@@ -36,7 +36,7 @@ function useSectionObserver() {
         }
       },
       {
-        rootMargin: '-15% 0px -62% 0px',
+        rootMargin: '-12% 0px -62% 0px',
         threshold: [0.2, 0.35, 0.6],
       },
     );
@@ -48,57 +48,51 @@ function useSectionObserver() {
   return activeId;
 }
 
+function SectionBand({ children, tint = 'default' }: { children: React.ReactNode; tint?: 'default' | 'mist' | 'ink' }) {
+  return <div className={`dk-band dk-band-${tint}`}>{children}</div>;
+}
+
 export default function HomeShell() {
   const activeId = useSectionObserver();
   const [newsLocale, setNewsLocale] = useState<'az' | 'en' | 'ru' | 'tr'>('az');
-  const [motionEnabled, setMotionEnabled] = useState(true);
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const apply = () => setMotionEnabled(!media.matches);
-    apply();
-    media.addEventListener('change', apply);
-    return () => media.removeEventListener('change', apply);
-  }, []);
 
   return (
-    <div className="home-surface" data-motion={motionEnabled ? 'on' : 'off'}>
-      <div className="home-shell">
-        <div className="home-grid">
-          <StickyChapterNav activeId={activeId} />
+    <main className="home-surface">
+      <StickyChapterNav activeId={activeId} />
 
-          <div className="home-panel home-content">
-            <Hero
-              onTabSwitch={(tab) => trackHomeEvent({ event: 'home_tab_switch', tab, section: 'hero' })}
-              onCtaClick={(ctaLabel) => trackHomeEvent({ event: 'home_cta_click', section: 'hero', ctaLabel })}
-              onKazanClick={() => trackHomeEvent({ event: 'kazan_ai_click', section: 'hero', ctaLabel: 'kazan_hero' })}
-            />
-            <StageCards />
-            <Basla />
-            <Comparison />
-            <HizlandirAlternating
-              onKazanClick={() => trackHomeEvent({ event: 'kazan_ai_click', section: 'hizlandir', ctaLabel: 'kazan_widget' })}
-            />
-            <Boyut />
-            <ListingsPreview />
+      <SectionBand>
+        <Hero
+          onTabSwitch={(tab) => trackHomeEvent({ event: 'home_tab_switch', tab, section: 'hero' })}
+          onCtaClick={(ctaLabel) => trackHomeEvent({ event: 'home_cta_click', section: 'hero', ctaLabel })}
+          onKazanClick={() => trackHomeEvent({ event: 'kazan_ai_click', section: 'hero', ctaLabel: 'kazan_hero' })}
+        />
+      </SectionBand>
 
-            <section aria-label="news locale controls" style={{ paddingBottom: 0 }}>
-              <span className="home-kicker">Locale</span>
-              <div className="tab-row" role="tablist" aria-label="news locale tabs">
-                {(['az', 'en', 'ru', 'tr'] as const).map((locale) => (
-                  <button key={locale} type="button" data-active={newsLocale === locale} onClick={() => setNewsLocale(locale)}>
-                    {locale.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-            </section>
+      <SectionBand tint="mist"><StageCards /></SectionBand>
+      <SectionBand><Basla /></SectionBand>
+      <SectionBand tint="mist"><Comparison /></SectionBand>
+      <SectionBand><HizlandirAlternating onKazanClick={() => trackHomeEvent({ event: 'kazan_ai_click', section: 'hizlandir', ctaLabel: 'kazan_widget' })} /></SectionBand>
+      <SectionBand tint="mist"><Boyut /></SectionBand>
+      <SectionBand><ListingsPreview /></SectionBand>
 
-            <NewsEditorial locale={newsLocale} />
-            <StatsBar />
-            <SignupCTA onClick={(ctaLabel) => trackHomeEvent({ event: 'home_cta_click', section: 'signup', ctaLabel })} />
+      <SectionBand tint="mist">
+        <section aria-label="news locale controls" className="dk-section">
+          <div className="dk-container">
+            <span className="home-kicker">Xeber dili</span>
+            <div className="tab-row" role="tablist" aria-label="news locale tabs">
+              {(['az', 'en', 'ru', 'tr'] as const).map((locale) => (
+                <button key={locale} type="button" data-active={newsLocale === locale} onClick={() => setNewsLocale(locale)}>
+                  {locale.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </section>
+        <NewsEditorial locale={newsLocale} />
+      </SectionBand>
+
+      <SectionBand><StatsBar /></SectionBand>
+      <SectionBand tint="ink"><SignupCTA onClick={(ctaLabel) => trackHomeEvent({ event: 'home_cta_click', section: 'signup', ctaLabel })} /></SectionBand>
+    </main>
   );
 }

@@ -6,10 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:local": "next start -H 127.0.0.1 -p 3001",
+    "start:3000": "next start -H 127.0.0.1 -p 3000",
     "lint": "eslint"
   },
   "dependencies": {
     "@google/genai": "^1.42.0",
+    "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
     "next": "16.1.6",
     "react": "19.2.3",

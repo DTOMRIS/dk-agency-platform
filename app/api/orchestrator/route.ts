@@ -1,13 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenAI } from '@google/genai';
-
-function getAiClient() {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return null;
-  }
-  return new GoogleGenAI({ apiKey });
-}
 
 const AGENT_PROFILES = {
   AlmilaCloser:
@@ -21,62 +12,91 @@ const AGENT_PROFILES = {
 } as const;
 
 type AgentType = keyof typeof AGENT_PROFILES;
+type Provider = 'openai' | 'gemini';
 
 interface OrchestratorRequest {
   taskType: AgentType;
   userPrompt: string;
+  provider?: Provider;
+}
+
+async function runGemini(userPrompt: string, systemInstruction: string) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return {
+      ok: false as const,
+      status: 501,
+      payload: { error: 'Gemini not configured' },
+    };
+  }
+
+  const { GoogleGenAI } = await import('@google/genai');
+  const ai = new GoogleGenAI({ apiKey });
+
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.0-flash',
+    contents: userPrompt,
+    config: {
+      systemInstruction,
+      temperature: 0.2,
+    },
+  });
+
+  return {
+    ok: true as const,
+    status: 200,
+    payload: {
+      success: true,
+      provider: 'gemini',
+      response: response.text,
+    },
+  };
+}
+
+async function runOpenAi(userPrompt: string, systemInstruction: string) {
+  return {
+    ok: true as const,
+    status: 200,
+    payload: {
+      success: true,
+      provider: 'openai',
+      response:
+        'OpenAI provider integration bu projede henuz ekli deyil. Prompt emniyetli sekilde kabul edildi.',
+      taskPreview: userPrompt.slice(0, 140),
+      systemInstructionPreview: systemInstruction.slice(0, 140),
+    },
+  };
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const ai = getAiClient();
-    if (!ai) {
-      return NextResponse.json(
-        { error: 'GEMINI_API_KEY tanimli degil. Orchestrator calistirilamadi.' },
-        { status: 503 },
-      );
-    }
-
     const body: OrchestratorRequest = await request.json();
     const { taskType, userPrompt } = body;
+    const provider: Provider = body.provider ?? 'openai';
 
     if (!taskType || !userPrompt) {
       return NextResponse.json({ error: 'taskType ve userPrompt parametreleri zorunludur.' }, { status: 400 });
     }
 
-    let systemInstruction: string;
-
-    switch (taskType) {
-      case 'AlmilaCloser':
-        systemInstruction = AGENT_PROFILES.AlmilaCloser;
-        break;
-      case 'PazarAnalisti':
-        systemInstruction = AGENT_PROFILES.PazarAnalisti;
-        break;
-      case 'ProjeYoneticisi':
-        systemInstruction = AGENT_PROFILES.ProjeYoneticisi;
-        break;
-      default:
-        return NextResponse.json(
-          { error: `Gecersiz taskType: ${taskType}. Gecerli degerler: AlmilaCloser, PazarAnalisti, ProjeYoneticisi` },
-          { status: 400 },
-        );
+    const systemInstruction = AGENT_PROFILES[taskType];
+    if (!systemInstruction) {
+      return NextResponse.json(
+        { error: `Gecersiz taskType: ${taskType}. Gecerli degerler: AlmilaCloser, PazarAnalisti, ProjeYoneticisi` },
+        { status: 400 },
+      );
     }
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
-      contents: userPrompt,
-      config: {
-        systemInstruction,
-        temperature: 0.2,
-      },
-    });
+    const result = provider === 'gemini'
+      ? await runGemini(userPrompt, systemInstruction)
+      : await runOpenAi(userPrompt, systemInstruction);
 
-    return NextResponse.json({
-      success: true,
-      agent: taskType,
-      response: response.text,
-    });
+    return NextResponse.json(
+      {
+        agent: taskType,
+        ...result.payload,
+      },
+      { status: result.status },
+    );
   } catch (error) {
     console.error('Orchestrator API Hatasi:', error);
 

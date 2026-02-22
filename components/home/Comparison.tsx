@@ -2,7 +2,7 @@ export default function Comparison() {
   return (
     <section id="comparison">
       <span className="home-kicker">Comparison</span>
-      <h2 className="home-title">Legacy patchwork vs. DK operating stack.</h2>
+      <h2 className="home-title">Parcali sistem vs DK emeliyyat stacki.</h2>
       <div className="alt-grid">
         <article className="alt-card">
           <h3>Legacy stack</h3>
@@ -16,3 +16,4 @@ export default function Comparison() {
     </section>
   );
 }
+

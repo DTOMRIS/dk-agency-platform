@@ -9,7 +9,7 @@ export default function Boyut() {
   return (
     <section id="boyut">
       <span className="home-kicker">Boyut</span>
-      <h2 className="home-title">Scale from single site to multi-unit operations.</h2>
+      <h2 className="home-title">Tek mekandan multi-unit emeliyyata olceklenin.</h2>
       <p className="home-body">From one kitchen to distributed groups, the same narrative modules keep governance consistent.</p>
       <div className="metric-row">
         {metrics.map((metric) => (
@@ -22,3 +22,4 @@ export default function Boyut() {
     </section>
   );
 }
+

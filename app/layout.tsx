@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CookiesBanner from "@/components/ui/CookiesBanner";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
+import AttributionCapture from "@/components/marketing/AttributionCapture";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,6 +49,7 @@ export default function RootLayout({
   return (
     <html lang="az">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0A0A1A] text-[#EAEAEA] min-h-screen`}>
+        <AttributionCapture />
         <Header />
         <main className="pt-16 pb-20 md:pb-0">{children}</main>
         <MobileBottomNav />
@@ -57,3 +59,4 @@ export default function RootLayout({
     </html>
   );
 }
+

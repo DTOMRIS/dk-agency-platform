@@ -1,23 +1,23 @@
 export default function StageCards() {
   const cards = [
     {
-      title: 'Stage 1: Diagnose',
+      title: 'Merhele 1: Diagnose',
       body: 'Read margin leaks, labor drift and campaign attribution in one view.',
     },
     {
-      title: 'Stage 2: Simulate',
+      title: 'Merhele 2: Simulate',
       body: 'Run KAZAN AI scenarios before changing menu, staffing or media spend.',
     },
     {
-      title: 'Stage 3: Execute',
+      title: 'Merhele 3: Execute',
       body: 'Push to listings, newsletter and newsroom channels with measurable impact.',
     },
   ];
 
   return (
     <section id="stages">
-      <span className="home-kicker">Scroll Blueprint</span>
-      <h2 className="home-title">Alternating narrative, one system language.</h2>
+      <span className="home-kicker">Marhele Blueprint</span>
+      <h2 className="home-title">Alternativ hekayelendirme, vahid emeliyyat dili.</h2>
       <div className="home-cards">
         {cards.map((card) => (
           <article key={card.title} className="home-card">
@@ -29,3 +29,4 @@ export default function StageCards() {
     </section>
   );
 }
+

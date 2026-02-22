@@ -8,7 +8,7 @@ export default function Basla() {
   return (
     <section id="basla">
       <span className="home-kicker">Basla</span>
-      <h2 className="home-title">Quick start without ripping existing workflows.</h2>
+      <h2 className="home-title">Movcud axinlari pozmadan surerli baslangic.</h2>
       <p className="home-body">
         Keep current tools running while operators phase into unified planning. No hard cutover is required.
       </p>
@@ -22,3 +22,4 @@ export default function Basla() {
     </section>
   );
 }
+
