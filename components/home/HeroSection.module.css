@@ -1,0 +1,42 @@
+.floatWrap {
+  transform-style: preserve-3d;
+}
+
+.floatCard {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  will-change: transform;
+}
+
+.floatEnabled .floatCard {
+  animation: heroFloat 6s ease-in-out infinite;
+}
+
+.floatEnabled .floatCard:nth-child(2) {
+  animation-delay: 0.9s;
+}
+
+.floatEnabled .floatCard:nth-child(3) {
+  animation-delay: 1.8s;
+}
+
+@keyframes heroFloat {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@media (max-width: 767px) {
+  .floatEnabled .floatCard {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floatCard {
+    transition: none;
+  }
+
+  .floatEnabled .floatCard {
+    animation: none;
+  }
+}
