@@ -11,8 +11,8 @@ function resolveLocale(input: string | undefined): NewsLocale {
 }
 
 export const metadata = {
-  title: 'Xeberler | DK Agency Editorial',
-  description: 'Featured editorial flow with multilingual consistency and RSS distribution layer.',
+  title: 'Xəbərlər | DK Agency',
+  description: 'HoReCa sektorundan ən son xəbərlər, analiz və trendlər.',
 };
 
 export default async function XeberlerPage({
@@ -65,12 +65,12 @@ export default async function XeberlerPage({
         </main>
 
         <aside className="rounded-2xl border border-[#d4d0c4] bg-[#fffdf7] p-6 h-fit">
-          <h3 className="text-lg font-semibold">Most Read</h3>
+          <h3 className="text-lg font-semibold">Ən Çox Oxunan</h3>
           <div className="mt-3 grid gap-2">
             {mostRead.map((item) => (
               <article key={item.id} className="rounded-lg border border-[#dcd7ca] bg-white p-3">
                 <strong>{item.localizedTitle}</strong>
-                <p className="text-sm text-[#59645f] mt-1">{item.views.toLocaleString()} reads</p>
+                <p className="text-sm text-[#59645f] mt-1">{item.views.toLocaleString()} oxunuş</p>
               </article>
             ))}
           </div>
