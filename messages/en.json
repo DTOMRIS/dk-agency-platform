@@ -1,0 +1,200 @@
+{
+  "nav": {
+    "home": "Home",
+    "trends": "Trends",
+    "blog": "Blog",
+    "dashboard": "Dashboard",
+    "login": "Sign in",
+    "register": "Subscribe",
+    "startFree": "Start free",
+    "language": "EN"
+  },
+  "utilityBar": {
+    "newLabel": "NEW:",
+    "newText": "KAZAN AI — the industry's first AI consultant, coming soon"
+  },
+  "hero": {
+    "badge": "Azerbaijan's first AI-powered HoReCa platform",
+    "titleLine1": "Don't know why",
+    "titleLine2": "your restaurant",
+    "titleLine3": "",
+    "titleLine4": "loses money?",
+    "subtitle": "We find it, we fix it. Free tools, expert knowledge, AI support — all in one platform.",
+    "motto": "Masters of the digital guild — we protect the bread and salt covenant.",
+    "ctaStart": "Start now",
+    "ctaExplore": "Explore tools",
+    "statRestaurants": "ACTIVE RESTAURANTS",
+    "statTools": "FREE TOOLS",
+    "statCostReduction": "COST REDUCTION",
+    "panelTitle": "OCAQ Panel",
+    "panelActive": "Active",
+    "panelRevenue": "Monthly revenue",
+    "panelFoodCost": "Food cost",
+    "panelNetProfit": "Net profit",
+    "menuMatrix": "Menu Matrix",
+    "menuStar": "Star",
+    "menuHorse": "Plow Horse",
+    "menuPuzzle": "Puzzle",
+    "menuDog": "Dog",
+    "sheddBadge": "Shedd Badge",
+    "sheddDesc": "— DK Agency audit passed"
+  },
+  "stages": {
+    "title": "Which stage are you at?",
+    "subtitle": "Free tools and guides for every stage.",
+    "imageAlt": "Operations system illustration",
+    "start": {
+      "title": "Start",
+      "description": "Want to open a restaurant? Checklist, legal matters, location selection, menu plan.",
+      "count": "8 guides"
+    },
+    "grow": {
+      "title": "Grow",
+      "description": "Optimize your existing restaurant. P&L, food cost, menu matrix, AI support.",
+      "count": "6 tools"
+    },
+    "transfer": {
+      "title": "Transfer & Sale",
+      "description": "Restaurant transfer, equipment sale, franchise, partner search.",
+      "count": "4 categories"
+    }
+  },
+  "toolkit": {
+    "label": "Free Toolkit",
+    "title": "Every gram counted, nothing wasted",
+    "subtitle": "In our culture, bread never stays on the ground. These tools account for every penny.",
+    "imageAlt": "Menu engineering illustration",
+    "pnl": {
+      "title": "P&L Calculator",
+      "desc": "Enter revenue, food cost, labor cost, overhead — net profit automatically. AZN support, PDF export.",
+      "metrics": ["Net profit %", "Prime cost", "Trend analysis"]
+    },
+    "foodCost": {
+      "title": "Food Cost Calculator",
+      "desc": "Create recipe cards — ingredients, quantities, prices. Real food cost with trim loss support.",
+      "metrics": ["Portion cost", "Trim loss", "Target price"]
+    },
+    "menuMatrix": {
+      "title": "Menu Matrix",
+      "desc": "Categorize each dish as Star/Plow Horse/Puzzle/Dog. Keep or kill — with data.",
+      "metrics": ["Star analysis", "CM calculation", "Action plan"]
+    },
+    "cta": "Use for free"
+  },
+  "dogan": {
+    "quote": "700 years ago when a master tied a Shedd around his apprentice's waist — it wasn't just a piece of cloth. It was a pledge of honor for the quality of that shop. Today, we make the same oath for the digital world of HoReCa.",
+    "name": "Dogan Tomris",
+    "role": "DK Agency founder",
+    "cavanmerdlik": "We are the Cavaliers of this industry."
+  },
+  "cta": {
+    "badge": "JOIN NOW",
+    "title": "Take your agency operations to",
+    "titleHighlight": "the next level",
+    "titleEnd": "",
+    "subtitle": "Just like hundreds of successful projects, join the DK AGENCY family and gain strategic advantage.",
+    "features": [
+      "Unlimited access to all strategic tools",
+      "24/7 operations support with KAZAN AI",
+      "Exclusive investment opportunities",
+      "Free first strategic consultation"
+    ],
+    "formTitle": "Apply",
+    "labelName": "First Name",
+    "labelSurname": "Last Name",
+    "labelEmail": "Email",
+    "labelCompany": "Company / Project Name",
+    "placeholderName": "e.g. John",
+    "placeholderSurname": "e.g. Smith",
+    "placeholderEmail": "john@agency.az",
+    "placeholderCompany": "e.g. Grand Holding",
+    "submit": "Submit"
+  },
+  "footer": {
+    "brand": "DK Agency",
+    "brandDesc": "The mark of mastery, the shield of digital. Azerbaijan's first AI-powered HoReCa platform.",
+    "tools": "Tools",
+    "toolsPnl": "P&L Calculator",
+    "toolsFoodCost": "Food Cost",
+    "toolsMenuMatrix": "Menu Matrix",
+    "toolsBreakeven": "Break-even",
+    "toolsKazanAi": "KAZAN AI",
+    "start": "Start",
+    "startChecklist": "Opening Checklist",
+    "startOfficialMatters": "Legal Matters",
+    "startLocation": "Location Selection",
+    "startMenuEngineering": "Menu Engineering",
+    "resources": "Resources",
+    "resourcesBlog": "Blog",
+    "resourcesTrends": "Trends",
+    "resourcesHapBilgi": "Quick Tips",
+    "resourcesDigest": "DK Digest",
+    "company": "Company",
+    "companyAbout": "About Us",
+    "companyConsulting": "Consulting",
+    "companyContact": "Contact",
+    "companySheddBadge": "Shedd Badge",
+    "copyright": "2026 DK Agency. All rights reserved.",
+    "poweredBy": "Powered by TQTA.az",
+    "kazanAiTooltip": "Ask KAZAN AI!"
+  },
+  "megamenu": {
+    "platformTitle": "DK Agency Platform",
+    "platformDesc": "Plan, manage, and grow your restaurant — all in one platform.",
+    "allTools": "All tools",
+    "healthTest": "Health test",
+    "sectionStart": "START",
+    "sectionGrow": "GROW",
+    "sectionTransfer": "TRANSFER & SALE",
+    "popular": "Popular:",
+    "startItems": {
+      "checklist": { "label": "Opening Checklist", "desc": "Step-by-step opening plan" },
+      "officialMatters": { "label": "Legal Matters", "desc": "ASAN, AQTA, taxes" },
+      "location": { "label": "Location Selection", "desc": "Location, rent" },
+      "concept": { "label": "Concept Preparation", "desc": "Target audience, brand" },
+      "menuEngineering": { "label": "Menu Engineering", "desc": "Pricing, star analysis" },
+      "marketing": { "label": "Marketing", "desc": "Opening campaign" },
+      "equipment": { "label": "Equipment Catalog", "desc": "500+ professional equipment" },
+      "identity": { "label": "Corporate Identity", "desc": "Logo, colors, samples" }
+    },
+    "growItems": {
+      "pnl": { "label": "Profit & Loss (P&L)", "desc": "Revenue-expense analysis" },
+      "foodCost": { "label": "Food Cost", "desc": "Calculate portion cost" },
+      "breakeven": { "label": "Break-even Analysis", "desc": "Break-even point" },
+      "marketPrices": { "label": "Market Prices", "desc": "Weekly food prices" },
+      "opChecklist": { "label": "Operations Checklist", "desc": "Daily, weekly" },
+      "kazanAi": { "label": "KAZAN AI", "desc": "AI consultant", "badge": "COMING SOON" }
+    },
+    "transferItems": {
+      "restaurantTransfer": "Restaurant Transfer",
+      "equipmentSale": "Equipment Sale",
+      "franchise": "Franchise",
+      "findOperator": "Find Operator"
+    },
+    "popularItems": {
+      "pnl": "P&L Calculator",
+      "checklist": "Opening Checklist",
+      "foodCost": "Food Cost"
+    }
+  },
+  "cookies": {
+    "imageAlt": "Cookies",
+    "title": "Who said cookies aren't healthy?",
+    "description": "We love cookies as much as we love restaurants. This site uses cookies.",
+    "privacyLink": "Read our privacy policy here.",
+    "reject": "No, thanks",
+    "customize": "Customize",
+    "accept": "Accept",
+    "toggleAll": "Toggle all cookies",
+    "facebookAds": "Facebook Ads",
+    "facebookDesc": "Measures the effectiveness of ad campaigns",
+    "googleAds": "Google Ads",
+    "googleDesc": "Measures the effectiveness of search ads",
+    "hotjar": "Hotjar",
+    "hotjarDesc": "Tracks user behavior",
+    "back": "Back",
+    "acceptAll": "Accept all",
+    "saveCustom": "Save selection",
+    "certifiedBy": "Consent certified by Axeptio"
+  }
+}

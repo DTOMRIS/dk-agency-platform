@@ -4,33 +4,50 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node --max-old-space-size=4096 node_modules/next/dist/bin/next build",
     "start": "next start",
     "start:local": "next start -H 127.0.0.1 -p 3001",
     "start:3000": "next start -H 127.0.0.1 -p 3000",
-    "lint": "eslint"
+    "lint": "eslint",
+    "hooks:install": "node scripts/install-hooks.mjs",
+    "verify:protected": "node scripts/verify-protected.mjs",
+    "verify:encoding": "node scripts/verify-encoding.mjs",
+    "verify:staged": "node scripts/verify-protected.mjs --staged && node scripts/verify-encoding.mjs --staged",
+    "verify": "node scripts/verify-protected-range-safe.mjs && npm run verify:encoding",
+    "verify:task-range": "node scripts/verify-task-card.mjs --range",
+    "snapshot:state": "node scripts/generate-state.mjs",
+    "audit:drift": "node scripts/drift-audit.mjs",
+    "fetch:news": "node --env-file=.env.local scripts/fetch-news.mjs",
+    "approve:news": "node scripts/approve-news.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.42.0",
+    "@neondatabase/serverless": "^1.0.2",
+    "@tailwindcss/postcss": "^4",
+    "autoprefixer": "^10.4.27",
+    "drizzle-orm": "^0.45.1",
     "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
     "next": "16.1.6",
+    "next-intl": "^4.8.3",
+    "postcss": "^8.5.8",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1",
-    "rss-parser": "^3.13.0"
+    "rss-parser": "^3.13.0",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }
