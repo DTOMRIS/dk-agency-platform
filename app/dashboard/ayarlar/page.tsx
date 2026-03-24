@@ -28,14 +28,7 @@ import {
 
 type SettingsTab = 'general' | 'notifications' | 'security' | 'integrations' | 'appearance';
 
-interface _Setting {
-  id: string;
-  label: string;
-  description: string;
-  type: 'toggle' | 'select' | 'input' | 'textarea';
-  value: string | boolean;
-  options?: { value: string; label: string }[];
-}
+// SettingsTab type above covers tab navigation
 
 export default function AyarlarPage() {
   const [activeTab, setActiveTab] = useState<SettingsTab>('general');

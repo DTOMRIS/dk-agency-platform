@@ -6,22 +6,15 @@
 import { useState } from 'react';
 import {
   TrendingUp,
-  TrendingDown,
   DollarSign,
   Target,
-  Users,
   Clock,
   CheckCircle,
-  XCircle,
-  ArrowRight,
-  Filter,
-  Calendar,
   BarChart3,
   PieChart,
   Activity,
   Zap,
   Award,
-  Building2
 } from 'lucide-react';
 
 interface DealFlowData {
@@ -195,7 +188,7 @@ export default function DealFlowPage() {
               { stage: 'Teklif', count: 89, pct: 45, color: 'bg-purple-500' },
               { stage: 'Müzakere', count: 54, pct: 27, color: 'bg-pink-500' },
               { stage: 'Kapandı (Kazanıldı)', count: 69, pct: 35, color: 'bg-green-500' },
-            ].map((item, idx) => (
+            ].map((item) => (
               <div key={item.stage}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm text-gray-600">{item.stage}</span>

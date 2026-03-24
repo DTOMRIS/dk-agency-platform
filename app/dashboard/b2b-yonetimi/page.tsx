@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import {
-  Building2, Search, Filter, Plus, MoreHorizontal,
+  Building2, Search, Plus, MoreHorizontal,
   CheckCircle, Clock, XCircle, TrendingUp, Users,
   FileText, Star, ChevronDown, ExternalLink, Mail, Phone, X
 } from 'lucide-react';
