@@ -2,6 +2,33 @@
 
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
+## [0.3.0] - 2026-03-24
+### Added
+- i18n altyapisi (next-intl v4, 3 dil: az/tr/en, 168 key)
+- Database schema (Drizzle + 6 tablo: blog, ilan, partner, hero, guru, settings)
+- Image optimization (sharp + Cloudinary/Unsplash config)
+- Design tokens (colors, fonts, shadows, radius — typed)
+- Prettier config (.prettierrc)
+- /toolkit — index page (3 alet karti)
+- /toolkit/food-cost — porsiya maya deyeri hesablayici (interaktiv)
+- /toolkit/pnl — ayliq P&L simulyatoru (KPI + editable cedvel)
+- /toolkit/checklist — 43 maddelik restoran acilis checklist (7 bolme, progress bar)
+- Blog detail: MarkdownRenderer ile zengin formatlama (guru box, dogan notu, warning/tip, cedvel, code block)
+- Blog detail: related articles sidebar, tag-lar, xulase paneli
+- .claude/CLAUDE.md — proyekt kontekst faylI
+- docs/BRAND-GUIDE.md, docs/CODING-STANDARDS.md
+
+### Changed
+- Blog list: components/constants -> lib/data/blogArticles (9 yazi duzgun gosterilir)
+- Blog detail: ReactMarkdown -> MarkdownRenderer (zengin formatlama)
+- Xeberler: basliq + UI AZ diline cevirildi ("En Cox Oxunan", "oxunus")
+- StageSelector: /basla/checklist linki -> /toolkit/checklist (404 fix)
+
+### Fixed
+- CI: 10 ESLint error hell edildi (unescaped quotes, unused imports, Math.random in render, mojibake)
+- verify-encoding.mjs: binary fayllari (PNG/JPG) skip edir, oz-ozunu skip edir
+- Butun bos route qovluqlari (toolkit/food-cost, toolkit/pnl) sehifeyle dolduruldu
+
 ## [0.2.0] - 2026-03-24
 ### Added
 - Utility bar (KAZAN AI banner)
