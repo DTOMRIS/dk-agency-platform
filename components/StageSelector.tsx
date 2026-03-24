@@ -24,7 +24,7 @@ const stages: Stage[] = [
       'Restoran acmaq isteyirsen? Checklist, resmi isler, mekan secimi, menyu plani.',
     color: '#E94560',
     hoverBorder: 'hover:border-[#E94560]',
-    link: '/basla/checklist',
+    link: '/toolkit/checklist',
     count: '8 beledci',
     countClass: 'text-red-500',
   },
