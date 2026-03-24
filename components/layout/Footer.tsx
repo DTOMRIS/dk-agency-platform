@@ -1,85 +1,79 @@
-// components/layout/Footer.tsx
-// DK Agency — Global Footer (Dark Theme)
-// 5-column layout, social icons, copyright
+'use client';
 
-import React from 'react';
+import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import SocialIcons from './SocialIcons';
 
-// Footer link sections
-const footerSections = [
+const footerColumns = [
   {
-    title: 'Platform',
+    title: 'Aletler',
     links: [
-      { href: '/', label: 'Ana Səhifə' },
-      { href: '/haberler', label: 'TQTA Jurnal' },
-      { href: '/b2b-panel', label: 'B2B Panel' },
-      { href: '/b2b-panel/toolkit', label: 'Toolkit' },
+      { label: 'P&L Hesablama', href: '/b2b-panel/toolkit/pnl-simulator' },
+      { label: 'Food Cost', href: '/b2b-panel/toolkit/food-cost' },
+      { label: 'Menyu Matrisi', href: '/b2b-panel/toolkit' },
+      { label: 'Basabas', href: '/b2b-panel/toolkit/basabas' },
+      { label: 'KAZAN AI', href: '/kazan-ai' },
     ],
   },
   {
-    title: 'B2B Xidmətlər',
+    title: 'Basla',
     links: [
-      { href: '/b2b-panel/yeni-ilan', label: 'İlan Ver' },
-      { href: '/b2b-panel/ilanlarim', label: 'İlanlarım' },
-      { href: '/b2b-panel/mesajlar', label: 'Mesajlar' },
-      { href: '/b2b-panel/toolkit/roi-calculator', label: 'ROI Kalkulyator' },
+      { label: 'Acilis Checklist', href: '/basla/checklist' },
+      { label: 'Resmi Isler', href: '/basla/resmi-isler' },
+      { label: 'Mekan Secimi', href: '/basla/mekan' },
+      { label: 'Menyu Muhendisliyi', href: '/basla/menu' },
     ],
   },
   {
-    title: 'Hesab',
+    title: 'Resurslar',
     links: [
-      { href: '/auth/login', label: 'Giriş' },
-      { href: '/auth/register', label: 'Qeydiyyat' },
-      { href: '/dashboard', label: 'Dashboard' },
-      { href: '/dashboard/ayarlar', label: 'Ayarlar' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Trendler', href: '/haberler' },
+      { label: 'HAP Bilgiler', href: '/blog' },
+      { label: 'DK Digest', href: '/news' },
     ],
   },
   {
-    title: 'Hüquqi',
+    title: 'Sirket',
     links: [
-      { href: '/privacy', label: 'Gizlilik Siyasəti' },
-      { href: '/terms', label: 'İstifadə Sertleri' },
-      { href: '/cookies', label: 'Cookie Policy' },
-      { href: '/contact', label: 'Əlaqə' },
+      { label: 'Haqqimizda', href: '/haqqimizda' },
+      { label: 'Danismanlik', href: '/elaqe' },
+      { label: 'Elaqe', href: '/elaqe' },
+      { label: 'Sedd Rozeti', href: '/haqqimizda' },
     ],
   },
 ];
 
-export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
+export function Footer() {
   return (
-    <footer className="bg-[#0A0A1A] border-t border-[#8892B015]">
+    <footer className="bg-[#FAFAF8] border-t border-gray-200 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="py-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand Column */}
-          <div className="col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C5A022] to-[#E94560] flex items-center justify-center">
-                <span className="text-[#0A0A1A] font-black text-lg">DK</span>
+          <div className="lg:col-span-1">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-[#1A1A2E] rounded-lg flex items-center justify-center">
+                <span className="text-white text-xs font-bold">DK</span>
               </div>
-              <span className="text-[#EAEAEA] font-bold text-lg">DK Agency</span>
-            </Link>
-            <p className="text-[#8892B0] text-sm leading-relaxed mb-6">
-              Azərbaycan TQTA sektoru üçün premium biznes platforması və media şəbəkəsi.
+              <span className="text-sm font-bold text-slate-900">DK Agency</span>
+            </div>
+            <p className="text-sm text-gray-500 max-w-[240px] leading-relaxed">
+              Ustaligin nisani, dijitalin seddi. Azerbaycanin ilk AI-destekli HoReCa platformasi.
             </p>
-            <SocialIcons />
           </div>
 
           {/* Link Columns */}
-          {footerSections.map((section) => (
-            <div key={section.title}>
-              <h3 className="text-[#C5A022] font-semibold text-sm uppercase tracking-wide mb-4">
-                {section.title}
-              </h3>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.href + link.label}>
+          {footerColumns.map((col) => (
+            <div key={col.title}>
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">
+                {col.title}
+              </h4>
+              <ul className="space-y-0">
+                {col.links.map((link) => (
+                  <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-[#B0B8C8] text-sm hover:text-[#EAEAEA] transition-colors"
+                      className="text-sm text-gray-500 hover:text-slate-900 block py-1 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -90,53 +84,37 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Newsletter Section */}
-        <div className="py-8 border-t border-[#8892B015]">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-[#EAEAEA] font-semibold text-lg mb-1">
-                Həftəlik bülletenə abunə olun
-              </h3>
-              <p className="text-[#8892B0] text-sm">
-                TQTA sektorundan ən son xəbərlər və analizlər
-              </p>
-            </div>
-            <div className="flex w-full md:w-auto gap-2">
-              <input
-                type="email"
-                placeholder="Email ünvanınız"
-                className="flex-1 md:w-64 px-4 py-3 rounded-lg bg-[#1A1A2E] border border-[#8892B020] text-[#EAEAEA] placeholder-[#8892B0] text-sm focus:outline-none focus:border-[#C5A022] transition-colors"
-              />
-              <button className="px-6 py-3 rounded-lg bg-[#E94560] text-white font-semibold text-sm hover:bg-[#C5A022] transition-colors whitespace-nowrap">
-                Abunə ol
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="py-6 border-t border-[#8892B015] flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[#8892B0] text-sm">
-            © {currentYear} DK Agency. Bütün hüquqlar qorunur.
+        {/* Bottom */}
+        <div className="border-t border-gray-200 pt-6 mt-12 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-gray-400">
+            &copy; 2026 DK Agency. Butun huquqlar qorunur.
           </p>
-          <div className="flex items-center gap-6 text-[#8892B0] text-sm">
-            <Link href="/privacy" className="hover:text-[#EAEAEA] transition-colors">
-              Gizlilik
-            </Link>
-            <Link href="/terms" className="hover:text-[#EAEAEA] transition-colors">
-              Sertler
-            </Link>
-            <Link href="/cookies" className="hover:text-[#EAEAEA] transition-colors">
-              Cookie
-            </Link>
-          </div>
+          <Link
+            href="https://tqta.az"
+            target="_blank"
+            className="text-xs text-amber-600 font-semibold hover:text-amber-700 transition-colors"
+          >
+            Powered by TQTA.az
+          </Link>
         </div>
       </div>
     </footer>
   );
 }
 
+export function KazanAIBot() {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      className="fixed bottom-8 right-8 w-16 h-16 bg-brand-red text-white rounded-2xl shadow-2xl shadow-brand-red/40 flex items-center justify-center z-50 group"
+    >
+      <div className="absolute -top-12 right-0 bg-white text-slate-900 px-4 py-2 rounded-xl text-xs font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap">
+        KAZAN AI-ya sual ver!
+      </div>
+      <Sparkles size={32} fill="currentColor" />
+    </motion.button>
+  );
+}
 
-
-
-
+export default Footer;

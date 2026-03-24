@@ -1,157 +1,172 @@
-// components/layout/Header.tsx
-// DK Agency — Global Header (Dark Theme)
-// Sticky nav, gold logo, E94560 CTA
-
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import MegaMenu from './MegaMenu';
 
-// Navigation items
 const navItems = [
-  { href: '/', label: 'Ana Səhifə' },
-  { href: '/haberler', label: 'TQTA Jurnal' },
-  { href: '/b2b-panel', label: 'B2B Panel' },
-  { href: '/dashboard', label: 'Dashboard' },
+  { name: 'Ana səhifə', href: '/', hasMegaMenu: true },
+  { name: 'Trendlər', href: '/haberler', hasMegaMenu: false },
+  { name: 'Blog', href: '/blog', hasMegaMenu: false },
+  { name: 'Ocaq', href: '/dashboard', hasMegaMenu: false },
 ];
 
 export default function Header() {
-  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
-
   return (
-    <header
-      className={`
-        fixed top-0 left-0 right-0 z-50
-        transition-all duration-300
-        ${isScrolled 
-          ? 'bg-[#1A1A2E]/95 backdrop-blur-md shadow-lg border-b border-[#8892B015]' 
-          : 'bg-[#1A1A2E]'}
-      `}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C5A022] to-[#E94560] flex items-center justify-center">
-              <span className="text-[#0A0A1A] font-black text-lg">DK</span>
-            </div>
-            <div className="hidden sm:block">
-              <span className="text-[#EAEAEA] font-bold text-lg">DK Agency</span>
-              <span className="hidden md:inline text-[#8892B0] text-sm ml-2">
-                | TQTA Media
-              </span>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href || 
-                (item.href !== '/' && pathname?.startsWith(item.href));
-              
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`
-                    px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                    ${isActive 
-                      ? 'text-[#C5A022] bg-[#C5A02215]' 
-                      : 'text-[#B0B8C8] hover:text-[#EAEAEA] hover:bg-[#8892B010]'}
-                  `}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Right side: CTA + Mobile toggle */}
-          <div className="flex items-center gap-3">
-            {/* CTA Button */}
-            <Link
-              href="/auth/register"
-              className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E94560] text-white text-sm font-semibold hover:bg-[#C5A022] transition-colors"
-            >
-              <span>Abunə ol</span>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+    <>
+      {/* Utility Bar */}
+      <div className="hidden md:block bg-[#1A1A2E]">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-2">
+          <div className="flex items-center gap-2 text-xs">
+            <span className="text-[#C5A022] font-bold">YENİ:</span>
+            <span className="text-gray-400">
+              KAZAN AI — sektorun ilk AI danışmanı tezliklə
+            </span>
+          </div>
+          <div className="flex items-center gap-3 text-xs text-gray-400">
+            <span>AZ</span>
+            <span className="text-gray-600">|</span>
+            <Link href="/auth/login" className="hover:text-white transition-colors">
+              Üzv girişi
             </Link>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-[#B0B8C8] hover:text-[#EAEAEA] hover:bg-[#8892B010]"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+            <span className="text-gray-600">|</span>
+            <Link href="/auth/register" className="hover:text-white transition-colors">
+              Abunə ol
+            </Link>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div
-        className={`
-          md:hidden overflow-hidden transition-all duration-300
-          ${isMobileMenuOpen ? 'max-h-96 border-t border-[#8892B015]' : 'max-h-0'}
-        `}
+      {/* Main Header */}
+      <header
+        className={`sticky top-0 z-50 transition-all duration-300 bg-white ${
+          isScrolled
+            ? 'border-b border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.05)]'
+            : ''
+        }`}
       >
-        <nav className="px-4 py-4 space-y-1 bg-[#1A1A2E]">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href || 
-              (item.href !== '/' && pathname?.startsWith(item.href));
-            
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`
-                  block px-4 py-3 rounded-lg text-sm font-medium transition-colors
-                  ${isActive 
-                    ? 'text-[#C5A022] bg-[#C5A02215]' 
-                    : 'text-[#B0B8C8] hover:text-[#EAEAEA] hover:bg-[#8892B010]'}
-                `}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-          
-          {/* Mobile CTA */}
-          <Link
-            href="/auth/register"
-            className="block mt-4 px-4 py-3 rounded-full bg-[#E94560] text-white text-center text-sm font-semibold hover:bg-[#C5A022] transition-colors"
-          >
-            Abunə ol
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 bg-[#1A1A2E] rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0">
+              DK
+            </div>
+            <span className="text-[#1A1A2E] text-base font-bold">
+              DK Agency
+            </span>
           </Link>
-        </nav>
-      </div>
-    </header>
+
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {navItems.map((item) =>
+              item.hasMegaMenu ? (
+                <div
+                  key={item.name}
+                  className="relative"
+                  onMouseEnter={() => setMenuOpen(true)}
+                  onMouseLeave={() => setMenuOpen(false)}
+                >
+                  <Link
+                    href={item.href}
+                    className="text-sm font-medium text-gray-500 hover:text-[#1A1A2E] px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors inline-block"
+                  >
+                    {item.name}
+                  </Link>
+                  <MegaMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+                </div>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-sm font-medium text-gray-500 hover:text-[#1A1A2E] px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
+          </nav>
+
+          {/* Right Side */}
+          <div className="flex items-center gap-3">
+            <Link
+              href="/auth/login"
+              className="hidden sm:inline-block text-sm text-gray-500 hover:text-[#1A1A2E] transition-colors"
+            >
+              Üzv girişi
+            </Link>
+            <Link
+              href="/auth/register"
+              className="hidden sm:inline-flex items-center gap-2 bg-[#E94560] text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-[#E94560]/20 transition-all active:scale-95"
+            >
+              Pulsuz başla
+              <ArrowRight size={16} />
+            </Link>
+
+            {/* Mobile Hamburger */}
+            <button
+              className="lg:hidden p-2 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors"
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              aria-label="Menu"
+            >
+              {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMobileOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white rounded-2xl border border-gray-200 shadow-2xl p-6 z-50"
+            >
+              <div className="flex flex-col gap-1">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-base font-medium text-gray-700 p-3 rounded-xl hover:bg-gray-50 hover:text-[#1A1A2E] transition-colors"
+                    onClick={() => setIsMobileOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <div className="h-px bg-gray-100 my-3" />
+                <Link
+                  href="/auth/login"
+                  className="text-base font-medium text-gray-500 p-3 rounded-xl hover:bg-gray-50 transition-colors"
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  Üzv girişi
+                </Link>
+                <Link
+                  href="/auth/register"
+                  className="flex items-center justify-center gap-2 w-full bg-[#E94560] text-white py-3 rounded-xl font-semibold shadow-lg shadow-[#E94560]/20 mt-2"
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  Pulsuz başla
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </>
   );
 }
