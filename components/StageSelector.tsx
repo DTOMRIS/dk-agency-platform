@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Stage {
   emoji: string;
@@ -56,19 +57,36 @@ export default function StageSelector() {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
-          <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-3">
-            Sen hansi merheledesen?
-          </h2>
-          <p className="text-base text-gray-500">
-            Her merhele ucun pulsuz alet ve beledci.
-          </p>
-        </motion.div>
+        <div className="flex items-center justify-between mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center lg:text-left flex-1"
+          >
+            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-3">
+              Sen hansi merheledesen?
+            </h2>
+            <p className="text-base text-gray-500">
+              Her merhele ucun pulsuz alet ve beledci.
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <Image
+              src="/operasyon-sistemi.png"
+              width={180}
+              height={140}
+              alt="Əməliyyat sistemi illüstrasiyası"
+              loading="lazy"
+              className="hidden lg:block opacity-70 flex-shrink-0"
+            />
+          </motion.div>
+        </div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
