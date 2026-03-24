@@ -125,7 +125,7 @@ export default function CookiesBanner() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.35, ease: 'easeOut' }}
-          className="fixed bottom-6 left-6 z-[60] max-w-[420px] rounded-2xl bg-white border border-gray-100 p-6"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] w-[90vw] max-w-[420px] rounded-2xl bg-white border border-gray-100 p-6"
           style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.12)' }}
         >
           {!settingsOpen ? (
@@ -135,21 +135,21 @@ export default function CookiesBanner() {
                 src="/cookies.png"
                 width={120}
                 height={80}
-                alt="Cookies"
+                alt="Çərəzlər"
                 className="mx-auto mb-4"
               />
               <h3 className="text-lg font-bold text-slate-900 text-center mb-2">
-                Kim dedi ki cookies saglam deyil?
+                Kim dedi ki çərəzlər sağlam deyil?
               </h3>
               <p className="text-sm text-gray-500 text-center mb-2">
-                Biz restoranlari sevdiyimiz qeder cookileri de sevirik. Bu saytda
-                cookilerden istifade edirik.
+                Biz restoranları sevdiyimiz qədər çərəzləri də sevirik. Bu saytda
+                çərəzlərdən istifadə edirik.
               </p>
               <Link
                 href="/privacy"
                 className="block text-sm text-amber-600 hover:underline text-center mb-1"
               >
-                Mexfilik siyasetimizi buradan oxuyun.
+                Məxfilik siyasətimizi buradan oxuyun.
               </Link>
 
               <div className="flex gap-2 mt-4">
@@ -158,21 +158,21 @@ export default function CookiesBanner() {
                   onClick={handleReject}
                   className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  Yox, sag ol
+                  Yox, sağ ol
                 </button>
                 <button
                   type="button"
                   onClick={() => setSettingsOpen(true)}
                   className="text-sm font-medium border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  Secim et
+                  Seçim et
                 </button>
                 <button
                   type="button"
                   onClick={handleAccept}
                   className="text-sm font-medium bg-[#1A1A2E] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
                 >
-                  Qebul et
+                  Qəbul et
                 </button>
               </div>
             </div>
@@ -182,7 +182,7 @@ export default function CookiesBanner() {
               {/* Toggle all */}
               <div className="flex items-center justify-between mb-5">
                 <span className="text-sm font-medium text-slate-900">
-                  Butun cookileri ac/bagla
+                  Bütün çərəzləri aç/bağla
                 </span>
                 <Toggle checked={allOn} onChange={handleToggleAll} />
               </div>
@@ -193,7 +193,7 @@ export default function CookiesBanner() {
                   <div>
                     <p className="text-sm font-medium text-slate-900">Facebook Ads</p>
                     <p className="text-xs text-gray-400">
-                      Reklam kampaniyalarinin effektivliyini olcur
+                      Reklam kampaniyalarının effektivliyini ölçür
                     </p>
                   </div>
                   <Toggle checked={facebook} onChange={setFacebook} />
@@ -204,7 +204,7 @@ export default function CookiesBanner() {
                   <div>
                     <p className="text-sm font-medium text-slate-900">Google Ads</p>
                     <p className="text-xs text-gray-400">
-                      Axtaris reklamlarinin effektivliyini olcur
+                      Axtarış reklamlarının effektivliyini ölçür
                     </p>
                   </div>
                   <Toggle checked={google} onChange={setGoogle} />
@@ -215,7 +215,7 @@ export default function CookiesBanner() {
                   <div>
                     <p className="text-sm font-medium text-slate-900">Hotjar</p>
                     <p className="text-xs text-gray-400">
-                      Istifadeci davranisini izleyir
+                      İstifadəçi davranışını izləyir
                     </p>
                   </div>
                   <Toggle checked={hotjar} onChange={setHotjar} />
@@ -236,14 +236,14 @@ export default function CookiesBanner() {
                   onClick={handleAcceptAll}
                   className="text-sm font-medium bg-[#1A1A2E] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
                 >
-                  Hamisini qebul et
+                  Hamısını qəbul et
                 </button>
                 <button
                   type="button"
                   onClick={handleSaveCustom}
                   className="text-sm font-medium border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  Secimi saxla
+                  Seçimi saxla
                 </button>
               </div>
 
