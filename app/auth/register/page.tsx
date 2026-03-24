@@ -178,7 +178,7 @@ export default function RegisterPage() {
                 ))}
               </div>
               <p className="text-sm text-slate-300 italic">
-                "Sektör NABZI sayəsində food cost-umuzu 8% azaltdıq. Hər həftə newsletter-i gözləyirəm."
+                {"\u201C"}Sektör NABZI sayəsində food cost-umuzu 8% azaltdıq. Hər həftə newsletter-i gözləyirəm.{"\u201D"}
               </p>
               <p className="text-xs text-slate-500 mt-2">— Elvin M., Restoran Sahibi</p>
             </div>

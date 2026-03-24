@@ -42,7 +42,7 @@ export default function GuruQuoteBox({
       <div className="px-6 py-5">
         <div className="border-l-[3px] border-[#C5A022] pl-5">
           <p className="text-[16px] leading-[1.75] italic text-[#EAEAEA]">
-            "{quote}"
+            {"\u201C"}{quote}{"\u201D"}
           </p>
         </div>
         
@@ -94,7 +94,7 @@ export function GuruQuoteBoxCompact({
           <p className="text-[#8892B0] text-[11px]">{title}</p>
         </div>
       </div>
-      <p className="text-[#EAEAEA] text-[14px] italic leading-relaxed">"{quote}"</p>
+      <p className="text-[#EAEAEA] text-[14px] italic leading-relaxed">{"\u201C"}{quote}{"\u201D"}</p>
       <p className="text-[#8892B0] text-[11px] mt-3">📖 {source}</p>
     </div>
   );

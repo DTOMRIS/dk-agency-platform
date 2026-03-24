@@ -16,7 +16,6 @@ import {
   Save,
   RefreshCw,
   Check,
-  AlertCircle,
   Moon,
   Sun,
   Smartphone,
@@ -25,12 +24,11 @@ import {
   Languages,
   CreditCard,
   FileText,
-  Building2
 } from 'lucide-react';
 
 type SettingsTab = 'general' | 'notifications' | 'security' | 'integrations' | 'appearance';
 
-interface Setting {
+interface _Setting {
   id: string;
   label: string;
   description: string;

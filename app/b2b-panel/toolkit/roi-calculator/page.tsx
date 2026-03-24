@@ -5,7 +5,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Calculator, TrendingUp, DollarSign, Clock, Info } from 'lucide-react';
+import { ArrowLeft, Calculator, TrendingUp, Clock, Info } from 'lucide-react';
 
 export default function ROICalculatorPage() {
   const [initialInvestment, setInitialInvestment] = useState<number>(500000);

@@ -442,7 +442,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                     Viewpoint
                   </span>
                   <blockquote className="mt-3 text-[15px] leading-relaxed italic text-[#B0B8C8]">
-                    "Restoran biznesi rəqəmlərlə idarə olunur, duyğularla yox"
+                    {"\u201C"}Restoran biznesi rəqəmlərlə idarə olunur, duyğularla yox{"\u201D"}
                   </blockquote>
                   <div className="mt-4 flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-[#C5A022] flex items-center justify-center text-[#0A0A1A] text-xs font-bold">

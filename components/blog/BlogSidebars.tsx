@@ -1,16 +1,16 @@
 // components/blog/BlogSidebars.tsx
-// DK Agency Blog — Sidebar Components (Dark Theme)
+// DK Agency Blog - Sidebar Components (Dark Theme)
 // Gold + Navy premium dizayn
 'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
 import { Copy, MessageCircle, Send, Linkedin, Check, ChevronRight, Mail, Star } from 'lucide-react';
-import type { BlogArticle } from '@/lib/data/blogArticles';
+import { CATEGORY_CONFIG, type BlogArticle } from '@/lib/data/blogArticles';
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // NEWSLETTER WIDGET
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function NewsletterWidget() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -62,9 +62,9 @@ export function NewsletterWidget() {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════
-// DOĞAN VIEWPOINT WIDGET
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// DOÄAN VIEWPOINT WIDGET
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function ViewpointWidget({ quote }: { quote: string }) {
   return (
     <div className="bg-[#16213E60] backdrop-blur-sm rounded-2xl p-5 border border-[#C5A02220]">
@@ -73,7 +73,7 @@ export function ViewpointWidget({ quote }: { quote: string }) {
         Viewpoint
       </span>
       <blockquote className="mt-3 text-[15px] leading-relaxed italic text-[#EAEAEA]">
-        "{quote}"
+        {"\u201C"}{quote}{"\u201D"}
       </blockquote>
       <div className="mt-4 flex items-center gap-3">
         <div className="w-8 h-8 rounded-full bg-[#C5A022] flex items-center justify-center text-[#0A0A1A] text-xs font-bold">
@@ -88,23 +88,14 @@ export function ViewpointWidget({ quote }: { quote: string }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // RELATED ARTICLES WIDGET
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function RelatedArticlesWidget({ articles }: { articles: BlogArticle[] }) {
-  const CATEGORY_EMOJIS: Record<string, string> = {
-    maliyye: '💰',
-    kadr: '👥',
-    emeliyyat: '⚙️',
-    konsept: '💡',
-    acilis: '🚀',
-    satis: '📈',
-  };
-
   return (
     <div className="bg-[#16213E60] backdrop-blur-sm rounded-2xl p-5 border border-[#8892B015]">
       <h4 className="font-bold text-[15px] text-[#EAEAEA] mb-4 flex items-center gap-2">
-        📰 Bənzər Yazılar
+        📝 Bənzər Yazılar
       </h4>
       <div className="space-y-3">
         {articles.slice(0, 3).map(article => (
@@ -115,7 +106,7 @@ export function RelatedArticlesWidget({ articles }: { articles: BlogArticle[] })
           >
             {/* Thumbnail placeholder */}
             <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-[#C5A02215] border border-[#C5A02230] flex items-center justify-center">
-              <span className="text-xl">{CATEGORY_EMOJIS[article.category] || '📝'}</span>
+              <span className="text-xl">{CATEGORY_CONFIG[article.category]?.emoji || '📝'}</span>
             </div>
             
             {/* Text */}
@@ -134,9 +125,9 @@ export function RelatedArticlesWidget({ articles }: { articles: BlogArticle[] })
   );
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // SHARE BUTTONS (LEFT SIDEBAR)
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 interface ShareButtonsProps {
   title: string;
   url: string;
@@ -212,9 +203,9 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TABLE OF CONTENTS (LEFT SIDEBAR)
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 interface TOCItem {
   id: string;
   text: string;
@@ -268,9 +259,9 @@ export function TableOfContents({ content }: { content: string }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // AUTHOR CARD (BOTTOM OF ARTICLE)
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function AuthorCard({ author }: { author: string }) {
   return (
     <div className="bg-[#16213E] rounded-2xl p-6 border border-[#8892B015]">
@@ -286,7 +277,7 @@ export function AuthorCard({ author }: { author: string }) {
           </p>
           <div className="flex items-center gap-3 mt-3">
             <Link 
-              href="/about"
+              href="/haqqimizda"
               className="text-sm text-[#C5A022] hover:text-[#D4AF37] font-medium flex items-center gap-1"
             >
               Haqqında <ChevronRight className="w-4 h-4" />
@@ -298,9 +289,9 @@ export function AuthorCard({ author }: { author: string }) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TOOLKIT CTA (BOTTOM OF ARTICLE)
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function ToolkitCTA() {
   return (
     <div className="bg-[#16213E] rounded-2xl p-6 md:p-8 text-center border border-[#C5A02230]">
@@ -317,15 +308,15 @@ export function ToolkitCTA() {
         href="/b2b-panel/toolkit"
         className="inline-flex items-center gap-2 bg-[#C5A022] hover:bg-[#D4AF37] text-[#0A0A1A] px-6 py-3 rounded-xl font-bold transition-all"
       >
-        🧰 Pulsuz Toolkit-ə keç
+        ✨ Pulsuz Toolkit-ə keç
       </Link>
     </div>
   );
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // MOBILE SHARE BAR (FIXED BOTTOM)
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function MobileShareBar({ title, url }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
 
@@ -383,3 +374,4 @@ export function MobileShareBar({ title, url }: ShareButtonsProps) {
     </div>
   );
 }
+

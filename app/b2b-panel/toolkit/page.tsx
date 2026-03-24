@@ -7,9 +7,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
-  Calculator, TrendingUp, Users, Megaphone,
+  Calculator, Users, Megaphone,
   FileCheck, DollarSign, Award, Package,
-  ArrowRight, Play, Star, Sparkles, ChevronRight,
+  Play, Sparkles, ChevronRight,
   BarChart3, Clock, Target, Shield
 } from 'lucide-react';
 

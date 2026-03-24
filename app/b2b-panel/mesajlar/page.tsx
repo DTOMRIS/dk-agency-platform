@@ -7,18 +7,15 @@
 import { useState } from 'react';
 import {
   Inbox,
-  Send,
   Star,
   Search,
   Paperclip,
   Reply,
   Clock,
-  Circle,
   ArrowLeft,
   Mail,
   Plus,
   Sparkles,
-  Building2,
   Shield,
   Bell,
   FileText,
