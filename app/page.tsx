@@ -37,7 +37,7 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 gap-12">
             {NEWS_ITEMS.slice(0, 2).map((news) => (
-              <Link key={news.id} href={`/blog/pl-hesablama`} className="group block">
+              <Link key={news.id} href={`/blog/${news.slug}`} className="group block">
                 <div className="aspect-[16/9] rounded-[2.5rem] overflow-hidden mb-8 shadow-2xl shadow-slate-200/50">
                   <img src={news.image} alt={news.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                 </div>

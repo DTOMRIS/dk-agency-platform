@@ -9,8 +9,8 @@ import MegaMenu from './MegaMenu';
 const navItems = [
   { name: 'Ana səhifə', href: '/', hasMegaMenu: true },
   { name: 'Trendlər', href: '/haberler', hasMegaMenu: false },
-  { name: 'Blog', href: '/blog', hasMegaMenu: false },
-  { name: 'Ocaq', href: '/dashboard', hasMegaMenu: false },
+  { name: 'Bloq', href: '/blog', hasMegaMenu: false },
+  { name: 'İdarə Paneli', href: '/dashboard', hasMegaMenu: false },
 ];
 
 export default function Header() {

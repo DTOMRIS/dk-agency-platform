@@ -14,7 +14,7 @@ const tools = [
     colorBg: 'bg-red-50',
     colorText: 'text-red-500',
     metrics: ['Net mənfəət %', 'Prime cost', 'Trend analiz'],
-    href: '/b2b-panel/toolkit/pnl-simulator',
+    href: '/toolkit/pnl',
   },
   {
     icon: Calculator,
@@ -24,7 +24,7 @@ const tools = [
     colorBg: 'bg-amber-50',
     colorText: 'text-amber-600',
     metrics: ['Porsiya maya', 'Trim loss', 'Hədəf qiymət'],
-    href: '/b2b-panel/toolkit/food-cost',
+    href: '/toolkit/food-cost',
   },
   {
     icon: UtensilsCrossed,
@@ -34,7 +34,7 @@ const tools = [
     colorBg: 'bg-purple-50',
     colorText: 'text-purple-600',
     metrics: ['Star analiz', 'CM hesab', 'Aksiyon planı'],
-    href: '/b2b-panel/toolkit',
+    href: '/toolkit',
   },
 ];
 
