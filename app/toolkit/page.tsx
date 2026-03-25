@@ -6,21 +6,21 @@ import { Calculator, ClipboardList, BarChart3, ArrowRight } from 'lucide-react';
 const tools = [
   {
     title: 'Food Cost Hesablayici',
-    desc: 'Porsiya maya deyerini hesabla, ideal food cost faizini tap.',
+    desc: 'Porsiya maya dəyərini hesabla, ideal food cost faizini tap.',
     href: '/toolkit/food-cost',
     icon: Calculator,
     color: 'bg-emerald-500',
   },
   {
     title: 'P&L Simulyatoru',
-    desc: 'Ayliq gelir-xerc hesabati yarat, basabas noqtesini tap.',
+    desc: 'Aylıq gəlir-xərc hesabatı yarat, başabaş nöqtəsini tap.',
     href: '/toolkit/pnl',
     icon: BarChart3,
     color: 'bg-blue-500',
   },
   {
-    title: 'Restoran Acilis Checklist',
-    desc: '43 maddelik tam checklist — huquqi, mekan, menyu, kadr, marketinq.',
+    title: 'Restoran Açılış Checklist',
+    desc: '43 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.',
     href: '/toolkit/checklist',
     icon: ClipboardList,
     color: 'bg-amber-500',
@@ -33,13 +33,13 @@ export default function ToolkitPage() {
       <div className="bg-slate-950 py-20 text-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <span className="bg-brand-red text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-6 inline-block">
-            Pulsuz Aletler
+            Pulsuz Alətlər
           </span>
           <h1 className="text-4xl lg:text-6xl font-display font-black tracking-tighter mb-6">
             DK Agency Toolkit
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            Restoranini idarə etmek ucun pulsuz aletler. Food cost, P&L, checklist — hamisi bir yerde.
+            Restoranını idarə etmək üçün pulsuz alətlər. Food cost, P&L, checklist — hamısı bir yerdə.
           </p>
         </div>
       </div>
@@ -60,7 +60,7 @@ export default function ToolkitPage() {
               </h2>
               <p className="text-sm text-slate-500 mb-4">{tool.desc}</p>
               <div className="flex items-center gap-2 text-brand-red text-sm font-bold group-hover:gap-3 transition-all">
-                Basla <ArrowRight size={16} />
+                Başla <ArrowRight size={16} />
               </div>
             </Link>
           ))}

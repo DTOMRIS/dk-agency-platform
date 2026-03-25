@@ -27,11 +27,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between border-b border-slate-200 pb-8 mb-12">
             <div>
-              <h2 className="text-4xl font-display font-black text-slate-900 uppercase tracking-tighter">Blog & Analizler</h2>
-              <p className="text-slate-500 mt-2">Sektör profesyonelleri için derinlemesine incelemeler.</p>
+              <h2 className="text-4xl font-display font-black text-slate-900 uppercase tracking-tighter">Bloq & Analizlər</h2>
+              <p className="text-slate-500 mt-2">Sektor peşəkarları üçün dərin analizlər.</p>
             </div>
             <Link href="/blog" className="group flex items-center gap-2 bg-white border border-slate-200 px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest hover:bg-brand-red hover:text-white hover:border-brand-red transition-all">
-              Tümünü Gör <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              Hamısını gör <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
           

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle, Circle, ArrowLeft, Download, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle, Circle, ChevronLeft, Download, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface ChecklistItem {
   id: string;
@@ -133,16 +133,18 @@ export default function ChecklistPage() {
   return (
     <div className="min-h-screen bg-[#FAFAF8] pb-20">
       {/* Header */}
-      <div className="bg-slate-950 py-16 text-white">
-        <div className="max-w-3xl mx-auto px-4">
-          <Link href="/toolkit" className="inline-flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-6 transition-colors">
-            <ArrowLeft size={16} /> Toolkit
+      <div className="bg-slate-950 pt-8 pb-16 text-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link href="/toolkit" className="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-300 text-sm transition-colors mb-8 group">
+            <ChevronLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+            <span>Toolkit</span>
           </Link>
+          <span className="bg-amber-600 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-4 inline-block">Pulsuz Bələdçi</span>
           <h1 className="text-4xl font-display font-black tracking-tighter mb-4">
-            Restoran Acilis Checklist
+            Restoran Açılış Checklist
           </h1>
           <p className="text-slate-400 text-lg">
-            Restoran acmaq ucun lazim olan butun addimlar — huquqi, maliyye, menyudan marketinqe qeder.
+            Restoran açmaq üçün lazım olan bütün addımlar — hüquqi, maliyyə, menyudan marketinqə qədər.
           </p>
         </div>
       </div>
@@ -151,7 +153,7 @@ export default function ChecklistPage() {
       <div className="max-w-3xl mx-auto px-4 -mt-6">
         <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-bold text-slate-700">{checkedCount} / {totalItems} tamamlandi</span>
+            <span className="text-sm font-bold text-slate-700">{checkedCount} / {totalItems} tamamlandı</span>
             <span className="text-sm font-black text-brand-red">{progress}%</span>
           </div>
           <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
@@ -181,7 +183,7 @@ export default function ChecklistPage() {
                   <span className="text-2xl">{section.emoji}</span>
                   <div>
                     <h2 className="font-bold text-slate-900">{section.title}</h2>
-                    <p className="text-xs text-slate-400">{sectionChecked}/{section.items.length} tamamlandi</p>
+                    <p className="text-xs text-slate-400">{sectionChecked}/{section.items.length} tamamlandı</p>
                   </div>
                 </div>
                 {isExpanded ? <ChevronUp size={20} className="text-slate-400" /> : <ChevronDown size={20} className="text-slate-400" />}

@@ -94,31 +94,45 @@ export const AD_ITEMS: AdItem[] = [
 export const PARTNERS: Partner[] = [
   {
     id: 'p1',
-    name: 'Logistics Prime',
-    logo: 'https://picsum.photos/seed/truck/100/100',
-    category: 'Logistika',
-    description: 'Yüksək səviyyəli regional logistika tərəfdaşı.'
+    name: 'Wolt',
+    logo: 'https://ui-avatars.com/api/?name=Wolt&background=009de0&color=fff&bold=true&size=100',
+    category: 'Çatdırılma',
+    description: 'Qida çatdırılma platforması.'
   },
   {
     id: 'p2',
-    name: 'Tech Solutions',
-    logo: 'https://picsum.photos/seed/tech/100/100',
-    category: 'Proqram Təminatı',
-    description: 'Custom SaaS və API həlləri.'
+    name: 'Bolt Food',
+    logo: 'https://ui-avatars.com/api/?name=BF&background=34d186&color=fff&bold=true&size=100',
+    category: 'Çatdırılma',
+    description: 'Sürətli qida çatdırılma xidməti.'
   },
   {
     id: 'p3',
-    name: 'Capital Invest',
-    logo: 'https://picsum.photos/seed/money/100/100',
-    category: 'İnvestisiya',
-    description: 'Lahiyələrin maliyyələşdirilməsi və strateji planlama.'
+    name: 'iLoyal POS',
+    logo: 'https://ui-avatars.com/api/?name=iL&background=6366f1&color=fff&bold=true&size=100',
+    category: 'POS Sistemi',
+    description: 'Restoran idarəetmə və kassa proqramı.'
   },
   {
     id: 'p4',
-    name: 'Global HR',
-    logo: 'https://picsum.photos/seed/people/100/100',
-    category: 'Kadr Pipeline',
-    description: 'TQTA daxili mütəxəssis bazası.'
+    name: 'Bravo',
+    logo: 'https://ui-avatars.com/api/?name=Bravo&background=e11d48&color=fff&bold=true&size=100',
+    category: 'Tədarük',
+    description: 'Ərzaq və içki tədarükçüsü.'
+  },
+  {
+    id: 'p5',
+    name: 'AQTA',
+    logo: 'https://ui-avatars.com/api/?name=AQTA&background=0d9488&color=fff&bold=true&size=100',
+    category: 'Qida Təhlükəsizliyi',
+    description: 'Azərbaycan Qida Təhlükəsizliyi Agentliyi.'
+  },
+  {
+    id: 'p6',
+    name: 'Rahat Market',
+    logo: 'https://ui-avatars.com/api/?name=RM&background=f59e0b&color=fff&bold=true&size=100',
+    category: 'Tədarük',
+    description: 'Topdan ərzaq tədarükü.'
   }
 ];
 
