@@ -1,6 +1,3 @@
-// app/dashboard/layout.tsx
-// DK Agency Dashboard Layout
-
 'use client';
 
 import { useState } from 'react';
@@ -30,7 +27,7 @@ export default function DashboardLayout({
           <div className="w-6 h-6 bg-red-600 rounded flex items-center justify-center text-white font-bold text-xs">
             DK
           </div>
-          <span className="font-bold text-white text-sm">Dashboard</span>
+          <span className="font-bold text-white text-sm">Admin Panel</span>
         </div>
       </div>
 

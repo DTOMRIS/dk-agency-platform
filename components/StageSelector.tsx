@@ -9,7 +9,6 @@ interface Stage {
   emoji: string;
   title: string;
   description: string;
-  color: string;
   hoverBorder: string;
   link: string;
   count: string;
@@ -18,33 +17,29 @@ interface Stage {
 
 const stages: Stage[] = [
   {
-    emoji: '\u{1F3D7}',
+    emoji: '🏗',
     title: 'Başla',
     description:
       'Restoran açmaq istəyirsən? Checklist, rəsmi işlər, məkan seçimi, menyu planı.',
-    color: '#E94560',
     hoverBorder: 'hover:border-[#E94560]',
-    link: '/toolkit',
+    link: '/toolkit/checklist',
     count: '8 bələdçi',
     countClass: 'text-red-500',
   },
   {
-    emoji: '\u{1F4CA}',
+    emoji: '📊',
     title: 'Böyüt',
     description:
       'Mövcud restoranını optimallaşdır. P&L, food cost, menyu matrisi, AI dəstək.',
-    color: '#C5A022',
     hoverBorder: 'hover:border-[#C5A022]',
     link: '/toolkit',
     count: '6 alət',
     countClass: 'text-amber-600',
   },
   {
-    emoji: '\u{1F504}',
+    emoji: '🔄',
     title: 'Devir & Satış',
-    description:
-      'Restoran devri, ekipman satışı, franchise, ortaq axtarışı.',
-    color: '#8B5CF6',
+    description: 'Restoran devri, ekipman satışı, franchise, ortaq axtarışı.',
     hoverBorder: 'hover:border-[#8B5CF6]',
     link: '/ilanlar',
     count: '4 kateqoriya',
@@ -54,22 +49,19 @@ const stages: Stage[] = [
 
 export default function StageSelector() {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-14">
+    <section className="bg-white py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center lg:text-left flex-1"
+            className="flex-1 text-center lg:text-left"
           >
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-3">
+            <h2 className="mb-3 text-3xl font-display font-extrabold text-slate-900">
               Sən hansı mərhələdəsən?
             </h2>
-            <p className="text-base text-gray-500">
-              Hər mərhələ üçün pulsuz alət və bələdçi.
-            </p>
+            <p className="text-base text-gray-500">Hər mərhələ üçün pulsuz alət və bələdçi.</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -83,13 +75,12 @@ export default function StageSelector() {
               height={140}
               alt="Əməliyyat sistemi illüstrasiyası"
               loading="lazy"
-              className="hidden lg:block opacity-70 flex-shrink-0"
+              className="hidden flex-shrink-0 opacity-70 lg:block"
             />
           </motion.div>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {stages.map((stage, index) => (
             <motion.div
               key={stage.title}
@@ -100,18 +91,12 @@ export default function StageSelector() {
             >
               <Link
                 href={stage.link}
-                className={`block bg-white rounded-2xl border border-gray-200 p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${stage.hoverBorder}`}
+                className={`block rounded-2xl border border-gray-200 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${stage.hoverBorder}`}
               >
-                <div className="text-3xl mb-4">{stage.emoji}</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">
-                  {stage.title}
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-4">
-                  {stage.description}
-                </p>
-                <div
-                  className={`flex items-center gap-1 text-sm font-semibold ${stage.countClass}`}
-                >
+                <div className="mb-4 text-3xl">{stage.emoji}</div>
+                <h3 className="mb-2 text-xl font-bold text-slate-900">{stage.title}</h3>
+                <p className="mb-4 text-sm leading-relaxed text-gray-500">{stage.description}</p>
+                <div className={`flex items-center gap-1 text-sm font-semibold ${stage.countClass}`}>
                   {stage.count} <ChevronRight size={14} />
                 </div>
               </Link>

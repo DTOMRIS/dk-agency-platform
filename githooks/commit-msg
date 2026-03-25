@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -eu
+
+node scripts/verify-task-card.mjs --commit-msg "$1"

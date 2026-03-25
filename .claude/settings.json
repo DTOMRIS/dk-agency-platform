@@ -1,0 +1,16 @@
+{
+  "protectedFiles": [
+    "app/layout.tsx",
+    "app/globals.css",
+    "components/layout/Header.tsx",
+    "components/layout/Footer.tsx",
+    "components/layout/MobileBottomNav.tsx",
+    "app/page.tsx",
+    "app/haberler/page.tsx",
+    "app/blog/page.tsx",
+    "app/b2b-panel/page.tsx",
+    "next.config.ts",
+    "package.json",
+    "tsconfig.json"
+  ]
+}

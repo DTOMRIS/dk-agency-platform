@@ -34,36 +34,36 @@ interface MenuItemData {
 }
 
 const baslaItems: MenuItemData[] = [
-  { icon: ClipboardList, label: 'Acilis Checklist', desc: 'Addim-addim acilis plani', href: '/basla/checklist' },
-  { icon: FileText, label: 'Resmi Isler', desc: 'ASAN, AQTA, vergi', href: '/basla/resmi-isler' },
-  { icon: MapPin, label: 'Mekan Secimi', desc: 'Lokasiya, icare', href: '/basla/mekan' },
-  { icon: Palette, label: 'Konsept Hazirlama', desc: 'Hedef kutle, brend', href: '/basla/konsept' },
-  { icon: UtensilsCrossed, label: 'Menyu Muhendisliyi', desc: 'Qiymetlendirme, star analiz', href: '/basla/menu' },
-  { icon: Megaphone, label: 'Marketing', desc: 'Acilis kampaniyasi', href: '/basla/marketing' },
-  { icon: Wrench, label: 'Ekipman Kataloqu', desc: '500+ pesekar avadanliq', href: '/basla/ekipman' },
-  { icon: Paintbrush, label: 'Kurumsal Kimlik', desc: 'Logo, reng, numuneler', href: '/basla/kurumsal-kimlik' },
+  { icon: ClipboardList, label: 'Açılış Checklist', desc: 'Addım-addım açılış planı', href: '/toolkit/checklist' },
+  { icon: FileText, label: 'Rəsmi işlər', desc: 'ASAN, AQTA, vergi', href: '/basla/resmi-isler' },
+  { icon: MapPin, label: 'Məkan seçimi', desc: 'Lokasiya, icarə', href: '/basla/mekan' },
+  { icon: Palette, label: 'Konsept hazırlama', desc: 'Hədəf kütlə, brend', href: '/basla/konsept' },
+  { icon: UtensilsCrossed, label: 'Menyu mühəndisliyi', desc: 'Qiymətləndirmə, star analiz', href: '/toolkit/menu-matrix' },
+  { icon: Megaphone, label: 'Marketinq', desc: 'Açılış kampaniyası', href: '/basla/marketing' },
+  { icon: Wrench, label: 'Ekipman kataloqu', desc: '500+ peşəkar avadanlıq', href: '/basla/ekipman' },
+  { icon: Paintbrush, label: 'Korporativ kimlik', desc: 'Loqo, rəng, nümunələr', href: '/basla/kurumsal-kimlik' },
 ];
 
 const boyutItems: MenuItemData[] = [
-  { icon: BarChart3, label: 'Menfeet-Zerer (P&L)', desc: 'Gelir-xerc analizi', href: '/b2b-panel/toolkit/pnl-simulator' },
-  { icon: Calculator, label: 'Erzaq Maya Deyeri', desc: 'Porsiya maya hesabla', href: '/b2b-panel/toolkit/food-cost' },
-  { icon: Scale, label: 'Basabas Analizi', desc: 'Break-even noqtesi', href: '/b2b-panel/toolkit/basabas' },
-  { icon: TrendingUp, label: 'Bazar Qiymetleri', desc: 'Heftelik erzaq qiymetleri', href: '/b2b-panel/toolkit/qiymetler' },
-  { icon: CheckSquare, label: 'Emeliyyat Checklist', desc: 'Gundelik, heftelik', href: '/b2b-panel/toolkit/checklist' },
-  { icon: Bot, label: 'KAZAN AI', desc: 'AI konsultant', href: '/kazan-ai', badge: 'TEZLIKLE' },
+  { icon: BarChart3, label: 'Mənfəət-zərər (P&L)', desc: 'Gəlir-xərc analizi', href: '/toolkit/pnl' },
+  { icon: Calculator, label: 'Ərzaq maya dəyəri', desc: 'Porsiya maya hesabla', href: '/toolkit/food-cost' },
+  { icon: Scale, label: 'Başabaş analizi', desc: 'Break-even nöqtəsi', href: '/toolkit/basabas' },
+  { icon: TrendingUp, label: 'Bazar qiymətləri', desc: 'Həftəlik ərzaq qiymətləri', href: '/b2b-panel/toolkit/inventory' },
+  { icon: CheckSquare, label: 'Əməliyyat checklist', desc: 'Gündəlik, həftəlik', href: '/toolkit/checklist' },
+  { icon: Bot, label: 'KAZAN AI', desc: 'AI konsultant', href: '/kazan-ai', badge: 'TEZLİKLƏ' },
 ];
 
 const devirItems: { icon: LucideIcon; label: string; href: string }[] = [
-  { icon: Building2, label: 'Restoran Devri', href: '/b2b-panel/ilanlarim?tur=devir' },
-  { icon: Package, label: 'Ekipman Satisi', href: '/b2b-panel/ilanlarim?tur=ekipman' },
+  { icon: Building2, label: 'Restoran devri', href: '/b2b-panel/ilanlarim?tur=devir' },
+  { icon: Package, label: 'Ekipman satışı', href: '/b2b-panel/ilanlarim?tur=ekipman' },
   { icon: Network, label: 'Franchise', href: '/b2b-panel/ilanlarim?tur=franchise' },
-  { icon: UserSearch, label: 'Isletmeci Tap', href: '/b2b-panel/ilanlarim?tur=isletmeci' },
+  { icon: UserSearch, label: 'İşlətmeci tap', href: '/b2b-panel/ilanlarim?tur=isletmeci' },
 ];
 
 const popularItems = [
-  { label: 'P&L Hesablama', href: '/b2b-panel/toolkit/pnl-simulator' },
-  { label: 'Acilis Checklist', href: '/basla/checklist' },
-  { label: 'Food Cost', href: '/b2b-panel/toolkit/food-cost' },
+  { label: 'P&L hesablama', href: '/toolkit/pnl' },
+  { label: 'Açılış checklist', href: '/toolkit/checklist' },
+  { label: 'Food Cost', href: '/toolkit/food-cost' },
 ];
 
 export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
@@ -75,61 +75,57 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-full left-1/2 -translate-x-1/2 bg-white border border-[#E5E7EB] rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-8 max-w-[880px] w-[90vw] z-50"
+          className="absolute left-1/2 top-full z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[#E5E7EB] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
           onMouseLeave={onClose}
         >
-          {/* Top section */}
           <div className="flex items-start justify-between">
             <div>
-              <p className="font-bold text-gray-900">DK Agency Platformasi</p>
-              <p className="text-sm text-gray-500 mt-0.5">
-                Restoranini planla, idare et, boyut — bir platformada.
+              <p className="font-bold text-gray-900">DK Agency Platforması</p>
+              <p className="mt-0.5 text-sm text-gray-500">
+                Restoranını planla, idarə et, böyüt — bir platformada.
               </p>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex shrink-0 items-center gap-2">
               <Link
-                href="/b2b-panel/toolkit"
-                className="flex items-center gap-2 border border-gray-200 rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                href="/toolkit"
+                className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
               >
                 <Wrench size={14} />
-                Butun aletler
+                Bütün alətlər
               </Link>
               <Link
                 href="/test"
-                className="flex items-center gap-2 border border-gray-200 rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
               >
                 <Stethoscope size={14} />
-                Saglamliq testi
+                Sağlamlıq testi
               </Link>
             </div>
           </div>
 
-          {/* Divider */}
-          <div className="h-px bg-gray-100 my-6" />
+          <div className="my-6 h-px bg-gray-100" />
 
-          {/* Two column grid */}
           <div className="grid grid-cols-2 gap-8">
-            {/* BASLA column */}
             <div>
               <div className="mb-3">
-                <p className="text-xs font-extrabold text-[#E94560] uppercase tracking-widest">
-                  BASLA
+                <p className="text-xs font-extrabold uppercase tracking-widest text-[#E94560]">
+                  Başla
                 </p>
-                <div className="w-6 h-0.5 bg-[#E94560] mt-1" />
+                <div className="mt-1 h-0.5 w-6 bg-[#E94560]" />
               </div>
               <div className="flex flex-col gap-0.5">
                 {baslaItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="group flex items-start gap-3 p-2 rounded-lg hover:bg-red-50/50 transition-colors"
+                    className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-red-50/50"
                   >
                     <item.icon
                       size={18}
-                      className="text-gray-400 group-hover:text-[#E94560] transition-colors mt-0.5 shrink-0"
+                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#E94560]"
                     />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 group-hover:text-[#E94560] transition-colors">
+                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#E94560]">
                         {item.label}
                       </p>
                       <p className="text-xs text-gray-400">{item.desc}</p>
@@ -139,31 +135,30 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
               </div>
             </div>
 
-            {/* BOYUT column */}
             <div>
               <div className="mb-3">
-                <p className="text-xs font-extrabold text-[#C5A022] uppercase tracking-widest">
-                  BOYUT
+                <p className="text-xs font-extrabold uppercase tracking-widest text-[#C5A022]">
+                  Böyüt
                 </p>
-                <div className="w-6 h-0.5 bg-[#C5A022] mt-1" />
+                <div className="mt-1 h-0.5 w-6 bg-[#C5A022]" />
               </div>
               <div className="flex flex-col gap-0.5">
                 {boyutItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="group flex items-start gap-3 p-2 rounded-lg hover:bg-amber-50/50 transition-colors"
+                    className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-amber-50/50"
                   >
                     <item.icon
                       size={18}
-                      className="text-gray-400 group-hover:text-[#C5A022] transition-colors mt-0.5 shrink-0"
+                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#C5A022]"
                     />
                     <div className="flex items-center gap-2">
                       <div>
-                        <p className="text-sm font-semibold text-gray-900 group-hover:text-[#C5A022] transition-colors">
+                        <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#C5A022]">
                           {item.label}
                           {item.badge && (
-                            <span className="ml-2 inline-block bg-amber-100 text-amber-800 text-[10px] font-bold rounded-full px-2 align-middle">
+                            <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 text-[10px] font-bold text-amber-800 align-middle">
                               {item.badge}
                             </span>
                           )}
@@ -177,20 +172,18 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
             </div>
           </div>
 
-          {/* Divider */}
-          <div className="h-px bg-gray-100 my-6" />
+          <div className="my-6 h-px bg-gray-100" />
 
-          {/* DEVIR & SATIS */}
           <div>
-            <p className="text-xs font-extrabold text-[#8B5CF6] uppercase tracking-widest mb-3">
-              DEVIR & SATIS
+            <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[#8B5CF6]">
+              Devir & Satış
             </p>
             <div className="flex flex-wrap gap-1">
               {devirItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex items-center gap-2 text-sm text-gray-500 hover:text-[#8B5CF6] hover:bg-purple-50/50 px-3 py-2 rounded-lg transition-colors"
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[#8B5CF6]"
                 >
                   <item.icon size={16} />
                   {item.label}
@@ -199,19 +192,14 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
             </div>
           </div>
 
-          {/* Divider */}
-          <div className="h-px bg-gray-100 my-4" />
+          <div className="my-4 h-px bg-gray-100" />
 
-          {/* Popular */}
           <div className="flex items-center gap-2 text-xs">
-            <span className="text-[#E94560] font-bold">Populyar:</span>
-            {popularItems.map((item, idx) => (
+            <span className="font-bold text-[#E94560]">Populyar:</span>
+            {popularItems.map((item, index) => (
               <span key={item.href} className="flex items-center gap-2">
-                {idx > 0 && <span className="text-gray-300">&middot;</span>}
-                <Link
-                  href={item.href}
-                  className="text-gray-500 hover:text-[#E94560] transition-colors"
-                >
+                {index > 0 && <span className="text-gray-300">&middot;</span>}
+                <Link href={item.href} className="text-gray-500 transition-colors hover:text-[#E94560]">
                   {item.label}
                 </Link>
               </span>
