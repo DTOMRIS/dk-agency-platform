@@ -22,13 +22,13 @@ export default function PnLPage() {
   const pct = (val: number) => revenue > 0 ? ((val / revenue) * 100).toFixed(1) : '0.0';
 
   const rows = [
-    { label: 'Umumi Satis (Revenue)', value: revenue, setter: setRevenue, isRevenue: true },
-    { label: 'Food Cost (Erzaq)', value: foodCost, setter: setFoodCost },
-    { label: 'Isci Xercleri (Labor)', value: laborCost, setter: setLaborCost },
-    { label: 'Icare (Rent)', value: rent, setter: setRent },
+    { label: 'Ümumi Satış (Revenue)', value: revenue, setter: setRevenue, isRevenue: true },
+    { label: 'Food Cost (Ərzaq)', value: foodCost, setter: setFoodCost },
+    { label: 'İşçi Xərcləri (Labor)', value: laborCost, setter: setLaborCost },
+    { label: 'İcarə (Rent)', value: rent, setter: setRent },
     { label: 'Kommunal (Utilities)', value: utilities, setter: setUtilities },
     { label: 'Marketinq', value: marketing, setter: setMarketing },
-    { label: 'Diger Xercler', value: other, setter: setOther },
+    { label: 'Digər Xərclər', value: other, setter: setOther },
   ];
 
   return (
@@ -42,7 +42,7 @@ export default function PnLPage() {
             P&L Simulyatoru
           </h1>
           <p className="text-slate-400 text-lg">
-            Ayliq gelir-xerc hesabati. Xalis menfeet ve prime cost-u izle.
+            Aylıq gəlir-xərc hesabatı. Xalis mənfəət və prime cost-u izlə.
           </p>
         </div>
       </div>
@@ -51,7 +51,7 @@ export default function PnLPage() {
         {/* KPI Cards */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-center">
-            <p className="text-xs text-slate-400 uppercase tracking-widest mb-1">Xalis Menfeet</p>
+            <p className="text-xs text-slate-400 uppercase tracking-widest mb-1">Xalis Mənfəət</p>
             <p className={`text-2xl font-black ${netProfit >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
               {netProfit.toLocaleString()} AZN
             </p>
@@ -65,14 +65,14 @@ export default function PnLPage() {
             <p className={`text-2xl font-black ${primeCostPct <= 65 ? 'text-emerald-600' : 'text-red-600'}`}>
               {primeCostPct.toFixed(1)}%
             </p>
-            <p className="text-xs text-slate-400 mt-1">Hedefe: &le;65%</p>
+            <p className="text-xs text-slate-400 mt-1">Hədəf: &le;65%</p>
           </div>
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm text-center">
             <p className="text-xs text-slate-400 uppercase tracking-widest mb-1">Food Cost %</p>
             <p className={`text-2xl font-black ${revenue > 0 && (foodCost/revenue*100) <= 32 ? 'text-emerald-600' : 'text-amber-600'}`}>
               {pct(foodCost)}%
             </p>
-            <p className="text-xs text-slate-400 mt-1">Hedefe: &le;32%</p>
+            <p className="text-xs text-slate-400 mt-1">Hədəf: &le;32%</p>
           </div>
         </div>
 
@@ -80,7 +80,7 @@ export default function PnLPage() {
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="grid grid-cols-12 bg-slate-900 text-white text-xs font-bold uppercase tracking-widest px-6 py-3">
             <div className="col-span-5">Kateqoriya</div>
-            <div className="col-span-4">Mebleq (AZN)</div>
+            <div className="col-span-4">Məbləğ (AZN)</div>
             <div className="col-span-3 text-right">Faiz (%)</div>
           </div>
           {rows.map((row) => (
@@ -101,7 +101,7 @@ export default function PnLPage() {
           ))}
           {/* Total Row */}
           <div className="grid grid-cols-12 items-center px-6 py-4 bg-slate-50 font-bold">
-            <div className="col-span-5 text-sm text-slate-900">Xalis Menfeet</div>
+            <div className="col-span-5 text-sm text-slate-900">Xalis Mənfəət</div>
             <div className={`col-span-4 text-lg ${netProfit >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
               {netProfit.toLocaleString()} AZN
             </div>
