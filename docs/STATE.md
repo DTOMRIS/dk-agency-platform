@@ -3,16 +3,34 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-03-23T08:17:04.869Z
-- BuildStatus: UNKNOWN
+- GeneratedAt: 2026-03-25T20:13:48.161Z
+- BuildStatus: PASS
 
-## Routes (52)
-- /
-- /about
+## Routes (58)
+- /[locale]
+- /[locale]/about
+- /[locale]/blog
+- /[locale]/blog/[slug]
+- /[locale]/contact
+- /[locale]/cookies
+- /[locale]/elaqe
+- /[locale]/haberler
+- /[locale]/haberler/[slug]
+- /[locale]/haqqimizda
+- /[locale]/ilanlar
+- /[locale]/privacy
+- /[locale]/randevu
+- /[locale]/terefdashlar
+- /[locale]/terms
+- /[locale]/toolkit
+- /[locale]/toolkit/basabas
+- /[locale]/toolkit/checklist
+- /[locale]/toolkit/food-cost
+- /[locale]/toolkit/menu-matrix
+- /[locale]/toolkit/pnl
 - /auth/forgot-password
 - /auth/login
 - /auth/register
-- /az
 - /b2b-panel
 - /b2b-panel/ilanlarim
 - /b2b-panel/mesajlar
@@ -27,10 +45,6 @@ Auto-generated. Do not edit manually.
 - /b2b-panel/toolkit/talent-up
 - /b2b-panel/toolkit/workforce
 - /b2b-panel/yeni-ilan
-- /blog
-- /blog/[slug]
-- /contact
-- /cookies
 - /dashboard
 - /dashboard/ayarlar
 - /dashboard/b2b-yonetimi
@@ -46,22 +60,26 @@ Auto-generated. Do not edit manually.
 - /dashboard/raporlar
 - /dashboard/roller
 - /dashboard/trends
-- /elaqe
-- /en
-- /haberler
-- /haberler/[slug]
-- /haqqimizda
 - /kazan-ai
 - /news
-- /privacy
-- /randevu
-- /terefdashlar
-- /terms
-- /tr
+- /toolkit/basabas
+- /toolkit/menu-matrix
 - /xeberler
 
-## API Routes (0)
-
+## API Routes (13)
+- /api/admin/news/approve
+- /api/admin/news/pending
+- /api/admin/news/reject
+- /api/auth
+- /api/health
+- /api/news
+- /api/news/[slug]
+- /api/newsletter/digest
+- /api/orchestrator
+- /api/rss/haberler
+- /api/rss/xeberler
+- /api/rss/xeberler/[locale]
+- /api/telegram/post
 
 ## i18n Namespaces (0)
 - none detected
