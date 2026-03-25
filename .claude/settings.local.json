@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(npx next build)",
+      "Read(//c/codelar/dk-agency-platform/app//**)",
+      "Read(//c/codelar/dk-agency-platform/components//**)",
+      "Read(//c/codelar/dk-agency-platform/lib/data//**)",
+      "Read(//c/codelar/dk-agency-platform/**)"
+    ]
+  }
+}

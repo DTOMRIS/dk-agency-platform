@@ -9,7 +9,7 @@ const tools = [
   {
     icon: BarChart3,
     title: 'P&L Hesablama',
-    desc: 'Gəlir, food cost, labor cost, overhead daxil et — net mənfəət avtomatik. AZN dəstəyi, PDF export.',
+    desc: 'Gəlir, food cost, labor cost, overhead daxil et — net mənfəət avtomatik hesablanır.',
     color: '#E94560',
     colorBg: 'bg-red-50',
     colorText: 'text-red-500',
@@ -18,8 +18,8 @@ const tools = [
   },
   {
     icon: Calculator,
-    title: 'Food Cost Kalkulyator',
-    desc: 'Resept kartı yarat — ingrediyent, miqdar, qiymət. Trim loss dəstəyi ilə real food cost.',
+    title: 'Food Cost Kalkulyatoru',
+    desc: 'Resept kartı yarat, miqdar və qiymət daxil et, porsiya maya dəyərini dərhal gör.',
     color: '#C5A022',
     colorBg: 'bg-amber-50',
     colorText: 'text-amber-600',
@@ -29,29 +29,28 @@ const tools = [
   {
     icon: UtensilsCrossed,
     title: 'Menyu Matrisi',
-    desc: 'Hər yeməyi Ulduz/At/Puzzle/İt kateqoriyasına ayır. Hansını saxla, hansını öldür — data ilə.',
+    desc: 'Hər yeməyi Ulduz, At, Puzzle, İt kateqoriyasına ayır və menyunu data ilə idarə et.',
     color: '#8B5CF6',
     colorBg: 'bg-purple-50',
     colorText: 'text-purple-600',
     metrics: ['Star analiz', 'CM hesab', 'Aksiyon planı'],
-    href: '/toolkit',
+    href: '/toolkit/menu-matrix',
   },
 ];
 
 export default function ToolkitShowcase() {
   return (
-    <section id="toolkit" className="py-20 bg-[#F9FAFB]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-12">
-          <div className="text-center md:text-left flex-1">
-            <div className="text-xs font-bold text-amber-600 uppercase tracking-widest mb-2">
+    <section id="toolkit" className="bg-[#F9FAFB] py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 flex items-center justify-between">
+          <div className="flex-1 text-center md:text-left">
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-amber-600">
               Pulsuz Toolkit
             </div>
-            <h2 className="text-3xl font-display font-extrabold text-slate-900 mb-3">
+            <h2 className="mb-3 text-3xl font-display font-extrabold text-slate-900">
               Hər qram hesablansın, heç nə israf olmasın
             </h2>
-            <p className="text-base text-gray-500 max-w-2xl">
+            <p className="max-w-2xl text-base text-gray-500">
               Bizim mədəniyyətdə çörək yerdə qalmaz. Bu alətlər hər qəpiyin hesabını tutur.
             </p>
           </div>
@@ -61,52 +60,43 @@ export default function ToolkitShowcase() {
             height={150}
             alt="Menyu mühəndisliyi illüstrasiyası"
             loading="lazy"
-            className="hidden md:block opacity-80 flex-shrink-0"
+            className="hidden flex-shrink-0 opacity-80 md:block"
           />
         </div>
 
-        {/* 3 Card Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {tools.map((t, i) => {
-            const Icon = t.icon;
+        <div className="grid gap-6 md:grid-cols-3">
+          {tools.map((tool, index) => {
+            const Icon = tool.icon;
             return (
               <motion.div
-                key={t.title}
+                key={tool.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="bg-white rounded-2xl p-7 border border-gray-200 hover:shadow-lg transition-all duration-300"
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="rounded-2xl border border-gray-200 bg-white p-7 transition-all duration-300 hover:shadow-lg"
               >
-                {/* Icon */}
-                <div
-                  className={`w-11 h-11 rounded-xl ${t.colorBg} flex items-center justify-center mb-5`}
-                >
-                  <Icon size={22} style={{ color: t.color }} />
+                <div className={`mb-5 flex h-11 w-11 items-center justify-center rounded-xl ${tool.colorBg}`}>
+                  <Icon size={22} style={{ color: tool.color }} />
                 </div>
 
-                {/* Title */}
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{t.title}</h3>
+                <h3 className="mb-2 text-lg font-bold text-slate-900">{tool.title}</h3>
+                <p className="mb-5 text-sm leading-relaxed text-gray-500">{tool.desc}</p>
 
-                {/* Description */}
-                <p className="text-sm text-gray-500 leading-relaxed mb-5">{t.desc}</p>
-
-                {/* Metric badges */}
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {t.metrics.map((m) => (
+                <div className="mb-5 flex flex-wrap gap-1.5">
+                  {tool.metrics.map((metric) => (
                     <span
-                      key={m}
-                      className={`text-[11px] font-semibold ${t.colorText} ${t.colorBg} rounded-md px-2.5 py-1`}
+                      key={metric}
+                      className={`rounded-md px-2.5 py-1 text-[11px] font-semibold ${tool.colorText} ${tool.colorBg}`}
                     >
-                      {m}
+                      {metric}
                     </span>
                   ))}
                 </div>
 
-                {/* CTA */}
                 <Link
-                  href={t.href}
-                  className={`inline-flex items-center gap-1.5 text-sm font-semibold ${t.colorText} hover:underline`}
+                  href={tool.href}
+                  className={`inline-flex items-center gap-1.5 text-sm font-semibold ${tool.colorText} hover:underline`}
                 >
                   Pulsuz istifadə et <ArrowRight size={14} />
                 </Link>

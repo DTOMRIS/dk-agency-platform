@@ -5,7 +5,7 @@ import { Calculator, ClipboardList, BarChart3, ArrowRight, UtensilsCrossed, Targ
 
 const tools = [
   {
-    title: 'Food Cost Hesablayici',
+    title: 'Food Cost Hesablayıcı',
     desc: 'Porsiya maya dəyərini hesabla, ideal food cost faizini tap.',
     href: '/toolkit/food-cost',
     icon: Calculator,
