@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Calculator, ClipboardList, BarChart3, ArrowRight } from 'lucide-react';
+import { Calculator, ClipboardList, BarChart3, ArrowRight, UtensilsCrossed, Target } from 'lucide-react';
 
 const tools = [
   {
@@ -23,6 +23,20 @@ const tools = [
     desc: '43 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.',
     href: '/toolkit/checklist',
     icon: ClipboardList,
+    color: 'bg-rose-500',
+  },
+  {
+    title: 'Menyu Matrisi',
+    desc: 'Yeməkləri Ulduz, At, Puzzle, İt kateqoriyalarına ayır — menyunu data ilə idarə et.',
+    href: '/toolkit/menu-matrix',
+    icon: UtensilsCrossed,
+    color: 'bg-purple-500',
+  },
+  {
+    title: 'Başabaş Nöqtəsi',
+    desc: 'Aylıq minimum satış, günlük müştəri sayı və təhlükəsizlik marjası hesabla.',
+    href: '/toolkit/basabas',
+    icon: Target,
     color: 'bg-amber-500',
   },
 ];
@@ -44,8 +58,8 @@ export default function ToolkitPage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 -mt-10">
-        <div className="grid md:grid-cols-3 gap-6">
+      <div className="max-w-5xl mx-auto px-4 -mt-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {tools.map((tool) => (
             <Link
               key={tool.href}
