@@ -6,40 +6,40 @@ import Link from 'next/link';
 
 const footerColumns = [
   {
-    title: 'Aletler',
+    title: 'Alətlər',
     links: [
-      { label: 'P&L Hesablama', href: '/b2b-panel/toolkit/pnl-simulator' },
-      { label: 'Food Cost', href: '/b2b-panel/toolkit/food-cost' },
-      { label: 'Menyu Matrisi', href: '/b2b-panel/toolkit' },
-      { label: 'Basabas', href: '/b2b-panel/toolkit/basabas' },
+      { label: 'P&L Hesablama', href: '/toolkit/pnl' },
+      { label: 'Food Cost', href: '/toolkit/food-cost' },
+      { label: 'Menyu Matrisi', href: '/toolkit' },
+      { label: 'Başabaş', href: '/toolkit' },
       { label: 'KAZAN AI', href: '/kazan-ai' },
     ],
   },
   {
-    title: 'Basla',
+    title: 'Başla',
     links: [
-      { label: 'Acilis Checklist', href: '/basla/checklist' },
-      { label: 'Resmi Isler', href: '/basla/resmi-isler' },
-      { label: 'Mekan Secimi', href: '/basla/mekan' },
-      { label: 'Menyu Muhendisliyi', href: '/basla/menu' },
+      { label: 'Açılış Checklist', href: '/toolkit/checklist' },
+      { label: 'Rəsmi İşlər', href: '/toolkit' },
+      { label: 'Məkan Seçimi', href: '/toolkit' },
+      { label: 'Menyu Mühəndisliyi', href: '/toolkit' },
     ],
   },
   {
     title: 'Resurslar',
     links: [
-      { label: 'Blog', href: '/blog' },
-      { label: 'Trendler', href: '/haberler' },
-      { label: 'HAP Bilgiler', href: '/blog' },
+      { label: 'Bloq', href: '/blog' },
+      { label: 'Trendlər', href: '/haberler' },
+      { label: 'HAP Bilgilər', href: '/blog' },
       { label: 'DK Digest', href: '/news' },
     ],
   },
   {
-    title: 'Sirket',
+    title: 'Şirkət',
     links: [
-      { label: 'Haqqimizda', href: '/haqqimizda' },
-      { label: 'Danismanlik', href: '/elaqe' },
-      { label: 'Elaqe', href: '/elaqe' },
-      { label: 'Sedd Rozeti', href: '/haqqimizda' },
+      { label: 'Haqqımızda', href: '/haqqimizda' },
+      { label: 'Məsləhət', href: '/elaqe' },
+      { label: 'Əlaqə', href: '/elaqe' },
+      { label: 'Sədd Rozeti', href: '/haqqimizda' },
     ],
   },
 ];
@@ -58,7 +58,7 @@ export function Footer() {
               <span className="text-sm font-bold text-slate-900">DK Agency</span>
             </div>
             <p className="text-sm text-gray-500 max-w-[240px] leading-relaxed">
-              Ustaligin nisani, dijitalin seddi. Azerbaycanin ilk AI-destekli HoReCa platformasi.
+              Ustalığın nişanı, dijitalın səddi. Azərbaycanın ilk AI-dəstəkli HoReCa platforması.
             </p>
           </div>
 
@@ -87,14 +87,14 @@ export function Footer() {
         {/* Bottom */}
         <div className="border-t border-gray-200 pt-6 mt-12 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-400">
-            &copy; 2026 DK Agency. Butun huquqlar qorunur.
+            &copy; 2026 DK Agency. Bütün hüquqlar qorunur.
           </p>
           <Link
-            href="https://tqta.az"
+            href="https://dkagency.az"
             target="_blank"
             className="text-xs text-amber-600 font-semibold hover:text-amber-700 transition-colors"
           >
-            Powered by TQTA.az
+            Powered by DK Agency
           </Link>
         </div>
       </div>

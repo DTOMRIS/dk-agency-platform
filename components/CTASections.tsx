@@ -14,17 +14,17 @@ export function DoganNote() {
 
         {/* Quote */}
         <blockquote className="text-xl sm:text-2xl font-medium text-slate-900 italic leading-relaxed mb-5">
-          &ldquo;700 il evvel bir usta, ciraqinin beline Sedd baglayanda &mdash; bu sadece bir kumas parcasi deyildi. O dukanin keyfiyyetine verilen bir namus sozu idi. Bu gun biz, HoReCa dunyasinda eyni yemini dijital ucun edirik.&rdquo;
+          &ldquo;700 il əvvəl bir usta, çırağının belinə Şədd bağlayanda &mdash; bu sadəcə bir qumaş parçası deyildi. O dükanın keyfiyyətinə verilən bir namus sözü idi. Bu gün biz, HoReCa dünyasında eyni yemini dijital üçün edirik.&rdquo;
         </blockquote>
 
         {/* Name */}
         <div className="text-sm text-gray-500">
-          <span className="font-semibold text-slate-900">Dogan Tomris</span> &mdash; DK Agency qurucusu
+          <span className="font-semibold text-slate-900">Doğan Tomris</span> &mdash; DK Agency qurucusu
         </div>
 
         {/* Cavanmerdlik */}
         <div className="text-xs text-amber-600 italic mt-2">
-          Biz bu sektorun Cavanmerdleriyik.
+          Biz bu sektorun Cavənmərdləriyik.
         </div>
       </div>
     </section>
@@ -102,7 +102,7 @@ export function JoinCTA() {
                     <input type="email" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-xs font-bold focus:outline-none focus:border-brand-red transition-colors" placeholder="elvin@agency.az" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Şirkət / Lahiyə Adı</label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Şirkət / Layihə Adı</label>
                     <input type="text" className="w-full bg-slate-50 border border-slate-100 rounded-xl px-5 py-4 text-xs font-bold focus:outline-none focus:border-brand-red transition-colors" placeholder="Məs: Grand Holding" />
                   </div>
                   <button className="w-full bg-brand-red text-white py-5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-rose-600 transition-all shadow-xl shadow-brand-red/20 flex items-center justify-center gap-3 active:scale-95">

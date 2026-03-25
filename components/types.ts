@@ -1,0 +1,46 @@
+export interface NewsItem {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  type: 'News' | 'Opinion' | 'Appointment' | 'Announcement' | 'Report';
+  date: string;
+  image: string;
+  excerpt: string;
+  author?: {
+    name: string;
+    role: string;
+    avatar?: string;
+  };
+  source?: string;
+}
+
+export interface AdItem {
+  id: string;
+  title: string;
+  type: 'Lahiyə' | 'Avadanlıq' | 'İnvestisiya' | 'İcarə' | 'B2B Tərəfdaş';
+  category: string;
+  price?: string;
+  location: string;
+  date: string;
+  image: string;
+}
+
+export interface Partner {
+  id: string;
+  name: string;
+  logo: string;
+  category: string;
+  description: string;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  category: string;
+  author: string;
+  date: string;
+  image: string;
+  content?: string;
+  slug?: string;
+}

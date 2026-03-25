@@ -16,8 +16,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'DK AGENCY | Hospitality Insights & Intelligence',
-  description: 'The leading source for hospitality industry news, insights, and analysis in Azerbaijan.',
+  title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
+  description: 'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HORECA sektoru üçün.',
 };
 
 export default function RootLayout({
