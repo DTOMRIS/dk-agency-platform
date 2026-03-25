@@ -4,7 +4,25 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import MegaMenu from './MegaMenu';
+
+const locales = ['az', 'tr', 'en'] as const;
+
+function useCurrentLocale() {
+  const pathname = usePathname();
+  const segment = pathname.split('/')[1];
+  if (segment === 'tr' || segment === 'en') return segment;
+  return 'az';
+}
+
+function getLocalePath(pathname: string, newLocale: string) {
+  const currentLocale = pathname.split('/')[1];
+  const isLocalePrefix = currentLocale === 'tr' || currentLocale === 'en';
+  const pathWithoutLocale = isLocalePrefix ? pathname.slice(3) || '/' : pathname;
+  if (newLocale === 'az') return pathWithoutLocale;
+  return `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
+}
 
 const navItems = [
   { name: 'Ana səhifə', href: '/', hasMegaMenu: true },
@@ -17,6 +35,8 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const currentLocale = useCurrentLocale();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -36,7 +56,23 @@ export default function Header() {
             </span>
           </div>
           <div className="flex items-center gap-3 text-xs text-gray-400">
-            <span>AZ</span>
+            <div className="flex items-center gap-1">
+              {locales.map((loc, i) => (
+                <span key={loc} className="flex items-center gap-1">
+                  {i > 0 && <span className="text-gray-600">|</span>}
+                  <Link
+                    href={getLocalePath(pathname, loc)}
+                    className={`transition-colors ${
+                      currentLocale === loc
+                        ? 'text-white font-bold'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    {loc.toUpperCase()}
+                  </Link>
+                </span>
+              ))}
+            </div>
             <span className="text-gray-600">|</span>
             <Link href="/auth/login" className="hover:text-white transition-colors">
               Üzv girişi

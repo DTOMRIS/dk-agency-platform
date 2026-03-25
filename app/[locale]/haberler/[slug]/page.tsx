@@ -3,7 +3,7 @@
 // foodinlife.com + thecaterer.com ilhamı
 
 import { notFound } from 'next/navigation';
-import { getBlogArticleBySlug, getAllBlogArticles, type BlogArticle } from '@/lib/data/blogArticles';
+import { getBlogArticleBySlug, getAllBlogArticles, CATEGORY_CONFIG as BLOG_CATEGORY, type BlogArticle } from '@/lib/data/blogArticles';
 import { getGuruByName } from '@/lib/data/guruDatabase';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Newspaper, ChevronRight, BookOpen, Calendar, Zap } from 'lucide-react';
@@ -11,7 +11,7 @@ import { MarkdownRenderer } from '@/components/blog';
 import DoganNote from '@/components/blog/DoganNote';
 import MikroCTA, { MainCTA } from '@/components/blog/MikroCTA';
 import { ReadingTime } from '@/components/blog/BlogElements';
-import BlogContentWrapper from '../../../components/news/BlogContentWrapper';
+import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import {
   NewsletterWidget,
   ViewpointWidget,
@@ -52,20 +52,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-const CATEGORY_CONFIG: Record<string, { label: string; emoji: string; color: string }> = {
-  maliyye: { label: 'Maliyyə', emoji: '💰', color: 'bg-emerald-600' },
-  kadr: { label: 'Kadr', emoji: '👥', color: 'bg-blue-600' },
-  emeliyyat: { label: 'Əməliyyat', emoji: '⚙️', color: 'bg-purple-600' },
-  konsept: { label: 'Konsept', emoji: '🎯', color: 'bg-pink-600' },
-  acilis: { label: 'Açılış', emoji: '🚀', color: 'bg-orange-600' },
-  satis: { label: 'Satış', emoji: '📈', color: 'bg-red-600' },
+// Use BLOG_CATEGORY from blogArticles (proper UTF-8), map color to Tailwind
+const COLOR_MAP: Record<string, string> = {
+  green: 'bg-emerald-600', blue: 'bg-blue-600', purple: 'bg-purple-600',
+  pink: 'bg-pink-600', orange: 'bg-orange-600', cyan: 'bg-cyan-600',
 };
+const CATEGORY_CONFIG = Object.fromEntries(
+  Object.entries(BLOG_CATEGORY).map(([k, v]) => [
+    k,
+    { ...v, color: COLOR_MAP[v.color] || 'bg-slate-600' },
+  ])
+) as Record<string, { label: string; emoji: string; color: string }>;
+
 
 // Doğan viewpoint quotes by category
 const VIEWPOINT_QUOTES: Record<string, string> = {
   maliyye: 'Hesabları bilmədən mənfəət idarə edilmir. Əvvəlcə ölçün, sonra qərar verin.',
-  kadr: 'İnsanlar sistemə deyil, liderə bağlıdır. Əvvəlcə kultura qur, sonra iş axınını izah et.',
-  emeliyyat: 'Standard olmadan keyfiyyət olmur. Əvvəlcə prosedur yaz, sonra hərkəsə öyrət.',
+  kadr: 'İnsanlar sistemə deyil, liderə bağlıdır. Əvvəlcə mədəniyyət qur, sonra iş axınını izah et.',
+  emeliyyat: 'Standard olmadan keyfiyyət olmur. Əvvəlcə prosedur yaz, sonra hərkəsi öyrət.',
   konsept: 'Konseptiniz tarixçənizdir. İnsanlar yeməkdən əvvəl hekayənizi alırlar.',
   acilis: 'Açılış günü deyil, həftəsidir. Hər şey plana uyğun deyil, buna hazır ol.',
   satis: 'Upsell gülüşlə başlayır. Xidmət etsən, satış özü gəlir.',
@@ -105,7 +109,7 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
     day: 'numeric',
   });
 
-  const categoryConfig = CATEGORY_CONFIG[article.category] || { label: article.category, emoji: '📄', color: 'bg-slate-600' };
+  const categoryConfig = CATEGORY_CONFIG[article.category] || { label: article.category, emoji: '📝', color: 'bg-slate-600' };
   
   // Get related articles for sidebar
   const relatedArticles = getAllBlogArticles()
@@ -125,9 +129,9 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
   return (
     <BlogContentWrapper articleTitle={article.title}>
       <main className="bg-slate-50 min-h-screen pb-20 lg:pb-0">
-        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         {/* TOP NAVIGATION BAR */}
-        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <div className="bg-slate-900 border-b-4 border-amber-500">
           <div className="px-4 py-3">
             <div className="mx-auto max-w-7xl flex items-center justify-between">
@@ -135,7 +139,7 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
                 <div className="bg-amber-500 p-1.5 rounded">
                   <Zap className="w-4 h-4 text-slate-900" />
                 </div>
-                <span className="text-sm font-bold text-white">SEKTÖR <span className="text-amber-400">NABZI</span></span>
+                <span className="text-sm font-bold text-white">SEKTOR <span className="text-amber-400">NABZI</span></span>
               </Link>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-slate-400 hidden sm:block">{publishDate}</span>
@@ -148,9 +152,9 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         {/* HERO SECTION */}
-        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <header className="bg-white border-b border-slate-200">
           <div className="px-4 py-8 md:py-12">
             <div className="mx-auto max-w-4xl">
@@ -205,9 +209,9 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
           </div>
         </header>
 
-        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         {/* FEATURED IMAGE (if exists) */}
-        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         {article.coverImage && (
           <div className="bg-white pb-8">
             <div className="mx-auto max-w-5xl px-4">
@@ -227,15 +231,15 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
           </div>
         )}
 
-        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         {/* 3-COLUMN LAYOUT */}
-        {/* ═══════════════════════════════════════════════════════════════ */}
+        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <div className="mx-auto max-w-7xl px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr_300px] xl:grid-cols-[220px_1fr_320px] gap-6 lg:gap-8">
             
-            {/* ─────────────────────────────────────────────────────────── */}
+            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             {/* LEFT SIDEBAR - Share + TOC (Desktop only) */}
-            {/* ─────────────────────────────────────────────────────────── */}
+            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <aside className="hidden lg:block">
               <div className="sticky top-24 space-y-4">
                 <ShareButtons title={article.title} url={`https://dkagency.az/haberler/${slug}`} />
@@ -243,16 +247,16 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
               </div>
             </aside>
 
-            {/* ─────────────────────────────────────────────────────────── */}
+            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             {/* MAIN CONTENT */}
-            {/* ─────────────────────────────────────────────────────────── */}
+            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <article className="min-w-0">
               {/* Content Card */}
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-10">
                 <MarkdownRenderer content={article.content} />
               </div>
 
-              {/* Doğan Note */}
+              {/* DoÄŸan Note */}
               <div className="mt-8">
                 <DoganNote variant="insight">
                   {VIEWPOINT_QUOTES[article.category] || VIEWPOINT_QUOTES.maliyye}
@@ -267,7 +271,7 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
                     ? 'Food Cost hesablayıcımızla dərhal öz rəqəmlərinizi tapın' 
                     : 'Bu mövzuda pulsuz konsultasiya almaq istəyirsiniz?'
                   }
-                  href={article.category === 'maliyye' ? '/b2b-panel/toolkit' : '/contact'}
+                  href={article.category === 'maliyye' ? '/b2b-panel/toolkit' : '/elaqe'}
                 />
               </div>
 
@@ -339,9 +343,9 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
               </div>
             </article>
 
-            {/* ─────────────────────────────────────────────────────────── */}
+            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             {/* RIGHT SIDEBAR */}
-            {/* ─────────────────────────────────────────────────────────── */}
+            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <aside className="space-y-6">
               <div className="lg:sticky lg:top-24 space-y-6">
                 {/* Related Articles Widget */}
@@ -365,3 +369,4 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
     </BlogContentWrapper>
   );
 }
+

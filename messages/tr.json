@@ -1,200 +1,48 @@
 {
   "nav": {
-    "home": "Ana sayfa",
+    "home": "Ana Sayfa",
     "trends": "Trendler",
     "blog": "Blog",
-    "dashboard": "Ocak",
-    "login": "Üye girişi",
-    "register": "Abone ol",
-    "startFree": "Ücretsiz başla",
-    "language": "TR"
-  },
-  "utilityBar": {
-    "newLabel": "YENİ:",
-    "newText": "KAZAN AI — sektörün ilk AI danışmanı yakında"
+    "dashboard": "Yönetim Paneli",
+    "login": "Üye Girişi",
+    "register": "Ücretsiz Başla",
+    "newBadge": "YENİ:",
+    "kazanAI": "KAZAN AI — sektörün ilk AI danışmanı yakında"
   },
   "hero": {
-    "badge": "Azerbaycan'ın ilk AI destekli HoReCa platformu",
-    "titleLine1": "Restoranın neden",
-    "titleLine2": "para kaybettiğin",
-    "titleLine3": "i",
-    "titleLine4": "bilmiyor musun?",
-    "subtitle": "Biz buluyoruz, düzeltiyoruz. Ücretsiz araçlar, uzman bilgi, AI desteği — hepsi bir platformda.",
-    "motto": "Dijital loncanın ustaları — ekmek hakkını koruyoruz.",
-    "ctaStart": "Şimdi başla",
-    "ctaExplore": "Araçları keşfet",
-    "statRestaurants": "AKTİF RESTORAN",
-    "statTools": "ÜCRETSİZ ARAÇ",
-    "statCostReduction": "MALİYET DÜŞÜŞÜ",
-    "panelTitle": "OCAK Panel",
-    "panelActive": "Aktif",
-    "panelRevenue": "Aylık gelir",
-    "panelFoodCost": "Food cost",
-    "panelNetProfit": "Net kâr",
-    "menuMatrix": "Menü Matrisi",
-    "menuStar": "Yıldız",
-    "menuHorse": "At",
-    "menuPuzzle": "Puzzle",
-    "menuDog": "Köpek",
-    "sheddBadge": "Şedd Rozeti",
-    "sheddDesc": "— DK Agency denetiminden geçti"
-  },
-  "stages": {
-    "title": "Sen hangi aşamadasın?",
-    "subtitle": "Her aşama için ücretsiz araç ve rehber.",
-    "imageAlt": "Operasyon sistemi illüstrasyonu",
-    "start": {
-      "title": "Başla",
-      "description": "Restoran açmak mı istiyorsun? Checklist, resmi işler, mekan seçimi, menü planı.",
-      "count": "8 rehber"
-    },
-    "grow": {
-      "title": "Büyüt",
-      "description": "Mevcut restoranını optimize et. P&L, food cost, menü matrisi, AI destek.",
-      "count": "6 araç"
-    },
-    "transfer": {
-      "title": "Devir & Satış",
-      "description": "Restoran devri, ekipman satışı, franchise, ortak arama.",
-      "count": "4 kategori"
-    }
-  },
-  "toolkit": {
-    "label": "Ücretsiz Toolkit",
-    "title": "Her gram hesaplansın, hiçbir şey israf olmasın",
-    "subtitle": "Bizim kültürümüzde ekmek yerde kalmaz. Bu araçlar her kuruşun hesabını tutar.",
-    "imageAlt": "Menü mühendisliği illüstrasyonu",
-    "pnl": {
-      "title": "P&L Hesaplama",
-      "desc": "Gelir, food cost, labor cost, overhead gir — net kâr otomatik. AZN desteği, PDF export.",
-      "metrics": ["Net kâr %", "Prime cost", "Trend analiz"]
-    },
-    "foodCost": {
-      "title": "Food Cost Hesaplayıcı",
-      "desc": "Tarif kartı oluştur — malzeme, miktar, fiyat. Trim loss desteğiyle gerçek food cost.",
-      "metrics": ["Porsiyon maliyeti", "Trim loss", "Hedef fiyat"]
-    },
-    "menuMatrix": {
-      "title": "Menü Matrisi",
-      "desc": "Her yemeği Yıldız/At/Puzzle/Köpek kategorisine ayır. Hangisini tut, hangisini çıkar — veriyle.",
-      "metrics": ["Star analiz", "CM hesap", "Aksiyon planı"]
-    },
-    "cta": "Ücretsiz kullan"
-  },
-  "dogan": {
-    "quote": "700 yıl önce bir usta, çırağının beline Şedd bağladığında — bu sadece bir kumaş parçası değildi. O dükkânın kalitesine verilen bir namus sözüydü. Bugün biz, HoReCa dünyasında aynı yemini dijital için ediyoruz.",
-    "name": "Doğan Tomris",
-    "role": "DK Agency kurucusu",
-    "cavanmerdlik": "Biz bu sektörün Civanmertleriyiz."
-  },
-  "cta": {
-    "badge": "ŞİMDİ KATIL",
-    "title": "Ajans operasyonlarınızı",
-    "titleHighlight": "bir sonraki seviyeye",
-    "titleEnd": "taşıyın",
-    "subtitle": "Yüzlerce başarılı projede olduğu gibi, siz de DK AGENCY ailesine katılın ve stratejik avantaj kazanın.",
-    "features": [
-      "Tüm stratejik araçlara sınırsız erişim",
-      "KAZAN AI ile 7/24 operasyon desteği",
-      "Özel yatırım fırsatları",
-      "Ücretsiz ilk stratejik danışmanlık"
-    ],
-    "formTitle": "Başvur",
-    "labelName": "Adınız",
-    "labelSurname": "Soyadınız",
-    "labelEmail": "E-posta",
-    "labelCompany": "Şirket / Proje Adı",
-    "placeholderName": "Örn: Elvin",
-    "placeholderSurname": "Örn: Mammadov",
-    "placeholderEmail": "elvin@agency.az",
-    "placeholderCompany": "Örn: Grand Holding",
-    "submit": "Gönder"
+    "title": "Azerbaycan'ın İlk AI Destekli HoReCa Platformu",
+    "subtitle": "Ücretsiz araçlar, uzman blog, restoran devri ve franchise"
   },
   "footer": {
-    "brand": "DK Agency",
-    "brandDesc": "Ustalığın nişanı, dijitalin şeddi. Azerbaycan'ın ilk AI destekli HoReCa platformu.",
-    "tools": "Araçlar",
-    "toolsPnl": "P&L Hesaplama",
-    "toolsFoodCost": "Food Cost",
-    "toolsMenuMatrix": "Menü Matrisi",
-    "toolsBreakeven": "Başabaş",
-    "toolsKazanAi": "KAZAN AI",
-    "start": "Başla",
-    "startChecklist": "Açılış Checklist",
-    "startOfficialMatters": "Resmi İşler",
-    "startLocation": "Mekan Seçimi",
-    "startMenuEngineering": "Menü Mühendisliği",
-    "resources": "Kaynaklar",
-    "resourcesBlog": "Blog",
-    "resourcesTrends": "Trendler",
-    "resourcesHapBilgi": "HAP Bilgiler",
-    "resourcesDigest": "DK Digest",
-    "company": "Şirket",
-    "companyAbout": "Hakkımızda",
-    "companyConsulting": "Danışmanlık",
-    "companyContact": "İletişim",
-    "companySheddBadge": "Şedd Rozeti",
-    "copyright": "2026 DK Agency. Tüm hakları saklıdır.",
-    "poweredBy": "Powered by TQTA.az",
-    "kazanAiTooltip": "KAZAN AI'ya soru sor!"
+    "rights": "Tüm hakları saklıdır.",
+    "company": "DK Agency"
   },
-  "megamenu": {
-    "platformTitle": "DK Agency Platformu",
-    "platformDesc": "Restoranını planla, yönet, büyüt — tek platformda.",
-    "allTools": "Tüm araçlar",
-    "healthTest": "Sağlık testi",
-    "sectionStart": "BAŞLA",
-    "sectionGrow": "BÜYÜT",
-    "sectionTransfer": "DEVİR & SATIŞ",
-    "popular": "Popüler:",
-    "startItems": {
-      "checklist": { "label": "Açılış Checklist", "desc": "Adım adım açılış planı" },
-      "officialMatters": { "label": "Resmi İşler", "desc": "ASAN, AQTA, vergi" },
-      "location": { "label": "Mekan Seçimi", "desc": "Lokasyon, kira" },
-      "concept": { "label": "Konsept Hazırlama", "desc": "Hedef kitle, marka" },
-      "menuEngineering": { "label": "Menü Mühendisliği", "desc": "Fiyatlandırma, star analiz" },
-      "marketing": { "label": "Pazarlama", "desc": "Açılış kampanyası" },
-      "equipment": { "label": "Ekipman Kataloğu", "desc": "500+ profesyonel ekipman" },
-      "identity": { "label": "Kurumsal Kimlik", "desc": "Logo, renk, örnekler" }
-    },
-    "growItems": {
-      "pnl": { "label": "Kâr-Zarar (P&L)", "desc": "Gelir-gider analizi" },
-      "foodCost": { "label": "Gıda Maliyet", "desc": "Porsiyon maliyeti hesapla" },
-      "breakeven": { "label": "Başabaş Analizi", "desc": "Break-even noktası" },
-      "marketPrices": { "label": "Piyasa Fiyatları", "desc": "Haftalık gıda fiyatları" },
-      "opChecklist": { "label": "Operasyon Checklist", "desc": "Günlük, haftalık" },
-      "kazanAi": { "label": "KAZAN AI", "desc": "AI danışman", "badge": "YAKINDA" }
-    },
-    "transferItems": {
-      "restaurantTransfer": "Restoran Devri",
-      "equipmentSale": "Ekipman Satışı",
-      "franchise": "Franchise",
-      "findOperator": "İşletmeci Bul"
-    },
-    "popularItems": {
-      "pnl": "P&L Hesaplama",
-      "checklist": "Açılış Checklist",
-      "foodCost": "Food Cost"
-    }
+  "toolkit": {
+    "badge": "Ücretsiz Araçlar",
+    "title": "DK Agency Toolkit",
+    "subtitle": "Restoranını yönetmek için ücretsiz araçlar. Food cost, P&L, checklist — hepsi bir arada.",
+    "foodCost": "Food Cost Hesaplayıcı",
+    "foodCostDesc": "Porsiyon maliyet hesabı yap, ideal food cost oranını bul.",
+    "pnl": "P&L Simülatörü",
+    "pnlDesc": "Aylık gelir-gider raporu oluştur, başabaş noktasını bul.",
+    "checklist": "Restoran Açılış Kontrol Listesi",
+    "checklistDesc": "43 maddelik tam kontrol listesi — hukuki, mekan, menü, kadro, pazarlama.",
+    "start": "Başla"
   },
-  "cookies": {
-    "imageAlt": "Çerezler",
-    "title": "Kim dedi ki çerezler sağlıklı değil?",
-    "description": "Biz restoranları sevdiğimiz kadar çerezleri de seviyoruz. Bu sitede çerezler kullanıyoruz.",
-    "privacyLink": "Gizlilik politikamızı buradan okuyun.",
-    "reject": "Hayır, teşekkürler",
-    "customize": "Seçim yap",
-    "accept": "Kabul et",
-    "toggleAll": "Tüm çerezleri aç/kapat",
-    "facebookAds": "Facebook Ads",
-    "facebookDesc": "Reklam kampanyalarının etkinliğini ölçer",
-    "googleAds": "Google Ads",
-    "googleDesc": "Arama reklamlarının etkinliğini ölçer",
-    "hotjar": "Hotjar",
-    "hotjarDesc": "Kullanıcı davranışını izler",
-    "back": "Geri",
-    "acceptAll": "Hepsini kabul et",
-    "saveCustom": "Seçimi kaydet",
-    "certifiedBy": "Consent certified by Axeptio"
+  "blog": {
+    "title": "Blog & Analizler",
+    "subtitle": "Sektör profesyonelleri için derinlemesine analizler.",
+    "viewAll": "Tümünü Gör",
+    "readMore": "Devamını Oku"
+  },
+  "ilanlar": {
+    "title": "İş İlanları",
+    "subtitle": "HoReCa sektöründe kariyer fırsatları"
+  },
+  "common": {
+    "language": "Dil",
+    "az": "AZ",
+    "tr": "TR",
+    "en": "EN"
   }
 }
