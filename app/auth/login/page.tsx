@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, ArrowLeft, Lock, LogIn, Mail, ShieldCheck } from 'lucide-react';
-import { writeMemberSession } from '@/lib/member-access';
+import { type MemberSession, writeMemberSession } from '@/lib/member-access';
 
 const TEST_USERS = [
   { email: 'dotomris@gmail.com', password: '123456', name: 'Doğan Tomris', plan: 'admin' as const },
@@ -40,11 +40,18 @@ export default function LoginPage() {
       return;
     }
 
-    writeMemberSession({
+    const nextSession: MemberSession = {
       email: user.email,
       name: user.name,
       loggedIn: true,
       plan: user.plan,
+    };
+
+    writeMemberSession(nextSession);
+    void fetch('/api/member/session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nextSession),
     });
 
     router.push(nextUrl);
@@ -120,6 +127,13 @@ export default function LoginPage() {
               Hesabın yoxdur?{' '}
               <Link href={`/auth/register?next=${encodeURIComponent(nextUrl)}`} className="font-semibold text-red-600 hover:text-red-700">
                 Üzv ol
+              </Link>
+            </p>
+
+            <p className="mt-3 text-sm text-slate-500">
+              Üzvlük modeli haqqında bax:{' '}
+              <Link href="/uzvluk" className="font-semibold text-slate-900 hover:text-red-600">
+                /uzvluk
               </Link>
             </p>
           </div>

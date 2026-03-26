@@ -127,3 +127,42 @@ export const siteSettings = pgTable('site_settings', {
   value_en: text('value_en'),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
+
+// Membership profiles
+export const memberProfiles = pgTable('member_profiles', {
+  id: serial('id').primaryKey(),
+  email: varchar('email', { length: 255 }).unique().notNull(),
+  fullName: varchar('full_name', { length: 150 }),
+  company: varchar('company', { length: 150 }),
+  phone: varchar('phone', { length: 30 }),
+  role: varchar('role', { length: 30 }).default('member'),
+  source: varchar('source', { length: 50 }).default('website'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// Membership subscriptions
+export const memberSubscriptions = pgTable('member_subscriptions', {
+  id: serial('id').primaryKey(),
+  profileId: integer('profile_id').references(() => memberProfiles.id),
+  provider: varchar('provider', { length: 30 }).default('manual'),
+  planCode: varchar('plan_code', { length: 50 }).default('member-monthly'),
+  status: varchar('status', { length: 30 }).default('trial'),
+  externalCustomerId: varchar('external_customer_id', { length: 120 }),
+  externalSubscriptionId: varchar('external_subscription_id', { length: 120 }),
+  currentPeriodEndsAt: timestamp('current_period_ends_at'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// Membership entitlements
+export const memberEntitlements = pgTable('member_entitlements', {
+  id: serial('id').primaryKey(),
+  profileId: integer('profile_id').references(() => memberProfiles.id),
+  code: varchar('code', { length: 80 }).notNull(),
+  source: varchar('source', { length: 50 }).default('subscription'),
+  isActive: boolean('is_active').default(true),
+  metadata: jsonb('metadata'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});

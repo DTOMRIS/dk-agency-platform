@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Building2, Mail, Phone, Sparkles, User } from 'lucide-react';
-import { writeMemberSession } from '@/lib/member-access';
+import { type MemberSession, writeMemberSession } from '@/lib/member-access';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -25,11 +25,18 @@ export default function RegisterPage() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    writeMemberSession({
+    const nextSession: MemberSession = {
       email: formData.email.trim(),
       name: formData.name.trim() || 'DK Member',
       loggedIn: true,
       plan: 'member',
+    };
+
+    writeMemberSession(nextSession);
+    void fetch('/api/member/session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nextSession),
     });
 
     router.push(nextUrl);
@@ -126,6 +133,13 @@ export default function RegisterPage() {
               Artıq hesabın var?{' '}
               <Link href={`/auth/login?next=${encodeURIComponent(nextUrl)}`} className="font-semibold text-red-600 hover:text-red-700">
                 Daxil ol
+              </Link>
+            </p>
+
+            <p className="mt-3 text-sm text-slate-500">
+              Üzvlük səhifəsi:{' '}
+              <Link href="/uzvluk" className="font-semibold text-slate-900 hover:text-red-600">
+                /uzvluk
               </Link>
             </p>
           </div>
