@@ -36,7 +36,7 @@ interface MenuItemData {
 
 const baslaItems: MenuItemData[] = [
   { icon: ClipboardList, label: 'Açılış Checklist', desc: 'Addım-addım açılış planı', href: '/toolkit/checklist' },
-  { icon: HardHat, label: 'İnşaatdan açılışa', desc: '52 maddəlik tikinti sprinti', href: '/toolkit/insaat-checklist' },
+  { icon: HardHat, label: 'İnşaatdan Açılışa', desc: '52 maddəlik tikinti sprinti', href: '/toolkit/insaat-checklist' },
   { icon: FileText, label: 'Rəsmi işlər', desc: 'ASAN, AQTA, vergi', href: '/basla/resmi-isler' },
   { icon: MapPin, label: 'Məkan seçimi', desc: 'Lokasiya, icarə', href: '/basla/mekan' },
   { icon: Palette, label: 'Konsept hazırlama', desc: 'Hədəf kütlə, brend', href: '/basla/konsept' },
@@ -77,13 +77,15 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="absolute left-1/2 top-full z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[#E5E7EB] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+          className="absolute top-full left-1/2 z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[#E5E7EB] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
           onMouseLeave={onClose}
         >
           <div className="flex items-start justify-between">
             <div>
               <p className="font-bold text-gray-900">DK Agency Platforması</p>
-              <p className="mt-0.5 text-sm text-gray-500">Restoranını planla, idarə et, böyüt, bir platformada.</p>
+              <p className="mt-0.5 text-sm text-gray-500">
+                Restoranını planla, idarə et, böyüt, bir platformada.
+              </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <Link
@@ -118,9 +120,14 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                     href={item.href}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-red-50/50"
                   >
-                    <item.icon size={18} className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#E94560]" />
+                    <item.icon
+                      size={18}
+                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#E94560]"
+                    />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#E94560]">{item.label}</p>
+                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#E94560]">
+                        {item.label}
+                      </p>
                       <p className="text-xs text-gray-400">{item.desc}</p>
                     </div>
                   </Link>
@@ -140,7 +147,10 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                     href={item.href}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-amber-50/50"
                   >
-                    <item.icon size={18} className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#C5A022]" />
+                    <item.icon
+                      size={18}
+                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#C5A022]"
+                    />
                     <div>
                       <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#C5A022]">
                         {item.label}
