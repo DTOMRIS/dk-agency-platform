@@ -20,7 +20,7 @@ const SAMPLE_QUESTIONS = [
 ];
 
 const INITIAL_ASSISTANT =
-  'Salam. Mən **KAZAN AI**-yam. Food cost, P&L, AQTA, delivery, açılış və marka qərarlarını Azərbaycan HoReCa reallığına görə şərh edirəm.\n\nBaşlamaq üçün məsələn belə soruş:\n- Food cost-um %38-dir, nə etməliyəm?\n- P&L-də ilk hansı rəqəmə baxım?\n- Delivery menyusunu necə mənfəətli edim?\n\nToolkit: [Food Cost kalkulyatoru](/toolkit/food-cost)\nBlog: [Food Cost yazısı](/blog/1-porsiya-food-cost-hesablama)';
+  'Salam. Mən **KAZAN AI**-yam. Food cost, P&L, AQTA, delivery, açılış və marka qərarlarını Azərbaycan HoReCa reallığına görə şərh edirəm.\n\nBaşlamaq üçün belə soruş:\n- Food cost-um %38-dir, nə etməliyəm?\n- P&L-də ilk hansı rəqəmə baxım?\n- Delivery menyusunu necə mənfəətli edim?\n\nToolkit: [Food Cost kalkulyatoru](/toolkit/food-cost)\nBlog: [Food Cost yazısı](/blog/1-porsiya-food-cost-hesablama)';
 
 export default function KazanAiChatClient() {
   const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: INITIAL_ASSISTANT }]);
@@ -49,15 +49,16 @@ export default function KazanAiChatClient() {
       }
 
       setMessages((prev) => [...prev, { role: 'assistant', content: payload.message || '' }]);
-    } catch {
+    } catch (error) {
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
           content:
-            'Hazırda server tərəfdə AI bağlantısı əlçatan deyil. Yenə də ölçünü itirmə:\n\n1. Rəqəmi ölç\n2. Uyğun toolkit-i işə sal\n3. Sonra konsultasiya qərarı ver\n\nToolkit: [Bütün alətlər](/toolkit)\nBlog: [Bloq bölməsi](/blog)\nKonsultasiya: [DK Agency ilə görüş](/elaqe)',
+            'Hazırda server tərəfdə AI bağlantısı əlçatan deyil. Yenə də ölçünü itirmə:\n\n1. Problemi ölç\n2. Uyğun toolkit-i işə sal\n3. Sonra qərarı ver və ya görüş təyin et\n\nToolkit: [Bütün alətlər](/toolkit)\nBlog: [Bloq bölməsi](/blog)\nKonsultasiya: [DK Agency ilə görüş](/elaqe)',
         },
       ]);
+      if (error instanceof Error) console.error(error);
     } finally {
       setLoading(false);
     }
@@ -69,10 +70,10 @@ export default function KazanAiChatClient() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] pb-16">
+    <div className="min-h-screen bg-[#f7f4ee] pb-16">
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-white">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#162033] px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-white">
             <Sparkles size={14} />
             KAZAN AI Beta
           </div>
@@ -89,7 +90,7 @@ export default function KazanAiChatClient() {
         <section className="flex min-h-[68vh] flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
           <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1A1A2E] text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#162033] text-white">
                 <Bot size={22} />
               </div>
               <div>
@@ -102,13 +103,13 @@ export default function KazanAiChatClient() {
             </Link>
           </div>
 
-          <div className="flex-1 space-y-4 overflow-y-auto bg-slate-50/70 px-4 py-5 sm:px-6">
+          <div className="flex-1 space-y-4 overflow-y-auto bg-[#fbfaf7] px-4 py-5 sm:px-6">
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
                   className={`max-w-[90%] rounded-[1.5rem] px-4 py-3 shadow-sm sm:max-w-[78%] ${
                     message.role === 'user'
-                      ? 'bg-[#1A1A2E] text-white'
+                      ? 'bg-[#162033] text-white'
                       : 'border border-slate-200 bg-white text-slate-800'
                   }`}
                 >
@@ -193,9 +194,9 @@ export default function KazanAiChatClient() {
           </div>
 
           <div className="rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">Inteqrasiya</div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">İnteqrasiya</div>
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              Food Cost kalkulyatorunu sınadın? İndi nəticəni burada paylaş və KAZAN-dan onu necə yaxşılaşdıracağını soruş.
+              Food Cost kalkulyatorunu sınadın? Nəticəni burada paylaş və KAZAN-dan onu necə yaxşılaşdıracağını soruş.
             </p>
             <div className="mt-4 space-y-3">
               <Link href="/toolkit/food-cost" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-900 transition-colors hover:bg-slate-100">
@@ -211,7 +212,7 @@ export default function KazanAiChatClient() {
           </div>
 
           <div className="rounded-[1.6rem] border border-[#E94560]/20 bg-rose-50 p-6 shadow-sm">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-[#E94560]">Satış Layer</div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-[#E94560]">Satış layer</div>
             <p className="mt-3 text-sm leading-6 text-slate-700">
               KAZAN AI problemi ölçməyə kömək edir. Sistem qurmaq, audit etmək və nəticəni real mənfəətə çevirmək üçün növbəti addım danışmanlıqdır.
             </p>
