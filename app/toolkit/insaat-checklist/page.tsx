@@ -221,13 +221,13 @@ export default function InsaatChecklistPage() {
       return;
     }
 
-    const entry = isVideo(file)
-      ? { name: file.name, url: URL.createObjectURL(file), type: 'video' as const }
-      : (() => resizeImage(file, { maxWidth: 1600, maxHeight: 1600, quality: 0.82 }))();
-
     const resolved = isVideo(file)
-      ? entry
-      : await entry.then((image) => ({ name: file.name, url: image.url, type: 'image' as const }));
+      ? ({ name: file.name, url: URL.createObjectURL(file), type: 'video' as const })
+      : await resizeImage(file, { maxWidth: 1600, maxHeight: 1600, quality: 0.82 }).then((image) => ({
+          name: file.name,
+          url: image.url,
+          type: 'image' as const,
+        }));
 
     setMedia((current) => ({
       ...current,
