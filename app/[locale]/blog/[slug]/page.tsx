@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation';
 import { getBlogArticleBySlug, getRelatedArticles, CATEGORY_CONFIG } from '@/lib/data/blogArticles';
 import { MarkdownRenderer } from '@/components/blog';
+import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import { motion } from 'framer-motion';
 import { Calendar, User, Tag, ChevronLeft, Share2, Bookmark, Clock, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -29,6 +30,7 @@ export default function BlogDetailPage() {
   const related = getRelatedArticles(slug);
 
   return (
+    <BlogContentWrapper articleTitle={article.title} isPremium={true}>
     <div className="bg-[#FAFAF8] min-h-screen pb-20">
       {/* Hero Image Section */}
       <div className="relative w-full h-[420px] overflow-hidden">
@@ -155,5 +157,6 @@ export default function BlogDetailPage() {
         </div>
       </div>
     </div>
+    </BlogContentWrapper>
   );
 }

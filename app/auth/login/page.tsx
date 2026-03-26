@@ -1,158 +1,155 @@
-// app/auth/login/page.tsx
-// DK Agency - Üzv Girişi
-
 'use client';
 
-import { useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Zap, Mail, Lock, ArrowLeft, Check, AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { AlertCircle, ArrowLeft, Lock, LogIn, Mail, ShieldCheck } from 'lucide-react';
+import { writeMemberSession } from '@/lib/member-access';
 
-// Test kullanıcısı - Production'da database'den gelecek
 const TEST_USERS = [
-  { email: 'dotomris@gmail.com', password: '123456', name: 'Doğan Tomris' },
-  { email: 'admin@dkagency.az', password: 'admin123', name: 'Admin' },
+  { email: 'dotomris@gmail.com', password: '123456', name: 'Doğan Tomris', plan: 'admin' as const },
+  { email: 'admin@dkagency.az', password: 'admin123', name: 'DK Admin', plan: 'admin' as const },
+  { email: 'member@dkagency.az', password: 'member123', name: 'DK Member', plan: 'member' as const },
 ];
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [nextUrl, setNextUrl] = useState('/haberler');
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setNextUrl(params.get('next') || '/haberler');
+  }, []);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setError('');
-    
-    // Test kullanıcısı kontrolü
+
     const user = TEST_USERS.find(
-      u => u.email === formData.email && u.password === formData.password
+      (item) => item.email === formData.email.trim() && item.password === formData.password
     );
-    
-    if (user) {
-      // localStorage'a kaydet (paywall için)
-      localStorage.setItem('dk_user', JSON.stringify({ email: user.email, name: user.name, loggedIn: true }));
-      setSubmitted(true);
-    } else {
-      setError('E-mail və ya şifrə yanlışdır');
+
+    if (!user) {
+      setError('E-mail və ya şifrə yanlışdır.');
+      return;
     }
+
+    writeMemberSession({
+      email: user.email,
+      name: user.name,
+      loggedIn: true,
+      plan: user.plan,
+    });
+
+    router.push(nextUrl);
   };
 
-  if (submitted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Check className="w-8 h-8 text-emerald-600" />
-          </div>
-          <h1 className="text-2xl font-bold text-slate-800 mb-2">Xoş gəldiniz! 👋</h1>
-          <p className="text-slate-600 mb-6">
-            Uğurla daxil oldunuz. Artıq bütün məzmuna tam giriş əldə etdiniz.
-          </p>
-          <Link 
-            href="/haberler"
-            className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-bold transition-colors"
-          >
-            Sektör NABZI-ya keç
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Back Button */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50">
       <div className="p-4">
-        <Link 
-          href="/haberler"
-          className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Sektör NABZI</span>
+        <Link href={nextUrl} className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900">
+          <ArrowLeft className="h-4 w-4" />
+          Geri qayıt
         </Link>
       </div>
 
       <div className="flex items-center justify-center px-4 pb-12">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="bg-amber-500 p-2 rounded-lg">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-slate-800">Daxil Ol</h1>
-              <p className="text-sm text-slate-500">Hesabınıza giriş edin</p>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">E-mail</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  placeholder="email@example.com"
-                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
-                />
+        <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl md:grid-cols-[1.05fr_0.95fr]">
+          <div className="p-8 md:p-10">
+            <div className="mb-8">
+              <div className="mb-4 inline-flex rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-red-600">
+                DK Members
               </div>
+              <h1 className="text-3xl font-black text-slate-900">Daxil ol</h1>
+              <p className="mt-2 text-slate-600">
+                Premium məqalə, xəbər analizi və gələcək üzvlük qatlarına giriş üçün hesabına daxil ol.
+              </p>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Şifrə</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <input
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
-                  placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
-                />
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="mb-1 block text-sm font-medium text-slate-700">E-mail</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+                    placeholder="email@example.com"
+                    className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                  />
+                </div>
               </div>
-            </div>
 
-            {error && (
-              <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                {error}
+              <div>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Şifrə</label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="password"
+                    required
+                    value={formData.password}
+                    onChange={(event) => setFormData({ ...formData, password: event.target.value })}
+                    placeholder="••••••••"
+                    className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                  />
+                </div>
               </div>
-            )}
 
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded border-slate-300 text-amber-500 focus:ring-amber-500" />
-                <span className="text-slate-600">Məni xatırla</span>
-              </label>
-              <Link href="/auth/forgot-password" className="text-amber-600 hover:text-amber-700 font-medium">
-                Şifrəni unutdum
-              </Link>
-            </div>
+              {error && (
+                <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                  {error}
+                </div>
+              )}
 
-            <button
-              type="submit"
-              className="w-full bg-amber-500 hover:bg-amber-600 text-white py-3.5 rounded-xl font-bold transition-colors shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2"
-            >
-              Daxil Ol
-            </button>
-          </form>
+              <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700">
+                <LogIn className="h-5 w-5" />
+                Daxil ol və davam et
+              </button>
+            </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-100 text-center">
-            <p className="text-sm text-slate-500">
-              Hələ üzv deyilsiniz?{' '}
-              <Link href="/auth/register" className="text-amber-600 hover:text-amber-700 font-medium">
-                Pulsuz qeydiyyat
+            <p className="mt-6 text-sm text-slate-500">
+              Hesabın yoxdur?{' '}
+              <Link href={`/auth/register?next=${encodeURIComponent(nextUrl)}`} className="font-semibold text-red-600 hover:text-red-700">
+                Üzv ol
               </Link>
             </p>
+          </div>
+
+          <div className="bg-slate-950 p-8 text-white md:p-10">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
+              <ShieldCheck className="h-4 w-4" />
+              Demo girişlər
+            </div>
+
+            <div className="space-y-4 text-sm">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="font-semibold text-white">Member</p>
+                <p className="mt-2 text-slate-300">member@dkagency.az</p>
+                <p className="text-slate-400">member123</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="font-semibold text-white">Admin</p>
+                <p className="mt-2 text-slate-300">admin@dkagency.az</p>
+                <p className="text-slate-400">admin123</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="font-semibold text-white">Founder test</p>
+                <p className="mt-2 text-slate-300">dotomris@gmail.com</p>
+                <p className="text-slate-400">123456</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

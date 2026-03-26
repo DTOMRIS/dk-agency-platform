@@ -1,186 +1,150 @@
-// app/auth/register/page.tsx
-// DK Agency - Pulsuz Üzvlük Qeydiyyatı
-
 'use client';
 
-import { useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Zap, Mail, User, Building2, Phone, ArrowLeft, Check, Star } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, Building2, Mail, Phone, Sparkles, User } from 'lucide-react';
+import { writeMemberSession } from '@/lib/member-access';
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const [nextUrl, setNextUrl] = useState('/haberler');
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
     phone: '',
   });
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Backend entegrasyonu
-    setSubmitted(true);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setNextUrl(params.get('next') || '/haberler');
+  }, []);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    writeMemberSession({
+      email: formData.email.trim(),
+      name: formData.name.trim() || 'DK Member',
+      loggedIn: true,
+      plan: 'member',
+    });
+
+    router.push(nextUrl);
   };
 
-  if (submitted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Check className="w-8 h-8 text-emerald-600" />
-          </div>
-          <h1 className="text-2xl font-bold text-slate-800 mb-2">Təbriklər! 🎉</h1>
-          <p className="text-slate-600 mb-6">
-            Qeydiyyatınız uğurla tamamlandı. Artıq bütün məqalələri tam oxuya bilərsiniz.
-          </p>
-          <Link 
-            href="/haberler"
-            className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-bold transition-colors"
-          >
-            Sektör NABZI-ya keç
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Back Button */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50">
       <div className="p-4">
-        <Link 
-          href="/haberler"
-          className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Sektör NABZI</span>
+        <Link href={nextUrl} className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900">
+          <ArrowLeft className="h-4 w-4" />
+          Geri qayıt
         </Link>
       </div>
 
       <div className="flex items-center justify-center px-4 pb-12">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-w-4xl w-full grid md:grid-cols-2">
-          {/* Sol - Form */}
-          <div className="p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="bg-amber-500 p-2 rounded-lg">
-                <Zap className="w-5 h-5 text-white" />
+        <div className="grid w-full max-w-6xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl md:grid-cols-[1fr_0.95fr]">
+          <div className="p-8 md:p-10">
+            <div className="mb-8">
+              <div className="mb-4 inline-flex rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-red-600">
+                Member Signup
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-slate-800">Pulsuz Üzv Ol</h1>
-                <p className="text-sm text-slate-500">30 saniyədə qeydiyyatdan keç</p>
-              </div>
+              <h1 className="text-3xl font-black text-slate-900">Üzv ol</h1>
+              <p className="mt-2 text-slate-600">
+                Bu MVP axında qeydiyyat etdikdən sonra birbaşa məqaləyə qayıdacaqsan. Sonrakı mərhələdə Supabase və ödəniş qatını bağlayacağıq.
+              </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Ad Soyad</label>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Ad soyad</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <User className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                   <input
                     type="text"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    onChange={(event) => setFormData({ ...formData, name: event.target.value })}
                     placeholder="Adınız Soyadınız"
-                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                    className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">E-mail</label>
+                <label className="mb-1 block text-sm font-medium text-slate-700">E-mail</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                   <input
                     type="email"
                     required
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                     placeholder="email@example.com"
-                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                    className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Şirkət (ixtiyari)</label>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Şirkət</label>
                 <div className="relative">
-                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Building2 className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                   <input
                     type="text"
                     value={formData.company}
-                    onChange={(e) => setFormData({...formData, company: e.target.value})}
-                    placeholder="Şirkət adı"
-                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                    onChange={(event) => setFormData({ ...formData, company: event.target.value })}
+                    placeholder="Restoran və ya şirkət adı"
+                    className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Telefon (ixtiyari)</label>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Telefon</label>
                 <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Phone className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                   <input
                     type="tel"
                     value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    onChange={(event) => setFormData({ ...formData, phone: event.target.value })}
                     placeholder="+994 XX XXX XX XX"
-                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none"
+                    className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
                   />
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-amber-500 hover:bg-amber-600 text-white py-3.5 rounded-xl font-bold transition-colors shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2"
-              >
-                <Zap className="w-5 h-5" />
-                Pulsuz Qeydiyyat
+              <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700">
+                <Sparkles className="h-5 w-5" />
+                Üzv ol və davam et
               </button>
             </form>
 
-            <p className="text-center text-sm text-slate-500 mt-4">
-              Artıq üzvsünüz?{' '}
-              <Link href="/auth/login" className="text-amber-600 hover:text-amber-700 font-medium">
-                Daxil olun
+            <p className="mt-6 text-sm text-slate-500">
+              Artıq hesabın var?{' '}
+              <Link href={`/auth/login?next=${encodeURIComponent(nextUrl)}`} className="font-semibold text-red-600 hover:text-red-700">
+                Daxil ol
               </Link>
             </p>
           </div>
 
-          {/* Sağ - Benefits */}
-          <div className="bg-slate-900 p-8 text-white hidden md:block">
-            <h2 className="text-xl font-bold mb-6">Üzvlük üstünlükləri</h2>
-            
-            <div className="space-y-4">
-              {[
-                { title: 'Tam Məqalə Oxusu', desc: 'Bütün ekspert yazılarını sonuna qədər oxuyun' },
-                { title: 'Həftəlik Newsletter', desc: 'Sektor trendləri hər həftə email-inizə' },
-                { title: 'Pulsuz Toolkit', desc: 'P&L, Food Cost və digər kalkulyatorlar' },
-                { title: 'Ekspert Webinarları', desc: 'Canlı təlim və sual-cavab sessiyaları' },
-                { title: 'PDF Bələdçilər', desc: 'Endirilə bilən resurs və şablonlar' },
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-amber-400" />
-                  </div>
-                  <div>
-                    <p className="font-medium">{item.title}</p>
-                    <p className="text-sm text-slate-400">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 p-4 bg-slate-800 rounded-xl">
-              <div className="flex items-center gap-1 mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
-                ))}
+          <div className="bg-red-600 p-8 text-white md:p-10">
+            <h2 className="text-2xl font-black">Nə açılır?</h2>
+            <div className="mt-6 space-y-4 text-sm">
+              <div className="rounded-2xl bg-white/10 p-4">
+                <p className="font-semibold">Tam məqalə girişi</p>
+                <p className="mt-1 text-red-100">Longform blog və premium xəbər detalları kilidsiz açılır.</p>
               </div>
-              <p className="text-sm text-slate-300 italic">
-                {"\u201C"}Sektör NABZI sayəsində food cost-umuzu 8% azaltdıq. Hər həftə newsletter-i gözləyirəm.{"\u201D"}
-              </p>
-              <p className="text-xs text-slate-500 mt-2">— Elvin M., Restoran Sahibi</p>
+              <div className="rounded-2xl bg-white/10 p-4">
+                <p className="font-semibold">Gələcək subscription qatı</p>
+                <p className="mt-1 text-red-100">Supabase role, payment və entitlement modeli bunun üstünə qurulacaq.</p>
+              </div>
+              <div className="rounded-2xl bg-white/10 p-4">
+                <p className="font-semibold">Sales layer</p>
+                <p className="mt-1 text-red-100">KAZAN AI, toolkit və konsultasiya CTA-ları üzvlük axınına bağlanacaq.</p>
+              </div>
             </div>
           </div>
         </div>

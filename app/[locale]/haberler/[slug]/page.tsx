@@ -127,7 +127,7 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
     : `https://dkagency.az/haberler/${slug}`;
 
   return (
-    <BlogContentWrapper articleTitle={article.title}>
+    <BlogContentWrapper articleTitle={article.title} isPremium={article.isPremium}>
       <main className="bg-slate-50 min-h-screen pb-20 lg:pb-0">
         {/* Section */}
         {/* Section */}
