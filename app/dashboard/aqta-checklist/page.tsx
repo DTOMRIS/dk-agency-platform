@@ -5,459 +5,386 @@ import Link from 'next/link';
 import {
   AlertTriangle,
   ArrowRight,
-  BookOpen,
-  CheckCircle2,
+  CheckSquare,
   ChevronDown,
+  ChevronUp,
   ClipboardCheck,
   Droplets,
-  FileCheck2,
   Flame,
-  Gauge,
-  Shield,
-  Sparkles,
-  SprayCan,
-  TimerReset,
-  UtensilsCrossed,
+  RefreshCcw,
+  ShieldAlert,
+  ShieldCheck,
+  Soup,
   Users,
+  Utensils,
+  WalletCards,
+  Waves,
 } from 'lucide-react';
 
-type RoutineTab = 'daily' | 'weekly' | 'monthly';
+type TabKey = 'daily' | 'weekly' | 'monthly';
 
-type ChecklistItem = {
+type AdminSection = {
   id: string;
-  label: string;
-};
-
-type Section = {
   title: string;
-  subtitle: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  items: ChecklistItem[];
+  owner: string;
+  icon: typeof ShieldAlert;
+  items: string[];
 };
 
-const SECTIONS: Section[] = [
+const sections: AdminSection[] = [
   {
+    id: 'storage',
     title: 'Ərzaq saxlama',
-    subtitle: 'Soyuq zəncir, FIFO və temperatur intizamı',
-    icon: Droplets,
+    owner: 'Sous chef',
+    icon: Soup,
     items: [
-      { id: 'storage-1', label: 'Soyuducu +2°C ilə +6°C arasında saxlanır' },
-      { id: 'storage-2', label: 'Dondurucu -18°C və aşağıda işləyir' },
-      { id: 'storage-3', label: 'Çiy və hazır ərzaq ayrı rəflərdədir' },
-      { id: 'storage-4', label: 'Ərzaqlar yerdən 15-20 sm yuxarıdadır' },
-      { id: 'storage-5', label: 'FIFO və tarix etiketləri izlənir' },
-      { id: 'storage-6', label: 'Vaxtı keçmiş məhsul anbarı yoxdur' },
+      'Soyuducu +2°C ilə +6°C arasındadır',
+      'Dondurucu -18°C və aşağıdır',
+      'Çiy və hazır ərzaq ayrı saxlanır',
+      'FIFO və tarix etiketi görünür',
     ],
   },
   {
+    id: 'hygiene',
     title: 'Şəxsi gigiyena',
-    subtitle: 'Komanda intizamı və tibbi uyğunluq',
+    owner: 'Shift manager',
     icon: Users,
     items: [
-      { id: 'personal-1', label: 'Aktual tibbi arayışlar mövcuddur' },
-      { id: 'personal-2', label: 'İş geyimi təmiz və açıq rəngdədir' },
-      { id: 'personal-3', label: 'Bone və baş örtüyü istifadə olunur' },
-      { id: 'personal-4', label: 'Əl yuma stansiyası sabun və quruducu ilə hazırdır' },
-      { id: 'personal-5', label: 'Uzun dırnaq, zərgərlik və lak qadağası izlənir' },
-      { id: 'personal-6', label: 'Mətbəx və saxlama zonasında siqaret yoxdur' },
+      'Tibbi arayışlar aktualdır',
+      'İş geyimi və bone standartdadır',
+      'Əl yuma stansiyası işləkdir',
+      'Aksesuar və siqaret qaydası tətbiq olunur',
     ],
   },
   {
+    id: 'kitchen',
     title: 'Mətbəx gigiyenası',
-    subtitle: 'İş səthləri, rəng kodları və zibil axını',
-    icon: SprayCan,
+    owner: 'Kitchen lead',
+    icon: Utensils,
     items: [
-      { id: 'kitchen-1', label: 'Kəsmə taxtaları hər istifadədən sonra təmizlənir' },
-      { id: 'kitchen-2', label: 'Rəng kodlu taxtalar ayrı saxlanılır' },
-      { id: 'kitchen-3', label: 'Zibil qutuları qapaqlı və pedallıdır' },
-      { id: 'kitchen-4', label: 'Səthlərdə yağ, qalıq və çirk yığılmır' },
-      { id: 'kitchen-5', label: 'Zərərverici izi yoxdur' },
-      { id: 'kitchen-6', label: 'Əlcəklər çiy və bişmiş məhsul arasında dəyişdirilir' },
+      'İş səthləri dezinfeksiya edilir',
+      'Rəng kodlu taxtalar istifadə olunur',
+      'Zibil qutuları qapaqlıdır',
+      'Zərərverici izi görünmür',
     ],
   },
   {
+    id: 'water',
     title: 'Su keyfiyyəti',
-    subtitle: 'İçməli su, buz və təmiz axın',
+    owner: 'Operations',
     icon: Droplets,
     items: [
-      { id: 'water-1', label: 'Şəbəkə suyu filtrdən keçir' },
-      { id: 'water-2', label: 'Buz maşını təmizlənir və izlənir' },
-      { id: 'water-3', label: 'Buz əl ilə deyil, alətlə götürülür' },
-      { id: 'water-4', label: 'Suyun qoxu və bulanıqlıq problemi yoxdur' },
+      'İçməli su sistemi təhlükəsizdir',
+      'Buz maşını təmizdir',
+      'Buz servis qaydası pozulmur',
     ],
   },
   {
+    id: 'prep',
     title: 'Yemək hazırlama',
-    subtitle: 'Temperatur və təhlükəsiz saxlanma rejimi',
+    owner: 'Chef',
     icon: Flame,
     items: [
-      { id: 'prep-1', label: 'Toyuq minimum 74°C daxili temperaturda bişirilir' },
-      { id: 'prep-2', label: 'Mal əti uyğun daxili temperaturla çıxarılır' },
-      { id: 'prep-3', label: 'Hazır yemək 2 saatdan çox otaq temperaturunda qalmır' },
-      { id: 'prep-4', label: 'Yenidən qızdırma 74°C səviyyəsinə çatır' },
-      { id: 'prep-5', label: 'Termometr istifadə qaydası komanda tərəfindən bilinir' },
+      'Toyuq 74°C daxili temperaturu keçir',
+      'Hazır yemək 2 saatdan çox kənarda qalmır',
+      'Yenidən qızdırma 74°C üzərinə çıxır',
+      'Əlcək qaydası qorunur',
     ],
   },
   {
+    id: 'docs',
     title: 'Sənədləşdirmə',
-    subtitle: 'Audit, izlenebilirlik və jurnal intizamı',
-    icon: FileCheck2,
+    owner: 'Admin',
+    icon: WalletCards,
     items: [
-      { id: 'docs-1', label: 'AQTA qeydiyyatı tamamlanıb' },
-      { id: 'docs-2', label: 'Gündəlik temperatur jurnalı doldurulur' },
-      { id: 'docs-3', label: 'Təmizlik jurnalı saxlanır' },
-      { id: 'docs-4', label: 'Ərzaq mənbəyi faktura və qəbzlə izlənir' },
-      { id: 'docs-5', label: 'Tibbi arayışların tarixləri nəzarətdədir' },
+      'AQTA qeydiyyatı tamdır',
+      'Temperatur jurnalı doldurulur',
+      'Fakturalar arxivlənir',
+      'Tibbi arayış tarixləri izlənir',
     ],
   },
   {
+    id: 'hall',
     title: 'Zal və ümumi sahələr',
-    subtitle: 'Tualet, havalandırma və görünən nizam',
-    icon: UtensilsCrossed,
+    owner: 'Front-of-house',
+    icon: Waves,
     items: [
-      { id: 'hall-1', label: 'Tualet təmiz və tam təchizatlıdır' },
-      { id: 'hall-2', label: 'Havalandırma qoxu daşımır' },
-      { id: 'hall-3', label: 'Giriş və zal sanitariya baxımından uyğundur' },
-      { id: 'hall-4', label: 'Döşəmə və divar səthləri təmiz saxlanır' },
+      'Tualet təmiz və tam təchizatlıdır',
+      'Mətbəx qoxusu zala keçmir',
+      'Ümumi sanitariya uyğun görünür',
     ],
   },
   {
+    id: 'allergen',
     title: 'Allergen',
-    subtitle: 'Menyu üzərində riskli maddələrin işarəsi',
-    icon: AlertTriangle,
+    owner: 'Service lead',
+    icon: ShieldAlert,
     items: [
-      { id: 'allergen-1', label: 'Menyuda allergen məlumatı göstərilir' },
-      { id: 'allergen-2', label: 'Süd, gluten, yumurta və qoz işarələnib' },
-      { id: 'allergen-3', label: 'Server allergen sualına cavab verə bilir' },
-      { id: 'allergen-4', label: 'Çarpaz kontaminasiya protokolu yazılıb' },
+      'Menyuda allergen qeyd olunub',
+      'Servis heyəti allergen cavabını bilir',
+      'Allergen üçün ayrıca hazırlıq qaydası var',
     ],
   },
 ];
 
-const ROUTINES: Record<RoutineTab, string[]> = {
+const routines: Record<TabKey, string[]> = {
   daily: [
-    'Soyuducu və dondurucu temperaturunu yoxla',
-    'İş səthlərini və əl yuma zonalarını dezinfeksiya et',
-    'FIFO və son istifadə tarixlərini gözdən keçir',
-    'Zibil qutularını boşalt və qapaqları yoxla',
-    'İş geyimləri və bone intizamını təsdiqlə',
+    'Temperatur jurnalını doldur',
+    'Əl yuma və sabun stansiyalarını yoxla',
+    'FIFO və son tarixləri scan et',
+    'İş səthləri və zibili bağlanışda audit et',
   ],
   weekly: [
-    'Soyuducu içini tam təmizlə',
-    'Zərərverici nəzarəti üçün küncləri yoxla',
-    'Kəsmə taxtalarında çat və deformasiya olub-olmadığını bax',
-    'Havalandırma filtrini təmizlə',
-    'Tualet sanitariya auditini apar',
+    'Soyuducuları dərin təmizlə',
+    'Kəsmə taxtalarını və havalandırma filtrini yoxla',
+    'Zərərverici risk nöqtələrini audit et',
   ],
   monthly: [
-    'Tibbi arayış tarixlərini yenilə',
-    'Ərzaq mənbəyi sənədlərini arxivlə',
-    'Avadanlıq xidmət statusunu yoxla',
-    'Komandaya qısa gigiyena refresher keç',
-    'Pest control xidmətini planla',
+    'Tibbi arayış və sənəd tarixlərini yenilə',
+    'Komandaya 15 dəqiqəlik gigiyena refresher et',
+    'Traceability sənədlərini arxivdən test çıxart',
   ],
 };
 
-const COMMON_FINES = [
-  'Tibbi arayışların olmaması',
-  'Vaxtı keçmiş ərzaq',
-  'Soyuducu temperaturunun normadan kənar olması',
-  'Çiy və hazır ərzağın birlikdə saxlanması',
-  'Əl yuma imkanının olmaması',
-  'Gigiyena jurnalının aparılmaması',
-  'Zərərverici izi',
-  'Ərzaq mənbəyi sənədlərinin olmaması',
-  'Uyğunsuz iş geyimi',
-  'Tualet sanitariya problemi',
+const riskReasons = [
+  'Tibbi arayış yoxdur',
+  'Vaxtı keçmiş məhsul var',
+  'Soyuducu norma xaricindədir',
+  'Çiy və hazır məhsul qarışır',
+  'Jurnal boşdur',
 ];
 
-const CROSS_CONTAMINATION = [
-  { color: 'bg-red-500', label: 'Qırmızı', desc: 'Çiy ət' },
-  { color: 'bg-green-500', label: 'Yaşıl', desc: 'Tərəvəz' },
-  { color: 'bg-yellow-500', label: 'Sarı', desc: 'Toyuq' },
-  { color: 'bg-blue-500', label: 'Mavi', desc: 'Balıq' },
-];
+export default function DashboardAqtaChecklistPage() {
+  const [checked, setChecked] = useState<Set<string>>(new Set());
+  const [openSection, setOpenSection] = useState<string>(sections[0].id);
+  const [tab, setTab] = useState<TabKey>('daily');
 
-export default function AqtaChecklistAdminPage() {
-  const [openSection, setOpenSection] = useState(0);
-  const [activeRoutine, setActiveRoutine] = useState<RoutineTab>('daily');
-  const [checked, setChecked] = useState<Set<string>>(new Set(['storage-1', 'personal-1']));
+  const totalItems = useMemo(
+    () => sections.reduce((sum, section) => sum + section.items.length, 0),
+    []
+  );
 
-  const totalItems = useMemo(() => SECTIONS.reduce((sum, section) => sum + section.items.length, 0), []);
-  const completedItems = checked.size;
-  const progress = Math.round((completedItems / totalItems) * 100);
+  const progress = Math.round((checked.size / totalItems) * 100);
 
-  const toggleItem = (id: string) => {
+  const toggle = (key: string) => {
     setChecked((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
       return next;
     });
   };
 
-  const resetAll = () => setChecked(new Set());
+  const reset = () => setChecked(new Set());
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 lg:p-8">
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-red-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.24em] text-red-700">
-            <Shield size={12} />
-            AQTA Admin
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-red-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-red-700">
+            <ShieldAlert size={14} />
+            Compliance Control
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">AQTA Hazırlıq və Review Paneli</h1>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Gigiyena, sənədləşdirmə və yoxlama intizamını bir yerdə izləyin. Bu ekran operativ review üçündür, public toolkit deyil.
+          <h1 className="text-2xl font-bold text-gray-900">AQTA Hazırlıq Paneli</h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Admin üçün operativ gigiyena və sənədləşdirmə nəzarəti. Mock state ilə işləyir.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <button
-            onClick={resetAll}
+            onClick={reset}
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
           >
-            <TimerReset size={16} />
+            <RefreshCcw size={16} />
             Sıfırla
           </button>
           <Link
-            href="/blog/aqta-cerime-checklist"
+            href="/toolkit/aqta-checklist"
             className="inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-red-700"
           >
-            <BookOpen size={16} />
-            Blog referansı
+            Public aləti aç
+            <ArrowRight size={15} />
           </Link>
         </div>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <div className="space-y-6">
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center justify-between">
-              <div>
-                <p className="text-sm font-semibold text-gray-500">İrəliləyiş</p>
-                <h2 className="text-lg font-bold text-gray-900">
-                  {completedItems}/{totalItems} maddə tamamlandı
-                </h2>
-              </div>
-              <div className="rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-700">
-                {progress}% hazır
-              </div>
-            </div>
-            <div className="h-3 overflow-hidden rounded-full bg-gray-100">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-red-600 to-rose-500 transition-all"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-xl bg-red-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-widest text-red-600">Risk zonası</p>
-                <p className="mt-1 text-2xl font-black text-red-700">{totalItems - completedItems}</p>
-              </div>
-              <div className="rounded-xl bg-emerald-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600">Hazır maddə</p>
-                <p className="mt-1 text-2xl font-black text-emerald-700">{completedItems}</p>
-              </div>
-              <div className="rounded-xl bg-slate-100 p-4">
-                <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">İzləmə rejimi</p>
-                <p className="mt-1 text-sm font-bold text-slate-900">Sahə + sənəd + tarix</p>
-              </div>
+      <div className="mb-8 grid gap-4 md:grid-cols-4">
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:col-span-2">
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-gray-400">
+            Audit progress
+          </div>
+          <div className="flex items-end gap-3">
+            <div className="text-3xl font-black text-red-600">{progress}%</div>
+            <div className="pb-1 text-sm text-gray-500">
+              {checked.size}/{totalItems} nəzarət maddəsi tamamdır
             </div>
           </div>
+          <div className="mt-4 h-2 overflow-hidden rounded-full bg-gray-100">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-red-600 to-rose-500 transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-5">
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-red-500">
+            Açıq risk
+          </div>
+          <div className="text-3xl font-black text-red-600">{riskReasons.length}</div>
+          <div className="mt-1 text-xs text-gray-500">Ən çox cərimə doğuran başlıq</div>
+        </div>
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-gray-400">
+            Ritm
+          </div>
+          <div className="text-3xl font-black text-gray-900">3</div>
+          <div className="mt-1 text-xs text-gray-500">Daily, weekly, monthly review</div>
+        </div>
+      </div>
 
-          <div className="space-y-4">
-            {SECTIONS.map((section, sectionIndex) => {
-              const Icon = section.icon;
-              const done = section.items.filter((item) => checked.has(item.id)).length;
-              const isOpen = openSection === sectionIndex;
-
-              return (
-                <div key={section.title} className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-                  <button
-                    onClick={() => setOpenSection(isOpen ? -1 : sectionIndex)}
-                    className="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-gray-50"
-                  >
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-50">
-                      <Icon size={20} className="text-red-600" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-base font-bold text-gray-900">{section.title}</h3>
-                        <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-bold text-gray-600">
-                          {done}/{section.items.length}
-                        </span>
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_360px]">
+        <div className="space-y-6">
+          <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+            <div className="space-y-3">
+              {sections.map((section) => {
+                const Icon = section.icon;
+                const isOpen = openSection === section.id;
+                const done = section.items.filter((item) => checked.has(`${section.id}:${item}`)).length;
+                return (
+                  <div key={section.id} className="overflow-hidden rounded-2xl border border-gray-200">
+                    <button
+                      onClick={() => setOpenSection(isOpen ? '' : section.id)}
+                      className="flex w-full items-center gap-4 px-4 py-4 text-left hover:bg-gray-50"
+                    >
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-50 text-red-600">
+                        <Icon size={20} />
                       </div>
-                      <p className="text-sm text-gray-500">{section.subtitle}</p>
-                    </div>
-                    <ChevronDown size={18} className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                  </button>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h2 className="text-sm font-bold text-gray-900 sm:text-base">{section.title}</h2>
+                          <span className="rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-600">
+                            {done}/{section.items.length}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-xs text-gray-500">Owner: {section.owner}</p>
+                      </div>
+                      {isOpen ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
+                    </button>
 
-                  {isOpen && (
-                    <div className="border-t border-gray-100 px-5 py-4">
-                      <div className="grid gap-3 sm:grid-cols-2">
+                    {isOpen && (
+                      <div className="border-t border-gray-100 bg-gray-50/50">
                         {section.items.map((item) => {
-                          const isDone = checked.has(item.id);
-
+                          const key = `${section.id}:${item}`;
+                          const active = checked.has(key);
                           return (
                             <button
-                              key={item.id}
-                              onClick={() => toggleItem(item.id)}
-                              className={`flex items-start gap-3 rounded-xl border p-4 text-left transition-all ${
-                                isDone
-                                  ? 'border-emerald-200 bg-emerald-50'
-                                  : 'border-gray-200 bg-white hover:border-red-200 hover:bg-red-50/40'
-                              }`}
+                              key={key}
+                              onClick={() => toggle(key)}
+                              className="flex w-full items-start gap-3 border-b border-gray-100 px-4 py-4 text-left last:border-b-0 hover:bg-white"
                             >
-                              <span
-                                className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 ${
-                                  isDone
-                                    ? 'border-emerald-600 bg-emerald-600 text-white'
-                                    : 'border-gray-300 bg-white'
+                              <div
+                                className={`mt-0.5 flex h-6 w-6 items-center justify-center rounded-lg border ${
+                                  active
+                                    ? 'border-emerald-500 bg-emerald-500 text-white'
+                                    : 'border-gray-300 bg-white text-transparent'
                                 }`}
                               >
-                                {isDone && <CheckCircle2 size={12} />}
-                              </span>
-                              <span className={`text-sm font-medium ${isDone ? 'text-emerald-900' : 'text-gray-800'}`}>
-                                {item.label}
-                              </span>
+                                <CheckSquare size={14} />
+                              </div>
+                              <div className={`text-sm ${active ? 'font-semibold text-emerald-700' : 'text-gray-700'}`}>
+                                {item}
+                              </div>
                             </button>
                           );
                         })}
                       </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-2">
-              <Gauge size={18} className="text-red-600" />
-              <h2 className="text-lg font-bold text-gray-900">Gigiyena rejimi</h2>
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">Gigiyena ritmi</h2>
+                <p className="text-sm text-gray-500">Admin checklist görünüşü ilə komanda təkrarı.</p>
+              </div>
             </div>
-            <div className="mb-4 flex gap-2">
-              {(['daily', 'weekly', 'monthly'] as RoutineTab[]).map((tab) => (
+            <div className="mb-4 inline-flex rounded-xl bg-gray-100 p-1">
+              {(['daily', 'weekly', 'monthly'] as TabKey[]).map((item) => (
                 <button
-                  key={tab}
-                  onClick={() => setActiveRoutine(tab)}
-                  className={`rounded-full px-4 py-2 text-sm font-bold transition-colors ${
-                    activeRoutine === tab ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  key={item}
+                  onClick={() => setTab(item)}
+                  className={`rounded-lg px-4 py-2 text-sm font-semibold ${
+                    tab === item ? 'bg-white text-red-600 shadow-sm' : 'text-gray-500'
                   }`}
                 >
-                  {tab === 'daily' ? 'Gündəlik' : tab === 'weekly' ? 'Həftəlik' : 'Aylıq'}
+                  {item === 'daily' ? 'Gündəlik' : item === 'weekly' ? 'Həftəlik' : 'Aylıq'}
                 </button>
               ))}
             </div>
-            <div className="grid gap-3 md:grid-cols-2">
-              {ROUTINES[activeRoutine].map((task) => (
-                <div key={task} className="flex items-start gap-3 rounded-xl bg-gray-50 p-4">
-                  <ClipboardCheck size={16} className="mt-0.5 text-red-600" />
-                  <p className="text-sm text-gray-700">{task}</p>
+            <div className="space-y-3">
+              {routines[tab].map((item, index) => (
+                <div key={item} className="flex items-start gap-3 rounded-xl bg-gray-50 px-4 py-3">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-red-100 text-[11px] font-black text-red-600">
+                    {index + 1}
+                  </div>
+                  <div className="text-sm text-gray-700">{item}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-2">
-              <Sparkles size={18} className="text-red-600" />
-              <h2 className="text-lg font-bold text-gray-900">AQTA nədir?</h2>
-            </div>
-            <p className="text-sm leading-6 text-gray-600">
-              Azərbaycan Qida Təhlükəsizliyi Agentliyi qida təhlükəsizliyi, gigiyena və sənədləşdirmə
-              intizamına baxır. Yoxlama qısa, konkret və sənəd əsaslı olur.
-            </p>
-          </div>
-
+        <aside className="space-y-5">
           <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <AlertTriangle size={18} className="text-red-600" />
-              <h2 className="text-lg font-bold text-gray-900">Ən yayğın 10 cərimə səbəbi</h2>
+              <h2 className="font-bold text-gray-900">Ən yayğın cərimə səbəbləri</h2>
             </div>
-            <ol className="space-y-2 text-sm text-gray-700">
-              {COMMON_FINES.map((item, index) => (
-                <li key={item} className="flex items-start gap-3 rounded-xl bg-gray-50 p-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-red-700">
-                    {index + 1}
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-2">
-              <Shield size={18} className="text-red-600" />
-              <h2 className="text-lg font-bold text-gray-900">Cross-contamination</h2>
-            </div>
-            <p className="text-sm leading-6 text-gray-600">
-              Çarpaz kontaminasiya çiy məhsuldan hazır yeməyə bakteriya keçməsidir. Ən praktik qorunma
-              rəng kodlu taxtalar, ayrıca alətlər və əl dəyişmə intizamıdır.
-            </p>
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              {CROSS_CONTAMINATION.map((item) => (
-                <div key={item.label} className="flex items-center gap-3 rounded-xl border border-gray-200 p-3">
-                  <span className={`h-3 w-3 rounded-full ${item.color}`} />
-                  <div>
-                    <p className="text-sm font-bold text-gray-900">{item.label}</p>
-                    <p className="text-xs text-gray-500">{item.desc}</p>
-                  </div>
+            <div className="space-y-3">
+              {riskReasons.map((reason) => (
+                <div key={reason} className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-900">
+                  {reason}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-red-200 bg-gradient-to-br from-red-50 to-rose-50 p-6 shadow-sm">
-            <div className="mb-3 flex items-center gap-2">
-              <Sparkles size={18} className="text-red-600" />
-              <h2 className="text-lg font-bold text-gray-900">DK Agency məsləhəti</h2>
-            </div>
-            <p className="text-sm leading-6 text-gray-700">
-              Bu işi cərimə sonrası yox, açılışdan əvvəl sistemləşdirin. Gündəlik temperatur, aylıq sənəd
-              təzələnməsi və məsul şəxs üzrə audit xətti yaradın.
-            </p>
-          </div>
-
-          <div className="rounded-2xl bg-slate-950 p-6 text-white shadow-sm">
-            <div className="mb-3 flex items-center gap-2">
-              <ClipboardCheck size={18} className="text-red-400" />
-              <h2 className="text-lg font-bold">OCAQ Panel</h2>
-            </div>
-            <p className="text-sm leading-6 text-slate-300">
-              AQTA, gigiyena və açılış yoxlamalarını bir paneldə izləmək üçün əməliyyat qovşağı.
-              Sənəd, foto və məsuliyyət axınını bir yerdə saxla.
-            </p>
-            <Link
-              href="/dashboard"
-              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-900 transition-transform hover:scale-[1.01]"
-            >
-              Panelə bax
-              <ArrowRight size={14} />
-            </Link>
-          </div>
-
           <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="mb-3 flex items-center gap-2">
-              <BookOpen size={18} className="text-red-600" />
-              <h2 className="text-lg font-bold text-gray-900">Blog referansı</h2>
+            <div className="mb-4 flex items-center gap-2">
+              <ClipboardCheck size={18} className="text-red-600" />
+              <h2 className="font-bold text-gray-900">Cross-contamination</h2>
             </div>
-            <p className="text-sm text-gray-600">
-              Public izah və müştəri yönümlü versiya üçün əsas yazı ilə sinxron saxla.
+            <div className="space-y-2 text-sm text-gray-600">
+              <p>Qırmızı: çiy ət</p>
+              <p>Sarı: toyuq</p>
+              <p>Mavi: balıq</p>
+              <p>Yaşıl: tərəvəz</p>
+              <p>Ağ: çörək və servis</p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-6 text-white">
+            <div className="mb-3 flex items-center gap-2">
+              <ShieldCheck size={18} className="text-red-300" />
+              <h2 className="font-bold">OCAQ Panel upsell</h2>
+            </div>
+            <p className="text-sm leading-relaxed text-slate-300">
+              Bu kontrol siyahısını field-by-field işçi bazasında tapşırıq, deadline və tarixçə ilə
+              izləmək üçün OCAQ panel workflow-u açılmalıdır.
             </p>
             <Link
-              href="/blog/aqta-cerime-checklist"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-red-600 hover:text-red-700"
+              href="/auth/register"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-red-300 hover:text-red-200"
             >
-              aqta-cerime-checklist
-              <ArrowRight size={14} />
+              Panel setup planı <ArrowRight size={14} />
             </Link>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   );
