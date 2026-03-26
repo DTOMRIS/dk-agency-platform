@@ -220,7 +220,8 @@ export const KAZAN_KNOWLEDGE = {
   aqta: {
     definition:
       'AQTA qida təhlükəsizliyi yoxlamalarında saxlama, gigiyena, sənədləşdirmə və allergen nəzarətini ölçən əsas tənzimləyici qurumdur.',
-    registrationFee: 'Məqalə konteksti: qeydiyyat pulsuzdur, vasitəçiyə ödəniş vermə.',
+    registrationFee:
+      'AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət rüsumu yoxdur, müraciət pulsuzdur.',
     hotline: '1003',
     website: 'aqta.gov.az',
     eightAreas: ['Ərzaq saxlama', 'Şəxsi gigiyena', 'Mətbəx gigiyenası', 'Su keyfiyyəti', 'Yemək hazırlama', 'Sənədləşdirmə', 'Zal və ümumi sahələr', 'Allergen'],

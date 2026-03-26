@@ -5,6 +5,7 @@
 - **Core Business**: Investment, Holding, and Agency Management.
 - **Target Audience**: Business partners, investors, and elite clients.
 - **CRITICAL RULE**: This is NOT a Restaurant Management System. Avoid hardcoded "Hospitality", "Restaurant", "Food Cost", or "AQTA" related content on core landing pages unless specifically requested for a sub-module.
+- **AQTA SOURCE OF TRUTH**: `AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət rüsumu yoxdur, müraciət pulsuzdur.`
 
 ## 🎨 Design System
 - **Tone**: Premium, Sophisticated, High-Tech ("God Mode").

@@ -1,18 +1,18 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
-  ChevronLeft,
   ArrowRight,
-  Lightbulb,
   BookOpen,
-  Plus,
-  X,
-  RotateCcw,
+  ChevronLeft,
   Info,
+  Lightbulb,
+  Plus,
+  RotateCcw,
   TrendingUp,
   UtensilsCrossed,
+  X,
 } from 'lucide-react';
 
 interface MenuItem {
@@ -24,42 +24,53 @@ interface MenuItem {
 
 type Category = 'star' | 'plowHorse' | 'puzzle' | 'dog';
 
-const CATEGORY_META: Record<Category, { emoji: string; label: string; labelAz: string; color: string; bg: string; ring: string; advice: string }> = {
+const CATEGORY_META: Record<
+  Category,
+  {
+    emoji: string;
+    label: string;
+    labelEn: string;
+    color: string;
+    bg: string;
+    ring: string;
+    advice: string;
+  }
+> = {
   star: {
     emoji: '⭐',
     label: 'Ulduz',
-    labelAz: 'Star',
+    labelEn: 'Star',
     color: 'text-yellow-600',
     bg: 'bg-yellow-50',
     ring: 'ring-yellow-200/60',
-    advice: 'Saxla, qiymət artır, onu birinci görünür et',
+    advice: 'Saxla, qiyməti artır və menyuda daha görünən yerə qoy.',
   },
   plowHorse: {
     emoji: '🐴',
     label: 'At',
-    labelAz: 'Plow Horse',
+    labelEn: 'Plow Horse',
     color: 'text-blue-600',
     bg: 'bg-blue-50',
     ring: 'ring-blue-200/60',
-    advice: 'Maya dəyərini azalt, porsiya ölçüsünü optimallaşdır',
+    advice: 'Maya dəyərini azalt, porsiya və garniri optimallaşdır.',
   },
   puzzle: {
     emoji: '🧩',
     label: 'Puzzle',
-    labelAz: 'Puzzle',
+    labelEn: 'Puzzle',
     color: 'text-purple-600',
     bg: 'bg-purple-50',
     ring: 'ring-purple-200/60',
-    advice: 'Tanıtımı artır, menyuda görünürlüğü yüksəlt',
+    advice: 'Tanıtımı artır, ofisiant tövsiyəsi və görünürlük ver.',
   },
   dog: {
     emoji: '🐕',
     label: 'İt',
-    labelAz: 'Dog',
+    labelEn: 'Dog',
     color: 'text-red-600',
     bg: 'bg-red-50',
     ring: 'ring-red-200/60',
-    advice: 'Menyudan çıxar və ya tam yenidən dizayn et',
+    advice: 'Menyudan çıxar və ya resepti tam yenidən düşün.',
   },
 };
 
@@ -74,16 +85,21 @@ const DEFAULT_ITEMS: MenuItem[] = [
 
 function classify(items: MenuItem[]): { item: MenuItem; category: Category }[] {
   if (items.length === 0) return [];
-  const avgSales = items.reduce((s, i) => s + i.salesCount, 0) / items.length;
-  const avgMargin = items.reduce((s, i) => s + i.contributionMargin, 0) / items.length;
+
+  const avgSales = items.reduce((sum, item) => sum + item.salesCount, 0) / items.length;
+  const avgMargin =
+    items.reduce((sum, item) => sum + item.contributionMargin, 0) / items.length;
+
   return items.map((item) => {
     const highSales = item.salesCount >= avgSales;
     const highMargin = item.contributionMargin >= avgMargin;
+
     let category: Category;
     if (highSales && highMargin) category = 'star';
-    else if (highSales && !highMargin) category = 'plowHorse';
-    else if (!highSales && highMargin) category = 'puzzle';
+    else if (highSales) category = 'plowHorse';
+    else if (highMargin) category = 'puzzle';
     else category = 'dog';
+
     return { item, category };
   });
 }
@@ -92,116 +108,181 @@ export default function MenuMatrixPage() {
   const [items, setItems] = useState<MenuItem[]>(DEFAULT_ITEMS);
 
   const classified = useMemo(() => classify(items), [items]);
-  const avgSales = items.length > 0 ? items.reduce((s, i) => s + i.salesCount, 0) / items.length : 0;
-  const avgMargin = items.length > 0 ? items.reduce((s, i) => s + i.contributionMargin, 0) / items.length : 0;
+
+  const avgSales = useMemo(() => {
+    if (items.length === 0) return 0;
+    return items.reduce((sum, item) => sum + item.salesCount, 0) / items.length;
+  }, [items]);
+
+  const avgMargin = useMemo(() => {
+    if (items.length === 0) return 0;
+    return items.reduce((sum, item) => sum + item.contributionMargin, 0) / items.length;
+  }, [items]);
 
   const counts = useMemo(() => {
-    const c = { star: 0, plowHorse: 0, puzzle: 0, dog: 0 };
-    classified.forEach(({ category }) => c[category]++);
-    return c;
+    const next = { star: 0, plowHorse: 0, puzzle: 0, dog: 0 };
+    classified.forEach(({ category }) => {
+      next[category] += 1;
+    });
+    return next;
   }, [classified]);
 
   const addItem = () => {
-    setItems([...items, { id: Date.now().toString(), name: '', salesCount: 0, contributionMargin: 0 }]);
+    setItems((prev) => [
+      ...prev,
+      { id: Date.now().toString(), name: '', salesCount: 0, contributionMargin: 0 },
+    ]);
   };
+
   const removeItem = (id: string) => {
-    if (items.length > 1) setItems(items.filter((i) => i.id !== id));
+    setItems((prev) => (prev.length > 1 ? prev.filter((item) => item.id !== id) : prev));
   };
+
   const updateItem = (id: string, field: keyof MenuItem, value: string | number) => {
-    setItems(items.map((i) => (i.id === id ? { ...i, [field]: value } : i)));
+    setItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, [field]: value } : item))
+    );
   };
-  const resetAll = () => setItems(DEFAULT_ITEMS);
+
+  const resetAll = () => {
+    setItems(DEFAULT_ITEMS);
+  };
 
   return (
     <div className="bg-white pb-24">
-
-      {/* HERO */}
-      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden">
+      <div className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
         <div className="absolute inset-0">
-          <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-purple-500/8 rounded-full blur-[100px]" />
-          <div className="absolute bottom-[-30%] left-[-5%] w-[400px] h-[400px] bg-fuchsia-500/5 rounded-full blur-[80px]" />
+          <div className="absolute right-[-10%] top-[-20%] h-[600px] w-[600px] rounded-full bg-purple-500/8 blur-[100px]" />
+          <div className="absolute bottom-[-30%] left-[-5%] h-[400px] w-[400px] rounded-full bg-fuchsia-500/5 blur-[80px]" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-20">
-          <Link href="/toolkit" className="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-300 text-sm transition-colors mb-8 group">
-            <ChevronLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+        <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-8">
+          <Link
+            href="/toolkit"
+            className="group mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-300"
+          >
+            <ChevronLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
             <span>Toolkit</span>
           </Link>
           <div className="max-w-2xl">
-            <h1 className="text-4xl sm:text-5xl font-display font-black text-white tracking-tight leading-[1.1] mb-5">
-              Menyu<br />
-              <span className="bg-gradient-to-r from-purple-400 to-fuchsia-300 bg-clip-text text-transparent">Matrisi</span>
+            <h1 className="mb-5 text-4xl font-display font-black leading-[1.1] tracking-tight text-white sm:text-5xl">
+              Menyu
+              <br />
+              <span className="bg-gradient-to-r from-purple-400 to-fuchsia-300 bg-clip-text text-transparent">
+                Matrisi
+              </span>
             </h1>
-            <p className="text-lg text-slate-400 leading-relaxed max-w-lg">
-              Yeməklərini 4 kateqoriyaya ayır - hansını saxla, hansını sil, hansını tanıt. BCG matrisi ilə menyu mühəndisliyi.
+            <p className="max-w-lg text-lg leading-relaxed text-slate-400">
+              Yeməklərini 4 kateqoriyaya ayır, hansını saxla, hansını sil, hansını tanıt. BCG
+              matrisi ilə menyu mühəndisliyi.
             </p>
           </div>
         </div>
       </div>
 
-      {/* KPI STRIP */}
-      <div className="max-w-6xl mx-auto px-6 -mt-10 relative z-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {(['star', 'plowHorse', 'puzzle', 'dog'] as Category[]).map((cat) => {
-            const m = CATEGORY_META[cat];
+      <div className="relative z-10 mx-auto -mt-10 max-w-6xl px-6">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {(['star', 'plowHorse', 'puzzle', 'dog'] as Category[]).map((category) => {
+            const meta = CATEGORY_META[category];
             return (
-              <div key={cat} className={`${m.bg} rounded-2xl p-5 ring-1 ${m.ring}`}>
-                <div className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2">{m.emoji} {m.label}</div>
-                <div className={`text-3xl font-black ${m.color} tabular-nums`}>{counts[cat]}</div>
-                <div className="text-[10px] text-slate-400 mt-1">{m.labelAz}</div>
+              <div key={category} className={`${meta.bg} rounded-2xl p-5 ring-1 ${meta.ring}`}>
+                <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">
+                  {meta.emoji} {meta.label}
+                </div>
+                <div className={`text-3xl font-black tabular-nums ${meta.color}`}>
+                  {counts[category]}
+                </div>
+                <div className="mt-1 text-[10px] text-slate-400">{meta.labelEn}</div>
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* CALCULATOR TABLE */}
-      <div className="max-w-6xl mx-auto px-6 mt-10 space-y-6">
-        <div className="bg-white rounded-2xl ring-1 ring-slate-200/80 shadow-lg shadow-slate-200/40 overflow-hidden">
-          <div className="px-6 py-5 flex items-center justify-between border-b border-slate-100">
+      <div className="mx-auto mt-10 max-w-6xl space-y-6 px-6">
+        <div className="overflow-hidden rounded-2xl bg-white shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
+          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-5">
             <h2 className="text-base font-bold text-slate-900">Yemək Siyahısı</h2>
             <div className="flex items-center gap-4">
               <div className="text-xs text-slate-400">
-                Ort. satış: <strong className="text-slate-600">{avgSales.toFixed(0)}</strong> | Ort. marja: <strong className="text-slate-600">{avgMargin.toFixed(1)} ₼</strong>
+                Ort. satış: <strong className="text-slate-600">{avgSales.toFixed(0)}</strong> |
+                Ort. marja:{' '}
+                <strong className="text-slate-600">{avgMargin.toFixed(1)} ₼</strong>
               </div>
-              <button onClick={resetAll} className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-red-500 transition-colors">
+              <button
+                onClick={resetAll}
+                className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500"
+              >
                 <RotateCcw size={13} /> Sıfırla
               </button>
             </div>
           </div>
+
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100 bg-slate-50/60">
+                <tr className="border-b border-slate-100 bg-slate-50/60 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                   <th className="px-5 py-3 text-left">Yemək adı</th>
-                  <th className="px-3 py-3 text-center w-[130px]">Satış sayı</th>
-                  <th className="px-3 py-3 text-center w-[160px]">Contribution Margin (₼)</th>
-                  <th className="px-3 py-3 text-center w-[140px]">Kateqoriya</th>
+                  <th className="w-[130px] px-3 py-3 text-center">Satış sayı</th>
+                  <th className="w-[160px] px-3 py-3 text-center">Contribution Margin (₼)</th>
+                  <th className="w-[140px] px-3 py-3 text-center">Kateqoriya</th>
                   <th className="px-3 py-3 text-left">Tövsiyə</th>
-                  <th className="w-10"></th>
+                  <th className="w-10" />
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {classified.map(({ item, category }) => {
-                  const m = CATEGORY_META[category];
+                  const meta = CATEGORY_META[category];
                   return (
-                    <tr key={item.id} className="group hover:bg-slate-50/50 transition-colors">
+                    <tr key={item.id} className="group transition-colors hover:bg-slate-50/50">
                       <td className="px-5 py-3">
-                        <input type="text" value={item.name} onChange={(e) => updateItem(item.id, 'name', e.target.value)} className="w-full bg-transparent text-slate-900 font-medium outline-none placeholder:text-slate-300" placeholder="Yemək adı" />
+                        <input
+                          type="text"
+                          value={item.name}
+                          onChange={(event) => updateItem(item.id, 'name', event.target.value)}
+                          className="w-full bg-transparent font-medium text-slate-900 outline-none placeholder:text-slate-300"
+                          placeholder="Yemək adı"
+                        />
                       </td>
                       <td className="px-3 py-3">
-                        <input type="number" min="0" value={item.salesCount || ''} onChange={(e) => updateItem(item.id, 'salesCount', parseInt(e.target.value) || 0)} className="w-full text-center bg-slate-100/80 rounded-lg px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-purple-500/30 transition-shadow" />
+                        <input
+                          type="number"
+                          min="0"
+                          value={item.salesCount || ''}
+                          onChange={(event) =>
+                            updateItem(item.id, 'salesCount', parseInt(event.target.value, 10) || 0)
+                          }
+                          className="w-full rounded-lg bg-slate-100/80 px-2 py-1.5 text-center text-sm outline-none transition-shadow focus:ring-2 focus:ring-purple-500/30"
+                        />
                       </td>
                       <td className="px-3 py-3">
-                        <input type="number" step="0.1" min="0" value={item.contributionMargin || ''} onChange={(e) => updateItem(item.id, 'contributionMargin', parseFloat(e.target.value) || 0)} className="w-full text-center bg-slate-100/80 rounded-lg px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-purple-500/30 transition-shadow" />
+                        <input
+                          type="number"
+                          min="0"
+                          step="0.1"
+                          value={item.contributionMargin || ''}
+                          onChange={(event) =>
+                            updateItem(
+                              item.id,
+                              'contributionMargin',
+                              parseFloat(event.target.value) || 0
+                            )
+                          }
+                          className="w-full rounded-lg bg-slate-100/80 px-2 py-1.5 text-center text-sm outline-none transition-shadow focus:ring-2 focus:ring-purple-500/30"
+                        />
                       </td>
                       <td className="px-3 py-3 text-center">
-                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${m.bg} ${m.color} ring-1 ${m.ring}`}>
-                          {m.emoji} {m.label}
+                        <span
+                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${meta.bg} ${meta.color} ring-1 ${meta.ring}`}
+                        >
+                          {meta.emoji} {meta.label}
                         </span>
                       </td>
-                      <td className="px-3 py-3 text-xs text-slate-500">{m.advice}</td>
+                      <td className="px-3 py-3 text-xs text-slate-500">{meta.advice}</td>
                       <td className="pr-4 py-3">
-                        <button onClick={() => removeItem(item.id)} className="opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-500 transition-all">
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="text-slate-300 opacity-0 transition-all hover:text-red-500 group-hover:opacity-100"
+                        >
                           <X size={15} />
                         </button>
                       </td>
@@ -211,157 +292,203 @@ export default function MenuMatrixPage() {
               </tbody>
             </table>
           </div>
-          <div className="px-6 py-4 border-t border-slate-100">
-            <button onClick={addItem} className="inline-flex items-center gap-1.5 text-sm font-semibold text-purple-600 hover:text-purple-700 transition-colors">
+
+          <div className="border-t border-slate-100 px-6 py-4">
+            <button
+              onClick={addItem}
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-purple-600 transition-colors hover:text-purple-700"
+            >
               <Plus size={15} /> Əlavə et
             </button>
           </div>
         </div>
       </div>
 
-      {/* BİLİK PANELİ */}
-      <div className="max-w-6xl mx-auto px-6 mt-16">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-3xl font-display font-black text-slate-900 tracking-tight">
-            Menyu Mühəndisliyini <span className="bg-gradient-to-r from-purple-600 to-fuchsia-500 bg-clip-text text-transparent">Anlamaq</span>
+      <div className="mx-auto mt-16 max-w-6xl px-6">
+        <div className="mb-10 text-center">
+          <h2 className="text-2xl font-display font-black tracking-tight text-slate-900 sm:text-3xl">
+            Menyu Mühəndisliyini{' '}
+            <span className="bg-gradient-to-r from-purple-600 to-fuchsia-500 bg-clip-text text-transparent">
+              Anlamaq
+            </span>
           </h2>
-          <p className="text-slate-500 mt-2 max-w-md mx-auto text-sm">Menyunu data ilə idarə et, intuisiya ilə yox.</p>
+          <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
+            Menyunu data ilə idarə et, intuisiya ilə yox.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
-          {/* Menyu Mühəndisliyi Nədir */}
-          <div className="rounded-2xl bg-gradient-to-br from-purple-50/60 to-white ring-1 ring-purple-200/40 p-6 flex flex-col">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center shrink-0">
+        <div className="grid gap-5 md:grid-cols-3">
+          <div className="flex flex-col rounded-2xl bg-gradient-to-br from-purple-50/60 to-white p-6 ring-1 ring-purple-200/40">
+            <div className="mb-4 flex items-center gap-2.5">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-purple-100">
                 <Info size={15} className="text-purple-600" />
               </div>
               <h3 className="text-sm font-bold text-slate-900">Menyu Mühəndisliyi Nədir?</h3>
             </div>
-            <p className="text-[13px] text-slate-600 leading-relaxed mb-5">
-              Menyu mühəndisliyi - yeməkləri <strong className="text-slate-800">satış həcmi</strong> və <strong className="text-slate-800">mənfəət marjası</strong> üzrə təhlil edərək, menyunun optimallaşdırılmasıdır. 1982-ci ildə Michael Kasavana və Donald Smith tərəfindən yaradılıb.
+            <p className="mb-5 text-[13px] leading-relaxed text-slate-600">
+              Menyu mühəndisliyi yeməkləri <strong className="text-slate-800">satış həcmi</strong>{' '}
+              və <strong className="text-slate-800">mənfəət marjası</strong> üzrə təhlil edib
+              menyunu optimallaşdırmaqdır.
             </p>
-            <div className="bg-slate-900 rounded-xl p-4 space-y-2 mt-auto">
-              <p className="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Proses</p>
-              <div className="text-[12px] font-mono text-slate-300 space-y-0.5">
-                <p className="text-white">1. Satış data-sını topla</p>
-                <p>2. Hər yeməyin CM hesabla</p>
+            <div className="mt-auto space-y-2 rounded-xl bg-slate-900 p-4">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-purple-400">
+                Proses
+              </p>
+              <div className="space-y-0.5 font-mono text-[12px] text-slate-300">
+                <p className="text-white">1. Satış datasını topla</p>
+                <p>2. Hər yeməyin CM-ni hesabla</p>
                 <p>3. Ortalamalarla müqayisə et</p>
-                <p className="text-purple-400 font-bold">4. 4 kateqoriyaya ayır</p>
+                <p className="font-bold text-purple-400">4. 4 kateqoriyaya ayır</p>
               </div>
             </div>
           </div>
 
-          {/* BCG Matrisi */}
-          <div className="rounded-2xl bg-gradient-to-br from-slate-50 to-white ring-1 ring-slate-200/60 p-6 flex flex-col">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+          <div className="flex flex-col rounded-2xl bg-gradient-to-br from-slate-50 to-white p-6 ring-1 ring-slate-200/60">
+            <div className="mb-4 flex items-center gap-2.5">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100">
                 <UtensilsCrossed size={15} className="text-slate-600" />
               </div>
               <h3 className="text-sm font-bold text-slate-900">BCG Matrisi</h3>
             </div>
-            <p className="text-[12px] text-slate-500 mb-4">Boston Consulting Group matrisi restorana uyğunlaşdırılıb:</p>
-            <div className="grid grid-cols-2 gap-2.5 mt-auto">
-              <div className="bg-yellow-50 ring-1 ring-yellow-200/60 rounded-xl p-3">
+            <p className="mb-4 text-[12px] text-slate-500">
+              Boston Consulting Group matrisi restorana uyğunlaşdırılıb:
+            </p>
+            <div className="mt-auto grid grid-cols-2 gap-2.5">
+              <div className="rounded-xl bg-yellow-50 p-3 ring-1 ring-yellow-200/60">
                 <p className="text-xs font-bold text-yellow-700">⭐ Ulduz</p>
-                <p className="text-[11px] text-yellow-600/80 mt-1">Yüksək satış + yüksək marja</p>
+                <p className="mt-1 text-[11px] text-yellow-600/80">Yüksək satış + yüksək marja</p>
               </div>
-              <div className="bg-blue-50 ring-1 ring-blue-200/60 rounded-xl p-3">
+              <div className="rounded-xl bg-blue-50 p-3 ring-1 ring-blue-200/60">
                 <p className="text-xs font-bold text-blue-700">🐴 At</p>
-                <p className="text-[11px] text-blue-600/80 mt-1">Yüksək satış + aşağı marja</p>
+                <p className="mt-1 text-[11px] text-blue-600/80">Yüksək satış + aşağı marja</p>
               </div>
-              <div className="bg-purple-50 ring-1 ring-purple-200/60 rounded-xl p-3">
+              <div className="rounded-xl bg-purple-50 p-3 ring-1 ring-purple-200/60">
                 <p className="text-xs font-bold text-purple-700">🧩 Puzzle</p>
-                <p className="text-[11px] text-purple-600/80 mt-1">Aşağı satış + yüksək marja</p>
+                <p className="mt-1 text-[11px] text-purple-600/80">Aşağı satış + yüksək marja</p>
               </div>
-              <div className="bg-red-50 ring-1 ring-red-200/60 rounded-xl p-3">
+              <div className="rounded-xl bg-red-50 p-3 ring-1 ring-red-200/60">
                 <p className="text-xs font-bold text-red-700">🐕 İt</p>
-                <p className="text-[11px] text-red-600/80 mt-1">Aşağı satış + aşağı marja</p>
+                <p className="mt-1 text-[11px] text-red-600/80">Aşağı satış + aşağı marja</p>
               </div>
             </div>
           </div>
 
-          {/* Strategiyalar */}
-          <div className="rounded-2xl bg-gradient-to-br from-fuchsia-50/60 to-white ring-1 ring-fuchsia-200/40 p-6 flex flex-col">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-fuchsia-100 flex items-center justify-center shrink-0">
+          <div className="flex flex-col rounded-2xl bg-gradient-to-br from-fuchsia-50/60 to-white p-6 ring-1 ring-fuchsia-200/40">
+            <div className="mb-4 flex items-center gap-2.5">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-fuchsia-100">
                 <TrendingUp size={15} className="text-fuchsia-600" />
               </div>
               <h3 className="text-sm font-bold text-slate-900">Strategiyalar</h3>
             </div>
-            <div className="space-y-2.5 mt-auto">
-              <div className="bg-yellow-50 ring-1 ring-yellow-200/60 rounded-xl p-3.5">
+            <div className="mt-auto space-y-2.5">
+              <div className="rounded-xl bg-yellow-50 p-3.5 ring-1 ring-yellow-200/60">
                 <p className="text-xs font-bold text-yellow-700">⭐ Ulduz → Qoru</p>
-                <p className="text-[11px] text-yellow-600/80 mt-1">Qiyməti artır, menyuda ön sıraya qoy, ofisiant tövsiyə etsin.</p>
+                <p className="mt-1 text-[11px] text-yellow-600/80">
+                  Qiyməti artır, menyuda ön sıraya qoy, ofisiant tövsiyə etsin.
+                </p>
               </div>
-              <div className="bg-blue-50 ring-1 ring-blue-200/60 rounded-xl p-3.5">
+              <div className="rounded-xl bg-blue-50 p-3.5 ring-1 ring-blue-200/60">
                 <p className="text-xs font-bold text-blue-700">🐴 At → Optimallaşdır</p>
-                <p className="text-[11px] text-blue-600/80 mt-1">Maya dəyərini azalt, porsiya ölçüsünü kiçilt, garniri dəyiş.</p>
+                <p className="mt-1 text-[11px] text-blue-600/80">
+                  Maya dəyərini azalt, porsiya ölçüsünü kiçilt, garniri dəyiş.
+                </p>
               </div>
-              <div className="bg-purple-50 ring-1 ring-purple-200/60 rounded-xl p-3.5">
+              <div className="rounded-xl bg-purple-50 p-3.5 ring-1 ring-purple-200/60">
                 <p className="text-xs font-bold text-purple-700">🧩 Puzzle → Tanıt</p>
-                <p className="text-[11px] text-purple-600/80 mt-1">Menyuda görünürlüyü artır, endirim və ya set təklifi et.</p>
+                <p className="mt-1 text-[11px] text-purple-600/80">
+                  Menyuda görünürlüğü artır, set və tövsiyə mexanizmi ver.
+                </p>
               </div>
-              <div className="bg-red-50 ring-1 ring-red-200/60 rounded-xl p-3.5">
+              <div className="rounded-xl bg-red-50 p-3.5 ring-1 ring-red-200/60">
                 <p className="text-xs font-bold text-red-700">🐕 İt → Çıxar</p>
-                <p className="text-[11px] text-red-600/80 mt-1">Menyudan sil və ya tam resepti dəyiş. Vaxt itirmə.</p>
+                <p className="mt-1 text-[11px] text-red-600/80">
+                  Menyudan sil və ya resepti tam yenidən düşün.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* DK + OCAQ */}
-      <div className="max-w-6xl mx-auto px-6 mt-10">
-        <div className="grid md:grid-cols-2 gap-5">
-          <div className="rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-purple-500/10 rounded-full blur-[50px]" />
+      <div className="mx-auto mt-10 max-w-6xl px-6">
+        <div className="grid gap-5 md:grid-cols-2">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-8">
+            <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-purple-500/10 blur-[50px]" />
             <div className="relative">
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center">
+              <div className="mb-4 flex items-center gap-2.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/20">
                   <Lightbulb size={16} className="text-amber-400" />
                 </div>
                 <h3 className="text-base font-bold text-amber-400">DK Agency Məsləhəti</h3>
               </div>
-              <p className="text-[13px] text-slate-400 leading-relaxed mb-5">
-                Menyuda <strong className="text-white">20% yemək, satışın 80%-ni</strong> gətirir. Bu qaydanı bilmək az, tətbiq etmək çoxdur. Hər ay matris yenilənsin, ofisiantlar Ulduz yeməkləri tövsiyə etsin.
+              <p className="mb-5 text-[13px] leading-relaxed text-slate-400">
+                Menyuda <strong className="text-white">20% yemək satışın 80%-ni</strong> gətirir.
+                Bu qaydanı hər ay ölçməsən, yaxşı yeməyi zəif yeməklə subsidiyalaşdıracaqsan.
               </p>
-              <Link href="/blog/menyu-muhendisliyi-satis" className="inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors group">
-                Tam yazını oxu <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+              <Link
+                href="/blog/menyu-muhendisliyi-satis"
+                className="group inline-flex items-center gap-2 text-sm font-bold text-amber-400 transition-colors hover:text-amber-300"
+              >
+                Tam yazını oxu
+                <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
           </div>
 
-          <div className="rounded-2xl bg-gradient-to-br from-[#E94560] to-[#d63b54] p-8 text-white shadow-xl shadow-red-500/15 flex flex-col justify-between">
+          <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-[#E94560] to-[#d63b54] p-8 text-white shadow-xl shadow-red-500/15">
             <div>
-              <h3 className="text-xl font-display font-black mb-3">OCAQ Panel</h3>
-              <p className="text-sm text-white/80 leading-relaxed mb-6">
-                Menyu matrisini avtomatik hesabla, satış data-sını POS-dan çək, real-time analitika al.
+              <h3 className="mb-3 text-xl font-display font-black">OCAQ Panel</h3>
+              <p className="mb-6 text-sm leading-relaxed text-white/80">
+                Menyu matrisini avtomatik hesabla, satış datasını POS-dan çək və trendi real
+                vaxtda izlə.
               </p>
             </div>
-            <Link href="/auth/register" className="flex items-center justify-center gap-2 w-full bg-white text-[#E94560] py-3.5 rounded-xl font-black text-sm hover:shadow-lg transition-all active:scale-[0.98]">
+            <Link
+              href="/auth/register"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-[#E94560] transition-all hover:shadow-lg active:scale-[0.98]"
+            >
               Pulsuz başla <ArrowRight size={15} />
             </Link>
           </div>
         </div>
       </div>
 
-      {/* ƏLAQƏLİ YAZILAR */}
-      <div className="max-w-6xl mx-auto px-6 mt-20">
-        <div className="bg-slate-50 rounded-2xl p-8 sm:p-10">
-          <div className="flex items-center gap-2.5 mb-8">
+      <div className="mx-auto mt-20 max-w-6xl px-6">
+        <div className="rounded-2xl bg-slate-50 p-8 sm:p-10">
+          <div className="mb-8 flex items-center gap-2.5">
             <BookOpen size={18} className="text-[#E94560]" />
             <h3 className="text-lg font-bold text-slate-900">Daha Dərin Öyrən</h3>
           </div>
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-3">
             {[
-              { title: 'Menyu Mühəndisliyi: Ulduz və İt', slug: 'menyu-muhendisliyi-satis', tag: 'Əməliyyat' },
-              { title: 'Food Cost-un Qanlı Həqiqəti', slug: '1-porsiya-food-cost-hesablama', tag: 'Maliyyə' },
-              { title: 'P&L Oxuya Bilmirsən?', slug: 'pnl-oxuya-bilmirsen', tag: 'Maliyyə' },
-            ].map((a) => (
-              <Link key={a.slug} href={`/blog/${a.slug}`} className="group block bg-white rounded-xl p-5 ring-1 ring-slate-200/60 hover:shadow-md hover:ring-slate-300/60 transition-all duration-300">
-                <span className="text-[10px] font-bold text-[#E94560] uppercase tracking-widest">{a.tag}</span>
-                <h4 className="text-sm font-bold text-slate-900 mt-2.5 leading-snug group-hover:text-[#E94560] transition-colors">{a.title}</h4>
-                <div className="flex items-center gap-1 text-xs text-slate-400 font-semibold mt-4 group-hover:text-[#E94560] group-hover:gap-2 transition-all">
+              {
+                title: 'Menyu Mühəndisliyi: Ulduz və İt',
+                slug: 'menyu-muhendisliyi-satis',
+                tag: 'Əməliyyat',
+              },
+              {
+                title: 'Food Cost-un Qanlı Həqiqəti',
+                slug: '1-porsiya-food-cost-hesablama',
+                tag: 'Maliyyə',
+              },
+              {
+                title: 'P&L Oxuya Bilmirsən?',
+                slug: 'pnl-oxuya-bilmirsen',
+                tag: 'Maliyyə',
+              },
+            ].map((article) => (
+              <Link
+                key={article.slug}
+                href={`/blog/${article.slug}`}
+                className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 transition-all duration-300 hover:shadow-md hover:ring-slate-300/60"
+              >
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#E94560]">
+                  {article.tag}
+                </span>
+                <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-[#E94560]">
+                  {article.title}
+                </h4>
+                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 transition-all group-hover:gap-2 group-hover:text-[#E94560]">
                   Oxu <ArrowRight size={12} />
                 </div>
               </Link>
@@ -372,5 +499,3 @@ export default function MenuMatrixPage() {
     </div>
   );
 }
-
-

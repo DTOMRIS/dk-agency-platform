@@ -10,3 +10,4 @@ export const config = {
     '/((?!api|auth|dashboard|b2b-panel|_next|_vercel|favicon\\.ico|.*\\..*).*)',
   ],
 };
+

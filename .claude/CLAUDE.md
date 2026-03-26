@@ -70,3 +70,6 @@ Consulting + digital tools + AI is the core model.
 - Use `@architect` for product direction, structure, and feature planning.
 - Use `@builder` for implementation.
 - Use `@verifier` for final quality audit.
+
+## Critical Facts
+- AQTA source-of-truth: `AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət rüsumu yoxdur, müraciət pulsuzdur.` Never write AQTA state fee as paid in this project.

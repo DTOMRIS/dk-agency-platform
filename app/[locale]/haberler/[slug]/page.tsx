@@ -1,5 +1,5 @@
 // app/haberler/[slug]/page.tsx
-// DK Agency Blog Detay Sayfası - 3 Sütunlu Premium Layout
+// DK Agency Blog Detay Səhifəsi - 3 sütunlu premium layout
 // foodinlife.com + thecaterer.com ilhamı
 
 import { notFound } from 'next/navigation';
@@ -65,11 +65,11 @@ const CATEGORY_CONFIG = Object.fromEntries(
 ) as Record<string, { label: string; emoji: string; color: string }>;
 
 
-// Doğan viewpoint quotes by category
+// Dogan viewpoint quotes by category
 const VIEWPOINT_QUOTES: Record<string, string> = {
   maliyye: 'Hesabları bilmədən mənfəət idarə edilmir. Əvvəlcə ölçün, sonra qərar verin.',
   kadr: 'İnsanlar sistemə deyil, liderə bağlıdır. Əvvəlcə mədəniyyət qur, sonra iş axınını izah et.',
-  emeliyyat: 'Standard olmadan keyfiyyət olmur. Əvvəlcə prosedur yaz, sonra hərkəsi öyrət.',
+  emeliyyat: 'Standart olmadan keyfiyyət olmur. Əvvəlcə prosedur yaz, sonra hər kəsi öyrət.',
   konsept: 'Konseptiniz tarixçənizdir. İnsanlar yeməkdən əvvəl hekayənizi alırlar.',
   acilis: 'Açılış günü deyil, həftəsidir. Hər şey plana uyğun deyil, buna hazır ol.',
   satis: 'Upsell gülüşlə başlayır. Xidmət etsən, satış özü gəlir.',
@@ -129,9 +129,9 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
   return (
     <BlogContentWrapper articleTitle={article.title}>
       <main className="bg-slate-50 min-h-screen pb-20 lg:pb-0">
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        {/* TOP NAVIGATION BAR */}
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+        {/* Section */}
+        {/* Section */}
+        {/* Section */}
         <div className="bg-slate-900 border-b-4 border-amber-500">
           <div className="px-4 py-3">
             <div className="mx-auto max-w-7xl flex items-center justify-between">
@@ -152,13 +152,13 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
           </div>
         </div>
 
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        {/* HERO SECTION */}
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+        {/* Section */}
+        {/* Section */}
+        {/* Section */}
         <header className="bg-white border-b border-slate-200">
           <div className="px-4 py-8 md:py-12">
             <div className="mx-auto max-w-4xl">
-              {/* Back button + Reading time */}
+        {/* Section */}
               <div className="mb-6 flex items-center justify-between">
                 <Link href="/haberler" className="flex items-center gap-2 text-sm text-slate-500 hover:text-amber-600 transition-colors">
                   <ArrowLeft size={16} /> Bütün yazılar
@@ -166,7 +166,7 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
                 <ReadingTime wordCount={article.wordCount} />
               </div>
 
-              {/* Category Badge + Reading time */}
+        {/* Section */}
               <div className="mb-4 flex items-center gap-3">
                 <span className={`${categoryConfig.color} rounded-lg px-3 py-1.5 text-xs font-bold text-white flex items-center gap-1.5 shadow-sm`}>
                   <span>{categoryConfig.emoji}</span>
@@ -178,17 +178,17 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
                 </span>
               </div>
 
-              {/* Title */}
+        {/* Section */}
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-[1.15] text-slate-900 max-w-3xl">
                 {article.title}
               </h1>
 
-              {/* Excerpt */}
+        {/* Section */}
               <p className="mt-5 text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl">
                 {article.summary}
               </p>
 
-              {/* Author info */}
+        {/* Section */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold shadow-lg">
@@ -209,9 +209,9 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
           </div>
         </header>
 
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        {/* FEATURED IMAGE (if exists) */}
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+        {/* Section */}
+        {/* Section */}
+        {/* Section */}
         {article.coverImage && (
           <div className="bg-white pb-8">
             <div className="mx-auto max-w-5xl px-4">
@@ -231,15 +231,15 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
           </div>
         )}
 
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-        {/* 3-COLUMN LAYOUT */}
-        {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+        {/* Section */}
+        {/* Section */}
+        {/* Section */}
         <div className="mx-auto max-w-7xl px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr_300px] xl:grid-cols-[220px_1fr_320px] gap-6 lg:gap-8">
             
-            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-            {/* LEFT SIDEBAR - Share + TOC (Desktop only) */}
-            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* Sidebar */}
+        {/* Section */}
+        {/* Section */}
             <aside className="hidden lg:block">
               <div className="sticky top-24 space-y-4">
                 <ShareButtons title={article.title} url={`https://dkagency.az/haberler/${slug}`} />
@@ -247,23 +247,23 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
               </div>
             </aside>
 
-            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-            {/* MAIN CONTENT */}
-            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* Main content */}
+        {/* Section */}
+        {/* Section */}
             <article className="min-w-0">
-              {/* Content Card */}
+        {/* Section */}
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-10">
                 <MarkdownRenderer content={article.content} />
               </div>
 
-              {/* DoÄŸan Note */}
+        {/* Section */}
               <div className="mt-8">
                 <DoganNote variant="insight">
                   {VIEWPOINT_QUOTES[article.category] || VIEWPOINT_QUOTES.maliyye}
                 </DoganNote>
               </div>
 
-              {/* Micro CTA */}
+        {/* Section */}
               <div className="mt-8">
                 <MikroCTA 
                   type={article.category === 'maliyye' ? 'calculator' : 'consultation'}
@@ -275,7 +275,7 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
                 />
               </div>
 
-              {/* Tags */}
+        {/* Section */}
               <div className="mt-8 pt-6 border-t border-slate-200">
                 <h4 className="text-sm font-medium text-slate-500 mb-3">Etiketlər:</h4>
                 <div className="flex flex-wrap gap-2">
@@ -291,17 +291,17 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
                 </div>
               </div>
 
-              {/* Author Card */}
+        {/* Section */}
               <div className="mt-10">
                 <AuthorCard author={article.author} />
               </div>
 
-              {/* Toolkit CTA */}
+        {/* Section */}
               <div className="mt-10">
                 <ToolkitCTA />
               </div>
 
-              {/* Related Articles Grid (Bottom) */}
+        {/* Section */}
               <div className="mt-12">
                 <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                   <BookOpen size={20} className="text-amber-500" />
@@ -315,13 +315,13 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
                       className="group block"
                     >
                       <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white hover:border-amber-300 hover:shadow-lg transition-all">
-                        {/* Thumbnail */}
+        {/* Section */}
                         <div className="aspect-[16/10] bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center">
                           <span className="text-4xl opacity-60">
                             {CATEGORY_CONFIG[relatedArticle.category]?.emoji || '📝'}
                           </span>
                         </div>
-                        {/* Content */}
+        {/* Section */}
                         <div className="p-4">
                           <span className={`${CATEGORY_CONFIG[relatedArticle.category]?.color || 'bg-slate-500'} text-white text-[10px] font-bold px-2 py-1 rounded`}>
                             {CATEGORY_CONFIG[relatedArticle.category]?.label || relatedArticle.category}
@@ -343,30 +343,33 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
               </div>
             </article>
 
-            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-            {/* RIGHT SIDEBAR */}
-            {/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* Sidebar */}
+        {/* Section */}
+        {/* Section */}
             <aside className="space-y-6">
               <div className="lg:sticky lg:top-24 space-y-6">
-                {/* Related Articles Widget */}
+        {/* Section */}
                 {relatedArticles.length > 0 && (
                   <RelatedArticlesWidget articles={relatedArticles} />
                 )}
 
-                {/* Viewpoint Widget */}
+        {/* Section */}
                 <ViewpointWidget quote={VIEWPOINT_QUOTES[article.category] || VIEWPOINT_QUOTES.maliyye} />
 
-                {/* Newsletter Widget */}
+        {/* Section */}
                 <NewsletterWidget />
               </div>
             </aside>
           </div>
         </div>
 
-        {/* Mobile Share Bar */}
+        {/* Section */}
         <MobileShareBar title={article.title} url={`https://dkagency.az/haberler/${slug}`} />
       </main>
     </BlogContentWrapper>
   );
 }
+
+
+
 

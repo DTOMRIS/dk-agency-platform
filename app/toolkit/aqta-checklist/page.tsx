@@ -207,7 +207,7 @@ const sections: Section[] = [
         id: 'docs-1',
         text: 'AQTA qeydiyyatı tamamlanıb',
         detail:
-          'AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət rüsumu 150 AZN.',
+          'AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət rüsumu yoxdur, müraciət pulsuzdur.',
       },
       {
         id: 'docs-2',
@@ -603,7 +603,7 @@ export default function AqtaChecklistPage() {
               AQTA qida təhlükəsizliyi, gigiyena, traceability və istehlakçı riskinə baxır.
               Problem yalnız təmizlik deyil. Qaydaların sistemli izlənməsi və sənədləşdirilməsi
               əsasdır. AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət
-              rüsumu 150 AZN.
+              rüsumu yoxdur, müraciət pulsuzdur.
             </p>
           </div>
 

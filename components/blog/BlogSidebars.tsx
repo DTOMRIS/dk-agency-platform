@@ -1,6 +1,3 @@
-// components/blog/BlogSidebars.tsx
-// DK Agency Blog - Sidebar Components (Dark Theme)
-// Gold + Navy premium dizayn
 'use client';
 
 import { useState } from 'react';
@@ -8,9 +5,6 @@ import Link from 'next/link';
 import { Copy, MessageCircle, Send, Linkedin, Check, ChevronRight, Mail, Star } from 'lucide-react';
 import { CATEGORY_CONFIG, type BlogArticle } from '@/lib/data/blogArticles';
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// NEWSLETTER WIDGET
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function NewsletterWidget() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -25,33 +19,31 @@ export function NewsletterWidget() {
   };
 
   return (
-    <div className="bg-[#16213E60] backdrop-blur-sm rounded-2xl p-5 border border-[#8892B015]">
-      <div className="flex items-center gap-2 mb-1">
-        <Mail className="w-4 h-4 text-[#C5A022]" />
-        <h4 className="font-bold text-[15px] text-[#EAEAEA]">Həftəlik Bülletin</h4>
+    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E60] p-5 backdrop-blur-sm">
+      <div className="mb-1 flex items-center gap-2">
+        <Mail className="h-4 w-4 text-[#C5A022]" />
+        <h4 className="text-[15px] font-bold text-[#EAEAEA]">Həftəlik Bülletin</h4>
       </div>
-      <p className="text-[12px] text-[#8892B0] mb-4">
+      <p className="mb-4 text-[12px] text-[#8892B0]">
         HoReCa trend analizləri birbaşa e-poçtunuza
       </p>
       <form onSubmit={handleSubscribe}>
-        <input 
-          type="email" 
-          placeholder="E-poçt ünvanınız" 
+        <input
+          type="email"
+          placeholder="E-poçt ünvanınız"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-[#0A0A1A] border border-[#8892B020] rounded-xl px-4 py-3 text-sm text-[#EAEAEA] mb-3 placeholder:text-[#8892B060] focus:outline-none focus:border-[#C5A022] transition-all" 
+          className="mb-3 w-full rounded-xl border border-[#8892B020] bg-[#0A0A1A] px-4 py-3 text-sm text-[#EAEAEA] placeholder:text-[#8892B060] transition-all focus:border-[#C5A022] focus:outline-none"
         />
-        <button 
+        <button
           type="submit"
-          className={`w-full font-bold text-sm py-3 rounded-xl transition-all ${
-            subscribed 
-              ? 'bg-[#2ECC71] text-white' 
-              : 'bg-[#E94560] text-white hover:bg-[#FF5A75]'
+          className={`w-full rounded-xl py-3 text-sm font-bold transition-all ${
+            subscribed ? 'bg-[#2ECC71] text-white' : 'bg-[#E94560] text-white hover:bg-[#FF5A75]'
           }`}
         >
           {subscribed ? (
             <span className="flex items-center justify-center gap-2">
-              <Check className="w-4 h-4" /> Abunə oldunuz!
+              <Check className="h-4 w-4" /> Abunə oldunuz!
             </span>
           ) : (
             'Abunə ol'
@@ -62,25 +54,24 @@ export function NewsletterWidget() {
   );
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// DOÄAN VIEWPOINT WIDGET
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function ViewpointWidget({ quote }: { quote: string }) {
   return (
-    <div className="bg-[#16213E60] backdrop-blur-sm rounded-2xl p-5 border border-[#C5A02220]">
-      <span className="text-[11px] font-bold text-[#C5A022] uppercase tracking-wider flex items-center gap-1">
-        <Star className="w-3 h-3" />
+    <div className="rounded-2xl border border-[#C5A02220] bg-[#16213E60] p-5 backdrop-blur-sm">
+      <span className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#C5A022]">
+        <Star className="h-3 w-3" />
         Viewpoint
       </span>
-      <blockquote className="mt-3 text-[15px] leading-relaxed italic text-[#EAEAEA]">
-        {"\u201C"}{quote}{"\u201D"}
+      <blockquote className="mt-3 text-[15px] italic leading-relaxed text-[#EAEAEA]">
+        {'\u201C'}
+        {quote}
+        {'\u201D'}
       </blockquote>
       <div className="mt-4 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-[#C5A022] flex items-center justify-center text-[#0A0A1A] text-xs font-bold">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C5A022] text-xs font-bold text-[#0A0A1A]">
           DT
         </div>
         <div>
-          <p className="text-[12px] font-semibold text-[#EAEAEA]">Doğan Tomris</p>
+          <p className="text-[12px] font-semibold text-[#EAEAEA]">Dogan Tomris</p>
           <p className="text-[11px] text-[#8892B0]">DK Agency qurucusu</p>
         </div>
       </div>
@@ -88,35 +79,27 @@ export function ViewpointWidget({ quote }: { quote: string }) {
   );
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// RELATED ARTICLES WIDGET
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function RelatedArticlesWidget({ articles }: { articles: BlogArticle[] }) {
   return (
-    <div className="bg-[#16213E60] backdrop-blur-sm rounded-2xl p-5 border border-[#8892B015]">
-      <h4 className="font-bold text-[15px] text-[#EAEAEA] mb-4 flex items-center gap-2">
-        📝 Bənzər Yazılar
+    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E60] p-5 backdrop-blur-sm">
+      <h4 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#EAEAEA]">
+        Bənzər Yazılar
       </h4>
       <div className="space-y-3">
-        {articles.slice(0, 3).map(article => (
-          <Link 
+        {articles.slice(0, 3).map((article) => (
+          <Link
             key={article.id}
             href={`/haberler/${article.slug}`}
-            className="flex gap-3 p-2 -mx-2 rounded-xl hover:bg-[#C5A02208] transition-colors group"
+            className="group -mx-2 flex gap-3 rounded-xl p-2 transition-colors hover:bg-[#C5A02208]"
           >
-            {/* Thumbnail placeholder */}
-            <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-[#C5A02215] border border-[#C5A02230] flex items-center justify-center">
+            <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#C5A02230] bg-[#C5A02215]">
               <span className="text-xl">{CATEGORY_CONFIG[article.category]?.emoji || '📝'}</span>
             </div>
-            
-            {/* Text */}
-            <div className="flex-1 min-w-0">
-              <h5 className="text-[13px] font-semibold leading-tight text-[#B0B8C8] line-clamp-2 group-hover:text-[#C5A022] transition-colors">
+            <div className="min-w-0 flex-1">
+              <h5 className="line-clamp-2 text-[13px] font-semibold leading-tight text-[#B0B8C8] transition-colors group-hover:text-[#C5A022]">
                 {article.title}
               </h5>
-              <p className="text-[11px] text-[#8892B0] mt-1">
-                {article.readingTime} dəq oxu
-              </p>
+              <p className="mt-1 text-[11px] text-[#8892B0]">{article.readingTime} dəq oxu</p>
             </div>
           </Link>
         ))}
@@ -125,9 +108,6 @@ export function RelatedArticlesWidget({ articles }: { articles: BlogArticle[] })
   );
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// SHARE BUTTONS (LEFT SIDEBAR)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 interface ShareButtonsProps {
   title: string;
   url: string;
@@ -153,49 +133,49 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
   };
 
   return (
-    <div className="bg-[#16213E60] backdrop-blur-sm rounded-2xl border border-[#8892B015] p-5">
-      <h4 className="text-[12px] font-bold text-[#8892B0] uppercase tracking-widest mb-4">PAYLAŞ</h4>
+    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E60] p-5 backdrop-blur-sm">
+      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-[#8892B0]">PAYLAŞ</h4>
       <div className="space-y-2">
         <button
           onClick={handleCopy}
-          className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-[13px] font-medium transition-all ${
-            copied 
-              ? 'bg-[#2ECC71] text-white' 
-              : 'bg-[#0A0A1A60] border border-[#8892B015] text-[#B0B8C8] hover:border-[#C5A02240] hover:text-[#C5A022]'
+          className={`flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-[13px] font-medium transition-all ${
+            copied
+              ? 'bg-[#2ECC71] text-white'
+              : 'border border-[#8892B015] bg-[#0A0A1A60] text-[#B0B8C8] hover:border-[#C5A02240] hover:text-[#C5A022]'
           }`}
           title="Link kopyala"
         >
-          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
           <span>{copied ? 'Kopyalandı!' : 'Kopyala'}</span>
         </button>
         <a
           href={shareLinks.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-[13px] font-medium bg-[#0A0A1A60] border border-[#8892B015] text-[#B0B8C8] hover:bg-[#25D366] hover:text-white hover:border-transparent transition-all"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#8892B015] bg-[#0A0A1A60] py-2.5 text-[13px] font-medium text-[#B0B8C8] transition-all hover:border-transparent hover:bg-[#25D366] hover:text-white"
           title="WhatsApp"
         >
-          <MessageCircle className="w-4 h-4" />
+          <MessageCircle className="h-4 w-4" />
           <span>WhatsApp</span>
         </a>
         <a
           href={shareLinks.telegram}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-[13px] font-medium bg-[#0A0A1A60] border border-[#8892B015] text-[#B0B8C8] hover:bg-[#0088cc] hover:text-white hover:border-transparent transition-all"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#8892B015] bg-[#0A0A1A60] py-2.5 text-[13px] font-medium text-[#B0B8C8] transition-all hover:border-transparent hover:bg-[#0088cc] hover:text-white"
           title="Telegram"
         >
-          <Send className="w-4 h-4" />
+          <Send className="h-4 w-4" />
           <span>Telegram</span>
         </a>
         <a
           href={shareLinks.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-[13px] font-medium bg-[#0A0A1A60] border border-[#8892B015] text-[#B0B8C8] hover:bg-[#0A66C2] hover:text-white hover:border-transparent transition-all"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#8892B015] bg-[#0A0A1A60] py-2.5 text-[13px] font-medium text-[#B0B8C8] transition-all hover:border-transparent hover:bg-[#0A66C2] hover:text-white"
           title="LinkedIn"
         >
-          <Linkedin className="w-4 h-4" />
+          <Linkedin className="h-4 w-4" />
           <span>LinkedIn</span>
         </a>
       </div>
@@ -203,9 +183,6 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
   );
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// TABLE OF CONTENTS (LEFT SIDEBAR)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 interface TOCItem {
   id: string;
   text: string;
@@ -213,14 +190,13 @@ interface TOCItem {
 }
 
 export function TableOfContents({ content }: { content: string }) {
-  // Extract headings from markdown content
   const headings: TOCItem[] = [];
   const lines = content.split('\n');
-  
+
   lines.forEach((line, index) => {
     const h2Match = line.match(/^## (.+)$/);
     const h3Match = line.match(/^### (.+)$/);
-    
+
     if (h2Match) {
       headings.push({
         id: `heading-${index}`,
@@ -239,18 +215,18 @@ export function TableOfContents({ content }: { content: string }) {
   if (headings.length === 0) return null;
 
   return (
-    <div className="bg-[#16213E60] backdrop-blur-sm rounded-2xl border border-[#8892B015] p-5">
-      <h4 className="text-[12px] font-bold text-[#8892B0] uppercase tracking-widest mb-4">İÇİNDƏKİLƏR</h4>
+    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E60] p-5 backdrop-blur-sm">
+      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-[#8892B0]">İÇİNDƏKİLƏR</h4>
       <nav className="space-y-1">
         {headings.slice(0, 6).map((heading, index) => (
           <a
             key={heading.id}
             href={`#${heading.id}`}
-            className={`flex items-start gap-2.5 py-2 px-2 rounded-lg text-[13px] leading-snug text-[#8892B0] hover:text-[#C5A022] hover:bg-[#C5A02208] transition-all group ${
+            className={`group flex items-start gap-2.5 rounded-lg px-2 py-2 text-[13px] leading-snug text-[#8892B0] transition-all hover:bg-[#C5A02208] hover:text-[#C5A022] ${
               heading.level === 3 ? 'pl-4 text-[12px]' : 'font-medium'
             }`}
           >
-            <span className="text-[#C5A02260] font-mono text-[11px] mt-0.5 group-hover:text-[#C5A022]">{index + 1}</span>
+            <span className="mt-0.5 font-mono text-[11px] text-[#C5A02260] group-hover:text-[#C5A022]">{index + 1}</span>
             <span className="line-clamp-2">{heading.text}</span>
           </a>
         ))}
@@ -259,28 +235,24 @@ export function TableOfContents({ content }: { content: string }) {
   );
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// AUTHOR CARD (BOTTOM OF ARTICLE)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function AuthorCard({ author }: { author: string }) {
   return (
-    <div className="bg-[#16213E] rounded-2xl p-6 border border-[#8892B015]">
+    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E] p-6">
       <div className="flex items-start gap-5">
-        <div className="w-16 h-16 rounded-full bg-[#C5A022] flex items-center justify-center text-[#0A0A1A] text-xl font-bold flex-shrink-0">
+        <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-[#C5A022] text-xl font-bold text-[#0A0A1A]">
           DT
         </div>
         <div className="flex-1">
-          <h4 className="font-bold text-lg text-[#EAEAEA]">{author}</h4>
-          <p className="text-sm text-[#8892B0] mt-1">
-            DK Agency qurucusu, 15+ il HoReCa sektoru təcrübəsi. 
-            Azərbaycanda 50+ restoran və otel layihəsinin konsultantı.
+          <h4 className="text-lg font-bold text-[#EAEAEA]">{author}</h4>
+          <p className="mt-1 text-sm text-[#8892B0]">
+            DK Agency qurucusu, 15+ il HoReCa sektoru təcrübəsi. Azərbaycanda 50+ restoran və otel layihəsinin konsultantı.
           </p>
-          <div className="flex items-center gap-3 mt-3">
-            <Link 
+          <div className="mt-3 flex items-center gap-3">
+            <Link
               href="/haqqimizda"
-              className="text-sm text-[#C5A022] hover:text-[#D4AF37] font-medium flex items-center gap-1"
+              className="flex items-center gap-1 text-sm font-medium text-[#C5A022] hover:text-[#D4AF37]"
             >
-              Haqqında <ChevronRight className="w-4 h-4" />
+              Haqqında <ChevronRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -289,34 +261,24 @@ export function AuthorCard({ author }: { author: string }) {
   );
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// TOOLKIT CTA (BOTTOM OF ARTICLE)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function ToolkitCTA() {
   return (
-    <div className="bg-[#16213E] rounded-2xl p-6 md:p-8 text-center border border-[#C5A02230]">
-      <span className="text-[#C5A022] text-sm font-bold tracking-wider uppercase">
-        DK Agency Toolkit
-      </span>
-      <h3 className="text-xl md:text-2xl font-bold text-[#EAEAEA] mt-3 mb-3">
-        Bu mövzunu praktikaya çevir
-      </h3>
-      <p className="text-[#8892B0] text-sm mb-6 max-w-md mx-auto">
+    <div className="rounded-2xl border border-[#C5A02230] bg-[#16213E] p-6 text-center md:p-8">
+      <span className="text-sm font-bold uppercase tracking-wider text-[#C5A022]">DK Agency Toolkit</span>
+      <h3 className="mt-3 mb-3 text-xl font-bold text-[#EAEAEA] md:text-2xl">Bu mövzunu praktikaya çevir</h3>
+      <p className="mx-auto mb-6 max-w-md text-sm text-[#8892B0]">
         Food Cost kalkulyatoru, P&L şablonu, ROI hesablayıcı və digər professional alətlər
       </p>
       <Link
         href="/b2b-panel/toolkit"
-        className="inline-flex items-center gap-2 bg-[#C5A022] hover:bg-[#D4AF37] text-[#0A0A1A] px-6 py-3 rounded-xl font-bold transition-all"
+        className="inline-flex items-center gap-2 rounded-xl bg-[#C5A022] px-6 py-3 font-bold text-[#0A0A1A] transition-all hover:bg-[#D4AF37]"
       >
-        ✨ Pulsuz Toolkit-ə keç
+        Pulsuz Toolkit-ə keç
       </Link>
     </div>
   );
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// MOBILE SHARE BAR (FIXED BOTTOM)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export function MobileShareBar({ title, url }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
 
@@ -337,41 +299,25 @@ export function MobileShareBar({ title, url }: ShareButtonsProps) {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#1A1A2E] border-t border-[#8892B015] p-3 flex items-center justify-center gap-3 lg:hidden z-40 safe-area-inset-bottom">
-      <span className="text-xs text-[#8892B0] mr-2">Paylaş:</span>
+    <div className="safe-area-inset-bottom fixed right-0 bottom-0 left-0 z-40 flex items-center justify-center gap-3 border-t border-[#8892B015] bg-[#1A1A2E] p-3 lg:hidden">
+      <span className="mr-2 text-xs text-[#8892B0]">Paylaş:</span>
       <button
         onClick={handleCopy}
-        className={`p-2 rounded-lg transition-all ${
-          copied ? 'bg-[#2ECC71] text-white' : 'bg-[#16213E] text-[#B0B8C8] border border-[#8892B015]'
+        className={`rounded-lg p-2 transition-all ${
+          copied ? 'bg-[#2ECC71] text-white' : 'border border-[#8892B015] bg-[#16213E] text-[#B0B8C8]'
         }`}
       >
-        {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+        {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
       </button>
-      <a
-        href={shareLinks.whatsapp}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-2 rounded-lg bg-[#25D366] text-white"
-      >
-        <MessageCircle className="w-5 h-5" />
+      <a href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[#25D366] p-2 text-white">
+        <MessageCircle className="h-5 w-5" />
       </a>
-      <a
-        href={shareLinks.telegram}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-2 rounded-lg bg-[#0088cc] text-white"
-      >
-        <Send className="w-5 h-5" />
+      <a href={shareLinks.telegram} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[#0088cc] p-2 text-white">
+        <Send className="h-5 w-5" />
       </a>
-      <a
-        href={shareLinks.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-2 rounded-lg bg-[#0A66C2] text-white"
-      >
-        <Linkedin className="w-5 h-5" />
+      <a href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[#0A66C2] p-2 text-white">
+        <Linkedin className="h-5 w-5" />
       </a>
     </div>
   );
 }
-
