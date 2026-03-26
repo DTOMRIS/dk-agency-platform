@@ -9,6 +9,7 @@ import {
   HardHat,
   Shield,
   Target,
+  Truck,
   UtensilsCrossed,
 } from 'lucide-react';
 
@@ -61,6 +62,13 @@ const tools = [
     href: '/toolkit/aqta-checklist',
     icon: Shield,
     color: 'bg-red-500',
+  },
+  {
+    title: 'Delivery Kalkulyator',
+    desc: 'Wolt, Bolt Food, Yango və öz delivery modeli üçün komissiya marjasını hesabla.',
+    href: '/toolkit/delivery-calc',
+    icon: Truck,
+    color: 'bg-orange-500',
   },
 ];
 

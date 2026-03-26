@@ -1,55 +1,72 @@
-# DK Agency — Claude Code Kontekst
+# DK Agency - Claude Code Context
 
-## Proyekt nədir?
-Azərbaycanın ilk AI-dəstəkli HoReCa (Hotel, Restaurant, Cafe) platforması.
-Danışmanlıq + dijital alətlər + AI = hibrid model.
+## Project
+Azarbaycanin AI-supported HoReCa platformasi.
+Consulting + digital tools + AI is the core model.
 
-## Marka adları (KİLİDLİ):
-- **DK Agency** = çatı marka, B2B danışmanlıq
-- **KAZAN AI** = AI chatbot/asistan
-- **OCAQ** = sahibkar paneli (/dashboard)
-- **Şədd Rozeti** = audit sertifikası/keyfiyyət rozeti
-- **Doğan Tomris** = qurucu (HEÇVAXT "Özbahçeci" YAZMA!)
+## Brand Names
+- `DK Agency` = umbrella brand, B2B consulting
+- `KAZAN AI` = AI chatbot / assistant
+- `OCAQ` = owner dashboard (`/dashboard`)
+- `Sedd Rozeti` = audit / quality badge
+- `Dogan Tomris` = founder
 
-## Tech stack:
+## Tech Stack
 - Next.js 16 + Tailwind CSS v4 + Framer Motion
-- DM Sans (body) + Playfair Display (başlıqlar)
+- DM Sans (body) + Playfair Display (headings)
 - Drizzle ORM + Neon PostgreSQL
-- next-intl (3 dil: AZ, TR, EN)
-- Vercel deploy
+- next-intl (3 languages: AZ, TR, EN)
+- Vercel deployment
 
-## Rənglər (LIGHT TEMA — DARK QADAĞAN):
-- bg: #FAFAF8, white: #FFFFFF, surface: #F9FAFB
-- navy: #1A1A2E (text + utility bar)
-- gold: #C5A022 (aksent)
-- red/CTA: #E94560 (butonlar)
-- textMuted: #6B7280, border: #E5E7EB
-- purple: #8B5CF6 (devir), green: #059669 (müsbət)
+## Colors
+- Background: `#FAFAF8`
+- White: `#FFFFFF`
+- Surface: `#F9FAFB`
+- Navy: `#1A1A2E`
+- Gold: `#C5A022`
+- Red CTA: `#E94560`
+- Muted text: `#6B7280`
+- Border: `#E5E7EB`
+- Purple: `#8B5CF6`
+- Green: `#059669`
 
-## Qaydalar:
-1. Hər dəyişiklikdən sonra docs/CHANGELOG.md yenilə
-2. "Agentlik", "Holdinq", "CRM" sözlərini istifadə ETMƏ — bu HoReCa platformasıdır
-3. Dizayn: LIGHT tema only, dark tema QADAĞAN
-4. `any` tipi QADAĞAN — `unknown` istifadə et
-5. `console.log` production-da QADAĞAN
-6. Bütün UI text AZ dilində (default)
-7. Commit formatı: TASK-XXXX: qısa izah
-8. Protected files: app/layout.tsx, components/layout/Header.tsx, Footer.tsx — ALLOW_PROTECTED=1 lazım
+## Rules
+1. Update `docs/CHANGELOG.md` after every important change.
+2. Do not use `Agentlik`, `Holdinq`, or `CRM` wording in product UI.
+3. Light theme only. Dark theme is prohibited.
+4. Do not use `any`. Prefer `unknown`.
+5. Do not use `console.log` in production code.
+6. All UI text should default to AZ.
+7. Commit format: `TASK-XXXX: short summary`
+8. Protected files: `app/layout.tsx`, `components/layout/Header.tsx`, `Footer.tsx` require `ALLOW_PROTECTED=1`
 
-## İllüstrasiya stili:
-- İncə çizgi (hairline), petroleum/tünd boz (#2C2C2A)
-- Vurgu: terracotta (#C07A50)
-- Flat, gradient/gölge YOXDUR
-- %50 boşluq
+## Illustration Style
+- Hairline style
+- Petroleum / dark gray `#2C2C2A`
+- Accent: terracotta `#C07A50`
+- Flat, no heavy gradients or shadows
+- Lots of whitespace
 
-## Əsas fayllar:
-- components/layout/Header.tsx — Nav + Utility bar + MegaMenu trigger
-- components/layout/Footer.tsx — Light tema footer
-- components/layout/MegaMenu.tsx — 880px mega menü
-- components/Hero.tsx — OCAQ Panel mockup ilə hero
-- components/StageSelector.tsx — 3 mərhələ kartı
-- components/ToolkitShowcase.tsx — 3 alət kartı
-- components/CTASections.tsx — DoganNote + JoinCTA
-- components/ui/CookiesBanner.tsx — Axeptio stili cookies
-- app/page.tsx — Ana səhifə
-- app/layout.tsx — Root layout (DM Sans + Playfair)
+## Key Files
+- `components/layout/Header.tsx`
+- `components/layout/Footer.tsx`
+- `components/layout/MegaMenu.tsx`
+- `components/Hero.tsx`
+- `components/StageSelector.tsx`
+- `components/ToolkitShowcase.tsx`
+- `components/CTASections.tsx`
+- `components/ui/CookiesBanner.tsx`
+- `app/page.tsx`
+- `app/layout.tsx`
+
+## Agent Definitions
+- `@scout` - web search for trends, competitors, platforms, and market research. Use sources. Do not guess.
+- `@architect` - strategy plan, roadmap, feature spec, field-by-field admin model, and sales flow.
+- `@builder` - write code, create components, and keep the current design language, performance, and mobile UX intact.
+- `@verifier` - check build, tests, lint, encoding, and UX risks before release.
+
+## Agent Usage
+- Use `@scout` when research or verification from external sources is needed.
+- Use `@architect` for product direction, structure, and feature planning.
+- Use `@builder` for implementation.
+- Use `@verifier` for final quality audit.
