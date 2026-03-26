@@ -1,27 +1,28 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import {
-  ClipboardList,
-  FileText,
-  MapPin,
-  Palette,
-  UtensilsCrossed,
-  Megaphone,
-  Wrench,
-  Paintbrush,
   BarChart3,
-  Calculator,
-  Scale,
-  TrendingUp,
-  CheckSquare,
   Bot,
   Building2,
-  Package,
+  Calculator,
+  CheckSquare,
+  ClipboardList,
+  FileText,
+  HardHat,
+  MapPin,
+  Megaphone,
   Network,
-  UserSearch,
+  Package,
+  Paintbrush,
+  Palette,
+  Scale,
   Stethoscope,
+  TrendingUp,
+  UserSearch,
+  UtensilsCrossed,
+  Wrench,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -35,6 +36,7 @@ interface MenuItemData {
 
 const baslaItems: MenuItemData[] = [
   { icon: ClipboardList, label: 'Açılış Checklist', desc: 'Addım-addım açılış planı', href: '/toolkit/checklist' },
+  { icon: HardHat, label: 'İnşaatdan açılışa', desc: '52 maddəlik tikinti sprinti', href: '/toolkit/insaat-checklist' },
   { icon: FileText, label: 'Rəsmi işlər', desc: 'ASAN, AQTA, vergi', href: '/basla/resmi-isler' },
   { icon: MapPin, label: 'Məkan seçimi', desc: 'Lokasiya, icarə', href: '/basla/mekan' },
   { icon: Palette, label: 'Konsept hazırlama', desc: 'Hədəf kütlə, brend', href: '/basla/konsept' },
@@ -81,9 +83,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="flex items-start justify-between">
             <div>
               <p className="font-bold text-gray-900">DK Agency Platforması</p>
-              <p className="mt-0.5 text-sm text-gray-500">
-                Restoranını planla, idarə et, böyüt — bir platformada.
-              </p>
+              <p className="mt-0.5 text-sm text-gray-500">Restoranını planla, idarə et, böyüt, bir platformada.</p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <Link
@@ -108,9 +108,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="grid grid-cols-2 gap-8">
             <div>
               <div className="mb-3">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-[#E94560]">
-                  Başla
-                </p>
+                <p className="text-xs font-extrabold uppercase tracking-widest text-[#E94560]">Başla</p>
                 <div className="mt-1 h-0.5 w-6 bg-[#E94560]" />
               </div>
               <div className="flex flex-col gap-0.5">
@@ -120,14 +118,9 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                     href={item.href}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-red-50/50"
                   >
-                    <item.icon
-                      size={18}
-                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#E94560]"
-                    />
+                    <item.icon size={18} className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#E94560]" />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#E94560]">
-                        {item.label}
-                      </p>
+                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#E94560]">{item.label}</p>
                       <p className="text-xs text-gray-400">{item.desc}</p>
                     </div>
                   </Link>
@@ -137,9 +130,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
 
             <div>
               <div className="mb-3">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-[#C5A022]">
-                  Böyüt
-                </p>
+                <p className="text-xs font-extrabold uppercase tracking-widest text-[#C5A022]">Böyüt</p>
                 <div className="mt-1 h-0.5 w-6 bg-[#C5A022]" />
               </div>
               <div className="flex flex-col gap-0.5">
@@ -149,22 +140,17 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                     href={item.href}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-amber-50/50"
                   >
-                    <item.icon
-                      size={18}
-                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#C5A022]"
-                    />
-                    <div className="flex items-center gap-2">
-                      <div>
-                        <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#C5A022]">
-                          {item.label}
-                          {item.badge && (
-                            <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 text-[10px] font-bold text-amber-800 align-middle">
-                              {item.badge}
-                            </span>
-                          )}
-                        </p>
-                        <p className="text-xs text-gray-400">{item.desc}</p>
-                      </div>
+                    <item.icon size={18} className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#C5A022]" />
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#C5A022]">
+                        {item.label}
+                        {item.badge && (
+                          <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 align-middle text-[10px] font-bold text-amber-800">
+                            {item.badge}
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-400">{item.desc}</p>
                     </div>
                   </Link>
                 ))}
@@ -175,9 +161,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="my-6 h-px bg-gray-100" />
 
           <div>
-            <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[#8B5CF6]">
-              Devir & Satış
-            </p>
+            <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[#8B5CF6]">Devir & Satış</p>
             <div className="flex flex-wrap gap-1">
               {devirItems.map((item) => (
                 <Link
