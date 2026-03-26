@@ -7,9 +7,11 @@ import {
   Calculator,
   ClipboardList,
   HardHat,
+  Palette,
   Shield,
   Target,
   Truck,
+  Users,
   UtensilsCrossed,
 } from 'lucide-react';
 
@@ -23,14 +25,14 @@ const tools = [
   },
   {
     title: 'P&L Simulyatoru',
-    desc: 'Aylıq gəlir-xərc hesabatı yarat, başabaş nöqtəsini tap.',
+    desc: 'Aylıq gəlir-xərc hesabatı yarat, marjanı və xalis mənfəəti gör.',
     href: '/toolkit/pnl',
     icon: BarChart3,
     color: 'bg-blue-500',
   },
   {
     title: 'Restoran Açılış Checklist',
-    desc: '43 maddəlik tam checklist: hüquqi, məkan, menyu, kadr və marketinq.',
+    desc: 'Hüquqi, məkan, menyu, kadr və marketinq addımlarını bir yerdə yoxla.',
     href: '/toolkit/checklist',
     icon: ClipboardList,
     color: 'bg-rose-500',
@@ -44,14 +46,14 @@ const tools = [
   },
   {
     title: 'Başabaş Nöqtəsi',
-    desc: 'Aylıq minimum satış, günlük müştəri sayı və təhlükəsizlik marjasını hesabla.',
+    desc: 'Aylıq minimum satış, gündəlik müştəri sayı və təhlükəsizlik marjasını hesabla.',
     href: '/toolkit/basabas',
     icon: Target,
     color: 'bg-amber-500',
   },
   {
     title: 'İnşaatdan Açılışa',
-    desc: '52 maddəlik fazalı checklist, foto-video progress qeydləri və real büdcə bölməsi.',
+    desc: 'Fazalara bölünmüş açılış checklist-i, foto qeydləri və mobil uyğun iş planı.',
     href: '/toolkit/insaat-checklist',
     icon: HardHat,
     color: 'bg-orange-500',
@@ -65,10 +67,24 @@ const tools = [
   },
   {
     title: 'Delivery Kalkulyator',
-    desc: 'Wolt, Bolt Food, Yango və öz delivery modeli üçün komissiya marjasını hesabla.',
+    desc: 'Wolt, Bolt Food, Yango və öz delivery üçün komissiya marjasını hesabla.',
     href: '/toolkit/delivery-calc',
     icon: Truck,
     color: 'bg-orange-500',
+  },
+  {
+    title: 'İşçi Saxlama',
+    desc: 'Turnover faizini, 1 işçi dəyişmə xərcini və illik kadr itkisini hesabla.',
+    href: '/toolkit/staff-retention',
+    icon: Users,
+    color: 'bg-indigo-500',
+  },
+  {
+    title: 'Markalaşma Bələdçisi',
+    desc: 'Brend sözünü, vizual kimliyi və sosial media xəttini checklist ilə formalaşdır.',
+    href: '/toolkit/branding-guide',
+    icon: Palette,
+    color: 'bg-pink-500',
   },
 ];
 
@@ -84,7 +100,8 @@ export default function ToolkitPage() {
             DK Agency Toolkit
           </h1>
           <p className="mx-auto max-w-2xl text-xl text-slate-400">
-            Restoranını idarə etmək üçün pulsuz alətlər. Food cost, P&L, AQTA hazırlıq və checklistlər bir yerdədir.
+            Restoranı idarə etmək üçün praktik alətlər. Food cost, P&amp;L, AQTA, delivery,
+            kadr və markalaşma işlərini eyni sistemdən idarə et.
           </p>
         </div>
       </div>
