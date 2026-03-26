@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Crown, Lock, Sparkles, TrendingUp } from 'lucide-react';
+import CheckoutActions from '@/components/members/CheckoutActions';
 import MemberLogoutButton from '@/components/members/MemberLogoutButton';
-import { getCheckoutUrl, getMembershipCapability } from '@/lib/members/provider';
+import { getMembershipCapability } from '@/lib/members/provider';
 import { getServerMemberSession } from '@/lib/members/server-session';
 
 export const metadata = {
@@ -76,20 +77,7 @@ export default async function MembershipPage() {
                 Ödəniş provideri veriləndə CTA birbaşa checkout-a çıxacaq. İndilik placeholder axını qalır.
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href={getCheckoutUrl('member')}
-                  className="inline-flex items-center justify-center rounded-xl bg-red-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-red-700"
-                >
-                  Monthly checkout
-                </Link>
-                <Link
-                  href={getCheckoutUrl('annual')}
-                  className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 transition hover:bg-slate-50"
-                >
-                  Annual checkout
-                </Link>
-              </div>
+              <CheckoutActions />
             </div>
           </section>
 
@@ -101,6 +89,9 @@ export default async function MembershipPage() {
               <li>3. Member dashboard içində billing history</li>
               <li>4. KAZAN AI usage limit və premium analytics</li>
             </ul>
+            <Link href="/docs/member-env-checklist" className="mt-6 inline-flex text-sm font-semibold text-amber-300 hover:text-amber-200">
+              Setup checklist
+            </Link>
           </aside>
         </div>
       </div>
