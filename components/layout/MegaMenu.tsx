@@ -36,29 +36,29 @@ interface MenuItemData {
 const baslaItems: MenuItemData[] = [
   { icon: ClipboardList, label: 'Açılış Checklist', desc: 'Addım-addım açılış planı', href: '/toolkit/checklist' },
   { icon: HardHat, label: 'İnşaatdan Açılışa', desc: '52 maddəlik tikinti sprinti', href: '/toolkit/insaat-checklist' },
-  { icon: FileText, label: 'Rəsmi işlər', desc: 'ASAN, AQTA, vergi', href: '/toolkit?stage=basla' },
-  { icon: MapPin, label: 'Məkan seçimi', desc: 'Lokasiya, icarə', href: '/toolkit?stage=basla' },
-  { icon: Palette, label: 'Konsept hazırlama', desc: 'Hədəf kütlə, brend', href: '/toolkit?stage=basla' },
-  { icon: UtensilsCrossed, label: 'Menyu mühəndisliyi', desc: 'Qiymətləndirmə, star analiz', href: '/toolkit/menu-matrix' },
-  { icon: Megaphone, label: 'Marketinq', desc: 'Açılış kampaniyası', href: '/toolkit?stage=basla' },
-  { icon: Wrench, label: 'Ekipman kataloqu', desc: '500+ peşəkar avadanlıq', href: '/toolkit?stage=basla' },
-  { icon: Paintbrush, label: 'Korporativ kimlik', desc: 'Loqo, rəng, nümunələr', href: '/toolkit?stage=basla' },
+  { icon: FileText, label: 'Rəsmi işlər', desc: 'AQTA və uyğunluq yoxlaması', href: '/toolkit/aqta-checklist' },
+  { icon: MapPin, label: 'Məkan seçimi', desc: 'Checklist daxilində lokasiya qərarları', href: '/toolkit/checklist' },
+  { icon: Palette, label: 'Konsept hazırlama', desc: 'Brend və mövqe seçimi', href: '/toolkit/branding-guide' },
+  { icon: UtensilsCrossed, label: 'Menyu mühəndisliyi', desc: 'Qiymətləndirmə və star analiz', href: '/toolkit/menu-matrix' },
+  { icon: Megaphone, label: 'Marketinq', desc: 'Brend dili və tanıtım planı', href: '/toolkit/branding-guide' },
+  { icon: Wrench, label: 'Ekipman kataloqu', desc: 'Ekipman kateqoriyalarına bax', href: '/ilanlar' },
+  { icon: Paintbrush, label: 'Korporativ kimlik', desc: 'Loqo, rəng və vizual dil', href: '/toolkit/branding-guide' },
 ];
 
 const boyutItems: MenuItemData[] = [
   { icon: BarChart3, label: 'Mənfəət-zərər (P&L)', desc: 'Gəlir-xərc analizi', href: '/toolkit/pnl' },
   { icon: Calculator, label: 'Ərzaq maya dəyəri', desc: 'Porsiya maya hesabla', href: '/toolkit/food-cost' },
   { icon: Scale, label: 'Başabaş analizi', desc: 'Break-even nöqtəsi', href: '/toolkit/basabas' },
-  { icon: TrendingUp, label: 'Bazar qiymətləri', desc: 'Həftəlik ərzaq qiymətləri', href: '/b2b-panel/toolkit/inventory' },
-  { icon: CheckSquare, label: 'Əməliyyat checklist', desc: 'Gündəlik, həftəlik', href: '/toolkit/checklist' },
+  { icon: TrendingUp, label: 'Bazar qiymətləri', desc: 'Food cost daxilində bazar məntiqi', href: '/toolkit/food-cost' },
+  { icon: CheckSquare, label: 'Əməliyyat checklist', desc: 'Gigiyena və gündəlik nəzarət', href: '/toolkit/aqta-checklist' },
   { icon: Bot, label: 'KAZAN AI', desc: 'AI konsultant', href: '/kazan-ai', badge: 'TEZLİKLƏ' },
 ];
 
 const devirItems: { icon: LucideIcon; label: string; href: string }[] = [
-  { icon: Building2, label: 'Restoran devri', href: '/b2b-panel/ilanlarim?tur=devir' },
-  { icon: Package, label: 'Ekipman satışı', href: '/b2b-panel/ilanlarim?tur=ekipman' },
-  { icon: Network, label: 'Franchise', href: '/b2b-panel/ilanlarim?tur=franchise' },
-  { icon: UserSearch, label: 'İşlətmeci tap', href: '/b2b-panel/ilanlarim?tur=isletmeci' },
+  { icon: Building2, label: 'Restoran devri', href: '/ilanlar' },
+  { icon: Package, label: 'Ekipman satışı', href: '/ilanlar' },
+  { icon: Network, label: 'Franchise', href: '/ilanlar' },
+  { icon: UserSearch, label: 'İşlətmeci tap', href: '/ilanlar' },
 ];
 
 const popularItems = [
@@ -108,7 +108,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
               <div className="flex flex-col gap-0.5">
                 {baslaItems.map((item) => (
                   <Link
-                    key={item.href}
+                    key={`${item.href}-${item.label}`}
                     href={item.href}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-red-50/50"
                   >
@@ -135,7 +135,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
               <div className="flex flex-col gap-0.5">
                 {boyutItems.map((item) => (
                   <Link
-                    key={item.href}
+                    key={`${item.href}-${item.label}`}
                     href={item.href}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-amber-50/50"
                   >
@@ -167,7 +167,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
             <div className="flex flex-wrap gap-1">
               {devirItems.map((item) => (
                 <Link
-                  key={item.href}
+                  key={`${item.href}-${item.label}`}
                   href={item.href}
                   className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[#8B5CF6]"
                 >
