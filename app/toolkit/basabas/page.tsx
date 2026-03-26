@@ -25,14 +25,9 @@ export default function BasabasPage() {
   const calc = useMemo(() => {
     const totalFixed = rent + salaries + utilities + otherFixed;
     const contributionPct = 100 - variablePct;
-    const breakEvenRevenue =
-      contributionPct > 0 ? totalFixed / (contributionPct / 100) : 0;
-    const dailyCustomers =
-      avgCheck > 0 ? Math.ceil(breakEvenRevenue / 30 / avgCheck) : 0;
-    const safetyMargin =
-      currentSales > 0
-        ? ((currentSales - breakEvenRevenue) / currentSales) * 100
-        : 0;
+    const breakEvenRevenue = contributionPct > 0 ? totalFixed / (contributionPct / 100) : 0;
+    const dailyCustomers = avgCheck > 0 ? Math.ceil(breakEvenRevenue / 30 / avgCheck) : 0;
+    const safetyMargin = currentSales > 0 ? ((currentSales - breakEvenRevenue) / currentSales) * 100 : 0;
 
     const status: 'safe' | 'warning' | 'danger' =
       safetyMargin >= 20 ? 'safe' : safetyMargin >= 0 ? 'warning' : 'danger';
@@ -82,10 +77,10 @@ export default function BasabasPage() {
     <div className="bg-white pb-24">
       <div className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
         <div className="absolute inset-0">
-          <div className="absolute right-[-10%] top-[-20%] h-[600px] w-[600px] rounded-full bg-amber-500/8 blur-[100px]" />
+          <div className="absolute top-[-20%] right-[-10%] h-[600px] w-[600px] rounded-full bg-amber-500/8 blur-[100px]" />
           <div className="absolute bottom-[-30%] left-[-5%] h-[400px] w-[400px] rounded-full bg-orange-500/5 blur-[80px]" />
         </div>
-        <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-8">
+        <div className="relative mx-auto max-w-6xl px-6 pt-8 pb-20">
           <Link
             href="/toolkit"
             className="group mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-300"
@@ -102,8 +97,7 @@ export default function BasabasPage() {
               </span>
             </h1>
             <p className="max-w-lg text-lg leading-relaxed text-slate-400">
-              Aylıq minimum satış həddi, günlük müştəri sayı və təhlükəsizlik marjası üçün 3 əsas
-              rəqəm.
+              Aylıq minimum satış həddi, günlük müştəri sayı və təhlükəsizlik marjası üçün 3 əsas rəqəm.
             </p>
           </div>
         </div>
@@ -112,9 +106,7 @@ export default function BasabasPage() {
       <div className="relative z-10 mx-auto -mt-10 max-w-6xl px-6">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <div className="rounded-2xl bg-amber-50 p-5 ring-1 ring-amber-200/60">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">
-              Başabaş nöqtəsi
-            </div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">Başabaş nöqtəsi</div>
             <div className="text-3xl font-black tabular-nums text-amber-600">
               {calc.breakEvenRevenue.toFixed(0)}
               <span className="ml-1 text-lg">₼</span>
@@ -123,9 +115,7 @@ export default function BasabasPage() {
           </div>
 
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/60">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-              Günlük müştəri
-            </div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">Günlük müştəri</div>
             <div className="text-3xl font-black tabular-nums text-slate-900">
               {calc.dailyCustomers}
               <span className="ml-1 text-lg">nəfər</span>
@@ -134,12 +124,8 @@ export default function BasabasPage() {
           </div>
 
           <div className={`${statusStyles.bg} rounded-2xl p-5 ring-1 ${statusStyles.ring}`}>
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">
-              Təhlükəsizlik marjası
-            </div>
-            <div className={`text-3xl font-black tabular-nums ${statusStyles.text}`}>
-              {calc.safetyMargin.toFixed(1)}%
-            </div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">Təhlükəsizlik marjası</div>
+            <div className={`text-3xl font-black tabular-nums ${statusStyles.text}`}>{calc.safetyMargin.toFixed(1)}%</div>
             <div className={`mt-1 flex items-center gap-1 text-xs font-semibold ${statusStyles.text}`}>
               <span className="h-1.5 w-1.5 rounded-full bg-current" />
               {statusStyles.label}
@@ -147,9 +133,7 @@ export default function BasabasPage() {
           </div>
 
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/60">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-              Sabit xərclər
-            </div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">Sabit xərclər</div>
             <div className="text-3xl font-black tabular-nums text-slate-900">
               {calc.totalFixed.toFixed(0)}
               <span className="ml-1 text-lg">₼</span>
@@ -163,9 +147,7 @@ export default function BasabasPage() {
         <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
           <div className="rounded-2xl bg-white p-6 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
             <div className="mb-5 flex items-center justify-between">
-              <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                Sabit xərclər (aylıq)
-              </h3>
+              <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Sabit xərclər (aylıq)</h3>
               <button
                 onClick={resetAll}
                 className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500"
@@ -219,9 +201,7 @@ export default function BasabasPage() {
           </div>
 
           <div className="rounded-2xl bg-white p-6 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
-            <h3 className="mb-5 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-              Dəyişən xərc və parametrlər
-            </h3>
+            <h3 className="mb-5 text-[11px] font-bold uppercase tracking-widest text-slate-400">Dəyişən xərc və parametrlər</h3>
 
             <div className="mb-6 grid grid-cols-3 gap-4">
               <div>
@@ -297,24 +277,17 @@ export default function BasabasPage() {
               <h3 className="text-sm font-bold text-slate-900">Başabaş nədir?</h3>
             </div>
             <p className="mb-5 text-[13px] leading-relaxed text-slate-600">
-              Başabaş nöqtəsi restoranın nə mənfəət, nə də zərər etdiyi minimum satış həddidir.
-              Bu rəqəmdən aşağı hər ay zərərdir.
+              Başabaş nöqtəsi restoranın nə mənfəət, nə də zərər etdiyi minimum satış həddidir. Bu rəqəmdən aşağı hər ay zərərdir.
             </p>
             <div className="mt-auto space-y-2 rounded-xl bg-slate-900 p-4">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-amber-400">
-                Formul
-              </p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-amber-400">Formul</p>
               <div className="space-y-0.5 font-mono text-[12px] text-slate-300">
                 <p className="text-white">Sabit xərclər</p>
                 <p>÷ Contribution Margin %</p>
-                <p className="border-t border-slate-700 pt-1 font-bold text-amber-400">
-                  = Başabaş satış (₼)
-                </p>
+                <p className="border-t border-slate-700 pt-1 font-bold text-amber-400">= Başabaş satış (₼)</p>
               </div>
               <div className="border-t border-slate-700 pt-2">
-                <p className="font-mono text-[11px] font-bold text-white">
-                  CM% = 100% - Dəyişən xərc%
-                </p>
+                <p className="font-mono text-[11px] font-bold text-white">CM% = 100% - Dəyişən xərc%</p>
               </div>
             </div>
           </div>
@@ -326,9 +299,7 @@ export default function BasabasPage() {
               </div>
               <h3 className="text-sm font-bold text-slate-900">Sabit vs dəyişən xərc</h3>
             </div>
-            <p className="mb-4 text-[12px] text-slate-500">
-              Satış dəyişsə də, sabit xərc dəyişmir.
-            </p>
+            <p className="mb-4 text-[12px] text-slate-500">Satış dəyişsə də, sabit xərc dəyişmir.</p>
             <div className="mt-auto space-y-2.5">
               <div className="rounded-xl bg-amber-50 p-3.5 ring-1 ring-amber-200/60">
                 <p className="text-xs font-bold text-amber-700">Sabit xərclər</p>
@@ -359,31 +330,22 @@ export default function BasabasPage() {
               <h3 className="text-sm font-bold text-slate-900">Təhlükəsizlik marjası</h3>
             </div>
             <p className="mb-5 text-[13px] leading-relaxed text-slate-600">
-              Hazırkı satışın başabaşdan nə qədər uzaq olduğunu göstərir. 20%-dən aşağıdırsa,
-              risk zonasındasan.
+              Hazırkı satışın başabaşdan nə qədər uzaq olduğunu göstərir. 20%-dən aşağıdırsa, risk zonasındasan.
             </p>
             <div className="mt-auto rounded-xl bg-white p-4 ring-1 ring-emerald-200/60">
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-emerald-700">
-                Marja səviyyələri
-              </p>
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-emerald-700">Marja səviyyələri</p>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  <span className="text-[11px] text-slate-600">
-                    <strong className="text-emerald-700">≥20%</strong> - Təhlükəsizdə
-                  </span>
+                  <span className="text-[11px] text-slate-600"><strong className="text-emerald-700">≥20%</strong> - Təhlükəsizdə</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-amber-500" />
-                  <span className="text-[11px] text-slate-600">
-                    <strong className="text-amber-700">0-20%</strong> - Diqqət zonası
-                  </span>
+                  <span className="text-[11px] text-slate-600"><strong className="text-amber-700">0-20%</strong> - Diqqət zonası</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-red-500" />
-                  <span className="text-[11px] text-slate-600">
-                    <strong className="text-red-700">&lt;0%</strong> - Zərər edirsən
-                  </span>
+                  <span className="text-[11px] text-slate-600"><strong className="text-red-700">&lt;0%</strong> - Zərər edirsən</span>
                 </div>
               </div>
             </div>
@@ -394,7 +356,7 @@ export default function BasabasPage() {
       <div className="mx-auto mt-10 max-w-6xl px-6">
         <div className="grid gap-5 md:grid-cols-2">
           <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-8">
-            <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-amber-500/10 blur-[50px]" />
+            <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-amber-500/10 blur-[50px]" />
             <div className="relative">
               <div className="mb-4 flex items-center gap-2.5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/20">
@@ -403,8 +365,7 @@ export default function BasabasPage() {
                 <h3 className="text-base font-bold text-amber-400">DK Agency Məsləhəti</h3>
               </div>
               <p className="mb-5 text-[13px] leading-relaxed text-slate-400">
-                Başabaş nöqtəsini aylıq yox, həftəlik də izlə. Çünki problem adətən ay sonunda yox,
-                ayın ortasında başlayır.
+                Başabaş nöqtəsini aylıq yox, həftəlik də izlə. Çünki problem adətən ay sonunda yox, ayın ortasında başlayır.
               </p>
               <Link
                 href="/blog/basabas-noqtesi-hesablama"
@@ -441,30 +402,16 @@ export default function BasabasPage() {
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
             {[
-              {
-                title: 'Başabaş Nöqtəsi Hesablama',
-                slug: 'basabas-noqtesi-hesablama',
-                tag: 'Maliyyə',
-              },
-              {
-                title: 'P&L Oxuya Bilmirsən?',
-                slug: 'pnl-oxuya-bilmirsen',
-                tag: 'Maliyyə',
-              },
-              {
-                title: 'Food Cost-un Qanlı Həqiqəti',
-                slug: '1-porsiya-food-cost-hesablama',
-                tag: 'Maliyyə',
-              },
+              { title: 'Başabaş Nöqtəsi Hesablama', slug: 'basabas-noqtesi-hesablama', tag: 'Maliyyə' },
+              { title: 'P&L Oxuya Bilmirsən?', slug: 'pnl-oxuya-bilmirsen', tag: 'Maliyyə' },
+              { title: 'Food Cost-un Qanlı Həqiqəti', slug: '1-porsiya-food-cost-hesablama', tag: 'Maliyyə' },
             ].map((article) => (
               <Link
                 key={article.slug}
                 href={`/blog/${article.slug}`}
                 className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 transition-all duration-300 hover:shadow-md hover:ring-slate-300/60"
               >
-                <span className="text-[10px] font-bold uppercase tracking-widest text-orange-600">
-                  {article.tag}
-                </span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-orange-600">{article.tag}</span>
                 <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-orange-600">
                   {article.title}
                 </h4>
