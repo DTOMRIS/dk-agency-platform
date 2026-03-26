@@ -37,13 +37,13 @@ interface MenuItemData {
 const baslaItems: MenuItemData[] = [
   { icon: ClipboardList, label: 'Açılış Checklist', desc: 'Addım-addım açılış planı', href: '/toolkit/checklist' },
   { icon: HardHat, label: 'İnşaatdan Açılışa', desc: '52 maddəlik tikinti sprinti', href: '/toolkit/insaat-checklist' },
-  { icon: FileText, label: 'Rəsmi işlər', desc: 'ASAN, AQTA, vergi', href: '/basla/resmi-isler' },
-  { icon: MapPin, label: 'Məkan seçimi', desc: 'Lokasiya, icarə', href: '/basla/mekan' },
-  { icon: Palette, label: 'Konsept hazırlama', desc: 'Hədəf kütlə, brend', href: '/basla/konsept' },
+  { icon: FileText, label: 'Rəsmi işlər', desc: 'ASAN, AQTA, vergi', href: '/toolkit?stage=basla' },
+  { icon: MapPin, label: 'Məkan seçimi', desc: 'Lokasiya, icarə', href: '/toolkit?stage=basla' },
+  { icon: Palette, label: 'Konsept hazırlama', desc: 'Hədəf kütlə, brend', href: '/toolkit?stage=basla' },
   { icon: UtensilsCrossed, label: 'Menyu mühəndisliyi', desc: 'Qiymətləndirmə, star analiz', href: '/toolkit/menu-matrix' },
-  { icon: Megaphone, label: 'Marketinq', desc: 'Açılış kampaniyası', href: '/basla/marketing' },
-  { icon: Wrench, label: 'Ekipman kataloqu', desc: '500+ peşəkar avadanlıq', href: '/basla/ekipman' },
-  { icon: Paintbrush, label: 'Korporativ kimlik', desc: 'Loqo, rəng, nümunələr', href: '/basla/kurumsal-kimlik' },
+  { icon: Megaphone, label: 'Marketinq', desc: 'Açılış kampaniyası', href: '/toolkit?stage=basla' },
+  { icon: Wrench, label: 'Ekipman kataloqu', desc: '500+ peşəkar avadanlıq', href: '/toolkit?stage=basla' },
+  { icon: Paintbrush, label: 'Korporativ kimlik', desc: 'Loqo, rəng, nümunələr', href: '/toolkit?stage=basla' },
 ];
 
 const boyutItems: MenuItemData[] = [

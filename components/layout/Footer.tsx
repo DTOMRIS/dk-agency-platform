@@ -20,8 +20,8 @@ const footerColumns = [
     links: [
       { label: 'Açılış Checklist', href: '/toolkit/checklist' },
       { label: 'İnşaatdan Açılışa', href: '/toolkit/insaat-checklist' },
-      { label: 'Rəsmi İşlər', href: '/toolkit' },
-      { label: 'Məkan Seçimi', href: '/toolkit' },
+      { label: 'Rəsmi İşlər', href: '/toolkit?stage=basla' },
+      { label: 'Məkan Seçimi', href: '/toolkit?stage=basla' },
       { label: 'Menyu Mühəndisliyi', href: '/toolkit/menu-matrix' },
     ],
   },

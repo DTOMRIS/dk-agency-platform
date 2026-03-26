@@ -48,11 +48,31 @@ const sections: Section[] = [
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'storage-1', text: 'Soyuducu +2°C ilə +6°C arasındadır', detail: 'Termometr gündəlik yoxlanır və qeydə düşür.' },
-      { id: 'storage-2', text: 'Dondurucu -18°C və aşağıdır', detail: 'Normadan çıxırsa dərhal tədbir planı var.' },
-      { id: 'storage-3', text: 'Çiy və hazır ərzaq ayrı saxlanır', detail: 'Damcılama riski olmayan ayrı rəf və qab qaydası tətbiq edilir.' },
-      { id: 'storage-4', text: 'Ərzaq yerdən yuxarı saxlanır', detail: 'Rəf, palet və uyğun konteyner istifadə olunur.' },
-      { id: 'storage-5', text: 'FIFO və son tarix etiketi görünür', detail: 'Köhnə məhsul ön sıradadır, vaxtı keçmiş məhsul yoxdur.' },
+      {
+        id: 'storage-1',
+        text: 'Soyuducu +2°C ilə +6°C arasındadır',
+        detail: 'Termometr gündəlik yoxlanır və qeyd də düşür.',
+      },
+      {
+        id: 'storage-2',
+        text: 'Dondurucu -18°C və aşağıdır',
+        detail: 'Normadan çıxırsa dərhal tədbir planı var.',
+      },
+      {
+        id: 'storage-3',
+        text: 'Çiy və hazır ərzaq ayrı saxlanır',
+        detail: 'Damcılama riski olmayan ayrı rəf və qab qaydası tətbiq edilir.',
+      },
+      {
+        id: 'storage-4',
+        text: 'Ərzaq yerdən yuxarı saxlanır',
+        detail: 'Rəf, palet və uyğun konteyner istifadəsi olunur.',
+      },
+      {
+        id: 'storage-5',
+        text: 'FIFO və son tarix etiketi görünür',
+        detail: 'Köhnə məhsul ön sıradadır, vaxtı keçmiş məhsul yoxdur.',
+      },
     ],
   },
   {
@@ -64,10 +84,26 @@ const sections: Section[] = [
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'hygiene-1', text: 'Bütün işçilərin tibbi arayışı aktualdır', detail: 'Tarix nəzarəti aylıq aparılır.' },
-      { id: 'hygiene-2', text: 'İş geyimi təmiz və standartdır', detail: 'Mətbəx komandasında açıq rəng forma və bone var.' },
-      { id: 'hygiene-3', text: 'Əl yuma stansiyası işləkdir', detail: 'Sabun, dezinfeksiya və quruducu həmişə doludur.' },
-      { id: 'hygiene-4', text: 'Dırnaq, aksesuar və siqaret qaydası tətbiq olunur', detail: 'Üzük, bilərzik və mətbəxdə siqaret qadağası pozulmur.' },
+      {
+        id: 'hygiene-1',
+        text: 'Bütün işçilərin tibbi arayışı aktualdır',
+        detail: 'Tarix nəzarəti aylıq aparılır.',
+      },
+      {
+        id: 'hygiene-2',
+        text: 'İş geyimi təmiz və standartdır',
+        detail: 'Mətbəx komandasında açıq rəng forma və bone var.',
+      },
+      {
+        id: 'hygiene-3',
+        text: 'Əl yuma stansiyası işləkdir',
+        detail: 'Sabun, dezinfeksiya və quruducu həmişə doludur.',
+      },
+      {
+        id: 'hygiene-4',
+        text: 'Dırnaq, aksesuar və siqaret qaydası tətbiq olunur',
+        detail: 'Üzük, bilərzik və mətbəxdə siqaret qadağası pozulmur.',
+      },
     ],
   },
   {
@@ -79,10 +115,26 @@ const sections: Section[] = [
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'kitchen-1', text: 'İş səthləri və bıçaqlar hər istifadə sonrası təmizlənir', detail: 'Təmizlik və dezinfeksiya ayrıdır, ikisi də tətbiq edilir.' },
-      { id: 'kitchen-2', text: 'Rəng kodlu kəsmə taxtaları istifadə olunur', detail: 'Çiy ət, toyuq, balıq və tərəvəz üçün ayrıca taxta ayrılıb.' },
-      { id: 'kitchen-3', text: 'Zibil qutuları qapaqlı və pedallıdır', detail: 'Daşma, qoxu və açıq zibil sahəsi yoxdur.' },
-      { id: 'kitchen-4', text: 'Zərərverici izi yoxdur', detail: 'Həftəlik yoxlama və peşəkar dərmanlama planı saxlanılır.' },
+      {
+        id: 'kitchen-1',
+        text: 'İş səthləri və bıçaqlar hər istifadə sonrası təmizlənir',
+        detail: 'Təmizlik və dezinfeksiya ayrıdır, ikisi də tətbiq edilir.',
+      },
+      {
+        id: 'kitchen-2',
+        text: 'Rəng kodlu kəsmə taxtaları istifadə olunur',
+        detail: 'Çiy ət, toyuq, balıq və tərəvəz üçün ayrıca taxta ayrılıb.',
+      },
+      {
+        id: 'kitchen-3',
+        text: 'Zibil qutuları qapaqlı və pedallıdır',
+        detail: 'Daşma, qoxu və açıq zibil sahəsi yoxdur.',
+      },
+      {
+        id: 'kitchen-4',
+        text: 'Zərərverici izi yoxdur',
+        detail: 'Həftəlik yoxlama və peşəkar dərmanlama planı saxlanılır.',
+      },
     ],
   },
   {
@@ -94,9 +146,21 @@ const sections: Section[] = [
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'water-1', text: 'İçməli su mənbəyi təhlükəsizdir', detail: 'Filtr, servis və baxım vaxtı nəzarətdədir.' },
-      { id: 'water-2', text: 'Buz maşını təmizdir', detail: 'Buz əl ilə deyil, maşa və ya kürək ilə götürülür.' },
-      { id: 'water-3', text: 'Su ilə təmas edən qablar ayrıdır', detail: 'Buz qabı, su qabı və qabyuyan axını qarışdırılmır.' },
+      {
+        id: 'water-1',
+        text: 'İçməli su mənbəyi təhlükəsizdir',
+        detail: 'Filtr, servis və baxım vaxtı nəzarətdədir.',
+      },
+      {
+        id: 'water-2',
+        text: 'Buz maşını təmizdir',
+        detail: 'Buz əl ilə deyil, maşa və ya kürək ilə götürülür.',
+      },
+      {
+        id: 'water-3',
+        text: 'Su ilə təmas edən qablar ayrıdır',
+        detail: 'Buz qabı, su qabı və qabyuyan axını qarışdırılmır.',
+      },
     ],
   },
   {
@@ -108,25 +172,58 @@ const sections: Section[] = [
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'prep-1', text: 'Toyuq minimum 74°C daxili temperatura çatır', detail: 'Termometr ilə yoxlanılır, gözə görə qərar verilmir.' },
-      { id: 'prep-2', text: 'Hazır yemək 2 saatdan çox otaq temperaturunda qalmır', detail: '2 saatdan sonra soyudulur və ya atılır.' },
-      { id: 'prep-3', text: 'Yenidən qızdırılan məhsul 74°C üzərinə çıxır', detail: 'Təkrar servis üçün eyni təhlükəsizlik sərhədi qorunur.' },
-      { id: 'prep-4', text: 'Eyni əlcək fərqli məhsul qruplarında istifadə olunmur', detail: 'Çarpaz kontaminasiya qaydası komanda tərəfindən bilinir.' },
+      {
+        id: 'prep-1',
+        text: 'Toyuq minimum 74°C daxili temperatura çatır',
+        detail: 'Termometr ilə yoxlanılır, gözə görə qərar verilmir.',
+      },
+      {
+        id: 'prep-2',
+        text: 'Hazır yemək 2 saatdan çox otaq temperaturunda qalmır',
+        detail: '2 saatdan sonra soyudulur və ya atılır.',
+      },
+      {
+        id: 'prep-3',
+        text: 'Yenidən qızdırılan məhsul 74°C üzərinə çıxır',
+        detail: 'Təkrar servis üçün eyni təhlükəsizlik sərhədi qorunur.',
+      },
+      {
+        id: 'prep-4',
+        text: 'Eyni əlcək fərqli məhsul qruplarında istifadə olunmur',
+        detail: 'Çarpaz kontaminasiya qaydası komanda tərəfindən bilinir.',
+      },
     ],
   },
   {
     id: 'docs',
     title: 'Sənədləşdirmə',
-    subtitle: 'AQTA qeydiyyatı, jurnal və izləni bilənlik',
+    subtitle: 'AQTA qeydiyyatı, jurnal və izlənə bilənlik',
     icon: WalletCards,
     accent: 'text-red-600',
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'docs-1', text: 'AQTA qeydiyyatı tamamlanıb', detail: 'ASAN və ya KOBİA üzərindən pulsuz qeydiyyat mövcuddur.' },
-      { id: 'docs-2', text: 'Temperatur və gigiyena jurnalı doludur', detail: 'Gündəlik qeydlər boş buraxılmır.' },
-      { id: 'docs-3', text: 'Faktura və məhsul mənbə sənədləri arxivlənir', detail: 'Traceability tələbi üçün sənəd çıxarmaq mümkündür.' },
-      { id: 'docs-4', text: 'Tibbi arayış tarixləri ayrıca cədvəldə izlənir', detail: 'Müddəti bitmədən yenilənmə xəbərdarlığı verilir.' },
+      {
+        id: 'docs-1',
+        text: 'AQTA qeydiyyatı tamamlanıb',
+        detail:
+          'AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət rüsumu 150 AZN.',
+      },
+      {
+        id: 'docs-2',
+        text: 'Temperatur və gigiyena jurnalı doludur',
+        detail: 'Gündəlik qeydlər boş buraxılmır.',
+      },
+      {
+        id: 'docs-3',
+        text: 'Faktura və məhsul mənbə sənədləri arxivlənir',
+        detail: 'Traceability tələbi üçün sənəd çıxarmaq mümkündür.',
+      },
+      {
+        id: 'docs-4',
+        text: 'Tibbi arayış tarixləri ayrıca cədvəldə izlənir',
+        detail: 'Müddəti bitmədən yenilənmə xəbərdarlığı verilir.',
+      },
     ],
   },
   {
@@ -138,9 +235,21 @@ const sections: Section[] = [
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'hall-1', text: 'Tualet təmiz və tam təchizatlıdır', detail: 'Sabun, quruducu və işlək su mövcuddur.' },
-      { id: 'hall-2', text: 'Mətbəx qoxusu zala keçmir', detail: 'Havalandırma axını və filtr təmizliyi nəzarətdədir.' },
-      { id: 'hall-3', text: 'Döşəmə, divar və tavan sanitariya baxımından uyğundur', detail: 'Səthlərdə yağ, kif və açıq çirk görünmür.' },
+      {
+        id: 'hall-1',
+        text: 'Tualet təmiz və tam təchizatlıdır',
+        detail: 'Sabun, quruducu və işlək su mövcuddur.',
+      },
+      {
+        id: 'hall-2',
+        text: 'Mətbəx qoxusu zala keçmir',
+        detail: 'Havalandırma axını və filtr təmizliyi nəzarətdədir.',
+      },
+      {
+        id: 'hall-3',
+        text: 'Döşəmə, divar və tavan sanitariya baxımından uyğundur',
+        detail: 'Səthlərdə yağ, kif və açıq çirk görünmür.',
+      },
     ],
   },
   {
@@ -152,9 +261,21 @@ const sections: Section[] = [
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'allergen-1', text: 'Menyuda əsas allergenlər qeyd olunub', detail: 'Süd, gluten, yumurta, fındıq və s. aydın göstərilir.' },
-      { id: 'allergen-2', text: 'Komanda allergen sualına düzgün cavab verir', detail: 'Servis heyətində qısa cavab skripti var.' },
-      { id: 'allergen-3', text: 'Allergen üçün ayrıca hazırlıq qaydası mövcuddur', detail: 'Taxta, bıçaq və səth ayrımı məlumdur.' },
+      {
+        id: 'allergen-1',
+        text: 'Menyuda əsas allergenlər qeyd olunub',
+        detail: 'Süd, gluten, yumurta, fındıq və s. aydın göstərilir.',
+      },
+      {
+        id: 'allergen-2',
+        text: 'Komanda allergen sualına düzgün cavab verir',
+        detail: 'Servis heyətində qısa cavab skripti var.',
+      },
+      {
+        id: 'allergen-3',
+        text: 'Allergen üçün ayrıca hazırlıq qaydası mövcuddur',
+        detail: 'Taxta, bıçaq və səth ayrımı məlumdur.',
+      },
     ],
   },
 ];
@@ -286,7 +407,7 @@ export default function AqtaChecklistPage() {
               </span>
             </h1>
             <p className="max-w-lg text-base leading-relaxed text-slate-400 sm:text-lg">
-              Gigiyena, sənədləşdirmə, cross-contamination və gündəlik nəzarət. Çərimə riskini
+              Gigiyena, sənədləşdirmə, cross-contamination və gündəlik nəzarət. Cərimə riskini
               bölmə-bölmə gör və komandan üçün standart qur.
             </p>
           </div>
@@ -316,9 +437,7 @@ export default function AqtaChecklistPage() {
             <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">
               Risk zonası
             </div>
-            <div className="text-3xl font-black text-red-600">
-              {fineReasons.length}
-            </div>
+            <div className="text-3xl font-black text-red-600">{fineReasons.length}</div>
             <div className="mt-1 text-xs text-slate-500">Ən yayğın cərimə səbəbi</div>
           </div>
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70">
@@ -482,8 +601,9 @@ export default function AqtaChecklistPage() {
             </div>
             <p className="text-sm leading-relaxed text-slate-600">
               AQTA qida təhlükəsizliyi, gigiyena, traceability və istehlakçı riskinə baxır.
-              Problem yalnız təmizlik deyil. Qaydaların sistemli izlənməsi və sənədləşdirilməsi əsasdır.
-              Qeydiyyat prosesi ASAN və KOBİA xətti ilə pulsuz aparılır.
+              Problem yalnız təmizlik deyil. Qaydaların sistemli izlənməsi və sənədləşdirilməsi
+              əsasdır. AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət
+              rüsumu 150 AZN.
             </p>
           </div>
 
@@ -510,8 +630,8 @@ export default function AqtaChecklistPage() {
               <h2 className="text-base font-bold text-slate-900">Cross-contamination</h2>
             </div>
             <p className="mb-4 text-sm leading-relaxed text-slate-600">
-              Çiy məhsuldakı bakteriyanın hazır yeməyə keçməsi qida zəhərlənməsinin əsas səbəbidir.
-              Eyni taxta, eyni əlcək və yanlış soyuducu düzülüşü ən riskli üçlükdür.
+              Çiy məhsuldakı bakteriyanın hazır yeməyə keçməsi qida zəhərlənməsinin əsas
+              səbəbidir. Eyni taxta, eyni əlcək və yanlış soyuducu düzülüşü ən riskli üçlükdür.
             </p>
             <div className="space-y-2">
               {crossBoards.map((board) => (
@@ -533,7 +653,7 @@ export default function AqtaChecklistPage() {
                 <h2 className="text-base font-bold text-red-300">DK Agency məsləhəti</h2>
               </div>
               <p className="text-sm leading-relaxed text-slate-300">
-                AQTA problemi adətən “təmizlik problemi” deyil, “idarəetmə ritmi problemi”dir.
+                AQTA problemi adətən "təmizlik problemi" deyil, "idarəetmə ritmi problemi"dir.
                 Jurnal, məsul şəxs və gündəlik nəzarət saatı yoxdursa, cərimə riski yüksəlir.
               </p>
               <Link
@@ -551,8 +671,8 @@ export default function AqtaChecklistPage() {
               <h2 className="text-base font-bold">OCAQ Panel</h2>
             </div>
             <p className="text-sm leading-relaxed text-white/85">
-              Temperatur jurnalı, tibbi arayış tarixləri, gigiyena tapşırıqları və audit qeydlərini
-              komandaya field-by-field payla.
+              Temperatur jurnalı, tibbi arayış tarixləri, gigiyena tapşırıqları və audit
+              qeydlərini komandaya field-by-field payla.
             </p>
             <Link
               href="/auth/register"
