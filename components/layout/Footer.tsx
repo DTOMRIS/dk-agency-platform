@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const footerColumns = [
   {
-    title: 'AlÉ™tlÉ™r',
+    title: 'Alətlər',
     links: [
       { label: 'P&L Hesablama', href: '/toolkit/pnl' },
       { label: 'Food Cost', href: '/toolkit/food-cost' },
@@ -29,18 +29,18 @@ const footerColumns = [
     title: 'Resurslar',
     links: [
       { label: 'Bloq', href: '/blog' },
-      { label: 'TrendlÉ™r', href: '/haberler' },
-      { label: 'HAP BilgilÉ™r', href: '/blog' },
-      { label: 'DK Digest', href: '/news' },
+      { label: 'Trendlər', href: '/haberler' },
+      { label: 'HAP Bilgilər', href: '/blog' },
+      { label: 'DK Digest', href: '/haberler' },
     ],
   },
   {
     title: 'Şirkət',
     links: [
       { label: 'Haqqımızda', href: '/haqqimizda' },
-      { label: 'MÉ™slÉ™hÉ™t', href: '/elaqe' },
+      { label: 'Məsləhət', href: '/elaqe' },
       { label: 'Əlaqə', href: '/elaqe' },
-      { label: 'SÉ™dd Rozeti', href: '/haqqimizda' },
+      { label: 'Sədd Rozeti', href: '/haqqimizda' },
     ],
   },
 ];
@@ -114,4 +114,3 @@ export function KazanAIBot() {
 }
 
 export default Footer;
-

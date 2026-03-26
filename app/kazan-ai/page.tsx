@@ -1,12 +1,20 @@
 import type { Metadata } from 'next';
-import KazanAiChatClient from '@/components/kazan-ai/KazanAiChatClient';
 
 export const metadata: Metadata = {
-  title: 'KAZAN AI — Restoranının AI danışmanı',
-  description:
-    'KAZAN AI restoranlar üçün food cost, P&L, AQTA, delivery və açılış qərarlarını satış yönlü şəkildə şərh edən AI danışmandır.',
+  title: 'KAZAN AI | Tezliklə',
+  description: 'KAZAN AI tezliklə aktiv olacaq.',
 };
 
 export default function KazanAiPage() {
-  return <KazanAiChatClient />;
+  return (
+    <main className="min-h-[70vh] bg-[#FAFAF8] px-4 py-24">
+      <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+        <div className="mb-4 inline-flex rounded-full bg-amber-100 px-4 py-1 text-xs font-bold uppercase tracking-widest text-amber-800">
+          Tezliklə
+        </div>
+        <h1 className="text-4xl font-black text-slate-900">KAZAN AI</h1>
+        <p className="mt-4 text-lg text-slate-600">KAZAN AI tezliklə aktiv olacaq.</p>
+      </div>
+    </main>
+  );
 }

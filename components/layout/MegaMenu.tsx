@@ -18,7 +18,6 @@ import {
   Paintbrush,
   Palette,
   Scale,
-  Stethoscope,
   TrendingUp,
   UserSearch,
   UtensilsCrossed,
@@ -94,13 +93,6 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
               >
                 <Wrench size={14} />
                 Bütün alətlər
-              </Link>
-              <Link
-                href="/test"
-                className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
-              >
-                <Stethoscope size={14} />
-                Sağlamlıq testi
               </Link>
             </div>
           </div>
