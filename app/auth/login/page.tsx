@@ -6,16 +6,10 @@ import { useRouter } from 'next/navigation';
 import { AlertCircle, ArrowLeft, Lock, LogIn, Mail, ShieldCheck } from 'lucide-react';
 import { type MemberSession, writeMemberSession } from '@/lib/member-access';
 
-const TEST_USERS = [
-  { email: 'dotomris@gmail.com', password: '123456', name: 'Doğan Tomris', plan: 'admin' as const },
-  { email: 'admin@dkagency.az', password: 'admin123', name: 'DK Admin', plan: 'admin' as const },
-  { email: 'member@dkagency.az', password: 'member123', name: 'DK Member', plan: 'member' as const },
-];
-
 export default function LoginPage() {
   const router = useRouter();
   const [nextUrl, setNextUrl] = useState('/haberler');
-
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,34 +21,40 @@ export default function LoginPage() {
     setNextUrl(params.get('next') || '/haberler');
   }, []);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError('');
+    setSubmitting(true);
 
-    const user = TEST_USERS.find(
-      (item) => item.email === formData.email.trim() && item.password === formData.password
-    );
+    try {
+      const response = await fetch('/api/member/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'login',
+          email: formData.email.trim(),
+          password: formData.password,
+        }),
+      });
 
-    if (!user) {
-      setError('E-mail və ya şifrə yanlışdır.');
-      return;
+      const data = await response.json();
+
+      if (!response.ok || !data?.session) {
+        setError(data?.error || 'Login alınmadı.');
+        return;
+      }
+
+      writeMemberSession(data.session as MemberSession);
+      void fetch('/api/member/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data.session),
+      });
+
+      router.push(nextUrl);
+    } finally {
+      setSubmitting(false);
     }
-
-    const nextSession: MemberSession = {
-      email: user.email,
-      name: user.name,
-      loggedIn: true,
-      plan: user.plan,
-    };
-
-    writeMemberSession(nextSession);
-    void fetch('/api/member/session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nextSession),
-    });
-
-    router.push(nextUrl);
   };
 
   return (
@@ -117,9 +117,9 @@ export default function LoginPage() {
                 </div>
               )}
 
-              <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700">
+              <button type="submit" disabled={submitting} className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-400">
                 <LogIn className="h-5 w-5" />
-                Daxil ol və davam et
+                {submitting ? 'Yoxlanır...' : 'Daxil ol və davam et'}
               </button>
             </form>
 

@@ -12,6 +12,8 @@ import DoganNote from '@/components/blog/DoganNote';
 import MikroCTA, { MainCTA } from '@/components/blog/MikroCTA';
 import { ReadingTime } from '@/components/blog/BlogElements';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
+import { getProtectedArticleContent, getProtectedTableOfContentsContent } from '@/lib/members/article-access';
+import { getServerMemberSession } from '@/lib/members/server-session';
 import {
   NewsletterWidget,
   ViewpointWidget,
@@ -82,6 +84,7 @@ interface BlogDetayProps {
 export default async function BlogDetay({ params }: BlogDetayProps) {
   const { slug } = await params;
   const article = getBlogArticleBySlug(slug);
+  const session = await getServerMemberSession();
 
   if (!article) {
     return (
@@ -111,6 +114,9 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
 
   const categoryConfig = CATEGORY_CONFIG[article.category] || { label: article.category, emoji: '📝', color: 'bg-slate-600' };
   
+  const renderedContent = getProtectedArticleContent(article.content, session, article.isPremium);
+  const tableOfContentsContent = getProtectedTableOfContentsContent(article.content, session, article.isPremium);
+
   // Get related articles for sidebar
   const relatedArticles = getAllBlogArticles()
     .filter((a: BlogArticle) => a.category === article.category && a.slug !== article.slug)
@@ -243,7 +249,7 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
             <aside className="hidden lg:block">
               <div className="sticky top-24 space-y-4">
                 <ShareButtons title={article.title} url={`https://dkagency.az/haberler/${slug}`} />
-                <TableOfContents content={article.content} />
+                <TableOfContents content={tableOfContentsContent} />
               </div>
             </aside>
 
@@ -253,7 +259,7 @@ export default async function BlogDetay({ params }: BlogDetayProps) {
             <article className="min-w-0">
         {/* Section */}
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-10">
-                <MarkdownRenderer content={article.content} />
+                <MarkdownRenderer content={renderedContent} />
               </div>
 
         {/* Section */}

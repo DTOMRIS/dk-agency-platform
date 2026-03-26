@@ -9,12 +9,14 @@ import { type MemberSession, writeMemberSession } from '@/lib/member-access';
 export default function RegisterPage() {
   const router = useRouter();
   const [nextUrl, setNextUrl] = useState('/haberler');
-
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
     phone: '',
+    password: '',
   });
 
   useEffect(() => {
@@ -22,24 +24,43 @@ export default function RegisterPage() {
     setNextUrl(params.get('next') || '/haberler');
   }, []);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError('');
+    setSubmitting(true);
 
-    const nextSession: MemberSession = {
-      email: formData.email.trim(),
-      name: formData.name.trim() || 'DK Member',
-      loggedIn: true,
-      plan: 'member',
-    };
+    try {
+      const response = await fetch('/api/member/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'register',
+          email: formData.email.trim(),
+          password: formData.password,
+          name: formData.name.trim(),
+          company: formData.company.trim(),
+          phone: formData.phone.trim(),
+        }),
+      });
 
-    writeMemberSession(nextSession);
-    void fetch('/api/member/session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nextSession),
-    });
+      const data = await response.json();
 
-    router.push(nextUrl);
+      if (!response.ok || !data?.session) {
+        setError(data?.error || 'Qeydiyyat alınmadı.');
+        return;
+      }
+
+      writeMemberSession(data.session as MemberSession);
+      void fetch('/api/member/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data.session),
+      });
+
+      router.push(nextUrl);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -60,7 +81,7 @@ export default function RegisterPage() {
               </div>
               <h1 className="text-3xl font-black text-slate-900">Üzv ol</h1>
               <p className="mt-2 text-slate-600">
-                Bu MVP axında qeydiyyat etdikdən sonra birbaşa məqaləyə qayıdacaqsan. Sonrakı mərhələdə Supabase və ödəniş qatını bağlayacağıq.
+                Bu axında qeydiyyatdan sonra birbaşa əvvəlki yazıya qayıdırsan. Supabase env varsa real signup işləyir, yoxdursa local member fallback açılır.
               </p>
             </div>
 
@@ -123,9 +144,28 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700">
+              <div>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Şifrə</label>
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  value={formData.password}
+                  onChange={(event) => setFormData({ ...formData, password: event.target.value })}
+                  placeholder="minimum 6 simvol"
+                  className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                />
+              </div>
+
+              {error && (
+                <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                  {error}
+                </div>
+              )}
+
+              <button type="submit" disabled={submitting} className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-400">
                 <Sparkles className="h-5 w-5" />
-                Üzv ol və davam et
+                {submitting ? 'Yaradılır...' : 'Üzv ol və davam et'}
               </button>
             </form>
 
@@ -149,11 +189,11 @@ export default function RegisterPage() {
             <div className="mt-6 space-y-4 text-sm">
               <div className="rounded-2xl bg-white/10 p-4">
                 <p className="font-semibold">Tam məqalə girişi</p>
-                <p className="mt-1 text-red-100">Longform blog və premium xəbər detalları kilidsiz açılır.</p>
+                <p className="mt-1 text-red-100">Premium xəbər və longform blog detail-ları server guard ilə qorunur.</p>
               </div>
               <div className="rounded-2xl bg-white/10 p-4">
-                <p className="font-semibold">Gələcək subscription qatı</p>
-                <p className="mt-1 text-red-100">Supabase role, payment və entitlement modeli bunun üstünə qurulacaq.</p>
+                <p className="font-semibold">Supabase-ready auth</p>
+                <p className="mt-1 text-red-100">Env veriləndə login/register birbaşa Supabase Auth-a keçir.</p>
               </div>
               <div className="rounded-2xl bg-white/10 p-4">
                 <p className="font-semibold">Sales layer</p>
