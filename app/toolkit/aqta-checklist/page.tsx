@@ -123,7 +123,7 @@ const sections: Section[] = [
     accentBg: 'bg-red-50',
     accentRing: 'ring-red-200/60',
     items: [
-      { id: 'docs-1', text: 'AQTA qeydiyyatı tamamlanıb', detail: 'ASAN və ya KOBIA üzərindən pulsuz qeydiyyat mövcuddur.' },
+      { id: 'docs-1', text: 'AQTA qeydiyyatı tamamlanıb', detail: 'ASAN və ya KOBİA xətti ilə 150 AZN dövlət rüsumu və sənəd prosesi əvvəlcədən planlanıb.' },
       { id: 'docs-2', text: 'Temperatur və gigiyena jurnalı doludur', detail: 'Gündəlik qeydlər boş buraxılmır.' },
       { id: 'docs-3', text: 'Faktura və məhsul mənbə sənədləri arxivlənir', detail: 'Traceability tələbi üçün sənəd çıxarmaq mümkündür.' },
       { id: 'docs-4', text: 'Tibbi arayış tarixləri ayrıca cədvəldə izlənir', detail: 'Müddəti bitmədən yenilənmə xəbərdarlığı verilir.' },
@@ -483,6 +483,7 @@ export default function AqtaChecklistPage() {
             <p className="text-sm leading-relaxed text-slate-600">
               AQTA qida təhlükəsizliyi, gigiyena, traceability və istehlakçı riskinə baxır.
               Problem yalnız təmizlik deyil. Qaydaların sistemli izlənməsi və sənədləşdirilməsi əsasdır.
+              Qeydiyyat və icazə prosesində 150 AZN dövlət rüsumunu ayrıca büdcələmək lazımdır.
             </p>
           </div>
 
