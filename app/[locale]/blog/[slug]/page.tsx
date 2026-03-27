@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { ArrowRight, Bookmark, Calendar, ChevronLeft, Clock, Share2, Tag, User } from 'lucide-react';
 import { MarkdownRenderer } from '@/components/blog';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
@@ -39,7 +38,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
           <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
             <div className="mx-auto max-w-4xl">
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+              <div className="space-y-4">
                 <span className="rounded-full bg-brand-red px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
                   {cat?.emoji} {cat?.label}
                 </span>
@@ -47,7 +46,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                   {article.title}
                 </h1>
                 {article.subtitle && <p className="max-w-2xl text-lg text-white/70">{article.subtitle}</p>}
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
