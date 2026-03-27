@@ -54,7 +54,7 @@ body {
 .blog-content {
   font-family: 'DM Sans', Georgia, serif;
   line-height: 1.85;
-  color: var(--text-body);
+  color: #475569;
 }
 
 .blog-content > *:first-child {
@@ -69,7 +69,7 @@ body {
 .blog-content > p:first-of-type {
   font-size: 1.2rem;
   line-height: 1.75;
-  color: var(--text-primary);
+  color: #0f172a;
 }
 
 /* Checklist items */
@@ -82,30 +82,31 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
+  background: #ffffff;
 }
 
 .blog-content th,
 .blog-content td {
   padding: 0.75rem 1rem;
-  border: 1px solid rgba(136, 146, 176, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   text-align: left;
 }
 
 .blog-content th {
-  background: var(--bg-secondary);
+  background: #fff5f5;
   font-weight: 600;
-  color: var(--gold);
+  color: #b91c1c;
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .blog-content tr:hover {
-  background-color: rgba(197, 160, 34, 0.05);
+  background-color: #f8fafc;
 }
 
 /* Code blocks — DARK THEME */
 .blog-content code {
-  background-color: var(--bg-secondary);
-  color: var(--gold);
+  background-color: #f8fafc;
+  color: #b91c1c;
   padding: 0.125rem 0.5rem;
   border-radius: 0.375rem;
   font-size: 0.875em;
@@ -119,14 +120,14 @@ body {
 
 /* Selection color */
 .blog-content ::selection {
-  background-color: rgba(197, 160, 34, 0.3);
-  color: var(--text-primary);
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #0f172a;
 }
 
 /* Horizontal rules — QIRMIZI YOX, SUBTLE BORDER */
 hr, .blog-content hr, .news-content hr {
   border: none;
-  border-top: 1px solid rgba(136, 146, 176, 0.12);
+  border-top: 1px solid #e2e8f0;
   margin: 2.5rem 0;
 }
 
@@ -145,13 +146,13 @@ hr, .blog-content hr, .news-content hr {
 
 /* Bold text — EAEAEA (ağ), NOT amber */
 .blog-content strong {
-  color: var(--text-primary);
+  color: #0f172a;
   font-weight: 700;
 }
 
 /* Italic text — GOLD */
 .blog-content em {
-  color: var(--gold);
+  color: #b45309;
   font-style: italic;
 }
 
@@ -166,19 +167,19 @@ hr, .blog-content hr, .news-content hr {
 
 /* Links — GOLD */
 .blog-content a {
-  color: var(--gold);
+  color: #dc2626;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .blog-content a:hover {
-  color: var(--gold-hover);
+  color: #991b1b;
 }
 
 /* Headings */
 .blog-content h1, .blog-content h2, .blog-content h3, 
 .blog-content h4, .blog-content h5, .blog-content h6 {
-  color: var(--text-primary);
+  color: #0f172a;
   font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 700;
 }
