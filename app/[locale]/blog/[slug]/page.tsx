@@ -205,10 +205,14 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   const cat = CATEGORY_CONFIG[articleWithOverrides.category];
   const related = getRelatedArticles(slug);
-  const renderedContent = getProtectedArticleContent(articleWithOverrides.content || '', session, true);
+  const renderedContent = getProtectedArticleContent(
+    articleWithOverrides.content || '',
+    session,
+    articleWithOverrides.isPremium
+  );
 
   return (
-    <BlogContentWrapper articleTitle={articleWithOverrides.title} isPremium={true}>
+    <BlogContentWrapper articleTitle={articleWithOverrides.title} isPremium={articleWithOverrides.isPremium}>
       <div className="min-h-screen bg-[#FAFAF8] pb-20">
         <div className="relative h-[420px] w-full overflow-hidden">
           <img
