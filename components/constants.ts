@@ -1,94 +1,97 @@
-import { NewsItem, AdItem, Partner, BlogPost } from './types';
+import type { AdItem, BlogPost, NewsItem, Partner } from './types';
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
     id: '1',
-    slug: 'holdinq-daxili-emeliyyatlarin-reqemsallasdirilmasi',
-    title: 'Holdinq daxili əməliyyatların rəqəmsallaşdırılması: Yeni standartlar',
-    category: 'Strateji',
+    slug: '1-porsiya-food-cost-hesablama',
+    title: '1 porsiya food cost necə hesablanır?',
+    category: 'Food Cost',
     type: 'Opinion',
-    date: '02 March 2026',
+    date: '02 Mart 2026',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80',
-    excerpt: 'DK Agency yeni Universal Əməliyyat Protokolu ilə bütün lahiyələrin idarəetməsini tək mərkəzə toplayır.',
-    author: { name: 'Doğan', role: 'Təsisçi' },
-    source: 'DK Agency'
+    excerpt: 'Porsiya maya dəyəri, resept kartı və düzgün satış qiyməti arasında əlaqəni sadə nümunə ilə izah edirik.',
+    author: { name: 'Doğan', role: 'Qurucu' },
+    source: 'DK Agency',
   },
   {
     id: '2',
-    slug: 'b2b-sektorunda-ai-nin-rolu-2026',
-    title: 'B2B Sektorunda AI-nın rolu: 2026 Trendləri',
-    category: 'Texnologiya',
+    slug: 'pnl-oxuya-bilmirsen',
+    title: 'P&L niyə oxunmur və haradan başlamaq lazımdır?',
+    category: 'P&L',
     type: 'Report',
-    date: '01 March 2026',
-    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80',
-    excerpt: 'Süni intellekt lahiyə idarəetməsində və risk analizində necə inqilab edir?',
-    author: { name: 'Jane Smith', role: 'Analitik' },
-    source: 'DK Editorial'
+    date: '28 Fevral 2026',
+    image: 'https://images.unsplash.com/photo-1454165833267-024f0c90432c?auto=format&fit=crop&q=80',
+    excerpt: 'Prime cost, icarə faizi və xalis mənfəət xəttinə 5 dəqiqədə baxma qaydası.',
+    author: { name: 'Doğan', role: 'Qurucu' },
+    source: 'DK Agency',
   },
   {
     id: '3',
-    slug: 'yeni-investisiya-fondu-azerbaycanin-kadr-bazarina-daxil-olur',
-    title: 'Yeni İnvestisiya Fondu Azərbaycanın kadr bazarına daxil olur',
-    category: 'İnvestisiya',
-    type: 'Announcement',
-    date: '28 February 2026',
-    image: 'https://images.unsplash.com/photo-1454165833267-024f0c90432c?auto=format&fit=crop&q=80',
-    excerpt: 'TQTA ekosistemi daxilində yeni kadr pipeline-ı üçün 5 milyon AZN yatırılacaq.',
-    source: 'DK Agency'
+    slug: 'menyu-muhendisliyi-satis',
+    title: 'Menyu mühəndisliyi ilə satışı necə artırmaq olar?',
+    category: 'Menyu',
+    type: 'Opinion',
+    date: '24 Fevral 2026',
+    image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80',
+    excerpt: 'Ulduz, At, Puzzle və İt kateqoriyaları ilə menyunu data əsasında idarə edin.',
+    author: { name: 'Doğan', role: 'Qurucu' },
+    source: 'DK Agency',
   },
   {
     id: '4',
-    slug: 'baki-beynelxalq-forumu-strateji-terefdashlar',
-    title: 'Bakı Beynəlxalq Forumu: Strateji Tərəfdaşlıqlar',
-    category: 'Tədbirlər',
+    slug: 'aqta-cerime-checklist',
+    title: 'AQTA yoxlamasına necə hazırlaşmaq olar?',
+    category: 'AQTA',
     type: 'Announcement',
-    date: '27 February 2026',
-    image: 'https://images.unsplash.com/photo-1540575861501-7ad05823123d?auto=format&fit=crop&q=80',
-    excerpt: 'Sentyabr ayında Bakıda keçiriləcək forumda regional əməkdaşlıqlar müzakirə olunacaq.',
-    source: 'DK Events'
-  }
+    date: '20 Fevral 2026',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80',
+    excerpt: 'Gigiyena, sənədləşdirmə və allergen nəzarəti üzrə əsas risk sahələrini topladıq.',
+    author: { name: 'Doğan', role: 'Qurucu' },
+    source: 'DK Agency',
+  },
 ];
 
 export const AD_ITEMS: AdItem[] = [
   {
     id: 'a1',
-    title: 'Bakı mərkəzində hazır ofis və agentlik devri',
-    type: 'Lahiyə',
-    category: 'Lahiyə',
+    title: 'Nərimanovda hazır restoran devri',
+    type: 'Devir',
+    category: 'Devir',
     price: '125,000 AZN',
     location: 'Bakı, Nərimanov',
-    date: '28 Fevral 2026',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80'
+    date: '28 Mart 2026',
+    image: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&q=80',
   },
   {
     id: 'a2',
-    title: 'Professional IT Hub üçün server avadanlığı',
-    type: 'Avadanlıq',
-    category: 'Avadanlıq',
-    price: '45,000 AZN',
+    title: 'Rahat Market üçün topdan tədarük partnyoru axtarılır',
+    type: 'B2B Tərəfdaş',
+    category: 'B2B Tərəfdaş',
+    price: 'Sorğu ilə',
     location: 'Bakı, Yasamal',
-    date: '27 Fevral 2026',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80'
+    date: '27 Mart 2026',
+    image: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&q=80',
   },
   {
     id: 'a3',
-    title: 'Yeni FinTech lahiyəsi üçün B2B tərəfdaş / investor axtarılır',
+    title: 'Yeni franchise nöqtəsi üçün investor axtarılır',
     type: 'İnvestisiya',
     category: 'İnvestisiya',
-    location: 'Bakı, Mərkəz',
-    date: '26 Fevral 2026',
-    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80'
+    price: '60,000 AZN',
+    location: 'Bakı, Ağ Şəhər',
+    date: '26 Mart 2026',
+    image: 'https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&q=80',
   },
   {
     id: 'a4',
-    title: 'Yeni loqistika mərkəzi üçün anbar sahəsi icarəyə verilir',
-    type: 'İcarə',
-    category: 'İcarə',
-    price: '15,000 AZN/ay',
+    title: 'Mətbəx avadanlığı paketi satılır',
+    type: 'Avadanlıq',
+    category: 'Avadanlıq',
+    price: '18,000 AZN',
     location: 'Bakı, Binəqədi',
-    date: '25 Fevral 2026',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80'
-  }
+    date: '24 Mart 2026',
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80',
+  },
 ];
 
 export const PARTNERS: Partner[] = [
@@ -96,72 +99,72 @@ export const PARTNERS: Partner[] = [
     id: 'p1',
     name: 'Wolt',
     logo: 'https://ui-avatars.com/api/?name=Wolt&background=009de0&color=fff&bold=true&size=100',
-    category: 'Çatdırılma',
-    description: 'Qida çatdırılma platforması.'
+    category: 'Delivery',
+    description: 'Çatdırılma platforması',
   },
   {
     id: 'p2',
     name: 'Bolt Food',
-    logo: 'https://ui-avatars.com/api/?name=BF&background=34d186&color=fff&bold=true&size=100',
-    category: 'Çatdırılma',
-    description: 'Sürətli qida çatdırılma xidməti.'
+    logo: 'https://ui-avatars.com/api/?name=Bolt+Food&background=34d186&color=fff&bold=true&size=100',
+    category: 'Delivery',
+    description: 'Çatdırılma tərəfdaşı',
   },
   {
     id: 'p3',
     name: 'iLoyal POS',
-    logo: 'https://ui-avatars.com/api/?name=iL&background=6366f1&color=fff&bold=true&size=100',
-    category: 'POS Sistemi',
-    description: 'Restoran idarəetmə və kassa proqramı.'
+    logo: 'https://ui-avatars.com/api/?name=iLoyal+POS&background=6366f1&color=fff&bold=true&size=100',
+    category: 'POS',
+    description: 'POS və loyallıq sistemi',
   },
   {
     id: 'p4',
     name: 'Bravo',
     logo: 'https://ui-avatars.com/api/?name=Bravo&background=e11d48&color=fff&bold=true&size=100',
     category: 'Tədarük',
-    description: 'Ərzaq və içki tədarükçüsü.'
+    description: 'Topdan alış və market tərəfdaşı',
   },
   {
     id: 'p5',
     name: 'AQTA',
     logo: 'https://ui-avatars.com/api/?name=AQTA&background=0d9488&color=fff&bold=true&size=100',
-    category: 'Qida Təhlükəsizliyi',
-    description: 'Azərbaycan Qida Təhlükəsizliyi Agentliyi.'
+    category: 'Compliance',
+    description: 'Qida təhlükəsizliyi tərəfi',
   },
   {
     id: 'p6',
     name: 'Rahat Market',
-    logo: 'https://ui-avatars.com/api/?name=RM&background=f59e0b&color=fff&bold=true&size=100',
+    logo: 'https://ui-avatars.com/api/?name=Rahat+Market&background=f59e0b&color=fff&bold=true&size=100',
     category: 'Tədarük',
-    description: 'Topdan ərzaq tədarükü.'
-  }
+    description: 'Ərzaq tədarük partnyoru',
+  },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [
   {
     id: 'b1',
-    slug: 'agentlik-pl-idarəetmə',
-    title: 'Agentlik üçün düzgün P&L necə qurulmalıdır?',
-    category: 'Strateji',
+    slug: '1-porsiya-food-cost-hesablama',
+    title: '1 porsiya food cost necə hesablanır?',
+    category: 'Food Cost',
     author: 'Doğan',
     date: '15 Fevral 2026',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80',
   },
   {
     id: 'b2',
-    slug: 'yeni-lahiya-sehvler',
-    title: 'Yeni lahiyə başladarkən edilən 10 kritik səhv',
-    category: 'Lahiyə',
+    slug: 'menyu-muhendisliyi-satis',
+    title: 'Menyu mühəndisliyi ilə satışı necə artırmaq olar?',
+    category: 'Menyu',
     author: 'Doğan',
     date: '10 Fevral 2026',
-    image: 'https://images.unsplash.com/photo-1454165833267-024f0c90432c?auto=format&fit=crop&q=80'
+    image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80',
   },
   {
     id: 'b3',
-    slug: 'b2b-ekosistem',
-    title: 'Niyə B2B ekosistemi lahiyələrinizi 3 qat daha sürətli böyüdür?',
-    category: 'Ekosistem',
+    slug: 'aqta-cerime-checklist',
+    title: 'AQTA hazırlıq checklisti',
+    category: 'AQTA',
     author: 'Doğan',
-    date: '5 Fevral 2026',
-    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80'
-  }
+    date: '05 Fevral 2026',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80',
+  },
 ];
