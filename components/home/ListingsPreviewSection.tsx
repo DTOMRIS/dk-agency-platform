@@ -29,15 +29,15 @@ export default function ListingsPreviewSection() {
   }, [tab, query]);
 
   return (
-    <section id="listings-preview" className="border-t border-[#e3d8c8] px-5 py-10 md:px-8">
-      <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-[#1f2e4a]">Listings Preview</h2>
+    <section id="listings-preview" className="border-t border-[var(--dk-warm-border)] px-5 py-10 md:px-8">
+      <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-[var(--dk-indigo)]">Listings Preview</h2>
       <div className="mt-4 flex flex-wrap gap-2">
         {(['ekipman', 'devir', 'tedarikci'] as const).map((name) => (
           <button
             key={name}
             type="button"
             onClick={() => setTab(name)}
-            className={`rounded-full border px-3 py-1 text-sm ${tab === name ? 'bg-[#dcefe8] border-[#9bc5b9]' : 'bg-[#fff7ea] border-[#dccbb5]'}`}
+            className={`rounded-full border px-3 py-1 text-sm ${tab === name ? 'bg-[color-mix(in srgb, var(--dk-mint) 70%, white)] border-[var(--dk-line)]' : 'bg-dk-paper border-[var(--dk-warm-border)]'}`}
           >
             {name}
           </button>
@@ -48,13 +48,13 @@ export default function ListingsPreviewSection() {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder="Search listings"
-        className="mt-4 w-full md:w-80 rounded-xl border border-[#d7cab8] bg-white px-3 py-2"
+        className="mt-4 w-full md:w-80 rounded-xl border border-[var(--dk-warm-border)] bg-white px-3 py-2"
       />
       <div className="mt-4 grid gap-3">
         {rows.map((row) => (
-          <article key={row.title} className="rounded-xl border border-[#d6dccf] bg-[#fafdff] p-4">
-            <h3 className="font-semibold text-[#1d3f5a]">{row.title}</h3>
-            <p className="text-sm text-[#5a6668]">{row.city}</p>
+          <article key={row.title} className="rounded-xl border border-[var(--dk-line)] bg-[color-mix(in srgb, var(--dk-paper) 35%, white)] p-4">
+            <h3 className="font-semibold text-[var(--dk-ink)]">{row.title}</h3>
+            <p className="text-sm text-[var(--dk-ink-soft)]">{row.city}</p>
           </article>
         ))}
       </div>

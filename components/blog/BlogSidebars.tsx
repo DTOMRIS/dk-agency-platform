@@ -19,12 +19,12 @@ export function NewsletterWidget() {
   };
 
   return (
-    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E60] p-5 backdrop-blur-sm">
+    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
       <div className="mb-1 flex items-center gap-2">
-        <Mail className="h-4 w-4 text-[#C5A022]" />
-        <h4 className="text-[15px] font-bold text-[#EAEAEA]">Həftəlik Bülletin</h4>
+        <Mail className="h-4 w-4 text-[var(--dk-gold)]" />
+        <h4 className="text-[15px] font-bold text-[var(--dk-text)]">Həftəlik Bülletin</h4>
       </div>
-      <p className="mb-4 text-[12px] text-[#8892B0]">
+      <p className="mb-4 text-[12px] text-[var(--dk-muted)]">
         HoReCa trend analizləri birbaşa e-poçtunuza
       </p>
       <form onSubmit={handleSubscribe}>
@@ -33,12 +33,12 @@ export function NewsletterWidget() {
           placeholder="E-poçt ünvanınız"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mb-3 w-full rounded-xl border border-[#8892B020] bg-[#0A0A1A] px-4 py-3 text-sm text-[#EAEAEA] placeholder:text-[#8892B060] transition-all focus:border-[#C5A022] focus:outline-none"
+          className="mb-3 w-full rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] bg-[var(--dk-night)] px-4 py-3 text-sm text-[var(--dk-text)] placeholder:text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)] transition-all focus:border-[var(--dk-gold)] focus:outline-none"
         />
         <button
           type="submit"
           className={`w-full rounded-xl py-3 text-sm font-bold transition-all ${
-            subscribed ? 'bg-[#2ECC71] text-white' : 'bg-[#E94560] text-white hover:bg-[#FF5A75]'
+            subscribed ? 'bg-[var(--dk-success)] text-white' : 'bg-[var(--dk-red)] text-white hover:bg-[var(--dk-red-hover)]'
           }`}
         >
           {subscribed ? (
@@ -56,23 +56,23 @@ export function NewsletterWidget() {
 
 export function ViewpointWidget({ quote }: { quote: string }) {
   return (
-    <div className="rounded-2xl border border-[#C5A02220] bg-[#16213E60] p-5 backdrop-blur-sm">
-      <span className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[#C5A022]">
+    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-gold)_13%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
+      <span className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-[var(--dk-gold)]">
         <Star className="h-3 w-3" />
         Viewpoint
       </span>
-      <blockquote className="mt-3 text-[15px] italic leading-relaxed text-[#EAEAEA]">
+      <blockquote className="mt-3 text-[15px] italic leading-relaxed text-[var(--dk-text)]">
         {'\u201C'}
         {quote}
         {'\u201D'}
       </blockquote>
       <div className="mt-4 flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C5A022] text-xs font-bold text-[#0A0A1A]">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--dk-gold)] text-xs font-bold text-[var(--dk-night)]">
           DT
         </div>
         <div>
-          <p className="text-[12px] font-semibold text-[#EAEAEA]">Dogan Tomris</p>
-          <p className="text-[11px] text-[#8892B0]">DK Agency qurucusu</p>
+          <p className="text-[12px] font-semibold text-[var(--dk-text)]">Dogan Tomris</p>
+          <p className="text-[11px] text-[var(--dk-muted)]">DK Agency qurucusu</p>
         </div>
       </div>
     </div>
@@ -81,8 +81,8 @@ export function ViewpointWidget({ quote }: { quote: string }) {
 
 export function RelatedArticlesWidget({ articles }: { articles: BlogArticle[] }) {
   return (
-    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E60] p-5 backdrop-blur-sm">
-      <h4 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[#EAEAEA]">
+    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
+      <h4 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[var(--dk-text)]">
         Bənzər Yazılar
       </h4>
       <div className="space-y-3">
@@ -90,16 +90,16 @@ export function RelatedArticlesWidget({ articles }: { articles: BlogArticle[] })
           <Link
             key={article.id}
             href={`/haberler/${article.slug}`}
-            className="group -mx-2 flex gap-3 rounded-xl p-2 transition-colors hover:bg-[#C5A02208]"
+            className="group -mx-2 flex gap-3 rounded-xl p-2 transition-colors hover:bg-[color:color-mix(in_srgb,var(--dk-gold)_3%,transparent)]"
           >
-            <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#C5A02230] bg-[#C5A02215]">
+            <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-gold)_8%,transparent)]">
               <span className="text-xl">{CATEGORY_CONFIG[article.category]?.emoji || '📝'}</span>
             </div>
             <div className="min-w-0 flex-1">
-              <h5 className="line-clamp-2 text-[13px] font-semibold leading-tight text-[#B0B8C8] transition-colors group-hover:text-[#C5A022]">
+              <h5 className="line-clamp-2 text-[13px] font-semibold leading-tight text-[var(--dk-body)] transition-colors group-hover:text-[var(--dk-gold)]">
                 {article.title}
               </h5>
-              <p className="mt-1 text-[11px] text-[#8892B0]">{article.readingTime} dəq oxu</p>
+              <p className="mt-1 text-[11px] text-[var(--dk-muted)]">{article.readingTime} dəq oxu</p>
             </div>
           </Link>
         ))}
@@ -133,15 +133,15 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E60] p-5 backdrop-blur-sm">
-      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-[#8892B0]">PAYLAŞ</h4>
+    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
+      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-[var(--dk-muted)]">PAYLAŞ</h4>
       <div className="space-y-2">
         <button
           onClick={handleCopy}
           className={`flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-[13px] font-medium transition-all ${
             copied
-              ? 'bg-[#2ECC71] text-white'
-              : 'border border-[#8892B015] bg-[#0A0A1A60] text-[#B0B8C8] hover:border-[#C5A02240] hover:text-[#C5A022]'
+              ? 'bg-[var(--dk-success)] text-white'
+              : 'border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-night)_38%,transparent)] text-[var(--dk-body)] hover:border-[color:color-mix(in_srgb,var(--dk-gold)_25%,transparent)] hover:text-[var(--dk-gold)]'
           }`}
           title="Link kopyala"
         >
@@ -152,7 +152,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
           href={shareLinks.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#8892B015] bg-[#0A0A1A60] py-2.5 text-[13px] font-medium text-[#B0B8C8] transition-all hover:border-transparent hover:bg-[#25D366] hover:text-white"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-night)_38%,transparent)] py-2.5 text-[13px] font-medium text-[var(--dk-body)] transition-all hover:border-transparent hover:bg-[var(--dk-social-whatsapp)] hover:text-white"
           title="WhatsApp"
         >
           <MessageCircle className="h-4 w-4" />
@@ -162,7 +162,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
           href={shareLinks.telegram}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#8892B015] bg-[#0A0A1A60] py-2.5 text-[13px] font-medium text-[#B0B8C8] transition-all hover:border-transparent hover:bg-[#0088cc] hover:text-white"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-night)_38%,transparent)] py-2.5 text-[13px] font-medium text-[var(--dk-body)] transition-all hover:border-transparent hover:bg-[var(--dk-social-telegram)] hover:text-white"
           title="Telegram"
         >
           <Send className="h-4 w-4" />
@@ -172,7 +172,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
           href={shareLinks.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#8892B015] bg-[#0A0A1A60] py-2.5 text-[13px] font-medium text-[#B0B8C8] transition-all hover:border-transparent hover:bg-[#0A66C2] hover:text-white"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-night)_38%,transparent)] py-2.5 text-[13px] font-medium text-[var(--dk-body)] transition-all hover:border-transparent hover:bg-[var(--dk-social-linkedin)] hover:text-white"
           title="LinkedIn"
         >
           <Linkedin className="h-4 w-4" />
@@ -215,18 +215,18 @@ export function TableOfContents({ content }: { content: string }) {
   if (headings.length === 0) return null;
 
   return (
-    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E60] p-5 backdrop-blur-sm">
-      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-[#8892B0]">İÇİNDƏKİLƏR</h4>
+    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
+      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-[var(--dk-muted)]">İÇİNDƏKİLƏR</h4>
       <nav className="space-y-1">
         {headings.slice(0, 6).map((heading, index) => (
           <a
             key={heading.id}
             href={`#${heading.id}`}
-            className={`group flex items-start gap-2.5 rounded-lg px-2 py-2 text-[13px] leading-snug text-[#8892B0] transition-all hover:bg-[#C5A02208] hover:text-[#C5A022] ${
+            className={`group flex items-start gap-2.5 rounded-lg px-2 py-2 text-[13px] leading-snug text-[var(--dk-muted)] transition-all hover:bg-[color:color-mix(in_srgb,var(--dk-gold)_3%,transparent)] hover:text-[var(--dk-gold)] ${
               heading.level === 3 ? 'pl-4 text-[12px]' : 'font-medium'
             }`}
           >
-            <span className="mt-0.5 font-mono text-[11px] text-[#C5A02260] group-hover:text-[#C5A022]">{index + 1}</span>
+            <span className="mt-0.5 font-mono text-[11px] text-[color:color-mix(in_srgb,var(--dk-gold)_38%,transparent)] group-hover:text-[var(--dk-gold)]">{index + 1}</span>
             <span className="line-clamp-2">{heading.text}</span>
           </a>
         ))}
@@ -237,20 +237,20 @@ export function TableOfContents({ content }: { content: string }) {
 
 export function AuthorCard({ author }: { author: string }) {
   return (
-    <div className="rounded-2xl border border-[#8892B015] bg-[#16213E] p-6">
+    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[var(--dk-surface-dark)] p-6">
       <div className="flex items-start gap-5">
-        <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-[#C5A022] text-xl font-bold text-[#0A0A1A]">
+        <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-[var(--dk-gold)] text-xl font-bold text-[var(--dk-night)]">
           DT
         </div>
         <div className="flex-1">
-          <h4 className="text-lg font-bold text-[#EAEAEA]">{author}</h4>
-          <p className="mt-1 text-sm text-[#8892B0]">
+          <h4 className="text-lg font-bold text-[var(--dk-text)]">{author}</h4>
+          <p className="mt-1 text-sm text-[var(--dk-muted)]">
             DK Agency qurucusu, 15+ il HoReCa sektoru təcrübəsi. Azərbaycanda 50+ restoran və otel layihəsinin konsultantı.
           </p>
           <div className="mt-3 flex items-center gap-3">
             <Link
               href="/haqqimizda"
-              className="flex items-center gap-1 text-sm font-medium text-[#C5A022] hover:text-[#D4AF37]"
+              className="flex items-center gap-1 text-sm font-medium text-[var(--dk-gold)] hover:text-[var(--dk-gold-hover)]"
             >
               Haqqında <ChevronRight className="h-4 w-4" />
             </Link>
@@ -263,15 +263,15 @@ export function AuthorCard({ author }: { author: string }) {
 
 export function ToolkitCTA() {
   return (
-    <div className="rounded-2xl border border-[#C5A02230] bg-[#16213E] p-6 text-center md:p-8">
-      <span className="text-sm font-bold uppercase tracking-wider text-[#C5A022]">DK Agency Toolkit</span>
-      <h3 className="mt-3 mb-3 text-xl font-bold text-[#EAEAEA] md:text-2xl">Bu mövzunu praktikaya çevir</h3>
-      <p className="mx-auto mb-6 max-w-md text-sm text-[#8892B0]">
+    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)] bg-[var(--dk-surface-dark)] p-6 text-center md:p-8">
+      <span className="text-sm font-bold uppercase tracking-wider text-[var(--dk-gold)]">DK Agency Toolkit</span>
+      <h3 className="mt-3 mb-3 text-xl font-bold text-[var(--dk-text)] md:text-2xl">Bu mövzunu praktikaya çevir</h3>
+      <p className="mx-auto mb-6 max-w-md text-sm text-[var(--dk-muted)]">
         Food Cost kalkulyatoru, P&L şablonu, ROI hesablayıcı və digər professional alətlər
       </p>
       <Link
         href="/b2b-panel/toolkit"
-        className="inline-flex items-center gap-2 rounded-xl bg-[#C5A022] px-6 py-3 font-bold text-[#0A0A1A] transition-all hover:bg-[#D4AF37]"
+        className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-6 py-3 font-bold text-[var(--dk-night)] transition-all hover:bg-[var(--dk-gold-hover)]"
       >
         Pulsuz Toolkit-ə keç
       </Link>
@@ -299,23 +299,23 @@ export function MobileShareBar({ title, url }: ShareButtonsProps) {
   };
 
   return (
-    <div className="safe-area-inset-bottom fixed right-0 bottom-0 left-0 z-40 flex items-center justify-center gap-3 border-t border-[#8892B015] bg-[#1A1A2E] p-3 lg:hidden">
-      <span className="mr-2 text-xs text-[#8892B0]">Paylaş:</span>
+    <div className="safe-area-inset-bottom fixed right-0 bottom-0 left-0 z-40 flex items-center justify-center gap-3 border-t border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[var(--dk-navy)] p-3 lg:hidden">
+      <span className="mr-2 text-xs text-[var(--dk-muted)]">Paylaş:</span>
       <button
         onClick={handleCopy}
         className={`rounded-lg p-2 transition-all ${
-          copied ? 'bg-[#2ECC71] text-white' : 'border border-[#8892B015] bg-[#16213E] text-[#B0B8C8]'
+          copied ? 'bg-[var(--dk-success)] text-white' : 'border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[var(--dk-surface-dark)] text-[var(--dk-body)]'
         }`}
       >
         {copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
       </button>
-      <a href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[#25D366] p-2 text-white">
+      <a href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[var(--dk-social-whatsapp)] p-2 text-white">
         <MessageCircle className="h-5 w-5" />
       </a>
-      <a href={shareLinks.telegram} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[#0088cc] p-2 text-white">
+      <a href={shareLinks.telegram} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[var(--dk-social-telegram)] p-2 text-white">
         <Send className="h-5 w-5" />
       </a>
-      <a href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[#0A66C2] p-2 text-white">
+      <a href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[var(--dk-social-linkedin)] p-2 text-white">
         <Linkedin className="h-5 w-5" />
       </a>
     </div>

@@ -70,10 +70,10 @@ export default function KazanAiChatClient() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f4ee] pb-16">
+    <div className="min-h-screen bg-[var(--dk-paper)] pb-16">
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#162033] px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-white">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--dk-navy)] px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-white">
             <Sparkles size={14} />
             KAZAN AI Beta
           </div>
@@ -90,7 +90,7 @@ export default function KazanAiChatClient() {
         <section className="flex min-h-[68vh] flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
           <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#162033] text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-white">
                 <Bot size={22} />
               </div>
               <div>
@@ -98,18 +98,18 @@ export default function KazanAiChatClient() {
                 <div className="text-lg font-bold text-slate-900">KAZAN AI</div>
               </div>
             </div>
-            <Link href="/toolkit" className="text-sm font-bold text-[#E94560] transition-colors hover:text-rose-700">
+            <Link href="/toolkit" className="text-sm font-bold text-[var(--dk-red)] transition-colors hover:text-rose-700">
               Toolkit →
             </Link>
           </div>
 
-          <div className="flex-1 space-y-4 overflow-y-auto bg-[#fbfaf7] px-4 py-5 sm:px-6">
+          <div className="flex-1 space-y-4 overflow-y-auto bg-[color-mix(in srgb, var(--dk-paper) 78%, white)] px-4 py-5 sm:px-6">
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
                   className={`max-w-[90%] rounded-[1.5rem] px-4 py-3 shadow-sm sm:max-w-[78%] ${
                     message.role === 'user'
-                      ? 'bg-[#162033] text-white'
+                      ? 'bg-[var(--dk-navy)] text-white'
                       : 'border border-slate-200 bg-white text-slate-800'
                   }`}
                 >
@@ -122,14 +122,14 @@ export default function KazanAiChatClient() {
                             const url = href || '#';
                             if (url.startsWith('/')) {
                               return (
-                                <Link href={url} className="font-semibold text-[#E94560] underline underline-offset-4">
+                                <Link href={url} className="font-semibold text-[var(--dk-red)] underline underline-offset-4">
                                   {children}
                                 </Link>
                               );
                             }
 
                             return (
-                              <a href={url} target="_blank" rel="noreferrer" className="font-semibold text-[#E94560] underline underline-offset-4">
+                              <a href={url} target="_blank" rel="noreferrer" className="font-semibold text-[var(--dk-red)] underline underline-offset-4">
                                 {children}
                               </a>
                             );
@@ -163,12 +163,12 @@ export default function KazanAiChatClient() {
                 onChange={(event) => setInput(event.target.value)}
                 placeholder="Məsələn: Food cost-um %38-dir, 30%-ə necə düşürəm?"
                 rows={3}
-                className="min-h-[84px] flex-1 resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-[#C5A022]"
+                className="min-h-[84px] flex-1 resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#E94560] px-5 py-4 text-sm font-bold text-white transition-colors hover:bg-rose-600 disabled:cursor-not-allowed disabled:bg-slate-300"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--dk-red)] px-5 py-4 text-sm font-bold text-white transition-colors hover:bg-rose-600 disabled:cursor-not-allowed disabled:bg-slate-300"
               >
                 Göndər
                 <Send size={16} />
@@ -179,13 +179,13 @@ export default function KazanAiChatClient() {
 
         <aside className="space-y-6">
           <div className="rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-[#C5A022]">Nümunə suallar</div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-[var(--dk-gold)]">Nümunə suallar</div>
             <div className="mt-4 space-y-3">
               {SAMPLE_QUESTIONS.map((question) => (
                 <button
                   key={question}
                   onClick={() => void sendMessage(question)}
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left text-sm font-semibold text-slate-700 transition-colors hover:border-[#C5A022] hover:bg-amber-50"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left text-sm font-semibold text-slate-700 transition-colors hover:border-[var(--dk-gold)] hover:bg-amber-50"
                 >
                   {question}
                 </button>
@@ -211,12 +211,12 @@ export default function KazanAiChatClient() {
             </div>
           </div>
 
-          <div className="rounded-[1.6rem] border border-[#E94560]/20 bg-rose-50 p-6 shadow-sm">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-[#E94560]">Satış layer</div>
+          <div className="rounded-[1.6rem] border border-[var(--dk-red)]/20 bg-rose-50 p-6 shadow-sm">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-[var(--dk-red)]">Satış layer</div>
             <p className="mt-3 text-sm leading-6 text-slate-700">
               KAZAN AI problemi ölçməyə kömək edir. Sistem qurmaq, audit etmək və nəticəni real mənfəətə çevirmək üçün növbəti addım danışmanlıqdır.
             </p>
-            <Link href="/elaqe" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#E94560] transition-colors hover:text-rose-700">
+            <Link href="/elaqe" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[var(--dk-red)] transition-colors hover:text-rose-700">
               DK Agency ilə görüş
               <ArrowRight size={16} />
             </Link>

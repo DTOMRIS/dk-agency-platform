@@ -1,14 +1,14 @@
 export const dkHomeTokens = {
   color: {
-    ink: '#0f172a',
-    inkSoft: '#475569',
-    gold: '#c5a022',
-    red: '#e94560',
-    mist: '#edf3f6',
-    navy: '#16213e',
-    teal: '#1f5b55',
-    paper: '#ffffff',
-    line: '#d8e2ea',
+    ink: 'var(--dk-ink)',
+    inkSoft: 'var(--dk-ink-soft)',
+    gold: 'var(--dk-gold)',
+    red: 'var(--dk-red)',
+    mist: 'var(--dk-mint-soft)',
+    navy: 'var(--dk-surface-dark)',
+    teal: 'var(--dk-teal)',
+    paper: 'var(--dk-paper-strong)',
+    line: 'var(--dk-line)',
   },
   shadow: {
     soft: '0 14px 40px rgba(15, 23, 42, 0.08)',

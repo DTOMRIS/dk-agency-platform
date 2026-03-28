@@ -34,7 +34,7 @@ export default function NewsCard({ post }: { post: NewsArticle }) {
       <article className="flex flex-row md:flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:border-red-200 hover:shadow-lg">
         {/* Image */}
         <div className="relative w-24 h-24 md:w-full md:h-48 flex-shrink-0 overflow-hidden">
-          <div className="h-full w-full bg-gradient-to-br from-[#1F2937] to-[#374151] flex items-center justify-center">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--dk-ink)] to-[var(--dk-ink-soft)]">
             <Newspaper size={28} className="text-white/30" />
           </div>
           {/* Category badge on image (desktop only) */}

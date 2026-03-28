@@ -46,10 +46,10 @@ export default function Header() {
 
   return (
     <>
-      <div className="hidden bg-[#1A1A2E] md:block">
+      <div className="hidden bg-[var(--dk-navy)] md:block">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
           <div className="flex items-center gap-2 text-xs">
-            <span className="font-bold text-[#C5A022]">YENİ:</span>
+            <span className="font-bold text-[var(--dk-gold)]">YENİ:</span>
             <span className="text-gray-400">KAZAN AI — sektorun ilk AI danışmanı tezliklə</span>
           </div>
           <div className="flex items-center gap-3 text-xs text-gray-400">
@@ -87,10 +87,10 @@ export default function Header() {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
           <Link href="/" className="group flex items-center gap-2.5">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#1A1A2E] text-sm font-bold text-white">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--dk-navy)] text-sm font-bold text-white">
               DK
             </div>
-            <span className="text-base font-bold text-[#1A1A2E]">DK Agency</span>
+            <span className="text-base font-bold text-[var(--dk-navy)]">DK Agency</span>
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
@@ -104,7 +104,7 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className="inline-block rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[#1A1A2E]"
+                    className="inline-block rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[var(--dk-navy)]"
                   >
                     {item.name}
                   </Link>
@@ -114,7 +114,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[#1A1A2E]"
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[var(--dk-navy)]"
                 >
                   {item.name}
                 </Link>
@@ -123,12 +123,12 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link href="/auth/login" className="hidden text-sm text-gray-500 transition-colors hover:text-[#1A1A2E] sm:inline-block">
+            <Link href="/auth/login" className="hidden text-sm text-gray-500 transition-colors hover:text-[var(--dk-navy)] sm:inline-block">
               Üzv girişi
             </Link>
             <Link
               href="/auth/register"
-              className="hidden items-center gap-2 rounded-xl bg-[#E94560] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-[#E94560]/20 active:scale-95 sm:inline-flex"
+              className="hidden items-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-[var(--dk-red)]/20 active:scale-95 sm:inline-flex"
             >
               Pulsuz başla
               <ArrowRight size={16} />
@@ -158,7 +158,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="rounded-xl p-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#1A1A2E]"
+                    className="rounded-xl p-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--dk-navy)]"
                     onClick={() => setIsMobileOpen(false)}
                   >
                     {item.name}
@@ -174,7 +174,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/auth/register"
-                  className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#E94560] py-3 font-semibold text-white shadow-lg shadow-[#E94560]/20"
+                  className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] py-3 font-semibold text-white shadow-lg shadow-[var(--dk-red)]/20"
                   onClick={() => setIsMobileOpen(false)}
                 >
                   Pulsuz başla

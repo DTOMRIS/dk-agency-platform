@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function KazanAiPage() {
   return (
-    <main className="min-h-[70vh] bg-[#FAFAF8] px-4 py-24">
+    <main className="min-h-[70vh] bg-[var(--dk-paper)] px-4 py-24">
       <div className="mx-auto max-w-3xl rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
         <div className="mb-4 inline-flex rounded-full bg-amber-100 px-4 py-1 text-xs font-bold uppercase tracking-widest text-amber-800">
           Tezliklə

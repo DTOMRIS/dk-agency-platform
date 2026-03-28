@@ -213,7 +213,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   return (
     <BlogContentWrapper articleTitle={articleWithOverrides.title} isPremium={articleWithOverrides.isPremium}>
-      <div className="min-h-screen bg-[#FAFAF8] pb-20">
+      <div className="min-h-screen bg-[var(--dk-paper)] pb-20">
         <div className="relative h-[420px] w-full overflow-hidden">
           <img
             src={articleWithOverrides.coverImage}

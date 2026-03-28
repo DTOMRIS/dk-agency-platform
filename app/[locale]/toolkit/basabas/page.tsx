@@ -284,14 +284,14 @@ export default function BasabasPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl bg-gradient-to-br from-[#E94560] to-[#d63b54] p-8 text-white shadow-xl shadow-red-500/15 flex flex-col justify-between">
+          <div className="rounded-2xl bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-8 text-white shadow-xl shadow-red-500/15 flex flex-col justify-between">
             <div>
               <h3 className="text-xl font-display font-black mb-3">OCAQ Panel</h3>
               <p className="text-sm text-white/80 leading-relaxed mb-6">
                 Ayl\u0131q sabit x\u0259rcl\u0259ri izl\u0259, ba\u015faba\u015f\u0131 avtomatik hesabla, real-time maliyy\u0259 n\u0259zar\u0259ti al.
               </p>
             </div>
-            <Link href="/auth/register" className="flex items-center justify-center gap-2 w-full bg-white text-[#E94560] py-3.5 rounded-xl font-black text-sm hover:shadow-lg transition-all active:scale-[0.98]">
+            <Link href="/auth/register" className="flex items-center justify-center gap-2 w-full bg-white text-[var(--dk-red)] py-3.5 rounded-xl font-black text-sm hover:shadow-lg transition-all active:scale-[0.98]">
               Pulsuz ba\u015fla <ArrowRight size={15} />
             </Link>
           </div>
@@ -302,7 +302,7 @@ export default function BasabasPage() {
       <div className="max-w-6xl mx-auto px-6 mt-20">
         <div className="bg-slate-50 rounded-2xl p-8 sm:p-10">
           <div className="flex items-center gap-2.5 mb-8">
-            <BookOpen size={18} className="text-[#E94560]" />
+            <BookOpen size={18} className="text-[var(--dk-red)]" />
             <h3 className="text-lg font-bold text-slate-900">Daha D\u0259rin \u00d6yr\u0259n</h3>
           </div>
           <div className="grid sm:grid-cols-3 gap-4">
@@ -312,9 +312,9 @@ export default function BasabasPage() {
               { title: 'Food Cost-un Qanl\u0131 H\u0259qiq\u0259ti', slug: '1-porsiya-food-cost-hesablama', tag: 'Maliyy\u0259' },
             ].map((a) => (
               <Link key={a.slug} href={`/blog/${a.slug}`} className="group block bg-white rounded-xl p-5 ring-1 ring-slate-200/60 hover:shadow-md hover:ring-slate-300/60 transition-all duration-300">
-                <span className="text-[10px] font-bold text-[#E94560] uppercase tracking-widest">{a.tag}</span>
-                <h4 className="text-sm font-bold text-slate-900 mt-2.5 leading-snug group-hover:text-[#E94560] transition-colors">{a.title}</h4>
-                <div className="flex items-center gap-1 text-xs text-slate-400 font-semibold mt-4 group-hover:text-[#E94560] group-hover:gap-2 transition-all">
+                <span className="text-[10px] font-bold text-[var(--dk-red)] uppercase tracking-widest">{a.tag}</span>
+                <h4 className="text-sm font-bold text-slate-900 mt-2.5 leading-snug group-hover:text-[var(--dk-red)] transition-colors">{a.title}</h4>
+                <div className="flex items-center gap-1 text-xs text-slate-400 font-semibold mt-4 group-hover:text-[var(--dk-red)] group-hover:gap-2 transition-all">
                   Oxu <ArrowRight size={12} />
                 </div>
               </Link>

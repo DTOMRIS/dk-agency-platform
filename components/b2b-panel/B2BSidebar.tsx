@@ -81,7 +81,7 @@ export default function B2BSidebar() {
     <aside className="flex min-h-screen w-72 flex-col border-r border-slate-200 bg-white">
       <div className="border-b border-slate-200 p-5">
         <Link href="/b2b-panel" className="group flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#1A1A2E] shadow-sm transition-all group-hover:shadow-md">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--dk-navy)] shadow-sm transition-all group-hover:shadow-md">
             <span className="text-lg font-bold text-white">DK</span>
           </div>
           <div>

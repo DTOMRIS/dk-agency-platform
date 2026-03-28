@@ -148,7 +148,7 @@ export const LISTING_CATEGORIES: CategoryConfig[] = [
     titleAz: 'Yeni İnvestisiya',
     description: 'Yeni yatırım fırsatlarını paylaşın',
     icon: 'TrendingUp',
-    color: 'bg-[#E94560]',
+    color: 'bg-[var(--dk-red)]',
     fields: [
       { name: 'projectTitle', label: 'Proje Başlığı', type: 'text', required: true },
       { name: 'category', label: 'Kategori', type: 'select', required: true, options: [
@@ -260,5 +260,5 @@ export function getCategoryById(id: ListingCategory): CategoryConfig | undefined
 
 export function getCategoryColor(id: ListingCategory): string {
   const cat = getCategoryById(id);
-  return cat?.color || 'bg-[#8892B0]';
+  return cat?.color || 'bg-[var(--dk-muted)]';
 }

@@ -54,15 +54,15 @@ export default function HeroSection() {
   );
 
   return (
-    <section id="hero" className="rounded-3xl border border-[#d7cab8] bg-gradient-to-br from-[#fff7ea] via-[#fffdf8] to-[#eef8f4] px-5 py-10 md:px-8">
+    <section id="hero" className="rounded-3xl border border-[var(--dk-warm-border)] bg-gradient-to-br from-dk-paper via-dk-paper to-[var(--dk-mint)] px-5 py-10 md:px-8">
       <div className="max-w-4xl">
-        <span className="inline-flex rounded-full border border-[#b8d4cd] bg-[#e9f5f1] px-3 py-1 text-xs font-semibold tracking-[0.08em] text-[#1f5b55] uppercase">
+        <span className="inline-flex rounded-full border border-[var(--dk-line)] bg-[color-mix(in srgb, var(--dk-mint) 52%, white)] px-3 py-1 text-xs font-semibold tracking-[0.08em] text-[var(--dk-teal)] uppercase">
           DK Agency v4.1 Homepage
         </span>
-        <h1 className="mt-4 text-4xl md:text-6xl font-black tracking-[-0.03em] text-[#1f2e4a]">
+        <h1 className="mt-4 text-4xl md:text-6xl font-black tracking-[-0.03em] text-[var(--dk-indigo)]">
           World-class HoReCa operating narrative with kinetic clarity.
         </h1>
-        <p className="mt-4 max-w-[65ch] text-[#4d5a59] leading-7">
+        <p className="mt-4 max-w-[65ch] text-[var(--dk-ink-soft)] leading-7">
           CloudKitchens-like movement, Restaurant365-like modular storyline. Built to stay light, stable, and measurable.
         </p>
       </div>
@@ -71,7 +71,7 @@ export default function HeroSection() {
         {[1, 2, 3].map((item) => (
           <article
             key={item}
-            className={`${styles.floatCard} rounded-2xl border border-[#d4d9d0] bg-white/90 p-4 shadow-[0_10px_24px_rgba(31,46,74,0.08)]`}
+            className={`${styles.floatCard} rounded-2xl border border-[var(--dk-line)] bg-white/90 p-4 shadow-[0_10px_24px_rgba(31,46,74,0.08)]`}
             style={cardStyle}
           >
             <Image
@@ -81,10 +81,10 @@ export default function HeroSection() {
               height={190}
               loading="lazy"
               sizes="(max-width: 768px) 100vw, 33vw"
-              className="h-auto w-full rounded-xl border border-[#ebdfcf]"
+              className="h-auto w-full rounded-xl border border-[color-mix(in srgb, var(--dk-warm-border) 55%, white)]"
             />
-            <h2 className="mt-3 text-lg font-semibold text-[#1f2e4a]">Chapter {item}</h2>
-            <p className="mt-1 text-sm text-[#596463]">Lightweight visual card with fixed dimensions to prevent CLS.</p>
+            <h2 className="mt-3 text-lg font-semibold text-[var(--dk-indigo)]">Chapter {item}</h2>
+            <p className="mt-1 text-sm text-[var(--dk-ink-soft)]">Lightweight visual card with fixed dimensions to prevent CLS.</p>
           </article>
         ))}
       </div>

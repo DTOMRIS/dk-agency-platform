@@ -18,8 +18,8 @@ export default function OpenGraphImage() {
           flexDirection: 'column',
           justifyContent: 'space-between',
           padding: 56,
-          background: 'linear-gradient(140deg, #1f2e4a 0%, #1f5b55 45%, #c14f35 100%)',
-          color: '#fff',
+          background: 'linear-gradient(140deg, var(--dk-indigo) 0%, var(--dk-teal) 45%, var(--dk-red-strong) 100%)',
+          color: 'var(--dk-paper-strong)',
         }}
       >
         <div style={{ fontSize: 34, letterSpacing: 1.5 }}>DK Agency Editorial</div>

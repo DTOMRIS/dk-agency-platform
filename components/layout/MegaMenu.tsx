@@ -76,7 +76,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-full left-1/2 z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[#E5E7EB] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+          className="absolute top-full left-1/2 z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[var(--dk-border-soft)] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
           onMouseLeave={onClose}
         >
           <div className="flex items-start justify-between">
@@ -102,8 +102,8 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="grid grid-cols-2 gap-8">
             <div>
               <div className="mb-3">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-[#E94560]">Başla</p>
-                <div className="mt-1 h-0.5 w-6 bg-[#E94560]" />
+                <p className="text-xs font-extrabold uppercase tracking-widest text-[var(--dk-red)]">Başla</p>
+                <div className="mt-1 h-0.5 w-6 bg-[var(--dk-red)]" />
               </div>
               <div className="flex flex-col gap-0.5">
                 {baslaItems.map((item) => (
@@ -114,10 +114,10 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                   >
                     <item.icon
                       size={18}
-                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#E94560]"
+                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[var(--dk-red)]"
                     />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#E94560]">
+                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[var(--dk-red)]">
                         {item.label}
                       </p>
                       <p className="text-xs text-gray-400">{item.desc}</p>
@@ -129,8 +129,8 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
 
             <div>
               <div className="mb-3">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-[#C5A022]">Böyüt</p>
-                <div className="mt-1 h-0.5 w-6 bg-[#C5A022]" />
+                <p className="text-xs font-extrabold uppercase tracking-widest text-[var(--dk-gold)]">Böyüt</p>
+                <div className="mt-1 h-0.5 w-6 bg-[var(--dk-gold)]" />
               </div>
               <div className="flex flex-col gap-0.5">
                 {boyutItems.map((item) => (
@@ -141,10 +141,10 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                   >
                     <item.icon
                       size={18}
-                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#C5A022]"
+                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[var(--dk-gold)]"
                     />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#C5A022]">
+                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[var(--dk-gold)]">
                         {item.label}
                         {item.badge && (
                           <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 align-middle text-[10px] font-bold text-amber-800">
@@ -163,13 +163,13 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="my-6 h-px bg-gray-100" />
 
           <div>
-            <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[#8B5CF6]">Devir & Satış</p>
+            <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[var(--dk-purple)]">Devir & Satış</p>
             <div className="flex flex-wrap gap-1">
               {devirItems.map((item) => (
                 <Link
                   key={`${item.href}-${item.label}`}
                   href={item.href}
-                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[#8B5CF6]"
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[var(--dk-purple)]"
                 >
                   <item.icon size={16} />
                   {item.label}
@@ -181,11 +181,11 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="my-4 h-px bg-gray-100" />
 
           <div className="flex items-center gap-2 text-xs">
-            <span className="font-bold text-[#E94560]">Populyar:</span>
+            <span className="font-bold text-[var(--dk-red)]">Populyar:</span>
             {popularItems.map((item, index) => (
               <span key={item.href} className="flex items-center gap-2">
                 {index > 0 && <span className="text-gray-300">&middot;</span>}
-                <Link href={item.href} className="text-gray-500 transition-colors hover:text-[#E94560]">
+                <Link href={item.href} className="text-gray-500 transition-colors hover:text-[var(--dk-red)]">
                   {item.label}
                 </Link>
               </span>

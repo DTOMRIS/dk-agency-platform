@@ -13,20 +13,20 @@ interface PromoCardProps {
 
 export default function PromoCard({ title, description, ctaText, ctaLink }: PromoCardProps) {
   return (
-    <div className="rounded-2xl bg-gradient-to-br from-[#16213E] to-[#0F3460] p-6 relative overflow-hidden border border-[#C5A02215]">
+    <div className="rounded-2xl bg-gradient-to-br from-[var(--dk-surface-dark)] to-[var(--dk-surface-deep)] p-6 relative overflow-hidden border border-[color:color-mix(in_srgb,var(--dk-gold)_8%,transparent)]">
       {/* Decorative circles */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#C5A022]/5" />
-      <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-[#C5A022]/5" />
-      <div className="absolute top-1/2 right-1/4 w-20 h-20 rounded-full bg-[#E94560]/5" />
+      <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--dk-gold)]/5" />
+      <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-[var(--dk-gold)]/5" />
+      <div className="absolute top-1/2 right-1/4 w-20 h-20 rounded-full bg-[var(--dk-red)]/5" />
 
       {/* Content */}
       <div className="relative z-10">
-        <h3 className="font-black text-xl text-[#EAEAEA] mb-2">{title}</h3>
-        <p className="text-sm text-[#8892B0] leading-relaxed mb-5">{description}</p>
+        <h3 className="font-black text-xl text-[var(--dk-text)] mb-2">{title}</h3>
+        <p className="text-sm text-[var(--dk-muted)] leading-relaxed mb-5">{description}</p>
 
         <Link
           href={ctaLink}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#E94560] text-white rounded-xl text-sm font-bold hover:bg-[#C5A022] transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--dk-red)] text-white rounded-xl text-sm font-bold hover:bg-[var(--dk-gold)] transition-colors"
         >
           <Sparkles size={16} />
           {ctaText}

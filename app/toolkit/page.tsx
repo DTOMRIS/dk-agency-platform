@@ -142,7 +142,7 @@ export default function ToolkitPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] pb-20">
+    <div className="min-h-screen bg-[var(--dk-paper)] pb-20">
       <div className="bg-slate-950 py-20 text-white">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <span className="mb-6 inline-block rounded-full bg-brand-red px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white">

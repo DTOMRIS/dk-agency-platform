@@ -47,12 +47,12 @@ const footerColumns = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-[#FAFAF8] pt-16 pb-8">
+    <footer className="border-t border-gray-200 bg-[var(--dk-paper)] pt-16 pb-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">
             <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1A1A2E]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--dk-navy)]">
                 <span className="text-xs font-bold text-white">DK</span>
               </div>
               <span className="text-sm font-bold text-slate-900">DK Agency</span>

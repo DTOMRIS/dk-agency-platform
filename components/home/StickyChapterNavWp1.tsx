@@ -36,7 +36,7 @@ export default function StickyChapterNavWp1() {
   }, []);
 
   return (
-    <nav aria-label="Homepage chapter navigation" className="sticky top-24 rounded-2xl border border-[#d5cab8] bg-[#f9f1e3]/90 p-3 backdrop-blur hidden lg:block">
+    <nav aria-label="Homepage chapter navigation" className="sticky top-24 rounded-2xl border border-[var(--dk-warm-border)] bg-[color-mix(in srgb, var(--dk-gold) 12%, white)]/90 p-3 backdrop-blur hidden lg:block">
       <ul className="space-y-1">
         {HOME_CHAPTERS.map((chapter) => (
           <li key={chapter.id}>
@@ -47,8 +47,8 @@ export default function StickyChapterNavWp1() {
               }}
               className={`w-full rounded-xl px-3 py-2 text-left text-sm transition ${
                 activeId === chapter.id
-                  ? 'bg-[#d9f0e8] text-[#153f3d] font-semibold'
-                  : 'text-[#4b5553] hover:bg-[#efe1cc]'
+                  ? 'bg-[color-mix(in srgb, var(--dk-mint) 72%, white)] text-[var(--dk-teal)] font-semibold'
+                  : 'text-[var(--dk-ink-soft)] hover:bg-[color-mix(in srgb, var(--dk-gold) 16%, white)]'
               }`}
             >
               {chapter.label}

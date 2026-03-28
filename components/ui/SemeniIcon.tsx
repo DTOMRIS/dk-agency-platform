@@ -28,22 +28,22 @@ export default function SemeniIcon({ className = '', size = 24, title = 'Bahar B
         {/* Buğda saplağı */}
         <path
           d="M12 3v14"
-          stroke="#4ade80"
+          stroke="color-mix(in srgb, var(--dk-success) 82%, white)"
           strokeWidth="1.5"
           strokeLinecap="round"
         />
         {/* Cücərti yarpaqları (sol) */}
-        <path d="M12 5 Q8 7 10 10" stroke="#22c55e" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-        <path d="M12 8 Q7 9 9 13" stroke="#4ade80" strokeWidth="1" strokeLinecap="round" fill="none" />
-        <path d="M12 11 Q6 12 8 16" stroke="#22c55e" strokeWidth="1" strokeLinecap="round" fill="none" />
+        <path d="M12 5 Q8 7 10 10" stroke="var(--dk-success)" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+        <path d="M12 8 Q7 9 9 13" stroke="color-mix(in srgb, var(--dk-success) 82%, white)" strokeWidth="1" strokeLinecap="round" fill="none" />
+        <path d="M12 11 Q6 12 8 16" stroke="var(--dk-success)" strokeWidth="1" strokeLinecap="round" fill="none" />
         {/* Cücərti yarpaqları (sağ) */}
-        <path d="M12 5 Q16 7 14 10" stroke="#22c55e" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-        <path d="M12 8 Q17 9 15 13" stroke="#4ade80" strokeWidth="1" strokeLinecap="round" fill="none" />
-        <path d="M12 11 Q18 12 16 16" stroke="#22c55e" strokeWidth="1" strokeLinecap="round" fill="none" />
+        <path d="M12 5 Q16 7 14 10" stroke="var(--dk-success)" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+        <path d="M12 8 Q17 9 15 13" stroke="color-mix(in srgb, var(--dk-success) 82%, white)" strokeWidth="1" strokeLinecap="round" fill="none" />
+        <path d="M12 11 Q18 12 16 16" stroke="var(--dk-success)" strokeWidth="1" strokeLinecap="round" fill="none" />
         {/* Qırmızı lent */}
-        <rect x="10" y="8" width="4" height="2" rx="0.5" fill="#dc2626" />
+        <rect x="10" y="8" width="4" height="2" rx="0.5" fill="var(--dk-red)" />
         {/* Başaq */}
-        <circle cx="12" cy="3" r="1.2" fill="#22c55e" />
+        <circle cx="12" cy="3" r="1.2" fill="var(--dk-success)" />
       </svg>
     </span>
   );

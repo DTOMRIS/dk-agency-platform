@@ -85,7 +85,7 @@ function NewsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf9]">
+    <div className="min-h-screen bg-[var(--dk-paper)]">
       {/* Category Bar — HORECA TREND style */}
       <div className="sticky top-[7rem] z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -512,7 +512,7 @@ export default function HaberlerPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#fafaf9] flex items-center justify-center">
+        <div className="min-h-screen bg-[var(--dk-paper)] flex items-center justify-center">
           <div className="animate-pulse text-slate-400">Yüklənir...</div>
         </div>
       }

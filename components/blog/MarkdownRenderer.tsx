@@ -256,7 +256,7 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
                       <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
                         DT
                       </div>
-                      <span className="text-[#8892B0] text-sm">— Doğan Tomris</span>
+                      <span className="text-[var(--dk-muted)] text-sm">— Doğan Tomris</span>
                     </div>
                   </div>
                 </div>

@@ -264,7 +264,7 @@ export default function InsaatChecklistPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] pb-16">
+    <div className="min-h-screen bg-[var(--dk-paper)] pb-16">
       <input
         ref={fileRef}
         type="file"
@@ -459,12 +459,12 @@ export default function InsaatChecklistPage() {
             </ul>
           </div>
 
-          <div className="rounded-[1.6rem] bg-gradient-to-br from-[#E94560] to-[#d63b54] p-6 text-white shadow-xl shadow-red-500/15">
+          <div className="rounded-[1.6rem] bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-6 text-white shadow-xl shadow-red-500/15">
             <h3 className="text-xl font-black">OCAQ Panel</h3>
             <p className="mt-3 text-sm leading-6 text-white/80">
               Faza progressini, podratçı statusunu və büdcə sürüşməsini bir paneldə izləmək istəyirsənsə, bunu OCAQ Panel üzərindən avtomatlaşdır.
             </p>
-            <Link href="/auth/register" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-black text-[#E94560]">
+            <Link href="/auth/register" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-black text-[var(--dk-red)]">
               Pulsuz başla
               <ArrowRight size={15} />
             </Link>

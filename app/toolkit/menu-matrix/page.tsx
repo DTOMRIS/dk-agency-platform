@@ -435,7 +435,7 @@ export default function MenuMatrixPage() {
             </div>
           </div>
 
-          <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-[#E94560] to-[#d63b54] p-8 text-white shadow-xl shadow-red-500/15">
+          <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-8 text-white shadow-xl shadow-red-500/15">
             <div>
               <h3 className="mb-3 text-xl font-display font-black">OCAQ Panel</h3>
               <p className="mb-6 text-sm leading-relaxed text-white/80">
@@ -445,7 +445,7 @@ export default function MenuMatrixPage() {
             </div>
             <Link
               href="/auth/register"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-[#E94560] transition-all hover:shadow-lg active:scale-[0.98]"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-[var(--dk-red)] transition-all hover:shadow-lg active:scale-[0.98]"
             >
               Pulsuz başla <ArrowRight size={15} />
             </Link>
@@ -456,7 +456,7 @@ export default function MenuMatrixPage() {
       <div className="mx-auto mt-20 max-w-6xl px-6">
         <div className="rounded-2xl bg-slate-50 p-8 sm:p-10">
           <div className="mb-8 flex items-center gap-2.5">
-            <BookOpen size={18} className="text-[#E94560]" />
+            <BookOpen size={18} className="text-[var(--dk-red)]" />
             <h3 className="text-lg font-bold text-slate-900">Daha Dərin Öyrən</h3>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
@@ -482,13 +482,13 @@ export default function MenuMatrixPage() {
                 href={`/blog/${article.slug}`}
                 className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 transition-all duration-300 hover:shadow-md hover:ring-slate-300/60"
               >
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#E94560]">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--dk-red)]">
                   {article.tag}
                 </span>
-                <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-[#E94560]">
+                <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-[var(--dk-red)]">
                   {article.title}
                 </h4>
-                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 transition-all group-hover:gap-2 group-hover:text-[#E94560]">
+                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 transition-all group-hover:gap-2 group-hover:text-[var(--dk-red)]">
                   Oxu <ArrowRight size={12} />
                 </div>
               </Link>

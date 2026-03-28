@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "HoReCa media, toolkit ve marketplace platformasi",
     start_url: "/",
     display: "standalone",
-    background_color: "#0A0A1A",
-    theme_color: "#0A0A1A",
+    background_color: "var(--dk-night)",
+    theme_color: "var(--dk-night)",
     lang: "az",
     icons: [
       {
