@@ -152,22 +152,22 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
         rehypePlugins={[rehypeRaw]}
         components={{
           h1: ({ children }) => (
-            <h1 className="text-3xl md:text-4xl font-black mt-12 mb-6 text-[#EAEAEA] leading-tight">
+            <h1 className="mt-12 mb-6 text-3xl font-black leading-tight text-slate-950 md:text-4xl">
               {children}
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-2xl md:text-[26px] font-bold mt-12 mb-4 text-[#EAEAEA] leading-tight">
+            <h2 className="mt-12 mb-4 text-2xl font-bold leading-tight text-slate-950 md:text-[26px]">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-xl font-semibold mt-10 mb-3 text-[#EAEAEA]">
+            <h3 className="mt-10 mb-3 text-xl font-semibold text-slate-900">
               {children}
             </h3>
           ),
           h4: ({ children }) => (
-            <h4 className="text-lg font-semibold mt-8 mb-2 text-[#EAEAEA]">
+            <h4 className="mt-8 mb-2 text-lg font-semibold text-slate-900">
               {children}
             </h4>
           ),
@@ -193,16 +193,16 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             }
 
             return (
-              <p className="text-[17px] leading-[1.85] text-[#B0B8C8] mb-6">
+              <p className="mb-6 text-[17px] leading-[1.85] text-slate-600">
                 {children}
               </p>
             );
           },
           strong: ({ children }) => (
-            <strong className="text-[#EAEAEA] font-bold">{children}</strong>
+            <strong className="font-bold text-slate-950">{children}</strong>
           ),
           em: ({ children }) => (
-            <em className="text-[#C5A022] italic">{children}</em>
+            <em className="italic text-amber-700">{children}</em>
           ),
           blockquote: ({ children }) => {
             const rawText = getBlockquoteContent(children);
@@ -227,10 +227,10 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             // Warning Box
             if (blockType === 'warning') {
               return (
-                <div className="my-8 p-5 rounded-xl bg-[#16213E] border border-[#F39C1230] border-l-4 border-l-[#F39C12]">
+                <div className="my-8 rounded-xl border border-amber-200 border-l-4 border-l-amber-500 bg-amber-50 p-5">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl flex-shrink-0">⚠️</span>
-                    <div className="text-[#B0B8C8] [&>p]:mb-0 [&_strong]:text-[#F39C12]">
+                    <div className="text-slate-700 [&>p]:mb-0 [&_strong]:text-amber-700">
                       {children}
                     </div>
                   </div>
@@ -241,22 +241,22 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             // Doğan Note
             if (blockType === 'dogan-note') {
               return (
-                <div className="my-8 rounded-2xl overflow-hidden bg-[#16213E] border border-[#C5A02230]">
-                  <div className="px-5 py-3 flex items-center gap-2 border-b border-[#C5A02215]">
+                <div className="my-8 overflow-hidden rounded-2xl border border-red-200 bg-white">
+                  <div className="flex items-center gap-2 border-b border-red-100 bg-red-50 px-5 py-3">
                     <span className="text-lg">📋</span>
-                    <span className="text-sm font-bold tracking-wider text-[#C5A022]">
+                    <span className="text-sm font-bold tracking-wider text-red-600">
                       DK AGENCY NOTU
                     </span>
                   </div>
                   <div className="px-5 py-4">
-                    <div className="text-[#EAEAEA] leading-relaxed [&>p]:mb-0">
+                    <div className="leading-relaxed text-slate-800 [&>p]:mb-0">
                       {children}
                     </div>
                     <div className="mt-3 flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-[#C5A022] flex items-center justify-center text-[#0A0A1A] text-xs font-bold">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
                         DT
                       </div>
-                      <span className="text-[#8892B0] text-sm">— Doğan Tomris</span>
+                      <span className="text-[var(--dk-muted)] text-sm">— Doğan Tomris</span>
                     </div>
                   </div>
                 </div>
@@ -266,10 +266,10 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             // Tip Box
             if (blockType === 'tip') {
               return (
-                <div className="my-8 p-5 rounded-xl bg-[#16213E] border border-[#2ECC7130] border-l-4 border-l-[#2ECC71]">
+                <div className="my-8 rounded-xl border border-emerald-200 border-l-4 border-l-emerald-500 bg-emerald-50 p-5">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl flex-shrink-0">💡</span>
-                    <div className="text-[#B0B8C8] [&>p]:mb-0 [&_strong]:text-[#2ECC71]">
+                    <div className="text-slate-700 [&>p]:mb-0 [&_strong]:text-emerald-700">
                       {children}
                     </div>
                   </div>
@@ -279,18 +279,18 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
 
             // Regular blockquote
             return (
-              <blockquote className="border-l-4 border-[#C5A022] bg-[#16213E] rounded-r-xl px-6 py-4 my-8 italic text-[#EAEAEA]">
+              <blockquote className="my-8 rounded-r-xl border-l-4 border-red-500 bg-slate-50 px-6 py-4 italic text-slate-800">
                 {children}
               </blockquote>
             );
           },
           ul: ({ children }) => (
-            <ul className="list-disc pl-6 space-y-2 mb-6 text-[#B0B8C8] text-[16px] marker:text-[#C5A022]">
+            <ul className="mb-6 list-disc space-y-2 pl-6 text-[16px] text-slate-700 marker:text-red-500">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal pl-6 space-y-2 mb-6 text-[#B0B8C8] text-[16px] marker:text-[#C5A022]">
+            <ol className="mb-6 list-decimal space-y-2 pl-6 text-[16px] text-slate-700 marker:text-red-500">
               {children}
             </ol>
           ),
@@ -301,26 +301,26 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             const isInline = !className;
             if (isInline) {
               return (
-                <code className="bg-[#16213E] text-[#C5A022] px-2 py-0.5 rounded text-sm font-mono">
+                <code className="rounded bg-slate-100 px-2 py-0.5 text-sm font-mono text-red-700">
                   {children}
                 </code>
               );
             }
             return (
-              <code className="text-[#B0B8C8] text-sm font-mono leading-relaxed" {...props}>
+              <code className="font-mono text-sm leading-relaxed text-slate-100" {...props}>
                 {children}
               </code>
             );
           },
           pre: ({ children }) => (
-            <pre className="bg-[#0A0A1A] border border-[#8892B015] rounded-xl p-5 my-6 overflow-x-auto">
+            <pre className="my-6 overflow-x-auto rounded-xl border border-slate-200 bg-slate-900 p-5">
               {children}
             </pre>
           ),
           a: ({ href, children }) => (
             <a 
               href={href} 
-              className="text-[#C5A022] underline underline-offset-2 hover:text-[#D4AF37] transition-colors" 
+              className="text-red-600 underline underline-offset-2 transition-colors hover:text-red-800" 
               target="_blank" 
               rel="noopener noreferrer"
             >
@@ -328,7 +328,7 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             </a>
           ),
           hr: () => (
-            <hr className="border-[#8892B020] my-10" />
+            <hr className="my-10 border-slate-200" />
           ),
           img: ({ src, alt }) => (
             <figure className="my-8">
@@ -338,34 +338,34 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
                 className="w-full rounded-2xl" 
               />
               {alt && (
-                <figcaption className="text-center text-sm text-[#8892B0] mt-3">
+                <figcaption className="mt-3 text-center text-sm text-slate-500">
                   {alt}
                 </figcaption>
               )}
             </figure>
           ),
           table: ({ children }) => (
-            <div className="overflow-x-auto my-6 rounded-xl border border-[#8892B015]">
+            <div className="my-6 overflow-x-auto rounded-xl border border-slate-200 bg-white">
               <table className="w-full text-sm border-collapse">
                 {children}
               </table>
             </div>
           ),
           thead: ({ children }) => (
-            <thead className="bg-[#16213E]">{children}</thead>
+            <thead className="bg-red-50">{children}</thead>
           ),
           th: ({ children }) => (
-            <th className="bg-[#16213E] text-[#C5A022] px-4 py-3 text-left font-semibold border-b border-[#8892B015]">
+            <th className="border-b border-slate-200 bg-red-50 px-4 py-3 text-left font-semibold text-red-700">
               {children}
             </th>
           ),
           td: ({ children }) => (
-            <td className="px-4 py-3 border-b border-[#8892B010] text-[#B0B8C8]">
+            <td className="border-b border-slate-100 px-4 py-3 text-slate-700">
               {children}
             </td>
           ),
           tr: ({ children }) => (
-            <tr className="hover:bg-[#C5A02208] transition-colors">{children}</tr>
+            <tr className="transition-colors hover:bg-slate-50">{children}</tr>
           ),
         }}
       >

@@ -25,7 +25,7 @@ export default function NewsHero({ post }: NewsHeroProps) {
       className="block relative w-full h-[420px] md:h-[480px] rounded-2xl overflow-hidden group"
     >
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1F2937] via-[#374151] to-[#4B5563] flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--dk-ink)] via-[var(--dk-ink-soft)] to-[var(--dk-ink-soft)]">
         <Newspaper size={64} className="text-white/10" />
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />

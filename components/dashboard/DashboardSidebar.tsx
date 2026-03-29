@@ -19,6 +19,7 @@ import {
   LogOut,
   FolderKanban,
   CheckSquare,
+  ShieldAlert,
 } from 'lucide-react';
 
 const MENU_SECTIONS = [
@@ -50,6 +51,7 @@ const MENU_SECTIONS = [
     title: 'Analitika',
     items: [
       { title: 'Raporlar', href: '/dashboard/raporlar', icon: PieChart },
+      { title: 'AQTA Hazırlıq', href: '/dashboard/aqta-checklist', icon: ShieldAlert },
       { title: 'Aktivlik logları', href: '/dashboard/loglar', icon: Activity },
     ],
   },

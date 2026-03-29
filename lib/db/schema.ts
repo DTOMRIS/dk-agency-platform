@@ -1,5 +1,6 @@
 import {
   pgTable,
+  pgEnum,
   serial,
   text,
   varchar,
@@ -85,27 +86,154 @@ export const guruBoxes = pgTable('guru_boxes', {
   sortOrder: integer('sort_order'),
 });
 
-// Listings (ilanlar)
+export const listingTypeEnum = pgEnum('listing_type', [
+  'devir',
+  'franchise-vermek',
+  'franchise-almaq',
+  'ortak-tapmaq',
+  'yeni-investisiya',
+  'obyekt-icaresi',
+  'horeca-ekipman',
+]);
+
+export const listingStatusEnum = pgEnum('listing_status', [
+  'submitted',
+  'ai_checked',
+  'committee_review',
+  'shortlisted',
+  'docs_requested',
+  'showcase_ready',
+  'rejected',
+]);
+
+export const listingMediaTypeEnum = pgEnum('listing_media_type', [
+  'image',
+  'video',
+  'document',
+]);
+
+export const listingLeadStatusEnum = pgEnum('listing_lead_status', [
+  'new',
+  'contacted',
+  'converted',
+]);
+
+export const listingReviewDecisionEnum = pgEnum('listing_review_decision', [
+  'approve',
+  'conditional',
+  'reject',
+]);
+
+export const newsSourceLanguageEnum = pgEnum('news_source_language', [
+  'en',
+  'tr',
+  'az',
+]);
+
+export const newsArticleCategoryEnum = pgEnum('news_article_category', [
+  'operations',
+  'finance',
+  'growth',
+  'market',
+  'technology',
+]);
+
+export const newsArticleStatusEnum = pgEnum('news_article_status', [
+  'fetched',
+  'translated',
+  'approved',
+  'rejected',
+]);
+
+// Listings (devir & satis marketplace)
 export const listings = pgTable('listings', {
   id: serial('id').primaryKey(),
-  title_az: text('title_az').notNull(),
-  title_tr: text('title_tr'),
-  title_en: text('title_en'),
-  category: varchar('category', { length: 50 }),
+  trackingCode: varchar('tracking_code', { length: 20 }).notNull().unique(),
+  type: listingTypeEnum('type').notNull(),
+  status: listingStatusEnum('status').notNull().default('submitted'),
+  isShowcase: boolean('is_showcase').notNull().default(false),
+  isFeatured: boolean('is_featured').notNull().default(false),
+  ownerName: varchar('owner_name', { length: 150 }).notNull(),
+  phone: varchar('phone', { length: 30 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull(),
+  city: varchar('city', { length: 120 }).notNull(),
+  district: varchar('district', { length: 120 }),
+  slug: varchar('slug', { length: 255 }).unique(),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
   price: integer('price'),
-  priceType: varchar('price_type', { length: 20 }),
-  currency: varchar('currency', { length: 5 }).default('AZN'),
-  location: varchar('location', { length: 100 }),
-  description_az: text('description_az'),
-  description_tr: text('description_tr'),
-  description_en: text('description_en'),
-  images: jsonb('images'),
-  contactPhone: varchar('contact_phone', { length: 20 }),
-  contactEmail: varchar('contact_email', { length: 100 }),
-  status: varchar('status', { length: 20 }).default('pending'),
-  views: integer('views').default(0),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  currency: varchar('currency', { length: 5 }).notNull().default('AZN'),
+  typeSpecificData: jsonb('type_specific_data').$type<Record<string, unknown>>(),
+  aiAnalysis: jsonb('ai_analysis').$type<Record<string, unknown>>(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  publishedAt: timestamp('published_at'),
+});
+
+export const listingMedia = pgTable('listing_media', {
+  id: serial('id').primaryKey(),
+  listingId: integer('listing_id')
+    .notNull()
+    .references(() => listings.id),
+  url: text('url').notNull(),
+  type: listingMediaTypeEnum('type').notNull().default('image'),
+  isShowcase: boolean('is_showcase').notNull().default(false),
+  sortOrder: integer('sort_order').notNull().default(0),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+export const listingLeads = pgTable('listing_leads', {
+  id: serial('id').primaryKey(),
+  listingId: integer('listing_id')
+    .notNull()
+    .references(() => listings.id),
+  name: varchar('name', { length: 150 }).notNull(),
+  phone: varchar('phone', { length: 30 }),
+  email: varchar('email', { length: 255 }),
+  message: text('message'),
+  status: listingLeadStatusEnum('status').notNull().default('new'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+export const listingReviews = pgTable('listing_reviews', {
+  id: serial('id').primaryKey(),
+  listingId: integer('listing_id')
+    .notNull()
+    .references(() => listings.id),
+  reviewerId: integer('reviewer_id'),
+  score: integer('score'),
+  notes: text('notes'),
+  decision: listingReviewDecisionEnum('decision'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+export const newsSources = pgTable('news_sources', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 150 }).notNull(),
+  url: text('url').notNull(),
+  rssUrl: text('rss_url').notNull(),
+  language: newsSourceLanguageEnum('language').notNull().default('en'),
+  category: newsArticleCategoryEnum('category').notNull().default('market'),
+  isActive: boolean('is_active').notNull().default(true),
+  lastFetchedAt: timestamp('last_fetched_at'),
+});
+
+export const newsArticles = pgTable('news_articles', {
+  id: serial('id').primaryKey(),
+  sourceId: integer('source_id').references(() => newsSources.id),
+  externalUrl: text('external_url').notNull().unique(),
+  slug: varchar('slug', { length: 255 }).unique(),
+  title: text('title').notNull(),
+  titleAz: text('title_az'),
+  summary: text('summary'),
+  summaryAz: text('summary_az'),
+  category: newsArticleCategoryEnum('category').notNull().default('market'),
+  imageUrl: text('image_url'),
+  author: varchar('author', { length: 150 }),
+  publishedAt: timestamp('published_at'),
+  status: newsArticleStatusEnum('status').notNull().default('fetched'),
+  isEditorPick: boolean('is_editor_pick').notNull().default(false),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
 // Partners (terefdaslar)
@@ -125,5 +253,44 @@ export const siteSettings = pgTable('site_settings', {
   value_az: text('value_az'),
   value_tr: text('value_tr'),
   value_en: text('value_en'),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// Membership profiles
+export const memberProfiles = pgTable('member_profiles', {
+  id: serial('id').primaryKey(),
+  email: varchar('email', { length: 255 }).unique().notNull(),
+  fullName: varchar('full_name', { length: 150 }),
+  company: varchar('company', { length: 150 }),
+  phone: varchar('phone', { length: 30 }),
+  role: varchar('role', { length: 30 }).default('member'),
+  source: varchar('source', { length: 50 }).default('website'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// Membership subscriptions
+export const memberSubscriptions = pgTable('member_subscriptions', {
+  id: serial('id').primaryKey(),
+  profileId: integer('profile_id').references(() => memberProfiles.id),
+  provider: varchar('provider', { length: 30 }).default('manual'),
+  planCode: varchar('plan_code', { length: 50 }).default('member-monthly'),
+  status: varchar('status', { length: 30 }).default('trial'),
+  externalCustomerId: varchar('external_customer_id', { length: 120 }),
+  externalSubscriptionId: varchar('external_subscription_id', { length: 120 }),
+  currentPeriodEndsAt: timestamp('current_period_ends_at'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// Membership entitlements
+export const memberEntitlements = pgTable('member_entitlements', {
+  id: serial('id').primaryKey(),
+  profileId: integer('profile_id').references(() => memberProfiles.id),
+  code: varchar('code', { length: 80 }).notNull(),
+  source: varchar('source', { length: 50 }).default('subscription'),
+  isActive: boolean('is_active').default(true),
+  metadata: jsonb('metadata'),
+  createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });

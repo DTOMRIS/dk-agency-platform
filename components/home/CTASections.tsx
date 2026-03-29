@@ -80,7 +80,7 @@ export function JoinCTA() {
         <div className="bg-slate-900 rounded-[3rem] p-12 lg:p-24 relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)]">
           {/* Background Mesh */}
           <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#e11d48_0%,transparent_50%)] blur-3xl"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,var(--dk-red)_0%,transparent_50%)] blur-3xl"></div>
           </div>
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center gap-20">

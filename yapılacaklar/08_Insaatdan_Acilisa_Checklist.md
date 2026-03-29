@@ -42,7 +42,7 @@ Bu mərhələdə **əlinə kərpic götürmə.** Əvvəlcə sənədləri, icazə
 | 8 | İnşaat büdcəsi hazırlanması | Kaba + incə iş + ehtiyat fond (15%) | ☐ |
 | 9 | Ustabaşı/podratçı seçimi | Minimum 3 təklifdən müqayisə et | ☐ |
 | 10 | İnşaat müqaviləsi | Vaxt, qiymət, material, cərimə şərtləri yazılı | ☐ |
-| 11 | AQTA qeydiyyatı | ASAN Xidmət/KOBİA — PULSUZDUR | ☐ |
+| 11 | AQTA qeydiyyatı | ASAN Xidmət/KOBİA — dövlət rüsumu yoxdur, müraciət pulsuzdur | ☐ |
 | 12 | FHN icazəsi müraciəti | Yanğın təhlükəsizliyi planı | ☐ |
 
 > ⚠️ **Xəbərdarlıq:** 3 faza elektrik, təbii qaz və baca — bu üçünü yoxlamadan İNŞAATA BAŞLAMA. Bu üçü tək başına layihəni öldürə bilər. "12 Səhv" yazımızda detallı izah etmişik.

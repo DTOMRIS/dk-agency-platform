@@ -2,24 +2,56 @@
 
 :root {
   /* DK AGENCY COLOR PALETTE */
-  --bg-deepest: #0A0A1A;
-  --bg-primary: #1A1A2E;
-  --bg-secondary: #16213E;
-  --bg-surface: #0F3460;
-  
-  --text-primary: #EAEAEA;
-  --text-body: #B0B8C8;
-  --text-muted: #8892B0;
+  --dk-night: #0a0a1a;
+  --dk-navy: #1a1a2e;
+  --dk-surface-dark: #16213e;
+  --dk-surface-deep: #0f3460;
+
+  --dk-text: #eaeaea;
+  --dk-body: #b0b8c8;
+  --dk-muted: #8892b0;
   --text-faded: rgba(136, 146, 176, 0.38);
-  
-  --gold: #C5A022;
-  --gold-hover: #D4AF37;
+
+  --dk-gold: #c5a022;
+  --dk-gold-hover: #d4af37;
   --gold-bg: rgba(197, 160, 34, 0.1);
-  --cta: #E94560;
-  --cta-hover: #FF5A75;
-  --success: #2ECC71;
-  --warning: #F39C12;
-  
+  --dk-red: #e94560;
+  --dk-red-strong: #d63b54;
+  --dk-red-hover: #ff5a75;
+  --dk-purple: #8b5cf6;
+  --dk-success: #2ecc71;
+  --dk-warning: #f39c12;
+
+  --dk-paper: #fafaf8;
+  --dk-paper-strong: #ffffff;
+  --dk-indigo: #1f2e4a;
+  --dk-warm-border: #d7cab8;
+  --dk-line: #d8e2ea;
+  --dk-mint: #eef8f4;
+  --dk-mint-soft: #edf3f6;
+  --dk-social-whatsapp: #25d366;
+  --dk-social-telegram: #0088cc;
+  --dk-social-linkedin: #0a66c2;
+  --dk-border-soft: #edede9;
+  --dk-ink: #0f172a;
+  --dk-ink-soft: #475569;
+  --dk-teal: #1f5b55;
+
+  --bg-deepest: var(--dk-night);
+  --bg-primary: var(--dk-navy);
+  --bg-secondary: var(--dk-surface-dark);
+  --bg-surface: var(--dk-surface-deep);
+
+  --text-primary: var(--dk-text);
+  --text-body: var(--dk-body);
+  --text-muted: var(--dk-muted);
+  --gold: var(--dk-gold);
+  --gold-hover: var(--dk-gold-hover);
+  --cta: var(--dk-red);
+  --cta-hover: var(--dk-red-hover);
+  --success: var(--dk-success);
+  --warning: var(--dk-warning);
+
   --background: var(--bg-deepest);
   --foreground: var(--text-primary);
 }
@@ -27,6 +59,35 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-dk-night: var(--dk-night);
+  --color-dk-navy: var(--dk-navy);
+  --color-dk-surface-dark: var(--dk-surface-dark);
+  --color-dk-surface-deep: var(--dk-surface-deep);
+  --color-dk-text: var(--dk-text);
+  --color-dk-body: var(--dk-body);
+  --color-dk-muted: var(--dk-muted);
+  --color-dk-gold: var(--dk-gold);
+  --color-dk-gold-hover: var(--dk-gold-hover);
+  --color-dk-red: var(--dk-red);
+  --color-dk-red-strong: var(--dk-red-strong);
+  --color-dk-red-hover: var(--dk-red-hover);
+  --color-dk-purple: var(--dk-purple);
+  --color-dk-paper: var(--dk-paper);
+  --color-dk-paper-strong: var(--dk-paper-strong);
+  --color-dk-indigo: var(--dk-indigo);
+  --color-dk-warm-border: var(--dk-warm-border);
+  --color-dk-line: var(--dk-line);
+  --color-dk-mint: var(--dk-mint);
+  --color-dk-mint-soft: var(--dk-mint-soft);
+  --color-dk-social-whatsapp: var(--dk-social-whatsapp);
+  --color-dk-social-telegram: var(--dk-social-telegram);
+  --color-dk-social-linkedin: var(--dk-social-linkedin);
+  --color-dk-border-soft: var(--dk-border-soft);
+  --color-dk-ink: var(--dk-ink);
+  --color-dk-ink-soft: var(--dk-ink-soft);
+  --color-dk-teal: var(--dk-teal);
+  --color-dk-success: var(--dk-success);
+  --color-dk-warning: var(--dk-warning);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -54,7 +115,7 @@ body {
 .blog-content {
   font-family: 'DM Sans', Georgia, serif;
   line-height: 1.85;
-  color: var(--text-body);
+  color: var(--dk-ink-soft);
 }
 
 .blog-content > *:first-child {
@@ -69,7 +130,7 @@ body {
 .blog-content > p:first-of-type {
   font-size: 1.2rem;
   line-height: 1.75;
-  color: var(--text-primary);
+  color: var(--dk-ink);
 }
 
 /* Checklist items */
@@ -82,30 +143,31 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
+  background: var(--dk-paper-strong);
 }
 
 .blog-content th,
 .blog-content td {
   padding: 0.75rem 1rem;
-  border: 1px solid rgba(136, 146, 176, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   text-align: left;
 }
 
 .blog-content th {
-  background: var(--bg-secondary);
+  background: color-mix(in srgb, var(--dk-red) 8%, white);
   font-weight: 600;
-  color: var(--gold);
+  color: color-mix(in srgb, var(--dk-red) 82%, black);
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .blog-content tr:hover {
-  background-color: rgba(197, 160, 34, 0.05);
+  background-color: color-mix(in srgb, var(--dk-paper) 60%, white);
 }
 
 /* Code blocks — DARK THEME */
 .blog-content code {
-  background-color: var(--bg-secondary);
-  color: var(--gold);
+  background-color: color-mix(in srgb, var(--dk-paper) 60%, white);
+  color: color-mix(in srgb, var(--dk-red) 82%, black);
   padding: 0.125rem 0.5rem;
   border-radius: 0.375rem;
   font-size: 0.875em;
@@ -119,14 +181,14 @@ body {
 
 /* Selection color */
 .blog-content ::selection {
-  background-color: rgba(197, 160, 34, 0.3);
-  color: var(--text-primary);
+  background-color: rgba(239, 68, 68, 0.2);
+  color: var(--dk-ink);
 }
 
 /* Horizontal rules — QIRMIZI YOX, SUBTLE BORDER */
 hr, .blog-content hr, .news-content hr {
   border: none;
-  border-top: 1px solid rgba(136, 146, 176, 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--dk-border-soft) 75%, white);
   margin: 2.5rem 0;
 }
 
@@ -145,13 +207,13 @@ hr, .blog-content hr, .news-content hr {
 
 /* Bold text — EAEAEA (ağ), NOT amber */
 .blog-content strong {
-  color: var(--text-primary);
+  color: var(--dk-ink);
   font-weight: 700;
 }
 
 /* Italic text — GOLD */
 .blog-content em {
-  color: var(--gold);
+  color: color-mix(in srgb, var(--dk-gold) 80%, black);
   font-style: italic;
 }
 
@@ -166,19 +228,19 @@ hr, .blog-content hr, .news-content hr {
 
 /* Links — GOLD */
 .blog-content a {
-  color: var(--gold);
+  color: var(--dk-red);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .blog-content a:hover {
-  color: var(--gold-hover);
+  color: color-mix(in srgb, var(--dk-red) 70%, black);
 }
 
 /* Headings */
 .blog-content h1, .blog-content h2, .blog-content h3, 
 .blog-content h4, .blog-content h5, .blog-content h6 {
-  color: var(--text-primary);
+  color: var(--dk-ink);
   font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 700;
 }

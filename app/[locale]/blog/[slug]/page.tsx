@@ -1,159 +1,344 @@
-'use client';
-
-import { useParams } from 'next/navigation';
-import { getBlogArticleBySlug, getRelatedArticles, CATEGORY_CONFIG } from '@/lib/data/blogArticles';
-import { MarkdownRenderer } from '@/components/blog';
-import { motion } from 'framer-motion';
-import { Calendar, User, Tag, ChevronLeft, Share2, Bookmark, Clock, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { ArrowRight, Bookmark, Calendar, ChevronLeft, Clock, Share2, Tag, User } from 'lucide-react';
 
-export default function BlogDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
+import { MarkdownRenderer } from '@/components/blog';
+import BlogContentWrapper from '@/components/news/BlogContentWrapper';
+import { CATEGORY_CONFIG, getBlogArticleBySlug, getRelatedArticles } from '@/lib/data/blogArticles';
+import { getProtectedArticleContent } from '@/lib/members/article-access';
+import { getServerMemberSession } from '@/lib/members/server-session';
+
+const BLOG_OVERRIDES = {
+  'wolt-bolt-komissiyon': {
+    title: 'Wolt, Bolt, Yango sənin pulunu yeyir? Komissiyanın gizli riyaziyyatı',
+    subtitle: 'Delivery gəlir gətirə bilər, amma yanlış hesablananda mənfəəti də yeyir',
+    summary:
+      '30% komissiya, 33% food cost, qablaşdırma və əlavə əməliyyat xərcləri birlikdə delivery satışını asanlıqla mənfisə sala bilər. Bu yazı delivery kanalını ayrıca P&L kimi düşünməyi öyrədir.',
+    content: `# Wolt, Bolt, Yango sənin pulunu yeyir? Komissiyanın gizli riyaziyyatı
+
+*Kateqoriya: 📈 Satış & Delivery | Oxu müddəti: 10-12 dəq*
+
+---
+
+"Wolt-a qoşulduq, sifariş gəlir, hər şey əladır" demək asandır. Amma delivery gəliri ilə delivery mənfəəti eyni şey deyil.
+
+Sən 30₼-lıq sifariş alırsan. Komissiya 30%-dirsə, platforma 9₼ götürür. Əlində 21₼ qalır. Bunun içindən food cost 33%dirsə, 9.9₼ gedir. Qablaşdırma 1.5₼, əlavə hazırlıq əməliyyatı 2-3₼ gedir. Sonda icarə, vergi, kommunal çıxmadan belə marja təhlükəli dərəcədə daralır.
+
+## Delivery riyaziyyatı nədən ibarətdir?
+
+Ən sadə model:
+
+\`\`\`
+Net gəlir = Sifariş dəyəri - platforma komissiyası
+Contribution margin = Net gəlir - food cost - qablaşdırma - əlavə əməliyyat xərcləri
+\`\`\`
+
+### Nümunə
+
+| Maddə | Restoranda | Delivery |
+|---|---|---|
+| Satış | 30₼ | 30₼ |
+| Platforma komissiyası | 0₼ | -9₼ |
+| Netto gəlir | 30₼ | 21₼ |
+| Food cost (33%) | -9.9₼ | -9.9₼ |
+| Qablaşdırma | 0₼ | -1.5₼ |
+| Əlavə əməliyyat xərci | - | -2₼ |
+| Qalan marja | 20.1₼ | 7.6₼ |
+
+Bu 7.6₼ hələ son mənfəət deyil. Buradan icarə, əməkhaqqı, vergi və digər sabit xərclər də ödənməlidir.
+
+## Bakı üçün praktik komissiya çərçivəsi
+
+- Wolt: adətən 25-30%
+- Bolt Food: adətən 25-30%
+- Yango: adətən 20-30%
+
+Rəqəm müqaviləyə, kampaniyaya və əlavə reklam paketlərinə görə dəyişir. Hər sahibkar öz müqaviləsində 3 şeyi ayrıca oxumalıdır:
+
+1. Komissiya neçə faizdir?
+2. Promosyon endiriminin neçə faizini sən qarşılaya bilərsən?
+3. Ödəniş nə vaxt və hansı kəsintilərlə köçürülür?
+
+## Delivery-ni mənfəətli etməyin 7 yolu
+
+1. Delivery üçün ayrıca menyu qur. Hər yemək delivery-ə uyğun deyil.
+2. Qiymətləri delivery kanalı üçün 10-20% yenidən hesabla.
+3. Combo və set menyularla orta çek artır.
+4. Qablaşdırma xərcini standartlaşdır və toplu al.
+5. Ən zəif marjlı yeməkləri platformadan çıxar.
+6. Delivery P&L-ni əsas restoran P&L-dən ayrı izləyin.
+7. Sadiq müştəriləri zamanla öz kanallarına yönəlt.
+
+## Müqavilə bağlayarkən verəcəyin 7 sual
+
+1. Komissiya sabitdir, yoxsa kateqoriyaya görə dəyişir?
+2. Endirim kampaniyasında pay bölgüsü necədir?
+3. Ödənişlər həftəlikdir, aylıqdır?
+4. Müqavilədən çıxış şərti nədir?
+5. Delivery menyusunda fərqli qiymət qoya bilirəm?
+6. Reytinq və görünürlük necə hesablanır?
+7. Reklam və sponsorlu yerləşdirmə ayrıca ödənişlidirmi?
+
+## Nəticə
+
+Delivery pis kanal deyil. Sadəcə onu "əlavə satış" yox, ayrıca biznes xətti kimi idarə etmək lazımdır. Əgər hər sifarişin contribution margin-ni bilmirsənsə, həcmin artması mənfəət yox, itki böyüdə bilər.
+
+> **DK Agency qeydi:** Delivery kanalında ən böyük səhv "sifariş var, deməli yaxşıdır" düşüncəsidir. Doğru sual budur: bu sifarişdən nə qədər qalır?
+
+> **Toolkit tövsiyəsi:** Delivery Komissiya Kalkulyatorunda sifariş dəyəri, komissiya, food cost və qablaşdırmanı daxil edib real nəticəni yoxla.
+`,
+  },
+  'restoran-markalasma-konsept': {
+    title: 'Restoran markası loqo deyil: hiss, dil, mədəniyyət',
+    subtitle: 'Marka sadəcə dizayn deyil, müştərinin səndən aldığı ümumi hissdir',
+    summary:
+      'Loqo, rəng və şrift markanın yalnız görünən hissəsidir. Güclü restoran markası dil, xidmət tərzi, sosial media tonu və komanda mədəniyyəti ilə qurulur.',
+    content: `# Restoran markası loqo deyil: hiss, dil, mədəniyyət
+
+*Kateqoriya: 🎨 Konsept & Brend | Oxu müddəti: 10-12 dəq*
+
+---
+
+Sahibkar dizaynerə gedib loqo sifariş edir və düşünür ki marka hazır oldu. Hazır olmadı.
+
+Loqo markanın üzü ola bilər, amma markanın özü deyil. Marka müştərinin sənin restoranını xatırlayanda hiss etdiyi şeydir. Sənin məkanın onun ağlına nə ilə gəlir: rahatlıq, sürət, ailə hissi, premium xidmət, yoxsa sadəcə "bir restoran"?
+
+## Marka nədir? 3 səviyyə
+
+### 1. Vizual kimlik
+
+- Loqo
+- Rəng palitrası
+- Şrift sistemi
+- Menyu dizaynı
+- İnteryer və dekor
+- Uniforma
+- Qablaşdırma
+
+Bu qat görünəndir. Amma təkbaşına kifayət deyil.
+
+### 2. Dil və ton
+
+- Telefona necə cavab verirsən?
+- Menyuda yeməkləri necə təsvir edirsən?
+- Sosial mediada rəsmi danışırsan, yoxsa isti?
+- Ofisiant müştəriyə hansı sözlərlə yaxınlaşır?
+
+Bir restoranın dili də onun brendidir. "Salam, buyurun" ilə "Xoş gəldiniz, sizə nə tövsiyə edək?" eyni təsir yaratmır.
+
+### 3. Mədəniyyət və dəyərlər
+
+- Problemi necə həll edirsiniz?
+- Komanda müştəriyə necə yanaşır?
+- Gərgin anda ton dəyişirmi?
+- Müştəri çıxanda nə hiss edir?
+
+Ən çətin, amma ən güclü qat budur. Marka burada gerçək olur.
+
+## Marka sözü nədir?
+
+Güclü restoran markası bir cümləlik vəd verir. Məsələn:
+
+- "Bakıda rahat ailə axşamı üçün ən isti məkan"
+- "Sürətli, doyurucu və sabit nahar təcrübəsi"
+- "Azərbaycan mətbəxinin modern, premium təqdimatı"
+
+Bu cümlə yalnız şüar deyil. Menyu, dekor, musiqi, foto üslubu, komanda dili və xidmət səviyyəsi bu vədi dəstəkləməlidir.
+
+## Vizual kimliyin 7 elementi
+
+1. Sadə və tanınan loqo
+2. 3-4 əsas rəngdən ibarət palitra
+3. Maksimum 2 əsas şrift
+4. Sabit foto və video stili
+5. Brendə uyğun menyu dizaynı
+6. Sosial media şablonları
+7. Qablaşdırma və touchpoint dizaynı
+
+## Sosial media strategiyası
+
+Sosial media "hər gün nəsə paylaş" oyunu deyil. Məqsəd aydındır: brend hissini ekrana daşımaq.
+
+### Qısa çərçivə
+
+- Instagram: vizual atmosfer, yemək və məkan hissi
+- TikTok: ritm, mətbəx anları, arxa səhnə
+- Google Business: axtarış görünürlüğü və rəylər
+- Facebook: kampaniya, tədbir, daha geniş yaş qrupu
+
+### 80/20 qaydası
+
+- 80% dəyər verən məzmun
+- 20% birbaşa satış və kampaniya
+
+## Ən yayğın branding səhvləri
+
+1. Bir gün premium, o biri gün küçə dili
+2. Menyu, interyer və Instagram-ın bir-birinə bənzəməməsi
+3. Hamıya bənzəməyə çalışmaq
+4. Söz verdiyini xidmətdə tutmamaq
+5. Komandanı marka dilinə öyrətməmək
+
+## Nəticə
+
+Marka dizayndan başlayır, amma yalnız dizaynla yaşamır. Əgər restoranın niyə mövcud olduğunu, kimə xidmət etdiyini və hansı hissi satdığını bir cümlə ilə izah edə bilmirsənsə, hələ marka qurmamısan.
+
+> **DK Agency qeydi:** Ən yaxşı marka sistemi olandır. Loqo, menecerin dili, ofisiantın davranışı və Instagram paylaşımı eyni restoranı göstərməlidir.
+
+> **Toolkit tövsiyəsi:** Branding Guide səhifəsində 12 maddəlik checklist və vizual kimliyin 7 elementini addım-addım doldur.
+`,
+  },
+} as const;
+
+export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const article = getBlogArticleBySlug(slug);
+  const session = await getServerMemberSession();
 
   if (!article) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <h1 className="text-4xl font-display font-black text-slate-900 mb-4">Məqalə tapılmadı</h1>
-          <Link href="/blog" className="text-brand-red font-bold hover:underline flex items-center justify-center gap-2">
-            <ChevronLeft size={20} /> Bloga qayıt
-          </Link>
-        </div>
-      </div>
-    );
+    notFound();
   }
 
-  const cat = CATEGORY_CONFIG[article.category];
+  const articleWithOverrides = BLOG_OVERRIDES[slug as keyof typeof BLOG_OVERRIDES]
+    ? { ...article, ...BLOG_OVERRIDES[slug as keyof typeof BLOG_OVERRIDES] }
+    : article;
+
+  const cat = CATEGORY_CONFIG[articleWithOverrides.category];
   const related = getRelatedArticles(slug);
+  const renderedContent = getProtectedArticleContent(
+    articleWithOverrides.content || '',
+    session,
+    articleWithOverrides.isPremium
+  );
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen pb-20">
-      {/* Hero Image Section */}
-      <div className="relative w-full h-[420px] overflow-hidden">
-        <img
-          src={article.coverImage}
-          alt={article.coverImageAlt || article.title}
-          className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+    <BlogContentWrapper articleTitle={articleWithOverrides.title} isPremium={articleWithOverrides.isPremium}>
+      <div className="min-h-screen bg-[var(--dk-paper)] pb-20">
+        <div className="relative h-[420px] w-full overflow-hidden">
+          <img
+            src={articleWithOverrides.coverImage}
+            alt={articleWithOverrides.coverImageAlt || articleWithOverrides.title}
+            className="h-full w-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-        {/* Back button */}
-        <Link href="/blog" className="absolute top-6 left-6 z-10 flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium transition-colors">
-          <ChevronLeft size={18} /> Bloga qayıt
-        </Link>
+          <Link
+            href="/blog"
+            className="absolute left-6 top-6 z-10 flex items-center gap-2 text-sm font-medium text-white/80 transition-colors hover:text-white"
+          >
+            <ChevronLeft size={18} /> Bloga qayıt
+          </Link>
 
-        <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-4"
-            >
-              <span className="bg-brand-red text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-red/20">
-                {cat?.emoji} {cat?.label}
-              </span>
-              <h1 className="text-3xl lg:text-5xl font-display font-black text-white leading-tight tracking-tighter">
-                {article.title}
-              </h1>
-              {article.subtitle && (
-                <p className="text-lg text-white/70 max-w-2xl">{article.subtitle}</p>
-              )}
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-        <div className="grid lg:grid-cols-12 gap-12">
-          {/* Main Content */}
-          <article className="lg:col-span-8">
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-6 pb-8 border-b border-slate-200 mb-10 text-slate-400 text-xs font-bold uppercase tracking-widest">
-              <div className="flex items-center gap-2">
-                <User size={16} className="text-brand-red" />
-                {article.author}
-              </div>
-              <div className="flex items-center gap-2">
-                <Calendar size={16} className="text-brand-red" />
-                {new Date(article.publishDate).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock size={16} className="text-brand-red" />
-                {article.readingTime} dəq oxu
-              </div>
-              <div className="flex items-center gap-2">
-                <Tag size={16} className="text-brand-red" />
-                {cat?.label}
-              </div>
-              <div className="ml-auto flex items-center gap-4">
-                <button className="hover:text-brand-red transition-colors"><Share2 size={18} /></button>
-                <button className="hover:text-brand-red transition-colors"><Bookmark size={18} /></button>
+          <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
+            <div className="mx-auto max-w-4xl">
+              <div className="space-y-4">
+                <span className="rounded-full bg-brand-red px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
+                  {cat?.emoji} {cat?.label}
+                </span>
+                <h1 className="text-3xl font-display font-black leading-tight tracking-tighter text-white lg:text-5xl">
+                  {articleWithOverrides.title}
+                </h1>
+                {articleWithOverrides.subtitle && (
+                  <p className="max-w-2xl text-lg text-white/70">{articleWithOverrides.subtitle}</p>
+                )}
               </div>
             </div>
+          </div>
+        </div>
 
-            {/* Tags */}
-            {article.tags && article.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-8">
-                {article.tags.map(tag => (
-                  <span key={tag} className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-medium">
-                    #{tag}
-                  </span>
-                ))}
+        <div className="mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-12">
+            <article className="lg:col-span-8">
+              <div className="mb-10 flex flex-wrap items-center gap-6 border-b border-slate-200 pb-8 text-xs font-bold uppercase tracking-widest text-slate-400">
+                <div className="flex items-center gap-2">
+                  <User size={16} className="text-brand-red" />
+                  {articleWithOverrides.author}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar size={16} className="text-brand-red" />
+                  {new Date(articleWithOverrides.publishDate).toLocaleDateString('az-AZ', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock size={16} className="text-brand-red" />
+                  {articleWithOverrides.readingTime} dəq oxu
+                </div>
+                <div className="flex items-center gap-2">
+                  <Tag size={16} className="text-brand-red" />
+                  {cat?.label}
+                </div>
+                <div className="ml-auto flex items-center gap-4">
+                  <button className="transition-colors hover:text-brand-red">
+                    <Share2 size={18} />
+                  </button>
+                  <button className="transition-colors hover:text-brand-red">
+                    <Bookmark size={18} />
+                  </button>
+                </div>
               </div>
-            )}
 
-            {/* Rich Markdown Content via MarkdownRenderer */}
-            <MarkdownRenderer content={article.content || ''} />
-          </article>
-
-          {/* Sidebar */}
-          <aside className="lg:col-span-4 space-y-8">
-            <div className="sticky top-32 space-y-8">
-              {/* Article Summary */}
-              <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3">Xülasə</h3>
-                <p className="text-slate-700 text-sm leading-relaxed">{article.summary}</p>
-              </div>
-
-              {/* Related Articles */}
-              {related.length > 0 && (
-                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-                  <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Əlaqəli Yazılar</h3>
-                  <div className="space-y-4">
-                    {related.map(rel => (
-                      <Link key={rel.slug} href={`/blog/${rel.slug}`} className="group block">
-                        <div className="flex items-start gap-3">
-                          <div className="text-lg flex-shrink-0">{CATEGORY_CONFIG[rel.category]?.emoji}</div>
-                          <div>
-                            <h4 className="text-sm font-semibold text-slate-900 group-hover:text-brand-red transition-colors leading-snug">
-                              {rel.title}
-                            </h4>
-                            <p className="text-xs text-slate-400 mt-1">{rel.readingTime} dəq oxu</p>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
+              {articleWithOverrides.tags && articleWithOverrides.tags.length > 0 && (
+                <div className="mb-8 flex flex-wrap gap-2">
+                  {articleWithOverrides.tags.map((tag) => (
+                    <span key={tag} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+                      #{tag}
+                    </span>
+                  ))}
                 </div>
               )}
 
-              {/* CTA */}
-              <div className="bg-brand-red rounded-2xl p-8 text-white shadow-2xl shadow-brand-red/20">
-                <h3 className="text-xl font-display font-black mb-3 leading-tight">Pulsuz Toolkit</h3>
-                <p className="text-sm text-white/80 mb-6 leading-relaxed">
-                  Food cost, P&L, menyu matrisi — pulsuz alətlərlə restoranını optimallaşdır.
-                </p>
-                <Link href="/toolkit" className="flex items-center justify-center gap-2 w-full bg-white text-brand-red py-3 rounded-xl font-black text-sm hover:bg-slate-50 transition-all uppercase tracking-widest">
-                  Alətlərə bax <ArrowRight size={16} />
-                </Link>
+              <MarkdownRenderer content={renderedContent} />
+            </article>
+
+            <aside className="space-y-8 lg:col-span-4">
+              <div className="sticky top-32 space-y-8">
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <h3 className="mb-3 text-sm font-bold uppercase tracking-widest text-slate-400">Xülasə</h3>
+                  <p className="text-sm leading-relaxed text-slate-700">{articleWithOverrides.summary}</p>
+                </div>
+
+                {related.length > 0 && (
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <h3 className="mb-4 text-sm font-bold uppercase tracking-widest text-slate-400">Əlaqəli yazılar</h3>
+                    <div className="space-y-4">
+                      {related.map((rel) => (
+                        <Link key={rel.slug} href={`/blog/${rel.slug}`} className="group block">
+                          <div className="flex items-start gap-3">
+                            <div className="flex-shrink-0 text-lg">{CATEGORY_CONFIG[rel.category]?.emoji}</div>
+                            <div>
+                              <h4 className="text-sm font-semibold leading-snug text-slate-900 transition-colors group-hover:text-brand-red">
+                                {rel.title}
+                              </h4>
+                              <p className="mt-1 text-xs text-slate-400">{rel.readingTime} dəq oxu</p>
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="rounded-2xl bg-brand-red p-8 text-white shadow-2xl shadow-brand-red/20">
+                  <h3 className="mb-3 text-xl font-display font-black leading-tight">Pulsuz Toolkit</h3>
+                  <p className="mb-6 text-sm leading-relaxed text-white/80">
+                    Food cost, P&amp;L, menyu matrisi və digər alətlərlə restoranını optimallaşdır.
+                  </p>
+                  <Link
+                    href="/toolkit"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3 text-sm font-black uppercase tracking-widest text-brand-red transition-all hover:bg-slate-50"
+                  >
+                    Alətlərə bax <ArrowRight size={16} />
+                  </Link>
+                </div>
               </div>
-            </div>
-          </aside>
+            </aside>
+          </div>
         </div>
       </div>
-    </div>
+    </BlogContentWrapper>
   );
 }

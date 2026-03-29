@@ -1,0 +1,209 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { buildKazanSystemPrompt } from '@/lib/kazan-ai/system-prompt';
+
+type ChatRole = 'user' | 'assistant';
+
+type ChatMessage = {
+  role: ChatRole;
+  content: string;
+};
+
+type RequestBody = {
+  messages?: ChatMessage[];
+};
+
+function normalizeMessages(messages: ChatMessage[]): ChatMessage[] {
+  return messages
+    .filter((message) => (message.role === 'user' || message.role === 'assistant') && message.content.trim())
+    .slice(-10)
+    .map((message) => ({
+      role: message.role,
+      content: message.content.trim().slice(0, 4000),
+    }));
+}
+
+function buildStaticFallback(messages: ChatMessage[]) {
+  const lastUserMessage = [...messages].reverse().find((message) => message.role === 'user')?.content.toLowerCase() ?? '';
+
+  if (lastUserMessage.includes('food cost')) {
+    return `Food cost-un yüksəkdirsə əvvəl 3 rəqəmə bax: ideal aralıq çox restoran üçün 28-32%-dir, sən 38%-dəsənsə ən azı 6 bənd aşağı enməlisən. 1) Resept kartını sabitlə. 2) Trim loss-u ölç. 3) Satış mix-ini Ulduz yeməklərə çək. 4) Alış qiymətini yenidən danış. 5) Həftəlik inventar say.\n\nAlət: /toolkit/food-cost\nBlog: /blog/1-porsiya-food-cost-hesablama`;
+  }
+
+  if (lastUserMessage.includes('aqta')) {
+    return `AQTA yoxlaması üçün 3 kritik blok var: ərzaq saxlama, şəxsi gigiyena və sənədləşdirmə. Ən çox cərimə riskini temperatur nəzarəti, etiketləmə və çarpaz bulaşma yaradır. Bu həftə minimum 1 daxili audit et və qırmızı, yaşıl, sarı, mavi taxtaları ayrı saxla.\n\nAlət: /toolkit/aqta-checklist\nBlog: /blog/aqta-cerime-checklist`;
+  }
+
+  if (lastUserMessage.includes('delivery')) {
+    return `Delivery-də komissiya 30%-dirsə tək komissiyaya baxmaq kifayət deyil. Food cost 33%, qablaşdırma 1.5 ₼, işçi xərci 3 ₼ olduqda real netto çox sürətlə əriyir. Platforma P&L-ni ayrıca izləmək lazımdır.\n\nAlət: /toolkit/delivery-calc\nBlog: /blog/wolt-bolt-komissiyon`;
+  }
+
+  return `Bakıda restoran idarəetməsində qərarı rəqəmlə vermək lazımdır: food cost, labor, AQTA, delivery və kadr axını eyni sistemdə baxılmalıdır. Sualını bir az konkret yaz, mən sənə rəqəm və addım planı ilə cavab verim.\n\nAlət: /toolkit/pnl\nBlog: /blog/pnl-oxuya-bilmirsen`;
+}
+
+async function callAnthropic(messages: ChatMessage[], apiKey: string) {
+  const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-20250514';
+  const baseUrl = process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com';
+
+  const response = await fetch(`${baseUrl}/v1/messages`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model,
+      system: buildKazanSystemPrompt(),
+      max_tokens: 700,
+      temperature: 0.2,
+      messages,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    return {
+      ok: false as const,
+      status: response.status,
+      body: {
+        error: 'Anthropic proxy cavabı uğursuz oldu.',
+        details: errorText.slice(0, 1200),
+      },
+    };
+  }
+
+  const payload = (await response.json()) as {
+    id?: string;
+    model?: string;
+    content?: Array<{ type?: string; text?: string }>;
+  };
+
+  const text = payload.content
+    ?.filter((item) => item.type === 'text')
+    .map((item) => item.text || '')
+    .join('\n\n')
+    .trim();
+
+  if (!text) {
+    return {
+      ok: false as const,
+      status: 502,
+      body: { error: 'Anthropic modeli boş cavab qaytardı.' },
+    };
+  }
+
+  return {
+    ok: true as const,
+    status: 200,
+    body: {
+      id: payload.id,
+      model: payload.model || model,
+      provider: 'anthropic',
+      message: text,
+    },
+  };
+}
+
+async function callDeepSeek(messages: ChatMessage[], apiKey: string) {
+  const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      temperature: 0.2,
+      max_tokens: 700,
+      messages: [
+        { role: 'system', content: buildKazanSystemPrompt() },
+        ...messages.map((message) => ({
+          role: message.role,
+          content: message.content,
+        })),
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    return {
+      ok: false as const,
+      status: response.status,
+      body: {
+        error: 'DeepSeek proxy cavabı uğursuz oldu.',
+        details: errorText.slice(0, 1200),
+      },
+    };
+  }
+
+  const payload = (await response.json()) as {
+    id?: string;
+    model?: string;
+    choices?: Array<{ message?: { content?: string } }>;
+  };
+
+  const text = payload.choices?.[0]?.message?.content?.trim();
+  if (!text) {
+    return {
+      ok: false as const,
+      status: 502,
+      body: { error: 'DeepSeek modeli boş cavab qaytardı.' },
+    };
+  }
+
+  return {
+    ok: true as const,
+    status: 200,
+    body: {
+      id: payload.id,
+      model: payload.model || 'deepseek-chat',
+      provider: 'deepseek',
+      message: text,
+    },
+  };
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = (await request.json()) as RequestBody;
+    const messages = normalizeMessages(body.messages ?? []);
+
+    if (messages.length === 0) {
+      return NextResponse.json({ error: 'Ən azı 1 mesaj göndərilməlidir.' }, { status: 400 });
+    }
+
+    const anthropicApiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
+    const deepseekApiKey = process.env.DEEPSEEK_API_KEY;
+    const availableApiKey = process.env.DEEPSEEK_API_KEY || process.env.ANTHROPIC_API_KEY;
+
+    if (anthropicApiKey) {
+      const result = await callAnthropic(messages, anthropicApiKey);
+      return NextResponse.json(result.body, { status: result.status });
+    }
+
+    if (availableApiKey) {
+      if (deepseekApiKey) {
+        const result = await callDeepSeek(messages, deepseekApiKey);
+        return NextResponse.json(result.body, { status: result.status });
+      }
+    }
+
+    return NextResponse.json(
+      {
+        provider: 'static',
+        model: 'kazan-static-sample',
+        message: buildStaticFallback(messages),
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: 'KAZAN AI sorğusu zamanı xəta baş verdi.',
+        details: String(error),
+      },
+      { status: 500 },
+    );
+  }
+}

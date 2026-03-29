@@ -107,18 +107,18 @@ function BlogCard({ article, categoryConfig, catColors }: {
   const catConfig = categoryConfig[article.category];
   return (
     <Link href={`/haberler/${article.slug}`} className="group block">
-      <div className="rounded-2xl overflow-hidden border border-[#8892B015] bg-[#16213E] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[#C5A02230] group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
+      <div className="rounded-2xl overflow-hidden border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[var(--dk-surface-dark)] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)] group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
         {/* Image */}
-        <div className="aspect-[16/10] relative overflow-hidden bg-gradient-to-br from-[#0A0A1A] to-[#16213E]">
+        <div className="aspect-[16/10] relative overflow-hidden bg-gradient-to-br from-[var(--dk-night)] to-[var(--dk-surface-dark)]">
           <div className="absolute inset-0 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
             <span className="text-6xl opacity-40">{catConfig?.emoji || '📝'}</span>
           </div>
           {/* Category badge on image */}
-          <span className={`absolute bottom-3 left-3 ${catColors[article.category] || 'bg-[#8892B0]'} text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md`}>
+          <span className={`absolute bottom-3 left-3 ${catColors[article.category] || 'bg-[var(--dk-muted)]'} text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md`}>
             {catConfig?.label || article.category}
           </span>
           {/* Reading time badge */}
-          <div className="absolute top-3 right-3 bg-[#0A0A1A]/80 backdrop-blur-sm text-[#EAEAEA] px-2.5 py-1 rounded-full text-[11px] font-medium flex items-center gap-1">
+          <div className="absolute top-3 right-3 bg-[var(--dk-night)]/80 backdrop-blur-sm text-[var(--dk-text)] px-2.5 py-1 rounded-full text-[11px] font-medium flex items-center gap-1">
             <Clock className="w-3 h-3" />
             {article.readingTime} dəq
           </div>
@@ -126,15 +126,15 @@ function BlogCard({ article, categoryConfig, catColors }: {
         
         {/* Content */}
         <div className="p-5">
-          <h3 className="text-[17px] font-bold leading-snug mb-2 text-[#EAEAEA] group-hover:text-[#C5A022] transition-colors line-clamp-2">
+          <h3 className="text-[17px] font-bold leading-snug mb-2 text-[var(--dk-text)] group-hover:text-[var(--dk-gold)] transition-colors line-clamp-2">
             {article.title}
           </h3>
-          <p className="text-[13px] text-[#8892B0] leading-relaxed line-clamp-2 mb-4">
+          <p className="text-[13px] text-[var(--dk-muted)] leading-relaxed line-clamp-2 mb-4">
             {article.summary}
           </p>
-          <div className="flex items-center gap-3 text-[12px] text-[#8892B060]">
+          <div className="flex items-center gap-3 text-[12px] text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)]">
             <span className="flex items-center gap-1">
-              <Star className="w-3 h-3 text-[#C5A022]" />
+              <Star className="w-3 h-3 text-[var(--dk-gold)]" />
               {article.category === 'maliyye' ? 'Yüksək' : article.category === 'emeliyyat' ? 'Kritik' : 'Orta'} Təsir
             </span>
             <span>•</span>
@@ -161,19 +161,19 @@ function SidebarNewsList({ articles, categoryConfig }: {
           <Link 
             key={article.id} 
             href={`/haberler/${article.slug}`}
-            className="flex gap-3 p-3 rounded-xl hover:bg-[#C5A02208] transition-colors group"
+            className="flex gap-3 p-3 rounded-xl hover:bg-[color:color-mix(in_srgb,var(--dk-gold)_3%,transparent)] transition-colors group"
           >
             {/* Thumbnail */}
-            <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-[#C5A02215] flex items-center justify-center">
+            <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-[color:color-mix(in_srgb,var(--dk-gold)_8%,transparent)] flex items-center justify-center">
               <span className="text-xl">{catConfig?.emoji || '📝'}</span>
             </div>
             
             {/* Text */}
             <div className="flex-1 min-w-0">
-              <span className="text-[10px] font-bold text-[#C5A022] uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-[var(--dk-gold)] uppercase tracking-wider">
                 {catConfig?.label || article.category}
               </span>
-              <h4 className="text-[14px] font-semibold leading-tight text-[#B0B8C8] line-clamp-2 group-hover:text-[#C5A022] transition-colors mt-0.5">
+              <h4 className="text-[14px] font-semibold leading-tight text-[var(--dk-body)] line-clamp-2 group-hover:text-[var(--dk-gold)] transition-colors mt-0.5">
                 {article.title}
               </h4>
             </div>
@@ -210,7 +210,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
       {/* ═══════════════════════════════════════════════════════════════ */}
       {/* TAB NAVIGATION */}
       {/* ═══════════════════════════════════════════════════════════════ */}
-      <div className="bg-[#1A1A2E] border-b border-[#8892B015] sticky top-0 z-20">
+      <div className="bg-[var(--dk-navy)] border-b border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center gap-1">
             {tabs.map((tab) => {
@@ -223,8 +223,8 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   className={`
                     flex items-center gap-2 px-6 py-4 font-semibold text-sm border-b-2 transition-all
                     ${isActive 
-                      ? 'border-[#C5A022] text-[#C5A022] bg-[#C5A02210]' 
-                      : 'border-transparent text-[#8892B0] hover:text-[#EAEAEA] hover:bg-[#8892B010]'
+                      ? 'border-[var(--dk-gold)] text-[var(--dk-gold)] bg-[color:color-mix(in_srgb,var(--dk-gold)_6%,transparent)]' 
+                      : 'border-transparent text-[var(--dk-muted)] hover:text-[var(--dk-text)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_6%,transparent)]'
                     }
                   `}
                 >
@@ -232,7 +232,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   {tab.label}
                   <span className={`
                     text-xs px-2 py-0.5 rounded-full
-                    ${isActive ? 'bg-[#C5A022] text-[#0A0A1A]' : 'bg-[#8892B020] text-[#8892B0]'}
+                    ${isActive ? 'bg-[var(--dk-gold)] text-[var(--dk-night)]' : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] text-[var(--dk-muted)]'}
                   `}>
                     {tab.count}
                   </span>
@@ -259,15 +259,15 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   className={`
                     flex items-start gap-4 p-4 rounded-xl border transition-all cursor-pointer
                     ${news.hot 
-                      ? 'bg-[#E9456015] border-[#E9456030] hover:border-[#E94560]' 
-                      : 'bg-[#16213E] border-[#8892B015] hover:border-[#C5A02230]'
+                      ? 'bg-[color:color-mix(in_srgb,var(--dk-red)_8%,transparent)] border-[var(--dk-red)]/30 hover:border-[var(--dk-red)]' 
+                      : 'bg-[var(--dk-surface-dark)] border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] hover:border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)]'
                     }
                   `}
                 >
                   {/* Numara */}
                   <div className={`
                     w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg flex-shrink-0
-                    ${news.hot ? 'bg-[#E94560] text-white' : 'bg-[#8892B020] text-[#8892B0]'}
+                    ${news.hot ? 'bg-[var(--dk-red)] text-white' : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] text-[var(--dk-muted)]'}
                   `}>
                     {String(idx + 1).padStart(2, '0')}
                   </div>
@@ -277,24 +277,24 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`
                         text-xs font-bold uppercase tracking-wider
-                        ${news.hot ? 'text-[#E94560]' : 'text-[#8892B0]'}
+                        ${news.hot ? 'text-[var(--dk-red)]' : 'text-[var(--dk-muted)]'}
                       `}>
                         {news.category}
                       </span>
                       {news.hot && (
-                        <span className="text-xs bg-[#E94560] text-white px-2 py-0.5 rounded-full font-bold animate-pulse">
+                        <span className="text-xs bg-[var(--dk-red)] text-white px-2 py-0.5 rounded-full font-bold animate-pulse">
                           🔥 HOT
                         </span>
                       )}
                     </div>
 
                     {/* Başlık */}
-                    <h3 className="font-semibold text-[#EAEAEA] leading-snug">
+                    <h3 className="font-semibold text-[var(--dk-text)] leading-snug">
                       {news.title}
                     </h3>
 
                     {/* Tarih */}
-                    <p className="text-xs text-[#8892B060] mt-1">
+                    <p className="text-xs text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)] mt-1">
                       {new Date(news.date).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long' })}
                     </p>
                   </div>
@@ -342,20 +342,20 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
             {/* ─────────────────────────────────────────────────────────── */}
             <div className="lg:col-span-3 order-2 lg:order-1">
               <div className="lg:sticky lg:top-24">
-                <h3 className="text-xs font-bold text-[#8892B0] uppercase tracking-wider mb-4">
+                <h3 className="text-xs font-bold text-[var(--dk-muted)] uppercase tracking-wider mb-4">
                   Son Yazılar
                 </h3>
                 <SidebarNewsList articles={sideArticles} categoryConfig={categoryConfig} />
 
                 {/* Trending Section */}
-                <div className="mt-8 pt-6 border-t border-[#8892B015]">
+                <div className="mt-8 pt-6 border-t border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]">
                   <div className="flex items-center gap-2 mb-4">
-                    <Flame className="w-5 h-5 text-[#E94560]" />
-                    <span className="font-bold text-[#EAEAEA]">Trend Mövzular</span>
+                    <Flame className="w-5 h-5 text-[var(--dk-red)]" />
+                    <span className="font-bold text-[var(--dk-text)]">Trend Mövzular</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {['Food Cost', 'P&L', 'AQTA', 'Wolt', 'İşçi Saxlama', 'Menyu'].map((tag) => (
-                      <span key={tag} className="px-3 py-1.5 bg-[#8892B015] hover:bg-[#C5A02215] hover:text-[#C5A022] text-[#8892B0] text-xs rounded-full cursor-pointer transition-colors">
+                      <span key={tag} className="px-3 py-1.5 bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] hover:bg-[color:color-mix(in_srgb,var(--dk-gold)_8%,transparent)] hover:text-[var(--dk-gold)] text-[var(--dk-muted)] text-xs rounded-full cursor-pointer transition-colors">
                         {tag}
                       </span>
                     ))}
@@ -389,23 +389,23 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-2xl md:text-3xl font-bold text-[#EAEAEA] group-hover:text-[#C5A022] transition-colors leading-tight mb-3">
+                  <h2 className="text-2xl md:text-3xl font-bold text-[var(--dk-text)] group-hover:text-[var(--dk-gold)] transition-colors leading-tight mb-3">
                     {featuredArticle.title}
                   </h2>
 
                   {/* Summary */}
-                  <p className="text-[#B0B8C8] leading-relaxed line-clamp-3 text-[16px]">
+                  <p className="text-[var(--dk-body)] leading-relaxed line-clamp-3 text-[16px]">
                     {featuredArticle.summary}
                   </p>
 
                   {/* Author info */}
-                  <div className="flex items-center gap-3 mt-5 pt-5 border-t border-[#8892B015]">
-                    <div className="w-11 h-11 rounded-full bg-[#C5A022] flex items-center justify-center text-[#0A0A1A] font-bold shadow-md">
+                  <div className="flex items-center gap-3 mt-5 pt-5 border-t border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]">
+                    <div className="w-11 h-11 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] font-bold shadow-md">
                       DT
                     </div>
                     <div>
-                      <p className="font-semibold text-[#EAEAEA]">{featuredArticle.author}</p>
-                      <p className="text-xs text-[#8892B0]">
+                      <p className="font-semibold text-[var(--dk-text)]">{featuredArticle.author}</p>
+                      <p className="text-xs text-[var(--dk-muted)]">
                         {new Date(featuredArticle.publishDate).toLocaleDateString('az-AZ', { month: 'long', day: 'numeric', year: 'numeric' })}
                       </p>
                     </div>
@@ -420,37 +420,37 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
             <div className="lg:col-span-3 order-3">
               <div className="lg:sticky lg:top-24 space-y-6">
                 {/* Newsletter Widget */}
-                <div className="bg-[#16213E] rounded-2xl p-6 border border-[#C5A02220]">
-                  <h3 className="text-[#EAEAEA] font-bold mb-2 flex items-center gap-2">
+                <div className="bg-[var(--dk-surface-dark)] rounded-2xl p-6 border border-[color:color-mix(in_srgb,var(--dk-gold)_13%,transparent)]">
+                  <h3 className="text-[var(--dk-text)] font-bold mb-2 flex items-center gap-2">
                     📬 Həftəlik Bülletin
                   </h3>
-                  <p className="text-[#8892B0] text-sm mb-4">HoReCa trend analizləri birbaşa e-poçtunuza</p>
+                  <p className="text-[var(--dk-muted)] text-sm mb-4">HoReCa trend analizləri birbaşa e-poçtunuza</p>
                   <input 
                     type="email" 
                     placeholder="E-poçt ünvanınız"
-                    className="w-full px-4 py-2.5 rounded-xl bg-[#0A0A1A] border border-[#8892B020] text-[#EAEAEA] placeholder:text-[#8892B060] text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[#C5A022]"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[var(--dk-night)] border border-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] text-[var(--dk-text)] placeholder:text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)] text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]"
                   />
-                  <button className="w-full bg-[#E94560] hover:bg-[#C5A022] text-white py-2.5 rounded-xl font-bold text-sm transition-colors shadow-md">
+                  <button className="w-full bg-[var(--dk-red)] hover:bg-[var(--dk-gold)] text-white py-2.5 rounded-xl font-bold text-sm transition-colors shadow-md">
                     Abunə ol
                   </button>
                 </div>
 
                 {/* Viewpoint Widget */}
-                <div className="bg-[#16213E60] rounded-2xl p-5 border border-[#8892B015]">
-                  <span className="text-xs font-bold text-[#C5A022] uppercase tracking-wider flex items-center gap-1">
+                <div className="bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] rounded-2xl p-5 border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]">
+                  <span className="text-xs font-bold text-[var(--dk-gold)] uppercase tracking-wider flex items-center gap-1">
                     <Star className="w-3 h-3" />
                     Viewpoint
                   </span>
-                  <blockquote className="mt-3 text-[15px] leading-relaxed italic text-[#B0B8C8]">
+                  <blockquote className="mt-3 text-[15px] leading-relaxed italic text-[var(--dk-body)]">
                     {"\u201C"}Restoran biznesi rəqəmlərlə idarə olunur, duyğularla yox{"\u201D"}
                   </blockquote>
                   <div className="mt-4 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#C5A022] flex items-center justify-center text-[#0A0A1A] text-xs font-bold">
+                    <div className="w-8 h-8 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] text-xs font-bold">
                       DT
                     </div>
                     <div>
-                      <p className="text-[12px] font-semibold text-[#EAEAEA]">Doğan Tomris</p>
-                      <p className="text-[11px] text-[#8892B0]">DK Agency qurucusu</p>
+                      <p className="text-[12px] font-semibold text-[var(--dk-text)]">Doğan Tomris</p>
+                      <p className="text-[11px] text-[var(--dk-muted)]">DK Agency qurucusu</p>
                     </div>
                   </div>
                 </div>
@@ -461,15 +461,15 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
           {/* ═══════════════════════════════════════════════════════════════ */}
           {/* CATEGORY FILTER */}
           {/* ═══════════════════════════════════════════════════════════════ */}
-          <div className="mt-10 pt-8 border-t border-[#8892B015]">
+          <div className="mt-10 pt-8 border-t border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]">
             <div className="flex flex-wrap items-center gap-2 mb-6">
-              <span className="text-sm font-semibold text-[#8892B0] mr-2">Kateqoriyalar:</span>
+              <span className="text-sm font-semibold text-[var(--dk-muted)] mr-2">Kateqoriyalar:</span>
               <button
                 onClick={() => setSelectedCategory(null)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   !selectedCategory 
-                    ? 'bg-[#C5A022] text-[#0A0A1A]' 
-                    : 'bg-[#8892B015] text-[#8892B0] hover:bg-[#8892B025]'
+                    ? 'bg-[var(--dk-gold)] text-[var(--dk-night)]' 
+                    : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] text-[var(--dk-muted)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_15%,transparent)]'
                 }`}
               >
                 Hamısı
@@ -480,8 +480,8 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   onClick={() => setSelectedCategory(key)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-1.5 ${
                     selectedCategory === key 
-                      ? `${catColors[key] || 'bg-[#8892B0]'} text-white` 
-                      : 'bg-[#8892B015] text-[#8892B0] hover:bg-[#8892B025]'
+                      ? `${catColors[key] || 'bg-[var(--dk-muted)]'} text-white` 
+                      : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] text-[var(--dk-muted)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_15%,transparent)]'
                   }`}
                 >
                   <span>{config.emoji}</span>
@@ -497,10 +497,10 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
           <div className="mt-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="w-1 h-8 bg-[#C5A022] rounded-full" />
-                <h2 className="text-2xl font-bold text-[#EAEAEA] italic">InDepth</h2>
+                <div className="w-1 h-8 bg-[var(--dk-gold)] rounded-full" />
+                <h2 className="text-2xl font-bold text-[var(--dk-text)] italic">InDepth</h2>
               </div>
-              <span className="text-sm text-[#8892B0]">{filteredArticles.length} yazı</span>
+              <span className="text-sm text-[var(--dk-muted)]">{filteredArticles.length} yazı</span>
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -517,7 +517,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
             {/* Load more button */}
             {filteredArticles.length > 6 && (
               <div className="mt-10 text-center">
-                <button className="px-8 py-3 bg-[#E94560] hover:bg-[#C5A022] text-white rounded-xl font-bold transition-colors">
+                <button className="px-8 py-3 bg-[var(--dk-red)] hover:bg-[var(--dk-gold)] text-white rounded-xl font-bold transition-colors">
                   Daha çox yüklə →
                 </button>
               </div>
@@ -534,14 +534,14 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
             {EVENTS.map((event) => (
               <div 
                 key={event.id}
-                className="bg-[#16213E] rounded-2xl border border-[#8892B015] overflow-hidden hover:border-[#C5A02230] hover:shadow-xl transition-all group"
+                className="bg-[var(--dk-surface-dark)] rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] overflow-hidden hover:border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)] hover:shadow-xl transition-all group"
               >
                 {/* Event header */}
                 <div className={`
                   p-6 relative
                   ${event.category === 'Konfrans' ? 'bg-gradient-to-br from-purple-600 to-indigo-700' : ''}
                   ${event.category === 'Təlim' ? 'bg-gradient-to-br from-emerald-600 to-teal-700' : ''}
-                  ${event.category === 'Networking' ? 'bg-gradient-to-br from-[#C5A022] to-[#E94560]' : ''}
+                  ${event.category === 'Networking' ? 'bg-gradient-to-br from-[var(--dk-gold)] to-[var(--dk-red)]' : ''}
                   ${event.category === 'Workshop' ? 'bg-gradient-to-br from-blue-600 to-cyan-700' : ''}
                 `}>
                   <span className="text-6xl opacity-30 absolute right-4 top-4">{event.image}</span>
@@ -551,8 +551,8 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
 
                 {/* Event details */}
                 <div className="p-6 space-y-3">
-                  <div className="flex items-center gap-3 text-[#B0B8C8]">
-                    <Calendar className="w-5 h-5 text-[#C5A022]" />
+                  <div className="flex items-center gap-3 text-[var(--dk-body)]">
+                    <Calendar className="w-5 h-5 text-[var(--dk-gold)]" />
                     <span className="font-medium">
                       {new Date(event.date).toLocaleDateString('az-AZ', { 
                         weekday: 'long',
@@ -563,25 +563,25 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                     </span>
                   </div>
                   
-                  <div className="flex items-center gap-3 text-[#B0B8C8]">
-                    <MapPin className="w-5 h-5 text-[#C5A022]" />
+                  <div className="flex items-center gap-3 text-[var(--dk-body)]">
+                    <MapPin className="w-5 h-5 text-[var(--dk-gold)]" />
                     <span>{event.location}</span>
                   </div>
 
-                  <div className="flex items-center gap-3 text-[#B0B8C8]">
-                    <Users className="w-5 h-5 text-[#C5A022]" />
+                  <div className="flex items-center gap-3 text-[var(--dk-body)]">
+                    <Users className="w-5 h-5 text-[var(--dk-gold)]" />
                     <span>{event.attendees} iştirakçı limiti</span>
                   </div>
 
                   {/* Price & CTA */}
-                  <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#8892B015]">
+                  <div className="flex items-center justify-between pt-4 mt-4 border-t border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]">
                     <div className="flex items-center gap-2">
-                      <Ticket className="w-5 h-5 text-[#2ECC71]" />
-                      <span className={`font-bold ${event.price === 'Pulsuz' ? 'text-[#2ECC71]' : 'text-[#EAEAEA]'}`}>
+                      <Ticket className="w-5 h-5 text-[var(--dk-success)]" />
+                      <span className={`font-bold ${event.price === 'Pulsuz' ? 'text-[var(--dk-success)]' : 'text-[var(--dk-text)]'}`}>
                         {event.price}
                       </span>
                     </div>
-                    <button className="bg-[#E94560] hover:bg-[#C5A022] text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors">
+                    <button className="bg-[var(--dk-red)] hover:bg-[var(--dk-gold)] text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors">
                       Qeydiyyat
                     </button>
                   </div>
@@ -592,8 +592,8 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
 
           {/* Past events teaser */}
           <div className="mt-12 text-center">
-            <p className="text-[#8892B0] mb-4">Keçmiş tədbir arxivimiz</p>
-            <button className="text-[#C5A022] font-semibold hover:underline">
+            <p className="text-[var(--dk-muted)] mb-4">Keçmiş tədbir arxivimiz</p>
+            <button className="text-[var(--dk-gold)] font-semibold hover:underline">
               2025 Arxivinə bax →
             </button>
           </div>

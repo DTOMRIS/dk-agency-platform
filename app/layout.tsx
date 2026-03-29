@@ -16,8 +16,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://dkagency.az'),
   title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
-  description: 'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HORECA sektoru üçün.',
+  description: 'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
 };
 
 export default function RootLayout({
@@ -36,3 +37,4 @@ export default function RootLayout({
     </html>
   );
 }
+

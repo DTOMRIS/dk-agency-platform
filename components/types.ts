@@ -18,7 +18,7 @@ export interface NewsItem {
 export interface AdItem {
   id: string;
   title: string;
-  type: 'Lahiyə' | 'Avadanlıq' | 'İnvestisiya' | 'İcarə' | 'B2B Tərəfdaş';
+  type: 'Devir' | 'Avadanlıq' | 'İnvestisiya' | 'İcarə' | 'B2B Tərəfdaş';
   category: string;
   price?: string;
   location: string;

@@ -17,32 +17,30 @@ interface Stage {
 
 const stages: Stage[] = [
   {
-    emoji: '🏗',
+    emoji: '🏗️',
     title: 'Başla',
-    description:
-      'Restoran açmaq istəyirsən? Checklist, rəsmi işlər, məkan seçimi, menyu planı.',
-    hoverBorder: 'hover:border-[#E94560]',
-    link: '/toolkit/checklist',
-    count: '8 bələdçi',
+    description: 'Restoran açmaq istəyirsən? Checklist, rəsmi işlər, məkan seçimi və açılış planı.',
+    hoverBorder: 'hover:border-[var(--dk-red)]',
+    link: '/toolkit?stage=basla',
+    count: '5 bələdçi',
     countClass: 'text-red-500',
   },
   {
     emoji: '📊',
     title: 'Böyüt',
-    description:
-      'Mövcud restoranını optimallaşdır. P&L, food cost, menyu matrisi, AI dəstək.',
-    hoverBorder: 'hover:border-[#C5A022]',
-    link: '/toolkit',
-    count: '6 alət',
+    description: 'Mövcud restoranını optimallaşdır. Food cost, P&L, menyu, delivery və komanda nəzarəti.',
+    hoverBorder: 'hover:border-[var(--dk-gold)]',
+    link: '/toolkit?stage=boyut',
+    count: '5 alət',
     countClass: 'text-amber-600',
   },
   {
     emoji: '🔄',
     title: 'Devir & Satış',
-    description: 'Restoran devri, ekipman satışı, franchise, ortaq axtarışı.',
-    hoverBorder: 'hover:border-[#8B5CF6]',
+    description: 'Restoran devri, ekipman satışı, franchise, ortaq və digər biznes keçid kateqoriyaları.',
+    hoverBorder: 'hover:border-[var(--dk-purple)]',
     link: '/ilanlar',
-    count: '4 kateqoriya',
+    count: '7 kateqoriya',
     countClass: 'text-purple-600',
   },
 ];
@@ -61,7 +59,7 @@ export default function StageSelector() {
             <h2 className="mb-3 text-3xl font-display font-extrabold text-slate-900">
               Sən hansı mərhələdəsən?
             </h2>
-            <p className="text-base text-gray-500">Hər mərhələ üçün pulsuz alət və bələdçi.</p>
+            <p className="text-base text-gray-500">Hər mərhələ üçün uyğun alət və bələdçi seç.</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}

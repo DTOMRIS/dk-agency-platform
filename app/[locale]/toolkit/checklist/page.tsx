@@ -131,7 +131,7 @@ export default function ChecklistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] pb-20">
+    <div className="min-h-screen bg-[var(--dk-paper)] pb-20">
       {/* Header */}
       <div className="bg-slate-950 pt-8 pb-16 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

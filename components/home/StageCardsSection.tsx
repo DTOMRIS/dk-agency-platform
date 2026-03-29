@@ -6,13 +6,13 @@ export default function StageCardsSection() {
   ];
 
   return (
-    <section id="stage-cards" className="border-t border-[#e3d8c8] px-5 py-10 md:px-8">
-      <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-[#1f2e4a]">Stage Cards</h2>
+    <section id="stage-cards" className="border-t border-[var(--dk-warm-border)] px-5 py-10 md:px-8">
+      <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-[var(--dk-indigo)]">Stage Cards</h2>
       <div className="mt-5 grid gap-4 md:grid-cols-3">
         {items.map((item) => (
-          <article key={item.title} className="rounded-2xl border border-[#d8decf] bg-[#fbfff8] p-5">
-            <h3 className="text-lg font-semibold text-[#18433f]">{item.title}</h3>
-            <p className="mt-2 text-[#586765]">{item.text}</p>
+          <article key={item.title} className="rounded-2xl border border-[var(--dk-line)] bg-[color-mix(in srgb, var(--dk-mint) 22%, white)] p-5">
+            <h3 className="text-lg font-semibold text-[var(--dk-teal)]">{item.title}</h3>
+            <p className="mt-2 text-[var(--dk-ink-soft)]">{item.text}</p>
           </article>
         ))}
       </div>

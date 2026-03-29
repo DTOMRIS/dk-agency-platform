@@ -85,9 +85,9 @@ export default function SocialIcons({
   };
 
   const variantClasses = {
-    default: 'bg-[#E94560] text-white hover:bg-[#C5A022]',
-    outline: 'bg-transparent border border-[#E94560] text-[#E94560] hover:bg-[#E94560] hover:text-white',
-    ghost: 'bg-[#16213E] text-[#8892B0] hover:text-[#EAEAEA] hover:bg-[#8892B015]',
+    default: 'bg-[var(--dk-red)] text-white hover:bg-[var(--dk-gold)]',
+    outline: 'bg-transparent border border-[var(--dk-red)] text-[var(--dk-red)] hover:bg-[var(--dk-red)] hover:text-white',
+    ghost: 'bg-[var(--dk-surface-dark)] text-[var(--dk-muted)] hover:text-[var(--dk-text)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]',
   };
 
   return (
@@ -128,9 +128,9 @@ export function SocialIcon({
   };
 
   const variantClasses = {
-    default: 'bg-[#E94560] text-white hover:bg-[#C5A022]',
-    outline: 'bg-transparent border border-[#E94560] text-[#E94560] hover:bg-[#E94560] hover:text-white',
-    ghost: 'bg-[#16213E] text-[#8892B0] hover:text-[#EAEAEA] hover:bg-[#8892B015]',
+    default: 'bg-[var(--dk-red)] text-white hover:bg-[var(--dk-gold)]',
+    outline: 'bg-transparent border border-[var(--dk-red)] text-[var(--dk-red)] hover:bg-[var(--dk-red)] hover:text-white',
+    ghost: 'bg-[var(--dk-surface-dark)] text-[var(--dk-muted)] hover:text-[var(--dk-text)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]',
   };
 
   return (

@@ -30,7 +30,7 @@ export default function NewsGrid({ posts }: NewsGridProps) {
           >
             {/* Image placeholder */}
             <div className="relative h-32 md:h-40 overflow-hidden">
-              <div className="w-full h-full bg-gradient-to-br from-[#1F2937] to-[#374151] flex items-center justify-center">
+              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--dk-ink)] to-[var(--dk-ink-soft)]">
                 <Newspaper size={28} className="text-white/15" />
               </div>
 

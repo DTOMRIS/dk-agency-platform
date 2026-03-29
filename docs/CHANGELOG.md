@@ -2,6 +2,20 @@
 
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
+## [0.4.0] - 2026-03-26
+### Added
+- `KAZAN AI` knowledge base (`lib/kazan-ai/knowledge-base.ts`) - 10 yazidan cixarilan formula, range, checklist, praktik addim ve guru sitatlari
+- `KAZAN AI` system prompt (`lib/kazan-ai/system-prompt.ts`) - AZ ton, sales layer, toolkit/blog yonlendirmesi
+- `POST /api/kazan-ai` Anthropic proxy route - server-side system prompt + knowledge injection
+- `/kazan-ai` real chat UI - sample questions, clickable markdown linkler, toolkit enteqrasiyasi
+- `/toolkit/insaat-checklist` ve locale wrapper - temiz interactive checklist, upload util istifadəsi
+- `lib/utils/image-resize.ts` - client-side image resize/validation util
+
+### Changed
+- `components/layout/Footer.tsx` - toolkit ve insaat linkleri yenilendi, encoding temizlendi
+- `components/layout/MegaMenu.tsx` - insaat checklist linki elave olundu, encoding temizlendi
+- `app/kazan-ai/page.tsx` teaser sehifeden real chat shell-e cevrildi
+
 ## [0.3.0] - 2026-03-24
 ### Added
 - i18n altyapisi (next-intl v4, 3 dil: az/tr/en, 168 key)

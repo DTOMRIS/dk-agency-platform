@@ -170,7 +170,7 @@ export default function CookiesBanner() {
                 <button
                   type="button"
                   onClick={handleAccept}
-                  className="text-sm font-medium bg-[#1A1A2E] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+                  className="text-sm font-medium bg-[var(--dk-navy)] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
                 >
                   Qəbul et
                 </button>
@@ -234,7 +234,7 @@ export default function CookiesBanner() {
                 <button
                   type="button"
                   onClick={handleAcceptAll}
-                  className="text-sm font-medium bg-[#1A1A2E] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+                  className="text-sm font-medium bg-[var(--dk-navy)] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
                 >
                   Hamısını qəbul et
                 </button>

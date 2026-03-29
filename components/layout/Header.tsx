@@ -25,10 +25,11 @@ function getLocalePath(pathname: string, newLocale: string) {
 }
 
 const navItems = [
-  { name: 'Ana səhifə', href: '/', hasMegaMenu: true },
+  { name: 'Ana səhifə', href: '/', hasMegaMenu: false },
+  { name: 'Platforması', href: '#', hasMegaMenu: true },
   { name: 'Trendlər', href: '/haberler', hasMegaMenu: false },
   { name: 'Bloq', href: '/blog', hasMegaMenu: false },
-  { name: 'İdarə Paneli', href: '/dashboard', hasMegaMenu: false },
+  { name: 'İdarə Paneli', href: '/b2b-panel', hasMegaMenu: false },
 ];
 
 export default function Header() {
@@ -46,14 +47,11 @@ export default function Header() {
 
   return (
     <>
-      {/* Utility Bar */}
-      <div className="hidden md:block bg-[#1A1A2E]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-2">
+      <div className="hidden bg-[var(--dk-navy)] md:block">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
           <div className="flex items-center gap-2 text-xs">
-            <span className="text-[#C5A022] font-bold">YENİ:</span>
-            <span className="text-gray-400">
-              KAZAN AI — sektorun ilk AI danışmanı tezliklə
-            </span>
+            <span className="font-bold text-[var(--dk-gold)]">YENİ:</span>
+            <span className="text-gray-400">KAZAN AI — sektorun ilk AI danışmanı tezliklə</span>
           </div>
           <div className="flex items-center gap-3 text-xs text-gray-400">
             <div className="flex items-center gap-1">
@@ -63,9 +61,7 @@ export default function Header() {
                   <Link
                     href={getLocalePath(pathname, loc)}
                     className={`transition-colors ${
-                      currentLocale === loc
-                        ? 'text-white font-bold'
-                        : 'text-gray-400 hover:text-white'
+                      currentLocale === loc ? 'font-bold text-white' : 'text-gray-400 hover:text-white'
                     }`}
                   >
                     {loc.toUpperCase()}
@@ -74,38 +70,31 @@ export default function Header() {
               ))}
             </div>
             <span className="text-gray-600">|</span>
-            <Link href="/auth/login" className="hover:text-white transition-colors">
+            <Link href="/auth/login" className="transition-colors hover:text-white">
               Üzv girişi
             </Link>
             <span className="text-gray-600">|</span>
-            <Link href="/auth/register" className="hover:text-white transition-colors">
+            <Link href="/auth/register" className="transition-colors hover:text-white">
               Abunə ol
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Main Header */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 bg-white ${
-          isScrolled
-            ? 'border-b border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.05)]'
-            : ''
+        className={`sticky top-0 z-50 bg-white transition-all duration-300 ${
+          isScrolled ? 'border-b border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.05)]' : ''
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-[#1A1A2E] rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+          <Link href="/" className="group flex items-center gap-2.5">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--dk-navy)] text-sm font-bold text-white">
               DK
             </div>
-            <span className="text-[#1A1A2E] text-base font-bold">
-              DK Agency
-            </span>
+            <span className="text-base font-bold text-[var(--dk-navy)]">DK Agency</span>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) =>
               item.hasMegaMenu ? (
                 <div
@@ -114,19 +103,19 @@ export default function Header() {
                   onMouseEnter={() => setMenuOpen(true)}
                   onMouseLeave={() => setMenuOpen(false)}
                 >
-                  <Link
-                    href={item.href}
-                    className="text-sm font-medium text-gray-500 hover:text-[#1A1A2E] px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors inline-block"
+                  <button
+                    type="button"
+                    className="inline-block rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[var(--dk-navy)]"
                   >
                     {item.name}
-                  </Link>
+                  </button>
                   <MegaMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
                 </div>
               ) : (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-medium text-gray-500 hover:text-[#1A1A2E] px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[var(--dk-navy)]"
                 >
                   {item.name}
                 </Link>
@@ -134,25 +123,20 @@ export default function Header() {
             )}
           </nav>
 
-          {/* Right Side */}
           <div className="flex items-center gap-3">
-            <Link
-              href="/auth/login"
-              className="hidden sm:inline-block text-sm text-gray-500 hover:text-[#1A1A2E] transition-colors"
-            >
+            <Link href="/auth/login" className="hidden text-sm text-gray-500 transition-colors hover:text-[var(--dk-navy)] sm:inline-block">
               Üzv girişi
             </Link>
             <Link
               href="/auth/register"
-              className="hidden sm:inline-flex items-center gap-2 bg-[#E94560] text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-[#E94560]/20 transition-all active:scale-95"
+              className="hidden items-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-[var(--dk-red)]/20 active:scale-95 sm:inline-flex"
             >
               Pulsuz başla
               <ArrowRight size={16} />
             </Link>
 
-            {/* Mobile Hamburger */}
             <button
-              className="lg:hidden p-2 rounded-xl text-gray-600 hover:bg-gray-100 transition-colors"
+              className="rounded-xl p-2 text-gray-600 transition-colors hover:bg-gray-100 lg:hidden"
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               aria-label="Menu"
             >
@@ -161,7 +145,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileOpen && (
             <motion.div
@@ -169,30 +152,30 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white rounded-2xl border border-gray-200 shadow-2xl p-6 z-50"
+              className="absolute left-4 right-4 top-full z-50 mt-2 rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl lg:hidden"
             >
               <div className="flex flex-col gap-1">
                 {navItems.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="text-base font-medium text-gray-700 p-3 rounded-xl hover:bg-gray-50 hover:text-[#1A1A2E] transition-colors"
+                    className="rounded-xl p-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--dk-navy)]"
                     onClick={() => setIsMobileOpen(false)}
                   >
                     {item.name}
                   </Link>
                 ))}
-                <div className="h-px bg-gray-100 my-3" />
+                <div className="my-3 h-px bg-gray-100" />
                 <Link
                   href="/auth/login"
-                  className="text-base font-medium text-gray-500 p-3 rounded-xl hover:bg-gray-50 transition-colors"
+                  className="rounded-xl p-3 text-base font-medium text-gray-500 transition-colors hover:bg-gray-50"
                   onClick={() => setIsMobileOpen(false)}
                 >
                   Üzv girişi
                 </Link>
                 <Link
                   href="/auth/register"
-                  className="flex items-center justify-center gap-2 w-full bg-[#E94560] text-white py-3 rounded-xl font-semibold shadow-lg shadow-[#E94560]/20 mt-2"
+                  className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] py-3 font-semibold text-white shadow-lg shadow-[var(--dk-red)]/20"
                   onClick={() => setIsMobileOpen(false)}
                 >
                   Pulsuz başla

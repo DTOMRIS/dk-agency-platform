@@ -1,27 +1,27 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import {
-  ClipboardList,
-  FileText,
-  MapPin,
-  Palette,
-  UtensilsCrossed,
-  Megaphone,
-  Wrench,
-  Paintbrush,
   BarChart3,
-  Calculator,
-  Scale,
-  TrendingUp,
-  CheckSquare,
   Bot,
   Building2,
-  Package,
+  Calculator,
+  CheckSquare,
+  ClipboardList,
+  FileText,
+  HardHat,
+  MapPin,
+  Megaphone,
   Network,
+  Package,
+  Paintbrush,
+  Palette,
+  Scale,
+  TrendingUp,
   UserSearch,
-  Stethoscope,
+  UtensilsCrossed,
+  Wrench,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -35,29 +35,30 @@ interface MenuItemData {
 
 const baslaItems: MenuItemData[] = [
   { icon: ClipboardList, label: 'Açılış Checklist', desc: 'Addım-addım açılış planı', href: '/toolkit/checklist' },
-  { icon: FileText, label: 'Rəsmi işlər', desc: 'ASAN, AQTA, vergi', href: '/basla/resmi-isler' },
-  { icon: MapPin, label: 'Məkan seçimi', desc: 'Lokasiya, icarə', href: '/basla/mekan' },
-  { icon: Palette, label: 'Konsept hazırlama', desc: 'Hədəf kütlə, brend', href: '/basla/konsept' },
-  { icon: UtensilsCrossed, label: 'Menyu mühəndisliyi', desc: 'Qiymətləndirmə, star analiz', href: '/toolkit/menu-matrix' },
-  { icon: Megaphone, label: 'Marketinq', desc: 'Açılış kampaniyası', href: '/basla/marketing' },
-  { icon: Wrench, label: 'Ekipman kataloqu', desc: '500+ peşəkar avadanlıq', href: '/basla/ekipman' },
-  { icon: Paintbrush, label: 'Korporativ kimlik', desc: 'Loqo, rəng, nümunələr', href: '/basla/kurumsal-kimlik' },
+  { icon: HardHat, label: 'İnşaatdan Açılışa', desc: '52 maddəlik tikinti sprinti', href: '/toolkit/insaat-checklist' },
+  { icon: FileText, label: 'Rəsmi işlər', desc: 'AQTA və uyğunluq yoxlaması', href: '/toolkit/aqta-checklist' },
+  { icon: MapPin, label: 'Məkan seçimi', desc: 'Checklist daxilində lokasiya qərarları', href: '/toolkit/checklist' },
+  { icon: Palette, label: 'Konsept hazırlama', desc: 'Brend və mövqe seçimi', href: '/toolkit/branding-guide' },
+  { icon: UtensilsCrossed, label: 'Menyu mühəndisliyi', desc: 'Qiymətləndirmə və star analiz', href: '/toolkit/menu-matrix' },
+  { icon: Megaphone, label: 'Marketinq', desc: 'Brend dili və tanıtım planı', href: '/toolkit/branding-guide' },
+  { icon: Wrench, label: 'Ekipman kataloqu', desc: 'Ekipman kateqoriyalarına bax', href: '/ilanlar' },
+  { icon: Paintbrush, label: 'Korporativ kimlik', desc: 'Loqo, rəng və vizual dil', href: '/toolkit/branding-guide' },
 ];
 
 const boyutItems: MenuItemData[] = [
   { icon: BarChart3, label: 'Mənfəət-zərər (P&L)', desc: 'Gəlir-xərc analizi', href: '/toolkit/pnl' },
   { icon: Calculator, label: 'Ərzaq maya dəyəri', desc: 'Porsiya maya hesabla', href: '/toolkit/food-cost' },
   { icon: Scale, label: 'Başabaş analizi', desc: 'Break-even nöqtəsi', href: '/toolkit/basabas' },
-  { icon: TrendingUp, label: 'Bazar qiymətləri', desc: 'Həftəlik ərzaq qiymətləri', href: '/b2b-panel/toolkit/inventory' },
-  { icon: CheckSquare, label: 'Əməliyyat checklist', desc: 'Gündəlik, həftəlik', href: '/toolkit/checklist' },
-  { icon: Bot, label: 'KAZAN AI', desc: 'AI konsultant', href: '/kazan-ai', badge: 'TEZLİKLƏ' },
+  { icon: TrendingUp, label: 'Bazar qiymətləri', desc: 'Food cost daxilində bazar məntiqi', href: '/toolkit/food-cost' },
+  { icon: CheckSquare, label: 'Əməliyyat checklist', desc: 'Gigiyena və gündəlik nəzarət', href: '/toolkit/aqta-checklist' },
+  { icon: Bot, label: 'KAZAN AI', desc: 'AI konsultant', href: '/kazan-ai', badge: 'BETA' },
 ];
 
 const devirItems: { icon: LucideIcon; label: string; href: string }[] = [
-  { icon: Building2, label: 'Restoran devri', href: '/b2b-panel/ilanlarim?tur=devir' },
-  { icon: Package, label: 'Ekipman satışı', href: '/b2b-panel/ilanlarim?tur=ekipman' },
-  { icon: Network, label: 'Franchise', href: '/b2b-panel/ilanlarim?tur=franchise' },
-  { icon: UserSearch, label: 'İşlətmeci tap', href: '/b2b-panel/ilanlarim?tur=isletmeci' },
+  { icon: Building2, label: 'Restoran devri', href: '/ilanlar' },
+  { icon: Package, label: 'Ekipman satışı', href: '/ilanlar' },
+  { icon: Network, label: 'Franchise', href: '/ilanlar' },
+  { icon: UserSearch, label: 'İşlətmeci tap', href: '/ilanlar' },
 ];
 
 const popularItems = [
@@ -75,14 +76,14 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="absolute left-1/2 top-full z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[#E5E7EB] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+          className="absolute top-full left-1/2 z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[var(--dk-border-soft)] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
           onMouseLeave={onClose}
         >
           <div className="flex items-start justify-between">
             <div>
               <p className="font-bold text-gray-900">DK Agency Platforması</p>
               <p className="mt-0.5 text-sm text-gray-500">
-                Restoranını planla, idarə et, böyüt — bir platformada.
+                Restoranını planla, idarə et, böyüt, bir platformada.
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
@@ -93,13 +94,6 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                 <Wrench size={14} />
                 Bütün alətlər
               </Link>
-              <Link
-                href="/test"
-                className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
-              >
-                <Stethoscope size={14} />
-                Sağlamlıq testi
-              </Link>
             </div>
           </div>
 
@@ -108,24 +102,22 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="grid grid-cols-2 gap-8">
             <div>
               <div className="mb-3">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-[#E94560]">
-                  Başla
-                </p>
-                <div className="mt-1 h-0.5 w-6 bg-[#E94560]" />
+                <p className="text-xs font-extrabold uppercase tracking-widest text-[var(--dk-red)]">Başla</p>
+                <div className="mt-1 h-0.5 w-6 bg-[var(--dk-red)]" />
               </div>
               <div className="flex flex-col gap-0.5">
                 {baslaItems.map((item) => (
                   <Link
-                    key={item.href}
+                    key={`${item.href}-${item.label}`}
                     href={item.href}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-red-50/50"
                   >
                     <item.icon
                       size={18}
-                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#E94560]"
+                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[var(--dk-red)]"
                     />
                     <div>
-                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#E94560]">
+                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[var(--dk-red)]">
                         {item.label}
                       </p>
                       <p className="text-xs text-gray-400">{item.desc}</p>
@@ -137,34 +129,30 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
 
             <div>
               <div className="mb-3">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-[#C5A022]">
-                  Böyüt
-                </p>
-                <div className="mt-1 h-0.5 w-6 bg-[#C5A022]" />
+                <p className="text-xs font-extrabold uppercase tracking-widest text-[var(--dk-gold)]">Böyüt</p>
+                <div className="mt-1 h-0.5 w-6 bg-[var(--dk-gold)]" />
               </div>
               <div className="flex flex-col gap-0.5">
                 {boyutItems.map((item) => (
                   <Link
-                    key={item.href}
+                    key={`${item.href}-${item.label}`}
                     href={item.href}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-amber-50/50"
                   >
                     <item.icon
                       size={18}
-                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[#C5A022]"
+                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[var(--dk-gold)]"
                     />
-                    <div className="flex items-center gap-2">
-                      <div>
-                        <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[#C5A022]">
-                          {item.label}
-                          {item.badge && (
-                            <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 text-[10px] font-bold text-amber-800 align-middle">
-                              {item.badge}
-                            </span>
-                          )}
-                        </p>
-                        <p className="text-xs text-gray-400">{item.desc}</p>
-                      </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[var(--dk-gold)]">
+                        {item.label}
+                        {item.badge && (
+                          <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 align-middle text-[10px] font-bold text-amber-800">
+                            {item.badge}
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-xs text-gray-400">{item.desc}</p>
                     </div>
                   </Link>
                 ))}
@@ -175,15 +163,13 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="my-6 h-px bg-gray-100" />
 
           <div>
-            <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[#8B5CF6]">
-              Devir & Satış
-            </p>
+            <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[var(--dk-purple)]">Devir & Satış</p>
             <div className="flex flex-wrap gap-1">
               {devirItems.map((item) => (
                 <Link
-                  key={item.href}
+                  key={`${item.href}-${item.label}`}
                   href={item.href}
-                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[#8B5CF6]"
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[var(--dk-purple)]"
                 >
                   <item.icon size={16} />
                   {item.label}
@@ -195,11 +181,11 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           <div className="my-4 h-px bg-gray-100" />
 
           <div className="flex items-center gap-2 text-xs">
-            <span className="font-bold text-[#E94560]">Populyar:</span>
+            <span className="font-bold text-[var(--dk-red)]">Populyar:</span>
             {popularItems.map((item, index) => (
               <span key={item.href} className="flex items-center gap-2">
                 {index > 0 && <span className="text-gray-300">&middot;</span>}
-                <Link href={item.href} className="text-gray-500 transition-colors hover:text-[#E94560]">
+                <Link href={item.href} className="text-gray-500 transition-colors hover:text-[var(--dk-red)]">
                   {item.label}
                 </Link>
               </span>

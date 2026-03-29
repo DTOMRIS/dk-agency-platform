@@ -22,7 +22,7 @@ export default function BlogGridPage() {
     : articles.filter((a) => a.category === activeCategory);
 
   return (
-    <div className="bg-[#FAFAF8] min-h-screen pb-20">
+    <div className="bg-[var(--dk-paper)] min-h-screen pb-20">
       {/* Hero */}
       <div className="bg-slate-950 py-24 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-brand-red/10 rounded-full blur-[120px]" />
@@ -48,7 +48,7 @@ export default function BlogGridPage() {
           <button
             onClick={() => setActiveCategory('all')}
             className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
-              activeCategory === 'all' ? 'bg-[#1A1A2E] text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+              activeCategory === 'all' ? 'bg-[var(--dk-navy)] text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             Hamisi
@@ -58,7 +58,7 @@ export default function BlogGridPage() {
               key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
               className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
-                activeCategory === cat.key ? 'bg-[#1A1A2E] text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                activeCategory === cat.key ? 'bg-[var(--dk-navy)] text-white shadow-lg' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
               {cat.emoji} {cat.label}
@@ -109,7 +109,7 @@ function BlogCard({ article }: { article: BlogArticle }) {
             referrerPolicy="no-referrer"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-[#FEF3C7] to-[#FECACA]" />
+          <div className="w-full h-full bg-gradient-to-br from-[color-mix(in srgb, var(--dk-gold) 22%, white)] to-[color-mix(in srgb, var(--dk-red) 24%, white)]" />
         )}
         <div className="absolute top-4 left-4">
           <span className="bg-white/90 backdrop-blur-md text-slate-900 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
@@ -118,7 +118,7 @@ function BlogCard({ article }: { article: BlogArticle }) {
         </div>
         {article.isPremium && (
           <div className="absolute top-4 right-4">
-            <span className="bg-[#C5A022] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+            <span className="bg-[var(--dk-gold)] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
               Premium
             </span>
           </div>

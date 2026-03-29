@@ -66,7 +66,7 @@ export default function AyarlarPage() {
     
     // Appearance
     theme: 'light',
-    primaryColor: '#dc2626',
+    primaryColor: 'var(--dk-red)',
     sidebarStyle: 'dark',
     compactMode: false,
   });

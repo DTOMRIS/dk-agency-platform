@@ -38,6 +38,7 @@ const quickActions = [
   { href: '/dashboard/haberler', label: 'Kontenti idarə et' },
   { href: '/dashboard/ilan-onaylari', label: 'İlan onaylarını aç' },
   { href: '/dashboard/pipeline', label: 'Pipeline görünüşü' },
+  { href: '/dashboard/aqta-checklist', label: 'AQTA hazırlığını yoxla' },
   { href: '/dashboard/raporlar', label: 'Raporları yoxla' },
 ];
 

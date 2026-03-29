@@ -39,7 +39,7 @@ export default function NewsListItem({ post }: NewsListItemProps) {
     >
       {/* Thumbnail */}
       <div className="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden">
-        <div className="w-full h-full bg-gradient-to-br from-[#1F2937] to-[#374151] flex items-center justify-center">
+        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--dk-ink)] to-[var(--dk-ink-soft)]">
           <Newspaper size={20} className="text-white/20" />
         </div>
       </div>
