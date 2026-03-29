@@ -1,92 +1,128 @@
-import { createHash } from 'crypto';
 import { NextResponse } from 'next/server';
+import { v2 as cloudinary } from 'cloudinary';
+import { getServerMemberSession } from '@/lib/members/server-session';
 
-function cloudinaryConfigured() {
-  return (
-    Boolean(process.env.CLOUDINARY_CLOUD_NAME) &&
-    Boolean(process.env.CLOUDINARY_API_KEY) &&
-    Boolean(process.env.CLOUDINARY_API_SECRET)
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+function hasCloudinaryConfig() {
+  return Boolean(
+    process.env.CLOUDINARY_CLOUD_NAME &&
+      process.env.CLOUDINARY_API_KEY &&
+      process.env.CLOUDINARY_API_SECRET,
   );
 }
 
-function signParams(params: Record<string, string>, apiSecret: string) {
-  const sorted = Object.keys(params)
-    .sort()
-    .map((key) => `${key}=${params[key]}`)
-    .join('&');
+function uploadToCloudinary(buffer: Buffer, folder: string) {
+  return new Promise<Record<string, any>>((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder,
+        transformation: [{ width: 1200, crop: 'limit', quality: 'auto', fetch_format: 'webp' }],
+        resource_type: 'image',
+      },
+      (error, result) => {
+        if (error || !result) {
+          reject(error || new Error('Şəkil yüklənmədi.'));
+          return;
+        }
+        resolve(result);
+      },
+    );
 
-  return createHash('sha1')
-    .update(`${sorted}${apiSecret}`)
-    .digest('hex');
+    stream.end(buffer);
+  });
 }
 
 export async function POST(request: Request) {
-  if (!cloudinaryConfigured()) {
+  const session = await getServerMemberSession();
+  if (!session.loggedIn) {
+    return NextResponse.json({ success: false, error: 'Giriş tələb olunur.' }, { status: 401 });
+  }
+
+  if (!hasCloudinaryConfig()) {
     return NextResponse.json(
-      { error: 'Cloudinary konfiqurasiya olunmayıb.' },
+      { success: false, error: 'Cloudinary konfiqurasiya olunmayıb.' },
       { status: 503 },
     );
   }
 
   const formData = await request.formData();
   const file = formData.get('file');
-  const folder = String(formData.get('folder') || '');
-  const listingId = String(formData.get('listingId') || 'draft');
+  const listingId = String(formData.get('listingId') || 'temp');
 
   if (!(file instanceof File)) {
-    return NextResponse.json({ error: 'Şəkil faylı tapılmadı.' }, { status: 400 });
+    return NextResponse.json({ success: false, error: 'Şəkil faylı tapılmadı.' }, { status: 400 });
   }
 
-  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-    return NextResponse.json({ error: 'Yalnız JPG, PNG və WEBP formatı qəbul olunur.' }, { status: 400 });
-  }
-
-  if (file.size > 10 * 1024 * 1024) {
-    return NextResponse.json({ error: 'Şəkil 10MB-dan böyük ola bilməz.' }, { status: 400 });
-  }
-
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME!;
-  const apiKey = process.env.CLOUDINARY_API_KEY!;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET!;
-  const timestamp = `${Math.floor(Date.now() / 1000)}`;
-  const uploadFolder = `dk-agency/listings/${listingId}${folder ? `/${folder}` : ''}`;
-  const paramsToSign = {
-    folder: uploadFolder,
-    timestamp,
-    transformation: 'f_auto,q_auto,w_1200,c_limit',
-  };
-
-  const signature = signParams(paramsToSign, apiSecret);
-  const cloudinaryForm = new FormData();
-  cloudinaryForm.set('file', file);
-  cloudinaryForm.set('api_key', apiKey);
-  cloudinaryForm.set('timestamp', timestamp);
-  cloudinaryForm.set('folder', uploadFolder);
-  cloudinaryForm.set('transformation', 'f_auto,q_auto,w_1200,c_limit');
-  cloudinaryForm.set('signature', signature);
-
-  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-    method: 'POST',
-    body: cloudinaryForm,
-  });
-
-  const payload = await response.json();
-
-  if (!response.ok) {
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  if (!allowedTypes.includes(file.type)) {
     return NextResponse.json(
-      {
-        error: payload?.error?.message || 'Cloudinary yükləməsi zamanı xəta baş verdi.',
-      },
-      { status: 502 },
+      { success: false, error: 'Yalnız şəkil faylı yükləyə bilərsiniz.' },
+      { status: 400 },
     );
   }
 
-  return NextResponse.json({
-    url: payload.secure_url,
-    publicId: payload.public_id,
-    width: payload.width,
-    height: payload.height,
-    format: payload.format,
-    bytes: payload.bytes,
-  });
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await uploadToCloudinary(
+      Buffer.from(arrayBuffer),
+      `dk-agency/listings/${listingId || 'temp'}`,
+    );
+
+    return NextResponse.json({
+      success: true,
+      url: result.secure_url,
+      publicId: result.public_id,
+      width: result.width,
+      height: result.height,
+      format: result.format,
+      bytes: result.bytes,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Şəkil yüklənməsi zamanı xəta baş verdi.',
+      },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  const session = await getServerMemberSession();
+  if (!session.loggedIn) {
+    return NextResponse.json({ success: false, error: 'Giriş tələb olunur.' }, { status: 401 });
+  }
+
+  if (!hasCloudinaryConfig()) {
+    return NextResponse.json(
+      { success: false, error: 'Cloudinary konfiqurasiya olunmayıb.' },
+      { status: 503 },
+    );
+  }
+
+  const { searchParams } = new URL(request.url);
+  const publicId = searchParams.get('publicId');
+
+  if (!publicId) {
+    return NextResponse.json({ success: false, error: 'publicId tələb olunur.' }, { status: 400 });
+  }
+
+  try {
+    await cloudinary.uploader.destroy(publicId, { resource_type: 'image' });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Şəkil silinmədi.',
+      },
+      { status: 500 },
+    );
+  }
 }

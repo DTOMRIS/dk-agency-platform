@@ -256,6 +256,31 @@ export const siteSettings = pgTable('site_settings', {
   updatedAt: timestamp('updated_at').defaultNow(),
 });
 
+export const emailTemplateAudienceEnum = pgEnum('email_template_audience', [
+  'member',
+  'lead',
+  'admin',
+  'system',
+]);
+
+// Email templates (message catalog)
+export const emailTemplates = pgTable('email_templates', {
+  id: serial('id').primaryKey(),
+  templateKey: varchar('template_key', { length: 120 }).unique().notNull(),
+  audience: emailTemplateAudienceEnum('audience').notNull().default('member'),
+  subjectAz: text('subject_az').notNull(),
+  subjectTr: text('subject_tr'),
+  subjectEn: text('subject_en'),
+  previewAz: text('preview_az'),
+  previewTr: text('preview_tr'),
+  previewEn: text('preview_en'),
+  bodyAz: text('body_az').notNull(),
+  bodyTr: text('body_tr'),
+  bodyEn: text('body_en'),
+  isActive: boolean('is_active').notNull().default(true),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
 // Membership profiles
 export const memberProfiles = pgTable('member_profiles', {
   id: serial('id').primaryKey(),
