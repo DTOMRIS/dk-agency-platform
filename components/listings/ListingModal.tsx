@@ -21,7 +21,7 @@ function formatPrice(listing: MockListing) {
 function renderFieldValue(value: string | number | boolean | undefined) {
   if (value === undefined || value === null || value === '') return '—';
   if (typeof value === 'boolean') {
-    return value ? '✅' : '❌';
+    return value ? '✅ Bəli' : '❌ Xeyr';
   }
   return String(value);
 }
@@ -146,6 +146,9 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
                     <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">{field.label}</div>
                     <div className="mt-2 text-sm font-semibold text-slate-700">
                       {renderFieldValue(listing.typeSpecificData[field.key])}
+                      {field.suffix && listing.typeSpecificData[field.key] !== undefined && typeof listing.typeSpecificData[field.key] !== 'boolean'
+                        ? ` ${field.suffix}`
+                        : ''}
                     </div>
                   </div>
                 ))}

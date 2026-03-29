@@ -58,7 +58,7 @@ export default function Header() {
             <div className="flex items-center gap-1">
               {locales.map((loc, index) => (
                 <span key={loc} className="flex items-center gap-1">
-                  {index > 0 && <span className="text-slate-500">|</span>}
+                  {index > 0 ? <span className="text-slate-500">|</span> : null}
                   <Link
                     href={getLocalePath(pathname, loc)}
                     className={currentLocale === loc ? 'font-bold text-white' : 'hover:text-white'}
@@ -118,12 +118,15 @@ export default function Header() {
                 >
                   {item.name}
                 </Link>
-              )
+              ),
             )}
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link href="/auth/login" className="hidden text-sm text-slate-500 transition-colors hover:text-[var(--dk-navy)] sm:inline-block">
+            <Link
+              href="/auth/login"
+              className="hidden text-sm text-slate-500 transition-colors hover:text-[var(--dk-navy)] sm:inline-block"
+            >
               Üzv girişi
             </Link>
             <Link
@@ -144,7 +147,7 @@ export default function Header() {
         </div>
 
         <AnimatePresence>
-          {isMobileOpen && (
+          {isMobileOpen ? (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -181,7 +184,7 @@ export default function Header() {
                 </Link>
               </div>
             </motion.div>
-          )}
+          ) : null}
         </AnimatePresence>
       </header>
     </>
