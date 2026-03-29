@@ -186,7 +186,9 @@ export default function InsaatChecklistPage() {
   useEffect(() => {
     const savedChecked = window.localStorage.getItem(STORAGE_KEY);
     const savedMedia = window.localStorage.getItem(MEDIA_KEY);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (savedChecked) setChecked(JSON.parse(savedChecked));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (savedMedia) setMedia(JSON.parse(savedMedia));
   }, []);
 
