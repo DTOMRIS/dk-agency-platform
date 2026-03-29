@@ -78,6 +78,10 @@ export const CITY_OPTIONS = [
   { value: 'lenkeran', label: 'Lənkəran' },
   { value: 'seki', label: 'Şəki' },
   { value: 'qusar', label: 'Qusar' },
+  { value: 'samaxi', label: 'Şamaxı' },
+  { value: 'zaqatala', label: 'Zaqatala' },
+  { value: 'qebele', label: 'Qəbələ' },
+  { value: 'diger', label: 'Digər' },
 ] as const;
 
 export const DISTRICT_OPTIONS = [
@@ -88,6 +92,12 @@ export const DISTRICT_OPTIONS = [
   { city: 'Bakı', value: 'Xətai', label: 'Xətai' },
   { city: 'Bakı', value: 'Binəqədi', label: 'Binəqədi' },
   { city: 'Bakı', value: 'Nizami', label: 'Nizami' },
+  { city: 'Bakı', value: 'Xəzər', label: 'Xəzər' },
+  { city: 'Bakı', value: 'Suraxanı', label: 'Suraxanı' },
+  { city: 'Bakı', value: 'Qaradağ', label: 'Qaradağ' },
+  { city: 'Bakı', value: 'Sabunçu', label: 'Sabunçu' },
+  { city: 'Bakı', value: 'Pirallahı', label: 'Pirallahı' },
+  { city: 'Bakı', value: 'Abşeron', label: 'Abşeron' },
 ] as const;
 
 export const PRICE_RANGE_OPTIONS: PriceRangeOption[] = [

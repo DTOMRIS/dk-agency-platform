@@ -25,7 +25,7 @@ function formatDate(value: string) {
 
 function renderFieldValue(value: string | number | boolean | undefined) {
   if (value === undefined || value === null || value === '') return '—';
-  if (typeof value === 'boolean') return value ? '✅' : '❌';
+  if (typeof value === 'boolean') return value ? '✅ Bəli' : '❌ Xeyr';
   return String(value);
 }
 
@@ -188,13 +188,21 @@ export default function DashboardIlanDetailPage() {
             </div>
 
             <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Tipə görə məlumatlar</h2>
+              <div className="flex items-center gap-3">
+                <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Tipə görə məlumatlar</h2>
+                <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold ${category?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
+                  {category?.label ?? listing.type}
+                </span>
+              </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {fields.map((field) => (
                   <div key={field.key} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                     <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{field.label}</div>
                     <div className="mt-2 text-sm font-semibold text-slate-700">
                       {renderFieldValue(listing.typeSpecificData[field.key])}
+                      {field.suffix && listing.typeSpecificData[field.key] !== undefined && typeof listing.typeSpecificData[field.key] !== 'boolean'
+                        ? ` ${field.suffix}`
+                        : ''}
                     </div>
                   </div>
                 ))}

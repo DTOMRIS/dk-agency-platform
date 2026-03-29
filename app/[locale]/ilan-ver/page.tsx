@@ -1,19 +1,11 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
-import ListingSubmissionPage from '@/components/listings/ListingSubmissionPage';
-import { getServerMemberSession } from '@/lib/members/server-session';
+import IlanVerPage from '@/app/ilan-ver/page';
 
 export const metadata: Metadata = {
   title: 'Elan ver',
-  description: 'HoReCa üçün restoran devri, franchise, obyekt və ekipman elanı göndər.',
+  description: 'HoReCa üçün devir, franchise, obyekt və avadanlıq elanı göndər.',
 };
 
-export default async function LocalizedIlanVerPage() {
-  const session = await getServerMemberSession();
-
-  if (!session.loggedIn) {
-    redirect('/auth/login?next=/ilan-ver');
-  }
-
-  return <ListingSubmissionPage />;
+export default function LocalizedIlanVerPage() {
+  return <IlanVerPage />;
 }
