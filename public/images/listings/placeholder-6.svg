@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#1A1A2E"/>
+  <rect x="108" y="120" width="1384" height="660" rx="40" fill="#FFFDF8"/>
+  <rect x="178" y="204" width="520" height="494" rx="32" fill="#F8FAFC"/>
+  <text x="762" y="330" fill="#1A1A2E" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">Obyekt İcarəsi</text>
+  <text x="762" y="392" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="24">Premium lokasiya placeholder</text>
+  <text x="762" y="454" fill="#C5A022" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">DK Agency listings</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#F8FAFC"/>
+  <circle cx="800" cy="450" r="280" fill="#C5A022" fill-opacity=".18"/>
+  <circle cx="520" cy="380" r="160" fill="#1A1A2E" fill-opacity=".08"/>
+  <circle cx="1030" cy="560" r="180" fill="#E94560" fill-opacity=".1"/>
+  <text x="560" y="448" fill="#1A1A2E" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">HORECA Ekipman</text>
+  <text x="560" y="506" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="24">Avadanlıq paketi placeholder</text>
+</svg>

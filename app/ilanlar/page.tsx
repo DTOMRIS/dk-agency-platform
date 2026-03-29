@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     'Restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və HORECA ekipman elanları bir vitrində.',
 };
 
-export default function LocalizedIlanlarPage() {
+export default function IlanlarPage() {
   return (
     <Suspense fallback={null}>
       <ListingsShowcasePage />
