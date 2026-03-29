@@ -30,9 +30,12 @@ interface SessionLike {
 interface UploadedImageItem {
   id: string;
   file: File;
+  original?: File;
+  compressed?: File;
   preview: string;
   thumbnail: string;
   sizeReduction: string;
+  reduction?: string;
 }
 
 interface FormState {
@@ -198,7 +201,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     }
 
     for (const file of files) {
-      const validation = await validateImage(file);
+      const validation = validateImage(file);
       if (!validation.valid) {
         pushToast(validation.error || 'Şəkil faylı qəbul olunmadı.');
         continue;
@@ -209,9 +212,12 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       const item: UploadedImageItem = {
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         file: compressed.file,
+        original: file,
+        compressed: compressed.file,
         preview: compressed.preview,
         thumbnail,
         sizeReduction: compressed.sizeReduction,
+        reduction: compressed.reduction,
       };
 
       setImages((prev) => [...prev, item]);

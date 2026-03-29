@@ -10,10 +10,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [nextUrl, setNextUrl] = useState('/haberler');
   const [submitting, setSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -40,12 +37,12 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok || !data?.session) {
-        setError(data?.error || 'Login alınmadı.');
+        setError(data?.error || 'Daxil olmaq alınmadı.');
         return;
       }
 
       writeMemberSession(data.session as MemberSession);
-      void fetch('/api/member/session', {
+      await fetch('/api/member/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data.session),
@@ -60,7 +57,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50">
       <div className="p-4">
-        <Link href={nextUrl} className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900">
+        <Link
+          href={nextUrl}
+          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
+        >
           <ArrowLeft className="h-4 w-4" />
           Geri qayıt
         </Link>
@@ -75,7 +75,7 @@ export default function LoginPage() {
               </div>
               <h1 className="text-3xl font-black text-slate-900">Daxil ol</h1>
               <p className="mt-2 text-slate-600">
-                Premium məqalə, xəbər analizi və gələcək üzvlük qatlarına giriş üçün hesabına daxil ol.
+                Premium məqalələrə, KAZAN AI-a və hesab ayarlarınıza giriş üçün hesabınıza daxil olun.
               </p>
             </div>
 
@@ -110,25 +110,38 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {error && (
+              <div className="text-right">
+                <Link href="/forgot-password" className="text-sm font-semibold text-red-600 hover:text-red-700">
+                  Şifrəni unutdum?
+                </Link>
+              </div>
+
+              {error ? (
                 <div className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
                   <AlertCircle className="h-4 w-4 flex-shrink-0" />
                   {error}
                 </div>
-              )}
+              ) : null}
 
-              <button type="submit" disabled={submitting} className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-400">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-400"
+              >
                 <LogIn className="h-5 w-5" />
                 {submitting ? 'Yoxlanır...' : 'Daxil ol və davam et'}
               </button>
             </form>
 
-            <p className="mt-6 text-sm text-slate-500">
-              Hesabın yoxdur?{' '}
-              <Link href={`/auth/register?next=${encodeURIComponent(nextUrl)}`} className="font-semibold text-red-600 hover:text-red-700">
+            <div className="mt-4 flex items-center justify-between text-sm text-slate-500">
+              <span>Hesabın yoxdur?</span>
+              <Link
+                href={`/auth/register?next=${encodeURIComponent(nextUrl)}`}
+                className="font-semibold text-red-600 hover:text-red-700"
+              >
                 Üzv ol
               </Link>
-            </p>
+            </div>
 
             <p className="mt-3 text-sm text-slate-500">
               Üzvlük modeli haqqında bax:{' '}
@@ -158,7 +171,7 @@ export default function LoginPage() {
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <p className="font-semibold text-white">Founder test</p>
                 <p className="mt-2 text-slate-300">dotomris@gmail.com</p>
-                <p className="text-slate-400">123456</p>
+                <p className="text-slate-400">12345678</p>
               </div>
             </div>
           </div>

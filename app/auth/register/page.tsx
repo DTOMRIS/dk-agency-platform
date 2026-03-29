@@ -11,6 +11,8 @@ export default function RegisterPage() {
   const [nextUrl, setNextUrl] = useState('/haberler');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
+  const [verifyUrl, setVerifyUrl] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,6 +29,8 @@ export default function RegisterPage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError('');
+    setNotice('');
+    setVerifyUrl('');
     setSubmitting(true);
 
     try {
@@ -45,19 +49,31 @@ export default function RegisterPage() {
 
       const data = await response.json();
 
-      if (!response.ok || !data?.session) {
+      if (!response.ok) {
         setError(data?.error || 'Qeydiyyat alınmadı.');
         return;
       }
 
-      writeMemberSession(data.session as MemberSession);
-      void fetch('/api/member/session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data.session),
-      });
+      if (data?.session) {
+        writeMemberSession(data.session as MemberSession);
+        void fetch('/api/member/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data.session),
+        });
+        router.push(nextUrl);
+        return;
+      }
 
-      router.push(nextUrl);
+      if (data?.verificationRequired) {
+        setNotice(data?.message || 'Hesabınız yaradıldı! Email ünvanınıza təsdiq linki göndərildi.');
+        if (data?.verificationToken) {
+          setVerifyUrl(`/verify-email?token=${encodeURIComponent(data.verificationToken)}`);
+        }
+        return;
+      }
+
+      setNotice(data?.message || 'Hesabınız yaradıldı!');
     } finally {
       setSubmitting(false);
     }
@@ -87,6 +103,17 @@ export default function RegisterPage() {
                 Pulsuz üzv ol, premium məqalələrə və KAZAN AI-a giriş əldə et.
               </p>
             </div>
+
+            {notice ? (
+              <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
+                <p className="font-semibold">{notice}</p>
+                {verifyUrl ? (
+                  <Link href={verifyUrl} className="mt-2 inline-flex font-semibold text-emerald-800 underline">
+                    Təsdiq səhifəsinə keç
+                  </Link>
+                ) : null}
+              </div>
+            ) : null}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -152,19 +179,19 @@ export default function RegisterPage() {
                 <input
                   type="password"
                   required
-                  minLength={6}
+                  minLength={8}
                   value={formData.password}
                   onChange={(event) => setFormData({ ...formData, password: event.target.value })}
-                  placeholder="minimum 6 simvol"
+                  placeholder="minimum 8 simvol"
                   className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
                 />
               </div>
 
-              {error && (
+              {error ? (
                 <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
                   {error}
                 </div>
-              )}
+              ) : null}
 
               <button
                 type="submit"

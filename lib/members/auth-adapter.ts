@@ -1,4 +1,10 @@
 import { type MemberSession } from '@/lib/member-access';
+import {
+  createEmailVerificationToken,
+  createLoginLog,
+  createMockUser,
+  findMockUserByEmail,
+} from '@/lib/auth/mock-state';
 import { getMembershipCapability } from '@/lib/members/provider';
 
 export interface AuthPayload {
@@ -14,26 +20,37 @@ export interface AuthResult {
   session?: MemberSession;
   error?: string;
   provider: 'local' | 'supabase';
+  verificationRequired?: boolean;
+  verificationToken?: string;
+  message?: string;
 }
-
-const LOCAL_USERS = [
-  { email: 'dotomris@gmail.com', password: '123456', name: 'Doğan Tomris', plan: 'admin' as const },
-  { email: 'admin@dkagency.az', password: 'admin123', name: 'DK Admin', plan: 'admin' as const },
-  { email: 'member@dkagency.az', password: 'member123', name: 'DK Member', plan: 'member' as const },
-];
 
 function normalizeEmail(value: string) {
   return value.trim().toLowerCase();
 }
 
 async function localLogin(payload: AuthPayload): Promise<AuthResult> {
-  const user = LOCAL_USERS.find(
-    (item) => item.email === normalizeEmail(payload.email) && item.password === payload.password
-  );
+  const user = findMockUserByEmail(payload.email);
 
-  if (!user) {
+  if (!user || user.password !== payload.password) {
+    if (user) {
+      createLoginLog(user.id, { success: false });
+    }
+
     return { ok: false, error: 'E-mail və ya şifrə yanlışdır.', provider: 'local' };
   }
+
+  if (!user.emailVerified) {
+    createLoginLog(user.id, { success: false });
+
+    return {
+      ok: false,
+      error: 'Email ünvanınızı təsdiqləyin. Təsdiq linkini yenidən göndərə bilərik.',
+      provider: 'local',
+    };
+  }
+
+  createLoginLog(user.id, { success: true });
 
   return {
     ok: true,
@@ -42,21 +59,38 @@ async function localLogin(payload: AuthPayload): Promise<AuthResult> {
       email: user.email,
       name: user.name,
       loggedIn: true,
-      plan: user.plan,
+      plan: user.role,
     },
   };
 }
 
 async function localRegister(payload: AuthPayload): Promise<AuthResult> {
+  const created = createMockUser({
+    email: payload.email,
+    name: payload.name?.trim() || 'DK Member',
+    password: payload.password || '',
+    company: payload.company,
+    phone: payload.phone,
+  });
+
+  if ('error' in created) {
+    return { ok: false, error: created.error, provider: 'local' };
+  }
+
+  const verificationToken = crypto.randomUUID();
+  createEmailVerificationToken(created.user.id, verificationToken);
+  console.log('Verification email:', created.user.email, verificationToken);
+  console.log(
+    'Verify URL:',
+    `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`,
+  );
+
   return {
     ok: true,
     provider: 'local',
-    session: {
-      email: normalizeEmail(payload.email),
-      name: payload.name?.trim() || 'DK Member',
-      loggedIn: true,
-      plan: 'member',
-    },
+    verificationRequired: true,
+    verificationToken,
+    message: 'Hesabınız yaradıldı! Email ünvanınıza təsdiq linki göndərildi.',
   };
 }
 
@@ -142,18 +176,11 @@ async function supabaseRegister(payload: AuthPayload): Promise<AuthResult> {
     };
   }
 
-  const email = data?.user?.email || normalizeEmail(payload.email);
-  const name = data?.user?.user_metadata?.name || payload.name?.trim() || 'DK Member';
-
   return {
     ok: true,
     provider: 'supabase',
-    session: {
-      email,
-      name,
-      loggedIn: true,
-      plan: 'member',
-    },
+    verificationRequired: true,
+    message: 'Hesabınız yaradıldı! Email təsdiqi üçün gələn linki açın.',
   };
 }
 

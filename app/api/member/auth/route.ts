@@ -26,6 +26,16 @@ export async function POST(request: NextRequest) {
   const result = action === 'login' ? await loginMember(body) : await registerMember(body);
 
   if (!result.ok || !result.session) {
+    if (result.ok && result.verificationRequired) {
+      return NextResponse.json({
+        ok: true,
+        verificationRequired: true,
+        verificationToken: result.verificationToken,
+        message: result.message,
+        provider: result.provider,
+      });
+    }
+
     return NextResponse.json(
       { ok: false, error: result.error || 'Auth xətası', provider: result.provider },
       { status: 400 }
@@ -37,6 +47,7 @@ export async function POST(request: NextRequest) {
       ok: true,
       session: result.session,
       provider: result.provider,
+      message: result.message,
     }),
     result.session
   );
