@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-03-29T17:43:15.365Z
+- GeneratedAt: 2026-03-29T19:18:52.905Z
 - BuildStatus: PASS
 
-## Routes (77)
+## Routes (78)
 - /[locale]
 - /[locale]/about
 - /[locale]/blog
@@ -69,6 +69,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/roller
 - /dashboard/trends
 - /docs/member-env-checklist
+- /ilanlar
 - /kazan-ai
 - /news
 - /toolkit
