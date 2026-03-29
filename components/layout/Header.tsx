@@ -26,7 +26,7 @@ function getLocalePath(pathname: string, newLocale: string) {
 
 const navItems = [
   { name: 'Ana səhifə', href: '/', hasMegaMenu: false },
-  { name: 'Platforması', href: '#', hasMegaMenu: true },
+  { name: 'Alətlər', href: '#', hasMegaMenu: true },
   { name: 'Trendlər', href: '/haberler', hasMegaMenu: false },
   { name: 'Bloq', href: '/blog', hasMegaMenu: false },
   { name: 'İdarə Paneli', href: '/b2b-panel', hasMegaMenu: false },
