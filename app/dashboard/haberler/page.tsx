@@ -53,6 +53,7 @@ export default function DashboardHaberlerPage() {
   }, [categoryFilter, search]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchPosts();
   }, [fetchPosts]);
 

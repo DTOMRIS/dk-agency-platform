@@ -339,6 +339,7 @@ export default function AqtaChecklistPage() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setChecked(new Set(JSON.parse(saved) as string[]));
       }
     } catch {}
@@ -653,7 +654,7 @@ export default function AqtaChecklistPage() {
                 <h2 className="text-base font-bold text-red-300">DK Agency məsləhəti</h2>
               </div>
               <p className="text-sm leading-relaxed text-slate-300">
-                AQTA problemi adətən "təmizlik problemi" deyil, "idarəetmə ritmi problemi"dir.
+                AQTA problemi adətən &quot;təmizlik problemi&quot; deyil, &quot;idarəetmə ritmi problemi&quot;dir.
                 Jurnal, məsul şəxs və gündəlik nəzarət saatı yoxdursa, cərimə riski yüksəlir.
               </p>
               <Link
