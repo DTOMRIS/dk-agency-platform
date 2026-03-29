@@ -94,6 +94,7 @@ export default function BrandingGuidePage() {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setChecked(JSON.parse(saved) as Record<string, boolean>);
       } catch {
         window.localStorage.removeItem(STORAGE_KEY);
