@@ -90,7 +90,7 @@ export default function LoginPage() {
                     value={formData.email}
                     onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                     placeholder="email@example.com"
-                    className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
                   />
                 </div>
               </div>
@@ -105,7 +105,7 @@ export default function LoginPage() {
                     value={formData.password}
                     onChange={(event) => setFormData({ ...formData, password: event.target.value })}
                     placeholder="••••••••"
-                    className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-4 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
                   />
                 </div>
               </div>

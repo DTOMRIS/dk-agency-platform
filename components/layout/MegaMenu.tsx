@@ -51,7 +51,7 @@ const boyutItems: MenuItemData[] = [
   { icon: Scale, label: 'Başabaş analizi', desc: 'Break-even nöqtəsi', href: '/toolkit/basabas' },
   { icon: TrendingUp, label: 'Bazar qiymətləri', desc: 'Food cost daxilində bazar məntiqi', href: '/toolkit/food-cost' },
   { icon: CheckSquare, label: 'Əməliyyat checklist', desc: 'Gigiyena və gündəlik nəzarət', href: '/toolkit/aqta-checklist' },
-  { icon: Bot, label: 'KAZAN AI', desc: 'AI konsultant', href: '/kazan-ai', badge: 'TEZLİKLƏ' },
+  { icon: Bot, label: 'KAZAN AI', desc: 'AI konsultant', href: '/kazan-ai', badge: 'BETA' },
 ];
 
 const devirItems: { icon: LucideIcon; label: string; href: string }[] = [

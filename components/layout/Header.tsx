@@ -25,7 +25,8 @@ function getLocalePath(pathname: string, newLocale: string) {
 }
 
 const navItems = [
-  { name: 'Ana səhifə', href: '/', hasMegaMenu: true },
+  { name: 'Ana səhifə', href: '/', hasMegaMenu: false },
+  { name: 'Platforması', href: '#', hasMegaMenu: true },
   { name: 'Trendlər', href: '/haberler', hasMegaMenu: false },
   { name: 'Bloq', href: '/blog', hasMegaMenu: false },
   { name: 'İdarə Paneli', href: '/b2b-panel', hasMegaMenu: false },
@@ -102,12 +103,12 @@ export default function Header() {
                   onMouseEnter={() => setMenuOpen(true)}
                   onMouseLeave={() => setMenuOpen(false)}
                 >
-                  <Link
-                    href={item.href}
+                  <button
+                    type="button"
                     className="inline-block rounded-lg px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-50 hover:text-[var(--dk-navy)]"
                   >
                     {item.name}
-                  </Link>
+                  </button>
                   <MegaMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
                 </div>
               ) : (
@@ -151,7 +152,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-4 right-4 z-50 mt-2 rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl lg:hidden"
+              className="absolute left-4 right-4 top-full z-50 mt-2 rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl lg:hidden"
             >
               <div className="flex flex-col gap-1">
                 {navItems.map((item) => (

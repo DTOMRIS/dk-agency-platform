@@ -114,6 +114,52 @@ export default function Home() {
       </section>
 
       <NewsPreview />
+
+      <section className="bg-slate-50 py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <span className="rounded-full bg-[var(--dk-navy)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
+              B2B Ekosistem
+            </span>
+            <h2 className="mt-4 text-3xl font-display font-black text-slate-900 lg:text-4xl">
+              HORECA B2B Elanlar
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-base text-slate-500">
+              Restoran devri, franchise, ortaq axtarışı, investisiya — bir platformada.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { title: 'Restoran Devri', desc: 'İşlətmənizi devir edin və ya hazır restoran alın', href: '/ilanlar', emoji: '🍽️' },
+              { title: 'Franchise', desc: 'Franchise verin və ya hazır brend ilə başlayın', href: '/ilanlar', emoji: '🤝' },
+              { title: 'Ortaq Tapmaq', desc: 'Layihəniz üçün sermaye və ya əməliyyat ortağı tapın', href: '/ilanlar', emoji: '👥' },
+              { title: 'Yeni İnvestisiya', desc: 'Yatırımçı axtaran yeni layihələr', href: '/ilanlar', emoji: '📈' },
+              { title: 'Obyekt İcarəsi', desc: 'HoReCa uyğun məkan kiralayın', href: '/ilanlar', emoji: '🏢' },
+              { title: 'HORECA Ekipman', desc: 'Peşəkar avadanlıq alın və ya satın', href: '/ilanlar', emoji: '⚙️' },
+            ].map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-[var(--dk-gold)] hover:shadow-lg"
+              >
+                <span className="text-2xl">{item.emoji}</span>
+                <h3 className="mt-3 text-lg font-bold text-slate-900 group-hover:text-[var(--dk-red)]">{item.title}</h3>
+                <p className="mt-1 text-sm text-slate-500">{item.desc}</p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link
+              href="/ilanlar"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-navy)] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800"
+            >
+              Bütün elanları gör
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <AdsPreview />
       <DoganNote />
       <JoinCTA />
