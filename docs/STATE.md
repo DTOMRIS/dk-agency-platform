@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-03-25T20:22:08.787Z
+- GeneratedAt: 2026-03-29T15:33:44.438Z
 - BuildStatus: PASS
 
-## Routes (58)
+## Routes (77)
 - /[locale]
 - /[locale]/about
 - /[locale]/blog
@@ -18,16 +18,23 @@ Auto-generated. Do not edit manually.
 - /[locale]/haberler/[slug]
 - /[locale]/haqqimizda
 - /[locale]/ilanlar
+- /[locale]/kazan-ai
 - /[locale]/privacy
 - /[locale]/randevu
 - /[locale]/terefdashlar
 - /[locale]/terms
 - /[locale]/toolkit
+- /[locale]/toolkit/aqta-checklist
 - /[locale]/toolkit/basabas
+- /[locale]/toolkit/branding-guide
 - /[locale]/toolkit/checklist
+- /[locale]/toolkit/delivery-calc
 - /[locale]/toolkit/food-cost
+- /[locale]/toolkit/insaat-checklist
 - /[locale]/toolkit/menu-matrix
 - /[locale]/toolkit/pnl
+- /[locale]/toolkit/staff-retention
+- /[locale]/uzvluk
 - /auth/forgot-password
 - /auth/login
 - /auth/register
@@ -46,6 +53,7 @@ Auto-generated. Do not edit manually.
 - /b2b-panel/toolkit/workforce
 - /b2b-panel/yeni-ilan
 - /dashboard
+- /dashboard/aqta-checklist
 - /dashboard/ayarlar
 - /dashboard/b2b-yonetimi
 - /dashboard/deal-flow
@@ -60,18 +68,34 @@ Auto-generated. Do not edit manually.
 - /dashboard/raporlar
 - /dashboard/roller
 - /dashboard/trends
+- /docs/member-env-checklist
 - /kazan-ai
 - /news
+- /toolkit
+- /toolkit/aqta-checklist
 - /toolkit/basabas
+- /toolkit/branding-guide
+- /toolkit/checklist
+- /toolkit/delivery-calc
+- /toolkit/food-cost
+- /toolkit/insaat-checklist
 - /toolkit/menu-matrix
+- /toolkit/pnl
+- /toolkit/staff-retention
+- /uzvluk
 - /xeberler
 
-## API Routes (13)
+## API Routes (18)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
 - /api/auth
 - /api/health
+- /api/kazan-ai
+- /api/member/auth
+- /api/member/checkout
+- /api/member/session
+- /api/member/webhook
 - /api/news
 - /api/news/[slug]
 - /api/newsletter/digest
