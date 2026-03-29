@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#FFFDF8"/>
+  <rect width="1600" height="900" fill="url(#paint0_linear_2_1)"/>
+  <rect x="860" y="150" width="500" height="500" rx="36" fill="white" fill-opacity=".88"/>
+  <circle cx="320" cy="260" r="170" fill="#E94560" fill-opacity=".12"/>
+  <text x="924" y="292" fill="#1A1A2E" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="700">Franchise</text>
+  <text x="924" y="350" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="24">Açılışa hazır sistem</text>
+  <text x="924" y="412" fill="#C5A022" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Showcase cover</text>
+  <defs>
+    <linearGradient id="paint0_linear_2_1" x1="164" y1="172" x2="1500" y2="818" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#1A1A2E"/>
+    </linearGradient>
+  </defs>
+</svg>

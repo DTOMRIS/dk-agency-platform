@@ -1,24 +1,15 @@
-// lib/data/listingCategories.ts
-// DK Agency - 7 Kategori İlan Sistemi
-// HORECA B2B Yatırım Kategorileri
-
 export type ListingCategory =
   | 'devir'
   | 'franchise-vermek'
-  | 'franchise-almak'
+  | 'franchise-almaq'
   | 'ortak-tapmaq'
   | 'yeni-investisiya'
   | 'obyekt-icaresi'
   | 'horeca-ekipman';
 
-export interface CategoryConfig {
-  id: ListingCategory;
-  title: string;
-  titleAz: string;
-  description: string;
-  icon: string;
-  color: string;
-  fields: FormField[];
+export interface FormFieldOption {
+  value: string;
+  label: string;
 }
 
 export interface FormField {
@@ -27,238 +18,189 @@ export interface FormField {
   type: 'text' | 'textarea' | 'number' | 'select' | 'checkbox' | 'file' | 'range' | 'radio';
   required: boolean;
   placeholder?: string;
-  options?: { value: string; label: string }[];
+  options?: FormFieldOption[];
   min?: number;
   max?: number;
   suffix?: string;
 }
 
+export interface CategoryConfig {
+  id: ListingCategory;
+  value: ListingCategory;
+  title: string;
+  titleAz: string;
+  label: string;
+  description: string;
+  icon: string;
+  color: string;
+  badgeClass: string;
+  fields: FormField[];
+}
+
+export interface PriceRangeOption {
+  value: string;
+  label: string;
+  min: number;
+  max: number | null;
+}
+
+export const CITY_OPTIONS = [
+  { value: 'all', label: 'Bütün şəhərlər' },
+  { value: 'baki', label: 'Bakı' },
+  { value: 'sumqayit', label: 'Sumqayıt' },
+  { value: 'gence', label: 'Gəncə' },
+  { value: 'mingecevir', label: 'Mingəçevir' },
+  { value: 'lenkeran', label: 'Lənkəran' },
+  { value: 'seki', label: 'Şəki' },
+  { value: 'qusar', label: 'Qusar' },
+] as const;
+
+export const PRICE_RANGE_OPTIONS: PriceRangeOption[] = [
+  { value: 'all', label: 'Bütün qiymətlər', min: 0, max: null },
+  { value: '0-10000', label: '0 - 10 000 AZN', min: 0, max: 10000 },
+  { value: '10000-50000', label: '10 000 - 50 000 AZN', min: 10000, max: 50000 },
+  { value: '50000-100000', label: '50 000 - 100 000 AZN', min: 50000, max: 100000 },
+  { value: '100000+', label: '100 000+ AZN', min: 100000, max: null },
+];
+
 export const LISTING_CATEGORIES: CategoryConfig[] = [
   {
     id: 'devir',
-    title: 'İşletme Devri',
+    value: 'devir',
+    title: 'Devir',
     titleAz: 'Devir',
-    description: 'Mevcut işletmenizi devretmek için ilan verin',
+    label: 'Devir',
+    description: 'Hazır restoran, kafe və ya şəbəkə nöqtələrinin devri üçün vitrindir.',
     icon: 'ArrowLeftRight',
-    color: 'bg-blue-500',
+    color: 'bg-[var(--dk-red)]',
+    badgeClass: 'bg-rose-50 text-rose-700 border border-rose-200',
     fields: [
-      { name: 'businessName', label: 'İşletme Adı', type: 'text', required: true, placeholder: 'Örn: Merkez Cafe' },
-      { name: 'businessType', label: 'İşletme Tipi', type: 'select', required: true, options: [
-        { value: 'restoran', label: 'Restoran' },
-        { value: 'cafe', label: 'Cafe' },
-        { value: 'bar', label: 'Bar' },
-        { value: 'otel', label: 'Otel' },
-        { value: 'fastfood', label: 'Fast Food' },
-        { value: 'pastane', label: 'Pastane' },
-        { value: 'diger', label: 'Diğer' },
-      ]},
-      { name: 'city', label: 'Şehir', type: 'text', required: true, placeholder: 'İstanbul' },
-      { name: 'district', label: 'İlçe', type: 'text', required: true, placeholder: 'Kadıköy' },
-      { name: 'sqm', label: 'Alan (m²)', type: 'number', required: true, min: 10, max: 10000, suffix: 'm²' },
-      { name: 'askingPrice', label: 'Talep Edilen Fiyat', type: 'number', required: true, suffix: '₺' },
-      { name: 'monthlyRevenue', label: 'Aylık Ciro', type: 'number', required: false, suffix: '₺' },
-      { name: 'employeeCount', label: 'Çalışan Sayısı', type: 'number', required: false },
-      { name: 'reason', label: 'Devir Sebebi', type: 'textarea', required: false, placeholder: 'Devir sebepinizi açıklayın...' },
-      { name: 'description', label: 'Detaylı Açıklama', type: 'textarea', required: true, placeholder: 'İşletme hakkında detaylı bilgi...' },
+      { name: 'title', label: 'Elan başlığı', type: 'text', required: true, placeholder: 'Nərimanovda restoran devri' },
+      { name: 'district', label: 'Rayon', type: 'text', required: true, placeholder: 'Nərimanov' },
+      { name: 'area', label: 'Sahə', type: 'number', required: true, suffix: 'm²' },
+      { name: 'seatCount', label: 'Oturacaq sayı', type: 'number', required: true },
+      { name: 'monthlyRevenue', label: 'Aylıq dövriyyə', type: 'number', required: false, suffix: 'AZN' },
+      { name: 'hasLicense', label: 'Lisenziya var', type: 'checkbox', required: false },
+      { name: 'description', label: 'Təsvir', type: 'textarea', required: true, placeholder: 'Məkan, mətbəx və komanda haqqında qısa məlumat verin.' },
     ],
   },
   {
     id: 'franchise-vermek',
-    title: 'Franchise Vermek',
+    value: 'franchise-vermek',
+    title: 'Franchise Vermək',
     titleAz: 'Franchise Vermək',
-    description: 'Markanızı franchise olarak verin',
+    label: 'Franchise Vermək',
+    description: 'Markasını genişləndirmək istəyən brendlər üçün franchise vitrini.',
     icon: 'Crown',
-    color: 'bg-purple-500',
+    color: 'bg-[var(--dk-gold)]',
+    badgeClass: 'bg-amber-50 text-amber-700 border border-amber-200',
     fields: [
-      { name: 'brandName', label: 'Marka Adı', type: 'text', required: true, placeholder: 'Marka adınız' },
-      { name: 'sector', label: 'Sektör', type: 'select', required: true, options: [
-        { value: 'yemek', label: 'Yemek & Restoran' },
-        { value: 'cafe', label: 'Cafe & Kahve' },
-        { value: 'fastfood', label: 'Fast Food' },
-        { value: 'tatli', label: 'Tatlı & Pastane' },
-        { value: 'icecek', label: 'İçecek' },
-        { value: 'diger', label: 'Diğer' },
-      ]},
-      { name: 'totalBranches', label: 'Mevcut Şube Sayısı', type: 'number', required: true },
-      { name: 'franchiseFee', label: 'Franchise Bedeli', type: 'number', required: true, suffix: '₺' },
-      { name: 'royaltyRate', label: 'Royalty Oranı', type: 'number', required: true, suffix: '%' },
-      { name: 'totalInvestment', label: 'Toplam Yatırım Maliyeti', type: 'range', required: true, min: 100000, max: 5000000, suffix: '₺' },
-      { name: 'supportServices', label: 'Sunulan Destekler', type: 'textarea', required: true, placeholder: 'Eğitim, pazarlama, IT desteği vb.' },
-      { name: 'requirements', label: 'Franchise Alan Gereksinimleri', type: 'textarea', required: true, placeholder: 'Minimum sermaye, deneyim, lokasyon vb.' },
-      { name: 'description', label: 'Marka Tanıtımı', type: 'textarea', required: true, placeholder: 'Markanız hakkında detaylı bilgi...' },
+      { name: 'brandName', label: 'Brend adı', type: 'text', required: true },
+      { name: 'franchiseFee', label: 'Franchise haqqı', type: 'number', required: true, suffix: 'AZN' },
+      { name: 'royaltyRate', label: 'Royalty faizi', type: 'number', required: true, suffix: '%' },
+      { name: 'initialInvestment', label: 'Başlanğıc investisiya', type: 'number', required: true, suffix: 'AZN' },
+      { name: 'supportPackage', label: 'Dəstək paketi', type: 'textarea', required: true },
+      { name: 'description', label: 'Təsvir', type: 'textarea', required: true },
     ],
   },
   {
-    id: 'franchise-almak',
-    title: 'Franchise Almak',
+    id: 'franchise-almaq',
+    value: 'franchise-almaq',
+    title: 'Franchise Almaq',
     titleAz: 'Franchise Almaq',
-    description: 'Franchise almak istediğinizi duyurun',
+    label: 'Franchise Almaq',
+    description: 'Hazır brendlə bazara girmək istəyən investor və operatorlar üçün.',
     icon: 'ShoppingBag',
-    color: 'bg-green-500',
+    color: 'bg-[var(--dk-navy)]',
+    badgeClass: 'bg-slate-100 text-slate-700 border border-slate-200',
     fields: [
-      { name: 'investorName', label: 'Yatırımcı / Şirket Adı', type: 'text', required: true },
-      { name: 'preferredSector', label: 'Tercih Edilen Sektör', type: 'select', required: true, options: [
-        { value: 'yemek', label: 'Yemek & Restoran' },
-        { value: 'cafe', label: 'Cafe & Kahve' },
-        { value: 'fastfood', label: 'Fast Food' },
-        { value: 'tatli', label: 'Tatlı & Pastane' },
-        { value: 'farketmez', label: 'Farketmez' },
-      ]},
-      { name: 'preferredCity', label: 'Tercih Edilen Şehir', type: 'text', required: true, placeholder: 'Birden fazla varsa virgülle ayırın' },
-      { name: 'budget', label: 'Bütçe', type: 'range', required: true, min: 100000, max: 10000000, suffix: '₺' },
-      { name: 'experience', label: 'Sektör Deneyimi', type: 'select', required: true, options: [
-        { value: 'yok', label: 'Deneyim yok' },
-        { value: '1-3', label: '1-3 yıl' },
-        { value: '3-5', label: '3-5 yıl' },
-        { value: '5+', label: '5 yıl üzeri' },
-      ]},
-      { name: 'preferredBrands', label: 'Tercih Edilen Markalar', type: 'textarea', required: false, placeholder: 'Varsa belirli markalar...' },
-      { name: 'notes', label: 'Ek Notlar', type: 'textarea', required: false },
+      { name: 'budget', label: 'Büdcə', type: 'number', required: true, suffix: 'AZN' },
+      { name: 'preferredSector', label: 'İstiqamət', type: 'text', required: true, placeholder: 'Fast food, pizza, qəhvə' },
+      { name: 'preferredCity', label: 'Şəhər', type: 'text', required: true, placeholder: 'Bakı' },
+      { name: 'experience', label: 'Təcrübə', type: 'text', required: false, placeholder: 'Əməliyyat və ya investor təcrübəsi' },
+      { name: 'description', label: 'Təsvir', type: 'textarea', required: true },
     ],
   },
   {
     id: 'ortak-tapmaq',
-    title: 'Ortak Bulmak',
+    value: 'ortak-tapmaq',
+    title: 'Ortaq Tapmaq',
     titleAz: 'Ortaq Tapmaq',
-    description: 'Projeleriniz için ortak arayın',
+    label: 'Ortaq Tapmaq',
+    description: 'Sərmayə və ya əməliyyat ortağı axtaran layihələr üçün elan axınıdır.',
     icon: 'Users',
-    color: 'bg-amber-500',
+    color: 'bg-teal-600',
+    badgeClass: 'bg-teal-50 text-teal-700 border border-teal-200',
     fields: [
-      { name: 'projectName', label: 'Proje / İşletme Adı', type: 'text', required: true },
-      { name: 'projectType', label: 'Proje Tipi', type: 'select', required: true, options: [
-        { value: 'yeni', label: 'Yeni Girişim' },
-        { value: 'mevcut', label: 'Mevcut İşletme' },
-        { value: 'genisleme', label: 'Genişleme Projesi' },
-      ]},
-      { name: 'partnershipType', label: 'Ortaklık Tipi', type: 'select', required: true, options: [
-        { value: 'sermaye', label: 'Sermaye Ortağı' },
-        { value: 'isletme', label: 'İşletme Ortağı' },
-        { value: 'karma', label: 'Karma (Sermaye + İşletme)' },
-      ]},
-      { name: 'requiredCapital', label: 'Aranan Sermaye', type: 'number', required: true, suffix: '₺' },
-      { name: 'shareOffered', label: 'Teklif Edilen Hisse', type: 'number', required: true, min: 1, max: 100, suffix: '%' },
-      { name: 'location', label: 'Lokasyon', type: 'text', required: true },
-      { name: 'partnerRequirements', label: 'Ortaktan Beklentiler', type: 'textarea', required: true, placeholder: 'Deneyim, beceriler, zaman taahhüdü vb.' },
-      { name: 'businessPlan', label: 'İş Planı Özeti', type: 'textarea', required: true },
+      { name: 'capitalNeeded', label: 'Axtarılan sərmayə', type: 'number', required: true, suffix: 'AZN' },
+      { name: 'shareOffered', label: 'Təklif edilən pay', type: 'number', required: true, suffix: '%' },
+      { name: 'partnerRole', label: 'Ortağın rolu', type: 'text', required: true, placeholder: 'Sərmayədar, operator, partnyor' },
+      { name: 'location', label: 'Lokasiya', type: 'text', required: true },
+      { name: 'description', label: 'Təsvir', type: 'textarea', required: true },
     ],
   },
   {
     id: 'yeni-investisiya',
-    title: 'Yeni Yatırım',
+    value: 'yeni-investisiya',
+    title: 'Yeni İnvestisiya',
     titleAz: 'Yeni İnvestisiya',
-    description: 'Yeni yatırım fırsatlarını paylaşın',
+    label: 'Yeni İnvestisiya',
+    description: 'Yeni konsept və ya açılış öncəsi layihələr üçün investor vitrini.',
     icon: 'TrendingUp',
-    color: 'bg-[var(--dk-red)]',
+    color: 'bg-orange-500',
+    badgeClass: 'bg-orange-50 text-orange-700 border border-orange-200',
     fields: [
-      { name: 'projectTitle', label: 'Proje Başlığı', type: 'text', required: true },
-      { name: 'category', label: 'Kategori', type: 'select', required: true, options: [
-        { value: 'restoran', label: 'Restoran' },
-        { value: 'otel', label: 'Otel' },
-        { value: 'cafe', label: 'Cafe' },
-        { value: 'bar', label: 'Bar & Gece Hayatı' },
-        { value: 'catering', label: 'Catering' },
-        { value: 'uretim', label: 'Gıda Üretim' },
-        { value: 'teknoloji', label: 'HORECA Teknoloji' },
-      ]},
-      { name: 'investmentAmount', label: 'Toplam Yatırım Bedeli', type: 'number', required: true, suffix: '₺' },
-      { name: 'seekingAmount', label: 'Aranan Yatırım', type: 'number', required: true, suffix: '₺' },
-      { name: 'expectedROI', label: 'Beklenen ROI', type: 'number', required: false, suffix: '%' },
-      { name: 'paybackPeriod', label: 'Geri Dönüş Süresi', type: 'select', required: false, options: [
-        { value: '1', label: '1 yıl' },
-        { value: '2', label: '2 yıl' },
-        { value: '3', label: '3 yıl' },
-        { value: '5', label: '5 yıl' },
-        { value: '5+', label: '5 yıl üzeri' },
-      ]},
-      { name: 'location', label: 'Lokasyon', type: 'text', required: true },
-      { name: 'projectPhase', label: 'Proje Aşaması', type: 'select', required: true, options: [
-        { value: 'fikir', label: 'Fikir Aşaması' },
-        { value: 'planlama', label: 'Planlama' },
-        { value: 'gelistirme', label: 'Geliştirme' },
-        { value: 'hazir', label: 'Yatırıma Hazır' },
-      ]},
-      { name: 'description', label: 'Proje Detayları', type: 'textarea', required: true },
+      { name: 'investmentAmount', label: 'Axtarılan investisiya', type: 'number', required: true, suffix: 'AZN' },
+      { name: 'projectStage', label: 'Layihə mərhələsi', type: 'text', required: true, placeholder: 'Konsept, tikinti, açılış öncəsi' },
+      { name: 'expectedReturn', label: 'Gözlənilən geri dönüş', type: 'text', required: false, placeholder: '18-24 ay' },
+      { name: 'location', label: 'Lokasiya', type: 'text', required: true },
+      { name: 'description', label: 'Təsvir', type: 'textarea', required: true },
     ],
   },
   {
     id: 'obyekt-icaresi',
-    title: 'Mekan Kiralama',
+    value: 'obyekt-icaresi',
+    title: 'Obyekt İcarəsi',
     titleAz: 'Obyekt İcarəsi',
-    description: 'HORECA uygun mekanları kiralayın/kiraya verin',
+    label: 'Obyekt İcarəsi',
+    description: 'HoReCa uyğun obyektlərin icarəsi və lokasiya axtarışı üçün.',
     icon: 'Building',
-    color: 'bg-teal-500',
+    color: 'bg-indigo-600',
+    badgeClass: 'bg-indigo-50 text-indigo-700 border border-indigo-200',
     fields: [
-      { name: 'listingType', label: 'İlan Tipi', type: 'radio', required: true, options: [
-        { value: 'kiralik', label: 'Kiralık' },
-        { value: 'devir', label: 'Devir' },
-      ]},
-      { name: 'propertyType', label: 'Mekan Tipi', type: 'select', required: true, options: [
-        { value: 'restoran', label: 'Restoran Uygun' },
-        { value: 'cafe', label: 'Cafe Uygun' },
-        { value: 'bar', label: 'Bar Uygun' },
-        { value: 'mutfak', label: 'Üretim Mutfağı' },
-        { value: 'depo', label: 'Depo / Soğuk Hava' },
-        { value: 'coklu', label: 'Çoklu Kullanım' },
-      ]},
-      { name: 'address', label: 'Adres', type: 'text', required: true },
-      { name: 'city', label: 'Şehir', type: 'text', required: true },
-      { name: 'sqm', label: 'Alan (m²)', type: 'number', required: true, suffix: 'm²' },
-      { name: 'monthlyRent', label: 'Aylık Kira', type: 'number', required: true, suffix: '₺' },
-      { name: 'deposit', label: 'Depozito', type: 'number', required: false, suffix: '₺' },
-      { name: 'hasKitchen', label: 'Mutfak Altyapısı', type: 'checkbox', required: false },
-      { name: 'hasExhaust', label: 'Havalandırma / Davlumbaz', type: 'checkbox', required: false },
-      { name: 'hasParking', label: 'Otopark', type: 'checkbox', required: false },
-      { name: 'features', label: 'Özellikler', type: 'textarea', required: false, placeholder: 'Ek özellikler ve detaylar...' },
+      { name: 'address', label: 'Ünvan', type: 'text', required: true },
+      { name: 'area', label: 'Sahə', type: 'number', required: true, suffix: 'm²' },
+      { name: 'monthlyRent', label: 'Aylıq icarə', type: 'number', required: true, suffix: 'AZN' },
+      { name: 'hasKitchen', label: 'Mətbəx çıxışı var', type: 'checkbox', required: false },
+      { name: 'hasExhaust', label: 'Havalandırma var', type: 'checkbox', required: false },
+      { name: 'description', label: 'Təsvir', type: 'textarea', required: true },
     ],
   },
   {
     id: 'horeca-ekipman',
+    value: 'horeca-ekipman',
     title: 'HORECA Ekipman',
-    titleAz: 'HORECA Ekipman Satışı',
-    description: 'Profesyonel ekipman alın veya satın',
+    titleAz: 'HORECA Ekipman',
+    label: 'HORECA Ekipman',
+    description: 'Peşəkar mətbəx avadanlıqları, servis və istehsal xəttləri üçün.',
     icon: 'Package',
-    color: 'bg-indigo-500',
+    color: 'bg-emerald-600',
+    badgeClass: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
     fields: [
-      { name: 'listingType', label: 'İlan Tipi', type: 'radio', required: true, options: [
-        { value: 'satilik', label: 'Satılık' },
-        { value: 'kiralik', label: 'Kiralık' },
-      ]},
-      { name: 'equipmentCategory', label: 'Ekipman Kategorisi', type: 'select', required: true, options: [
-        { value: 'pisirme', label: 'Pişirme Ekipmanları' },
-        { value: 'sogutma', label: 'Soğutma Ekipmanları' },
-        { value: 'hazirlama', label: 'Hazırlama Ekipmanları' },
-        { value: 'servis', label: 'Servis Ekipmanları' },
-        { value: 'temizlik', label: 'Temizlik Ekipmanları' },
-        { value: 'mobilya', label: 'Mobilya' },
-        { value: 'yazilim', label: 'POS / Yazılım' },
-        { value: 'diger', label: 'Diğer' },
-      ]},
-      { name: 'equipmentName', label: 'Ekipman Adı', type: 'text', required: true, placeholder: 'Örn: Endüstriyel Bulaşık Makinesi' },
-      { name: 'brand', label: 'Marka', type: 'text', required: false },
-      { name: 'condition', label: 'Durum', type: 'select', required: true, options: [
-        { value: 'sifir', label: 'Sıfır' },
-        { value: 'az-kullanilmis', label: 'Az Kullanılmış' },
-        { value: 'kullanilmis', label: 'Kullanılmış' },
-        { value: 'yenilenmiş', label: 'Yenilenmiş' },
-      ]},
-      { name: 'price', label: 'Fiyat', type: 'number', required: true, suffix: '₺' },
-      { name: 'warranty', label: 'Garanti', type: 'select', required: false, options: [
-        { value: 'yok', label: 'Garanti Yok' },
-        { value: '6ay', label: '6 Ay' },
-        { value: '1yil', label: '1 Yıl' },
-        { value: '2yil', label: '2 Yıl' },
-      ]},
-      { name: 'location', label: 'Konum', type: 'text', required: true },
-      { name: 'description', label: 'Açıklama', type: 'textarea', required: true, placeholder: 'Ekipman detayları, özellikler, boyutlar vb.' },
+      { name: 'equipmentName', label: 'Avadanlıq adı', type: 'text', required: true },
+      { name: 'brand', label: 'Brend', type: 'text', required: false },
+      { name: 'condition', label: 'Vəziyyət', type: 'text', required: true, placeholder: 'Yeni, az işlənmiş, ikinci əl' },
+      { name: 'warranty', label: 'Zəmanət', type: 'text', required: false },
+      { name: 'price', label: 'Qiymət', type: 'number', required: true, suffix: 'AZN' },
+      { name: 'description', label: 'Təsvir', type: 'textarea', required: true },
     ],
   },
 ];
 
 export function getCategoryById(id: ListingCategory): CategoryConfig | undefined {
-  return LISTING_CATEGORIES.find(cat => cat.id === id);
+  return LISTING_CATEGORIES.find((category) => category.id === id);
 }
 
 export function getCategoryColor(id: ListingCategory): string {
-  const cat = getCategoryById(id);
-  return cat?.color || 'bg-[var(--dk-muted)]';
+  return getCategoryById(id)?.color ?? 'bg-slate-200';
 }

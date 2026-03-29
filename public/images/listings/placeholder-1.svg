@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#F8FAFC"/>
+  <rect width="1600" height="900" fill="url(#paint0_linear_1_1)"/>
+  <circle cx="1292" cy="182" r="192" fill="#C5A022" fill-opacity=".18"/>
+  <circle cx="276" cy="734" r="280" fill="#E94560" fill-opacity=".12"/>
+  <rect x="168" y="180" width="540" height="420" rx="32" fill="white" fill-opacity=".85"/>
+  <text x="214" y="290" fill="#1A1A2E" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="700">Restoran Devri</text>
+  <text x="214" y="352" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="24">HoReCa vitrin placeholder</text>
+  <text x="214" y="420" fill="#C5A022" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">DK-2026-0001</text>
+  <defs>
+    <linearGradient id="paint0_linear_1_1" x1="150" y1="110" x2="1440" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A1A2E"/>
+      <stop offset="1" stop-color="#F8FAFC"/>
+    </linearGradient>
+  </defs>
+</svg>
