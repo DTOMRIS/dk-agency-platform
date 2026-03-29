@@ -5,65 +5,31 @@ import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   Newspaper,
-  Megaphone,
-  Building2,
+  BookOpen,
+  Wrench,
+  Globe,
   Users,
   Settings,
-  TrendingUp,
-  Calendar,
-  X,
-  MessageSquare,
-  ShieldCheck,
-  PieChart,
-  Activity,
+  Store,
+  ChevronLeft,
   LogOut,
-  FolderKanban,
-  CheckSquare,
-  ShieldAlert,
 } from 'lucide-react';
+import { MOCK_LISTINGS } from '@/lib/data/mockListings';
 
-const MENU_SECTIONS = [
-  {
-    title: 'İdarəetmə',
-    items: [
-      { title: 'Admin Dashboard', href: '/dashboard', icon: LayoutDashboard },
-      { title: 'Pipeline', href: '/dashboard/pipeline', icon: FolderKanban, badge: '12' },
-      { title: 'Mesajlar', href: '/dashboard/mesajlar', icon: MessageSquare, badge: '5' },
-    ],
-  },
-  {
-    title: 'Kontent',
-    items: [
-      { title: 'Xəbərlər & Analizlər', href: '/dashboard/haberler', icon: Newspaper },
-      { title: 'Duyurular', href: '/dashboard/duyurular', icon: Megaphone },
-      { title: 'Tədbirlər', href: '/dashboard/etkinlikler', icon: Calendar },
-    ],
-  },
-  {
-    title: 'B2B Ekosistem',
-    items: [
-      { title: 'B2B idarəetməsi', href: '/dashboard/b2b-yonetimi', icon: Building2 },
-      { title: 'İlan onayları', href: '/dashboard/ilan-onaylari', icon: CheckSquare, badge: '8' },
-      { title: 'Deal flow', href: '/dashboard/deal-flow', icon: TrendingUp },
-    ],
-  },
-  {
-    title: 'Analitika',
-    items: [
-      { title: 'Raporlar', href: '/dashboard/raporlar', icon: PieChart },
-      { title: 'AQTA Hazırlıq', href: '/dashboard/aqta-checklist', icon: ShieldAlert },
-      { title: 'Aktivlik logları', href: '/dashboard/loglar', icon: Activity },
-    ],
-  },
-  {
-    title: 'Sistem',
-    items: [
-      { title: 'İstifadəçilər', href: '/dashboard/kullanicilar', icon: Users },
-      { title: 'Rollar & icazələr', href: '/dashboard/roller', icon: ShieldCheck },
-      { title: 'Ayarlar', href: '/dashboard/ayarlar', icon: Settings },
-    ],
-  },
-];
+const pendingCount = MOCK_LISTINGS.filter((listing) =>
+  ['submitted', 'ai_checked', 'committee_review'].includes(listing.status),
+).length;
+
+const NAV_ITEMS = [
+  { title: 'Əsas səhifə', href: '/dashboard', icon: LayoutDashboard },
+  { title: 'Elanlar', href: '/dashboard/ilanlar', icon: Store, badge: pendingCount.toString() },
+  { title: 'Xəbərlər', href: '/dashboard/xeberler', icon: Newspaper },
+  { title: 'Bloq', href: '/dashboard/blog', icon: BookOpen },
+  { title: 'Toolkit', href: '/dashboard/toolkit', icon: Wrench },
+  { title: 'Sayt', href: '/dashboard/site', icon: Globe },
+  { title: 'İstifadəçilər', href: '/dashboard/users', icon: Users },
+  { title: 'Parametrlər', href: '/dashboard/settings', icon: Settings },
+] as const;
 
 interface DashboardSidebarProps {
   isOpen?: boolean;
@@ -75,111 +41,106 @@ export default function DashboardSidebar({
   onClose,
 }: DashboardSidebarProps) {
   const pathname = usePathname();
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <>
       {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+        <button
+          type="button"
+          aria-label="Sidebar bağla"
+          className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}
 
       <aside
-        className={`
-          fixed left-0 top-0 z-50 flex h-screen w-72 flex-col bg-gray-900
-          transform transition-transform duration-300 ease-in-out
-          lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        `}
+        className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-slate-200 bg-white transition-transform duration-300 lg:translate-x-0 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
-        <div className="flex h-16 items-center justify-between border-b border-gray-800/50 px-5">
-          <Link href="/dashboard" className="group flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-red-700 font-bold text-white shadow-lg shadow-red-500/20 transition-shadow group-hover:shadow-red-500/40">
+        <div className="flex h-20 items-center justify-between border-b border-slate-200 px-5">
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-sm font-black text-white shadow-lg shadow-slate-900/15">
               DK
             </div>
             <div>
-              <span className="text-sm font-bold text-white">DK Agency</span>
-              <p className="text-[10px] uppercase tracking-wider text-gray-500">Admin Panel</p>
+              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">DK Agency OCAQ</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Admin panel
+              </div>
             </div>
           </Link>
+
           <button
+            type="button"
             onClick={onClose}
-            className="rounded-lg p-1 text-gray-500 transition-colors hover:bg-gray-800 hover:text-white lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] lg:hidden"
           >
-            <X size={18} />
+            <ChevronLeft size={18} />
           </button>
         </div>
 
-        <div className="border-b border-gray-800/50 px-4 py-4">
-          <div className="flex items-center gap-3 rounded-xl bg-gray-800/50 p-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-gray-700 to-gray-600">
-              <ShieldCheck size={18} className="text-red-400" />
+        <div className="border-b border-slate-200 px-5 py-4">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-bold text-[var(--dk-navy)]">Admin istifadəçi</p>
+                <p className="mt-1 text-xs text-slate-500">Tam idarəetmə girişi aktivdir</p>
+              </div>
+              <span className="inline-flex h-3 w-3 rounded-full bg-emerald-500" />
             </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-white">God Mode</p>
-              <p className="text-xs text-gray-500">Super Admin</p>
-            </div>
-            <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
           </div>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-3 py-4">
-          {MENU_SECTIONS.map((section, index) => (
-            <div key={section.title} className={index > 0 ? 'mt-6' : ''}>
-              <p className="mb-2 px-3 text-[10px] font-bold uppercase tracking-widest text-gray-600">
-                {section.title}
-              </p>
-              <div className="space-y-1">
-                {section.items.map((item) => {
-                  const Icon = item.icon;
-                  const active = isActive(item.href);
+        <nav className="flex-1 overflow-y-auto px-3 py-5">
+          <div className="space-y-1.5">
+            {NAV_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.href);
 
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`
-                        group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200
-                        ${active ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' : 'text-gray-400 hover:bg-gray-800/70 hover:text-white'}
-                      `}
-                    >
-                      <div
-                        className={`
-                          flex h-8 w-8 items-center justify-center rounded-lg transition-colors
-                          ${active ? 'bg-white/20' : 'bg-gray-800 group-hover:bg-gray-700'}
-                        `}
-                      >
-                        <Icon
-                          size={16}
-                          className={active ? 'text-white' : 'text-gray-500 group-hover:text-red-400'}
-                        />
-                      </div>
-                      <span className="flex-1 text-sm font-medium">{item.title}</span>
-                      {item.badge && (
-                        <span
-                          className={`
-                            rounded-full px-2 py-0.5 text-[10px] font-bold
-                            ${active ? 'bg-white/20 text-white' : 'bg-red-600/20 text-red-400'}
-                          `}
-                        >
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`group flex items-center gap-3 rounded-2xl border-l-4 px-4 py-3 transition ${
+                    active
+                      ? 'border-[var(--dk-gold)] bg-amber-50 text-[var(--dk-navy)]'
+                      : 'border-transparent text-slate-600 hover:bg-slate-50 hover:text-[var(--dk-navy)]'
+                  }`}
+                >
+                  <span
+                    className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${
+                      active ? 'bg-white text-[var(--dk-red)] shadow-sm' : 'bg-slate-100 text-slate-500'
+                    }`}
+                  >
+                    <Icon size={18} />
+                  </span>
+                  <span className="flex-1 text-sm font-semibold">{item.title}</span>
+                  {'badge' in item && item.badge ? (
+                    <span className="rounded-full bg-[var(--dk-red)] px-2.5 py-1 text-[11px] font-bold text-white">
+                      {item.badge}
+                    </span>
+                  ) : null}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
-        <div className="border-t border-gray-800/50 p-4">
-          <button className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-gray-500 transition-all hover:bg-gray-800/70 hover:text-white">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-800">
-              <LogOut size={16} />
-            </div>
-            <span className="text-sm font-medium">Çıxış et</span>
+        <div className="border-t border-slate-200 p-4">
+          <div className="mb-3 rounded-2xl bg-slate-50 px-4 py-3">
+            <p className="text-sm font-bold text-[var(--dk-navy)]">Admin</p>
+            <p className="mt-1 text-xs text-slate-500">admin@dkagency.az</p>
+          </div>
+
+          <button
+            type="button"
+            className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]"
+          >
+            <LogOut size={18} />
+            Çıxış
           </button>
         </div>
       </aside>
