@@ -3,24 +3,30 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-03-29T19:18:52.905Z
+- GeneratedAt: 2026-03-30T07:04:06.874Z
 - BuildStatus: PASS
 
-## Routes (78)
+## Routes (102)
 - /[locale]
 - /[locale]/about
 - /[locale]/blog
 - /[locale]/blog/[slug]
 - /[locale]/contact
 - /[locale]/cookies
+- /[locale]/dashboard/ilanlar
+- /[locale]/dashboard/ilanlar/[id]
 - /[locale]/elaqe
+- /[locale]/forgot-password
 - /[locale]/haberler
 - /[locale]/haberler/[slug]
 - /[locale]/haqqimizda
+- /[locale]/ilan-ver
 - /[locale]/ilanlar
 - /[locale]/kazan-ai
 - /[locale]/privacy
 - /[locale]/randevu
+- /[locale]/reset-password
+- /[locale]/settings
 - /[locale]/terefdashlar
 - /[locale]/terms
 - /[locale]/toolkit
@@ -35,6 +41,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/pnl
 - /[locale]/toolkit/staff-retention
 - /[locale]/uzvluk
+- /[locale]/verify-email
 - /auth/forgot-password
 - /auth/login
 - /auth/register
@@ -56,22 +63,38 @@ Auto-generated. Do not edit manually.
 - /dashboard/aqta-checklist
 - /dashboard/ayarlar
 - /dashboard/b2b-yonetimi
+- /dashboard/blog
+- /dashboard/blog/[slug]
+- /dashboard/blog/new
 - /dashboard/deal-flow
 - /dashboard/duyurular
 - /dashboard/etkinlikler
 - /dashboard/haberler
+- /dashboard/hero
 - /dashboard/ilan-onaylari
+- /dashboard/ilanlar
+- /dashboard/ilanlar/[id]
 - /dashboard/kullanicilar
 - /dashboard/loglar
 - /dashboard/mesajlar
 - /dashboard/pipeline
 - /dashboard/raporlar
 - /dashboard/roller
+- /dashboard/settings
+- /dashboard/site
+- /dashboard/toolkit
 - /dashboard/trends
+- /dashboard/users
+- /dashboard/xeberler
+- /dashboard/xeberler/rss
 - /docs/member-env-checklist
+- /forgot-password
+- /ilan-ver
 - /ilanlar
 - /kazan-ai
 - /news
+- /reset-password
+- /settings
 - /toolkit
 - /toolkit/aqta-checklist
 - /toolkit/basabas
@@ -84,13 +107,18 @@ Auto-generated. Do not edit manually.
 - /toolkit/pnl
 - /toolkit/staff-retention
 - /uzvluk
+- /verify-email
 - /xeberler
 
-## API Routes (18)
+## API Routes (23)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
 - /api/auth
+- /api/auth/change-password
+- /api/auth/forgot-password
+- /api/auth/reset-password
+- /api/auth/verify-email
 - /api/health
 - /api/kazan-ai
 - /api/member/auth
@@ -105,6 +133,7 @@ Auto-generated. Do not edit manually.
 - /api/rss/xeberler
 - /api/rss/xeberler/[locale]
 - /api/telegram/post
+- /api/upload
 
 ## i18n Namespaces (0)
 - none detected
