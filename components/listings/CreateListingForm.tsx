@@ -281,6 +281,23 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
     try {
       const uploadedImages = await uploadImagesIfPossible(trackingCode);
+      const payload = {
+        ...formData,
+        trackingCode,
+        images:
+          uploadedImages.length > 0
+            ? uploadedImages.map((image: { url: string }) => ({ url: image.url }))
+            : images.map((image) => ({ url: image.preview })),
+      };
+      const response = await fetch('/api/listings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        pushToast('Elan göndərilərkən xəta baş verdi.');
+        return;
+      }
       await sendEmail(
         formData.email || 'member@dkagency.az',
         emailTemplates.listingSubmitted(trackingCode, formData.ownerName || 'Üzv'),

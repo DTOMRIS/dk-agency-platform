@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { Check, Copy, Mail, MessageCircle, Phone, Star } from 'lucide-react';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getFieldsForType } from '@/lib/data/listingFieldConfig';
-import { MOCK_LISTINGS } from '@/lib/data/mockListings';
+import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import { emailTemplates, sendEmail } from '@/lib/email/templates';
 import { canTransition, getAvailableTransitions, getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 
@@ -32,22 +32,75 @@ function renderFieldValue(value: string | number | boolean | undefined) {
 
 export default function DashboardIlanDetailPage() {
   const params = useParams<{ id: string }>();
-  const listing = MOCK_LISTINGS.find((item) => item.id === Number(params.id));
+  const [listing, setListing] = useState<MockListing | null>(null);
   const [activeImage, setActiveImage] = useState(0);
-  const [status, setStatus] = useState<ListingWorkflowStatus>(listing?.status ?? 'submitted');
-  const [nextStatus, setNextStatus] = useState<ListingWorkflowStatus>(listing?.status ?? 'submitted');
-  const [isFeatured, setIsFeatured] = useState(Boolean(listing?.isFeatured));
-  const [isShowcase, setIsShowcase] = useState(Boolean(listing?.isShowcase));
+  const [status, setStatus] = useState<ListingWorkflowStatus>('submitted');
+  const [nextStatus, setNextStatus] = useState<ListingWorkflowStatus>('submitted');
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [isShowcase, setIsShowcase] = useState(false);
   const [note, setNote] = useState('');
   const [score, setScore] = useState(4);
   const [toast, setToast] = useState('');
-  const [notes, setNotes] = useState(listing?.reviewNotes ?? []);
-  const [leads, setLeads] = useState(listing?.leads ?? []);
+  const [notes, setNotes] = useState<MockListing['reviewNotes']>([]);
+  const [leads, setLeads] = useState<MockListing['leads']>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadListing() {
+      try {
+        const response = await fetch(`/api/listings/${params.id}`);
+        if (!response.ok) throw new Error('load failed');
+        const payload = (await response.json()) as { data?: MockListing };
+        const nextListing = payload.data ?? null;
+        if (!cancelled && nextListing) {
+          setListing(nextListing);
+          setStatus(nextListing.status);
+          setNextStatus(nextListing.status);
+          setIsFeatured(Boolean(nextListing.isFeatured));
+          setIsShowcase(Boolean(nextListing.isShowcase));
+          setNotes(nextListing.reviewNotes ?? []);
+          setLeads(nextListing.leads ?? []);
+        }
+      } catch {
+        const fallback = MOCK_LISTINGS.find((item) => item.id === Number(params.id)) ?? null;
+        if (!cancelled && fallback) {
+          setListing(fallback);
+          setStatus(fallback.status);
+          setNextStatus(fallback.status);
+          setIsFeatured(Boolean(fallback.isFeatured));
+          setIsShowcase(Boolean(fallback.isShowcase));
+          setNotes(fallback.reviewNotes ?? []);
+          setLeads(fallback.leads ?? []);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void loadListing();
+    return () => {
+      cancelled = true;
+    };
+  }, [params.id]);
 
   const category = listing ? getCategoryById(listing.type) : null;
   const badge = listing ? getStatusBadge(status) : null;
   const fields = useMemo(() => (listing ? getFieldsForType(listing.type) : []), [listing]);
   const transitions = useMemo(() => getAvailableTransitions(status), [status]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white p-6 lg:p-8">
+        <div className="mx-auto max-w-3xl rounded-[28px] border border-slate-200 bg-white p-8 text-center shadow-sm">
+          <p className="text-sm text-slate-500">Elan yüklənir...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!listing) {
     return (
@@ -67,6 +120,7 @@ export default function DashboardIlanDetailPage() {
   }
 
   const handleStatusUpdate = async () => {
+    if (!listing) return;
     if (status !== nextStatus && !canTransition(status, nextStatus)) return;
     if (nextStatus === 'showcase_ready') {
       await sendEmail(
@@ -80,6 +134,15 @@ export default function DashboardIlanDetailPage() {
         emailTemplates.listingRejected(listing.trackingCode, 'Admin qərarı ilə rədd edildi', listing.ownerName),
       );
     }
+    const response = await fetch(`/api/listings/${listing.id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        status: nextStatus,
+        isFeatured,
+        isShowcase,
+      }),
+    }).catch(() => null);
     console.log('listing_status_update', {
       id: listing.id,
       trackingCode: listing.trackingCode,
@@ -87,6 +150,7 @@ export default function DashboardIlanDetailPage() {
       to: nextStatus,
       isFeatured,
       isShowcase,
+      responseOk: response?.ok,
     });
     setStatus(nextStatus);
     setToast('Status yeniləndi.');

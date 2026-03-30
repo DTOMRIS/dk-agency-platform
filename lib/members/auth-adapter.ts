@@ -1,3 +1,5 @@
+import { compare, hash } from 'bcryptjs';
+import { eq } from 'drizzle-orm';
 import { type MemberSession } from '@/lib/member-access';
 import {
   createEmailVerificationToken,
@@ -5,6 +7,8 @@ import {
   createMockUser,
   findMockUserByEmail,
 } from '@/lib/auth/mock-state';
+import { db, dbAvailable } from '@/lib/db';
+import { users } from '@/lib/db/schema';
 import { getMembershipCapability } from '@/lib/members/provider';
 
 export interface AuthPayload {
@@ -30,6 +34,49 @@ function normalizeEmail(value: string) {
 }
 
 async function localLogin(payload: AuthPayload): Promise<AuthResult> {
+  if (dbAvailable && db) {
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, normalizeEmail(payload.email)))
+      .then((items) => items[0]);
+
+    if (!user || !user.passwordHash || !payload.password) {
+      if (user) {
+        createLoginLog(user.id, { success: false });
+      }
+
+      return { ok: false, error: 'E-mail və ya şifrə yanlışdır.', provider: 'local' };
+    }
+
+    const matches = await compare(payload.password, user.passwordHash);
+    if (!matches) {
+      createLoginLog(user.id, { success: false });
+      return { ok: false, error: 'E-mail və ya şifrə yanlışdır.', provider: 'local' };
+    }
+
+    if (!user.emailVerified) {
+      createLoginLog(user.id, { success: false });
+      return {
+        ok: false,
+        error: 'Email ünvanınızı təsdiqləyin. Təsdiq linkini yenidən göndərə bilərik.',
+        provider: 'local',
+      };
+    }
+
+    createLoginLog(user.id, { success: true });
+    return {
+      ok: true,
+      provider: 'local',
+      session: {
+        email: user.email,
+        name: user.name,
+        loggedIn: true,
+        plan: user.role === 'admin' ? 'admin' : 'member',
+      },
+    };
+  }
+
   const user = findMockUserByEmail(payload.email);
 
   if (!user || user.password !== payload.password) {
@@ -65,6 +112,46 @@ async function localLogin(payload: AuthPayload): Promise<AuthResult> {
 }
 
 async function localRegister(payload: AuthPayload): Promise<AuthResult> {
+  if (dbAvailable && db) {
+    const email = normalizeEmail(payload.email);
+    const existing = await db.select().from(users).where(eq(users.email, email)).then((items) => items[0]);
+
+    if (existing) {
+      return { ok: false, error: 'Bu email artıq qeydiyyatdadır.', provider: 'local' };
+    }
+
+    const passwordHash = payload.password ? await hash(payload.password, 12) : null;
+    const inserted = await db
+      .insert(users)
+      .values({
+        email,
+        name: payload.name?.trim() || 'DK Member',
+        passwordHash,
+        phone: payload.phone?.trim() || null,
+        company: payload.company?.trim() || null,
+        role: 'member',
+        emailVerified: false,
+      })
+      .returning({ id: users.id, email: users.email });
+
+    const created = inserted[0];
+    const verificationToken = crypto.randomUUID();
+    createEmailVerificationToken(created.id, verificationToken);
+    console.log('Verification email:', created.email, verificationToken);
+    console.log(
+      'Verify URL:',
+      `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`,
+    );
+
+    return {
+      ok: true,
+      provider: 'local',
+      verificationRequired: true,
+      verificationToken,
+      message: 'Hesabınız yaradıldı! Email ünvanınıza təsdiq linki göndərildi.',
+    };
+  }
+
   const created = createMockUser({
     email: payload.email,
     name: payload.name?.trim() || 'DK Member',

@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
-import { MOCK_LISTINGS } from '@/lib/data/mockListings';
+import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import { getStatusBadge } from '@/lib/utils/listingStatus';
 
 const PAGE_SIZE = 10;
@@ -33,23 +33,47 @@ function formatDate(value: string) {
 }
 
 export default function DashboardIlanlarPage() {
+  const [listings, setListings] = useState<MockListing[]>(MOCK_LISTINGS);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    let cancelled = false;
+    async function loadListings() {
+      try {
+        const response = await fetch('/api/listings');
+        if (!response.ok) throw new Error('load failed');
+        const payload = (await response.json()) as { data?: MockListing[] };
+        if (!cancelled && Array.isArray(payload.data)) {
+          setListings(payload.data);
+        }
+      } catch {
+        if (!cancelled) {
+          setListings(MOCK_LISTINGS);
+        }
+      }
+    }
+
+    void loadListings();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const stats = useMemo(() => {
-    const total = MOCK_LISTINGS.length;
-    const pending = MOCK_LISTINGS.filter((listing) =>
+    const total = listings.length;
+    const pending = listings.filter((listing) =>
       ['submitted', 'ai_checked', 'committee_review'].includes(listing.status)
     ).length;
-    const showcase = MOCK_LISTINGS.filter((listing) => listing.status === 'showcase_ready').length;
-    const rejected = MOCK_LISTINGS.filter((listing) => listing.status === 'rejected').length;
+    const showcase = listings.filter((listing) => listing.status === 'showcase_ready').length;
+    const rejected = listings.filter((listing) => listing.status === 'rejected').length;
     return { total, pending, showcase, rejected };
-  }, []);
+  }, [listings]);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return MOCK_LISTINGS.filter((listing) => {
+    return listings.filter((listing) => {
       const matchesQuery =
         !query ||
         listing.trackingCode.toLowerCase().includes(query) ||
@@ -68,7 +92,7 @@ export default function DashboardIlanlarPage() {
 
       return matchesQuery && matchesStatus;
     });
-  }, [search, statusFilter]);
+  }, [listings, search, statusFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);

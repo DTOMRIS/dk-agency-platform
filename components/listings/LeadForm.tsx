@@ -36,7 +36,12 @@ export default function LeadForm({ trackingCode, title }: LeadFormProps) {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitting(true);
-    console.log('listing_lead_submit', { trackingCode, title, ...form });
+    const response = await fetch(`/api/listings/${encodeURIComponent(trackingCode)}/leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    }).catch(() => null);
+    console.log('listing_lead_submit', { trackingCode, title, ...form, responseOk: response?.ok });
     await sendEmail(
       'owner@dkagency.az',
       emailTemplates.newLead(trackingCode, form.name || 'Yeni lead', 'Elan sahibi'),
