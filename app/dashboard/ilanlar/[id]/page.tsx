@@ -8,6 +8,7 @@ import { Check, Copy, Mail, MessageCircle, Phone, Star } from 'lucide-react';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getFieldsForType } from '@/lib/data/listingFieldConfig';
 import { MOCK_LISTINGS } from '@/lib/data/mockListings';
+import { emailTemplates, sendEmail } from '@/lib/email/templates';
 import { canTransition, getAvailableTransitions, getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 
 function formatPrice(price: number, currency: string, priceLabel?: string) {
@@ -65,8 +66,20 @@ export default function DashboardIlanDetailPage() {
     );
   }
 
-  const handleStatusUpdate = () => {
+  const handleStatusUpdate = async () => {
     if (status !== nextStatus && !canTransition(status, nextStatus)) return;
+    if (nextStatus === 'showcase_ready') {
+      await sendEmail(
+        listing.email,
+        emailTemplates.listingApproved(listing.trackingCode, listing.title, listing.ownerName),
+      );
+    }
+    if (nextStatus === 'rejected') {
+      await sendEmail(
+        listing.email,
+        emailTemplates.listingRejected(listing.trackingCode, 'Admin qərarı ilə rədd edildi', listing.ownerName),
+      );
+    }
     console.log('listing_status_update', {
       id: listing.id,
       trackingCode: listing.trackingCode,

@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 import { CheckCircle2, Loader2, Send } from 'lucide-react';
+import { emailTemplates, sendEmail } from '@/lib/email/templates';
 
 interface LeadFormProps {
   trackingCode: string;
@@ -36,6 +37,10 @@ export default function LeadForm({ trackingCode, title }: LeadFormProps) {
     event.preventDefault();
     setSubmitting(true);
     console.log('listing_lead_submit', { trackingCode, title, ...form });
+    await sendEmail(
+      'owner@dkagency.az',
+      emailTemplates.newLead(trackingCode, form.name || 'Yeni lead', 'Elan sahibi'),
+    );
     await new Promise((resolve) => setTimeout(resolve, 350));
     setSuccess('Müraciətiniz göndərildi!');
     setSubmitting(false);

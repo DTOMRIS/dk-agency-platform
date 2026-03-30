@@ -3,28 +3,33 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
-  Newspaper,
   BookOpen,
-  Wrench,
+  ChevronLeft,
+  FilePenLine,
   Globe,
-  Users,
+  LayoutDashboard,
+  LogOut,
+  Newspaper,
   Settings,
   Store,
-  ChevronLeft,
-  LogOut,
+  Users,
+  Wrench,
 } from 'lucide-react';
 import { MOCK_LISTINGS } from '@/lib/data/mockListings';
+import { adminBlogPosts, adminNewsQueue } from '@/lib/data/adminContent';
 
-const pendingCount = MOCK_LISTINGS.filter((listing) =>
-  ['submitted', 'ai_checked', 'committee_review'].includes(listing.status),
+const pendingListings = MOCK_LISTINGS.filter((listing) =>
+  ['submitted', 'committee_review', 'ai_checked'].includes(listing.status),
 ).length;
+const pendingNews = adminNewsQueue.filter((item) => item.status === 'fetched').length;
+const draftBlogs = adminBlogPosts.filter((item) => item.status === 'draft').length;
 
-const NAV_ITEMS = [
+const navItems = [
   { title: 'Əsas səhifə', href: '/dashboard', icon: LayoutDashboard },
-  { title: 'Elanlar', href: '/dashboard/ilanlar', icon: Store, badge: pendingCount.toString() },
-  { title: 'Xəbərlər', href: '/dashboard/xeberler', icon: Newspaper },
-  { title: 'Bloq', href: '/dashboard/blog', icon: BookOpen },
+  { title: 'Elanlar', href: '/dashboard/ilanlar', icon: Store, badge: pendingListings },
+  { title: 'Hero', href: '/dashboard/hero', icon: FilePenLine },
+  { title: 'Xəbərlər', href: '/dashboard/xeberler', icon: Newspaper, badge: pendingNews },
+  { title: 'Bloq', href: '/dashboard/blog', icon: BookOpen, badge: draftBlogs },
   { title: 'Toolkit', href: '/dashboard/toolkit', icon: Wrench },
   { title: 'Sayt', href: '/dashboard/site', icon: Globe },
   { title: 'İstifadəçilər', href: '/dashboard/users', icon: Users },
@@ -36,24 +41,20 @@ interface DashboardSidebarProps {
   onClose?: () => void;
 }
 
-export default function DashboardSidebar({
-  isOpen = true,
-  onClose,
-}: DashboardSidebarProps) {
+export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarProps) {
   const pathname = usePathname();
-
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <>
-      {isOpen && (
+      {isOpen ? (
         <button
           type="button"
           aria-label="Sidebar bağla"
           className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
-      )}
+      ) : null}
 
       <aside
         className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-slate-200 bg-white transition-transform duration-300 lg:translate-x-0 ${
@@ -66,9 +67,9 @@ export default function DashboardSidebar({
               DK
             </div>
             <div>
-              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">DK Agency OCAQ</div>
+              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">OCAQ İdarə Paneli</div>
               <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Admin panel
+                Admin mərkəzi
               </div>
             </div>
           </Link>
@@ -84,22 +85,16 @@ export default function DashboardSidebar({
 
         <div className="border-b border-slate-200 px-5 py-4">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-sm font-bold text-[var(--dk-navy)]">Admin istifadəçi</p>
-                <p className="mt-1 text-xs text-slate-500">Tam idarəetmə girişi aktivdir</p>
-              </div>
-              <span className="inline-flex h-3 w-3 rounded-full bg-emerald-500" />
-            </div>
+            <p className="text-sm font-bold text-[var(--dk-navy)]">Doğan Tomris</p>
+            <p className="mt-1 text-xs text-slate-500">Tam idarəetmə girişi aktivdir</p>
           </div>
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3 py-5">
           <div className="space-y-1.5">
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.href);
-
               return (
                 <Link
                   key={item.href}

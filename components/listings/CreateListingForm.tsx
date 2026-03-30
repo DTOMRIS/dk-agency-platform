@@ -18,6 +18,7 @@ import {
   type ListingCategory,
 } from '@/lib/data/listingCategories';
 import { getFieldsForType, type FieldConfig } from '@/lib/data/listingFieldConfig';
+import { emailTemplates, sendEmail } from '@/lib/email/templates';
 import { compressImage, generateThumbnail, validateImage } from '@/lib/utils/imageUtils';
 
 type FormStep = 1 | 2 | 3 | 4 | 5;
@@ -280,6 +281,10 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
     try {
       const uploadedImages = await uploadImagesIfPossible(trackingCode);
+      await sendEmail(
+        formData.email || 'member@dkagency.az',
+        emailTemplates.listingSubmitted(trackingCode, formData.ownerName || 'Üzv'),
+      );
       console.log('Listing submitted:', {
         trackingCode,
         ...formData,

@@ -4,11 +4,7 @@ import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -23,7 +19,7 @@ export default function DashboardLayout({
         >
           <Menu size={20} />
         </button>
-        <div className="text-sm font-bold text-[var(--dk-navy)]">DK Agency OCAQ</div>
+        <div className="text-sm font-bold text-[var(--dk-navy)]">OCAQ İdarə Paneli</div>
         <div className="text-xs font-semibold text-slate-500">Admin</div>
       </div>
 
