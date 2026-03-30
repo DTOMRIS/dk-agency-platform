@@ -299,9 +299,11 @@ export const memberProfiles = pgTable('member_profiles', {
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
   email: varchar('email', { length: 255 }).unique().notNull(),
-  name: varchar('name', { length: 150 }),
+  name: varchar('name', { length: 150 }).notNull(),
   passwordHash: text('password_hash'),
   phone: text('phone'),
+  company: varchar('company', { length: 150 }),
+  role: varchar('role', { length: 30 }).default('member'),
   emailVerified: boolean('email_verified').default(false),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),

@@ -42,6 +42,8 @@ export default function ListingsShowcasePage() {
   const [city, setCity] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [listings, setListings] = useState<MockListing[]>(MOCK_LISTINGS);
+  const [loadError, setLoadError] = useState('');
   const [activeListing, setActiveListing] = useState<MockListing | null>(null);
   const [initialized, setInitialized] = useState(false);
 
@@ -53,8 +55,34 @@ export default function ListingsShowcasePage() {
   }, [searchParams]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setLoading(false), 320);
-    return () => window.clearTimeout(timer);
+    let cancelled = false;
+
+    async function loadListings() {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/listings?showcase=true');
+        if (!response.ok) throw new Error('load failed');
+        const payload = (await response.json()) as { data?: MockListing[] };
+        if (!cancelled && Array.isArray(payload.data) && payload.data.length > 0) {
+          setListings(payload.data);
+          setLoadError('');
+        }
+      } catch {
+        if (!cancelled) {
+          setListings(MOCK_LISTINGS);
+          setLoadError('Elanlar yüklənə bilmədi');
+        }
+      } finally {
+        if (!cancelled) {
+          window.setTimeout(() => setLoading(false), 220);
+        }
+      }
+    }
+
+    void loadListings();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -72,7 +100,7 @@ export default function ListingsShowcasePage() {
   const filteredListings = useMemo(() => {
     const range = PRICE_RANGE_OPTIONS.find((item) => item.value === priceRange) ?? PRICE_RANGE_OPTIONS[0];
 
-    return MOCK_LISTINGS.filter((listing) => {
+    return listings.filter((listing) => {
       const typeMatch = type === 'all' || listing.type === type;
       const cityMatch = city === 'all' || normalizeCityForQuery(listing.city) === city;
       const priceMatch =
@@ -82,7 +110,7 @@ export default function ListingsShowcasePage() {
 
       return listing.isShowcase && typeMatch && cityMatch && priceMatch;
     });
-  }, [city, priceRange, type]);
+  }, [city, listings, priceRange, type]);
 
   const handleReset = () => {
     setType('all');
@@ -202,8 +230,7 @@ export default function ListingsShowcasePage() {
                 Bu filtrə uyğun elan tapılmadı
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
-                Filtrləri sıfırla və ya başqa kateqoriya seç. Yeni elanlar vitrində davamlı
-                yenilənəcək.
+                {loadError || 'Filtrləri sıfırla və ya başqa kateqoriya seç. Yeni elanlar vitrində davamlı yenilənəcək.'}
               </p>
               <button
                 type="button"

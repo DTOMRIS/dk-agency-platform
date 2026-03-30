@@ -18,13 +18,15 @@
     "snapshot:state": "node scripts/generate-state.mjs",
     "audit:drift": "node scripts/drift-audit.mjs",
     "fetch:news": "node --env-file=.env.local scripts/fetch-news.mjs",
-    "approve:news": "node scripts/approve-news.mjs"
+    "approve:news": "node scripts/approve-news.mjs",
+    "db:seed": "npx tsx lib/db/seed.ts"
   },
   "dependencies": {
     "@google/genai": "^1.42.0",
     "@neondatabase/serverless": "^1.0.2",
     "@tailwindcss/postcss": "^4",
     "autoprefixer": "^10.4.27",
+    "bcryptjs": "^3.0.3",
     "cloudinary": "^2.9.0",
     "drizzle-orm": "^0.45.1",
     "framer-motion": "^12.34.3",
@@ -40,9 +42,11 @@
     "remark-gfm": "^4.0.1",
     "rss-parser": "^3.13.0",
     "sharp": "^0.34.5",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
