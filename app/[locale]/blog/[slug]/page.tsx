@@ -4,7 +4,8 @@ import { ArrowRight, Bookmark, Calendar, ChevronLeft, Clock, Share2, Tag, User }
 
 import { MarkdownRenderer } from '@/components/blog';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
-import { CATEGORY_CONFIG, getBlogArticleBySlug, getRelatedArticles } from '@/lib/data/blogArticles';
+import { CATEGORY_CONFIG, getRelatedArticles } from '@/lib/data/blogArticles';
+import { getBlogPostDetail } from '@/lib/db/blog-repository';
 import { getProtectedArticleContent } from '@/lib/members/article-access';
 import { getServerMemberSession } from '@/lib/members/server-session';
 
@@ -190,9 +191,26 @@ Marka dizayndan başlayır, amma yalnız dizaynla yaşamır. Əgər restoranın 
   },
 } as const;
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const article = await getBlogPostDetail(slug);
+
+  if (!article) {
+    return {
+      title: 'Blog yazısı tapılmadı',
+      description: 'Axtardığınız yazı tapılmadı.',
+    };
+  }
+
+  return {
+    title: article.seoTitle || article.title,
+    description: article.seoDescription || article.summary,
+  };
+}
+
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = getBlogArticleBySlug(slug);
+  const article = await getBlogPostDetail(slug);
   const session = await getServerMemberSession();
 
   if (!article) {
