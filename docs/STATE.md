@@ -3,7 +3,7 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-03-30T07:04:06.874Z
+- GeneratedAt: 2026-03-30T08:39:45.544Z
 - BuildStatus: PASS
 
 ## Routes (102)
@@ -110,7 +110,7 @@ Auto-generated. Do not edit manually.
 - /verify-email
 - /xeberler
 
-## API Routes (23)
+## API Routes (27)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
@@ -121,6 +121,10 @@ Auto-generated. Do not edit manually.
 - /api/auth/verify-email
 - /api/health
 - /api/kazan-ai
+- /api/listings
+- /api/listings/[id]
+- /api/listings/[id]/leads
+- /api/listings/[id]/status
 - /api/member/auth
 - /api/member/checkout
 - /api/member/session
