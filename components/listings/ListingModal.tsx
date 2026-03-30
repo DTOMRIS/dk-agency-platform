@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { Copy, MapPin, MessageCircle, Share2, X } from 'lucide-react';
+import { Check, Copy, MapPin, MessageCircle, Share2, X } from 'lucide-react';
 import LeadForm from '@/components/listings/LeadForm';
-import { MockListing } from '@/lib/data/mockListings';
 import { getCategoryById } from '@/lib/data/listingCategories';
+import { getFieldsForType } from '@/lib/data/listingFieldConfig';
+import { MockListing } from '@/lib/data/mockListings';
 
 interface ListingModalProps {
   listing: MockListing | null;
@@ -17,55 +18,12 @@ function formatPrice(listing: MockListing) {
   return `${new Intl.NumberFormat('az-AZ').format(listing.price)} ${listing.currency}`;
 }
 
-function renderSpecs(type: MockListing['type'], data: MockListing['typeSpecificData']) {
-  switch (type) {
-    case 'devir':
-      return [
-        ['Sahə', `${data.area} m²`],
-        ['Oturacaq sayı', String(data.seatCount)],
-        ['Lisenziya', data.hasLicense ? 'Var' : 'Yoxdur'],
-        ['Aylıq gəlir', `${new Intl.NumberFormat('az-AZ').format(Number(data.monthlyRevenue ?? 0))} AZN`],
-      ];
-    case 'franchise-vermek':
-      return [
-        ['Royalty', String(data.royaltyRate)],
-        ['Başlanğıc investisiya', String(data.initialInvestment)],
-        ['Dəstək paketi', String(data.supportPackage)],
-      ];
-    case 'franchise-almaq':
-      return [
-        ['Büdcə', String(data.budget)],
-        ['İstiqamət', String(data.preferredSector)],
-        ['Təcrübə', String(data.experience)],
-      ];
-    case 'ortak-tapmaq':
-      return [
-        ['Axtarılan sərmayə', String(data.capitalNeeded)],
-        ['Təklif edilən pay', String(data.shareOffered)],
-        ['Ortağın rolu', String(data.partnerRole)],
-      ];
-    case 'obyekt-icaresi':
-      return [
-        ['Sahə', `${data.area} m²`],
-        ['Aylıq icarə', String(data.monthlyRent)],
-        ['Mətbəx çıxışı', data.hasKitchen ? 'Var' : 'Yoxdur'],
-        ['Havalandırma', data.hasExhaust ? 'Var' : 'Yoxdur'],
-      ];
-    case 'horeca-ekipman':
-      return [
-        ['Brend', String(data.brand)],
-        ['Vəziyyət', String(data.condition)],
-        ['Zəmanət', String(data.warranty)],
-      ];
-    case 'yeni-investisiya':
-      return [
-        ['Axtarılan investisiya', String(data.investmentAmount)],
-        ['Layihə mərhələsi', String(data.projectStage)],
-        ['Geri dönüş', String(data.expectedReturn)],
-      ];
-    default:
-      return [];
+function renderFieldValue(value: string | number | boolean | undefined) {
+  if (value === undefined || value === null || value === '') return '—';
+  if (typeof value === 'boolean') {
+    return value ? '✅ Bəli' : '❌ Xeyr';
   }
+  return String(value);
 }
 
 export default function ListingModal({ listing, onClose }: ListingModalProps) {
@@ -83,8 +41,8 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
     };
   }, [listing]);
 
-  const specs = useMemo(
-    () => (listing ? renderSpecs(listing.type, listing.typeSpecificData) : []),
+  const typeFields = useMemo(
+    () => (listing ? getFieldsForType(listing.type) : []),
     [listing]
   );
 
@@ -181,12 +139,17 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
             </div>
 
             <div className="rounded-[28px] border border-slate-200 bg-white p-6">
-              <h3 className="font-display text-2xl font-black text-[var(--dk-navy)]">Elan detalları</h3>
+              <h3 className="font-display text-2xl font-black text-[var(--dk-navy)]">Tipə görə detallar</h3>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                {specs.map(([label, value]) => (
-                  <div key={label} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">{label}</div>
-                    <div className="mt-2 text-sm font-semibold text-slate-700">{value}</div>
+                {typeFields.map((field) => (
+                  <div key={field.key} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">{field.label}</div>
+                    <div className="mt-2 text-sm font-semibold text-slate-700">
+                      {renderFieldValue(listing.typeSpecificData[field.key])}
+                      {field.suffix && listing.typeSpecificData[field.key] !== undefined && typeof listing.typeSpecificData[field.key] !== 'boolean'
+                        ? ` ${field.suffix}`
+                        : ''}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -225,7 +188,8 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
                 </button>
               </div>
               {toast ? (
-                <div className="mt-3 rounded-full bg-slate-100 px-4 py-2 text-center text-xs font-semibold text-slate-600">
+                <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700">
+                  <Check className="h-4 w-4" />
                   {toast}
                 </div>
               ) : null}

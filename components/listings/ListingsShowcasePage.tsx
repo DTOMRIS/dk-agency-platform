@@ -30,6 +30,7 @@ function normalizeCityForQuery(city: string) {
     Şəki: 'seki',
     Qusar: 'qusar',
   };
+
   return map[city] ?? city.toLowerCase();
 }
 
@@ -58,10 +59,12 @@ export default function ListingsShowcasePage() {
 
   useEffect(() => {
     if (!initialized) return;
+
     const params = new URLSearchParams();
     if (type !== 'all') params.set('type', type);
     if (city !== 'all') params.set('city', city);
     if (priceRange !== 'all') params.set('price', priceRange);
+
     const next = params.toString() ? `${pathname}?${params.toString()}` : pathname;
     router.replace(next, { scroll: false });
   }, [city, initialized, pathname, priceRange, router, type]);
@@ -100,21 +103,22 @@ export default function ListingsShowcasePage() {
                 HoReCa Elanları
               </h1>
               <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-                Azərbaycanın ən böyük HoReCa elan platforması. Restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq bir vitrində.
+                Azərbaycanın ən böyük HoReCa elan platforması. Restoran devri, franchise,
+                ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq bir vitrində.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
-                  href="/b2b-panel/yeni-ilan"
+                  href="/ilan-ver"
                   className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white transition hover:opacity-95"
                 >
                   Elan ver
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/b2b-panel"
+                  href="/b2b-panel/ilanlarim"
                   className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:border-[var(--dk-gold)]"
                 >
-                  B2B panelə keç
+                  Elanlarıma bax
                 </Link>
               </div>
             </div>
@@ -198,7 +202,8 @@ export default function ListingsShowcasePage() {
                 Bu filtrə uyğun elan tapılmadı
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
-                Filtrləri sıfırla və ya başqa kateqoriya seç. Yeni elanlar vitrində davamlı yenilənəcək.
+                Filtrləri sıfırla və ya başqa kateqoriya seç. Yeni elanlar vitrində davamlı
+                yenilənəcək.
               </p>
               <button
                 type="button"
@@ -212,7 +217,9 @@ export default function ListingsShowcasePage() {
             <>
               <div className="mb-6 flex items-center justify-between gap-4">
                 <div>
-                  <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">Vitrində olan elanlar</h2>
+                  <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">
+                    Vitrində olan elanlar
+                  </h2>
                   <p className="mt-2 text-sm text-slate-500">
                     Hazırda {filteredListings.length} aktiv showcase elanı görünür.
                   </p>

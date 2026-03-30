@@ -25,6 +25,7 @@
     "@neondatabase/serverless": "^1.0.2",
     "@tailwindcss/postcss": "^4",
     "autoprefixer": "^10.4.27",
+    "cloudinary": "^2.9.0",
     "drizzle-orm": "^0.45.1",
     "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",

@@ -256,6 +256,31 @@ export const siteSettings = pgTable('site_settings', {
   updatedAt: timestamp('updated_at').defaultNow(),
 });
 
+export const emailTemplateAudienceEnum = pgEnum('email_template_audience', [
+  'member',
+  'lead',
+  'admin',
+  'system',
+]);
+
+// Email templates (message catalog)
+export const emailTemplates = pgTable('email_templates', {
+  id: serial('id').primaryKey(),
+  templateKey: varchar('template_key', { length: 120 }).unique().notNull(),
+  audience: emailTemplateAudienceEnum('audience').notNull().default('member'),
+  subjectAz: text('subject_az').notNull(),
+  subjectTr: text('subject_tr'),
+  subjectEn: text('subject_en'),
+  previewAz: text('preview_az'),
+  previewTr: text('preview_tr'),
+  previewEn: text('preview_en'),
+  bodyAz: text('body_az').notNull(),
+  bodyTr: text('body_tr'),
+  bodyEn: text('body_en'),
+  isActive: boolean('is_active').notNull().default(true),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
 // Membership profiles
 export const memberProfiles = pgTable('member_profiles', {
   id: serial('id').primaryKey(),
@@ -265,8 +290,50 @@ export const memberProfiles = pgTable('member_profiles', {
   phone: varchar('phone', { length: 30 }),
   role: varchar('role', { length: 30 }).default('member'),
   source: varchar('source', { length: 50 }).default('website'),
+  emailVerified: boolean('email_verified').default(false),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// Generic users table for auth-related utilities and future adapter alignment
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  email: varchar('email', { length: 255 }).unique().notNull(),
+  name: varchar('name', { length: 150 }),
+  passwordHash: text('password_hash'),
+  phone: text('phone'),
+  emailVerified: boolean('email_verified').default(false),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+export const passwordResetTokens = pgTable('password_reset_tokens', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  token: text('token').notNull().unique(),
+  expiresAt: timestamp('expires_at').notNull(),
+  usedAt: timestamp('used_at'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const emailVerificationTokens = pgTable('email_verification_tokens', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  token: text('token').notNull().unique(),
+  expiresAt: timestamp('expires_at').notNull(),
+  usedAt: timestamp('used_at'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const loginLogs = pgTable('login_logs', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  ipAddress: text('ip_address'),
+  userAgent: text('user_agent'),
+  city: text('city'),
+  country: text('country'),
+  success: boolean('success').default(true),
+  createdAt: timestamp('created_at').defaultNow(),
 });
 
 // Membership subscriptions
