@@ -2,6 +2,32 @@
 
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
+## [0.5.0] - 2026-03-31
+### Added
+- `/ilanlar` vitrin MVP-si: filter, kart grid, modal, `Maraqlaniram` formu, WhatsApp paylasim
+- Admin `ilanlar` paneli: list, detail, status workflow, review qeydlari, lead kartlari
+- `ilan-ver` multi-step formu: type-specific field config, sekil preview, client-side compress, Cloudinary upload hazirligi
+- Auth genislendirmeleri: forgot/reset password, email verify, settings, change password, login logs, user dropdown
+- Admin CRUD shell-lari: hero, blog, toolkit, site, xeberler, users, dashboard statistikasi
+- Email template qati ve listing event hook-lari (`listingSubmitted`, `listingApproved`, `listingRejected`, `newLead`)
+- Neon + Drizzle real DB wiring, listings API, bcryptjs auth hazirligi, seed scriptleri
+- Blog DB migration: `db:seed-blog`, `/api/blog`, `/api/blog/[slug]`, admin blog formu real API axini
+
+### Changed
+- Homepage polish: hero metnleri, partner carousel, `Nece isleyir?` section, B2B elanlar bloku
+- Header/MegaMenu/Footer nav axini yenilendi: `Aletler`, `Ilanlar`, `Elan ver`, KAZAN AI `BETA`, qiriq linkler duzeldi
+- `KAZAN AI` route-u aktiv chat sehifesine kecdi
+- Blog list/detail ve admin blog idarasi statik source-dan DB+fallback qatina kecirildi
+- Dashboard sidebari `OCAQ Idare Paneli` kimi formallasdi, badge ve yeni bolmeler elave olundu
+
+### Fixed
+- Mojibake/encoding problemlari: header, footer, megamenu, stage selector, toolkit ve blog hisselerinde temizleme
+- `middleware.ts` berpa olundu, i18n routing qirigi baglandi
+- Toolkit locale wrapper-leri normallasdirildi (`basabas`, `menu-matrix`)
+- Homepage/blog reng kontrasti, login/register input readability, mega menu trigger davranisi duzeldi
+- ESLint CI error-lari baglandi, build/lint axini stabillesdi
+- Listings, auth ve blog qati real DB smoke testlerle tesdiqlendi
+
 ## [0.4.0] - 2026-03-26
 ### Added
 - `KAZAN AI` knowledge base (`lib/kazan-ai/knowledge-base.ts`) - 10 yazidan cixarilan formula, range, checklist, praktik addim ve guru sitatlari
