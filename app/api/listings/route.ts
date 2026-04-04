@@ -1,18 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { getListings } from '@/lib/db/listings-repository';
+import { getAdminListings } from '@/lib/repositories/listingRepository';
 import { listingMedia, listings } from '@/lib/db/schema';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { generateTrackingCode } from '@/lib/utils/tracking';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
+  const scope = searchParams.get('scope');
   const type = searchParams.get('type');
   const city = searchParams.get('city');
   const status = searchParams.get('status');
+  const query = searchParams.get('q');
   const showcase = searchParams.get('showcase') === 'true';
   const minPrice = searchParams.get('minPrice');
   const maxPrice = searchParams.get('maxPrice');
+  const limit = Number(searchParams.get('limit') || '20');
+  const offset = Number(searchParams.get('offset') || '0');
+
+  if (scope === 'admin') {
+    const result = await getAdminListings({
+      status,
+      query,
+      limit,
+      offset,
+    });
+
+    return NextResponse.json({
+      success: true,
+      data: result.items,
+      total: result.total,
+      source: result.source,
+    });
+  }
 
   const results = await getListings({
     type,

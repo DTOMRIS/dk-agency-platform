@@ -1,39 +1,101 @@
 'use client';
 
-import { useState } from 'react';
-import { defaultNewsSources } from '@/lib/data/newsSources';
+import { useEffect, useState } from 'react';
+
+interface NewsSourceRow {
+  id: number;
+  name: string;
+  url: string;
+  rssUrl: string;
+  language: 'en' | 'tr' | 'az';
+  category: 'operations' | 'finance' | 'growth' | 'market' | 'technology';
+  isActive: boolean;
+  lastFetchedAt: string | null;
+}
 
 export default function DashboardXeberlerRssPage() {
-  const [sources, setSources] = useState(defaultNewsSources);
+  const [sources, setSources] = useState<NewsSourceRow[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  async function loadSources() {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/news/admin?resource=sources');
+      if (!response.ok) throw new Error('load failed');
+      const payload = (await response.json()) as { data?: NewsSourceRow[] };
+      setSources(payload.data || []);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    void loadSources();
+  }, []);
+
+  async function toggleSource(id: number, isActive: boolean) {
+    const response = await fetch(`/api/news/sources/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ isActive }),
+    });
+
+    if (response.ok) {
+      setSources((prev) => prev.map((item) => (item.id === id ? { ...item, isActive } : item)));
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white p-6 lg:p-8">
       <div className="mx-auto max-w-6xl space-y-6">
-        <div className="flex items-center justify-between gap-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <div>
-            <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">RSS Mənbələri</h1>
-            <p className="mt-3 text-sm text-slate-500">n8n workflow qoşulanda bu siyahıdan avtomatik feed çəkiləcək.</p>
-          </div>
-          <div className="flex gap-3">
-            <button type="button" onClick={() => console.log('rss_fetch_now')} className="rounded-full border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700">İndi çək</button>
-            <button type="button" onClick={() => setSources((prev) => [...prev, { name: '', url: '', rssUrl: '', language: 'en', category: 'market', isActive: true }])} className="rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white">Yeni mənbə əlavə et</button>
-          </div>
+        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">RSS menbeleri</h1>
+          <p className="mt-3 text-sm text-slate-500">
+            `news_sources` cedveli uzerinden source statusu ve son fetch vaxti idare olunur.
+          </p>
         </div>
 
         <div className="grid gap-4">
-          {sources.map((source, index) => (
-            <div key={`${source.name}-${index}`} className="grid gap-4 rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm md:grid-cols-2 xl:grid-cols-[1fr_1fr_160px_160px_120px]">
-              <input value={source.name} onChange={(e) => setSources((prev) => prev.map((item, idx) => (idx === index ? { ...item, name: e.target.value } : item)))} placeholder="Mənbə adı" className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-              <input value={source.rssUrl} onChange={(e) => setSources((prev) => prev.map((item, idx) => (idx === index ? { ...item, rssUrl: e.target.value } : item)))} placeholder="RSS URL" className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-              <input value={source.language} onChange={(e) => setSources((prev) => prev.map((item, idx) => (idx === index ? { ...item, language: e.target.value as 'en' | 'tr' | 'az' } : item)))} className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-              <input value={source.category} onChange={(e) => setSources((prev) => prev.map((item, idx) => (idx === index ? { ...item, category: e.target.value as typeof source.category } : item)))} className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+          {sources.map((source) => (
+            <div
+              key={source.id}
+              className="grid gap-4 rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm md:grid-cols-2 xl:grid-cols-[1fr_1fr_160px_160px_200px_120px]"
+            >
+              <div>
+                <div className="text-sm font-bold text-[var(--dk-navy)]">{source.name}</div>
+                <div className="mt-1 text-xs text-slate-500">{source.url}</div>
+              </div>
+              <div className="truncate rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+                {source.rssUrl}
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+                {source.language}
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+                {source.category}
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+                {source.lastFetchedAt
+                  ? new Date(source.lastFetchedAt).toLocaleString('az-AZ')
+                  : 'Hele fetch edilmeyib'}
+              </div>
               <label className="inline-flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
-                <input type="checkbox" checked={source.isActive} onChange={(e) => setSources((prev) => prev.map((item, idx) => (idx === index ? { ...item, isActive: e.target.checked } : item)))} />
+                <input
+                  type="checkbox"
+                  checked={source.isActive}
+                  onChange={(e) => void toggleSource(source.id, e.target.checked)}
+                />
                 Aktiv
               </label>
             </div>
           ))}
         </div>
+
+        {!loading && sources.length === 0 ? (
+          <div className="rounded-[28px] border border-slate-200 bg-white p-6 text-sm text-slate-500 shadow-sm">
+            Source tapilmadi.
+          </div>
+        ) : null}
       </div>
     </div>
   );
