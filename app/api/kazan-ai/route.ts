@@ -173,18 +173,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Ən azı 1 mesaj göndərilməlidir.' }, { status: 400 });
     }
 
-    const anthropicApiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
     const deepseekApiKey = process.env.DEEPSEEK_API_KEY;
-    const availableApiKey = process.env.DEEPSEEK_API_KEY || process.env.ANTHROPIC_API_KEY;
+    const anthropicApiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
+
+    if (deepseekApiKey) {
+      const result = await callDeepSeek(messages, deepseekApiKey);
+      if (result.ok) {
+        return NextResponse.json(result.body, { status: result.status });
+      }
+    }
 
     if (anthropicApiKey) {
       const result = await callAnthropic(messages, anthropicApiKey);
-      return NextResponse.json(result.body, { status: result.status });
-    }
-
-    if (availableApiKey) {
-      if (deepseekApiKey) {
-        const result = await callDeepSeek(messages, deepseekApiKey);
+      if (result.ok) {
         return NextResponse.json(result.body, { status: result.status });
       }
     }
