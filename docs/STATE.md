@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-04T20:20:10.403Z
+- GeneratedAt: 2026-04-04T20:46:28.903Z
 - BuildStatus: PASS
 
-## Routes (103)
+## Routes (104)
 - /[locale]
 - /[locale]/about
 - /[locale]/blog
@@ -67,6 +67,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/blog
 - /dashboard/blog/[slug]
 - /dashboard/blog/new
+- /dashboard/blog/yeni
 - /dashboard/deal-flow
 - /dashboard/duyurular
 - /dashboard/etkinlikler
@@ -111,7 +112,7 @@ Auto-generated. Do not edit manually.
 - /verify-email
 - /xeberler
 
-## API Routes (29)
+## API Routes (34)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
@@ -127,6 +128,7 @@ Auto-generated. Do not edit manually.
 - /api/listings
 - /api/listings/[id]
 - /api/listings/[id]/leads
+- /api/listings/[id]/reviews
 - /api/listings/[id]/status
 - /api/member/auth
 - /api/member/checkout
@@ -134,11 +136,15 @@ Auto-generated. Do not edit manually.
 - /api/member/webhook
 - /api/news
 - /api/news/[slug]
+- /api/news/admin
+- /api/news/admin/[id]
+- /api/news/sources/[id]
 - /api/newsletter/digest
 - /api/orchestrator
 - /api/rss/haberler
 - /api/rss/xeberler
 - /api/rss/xeberler/[locale]
+- /api/settings
 - /api/telegram/post
 - /api/upload
 
