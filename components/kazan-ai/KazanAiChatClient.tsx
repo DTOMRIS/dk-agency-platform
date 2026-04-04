@@ -15,7 +15,7 @@ const SAMPLE_QUESTIONS = [
   'Food cost-um %38, nə etməliyəm?',
   'P&L necə oxunur?',
   'AQTA yoxlamasına necə hazırlaşım?',
-  'Delivery mənfəətlidirmi?',
+  'Wolt komissiyon riyaziyyatı',
   'Menyu neçə yemək olmalıdır?',
 ];
 
@@ -26,15 +26,25 @@ export default function KazanAiChatClient() {
   const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: INITIAL_ASSISTANT }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [lastSentAt, setLastSentAt] = useState(0);
+  const [throttleError, setThrottleError] = useState('');
 
   async function sendMessage(question: string) {
     const trimmed = question.trim();
     if (!trimmed || loading) return;
+    const now = Date.now();
+    const waitMs = 3000 - (now - lastSentAt);
+    if (waitMs > 0) {
+      setThrottleError(`${Math.ceil(waitMs / 1000)} saniyə gözlə, sonra yenidən göndər.`);
+      return;
+    }
 
     const nextMessages: Message[] = [...messages, { role: 'user', content: trimmed }];
     setMessages(nextMessages);
     setInput('');
     setLoading(true);
+    setThrottleError('');
+    setLastSentAt(now);
 
     try {
       const response = await fetch('/api/kazan-ai', {
@@ -71,7 +81,7 @@ export default function KazanAiChatClient() {
 
   return (
     <div className="min-h-screen bg-[var(--dk-paper)] pb-16">
-      <div className="border-b border-slate-200 bg-white">
+      <div className="border-b border-[var(--dk-gold)]/20 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--dk-navy)] px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-white">
             <Sparkles size={14} />
@@ -88,17 +98,17 @@ export default function KazanAiChatClient() {
 
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">
         <section className="flex min-h-[68vh] flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
+          <div className="flex items-center justify-between border-b border-slate-200 bg-[var(--dk-navy)] px-5 py-5 sm:px-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white ring-1 ring-white/15">
                 <Bot size={22} />
               </div>
               <div>
-                <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-500">Canlı Chat</div>
-                <div className="text-lg font-bold text-slate-900">KAZAN AI</div>
+                <div className="text-sm font-black uppercase tracking-[0.18em] text-[var(--dk-gold)]">Canlı Chat</div>
+                <div className="text-lg font-bold text-white">KAZAN AI</div>
               </div>
             </div>
-            <Link href="/toolkit" className="text-sm font-bold text-[var(--dk-red)] transition-colors hover:text-rose-700">
+            <Link href="/toolkit" className="text-sm font-bold text-[var(--dk-gold)] transition-colors hover:text-amber-200">
               Toolkit →
             </Link>
           </div>
@@ -150,7 +160,7 @@ export default function KazanAiChatClient() {
               <div className="flex justify-start">
                 <div className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">
                   <Loader2 size={16} className="animate-spin" />
-                  KAZAN hesablayır...
+                  KAZAN düşünür...
                 </div>
               </div>
             )}
@@ -174,6 +184,7 @@ export default function KazanAiChatClient() {
                 <Send size={16} />
               </button>
             </div>
+            {throttleError ? <p className="mt-3 text-sm font-medium text-[var(--dk-red)]">{throttleError}</p> : null}
           </form>
         </section>
 
