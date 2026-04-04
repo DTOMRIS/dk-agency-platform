@@ -157,17 +157,33 @@ export default function DashboardIlanDetailPage() {
     setTimeout(() => setToast(''), 2400);
   };
 
-  const handleSaveNote = () => {
-    const next = {
+  const handleSaveNote = async () => {
+    const response = await fetch(`/api/listings/${listing.id}/reviews`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        notes: note.trim() || 'Qeyd elave edilmedi.',
+        score,
+        decision:
+          nextStatus === 'showcase_ready'
+            ? 'approve'
+            : nextStatus === 'rejected'
+              ? 'reject'
+              : 'conditional',
+      }),
+    }).catch(() => null);
+
+    const payload = await response?.json().catch(() => null);
+    const next = payload?.data ?? {
       reviewer: 'Admin',
-      note: note.trim() || 'Qeyd əlavə edilmədi.',
+      note: note.trim() || 'Qeyd elave edilmedi.',
       score,
       createdAt: new Date().toISOString(),
     };
-    console.log('listing_review_note', { listingId: listing.id, ...next });
+
     setNotes((prev) => [next, ...prev]);
     setNote('');
-    setToast('Qeyd saxlanıldı.');
+    setToast('Qeyd saxlanildi.');
     setTimeout(() => setToast(''), 2400);
   };
 

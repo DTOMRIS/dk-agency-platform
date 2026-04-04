@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerMemberSession } from '@/lib/members/server-session';
-import { updateListingStatus } from '@/lib/repositories/listingRepository';
+import { updateNewsArticleReviewState } from '@/lib/repositories/newsRepository';
 
 export async function PATCH(
   request: NextRequest,
@@ -8,16 +8,15 @@ export async function PATCH(
 ) {
   const session = await getServerMemberSession();
   if (!session.loggedIn || session.plan !== 'admin') {
-    return NextResponse.json({ success: false, error: 'Admin girişi tələb olunur.' }, { status: 403 });
+    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
   }
 
   const { id } = await params;
   const body = await request.json();
 
-  const result = await updateListingStatus(Number(id), {
+  const result = await updateNewsArticleReviewState(Number(id), {
     status: body.status,
-    isShowcase: body.isShowcase,
-    isFeatured: body.isFeatured,
+    isEditorPick: body.isEditorPick,
   });
 
   return NextResponse.json({ success: true, source: result.source });

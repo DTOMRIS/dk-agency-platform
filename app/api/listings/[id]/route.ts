@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getListingById } from '@/lib/db/listings-repository';
+import { getListingDetail } from '@/lib/repositories/listingRepository';
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
-  const listing = await getListingById(Number(id));
+  const listing = await getListingDetail(Number(id));
 
   if (!listing) {
     return NextResponse.json({ success: false, error: 'Elan tapılmadı.' }, { status: 404 });

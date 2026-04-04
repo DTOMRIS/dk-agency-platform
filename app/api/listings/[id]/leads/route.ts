@@ -2,6 +2,22 @@ import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { listingLeads, listings } from '@/lib/db/schema';
+import { getServerMemberSession } from '@/lib/members/server-session';
+import { getListingLeadsByListingId } from '@/lib/repositories/listingRepository';
+
+export async function GET(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const session = await getServerMemberSession();
+  if (!session.loggedIn || session.plan !== 'admin') {
+    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
+  }
+
+  const { id } = await params;
+  const data = await getListingLeadsByListingId(Number(id));
+  return NextResponse.json({ success: true, data });
+}
 
 export async function POST(
   request: NextRequest,
