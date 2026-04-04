@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-04T19:48:04.997Z
+- GeneratedAt: 2026-04-04T20:20:10.403Z
 - BuildStatus: PASS
 
-## Routes (102)
+## Routes (103)
 - /[locale]
 - /[locale]/about
 - /[locale]/blog
@@ -46,6 +46,7 @@ Auto-generated. Do not edit manually.
 - /auth/login
 - /auth/register
 - /b2b-panel
+- /b2b-panel/[slug]
 - /b2b-panel/ilanlarim
 - /b2b-panel/mesajlar
 - /b2b-panel/toolkit
