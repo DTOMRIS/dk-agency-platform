@@ -103,7 +103,7 @@ export function KazanAIBot() {
     <motion.button
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="group fixed right-8 bottom-8 z-50 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-red text-white shadow-2xl shadow-brand-red/40"
+      className="group fixed right-8 bottom-8 z-50 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#1A1A2E] text-[#C5A022] shadow-2xl shadow-[#1A1A2E]/30"
     >
       <div className="pointer-events-none absolute -top-12 right-0 rounded-xl bg-white px-4 py-2 text-xs font-bold whitespace-nowrap text-slate-900 opacity-0 shadow-xl transition-all group-hover:opacity-100">
         KAZAN AI-ya sual ver!

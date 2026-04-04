@@ -373,12 +373,12 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   {/* Featured Image */}
                   <div className="relative aspect-[16/10] bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 rounded-2xl overflow-hidden mb-5 shadow-xl">
                     <div className="absolute inset-0 flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
-                      <span className="text-9xl opacity-15">{categoryConfig[featuredArticle.category]?.emoji}</span>
+                      <span className="text-9xl opacity-15">{categoryConfig[featuredArticle.category]?.emoji || '📝'}</span>
                     </div>
                     
                     <div className="absolute bottom-4 left-4">
                       <span className={`${catColors[featuredArticle.category]} text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg`}>
-                        {categoryConfig[featuredArticle.category]?.label}
+                        {categoryConfig[featuredArticle.category]?.label || featuredArticle.category}
                       </span>
                     </div>
 
@@ -484,7 +484,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                       : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] text-[var(--dk-muted)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_15%,transparent)]'
                   }`}
                 >
-                  <span>{config.emoji}</span>
+                  <span>{config?.emoji || '📝'}</span>
                   {config.label}
                 </button>
               ))}

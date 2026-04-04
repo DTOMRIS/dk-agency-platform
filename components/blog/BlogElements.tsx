@@ -245,9 +245,9 @@ const categoryConfig = {
 export function CategoryBadge({ category }: CategoryBadgeProps) {
   const config = categoryConfig[category];
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium border ${config.color}`}>
-      <span>{config.emoji}</span>
-      <span>{config.label}</span>
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium border ${config?.color || 'bg-slate-100 text-slate-700 border-slate-200'}`}>
+      <span>{config?.emoji || '📝'}</span>
+      <span>{config?.label || 'Digər'}</span>
     </span>
   );
 }
