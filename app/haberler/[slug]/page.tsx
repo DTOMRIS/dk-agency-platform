@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { formatDateAz } from '@/lib/formatDate';
 import { getNewsArticleBySlug, getRelatedApprovedNewsArticles } from '@/lib/repositories/newsRepository';
 
 function buildImageFallback(title: string) {
@@ -52,7 +53,7 @@ export default async function HaberDetailPage({
               <span className="rounded-full bg-[#FFF8E7] px-3 py-1 text-[#C5A022]">{article.category}</span>
               <span>{article.sourceName || 'Mənbə yoxdur'}</span>
               <span>•</span>
-              <span>{new Date(article.publishedAt).toLocaleDateString('az-AZ')}</span>
+              <span>{formatDateAz(article.publishedAt)}</span>
             </div>
 
             <h1 className="mt-5 font-display text-5xl font-black leading-tight">{article.title}</h1>
@@ -68,7 +69,10 @@ export default async function HaberDetailPage({
             </div>
 
             <div className="mt-8 space-y-4 text-sm leading-7 text-slate-700">
-              <p>{article.summary}</p>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Qısa xülasə</div>
+                <p className="mt-3">{article.summary}</p>
+              </div>
               {article.originalSummary && article.originalSummary !== article.summary ? (
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                   <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Original Summary</div>
@@ -84,7 +88,15 @@ export default async function HaberDetailPage({
                 rel="noopener noreferrer"
                 className="rounded-full bg-[#1A1A2E] px-5 py-3 text-sm font-bold text-white"
               >
-                Orijinal xəbəri aç
+                Orijinal mənbə
+              </a>
+              <a
+                href={article.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-[#C5A022] hover:text-[#1A1A2E]"
+              >
+                Tam xəbəri oxu →
               </a>
               {article.sourceName ? (
                 <span className="rounded-full border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600">
@@ -107,7 +119,9 @@ export default async function HaberDetailPage({
                 >
                   <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">{item.category}</div>
                   <div className="mt-2 text-sm font-bold leading-6 text-[#1A1A2E]">{item.title}</div>
-                  <div className="mt-2 text-xs text-slate-500">{item.sourceName || 'Mənbə yoxdur'}</div>
+                  <div className="mt-2 text-xs text-slate-500">
+                    {(item.sourceName || 'Mənbə yoxdur') + ' • ' + formatDateAz(item.publishedAt)}
+                  </div>
                 </Link>
               ))}
 

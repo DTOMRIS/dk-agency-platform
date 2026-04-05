@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray, ne, sql } from 'drizzle-orm';
+import { and, desc, eq, isNotNull, ne, sql } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { newsArticles, newsSources } from '@/lib/db/schema';
 import { getAllNews } from '@/lib/data/mockNewsDB';
@@ -28,6 +28,22 @@ export interface PublicNewsArticle {
   externalUrl: string;
   publishedAt: string;
   isEditorPick: boolean;
+}
+
+function getPublicNewsConditions(category?: NewsCategoryKey) {
+  const conditions = [
+    eq(newsArticles.status, 'approved'),
+    isNotNull(newsArticles.slug),
+    isNotNull(newsArticles.titleAz),
+    sql`trim(coalesce(${newsArticles.titleAz}, '')) <> ''`,
+    isNotNull(newsArticles.summaryAz),
+  ];
+
+  if (category && category !== 'all') {
+    conditions.push(eq(newsArticles.category, category));
+  }
+
+  return conditions;
 }
 
 export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
@@ -279,21 +295,32 @@ function mapPublicArticle(row: {
 
 export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}) {
   if (!dbAvailable || !db) {
+    const mockItems = getAllNews()
+      .map((item, index) => ({
+        id: index + 1,
+        slug: item.slug,
+        title: item.title,
+        summary: item.summary,
+        category: 'market' as const,
+        imageUrl: null,
+        author: item.author,
+        sourceName: item.author,
+        externalUrl: `https://dkagency.az/haberler/${item.slug}`,
+        publishedAt: item.publishDate,
+        isEditorPick: index === 0,
+      }))
+      .filter((item) => (filters.category && filters.category !== 'all' ? item.category === filters.category : true));
+
     return {
-      items: [] as PublicNewsArticle[],
-      total: 0,
+      items: mockItems.slice(filters.offset ?? 0, (filters.offset ?? 0) + (filters.limit ?? 12)),
+      total: mockItems.length,
       source: 'mock' as const,
     };
   }
 
-  const conditions = [eq(newsArticles.status, 'approved')];
-  if (filters.category && filters.category !== 'all') {
-    conditions.push(eq(newsArticles.category, filters.category));
-  }
-
   const limit = filters.limit ?? 12;
   const offset = filters.offset ?? 0;
-  const where = and(...conditions);
+  const where = and(...getPublicNewsConditions(filters.category));
 
   const [rows, totalRows] = await Promise.all([
     db
@@ -350,7 +377,7 @@ export async function getNewsArticleBySlug(slug: string) {
     })
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
-    .where(eq(newsArticles.slug, slug))
+    .where(and(eq(newsArticles.slug, slug), ...getPublicNewsConditions()))
     .then((rows) => rows[0] || null);
 
   if (!row || row.status !== 'approved') return null;
@@ -384,8 +411,7 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
     .where(
       and(
-        eq(newsArticles.status, 'approved'),
-        eq(newsArticles.category, category),
+        ...getPublicNewsConditions(category),
         ne(newsArticles.id, articleId),
       ),
     )

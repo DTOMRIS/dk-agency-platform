@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
+import { formatDateAz } from '@/lib/formatDate';
 import { getApprovedNewsArticles, type NewsCategoryKey } from '@/lib/repositories/newsRepository';
 
 const CATEGORY_TABS: Array<{ key: NewsCategoryKey; label: string }> = [
@@ -99,7 +100,7 @@ export default async function HaberlerPage({
                 <div className="mt-6 flex flex-wrap gap-3 text-xs font-semibold text-slate-500">
                   <span>{hero.sourceName || 'Mənbə yoxdur'}</span>
                   <span>•</span>
-                  <span>{new Date(hero.publishedAt).toLocaleDateString('az-AZ')}</span>
+                  <span>{formatDateAz(hero.publishedAt)}</span>
                   <span>•</span>
                   <span>{hero.category}</span>
                 </div>
@@ -134,7 +135,7 @@ export default async function HaberlerPage({
                 <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-slate-500">
                   <span>{item.sourceName || 'Mənbə yoxdur'}</span>
                   <span>•</span>
-                  <span>{new Date(item.publishedAt).toLocaleDateString('az-AZ')}</span>
+                  <span>{formatDateAz(item.publishedAt)}</span>
                 </div>
               </div>
             </Link>
