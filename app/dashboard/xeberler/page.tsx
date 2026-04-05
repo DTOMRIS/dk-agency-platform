@@ -20,6 +20,7 @@ export default function DashboardXeberlerPage() {
   const [items, setItems] = useState<AdminNewsRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
 
   async function loadNews(nextFilter: FilterStatus) {
     setLoading(true);
@@ -76,14 +77,34 @@ export default function DashboardXeberlerPage() {
   }, [filter]);
 
   async function updateItem(id: number, body: { status?: FilterStatus; isEditorPick?: boolean }) {
-    const response = await fetch(`/api/news/admin/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+    setError(null);
+    setToast(null);
+    try {
+      console.log('[dashboard/xeberler] updateItem', { id, body });
+      const response = await fetch(`/api/news/admin/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const payload = (await response.json()) as { success?: boolean; error?: string; source?: string };
 
-    if (response.ok) {
+      console.log('[dashboard/xeberler] updateItem response', {
+        id,
+        ok: response.ok,
+        status: response.status,
+        payload,
+      });
+
+      if (!response.ok) {
+        throw new Error(payload.error || `update failed (${response.status})`);
+      }
+
+      setToast('Xeber yenilendi.');
       await loadNews(filter);
+    } catch (updateError) {
+      const message = updateError instanceof Error ? updateError.message : 'Xeber yenilenmedi';
+      console.error('[dashboard/xeberler] update failed', { id, body, error: message });
+      setError(message);
     }
   }
 
@@ -121,6 +142,12 @@ export default function DashboardXeberlerPage() {
         {error ? (
           <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-700">
             Xeber listesi yuklenmedi: {error}
+          </div>
+        ) : null}
+
+        {toast ? (
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700">
+            {toast}
           </div>
         ) : null}
 
