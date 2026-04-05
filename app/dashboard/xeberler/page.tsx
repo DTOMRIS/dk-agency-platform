@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { compressImage, validateImage } from '@/lib/utils/imageUtils';
 
 type FilterStatus = 'all' | 'fetched' | 'translated' | 'approved' | 'rejected';
 
@@ -39,6 +40,7 @@ export default function DashboardXeberlerPage() {
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [savingEditor, setSavingEditor] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [editorDraft, setEditorDraft] = useState<EditorDraft | null>(null);
 
   async function loadNews(nextFilter: FilterStatus) {
@@ -140,6 +142,55 @@ export default function DashboardXeberlerPage() {
       externalUrl: item.externalUrl,
       status: item.status,
     });
+  }
+
+  async function handleEditorImage(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file || !editorDraft) return;
+
+    setError(null);
+    setToast(null);
+
+    const validation = validateImage(file);
+    if (!validation.valid) {
+      setError(validation.error || 'Sekil secilemedi.');
+      event.target.value = '';
+      return;
+    }
+
+    setUploadingImage(true);
+    try {
+      const compressed = await compressImage(file, {
+        maxWidth: 1400,
+        maxHeight: 1400,
+        maxSizeKB: 350,
+        quality: 0.82,
+      });
+
+      const formData = new FormData();
+      formData.append('file', compressed.file);
+      formData.append('listingId', `news-${editorDraft.id}`);
+      formData.append('folder', `dk-agency/news/${editorDraft.id}`);
+
+      const response = await fetch('/api/upload?purpose=news-admin', {
+        method: 'POST',
+        body: formData,
+      });
+      const payload = (await response.json()) as { success?: boolean; error?: string; url?: string };
+
+      if (!response.ok || !payload.url) {
+        throw new Error(payload.error || `upload failed (${response.status})`);
+      }
+
+      setEditorDraft((prev) => (prev ? { ...prev, imageUrl: payload.url || '' } : prev));
+      setToast(`Sekil yuklendi ve kicildildi: ${compressed.reduction}`);
+    } catch (uploadError) {
+      const message = uploadError instanceof Error ? uploadError.message : 'Sekil yuklenmedi';
+      setError(message);
+    } finally {
+      setUploadingImage(false);
+      event.target.value = '';
+    }
   }
 
   async function saveEditor(nextStatus?: FilterStatus) {
@@ -306,7 +357,7 @@ export default function DashboardXeberlerPage() {
 
         {editorDraft ? (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 px-4 py-8">
-            <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-[32px] bg-white p-6 shadow-2xl">
+            <div className="max-h-[92vh] w-full max-w-6xl overflow-y-auto rounded-[32px] bg-white p-6 shadow-2xl lg:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">Xeber redaktoru</h2>
@@ -323,15 +374,17 @@ export default function DashboardXeberlerPage() {
                 </button>
               </div>
 
-              <div className="mt-6 grid gap-6 lg:grid-cols-2">
+              <div className="mt-6 grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
                 <div className="space-y-4 rounded-3xl border border-slate-200 bg-slate-50 p-5">
                   <div>
                     <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Original basliq</div>
-                    <div className="mt-2 text-base font-bold text-[var(--dk-navy)]">{editorDraft.title}</div>
+                    <div className="mt-2 text-lg font-bold leading-8 text-[var(--dk-navy)]">{editorDraft.title}</div>
                   </div>
-                  <div>
+                  <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-100">
                     <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Original xulase</div>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">{editorDraft.summary || 'Xulase yoxdur.'}</p>
+                    <div className="mt-3 max-h-[360px] overflow-y-auto pr-2 text-[15px] leading-8 text-slate-700">
+                      {editorDraft.summary || 'Xulase yoxdur.'}
+                    </div>
                   </div>
                   <div>
                     <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Orijinal menbe</div>
@@ -367,39 +420,83 @@ export default function DashboardXeberlerPage() {
                   </button>
                 </div>
 
-                <div className="space-y-4 rounded-3xl border border-slate-200 bg-white p-5">
+                <div className="space-y-5 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
                   <div>
-                    <label className="mb-2 block text-sm font-bold text-slate-700">AZ basliq</label>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <label className="block text-sm font-black uppercase tracking-[0.14em] text-slate-500">AZ basliq</label>
+                      <span className="text-xs font-semibold text-slate-400">{editorDraft.titleAz.trim().length} simvol</span>
+                    </div>
                     <input
                       value={editorDraft.titleAz}
                       onChange={(event) =>
                         setEditorDraft((prev) => (prev ? { ...prev, titleAz: event.target.value } : prev))
                       }
-                      className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-[var(--dk-gold)]"
+                      placeholder="Tercume olunmus basliq daxil edin"
+                      className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-[15px] font-medium text-slate-900 outline-none transition focus:border-[var(--dk-gold)] focus:bg-white"
                     />
                   </div>
                   <div>
-                    <label className="mb-2 block text-sm font-bold text-slate-700">AZ xulase</label>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <label className="block text-sm font-black uppercase tracking-[0.14em] text-slate-500">AZ xulase</label>
+                      <span className="text-xs font-semibold text-slate-400">{editorDraft.summaryAz.trim().length} simvol</span>
+                    </div>
                     <textarea
-                      rows={10}
+                      rows={12}
                       value={editorDraft.summaryAz}
                       onChange={(event) =>
                         setEditorDraft((prev) => (prev ? { ...prev, summaryAz: event.target.value } : prev))
                       }
-                      className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm leading-7 outline-none focus:border-[var(--dk-gold)]"
+                      placeholder="Xeberin qisa AZ xulasesini burada redakte edin"
+                      className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-[15px] leading-8 text-slate-900 outline-none transition focus:border-[var(--dk-gold)] focus:bg-white"
                     />
                   </div>
-                  <div>
-                    <label className="mb-2 block text-sm font-bold text-slate-700">Sekil URL</label>
-                    <input
-                      value={editorDraft.imageUrl}
-                      onChange={(event) =>
-                        setEditorDraft((prev) => (prev ? { ...prev, imageUrl: event.target.value } : prev))
-                      }
-                      placeholder="https://..."
-                      className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-[var(--dk-gold)]"
-                    />
-                    <p className="mt-2 text-xs text-slate-400">Public kartda ve detail sehifede bu sekil gosterilecek.</p>
+                  <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <div className="text-sm font-black uppercase tracking-[0.14em] text-slate-500">Sekil</div>
+                        <p className="mt-1 text-xs text-slate-500">
+                          Sekil secilir, brauzerde kicildilir, sonra yuklenir. Belece hem oxunaqli qalir hem de yer tutmur.
+                        </p>
+                      </div>
+                      <label className="inline-flex cursor-pointer rounded-full bg-[var(--dk-navy)] px-4 py-2 text-sm font-bold text-white">
+                        {uploadingImage ? 'Yuklenir...' : 'Sekil elave et'}
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp"
+                          onChange={(event) => void handleEditorImage(event)}
+                          className="hidden"
+                          disabled={uploadingImage}
+                        />
+                      </label>
+                    </div>
+
+                    {editorDraft.imageUrl ? (
+                      <div className="mt-4 overflow-hidden rounded-3xl border border-slate-200 bg-white">
+                        <img
+                          src={editorDraft.imageUrl}
+                          alt={editorDraft.titleAz || editorDraft.title}
+                          className="h-48 w-full object-cover"
+                        />
+                        <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+                          <p className="text-xs text-slate-500">Bu sekil public kartda ve detail sehifede gosterilecek.</p>
+                          <button
+                            type="button"
+                            onClick={() => setEditorDraft((prev) => (prev ? { ...prev, imageUrl: '' } : prev))}
+                            className="rounded-full border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600"
+                          >
+                            Sekli sil
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mt-4 rounded-3xl border border-dashed border-slate-300 bg-white px-4 py-8 text-center text-sm text-slate-500">
+                        Hele sekil elave olunmayib. Kart daha guclu gorunsun deye burada cover sekil secmek yaxsidir.
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                    Kisaca redaktor qaydasi: basliq qisa ve aydin olsun, xulase 2-4 cumlelik qalsin, sekil varsa yemek ve ya brend vizuali kimi guclu kadr secilsin.
                   </div>
                 </div>
               </div>

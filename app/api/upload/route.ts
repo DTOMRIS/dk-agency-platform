@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 import { getServerMemberSession } from '@/lib/members/server-session';
+import { canAccessNewsAdmin } from '@/lib/news/admin-access';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -21,12 +22,12 @@ function uploadToCloudinary(buffer: Buffer, folder: string) {
     const stream = cloudinary.uploader.upload_stream(
       {
         folder,
-        transformation: [{ width: 1200, crop: 'limit', quality: 'auto', fetch_format: 'webp' }],
+        transformation: [{ width: 1400, crop: 'limit', quality: 'auto', fetch_format: 'webp' }],
         resource_type: 'image',
       },
       (error, result) => {
         if (error || !result) {
-          reject(error || new Error('Şəkil yüklənmədi.'));
+          reject(error || new Error('Sekil yuklenmedi.'));
           return;
         }
         resolve(result);
@@ -37,15 +38,19 @@ function uploadToCloudinary(buffer: Buffer, folder: string) {
   });
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const session = await getServerMemberSession();
-  if (!session.loggedIn) {
-    return NextResponse.json({ success: false, error: 'Giriş tələb olunur.' }, { status: 401 });
+  const purpose = request.nextUrl.searchParams.get('purpose');
+  const newsAdminAccess = purpose === 'news-admin' ? await canAccessNewsAdmin(request) : null;
+  const canUpload = session.loggedIn || Boolean(newsAdminAccess?.allowed);
+
+  if (!canUpload) {
+    return NextResponse.json({ success: false, error: 'Giris teleb olunur.' }, { status: 401 });
   }
 
   if (!hasCloudinaryConfig()) {
     return NextResponse.json(
-      { success: false, error: 'Cloudinary konfiqurasiya olunmayıb.' },
+      { success: false, error: 'Cloudinary konfigurasiya olunmayib.' },
       { status: 503 },
     );
   }
@@ -53,25 +58,23 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const file = formData.get('file');
   const listingId = String(formData.get('listingId') || 'temp');
+  const folder = String(formData.get('folder') || `dk-agency/listings/${listingId || 'temp'}`);
 
   if (!(file instanceof File)) {
-    return NextResponse.json({ success: false, error: 'Şəkil faylı tapılmadı.' }, { status: 400 });
+    return NextResponse.json({ success: false, error: 'Sekil fayli tapilmadi.' }, { status: 400 });
   }
 
   const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
   if (!allowedTypes.includes(file.type)) {
     return NextResponse.json(
-      { success: false, error: 'Yalnız şəkil faylı yükləyə bilərsiniz.' },
+      { success: false, error: 'Yalniz sekil fayli yukleye bilersiniz.' },
       { status: 400 },
     );
   }
 
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const result = await uploadToCloudinary(
-      Buffer.from(arrayBuffer),
-      `dk-agency/listings/${listingId || 'temp'}`,
-    );
+    const result = await uploadToCloudinary(Buffer.from(arrayBuffer), folder);
 
     return NextResponse.json({
       success: true,
@@ -86,31 +89,30 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Şəkil yüklənməsi zamanı xəta baş verdi.',
+        error: error instanceof Error ? error.message : 'Sekil yuklenmesi zamani xeta bas verdi.',
       },
       { status: 500 },
     );
   }
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(request: NextRequest) {
   const session = await getServerMemberSession();
   if (!session.loggedIn) {
-    return NextResponse.json({ success: false, error: 'Giriş tələb olunur.' }, { status: 401 });
+    return NextResponse.json({ success: false, error: 'Giris teleb olunur.' }, { status: 401 });
   }
 
   if (!hasCloudinaryConfig()) {
     return NextResponse.json(
-      { success: false, error: 'Cloudinary konfiqurasiya olunmayıb.' },
+      { success: false, error: 'Cloudinary konfigurasiya olunmayib.' },
       { status: 503 },
     );
   }
 
-  const { searchParams } = new URL(request.url);
-  const publicId = searchParams.get('publicId');
+  const publicId = request.nextUrl.searchParams.get('publicId');
 
   if (!publicId) {
-    return NextResponse.json({ success: false, error: 'publicId tələb olunur.' }, { status: 400 });
+    return NextResponse.json({ success: false, error: 'publicId teleb olunur.' }, { status: 400 });
   }
 
   try {
@@ -120,7 +122,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Şəkil silinmədi.',
+        error: error instanceof Error ? error.message : 'Sekil silinmedi.',
       },
       { status: 500 },
     );
