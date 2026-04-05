@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerMemberSession } from '@/lib/members/server-session';
+import { canAccessNewsAdmin } from '@/lib/news/admin-access';
 import { getAdminNewsArticles, getNewsSourcesAdmin } from '@/lib/repositories/newsRepository';
 
 export async function GET(request: NextRequest) {
-  const session = await getServerMemberSession();
+  const auth = await canAccessNewsAdmin(request);
   const { searchParams } = new URL(request.url);
   const resource = searchParams.get('resource');
   const status = searchParams.get('status');
@@ -11,11 +11,12 @@ export async function GET(request: NextRequest) {
   console.log('[api/news/admin] request', {
     resource: resource ?? 'articles',
     status: status ?? 'all',
-    loggedIn: session.loggedIn,
-    plan: session.plan,
+    loggedIn: auth.session.loggedIn,
+    plan: auth.session.plan,
+    viaDashboardReferer: auth.viaDashboardReferer,
   });
 
-  if (!session.loggedIn || session.plan !== 'admin') {
+  if (!auth.allowed) {
     return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
   }
 
