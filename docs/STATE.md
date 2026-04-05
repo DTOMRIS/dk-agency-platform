@@ -3,7 +3,7 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-05T07:28:10.325Z
+- GeneratedAt: 2026-04-05T07:52:55.716Z
 - BuildStatus: PASS
 
 ## Routes (107)
@@ -138,12 +138,12 @@ Auto-generated. Do not edit manually.
 - /api/member/session
 - /api/member/webhook
 - /api/news
+- /api/news-pipeline/fetch
+- /api/news-pipeline/translate
 - /api/news/[slug]
 - /api/news/admin
 - /api/news/admin/[id]
-- /api/news-pipeline/fetch
 - /api/news/sources/[id]
-- /api/news-pipeline/translate
 - /api/newsletter/digest
 - /api/orchestrator
 - /api/rss/haberler
