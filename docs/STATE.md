@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-04T20:46:28.903Z
+- GeneratedAt: 2026-04-05T07:28:10.325Z
 - BuildStatus: PASS
 
-## Routes (104)
+## Routes (107)
 - /[locale]
 - /[locale]/about
 - /[locale]/blog
@@ -91,6 +91,8 @@ Auto-generated. Do not edit manually.
 - /dashboard/xeberler/rss
 - /docs/member-env-checklist
 - /forgot-password
+- /haberler
+- /haberler/[slug]
 - /ilan-ver
 - /ilanlar
 - /kazan-ai
@@ -111,8 +113,9 @@ Auto-generated. Do not edit manually.
 - /uzvluk
 - /verify-email
 - /xeberler
+- /xeberler/[slug]
 
-## API Routes (34)
+## API Routes (36)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
@@ -138,7 +141,9 @@ Auto-generated. Do not edit manually.
 - /api/news/[slug]
 - /api/news/admin
 - /api/news/admin/[id]
+- /api/news/fetch
 - /api/news/sources/[id]
+- /api/news/translate
 - /api/newsletter/digest
 - /api/orchestrator
 - /api/rss/haberler
