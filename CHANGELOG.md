@@ -5,6 +5,38 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-04-05 - Phase 4: RSS News Pipeline
+
+### Added
+- POST /api/news/fetch - real RSS fetch (rss-parser, 6 HoReCa source)
+- POST /api/news/translate - DeepSeek EN->AZ translate
+- lib/news/rss-pipeline.ts - fetch+translate pipeline
+- Public /haberler real DB-dən (mock əvəzinə)
+- /haberler/[slug] detail page (titleAz, summaryAz, source link)
+- Editor Pick hero card
+- Category tab filter
+- NEWS_API_SECRET security (admin session || API key)
+- docs/ENV-SETUP.md
+
+## [0.7.0] - 2026-04-05 - Phase 2: Admin OCAQ Real DB CRUD
+
+### Changed
+- Dashboard stats: mock -> real COUNT queries
+- /dashboard/ilanlar: mock list -> real DB query + filter + pagination
+- /dashboard/ilanlar/[id]: mock detail -> real DB + status update + review insert
+- /dashboard/xeberler: mock -> real news_articles DB query
+- /dashboard/xeberler/rss: real news_sources toggle
+- /dashboard/ayarlar: real site_settings read/write
+
+### Added
+- lib/repositories/listingRepository.ts
+- lib/repositories/newsRepository.ts
+- lib/repositories/settingsRepository.ts
+- API: /api/listings (admin query), /api/listings/[id]/reviews
+- API: /api/news/admin, /api/news/admin/[id], /api/news/sources/[id]
+- API: /api/settings
+- /dashboard/blog/yeni alias route
+
 ### Planned
 - Phase 2: Admin OCAQ real DB CRUD
 - Phase 3: Resend email + Cloudinary media env activation
