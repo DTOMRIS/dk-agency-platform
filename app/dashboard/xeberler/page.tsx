@@ -19,16 +19,53 @@ export default function DashboardXeberlerPage() {
   const [filter, setFilter] = useState<FilterStatus>('all');
   const [items, setItems] = useState<AdminNewsRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   async function loadNews(nextFilter: FilterStatus) {
     setLoading(true);
+    setError(null);
     try {
       const params = new URLSearchParams();
       if (nextFilter !== 'all') params.set('status', nextFilter);
-      const response = await fetch(`/api/news/admin?${params.toString()}`);
-      if (!response.ok) throw new Error('load failed');
-      const payload = (await response.json()) as { data?: AdminNewsRow[] };
+      const requestUrl = `/api/news/admin?${params.toString()}`;
+      console.log('[dashboard/xeberler] loadNews', {
+        filter: nextFilter,
+        sentStatusParam: params.get('status'),
+        requestUrl,
+      });
+
+      const response = await fetch(requestUrl);
+      const payload = (await response.json()) as { data?: AdminNewsRow[]; error?: string; total?: number; source?: string };
+
+      console.log('[dashboard/xeberler] response', {
+        filter: nextFilter,
+        ok: response.ok,
+        status: response.status,
+        total: payload.total,
+        source: payload.source,
+        received: payload.data?.length || 0,
+        error: payload.error,
+      });
+
+      if (!response.ok) {
+        throw new Error(payload.error || `load failed (${response.status})`);
+      }
+
       setItems(payload.data || []);
+      if (!payload.data?.length) {
+        console.log('[dashboard/xeberler] empty-result', {
+          filter: nextFilter,
+          payload,
+        });
+      }
+    } catch (loadError) {
+      const message = loadError instanceof Error ? loadError.message : 'Xeberler yuklenmedi';
+      console.error('[dashboard/xeberler] load failed', {
+        filter: nextFilter,
+        error: message,
+      });
+      setError(message);
+      setItems([]);
     } finally {
       setLoading(false);
     }
@@ -80,6 +117,12 @@ export default function DashboardXeberlerPage() {
             </button>
           ))}
         </div>
+
+        {error ? (
+          <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-700">
+            Xeber listesi yuklenmedi: {error}
+          </div>
+        ) : null}
 
         <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
           <table className="min-w-full text-sm">
