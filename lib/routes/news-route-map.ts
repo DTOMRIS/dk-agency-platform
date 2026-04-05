@@ -25,8 +25,8 @@ export const newsRouteMap: NewsRouteMap = {
     { path: '/dashboard/xeberler/yeni' },
   ],
   api: [
-    { method: 'POST', path: '/api/news/fetch' },
-    { method: 'POST', path: '/api/news/translate' },
+    { method: 'POST', path: '/api/news-pipeline/fetch' },
+    { method: 'POST', path: '/api/news-pipeline/translate' },
   ],
 };
 

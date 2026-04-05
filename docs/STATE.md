@@ -141,9 +141,9 @@ Auto-generated. Do not edit manually.
 - /api/news/[slug]
 - /api/news/admin
 - /api/news/admin/[id]
-- /api/news/fetch
+- /api/news-pipeline/fetch
 - /api/news/sources/[id]
-- /api/news/translate
+- /api/news-pipeline/translate
 - /api/newsletter/digest
 - /api/orchestrator
 - /api/rss/haberler
