@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
-import { updateNewsArticleReviewState } from '@/lib/repositories/newsRepository';
+import { updateNewsArticleAdmin } from '@/lib/repositories/newsRepository';
 
 export async function PATCH(
   request: NextRequest,
@@ -21,9 +21,12 @@ export async function PATCH(
   const { id } = await params;
   const body = await request.json();
 
-  const result = await updateNewsArticleReviewState(Number(id), {
+  const result = await updateNewsArticleAdmin(Number(id), {
     status: body.status,
     isEditorPick: body.isEditorPick,
+    titleAz: body.titleAz,
+    summaryAz: body.summaryAz,
+    imageUrl: body.imageUrl,
   });
 
   return NextResponse.json({ success: true, source: result.source });
