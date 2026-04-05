@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
     status: status ?? 'all',
     loggedIn: auth.session.loggedIn,
     plan: auth.session.plan,
+    viaSameOrigin: auth.viaSameOrigin,
     viaDashboardReferer: auth.viaDashboardReferer,
   });
 
