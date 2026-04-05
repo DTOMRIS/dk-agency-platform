@@ -8,6 +8,24 @@ export interface NewsAdminFilters {
   status?: string | null;
 }
 
+export interface AdminNewsArticle {
+  id: number;
+  sourceId: number | null;
+  sourceName: string | null;
+  externalUrl: string | null;
+  slug: string | null;
+  title: string;
+  titleAz: string | null;
+  summary: string | null;
+  summaryAz: string | null;
+  category: string;
+  imageUrl: string | null;
+  author: string | null;
+  publishedAt: string;
+  status: 'fetched' | 'translated' | 'approved' | 'rejected';
+  isEditorPick: boolean;
+}
+
 export type NewsCategoryKey = 'all' | 'finance' | 'operations' | 'growth' | 'market' | 'technology';
 
 export interface PublicNewsFilters {
@@ -73,7 +91,7 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
       total: mockRows.length,
     });
 
-    return { items: mockRows, total: mockRows.length, source: 'mock' as const };
+    return { items: mockRows as AdminNewsArticle[], total: mockRows.length, source: 'mock' as const };
   }
 
   const conditions = [];
@@ -119,7 +137,7 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
     items: rows.map((item) => ({
       ...item,
       publishedAt: item.publishedAt?.toISOString() || new Date().toISOString(),
-    })),
+    })) as AdminNewsArticle[],
     total: totalRows[0]?.count || 0,
     source: 'db' as const,
   };
@@ -138,6 +156,34 @@ export async function updateNewsArticleReviewState(
     .set({
       status: input.status,
       isEditorPick: input.isEditorPick,
+    })
+    .where(eq(newsArticles.id, id));
+
+  return { success: true, source: 'db' as const };
+}
+
+export async function updateNewsArticleAdmin(
+  id: number,
+  input: {
+    status?: 'fetched' | 'translated' | 'approved' | 'rejected';
+    isEditorPick?: boolean;
+    titleAz?: string | null;
+    summaryAz?: string | null;
+    imageUrl?: string | null;
+  },
+) {
+  if (!dbAvailable || !db) {
+    return { success: true, source: 'mock' as const };
+  }
+
+  await db
+    .update(newsArticles)
+    .set({
+      status: input.status,
+      isEditorPick: input.isEditorPick,
+      titleAz: input.titleAz,
+      summaryAz: input.summaryAz,
+      imageUrl: input.imageUrl,
     })
     .where(eq(newsArticles.id, id));
 
