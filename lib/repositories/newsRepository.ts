@@ -446,7 +446,18 @@ export async function getApprovedEditorPick(category?: NewsCategoryKey) {
     .select(buildPublicArticleSelect())
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
-    .where(and(...getPublicNewsConditions(category), eq(newsArticles.isEditorPick, true)))
+    .where(
+      and(
+        eq(newsArticles.isEditorPick, true),
+        eq(newsArticles.status, 'approved'),
+        isNotNull(newsArticles.slug),
+        isNotNull(newsArticles.titleAz),
+        sql`trim(coalesce(${newsArticles.titleAz}, '')) <> ''`,
+        isNotNull(newsArticles.summaryAz),
+        sql`trim(coalesce(${newsArticles.summaryAz}, '')) <> ''`,
+        ...(category && category !== 'all' ? [eq(newsArticles.category, category)] : []),
+      ),
+    )
     .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
     .limit(1)
     .then((rows) => rows[0] || null);
