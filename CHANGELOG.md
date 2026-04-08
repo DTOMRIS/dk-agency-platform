@@ -5,6 +5,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+### Fixed
+- Public `/haberler` hero now prefers translated editor picks only and falls back safely when an editor pick is not publishable.
+- Admin news approve API now blocks approving articles that do not have Azerbaijani title/summary content.
+- News cards now use category-based gradient placeholders instead of generic dark image fallbacks.
+- Public news heading copy now uses final `Sektor Nəbzi` wording instead of pipeline/developer phrasing.
+
 ## [0.8.0] - 2026-04-05 - Phase 4: RSS News Pipeline
 
 ### Added

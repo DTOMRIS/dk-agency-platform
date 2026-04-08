@@ -48,13 +48,20 @@ export interface PublicNewsArticle {
   isEditorPick: boolean;
 }
 
+function getTranslatedNewsConditions() {
+  return [
+    isNotNull(newsArticles.titleAz),
+    sql`trim(coalesce(${newsArticles.titleAz}, '')) <> ''`,
+    isNotNull(newsArticles.summaryAz),
+    sql`trim(coalesce(${newsArticles.summaryAz}, '')) <> ''`,
+  ];
+}
+
 function getPublicNewsConditions(category?: NewsCategoryKey) {
   const conditions = [
     eq(newsArticles.status, 'approved'),
     isNotNull(newsArticles.slug),
-    isNotNull(newsArticles.titleAz),
-    sql`trim(coalesce(${newsArticles.titleAz}, '')) <> ''`,
-    isNotNull(newsArticles.summaryAz),
+    ...getTranslatedNewsConditions(),
   ];
 
   if (category && category !== 'all') {
@@ -188,6 +195,22 @@ export async function updateNewsArticleAdmin(
     .where(eq(newsArticles.id, id));
 
   return { success: true, source: 'db' as const };
+}
+
+export async function getAdminNewsArticleById(id: number) {
+  if (!dbAvailable || !db) return null;
+
+  return db
+    .select({
+      id: newsArticles.id,
+      titleAz: newsArticles.titleAz,
+      summaryAz: newsArticles.summaryAz,
+      status: newsArticles.status,
+      isEditorPick: newsArticles.isEditorPick,
+    })
+    .from(newsArticles)
+    .where(eq(newsArticles.id, id))
+    .then((rows) => rows[0] || null);
 }
 
 export async function getNewsSourcesAdmin() {
@@ -350,6 +373,24 @@ function mapPublicArticle(row: {
   };
 }
 
+function buildPublicArticleSelect() {
+  return {
+    id: newsArticles.id,
+    slug: newsArticles.slug,
+    title: newsArticles.title,
+    titleAz: newsArticles.titleAz,
+    summary: newsArticles.summary,
+    summaryAz: newsArticles.summaryAz,
+    category: newsArticles.category,
+    imageUrl: newsArticles.imageUrl,
+    author: newsArticles.author,
+    sourceName: newsSources.name,
+    externalUrl: newsArticles.externalUrl,
+    publishedAt: newsArticles.publishedAt,
+    isEditorPick: newsArticles.isEditorPick,
+  };
+}
+
 export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}) {
   if (!dbAvailable || !db) {
     const mockItems = getAllNews()
@@ -381,21 +422,7 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}) {
 
   const [rows, totalRows] = await Promise.all([
     db
-      .select({
-        id: newsArticles.id,
-        slug: newsArticles.slug,
-        title: newsArticles.title,
-        titleAz: newsArticles.titleAz,
-        summary: newsArticles.summary,
-        summaryAz: newsArticles.summaryAz,
-        category: newsArticles.category,
-        imageUrl: newsArticles.imageUrl,
-        author: newsArticles.author,
-        sourceName: newsSources.name,
-        externalUrl: newsArticles.externalUrl,
-        publishedAt: newsArticles.publishedAt,
-        isEditorPick: newsArticles.isEditorPick,
-      })
+      .select(buildPublicArticleSelect())
       .from(newsArticles)
       .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
       .where(where)
@@ -410,6 +437,21 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}) {
     total: totalRows[0]?.count || 0,
     source: 'db' as const,
   };
+}
+
+export async function getApprovedEditorPick(category?: NewsCategoryKey) {
+  if (!dbAvailable || !db) return null;
+
+  const row = await db
+    .select(buildPublicArticleSelect())
+    .from(newsArticles)
+    .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
+    .where(and(...getPublicNewsConditions(category), eq(newsArticles.isEditorPick, true)))
+    .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
+    .limit(1)
+    .then((rows) => rows[0] || null);
+
+  return row ? mapPublicArticle(row) : null;
 }
 
 export async function getNewsArticleBySlug(slug: string) {

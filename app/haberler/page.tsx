@@ -1,8 +1,14 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { BarChart3, BriefcaseBusiness, ChartNoAxesCombined, Cpu, type LucideIcon } from 'lucide-react';
 
 import { formatDateAz } from '@/lib/formatDate';
-import { getApprovedNewsArticles, type NewsCategoryKey } from '@/lib/repositories/newsRepository';
+import {
+  getApprovedEditorPick,
+  getApprovedNewsArticles,
+  type NewsCategoryKey,
+  type PublicNewsArticle,
+} from '@/lib/repositories/newsRepository';
 
 const CATEGORY_TABS: Array<{ key: NewsCategoryKey; label: string }> = [
   { key: 'all', label: 'Hamısı' },
@@ -13,15 +19,92 @@ const CATEGORY_TABS: Array<{ key: NewsCategoryKey; label: string }> = [
   { key: 'technology', label: 'Texnologiya' },
 ];
 
+const CATEGORY_META: Record<Exclude<NewsCategoryKey, 'all'>, { icon: LucideIcon; gradient: string; label: string }> = {
+  finance: {
+    icon: BarChart3,
+    gradient: 'from-[#1A1A2E] via-[#243B6B] to-[#4C7DF0]',
+    label: 'Maliyyə',
+  },
+  operations: {
+    icon: BriefcaseBusiness,
+    gradient: 'from-[#1A1A2E] via-[#475569] to-[#94A3B8]',
+    label: 'Əməliyyat',
+  },
+  growth: {
+    icon: ChartNoAxesCombined,
+    gradient: 'from-[#0B3B2E] via-[#167B4D] to-[#6BCB77]',
+    label: 'Böyümə',
+  },
+  market: {
+    icon: ChartNoAxesCombined,
+    gradient: 'from-[#5C4310] via-[#A67C1D] to-[#E8C15A]',
+    label: 'Bazar',
+  },
+  technology: {
+    icon: Cpu,
+    gradient: 'from-[#102A43] via-[#1E5AA8] to-[#5BA8FF]',
+    label: 'Texnologiya',
+  },
+};
+
 const PAGE_SIZE = 12;
 
 export const metadata: Metadata = {
   title: 'Haberler | DK Agency',
-  description: 'HoReCa sektoru üzrə təsdiqlənmiş xəbərlər, analizlər və editor pick seçimləri.',
+  description: 'HoReCa sektorundan seçilmiş xəbərlər.',
 };
 
-function buildImageFallback(title: string) {
-  return `https://placehold.co/1200x800/1A1A2E/C5A022?text=${encodeURIComponent(title.slice(0, 36))}`;
+function NewsVisual({
+  item,
+  className,
+  compact = false,
+}: {
+  item: PublicNewsArticle;
+  className?: string;
+  compact?: boolean;
+}) {
+  if (item.imageUrl) {
+    return (
+      <img
+        src={item.imageUrl}
+        alt={item.title}
+        className={className || 'h-full w-full object-cover'}
+        referrerPolicy="no-referrer"
+      />
+    );
+  }
+
+  const meta = CATEGORY_META[item.category];
+  const Icon = meta.icon;
+
+  return (
+    <div
+      className={`relative overflow-hidden bg-gradient-to-br ${meta.gradient} ${className || 'h-full w-full'} ${
+        compact ? 'min-h-[180px]' : 'min-h-[320px]'
+      }`}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.28),transparent_34%)]" />
+      <div className="absolute -right-6 bottom-0 text-[88px] font-black uppercase tracking-[0.22em] text-white/10">
+        DK
+      </div>
+      <div className="relative flex h-full flex-col justify-between p-6 text-white">
+        <div className="flex items-center justify-between gap-3">
+          <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em]">
+            {meta.label}
+          </span>
+          <span className="rounded-full border border-white/15 bg-white/10 p-3">
+            <Icon className="h-5 w-5" />
+          </span>
+        </div>
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-white/75">DK Agency</div>
+          <div className="mt-2 max-w-[18rem] text-sm leading-6 text-white/90">
+            HoReCa sektorundan seçilmiş xəbərlər
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default async function HaberlerPage({
@@ -40,7 +123,8 @@ export default async function HaberlerPage({
     offset,
   });
 
-  const hero = result.items.find((item) => item.isEditorPick) || result.items[0];
+  const editorPick = offset === 0 ? await getApprovedEditorPick(category) : null;
+  const hero = editorPick || result.items[0];
   const gridItems = result.items.filter((item) => item.id !== hero?.id);
   const totalPages = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
 
@@ -49,11 +133,11 @@ export default async function HaberlerPage({
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
           <span className="inline-flex rounded-full bg-[#1A1A2E] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
-            SEKTOR NƏBZİ
+            Sektor Nəbzi
           </span>
-          <h1 className="mt-4 font-display text-5xl font-black">HoReCa xəbər axını</h1>
+          <h1 className="mt-4 font-display text-5xl font-black">Sektor Nəbzi</h1>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">
-            RSS pipeline ilə yığılan, tərcümə olunan və redaksiya tərəfindən təsdiqlənən xəbərlər.
+            HoReCa sektorundan seçilmiş xəbərlər.
           </p>
         </div>
 
@@ -84,12 +168,7 @@ export default async function HaberlerPage({
           >
             <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
               <div className="relative min-h-[320px] bg-slate-100">
-                <img
-                  src={hero.imageUrl || buildImageFallback(hero.title)}
-                  alt={hero.title}
-                  className="h-full w-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
+                <NewsVisual item={hero} className="h-full w-full" />
               </div>
               <div className="p-8">
                 <span className="inline-flex rounded-full bg-[#FFF8E7] px-3 py-1 text-xs font-bold text-[#C5A022]">
@@ -99,9 +178,9 @@ export default async function HaberlerPage({
                 <p className="mt-4 text-sm leading-7 text-slate-600">{hero.summary}</p>
                 <div className="mt-6 flex flex-wrap gap-3 text-xs font-semibold text-slate-500">
                   <span>{hero.sourceName || 'Mənbə yoxdur'}</span>
-                  <span>•</span>
+                  <span>&bull;</span>
                   <span>{formatDateAz(hero.publishedAt)}</span>
-                  <span>•</span>
+                  <span>&bull;</span>
                   <span>{hero.category}</span>
                 </div>
               </div>
@@ -121,12 +200,7 @@ export default async function HaberlerPage({
               className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
             >
               <div className="aspect-[16/10] bg-slate-100">
-                <img
-                  src={item.imageUrl || buildImageFallback(item.title)}
-                  alt={item.title}
-                  className="h-full w-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
+                <NewsVisual item={item} className="h-full w-full" compact />
               </div>
               <div className="p-6">
                 <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">{item.category}</div>
@@ -134,7 +208,7 @@ export default async function HaberlerPage({
                 <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{item.summary}</p>
                 <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-slate-500">
                   <span>{item.sourceName || 'Mənbə yoxdur'}</span>
-                  <span>•</span>
+                  <span>&bull;</span>
                   <span>{formatDateAz(item.publishedAt)}</span>
                 </div>
               </div>
