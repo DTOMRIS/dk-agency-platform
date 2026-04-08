@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
-import { updateNewsArticleAdmin } from '@/lib/repositories/newsRepository';
+import { getAdminNewsArticleById, updateNewsArticleAdmin } from '@/lib/repositories/newsRepository';
 
 export async function PATCH(
   request: NextRequest,
@@ -20,8 +20,24 @@ export async function PATCH(
 
   const { id } = await params;
   const body = await request.json();
+  const articleId = Number(id);
+  const article = await getAdminNewsArticleById(articleId);
 
-  const result = await updateNewsArticleAdmin(Number(id), {
+  if (!article) {
+    return NextResponse.json({ success: false, error: 'Xeber tapilmadi.' }, { status: 404 });
+  }
+
+  const nextTitleAz = typeof body.titleAz === 'string' ? body.titleAz : article.titleAz;
+  const nextSummaryAz = typeof body.summaryAz === 'string' ? body.summaryAz : article.summaryAz;
+
+  if (body.status === 'approved' && (!nextTitleAz || !nextTitleAz.trim() || !nextSummaryAz || !nextSummaryAz.trim())) {
+    return NextResponse.json(
+      { success: false, error: 'Tərcümə olunmamış xəbər approve edilə bilməz.' },
+      { status: 400 },
+    );
+  }
+
+  const result = await updateNewsArticleAdmin(articleId, {
     status: body.status,
     isEditorPick: body.isEditorPick,
     titleAz: body.titleAz,
