@@ -10,6 +10,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - Admin news approve API now blocks approving articles that do not have Azerbaijani title/summary content.
 - News cards now use category-based gradient placeholders instead of generic dark image fallbacks.
 - Public news heading copy now uses final `Sektor Nəbzi` wording instead of pipeline/developer phrasing.
+- News detail pages now use the simplified article-first layout with a single source CTA and share block.
+- Locale news detail route now points at the same redesigned article page.
+- Untranslated `editor pick` flags were cleared in the database so public hero selection cannot surface untranslated articles.
 
 ## [0.8.0] - 2026-04-05 - Phase 4: RSS News Pipeline
 
