@@ -20,8 +20,8 @@ const footerColumns = [
     links: [
       { label: 'Açılış Checklist', href: '/toolkit/checklist' },
       { label: 'İnşaatdan Açılışa', href: '/toolkit/insaat-checklist' },
-      { label: 'Rəsmi İşlər', href: '/toolkit?stage=basla' },
-      { label: 'Məkan Seçimi', href: '/toolkit?stage=basla' },
+      { label: 'Rəsmi İşlər', href: '/toolkit/aqta-checklist' },
+      { label: 'Məkan Seçimi', href: '/blog/mekan-secimi' },
       { label: 'Menyu Mühəndisliyi', href: '/toolkit/menu-matrix' },
     ],
   },
@@ -29,9 +29,9 @@ const footerColumns = [
     title: 'Resurslar',
     links: [
       { label: 'Bloq', href: '/blog' },
-      { label: 'Trendlər', href: '/haberler' },
-      { label: 'HAP Bilgilər', href: '/blog' },
-      { label: 'DK Digest', href: '/haberler' },
+      { label: 'Sektor Nəbzi', href: '/haberler' },
+      { label: 'İlanlar', href: '/ilanlar' },
+      { label: 'Toolkit', href: '/toolkit' },
     ],
   },
   {
@@ -40,7 +40,7 @@ const footerColumns = [
       { label: 'Haqqımızda', href: '/haqqimizda' },
       { label: 'Məsləhət', href: '/elaqe' },
       { label: 'Əlaqə', href: '/elaqe' },
-      { label: 'Sədd Rozeti', href: '/haqqimizda' },
+      { label: 'Şədd Rozeti', href: '/sedd-rozeti' },
     ],
   },
 ];
@@ -58,7 +58,7 @@ export function Footer() {
               <span className="text-sm font-bold text-slate-900">DK Agency</span>
             </div>
             <p className="max-w-[240px] text-sm leading-relaxed text-gray-500">
-              Ustalığın nişanı, dijitalın səddi. Azərbaycanın ilk AI-dəstəkli HoReCa platforması.
+              Ustalığın nişanı, dijitalın şəddi. Azərbaycanın ilk AI-dəstəkli HoReCa platforması.
             </p>
           </div>
 
