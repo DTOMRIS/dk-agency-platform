@@ -3,12 +3,17 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-10T18:40:31.787Z
+- GeneratedAt: 2026-04-10T18:54:14.830Z
 - BuildStatus: PASS
 
-## Routes (108)
+## Routes (115)
 - /[locale]
 - /[locale]/about
+- /[locale]/b2b-panel
+- /[locale]/b2b-panel/ilanlarim
+- /[locale]/b2b-panel/mesajlar
+- /[locale]/b2b-panel/toolkit
+- /[locale]/b2b-panel/yeni-ilan
 - /[locale]/blog
 - /[locale]/blog/[slug]
 - /[locale]/contact
@@ -26,6 +31,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/privacy
 - /[locale]/randevu
 - /[locale]/reset-password
+- /[locale]/sedd-rozeti
 - /[locale]/settings
 - /[locale]/terefdashlar
 - /[locale]/terms
@@ -99,6 +105,7 @@ Auto-generated. Do not edit manually.
 - /kazan-ai
 - /news
 - /reset-password
+- /sedd-rozeti
 - /settings
 - /toolkit
 - /toolkit/aqta-checklist
