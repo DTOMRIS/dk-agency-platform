@@ -33,10 +33,11 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
 
   useEffect(() => {
     if (!listing) return;
-    setActiveImage(0);
+    const timer = window.setTimeout(() => setActiveImage(0), 0);
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
+      window.clearTimeout(timer);
       document.body.style.overflow = previous;
     };
   }, [listing]);
