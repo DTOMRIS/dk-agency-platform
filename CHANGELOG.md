@@ -5,6 +5,28 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+### Added
+- DK Agency HoReCa sales sprint added to the operating record: 20 Baku target accounts were grouped across restaurant chains, hotel+restaurant properties, cafes/brunch venues and premium/fine-dining restaurants.
+- First outreach pack prepared for 10 April 2026 with short Instagram/Web DM scripts for the first 10 targets, plus response handling for demo requests, pricing questions, existing-system objections and opt-outs.
+- AEO mini-audit offer added as the primary low-friction entry point for premium restaurants such as Meatadore and Firuze.
+- Almila production readiness was documented for sales use: DeepSeek direct model path, lead capture, WhatsApp deep link, objection handling and employer mode are ready for live demos.
+
+### Changed
+- Cold outreach wording was softened for first contact: removed early pricing, hard chatbot claims and aggressive enterprise comparisons from the initial DM flow.
+- Hotel pitch reframed from Booking.com commission pressure to direct reservation lift and faster guest-response handling.
+- Restaurant pitch reframed around WhatsApp/Instagram response capture, menu questions, reservations and lost lead prevention.
+
+### Fixed
+- Almila OpenClaw prompt conflict was resolved by updating the workspace-level `SOUL.md`, which was still carrying the old short `wa.me/994517696181` CTA format.
+- WhatsApp CTA now uses the full `https://wa.me/...?...text=...` deep link format in the live Almila flow.
+- OpenRouter `402` dependency risk was removed from the active Almila path by confirming `deepseek/deepseek-chat` as the direct model route.
+- First greeting behavior was corrected so Almila no longer asks for name/phone immediately on a simple greeting.
+
+### Operational Notes
+- Gemma 4 VPS inference was parked because the current VPS is CPU-only with limited RAM and is not suitable for production-speed local inference.
+- Almila v3.2 is accepted as production-ready for demos; remaining inconsistent name echoing is tracked as a non-blocking model behavior.
+- Today’s outreach target is 10 DMs: 5 restaurant targets first, then 5 hotel targets after a short interval.
+
 ### Fixed
 - Public `/haberler` hero now prefers translated editor picks only and falls back safely when an editor pick is not publishable.
 - Admin news approve API now blocks approving articles that do not have Azerbaijani title/summary content.
