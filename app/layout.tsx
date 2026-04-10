@@ -3,6 +3,7 @@ import { DM_Sans, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from '../components/layout/Header';
 import { Footer, KazanAIBot } from '../components/layout/Footer';
+import CookiesBanner from '../components/ui/CookiesBanner';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -33,8 +34,8 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <KazanAIBot />
+        <CookiesBanner />
       </body>
     </html>
   );
 }
-

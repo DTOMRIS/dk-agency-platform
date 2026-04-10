@@ -11,7 +11,6 @@ import NewsPreview from '@/components/NewsPreview';
 import PartnersCarousel from '@/components/PartnersCarousel';
 import StageSelector from '@/components/StageSelector';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
-import CookiesBanner from '@/components/ui/CookiesBanner';
 
 const featuredBlogs = [
   {
@@ -171,7 +170,6 @@ export default function Home() {
       <AdsPreview />
       <DoganNote />
       <JoinCTA />
-      <CookiesBanner />
     </div>
   );
 }
