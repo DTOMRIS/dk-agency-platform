@@ -26,18 +26,22 @@ function buildStaticFallback(messages: ChatMessage[]) {
   const lastUserMessage = [...messages].reverse().find((message) => message.role === 'user')?.content.toLowerCase() ?? '';
 
   if (lastUserMessage.includes('food cost')) {
-    return `Food cost-un yüksəkdirsə əvvəl 3 rəqəmə bax: ideal aralıq çox restoran üçün 28-32%-dir, sən 38%-dəsənsə ən azı 6 bənd aşağı enməlisən. 1) Resept kartını sabitlə. 2) Trim loss-u ölç. 3) Satış mix-ini Ulduz yeməklərə çək. 4) Alış qiymətini yenidən danış. 5) Həftəlik inventar say.\n\nAlət: /toolkit/food-cost\nBlog: /blog/1-porsiya-food-cost-hesablama`;
+    return `Food cost-un yüksəkdirsə əvvəl 3 rəqəmə bax: ideal aralıq çox restoran üçün 28-32%-dir, sən 38%-dəsənsə ən azı 6 bənd aşağı enməlisən. 1) Resept kartını sabitlə. 2) Trim loss-u ölç. 3) Satış mix-ini ulduz yeməklərə çək. 4) Alış qiymətini yenidən danış. 5) Həftəlik inventar say.\n\n[Food Cost hesabla](/toolkit/food-cost)`;
   }
 
   if (lastUserMessage.includes('aqta')) {
-    return `AQTA yoxlaması üçün 3 kritik blok var: ərzaq saxlama, şəxsi gigiyena və sənədləşdirmə. Ən çox cərimə riskini temperatur nəzarəti, etiketləmə və çarpaz bulaşma yaradır. Bu həftə minimum 1 daxili audit et və qırmızı, yaşıl, sarı, mavi taxtaları ayrı saxla.\n\nAlət: /toolkit/aqta-checklist\nBlog: /blog/aqta-cerime-checklist`;
+    return `AQTA yoxlaması üçün 3 kritik blok var: ərzaq saxlama, şəxsi gigiyena və sənədləşdirmə. Ən çox cərimə riskini temperatur nəzarəti, etiketləmə və çarpaz bulaşma yaradır. Bu həftə minimum 1 daxili audit et və qırmızı, yaşıl, sarı, mavi taxtaları ayrı saxla.\n\n[AQTA checklist](/toolkit/aqta-checklist)`;
   }
 
   if (lastUserMessage.includes('delivery')) {
-    return `Delivery-də komissiya 30%-dirsə tək komissiyaya baxmaq kifayət deyil. Food cost 33%, qablaşdırma 1.5 ₼, işçi xərci 3 ₼ olduqda real netto çox sürətlə əriyir. Platforma P&L-ni ayrıca izləmək lazımdır.\n\nAlət: /toolkit/delivery-calc\nBlog: /blog/wolt-bolt-komissiyon`;
+    return `Delivery-də komissiya 30%-dirsə tək komissiyaya baxmaq kifayət deyil. Food cost 33%, qablaşdırma 1.5 AZN, işçi xərci 3 AZN olduqda real netto çox sürətlə əriyir. Platforma P&L-ni ayrıca izləmək lazımdır.\n\n[Delivery kalkulyatoru](/toolkit/delivery-calc)`;
   }
 
-  return `Bakıda restoran idarəetməsində qərarı rəqəmlə vermək lazımdır: food cost, labor, AQTA, delivery və kadr axını eyni sistemdə baxılmalıdır. Sualını bir az konkret yaz, mən sənə rəqəm və addım planı ilə cavab verim.\n\nAlət: /toolkit/pnl\nBlog: /blog/pnl-oxuya-bilmirsen`;
+  if (lastUserMessage.includes('p&l') || lastUserMessage.includes('pnl')) {
+    return `P&L hesabatında əvvəl gross sales, COGS, labor və operating expense bloklarına bax. EBITDA müsbət görünürsə belə food cost və əmək xərci birlikdə 55-60%-i keçirsə model zəifləyir. Son 4 həftəni yan-yana aç və trendi yoxla.\n\n[P&L alətinə keç](/toolkit/pnl)`;
+  }
+
+  return `Bakıda restoran idarəetməsində qərarı rəqəmlə vermək lazımdır: food cost, labor, AQTA, delivery və kadr axını eyni sistemdə baxılmalıdır. Sualını bir az konkret yaz, mən sənə rəqəm və addım planı ilə cavab verim.\n\n[Əlaqə saxla](/elaqe)`;
 }
 
 async function callAnthropic(messages: ChatMessage[], apiKey: string) {
