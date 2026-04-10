@@ -8,6 +8,7 @@ import {
   boolean,
   timestamp,
   jsonb,
+  uuid,
 } from 'drizzle-orm/pg-core';
 
 // Hero section content (field by field admin)
@@ -124,6 +125,29 @@ export const listingReviewDecisionEnum = pgEnum('listing_review_decision', [
   'reject',
 ]);
 
+export const kazanBusinessTypeEnum = pgEnum('kazan_business_type', [
+  'restoran',
+  'kafe',
+  'franchise',
+  'diger',
+]);
+
+export const kazanLeadIntentEnum = pgEnum('kazan_lead_intent', [
+  'food_cost',
+  'pnl',
+  'aqta',
+  'delivery',
+  'general',
+]);
+
+export const kazanLeadStatusEnum = pgEnum('kazan_lead_status', [
+  'new',
+  'contacted',
+  'qualified',
+  'converted',
+  'dismissed',
+]);
+
 export const newsSourceLanguageEnum = pgEnum('news_source_language', [
   'en',
   'tr',
@@ -193,6 +217,21 @@ export const listingLeads = pgTable('listing_leads', {
   message: text('message'),
   status: listingLeadStatusEnum('status').notNull().default('new'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
+export const kazanLeads = pgTable('kazan_leads', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: varchar('name', { length: 150 }).notNull(),
+  phone: varchar('phone', { length: 30 }).notNull(),
+  email: varchar('email', { length: 255 }),
+  businessType: kazanBusinessTypeEnum('business_type').notNull(),
+  conversationContext: jsonb('conversation_context').$type<Array<{ role: string; content: string }>>(),
+  intent: kazanLeadIntentEnum('intent').notNull().default('general'),
+  status: kazanLeadStatusEnum('status').notNull().default('new'),
+  whatsappHandoff: boolean('whatsapp_handoff').notNull().default(false),
+  meetingRequested: boolean('meeting_requested').notNull().default(false),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
 export const listingReviews = pgTable('listing_reviews', {

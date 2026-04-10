@@ -1,9 +1,11 @@
 'use client';
 
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   BookOpen,
+  Bot,
   ChevronLeft,
   FilePenLine,
   Globe,
@@ -15,8 +17,8 @@ import {
   Users,
   Wrench,
 } from 'lucide-react';
-import { MOCK_LISTINGS } from '@/lib/data/mockListings';
 import { adminBlogPosts, adminNewsQueue } from '@/lib/data/adminContent';
+import { MOCK_LISTINGS } from '@/lib/data/mockListings';
 
 const pendingListings = MOCK_LISTINGS.filter((listing) =>
   ['submitted', 'committee_review', 'ai_checked'].includes(listing.status),
@@ -30,6 +32,7 @@ const navItems = [
   { title: 'Hero', href: '/dashboard/hero', icon: FilePenLine },
   { title: 'Xəbərlər', href: '/dashboard/xeberler', icon: Newspaper, badge: pendingNews },
   { title: 'Bloq', href: '/dashboard/blog', icon: BookOpen, badge: draftBlogs },
+  { title: 'KAZAN Leads', href: '/dashboard/kazan-leads', icon: Bot },
   { title: 'Toolkit', href: '/dashboard/toolkit', icon: Wrench },
   { title: 'Sayt', href: '/dashboard/site', icon: Globe },
   { title: 'İstifadəçilər', href: '/dashboard/users', icon: Users },
@@ -43,7 +46,39 @@ interface DashboardSidebarProps {
 
 export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const [kazanLeadCount, setKazanLeadCount] = useState<number | null>(null);
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadKazanLeadCount() {
+      try {
+        const response = await fetch('/api/kazan-ai/leads?status=new');
+        const payload = (await response.json()) as { data?: Array<unknown> };
+        if (!cancelled) {
+          setKazanLeadCount(payload.data?.length ?? 0);
+        }
+      } catch {
+        if (!cancelled) {
+          setKazanLeadCount(null);
+        }
+      }
+    }
+
+    void loadKazanLeadCount();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const sidebarItems = useMemo(
+    () =>
+      navItems.map((item) =>
+        item.href === '/dashboard/kazan-leads' ? { ...item, badge: kazanLeadCount ?? undefined } : item,
+      ),
+    [kazanLeadCount],
+  );
 
   return (
     <>
@@ -68,9 +103,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
             </div>
             <div>
               <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">OCAQ İdarə Paneli</div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Admin mərkəzi
-              </div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Admin mərkəzi</div>
             </div>
           </Link>
 
@@ -92,7 +125,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
 
         <nav className="flex-1 overflow-y-auto px-3 py-5">
           <div className="space-y-1.5">
-            {navItems.map((item) => {
+            {sidebarItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.href);
               return (
