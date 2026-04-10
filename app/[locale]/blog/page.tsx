@@ -55,26 +55,33 @@ export default function BlogGridPage() {
 
   return (
     <div className="bg-white min-h-screen pb-20">
-      <div className="bg-slate-950 py-24 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-red/10 rounded-full blur-[120px]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative overflow-hidden bg-white py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="bg-brand-red text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 inline-block">
               Ekspert Analiz
             </span>
-            <h1 className="text-5xl lg:text-7xl font-display font-black uppercase tracking-tighter leading-none mb-8">
+            <h1 className="text-5xl lg:text-7xl font-display font-black uppercase tracking-tighter leading-none mb-8 text-slate-900">
               DK Agency <br />
-              <span className="text-slate-500">Blog</span>
+              <span className="text-[var(--dk-red)]">Blog</span>
             </h1>
-            <p className="max-w-2xl text-xl text-slate-400 leading-relaxed font-medium">
+            <p className="max-w-2xl text-xl text-slate-600 leading-relaxed font-medium">
               HoReCa sektorunda ekspert analizlər, addım-addım bələdçilər və sektor trendləri.
             </p>
-            {error ? <p className="mt-4 text-sm font-semibold text-amber-300">{error}</p> : null}
+            {error ? <p className="mt-4 text-sm font-semibold text-amber-600">{error}</p> : null}
           </motion.div>
+          <Image
+            src="/images/training-seminar.png"
+            alt="HoReCa təlim və seminar illüstrasiyası"
+            width={640}
+            height={480}
+            priority
+            className="hidden max-h-[400px] w-full object-contain lg:block"
+          />
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {loading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Array.from({ length: 6 }).map((_, index) => (

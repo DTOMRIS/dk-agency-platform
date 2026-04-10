@@ -2,6 +2,7 @@
 
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import AdsPreview from '@/components/AdsPreview';
 import { DoganNote, JoinCTA } from '@/components/CTASections';
@@ -37,9 +38,9 @@ export default function Home() {
       <ToolkitShowcase />
 
       <section className="bg-white py-20">
-        <div className="mx-auto max-w-7xl px-4 text-center">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <h2 className="mb-12 text-3xl font-display font-black text-slate-900">Necə işləyir?</h2>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-1">
             <div>
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50">
                 <span className="text-2xl">1️⃣</span>
@@ -68,6 +69,13 @@ export default function Home() {
               </p>
             </div>
           </div>
+          <Image
+            src="/images/consulting-meeting.png"
+            alt="Restoran sahibi ilə biznes konsultasiyası"
+            width={640}
+            height={480}
+            className="hidden max-h-[400px] w-full object-contain lg:block"
+          />
         </div>
       </section>
 

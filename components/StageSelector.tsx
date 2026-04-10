@@ -68,7 +68,7 @@ export default function StageSelector() {
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <Image
-              src="/operasyon-sistemi.png"
+              src="/images/operasyon-sistemi.png"
               width={180}
               height={140}
               alt="Əməliyyat sistemi illüstrasiyası"

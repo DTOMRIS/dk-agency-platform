@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { FormEvent, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -189,6 +190,15 @@ export default function KazanAiChatClient() {
         </section>
 
         <aside className="space-y-6">
+          <Image
+            src="/images/ai-consulting.png"
+            alt="KAZAN AI konsultasiya illüstrasiyası"
+            width={420}
+            height={320}
+            priority
+            className="hidden max-h-[320px] w-full object-contain lg:block"
+          />
+
           <div className="rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm">
             <div className="text-xs font-black uppercase tracking-[0.18em] text-[var(--dk-gold)]">Nümunə suallar</div>
             <div className="mt-4 space-y-3">
