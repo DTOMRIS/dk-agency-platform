@@ -12,6 +12,7 @@ const allCategories = Object.entries(CATEGORY_CONFIG).map(([key, val]) => ({
   label: val.label,
   emoji: val.emoji,
 }));
+const FALLBACK_CATEGORY = { emoji: '📝', label: 'Bloq', color: 'slate' };
 
 export default function BlogGridPage() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -93,7 +94,7 @@ export default function BlogGridPage() {
 }
 
 function BlogCard({ article }: { article: BlogArticle }) {
-  const cat = CATEGORY_CONFIG[article.category];
+  const cat = CATEGORY_CONFIG[article.category] ?? FALLBACK_CATEGORY;
 
   return (
     <Link
@@ -152,5 +153,4 @@ function BlogCard({ article }: { article: BlogArticle }) {
     </Link>
   );
 }
-
 

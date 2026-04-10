@@ -19,6 +19,7 @@ type BlogListItem = BlogArticle & {
 };
 
 const FALLBACK_ARTICLES = getAllBlogArticles();
+const FALLBACK_CATEGORY = { emoji: '📝', label: 'Bloq', color: 'slate' };
 
 export default function BlogGridPage() {
   const [articles, setArticles] = useState<BlogListItem[]>(FALLBACK_ARTICLES);
@@ -99,7 +100,7 @@ export default function BlogGridPage() {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles.map((article, index) => {
-              const cat = CATEGORY_CONFIG[article.category];
+              const cat = CATEGORY_CONFIG[article.category] ?? FALLBACK_CATEGORY;
               return (
                 <motion.div
                   key={article.id}
