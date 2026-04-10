@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
+import type { UploadApiResponse } from 'cloudinary';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
 
@@ -18,7 +19,7 @@ function hasCloudinaryConfig() {
 }
 
 function uploadToCloudinary(buffer: Buffer, folder: string) {
-  return new Promise<Record<string, any>>((resolve, reject) => {
+  return new Promise<UploadApiResponse>((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       {
         folder,

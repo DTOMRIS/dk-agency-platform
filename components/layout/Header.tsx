@@ -93,9 +93,12 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    setIsMobileOpen(false);
-    setIsMegaMenuOpen(false);
-    setIsUserMenuOpen(false);
+    const timer = window.setTimeout(() => {
+      setIsMobileOpen(false);
+      setIsMegaMenuOpen(false);
+      setIsUserMenuOpen(false);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [pathname]);
 
   useEffect(() => {
