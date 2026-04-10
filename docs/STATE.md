@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-10T19:15:09.163Z
+- GeneratedAt: 2026-04-10T19:44:35.152Z
 - BuildStatus: PASS
 
-## Routes (115)
+## Routes (116)
 - /[locale]
 - /[locale]/about
 - /[locale]/b2b-panel
@@ -83,6 +83,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/ilan-onaylari
 - /dashboard/ilanlar
 - /dashboard/ilanlar/[id]
+- /dashboard/kazan-leads
 - /dashboard/kullanicilar
 - /dashboard/loglar
 - /dashboard/mesajlar
@@ -123,7 +124,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (36)
+## API Routes (37)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
@@ -136,6 +137,7 @@ Auto-generated. Do not edit manually.
 - /api/blog/[slug]
 - /api/health
 - /api/kazan-ai
+- /api/kazan-ai/leads
 - /api/listings
 - /api/listings/[id]
 - /api/listings/[id]/leads
