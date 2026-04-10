@@ -2,6 +2,7 @@
 
 import type { ComponentType } from 'react';
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -143,21 +144,31 @@ export default function ToolkitPage() {
 
   return (
     <div className="min-h-screen bg-[var(--dk-paper)] pb-20">
-      <div className="bg-slate-950 py-20 text-white">
-        <div className="mx-auto max-w-4xl px-4 text-center">
+      <div className="bg-white py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+          <div>
           <span className="mb-6 inline-block rounded-full bg-brand-red px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.3em] text-white">
             Pulsuz Alətlər
           </span>
-          <h1 className="mb-6 text-4xl font-display font-black tracking-tighter lg:text-6xl">
+          <h1 className="mb-6 text-4xl font-display font-black tracking-tighter text-slate-900 lg:text-6xl">
             DK Agency Toolkit
           </h1>
-          <p className="mx-auto max-w-2xl text-xl text-slate-400">
+          <p className="max-w-2xl text-xl text-slate-600">
             Alətləri mərhələyə görə ayırdıq: əvvəl açılış sistemi qur, sonra rəqəmlə böyüt.
           </p>
+          </div>
+          <Image
+            src="/images/stock-flow.png"
+            alt="Restoran stok və sifariş axını"
+            width={640}
+            height={480}
+            priority
+            className="hidden max-h-[400px] w-full object-contain lg:block"
+          />
         </div>
       </div>
 
-      <div className="mx-auto -mt-10 max-w-6xl space-y-10 px-4">
+      <div className="mx-auto max-w-6xl space-y-10 px-4">
         <section ref={baslaRef} className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
           <div className="mb-8 max-w-2xl">
             <div className="mb-3 inline-flex rounded-full bg-rose-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-rose-600">

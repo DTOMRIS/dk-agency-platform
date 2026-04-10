@@ -53,7 +53,7 @@ export default function ToolkitShowcase() {
             </p>
           </div>
           <Image
-            src="/menu-muhendisligi.png"
+            src="/images/menu-muhendisligi.png"
             width={200}
             height={150}
             alt="Menyu mühəndisliyi illüstrasiyası"

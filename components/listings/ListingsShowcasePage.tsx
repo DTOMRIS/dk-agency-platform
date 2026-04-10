@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ArrowRight, PackageSearch } from 'lucide-react';
@@ -122,8 +123,8 @@ export default function ListingsShowcasePage() {
     <>
       <div className="min-h-screen bg-white pb-24">
         <section className="border-b border-slate-200 bg-[linear-gradient(180deg,rgba(26,26,46,0.05),rgba(255,255,255,1))] py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
+          <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+            <div>
               <span className="inline-flex rounded-full bg-[var(--dk-red)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
                 HoReCa Marketplace
               </span>
@@ -150,6 +151,14 @@ export default function ListingsShowcasePage() {
                 </Link>
               </div>
             </div>
+            <Image
+              src="/images/yatirimci-sunumu.png"
+              alt="HoReCa investor təqdimatı"
+              width={640}
+              height={480}
+              priority
+              className="hidden max-h-[400px] w-full object-contain lg:block"
+            />
           </div>
         </section>
 

@@ -132,7 +132,7 @@ export default function CookiesBanner() {
             /* ---- Main Banner ---- */
             <div>
               <Image
-                src="/cookies.png"
+                src="/images/cookies.png"
                 width={120}
                 height={80}
                 alt="Çərəzlər"

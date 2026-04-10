@@ -75,7 +75,7 @@ export default function HeroSection() {
             style={cardStyle}
           >
             <Image
-              src="/cookies.png"
+              src="/images/cookies.png"
               alt="Dashboard teaser visual"
               width={320}
               height={190}
