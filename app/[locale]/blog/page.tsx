@@ -55,7 +55,7 @@ export default function BlogGridPage() {
   }, []);
 
   return (
-    <div className="bg-white min-h-screen pb-20">
+    <div className="min-h-screen bg-white pb-20 text-slate-900">
       <div className="relative overflow-hidden bg-white py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

@@ -55,7 +55,7 @@ export default async function HaberDetailPage({
   return (
     <main className="min-h-screen bg-[#FAFAF8] px-4 py-10 text-[#1A1A2E]">
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
-        <article className="rounded-[32px] border border-slate-200 bg-white px-6 py-8 shadow-sm md:px-10 md:py-10">
+        <article className="rounded-[32px] border border-slate-200 bg-white px-6 py-8 text-[#1A1A2E] shadow-sm md:px-10 md:py-10">
           <Link
             href="/haberler"
             className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-[#C5A022]"
@@ -108,7 +108,7 @@ export default async function HaberDetailPage({
         </article>
 
         {related.length > 0 ? (
-          <aside className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+          <aside className="rounded-[32px] border border-slate-200 bg-white p-6 text-[#1A1A2E] shadow-sm">
             <h3 className="font-display text-2xl font-bold text-[#1A1A2E]">Əlaqəli xəbərlər</h3>
             <div className="mt-5 space-y-4">
               {related.map((item) => (
