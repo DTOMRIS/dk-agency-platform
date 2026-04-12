@@ -5,6 +5,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+### Added
+- Devir listing-ə 3 yeni field: icarə müddəti (ay), aylıq xalis mənfəət, mülkiyyət tipi — BizBuySell/BusinessesForSale benchmark əsasında.
+- Franchise-vermek kateqoriyasına minimum sahə tələbi field-ı.
+- Obyekt icarəsi kateqoriyasına icarə müddəti field-ı.
+- Input placeholder dəstəyi əlavə sahələr addımında.
+
 ### Fixed
 - Locale admin leads route now resolves correctly by redirecting `/[locale]/admin/leads` to the existing real DB-backed `/dashboard/kazan-leads` screen instead of returning 404.
 
