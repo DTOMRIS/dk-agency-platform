@@ -62,7 +62,7 @@ export default function BlogGridPage() {
             <span className="bg-brand-red text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 inline-block">
               Ekspert Analiz
             </span>
-            <h1 className="text-5xl lg:text-7xl font-display font-black uppercase tracking-tighter leading-none mb-8 text-slate-900">
+            <h1 className="mb-8 text-4xl font-display font-black uppercase leading-none tracking-tighter text-slate-900 sm:text-5xl lg:text-7xl">
               DK Agency <br />
               <span className="text-[var(--dk-red)]">Blog</span>
             </h1>

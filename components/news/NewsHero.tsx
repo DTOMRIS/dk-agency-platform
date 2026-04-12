@@ -22,7 +22,7 @@ export default function NewsHero({ post }: NewsHeroProps) {
   return (
     <Link
       href={`/haberler/${post.slug}`}
-      className="block relative w-full h-[420px] md:h-[480px] rounded-2xl overflow-hidden group"
+      className="block relative w-full h-[320px] sm:h-[420px] md:h-[480px] rounded-2xl overflow-hidden group"
     >
       {/* Background Gradient */}
       <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--dk-ink)] via-[var(--dk-ink-soft)] to-[var(--dk-ink-soft)]">
@@ -65,3 +65,4 @@ export default function NewsHero({ post }: NewsHeroProps) {
     </Link>
   );
 }
+

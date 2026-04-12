@@ -32,8 +32,26 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
+    metadataBase: new URL('https://dkagency.az'),
     title: `${article.title} | DK Agency`,
     description: article.summary,
+    alternates: {
+      canonical: `/haberler/${article.slug}`,
+    },
+    openGraph: {
+      type: 'article',
+      url: `https://dkagency.az/haberler/${article.slug}`,
+      title: `${article.title} | DK Agency`,
+      description: article.summary,
+      images: article.imageUrl
+        ? [
+            {
+              url: article.imageUrl,
+              alt: article.title,
+            },
+          ]
+        : [],
+    },
   };
 }
 
@@ -51,9 +69,30 @@ export default async function HaberDetailPage({
 
   const related = await getRelatedApprovedNewsArticles(article.id, article.category);
   const shareUrl = `https://dkagency.az/haberler/${article.slug}`;
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: article.title,
+    description: article.summary,
+    image: article.imageUrl ? [article.imageUrl] : undefined,
+    author: {
+      '@type': 'Person',
+      name: article.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'DK Agency',
+      url: 'https://dkagency.az',
+    },
+    datePublished: article.publishedAt,
+    dateModified: article.publishedAt,
+    mainEntityOfPage: shareUrl,
+    inLanguage: 'az',
+  };
 
   return (
     <main className="min-h-screen bg-[#FAFAF8] px-4 py-10 text-[#1A1A2E]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
         <article className="rounded-[32px] border border-slate-200 bg-white px-6 py-8 text-[#1A1A2E] shadow-sm md:px-10 md:py-10">
           <Link
@@ -72,7 +111,7 @@ export default async function HaberDetailPage({
                 {(article.sourceName || 'Mənbə yoxdur') + ' · ' + formatDateAz(article.publishedAt)}
               </span>
             </div>
-            <h1 className="mt-5 max-w-[720px] font-display text-[36px] font-bold leading-tight text-[#1A1A2E] md:text-[42px]">
+            <h1 className="mt-5 max-w-[720px] font-display text-[30px] font-bold leading-tight text-[#1A1A2E] sm:text-[36px] md:text-[42px]">
               {article.title}
             </h1>
           </header>
@@ -133,3 +172,4 @@ export default async function HaberDetailPage({
     </main>
   );
 }
+
