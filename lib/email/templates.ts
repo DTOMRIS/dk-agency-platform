@@ -78,13 +78,19 @@ export const emailTemplates = {
       <p>Tracking kodu: <strong>${trackingCode}</strong>.</p>
     `),
   }),
+  leadConfirmation: (buyerName: string): EmailTemplate => ({
+    subject: 'DK Agency — Müraciətiniz Qəbul Olundu',
+    html: wrapEmail(`
+      <p>Salam ${buyerName},</p>
+      <p>Müraciətiniz uğurla qəbul olundu.</p>
+      <p>Satıcı sizinlə tezliklə əlaqə saxlayacaq.</p>
+      <p style="color:#64748b;font-size:14px;margin-top:24px;">Təşəkkür edirik!</p>
+    `),
+  }),
 };
 
+import { sendEmailViaResend } from './client';
+
 export async function sendEmail(to: string, template: EmailTemplate) {
-  console.log('=== EMAİL GÖNDƏRİLƏCƏKDİ ===');
-  console.log('To:', to);
-  console.log('Subject:', template.subject);
-  console.log('Resend/SendGrid bağlananda real göndəriləcək');
-  console.log(template.html);
-  // TODO: Resend və ya SendGrid provider-i bağlanacaq.
+  return await sendEmailViaResend(to, template.subject, template.html);
 }
