@@ -372,19 +372,19 @@ export default function FloatingKazanWidget() {
                       value={leadForm.name}
                       onChange={(event) => setLeadForm((current) => ({ ...current, name: event.target.value }))}
                       placeholder="Ad"
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[var(--dk-gold)]"
+                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <input
                       value={leadForm.phone}
                       onChange={(event) => setLeadForm((current) => ({ ...current, phone: event.target.value }))}
                       placeholder="+994 50 000 00 00"
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[var(--dk-gold)]"
+                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <input
                       value={leadForm.email}
                       onChange={(event) => setLeadForm((current) => ({ ...current, email: event.target.value }))}
                       placeholder="Email (istəyə bağlı)"
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[var(--dk-gold)]"
+                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <select
                       value={leadForm.businessType}
