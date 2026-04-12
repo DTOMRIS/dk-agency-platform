@@ -22,6 +22,15 @@ export const TYPE_SPECIFIC_FIELDS: Record<ListingCategory, FieldConfig[]> = {
     { key: 'reason', label: 'Devir səbəbi', type: 'textarea' },
     { key: 'equipmentIncluded', label: 'Avadanlıq daxildir?', type: 'boolean' },
     { key: 'yearsOperating', label: 'Fəaliyyət müddəti', type: 'number', suffix: 'il' },
+    { key: 'leaseTermMonths', label: 'İcarə müddəti', type: 'number', suffix: 'ay', placeholder: 'məs: 36' },
+    { key: 'monthlyNetProfit', label: 'Aylıq xalis mənfəət', type: 'number', suffix: 'AZN', placeholder: 'məs: 5000' },
+    {
+      key: 'propertyType',
+      label: 'Mülkiyyət tipi',
+      type: 'select',
+      required: true,
+      options: ['İcarə (kirayə)', 'Mülkiyyət (satış)', 'İcarə + satınalma opsiyonu'],
+    },
   ],
   'franchise-vermek': [
     { key: 'brandName', label: 'Brend adı', type: 'text', required: true },
@@ -33,6 +42,7 @@ export const TYPE_SPECIFIC_FIELDS: Record<ListingCategory, FieldConfig[]> = {
     { key: 'exclusiveTerritory', label: 'Eksklüziv ərazi', type: 'text' },
     { key: 'currentLocations', label: 'Mövcud filial sayı', type: 'number' },
     { key: 'contractYears', label: 'Müqavilə müddəti', type: 'number', suffix: 'il' },
+    { key: 'minArea', label: 'Minimum sahə tələbi', type: 'number', suffix: 'm²', placeholder: 'məs: 120' },
   ],
   'franchise-almaq': [
     { key: 'desiredCategory', label: 'İstənilən kateqoriya', type: 'text', required: true },
@@ -65,6 +75,7 @@ export const TYPE_SPECIFIC_FIELDS: Record<ListingCategory, FieldConfig[]> = {
     { key: 'parkingSpaces', label: 'Parking yeri', type: 'number' },
     { key: 'previousUse', label: 'Əvvəlki istifadə', type: 'text' },
     { key: 'availableFrom', label: 'Nə vaxtdan boşdur', type: 'text' },
+    { key: 'leaseTermMonths', label: 'İcarə müddəti', type: 'number', suffix: 'ay', placeholder: 'məs: 60' },
   ],
   'horeca-ekipman': [
     { key: 'brand', label: 'Marka', type: 'text', required: true },

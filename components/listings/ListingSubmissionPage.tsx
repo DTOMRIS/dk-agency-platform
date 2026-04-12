@@ -158,6 +158,7 @@ export default function ListingSubmissionPage() {
       <input
         type={field.type === 'number' ? 'number' : 'text'}
         value={String(value ?? '')}
+        placeholder={field.placeholder}
         onChange={(event) =>
           setFormData((prev) => ({
             ...prev,
