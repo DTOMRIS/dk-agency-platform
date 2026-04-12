@@ -6,6 +6,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 ## [Unreleased]
 
 ### Added
+- TASK-0008: Resend email integration — `lib/email/client.ts` (SDK wrapper), `app/api/leads/route.ts` (lead capture), templates for confirmations
+- TASK-0008: Email templates — `leadConfirmation`, `newLead` for lead notifications (AZ, navy+gold branding)
+- TASK-0013: News batch approval script — `scripts/approve-translated-news.ts` with --dry-run and --execute modes
+- TASK-0013: npm script — `approve-news` for bulk approve translated articles
+
+### Fixed
+- TASK-0008: Email sending gracefully degrades when RESEND_API_KEY is not present (logs instead of crashing)
+
+### Added
 - Devir listing-ə 3 yeni field: icarə müddəti (ay), aylıq xalis mənfəət, mülkiyyət tipi — BizBuySell/BusinessesForSale benchmark əsasında.
 - Franchise-vermek kateqoriyasına minimum sahə tələbi field-ı.
 - Obyekt icarəsi kateqoriyasına icarə müddəti field-ı.

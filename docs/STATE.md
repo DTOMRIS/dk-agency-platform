@@ -3,13 +3,8 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-12T17:10:56.013Z
+- GeneratedAt: 2026-04-12T17:48:37.223Z
 - BuildStatus: PASS
-- ActiveBranch: main
-- LastMerge: PR #39 (TASK-0001..0005: devir field gap + production triage bundle)
-- LastMergeDate: 2026-04-12T17:10Z
-- OpenTasks: none
-- ProdVerification: 4/4 PASS (Playwright, 2026-04-12T17:15Z)
 
 ## Routes (117)
 - /[locale]

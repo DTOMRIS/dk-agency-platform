@@ -19,6 +19,7 @@
     "audit:drift": "node scripts/drift-audit.mjs",
     "fetch:news": "node --env-file=.env.local scripts/fetch-news.mjs",
     "approve:news": "node scripts/approve-news.mjs",
+    "approve-news": "npx tsx scripts/approve-translated-news.ts",
     "db:seed": "npx tsx lib/db/seed.ts",
     "db:seed-blog": "npx tsx lib/db/seed-blog.ts"
   },
@@ -41,6 +42,7 @@
     "rehype-raw": "^7.0.0",
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1",
+    "resend": "^6.10.0",
     "rss-parser": "^3.13.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.2.2",
