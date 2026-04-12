@@ -43,3 +43,7 @@ next-env.d.ts
 build_output.txt
 build_final.log
 page_list.txt
+
+# Local working images (not for repo)
+public/images/pl *.jpeg
+public/images/AQO*.jpeg

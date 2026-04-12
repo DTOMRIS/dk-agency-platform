@@ -203,8 +203,26 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
+    metadataBase: new URL('https://dkagency.az'),
     title: article.seoTitle || article.title,
     description: article.seoDescription || article.summary,
+    alternates: {
+      canonical: `/blog/${article.slug}`,
+    },
+    openGraph: {
+      type: 'article',
+      url: `https://dkagency.az/blog/${article.slug}`,
+      title: article.seoTitle || article.title,
+      description: article.seoDescription || article.summary,
+      images: article.coverImage
+        ? [
+            {
+              url: article.coverImage,
+              alt: article.coverImageAlt || article.title,
+            },
+          ]
+        : [],
+    },
   };
 }
 
@@ -228,11 +246,34 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     session,
     articleWithOverrides.isPremium
   );
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: articleWithOverrides.seoTitle || articleWithOverrides.title,
+    description: articleWithOverrides.seoDescription || articleWithOverrides.summary,
+    image: articleWithOverrides.coverImage ? [articleWithOverrides.coverImage] : undefined,
+    author: {
+      '@type': 'Person',
+      name: articleWithOverrides.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'DK Agency',
+      url: 'https://dkagency.az',
+    },
+    datePublished: articleWithOverrides.publishDate,
+    dateModified: articleWithOverrides.updatedAt || articleWithOverrides.publishDate,
+    mainEntityOfPage: `https://dkagency.az/blog/${articleWithOverrides.slug}`,
+    keywords: articleWithOverrides.tags?.join(', ') || undefined,
+    inLanguage: 'az',
+    isAccessibleForFree: !articleWithOverrides.isPremium,
+  };
 
   return (
     <BlogContentWrapper articleTitle={articleWithOverrides.title} isPremium={articleWithOverrides.isPremium}>
-      <div className="min-h-screen bg-[var(--dk-paper)] pb-20">
-        <div className="relative h-[420px] w-full overflow-hidden">
+      <div className="min-h-screen bg-[var(--dk-paper)] pb-20 text-slate-900">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        <div className="relative h-[320px] w-full overflow-hidden sm:h-[380px] lg:h-[420px]">
           <img
             src={articleWithOverrides.coverImage}
             alt={articleWithOverrides.coverImageAlt || articleWithOverrides.title}
@@ -254,11 +295,11 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                 <span className="rounded-full bg-brand-red px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
                   {cat?.emoji} {cat?.label}
                 </span>
-                <h1 className="text-3xl font-display font-black leading-tight tracking-tighter text-white lg:text-5xl">
+                <h1 className="text-2xl font-display font-black leading-tight tracking-tighter text-white sm:text-3xl lg:text-5xl">
                   {articleWithOverrides.title}
                 </h1>
                 {articleWithOverrides.subtitle && (
-                  <p className="max-w-2xl text-lg text-white/70">{articleWithOverrides.subtitle}</p>
+                  <p className="max-w-2xl text-base text-white/70 sm:text-lg">{articleWithOverrides.subtitle}</p>
                 )}
               </div>
             </div>
@@ -267,7 +308,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
         <div className="mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-12">
-            <article className="lg:col-span-8">
+            <article className="text-slate-900 lg:col-span-8">
               <div className="mb-10 flex flex-wrap items-center gap-6 border-b border-slate-200 pb-8 text-xs font-bold uppercase tracking-widest text-slate-400">
                 <div className="flex items-center gap-2">
                   <User size={16} className="text-brand-red" />
@@ -314,13 +355,13 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
             <aside className="space-y-8 lg:col-span-4">
               <div className="sticky top-32 space-y-8">
-                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
                   <h3 className="mb-3 text-sm font-bold uppercase tracking-widest text-slate-400">Xülasə</h3>
                   <p className="text-sm leading-relaxed text-slate-700">{articleWithOverrides.summary}</p>
                 </div>
 
                 {related.length > 0 && (
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
                     <h3 className="mb-4 text-sm font-bold uppercase tracking-widest text-slate-400">Əlaqəli yazılar</h3>
                     <div className="space-y-4">
                       {related.map((rel) => (

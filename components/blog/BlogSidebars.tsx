@@ -19,7 +19,7 @@ export function NewsletterWidget() {
   };
 
   return (
-    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-sm">
       <div className="mb-1 flex items-center gap-2">
         <Mail className="h-4 w-4 text-[var(--dk-gold)]" />
         <h4 className="text-[15px] font-bold text-[var(--dk-text)]">Həftəlik Bülletin</h4>
@@ -81,7 +81,7 @@ export function ViewpointWidget({ quote }: { quote: string }) {
 
 export function RelatedArticlesWidget({ articles }: { articles: BlogArticle[] }) {
   return (
-    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-sm">
       <h4 className="mb-4 flex items-center gap-2 text-[15px] font-bold text-[var(--dk-text)]">
         Bənzər Yazılar
       </h4>
@@ -133,15 +133,15 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
-      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-[var(--dk-muted)]">PAYLAŞ</h4>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-sm">
+      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-slate-500">PAYLAŞ</h4>
       <div className="space-y-2">
         <button
           onClick={handleCopy}
           className={`flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-[13px] font-medium transition-all ${
             copied
               ? 'bg-[var(--dk-success)] text-white'
-              : 'border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-night)_38%,transparent)] text-[var(--dk-body)] hover:border-[color:color-mix(in_srgb,var(--dk-gold)_25%,transparent)] hover:text-[var(--dk-gold)]'
+              : 'border border-slate-200 bg-slate-50 text-slate-700 hover:border-[color:color-mix(in_srgb,var(--dk-gold)_25%,transparent)] hover:text-[var(--dk-gold)]'
           }`}
           title="Link kopyala"
         >
@@ -152,7 +152,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
           href={shareLinks.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-night)_38%,transparent)] py-2.5 text-[13px] font-medium text-[var(--dk-body)] transition-all hover:border-transparent hover:bg-[var(--dk-social-whatsapp)] hover:text-white"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 text-[13px] font-medium text-slate-700 transition-all hover:border-transparent hover:bg-[var(--dk-social-whatsapp)] hover:text-white"
           title="WhatsApp"
         >
           <MessageCircle className="h-4 w-4" />
@@ -162,7 +162,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
           href={shareLinks.telegram}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-night)_38%,transparent)] py-2.5 text-[13px] font-medium text-[var(--dk-body)] transition-all hover:border-transparent hover:bg-[var(--dk-social-telegram)] hover:text-white"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 text-[13px] font-medium text-slate-700 transition-all hover:border-transparent hover:bg-[var(--dk-social-telegram)] hover:text-white"
           title="Telegram"
         >
           <Send className="h-4 w-4" />
@@ -172,7 +172,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
           href={shareLinks.linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-night)_38%,transparent)] py-2.5 text-[13px] font-medium text-[var(--dk-body)] transition-all hover:border-transparent hover:bg-[var(--dk-social-linkedin)] hover:text-white"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 text-[13px] font-medium text-slate-700 transition-all hover:border-transparent hover:bg-[var(--dk-social-linkedin)] hover:text-white"
           title="LinkedIn"
         >
           <Linkedin className="h-4 w-4" />
@@ -215,8 +215,8 @@ export function TableOfContents({ content }: { content: string }) {
   if (headings.length === 0) return null;
 
   return (
-    <div className="rounded-2xl border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] bg-[color:color-mix(in_srgb,var(--dk-surface-dark)_38%,transparent)] p-5 backdrop-blur-sm">
-      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-[var(--dk-muted)]">İÇİNDƏKİLƏR</h4>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-sm">
+      <h4 className="mb-4 text-[12px] font-bold uppercase tracking-widest text-slate-500">İÇİNDƏKİLƏR</h4>
       <nav className="space-y-1">
         {headings.slice(0, 6).map((heading, index) => (
           <a
@@ -321,3 +321,4 @@ export function MobileShareBar({ title, url }: ShareButtonsProps) {
     </div>
   );
 }
+

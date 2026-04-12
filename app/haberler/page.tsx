@@ -135,7 +135,7 @@ export default async function HaberlerPage({
           <span className="inline-flex rounded-full bg-[#1A1A2E] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
             Sektor Nəbzi
           </span>
-          <h1 className="mt-4 font-display text-5xl font-black">Sektor Nəbzi</h1>
+          <h1 className="mt-4 font-display text-4xl font-black sm:text-5xl">Sektor Nəbzi</h1>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">
             HoReCa sektorundan seçilmiş xəbərlər.
           </p>
@@ -244,3 +244,4 @@ export default async function HaberlerPage({
     </main>
   );
 }
+
