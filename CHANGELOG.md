@@ -6,6 +6,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 ## [Unreleased]
 
 ### Added
+- TASK-0012: n8n RSS pipeline workflow template yaradıldı (`docs/n8n-rss-workflow.json`) — hər 6 saatdan bir HoReCa xəbərlərini çəkir, AZ dilinə tərcümə edir.
+- TASK-0012: n8n qurulum rəhbəri yaradıldı (`docs/n8n-setup.md`) — import addımları, env var-lar, manual test, Slack bildiriş, troubleshooting cədvəli.
+
+### Changed
+- TASK-0012: `/api/news-pipeline/fetch` endpoint-ə 60s cooldown rate limit əlavə edildi (429 + Retry-After header).
+
+### Added
 - Devir listing-ə 3 yeni field: icarə müddəti (ay), aylıq xalis mənfəət, mülkiyyət tipi — BizBuySell/BusinessesForSale benchmark əsasında.
 - Franchise-vermek kateqoriyasına minimum sahə tələbi field-ı.
 - Obyekt icarəsi kateqoriyasına icarə müddəti field-ı.
