@@ -30,6 +30,12 @@
 - Do not copy-paste templates from other sectors without deep customization.
 - Do not bypass `Header.tsx` for global navigation.
 
+## PR Disiplini
+- Hər PR-da STATE.md + CHANGELOG.md yenilənməlidir
+- PR template-i (.github/pull_request_template.md) doldurulmalıdır
+- PROTECTED.md-dəki fayllara toxunulubsa TASK ID + CTO icazəsi lazımdır
+- Merge öncəsi checklist tam olmalıdır
+
 ## Content Contrast Guardrail
 - In blog, news, article, CMS, and markdown content surfaces, dark text is the default.
 - On light backgrounds such as `bg-white`, `bg-[var(--dk-paper)]`, `bg-slate-50`, and `bg-slate-100`, use dark text utilities only: `text-slate-900`, `text-slate-800`, `text-[var(--dk-ink)]`, or `text-[var(--dk-ink-soft)]`.
