@@ -27,6 +27,37 @@ Use script:
   - Enable GitHub branch protection settings per docs/REPO-GOVERNANCE.md`nAdopt TASK-ID in all commits`nRun first weekly drift audit
 
 
+## 2026-04-12T17:15:00.000Z — claude-code
+
+### TASK-0005 verification
+- Preview: ⚠️ SKIPPED (Vercel Authentication Protection → 401)
+- Prod: ✅ PASS (4/4 Playwright tests)
+  - /ilan-ver loads (auth wall) ✅
+  - /ilan-ver shows login + register links ✅
+  - /ilanlar showcase loads ✅
+  - devir listing modal shows İcarə müddəti, Aylıq xalis mənfəət, Mülkiyyət tipi ✅
+- Unit test: ✅ 32/32 PASS (field config integrity)
+- TypeScript: ✅ 0 errors
+- Timestamp: 2026-04-12T17:15Z
+
+- Ne değişti:
+  - TASK-0001: repo ops bootstrap (hooks, CI, STATE)
+  - TASK-0002: admin leads route + blog/news contrast guardrails
+  - TASK-0003: mobile editorial audit + sitemap + article metadata
+  - TASK-0004: .gitignore local working images
+  - TASK-0005: devir field gap (leaseTermMonths, monthlyNetProfit, propertyType) + franchise minArea + obyekt leaseTermMonths + Playwright scaffold
+- Ne değişmedi:
+  - DB schema (JSONB, migration yok)
+  - Status workflow
+  - Auth flows
+  - Dashboard routes
+- Riskler:
+  - propertyType ilk select-tip field — manual form test edilməli (auth lazım)
+  - Vercel preview authentication aktiv — PR preview testləri mümkün deyil
+- Sonraki adım:
+  - Faza 1: listing detail page redesign (BizBuySell card layout benchmark)
+  - Route middleware fix: /ilan-ver və /ilanlar dev server-də 404 (pre-existing)
+
 ## 2026-03-23T08:15:47.626Z — unknown
 - Ne değişti:
   - Trendlerin idare edilmesi (CRUD), Modal UI, STATE.md güncellemesi
