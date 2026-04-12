@@ -282,7 +282,7 @@ export default function FloatingKazanWidget() {
   }
 
   return (
-    <div className="fixed bottom-5 right-4 z-[70] sm:bottom-8 sm:right-8">
+    <div className="fixed bottom-4 right-3 z-[70] sm:bottom-8 sm:right-8">
       <AnimatePresence>
         {open ? (
           <motion.section
@@ -291,7 +291,7 @@ export default function FloatingKazanWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.2 }}
-            className="mb-4 flex h-[min(720px,calc(100vh-110px))] w-[calc(100vw-32px)] max-w-[460px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20"
+            className="mb-3 flex h-[min(680px,calc(100vh-96px))] w-[calc(100vw-20px)] max-w-[460px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:mb-4 sm:h-[min(720px,calc(100vh-110px))] sm:w-[calc(100vw-32px)]"
           >
             <div className="flex items-center justify-between bg-[var(--dk-navy)] px-5 py-4 text-white">
               <div className="flex items-center gap-3">
@@ -468,9 +468,9 @@ export default function FloatingKazanWidget() {
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
         aria-label={open ? 'KAZAN AI panelini bağla' : 'KAZAN AI panelini aç'}
-        className="ml-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-[var(--dk-gold)] shadow-2xl shadow-[var(--dk-navy)]/30"
+        className="ml-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-[var(--dk-gold)] shadow-2xl shadow-[var(--dk-navy)]/30 sm:h-16 sm:w-16"
       >
-        {open ? <X size={30} /> : <MessageCircle size={30} />}
+        {open ? <X size={26} /> : <MessageCircle size={26} />}
       </motion.button>
     </div>
   );

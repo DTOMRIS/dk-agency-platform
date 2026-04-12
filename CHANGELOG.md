@@ -110,6 +110,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 ### Security
 - Admin seed password production-da dəyişməlidir
 
+## [0.9.3] - 2026-04-12 - Mobile Triage Addendum
+
+### Fixed
+- `NewsPreview` mobil kart spacing, button width və type scale düzəldi
+- `app/[locale]/page.tsx` daxilində blog və B2B section spacing mobil üçün rahatlaşdırıldı
+- `FloatingKazanWidget` mobil ölçü və alt-sağ yerləşimi content overlap riskini azaltdı
+
+### Notes
+- PR#36 üzərinə mobile triage əlavə edildi
+
 ## [0.3.0] - 2026-03-30 - PR#9: Mega Sprint
 
 ### Added
