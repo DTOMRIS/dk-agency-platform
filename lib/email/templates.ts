@@ -80,11 +80,7 @@ export const emailTemplates = {
   }),
 };
 
-export async function sendEmail(to: string, template: EmailTemplate) {
-  console.log('=== EMAİL GÖNDƏRİLƏCƏKDİ ===');
-  console.log('To:', to);
-  console.log('Subject:', template.subject);
-  console.log('Resend/SendGrid bağlananda real göndəriləcək');
-  console.log(template.html);
-  // TODO: Resend və ya SendGrid provider-i bağlanacaq.
+export async function sendEmail(to: string, template: EmailTemplate): Promise<boolean> {
+  const { sendEmail: sendViaResend } = await import('./send');
+  return sendViaResend({ to, subject: template.subject, html: template.html });
 }

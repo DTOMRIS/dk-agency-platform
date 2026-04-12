@@ -19,6 +19,7 @@
     "audit:drift": "node scripts/drift-audit.mjs",
     "fetch:news": "node --env-file=.env.local scripts/fetch-news.mjs",
     "approve:news": "node scripts/approve-news.mjs",
+    "approve:news:batch": "node --env-file=.env.local node_modules/.bin/tsx scripts/approve-translated-news.ts",
     "db:seed": "npx tsx lib/db/seed.ts",
     "db:seed-blog": "npx tsx lib/db/seed-blog.ts"
   },

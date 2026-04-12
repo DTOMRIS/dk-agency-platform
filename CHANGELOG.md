@@ -6,6 +6,26 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 ## [Unreleased]
 
 ### Added
+- TASK-0007 (Devir M5): `lib/types/listing.ts` — Unified `Listing` type replacing `MockListing` across all components. `MockListing` re-exported as alias for backward compat.
+
+### Changed
+- TASK-0007: `ListingSubmissionPage` handleSubmit sends real POST /api/listings — trackingCode from server, error state shown.
+- TASK-0007: `ListingsShowcasePage` mock fallback removed — empty state + retry button on API error.
+- TASK-0007: `LeadForm` sends real POST, client-side sendEmail call removed, error feedback added.
+- TASK-0007: `DashboardSidebar` pending listing count from real DB API.
+- TASK-0007: Admin ilanlar page mock catch fallback removed.
+- TASK-0007: Admin ilanlar/[id] page mock fallback removed — shows empty state.
+
+### Deprecated
+- TASK-0007: `lib/data/mockListings.ts` MOCK_LISTINGS marked @deprecated (kept for seed.ts compatibility).
+
+### Added
+- Resend email integration (TASK-0008): `lib/email/client.ts`, `lib/email/send.ts`, 3 HTML template (newLead, leadConfirmation, listingApproved).
+- Lead submit endpoint indi admin + müraciət edənə real email göndərir.
+- Status `showcase_ready` → sahibkara avtomatik təsdiq emaili.
+- Qeydiyyat axını: email verification real Resend üzərindən göndərilir.
+- Email fallback: `RESEND_API_KEY` yoxdursa `console.warn`, build qırılmır.
+- `npm run approve:news:batch` — Drizzle ORM batch approve script (dry-run default, --execute for real DB update).
 - Devir listing-ə 3 yeni field: icarə müddəti (ay), aylıq xalis mənfəət, mülkiyyət tipi — BizBuySell/BusinessesForSale benchmark əsasında.
 - Franchise-vermek kateqoriyasına minimum sahə tələbi field-ı.
 - Obyekt icarəsi kateqoriyasına icarə müddəti field-ı.
