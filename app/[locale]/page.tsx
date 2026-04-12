@@ -80,18 +80,18 @@ export default function Home() {
 
       <StageSelector />
 
-      <section className="bg-slate-50 py-24">
+      <section className="bg-slate-50 py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 flex items-center justify-between border-b border-slate-200 pb-8">
+          <div className="mb-10 flex flex-col gap-4 border-b border-slate-200 pb-6 sm:mb-12 sm:flex-row sm:items-center sm:justify-between sm:pb-8">
             <div>
-              <h2 className="text-4xl font-display font-black uppercase tracking-tighter text-slate-900">
+              <h2 className="text-3xl font-display font-black uppercase tracking-tighter text-slate-900 sm:text-4xl">
                 Bloq & Analizlər
               </h2>
               <p className="mt-2 text-slate-500">Sektor peşəkarları üçün dərin analizlər və praktik bələdçilər.</p>
             </div>
             <Link
               href="/blog"
-              className="group flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-xs font-black uppercase tracking-widest transition-all hover:border-brand-red hover:bg-brand-red hover:text-white"
+              className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-xs font-black uppercase tracking-widest transition-all hover:border-brand-red hover:bg-brand-red hover:text-white sm:w-auto sm:px-6"
             >
               Hamısını gör <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
@@ -110,7 +110,7 @@ export default function Home() {
                 <span className="mb-4 block text-[10px] font-black uppercase tracking-[0.2em] text-brand-red">
                   {post.category}
                 </span>
-                <h3 className="text-3xl font-display font-black leading-tight text-slate-900 transition-colors group-hover:text-brand-red">
+                <h3 className="text-2xl font-display font-black leading-tight text-slate-900 transition-colors group-hover:text-brand-red sm:text-3xl">
                   {post.title}
                 </h3>
                 <p className="mt-4 line-clamp-2 text-slate-500">{post.excerpt}</p>
@@ -122,13 +122,13 @@ export default function Home() {
 
       <NewsPreview />
 
-      <section className="bg-slate-50 py-20">
+      <section className="bg-slate-50 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <span className="rounded-full bg-[var(--dk-navy)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
               B2B Ekosistem
             </span>
-            <h2 className="mt-4 text-3xl font-display font-black text-slate-900 lg:text-4xl">
+            <h2 className="mt-4 text-3xl font-display font-black text-slate-900 sm:text-4xl">
               HORECA B2B Elanlar
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-base text-slate-500">

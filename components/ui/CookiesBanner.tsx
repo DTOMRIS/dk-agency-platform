@@ -125,11 +125,10 @@ export default function CookiesBanner() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.35, ease: 'easeOut' }}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] w-[90vw] max-w-[420px] rounded-2xl bg-white border border-gray-100 p-6"
+          className="fixed bottom-6 left-1/2 z-50 w-[90vw] max-w-[420px] -translate-x-1/2 rounded-2xl border border-gray-100 bg-white p-6"
           style={{ boxShadow: '0 10px 40px rgba(0,0,0,0.12)' }}
         >
           {!settingsOpen ? (
-            /* ---- Main Banner ---- */
             <div>
               <Image
                 src="/images/cookies.png"
@@ -138,57 +137,54 @@ export default function CookiesBanner() {
                 alt="Çərəzlər"
                 className="mx-auto mb-4"
               />
-              <h3 className="text-lg font-bold text-slate-900 text-center mb-2">
-                Kim dedi ki çərəzlər sağlam deyil?
+              <h3 className="mb-2 text-center text-lg font-bold text-slate-900">
+                Bu sayt çərəzlərdən istifadə edir
               </h3>
-              <p className="text-sm text-gray-500 text-center mb-2">
-                Biz restoranları sevdiyimiz qədər çərəzləri də sevirik. Bu saytda
-                çərəzlərdən istifadə edirik.
+              <p className="mb-2 text-center text-sm text-gray-500">
+                Bu sayt təcrübənizi yaxşılaşdırmaq, performansı ölçmək və sizə daha uyğun məzmun
+                göstərmək üçün çərəzlərdən istifadə edir.
               </p>
               <Link
                 href="/privacy"
-                className="block text-sm text-amber-600 hover:underline text-center mb-1"
+                className="mb-1 block text-center text-sm text-amber-600 hover:underline"
               >
                 Məxfilik siyasətimizi buradan oxuyun.
               </Link>
 
-              <div className="flex gap-2 mt-4">
+              <div className="mt-4 flex gap-2">
                 <button
                   type="button"
                   onClick={handleReject}
-                  className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-sm text-gray-400 transition-colors hover:text-gray-600"
                 >
-                  Yox, sağ ol
+                  İmtina edirəm
                 </button>
                 <button
                   type="button"
                   onClick={() => setSettingsOpen(true)}
-                  className="text-sm font-medium border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-50"
                 >
                   Seçim et
                 </button>
                 <button
                   type="button"
                   onClick={handleAccept}
-                  className="text-sm font-medium bg-[var(--dk-navy)] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+                  className="rounded-lg bg-[var(--dk-navy)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800"
                 >
-                  Qəbul et
+                  Qəbul edirəm
                 </button>
               </div>
             </div>
           ) : (
-            /* ---- Settings Panel ---- */
             <div>
-              {/* Toggle all */}
-              <div className="flex items-center justify-between mb-5">
+              <div className="mb-5 flex items-center justify-between">
                 <span className="text-sm font-medium text-slate-900">
-                  Bütün çərəzləri aç/bağla
+                  Bütün çərəzləri aç və ya bağla
                 </span>
                 <Toggle checked={allOn} onChange={handleToggleAll} />
               </div>
 
               <div className="space-y-4">
-                {/* Facebook Ads */}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium text-slate-900">Facebook Ads</p>
@@ -199,7 +195,6 @@ export default function CookiesBanner() {
                   <Toggle checked={facebook} onChange={setFacebook} />
                 </div>
 
-                {/* Google Ads */}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium text-slate-900">Google Ads</p>
@@ -210,45 +205,41 @@ export default function CookiesBanner() {
                   <Toggle checked={google} onChange={setGoogle} />
                 </div>
 
-                {/* Hotjar */}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium text-slate-900">Hotjar</p>
-                    <p className="text-xs text-gray-400">
-                      İstifadəçi davranışını izləyir
-                    </p>
+                    <p className="text-xs text-gray-400">İstifadəçi davranışını izləyir</p>
                   </div>
                   <Toggle checked={hotjar} onChange={setHotjar} />
                 </div>
               </div>
 
-              {/* Settings buttons */}
-              <div className="flex gap-2 mt-5">
+              <div className="mt-5 flex gap-2">
                 <button
                   type="button"
                   onClick={() => setSettingsOpen(false)}
-                  className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-sm text-gray-400 transition-colors hover:text-gray-600"
                 >
-                  Geri
+                  Geri qayıt
                 </button>
                 <button
                   type="button"
                   onClick={handleAcceptAll}
-                  className="text-sm font-medium bg-[var(--dk-navy)] text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
+                  className="rounded-lg bg-[var(--dk-navy)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800"
                 >
                   Hamısını qəbul et
                 </button>
                 <button
                   type="button"
                   onClick={handleSaveCustom}
-                  className="text-sm font-medium border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-50"
                 >
                   Seçimi saxla
                 </button>
               </div>
 
-              <p className="text-[10px] text-gray-300 text-center mt-3">
-                Consent certified by Axeptio
+              <p className="mt-3 text-center text-[10px] text-gray-300">
+                Seçiminiz bu cihazda yadda saxlanılır.
               </p>
             </div>
           )}
