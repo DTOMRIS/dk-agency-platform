@@ -3,7 +3,7 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-24T18:58:36.730Z
+- GeneratedAt: 2026-04-24T19:00:21.071Z
 - BuildStatus: PASS
 
 ## Routes (117)
@@ -168,36 +168,3 @@ Auto-generated. Do not edit manually.
 
 ## i18n Namespaces (0)
 - none detected
-
-## Manual Status (son yenilənmə: 2026-04-12)
-
-### Aktiv Branch-lar
-- main (production)
-
-### Son 5 PR
-| # | Başlıq | Tarix | Status |
-|---|--------|-------|--------|
-| #40 | docs: TASK-0005 prod verification + STATE update | 2026-04-12 | merged |
-| #39 | fix(production): triage + devir field gap (TASK 1-5) | 2026-04-12 | merged |
-| #38 | fix(production): mobile triage + content contrast + editorial audit | 2026-04-12 | merged |
-| #37 | fix: admin leads route 404 -> existing KAZAN leads screen | 2026-04-12 | merged |
-| #36 | fix: production triage — lead form contrast + cookies banner | 2026-04-12 | merged |
-
-### Açıq Task-lar
-| TASK | Scope | Status |
-|------|-------|--------|
-| TASK-0006 | Admin password rotation | in progress |
-| TASK-0007 | Devir M5 real CRUD | in progress |
-| TASK-0008 | Resend email integration | in progress |
-
-### Bilinən Bug-lar
-- /ilan-ver və /ilanlar dev server-də 404 (middleware rewrite, prod-da OK)
-- Vercel preview 401 (Authentication Protection aktiv)
-
-### Env Var Statusu
-| Var | Qurulu? |
-|-----|---------|
-| DATABASE_URL | ✅ |
-| DEEPSEEK_API_KEY | ✅ |
-| RESEND_API_KEY | ❌ əskik |
-| ADMIN_SEED_PASSWORD | ❌ əskik |
