@@ -94,50 +94,7 @@ export const AD_ITEMS: AdItem[] = [
   },
 ];
 
-export const PARTNERS: Partner[] = [
-  {
-    id: 'p1',
-    name: 'Wolt',
-    logo: 'https://ui-avatars.com/api/?name=Wolt&background=009de0&color=fff&bold=true&size=100',
-    category: 'Delivery',
-    description: 'Çatdırılma platforması',
-  },
-  {
-    id: 'p2',
-    name: 'Bolt Food',
-    logo: 'https://ui-avatars.com/api/?name=Bolt+Food&background=34d186&color=fff&bold=true&size=100',
-    category: 'Delivery',
-    description: 'Çatdırılma tərəfdaşı',
-  },
-  {
-    id: 'p3',
-    name: 'iLoyal POS',
-    logo: 'https://ui-avatars.com/api/?name=iLoyal+POS&background=6366f1&color=fff&bold=true&size=100',
-    category: 'POS',
-    description: 'POS və loyallıq sistemi',
-  },
-  {
-    id: 'p4',
-    name: 'Bravo',
-    logo: 'https://ui-avatars.com/api/?name=Bravo&background=e11d48&color=fff&bold=true&size=100',
-    category: 'Tədarük',
-    description: 'Topdan alış və market tərəfdaşı',
-  },
-  {
-    id: 'p5',
-    name: 'AQTA',
-    logo: 'https://ui-avatars.com/api/?name=AQTA&background=0d9488&color=fff&bold=true&size=100',
-    category: 'Compliance',
-    description: 'Qida təhlükəsizliyi tərəfi',
-  },
-  {
-    id: 'p6',
-    name: 'Rahat Market',
-    logo: 'https://ui-avatars.com/api/?name=Rahat+Market&background=f59e0b&color=fff&bold=true&size=100',
-    category: 'Tədarük',
-    description: 'Ərzaq tədarük partnyoru',
-  },
-];
+export const PARTNERS: Partner[] = [];
 
 export const BLOG_POSTS: BlogPost[] = [
   {

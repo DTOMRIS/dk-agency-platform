@@ -62,21 +62,21 @@ export default function Hero() {
 
             <div className="mt-12 flex gap-8">
               <div>
-                <div className="text-2xl font-extrabold text-slate-900">150+</div>
+                <div className="text-2xl font-extrabold text-slate-900">BETA</div>
                 <div className="mt-1 text-[11px] uppercase tracking-wider text-gray-500">
-                  AKTİV RESTORAN
+                  Pilot proqram açıqdır
                 </div>
               </div>
               <div>
-                <div className="text-2xl font-extrabold text-slate-900">10</div>
+                <div className="text-2xl font-extrabold text-slate-900">10+</div>
                 <div className="mt-1 text-[11px] uppercase tracking-wider text-gray-500">
-                  PULSUZ ALƏT
+                  Pulsuz alət
                 </div>
               </div>
               <div>
-                <div className="text-2xl font-extrabold text-slate-900">32%</div>
+                <div className="text-2xl font-extrabold text-slate-900">AI</div>
                 <div className="mt-1 text-[11px] uppercase tracking-wider text-gray-500">
-                  XƏRC AZALMASI
+                  KAZAN dəstəyi
                 </div>
               </div>
             </div>

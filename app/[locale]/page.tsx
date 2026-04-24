@@ -8,7 +8,6 @@ import AdsPreview from '@/components/AdsPreview';
 import { DoganNote, JoinCTA } from '@/components/CTASections';
 import Hero from '@/components/Hero';
 import NewsPreview from '@/components/NewsPreview';
-import PartnersCarousel from '@/components/PartnersCarousel';
 import StageSelector from '@/components/StageSelector';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
 
@@ -33,7 +32,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <Hero />
-      <PartnersCarousel />
       <ToolkitShowcase />
 
       <section className="bg-white py-20">
