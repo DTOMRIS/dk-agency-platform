@@ -6,6 +6,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 ## [Unreleased]
 
 ### Added
+- TASK-0012: n8n RSS workflow template — `docs/n8n-rss-workflow.json` for scheduled fetch + translate
+- TASK-0012: n8n setup guide — `docs/n8n-setup.md` with import, env vars, test, troubleshooting
+
+### Changed
+- TASK-0012: new `/api/news/fetch` and `/api/news/translate` endpoints with 60s rate limiting and `Authorization: Bearer <NEWS_API_SECRET>` auth
+
+### Added
 - Devir listing-ə 3 yeni field: icarə müddəti (ay), aylıq xalis mənfəət, mülkiyyət tipi — BizBuySell/BusinessesForSale benchmark əsasında.
 - Franchise-vermek kateqoriyasına minimum sahə tələbi field-ı.
 - Obyekt icarəsi kateqoriyasına icarə müddəti field-ı.
