@@ -76,6 +76,7 @@ export default function Home() {
         </div>
       </section>
 
+      <DoganNote />
       <StageSelector />
 
       <section className="bg-slate-50 py-16 sm:py-20 lg:py-24">
@@ -166,7 +167,6 @@ export default function Home() {
       </section>
 
       <AdsPreview />
-      <DoganNote />
       <JoinCTA />
     </div>
   );

@@ -1,25 +1,41 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { BookOpen, Check, Send, Sparkles } from 'lucide-react';
 
 export function DoganNote() {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-[#1A1A2E] py-20 text-white">
       <div className="mx-auto max-w-3xl px-4 text-center">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-amber-200/30 bg-amber-50">
-          <BookOpen size={28} className="text-amber-600" />
-        </div>
+        <div className="rounded-[2rem] border border-[#C5A022]/30 bg-white/5 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)] sm:p-10">
+          <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-[#C5A022] bg-white/10 shadow-lg shadow-black/20 sm:h-28 sm:w-28">
+            <Image
+              src="/images/dogan-note-avatar.png"
+              alt="Doğan Tomris üçün placeholder avatar"
+              width={300}
+              height={300}
+              className="h-full w-full object-cover"
+            />
+          </div>
 
-        <blockquote className="mb-5 text-xl font-medium italic leading-relaxed text-slate-900 sm:text-2xl">
-          “700 il əvvəl bir usta, şagirdinin belinə Şədd bağlayanda bu sadəcə bir parça parça deyildi.
-          Bu, keyfiyyətə verilən namus sözü idi. Bu gün biz eyni sözü rəqəmlə və sistemlə qoruyuruq.”
-        </blockquote>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#C5A022]/35 bg-[#C5A022]/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-[#C5A022]">
+            <BookOpen size={14} />
+            Founder Note
+          </div>
 
-        <div className="text-sm text-gray-500">
-          <span className="font-semibold text-slate-900">Doğan Tomris</span> — DK Agency qurucusu
+          <h3 className="font-display text-3xl font-black text-white sm:text-4xl">Doğan Notu</h3>
+
+          <p className="mt-6 text-lg leading-relaxed text-slate-200">
+            &ldquo;Mən 10 ildən çox HoReCa sektorunda çalışmışam. Restoranların 70%-i düzgün maliyyə
+            hesabatı aparmır. DK Agency-ni bu problemi həll etmək üçün qurdum - pulsuz alətlər,
+            şəffaf bilik, texnologiya dəstəyi.&rdquo;
+          </p>
+
+          <span className="mt-6 block text-sm font-semibold tracking-wide text-[#C5A022]">
+            - Doğan Tomris, Təsisçi
+          </span>
         </div>
-        <div className="mt-2 text-xs italic text-amber-600">Bu sektorda cavanmərdlik hələ də vacibdir.</div>
       </div>
     </section>
   );
@@ -39,7 +55,7 @@ export function JoinCTA() {
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
                 <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-brand-red">
                   <Sparkles size={12} fill="currentColor" />
-                  İNDİ QOŞULUN
+                  İndi qoşulun
                 </div>
                 <h3 className="mb-8 text-5xl font-display font-black leading-tight tracking-tighter text-white lg:text-6xl">
                   Agentlik əməliyyatlarınızı
