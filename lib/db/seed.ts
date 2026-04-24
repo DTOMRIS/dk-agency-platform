@@ -14,8 +14,8 @@ async function seed() {
 
   console.log('Seeding database...');
 
-  const adminPassword = await hash('admin123', 12);
-  const memberPassword = await hash('member123', 12);
+  const adminPassword = await hash(process.env.ADMIN_SEED_PASSWORD ?? 'DkAdmin2026!', 12);
+  const memberPassword = await hash(process.env.MEMBER_SEED_PASSWORD ?? 'DkMember2026!', 12);
 
   await db
     .insert(users)
