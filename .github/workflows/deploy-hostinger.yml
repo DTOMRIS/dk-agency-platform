@@ -1,0 +1,28 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          script: |
+            APP_DIR="/home/${{ secrets.HOSTINGER_USER }}/dk-agency-platform"
+            cd "$APP_DIR"
+            git pull origin main
+            npm ci --include=dev
+            npm run build
+            cp -r public .next/standalone/
+            mkdir -p .next/standalone/.next
+            cp -r .next/static .next/standalone/.next/
+            touch tmp/restart.txt
