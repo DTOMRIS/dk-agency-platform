@@ -20,4 +20,4 @@ Her prompt basinda bu siyahini oxu.
 ## Config
 - `middleware.ts` - route middleware
 - `package.json` - ALLOW_PROTECTED=1 lazim
-- `next.config.ts` - Hostinger standalone and image policy changes must be additive only
+- `next.config.ts` - Hostinger image policy and runtime-safe settings must be changed carefully

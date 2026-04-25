@@ -10,6 +10,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - Hostinger deployment runbook added at `docs/deployment-hostinger.md`.
 
 ### Changed
+- Hostinger migration simplification for Web Apps: removed standalone-only deploy layers, kept `middleware.ts` on Node runtime, and aligned deployment docs with Hostinger native auto-deploy behavior.
 - Phase 2/5 Hostinger migration prep: `next.config.ts` now enables `output: 'standalone'` and `images.unoptimized` while preserving current image hosts and headers.
 - `middleware.ts` now forces `runtime = 'nodejs'` to avoid Hostinger edge-runtime incompatibility.
 - `package.json` now includes `build:standalone` and uses `next start -p $PORT` for Hostinger-managed runtime ports.

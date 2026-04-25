@@ -171,6 +171,6 @@ Auto-generated. Do not edit manually.
 
 ## Hosting
 - Current Production Host: Vercel
-- Migration Target: Hostinger Business (Node.js 20 LTS)
-- Migration Status: Phase 2 prep complete on `chore/hostinger-migration`
+- Migration Target: Hostinger Web Apps (Cloud Startup plan)
+- Migration Status: Phase 2 repo prep simplified for Hostinger Web Apps on `chore/hostinger-migration`
 - Runtime Constraint: Hostinger requires Node runtime; Edge runtime is not allowed
