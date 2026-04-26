@@ -21,7 +21,7 @@ import {
   type MemberSession,
 } from '@/lib/member-access';
 
-const locales = ['az', 'tr', 'en'] as const;
+const locales = ['az', 'ru', 'en', 'tr'] as const;
 
 const navItems = [
   { name: 'Ana səhifə', href: '/', hasMegaMenu: false },
@@ -40,13 +40,13 @@ const memberLinks = [
 function useCurrentLocale() {
   const pathname = usePathname();
   const segment = pathname.split('/')[1];
-  if (segment === 'tr' || segment === 'en') return segment;
+  if (segment === 'tr' || segment === 'en' || segment === 'ru') return segment;
   return 'az';
 }
 
 function getLocalePath(pathname: string, newLocale: string) {
   const currentLocale = pathname.split('/')[1];
-  const isLocalePrefix = currentLocale === 'tr' || currentLocale === 'en';
+  const isLocalePrefix = currentLocale === 'tr' || currentLocale === 'en' || currentLocale === 'ru';
   const pathWithoutLocale = isLocalePrefix ? pathname.slice(3) || '/' : pathname;
   if (newLocale === 'az') return pathWithoutLocale;
   return `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
