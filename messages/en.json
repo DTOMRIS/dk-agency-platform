@@ -45,5 +45,33 @@
     "ru": "RU",
     "en": "EN",
     "tr": "TR"
+  },
+  "platformPillars": {
+    "sectionTitle": "Platform Pillars",
+    "sectionSubtitle": "3 essential tools for HoReCa entrepreneurs",
+    "kazan": {
+      "title": "KAZAN AI",
+      "subtitle": "Your AI HoReCa Consultant",
+      "f1": "Food cost calculator",
+      "f2": "Location analysis",
+      "f3": "24/7 instant answers",
+      "cta": "Try now"
+    },
+    "toolkit": {
+      "title": "Toolkit",
+      "subtitle": "10 Free Tools",
+      "f1": "Food Cost, P&L, Menu Matrix",
+      "f2": "Calibrated for Baku market",
+      "f3": "In entrepreneur's language",
+      "cta": "View tools"
+    },
+    "ocaq": {
+      "title": "OCAQ",
+      "subtitle": "Entrepreneur Dashboard",
+      "f1": "Restaurant data dashboard",
+      "f2": "Lead management",
+      "f3": "Membership tiers",
+      "cta": "Join now"
+    }
   }
 }

@@ -45,5 +45,33 @@
     "ru": "RU",
     "en": "EN",
     "tr": "TR"
+  },
+  "platformPillars": {
+    "sectionTitle": "Platform sütunları",
+    "sectionSubtitle": "HoReCa girişimcileri için 3 temel araç",
+    "kazan": {
+      "title": "KAZAN AI",
+      "subtitle": "AI HoReCa danışmanın",
+      "f1": "Maliyet hesaplayıcı",
+      "f2": "Lokasyon analizi",
+      "f3": "7/24 anlık cevap",
+      "cta": "Şimdi dene"
+    },
+    "toolkit": {
+      "title": "Toolkit",
+      "subtitle": "10 Ücretsiz Araç",
+      "f1": "Food Cost, P&L, Menü Matrisi",
+      "f2": "Bakü pazarı kalibrasyonu",
+      "f3": "Girişimci dilinde",
+      "cta": "Araçlara bak"
+    },
+    "ocaq": {
+      "title": "OCAQ",
+      "subtitle": "Girişimci paneli",
+      "f1": "Restoran data dashboard",
+      "f2": "Lead yönetimi",
+      "f3": "Üyelik seviyeleri",
+      "cta": "Üye ol"
+    }
   }
 }
