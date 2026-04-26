@@ -35,6 +35,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/:locale(az|en|tr|ru)/haberler',
+        destination: '/:locale/sektor-nebzi',
+        permanent: true,
+      },
+      {
+        source: '/haberler',
+        destination: '/az/sektor-nebzi',
+        permanent: true,
+      },
+      {
         source: '/admin',
         destination: '/dashboard',
         permanent: false,
