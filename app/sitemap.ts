@@ -1,17 +1,17 @@
 import type { MetadataRoute } from 'next';
 
+import { locales } from '@/i18n/config';
 import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import { getApprovedNewsArticles } from '@/lib/repositories/newsRepository';
 
 const BASE_URL = 'https://dkagency.az';
-const LOCALES = ['az', 'tr', 'en'] as const;
 
 function absolute(path: string) {
   return `${BASE_URL}${path}`;
 }
 
 function withLocales(path: string) {
-  return LOCALES.map((locale) => absolute(`/${locale}${path}`));
+  return locales.map((locale) => absolute(`/${locale}${path}`));
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

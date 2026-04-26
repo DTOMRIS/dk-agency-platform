@@ -1,11 +1,72 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useLocale } from 'next-intl';
 import { Calendar, ArrowRight, Tag, Bookmark } from 'lucide-react';
 import Link from 'next/link';
 import { NEWS_ITEMS } from '@/components/constants';
+import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
+
+const copyByLocale: Record<Locale, {
+  badge: string;
+  title: [string, string];
+  cta: string;
+  tagLabel: string;
+  readMore: string;
+  newsletterTitle: string;
+  newsletterBody: string;
+  emailPlaceholder: string;
+  subscribe: string;
+}> = {
+  az: {
+    badge: 'Xəbərlər & Blog',
+    title: ['Sektordan ən son', 'yeniliklər'],
+    cta: 'Bütün xəbərlər',
+    tagLabel: 'AQTA, Gigiyena',
+    readMore: 'Davamını oxu',
+    newsletterTitle: 'Həftəlik bülleten',
+    newsletterBody: 'Sektordakı ən son xəbərləri və analizləri birbaşa e-poçtunuza alın.',
+    emailPlaceholder: 'E-poçt ünvanınız',
+    subscribe: 'Abunə ol',
+  },
+  ru: {
+    badge: 'Новости и блог',
+    title: ['Последние', 'обновления сектора'],
+    cta: 'Все новости',
+    tagLabel: 'AQTA, Гигиена',
+    readMore: 'Читать дальше',
+    newsletterTitle: 'Еженедельный дайджест',
+    newsletterBody: 'Получайте последние новости и аналитику сектора прямо на почту.',
+    emailPlaceholder: 'Ваш e-mail',
+    subscribe: 'Подписаться',
+  },
+  en: {
+    badge: 'News & Blog',
+    title: ['Latest', 'sector updates'],
+    cta: 'All news',
+    tagLabel: 'AQTA, Hygiene',
+    readMore: 'Read more',
+    newsletterTitle: 'Weekly digest',
+    newsletterBody: 'Receive the latest sector news and analysis directly in your inbox.',
+    emailPlaceholder: 'Your email',
+    subscribe: 'Subscribe',
+  },
+  tr: {
+    badge: 'Haberler & Blog',
+    title: ['Sektörden en son', 'güncellemeler'],
+    cta: 'Tüm haberler',
+    tagLabel: 'AQTA, Hijyen',
+    readMore: 'Devamını oku',
+    newsletterTitle: 'Haftalık bülten',
+    newsletterBody: 'Sektördeki son haberleri ve analizleri doğrudan e-posta kutuna al.',
+    emailPlaceholder: 'E-posta adresin',
+    subscribe: 'Abone ol',
+  },
+};
 
 export default function NewsPreview() {
+  const locale = normalizeLocale(useLocale());
+  const copy = copyByLocale[locale];
   const featuredNews = NEWS_ITEMS[0];
   const sideNews = NEWS_ITEMS.slice(1);
 
@@ -20,25 +81,25 @@ export default function NewsPreview() {
               viewport={{ once: true }}
               className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-100 bg-slate-50 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.24em] text-brand-red sm:mb-6 sm:px-4"
             >
-              Xəbərlər & Blog
+              {copy.badge}
             </motion.div>
             <h3 className="text-4xl font-display font-extrabold leading-[0.95] text-slate-900 sm:text-5xl lg:text-6xl">
-              Sektordan ən son <br />
-              <span className="text-slate-400">yeniliklər</span>
+              {copy.title[0]} <br />
+              <span className="text-slate-400">{copy.title[1]}</span>
             </h3>
           </div>
 
           <Link
-            href="/news"
+            href={withLocale(locale, '/haberler')}
             className="group inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-95 sm:w-auto sm:px-8 sm:py-4"
           >
-            Bütün xəbərlər
+            {copy.cta}
             <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-16">
-          <Link href="/news" className="group block cursor-pointer lg:col-span-2">
+          <Link href={withLocale(locale, '/haberler')} className="group block cursor-pointer lg:col-span-2">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-[1.75rem] shadow-2xl shadow-slate-200/50 sm:mb-8 sm:rounded-[2.5rem]">
                 <img
@@ -65,7 +126,7 @@ export default function NewsPreview() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Tag size={16} className="text-brand-red" />
-                  AQTA, Gigiyena
+                  {copy.tagLabel}
                 </div>
               </div>
 
@@ -76,7 +137,7 @@ export default function NewsPreview() {
                 {featuredNews.excerpt}
               </p>
               <div className="flex items-center gap-3 font-bold text-slate-900 transition-all group-hover:gap-5">
-                Davamını oxu
+                {copy.readMore}
                 <ArrowRight size={20} className="text-brand-red" />
               </div>
             </motion.div>
@@ -84,7 +145,7 @@ export default function NewsPreview() {
 
           <div className="space-y-8 sm:space-y-10 lg:space-y-12">
             {sideNews.map((news, index) => (
-              <Link key={news.id} href="/news" className="group block cursor-pointer">
+              <Link key={news.id} href={withLocale(locale, '/haberler')} className="group block cursor-pointer">
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -119,18 +180,18 @@ export default function NewsPreview() {
 
             <div className="relative overflow-hidden rounded-[1.75rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-900/20 sm:rounded-[2.5rem] sm:p-10">
               <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-brand-red/10 blur-3xl" />
-              <h5 className="relative z-10 mb-4 text-xl font-display font-bold sm:text-2xl">Həftəlik bülleten</h5>
+              <h5 className="relative z-10 mb-4 text-xl font-display font-bold sm:text-2xl">{copy.newsletterTitle}</h5>
               <p className="relative z-10 mb-6 text-sm leading-relaxed text-slate-400 sm:mb-8">
-                Sektordakı ən son xəbərləri və analizləri birbaşa e-poçtunuza alın.
+                {copy.newsletterBody}
               </p>
               <div className="relative z-10 space-y-4">
                 <input
                   type="email"
-                  placeholder="E-poçt ünvanınız"
+                  placeholder={copy.emailPlaceholder}
                   className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm backdrop-blur-sm transition-colors focus:border-brand-red focus:outline-none sm:px-5 sm:py-4"
                 />
                 <button className="w-full rounded-2xl bg-brand-red py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95 sm:py-4">
-                  Abunə ol
+                  {copy.subscribe}
                 </button>
               </div>
             </div>

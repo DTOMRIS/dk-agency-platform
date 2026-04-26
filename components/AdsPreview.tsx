@@ -2,10 +2,56 @@
 
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useLocale } from 'next-intl';
 import { AD_ITEMS } from '@/components/constants';
 import { ArrowUpRight, Clock, Filter, MapPin, Plus } from 'lucide-react';
+import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
+
+const copyByLocale: Record<Locale, {
+  badge: string;
+  title: [string, string];
+  categories: Record<string, string>;
+  postListing: string;
+  details: string;
+  empty: string;
+}> = {
+  az: {
+    badge: 'ELANLAR LÖVHƏSİ',
+    title: ['Fürsətləri', 'qaçırmayın'],
+    categories: { Bütün: 'Bütün', Devir: 'Devir', Avadanlıq: 'Avadanlıq', İnvestisiya: 'İnvestisiya', 'B2B Tərəfdaş': 'B2B Tərəfdaş' },
+    postListing: 'Elan yerləşdir',
+    details: 'Təfərrüatlara bax',
+    empty: 'Bu kateqoriyada hələ elan yoxdur.',
+  },
+  ru: {
+    badge: 'ДОСКА ОБЪЯВЛЕНИЙ',
+    title: ['Не упусти', 'возможности'],
+    categories: { Bütün: 'Все', Devir: 'Передача', Avadanlıq: 'Оборудование', İnvestisiya: 'Инвестиции', 'B2B Tərəfdaş': 'B2B партнёр' },
+    postListing: 'Разместить объявление',
+    details: 'Смотреть детали',
+    empty: 'В этой категории пока нет объявлений.',
+  },
+  en: {
+    badge: 'LISTINGS BOARD',
+    title: ['Do not miss', 'the opportunities'],
+    categories: { Bütün: 'All', Devir: 'Transfer', Avadanlıq: 'Equipment', İnvestisiya: 'Investment', 'B2B Tərəfdaş': 'B2B Partner' },
+    postListing: 'Post listing',
+    details: 'View details',
+    empty: 'There are no listings in this category yet.',
+  },
+  tr: {
+    badge: 'İLAN PANOSU',
+    title: ['Fırsatları', 'kaçırmayın'],
+    categories: { Bütün: 'Tümü', Devir: 'Devir', Avadanlıq: 'Ekipman', İnvestisiya: 'Yatırım', 'B2B Tərəfdaş': 'B2B Partner' },
+    postListing: 'İlan ver',
+    details: 'Detaylara bak',
+    empty: 'Bu kategoride henüz ilan yok.',
+  },
+};
 
 export default function AdsPreview() {
+  const locale = normalizeLocale(useLocale());
+  const copy = copyByLocale[locale];
   const [activeCategory, setActiveCategory] = useState('Bütün');
   const categories = ['Bütün', 'Devir', 'Avadanlıq', 'İnvestisiya', 'B2B Tərəfdaş'];
 
@@ -23,12 +69,12 @@ export default function AdsPreview() {
               viewport={{ once: true }}
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.3em] text-brand-red"
             >
-              ELANLAR LÖVHƏSİ
+              {copy.badge}
             </motion.div>
             <h3 className="text-5xl font-display font-extrabold text-slate-900 lg:text-6xl">
-              Fürsətləri
+              {copy.title[0]}
               <br />
-              <span className="text-slate-400">qaçırmayın</span>
+              <span className="text-slate-400">{copy.title[1]}</span>
             </h3>
           </div>
 
@@ -44,12 +90,12 @@ export default function AdsPreview() {
                       : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                   }`}
                 >
-                  {cat}
+                  {copy.categories[cat]}
                 </button>
               ))}
             </div>
             <button className="flex items-center gap-2 rounded-2xl bg-brand-red px-8 py-4 font-bold text-white shadow-xl shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95">
-              <Plus size={20} /> Elan yerləşdir
+              <Plus size={20} /> {copy.postListing}
             </button>
           </div>
         </div>
@@ -57,8 +103,9 @@ export default function AdsPreview() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filteredAds.map((ad, index) => (
-              <motion.div
+              <motion.a
                 key={ad.id}
+                href={withLocale(locale, '/ilanlar')}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -75,7 +122,7 @@ export default function AdsPreview() {
                   />
                   <div className="absolute left-6 top-6">
                     <span className="rounded-full bg-white/90 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-900 shadow-lg backdrop-blur-md">
-                      {ad.category}
+                      {copy.categories[ad.category] || ad.category}
                     </span>
                   </div>
                   <div className="absolute bottom-6 right-6">
@@ -100,13 +147,13 @@ export default function AdsPreview() {
                     {ad.title}
                   </h4>
                   <div className="flex items-center justify-between border-t border-slate-50 pt-6">
-                    <span className="text-xs font-bold uppercase tracking-widest text-slate-400">Təfərrüatlara bax</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-slate-400">{copy.details}</span>
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-900 transition-all group-hover:bg-brand-red group-hover:text-white">
                       <ArrowUpRight size={20} />
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </AnimatePresence>
         </div>
@@ -114,7 +161,7 @@ export default function AdsPreview() {
         {filteredAds.length === 0 && (
           <div className="py-20 text-center">
             <Filter className="mx-auto mb-6 h-16 w-16 text-slate-200" />
-            <p className="text-xl font-medium text-slate-400">Bu kateqoriyada hələ elan yoxdur.</p>
+            <p className="text-xl font-medium text-slate-400">{copy.empty}</p>
           </div>
         )}
       </div>
