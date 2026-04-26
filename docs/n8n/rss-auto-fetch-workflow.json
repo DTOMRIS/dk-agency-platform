@@ -1,0 +1,163 @@
+{
+  "name": "DK Agency — RSS Auto Fetch + Translate (6h)",
+  "active": false,
+  "settings": {
+    "timezone": "Asia/Baku"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "hours", "hoursInterval": 6 }]
+        }
+      },
+      "name": "Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 300],
+      "id": "schedule-6h"
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.RSS_FEED_URL_1 || 'https://en.horecatrend.com/feed' }}",
+        "options": { "timeout": 15000 }
+      },
+      "name": "Fetch RSS — HORECA TREND",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 180],
+      "id": "fetch-rss-1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.RSS_FEED_URL_2 || 'https://www.hospitalitynet.org/news/global.xml' }}",
+        "options": { "timeout": 15000 }
+      },
+      "name": "Fetch RSS — Hospitality Net",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 420],
+      "id": "fetch-rss-2"
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "jsCode": "// Parse RSS XML into items array\nconst xml = $input.all().map(i => i.json?.data || i.json?.body || '').join('');\nconst items = [];\nconst regex = /<item>([\\s\\S]*?)<\\/item>/gi;\nlet match;\nwhile ((match = regex.exec(xml)) !== null) {\n  const block = match[1];\n  const title = (block.match(/<title><!\\[CDATA\\[(.+?)\\]\\]>/) || block.match(/<title>(.+?)<\\/title>/) || [])[1] || '';\n  const link = (block.match(/<link>(.+?)<\\/link>/) || [])[1] || '';\n  const desc = (block.match(/<description><!\\[CDATA\\[(.+?)\\]\\]>/) || block.match(/<description>(.+?)<\\/description>/) || [])[1] || '';\n  const pubDate = (block.match(/<pubDate>(.+?)<\\/pubDate>/) || [])[1] || '';\n  if (title) items.push({ json: { title, link, description: desc.slice(0, 500), pubDate, source: 'rss' } });\n}\nreturn items.slice(0, 10);"
+      },
+      "name": "Parse RSS Items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 300],
+      "id": "parse-rss"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.deepseek.com/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $env.DEEPSEEK_API_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "body",
+              "value": "={\"model\":\"deepseek-chat\",\"messages\":[{\"role\":\"system\",\"content\":\"Sen professional xeber tercumecisisen. Basliqi ve mezmunu Azerbaycan diline (AZ) tercume et. Yalniz tercumeni qaytar, izahat verme.\"},{\"role\":\"user\",\"content\":\"Title: {{ $json.title }}\\n\\nDescription: {{ $json.description }}\"}],\"temperature\":0.3,\"max_tokens\":800}"
+            }
+          ]
+        },
+        "options": { "timeout": 30000 }
+      },
+      "name": "DeepSeek Translate EN→AZ",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [960, 300],
+      "id": "deepseek-translate"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.BASE_URL || 'https://dkagency.com.tr' }}/api/news",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $env.NEWS_API_SECRET }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "body",
+              "value": "={\"title_az\":\"{{ $json.choices[0].message.content.split('\\n')[0] || $json.title }}\",\"content_az\":\"{{ $json.choices[0].message.content || $json.description }}\",\"source_url\":\"{{ $node['Parse RSS Items'].json.link }}\",\"source_title\":\"{{ $node['Parse RSS Items'].json.title }}\",\"status\":\"draft\"}"
+            }
+          ]
+        },
+        "options": { "timeout": 15000 }
+      },
+      "name": "POST /api/news",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1220, 300],
+      "id": "post-news"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "chat_id", "value": "={{ $env.TELEGRAM_CHAT_ID }}" },
+            { "name": "text", "value": "=DK Agency RSS Error\\n\\nNode: {{ $execution.resumeUrl }}\\nError: {{ $json.error || 'Unknown error' }}\\nTime: {{ new Date().toISOString() }}" },
+            { "name": "parse_mode", "value": "HTML" }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Telegram Error Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1220, 540],
+      "id": "telegram-error"
+    }
+  ],
+  "connections": {
+    "Every 6 Hours": {
+      "main": [
+        [
+          { "node": "Fetch RSS — HORECA TREND", "type": "main", "index": 0 },
+          { "node": "Fetch RSS — Hospitality Net", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Fetch RSS — HORECA TREND": {
+      "main": [
+        [{ "node": "Parse RSS Items", "type": "main", "index": 0 }]
+      ]
+    },
+    "Fetch RSS — Hospitality Net": {
+      "main": [
+        [{ "node": "Parse RSS Items", "type": "main", "index": 0 }]
+      ]
+    },
+    "Parse RSS Items": {
+      "main": [
+        [{ "node": "DeepSeek Translate EN→AZ", "type": "main", "index": 0 }]
+      ]
+    },
+    "DeepSeek Translate EN→AZ": {
+      "main": [
+        [{ "node": "POST /api/news", "type": "main", "index": 0 }]
+      ]
+    },
+    "POST /api/news": {
+      "main": [[], [{ "node": "Telegram Error Alert", "type": "main", "index": 0 }]]
+    }
+  }
+}
