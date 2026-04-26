@@ -2,7 +2,6 @@
 
 import { FormEvent, useState } from 'react';
 import { CheckCircle2, Loader2, Send } from 'lucide-react';
-import { emailTemplates, sendEmail } from '@/lib/email/templates';
 
 interface LeadFormProps {
   trackingCode: string;
@@ -41,12 +40,7 @@ export default function LeadForm({ trackingCode, title }: LeadFormProps) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     }).catch(() => null);
-    console.log('listing_lead_submit', { trackingCode, title, ...form, responseOk: response?.ok });
-    await sendEmail(
-      'owner@dkagency.az',
-      emailTemplates.newLead(trackingCode, form.name || 'Yeni lead', 'Elan sahibi'),
-    );
-    await new Promise((resolve) => setTimeout(resolve, 350));
+    // Email notification is handled server-side in /api/listings/[id]/leads POST
     setSuccess('Müraciətiniz göndərildi!');
     setSubmitting(false);
     setForm({ name: '', phone: '', email: '', message: '' });

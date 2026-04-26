@@ -69,14 +69,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Ad və telefon məcburidir.' }, { status: 400 });
     }
 
+    const businessType = normalizeBusinessType(cleanText(body.businessType, 50));
+    const intent = cleanText(body.intent, 50) ? normalizeIntent(cleanText(body.intent, 50)) : detectKazanIntent(intentSeed);
+
     const lead = await createKazanLead({
       name,
       phone,
       email: email || undefined,
-      businessType: normalizeBusinessType(cleanText(body.businessType, 50)),
+      businessType,
       conversationContext,
-      intent: cleanText(body.intent, 50) ? normalizeIntent(cleanText(body.intent, 50)) : detectKazanIntent(intentSeed),
+      intent,
     });
+
+    // Admin notification (fire-and-forget)
+    import('@/lib/email/templates').then(({ emailTemplates, sendEmail }) => {
+      const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.az';
+      sendEmail(adminEmail, emailTemplates.kazanLeadAdmin(name, phone, businessType, intent)).catch(() => {});
+    }).catch(() => {});
 
     return NextResponse.json({
       success: true,

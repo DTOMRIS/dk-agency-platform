@@ -103,5 +103,13 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  // Send confirmation email to submitter (fire-and-forget)
+  const submitterEmail = body.email || session.email;
+  if (submitterEmail) {
+    import('@/lib/email/templates').then(({ emailTemplates, sendEmail }) => {
+      sendEmail(submitterEmail, emailTemplates.listingSubmitted(trackingCode, body.ownerName || session.name || 'Üzv')).catch(() => {});
+    }).catch(() => {});
+  }
+
   return NextResponse.json({ success: true, source: 'db', data: listing }, { status: 201 });
 }

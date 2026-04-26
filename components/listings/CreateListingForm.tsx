@@ -18,7 +18,6 @@ import {
   type ListingCategory,
 } from '@/lib/data/listingCategories';
 import { getFieldsForType, type FieldConfig } from '@/lib/data/listingFieldConfig';
-import { emailTemplates, sendEmail } from '@/lib/email/templates';
 import { compressImage, generateThumbnail, validateImage } from '@/lib/utils/imageUtils';
 
 type FormStep = 1 | 2 | 3 | 4 | 5;
@@ -298,10 +297,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
         pushToast('Elan göndərilərkən xəta baş verdi.');
         return;
       }
-      await sendEmail(
-        formData.email || 'member@dkagency.az',
-        emailTemplates.listingSubmitted(trackingCode, formData.ownerName || 'Üzv'),
-      );
+      // Email notification is handled server-side in /api/listings POST
       console.log('Listing submitted:', {
         trackingCode,
         ...formData,
