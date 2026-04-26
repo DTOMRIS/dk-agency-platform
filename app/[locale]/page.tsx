@@ -8,6 +8,7 @@ import AdsPreview from '@/components/AdsPreview';
 import { DoganNote, JoinCTA } from '@/components/CTASections';
 import Hero from '@/components/Hero';
 import NewsPreview from '@/components/NewsPreview';
+import PilotPartners from '@/components/PilotPartners';
 import PlatformPillars from '@/components/PlatformPillars';
 import StageSelector from '@/components/StageSelector';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
@@ -78,6 +79,7 @@ export default function Home() {
         </div>
       </section>
 
+      <PilotPartners />
       <DoganNote />
       <StageSelector />
 

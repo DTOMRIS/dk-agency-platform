@@ -73,5 +73,18 @@
       "f3": "Membership tiers",
       "cta": "Join now"
     }
+  },
+  "pilotPartners": {
+    "badge": "Pilot Program",
+    "title": "Our Pilot Partners",
+    "subtitle": "Restaurant owners who first tested DK Agency tools",
+    "comingSoon": "Coming Soon",
+    "partnerBadge": "Pilot partner"
+  },
+  "doganNote": {
+    "ahilikTitle": "Why Ahilism?",
+    "ahilikText": "Ahilism is a medieval Turkish artisan philosophy. Javanmardlik, SİMAT (honesty, quality, ethics), and the master-apprentice relationship are its foundation. DK Agency brings these values to the HoReCa sector.",
+    "bio": "Dogan Tomris is a HoReCa consultant with experience in restaurant operations, food cost management, and digital transformation. He founded DK Agency to support Azerbaijani entrepreneurs with digital tools and AI.",
+    "socialProof": "The first AI-powered platform for HoReCa in Baku"
   }
 }

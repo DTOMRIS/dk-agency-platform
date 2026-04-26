@@ -2,40 +2,82 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { BookOpen, Check, Send, Sparkles } from 'lucide-react';
+import { BookOpen, Check, Send, Sparkles, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function DoganNote() {
+  const t = useTranslations('doganNote');
+
   return (
     <section className="bg-[#1A1A2E] py-20 text-white">
-      <div className="mx-auto max-w-3xl px-4 text-center">
-        <div className="rounded-[2rem] border border-[#C5A022]/30 bg-white/5 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)] sm:p-10">
-          <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-[#C5A022] bg-white/10 shadow-lg shadow-black/20 sm:h-28 sm:w-28">
-            <Image
-              src="/images/dogan-note-avatar.png"
-              alt="Doğan Tomris üçün placeholder avatar"
-              width={300}
-              height={300}
-              className="h-full w-full object-cover"
-            />
+      <div className="mx-auto max-w-5xl px-4">
+        {/* Existing founder card — untouched */}
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="rounded-[2rem] border border-[#C5A022]/30 bg-white/5 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)] sm:p-10">
+            <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-[#C5A022] bg-white/10 shadow-lg shadow-black/20 sm:h-28 sm:w-28">
+              <Image
+                src="/images/dogan-note-avatar.png"
+                alt="Doğan Tomris üçün placeholder avatar"
+                width={300}
+                height={300}
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#C5A022]/35 bg-[#C5A022]/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-[#C5A022]">
+              <BookOpen size={14} />
+              Founder Note
+            </div>
+
+            <h3 className="font-display text-3xl font-black text-white sm:text-4xl">Doğan Notu</h3>
+
+            <p className="mt-6 text-lg leading-relaxed text-slate-200">
+              &ldquo;Mən 10 ildən çox HoReCa sektorunda çalışmışam. Restoranların 70%-i düzgün maliyyə
+              hesabatı aparmır. DK Agency-ni bu problemi həll etmək üçün qurdum - pulsuz alətlər,
+              şəffaf bilik, texnologiya dəstəyi.&rdquo;
+            </p>
+
+            <span className="mt-6 block text-sm font-semibold tracking-wide text-[#C5A022]">
+              - Doğan Tomris, Təsisçi
+            </span>
           </div>
-
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#C5A022]/35 bg-[#C5A022]/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-[#C5A022]">
-            <BookOpen size={14} />
-            Founder Note
-          </div>
-
-          <h3 className="font-display text-3xl font-black text-white sm:text-4xl">Doğan Notu</h3>
-
-          <p className="mt-6 text-lg leading-relaxed text-slate-200">
-            &ldquo;Mən 10 ildən çox HoReCa sektorunda çalışmışam. Restoranların 70%-i düzgün maliyyə
-            hesabatı aparmır. DK Agency-ni bu problemi həll etmək üçün qurdum - pulsuz alətlər,
-            şəffaf bilik, texnologiya dəstəyi.&rdquo;
-          </p>
-
-          <span className="mt-6 block text-sm font-semibold tracking-wide text-[#C5A022]">
-            - Doğan Tomris, Təsisçi
-          </span>
         </div>
+
+        {/* Expanded section: bio + Ahilik */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mt-10 grid gap-6 sm:grid-cols-2"
+        >
+          {/* Bio card */}
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8">
+            <p className="text-sm leading-relaxed text-slate-300">{t('bio')}</p>
+          </div>
+
+          {/* Ahilik card */}
+          <div className="rounded-2xl border border-[#C5A022]/25 bg-[#C5A022]/5 p-6 sm:p-8">
+            <h4 className="mb-3 text-base font-black uppercase tracking-wide text-[#C5A022]">
+              {t('ahilikTitle')}
+            </h4>
+            <p className="text-sm leading-relaxed text-slate-300">{t('ahilikText')}</p>
+          </div>
+        </motion.div>
+
+        {/* Social proof badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.25 }}
+          className="mt-8 flex justify-center"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-300">
+            <Users size={13} className="text-[#C5A022]" />
+            {t('socialProof')}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

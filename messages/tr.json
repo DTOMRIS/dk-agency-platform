@@ -73,5 +73,18 @@
       "f3": "Üyelik seviyeleri",
       "cta": "Üye ol"
     }
+  },
+  "pilotPartners": {
+    "badge": "Pilot Program",
+    "title": "Pilot Ortaklarımız",
+    "subtitle": "DK Agency araçlarını ilk test eden restoran sahipleri",
+    "comingSoon": "Yakında",
+    "partnerBadge": "Pilot ortak"
+  },
+  "doganNote": {
+    "ahilikTitle": "Neden Ahilik?",
+    "ahilikText": "Ahilik — Orta Çağ'dan gelen Türk esnaf felsefesidir. Cavanmertlik, SİMAT (dürüstlük, kalite, ahlak) ve usta-çırak ilişkisi onun temelidir. DK Agency bu değerleri HoReCa sektörüne taşır.",
+    "bio": "Doğan Tomris — restoran operasyonları, food cost yönetimi ve dijital dönüşüm alanında deneyimli HoReCa danışmanı. DK Agency'yi Azerbaycanlı girişimcilere dijital araçlar ve AI ile destek vermek için kurdu.",
+    "socialProof": "Bakü'de HoReCa sektörü için ilk AI destekli platform"
   }
 }
