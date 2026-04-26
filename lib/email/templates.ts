@@ -78,13 +78,43 @@ export const emailTemplates = {
       <p>Tracking kodu: <strong>${trackingCode}</strong>.</p>
     `),
   }),
+  kazanLeadAdmin: (leadName: string, phone: string, businessType: string, intent: string): EmailTemplate => ({
+    subject: `KAZAN AI — Yeni lead: ${leadName}`,
+    html: wrapEmail(`
+      <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">KAZAN AI Lead</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <tr><td style="padding:8px 0;color:#64748b;">Ad</td><td style="padding:8px 0;font-weight:600;">${leadName}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Telefon</td><td style="padding:8px 0;font-weight:600;">${phone}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Biznes tipi</td><td style="padding:8px 0;font-weight:600;">${businessType}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Maraq</td><td style="padding:8px 0;font-weight:600;">${intent}</td></tr>
+      </table>
+      <p style="margin-top:20px;">
+        <a href="https://dkagency.az/dashboard/kazan-leads" style="display:inline-block;background:#E94560;color:#fff;padding:10px 24px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;">
+          Lead-ə bax
+        </a>
+      </p>
+    `),
+  }),
+  listingLeadAdmin: (trackingCode: string, listingTitle: string, leadName: string, phone: string, message: string): EmailTemplate => ({
+    subject: `Elan Lead — ${listingTitle} (${trackingCode})`,
+    html: wrapEmail(`
+      <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">Yeni Elan Marağı</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <tr><td style="padding:8px 0;color:#64748b;">Elan</td><td style="padding:8px 0;font-weight:600;">${listingTitle} (${trackingCode})</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Maraq bildirən</td><td style="padding:8px 0;font-weight:600;">${leadName}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Telefon</td><td style="padding:8px 0;font-weight:600;">${phone}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Mesaj</td><td style="padding:8px 0;">${message || 'Mesaj yoxdur'}</td></tr>
+      </table>
+      <p style="margin-top:20px;">
+        <a href="https://dkagency.az/dashboard/ilanlar" style="display:inline-block;background:#E94560;color:#fff;padding:10px 24px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;">
+          Dashboard-a keç
+        </a>
+      </p>
+    `),
+  }),
 };
 
 export async function sendEmail(to: string, template: EmailTemplate) {
-  console.log('=== EMAİL GÖNDƏRİLƏCƏKDİ ===');
-  console.log('To:', to);
-  console.log('Subject:', template.subject);
-  console.log('Resend/SendGrid bağlananda real göndəriləcək');
-  console.log(template.html);
-  // TODO: Resend və ya SendGrid provider-i bağlanacaq.
+  const { sendSmtpEmail } = await import('./smtp');
+  return sendSmtpEmail(to, template.subject, template.html);
 }

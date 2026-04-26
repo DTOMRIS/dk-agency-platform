@@ -56,6 +56,28 @@ export async function POST(
     })
     .returning();
 
-  console.log('Lead email notification would send:', inserted[0]?.id, body.email);
+  // Admin notification (fire-and-forget)
+  const listing = await db
+    .select({ trackingCode: listings.trackingCode, title: listings.title })
+    .from(listings)
+    .where(eq(listings.id, resolvedListingId))
+    .then((items) => items[0]);
+
+  if (listing) {
+    import('@/lib/email/templates').then(({ emailTemplates, sendEmail }) => {
+      const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.az';
+      sendEmail(
+        adminEmail,
+        emailTemplates.listingLeadAdmin(
+          listing.trackingCode || String(resolvedListingId),
+          listing.title || 'Elan',
+          body.name || 'Anonim',
+          body.phone || '-',
+          body.message || '',
+        ),
+      ).catch(() => {});
+    }).catch(() => {});
+  }
+
   return NextResponse.json({ success: true, source: 'db', data: inserted[0] }, { status: 201 });
 }
