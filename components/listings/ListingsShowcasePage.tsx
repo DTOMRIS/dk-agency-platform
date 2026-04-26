@@ -35,7 +35,14 @@ function normalizeCityForQuery(city: string) {
   return map[city] ?? city.toLowerCase();
 }
 
+function useLocaleFromPath(): string {
+  const pathname = usePathname();
+  const match = pathname?.match(/^\/(ru|en|tr)\//);
+  return match?.[1] || 'az';
+}
+
 export default function ListingsShowcasePage() {
+  const locale = useLocaleFromPath();
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -61,7 +68,7 @@ export default function ListingsShowcasePage() {
     async function loadListings() {
       setLoading(true);
       try {
-        const response = await fetch('/api/listings?showcase=true');
+        const response = await fetch(`/api/listings?showcase=true&locale=${locale}`);
         if (!response.ok) throw new Error('load failed');
         const payload = (await response.json()) as { data?: MockListing[] };
         if (!cancelled && Array.isArray(payload.data) && payload.data.length > 0) {

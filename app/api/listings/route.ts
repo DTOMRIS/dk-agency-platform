@@ -35,6 +35,8 @@ export async function GET(request: NextRequest) {
     });
   }
 
+  const locale = searchParams.get('locale') || 'az';
+
   const results = await getListings({
     type,
     city,
@@ -42,7 +44,7 @@ export async function GET(request: NextRequest) {
     showcase: showcase || undefined,
     minPrice: minPrice ? Number(minPrice) : undefined,
     maxPrice: maxPrice ? Number(maxPrice) : undefined,
-  });
+  }, locale);
 
   return NextResponse.json({ success: true, data: results, source: dbAvailable ? 'db' : 'mock' });
 }

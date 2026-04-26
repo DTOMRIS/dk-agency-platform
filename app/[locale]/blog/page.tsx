@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
 import Link from 'next/link';
@@ -21,7 +22,14 @@ type BlogListItem = BlogArticle & {
 const FALLBACK_ARTICLES = getAllBlogArticles();
 const FALLBACK_CATEGORY = { emoji: '📝', label: 'Bloq', color: 'slate' };
 
+function useLocaleFromPath(): string {
+  const pathname = usePathname();
+  const match = pathname?.match(/^\/(ru|en|tr)\//);
+  return match?.[1] || 'az';
+}
+
 export default function BlogGridPage() {
+  const locale = useLocaleFromPath();
   const [articles, setArticles] = useState<BlogListItem[]>(FALLBACK_ARTICLES);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -31,7 +39,7 @@ export default function BlogGridPage() {
 
     async function loadPosts() {
       try {
-        const response = await fetch('/api/blog');
+        const response = await fetch(`/api/blog?locale=${locale}`);
         if (!response.ok) throw new Error('Blog posts failed');
         const payload = (await response.json()) as { posts?: BlogListItem[] };
         if (!cancelled && Array.isArray(payload.posts) && payload.posts.length > 0) {

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { BarChart3, BriefcaseBusiness, ChartNoAxesCombined, Cpu, type LucideIcon } from 'lucide-react';
+import { getLocale } from 'next-intl/server';
 
 import { formatDateAz } from '@/lib/formatDate';
 import {
@@ -113,6 +114,7 @@ export default async function HaberlerPage({
   searchParams: Promise<{ category?: string; page?: string }>;
 }) {
   const params = await searchParams;
+  const locale = await getLocale();
   const category = (params.category as NewsCategoryKey) || 'all';
   const page = Math.max(1, Number(params.page || '1'));
   const offset = (page - 1) * PAGE_SIZE;
@@ -121,9 +123,9 @@ export default async function HaberlerPage({
     category,
     limit: PAGE_SIZE,
     offset,
-  });
+  }, locale);
 
-  const editorPick = offset === 0 ? await getApprovedEditorPick(category) : null;
+  const editorPick = offset === 0 ? await getApprovedEditorPick(category, locale) : null;
   const hero = editorPick || result.items[0];
   const gridItems = result.items.filter((item) => item.id !== hero?.id);
   const totalPages = Math.max(1, Math.ceil(result.total / PAGE_SIZE));

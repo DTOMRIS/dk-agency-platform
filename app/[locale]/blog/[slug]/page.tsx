@@ -191,9 +191,9 @@ Marka dizayndan başlayır, amma yalnız dizaynla yaşamır. Əgər restoranın 
   },
 } as const;
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const article = await getBlogPostDetail(slug);
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  const article = await getBlogPostDetail(slug, locale);
 
   if (!article) {
     return {
@@ -202,16 +202,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  const localePrefix = locale === 'az' ? '' : `/${locale}`;
+
   return {
     metadataBase: new URL('https://dkagency.az'),
     title: article.seoTitle || article.title,
     description: article.seoDescription || article.summary,
     alternates: {
-      canonical: `/blog/${article.slug}`,
+      canonical: `${localePrefix}/blog/${article.slug}`,
+      languages: {
+        az: `/blog/${article.slug}`,
+        ru: `/ru/blog/${article.slug}`,
+        en: `/en/blog/${article.slug}`,
+        tr: `/tr/blog/${article.slug}`,
+      },
     },
     openGraph: {
       type: 'article',
-      url: `https://dkagency.az/blog/${article.slug}`,
+      locale: locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
+      url: `https://dkagency.az${localePrefix}/blog/${article.slug}`,
       title: article.seoTitle || article.title,
       description: article.seoDescription || article.summary,
       images: article.coverImage
@@ -226,9 +235,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const article = await getBlogPostDetail(slug);
+export default async function BlogDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  const article = await getBlogPostDetail(slug, locale);
   const session = await getServerMemberSession();
 
   if (!article) {
@@ -265,7 +274,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     dateModified: articleWithOverrides.updatedAt || articleWithOverrides.publishDate,
     mainEntityOfPage: `https://dkagency.az/blog/${articleWithOverrides.slug}`,
     keywords: articleWithOverrides.tags?.join(', ') || undefined,
-    inLanguage: 'az',
+    inLanguage: locale || 'az',
     isAccessibleForFree: !articleWithOverrides.isPremium,
   };
 

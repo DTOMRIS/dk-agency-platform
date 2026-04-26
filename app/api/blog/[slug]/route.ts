@@ -7,11 +7,12 @@ import {
 import { getServerMemberSession } from '@/lib/members/server-session';
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const post = await getBlogPostDetail(slug);
+  const locale = new URL(request.url).searchParams.get('locale') || 'az';
+  const post = await getBlogPostDetail(slug, locale);
 
   if (!post) {
     return NextResponse.json({ success: false, error: 'Yazı tapılmadı.' }, { status: 404 });
