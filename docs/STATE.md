@@ -168,3 +168,9 @@ Auto-generated. Do not edit manually.
 
 ## i18n Namespaces (0)
 - none detected
+
+## Hosting
+- Current Production Host: Vercel
+- Migration Target: Hostinger Web Apps (Cloud Startup plan)
+- Migration Status: Phase 2 repo prep simplified for Hostinger Web Apps on `chore/hostinger-migration`
+- Runtime Constraint: Hostinger requires Node runtime; Edge runtime is not allowed

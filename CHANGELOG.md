@@ -6,6 +6,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 ## [Unreleased]
 
 ### Added
+- Hostinger deployment workflow skeleton added at `.github/workflows/deploy-hostinger.yml` for SSH-based deploys on `main` push.
+- Hostinger deployment runbook added at `docs/deployment-hostinger.md`.
+
+### Changed
+- Hostinger migration simplification for Web Apps: removed standalone-only deploy layers, kept `middleware.ts` on Node runtime, and aligned deployment docs with Hostinger native auto-deploy behavior.
+- Phase 2/5 Hostinger migration prep: `next.config.ts` now enables `output: 'standalone'` and `images.unoptimized` while preserving current image hosts and headers.
+- `middleware.ts` now forces `runtime = 'nodejs'` to avoid Hostinger edge-runtime incompatibility.
+- `package.json` now includes `build:standalone` and uses `next start -p $PORT` for Hostinger-managed runtime ports.
+
+### Added
 - TASK-0012: n8n RSS workflow template — `docs/n8n-rss-workflow.json` for scheduled fetch + translate
 - TASK-0012: n8n setup guide — `docs/n8n-setup.md` with import, env vars, test, troubleshooting
 

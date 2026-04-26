@@ -5,6 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -31,6 +32,30 @@ const nextConfig: NextConfig = {
     "http://172.24.112.1:3000",
     "http://192.168.100.67:3000",
   ],
+  async redirects() {
+    return [
+      {
+        source: '/:locale(az|en|tr|ru)/haberler',
+        destination: '/:locale/sektor-nebzi',
+        permanent: true,
+      },
+      {
+        source: '/haberler',
+        destination: '/az/sektor-nebzi',
+        permanent: true,
+      },
+      {
+        source: '/admin',
+        destination: '/dashboard',
+        permanent: false,
+      },
+      {
+        source: '/admin/:path*',
+        destination: '/dashboard/:path*',
+        permanent: false,
+      },
+    ]
+  },
   async headers() {
     return [
       {

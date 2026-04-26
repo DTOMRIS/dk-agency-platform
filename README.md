@@ -43,7 +43,24 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deployment
+
+Current production remains on Vercel during the migration safety window.
+
+Hostinger Business target pattern:
+
+- `npm run build:standalone`
+- Node.js 20 LTS in hPanel
+- `HOSTNAME=0.0.0.0`
+- Hostinger-managed `PORT`
+- Cloudflare DNS in `DNS only` mode during first cutover
+- Vercel left online for 24-48 hours as rollback target
+
+Detailed migration runbook:
+
+- `docs/deployment-hostinger.md`
+
+## Legacy Vercel Note
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
