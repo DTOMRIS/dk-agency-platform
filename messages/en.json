@@ -42,7 +42,8 @@
   "common": {
     "language": "Language",
     "az": "AZ",
-    "tr": "TR",
-    "en": "EN"
+    "ru": "RU",
+    "en": "EN",
+    "tr": "TR"
   }
 }

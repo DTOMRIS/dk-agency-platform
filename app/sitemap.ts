@@ -4,7 +4,7 @@ import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import { getApprovedNewsArticles } from '@/lib/repositories/newsRepository';
 
 const BASE_URL = 'https://dkagency.az';
-const LOCALES = ['az', 'tr', 'en'] as const;
+const LOCALES = ['az', 'ru', 'en', 'tr'] as const;
 
 function absolute(path: string) {
   return `${BASE_URL}${path}`;

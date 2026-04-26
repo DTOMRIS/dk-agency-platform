@@ -8,7 +8,7 @@ export default createMiddleware(routing);
 export const config = {
   matcher: [
     '/',
-    '/(az|tr|en)/:path*',
+    '/(az|ru|en|tr)/:path*',
     '/((?!api|auth|dashboard|b2b-panel|_next|_vercel|favicon\\.ico|.*\\..*).*)',
   ],
 };

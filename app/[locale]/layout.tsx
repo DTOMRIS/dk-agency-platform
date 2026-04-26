@@ -11,7 +11,7 @@ type Props = {
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as 'az' | 'tr' | 'en')) {
+  if (!routing.locales.includes(locale as 'az' | 'ru' | 'en' | 'tr')) {
     notFound();
   }
 
