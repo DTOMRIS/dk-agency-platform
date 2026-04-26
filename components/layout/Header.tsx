@@ -20,37 +20,69 @@ import {
   readMemberSession,
   type MemberSession,
 } from '@/lib/member-access';
+import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale, type Locale } from '@/i18n/config';
 
-const locales = ['az', 'tr', 'en'] as const;
-
-const navItems = [
-  { name: 'Ana səhifə', href: '/', hasMegaMenu: false },
-  { name: 'Alətlər', href: '#', hasMegaMenu: true },
-  { name: 'İlanlar', href: '/ilanlar', hasMegaMenu: false },
-  { name: 'Sektor Nəbzi', href: '/haberler', hasMegaMenu: false },
-  { name: 'Bloq', href: '/blog', hasMegaMenu: false },
-  { name: 'İdarə Paneli', href: '/b2b-panel', hasMegaMenu: false },
-] as const;
-
-const memberLinks = [
-  { label: 'Hesabım', href: '/settings', icon: UserRound },
-  { label: 'Elanlarım', href: '/b2b-panel/ilanlarim', icon: LayoutGrid },
-] as const;
-
-function useCurrentLocale() {
-  const pathname = usePathname();
-  const segment = pathname.split('/')[1];
-  if (segment === 'tr' || segment === 'en') return segment;
-  return 'az';
-}
-
-function getLocalePath(pathname: string, newLocale: string) {
-  const currentLocale = pathname.split('/')[1];
-  const isLocalePrefix = currentLocale === 'tr' || currentLocale === 'en';
-  const pathWithoutLocale = isLocalePrefix ? pathname.slice(3) || '/' : pathname;
-  if (newLocale === 'az') return pathWithoutLocale;
-  return `/${newLocale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
-}
+const headerCopy: Record<Locale, {
+  nav: { home: string; tools: string; listings: string; news: string; blog: string; panel: string };
+  topBadge: string;
+  topText: string;
+  login: string;
+  register: string;
+  postListing: string;
+  account: string;
+  myListings: string;
+  logout: string;
+  menu: string;
+}> = {
+  az: {
+    nav: { home: 'Ana səhifə', tools: 'Alətlər', listings: 'İlanlar', news: 'Sektor Nəbzi', blog: 'Bloq', panel: 'İdarə Paneli' },
+    topBadge: 'YENİ:',
+    topText: 'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.',
+    login: 'Daxil ol',
+    register: 'Üzv ol',
+    postListing: 'Elan ver',
+    account: 'Hesabım',
+    myListings: 'Elanlarım',
+    logout: 'Çıxış',
+    menu: 'Menyu',
+  },
+  ru: {
+    nav: { home: 'Главная', tools: 'Инструменты', listings: 'Объявления', news: 'Пульс сектора', blog: 'Блог', panel: 'Панель управления' },
+    topBadge: 'НОВОЕ:',
+    topText: 'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.',
+    login: 'Войти',
+    register: 'Стать участником',
+    postListing: 'Разместить объявление',
+    account: 'Мой аккаунт',
+    myListings: 'Мои объявления',
+    logout: 'Выйти',
+    menu: 'Меню',
+  },
+  en: {
+    nav: { home: 'Home', tools: 'Tools', listings: 'Listings', news: 'Sector Pulse', blog: 'Blog', panel: 'Control Panel' },
+    topBadge: 'NEW:',
+    topText: 'KAZAN AI is in beta as the sector AI advisor.',
+    login: 'Sign in',
+    register: 'Join',
+    postListing: 'Post listing',
+    account: 'My account',
+    myListings: 'My listings',
+    logout: 'Log out',
+    menu: 'Menu',
+  },
+  tr: {
+    nav: { home: 'Ana sayfa', tools: 'Araçlar', listings: 'İlanlar', news: 'Sektör Nabzı', blog: 'Blog', panel: 'Yönetim Paneli' },
+    topBadge: 'YENİ:',
+    topText: 'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.',
+    login: 'Giriş yap',
+    register: 'Üye ol',
+    postListing: 'İlan ver',
+    account: 'Hesabım',
+    myListings: 'İlanlarım',
+    logout: 'Çıkış',
+    menu: 'Menü',
+  },
+};
 
 function getMemberInitials(session: MemberSession) {
   const source = session.name.trim() || session.email.trim();
@@ -67,7 +99,20 @@ function getMemberInitials(session: MemberSession) {
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const currentLocale = useCurrentLocale();
+  const currentLocale = normalizeLocale(pathname.split('/')[1]);
+  const copy = headerCopy[currentLocale];
+  const navItems = [
+    { name: copy.nav.home, href: withLocale(currentLocale, '/'), hasMegaMenu: false },
+    { name: copy.nav.tools, href: '#', hasMegaMenu: true },
+    { name: copy.nav.listings, href: withLocale(currentLocale, '/ilanlar'), hasMegaMenu: false },
+    { name: copy.nav.news, href: withLocale(currentLocale, '/haberler'), hasMegaMenu: false },
+    { name: copy.nav.blog, href: withLocale(currentLocale, '/blog'), hasMegaMenu: false },
+    { name: copy.nav.panel, href: withLocale(currentLocale, '/b2b-panel'), hasMegaMenu: false },
+  ] as const;
+  const memberLinks = [
+    { label: copy.account, href: withLocale(currentLocale, '/settings'), icon: UserRound },
+    { label: copy.myListings, href: withLocale(currentLocale, '/b2b-panel/ilanlarim'), icon: LayoutGrid },
+  ] as const;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
@@ -118,7 +163,7 @@ export default function Header() {
     setIsUserMenuOpen(false);
     setIsMobileOpen(false);
     router.refresh();
-    router.push('/uzvluk');
+    router.push(withLocale(currentLocale, '/uzvluk'));
   };
 
   return (
@@ -126,10 +171,8 @@ export default function Header() {
       <div className="hidden bg-[var(--dk-navy)] md:block">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
           <div className="flex items-center gap-2 text-xs">
-            <span className="font-bold text-[var(--dk-gold)]">YENİ:</span>
-            <span className="text-slate-300">
-              KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.
-            </span>
+            <span className="font-bold text-[var(--dk-gold)]">{copy.topBadge}</span>
+            <span className="text-slate-300">{copy.topText}</span>
           </div>
           <div className="flex items-center gap-3 text-xs text-slate-300">
             <div className="flex items-center gap-1">
@@ -137,10 +180,10 @@ export default function Header() {
                 <span key={locale} className="flex items-center gap-1">
                   {index > 0 ? <span className="text-slate-500">|</span> : null}
                   <Link
-                    href={getLocalePath(pathname, locale)}
+                    href={switchLocalePath(pathname, locale)}
                     className={currentLocale === locale ? 'font-bold text-white' : 'hover:text-white'}
                   >
-                    {locale.toUpperCase()}
+                    {localeLabels[locale]}
                   </Link>
                 </span>
               ))}
@@ -151,11 +194,11 @@ export default function Header() {
             ) : (
               <>
                 <Link href="/auth/login" className="hover:text-white">
-                  Daxil ol
+                  {copy.login}
                 </Link>
                 <span className="text-slate-500">|</span>
                 <Link href="/auth/register" className="hover:text-white">
-                  Üzv ol
+                  {copy.register}
                 </Link>
               </>
             )}
@@ -169,7 +212,7 @@ export default function Header() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-          <Link href="/" className="group flex items-center gap-2.5">
+          <Link href={withLocale(currentLocale, '/')} className="group flex items-center gap-2.5">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--dk-navy)] text-sm font-bold text-white">
               DK
             </div>
@@ -207,10 +250,10 @@ export default function Header() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/ilan-ver"
+              href={withLocale(currentLocale, '/ilan-ver')}
               className="hidden items-center gap-2 rounded-xl bg-[var(--dk-red)] px-5 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-[var(--dk-red)]/20 active:scale-95 sm:inline-flex"
             >
-              Elan ver
+              {copy.postListing}
               <ArrowRight size={16} />
             </Link>
 
@@ -250,7 +293,7 @@ export default function Header() {
                       className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium text-[var(--dk-red)] transition hover:bg-red-50"
                     >
                       <LogOut className="h-4 w-4" />
-                      Çıxış
+                      {copy.logout}
                     </button>
                   </div>
                 ) : null}
@@ -261,13 +304,13 @@ export default function Header() {
                   href="/auth/login"
                   className="hidden text-sm text-slate-500 transition-colors hover:text-[var(--dk-navy)] sm:inline-block"
                 >
-                  Daxil ol
+                  {copy.login}
                 </Link>
                 <Link
                   href="/auth/register"
                   className="hidden rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] sm:inline-block"
                 >
-                  Üzv ol
+                  {copy.register}
                 </Link>
               </>
             )}
@@ -275,7 +318,7 @@ export default function Header() {
             <button
               className="rounded-xl p-2 text-slate-600 transition-colors hover:bg-slate-100 lg:hidden"
               onClick={() => setIsMobileOpen((prev) => !prev)}
-              aria-label="Menyu"
+              aria-label={copy.menu}
             >
               {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -295,7 +338,7 @@ export default function Header() {
                 {navItems.map((item) => (
                   <Link
                     key={item.name}
-                    href={item.hasMegaMenu ? '/toolkit' : item.href}
+                    href={item.hasMegaMenu ? withLocale(currentLocale, '/toolkit') : item.href}
                     className="rounded-xl p-3 text-base font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]"
                     onClick={() => setIsMobileOpen(false)}
                   >
@@ -303,11 +346,11 @@ export default function Header() {
                   </Link>
                 ))}
                 <Link
-                  href="/ilan-ver"
+                  href={withLocale(currentLocale, '/ilan-ver')}
                   className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] py-3 font-semibold text-white shadow-lg shadow-[var(--dk-red)]/20"
                   onClick={() => setIsMobileOpen(false)}
                 >
-                  Elan ver
+                  {copy.postListing}
                   <ArrowRight size={16} />
                 </Link>
                 <div className="my-3 h-px bg-slate-100" />
@@ -333,7 +376,7 @@ export default function Header() {
                       className="flex items-center gap-3 rounded-xl p-3 text-left text-base font-medium text-[var(--dk-red)] transition hover:bg-red-50"
                     >
                       <LogOut className="h-4 w-4" />
-                      Çıxış
+                      {copy.logout}
                     </button>
                   </>
                 ) : (
@@ -343,14 +386,14 @@ export default function Header() {
                       className="rounded-xl p-3 text-base font-medium text-slate-700 transition hover:bg-slate-50"
                       onClick={() => setIsMobileOpen(false)}
                     >
-                      Daxil ol
+                      {copy.login}
                     </Link>
                     <Link
                       href="/auth/register"
                       className="rounded-xl p-3 text-base font-medium text-slate-700 transition hover:bg-slate-50"
                       onClick={() => setIsMobileOpen(false)}
                     >
-                      Üzv ol
+                      {copy.register}
                     </Link>
                   </>
                 )}
