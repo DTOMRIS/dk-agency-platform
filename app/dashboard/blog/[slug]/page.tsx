@@ -1,37 +1,43 @@
 import { notFound } from 'next/navigation';
 import BlogEditorForm, { type BlogDraft } from '@/components/dashboard/BlogEditorForm';
-import { getBlogPostDetail } from '@/lib/db/blog-repository';
+import { getBlogPostRaw } from '@/lib/db/blog-repository';
 
-function toDraft(post: NonNullable<Awaited<ReturnType<typeof getBlogPostDetail>>>): BlogDraft {
+type RawPost = NonNullable<Awaited<ReturnType<typeof getBlogPostRaw>>>;
+
+function toDraft(post: RawPost): BlogDraft {
   return {
     slug: post.slug,
-    titleAz: post.title,
-    titleTr: '',
-    titleEn: '',
-    category: post.category,
-    author: post.author,
-    readTime: post.readingTime,
+    titleAz: post.title_az,
+    titleTr: post.title_tr || '',
+    titleEn: post.title_en || '',
+    titleRu: post.title_ru || '',
+    category: post.category || 'Maliyyə',
+    author: post.author || 'DK Agency',
+    readTime: post.readTime || 8,
     status: (post.status as BlogDraft['status']) || 'draft',
-    paywall: post.isPremium,
-    publishDate: post.publishDate.slice(0, 10),
+    paywall: Boolean(post.hasPaywall),
+    publishDate: post.publishedAt?.toISOString().slice(0, 10) || new Date().toISOString().slice(0, 10),
     seoTitle: post.seoTitle || '',
     seoDescription: post.seoDescription || '',
     doganNote: post.doganNote || '',
-    contentAz: post.content,
-    contentTr: '',
-    contentEn: '',
-    featuredImage: post.coverImage || '',
-    guruBoxes: post.guruBoxes.map((box) => ({
-      guru: box.guruName,
-      quote: box.quote,
-      book: box.book,
-    })),
+    contentAz: post.content_az,
+    contentTr: post.content_tr || '',
+    contentEn: post.content_en || '',
+    contentRu: post.content_ru || '',
+    featuredImage: post.featuredImage || '',
+    guruBoxes: post.guruBoxesList
+      .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+      .map((box) => ({
+        guru: box.guruName || '',
+        quote: box.quote_az || '',
+        book: box.book || '',
+      })),
   };
 }
 
 export default async function DashboardBlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await getBlogPostDetail(slug);
+  const post = await getBlogPostRaw(slug);
   if (!post) notFound();
 
   return (

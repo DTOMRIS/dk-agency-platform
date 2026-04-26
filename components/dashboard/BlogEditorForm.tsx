@@ -17,6 +17,7 @@ export interface BlogDraft {
   titleAz: string;
   titleTr: string;
   titleEn: string;
+  titleRu: string;
   category: string;
   author: string;
   readTime: number;
@@ -29,12 +30,28 @@ export interface BlogDraft {
   contentAz: string;
   contentTr: string;
   contentEn: string;
+  contentRu: string;
   featuredImage?: string;
   guruBoxes: Array<{
     guru: string;
     quote: string;
     book: string;
   }>;
+}
+
+type LocaleTab = 'az' | 'ru' | 'en' | 'tr';
+const LOCALE_TABS: Array<{ key: LocaleTab; label: string }> = [
+  { key: 'az', label: 'AZ' },
+  { key: 'ru', label: 'RU' },
+  { key: 'en', label: 'EN' },
+  { key: 'tr', label: 'TR' },
+];
+
+function titleKey(locale: LocaleTab): keyof BlogDraft {
+  return `title${locale.charAt(0).toUpperCase() + locale.slice(1)}` as keyof BlogDraft;
+}
+function contentKey(locale: LocaleTab): keyof BlogDraft {
+  return `content${locale.charAt(0).toUpperCase() + locale.slice(1)}` as keyof BlogDraft;
 }
 
 function slugify(value: string) {
@@ -56,6 +73,7 @@ const EMPTY_DRAFT: BlogDraft = {
   titleAz: '',
   titleTr: '',
   titleEn: '',
+  titleRu: '',
   category: 'Maliyyə',
   author: 'DK Agency',
   readTime: 8,
@@ -68,6 +86,7 @@ const EMPTY_DRAFT: BlogDraft = {
   contentAz: '',
   contentTr: '',
   contentEn: '',
+  contentRu: '',
   featuredImage: '',
   guruBoxes: [],
 };
@@ -79,6 +98,8 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
   const [toast, setToast] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ titleAz?: string; slug?: string; contentAz?: string }>({});
+
+  const [activeLocale, setActiveLocale] = useState<LocaleTab>('az');
 
   const [seoTitleCount, seoDescriptionCount, doganNoteCount] = useMemo(
     () => [post.seoTitle.length, post.seoDescription.length, post.doganNote.length],
@@ -170,42 +191,48 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
 
       <div className="grid gap-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm xl:grid-cols-[1.15fr_0.85fr]">
         <div className="grid gap-4">
+          <div className="flex gap-1 rounded-2xl bg-slate-100 p-1">
+            {LOCALE_TABS.map((tab) => {
+              const hasContent = Boolean((post[titleKey(tab.key)] as string)?.trim());
+              return (
+                <button
+                  key={tab.key}
+                  type="button"
+                  onClick={() => setActiveLocale(tab.key)}
+                  className={`relative flex-1 rounded-xl px-4 py-2.5 text-sm font-bold transition ${
+                    activeLocale === tab.key
+                      ? 'bg-white text-[var(--dk-navy)] shadow-sm'
+                      : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                >
+                  {tab.label}
+                  {hasContent && tab.key !== 'az' ? (
+                    <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald-400" />
+                  ) : null}
+                  {!hasContent && tab.key !== 'az' ? (
+                    <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-slate-300" />
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
+
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">Başlıq (AZ)</label>
+            <label className="mb-2 block text-sm font-bold text-slate-700">
+              Başlıq ({activeLocale.toUpperCase()})
+              {activeLocale !== 'az' ? <span className="ml-2 text-xs font-normal text-slate-400">Boşdursa AZ göstərilir</span> : null}
+            </label>
             <input
-              value={post.titleAz}
+              value={post[titleKey(activeLocale)] as string}
               onChange={(e) => {
                 const title = e.target.value;
-                setField('titleAz', title);
-                if (!initialPost) setField('slug', slugify(title));
+                setField(titleKey(activeLocale), title);
+                if (!initialPost && activeLocale === 'az') setField('slug', slugify(title));
               }}
+              placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} tərcümə...` : ''}
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
             />
-            {errors.titleAz ? <p className="mt-2 text-xs text-red-600">{errors.titleAz}</p> : null}
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-[1fr_auto]">
-            <input
-              value={post.titleTr}
-              onChange={(e) => setField('titleTr', e.target.value)}
-              placeholder="Başlıq (TR)"
-              className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
-            />
-            <button type="button" onClick={() => translateField('title', 'tr')} className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
-              Tərcümə
-            </button>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-[1fr_auto]">
-            <input
-              value={post.titleEn}
-              onChange={(e) => setField('titleEn', e.target.value)}
-              placeholder="Başlıq (EN)"
-              className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
-            />
-            <button type="button" onClick={() => translateField('title', 'en')} className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
-              Tərcümə
-            </button>
+            {activeLocale === 'az' && errors.titleAz ? <p className="mt-2 text-xs text-red-600">{errors.titleAz}</p> : null}
           </div>
 
           <div>
@@ -297,25 +324,36 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
 
       <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
         <div className="grid gap-4">
-          <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">Məzmun (AZ)</label>
-            <textarea rows={12} value={post.contentAz} onChange={(e) => setField('contentAz', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-            {errors.contentAz ? <p className="mt-2 text-xs text-red-600">{errors.contentAz}</p> : null}
+          <div className="flex items-center justify-between">
+            <label className="block text-sm font-bold text-slate-700">
+              Məzmun ({activeLocale.toUpperCase()})
+              {activeLocale !== 'az' ? <span className="ml-2 text-xs font-normal text-slate-400">Boşdursa AZ göstərilir</span> : null}
+            </label>
+            {activeLocale !== 'az' ? (
+              <button
+                type="button"
+                onClick={() => translateField('content', activeLocale as 'tr' | 'en')}
+                className="rounded-full border border-slate-200 px-4 py-1.5 text-xs font-semibold text-slate-600"
+              >
+                AZ-dan tərcümə et
+              </button>
+            ) : null}
           </div>
+          <textarea
+            rows={activeLocale === 'az' ? 12 : 10}
+            value={post[contentKey(activeLocale)] as string}
+            onChange={(e) => setField(contentKey(activeLocale), e.target.value)}
+            placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} məzmun tərcüməsi...` : ''}
+            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+          />
+          {activeLocale === 'az' && errors.contentAz ? <p className="mt-2 text-xs text-red-600">{errors.contentAz}</p> : null}
 
-          <div className="grid gap-4 md:grid-cols-[1fr_auto]">
-            <textarea rows={8} value={post.contentTr} onChange={(e) => setField('contentTr', e.target.value)} placeholder="Məzmun (TR)" className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-            <button type="button" onClick={() => translateField('content', 'tr')} className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
-              Tərcümə
-            </button>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-[1fr_auto]">
-            <textarea rows={8} value={post.contentEn} onChange={(e) => setField('contentEn', e.target.value)} placeholder="Məzmun (EN)" className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-            <button type="button" onClick={() => translateField('content', 'en')} className="rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
-              Tərcümə
-            </button>
-          </div>
+          {activeLocale !== 'az' && post.contentAz ? (
+            <details className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+              <summary className="cursor-pointer text-xs font-bold text-slate-500">AZ mənbə məzmunu (referans)</summary>
+              <pre className="mt-3 max-h-48 overflow-y-auto whitespace-pre-wrap text-xs leading-6 text-slate-600">{post.contentAz.slice(0, 500)}{post.contentAz.length > 500 ? '...' : ''}</pre>
+            </details>
+          ) : null}
         </div>
       </div>
 

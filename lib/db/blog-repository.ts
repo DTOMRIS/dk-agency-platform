@@ -157,11 +157,23 @@ export async function getBlogPostDetail(slug: string, locale?: string) {
   return mapDbArticle(row, boxes, loc);
 }
 
+/** Returns raw DB row with all locale columns — for admin editor */
+export async function getBlogPostRaw(slug: string) {
+  if (!dbAvailable || !db) return null;
+
+  const row = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).then((items) => items[0]);
+  if (!row) return null;
+
+  const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, row.id));
+  return { ...row, guruBoxesList: boxes };
+}
+
 export async function createBlogPostInDb(input: {
   slug: string;
   titleAz: string;
   titleTr?: string;
   titleEn?: string;
+  titleRu?: string;
   category: string;
   author: string;
   readTime: number;
@@ -169,6 +181,7 @@ export async function createBlogPostInDb(input: {
   contentAz: string;
   contentTr?: string;
   contentEn?: string;
+  contentRu?: string;
   doganNote?: string;
   seoTitle?: string;
   seoDescription?: string;
@@ -188,10 +201,12 @@ export async function createBlogPostInDb(input: {
       title_az: input.titleAz,
       title_tr: input.titleTr || null,
       title_en: input.titleEn || null,
+      title_ru: input.titleRu || null,
       summary_az: excerpt(input.contentAz, 220),
       content_az: input.contentAz,
       content_tr: input.contentTr || null,
       content_en: input.contentEn || null,
+      content_ru: input.contentRu || null,
       category: input.category,
       author: input.author,
       readTime: input.readTime,
@@ -239,10 +254,12 @@ export async function updateBlogPostInDb(
       title_az: input.titleAz,
       title_tr: input.titleTr || null,
       title_en: input.titleEn || null,
+      title_ru: input.titleRu || null,
       summary_az: excerpt(input.contentAz, 220),
       content_az: input.contentAz,
       content_tr: input.contentTr || null,
       content_en: input.contentEn || null,
+      content_ru: input.contentRu || null,
       category: input.category,
       author: input.author,
       readTime: input.readTime,
