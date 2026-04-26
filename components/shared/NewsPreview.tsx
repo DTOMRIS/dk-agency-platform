@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { NEWS_ITEMS } from '@/components/constants';
 import { Calendar, ArrowRight, Tag, Bookmark } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function NewsPreview() {
   const featuredNews = NEWS_ITEMS[0];
@@ -41,10 +42,12 @@ export default function NewsPreview() {
               viewport={{ once: true }}
             >
               <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden mb-8 shadow-2xl shadow-slate-200/50">
-                <img
+                <Image
                   src={featuredNews.image}
                   alt={featuredNews.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-1000"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>

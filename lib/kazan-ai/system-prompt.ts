@@ -1,5 +1,17 @@
 import { serializeKazanKnowledge } from './knowledge-base';
 
+export type KazanLocale = 'az' | 'en' | 'tr' | 'ru';
+
+const LOCALE_INSTRUCTIONS: Record<KazanLocale, string> = {
+  az: 'Cavabları Azərbaycan dilində ver.',
+  ru: 'Отвечай на русском языке. Используй профессиональный деловой регистр. Технические термины HoReCa: фуд-кост, P&L отчёт, прайм-кост, себестоимость.',
+  en: 'Respond in English. Use professional business register.',
+  tr: 'Türkçe cevap ver. Profesyonel iş dili kullan.',
+};
+
+const BRAND_GUARD =
+  'Brand terms must remain UNCHANGED in all languages: KAZAN AI, OCAQ, ŞEDD, SİMAT, Ahilik, DK Agency, HoReCa. Currency stays AZN.';
+
 const KNOWLEDGE_CONTEXT = serializeKazanKnowledge();
 
 export const KAZAN_SYSTEM_PROMPT = `
@@ -43,6 +55,7 @@ BİLGİ BAZASI:
 ${KNOWLEDGE_CONTEXT}
 `.trim();
 
-export function buildKazanSystemPrompt(): string {
-  return KAZAN_SYSTEM_PROMPT;
+export function buildKazanSystemPrompt(locale: KazanLocale = 'az'): string {
+  const langRule = LOCALE_INSTRUCTIONS[locale] || LOCALE_INSTRUCTIONS.az;
+  return `${KAZAN_SYSTEM_PROMPT}\n\nLANGUAGE OUTPUT RULE:\n${langRule}\n${BRAND_GUARD}`;
 }

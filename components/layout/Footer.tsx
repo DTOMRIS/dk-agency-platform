@@ -56,9 +56,14 @@ export function Footer() {
               </div>
               <span className="text-sm font-bold text-slate-900">DK Agency</span>
             </div>
-            <p className="max-w-[240px] text-sm leading-relaxed text-gray-500">
+            <p className="max-w-[240px] text-sm leading-relaxed text-gray-500 mb-6">
               Ustalığın nişanı, dijitalın şəddi. Azərbaycanın ilk AI-dəstəkli HoReCa platforması.
             </p>
+            <div className="flex flex-col gap-2 text-sm text-gray-500">
+              <a href="tel:+994502566279" className="hover:text-slate-900 transition-colors">Tel: +994 50 256 62 79</a>
+              <a href="mailto:info@dkagency.com.tr" className="hover:text-slate-900 transition-colors">info@dkagency.com.tr</a>
+              <a href="https://t.me/dkagency" target="_blank" rel="noopener noreferrer" className="text-[var(--dk-gold)] font-medium hover:text-[#a08018] transition-colors">KAZAN Telegram</a>
+            </div>
           </div>
 
           {footerColumns.map((column) => (

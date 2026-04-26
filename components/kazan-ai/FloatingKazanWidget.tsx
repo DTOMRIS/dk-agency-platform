@@ -14,6 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FormEvent, MouseEvent, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -90,7 +91,15 @@ function lastUserQuestions(messages: Message[], pendingQuestion?: string) {
     .reverse();
 }
 
+function useCurrentLocale() {
+  const pathname = usePathname();
+  const segment = pathname.split('/')[1];
+  if (segment === 'tr' || segment === 'en' || segment === 'ru') return segment;
+  return 'az';
+}
+
 export default function FloatingKazanWidget() {
+  const locale = useCurrentLocale();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: welcomeMessage }]);
   const [input, setInput] = useState('');
@@ -148,7 +157,7 @@ export default function FloatingKazanWidget() {
       const response = await fetch('/api/kazan-ai', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({ messages: nextMessages, locale }),
       });
       const payload = (await response.json()) as { message?: string; error?: string };
       if (!response.ok || !payload.message) {

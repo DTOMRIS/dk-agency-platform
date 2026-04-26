@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -23,7 +24,15 @@ const SAMPLE_QUESTIONS = [
 const INITIAL_ASSISTANT =
   'Salam. Mən **KAZAN AI**-yam. Food cost, P&L, AQTA, delivery, açılış və marka qərarlarını Azərbaycan HoReCa reallığına görə şərh edirəm.\n\nBaşlamaq üçün belə soruş:\n- Food cost-um %38-dir, nə etməliyəm?\n- P&L-də ilk hansı rəqəmə baxım?\n- Delivery menyusunu necə mənfəətli edim?\n\nToolkit: [Food Cost kalkulyatoru](/toolkit/food-cost)\nBlog: [Food Cost yazısı](/blog/1-porsiya-food-cost-hesablama)';
 
+function useCurrentLocale() {
+  const pathname = usePathname();
+  const segment = pathname.split('/')[1];
+  if (segment === 'tr' || segment === 'en' || segment === 'ru') return segment;
+  return 'az';
+}
+
 export default function KazanAiChatClient() {
+  const locale = useCurrentLocale();
   const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: INITIAL_ASSISTANT }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -51,7 +60,7 @@ export default function KazanAiChatClient() {
       const response = await fetch('/api/kazan-ai', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({ messages: nextMessages, locale }),
       });
 
       const payload = (await response.json()) as { message?: string; error?: string };

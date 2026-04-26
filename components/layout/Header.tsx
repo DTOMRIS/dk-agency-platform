@@ -131,7 +131,12 @@ export default function Header() {
               KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.
             </span>
           </div>
-          <div className="flex items-center gap-3 text-xs text-slate-300">
+          <div className="flex items-center gap-4 text-xs text-slate-300">
+            <div className="flex items-center gap-3 border-r border-slate-700 pr-4">
+              <a href="tel:+994502566279" className="hover:text-white transition-colors flex items-center gap-1"><span className="hidden lg:inline">Tel:</span> +994 50 256 62 79</a>
+              <a href="mailto:info@dkagency.com.tr" className="hover:text-white transition-colors flex items-center gap-1"><span className="hidden lg:inline">E-poçt:</span> info@dkagency.com.tr</a>
+              <a href="https://t.me/dkagency" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-[var(--dk-gold)] font-semibold flex items-center gap-1">KAZAN Telegram</a>
+            </div>
             <div className="flex items-center gap-1">
               {locales.map((locale, index) => (
                 <span key={locale} className="flex items-center gap-1">
@@ -354,6 +359,12 @@ export default function Header() {
                     </Link>
                   </>
                 )}
+                <div className="my-3 h-px bg-slate-100" />
+                <div className="flex flex-col gap-3 px-3 py-2 text-sm font-medium text-slate-500">
+                  <a href="tel:+994502566279" className="flex items-center gap-2 hover:text-[var(--dk-navy)]"><span className="text-[var(--dk-navy)]">Tel:</span> +994 50 256 62 79</a>
+                  <a href="mailto:info@dkagency.com.tr" className="flex items-center gap-2 hover:text-[var(--dk-navy)]"><span className="text-[var(--dk-navy)]">E-poçt:</span> info@dkagency.com.tr</a>
+                  <a href="https://t.me/dkagency" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[var(--dk-gold)] hover:text-[#a08018]">KAZAN Telegram</a>
+                </div>
               </div>
             </motion.div>
           ) : null}

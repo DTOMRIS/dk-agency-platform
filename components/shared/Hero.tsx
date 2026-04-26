@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play, CheckCircle2, Users, Star } from 'lucide-react';
 
@@ -8,10 +9,13 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-slate-950">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img 
+        <Image 
           src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=2070" 
           alt="Premium Restaurant Background"
-          className="w-full h-full object-cover opacity-40 scale-105 animate-slow-zoom"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-40 scale-105 animate-slow-zoom"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950"></div>
