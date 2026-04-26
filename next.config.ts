@@ -32,6 +32,20 @@ const nextConfig: NextConfig = {
     "http://172.24.112.1:3000",
     "http://192.168.100.67:3000",
   ],
+  async redirects() {
+    return [
+      {
+        source: '/admin',
+        destination: '/dashboard',
+        permanent: false,
+      },
+      {
+        source: '/admin/:path*',
+        destination: '/dashboard/:path*',
+        permanent: false,
+      },
+    ]
+  },
   async headers() {
     return [
       {
