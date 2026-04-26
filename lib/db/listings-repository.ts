@@ -2,6 +2,7 @@ import { and, asc, eq, gte, inArray, lte } from 'drizzle-orm';
 import { db } from './index';
 import { listingLeads, listingMedia, listingReviews, listings } from './schema';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
+import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
 
 export interface ListingFilters {
   type?: string | null;
@@ -16,15 +17,19 @@ function normalizePhone(phone: string) {
   return phone.startsWith('+') ? phone : `+${phone}`;
 }
 
-function mapDbListing(row: typeof listings.$inferSelect, media: typeof listingMedia.$inferSelect[], leads: typeof listingLeads.$inferSelect[], reviews: typeof listingReviews.$inferSelect[]): MockListing {
+function mapDbListing(row: typeof listings.$inferSelect, media: typeof listingMedia.$inferSelect[], leads: typeof listingLeads.$inferSelect[], reviews: typeof listingReviews.$inferSelect[], locale: ContentLocale = 'az'): MockListing {
+  const r = row as unknown as Record<string, unknown>;
+  const title = localizedField(r, 'title', locale) || row.title;
+  const description = localizedField(r, 'description', locale) || row.description;
+
   return {
     id: row.id,
     slug: row.slug || row.trackingCode.toLowerCase(),
     trackingCode: row.trackingCode,
     type: row.type,
     status: row.status,
-    title: row.title,
-    description: row.description,
+    title,
+    description,
     price: row.price ?? 0,
     currency: (row.currency as 'AZN') || 'AZN',
     city: row.city,
@@ -61,7 +66,8 @@ function mapDbListing(row: typeof listings.$inferSelect, media: typeof listingMe
   };
 }
 
-export async function getListings(filters: ListingFilters = {}) {
+export async function getListings(filters: ListingFilters = {}, locale?: string) {
+  const loc = sanitizeLocale(locale);
   if (!db) return MOCK_LISTINGS;
 
   const conditions = [];
@@ -93,11 +99,13 @@ export async function getListings(filters: ListingFilters = {}) {
       mediaRows.filter((item) => item.listingId === row.id),
       leadRows.filter((item) => item.listingId === row.id),
       reviewRows.filter((item) => item.listingId === row.id),
+      loc,
     ),
   );
 }
 
-export async function getListingById(id: number) {
+export async function getListingById(id: number, locale?: string) {
+  const loc = sanitizeLocale(locale);
   if (!db) return MOCK_LISTINGS.find((item) => item.id === id) || null;
 
   const row = await db.select().from(listings).where(eq(listings.id, id)).then((items) => items[0]);
@@ -109,5 +117,5 @@ export async function getListingById(id: number) {
     db.select().from(listingReviews).where(eq(listingReviews.listingId, id)),
   ]);
 
-  return mapDbListing(row, mediaRows, leadRows, reviewRows);
+  return mapDbListing(row, mediaRows, leadRows, reviewRows, loc);
 }

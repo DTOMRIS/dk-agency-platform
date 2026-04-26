@@ -3,6 +3,7 @@ import { db, dbAvailable } from '@/lib/db';
 import { newsArticles, newsSources } from '@/lib/db/schema';
 import { getAllNews } from '@/lib/data/mockNewsDB';
 import { defaultNewsSources } from '@/lib/data/newsSources';
+import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
 
 export interface NewsAdminFilters {
   status?: string | null;
@@ -357,12 +358,30 @@ function mapPublicArticle(row: {
   externalUrl: string;
   publishedAt: Date | null;
   isEditorPick: boolean;
-}): PublicNewsArticle {
+  titleRu?: string | null;
+  titleEn?: string | null;
+  titleTr?: string | null;
+  summaryRu?: string | null;
+  summaryEn?: string | null;
+  summaryTr?: string | null;
+}, locale: ContentLocale = 'az'): PublicNewsArticle {
+  const r = row as unknown as Record<string, unknown>;
+  // News uses titleAz (camelCase) not title_az — remap for localizedField
+  const titleByLocale: Record<ContentLocale, string | null | undefined> = {
+    az: row.titleAz, ru: row.titleRu, en: row.titleEn, tr: row.titleTr,
+  };
+  const summaryByLocale: Record<ContentLocale, string | null | undefined> = {
+    az: row.summaryAz, ru: row.summaryRu, en: row.summaryEn, tr: row.summaryTr,
+  };
+
+  const title = titleByLocale[locale]?.trim() || row.titleAz || row.title;
+  const summary = summaryByLocale[locale]?.trim() || row.summaryAz || row.summary || '';
+
   return {
     id: row.id,
     slug: row.slug || `news-${row.id}`,
-    title: row.titleAz || row.title,
-    summary: row.summaryAz || row.summary || '',
+    title,
+    summary,
     category: row.category,
     imageUrl: row.imageUrl,
     author: row.author,
@@ -379,8 +398,14 @@ function buildPublicArticleSelect() {
     slug: newsArticles.slug,
     title: newsArticles.title,
     titleAz: newsArticles.titleAz,
+    titleRu: newsArticles.titleRu,
+    titleEn: newsArticles.titleEn,
+    titleTr: newsArticles.titleTr,
     summary: newsArticles.summary,
     summaryAz: newsArticles.summaryAz,
+    summaryRu: newsArticles.summaryRu,
+    summaryEn: newsArticles.summaryEn,
+    summaryTr: newsArticles.summaryTr,
     category: newsArticles.category,
     imageUrl: newsArticles.imageUrl,
     author: newsArticles.author,
@@ -391,7 +416,9 @@ function buildPublicArticleSelect() {
   };
 }
 
-export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}) {
+export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
   if (!dbAvailable || !db) {
     const mockItems = getAllNews()
       .map((item, index) => ({
@@ -433,13 +460,15 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}) {
   ]);
 
   return {
-    items: rows.map(mapPublicArticle),
+    items: rows.map((row) => mapPublicArticle(row, loc)),
     total: totalRows[0]?.count || 0,
     source: 'db' as const,
   };
 }
 
-export async function getApprovedEditorPick(category?: NewsCategoryKey) {
+export async function getApprovedEditorPick(category?: NewsCategoryKey, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
   if (!dbAvailable || !db) return null;
 
   const row = await db
@@ -462,10 +491,12 @@ export async function getApprovedEditorPick(category?: NewsCategoryKey) {
     .limit(1)
     .then((rows) => rows[0] || null);
 
-  return row ? mapPublicArticle(row) : null;
+  return row ? mapPublicArticle(row, loc) : null;
 }
 
-export async function getNewsArticleBySlug(slug: string) {
+export async function getNewsArticleBySlug(slug: string, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
   if (!dbAvailable || !db) return null;
 
   const row = await db
@@ -474,8 +505,14 @@ export async function getNewsArticleBySlug(slug: string) {
       slug: newsArticles.slug,
       title: newsArticles.title,
       titleAz: newsArticles.titleAz,
+      titleRu: newsArticles.titleRu,
+      titleEn: newsArticles.titleEn,
+      titleTr: newsArticles.titleTr,
       summary: newsArticles.summary,
       summaryAz: newsArticles.summaryAz,
+      summaryRu: newsArticles.summaryRu,
+      summaryEn: newsArticles.summaryEn,
+      summaryTr: newsArticles.summaryTr,
       category: newsArticles.category,
       imageUrl: newsArticles.imageUrl,
       author: newsArticles.author,
@@ -492,31 +529,19 @@ export async function getNewsArticleBySlug(slug: string) {
 
   if (!row || row.status !== 'approved') return null;
   return {
-    ...mapPublicArticle(row),
+    ...mapPublicArticle(row, loc),
     originalTitle: row.title,
     originalSummary: row.summary || '',
   };
 }
 
-export async function getRelatedApprovedNewsArticles(articleId: number, category: Exclude<NewsCategoryKey, 'all'>) {
+export async function getRelatedApprovedNewsArticles(articleId: number, category: Exclude<NewsCategoryKey, 'all'>, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
   if (!dbAvailable || !db) return [];
 
   const rows = await db
-    .select({
-      id: newsArticles.id,
-      slug: newsArticles.slug,
-      title: newsArticles.title,
-      titleAz: newsArticles.titleAz,
-      summary: newsArticles.summary,
-      summaryAz: newsArticles.summaryAz,
-      category: newsArticles.category,
-      imageUrl: newsArticles.imageUrl,
-      author: newsArticles.author,
-      sourceName: newsSources.name,
-      externalUrl: newsArticles.externalUrl,
-      publishedAt: newsArticles.publishedAt,
-      isEditorPick: newsArticles.isEditorPick,
-    })
+    .select(buildPublicArticleSelect())
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
     .where(
@@ -528,5 +553,5 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
     .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
     .limit(3);
 
-  return rows.map(mapPublicArticle);
+  return rows.map((row) => mapPublicArticle(row, loc));
 }

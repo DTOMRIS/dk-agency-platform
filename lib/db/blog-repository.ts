@@ -7,6 +7,7 @@ import {
   getBlogArticleBySlug,
   type BlogArticle,
 } from '@/lib/data/blogArticles';
+import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
 
 export interface BlogListFilters {
   category?: string | null;
@@ -46,44 +47,55 @@ function mapStaticArticle(article: BlogArticle): DbBlogPost {
 function mapDbArticle(
   row: typeof blogPosts.$inferSelect,
   boxRows: typeof guruBoxes.$inferSelect[] = [],
+  locale: ContentLocale = 'az',
 ): DbBlogPost {
+  const r = row as unknown as Record<string, unknown>;
+  const title = localizedField(r, 'title', locale) || row.title_az;
+  const summary = localizedField(r, 'summary', locale) || excerpt(row.content_az, 220);
+  const content = localizedField(r, 'content', locale) || row.content_az;
+
   return {
     id: String(row.id),
     slug: row.slug,
-    title: row.title_az,
+    title,
     subtitle: undefined,
     category: (row.category as BlogArticle['category']) || 'maliyye',
     categoryEmoji: '',
     readingTime: row.readTime || 8,
-    wordCount: row.content_az?.split(/\s+/).filter(Boolean).length || 0,
+    wordCount: content?.split(/\s+/).filter(Boolean).length || 0,
     author: row.author || 'DK Agency',
     publishDate: row.publishedAt?.toISOString() || row.createdAt?.toISOString() || new Date().toISOString(),
     updatedAt: row.updatedAt?.toISOString() || row.createdAt?.toISOString() || new Date().toISOString(),
     tags: [],
-    metaDescription: row.seoDescription || row.summary_az || excerpt(row.content_az, 160),
+    metaDescription: row.seoDescription || summary || excerpt(content, 160),
     focusKeyword: '',
-    summary: row.summary_az || excerpt(row.content_az, 220),
-    content: row.content_az,
+    summary,
+    content,
     isPremium: Boolean(row.hasPaywall),
     relatedArticles: [],
     coverImage: row.featuredImage || '',
-    coverImageAlt: row.title_az,
-    seoTitle: row.seoTitle || row.title_az,
-    seoDescription: row.seoDescription || row.summary_az || '',
+    coverImageAlt: title,
+    seoTitle: row.seoTitle || title,
+    seoDescription: row.seoDescription || summary || '',
     doganNote: row.doganNote || '',
     status: row.status || 'draft',
     guruBoxes: boxRows
       .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
-      .map((item) => ({
-        guruName: item.guruName || '',
-        quote: item.quote_az || '',
-        book: item.book || '',
-        sortOrder: item.sortOrder || 0,
-      })),
+      .map((item) => {
+        const boxR = item as unknown as Record<string, unknown>;
+        return {
+          guruName: item.guruName || '',
+          quote: localizedField(boxR, 'quote', locale) || item.quote_az || '',
+          book: item.book || '',
+          sortOrder: item.sortOrder || 0,
+        };
+      }),
   };
 }
 
-export async function getBlogPostsFromDb(filters: BlogListFilters = {}) {
+export async function getBlogPostsFromDb(filters: BlogListFilters = {}, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
   if (!dbAvailable || !db) {
     const staticArticles = getAllBlogArticles().map(mapStaticArticle);
     const filtered = staticArticles.filter((article) => {
@@ -124,13 +136,15 @@ export async function getBlogPostsFromDb(filters: BlogListFilters = {}) {
     .where(conditions.length ? and(...conditions) : undefined);
 
   return {
-    posts: rows.map((row) => mapDbArticle(row)),
+    posts: rows.map((row) => mapDbArticle(row, [], loc)),
     total: totalRows[0]?.count || 0,
     source: 'db' as const,
   };
 }
 
-export async function getBlogPostDetail(slug: string) {
+export async function getBlogPostDetail(slug: string, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
   if (!dbAvailable || !db) {
     const article = getBlogArticleBySlug(slug);
     return article ? mapStaticArticle(article) : null;
@@ -140,7 +154,7 @@ export async function getBlogPostDetail(slug: string) {
   if (!row) return null;
 
   const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, row.id));
-  return mapDbArticle(row, boxes);
+  return mapDbArticle(row, boxes, loc);
 }
 
 export async function createBlogPostInDb(input: {

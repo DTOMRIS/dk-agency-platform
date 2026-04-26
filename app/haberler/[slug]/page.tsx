@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
 
 import { ShareButtons } from '@/components/blog/BlogSidebars';
 import { formatDateAz } from '@/lib/formatDate';
@@ -25,22 +26,32 @@ function getCategoryLabel(category: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const article = await getNewsArticleBySlug(slug);
+  const locale = await getLocale();
+  const article = await getNewsArticleBySlug(slug, locale);
 
   if (!article) {
     return { title: 'Xəbər tapılmadı | DK Agency' };
   }
+
+  const localePrefix = locale === 'az' ? '' : `/${locale}`;
 
   return {
     metadataBase: new URL('https://dkagency.az'),
     title: `${article.title} | DK Agency`,
     description: article.summary,
     alternates: {
-      canonical: `/haberler/${article.slug}`,
+      canonical: `${localePrefix}/sektor-nebzi/${article.slug}`,
+      languages: {
+        az: `/sektor-nebzi/${article.slug}`,
+        ru: `/ru/sektor-nebzi/${article.slug}`,
+        en: `/en/sektor-nebzi/${article.slug}`,
+        tr: `/tr/sektor-nebzi/${article.slug}`,
+      },
     },
     openGraph: {
       type: 'article',
-      url: `https://dkagency.az/haberler/${article.slug}`,
+      locale: locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
+      url: `https://dkagency.az${localePrefix}/sektor-nebzi/${article.slug}`,
       title: `${article.title} | DK Agency`,
       description: article.summary,
       images: article.imageUrl
@@ -61,13 +72,14 @@ export default async function HaberDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = await getNewsArticleBySlug(slug);
+  const locale = await getLocale();
+  const article = await getNewsArticleBySlug(slug, locale);
 
   if (!article) {
     notFound();
   }
 
-  const related = await getRelatedApprovedNewsArticles(article.id, article.category);
+  const related = await getRelatedApprovedNewsArticles(article.id, article.category, locale);
   const shareUrl = `https://dkagency.az/haberler/${article.slug}`;
   const structuredData = {
     '@context': 'https://schema.org',
@@ -87,7 +99,7 @@ export default async function HaberDetailPage({
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
     mainEntityOfPage: shareUrl,
-    inLanguage: 'az',
+    inLanguage: locale || 'az',
   };
 
   return (

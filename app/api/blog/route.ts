@@ -8,13 +8,14 @@ export async function GET(request: NextRequest) {
   const status = searchParams.get('status') || 'published';
   const limit = searchParams.get('limit');
   const offset = searchParams.get('offset');
+  const locale = searchParams.get('locale') || 'az';
 
   const result = await getBlogPostsFromDb({
     category,
     status,
     limit: limit ? Number(limit) : undefined,
     offset: offset ? Number(offset) : undefined,
-  });
+  }, locale);
 
   return NextResponse.json({
     posts: result.posts,
