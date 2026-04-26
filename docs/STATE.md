@@ -3,8 +3,8 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-26T06:38:45.618Z
-- BuildStatus: UNKNOWN
+- GeneratedAt: 2026-04-26T07:23:57.751Z
+- BuildStatus: PASS
 
 ## Routes (117)
 - /[locale]
@@ -125,8 +125,46 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (0)
-
+## API Routes (39)
+- /api/admin/news/approve
+- /api/admin/news/pending
+- /api/admin/news/reject
+- /api/auth
+- /api/auth/change-password
+- /api/auth/forgot-password
+- /api/auth/reset-password
+- /api/auth/verify-email
+- /api/blog
+- /api/blog/[slug]
+- /api/health
+- /api/kazan-ai
+- /api/kazan-ai/leads
+- /api/listings
+- /api/listings/[id]
+- /api/listings/[id]/leads
+- /api/listings/[id]/reviews
+- /api/listings/[id]/status
+- /api/member/auth
+- /api/member/checkout
+- /api/member/session
+- /api/member/webhook
+- /api/news
+- /api/news-pipeline/fetch
+- /api/news-pipeline/translate
+- /api/news/[slug]
+- /api/news/admin
+- /api/news/admin/[id]
+- /api/news/fetch
+- /api/news/sources/[id]
+- /api/news/translate
+- /api/newsletter/digest
+- /api/orchestrator
+- /api/rss/haberler
+- /api/rss/xeberler
+- /api/rss/xeberler/[locale]
+- /api/settings
+- /api/telegram/post
+- /api/upload
 
 ## i18n Namespaces (0)
 - none detected
