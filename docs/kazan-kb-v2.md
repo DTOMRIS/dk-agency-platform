@@ -25,13 +25,22 @@ Her entry ayri JSON faylidir: `data/kazan-kb/v2/{category}-{sira}-{slug}.json`
 | 4 | management-04-stok-fifo.json | kb-v2-mgmt-04 | Stok idareetmesi ve FIFO |
 | 5 | management-05-shift.json | kb-v2-mgmt-05 | Novbe planlamasi ve emek mehsuldarliqi |
 
-### Batch 4 — (gozleyir)
+### Batch 4 — Acilis (5 entry)
+| # | Fayl | ID | Movzu |
+|---|------|----|-------|
+| 1 | launch-01-lokasiya.json | kb-v2-launch-01 | Lokasiya secimi (footfall, parkinq) |
+| 2 | launch-02-aqta-lisenziya.json | kb-v2-launch-02 | AQTA qeydiyyati ve lisenziya |
+| 3 | launch-03-metbex-layihe.json | kb-v2-launch-03 | Metbex layihelendirme |
+| 4 | launch-04-budce.json | kb-v2-launch-04 | Acilis kapital budcesi |
+| 5 | launch-05-marketing-90gun.json | kb-v2-launch-05 | Acilis marketinqi ve ilk 90 gun |
+
+### Batch 5 — (gozleyir)
 
 ## JSON Schema
 ```json
 {
   "id": "kb-v2-{cat}-{sira}",
-  "category": "maliyye | idare | marketing | huquqi | personel",
+  "category": "maliyye | idare | acilis | marketing | huquqi | personel",
   "subcategory": "...",
   "title_az": "...",
   "summary_az": "1-2 cumle",
@@ -44,7 +53,8 @@ Her entry ayri JSON faylidir: `data/kazan-kb/v2/{category}-{sira}-{slug}.json`
 
 ## Qaydalar
 - Statik reqem yox, range ver (28-32%)
-- AZ spesifik: AQTA, ASAN, KOBiA, Sahibkarliq Agentliyi, Emek Mecellesi
+- AZ spesifik: AQTA, ASAN, KOBiA, Sahibkarligin Inkisafi Fondu, Emek Mecellesi
+- Wolt + Bolt Food (Yandex Yemek AZ-da feal deyil)
 - Cavanmerdlik / SiMAT baqlantisi her entry-de minimum 1 cumle
-- Qadaqan: CRM, Pipeline, Agentlik sozleri
 - "vergi planlamasi" istifade et, "naxislanmamis" YASAQ
+- Qadaqan: CRM, Pipeline, Agentlik sozleri
