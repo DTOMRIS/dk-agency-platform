@@ -1,0 +1,202 @@
+[
+  {
+    "id": "q-001",
+    "az": "Eli aciq olanin qazanci cox olar.",
+    "ru": "U shchedrogo mastera pribyli bol'she.",
+    "en": "The generous craftsman earns more.",
+    "tr": "Eli acik olanin kazanci cok olur.",
+    "category": "comertlik"
+  },
+  {
+    "id": "q-002",
+    "az": "Musterini aldatmaq en boyuk gunahdir.",
+    "ru": "Obmanyvat' pokupatelya — velichayshiy grekh.",
+    "en": "Deceiving the customer is the greatest sin.",
+    "tr": "Musteriyi aldatmak en buyuk gunahtir.",
+    "category": "durustluk"
+  },
+  {
+    "id": "q-003",
+    "az": "Usta isini yarimciq qoymaz.",
+    "ru": "Master ne brosayet rabotu na polputi.",
+    "en": "A master never leaves work half done.",
+    "tr": "Usta isini yarim birakmaz.",
+    "category": "emek"
+  },
+  {
+    "id": "q-004",
+    "az": "Hesabi temiz olanin uzu ag olar.",
+    "ru": "U togo, chey schyot chist, sovest' chistaya.",
+    "en": "Clean accounts make a clear conscience.",
+    "tr": "Hesabi temiz olanin yuzu ak olur.",
+    "category": "durustluk"
+  },
+  {
+    "id": "q-005",
+    "az": "Esnaf dukanini elinin isigi dusen yerde acar.",
+    "ru": "Remeslennik otkryvayet lavku tam, gde ruka dayot svet.",
+    "en": "The artisan opens shop where the hand brings light.",
+    "tr": "Esnaf dukanini elinin isigi dusen yerde acar.",
+    "category": "emek"
+  },
+  {
+    "id": "q-006",
+    "az": "Sagirde elm oyreden ustanin elinden tutan olar.",
+    "ru": "Uchenik, obuchayushchiy mastera, podderzhivayet yego ruku.",
+    "en": "The apprentice who teaches the master holds his hand.",
+    "tr": "Ciraga ilim ogreten ustanin elinden tutan olur.",
+    "category": "usta-sagird"
+  },
+  {
+    "id": "q-007",
+    "az": "Halal qazan, haram yemek — Ahilik yasasi.",
+    "ru": "Zarabatyvay chestno, ne yesh' zapretnogo — zakon Akhi.",
+    "en": "Earn honestly, consume nothing forbidden — Akhi law.",
+    "tr": "Helal kazan, haram yeme — Ahilik yasasi.",
+    "category": "durustluk"
+  },
+  {
+    "id": "q-008",
+    "az": "Tacirin sozu seneddir.",
+    "ru": "Slovo torgovtsa — yego dogovor.",
+    "en": "A merchant's word is their contract.",
+    "tr": "Tacirin sozu senettir.",
+    "category": "sedaqet"
+  },
+  {
+    "id": "q-009",
+    "az": "Nemeti israf eden bereketsiz qalar.",
+    "ru": "Rastochitel'nyy ostayyotsya bez blagosloveniya.",
+    "en": "The wasteful remain without blessing.",
+    "tr": "Nimeti israf eden bereketsiz kalir.",
+    "category": "bereket"
+  },
+  {
+    "id": "q-010",
+    "az": "Hesabsiz bazara cixan evine eli bos doner.",
+    "ru": "Kto idyot na bazar bez schyota — vozvrashchayetsya s pustymi rukami.",
+    "en": "Go to market without numbers, return empty-handed.",
+    "tr": "Hesapsiz pazara cikan evine eli bos doner.",
+    "category": "bereket"
+  },
+  {
+    "id": "q-011",
+    "az": "Temeli mohkem olan bina yuz il dayanar.",
+    "ru": "Zdaniye s krepkim fundamentom prostoit sto let.",
+    "en": "A building with strong foundation stands a hundred years.",
+    "tr": "Temeli saglam olan bina yuz yil dayanir.",
+    "category": "emek"
+  },
+  {
+    "id": "q-012",
+    "az": "Ahi teskilatinda hesab kitabi aciq olar.",
+    "ru": "V organizatsii Akhi kniga schyotov otkryta.",
+    "en": "In the Akhi order, the ledger is always open.",
+    "tr": "Ahi teskilatinda hesap defteri acik olur.",
+    "category": "durustluk"
+  },
+  {
+    "id": "q-013",
+    "az": "Usta sagirdini terk etmez, sagird de ustasina xeyanet etmez.",
+    "ru": "Master ne brosit uchenika, a uchenik ne predast mastera.",
+    "en": "Master won't abandon apprentice, apprentice won't betray master.",
+    "tr": "Usta ciragini terk etmez, cirak da ustasina ihanet etmez.",
+    "category": "usta-sagird"
+  },
+  {
+    "id": "q-014",
+    "az": "Esnaf en yaxsi malini one qoyar, pis mali gizletmez.",
+    "ru": "Remeslennik vystavlyayet luchshiy tovar vpered, ne pryachet plokhoy.",
+    "en": "The artisan puts best goods forward, never hides the poor.",
+    "tr": "Esnaf en iyi malini one koyar, kotuyu gizlemez.",
+    "category": "durustluk"
+  },
+  {
+    "id": "q-015",
+    "az": "Adil is bolgusu esnafin arasinda nifaqi aradan qaldirar.",
+    "ru": "Spravedlivoye razdeleniye truda ustranyayet razdory mezhdu remeslennokami.",
+    "en": "Fair division of labor removes discord among craftsmen.",
+    "tr": "Adil is bolusmesi esnaf arasindaki nifaki kaldirir.",
+    "category": "emek"
+  },
+  {
+    "id": "q-016",
+    "az": "Gozunu ac, qulaqlarini da — bazar danisir, sen dinle.",
+    "ru": "Otkroy glaza i ushi — rynok govorit, ty slushay.",
+    "en": "Open your eyes and ears — the market speaks, you listen.",
+    "tr": "Gozunu ac, kulaklarini da — pazar konusuyor, sen dinle.",
+    "category": "bereket"
+  },
+  {
+    "id": "q-017",
+    "az": "Esnaf mehellesine faydali olmalidir — restoran da etrafa deyer qatmalidir.",
+    "ru": "Remeslennik dolzhen byt' polezen soyedu — restoran tozhe dolzhen dobavlyat' tsennost'.",
+    "en": "An artisan must benefit the neighborhood — a restaurant must add value.",
+    "tr": "Esnaf mahallesine faydali olmalidir — restoran da cevrresine deger katmalidir.",
+    "category": "comertlik"
+  },
+  {
+    "id": "q-018",
+    "az": "Halal qazanc vergisini vermeye utanmaz.",
+    "ru": "Chestnyy zarabotok ne styditsya platit' nalogi.",
+    "en": "Honest earnings are never ashamed to pay tax.",
+    "tr": "Helal kazanc vergisini vermekten utanmaz.",
+    "category": "durustluk"
+  },
+  {
+    "id": "q-019",
+    "az": "Esnaf sufresine qoydugu yemeyin arxasinda durar.",
+    "ru": "Remeslennik stoit za kazhdym blyudom na svoyom stole.",
+    "en": "The craftsman stands behind every dish on their table.",
+    "tr": "Esnaf sofrasina koydugu yemegin arkasinda durur.",
+    "category": "sedaqet"
+  },
+  {
+    "id": "q-020",
+    "az": "Ilk musterine gosterdiyin hormet sonuncu musterine de catmalidir.",
+    "ru": "Uvazhenie k pervomu klientu dolzhno doytii do poslednego.",
+    "en": "Respect shown to the first customer must reach the last.",
+    "tr": "Ilk musterine gosterdigin saygi son musterine de ulasmalidir.",
+    "category": "sedaqet"
+  },
+  {
+    "id": "q-021",
+    "az": "Muqavileye sadiq olan uzun omurlu is qurar.",
+    "ru": "Vernyy dogovoru stroit dolgoye delo.",
+    "en": "One faithful to contracts builds lasting business.",
+    "tr": "Sozlesmeye sadik olan uzun omurlu is kurar.",
+    "category": "sedaqet"
+  },
+  {
+    "id": "q-022",
+    "az": "Yaxsi usta aletini temiz saxlar, yaxsi sahibkar hesabini.",
+    "ru": "Khoroshiy master derzhit instrument v chistote, khoroshiy khozyain — schyota.",
+    "en": "A good master keeps tools clean, a good owner keeps books clean.",
+    "tr": "Iyi usta aletini temiz tutar, iyi isletmeci hesabini.",
+    "category": "emek"
+  },
+  {
+    "id": "q-023",
+    "az": "Qonagin gozu sufrende, sahibkarin gozu hesabdadir.",
+    "ru": "Glaz gostya na stole, glaz khozyaina — v knige.",
+    "en": "The guest's eye is on the table, the owner's eye is on the ledger.",
+    "tr": "Konugun gozu sofrada, isletmecinin gozu hesaptadir.",
+    "category": "bereket"
+  },
+  {
+    "id": "q-024",
+    "az": "Az qazanib cox saxlayan, cox qazanib israf edenden zengindir.",
+    "ru": "Tot, kto malo zarabotayet, no berezhet — bogache togo, kto mnogo zarabotayet i razbazarivayet.",
+    "en": "One who earns little but saves is richer than one who earns much and wastes.",
+    "tr": "Az kazanip cok biriktiren, cok kazanip israf edenden zengindir.",
+    "category": "bereket"
+  },
+  {
+    "id": "q-025",
+    "az": "Keyfiyyetsiz is ucuz da olsa bahadir.",
+    "ru": "Nekachestvennoye delo dorogo, dazhe yesli deshevo.",
+    "en": "Poor quality work is expensive even when cheap.",
+    "tr": "Kalitesiz is ucuz da olsa pahalidir.",
+    "category": "emek"
+  }
+]
