@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-27T03:14:37.261Z
+- GeneratedAt: 2026-04-27T03:17:11.698Z
 - BuildStatus: PASS
 
-## Routes (117)
+## Routes (118)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -30,6 +30,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/ilanlar
 - /[locale]/kazan-ai
 - /[locale]/privacy
+- /[locale]/qiymet
 - /[locale]/randevu
 - /[locale]/reset-password
 - /[locale]/sedd-rozeti
