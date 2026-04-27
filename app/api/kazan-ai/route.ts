@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildKazanSystemPrompt } from '@/lib/kazan-ai/system-prompt';
+import ahilikQuotes from '@/data/kazan-kb/ahilik-quotes.json';
 
 type ChatRole = 'user' | 'assistant';
 
@@ -10,7 +11,30 @@ type ChatMessage = {
 
 type RequestBody = {
   messages?: ChatMessage[];
+  locale?: string;
 };
+
+type AhilikQuote = { id: string; az: string; ru: string; en: string; tr: string; category: string };
+
+function pickRandomQuote(locale: string): string {
+  const quotes = ahilikQuotes as AhilikQuote[];
+  const q = quotes[Math.floor(Math.random() * quotes.length)];
+  const lang = (locale === 'ru' || locale === 'en' || locale === 'tr') ? locale : 'az';
+  return q[lang as keyof AhilikQuote] || q.az;
+}
+
+function shouldAppendQuote(text: string): boolean {
+  const trimmed = text.trim();
+  if (trimmed.length < 80) return false;
+  if (trimmed.endsWith('?')) return false;
+  return true;
+}
+
+function appendQuote(text: string, locale: string): string {
+  if (!shouldAppendQuote(text)) return text;
+  const quote = pickRandomQuote(locale);
+  return `${text}\n\n---\n☕ *${quote}* — Əhilik`;
+}
 
 function normalizeMessages(messages: ChatMessage[]): ChatMessage[] {
   return messages
@@ -171,6 +195,7 @@ async function callDeepSeek(messages: ChatMessage[], apiKey: string) {
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as RequestBody;
+    const locale = body.locale || 'az';
     const messages = normalizeMessages(body.messages ?? []);
 
     if (messages.length === 0) {
@@ -183,6 +208,7 @@ export async function POST(request: NextRequest) {
     if (deepseekApiKey) {
       const result = await callDeepSeek(messages, deepseekApiKey);
       if (result.ok) {
+        result.body.message = appendQuote(result.body.message, locale);
         return NextResponse.json(result.body, { status: result.status });
       }
     }
@@ -190,6 +216,7 @@ export async function POST(request: NextRequest) {
     if (anthropicApiKey) {
       const result = await callAnthropic(messages, anthropicApiKey);
       if (result.ok) {
+        result.body.message = appendQuote(result.body.message, locale);
         return NextResponse.json(result.body, { status: result.status });
       }
     }
@@ -198,7 +225,7 @@ export async function POST(request: NextRequest) {
       {
         provider: 'static',
         model: 'kazan-static-sample',
-        message: buildStaticFallback(messages),
+        message: appendQuote(buildStaticFallback(messages), locale),
       },
       { status: 200 },
     );
