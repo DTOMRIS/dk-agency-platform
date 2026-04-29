@@ -853,6 +853,18 @@ export default function DashboardFaturalarPage() {
     setSelected(new Set());
   };
 
+  const handleExportSelected = async () => {
+    const { exportInvoicesToCsv } = await import('@/lib/invoice-ocr/export-utils');
+    const selectedInvoices = invoices.filter((i) => selected.has(i.id));
+    exportInvoicesToCsv(selectedInvoices, `faturalar-secilmis-${new Date().toISOString().slice(0, 10)}.csv`);
+  };
+
+  const handleExportSelectedExcel = async () => {
+    const { exportInvoicesToExcel } = await import('@/lib/invoice-ocr/export-utils');
+    const selectedInvoices = invoices.filter((i) => selected.has(i.id));
+    exportInvoicesToExcel(selectedInvoices, `faturalar-secilmis-${new Date().toISOString().slice(0, 10)}.xlsx`);
+  };
+
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
@@ -936,8 +948,11 @@ export default function DashboardFaturalarPage() {
           <button onClick={handleBulkDelete} className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700">
             <Trash2 className="h-3.5 w-3.5" /> Sil
           </button>
-          <button className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
-            <Download className="h-3.5 w-3.5" /> Export
+          <button onClick={handleExportSelected} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
+            <Download className="h-3.5 w-3.5" /> CSV
+          </button>
+          <button onClick={handleExportSelectedExcel} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
+            <FileSpreadsheet className="h-3.5 w-3.5" /> Excel
           </button>
         </div>
       )}
