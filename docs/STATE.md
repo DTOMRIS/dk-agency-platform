@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-29T17:37:59.344Z
+- GeneratedAt: 2026-04-29T18:22:06.535Z
 - BuildStatus: PASS
 
-## Routes (120)
+## Routes (121)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -80,6 +80,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/deal-flow
 - /dashboard/duyurular
 - /dashboard/etkinlikler
+- /dashboard/fatura-kateqoriyalar
 - /dashboard/faturalar
 - /dashboard/faturalar/[id]
 - /dashboard/haberler
