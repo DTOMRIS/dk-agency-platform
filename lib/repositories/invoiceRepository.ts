@@ -1,5 +1,5 @@
 import { and, desc, eq, gte, ilike, inArray, lte, sql } from 'drizzle-orm';
-import { db, dbAvailable } from '@/lib/db';
+import { db } from '@/lib/db';
 import {
   invoices,
   invoiceItems,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Camera,
   Check,
@@ -10,7 +10,6 @@ import {
   FileSpreadsheet,
   Loader2,
   Pencil,
-  Plus,
   Receipt,
   Search,
   Trash2,
@@ -272,6 +271,7 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
           {/* Preview */}
           {preview && (
             <div className="relative overflow-hidden rounded-xl border border-slate-200">
+              {/* eslint-disable-next-line @next/next/no-img-element -- base64 preview, next/image not applicable */}
               <img src={preview} alt="Fatura" className="max-h-64 w-full object-contain" />
               {file && (
                 <div className="absolute bottom-2 left-2 rounded-lg bg-black/60 px-2 py-1 text-xs text-white">
@@ -756,48 +756,59 @@ export default function DashboardFaturalarPage() {
   const [modal, setModal] = useState<ModalType>(null);
   const router = { push: (url: string) => window.location.href = url };
 
-  const loadData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({
-        limit: String(PAGE_SIZE),
-        offset: String((page - 1) * PAGE_SIZE),
-      });
-      if (statusFilter !== 'all') params.set('status', statusFilter);
-      if (sourceFilter !== 'all') params.set('source', sourceFilter);
-      if (search.trim()) params.set('q', search.trim());
+  // loadData removed — inlined into useEffect to avoid setState-in-effect lint error
 
-      const [invRes, statsRes] = await Promise.all([
-        fetch(`/api/invoices?${params}`),
-        fetch('/api/invoices?stats=1'),
-      ]);
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams({
+          limit: String(PAGE_SIZE),
+          offset: String((page - 1) * PAGE_SIZE),
+        });
+        if (statusFilter !== 'all') params.set('status', statusFilter);
+        if (sourceFilter !== 'all') params.set('source', sourceFilter);
+        if (search.trim()) params.set('q', search.trim());
 
-      const invData = await invRes.json();
-      const statsData = await statsRes.json();
+        const [invRes, statsRes] = await Promise.all([
+          fetch(`/api/invoices?${params}`),
+          fetch('/api/invoices?stats=1'),
+        ]);
 
-      if (invData.data && invData.data.length > 0) {
-        setInvoices(invData.data);
-        setTotal(invData.total ?? invData.data.length);
-      } else {
-        setInvoices(MOCK_INVOICES);
-        setTotal(MOCK_INVOICES.length);
+        const invData = await invRes.json();
+        const statsData = await statsRes.json();
+
+        if (cancelled) return;
+
+        if (invData.data && invData.data.length > 0) {
+          setInvoices(invData.data);
+          setTotal(invData.total ?? invData.data.length);
+        } else {
+          setInvoices(MOCK_INVOICES);
+          setTotal(MOCK_INVOICES.length);
+        }
+
+        if (statsData.data && statsData.data.totalCount > 0) {
+          setStats(statsData.data);
+        } else {
+          setStats(MOCK_STATS);
+        }
+      } catch {
+        if (!cancelled) {
+          setInvoices(MOCK_INVOICES);
+          setTotal(MOCK_INVOICES.length);
+          setStats(MOCK_STATS);
+        }
       }
-
-      if (statsData.data && statsData.data.totalCount > 0) {
-        setStats(statsData.data);
-      } else {
-        setStats(MOCK_STATS);
+      if (!cancelled) {
+        setSelected(new Set());
+        setLoading(false);
       }
-    } catch {
-      setInvoices(MOCK_INVOICES);
-      setTotal(MOCK_INVOICES.length);
-      setStats(MOCK_STATS);
     }
-    setSelected(new Set());
-    setLoading(false);
+    void fetchData();
+    return () => { cancelled = true; };
   }, [page, statusFilter, sourceFilter, search]);
-
-  useEffect(() => { void loadData(); }, [loadData]);
 
   const handleNewInvoice = (inv: InvoiceRow) => {
     setInvoices((prev) => [inv, ...prev]);
