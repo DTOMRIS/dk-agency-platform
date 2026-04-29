@@ -9,6 +9,8 @@ import {
   timestamp,
   jsonb,
   uuid,
+  real,
+  date,
 } from 'drizzle-orm/pg-core';
 
 // Hero section content (field by field admin)
@@ -433,4 +435,116 @@ export const memberEntitlements = pgTable('member_entitlements', {
   metadata: jsonb('metadata'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// ── FATURA OCR SİSTEMİ ─────────────────────────────────────────────
+
+export const invoiceStatusEnum = pgEnum('invoice_status', [
+  'draft',
+  'confirmed',
+  'disputed',
+  'archived',
+]);
+
+export const invoiceSourceEnum = pgEnum('invoice_source', [
+  'ocr_camera',
+  'ocr_upload',
+  'manual',
+  'excel',
+  'pdf',
+]);
+
+export const invoiceOcrProviderEnum = pgEnum('invoice_ocr_provider', [
+  'gemini',
+  'deepseek-vision',
+  'deepseek-text',
+]);
+
+export const invoiceImportStatusEnum = pgEnum('invoice_import_status', [
+  'processing',
+  'completed',
+  'failed',
+]);
+
+// Fatura kateqoriyaları (ət, süd, içki, təmizlik...)
+export const invoiceCategories = pgTable('invoice_categories', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 100 }).notNull(),
+  slug: varchar('slug', { length: 100 }).unique().notNull(),
+  color: varchar('color', { length: 10 }).default('#6B7280'),
+  icon: varchar('icon', { length: 50 }).default('package'),
+  sortOrder: integer('sort_order').default(0),
+  isActive: boolean('is_active').default(true),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+// Ana fatura cədvəli
+export const invoices = pgTable('invoices', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id),
+  supplierName: text('supplier_name').notNull(),
+  supplierVoen: varchar('supplier_voen', { length: 20 }),
+  invoiceNumber: varchar('invoice_number', { length: 100 }),
+  invoiceDate: date('invoice_date').notNull(),
+  subtotal: integer('subtotal').notNull().default(0),
+  vatAmount: integer('vat_amount').default(0),
+  grandTotal: integer('grand_total').notNull().default(0),
+  currency: varchar('currency', { length: 5 }).default('AZN'),
+  status: invoiceStatusEnum('status').default('draft'),
+  source: invoiceSourceEnum('source').notNull(),
+  ocrProvider: invoiceOcrProviderEnum('ocr_provider'),
+  ocrConfidence: real('ocr_confidence'),
+  originalFileUrl: text('original_file_url'),
+  originalFileSize: integer('original_file_size'),
+  compressedSize: integer('compressed_size'),
+  notes: text('notes'),
+  branchId: integer('branch_id'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+  confirmedAt: timestamp('confirmed_at'),
+  confirmedBy: integer('confirmed_by').references(() => users.id),
+});
+
+// Fatura sətirləri (field-by-field)
+export const invoiceItems = pgTable('invoice_items', {
+  id: serial('id').primaryKey(),
+  invoiceId: integer('invoice_id')
+    .notNull()
+    .references(() => invoices.id, { onDelete: 'cascade' }),
+  categoryId: integer('category_id').references(() => invoiceCategories.id),
+  name: text('name').notNull(),
+  quantity: real('quantity').notNull(),
+  unit: varchar('unit', { length: 20 }).notNull().default('əd'),
+  unitPrice: integer('unit_price').notNull().default(0),
+  totalPrice: integer('total_price').notNull().default(0),
+  sortOrder: integer('sort_order').default(0),
+  isEdited: boolean('is_edited').default(false),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+// Toplu import tarixçəsi
+export const invoiceImports = pgTable('invoice_imports', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id),
+  source: invoiceSourceEnum('source').notNull(),
+  fileName: text('file_name'),
+  totalRows: integer('total_rows').default(0),
+  successRows: integer('success_rows').default(0),
+  failedRows: integer('failed_rows').default(0),
+  errorLog: jsonb('error_log').$type<Array<{ row: number; field: string; value: string; error: string }>>(),
+  status: invoiceImportStatusEnum('status').default('processing'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+// Kateqoriya auto-mapping qaydaları (AI öyrənmə)
+export const invoiceCategoryRules = pgTable('invoice_category_rules', {
+  id: serial('id').primaryKey(),
+  keyword: varchar('keyword', { length: 150 }).notNull(),
+  categoryId: integer('category_id')
+    .notNull()
+    .references(() => invoiceCategories.id, { onDelete: 'cascade' }),
+  createdBy: varchar('created_by', { length: 30 }).default('system'),
+  confidence: real('confidence').default(1.0),
+  createdAt: timestamp('created_at').defaultNow(),
 });
