@@ -417,6 +417,253 @@ export async function addCategoryRule(data: {
   return row;
 }
 
+// ── Food Cost Report ───────────────────────────────────────────────
+
+export interface FoodCostFilters {
+  dateFrom?: string; // YYYY-MM-DD
+  dateTo?: string;
+  branchId?: number;
+  userId?: number;
+}
+
+export interface CategoryCost {
+  categoryId: number | null;
+  categoryName: string;
+  categoryColor: string;
+  categoryIcon: string;
+  totalAmount: number; // qəpiklə
+  itemCount: number;
+  percentage: number;
+}
+
+export interface FoodCostReport {
+  categories: CategoryCost[];
+  grandTotal: number;
+  invoiceCount: number;
+  dateFrom: string;
+  dateTo: string;
+}
+
+export async function getFoodCostReport(filters: FoodCostFilters = {}): Promise<FoodCostReport | null> {
+  if (!db) return null;
+
+  const now = new Date();
+  const dateFrom = filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+  const dateTo = filters.dateTo ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
+
+  const invoiceConditions = [
+    gte(invoices.invoiceDate, dateFrom),
+    lte(invoices.invoiceDate, dateTo),
+    eq(invoices.status, 'confirmed' as const),
+  ];
+  if (filters.branchId) invoiceConditions.push(eq(invoices.branchId, filters.branchId));
+  if (filters.userId) invoiceConditions.push(eq(invoices.userId, filters.userId));
+
+  // Kateqoriya üzrə xərc cəmləri
+  const rows = await db
+    .select({
+      categoryId: invoiceItems.categoryId,
+      categoryName: sql<string>`coalesce(${invoiceCategories.name}, 'Kateqoriyasız')`,
+      categoryColor: sql<string>`coalesce(${invoiceCategories.color}, '#6B7280')`,
+      categoryIcon: sql<string>`coalesce(${invoiceCategories.icon}, 'package')`,
+      totalAmount: sql<number>`coalesce(sum(${invoiceItems.totalPrice}), 0)::int`,
+      itemCount: sql<number>`count(${invoiceItems.id})::int`,
+    })
+    .from(invoiceItems)
+    .innerJoin(invoices, eq(invoiceItems.invoiceId, invoices.id))
+    .leftJoin(invoiceCategories, eq(invoiceItems.categoryId, invoiceCategories.id))
+    .where(and(...invoiceConditions))
+    .groupBy(invoiceItems.categoryId, invoiceCategories.name, invoiceCategories.color, invoiceCategories.icon)
+    .orderBy(sql`sum(${invoiceItems.totalPrice}) desc`);
+
+  const grandTotal = rows.reduce((sum, r) => sum + r.totalAmount, 0);
+
+  // Fatura sayı
+  const [countRow] = await db
+    .select({ count: sql<number>`count(distinct ${invoices.id})::int` })
+    .from(invoices)
+    .where(and(...invoiceConditions));
+
+  const categories: CategoryCost[] = rows.map((r) => ({
+    categoryId: r.categoryId,
+    categoryName: r.categoryName,
+    categoryColor: r.categoryColor,
+    categoryIcon: r.categoryIcon,
+    totalAmount: r.totalAmount,
+    itemCount: r.itemCount,
+    percentage: grandTotal > 0 ? Math.round((r.totalAmount / grandTotal) * 10000) / 100 : 0,
+  }));
+
+  return {
+    categories,
+    grandTotal,
+    invoiceCount: countRow?.count ?? 0,
+    dateFrom,
+    dateTo,
+  };
+}
+
+export interface MonthlyTrendItem {
+  month: string; // YYYY-MM
+  totalAmount: number;
+  invoiceCount: number;
+}
+
+export async function getMonthlyTrend(months: number = 6, filters: FoodCostFilters = {}): Promise<MonthlyTrendItem[]> {
+  if (!db) return [];
+
+  const now = new Date();
+  const startDate = new Date(now.getFullYear(), now.getMonth() - months + 1, 1);
+  const dateFrom = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}-01`;
+
+  const conditions = [
+    gte(invoices.invoiceDate, dateFrom),
+    eq(invoices.status, 'confirmed' as const),
+  ];
+  if (filters.branchId) conditions.push(eq(invoices.branchId, filters.branchId));
+  if (filters.userId) conditions.push(eq(invoices.userId, filters.userId));
+
+  const rows = await db
+    .select({
+      month: sql<string>`to_char(${invoices.invoiceDate}::date, 'YYYY-MM')`,
+      totalAmount: sql<number>`coalesce(sum(${invoices.grandTotal}), 0)::int`,
+      invoiceCount: sql<number>`count(*)::int`,
+    })
+    .from(invoices)
+    .where(and(...conditions))
+    .groupBy(sql`to_char(${invoices.invoiceDate}::date, 'YYYY-MM')`)
+    .orderBy(sql`to_char(${invoices.invoiceDate}::date, 'YYYY-MM')`);
+
+  return rows;
+}
+
+export interface SupplierCostItem {
+  supplierName: string;
+  totalAmount: number;
+  invoiceCount: number;
+  avgAmount: number;
+}
+
+export async function getSupplierComparison(filters: FoodCostFilters = {}): Promise<SupplierCostItem[]> {
+  if (!db) return [];
+
+  const now = new Date();
+  const dateFrom = filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+  const dateTo = filters.dateTo ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
+
+  const conditions = [
+    gte(invoices.invoiceDate, dateFrom),
+    lte(invoices.invoiceDate, dateTo),
+    eq(invoices.status, 'confirmed' as const),
+  ];
+  if (filters.branchId) conditions.push(eq(invoices.branchId, filters.branchId));
+  if (filters.userId) conditions.push(eq(invoices.userId, filters.userId));
+
+  const rows = await db
+    .select({
+      supplierName: invoices.supplierName,
+      totalAmount: sql<number>`coalesce(sum(${invoices.grandTotal}), 0)::int`,
+      invoiceCount: sql<number>`count(*)::int`,
+      avgAmount: sql<number>`coalesce(avg(${invoices.grandTotal}), 0)::int`,
+    })
+    .from(invoices)
+    .where(and(...conditions))
+    .groupBy(invoices.supplierName)
+    .orderBy(sql`sum(${invoices.grandTotal}) desc`)
+    .limit(20);
+
+  return rows;
+}
+
+export interface TopProductItem {
+  name: string;
+  categoryName: string;
+  totalQuantity: number;
+  unit: string;
+  totalAmount: number;
+  avgUnitPrice: number;
+}
+
+export async function getTopProducts(filters: FoodCostFilters = {}, limit: number = 20): Promise<TopProductItem[]> {
+  if (!db) return [];
+
+  const now = new Date();
+  const dateFrom = filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+  const dateTo = filters.dateTo ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
+
+  const conditions = [
+    gte(invoices.invoiceDate, dateFrom),
+    lte(invoices.invoiceDate, dateTo),
+    eq(invoices.status, 'confirmed' as const),
+  ];
+  if (filters.branchId) conditions.push(eq(invoices.branchId, filters.branchId));
+  if (filters.userId) conditions.push(eq(invoices.userId, filters.userId));
+
+  const rows = await db
+    .select({
+      name: invoiceItems.name,
+      categoryName: sql<string>`coalesce(${invoiceCategories.name}, 'Kateqoriyasız')`,
+      totalQuantity: sql<number>`coalesce(sum(${invoiceItems.quantity}), 0)::real`,
+      unit: invoiceItems.unit,
+      totalAmount: sql<number>`coalesce(sum(${invoiceItems.totalPrice}), 0)::int`,
+      avgUnitPrice: sql<number>`coalesce(avg(${invoiceItems.unitPrice}), 0)::int`,
+    })
+    .from(invoiceItems)
+    .innerJoin(invoices, eq(invoiceItems.invoiceId, invoices.id))
+    .leftJoin(invoiceCategories, eq(invoiceItems.categoryId, invoiceCategories.id))
+    .where(and(...conditions))
+    .groupBy(invoiceItems.name, invoiceCategories.name, invoiceItems.unit)
+    .orderBy(sql`sum(${invoiceItems.totalPrice}) desc`)
+    .limit(limit);
+
+  return rows;
+}
+
+// ── Product Price Lookup (Toolkit food-cost) ────────────────────────
+
+export interface ProductPriceLookup {
+  name: string;
+  unit: string;
+  avgUnitPrice: number; // qəpiklə
+  minUnitPrice: number;
+  maxUnitPrice: number;
+  occurrences: number;
+  lastSeen: string;
+}
+
+export async function lookupProductPrices(query?: string, limit: number = 20): Promise<ProductPriceLookup[]> {
+  if (!db) return [];
+
+  // Son 90 günün confirmed faturalarından
+  const now = new Date();
+  const dateFrom = new Date(now.getFullYear(), now.getMonth() - 3, 1);
+  const dateFromStr = `${dateFrom.getFullYear()}-${String(dateFrom.getMonth() + 1).padStart(2, '0')}-01`;
+
+  const conditions = [
+    gte(invoices.invoiceDate, dateFromStr),
+    eq(invoices.status, 'confirmed' as const),
+  ];
+
+  const baseQuery = db
+    .select({
+      name: invoiceItems.name,
+      unit: invoiceItems.unit,
+      avgUnitPrice: sql<number>`coalesce(avg(${invoiceItems.unitPrice}), 0)::int`,
+      minUnitPrice: sql<number>`coalesce(min(${invoiceItems.unitPrice}), 0)::int`,
+      maxUnitPrice: sql<number>`coalesce(max(${invoiceItems.unitPrice}), 0)::int`,
+      occurrences: sql<number>`count(*)::int`,
+      lastSeen: sql<string>`max(${invoices.invoiceDate})`,
+    })
+    .from(invoiceItems)
+    .innerJoin(invoices, eq(invoiceItems.invoiceId, invoices.id))
+    .where(and(...conditions, query ? ilike(invoiceItems.name, `%${query}%`) : undefined))
+    .groupBy(invoiceItems.name, invoiceItems.unit)
+    .orderBy(sql`count(*) desc`)
+    .limit(limit);
+
+  return baseQuery;
+}
+
 // ── Stats (Admin/Super Admin) ───────────────────────────────────────
 
 export async function getInvoiceStats(userId?: number) {
