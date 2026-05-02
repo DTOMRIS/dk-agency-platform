@@ -537,6 +537,59 @@ export const invoiceImports = pgTable('invoice_imports', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
+// ── RESTORAN AUDİT SİSTEMİ ──────────────────────────────────────────
+
+export const auditCategoryEnum = pgEnum('audit_category', [
+  'kafe',
+  'restoran',
+  'fast-food',
+  'fine-dining',
+]);
+
+export const auditStatusEnum = pgEnum('audit_status', [
+  'draft',
+  'sent',
+  'meeting',
+  'converted',
+  'rejected',
+]);
+
+export const restaurantAudits = pgTable('restaurant_audits', {
+  id: serial('id').primaryKey(),
+  createdBy: integer('created_by').references(() => users.id),
+  name: text('name').notNull(),
+  address: text('address'),
+  phone: varchar('phone', { length: 30 }),
+  category: auditCategoryEnum('category').default('restoran'),
+  photos: jsonb('photos').$type<string[]>().default([]),
+  socialLinks: jsonb('social_links').$type<{ instagram?: string; facebook?: string }>().default({}),
+  deliveryLinks: jsonb('delivery_links').$type<{ wolt?: string; bolt?: string }>().default({}),
+  menuPhotoUrl: text('menu_photo_url'),
+  aiAnalysis: jsonb('ai_analysis').$type<{
+    strengths: string[];
+    weaknesses: string[];
+    recommendations: Array<{ priority: string; area: string; action: string; dkAgencyHelp: string }>;
+    estimatedRevenue: { min: number; max: number; currency: string };
+    redFlags: string[];
+    whatsappTemplate: string;
+    summary: string;
+  }>(),
+  status: auditStatusEnum('status').default('draft'),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+
+export const restaurantAuditActions = pgTable('restaurant_audit_actions', {
+  id: serial('id').primaryKey(),
+  auditId: integer('audit_id')
+    .notNull()
+    .references(() => restaurantAudits.id, { onDelete: 'cascade' }),
+  actionType: varchar('action_type', { length: 50 }).notNull(), // created, sent, called, meeting, converted, rejected, note
+  date: timestamp('date').defaultNow(),
+  notes: text('notes'),
+});
+
 // Kateqoriya auto-mapping qaydaları (AI öyrənmə)
 export const invoiceCategoryRules = pgTable('invoice_category_rules', {
   id: serial('id').primaryKey(),

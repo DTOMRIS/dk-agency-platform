@@ -550,10 +550,12 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
   const [parseErrors, setParseErrors] = useState<Array<{ row: number; field: string; error: string }>>([]);
   const [parseSummary, setParseSummary] = useState<string | null>(null);
   const [imported, setImported] = useState(false);
+  const [importSource, setImportSource] = useState<'excel' | 'pdf'>('excel');
 
-  const reset = () => { setParsing(false); setParsedRows([]); setParseErrors([]); setParseSummary(null); setImported(false); };
+  const reset = () => { setParsing(false); setParsedRows([]); setParseErrors([]); setParseSummary(null); setImported(false); setImportSource('excel'); };
 
   const handleExcel = async (f: File) => {
+    setImportSource('excel');
     setParsing(true);
     setParsedRows([]);
     setParseErrors([]);
@@ -593,7 +595,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
         grandTotal: Math.round(total * 100),
         currency: 'AZN',
         status: 'draft',
-        source: 'excel',
+        source: importSource,
         ocrConfidence: null,
         createdAt: new Date().toISOString(),
       });
@@ -601,8 +603,54 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
     setImported(true);
   };
 
-  const handlePdf = (f: File) => {
-    setParseSummary(`"${f.name}" seçildi (${(f.size / 1024).toFixed(0)} KB). PDF import tezliklə aktivləşəcək.`);
+  const handlePdf = async (f: File) => {
+    setImportSource('pdf');
+    setParsing(true);
+    setParsedRows([]);
+    setParseErrors([]);
+    setParseSummary(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', f);
+
+      const res = await fetch('/api/invoice-pdf', { method: 'POST', body: formData });
+      const json = (await res.json()) as {
+        success: boolean;
+        type?: string;
+        error?: string;
+        rows?: Array<{ supplier: string; productName: string; quantity: number | null; unit: string; unitPrice: number | null; date: string | null }>;
+        errors?: Array<{ row: number; field: string; error: string }>;
+        successRows?: number;
+        failedRows?: number;
+        pageCount?: number;
+      };
+
+      if (!json.success) {
+        if (json.type === 'scanned') {
+          setParseSummary(`"${f.name}" skan edilmiş PDF-dir — text tapılmadı. Şəkil kimi OCR yükləyin.`);
+        } else {
+          setParseSummary(`Xəta: ${json.error ?? 'PDF oxunmadı'}`);
+        }
+        setParsing(false);
+        return;
+      }
+
+      const rows: ExcelPreviewRow[] = (json.rows ?? []).map((r) => ({
+        supplier: r.supplier,
+        productName: r.productName,
+        quantity: r.quantity ?? undefined,
+        unit: r.unit,
+        unitPrice: r.unitPrice ?? undefined,
+      }));
+
+      setParsedRows(rows.slice(0, 20));
+      setParseErrors((json.errors ?? []).slice(0, 10));
+      setParseSummary(`${json.successRows ?? rows.length} sətir tapıldı, ${json.failedRows ?? 0} xəta · "${f.name}" (${json.pageCount ?? 1} səhifə)`);
+    } catch (err) {
+      setParseSummary(`Xəta: ${String(err)}`);
+    }
+    setParsing(false);
   };
 
   return (
@@ -641,7 +689,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
         {/* Parsing */}
         {parsing && (
           <div className="flex items-center gap-2 py-8 justify-center text-slate-500">
-            <Loader2 className="h-5 w-5 animate-spin" /> Excel oxunur...
+            <Loader2 className="h-5 w-5 animate-spin" /> {importSource === 'pdf' ? 'PDF oxunur...' : 'Excel oxunur...'}
           </div>
         )}
 
