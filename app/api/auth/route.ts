@@ -1,39 +1,16 @@
-// app/api/auth/route.ts
-// DK Agency - Authentication API Routes
-// Password Reset, Login, Register Placeholders
-
 import { NextRequest, NextResponse } from 'next/server';
+import { compare, hash } from 'bcryptjs';
+import { eq, and, isNull } from 'drizzle-orm';
+import { db, dbAvailable } from '@/lib/db';
+import { users, loginLogs, emailVerificationTokens, passwordResetTokens } from '@/lib/db/schema';
+import { signToken, verifyToken, AUTH_COOKIE_NAME, authCookieOptions } from '@/lib/auth/jwt';
+import { sendSmtpEmail } from '@/lib/email/smtp';
 
-// Types for auth operations
-interface LoginData {
-  email: string;
-  password: string;
-  rememberMe?: boolean;
+function normalizeEmail(value: string) {
+  return value.trim().toLowerCase();
 }
 
-interface RegisterData {
-  email: string;
-  password: string;
-  name: string;
-  company?: string;
-  phone?: string;
-  userType: 'investor' | 'partner' | 'admin';
-}
-
-interface PasswordResetData {
-  email: string;
-}
-
-interface PasswordUpdateData {
-  token: string;
-  newPassword: string;
-  confirmPassword: string;
-}
-
-// Simulated user store (replace with actual database)
-const users = new Map<string, { id: string; email: string; name: string; passwordHash: string; userType: string }>();
-
-// POST - Handle various auth operations
+// POST — action-based dispatcher (backward compat)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -41,266 +18,307 @@ export async function POST(request: NextRequest) {
 
     switch (action) {
       case 'login':
-        return handleLogin(body);
-      
+        return handleLogin(request, body);
       case 'register':
         return handleRegister(body);
-      
       case 'password-reset-request':
         return handlePasswordResetRequest(body);
-      
       case 'password-reset-confirm':
         return handlePasswordResetConfirm(body);
-      
       case 'logout':
         return handleLogout();
-      
       case 'verify-token':
-        return handleVerifyToken(body);
-      
+        return handleVerifyToken(request);
       default:
-        return NextResponse.json(
-          { error: 'Invalid action' },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: 'Yanlış action.' }, { status: 400 });
     }
-  } catch (error) {
-    console.error('Auth API error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+  } catch (err) {
+    console.error('[auth] Error:', err);
+    return NextResponse.json({ error: 'Daxili xəta.' }, { status: 500 });
   }
 }
 
-// Login handler
-async function handleLogin(data: LoginData & { action: string }) {
-  const { email, password, rememberMe } = data;
+// GET — /api/auth (me)
+export async function GET(request: NextRequest) {
+  const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
 
-  // Validation
+  if (!token) {
+    return NextResponse.json({ authenticated: false }, { status: 401 });
+  }
+
+  const payload = verifyToken(token);
+  if (!payload) {
+    return NextResponse.json({ authenticated: false, message: 'Token expired' }, { status: 401 });
+  }
+
+  if (!dbAvailable || !db) {
+    return NextResponse.json({ authenticated: true, userId: payload.userId, email: payload.email, role: payload.role });
+  }
+
+  const user = await db
+    .select({ id: users.id, email: users.email, name: users.name, role: users.role })
+    .from(users)
+    .where(eq(users.id, payload.userId))
+    .then((rows) => rows[0]);
+
+  if (!user) {
+    return NextResponse.json({ authenticated: false, message: 'User not found' }, { status: 401 });
+  }
+
+  return NextResponse.json({ authenticated: true, user });
+}
+
+// ── LOGIN ──────────────────────────────────────────
+async function handleLogin(request: NextRequest, data: Record<string, unknown>) {
+  const email = normalizeEmail(String(data.email || ''));
+  const password = String(data.password || '');
+
   if (!email || !password) {
-    return NextResponse.json(
-      { error: 'Email ve şifre zorunludur' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Email və şifrə tələb olunur.' }, { status: 400 });
   }
 
-  // TODO: Replace with actual database lookup and password verification
-  // Simulated login success
-  const mockUser = {
-    id: 'usr_' + Date.now(),
-    email,
-    name: 'Test User',
-    userType: email.includes('admin') ? 'admin' : 'partner',
-  };
+  if (!dbAvailable || !db) {
+    return NextResponse.json({ error: 'DB əlçatan deyil.' }, { status: 503 });
+  }
 
-  // TODO: Generate actual JWT token
-  const mockToken = 'jwt_' + Buffer.from(JSON.stringify({ userId: mockUser.id, exp: Date.now() + 86400000 })).toString('base64');
+  const user = await db.select().from(users).where(eq(users.email, email)).then((r) => r[0]);
 
-  // Log the login activity
-  console.log(`[AUTH] Login: ${email} at ${new Date().toISOString()}`);
+  if (!user || !user.passwordHash) {
+    return NextResponse.json({ error: 'Email və ya şifrə yanlışdır.' }, { status: 401 });
+  }
 
-  return NextResponse.json({
+  const matches = await compare(password, user.passwordHash);
+  if (!matches) {
+    await db.insert(loginLogs).values({
+      userId: user.id,
+      ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
+      userAgent: request.headers.get('user-agent') || 'unknown',
+      success: false,
+    });
+    return NextResponse.json({ error: 'Email və ya şifrə yanlışdır.' }, { status: 401 });
+  }
+
+  if (!user.emailVerified) {
+    return NextResponse.json({ error: 'Email ünvanınızı təsdiqləyin.' }, { status: 403 });
+  }
+
+  await db.insert(loginLogs).values({
+    userId: user.id,
+    ipAddress: request.headers.get('x-forwarded-for') || 'unknown',
+    userAgent: request.headers.get('user-agent') || 'unknown',
     success: true,
-    message: 'Giriş başarılı',
-    user: mockUser,
-    token: mockToken,
-    expiresIn: rememberMe ? 604800 : 86400, // 7 days or 1 day
   });
+
+  const token = signToken({ userId: user.id, email: user.email, role: user.role || 'member' });
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  const response = NextResponse.json({
+    success: true,
+    message: 'Giriş uğurludur.',
+    user: { id: user.id, email: user.email, name: user.name, userType: user.role },
+    token,
+    expiresIn: 604800,
+  });
+
+  response.cookies.set(AUTH_COOKIE_NAME, token, authCookieOptions(isProduction));
+  return response;
 }
 
-// Register handler
-async function handleRegister(data: RegisterData & { action: string }) {
-  const { email, password, name, company, phone, userType } = data;
+// ── REGISTER ──────────────────────────────────────
+async function handleRegister(data: Record<string, unknown>) {
+  const email = normalizeEmail(String(data.email || ''));
+  const password = String(data.password || '');
+  const name = String(data.name || '').trim();
 
-  // Validation
   if (!email || !password || !name) {
-    return NextResponse.json(
-      { error: 'Email, şifre ve isim zorunludur' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Email, şifrə və ad tələb olunur.' }, { status: 400 });
   }
 
   if (password.length < 8) {
-    return NextResponse.json(
-      { error: 'Şifre en az 8 karakter olmalıdır' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Şifrə ən az 8 simvol olmalıdır.' }, { status: 400 });
   }
 
-  // Check if user exists
-  if (users.has(email)) {
-    return NextResponse.json(
-      { error: 'Bu email adresi zaten kayıtlı' },
-      { status: 409 }
-    );
+  if (!dbAvailable || !db) {
+    return NextResponse.json({ error: 'DB əlçatan deyil.' }, { status: 503 });
   }
 
-  // TODO: Replace with actual database insert and password hashing
-  const newUser = {
-    id: 'usr_' + Date.now(),
+  const existing = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).then((r) => r[0]);
+  if (existing) {
+    return NextResponse.json({ error: 'Bu email artıq qeydiyyatdadır.' }, { status: 409 });
+  }
+
+  const passwordHash = await hash(password, 12);
+  const inserted = await db
+    .insert(users)
+    .values({
+      email,
+      name,
+      passwordHash,
+      phone: String(data.phone || '').trim() || null,
+      company: String(data.company || '').trim() || null,
+      role: 'member',
+      emailVerified: false,
+    })
+    .returning({ id: users.id, email: users.email });
+
+  const newUser = inserted[0];
+  const verifyToken = crypto.randomUUID();
+
+  await db.insert(emailVerificationTokens).values({
+    userId: newUser.id,
+    token: verifyToken,
+    expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  });
+
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  const confirmUrl = `${baseUrl}/api/auth/confirm?token=${verifyToken}`;
+
+  await sendSmtpEmail(
     email,
-    name,
-    company: company || '',
-    phone: phone || '',
-    userType: userType || 'partner',
-    createdAt: new Date().toISOString(),
-  };
-
-  // Log the registration
-  console.log(`[AUTH] Register: ${email} as ${userType} at ${new Date().toISOString()}`);
+    'DK Agency — Email Təsdiqi',
+    `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:40px 20px;">
+      <h2 style="color:#1e3a5f;">Xoş gəldiniz, ${name}!</h2>
+      <p style="color:#333;">Email ünvanınızı təsdiqləmək üçün aşağıdakı düyməyə basın:</p>
+      <div style="text-align:center;margin:30px 0;">
+        <a href="${confirmUrl}" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#d4af37;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;">
+          Email-i Təsdiq Et
+        </a>
+      </div>
+      <p style="color:#666;font-size:13px;">Link 24 saat ərzində etibarlıdır.</p>
+      <hr style="border:none;border-top:1px solid #e5e5e5;margin:30px 0;" />
+      <p style="color:#999;font-size:12px;text-align:center;">&copy; 2026 DK Agency</p>
+    </div>`,
+  );
 
   return NextResponse.json({
     success: true,
-    message: 'Kayıt başarılı. Lütfen email adresinizi doğrulayın.',
-    user: { id: newUser.id, email: newUser.email, name: newUser.name },
+    message: 'Hesabınız yaradıldı! Email ünvanınıza təsdiq linki göndərildi.',
+    user: { id: newUser.id, email: newUser.email, name },
   });
 }
 
-// Password reset request handler
-async function handlePasswordResetRequest(data: PasswordResetData & { action: string }) {
-  const { email } = data;
+// ── PASSWORD RESET REQUEST ───────────────────────
+async function handlePasswordResetRequest(data: Record<string, unknown>) {
+  const email = normalizeEmail(String(data.email || ''));
 
   if (!email) {
-    return NextResponse.json(
-      { error: 'Email adresi zorunludur' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Email tələb olunur.' }, { status: 400 });
   }
 
-  // TODO: Check if user exists in database
-  // TODO: Generate password reset token
-  // TODO: Send password reset email
+  if (!dbAvailable || !db) {
+    return NextResponse.json({ success: true, message: 'Sıfırlama linki göndərildi.' });
+  }
 
-  const resetToken = 'rst_' + Buffer.from(JSON.stringify({ email, exp: Date.now() + 3600000 })).toString('base64');
+  const user = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).then((r) => r[0]);
 
-  // Log the password reset request
-  console.log(`[AUTH] Password reset requested for: ${email} at ${new Date().toISOString()}`);
+  if (user) {
+    const token = crypto.randomUUID();
+    await db.insert(passwordResetTokens).values({
+      userId: user.id,
+      token,
+      expiresAt: new Date(Date.now() + 60 * 60 * 1000), // 1 hour
+    });
+
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    await sendSmtpEmail(
+      email,
+      'DK Agency — Şifrə Sıfırlama',
+      `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:40px 20px;">
+        <h2 style="color:#1e3a5f;">Şifrə Sıfırlama</h2>
+        <p style="color:#333;">Şifrənizi sıfırlamaq üçün aşağıdakı linkə keçin:</p>
+        <div style="text-align:center;margin:30px 0;">
+          <a href="${baseUrl}/reset-password?token=${token}" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#d4af37;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;">
+            Şifrəni Sıfırla
+          </a>
+        </div>
+        <p style="color:#666;font-size:13px;">Link 1 saat ərzində etibarlıdır.</p>
+        <p style="color:#999;font-size:12px;text-align:center;">&copy; 2026 DK Agency</p>
+      </div>`,
+    );
+  }
 
   // Always return success to prevent email enumeration
   return NextResponse.json({
     success: true,
-    message: 'Şifre sıfırlama bağlantısı email adresinize gönderildi',
-    // In production, don't return the token - send via email
-    debug_token: process.env.NODE_ENV === 'development' ? resetToken : undefined,
+    message: 'Sıfırlama linki email ünvanınıza göndərildi.',
   });
 }
 
-// Password reset confirmation handler
-async function handlePasswordResetConfirm(data: PasswordUpdateData & { action: string }) {
-  const { token, newPassword, confirmPassword } = data;
+// ── PASSWORD RESET CONFIRM ───────────────────────
+async function handlePasswordResetConfirm(data: Record<string, unknown>) {
+  const token = String(data.token || '');
+  const newPassword = String(data.newPassword || '');
+  const confirmPassword = String(data.confirmPassword || '');
 
   if (!token || !newPassword || !confirmPassword) {
-    return NextResponse.json(
-      { error: 'Tüm alanlar zorunludur' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Bütün sahələr tələb olunur.' }, { status: 400 });
   }
 
   if (newPassword !== confirmPassword) {
-    return NextResponse.json(
-      { error: 'Şifreler eşleşmiyor' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Şifrələr uyğun deyil.' }, { status: 400 });
   }
 
   if (newPassword.length < 8) {
-    return NextResponse.json(
-      { error: 'Şifre en az 8 karakter olmalıdır' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Şifrə ən az 8 simvol olmalıdır.' }, { status: 400 });
   }
 
-  // TODO: Verify token validity
-  // TODO: Update password in database
-  // TODO: Invalidate all existing sessions
+  if (!dbAvailable || !db) {
+    return NextResponse.json({ error: 'DB əlçatan deyil.' }, { status: 503 });
+  }
 
-  // Log the password change
-  console.log(`[AUTH] Password reset completed at ${new Date().toISOString()}`);
+  const record = await db
+    .select()
+    .from(passwordResetTokens)
+    .where(and(eq(passwordResetTokens.token, token), isNull(passwordResetTokens.usedAt)))
+    .then((r) => r[0]);
+
+  if (!record) {
+    return NextResponse.json({ error: 'Link etibarsızdır.' }, { status: 400 });
+  }
+
+  if (record.expiresAt < new Date()) {
+    return NextResponse.json({ error: 'Linkin müddəti bitib.' }, { status: 400 });
+  }
+
+  const passwordHash = await hash(newPassword, 12);
+
+  await db.update(passwordResetTokens).set({ usedAt: new Date() }).where(eq(passwordResetTokens.id, record.id));
+
+  if (record.userId) {
+    await db.update(users).set({ passwordHash, updatedAt: new Date() }).where(eq(users.id, record.userId));
+  }
 
   return NextResponse.json({
     success: true,
-    message: 'Şifreniz başarıyla güncellendi. Yeni şifrenizle giriş yapabilirsiniz.',
+    message: 'Şifrəniz uğurla yeniləndi. Yeni şifrə ilə giriş edə bilərsiniz.',
   });
 }
 
-// Logout handler
-async function handleLogout() {
-  // TODO: Invalidate session/token
-
-  return NextResponse.json({
-    success: true,
-    message: 'Çıkış yapıldı',
+// ── LOGOUT ───────────────────────────────────────
+function handleLogout() {
+  const response = NextResponse.json({ success: true, message: 'Çıxış edildi.' });
+  response.cookies.set(AUTH_COOKIE_NAME, '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 0,
   });
+  return response;
 }
 
-// Token verification handler
-async function handleVerifyToken(data: { token: string; action: string }) {
-  const { token } = data;
+// ── VERIFY TOKEN ─────────────────────────────────
+function handleVerifyToken(request: NextRequest) {
+  const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
 
   if (!token) {
-    return NextResponse.json(
-      { valid: false, error: 'Token gerekli' },
-      { status: 400 }
-    );
+    return NextResponse.json({ valid: false, error: 'Token yoxdur.' });
   }
 
-  // TODO: Verify JWT token
-  // This is a placeholder implementation
-  try {
-    const decoded = JSON.parse(Buffer.from(token.replace('jwt_', ''), 'base64').toString());
-    
-    if (decoded.exp < Date.now()) {
-      return NextResponse.json({
-        valid: false,
-        error: 'Token süresi dolmuş',
-      });
-    }
-
-    return NextResponse.json({
-      valid: true,
-      userId: decoded.userId,
-    });
-  } catch {
-    return NextResponse.json({
-      valid: false,
-      error: 'Geçersiz token',
-    });
-  }
-}
-
-// GET - Check auth status
-export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get('authorization');
-
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return NextResponse.json({
-      authenticated: false,
-      message: 'No authentication token provided',
-    });
+  const payload = verifyToken(token);
+  if (!payload) {
+    return NextResponse.json({ valid: false, error: 'Token etibarsızdır.' });
   }
 
-  const token = authHeader.substring(7);
-
-  // TODO: Verify token and return user info
-  try {
-    const decoded = JSON.parse(Buffer.from(token.replace('jwt_', ''), 'base64').toString());
-    
-    if (decoded.exp < Date.now()) {
-      return NextResponse.json({
-        authenticated: false,
-        message: 'Token expired',
-      });
-    }
-
-    return NextResponse.json({
-      authenticated: true,
-      userId: decoded.userId,
-    });
-  } catch {
-    return NextResponse.json({
-      authenticated: false,
-      message: 'Invalid token',
-    });
-  }
+  return NextResponse.json({ valid: true, userId: payload.userId, email: payload.email });
 }
