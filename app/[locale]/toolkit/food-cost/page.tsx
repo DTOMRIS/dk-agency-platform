@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Calculator,
   ChevronLeft,
   AlertTriangle,
+  Database,
   Info,
   ShoppingCart,
   Tag,
@@ -20,6 +21,57 @@ import {
 } from 'lucide-react';
 
 const UNITS = ['kq', 'qr', 'litr', 'ml', 'ədəd'];
+
+// ── Product Price Suggestion ────────────────────────────────────────
+
+interface PriceSuggestion {
+  name: string;
+  unit: string;
+  avgUnitPrice: number; // qəpiklə
+  minUnitPrice: number;
+  maxUnitPrice: number;
+  occurrences: number;
+}
+
+function useProductLookup() {
+  const [suggestions, setSuggestions] = useState<PriceSuggestion[]>([]);
+  const [activeIngId, setActiveIngId] = useState<string | null>(null);
+  const [hasInvoiceData, setHasInvoiceData] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    // Check if invoice data exists
+    fetch('/api/food-cost?type=lookup&limit=1')
+      .then((r) => r.json())
+      .then((json: { data?: PriceSuggestion[] }) => {
+        if (json.data && json.data.length > 0) setHasInvoiceData(true);
+      })
+      .catch(() => { /* ignore */ });
+  }, []);
+
+  const search = useCallback((query: string, ingId: string) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (query.length < 2) { setSuggestions([]); setActiveIngId(null); return; }
+
+    setActiveIngId(ingId);
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/food-cost?type=lookup&q=${encodeURIComponent(query)}&limit=5`);
+        const json = (await res.json()) as { data: PriceSuggestion[] };
+        setSuggestions(json.data ?? []);
+      } catch {
+        setSuggestions([]);
+      }
+    }, 300);
+  }, []);
+
+  const clear = useCallback(() => {
+    setSuggestions([]);
+    setActiveIngId(null);
+  }, []);
+
+  return { suggestions, activeIngId, hasInvoiceData, search, clear };
+}
 
 interface Ingredient {
   id: string;
@@ -74,6 +126,18 @@ export default function FoodCostCalculator() {
   const [menuPrice, setMenuPrice] = useState<number>(18);
   const [portions, setPortions] = useState<number>(1);
   const [targetFoodCost, setTargetFoodCost] = useState<number>(32);
+  const { suggestions, activeIngId, hasInvoiceData, search, clear } = useProductLookup();
+
+  const applySuggestion = (ingId: string, sug: PriceSuggestion) => {
+    setIngredients((prev) =>
+      prev.map((i) =>
+        i.id === ingId
+          ? { ...i, name: sug.name, unit: sug.unit, pricePerUnit: sug.avgUnitPrice / 100 }
+          : i,
+      ),
+    );
+    clear();
+  };
 
   const calc = useMemo(() => {
     const totalRaw = ingredients.reduce((sum, ing) => {
@@ -171,7 +235,14 @@ export default function FoodCostCalculator() {
         {/* Resept Kartı */}
         <div className="bg-white rounded-2xl ring-1 ring-slate-200/80 shadow-lg shadow-slate-200/40 overflow-hidden">
           <div className="px-6 py-5 flex items-center justify-between border-b border-slate-100">
-            <h2 className="text-base font-bold text-slate-900">Resept Kartı</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-base font-bold text-slate-900">Resept Kartı</h2>
+              {hasInvoiceData && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 ring-1 ring-emerald-200/60">
+                  <Database size={10} /> Fatura qiymətləri aktiv
+                </span>
+              )}
+            </div>
             <button onClick={resetAll} className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-red-500 transition-colors">
               <RotateCcw size={13} /> Sıfırla
             </button>
@@ -194,8 +265,43 @@ export default function FoodCostCalculator() {
                   const total = ing.quantity * (1 + ing.trimLoss / 100) * ing.pricePerUnit;
                   return (
                     <tr key={ing.id} className="group hover:bg-slate-50/50 transition-colors">
-                      <td className="px-5 py-3">
-                        <input type="text" value={ing.name} onChange={(e) => updateIngredient(ing.id, 'name', e.target.value)} className="w-full bg-transparent text-slate-900 font-medium outline-none placeholder:text-slate-300" placeholder="Məhsul adı" />
+                      <td className="relative px-5 py-3">
+                        <input
+                          type="text"
+                          value={ing.name}
+                          onChange={(e) => {
+                            updateIngredient(ing.id, 'name', e.target.value);
+                            if (hasInvoiceData) search(e.target.value, ing.id);
+                          }}
+                          onBlur={() => setTimeout(clear, 200)}
+                          className="w-full bg-transparent text-slate-900 font-medium outline-none placeholder:text-slate-300"
+                          placeholder="Məhsul adı"
+                        />
+                        {activeIngId === ing.id && suggestions.length > 0 && (
+                          <div className="absolute left-4 top-full z-20 mt-1 w-72 rounded-xl border border-slate-200 bg-white shadow-xl">
+                            {suggestions.map((sug) => (
+                              <button
+                                key={`${sug.name}-${sug.unit}`}
+                                type="button"
+                                onMouseDown={() => applySuggestion(ing.id, sug)}
+                                className="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-emerald-50 first:rounded-t-xl last:rounded-b-xl"
+                              >
+                                <div>
+                                  <span className="font-medium text-slate-800">{sug.name}</span>
+                                  <span className="ml-1 text-xs text-slate-400">({sug.unit})</span>
+                                </div>
+                                <div className="text-right">
+                                  <span className="font-semibold text-emerald-600">{(sug.avgUnitPrice / 100).toFixed(2)} ₼</span>
+                                  <span className="ml-1 text-[10px] text-slate-400">×{sug.occurrences}</span>
+                                </div>
+                              </button>
+                            ))}
+                            <div className="border-t border-slate-100 px-3 py-1.5 text-[10px] text-slate-400">
+                              <Database size={10} className="mr-1 inline" />
+                              Son 90 günün fatura qiymətləri
+                            </div>
+                          </div>
+                        )}
                       </td>
                       <td className="px-3 py-3">
                         <input type="number" step="0.01" value={ing.quantity || ''} onChange={(e) => updateIngredient(ing.id, 'quantity', parseFloat(e.target.value) || 0)} className="w-full text-center bg-slate-100/80 rounded-lg px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500/30 transition-shadow" />
