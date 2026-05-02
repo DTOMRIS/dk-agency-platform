@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-04-29T18:22:06.535Z
+- GeneratedAt: 2026-05-02T18:20:58.615Z
 - BuildStatus: PASS
 
-## Routes (121)
+## Routes (123)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -71,6 +71,7 @@ Auto-generated. Do not edit manually.
 - /blog
 - /dashboard
 - /dashboard/aqta-checklist
+- /dashboard/auditor
 - /dashboard/ayarlar
 - /dashboard/b2b-yonetimi
 - /dashboard/blog
@@ -83,6 +84,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/fatura-kateqoriyalar
 - /dashboard/faturalar
 - /dashboard/faturalar/[id]
+- /dashboard/food-cost
 - /dashboard/haberler
 - /dashboard/hero
 - /dashboard/ilan-onaylari
@@ -129,10 +131,12 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (43)
+## API Routes (47)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
+- /api/audit
+- /api/audit/[id]
 - /api/auth
 - /api/auth/change-password
 - /api/auth/forgot-password
@@ -140,9 +144,11 @@ Auto-generated. Do not edit manually.
 - /api/auth/verify-email
 - /api/blog
 - /api/blog/[slug]
+- /api/food-cost
 - /api/health
 - /api/invoice-categories
 - /api/invoice-ocr
+- /api/invoice-pdf
 - /api/invoices
 - /api/kazan-ai
 - /api/kazan-ai/leads
