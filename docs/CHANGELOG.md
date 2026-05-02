@@ -2,6 +2,69 @@
 
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
+## [0.7.0] - 2026-04-30
+### Added — Restoran Auditor (tam yeni feature)
+- DB schema: `restaurant_audits` + `restaurant_audit_actions` (2 tablo, 2 enum, Neon push)
+- AI engine: `lib/audit/photo-analyzer.ts` (Gemini Vision + kateqoriya fallback)
+- AI engine: `lib/audit/menu-analyzer.ts` (menyu foto → qiymet/kateqoriya)
+- AI engine: `lib/audit/social-scraper.ts` (Instagram/Facebook public data)
+- AI engine: `lib/audit/full-audit.ts` (DeepSeek SWOT + tovsiye + WhatsApp sablon)
+- Repository: `lib/repositories/auditRepository.ts` (CRUD + actions + stats)
+- API: `POST/GET /api/audit` (yaratma + siyahi + bulk delete)
+- API: `GET/PATCH/DELETE/POST /api/audit/[id]` (detal + status + action log)
+- Dashboard: `/dashboard/auditor` — 3 view (list/new/detail), mobile-first, kanban filter
+- PDF export: `lib/audit/audit-pdf.ts` (jsPDF, AZ karakter sanitize)
+- WhatsApp template: AI auto-generate, clipboard copy
+- Sidebar: "Auditor" linki (ClipboardCheck icon)
+
+### Added — Toolkit Food Cost Real Data
+- Product lookup API: `/api/food-cost?type=lookup&q=toyuq` (son 90 gun orta qiymet)
+- Repository: `lookupProductPrices()` — avg/min/max qiymet, vahid, occurrences
+- Toolkit autocomplete: `/toolkit/food-cost` mehsul adina gore fatura qiymetleri onerisi
+- Auto-fill: onerini secdikde ad, vahid, qiymet avtomatik doldurulur
+- "Fatura qiymetleri aktiv" badge (DB-de data varsa)
+
+## [0.6.0] - 2026-04-30
+### Added — Fatura OCR Faza 9-10 (Food Cost + KAZAN AI + Export)
+- Food Cost hesablama motoru: `getFoodCostReport()`, `getMonthlyTrend()`, `getSupplierComparison()`, `getTopProducts()`
+- Food Cost API: `/api/food-cost?type=report|trend|suppliers|products|all`
+- Food Cost Dashboard: `/dashboard/food-cost` (4 KPI, trend chart, 3 tab, ay secici)
+- KAZAN AI real data inject: `lib/kazan-ai/food-cost-context.ts` + `isFoodCostIntent()`
+- KAZAN AI artiq "Bu ay en cox neye xerclemisem?" sualina real reqemlerle cavab verir
+- Sidebar: "Food Cost" linki (CookingPot icon)
+
+### Added — PDF Import (Faza 4)
+- PDF parser: `lib/invoice-ocr/pdf-parser.ts` (pdf-parse v2 PDFParse + DeepSeek text parse + regex fallback)
+- PDF API: `POST /api/invoice-pdf` (FormData → text extract → AI parse → structured rows)
+- Import modal: PDF butonu artiq isleyir (eskiden "tezlikle" yazirdi)
+
+### Changed — CSV/Excel Export Encoding Fix
+- CSV separator: virgul (`,`) → noqteli vergul (`;`) — AZ/TR locale-da Excel duzgun acilir
+- UTF-8 BOM + CRLF setir sonu
+- Status/Menbe etiketleri AZ diline cevirildi
+- Food Cost CSV/Excel/PDF export funksiyalari elave edildi
+- Excel export: `bookSST: true` (string table optimizasiyasi)
+
+### Dependencies
+- `jspdf` (PDF export)
+- `pdf-parse` (PDF import)
+
+## [0.5.0] - 2026-04-28
+### Added — Fatura OCR Faza 1-8
+- DB schema: 5 tablo (invoices, invoice_items, invoice_categories, invoice_imports, invoice_category_rules), 4 enum
+- Seed: 12 default kateqoriya + 64 auto-mapping rule
+- OCR pipeline: Gemini 2.5 Flash Vision (primary) + DeepSeek Text (fallback)
+- Client-side sekil sixilma: browser-image-compression, WebP, 70%+ azalma
+- Manual giris: +1/+5/+10 toplu setir elavesi
+- Excel/CSV import: SheetJS, AZ/TR/EN/RU sutun tanima
+- Detail page: field-by-field inline edit
+- Admin: bulk delete, filter, pagination
+- Mobil UX: kart view, kamera, bottom bar
+- Kateqoriya admin: `/dashboard/fatura-kateqoriyalar`
+- Export: CSV (UTF-8 BOM) + Excel (.xlsx)
+- Sidebar: "Faturalar" linki
+- PR #65 merged to main
+
 ## [0.4.0] - 2026-03-26
 ### Added
 - `KAZAN AI` knowledge base (`lib/kazan-ai/knowledge-base.ts`) - 10 yazidan cixarilan formula, range, checklist, praktik addim ve guru sitatlari

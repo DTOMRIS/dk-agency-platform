@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildKazanSystemPrompt } from '@/lib/kazan-ai/system-prompt';
+import { buildFoodCostContext } from '@/lib/kazan-ai/food-cost-context';
 import ahilikQuotes from '@/data/kazan-kb/ahilik-quotes.json';
 
 type ChatRole = 'user' | 'assistant';
@@ -68,7 +69,7 @@ function buildStaticFallback(messages: ChatMessage[]) {
   return `Bakıda restoran idarəetməsində qərarı rəqəmlə vermək lazımdır: food cost, labor, AQTA, delivery və kadr axını eyni sistemdə baxılmalıdır. Sualını bir az konkret yaz, mən sənə rəqəm və addım planı ilə cavab verim.\n\n[Əlaqə saxla](/elaqe)`;
 }
 
-async function callAnthropic(messages: ChatMessage[], apiKey: string) {
+async function callAnthropicWithPrompt(messages: ChatMessage[], apiKey: string, systemPrompt: string) {
   const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-20250514';
   const baseUrl = process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com';
 
@@ -81,7 +82,7 @@ async function callAnthropic(messages: ChatMessage[], apiKey: string) {
     },
     body: JSON.stringify({
       model,
-      system: buildKazanSystemPrompt(),
+      system: systemPrompt,
       max_tokens: 700,
       temperature: 0.2,
       messages,
@@ -132,7 +133,7 @@ async function callAnthropic(messages: ChatMessage[], apiKey: string) {
   };
 }
 
-async function callDeepSeek(messages: ChatMessage[], apiKey: string) {
+async function callDeepSeekWithPrompt(messages: ChatMessage[], apiKey: string, systemPrompt: string) {
   const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -144,7 +145,7 @@ async function callDeepSeek(messages: ChatMessage[], apiKey: string) {
       temperature: 0.2,
       max_tokens: 700,
       messages: [
-        { role: 'system', content: buildKazanSystemPrompt() },
+        { role: 'system', content: systemPrompt },
         ...messages.map((message) => ({
           role: message.role,
           content: message.content,
@@ -192,6 +193,13 @@ async function callDeepSeek(messages: ChatMessage[], apiKey: string) {
   };
 }
 
+function isFoodCostIntent(messages: ChatMessage[]): boolean {
+  const last3 = messages.slice(-3);
+  const text = last3.map((m) => m.content.toLowerCase()).join(' ');
+  const keywords = ['food cost', 'xərc', 'kateqoriya', 'nəyə xərcləmişəm', 'nə qədər', 'fatura', 'tədarükçü', 'ən bahalı', 'maya dəyəri', 'qida xərci', 'aylıq xərc'];
+  return keywords.some((kw) => text.includes(kw));
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as RequestBody;
@@ -202,11 +210,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Ən azı 1 mesaj göndərilməlidir.' }, { status: 400 });
     }
 
+    // Food cost intent olduqda real veri inject et
+    let systemPrompt = buildKazanSystemPrompt();
+    if (isFoodCostIntent(messages)) {
+      const foodCostCtx = await buildFoodCostContext();
+      systemPrompt = systemPrompt + '\n\n' + foodCostCtx;
+    }
+
     const deepseekApiKey = process.env.DEEPSEEK_API_KEY;
     const anthropicApiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
 
     if (deepseekApiKey) {
-      const result = await callDeepSeek(messages, deepseekApiKey);
+      const result = await callDeepSeekWithPrompt(messages, deepseekApiKey, systemPrompt);
       if (result.ok) {
         result.body.message = appendQuote(result.body.message, locale);
         return NextResponse.json(result.body, { status: result.status });
@@ -214,7 +229,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (anthropicApiKey) {
-      const result = await callAnthropic(messages, anthropicApiKey);
+      const result = await callAnthropicWithPrompt(messages, anthropicApiKey, systemPrompt);
       if (result.ok) {
         result.body.message = appendQuote(result.body.message, locale);
         return NextResponse.json(result.body, { status: result.status });
