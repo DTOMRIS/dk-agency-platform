@@ -24,11 +24,10 @@ export default function LoginPage() {
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/member/auth', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'login',
           email: formData.email.trim(),
           password: formData.password,
         }),
@@ -36,16 +35,22 @@ export default function LoginPage() {
 
       const data = await response.json();
 
-      if (!response.ok || !data?.session) {
+      if (!response.ok || !data?.ok) {
         setError(data?.error || 'Daxil olmaq alınmadı.');
         return;
       }
 
-      writeMemberSession(data.session as MemberSession);
+      const session: MemberSession = {
+        email: data.user.email,
+        name: data.user.name || '',
+        loggedIn: true,
+        plan: data.user.role === 'admin' ? 'admin' : 'member',
+      };
+      writeMemberSession(session);
       await fetch('/api/member/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data.session),
+        body: JSON.stringify(session),
       });
 
       router.push(nextUrl);
@@ -102,6 +107,7 @@ export default function LoginPage() {
                   <input
                     type="password"
                     required
+                    autoComplete="current-password"
                     value={formData.password}
                     onChange={(event) => setFormData({ ...formData, password: event.target.value })}
                     placeholder="••••••••"
