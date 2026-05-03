@@ -68,6 +68,7 @@ export default function ResetPasswordPageClient() {
               <label className="mb-2 block text-sm font-medium text-slate-700">Yeni şifrə</label>
               <input
                 type="password"
+                autoComplete="new-password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
@@ -77,6 +78,7 @@ export default function ResetPasswordPageClient() {
               <label className="mb-2 block text-sm font-medium text-slate-700">Yeni şifrəni təsdiqlə</label>
               <input
                 type="password"
+                autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
