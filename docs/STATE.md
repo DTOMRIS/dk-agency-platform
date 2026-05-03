@@ -3,13 +3,15 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-02T20:01:35.715Z
+- GeneratedAt: 2026-05-03T09:33:28.203Z
 - BuildStatus: PASS
 
-## Routes (123)
+## Routes (125)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
+- /[locale]/auth/login
+- /[locale]/auth/register
 - /[locale]/b2b-panel
 - /[locale]/b2b-panel/ilanlarim
 - /[locale]/b2b-panel/mesajlar
