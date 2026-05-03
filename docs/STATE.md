@@ -3,13 +3,15 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-02T18:20:58.615Z
+- GeneratedAt: 2026-05-03T09:33:28.203Z
 - BuildStatus: PASS
 
-## Routes (123)
+## Routes (125)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
+- /[locale]/auth/login
+- /[locale]/auth/register
 - /[locale]/b2b-panel
 - /[locale]/b2b-panel/ilanlarim
 - /[locale]/b2b-panel/mesajlar
@@ -131,7 +133,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (47)
+## API Routes (52)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
@@ -139,7 +141,12 @@ Auto-generated. Do not edit manually.
 - /api/audit/[id]
 - /api/auth
 - /api/auth/change-password
+- /api/auth/confirm
 - /api/auth/forgot-password
+- /api/auth/login
+- /api/auth/logout
+- /api/auth/me
+- /api/auth/register
 - /api/auth/reset-password
 - /api/auth/verify-email
 - /api/blog
