@@ -2,17 +2,13 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { ArrowLeft, Building2, Mail, Phone, Sparkles, User } from 'lucide-react';
-import { type MemberSession, writeMemberSession } from '@/lib/member-access';
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [nextUrl, setNextUrl] = useState('/haberler');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [verifyUrl, setVerifyUrl] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,15 +26,13 @@ export default function RegisterPage() {
     event.preventDefault();
     setError('');
     setNotice('');
-    setVerifyUrl('');
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/member/auth', {
+      const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'register',
           email: formData.email.trim(),
           password: formData.password,
           name: formData.name.trim(),
@@ -54,22 +48,8 @@ export default function RegisterPage() {
         return;
       }
 
-      if (data?.session) {
-        writeMemberSession(data.session as MemberSession);
-        void fetch('/api/member/session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data.session),
-        });
-        router.push(nextUrl);
-        return;
-      }
-
       if (data?.verificationRequired) {
         setNotice(data?.message || 'Hesabınız yaradıldı! Email ünvanınıza təsdiq linki göndərildi.');
-        if (data?.verificationToken) {
-          setVerifyUrl(`/verify-email?token=${encodeURIComponent(data.verificationToken)}`);
-        }
         return;
       }
 
@@ -107,11 +87,9 @@ export default function RegisterPage() {
             {notice ? (
               <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
                 <p className="font-semibold">{notice}</p>
-                {verifyUrl ? (
-                  <Link href={verifyUrl} className="mt-2 inline-flex font-semibold text-emerald-800 underline">
-                    Təsdiq səhifəsinə keç
-                  </Link>
-                ) : null}
+                <Link href="/auth/login" className="mt-2 inline-flex font-semibold text-emerald-800 underline">
+                  Daxil ol səhifəsinə keç
+                </Link>
               </div>
             ) : null}
 
@@ -180,6 +158,7 @@ export default function RegisterPage() {
                   type="password"
                   required
                   minLength={8}
+                  autoComplete="new-password"
                   value={formData.password}
                   onChange={(event) => setFormData({ ...formData, password: event.target.value })}
                   placeholder="minimum 8 simvol"
