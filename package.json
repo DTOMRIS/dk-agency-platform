@@ -2,6 +2,9 @@
   "name": "dk-agency-platform",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "npm install --include=dev && node --max-old-space-size=4096 node_modules/next/dist/bin/next build",

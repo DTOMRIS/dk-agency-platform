@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    trustHostHeader: true,
+  },
   serverExternalPackages: ['nodemailer'],
   images: {
     remotePatterns: [

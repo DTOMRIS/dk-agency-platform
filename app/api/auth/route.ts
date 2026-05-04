@@ -5,6 +5,7 @@ import { db, dbAvailable } from '@/lib/db';
 import { users, loginLogs, emailVerificationTokens, passwordResetTokens } from '@/lib/db/schema';
 import { signToken, verifyToken, AUTH_COOKIE_NAME, authCookieOptions } from '@/lib/auth/jwt';
 import { sendSmtpEmail } from '@/lib/email/smtp';
+import { getBaseUrl } from '@/lib/utils/get-base-url';
 
 function normalizeEmail(value: string) {
   return value.trim().toLowerCase();
@@ -170,8 +171,7 @@ async function handleRegister(data: Record<string, unknown>) {
     expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
   });
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  const confirmUrl = `${baseUrl}/api/auth/confirm?token=${verifyToken}`;
+  const confirmUrl = `${getBaseUrl()}/api/auth/confirm?token=${verifyToken}`;
 
   await sendSmtpEmail(
     email,
@@ -219,7 +219,6 @@ async function handlePasswordResetRequest(data: Record<string, unknown>) {
       expiresAt: new Date(Date.now() + 60 * 60 * 1000), // 1 hour
     });
 
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     await sendSmtpEmail(
       email,
       'DK Agency — Şifrə Sıfırlama',
@@ -227,7 +226,7 @@ async function handlePasswordResetRequest(data: Record<string, unknown>) {
         <h2 style="color:#1e3a5f;">Şifrə Sıfırlama</h2>
         <p style="color:#333;">Şifrənizi sıfırlamaq üçün aşağıdakı linkə keçin:</p>
         <div style="text-align:center;margin:30px 0;">
-          <a href="${baseUrl}/reset-password?token=${token}" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#d4af37;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;">
+          <a href="${getBaseUrl()}/reset-password?token=${token}" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#d4af37;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;">
             Şifrəni Sıfırla
           </a>
         </div>

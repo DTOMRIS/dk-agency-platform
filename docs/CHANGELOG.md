@@ -2,6 +2,14 @@
 
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
+## [0.8.0] - 2026-05-04
+### Fixed — Auth redirect / hostname fix package (TASK-0030 – TASK-0034)
+- [TASK-0030] next.config.ts: `experimental.trustHostHeader: true` — Hostinger reverse proxy hostname fix
+- [TASK-0031] Auth redirects: replaced `request.nextUrl.origin` and raw env var reads with `getBaseUrl()` in confirm, register, and route handlers
+- [TASK-0032] New utility: `lib/utils/get-base-url.ts` — single source of truth for public base URL
+- [TASK-0033] Deleted duplicate `postcss.config.js` (CJS) — canonical config is `postcss.config.mjs`
+- [TASK-0034] Pinned Node.js to >=22 (`package.json` engines + `.nvmrc`)
+
 ## [0.7.0] - 2026-04-30
 ### Added — Restoran Auditor (tam yeni feature)
 - DB schema: `restaurant_audits` + `restaurant_audit_actions` (2 tablo, 2 enum, Neon push)
