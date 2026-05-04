@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
+import { requireAdmin } from '@/lib/auth/guards';
 
 // Node.js runtime required for fs (self-hosted / local)
 export const dynamic = 'force-dynamic';
@@ -25,6 +26,9 @@ function save(path: string, items: unknown[]) {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await req.json();
     const ids = Array.isArray(body.ids) ? body.ids : body.id ? [body.id] : [];

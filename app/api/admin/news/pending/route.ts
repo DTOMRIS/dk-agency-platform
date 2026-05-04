@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
+import { requireAdmin } from '@/lib/auth/guards';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +17,8 @@ function load(path: string): unknown[] {
 }
 
 export async function GET() {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
   const curated = load(join(DATA_DIR, 'curatedNews.json'));
   const pending = load(join(DATA_DIR, 'pendingNews.json'));
   return NextResponse.json({ curated, pending });
