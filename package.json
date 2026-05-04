@@ -2,9 +2,12 @@
   "name": "dk-agency-platform",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
-    "build": "node --max-old-space-size=4096 node_modules/next/dist/bin/next build",
+    "build": "npm install --include=dev && node --max-old-space-size=4096 node_modules/next/dist/bin/next build",
     "start": "next start",
     "start:local": "next start -H 127.0.0.1 -p 3001",
     "start:3000": "next start -H 127.0.0.1 -p 3000",
@@ -51,12 +54,12 @@
     "tailwindcss": "^4.2.2",
     "tsx": "^4.21.0",
     "xlsx": "^0.18.5",
-    "drizzle-kit": "^0.31.10"
+    "drizzle-kit": "^0.31.10",
+    "@types/jsonwebtoken": "^9.0.10"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@types/bcryptjs": "^2.4.6",
-    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/nodemailer": "^8.0.0",
     "@types/react": "^19",

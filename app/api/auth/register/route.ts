@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { users, emailVerificationTokens } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
+import { getBaseUrl } from '@/lib/utils/get-base-url';
 
 export async function POST(request: NextRequest) {
   try {
@@ -73,8 +74,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Send confirmation email
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const confirmUrl = `${baseUrl}/api/auth/confirm?token=${token}`;
+    const confirmUrl = `${getBaseUrl()}/api/auth/confirm?token=${token}`;
 
     await sendSmtpEmail(
       email,
