@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { eq, and, isNull } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { users, emailVerificationTokens } from '@/lib/db/schema';
+import { getBaseUrl } from '@/lib/utils/get-base-url';
 
 export async function GET(request: NextRequest) {
   try {
@@ -56,9 +57,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function redirectWithMessage(request: NextRequest, type: 'success' | 'error', message: string) {
-  const baseUrl = request.nextUrl.origin;
-  const url = new URL('/auth/login', baseUrl);
+function redirectWithMessage(_request: NextRequest, type: 'success' | 'error', message: string) {
+  const url = new URL('/auth/login', getBaseUrl());
   url.searchParams.set(type, message);
   return NextResponse.redirect(url);
 }
