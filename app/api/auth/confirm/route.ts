@@ -3,6 +3,7 @@ import { eq, and, isNull } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { users, emailVerificationTokens } from '@/lib/db/schema';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
+import { sendEmail, emailTemplates } from '@/lib/email/templates';
 
 export async function GET(request: NextRequest) {
   try {
@@ -42,12 +43,18 @@ export async function GET(request: NextRequest) {
       .set({ usedAt: new Date() })
       .where(eq(emailVerificationTokens.id, record.id));
 
-    // Set user emailVerified = true
+    // Set user emailVerified = true and send welcome email
     if (record.userId) {
-      await db
+      const [user] = await db
         .update(users)
         .set({ emailVerified: true, updatedAt: new Date() })
-        .where(eq(users.id, record.userId));
+        .where(eq(users.id, record.userId))
+        .returning({ name: users.name, email: users.email });
+
+      if (user?.email) {
+        const baseUrl = getBaseUrl();
+        sendEmail(user.email, emailTemplates.welcome(user.name, baseUrl)).catch(() => {});
+      }
     }
 
     return redirectWithMessage(request, 'success', 'Email təsdiqləndi! İndi giriş edə bilərsiniz.');
