@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { adminBlogPosts, adminNewsQueue } from '@/lib/data/adminContent';
 import { MOCK_LISTINGS } from '@/lib/data/mockListings';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 const pendingListings = MOCK_LISTINGS.filter((listing) =>
   ['submitted', 'committee_review', 'ai_checked'].includes(listing.status),
@@ -29,21 +30,126 @@ const pendingListings = MOCK_LISTINGS.filter((listing) =>
 const pendingNews = adminNewsQueue.filter((item) => item.status === 'fetched').length;
 const draftBlogs = adminBlogPosts.filter((item) => item.status === 'draft').length;
 
-const navItems = [
-  { title: 'Əsas səhifə', href: '/dashboard', icon: LayoutDashboard },
-  { title: 'Elanlar', href: '/dashboard/ilanlar', icon: Store, badge: pendingListings },
-  { title: 'Hero', href: '/dashboard/hero', icon: FilePenLine },
-  { title: 'Xəbərlər', href: '/dashboard/xeberler', icon: Newspaper, badge: pendingNews },
-  { title: 'Bloq', href: '/dashboard/blog', icon: BookOpen, badge: draftBlogs },
-  { title: 'KAZAN Leads', href: '/dashboard/kazan-leads', icon: Bot },
-  { title: 'Auditor', href: '/dashboard/auditor', icon: ClipboardCheck },
-  { title: 'Faturalar', href: '/dashboard/faturalar', icon: Receipt },
-  { title: 'Food Cost', href: '/dashboard/food-cost', icon: CookingPot },
-  { title: 'Toolkit', href: '/dashboard/toolkit', icon: Wrench },
-  { title: 'Sayt', href: '/dashboard/site', icon: Globe },
-  { title: 'İstifadəçilər', href: '/dashboard/users', icon: Users },
-  { title: 'Parametrlər', href: '/dashboard/settings', icon: Settings },
-] as const;
+type NavItemDef = {
+  titleKey: string;
+  href: string;
+  icon: React.ElementType;
+  badge?: number;
+};
+
+const navItemDefs: NavItemDef[] = [
+  { titleKey: 'home', href: '/dashboard', icon: LayoutDashboard },
+  { titleKey: 'listings', href: '/dashboard/ilanlar', icon: Store, badge: pendingListings },
+  { titleKey: 'hero', href: '/dashboard/hero', icon: FilePenLine },
+  { titleKey: 'news', href: '/dashboard/xeberler', icon: Newspaper, badge: pendingNews },
+  { titleKey: 'blog', href: '/dashboard/blog', icon: BookOpen, badge: draftBlogs },
+  { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
+  { titleKey: 'auditor', href: '/dashboard/auditor', icon: ClipboardCheck },
+  { titleKey: 'invoices', href: '/dashboard/faturalar', icon: Receipt },
+  { titleKey: 'foodCost', href: '/dashboard/food-cost', icon: CookingPot },
+  { titleKey: 'toolkit', href: '/dashboard/toolkit', icon: Wrench },
+  { titleKey: 'site', href: '/dashboard/site', icon: Globe },
+  { titleKey: 'users', href: '/dashboard/users', icon: Users },
+  { titleKey: 'settings', href: '/dashboard/settings', icon: Settings },
+];
+
+const sidebarCopy: Record<Locale, {
+  panelTitle: string;
+  adminSubtitle: string;
+  userAccess: string;
+  closeSidebar: string;
+  logout: string;
+  nav: Record<string, string>;
+}> = {
+  az: {
+    panelTitle: 'OCAQ İdarə Paneli',
+    adminSubtitle: 'Admin mərkəzi',
+    userAccess: 'Tam idarəetmə girişi aktivdir',
+    closeSidebar: 'Sidebar bağla',
+    logout: 'Çıxış',
+    nav: {
+      home: 'Əsas səhifə',
+      listings: 'Elanlar',
+      hero: 'Hero',
+      news: 'Xəbərlər',
+      blog: 'Bloq',
+      kazanLeads: 'KAZAN Leads',
+      auditor: 'Auditor',
+      invoices: 'Faturalar',
+      foodCost: 'Food Cost',
+      toolkit: 'Toolkit',
+      site: 'Sayt',
+      users: 'İstifadəçilər',
+      settings: 'Parametrlər',
+    },
+  },
+  en: {
+    panelTitle: 'OCAQ Control Panel',
+    adminSubtitle: 'Admin centre',
+    userAccess: 'Full management access is active',
+    closeSidebar: 'Close sidebar',
+    logout: 'Log out',
+    nav: {
+      home: 'Home',
+      listings: 'Listings',
+      hero: 'Hero',
+      news: 'News',
+      blog: 'Blog',
+      kazanLeads: 'KAZAN Leads',
+      auditor: 'Auditor',
+      invoices: 'Invoices',
+      foodCost: 'Food Cost',
+      toolkit: 'Toolkit',
+      site: 'Website',
+      users: 'Users',
+      settings: 'Settings',
+    },
+  },
+  tr: {
+    panelTitle: 'OCAQ Yönetim Paneli',
+    adminSubtitle: 'Yönetim merkezi',
+    userAccess: 'Tam yönetim erişimi aktif',
+    closeSidebar: 'Kenar çubuğunu kapat',
+    logout: 'Çıkış',
+    nav: {
+      home: 'Ana Sayfa',
+      listings: 'İlanlar',
+      hero: 'Hero',
+      news: 'Haberler',
+      blog: 'Blog',
+      kazanLeads: 'KAZAN Leads',
+      auditor: 'Denetçi',
+      invoices: 'Faturalar',
+      foodCost: 'Food Cost',
+      toolkit: 'Toolkit',
+      site: 'Site',
+      users: 'Kullanıcılar',
+      settings: 'Ayarlar',
+    },
+  },
+  ru: {
+    panelTitle: 'Панель управления OCAQ',
+    adminSubtitle: 'Центр администрирования',
+    userAccess: 'Полный доступ к управлению активен',
+    closeSidebar: 'Закрыть боковую панель',
+    logout: 'Выйти',
+    nav: {
+      home: 'Главная',
+      listings: 'Объявления',
+      hero: 'Hero',
+      news: 'Новости',
+      blog: 'Блог',
+      kazanLeads: 'KAZAN Leads',
+      auditor: 'Аудитор',
+      invoices: 'Счета',
+      foodCost: 'Food Cost',
+      toolkit: 'Toolkit',
+      site: 'Сайт',
+      users: 'Пользователи',
+      settings: 'Настройки',
+    },
+  },
+};
 
 interface DashboardSidebarProps {
   isOpen?: boolean;
@@ -52,6 +158,8 @@ interface DashboardSidebarProps {
 
 export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const locale: Locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = sidebarCopy[locale];
   const [kazanLeadCount, setKazanLeadCount] = useState<number | null>(null);
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
@@ -80,10 +188,12 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
 
   const sidebarItems = useMemo(
     () =>
-      navItems.map((item) =>
-        item.href === '/dashboard/kazan-leads' ? { ...item, badge: kazanLeadCount ?? undefined } : item,
-      ),
-    [kazanLeadCount],
+      navItemDefs.map((item) => ({
+        ...item,
+        title: copy.nav[item.titleKey] ?? item.titleKey,
+        badge: item.href === '/dashboard/kazan-leads' ? (kazanLeadCount ?? undefined) : item.badge,
+      })),
+    [kazanLeadCount, copy],
   );
 
   return (
@@ -91,7 +201,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       {isOpen ? (
         <button
           type="button"
-          aria-label="Sidebar bağla"
+          aria-label={copy.closeSidebar}
           className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
@@ -108,8 +218,8 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
               DK
             </div>
             <div>
-              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">OCAQ İdarə Paneli</div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Admin mərkəzi</div>
+              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">{copy.panelTitle}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">{copy.adminSubtitle}</div>
             </div>
           </Link>
 
@@ -125,7 +235,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
         <div className="border-b border-slate-200 px-5 py-4">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <p className="text-sm font-bold text-[var(--dk-navy)]">Doğan Tomris</p>
-            <p className="mt-1 text-xs text-slate-500">Tam idarəetmə girişi aktivdir</p>
+            <p className="mt-1 text-xs text-slate-500">{copy.userAccess}</p>
           </div>
         </div>
 
@@ -152,7 +262,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
                     <Icon size={18} />
                   </span>
                   <span className="flex-1 text-sm font-semibold">{item.title}</span>
-                  {'badge' in item && item.badge ? (
+                  {item.badge ? (
                     <span className="rounded-full bg-[var(--dk-red)] px-2.5 py-1 text-[11px] font-bold text-white">
                       {item.badge}
                     </span>
@@ -174,7 +284,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
             className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]"
           >
             <LogOut size={18} />
-            Çıxış
+            {copy.logout}
           </button>
         </div>
       </aside>
