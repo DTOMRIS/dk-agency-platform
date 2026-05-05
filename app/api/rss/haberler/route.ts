@@ -12,7 +12,7 @@ function xmlEscape(value: string) {
 
 export function GET() {
   const articles = getAllBlogArticles();
-  const baseUrl = 'https://dkagency.az';
+  const baseUrl = 'https://dkagency.com.tr';
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

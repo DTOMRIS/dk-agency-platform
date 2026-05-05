@@ -21,7 +21,7 @@ async function seed() {
     .insert(users)
     .values({
       name: 'Doğan Tomris',
-      email: 'admin@dkagency.az',
+      email: 'admin@dkagency.com.tr',
       passwordHash: adminPassword,
       role: 'admin',
       emailVerified: true,

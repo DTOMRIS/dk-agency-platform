@@ -40,7 +40,7 @@ const MOCK_USERS: User[] = [
   {
     id: '1',
     name: 'Elvin Guliyev',
-    email: 'elvin@dkagency.az',
+    email: 'elvin@dkagency.com.tr',
     phone: '+994 50 111 2233',
     role: 'admin',
     status: 'active',
@@ -50,7 +50,7 @@ const MOCK_USERS: User[] = [
   {
     id: '2',
     name: 'Aysel Huseynova',
-    email: 'aysel@dkagency.az',
+    email: 'aysel@dkagency.com.tr',
     phone: '+994 55 222 3344',
     role: 'editor',
     status: 'active',
@@ -60,7 +60,7 @@ const MOCK_USERS: User[] = [
   {
     id: '3',
     name: 'Orkhan Mammadov',
-    email: 'orkhan@dkagency.az',
+    email: 'orkhan@dkagency.com.tr',
     phone: '+994 70 333 4455',
     role: 'editor',
     status: 'active',

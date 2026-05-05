@@ -14,8 +14,8 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { Icon: Facebook, href: 'https://facebook.com/dkagency.az', label: 'Facebook' },
-  { Icon: Instagram, href: 'https://instagram.com/dkagency.az', label: 'Instagram' },
+  { Icon: Facebook, href: 'https://facebook.com/dkagency.com.tr', label: 'Facebook' },
+  { Icon: Instagram, href: 'https://instagram.com/dkagency.com.tr', label: 'Instagram' },
   { Icon: Linkedin, href: 'https://linkedin.com/company/dkagency', label: 'LinkedIn' },
   { Icon: Twitter, href: 'https://twitter.com/dkagency_az', label: 'Twitter' },
 ];
@@ -87,7 +87,7 @@ export function EditorialFooter() {
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-red flex-shrink-0">
                   <Mail size={18} />
                 </div>
-                <a href="mailto:info@dkagency.az" className="text-slate-400 text-sm hover:text-white transition-colors">info@dkagency.az</a>
+                <a href="mailto:info@dkagency.com.tr" className="text-slate-400 text-sm hover:text-white transition-colors">info@dkagency.com.tr</a>
               </li>
             </ul>
           </div>

@@ -36,7 +36,7 @@ n8n, kod yazmadan iş axınları yaratmaq üçün açıq mənbə workflow avtoma
 5. Workflow-u aktiv edin.
 
 ## Env var-lar
-- `BASE_URL` — `https://dkagency.az` və ya testdə `http://localhost:3000`
+- `BASE_URL` — `https://dkagency.com.tr` və ya testdə `http://localhost:3000`
 - `NEWS_API_SECRET` — güclü, 32 simvolluq random secret
 - `SLACK_WEBHOOK_URL` — bildiriş üçün Slack webhook URL
 
@@ -60,7 +60,7 @@ n8n, kod yazmadan iş axınları yaratmaq üçün açıq mənbə workflow avtoma
 - Workflow-u test edərkən birinci çağırışı tamamlayın, sonra 30s yox, 60s gözləyin.
 
 ### Network problemi
-- Server `https://dkagency.az`-a çıxış imkanını yoxlayın.
+- Server `https://dkagency.com.tr`-a çıxış imkanını yoxlayın.
 - TLS/SSL xətaları varsa, `BASE_URL`-in prefiksini doğru təyin edin.
 
 ## Success qeydləri

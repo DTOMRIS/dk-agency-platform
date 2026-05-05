@@ -9,7 +9,7 @@ Hazırlayan: Codex
 - Public toolkit aktivdir və əsas discovery route `/toolkit` üzərindədir.
 - `b2b-panel/toolkit` artıq əsas public giriş nöqtəsi deyil.
 - `proxy.ts` istifadəyə keçirilib, `middleware.ts` deprecation bağlanıb.
-- `app/layout.tsx` daxilində `metadataBase: new URL('https://dkagency.az')` əlavə olunub.
+- `app/layout.tsx` daxilində `metadataBase: new URL('https://dkagency.com.tr')` əlavə olunub.
 
 ## 2. Bug Fix Paketi
 

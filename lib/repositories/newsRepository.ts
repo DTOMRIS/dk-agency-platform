@@ -432,7 +432,7 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, l
         imageUrl: null,
         author: item.author,
         sourceName: item.author,
-        externalUrl: `https://dkagency.az/haberler/${item.slug}`,
+        externalUrl: `https://dkagency.com.tr/haberler/${item.slug}`,
         publishedAt: item.publishDate,
         isEditorPick: index === 0,
       }))

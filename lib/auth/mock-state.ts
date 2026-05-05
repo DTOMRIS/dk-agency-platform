@@ -39,7 +39,7 @@ const users: MockAuthUser[] = [
   },
   {
     id: 2,
-    email: 'admin@dkagency.az',
+    email: 'admin@dkagency.com.tr',
     name: 'DK Admin',
     password: process.env.ADMIN_SEED_PASSWORD ?? 'DkAdmin2026!',
     emailVerified: true,
@@ -48,7 +48,7 @@ const users: MockAuthUser[] = [
   },
   {
     id: 3,
-    email: 'member@dkagency.az',
+    email: 'member@dkagency.com.tr',
     name: 'DK Member',
     password: process.env.MEMBER_SEED_PASSWORD ?? 'DkMember2026!',
     emailVerified: true,

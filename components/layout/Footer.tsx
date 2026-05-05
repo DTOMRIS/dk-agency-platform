@@ -100,7 +100,7 @@ export function Footer() {
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 sm:flex-row">
           <p className="text-xs text-gray-400">&copy; 2026 DK Agency. {copy.rights}</p>
           <Link
-            href="https://dkagency.az"
+            href="https://dkagency.com.tr"
             target="_blank"
             className="text-xs font-semibold text-amber-600 transition-colors hover:text-amber-700"
           >

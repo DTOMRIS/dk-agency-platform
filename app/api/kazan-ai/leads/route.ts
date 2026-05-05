@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
 
     // Admin notification (fire-and-forget)
     import('@/lib/email/templates').then(({ emailTemplates, sendEmail }) => {
-      const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.az';
+      const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
       sendEmail(adminEmail, emailTemplates.kazanLeadAdmin(name, phone, businessType, intent)).catch(() => {});
     }).catch(() => {});
 
