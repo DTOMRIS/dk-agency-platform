@@ -5,9 +5,9 @@ function ResetPasswordFallback() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50 px-4 py-16">
       <div className="mx-auto max-w-xl rounded-3xl border border-slate-200 bg-white p-8 shadow-2xl">
-        <h1 className="text-3xl font-black text-slate-900">Şifrəni yenilə</h1>
+        <h1 className="text-3xl font-black text-slate-900">Reset password</h1>
         <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-          Səhifə hazırlanır...
+          Loading...
         </div>
       </div>
     </div>
