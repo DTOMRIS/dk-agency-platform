@@ -14,8 +14,102 @@ import {
   type ListingCategory,
 } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 type FilterType = 'all' | ListingCategory;
+
+interface PageCopy {
+  badge: string;
+  title: string;
+  subtitle: string;
+  imageAlt: string;
+  ctaPost: string;
+  ctaMyListings: string;
+  filterAll: string;
+  filterReset: string;
+  loadingError: string;
+  emptyTitle: string;
+  emptyBody: string;
+  emptyReset: string;
+  activeTitle: string;
+  activeCount: (n: number) => string;
+  verifiedOnly: string;
+}
+
+const copy: Record<Locale, PageCopy> = {
+  az: {
+    badge: 'HoReCa Marketplace',
+    title: 'HoReCa Elanları',
+    subtitle:
+      'Azərbaycanın ən böyük HoReCa elan platforması. Restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq bir vitrində.',
+    imageAlt: 'HoReCa investor təqdimatı',
+    ctaPost: 'Elan ver',
+    ctaMyListings: 'Elanlarıma bax',
+    filterAll: 'Bütün kateqoriyalar',
+    filterReset: 'Sıfırla',
+    loadingError: 'Elanlar yüklənə bilmədi',
+    emptyTitle: 'Bu filtrə uyğun elan tapılmadı',
+    emptyBody: 'Filtrləri sıfırla və ya başqa kateqoriya seç. Yeni elanlar vitrində davamlı yenilənəcək.',
+    emptyReset: 'Filtrləri sıfırla',
+    activeTitle: 'Vitrində olan elanlar',
+    activeCount: (n) => `Hazırda ${n} aktiv showcase elanı görünür.`,
+    verifiedOnly: 'Yalnız təsdiqlənmiş elanlar göstərilir',
+  },
+  tr: {
+    badge: 'HoReCa Marketplace',
+    title: 'HoReCa İlanları',
+    subtitle:
+      'Azerbaycan\'ın en büyük HoReCa ilan platforması. Restoran devri, franchise, ortak arayışı, mekan kiralaması ve profesyonel ekipman tek vitrinde.',
+    imageAlt: 'HoReCa yatırımcı sunumu',
+    ctaPost: 'İlan ver',
+    ctaMyListings: 'İlanlarıma bak',
+    filterAll: 'Tüm kategoriler',
+    filterReset: 'Sıfırla',
+    loadingError: 'İlanlar yüklenemedi',
+    emptyTitle: 'Bu filtreye uygun ilan bulunamadı',
+    emptyBody: 'Filtreleri sıfırla veya başka kategori seç. Yeni ilanlar vitrinde sürekli güncellenecek.',
+    emptyReset: 'Filtreleri sıfırla',
+    activeTitle: 'Vitrindeki ilanlar',
+    activeCount: (n) => `Şu anda ${n} aktif showcase ilanı görünüyor.`,
+    verifiedOnly: 'Yalnızca onaylı ilanlar gösteriliyor',
+  },
+  en: {
+    badge: 'HoReCa Marketplace',
+    title: 'HoReCa Listings',
+    subtitle:
+      "Azerbaijan's largest HoReCa listing platform. Restaurant transfers, franchise, partner search, venue lease, and professional equipment — all in one place.",
+    imageAlt: 'HoReCa investor presentation',
+    ctaPost: 'Post a listing',
+    ctaMyListings: 'My listings',
+    filterAll: 'All categories',
+    filterReset: 'Reset',
+    loadingError: 'Failed to load listings',
+    emptyTitle: 'No listings match this filter',
+    emptyBody: 'Reset the filters or choose another category. New listings are continuously added to the showcase.',
+    emptyReset: 'Reset filters',
+    activeTitle: 'Active listings',
+    activeCount: (n) => `${n} active showcase listing${n === 1 ? '' : 's'} currently shown.`,
+    verifiedOnly: 'Verified listings only',
+  },
+  ru: {
+    badge: 'HoReCa Marketplace',
+    title: 'Объявления HoReCa',
+    subtitle:
+      'Крупнейшая платформа объявлений HoReCa в Азербайджане. Передача ресторана, франшиза, поиск партнёра, аренда помещения и профессиональное оборудование — всё в одном месте.',
+    imageAlt: 'Презентация для инвесторов HoReCa',
+    ctaPost: 'Разместить объявление',
+    ctaMyListings: 'Мои объявления',
+    filterAll: 'Все категории',
+    filterReset: 'Сбросить',
+    loadingError: 'Не удалось загрузить объявления',
+    emptyTitle: 'Объявления по этому фильтру не найдены',
+    emptyBody: 'Сбросьте фильтры или выберите другую категорию. Новые объявления постоянно добавляются в витрину.',
+    emptyReset: 'Сбросить фильтры',
+    activeTitle: 'Объявления в витрине',
+    activeCount: (n) => `Сейчас отображается ${n} активных объявлений.`,
+    verifiedOnly: 'Показываются только верифицированные объявления',
+  },
+};
 
 function normalizeParam(value: string | null) {
   return value ?? 'all';
@@ -35,14 +129,15 @@ function normalizeCityForQuery(city: string) {
   return map[city] ?? city.toLowerCase();
 }
 
-function useLocaleFromPath(): string {
+function useLocaleFromPath(): Locale {
   const pathname = usePathname();
   const match = pathname?.match(/^\/(ru|en|tr)\//);
-  return match?.[1] || 'az';
+  return normalizeLocale(match?.[1]);
 }
 
 export default function ListingsShowcasePage() {
   const locale = useLocaleFromPath();
+  const c = copy[locale];
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -78,7 +173,7 @@ export default function ListingsShowcasePage() {
       } catch {
         if (!cancelled) {
           setListings(MOCK_LISTINGS);
-          setLoadError('Elanlar yüklənə bilmədi');
+          setLoadError(c.loadingError);
         }
       } finally {
         if (!cancelled) {
@@ -91,7 +186,7 @@ export default function ListingsShowcasePage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [locale, c.loadingError]);
 
   useEffect(() => {
     if (!initialized) return;
@@ -126,6 +221,9 @@ export default function ListingsShowcasePage() {
     setPriceRange('all');
   };
 
+  const ilanVerHref = locale === 'az' ? '/ilan-ver' : `/${locale}/ilan-ver`;
+  const ilanlarimHref = locale === 'az' ? '/b2b-panel/ilanlarim' : `/${locale}/b2b-panel/ilanlarim`;
+
   return (
     <>
       <div className="min-h-screen bg-white pb-24">
@@ -133,34 +231,31 @@ export default function ListingsShowcasePage() {
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
             <div>
               <span className="inline-flex rounded-full bg-[var(--dk-red)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
-                HoReCa Marketplace
+                {c.badge}
               </span>
               <h1 className="mt-5 font-display text-4xl font-black text-[var(--dk-navy)] lg:text-6xl">
-                HoReCa Elanları
+                {c.title}
               </h1>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-                Azərbaycanın ən böyük HoReCa elan platforması. Restoran devri, franchise,
-                ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq bir vitrində.
-              </p>
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">{c.subtitle}</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
-                  href="/ilan-ver"
+                  href={ilanVerHref}
                   className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white transition hover:opacity-95"
                 >
-                  Elan ver
+                  {c.ctaPost}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/b2b-panel/ilanlarim"
+                  href={ilanlarimHref}
                   className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:border-[var(--dk-gold)]"
                 >
-                  Elanlarıma bax
+                  {c.ctaMyListings}
                 </Link>
               </div>
             </div>
             <Image
               src="/images/yatirimci-sunumu.png"
-              alt="HoReCa investor təqdimatı"
+              alt={c.imageAlt}
               width={640}
               height={480}
               priority
@@ -176,7 +271,7 @@ export default function ListingsShowcasePage() {
               onChange={(event) => setType(event.target.value as FilterType)}
               className="min-w-[220px] rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)]"
             >
-              <option value="all">Bütün kateqoriyalar</option>
+              <option value="all">{c.filterAll}</option>
               {LISTING_CATEGORIES.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.label}
@@ -213,7 +308,7 @@ export default function ListingsShowcasePage() {
               onClick={handleReset}
               className="rounded-2xl border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]"
             >
-              Sıfırla
+              {c.filterReset}
             </button>
           </div>
         </section>
@@ -243,17 +338,17 @@ export default function ListingsShowcasePage() {
                 <PackageSearch className="h-8 w-8 text-[var(--dk-gold)]" />
               </div>
               <h2 className="mt-5 font-display text-3xl font-black text-[var(--dk-navy)]">
-                Bu filtrə uyğun elan tapılmadı
+                {c.emptyTitle}
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
-                {loadError || 'Filtrləri sıfırla və ya başqa kateqoriya seç. Yeni elanlar vitrində davamlı yenilənəcək.'}
+                {loadError || c.emptyBody}
               </p>
               <button
                 type="button"
                 onClick={handleReset}
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white"
               >
-                Filtrləri sıfırla
+                {c.emptyReset}
               </button>
             </div>
           ) : (
@@ -261,14 +356,12 @@ export default function ListingsShowcasePage() {
               <div className="mb-6 flex items-center justify-between gap-4">
                 <div>
                   <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">
-                    Vitrində olan elanlar
+                    {c.activeTitle}
                   </h2>
-                  <p className="mt-2 text-sm text-slate-500">
-                    Hazırda {filteredListings.length} aktiv showcase elanı görünür.
-                  </p>
+                  <p className="mt-2 text-sm text-slate-500">{c.activeCount(filteredListings.length)}</p>
                 </div>
                 <div className="hidden rounded-full bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-600 md:inline-flex">
-                  Yalnız təsdiqlənmiş elanlar göstərilir
+                  {c.verifiedOnly}
                 </div>
               </div>
 
