@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { defaultLocale, isLocale, normalizeLocale, withLocale } from '@/i18n/config';
 import { routing } from '@/i18n/routing';
+import { getAlternates } from '@/lib/seo/alternates';
 
 type Props = {
   children: React.ReactNode;
@@ -36,15 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: localeMetadata[locale].title,
     description: localeMetadata[locale].description,
-    alternates: {
-      canonical: withLocale(locale, '/'),
-      languages: {
-        'az-AZ': '/',
-        'ru-RU': '/ru',
-        'en-US': '/en',
-        'tr-TR': '/tr',
-      },
-    },
+    alternates: getAlternates(locale, '/'),
   };
 }
 
