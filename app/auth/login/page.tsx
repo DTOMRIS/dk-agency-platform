@@ -21,7 +21,9 @@ const loginCopy: Record<Locale, {
   noAccount: string;
   signUp: string;
   membershipInfo: string;
-  demoLabel: string;
+  ctaHeading: string;
+  ctaDesc: string;
+  ctaButton: string;
   fallbackError: string;
 }> = {
   az: {
@@ -38,7 +40,9 @@ const loginCopy: Record<Locale, {
     noAccount: 'Hesabın yoxdur?',
     signUp: 'Üzv ol',
     membershipInfo: 'Üzvlük modeli haqqında bax:',
-    demoLabel: 'Demo girişlər',
+    ctaHeading: 'DK Members',
+    ctaDesc: 'Premium məqalələr, KAZAN AI, Toolkit və daha çoxuna giriş əldə edin.',
+    ctaButton: 'Hesab yarat',
     fallbackError: 'Daxil olmaq alınmadı.',
   },
   en: {
@@ -55,7 +59,9 @@ const loginCopy: Record<Locale, {
     noAccount: "Don't have an account?",
     signUp: 'Sign up',
     membershipInfo: 'Learn about membership:',
-    demoLabel: 'Demo logins',
+    ctaHeading: 'DK Members',
+    ctaDesc: 'Get access to premium articles, KAZAN AI, Toolkit and more.',
+    ctaButton: 'Create account',
     fallbackError: 'Sign in failed.',
   },
   tr: {
@@ -72,7 +78,9 @@ const loginCopy: Record<Locale, {
     noAccount: 'Hesabınız yok mu?',
     signUp: 'Üye ol',
     membershipInfo: 'Üyelik hakkında bilgi alın:',
-    demoLabel: 'Demo girişler',
+    ctaHeading: 'DK Members',
+    ctaDesc: 'Premium içeriklere, KAZAN AI, Toolkit ve daha fazlasına erişin.',
+    ctaButton: 'Hesap oluştur',
     fallbackError: 'Giriş başarısız.',
   },
   ru: {
@@ -89,7 +97,9 @@ const loginCopy: Record<Locale, {
     noAccount: 'Нет аккаунта?',
     signUp: 'Зарегистрироваться',
     membershipInfo: 'Узнать о членстве:',
-    demoLabel: 'Демо-входы',
+    ctaHeading: 'DK Members',
+    ctaDesc: 'Получите доступ к премиум-материалам, KAZAN AI, Toolkit и многому другому.',
+    ctaButton: 'Создать аккаунт',
     fallbackError: 'Не удалось войти.',
   },
 };
@@ -254,27 +264,16 @@ export default function LoginPage() {
           </div>
 
           <div className="bg-slate-950 p-8 text-white md:p-10">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
-              <ShieldCheck className="h-4 w-4" />
-              {copy.demoLabel}
-            </div>
-
-            <div className="space-y-4 text-sm">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="font-semibold text-white">Member</p>
-                <p className="mt-2 text-slate-300">member@dkagency.com.tr</p>
-                <p className="text-slate-400">member123</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="font-semibold text-white">Admin</p>
-                <p className="mt-2 text-slate-300">admin@dkagency.com.tr</p>
-                <p className="text-slate-400">admin123</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="font-semibold text-white">Founder test</p>
-                <p className="mt-2 text-slate-300">dotomris@gmail.com</p>
-                <p className="text-slate-400">12345678</p>
-              </div>
+            <div className="flex flex-col items-center justify-center gap-4 text-center h-full">
+              <ShieldCheck className="h-12 w-12 text-amber-400" />
+              <h2 className="text-xl font-bold">{copy.ctaHeading}</h2>
+              <p className="text-sm text-slate-400">{copy.ctaDesc}</p>
+              <Link
+                href={`/auth/register?next=${encodeURIComponent(nextUrl)}`}
+                className="mt-2 inline-block rounded-full bg-amber-400/20 px-6 py-2 text-sm font-semibold text-amber-300 transition hover:bg-amber-400/30"
+              >
+                {copy.ctaButton}
+              </Link>
             </div>
           </div>
         </div>
