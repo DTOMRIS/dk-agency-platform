@@ -140,7 +140,7 @@ export default function KullanicilarPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center shadow-xl">
-            <Users size={24} className="text-red-500" />
+            <Users size={24} className="text-dk-red" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Kullanıcı Yönetimi</h1>
@@ -154,7 +154,7 @@ export default function KullanicilarPage() {
           </button>
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-colors"
+            className="flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-2.5 rounded-xl font-semibold transition-colors"
           >
             <UserPlus size={18} />
             Yeni Kullanıcı
@@ -220,14 +220,14 @@ export default function KullanicilarPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="İsim veya e-posta ara..."
-              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
             />
           </div>
           <div className="flex gap-3">
             <select
               value={filterRole}
               onChange={(e) => setFilterRole(e.target.value)}
-              className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white"
+              className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
             >
               <option value="all">Tüm Roller</option>
               <option value="admin">Admin</option>
@@ -238,7 +238,7 @@ export default function KullanicilarPage() {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white"
+              className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
             >
               <option value="all">Tüm Durumlar</option>
               <option value="active">Aktif</option>
@@ -378,7 +378,7 @@ export default function KullanicilarPage() {
                 <input
                   type="text"
                   placeholder="Kullanıcı adı"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
 
@@ -388,7 +388,7 @@ export default function KullanicilarPage() {
                   <input
                     type="email"
                     placeholder="email@domain.com"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                   />
                 </div>
                 <div>
@@ -396,14 +396,14 @@ export default function KullanicilarPage() {
                   <input
                     type="tel"
                     placeholder="+994 XX XXX XXXX"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Rol</label>
-                <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white">
+                <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white">
                   <option value="">Rol Seçin</option>
                   <option value="admin">Admin</option>
                   <option value="editor">Editör</option>
@@ -417,7 +417,7 @@ export default function KullanicilarPage() {
                 <input
                   type="password"
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
             </form>
@@ -434,7 +434,7 @@ export default function KullanicilarPage() {
                   alert('Kullanıcı eklendi! (Demo)');
                   setShowAddModal(false);
                 }}
-                className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold transition-colors"
+                className="px-5 py-2.5 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors"
               >
                 Kullanıcı Ekle
               </button>

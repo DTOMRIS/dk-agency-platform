@@ -125,7 +125,7 @@ export default function ForgotPasswordPageClient() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50 px-4 py-16">
       <div className="mx-auto max-w-xl rounded-3xl border border-slate-200 bg-white p-8 shadow-2xl">
         <div className="mb-6 text-center">
-          <div className="inline-flex rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-red-600">
+          <div className="inline-flex rounded-full bg-dk-red/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-dk-red">
             {copy.badge}
           </div>
           <h1 className="mt-4 text-3xl font-black text-slate-900">{copy.title}</h1>
@@ -140,7 +140,7 @@ export default function ForgotPasswordPageClient() {
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
               placeholder={copy.emailPlaceholder}
             />
           </div>
@@ -148,7 +148,7 @@ export default function ForgotPasswordPageClient() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700 disabled:opacity-60"
+            className="w-full rounded-xl bg-dk-red py-3.5 font-bold text-white transition hover:bg-dk-red-strong disabled:opacity-60"
           >
             {submitting ? copy.submitting : copy.submitBtn}
           </button>
@@ -164,7 +164,7 @@ export default function ForgotPasswordPageClient() {
           <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
             {copy.demoLinkLabel}
             <div className="mt-2">
-              <a href={resetUrl} className="font-semibold text-red-600 hover:text-red-700">
+              <a href={resetUrl} className="font-semibold text-dk-red hover:text-dk-red-strong">
                 {copy.resetLinkText}
               </a>
             </div>
@@ -172,7 +172,7 @@ export default function ForgotPasswordPageClient() {
         ) : null}
 
         <div className="mt-6 text-sm text-slate-500">
-          <Link href="/auth/login" className="font-semibold text-red-600 hover:text-red-700">
+          <Link href="/auth/login" className="font-semibold text-dk-red hover:text-dk-red-strong">
             {copy.backToLogin}
           </Link>
         </div>

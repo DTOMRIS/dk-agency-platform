@@ -268,7 +268,7 @@ export default function RegisterPage() {
         <div className="grid w-full max-w-6xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl md:grid-cols-[1fr_0.95fr]">
           <div className="p-8 md:p-10">
             <div className="mb-8">
-              <div className="mb-4 inline-flex rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-red-600">
+              <div className="mb-4 inline-flex rounded-full bg-dk-red/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-dk-red">
                 {copy.badge}
               </div>
               <h1 className="text-3xl font-black text-slate-900">{copy.title}</h1>
@@ -295,7 +295,7 @@ export default function RegisterPage() {
                     value={formData.name}
                     onChange={(event) => setFormData({ ...formData, name: event.target.value })}
                     placeholder={copy.namePlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
                   />
                 </div>
               </div>
@@ -310,7 +310,7 @@ export default function RegisterPage() {
                     value={formData.email}
                     onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                     placeholder={copy.emailPlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
                   />
                 </div>
               </div>
@@ -324,7 +324,7 @@ export default function RegisterPage() {
                     value={formData.company}
                     onChange={(event) => setFormData({ ...formData, company: event.target.value })}
                     placeholder={copy.companyPlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
                   />
                 </div>
               </div>
@@ -338,7 +338,7 @@ export default function RegisterPage() {
                     value={formData.phone}
                     onChange={(event) => setFormData({ ...formData, phone: event.target.value })}
                     placeholder={copy.phonePlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
                   />
                 </div>
               </div>
@@ -353,7 +353,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={(event) => setFormData({ ...formData, password: event.target.value })}
                   placeholder={copy.passwordPlaceholder}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
                 />
               </div>
 
@@ -366,7 +366,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-400"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red py-3.5 font-bold text-white transition hover:bg-dk-red-strong disabled:cursor-not-allowed disabled:bg-dk-red/60"
               >
                 <Sparkles className="h-5 w-5" />
                 {submitting ? copy.submitting : copy.submitBtn}
@@ -377,7 +377,7 @@ export default function RegisterPage() {
               {copy.alreadyHaveAccount}{' '}
               <Link
                 href={`/auth/login?next=${encodeURIComponent(nextUrl)}`}
-                className="font-semibold text-red-600 hover:text-red-700"
+                className="font-semibold text-dk-red hover:text-dk-red-strong"
               >
                 {copy.signIn}
               </Link>
@@ -385,30 +385,30 @@ export default function RegisterPage() {
 
             <p className="mt-3 text-sm text-slate-500">
               {copy.membershipPage}{' '}
-              <Link href="/uzvluk" className="font-semibold text-slate-900 hover:text-red-600">
+              <Link href="/uzvluk" className="font-semibold text-slate-900 hover:text-dk-red">
                 /uzvluk
               </Link>
             </p>
           </div>
 
-          <div className="bg-red-600 p-8 text-white md:p-10">
+          <div className="bg-dk-red p-8 text-white md:p-10">
             <h2 className="text-2xl font-black">{copy.panel.title}</h2>
             <div className="mt-6 space-y-4 text-sm">
               <div className="rounded-2xl bg-white/10 p-4">
                 <p className="font-semibold">{copy.panel.premiumTitle}</p>
-                <p className="mt-1 text-red-100">{copy.panel.premiumDesc}</p>
+                <p className="mt-1 text-white/70">{copy.panel.premiumDesc}</p>
               </div>
               <div className="rounded-2xl bg-white/10 p-4">
                 <p className="font-semibold">{copy.panel.kazanTitle}</p>
-                <p className="mt-1 text-red-100">{copy.panel.kazanDesc}</p>
+                <p className="mt-1 text-white/70">{copy.panel.kazanDesc}</p>
               </div>
               <div className="rounded-2xl bg-white/10 p-4">
                 <p className="font-semibold">{copy.panel.toolkitTitle}</p>
-                <p className="mt-1 text-red-100">{copy.panel.toolkitDesc}</p>
+                <p className="mt-1 text-white/70">{copy.panel.toolkitDesc}</p>
               </div>
               <div className="rounded-2xl bg-white/10 p-4">
                 <p className="font-semibold">{copy.panel.b2bTitle}</p>
-                <p className="mt-1 text-red-100">{copy.panel.b2bDesc}</p>
+                <p className="mt-1 text-white/70">{copy.panel.b2bDesc}</p>
               </div>
             </div>
           </div>
