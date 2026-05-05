@@ -231,6 +231,7 @@ export default function RegisterPage() {
           name: formData.name.trim(),
           company: formData.company.trim(),
           phone: formData.phone.trim(),
+          locale,
         }),
       });
 

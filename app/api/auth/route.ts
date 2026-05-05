@@ -4,8 +4,9 @@ import { eq, and, isNull } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { users, loginLogs, emailVerificationTokens, passwordResetTokens } from '@/lib/db/schema';
 import { signToken, verifyToken, AUTH_COOKIE_NAME, authCookieOptions } from '@/lib/auth/jwt';
-import { sendSmtpEmail } from '@/lib/email/smtp';
+import { sendEmail, emailTemplates } from '@/lib/email/templates';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
+import { normalizeLocale } from '@/i18n/config';
 
 function normalizeEmail(value: string) {
   return value.trim().toLowerCase();
@@ -172,23 +173,9 @@ async function handleRegister(data: Record<string, unknown>) {
   });
 
   const confirmUrl = `${getBaseUrl()}/api/auth/confirm?token=${verifyToken}`;
+  const locale = normalizeLocale(String(data.locale || ''));
 
-  await sendSmtpEmail(
-    email,
-    'DK Agency — Email Təsdiqi',
-    `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:40px 20px;">
-      <h2 style="color:#1e3a5f;">Xoş gəldiniz, ${name}!</h2>
-      <p style="color:#333;">Email ünvanınızı təsdiqləmək üçün aşağıdakı düyməyə basın:</p>
-      <div style="text-align:center;margin:30px 0;">
-        <a href="${confirmUrl}" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#d4af37;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;">
-          Email-i Təsdiq Et
-        </a>
-      </div>
-      <p style="color:#666;font-size:13px;">Link 24 saat ərzində etibarlıdır.</p>
-      <hr style="border:none;border-top:1px solid #e5e5e5;margin:30px 0;" />
-      <p style="color:#999;font-size:12px;text-align:center;">&copy; 2026 DK Agency</p>
-    </div>`,
-  );
+  await sendEmail(email, emailTemplates.emailVerification(confirmUrl, name, locale));
 
   return NextResponse.json({
     success: true,
@@ -219,21 +206,9 @@ async function handlePasswordResetRequest(data: Record<string, unknown>) {
       expiresAt: new Date(Date.now() + 60 * 60 * 1000), // 1 hour
     });
 
-    await sendSmtpEmail(
-      email,
-      'DK Agency — Şifrə Sıfırlama',
-      `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:40px 20px;">
-        <h2 style="color:#1e3a5f;">Şifrə Sıfırlama</h2>
-        <p style="color:#333;">Şifrənizi sıfırlamaq üçün aşağıdakı linkə keçin:</p>
-        <div style="text-align:center;margin:30px 0;">
-          <a href="${getBaseUrl()}/reset-password?token=${token}" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#d4af37;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;">
-            Şifrəni Sıfırla
-          </a>
-        </div>
-        <p style="color:#666;font-size:13px;">Link 1 saat ərzində etibarlıdır.</p>
-        <p style="color:#999;font-size:12px;text-align:center;">&copy; 2026 DK Agency</p>
-      </div>`,
-    );
+    const locale = normalizeLocale(String(data.locale || ''));
+    const resetUrl = `${getBaseUrl()}/reset-password?token=${token}`;
+    await sendEmail(email, emailTemplates.passwordReset(resetUrl, email, locale));
   }
 
   // Always return success to prevent email enumeration
