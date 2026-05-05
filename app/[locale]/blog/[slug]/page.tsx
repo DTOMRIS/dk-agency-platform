@@ -8,6 +8,7 @@ import { CATEGORY_CONFIG, getRelatedArticles } from '@/lib/data/blogArticles';
 import { getBlogPostDetail } from '@/lib/db/blog-repository';
 import { getProtectedArticleContent } from '@/lib/members/article-access';
 import { getServerMemberSession } from '@/lib/members/server-session';
+import { getAlternates } from '@/lib/seo/alternates';
 
 const BLOG_OVERRIDES = {
   'wolt-bolt-komissiyon': {
@@ -208,15 +209,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     metadataBase: new URL('https://dkagency.com.tr'),
     title: article.seoTitle || article.title,
     description: article.seoDescription || article.summary,
-    alternates: {
-      canonical: `${localePrefix}/blog/${article.slug}`,
-      languages: {
-        az: `/blog/${article.slug}`,
-        ru: `/ru/blog/${article.slug}`,
-        en: `/en/blog/${article.slug}`,
-        tr: `/tr/blog/${article.slug}`,
-      },
-    },
+    alternates: getAlternates(locale, `/blog/${article.slug}`),
     openGraph: {
       type: 'article',
       locale: locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
