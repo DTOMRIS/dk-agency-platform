@@ -166,12 +166,12 @@ export default function LoginPage() {
             <div className="space-y-4 text-sm">
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <p className="font-semibold text-white">Member</p>
-                <p className="mt-2 text-slate-300">member@dkagency.az</p>
+                <p className="mt-2 text-slate-300">member@dkagency.com.tr</p>
                 <p className="text-slate-400">member123</p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <p className="font-semibold text-white">Admin</p>
-                <p className="mt-2 text-slate-300">admin@dkagency.az</p>
+                <p className="mt-2 text-slate-300">admin@dkagency.com.tr</p>
                 <p className="text-slate-400">admin123</p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">

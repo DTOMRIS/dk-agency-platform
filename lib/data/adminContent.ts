@@ -112,7 +112,7 @@ export const adminSiteSettings = {
   twitter: 'https://x.com/dkagency',
   youtube: 'https://youtube.com/@dkagency',
   phone: '+994 50 123 45 67',
-  email: 'info@dkagency.az',
+  email: 'info@dkagency.com.tr',
   address: 'Bakı, Azərbaycan',
   copyright: '© 2026 DK Agency',
   siteName: 'DK Agency',
@@ -134,11 +134,11 @@ export const adminNewsQueue = [
 
 export const adminUsers = [
   { id: 1, name: 'Doğan Tomris', email: 'dotomris@gmail.com', phone: '+994501234567', createdAt: '2026-03-01', emailVerified: true, listingCount: 3, lastLogin: '2026-03-30 14:25', leads: 5 },
-  { id: 2, name: 'Nərgiz Əliyeva', email: 'nergiz@dkagency.az', phone: '+994501112244', createdAt: '2026-03-04', emailVerified: true, listingCount: 1, lastLogin: '2026-03-29 18:10', leads: 3 },
-  { id: 3, name: 'Rauf Həsənov', email: 'rauf@dkagency.az', phone: '+994501112255', createdAt: '2026-03-06', emailVerified: false, listingCount: 2, lastLogin: '2026-03-29 13:44', leads: 2 },
-  { id: 4, name: 'Leyla Quliyeva', email: 'leyla@dkagency.az', phone: '+994501112266', createdAt: '2026-03-08', emailVerified: true, listingCount: 1, lastLogin: '2026-03-28 10:30', leads: 1 },
-  { id: 5, name: 'Aysel Rzayeva', email: 'aysel@dkagency.az', phone: '+994501112277', createdAt: '2026-03-09', emailVerified: true, listingCount: 1, lastLogin: '2026-03-27 20:11', leads: 4 },
-  { id: 6, name: 'Murad Qasımov', email: 'murad@dkagency.az', phone: '+994551112233', createdAt: '2026-03-10', emailVerified: false, listingCount: 0, lastLogin: '2026-03-26 15:09', leads: 0 },
-  { id: 7, name: 'Əli Məmmədov', email: 'eli@dkagency.az', phone: '+994501234568', createdAt: '2026-03-11', emailVerified: true, listingCount: 0, lastLogin: '2026-03-25 09:20', leads: 0 },
-  { id: 8, name: 'Fərid Abbasov', email: 'ferid@dkagency.az', phone: '+994501414141', createdAt: '2026-03-12', emailVerified: true, listingCount: 2, lastLogin: '2026-03-24 08:15', leads: 2 },
+  { id: 2, name: 'Nərgiz Əliyeva', email: 'nergiz@dkagency.com.tr', phone: '+994501112244', createdAt: '2026-03-04', emailVerified: true, listingCount: 1, lastLogin: '2026-03-29 18:10', leads: 3 },
+  { id: 3, name: 'Rauf Həsənov', email: 'rauf@dkagency.com.tr', phone: '+994501112255', createdAt: '2026-03-06', emailVerified: false, listingCount: 2, lastLogin: '2026-03-29 13:44', leads: 2 },
+  { id: 4, name: 'Leyla Quliyeva', email: 'leyla@dkagency.com.tr', phone: '+994501112266', createdAt: '2026-03-08', emailVerified: true, listingCount: 1, lastLogin: '2026-03-28 10:30', leads: 1 },
+  { id: 5, name: 'Aysel Rzayeva', email: 'aysel@dkagency.com.tr', phone: '+994501112277', createdAt: '2026-03-09', emailVerified: true, listingCount: 1, lastLogin: '2026-03-27 20:11', leads: 4 },
+  { id: 6, name: 'Murad Qasımov', email: 'murad@dkagency.com.tr', phone: '+994551112233', createdAt: '2026-03-10', emailVerified: false, listingCount: 0, lastLogin: '2026-03-26 15:09', leads: 0 },
+  { id: 7, name: 'Əli Məmmədov', email: 'eli@dkagency.com.tr', phone: '+994501234568', createdAt: '2026-03-11', emailVerified: true, listingCount: 0, lastLogin: '2026-03-25 09:20', leads: 0 },
+  { id: 8, name: 'Fərid Abbasov', email: 'ferid@dkagency.com.tr', phone: '+994501414141', createdAt: '2026-03-12', emailVerified: true, listingCount: 2, lastLogin: '2026-03-24 08:15', leads: 2 },
 ];

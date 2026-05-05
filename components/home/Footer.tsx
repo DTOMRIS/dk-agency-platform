@@ -72,7 +72,7 @@ export function Footer() {
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-red flex-shrink-0">
                   <Mail size={18} />
                 </div>
-                <span className="text-slate-400 text-sm">info@dkagency.az</span>
+                <span className="text-slate-400 text-sm">info@dkagency.com.tr</span>
               </li>
             </ul>
           </div>

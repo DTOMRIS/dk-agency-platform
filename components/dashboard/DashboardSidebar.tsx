@@ -166,7 +166,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
         <div className="border-t border-slate-200 p-4">
           <div className="mb-3 rounded-2xl bg-slate-50 px-4 py-3">
             <p className="text-sm font-bold text-[var(--dk-navy)]">Admin</p>
-            <p className="mt-1 text-xs text-slate-500">admin@dkagency.az</p>
+            <p className="mt-1 text-xs text-slate-500">admin@dkagency.com.tr</p>
           </div>
 
           <button

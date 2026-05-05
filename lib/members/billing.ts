@@ -24,7 +24,7 @@ export function resolveCheckoutUrl(plan: BillingPlan, origin?: string) {
     };
   }
 
-  const fallbackBase = origin || process.env.NEXT_PUBLIC_APP_URL || 'https://dkagency.az';
+  const fallbackBase = origin || process.env.NEXT_PUBLIC_APP_URL || 'https://dkagency.com.tr';
   const url = new URL('/uzvluk', fallbackBase);
   url.searchParams.set('plan', plan);
   url.searchParams.set('checkout', 'placeholder');

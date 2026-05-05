@@ -44,7 +44,7 @@ const logs: LogEntry[] = [
     level: 'success',
     category: 'AUTH',
     message: 'Kullanıcı girişi başarılı',
-    user: 'admin@dkagency.az',
+    user: 'admin@dkagency.com.tr',
     ip: '185.129.xxx.xxx',
     details: 'Chrome 120, Windows 11'
   },
@@ -123,7 +123,7 @@ const logs: LogEntry[] = [
     level: 'success',
     category: 'AUTH',
     message: 'Şifre başarıyla değiştirildi',
-    user: 'moderator@dkagency.az',
+    user: 'moderator@dkagency.com.tr',
     ip: '185.129.xxx.xxx'
   },
 ];

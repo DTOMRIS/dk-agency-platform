@@ -89,7 +89,7 @@ export const emailTemplates = {
         <tr><td style="padding:8px 0;color:#64748b;">Maraq</td><td style="padding:8px 0;font-weight:600;">${intent}</td></tr>
       </table>
       <p style="margin-top:20px;">
-        <a href="https://dkagency.az/dashboard/kazan-leads" style="display:inline-block;background:#E94560;color:#fff;padding:10px 24px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;">
+        <a href="https://dkagency.com.tr/dashboard/kazan-leads" style="display:inline-block;background:#E94560;color:#fff;padding:10px 24px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;">
           Lead-ə bax
         </a>
       </p>
@@ -202,7 +202,7 @@ export const emailTemplates = {
         <tr><td style="padding:8px 0;color:#64748b;">Mesaj</td><td style="padding:8px 0;">${message || 'Mesaj yoxdur'}</td></tr>
       </table>
       <p style="margin-top:20px;">
-        <a href="https://dkagency.az/dashboard/ilanlar" style="display:inline-block;background:#E94560;color:#fff;padding:10px 24px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;">
+        <a href="https://dkagency.com.tr/dashboard/ilanlar" style="display:inline-block;background:#E94560;color:#fff;padding:10px 24px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;">
           Dashboard-a keç
         </a>
       </p>

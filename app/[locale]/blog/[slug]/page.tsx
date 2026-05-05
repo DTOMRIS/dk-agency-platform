@@ -205,7 +205,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const localePrefix = locale === 'az' ? '' : `/${locale}`;
 
   return {
-    metadataBase: new URL('https://dkagency.az'),
+    metadataBase: new URL('https://dkagency.com.tr'),
     title: article.seoTitle || article.title,
     description: article.seoDescription || article.summary,
     alternates: {
@@ -220,7 +220,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       type: 'article',
       locale: locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
-      url: `https://dkagency.az${localePrefix}/blog/${article.slug}`,
+      url: `https://dkagency.com.tr${localePrefix}/blog/${article.slug}`,
       title: article.seoTitle || article.title,
       description: article.seoDescription || article.summary,
       images: article.coverImage
@@ -268,11 +268,11 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
     publisher: {
       '@type': 'Organization',
       name: 'DK Agency',
-      url: 'https://dkagency.az',
+      url: 'https://dkagency.com.tr',
     },
     datePublished: articleWithOverrides.publishDate,
     dateModified: articleWithOverrides.updatedAt || articleWithOverrides.publishDate,
-    mainEntityOfPage: `https://dkagency.az/blog/${articleWithOverrides.slug}`,
+    mainEntityOfPage: `https://dkagency.com.tr/blog/${articleWithOverrides.slug}`,
     keywords: articleWithOverrides.tags?.join(', ') || undefined,
     inLanguage: locale || 'az',
     isAccessibleForFree: !articleWithOverrides.isPremium,

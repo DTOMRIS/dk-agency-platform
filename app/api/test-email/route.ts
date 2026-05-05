@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json().catch(() => null);
-  const to = body?.to || process.env.ADMIN_EMAIL || 'info@dkagency.az';
+  const to = body?.to || process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
 
   const result = await sendSmtpEmail(
     to,

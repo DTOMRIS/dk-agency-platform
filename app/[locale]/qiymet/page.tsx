@@ -370,7 +370,7 @@ export default function PricingPage() {
               {c.whatsapp}
             </a>
             <a
-              href="mailto:info@dkagency.az"
+              href="mailto:info@dkagency.com.tr"
               className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
             >
               {c.email}

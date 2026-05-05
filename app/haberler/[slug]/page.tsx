@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const localePrefix = locale === 'az' ? '' : `/${locale}`;
 
   return {
-    metadataBase: new URL('https://dkagency.az'),
+    metadataBase: new URL('https://dkagency.com.tr'),
     title: `${article.title} | DK Agency`,
     description: article.summary,
     alternates: {
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       type: 'article',
       locale: locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
-      url: `https://dkagency.az${localePrefix}/sektor-nebzi/${article.slug}`,
+      url: `https://dkagency.com.tr${localePrefix}/sektor-nebzi/${article.slug}`,
       title: `${article.title} | DK Agency`,
       description: article.summary,
       images: article.imageUrl
@@ -80,7 +80,7 @@ export default async function HaberDetailPage({
   }
 
   const related = await getRelatedApprovedNewsArticles(article.id, article.category, locale);
-  const shareUrl = `https://dkagency.az/haberler/${article.slug}`;
+  const shareUrl = `https://dkagency.com.tr/haberler/${article.slug}`;
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
@@ -94,7 +94,7 @@ export default async function HaberDetailPage({
     publisher: {
       '@type': 'Organization',
       name: 'DK Agency',
-      url: 'https://dkagency.az',
+      url: 'https://dkagency.com.tr',
     },
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
