@@ -282,11 +282,11 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
     <BlogContentWrapper articleTitle={articleWithOverrides.title} isPremium={articleWithOverrides.isPremium}>
       <div className="min-h-screen bg-[var(--dk-paper)] pb-20 text-slate-900">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-        <div className="relative h-[320px] w-full overflow-hidden sm:h-[380px] lg:h-[420px]">
+        <div className="relative h-[240px] w-full overflow-hidden sm:h-[320px] lg:h-[420px]">
           <img
             src={articleWithOverrides.coverImage}
             alt={articleWithOverrides.coverImageAlt || articleWithOverrides.title}
-            className="h-full w-full object-cover"
+            className="h-full w-full max-w-full object-cover"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
@@ -298,27 +298,27 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
             <ChevronLeft size={18} /> Bloga qayıt
           </Link>
 
-          <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 lg:p-16">
             <div className="mx-auto max-w-4xl">
-              <div className="space-y-4">
-                <span className="rounded-full bg-brand-red px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
+              <div className="space-y-3 sm:space-y-4">
+                <span className="rounded-full bg-brand-red px-3 py-1 sm:px-4 sm:py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
                   {cat?.emoji} {cat?.label}
                 </span>
-                <h1 className="text-2xl font-display font-black leading-tight tracking-tighter text-white sm:text-3xl lg:text-5xl">
+                <h1 className="text-xl font-display font-black leading-tight tracking-tighter text-white sm:text-3xl lg:text-5xl">
                   {articleWithOverrides.title}
                 </h1>
                 {articleWithOverrides.subtitle && (
-                  <p className="max-w-2xl text-base text-white/70 sm:text-lg">{articleWithOverrides.subtitle}</p>
+                  <p className="max-w-2xl text-sm text-white/70 sm:text-base sm:text-lg">{articleWithOverrides.subtitle}</p>
                 )}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-12">
+        <div className="mx-auto mt-6 sm:mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 sm:gap-12 lg:grid-cols-12">
             <article className="text-slate-900 lg:col-span-8">
-              <div className="mb-10 flex flex-wrap items-center gap-6 border-b border-slate-200 pb-8 text-xs font-bold uppercase tracking-widest text-slate-400">
+              <div className="mb-6 sm:mb-10 flex flex-wrap items-center gap-3 sm:gap-6 border-b border-slate-200 pb-6 sm:pb-8 text-xs font-bold uppercase tracking-widest text-slate-400">
                 <div className="flex items-center gap-2">
                   <User size={16} className="text-brand-red" />
                   {articleWithOverrides.author}
