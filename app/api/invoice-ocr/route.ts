@@ -7,11 +7,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { runInvoiceOcr } from '@/lib/invoice-ocr/ocr-providers';
 import type { OcrApiResponse } from '@/lib/invoice-ocr/types';
+import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 export async function POST(request: NextRequest): Promise<NextResponse<OcrApiResponse>> {
+  const ip = getClientIp(request);
+  const rl = checkRateLimit(`invoice-ocr:${ip}`, RATE_LIMITS.invoiceOcr);
+  if (!rl.success) return rateLimitExceeded(rl) as NextResponse<OcrApiResponse>;
+
   const start = Date.now();
 
   try {
