@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowRight,
   ChevronDown,
+  Globe,
   LayoutGrid,
   LogOut,
   Menu,
@@ -353,6 +354,29 @@ export default function Header() {
                   {copy.postListing}
                   <ArrowRight size={16} />
                 </Link>
+                {/* Mobile Language Switcher */}
+                <div className="my-3 h-px bg-slate-100" />
+                <div className="flex items-center gap-2 px-3 py-2">
+                  <Globe className="h-4 w-4 text-slate-400" />
+                  <div className="flex items-center gap-1">
+                    {locales.map((locale, index) => (
+                      <span key={locale} className="flex items-center gap-1">
+                        {index > 0 ? <span className="text-slate-300">|</span> : null}
+                        <Link
+                          href={switchLocalePath(pathname, locale)}
+                          className={`rounded-md px-2 py-1 text-sm font-medium transition-colors ${
+                            currentLocale === locale
+                              ? 'bg-[var(--dk-navy)] text-white'
+                              : 'text-slate-500 hover:bg-slate-50 hover:text-[var(--dk-navy)]'
+                          }`}
+                          onClick={() => setIsMobileOpen(false)}
+                        >
+                          {localeLabels[locale]}
+                        </Link>
+                      </span>
+                    ))}
+                  </div>
+                </div>
                 <div className="my-3 h-px bg-slate-100" />
                 {memberSession.loggedIn ? (
                   <>
