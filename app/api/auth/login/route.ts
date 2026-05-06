@@ -4,9 +4,14 @@ import { eq } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { users, loginLogs } from '@/lib/db/schema';
 import { signToken, AUTH_COOKIE_NAME, authCookieOptions } from '@/lib/auth/jwt';
+import { checkRateLimit, getClientIp, rateLimitExceeded, withRateLimitHeaders, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request);
+    const rl = checkRateLimit(`auth-login:${ip}`, RATE_LIMITS.authLogin);
+    if (!rl.success) return rateLimitExceeded(rl);
+
     const body = await request.json();
     const email = String(body?.email || '').trim().toLowerCase();
     const password = String(body?.password || '');
@@ -82,7 +87,7 @@ export async function POST(request: NextRequest) {
 
     response.cookies.set(AUTH_COOKIE_NAME, token, authCookieOptions(isProduction));
 
-    return response;
+    return withRateLimitHeaders(response, rl);
   } catch (err) {
     console.error('[auth/login] Error:', err);
     return NextResponse.json(

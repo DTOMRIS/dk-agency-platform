@@ -6,9 +6,14 @@ import { users, emailVerificationTokens } from '@/lib/db/schema';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
 import { normalizeLocale } from '@/i18n/config';
+import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request);
+    const rl = checkRateLimit(`auth-register:${ip}`, RATE_LIMITS.authRegister);
+    if (!rl.success) return rateLimitExceeded(rl);
+
     const body = await request.json();
     const email = String(body?.email || '').trim().toLowerCase();
     const password = String(body?.password || '');
