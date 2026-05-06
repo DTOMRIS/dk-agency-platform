@@ -382,7 +382,7 @@ export default function FoodCostDashboard() {
       itemCount: c.itemCount,
       percentage: c.percentage,
     }));
-    exportFoodCostToExcel(cats, report?.grandTotal ?? 0, label, `food-cost-${dateFrom}.xlsx`);
+    await exportFoodCostToExcel(cats, report?.grandTotal ?? 0, label, `food-cost-${dateFrom}.xlsx`);
   };
 
   const handleExportPdf = async () => {
