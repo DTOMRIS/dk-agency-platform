@@ -16,7 +16,6 @@ export async function POST(request: Request) {
   }
 
   updateMockPassword(result.userId, newPassword);
-  console.log('Password reset completed for user:', result.userId);
 
   return NextResponse.json({
     success: true,

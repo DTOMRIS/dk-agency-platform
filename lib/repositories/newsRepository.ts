@@ -94,11 +94,6 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
       }))
       .filter((item) => (!filters.status || filters.status === 'all' ? true : item.status === filters.status));
 
-    console.log('[newsRepository.getAdminNewsArticles] mock', {
-      status: filters.status ?? 'all',
-      total: mockRows.length,
-    });
-
     return { items: mockRows as AdminNewsArticle[], total: mockRows.length, source: 'mock' as const };
   }
 
@@ -134,12 +129,6 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
     .select({ count: sql<number>`count(*)::int` })
     .from(newsArticles)
     .where(conditions.length ? and(...conditions) : undefined);
-
-  console.log('[newsRepository.getAdminNewsArticles] db', {
-    status: filters.status ?? 'all',
-    total: totalRows[0]?.count || 0,
-    sampleIds: rows.slice(0, 5).map((item) => item.id),
-  });
 
   return {
     items: rows.map((item) => ({

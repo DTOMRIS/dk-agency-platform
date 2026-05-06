@@ -131,15 +131,6 @@ export default function DashboardIlanDetailPage() {
         isShowcase,
       }),
     }).catch(() => null);
-    console.log('listing_status_update', {
-      id: listing.id,
-      trackingCode: listing.trackingCode,
-      from: status,
-      to: nextStatus,
-      isFeatured,
-      isShowcase,
-      responseOk: response?.ok,
-    });
     setStatus(nextStatus);
     setToast('Status yeniləndi.');
     setTimeout(() => setToast(''), 2400);
@@ -179,7 +170,6 @@ export default function DashboardIlanDetailPage() {
     setLeads((prev) =>
       prev.map((lead, idx) => (idx === index ? { ...lead, status: 'contacted' as const } : lead))
     );
-    console.log('lead_contacted', { listingId: listing.id, leadIndex: index });
     setToast('Lead statusu yeniləndi.');
     setTimeout(() => setToast(''), 2400);
   };

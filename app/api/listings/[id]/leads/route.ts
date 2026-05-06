@@ -28,7 +28,6 @@ export async function POST(
   const listingId = Number(id);
 
   if (!dbAvailable || !db) {
-    console.log('listing_lead_submit_mock', { id, body });
     return NextResponse.json({ success: true, source: 'mock' }, { status: 201 });
   }
 

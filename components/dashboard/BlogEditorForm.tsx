@@ -120,8 +120,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
     window.setTimeout(() => setToast(''), 2200);
   };
 
-  const translateField = (field: 'title' | 'content', locale: 'tr' | 'en') => {
-    console.log('blog_translate', { field, locale, source: field === 'title' ? post.titleAz : post.contentAz });
+  const translateField = (_field: 'title' | 'content', _locale: 'tr' | 'en') => {
     showToast('Tərcümə sorğusu qeyd olundu.');
   };
 

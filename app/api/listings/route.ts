@@ -59,7 +59,6 @@ export async function POST(request: NextRequest) {
   const trackingCode = body?.trackingCode || generateTrackingCode();
 
   if (!dbAvailable || !db) {
-    console.log('listing_create_mock', { trackingCode, body, session });
     return NextResponse.json({
       success: true,
       source: 'mock',
