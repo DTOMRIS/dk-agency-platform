@@ -23,7 +23,6 @@ export async function POST(request: Request) {
   }
 
   updateMockPassword(user.id, newPassword);
-  console.log('Password changed for user:', user.email);
 
   return NextResponse.json({ success: true, message: 'Şifrəniz dəyişdirildi.' });
 }

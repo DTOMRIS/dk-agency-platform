@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   ArrowLeft,
   Check,
@@ -11,6 +12,7 @@ import {
   Trash2,
   X,
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 interface Category {
   id: number;
@@ -22,7 +24,101 @@ interface Category {
   isActive: boolean;
 }
 
+const pageCopy: Record<
+  Locale,
+  {
+    backLink: string;
+    pageTitle: string;
+    addBtn: string;
+    feedbackUpdated: string;
+    feedbackAdded: string;
+    feedbackDeleted: (n: number) => string;
+    feedbackError: string;
+    bulkSelected: (n: number) => string;
+    bulkDelete: string;
+    addPlaceholder: string;
+    colColor: string;
+    colName: string;
+    colOrder: string;
+    deleteConfirm: (n: number) => string;
+    footerNote: string;
+  }
+> = {
+  az: {
+    backLink: 'Fakturalar',
+    pageTitle: 'Faktura Kateqoriyaları',
+    addBtn: 'Yeni',
+    feedbackUpdated: 'Kateqoriya yeniləndi',
+    feedbackAdded: 'Kateqoriya əlavə edildi',
+    feedbackDeleted: (n) => `${n} kateqoriya silindi`,
+    feedbackError: 'Xəta baş verdi',
+    bulkSelected: (n) => `${n} seçilib`,
+    bulkDelete: 'Sil',
+    addPlaceholder: 'Kateqoriya adı...',
+    colColor: 'Rəng',
+    colName: 'Ad',
+    colOrder: 'Sıra',
+    deleteConfirm: (n) => `${n} kateqoriya silinsin?`,
+    footerNote: 'Kateqoriya silinərsə, aid məhsullar kateqoriyasız qalır.',
+  },
+  ru: {
+    backLink: 'Счета',
+    pageTitle: 'Категории счетов',
+    addBtn: 'Новый',
+    feedbackUpdated: 'Категория обновлена',
+    feedbackAdded: 'Категория добавлена',
+    feedbackDeleted: (n) => `${n} категорий удалено`,
+    feedbackError: 'Произошла ошибка',
+    bulkSelected: (n) => `${n} выбрано`,
+    bulkDelete: 'Удалить',
+    addPlaceholder: 'Название категории...',
+    colColor: 'Цвет',
+    colName: 'Название',
+    colOrder: 'Порядок',
+    deleteConfirm: (n) => `Удалить ${n} категорий?`,
+    footerNote: 'При удалении категории связанные товары останутся без категории.',
+  },
+  en: {
+    backLink: 'Invoices',
+    pageTitle: 'Invoice Categories',
+    addBtn: 'New',
+    feedbackUpdated: 'Category updated',
+    feedbackAdded: 'Category added',
+    feedbackDeleted: (n) => `${n} category deleted`,
+    feedbackError: 'An error occurred',
+    bulkSelected: (n) => `${n} selected`,
+    bulkDelete: 'Delete',
+    addPlaceholder: 'Category name...',
+    colColor: 'Color',
+    colName: 'Name',
+    colOrder: 'Order',
+    deleteConfirm: (n) => `Delete ${n} category?`,
+    footerNote: 'If a category is deleted, associated items will remain without a category.',
+  },
+  tr: {
+    backLink: 'Faturalar',
+    pageTitle: 'Fatura Kategorileri',
+    addBtn: 'Yeni',
+    feedbackUpdated: 'Kategori güncellendi',
+    feedbackAdded: 'Kategori eklendi',
+    feedbackDeleted: (n) => `${n} kategori silindi`,
+    feedbackError: 'Bir hata oluştu',
+    bulkSelected: (n) => `${n} seçildi`,
+    bulkDelete: 'Sil',
+    addPlaceholder: 'Kategori adı...',
+    colColor: 'Renk',
+    colName: 'Ad',
+    colOrder: 'Sıra',
+    deleteConfirm: (n) => `${n} kategori silinsin?`,
+    footerNote: 'Kategori silinirse, ilgili ürünler kategorisiz kalır.',
+  },
+};
+
 export default function FaturaKateqoriyalarPage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -68,8 +164,8 @@ export default function FaturaKateqoriyalarPage() {
         body: JSON.stringify({ id: editingId, name: editName.trim(), color: editColor }),
       });
       setCategories((prev) => prev.map((c) => c.id === editingId ? { ...c, name: editName.trim(), color: editColor } : c));
-      showFeedback('Kateqoriya yeniləndi');
-    } catch { showFeedback('Xəta baş verdi'); }
+      showFeedback(copy.feedbackUpdated);
+    } catch { showFeedback(copy.feedbackError); }
     setEditingId(null);
   };
 
@@ -85,16 +181,16 @@ export default function FaturaKateqoriyalarPage() {
       const data = await res.json();
       if (data.data) {
         setCategories((prev) => [...prev, data.data]);
-        showFeedback('Kateqoriya əlavə edildi');
+        showFeedback(copy.feedbackAdded);
       }
-    } catch { showFeedback('Xəta baş verdi'); }
+    } catch { showFeedback(copy.feedbackError); }
     setNewName('');
     setNewColor('#6B7280');
     setAdding(false);
   };
 
   const handleDelete = async (ids: number[]) => {
-    if (!confirm(`${ids.length} kateqoriya silinsin?`)) return;
+    if (!confirm(copy.deleteConfirm(ids.length))) return;
     try {
       await fetch('/api/invoice-categories', {
         method: 'DELETE',
@@ -103,8 +199,8 @@ export default function FaturaKateqoriyalarPage() {
       });
       setCategories((prev) => prev.filter((c) => !ids.includes(c.id)));
       setSelected(new Set());
-      showFeedback(`${ids.length} kateqoriya silindi`);
-    } catch { showFeedback('Xəta baş verdi'); }
+      showFeedback(copy.feedbackDeleted(ids.length));
+    } catch { showFeedback(copy.feedbackError); }
   };
 
   const toggleSelect = (id: number) => {
@@ -120,12 +216,12 @@ export default function FaturaKateqoriyalarPage() {
       {/* Header */}
       <div className="mb-6">
         <Link href="/dashboard/faturalar" className="mb-3 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700">
-          <ArrowLeft className="h-4 w-4" /> Faturalar
+          <ArrowLeft className="h-4 w-4" /> {copy.backLink}
         </Link>
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-slate-900">Fatura Kateqoriyaları</h1>
+          <h1 className="text-xl font-bold text-slate-900">{copy.pageTitle}</h1>
           <button onClick={() => setAdding(true)} className="inline-flex items-center gap-1.5 rounded-xl bg-[#E11D48] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#BE123C] active:scale-[0.98]">
-            <Plus className="h-4 w-4" /> Yeni
+            <Plus className="h-4 w-4" /> {copy.addBtn}
           </button>
         </div>
       </div>
@@ -138,9 +234,9 @@ export default function FaturaKateqoriyalarPage() {
       {/* Bulk actions */}
       {selected.size > 0 && (
         <div className="mb-3 flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5">
-          <span className="text-sm font-medium text-amber-800">{selected.size} seçilib</span>
+          <span className="text-sm font-medium text-amber-800">{copy.bulkSelected(selected.size)}</span>
           <button onClick={() => handleDelete([...selected])} className="inline-flex items-center gap-1 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700">
-            <Trash2 className="h-3.5 w-3.5" /> Sil
+            <Trash2 className="h-3.5 w-3.5" /> {copy.bulkDelete}
           </button>
         </div>
       )}
@@ -149,7 +245,7 @@ export default function FaturaKateqoriyalarPage() {
       {adding && (
         <div className="mb-3 flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 p-3">
           <input type="color" value={newColor} onChange={(e) => setNewColor(e.target.value)} className="h-9 w-9 cursor-pointer rounded-lg border-0" />
-          <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Kateqoriya adı..." autoFocus className="h-9 flex-1 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48]" onKeyDown={(e) => e.key === 'Enter' && handleAdd()} />
+          <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder={copy.addPlaceholder} autoFocus className="h-9 flex-1 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48]" onKeyDown={(e) => e.key === 'Enter' && handleAdd()} />
           <button onClick={handleAdd} className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"><Check className="h-4 w-4" /></button>
           <button onClick={() => setAdding(false)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"><X className="h-4 w-4" /></button>
         </div>
@@ -169,9 +265,9 @@ export default function FaturaKateqoriyalarPage() {
                     onChange={() => setSelected(selected.size === categories.length ? new Set() : new Set(categories.map(c => c.id)))}
                   />
                 </th>
-                <th className="w-12 px-4 py-3 font-medium text-slate-500">Rəng</th>
-                <th className="px-4 py-3 font-medium text-slate-500">Ad</th>
-                <th className="w-16 px-4 py-3 font-medium text-slate-500 text-center">Sıra</th>
+                <th className="w-12 px-4 py-3 font-medium text-slate-500">{copy.colColor}</th>
+                <th className="px-4 py-3 font-medium text-slate-500">{copy.colName}</th>
+                <th className="w-16 px-4 py-3 font-medium text-slate-500 text-center">{copy.colOrder}</th>
                 <th className="w-20 px-4 py-3"></th>
               </tr>
             </thead>
@@ -218,7 +314,7 @@ export default function FaturaKateqoriyalarPage() {
         )}
       </div>
 
-      <p className="mt-3 text-xs text-slate-400">Kateqoriya silinərsə, aid məhsullar kateqoriyasız qalır.</p>
+      <p className="mt-3 text-xs text-slate-400">{copy.footerNote}</p>
     </div>
   );
 }

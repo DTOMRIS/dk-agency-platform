@@ -4,7 +4,7 @@ import { locales } from '@/i18n/config';
 import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import { getApprovedNewsArticles } from '@/lib/repositories/newsRepository';
 
-const BASE_URL = 'https://dkagency.az';
+const BASE_URL = 'https://dkagency.com.tr';
 
 function absolute(path: string) {
   return `${BASE_URL}${path}`;

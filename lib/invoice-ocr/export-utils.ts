@@ -7,7 +7,7 @@
  * PDF: jsPDF — AZ hərfləri (ə, ı, ö, ü, ş, ç, ğ) dəstəklənir
  */
 
-import * as XLSX from 'xlsx';
+// XLSX loaded dynamically to reduce initial bundle size (~2.5MB)
 
 // ── Shared Types ────────────────────────────────────────────────────
 
@@ -128,7 +128,8 @@ export function exportFoodCostToCsv(
 
 // ── Excel Export ────────────────────────────────────────────────────
 
-export function exportInvoicesToExcel(invoices: ExportInvoice[], filename = 'faturalar.xlsx') {
+export async function exportInvoicesToExcel(invoices: ExportInvoice[], filename = 'faturalar.xlsx') {
+  const XLSX = await import('xlsx');
   const data = invoices.map((inv) => ({
     'Tədarükçü': inv.supplierName,
     'VÖEN': inv.supplierVoen ?? '',
@@ -158,12 +159,13 @@ export function exportInvoicesToExcel(invoices: ExportInvoice[], filename = 'fat
 
 // ── Food Cost Excel Export ──────────────────────────────────────────
 
-export function exportFoodCostToExcel(
+export async function exportFoodCostToExcel(
   categories: FoodCostExportRow[],
   grandTotal: number,
   period: string,
   filename = 'food-cost.xlsx',
 ) {
+  const XLSX = await import('xlsx');
   const data = categories.map((cat) => ({
     'Kateqoriya': cat.categoryName,
     'Məbləğ (AZN)': Number(fmtMoney(cat.totalAmount)),

@@ -6,7 +6,10 @@
       "Read(//c/codelar/dk-agency-platform/app//**)",
       "Read(//c/codelar/dk-agency-platform/components//**)",
       "Read(//c/codelar/dk-agency-platform/lib/data//**)",
-      "Read(//c/codelar/dk-agency-platform/**)"
+      "Read(//c/codelar/dk-agency-platform/**)",
+      "Bash(while read:*)",
+      "Bash(do sed:*)",
+      "Bash(cd:*)"
     ]
   }
 }

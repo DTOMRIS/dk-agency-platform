@@ -94,7 +94,7 @@ export default function B2BSidebar() {
       <div className="border-b border-slate-200 p-4">
         <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 font-bold text-red-600 shadow-sm">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-dk-red/15 font-bold text-dk-red shadow-sm">
               İH
             </div>
             <div className="min-w-0 flex-1">
@@ -111,7 +111,7 @@ export default function B2BSidebar() {
               <span className="font-medium text-slate-900">78%</span>
             </div>
             <div className="h-1.5 overflow-hidden rounded-full bg-slate-200">
-              <div className="h-full w-[78%] rounded-full bg-gradient-to-r from-red-500 to-red-600" />
+              <div className="h-full w-[78%] rounded-full bg-gradient-to-r from-dk-red to-dk-red-strong" />
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@ export default function B2BSidebar() {
                       href={item.href}
                       className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
                         active
-                          ? 'bg-red-50 text-red-600'
+                          ? 'bg-dk-red/10 text-dk-red'
                           : item.highlight
                             ? 'border border-dashed border-emerald-300 text-slate-700 hover:border-emerald-400 hover:bg-emerald-50'
                             : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
@@ -143,7 +143,7 @@ export default function B2BSidebar() {
                       <div
                         className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all ${
                           active
-                            ? 'bg-red-100 text-red-600'
+                            ? 'bg-dk-red/15 text-dk-red'
                             : item.highlight
                               ? 'bg-emerald-100 text-emerald-600'
                               : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700'
@@ -155,7 +155,7 @@ export default function B2BSidebar() {
                       {item.badge && (
                         <span
                           className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                            active ? 'bg-red-100 text-red-600' : 'bg-slate-200 text-slate-600'
+                            active ? 'bg-dk-red/15 text-dk-red' : 'bg-slate-200 text-slate-600'
                           }`}
                         >
                           {item.badge}

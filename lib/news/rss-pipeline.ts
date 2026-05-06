@@ -98,7 +98,7 @@ async function parseFeedWithTimeout(url: string, timeoutMs: number = 15000) {
       signal: controller.signal,
       headers: {
         accept: 'application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.8',
-        'user-agent': 'DKAgencyRSSBot/1.0 (+https://dkagency.az)',
+        'user-agent': 'DKAgencyRSSBot/1.0 (+https://dkagency.com.tr)',
       },
       cache: 'no-store',
     });

@@ -3,7 +3,7 @@ import { DM_Sans, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Header from '../components/layout/Header';
 import { Footer, KazanAIBot } from '../components/layout/Footer';
-import CookiesBanner from '../components/ui/CookiesBanner';
+import LazyCookiesBanner from '../components/ui/LazyCookiesBanner';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -17,7 +17,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://dkagency.az'),
+  metadataBase: new URL('https://dkagency.com.tr'),
   title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
   description: 'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
 };
@@ -34,7 +34,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <KazanAIBot />
-        <CookiesBanner />
+        <LazyCookiesBanner />
       </body>
     </html>
   );

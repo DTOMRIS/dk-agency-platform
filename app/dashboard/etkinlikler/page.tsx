@@ -4,6 +4,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   Activity,
   Calendar,
@@ -13,18 +14,13 @@ import {
   MessageSquare,
   DollarSign,
   Building2,
-  Filter,
   Search,
   ChevronRight,
-  Eye,
-  Edit2,
-  Trash2,
   CheckCircle,
   AlertCircle,
   XCircle,
-  TrendingUp,
-  Users
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 type ActivityType = 'all' | 'listing' | 'partner' | 'deal' | 'message' | 'system';
 
@@ -157,21 +153,105 @@ const activities: ActivityItem[] = [
   },
 ];
 
-const typeConfig = {
-  listing: { icon: FileText, color: 'bg-blue-100 text-blue-600', label: 'İlan' },
-  partner: { icon: Building2, color: 'bg-purple-100 text-purple-600', label: 'Partner' },
-  deal: { icon: DollarSign, color: 'bg-green-100 text-green-600', label: 'Deal' },
-  message: { icon: MessageSquare, color: 'bg-amber-100 text-amber-600', label: 'Mesaj' },
-  system: { icon: Activity, color: 'bg-gray-100 text-gray-600', label: 'Sistem' },
-};
-
-const statusConfig = {
-  success: { icon: CheckCircle, color: 'text-green-500' },
-  pending: { icon: AlertCircle, color: 'text-amber-500' },
-  failed: { icon: XCircle, color: 'text-red-500' },
+const pageCopy: Record<
+  Locale,
+  {
+    pageTitle: string;
+    pageSubtitle: string;
+    dateToday: string;
+    dateWeek: string;
+    dateMonth: string;
+    dateAll: string;
+    statTotal: string;
+    statToday: string;
+    statSuccess: string;
+    statPending: string;
+    searchPlaceholder: string;
+    filterAll: string;
+    typeLabels: Record<string, string>;
+  }
+> = {
+  az: {
+    pageTitle: 'Fəaliyyətlər',
+    pageSubtitle: 'Platforma aktivliyi və əməliyyat tarixi',
+    dateToday: 'Bu gün',
+    dateWeek: 'Bu həftə',
+    dateMonth: 'Bu ay',
+    dateAll: 'Hamısı',
+    statTotal: 'Ümumi Fəaliyyət',
+    statToday: 'Bu gün',
+    statSuccess: 'Uğurlu',
+    statPending: 'Gözləyən',
+    searchPlaceholder: 'Fəaliyyətlərdə axtar...',
+    filterAll: 'Hamısı',
+    typeLabels: { listing: 'Elan', partner: 'Partner', deal: 'Sövdələşmə', message: 'Mesaj', system: 'Sistem' },
+  },
+  ru: {
+    pageTitle: 'Действия',
+    pageSubtitle: 'Активность платформы и история операций',
+    dateToday: 'Сегодня',
+    dateWeek: 'На этой неделе',
+    dateMonth: 'В этом месяце',
+    dateAll: 'Все',
+    statTotal: 'Всего действий',
+    statToday: 'Сегодня',
+    statSuccess: 'Успешно',
+    statPending: 'Ожидающих',
+    searchPlaceholder: 'Поиск по действиям...',
+    filterAll: 'Все',
+    typeLabels: { listing: 'Объявление', partner: 'Партнёр', deal: 'Сделка', message: 'Сообщение', system: 'Система' },
+  },
+  en: {
+    pageTitle: 'Activities',
+    pageSubtitle: 'Platform activity and transaction history',
+    dateToday: 'Today',
+    dateWeek: 'This Week',
+    dateMonth: 'This Month',
+    dateAll: 'All',
+    statTotal: 'Total Activities',
+    statToday: 'Today',
+    statSuccess: 'Successful',
+    statPending: 'Pending',
+    searchPlaceholder: 'Search activities...',
+    filterAll: 'All',
+    typeLabels: { listing: 'Listing', partner: 'Partner', deal: 'Deal', message: 'Message', system: 'System' },
+  },
+  tr: {
+    pageTitle: 'Etkinlikler',
+    pageSubtitle: 'Platform aktivite ve işlem geçmişi',
+    dateToday: 'Bugün',
+    dateWeek: 'Bu Hafta',
+    dateMonth: 'Bu Ay',
+    dateAll: 'Tümü',
+    statTotal: 'Toplam Etkinlik',
+    statToday: 'Bugün',
+    statSuccess: 'Başarılı',
+    statPending: 'Bekleyen',
+    searchPlaceholder: 'Etkinliklerde ara...',
+    filterAll: 'Tümü',
+    typeLabels: { listing: 'İlan', partner: 'Partner', deal: 'Deal', message: 'Mesaj', system: 'Sistem' },
+  },
 };
 
 export default function EtkinliklerPage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
+  const typeConfig = {
+    listing: { icon: FileText, color: 'bg-blue-100 text-blue-600', label: copy.typeLabels.listing },
+    partner: { icon: Building2, color: 'bg-purple-100 text-purple-600', label: copy.typeLabels.partner },
+    deal: { icon: DollarSign, color: 'bg-green-100 text-green-600', label: copy.typeLabels.deal },
+    message: { icon: MessageSquare, color: 'bg-amber-100 text-amber-600', label: copy.typeLabels.message },
+    system: { icon: Activity, color: 'bg-gray-100 text-gray-600', label: copy.typeLabels.system },
+  };
+
+  const statusConfig = {
+    success: { icon: CheckCircle, color: 'text-green-500' },
+    pending: { icon: AlertCircle, color: 'text-amber-500' },
+    failed: { icon: XCircle, color: 'text-red-500' },
+  };
+
   const [filter, setFilter] = useState<ActivityType>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [dateRange, setDateRange] = useState('week');
@@ -194,8 +274,8 @@ export default function EtkinliklerPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Etkinlikler</h1>
-          <p className="text-sm text-gray-500 mt-1">Platform aktivite ve işlem geçmişi</p>
+          <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
+          <p className="text-sm text-gray-500 mt-1">{copy.pageSubtitle}</p>
         </div>
         <div className="flex items-center gap-3">
           <select
@@ -203,10 +283,10 @@ export default function EtkinliklerPage() {
             onChange={(e) => setDateRange(e.target.value)}
             className="px-4 py-2 border border-gray-200 rounded-xl bg-white text-sm font-medium"
           >
-            <option value="today">Bugün</option>
-            <option value="week">Bu Hafta</option>
-            <option value="month">Bu Ay</option>
-            <option value="all">Tümü</option>
+            <option value="today">{copy.dateToday}</option>
+            <option value="week">{copy.dateWeek}</option>
+            <option value="month">{copy.dateMonth}</option>
+            <option value="all">{copy.dateAll}</option>
           </select>
         </div>
       </div>
@@ -216,28 +296,28 @@ export default function EtkinliklerPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <Activity size={16} />
-            <span className="text-xs font-medium">Toplam Etkinlik</span>
+            <span className="text-xs font-medium">{copy.statTotal}</span>
           </div>
           <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <Calendar size={16} />
-            <span className="text-xs font-medium">Bugün</span>
+            <span className="text-xs font-medium">{copy.statToday}</span>
           </div>
           <p className="text-2xl font-bold text-blue-600">{stats.today}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <CheckCircle size={16} />
-            <span className="text-xs font-medium">Başarılı</span>
+            <span className="text-xs font-medium">{copy.statSuccess}</span>
           </div>
           <p className="text-2xl font-bold text-green-600">{stats.success}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <AlertCircle size={16} />
-            <span className="text-xs font-medium">Bekleyen</span>
+            <span className="text-xs font-medium">{copy.statPending}</span>
           </div>
           <p className="text-2xl font-bold text-amber-600">{stats.pending}</p>
         </div>
@@ -251,8 +331,8 @@ export default function EtkinliklerPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Etkinliklerde ara..."
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-red-500/20"
+            placeholder={copy.searchPlaceholder}
+            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
           />
         </div>
         <div className="flex gap-2">
@@ -262,11 +342,11 @@ export default function EtkinliklerPage() {
               onClick={() => setFilter(type)}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                 filter === type
-                  ? 'bg-red-600 text-white'
+                  ? 'bg-dk-red text-white'
                   : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
               }`}
             >
-              {type === 'all' ? 'Tümü' : typeConfig[type].label}
+              {type === 'all' ? copy.filterAll : typeConfig[type].label}
             </button>
           ))}
         </div>

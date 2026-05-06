@@ -71,6 +71,8 @@
   --color-dk-red: var(--dk-red);
   --color-dk-red-strong: var(--dk-red-strong);
   --color-dk-red-hover: var(--dk-red-hover);
+  --color-brand-red: var(--dk-red);
+  --color-brand-red-hover: #D63852;
   --color-dk-purple: var(--dk-purple);
   --color-dk-paper: var(--dk-paper);
   --color-dk-paper-strong: var(--dk-paper-strong);

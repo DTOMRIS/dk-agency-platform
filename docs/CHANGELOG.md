@@ -2,6 +2,14 @@
 
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
+## [0.9.0] - 2026-05-04
+### Added — i18n Phase 2: public route translations (TASK-0049 – TASK-0053)
+- [TASK-0049] `app/toolkit/page.tsx`: 4-language copy (az/tr/en/ru) — hero badge, title, subtitle, 10 tool names & descriptions, section headings, CTA label; locale detected from pathname
+- [TASK-0050] `components/listings/ListingsShowcasePage.tsx`: 4-language copy — hero, CTA buttons, filter labels, empty state, active count, verified badge
+- [TASK-0051] `app/haberler/page.tsx`: 4-language copy — page badge, title, subtitle, category tabs, editor pick label, no-source label, empty state
+- [TASK-0052] `app/[locale]/blog/page.tsx`: 4-language copy — hero badge, subtitle, error message, read CTA, reading time label; locale detected from pathname
+- [TASK-0053] `app/[locale]/qiymet/page.tsx`: verified already fully translated in Phase 1 — no changes needed
+
 ## [0.8.0] - 2026-05-04
 ### Fixed — Auth redirect / hostname fix package (TASK-0030 – TASK-0034)
 - [TASK-0030] next.config.ts: `experimental.trustHostHeader: true` — Hostinger reverse proxy hostname fix

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   Camera,
   Check,
@@ -16,6 +17,491 @@ import {
   Upload,
   X,
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
+
+// ── i18n ────────────────────────────────────────────────────────────
+
+const pageCopy: Record<Locale, {
+  // Page header
+  pageTitle: string;
+  pageSubtitle: string;
+  // Header buttons
+  btnCamera: string;
+  btnCameraShort: string;
+  btnManual: string;
+  btnManualShort: string;
+  btnImport: string;
+  // Stats
+  statTotal: string;
+  statAmount: string;
+  statAvg: string;
+  statPending: string;
+  statConfirmed: string;
+  // Filters
+  searchPlaceholder: string;
+  // Bulk actions
+  selectedCount: string;
+  btnDelete: string;
+  // Table headers
+  thSupplier: string;
+  thDate: string;
+  thTotal: string;
+  thSource: string;
+  thConfidence: string;
+  thStatus: string;
+  // Table states
+  loading: string;
+  empty: string;
+  // Pagination
+  paginationOf: string;
+  // Bulk delete confirm
+  confirmDelete: string;
+  // Source filter labels
+  filterAll: string;
+  srcCamera: string;
+  srcOcr: string;
+  srcManual: string;
+  srcExcel: string;
+  srcPdf: string;
+  // Status labels
+  statusDraft: string;
+  statusConfirmed: string;
+  statusDisputed: string;
+  statusArchived: string;
+  // OCR Modal
+  ocrModalTitle: string;
+  ocrCamera: string;
+  ocrGallery: string;
+  ocrFileHint: string;
+  ocrCompressing: string;
+  ocrCompressionLabel: string;
+  ocrCompressionSuffix: string;
+  ocrSuccess: string;
+  ocrReselect: string;
+  ocrReading: string;
+  ocrReadBtn: string;
+  ocrClose: string;
+  ocrFailed: string;
+  // Manual Modal
+  manualModalTitle: string;
+  manualSupplierLabel: string;
+  manualSupplierPlaceholder: string;
+  manualVoenLabel: string;
+  manualVoenPlaceholder: string;
+  manualInvoiceNoLabel: string;
+  manualDateLabel: string;
+  manualItemsLabel: string;
+  manualItemNamePlaceholder: string;
+  manualItemQtyPlaceholder: string;
+  manualTotalLabel: string;
+  manualSaving: string;
+  manualSave: string;
+  manualErrSupplier: string;
+  manualErrItems: string;
+  manualSavedOk: string;
+  manualSavedLocal: string;
+  // Manual units
+  unitKg: string;
+  unitLitre: string;
+  unitPcs: string;
+  unitBox: string;
+  unitPack: string;
+  // Import Modal
+  importModalTitle: string;
+  importExcelLabel: string;
+  importPdfLabel: string;
+  importPdfHint: string;
+  importParsingPdf: string;
+  importParsingExcel: string;
+  importErrorsLabel: string;
+  importRowLabel: string;
+  importPreviewSupplier: string;
+  importPreviewProduct: string;
+  importPreviewQty: string;
+  importPreviewPrice: string;
+  importMoreRows: string;
+  importSuccess: string;
+  importBtn: string;
+  importClose: string;
+  importReselect: string;
+  importCancel: string;
+  importScannedPdf: string;
+  importRowsFound: string;
+  importErrors: string;
+}> = {
+  az: {
+    pageTitle: 'Faturalar',
+    pageSubtitle: 'Fatura OCR, manual giriş və import idarəsi',
+    btnCamera: 'Kamera / Yüklə',
+    btnCameraShort: 'Yüklə',
+    btnManual: 'Əl ilə daxil et',
+    btnManualShort: 'Manual',
+    btnImport: 'Import',
+    statTotal: 'Cəmi fatura',
+    statAmount: 'Ümumi məbləğ',
+    statAvg: 'Ortalama',
+    statPending: 'Gözləyən',
+    statConfirmed: 'təsdiqlənib',
+    searchPlaceholder: 'Tədarükçü axtar...',
+    selectedCount: 'seçilib',
+    btnDelete: 'Sil',
+    thSupplier: 'Tədarükçü',
+    thDate: 'Tarix',
+    thTotal: 'Yekun',
+    thSource: 'Mənbə',
+    thConfidence: 'Dəqiqlik',
+    thStatus: 'Status',
+    loading: 'Yüklənir...',
+    empty: 'Fatura tapılmadı',
+    paginationOf: 'faturadan',
+    confirmDelete: 'fatura silinsin?',
+    filterAll: 'Hamısı',
+    srcCamera: 'Kamera',
+    srcOcr: 'OCR',
+    srcManual: 'Əl ilə',
+    srcExcel: 'Excel',
+    srcPdf: 'PDF',
+    statusDraft: 'Qaralama',
+    statusConfirmed: 'Təsdiqlənib',
+    statusDisputed: 'Mübahisəli',
+    statusArchived: 'Arxiv',
+    ocrModalTitle: 'Fatura Yüklə / Kamera',
+    ocrCamera: 'Kamera ilə çək',
+    ocrGallery: 'Qaleriya / Fayl seç',
+    ocrFileHint: 'JPEG, PNG, WebP · Maks 5MB',
+    ocrCompressing: 'Şəkil sıxılır...',
+    ocrCompressionLabel: 'Sıxılma:',
+    ocrCompressionSuffix: 'azalma',
+    ocrSuccess: 'OCR uğurlu!',
+    ocrReselect: 'Yenidən seç',
+    ocrReading: 'Oxunur...',
+    ocrReadBtn: 'AI ilə Oxu',
+    ocrClose: 'Bağla',
+    ocrFailed: 'OCR uğursuz oldu',
+    manualModalTitle: 'Əl ilə Fatura Daxil Et',
+    manualSupplierLabel: 'Tədarükçü *',
+    manualSupplierPlaceholder: 'Metro, Bravo...',
+    manualVoenLabel: 'VÖEN',
+    manualVoenPlaceholder: '10 rəqəm',
+    manualInvoiceNoLabel: 'Faktura No',
+    manualDateLabel: 'Tarix *',
+    manualItemsLabel: 'Məhsullar *',
+    manualItemNamePlaceholder: 'Məhsul adı',
+    manualItemQtyPlaceholder: 'Miq.',
+    manualTotalLabel: 'Yekun:',
+    manualSaving: 'Saxlanılır...',
+    manualSave: 'Təsdiqlə və Saxla',
+    manualErrSupplier: 'Tədarükçü adı daxil edin',
+    manualErrItems: 'Ən azı 1 məhsul daxil edin',
+    manualSavedOk: 'Fatura saxlanıldı!',
+    manualSavedLocal: 'Fatura saxlanıldı (lokal)!',
+    unitKg: 'kq',
+    unitLitre: 'litr',
+    unitPcs: 'əd',
+    unitBox: 'qutu',
+    unitPack: 'paket',
+    importModalTitle: 'Fatura Import',
+    importExcelLabel: 'Excel / CSV Import',
+    importPdfLabel: 'PDF Fatura Import',
+    importPdfHint: '.pdf (digital və ya skan)',
+    importParsingPdf: 'PDF oxunur...',
+    importParsingExcel: 'Excel oxunur...',
+    importErrorsLabel: 'Xətalar:',
+    importRowLabel: 'Sətir',
+    importPreviewSupplier: 'Tədarükçü',
+    importPreviewProduct: 'Məhsul',
+    importPreviewQty: 'Miq.',
+    importPreviewPrice: 'Qiy.',
+    importMoreRows: 'sətir daha',
+    importSuccess: 'sətir import edildi!',
+    importBtn: 'sətri import et',
+    importClose: 'Bağla',
+    importReselect: 'Yenidən seç',
+    importCancel: 'Ləğv et',
+    importScannedPdf: 'skan edilmiş PDF-dir — text tapılmadı. Şəkil kimi OCR yükləyin.',
+    importRowsFound: 'sətir tapıldı,',
+    importErrors: 'xəta',
+  },
+  ru: {
+    pageTitle: 'Счета-фактуры',
+    pageSubtitle: 'Управление OCR, ручным вводом и импортом счетов',
+    btnCamera: 'Камера / Загрузить',
+    btnCameraShort: 'Загрузить',
+    btnManual: 'Ввести вручную',
+    btnManualShort: 'Вручную',
+    btnImport: 'Импорт',
+    statTotal: 'Всего счетов',
+    statAmount: 'Общая сумма',
+    statAvg: 'Среднее',
+    statPending: 'Ожидающие',
+    statConfirmed: 'подтверждено',
+    searchPlaceholder: 'Поиск поставщика...',
+    selectedCount: 'выбрано',
+    btnDelete: 'Удалить',
+    thSupplier: 'Поставщик',
+    thDate: 'Дата',
+    thTotal: 'Итого',
+    thSource: 'Источник',
+    thConfidence: 'Точность',
+    thStatus: 'Статус',
+    loading: 'Загрузка...',
+    empty: 'Счета не найдены',
+    paginationOf: 'из',
+    confirmDelete: 'счетов будет удалено?',
+    filterAll: 'Все',
+    srcCamera: 'Камера',
+    srcOcr: 'OCR',
+    srcManual: 'Вручную',
+    srcExcel: 'Excel',
+    srcPdf: 'PDF',
+    statusDraft: 'Черновик',
+    statusConfirmed: 'Подтверждён',
+    statusDisputed: 'Спорный',
+    statusArchived: 'Архив',
+    ocrModalTitle: 'Загрузить счёт / Камера',
+    ocrCamera: 'Сфотографировать',
+    ocrGallery: 'Галерея / Выбрать файл',
+    ocrFileHint: 'JPEG, PNG, WebP · Макс 5МБ',
+    ocrCompressing: 'Сжатие изображения...',
+    ocrCompressionLabel: 'Сжатие:',
+    ocrCompressionSuffix: 'уменьшение',
+    ocrSuccess: 'OCR успешно!',
+    ocrReselect: 'Выбрать снова',
+    ocrReading: 'Чтение...',
+    ocrReadBtn: 'Читать с ИИ',
+    ocrClose: 'Закрыть',
+    ocrFailed: 'OCR не удался',
+    manualModalTitle: 'Ввести счёт вручную',
+    manualSupplierLabel: 'Поставщик *',
+    manualSupplierPlaceholder: 'Metro, Bravo...',
+    manualVoenLabel: 'ИНН',
+    manualVoenPlaceholder: '10 цифр',
+    manualInvoiceNoLabel: 'Номер счёта',
+    manualDateLabel: 'Дата *',
+    manualItemsLabel: 'Товары *',
+    manualItemNamePlaceholder: 'Название товара',
+    manualItemQtyPlaceholder: 'Кол.',
+    manualTotalLabel: 'Итого:',
+    manualSaving: 'Сохранение...',
+    manualSave: 'Подтвердить и сохранить',
+    manualErrSupplier: 'Введите название поставщика',
+    manualErrItems: 'Добавьте хотя бы 1 товар',
+    manualSavedOk: 'Счёт сохранён!',
+    manualSavedLocal: 'Счёт сохранён (локально)!',
+    unitKg: 'кг',
+    unitLitre: 'литр',
+    unitPcs: 'шт',
+    unitBox: 'коробка',
+    unitPack: 'пакет',
+    importModalTitle: 'Импорт счетов',
+    importExcelLabel: 'Импорт Excel / CSV',
+    importPdfLabel: 'Импорт PDF счёта',
+    importPdfHint: '.pdf (цифровой или скан)',
+    importParsingPdf: 'Чтение PDF...',
+    importParsingExcel: 'Чтение Excel...',
+    importErrorsLabel: 'Ошибки:',
+    importRowLabel: 'Строка',
+    importPreviewSupplier: 'Поставщик',
+    importPreviewProduct: 'Товар',
+    importPreviewQty: 'Кол.',
+    importPreviewPrice: 'Цена',
+    importMoreRows: 'строк ещё',
+    importSuccess: 'строк импортировано!',
+    importBtn: 'импортировать строк',
+    importClose: 'Закрыть',
+    importReselect: 'Выбрать снова',
+    importCancel: 'Отмена',
+    importScannedPdf: 'является сканом — текст не найден. Загрузите как изображение через OCR.',
+    importRowsFound: 'строк найдено,',
+    importErrors: 'ошибок',
+  },
+  en: {
+    pageTitle: 'Invoices',
+    pageSubtitle: 'Manage OCR, manual entry and import of invoices',
+    btnCamera: 'Camera / Upload',
+    btnCameraShort: 'Upload',
+    btnManual: 'Enter manually',
+    btnManualShort: 'Manual',
+    btnImport: 'Import',
+    statTotal: 'Total invoices',
+    statAmount: 'Total amount',
+    statAvg: 'Average',
+    statPending: 'Pending',
+    statConfirmed: 'confirmed',
+    searchPlaceholder: 'Search supplier...',
+    selectedCount: 'selected',
+    btnDelete: 'Delete',
+    thSupplier: 'Supplier',
+    thDate: 'Date',
+    thTotal: 'Total',
+    thSource: 'Source',
+    thConfidence: 'Confidence',
+    thStatus: 'Status',
+    loading: 'Loading...',
+    empty: 'No invoices found',
+    paginationOf: 'of',
+    confirmDelete: 'invoices will be deleted?',
+    filterAll: 'All',
+    srcCamera: 'Camera',
+    srcOcr: 'OCR',
+    srcManual: 'Manual',
+    srcExcel: 'Excel',
+    srcPdf: 'PDF',
+    statusDraft: 'Draft',
+    statusConfirmed: 'Confirmed',
+    statusDisputed: 'Disputed',
+    statusArchived: 'Archived',
+    ocrModalTitle: 'Upload Invoice / Camera',
+    ocrCamera: 'Take a photo',
+    ocrGallery: 'Gallery / Choose file',
+    ocrFileHint: 'JPEG, PNG, WebP · Max 5MB',
+    ocrCompressing: 'Compressing image...',
+    ocrCompressionLabel: 'Compressed:',
+    ocrCompressionSuffix: 'reduction',
+    ocrSuccess: 'OCR successful!',
+    ocrReselect: 'Choose again',
+    ocrReading: 'Reading...',
+    ocrReadBtn: 'Read with AI',
+    ocrClose: 'Close',
+    ocrFailed: 'OCR failed',
+    manualModalTitle: 'Enter Invoice Manually',
+    manualSupplierLabel: 'Supplier *',
+    manualSupplierPlaceholder: 'Metro, Bravo...',
+    manualVoenLabel: 'Tax ID',
+    manualVoenPlaceholder: '10 digits',
+    manualInvoiceNoLabel: 'Invoice No.',
+    manualDateLabel: 'Date *',
+    manualItemsLabel: 'Items *',
+    manualItemNamePlaceholder: 'Item name',
+    manualItemQtyPlaceholder: 'Qty.',
+    manualTotalLabel: 'Total:',
+    manualSaving: 'Saving...',
+    manualSave: 'Confirm & Save',
+    manualErrSupplier: 'Enter supplier name',
+    manualErrItems: 'Add at least 1 item',
+    manualSavedOk: 'Invoice saved!',
+    manualSavedLocal: 'Invoice saved (local)!',
+    unitKg: 'kg',
+    unitLitre: 'litre',
+    unitPcs: 'pcs',
+    unitBox: 'box',
+    unitPack: 'pack',
+    importModalTitle: 'Import Invoices',
+    importExcelLabel: 'Excel / CSV Import',
+    importPdfLabel: 'PDF Invoice Import',
+    importPdfHint: '.pdf (digital or scanned)',
+    importParsingPdf: 'Reading PDF...',
+    importParsingExcel: 'Reading Excel...',
+    importErrorsLabel: 'Errors:',
+    importRowLabel: 'Row',
+    importPreviewSupplier: 'Supplier',
+    importPreviewProduct: 'Product',
+    importPreviewQty: 'Qty.',
+    importPreviewPrice: 'Price',
+    importMoreRows: 'more rows',
+    importSuccess: 'rows imported!',
+    importBtn: 'Import rows',
+    importClose: 'Close',
+    importReselect: 'Choose again',
+    importCancel: 'Cancel',
+    importScannedPdf: 'is a scanned PDF — no text found. Upload as image via OCR.',
+    importRowsFound: 'rows found,',
+    importErrors: 'errors',
+  },
+  tr: {
+    pageTitle: 'Faturalar',
+    pageSubtitle: 'Fatura OCR, manuel giriş ve içe aktarma yönetimi',
+    btnCamera: 'Kamera / Yükle',
+    btnCameraShort: 'Yükle',
+    btnManual: 'Manuel gir',
+    btnManualShort: 'Manuel',
+    btnImport: 'İçe Aktar',
+    statTotal: 'Toplam fatura',
+    statAmount: 'Toplam tutar',
+    statAvg: 'Ortalama',
+    statPending: 'Bekleyen',
+    statConfirmed: 'onaylandı',
+    searchPlaceholder: 'Tedarikçi ara...',
+    selectedCount: 'seçildi',
+    btnDelete: 'Sil',
+    thSupplier: 'Tedarikçi',
+    thDate: 'Tarih',
+    thTotal: 'Toplam',
+    thSource: 'Kaynak',
+    thConfidence: 'Doğruluk',
+    thStatus: 'Durum',
+    loading: 'Yükleniyor...',
+    empty: 'Fatura bulunamadı',
+    paginationOf: 'faturadan',
+    confirmDelete: 'fatura silinsin mi?',
+    filterAll: 'Tümü',
+    srcCamera: 'Kamera',
+    srcOcr: 'OCR',
+    srcManual: 'Manuel',
+    srcExcel: 'Excel',
+    srcPdf: 'PDF',
+    statusDraft: 'Taslak',
+    statusConfirmed: 'Onaylandı',
+    statusDisputed: 'İtirazlı',
+    statusArchived: 'Arşiv',
+    ocrModalTitle: 'Fatura Yükle / Kamera',
+    ocrCamera: 'Kamerayla çek',
+    ocrGallery: 'Galeri / Dosya seç',
+    ocrFileHint: 'JPEG, PNG, WebP · Maks 5MB',
+    ocrCompressing: 'Görüntü sıkıştırılıyor...',
+    ocrCompressionLabel: 'Sıkıştırma:',
+    ocrCompressionSuffix: 'azalma',
+    ocrSuccess: 'OCR başarılı!',
+    ocrReselect: 'Yeniden seç',
+    ocrReading: 'Okunuyor...',
+    ocrReadBtn: 'AI ile Oku',
+    ocrClose: 'Kapat',
+    ocrFailed: 'OCR başarısız',
+    manualModalTitle: 'Manuel Fatura Gir',
+    manualSupplierLabel: 'Tedarikçi *',
+    manualSupplierPlaceholder: 'Metro, Bravo...',
+    manualVoenLabel: 'Vergi No',
+    manualVoenPlaceholder: '10 rakam',
+    manualInvoiceNoLabel: 'Fatura No',
+    manualDateLabel: 'Tarih *',
+    manualItemsLabel: 'Ürünler *',
+    manualItemNamePlaceholder: 'Ürün adı',
+    manualItemQtyPlaceholder: 'Mik.',
+    manualTotalLabel: 'Toplam:',
+    manualSaving: 'Kaydediliyor...',
+    manualSave: 'Onayla ve Kaydet',
+    manualErrSupplier: 'Tedarikçi adı girin',
+    manualErrItems: 'En az 1 ürün girin',
+    manualSavedOk: 'Fatura kaydedildi!',
+    manualSavedLocal: 'Fatura kaydedildi (yerel)!',
+    unitKg: 'kg',
+    unitLitre: 'litre',
+    unitPcs: 'adet',
+    unitBox: 'kutu',
+    unitPack: 'paket',
+    importModalTitle: 'Fatura İçe Aktar',
+    importExcelLabel: 'Excel / CSV İçe Aktar',
+    importPdfLabel: 'PDF Fatura İçe Aktar',
+    importPdfHint: '.pdf (dijital veya tarama)',
+    importParsingPdf: 'PDF okunuyor...',
+    importParsingExcel: 'Excel okunuyor...',
+    importErrorsLabel: 'Hatalar:',
+    importRowLabel: 'Satır',
+    importPreviewSupplier: 'Tedarikçi',
+    importPreviewProduct: 'Ürün',
+    importPreviewQty: 'Mik.',
+    importPreviewPrice: 'Fiy.',
+    importMoreRows: 'satır daha',
+    importSuccess: 'satır içe aktarıldı!',
+    importBtn: 'satırı içe aktar',
+    importClose: 'Kapat',
+    importReselect: 'Yeniden seç',
+    importCancel: 'İptal',
+    importScannedPdf: 'taranmış PDF — metin bulunamadı. Görüntü olarak OCR ile yükleyin.',
+    importRowsFound: 'satır bulundu,',
+    importErrors: 'hata',
+  },
+};
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -73,23 +559,23 @@ function formatDate(d: string) {
   return new Intl.DateTimeFormat('az-AZ', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(d));
 }
 
-function sourceLabel(s: string) {
+function sourceLabel(s: string, copy: (typeof pageCopy)[Locale]) {
   const map: Record<string, { label: string; icon: string }> = {
-    ocr_camera: { label: 'Kamera', icon: '📷' },
-    ocr_upload: { label: 'OCR', icon: '🔍' },
-    manual: { label: 'Əl ilə', icon: '✏️' },
-    excel: { label: 'Excel', icon: '📊' },
-    pdf: { label: 'PDF', icon: '📄' },
+    ocr_camera: { label: copy.srcCamera, icon: '📷' },
+    ocr_upload: { label: copy.srcOcr, icon: '🔍' },
+    manual: { label: copy.srcManual, icon: '✏️' },
+    excel: { label: copy.srcExcel, icon: '📊' },
+    pdf: { label: copy.srcPdf, icon: '📄' },
   };
   return map[s] ?? { label: s, icon: '📎' };
 }
 
-function statusBadge(s: string) {
+function statusBadge(s: string, copy: (typeof pageCopy)[Locale]) {
   const map: Record<string, { label: string; cls: string }> = {
-    draft: { label: 'Qaralama', cls: 'bg-amber-100 text-amber-700' },
-    confirmed: { label: 'Təsdiqlənib', cls: 'bg-emerald-100 text-emerald-700' },
-    disputed: { label: 'Mübahisəli', cls: 'bg-red-100 text-red-700' },
-    archived: { label: 'Arxiv', cls: 'bg-slate-100 text-slate-600' },
+    draft: { label: copy.statusDraft, cls: 'bg-amber-100 text-amber-700' },
+    confirmed: { label: copy.statusConfirmed, cls: 'bg-emerald-100 text-emerald-700' },
+    disputed: { label: copy.statusDisputed, cls: 'bg-red-100 text-red-700' },
+    archived: { label: copy.statusArchived, cls: 'bg-slate-100 text-slate-600' },
   };
   const b = map[s] ?? { label: s, cls: 'bg-slate-100 text-slate-600' };
   return <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${b.cls}`}>{b.label}</span>;
@@ -145,10 +631,11 @@ function ModalShell({ open, onClose, title, children }: {
 
 // ── OCR Upload Modal ────────────────────────────────────────────────
 
-function OcrUploadModal({ open, onClose, onSuccess }: {
+function OcrUploadModal({ open, onClose, onSuccess, copy }: {
   open: boolean;
   onClose: () => void;
   onSuccess: (inv: InvoiceRow) => void;
+  copy: (typeof pageCopy)[Locale];
 }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
@@ -179,9 +666,9 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
     if (f.size > 1 * 1024 * 1024) {
       setCompressing(true);
       try {
-        const result = await compressImage(f);
-        setFile(result.file);
-        setCompressionInfo(`${(result.originalSize / 1024 / 1024).toFixed(1)}MB → ${(result.compressedSize / 1024 / 1024).toFixed(1)}MB (${result.reductionPercent}% azalma)`);
+        const compressed = await compressImage(f);
+        setFile(compressed.file);
+        setCompressionInfo(`${(compressed.originalSize / 1024 / 1024).toFixed(1)}MB → ${(compressed.compressedSize / 1024 / 1024).toFixed(1)}MB (${compressed.reductionPercent}% ${copy.ocrCompressionSuffix})`);
       } catch {
         setFile(f); // sıxılma uğursuz, orijinalı istifadə et
       }
@@ -225,7 +712,7 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
           createdAt: new Date().toISOString(),
         });
       } else {
-        setError(data.error || 'OCR uğursuz oldu');
+        setError(data.error || copy.ocrFailed);
       }
     } catch (err) {
       setError(`Xəta: ${String(err)}`);
@@ -234,7 +721,7 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
   };
 
   return (
-    <ModalShell open={open} onClose={() => { reset(); onClose(); }} title="Fatura Yüklə / Kamera">
+    <ModalShell open={open} onClose={() => { reset(); onClose(); }} title={copy.ocrModalTitle}>
       {!file ? (
         <div className="flex flex-col gap-3">
           {/* Kamera — mobil-də arxa kamera açılır */}
@@ -243,9 +730,9 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
             className="flex h-32 flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-[#E11D48]/30 bg-red-50 text-[#E11D48] hover:border-[#E11D48] hover:bg-red-100 active:scale-[0.98]"
           >
             <Camera className="h-8 w-8" />
-            <span className="text-sm font-medium">Kamera ilə çək</span>
+            <span className="text-sm font-medium">{copy.ocrCamera}</span>
           </button>
-          <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
+          <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void handleFile(f); }} />
 
           {/* Qaleriya / Fayl */}
           <button
@@ -253,18 +740,18 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
             className="flex h-20 flex-col items-center justify-center gap-1 rounded-2xl border-2 border-dashed border-slate-300 text-slate-500 hover:border-slate-400 hover:bg-slate-50"
           >
             <Upload className="h-5 w-5" />
-            <span className="text-sm">Qaleriya / Fayl seç</span>
+            <span className="text-sm">{copy.ocrGallery}</span>
           </button>
-          <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
+          <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void handleFile(f); }} />
 
-          <p className="text-center text-xs text-slate-400">JPEG, PNG, WebP · Maks 5MB</p>
+          <p className="text-center text-xs text-slate-400">{copy.ocrFileHint}</p>
         </div>
       ) : (
         <div className="flex flex-col gap-4">
           {/* Compressing */}
           {compressing && (
             <div className="flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 p-3 text-sm text-blue-700">
-              <Loader2 className="h-4 w-4 animate-spin" /> Şəkil sıxılır...
+              <Loader2 className="h-4 w-4 animate-spin" /> {copy.ocrCompressing}
             </div>
           )}
 
@@ -284,7 +771,7 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
           {/* Compression info */}
           {compressionInfo && (
             <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-2 text-xs text-emerald-700">
-              Sıxılma: {compressionInfo}
+              {copy.ocrCompressionLabel} {compressionInfo}
             </div>
           )}
 
@@ -297,7 +784,7 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
           {result && (
             <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
               <div className="mb-1 flex items-center gap-1 text-sm font-medium text-emerald-700">
-                <Check className="h-4 w-4" /> OCR uğurlu!
+                <Check className="h-4 w-4" /> {copy.ocrSuccess}
               </div>
               <pre className="max-h-40 overflow-auto text-xs text-emerald-800">
                 {JSON.stringify(result, null, 2)}
@@ -308,15 +795,15 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
           {/* Actions */}
           <div className="flex gap-2">
             <button onClick={() => { reset(); }} className="flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
-              Yenidən seç
+              {copy.ocrReselect}
             </button>
             {!result && (
               <button
-                onClick={handleUpload}
+                onClick={() => void handleUpload()}
                 disabled={uploading}
                 className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#E11D48] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#BE123C] disabled:opacity-60"
               >
-                {uploading ? <><Loader2 className="h-4 w-4 animate-spin" /> Oxunur...</> : 'AI ilə Oxu'}
+                {uploading ? <><Loader2 className="h-4 w-4 animate-spin" /> {copy.ocrReading}</> : copy.ocrReadBtn}
               </button>
             )}
             {result && (
@@ -324,7 +811,7 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
                 onClick={() => { reset(); onClose(); }}
                 className="flex-1 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700"
               >
-                Bağla
+                {copy.ocrClose}
               </button>
             )}
           </div>
@@ -336,10 +823,11 @@ function OcrUploadModal({ open, onClose, onSuccess }: {
 
 // ── Manual Entry Modal ──────────────────────────────────────────────
 
-function ManualEntryModal({ open, onClose, onSuccess }: {
+function ManualEntryModal({ open, onClose, onSuccess, copy }: {
   open: boolean;
   onClose: () => void;
   onSuccess: (inv: InvoiceRow) => void;
+  copy: (typeof pageCopy)[Locale];
 }) {
   const [supplier, setSupplier] = useState('');
   const [voen, setVoen] = useState('');
@@ -379,9 +867,9 @@ function ManualEntryModal({ open, onClose, onSuccess }: {
   }, 0);
 
   const handleSave = async () => {
-    if (!supplier.trim()) { setFeedback('Tədarükçü adı daxil edin'); return; }
+    if (!supplier.trim()) { setFeedback(copy.manualErrSupplier); return; }
     const validItems = items.filter((it) => it.name.trim());
-    if (validItems.length === 0) { setFeedback('Ən azı 1 məhsul daxil edin'); return; }
+    if (validItems.length === 0) { setFeedback(copy.manualErrItems); return; }
 
     setSaving(true);
     setFeedback(null);
@@ -428,7 +916,7 @@ function ManualEntryModal({ open, onClose, onSuccess }: {
         createdAt: new Date().toISOString(),
       });
 
-      setFeedback('Fatura saxlanıldı!');
+      setFeedback(copy.manualSavedOk);
       setTimeout(() => { reset(); onClose(); }, 800);
     } catch {
       // Offline/mock mode — yenə listeye əlavə et
@@ -445,31 +933,31 @@ function ManualEntryModal({ open, onClose, onSuccess }: {
         ocrConfidence: null,
         createdAt: new Date().toISOString(),
       });
-      setFeedback('Fatura saxlanıldı (lokal)!');
+      setFeedback(copy.manualSavedLocal);
       setTimeout(() => { reset(); onClose(); }, 800);
     }
     setSaving(false);
   };
 
   return (
-    <ModalShell open={open} onClose={() => { reset(); onClose(); }} title="Əl ilə Fatura Daxil Et">
+    <ModalShell open={open} onClose={() => { reset(); onClose(); }} title={copy.manualModalTitle}>
       <div className="flex flex-col gap-4">
         {/* Supplier info */}
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
-            <label className="mb-1 block text-xs font-medium text-slate-500">Tədarükçü *</label>
-            <input value={supplier} onChange={(e) => setSupplier(e.target.value)} placeholder="Metro, Bravo..." className="h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48] focus:ring-1 focus:ring-[#E11D48]" />
+            <label className="mb-1 block text-xs font-medium text-slate-500">{copy.manualSupplierLabel}</label>
+            <input value={supplier} onChange={(e) => setSupplier(e.target.value)} placeholder={copy.manualSupplierPlaceholder} className="h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48] focus:ring-1 focus:ring-[#E11D48]" />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-500">VÖEN</label>
-            <input value={voen} onChange={(e) => setVoen(e.target.value)} placeholder="10 rəqəm" maxLength={10} className="h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48]" />
+            <label className="mb-1 block text-xs font-medium text-slate-500">{copy.manualVoenLabel}</label>
+            <input value={voen} onChange={(e) => setVoen(e.target.value)} placeholder={copy.manualVoenPlaceholder} maxLength={10} className="h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48]" />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-500">Faktura No</label>
+            <label className="mb-1 block text-xs font-medium text-slate-500">{copy.manualInvoiceNoLabel}</label>
             <input value={invoiceNo} onChange={(e) => setInvoiceNo(e.target.value)} placeholder="FC-001" className="h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48]" />
           </div>
           <div className="col-span-2">
-            <label className="mb-1 block text-xs font-medium text-slate-500">Tarix *</label>
+            <label className="mb-1 block text-xs font-medium text-slate-500">{copy.manualDateLabel}</label>
             <input type="date" value={invoiceDate} onChange={(e) => setInvoiceDate(e.target.value)} className="h-11 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48]" />
           </div>
         </div>
@@ -477,7 +965,7 @@ function ManualEntryModal({ open, onClose, onSuccess }: {
         {/* Items */}
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <label className="text-xs font-medium text-slate-500">Məhsullar *</label>
+            <label className="text-xs font-medium text-slate-500">{copy.manualItemsLabel}</label>
             <div className="flex gap-1">
               <button onClick={() => addRows(1)} className="rounded-lg border border-slate-200 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50">+1</button>
               <button onClick={() => addRows(5)} className="rounded-lg border border-slate-200 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50">+5</button>
@@ -488,17 +976,17 @@ function ManualEntryModal({ open, onClose, onSuccess }: {
           <div className="flex flex-col gap-2">
             {items.map((item, idx) => (
               <div key={idx} className="flex items-center gap-1.5 rounded-xl border border-slate-100 bg-slate-50 p-2">
-                <input value={item.name} onChange={(e) => updateItem(idx, 'name', e.target.value)} placeholder="Məhsul adı" className="h-9 min-w-0 flex-[3] rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48]" />
-                <input value={item.quantity} onChange={(e) => updateItem(idx, 'quantity', e.target.value)} placeholder="Miq." type="number" step="0.1" className="h-9 w-16 rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48]" />
+                <input value={item.name} onChange={(e) => updateItem(idx, 'name', e.target.value)} placeholder={copy.manualItemNamePlaceholder} className="h-9 min-w-0 flex-[3] rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48]" />
+                <input value={item.quantity} onChange={(e) => updateItem(idx, 'quantity', e.target.value)} placeholder={copy.manualItemQtyPlaceholder} type="number" step="0.1" className="h-9 w-16 rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48]" />
                 <select value={item.unit} onChange={(e) => updateItem(idx, 'unit', e.target.value)} className="h-9 w-14 rounded-lg border border-slate-200 bg-white px-1 text-xs outline-none">
-                  <option value="kq">kq</option>
-                  <option value="litr">litr</option>
-                  <option value="əd">əd</option>
-                  <option value="qutu">qutu</option>
-                  <option value="paket">paket</option>
+                  <option value="kq">{copy.unitKg}</option>
+                  <option value="litr">{copy.unitLitre}</option>
+                  <option value="əd">{copy.unitPcs}</option>
+                  <option value="qutu">{copy.unitBox}</option>
+                  <option value="paket">{copy.unitPack}</option>
                 </select>
-                <input value={item.unitPrice} onChange={(e) => updateItem(idx, 'unitPrice', e.target.value)} placeholder="Qiymət" type="number" step="0.01" className="h-9 w-20 rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48]" />
-                <button onClick={() => removeItem(idx)} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500" title="Sil">
+                <input value={item.unitPrice} onChange={(e) => updateItem(idx, 'unitPrice', e.target.value)} placeholder="0.00" type="number" step="0.01" className="h-9 w-20 rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48]" />
+                <button onClick={() => removeItem(idx)} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500" title={copy.btnDelete}>
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -508,24 +996,24 @@ function ManualEntryModal({ open, onClose, onSuccess }: {
 
         {/* Total */}
         <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-          <span className="text-sm font-medium text-slate-600">Yekun:</span>
+          <span className="text-sm font-medium text-slate-600">{copy.manualTotalLabel}</span>
           <span className="text-lg font-bold text-slate-900">{grandTotal.toFixed(2)} AZN</span>
         </div>
 
         {/* Feedback */}
         {feedback && (
-          <div className={`rounded-xl p-3 text-sm ${feedback.includes('saxlanıldı') ? 'border border-emerald-200 bg-emerald-50 text-emerald-700' : 'border border-red-200 bg-red-50 text-red-700'}`}>
+          <div className={`rounded-xl p-3 text-sm ${feedback.includes('saxlanıldı') || feedback.includes('saved') || feedback.includes('сохранён') || feedback.includes('kaydedildi') ? 'border border-emerald-200 bg-emerald-50 text-emerald-700' : 'border border-red-200 bg-red-50 text-red-700'}`}>
             {feedback}
           </div>
         )}
 
         {/* Save */}
         <button
-          onClick={handleSave}
+          onClick={() => void handleSave()}
           disabled={saving}
           className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#E11D48] text-sm font-medium text-white hover:bg-[#BE123C] disabled:opacity-60 active:scale-[0.98]"
         >
-          {saving ? <><Loader2 className="h-4 w-4 animate-spin" /> Saxlanılır...</> : <><Check className="h-4 w-4" /> Təsdiqlə və Saxla</>}
+          {saving ? <><Loader2 className="h-4 w-4 animate-spin" /> {copy.manualSaving}</> : <><Check className="h-4 w-4" /> {copy.manualSave}</>}
         </button>
       </div>
     </ModalShell>
@@ -542,7 +1030,12 @@ interface ExcelPreviewRow {
   unitPrice?: number;
 }
 
-function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () => void; onSuccess: (inv: InvoiceRow) => void }) {
+function ImportModal({ open, onClose, onSuccess, copy }: {
+  open: boolean;
+  onClose: () => void;
+  onSuccess: (inv: InvoiceRow) => void;
+  copy: (typeof pageCopy)[Locale];
+}) {
   const excelRef = useRef<HTMLInputElement>(null);
   const pdfRef = useRef<HTMLInputElement>(null);
   const [parsing, setParsing] = useState(false);
@@ -567,7 +1060,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
 
       setParsedRows(result.rows.slice(0, 20) as ExcelPreviewRow[]); // önizləmə: ilk 20
       setParseErrors(result.errors.slice(0, 10));
-      setParseSummary(`${result.successRows} sətir tapıldı, ${result.failedRows} xəta · "${f.name}"`);
+      setParseSummary(`${result.successRows} ${copy.importRowsFound} ${result.failedRows} ${copy.importErrors} · "${f.name}"`);
     } catch (err) {
       setParseSummary(`Xəta: ${String(err)}`);
     }
@@ -628,7 +1121,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
 
       if (!json.success) {
         if (json.type === 'scanned') {
-          setParseSummary(`"${f.name}" skan edilmiş PDF-dir — text tapılmadı. Şəkil kimi OCR yükləyin.`);
+          setParseSummary(`"${f.name}" ${copy.importScannedPdf}`);
         } else {
           setParseSummary(`Xəta: ${json.error ?? 'PDF oxunmadı'}`);
         }
@@ -646,7 +1139,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
 
       setParsedRows(rows.slice(0, 20));
       setParseErrors((json.errors ?? []).slice(0, 10));
-      setParseSummary(`${json.successRows ?? rows.length} sətir tapıldı, ${json.failedRows ?? 0} xəta · "${f.name}" (${json.pageCount ?? 1} səhifə)`);
+      setParseSummary(`${json.successRows ?? rows.length} ${copy.importRowsFound} ${json.failedRows ?? 0} ${copy.importErrors} · "${f.name}" (${json.pageCount ?? 1} səhifə)`);
     } catch (err) {
       setParseSummary(`Xəta: ${String(err)}`);
     }
@@ -654,7 +1147,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
   };
 
   return (
-    <ModalShell open={open} onClose={() => { reset(); onClose(); }} title="Fatura Import">
+    <ModalShell open={open} onClose={() => { reset(); onClose(); }} title={copy.importModalTitle}>
       <div className="flex flex-col gap-3">
         {!parseSummary && !parsing && (
           <>
@@ -665,11 +1158,11 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
             >
               <FileSpreadsheet className="h-8 w-8 text-emerald-600" />
               <div>
-                <div className="text-sm font-medium text-emerald-800">Excel / CSV Import</div>
+                <div className="text-sm font-medium text-emerald-800">{copy.importExcelLabel}</div>
                 <div className="text-xs text-emerald-600">.xlsx, .xls, .csv</div>
               </div>
             </button>
-            <input ref={excelRef} type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleExcel(f); }} />
+            <input ref={excelRef} type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void handleExcel(f); }} />
 
             {/* PDF */}
             <button
@@ -678,18 +1171,18 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
             >
               <Receipt className="h-8 w-8 text-blue-600" />
               <div>
-                <div className="text-sm font-medium text-blue-800">PDF Fatura Import</div>
-                <div className="text-xs text-blue-600">.pdf (digital və ya skan)</div>
+                <div className="text-sm font-medium text-blue-800">{copy.importPdfLabel}</div>
+                <div className="text-xs text-blue-600">{copy.importPdfHint}</div>
               </div>
             </button>
-            <input ref={pdfRef} type="file" accept=".pdf" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) handlePdf(f); }} />
+            <input ref={pdfRef} type="file" accept=".pdf" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void handlePdf(f); }} />
           </>
         )}
 
         {/* Parsing */}
         {parsing && (
           <div className="flex items-center gap-2 py-8 justify-center text-slate-500">
-            <Loader2 className="h-5 w-5 animate-spin" /> {importSource === 'pdf' ? 'PDF oxunur...' : 'Excel oxunur...'}
+            <Loader2 className="h-5 w-5 animate-spin" /> {importSource === 'pdf' ? copy.importParsingPdf : copy.importParsingExcel}
           </div>
         )}
 
@@ -703,9 +1196,9 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
         {/* Errors */}
         {parseErrors.length > 0 && (
           <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
-            <div className="mb-1 text-xs font-medium text-amber-700">Xətalar:</div>
+            <div className="mb-1 text-xs font-medium text-amber-700">{copy.importErrorsLabel}</div>
             {parseErrors.map((e, i) => (
-              <div key={i} className="text-xs text-amber-600">Sətir {e.row}: {e.field} — {e.error}</div>
+              <div key={i} className="text-xs text-amber-600">{copy.importRowLabel} {e.row}: {e.field} — {e.error}</div>
             ))}
           </div>
         )}
@@ -717,10 +1210,10 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
               <table className="w-full text-left text-xs">
                 <thead>
                   <tr className="bg-slate-50">
-                    <th className="px-2 py-1.5 font-medium text-slate-500">Tədarükçü</th>
-                    <th className="px-2 py-1.5 font-medium text-slate-500">Məhsul</th>
-                    <th className="px-2 py-1.5 font-medium text-slate-500">Miq.</th>
-                    <th className="px-2 py-1.5 font-medium text-slate-500">Qiy.</th>
+                    <th className="px-2 py-1.5 font-medium text-slate-500">{copy.importPreviewSupplier}</th>
+                    <th className="px-2 py-1.5 font-medium text-slate-500">{copy.importPreviewProduct}</th>
+                    <th className="px-2 py-1.5 font-medium text-slate-500">{copy.importPreviewQty}</th>
+                    <th className="px-2 py-1.5 font-medium text-slate-500">{copy.importPreviewPrice}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -736,7 +1229,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
               </table>
             </div>
             {parsedRows.length > 10 && (
-              <div className="text-center text-xs text-slate-400">+ {parsedRows.length - 10} sətir daha</div>
+              <div className="text-center text-xs text-slate-400">+ {parsedRows.length - 10} {copy.importMoreRows}</div>
             )}
           </>
         )}
@@ -744,7 +1237,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
         {/* Imported success */}
         {imported && (
           <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700">
-            <Check className="mr-1 inline h-4 w-4" /> {parsedRows.length} sətir import edildi!
+            <Check className="mr-1 inline h-4 w-4" /> {parsedRows.length} {copy.importSuccess}
           </div>
         )}
 
@@ -755,14 +1248,14 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
               onClick={handleImport}
               className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 active:scale-[0.98]"
             >
-              <Check className="h-4 w-4" /> {parsedRows.length} sətri import et
+              <Check className="h-4 w-4" /> {parsedRows.length} {copy.importBtn}
             </button>
           )}
           <button
             onClick={() => { reset(); if (imported) onClose(); }}
             className="flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
           >
-            {imported ? 'Bağla' : parseSummary ? 'Yenidən seç' : 'Ləğv et'}
+            {imported ? copy.importClose : parseSummary ? copy.importReselect : copy.importCancel}
           </button>
         </div>
       </div>
@@ -774,24 +1267,28 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
 
 const PAGE_SIZE = 20;
 
-const SOURCE_FILTERS = [
-  { key: 'all', label: 'Hamısı' },
-  { key: 'ocr_camera', label: '📷 Kamera' },
-  { key: 'ocr_upload', label: '🔍 OCR' },
-  { key: 'manual', label: '✏️ Əl ilə' },
-  { key: 'excel', label: '📊 Excel' },
-  { key: 'pdf', label: '📄 PDF' },
-] as const;
-
-const STATUS_FILTERS = [
-  { key: 'all', label: 'Hamısı' },
-  { key: 'draft', label: 'Qaralama' },
-  { key: 'confirmed', label: 'Təsdiqlənib' },
-  { key: 'disputed', label: 'Mübahisəli' },
-  { key: 'archived', label: 'Arxiv' },
-] as const;
-
 export default function DashboardFaturalarPage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
+  const SOURCE_FILTERS = [
+    { key: 'all', label: copy.filterAll },
+    { key: 'ocr_camera', label: `📷 ${copy.srcCamera}` },
+    { key: 'ocr_upload', label: `🔍 ${copy.srcOcr}` },
+    { key: 'manual', label: `✏️ ${copy.srcManual}` },
+    { key: 'excel', label: `📊 ${copy.srcExcel}` },
+    { key: 'pdf', label: `📄 ${copy.srcPdf}` },
+  ] as const;
+
+  const STATUS_FILTERS = [
+    { key: 'all', label: copy.filterAll },
+    { key: 'draft', label: copy.statusDraft },
+    { key: 'confirmed', label: copy.statusConfirmed },
+    { key: 'disputed', label: copy.statusDisputed },
+    { key: 'archived', label: copy.statusArchived },
+  ] as const;
+
   const [invoices, setInvoices] = useState<InvoiceRow[]>([]);
   const [stats, setStats] = useState<InvoiceStats | null>(null);
   const [total, setTotal] = useState(0);
@@ -886,7 +1383,7 @@ export default function DashboardFaturalarPage() {
 
   const handleBulkDelete = async () => {
     if (selected.size === 0) return;
-    if (!confirm(`${selected.size} fatura silinsin?`)) return;
+    if (!confirm(`${selected.size} ${copy.confirmDelete}`)) return;
 
     try {
       await fetch('/api/invoices', {
@@ -910,7 +1407,7 @@ export default function DashboardFaturalarPage() {
   const handleExportSelectedExcel = async () => {
     const { exportInvoicesToExcel } = await import('@/lib/invoice-ocr/export-utils');
     const selectedInvoices = invoices.filter((i) => selected.has(i.id));
-    exportInvoicesToExcel(selectedInvoices, `faturalar-secilmis-${new Date().toISOString().slice(0, 10)}.xlsx`);
+    await exportInvoicesToExcel(selectedInvoices, `faturalar-secilmis-${new Date().toISOString().slice(0, 10)}.xlsx`);
   };
 
   const totalPages = Math.ceil(total / PAGE_SIZE);
@@ -918,34 +1415,34 @@ export default function DashboardFaturalarPage() {
   return (
     <div className="p-4 lg:p-8">
       {/* Modals */}
-      <OcrUploadModal open={modal === 'ocr'} onClose={() => setModal(null)} onSuccess={handleNewInvoice} />
-      <ManualEntryModal open={modal === 'manual'} onClose={() => setModal(null)} onSuccess={handleNewInvoice} />
-      <ImportModal open={modal === 'import'} onClose={() => setModal(null)} onSuccess={handleNewInvoice} />
+      <OcrUploadModal open={modal === 'ocr'} onClose={() => setModal(null)} onSuccess={handleNewInvoice} copy={copy} />
+      <ManualEntryModal open={modal === 'manual'} onClose={() => setModal(null)} onSuccess={handleNewInvoice} copy={copy} />
+      <ImportModal open={modal === 'import'} onClose={() => setModal(null)} onSuccess={handleNewInvoice} copy={copy} />
 
       {/* Header */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="flex items-center gap-2 text-2xl font-bold text-slate-900">
             <Receipt className="h-7 w-7 text-[#E11D48]" />
-            Faturalar
+            {copy.pageTitle}
           </h1>
-          <p className="mt-1 text-sm text-slate-500">Fatura OCR, manual giriş və import idarəsi</p>
+          <p className="mt-1 text-sm text-slate-500">{copy.pageSubtitle}</p>
         </div>
 
         <div className="flex flex-wrap gap-2">
           <button onClick={() => setModal('ocr')} className="inline-flex items-center gap-2 rounded-xl bg-[#E11D48] px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-[#BE123C] active:scale-[0.98]">
             <Camera className="h-4 w-4" />
-            <span className="hidden sm:inline">Kamera / Yüklə</span>
-            <span className="sm:hidden">Yüklə</span>
+            <span className="hidden sm:inline">{copy.btnCamera}</span>
+            <span className="sm:hidden">{copy.btnCameraShort}</span>
           </button>
           <button onClick={() => setModal('manual')} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 active:scale-[0.98]">
             <Pencil className="h-4 w-4" />
-            <span className="hidden sm:inline">Əl ilə daxil et</span>
-            <span className="sm:hidden">Manual</span>
+            <span className="hidden sm:inline">{copy.btnManual}</span>
+            <span className="sm:hidden">{copy.btnManualShort}</span>
           </button>
           <button onClick={() => setModal('import')} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 active:scale-[0.98]">
             <Upload className="h-4 w-4" />
-            Import
+            {copy.btnImport}
           </button>
         </div>
       </div>
@@ -954,21 +1451,21 @@ export default function DashboardFaturalarPage() {
       {stats && (
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:gap-4">
           <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="text-xs font-medium text-slate-500">Cəmi fatura</div>
+            <div className="text-xs font-medium text-slate-500">{copy.statTotal}</div>
             <div className="mt-1 text-2xl font-bold text-slate-900">{stats.totalCount}</div>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="text-xs font-medium text-slate-500">Ümumi məbləğ</div>
+            <div className="text-xs font-medium text-slate-500">{copy.statAmount}</div>
             <div className="mt-1 text-2xl font-bold text-slate-900">{formatMoney(stats.totalAmount)}</div>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="text-xs font-medium text-slate-500">Ortalama</div>
+            <div className="text-xs font-medium text-slate-500">{copy.statAvg}</div>
             <div className="mt-1 text-2xl font-bold text-slate-900">{formatMoney(stats.avgAmount)}</div>
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div className="text-xs font-medium text-slate-500">Gözləyən</div>
+            <div className="text-xs font-medium text-slate-500">{copy.statPending}</div>
             <div className="mt-1 text-2xl font-bold text-amber-600">{stats.draftCount}</div>
-            <div className="text-xs text-slate-400">{stats.confirmedCount} təsdiqlənib</div>
+            <div className="text-xs text-slate-400">{stats.confirmedCount} {copy.statConfirmed}</div>
           </div>
         </div>
       )}
@@ -977,7 +1474,7 @@ export default function DashboardFaturalarPage() {
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          <input type="text" placeholder="Tədarükçü axtar..." value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} className="h-10 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 outline-none focus:border-[#E11D48] focus:ring-1 focus:ring-[#E11D48]" />
+          <input type="text" placeholder={copy.searchPlaceholder} value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} className="h-10 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 outline-none focus:border-[#E11D48] focus:ring-1 focus:ring-[#E11D48]" />
         </div>
         <div className="flex gap-2">
           <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none">
@@ -992,14 +1489,14 @@ export default function DashboardFaturalarPage() {
       {/* Bulk Actions */}
       {selected.size > 0 && (
         <div className="mb-3 flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5">
-          <span className="text-sm font-medium text-amber-800">{selected.size} seçilib</span>
-          <button onClick={handleBulkDelete} className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700">
-            <Trash2 className="h-3.5 w-3.5" /> Sil
+          <span className="text-sm font-medium text-amber-800">{selected.size} {copy.selectedCount}</span>
+          <button onClick={() => void handleBulkDelete()} className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700">
+            <Trash2 className="h-3.5 w-3.5" /> {copy.btnDelete}
           </button>
-          <button onClick={handleExportSelected} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
+          <button onClick={() => void handleExportSelected()} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
             <Download className="h-3.5 w-3.5" /> CSV
           </button>
-          <button onClick={handleExportSelectedExcel} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
+          <button onClick={() => void handleExportSelectedExcel()} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50">
             <FileSpreadsheet className="h-3.5 w-3.5" /> Excel
           </button>
         </div>
@@ -1011,21 +1508,21 @@ export default function DashboardFaturalarPage() {
           <thead>
             <tr className="border-b border-slate-100 bg-slate-50">
               <th className="px-4 py-3"><input type="checkbox" checked={selected.size === invoices.length && invoices.length > 0} onChange={toggleSelectAll} className="h-4 w-4 rounded border-slate-300" /></th>
-              <th className="px-4 py-3 font-medium text-slate-500">Tədarükçü</th>
-              <th className="px-4 py-3 font-medium text-slate-500">Tarix</th>
-              <th className="px-4 py-3 font-medium text-slate-500 text-right">Yekun</th>
-              <th className="px-4 py-3 font-medium text-slate-500">Mənbə</th>
-              <th className="px-4 py-3 font-medium text-slate-500">Dəqiqlik</th>
-              <th className="px-4 py-3 font-medium text-slate-500">Status</th>
+              <th className="px-4 py-3 font-medium text-slate-500">{copy.thSupplier}</th>
+              <th className="px-4 py-3 font-medium text-slate-500">{copy.thDate}</th>
+              <th className="px-4 py-3 font-medium text-slate-500 text-right">{copy.thTotal}</th>
+              <th className="px-4 py-3 font-medium text-slate-500">{copy.thSource}</th>
+              <th className="px-4 py-3 font-medium text-slate-500">{copy.thConfidence}</th>
+              <th className="px-4 py-3 font-medium text-slate-500">{copy.thStatus}</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-400">Yüklənir...</td></tr>
+              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-400">{copy.loading}</td></tr>
             ) : invoices.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-400">Fatura tapılmadı</td></tr>
+              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-400">{copy.empty}</td></tr>
             ) : invoices.map((inv) => {
-              const src = sourceLabel(inv.source);
+              const src = sourceLabel(inv.source, copy);
               return (
                 <tr key={inv.id} className={`border-b border-slate-50 transition-colors hover:bg-slate-50 cursor-pointer ${selected.has(inv.id) ? 'bg-amber-50/50' : ''}`} onClick={() => router.push(`/dashboard/faturalar/${inv.id}`)}>
                   <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}><input type="checkbox" checked={selected.has(inv.id)} onChange={() => toggleSelect(inv.id)} className="h-4 w-4 rounded border-slate-300" /></td>
@@ -1037,7 +1534,7 @@ export default function DashboardFaturalarPage() {
                   <td className="px-4 py-3 text-right font-semibold text-slate-900">{formatMoney(inv.grandTotal, inv.currency)}</td>
                   <td className="px-4 py-3"><span className="text-sm">{src.icon} {src.label}</span></td>
                   <td className="px-4 py-3">{confidenceBadge(inv.ocrConfidence)}</td>
-                  <td className="px-4 py-3">{statusBadge(inv.status)}</td>
+                  <td className="px-4 py-3">{statusBadge(inv.status, copy)}</td>
                 </tr>
               );
             })}
@@ -1048,11 +1545,11 @@ export default function DashboardFaturalarPage() {
       {/* Cards — Mobile */}
       <div className="flex flex-col gap-3 sm:hidden">
         {loading ? (
-          <div className="py-12 text-center text-slate-400">Yüklənir...</div>
+          <div className="py-12 text-center text-slate-400">{copy.loading}</div>
         ) : invoices.length === 0 ? (
-          <div className="py-12 text-center text-slate-400">Fatura tapılmadı</div>
+          <div className="py-12 text-center text-slate-400">{copy.empty}</div>
         ) : invoices.map((inv) => {
-          const src = sourceLabel(inv.source);
+          const src = sourceLabel(inv.source, copy);
           return (
             <div key={inv.id} onClick={() => router.push(`/dashboard/faturalar/${inv.id}`)} className={`cursor-pointer rounded-2xl border bg-white p-4 shadow-sm active:scale-[0.99] ${selected.has(inv.id) ? 'border-amber-300 bg-amber-50/50' : 'border-slate-200'}`}>
               <div className="flex items-start justify-between">
@@ -1070,7 +1567,7 @@ export default function DashboardFaturalarPage() {
                   <span className="text-sm">{src.icon} {src.label}</span>
                   {confidenceBadge(inv.ocrConfidence)}
                 </div>
-                {statusBadge(inv.status)}
+                {statusBadge(inv.status, copy)}
               </div>
             </div>
           );
@@ -1080,7 +1577,7 @@ export default function DashboardFaturalarPage() {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-slate-500">{total} faturadan {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, total)}</div>
+          <div className="text-sm text-slate-500">{total} {copy.paginationOf} {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, total)}</div>
           <div className="flex items-center gap-1">
             <button disabled={page <= 1} onClick={() => setPage((p) => p - 1)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 disabled:opacity-40"><ChevronLeft className="h-4 w-4" /></button>
             <span className="px-3 text-sm font-medium text-slate-700">{page} / {totalPages}</span>

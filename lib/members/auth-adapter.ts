@@ -137,11 +137,6 @@ async function localRegister(payload: AuthPayload): Promise<AuthResult> {
     const created = inserted[0];
     const verificationToken = crypto.randomUUID();
     createEmailVerificationToken(created.id, verificationToken);
-    console.log('Verification email:', created.email, verificationToken);
-    console.log(
-      'Verify URL:',
-      `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`,
-    );
 
     return {
       ok: true,
@@ -166,11 +161,6 @@ async function localRegister(payload: AuthPayload): Promise<AuthResult> {
 
   const verificationToken = crypto.randomUUID();
   createEmailVerificationToken(created.user.id, verificationToken);
-  console.log('Verification email:', created.user.email, verificationToken);
-  console.log(
-    'Verify URL:',
-    `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`,
-  );
 
   return {
     ok: true,

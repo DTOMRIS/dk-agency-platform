@@ -5,6 +5,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   Inbox,
   Star,
@@ -21,6 +22,7 @@ import {
   FileText,
   CheckCircle2
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 interface Message {
   id: number;
@@ -35,6 +37,98 @@ interface Message {
   hasAttachment: boolean;
   isFromAdmin: boolean;
 }
+
+const pageCopy: Record<Locale, {
+  heading: string;
+  subheading: string;
+  newMessage: string;
+  statTotal: string;
+  statUnread: string;
+  statAiReports: string;
+  searchPlaceholder: string;
+  filterAll: string;
+  filterUnread: string;
+  attachmentLabel: string;
+  officialBadge: string;
+  noMessages: string;
+  attachments: string;
+  reply: string;
+  markRead: string;
+  download: string;
+}> = {
+  az: {
+    heading: 'Mesajlarım',
+    subheading: 'DK Agency ilə əlaqə mərkəzi',
+    newMessage: 'Yeni Mesaj',
+    statTotal: 'Ümumi Mesaj',
+    statUnread: 'Oxunmamış',
+    statAiReports: 'AI Hesabatları',
+    searchPlaceholder: 'Mesajlarda axtar...',
+    filterAll: 'Hamısı',
+    filterUnread: 'Oxunmamış',
+    attachmentLabel: 'Əlavə fayl',
+    officialBadge: 'Rəsmi',
+    noMessages: 'Mesaj tapılmadı',
+    attachments: 'Əlavələr',
+    reply: 'Cavabla',
+    markRead: 'Oxunmuş İşarələ',
+    download: 'Yüklə',
+  },
+  ru: {
+    heading: 'Мои сообщения',
+    subheading: 'Центр коммуникации с DK Agency',
+    newMessage: 'Новое сообщение',
+    statTotal: 'Всего сообщений',
+    statUnread: 'Непрочитанных',
+    statAiReports: 'AI Отчёты',
+    searchPlaceholder: 'Поиск в сообщениях...',
+    filterAll: 'Все',
+    filterUnread: 'Непрочитанные',
+    attachmentLabel: 'Прикреплённый файл',
+    officialBadge: 'Официально',
+    noMessages: 'Сообщения не найдены',
+    attachments: 'Вложения',
+    reply: 'Ответить',
+    markRead: 'Отметить прочитанным',
+    download: 'Скачать',
+  },
+  en: {
+    heading: 'My Messages',
+    subheading: 'Communication centre with DK Agency',
+    newMessage: 'New Message',
+    statTotal: 'Total Messages',
+    statUnread: 'Unread',
+    statAiReports: 'AI Reports',
+    searchPlaceholder: 'Search messages...',
+    filterAll: 'All',
+    filterUnread: 'Unread',
+    attachmentLabel: 'Attached file',
+    officialBadge: 'Official',
+    noMessages: 'No messages found',
+    attachments: 'Attachments',
+    reply: 'Reply',
+    markRead: 'Mark as Read',
+    download: 'Download',
+  },
+  tr: {
+    heading: 'Mesajlarım',
+    subheading: 'DK Agency ile iletişim merkezi',
+    newMessage: 'Yeni Mesaj',
+    statTotal: 'Toplam Mesaj',
+    statUnread: 'Okunmamış',
+    statAiReports: 'AI Raporları',
+    searchPlaceholder: 'Mesajlarda ara...',
+    filterAll: 'Tümü',
+    filterUnread: 'Okunmamış',
+    attachmentLabel: 'Ek dosya',
+    officialBadge: 'Resmi',
+    noMessages: 'Mesaj bulunamadı',
+    attachments: 'Ekler',
+    reply: 'Yanıtla',
+    markRead: 'Okundu İşaretle',
+    download: 'İndir',
+  },
+};
 
 const messages: Message[] = [
   {
@@ -105,6 +199,10 @@ const messages: Message[] = [
 ];
 
 export default function B2BMessagesPage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<'all' | 'unread' | 'starred'>('all');
@@ -126,12 +224,12 @@ export default function B2BMessagesPage() {
       <div className="bg-white border-b border-gray-200 px-6 py-5">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Mesajlarım</h1>
-            <p className="text-sm text-gray-500 mt-1">DK Agency ile iletişim merkezi</p>
+            <h1 className="text-2xl font-bold text-gray-900">{copy.heading}</h1>
+            <p className="text-sm text-gray-500 mt-1">{copy.subheading}</p>
           </div>
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
+          <button className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-dk-red to-dk-red-strong hover:from-dk-red-strong hover:to-dk-red-strong text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
             <Plus size={18} />
-            Yeni Mesaj
+            {copy.newMessage}
           </button>
         </div>
       </div>
@@ -146,7 +244,7 @@ export default function B2BMessagesPage() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{messages.length}</p>
-                <p className="text-xs text-gray-500">Toplam Mesaj</p>
+                <p className="text-xs text-gray-500">{copy.statTotal}</p>
               </div>
             </div>
           </div>
@@ -157,7 +255,7 @@ export default function B2BMessagesPage() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{unreadCount}</p>
-                <p className="text-xs text-gray-500">Okunmamış</p>
+                <p className="text-xs text-gray-500">{copy.statUnread}</p>
               </div>
             </div>
           </div>
@@ -168,7 +266,7 @@ export default function B2BMessagesPage() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">2</p>
-                <p className="text-xs text-gray-500">AI Raporları</p>
+                <p className="text-xs text-gray-500">{copy.statAiReports}</p>
               </div>
             </div>
           </div>
@@ -185,26 +283,26 @@ export default function B2BMessagesPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Mesajlarda ara..."
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                  placeholder={copy.searchPlaceholder}
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => setFilter('all')}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                    filter === 'all' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    filter === 'all' ? 'bg-dk-red text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  Tümü
+                  {copy.filterAll}
                 </button>
                 <button
                   onClick={() => setFilter('unread')}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2 ${
-                    filter === 'unread' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    filter === 'unread' ? 'bg-dk-red text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  Okunmamış
+                  {copy.filterUnread}
                   {unreadCount > 0 && (
                     <span className={`px-1.5 py-0.5 text-xs rounded-full ${
                       filter === 'unread' ? 'bg-white/20' : 'bg-red-100 text-red-700'
@@ -214,7 +312,7 @@ export default function B2BMessagesPage() {
                 <button
                   onClick={() => setFilter('starred')}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                    filter === 'starred' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    filter === 'starred' ? 'bg-dk-red text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
                   <Star size={14} className={filter === 'starred' ? 'fill-white' : ''} />
@@ -227,7 +325,7 @@ export default function B2BMessagesPage() {
               {filteredMessages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 text-gray-500">
                   <Mail size={48} className="mb-4 opacity-50" />
-                  <p>Mesaj bulunamadı</p>
+                  <p>{copy.noMessages}</p>
                 </div>
               ) : (
                 filteredMessages.map((message) => (
@@ -235,15 +333,15 @@ export default function B2BMessagesPage() {
                     key={message.id}
                     onClick={() => setSelectedMessage(message)}
                     className={`p-4 border-b border-gray-100 cursor-pointer transition-all ${
-                      selectedMessage?.id === message.id 
-                        ? 'bg-red-50 border-l-4 border-l-red-600' 
+                      selectedMessage?.id === message.id
+                        ? 'bg-red-50 border-l-4 border-l-dk-red'
                         : 'hover:bg-gray-50'
                     } ${!message.read ? 'bg-blue-50/30' : ''}`}
                   >
                     <div className="flex items-start gap-3">
                       <div className={`w-11 h-11 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0 ${
                         message.avatar === 'AI' ? 'bg-gradient-to-br from-purple-500 to-indigo-600' :
-                        message.avatar === 'DK' ? 'bg-gradient-to-br from-red-500 to-red-700' :
+                        message.avatar === 'DK' ? 'bg-gradient-to-br from-dk-red to-dk-red-strong' :
                         message.avatar === 'DS' ? 'bg-gradient-to-br from-blue-500 to-cyan-600' :
                         message.avatar === 'SY' ? 'bg-gradient-to-br from-amber-500 to-orange-600' :
                         'bg-gradient-to-br from-gray-500 to-gray-700'
@@ -272,7 +370,7 @@ export default function B2BMessagesPage() {
                         {message.hasAttachment && (
                           <div className="flex items-center gap-1 mt-2 text-gray-400">
                             <Paperclip size={12} />
-                            <span className="text-xs">Ek dosya</span>
+                            <span className="text-xs">{copy.attachmentLabel}</span>
                           </div>
                         )}
                       </div>
@@ -297,7 +395,7 @@ export default function B2BMessagesPage() {
                   </button>
                   <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-white text-lg font-bold ${
                     selectedMessage.avatar === 'AI' ? 'bg-gradient-to-br from-purple-500 to-indigo-600' :
-                    selectedMessage.avatar === 'DK' ? 'bg-gradient-to-br from-red-500 to-red-700' :
+                    selectedMessage.avatar === 'DK' ? 'bg-gradient-to-br from-dk-red to-dk-red-strong' :
                     selectedMessage.avatar === 'DS' ? 'bg-gradient-to-br from-blue-500 to-cyan-600' :
                     selectedMessage.avatar === 'SY' ? 'bg-gradient-to-br from-amber-500 to-orange-600' :
                     'bg-gradient-to-br from-gray-500 to-gray-700'
@@ -311,7 +409,7 @@ export default function B2BMessagesPage() {
                       {selectedMessage.isFromAdmin && (
                         <span className="flex items-center gap-1 px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">
                           <Shield size={10} />
-                          Resmi
+                          {copy.officialBadge}
                         </span>
                       )}
                     </div>
@@ -336,7 +434,7 @@ export default function B2BMessagesPage() {
                   <div className="mt-6 p-4 bg-gray-50 rounded-xl">
                     <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                       <Paperclip size={16} />
-                      Ekler
+                      {copy.attachments}
                     </p>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 transition-colors cursor-pointer">
@@ -351,8 +449,8 @@ export default function B2BMessagesPage() {
                             <p className="text-xs text-gray-500">PDF • 1.2 MB</p>
                           </div>
                         </div>
-                        <button className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition-colors">
-                          İndir
+                        <button className="px-3 py-1.5 bg-dk-red hover:bg-dk-red-strong text-white text-xs font-semibold rounded-lg transition-colors">
+                          {copy.download}
                         </button>
                       </div>
                     </div>
@@ -363,13 +461,13 @@ export default function B2BMessagesPage() {
               {/* Reply */}
               <div className="p-6 border-t border-gray-200 bg-gray-50">
                 <div className="flex gap-3">
-                  <button className="flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold transition-colors">
+                  <button className="flex items-center gap-2 px-5 py-2.5 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors">
                     <Reply size={16} />
-                    Yanıtla
+                    {copy.reply}
                   </button>
                   <button className="flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl font-medium transition-colors">
                     <CheckCircle2 size={16} />
-                    Okundu İşaretle
+                    {copy.markRead}
                   </button>
                 </div>
               </div>

@@ -212,7 +212,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
       {/* ═══════════════════════════════════════════════════════════════ */}
       <div className="bg-[var(--dk-navy)] border-b border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0 overflow-x-auto scrollbar-hide">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -221,17 +221,17 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`
-                    flex items-center gap-2 px-6 py-4 font-semibold text-sm border-b-2 transition-all
-                    ${isActive 
-                      ? 'border-[var(--dk-gold)] text-[var(--dk-gold)] bg-[color:color-mix(in_srgb,var(--dk-gold)_6%,transparent)]' 
+                    flex items-center gap-1.5 px-4 py-3 sm:px-6 sm:py-4 font-semibold text-xs sm:text-sm border-b-2 transition-all whitespace-nowrap min-h-[44px] flex-shrink-0
+                    ${isActive
+                      ? 'border-[var(--dk-gold)] text-[var(--dk-gold)] bg-[color:color-mix(in_srgb,var(--dk-gold)_6%,transparent)]'
                       : 'border-transparent text-[var(--dk-muted)] hover:text-[var(--dk-text)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_6%,transparent)]'
                     }
                   `}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   {tab.label}
                   <span className={`
-                    text-xs px-2 py-0.5 rounded-full
+                    text-[10px] sm:text-xs px-1.5 py-0.5 rounded-full
                     ${isActive ? 'bg-[var(--dk-gold)] text-[var(--dk-night)]' : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] text-[var(--dk-muted)]'}
                   `}>
                     {tab.count}
@@ -249,17 +249,17 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
 
       {/* XƏBƏRLƏR TAB */}
       {activeTab === 'news' && (
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Ana xəbər listesi */}
             <div className="lg:col-span-2 space-y-4">
               {NEWS_ITEMS.map((news, idx) => (
-                <div 
+                <div
                   key={news.id}
                   className={`
-                    flex items-start gap-4 p-4 rounded-xl border transition-all cursor-pointer
-                    ${news.hot 
-                      ? 'bg-[color:color-mix(in_srgb,var(--dk-red)_8%,transparent)] border-[var(--dk-red)]/30 hover:border-[var(--dk-red)]' 
+                    flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border transition-all cursor-pointer min-h-[44px]
+                    ${news.hot
+                      ? 'bg-[color:color-mix(in_srgb,var(--dk-red)_8%,transparent)] border-[var(--dk-red)]/30 hover:border-[var(--dk-red)]'
                       : 'bg-[var(--dk-surface-dark)] border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] hover:border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)]'
                     }
                   `}
@@ -335,8 +335,8 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
 
       {/* BLOG TAB - Editorial Layout */}
       {activeTab === 'blog' && (
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="grid lg:grid-cols-12 gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="grid lg:grid-cols-12 gap-6 sm:gap-8">
             {/* ─────────────────────────────────────────────────────────── */}
             {/* SOL SIDEBAR - Küçük haberler listesi */}
             {/* ─────────────────────────────────────────────────────────── */}
@@ -463,12 +463,12 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
           {/* ═══════════════════════════════════════════════════════════════ */}
           <div className="mt-10 pt-8 border-t border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]">
             <div className="flex flex-wrap items-center gap-2 mb-6">
-              <span className="text-sm font-semibold text-[var(--dk-muted)] mr-2">Kateqoriyalar:</span>
+              <span className="text-xs sm:text-sm font-semibold text-[var(--dk-muted)] mr-1 sm:mr-2">Kateqoriyalar:</span>
               <button
                 onClick={() => setSelectedCategory(null)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  !selectedCategory 
-                    ? 'bg-[var(--dk-gold)] text-[var(--dk-night)]' 
+                className={`px-3 py-2 sm:px-4 rounded-full text-xs sm:text-sm font-medium transition-all min-h-[44px] ${
+                  !selectedCategory
+                    ? 'bg-[var(--dk-gold)] text-[var(--dk-night)]'
                     : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] text-[var(--dk-muted)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_15%,transparent)]'
                 }`}
               >
@@ -478,9 +478,9 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                 <button
                   key={key}
                   onClick={() => setSelectedCategory(key)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-1.5 ${
-                    selectedCategory === key 
-                      ? `${catColors[key] || 'bg-[var(--dk-muted)]'} text-white` 
+                  className={`px-3 py-2 sm:px-4 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center gap-1 sm:gap-1.5 min-h-[44px] ${
+                    selectedCategory === key
+                      ? `${catColors[key] || 'bg-[var(--dk-muted)]'} text-white`
                       : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] text-[var(--dk-muted)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_15%,transparent)]'
                   }`}
                 >
@@ -528,7 +528,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
 
       {/* ETKİNLİKLƏR TAB */}
       {activeTab === 'events' && (
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           {/* Upcoming Events Grid */}
           <div className="grid md:grid-cols-2 gap-6">
             {EVENTS.map((event) => (

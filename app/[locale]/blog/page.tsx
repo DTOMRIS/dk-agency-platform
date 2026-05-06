@@ -11,6 +11,7 @@ import {
   getAllBlogArticles,
   type BlogArticle,
 } from '@/lib/data/blogArticles';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 type BlogListItem = BlogArticle & {
   seoTitle?: string;
@@ -22,14 +23,59 @@ type BlogListItem = BlogArticle & {
 const FALLBACK_ARTICLES = getAllBlogArticles();
 const FALLBACK_CATEGORY = { emoji: '📝', label: 'Bloq', color: 'slate' };
 
-function useLocaleFromPath(): string {
+interface BlogCopy {
+  badge: string;
+  title: string;
+  subtitle: string;
+  loadError: string;
+  readLabel: string;
+  minLabel: string;
+}
+
+const copy: Record<Locale, BlogCopy> = {
+  az: {
+    badge: 'Ekspert Analiz',
+    title: 'DK Agency Blog',
+    subtitle: 'HoReCa sektorunda ekspert analizlər, addım-addım bələdçilər və sektor trendləri.',
+    loadError: 'Blog yazıları yüklənə bilmədi. Statik məzmun göstərilir.',
+    readLabel: 'Oxu',
+    minLabel: 'dəq',
+  },
+  tr: {
+    badge: 'Uzman Analiz',
+    title: 'DK Agency Blog',
+    subtitle: 'HoReCa sektöründe uzman analizler, adım adım rehberler ve sektör trendleri.',
+    loadError: 'Blog yazıları yüklenemedi. Statik içerik gösteriliyor.',
+    readLabel: 'Oku',
+    minLabel: 'dk',
+  },
+  en: {
+    badge: 'Expert Analysis',
+    title: 'DK Agency Blog',
+    subtitle: 'Expert analyses, step-by-step guides, and sector trends in the HoReCa industry.',
+    loadError: 'Blog posts could not be loaded. Showing static content.',
+    readLabel: 'Read',
+    minLabel: 'min',
+  },
+  ru: {
+    badge: 'Экспертный анализ',
+    title: 'DK Agency Blog',
+    subtitle: 'Экспертная аналитика, пошаговые руководства и тренды отрасли HoReCa.',
+    loadError: 'Не удалось загрузить записи блога. Отображается статичный контент.',
+    readLabel: 'Читать',
+    minLabel: 'мин',
+  },
+};
+
+function useLocaleFromPath(): Locale {
   const pathname = usePathname();
   const match = pathname?.match(/^\/(ru|en|tr)\//);
-  return match?.[1] || 'az';
+  return normalizeLocale(match?.[1]);
 }
 
 export default function BlogGridPage() {
   const locale = useLocaleFromPath();
+  const c = copy[locale];
   const [articles, setArticles] = useState<BlogListItem[]>(FALLBACK_ARTICLES);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -49,7 +95,7 @@ export default function BlogGridPage() {
       } catch {
         if (!cancelled) {
           setArticles(FALLBACK_ARTICLES);
-          setError('Blog yazıları yüklənə bilmədi. Statik məzmun göstərilir.');
+          setError(c.loadError);
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -60,7 +106,7 @@ export default function BlogGridPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [locale, c.loadError]);
 
   return (
     <div className="min-h-screen bg-white pb-20 text-slate-900">
@@ -68,20 +114,20 @@ export default function BlogGridPage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="bg-brand-red text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 inline-block">
-              Ekspert Analiz
+              {c.badge}
             </span>
             <h1 className="mb-8 text-4xl font-display font-black uppercase leading-none tracking-tighter text-slate-900 sm:text-5xl lg:text-7xl">
               DK Agency <br />
               <span className="text-[var(--dk-red)]">Blog</span>
             </h1>
             <p className="max-w-2xl text-xl text-slate-600 leading-relaxed font-medium">
-              HoReCa sektorunda ekspert analizlər, addım-addım bələdçilər və sektor trendləri.
+              {c.subtitle}
             </p>
             {error ? <p className="mt-4 text-sm font-semibold text-amber-600">{error}</p> : null}
           </motion.div>
           <Image
             src="/images/training-seminar.png"
-            alt="HoReCa təlim və seminar illüstrasiyası"
+            alt={c.badge}
             width={640}
             height={480}
             priority
@@ -138,7 +184,7 @@ export default function BlogGridPage() {
                         </div>
                         <div className="flex items-center gap-2">
                           <Clock size={14} className="text-brand-red" />
-                          {article.readingTime} dəq
+                          {article.readingTime} {c.minLabel}
                         </div>
                       </div>
                       <h3 className="text-xl font-display font-black text-slate-900 leading-tight mb-4 group-hover:text-brand-red transition-colors">
@@ -151,7 +197,7 @@ export default function BlogGridPage() {
                           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{article.author}</span>
                         </div>
                         <div className="flex items-center gap-2 text-slate-900 font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">
-                          Oxu <ArrowRight size={16} className="text-brand-red" />
+                          {c.readLabel} <ArrowRight size={16} className="text-brand-red" />
                         </div>
                       </div>
                     </div>

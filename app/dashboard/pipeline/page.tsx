@@ -4,6 +4,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   BarChart3,
   Filter,
@@ -25,6 +26,139 @@ import {
   Target,
   AlertCircle
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
+
+const pageCopy: Record<Locale, {
+  pageTitle: string;
+  pageSubtitle: string;
+  filter: string;
+  newOpportunity: string;
+  statTotalPipeline: string;
+  statWeighted: string;
+  statHot: string;
+  statClosedThisMonth: string;
+  searchPlaceholder: string;
+  emptyStage: string;
+  days: string;
+  daysInStage: string;
+  drawerContact: string;
+  drawerValue: string;
+  drawerProbability: string;
+  drawerNextAction: string;
+  drawerStageInfo: string;
+  drawerAdvance: string;
+  drawerEdit: string;
+  stagePotential: string;
+  stageQualified: string;
+  stageProposal: string;
+  stageNegotiation: string;
+  stageClosed: string;
+}> = {
+  az: {
+    pageTitle: 'Holdinq Layihə Hunisi',
+    pageSubtitle: 'İnvestisiya fürsətləri və deal flow idarəetməsi',
+    filter: 'Filtrele',
+    newOpportunity: 'Yeni Fürsət',
+    statTotalPipeline: 'Ümumi Pipeline',
+    statWeighted: 'Çəkili Dəyər',
+    statHot: 'İsti Fürsətlər',
+    statClosedThisMonth: 'Bu Ay Bağlanan',
+    searchPlaceholder: 'Fürsət axtar...',
+    emptyStage: 'Bu mərhələdə fürsət yoxdur',
+    days: 'gün',
+    daysInStage: 'gündür bu mərhələdə',
+    drawerContact: 'Əlaqə',
+    drawerValue: 'Dəyər',
+    drawerProbability: 'Ehtimal',
+    drawerNextAction: 'Növbəti Aksiya',
+    drawerStageInfo: 'Mərhələ Məlumatı',
+    drawerAdvance: 'Mərhələni İrəlilət',
+    drawerEdit: 'Düzəlt',
+    stagePotential: 'Potensial',
+    stageQualified: 'Keyfiyyətli',
+    stageProposal: 'Təklif',
+    stageNegotiation: 'Danışıqlar',
+    stageClosed: 'Bağlandı',
+  },
+  ru: {
+    pageTitle: 'Воронка проектов холдинга',
+    pageSubtitle: 'Управление инвестиционными возможностями и потоком сделок',
+    filter: 'Фильтр',
+    newOpportunity: 'Новая возможность',
+    statTotalPipeline: 'Общий Pipeline',
+    statWeighted: 'Взвешенная стоимость',
+    statHot: 'Горячие сделки',
+    statClosedThisMonth: 'Закрыто в этом месяце',
+    searchPlaceholder: 'Поиск возможностей...',
+    emptyStage: 'На этом этапе нет возможностей',
+    days: 'дн.',
+    daysInStage: 'дней на этом этапе',
+    drawerContact: 'Контакт',
+    drawerValue: 'Стоимость',
+    drawerProbability: 'Вероятность',
+    drawerNextAction: 'Следующее действие',
+    drawerStageInfo: 'Информация о этапе',
+    drawerAdvance: 'Перейти на следующий этап',
+    drawerEdit: 'Редактировать',
+    stagePotential: 'Потенциал',
+    stageQualified: 'Квалифицированный',
+    stageProposal: 'Предложение',
+    stageNegotiation: 'Переговоры',
+    stageClosed: 'Закрыто',
+  },
+  en: {
+    pageTitle: 'Holding Project Pipeline',
+    pageSubtitle: 'Investment opportunities and deal flow management',
+    filter: 'Filter',
+    newOpportunity: 'New Opportunity',
+    statTotalPipeline: 'Total Pipeline',
+    statWeighted: 'Weighted Value',
+    statHot: 'Hot Opportunities',
+    statClosedThisMonth: 'Closed This Month',
+    searchPlaceholder: 'Search opportunities...',
+    emptyStage: 'No opportunities at this stage',
+    days: 'days',
+    daysInStage: 'days in this stage',
+    drawerContact: 'Contact',
+    drawerValue: 'Value',
+    drawerProbability: 'Probability',
+    drawerNextAction: 'Next Action',
+    drawerStageInfo: 'Stage Info',
+    drawerAdvance: 'Advance Stage',
+    drawerEdit: 'Edit',
+    stagePotential: 'Potential',
+    stageQualified: 'Qualified',
+    stageProposal: 'Proposal',
+    stageNegotiation: 'Negotiation',
+    stageClosed: 'Closed',
+  },
+  tr: {
+    pageTitle: 'Holding Proje Hunisi',
+    pageSubtitle: 'Yatırım fırsatları ve deal flow yönetimi',
+    filter: 'Filtrele',
+    newOpportunity: 'Yeni Fırsat',
+    statTotalPipeline: 'Toplam Pipeline',
+    statWeighted: 'Ağırlıklı Değer',
+    statHot: 'Sıcak Fırsatlar',
+    statClosedThisMonth: 'Bu Ay Kapanan',
+    searchPlaceholder: 'Fırsat ara...',
+    emptyStage: 'Bu aşamada fırsat yok',
+    days: 'gün',
+    daysInStage: 'gündür bu aşamada',
+    drawerContact: 'İletişim',
+    drawerValue: 'Değer',
+    drawerProbability: 'Olasılık',
+    drawerNextAction: 'Sonraki Aksiyon',
+    drawerStageInfo: 'Aşama Bilgisi',
+    drawerAdvance: 'Aşamayı İlerlet',
+    drawerEdit: 'Düzenle',
+    stagePotential: 'Potansiyel',
+    stageQualified: 'Nitelikli',
+    stageProposal: 'Teklif',
+    stageNegotiation: 'Müzakere',
+    stageClosed: 'Kapandı',
+  },
+};
 
 interface Deal {
   id: string;
@@ -43,14 +177,6 @@ interface Deal {
   nextAction: string;
   nextActionDate: string;
 }
-
-const stages = [
-  { id: 'leads', name: 'Potansiyel', color: 'bg-gray-600' },
-  { id: 'qualified', name: 'Nitelikli', color: 'bg-blue-600' },
-  { id: 'proposal', name: 'Teklif', color: 'bg-amber-600' },
-  { id: 'negotiation', name: 'Müzakere', color: 'bg-purple-600' },
-  { id: 'closed', name: 'Kapandı', color: 'bg-green-600' },
-];
 
 const deals: Deal[] = [
   {
@@ -209,6 +335,18 @@ const deals: Deal[] = [
 ];
 
 export default function PipelinePage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
+  const stages = [
+    { id: 'leads', name: copy.stagePotential, color: 'bg-gray-600' },
+    { id: 'qualified', name: copy.stageQualified, color: 'bg-blue-600' },
+    { id: 'proposal', name: copy.stageProposal, color: 'bg-amber-600' },
+    { id: 'negotiation', name: copy.stageNegotiation, color: 'bg-purple-600' },
+    { id: 'closed', name: copy.stageClosed, color: 'bg-green-600' },
+  ];
+
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -232,17 +370,17 @@ export default function PipelinePage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Holding Proje Hunisi</h1>
-          <p className="text-sm text-gray-500 mt-1">Yatırım fırsatları ve deal flow yönetimi</p>
+          <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
+          <p className="text-sm text-gray-500 mt-1">{copy.pageSubtitle}</p>
         </div>
         <div className="flex items-center gap-3">
           <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl hover:bg-gray-50">
             <Filter size={16} className="text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">Filtrele</span>
+            <span className="text-sm font-medium text-gray-700">{copy.filter}</span>
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700">
+          <button className="flex items-center gap-2 px-4 py-2 bg-dk-red text-white rounded-xl hover:bg-dk-red-strong">
             <Plus size={16} />
-            <span className="text-sm font-bold">Yeni Fırsat</span>
+            <span className="text-sm font-bold">{copy.newOpportunity}</span>
           </button>
         </div>
       </div>
@@ -252,28 +390,28 @@ export default function PipelinePage() {
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <BarChart3 size={16} />
-            <span className="text-xs font-medium">Toplam Pipeline</span>
+            <span className="text-xs font-medium">{copy.statTotalPipeline}</span>
           </div>
           <p className="text-2xl font-bold text-gray-900">{(totalPipeline / 1000000).toFixed(1)}M ₼</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <Target size={16} />
-            <span className="text-xs font-medium">Ağırlıklı Değer</span>
+            <span className="text-xs font-medium">{copy.statWeighted}</span>
           </div>
           <p className="text-2xl font-bold text-green-600">{(weightedPipeline / 1000000).toFixed(2)}M ₼</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <Flame size={16} />
-            <span className="text-xs font-medium">Sıcak Fırsatlar</span>
+            <span className="text-xs font-medium">{copy.statHot}</span>
           </div>
           <p className="text-2xl font-bold text-orange-600">{deals.filter(d => d.hot).length}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <TrendingUp size={16} />
-            <span className="text-xs font-medium">Bu Ay Kapanan</span>
+            <span className="text-xs font-medium">{copy.statClosedThisMonth}</span>
           </div>
           <p className="text-2xl font-bold text-purple-600">{deals.filter(d => d.stage === 'closed').length}</p>
         </div>
@@ -286,8 +424,8 @@ export default function PipelinePage() {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Fırsat ara..."
-          className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-red-500/20"
+          placeholder={copy.searchPlaceholder}
+          className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
         />
       </div>
 
@@ -346,7 +484,7 @@ export default function PipelinePage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1 text-xs text-gray-400">
                           <Clock size={12} />
-                          {deal.daysInStage} gün
+                          {deal.daysInStage} {copy.days}
                         </div>
                         <span className={`px-2 py-0.5 rounded text-xs font-medium ${
                           deal.category === 'Devir' ? 'bg-blue-50 text-blue-700' :
@@ -363,7 +501,7 @@ export default function PipelinePage() {
 
                 {stageDeals.length === 0 && (
                   <div className="text-center py-8 text-gray-400">
-                    <p className="text-sm">Bu aşamada fırsat yok</p>
+                    <p className="text-sm">{copy.emptyStage}</p>
                   </div>
                 )}
               </div>
@@ -399,20 +537,20 @@ export default function PipelinePage() {
               {/* Value & Stage */}
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-green-50 rounded-xl p-4">
-                  <p className="text-xs text-green-600 font-medium mb-1">Değer</p>
+                  <p className="text-xs text-green-600 font-medium mb-1">{copy.drawerValue}</p>
                   <p className="text-2xl font-bold text-green-700">
                     {(selectedDeal.value / 1000).toFixed(0)}K ₼
                   </p>
                 </div>
                 <div className="bg-purple-50 rounded-xl p-4">
-                  <p className="text-xs text-purple-600 font-medium mb-1">Olasılık</p>
+                  <p className="text-xs text-purple-600 font-medium mb-1">{copy.drawerProbability}</p>
                   <p className="text-2xl font-bold text-purple-700">%{selectedDeal.probability}</p>
                 </div>
               </div>
 
               {/* Contact Info */}
               <div className="bg-gray-50 rounded-xl p-4 mb-6">
-                <h3 className="font-semibold text-gray-900 mb-3">İletişim</h3>
+                <h3 className="font-semibold text-gray-900 mb-3">{copy.drawerContact}</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <User size={16} className="text-gray-400" />
@@ -437,7 +575,7 @@ export default function PipelinePage() {
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertCircle size={16} className="text-amber-600" />
-                  <h3 className="font-semibold text-amber-800">Sonraki Aksiyon</h3>
+                  <h3 className="font-semibold text-amber-800">{copy.drawerNextAction}</h3>
                 </div>
                 <p className="text-sm text-amber-700 mb-2">{selectedDeal.nextAction}</p>
                 <div className="flex items-center gap-2 text-xs text-amber-600">
@@ -448,24 +586,24 @@ export default function PipelinePage() {
 
               {/* Stage Info */}
               <div className="mb-6">
-                <h3 className="font-semibold text-gray-900 mb-3">Aşama Bilgisi</h3>
+                <h3 className="font-semibold text-gray-900 mb-3">{copy.drawerStageInfo}</h3>
                 <div className="flex items-center gap-4">
                   <span className={`px-3 py-1.5 rounded-lg text-white text-sm font-medium ${
                     stages.find(s => s.id === selectedDeal.stage)?.color || 'bg-gray-500'
                   }`}>
                     {stages.find(s => s.id === selectedDeal.stage)?.name}
                   </span>
-                  <span className="text-sm text-gray-500">{selectedDeal.daysInStage} gündür bu aşamada</span>
+                  <span className="text-sm text-gray-500">{selectedDeal.daysInStage} {copy.daysInStage}</span>
                 </div>
               </div>
 
               {/* Actions */}
               <div className="flex gap-3">
-                <button className="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-colors">
-                  Aşamayı İlerlet
+                <button className="flex-1 px-4 py-3 bg-dk-red text-white rounded-xl font-semibold hover:bg-dk-red-strong transition-colors">
+                  {copy.drawerAdvance}
                 </button>
                 <button className="px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors">
-                  Düzenle
+                  {copy.drawerEdit}
                 </button>
               </div>
             </div>

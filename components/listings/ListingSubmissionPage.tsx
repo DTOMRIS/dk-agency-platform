@@ -98,7 +98,6 @@ export default function ListingSubmissionPage() {
       coverId,
     };
 
-    console.log('listing_submit', payload);
     setSubmittedCode(trackingCode);
     setStep(6);
   };

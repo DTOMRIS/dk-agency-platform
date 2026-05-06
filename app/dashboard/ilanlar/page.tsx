@@ -2,21 +2,176 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import { getStatusBadge } from '@/lib/utils/listingStatus';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 const PAGE_SIZE = 20;
 
 const STATUS_FILTERS = [
-  { key: 'all', label: 'Hamisi', apiStatus: 'all' },
-  { key: 'submitted', label: 'Submitted', apiStatus: 'submitted' },
-  { key: 'ai_checked', label: 'AI checked', apiStatus: 'ai_checked' },
-  { key: 'committee_review', label: 'Committee review', apiStatus: 'committee_review' },
-  { key: 'showcase_ready', label: 'Vitrinde', apiStatus: 'showcase_ready' },
-  { key: 'rejected', label: 'Redd', apiStatus: 'rejected' },
+  { key: 'all', apiStatus: 'all' },
+  { key: 'submitted', apiStatus: 'submitted' },
+  { key: 'ai_checked', apiStatus: 'ai_checked' },
+  { key: 'committee_review', apiStatus: 'committee_review' },
+  { key: 'showcase_ready', apiStatus: 'showcase_ready' },
+  { key: 'rejected', apiStatus: 'rejected' },
 ] as const;
+
+const pageCopy: Record<
+  Locale,
+  {
+    pageTitle: string;
+    pageSubtitle: string;
+    searchPlaceholder: string;
+    statTotal: string;
+    statPending: string;
+    statShowcase: string;
+    statRejected: string;
+    colTrackingCode: string;
+    colTitle: string;
+    colCategory: string;
+    colCity: string;
+    colPrice: string;
+    colStatus: string;
+    colDate: string;
+    colReview: string;
+    reviewAction: string;
+    emptyState: string;
+    loading: string;
+    paginationSummary: (total: number, current: number, pages: number) => string;
+    prevPage: string;
+    nextPage: string;
+    statusLabels: Record<string, string>;
+  }
+> = {
+  az: {
+    pageTitle: 'Elan idarəetmə',
+    pageSubtitle: 'Listing siyahısı DB sorğusu, status filteri, axtarış və səhifələmə ilə işləyir.',
+    searchPlaceholder: 'Başlıq və ya tracking code ilə axtar',
+    statTotal: 'Ümumi elan sayı',
+    statPending: 'Gözləyən',
+    statShowcase: 'Vitrində',
+    statRejected: 'Rədd',
+    colTrackingCode: 'Tracking code',
+    colTitle: 'Başlıq',
+    colCategory: 'Kateqoriya',
+    colCity: 'Şəhər',
+    colPrice: 'Qiymət',
+    colStatus: 'Status',
+    colDate: 'Tarix',
+    colReview: 'İncələ',
+    reviewAction: 'İncələ →',
+    emptyState: 'Bu filtrə uyğun elan tapılmadı.',
+    loading: 'Yüklənir...',
+    paginationSummary: (total, current, pages) => `${total} nəticə, səhifə ${current}/${pages}`,
+    prevPage: 'Geri',
+    nextPage: 'İrəli',
+    statusLabels: {
+      all: 'Hamısı',
+      submitted: 'Göndərildi',
+      ai_checked: 'AI yoxlandı',
+      committee_review: 'Komitə baxışı',
+      showcase_ready: 'Vitrində',
+      rejected: 'Rədd',
+    },
+  },
+  ru: {
+    pageTitle: 'Управление объявлениями',
+    pageSubtitle: 'Список объявлений работает с DB-запросом, фильтром статуса, поиском и пагинацией.',
+    searchPlaceholder: 'Поиск по заголовку или tracking code',
+    statTotal: 'Всего объявлений',
+    statPending: 'Ожидающие',
+    statShowcase: 'В витрине',
+    statRejected: 'Отклонённые',
+    colTrackingCode: 'Tracking code',
+    colTitle: 'Заголовок',
+    colCategory: 'Категория',
+    colCity: 'Город',
+    colPrice: 'Цена',
+    colStatus: 'Статус',
+    colDate: 'Дата',
+    colReview: 'Просмотр',
+    reviewAction: 'Просмотр →',
+    emptyState: 'Объявления по данному фильтру не найдены.',
+    loading: 'Загрузка...',
+    paginationSummary: (total, current, pages) => `${total} результатов, страница ${current}/${pages}`,
+    prevPage: 'Назад',
+    nextPage: 'Вперёд',
+    statusLabels: {
+      all: 'Все',
+      submitted: 'Отправлено',
+      ai_checked: 'Проверено AI',
+      committee_review: 'На рассмотрении',
+      showcase_ready: 'В витрине',
+      rejected: 'Отклонено',
+    },
+  },
+  en: {
+    pageTitle: 'Listing Management',
+    pageSubtitle: 'The listing table is powered by DB queries with status filtering, search, and pagination.',
+    searchPlaceholder: 'Search by title or tracking code',
+    statTotal: 'Total listings',
+    statPending: 'Pending',
+    statShowcase: 'In showcase',
+    statRejected: 'Rejected',
+    colTrackingCode: 'Tracking code',
+    colTitle: 'Title',
+    colCategory: 'Category',
+    colCity: 'City',
+    colPrice: 'Price',
+    colStatus: 'Status',
+    colDate: 'Date',
+    colReview: 'Review',
+    reviewAction: 'Review →',
+    emptyState: 'No listings found for this filter.',
+    loading: 'Loading...',
+    paginationSummary: (total, current, pages) => `${total} results, page ${current}/${pages}`,
+    prevPage: 'Back',
+    nextPage: 'Next',
+    statusLabels: {
+      all: 'All',
+      submitted: 'Submitted',
+      ai_checked: 'AI checked',
+      committee_review: 'Committee review',
+      showcase_ready: 'In showcase',
+      rejected: 'Rejected',
+    },
+  },
+  tr: {
+    pageTitle: 'İlan Yönetimi',
+    pageSubtitle: 'İlan listesi DB sorgusu, durum filtresi, arama ve sayfalama ile çalışır.',
+    searchPlaceholder: 'Başlık veya tracking code ile ara',
+    statTotal: 'Toplam ilan sayısı',
+    statPending: 'Bekleyen',
+    statShowcase: 'Vitirinde',
+    statRejected: 'Reddedilen',
+    colTrackingCode: 'Tracking code',
+    colTitle: 'Başlık',
+    colCategory: 'Kategori',
+    colCity: 'Şehir',
+    colPrice: 'Fiyat',
+    colStatus: 'Durum',
+    colDate: 'Tarih',
+    colReview: 'İncele',
+    reviewAction: 'İncele →',
+    emptyState: 'Bu filtreye uygun ilan bulunamadı.',
+    loading: 'Yükleniyor...',
+    paginationSummary: (total, current, pages) => `${total} sonuç, sayfa ${current}/${pages}`,
+    prevPage: 'Geri',
+    nextPage: 'İleri',
+    statusLabels: {
+      all: 'Hepsi',
+      submitted: 'Gönderildi',
+      ai_checked: 'AI kontrol edildi',
+      committee_review: 'Komite incelemesi',
+      showcase_ready: 'Vitirinde',
+      rejected: 'Reddedildi',
+    },
+  },
+};
 
 type StatusFilter = (typeof STATUS_FILTERS)[number]['key'];
 
@@ -34,6 +189,10 @@ function formatDate(value: string) {
 }
 
 export default function DashboardIlanlarPage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
   const [listings, setListings] = useState<MockListing[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -112,9 +271,9 @@ export default function DashboardIlanlarPage() {
             <span className="inline-flex rounded-full bg-slate-900 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
               OCAQ
             </span>
-            <h1 className="mt-4 font-display text-4xl font-black text-[var(--dk-navy)]">Elan idareetme</h1>
+            <h1 className="mt-4 font-display text-4xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
             <p className="mt-2 text-sm text-slate-500">
-              Listing siyahisi artik DB query, status filter, search ve pagination ile isleyir.
+              {copy.pageSubtitle}
             </p>
           </div>
 
@@ -126,7 +285,7 @@ export default function DashboardIlanlarPage() {
                 setSearch(event.target.value);
                 setPage(1);
               }}
-              placeholder="Basliq ve ya tracking code ile axtar"
+              placeholder={copy.searchPlaceholder}
               className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
             />
           </div>
@@ -134,10 +293,10 @@ export default function DashboardIlanlarPage() {
 
         <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {[
-            { label: 'Umumi elan sayi', value: stats.total, tone: 'bg-slate-100 text-slate-700' },
-            { label: 'Gozleyen', value: stats.pending, tone: 'bg-amber-50 text-amber-700' },
-            { label: 'Vitrinde', value: stats.showcase, tone: 'bg-emerald-50 text-emerald-700' },
-            { label: 'Redd', value: stats.rejected, tone: 'bg-rose-50 text-rose-700' },
+            { label: copy.statTotal, value: stats.total, tone: 'bg-slate-100 text-slate-700' },
+            { label: copy.statPending, value: stats.pending, tone: 'bg-amber-50 text-amber-700' },
+            { label: copy.statShowcase, value: stats.showcase, tone: 'bg-emerald-50 text-emerald-700' },
+            { label: copy.statRejected, value: stats.rejected, tone: 'bg-rose-50 text-rose-700' },
           ].map((card) => (
             <div key={card.label} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
               <div className={`inline-flex rounded-2xl px-3 py-2 text-xs font-bold ${card.tone}`}>
@@ -163,7 +322,7 @@ export default function DashboardIlanlarPage() {
                   : 'border border-slate-200 bg-white text-slate-600 hover:border-[var(--dk-gold)]'
               }`}
             >
-              {tab.label}
+              {copy.statusLabels[tab.key] ?? tab.key}
             </button>
           ))}
         </div>
@@ -173,14 +332,14 @@ export default function DashboardIlanlarPage() {
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="bg-slate-50">
                 <tr className="text-left text-xs font-black uppercase tracking-[0.16em] text-slate-500">
-                  <th className="px-5 py-4">Tracking code</th>
-                  <th className="px-5 py-4">Basliq</th>
-                  <th className="px-5 py-4">Kategoriya</th>
-                  <th className="px-5 py-4">Seher</th>
-                  <th className="px-5 py-4">Qiymet</th>
-                  <th className="px-5 py-4">Status</th>
-                  <th className="px-5 py-4">Tarix</th>
-                  <th className="px-5 py-4">Incele</th>
+                  <th className="px-5 py-4">{copy.colTrackingCode}</th>
+                  <th className="px-5 py-4">{copy.colTitle}</th>
+                  <th className="px-5 py-4">{copy.colCategory}</th>
+                  <th className="px-5 py-4">{copy.colCity}</th>
+                  <th className="px-5 py-4">{copy.colPrice}</th>
+                  <th className="px-5 py-4">{copy.colStatus}</th>
+                  <th className="px-5 py-4">{copy.colDate}</th>
+                  <th className="px-5 py-4">{copy.colReview}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -214,7 +373,7 @@ export default function DashboardIlanlarPage() {
                           href={`/dashboard/ilanlar/${listing.id}`}
                           className="inline-flex rounded-full bg-[var(--dk-red)] px-4 py-2 text-xs font-bold text-white"
                         >
-                          Incele →
+                          {copy.reviewAction}
                         </Link>
                       </td>
                     </tr>
@@ -225,12 +384,12 @@ export default function DashboardIlanlarPage() {
           </div>
 
           {!loading && listings.length === 0 ? (
-            <div className="px-6 py-12 text-center text-sm text-slate-500">Bu filtre uygun elan tapilmadi.</div>
+            <div className="px-6 py-12 text-center text-sm text-slate-500">{copy.emptyState}</div>
           ) : null}
 
           <div className="flex items-center justify-between border-t border-slate-200 px-5 py-4">
             <p className="text-sm text-slate-500">
-              {loading ? 'Yuklenir...' : `${total} netice, sehife ${currentPage}/${totalPages}`}
+              {loading ? copy.loading : copy.paginationSummary(total, currentPage, totalPages)}
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -240,7 +399,7 @@ export default function DashboardIlanlarPage() {
                 className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 disabled:opacity-40"
               >
                 <ChevronLeft className="h-4 w-4" />
-                Geri
+                {copy.prevPage}
               </button>
               <button
                 type="button"
@@ -248,7 +407,7 @@ export default function DashboardIlanlarPage() {
                 onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
                 className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 disabled:opacity-40"
               >
-                Ireli
+                {copy.nextPage}
                 <ChevronRight className="h-4 w-4" />
               </button>
             </div>

@@ -251,7 +251,6 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
   const uploadImagesIfPossible = async (trackingCode: string) => {
     const hasPublicCloud = Boolean(process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
     if (!hasPublicCloud) {
-      console.log('Images would upload:', images.length);
       return [];
     }
 
@@ -298,12 +297,6 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
         return;
       }
       // Email notification is handled server-side in /api/listings POST
-      console.log('Listing submitted:', {
-        trackingCode,
-        ...formData,
-        images: images.map((image) => image.file.name),
-        uploadedImages,
-      });
       setSubmittedCode(trackingCode);
       pushToast('Elanınız uğurla göndərildi!');
     } finally {

@@ -6,6 +6,8 @@ import { users, loginLogs, emailVerificationTokens, passwordResetTokens } from '
 import { signToken, verifyToken, AUTH_COOKIE_NAME, authCookieOptions } from '@/lib/auth/jwt';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
+import { normalizeLocale } from '@/i18n/config';
+import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 function normalizeEmail(value: string) {
   return value.trim().toLowerCase();
@@ -16,6 +18,21 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { action } = body;
+    const ip = getClientIp(request);
+
+    // Rate limit sensitive actions
+    if (action === 'login') {
+      const rl = checkRateLimit(`auth-login:${ip}`, RATE_LIMITS.authLogin);
+      if (!rl.success) return rateLimitExceeded(rl);
+    }
+    if (action === 'register') {
+      const rl = checkRateLimit(`auth-register:${ip}`, RATE_LIMITS.authRegister);
+      if (!rl.success) return rateLimitExceeded(rl);
+    }
+    if (action === 'password-reset-request') {
+      const rl = checkRateLimit(`auth-forgot:${ip}`, RATE_LIMITS.authForgotPassword);
+      if (!rl.success) return rateLimitExceeded(rl);
+    }
 
     switch (action) {
       case 'login':
@@ -172,7 +189,9 @@ async function handleRegister(data: Record<string, unknown>) {
   });
 
   const confirmUrl = `${getBaseUrl()}/api/auth/confirm?token=${verifyToken}`;
-  await sendEmail(email, emailTemplates.emailVerification(confirmUrl, name));
+  const locale = normalizeLocale(String(data.locale || ''));
+
+  await sendEmail(email, emailTemplates.emailVerification(confirmUrl, name, locale));
 
   return NextResponse.json({
     success: true,
@@ -203,8 +222,9 @@ async function handlePasswordResetRequest(data: Record<string, unknown>) {
       expiresAt: new Date(Date.now() + 60 * 60 * 1000), // 1 hour
     });
 
+    const locale = normalizeLocale(String(data.locale || ''));
     const resetUrl = `${getBaseUrl()}/reset-password?token=${token}`;
-    await sendEmail(email, emailTemplates.passwordReset(resetUrl, user.name));
+    await sendEmail(email, emailTemplates.passwordReset(resetUrl, email, locale));
   }
 
   // Always return success to prevent email enumeration

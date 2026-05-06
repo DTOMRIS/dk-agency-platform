@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://dkagency.az/sitemap.xml",
-    host: "https://dkagency.az",
+    sitemap: "https://dkagency.com.tr/sitemap.xml",
+    host: "https://dkagency.com.tr",
   };
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   ArrowLeft,
   Camera,
@@ -18,6 +19,189 @@ import {
   Trash2,
   X,
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
+
+// ── i18n ────────────────────────────────────────────────────────────
+
+const pageCopy: Record<Locale, {
+  pageTitle: string;
+  pageSubtitle: string;
+  newAudit: string;
+  filterAll: string;
+  searchPlaceholder: string;
+  emptyState: string;
+  aiPending: string;
+  // status labels
+  statusDraft: string;
+  statusSent: string;
+  statusMeeting: string;
+  statusConverted: string;
+  statusRejected: string;
+  // new audit view
+  back: string;
+  newAuditTitle: string;
+  fieldName: string;
+  fieldAddress: string;
+  fieldPhone: string;
+  fieldCategory: string;
+  fieldPhotos: string;
+  photoHint: string;
+  analyzing: string;
+  createAudit: string;
+  errorNameRequired: string;
+  // detail view
+  sectionSummary: string;
+  estimatedRevenue: string;
+  sectionStrengths: string;
+  sectionWeaknesses: string;
+  sectionCritical: string;
+  sectionRecommendations: string;
+  copied: string;
+  whatsappTemplate: string;
+  pdfExport: string;
+  sectionHistory: string;
+}> = {
+  az: {
+    pageTitle: 'Restoran Auditor',
+    pageSubtitle: 'Foto-əsaslı AI audit və satış axını',
+    newAudit: 'Yeni Audit',
+    filterAll: 'Hamısı',
+    searchPlaceholder: 'Axtar...',
+    emptyState: 'Audit tapılmadı. "Yeni Audit" ilə başlayın.',
+    aiPending: 'AI analizi gözlənilir...',
+    statusDraft: 'Qaralama',
+    statusSent: 'Göndərildi',
+    statusMeeting: 'Görüş',
+    statusConverted: 'Müştəri',
+    statusRejected: 'Rədd',
+    back: 'Geri',
+    newAuditTitle: 'Yeni Audit',
+    fieldName: 'Restoran adı *',
+    fieldAddress: 'Ünvan',
+    fieldPhone: 'Telefon',
+    fieldCategory: 'Kateqoriya',
+    fieldPhotos: 'Fotolar',
+    photoHint: 'Xarici görünüş, daxili, menyu — max 5 foto',
+    analyzing: 'AI analiz edir...',
+    createAudit: 'Audit yarat',
+    errorNameRequired: 'Restoran adı məcburidir',
+    sectionSummary: 'Xülasə',
+    estimatedRevenue: 'Təxmini aylıq gəlir:',
+    sectionStrengths: 'Güclü tərəflər',
+    sectionWeaknesses: 'Zəif tərəflər',
+    sectionCritical: 'Kritik problemlər',
+    sectionRecommendations: 'Tövsiyələr',
+    copied: 'Kopyalandı!',
+    whatsappTemplate: 'WhatsApp şablonu',
+    pdfExport: 'PDF ixrac',
+    sectionHistory: 'Tarixçə',
+  },
+  ru: {
+    pageTitle: 'Аудит ресторанов',
+    pageSubtitle: 'AI-аудит на основе фото и воронка продаж',
+    newAudit: 'Новый аудит',
+    filterAll: 'Все',
+    searchPlaceholder: 'Поиск...',
+    emptyState: 'Аудиты не найдены. Нажмите «Новый аудит» для начала.',
+    aiPending: 'Ожидание AI-анализа...',
+    statusDraft: 'Черновик',
+    statusSent: 'Отправлено',
+    statusMeeting: 'Встреча',
+    statusConverted: 'Клиент',
+    statusRejected: 'Отклонено',
+    back: 'Назад',
+    newAuditTitle: 'Новый аудит',
+    fieldName: 'Название ресторана *',
+    fieldAddress: 'Адрес',
+    fieldPhone: 'Телефон',
+    fieldCategory: 'Категория',
+    fieldPhotos: 'Фотографии',
+    photoHint: 'Внешний вид, интерьер, меню — макс. 5 фото',
+    analyzing: 'AI анализирует...',
+    createAudit: 'Создать аудит',
+    errorNameRequired: 'Название ресторана обязательно',
+    sectionSummary: 'Резюме',
+    estimatedRevenue: 'Примерная ежемесячная выручка:',
+    sectionStrengths: 'Сильные стороны',
+    sectionWeaknesses: 'Слабые стороны',
+    sectionCritical: 'Критические проблемы',
+    sectionRecommendations: 'Рекомендации',
+    copied: 'Скопировано!',
+    whatsappTemplate: 'Шаблон WhatsApp',
+    pdfExport: 'Экспорт PDF',
+    sectionHistory: 'История',
+  },
+  en: {
+    pageTitle: 'Restaurant Auditor',
+    pageSubtitle: 'Photo-based AI audit and sales pipeline',
+    newAudit: 'New Audit',
+    filterAll: 'All',
+    searchPlaceholder: 'Search...',
+    emptyState: 'No audits found. Click "New Audit" to get started.',
+    aiPending: 'Awaiting AI analysis...',
+    statusDraft: 'Draft',
+    statusSent: 'Sent',
+    statusMeeting: 'Meeting',
+    statusConverted: 'Client',
+    statusRejected: 'Rejected',
+    back: 'Back',
+    newAuditTitle: 'New Audit',
+    fieldName: 'Restaurant name *',
+    fieldAddress: 'Address',
+    fieldPhone: 'Phone',
+    fieldCategory: 'Category',
+    fieldPhotos: 'Photos',
+    photoHint: 'Exterior, interior, menu — max 5 photos',
+    analyzing: 'AI analyzing...',
+    createAudit: 'Create Audit',
+    errorNameRequired: 'Restaurant name is required',
+    sectionSummary: 'Summary',
+    estimatedRevenue: 'Estimated monthly revenue:',
+    sectionStrengths: 'Strengths',
+    sectionWeaknesses: 'Weaknesses',
+    sectionCritical: 'Critical issues',
+    sectionRecommendations: 'Recommendations',
+    copied: 'Copied!',
+    whatsappTemplate: 'WhatsApp template',
+    pdfExport: 'Export PDF',
+    sectionHistory: 'History',
+  },
+  tr: {
+    pageTitle: 'Restoran Denetçisi',
+    pageSubtitle: 'Fotoğraf tabanlı AI denetimi ve satış hunisi',
+    newAudit: 'Yeni Denetim',
+    filterAll: 'Tümü',
+    searchPlaceholder: 'Ara...',
+    emptyState: 'Denetim bulunamadı. Başlamak için "Yeni Denetim"e tıklayın.',
+    aiPending: 'AI analizi bekleniyor...',
+    statusDraft: 'Taslak',
+    statusSent: 'Gönderildi',
+    statusMeeting: 'Toplantı',
+    statusConverted: 'Müşteri',
+    statusRejected: 'Reddedildi',
+    back: 'Geri',
+    newAuditTitle: 'Yeni Denetim',
+    fieldName: 'Restoran adı *',
+    fieldAddress: 'Adres',
+    fieldPhone: 'Telefon',
+    fieldCategory: 'Kategori',
+    fieldPhotos: 'Fotoğraflar',
+    photoHint: 'Dış görünüş, iç mekan, menü — maks. 5 fotoğraf',
+    analyzing: 'AI analiz ediyor...',
+    createAudit: 'Denetim oluştur',
+    errorNameRequired: 'Restoran adı zorunludur',
+    sectionSummary: 'Özet',
+    estimatedRevenue: 'Tahmini aylık gelir:',
+    sectionStrengths: 'Güçlü yönler',
+    sectionWeaknesses: 'Zayıf yönler',
+    sectionCritical: 'Kritik sorunlar',
+    sectionRecommendations: 'Öneriler',
+    copied: 'Kopyalandı!',
+    whatsappTemplate: 'WhatsApp şablonu',
+    pdfExport: 'PDF dışa aktar',
+    sectionHistory: 'Geçmiş',
+  },
+};
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -69,13 +253,17 @@ const CATEGORIES = [
   { key: 'fine-dining', label: 'Fine Dining' },
 ] as const;
 
-const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  draft: { label: 'Qaralama', color: 'text-slate-600', bg: 'bg-slate-100' },
-  sent: { label: 'Göndərildi', color: 'text-blue-600', bg: 'bg-blue-100' },
-  meeting: { label: 'Görüş', color: 'text-amber-600', bg: 'bg-amber-100' },
-  converted: { label: 'Müştəri', color: 'text-emerald-600', bg: 'bg-emerald-100' },
-  rejected: { label: 'Rədd', color: 'text-red-600', bg: 'bg-red-100' },
-};
+type StatusConfig = Record<string, { label: string; color: string; bg: string }>;
+
+function buildStatusConfig(copy: (typeof pageCopy)[Locale]): StatusConfig {
+  return {
+    draft: { label: copy.statusDraft, color: 'text-slate-600', bg: 'bg-slate-100' },
+    sent: { label: copy.statusSent, color: 'text-blue-600', bg: 'bg-blue-100' },
+    meeting: { label: copy.statusMeeting, color: 'text-amber-600', bg: 'bg-amber-100' },
+    converted: { label: copy.statusConverted, color: 'text-emerald-600', bg: 'bg-emerald-100' },
+    rejected: { label: copy.statusRejected, color: 'text-red-600', bg: 'bg-red-100' },
+  };
+}
 
 const STATUSES = ['draft', 'sent', 'meeting', 'converted', 'rejected'] as const;
 
@@ -111,6 +299,11 @@ function formatDate(d: string) {
 // ── Main Component ──────────────────────────────────────────────────
 
 export default function AuditorDashboard() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+  const STATUS_CONFIG = buildStatusConfig(copy);
+
   const [view, setView] = useState<View>('list');
   const [audits, setAudits] = useState<AuditRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -151,11 +344,11 @@ export default function AuditorDashboard() {
   };
 
   if (view === 'new') {
-    return <NewAuditView onBack={() => setView('list')} onSuccess={handleNewAuditSuccess} />;
+    return <NewAuditView onBack={() => setView('list')} onSuccess={handleNewAuditSuccess} copy={copy} />;
   }
 
   if (view === 'detail' && selectedAuditId) {
-    return <DetailView auditId={selectedAuditId} onBack={() => setView('list')} onRefresh={fetchAudits} />;
+    return <DetailView auditId={selectedAuditId} onBack={() => setView('list')} onRefresh={fetchAudits} copy={copy} statusConfig={STATUS_CONFIG} />;
   }
 
   return (
@@ -163,22 +356,22 @@ export default function AuditorDashboard() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black text-[var(--dk-navy)]">Restoran Auditor</h1>
-          <p className="mt-1 text-sm text-slate-500">Foto-əsaslı AI audit və satış axını</p>
+          <h1 className="text-2xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
+          <p className="mt-1 text-sm text-slate-500">{copy.pageSubtitle}</p>
         </div>
         <button
           type="button"
           onClick={() => setView('new')}
           className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-navy)] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90 active:scale-[0.98]"
         >
-          <Plus size={16} /> Yeni Audit
+          <Plus size={16} /> {copy.newAudit}
         </button>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-2">
         {['all', ...STATUSES].map((s) => {
-          const cfg = s === 'all' ? { label: 'Hamısı', bg: 'bg-slate-100', color: 'text-slate-700' } : STATUS_CONFIG[s];
+          const cfg = s === 'all' ? { label: copy.filterAll, bg: 'bg-slate-100', color: 'text-slate-700' } : STATUS_CONFIG[s];
           const count = s === 'all' ? audits.length : audits.filter((a) => a.status === s).length;
           return (
             <button
@@ -199,7 +392,7 @@ export default function AuditorDashboard() {
           <Search size={14} className="text-slate-400" />
           <input
             type="text"
-            placeholder="Axtar..."
+            placeholder={copy.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-32 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400 sm:w-48"
@@ -217,11 +410,11 @@ export default function AuditorDashboard() {
           {audits
             .filter((a) => statusFilter === 'all' || a.status === statusFilter)
             .map((audit) => (
-              <AuditCard key={audit.id} audit={audit} onClick={() => openDetail(audit.id)} />
+              <AuditCard key={audit.id} audit={audit} onClick={() => openDetail(audit.id)} aiPending={copy.aiPending} statusConfig={STATUS_CONFIG} />
             ))}
           {audits.length === 0 && (
             <div className="col-span-full py-16 text-center text-sm text-slate-400">
-              Audit tapılmadı. "Yeni Audit" ilə başlayın.
+              {copy.emptyState}
             </div>
           )}
         </div>
@@ -232,9 +425,9 @@ export default function AuditorDashboard() {
 
 // ── Audit Card ──────────────────────────────────────────────────────
 
-function AuditCard({ audit, onClick }: { audit: AuditRow; onClick: () => void }) {
-  const cfg = STATUS_CONFIG[audit.status] ?? STATUS_CONFIG['draft'];
-  const summary = audit.aiAnalysis?.summary ?? 'AI analizi gözlənilir...';
+function AuditCard({ audit, onClick, aiPending, statusConfig }: { audit: AuditRow; onClick: () => void; aiPending: string; statusConfig: StatusConfig }) {
+  const cfg = statusConfig[audit.status] ?? statusConfig['draft'];
+  const summary = audit.aiAnalysis?.summary ?? aiPending;
 
   return (
     <button
@@ -279,7 +472,7 @@ function AuditCard({ audit, onClick }: { audit: AuditRow; onClick: () => void })
 
 // ── New Audit View (Mobile-first) ───────────────────────────────────
 
-function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a: AuditRow) => void }) {
+function NewAuditView({ onBack, onSuccess, copy }: { onBack: () => void; onSuccess: (a: AuditRow) => void; copy: (typeof pageCopy)[Locale] }) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
@@ -309,7 +502,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
   };
 
   const handleSubmit = async () => {
-    if (!name.trim()) { setError('Restoran adı məcburidir'); return; }
+    if (!name.trim()) { setError(copy.errorNameRequired); return; }
     setSubmitting(true);
     setError(null);
     setElapsed(0);
@@ -354,19 +547,19 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
   return (
     <div className="mx-auto max-w-lg space-y-5">
       <button type="button" onClick={onBack} className="flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} /> Geri
+        <ArrowLeft size={16} /> {copy.back}
       </button>
 
-      <h1 className="text-xl font-black text-[var(--dk-navy)]">Yeni Audit</h1>
+      <h1 className="text-xl font-black text-[var(--dk-navy)]">{copy.newAuditTitle}</h1>
 
       {/* Form */}
       <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5">
-        <Field label="Restoran adı *" value={name} onChange={setName} placeholder="Şuşa Restoran" />
-        <Field label="Ünvan" value={address} onChange={setAddress} placeholder="Nizami küç. 45, Bakı" />
-        <Field label="Telefon" value={phone} onChange={setPhone} placeholder="+994501234567" />
+        <Field label={copy.fieldName} value={name} onChange={setName} placeholder="Şuşa Restoran" />
+        <Field label={copy.fieldAddress} value={address} onChange={setAddress} placeholder="Nizami küç. 45, Bakı" />
+        <Field label={copy.fieldPhone} value={phone} onChange={setPhone} placeholder="+994501234567" />
 
         <div>
-          <label className="mb-1 block text-xs font-semibold text-slate-500">Kateqoriya</label>
+          <label className="mb-1 block text-xs font-semibold text-slate-500">{copy.fieldCategory}</label>
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((c) => (
               <button
@@ -387,7 +580,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
 
         {/* Photo Upload */}
         <div>
-          <label className="mb-1 block text-xs font-semibold text-slate-500">Fotolar</label>
+          <label className="mb-1 block text-xs font-semibold text-slate-500">{copy.fieldPhotos}</label>
           <div className="flex flex-wrap gap-2">
             {photos.map((url, i) => (
               <div key={i} className="group relative h-20 w-20 overflow-hidden rounded-xl bg-slate-100">
@@ -418,7 +611,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
             className="hidden"
             onChange={handlePhotoUpload}
           />
-          <p className="mt-1 text-[10px] text-slate-400">Xarici görünüş, daxili, menyu — max 5 foto</p>
+          <p className="mt-1 text-[10px] text-slate-400">{copy.photoHint}</p>
         </div>
 
         {/* Social & Delivery */}
@@ -445,11 +638,11 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
         {submitting ? (
           <>
             <Loader2 size={18} className="animate-spin" />
-            AI analiz edir... {elapsed}s
+            {copy.analyzing} {elapsed}s
           </>
         ) : (
           <>
-            <Check size={18} /> Audit yarat
+            <Check size={18} /> {copy.createAudit}
           </>
         )}
       </button>
@@ -459,7 +652,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
 
 // ── Detail View ─────────────────────────────────────────────────────
 
-function DetailView({ auditId, onBack, onRefresh }: { auditId: number; onBack: () => void; onRefresh: () => void }) {
+function DetailView({ auditId, onBack, onRefresh, copy, statusConfig }: { auditId: number; onBack: () => void; onRefresh: () => void; copy: (typeof pageCopy)[Locale]; statusConfig: StatusConfig }) {
   const [audit, setAudit] = useState<AuditDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -519,14 +712,14 @@ function DetailView({ auditId, onBack, onRefresh }: { auditId: number; onBack: (
   }
 
   const analysis = audit.aiAnalysis;
-  const cfg = STATUS_CONFIG[audit.status] ?? STATUS_CONFIG['draft'];
+  const cfg = statusConfig[audit.status] ?? statusConfig['draft'];
 
   return (
     <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
         <button type="button" onClick={onBack} className="flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-[var(--dk-navy)]">
-          <ArrowLeft size={16} /> Geri
+          <ArrowLeft size={16} /> {copy.back}
         </button>
         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${cfg.bg} ${cfg.color}`}>{cfg.label}</span>
       </div>
@@ -547,7 +740,7 @@ function DetailView({ auditId, onBack, onRefresh }: { auditId: number; onBack: (
       {/* Status Change */}
       <div className="flex flex-wrap gap-2">
         {STATUSES.map((s) => {
-          const sc = STATUS_CONFIG[s];
+          const sc = statusConfig[s];
           return (
             <button
               key={s}
@@ -570,30 +763,30 @@ function DetailView({ auditId, onBack, onRefresh }: { auditId: number; onBack: (
         <div className="space-y-4">
           {/* Summary */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <h2 className="mb-2 text-sm font-bold text-[var(--dk-navy)]">Xülasə</h2>
+            <h2 className="mb-2 text-sm font-bold text-[var(--dk-navy)]">{copy.sectionSummary}</h2>
             <p className="text-sm text-slate-600">{analysis.summary}</p>
             {analysis.estimatedRevenue && (
               <p className="mt-2 text-xs text-slate-400">
-                Təxmini aylıq gəlir: {analysis.estimatedRevenue.min.toLocaleString()}-{analysis.estimatedRevenue.max.toLocaleString()} {analysis.estimatedRevenue.currency}
+                {copy.estimatedRevenue} {analysis.estimatedRevenue.min.toLocaleString()}-{analysis.estimatedRevenue.max.toLocaleString()} {analysis.estimatedRevenue.currency}
               </p>
             )}
           </div>
 
           {/* Strengths */}
-          <Section title="Güclü tərəflər" items={analysis.strengths} color="emerald" />
+          <Section title={copy.sectionStrengths} items={analysis.strengths} color="emerald" />
 
           {/* Weaknesses */}
-          <Section title="Zəif tərəflər" items={analysis.weaknesses} color="amber" />
+          <Section title={copy.sectionWeaknesses} items={analysis.weaknesses} color="amber" />
 
           {/* Red Flags */}
           {analysis.redFlags.length > 0 && (
-            <Section title="Kritik problemlər" items={analysis.redFlags} color="red" />
+            <Section title={copy.sectionCritical} items={analysis.redFlags} color="red" />
           )}
 
           {/* Recommendations */}
           {analysis.recommendations.length > 0 && (
             <div className="rounded-2xl border border-slate-200 bg-white p-5">
-              <h2 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">Tövsiyələr</h2>
+              <h2 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{copy.sectionRecommendations}</h2>
               <div className="space-y-3">
                 {analysis.recommendations.map((rec, i) => (
                   <div key={i} className="rounded-xl border border-slate-100 p-3">
@@ -621,7 +814,7 @@ function DetailView({ auditId, onBack, onRefresh }: { auditId: number; onBack: (
               className="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100 active:scale-[0.98]"
             >
               {copied ? <Check size={16} /> : <MessageCircle size={16} />}
-              {copied ? 'Kopyalandı!' : 'WhatsApp şablonu'}
+              {copied ? copy.copied : copy.whatsappTemplate}
             </button>
             <button
               type="button"
@@ -631,7 +824,7 @@ function DetailView({ auditId, onBack, onRefresh }: { auditId: number; onBack: (
               }}
               className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 active:scale-[0.98]"
             >
-              <FileText size={16} /> PDF ixrac
+              <FileText size={16} /> {copy.pdfExport}
             </button>
           </div>
         </div>
@@ -640,7 +833,7 @@ function DetailView({ auditId, onBack, onRefresh }: { auditId: number; onBack: (
       {/* Action History */}
       {audit.actions?.length > 0 && (
         <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <h2 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">Tarixçə</h2>
+          <h2 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{copy.sectionHistory}</h2>
           <div className="space-y-2">
             {audit.actions.map((action) => (
               <div key={action.id} className="flex items-center gap-3 text-xs">

@@ -3,7 +3,7 @@
  * @purpose Excel/CSV fatura import — SheetJS ilə parse, sütun mapping, validation
  */
 
-import * as XLSX from 'xlsx';
+// XLSX loaded dynamically to reduce initial bundle size
 
 export interface ExcelRow {
   supplier?: string;
@@ -51,7 +51,7 @@ function detectColumn(header: string): keyof ExcelRow | null {
   return null;
 }
 
-function parseDate(val: unknown): string | undefined {
+function parseDate(val: unknown, XLSX: typeof import('xlsx')): string | undefined {
   if (!val) return undefined;
 
   // Excel serial number
@@ -83,7 +83,8 @@ function parseNumber(val: unknown): number | undefined {
   return isNaN(n) ? undefined : n;
 }
 
-export function parseExcelFile(buffer: ArrayBuffer): ParsedExcelResult {
+export async function parseExcelFile(buffer: ArrayBuffer): Promise<ParsedExcelResult> {
+  const XLSX = await import('xlsx');
   const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
@@ -113,7 +114,7 @@ export function parseExcelFile(buffer: ArrayBuffer): ParsedExcelResult {
       const val = raw[header];
 
       if (field === 'date') {
-        row.date = parseDate(val);
+        row.date = parseDate(val, XLSX);
       } else if (field === 'quantity' || field === 'unitPrice') {
         const num = parseNumber(val);
         if (num !== undefined) {

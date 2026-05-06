@@ -21,10 +21,10 @@ export function GET(request: NextRequest) {
   const locale = resolveLocale(request.nextUrl.searchParams.get('locale'));
   const items = getLocalizedNews(locale);
 
-  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n<channel>\n<title>DK Agency Xeberler (${locale.toUpperCase()})</title>\n<link>https://dkagency.az/xeberler?locale=${locale}</link>\n<description>Multilingual DK Agency newsroom feed</description>\n${items
+  const body = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n<channel>\n<title>DK Agency Xeberler (${locale.toUpperCase()})</title>\n<link>https://dkagency.com.tr/xeberler?locale=${locale}</link>\n<description>Multilingual DK Agency newsroom feed</description>\n${items
     .map(
       (item) =>
-        `<item><title>${xmlEscape(item.localizedTitle)}</title><link>https://dkagency.az/xeberler#${item.slug}</link><guid>${item.id}</guid><pubDate>${new Date(item.publishedAt).toUTCString()}</pubDate><description>${xmlEscape(
+        `<item><title>${xmlEscape(item.localizedTitle)}</title><link>https://dkagency.com.tr/xeberler#${item.slug}</link><guid>${item.id}</guid><pubDate>${new Date(item.publishedAt).toUTCString()}</pubDate><description>${xmlEscape(
           item.localizedSummary,
         )}</description></item>`,
     )
