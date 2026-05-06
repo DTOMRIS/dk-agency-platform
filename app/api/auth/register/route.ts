@@ -3,8 +3,9 @@ import { hash } from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { users, emailVerificationTokens } from '@/lib/db/schema';
-import { sendSmtpEmail } from '@/lib/email/smtp';
+import { sendEmail, emailTemplates } from '@/lib/email/templates';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
+import { normalizeLocale } from '@/i18n/config';
 
 export async function POST(request: NextRequest) {
   try {
@@ -75,24 +76,9 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email
     const confirmUrl = `${getBaseUrl()}/api/auth/confirm?token=${token}`;
+    const locale = normalizeLocale(String(body?.locale || ''));
 
-    await sendSmtpEmail(
-      email,
-      'DK Agency — Email Təsdiqi',
-      `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:40px 20px;">
-        <h2 style="color:#1e3a5f;">Xoş gəldiniz, ${name}!</h2>
-        <p style="color:#333;line-height:1.6;">DK Agency platformasına qeydiyyatınız uğurla tamamlandı.</p>
-        <p style="color:#333;line-height:1.6;">Email ünvanınızı təsdiqləmək üçün aşağıdakı düyməyə basın:</p>
-        <div style="text-align:center;margin:30px 0;">
-          <a href="${confirmUrl}" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#d4af37;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block;">
-            Email-i Təsdiq Et
-          </a>
-        </div>
-        <p style="color:#666;font-size:13px;">Link 24 saat ərzində etibarlıdır.</p>
-        <hr style="border:none;border-top:1px solid #e5e5e5;margin:30px 0;" />
-        <p style="color:#999;font-size:12px;text-align:center;">&copy; 2026 DK Agency. Bütün hüquqlar qorunur.</p>
-      </div>`,
-    );
+    await sendEmail(email, emailTemplates.emailVerification(confirmUrl, name, locale));
 
     return NextResponse.json({
       ok: true,

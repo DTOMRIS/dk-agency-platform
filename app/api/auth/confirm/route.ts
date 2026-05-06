@@ -53,7 +53,8 @@ export async function GET(request: NextRequest) {
 
       if (user?.email) {
         const baseUrl = getBaseUrl();
-        sendEmail(user.email, emailTemplates.welcome(user.name, baseUrl)).catch(() => {});
+        const locale = request.nextUrl.searchParams.get('locale') || 'az';
+        sendEmail(user.email, emailTemplates.welcome(user.name, baseUrl, locale)).catch(() => {});
       }
     }
 
