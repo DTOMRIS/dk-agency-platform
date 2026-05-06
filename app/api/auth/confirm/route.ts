@@ -4,9 +4,14 @@ import { db, dbAvailable } from '@/lib/db';
 import { users, emailVerificationTokens } from '@/lib/db/schema';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
+import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 export async function GET(request: NextRequest) {
   try {
+    const ip = getClientIp(request);
+    const rl = checkRateLimit(`auth-verify:${ip}`, RATE_LIMITS.authVerifyEmail);
+    if (!rl.success) return rateLimitExceeded(rl);
+
     const token = request.nextUrl.searchParams.get('token');
 
     if (!token) {

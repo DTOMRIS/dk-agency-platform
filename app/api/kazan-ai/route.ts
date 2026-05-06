@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 import { buildKazanSystemPrompt } from '@/lib/kazan-ai/system-prompt';
 import { buildFoodCostContext } from '@/lib/kazan-ai/food-cost-context';
 import ahilikQuotes from '@/data/kazan-kb/ahilik-quotes.json';
@@ -202,6 +203,10 @@ function isFoodCostIntent(messages: ChatMessage[]): boolean {
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request);
+    const rl = checkRateLimit(`kazan-ai:${ip}`, RATE_LIMITS.kazanAi);
+    if (!rl.success) return rateLimitExceeded(rl);
+
     const body = (await request.json()) as RequestBody;
     const locale = body.locale || 'az';
     const messages = normalizeMessages(body.messages ?? []);
