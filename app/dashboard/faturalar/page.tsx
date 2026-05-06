@@ -1407,7 +1407,7 @@ export default function DashboardFaturalarPage() {
   const handleExportSelectedExcel = async () => {
     const { exportInvoicesToExcel } = await import('@/lib/invoice-ocr/export-utils');
     const selectedInvoices = invoices.filter((i) => selected.has(i.id));
-    exportInvoicesToExcel(selectedInvoices, `faturalar-secilmis-${new Date().toISOString().slice(0, 10)}.xlsx`);
+    await exportInvoicesToExcel(selectedInvoices, `faturalar-secilmis-${new Date().toISOString().slice(0, 10)}.xlsx`);
   };
 
   const totalPages = Math.ceil(total / PAGE_SIZE);

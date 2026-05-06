@@ -5,12 +5,14 @@ import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import AdsPreview from '@/components/AdsPreview';
+import dynamic from 'next/dynamic';
 import { DoganNote, JoinCTA } from '@/components/CTASections';
 import Hero from '@/components/Hero';
 import NewsPreview from '@/components/NewsPreview';
-import StageSelector from '@/components/StageSelector';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
+
+const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
+const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 
 const featuredBlogs = [
