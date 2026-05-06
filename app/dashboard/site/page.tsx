@@ -79,7 +79,7 @@ export default function DashboardSitePage() {
               <textarea rows={3} value={settings.address} onChange={(e) => setSettings((prev) => ({ ...prev, address: e.target.value }))} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
             </div>
             <div className="md:col-span-2">
-              <button type="button" onClick={() => { console.log('site_footer_save', settings); notify('Footer saxlanıldı ✓'); }} className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">Saxla</button>
+              <button type="button" onClick={() => { notify('Footer saxlanıldı ✓'); }} className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">Saxla</button>
             </div>
           </div>
         ) : null}
@@ -125,7 +125,7 @@ export default function DashboardSitePage() {
               <textarea rows={4} value={settings.seoDescription} onChange={(e) => setSettings((prev) => ({ ...prev, seoDescription: e.target.value }))} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
             </div>
             <div className="md:col-span-2">
-              <button type="button" onClick={() => { console.log('site_general_save', settings); notify('Ümumi ayarlar saxlanıldı ✓'); }} className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">Saxla</button>
+              <button type="button" onClick={() => { notify('Ümumi ayarlar saxlanıldı ✓'); }} className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">Saxla</button>
             </div>
           </div>
         ) : null}

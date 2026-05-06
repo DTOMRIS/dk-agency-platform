@@ -38,7 +38,7 @@ export default function HeroAdminPage() {
                 <input value={formData.badgeTr} onChange={(e) => setField('badgeTr', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
               </div>
               <div className="flex items-end">
-                <button type="button" onClick={() => console.log('translate_hero_badge_tr', formData.badgeAz)} className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
+                <button type="button" onClick={() => undefined} className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
                   <Languages size={16} />
                   AZ-dən TR-ə tərcümə et
                 </button>
@@ -48,7 +48,7 @@ export default function HeroAdminPage() {
                 <input value={formData.badgeEn} onChange={(e) => setField('badgeEn', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
               </div>
               <div className="flex items-end">
-                <button type="button" onClick={() => console.log('translate_hero_badge_en', formData.badgeAz)} className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
+                <button type="button" onClick={() => undefined} className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
                   <Languages size={16} />
                   AZ-dən EN-ə tərcümə et
                 </button>
@@ -84,7 +84,7 @@ export default function HeroAdminPage() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <button type="button" onClick={() => { console.log('hero_save', formData); notify('Saxlanıldı ✓'); }} className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">
+              <button type="button" onClick={() => { notify('Saxlanıldı ✓'); }} className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">
                 <Save size={16} />
                 Yadda saxla
               </button>
@@ -92,7 +92,7 @@ export default function HeroAdminPage() {
                 <ExternalLink size={16} />
                 Önizlə
               </button>
-              <button type="button" onClick={() => { console.log('hero_publish', formData); notify('Dərc edildi ✓'); }} className="rounded-full border border-amber-200 bg-amber-50 px-6 py-3 text-sm font-bold text-amber-700">
+              <button type="button" onClick={() => { notify('Dərc edildi ✓'); }} className="rounded-full border border-amber-200 bg-amber-50 px-6 py-3 text-sm font-bold text-amber-700">
                 Dərc et
               </button>
             </div>

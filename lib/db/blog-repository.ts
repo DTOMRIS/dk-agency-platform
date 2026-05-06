@@ -190,7 +190,6 @@ export async function createBlogPostInDb(input: {
   guruBoxes?: Array<{ guru: string; quote: string; book: string }>;
 }) {
   if (!dbAvailable || !db) {
-    console.log('blog_create_mock', input);
     return { slug: input.slug, source: 'static' as const };
   }
 
@@ -240,7 +239,6 @@ export async function updateBlogPostInDb(
   input: Parameters<typeof createBlogPostInDb>[0],
 ) {
   if (!dbAvailable || !db) {
-    console.log('blog_update_mock', { slug, input });
     return { slug, source: 'static' as const };
   }
 
@@ -291,7 +289,6 @@ export async function updateBlogPostInDb(
 
 export async function archiveBlogPostInDb(slug: string) {
   if (!dbAvailable || !db) {
-    console.log('blog_delete_mock', slug);
     return true;
   }
 

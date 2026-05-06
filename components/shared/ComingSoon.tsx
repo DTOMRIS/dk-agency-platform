@@ -17,7 +17,6 @@ export default function ComingSoon({ title, description, category }: ComingSoonP
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    console.log('ComingSoon email signup:', email);
     setSubmitted(true);
     setEmail('');
   };

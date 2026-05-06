@@ -17,9 +17,6 @@ export async function POST(request: Request) {
     createPasswordResetToken(user.id, token, 1);
     debugToken = token;
 
-    const origin = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    console.log('Password reset email would be sent to:', normalizedEmail, 'Token:', token);
-    console.log('Reset URL:', `${origin}/reset-password?token=${token}`);
   }
 
   return NextResponse.json({

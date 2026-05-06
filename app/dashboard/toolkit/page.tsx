@@ -88,7 +88,6 @@ export default function DashboardToolkitPage() {
                     <button
                       type="button"
                       onClick={() => {
-                        console.log('toolkit_save', item);
                         setToast('Saxlanıldı ✓');
                         window.setTimeout(() => setToast(''), 2200);
                       }}

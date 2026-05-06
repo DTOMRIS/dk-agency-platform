@@ -7,13 +7,6 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const auth = await canAccessNewsAdmin(request);
-  console.log('[api/news/admin/:id] patch', {
-    id: (await params).id,
-    loggedIn: auth.session.loggedIn,
-    plan: auth.session.plan,
-    viaSameOrigin: auth.viaSameOrigin,
-    viaDashboardReferer: auth.viaDashboardReferer,
-  });
   if (!auth.allowed) {
     return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
   }
