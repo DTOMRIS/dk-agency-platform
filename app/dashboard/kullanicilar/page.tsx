@@ -4,6 +4,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   Users,
   Search,
@@ -18,11 +19,11 @@ import {
   Eye,
   Edit,
   Trash2,
-  Filter,
   Download,
   UserPlus,
   X
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 interface User {
   id: string;
@@ -99,20 +100,214 @@ const MOCK_USERS: User[] = [
   },
 ];
 
-const ROLE_CONFIG = {
-  admin: { label: 'Admin', color: 'bg-red-100 text-red-700', icon: Shield },
-  editor: { label: 'Editör', color: 'bg-blue-100 text-blue-700', icon: Edit },
-  viewer: { label: 'Görüntüleyici', color: 'bg-gray-100 text-gray-700', icon: Eye },
-  partner: { label: 'Partner', color: 'bg-purple-100 text-purple-700', icon: Users },
-};
-
-const STATUS_CONFIG = {
-  active: { label: 'Aktif', color: 'text-green-600', icon: CheckCircle },
-  pending: { label: 'Beklemede', color: 'text-amber-600', icon: Clock },
-  suspended: { label: 'Askıda', color: 'text-red-600', icon: XCircle },
+const pageCopy: Record<
+  Locale,
+  {
+    pageTitle: string;
+    pageSubtitle: string;
+    btnExport: string;
+    btnAddUser: string;
+    statTotalUsers: string;
+    statActive: string;
+    statPending: string;
+    statAdmins: string;
+    searchPlaceholder: string;
+    filterAllRoles: string;
+    filterAllStatuses: string;
+    colUser: string;
+    colRole: string;
+    colContact: string;
+    colStatus: string;
+    colLastLogin: string;
+    regLabel: string;
+    emptyTitle: string;
+    emptySubtitle: string;
+    modalTitle: string;
+    modalLabelName: string;
+    modalPlaceholderName: string;
+    modalLabelEmail: string;
+    modalLabelPhone: string;
+    modalLabelRole: string;
+    modalRoleSelect: string;
+    modalLabelPassword: string;
+    modalBtnCancel: string;
+    modalBtnAdd: string;
+    modalAddedDemo: string;
+    roleLabels: Record<string, string>;
+    statusLabels: Record<string, string>;
+    filterActive: string;
+    filterPending: string;
+    filterSuspended: string;
+  }
+> = {
+  az: {
+    pageTitle: 'İstifadəçi İdarəetməsi',
+    pageSubtitle: 'Sistem istifadəçiləri və giriş nəzarəti',
+    btnExport: 'İxrac et',
+    btnAddUser: 'Yeni İstifadəçi',
+    statTotalUsers: 'Ümumi İstifadəçi',
+    statActive: 'Aktiv',
+    statPending: 'Gözləyən',
+    statAdmins: 'Admin',
+    searchPlaceholder: 'Ad və ya e-poçt axtar...',
+    filterAllRoles: 'Bütün Rollar',
+    filterAllStatuses: 'Bütün Statuslar',
+    colUser: 'İstifadəçi',
+    colRole: 'Rol',
+    colContact: 'Əlaqə',
+    colStatus: 'Status',
+    colLastLogin: 'Son Giriş',
+    regLabel: 'Qeydiyyat:',
+    emptyTitle: 'İstifadəçi tapılmadı',
+    emptySubtitle: 'Filtrləri dəyişin və ya yeni istifadəçi əlavə edin',
+    modalTitle: 'Yeni İstifadəçi Əlavə Et',
+    modalLabelName: 'Ad Soyad',
+    modalPlaceholderName: 'İstifadəçi adı',
+    modalLabelEmail: 'E-poçt',
+    modalLabelPhone: 'Telefon',
+    modalLabelRole: 'Rol',
+    modalRoleSelect: 'Rol Seçin',
+    modalLabelPassword: 'Şifrə',
+    modalBtnCancel: 'Ləğv et',
+    modalBtnAdd: 'İstifadəçi Əlavə Et',
+    modalAddedDemo: 'İstifadəçi əlavə edildi! (Demo)',
+    roleLabels: { admin: 'Admin', editor: 'Redaktor', viewer: 'Baxıcı', partner: 'Partner' },
+    statusLabels: { active: 'Aktiv', pending: 'Gözləyən', suspended: 'Dayandırılıb' },
+    filterActive: 'Aktiv',
+    filterPending: 'Gözləyən',
+    filterSuspended: 'Dayandırılıb',
+  },
+  ru: {
+    pageTitle: 'Управление пользователями',
+    pageSubtitle: 'Системные пользователи и контроль доступа',
+    btnExport: 'Экспорт',
+    btnAddUser: 'Новый пользователь',
+    statTotalUsers: 'Всего пользователей',
+    statActive: 'Активных',
+    statPending: 'Ожидающих',
+    statAdmins: 'Администраторов',
+    searchPlaceholder: 'Поиск по имени или e-mail...',
+    filterAllRoles: 'Все роли',
+    filterAllStatuses: 'Все статусы',
+    colUser: 'Пользователь',
+    colRole: 'Роль',
+    colContact: 'Контакт',
+    colStatus: 'Статус',
+    colLastLogin: 'Последний вход',
+    regLabel: 'Регистрация:',
+    emptyTitle: 'Пользователь не найден',
+    emptySubtitle: 'Измените фильтры или добавьте нового пользователя',
+    modalTitle: 'Добавить пользователя',
+    modalLabelName: 'Имя Фамилия',
+    modalPlaceholderName: 'Имя пользователя',
+    modalLabelEmail: 'E-mail',
+    modalLabelPhone: 'Телефон',
+    modalLabelRole: 'Роль',
+    modalRoleSelect: 'Выберите роль',
+    modalLabelPassword: 'Пароль',
+    modalBtnCancel: 'Отмена',
+    modalBtnAdd: 'Добавить пользователя',
+    modalAddedDemo: 'Пользователь добавлен! (Демо)',
+    roleLabels: { admin: 'Администратор', editor: 'Редактор', viewer: 'Просмотрщик', partner: 'Партнёр' },
+    statusLabels: { active: 'Активный', pending: 'Ожидающий', suspended: 'Приостановлен' },
+    filterActive: 'Активный',
+    filterPending: 'Ожидающий',
+    filterSuspended: 'Приостановлен',
+  },
+  en: {
+    pageTitle: 'User Management',
+    pageSubtitle: 'System users and access control',
+    btnExport: 'Export',
+    btnAddUser: 'New User',
+    statTotalUsers: 'Total Users',
+    statActive: 'Active',
+    statPending: 'Pending',
+    statAdmins: 'Admins',
+    searchPlaceholder: 'Search by name or email...',
+    filterAllRoles: 'All Roles',
+    filterAllStatuses: 'All Statuses',
+    colUser: 'User',
+    colRole: 'Role',
+    colContact: 'Contact',
+    colStatus: 'Status',
+    colLastLogin: 'Last Login',
+    regLabel: 'Registered:',
+    emptyTitle: 'No user found',
+    emptySubtitle: 'Change filters or add a new user',
+    modalTitle: 'Add New User',
+    modalLabelName: 'Full Name',
+    modalPlaceholderName: 'Username',
+    modalLabelEmail: 'Email',
+    modalLabelPhone: 'Phone',
+    modalLabelRole: 'Role',
+    modalRoleSelect: 'Select Role',
+    modalLabelPassword: 'Password',
+    modalBtnCancel: 'Cancel',
+    modalBtnAdd: 'Add User',
+    modalAddedDemo: 'User added! (Demo)',
+    roleLabels: { admin: 'Admin', editor: 'Editor', viewer: 'Viewer', partner: 'Partner' },
+    statusLabels: { active: 'Active', pending: 'Pending', suspended: 'Suspended' },
+    filterActive: 'Active',
+    filterPending: 'Pending',
+    filterSuspended: 'Suspended',
+  },
+  tr: {
+    pageTitle: 'Kullanıcı Yönetimi',
+    pageSubtitle: 'Sistem kullanıcıları ve erişim kontrolü',
+    btnExport: 'Dışa Aktar',
+    btnAddUser: 'Yeni Kullanıcı',
+    statTotalUsers: 'Toplam Kullanıcı',
+    statActive: 'Aktif',
+    statPending: 'Beklemede',
+    statAdmins: 'Admin',
+    searchPlaceholder: 'İsim veya e-posta ara...',
+    filterAllRoles: 'Tüm Roller',
+    filterAllStatuses: 'Tüm Durumlar',
+    colUser: 'Kullanıcı',
+    colRole: 'Rol',
+    colContact: 'İletişim',
+    colStatus: 'Durum',
+    colLastLogin: 'Son Giriş',
+    regLabel: 'Kayıt:',
+    emptyTitle: 'Kullanıcı bulunamadı',
+    emptySubtitle: 'Filtreleri değiştirin veya yeni kullanıcı ekleyin',
+    modalTitle: 'Yeni Kullanıcı Ekle',
+    modalLabelName: 'Ad Soyad',
+    modalPlaceholderName: 'Kullanıcı adı',
+    modalLabelEmail: 'E-posta',
+    modalLabelPhone: 'Telefon',
+    modalLabelRole: 'Rol',
+    modalRoleSelect: 'Rol Seçin',
+    modalLabelPassword: 'Şifre',
+    modalBtnCancel: 'İptal',
+    modalBtnAdd: 'Kullanıcı Ekle',
+    modalAddedDemo: 'Kullanıcı eklendi! (Demo)',
+    roleLabels: { admin: 'Admin', editor: 'Editör', viewer: 'Görüntüleyici', partner: 'Partner' },
+    statusLabels: { active: 'Aktif', pending: 'Beklemede', suspended: 'Askıda' },
+    filterActive: 'Aktif',
+    filterPending: 'Beklemede',
+    filterSuspended: 'Askıda',
+  },
 };
 
 export default function KullanicilarPage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
+  const ROLE_CONFIG = {
+    admin: { label: copy.roleLabels.admin, color: 'bg-red-100 text-red-700', icon: Shield },
+    editor: { label: copy.roleLabels.editor, color: 'bg-blue-100 text-blue-700', icon: Edit },
+    viewer: { label: copy.roleLabels.viewer, color: 'bg-gray-100 text-gray-700', icon: Eye },
+    partner: { label: copy.roleLabels.partner, color: 'bg-purple-100 text-purple-700', icon: Users },
+  };
+
+  const STATUS_CONFIG = {
+    active: { label: copy.statusLabels.active, color: 'text-green-600', icon: CheckCircle },
+    pending: { label: copy.statusLabels.pending, color: 'text-amber-600', icon: Clock },
+    suspended: { label: copy.statusLabels.suspended, color: 'text-red-600', icon: XCircle },
+  };
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRole, setFilterRole] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -143,21 +338,21 @@ export default function KullanicilarPage() {
             <Users size={24} className="text-dk-red" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Kullanıcı Yönetimi</h1>
-            <p className="text-gray-500 text-sm mt-0.5">Sistem kullanıcıları ve erişim kontrolü</p>
+            <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
+            <p className="text-gray-500 text-sm mt-0.5">{copy.pageSubtitle}</p>
           </div>
         </div>
         <div className="flex gap-3">
           <button className="flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
             <Download size={16} />
-            Dışa Aktar
+            {copy.btnExport}
           </button>
           <button
             onClick={() => setShowAddModal(true)}
             className="flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-2.5 rounded-xl font-semibold transition-colors"
           >
             <UserPlus size={18} />
-            Yeni Kullanıcı
+            {copy.btnAddUser}
           </button>
         </div>
       </div>
@@ -171,7 +366,7 @@ export default function KullanicilarPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
-              <p className="text-xs text-gray-500">Toplam Kullanıcı</p>
+              <p className="text-xs text-gray-500">{copy.statTotalUsers}</p>
             </div>
           </div>
         </div>
@@ -182,7 +377,7 @@ export default function KullanicilarPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.active}</p>
-              <p className="text-xs text-gray-500">Aktif</p>
+              <p className="text-xs text-gray-500">{copy.statActive}</p>
             </div>
           </div>
         </div>
@@ -193,7 +388,7 @@ export default function KullanicilarPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.pending}</p>
-              <p className="text-xs text-gray-500">Beklemede</p>
+              <p className="text-xs text-gray-500">{copy.statPending}</p>
             </div>
           </div>
         </div>
@@ -204,7 +399,7 @@ export default function KullanicilarPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.admins}</p>
-              <p className="text-xs text-gray-500">Admin</p>
+              <p className="text-xs text-gray-500">{copy.statAdmins}</p>
             </div>
           </div>
         </div>
@@ -219,7 +414,7 @@ export default function KullanicilarPage() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="İsim veya e-posta ara..."
+              placeholder={copy.searchPlaceholder}
               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
             />
           </div>
@@ -229,21 +424,21 @@ export default function KullanicilarPage() {
               onChange={(e) => setFilterRole(e.target.value)}
               className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
             >
-              <option value="all">Tüm Roller</option>
-              <option value="admin">Admin</option>
-              <option value="editor">Editör</option>
-              <option value="viewer">Görüntüleyici</option>
-              <option value="partner">Partner</option>
+              <option value="all">{copy.filterAllRoles}</option>
+              <option value="admin">{copy.roleLabels.admin}</option>
+              <option value="editor">{copy.roleLabels.editor}</option>
+              <option value="viewer">{copy.roleLabels.viewer}</option>
+              <option value="partner">{copy.roleLabels.partner}</option>
             </select>
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
               className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
             >
-              <option value="all">Tüm Durumlar</option>
-              <option value="active">Aktif</option>
-              <option value="pending">Beklemede</option>
-              <option value="suspended">Askıda</option>
+              <option value="all">{copy.filterAllStatuses}</option>
+              <option value="active">{copy.filterActive}</option>
+              <option value="pending">{copy.filterPending}</option>
+              <option value="suspended">{copy.filterSuspended}</option>
             </select>
           </div>
         </div>
@@ -256,19 +451,19 @@ export default function KullanicilarPage() {
             <thead>
               <tr className="border-b border-gray-100">
                 <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Kullanıcı
+                  {copy.colUser}
                 </th>
                 <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Rol
+                  {copy.colRole}
                 </th>
                 <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  İletişim
+                  {copy.colContact}
                 </th>
                 <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Durum
+                  {copy.colStatus}
                 </th>
                 <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Son Giriş
+                  {copy.colLastLogin}
                 </th>
                 <th className="p-4"></th>
               </tr>
@@ -295,7 +490,7 @@ export default function KullanicilarPage() {
                         </div>
                         <div>
                           <p className="font-semibold text-gray-900">{user.name}</p>
-                          <p className="text-xs text-gray-500">Kayıt: {user.createdAt}</p>
+                          <p className="text-xs text-gray-500">{copy.regLabel} {user.createdAt}</p>
                         </div>
                       </div>
                     </td>
@@ -351,8 +546,8 @@ export default function KullanicilarPage() {
         {filteredUsers.length === 0 && (
           <div className="p-12 text-center">
             <Users size={48} className="mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500 font-medium">Kullanıcı bulunamadı</p>
-            <p className="text-sm text-gray-400 mt-1">Filtreleri değiştirin veya yeni kullanıcı ekleyin</p>
+            <p className="text-gray-500 font-medium">{copy.emptyTitle}</p>
+            <p className="text-sm text-gray-400 mt-1">{copy.emptySubtitle}</p>
           </div>
         )}
       </div>
@@ -363,7 +558,7 @@ export default function KullanicilarPage() {
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowAddModal(false)} />
           <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-auto">
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="text-lg font-bold text-gray-900">Yeni Kullanıcı Ekle</h2>
+              <h2 className="text-lg font-bold text-gray-900">{copy.modalTitle}</h2>
               <button
                 onClick={() => setShowAddModal(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -374,17 +569,17 @@ export default function KullanicilarPage() {
 
             <form className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelName}</label>
                 <input
                   type="text"
-                  placeholder="Kullanıcı adı"
+                  placeholder={copy.modalPlaceholderName}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelEmail}</label>
                   <input
                     type="email"
                     placeholder="email@domain.com"
@@ -392,7 +587,7 @@ export default function KullanicilarPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelPhone}</label>
                   <input
                     type="tel"
                     placeholder="+994 XX XXX XXXX"
@@ -402,18 +597,18 @@ export default function KullanicilarPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Rol</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelRole}</label>
                 <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white">
-                  <option value="">Rol Seçin</option>
-                  <option value="admin">Admin</option>
-                  <option value="editor">Editör</option>
-                  <option value="viewer">Görüntüleyici</option>
-                  <option value="partner">Partner</option>
+                  <option value="">{copy.modalRoleSelect}</option>
+                  <option value="admin">{copy.roleLabels.admin}</option>
+                  <option value="editor">{copy.roleLabels.editor}</option>
+                  <option value="viewer">{copy.roleLabels.viewer}</option>
+                  <option value="partner">{copy.roleLabels.partner}</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Şifre</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelPassword}</label>
                 <input
                   type="password"
                   placeholder="••••••••"
@@ -427,16 +622,16 @@ export default function KullanicilarPage() {
                 onClick={() => setShowAddModal(false)}
                 className="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-xl font-medium transition-colors"
               >
-                İptal
+                {copy.modalBtnCancel}
               </button>
               <button
                 onClick={() => {
-                  alert('Kullanıcı eklendi! (Demo)');
+                  alert(copy.modalAddedDemo);
                   setShowAddModal(false);
                 }}
                 className="px-5 py-2.5 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors"
               >
-                Kullanıcı Ekle
+                {copy.modalBtnAdd}
               </button>
             </div>
           </div>

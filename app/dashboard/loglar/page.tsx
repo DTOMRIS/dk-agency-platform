@@ -4,6 +4,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   Activity,
   Search,
@@ -23,6 +24,144 @@ import {
   Globe,
   Key
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
+
+const pageCopy: Record<Locale, {
+  pageTitle: string;
+  pageSubtitle: string;
+  refresh: string;
+  export: string;
+  statTotal: string;
+  statInfo: string;
+  statSuccess: string;
+  statWarning: string;
+  statError: string;
+  searchPlaceholder: string;
+  filterAll: string;
+  colTime: string;
+  colLevel: string;
+  colCategory: string;
+  colMessage: string;
+  colUser: string;
+  system: string;
+  modalLabelMessage: string;
+  modalLabelDetails: string;
+  modalLabelUser: string;
+  modalLabelIp: string;
+  levelInfo: string;
+  levelWarning: string;
+  levelError: string;
+  levelSuccess: string;
+}> = {
+  az: {
+    pageTitle: 'Sistem Logları',
+    pageSubtitle: 'Real vaxt sistem aktivliyi izləmə',
+    refresh: 'Yenilə',
+    export: 'İxrac et',
+    statTotal: 'Ümumi Log',
+    statInfo: 'Məlumat',
+    statSuccess: 'Uğurlu',
+    statWarning: 'Xəbərdarlıq',
+    statError: 'Xəta',
+    searchPlaceholder: 'Loglarda axtar...',
+    filterAll: 'Hamısı',
+    colTime: 'Vaxt',
+    colLevel: 'Səviyyə',
+    colCategory: 'Kateqoriya',
+    colMessage: 'Mesaj',
+    colUser: 'İstifadəçi',
+    system: 'Sistem',
+    modalLabelMessage: 'Mesaj',
+    modalLabelDetails: 'Detallar',
+    modalLabelUser: 'İstifadəçi',
+    modalLabelIp: 'IP Ünvanı',
+    levelInfo: 'Məlumat',
+    levelWarning: 'Xəbərdarlıq',
+    levelError: 'Xəta',
+    levelSuccess: 'Uğurlu',
+  },
+  ru: {
+    pageTitle: 'Системные логи',
+    pageSubtitle: 'Мониторинг системной активности в реальном времени',
+    refresh: 'Обновить',
+    export: 'Экспорт',
+    statTotal: 'Всего логов',
+    statInfo: 'Информация',
+    statSuccess: 'Успешно',
+    statWarning: 'Предупреждение',
+    statError: 'Ошибка',
+    searchPlaceholder: 'Поиск в логах...',
+    filterAll: 'Все',
+    colTime: 'Время',
+    colLevel: 'Уровень',
+    colCategory: 'Категория',
+    colMessage: 'Сообщение',
+    colUser: 'Пользователь',
+    system: 'Система',
+    modalLabelMessage: 'Сообщение',
+    modalLabelDetails: 'Подробности',
+    modalLabelUser: 'Пользователь',
+    modalLabelIp: 'IP-адрес',
+    levelInfo: 'Информация',
+    levelWarning: 'Предупреждение',
+    levelError: 'Ошибка',
+    levelSuccess: 'Успешно',
+  },
+  en: {
+    pageTitle: 'System Logs',
+    pageSubtitle: 'Real-time system activity monitoring',
+    refresh: 'Refresh',
+    export: 'Export',
+    statTotal: 'Total Logs',
+    statInfo: 'Info',
+    statSuccess: 'Success',
+    statWarning: 'Warning',
+    statError: 'Error',
+    searchPlaceholder: 'Search logs...',
+    filterAll: 'All',
+    colTime: 'Time',
+    colLevel: 'Level',
+    colCategory: 'Category',
+    colMessage: 'Message',
+    colUser: 'User',
+    system: 'System',
+    modalLabelMessage: 'Message',
+    modalLabelDetails: 'Details',
+    modalLabelUser: 'User',
+    modalLabelIp: 'IP Address',
+    levelInfo: 'Info',
+    levelWarning: 'Warning',
+    levelError: 'Error',
+    levelSuccess: 'Success',
+  },
+  tr: {
+    pageTitle: 'Sistem Logları',
+    pageSubtitle: 'Gerçek zamanlı sistem aktivite izleme',
+    refresh: 'Yenile',
+    export: 'Dışa Aktar',
+    statTotal: 'Toplam Log',
+    statInfo: 'Bilgi',
+    statSuccess: 'Başarılı',
+    statWarning: 'Uyarı',
+    statError: 'Hata',
+    searchPlaceholder: 'Loglarda ara...',
+    filterAll: 'Tümü',
+    colTime: 'Zaman',
+    colLevel: 'Seviye',
+    colCategory: 'Kategori',
+    colMessage: 'Mesaj',
+    colUser: 'Kullanıcı',
+    system: 'Sistem',
+    modalLabelMessage: 'Mesaj',
+    modalLabelDetails: 'Detaylar',
+    modalLabelUser: 'Kullanıcı',
+    modalLabelIp: 'IP Adresi',
+    levelInfo: 'Bilgi',
+    levelWarning: 'Uyarı',
+    levelError: 'Hata',
+    levelSuccess: 'Başarılı',
+  },
+};
 
 type LogLevel = 'all' | 'info' | 'warning' | 'error' | 'success';
 
@@ -128,13 +267,6 @@ const logs: LogEntry[] = [
   },
 ];
 
-const levelConfig = {
-  info: { icon: Info, color: 'bg-blue-100 text-blue-600', label: 'Bilgi' },
-  warning: { icon: AlertCircle, color: 'bg-amber-100 text-amber-600', label: 'Uyarı' },
-  error: { icon: XCircle, color: 'bg-red-100 text-red-600', label: 'Hata' },
-  success: { icon: CheckCircle, color: 'bg-green-100 text-green-600', label: 'Başarılı' },
-};
-
 const categoryIcons: Record<string, typeof Activity> = {
   AUTH: Key,
   LISTING: Globe,
@@ -148,6 +280,17 @@ const categoryIcons: Record<string, typeof Activity> = {
 };
 
 export default function LoglarPage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
+  const levelConfig = {
+    info: { icon: Info, color: 'bg-blue-100 text-blue-600', label: copy.levelInfo },
+    warning: { icon: AlertCircle, color: 'bg-amber-100 text-amber-600', label: copy.levelWarning },
+    error: { icon: XCircle, color: 'bg-red-100 text-red-600', label: copy.levelError },
+    success: { icon: CheckCircle, color: 'bg-green-100 text-green-600', label: copy.levelSuccess },
+  };
+
   const [filter, setFilter] = useState<LogLevel>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLog, setSelectedLog] = useState<LogEntry | null>(null);
@@ -171,17 +314,17 @@ export default function LoglarPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Sistem Logları</h1>
-          <p className="text-sm text-gray-500 mt-1">Gerçek zamanlı sistem aktivite izleme</p>
+          <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
+          <p className="text-sm text-gray-500 mt-1">{copy.pageSubtitle}</p>
         </div>
         <div className="flex items-center gap-3">
           <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
             <RefreshCw size={16} className="text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">Yenile</span>
+            <span className="text-sm font-medium text-gray-700">{copy.refresh}</span>
           </button>
           <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
             <Download size={16} className="text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">Dışa Aktar</span>
+            <span className="text-sm font-medium text-gray-700">{copy.export}</span>
           </button>
         </div>
       </div>
@@ -190,23 +333,23 @@ export default function LoglarPage() {
       <div className="grid grid-cols-5 gap-4 mb-6">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
-          <p className="text-xs text-gray-500">Toplam Log</p>
+          <p className="text-xs text-gray-500">{copy.statTotal}</p>
         </div>
         <div className="bg-blue-50 rounded-xl border border-blue-200 p-4">
           <p className="text-2xl font-bold text-blue-700">{stats.info}</p>
-          <p className="text-xs text-blue-600">Bilgi</p>
+          <p className="text-xs text-blue-600">{copy.statInfo}</p>
         </div>
         <div className="bg-green-50 rounded-xl border border-green-200 p-4">
           <p className="text-2xl font-bold text-green-700">{stats.success}</p>
-          <p className="text-xs text-green-600">Başarılı</p>
+          <p className="text-xs text-green-600">{copy.statSuccess}</p>
         </div>
         <div className="bg-amber-50 rounded-xl border border-amber-200 p-4">
           <p className="text-2xl font-bold text-amber-700">{stats.warning}</p>
-          <p className="text-xs text-amber-600">Uyarı</p>
+          <p className="text-xs text-amber-600">{copy.statWarning}</p>
         </div>
         <div className="bg-red-50 rounded-xl border border-red-200 p-4">
           <p className="text-2xl font-bold text-red-700">{stats.error}</p>
-          <p className="text-xs text-red-600">Hata</p>
+          <p className="text-xs text-red-600">{copy.statError}</p>
         </div>
       </div>
 
@@ -218,7 +361,7 @@ export default function LoglarPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Loglarda ara..."
+            placeholder={copy.searchPlaceholder}
             className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
           />
         </div>
@@ -233,7 +376,7 @@ export default function LoglarPage() {
                   : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
               }`}
             >
-              {level === 'all' ? 'Tümü' : levelConfig[level].label}
+              {level === 'all' ? copy.filterAll : levelConfig[level].label}
             </button>
           ))}
         </div>
@@ -245,11 +388,11 @@ export default function LoglarPage() {
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Zaman</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Seviye</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Kategori</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Mesaj</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Kullanıcı</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">{copy.colTime}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">{copy.colLevel}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">{copy.colCategory}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">{copy.colMessage}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">{copy.colUser}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -295,7 +438,7 @@ export default function LoglarPage() {
                           <span className="text-sm text-gray-600">{log.user}</span>
                         </div>
                       ) : (
-                        <span className="text-sm text-gray-400">Sistem</span>
+                        <span className="text-sm text-gray-400">{copy.system}</span>
                       )}
                     </td>
                   </tr>
@@ -332,24 +475,24 @@ export default function LoglarPage() {
             </div>
             <div className="space-y-4">
               <div>
-                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Mesaj</p>
+                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">{copy.modalLabelMessage}</p>
                 <p className="text-sm text-gray-900">{selectedLog.message}</p>
               </div>
               {selectedLog.details && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Detaylar</p>
+                  <p className="text-xs font-semibold text-gray-500 uppercase mb-1">{copy.modalLabelDetails}</p>
                   <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg font-mono">{selectedLog.details}</p>
                 </div>
               )}
               {selectedLog.user && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Kullanıcı</p>
+                  <p className="text-xs font-semibold text-gray-500 uppercase mb-1">{copy.modalLabelUser}</p>
                   <p className="text-sm text-gray-700">{selectedLog.user}</p>
                 </div>
               )}
               {selectedLog.ip && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase mb-1">IP Adresi</p>
+                  <p className="text-xs font-semibold text-gray-500 uppercase mb-1">{copy.modalLabelIp}</p>
                   <p className="text-sm text-gray-700">{selectedLog.ip}</p>
                 </div>
               )}

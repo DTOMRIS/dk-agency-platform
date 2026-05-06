@@ -4,29 +4,22 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   FileText,
   Search,
-  Filter,
   Eye,
   CheckCircle,
   XCircle,
   Clock,
-  User,
   Building2,
   MapPin,
-  DollarSign,
-  Calendar,
-  MessageSquare,
   Image,
   Paperclip,
-  AlertCircle,
-  ChevronDown,
   ThumbsUp,
   ThumbsDown,
-  MoreVertical,
-  ExternalLink
 } from 'lucide-react';
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 type ListingStatus = 'pending' | 'approved' | 'rejected';
 
@@ -142,19 +135,98 @@ const pendingListings: PendingListing[] = [
   },
 ];
 
-const priorityConfig = {
-  high: { color: 'bg-red-100 text-red-700', label: 'Yüksek' },
-  medium: { color: 'bg-amber-100 text-amber-700', label: 'Orta' },
-  low: { color: 'bg-gray-100 text-gray-600', label: 'Düşük' },
-};
-
-const statusConfig = {
-  pending: { color: 'bg-amber-100 text-amber-700', label: 'Beklemede', icon: Clock },
-  approved: { color: 'bg-green-100 text-green-700', label: 'Onaylandı', icon: CheckCircle },
-  rejected: { color: 'bg-red-100 text-red-700', label: 'Reddedildi', icon: XCircle },
+const pageCopy: Record<
+  Locale,
+  {
+    pageTitle: string;
+    pageSubtitle: string;
+    statPending: string;
+    statApproved: string;
+    statRejected: string;
+    searchPlaceholder: string;
+    emptyTitle: string;
+    emptySubtitle: string;
+    btnApprove: string;
+    btnReject: string;
+    priorityLabels: Record<string, string>;
+    statusLabels: Record<string, string>;
+  }
+> = {
+  az: {
+    pageTitle: 'Elan Təsdiqləri',
+    pageSubtitle: 'Gözləyən elanları nəzərdən keçirin və təsdiqləyin',
+    statPending: 'Gözləyən',
+    statApproved: 'Təsdiqləndi',
+    statRejected: 'Rədd Edildi',
+    searchPlaceholder: 'Elan axtar...',
+    emptyTitle: 'Elan Tapılmadı',
+    emptySubtitle: 'Bu filtrə uyğun elan yoxdur.',
+    btnApprove: 'Təsdiqlə',
+    btnReject: 'Rədd et',
+    priorityLabels: { high: 'Yüksək', medium: 'Orta', low: 'Aşağı' },
+    statusLabels: { pending: 'Gözləyən', approved: 'Təsdiqləndi', rejected: 'Rədd Edildi' },
+  },
+  ru: {
+    pageTitle: 'Одобрение объявлений',
+    pageSubtitle: 'Просматривайте и одобряйте ожидающие объявления',
+    statPending: 'Ожидающих',
+    statApproved: 'Одобрено',
+    statRejected: 'Отклонено',
+    searchPlaceholder: 'Поиск объявлений...',
+    emptyTitle: 'Объявление не найдено',
+    emptySubtitle: 'Нет объявлений, соответствующих этому фильтру.',
+    btnApprove: 'Одобрить',
+    btnReject: 'Отклонить',
+    priorityLabels: { high: 'Высокий', medium: 'Средний', low: 'Низкий' },
+    statusLabels: { pending: 'Ожидающий', approved: 'Одобрен', rejected: 'Отклонён' },
+  },
+  en: {
+    pageTitle: 'Listing Approvals',
+    pageSubtitle: 'Review and approve pending listings',
+    statPending: 'Pending',
+    statApproved: 'Approved',
+    statRejected: 'Rejected',
+    searchPlaceholder: 'Search listings...',
+    emptyTitle: 'No Listing Found',
+    emptySubtitle: 'No listing matches this filter.',
+    btnApprove: 'Approve',
+    btnReject: 'Reject',
+    priorityLabels: { high: 'High', medium: 'Medium', low: 'Low' },
+    statusLabels: { pending: 'Pending', approved: 'Approved', rejected: 'Rejected' },
+  },
+  tr: {
+    pageTitle: 'İlan Onayları',
+    pageSubtitle: 'Bekleyen ilanları incele ve onayla',
+    statPending: 'Beklemede',
+    statApproved: 'Onaylandı',
+    statRejected: 'Reddedildi',
+    searchPlaceholder: 'İlan ara...',
+    emptyTitle: 'İlan Bulunamadı',
+    emptySubtitle: 'Bu filtreye uygun ilan bulunmuyor.',
+    btnApprove: 'Onayla',
+    btnReject: 'Reddet',
+    priorityLabels: { high: 'Yüksek', medium: 'Orta', low: 'Düşük' },
+    statusLabels: { pending: 'Beklemede', approved: 'Onaylandı', rejected: 'Reddedildi' },
+  },
 };
 
 export default function IlanOnaylariPage() {
+  const pathname = usePathname();
+  const locale = normalizeLocale(pathname.split('/')[1]);
+  const copy = pageCopy[locale];
+
+  const priorityConfig = {
+    high: { color: 'bg-red-100 text-red-700', label: copy.priorityLabels.high },
+    medium: { color: 'bg-amber-100 text-amber-700', label: copy.priorityLabels.medium },
+    low: { color: 'bg-gray-100 text-gray-600', label: copy.priorityLabels.low },
+  };
+
+  const statusConfig = {
+    pending: { color: 'bg-amber-100 text-amber-700', label: copy.statusLabels.pending, icon: Clock },
+    approved: { color: 'bg-green-100 text-green-700', label: copy.statusLabels.approved, icon: CheckCircle },
+    rejected: { color: 'bg-red-100 text-red-700', label: copy.statusLabels.rejected, icon: XCircle },
+  };
+
   const [filter, setFilter] = useState<'all' | ListingStatus>('pending');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedListing, setSelectedListing] = useState<PendingListing | null>(null);
@@ -176,14 +248,14 @@ export default function IlanOnaylariPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">İlan Onayları</h1>
-          <p className="text-sm text-gray-500 mt-1">Bekleyen ilanları incele ve onayla</p>
+          <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
+          <p className="text-sm text-gray-500 mt-1">{copy.pageSubtitle}</p>
         </div>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <div 
+        <div
           onClick={() => setFilter('pending')}
           className={`bg-white rounded-xl border p-4 cursor-pointer transition-all ${
             filter === 'pending' ? 'border-amber-500 ring-2 ring-amber-500/20' : 'border-gray-200 hover:border-gray-300'
@@ -192,12 +264,12 @@ export default function IlanOnaylariPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-2xl font-bold text-amber-600">{stats.pending}</p>
-              <p className="text-sm text-gray-500">Beklemede</p>
+              <p className="text-sm text-gray-500">{copy.statPending}</p>
             </div>
             <Clock size={32} className="text-amber-200" />
           </div>
         </div>
-        <div 
+        <div
           onClick={() => setFilter('approved')}
           className={`bg-white rounded-xl border p-4 cursor-pointer transition-all ${
             filter === 'approved' ? 'border-green-500 ring-2 ring-green-500/20' : 'border-gray-200 hover:border-gray-300'
@@ -206,12 +278,12 @@ export default function IlanOnaylariPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-2xl font-bold text-green-600">{stats.approved}</p>
-              <p className="text-sm text-gray-500">Onaylandı</p>
+              <p className="text-sm text-gray-500">{copy.statApproved}</p>
             </div>
             <CheckCircle size={32} className="text-green-200" />
           </div>
         </div>
-        <div 
+        <div
           onClick={() => setFilter('rejected')}
           className={`bg-white rounded-xl border p-4 cursor-pointer transition-all ${
             filter === 'rejected' ? 'border-dk-red ring-2 ring-dk-red/20' : 'border-gray-200 hover:border-gray-300'
@@ -220,7 +292,7 @@ export default function IlanOnaylariPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-2xl font-bold text-red-600">{stats.rejected}</p>
-              <p className="text-sm text-gray-500">Reddedildi</p>
+              <p className="text-sm text-gray-500">{copy.statRejected}</p>
             </div>
             <XCircle size={32} className="text-red-200" />
           </div>
@@ -234,7 +306,7 @@ export default function IlanOnaylariPage() {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="İlan ara..."
+          placeholder={copy.searchPlaceholder}
           className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
         />
       </div>
@@ -304,21 +376,21 @@ export default function IlanOnaylariPage() {
 
               {listing.status === 'pending' && (
                 <div className="flex gap-2 mt-4">
-                  <button 
+                  <button
                     onClick={(e) => { e.stopPropagation(); }}
                     className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-colors"
                   >
                     <ThumbsUp size={14} />
-                    Onayla
+                    {copy.btnApprove}
                   </button>
-                  <button 
+                  <button
                     onClick={(e) => { e.stopPropagation(); }}
                     className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition-colors"
                   >
                     <ThumbsDown size={14} />
-                    Reddet
+                    {copy.btnReject}
                   </button>
-                  <button 
+                  <button
                     onClick={(e) => { e.stopPropagation(); }}
                     className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors"
                   >
@@ -334,8 +406,8 @@ export default function IlanOnaylariPage() {
       {filteredListings.length === 0 && (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
           <FileText size={48} className="text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">İlan Bulunamadı</h3>
-          <p className="text-sm text-gray-500">Bu filtreye uygun ilan bulunmuyor.</p>
+          <h3 className="text-lg font-semibold text-gray-700 mb-2">{copy.emptyTitle}</h3>
+          <p className="text-sm text-gray-500">{copy.emptySubtitle}</p>
         </div>
       )}
     </div>
