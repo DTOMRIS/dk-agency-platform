@@ -3,6 +3,42 @@
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [2026-05-06] — CTO Sprint: i18n 100%, Security, Performance
+
+### Added
+- **i18n Phase 1-3 complete — 62/62 pages translated to 4 languages (AZ/RU/EN/TR)**
+  - Phase 1: Auth sidebar, Header, MegaMenu (PR #82)
+  - Phase 2: Public routes — blog, news, ilanlar, toolkit, pricing (PR #82)
+  - Phase 3: Admin dashboard — 9 core pages (PR #89)
+  - Phase 4: Full coverage — remaining 32 pages in one batch (PR #93)
+- Mobile language switcher in header dropdown — Globe icon + 4 lang with active state (PR #87)
+- SEO hreflang alternates for all locale routes with x-default (PR #84)
+- Email templates i18n — all 9 templates (verification, welcome, password reset, listing notifications, KAZAN lead admin) now accept locale parameter (PR #86)
+- Rate limiting utility (`lib/utils/rate-limit.ts`) — in-memory sliding window, IP-based (PR #91)
+  - Auth endpoints: login 5/15min, register 3/1h, forgot-password 3/1h, verify-email 10/1h
+  - AI endpoints: kazan-ai 30/1min, invoice-ocr 20/1h
+  - 429 response with X-RateLimit-Limit/Remaining/Reset headers
+  - Locale-aware error messages
+- Lazy loading: CookiesBanner, AdsPreview, StageSelector via next/dynamic ssr:false (PR #92)
+
+### Changed
+- Brand color unification — 23 files converted from raw `red-500/600/700` to `dk-red`/`dk-red-strong` CSS tokens (PR #88)
+- `brand-red` and `brand-red-hover` tokens added to @theme inline block in globals.css
+- xlsx dynamic import in export-utils.ts and excel-parser.ts — no longer loaded at module init (PR #92)
+- News API refactored from mock data to real Neon DB (PR #85)
+- Mobile design pass — CategoryTabs scroll-snap, article reading ergonomics (PR #83)
+
+### Fixed
+- Console.log cleanup — 25+ debug logs deleted, 4 security-sensitive logs removed (token/password/reset-URL leaks), NODE_ENV guard on error logs (PR #90)
+
+### Security
+- Security sprint merged (PR #79): demo credentials removed, JWT enforcement, admin guards, password validation
+- Rate limiting on all auth + AI endpoints prevents brute force attacks
+- Sensitive console.log calls exposing tokens/passwords removed from production
+
+### Removed
+- Stale PRs closed: #45 (Resend email — superseded by Hostinger SMTP), #51 (Hostinger migration — completed separately)
+
 ## [Unreleased]
 
 ### Added
