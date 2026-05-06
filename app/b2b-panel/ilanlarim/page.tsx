@@ -121,7 +121,7 @@ export default function IlanlarimPage() {
         </div>
         <Link
           href="/b2b-panel/yeni-ilan"
-          className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-semibold transition-colors"
+          className="inline-flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-3 rounded-xl font-semibold transition-colors"
         >
           <Plus size={18} />
           Yeni İlan
@@ -158,7 +158,7 @@ export default function IlanlarimPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="İlan ara..."
-              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
             />
           </div>
           <div className="flex gap-3">
@@ -166,7 +166,7 @@ export default function IlanlarimPage() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
               >
                 <option value="all">Tüm Durumlar</option>
                 <option value="active">Aktif</option>
@@ -180,7 +180,7 @@ export default function IlanlarimPage() {
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
               >
                 <option value="all">Tüm Kategoriler</option>
                 {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
@@ -224,7 +224,7 @@ export default function IlanlarimPage() {
                       <div className="flex items-center gap-4 text-sm">
                         <span className="text-gray-500">{CATEGORY_LABELS[listing.category]}</span>
                         {listing.price && (
-                          <span className="font-semibold text-red-600">
+                          <span className="font-semibold text-dk-red">
                             {listing.price.toLocaleString('tr-TR')} ₺
                           </span>
                         )}

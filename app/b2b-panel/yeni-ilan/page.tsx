@@ -70,14 +70,14 @@ export default function YeniIlanPage() {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className="group bg-white rounded-xl border-2 border-gray-200 hover:border-red-500 p-6 text-left transition-all hover:shadow-lg"
+                  className="group bg-white rounded-xl border-2 border-gray-200 hover:border-dk-red p-6 text-left transition-all hover:shadow-lg"
                 >
                   <div className={`w-14 h-14 rounded-2xl ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                     <Icon size={24} className="text-white" />
                   </div>
                   <h3 className="font-bold text-gray-900 mb-1">{category.title}</h3>
                   <p className="text-sm text-gray-500">{category.description}</p>
-                  <div className="mt-4 flex items-center text-red-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="mt-4 flex items-center text-dk-red text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                     <span>Devam Et</span>
                     <Check size={16} className="ml-1" />
                   </div>

@@ -83,7 +83,7 @@ export default function DashboardHaberlerPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-            <Newspaper size={28} className="text-red-600" />
+            <Newspaper size={28} className="text-dk-red" />
             Haberler & Analizler
           </h1>
           <p className="text-gray-500 text-sm mt-1">
@@ -92,7 +92,7 @@ export default function DashboardHaberlerPage() {
         </div>
         <Link
           href="/dashboard/haberler/yeni"
-          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-xl font-bold transition-colors"
+          className="flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-2.5 rounded-xl font-bold transition-colors"
         >
           <Plus size={18} />
           Yeni Haber
@@ -126,7 +126,7 @@ export default function DashboardHaberlerPage() {
               placeholder="Haber ara..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+              className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
             />
           </div>
 
@@ -134,7 +134,7 @@ export default function DashboardHaberlerPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+            className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
           >
             {CATEGORIES.map(cat => (
               <option key={cat.value} value={cat.value}>{cat.label}</option>
@@ -156,7 +156,7 @@ export default function DashboardHaberlerPage() {
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 size={32} className="animate-spin text-red-600" />
+            <Loader2 size={32} className="animate-spin text-dk-red" />
           </div>
         ) : posts.length === 0 ? (
           <div className="text-center py-20">

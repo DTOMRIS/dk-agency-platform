@@ -240,7 +240,7 @@ export default function PipelinePage() {
             <Filter size={16} className="text-gray-500" />
             <span className="text-sm font-medium text-gray-700">Filtrele</span>
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700">
+          <button className="flex items-center gap-2 px-4 py-2 bg-dk-red text-white rounded-xl hover:bg-dk-red-strong">
             <Plus size={16} />
             <span className="text-sm font-bold">Yeni Fırsat</span>
           </button>
@@ -287,7 +287,7 @@ export default function PipelinePage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Fırsat ara..."
-          className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-red-500/20"
+          className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
         />
       </div>
 
@@ -461,7 +461,7 @@ export default function PipelinePage() {
 
               {/* Actions */}
               <div className="flex gap-3">
-                <button className="flex-1 px-4 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-colors">
+                <button className="flex-1 px-4 py-3 bg-dk-red text-white rounded-xl font-semibold hover:bg-dk-red-strong transition-colors">
                   Aşamayı İlerlet
                 </button>
                 <button className="px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors">

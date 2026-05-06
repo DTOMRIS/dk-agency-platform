@@ -252,7 +252,7 @@ export default function EtkinliklerPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Etkinliklerde ara..."
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-red-500/20"
+            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
           />
         </div>
         <div className="flex gap-2">
@@ -262,7 +262,7 @@ export default function EtkinliklerPage() {
               onClick={() => setFilter(type)}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                 filter === type
-                  ? 'bg-red-600 text-white'
+                  ? 'bg-dk-red text-white'
                   : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
               }`}
             >

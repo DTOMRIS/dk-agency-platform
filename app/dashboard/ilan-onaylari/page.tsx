@@ -214,7 +214,7 @@ export default function IlanOnaylariPage() {
         <div 
           onClick={() => setFilter('rejected')}
           className={`bg-white rounded-xl border p-4 cursor-pointer transition-all ${
-            filter === 'rejected' ? 'border-red-500 ring-2 ring-red-500/20' : 'border-gray-200 hover:border-gray-300'
+            filter === 'rejected' ? 'border-dk-red ring-2 ring-dk-red/20' : 'border-gray-200 hover:border-gray-300'
           }`}
         >
           <div className="flex items-center justify-between">
@@ -235,7 +235,7 @@ export default function IlanOnaylariPage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="İlan ara..."
-          className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-red-500/20"
+          className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
         />
       </div>
 
@@ -248,7 +248,7 @@ export default function IlanOnaylariPage() {
               key={listing.id}
               onClick={() => setSelectedListing(listing)}
               className={`bg-white rounded-xl border p-5 cursor-pointer transition-all hover:shadow-lg ${
-                selectedListing?.id === listing.id ? 'border-red-500 ring-2 ring-red-500/20' : 'border-gray-200'
+                selectedListing?.id === listing.id ? 'border-dk-red ring-2 ring-dk-red/20' : 'border-gray-200'
               }`}
             >
               <div className="flex items-start justify-between mb-3">

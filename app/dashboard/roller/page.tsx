@@ -130,7 +130,7 @@ export default function RollerPage() {
           <h1 className="text-2xl font-bold text-gray-900">Rol ve Yetki Yönetimi</h1>
           <p className="text-sm text-gray-500 mt-1">Kullanıcı rolleri ve erişim izinleri</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors">
+        <button className="flex items-center gap-2 px-4 py-2 bg-dk-red text-white rounded-xl hover:bg-dk-red-strong transition-colors">
           <Plus size={16} />
           <span className="text-sm font-bold">Yeni Rol</span>
         </button>
@@ -146,7 +146,7 @@ export default function RollerPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Rol ara..."
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-red-500/20"
+              className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
             />
           </div>
 
@@ -158,7 +158,7 @@ export default function RollerPage() {
               onClick={() => { setSelectedRole(role); setIsEditing(false); }}
               className={`bg-white rounded-xl border p-4 cursor-pointer transition-all ${
                 selectedRole?.id === role.id
-                  ? 'border-red-500 ring-2 ring-red-500/20'
+                  ? 'border-dk-red ring-2 ring-dk-red/20'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >

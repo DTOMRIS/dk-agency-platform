@@ -183,7 +183,7 @@ export default function LoginPage() {
         <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl md:grid-cols-[1.05fr_0.95fr]">
           <div className="p-8 md:p-10">
             <div className="mb-8">
-              <div className="mb-4 inline-flex rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-red-600">
+              <div className="mb-4 inline-flex rounded-full bg-dk-red/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-dk-red">
                 {copy.badge}
               </div>
               <h1 className="text-3xl font-black text-slate-900">{copy.title}</h1>
@@ -201,7 +201,7 @@ export default function LoginPage() {
                     value={formData.email}
                     onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                     placeholder={copy.emailPlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
                   />
                 </div>
               </div>
@@ -217,13 +217,13 @@ export default function LoginPage() {
                     value={formData.password}
                     onChange={(event) => setFormData({ ...formData, password: event.target.value })}
                     placeholder="••••••••"
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
                   />
                 </div>
               </div>
 
               <div className="text-right">
-                <Link href="/forgot-password" className="text-sm font-semibold text-red-600 hover:text-red-700">
+                <Link href="/forgot-password" className="text-sm font-semibold text-dk-red hover:text-dk-red-strong">
                   {copy.forgotPassword}
                 </Link>
               </div>
@@ -238,7 +238,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-400"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red py-3.5 font-bold text-white transition hover:bg-dk-red-strong disabled:cursor-not-allowed disabled:bg-dk-red/60"
               >
                 <LogIn className="h-5 w-5" />
                 {submitting ? copy.submitting : copy.submitBtn}
@@ -249,7 +249,7 @@ export default function LoginPage() {
               <span>{copy.noAccount}</span>
               <Link
                 href={`/auth/register?next=${encodeURIComponent(nextUrl)}`}
-                className="font-semibold text-red-600 hover:text-red-700"
+                className="font-semibold text-dk-red hover:text-dk-red-strong"
               >
                 {copy.signUp}
               </Link>
@@ -257,7 +257,7 @@ export default function LoginPage() {
 
             <p className="mt-3 text-sm text-slate-500">
               {copy.membershipInfo}{' '}
-              <Link href="/uzvluk" className="font-semibold text-slate-900 hover:text-red-600">
+              <Link href="/uzvluk" className="font-semibold text-slate-900 hover:text-dk-red">
                 /uzvluk
               </Link>
             </p>

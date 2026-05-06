@@ -78,7 +78,7 @@ export default function DashboardDuyurularPage() {
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center shadow-xl">
-            <Megaphone size={24} className="text-red-500" />
+            <Megaphone size={24} className="text-dk-red" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Duyuru Merkezi</h1>
@@ -86,8 +86,8 @@ export default function DashboardDuyurularPage() {
           </div>
         </div>
         <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-red-50 rounded-xl">
-          <Bell size={14} className="text-red-600" />
-          <span className="text-xs font-bold text-red-600">Real-time</span>
+          <Bell size={14} className="text-dk-red" />
+          <span className="text-xs font-bold text-dk-red">Real-time</span>
         </div>
       </div>
 
@@ -161,7 +161,7 @@ export default function DashboardDuyurularPage() {
               <h3 className="font-bold text-gray-900">Hedef Kitle</h3>
               <button
                 onClick={selectAll}
-                className="text-sm text-red-600 font-medium hover:text-red-700"
+                className="text-sm text-dk-red font-medium hover:text-dk-red-strong"
               >
                 {selectedRoles.length === ROLE_OPTIONS.length ? 'Hiçbirini Seçme' : 'Tümünü Seç'}
               </button>
@@ -177,12 +177,12 @@ export default function DashboardDuyurularPage() {
                     onClick={() => toggleRole(role.value)}
                     className={`p-4 rounded-xl border-2 text-left transition-all ${
                       isSelected
-                        ? 'border-red-500 bg-red-50'
+                        ? 'border-dk-red bg-red-50'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    <Icon size={24} className={isSelected ? 'text-red-600' : 'text-gray-400'} />
-                    <p className={`font-medium mt-2 ${isSelected ? 'text-red-700' : 'text-gray-700'}`}>
+                    <Icon size={24} className={isSelected ? 'text-dk-red' : 'text-gray-400'} />
+                    <p className={`font-medium mt-2 ${isSelected ? 'text-dk-red' : 'text-gray-700'}`}>
                       {role.label}
                     </p>
                     <p className="text-xs text-gray-500 mt-1">{role.desc}</p>
@@ -208,7 +208,7 @@ export default function DashboardDuyurularPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Duyuru başlığı..."
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
               <div>
@@ -218,7 +218,7 @@ export default function DashboardDuyurularPage() {
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Duyuru içeriği..."
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 resize-none"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red resize-none"
                 />
               </div>
               <div>
@@ -228,7 +228,7 @@ export default function DashboardDuyurularPage() {
                   value={actionUrl}
                   onChange={(e) => setActionUrl(e.target.value)}
                   placeholder="https://..."
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
             </div>
@@ -263,7 +263,7 @@ export default function DashboardDuyurularPage() {
                     {message || 'Duyuru içeriği burada görünecek...'}
                   </p>
                   {actionUrl && (
-                    <a href={actionUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-red-600 font-medium mt-2 inline-block">
+                    <a href={actionUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-dk-red font-medium mt-2 inline-block">
                       Detayları Gör →
                     </a>
                   )}
@@ -276,7 +276,7 @@ export default function DashboardDuyurularPage() {
           <button
             onClick={handleSend}
             disabled={sending || !title.trim() || !message.trim()}
-            className="w-full flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white px-6 py-4 rounded-xl font-bold transition-colors"
+            className="w-full flex items-center justify-center gap-3 bg-dk-red hover:bg-dk-red-strong disabled:bg-gray-300 text-white px-6 py-4 rounded-xl font-bold transition-colors"
           >
             {sending ? (
               <>

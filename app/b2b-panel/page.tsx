@@ -75,7 +75,7 @@ export default function B2BPanelPage() {
         </div>
         <Link
           href="/b2b-panel/yeni-ilan"
-          className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-semibold transition-colors"
+          className="inline-flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-3 rounded-xl font-semibold transition-colors"
         >
           <Plus size={18} />
           Yeni İlan Oluştur
@@ -111,7 +111,7 @@ export default function B2BPanelPage() {
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
               <h2 className="font-bold text-gray-900">İlanlarım</h2>
-              <Link href="/b2b-panel/ilanlarim" className="text-sm text-red-600 font-medium hover:text-red-700 flex items-center gap-1">
+              <Link href="/b2b-panel/ilanlarim" className="text-sm text-dk-red font-medium hover:text-dk-red-strong flex items-center gap-1">
                 Tümünü Gör <ArrowRight size={14} />
               </Link>
             </div>
@@ -185,7 +185,7 @@ export default function B2BPanelPage() {
                 </div>
               </div>
             </div>
-            <Link href="/b2b-panel/teklifler" className="mt-4 inline-flex items-center gap-1 text-sm text-red-600 font-medium hover:text-red-700">
+            <Link href="/b2b-panel/teklifler" className="mt-4 inline-flex items-center gap-1 text-sm text-dk-red font-medium hover:text-dk-red-strong">
               Tüm teklifler <ArrowRight size={14} />
             </Link>
           </div>

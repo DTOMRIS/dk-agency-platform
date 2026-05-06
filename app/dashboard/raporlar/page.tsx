@@ -126,7 +126,7 @@ export default function RaporlarPage() {
           <select
             value={dateRange}
             onChange={(e) => setDateRange(e.target.value)}
-            className="px-4 py-2 border border-gray-200 rounded-xl bg-white text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500/20"
+            className="px-4 py-2 border border-gray-200 rounded-xl bg-white text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-dk-red/20"
           >
             <option value="week">Bu Hafta</option>
             <option value="month">Bu Ay</option>
@@ -137,7 +137,7 @@ export default function RaporlarPage() {
             <RefreshCw size={16} className="text-gray-500" />
             <span className="text-sm font-medium text-gray-700">Yenile</span>
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-dk-red text-white rounded-xl hover:bg-dk-red-strong transition-colors">
             <FileText size={16} />
             <span className="text-sm font-bold">Yeni Rapor</span>
           </button>
@@ -172,7 +172,7 @@ export default function RaporlarPage() {
             onClick={() => setActiveCategory(cat.id)}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
               activeCategory === cat.id
-                ? 'bg-red-600 text-white'
+                ? 'bg-dk-red text-white'
                 : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
             }`}
           >
@@ -205,7 +205,7 @@ export default function RaporlarPage() {
               <p className="text-sm text-gray-500 mb-4">{report.description}</p>
               <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                 <span className="text-xs text-gray-400">{report.date}</span>
-                <button className="flex items-center gap-1 text-red-600 hover:text-red-700 text-sm font-medium">
+                <button className="flex items-center gap-1 text-dk-red hover:text-dk-red-strong text-sm font-medium">
                   <Download size={14} />
                   İndir
                 </button>

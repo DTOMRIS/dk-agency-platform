@@ -84,7 +84,7 @@ export default function DealFlowPage() {
               onClick={() => setPeriod(p)}
               className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                 period === p 
-                  ? 'bg-red-600 text-white' 
+                  ? 'bg-dk-red text-white'
                   : 'bg-white text-gray-600 hover:bg-gray-100'
               }`}
             >

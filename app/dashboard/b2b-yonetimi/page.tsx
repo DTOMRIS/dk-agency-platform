@@ -143,7 +143,7 @@ export default function B2BYonetimiPage() {
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center shadow-xl">
-            <Building2 size={24} className="text-red-500" />
+            <Building2 size={24} className="text-dk-red" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">B2B Yönetimi</h1>
@@ -152,7 +152,7 @@ export default function B2BYonetimiPage() {
         </div>
         <button 
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-semibold transition-colors"
+          className="flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-3 rounded-xl font-semibold transition-colors"
         >
           <Plus size={18} />
           Yeni Partner Ekle
@@ -217,7 +217,7 @@ export default function B2BYonetimiPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Partner, kişi veya şehir ara..."
-              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
             />
           </div>
           <div className="flex gap-3">
@@ -225,7 +225,7 @@ export default function B2BYonetimiPage() {
               <select
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
               >
                 <option value="all">Tüm Tipler</option>
                 <option value="investor">Yatırımcılar</option>
@@ -239,7 +239,7 @@ export default function B2BYonetimiPage() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
               >
                 <option value="all">Tüm Durumlar</option>
                 <option value="active">Aktif</option>
@@ -296,10 +296,10 @@ export default function B2BYonetimiPage() {
                       <div>
                         <p className="text-sm font-medium text-gray-900">{partner.contactPerson}</p>
                         <div className="flex items-center gap-3 mt-1">
-                          <a href={`mailto:${partner.email}`} className="text-gray-400 hover:text-red-600 transition-colors">
+                          <a href={`mailto:${partner.email}`} className="text-gray-400 hover:text-dk-red transition-colors">
                             <Mail size={14} />
                           </a>
-                          <a href={`tel:${partner.phone}`} className="text-gray-400 hover:text-red-600 transition-colors">
+                          <a href={`tel:${partner.phone}`} className="text-gray-400 hover:text-dk-red transition-colors">
                             <Phone size={14} />
                           </a>
                         </div>
@@ -377,14 +377,14 @@ export default function B2BYonetimiPage() {
                 <input
                   type="text"
                   placeholder="Firma adını girin"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Partner Tipi</label>
-                  <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 bg-white">
+                  <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white">
                     <option value="">Seçin</option>
                     <option value="investor">Yatırımcı</option>
                     <option value="franchisee">Franchise</option>
@@ -397,7 +397,7 @@ export default function B2BYonetimiPage() {
                   <input
                     type="text"
                     placeholder="Sektör"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                   />
                 </div>
               </div>
@@ -407,7 +407,7 @@ export default function B2BYonetimiPage() {
                 <input
                   type="text"
                   placeholder="Ad Soyad"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
 
@@ -417,7 +417,7 @@ export default function B2BYonetimiPage() {
                   <input
                     type="email"
                     placeholder="email@firma.com"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                   />
                 </div>
                 <div>
@@ -425,7 +425,7 @@ export default function B2BYonetimiPage() {
                   <input
                     type="tel"
                     placeholder="+90 5XX XXX XXXX"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                   />
                 </div>
               </div>
@@ -435,7 +435,7 @@ export default function B2BYonetimiPage() {
                 <input
                   type="text"
                   placeholder="Şehir"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
 
@@ -444,7 +444,7 @@ export default function B2BYonetimiPage() {
                 <textarea
                   rows={3}
                   placeholder="Ek bilgiler..."
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 resize-none"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red resize-none"
                 />
               </div>
             </form>
@@ -461,7 +461,7 @@ export default function B2BYonetimiPage() {
                   alert('Partner eklendi! (Demo)');
                   setShowAddModal(false);
                 }}
-                className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold transition-colors"
+                className="px-5 py-2.5 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors"
               >
                 Partner Ekle
               </button>

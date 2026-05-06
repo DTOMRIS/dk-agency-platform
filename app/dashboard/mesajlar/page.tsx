@@ -165,7 +165,7 @@ export default function MessagesPage() {
             <h1 className="text-2xl font-bold text-gray-900">Mesaj Merkezi</h1>
             <p className="text-sm text-gray-500 mt-1">Partner ve yatırımcı iletişimi</p>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors">
             <Plus size={18} />
             Yeni Mesaj
           </button>
@@ -180,7 +180,7 @@ export default function MessagesPage() {
             <button
               onClick={() => { setActiveTab('inbox'); setSelectedMessage(null); }}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-colors ${
-                activeTab === 'inbox' ? 'bg-red-600 text-white' : 'hover:bg-gray-100 text-gray-700'
+                activeTab === 'inbox' ? 'bg-dk-red text-white' : 'hover:bg-gray-100 text-gray-700'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -196,7 +196,7 @@ export default function MessagesPage() {
             <button
               onClick={() => { setActiveTab('starred'); setSelectedMessage(null); }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-                activeTab === 'starred' ? 'bg-red-600 text-white' : 'hover:bg-gray-100 text-gray-700'
+                activeTab === 'starred' ? 'bg-dk-red text-white' : 'hover:bg-gray-100 text-gray-700'
               }`}
             >
               <Star size={18} />
@@ -205,7 +205,7 @@ export default function MessagesPage() {
             <button
               onClick={() => { setActiveTab('sent'); setSelectedMessage(null); }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-                activeTab === 'sent' ? 'bg-red-600 text-white' : 'hover:bg-gray-100 text-gray-700'
+                activeTab === 'sent' ? 'bg-dk-red text-white' : 'hover:bg-gray-100 text-gray-700'
               }`}
             >
               <Send size={18} />
@@ -214,7 +214,7 @@ export default function MessagesPage() {
             <button
               onClick={() => { setActiveTab('archive'); setSelectedMessage(null); }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-                activeTab === 'archive' ? 'bg-red-600 text-white' : 'hover:bg-gray-100 text-gray-700'
+                activeTab === 'archive' ? 'bg-dk-red text-white' : 'hover:bg-gray-100 text-gray-700'
               }`}
             >
               <Archive size={18} />
@@ -251,7 +251,7 @@ export default function MessagesPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Mesajlarda ara..."
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
               />
             </div>
           </div>
@@ -269,7 +269,7 @@ export default function MessagesPage() {
                   key={message.id}
                   onClick={() => setSelectedMessage(message)}
                   className={`p-4 border-b border-gray-100 cursor-pointer transition-colors ${
-                    selectedMessage?.id === message.id ? 'bg-red-50 border-l-4 border-l-red-600' : 'hover:bg-gray-50'
+                    selectedMessage?.id === message.id ? 'bg-red-50 border-l-4 border-l-dk-red' : 'hover:bg-gray-50'
                   } ${!message.read ? 'bg-blue-50/50' : ''}`}
                 >
                   <div className="flex items-start gap-3">
@@ -408,7 +408,7 @@ export default function MessagesPage() {
             {/* Reply Box */}
             <div className="p-6 border-t border-gray-200 bg-gray-50">
               <div className="flex gap-3">
-                <button className="flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-semibold transition-colors">
+                <button className="flex items-center gap-2 px-4 py-2.5 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors">
                   <Reply size={16} />
                   Yanıtla
                 </button>
