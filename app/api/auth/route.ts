@@ -212,7 +212,7 @@ async function handlePasswordResetRequest(data: Record<string, unknown>) {
     return NextResponse.json({ success: true, message: 'Sıfırlama linki göndərildi.' });
   }
 
-  const user = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).then((r) => r[0]);
+  const user = await db.select({ id: users.id, name: users.name }).from(users).where(eq(users.email, email)).then((r) => r[0]);
 
   if (user) {
     const token = crypto.randomUUID();

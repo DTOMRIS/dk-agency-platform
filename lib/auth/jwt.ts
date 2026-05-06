@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dk-agency-jwt-secret-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) throw new Error('JWT_SECRET env var is required. Set it in .env.local or hosting panel.');
 const JWT_EXPIRES_IN = '7d';
 
 export const AUTH_COOKIE_NAME = 'dk_auth_token';
