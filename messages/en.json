@@ -39,6 +39,37 @@
     "title": "Job Listings",
     "subtitle": "Career opportunities in the HoReCa sector"
   },
+  "dashboard": {
+    "sidebar": {
+      "sectionGeneral": "GENERAL",
+      "sectionCommunication": "COMMUNICATION",
+      "sectionTools": "TOOLS",
+      "sectionAccount": "ACCOUNT",
+      "dashboard": "Dashboard",
+      "myListings": "My Listings",
+      "newListing": "New Listing",
+      "incomingOffers": "Incoming Offers",
+      "messages": "Messages",
+      "notifications": "Notifications",
+      "toolkit": "Toolkit",
+      "favorites": "Favorites",
+      "aiAnalysis": "AI Analytics",
+      "companyProfile": "Company Profile",
+      "settings": "Settings",
+      "support": "Support",
+      "logout": "Sign out",
+      "profileCompletion": "Profile completion",
+      "premium": "PREMIUM",
+      "kazanAiTitle": "KAZAN AI",
+      "kazanAiDesc": "Analyze food cost, P&L and operational decisions faster.",
+      "kazanAiCta": "Open"
+    },
+    "topBar": {
+      "notifications": "Notifications",
+      "profile": "Profile",
+      "logout": "Sign out"
+    }
+  },
   "common": {
     "language": "Language",
     "az": "AZ",

@@ -39,6 +39,37 @@
     "title": "Вакансии",
     "subtitle": "Карьерные возможности в секторе HoReCa"
   },
+  "dashboard": {
+    "sidebar": {
+      "sectionGeneral": "ОБЩЕЕ",
+      "sectionCommunication": "СВЯЗЬ",
+      "sectionTools": "ИНСТРУМЕНТЫ",
+      "sectionAccount": "АККАУНТ",
+      "dashboard": "Панель",
+      "myListings": "Мои объявления",
+      "newListing": "Новое объявление",
+      "incomingOffers": "Входящие предложения",
+      "messages": "Сообщения",
+      "notifications": "Уведомления",
+      "toolkit": "Toolkit",
+      "favorites": "Избранное",
+      "aiAnalysis": "AI-анализы",
+      "companyProfile": "Профиль компании",
+      "settings": "Настройки",
+      "support": "Поддержка",
+      "logout": "Выйти",
+      "profileCompletion": "Заполнение профиля",
+      "premium": "PREMIUM",
+      "kazanAiTitle": "KAZAN AI",
+      "kazanAiDesc": "Быстрее анализируйте food cost, P&L и операционные решения.",
+      "kazanAiCta": "Открыть"
+    },
+    "topBar": {
+      "notifications": "Уведомления",
+      "profile": "Профиль",
+      "logout": "Выйти"
+    }
+  },
   "common": {
     "language": "Язык",
     "az": "AZ",

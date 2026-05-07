@@ -39,6 +39,37 @@
     "title": "İş İlanları",
     "subtitle": "HoReCa sektöründe kariyer fırsatları"
   },
+  "dashboard": {
+    "sidebar": {
+      "sectionGeneral": "GENEL",
+      "sectionCommunication": "İLETİŞİM",
+      "sectionTools": "ARAÇLAR",
+      "sectionAccount": "HESAP",
+      "dashboard": "Dashboard",
+      "myListings": "İlanlarım",
+      "newListing": "Yeni İlan",
+      "incomingOffers": "Gelen Teklifler",
+      "messages": "Mesajlar",
+      "notifications": "Bildirimler",
+      "toolkit": "Toolkit",
+      "favorites": "Favorilerim",
+      "aiAnalysis": "AI Analizleri",
+      "companyProfile": "Firma Profili",
+      "settings": "Ayarlar",
+      "support": "Destek",
+      "logout": "Çıkış Yap",
+      "profileCompletion": "Profil Tamamlama",
+      "premium": "PREMIUM",
+      "kazanAiTitle": "KAZAN AI",
+      "kazanAiDesc": "Food cost, P&L ve operasyon kararlarını daha hızlı yorumla.",
+      "kazanAiCta": "Şimdi Bak"
+    },
+    "topBar": {
+      "notifications": "Bildirimler",
+      "profile": "Profil",
+      "logout": "Çıkış Yap"
+    }
+  },
   "common": {
     "language": "Dil",
     "az": "AZ",
