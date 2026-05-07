@@ -121,6 +121,7 @@ export const RATE_LIMITS = {
   authLogin: { maxRequests: 5, windowMs: 15 * 60 * 1000 },       // 5 / 15 min
   authRegister: { maxRequests: 3, windowMs: 60 * 60 * 1000 },    // 3 / 1 hour
   authForgotPassword: { maxRequests: 3, windowMs: 60 * 60 * 1000 }, // 3 / 1 hour
+  authResetPassword: { maxRequests: 5, windowMs: 60 * 60 * 1000 },  // 5 / 1 hour
   authVerifyEmail: { maxRequests: 10, windowMs: 60 * 60 * 1000 }, // 10 / 1 hour
   kazanAi: { maxRequests: 30, windowMs: 60 * 1000 },             // 30 / 1 min
   invoiceOcr: { maxRequests: 20, windowMs: 60 * 60 * 1000 },     // 20 / 1 hour
