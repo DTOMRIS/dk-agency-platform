@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
+import { DashboardTopBar } from '@/components/dashboard/DashboardTopBar';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,7 +24,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="text-xs font-semibold text-slate-500">Admin</div>
       </div>
 
-      <main className="min-h-screen bg-white pt-16 lg:ml-72 lg:pt-0">{children}</main>
+      <div className="min-h-screen bg-white pt-16 lg:ml-72 lg:pt-0">
+        <DashboardTopBar />
+        <main>{children}</main>
+      </div>
     </div>
   );
 }

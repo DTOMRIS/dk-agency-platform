@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { DM_Sans, Playfair_Display } from 'next/font/google';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import './globals.css';
-import Header from '../components/layout/Header';
-import { Footer, KazanAIBot } from '../components/layout/Footer';
-import LazyCookiesBanner from '../components/ui/LazyCookiesBanner';
+import PublicChrome from '@/components/layout/PublicChrome';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -22,19 +22,19 @@ export const metadata: Metadata = {
   description: 'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const messages = await getMessages();
+
   return (
     <html lang="az" className={`${dmSans.variable} ${playfair.variable}`}>
       <body className="min-h-screen bg-white font-sans selection:bg-brand-red selection:text-white antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <KazanAIBot />
-        <LazyCookiesBanner />
+        <NextIntlClientProvider messages={messages}>
+          <PublicChrome>{children}</PublicChrome>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

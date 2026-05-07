@@ -39,6 +39,37 @@
     "title": "İş Elanları",
     "subtitle": "HoReCa sektorunda karyera imkanları"
   },
+  "dashboard": {
+    "sidebar": {
+      "sectionGeneral": "ÜMUMİ",
+      "sectionCommunication": "ƏLAQƏ",
+      "sectionTools": "ALƏTLƏR",
+      "sectionAccount": "HESAB",
+      "dashboard": "İdarə paneli",
+      "myListings": "Elanlarım",
+      "newListing": "Yeni elan",
+      "incomingOffers": "Gələn təkliflər",
+      "messages": "Mesajlar",
+      "notifications": "Bildirişlər",
+      "toolkit": "Toolkit",
+      "favorites": "Sevimlilərim",
+      "aiAnalysis": "AI analizləri",
+      "companyProfile": "Şirkət profili",
+      "settings": "Tənzimləmələr",
+      "support": "Dəstək",
+      "logout": "Çıxış",
+      "profileCompletion": "Profil tamamlanması",
+      "premium": "PREMIUM",
+      "kazanAiTitle": "KAZAN AI",
+      "kazanAiDesc": "Food cost, P&L və əməliyyat qərarlarını daha sürətli şərh et.",
+      "kazanAiCta": "İndi bax"
+    },
+    "topBar": {
+      "notifications": "Bildirişlər",
+      "profile": "Profil",
+      "logout": "Çıxış"
+    }
+  },
   "common": {
     "language": "Dil",
     "az": "AZ",
