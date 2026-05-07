@@ -3,6 +3,22 @@
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [2026-05-07] — Auth Password Reset + Deployment Docs
+
+### Fixed
+- **forgot-password endpoint** — replaced in-memory mock with real Neon/Drizzle DB implementation
+  - User lookup via `users` table, token stored in `passwordResetTokens`
+  - Email sent via SMTP with locale-aware `passwordReset` template
+  - Email enumeration protection: always returns 200
+- **reset-password endpoint** — real DB token validation + bcrypt password hash update
+  - Token expiry check (1 hour), used-at marking, `users.passwordHash` update
+
+### Added
+- Rate limit for reset-password: 5 requests/hour/IP (`RATE_LIMITS.authResetPassword`)
+- `docs/DEPLOYMENT.md` — complete deployment guide (Hostinger, env vars, SMTP, DB, pitfalls, smoke tests)
+
+---
+
 ## [2026-05-06] — CTO Sprint: i18n 100%, Security, Performance
 
 ### Added
