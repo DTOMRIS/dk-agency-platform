@@ -259,5 +259,98 @@
     "ru": "RU",
     "tr": "TR",
     "en": "EN"
+  },
+  "marketing": {
+    "ocagi": {
+      "title": "Marketinq Ocağı",
+      "subtitle": "Restoran sahibi üçün AI-powered marketinq alətləri",
+      "categories": {
+        "gorunulurluk": "Görünürlük",
+        "kontent": "Kontent",
+        "strateji": "Strateji",
+        "reputasiya": "Reputasiya"
+      },
+      "tiers": {
+        "sagird": "ŞAGIRD",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      },
+      "tierPrices": {
+        "sagird": "Pulsuz",
+        "kalfa": "49 AZN/ay",
+        "usta": "149 AZN/ay"
+      },
+      "comingSoon": "Tezliklə",
+      "explore": "Daxil ol",
+      "upgrade": "Pillə yüksəlt",
+      "backToList": "Bütün alətlər"
+    },
+    "status": {
+      "planned": "Tezliklə",
+      "beta": "Beta",
+      "live": "Aktiv"
+    },
+    "tools": {
+      "gorunurluk-testi": {
+        "title": "Görünürlük Testi",
+        "subtitle": "Restoranınızın onlayn-fiziki görünürlüyünü 6 sahədə yoxlayın",
+        "why": "2026-da Google Maps + AI search dominantdır. Müştərilərin 52%-i gözəcarpan restoranlardan sifariş verir."
+      },
+      "kst-yoxlayici": {
+        "title": "KST Yoxlayıcı",
+        "subtitle": "Keyfiyyət, Servis, Təmizlik öz-özünə audit",
+        "why": "KST mükəmməlliyi bütün marketinq səylərinin təməlidir. Servis yavaş, məkan kirli, yemək keyfiyyətsizdirsə — heç bir reklam dönüşüm yaratmır."
+      },
+      "gbp-qurucu": {
+        "title": "GBP Qurucusu",
+        "subtitle": "Google Business Profile-ı 30 dəqiqədə qurun",
+        "why": "Google rating-də 1 ulduz artımı 5-9% gəlir artırır. GBP olmayan restoran Google Maps-da yoxdur."
+      },
+      "marka-kompasi": {
+        "title": "Marka Kompası",
+        "subtitle": "5 sualda restoranınızın bazardakı yerini tapın",
+        "why": "Konum (positioning) ucuz/lüks etiketlərdən ibarət deyil — kim üçün, hansı problem, niyə fərqli?"
+      },
+      "smm-plan-ai": {
+        "title": "SMM Plan AI",
+        "subtitle": "7-günlük Instagram + TikTok məzmun planı",
+        "why": "2026-da 94% marketers AI istifadə edir. Restoran sahibinin 7 gün boyu post fikri tapması mümkün deyil."
+      },
+      "caption-yazici": {
+        "title": "Caption Yazıcı",
+        "subtitle": "4 dildə, 3 ton ilə post mətni yazın",
+        "why": "Caption restoranın IG/TikTok-da konversiya nöqtəsidir."
+      },
+      "promosyon-roi": {
+        "title": "Promosyon ROI",
+        "subtitle": "Real incremental satış hesablayıcısı",
+        "why": "'20% endirim verdim, satış arttı' yanılgıdır. Bu alət yalnız promosyon səbəbiylə gəlmiş satışı hesablayır."
+      },
+      "kampaniya-takvimi": {
+        "title": "Kampaniya Takvimi",
+        "subtitle": "12 aylıq vizual promosyon planı",
+        "why": "Restoran sahibi 'Novruz nə edək?' sualını 1 həftə qala düşünür — gec olur."
+      },
+      "rey-cavab-ai": {
+        "title": "Rəy Cavab AI",
+        "subtitle": "Google və 2GIS rəylərinə brand-voice cavab",
+        "why": "Mənfi rəylərə yanlış cavab brendi sıxır. Bu alət brand-voice öyrənir, hər rəyə 3 variant yazır."
+      },
+      "reqib-radari": {
+        "title": "Rəqib Radarı",
+        "subtitle": "Yaxınlıqdakı 5 rəqibin menyu və sentiment analizi",
+        "why": "Manual rəqib araşdırması saatlar alır. AI bunu 30 saniyəyə edir."
+      },
+      "ai-vizyual-studyo": {
+        "title": "AI Vizyual Studyo",
+        "subtitle": "Yemək şəklindən professional foto və banner yaradın",
+        "why": "Restoran fotoçusu 200-500 AZN/seans. AI ilə eyni nəticə 5 dəqiqədə."
+      },
+      "aeo-skoru": {
+        "title": "AEO Skoru",
+        "subtitle": "ChatGPT/Perplexity sənin restoranını tövsiyə edirmi?",
+        "why": "2026-da klassik axtarış 25% düşür — adamlar AI-yə soruşur."
+      }
+    }
   }
 }
