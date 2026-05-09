@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) throw new Error('JWT_SECRET env var is required. Set it in .env.local or hosting panel.');
 const JWT_EXPIRES_IN = '7d';
 
 export const AUTH_COOKIE_NAME = 'dk_auth_token';
@@ -14,13 +12,19 @@ export interface JwtPayload {
   role: string;
 }
 
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) throw new Error('JWT_SECRET env var is required. Set it in .env.local or hosting panel.');
+  return secret;
+}
+
 export function signToken(payload: JwtPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+  return jwt.sign(payload, getJwtSecret(), { expiresIn: JWT_EXPIRES_IN });
 }
 
 export function verifyToken(token: string): JwtPayload | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload & { iat: number; exp: number };
+    const decoded = jwt.verify(token, getJwtSecret()) as JwtPayload & { iat: number; exp: number };
     return { userId: decoded.userId, email: decoded.email, role: decoded.role };
   } catch {
     return null;

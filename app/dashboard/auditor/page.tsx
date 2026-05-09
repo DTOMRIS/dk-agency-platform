@@ -331,7 +331,10 @@ export default function AuditorDashboard() {
     setLoading(false);
   }, [statusFilter, searchQuery]);
 
-  useEffect(() => { void fetchAudits(); }, [fetchAudits]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchAudits();
+  }, [fetchAudits]);
 
   const openDetail = (id: number) => {
     setSelectedAuditId(id);
