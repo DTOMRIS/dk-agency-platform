@@ -3,6 +3,33 @@
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [2026-05-09] — Marketinq Ocagi Sprint 1: Faza 0 Infrastructure (TASK-0101)
+
+### Added
+- **Marketinq Ocagi toolkit infrastructure** — 12 AI-powered marketing tools framework
+  - `lib/marketing-tools-config.ts` — single source of truth for all 12 tools (slug, tier, category, AI provider, input schema, run limits)
+  - `lib/ai-router.ts` — unified DeepSeek + Claude AI gateway with automatic fallback, cost tracking per token
+  - `lib/marketing-gating.ts` — SAGIRD/KALFA/USTA tier-based access control with monthly run limits
+  - `marketing_tool_runs` table in DB schema with user/slug/status indexes
+- **Dashboard pages** — `/dashboard/marketinq-ocagi` index (12 cards, 4 categories) + `/dashboard/marketinq-ocagi/[slug]` dynamic placeholder
+- **OCAQ sidebar entry** — "Marketinq Ocagi" with Sparkles icon, 4-language copy (AZ/EN/TR/RU)
+- **i18n keys** — `marketing.ocagi` + `marketing.tools.*` for all 12 tools in `messages/az.json`
+
+### Tool Inventory (all status: planned)
+| Pille | Aletler |
+|-------|---------|
+| SAGIRD (pulsuz) | Gorunurluk Testi, KST Yoxlayici, GBP Qurucu, Marka Kompasi |
+| KALFA (49 AZN/ay) | SMM Plan AI, Caption Yazici, Promosyon ROI, Kampaniya Takvimi, Rey Cavab AI |
+| USTA (149 AZN/ay) | Reqib Radari, AI Vizyual Studyo, AEO Skoru |
+
+### Notes
+- All 12 tools display "Tezlikle" badge — no tool is implemented yet
+- AI router tested at build time only, real API calls in Sprint 2
+- DB migration needs `drizzle-kit generate` + `drizzle-kit push` to Neon
+- Sprint 2 target: Marka Kompasi full implementation
+
+---
+
 ## [2026-05-07] — Auth Password Reset + Deployment Docs
 
 ### Fixed
