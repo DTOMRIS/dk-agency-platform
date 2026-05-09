@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-09T07:38:24.696Z
+- GeneratedAt: 2026-05-09T19:44:38.888Z
 - BuildStatus: PASS
 
-## Routes (127)
+## Routes (131)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -49,6 +49,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/insaat-checklist
 - /[locale]/toolkit/menu-matrix
 - /[locale]/toolkit/pnl
+- /[locale]/toolkit/pnl-simulator
 - /[locale]/toolkit/staff-retention
 - /[locale]/uzvluk
 - /[locale]/verify-email
@@ -95,6 +96,8 @@ Auto-generated. Do not edit manually.
 - /dashboard/kazan-leads
 - /dashboard/kullanicilar
 - /dashboard/loglar
+- /dashboard/marketinq-ocagi
+- /dashboard/marketinq-ocagi/[slug]
 - /dashboard/mesajlar
 - /dashboard/pipeline
 - /dashboard/raporlar
@@ -129,13 +132,14 @@ Auto-generated. Do not edit manually.
 - /toolkit/insaat-checklist
 - /toolkit/menu-matrix
 - /toolkit/pnl
+- /toolkit/pnl-simulator
 - /toolkit/staff-retention
 - /uzvluk
 - /verify-email
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (52)
+## API Routes (54)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
@@ -161,6 +165,8 @@ Auto-generated. Do not edit manually.
 - /api/invoices
 - /api/kazan-ai
 - /api/kazan-ai/leads
+- /api/leads/track
+- /api/leads/whatsapp
 - /api/listings
 - /api/listings/[id]
 - /api/listings/[id]/leads
