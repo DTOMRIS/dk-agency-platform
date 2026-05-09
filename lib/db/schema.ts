@@ -11,6 +11,7 @@ import {
   uuid,
   real,
   date,
+  index,
 } from 'drizzle-orm/pg-core';
 
 // Hero section content (field by field admin)
@@ -242,6 +243,22 @@ export const listingLeads = pgTable('listing_leads', {
   status: listingLeadStatusEnum('status').notNull().default('new'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
+
+export const leads = pgTable(
+  'leads',
+  {
+    id: serial('id').primaryKey(),
+    source: varchar('source', { length: 50 }),
+    channel: varchar('channel', { length: 20 }),
+    locale: varchar('locale', { length: 2 }),
+    userAgent: text('user_agent'),
+    ipHash: varchar('ip_hash', { length: 64 }),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  (table) => ({
+    sourceChannelIdx: index('idx_leads_source_channel').on(table.source, table.channel),
+  }),
+);
 
 export const kazanLeads = pgTable('kazan_leads', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -601,3 +618,31 @@ export const invoiceCategoryRules = pgTable('invoice_category_rules', {
   confidence: real('confidence').default(1.0),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+// ── MARKETINQ OCAGI ─────────────────────────────────────────────────
+
+export const marketingToolRuns = pgTable(
+  'marketing_tool_runs',
+  {
+    id: serial('id').primaryKey(),
+    userId: integer('user_id')
+      .notNull()
+      .references(() => users.id),
+    toolSlug: varchar('tool_slug', { length: 64 }).notNull(),
+    inputData: jsonb('input_data').$type<Record<string, unknown>>().notNull(),
+    outputData: jsonb('output_data').$type<Record<string, unknown>>(),
+    aiProvider: varchar('ai_provider', { length: 16 }),
+    tokensUsed: integer('tokens_used').default(0),
+    costAzn: real('cost_azn').default(0),
+    status: varchar('status', { length: 16 }).default('pending'),
+    errorMessage: varchar('error_message', { length: 500 }),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    completedAt: timestamp('completed_at'),
+    locale: varchar('locale', { length: 2 }).notNull().default('az'),
+  },
+  (table) => ({
+    userIdx: index('idx_mtr_user').on(table.userId),
+    slugIdx: index('idx_mtr_slug').on(table.toolSlug),
+    createdIdx: index('idx_mtr_created').on(table.createdAt),
+  }),
+);

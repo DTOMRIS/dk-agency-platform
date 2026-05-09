@@ -8,6 +8,13 @@
       "when": 1777346573261,
       "tag": "0000_add_invoice_ocr_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778318620905,
+      "tag": "0001_foamy_gideon",
+      "breakpoints": true
     }
   ]
 }

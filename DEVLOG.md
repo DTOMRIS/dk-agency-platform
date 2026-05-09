@@ -4,6 +4,61 @@ Sessiya qeydləri. Hər iş sessiyasının nəticəsi burada.
 
 ---
 
+## 2026-05-09 — Marketinq Ocagi Faza 0 Infrastructure (TASK-0101)
+
+**Problem:** DK Agency platformasinda restoran sahiblari ucun marketinq aletleri yox idi. Movcud toolkit (food cost, P&L, checklist) emeliyyat fokusludur. Marketinq — SMM, branding, reqib analizi, AEO — tamam bos idi.
+
+**Kok sebeb:** Marketinq alet kategoriyasi hec vaxt planlanmamisdi. "Marketinq el kitabi 2023" senedi B2C doner brendi ucun yazilibdi, yeni B2B HoReCa vizyonuna uygun deyildi.
+
+**Hell:**
+Sprint 1 (Faza 0) — yalniz infrastruktur, hec bir alet implement edilmir:
+
+1. `lib/marketing-tools-config.ts` — 12 aletin single source of truth konfiqurasiyasi
+   - 4 kateqoriya: Gorunurluk, Kontent, Strateji, Reputasiya
+   - 3 pille: SAGIRD (pulsuz, 4 alet), KALFA (49 AZN, +5), USTA (149 AZN, +3)
+   - Her aletin slug, AI provider, input schema, run limiti var
+   - `getToolConfig()`, `getToolsByTier()`, `canAccessTool()` helper-leri
+
+2. `lib/ai-router.ts` — vahid AI gateway
+   - DeepSeek primary, Claude fallback (Sarmal anti-pattern yasaq)
+   - `callAI()` ve `callAIJson<T>()` funksiyalari
+   - Token tracking + AZN cost hesablama
+   - Movcud KAZAN AI route-undan model/baseUrl pattern-i oyrenilib
+
+3. `lib/marketing-gating.ts` — tier erisim kontrolu
+   - `MemberPlan` → `MarketingToolTier` mapping (free→sagird, member→kalfa, admin→usta)
+   - Ayliq run limit check (DB query ile)
+   - `db` null check (Neon baglantisi olmadiqda graceful degrade)
+
+4. `lib/db/schema.ts` — `marketing_tool_runs` cedveli
+   - userId, toolSlug, inputData (jsonb), outputData, aiProvider, tokensUsed, costAzn, status
+   - 3 index: user, slug, createdAt
+
+5. Dashboard sehifeleri
+   - `/dashboard/marketinq-ocagi` — 12 kart, 4 kateqoriya, 4 dil inline copy
+   - `/dashboard/marketinq-ocagi/[slug]` — placeholder ("Tezlikle")
+   - Sidebar-a Sparkles icon ile yeni entry (4 dil)
+
+6. i18n — `messages/az.json`-a `marketing.*` acarlari elave edildi
+
+**Spec-den ferqler:**
+- Spec `/[locale]/ocaq/marketinq-ocagi/` isteyirdi → real codebase `/dashboard/` istifade edir (i18n middleware-den xaric), ona uygunlasdirildi
+- Spec `messages/az/marketing.json` isteyirdi → real struktur tek `messages/az.json` faylidir, nested keys elave edildi
+- Spec `drizzle/schema/marketing-tools.ts` isteyirdi → real schema tek `lib/db/schema.ts` faylidir, ora elave edildi
+
+**Cetinlikler:**
+- `db` exportu nullable (`neon` connection yoksa null) — gating-de null check lazim oldu
+- `sql` adi drizzle-orm import ile `@neondatabase/serverless` import-u toqqusudu — `dsql` alias istifade edildi
+
+**Build:** PASS
+**Protected violations:** 0
+**Encoding issues:** 0
+**Yeni TS xetalari:** 0 (movcud 7 xeta evvelden var)
+
+**Novbeti:** TASK-0102 — Marka Kompasi tam implementasiya (5 sual UI + Claude AI cagirisi + JSON output)
+
+---
+
 ## 2026-05-07 — Password Reset Real DB + Deployment Docs (TASK-0078, TASK-0081)
 
 **Problem:** Audit (5 May) qeyd etdi ki forgot-password və reset-password route-ları mock-state istifadə edir. Server restart-da bütün tokenlar itir. Production-da işləmir.
@@ -39,3 +94,15 @@ Sessiya qeydləri. Hər iş sessiyasının nəticəsi burada.
 **Build:** PASS (26.6s)
 **Protected violations:** 0
 **Encoding issues:** 0
+## 2026-05-09 — TASK-0100: P&L Simulator Pattern C → A
+
+**Changed:**
+- P&L Simulator copy moved to `messages/*.json` under `toolkit.pnl`.
+- Component now uses `useTranslations('toolkit.pnl')` and `useLocale()`.
+- Currency and percent output use `Intl.NumberFormat`.
+- Inputs parse locale-aware decimal formats for AZ/RU/TR and EN.
+- Added Playwright smoke coverage for the P&L simulator in 4 locales.
+
+**Out of scope:** other toolkit calculators, migrations, protected files.
+
+---

@@ -27,7 +27,150 @@
     "pnlDesc": "Create monthly income-expense reports, find the break-even point.",
     "checklist": "Restaurant Opening Checklist",
     "checklistDesc": "43-item complete checklist — legal, venue, menu, staffing, marketing.",
-    "start": "Start"
+    "start": "Start",
+    "pnl": {
+      "navigation": { "toolkit": "Toolkit" },
+      "title": "P&L",
+      "titleAccent": "Simulator",
+      "subtitle": "Monthly profit & expense analysis",
+      "description": "Model your monthly income and expense report. Separate controllable and fixed costs, then track net profit.",
+      "inputs": {
+        "revenue": { "label": "Monthly revenue", "placeholder": "0", "hint": "Total sales (excluding VAT)" },
+        "foodCost": { "label": "Food cost", "hint": "Typically {min}-{max}% of revenue" },
+        "packaging": { "label": "Packaging" },
+        "staffCost": { "label": "Labor cost", "hint": "Salaries + social insurance" },
+        "management": { "label": "Management salaries" },
+        "advertising": { "label": "Advertising / Marketing" },
+        "promo": { "label": "Promo / Complimentary" },
+        "outsource": { "label": "Outsourced services" },
+        "uniform": { "label": "Uniforms / Supplies" },
+        "supplies": { "label": "Consumables" },
+        "repair": { "label": "Repair / Maintenance" },
+        "utilities": { "label": "Utilities" },
+        "otherControllable": { "label": "Other controllable" },
+        "rent": { "label": "Rent", "hint": "Excluding utilities" },
+        "accounting": { "label": "Accounting" },
+        "insurance": { "label": "Insurance" },
+        "tax": { "label": "Taxes" },
+        "depreciation": { "label": "Depreciation" }
+      },
+      "outputs": {
+        "grossProfit": { "label": "Gross profit", "tooltip": "Revenue minus food cost" },
+        "operatingProfit": { "label": "Operating profit", "tooltip": "Revenue minus COGS" },
+        "controllableProfit": { "label": "Controllable profit" },
+        "netProfit": { "label": "Net profit" },
+        "margin": { "label": "Profit margin" }
+      },
+      "sections": {
+        "cogs": "COGS (Cost of goods sold)",
+        "controllable": "Controllable expenses",
+        "uncontrollable": "Fixed / less controllable expenses"
+      },
+      "kpis": {
+        "netProfit": "Net profit",
+        "primeCost": "Prime Cost",
+        "foodCost": "Food Cost",
+        "rent": "Rent",
+        "targetMax": "target ≤{value}%"
+      },
+      "table": { "title": "P&L Statement", "category": "Category", "amount": "Amount", "percent": "Percent" },
+      "actions": {
+        "calculate": "Calculate",
+        "reset": "Reset",
+        "export": "Download PDF",
+        "save": "Save",
+        "detailView": "Show details",
+        "simpleView": "Simple view"
+      },
+      "validation": {
+        "required": "This field is required",
+        "positive": "Enter a positive number",
+        "tooLow": "Value too low",
+        "tooHigh": "Value too high"
+      },
+      "insights": {
+        "healthyMargin": "Healthy profit margin",
+        "lowMargin": "Margin too low — review expenses",
+        "negativeMargin": "Loss: immediate structural changes required",
+        "foodCostHigh": "Food cost is above the industry benchmark ({value} target exceeded)",
+        "laborCostHigh": "Labor cost is excessive ({value} target exceeded)"
+      },
+      "benchmark": {
+        "title": "P&L Benchmark",
+        "netProfit": { "label": "Net profit", "value": "10-15%" },
+        "primeCost": { "label": "Prime Cost", "value": "≤65%" },
+        "foodCost": { "label": "Food Cost", "value": "28-32%" },
+        "rent": { "label": "Rent", "value": "≤10%" },
+        "chips": {
+          "labor": { "label": "Labor", "value": "25-35%" },
+          "marketing": { "label": "Marketing", "value": "3-6%" },
+          "utilities": { "label": "Utilities", "value": "3-5%" },
+          "repair": { "label": "Repair", "value": "1-2%" }
+        }
+      },
+      "education": {
+        "whatTitle": "What is P&L?",
+        "whatBody": "Profit & Loss is the financial statement that shows how much a restaurant earns and spends during a period. It should be prepared every month.",
+        "structureTitle": "P&L Structure",
+        "structure": {
+          "revenue": "Total revenue",
+          "cogs": "− COGS (food + packaging)",
+          "operatingProfit": "= Operating profit",
+          "controllable": "− Controllable expenses",
+          "controllableProfit": "= Controllable profit",
+          "uncontrollable": "− Fixed expenses",
+          "netProfit": "= Net profit"
+        }
+      },
+      "knowledge": {
+        "title": "Understand",
+        "titleAccent": "P&L Deeply",
+        "subtitle": "Know the logic behind the numbers and take control.",
+        "controlTitle": "Controllable vs fixed",
+        "controllableTitle": "Controllable",
+        "controllableBody": "Food, labor, ads, promos, utilities, and repairs can be changed. A large share of P&L control is in your hands.",
+        "uncontrollableTitle": "Less controllable",
+        "uncontrollableBody": "Rent, tax, insurance, and depreciation are more fixed. Focus first on expenses you can influence.",
+        "primeCostTitle": "What is Prime Cost?",
+        "primeCostBody": "The two largest restaurant costs are food and labor. Prime Cost is the most critical P&L metric. Keep it below 65% of sales.",
+        "formula": "Formula",
+        "primeCostFormula": {
+          "costs": "Food Cost + Labor Cost",
+          "result": "= Prime Cost",
+          "percent": "Prime Cost % = (FC + LC) ÷ Sales × 100"
+        },
+        "warningTitle": "Warning signs",
+        "warnings": {
+          "primeCost": "Prime cost above 70% means the restaurant is near the loss zone.",
+          "lowNet": "Net profit below 5% is risky; one mistake can turn the month negative.",
+          "highRent": "Rent above 12% may mean the location is too expensive.",
+          "strongNet": "Net profit above 15% signals strong performance and room to invest."
+        }
+      },
+      "advice": {
+        "title": "DK Agency advice",
+        "body": "A restaurant that prepares P&L once a month is already ahead of most competitors. Real power comes from weekly tracking because trends appear earlier.",
+        "readArticle": "Read full article"
+      },
+      "ocaq": {
+        "title": "OCAQ Panel",
+        "body": "Automatic P&L reports, food cost tracking, and labor cost analysis. Everything in one panel.",
+        "cta": "Start free"
+      },
+      "ahilik": {
+        "quote1": "\"Business without ledger, earnings without blessing.\" — Akhi notebook",
+        "quote2": "\"The master must know his craft, the apprentice his notebook.\""
+      },
+      "related": {
+        "title": "Learn More",
+        "read": "Read",
+        "articles": {
+          "pnl": { "title": "Can't Read P&L?", "slug": "pnl-oxuya-bilmirsen", "tag": "Finance" },
+          "foodCost": { "title": "The Hard Truth About Food Cost", "slug": "1-porsiya-food-cost-hesablama", "tag": "Finance" },
+          "breakEven": { "title": "What Is Break-even Point?", "slug": "basabas-noqtesi", "tag": "Operations" }
+        }
+      }
+    }
   },
   "blog": {
     "title": "Blog & Analysis",
@@ -69,6 +212,46 @@
       "profile": "Profile",
       "logout": "Sign out"
     }
+  },
+  "contact": {
+    "back": "Home",
+    "title": "Get in touch",
+    "lead": "If you have a question, proposal, or partnership idea, start from the right channel.",
+    "funnelTitle": "Fast contact channels",
+    "funnel": {
+      "kazan": {
+        "title": "Chat with KAZAN AI",
+        "description": "Our industry-trained AI assistant replies instantly. 24/7, free.",
+        "badge": "Recommended"
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "description": "Send a message, we reply within a business day.",
+        "preFill": "Hi, writing from the dkagency.com.tr contact page."
+      },
+      "telegram": {
+        "title": "Telegram",
+        "description": "Join our channel, send us a message."
+      }
+    },
+    "kazanTitle": "Start with KAZAN AI",
+    "kazanDescription": "Ask your question, pass the context to KAZAN AI, and let the team see it as a real lead.",
+    "kazanCta": "Open KAZAN AI",
+    "whatsappTitle": "WhatsApp",
+    "whatsappDescription": "Write with a prepared message. The number is not exposed, and the click is tracked as a lead.",
+    "whatsappCta": "Message on WhatsApp",
+    "whatsappMessage": "Hello, I am writing from the DK Agency contact page. I would like advice for my business.",
+    "telegramTitle": "Telegram",
+    "telegramDescription": "Write through Telegram. The click is stored for lead attribution.",
+    "telegramCta": "Message on Telegram",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "address": "Baku, Azerbaijan",
+    "hoursLabel": "Hours",
+    "hours": "Monday - Friday, 09:00 - 18:00 (UTC+4)",
+    "b2bTitle": "B2B partnerships",
+    "b2bText": "A separate funnel is built for restaurant chains, franchise brands, and suppliers. Pick a channel and we will track the lead.",
+    "trackingError": "The click was not recorded, but the channel will still open."
   },
   "common": {
     "language": "Language",

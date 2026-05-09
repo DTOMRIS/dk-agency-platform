@@ -27,7 +27,208 @@
     "pnlDesc": "Aylık gelir-gider raporu oluştur, başabaş noktasını bul.",
     "checklist": "Restoran Açılış Kontrol Listesi",
     "checklistDesc": "43 maddelik tam kontrol listesi — hukuki, mekan, menü, kadro, pazarlama.",
-    "start": "Başla"
+    "start": "Başla",
+    "pnl": {
+      "navigation": {
+        "toolkit": "Toolkit"
+      },
+      "title": "P&L",
+      "titleAccent": "Simülatörü",
+      "subtitle": "Restoran kârlılığı için interaktif model",
+      "description": "Aylık kâr-zarar tablosunu hesaplayın, her giderin marja etkisini görün ve sektör benchmarklarıyla karşılaştırın.",
+      "inputs": {
+        "revenue": {
+          "label": "Aylık ciro",
+          "placeholder": "Örn: 240.000",
+          "hint": "Tüm satışların toplamı, KDV hariç"
+        },
+        "foodCost": {
+          "label": "Yiyecek maliyeti",
+          "hint": "Genellikle cironun %28-32'si"
+        },
+        "packaging": {
+          "label": "Paketleme"
+        },
+        "staffCost": {
+          "label": "Personel gideri",
+          "hint": "Maaş + sosyal sigorta"
+        },
+        "management": {
+          "label": "Yönetim"
+        },
+        "advertising": {
+          "label": "Reklam"
+        },
+        "promo": {
+          "label": "Promosyon ve kampanya"
+        },
+        "outsource": {
+          "label": "Dış kaynak"
+        },
+        "uniform": {
+          "label": "Üniforma"
+        },
+        "supplies": {
+          "label": "Sarf malzemeleri"
+        },
+        "repair": {
+          "label": "Tamir"
+        },
+        "utilities": {
+          "label": "Faturalar"
+        },
+        "otherControllable": {
+          "label": "Diğer kontrol edilebilir"
+        },
+        "rent": {
+          "label": "Kira",
+          "hint": "Faturalar hariç"
+        },
+        "accounting": {
+          "label": "Muhasebe"
+        },
+        "insurance": {
+          "label": "Sigorta"
+        },
+        "tax": {
+          "label": "Vergi"
+        },
+        "depreciation": {
+          "label": "Amortisman"
+        }
+      },
+      "outputs": {
+        "grossProfit": {
+          "label": "Brüt kâr",
+          "tooltip": "Ciro eksi yiyecek maliyeti"
+        },
+        "operatingProfit": {
+          "label": "Faaliyet kârı",
+          "tooltip": "Brüt kâr eksi faaliyet giderleri"
+        },
+        "controllableProfit": {
+          "label": "Kontrol edilebilir kâr"
+        },
+        "netProfit": {
+          "label": "Net kâr"
+        },
+        "margin": {
+          "label": "Kâr marjı"
+        }
+      },
+      "sections": {
+        "cogs": "COGS (Satılan malın maliyeti)",
+        "controllable": "Kontrol edilebilir giderler",
+        "uncontrollable": "Kontrol edilemeyen giderler"
+      },
+      "kpis": {
+        "netProfit": "Net kâr",
+        "primeCost": "Prime cost",
+        "foodCost": "Food cost",
+        "rent": "Kira",
+        "targetMax": "Hedef: maksimum {value}"
+      },
+      "table": {
+        "title": "Detaylı P&L tablosu",
+        "category": "Kategori",
+        "amount": "Tutar",
+        "percent": "Ciro %"
+      },
+      "actions": {
+        "calculate": "Hesapla",
+        "reset": "Sıfırla",
+        "export": "PDF indir",
+        "save": "Kaydet",
+        "detailView": "Detaylı görünüm",
+        "simpleView": "Basit görünüm"
+      },
+      "validation": {
+        "required": "Bu alan zorunludur",
+        "positive": "Pozitif bir sayı girin",
+        "tooLow": "Değer çok düşük",
+        "tooHigh": "Değer çok yüksek"
+      },
+      "insights": {
+        "healthyMargin": "Sağlıklı kâr marjı",
+        "lowMargin": "Marj çok düşük — giderleri gözden geçirin",
+        "negativeMargin": "Zarar: acil yapısal değişiklik gerekli",
+        "foodCostHigh": "Yiyecek maliyeti sektör standardının üstünde",
+        "laborCostHigh": "Personel gideri fazla"
+      },
+      "benchmark": {
+        "title": "P&L Benchmark",
+        "netProfit": { "label": "Net kâr", "value": "10-15%" },
+        "primeCost": { "label": "Prime Cost", "value": "≤65%" },
+        "foodCost": { "label": "Food Cost", "value": "28-32%" },
+        "rent": { "label": "Kira", "value": "≤10%" },
+        "chips": {
+          "labor": { "label": "Labor", "value": "25-35%" },
+          "marketing": { "label": "Pazarlama", "value": "3-6%" },
+          "utilities": { "label": "Faturalar", "value": "3-5%" },
+          "repair": { "label": "Tamir", "value": "1-2%" }
+        }
+      },
+      "education": {
+        "whatTitle": "P&L nedir?",
+        "whatBody": "Profit & Loss, restoranın aylık kârını hangi gelir ve giderlerin oluşturduğunu gösterir.",
+        "structureTitle": "Yapı",
+        "structure": {
+          "sales": "Satışlar",
+          "cogs": "Satış maliyeti",
+          "controllable": "Kontrol edilebilir giderler",
+          "uncontrollable": "Kontrol edilemeyen giderler",
+          "net": "Net kâr"
+        }
+      },
+      "knowledge": {
+        "title": "Restoran finansı için",
+        "titleAccent": "kısa ders",
+        "subtitle": "Her gün okunması gereken göstergeler",
+        "controlTitle": "Kontrol etmek yönetmenin başlangıcıdır",
+        "controllableTitle": "Kontrol edilebilir giderler",
+        "controllableBody": "Personel, pazarlama, tamir ve sarf giderleri günlük operasyon kararlarıyla optimize edilebilir.",
+        "uncontrollableTitle": "Kontrol edilemeyen giderler",
+        "uncontrollableBody": "Kira, sigorta ve amortisman daha katıdır. Etkileri şube açılmadan önce hesaplanmalıdır.",
+        "primeCostTitle": "Prime cost",
+        "primeCostBody": "Food cost + personel gideri, restoranın satışı ne kadar verimli ürettiğini gösterir.",
+        "formula": "Formül",
+        "primeCostFormula": {
+          "costs": "Food Cost + Labor Cost",
+          "result": "= Prime Cost",
+          "percent": "Prime Cost % = (FC + LC) ÷ Satış × 100"
+        },
+        "warningTitle": "Risk sinyalleri",
+        "warnings": {
+          "primeCost": "Prime cost %70 üzerindeyse restoran zarar eşiğine yaklaşır.",
+          "lowNet": "Net kâr %5 altındaysa bir kötü ay zarara dönüşebilir.",
+          "highRent": "Kira %12 üzerindeyse lokasyon fazla pahalı olabilir.",
+          "strongNet": "Net kâr %15 üzerindeyse performans güçlüdür ve yatırım düşünülebilir."
+        }
+      },
+      "advice": {
+        "title": "Öneri",
+        "body": "P&L'i ayda bir hazırlayan restoran rakiplerinin çoğundan öndedir. Asıl güç haftalık takiptedir: trendleri daha erken görürsünüz.",
+        "readArticle": "Tam yazıyı oku"
+      },
+      "ocaq": {
+        "title": "OCAQ Panel",
+        "body": "Otomatik P&L raporu, food cost takibi ve personel gideri analizi. Her şey tek panelde.",
+        "cta": "Ücretsiz başla"
+      },
+      "ahilik": {
+        "quote1": "\"Hesapsız iş, bereketsiz kazanç.\" — Ahi defterinden",
+        "quote2": "\"Usta sanatını, çırak defterini bilmeli.\""
+      },
+      "related": {
+        "title": "Daha derin öğren",
+        "read": "Oku",
+        "articles": {
+          "pnl": { "title": "P&L okuyamıyor musun?", "slug": "pnl-oxuya-bilmirsen", "tag": "Finans" },
+          "foodCost": { "title": "Food cost'un sert gerçeği", "slug": "1-porsiya-food-cost-hesablama", "tag": "Finans" },
+          "breakEven": { "title": "Başabaş noktası nedir?", "slug": "basabas-noqtesi", "tag": "Operasyon" }
+        }
+      }
+    }
   },
   "blog": {
     "title": "Blog & Analizler",
@@ -69,6 +270,46 @@
       "profile": "Profil",
       "logout": "Çıkış Yap"
     }
+  },
+  "contact": {
+    "back": "Ana sayfa",
+    "title": "Bize ulaşın",
+    "lead": "Soru, öneri veya iş birliği fikriniz varsa doğru kanaldan başlayın.",
+    "funnelTitle": "Hızlı iletişim kanalları",
+    "funnel": {
+      "kazan": {
+        "title": "KAZAN AI ile konuş",
+        "description": "Sektör eğitimli AI asistanımız anında yanıt verir. 7/24, ücretsiz.",
+        "badge": "Önerilen"
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "description": "Mesaj atın, iş günü içinde yanıtlayalım.",
+        "preFill": "Merhaba, dkagency.com.tr iletişim sayfasından yazıyorum."
+      },
+      "telegram": {
+        "title": "Telegram",
+        "description": "Telegram kanalımıza katılın, mesaj atın."
+      }
+    },
+    "kazanTitle": "KAZAN AI ile başla",
+    "kazanDescription": "Sorunu yaz, bağlam KAZAN AI'a aktarılsın ve ekip bunu gerçek lead olarak görsün.",
+    "kazanCta": "KAZAN AI'ı aç",
+    "whatsappTitle": "WhatsApp",
+    "whatsappDescription": "Hazır mesajla yazın. Numara görünmez, tıklama lead olarak kaydedilir.",
+    "whatsappCta": "WhatsApp'tan yaz",
+    "whatsappMessage": "Merhaba, DK Agency iletişim sayfasından yazıyorum. İşletmem için danışmanlık almak istiyorum.",
+    "telegramTitle": "Telegram",
+    "telegramDescription": "Telegram üzerinden yazın. Tıklama lead attribution için saklanır.",
+    "telegramCta": "Telegram'dan yaz",
+    "emailLabel": "E-posta",
+    "addressLabel": "Adres",
+    "address": "Bakü, Azerbaycan",
+    "hoursLabel": "Çalışma saatleri",
+    "hours": "Pazartesi - Cuma, 09:00 - 18:00 (UTC+4)",
+    "b2bTitle": "B2B ortaklık",
+    "b2bText": "Restoran zincirleri, franchise markaları ve tedarikçiler için ayrı funnel kuruluyor. Kanal seçin, lead'i takip edelim.",
+    "trackingError": "Tıklama kaydedilemedi, ancak kanal yine de açılacak."
   },
   "common": {
     "language": "Dil",

@@ -67,3 +67,31 @@ Use script:
   - Mock veri kullanımı (gerçek API bağlantısı yok)
 - Sonraki adım:
   - Trend verilerinin veritabanına bağlanması, News API entegrasyonu
+
+## 2026-05-09T10:40:00+04:00 - codex
+- Ne degisti:
+  - TASK-0102 contact page lead funnel added: KAZAN AI / WhatsApp / Telegram channel cards, no visible phone card.
+  - Contact clicks now write to `leads` through `/api/leads/track` with `source`, `channel`, `locale`, `user_agent`, and `ip_hash`.
+  - `contact` i18n namespace added to AZ/RU/EN/TR messages.
+- Ne degismedi:
+  - Protected files untouched: `lib/member-access.ts`, `listingFieldConfig.ts`, `middleware.ts`.
+  - Existing KAZAN lead capture remains separate from contact click tracking.
+- Riskler:
+  - Production DB must apply `drizzle/0001_foamy_gideon.sql`.
+  - `IP_HASH_SALT` must be set in Hostinger before deploy.
+  - Telegram handle assumed from existing social link: `https://t.me/dkagency`.
+- Sonraki adim:
+  - After deploy, run `SELECT channel, locale, COUNT(*) FROM leads WHERE source='contact_page' GROUP BY channel, locale ORDER BY 1, 2;`.
+
+## 2026-05-09T11:30:00+04:00 - codex
+- Ne degisti:
+  - TASK-0100 P&L Simulator moved from hardcoded AZ copy to `toolkit.pnl` Pattern A i18n.
+  - Added AZ/RU/EN/TR `toolkit.pnl` message namespaces and locale-aware number formatting/parsing.
+  - Added `/toolkit/pnl-simulator` route aliases and Playwright coverage for 4 locales.
+- Ne degismedi:
+  - Other toolkit calculators remain out of scope.
+  - DB schema and protected files were not touched.
+- Riskler:
+  - `CLAUDE-DESIGN.md` has pre-existing encoding drift and should be cleaned separately before relying on it in hooks.
+- Sonraki adim:
+  - Continue remaining toolkit i18n tasks one calculator at a time.

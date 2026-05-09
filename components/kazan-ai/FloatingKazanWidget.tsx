@@ -14,7 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
-import { FormEvent, MouseEvent, useRef, useState } from 'react';
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { buildWhatsappLink } from '@/lib/utils/whatsapp';
@@ -107,6 +107,7 @@ export default function FloatingKazanWidget() {
     businessType: 'restoran',
   });
   const messagesRef = useRef<HTMLDivElement>(null);
+  const contactContextAddedRef = useRef(false);
 
   const activeIntent = lead?.intent || detectIntent([pendingQuestion, ...messages.map((message) => message.content)].join(' '));
   const toolAction = toolkitAction(activeIntent);
@@ -117,6 +118,29 @@ export default function FloatingKazanWidget() {
     },
     lastUserQuestions(messages, pendingQuestion),
   );
+
+  useEffect(() => {
+    function openFromContactPage(event: Event) {
+      const customEvent = event as CustomEvent<{ context?: string }>;
+      setOpen(true);
+      if (contactContextAddedRef.current) return;
+      contactContextAddedRef.current = true;
+      setMessages((current) => [
+        ...current,
+        {
+          role: 'assistant',
+          content: customEvent.detail?.context || 'Əlaqə səhifəsindən gəldi',
+        },
+      ]);
+    }
+
+    window.addEventListener('kazan:open', openFromContactPage);
+    window.addEventListener('dk:kazan-ai:open', openFromContactPage);
+    return () => {
+      window.removeEventListener('kazan:open', openFromContactPage);
+      window.removeEventListener('dk:kazan-ai:open', openFromContactPage);
+    };
+  }, []);
 
   function scrollToBottom() {
     requestAnimationFrame(() => {
