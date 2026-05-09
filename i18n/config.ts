@@ -31,6 +31,11 @@ export function withLocale(locale: Locale, pathname: string): string {
   return normalizedPath === '/' ? `/${locale}` : `/${locale}${normalizedPath}`;
 }
 
+export function withLocalePrefix(locale: Locale, pathname: string): string {
+  const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  return normalizedPath === '/' ? `/${locale}` : `/${locale}${normalizedPath}`;
+}
+
 export function switchLocalePath(pathname: string, locale: Locale): string {
-  return withLocale(locale, stripLocalePrefix(pathname));
+  return withLocalePrefix(locale, stripLocalePrefix(pathname));
 }

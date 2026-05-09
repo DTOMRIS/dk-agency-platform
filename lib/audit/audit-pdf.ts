@@ -3,6 +3,8 @@
  * @purpose Audit hesabatı PDF ixracı
  */
 
+import type { jsPDF } from 'jspdf';
+
 interface AuditData {
   name: string;
   address: string | null;
@@ -124,9 +126,8 @@ export async function exportAuditToPdf(audit: AuditData, analysis: AiAnalysis) {
   doc.save(`audit-${sanitize(audit.name).replace(/\s+/g, '-').toLowerCase()}.pdf`);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function printSection(
-  doc: any,
+  doc: jsPDF,
   title: string,
   items: string[],
   ml: number,
