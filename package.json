@@ -29,10 +29,12 @@
     "@google/genai": "^1.42.0",
     "@neondatabase/serverless": "^1.0.2",
     "@tailwindcss/postcss": "^4",
+    "@types/jsonwebtoken": "^9.0.10",
     "autoprefixer": "^10.4.27",
     "bcryptjs": "^3.0.3",
     "browser-image-compression": "^2.0.2",
     "cloudinary": "^2.9.0",
+    "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.1",
     "framer-motion": "^12.34.3",
     "jsonwebtoken": "^9.0.3",
@@ -54,8 +56,7 @@
     "tailwindcss": "^4.2.2",
     "tsx": "^4.21.0",
     "xlsx": "^0.18.5",
-    "drizzle-kit": "^0.31.10",
-    "@types/jsonwebtoken": "^9.0.10"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
