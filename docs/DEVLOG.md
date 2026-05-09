@@ -53,3 +53,15 @@ Hostinger runs Next.js standalone behind a reverse proxy. The internal server bi
 - KAZAN AI listens for `kazan:open` and opens directly from the contact page with contact context.
 - Playwright coverage for 4 locale rendering and WhatsApp tracking payload.
 - Deploy note: add `IP_HASH_SALT` in Hostinger before release.
+
+## 2026-05-09 - TASK-0100 P&L Simulator i18n
+
+### Changed
+- P&L Simulator now uses Pattern A (`useTranslations('toolkit.pnl')`) instead of hardcoded AZ copy.
+- Added `toolkit.pnl` translations for AZ/RU/EN/TR.
+- Currency and percent values are formatted with `Intl.NumberFormat`.
+- Numeric inputs parse EN comma thousands and AZ/RU/TR comma decimals.
+
+### Added
+- `/toolkit/pnl-simulator` aliases for existing P&L page compatibility.
+- Playwright smoke tests for 4 locale rendering and number formatting.

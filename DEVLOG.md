@@ -39,3 +39,15 @@ Sessiya qeydləri. Hər iş sessiyasının nəticəsi burada.
 **Build:** PASS (26.6s)
 **Protected violations:** 0
 **Encoding issues:** 0
+## 2026-05-09 — TASK-0100: P&L Simulator Pattern C → A
+
+**Changed:**
+- P&L Simulator copy moved to `messages/*.json` under `toolkit.pnl`.
+- Component now uses `useTranslations('toolkit.pnl')` and `useLocale()`.
+- Currency and percent output use `Intl.NumberFormat`.
+- Inputs parse locale-aware decimal formats for AZ/RU/TR and EN.
+- Added Playwright smoke coverage for the P&L simulator in 4 locales.
+
+**Out of scope:** other toolkit calculators, migrations, protected files.
+
+---

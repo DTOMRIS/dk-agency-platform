@@ -246,3 +246,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ### Changed
 - Removed the visible phone card from contact page. WhatsApp remains available through a localized prefilled redirect.
+
+## [2026-05-09] - TASK-0100 P&L Simulator i18n
+
+### Changed
+- P&L Simulator now fully uses i18n across AZ/RU/EN/TR with `Intl.NumberFormat` currency and percent output.

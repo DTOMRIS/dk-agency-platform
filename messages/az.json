@@ -27,7 +27,150 @@
     "pnlDesc": "Aylıq gəlir-xərc hesabatı yarat, başabaş nöqtəsini tap.",
     "checklist": "Restoran Açılış Checklist",
     "checklistDesc": "43 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.",
-    "start": "Başla"
+    "start": "Başla",
+    "pnl": {
+      "navigation": { "toolkit": "Toolkit" },
+      "title": "P&L",
+      "titleAccent": "Simulyatoru",
+      "subtitle": "Aylıq qazanc və xərc analizi",
+      "description": "Aylıq gəlir-xərc hesabatını modelləşdir. Nəzarət edilən və edilməyən xərcləri ayır, xalis mənfəəti izlə.",
+      "inputs": {
+        "revenue": { "label": "Aylıq dövriyyə", "placeholder": "0", "hint": "Bütün satışların cəmi (ƏDV-siz)" },
+        "foodCost": { "label": "Qida maya dəyəri", "hint": "Adətən dövriyyənin {min}-{max}%-i" },
+        "packaging": { "label": "Qablaşdırma" },
+        "staffCost": { "label": "İşçi xərcləri", "hint": "Maaş + sosial sığorta" },
+        "management": { "label": "Rəhbərlik maaşı" },
+        "advertising": { "label": "Reklam / Marketinq" },
+        "promo": { "label": "Promo / İkram" },
+        "outsource": { "label": "Kənar xidmətlər" },
+        "uniform": { "label": "Uniforma / Təchizat" },
+        "supplies": { "label": "Sərf materialları" },
+        "repair": { "label": "Təmir / Texniki xidmət" },
+        "utilities": { "label": "Kommunal xərclər" },
+        "otherControllable": { "label": "Digər nəzarət edilən" },
+        "rent": { "label": "İcarə", "hint": "Kommunal istisna" },
+        "accounting": { "label": "Mühasibatlıq" },
+        "insurance": { "label": "Sığorta" },
+        "tax": { "label": "Vergilər" },
+        "depreciation": { "label": "Amortizasiya" }
+      },
+      "outputs": {
+        "grossProfit": { "label": "Brüt mənfəət", "tooltip": "Dövriyyə - qida maya dəyəri" },
+        "operatingProfit": { "label": "Əməliyyat mənfəəti", "tooltip": "Dövriyyə - COGS" },
+        "controllableProfit": { "label": "Nəzarət edilə bilən mənfəət" },
+        "netProfit": { "label": "Xalis mənfəət" },
+        "margin": { "label": "Mənfəət marjı" }
+      },
+      "sections": {
+        "cogs": "COGS (Satılmış malların dəyəri)",
+        "controllable": "Nəzarət edilə bilən xərclər",
+        "uncontrollable": "Nəzarət edilə bilməyən xərclər"
+      },
+      "kpis": {
+        "netProfit": "Xalis mənfəət",
+        "primeCost": "Prime Cost",
+        "foodCost": "Food Cost",
+        "rent": "İcarə",
+        "targetMax": "hədəf ≤{value}%"
+      },
+      "table": { "title": "P&L Hesabatı", "category": "Kateqoriya", "amount": "Məbləğ", "percent": "Faiz" },
+      "actions": {
+        "calculate": "Hesabla",
+        "reset": "Sıfırla",
+        "export": "PDF olaraq yüklə",
+        "save": "Yadda saxla",
+        "detailView": "Detallı gör",
+        "simpleView": "Sadə görünüş"
+      },
+      "validation": {
+        "required": "Bu sahə tələb olunur",
+        "positive": "Müsbət rəqəm daxil edin",
+        "tooLow": "Çox kiçik dəyər",
+        "tooHigh": "Çox böyük dəyər"
+      },
+      "insights": {
+        "healthyMargin": "Sağlam mənfəət marjı",
+        "lowMargin": "Marj çox aşağıdır — xərcləri nəzərdən keçirin",
+        "negativeMargin": "Zərər: dərhal struktur dəyişikliyi tələb olunur",
+        "foodCostHigh": "Qida maya dəyəri sənaye standartından yüksəkdir ({value} hədəfini keçib)",
+        "laborCostHigh": "İşçi xərcləri çoxdur ({value} hədəfini keçib)"
+      },
+      "benchmark": {
+        "title": "P&L Benchmark",
+        "netProfit": { "label": "Net mənfəət", "value": "10-15%" },
+        "primeCost": { "label": "Prime Cost", "value": "≤65%" },
+        "foodCost": { "label": "Food Cost", "value": "28-32%" },
+        "rent": { "label": "İcarə", "value": "≤10%" },
+        "chips": {
+          "labor": { "label": "Labor", "value": "25-35%" },
+          "marketing": { "label": "Marketinq", "value": "3-6%" },
+          "utilities": { "label": "Kommunal", "value": "3-5%" },
+          "repair": { "label": "Təmir", "value": "1-2%" }
+        }
+      },
+      "education": {
+        "whatTitle": "P&L Nədir?",
+        "whatBody": "Profit & Loss (Mənfəət və Zərər) restoranın müəyyən dövrdə nə qədər qazandığını və nə qədər xərclədiyini göstərən maliyyə hesabatıdır. Hər ay hazırlanmalıdır.",
+        "structureTitle": "P&L Strukturu",
+        "structure": {
+          "revenue": "Ümumi satış (Revenue)",
+          "cogs": "− COGS (ərzaq + qablaşdırma)",
+          "operatingProfit": "= Əməliyyat mənfəəti",
+          "controllable": "− Nəzarət edilən xərclər",
+          "controllableProfit": "= Nəzarət edilə bilən mənfəət",
+          "uncontrollable": "− Nəzarət edilməyən xərclər",
+          "netProfit": "= Xalis mənfəət"
+        }
+      },
+      "knowledge": {
+        "title": "P&L-i",
+        "titleAccent": "Dərindən Anla",
+        "subtitle": "Rəqəmlərin arxasındakı məntiqi bil, nəzarəti ələ al.",
+        "controlTitle": "Nəzarət edilən və edilməyən",
+        "controllableTitle": "Nəzarət edilə bilən",
+        "controllableBody": "Ərzaq, əməkdaş, reklam, promo, kommunal və təmir xərclərini dəyişə bilərsən. P&L-in 60-70%-i sənin əlindədir.",
+        "uncontrollableTitle": "Nəzarət edilə bilməyən",
+        "uncontrollableBody": "İcarə, vergi, sığorta və amortizasiya daha sabitdir. Fokusunu nəzarət edilə bilən xərclərə yönəlt.",
+        "primeCostTitle": "Prime Cost nədir?",
+        "primeCostBody": "Restoranın ən böyük iki xərci ərzaq və əməkdir. Prime Cost P&L-in ən kritik göstəricisidir. Hədəf satışın 65%-indən aşağı qalmaqdır.",
+        "formula": "Formul",
+        "primeCostFormula": {
+          "costs": "Food Cost + Labor Cost",
+          "result": "= Prime Cost",
+          "percent": "Prime Cost % = (FC + LC) ÷ Satış × 100"
+        },
+        "warningTitle": "Xəbərdarlıq işarələri",
+        "warnings": {
+          "primeCost": "Prime cost 70%-dən yuxarıdırsa, restoran zərər astanasına yaxınlaşır.",
+          "lowNet": "Net mənfəət 5%-dən aşağıdırsa, bir səhv ayı zərərə çevirə bilər.",
+          "highRent": "İcarə 12%-dən yuxarıdırsa, lokasiya çox baha ola bilər.",
+          "strongNet": "Net mənfəət 15%-dən yuxarıdırsa, performans güclüdür və investisiya düşünülə bilər."
+        }
+      },
+      "advice": {
+        "title": "DK Agency məsləhəti",
+        "body": "P&L-i ayda 1 dəfə hazırlayan restoran artıq rəqiblərinin çoxundan öndədir. Həqiqi güc isə həftəlik izləmədədir: trendləri daha tez görürsən.",
+        "readArticle": "Tam yazını oxu"
+      },
+      "ocaq": {
+        "title": "OCAQ Panel",
+        "body": "Avtomatik P&L hesabatı, food cost izləmə və əməkdaş xərcləri analizi. Hər şey bir paneldə.",
+        "cta": "Pulsuz başla"
+      },
+      "ahilik": {
+        "quote1": "\"Hesabsız iş, bərəkətsiz qazanc.\" — Ahilik dəftəri",
+        "quote2": "\"Usta sənətini, çırağı dəftərini bilməlidir.\""
+      },
+      "related": {
+        "title": "Daha Dərin Öyrən",
+        "read": "Oxu",
+        "articles": {
+          "pnl": { "title": "P&L Oxuya Bilmirsən?", "slug": "pnl-oxuya-bilmirsen", "tag": "Maliyyə" },
+          "foodCost": { "title": "Food Cost-un Qanlı Həqiqəti", "slug": "1-porsiya-food-cost-hesablama", "tag": "Maliyyə" },
+          "breakEven": { "title": "Başabaş Nöqtəsi Nədir?", "slug": "basabas-noqtesi", "tag": "Əməliyyat" }
+        }
+      }
+    }
   },
   "blog": {
     "title": "Bloq & Analizlər",

@@ -82,3 +82,16 @@ Use script:
   - Telegram handle assumed from existing social link: `https://t.me/dkagency`.
 - Sonraki adim:
   - After deploy, run `SELECT channel, locale, COUNT(*) FROM leads WHERE source='contact_page' GROUP BY channel, locale ORDER BY 1, 2;`.
+
+## 2026-05-09T11:30:00+04:00 - codex
+- Ne degisti:
+  - TASK-0100 P&L Simulator moved from hardcoded AZ copy to `toolkit.pnl` Pattern A i18n.
+  - Added AZ/RU/EN/TR `toolkit.pnl` message namespaces and locale-aware number formatting/parsing.
+  - Added `/toolkit/pnl-simulator` route aliases and Playwright coverage for 4 locales.
+- Ne degismedi:
+  - Other toolkit calculators remain out of scope.
+  - DB schema and protected files were not touched.
+- Riskler:
+  - `CLAUDE-DESIGN.md` has pre-existing encoding drift and should be cleaned separately before relying on it in hooks.
+- Sonraki adim:
+  - Continue remaining toolkit i18n tasks one calculator at a time.

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     'Restaurant P&L simulator for food cost, prime cost, rent, and net profit analysis.',
 };
 
-export default function PublicPnlPage() {
+export default function PublicPnlSimulatorPage() {
   return (
     <NextIntlClientProvider locale="az" messages={azMessages}>
       <PnlPage />
