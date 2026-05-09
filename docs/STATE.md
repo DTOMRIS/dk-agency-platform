@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-06T19:14:10.120Z
+- GeneratedAt: 2026-05-09T07:38:24.696Z
 - BuildStatus: PASS
 
-## Routes (125)
+## Routes (127)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -107,9 +107,11 @@ Auto-generated. Do not edit manually.
 - /dashboard/xeberler
 - /dashboard/xeberler/rss
 - /docs/member-env-checklist
+- /elaqe
 - /forgot-password
 - /haberler
 - /haberler/[slug]
+- /haqqimizda
 - /ilan-ver
 - /ilanlar
 - /kazan-ai
