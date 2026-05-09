@@ -70,6 +70,46 @@
       "logout": "Выйти"
     }
   },
+  "contact": {
+    "back": "Главная",
+    "title": "Связаться с нами",
+    "lead": "Если есть вопрос, предложение или идея партнерства, начните с правильного канала.",
+    "funnelTitle": "Быстрые каналы связи",
+    "funnel": {
+      "kazan": {
+        "title": "Поговорить с KAZAN AI",
+        "description": "Наш отраслевой ИИ-ассистент отвечает мгновенно. 24/7, бесплатно.",
+        "badge": "Рекомендуется"
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "description": "Напишите, ответим в течение рабочего дня.",
+        "preFill": "Здравствуйте, пишу со страницы контактов dkagency.com.tr."
+      },
+      "telegram": {
+        "title": "Telegram",
+        "description": "Подпишитесь на наш канал, напишите сообщение."
+      }
+    },
+    "kazanTitle": "Начать с KAZAN AI",
+    "kazanDescription": "Задайте вопрос, передайте контекст KAZAN AI, и команда увидит это как реальный лид.",
+    "kazanCta": "Открыть KAZAN AI",
+    "whatsappTitle": "WhatsApp",
+    "whatsappDescription": "Напишите с готовым сообщением. Номер не показывается, клик фиксируется как лид.",
+    "whatsappCta": "Написать в WhatsApp",
+    "whatsappMessage": "Здравствуйте, пишу со страницы контактов DK Agency. Хочу получить консультацию для моего бизнеса.",
+    "telegramTitle": "Telegram",
+    "telegramDescription": "Напишите через Telegram. Клик сохраняется для attribution лида.",
+    "telegramCta": "Написать в Telegram",
+    "emailLabel": "E-mail",
+    "addressLabel": "Адрес",
+    "address": "Баку, Азербайджан",
+    "hoursLabel": "Рабочие часы",
+    "hours": "Понедельник - Пятница, 09:00 - 18:00 (UTC+4)",
+    "b2bTitle": "B2B-партнерство",
+    "b2bText": "Для ресторанных сетей, франшиз и поставщиков строится отдельная воронка. Выберите канал, мы отследим лид.",
+    "trackingError": "Клик не был записан, но канал все равно откроется."
+  },
   "common": {
     "language": "Язык",
     "az": "AZ",

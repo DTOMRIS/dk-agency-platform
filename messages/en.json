@@ -70,6 +70,46 @@
       "logout": "Sign out"
     }
   },
+  "contact": {
+    "back": "Home",
+    "title": "Get in touch",
+    "lead": "If you have a question, proposal, or partnership idea, start from the right channel.",
+    "funnelTitle": "Fast contact channels",
+    "funnel": {
+      "kazan": {
+        "title": "Chat with KAZAN AI",
+        "description": "Our industry-trained AI assistant replies instantly. 24/7, free.",
+        "badge": "Recommended"
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "description": "Send a message, we reply within a business day.",
+        "preFill": "Hi, writing from the dkagency.com.tr contact page."
+      },
+      "telegram": {
+        "title": "Telegram",
+        "description": "Join our channel, send us a message."
+      }
+    },
+    "kazanTitle": "Start with KAZAN AI",
+    "kazanDescription": "Ask your question, pass the context to KAZAN AI, and let the team see it as a real lead.",
+    "kazanCta": "Open KAZAN AI",
+    "whatsappTitle": "WhatsApp",
+    "whatsappDescription": "Write with a prepared message. The number is not exposed, and the click is tracked as a lead.",
+    "whatsappCta": "Message on WhatsApp",
+    "whatsappMessage": "Hello, I am writing from the DK Agency contact page. I would like advice for my business.",
+    "telegramTitle": "Telegram",
+    "telegramDescription": "Write through Telegram. The click is stored for lead attribution.",
+    "telegramCta": "Message on Telegram",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "address": "Baku, Azerbaijan",
+    "hoursLabel": "Hours",
+    "hours": "Monday - Friday, 09:00 - 18:00 (UTC+4)",
+    "b2bTitle": "B2B partnerships",
+    "b2bText": "A separate funnel is built for restaurant chains, franchise brands, and suppliers. Pick a channel and we will track the lead.",
+    "trackingError": "The click was not recorded, but the channel will still open."
+  },
   "common": {
     "language": "Language",
     "az": "AZ",

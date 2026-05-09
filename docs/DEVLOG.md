@@ -39,3 +39,17 @@ Hostinger runs Next.js standalone behind a reverse proxy. The internal server bi
 - Remove `HOSTNAME` env var from Hostinger panel if it exists.
 - Ensure `NEXT_PUBLIC_APP_URL=https://dkagency.com.tr` is set in Hostinger environment variables.
 - Do NOT set `NEXT_PUBLIC_APP_URL` to an IP address or internal hostname.
+
+## 2026-05-09 - TASK-0102 Contact lead funnel
+
+### Changed
+- Contact page now uses Pattern A (`useTranslations('contact')` + `messages/*.json`) instead of inline page copy.
+- Visible phone contact card was removed. Primary contact actions are now KAZAN AI, WhatsApp, and Telegram.
+- WhatsApp keeps a prefilled handoff through a same-origin redirect, so the number is not shown on the contact page.
+
+### Added
+- `POST /api/leads/track` records anonymous contact CTA clicks into `leads`.
+- `leads.source`, `leads.channel`, `leads.locale`, `leads.user_agent`, and `leads.ip_hash` track attribution without storing raw IP.
+- KAZAN AI listens for `kazan:open` and opens directly from the contact page with contact context.
+- Playwright coverage for 4 locale rendering and WhatsApp tracking payload.
+- Deploy note: add `IP_HASH_SALT` in Hostinger before release.

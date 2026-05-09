@@ -157,3 +157,14 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 - RSS xeber pipeline (6 menbe)
 - Auth (localStorage, TEST_USERS)
 - WhatsApp floating button
+
+## [0.9.1] - 2026-05-09
+### Added - TASK-0102 Contact lead funnel
+- Contact page CTA funnel: KAZAN AI primary card, WhatsApp card, Telegram card.
+- `POST /api/leads/track` writes contact CTA clicks to `leads` with `source`, `channel`, `locale`, `user_agent`, and `ip_hash`.
+- `leads` table mapping and `idx_leads_source_channel` migration.
+- 4-language `contact.funnel` namespace in `messages/*.json`.
+- Playwright contact funnel checks for 4 locales and WhatsApp tracking payload.
+
+### Changed
+- Removed visible phone card from contact page; WhatsApp handoff remains via localized prefilled redirect.

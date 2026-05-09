@@ -234,3 +234,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - RSS source xəritəsi
 - Homepage section-ları
 - Header, Footer, MegaMenu
+
+## [2026-05-09] - TASK-0102 Contact Lead Funnel
+
+### Added
+- Contact page lead funnel with KAZAN AI, WhatsApp, and Telegram channel cards.
+- `POST /api/leads/track` records contact CTA clicks in `leads` with `source`, `channel`, `locale`, `user_agent`, and `ip_hash`.
+- `leads` table mapping and `idx_leads_source_channel` migration.
+- 4-language `contact.funnel` namespace in `messages/*.json`.
+- Playwright checks for 4 locales and WhatsApp tracking payload.
+
+### Changed
+- Removed the visible phone card from contact page. WhatsApp remains available through a localized prefilled redirect.

@@ -70,6 +70,46 @@
       "logout": "Çıkış Yap"
     }
   },
+  "contact": {
+    "back": "Ana sayfa",
+    "title": "Bize ulaşın",
+    "lead": "Soru, öneri veya iş birliği fikriniz varsa doğru kanaldan başlayın.",
+    "funnelTitle": "Hızlı iletişim kanalları",
+    "funnel": {
+      "kazan": {
+        "title": "KAZAN AI ile konuş",
+        "description": "Sektör eğitimli AI asistanımız anında yanıt verir. 7/24, ücretsiz.",
+        "badge": "Önerilen"
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "description": "Mesaj atın, iş günü içinde yanıtlayalım.",
+        "preFill": "Merhaba, dkagency.com.tr iletişim sayfasından yazıyorum."
+      },
+      "telegram": {
+        "title": "Telegram",
+        "description": "Telegram kanalımıza katılın, mesaj atın."
+      }
+    },
+    "kazanTitle": "KAZAN AI ile başla",
+    "kazanDescription": "Sorunu yaz, bağlam KAZAN AI'a aktarılsın ve ekip bunu gerçek lead olarak görsün.",
+    "kazanCta": "KAZAN AI'ı aç",
+    "whatsappTitle": "WhatsApp",
+    "whatsappDescription": "Hazır mesajla yazın. Numara görünmez, tıklama lead olarak kaydedilir.",
+    "whatsappCta": "WhatsApp'tan yaz",
+    "whatsappMessage": "Merhaba, DK Agency iletişim sayfasından yazıyorum. İşletmem için danışmanlık almak istiyorum.",
+    "telegramTitle": "Telegram",
+    "telegramDescription": "Telegram üzerinden yazın. Tıklama lead attribution için saklanır.",
+    "telegramCta": "Telegram'dan yaz",
+    "emailLabel": "E-posta",
+    "addressLabel": "Adres",
+    "address": "Bakü, Azerbaycan",
+    "hoursLabel": "Çalışma saatleri",
+    "hours": "Pazartesi - Cuma, 09:00 - 18:00 (UTC+4)",
+    "b2bTitle": "B2B ortaklık",
+    "b2bText": "Restoran zincirleri, franchise markaları ve tedarikçiler için ayrı funnel kuruluyor. Kanal seçin, lead'i takip edelim.",
+    "trackingError": "Tıklama kaydedilemedi, ancak kanal yine de açılacak."
+  },
   "common": {
     "language": "Dil",
     "az": "AZ",

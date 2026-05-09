@@ -67,3 +67,18 @@ Use script:
   - Mock veri kullanımı (gerçek API bağlantısı yok)
 - Sonraki adım:
   - Trend verilerinin veritabanına bağlanması, News API entegrasyonu
+
+## 2026-05-09T10:40:00+04:00 - codex
+- Ne degisti:
+  - TASK-0102 contact page lead funnel added: KAZAN AI / WhatsApp / Telegram channel cards, no visible phone card.
+  - Contact clicks now write to `leads` through `/api/leads/track` with `source`, `channel`, `locale`, `user_agent`, and `ip_hash`.
+  - `contact` i18n namespace added to AZ/RU/EN/TR messages.
+- Ne degismedi:
+  - Protected files untouched: `lib/member-access.ts`, `listingFieldConfig.ts`, `middleware.ts`.
+  - Existing KAZAN lead capture remains separate from contact click tracking.
+- Riskler:
+  - Production DB must apply `drizzle/0001_foamy_gideon.sql`.
+  - `IP_HASH_SALT` must be set in Hostinger before deploy.
+  - Telegram handle assumed from existing social link: `https://t.me/dkagency`.
+- Sonraki adim:
+  - After deploy, run `SELECT channel, locale, COUNT(*) FROM leads WHERE source='contact_page' GROUP BY channel, locale ORDER BY 1, 2;`.

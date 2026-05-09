@@ -11,6 +11,7 @@ import {
   uuid,
   real,
   date,
+  index,
 } from 'drizzle-orm/pg-core';
 
 // Hero section content (field by field admin)
@@ -242,6 +243,22 @@ export const listingLeads = pgTable('listing_leads', {
   status: listingLeadStatusEnum('status').notNull().default('new'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
+
+export const leads = pgTable(
+  'leads',
+  {
+    id: serial('id').primaryKey(),
+    source: varchar('source', { length: 50 }),
+    channel: varchar('channel', { length: 20 }),
+    locale: varchar('locale', { length: 2 }),
+    userAgent: text('user_agent'),
+    ipHash: varchar('ip_hash', { length: 64 }),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+  },
+  (table) => ({
+    sourceChannelIdx: index('idx_leads_source_channel').on(table.source, table.channel),
+  }),
+);
 
 export const kazanLeads = pgTable('kazan_leads', {
   id: uuid('id').primaryKey().defaultRandom(),
