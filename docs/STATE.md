@@ -3,13 +3,8 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-10T16:43:23.635Z
+- GeneratedAt: 2026-05-10T19:25:28.600Z
 - BuildStatus: PASS
-- ActiveSprint: Sprint 2 ✅ tamam
-- LiveTools: 1/12 (Marka Kompasi)
-- LastCommitOnMain: 55398d6
-- OpenTechDebt: TD-001 (tier mapping), TD-002 (Claude primary)
-- NextSprint: TASK-0103 KST Yoxlayici
 
 ## Routes (131)
 - /[locale]
