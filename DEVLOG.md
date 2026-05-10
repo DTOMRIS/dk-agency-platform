@@ -4,6 +4,41 @@ Sessiya qeydləri. Hər iş sessiyasının nəticəsi burada.
 
 ---
 
+## 2026-05-09 — Marka Kompasi Live (TASK-0102)
+
+**Problem:** Marketinq Ocagi 12 aletden ibaret toolkit idi, lakin hec biri canli deyildi. Marka Kompasi butun diger aletlerin kontekst menbeyi oldugu ucun ilk implement edilmeliydi.
+
+**Hell:**
+1. API endpoint `app/api/marketing-tools/marka-kompasi/route.ts`:
+   - POST: zod input validation → gating check → Claude AI call (callAIJson) → zod output validation → DB insert
+   - GET: son ugurlu run-u qaytarir (history)
+   - Auth: `getAuthFromCookie()` JWT pattern istifade edildi
+   - Error handling: AI fail → DB-de `status: 'error'` + `errorMessage` yazilir
+
+2. UI komponentleri (3 fayl):
+   - `MarkaKompasiPage.tsx` — orchestrator (loading → form → result state machine)
+   - `QuestionnaireForm.tsx` — 5 sual (3 select + 1 textarea + 1 text input)
+   - `ResultCard.tsx` — tagline (copy button), ICP, value prop, differentiators, useThisIn
+
+3. `[slug]/page.tsx` yenilendi: `slug === 'marka-kompasi' && status === 'live'` → MarkaKompasiPage render
+4. Config update: `status: 'planned'` → `'live'`, field adlari spec-e uygunlasdirildi
+
+**Sprint 1 infra istifade:**
+- `callAIJson<T>()` — AI router isledi, meta (provider, tokens, cost) qaytardir
+- `checkToolAccess()` — gating isledi, `mapPlanToTier()` ile MemberPlan→MarketingToolTier cevirme
+- `marketingToolRuns` schema — DB insert/update isledi, nullable `db` check var
+- `getToolConfig()` — config-den slug ile tool tapma
+
+**Qerar:** `zod` dependency elave edildi (validation ucun). `dependencies`-e qoyuldu (Hostinger dersi).
+
+**Build:** PASS
+**Protected violations:** 0
+**New TS errors:** 0
+
+**Novbeti:** TASK-0103 — KST Yoxlayici (SAGIRD, ikinci alet)
+
+---
+
 ## 2026-05-09 — Marketinq Ocagi Faza 0 Infrastructure (TASK-0101)
 
 **Problem:** DK Agency platformasinda restoran sahiblari ucun marketinq aletleri yox idi. Movcud toolkit (food cost, P&L, checklist) emeliyyat fokusludur. Marketinq — SMM, branding, reqib analizi, AEO — tamam bos idi.

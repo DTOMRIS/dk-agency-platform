@@ -3,6 +3,30 @@
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [2026-05-09] — Marka Kompasi: First Live Marketing Tool (TASK-0102)
+
+### Added
+- **Marka Kompasi** — first live tool in Marketinq Ocagi (SAGIRD tier, free)
+- API endpoint `POST+GET /api/marketing-tools/marka-kompasi` with zod validation
+- 5-question form UI: customer time, activity, food story, competitor gap, recommend reason
+- AI-generated positioning result: tagline, ICP, value prop, 3 differentiators, useThisIn
+- History support: revisiting page shows last result with "Redo" option
+- Real DB run logging in `marketing_tool_runs` with AI cost tracking
+- Claude as primary AI provider for positioning context (DeepSeek fallback)
+- Copy button on tagline for quick clipboard copy
+- 4-language inline copy (AZ/EN/TR/RU) in all components
+- `zod` dependency added for input/output schema validation
+
+### Changed
+- `marka-kompasi` config status: `planned` → `live` in `marketing-tools-config.ts`
+- Input field names aligned with spec: `peakHours` → `customerTime`, `customerPurpose` → `customerActivity`
+- Monthly run limits updated: SAGIRD 3/mo, KALFA 10/mo, USTA unlimited
+
+### Notes
+- SAGIRD tier: 3 runs/month limit enforced via marketing-gating.ts
+- Sprint 1 infrastructure (ai-router, gating, config) used as designed — no infra changes needed
+- Live tools: 1/12
+
 ## [2026-05-09] — Marketinq Ocagi Sprint 1: Faza 0 Infrastructure (TASK-0101)
 
 ### Added
