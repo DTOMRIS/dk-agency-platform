@@ -15,6 +15,13 @@
       "when": 1778318620905,
       "tag": "0001_foamy_gideon",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778357182391,
+      "tag": "0002_curved_apocalypse",
+      "breakpoints": true
     }
   ]
 }
