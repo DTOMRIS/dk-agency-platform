@@ -3,6 +3,21 @@
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [2026-05-10] — KST Yoxlayici: 2nd Live Marketing Tool (TASK-0103)
+
+### Added
+- **KST Yoxlayici** — 30-question Quality/Service/Cleanliness self-audit (SAGIRD tier)
+- Reusable `LikertScale` component (`components/marketinq-ocagi/shared/`) — memo-optimized
+- `KSTQuestionnaireForm` with 3-section accordion, progress bar, useReducer state
+- `KSTResultCard` with score dashboard, 3 critical issues, 30-day action plan
+- API endpoint `POST+GET /api/marketing-tools/kst-yoxlayici` with zod validation
+
+### Changed
+- `kst-yoxlayici` config status: `planned` → `live`
+
+### Notes
+- DeepSeek primary AI, SAGIRD 3 runs/month, Live tools: 2/12
+
 ## [2026-05-09] — Marka Kompasi: First Live Marketing Tool (TASK-0102)
 
 ### Added

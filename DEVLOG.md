@@ -4,6 +4,27 @@ Sessiya qeydləri. Hər iş sessiyasının nəticəsi burada.
 
 ---
 
+## 2026-05-10 — KST Yoxlayici Live (TASK-0103)
+
+**Problem:** SAGIRD pillesinde 2-ci alet lazimdir. Marka Kompasi bazardaki yeri verir, KST ise daxili real veziyyeti olcur.
+
+**Hell:**
+1. API endpoint `app/api/marketing-tools/kst-yoxlayici/route.ts` — Marka Kompasi pattern ile eyni
+2. Reusable `LikertScale` komponenti `shared/` qovlugunda — memo-optimized, gelecek aletler ucun
+3. `KSTQuestionnaireForm` — 30 sual, 3 section accordion, useReducer state, progress bar
+4. `KSTResultCard` — overall skor, 3 kateqoriya, benchmark muqayise, 3 kritik problem, 30 gunluk plan
+5. `KSTYoxlayiciPage` — MarkaKompasiPage ile eyni orchestrator pattern (loading/form/result)
+
+**Marka Kompasi dersinden:**
+- `callAIJson` `{ data, meta }` qaytarir (meta.provider, meta.tokensUsed, meta.costAzn)
+- Auth: `getAuthFromCookie()` → `JwtPayload` (userId, email, role)
+- Dashboard i18n: inline copy pattern (useTranslations istifade olunmur)
+
+**Build:** PASS
+**Novbeti:** TASK-0104 — GBP Qurucu ve ya Gorunurluk Testi
+
+---
+
 ## 2026-05-09 — Marka Kompasi Live (TASK-0102)
 
 **Problem:** Marketinq Ocagi 12 aletden ibaret toolkit idi, lakin hec biri canli deyildi. Marka Kompasi butun diger aletlerin kontekst menbeyi oldugu ucun ilk implement edilmeliydi.

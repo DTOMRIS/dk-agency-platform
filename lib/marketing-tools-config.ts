@@ -101,21 +101,20 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     category: 'gorunulurluk',
     tier: 'sagird',
     iconName: 'ClipboardCheck',
-    status: 'planned',
+    status: 'live',
     aiProvider: 'deepseek',
     aiFallback: 'claude',
     externalApis: [],
     inputSchema: {
       fields: [
-        { name: 'restaurantName', type: 'text', required: true },
-        { name: 'auditDate', type: 'date', required: false, source: 'auto-from-api' },
-        { name: 'qualityScores', type: 'likert', required: true },
-        { name: 'serviceScores', type: 'likert', required: true },
-        { name: 'cleanlinessScores', type: 'likert', required: true },
+        { name: 'quality', type: 'likert', required: true },
+        { name: 'service', type: 'likert', required: true },
+        { name: 'cleanliness', type: 'likert', required: true },
+        { name: 'notes', type: 'textarea', required: false },
       ],
     },
-    monthlyRunLimit: { sagird: 2, kalfa: 5, usta: null },
-    estimatedCostAznPerRun: 0.05,
+    monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
+    estimatedCostAznPerRun: 0.0003,
   },
 
   {
