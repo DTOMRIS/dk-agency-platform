@@ -28,3 +28,34 @@ Stripe/Payriff inteqrasiyasi gelende bu yanlis olacaq.
 - docs/MARKETINQ_OCAGI_SPEC.md bolme 2.1.1
 - lib/marketing-gating.ts
 - Sprint 5 (Stripe/Payriff)
+
+---
+
+## TD-002 — ANTHROPIC_API_KEY production validation
+
+**Tarix:** 2026-05-10
+**Sprint:** 2
+**Status:** ACIQ
+**Prioritet:** Orta
+
+### Problem
+Marka Kompasi prod-da ai_provider=deepseek qaytarir (fallback), Claude
+primary islenir. Spec-de Claude primary qeyd edilmisdir
+(positioning ucun April Dunford terzi nuanced cavab).
+
+### Sebeb (ehtimal)
+- ANTHROPIC_API_KEY Hostinger panel env-de yoxdur, ya da
+- Movcuddur amma key kecersizdir/format yanlisdir, ya da
+- Model adi `claude-sonnet-4-20250514` movcud deyil (model adlandirmasi
+  deyismis ola biler)
+
+### Hell
+1. Dogan: Hostinger panelde ANTHROPIC_API_KEY movcudlugunu yoxla
+2. Var olarsa: lokalda eyni key ile tek cagris test et
+3. Test fail olsa: model adi movcud deyil — model siyahisini yoxla
+4. Duzelt → restart Hostinger app → yeniden test (yeni run
+   ai_provider='claude' olmalidir)
+
+### Elaqeli
+- lib/ai-router.ts (callClaude funksiyasi)
+- DEVLOG TASK-0102 netice bolmesi
