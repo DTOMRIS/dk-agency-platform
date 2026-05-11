@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation';
 import MarkaKompasiPage from '@/components/marketinq-ocagi/marka-kompasi/MarkaKompasiPage';
 import KSTYoxlayiciPage from '@/components/marketinq-ocagi/kst-yoxlayici/KSTYoxlayiciPage';
 import PromoROIPage from '@/components/marketinq-ocagi/promosyon-roi/PromoROIPage';
+import MenyuAnalitiyiPage from '@/components/marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiPage';
 
 const pageCopy: Record<
   Locale,
@@ -133,6 +134,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'promosyon-roi' && tool.status === 'live') {
     return <PromoROIPage />;
+  }
+  if (slug === 'menyu-analitigi' && tool.status === 'live') {
+    return <MenyuAnalitiyiPage />;
   }
 
   const tierColors = TIER_COLORS[tool.tier];

@@ -136,7 +136,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     category: 'analitika',
     tier: 'sagird',
     iconName: 'UtensilsCrossed',
-    status: 'planned',
+    status: 'live',
     aiProvider: 'deepseek',
     externalApis: [],
     inputSchema: {
