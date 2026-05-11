@@ -3,6 +3,39 @@
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [2026-05-11] — SPRINT 4 TAMAMLANDI: 7/13 alet canli
+
+### Sprint 4 — 5 yeni alet implement edildi (PR #110 — #114)
+
+| # | Alet | Pille | PR | Status |
+|---|------|-------|----|--------|
+| 3 | Promosyon ROI v2 | KALFA | #110 | live — McDonald's modeli, SOI hesabi, AI verdict |
+| 4 | Menyu Analitigi | SAGIRD | #111 | live — Menu Engineering Matrix (Stars/Plowhorses/Puzzles/Dogs) |
+| 5 | Sikayet Analitigi | KALFA | #112 | live — 8 kateqoriya, sentiment, action plan, cavab sablonlari |
+| 6 | Musteri Persona | KALFA | #113 | live — 2 persona + anti-persona, marketing tips |
+| 7 | P&L Simulator | KALFA | #114 | live — movcud formulalar saxlandi, AI yorum elave (SAGLAM/DIQQET/KRITIK) |
+
+### Sprint 4 toplam statistika
+- **Live tools:** 2/13 → 7/13
+- **Yeni API endpoints:** 5 (POST+GET her biri)
+- **Yeni komponentler:** 15 fayl
+- **Yeni kod:** ~3,000+ setr
+- **AI provider:** DeepSeek (butun aletler)
+- **DB:** marketing_tool_runs cedvelinde 5 yeni toolSlug
+- **Pilleler:** 3 SAGIRD (pulsuz) + 4 KALFA (89 AZN/ay)
+
+### Alət URL-ləri (dashboard auth lazimdir)
+- `/dashboard/marketinq-ocagi` — butun aletler index
+- `/dashboard/marketinq-ocagi/marka-kompasi` — Marka Kompasi (Sprint 2)
+- `/dashboard/marketinq-ocagi/kst-yoxlayici` — KST Yoxlayici (Sprint 3)
+- `/dashboard/marketinq-ocagi/menyu-analitigi` — Menyu Analitigi
+- `/dashboard/marketinq-ocagi/promosyon-roi` — Promosyon ROI v2
+- `/dashboard/marketinq-ocagi/sikayet-analitigi` — Sikayet Analitigi
+- `/dashboard/marketinq-ocagi/musteri-persona` — Musteri Persona
+- `/dashboard/marketinq-ocagi/pnl-simulator` — P&L Simulator
+
+---
+
 ## [2026-05-11] — Sprint 4 Spec: Tool List 12→13, Promosyon ROI v2, Lokasyon Secme
 
 ### Spec Updates (no code changes)
