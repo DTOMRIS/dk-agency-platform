@@ -3,6 +3,20 @@
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [2026-05-11] — Sprint 4 Spec: Tool List 12→13, Promosyon ROI v2, Lokasyon Secme
+
+### Spec Updates (no code changes)
+- **Master tool list**: 12 → 13 aletler, yeni adlar ve kategoriyalar
+  - 3 SAGIRD (pulsuz) + 6 KALFA (89 AZN) + 4 USTA (149 AZN)
+  - KALFA qiymet 49 → 89 AZN (daha cox alet, daha cox deger)
+- **Promosyon ROI v2**: McDonald's case study modeli
+  - Baz Hafta vs Promo Hafta muqayisesi, TC tracking, SOI hesabi
+  - 3-step wizard, x4 hafta extrapolasiya, AI verdict
+- **Lokasyon Secme**: 13-cu alet (USTA), Heb's metodologiyasi
+  - 7 restoran konsepti preset, 4-asama wizard
+  - Google Maps Places API entegrasiya, A/B/C gorunurluk skoru
+- **Sprint 4-5 plan**: 11 yeni alet implement schedule
+
 ## [2026-05-10] — KST Yoxlayici: 2nd Live Marketing Tool (TASK-0103)
 
 ### Added
