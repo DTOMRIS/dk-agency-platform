@@ -10,6 +10,7 @@ import MarkaKompasiPage from '@/components/marketinq-ocagi/marka-kompasi/MarkaKo
 import KSTYoxlayiciPage from '@/components/marketinq-ocagi/kst-yoxlayici/KSTYoxlayiciPage';
 import PromoROIPage from '@/components/marketinq-ocagi/promosyon-roi/PromoROIPage';
 import MenyuAnalitiyiPage from '@/components/marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiPage';
+import SikayetAnalitiyiPage from '@/components/marketinq-ocagi/sikayet-analitigi/SikayetAnalitiyiPage';
 
 const pageCopy: Record<
   Locale,
@@ -137,6 +138,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'menyu-analitigi' && tool.status === 'live') {
     return <MenyuAnalitiyiPage />;
+  }
+  if (slug === 'sikayet-analitigi' && tool.status === 'live') {
+    return <SikayetAnalitiyiPage />;
   }
 
   const tierColors = TIER_COLORS[tool.tier];
