@@ -8,6 +8,7 @@ import { getToolConfig, TIER_COLORS } from '@/lib/marketing-tools-config';
 import { notFound } from 'next/navigation';
 import MarkaKompasiPage from '@/components/marketinq-ocagi/marka-kompasi/MarkaKompasiPage';
 import KSTYoxlayiciPage from '@/components/marketinq-ocagi/kst-yoxlayici/KSTYoxlayiciPage';
+import PromoROIPage from '@/components/marketinq-ocagi/promosyon-roi/PromoROIPage';
 
 const pageCopy: Record<
   Locale,
@@ -129,6 +130,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'kst-yoxlayici' && tool.status === 'live') {
     return <KSTYoxlayiciPage />;
+  }
+  if (slug === 'promosyon-roi' && tool.status === 'live') {
+    return <PromoROIPage />;
   }
 
   const tierColors = TIER_COLORS[tool.tier];

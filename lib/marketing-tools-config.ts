@@ -157,7 +157,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     category: 'maliyye',
     tier: 'kalfa',
     iconName: 'TrendingUp',
-    status: 'planned',
+    status: 'live',
     aiProvider: 'deepseek',
     externalApis: [],
     inputSchema: {
