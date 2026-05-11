@@ -7,6 +7,7 @@ import { normalizeLocale, type Locale } from '@/i18n/config';
 import { getToolConfig, TIER_COLORS } from '@/lib/marketing-tools-config';
 import { notFound } from 'next/navigation';
 import MarkaKompasiPage from '@/components/marketinq-ocagi/marka-kompasi/MarkaKompasiPage';
+import KSTYoxlayiciPage from '@/components/marketinq-ocagi/kst-yoxlayici/KSTYoxlayiciPage';
 
 const pageCopy: Record<
   Locale,
@@ -118,9 +119,12 @@ export default function ToolSlugPage() {
     notFound();
   }
 
-  // Live tool — render dedicated page
+  // Live tools — render dedicated pages
   if (slug === 'marka-kompasi' && tool.status === 'live') {
     return <MarkaKompasiPage />;
+  }
+  if (slug === 'kst-yoxlayici' && tool.status === 'live') {
+    return <KSTYoxlayiciPage />;
   }
 
   const tierColors = TIER_COLORS[tool.tier];
