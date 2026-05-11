@@ -3,7 +3,7 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-11T10:54:42.374Z
+- GeneratedAt: 2026-05-11T14:00:14.799Z
 - BuildStatus: PASS
 
 ## Routes (131)
@@ -139,7 +139,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (59)
+## API Routes (60)
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
@@ -175,6 +175,7 @@ Auto-generated. Do not edit manually.
 - /api/marketing-tools/kst-yoxlayici
 - /api/marketing-tools/marka-kompasi
 - /api/marketing-tools/menyu-analitigi
+- /api/marketing-tools/musteri-persona
 - /api/marketing-tools/promosyon-roi
 - /api/marketing-tools/sikayet-analitigi
 - /api/member/auth
