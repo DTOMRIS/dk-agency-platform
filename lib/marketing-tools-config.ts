@@ -1,8 +1,8 @@
 /**
  * @file marketing-tools-config.ts
- * @purpose Marketinq Ocagi 12 aletinin single source of truth konfiqurasiyasi
+ * @purpose Marketinq Ocagi 13 aletinin single source of truth konfiqurasiyasi
  * @critical Ozbahceci dersi — butun sehifeler, API, gating buradan oxuyur
- * @lastModified 2026-05-09
+ * @lastModified 2026-05-11 (Sprint 4 — 12→13 alet yenilenmesi)
  */
 
 // ── TIP TEYINLERI ──────────────────────────────────────────────────
@@ -10,10 +10,11 @@
 export type MarketingToolTier = 'sagird' | 'kalfa' | 'usta';
 
 export type MarketingToolCategory =
-  | 'gorunulurluk'
+  | 'analitika'
+  | 'maliyye'
+  | 'musteri'
   | 'kontent'
-  | 'strateji'
-  | 'reputasiya';
+  | 'emeliyyat';
 
 export type AIProvider = 'deepseek' | 'claude' | 'none';
 
@@ -49,109 +50,19 @@ export interface MarketingToolConfig {
   estimatedCostAznPerRun: number;
 }
 
-// ── 12 ALET KONFIQURASIYASI ─────────────────────────────────────────
+// ── 13 ALET KONFIQURASIYASI ─────────────────────────────────────────
 
 export const MARKETING_TOOLS: MarketingToolConfig[] = [
-  // ── SAGIRD PILLESI (4 alet, pulsuz) ──────────────────────────────
-
-  {
-    slug: 'gorunurluk-testi',
-    category: 'gorunulurluk',
-    tier: 'sagird',
-    iconName: 'Eye',
-    status: 'planned',
-    aiProvider: 'none',
-    externalApis: ['google-maps', '2gis'],
-    inputSchema: {
-      fields: [
-        { name: 'restaurantName', type: 'text', required: true },
-        { name: 'address', type: 'text', required: true },
-        {
-          name: 'city',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'baku', labelKey: 'cities.baku' },
-            { value: 'sumqayit', labelKey: 'cities.sumqayit' },
-            { value: 'gence', labelKey: 'cities.gence' },
-            { value: 'diger', labelKey: 'cities.diger' },
-          ],
-        },
-        { name: 'coordinates', type: 'hidden', required: false, source: 'auto-from-api' },
-        {
-          name: 'category',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'fast-food', labelKey: 'categories.fastFood' },
-            { value: 'fine-dining', labelKey: 'categories.fineDining' },
-            { value: 'cafe', labelKey: 'categories.cafe' },
-            { value: 'pub', labelKey: 'categories.pub' },
-            { value: 'restoran', labelKey: 'categories.restoran' },
-          ],
-        },
-      ],
-    },
-    monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
-    estimatedCostAznPerRun: 0,
-  },
-
-  {
-    slug: 'kst-yoxlayici',
-    category: 'gorunulurluk',
-    tier: 'sagird',
-    iconName: 'ClipboardCheck',
-    status: 'live',
-    aiProvider: 'deepseek',
-    aiFallback: 'claude',
-    externalApis: [],
-    inputSchema: {
-      fields: [
-        { name: 'quality', type: 'likert', required: true },
-        { name: 'service', type: 'likert', required: true },
-        { name: 'cleanliness', type: 'likert', required: true },
-        { name: 'notes', type: 'textarea', required: false },
-      ],
-    },
-    monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
-    estimatedCostAznPerRun: 0.0003,
-  },
-
-  {
-    slug: 'gbp-qurucu',
-    category: 'gorunulurluk',
-    tier: 'sagird',
-    iconName: 'MapPin',
-    status: 'planned',
-    aiProvider: 'deepseek',
-    aiFallback: 'claude',
-    externalApis: ['cloudinary'],
-    inputSchema: {
-      fields: [
-        { name: 'restaurantName', type: 'text', required: true },
-        { name: 'address', type: 'text', required: true },
-        { name: 'phone', type: 'text', required: true },
-        { name: 'website', type: 'text', required: false },
-        { name: 'primaryCategory', type: 'select', required: true, options: [] },
-        { name: 'secondaryCategory', type: 'select', required: false, options: [] },
-        { name: 'workingHours', type: 'text', required: true },
-        { name: 'attributes', type: 'multi-select', required: false, options: [] },
-        { name: 'photos', type: 'file', required: false },
-        { name: 'deliveryRadius', type: 'number', required: false },
-      ],
-    },
-    monthlyRunLimit: { sagird: 1, kalfa: 3, usta: null },
-    estimatedCostAznPerRun: 0.08,
-  },
+  // ── SAGIRD PILLESI (3 alet, pulsuz) ──────────────────────────────
 
   {
     slug: 'marka-kompasi',
-    category: 'gorunulurluk',
+    category: 'analitika',
     tier: 'sagird',
     iconName: 'Compass',
     status: 'live',
-    aiProvider: 'claude',
-    aiFallback: 'deepseek',
+    aiProvider: 'deepseek',
+    aiFallback: 'claude',
     externalApis: [],
     inputSchema: {
       fields: [
@@ -196,131 +107,54 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
       ],
     },
     monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
-    estimatedCostAznPerRun: 0.12,
+    estimatedCostAznPerRun: 0.0003,
   },
 
-  // ── KALFA PILLESI (5 alet, 49 AZN/ay) ────────────────────────────
-
   {
-    slug: 'smm-plan-ai',
-    category: 'kontent',
-    tier: 'kalfa',
-    iconName: 'CalendarDays',
-    status: 'planned',
+    slug: 'kst-yoxlayici',
+    category: 'emeliyyat',
+    tier: 'sagird',
+    iconName: 'ClipboardCheck',
+    status: 'live',
     aiProvider: 'deepseek',
     aiFallback: 'claude',
     externalApis: [],
     inputSchema: {
       fields: [
-        { name: 'restaurantContext', type: 'hidden', required: false, source: 'auto-from-tool', sourceToolSlug: 'marka-kompasi' },
-        {
-          name: 'weekFocus',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'new-menu', labelKey: 'weekFocus.newMenu' },
-            { value: 'campaign', labelKey: 'weekFocus.campaign' },
-            { value: 'holiday', labelKey: 'weekFocus.holiday' },
-            { value: 'quiet', labelKey: 'weekFocus.quiet' },
-            { value: 'event', labelKey: 'weekFocus.event' },
-          ],
-        },
-        { name: 'events', type: 'text', required: false },
-        {
-          name: 'targetAudience',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'local', labelKey: 'audience.local' },
-            { value: 'tourist', labelKey: 'audience.tourist' },
-            { value: 'business', labelKey: 'audience.business' },
-            { value: 'families', labelKey: 'audience.families' },
-            { value: 'youth', labelKey: 'audience.youth' },
-          ],
-        },
-        {
-          name: 'language',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'az', labelKey: 'lang.az' },
-            { value: 'ru', labelKey: 'lang.ru' },
-            { value: 'tr', labelKey: 'lang.tr' },
-            { value: 'en', labelKey: 'lang.en' },
-          ],
-        },
-        {
-          name: 'tone',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'friendly', labelKey: 'tone.friendly' },
-            { value: 'premium', labelKey: 'tone.premium' },
-            { value: 'fun', labelKey: 'tone.fun' },
-            { value: 'ahilik', labelKey: 'tone.ahilik' },
-          ],
-        },
+        { name: 'quality', type: 'likert', required: true },
+        { name: 'service', type: 'likert', required: true },
+        { name: 'cleanliness', type: 'likert', required: true },
+        { name: 'notes', type: 'textarea', required: false },
       ],
     },
-    monthlyRunLimit: { sagird: 0, kalfa: 4, usta: null },
-    estimatedCostAznPerRun: 0.25,
+    monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
+    estimatedCostAznPerRun: 0.0003,
   },
 
   {
-    slug: 'caption-yazici',
-    category: 'kontent',
-    tier: 'kalfa',
-    iconName: 'PenLine',
+    slug: 'menyu-analitigi',
+    category: 'analitika',
+    tier: 'sagird',
+    iconName: 'UtensilsCrossed',
     status: 'planned',
     aiProvider: 'deepseek',
-    aiFallback: 'claude',
-    externalApis: ['cloudinary'],
+    externalApis: [],
     inputSchema: {
       fields: [
-        { name: 'subject', type: 'text', required: true },
-        { name: 'imageUrl', type: 'file', required: false },
-        {
-          name: 'goal',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'reservation', labelKey: 'goal.reservation' },
-            { value: 'order', labelKey: 'goal.order' },
-            { value: 'awareness', labelKey: 'goal.awareness' },
-            { value: 'engagement', labelKey: 'goal.engagement' },
-          ],
-        },
-        {
-          name: 'cta',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'reserve', labelKey: 'cta.reserve' },
-            { value: 'order', labelKey: 'cta.order' },
-            { value: 'comment', labelKey: 'cta.comment' },
-            { value: 'share', labelKey: 'cta.share' },
-            { value: 'custom', labelKey: 'cta.custom' },
-          ],
-        },
-        {
-          name: 'length',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'short', labelKey: 'length.short' },
-            { value: 'medium', labelKey: 'length.medium' },
-            { value: 'long', labelKey: 'length.long' },
-          ],
-        },
+        { name: 'menuItems', type: 'textarea', required: true },
+        { name: 'category', type: 'select', required: true, options: [] },
+        { name: 'avgFoodCostPercent', type: 'number', required: true },
       ],
     },
-    monthlyRunLimit: { sagird: 0, kalfa: 20, usta: null },
-    estimatedCostAznPerRun: 0.15,
+    monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
+    estimatedCostAznPerRun: 0.0003,
   },
+
+  // ── KALFA PILLESI (6 alet, 89 AZN/ay) ────────────────────────────
 
   {
     slug: 'promosyon-roi',
-    category: 'strateji',
+    category: 'maliyye',
     tier: 'kalfa',
     iconName: 'TrendingUp',
     status: 'planned',
@@ -328,197 +162,203 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     externalApis: [],
     inputSchema: {
       fields: [
-        { name: 'campaignName', type: 'text', required: true },
-        {
-          name: 'promoType',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'percent-discount', labelKey: 'promo.percentDiscount' },
-            { value: 'buy-x-get-1', labelKey: 'promo.buyXGet1' },
-            { value: 'combo', labelKey: 'promo.combo' },
-            { value: 'loyalty', labelKey: 'promo.loyalty' },
-            { value: 'friend-1plus1', labelKey: 'promo.friend1plus1' },
-          ],
-        },
+        { name: 'promoName', type: 'text', required: true },
+        { name: 'promoDurationDays', type: 'number', required: true },
+        { name: 'baselineTotalSales', type: 'number', required: true },
+        { name: 'baselineTC', type: 'number', required: true },
+        { name: 'baselineGrossMargin', type: 'number', required: true },
+        { name: 'promoTotalSales', type: 'number', required: true },
+        { name: 'promoTC', type: 'number', required: true },
+        { name: 'promoGrossMargin', type: 'number', required: true },
         { name: 'promoCost', type: 'number', required: true },
         { name: 'marketingSpend', type: 'number', required: true },
-        { name: 'baselineSales', type: 'number', required: true },
-        { name: 'actualSales', type: 'number', required: true },
-        { name: 'avgMargin', type: 'number', required: true },
-        { name: 'durationDays', type: 'number', required: true },
+        { name: 'rentPercent', type: 'number', required: false },
+        { name: 'royaltyPercent', type: 'number', required: false },
+        { name: 'adPoolPercent', type: 'number', required: false },
+        { name: 'serviceFeePercent', type: 'number', required: false },
       ],
     },
-    monthlyRunLimit: { sagird: 0, kalfa: 10, usta: null },
-    estimatedCostAznPerRun: 0.03,
+    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0.0003,
   },
 
   {
-    slug: 'kampaniya-takvimi',
-    category: 'strateji',
+    slug: 'pnl-simulator',
+    category: 'maliyye',
     tier: 'kalfa',
-    iconName: 'Calendar',
+    iconName: 'Calculator',
     status: 'planned',
-    aiProvider: 'claude',
-    aiFallback: 'deepseek',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'revenue', type: 'number', required: true },
+        { name: 'foodCost', type: 'number', required: true },
+        { name: 'laborCost', type: 'number', required: true },
+        { name: 'rent', type: 'number', required: true },
+        { name: 'otherExpenses', type: 'number', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0.0003,
+  },
+
+  {
+    slug: 'sikayet-analitigi',
+    category: 'musteri',
+    tier: 'kalfa',
+    iconName: 'MessageSquareWarning',
+    status: 'planned',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'complaints', type: 'textarea', required: true },
+        { name: 'source', type: 'select', required: true, options: [] },
+        { name: 'period', type: 'select', required: true, options: [] },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 10, usta: null },
+    estimatedCostAznPerRun: 0.0003,
+  },
+
+  {
+    slug: 'musteri-persona',
+    category: 'musteri',
+    tier: 'kalfa',
+    iconName: 'UserCircle',
+    status: 'planned',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'restaurantContext', type: 'hidden', required: false, source: 'auto-from-tool', sourceToolSlug: 'marka-kompasi' },
+        { name: 'targetSegment', type: 'select', required: true, options: [] },
+        { name: 'observations', type: 'textarea', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 5, usta: null },
+    estimatedCostAznPerRun: 0.0003,
+  },
+
+  {
+    slug: 'sezon-planlama',
+    category: 'emeliyyat',
+    tier: 'kalfa',
+    iconName: 'CalendarDays',
+    status: 'planned',
+    aiProvider: 'deepseek',
     externalApis: [],
     inputSchema: {
       fields: [
         { name: 'restaurantContext', type: 'hidden', required: false, source: 'auto-from-tool', sourceToolSlug: 'marka-kompasi' },
         { name: 'targetMonths', type: 'multi-select', required: true, options: [] },
-        { name: 'localEvents', type: 'textarea', required: false },
         { name: 'budget', type: 'number', required: false },
       ],
     },
     monthlyRunLimit: { sagird: 0, kalfa: 2, usta: null },
-    estimatedCostAznPerRun: 0.3,
+    estimatedCostAznPerRun: 0.0005,
   },
 
   {
-    slug: 'rey-cavab-ai',
-    category: 'reputasiya',
+    slug: 'reklam-yazicisi',
+    category: 'kontent',
     tier: 'kalfa',
-    iconName: 'MessageSquareReply',
+    iconName: 'PenLine',
     status: 'planned',
-    aiProvider: 'claude',
-    aiFallback: 'deepseek',
+    aiProvider: 'deepseek',
     externalApis: [],
     inputSchema: {
       fields: [
-        { name: 'reviewText', type: 'textarea', required: true },
-        { name: 'rating', type: 'number', required: true },
-        { name: 'reviewerName', type: 'text', required: false },
-        {
-          name: 'responseGoal',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'thank', labelKey: 'responseGoal.thank' },
-            { value: 'resolve', labelKey: 'responseGoal.resolve' },
-            { value: 'reinvite', labelKey: 'responseGoal.reinvite' },
-            { value: 'defuse', labelKey: 'responseGoal.defuse' },
-          ],
-        },
+        { name: 'subject', type: 'text', required: true },
+        { name: 'goal', type: 'select', required: true, options: [] },
+        { name: 'tone', type: 'select', required: true, options: [] },
+        { name: 'length', type: 'select', required: true, options: [] },
       ],
     },
-    monthlyRunLimit: { sagird: 0, kalfa: 30, usta: null },
-    estimatedCostAznPerRun: 0.08,
+    monthlyRunLimit: { sagird: 0, kalfa: 20, usta: null },
+    estimatedCostAznPerRun: 0.0002,
   },
 
-  // ── USTA PILLESI (3 alet, 149 AZN/ay) ────────────────────────────
+  // ── USTA PILLESI (4 alet, 149 AZN/ay) ────────────────────────────
 
   {
-    slug: 'reqib-radari',
-    category: 'strateji',
+    slug: 'sosial-medya-plan',
+    category: 'kontent',
     tier: 'usta',
-    iconName: 'Radar',
+    iconName: 'Share2',
     status: 'planned',
     aiProvider: 'deepseek',
-    aiFallback: 'claude',
-    externalApis: ['google-maps', '2gis'],
+    externalApis: [],
     inputSchema: {
       fields: [
-        { name: 'myRestaurantId', type: 'hidden', required: false, source: 'auto-from-api' },
-        {
-          name: 'competitorMode',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'auto', labelKey: 'competitorMode.auto' },
-            { value: 'manual', labelKey: 'competitorMode.manual' },
-          ],
-        },
-        { name: 'radius', type: 'number', required: true },
-        {
-          name: 'analysisFocus',
-          type: 'multi-select',
-          required: true,
-          options: [
-            { value: 'menu', labelKey: 'focus.menu' },
-            { value: 'price', labelKey: 'focus.price' },
-            { value: 'sentiment', labelKey: 'focus.sentiment' },
-            { value: 'hours', labelKey: 'focus.hours' },
-            { value: 'photos', labelKey: 'focus.photos' },
-          ],
-        },
+        { name: 'restaurantContext', type: 'hidden', required: false, source: 'auto-from-tool', sourceToolSlug: 'marka-kompasi' },
+        { name: 'platforms', type: 'multi-select', required: true, options: [] },
+        { name: 'weekFocus', type: 'select', required: true, options: [] },
+        { name: 'tone', type: 'select', required: true, options: [] },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: null },
+    estimatedCostAznPerRun: 0.0005,
+  },
+
+  {
+    slug: 'audit-robotu',
+    category: 'emeliyyat',
+    tier: 'usta',
+    iconName: 'ScanSearch',
+    status: 'planned',
+    aiProvider: 'deepseek',
+    externalApis: ['cloudinary'],
+    inputSchema: {
+      fields: [
+        { name: 'photos', type: 'file', required: true },
+        { name: 'auditType', type: 'select', required: true, options: [] },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: 10 },
+    estimatedCostAznPerRun: 0.005,
+  },
+
+  {
+    slug: 'trend-analitigi',
+    category: 'analitika',
+    tier: 'usta',
+    iconName: 'LineChart',
+    status: 'planned',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'city', type: 'select', required: true, options: [] },
+        { name: 'category', type: 'select', required: true, options: [] },
+        { name: 'period', type: 'select', required: true, options: [] },
       ],
     },
     monthlyRunLimit: { sagird: 0, kalfa: 0, usta: 5 },
-    estimatedCostAznPerRun: 0.4,
+    estimatedCostAznPerRun: 0.001,
   },
 
   {
-    slug: 'ai-vizyual-studyo',
-    category: 'kontent',
+    slug: 'lokasyon-secme',
+    category: 'analitika',
     tier: 'usta',
-    iconName: 'ImagePlus',
+    iconName: 'MapPin',
     status: 'planned',
     aiProvider: 'deepseek',
-    externalApis: ['cloudinary', 'replicate'],
+    externalApis: ['google-maps'],
     inputSchema: {
       fields: [
-        { name: 'sourceImage', type: 'file', required: true },
-        { name: 'dishName', type: 'text', required: true },
-        {
-          name: 'style',
-          type: 'select',
-          required: true,
-          options: [
-            { value: 'minimalist', labelKey: 'style.minimalist' },
-            { value: 'luxury', labelKey: 'style.luxury' },
-            { value: 'rustic', labelKey: 'style.rustic' },
-            { value: 'azerbaijani', labelKey: 'style.azerbaijani' },
-            { value: 'instagram', labelKey: 'style.instagram' },
-          ],
-        },
-        {
-          name: 'targetPlatforms',
-          type: 'multi-select',
-          required: true,
-          options: [
-            { value: 'ig-post', labelKey: 'platform.igPost' },
-            { value: 'ig-reel', labelKey: 'platform.igReel' },
-            { value: 'tiktok', labelKey: 'platform.tiktok' },
-            { value: 'gbp', labelKey: 'platform.gbp' },
-            { value: 'menu-print', labelKey: 'platform.menuPrint' },
-          ],
-        },
-        {
-          name: 'enhancements',
-          type: 'multi-select',
-          required: false,
-          options: [
-            { value: 'lighting', labelKey: 'enhance.lighting' },
-            { value: 'bg-remove', labelKey: 'enhance.bgRemove' },
-            { value: 'steam', labelKey: 'enhance.steam' },
-            { value: 'props', labelKey: 'enhance.props' },
-          ],
-        },
+        { name: 'address', type: 'text', required: true },
+        { name: 'city', type: 'select', required: true, options: [] },
+        { name: 'concept', type: 'select', required: true, options: [] },
+        { name: 'sizeM2', type: 'number', required: true },
+        { name: 'monthlyRent', type: 'number', required: true },
+        { name: 'investment', type: 'number', required: false },
       ],
     },
-    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: 20 },
-    estimatedCostAznPerRun: 0.5,
-  },
-
-  {
-    slug: 'aeo-skoru',
-    category: 'reputasiya',
-    tier: 'usta',
-    iconName: 'BrainCircuit',
-    status: 'planned',
-    aiProvider: 'claude',
-    aiFallback: 'deepseek',
-    externalApis: ['openai'],
-    inputSchema: {
-      fields: [
-        { name: 'restaurantId', type: 'hidden', required: false, source: 'auto-from-api' },
-        { name: 'targetCity', type: 'hidden', required: false, source: 'auto-from-tool', sourceToolSlug: 'marka-kompasi' },
-        { name: 'targetCategory', type: 'hidden', required: false, source: 'auto-from-tool', sourceToolSlug: 'marka-kompasi' },
-        { name: 'customQuestions', type: 'textarea', required: false },
-      ],
-    },
-    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: 3 },
-    estimatedCostAznPerRun: 1.2,
+    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: 10 },
+    estimatedCostAznPerRun: 0.35,
   },
 ];
 
@@ -550,10 +390,11 @@ export function canAccessTool(
 }
 
 export const TOOL_CATEGORIES: MarketingToolCategory[] = [
-  'gorunulurluk',
+  'analitika',
+  'maliyye',
+  'musteri',
   'kontent',
-  'strateji',
-  'reputasiya',
+  'emeliyyat',
 ];
 
 export const TIER_COLORS: Record<MarketingToolTier, { bg: string; text: string; border: string }> = {

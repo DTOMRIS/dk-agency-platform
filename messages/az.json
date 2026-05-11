@@ -265,10 +265,11 @@
       "title": "Marketinq Ocağı",
       "subtitle": "Restoran sahibi üçün AI-powered marketinq alətləri",
       "categories": {
-        "gorunulurluk": "Görünürlük",
+        "analitika": "Analitika",
+        "maliyye": "Maliyyə",
+        "musteri": "Müştəri",
         "kontent": "Kontent",
-        "strateji": "Strateji",
-        "reputasiya": "Reputasiya"
+        "emeliyyat": "Əməliyyat"
       },
       "tiers": {
         "sagird": "ŞAGIRD",
@@ -277,7 +278,7 @@
       },
       "tierPrices": {
         "sagird": "Pulsuz",
-        "kalfa": "49 AZN/ay",
+        "kalfa": "89 AZN/ay",
         "usta": "149 AZN/ay"
       },
       "comingSoon": "Tezliklə",
@@ -291,65 +292,70 @@
       "live": "Aktiv"
     },
     "tools": {
-      "gorunurluk-testi": {
-        "title": "Görünürlük Testi",
-        "subtitle": "Restoranınızın onlayn-fiziki görünürlüyünü 6 sahədə yoxlayın",
-        "why": "2026-da Google Maps + AI search dominantdır. Müştərilərin 52%-i gözəcarpan restoranlardan sifariş verir."
+      "marka-kompasi": {
+        "title": "Marka Kompası",
+        "subtitle": "5 sualda restoranınızın bazardakı yerini tapın",
+        "why": "Konum ucuz/lüks etiketlərdən ibarət deyil — kim üçün, hansı problem, niyə fərqli?"
       },
       "kst-yoxlayici": {
         "title": "KST Yoxlayıcı",
         "subtitle": "Keyfiyyət, Servis, Təmizlik öz-özünə audit",
-        "why": "KST mükəmməlliyi bütün marketinq səylərinin təməlidir. Servis yavaş, məkan kirli, yemək keyfiyyətsizdirsə — heç bir reklam dönüşüm yaratmır."
+        "why": "KST mükəmməlliyi bütün marketinq səylərinin təməlidir."
       },
-      "gbp-qurucu": {
-        "title": "GBP Qurucusu",
-        "subtitle": "Google Business Profile-ı 30 dəqiqədə qurun",
-        "why": "Google rating-də 1 ulduz artımı 5-9% gəlir artırır. GBP olmayan restoran Google Maps-da yoxdur."
-      },
-      "marka-kompasi": {
-        "title": "Marka Kompası",
-        "subtitle": "5 sualda restoranınızın bazardakı yerini tapın",
-        "why": "Konum (positioning) ucuz/lüks etiketlərdən ibarət deyil — kim üçün, hansı problem, niyə fərqli?"
-      },
-      "smm-plan-ai": {
-        "title": "SMM Plan AI",
-        "subtitle": "7-günlük Instagram + TikTok məzmun planı",
-        "why": "2026-da 94% marketers AI istifadə edir. Restoran sahibinin 7 gün boyu post fikri tapması mümkün deyil."
-      },
-      "caption-yazici": {
-        "title": "Caption Yazıcı",
-        "subtitle": "4 dildə, 3 ton ilə post mətni yazın",
-        "why": "Caption restoranın IG/TikTok-da konversiya nöqtəsidir."
+      "menyu-analitigi": {
+        "title": "Menyu Analitiği",
+        "subtitle": "Menyu pozisiyalarının rentabelliyini analiz edin",
+        "why": "Menyunun 20%-i satışın 80%-ni yaradır."
       },
       "promosyon-roi": {
         "title": "Promosyon ROI",
-        "subtitle": "Real incremental satış hesablayıcısı",
-        "why": "'20% endirim verdim, satış arttı' yanılgıdır. Bu alət yalnız promosyon səbəbiylə gəlmiş satışı hesablayır."
+        "subtitle": "Baz Hafta vs Promo Hafta — real ROI hesabla",
+        "why": "Endirimsiz də gələcək müştərilərin əlavə endirimi marjını yeyir."
       },
-      "kampaniya-takvimi": {
-        "title": "Kampaniya Takvimi",
-        "subtitle": "12 aylıq vizual promosyon planı",
-        "why": "Restoran sahibi 'Novruz nə edək?' sualını 1 həftə qala düşünür — gec olur."
+      "pnl-simulator": {
+        "title": "P&L Simulator",
+        "subtitle": "Aylıq gəlir-xərc modelləşdirməsi",
+        "why": "P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir."
       },
-      "rey-cavab-ai": {
-        "title": "Rəy Cavab AI",
-        "subtitle": "Google və 2GIS rəylərinə brand-voice cavab",
-        "why": "Mənfi rəylərə yanlış cavab brendi sıxır. Bu alət brand-voice öyrənir, hər rəyə 3 variant yazır."
+      "sikayet-analitigi": {
+        "title": "Şikayət Analitiği",
+        "subtitle": "Müştəri şikayətlərini AI ilə analiz et",
+        "why": "Hər şikayət arxasında 26 səssiz narazı müştəri var."
       },
-      "reqib-radari": {
-        "title": "Rəqib Radarı",
-        "subtitle": "Yaxınlıqdakı 5 rəqibin menyu və sentiment analizi",
-        "why": "Manual rəqib araşdırması saatlar alır. AI bunu 30 saniyəyə edir."
+      "musteri-persona": {
+        "title": "Müştəri Persona",
+        "subtitle": "Hədəf müştəri profilini yaradın",
+        "why": "Hər kəsə satmaq heç kimə satmaq deməkdir."
       },
-      "ai-vizyual-studyo": {
-        "title": "AI Vizyual Studyo",
-        "subtitle": "Yemək şəklindən professional foto və banner yaradın",
-        "why": "Restoran fotoçusu 200-500 AZN/seans. AI ilə eyni nəticə 5 dəqiqədə."
+      "sezon-planlama": {
+        "title": "Sezon Planlaması",
+        "subtitle": "12 aylıq kampaniya və event takvimi",
+        "why": "Novruz nə edək? sualını 1 həftə qala düşünmək — gec olur."
       },
-      "aeo-skoru": {
-        "title": "AEO Skoru",
-        "subtitle": "ChatGPT/Perplexity sənin restoranını tövsiyə edirmi?",
-        "why": "2026-da klassik axtarış 25% düşür — adamlar AI-yə soruşur."
+      "reklam-yazicisi": {
+        "title": "Reklam Yazıcısı",
+        "subtitle": "AI ilə reklam və post mətni yazın",
+        "why": "Düzgün reklam mətni konversiyanı 3x artıra bilər."
+      },
+      "sosial-medya-plan": {
+        "title": "Sosial Medya Plan",
+        "subtitle": "7-günlük Instagram + TikTok planı",
+        "why": "Restoran sahibinin 7 gün boyu post fikri tapması mümkün deyil."
+      },
+      "audit-robotu": {
+        "title": "Audit Robotu",
+        "subtitle": "Foto-əsaslı AI restoran auditi",
+        "why": "Telefon kamerasından 5 foto — AI 30 saniyədə audit raporu verir."
+      },
+      "trend-analitigi": {
+        "title": "Trend Analitiği",
+        "subtitle": "Bazardakı yemək trendlərini izlə",
+        "why": "Hansı yeməklər populyarlaşır? Hansı konseptlər azalır?"
+      },
+      "lokasyon-secme": {
+        "title": "Lokasyon Seçmə",
+        "subtitle": "4 aşamada restoran yeri seçimi",
+        "why": "Restoran sahibinin ən bahalı səhvi: səhv lokasyona açmaq."
       }
     }
   }
