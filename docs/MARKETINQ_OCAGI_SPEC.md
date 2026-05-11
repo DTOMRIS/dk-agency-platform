@@ -60,19 +60,21 @@ Bolme 5: "Novbeti addim" — basqa alete korpu
 
 | # | Alet | Slug | Pille | AI Provider | Status |
 |---|---|---|---|---|---|
-| 1 | Marka Kompasi | `marka-kompasi` | SAGIRD | deepseek | live |
-| 2 | KST Yoxlayici | `kst-yoxlayici` | SAGIRD | deepseek | live |
-| 3 | Menyu Analitigi | `menyu-analitigi` | SAGIRD | deepseek | planned (Sprint 4) |
-| 4 | Promosyon ROI v2 | `promosyon-roi` | KALFA | deepseek | planned (Sprint 4) |
-| 5 | P&L Simulator | `pnl-simulator` | KALFA | deepseek | planned (Sprint 4) |
-| 6 | Sikayet Analitigi | `sikayet-analitigi` | KALFA | deepseek | planned (Sprint 4) |
-| 7 | Musteri Persona | `musteri-persona` | KALFA | deepseek | planned (Sprint 4) |
-| 8 | Sezon Planlama | `sezon-planlama` | KALFA | deepseek | planned (Sprint 5) |
-| 9 | Reklam Yazicisi | `reklam-yazicisi` | KALFA | deepseek | planned (Sprint 5) |
-| 10 | Sosial Medya Plan | `sosial-medya-plan` | USTA | deepseek | planned (Sprint 5) |
-| 11 | Audit Robotu | `audit-robotu` | USTA | deepseek | planned (Sprint 5) |
-| 12 | Trend Analitigi | `trend-analitigi` | USTA | deepseek | planned (Sprint 5) |
-| 13 | Lokasyon Secme | `lokasyon-secme` | USTA | deepseek | planned (Sprint 5) |
+| # | Alet | Slug | Pille | AI | Status | TASK ID |
+|---|------|------|-------|----|--------|---------|
+| 1 | Marka Kompasi | `marka-kompasi` | SAGIRD | deepseek | ✅ live | TASK-0102 |
+| 2 | KST Yoxlayici | `kst-yoxlayici` | SAGIRD | deepseek | ✅ live | TASK-0103 |
+| 3 | Menyu Analitigi | `menyu-analitigi` | SAGIRD | deepseek | ✅ live | TASK-0104 |
+| 4 | Promosyon ROI v2 | `promosyon-roi` | KALFA | deepseek | ✅ live | TASK-0107 |
+| 5 | P&L Simulator | `pnl-simulator` | KALFA | deepseek | ✅ live | TASK-0106 |
+| 6 | Sikayet Analitigi | `sikayet-analitigi` | KALFA | deepseek | ✅ live | TASK-0105 |
+| 7 | Musteri Persona | `musteri-persona` | KALFA | deepseek | ✅ live | TASK-0109 |
+| 8 | Sezon Planlama | `sezon-planlama` | KALFA | deepseek | planned | TASK-0114 |
+| 9 | Reklam Yazicisi | `reklam-yazicisi` | KALFA | deepseek | planned | TASK-0115 |
+| 10 | Sosial Medya Plan | `sosial-medya-plan` | USTA | deepseek | planned | TASK-0116 |
+| 11 | Audit Robotu | `audit-robotu` | USTA | deepseek | planned | TASK-0117 |
+| 12 | Trend Analitigi | `trend-analitigi` | USTA | deepseek | planned | TASK-0118 |
+| 13 | Lokasyon Secme | `lokasyon-secme` | USTA | deepseek | planned | TASK-0119 |
 
 **Cemi:** 3 SAGIRD + 6 KALFA + 4 USTA = 13
 
@@ -204,17 +206,32 @@ Verdict: QAZANDIRDI/BERABERE/ZERER.
 
 ## 5. SPRINT PLANI
 
-### Sprint 4 (1 hefte)
-- TASK-0104 Menyu Analitigi (SAGIRD)
-- TASK-0105 Sikayet Analitigi (KALFA)
-- TASK-0106 P&L Simulator (KALFA)
-- TASK-0107 Promosyon ROI v2 (KALFA, McDonald's modeli)
-- TASK-0109 Musteri Persona (KALFA)
+### Sprint 2-3 (tamamlandi)
+- TASK-0102 Marka Kompasi (SAGIRD) ✅ PR #103
+- TASK-0103 KST Yoxlayici (SAGIRD) ✅ PR #106
 
-### Sprint 5 (1 hefte)
-- TASK-0110 Sezon Planlama (KALFA)
-- TASK-0111 Reklam Yazicisi (KALFA)
-- TASK-0112 Sosial Medya Plan (USTA)
-- TASK-0113 Audit Robotu (USTA)
-- TASK-0114 Trend Analitigi (USTA)
-- TASK-0108 Lokasyon Secme (USTA, en boyuk scope)
+### Sprint 4 (tamamlandi — 2026-05-11)
+- TASK-0107 Promosyon ROI v2 (KALFA) ✅ PR #110
+- TASK-0104 Menyu Analitigi (SAGIRD) ✅ PR #111
+- TASK-0105 Sikayet Analitigi (KALFA) ✅ PR #112
+- TASK-0109 Musteri Persona (KALFA) ✅ PR #113
+- TASK-0106 P&L Simulator refactor (KALFA) ✅ PR #114
+
+**Sprint 4 netice:** 2/13 → 7/13 live
+
+### Sprint 5 (novbeti — TASK ID yeniden nomreleme)
+
+**TASK ID konflikt helli:** Sprint 4-de TASK-0103-0109 istifade edildi.
+Kohne Sprint 5 plan-da TASK-0108-0114 vardi — konflikt.
+Yeni Sprint 5 ID-leri TASK-0114-den baslayir:
+
+| Sira | Yeni ID | Kohne ID | Alet | Pille | Risk |
+|------|---------|----------|------|-------|------|
+| 1 | TASK-0114 | TASK-0110 | Sezon Planlama | KALFA | Asagi |
+| 2 | TASK-0115 | TASK-0111 | Reklam Yazicisi | KALFA | Asagi |
+| 3 | TASK-0116 | TASK-0112 | Sosial Medya Plan | USTA | Orta |
+| 4 | TASK-0117 | TASK-0113 | Audit Robotu | USTA | Orta |
+| 5 | TASK-0118 | TASK-0114 | Trend Analitigi | USTA | Orta |
+| 6 | TASK-0119 | TASK-0108 | Lokasyon Secme | USTA | YUKSEK (Google Maps API) |
+
+**Sprint 5 sirasi:** Asan → cetin. Lokasyon Secme sona — Google Maps API risk tecrid.

@@ -3,6 +3,34 @@
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
+## [TASK-0113] - 2026-05-11 — Sprint 4 YEKUN + Sprint 5 hazırlıq
+
+### Sprint 4 YEKUN (7/13 live)
+- ✅ TASK-0102 Marka Kompasi (SAGIRD) — PR #103
+- ✅ TASK-0103 KST Yoxlayici (SAGIRD) — PR #106
+- ✅ TASK-0104 Menyu Analitigi (SAGIRD) — PR #111
+- ✅ TASK-0105 Sikayet Analitigi (KALFA) — PR #112
+- ✅ TASK-0106 P&L Simulator refactor (KALFA) — PR #114
+- ✅ TASK-0107 Promosyon ROI v2 (KALFA) — PR #110
+- ✅ TASK-0109 Musteri Persona (KALFA) — PR #113
+- **SAGIRD pillesi:** 3/3 ✅ tam
+- **KALFA pillesi:** 4/6
+- **USTA pillesi:** 0/4 (Sprint 5)
+- **Sarmal hadise:** 0
+
+### Sprint 5 TASK ID yeniden nomreleme
+Kohne Sprint 5 ID-leri (TASK-0108-0114) Sprint 4 ile konflikt edirdi.
+Yeni ID-ler TASK-0114-den baslayir:
+
+| Sira | ID | Alet | Pille |
+|------|----|------|-------|
+| 1 | TASK-0114 | Sezon Planlama | KALFA |
+| 2 | TASK-0115 | Reklam Yazicisi | KALFA |
+| 3 | TASK-0116 | Sosial Medya Plan | USTA |
+| 4 | TASK-0117 | Audit Robotu | USTA |
+| 5 | TASK-0118 | Trend Analitigi | USTA |
+| 6 | TASK-0119 | Lokasyon Secme | USTA |
+
 ## [2026-05-11] — SPRINT 4 TAMAMLANDI: 7/13 alet canli
 
 ### Sprint 4 — 5 yeni alet implement edildi (PR #110 — #114)
