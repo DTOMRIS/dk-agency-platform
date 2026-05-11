@@ -227,7 +227,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     category: 'musteri',
     tier: 'kalfa',
     iconName: 'UserCircle',
-    status: 'planned',
+    status: 'live',
     aiProvider: 'deepseek',
     externalApis: [],
     inputSchema: {

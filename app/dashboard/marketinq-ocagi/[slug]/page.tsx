@@ -11,6 +11,7 @@ import KSTYoxlayiciPage from '@/components/marketinq-ocagi/kst-yoxlayici/KSTYoxl
 import PromoROIPage from '@/components/marketinq-ocagi/promosyon-roi/PromoROIPage';
 import MenyuAnalitiyiPage from '@/components/marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiPage';
 import SikayetAnalitiyiPage from '@/components/marketinq-ocagi/sikayet-analitigi/SikayetAnalitiyiPage';
+import MusteriPersonaPage from '@/components/marketinq-ocagi/musteri-persona/MusteriPersonaPage';
 
 const pageCopy: Record<
   Locale,
@@ -141,6 +142,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'sikayet-analitigi' && tool.status === 'live') {
     return <SikayetAnalitiyiPage />;
+  }
+  if (slug === 'musteri-persona' && tool.status === 'live') {
+    return <MusteriPersonaPage />;
   }
 
   const tierColors = TIER_COLORS[tool.tier];
