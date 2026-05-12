@@ -13,6 +13,7 @@ import MenyuAnalitiyiPage from '@/components/marketinq-ocagi/menyu-analitigi/Men
 import SikayetAnalitiyiPage from '@/components/marketinq-ocagi/sikayet-analitigi/SikayetAnalitiyiPage';
 import MusteriPersonaPage from '@/components/marketinq-ocagi/musteri-persona/MusteriPersonaPage';
 import PnlSimulatorPage from '@/components/marketinq-ocagi/pnl-simulator/PnlSimulatorPage';
+import SezonPlanlamaPage from '@/components/marketinq-ocagi/sezon-planlama/SezonPlanlamaPage';
 
 const pageCopy: Record<
   Locale,
@@ -149,6 +150,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'pnl-simulator' && tool.status === 'live') {
     return <PnlSimulatorPage />;
+  }
+  if (slug === 'sezon-planlama' && tool.status === 'live') {
+    return <SezonPlanlamaPage />;
   }
 
   const tierColors = TIER_COLORS[tool.tier];
