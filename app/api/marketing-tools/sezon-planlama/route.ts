@@ -20,30 +20,30 @@ const InputSchema = z.object({
 });
 
 const CampaignSchema = z.object({
-  month: z.number(),
+  month: z.coerce.number(),
   monthName: z.string(),
   campaigns: z.array(z.object({
     name: z.string(),
-    type: z.enum(['bayram', 'movsum', 'event', 'promo', 'community']),
-    startDay: z.number(),
-    endDay: z.number(),
-    description: z.string(),
-    budget: z.string(),
-    channel: z.string(),
-    kpi: z.string(),
+    type: z.string().default('promo'),
+    startDay: z.coerce.number().default(1),
+    endDay: z.coerce.number().default(30),
+    description: z.string().default(''),
+    budget: z.string().optional().default(''),
+    channel: z.string().optional().default(''),
+    kpi: z.string().optional().default(''),
   })),
 });
 
 const OutputSchema = z.object({
   calendar: z.array(CampaignSchema),
-  totalCampaigns: z.number(),
+  totalCampaigns: z.coerce.number().optional().default(0),
   budgetSummary: z.object({
-    allocated: z.string(),
-    perMonth: z.string(),
-    topCategory: z.string(),
-  }),
-  topRecommendations: z.array(z.string()).min(3).max(5),
-  ahilikQuote: z.string(),
+    allocated: z.string().optional().default(''),
+    perMonth: z.string().optional().default(''),
+    topCategory: z.string().optional().default(''),
+  }).optional().default({ allocated: '', perMonth: '', topCategory: '' }),
+  topRecommendations: z.array(z.string()).default([]),
+  ahilikQuote: z.string().optional().default(''),
 });
 
 // ── AI PROMPT ───────────────────────────────────────────────────────
