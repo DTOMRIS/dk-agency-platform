@@ -246,7 +246,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     category: 'emeliyyat',
     tier: 'kalfa',
     iconName: 'CalendarDays',
-    status: 'planned',
+    status: 'live',
     aiProvider: 'deepseek',
     externalApis: [],
     inputSchema: {
