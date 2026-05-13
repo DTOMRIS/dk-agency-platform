@@ -7,6 +7,8 @@ import { db } from '@/lib/db';
 import { marketingToolRuns } from '@/lib/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
 
+export const maxDuration = 60;
+
 // ── SCHEMAS ─────────────────────────────────────────────────────────
 
 const InputSchema = z.object({
@@ -196,6 +198,7 @@ export async function POST(req: Request) {
           prompt: `DATA:\n${JSON.stringify(calcResult, null, 2)}`,
           maxTokens: 1500,
           temperature: 0.5,
+          timeout: 55000,
         },
         { preferProvider: 'deepseek', toolSlug: 'promosyon-roi', userId: auth.userId, locale: input.locale },
       );

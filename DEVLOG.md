@@ -1,5 +1,14 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-13 - TASK-0120
+
+**Problem:** Sezon Planlama 502 davam edirdi (PR #117 + #118 sonrasi).
+**Diaqnoz:** `/tmp/TASK-0114-DIAGNOSE-RAPORT.md` - non-streaming + proxy timeout + 3000 token output.
+**Fix:** AI router streaming + AbortController timeout + DeepSeek JSON mode. Schema sert geri qaytarildi.
+**Ders:** Schema gevsedilmesi simptom ortmesi idi. Kok sebeb diaqnozu edilmeden eyni problem tekrar ede bilerdi.
+
+---
+
 Sessiya qeydləri. Hər iş sessiyasının nəticəsi burada.
 
 ---

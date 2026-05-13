@@ -1,5 +1,10 @@
 # Changelog - DK Agency Platform
 
+## [Unreleased]
+
+### Fixed
+- **TASK-0120** [#119]: AI router streaming + 55s timeout + JSON mode qoshuldu. Sezon Planlama 502 Bad Gateway helli ucun DeepSeek streaming aktiv edildi. PR #118 schema relax geri qaytarildi. Diger marketing tool route-larina `maxDuration = 60` ve `timeout: 55000` elave edildi (regression-safe).
+
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 

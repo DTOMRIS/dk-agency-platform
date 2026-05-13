@@ -95,3 +95,18 @@ Use script:
   - `CLAUDE-DESIGN.md` has pre-existing encoding drift and should be cleaned separately before relying on it in hooks.
 - Sonraki adim:
   - Continue remaining toolkit i18n tasks one calculator at a time.
+
+## 2026-05-13T21:28:40+04:00 - codex
+- Ne degisti:
+  - TASK-0120: `lib/ai-router.ts` streaming, AbortController timeout, DeepSeek JSON mode, Claude streaming support ve token logging ile yenilendi.
+  - Sezon Planlama `stream: true`, `responseFormat: 'json_object'`, `timeout: 55000`, `maxDuration = 60` ile calisacak sekilde ayarlandi.
+  - Diger marketing tool route-larina `maxDuration = 60` ve explicit `timeout: 55000` eklendi.
+  - Sezon Planlama output schema PR #118 relax oncesi sert formuna geri alindi.
+- Ne degismedi:
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`, `.env.production`, `package.json`.
+  - Locale 404 fix bu task kapsaminda yapilmadi; TASK-0121'e kaldi.
+- Riskler:
+  - AI router 7+ live tool tarafindan kullanildigi icin regression test zorunlu.
+  - Streaming production proxy davranisi Hostinger uzerinde Dogan tarafindan test edilmeli.
+- Sonraki adim:
+  - PR acik kalacak; Dogan Sezon Planlama, Marka Kompasi ve KST regression testlerinden sonra merge karari verecek.

@@ -2,10 +2,12 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
-import { callAIJson } from '@/lib/ai-router';
+import { callAIJson, isAIAbortError } from '@/lib/ai-router';
 import { db } from '@/lib/db';
 import { marketingToolRuns } from '@/lib/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
+
+export const maxDuration = 60;
 
 // ── SCHEMAS ─────────────────────────────────────────────────────────
 
@@ -20,30 +22,30 @@ const InputSchema = z.object({
 });
 
 const CampaignSchema = z.object({
-  month: z.coerce.number(),
+  month: z.number(),
   monthName: z.string(),
   campaigns: z.array(z.object({
     name: z.string(),
-    type: z.string().default('promo'),
-    startDay: z.coerce.number().default(1),
-    endDay: z.coerce.number().default(30),
-    description: z.string().default(''),
-    budget: z.string().optional().default(''),
-    channel: z.string().optional().default(''),
-    kpi: z.string().optional().default(''),
+    type: z.enum(['bayram', 'movsum', 'event', 'promo', 'community']),
+    startDay: z.number(),
+    endDay: z.number(),
+    description: z.string(),
+    budget: z.string(),
+    channel: z.string(),
+    kpi: z.string(),
   })),
 });
 
 const OutputSchema = z.object({
   calendar: z.array(CampaignSchema),
-  totalCampaigns: z.coerce.number().optional().default(0),
+  totalCampaigns: z.number(),
   budgetSummary: z.object({
-    allocated: z.string().optional().default(''),
-    perMonth: z.string().optional().default(''),
-    topCategory: z.string().optional().default(''),
-  }).optional().default({ allocated: '', perMonth: '', topCategory: '' }),
-  topRecommendations: z.array(z.string()).default([]),
-  ahilikQuote: z.string().optional().default(''),
+    allocated: z.string(),
+    perMonth: z.string(),
+    topCategory: z.string(),
+  }),
+  topRecommendations: z.array(z.string()).min(3).max(5),
+  ahilikQuote: z.string(),
 });
 
 // ── AI PROMPT ───────────────────────────────────────────────────────
@@ -117,13 +119,24 @@ export async function POST(req: Request) {
 
     try {
       aiResult = await callAIJson<unknown>(
-        { system: SYSTEM_PROMPT, prompt: buildUserPrompt(input), maxTokens: 3000, temperature: 0.7 },
+        {
+          system: SYSTEM_PROMPT,
+          prompt: buildUserPrompt(input),
+          maxTokens: 3000,
+          temperature: 0.7,
+          stream: true,
+          timeout: 55000,
+          responseFormat: 'json_object',
+        },
         { preferProvider: 'deepseek', toolSlug: 'sezon-planlama', userId: auth.userId, locale: input.locale },
       );
     } catch (aiErr) {
       await db.update(marketingToolRuns)
         .set({ status: 'error', errorMessage: String(aiErr).slice(0, 500), completedAt: new Date() })
         .where(eq(marketingToolRuns.id, run.id));
+      if (isAIAbortError(aiErr)) {
+        return NextResponse.json({ error: 'ai-timeout' }, { status: 504 });
+      }
       return NextResponse.json({ error: 'ai-failed' }, { status: 502 });
     }
 
