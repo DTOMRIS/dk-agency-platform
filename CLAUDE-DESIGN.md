@@ -257,10 +257,31 @@ Azərbaycan əlifbası simvolları:
 - I ı — LATIN CAPITAL LETTER I / SMALL LETTER DOTLESS I
 
 **Mojibake nümunələri (ƏGƏR GÖRÜRSƏNSƏ DÜZƏLt):**
-- BaÅŸla → Başla
-- MÃ¼hendis → Mühendis
-- dÉ™yiÅŸ → dəyiş
-- Ã¼ → ü
-- Ã¶ → ö
+- Mojibake "Basla" variantı → Başla
+- Mojibake "Muhendis" variantı → Mühendis
+- Mojibake "deyis" variantı → dəyiş
+- Mojibake "u-diaeresis" variantı → ü
+- Mojibake "o-diaeresis" variantı → ö
 
 Bütün fayllar UTF-8 olmalıdır. BOM olmadan.
+
+## 14. AI ROUTER API (TASK-0120)
+
+`lib/ai-router.ts` Marketinq Ocagi tool-lari ucun ortaq AI gateway-dir.
+
+```typescript
+callAI({
+  prompt: string,
+  preferProvider: 'deepseek' | 'claude',
+  maxTokens: number,
+  stream?: boolean, // default false
+  timeout?: number, // default 55000ms
+  responseFormat?: 'json_object' | 'text', // default 'text'
+})
+```
+
+Qaydalar:
+- Sezon Planlama kimi uzun cavablar `stream: true`, `timeout: 55000`, `responseFormat: 'json_object'` ile cagrilmalidir.
+- Diger live tool-lar regression riskini azaltmaq ucun default non-streaming davranisi saxlaya biler.
+- Timeout `AbortError` kimi yuxariya qalxir; route handler bunu 504 qaytarmalidir.
+- DeepSeek JSON mode ucun hem `response_format`, hem de prompt/system daxilinde JSON talimati lazimdir.

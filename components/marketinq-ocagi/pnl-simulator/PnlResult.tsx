@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { TrendingUp, TrendingDown, Minus, AlertTriangle, Lightbulb, Shield } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 
@@ -158,7 +159,7 @@ export default function PnlResult({ result, locale, onRedo }: Props) {
 
       <div className="flex gap-3">
         <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>
-        <a href="/dashboard/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90">{t.next}</a>
+        <Link href="/dashboard/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90">{t.next}</Link>
       </div>
     </div>
   );

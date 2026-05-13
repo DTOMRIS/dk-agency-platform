@@ -7,6 +7,8 @@ import { db } from '@/lib/db';
 import { marketingToolRuns } from '@/lib/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
 
+export const maxDuration = 60;
+
 // ── SCHEMAS ─────────────────────────────────────────────────────────
 
 const InputSchema = z.object({
@@ -137,7 +139,7 @@ export async function POST(req: Request) {
 
     try {
       const aiResult = await callAIJson<unknown>(
-        { system: SYSTEM_PROMPT, prompt: `P&L NETICELERI:\n${JSON.stringify(pnlResult, null, 2)}`, maxTokens: 1500, temperature: 0.5 },
+        { system: SYSTEM_PROMPT, prompt: `P&L NETICELERI:\n${JSON.stringify(pnlResult, null, 2)}`, maxTokens: 1500, temperature: 0.5, timeout: 55000 },
         { preferProvider: 'deepseek', toolSlug: 'pnl-simulator', userId: auth.userId, locale: input.locale },
       );
       const parsed = AIInsightSchema.safeParse(aiResult.data);

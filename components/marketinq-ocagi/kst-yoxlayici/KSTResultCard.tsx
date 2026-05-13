@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type { Locale } from '@/i18n/config';
 
 interface KSTScores {
@@ -195,12 +196,12 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
         >
           {copy.redo}
         </button>
-        <a
+        <Link
           href="/dashboard/marketinq-ocagi"
           className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90"
         >
           {copy.next}
-        </a>
+        </Link>
       </div>
     </div>
   );

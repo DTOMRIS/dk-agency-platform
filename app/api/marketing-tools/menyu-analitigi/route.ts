@@ -2,10 +2,12 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
-import { callAIJson } from '@/lib/ai-router';
+import { callAIJson, isAIAbortError } from '@/lib/ai-router';
 import { db } from '@/lib/db';
 import { marketingToolRuns } from '@/lib/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
+
+export const maxDuration = 60;
 
 // ── SCHEMAS ─────────────────────────────────────────────────────────
 
@@ -135,13 +137,16 @@ export async function POST(req: Request) {
 
     try {
       aiResult = await callAIJson<unknown>(
-        { system: SYSTEM_PROMPT, prompt: buildUserPrompt(input), maxTokens: 2500, temperature: 0.5 },
+        { system: SYSTEM_PROMPT, prompt: buildUserPrompt(input), maxTokens: 2500, temperature: 0.5, timeout: 55000 },
         { preferProvider: 'deepseek', toolSlug: 'menyu-analitigi', userId: auth.userId, locale: input.locale },
       );
     } catch (aiErr) {
       await db.update(marketingToolRuns)
         .set({ status: 'error', errorMessage: String(aiErr).slice(0, 500), completedAt: new Date() })
         .where(eq(marketingToolRuns.id, run.id));
+      if (isAIAbortError(aiErr)) {
+        return NextResponse.json({ error: 'ai-timeout' }, { status: 504 });
+      }
       return NextResponse.json({ error: 'ai-failed' }, { status: 502 });
     }
 
