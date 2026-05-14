@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { DateInputAZ } from '@/components/marketing-tools/DateInputAZ';
 
 interface Complaint { text: string; source: string; date: string }
 
@@ -72,12 +73,6 @@ const EMPTY: Complaint = { text: '', source: '', date: '' };
 
 interface Props { locale: Locale; onResult: (data: unknown) => void; onError: (msg: string) => void }
 
-function formatDateAZ(iso: string) {
-  if (!iso) return '';
-  const [year, month, day] = iso.split('-');
-  return day && month && year ? `${day}.${month}.${year}` : iso;
-}
-
 export default function SikayetForm({ locale, onResult, onError }: Props) {
   const t = copy[locale];
   const [restaurantName, setRestaurantName] = useState('');
@@ -138,9 +133,11 @@ export default function SikayetForm({ locale, onResult, onError }: Props) {
                 {SOURCES.map((s) => <option key={s} value={s}>{t.sources[s]}</option>)}
               </select>
               <div className="flex flex-col gap-1 md:col-span-3">
-                <input type="date" value={c.date} onChange={(e) => update(idx, 'date', e.target.value)} disabled={loading}
-                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[var(--dk-gold)] focus:outline-none" />
-                {c.date && <span className="block text-xs text-slate-500">Seçildi: {formatDateAZ(c.date)}</span>}
+                <DateInputAZ
+                  value={c.date}
+                  onChange={(val) => update(idx, 'date', val)}
+                  label="Tarix"
+                />
               </div>
               {complaints.length > 3 && (
                 <button type="button" onClick={() => remove(idx)} disabled={loading}
