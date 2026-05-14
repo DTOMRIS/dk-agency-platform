@@ -49,6 +49,12 @@ const EMPTY: Complaint = { text: '', source: '', date: '' };
 
 interface Props { locale: Locale; onResult: (data: unknown) => void; onError: (msg: string) => void }
 
+function formatDateAZ(iso: string) {
+  if (!iso) return '';
+  const [year, month, day] = iso.split('-');
+  return day && month && year ? `${day}.${month}.${year}` : iso;
+}
+
 export default function SikayetForm({ locale, onResult, onError }: Props) {
   const t = copy[locale];
   const [restaurantName, setRestaurantName] = useState('');
@@ -110,8 +116,11 @@ export default function SikayetForm({ locale, onResult, onError }: Props) {
                 <option value="" disabled>{t.source}</option>
                 {SOURCES.map((s) => <option key={s} value={s}>{t.sources[s]}</option>)}
               </select>
-              <input type="date" value={c.date} onChange={(e) => update(idx, 'date', e.target.value)} disabled={loading}
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[var(--dk-gold)] focus:outline-none" />
+              <div className="flex min-w-[150px] flex-col gap-1">
+                <input type="date" value={c.date} onChange={(e) => update(idx, 'date', e.target.value)} disabled={loading}
+                  className="rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[var(--dk-gold)] focus:outline-none" />
+                {c.date && <span className="text-xs text-slate-500">{formatDateAZ(c.date)}</span>}
+              </div>
             </div>
             {complaints.length > 3 && (
               <button type="button" onClick={() => remove(idx)} disabled={loading}

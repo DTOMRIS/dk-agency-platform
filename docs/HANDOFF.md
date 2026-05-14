@@ -146,3 +146,18 @@ Use script:
   - KAHI/Dogan upload fayllari bu workspace-de yox idi; brain task prompt-daki excerpt-lere esaslandi.
 - Sonraki adim:
   - Dogan PR-i test edir. Sonra TASK-0125 frontend premium render ve TASK-0124 diger marketing tool audit.
+
+## 2026-05-14T20:30:00+04:00 - codex
+- Ne degisti:
+  - TASK-0124: Promosyon ROI AZ terminology, tooltips, Stok Tamponu input ve Working Capital result card elave edildi.
+  - Sikayet date input ISO qalir, yaninda DD.MM.YYYY display gosterilir.
+  - Menyu Analitigi input grid responsive oldu, placeholder kesilmesi azaldildi, BCG izahi yenilendi.
+  - Sezon Planlama optional premium fields quick render edildi.
+- Ne degismedi:
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`, `.env.production`, `lib/ai-router.ts`, `lib/marketing-tools/_brain/*`.
+  - Sezon API route ve brain schema toxunulmadi.
+- Riskler:
+  - Promosyon ROI API input-a optional `stokTampoon` qebul edir; kohne request-ler default 0 ile islemelidir.
+  - Menyu UI category labels deyisdi, amma backend enum value-lari saxlanildi.
+- Sonraki adim:
+  - Hostinger deploydan sonra Dogan 4 tool-u smoke test edir. TASK-0125 P&L Simulator ayrica basladilacaq.

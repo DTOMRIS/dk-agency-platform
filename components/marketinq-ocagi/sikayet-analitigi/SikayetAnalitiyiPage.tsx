@@ -3,25 +3,49 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, AlertCircle } from 'lucide-react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import SikayetForm from './SikayetForm';
 import SikayetResult from './SikayetResult';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
-  az: { title: 'Şikayət Analitiği', subtitle: 'Müştəri şikayətlərini AI ilə analiz et', backToList: 'Bütün alətlər',
-    whyTitle: 'Niyə bu vacibdir?', why: 'Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır, kök səbəbi göstərir, həll planı təklif edir.',
-    tier: 'KALFA', loading: 'Yüklənir...' },
-  en: { title: 'Complaint Analytics', subtitle: 'AI-powered complaint analysis', backToList: 'All tools',
-    whyTitle: 'Why is this important?', why: 'For every complaint, 26 unhappy customers stay silent. AI finds patterns, root causes, and action plans.',
-    tier: 'PRO', loading: 'Loading...' },
-  tr: { title: 'Şikayet Analitiği', subtitle: 'AI ile müşteri şikayet analizi', backToList: 'Tüm araçlar',
-    whyTitle: 'Bu neden önemli?', why: 'Her şikayetin arkasında 26 sessiz mutsuz müşteri var. AI kalıpları bulur, kök nedeni gösterir.',
-    tier: 'KALFA', loading: 'Yükleniyor...' },
-  ru: { title: 'Анализ Жалоб', subtitle: 'AI-анализ жалоб клиентов', backToList: 'Все инструменты',
-    whyTitle: 'Почему это важно?', why: 'За каждой жалобой стоят 26 молчаливых недовольных клиентов. AI находит паттерны и коренные причины.',
-    tier: 'ПОДМАСТЕРЬЕ', loading: 'Загрузка...' },
+  az: {
+    title: 'Sikayet Analitigi',
+    subtitle: 'Her sikayet arxasinda 26 sessiz musteri var. Kok sebebi tap.',
+    backToList: 'Butun aletler',
+    whyTitle: 'Niye bu vacibdir?',
+    why: 'Her sikayet arxasinda 26 sessiz narazi musteri var. AI pattern-leri tapir, kok sebebi gosterir ve hell plani teklif edir.',
+    tier: 'KALFA',
+    loading: 'Yuklenir...',
+  },
+  en: {
+    title: 'Complaint Analytics',
+    subtitle: 'Behind every complaint are 26 silent customers. Find the root cause.',
+    backToList: 'All tools',
+    whyTitle: 'Why is this important?',
+    why: 'For every complaint, 26 unhappy customers stay silent. AI finds patterns, root causes, and action plans.',
+    tier: 'PRO',
+    loading: 'Loading...',
+  },
+  tr: {
+    title: 'Sikayet Analitigi',
+    subtitle: 'Her sikayetin arkasinda 26 sessiz musteri var. Kok nedeni bul.',
+    backToList: 'Tum araclar',
+    whyTitle: 'Bu neden onemli?',
+    why: 'Her sikayetin arkasinda 26 sessiz mutsuz musteri var. AI kaliplari bulur, kok nedeni gosterir.',
+    tier: 'KALFA',
+    loading: 'Yukleniyor...',
+  },
+  ru: {
+    title: 'Complaint Analytics',
+    subtitle: 'Behind every complaint are 26 silent customers. Find the root cause.',
+    backToList: 'All tools',
+    whyTitle: 'Why is this important?',
+    why: 'For every complaint, 26 unhappy customers stay silent. AI finds patterns, root causes, and action plans.',
+    tier: 'PRO',
+    loading: 'Loading...',
+  },
 };
 
 type ViewMode = 'loading' | 'form' | 'result';

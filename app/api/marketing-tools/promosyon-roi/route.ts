@@ -26,6 +26,7 @@ const InputSchema = z.object({
     grossMarginPercent: z.number().min(0).max(100),
     promoCost: z.number().min(0),
     marketingSpend: z.number().min(0),
+    stokTampoon: z.number().min(0).default(0),
   }),
   fixedCosts: z.object({
     rentPercent: z.number().min(0).max(50).default(15),
@@ -102,6 +103,8 @@ function calculateAll(input: z.infer<typeof InputSchema>) {
 
   // Incremental
   const totalPromoInvestment = promo.promoCost + promo.marketingSpend;
+  const workingCapitalNeeded = promo.promoCost + promo.marketingSpend + promo.stokTampoon;
+  const workingCapitalDays = Math.ceil(input.promoDurationDays);
   const incrementalSales = promo.totalSales - baseline.totalSales;
   const incrementalGrossProfit = promoPnl.grossProfit - baselinePnl.grossProfit;
   const incrementalSOI = promoPnl.SOI - baselinePnl.SOI;
@@ -130,7 +133,16 @@ function calculateAll(input: z.infer<typeof InputSchema>) {
     breakEvenWeeks: incrementalSOI > 0 ? r(totalPromoInvestment / incrementalSOI) : 0,
   };
 
-  return { weeklyComparison, pnl: { baseline: baselinePnl, promo: promoPnl }, incremental, monthlyProjection };
+  return {
+    weeklyComparison,
+    pnl: { baseline: baselinePnl, promo: promoPnl },
+    incremental,
+    monthlyProjection,
+    workingCapital: {
+      workingCapitalNeeded: r(workingCapitalNeeded),
+      workingCapitalDays,
+    },
+  };
 }
 
 // ── AI PROMPT ───────────────────────────────────────────────────────

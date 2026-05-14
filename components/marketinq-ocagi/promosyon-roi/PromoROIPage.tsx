@@ -3,25 +3,49 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, AlertCircle } from 'lucide-react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import PromoROIForm from './PromoROIForm';
 import PromoROIResult from './PromoROIResult';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
-  az: { title: 'Promosyon ROI', subtitle: 'Baz Həftə vs Promo Həftə — real ROI hesabla', backToList: 'Bütün alətlər',
-    whyTitle: 'Niyə bu vacibdir?', why: 'Endirimsiz də gələcək müştərilərin əlavə endirimi sənin marjını yeyir. Bu alət TC, Gross Margin və SOI ilə real incrementil satışı ölçür.',
-    tier: 'KALFA', loading: 'Yüklənir...' },
-  en: { title: 'Promo ROI', subtitle: 'Base Week vs Promo Week — real ROI calculation', backToList: 'All tools',
-    whyTitle: 'Why is this important?', why: 'Discounts may bring existing customers at lower margin. This tool measures incremental sales with TC, Gross Margin and SOI.',
-    tier: 'PRO', loading: 'Loading...' },
-  tr: { title: 'Promosyon ROI', subtitle: 'Baz Hafta vs Promo Hafta — gerçek ROI', backToList: 'Tüm araçlar',
-    whyTitle: 'Bu neden önemli?', why: 'İndirimler mevcut müşterilere düşük marjla hizmet verebilir. Bu araç TC, Brüt Marj ve SOI ile artımlı satışı ölçer.',
-    tier: 'KALFA', loading: 'Yükleniyor...' },
-  ru: { title: 'ROI Промоакций', subtitle: 'Базовая vs Промо неделя — реальный ROI', backToList: 'Все инструменты',
-    whyTitle: 'Почему это важно?', why: 'Скидки могут привлечь существующих клиентов с меньшей маржой. Этот инструмент измеряет прирост с TC, Маржой и SOI.',
-    tier: 'ПОДМАСТЕРЬЕ', loading: 'Загрузка...' },
+  az: {
+    title: 'Promosyon ROI',
+    subtitle: 'Baz Hefte vs Promo Hefte - real ROI + Isletme Kapital hesabla',
+    backToList: 'Butun aletler',
+    whyTitle: 'Niye bu vacibdir?',
+    why: 'Endirim satisi artira biler, amma brut menfeet ve nagd axin eyni anda yoxlanmasa kampaniya pul qazandirmaya biler. Bu alet TC, brut menfeet, SOI ve isletme kapital telebini birlikde olcur.',
+    tier: 'KALFA',
+    loading: 'Yuklenir...',
+  },
+  en: {
+    title: 'Promo ROI',
+    subtitle: 'Base Week vs Promo Week - real ROI + working capital',
+    backToList: 'All tools',
+    whyTitle: 'Why is this important?',
+    why: 'Discounts may lift sales while hurting margin and cash flow. This tool checks TC, gross margin, SOI and working capital together.',
+    tier: 'PRO',
+    loading: 'Loading...',
+  },
+  tr: {
+    title: 'Promosyon ROI',
+    subtitle: 'Baz Hafta vs Promo Hafta - gercek ROI + isletme kapitali',
+    backToList: 'Tum araclar',
+    whyTitle: 'Bu neden onemli?',
+    why: 'Indirim satisi artirabilir, ama brut marj ve nakit akisi birlikte okunmazsa kampanya para kazandirmayabilir.',
+    tier: 'KALFA',
+    loading: 'Yukleniyor...',
+  },
+  ru: {
+    title: 'Promo ROI',
+    subtitle: 'Base Week vs Promo Week - real ROI + working capital',
+    backToList: 'All tools',
+    whyTitle: 'Why is this important?',
+    why: 'Discounts may lift sales while hurting margin and cash flow. This tool checks TC, gross margin, SOI and working capital together.',
+    tier: 'PRO',
+    loading: 'Loading...',
+  },
 };
 
 type ViewMode = 'loading' | 'form' | 'result';

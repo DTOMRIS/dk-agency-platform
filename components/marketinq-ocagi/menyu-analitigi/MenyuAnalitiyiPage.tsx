@@ -3,25 +3,49 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, AlertCircle } from 'lucide-react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import MenyuAnalitiyiForm from './MenyuAnalitiyiForm';
 import MenyuResultPanel from './MenyuResultPanel';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
-  az: { title: 'Menyu Analitiği', subtitle: 'Menyu pozisiyalarının rentabelliyini analiz edin', backToList: 'Bütün alətlər',
-    whyTitle: 'Niyə bu vacibdir?', why: 'Menyunun 20%-i satışın 80%-ni yaradır. Hansı yemək ulduz, hansı yük olduğunu bilmək gəliri artırır. Bu alət Menu Engineering Matrix metodologiyası ilə hər yeməyi 4 kategoriyaya bölür.',
-    tier: 'ŞAGIRD', loading: 'Yüklənir...' },
-  en: { title: 'Menu Analytics', subtitle: 'Analyze menu item profitability', backToList: 'All tools',
-    whyTitle: 'Why is this important?', why: '20% of your menu generates 80% of sales. Knowing which items are stars vs dogs directly increases revenue.',
-    tier: 'STARTER', loading: 'Loading...' },
-  tr: { title: 'Menü Analitiği', subtitle: 'Menü kalemlerinin karlılığını analiz edin', backToList: 'Tüm araçlar',
-    whyTitle: 'Bu neden önemli?', why: 'Menünüzün %20\'si satışın %80\'ini yaratır. Hangi yemek yıldız, hangisi yük — bilmek geliri artırır.',
-    tier: 'ÇIRAK', loading: 'Yükleniyor...' },
-  ru: { title: 'Анализ Меню', subtitle: 'Анализ рентабельности позиций меню', backToList: 'Все инструменты',
-    whyTitle: 'Почему это важно?', why: '20% меню создаёт 80% продаж. Знание звёзд и балласта напрямую увеличивает выручку.',
-    tier: 'УЧЕНИК', loading: 'Загрузка...' },
+  az: {
+    title: 'Menyu Analitigi',
+    subtitle: 'BCG Matrisi ile menyu performansini analiz edin (Cornell metodu)',
+    backToList: 'Butun aletler',
+    whyTitle: 'Niye bu vacibdir?',
+    why: 'Menyunun 20%-i satisin 80%-ni yaradir (Pareto qaydasi). Bu alet Boston BCG matrisi ile her yemeyi 4 kateqoriyaya bolur: STAR - yuksek satis + yuksek marja, PLOWHORSE - yuksek satis + asagi marja, PUZZLE - asagi satis + yuksek marja, DOG - asagi satis + asagi marja.',
+    tier: 'SAGIRD',
+    loading: 'Yuklenir...',
+  },
+  en: {
+    title: 'Menu Analytics',
+    subtitle: 'Analyze menu performance with BCG Matrix (Cornell method)',
+    backToList: 'All tools',
+    whyTitle: 'Why is this important?',
+    why: '20% of the menu creates 80% of sales. This tool separates items into STAR, PLOWHORSE, PUZZLE and DOG categories.',
+    tier: 'STARTER',
+    loading: 'Loading...',
+  },
+  tr: {
+    title: 'Menu Analitigi',
+    subtitle: 'BCG Matrisi ile menu performansini analiz edin',
+    backToList: 'Tum araclar',
+    whyTitle: 'Bu neden onemli?',
+    why: 'Menunun %20si satisin %80ini yaratir. Bu arac urunleri STAR, PLOWHORSE, PUZZLE ve DOG kategorilerine ayirir.',
+    tier: 'CIRAK',
+    loading: 'Yukleniyor...',
+  },
+  ru: {
+    title: 'Menu Analytics',
+    subtitle: 'Analyze menu performance with BCG Matrix',
+    backToList: 'All tools',
+    whyTitle: 'Why is this important?',
+    why: '20% of the menu creates 80% of sales. This tool separates items into STAR, PLOWHORSE, PUZZLE and DOG categories.',
+    tier: 'STARTER',
+    loading: 'Loading...',
+  },
 };
 
 type ViewMode = 'loading' | 'form' | 'result';

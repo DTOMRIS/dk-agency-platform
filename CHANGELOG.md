@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- **TASK-0124** [#123]: Quick UX wins for investor pitch. Promosyon ROI AZ terminology, Working Capital (Stok Tamponu) input + output card. Sikayet DD.MM.YYYY date display. Menyu placeholder/grid fix + BCG matrix description. Sezon Planlama new schema fields render (executiveSummary, methodology, doganRule, aeoRecommendations, risksWatchout). Brand tone polish on 3 tool titles.
 - **TASK-0123** [#122]: Marketing Brain Foundation. `lib/marketing-tools/_brain/` yaradildi - Dogan Dersleri v2.0, KAHI few-shot examples, 2026 trendleri (GEO/AEO, AI Decisioning, RCS), 7 pilleli marketing modeli, BCG matrisi, AZ 2026 teqvimi (Meherrem boslugu daxil), Baki region profilleri. Sezon Planlama schema genislendi: executiveSummary, methodology, doganRule, aeoRecommendations, risksWatchout.
 
 ### Debug
