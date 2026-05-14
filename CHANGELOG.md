@@ -5,6 +5,7 @@
 ### Debug
 - **TASK-0122** [#120]: Sezon Planlama raw DeepSeek output capture + Zod error detail. Zod validation fail statusu 502-den 422-ye kecirildi. Schema align Faza 2-de gelecek.
 ### Fixed
+- **TASK-0122** [#121]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.
 - **TASK-0120** [#119]: AI router streaming + 55s timeout + JSON mode qoshuldu. Sezon Planlama 502 Bad Gateway helli ucun DeepSeek streaming aktiv edildi. PR #118 schema relax geri qaytarildi. Diger marketing tool route-larina `maxDuration = 60` ve `timeout: 55000` elave edildi (regression-safe).
 
 Bütün dəyişikliklər bu faylda qeyd olunur.
@@ -206,7 +207,6 @@ Yeni ID-ler TASK-0114-den baslayir:
 ## [Unreleased]
 
 ### Debug
-- **TASK-0122** [PR pending]: Sezon Planlama raw DeepSeek output capture + Zod error detail. Zod validation fail statusu 502-den 422-ye kecirildi. Schema align Faza 2-de gelecek.
 ### Added
 - Russian (`ru`) locale infrastructure, DeepSeek-backed `scripts/translate-ru.mjs`, generated `messages/ru.json`, and a `/ru` Playwright smoke test.
 

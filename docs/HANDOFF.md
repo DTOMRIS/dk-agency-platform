@@ -121,3 +121,14 @@ Use script:
   - Debug output production response-da gorunecek; bu Faza 1 ucun qesden edilir ve qisa omurludur.
 - Sonraki adim:
   - Dogan submit edib Response body ve Hostinger `[SEZON-DEBUG] raw output` logunu gonderecek; sonra Faza 2 schema align.
+## 2026-05-14T09:42:00+04:00 - codex
+- Ne degisti:
+  - TASK-0122 Faza 2: Sezon Planlama prompt-u Zod schema ile eyni English JSON keys qaytarmağa mecbur edildi.
+  - Inline strict JSON structure: calendar, totalCampaigns, budgetSummary, topRecommendations, ahilikQuote.
+- Ne degismedi:
+  - Schema deyismedi; debug log-lar saxlanildi.
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`, `lib/ai-router.ts`.
+- Riskler:
+  - Debug log-lar prod-da qalir; ugurlu testden sonra TASK-0123 ile temizlenmelidir.
+- Sonraki adim:
+  - Dogan deploydan sonra Sezon Planlama 2-3 defe submit test edir; ugurlu olarsa TASK-0123 debug cleanup, sonra TASK-0124 diger tool key audit.

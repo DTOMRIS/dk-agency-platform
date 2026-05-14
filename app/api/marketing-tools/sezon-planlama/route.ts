@@ -80,6 +80,63 @@ MUHUM:
 
 Cavabi JSON formatinda ver.`;
 
+const STRICT_JSON_SCHEMA_INSTRUCTION = `
+===================================================
+JSON STRUCTURE - CRITICAL, NO EXCEPTIONS
+===================================================
+
+You MUST return a JSON object with EXACTLY these top-level keys in English:
+
+{
+  "calendar": [
+    {
+      "month": 6,
+      "monthName": "Iyun",
+      "campaigns": [
+        {
+          "name": "Kampaniya adi AZ dilinde",
+          "type": "bayram",
+          "startDay": 1,
+          "endDay": 15,
+          "description": "Tesvir AZ dilinde",
+          "budget": "200 AZN",
+          "channel": "Instagram, Wolt, yerinde",
+          "kpi": "satis artimi 10%, TC artimi 5%"
+        }
+      ]
+    }
+  ],
+  "totalCampaigns": 12,
+  "budgetSummary": {
+    "allocated": "1500 AZN",
+    "perMonth": "Her ay texminen 500 AZN",
+    "topCategory": "promo"
+  },
+  "topRecommendations": [
+    "Tovsiye 1 AZ dilinde",
+    "Tovsiye 2 AZ dilinde",
+    "Tovsiye 3 AZ dilinde"
+  ],
+  "ahilikQuote": "Ahilik hikmeti AZ dilinde"
+}
+
+CRITICAL RULES:
+1. Top-level keys MUST be exactly: calendar, totalCampaigns, budgetSummary, topRecommendations, ahilikQuote.
+2. Do NOT add extra top-level keys like restoran, konsept, seher, budce, tovsiyeler, ahilik_hikmeti.
+3. Do NOT use Azerbaijani or snake_case keys like kampaniya_takvimi, kampaniyalar, umumi_budce_xulasesi.
+4. "calendar" MUST be an array, NOT an object.
+5. Each calendar entry MUST have "month" as a number, "monthName" as a string, and "campaigns" as an array.
+6. Campaign keys MUST be exactly: name, type, startDay, endDay, description, budget, channel, kpi.
+7. Campaign "type" MUST be one of: bayram, movsum, event, promo, community.
+8. "startDay" and "endDay" MUST be numbers, NOT dates and NOT strings.
+9. "channel" MUST be a string, NOT an array.
+10. "budgetSummary" keys MUST be exactly: allocated, perMonth, topCategory.
+11. "totalCampaigns" MUST be a number, NOT a string.
+12. "topRecommendations" MUST contain 3 to 5 strings.
+13. Content values should be in Azerbaijani. Only JSON key names are English.
+14. Return ONLY the JSON object. No markdown, no explanation.
+`;
+
 function buildUserPrompt(input: z.infer<typeof InputSchema>): string {
   const monthNames = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'];
   const selected = input.targetMonths.map((m) => monthNames[m - 1]).join(', ');
@@ -120,7 +177,7 @@ export async function POST(req: Request) {
     try {
       aiResult = await callAIJson<unknown>(
         {
-          system: SYSTEM_PROMPT,
+          system: `${SYSTEM_PROMPT}\n${STRICT_JSON_SCHEMA_INSTRUCTION}`,
           prompt: buildUserPrompt(input),
           maxTokens: 3000,
           temperature: 0.7,
