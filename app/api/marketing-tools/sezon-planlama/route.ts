@@ -140,12 +140,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'ai-failed' }, { status: 502 });
     }
 
-    const parseResult = OutputSchema.safeParse(aiResult.data);
+    const rawOutput = aiResult.data;
+    console.error('[SEZON-DEBUG] raw output:', JSON.stringify(rawOutput, null, 2));
+    console.error('[SEZON-DEBUG] output keys:', Object.keys((rawOutput ?? {}) as Record<string, unknown>));
+
+    const parseResult = OutputSchema.safeParse(rawOutput);
     if (!parseResult.success) {
+      const debug = parseResult.error.format();
+      console.error('[SEZON-DEBUG] zod errors:', JSON.stringify(debug, null, 2));
       await db.update(marketingToolRuns)
         .set({ status: 'error', errorMessage: `Output validation: ${parseResult.error.message.slice(0, 400)}`, completedAt: new Date() })
         .where(eq(marketingToolRuns.id, run.id));
-      return NextResponse.json({ error: 'ai-output-invalid' }, { status: 502 });
+      return NextResponse.json({ error: 'ai-output-invalid', debug }, { status: 422 });
     }
 
     await db.update(marketingToolRuns)

@@ -110,3 +110,14 @@ Use script:
   - Streaming production proxy davranisi Hostinger uzerinde Dogan tarafindan test edilmeli.
 - Sonraki adim:
   - PR acik kalacak; Dogan Sezon Planlama, Marka Kompasi ve KST regression testlerinden sonra merge karari verecek.
+## 2026-05-14T07:15:00+04:00 - codex
+- Ne degisti:
+  - TASK-0122 Faza 1: Sezon Planlama route-u raw DeepSeek output ve Zod error detail loglayacaq.
+  - Zod validation fail response-u 502 yerine 422 + `debug` body qaytaracaq.
+- Ne degismedi:
+  - Schema/prompt align hele edilmedi; Faza 2 Dogan raw output verdikden sonra baslayacaq.
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`, `.env.production`, `lib/ai-router.ts`.
+- Riskler:
+  - Debug output production response-da gorunecek; bu Faza 1 ucun qesden edilir ve qisa omurludur.
+- Sonraki adim:
+  - Dogan submit edib Response body ve Hostinger `[SEZON-DEBUG] raw output` logunu gonderecek; sonra Faza 2 schema align.
