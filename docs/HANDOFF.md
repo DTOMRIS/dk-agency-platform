@@ -132,3 +132,17 @@ Use script:
   - Debug log-lar prod-da qalir; ugurlu testden sonra TASK-0123 ile temizlenmelidir.
 - Sonraki adim:
   - Dogan deploydan sonra Sezon Planlama 2-3 defe submit test edir; ugurlu olarsa TASK-0123 debug cleanup, sonra TASK-0124 diger tool key audit.
+
+## 2026-05-14T10:40:00+04:00 - codex
+- Ne degisti:
+  - TASK-0123: `lib/marketing-tools/_brain/` modulu yaradildi.
+  - Sezon Planlama brain context ile isleyir ve response schema executiveSummary, methodology, doganRule, aeoRecommendations, risksWatchout sahleri ile genislendi.
+  - Legacy quick-view sahleri saxlanildi ki, movcud frontend TASK-0125-e qeder qirilmasin.
+- Ne degismedi:
+  - Frontend render deyismedi; TASK-0125-e qaldi.
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`, `.env.production`, `lib/ai-router.ts`.
+- Riskler:
+  - Brain context output-u boyudur; production testde 55s timeout izlensin.
+  - KAHI/Dogan upload fayllari bu workspace-de yox idi; brain task prompt-daki excerpt-lere esaslandi.
+- Sonraki adim:
+  - Dogan PR-i test edir. Sonra TASK-0125 frontend premium render ve TASK-0124 diger marketing tool audit.
