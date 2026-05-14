@@ -161,3 +161,17 @@ Use script:
   - Menyu UI category labels deyisdi, amma backend enum value-lari saxlanildi.
 - Sonraki adim:
   - Hostinger deploydan sonra Dogan 4 tool-u smoke test edir. TASK-0125 P&L Simulator ayrica basladilacaq.
+
+## 2026-05-14T21:35:00+04:00 - codex
+- Ne degisti:
+  - TASK-0125: 7 marketing tool-da "Niye bu vacibdir?" info box kontrasti blue info card ile artirildi.
+  - Sikayet Analitigi duplicate sari warning bloku silindi.
+  - Sikayet complaint row grid-i genislendi; Menbe select backend-compatible option labels ile oxunaqli oldu.
+  - Sikayet date secilende DD.MM.YYYY display label gosterilir.
+- Ne degismedi:
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`, `.env.production`, `lib/ai-router.ts`, `lib/marketing-tools/_brain/*`.
+  - API route-lar ve backend schema deyismedi.
+- Riskler:
+  - Native date input-un placeholder-i browser locale-den asili qala biler; secimden sonra display label bunu neytrallasdirir.
+- Sonraki adim:
+  - Hostinger deploydan sonra Sikayet, Menyu, Promosyon ROI ve qalan marketinq aletlerinde info box oxunurlugunu smoke test et.

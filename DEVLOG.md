@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-14 - TASK-0125 Readability Fix
+
+**Niye:** Sikayet Analitigi screenshot-da info box metni oxunmurdu, eyni mesaj ikinci sari blokda tekrar olunurdu, Menbe/date sutunlari dar gorunurdu. Menyu Analitigi ve diger marketing tools info box pattern-i de eyni kontrast problemini dasiyirdi.
+
+**Ne deyisdi:** 7 marketing tool-da "Niye bu vacibdir?" info box blue contrast card-a kecdi. Sikayet duplicate warning silindi, Menbe select genislendi, backend-compatible source value-lari saxlanildi, date secilende DD.MM.YYYY label gosterilir.
+
+**Ders:** Screenshot-da gorunen oxunurluq problemi production-critical UX bug-dur; content dogru olsa da kontrast ve grid onu istifade olunmaz ede biler.
+
+---
+
 ## 2026-05-14 - TASK-0124 Quick UX Wins (Senbe pitch hazirligi)
 
 **Niye:** 16 May yatirimci pitch ucun 14 May screenshot-larinda gorunen UX surtunmeleri temizlendi: Gross Margin AZ istifadecisi ucun aydin deyildi, Working Capital yox idi, date format browser default idi, Menyu input placeholder-leri kesilirdi.

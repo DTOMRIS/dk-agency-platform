@@ -123,9 +123,9 @@ export default function MarkaKompasiPage() {
       </div>
 
       {view !== 'result' && (
-        <div className="mb-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-          <h2 className="mb-2 text-sm font-bold text-[var(--dk-navy)]">{copy.whyTitle}</h2>
-          <p className="text-sm leading-relaxed text-slate-600">{copy.why}</p>
+        <div className="mb-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
+          <h2 className="mb-2 text-sm font-bold text-blue-900">Məlumat: {copy.whyTitle}</h2>
+          <p className="text-sm leading-relaxed text-slate-800">{copy.why}</p>
         </div>
       )}
 
