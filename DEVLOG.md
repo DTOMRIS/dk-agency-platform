@@ -1,5 +1,19 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-14 - TASK-0122 Faza 2 (REAL FIX)
+
+**Kok sebeb:** TASK-0122 Faza 1 debug log-u gosterdi ki, DeepSeek AZ acarlar (kampaniya_takvimi, tovsiyeler) qaytarir, Zod schema EN acarlar (calendar, topRecommendations) gozleyir. PR #117-den beri uyğunsuzluq var idi.
+
+**Fix:** Inline Sezon Planlama prompt-a strict English JSON structure telebi elave edildi. Schema deyismir.
+
+**Ders:**
+1. Schema/Prompt eyni anda yoxlanmalidir.
+2. Her yeni marketing tool ucun prompt-da JSON numunesi mutleqdir.
+3. Faza 1 debug olmadan korleme fix riski cox yuksekdir.
+
+**TODO:** 6 diger marketing tool yoxlanilmalidir — eyni problem ola biler.
+
+---
 ## 2026-05-14 - TASK-0122 Faza 1
 
 **Problem:** TASK-0120 (PR #119) deploy oldu, amma istifadeci `ai-output-invalid` aldi. DeepSeek call success qaytardi, Zod parse fail oldu.
