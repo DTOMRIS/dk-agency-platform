@@ -5,7 +5,8 @@
 ### Debug
 - **TASK-0122** [#120]: Sezon Planlama raw DeepSeek output capture + Zod error detail. Zod validation fail statusu 502-den 422-ye kecirildi. Schema align Faza 2-de gelecek.
 ### Fixed
-- **TASK-0122** [PR pending]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.- **TASK-0120** [#119]: AI router streaming + 55s timeout + JSON mode qoshuldu. Sezon Planlama 502 Bad Gateway helli ucun DeepSeek streaming aktiv edildi. PR #118 schema relax geri qaytarildi. Diger marketing tool route-larina `maxDuration = 60` ve `timeout: 55000` elave edildi (regression-safe).
+- **TASK-0122** [#121]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.
+- **TASK-0120** [#119]: AI router streaming + 55s timeout + JSON mode qoshuldu. Sezon Planlama 502 Bad Gateway helli ucun DeepSeek streaming aktiv edildi. PR #118 schema relax geri qaytarildi. Diger marketing tool route-larina `maxDuration = 60` ve `timeout: 55000` elave edildi (regression-safe).
 
 Bütün dəyişikliklər bu faylda qeyd olunur.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
@@ -154,7 +155,7 @@ Yeni ID-ler TASK-0114-den baslayir:
 ## [2026-05-07] — Auth Password Reset + Deployment Docs
 
 ### Fixed
-- **TASK-0122** [PR pending]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.- **forgot-password endpoint** — replaced in-memory mock with real Neon/Drizzle DB implementation
+- **forgot-password endpoint** — replaced in-memory mock with real Neon/Drizzle DB implementation
   - User lookup via `users` table, token stored in `passwordResetTokens`
   - Email sent via SMTP with locale-aware `passwordReset` template
   - Email enumeration protection: always returns 200
@@ -193,7 +194,7 @@ Yeni ID-ler TASK-0114-den baslayir:
 - Mobile design pass — CategoryTabs scroll-snap, article reading ergonomics (PR #83)
 
 ### Fixed
-- **TASK-0122** [PR pending]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.- Console.log cleanup — 25+ debug logs deleted, 4 security-sensitive logs removed (token/password/reset-URL leaks), NODE_ENV guard on error logs (PR #90)
+- Console.log cleanup — 25+ debug logs deleted, 4 security-sensitive logs removed (token/password/reset-URL leaks), NODE_ENV guard on error logs (PR #90)
 
 ### Security
 - Security sprint merged (PR #79): demo credentials removed, JWT enforcement, admin guards, password validation
@@ -206,7 +207,6 @@ Yeni ID-ler TASK-0114-den baslayir:
 ## [Unreleased]
 
 ### Debug
-- **TASK-0122** [PR pending]: Sezon Planlama raw DeepSeek output capture + Zod error detail. Zod validation fail statusu 502-den 422-ye kecirildi. Schema align Faza 2-de gelecek.
 ### Added
 - Russian (`ru`) locale infrastructure, DeepSeek-backed `scripts/translate-ru.mjs`, generated `messages/ru.json`, and a `/ru` Playwright smoke test.
 
@@ -227,7 +227,7 @@ Yeni ID-ler TASK-0114-den baslayir:
 - Input placeholder dəstəyi əlavə sahələr addımında.
 
 ### Fixed
-- **TASK-0122** [PR pending]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.- Locale admin leads route now resolves correctly by redirecting `/[locale]/admin/leads` to the existing real DB-backed `/dashboard/kazan-leads` screen instead of returning 404.
+- Locale admin leads route now resolves correctly by redirecting `/[locale]/admin/leads` to the existing real DB-backed `/dashboard/kazan-leads` screen instead of returning 404.
 
 ### Added
 - DK Agency HoReCa sales sprint added to the operating record: 20 Baku target accounts were grouped across restaurant chains, hotel+restaurant properties, cafes/brunch venues and premium/fine-dining restaurants.
@@ -241,7 +241,7 @@ Yeni ID-ler TASK-0114-den baslayir:
 - Restaurant pitch reframed around WhatsApp/Instagram response capture, menu questions, reservations and lost lead prevention.
 
 ### Fixed
-- **TASK-0122** [PR pending]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.- Almila OpenClaw prompt conflict was resolved by updating the workspace-level `SOUL.md`, which was still carrying the old short `wa.me/994517696181` CTA format.
+- Almila OpenClaw prompt conflict was resolved by updating the workspace-level `SOUL.md`, which was still carrying the old short `wa.me/994517696181` CTA format.
 - WhatsApp CTA now uses the full `https://wa.me/...?...text=...` deep link format in the live Almila flow.
 - OpenRouter `402` dependency risk was removed from the active Almila path by confirming `deepseek/deepseek-chat` as the direct model route.
 - First greeting behavior was corrected so Almila no longer asks for name/phone immediately on a simple greeting.
@@ -252,7 +252,7 @@ Yeni ID-ler TASK-0114-den baslayir:
 - Today’s outreach target is 10 DMs: 5 restaurant targets first, then 5 hotel targets after a short interval.
 
 ### Fixed
-- **TASK-0122** [PR pending]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.- Public `/haberler` hero now prefers translated editor picks only and falls back safely when an editor pick is not publishable.
+- Public `/haberler` hero now prefers translated editor picks only and falls back safely when an editor pick is not publishable.
 - Admin news approve API now blocks approving articles that do not have Azerbaijani title/summary content.
 - News cards now use category-based gradient placeholders instead of generic dark image fallbacks.
 - Public news heading copy now uses final `Sektor Nəbzi` wording instead of pipeline/developer phrasing.
@@ -337,7 +337,7 @@ Yeni ID-ler TASK-0114-den baslayir:
 ## [0.9.3] - 2026-04-12 - Mobile Triage Addendum
 
 ### Fixed
-- **TASK-0122** [PR pending]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.- `NewsPreview` mobil kart spacing, button width və type scale düzəldi
+- `NewsPreview` mobil kart spacing, button width və type scale düzəldi
 - `app/[locale]/page.tsx` daxilində blog və B2B section spacing mobil üçün rahatlaşdırıldı
 - `FloatingKazanWidget` mobil ölçü və alt-sağ yerləşimi content overlap riskini azaltdı
 
@@ -362,7 +362,7 @@ Yeni ID-ler TASK-0114-den baslayir:
 ## [0.2.0] - 2026-03-29 - PR#5/#6/#7: Infrastructure Fixes
 
 ### Fixed
-- **TASK-0122** [PR pending]: Sezon Planlama 502/422 real root cause hell olundu. DeepSeek prompt AZ keys qaytarirdi, Zod schema EN keys gozleyirdi. Prompt-a strict English JSON structure elave edildi. PR #117, #118, #119 simptom idi; bu real key alignment fix-dir.- i18n routing və middleware axını
+- i18n routing və middleware axını
 - Toolkit route normalization
 - Register/Login input görünüşü
 - ESLint səhvləri
