@@ -9,12 +9,14 @@ interface WeeklyComp { salesUplift: number; salesUpliftPercent: number; tcUplift
 interface Incremental { incrementalSales: number; incrementalGrossProfit: number; incrementalSOI: number; totalPromoInvestment: number; ROI: number; breakEvenIncrementalSales: number }
 interface MonthlyProj { note: string; estimatedMonthlySalesUplift: number; estimatedMonthlySOIUplift: number; estimatedMonthlyROI: number; breakEvenWeeks: number }
 interface AIInsight { verdict: string; keyFindings: string[]; risks: string[]; recommendations: string[]; ahilikQuote: string }
+interface WorkingCapital { workingCapitalNeeded: number; workingCapitalDays: number }
 
 interface PromoROIResultData {
   weeklyComparison: WeeklyComp;
   pnl: { baseline: PnlRow; promo: PnlRow };
   incremental: Incremental;
   monthlyProjection: MonthlyProj;
+  workingCapital?: WorkingCapital;
   aiInsight: AIInsight;
 }
 
@@ -70,7 +72,7 @@ interface Props { result: PromoROIResultData; locale: Locale; onRedo: () => void
 
 export default function PromoROIResult({ result, locale, onRedo }: Props) {
   const t = resultCopy[locale];
-  const { weeklyComparison: w, pnl, incremental: inc, monthlyProjection: mp, aiInsight: ai } = result;
+  const { weeklyComparison: w, pnl, incremental: inc, monthlyProjection: mp, workingCapital, aiInsight: ai } = result;
 
   return (
     <div className="space-y-6">
@@ -135,6 +137,17 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
           <p className="mt-3 text-[10px] italic text-slate-400">{mp.note}</p>
         </div>
       </div>
+
+      {workingCapital && (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
+          <h3 className="mb-2 text-sm font-bold text-amber-900">Isletme Kapital Telebi</h3>
+          <p className="text-2xl font-bold text-[var(--dk-navy)]">{workingCapital.workingCapitalNeeded.toLocaleString()} AZN</p>
+          <p className="mt-1 text-sm text-slate-600">{workingCapital.workingCapitalDays} gun erzinde geri qaytarilir</p>
+          <p className="mt-3 text-xs leading-relaxed text-slate-500">
+            Kampaniya baslamadan evvel cibinizden cixan pul. ROI musbet olsa bele, bu mebleg geri donene qeder nagd axina tesir edir.
+          </p>
+        </div>
+      )}
 
       {/* AI Insight */}
       <div className="rounded-2xl border border-slate-200 bg-white p-5">

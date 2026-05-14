@@ -4,15 +4,36 @@ import Link from 'next/link';
 import { Calendar, Tag, Target } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 
-interface Campaign { name: string; type: string; startDay: number; endDay: number; description: string; budget: string; channel: string; kpi: string }
-interface MonthPlan { month: number; monthName: string; campaigns: Campaign[] }
+interface Campaign {
+  name: string;
+  type: string;
+  startDay: number;
+  endDay: number;
+  description: string;
+  budget: string;
+  channel: string;
+  kpi: string;
+  startDate?: string;
+  endDate?: string;
+  methodology?: string;
+  doganRule?: string;
+  channels?: string[];
+  budgetEstimate?: string;
+  riskNotes?: string;
+}
+interface MonthPlan { month: number; monthName: string; campaigns: Campaign[]; keyEvents?: string[] }
 interface BudgetSummary { allocated: string; perMonth: string; topCategory: string }
+interface AeoRecommendation { action: string; rationale: string; priority: 'high' | 'medium' | 'low' }
+interface RiskWatchout { period: string; risk: string; mitigation: string }
 
 interface SezonResultData {
+  executiveSummary?: string;
   calendar: MonthPlan[];
   totalCampaigns: number;
   budgetSummary: BudgetSummary;
   topRecommendations: string[];
+  aeoRecommendations?: AeoRecommendation[];
+  risksWatchout?: RiskWatchout[];
   ahilikQuote: string;
 }
 
@@ -76,6 +97,49 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
         </div>
       </div>
 
+      {result.executiveSummary && (
+        <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
+          <h3 className="mb-2 text-sm font-bold text-blue-900">Xulase</h3>
+          <p className="text-sm leading-relaxed text-slate-700">{result.executiveSummary}</p>
+        </div>
+      )}
+
+      {result.risksWatchout && result.risksWatchout.length > 0 && (
+        <div className="rounded-2xl border border-red-100 border-l-4 border-l-red-500 bg-red-50 p-5">
+          <h3 className="mb-3 text-sm font-bold text-red-900">Diqqet - Risk Pencereleri</h3>
+          <div className="space-y-3">
+            {result.risksWatchout.map((risk, i) => (
+              <div key={i}>
+                <p className="font-semibold text-[var(--dk-navy)]">{risk.period}</p>
+                <p className="text-sm text-slate-700">{risk.risk}</p>
+                <p className="mt-1 text-xs text-green-700">{risk.mitigation}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {result.aeoRecommendations && result.aeoRecommendations.length > 0 && (
+        <div className="rounded-2xl border border-purple-100 bg-purple-50 p-5">
+          <h3 className="mb-3 text-sm font-bold text-purple-900">AEO Tovsiyeleri (2026)</h3>
+          <div className="space-y-3">
+            {result.aeoRecommendations.map((rec, i) => (
+              <div key={i}>
+                <p className="font-semibold text-[var(--dk-navy)]">{rec.action}</p>
+                <p className="text-sm text-slate-700">{rec.rationale}</p>
+                <span className={`mt-1 inline-flex rounded px-2 py-0.5 text-xs ${
+                  rec.priority === 'high' ? 'bg-red-200 text-red-800'
+                    : rec.priority === 'medium' ? 'bg-yellow-200 text-yellow-800'
+                      : 'bg-slate-200 text-slate-700'
+                }`}>
+                  {rec.priority === 'high' ? 'Yuksek prioritet' : rec.priority === 'medium' ? 'Orta' : 'Asagi'}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Calendar by month */}
       {result.calendar.map((month) => (
         <div key={month.month} className="rounded-2xl border border-slate-200 bg-white p-5">
@@ -95,11 +159,15 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
                   <span className="text-[10px] text-slate-400">{c.startDay}-{c.endDay}</span>
                 </div>
                 <p className="mb-2 text-xs text-slate-600">{c.description}</p>
+                {c.methodology && <p className="mb-1 text-xs italic text-slate-600">{c.methodology}</p>}
+                {c.doganRule && <p className="mb-1 text-xs italic text-amber-700">Dogan qaydasi: {c.doganRule}</p>}
                 <div className="flex flex-wrap gap-3 text-[10px] text-slate-500">
-                  {c.budget && <span className="flex items-center gap-1"><Tag size={10} />{c.budget}</span>}
-                  <span className="flex items-center gap-1">{t.channel}: {c.channel}</span>
+                  {(c.budgetEstimate ?? c.budget) && <span className="flex items-center gap-1"><Tag size={10} />{c.budgetEstimate ?? c.budget}</span>}
+                  <span className="flex items-center gap-1">{t.channel}: {Array.isArray(c.channels) ? c.channels.join(', ') : c.channel}</span>
                   <span className="flex items-center gap-1"><Target size={10} />{t.kpi}: {c.kpi}</span>
+                  {(c.startDate || c.endDate) && <span>{c.startDate} - {c.endDate}</span>}
                 </div>
+                {c.riskNotes && <p className="mt-2 text-xs text-red-600">{c.riskNotes}</p>}
               </div>
             ))}
           </div>
