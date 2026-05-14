@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- **TASK-0123** [#122]: Marketing Brain Foundation. `lib/marketing-tools/_brain/` yaradildi - Dogan Dersleri v2.0, KAHI few-shot examples, 2026 trendleri (GEO/AEO, AI Decisioning, RCS), 7 pilleli marketing modeli, BCG matrisi, AZ 2026 teqvimi (Meherrem boslugu daxil), Baki region profilleri. Sezon Planlama schema genislendi: executiveSummary, methodology, doganRule, aeoRecommendations, risksWatchout.
+
 ### Debug
 - **TASK-0122** [#120]: Sezon Planlama raw DeepSeek output capture + Zod error detail. Zod validation fail statusu 502-den 422-ye kecirildi. Schema align Faza 2-de gelecek.
 ### Fixed

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
 import { callAIJson, isAIAbortError } from '@/lib/ai-router';
+import { buildBrainContext } from '@/lib/marketing-tools/_brain';
 import { db } from '@/lib/db';
 import { marketingToolRuns } from '@/lib/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
@@ -22,6 +23,8 @@ const InputSchema = z.object({
 });
 
 const CampaignSchema = z.object({
+  // Legacy quick-view fields kept until TASK-0125 frontend report renderer lands.
+  // New premium fields are added below.
   month: z.number(),
   monthName: z.string(),
   campaigns: z.array(z.object({
@@ -33,18 +36,59 @@ const CampaignSchema = z.object({
     budget: z.string(),
     channel: z.string(),
     kpi: z.string(),
+    startDate: z.string().optional(),
+    endDate: z.string().optional(),
+    methodology: z.string(),
+    doganRule: z.string().optional(),
+    targetSegment: z.string(),
+    channels: z.array(z.string()).optional(),
+    kpiDetail: z.object({
+      primary: z.string(),
+      target: z.string(),
+    }).optional(),
+    budgetEstimate: z.string().optional(),
+    riskNotes: z.string().optional(),
   })),
+  keyEvents: z.array(z.string()).optional(),
 });
 
 const OutputSchema = z.object({
+  executiveSummary: z.string().min(50).max(800),
+  context: z.object({
+    restaurantName: z.string(),
+    concept: z.string(),
+    location: z.string(),
+    audienceProfile: z.string(),
+    targetMonths: z.array(z.string()),
+  }),
   calendar: z.array(CampaignSchema),
   totalCampaigns: z.number(),
   budgetSummary: z.object({
+    // Legacy quick-view fields.
     allocated: z.string(),
     perMonth: z.string(),
     topCategory: z.string(),
+    // Premium report fields.
+    totalBudget: z.string().optional(),
+    breakdown: z.string().optional(),
+    roiProjection: z.string().optional(),
   }),
   topRecommendations: z.array(z.string()).min(3).max(5),
+  phases: z.object({
+    preLaunch: z.array(z.string()).optional(),
+    launch: z.array(z.string()).optional(),
+    postLaunch: z.array(z.string()).optional(),
+  }).optional(),
+  aeoRecommendations: z.array(z.object({
+    action: z.string(),
+    rationale: z.string(),
+    priority: z.enum(['high', 'medium', 'low']),
+  })).optional(),
+  risksWatchout: z.array(z.object({
+    period: z.string(),
+    risk: z.string(),
+    mitigation: z.string(),
+  })).optional(),
   ahilikQuote: z.string(),
 });
 
@@ -88,20 +132,38 @@ JSON STRUCTURE - CRITICAL, NO EXCEPTIONS
 You MUST return a JSON object with EXACTLY these top-level keys in English:
 
 {
+  "executiveSummary": "3-4 cumlelik strateji xulase AZ dilinde",
+  "context": {
+    "restaurantName": "Restoran adi",
+    "concept": "fine-dining",
+    "location": "Baki",
+    "audienceProfile": "aile, ciftlik, biznes ve turist segmentleri",
+    "targetMonths": ["Iyun", "Iyul", "Avqust"]
+  },
   "calendar": [
     {
       "month": 6,
       "monthName": "Iyun",
+      "keyEvents": ["01 Iyun Usaq Gunu", "26 Iyun - 22 Avqust Meherrem + Sefer"],
       "campaigns": [
         {
           "name": "Kampaniya adi AZ dilinde",
           "type": "bayram",
           "startDay": 1,
           "endDay": 15,
+          "startDate": "2026-06-01",
+          "endDate": "2026-06-15",
           "description": "Tesvir AZ dilinde",
+          "methodology": "Pille 3: Heveslendirme",
+          "doganRule": "Usaq strategiyasi: usaq razi qalanda aile tekrar gelir",
+          "targetSegment": "aile ve usaqli qonaqlar",
           "budget": "200 AZN",
+          "budgetEstimate": "200 AZN",
           "channel": "Instagram, Wolt, yerinde",
-          "kpi": "satis artimi 10%, TC artimi 5%"
+          "channels": ["Instagram", "Wolt", "yerinde"],
+          "kpi": "satis artimi 10%, TC artimi 5%",
+          "kpiDetail": { "primary": "TC artimi", "target": "5%" },
+          "riskNotes": "Meherrem dovru toy kampaniyasi verme"
         }
       ]
     }
@@ -110,31 +172,47 @@ You MUST return a JSON object with EXACTLY these top-level keys in English:
   "budgetSummary": {
     "allocated": "1500 AZN",
     "perMonth": "Her ay texminen 500 AZN",
-    "topCategory": "promo"
+    "topCategory": "promo",
+    "totalBudget": "1500 AZN",
+    "breakdown": "Her ay texminen 500 AZN",
+    "roiProjection": "Minimum 20% ROI hedeflenir"
   },
   "topRecommendations": [
     "Tovsiye 1 AZ dilinde",
     "Tovsiye 2 AZ dilinde",
     "Tovsiye 3 AZ dilinde"
   ],
+  "phases": {
+    "preLaunch": ["Hazirliq addimi"],
+    "launch": ["Icra addimi"],
+    "postLaunch": ["Olcme addimi"]
+  },
+  "aeoRecommendations": [
+    { "action": "Google Business Profile-i yenile", "rationale": "AI search citation ucun lazimdir", "priority": "high" }
+  ],
+  "risksWatchout": [
+    { "period": "26 Iyun - 22 Avqust", "risk": "Meherrem ve Sefer toy gelirini azaldir", "mitigation": "Korporativ, konfrans, turist ve aile nahari paketleri" }
+  ],
   "ahilikQuote": "Ahilik hikmeti AZ dilinde"
 }
 
 CRITICAL RULES:
-1. Top-level keys MUST be exactly: calendar, totalCampaigns, budgetSummary, topRecommendations, ahilikQuote.
+1. Top-level keys MUST include: executiveSummary, context, calendar, totalCampaigns, budgetSummary, topRecommendations, ahilikQuote.
 2. Do NOT add extra top-level keys like restoran, konsept, seher, budce, tovsiyeler, ahilik_hikmeti.
 3. Do NOT use Azerbaijani or snake_case keys like kampaniya_takvimi, kampaniyalar, umumi_budce_xulasesi.
 4. "calendar" MUST be an array, NOT an object.
 5. Each calendar entry MUST have "month" as a number, "monthName" as a string, and "campaigns" as an array.
-6. Campaign keys MUST be exactly: name, type, startDay, endDay, description, budget, channel, kpi.
+6. Campaign keys MUST include legacy quick-view keys: name, type, startDay, endDay, description, budget, channel, kpi.
 7. Campaign "type" MUST be one of: bayram, movsum, event, promo, community.
 8. "startDay" and "endDay" MUST be numbers, NOT dates and NOT strings.
 9. "channel" MUST be a string, NOT an array.
-10. "budgetSummary" keys MUST be exactly: allocated, perMonth, topCategory.
+10. "budgetSummary" MUST include legacy keys: allocated, perMonth, topCategory.
 11. "totalCampaigns" MUST be a number, NOT a string.
 12. "topRecommendations" MUST contain 3 to 5 strings.
-13. Content values should be in Azerbaijani. Only JSON key names are English.
-14. Return ONLY the JSON object. No markdown, no explanation.
+13. Every campaign MUST include "methodology" and "targetSegment"; "doganRule" is strongly recommended.
+14. Add "aeoRecommendations" and "risksWatchout" when relevant, especially for Meherrem/Sefer.
+15. Content values should be in Azerbaijani. Only JSON key names are English.
+16. Return ONLY the JSON object. No markdown, no explanation.
 `;
 
 function buildUserPrompt(input: z.infer<typeof InputSchema>): string {
@@ -177,9 +255,9 @@ export async function POST(req: Request) {
     try {
       aiResult = await callAIJson<unknown>(
         {
-          system: `${SYSTEM_PROMPT}\n${STRICT_JSON_SCHEMA_INSTRUCTION}`,
+          system: `${buildBrainContext('sezon-planlama')}\n\n=== TASK ===\n${SYSTEM_PROMPT}\n${STRICT_JSON_SCHEMA_INSTRUCTION}`,
           prompt: buildUserPrompt(input),
-          maxTokens: 3000,
+          maxTokens: 5000,
           temperature: 0.7,
           stream: true,
           timeout: 55000,

@@ -285,3 +285,29 @@ Qaydalar:
 - Diger live tool-lar regression riskini azaltmaq ucun default non-streaming davranisi saxlaya biler.
 - Timeout `AbortError` kimi yuxariya qalxir; route handler bunu 504 qaytarmalidir.
 - DeepSeek JSON mode ucun hem `response_format`, hem de prompt/system daxilinde JSON talimati lazimdir.
+
+## TASK-0123 - Marketing Brain Module
+
+`lib/marketing-tools/_brain/` marketing tools ucun ortaq knowledge base-dir.
+
+API:
+
+```ts
+buildBrainContext(toolSlug)
+```
+
+`toolSlug` deyerleri:
+- `sezon-planlama`
+- `marka-kompasi`
+- `kst-yoxlayici`
+- `menyu-analitigi`
+- `sikayet-analitigi`
+- `promosyon-roi`
+- `musteri-persona`
+
+Qayda:
+- Her yeni marketing tool AI prompt-u lazim olduqda once `buildBrainContext(slug)` yoxlanilir.
+- `sezon-planlama` daha genis brain alir: Dogan Dersleri, AZ 2026 teqvim, region profilleri, KAHI roadmap, 7 pille, GEO/AEO, AI Decisioning, RCS, ROI qaydalari.
+- `menyu-analitigi`, `promosyon-roi`, `musteri-persona` tool-specific brain alir.
+- Kicik scope tool-lar yalniz Dogan core rules ile baslayir.
+- Frontend premium render TASK-0125-de geleceyi ucun Sezon Planlama legacy quick-view JSON fields saxlanilmalidir.
