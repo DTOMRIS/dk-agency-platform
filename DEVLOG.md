@@ -1,5 +1,16 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-14 - TASK-0122 Faza 1
+
+**Problem:** TASK-0120 (PR #119) deploy oldu, amma istifadeci `ai-output-invalid` aldi. DeepSeek call success qaytardi, Zod parse fail oldu.
+
+**Faza 1:** Raw output capture deploy edilir. Dogan submit edib real DeepSeek output-u ve Zod error-u alacaq.
+
+**Faza 2:** Real output elde edildikden sonra schema/prompt align edilecek.
+
+**Ders:** "JSON mode bunu toparlar" varsayimi PR #119-da yanlis idi. DeepSeek valid JSON verir, amma Zod schema-ya birebir uygunluq garanti yoxdur.
+
+---
 ## 2026-05-13 - TASK-0120
 
 **Problem:** Sezon Planlama 502 davam edirdi (PR #117 + #118 sonrasi).
