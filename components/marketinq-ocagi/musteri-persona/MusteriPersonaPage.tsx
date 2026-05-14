@@ -8,6 +8,7 @@ import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import PersonaForm from './PersonaForm';
 import PersonaResult from './PersonaResult';
+import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
   az: { title: 'Müştəri Persona', subtitle: 'Hədəf müştəri profilini yaradın', backToList: 'Bütün alətlər',
@@ -58,10 +59,9 @@ export default function MusteriPersonaPage() {
       </div>
 
       {view !== 'result' && (
-        <div className="mb-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-          <h2 className="mb-2 text-sm font-bold text-blue-900">Məlumat: {c.whyTitle}</h2>
-          <p className="text-sm leading-relaxed text-slate-800">{c.why}</p>
-        </div>
+        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
+          <p>Hər kəsə satmaq heç kimə satmaq deməkdir. AI sizin restoran üçün 2 ideal persona + 1 anti-persona yaradır, marketinq mesajını kəskinləşdirir.</p>
+        </ToolInfoBox>
       )}
 
       {error && (

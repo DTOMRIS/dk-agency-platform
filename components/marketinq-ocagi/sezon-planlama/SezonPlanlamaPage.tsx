@@ -8,6 +8,7 @@ import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import SezonForm from './SezonForm';
 import SezonResult from './SezonResult';
+import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
   az: { title: 'Sezon Planlaması', subtitle: '12 aylıq kampaniya və event takvimi', backToList: 'Bütün alətlər',
@@ -56,10 +57,9 @@ export default function SezonPlanlamaPage() {
         <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${tierColors.bg} ${tierColors.text} ${tierColors.border}`}>{c.tier}</span>
       </div>
       {view !== 'result' && (
-        <div className="mb-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-          <h2 className="mb-2 text-sm font-bold text-blue-900">Məlumat: {c.whyTitle}</h2>
-          <p className="text-sm leading-relaxed text-slate-800">{c.why}</p>
-        </div>
+        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
+          <p>Novruz nə edək? sualını 1 həftə qala düşünmək — gec olur. Bu alət AZ bayramları, dünya günləri və HoReCa mövsümləri nəzərə alaraq bütün ili planlayır.</p>
+        </ToolInfoBox>
       )}
       {error && (
         <div className="mb-6 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3">

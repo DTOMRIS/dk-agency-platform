@@ -8,6 +8,7 @@ import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import KSTQuestionnaireForm from './KSTQuestionnaireForm';
 import KSTResultCard from './KSTResultCard';
+import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
 
 const pageCopy: Record<Locale, {
   title: string;
@@ -122,10 +123,9 @@ export default function KSTYoxlayiciPage() {
       </div>
 
       {view !== 'result' && (
-        <div className="mb-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-          <h2 className="mb-2 text-sm font-bold text-blue-900">Məlumat: {copy.whyTitle}</h2>
-          <p className="text-sm leading-relaxed text-slate-800">{copy.why}</p>
-        </div>
+        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
+          <p>KST mükəmməlliyi bütün marketinq səylərinin təməlidir. Servis yavaş, məkan kirli, yemək keyfiyyətsizdirsə — heç bir reklam dönüşüm yaratmır. Bu alət 30 sualla 3 sahəni ölçür.</p>
+        </ToolInfoBox>
       )}
 
       {error && (

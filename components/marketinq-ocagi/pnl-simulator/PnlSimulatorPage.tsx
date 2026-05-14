@@ -8,6 +8,7 @@ import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import PnlForm from './PnlForm';
 import PnlResult from './PnlResult';
+import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
   az: { title: 'P&L Simulator', subtitle: 'Aylıq gəlir-xərc modelləşdirməsi + AI yorum', backToList: 'Bütün alətlər',
@@ -58,10 +59,9 @@ export default function PnlSimulatorPage() {
       </div>
 
       {view !== 'result' && (
-        <div className="mb-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-          <h2 className="mb-2 text-sm font-bold text-[var(--dk-navy)]">{c.whyTitle}</h2>
-          <p className="text-sm leading-relaxed text-slate-600">{c.why}</p>
-        </div>
+        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
+          <p>P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir. Bu alət hesablama + AI yorum verir — food cost, labor, rent benchmark-larla müqayisə.</p>
+        </ToolInfoBox>
       )}
 
       {error && (

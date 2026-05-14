@@ -8,6 +8,7 @@ import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import PromoROIForm from './PromoROIForm';
 import PromoROIResult from './PromoROIResult';
+import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
   az: {
@@ -85,10 +86,9 @@ export default function PromoROIPage() {
       </div>
 
       {view !== 'result' && (
-        <div className="mb-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-          <h2 className="mb-2 text-sm font-bold text-blue-900">Məlumat: {copy.whyTitle}</h2>
-          <p className="text-sm leading-relaxed text-slate-800">{copy.why}</p>
-        </div>
+        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
+          <p>Endirim satisi artira biler, amma brut menfeet ve nagd axin eyni anda yoxlanmasa kampaniya pul qazandirmaya biler. Bu alet TC, brut menfeet, SOI ve isletme kapital telebini birlikde olcur.</p>
+        </ToolInfoBox>
       )}
 
       {error && (

@@ -8,6 +8,7 @@ import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import SikayetForm from './SikayetForm';
 import SikayetResult from './SikayetResult';
+import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
   az: {
@@ -82,10 +83,9 @@ export default function SikayetAnalitiyiPage() {
       </div>
 
       {view !== 'result' && (
-        <div className="mb-8 rounded-2xl border border-blue-200 bg-blue-50 p-5">
-          <h2 className="mb-2 text-sm font-bold text-blue-900">Məlumat: {c.whyTitle}</h2>
-          <p className="text-sm leading-relaxed text-slate-800">{c.why}</p>
-        </div>
+        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
+          <p>Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır, kök səbəbi göstərir və həll planı təklif edir.</p>
+        </ToolInfoBox>
       )}
 
       {error && (
