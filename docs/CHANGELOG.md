@@ -2,6 +2,16 @@
 
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
+## [Unreleased]
+### Added
+- TASK-0128: Şikayət Cavablandırıcı AI tool (Marketinq Ocağı, KALFA tier)
+  - 3 component: SikayetCavablandiriciPage, SikayetForm, SikayetCavablari
+  - POST /api/ai/complaint-response (DeepSeek primary, Claude fallback)
+  - lib/ai/complaint-prompt-builder.ts (Ahilik dəyərləri, few-shot)
+  - 4-language i18n (az/ru/en/tr) in messages/*.json
+  - Playwright smoke tests (4 locale + API 401 check)
+  - 20 responses/day rate limit per user
+
 ## [0.9.0] - 2026-05-04
 ### Added — i18n Phase 2: public route translations (TASK-0049 – TASK-0053)
 - [TASK-0049] `app/toolkit/page.tsx`: 4-language copy (az/tr/en/ru) — hero badge, title, subtitle, 10 tool names & descriptions, section headings, CTA label; locale detected from pathname

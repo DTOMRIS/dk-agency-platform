@@ -15,6 +15,7 @@ import MusteriPersonaPage from '@/components/marketinq-ocagi/musteri-persona/Mus
 import PnlSimulatorPage from '@/components/marketinq-ocagi/pnl-simulator/PnlSimulatorPage';
 import SezonPlanlamaPage from '@/components/marketinq-ocagi/sezon-planlama/SezonPlanlamaPage';
 import YemekXerciPage from '@/components/marketinq-ocagi/yemek-xerci/YemekXerciPage';
+import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
 
 const pageCopy: Record<
   Locale,
@@ -41,6 +42,7 @@ const pageCopy: Record<
       'promosyon-roi': { title: 'Promosyon ROI', subtitle: 'Baz Hafta vs Promo Hafta — real ROI hesabla', why: 'Endirimsiz də gələcək müştərilərin əlavə endirimi marjını yeyir. Bu alət incremental satışı ölçür.' },
       'pnl-simulator': { title: 'P&L Simulator', subtitle: 'Aylıq gəlir-xərc modelləşdirməsi', why: 'P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir.' },
       'sikayet-analitigi': { title: 'Şikayət Analitiği', subtitle: 'Müştəri şikayətlərini AI ilə analiz et', why: 'Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır.' },
+      'sikayet-cavablandirici': { title: 'Şikayət Cavablandırıcı', subtitle: 'AI ilə Google və TripAdvisor şikayətlərinə 3 fərqli tonda cavab', why: 'Hər cavabsız şikayət potensial müştəri itkisidir. AI 3 tonda peşəkar cavab yaradır.' },
       'musteri-persona': { title: 'Müştəri Persona', subtitle: 'Hədəf müştəri profilini yaradın', why: 'Hər kəsə satmaq heç kimə satmaq deməkdir. Persona ilə marketinq mesajı kəskinləşir.' },
       'sezon-planlama': { title: 'Sezon Planlaması', subtitle: '12 aylıq kampaniya və event takvimi', why: 'Novruz nə edək? sualını 1 həftə qala düşünmək — gec olur.' },
       'reklam-yazicisi': { title: 'Reklam Yazıcısı', subtitle: 'AI ilə reklam və post mətni yazın', why: 'Düzgün reklam mətni konversiyanı 3x artıra bilər.' },
@@ -64,6 +66,7 @@ const pageCopy: Record<
       'promosyon-roi': { title: 'Promo ROI', subtitle: 'Base vs Promo Week — real ROI', why: 'Discounts may bring existing customers at lower margin.' },
       'pnl-simulator': { title: 'P&L Simulator', subtitle: 'Monthly revenue-expense modeling', why: 'Restaurants tracking P&L monthly outperform competitors.' },
       'sikayet-analitigi': { title: 'Complaint Analytics', subtitle: 'AI-powered complaint analysis', why: 'For every complaint, 26 unhappy customers stay silent.' },
+      'sikayet-cavablandirici': { title: 'Complaint Responder', subtitle: 'AI-generated responses to reviews in 3 tones', why: 'Every unanswered complaint is a potential lost customer. AI generates professional responses in 3 tones.' },
       'musteri-persona': { title: 'Customer Persona', subtitle: 'Build target customer profiles', why: 'Selling to everyone means selling to no one.' },
       'sezon-planlama': { title: 'Season Planning', subtitle: '12-month campaign calendar', why: 'Planning holidays 1 week ahead is too late.' },
       'reklam-yazicisi': { title: 'Ad Writer', subtitle: 'AI-generated ad copy', why: 'Good ad copy can triple conversion rates.' },
@@ -87,6 +90,7 @@ const pageCopy: Record<
       'promosyon-roi': { title: 'Promosyon ROI', subtitle: 'Baz vs Promo Hafta — gerçek ROI', why: 'İndirimler mevcut müşterilere daha düşük marjla hizmet verebilir.' },
       'pnl-simulator': { title: 'P&L Simülatörü', subtitle: 'Aylık gelir-gider modeli', why: 'Aylık P&L hazırlayan restoran rakiplerinin önündedir.' },
       'sikayet-analitigi': { title: 'Şikayet Analitiği', subtitle: 'AI şikayet analizi', why: 'Her şikayetin arkasında 26 sessiz mutsuz müşteri var.' },
+      'sikayet-cavablandirici': { title: 'Şikayet Yanıtlayıcı', subtitle: 'Google ve TripAdvisor şikayetlerine AI ile 3 tonda yanıt', why: 'Her cevaplanmayan şikayet potansiyel müşteri kaybıdır. AI 3 tonda profesyonel yanıt üretir.' },
       'musteri-persona': { title: 'Müşteri Persona', subtitle: 'Hedef müşteri profili', why: 'Herkese satmak kimseye satmamak demektir.' },
       'sezon-planlama': { title: 'Sezon Planlaması', subtitle: '12 aylık kampanya takvimi', why: 'Bayramları 1 hafta önceden planlamak geç kalır.' },
       'reklam-yazicisi': { title: 'Reklam Yazıcısı', subtitle: 'AI reklam metni', why: 'Doğru reklam metni dönüşümü 3x artırabilir.' },
@@ -110,6 +114,7 @@ const pageCopy: Record<
       'promosyon-roi': { title: 'ROI Промоакций', subtitle: 'Базовая vs Промо неделя — реальный ROI', why: 'Скидки могут привлечь существующих клиентов с меньшей маржой.' },
       'pnl-simulator': { title: 'P&L Симулятор', subtitle: 'Ежемесячное моделирование', why: 'Рестораны с ежемесячным P&L опережают конкурентов.' },
       'sikayet-analitigi': { title: 'Анализ Жалоб', subtitle: 'AI-анализ жалоб', why: 'За каждой жалобой стоят 26 молчаливых недовольных клиентов.' },
+      'sikayet-cavablandirici': { title: 'Ответчик на жалобы', subtitle: 'AI-ответы на отзывы в 3 тонах', why: 'Каждая неотвеченная жалоба — потенциальная потеря клиента. AI генерирует профессиональные ответы в 3 тонах.' },
       'musteri-persona': { title: 'Персона Клиента', subtitle: 'Профиль целевого клиента', why: 'Продавать всем — значит не продавать никому.' },
       'sezon-planlama': { title: 'Сезонное Планирование', subtitle: '12-месячный календарь', why: 'Планировать праздники за неделю — слишком поздно.' },
       'reklam-yazicisi': { title: 'Генератор Рекламы', subtitle: 'AI-тексты для рекламы', why: 'Хороший рекламный текст может утроить конверсию.' },
@@ -152,6 +157,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'sikayet-analitigi' && tool.status === 'live') {
     return <SikayetAnalitiyiPage />;
+  }
+  if (slug === 'sikayet-cavablandirici' && tool.status === 'live') {
+    return <SikayetCavablandiriciPage />;
   }
   if (slug === 'musteri-persona' && tool.status === 'live') {
     return <MusteriPersonaPage />;

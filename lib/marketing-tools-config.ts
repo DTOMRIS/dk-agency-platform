@@ -244,6 +244,44 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
+    slug: 'sikayet-cavablandirici',
+    category: 'musteri',
+    tier: 'kalfa',
+    iconName: 'MessageSquareWarning',
+    status: 'live',
+    aiProvider: 'deepseek',
+    aiFallback: 'claude',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'complaintText', type: 'textarea', required: true },
+        { name: 'complaintType', type: 'select', required: true, options: [
+          { value: 'food', labelKey: 'complaintType.food' },
+          { value: 'service', labelKey: 'complaintType.service' },
+          { value: 'price', labelKey: 'complaintType.price' },
+          { value: 'cleanliness', labelKey: 'complaintType.cleanliness' },
+          { value: 'other', labelKey: 'complaintType.other' },
+        ] },
+        { name: 'complaintLang', type: 'select', required: true, options: [
+          { value: 'az', labelKey: 'lang.az' },
+          { value: 'en', labelKey: 'lang.en' },
+          { value: 'tr', labelKey: 'lang.tr' },
+          { value: 'ru', labelKey: 'lang.ru' },
+        ] },
+        { name: 'responseLang', type: 'select', required: true, options: [
+          { value: 'az', labelKey: 'lang.az' },
+          { value: 'en', labelKey: 'lang.en' },
+          { value: 'tr', labelKey: 'lang.tr' },
+          { value: 'ru', labelKey: 'lang.ru' },
+        ] },
+        { name: 'restaurantName', type: 'text', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 20, usta: null },
+    estimatedCostAznPerRun: 0.0005,
+  },
+
+  {
     slug: 'musteri-persona',
     category: 'musteri',
     tier: 'kalfa',

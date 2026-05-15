@@ -228,6 +228,49 @@
           "breakEven": { "title": "Başabaş noktası nedir?", "slug": "basabas-noqtesi", "tag": "Operasyon" }
         }
       }
+    },
+    "complaint-handler": {
+      "pageTitle": "Şikayet Yanıtlayıcı",
+      "pageDescription": "Google, TripAdvisor ve Yandex şikayetlerine AI ile 3 farklı tonda yanıt oluşturun.",
+      "form": {
+        "complaintText": "Şikayet metni",
+        "complaintTextPlaceholder": "Müşteri şikayetini buraya yapıştırın...",
+        "complaintLanguage": "Şikayet dili",
+        "responseLanguage": "Yanıt dili",
+        "restaurantName": "Restoran adı (isteğe bağlı)",
+        "complaintType": "Şikayet türü",
+        "submitButton": "Yanıt Oluştur",
+        "submitting": "AI yanıt oluşturuyor..."
+      },
+      "complaintTypes": {
+        "food": "Yemek",
+        "service": "Hizmet",
+        "price": "Fiyat",
+        "cleanliness": "Temizlik",
+        "other": "Diğer"
+      },
+      "tones": {
+        "formal": "Resmi",
+        "friendly": "Samimi",
+        "short": "Kısa"
+      },
+      "actions": {
+        "copy": "Kopyala",
+        "copied": "Kopyalandı!",
+        "regenerate": "Yeniden oluştur"
+      },
+      "validation": {
+        "minLength": "Şikayet en az 10 karakter olmalıdır",
+        "maxLength": "Şikayet en fazla 2000 karakter olabilir"
+      },
+      "errors": {
+        "aiUnavailable": "AI hizmeti geçici olarak kullanılamıyor",
+        "rateLimit": "Günlük limit doldu (20 yanıt/gün). Yarın tekrar deneyin."
+      },
+      "gating": {
+        "kalfaRequired": "Bu araç KALFA seviyesi gerektirir",
+        "upgradeCta": "KALFA'ya yükselt (89 AZN/ay)"
+      }
     }
   },
   "blog": {
