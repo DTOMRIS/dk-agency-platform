@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-15 - TASK-0127 Food Cost Calculator Repair
+
+**Niye:** PR #126 TASK-0127-ni tamamlanmis kimi merge etdi, amma main-de sadece task card var idi. `app`, `components`, `lib` altinda `yemek-xerci` implementasiyasi yox idi.
+
+**Ne deyisdi:** `yemek-xerci` Marketinq Ocagi live SAGIRD tool kimi elave edildi. Client-side resept karti, coxlu mehsul setri, trim loss, porsiya maya deyeri, food cost %, ideal qiymet, CSV ve Excel export hazirlandi. API/AI route elave edilmedi.
+
+**Ders:** Task card merge etmek feature merge etmek deyil. Bundan sonra acceptance criteria konkret route + ekran + klikli yoxlama ile baglanmalidir.
+
+---
+
 ## 2026-05-14 - TASK-0125 Readability Fix
 
 **Niye:** Sikayet Analitigi screenshot-da info box metni oxunmurdu, eyni mesaj ikinci sari blokda tekrar olunurdu, Menbe/date sutunlari dar gorunurdu. Menyu Analitigi ve diger marketing tools info box pattern-i de eyni kontrast problemini dasiyirdi.

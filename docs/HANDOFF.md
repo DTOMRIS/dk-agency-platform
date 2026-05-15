@@ -175,3 +175,18 @@ Use script:
   - Native date input-un placeholder-i browser locale-den asili qala biler; secimden sonra display label bunu neytrallasdirir.
 - Sonraki adim:
   - Hostinger deploydan sonra Sikayet, Menyu, Promosyon ROI ve qalan marketinq aletlerinde info box oxunurlugunu smoke test et.
+
+## 2026-05-15T16:00:00+04:00 - codex
+- Ne degisti:
+  - TASK-0127 repair: `yemek-xerci` Marketinq Ocagi live SAGIRD tool kimi real implement edildi.
+  - Client-side calculator: recipe card, ingredient rows, trim loss, portions, total cost, cost per portion, food cost %, gross profit, ideal price.
+  - CSV ve Excel export elave edildi.
+  - `MARKETING_TOOLS`, list page ve dynamic slug page `yemek-xerci` ucun baglandi.
+- Ne degismedi:
+  - API/AI route elave edilmedi; bu alet tam client-side qalir.
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`, `.env.production`, `lib/ai-router.ts`.
+- Riskler:
+  - Excel export browser-de `xlsx` dynamic import-a baglidir; build yoxlamasi kecmelidir.
+  - PR #126 artiq merge oldugu ucun bu repair ayri PR ile getmelidir.
+- Sonraki adim:
+  - Build/lint + real route smoke test; sonra PR merge ve Hostinger deploy.

@@ -1,6 +1,6 @@
 /**
  * @file marketing-tools-config.ts
- * @purpose Marketinq Ocagi 13 aletinin single source of truth konfiqurasiyasi
+ * @purpose Marketinq Ocagi 14 aletinin single source of truth konfiqurasiyasi
  * @critical Ozbahceci dersi — butun sehifeler, API, gating buradan oxuyur
  * @lastModified 2026-05-11 (Sprint 4 — 12→13 alet yenilenmesi)
  */
@@ -50,7 +50,7 @@ export interface MarketingToolConfig {
   estimatedCostAznPerRun: number;
 }
 
-// ── 13 ALET KONFIQURASIYASI ─────────────────────────────────────────
+// ── 14 ALET KONFIQURASIYASI ─────────────────────────────────────────
 
 export const MARKETING_TOOLS: MarketingToolConfig[] = [
   // ── SAGIRD PILLESI (3 alet, pulsuz) ──────────────────────────────
@@ -151,6 +151,27 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   // ── KALFA PILLESI (6 alet, 89 AZN/ay) ────────────────────────────
+
+  {
+    slug: 'yemek-xerci',
+    category: 'maliyye',
+    tier: 'sagird',
+    iconName: 'Calculator',
+    status: 'live',
+    aiProvider: 'none',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'recipeName', type: 'text', required: true },
+        { name: 'menuPrice', type: 'number', required: true },
+        { name: 'portions', type: 'number', required: true },
+        { name: 'targetFoodCost', type: 'number', required: true },
+        { name: 'ingredients', type: 'textarea', required: true },
+      ],
+    },
+    monthlyRunLimit: { sagird: null, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0,
+  },
 
   {
     slug: 'promosyon-roi',

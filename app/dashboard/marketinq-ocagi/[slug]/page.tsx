@@ -14,6 +14,7 @@ import SikayetAnalitiyiPage from '@/components/marketinq-ocagi/sikayet-analitigi
 import MusteriPersonaPage from '@/components/marketinq-ocagi/musteri-persona/MusteriPersonaPage';
 import PnlSimulatorPage from '@/components/marketinq-ocagi/pnl-simulator/PnlSimulatorPage';
 import SezonPlanlamaPage from '@/components/marketinq-ocagi/sezon-planlama/SezonPlanlamaPage';
+import YemekXerciPage from '@/components/marketinq-ocagi/yemek-xerci/YemekXerciPage';
 
 const pageCopy: Record<
   Locale,
@@ -36,6 +37,7 @@ const pageCopy: Record<
       'marka-kompasi': { title: 'Marka Kompası', subtitle: '5 sualda restoranınızın bazardakı yerini tapın', why: 'Konum ucuz/lüks etiketlərdən ibarət deyil — kim üçün, hansı problem, niyə fərqli?' },
       'kst-yoxlayici': { title: 'KST Yoxlayıcı', subtitle: 'Keyfiyyət, Servis, Təmizlik öz-özünə audit', why: 'KST mükəmməlliyi bütün marketinq səylərinin təməlidir.' },
       'menyu-analitigi': { title: 'Menyu Analitiği', subtitle: 'Menyu pozisiyalarının rentabelliyini analiz edin', why: 'Menyunun 20%-i satışın 80%-ni yaradır. Hansı yemək ulduz, hansı yük olduğunu bilmək gəliri artırır.' },
+      'yemek-xerci': { title: 'Yemək Xərci', subtitle: 'Resept kartı ilə porsiya maya dəyərini hesabla', why: 'Qiyməti göz ölçüsü ilə qoymaq marjanı yeyir. Bu alət ərzaq xərcini, trim loss-u və porsiya sayını bir yerdə hesablayır.' },
       'promosyon-roi': { title: 'Promosyon ROI', subtitle: 'Baz Hafta vs Promo Hafta — real ROI hesabla', why: 'Endirimsiz də gələcək müştərilərin əlavə endirimi marjını yeyir. Bu alət incremental satışı ölçür.' },
       'pnl-simulator': { title: 'P&L Simulator', subtitle: 'Aylıq gəlir-xərc modelləşdirməsi', why: 'P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir.' },
       'sikayet-analitigi': { title: 'Şikayət Analitiği', subtitle: 'Müştəri şikayətlərini AI ilə analiz et', why: 'Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır.' },
@@ -58,6 +60,7 @@ const pageCopy: Record<
       'marka-kompasi': { title: 'Brand Compass', subtitle: 'Find your market position in 5 questions', why: 'Positioning is about who, what problem, why different.' },
       'kst-yoxlayici': { title: 'QSC Checker', subtitle: 'Quality, Service, Cleanliness self-audit', why: 'QSC excellence is the foundation of all marketing.' },
       'menyu-analitigi': { title: 'Menu Analytics', subtitle: 'Analyze menu item profitability', why: '20% of your menu generates 80% of sales.' },
+      'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
       'promosyon-roi': { title: 'Promo ROI', subtitle: 'Base vs Promo Week — real ROI', why: 'Discounts may bring existing customers at lower margin.' },
       'pnl-simulator': { title: 'P&L Simulator', subtitle: 'Monthly revenue-expense modeling', why: 'Restaurants tracking P&L monthly outperform competitors.' },
       'sikayet-analitigi': { title: 'Complaint Analytics', subtitle: 'AI-powered complaint analysis', why: 'For every complaint, 26 unhappy customers stay silent.' },
@@ -80,6 +83,7 @@ const pageCopy: Record<
       'marka-kompasi': { title: 'Marka Pusulası', subtitle: '5 soruda konumunuzu bulun', why: 'Konumlandırma ucuz/lüks etiketlerinden ibaret değil.' },
       'kst-yoxlayici': { title: 'KST Denetçisi', subtitle: 'Kalite, Servis, Temizlik denetimi', why: 'KST mükemmelliği tüm pazarlama çabalarının temelidir.' },
       'menyu-analitigi': { title: 'Menü Analitiği', subtitle: 'Menü kalemlerinin karlılığı', why: 'Menünüzün %20\'si satışın %80\'ini yaratır.' },
+      'yemek-xerci': { title: 'Yemek Maliyeti', subtitle: 'Reçete kartı ile porsiyon maliyetini hesapla', why: 'Fiyatı göz kararı koymak marjı kaçırır. Bu araç ürün maliyeti, fire ve porsiyon sayısını birlikte hesaplar.' },
       'promosyon-roi': { title: 'Promosyon ROI', subtitle: 'Baz vs Promo Hafta — gerçek ROI', why: 'İndirimler mevcut müşterilere daha düşük marjla hizmet verebilir.' },
       'pnl-simulator': { title: 'P&L Simülatörü', subtitle: 'Aylık gelir-gider modeli', why: 'Aylık P&L hazırlayan restoran rakiplerinin önündedir.' },
       'sikayet-analitigi': { title: 'Şikayet Analitiği', subtitle: 'AI şikayet analizi', why: 'Her şikayetin arkasında 26 sessiz mutsuz müşteri var.' },
@@ -102,6 +106,7 @@ const pageCopy: Record<
       'marka-kompasi': { title: 'Компас Бренда', subtitle: 'Найдите свою позицию за 5 вопросов', why: 'Позиционирование — это не про дёшево/дорого.' },
       'kst-yoxlayici': { title: 'KST Аудитор', subtitle: 'Самопроверка Качества, Сервиса, Чистоты', why: 'Совершенство KST — основа всех маркетинговых усилий.' },
       'menyu-analitigi': { title: 'Анализ Меню', subtitle: 'Рентабельность позиций меню', why: '20% меню создаёт 80% продаж.' },
+      'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
       'promosyon-roi': { title: 'ROI Промоакций', subtitle: 'Базовая vs Промо неделя — реальный ROI', why: 'Скидки могут привлечь существующих клиентов с меньшей маржой.' },
       'pnl-simulator': { title: 'P&L Симулятор', subtitle: 'Ежемесячное моделирование', why: 'Рестораны с ежемесячным P&L опережают конкурентов.' },
       'sikayet-analitigi': { title: 'Анализ Жалоб', subtitle: 'AI-анализ жалоб', why: 'За каждой жалобой стоят 26 молчаливых недовольных клиентов.' },
@@ -141,6 +146,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'menyu-analitigi' && tool.status === 'live') {
     return <MenyuAnalitiyiPage />;
+  }
+  if (slug === 'yemek-xerci' && tool.status === 'live') {
+    return <YemekXerciPage />;
   }
   if (slug === 'sikayet-analitigi' && tool.status === 'live') {
     return <SikayetAnalitiyiPage />;
