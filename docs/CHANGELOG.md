@@ -4,6 +4,10 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- TASK-0131: Dashboard input/textarea/select contrast fix (globals.css systemic)
+  - Root cause: body color #eaeaea (landing dark) inherited by dashboard inputs on bg-white
+  - Fix: global input/textarea/select { color: var(--dk-ink) } + placeholder { color: var(--dk-ink-soft) }
+  - Affects all 11 marketing tools + dashboard forms
 - TASK-0130: Reklam Yazıcısı AI tool (Marketinq Ocağı, KALFA tier)
   - 3 variant: attention / informative / sales
   - Platform-specific: Instagram, Facebook, TikTok, Google Ads
