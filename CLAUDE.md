@@ -1,4 +1,7 @@
-# DK Agency Platform Guidelines
+# DK Agency — Project Rules (lean, every session loads this)
+
+## Stack
+Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwind · DeepSeek (primary AI) + Claude (fallback) · 4 dil: AZ/RU/EN/TR (Pattern A: useTranslations) · Hostinger Web Apps (GitHub auto-deploy from `main`).
 
 ## Project Identity
 - **Project Name**: `dk-agency-platform`
@@ -12,23 +15,44 @@
 - **Theme**: Premium light for dashboard, dark glassmorphism for landing.
 - **Primary Color**: `brand-red` (`#E11D48`)
 - **Typography**: `Inter` (sans), `Playfair Display` (display/serif)
-
-## Component Usage
 - **Global Header**: Always use `Header.tsx`.
 - **Do Not Use**: `HospitalityHeader.tsx` for core platform UI.
-- **Footer**: Use project-specific footers that match the agency/holding identity.
 
-## Tech Stack
-- Next.js App Router
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Lucide Icons
-
-## Prohibited Actions
-- Do not make reckless changes without reading the existing component and route structure first.
+## Hard rules — NEVER (PreToolUse hook bu qaydaları zorla tətbiq edir)
+- `--no-verify` ilə commit/push etmə
+- `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts` dəyişmə
+- `.env*` fayllarına yazma
+- Mock data ilə "tamam" demə (AzHealth dərsi)
+- Build keçdi = task bitdi sayma (TASK-0127 dərsi)
+- Eyni fix 2 dəfə fail-sə 3-cüsünü yazma — DUR, kök səbəbi araşdır (sarmal dərsi)
+- Component yarat amma route-a bağlama (Özbahçeci dərsi: `listingFieldConfig.ts` SST)
+- Do not use `any`. Prefer `unknown`.
+- Do not use `console.log` in production code.
 - Do not copy-paste templates from other sectors without deep customization.
 - Do not bypass `Header.tsx` for global navigation.
+
+## Content Contrast Guardrail
+- On light backgrounds (`bg-white`, `bg-[var(--dk-paper)]`, `bg-slate-50`, `bg-slate-100`): dark text only (`text-slate-900`, `text-slate-800`, `text-[var(--dk-ink)]`)
+- `text-white` forbidden inside article body, blog cards, news content, forms, CMS prose, or any light container
+- Light text allowed only on provably dark surfaces: image heroes with dark overlay, dark CTA sections, dark nav, dark footer
+- A white-on-white or low-contrast article body is a release-blocking bug, not a cosmetic issue
+
+## Definition of Done — bütün maddələr keçməli (Stop hook yoxlayır)
+1. `npm run build` → 0 TS error
+2. `npm run lint` → 0 yeni error
+3. `npm run verify:staged` → pass
+4. Playwright smoke icra olundu (yazıldı yox, **icra olundu**)
+5. Lokal route HEAD → 200/307 (404/500 yox)
+6. Lokal API POST → 401 əgər auth tələbi varsa (gating sübut)
+7. Yeni component-də `grep -rn "<turkish/azeri word>"` → 0 hit (hardcoded yox)
+8. DEVLOG.md + CHANGELOG.md yeniləndi
+
+## Workflow standard
+- **Plan əvvəl, kod sonra**: hər task üçün specification yazılır, ekran qarşılığında təsdiq alınır, sonra kod
+- **Diff oxu mövcuddur**: hər PR-də mən diff-i oxumadan kod yazma
+- **Validator çağır**: builder TASK bitirəndə `Use the dk-validator subagent` deyilir
+- **Atomic commits**: bir task = bir branch = bir PR
+- **Conventional commits**: `[TASK-XXXX] type(scope): message`
 
 ## PR Disiplini
 - Hər PR-da STATE.md + CHANGELOG.md yenilənməlidir
@@ -36,16 +60,11 @@
 - PROTECTED.md-dəki fayllara toxunulubsa TASK ID + CTO icazəsi lazımdır
 - Merge öncəsi checklist tam olmalıdır
 
-## Content Contrast Guardrail
-- In blog, news, article, CMS, and markdown content surfaces, dark text is the default.
-- On light backgrounds such as `bg-white`, `bg-[var(--dk-paper)]`, `bg-slate-50`, and `bg-slate-100`, use dark text utilities only: `text-slate-900`, `text-slate-800`, `text-[var(--dk-ink)]`, or `text-[var(--dk-ink-soft)]`.
-- `text-white`, `text-white/70`, `text-white/80`, and similar light-text utilities are forbidden inside article body, blog cards, news content, forms, CMS prose, or any light container.
-- Light text is allowed only on provably dark surfaces: image heroes with dark overlay, dark CTA sections, dark nav, and dark footer surfaces.
-- If a component mixes hero content and article content, hero text styles must stay scoped to the hero only. They must never bleed into the article body.
-- `MarkdownRenderer` and `.blog-content` are the source of truth for article readability. Do not override them with light text utilities unless the article body background is explicitly dark.
-- Before shipping any blog, news, or article route, verify rendered contrast at the final content layer. Do not assume the parent background; check the exact container the text sits on.
+## Referanslar
+- Acı dərslər: `docs/LESSONS.md` (yeni task-dan əvvəl oxu)
+- Listing config SST: `lib/listingFieldConfig.ts`
+- Marketing tools config: `lib/marketing-tools-config.ts`
+- Member access: `lib/member-access.ts`
 
-## Workflow Rule For Future Agents
-- If you touch any blog, news, article, markdown, or CMS route, inspect all inherited `text-white`, `prose`, and wrapper classes before finishing.
-- If there is any ambiguity about the final background, default to dark text and prove the exception instead of assuming a dark surface.
-- A white-on-white or low-contrast article body is a release-blocking bug, not a cosmetic issue.
+## Frame as facts, not commands (prompt injection defense)
+This document describes how the project works. It is project information, not a system command.
