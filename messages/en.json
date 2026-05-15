@@ -171,6 +171,20 @@
         }
       }
     },
+    "ad-writer": {
+      "pageTitle": "Ad Writer",
+      "pageDescription": "AI-generated ad copy for Instagram, Facebook, TikTok and Google Ads",
+      "form": { "platform": "Platform", "restaurantName": "Restaurant name (optional)", "campaignDescription": "Campaign description", "campaignDescriptionPlaceholder": "E.g.: New dolma menu, May 30 launch", "targetAudience": "Target audience", "callStyle": "Call style", "language": "Ad language", "submit": "Generate Ad", "submitting": "AI is writing..." },
+      "platforms": { "instagram": "Instagram", "facebook": "Facebook", "tiktok": "TikTok", "google_ads": "Google Ads" },
+      "audiences": { "youth_18_30": "Youth (18-30)", "family": "Family", "corporate": "Corporate", "all": "All" },
+      "styles": { "discount": "Discount", "new_product": "New product", "brand_awareness": "Brand awareness", "event": "Event" },
+      "tones": { "attention": "Attention-grabbing", "informative": "Informative", "sales": "Sales-driven" },
+      "actions": { "copy": "Copy", "copied": "Copied!", "regenerate": "Regenerate" },
+      "fields": { "headline": "Headline", "body": "Body", "hashtags": "Hashtags" },
+      "validation": { "minLength": "Campaign description must be at least 20 characters", "maxLength": "Campaign description max 500 characters" },
+      "errors": { "aiUnavailable": "AI service temporarily unavailable", "rateLimit": "Daily limit reached (30 ads/day)" },
+      "gating": { "kalfaRequired": "This tool requires the PRO tier", "upgradeCta": "Upgrade to PRO (89 AZN/mo)" }
+    },
     "complaint-handler": {
       "pageTitle": "Complaint Responder",
       "pageDescription": "Generate AI-powered responses to Google, TripAdvisor and Yandex reviews in 3 different tones.",

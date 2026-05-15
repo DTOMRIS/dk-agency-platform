@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-15 — TASK-0130 Reklam Yazıcısı
+
+### What
+AI ad copy generator for Instagram, Facebook, TikTok, Google Ads. 3 tones (attention/informative/sales) with platform-specific character limits and hashtags.
+
+### Pattern
+- Copied complaint-response route.ts line-by-line for auth/DB contract (L-002 lesson applied)
+- Same wrapper pattern: ReklamYazicisiPage (pageCopy, viewMode, ToolInfoBox)
+- Prompt builder: platform limits, Ahilik values, 2 few-shot examples
+- Config: reklam-yazicisi status changed from 'planned' to 'live'
+- Rate limit: 30/day/user (vs 20 for complaint handler)
+
 ## 2026-05-15 — TASK-0128 Şikayət Cavablandırıcı
 
 ### What

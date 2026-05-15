@@ -171,6 +171,20 @@
         }
       }
     },
+    "ad-writer": {
+      "pageTitle": "Reklam Yazıcısı",
+      "pageDescription": "AI ilə Instagram, Facebook, TikTok və Google Ads üçün reklam mətni yazın",
+      "form": { "platform": "Platform", "restaurantName": "Restoran adı (opsional)", "campaignDescription": "Kampaniya təsviri", "campaignDescriptionPlaceholder": "Məs: Yeni dolma menyusu, 30 May açılışı", "targetAudience": "Hədəf auditoriya", "callStyle": "Çağırış stili", "language": "Reklam dili", "submit": "Reklam Yarat", "submitting": "AI yazır..." },
+      "platforms": { "instagram": "Instagram", "facebook": "Facebook", "tiktok": "TikTok", "google_ads": "Google Ads" },
+      "audiences": { "youth_18_30": "Gənclər (18-30)", "family": "Ailə", "corporate": "Korporativ", "all": "Hamısı" },
+      "styles": { "discount": "Endirim", "new_product": "Yeni məhsul", "brand_awareness": "Brand tanınma", "event": "Event" },
+      "tones": { "attention": "Diqqət çəkən", "informative": "İnformativ", "sales": "Satış-yönlü" },
+      "actions": { "copy": "Kopyala", "copied": "Kopyalandı!", "regenerate": "Yenidən yarat" },
+      "fields": { "headline": "Başlıq", "body": "Mətn", "hashtags": "Hashtag-lar" },
+      "validation": { "minLength": "Kampaniya təsviri ən az 20 simvol olmalıdır", "maxLength": "Kampaniya təsviri maksimum 500 simvol" },
+      "errors": { "aiUnavailable": "AI xidməti müvəqqəti əlçatmazdır", "rateLimit": "Günlük limit doldu (30 reklam/gün)" },
+      "gating": { "kalfaRequired": "Bu alət KALFA tier üçündür", "upgradeCta": "KALFA-ya yüksəl (89 AZN/ay)" }
+    },
     "complaint-handler": {
       "pageTitle": "Şikayət Cavablandırıcı",
       "pageDescription": "Google, TripAdvisor və Yandex şikayətlərinə AI ilə 3 fərqli tonda cavab yaradın.",

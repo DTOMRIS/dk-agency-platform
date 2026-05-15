@@ -229,6 +229,20 @@
         }
       }
     },
+    "ad-writer": {
+      "pageTitle": "Генератор рекламы",
+      "pageDescription": "AI-тексты для Instagram, Facebook, TikTok и Google Ads",
+      "form": { "platform": "Платформа", "restaurantName": "Название ресторана (необязательно)", "campaignDescription": "Описание кампании", "campaignDescriptionPlaceholder": "Напр.: Новое меню долмы, открытие 30 мая", "targetAudience": "Целевая аудитория", "callStyle": "Стиль призыва", "language": "Язык рекламы", "submit": "Создать рекламу", "submitting": "AI пишет..." },
+      "platforms": { "instagram": "Instagram", "facebook": "Facebook", "tiktok": "TikTok", "google_ads": "Google Ads" },
+      "audiences": { "youth_18_30": "Молодёжь (18-30)", "family": "Семья", "corporate": "Корпоратив", "all": "Все" },
+      "styles": { "discount": "Скидка", "new_product": "Новый продукт", "brand_awareness": "Узнаваемость", "event": "Мероприятие" },
+      "tones": { "attention": "Привлекающий", "informative": "Информативный", "sales": "Продающий" },
+      "actions": { "copy": "Копировать", "copied": "Скопировано!", "regenerate": "Сгенерировать заново" },
+      "fields": { "headline": "Заголовок", "body": "Текст", "hashtags": "Хэштеги" },
+      "validation": { "minLength": "Описание кампании минимум 20 символов", "maxLength": "Описание кампании максимум 500 символов" },
+      "errors": { "aiUnavailable": "AI-сервис временно недоступен", "rateLimit": "Дневной лимит исчерпан (30 реклам/день)" },
+      "gating": { "kalfaRequired": "Требуется уровень ПОДМАСТЕРЬЕ", "upgradeCta": "Повысить до ПОДМАСТЕРЬЕ (89 AZN/мес)" }
+    },
     "complaint-handler": {
       "pageTitle": "Ответчик на жалобы",
       "pageDescription": "Создавайте AI-ответы на отзывы Google, TripAdvisor и Yandex в 3 разных тонах.",
