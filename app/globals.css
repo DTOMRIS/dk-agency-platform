@@ -109,6 +109,20 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* ── DASHBOARD INPUT CONTRAST FIX ────────────────────────────────────
+ * Root cause: body { color: #eaeaea } is for dark landing.
+ * Dashboard uses bg-white but inputs inherit #eaeaea = invisible text.
+ * This scopes dark text to all form elements inside light containers.
+ * TASK-0131 — one-time systemic fix, not per-tool yamaq.
+ */
+input, textarea, select {
+  color: var(--dk-ink);
+}
+input::placeholder, textarea::placeholder {
+  color: var(--dk-ink-soft);
+  opacity: 1;
+}
+
 /* Scrollbar gizleme */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
