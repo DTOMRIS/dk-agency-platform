@@ -16,6 +16,7 @@ import PnlSimulatorPage from '@/components/marketinq-ocagi/pnl-simulator/PnlSimu
 import SezonPlanlamaPage from '@/components/marketinq-ocagi/sezon-planlama/SezonPlanlamaPage';
 import YemekXerciPage from '@/components/marketinq-ocagi/yemek-xerci/YemekXerciPage';
 import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
+import ReklamYazicisiPage from '@/components/marketinq-ocagi/reklam-yazicisi/ReklamYazicisiPage';
 
 const pageCopy: Record<
   Locale,
@@ -169,6 +170,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'sezon-planlama' && tool.status === 'live') {
     return <SezonPlanlamaPage />;
+  }
+  if (slug === 'reklam-yazicisi' && tool.status === 'live') {
+    return <ReklamYazicisiPage />;
   }
 
   const tierColors = TIER_COLORS[tool.tier];

@@ -4,6 +4,11 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- TASK-0130: Reklam Yazıcısı AI tool (Marketinq Ocağı, KALFA tier)
+  - 3 variant: attention / informative / sales
+  - Platform-specific: Instagram, Facebook, TikTok, Google Ads
+  - POST /api/ai/ad-writer (DeepSeek + Claude fallback)
+  - 4-language i18n, Playwright smoke tests
 - TASK-0128: Şikayət Cavablandırıcı AI tool (Marketinq Ocağı, KALFA tier)
   - 3 component: SikayetCavablandiriciPage, SikayetForm, SikayetCavablari
   - POST /api/ai/complaint-response (DeepSeek primary, Claude fallback)
