@@ -170,6 +170,49 @@
           "breakEven": { "title": "What Is Break-even Point?", "slug": "basabas-noqtesi", "tag": "Operations" }
         }
       }
+    },
+    "complaint-handler": {
+      "pageTitle": "Complaint Responder",
+      "pageDescription": "Generate AI-powered responses to Google, TripAdvisor and Yandex reviews in 3 different tones.",
+      "form": {
+        "complaintText": "Complaint text",
+        "complaintTextPlaceholder": "Paste the customer complaint here...",
+        "complaintLanguage": "Complaint language",
+        "responseLanguage": "Response language",
+        "restaurantName": "Restaurant name (optional)",
+        "complaintType": "Complaint type",
+        "submitButton": "Generate Response",
+        "submitting": "AI is generating responses..."
+      },
+      "complaintTypes": {
+        "food": "Food",
+        "service": "Service",
+        "price": "Price",
+        "cleanliness": "Cleanliness",
+        "other": "Other"
+      },
+      "tones": {
+        "formal": "Formal",
+        "friendly": "Friendly",
+        "short": "Short"
+      },
+      "actions": {
+        "copy": "Copy",
+        "copied": "Copied!",
+        "regenerate": "Regenerate"
+      },
+      "validation": {
+        "minLength": "Complaint must be at least 10 characters",
+        "maxLength": "Complaint cannot exceed 2000 characters"
+      },
+      "errors": {
+        "aiUnavailable": "AI service is temporarily unavailable",
+        "rateLimit": "Daily limit reached (20 responses/day). Try again tomorrow."
+      },
+      "gating": {
+        "kalfaRequired": "This tool requires the PRO tier",
+        "upgradeCta": "Upgrade to PRO (89 AZN/mo)"
+      }
     }
   },
   "blog": {

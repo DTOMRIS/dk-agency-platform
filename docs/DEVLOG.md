@@ -1,5 +1,29 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-15 — TASK-0128 Şikayət Cavablandırıcı
+
+### What
+AI tool that generates 3-tone responses (formal/friendly/short) to restaurant review complaints from Google, TripAdvisor, Yandex.
+
+### Pattern
+- Followed PnlSimulatorPage wrapper pattern (pageCopy per locale, view state machine, ToolInfoBox)
+- API follows sikayet-analitigi route pattern (Zod validation, checkToolAccess gating, callAIJson with DeepSeek primary + Claude fallback)
+- Prompt builder uses Ahilik values: apology + concrete solution + re-invitation
+- 4 locale translations added to messages/*.json under `toolkit.complaint-handler`
+- In-memory rate limit (20/day/user) instead of Redis
+
+### Files created
+- `components/marketinq-ocagi/sikayet-cavablandirici/` (3 components)
+- `lib/ai/complaint-prompt-builder.ts`
+- `app/api/ai/complaint-response/route.ts`
+- `e2e/sikayet-cavablandirici.spec.ts`
+
+### Files modified
+- `lib/marketing-tools-config.ts` — new tool entry
+- `app/dashboard/marketinq-ocagi/page.tsx` — 4-locale title/subtitle
+- `app/dashboard/marketinq-ocagi/[slug]/page.tsx` — import + routing
+- `messages/*.json` (4 files) — complaint-handler namespace
+
 ## 2026-05-04 — Auth redirect / hostname fix package
 
 ### Problem

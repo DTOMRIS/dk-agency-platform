@@ -170,6 +170,49 @@
           "breakEven": { "title": "Başabaş Nöqtəsi Nədir?", "slug": "basabas-noqtesi", "tag": "Əməliyyat" }
         }
       }
+    },
+    "complaint-handler": {
+      "pageTitle": "Şikayət Cavablandırıcı",
+      "pageDescription": "Google, TripAdvisor və Yandex şikayətlərinə AI ilə 3 fərqli tonda cavab yaradın.",
+      "form": {
+        "complaintText": "Şikayət mətni",
+        "complaintTextPlaceholder": "Müştərinin şikayətini buraya yapışdırın...",
+        "complaintLanguage": "Şikayət dili",
+        "responseLanguage": "Cavab dili",
+        "restaurantName": "Restoran adı (opsional)",
+        "complaintType": "Şikayət növü",
+        "submitButton": "Cavab Yarat",
+        "submitting": "AI cavab yaradır..."
+      },
+      "complaintTypes": {
+        "food": "Yemək",
+        "service": "Xidmət",
+        "price": "Qiymət",
+        "cleanliness": "Təmizlik",
+        "other": "Digər"
+      },
+      "tones": {
+        "formal": "Rəsmi",
+        "friendly": "Səmimi",
+        "short": "Qısa"
+      },
+      "actions": {
+        "copy": "Kopyala",
+        "copied": "Kopyalandı!",
+        "regenerate": "Yenidən yarat"
+      },
+      "validation": {
+        "minLength": "Şikayət ən az 10 simvol olmalıdır",
+        "maxLength": "Şikayət maksimum 2000 simvol ola bilər"
+      },
+      "errors": {
+        "aiUnavailable": "AI xidməti müvəqqəti əlçatmazdır",
+        "rateLimit": "Günlük limit doldu (20 cavab/gün). Sabah yenidən yoxlayın."
+      },
+      "gating": {
+        "kalfaRequired": "Bu alət KALFA tier üçündür",
+        "upgradeCta": "KALFA-ya yüksəl (89 AZN/ay)"
+      }
     }
   },
   "blog": {

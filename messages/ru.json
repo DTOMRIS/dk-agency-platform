@@ -228,6 +228,49 @@
           "breakEven": { "title": "Что такое точка безубыточности?", "slug": "basabas-noqtesi", "tag": "Операции" }
         }
       }
+    },
+    "complaint-handler": {
+      "pageTitle": "Ответчик на жалобы",
+      "pageDescription": "Создавайте AI-ответы на отзывы Google, TripAdvisor и Yandex в 3 разных тонах.",
+      "form": {
+        "complaintText": "Текст жалобы",
+        "complaintTextPlaceholder": "Вставьте жалобу клиента сюда...",
+        "complaintLanguage": "Язык жалобы",
+        "responseLanguage": "Язык ответа",
+        "restaurantName": "Название ресторана (необязательно)",
+        "complaintType": "Тип жалобы",
+        "submitButton": "Создать ответ",
+        "submitting": "AI создаёт ответы..."
+      },
+      "complaintTypes": {
+        "food": "Еда",
+        "service": "Обслуживание",
+        "price": "Цена",
+        "cleanliness": "Чистота",
+        "other": "Другое"
+      },
+      "tones": {
+        "formal": "Официальный",
+        "friendly": "Дружелюбный",
+        "short": "Краткий"
+      },
+      "actions": {
+        "copy": "Копировать",
+        "copied": "Скопировано!",
+        "regenerate": "Сгенерировать заново"
+      },
+      "validation": {
+        "minLength": "Жалоба должна содержать минимум 10 символов",
+        "maxLength": "Жалоба не может превышать 2000 символов"
+      },
+      "errors": {
+        "aiUnavailable": "AI-сервис временно недоступен",
+        "rateLimit": "Дневной лимит исчерпан (20 ответов/день). Попробуйте завтра."
+      },
+      "gating": {
+        "kalfaRequired": "Этот инструмент требует уровень ПОДМАСТЕРЬЕ",
+        "upgradeCta": "Повысить до ПОДМАСТЕРЬЕ (89 AZN/мес)"
+      }
     }
   },
   "blog": {
