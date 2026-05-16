@@ -3,6 +3,13 @@
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
+### Fixed
+- [TASK-0134-FIX] fix(admin): resolve validator blocks — spec locale fix + i18n pageCopy
+  - E2E spec: locale prefix (`/${locale}/dashboard/users`) silindi, dashboard route-ları locale-independent
+  - pageCopy inline obyekti component-dən çıxarıldı, `useTranslations('dashboard.members')` ilə əvəz
+  - messages/az.json, en.json, ru.json, tr.json: `dashboard.members.*` namespace (4 dil tam)
+  - dk-validator L-004 (inline pageCopy) + E2E locale prefix block-ları həll edildi
+
 ### Added
 - TASK-0134: Admin İstifadəçilər page → real DB (mock removed)
   - GET /api/admin/members (admin-only, JOIN profiles+subscriptions, pagination, stats)

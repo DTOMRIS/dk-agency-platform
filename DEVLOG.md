@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-16 - TASK-0134-FIX Validator Block Resolution
+
+**Niyə:** PR #134 dk-validator tərəfindən BLOCK edildi: (1) E2E spec-də `/${locale}/dashboard/users` istifadə olunurdu — dashboard route-ları locale-independent-dir; (2) Component içində inline pageCopy obyekti L-004 pozuntusudur.
+
+**Nə dəyişdi:** E2E spec-dən locale prefix silindi (`/dashboard/users` birbaşa istifadə), page.tsx + MembersTable.tsx-dəki bütün UI mətnləri `messages/*.json` fayllarına `dashboard.members.*` namespace altına köçürüldü, component-lərdə `useTranslations('dashboard.members')` istifadə edilir. 4 dil (az/en/ru/tr) tam.
+
+**Dərs:** Dashboard route-ları Next.js app router-da `app/dashboard/` altındadır, `app/[locale]/dashboard/` yox. E2E spec-lər real routing strukturuna uyğun yazılmalıdır. Inline UI mətnləri nə qədər kiçik olsa da messages/*.json-a getməlidir — validator L-004 qaydası istisnasızdır.
+
+---
+
 ## 2026-05-15 - TASK-0127 Food Cost Calculator Repair
 
 **Niye:** PR #126 TASK-0127-ni tamamlanmis kimi merge etdi, amma main-de sadece task card var idi. `app`, `components`, `lib` altinda `yemek-xerci` implementasiyasi yox idi.

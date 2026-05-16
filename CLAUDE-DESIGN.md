@@ -311,3 +311,25 @@ Qayda:
 - `menyu-analitigi`, `promosyon-roi`, `musteri-persona` tool-specific brain alir.
 - Kicik scope tool-lar yalniz Dogan core rules ile baslayir.
 - Frontend premium render TASK-0125-de geleceyi ucun Sezon Planlama legacy quick-view JSON fields saxlanilmalidir.
+
+## TASK-0134 - Dashboard Admin i18n Pattern
+
+Dashboard admin səhifələri (app/dashboard/) üçün i18n qaydası:
+
+**Namespace:** `dashboard.<page>` (məs: `dashboard.members`, `dashboard.ilanlar`)
+
+**Fayl strukturu:**
+- Component: `useTranslations('dashboard.members')` hook istifadə edir
+- Açarlar: `messages/az.json`, `messages/en.json`, `messages/ru.json`, `messages/tr.json` — hər 4 dil TAM olmalı
+
+**Qadağan:**
+- Component içində inline `pageCopy`, `labels`, `translations` obyekti (L-004 pozuntusudur)
+- E2E spec-lərdə dashboard URL-lərinə locale prefix əlavə etmə (`/dashboard/users` doğrudur, `/${locale}/dashboard/users` YANLIŞ)
+
+**E2E spec pattern:**
+```ts
+// DOĞRU — dashboard locale-independent-dir
+await request.get('/dashboard/users');
+// YANLIŞ — locale prefix əlavə etmə
+await request.get(`/${locale}/dashboard/users`);
+```
