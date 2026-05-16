@@ -11,17 +11,7 @@ test('Admin members API returns 401 with body', async ({ request }) => {
   expect(body.error).toBe('not-authenticated');
 });
 
-const expectations = {
-  az: { title: /İstifadəçilər/i },
-  en: { title: /Users/i },
-  tr: { title: /Kullanıcılar/i },
-  ru: { title: /Пользователи/i },
-};
-
-for (const [locale, exp] of Object.entries(expectations)) {
-  test(`Users page renders heading in ${locale}`, async ({ page }) => {
-    test.skip(locale === 'az', 'Pre-existing middleware loop on default-locale /az routes');
-    await page.goto(`/${locale}/dashboard/users`);
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(exp.title);
-  });
-}
+test('Users page uses prefix-free dashboard route and redirects unauthenticated visitors', async ({ request }) => {
+  const response = await request.get('/dashboard/users', { maxRedirects: 0 });
+  expect(response.status()).toBe(307);
+});

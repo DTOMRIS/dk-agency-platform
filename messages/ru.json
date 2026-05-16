@@ -326,6 +326,51 @@
       "notifications": "Уведомления",
       "profile": "Профиль",
       "logout": "Выйти"
+    },
+    "members": {
+      "pageTitle": "Пользователи",
+      "pageSubtitle": "Зарегистрированные участники и статусы подписок",
+      "error": "Произошла ошибка, попробуйте снова",
+      "stats": {
+        "total": "Всего участников",
+        "verified": "Подтвержденные",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      },
+      "columns": {
+        "email": "Email",
+        "name": "Имя",
+        "company": "Компания",
+        "plan": "План",
+        "status": "Статус",
+        "phone": "Телефон",
+        "createdAt": "Регистрация"
+      },
+      "filters": {
+        "allStatuses": "Все статусы",
+        "allPlans": "Все планы",
+        "searchPlaceholder": "Поиск по email или имени"
+      },
+      "states": {
+        "loading": "Загрузка...",
+        "empty": "Пока нет зарегистрированных участников"
+      },
+      "pagination": {
+        "prev": "Назад",
+        "next": "Далее",
+        "pageLabel": "Страница"
+      },
+      "statuses": {
+        "active": "Активный",
+        "trial": "Пробный",
+        "expired": "Истек",
+        "cancelled": "Отменен"
+      },
+      "plans": {
+        "sagird": "SAGIRD",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      }
     }
   },
   "contact": {

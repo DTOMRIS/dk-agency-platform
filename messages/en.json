@@ -268,6 +268,51 @@
       "notifications": "Notifications",
       "profile": "Profile",
       "logout": "Sign out"
+    },
+    "members": {
+      "pageTitle": "Users",
+      "pageSubtitle": "Registered members and subscription statuses",
+      "error": "An error occurred, please try again",
+      "stats": {
+        "total": "Total members",
+        "verified": "Verified",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      },
+      "columns": {
+        "email": "Email",
+        "name": "Name",
+        "company": "Company",
+        "plan": "Plan",
+        "status": "Status",
+        "phone": "Phone",
+        "createdAt": "Registered"
+      },
+      "filters": {
+        "allStatuses": "All statuses",
+        "allPlans": "All plans",
+        "searchPlaceholder": "Search email or name"
+      },
+      "states": {
+        "loading": "Loading...",
+        "empty": "No members registered yet"
+      },
+      "pagination": {
+        "prev": "Previous",
+        "next": "Next",
+        "pageLabel": "Page"
+      },
+      "statuses": {
+        "active": "Active",
+        "trial": "Trial",
+        "expired": "Expired",
+        "cancelled": "Cancelled"
+      },
+      "plans": {
+        "sagird": "SAGIRD",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      }
     }
   },
   "contact": {
