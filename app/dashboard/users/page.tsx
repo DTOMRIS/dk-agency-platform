@@ -45,6 +45,7 @@ export default function DashboardUsersPage() {
   const [search, setSearch] = useState('');
   const [planFilter, setPlanFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
   const fetchMembers = useCallback(async () => {
     setLoading(true);
@@ -63,6 +64,7 @@ export default function DashboardUsersPage() {
       setMembers(data.members);
       setStats(data.stats);
       setTotalPages(data.totalPages);
+      if (data.currentUserId) setCurrentUserId(data.currentUserId);
     } catch {
       setError(t('error'));
     } finally {
@@ -73,6 +75,24 @@ export default function DashboardUsersPage() {
   useEffect(() => {
     fetchMembers();
   }, [fetchMembers]);
+
+  const handleRoleChange = useCallback(
+    async (memberId: number, newRole: string) => {
+      const res = await fetch(`/api/admin/members/${memberId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: newRole }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'role-change-failed');
+      }
+      setMembers((prev) =>
+        prev.map((m) => (m.id === memberId ? { ...m, role: newRole } : m)),
+      );
+    },
+    [],
+  );
 
   return (
     <div className="bg-white p-6 lg:p-8">
@@ -108,6 +128,8 @@ export default function DashboardUsersPage() {
           search={search}
           planFilter={planFilter}
           statusFilter={statusFilter}
+          currentUserId={currentUserId}
+          onRoleChange={handleRoleChange}
           onSearchChange={(v) => {
             setSearch(v);
             setPage(1);

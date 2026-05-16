@@ -341,10 +341,18 @@
         "email": "Email",
         "name": "Ad",
         "company": "Şirket",
+        "role": "Rol",
         "plan": "Plan",
         "status": "Durum",
         "phone": "Telefon",
         "createdAt": "Kayıt"
+      },
+      "roles": {
+        "member": "Üye",
+        "admin": "Admin",
+        "changeSuccess": "Rol güncellendi",
+        "changeError": "Hata oluştu",
+        "selfForbidden": "Kendi rolünü değiştiremezsin"
       },
       "filters": {
         "allStatuses": "Tüm durumlar",

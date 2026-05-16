@@ -333,3 +333,18 @@ await request.get('/dashboard/users');
 // YANLIŞ — locale prefix əlavə etmə
 await request.get(`/${locale}/dashboard/users`);
 ```
+
+## TASK-0135 - Admin Role Management
+
+Admin istifadəçi rolunu dəyişdirmə sistemi:
+
+**API:** `PATCH /api/admin/members/[id]` — body: `{ role: "member" | "admin" }`
+
+**Self-protection qaydası:**
+- API: `targetId === auth.userId` → 403 `self-role-forbidden`
+- UI: `m.id === currentUserId` → select əvəzinə disabled badge + tooltip
+- Bu ikili qat mütləqdir — gələcəkdə yeni admin əməliyyatları da eyni pattern izləməlidir
+
+**currentUserId pattern:** GET `/api/admin/members` response-una `currentUserId: auth.userId` əlavə edilib — ayrıca session fetch lazım deyil
+
+**Xəta statusları:** 400 (invalid role/id/body), 401 (no auth), 403 (not admin / self), 404 (user not found), 503 (DB unavailable)

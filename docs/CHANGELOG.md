@@ -3,6 +3,14 @@
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
+### Added
+- [TASK-0135] feat(admin): role assignment UI + PATCH API endpoint
+  - PATCH /api/admin/members/[id] — rol dəyişdirmə (member ↔ admin)
+  - Self-role protection: admin öz rolunu dəyişə bilməz (403 + UI disabled)
+  - MembersTable: rol sütunu select dropdown ilə (cari admin badge-only)
+  - i18n: dashboard.members.roles.* (4 dil — az/en/ru/tr)
+  - E2E smoke: PATCH 401 + invalid role + invalid id tests
+
 ### Fixed
 - [TASK-0134-FIX] fix(admin): resolve validator blocks — spec locale fix + i18n pageCopy
   - E2E spec: locale prefix (`/${locale}/dashboard/users`) silindi, dashboard route-ları locale-independent

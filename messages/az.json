@@ -283,10 +283,18 @@
         "email": "Email",
         "name": "Ad",
         "company": "Şirkət",
+        "role": "Rol",
         "plan": "Plan",
         "status": "Status",
         "phone": "Telefon",
         "createdAt": "Qeydiyyat"
+      },
+      "roles": {
+        "member": "İstifadəçi",
+        "admin": "Admin",
+        "changeSuccess": "Rol yeniləndi",
+        "changeError": "Xəta baş verdi",
+        "selfForbidden": "Öz rolunu dəyişə bilməzsən"
       },
       "filters": {
         "allStatuses": "Bütün statuslar",

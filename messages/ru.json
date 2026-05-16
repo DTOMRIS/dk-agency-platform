@@ -341,10 +341,18 @@
         "email": "Email",
         "name": "Имя",
         "company": "Компания",
+        "role": "Роль",
         "plan": "План",
         "status": "Статус",
         "phone": "Телефон",
         "createdAt": "Регистрация"
+      },
+      "roles": {
+        "member": "Пользователь",
+        "admin": "Администратор",
+        "changeSuccess": "Роль обновлена",
+        "changeError": "Произошла ошибка",
+        "selfForbidden": "Нельзя изменить свою роль"
       },
       "filters": {
         "allStatuses": "Все статусы",

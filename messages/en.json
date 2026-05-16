@@ -283,10 +283,18 @@
         "email": "Email",
         "name": "Name",
         "company": "Company",
+        "role": "Role",
         "plan": "Plan",
         "status": "Status",
         "phone": "Phone",
         "createdAt": "Registered"
+      },
+      "roles": {
+        "member": "Member",
+        "admin": "Admin",
+        "changeSuccess": "Role updated",
+        "changeError": "An error occurred",
+        "selfForbidden": "Cannot change your own role"
       },
       "filters": {
         "allStatuses": "All statuses",

@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0135 Admin Role Management
+
+**Niyə:** TASK-0134 ilə admin paneldə real istifadəçi siyahısı canlıdır. Adminin digər istifadəçilərin rolunu UI-dan dəyişə bilməsi lazımdır (member ↔ admin).
+
+**Nə dəyişdi:** PATCH `/api/admin/members/[id]` endpoint yaradıldı — JWT auth, self-role protection (öz ID-nə 403), valid role check. MembersTable-da rol sütununa select dropdown əlavə edildi — cari admin-in öz sətirində badge-only (disabled, tooltip ilə). Local state optimistic update + error toast. 4 dil i18n tam (`dashboard.members.roles.*`).
+
+**Dizayn qərarı:** Self-role protection həm API-da (403), həm UI-da (disabled select → badge) tətbiq olundu. İkili qat: frontend yanlışlıqla göndərsə belə backend bloklayır. `currentUserId` əlavə API sorğusu əvəzinə GET members response-una əlavə edildi (1 fetch = members + stats + currentUserId).
+
+**Dərs:** Admin role dəyişikliyi təhlükəli əməliyyatdır — self-protection olmadan admin özünü kilidləyə bilər. Həmişə "özünə" qaydası əlavə et.
+
+---
+
 ## 2026-05-16 - TASK-0134-FIX Validator Block Resolution
 
 **Niyə:** PR #134 dk-validator tərəfindən BLOCK edildi: (1) E2E spec-də `/${locale}/dashboard/users` istifadə olunurdu — dashboard route-ları locale-independent-dir; (2) Component içində inline pageCopy obyekti L-004 pozuntusudur.

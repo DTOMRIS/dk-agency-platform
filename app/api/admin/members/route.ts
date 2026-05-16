@@ -113,5 +113,5 @@ export async function GET(request: NextRequest) {
     subStatus: r.subStatus || null,
   }));
 
-  return NextResponse.json({ members, total, page, totalPages, stats });
+  return NextResponse.json({ members, total, page, totalPages, stats, currentUserId: auth.userId });
 }
