@@ -4,6 +4,10 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- TASK-0134: Admin İstifadəçilər page → real DB (mock removed)
+  - GET /api/admin/members (admin-only, JOIN profiles+subscriptions, pagination, stats)
+  - MembersTable component (filter, pagination, plan badges, 4 dil)
+  - 4 stat cards: total/verified/KALFA/USTA
 - TASK-0131: Dashboard input/textarea/select contrast fix (globals.css systemic)
   - Root cause: body color #eaeaea (landing dark) inherited by dashboard inputs on bg-white
   - Fix: global input/textarea/select { color: var(--dk-ink) } + placeholder { color: var(--dk-ink-soft) }

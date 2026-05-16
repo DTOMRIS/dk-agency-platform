@@ -1,191 +1,156 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { adminUsers } from '@/lib/data/adminContent';
+import { Users, ShieldCheck, Crown, GraduationCap } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import MembersTable from '@/components/dashboard/MembersTable';
+
+interface Member {
+  id: number;
+  email: string;
+  fullName: string | null;
+  company: string | null;
+  phone: string | null;
+  role: string | null;
+  emailVerified: boolean | null;
+  createdAt: string | null;
+  plan: string | null;
+  subStatus: string | null;
+}
+
+interface Stats {
+  total: number;
+  verified: number;
+  kalfa: number;
+  usta: number;
+  sagird: number;
+}
 
 const pageCopy: Record<Locale, {
   pageTitle: string;
   pageSubtitle: string;
-  colName: string;
-  colEmail: string;
-  colPhone: string;
-  colRegistered: string;
-  colVerified: string;
-  colListings: string;
-  colLastLogin: string;
-  colDetails: string;
-  detailsButton: string;
-  closeButton: string;
-  detailEmail: string;
-  detailPhone: string;
-  detailEmailVerified: string;
-  detailListings: string;
-  detailLeads: string;
-  detailLastLogin: string;
-  verifiedYes: string;
-  verifiedNo: string;
+  error: string;
+  stats: { total: string; verified: string; kalfa: string; usta: string };
 }> = {
   az: {
     pageTitle: 'İstifadəçilər',
-    pageSubtitle: 'Mock üzv siyahısı, verify statusu və elan aktivliyi burada görünür.',
-    colName: 'Ad',
-    colEmail: 'Email',
-    colPhone: 'Telefon',
-    colRegistered: 'Qeydiyyat',
-    colVerified: 'Verified',
-    colListings: 'Elan sayı',
-    colLastLogin: 'Son giriş',
-    colDetails: 'Detallar',
-    detailsButton: 'Detallar',
-    closeButton: 'Bağla',
-    detailEmail: 'Email',
-    detailPhone: 'Telefon',
-    detailEmailVerified: 'Email verified',
-    detailListings: 'Elan sayı',
-    detailLeads: 'Lead sayı',
-    detailLastLogin: 'Son giriş',
-    verifiedYes: 'Bəli',
-    verifiedNo: 'Xeyr',
+    pageSubtitle: 'Qeydiyyatdan keçən üzvlər və abunəlik statusları',
+    error: 'Xəta baş verdi, yenidən cəhd edin',
+    stats: { total: 'Cəmi üzv', verified: 'Təsdiqlənmiş', kalfa: 'KALFA', usta: 'USTA' },
   },
   ru: {
     pageTitle: 'Пользователи',
-    pageSubtitle: 'Список mock-участников, статус верификации и активность объявлений отображаются здесь.',
-    colName: 'Имя',
-    colEmail: 'Email',
-    colPhone: 'Телефон',
-    colRegistered: 'Регистрация',
-    colVerified: 'Верифицирован',
-    colListings: 'Объявлений',
-    colLastLogin: 'Последний вход',
-    colDetails: 'Подробности',
-    detailsButton: 'Подробности',
-    closeButton: 'Закрыть',
-    detailEmail: 'Email',
-    detailPhone: 'Телефон',
-    detailEmailVerified: 'Email верифицирован',
-    detailListings: 'Объявлений',
-    detailLeads: 'Лидов',
-    detailLastLogin: 'Последний вход',
-    verifiedYes: 'Да',
-    verifiedNo: 'Нет',
+    pageSubtitle: 'Зарегистрированные участники и статусы подписок',
+    error: 'Произошла ошибка, попробуйте снова',
+    stats: { total: 'Всего', verified: 'Подтверждённые', kalfa: 'KALFA', usta: 'USTA' },
   },
   en: {
     pageTitle: 'Users',
-    pageSubtitle: 'Mock member list, verification status and listing activity are shown here.',
-    colName: 'Name',
-    colEmail: 'Email',
-    colPhone: 'Phone',
-    colRegistered: 'Registered',
-    colVerified: 'Verified',
-    colListings: 'Listings',
-    colLastLogin: 'Last Login',
-    colDetails: 'Details',
-    detailsButton: 'Details',
-    closeButton: 'Close',
-    detailEmail: 'Email',
-    detailPhone: 'Phone',
-    detailEmailVerified: 'Email verified',
-    detailListings: 'Listings',
-    detailLeads: 'Leads',
-    detailLastLogin: 'Last login',
-    verifiedYes: 'Yes',
-    verifiedNo: 'No',
+    pageSubtitle: 'Registered members and subscription statuses',
+    error: 'An error occurred, please try again',
+    stats: { total: 'Total members', verified: 'Verified', kalfa: 'KALFA', usta: 'USTA' },
   },
   tr: {
     pageTitle: 'Kullanıcılar',
-    pageSubtitle: 'Mock üye listesi, doğrulama durumu ve ilan aktivitesi burada görünür.',
-    colName: 'Ad',
-    colEmail: 'Email',
-    colPhone: 'Telefon',
-    colRegistered: 'Kayıt',
-    colVerified: 'Doğrulandı',
-    colListings: 'İlan sayısı',
-    colLastLogin: 'Son giriş',
-    colDetails: 'Detaylar',
-    detailsButton: 'Detaylar',
-    closeButton: 'Kapat',
-    detailEmail: 'Email',
-    detailPhone: 'Telefon',
-    detailEmailVerified: 'Email doğrulandı',
-    detailListings: 'İlan sayısı',
-    detailLeads: 'Lead sayısı',
-    detailLastLogin: 'Son giriş',
-    verifiedYes: 'Evet',
-    verifiedNo: 'Hayır',
+    pageSubtitle: 'Kayıtlı üyeler ve abonelik durumları',
+    error: 'Bir hata oluştu, tekrar deneyin',
+    stats: { total: 'Toplam üye', verified: 'Doğrulanmış', kalfa: 'KALFA', usta: 'USTA' },
   },
 };
+
+const STAT_CARDS = [
+  { key: 'total' as const, icon: Users, color: 'text-[var(--dk-navy)]' },
+  { key: 'verified' as const, icon: ShieldCheck, color: 'text-emerald-600' },
+  { key: 'kalfa' as const, icon: Crown, color: 'text-purple-600' },
+  { key: 'usta' as const, icon: GraduationCap, color: 'text-amber-600' },
+];
 
 export default function DashboardUsersPage() {
   const pathname = usePathname();
   const locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = pageCopy[locale];
+  const c = pageCopy[locale];
 
-  const [selectedId, setSelectedId] = useState<number | null>(null);
-  const selectedUser = adminUsers.find((item) => item.id === selectedId);
+  const [members, setMembers] = useState<Member[]>([]);
+  const [stats, setStats] = useState<Stats>({ total: 0, verified: 0, kalfa: 0, usta: 0, sagird: 0 });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState('');
+  const [planFilter, setPlanFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+
+  const fetchMembers = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const params = new URLSearchParams();
+      params.set('page', String(page));
+      if (search) params.set('search', search);
+      if (planFilter) params.set('plan', planFilter);
+      if (statusFilter) params.set('status', statusFilter);
+
+      const res = await fetch(`/api/admin/members?${params}`);
+      if (!res.ok) throw new Error('fetch-failed');
+
+      const data = await res.json();
+      setMembers(data.members);
+      setStats(data.stats);
+      setTotalPages(data.totalPages);
+    } catch {
+      setError(c.error);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, search, planFilter, statusFilter, c.error]);
+
+  useEffect(() => { fetchMembers(); }, [fetchMembers]);
 
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
+    <div className="bg-white p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
-          <p className="mt-3 text-sm text-slate-500">{copy.pageSubtitle}</p>
+        {/* Header */}
+        <div>
+          <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{c.pageTitle}</h1>
+          <p className="mt-1 text-sm text-slate-500">{c.pageSubtitle}</p>
         </div>
 
-        <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
-          <table className="min-w-full text-sm">
-            <thead className="bg-slate-50 text-left text-slate-400">
-              <tr>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colName}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colEmail}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colPhone}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colRegistered}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colVerified}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colListings}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colLastLogin}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colDetails}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {adminUsers.map((user) => (
-                <tr key={user.id} className="border-t border-slate-100">
-                  <td className="px-5 py-4 font-semibold text-[var(--dk-navy)]">{user.name}</td>
-                  <td className="px-5 py-4 text-slate-600">{user.email}</td>
-                  <td className="px-5 py-4 text-slate-600">{user.phone}</td>
-                  <td className="px-5 py-4 text-slate-500">{user.createdAt}</td>
-                  <td className="px-5 py-4">{user.emailVerified ? '✓' : '✗'}</td>
-                  <td className="px-5 py-4 text-slate-600">{user.listingCount}</td>
-                  <td className="px-5 py-4 text-slate-500">{user.lastLogin}</td>
-                  <td className="px-5 py-4">
-                    <button type="button" onClick={() => setSelectedId(user.id)} className="rounded-full bg-[var(--dk-red)] px-4 py-2 text-xs font-bold text-white">{copy.detailsButton}</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Stat cards */}
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {STAT_CARDS.map(({ key, icon: Icon, color }) => (
+            <div key={key} className="rounded-2xl border border-slate-200 bg-white p-4">
+              <div className="flex items-center gap-3">
+                <Icon size={20} className={color} />
+                <div>
+                  <p className="text-2xl font-bold text-[var(--dk-navy)]">{stats[key]}</p>
+                  <p className="text-xs text-slate-500">{c.stats[key]}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {selectedUser ? (
-          <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center justify-between gap-4">
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">{selectedUser.name}</h2>
-              <button type="button" onClick={() => setSelectedId(null)} className="rounded-full border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700">{copy.closeButton}</button>
-            </div>
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <div className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">
-                <div><strong>{copy.detailEmail}:</strong> {selectedUser.email}</div>
-                <div className="mt-2"><strong>{copy.detailPhone}:</strong> {selectedUser.phone}</div>
-                <div className="mt-2"><strong>{copy.detailEmailVerified}:</strong> {selectedUser.emailVerified ? copy.verifiedYes : copy.verifiedNo}</div>
-              </div>
-              <div className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">
-                <div><strong>{copy.detailListings}:</strong> {selectedUser.listingCount}</div>
-                <div className="mt-2"><strong>{copy.detailLeads}:</strong> {selectedUser.leads}</div>
-                <div className="mt-2"><strong>{copy.detailLastLogin}:</strong> {selectedUser.lastLogin}</div>
-              </div>
-            </div>
-          </div>
-        ) : null}
+        {/* Error */}
+        {error && (
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
+        )}
+
+        {/* Table */}
+        <MembersTable
+          members={members}
+          loading={loading}
+          page={page}
+          totalPages={totalPages}
+          search={search}
+          planFilter={planFilter}
+          statusFilter={statusFilter}
+          onSearchChange={(v) => { setSearch(v); setPage(1); }}
+          onPlanChange={(v) => { setPlanFilter(v); setPage(1); }}
+          onStatusChange={(v) => { setStatusFilter(v); setPage(1); }}
+          onPageChange={setPage}
+          locale={locale}
+        />
       </div>
     </div>
   );
