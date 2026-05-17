@@ -29,6 +29,13 @@
       "when": 1778997981827,
       "tag": "0003_lean_shooting_star",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1779002017173,
+      "tag": "0004_aspiring_rockslide",
+      "breakpoints": true
     }
   ]
 }

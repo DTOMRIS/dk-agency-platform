@@ -4,6 +4,14 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- [TASK-0140] feat(admin): soft-delete single + bulk + login block + double confirm
+  - `deletedAt` column: users + memberProfiles (migration 0004)
+  - DELETE /api/admin/members/[id] — soft-delete, self-protection, audit log
+  - DELETE /api/admin/members/bulk — batch (max 50), self-filtered, per-item audit
+  - Login blocked for soft-deleted users (403)
+  - Siyahıdan gizlənir (deletedAt IS NULL)
+  - MembersTable: checkboxes + bulk action bar + per-row delete
+  - Detail page: double confirm (confirm → type "SİL")
 - [TASK-0139] feat(admin): admin-initiated password reset + email + audit
   - POST /api/admin/members/[id]/reset-password (token + email)
   - adminPasswordReset email template (4 languages, "admin tərəfindən sıfırlanıb" mesajı)

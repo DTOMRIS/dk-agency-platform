@@ -416,3 +416,21 @@ Hər admin əməliyyatı immutable `admin_audit_logs` cədvəlinə yazılır.
 **Audit:** `member.password_reset` action — metadata: `{ initiatedBy: 'admin' }`. Token/hash metadata-da HEÇ VAXT.
 
 **UI:** Detail page → Quick Actions → "Şifrəni Sıfırla" düyməsi → window.confirm → POST → toast.
+
+## TASK-0140 - Soft Delete Members
+
+**Hard delete QADAĞAN.** Audit log referansları qırılır. Yalnız soft delete (deletedAt timestamp).
+
+**Schema:** `deletedAt timestamptz` — `users` + `memberProfiles` hər ikisində.
+
+**DELETE /api/admin/members/[id]:** Self-protection (403), already-deleted check (409), dual-table soft-delete.
+
+**DELETE /api/admin/members/bulk:** `{ ids: number[] }`, max 50. Admin özü filter olunur (id listdən çıxır, əməliyyat dayanmır). `inArray` batch update — loop yox.
+
+**Siyahıdan gizlənmə:** GET members-ə `isNull(memberProfiles.deletedAt)` condition əlavə.
+
+**Login bloklama:** `deletedAt IS NOT NULL` → 403 "Hesab deaktiv edilib". emailVerified-dən ƏVVƏL yoxlanılır.
+
+**Double confirm (Detail page):** 2 addım: (1) window.confirm, (2) "SİL" yazma input → button disabled until exact match. MembersTable-da tək confirm.
+
+**Bulk limit:** 50 — DoS qoruma. Daha çoxu üçün admin 2 request göndərməlidir.

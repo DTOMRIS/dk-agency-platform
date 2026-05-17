@@ -96,6 +96,31 @@ export default function DashboardUsersPage() {
     [],
   );
 
+  const handleDelete = useCallback(
+    async (memberId: number) => {
+      const res = await fetch(`/api/admin/members/${memberId}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('delete-failed');
+      setMembers((prev) => prev.filter((m) => m.id !== memberId));
+    },
+    [],
+  );
+
+  const handleBulkDelete = useCallback(
+    async (ids: number[]) => {
+      const res = await fetch('/api/admin/members/bulk', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids }),
+      });
+      if (!res.ok) throw new Error('bulk-delete-failed');
+      const data = await res.json();
+      if (data.deleted > 0) {
+        fetchMembers();
+      }
+    },
+    [fetchMembers],
+  );
+
   return (
     <div className="bg-white p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
@@ -142,6 +167,8 @@ export default function DashboardUsersPage() {
           statusFilter={statusFilter}
           currentUserId={currentUserId}
           onRoleChange={handleRoleChange}
+          onDelete={handleDelete}
+          onBulkDelete={handleBulkDelete}
           onSearchChange={(v) => {
             setSearch(v);
             setPage(1);

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { db } from '@/lib/db';
 import { memberProfiles, memberSubscriptions, users, passwordResetTokens } from '@/lib/db/schema';
-import { eq, ilike, or, sql, desc } from 'drizzle-orm';
+import { eq, ilike, or, sql, desc, isNull } from 'drizzle-orm';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
 import { writeAuditLog } from '@/lib/audit';
@@ -30,8 +30,8 @@ export async function GET(request: NextRequest) {
   const statusFilter = searchParams.get('status') || '';
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
 
-  // 3. Build WHERE conditions
-  const conditions = [];
+  // 3. Build WHERE conditions (always exclude soft-deleted)
+  const conditions = [isNull(memberProfiles.deletedAt)];
 
   if (search) {
     conditions.push(

@@ -1,5 +1,19 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0140 Admin: İstifadəçi Sil (Soft Delete + Bulk)
+
+**Niyə hard delete rədd edildi:** Audit log-da `targetUserId` referansları var. Hard delete sonra bu referanslar qırılır — "kim silindi?" sualı cavabsız qalır. Soft delete (deletedAt timestamp) bütün referansları qoruyur.
+
+**Dual-table soft delete:** `users` (auth) + `memberProfiles` (admin panel) — hər ikisində deletedAt set olunmalıdır. `users`-ı email ilə tapırıq (id-lər fərqli ola bilər). Gələcəkdə bu iki cədvəl birləşdirildikdə (tech debt) bir update kifayət edəcək.
+
+**Login bloklama:** deletedAt check emailVerified-dən ƏVVƏL qoyulub — silinmiş user "email təsdiqləyin" mesajı görmür, birbaşa "hesab deaktiv" görür. Bu, XSS/phishing kontekstində daha təhlükəsizdir.
+
+**Bulk limit 50:** DoS qoruma — bir request-də 50-dən çox silmə bloklayır. Admin özünü bulk-dan da silə bilmir (id filter).
+
+**Double confirm:** Detail page-də təsadüfi klik qarşısını almaq üçün 2 addım: (1) window.confirm, (2) "SİL" yazma + button disabled until match. MembersTable-da isə tək confirm (daha sürətli workflow).
+
+---
+
 ## 2026-05-17 - TASK-0139 Admin: Şifrə Sıfırla
 
 **Niyə:** Admin istifadəçinin şifrəsini bilmir və bilməməlidir. Amma istifadəçi şifrəsini unutduqda admin-dən kömək istəyə bilər. Admin-initiated reset flow: admin düyməyə basır → sistem token yaradır → email gedir → user özü şifrəni seçir.
