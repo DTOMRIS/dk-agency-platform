@@ -1,5 +1,21 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0136 Admin: Manuel İstifadəçi Əlavə Et
+
+**Niyə:** Admin paneldən istifadəçi siyahısını görmək (TASK-0134) və rol dəyişmək (TASK-0135) mövcuddur, amma yeni istifadəçi əlavə etmək yox idi. Bu, onboarding zamanı admin-in əl ilə hesab yaratmasını tələb edir.
+
+**Seçim: OPTION B (passwordless invite):** OWASP 2025 tövsiyəsinə görə temp şifrə email-dən keçirmək pis praktikadır. Forgot-password token flow-unu yenidən istifadə etmək həm daha təhlükəsiz, həm kod duplikasiyasını aradan qaldırır. Bu pattern-i TASK-0139 (şifrə sıfırla link-i yenidən göndər) üçün də hazırlamış oluruq — task-lar bir-birini tamamlayır.
+
+**İkili cədvəl problemi:** Platform-da `users` (auth) və `memberProfiles` (admin panel) ayrıdır. Login `users.id`-dən JWT sign edir, admin panel isə `memberProfiles`-dan oxuyur. Admin-created user hər ikisində olmalıdır. Token `passwordResetTokens` → `users.id` referans edir. Gələcəkdə bu iki cədvəl birləşdirilməlidir (tech debt).
+
+**emailVerified = true niyə?** Login endpoint `!emailVerified` bloklayır. Admin trust model: admin email-in düzgünlüyünə cavabdehdir. passwordHash=null zaten unauthorized access-i bloklayır. User link-ə klik edib şifrə set etdikdə — email sahibliyi onsuz da sübut olunur.
+
+**Token 24 saat:** Forgot-password 1 saatdır (user aktiv istəyir). Admin-invite isə passiv — gecə göndərilib səhər baxıla bilər.
+
+**Email fail graceful:** User yaradılsa amma email göndərilə bilməzsə — rollback YOX. Admin-ə `emailSent: false` qaytarılır, UI-da warning göstərilir. Admin sonra resend edə bilər (gələcək feature).
+
+---
+
 ## 2026-05-17 - TASK-0135 Admin Role Management
 
 **Niyə:** TASK-0134 ilə admin paneldə real istifadəçi siyahısı canlıdır. Adminin digər istifadəçilərin rolunu UI-dan dəyişə bilməsi lazımdır (member ↔ admin).

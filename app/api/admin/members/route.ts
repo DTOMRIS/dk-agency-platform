@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { db } from '@/lib/db';
-import { memberProfiles, memberSubscriptions } from '@/lib/db/schema';
+import { memberProfiles, memberSubscriptions, users, passwordResetTokens } from '@/lib/db/schema';
 import { eq, ilike, or, sql, desc } from 'drizzle-orm';
+import { sendEmail, emailTemplates } from '@/lib/email/templates';
+import { getBaseUrl } from '@/lib/utils/get-base-url';
 
 const PAGE_SIZE = 25;
 
@@ -114,4 +116,106 @@ export async function GET(request: NextRequest) {
   }));
 
   return NextResponse.json({ members, total, page, totalPages, stats, currentUserId: auth.userId });
+}
+
+const VALID_ROLES = ['member', 'admin'] as const;
+
+export async function POST(request: NextRequest) {
+  // 1. Auth — admin only
+  const auth = await getAuthFromCookie();
+  if (!auth) {
+    return NextResponse.json({ error: 'not-authenticated' }, { status: 401 });
+  }
+  if (auth.role !== 'admin') {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 });
+  }
+
+  if (!db) {
+    return NextResponse.json({ error: 'database-unavailable' }, { status: 503 });
+  }
+
+  // 2. Parse + validate body
+  let body: { name?: string; email?: string; role?: string };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'invalid-body' }, { status: 400 });
+  }
+
+  const name = String(body.name || '').trim();
+  const email = String(body.email || '').trim().toLowerCase();
+  const role = body.role || 'member';
+
+  if (!name || !email) {
+    return NextResponse.json({ error: 'name-and-email-required' }, { status: 400 });
+  }
+  if (!VALID_ROLES.includes(role as (typeof VALID_ROLES)[number])) {
+    return NextResponse.json({ error: 'invalid-role' }, { status: 400 });
+  }
+
+  // 3. Check duplicate — both tables
+  const existingUser = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(eq(users.email, email))
+    .then((rows) => rows[0]);
+
+  const existingProfile = await db
+    .select({ id: memberProfiles.id })
+    .from(memberProfiles)
+    .where(eq(memberProfiles.email, email))
+    .then((rows) => rows[0]);
+
+  if (existingUser || existingProfile) {
+    return NextResponse.json({ error: 'email-exists' }, { status: 409 });
+  }
+
+  // 4. Insert into users (auth system — passwordHash=null, emailVerified=true)
+  //    emailVerified=true: admin vouches for email, passwordHash=null blocks login until set
+  const insertedUser = await db
+    .insert(users)
+    .values({
+      email,
+      name,
+      passwordHash: null,
+      role,
+      emailVerified: true,
+    })
+    .returning({ id: users.id });
+
+  const userId = insertedUser[0].id;
+
+  // 5. Insert into memberProfiles (admin panel visibility)
+  await db.insert(memberProfiles).values({
+    email,
+    fullName: name,
+    role,
+    emailVerified: true,
+  });
+
+  // 6. Create password-set token (24h — longer than forgot-password's 1h)
+  const token = crypto.randomUUID();
+  await db.insert(passwordResetTokens).values({
+    userId,
+    token,
+    expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  });
+
+  // 7. Send invite email
+  const setPasswordUrl = `${getBaseUrl()}/reset-password?token=${token}`;
+  try {
+    await sendEmail(
+      email,
+      emailTemplates.adminInvite(setPasswordUrl, name, auth.email, 'az'),
+    );
+  } catch (emailErr) {
+    // User created but email failed — don't rollback, admin can resend later
+    console.error('[admin/members POST] Email send failed:', emailErr);
+    return NextResponse.json(
+      { success: true, userId, emailSent: false, warning: 'user-created-email-failed' },
+      { status: 201 },
+    );
+  }
+
+  return NextResponse.json({ success: true, userId, emailSent: true }, { status: 201 });
 }

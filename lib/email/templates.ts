@@ -257,6 +257,57 @@ export const emailTemplates = {
     };
   },
 
+  adminInvite: (setPasswordUrl: string, userName: string, adminEmail: string, locale?: Locale | string): EmailTemplate => {
+    const loc = resolveLocale(locale);
+    const t: Record<Locale, { subject: string; greeting: string; body: string; cta: string; expiry: string; fallback: string }> = {
+      az: {
+        subject: 'DK Agency \u2014 Hesab\u0131n\u0131z yarad\u0131ld\u0131',
+        greeting: `Salam ${userName},`,
+        body: `<strong>${adminEmail}</strong> sizi DK Agency platformas\u0131na \u0259lav\u0259 etdi. Hesab\u0131n\u0131za daxil olmaq \u00FC\u00E7\u00FCn \u015Fifr\u0259nizi t\u0259yin edin.`,
+        cta: '\u015eifr\u0259mi T\u0259yin Et',
+        expiry: 'Bu link 24 saat \u0259rzind\u0259 etibarlid\u0131r.',
+        fallback: 'Link i\u015Fl\u0259m\u0259zs\u0259 bu URL-i brauzer\u0259 yap\u0131\u015Fd\u0131r\u0131n:',
+      },
+      ru: {
+        subject: 'DK Agency \u2014 \u0412\u0430\u0448 \u0430\u043A\u043A\u0430\u0443\u043D\u0442 \u0441\u043E\u0437\u0434\u0430\u043D',
+        greeting: `\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${userName}!`,
+        body: `<strong>${adminEmail}</strong> \u0434\u043E\u0431\u0430\u0432\u0438\u043B \u0432\u0430\u0441 \u043D\u0430 \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0443 DK Agency. \u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 \u043F\u0430\u0440\u043E\u043B\u044C \u0434\u043B\u044F \u0432\u0445\u043E\u0434\u0430 \u0432 \u0430\u043A\u043A\u0430\u0443\u043D\u0442.`,
+        cta: '\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u043F\u0430\u0440\u043E\u043B\u044C',
+        expiry: '\u0421\u0441\u044B\u043B\u043A\u0430 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430 24 \u0447\u0430\u0441\u0430.',
+        fallback: '\u0415\u0441\u043B\u0438 \u043A\u043D\u043E\u043F\u043A\u0430 \u043D\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442, \u0432\u0441\u0442\u0430\u0432\u044C\u0442\u0435 URL \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440:',
+      },
+      en: {
+        subject: 'DK Agency \u2014 Your account was created',
+        greeting: `Hello ${userName},`,
+        body: `<strong>${adminEmail}</strong> added you to DK Agency platform. Set your password to access your account.`,
+        cta: 'Set My Password',
+        expiry: 'This link expires in 24 hours.',
+        fallback: 'If the button doesn\u2019t work, paste this URL into your browser:',
+      },
+      tr: {
+        subject: 'DK Agency \u2014 Hesab\u0131n\u0131z olu\u015Fturuldu',
+        greeting: `Merhaba ${userName},`,
+        body: `<strong>${adminEmail}</strong> sizi DK Agency platformuna ekledi. Hesab\u0131n\u0131za eri\u015Fmek i\u00E7in \u015Fifrenizi belirleyin.`,
+        cta: '\u015eifremi Belirle',
+        expiry: 'Bu ba\u011Flant\u0131 24 saat ge\u00E7erlidir.',
+        fallback: 'Buton \u00E7al\u0131\u015Fmazsa bu URL\u2019yi taray\u0131c\u0131ya yap\u0131\u015Ft\u0131r\u0131n:',
+      },
+    };
+    const c = t[loc];
+    return {
+      subject: c.subject,
+      html: wrapEmail(`
+        <p>${c.greeting}</p>
+        <p>${c.body}</p>
+        <p style="margin: 24px 0;">
+          <a href="${setPasswordUrl}" style="${ctaStyle}">${c.cta}</a>
+        </p>
+        <p style="color:#64748b;font-size:14px;">${c.expiry}</p>
+        <p style="color:#94a3b8;font-size:12px;word-break:break-all;">${c.fallback}<br/>${setPasswordUrl}</p>
+      `),
+    };
+  },
+
   listingSubmitted: (trackingCode: string, userName: string, locale?: Locale | string): EmailTemplate => {
     const loc = resolveLocale(locale);
     const t: Record<Locale, { subject: string; greeting: string; body: string; review: string }> = {

@@ -320,6 +320,18 @@
         "sagird": "SAGIRD",
         "kalfa": "KALFA",
         "usta": "USTA"
+      },
+      "addMember": {
+        "button": "Add Member",
+        "title": "New Member",
+        "fieldName": "Full Name",
+        "fieldEmail": "Email",
+        "fieldRole": "Role",
+        "submit": "Add",
+        "successAdd": "Member created, email sent",
+        "errorEmailExists": "Email already exists",
+        "errorGeneric": "An error occurred",
+        "warningEmailFailed": "Member created, but email could not be sent"
       }
     }
   },

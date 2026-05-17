@@ -37,3 +37,18 @@ test('PATCH role returns 400 for non-numeric id', async ({ request }) => {
   });
   expect([400, 401]).toContain(response.status());
 });
+
+test('POST create member returns 401 without auth', async ({ request }) => {
+  const response = await request.post('/api/admin/members', {
+    data: { name: 'Test User', email: 'test@example.com', role: 'member' },
+  });
+  expect(response.status()).toBe(401);
+});
+
+test('POST create member returns 400 with empty body', async ({ request }) => {
+  const response = await request.post('/api/admin/members', {
+    data: {},
+  });
+  // Without auth: 401; with auth + empty: 400
+  expect([400, 401]).toContain(response.status());
+});
