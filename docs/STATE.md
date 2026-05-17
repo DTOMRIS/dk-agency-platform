@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-17T06:12:47.725Z
+- GeneratedAt: 2026-05-17T06:34:25.976Z
 - BuildStatus: PASS
 
-## Routes (131)
+## Routes (132)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -107,6 +107,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/toolkit
 - /dashboard/trends
 - /dashboard/users
+- /dashboard/users/[id]
 - /dashboard/xeberler
 - /dashboard/xeberler/rss
 - /docs/member-env-checklist
