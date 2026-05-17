@@ -16,7 +16,9 @@
 
 **Aksiyon tövsiyələri (statik, araşdırma əsaslı):** Video/Reels-ə keç (2-5x ER artım), şərhlərə 1h-da cavab (+23% gələcək ER), save-fokuslu kontent artır. Info bloku: "ER niyə aşağıdır" izahı (platforma səviyyəsində düşüş trendi).
 
-**Test dataseti (IG):** 8500 follower, 10 post, 1200 like + 85 comment + 140 save + 45 share = 1470 total. ER = 1470 / (10×8500) × 100 = 1.73%. Nano tier benchmark: 2.53%. Delta: -0.80%. Status: average. Health score: 34.
+**Test dataseti (IG):** 8500 follower, 10 post, 1200 like + 85 comment + 140 save + 45 share = 1470 total. ER = 1470 / (10×8500) × 100 = 1.73%. Nano tier benchmark: 2.53%. Delta: -0.80%. Status: weak (ratio 0.68 < 0.70 threshold). Health score: 34.
+
+**Post-merge audit (2026-05-17):** PR-sız push edildiyi üçün manual audit keçirildi. Nəticə: dublikat YOX, PROTECTED TƏMİZ, hardcoded AZ = 0, i18n 4 dil TAM, build PASS, tsc yeni xəta YOX. Qayda pozuntusu qeyd olundu → L-008.
 
 ## 2026-05-17 - TASK-0147 Marketinq: Reklam ROI
 
