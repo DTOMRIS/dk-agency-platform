@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0148] feat(marketinq): sosial media metrik analizatoru — KALFA + ER benchmark + content type ranking`
 - `[TASK-0146] feat(marketinq): Sezon Analitikası — AZ təqvimi + cash-flow + staff/inventar proqnozu`
 - `[TASK-0145] feat(marketinq): müştəri persona yaradıcısı — USTA + AI + AZ/TR kontekst`
 - `[TASK-0144] feat(marketinq): ROI kalkulatoru v2 — çoxlu kanal + CAC + LTV + payback`

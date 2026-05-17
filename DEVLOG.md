@@ -1,5 +1,23 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0148 Marketinq: Sosial Media Metrik Analizatoru
+
+**Niyə:** Restoran sahibləri "ER nədir, hansı kontent daha yaxşıdır" sualına cavab tapa bilmir. ER hesablama mənbədən-mənbəyə fərqlidir (follower-bazlı vs reach-bazlı vs impressions-bazlı) — istifadəçi qarışır. Bu tool bir formul seçir və HoReCa sektoru üçün doğru benchmark ilə müqayisə edir.
+
+**Formula (Instagram):** ER = (likes+comments+saves+shares) / (posts × followers) × 100. 2026-da save və share daxildir (əvvəlki formullardan fərq). Reach-bazlı ER opsionaldır (varsa göstərilir).
+
+**Formula (TikTok):** ER = (likes+comments+shares+saves) / totalViews × 100 (views-bazlı — platforma standartı).
+
+**HoReCa Benchmark-lar (2025-2026, Socialinsider/RivalIQ):** IG <10K: 2.53%, IG 10K-100K: 1.18%, IG 100K+: 0.70%. TikTok F&B: 2.65% (views-bazlı).
+
+**Sağlamlıq balı:** 0-100 skala — 50 = benchmark-da dəqiq, 100 = 2x benchmark, 0 = sıfır ER. Rəng kodlu (yaşıl/qızıl/qırmızı).
+
+**Kontent tipi ranking (Instagram, opsional):** Reels > Carousel > Single (2025-2026 data). İstifadəçi hər tip üçün ayrıca interaksiya daxil edirsə, real ranking göstərilir.
+
+**Aksiyon tövsiyələri (statik, araşdırma əsaslı):** Video/Reels-ə keç (2-5x ER artım), şərhlərə 1h-da cavab (+23% gələcək ER), save-fokuslu kontent artır. Info bloku: "ER niyə aşağıdır" izahı (platforma səviyyəsində düşüş trendi).
+
+**Test dataseti (IG):** 8500 follower, 10 post, 1200 like + 85 comment + 140 save + 45 share = 1470 total. ER = 1470 / (10×8500) × 100 = 1.73%. Nano tier benchmark: 2.53%. Delta: -0.80%. Status: average. Health score: 34.
+
 ## 2026-05-17 - TASK-0146 Marketinq: Sezon Analitikası
 
 **Niyə:** Kiçik restoranlarda cash-flow proqnozu çox vaxt intuisiya ilə aparılır. Pik ayda az staff və az inventar fürsəti qaçırır, ölü ayda artıq alış və uzun növbə nağd pulu yandırır. Rəqib ümumi kalkulyatorlardan fərq olaraq bu tool AZ-spesifik sezonları — Novruz, Ramazan pəncərəsi, sahil turizmi, Şahdağ/Qəbələ qış sezonu və toy-banket aylarını — deterministik əmsala çevirir.
