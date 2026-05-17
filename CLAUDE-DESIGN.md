@@ -214,6 +214,17 @@ CI/CD workflow (GitHub Actions):
 
 ## 11. ÖYRƏNILƏN DƏRSLƏR (POZMA!)
 
+### TASK-0142 Şikayət ele alınma biçimi
+Şikayət alətlərində əsas fəlsəfə: müştəri çox vaxt yalnız problemin səbəbindən yox, problemin necə ele alınmasından narazı qalır. Ona görə AI cavabı birbaşa "üzr istəyirik" şablonu olmamalıdır.
+
+Pattern:
+- Əvvəl şikayəti adlandır.
+- Sonra konkret addımı və sahibini göstər.
+- Cavabdan əvvəl kəşf sualları çıxar: gün/saat, stol/zona, işçi, əvvəl gəlib-gəlmədiyi, başqa marka ilə müqayisə edib-etmədiyi, kanal konteksti.
+- Daxili qeyddə CAPA mütləq olmalıdır: araşdırma, bağlama kriteriyası, düzəldici fəaliyyət, önləyici fəaliyyət, 7-14 günlük təkrar yoxlaması.
+- Google/Instagram kimi public kanallarda cavab həm müştəriyə, həm də oxuyan üçün güvən yaratmalıdır.
+- AI açarı server action-da qalmalıdır; client yalnız strukturlaşmış nəticə görməlidir.
+
 ### AzHealth dərsi (5 gün, 57 commit)
 "Field-by-field hazırdır" denildi, müştəri veri işləməyə başlayanda hər şeyin mock olduğu ortaya çıxdı.
 **QAYDA:** Hər Phase-in REAL test checklist-i olmalı. Mock ilə "hazır" sayılmır.

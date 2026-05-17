@@ -496,5 +496,76 @@
     "ru": "RU",
     "tr": "TR",
     "en": "EN"
+  },
+  "marketinq": {
+    "complaintAnalysis": {
+      "title": "Инструмент анализа жалоб",
+      "subtitle": "Каждая жалоба — возможность завоевать лояльность",
+      "philosophy": "Клиент часто недоволен не только проблемой, но и тем, как с ней обращаются. Этот инструмент показывает уточняющие вопросы до отправки ответа.",
+      "complaint_label": "Текст жалобы",
+      "complaint_placeholder": "Например: заказ пришёл на 45 минут позже, еда была холодной",
+      "channel_label": "Канал жалобы",
+      "customer_type_label": "Тип клиента",
+      "date_label": "Дата",
+      "analyze_btn": "Анализировать",
+      "instant_category": "Мгновенная категория",
+      "instant_empty": "Категория появится после 3+ слов",
+      "tab_response": "Ответ клиенту",
+      "tab_discovery": "Уточняющие вопросы",
+      "tab_internal": "Внутренняя заметка",
+      "copy_btn": "Копировать",
+      "copied": "Скопировано!",
+      "severity_low": "Низкая",
+      "severity_medium": "Средняя",
+      "severity_high": "Высокая",
+      "severity_critical": "Критическая",
+      "history_title": "Последние анализы",
+      "history_clear": "Очистить всё",
+      "history_empty": "Анализов пока нет",
+      "upgrade_cta": "Перейти на KALFA",
+      "back_to_tools": "Все инструменты",
+      "follow_up": "Рекомендация по follow-up",
+      "internal_owner": "Ответственный",
+      "internal_process": "Процесс для проверки",
+      "capa_title": "Корректирующее и предупреждающее действие",
+      "capa_investigation": "Расследование",
+      "capa_closure": "Критерий закрытия",
+      "capa_corrective": "Корректирующее действие",
+      "capa_preventive": "Предупреждающее действие",
+      "capa_recurrence": "Проверка повторения",
+      "validation_error": "Текст жалобы должен быть от 20 до 1000 символов",
+      "tier_required_title": "Этот инструмент требует членство KALFA",
+      "tier_required_body": "Анализ жалоб относится к KALFA, потому что объединяет уточняющие вопросы, ответ под канал и анализ ИИ.",
+      "channels": {
+        "face_to_face": "Лично",
+        "phone": "Телефон",
+        "whatsapp": "WhatsApp",
+        "google_maps": "Google Maps",
+        "instagram": "Instagram",
+        "other": "Другое"
+      },
+      "customerTypes": {
+        "first_time": "Первый раз",
+        "regular": "Постоянный клиент",
+        "unknown": "Неизвестно"
+      },
+      "categories": {
+        "food_quality": "Качество еды",
+        "wait_speed": "Ожидание/Скорость",
+        "cleanliness": "Чистота",
+        "service_staff": "Сервис/Персонал",
+        "price_bill": "Цена/Счёт",
+        "delivery": "Доставка",
+        "other": "Другое"
+      },
+      "errors": {
+        "unauthorized": "Требуется вход или членство KALFA",
+        "rate-limited": "Слишком много анализов. Попробуйте через 10 минут",
+        "validation": "Текст жалобы неверный",
+        "missing-key": "Ключ ИИ не настроен",
+        "ai-failed": "Анализ ИИ не загрузился — попробуйте снова",
+        "ai-output-invalid": "Ответ ИИ пришёл в неверном формате"
+      }
+    }
   }
 }
