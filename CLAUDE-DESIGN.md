@@ -230,6 +230,26 @@ Quadrant qaydası:
 
 AI yalnız tövsiyə qatıdır. Kateqoriyanı AI yox, bu deterministik formula verir. DeepSeek çağırışı server action-da qalmalıdır; `DEEPSEEK_API_KEY` client bundle-a düşməməlidir.
 
+### TASK-0143 P&L Simulyatoru formula və benchmark
+P&L Simulyatoru USTA tier alətidir. Hesablama client-side deterministikdir, AI yalnız maliyyə şərhi və addım tövsiyəsi verir:
+- Ümumi satış = yemək satışı + içki satışı + digər gəlir
+- COGS = başlanğıc stok + alışlar - son stok
+- Yemək məsrəfi % = COGS / ümumi satış * 100
+- İşçi xərci % = işçi xərci / ümumi satış * 100
+- Prime Cost = COGS + işçi xərci
+- Prime Cost % = Prime Cost / ümumi satış * 100
+- Overhead = icarə + kommunal + sığorta + lisenziya + marketing + digər
+- Xalis mənfəət = ümumi satış - COGS - işçi xərci - overhead
+- Zərərsizlik nöqtəsi = overhead / (1 - dəyişkən xərc %)
+
+Benchmark qaydası:
+- Food Cost <=30% yaxşı, 30-35% diqqət, >35% kritik
+- Labor <=30% yaxşı, 30-35% diqqət, >35% kritik
+- Prime Cost <=60% yaxşı, 60-70% diqqət, >70% kritik
+- Net Profit >=5% sağlam, 3-5% diqqət, <3% riskli
+
+AZ terminologiya: istifadəçiyə "gross margin" kimi yad ifadəni əsas label kimi göstərmə. "Ümumi mənfəət", "xalis mənfəət", "yemək məsrəfi", "işçi xərci", "zərərsizlik nöqtəsi" istifadə et. DeepSeek çağırışı server action-da qalmalıdır; `DEEPSEEK_API_KEY` client bundle-a düşməməlidir.
+
 ### AzHealth dərsi (5 gün, 57 commit)
 "Field-by-field hazırdır" denildi, müştəri veri işləməyə başlayanda hər şeyin mock olduğu ortaya çıxdı.
 **QAYDA:** Hər Phase-in REAL test checklist-i olmalı. Mock ilə "hazır" sayılmır.

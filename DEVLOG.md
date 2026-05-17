@@ -1,5 +1,19 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0143 Marketinq: P&L Simulyatoru
+
+**Niyə:** USTA tier üçün restoran sahibinin rəqəmləri real vaxtda görməsi lazımdır: satış, yemək məsrəfi, işçi xərci, əsas xərc, overhead, xalis mənfəət və zərərsizlik nöqtəsi eyni paneldə oxunur. Mövcud P&L səthi saxlanmadı; dashboard wrapper yeni mobil-first komponentə bağlandı ki iki fərqli P&L davranışı qalmasın.
+
+**Formula:** Ümumi satış = yemək satışı + içki satışı + digər. COGS = başlanğıc stok + alışlar - son stok. Yemək məsrəfi % = COGS / satış * 100. İşçi xərci % = işçi xərci / satış * 100. Prime Cost = COGS + işçi xərci. Prime Cost % = Prime Cost / satış * 100. Xalis mənfəət = satış - COGS - işçi xərci - overhead. Zərərsizlik nöqtəsi = overhead / (1 - dəyişkən xərc %).
+
+**Benchmark:** Yemək məsrəfi <=30% yaxşı, 30-35% diqqət, >35% kritik. İşçi xərci <=30% yaxşı, 30-35% diqqət. Prime Cost <=60% yaxşı, 60-70% diqqət, >70% kritik. Xalis mənfəət >=5% sağlam, 3-5% diqqət, <3% riskli.
+
+**Test dataseti nəticəsi:** Aylıq satış 18,000 AZN. COGS 6,500 AZN, Food Cost 36.1% -> kritik/diqqət zonası. İşçi xərci 5,800 AZN, Labor 32.2% -> diqqət. Prime Cost 12,300 AZN, 68.3% -> diqqət. Overhead 2,800 AZN. Xalis mənfəət 2,900 AZN, 16.1% -> yaxşı. Zərərsizlik nöqtəsi dəqiq formula ilə 8,842 AZN-dir; cari satış BEP-dən yuxarıdır.
+
+**AI təhlükəsizliyi:** DeepSeek çağırışı `app/actions/pl-ai-analysis.ts` server action-dadır. `DEEPSEEK_API_KEY` client bundle-a düşmür. Cookie əsaslı limit: 10 dəqiqədə 3 analiz. Xalis mənfəət mənfi ola bildiyi üçün server action bu sahədə signed number qəbul edir.
+
+---
+
 ## 2026-05-17 - TASK-0141 Marketinq: Menyu Analitiği
 
 **Niyə:** Köhnə Menyu Analitiği AI tahmininə çox bağlı idi. KALFA səviyyəsində satıla bilən tool üçün kateqoriyalaşdırma deterministik olmalıdır: CM, Food Cost %, Menu Mix % və orta eşiklər istifadə olunur; AI yalnız tövsiyə qatıdır.
