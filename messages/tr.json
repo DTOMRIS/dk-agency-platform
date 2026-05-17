@@ -429,7 +429,11 @@
       "quickActions": "Hızlı İşlemler",
       "loading": "Yükleniyor...",
       "notFound": "Üye bulunamadı",
-      "error": "Hata oluştu"
+      "error": "Hata oluştu",
+      "resetPassword": "Şifreyi Sıfırla",
+      "resetConfirm": "Şifre sıfırlama e-postası gönderilecek. Devam edilsin mi?",
+      "resetSuccess": "Şifre sıfırlama e-postası gönderildi",
+      "resetError": "E-posta gönderilemedi, tekrar deneyin"
     }
   },
   "contact": {

@@ -371,7 +371,11 @@
       "quickActions": "Sürətli Əməliyyatlar",
       "loading": "Yüklənir...",
       "notFound": "İstifadəçi tapılmadı",
-      "error": "Xəta baş verdi"
+      "error": "Xəta baş verdi",
+      "resetPassword": "Şifrəni Sıfırla",
+      "resetConfirm": "Bu istifadəçiyə şifrə sıfırlama emaili göndəriləcək. Davam edilsin?",
+      "resetSuccess": "Şifrə sıfırlama emaili göndərildi",
+      "resetError": "Email göndərilmədi, yenidən cəhd edin"
     }
   },
   "contact": {

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { ArrowLeft, Mail, Phone, Building2, Calendar, Shield } from 'lucide-react';
+import { ArrowLeft, KeyRound, Mail, Phone, Building2, Calendar, Shield } from 'lucide-react';
 
 interface MemberDetail {
   id: number;
@@ -167,6 +167,9 @@ export default function MemberDetailPage() {
           </div>
         </div>
 
+        {/* Quick Actions */}
+        <QuickActions userId={user.id} t={t} onSuccess={fetchDetail} />
+
         {/* Recent Activity */}
         <div className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="font-display text-lg font-bold text-[var(--dk-navy)]">{t('recentActivity')}</h2>
@@ -188,6 +191,50 @@ export default function MemberDetailPage() {
             </div>
           )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+function QuickActions({ userId, t, onSuccess }: { userId: number; t: (key: string) => string; onSuccess: () => void }) {
+  const [resetting, setResetting] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  const handleResetPassword = async () => {
+    if (!window.confirm(t('resetConfirm'))) return;
+    setResetting(true);
+    setMessage(null);
+    try {
+      const res = await fetch(`/api/admin/members/${userId}/reset-password`, { method: 'POST' });
+      if (!res.ok) throw new Error('failed');
+      setMessage({ type: 'success', text: t('resetSuccess') });
+      onSuccess();
+    } catch {
+      setMessage({ type: 'error', text: t('resetError') });
+    } finally {
+      setResetting(false);
+      setTimeout(() => setMessage(null), 4000);
+    }
+  };
+
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-6">
+      <h2 className="font-display text-lg font-bold text-[var(--dk-navy)]">{t('quickActions')}</h2>
+      {message && (
+        <div className={`mt-3 rounded-xl border px-4 py-2 text-sm ${message.type === 'success' ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-red-200 bg-red-50 text-red-700'}`}>
+          {message.text}
+        </div>
+      )}
+      <div className="mt-4 flex flex-wrap gap-3">
+        <button
+          type="button"
+          onClick={handleResetPassword}
+          disabled={resetting}
+          className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:border-[var(--dk-gold)] hover:bg-[var(--dk-gold)]/5 disabled:opacity-50"
+        >
+          <KeyRound size={16} />
+          {resetting ? '...' : t('resetPassword')}
+        </button>
       </div>
     </div>
   );

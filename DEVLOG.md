@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0139 Admin: Şifrə Sıfırla
+
+**Niyə:** Admin istifadəçinin şifrəsini bilmir və bilməməlidir. Amma istifadəçi şifrəsini unutduqda admin-dən kömək istəyə bilər. Admin-initiated reset flow: admin düyməyə basır → sistem token yaradır → email gedir → user özü şifrəni seçir.
+
+**Admin heç vaxt şifrəni görmür:** Token plain-text email-dən keçir amma bu one-time-use + 1 saat expire. Şifrə özü heç vaxt göndərilmir. Audit log-a da token/hash yazılmır (OWASP).
+
+**Niyə ayrı template?** Mövcud `passwordReset` template "Siz bu sorğunu göndərdiniz" deyir — admin-initiated olduqda bu yanlışdır. `adminPasswordReset` template "administrator tərəfindən sorğu göndərildi" + "əgər siz göndərməmisinizsə nəzərə almayın" deyir.
+
+**Token expire 1 saat (24 yox):** TASK-0136 invite-da 24 saat idi çünki passiv onboarding. Burada isə admin-user aktiv ünsiyyətdədir — "indi sıfırladım, bax emailinə" deyir. 1 saat kifayətdir.
+
+---
+
 ## 2026-05-17 - TASK-0138 Admin: İstifadəçi Detail Səhifəsi
 
 **Niyə:** Siyahıdan user-ı seçib profil, audit tarixçəsi və əməliyyatları bir yerdə görmək lazımdır. Əvvəl yalnız cədvəl var idi — admin context almadan rol dəyişirdi.

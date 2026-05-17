@@ -371,7 +371,11 @@
       "quickActions": "Quick Actions",
       "loading": "Loading...",
       "notFound": "Member not found",
-      "error": "An error occurred"
+      "error": "An error occurred",
+      "resetPassword": "Reset Password",
+      "resetConfirm": "A password reset email will be sent to this user. Continue?",
+      "resetSuccess": "Password reset email sent",
+      "resetError": "Failed to send email, try again"
     }
   },
   "contact": {

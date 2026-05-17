@@ -4,6 +4,12 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- [TASK-0139] feat(admin): admin-initiated password reset + email + audit
+  - POST /api/admin/members/[id]/reset-password (token + email)
+  - adminPasswordReset email template (4 languages, "admin tərəfindən sıfırlanıb" mesajı)
+  - Detail page: "Şifrəni Sıfırla" button with confirm dialog + loading + toast
+  - Audit: member.password_reset (token/hash NEVER in metadata)
+  - Reuses existing passwordResetTokens + /reset-password page (zero new pages)
 - [TASK-0138] feat(admin): member detail page + GET endpoint + audit preview
   - GET /api/admin/members/[id] — profile data (no passwordHash) + last 10 audit logs
   - /dashboard/users/[id] detail page (profile card, status badges, audit timeline)
