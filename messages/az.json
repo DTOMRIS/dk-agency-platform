@@ -826,6 +826,81 @@
         "ai-failed": "Persona yaradıla bilmədi — yenidən cəhd edin.",
         "json-parse": "AI cavabı düzgün formatda deyil — yenidən cəhd edin."
       }
+    },
+    "sezonAnalitikasi": {
+      "title": "Sezon Analitikası",
+      "subtitle": "AZ təqvimi, kurort sezonu və Ramazan davranışını nəzərə alaraq 12 aylıq cash-flow, işçi xərci və inventar büdcəsi proqnozu.",
+      "tier": "KALFA",
+      "back_to_tools": "Bütün alətlər",
+      "inputs": {
+        "title": "Giriş məlumatları",
+        "monthlyRevenue": {
+          "label": "Orta aylıq dövriyyə",
+          "placeholder": "Məsələn: 25000",
+          "validation": "Dövriyyə 0-dan böyük rəqəm olmalıdır."
+        },
+        "restaurantType": {
+          "label": "Restoran tipi",
+          "placeholder": "Restoran tipini seçin",
+          "validation": "Restoran tipi seçilməlidir."
+        },
+        "laborPercent": {
+          "label": "Hədəf işçi xərci faizi",
+          "placeholder": "28",
+          "validation": "İşçi xərci faizi 15-45 aralığında olmalıdır."
+        },
+        "foodCostPercent": {
+          "label": "Hədəf food cost faizi",
+          "placeholder": "32",
+          "validation": "Food cost faizi 20-45 aralığında olmalıdır."
+        }
+      },
+      "restaurantTypes": {
+        "city": "Şəhər restoranı",
+        "coast": "Sahil-kurort",
+        "mountain": "Dağ-kurort (Şahdağ/Qəbələ)",
+        "cafe": "Kafe-brunch",
+        "banquet": "Banket-catering"
+      },
+      "months": {
+        "jan": "Yan",
+        "feb": "Fev",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "İyn",
+        "jul": "İyl",
+        "aug": "Avq",
+        "sep": "Sen",
+        "oct": "Okt",
+        "nov": "Noy",
+        "dec": "Dek"
+      },
+      "results": {
+        "chartTitle": "12 aylıq dövriyyə proqnozu",
+        "annualRevenue": "İllik proqnoz dövriyyə",
+        "annualLabor": "İllik işçi büdcəsi",
+        "annualInventory": "İllik inventar büdcəsi",
+        "avgCoefficient": "Orta sezon əmsalı"
+      },
+      "table": {
+        "month": "Ay",
+        "coefficient": "Əmsal",
+        "projectedRevenue": "Proqnoz dövriyyə",
+        "laborBudget": "Tövsiyə işçi xərci",
+        "inventoryBudget": "Tövsiyə inventar"
+      },
+      "riskCard": {
+        "weak": "Ən riskli 3 ay",
+        "strong": "Ən güclü 3 ay"
+      },
+      "ramadanNote": "Ramazan pəncərəsi üçün gündüz trafiki təxminən 20% azalır, iftar axşamları isə təxminən 35% artır. Aylıq nəticə neytral qala bilər, amma staff və inventar saatlara görə planlanmalıdır.",
+      "deadMonthWarning": "Ölü ay: avans alışları azaldın, növbələri qısaldın və lokal kampaniya hazırlayın.",
+      "ahilikQuote": "Ahilik sözü: usta bolluq ayında ehtiyat yığar, dar ayda nizamı qoruyar.",
+      "cta": "Proqnozu yenilə",
+      "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
+      "tier_required_body": "Sezon Analitikası cash-flow proqnozu, staff və inventar planlamasını birləşdirdiyi üçün KALFA pilləsinə daxildir.",
+      "upgrade_cta": "KALFA üzvlüyünə keç"
     }
   }
 }

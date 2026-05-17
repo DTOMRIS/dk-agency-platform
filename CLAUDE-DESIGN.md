@@ -262,6 +262,18 @@ AZ/TR lokalizasiya fərqi: Bakı, Gəncə, İstanbul müştərisi fərqli davran
 
 `musteri-persona` config tier-i `kalfa`-dan `usta`-ya dəyişdirildi. monthlyRunLimit: sagird=0, kalfa=0, usta=unlimited.
 
+### TASK-0146 Sezon Analitikası — KALFA tier, AZ təqvim kalibrasiyası
+Sezon Analitikası deterministik cash-flow tool-udur. Input: orta aylıq dövriyyə, restoran tipi, hədəf işçi xərci faizi, hədəf food cost faizi. Hesablama component-də deyil, `lib/marketing-tools/sezon-analitikasi.ts` util-ində saxlanır.
+
+Matrix 5 restoran tipi x 12 ay əmsalıdır:
+- Şəhər restoranı: yanvar-fevral zəif, mart Novruz sıçrayışı, yay piki.
+- Sahil-kurort: iyun-avqust pik, dekabr-fevral dərin enmə.
+- Dağ-kurort: dekabr-mart qış piki, iyul-avqust zəif.
+- Kafe-brunch: aşağı amplituda, sabit həftəsonu davranışı.
+- Banket-catering: may-iyun və sentyabr-noyabr toy sezonu piki.
+
+Vizual pattern: sol input panel, sağ KPI + SVG bar/line chart + risk kartları + mobil scroll table. Weak risk vurğusu `#E94560`, strong risk vurğusu `#C5A022`. Bütün UI string-ləri `marketinq.sezonAnalitikasi` namespace-indədir.
+
 ### TASK-0144 ROI Kalkulatoru v2 formula və kanal müqayisəsi
 ROI v2 KALFA tier alətidir. V1 `promosyon-roi` baz həftə vs promo həftə müqayisəsi idi; v2 çoxlu marketinq kanalını eyni ekranda müqayisə edir:
 - Kanal ROI % = (gəlir - xərc) / xərc * 100

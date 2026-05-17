@@ -94,10 +94,17 @@ export default function CustomerPersona({ backHref = '/dashboard/marketinq-ocagi
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
   useEffect(() => {
+    let frameId: number | null = null;
     try {
       const raw = localStorage.getItem(HISTORY_KEY);
-      if (raw) setHistory(JSON.parse(raw) as HistoryItem[]);
+      if (raw) {
+        const parsed = JSON.parse(raw) as HistoryItem[];
+        frameId = window.requestAnimationFrame(() => setHistory(parsed));
+      }
     } catch { /* empty */ }
+    return () => {
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+    };
   }, []);
 
   function toggleMulti(current: string[], value: string, setter: (v: string[]) => void) {

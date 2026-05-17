@@ -785,6 +785,81 @@
         "ai-failed": "Persona oluşturulamadı — tekrar deneyin.",
         "json-parse": "AI yanıtı doğru formatta değil — tekrar deneyin."
       }
+    },
+    "sezonAnalitikasi": {
+      "title": "Sezon Analitiği",
+      "subtitle": "Azerbaycan bayramları, kurort sezonları ve Ramazan davranışına göre 12 aylık cash-flow, işçilik ve stok bütçesi tahmini.",
+      "tier": "KALFA",
+      "back_to_tools": "Tüm araçlar",
+      "inputs": {
+        "title": "Giriş verileri",
+        "monthlyRevenue": {
+          "label": "Ortalama aylık ciro",
+          "placeholder": "Örnek: 25000",
+          "validation": "Ciro 0'dan büyük bir sayı olmalıdır."
+        },
+        "restaurantType": {
+          "label": "Restoran tipi",
+          "placeholder": "Restoran tipini seçin",
+          "validation": "Restoran tipi seçilmelidir."
+        },
+        "laborPercent": {
+          "label": "Hedef işçilik maliyeti yüzdesi",
+          "placeholder": "28",
+          "validation": "İşçilik yüzdesi 15-45 aralığında olmalıdır."
+        },
+        "foodCostPercent": {
+          "label": "Hedef food cost yüzdesi",
+          "placeholder": "32",
+          "validation": "Food cost yüzdesi 20-45 aralığında olmalıdır."
+        }
+      },
+      "restaurantTypes": {
+        "city": "Şehir restoranı",
+        "coast": "Sahil-kurort",
+        "mountain": "Dağ-kurort (Şahdağ/Gebele)",
+        "cafe": "Kafe-brunch",
+        "banquet": "Banket-catering"
+      },
+      "months": {
+        "jan": "Oca",
+        "feb": "Şub",
+        "mar": "Mar",
+        "apr": "Nis",
+        "may": "May",
+        "jun": "Haz",
+        "jul": "Tem",
+        "aug": "Ağu",
+        "sep": "Eyl",
+        "oct": "Eki",
+        "nov": "Kas",
+        "dec": "Ara"
+      },
+      "results": {
+        "chartTitle": "12 aylık ciro tahmini",
+        "annualRevenue": "Yıllık tahmini ciro",
+        "annualLabor": "Yıllık işçilik bütçesi",
+        "annualInventory": "Yıllık stok bütçesi",
+        "avgCoefficient": "Ortalama sezon katsayısı"
+      },
+      "table": {
+        "month": "Ay",
+        "coefficient": "Katsayı",
+        "projectedRevenue": "Tahmini ciro",
+        "laborBudget": "Önerilen işçilik maliyeti",
+        "inventoryBudget": "Önerilen stok"
+      },
+      "riskCard": {
+        "weak": "En riskli 3 ay",
+        "strong": "En güçlü 3 ay"
+      },
+      "ramadanNote": "Ramazan penceresinde gündüz trafiği yaklaşık %20 düşer, iftar akşamları yaklaşık %35 artar. Aylık toplam nötr kalabilir, ama personel ve stok saatlere göre planlanmalıdır.",
+      "deadMonthWarning": "Ölü ay: peşin alımları azaltın, vardiyaları kısaltın ve yerel kampanya hazırlayın.",
+      "ahilikQuote": "Ahilik sözü: usta bolluk ayında yedek ayırır, dar ayda düzeni korur.",
+      "cta": "Tahmini güncelle",
+      "tier_required_title": "Bu araç KALFA üyeliği gerektirir",
+      "tier_required_body": "Sezon Analitiği cash-flow tahmini, personel ve stok planlamasını birleştirdiği için KALFA katmanındadır.",
+      "upgrade_cta": "KALFA'ya geç"
     }
   }
 }
