@@ -1,5 +1,19 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0141 Marketinq: Menyu Analitiği
+
+**Niyə:** Köhnə Menyu Analitiği AI tahmininə çox bağlı idi. KALFA səviyyəsində satıla bilən tool üçün kateqoriyalaşdırma deterministik olmalıdır: CM, Food Cost %, Menu Mix % və orta eşiklər istifadə olunur; AI yalnız tövsiyə qatıdır.
+
+**Formula:** CM = satış qiyməti - yemək məsrəfi. Food Cost % = məsrəf / qiymət * 100. Menu Mix % = item satışı / ümumi satış * 100. Orta CM item-lərin CM ortalamasıdır, orta Mix isə 100 / item sayı.
+
+**Test dataseti nəticəsi:** Plov 8/2.5/120 -> CM 5.50, FC 31.25%, Mix 42.11%, ULDUZ. Dolma 7/3/45 -> CM 4.00, FC 42.86%, Mix 15.79%, BULMACA. Qutab 4/1.2/90 -> CM 2.80, FC 30.00%, Mix 31.58%, İŞ ATI. Bozbas 6/2.8/30 -> CM 3.20, FC 46.67%, Mix 10.53%, İT.
+
+**Qeyd:** Prompt-da Qutab üçün "BULMACA və ya ULDUZ" ehtimalı yazılmışdı, amma məcburi formula ilə Qutab orta CM-dən aşağı, orta Mix-dən yuxarıdır. Ona görə doğru kateqoriya İŞ ATI-dır.
+
+**AI təhlükəsizliyi:** DeepSeek çağırışı `app/actions/menu-analytics-ai.ts` server action-dadır. Input max 20 item, item adı max 50 simvol, 10 dəqiqədə 3 çağırış cookie əsaslı rate limit ilə qorunur. API key client bundle-a düşmür.
+
+---
+
 ## 2026-05-17 - TASK-0140 Admin: İstifadəçi Sil (Soft Delete + Bulk)
 
 **Niyə hard delete rədd edildi:** Audit log-da `targetUserId` referansları var. Hard delete sonra bu referanslar qırılır — "kim silindi?" sualı cavabsız qalır. Soft delete (deletedAt timestamp) bütün referansları qoruyur.

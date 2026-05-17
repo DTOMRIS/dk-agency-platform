@@ -134,7 +134,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   {
     slug: 'menyu-analitigi',
     category: 'analitika',
-    tier: 'sagird',
+    tier: 'kalfa',
     iconName: 'UtensilsCrossed',
     status: 'live',
     aiProvider: 'deepseek',
@@ -146,7 +146,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
         { name: 'avgFoodCostPercent', type: 'number', required: true },
       ],
     },
-    monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
+    monthlyRunLimit: { sagird: 0, kalfa: 10, usta: null },
     estimatedCostAznPerRun: 0.0003,
   },
 
