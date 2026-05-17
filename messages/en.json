@@ -802,6 +802,88 @@
       "tier_required_title": "This tool requires KALFA membership",
       "tier_required_body": "Season Analytics belongs to KALFA because it combines cash-flow forecasting with labor and inventory planning.",
       "upgrade_cta": "Upgrade to KALFA"
+    },
+    "reklamRoi": {
+      "title": "Ad ROI",
+      "subtitle": "Turn awareness and conversion campaigns from vanity metrics into ROAS, CAC, and LTV:CAC.",
+      "tier": "KALFA",
+      "currency": "AZN",
+      "back_to_tools": "All tools",
+      "campaignType": {
+        "title": "Campaign type",
+        "awareness": "Awareness",
+        "conversion": "Sales/Conversion",
+        "awarenessDescription": "Measured by reach, CPM, and estimated EMV; not interpreted as direct sales.",
+        "conversionDescription": "Measured by ROAS, CAC, conversion output, and LTV:CAC health."
+      },
+      "channels": {
+        "instagram_facebook": "Instagram/Facebook ads",
+        "google_ads": "Google Ads",
+        "influencer": "Influencer",
+        "telegram": "Telegram campaign",
+        "whatsapp": "WhatsApp campaign"
+      },
+      "inputs": {
+        "channelsTitle": "Channel blocks",
+        "resultsTitle": "Result inputs",
+        "addChannel": "Add channel",
+        "removeChannel": "Remove",
+        "channelNumber": "Channel #{number}",
+        "channelType": { "label": "Channel type", "placeholder": "Select channel", "validation": "Channel type is required." },
+        "budget": { "label": "Budget spent", "placeholder": "600", "validation": "Budget must be greater than 0." },
+        "commissionPercent": { "label": "Commission percent", "placeholder": "12", "validation": "Commission must be between 0 and 50." },
+        "newCustomers": { "label": "New customers acquired", "placeholder": "18", "validation": "Customer count cannot be negative." },
+        "averageOrderValue": { "label": "Average order value", "placeholder": "32", "validation": "Average order value must be greater than 0." },
+        "repeatPurchasePercent": { "label": "Repeat purchase percent", "placeholder": "35", "validation": "Repeat purchase must be between 0 and 95." },
+        "reach": { "label": "Reach", "placeholder": "18000", "validation": "Reach cannot be negative." },
+        "impressions": { "label": "Impressions", "placeholder": "42000", "validation": "Impressions cannot be negative." },
+        "organicValuePerReach": { "label": "Average organic value coefficient", "placeholder": "0.03", "validation": "Organic value cannot be negative." },
+        "validation": { "channelBudget": "Enter budget for at least one channel." }
+      },
+      "results": {
+        "totalRoas": "Total ROAS",
+        "totalCac": "Total CAC",
+        "roiPercent": "ROI %",
+        "totalRevenue": "Total revenue",
+        "totalReach": "Total reach",
+        "averageCpm": "Average CPM",
+        "totalEmv": "Estimated EMV",
+        "chartTitle": "Channel ROAS comparison",
+        "cpmChartTitle": "Channel CPM comparison",
+        "tableTitle": "Channel ROI table",
+        "bestChannel": "Best channel",
+        "worstChannel": "Weakest channel",
+        "ltvFormulaNote": "LTV is a simple estimate: AOV × (1 / (1 − repeat purchase percent))."
+      },
+      "table": {
+        "channel": "Channel",
+        "budget": "Budget",
+        "customers": "Customers",
+        "cac": "CAC",
+        "roas": "ROAS",
+        "roi": "ROI%",
+        "reach": "Reach",
+        "impressions": "Impressions",
+        "cpm": "CPM",
+        "emv": "EMV"
+      },
+      "ltvCacCard": {
+        "title": "LTV:CAC health",
+        "healthy": "Healthy: target ≥ 3:1",
+        "weak": "Weak: between 1 and 3",
+        "harmful": "Harmful: below 1",
+        "neutral": "Not enough data"
+      },
+      "benchmarkNote": {
+        "title": "Benchmark note",
+        "body": "Global influencer marketing return is often cited around $5.78 per $1; treat it as a comparison signal, not a hard target. A healthy LTV:CAC target is ≥ 3:1."
+      },
+      "awarenessInfo": "This campaign is not measured as a sales campaign. In awareness mode, reach, CPM, and estimated EMV matter more than ROAS.",
+      "ahilikQuote": "Ahilik wisdom: a master follows profit and trust, not noise.",
+      "cta": "Calculate ROI",
+      "tier_required_title": "This tool requires KALFA membership",
+      "tier_required_body": "Ad ROI is in KALFA because it calculates channel ROAS, CAC, and LTV:CAC.",
+      "upgrade_cta": "Upgrade to KALFA"
     }
   }
 }

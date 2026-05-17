@@ -901,6 +901,88 @@
       "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
       "tier_required_body": "Sezon Analitikası cash-flow proqnozu, staff və inventar planlamasını birləşdirdiyi üçün KALFA pilləsinə daxildir.",
       "upgrade_cta": "KALFA üzvlüyünə keç"
+    },
+    "reklamRoi": {
+      "title": "Reklam ROI",
+      "subtitle": "Awareness və conversion kampaniyalarını vanity metrics-dən real ROAS, CAC və LTV:CAC hesabına çevirin.",
+      "tier": "KALFA",
+      "currency": "AZN",
+      "back_to_tools": "Bütün alətlər",
+      "campaignType": {
+        "title": "Kampaniya tipi",
+        "awareness": "Tanıtım/Awareness",
+        "conversion": "Satış/Conversion",
+        "awarenessDescription": "Reach, CPM və EMV təxmini ilə ölçülür; satış məqsədi kimi şərh olunmur.",
+        "conversionDescription": "ROAS, CAC, conversion nəticəsi və LTV:CAC sağlamlığı ilə ölçülür."
+      },
+      "channels": {
+        "instagram_facebook": "Instagram/Facebook reklam",
+        "google_ads": "Google Ads",
+        "influencer": "Influencer",
+        "telegram": "Telegram kampaniya",
+        "whatsapp": "WhatsApp kampaniya"
+      },
+      "inputs": {
+        "channelsTitle": "Kanal blokları",
+        "resultsTitle": "Nəticə inputları",
+        "addChannel": "Kanal əlavə et",
+        "removeChannel": "Sil",
+        "channelNumber": "Kanal #{number}",
+        "channelType": { "label": "Kanal tipi", "placeholder": "Kanal seçin", "validation": "Kanal tipi seçilməlidir." },
+        "budget": { "label": "Sərf olunan büdcə", "placeholder": "600", "validation": "Büdcə 0-dan böyük olmalıdır." },
+        "commissionPercent": { "label": "Komisyon faizi", "placeholder": "12", "validation": "Komisyon 0-50 aralığında olmalıdır." },
+        "newCustomers": { "label": "Gələn yeni müştəri sayı", "placeholder": "18", "validation": "Müştəri sayı mənfi ola bilməz." },
+        "averageOrderValue": { "label": "Orta çek (AOV)", "placeholder": "32", "validation": "Orta çek 0-dan böyük olmalıdır." },
+        "repeatPurchasePercent": { "label": "Təkrar alış faizi", "placeholder": "35", "validation": "Təkrar alış faizi 0-95 aralığında olmalıdır." },
+        "reach": { "label": "Çatım", "placeholder": "18000", "validation": "Çatım mənfi ola bilməz." },
+        "impressions": { "label": "Göstərim", "placeholder": "42000", "validation": "Göstərim mənfi ola bilməz." },
+        "organicValuePerReach": { "label": "Orta organik dəyər əmsalı", "placeholder": "0.03", "validation": "Organik dəyər əmsalı mənfi ola bilməz." },
+        "validation": { "channelBudget": "Ən azı bir kanal üçün büdcə daxil edin." }
+      },
+      "results": {
+        "totalRoas": "Ümumi ROAS",
+        "totalCac": "Ümumi CAC",
+        "roiPercent": "ROI %",
+        "totalRevenue": "Ümumi gəlir",
+        "totalReach": "Ümumi çatım",
+        "averageCpm": "Orta CPM",
+        "totalEmv": "EMV təxmini",
+        "chartTitle": "Kanal ROAS müqayisəsi",
+        "cpmChartTitle": "Kanal CPM müqayisəsi",
+        "tableTitle": "Kanal ROI cədvəli",
+        "bestChannel": "Ən yaxşı kanal",
+        "worstChannel": "Ən zəif kanal",
+        "ltvFormulaNote": "LTV sadə təxmindir: AOV × (1 / (1 − təkrar alış faizi))."
+      },
+      "table": {
+        "channel": "Kanal",
+        "budget": "Büdcə",
+        "customers": "Müştəri",
+        "cac": "CAC",
+        "roas": "ROAS",
+        "roi": "ROI%",
+        "reach": "Çatım",
+        "impressions": "Göstərim",
+        "cpm": "CPM",
+        "emv": "EMV"
+      },
+      "ltvCacCard": {
+        "title": "LTV:CAC sağlamlığı",
+        "healthy": "Sağlam: hədəf ≥ 3:1",
+        "weak": "Zəif: 1-3 aralığı",
+        "harmful": "Zərərli: 1-dən aşağı",
+        "neutral": "Məlumat yetərli deyil"
+      },
+      "benchmarkNote": {
+        "title": "Benchmark qeydi",
+        "body": "Influencer marketinq üçün qlobal orta gəlir təxminən $5.78 / $1 kimi verilir; bunu sərt hədəf yox, müqayisə siqnalı kimi oxuyun. LTV:CAC üçün sağlam hədəf ≥ 3:1-dir."
+      },
+      "awarenessInfo": "Bu kampaniya satış üçün deyil. Awareness rejimində ROAS əvəzinə reach, CPM və EMV təxmini əsasdır.",
+      "ahilikQuote": "Ahilik sözü: usta səs-küyə yox, qazanca və etibara baxar.",
+      "cta": "ROI hesabla",
+      "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
+      "tier_required_body": "Reklam ROI kanal ROAS, CAC və LTV:CAC hesabladığı üçün KALFA pilləsinə daxildir.",
+      "upgrade_cta": "KALFA üzvlüyünə keç"
     }
   }
 }

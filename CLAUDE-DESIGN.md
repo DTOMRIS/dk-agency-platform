@@ -274,6 +274,15 @@ Matrix 5 restoran tipi x 12 ay əmsalıdır:
 
 Vizual pattern: sol input panel, sağ KPI + SVG bar/line chart + risk kartları + mobil scroll table. Weak risk vurğusu `#E94560`, strong risk vurğusu `#C5A022`. Bütün UI string-ləri `marketinq.sezonAnalitikasi` namespace-indədir.
 
+### TASK-0147 Reklam ROI — KALFA tier, awareness vs conversion
+Reklam ROI deterministik reklam ölçmə tool-udur. Kampaniya tipi əvvəl seçilir:
+- Conversion: ROAS, CAC, ROI %, LTV:CAC və kanal başına attributed müştəri hesabı.
+- Awareness: reach, impressions, CPM və EMV təxmini. Bu rejim satış kampaniyası kimi şərh edilmir.
+
+Kanallar AZ HoReCa reallığına görə seçilib: Instagram/Facebook, Google Ads, influencer, Telegram, WhatsApp. Influencer üçün hybrid model var: baza ödəniş + attributed revenue üzərindən komisyon. Hesablama component-də deyil, `lib/marketing-tools/reklam-roi.ts` util-ində saxlanır.
+
+Vizual pattern: sol kampaniya tipi + kanal input paneli, sağ KPI kartları + LTV:CAC sağlamlıq kartı + kanal chart + mobil scroll table. Tək real component `components/marketinq-ocagi/reklam-roi/ReklamRoiPage.tsx`-dir. Bütün UI string-ləri `marketinq.reklamRoi` namespace-indədir.
+
 ### TASK-0144 ROI Kalkulatoru v2 formula və kanal müqayisəsi
 ROI v2 KALFA tier alətidir. V1 `promosyon-roi` baz həftə vs promo həftə müqayisəsi idi; v2 çoxlu marketinq kanalını eyni ekranda müqayisə edir:
 - Kanal ROI % = (gəlir - xərc) / xərc * 100
