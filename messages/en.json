@@ -333,6 +333,29 @@
         "errorGeneric": "An error occurred",
         "warningEmailFailed": "Member created, but email could not be sent"
       }
+    },
+    "auditLog": {
+      "title": "Audit Log",
+      "subtitle": "History of admin operations",
+      "colDate": "Date",
+      "colAdmin": "Admin",
+      "colAction": "Action",
+      "colTarget": "Target",
+      "colDetails": "Details",
+      "filterAction": "By action",
+      "filterFrom": "From",
+      "filterTo": "To",
+      "empty": "No logs found",
+      "loading": "Loading...",
+      "prev": "Previous",
+      "next": "Next",
+      "pageLabel": "Page",
+      "actions": {
+        "member.created": "Member created",
+        "member.role_changed": "Role changed",
+        "member.deleted": "Member deleted",
+        "member.password_reset": "Password reset"
+      }
     }
   },
   "contact": {

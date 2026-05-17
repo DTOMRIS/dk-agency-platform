@@ -52,3 +52,13 @@ test('POST create member returns 400 with empty body', async ({ request }) => {
   // Without auth: 401; with auth + empty: 400
   expect([400, 401]).toContain(response.status());
 });
+
+test('GET audit logs returns 401 without auth', async ({ request }) => {
+  const response = await request.get('/api/admin/audit-logs');
+  expect(response.status()).toBe(401);
+});
+
+test('Audit logs page uses prefix-free dashboard route', async ({ request }) => {
+  const response = await request.get('/dashboard/audit-logs', { maxRedirects: 0 });
+  expect(response.status()).toBe(307);
+});

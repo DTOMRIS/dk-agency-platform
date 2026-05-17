@@ -370,3 +370,25 @@ Admin-yaradılmış istifadəçi flow-u:
 
 **API:** `POST /api/admin/members` — body: `{ name, email, role }`
 **Xəta statusları:** 400 (missing field), 401 (no auth), 403 (not admin), 409 (email exists), 503 (DB)
+
+## TASK-0137 - Admin Audit Log (OWASP 2025)
+
+Hər admin əməliyyatı immutable `admin_audit_logs` cədvəlinə yazılır.
+
+**Table:** `admin_audit_logs` (serial id, admin_id, admin_email, action, target_user_id, target_email, metadata jsonb, created_at timestamptz)
+
+**İmmutability qaydası:** DELETE endpoint/UI YOX. Log-lar heç vaxt silinə bilməz.
+
+**OWASP 2025 credentials qaydası:** metadata-ya password, token, hash HEÇ VAXT yazılmaz.
+
+**writeAuditLog() utility:** `lib/audit.ts` — fire-and-forget (audit xətası main operation-u bloklamır)
+
+**Action növləri:**
+- `member.created` — admin yeni istifadəçi yaratdı
+- `member.role_changed` — admin istifadəçi rolunu dəyişdi (metadata: oldRole, newRole)
+- `member.deleted` — admin istifadəçini sildi (gələcək TASK-0140)
+- `member.password_reset` — admin şifrə sıfırlama göndərdi (gələcək)
+
+**GET API:** `/api/admin/audit-logs?page=1&action=member.created&from=2026-01-01&to=2026-12-31`
+
+**Hər yeni admin endpoint-ə:** uğurlu əməliyyatdan SONRA `writeAuditLog()` çağır. Əgər əməliyyat uğursuzsa — audit YAZILMIR.

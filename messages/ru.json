@@ -391,6 +391,29 @@
         "errorGeneric": "Произошла ошибка",
         "warningEmailFailed": "Пользователь создан, но письмо не удалось отправить"
       }
+    },
+    "auditLog": {
+      "title": "Журнал действий",
+      "subtitle": "История операций администратора",
+      "colDate": "Дата",
+      "colAdmin": "Администратор",
+      "colAction": "Действие",
+      "colTarget": "Цель",
+      "colDetails": "Детали",
+      "filterAction": "По действию",
+      "filterFrom": "С",
+      "filterTo": "По",
+      "empty": "Записи не найдены",
+      "loading": "Загрузка...",
+      "prev": "Назад",
+      "next": "Далее",
+      "pageLabel": "Страница",
+      "actions": {
+        "member.created": "Пользователь создан",
+        "member.role_changed": "Роль изменена",
+        "member.deleted": "Пользователь удалён",
+        "member.password_reset": "Пароль сброшен"
+      }
     }
   },
   "contact": {

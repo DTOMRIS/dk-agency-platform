@@ -4,6 +4,13 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- [TASK-0137] feat(admin): audit log — DB schema, API, UI, immutable
+  - `admin_audit_logs` Drizzle table (OWASP 2025: UTC timestamp, admin+target, metadata jsonb)
+  - GET /api/admin/audit-logs (pagination, action filter, date range)
+  - /dashboard/audit-logs UI page (table + filters + action badges)
+  - Retroactive: TASK-0135 PATCH + TASK-0136 POST now write audit entries
+  - Sidebar link added (4 languages)
+  - Immutable: no delete capability in API or UI
 - [TASK-0136] feat(admin): manual member creation + set-password email flow
   - POST /api/admin/members — passwordless user + invite email (24h token)
   - AddMemberModal component: name, email, role form
