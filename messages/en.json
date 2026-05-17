@@ -727,6 +727,81 @@
         "ai-failed": "Could not create persona — please try again.",
         "json-parse": "AI response was not in the correct format — please try again."
       }
+    },
+    "sezonAnalitikasi": {
+      "title": "Season Analytics",
+      "subtitle": "A 12-month cash-flow, labor budget, and inventory forecast calibrated for Azerbaijan holidays, resort seasons, and Ramadan behavior.",
+      "tier": "KALFA",
+      "back_to_tools": "All tools",
+      "inputs": {
+        "title": "Input data",
+        "monthlyRevenue": {
+          "label": "Average monthly revenue",
+          "placeholder": "Example: 25000",
+          "validation": "Revenue must be a number greater than 0."
+        },
+        "restaurantType": {
+          "label": "Restaurant type",
+          "placeholder": "Select restaurant type",
+          "validation": "Restaurant type is required."
+        },
+        "laborPercent": {
+          "label": "Target labor cost percent",
+          "placeholder": "28",
+          "validation": "Labor cost percent must be between 15 and 45."
+        },
+        "foodCostPercent": {
+          "label": "Target food cost percent",
+          "placeholder": "32",
+          "validation": "Food cost percent must be between 20 and 45."
+        }
+      },
+      "restaurantTypes": {
+        "city": "City restaurant",
+        "coast": "Coastal resort",
+        "mountain": "Mountain resort (Shahdag/Gabala)",
+        "cafe": "Cafe-brunch",
+        "banquet": "Banquet-catering"
+      },
+      "months": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aug",
+        "sep": "Sep",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dec"
+      },
+      "results": {
+        "chartTitle": "12-month revenue forecast",
+        "annualRevenue": "Annual forecast revenue",
+        "annualLabor": "Annual labor budget",
+        "annualInventory": "Annual inventory budget",
+        "avgCoefficient": "Average season coefficient"
+      },
+      "table": {
+        "month": "Month",
+        "coefficient": "Coefficient",
+        "projectedRevenue": "Forecast revenue",
+        "laborBudget": "Recommended labor cost",
+        "inventoryBudget": "Recommended inventory"
+      },
+      "riskCard": {
+        "weak": "3 riskiest months",
+        "strong": "3 strongest months"
+      },
+      "ramadanNote": "During the Ramadan window, daytime traffic may drop about 20%, while iftar evenings may rise about 35%. Monthly totals can stay near neutral, but staff and inventory should be planned by hour.",
+      "deadMonthWarning": "Dead month: reduce advance purchasing, shorten shifts, and prepare a local campaign.",
+      "ahilikQuote": "Ahilik wisdom: a master builds reserves in abundant months and keeps order in narrow months.",
+      "cta": "Update forecast",
+      "tier_required_title": "This tool requires KALFA membership",
+      "tier_required_body": "Season Analytics belongs to KALFA because it combines cash-flow forecasting with labor and inventory planning.",
+      "upgrade_cta": "Upgrade to KALFA"
     }
   }
 }

@@ -197,6 +197,26 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
+    slug: 'sezon-analitikasi',
+    category: 'analitika',
+    tier: 'kalfa',
+    iconName: 'BarChart3',
+    status: 'live',
+    aiProvider: 'none',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'monthlyRevenue', type: 'number', required: true },
+        { name: 'restaurantType', type: 'select', required: true },
+        { name: 'laborPercent', type: 'number', required: true },
+        { name: 'foodCostPercent', type: 'number', required: true },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0,
+  },
+
+  {
     slug: 'pnl-simulator',
     category: 'maliyye',
     tier: 'usta',

@@ -1,5 +1,20 @@
 # HANDOFF
 
+## 2026-05-17T00:00:00+04:00 — codex
+- Ne deyisdi:
+  - TASK-0146 Sezon Analitikası KALFA tool-u əlavə edildi: AZ sezon əmsalı matrix-i, cash-flow proqnozu, staff və inventar büdcəsi, risk kartları, responsive chart və cədvəl.
+  - Yeni slug: `sezon-analitikasi`; public locale route: `/az/marketinq/sezon-analitikasi`; dashboard route: `/dashboard/marketinq-ocagi/sezon-analitikasi`.
+  - `marketinq.sezonAnalitikasi` namespace-i AZ/RU/EN/TR messages fayllarına əlavə edildi.
+  - Komponent konvensiyası Sprint 4 dashboard pattern-inə salındı: tək real component `components/marketinq-ocagi/sezon-analitikasi/SezonAnalitikasiPage.tsx`.
+- Ne deyismedi:
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`.
+  - AI router/API əlavə edilmədi; hesab deterministikdir.
+- Riskler:
+  - `recharts` dependency-də yoxdur; yeni paket qadağasına görə chart native SVG ilə quruldu.
+  - Auth tələb edən route-larda tam browser smoke üçün lokal test user/session lazımdır.
+- Sonraki addim:
+  - TASK-0147 Reklam ROI planı: reklam büdcəsi, kanal, marja və yeni müştəri datası ilə kampaniya ROI proqnozu.
+
 Every agent/session must append a handoff block with this contract:
 - Ne değişti
 - Ne değişmedi

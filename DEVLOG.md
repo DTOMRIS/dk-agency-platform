@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0146 Marketinq: Sezon Analitikası
+
+**Niyə:** Kiçik restoranlarda cash-flow proqnozu çox vaxt intuisiya ilə aparılır. Pik ayda az staff və az inventar fürsəti qaçırır, ölü ayda artıq alış və uzun növbə nağd pulu yandırır. Rəqib ümumi kalkulyatorlardan fərq olaraq bu tool AZ-spesifik sezonları — Novruz, Ramazan pəncərəsi, sahil turizmi, Şahdağ/Qəbələ qış sezonu və toy-banket aylarını — deterministik əmsala çevirir.
+
+**Arxitektura:** Hesablama `lib/marketing-tools/sezon-analitikasi.ts` util-indədir; component yalnız input, validation və vizual nəticəni render edir. Matrix 5 restoran tipi x 12 ay əmsalından ibarətdir. Hər ay üçün dövriyyə, işçi büdcəsi və inventar büdcəsi hesablanır; ən zəif 3 ay, ən güclü 3 ay və `<0.80` ölü ay xəbərdarlığı çıxarılır.
+
+**Tier:** KALFA (89 AZN/ay). Tool `sezon-analitikasi` slug-u ilə `marketing-tools-config.ts` single source of truth-a əlavə edildi, `aiProvider: none` saxlandı, çünki hesab deterministikdir.
+
+**Test dataseti:** 25,000 AZN orta dövriyyə, şəhər restoranı, 28% işçi xərci, 32% food cost. Yanvar `18,750`, mart `30,000`, işçi büdcəsi müvafiq `5,250` və `8,400`, inventar büdcəsi `6,000` və `9,600` olmalıdır. Sahil-kurort fevral `13,750`, iyul `36,250`; dağ-kurort yanvar `33,750`, avqust `18,750`.
+
+**Qeyd:** Prompt `recharts` istəyirdi, amma repo dependency-lərində `recharts` yoxdur və task yeni paket qadağan edir. Ona görə mövcud stack ilə responsive SVG bar/line chart quruldu; chart `data-testid="season-chart"` ilə smoke üçün yoxlanır.
+
 ## 2026-05-17 - TASK-0145 Marketinq: Müştəri Persona Yaradıcısı
 
 **Niyə:** Restoran sahibi müştərisini tanımır — "kim gəlir, nə istəyir, harada tapıram?" suallarına cavab yoxdur. Ümumi persona tool-larından fərqli olaraq bu tool AZ/TR restoran sektoru üçün xüsusidir: Bakı vs Gəncə müştərisi, lokal ödəmə vərdişləri, WhatsApp statusu vs Instagram, ailə yönümlü vs fərdi yemək vərdişi.

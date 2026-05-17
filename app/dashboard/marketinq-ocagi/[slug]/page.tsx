@@ -14,6 +14,7 @@ import SikayetAnalitiyiPage from '@/components/marketinq-ocagi/sikayet-analitigi
 import MusteriPersonaPage from '@/components/marketinq-ocagi/musteri-persona/MusteriPersonaPage';
 import PnlSimulatorPage from '@/components/marketinq-ocagi/pnl-simulator/PnlSimulatorPage';
 import SezonPlanlamaPage from '@/components/marketinq-ocagi/sezon-planlama/SezonPlanlamaPage';
+import SezonAnalitikasiPage from '@/components/marketinq-ocagi/sezon-analitikasi/SezonAnalitikasiPage';
 import YemekXerciPage from '@/components/marketinq-ocagi/yemek-xerci/YemekXerciPage';
 import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
 import ReklamYazicisiPage from '@/components/marketinq-ocagi/reklam-yazicisi/ReklamYazicisiPage';
@@ -41,6 +42,7 @@ const pageCopy: Record<
       'menyu-analitigi': { title: 'Menyu Analitiği', subtitle: 'Menyu pozisiyalarının rentabelliyini analiz edin', why: 'Menyunun 20%-i satışın 80%-ni yaradır. Hansı yemək ulduz, hansı yük olduğunu bilmək gəliri artırır.' },
       'yemek-xerci': { title: 'Yemək Xərci', subtitle: 'Resept kartı ilə porsiya maya dəyərini hesabla', why: 'Qiyməti göz ölçüsü ilə qoymaq marjanı yeyir. Bu alət ərzaq xərcini, trim loss-u və porsiya sayını bir yerdə hesablayır.' },
       'promosyon-roi': { title: 'ROI Kalkulatoru', subtitle: 'Kanal ROI, CAC, LTV və payback müqayisəsi', why: 'Restoran sahibi büdcəni çox kanala böləndə əsas sual hansı kanalın real müştəri gətirməsidir. Bu alət kanal ROI, CAC, LTV və payback-i birlikdə göstərir.' },
+      'sezon-analitikasi': { title: 'Sezon Analitikası', subtitle: 'AZ təqvimi ilə 12 aylıq cash-flow proqnozu', why: 'Cash-flow proqnozu olmayan restoran pik ayda fürsəti, ölü ayda isə nağd pulu itirir. Bu alət Novruz, Ramazan, turist piki və kurort sezonunu rəqəmə çevirir.' },
       'pnl-simulator': { title: 'P&L Simulyatoru', subtitle: 'Gəlir-xərc, what-if və zərərsizlik analizi', why: 'P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir.' },
       'sikayet-analitigi': { title: 'Şikayət Analitiği', subtitle: 'Müştəri şikayətlərini AI ilə analiz et', why: 'Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır.' },
       'sikayet-cavablandirici': { title: 'Şikayət Cavablandırıcı', subtitle: 'AI ilə Google və TripAdvisor şikayətlərinə 3 fərqli tonda cavab', why: 'Hər cavabsız şikayət potensial müştəri itkisidir. AI 3 tonda peşəkar cavab yaradır.' },
@@ -65,6 +67,7 @@ const pageCopy: Record<
       'menyu-analitigi': { title: 'Menu Analytics', subtitle: 'Analyze menu item profitability', why: '20% of your menu generates 80% of sales.' },
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
       'promosyon-roi': { title: 'ROI Calculator', subtitle: 'Channel ROI, CAC, LTV, and payback comparison', why: 'When budget is split across channels, the core question is which channel actually brings profitable customers.' },
+      'sezon-analitikasi': { title: 'Season Analytics', subtitle: '12-month cash-flow forecast with Azerbaijan calendar', why: 'A restaurant without cash-flow forecasting loses opportunity in peak months and cash in dead months. This tool turns Novruz, Ramadan, tourist peaks, and resort seasons into numbers.' },
       'pnl-simulator': { title: 'P&L Simulator', subtitle: 'Revenue, what-if, and breakeven analysis', why: 'Restaurants tracking P&L monthly outperform competitors.' },
       'sikayet-analitigi': { title: 'Complaint Analytics', subtitle: 'AI-powered complaint analysis', why: 'For every complaint, 26 unhappy customers stay silent.' },
       'sikayet-cavablandirici': { title: 'Complaint Responder', subtitle: 'AI-generated responses to reviews in 3 tones', why: 'Every unanswered complaint is a potential lost customer. AI generates professional responses in 3 tones.' },
@@ -89,6 +92,7 @@ const pageCopy: Record<
       'menyu-analitigi': { title: 'Menü Analitiği', subtitle: 'Menü kalemlerinin karlılığı', why: 'Menünüzün %20\'si satışın %80\'ini yaratır.' },
       'yemek-xerci': { title: 'Yemek Maliyeti', subtitle: 'Reçete kartı ile porsiyon maliyetini hesapla', why: 'Fiyatı göz kararı koymak marjı kaçırır. Bu araç ürün maliyeti, fire ve porsiyon sayısını birlikte hesaplar.' },
       'promosyon-roi': { title: 'ROI Hesaplayıcı', subtitle: 'Kanal ROI, CAC, LTV ve payback karşılaştırması', why: 'Bütçe kanallara bölündüğünde asıl soru hangi kanalın kârlı müşteri getirdiğidir.' },
+      'sezon-analitikasi': { title: 'Sezon Analitiği', subtitle: 'Azerbaycan takvimiyle 12 aylık cash-flow tahmini', why: 'Cash-flow tahmini olmayan restoran yoğun ayda fırsatı, ölü ayda nakdi kaybeder. Bu araç Novruz, Ramazan, turist piki ve kurort sezonunu rakama çevirir.' },
       'pnl-simulator': { title: 'P&L Simülatörü', subtitle: 'Gelir, what-if ve başabaş analizi', why: 'Aylık P&L hazırlayan restoran rakiplerinin önündedir.' },
       'sikayet-analitigi': { title: 'Şikayet Analitiği', subtitle: 'AI şikayet analizi', why: 'Her şikayetin arkasında 26 sessiz mutsuz müşteri var.' },
       'sikayet-cavablandirici': { title: 'Şikayet Yanıtlayıcı', subtitle: 'Google ve TripAdvisor şikayetlerine AI ile 3 tonda yanıt', why: 'Her cevaplanmayan şikayet potansiyel müşteri kaybıdır. AI 3 tonda profesyonel yanıt üretir.' },
@@ -113,6 +117,7 @@ const pageCopy: Record<
       'menyu-analitigi': { title: 'Анализ Меню', subtitle: 'Рентабельность позиций меню', why: '20% меню создаёт 80% продаж.' },
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
       'promosyon-roi': { title: 'ROI Калькулятор', subtitle: 'Сравнение ROI, CAC, LTV и окупаемости каналов', why: 'Когда бюджет делится между каналами, главный вопрос — какой канал приводит прибыльных клиентов.' },
+      'sezon-analitikasi': { title: 'Сезонная аналитика', subtitle: '12-месячный прогноз cash-flow с календарем Азербайджана', why: 'Без прогноза cash-flow ресторан теряет возможности в пиковые месяцы и деньги в слабые месяцы. Инструмент переводит Новруз, Рамадан, туристические пики и курортные сезоны в цифры.' },
       'pnl-simulator': { title: 'P&L Симулятор', subtitle: 'Доходы, what-if и безубыточность', why: 'Рестораны с ежемесячным P&L опережают конкурентов.' },
       'sikayet-analitigi': { title: 'Анализ Жалоб', subtitle: 'AI-анализ жалоб', why: 'За каждой жалобой стоят 26 молчаливых недовольных клиентов.' },
       'sikayet-cavablandirici': { title: 'Ответчик на жалобы', subtitle: 'AI-ответы на отзывы в 3 тонах', why: 'Каждая неотвеченная жалоба — потенциальная потеря клиента. AI генерирует профессиональные ответы в 3 тонах.' },
@@ -170,6 +175,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'sezon-planlama' && tool.status === 'live') {
     return <SezonPlanlamaPage />;
+  }
+  if (slug === 'sezon-analitikasi' && tool.status === 'live') {
+    return <SezonAnalitikasiPage />;
   }
   if (slug === 'reklam-yazicisi' && tool.status === 'live') {
     return <ReklamYazicisiPage />;
