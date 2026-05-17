@@ -77,3 +77,8 @@ test('Member detail page uses prefix-free dashboard route', async ({ request }) 
   const response = await request.get('/dashboard/users/1', { maxRedirects: 0 });
   expect(response.status()).toBe(307);
 });
+
+test('POST reset-password returns 401 without auth', async ({ request }) => {
+  const response = await request.post('/api/admin/members/1/reset-password');
+  expect(response.status()).toBe(401);
+});

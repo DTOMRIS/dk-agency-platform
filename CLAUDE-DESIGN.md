@@ -402,3 +402,17 @@ Hər admin əməliyyatı immutable `admin_audit_logs` cədvəlinə yazılır.
 **Sensitiv sahə qaydası:** `memberProfiles`-dan named select istifadə et (explicit sütun siyahısı). Gələcəkdə cədvələ sensitiv sütun əlavə olunsa leak olmasın. `users.passwordHash` bu endpoint-dən HEÇ VAXT qaytarılmır.
 
 **Audit preview:** Detail page-də `adminAuditLogs.targetUserId = id` ilə son 10 log göstərilir. Ayrıca fetch yox — GET response-un içindədir.
+
+## TASK-0139 - Admin-Initiated Password Reset
+
+**Route:** `POST /api/admin/members/[id]/reset-password`
+
+**Pattern:** Eyni `passwordResetTokens` cədvəlini istifadə edir (token = crypto.randomUUID(), 1 saat expire). Mövcud `/reset-password` page token-i consume edir — yeni page lazım deyil.
+
+**Email template:** `adminPasswordReset` — mövcud `passwordReset`-dən fərqli body ("administrator tərəfindən sıfırlanıb" + "bu siz deyilsinizsə nəzərə almayın").
+
+**Token expire: 1 saat** (invite-dan fərqli: burada admin-user aktiv ünsiyyətdədir).
+
+**Audit:** `member.password_reset` action — metadata: `{ initiatedBy: 'admin' }`. Token/hash metadata-da HEÇ VAXT.
+
+**UI:** Detail page → Quick Actions → "Şifrəni Sıfırla" düyməsi → window.confirm → POST → toast.

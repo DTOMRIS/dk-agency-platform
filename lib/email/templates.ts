@@ -308,6 +308,57 @@ export const emailTemplates = {
     };
   },
 
+  adminPasswordReset: (resetUrl: string, userName: string, locale?: Locale | string): EmailTemplate => {
+    const loc = resolveLocale(locale);
+    const t: Record<Locale, { subject: string; greeting: string; body: string; cta: string; expiry: string; ignore: string }> = {
+      az: {
+        subject: 'DK Agency \u2014 \u015eifr\u0259nizi s\u0131f\u0131rlay\u0131n',
+        greeting: `Salam ${userName},`,
+        body: 'Hesab\u0131n\u0131z\u0131n \u015Fifr\u0259si administrator t\u0259r\u0259find\u0259n s\u0131f\u0131rlanmaq \u00FC\u00E7\u00FCn sor\u011Fu g\u00F6nd\u0259rildi.',
+        cta: '\u015eifr\u0259mi S\u0131f\u0131rla',
+        expiry: 'Bu link 1 saat \u0259rzind\u0259 etibarlid\u0131r.',
+        ignore: 'Bu sor\u011Funu siz g\u00F6nd\u0259rm\u0259misinizsiz, bu emaili n\u0259z\u0259r\u0259 almay\u0131n.',
+      },
+      ru: {
+        subject: 'DK Agency \u2014 \u0421\u0431\u0440\u043E\u0441\u044C\u0442\u0435 \u043F\u0430\u0440\u043E\u043B\u044C',
+        greeting: `\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${userName}!`,
+        body: '\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440 \u0438\u043D\u0438\u0446\u0438\u0438\u0440\u043E\u0432\u0430\u043B \u0441\u0431\u0440\u043E\u0441 \u043F\u0430\u0440\u043E\u043B\u044F \u0432\u0430\u0448\u0435\u0433\u043E \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u0430.',
+        cta: '\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C \u043F\u0430\u0440\u043E\u043B\u044C',
+        expiry: '\u0421\u0441\u044B\u043B\u043A\u0430 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430 1 \u0447\u0430\u0441.',
+        ignore: '\u0415\u0441\u043B\u0438 \u0432\u044B \u043D\u0435 \u0437\u0430\u043F\u0440\u0430\u0448\u0438\u0432\u0430\u043B\u0438 \u0441\u0431\u0440\u043E\u0441, \u043F\u0440\u043E\u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0439\u0442\u0435 \u044D\u0442\u043E \u043F\u0438\u0441\u044C\u043C\u043E.',
+      },
+      en: {
+        subject: 'DK Agency \u2014 Reset your password',
+        greeting: `Hello ${userName},`,
+        body: 'Your account password reset was initiated by an administrator.',
+        cta: 'Reset My Password',
+        expiry: 'This link expires in 1 hour.',
+        ignore: 'If you didn\u2019t request this, please ignore this email.',
+      },
+      tr: {
+        subject: 'DK Agency \u2014 \u015eifrenizi s\u0131f\u0131rlay\u0131n',
+        greeting: `Merhaba ${userName},`,
+        body: 'Hesab\u0131n\u0131z\u0131n \u015Fifresi y\u00F6netici taraf\u0131ndan s\u0131f\u0131rlanmak \u00FCzere talep edildi.',
+        cta: '\u015eifremi S\u0131f\u0131rla',
+        expiry: 'Bu ba\u011Flant\u0131 1 saat ge\u00E7erlidir.',
+        ignore: 'Bu talebi siz yapmad\u0131ysan\u0131z, bu e-postay\u0131 g\u00F6rmezden gelin.',
+      },
+    };
+    const c = t[loc];
+    return {
+      subject: c.subject,
+      html: wrapEmail(`
+        <p>${c.greeting}</p>
+        <p>${c.body}</p>
+        <p style="margin: 24px 0;">
+          <a href="${resetUrl}" style="${ctaStyle}">${c.cta}</a>
+        </p>
+        <p style="color:#64748b;font-size:14px;">${c.expiry}</p>
+        <p style="color:#94a3b8;font-size:12px;">${c.ignore}</p>
+      `),
+    };
+  },
+
   listingSubmitted: (trackingCode: string, userName: string, locale?: Locale | string): EmailTemplate => {
     const loc = resolveLocale(locale);
     const t: Record<Locale, { subject: string; greeting: string; body: string; review: string }> = {
