@@ -860,6 +860,88 @@
       "tier_required_title": "Этот инструмент требует членства KALFA",
       "tier_required_body": "Сезонная аналитика относится к KALFA, потому что объединяет прогноз cash-flow, персонал и планирование запасов.",
       "upgrade_cta": "Перейти на KALFA"
+    },
+    "reklamRoi": {
+      "title": "ROI рекламы",
+      "subtitle": "Переведите awareness и conversion кампании из vanity metrics в ROAS, CAC и LTV:CAC.",
+      "tier": "KALFA",
+      "currency": "AZN",
+      "back_to_tools": "Все инструменты",
+      "campaignType": {
+        "title": "Тип кампании",
+        "awareness": "Awareness",
+        "conversion": "Продажи/Conversion",
+        "awarenessDescription": "Измеряется reach, CPM и примерным EMV; не трактуется как прямые продажи.",
+        "conversionDescription": "Измеряется ROAS, CAC, конверсиями и здоровьем LTV:CAC."
+      },
+      "channels": {
+        "instagram_facebook": "Instagram/Facebook реклама",
+        "google_ads": "Google Ads",
+        "influencer": "Influencer",
+        "telegram": "Telegram кампания",
+        "whatsapp": "WhatsApp кампания"
+      },
+      "inputs": {
+        "channelsTitle": "Каналы",
+        "resultsTitle": "Входные результаты",
+        "addChannel": "Добавить канал",
+        "removeChannel": "Удалить",
+        "channelNumber": "Канал #{number}",
+        "channelType": { "label": "Тип канала", "placeholder": "Выберите канал", "validation": "Выберите тип канала." },
+        "budget": { "label": "Потраченный бюджет", "placeholder": "600", "validation": "Бюджет должен быть больше 0." },
+        "commissionPercent": { "label": "Процент комиссии", "placeholder": "12", "validation": "Комиссия должна быть от 0 до 50." },
+        "newCustomers": { "label": "Новые клиенты", "placeholder": "18", "validation": "Количество клиентов не может быть отрицательным." },
+        "averageOrderValue": { "label": "Средний чек", "placeholder": "32", "validation": "Средний чек должен быть больше 0." },
+        "repeatPurchasePercent": { "label": "Процент повторной покупки", "placeholder": "35", "validation": "Повторная покупка должна быть от 0 до 95." },
+        "reach": { "label": "Охват", "placeholder": "18000", "validation": "Охват не может быть отрицательным." },
+        "impressions": { "label": "Показы", "placeholder": "42000", "validation": "Показы не могут быть отрицательными." },
+        "organicValuePerReach": { "label": "Коэффициент органической ценности", "placeholder": "0.03", "validation": "Органическая ценность не может быть отрицательной." },
+        "validation": { "channelBudget": "Введите бюджет хотя бы для одного канала." }
+      },
+      "results": {
+        "totalRoas": "Общий ROAS",
+        "totalCac": "Общий CAC",
+        "roiPercent": "ROI %",
+        "totalRevenue": "Общий доход",
+        "totalReach": "Общий охват",
+        "averageCpm": "Средний CPM",
+        "totalEmv": "Примерный EMV",
+        "chartTitle": "Сравнение ROAS каналов",
+        "cpmChartTitle": "Сравнение CPM каналов",
+        "tableTitle": "Таблица ROI каналов",
+        "bestChannel": "Лучший канал",
+        "worstChannel": "Слабый канал",
+        "ltvFormulaNote": "LTV является простой оценкой: AOV × (1 / (1 − процент повторной покупки))."
+      },
+      "table": {
+        "channel": "Канал",
+        "budget": "Бюджет",
+        "customers": "Клиенты",
+        "cac": "CAC",
+        "roas": "ROAS",
+        "roi": "ROI%",
+        "reach": "Охват",
+        "impressions": "Показы",
+        "cpm": "CPM",
+        "emv": "EMV"
+      },
+      "ltvCacCard": {
+        "title": "Здоровье LTV:CAC",
+        "healthy": "Здорово: цель ≥ 3:1",
+        "weak": "Слабо: от 1 до 3",
+        "harmful": "Убыточно: ниже 1",
+        "neutral": "Недостаточно данных"
+      },
+      "benchmarkNote": {
+        "title": "Benchmark",
+        "body": "Глобальный ориентир influencer marketing часто указывают около $5.78 на $1; используйте это как сигнал сравнения, не жесткую цель. Здоровая цель LTV:CAC — ≥ 3:1."
+      },
+      "awarenessInfo": "Эта кампания не измеряется как продажи. В awareness режиме важнее reach, CPM и примерный EMV, а не ROAS.",
+      "ahilikQuote": "Мудрость ахилик: мастер смотрит не на шум, а на прибыль и доверие.",
+      "cta": "Рассчитать ROI",
+      "tier_required_title": "Этот инструмент требует KALFA",
+      "tier_required_body": "Ad ROI входит в KALFA, потому что считает ROAS, CAC и LTV:CAC по каналам.",
+      "upgrade_cta": "Перейти на KALFA"
     }
   }
 }

@@ -2,6 +2,21 @@
 
 ## 2026-05-17T00:00:00+04:00 — codex
 - Ne deyisdi:
+  - TASK-0147 Reklam ROI KALFA tool-u əlavə edildi: awareness/conversion seçimi, lokal reklam kanalları, influencer komisyon modeli, ROAS/CAC/LTV:CAC və CPM/EMV nəticələri.
+  - Yeni slug: `reklam-roi`; public locale route: `/az/marketinq/reklam-roi`; dashboard route: `/dashboard/marketinq-ocagi/reklam-roi`.
+  - `marketinq.reklamRoi` namespace-i AZ/RU/EN/TR messages fayllarına əlavə edildi.
+  - Tək real component `components/marketinq-ocagi/reklam-roi/ReklamRoiPage.tsx`; hesab util-i `lib/marketing-tools/reklam-roi.ts`.
+- Ne deyismedi:
+  - Protected files untouched: `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts`.
+  - AI router/API əlavə edilmədi; hesab deterministikdir.
+- Riskler:
+  - `recharts` dependency-də yoxdur; yeni paket qadağasına görə chart native SVG/bar rendering ilə quruldu.
+  - Dashboard copy hələ mövcud legacy inline `pageCopy` pattern-indədir; tool component-in öz string-ləri Pattern A i18n ilədir.
+- Sonraki addim:
+  - TASK-0148 Sosial Metrik planı: Instagram/TikTok/Telegram kontent metriklərini vanity metrics-dən actionable engagement və conversion siqnallarına çevirmək.
+
+## 2026-05-17T00:00:00+04:00 — codex
+- Ne deyisdi:
   - TASK-0146 Sezon Analitikası KALFA tool-u əlavə edildi: AZ sezon əmsalı matrix-i, cash-flow proqnozu, staff və inventar büdcəsi, risk kartları, responsive chart və cədvəl.
   - Yeni slug: `sezon-analitikasi`; public locale route: `/az/marketinq/sezon-analitikasi`; dashboard route: `/dashboard/marketinq-ocagi/sezon-analitikasi`.
   - `marketinq.sezonAnalitikasi` namespace-i AZ/RU/EN/TR messages fayllarına əlavə edildi.

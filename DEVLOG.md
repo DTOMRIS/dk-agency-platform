@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0147 Marketinq: Reklam ROI
+
+**Niyə:** Restoran sahibi çox vaxt like, baxış və ümumi reach kimi vanity metrics ilə qərar verir. HoReCa reklamında əsas sual hansı kanalın real müştəri gətirdiyi, CAC-i neçə AZN etdiyi və müştərinin LTV-si ilə xərcin sağlam olub-olmamasıdır. Bu tool awareness və conversion kampaniyalarını ayırır ki, tanıtım kampaniyası səhvən ROAS ilə ölçülməsin.
+
+**Arxitektura:** Hesablama `lib/marketing-tools/reklam-roi.ts` util-indədir; component yalnız input, validation, chart və cədvəl render edir. Conversion rejimində ROAS, CAC, ROI %, LTV:CAC və kanal müqayisəsi çıxarılır. Awareness rejimində reach, CPM və EMV təxmini göstərilir. Influencer üçün hybrid model: baza ödəniş + attributed revenue üzərindən komisyon.
+
+**Tier:** KALFA (89 AZN/ay). Tool `reklam-roi` slug-u ilə `marketing-tools-config.ts` single source of truth-a əlavə edildi, `aiProvider: none` saxlandı, çünki hesab deterministikdir.
+
+**Test dataseti:** Instagram/Facebook 600 AZN, 18 müştəri, AOV 32 AZN; Influencer 450 AZN + 12% komisyon, 14 müştəri; Telegram 180 AZN, 7 müştəri. Gözlənilən: Instagram/Facebook ROAS 0.96x, influencer effective budget 503.76 AZN, Telegram CAC 25.71 AZN, LTV 49.23 AZN, ümumi LTV:CAC təxminən 0.86:1. Awareness smoke: 600 AZN / 42,000 impressions -> CPM 14.29 AZN.
+
+**Qeyd:** Prompt `recharts` istəyirdi, amma repo dependency-lərində `recharts` yoxdur və yeni paket qadağandır. Ona görə TASK-0146 pattern-i ilə native SVG/bar chart quruldu; chart `data-testid="reklam-roi-chart"` ilə smoke üçün yoxlanır.
+
 ## 2026-05-17 - TASK-0146 Marketinq: Sezon Analitikası
 
 **Niyə:** Kiçik restoranlarda cash-flow proqnozu çox vaxt intuisiya ilə aparılır. Pik ayda az staff və az inventar fürsəti qaçırır, ölü ayda artıq alış və uzun növbə nağd pulu yandırır. Rəqib ümumi kalkulyatorlardan fərq olaraq bu tool AZ-spesifik sezonları — Novruz, Ramazan pəncərəsi, sahil turizmi, Şahdağ/Qəbələ qış sezonu və toy-banket aylarını — deterministik əmsala çevirir.

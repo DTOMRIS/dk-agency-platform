@@ -217,6 +217,27 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
+    slug: 'reklam-roi',
+    category: 'maliyye',
+    tier: 'kalfa',
+    iconName: 'TrendingUp',
+    status: 'live',
+    aiProvider: 'none',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'campaignType', type: 'select', required: true },
+        { name: 'channels', type: 'textarea', required: true },
+        { name: 'averageOrderValue', type: 'number', required: false },
+        { name: 'repeatPurchasePercent', type: 'number', required: false },
+        { name: 'organicValuePerReach', type: 'number', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0,
+  },
+
+  {
     slug: 'pnl-simulator',
     category: 'maliyye',
     tier: 'usta',
