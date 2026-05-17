@@ -378,6 +378,18 @@
         "sagird": "SAGIRD",
         "kalfa": "KALFA",
         "usta": "USTA"
+      },
+      "addMember": {
+        "button": "Добавить пользователя",
+        "title": "Новый пользователь",
+        "fieldName": "Имя Фамилия",
+        "fieldEmail": "Email",
+        "fieldRole": "Роль",
+        "submit": "Добавить",
+        "successAdd": "Пользователь создан, письмо отправлено",
+        "errorEmailExists": "Этот email уже зарегистрирован",
+        "errorGeneric": "Произошла ошибка",
+        "warningEmailFailed": "Пользователь создан, но письмо не удалось отправить"
       }
     }
   },

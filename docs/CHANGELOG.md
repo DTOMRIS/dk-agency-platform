@@ -4,6 +4,13 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- [TASK-0136] feat(admin): manual member creation + set-password email flow
+  - POST /api/admin/members — passwordless user + invite email (24h token)
+  - AddMemberModal component: name, email, role form
+  - adminInvite email template (4 dil — wrapEmail + CTA + fallback URL)
+  - Dual-table insert: users (auth) + memberProfiles (admin panel)
+  - 409 duplicate email check, email-failed graceful warning
+  - OWASP 2025 compliant: plain-text password never emailed
 - [TASK-0135] feat(admin): role assignment UI + PATCH API endpoint
   - PATCH /api/admin/members/[id] — rol dəyişdirmə (member ↔ admin)
   - Self-role protection: admin öz rolunu dəyişə bilməz (403 + UI disabled)

@@ -348,3 +348,25 @@ Admin istifadəçi rolunu dəyişdirmə sistemi:
 **currentUserId pattern:** GET `/api/admin/members` response-una `currentUserId: auth.userId` əlavə edilib — ayrıca session fetch lazım deyil
 
 **Xəta statusları:** 400 (invalid role/id/body), 401 (no auth), 403 (not admin / self), 404 (user not found), 503 (DB unavailable)
+
+## TASK-0136 - Admin-Created Users (Passwordless Invite)
+
+Admin-yaradılmış istifadəçi flow-u:
+
+**Pattern:** passwordless + token email (OWASP 2025 compliant)
+- Plain-text şifrə HEÇ VAXT email-dən keçmir
+- Mövcud `passwordResetTokens` + `/reset-password` page yenidən istifadə edilir
+- Token expire: 24 saat (forgot-password 1h, invite 24h)
+
+**Dual-table insert:**
+- `users` — auth sistemi (login, JWT, password reset)
+- `memberProfiles` — admin panel görüntüsü
+- Hər ikisində yaradılmalıdır, yoxsa ya giriş ya da admin panel qırılır
+- **Tech debt:** gələcəkdə bu iki cədvəl unified olmalıdır
+
+**emailVerified = true:** Admin trust model. passwordHash=null unauthorized access-i bloklayır.
+
+**Email fail graceful:** 201 + `{ emailSent: false, warning }` — rollback yox, admin resend edə bilər
+
+**API:** `POST /api/admin/members` — body: `{ name, email, role }`
+**Xəta statusları:** 400 (missing field), 401 (no auth), 403 (not admin), 409 (email exists), 503 (DB)

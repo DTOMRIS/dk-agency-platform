@@ -378,6 +378,18 @@
         "sagird": "ŞAGIRD",
         "kalfa": "KALFA",
         "usta": "USTA"
+      },
+      "addMember": {
+        "button": "Üye Ekle",
+        "title": "Yeni Üye",
+        "fieldName": "Ad Soyad",
+        "fieldEmail": "E-posta",
+        "fieldRole": "Rol",
+        "submit": "Ekle",
+        "successAdd": "Üye oluşturuldu, e-posta gönderildi",
+        "errorEmailExists": "Bu e-posta zaten kayıtlı",
+        "errorGeneric": "Hata oluştu",
+        "warningEmailFailed": "Üye oluşturuldu, ancak e-posta gönderilemedi"
       }
     }
   },

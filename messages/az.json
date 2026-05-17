@@ -320,6 +320,18 @@
         "sagird": "ŞAGIRD",
         "kalfa": "KALFA",
         "usta": "USTA"
+      },
+      "addMember": {
+        "button": "İstifadəçi əlavə et",
+        "title": "Yeni İstifadəçi",
+        "fieldName": "Ad Soyad",
+        "fieldEmail": "E-poçt",
+        "fieldRole": "Rol",
+        "submit": "Əlavə et",
+        "successAdd": "İstifadəçi yaradıldı, email göndərildi",
+        "errorEmailExists": "Bu email artıq qeydiyyatdadır",
+        "errorGeneric": "Xəta baş verdi",
+        "warningEmailFailed": "İstifadəçi yaradıldı, amma email göndərilə bilmədi"
       }
     }
   },

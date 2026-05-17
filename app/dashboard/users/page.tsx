@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Crown, GraduationCap, ShieldCheck, Users } from 'lucide-react';
+import { Crown, GraduationCap, ShieldCheck, UserPlus, Users } from 'lucide-react';
 import MembersTable from '@/components/dashboard/MembersTable';
+import AddMemberModal from '@/components/dashboard/AddMemberModal';
 
 interface Member {
   id: number;
@@ -46,6 +47,7 @@ export default function DashboardUsersPage() {
   const [planFilter, setPlanFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const fetchMembers = useCallback(async () => {
     setLoading(true);
@@ -97,9 +99,19 @@ export default function DashboardUsersPage() {
   return (
     <div className="bg-white p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{t('pageTitle')}</h1>
-          <p className="mt-1 text-sm text-slate-500">{t('pageSubtitle')}</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{t('pageTitle')}</h1>
+            <p className="mt-1 text-sm text-slate-500">{t('pageSubtitle')}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setAddModalOpen(true)}
+            className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-4 py-2.5 text-sm font-bold text-white transition hover:opacity-90"
+          >
+            <UserPlus size={16} />
+            {t('addMember.button')}
+          </button>
         </div>
 
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -143,6 +155,14 @@ export default function DashboardUsersPage() {
             setPage(1);
           }}
           onPageChange={setPage}
+        />
+
+        <AddMemberModal
+          open={addModalOpen}
+          onClose={() => setAddModalOpen(false)}
+          onSuccess={() => {
+            fetchMembers();
+          }}
         />
       </div>
     </div>
