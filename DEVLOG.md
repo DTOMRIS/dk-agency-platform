@@ -1,5 +1,6 @@
 # DEVLOG — DK Agency Platform
 
+<<<<<<< HEAD
 ## 2026-05-20 - TASK-0103 Toolkit i18n Batch 3 FINAL (aqta + insaat + checklist)
 
 **Why:** Last 3 Pattern C toolkit tools. Toolkit i18n now 11/11 complete.
@@ -221,6 +222,20 @@
 **Qeyd:** Prompt-da Qutab üçün "BULMACA və ya ULDUZ" ehtimalı yazılmışdı, amma məcburi formula ilə Qutab orta CM-dən aşağı, orta Mix-dən yuxarıdır. Ona görə doğru kateqoriya İŞ ATI-dır.
 
 **AI təhlükəsizliyi:** DeepSeek çağırışı `app/actions/menu-analytics-ai.ts` server action-dadır. Input max 20 item, item adı max 50 simvol, 10 dəqiqədə 3 çağırış cookie əsaslı rate limit ilə qorunur. API key client bundle-a düşmür.
+
+## 2026-05-17 - TASK-0142 Marketinq: Şikayət Analiz Aləti
+
+**Niyə:** Mövcud Şikayət Analitiği çoxlu şikayət pattern-ləri üçün idi. Bu task tək şikayəti operativ idarə etmək üçündür: əvvəl anlıq kateqoriya, sonra AI ilə ciddilik, kəşf sualları, kanal-aware müştəri cavabı və daxili qeydiyyat.
+
+**Fəlsəfə:** Müştəri çox vaxt yalnız şikayətin səbəbindən yox, ele alınma biçimindən narazı qalır. Tool cavab yazmadan əvvəl adminə boşluqları göstərir: gün/saat, stol/zona, işçi, müştəri əvvəldən loyaldırmı, public kanal konteksti varmı.
+
+**Test şikayəti 1:** "Sifarişim 45 dəqiqə gec gəldi və yemək soyuq idi" client-side iki siqnal verir: Yemək keyfiyyəti + Gözləmə/Sürət. Ciddilik yüksəkdir, çünki həm gecikmə, həm soyuq yemək var.
+
+**Test şikayəti 2:** "Ofisiant çox kobud idi, sualıma cavab vermədi" client-side Xidmət/Personal verir. Ciddilik orta-yüksəkdir, çünki personal davranışı reputasiya və təkrar gəliş riskidir.
+
+**AI təhlükəsizliyi:** DeepSeek çağırışı `app/actions/complaint-analysis-ai.ts` server action-dadır. Input 20-1000 simvol arası sanitize olunur, 10 dəqiqədə 5 analiz cookie əsaslı rate limit ilə qorunur. API key client bundle-a düşmür.
+
+**CAPA əlavəsi:** Push-dan əvvəl daxili qeydiyyata düzəldici/önləyici fəaliyyət bloku əlavə edildi. Şikayət yalnız cavab göndərməklə bağlanmır; araşdırma aparılmalı, bağlama kriteriyası bilinməli, bu hadisə üçün düzəldici fəaliyyət və təkrar olmaması üçün önləyici fəaliyyət yazılmalıdır.
 
 ---
 
