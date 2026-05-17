@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-16T05:08:44.333Z
+- GeneratedAt: 2026-05-17T05:38:55.116Z
 - BuildStatus: PASS
 
-## Routes (131)
+## Routes (130)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -94,7 +94,6 @@ Auto-generated. Do not edit manually.
 - /dashboard/ilanlar
 - /dashboard/ilanlar/[id]
 - /dashboard/kazan-leads
-- /dashboard/kullanicilar
 - /dashboard/loglar
 - /dashboard/marketinq-ocagi
 - /dashboard/marketinq-ocagi/[slug]
@@ -139,7 +138,9 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (64)
+## API Routes (66)
+- /api/admin/members
+- /api/admin/members/[id]
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
