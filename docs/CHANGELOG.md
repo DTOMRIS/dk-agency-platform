@@ -4,6 +4,25 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- [TASK-0135] feat(admin): role assignment UI + PATCH API endpoint
+  - PATCH /api/admin/members/[id] — rol dəyişdirmə (member ↔ admin)
+  - Self-role protection: admin öz rolunu dəyişə bilməz (403 + UI disabled)
+  - MembersTable: rol sütunu select dropdown ilə (cari admin badge-only)
+  - i18n: dashboard.members.roles.* (4 dil — az/en/ru/tr)
+  - E2E smoke: PATCH 401 + invalid role + invalid id tests
+
+### Fixed
+- [TASK-0134-FIX] fix(admin): resolve validator blocks — spec locale fix + i18n pageCopy
+  - E2E spec: locale prefix (`/${locale}/dashboard/users`) silindi, dashboard route-ları locale-independent
+  - pageCopy inline obyekti component-dən çıxarıldı, `useTranslations('dashboard.members')` ilə əvəz
+  - messages/az.json, en.json, ru.json, tr.json: `dashboard.members.*` namespace (4 dil tam)
+  - dk-validator L-004 (inline pageCopy) + E2E locale prefix block-ları həll edildi
+
+### Added
+- TASK-0134: Admin İstifadəçilər page → real DB (mock removed)
+  - GET /api/admin/members (admin-only, JOIN profiles+subscriptions, pagination, stats)
+  - MembersTable component (filter, pagination, plan badges, 4 dil)
+  - 4 stat cards: total/verified/KALFA/USTA
 - TASK-0131: Dashboard input/textarea/select contrast fix (globals.css systemic)
   - Root cause: body color #eaeaea (landing dark) inherited by dashboard inputs on bg-white
   - Fix: global input/textarea/select { color: var(--dk-ink) } + placeholder { color: var(--dk-ink-soft) }

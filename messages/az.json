@@ -268,6 +268,59 @@
       "notifications": "Bildirişlər",
       "profile": "Profil",
       "logout": "Çıxış"
+    },
+    "members": {
+      "pageTitle": "İstifadəçilər",
+      "pageSubtitle": "Qeydiyyatdan keçən üzvlər və abunəlik statusları",
+      "error": "Xəta baş verdi, yenidən cəhd edin",
+      "stats": {
+        "total": "Cəmi üzv",
+        "verified": "Təsdiqlənmiş",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      },
+      "columns": {
+        "email": "Email",
+        "name": "Ad",
+        "company": "Şirkət",
+        "role": "Rol",
+        "plan": "Plan",
+        "status": "Status",
+        "phone": "Telefon",
+        "createdAt": "Qeydiyyat"
+      },
+      "roles": {
+        "member": "İstifadəçi",
+        "admin": "Admin",
+        "changeSuccess": "Rol yeniləndi",
+        "changeError": "Xəta baş verdi",
+        "selfForbidden": "Öz rolunu dəyişə bilməzsən"
+      },
+      "filters": {
+        "allStatuses": "Bütün statuslar",
+        "allPlans": "Bütün planlar",
+        "searchPlaceholder": "Email və ya ad axtar"
+      },
+      "states": {
+        "loading": "Yüklənir...",
+        "empty": "Hələ qeydiyyatdan keçən üzv yoxdur"
+      },
+      "pagination": {
+        "prev": "Əvvəlki",
+        "next": "Növbəti",
+        "pageLabel": "Səhifə"
+      },
+      "statuses": {
+        "active": "Aktiv",
+        "trial": "Sınaq",
+        "expired": "Bitib",
+        "cancelled": "Ləğv"
+      },
+      "plans": {
+        "sagird": "ŞAGIRD",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      }
     }
   },
   "contact": {

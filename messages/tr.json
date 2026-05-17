@@ -326,6 +326,59 @@
       "notifications": "Bildirimler",
       "profile": "Profil",
       "logout": "Çıkış Yap"
+    },
+    "members": {
+      "pageTitle": "Kullanıcılar",
+      "pageSubtitle": "Kayıtlı üyeler ve abonelik durumları",
+      "error": "Bir hata oluştu, tekrar deneyin",
+      "stats": {
+        "total": "Toplam üye",
+        "verified": "Doğrulanmış",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      },
+      "columns": {
+        "email": "Email",
+        "name": "Ad",
+        "company": "Şirket",
+        "role": "Rol",
+        "plan": "Plan",
+        "status": "Durum",
+        "phone": "Telefon",
+        "createdAt": "Kayıt"
+      },
+      "roles": {
+        "member": "Üye",
+        "admin": "Admin",
+        "changeSuccess": "Rol güncellendi",
+        "changeError": "Hata oluştu",
+        "selfForbidden": "Kendi rolünü değiştiremezsin"
+      },
+      "filters": {
+        "allStatuses": "Tüm durumlar",
+        "allPlans": "Tüm planlar",
+        "searchPlaceholder": "Email veya ad ara"
+      },
+      "states": {
+        "loading": "Yükleniyor...",
+        "empty": "Henüz kayıtlı üye yok"
+      },
+      "pagination": {
+        "prev": "Önceki",
+        "next": "Sonraki",
+        "pageLabel": "Sayfa"
+      },
+      "statuses": {
+        "active": "Aktif",
+        "trial": "Deneme",
+        "expired": "Süresi dolmuş",
+        "cancelled": "İptal"
+      },
+      "plans": {
+        "sagird": "ŞAGIRD",
+        "kalfa": "KALFA",
+        "usta": "USTA"
+      }
     }
   },
   "contact": {
