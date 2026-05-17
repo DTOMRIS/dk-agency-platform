@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0144] feat(marketinq): ROI kalkulatoru v2 — çoxlu kanal + CAC + LTV + payback`
 - `[TASK-0143] feat(marketinq): P&L simulyatoru — USTA tier + what-if + AI + breakeven`
 - `[TASK-0141] feat(marketinq): Menyu Analitiği — BCG matrix + AI tövsiyə + PDF export`
 - **TASK-0127** [#127]: Yemək Xərci Food Cost Calculator real implementation. Marketinq Ocağına `yemek-xerci` live ŞAGİRD aləti əlavə edildi: resept kartı, çoxlu məhsul sətri, trim loss, porsiya maya dəyəri, food cost %, ideal qiymət, CSV/Excel export.

@@ -250,6 +250,25 @@ Benchmark qaydası:
 
 AZ terminologiya: istifadəçiyə "gross margin" kimi yad ifadəni əsas label kimi göstərmə. "Ümumi mənfəət", "xalis mənfəət", "yemək məsrəfi", "işçi xərci", "zərərsizlik nöqtəsi" istifadə et. DeepSeek çağırışı server action-da qalmalıdır; `DEEPSEEK_API_KEY` client bundle-a düşməməlidir.
 
+### TASK-0144 ROI Kalkulatoru v2 formula və kanal müqayisəsi
+ROI v2 KALFA tier alətidir. V1 `promosyon-roi` baz həftə vs promo həftə müqayisəsi idi; v2 çoxlu marketinq kanalını eyni ekranda müqayisə edir:
+- Kanal ROI % = (gəlir - xərc) / xərc * 100
+- ROAS = gəlir / xərc
+- CAC = xərc / yeni müştəri sayı
+- Payback gün = CAC / (orta çek * gündəlik ziyarət tezliyi)
+- Ümumi ROI % = (ümumi gəlir - ümumi xərc) / ümumi xərc * 100
+- Ümumi CAC = ümumi xərc / ümumi yeni müştəri
+- LTV = orta çek * aylıq ziyarət * loyallıq müddəti (ay)
+- LTV:CAC = LTV / ümumi CAC
+
+Benchmark qaydası:
+- ROI >100% sağlam, 0-100% diqqət, <0% kritik
+- ROAS >3x sağlam
+- LTV:CAC >=3:1 sağlam
+- Payback <180 gün restoran üçün ideal
+
+Pattern: kanal cədvəli ROI%-ə görə azalan sıralanır, ən yaxşı kanal gold highlight, ən pis kanal solğun göstərilir. AI yalnız büdcə yenidən bölüşdürmə tövsiyəsi verir; hesablamanı AI etmir. DeepSeek çağırışı server action-da qalmalıdır; `DEEPSEEK_API_KEY` client bundle-a düşməməlidir.
+
 ### AzHealth dərsi (5 gün, 57 commit)
 "Field-by-field hazırdır" denildi, müştəri veri işləməyə başlayanda hər şeyin mock olduğu ortaya çıxdı.
 **QAYDA:** Hər Phase-in REAL test checklist-i olmalı. Mock ilə "hazır" sayılmır.
