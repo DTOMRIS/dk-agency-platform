@@ -274,6 +274,11 @@
       "pageSubtitle": "Qeydiyyatdan keçən üzvlər və abunəlik statusları",
       "error": "Xəta baş verdi, yenidən cəhd edin",
       "view": "Bax",
+      "selected": "{n} istifadəçi seçildi",
+      "bulkDelete": "Seçilmişləri Sil",
+      "bulkConfirm": "{n} istifadəçi silinəcək. Davam edilsin?",
+      "bulkSuccess": "{deleted} istifadəçi silindi",
+      "deleteConfirm": "{email} silinəcək. Davam edilsin?",
       "stats": {
         "total": "Cəmi üzv",
         "verified": "Təsdiqlənmiş",
@@ -375,7 +380,16 @@
       "resetPassword": "Şifrəni Sıfırla",
       "resetConfirm": "Bu istifadəçiyə şifrə sıfırlama emaili göndəriləcək. Davam edilsin?",
       "resetSuccess": "Şifrə sıfırlama emaili göndərildi",
-      "resetError": "Email göndərilmədi, yenidən cəhd edin"
+      "resetError": "Email göndərilmədi, yenidən cəhd edin",
+      "deleteAccount": "Hesabı Sil",
+      "deleteConfirm1": "Bu istifadəçini silmək istədiyinizə əminsiniz?",
+      "deleteConfirm2": "Silmək üçün SİL yazın",
+      "deleteConfirmBtn": "Təsdiq et",
+      "cancel": "Ləğv et",
+      "deleteSelfForbidden": "Öz hesabınızı silə bilməzsən",
+      "deleteSuccess": "İstifadəçi silindi",
+      "deleteAlready": "Bu istifadəçi artıq silinib",
+      "deleteError": "Xəta baş verdi"
     }
   },
   "contact": {

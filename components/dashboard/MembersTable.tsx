@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Eye, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Eye, Search, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 interface Member {
@@ -32,6 +32,8 @@ interface MembersTableProps {
   onStatusChange: (v: string) => void;
   onPageChange: (p: number) => void;
   onRoleChange: (memberId: number, newRole: string) => Promise<void>;
+  onDelete: (memberId: number, email: string) => Promise<void>;
+  onBulkDelete: (ids: number[]) => Promise<void>;
 }
 
 const PLAN_BADGE: Record<string, string> = {
@@ -75,10 +77,14 @@ export default function MembersTable(props: MembersTableProps) {
     onStatusChange,
     onPageChange,
     onRoleChange,
+    onDelete,
+    onBulkDelete,
   } = props;
 
   const [changingRoleId, setChangingRoleId] = useState<number | null>(null);
   const [roleError, setRoleError] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<number>>(new Set());
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   const handleRoleSelect = async (memberId: number, newRole: string) => {
     setChangingRoleId(memberId);
@@ -94,6 +100,40 @@ export default function MembersTable(props: MembersTableProps) {
     } finally {
       setChangingRoleId(null);
     }
+  };
+
+  const toggleSelect = (id: number) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleAll = () => {
+    if (selected.size === members.length) {
+      setSelected(new Set());
+    } else {
+      setSelected(new Set(members.map((m) => m.id)));
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    const ids = [...selected].filter((id) => id !== currentUserId);
+    if (ids.length === 0) return;
+    if (!window.confirm(t('bulkConfirm', { n: ids.length }))) return;
+    setBulkDeleting(true);
+    try {
+      await onBulkDelete(ids);
+      setSelected(new Set());
+    } finally {
+      setBulkDeleting(false);
+    }
+  };
+
+  const handleSingleDelete = async (id: number, email: string) => {
+    if (!window.confirm(t('deleteConfirm', { email }))) return;
+    await onDelete(id, email);
   };
 
   const inputCls =
@@ -133,6 +173,21 @@ export default function MembersTable(props: MembersTableProps) {
         </select>
       </div>
 
+      {selected.size > 0 && (
+        <div className="flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5">
+          <span className="text-sm font-medium text-red-700">{t('selected', { n: selected.size })}</span>
+          <button
+            type="button"
+            onClick={handleBulkDelete}
+            disabled={bulkDeleting}
+            className="inline-flex items-center gap-1 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-bold text-white transition hover:bg-red-700 disabled:opacity-50"
+          >
+            <Trash2 size={12} />
+            {bulkDeleting ? '...' : t('bulkDelete')}
+          </button>
+        </div>
+      )}
+
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
         {loading ? (
           <div className="py-16 text-center text-sm text-slate-400">{t('states.loading')}</div>
@@ -143,6 +198,9 @@ export default function MembersTable(props: MembersTableProps) {
             <table className="min-w-full text-sm">
               <thead className="bg-slate-50 text-left text-slate-500">
                 <tr>
+                  <th className="w-10 px-4 py-3">
+                    <input type="checkbox" checked={selected.size === members.length && members.length > 0} onChange={toggleAll} className="rounded" />
+                  </th>
                   <th className="px-4 py-3 font-semibold">{t('columns.email')}</th>
                   <th className="px-4 py-3 font-semibold">{t('columns.name')}</th>
                   <th className="px-4 py-3 font-semibold">{t('columns.company')}</th>
@@ -160,6 +218,9 @@ export default function MembersTable(props: MembersTableProps) {
                   const role = m.role || 'member';
                   return (
                     <tr key={m.id} className="border-t border-slate-100 hover:bg-slate-50/50">
+                      <td className="w-10 px-4 py-3">
+                        <input type="checkbox" checked={selected.has(m.id)} onChange={() => toggleSelect(m.id)} className="rounded" />
+                      </td>
                       <td className="px-4 py-3 text-slate-700">{m.email}</td>
                       <td className="px-4 py-3 font-medium text-[var(--dk-navy)]">{m.fullName || '-'}</td>
                       <td className="px-4 py-3 text-slate-500">{m.company || '-'}</td>
@@ -206,13 +267,24 @@ export default function MembersTable(props: MembersTableProps) {
                       <td className="px-4 py-3 text-slate-500">{m.phone || '-'}</td>
                       <td className="px-4 py-3 text-slate-400">{formatDate(m.createdAt)}</td>
                       <td className="px-4 py-3">
-                        <Link
-                          href={`/dashboard/users/${m.id}`}
-                          className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-50 hover:border-[var(--dk-gold)]"
-                        >
-                          <Eye size={12} />
-                          {t('view')}
-                        </Link>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/dashboard/users/${m.id}`}
+                            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-50 hover:border-[var(--dk-gold)]"
+                          >
+                            <Eye size={12} />
+                            {t('view')}
+                          </Link>
+                          {!isSelf && (
+                            <button
+                              type="button"
+                              onClick={() => handleSingleDelete(m.id, m.email)}
+                              className="inline-flex items-center gap-1 rounded-lg border border-red-200 px-2.5 py-1 text-xs font-medium text-red-600 transition hover:bg-red-50"
+                            >
+                              <Trash2 size={12} />
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );

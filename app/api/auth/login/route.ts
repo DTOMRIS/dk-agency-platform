@@ -57,6 +57,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (user.deletedAt) {
+      return NextResponse.json(
+        { ok: false, error: 'Hesab deaktiv edilib.' },
+        { status: 403 },
+      );
+    }
+
     if (!user.emailVerified) {
       return NextResponse.json(
         { ok: false, error: 'Email ünvanınızı təsdiqləyin. Təsdiq linki email-inizə göndərilib.' },

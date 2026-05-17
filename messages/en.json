@@ -274,6 +274,11 @@
       "pageSubtitle": "Registered members and subscription statuses",
       "error": "An error occurred, please try again",
       "view": "View",
+      "selected": "{n} members selected",
+      "bulkDelete": "Delete Selected",
+      "bulkConfirm": "{n} members will be deleted. Continue?",
+      "bulkSuccess": "{deleted} members deleted",
+      "deleteConfirm": "{email} will be deleted. Continue?",
       "stats": {
         "total": "Total members",
         "verified": "Verified",
@@ -375,7 +380,16 @@
       "resetPassword": "Reset Password",
       "resetConfirm": "A password reset email will be sent to this user. Continue?",
       "resetSuccess": "Password reset email sent",
-      "resetError": "Failed to send email, try again"
+      "resetError": "Failed to send email, try again",
+      "deleteAccount": "Delete Account",
+      "deleteConfirm1": "Are you sure you want to delete this member?",
+      "deleteConfirm2": "Type DELETE to confirm",
+      "deleteConfirmBtn": "Confirm",
+      "cancel": "Cancel",
+      "deleteSelfForbidden": "Cannot delete your own account",
+      "deleteSuccess": "Member deleted",
+      "deleteAlready": "Member already deleted",
+      "deleteError": "An error occurred"
     }
   },
   "contact": {

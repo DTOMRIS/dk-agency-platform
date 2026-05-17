@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { ArrowLeft, KeyRound, Mail, Phone, Building2, Calendar, Shield } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, KeyRound, Mail, Phone, Building2, Calendar, Shield, Trash2 } from 'lucide-react';
 
 interface MemberDetail {
   id: number;
@@ -57,6 +58,7 @@ function formatDateTime(d: string) {
 export default function MemberDetailPage() {
   const t = useTranslations('dashboard.memberDetail');
   const tAudit = useTranslations('dashboard.auditLog');
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
@@ -64,6 +66,7 @@ export default function MemberDetailPage() {
   const [activity, setActivity] = useState<AuditEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
   const fetchDetail = useCallback(async () => {
     setLoading(true);
@@ -78,6 +81,7 @@ export default function MemberDetailPage() {
       const data = await res.json();
       setUser(data.user);
       setActivity(data.recentActivity || []);
+      if (data.currentUserId) setCurrentUserId(data.currentUserId);
     } catch {
       setError('fetch-failed');
     } finally {
@@ -168,7 +172,7 @@ export default function MemberDetailPage() {
         </div>
 
         {/* Quick Actions */}
-        <QuickActions userId={user.id} t={t} onSuccess={fetchDetail} />
+        <QuickActions userId={user.id} isSelf={user.id === currentUserId} t={t} onSuccess={fetchDetail} onDeleted={() => router.push('/dashboard/users')} />
 
         {/* Recent Activity */}
         <div className="rounded-2xl border border-slate-200 bg-white p-6">
@@ -196,8 +200,11 @@ export default function MemberDetailPage() {
   );
 }
 
-function QuickActions({ userId, t, onSuccess }: { userId: number; t: (key: string) => string; onSuccess: () => void }) {
+function QuickActions({ userId, isSelf, t, onSuccess, onDeleted }: { userId: number; isSelf: boolean; t: (key: string) => string; onSuccess: () => void; onDeleted: () => void }) {
   const [resetting, setResetting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteInput, setDeleteInput] = useState('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const handleResetPassword = async () => {
@@ -214,6 +221,26 @@ function QuickActions({ userId, t, onSuccess }: { userId: number; t: (key: strin
     } finally {
       setResetting(false);
       setTimeout(() => setMessage(null), 4000);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    setMessage(null);
+    try {
+      const res = await fetch(`/api/admin/members/${userId}`, { method: 'DELETE' });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'failed');
+      }
+      onDeleted();
+    } catch (err: unknown) {
+      const msg = err instanceof Error && err.message === 'already-deleted' ? t('deleteAlready') : t('deleteError');
+      setMessage({ type: 'error', text: msg });
+    } finally {
+      setDeleting(false);
+      setShowDeleteConfirm(false);
+      setDeleteInput('');
     }
   };
 
@@ -235,7 +262,57 @@ function QuickActions({ userId, t, onSuccess }: { userId: number; t: (key: strin
           <KeyRound size={16} />
           {resetting ? '...' : t('resetPassword')}
         </button>
+        {!isSelf && (
+          <button
+            type="button"
+            onClick={() => {
+              if (!window.confirm(t('deleteConfirm1'))) return;
+              setShowDeleteConfirm(true);
+            }}
+            className="inline-flex items-center gap-2 rounded-xl border border-red-200 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50"
+          >
+            <Trash2 size={16} />
+            {t('deleteAccount')}
+          </button>
+        )}
+        {isSelf && (
+          <span className="inline-flex items-center gap-2 rounded-xl border border-slate-100 px-4 py-2.5 text-sm text-slate-400 cursor-not-allowed" title={t('deleteSelfForbidden')}>
+            <Trash2 size={16} />
+            {t('deleteAccount')}
+          </span>
+        )}
       </div>
+
+      {/* Double confirm: type SİL */}
+      {showDeleteConfirm && (
+        <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 space-y-3">
+          <p className="text-sm text-red-700">{t('deleteConfirm2')}</p>
+          <input
+            type="text"
+            value={deleteInput}
+            onChange={(e) => setDeleteInput(e.target.value)}
+            className="w-full rounded-lg border border-red-300 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-red-300"
+            placeholder="SİL"
+          />
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={deleteInput !== 'SİL' || deleting}
+              className="rounded-lg bg-red-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-40"
+            >
+              {deleting ? '...' : t('deleteConfirmBtn')}
+            </button>
+            <button
+              type="button"
+              onClick={() => { setShowDeleteConfirm(false); setDeleteInput(''); }}
+              className="rounded-lg border border-slate-200 px-4 py-2 text-xs font-medium text-slate-600"
+            >
+              {t('cancel')}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

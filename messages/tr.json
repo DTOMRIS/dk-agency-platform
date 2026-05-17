@@ -332,6 +332,11 @@
       "pageSubtitle": "Kayıtlı üyeler ve abonelik durumları",
       "error": "Bir hata oluştu, tekrar deneyin",
       "view": "Görüntüle",
+      "selected": "{n} üye seçildi",
+      "bulkDelete": "Seçilenleri Sil",
+      "bulkConfirm": "{n} üye silinecek. Devam edilsin mi?",
+      "bulkSuccess": "{deleted} üye silindi",
+      "deleteConfirm": "{email} silinecek. Devam edilsin mi?",
       "stats": {
         "total": "Toplam üye",
         "verified": "Doğrulanmış",
@@ -433,7 +438,16 @@
       "resetPassword": "Şifreyi Sıfırla",
       "resetConfirm": "Şifre sıfırlama e-postası gönderilecek. Devam edilsin mi?",
       "resetSuccess": "Şifre sıfırlama e-postası gönderildi",
-      "resetError": "E-posta gönderilemedi, tekrar deneyin"
+      "resetError": "E-posta gönderilemedi, tekrar deneyin",
+      "deleteAccount": "Hesabı Sil",
+      "deleteConfirm1": "Bu üyeyi silmek istediğinizden emin misiniz?",
+      "deleteConfirm2": "Onaylamak için SİL yazın",
+      "deleteConfirmBtn": "Onayla",
+      "cancel": "İptal",
+      "deleteSelfForbidden": "Kendi hesabınızı silemezsiniz",
+      "deleteSuccess": "Üye silindi",
+      "deleteAlready": "Üye zaten silindi",
+      "deleteError": "Hata oluştu"
     }
   },
   "contact": {

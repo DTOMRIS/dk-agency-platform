@@ -381,6 +381,7 @@ export const memberProfiles = pgTable('member_profiles', {
   role: varchar('role', { length: 30 }).default('member'),
   source: varchar('source', { length: 50 }).default('website'),
   emailVerified: boolean('email_verified').default(false),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
@@ -395,6 +396,7 @@ export const users = pgTable('users', {
   company: varchar('company', { length: 150 }),
   role: varchar('role', { length: 30 }).default('member'),
   emailVerified: boolean('email_verified').default(false),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });

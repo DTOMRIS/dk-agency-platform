@@ -82,3 +82,15 @@ test('POST reset-password returns 401 without auth', async ({ request }) => {
   const response = await request.post('/api/admin/members/1/reset-password');
   expect(response.status()).toBe(401);
 });
+
+test('DELETE member returns 401 without auth', async ({ request }) => {
+  const response = await request.delete('/api/admin/members/1');
+  expect(response.status()).toBe(401);
+});
+
+test('DELETE bulk returns 401 without auth', async ({ request }) => {
+  const response = await request.delete('/api/admin/members/bulk', {
+    data: { ids: [1, 2] },
+  });
+  expect(response.status()).toBe(401);
+});
