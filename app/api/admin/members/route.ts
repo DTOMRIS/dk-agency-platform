@@ -5,6 +5,7 @@ import { memberProfiles, memberSubscriptions, users, passwordResetTokens } from 
 import { eq, ilike, or, sql, desc } from 'drizzle-orm';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
+import { writeAuditLog } from '@/lib/audit';
 
 const PAGE_SIZE = 25;
 
@@ -211,11 +212,29 @@ export async function POST(request: NextRequest) {
   } catch (emailErr) {
     // User created but email failed — don't rollback, admin can resend later
     console.error('[admin/members POST] Email send failed:', emailErr);
+    writeAuditLog({
+      adminId: auth.userId,
+      adminEmail: auth.email,
+      action: 'member.created',
+      targetUserId: userId,
+      targetEmail: email,
+      metadata: { role, inviteEmailSent: false },
+    });
     return NextResponse.json(
       { success: true, userId, emailSent: false, warning: 'user-created-email-failed' },
       { status: 201 },
     );
   }
+
+  // 8. Audit log (fire-and-forget)
+  writeAuditLog({
+    adminId: auth.userId,
+    adminEmail: auth.email,
+    action: 'member.created',
+    targetUserId: userId,
+    targetEmail: email,
+    metadata: { role, inviteEmailSent: true },
+  });
 
   return NextResponse.json({ success: true, userId, emailSent: true }, { status: 201 });
 }

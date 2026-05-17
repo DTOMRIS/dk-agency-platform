@@ -333,6 +333,29 @@
         "errorGeneric": "Xəta baş verdi",
         "warningEmailFailed": "İstifadəçi yaradıldı, amma email göndərilə bilmədi"
       }
+    },
+    "auditLog": {
+      "title": "Audit Log",
+      "subtitle": "Admin əməliyyatlarının tarixçəsi",
+      "colDate": "Tarix",
+      "colAdmin": "Admin",
+      "colAction": "Əməliyyat",
+      "colTarget": "Hədəf",
+      "colDetails": "Detallar",
+      "filterAction": "Əməliyyata görə",
+      "filterFrom": "Başlanğıc",
+      "filterTo": "Son",
+      "empty": "Log tapılmadı",
+      "loading": "Yüklənir...",
+      "prev": "Əvvəlki",
+      "next": "Növbəti",
+      "pageLabel": "Səhifə",
+      "actions": {
+        "member.created": "İstifadəçi yaradıldı",
+        "member.role_changed": "Rol dəyişdirildi",
+        "member.deleted": "İstifadəçi silindi",
+        "member.password_reset": "Şifrə sıfırlandı"
+      }
     }
   },
   "contact": {

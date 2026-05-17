@@ -3,6 +3,7 @@ import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { db } from '@/lib/db';
 import { memberProfiles } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { writeAuditLog } from '@/lib/audit';
 
 const VALID_ROLES = ['member', 'admin'] as const;
 type Role = (typeof VALID_ROLES)[number];
@@ -45,9 +46,9 @@ export async function PATCH(
     return NextResponse.json({ error: 'invalid-role' }, { status: 400 });
   }
 
-  // Check user exists
+  // Check user exists + get current role for audit
   const existing = await db
-    .select({ id: memberProfiles.id })
+    .select({ id: memberProfiles.id, role: memberProfiles.role, email: memberProfiles.email })
     .from(memberProfiles)
     .where(eq(memberProfiles.id, targetId))
     .limit(1);
@@ -56,11 +57,24 @@ export async function PATCH(
     return NextResponse.json({ error: 'user-not-found' }, { status: 404 });
   }
 
+  const oldRole = existing[0].role || 'member';
+  const targetEmail = existing[0].email;
+
   // Update role
   await db
     .update(memberProfiles)
     .set({ role: body.role, updatedAt: new Date() })
     .where(eq(memberProfiles.id, targetId));
+
+  // Audit log (fire-and-forget)
+  writeAuditLog({
+    adminId: auth.userId,
+    adminEmail: auth.email,
+    action: 'member.role_changed',
+    targetUserId: targetId,
+    targetEmail,
+    metadata: { oldRole, newRole: body.role },
+  });
 
   return NextResponse.json({ success: true, updatedRole: body.role });
 }

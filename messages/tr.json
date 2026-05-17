@@ -391,6 +391,29 @@
         "errorGeneric": "Hata oluştu",
         "warningEmailFailed": "Üye oluşturuldu, ancak e-posta gönderilemedi"
       }
+    },
+    "auditLog": {
+      "title": "Denetim Günlüğü",
+      "subtitle": "Yönetici işlemlerinin geçmişi",
+      "colDate": "Tarih",
+      "colAdmin": "Yönetici",
+      "colAction": "İşlem",
+      "colTarget": "Hedef",
+      "colDetails": "Detaylar",
+      "filterAction": "İşleme göre",
+      "filterFrom": "Başlangıç",
+      "filterTo": "Bitiş",
+      "empty": "Kayıt bulunamadı",
+      "loading": "Yükleniyor...",
+      "prev": "Önceki",
+      "next": "Sonraki",
+      "pageLabel": "Sayfa",
+      "actions": {
+        "member.created": "Üye oluşturuldu",
+        "member.role_changed": "Rol değiştirildi",
+        "member.deleted": "Üye silindi",
+        "member.password_reset": "Şifre sıfırlandı"
+      }
     }
   },
   "contact": {

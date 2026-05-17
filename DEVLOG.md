@@ -1,5 +1,27 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0137 Admin: Audit Log
+
+**Niyə:** TASK-0135/0136 admin əməliyyatları (rol dəyiş, user yarat) izlənmirdi. Audit log olmadan "kim nə etdi?" cavabsız qalır. Sonar + OWASP 2025 standartlarına görə hər admin əməliyyatı immutable log cədvəlinə yazılmalıdır.
+
+**OWASP 2025 riayəti:**
+- Timestamp UTC (`with timezone`) — locale-independent
+- Admin kimliyi (id + email) — JWT-dən gəlir
+- Target kimliyi (id + email) — kimin üzərində əməliyyat edilib
+- metadata jsonb — əlavə kontekst (oldRole→newRole kimi)
+- Credentials HEÇ VAXT log-a düşmür (password, token, hash)
+- Log immutable — DELETE endpoint YOX, UI-da silmə düyməsi YOX
+
+**Dizayn qərarları:**
+- `writeAuditLog()` utility: fire-and-forget pattern (audit failure main operation-u bloklamamalı)
+- serial id (uuid yerine) — mövcud schema pattern-ə uyğundur, performans üstünlüyü
+- 3 index (admin_id, action, created_at) — filter/sort performance
+- Retroaktiv yazma: TASK-0135 PATCH + TASK-0136 POST artıq audit qeyd edir
+
+**Gələcək:** `member.deleted` action hazırdır — TASK-0140 silmə endpoint-i yaradılanda avtomatik istifadə olunacaq.
+
+---
+
 ## 2026-05-17 - TASK-0136 Admin: Manuel İstifadəçi Əlavə Et
 
 **Niyə:** Admin paneldən istifadəçi siyahısını görmək (TASK-0134) və rol dəyişmək (TASK-0135) mövcuddur, amma yeni istifadəçi əlavə etmək yox idi. Bu, onboarding zamanı admin-in əl ilə hesab yaratmasını tələb edir.

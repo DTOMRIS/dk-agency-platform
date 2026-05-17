@@ -646,3 +646,24 @@ export const marketingToolRuns = pgTable(
     createdIdx: index('idx_mtr_created').on(table.createdAt),
   }),
 );
+
+// ── ADMIN AUDIT LOG (OWASP 2025 — immutable) ─────────────────────────
+
+export const adminAuditLogs = pgTable(
+  'admin_audit_logs',
+  {
+    id: serial('id').primaryKey(),
+    adminId: integer('admin_id').notNull(),
+    adminEmail: varchar('admin_email', { length: 255 }).notNull(),
+    action: varchar('action', { length: 50 }).notNull(),
+    targetUserId: integer('target_user_id'),
+    targetEmail: varchar('target_email', { length: 255 }),
+    metadata: jsonb('metadata'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    adminIdx: index('idx_aal_admin').on(table.adminId),
+    actionIdx: index('idx_aal_action').on(table.action),
+    createdIdx: index('idx_aal_created').on(table.createdAt),
+  }),
+);
