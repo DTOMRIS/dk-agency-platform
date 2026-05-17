@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-17T05:55:19.292Z
+- GeneratedAt: 2026-05-17T06:12:47.725Z
 - BuildStatus: PASS
 
-## Routes (130)
+## Routes (131)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -74,6 +74,7 @@ Auto-generated. Do not edit manually.
 - /blog
 - /dashboard
 - /dashboard/aqta-checklist
+- /dashboard/audit-logs
 - /dashboard/auditor
 - /dashboard/ayarlar
 - /dashboard/b2b-yonetimi
@@ -138,7 +139,8 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (66)
+## API Routes (67)
+- /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
 - /api/admin/news/approve
