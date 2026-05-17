@@ -206,7 +206,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   {
     slug: 'pnl-simulator',
     category: 'maliyye',
-    tier: 'kalfa',
+    tier: 'usta',
     iconName: 'Calculator',
     status: 'live',
     aiProvider: 'deepseek',
@@ -220,7 +220,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
         { name: 'otherExpenses', type: 'number', required: false },
       ],
     },
-    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: null },
     estimatedCostAznPerRun: 0.0003,
   },
 
