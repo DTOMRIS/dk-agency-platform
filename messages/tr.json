@@ -942,6 +942,93 @@
       "tier_required_title": "Bu araç KALFA üyeliği gerektirir",
       "tier_required_body": "Reklam ROI kanal ROAS, CAC ve LTV:CAC hesapladığı için KALFA katmanındadır.",
       "upgrade_cta": "KALFA üyeliğine geç"
+    },
+    "sosialMetrik": {
+      "title": "Sosyal Medya Metrik Analizörü",
+      "subtitle": "Instagram ve TikTok engagement rate'inizi HoReCa sektörüyle karşılaştırın",
+      "tier": "KALFA",
+      "back_to_tools": "Tüm araçlar",
+      "cta": "Hesapla",
+      "tier_required_title": "Bu araç KALFA üyeliği gerektirir",
+      "tier_required_body": "Sosyal Metrik Analizörü sektör benchmarkları ve içerik stratejisi önerisi içerdiği için KALFA katmanındadır.",
+      "upgrade_cta": "KALFA'ya geç",
+      "platforms": {
+        "instagram": "Instagram",
+        "tiktok": "TikTok"
+      },
+      "inputs": {
+        "ig_title": "Instagram verileri",
+        "tt_title": "TikTok verileri",
+        "followers": "Takipçi sayısı",
+        "total_likes": "Toplam beğeni (son 10 gönderi)",
+        "total_comments": "Toplam yorum",
+        "total_saves": "Toplam kaydetme",
+        "total_shares": "Toplam paylaşım",
+        "total_views": "Toplam izlenme",
+        "post_count": "Gönderi sayısı",
+        "avg_reach": "Ortalama erişim (gönderi başına)",
+        "optional": "opsiyonel",
+        "reach_placeholder": "Varsa daha doğru sonuç verir",
+        "content_breakdown": "İçerik türü dağılımı",
+        "count": "Adet",
+        "likes": "Beğeni",
+        "comments": "Yorum",
+        "saves": "Kaydetme",
+        "shares": "Paylaşım"
+      },
+      "contentType": {
+        "type": "İçerik türü",
+        "reels": "Reels",
+        "carousel": "Carousel",
+        "single": "Tek fotoğraf"
+      },
+      "results": {
+        "chart_title": "ER vs HoReCa Benchmark",
+        "your_er": "Sizin ER",
+        "benchmark": "Benchmark",
+        "follower_based": "takipçi",
+        "reach_based": "erişim",
+        "views_based": "izlenme",
+        "delta": "Benchmark farkı",
+        "total_interactions": "Toplam etkileşim",
+        "avg_per_post": "Gönderi başına ortalama",
+        "content_performance": "İçerik türü performansı"
+      },
+      "benchmark": {
+        "nano": "<10K takipçi (HoReCa)",
+        "micro": "10K–100K takipçi (HoReCa)",
+        "mid": "100K+ takipçi (HoReCa)"
+      },
+      "healthScore": {
+        "title": "Sağlık puanı",
+        "excellent": "Mükemmel",
+        "good": "İyi",
+        "average": "Orta",
+        "weak": "Zayıf"
+      },
+      "actions": {
+        "title": "Aksiyon önerileri",
+        "switch_to_video": "Video/Reels'e geçin",
+        "switch_to_video_detail": "Reels ortalamada 2-5x daha yüksek ER alıyor — statik gönderilerden videoya geçiş öncelikli olmalı.",
+        "reply_fast": "Yorumlara 1 saat içinde yanıt verin",
+        "reply_fast_detail": "İlk saat içinde yanıtlanan yorumlar gelecek gönderilerin ER'sini ~%23 artırır (algoritma sinyali).",
+        "save_content": "Kaydetme odaklı içerik artırın",
+        "save_content_detail": "Tarif, checklist, infografik — içeriğinizi kaydeden takipçiler algoritmada daha fazla görünür.",
+        "keep_going": "Devam edin — harika sonuç!",
+        "keep_going_detail": "Benchmark'ın üzerindesiniz. Tutarlılığı koruyun ve denemeye devam edin.",
+        "experiment": "Yeni formatlar deneyin",
+        "experiment_detail": "Hikaye anlatımlı carousel, sahne arkası Reels — farklı formatlar yeni kitle çeker.",
+        "ugc": "Müşteri içeriği kullanın (UGC)",
+        "ugc_detail": "Müşteri fotoğraf/videosu daha gerçekçi görünür, güven oluşturur ve paylaşımı artırır."
+      },
+      "infoLowEr": {
+        "title": "ER'niz neden düşük görünüyor?",
+        "body": "2024-2026 arasında Instagram'ın ortalama ER'si tüm sektörlerde düşüyor. Bu sizin hatanız değil — algoritma değişiklikleri ve platform doygunluğu nedeniyle. Önemli olan sektör benchmarkına göre konumunuz."
+      },
+      "infoMethodology": {
+        "title": "ER metodolojisi",
+        "body": "Bu araç takipçi-bazlı ER kullanır: (beğeni+yorum+kaydetme+paylaşım) / (gönderi×takipçi) × 100. Erişim-bazlı ER genelde daha yüksek çıkar. Kaynaklar arası fark normaldir — tek bir metodolojiye sadık kalın."
+      }
     }
   }
 }

@@ -983,6 +983,93 @@
       "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
       "tier_required_body": "Reklam ROI kanal ROAS, CAC və LTV:CAC hesabladığı üçün KALFA pilləsinə daxildir.",
       "upgrade_cta": "KALFA üzvlüyünə keç"
+    },
+    "sosialMetrik": {
+      "title": "Sosial Media Metrik Analizatoru",
+      "subtitle": "Instagram və TikTok engagement rate-nizi HoReCa sektoru ilə müqayisə edin",
+      "tier": "KALFA",
+      "back_to_tools": "Bütün alətlər",
+      "cta": "Hesabla",
+      "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
+      "tier_required_body": "Sosial Metrik Analizatoru sektor benchmark-ları və kontent strategiyası tövsiyəsi üçün KALFA pilləsinə daxildir.",
+      "upgrade_cta": "KALFA üzvlüyünə keç",
+      "platforms": {
+        "instagram": "Instagram",
+        "tiktok": "TikTok"
+      },
+      "inputs": {
+        "ig_title": "Instagram məlumatları",
+        "tt_title": "TikTok məlumatları",
+        "followers": "Follower sayı",
+        "total_likes": "Cəmi bəyənmə (son 10 post)",
+        "total_comments": "Cəmi şərh",
+        "total_saves": "Cəmi save",
+        "total_shares": "Cəmi paylaşım",
+        "total_views": "Cəmi izlənmə (views)",
+        "post_count": "Post sayı",
+        "avg_reach": "Orta reach (post başına)",
+        "optional": "opsional",
+        "reach_placeholder": "Varsa daha dəqiq nəticə verir",
+        "content_breakdown": "Kontent tipi breakdown",
+        "count": "Say",
+        "likes": "Bəyənmə",
+        "comments": "Şərh",
+        "saves": "Save",
+        "shares": "Paylaşım"
+      },
+      "contentType": {
+        "type": "Kontent tipi",
+        "reels": "Reels",
+        "carousel": "Carousel",
+        "single": "Tək şəkil"
+      },
+      "results": {
+        "chart_title": "ER vs HoReCa Benchmark",
+        "your_er": "Sizin ER",
+        "benchmark": "Benchmark",
+        "follower_based": "follower",
+        "reach_based": "reach",
+        "views_based": "views",
+        "delta": "Benchmark fərqi",
+        "total_interactions": "Cəmi interaksiya",
+        "avg_per_post": "Post başına orta",
+        "content_performance": "Kontent tipi performansı"
+      },
+      "benchmark": {
+        "nano": "<10K follower (HoReCa)",
+        "micro": "10K–100K follower (HoReCa)",
+        "mid": "100K+ follower (HoReCa)"
+      },
+      "healthScore": {
+        "title": "Sağlamlıq balı",
+        "excellent": "Əla",
+        "good": "Yaxşı",
+        "average": "Orta",
+        "weak": "Zəif"
+      },
+      "actions": {
+        "title": "Aksiyon tövsiyələri",
+        "switch_to_video": "Video/Reels-ə keçin",
+        "switch_to_video_detail": "Reels orta hesabla 2-5x daha yüksək ER əldə edir — statik postlardan video formatına keçid prioritet olmalıdır.",
+        "reply_fast": "Şərhlərə 1 saatda cavab verin",
+        "reply_fast_detail": "İlk saat ərzində cavablanan şərhlər gələcək postların ER-ni ~23% artırır (alqoritm siqnalı).",
+        "save_content": "Save-fokuslu kontent artırın",
+        "save_content_detail": "Resept, checklist, infographics — save edən izləyici alqoritmlə daha çox göstərilir.",
+        "keep_going": "Davam edin — yaxşı nəticə!",
+        "keep_going_detail": "Benchmark-dan yuxarısınız. Konsistentliyi qoruyun, eksperiment edin.",
+        "experiment": "Yeni formatlar sınayın",
+        "experiment_detail": "Carousel ilə story hekayəsi, behind-the-scenes Reels — fərqli formatlar yeni auditoriya gətirir.",
+        "ugc": "Müştəri kontenti istifadə edin (UGC)",
+        "ugc_detail": "Müştəri foto/videosu daha real görünür, etibar yaradır və paylaşımı artırır."
+      },
+      "infoLowEr": {
+        "title": "Niyə ER-niz aşağı görünür?",
+        "body": "2024-2026 arasında Instagram-ın orta ER-i bütün sektorlarda düşür. Bu sizin günahınız deyil — alqoritm dəyişiklikləri və platforma doymuşluğu səbəbdir. Vacib olan sektor benchmark-ınıza nəzərən vəziyyətinizdir."
+      },
+      "infoMethodology": {
+        "title": "ER metodologiyası",
+        "body": "Bu alət follower-bazlı ER istifadə edir: (bəyənmə+şərh+save+paylaşım) / (post×follower) × 100. Reach-bazlı ER adətən daha yüksək çıxır. Mənbədən-mənbəyə fərq normal — bir metodologiyaya sadiq qalın."
+      }
     }
   }
 }

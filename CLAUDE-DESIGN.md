@@ -250,6 +250,19 @@ Benchmark qaydası:
 
 AZ terminologiya: istifadəçiyə "gross margin" kimi yad ifadəni əsas label kimi göstərmə. "Ümumi mənfəət", "xalis mənfəət", "yemək məsrəfi", "işçi xərci", "zərərsizlik nöqtəsi" istifadə et. DeepSeek çağırışı server action-da qalmalıdır; `DEEPSEEK_API_KEY` client bundle-a düşməməlidir.
 
+### TASK-0148 Sosial Media Metrik Analizatoru — KALFA tier, HoReCa benchmark
+ER kalkulatoru (AI yoxdur, client-side hesablama). Instagram və TikTok üçün ayrı input/formula/benchmark.
+
+Instagram ER: (likes+comments+saves+shares) / (posts×followers) × 100. Save+share 2026-da daxildir.
+TikTok ER: (likes+comments+shares+saves) / totalViews × 100 (views-bazlı).
+
+Benchmark (HoReCa 2025-2026): IG <10K: 2.53%, 10K-100K: 1.18%, 100K+: 0.70%. TikTok F&B: 2.65%.
+Sağlamlıq balı: 0-100 (50=benchmark, 100=2x benchmark). Rəng: yaşıl/qızıl/qırmızı.
+
+Kontent tipi ranking (opsional): Reels > Carousel > Single (2025-2026 median). Real data ilə override olunur.
+
+Aksiyon kartları statikdir (AI çağırışı yoxdur). ER status-una görə fərqli tövsiyə set-i göstərilir.
+
 ### TASK-0145 Müştəri Persona Yaradıcısı — USTA tier, AZ/TR kontekst
 Persona yaradıcısı USTA tier alətidir. Restoran sahibi restoran profili (növ, şəhər, orta çek, xidmət modeli) və müştəri müşahidələri (yaş, cins, gəliş vaxtı/tezliyi, ödəmə, gəliş üsulu) daxil edir. DeepSeek JSON formatında 18 sahəli persona kartı qaytarır.
 

@@ -884,6 +884,93 @@
       "tier_required_title": "This tool requires KALFA membership",
       "tier_required_body": "Ad ROI is in KALFA because it calculates channel ROAS, CAC, and LTV:CAC.",
       "upgrade_cta": "Upgrade to KALFA"
+    },
+    "sosialMetrik": {
+      "title": "Social Media Metrics Analyzer",
+      "subtitle": "Compare your Instagram and TikTok engagement rate with HoReCa benchmarks",
+      "tier": "KALFA",
+      "back_to_tools": "All tools",
+      "cta": "Calculate",
+      "tier_required_title": "This tool requires KALFA membership",
+      "tier_required_body": "Social Metrics Analyzer includes sector benchmarks and content strategy advice, so it belongs to the KALFA tier.",
+      "upgrade_cta": "Upgrade to KALFA",
+      "platforms": {
+        "instagram": "Instagram",
+        "tiktok": "TikTok"
+      },
+      "inputs": {
+        "ig_title": "Instagram data",
+        "tt_title": "TikTok data",
+        "followers": "Followers",
+        "total_likes": "Total likes (last 10 posts)",
+        "total_comments": "Total comments",
+        "total_saves": "Total saves",
+        "total_shares": "Total shares",
+        "total_views": "Total views",
+        "post_count": "Number of posts",
+        "avg_reach": "Average reach (per post)",
+        "optional": "optional",
+        "reach_placeholder": "Provides more accurate results if available",
+        "content_breakdown": "Content type breakdown",
+        "count": "Count",
+        "likes": "Likes",
+        "comments": "Comments",
+        "saves": "Saves",
+        "shares": "Shares"
+      },
+      "contentType": {
+        "type": "Content type",
+        "reels": "Reels",
+        "carousel": "Carousel",
+        "single": "Single image"
+      },
+      "results": {
+        "chart_title": "ER vs HoReCa Benchmark",
+        "your_er": "Your ER",
+        "benchmark": "Benchmark",
+        "follower_based": "follower",
+        "reach_based": "reach",
+        "views_based": "views",
+        "delta": "Benchmark difference",
+        "total_interactions": "Total interactions",
+        "avg_per_post": "Avg per post",
+        "content_performance": "Content type performance"
+      },
+      "benchmark": {
+        "nano": "<10K followers (HoReCa)",
+        "micro": "10K–100K followers (HoReCa)",
+        "mid": "100K+ followers (HoReCa)"
+      },
+      "healthScore": {
+        "title": "Health score",
+        "excellent": "Excellent",
+        "good": "Good",
+        "average": "Average",
+        "weak": "Weak"
+      },
+      "actions": {
+        "title": "Action recommendations",
+        "switch_to_video": "Switch to video/Reels",
+        "switch_to_video_detail": "Reels achieve 2-5x higher ER on average — prioritize the shift from static posts to video format.",
+        "reply_fast": "Reply to comments within 1 hour",
+        "reply_fast_detail": "Comments answered within the first hour boost future post ER by ~23% (algorithm signal).",
+        "save_content": "Increase save-focused content",
+        "save_content_detail": "Recipes, checklists, infographics — followers who save your content get shown more of it.",
+        "keep_going": "Keep it up — great results!",
+        "keep_going_detail": "You're above the benchmark. Maintain consistency and keep experimenting.",
+        "experiment": "Test new formats",
+        "experiment_detail": "Story-driven carousels, behind-the-scenes Reels — different formats attract new audiences.",
+        "ugc": "Use customer content (UGC)",
+        "ugc_detail": "Customer photos/videos look more authentic, build trust, and boost shares."
+      },
+      "infoLowEr": {
+        "title": "Why does your ER seem low?",
+        "body": "Between 2024-2026, average Instagram ER has declined across all sectors. This isn't your fault — it's due to algorithm changes and platform saturation. What matters is your position relative to sector benchmarks."
+      },
+      "infoMethodology": {
+        "title": "ER methodology",
+        "body": "This tool uses follower-based ER: (likes+comments+saves+shares) / (posts×followers) × 100. Reach-based ER typically appears higher. Differences between sources are normal — stick to one methodology."
+      }
     }
   }
 }

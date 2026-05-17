@@ -344,6 +344,32 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
+    slug: 'sosial-metrik',
+    category: 'analitika',
+    tier: 'kalfa',
+    iconName: 'BarChart3',
+    status: 'live',
+    aiProvider: 'none',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'platform', type: 'select', required: true, options: [
+          { value: 'instagram', labelKey: 'platforms.instagram' },
+          { value: 'tiktok', labelKey: 'platforms.tiktok' },
+        ] },
+        { name: 'followers', type: 'number', required: true },
+        { name: 'totalLikes', type: 'number', required: true },
+        { name: 'totalComments', type: 'number', required: true },
+        { name: 'totalSaves', type: 'number', required: true },
+        { name: 'totalShares', type: 'number', required: true },
+        { name: 'postCount', type: 'number', required: true },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0,
+  },
+
+  {
     slug: 'sezon-planlama',
     category: 'emeliyyat',
     tier: 'kalfa',
