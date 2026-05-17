@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import Link from 'next/link';
+import { ChevronLeft, ChevronRight, Eye, Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 interface Member {
@@ -150,6 +151,7 @@ export default function MembersTable(props: MembersTableProps) {
                   <th className="px-4 py-3 font-semibold">{t('columns.status')}</th>
                   <th className="px-4 py-3 font-semibold">{t('columns.phone')}</th>
                   <th className="px-4 py-3 font-semibold">{t('columns.createdAt')}</th>
+                  <th className="px-4 py-3 font-semibold"></th>
                 </tr>
               </thead>
               <tbody>
@@ -203,6 +205,15 @@ export default function MembersTable(props: MembersTableProps) {
                       </td>
                       <td className="px-4 py-3 text-slate-500">{m.phone || '-'}</td>
                       <td className="px-4 py-3 text-slate-400">{formatDate(m.createdAt)}</td>
+                      <td className="px-4 py-3">
+                        <Link
+                          href={`/dashboard/users/${m.id}`}
+                          className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-50 hover:border-[var(--dk-gold)]"
+                        >
+                          <Eye size={12} />
+                          {t('view')}
+                        </Link>
+                      </td>
                     </tr>
                   );
                 })}

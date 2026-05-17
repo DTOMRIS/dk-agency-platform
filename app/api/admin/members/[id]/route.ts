@@ -1,12 +1,65 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { db } from '@/lib/db';
-import { memberProfiles } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { memberProfiles, adminAuditLogs } from '@/lib/db/schema';
+import { eq, desc } from 'drizzle-orm';
 import { writeAuditLog } from '@/lib/audit';
 
 const VALID_ROLES = ['member', 'admin'] as const;
 type Role = (typeof VALID_ROLES)[number];
+
+export async function GET(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const auth = await getAuthFromCookie();
+  if (!auth) {
+    return NextResponse.json({ error: 'not-authenticated' }, { status: 401 });
+  }
+  if (auth.role !== 'admin') {
+    return NextResponse.json({ error: 'forbidden' }, { status: 403 });
+  }
+  if (!db) {
+    return NextResponse.json({ error: 'database-unavailable' }, { status: 503 });
+  }
+
+  const { id: rawId } = await params;
+  const targetId = parseInt(rawId, 10);
+  if (isNaN(targetId)) {
+    return NextResponse.json({ error: 'invalid-id' }, { status: 400 });
+  }
+
+  // Fetch member profile (no sensitive fields — memberProfiles has no passwordHash)
+  const user = await db
+    .select({
+      id: memberProfiles.id,
+      email: memberProfiles.email,
+      fullName: memberProfiles.fullName,
+      company: memberProfiles.company,
+      phone: memberProfiles.phone,
+      role: memberProfiles.role,
+      emailVerified: memberProfiles.emailVerified,
+      createdAt: memberProfiles.createdAt,
+      updatedAt: memberProfiles.updatedAt,
+    })
+    .from(memberProfiles)
+    .where(eq(memberProfiles.id, targetId))
+    .then((rows) => rows[0]);
+
+  if (!user) {
+    return NextResponse.json({ error: 'user-not-found' }, { status: 404 });
+  }
+
+  // Recent audit activity for this user (last 10)
+  const recentActivity = await db
+    .select()
+    .from(adminAuditLogs)
+    .where(eq(adminAuditLogs.targetUserId, targetId))
+    .orderBy(desc(adminAuditLogs.createdAt))
+    .limit(10);
+
+  return NextResponse.json({ user, recentActivity });
+}
 
 export async function PATCH(
   request: NextRequest,

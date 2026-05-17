@@ -4,6 +4,11 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- [TASK-0138] feat(admin): member detail page + GET endpoint + audit preview
+  - GET /api/admin/members/[id] — profile data (no passwordHash) + last 10 audit logs
+  - /dashboard/users/[id] detail page (profile card, status badges, audit timeline)
+  - MembersTable "Bax" link per row
+  - i18n: dashboard.memberDetail namespace (4 languages)
 - [TASK-0137] feat(admin): audit log — DB schema, API, UI, immutable
   - `admin_audit_logs` Drizzle table (OWASP 2025: UTC timestamp, admin+target, metadata jsonb)
   - GET /api/admin/audit-logs (pagination, action filter, date range)

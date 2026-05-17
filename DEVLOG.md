@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0138 Admin: İstifadəçi Detail Səhifəsi
+
+**Niyə:** Siyahıdan user-ı seçib profil, audit tarixçəsi və əməliyyatları bir yerdə görmək lazımdır. Əvvəl yalnız cədvəl var idi — admin context almadan rol dəyişirdi.
+
+**Sensitiv sahə qoruma:** `memberProfiles` cədvəlində passwordHash yoxdur (o `users` cədvəlindədir), ona görə select-dən explicit exclude lazım olmadı. Amma yenə də named select istifadə etdim — gələcəkdə sütun əlavə olunsa avtomatik leak olmasın.
+
+**Audit preview:** Detail page-də istifadəçiyə aid son 10 audit log göstərilir. Bu, TASK-0137-in `adminAuditLogs.targetUserId` index-indən istifadə edir — ayrıca query, join yox. Əgər log sıfırdırsa "Əməliyyat yoxdur" mesajı.
+
+**MembersTable link:** Eye icon + "Bax" linki — mövcud cədvəl sütunlarına təsir etmir, sadəcə sonda əlavə sütun.
+
+---
+
 ## 2026-05-17 - TASK-0137 Admin: Audit Log
 
 **Niyə:** TASK-0135/0136 admin əməliyyatları (rol dəyiş, user yarat) izlənmirdi. Audit log olmadan "kim nə etdi?" cavabsız qalır. Sonar + OWASP 2025 standartlarına görə hər admin əməliyyatı immutable log cədvəlinə yazılmalıdır.
