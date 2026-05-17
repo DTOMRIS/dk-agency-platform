@@ -214,6 +214,22 @@ CI/CD workflow (GitHub Actions):
 
 ## 11. ÖYRƏNILƏN DƏRSLƏR (POZMA!)
 
+### TASK-0141 Menyu Analitiği formula
+Menyu mühəndisliyi BCG matrisi yalnız verilən rəqəmlərlə hesablanır:
+- Contribution Margin = Satış qiyməti - Yemək məsrəfi
+- Food Cost % = Yemək məsrəfi / Satış qiyməti * 100
+- Menu Mix % = Item satışı / Ümumi satış * 100
+- Orta CM = bütün item CM cəmi / item sayı
+- Orta Mix % = 100 / item sayı
+
+Quadrant qaydası:
+- ULDUZ: CM >= orta CM və Mix >= orta Mix
+- İŞ ATI: CM < orta CM və Mix >= orta Mix
+- BULMACA: CM >= orta CM və Mix < orta Mix
+- İT: CM < orta CM və Mix < orta Mix
+
+AI yalnız tövsiyə qatıdır. Kateqoriyanı AI yox, bu deterministik formula verir. DeepSeek çağırışı server action-da qalmalıdır; `DEEPSEEK_API_KEY` client bundle-a düşməməlidir.
+
 ### AzHealth dərsi (5 gün, 57 commit)
 "Field-by-field hazırdır" denildi, müştəri veri işləməyə başlayanda hər şeyin mock olduğu ortaya çıxdı.
 **QAYDA:** Hər Phase-in REAL test checklist-i olmalı. Mock ilə "hazır" sayılmır.

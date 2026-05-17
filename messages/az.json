@@ -537,5 +537,48 @@
         "why": "Restoran sahibinin ən bahalı səhvi: səhv lokasyona açmaq."
       }
     }
+  },
+  "marketinq": {
+    "menuAnalytics": {
+      "title": "Menyu Analitiği",
+      "subtitle": "BCG Matrisinə əsaslanan menyu mühəndisliyi",
+      "period_label": "Analiz dövrü",
+      "item_name": "Yeməyin adı",
+      "sell_price": "Satış qiyməti (AZN)",
+      "food_cost": "Yemək məsrəfi (AZN)",
+      "sales_count": "Satış sayı",
+      "add_item": "+ Item əlavə et",
+      "analyze": "Analiz et",
+      "matrix_view": "Matris görünüşü",
+      "table_view": "Cədvəl görünüşü",
+      "ai_tips": "AI Tövsiyələri",
+      "export_pdf": "PDF kimi yüklə",
+      "star": "Ulduz",
+      "plowhorse": "İş Atı",
+      "puzzle": "Bulmaca",
+      "dog": "İt",
+      "min_items_error": "Minimum 2 item lazımdır",
+      "upgrade_cta": "KALFA üzvlüyünə keç",
+      "back_to_tools": "Bütün alətlər",
+      "remove_item": "Item sil",
+      "load_demo": "Test dataseti",
+      "avg_cm": "Orta CM",
+      "avg_mix": "Orta Mix %",
+      "item": "Item",
+      "price": "Qiymət",
+      "cost": "Məsrəf",
+      "category": "Kateqoriya",
+      "empty_quadrant": "Bu kateqoriyada item yoxdur",
+      "star_hint": "Yüksək CM, çox satış",
+      "plowhorse_hint": "Aşağı CM, çox satış",
+      "puzzle_hint": "Yüksək CM, az satış",
+      "dog_hint": "Aşağı CM, az satış",
+      "ai_tips_subtitle": "DeepSeek nəticəyə əsasən praktik addımlar verir.",
+      "ai_loading": "AI tövsiyəsi hazırlanır...",
+      "ai_error": "AI tövsiyəsi yüklənmədi — yenidən cəhd edin",
+      "retry": "Yenidən cəhd et",
+      "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
+      "tier_required_body": "Menyu Analitiği real menyu mühəndisliyi və AI tövsiyələri verdiyi üçün KALFA pilləsinə daxildir."
+    }
   }
 }
