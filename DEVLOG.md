@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0145 Marketinq: Müştəri Persona Yaradıcısı
+
+**Niyə:** Restoran sahibi müştərisini tanımır — "kim gəlir, nə istəyir, harada tapıram?" suallarına cavab yoxdur. Ümumi persona tool-larından fərqli olaraq bu tool AZ/TR restoran sektoru üçün xüsusidir: Bakı vs Gəncə müştərisi, lokal ödəmə vərdişləri, WhatsApp statusu vs Instagram, ailə yönümlü vs fərdi yemək vərdişi.
+
+**Arxitektura:** 3 mərhələli UI (restoran profili + müştəri müşahidələri + AI persona generasiyası). DeepSeek server action JSON formatında cavab qaytarır, 18 sahəli persona kartı yaradır. Cookie-based rate limit: 10 dəqiqədə 5 persona. localStorage-da son 3 persona tarixi saxlanılır.
+
+**Tier:** USTA (149 AZN/ay). KALFA və ŞAGIRD üçün upgrade CTA göstərilir. Config: `musteri-persona` slug, tier `usta`-ya dəyişdirildi (əvvəl `kalfa` idi, amma prompt USTA tələb edir).
+
+**Test ssenarisi:** Milli Mətbəx, Bakı, 15-30 AZN, Zal + Çatdırılma. Yaş 25-34 + 35-44, Qadın 60%. Nahar + Axşam, Həftədə 2-3, Masa 2 + 3-4, Kart + Nağd, Piyada + Taksi. AI Bakılı, 28-38 yaş, orta-yüxsək gəlirli, Instagram aktiv persona qaytarmalıdır. Persona kartı: profil (sol) + insights (sağ) + marketinq tövsiyələri (alt) layout.
+
+**Qeyd:** DeepSeek response_format: json_object istifadə olunur — JSON parse uğursuzluğu üçün ayrıca error tipi (`json-parse`) əlavə edildi. Temperature 0.7 (ROI-dan yüksək) — kreativ persona üçün daha yaxşı nəticə verir.
+
 ## 2026-05-17 - TASK-0144 Marketinq: ROI Kalkulatoru v2
 
 **Niyə:** Mövcud Promosyon ROI v1 baz həftə ilə promo həftəni müqayisə edirdi. ROI v2 restoran sahibinin "hansı kanala pul xərcləməliyəm?" sualına cavab verir: Instagram, Google, WhatsApp, flyer və digər kanallar eyni cədvəldə ROI, ROAS, CAC, LTV:CAC və payback ilə müqayisə olunur.

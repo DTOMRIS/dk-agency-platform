@@ -710,6 +710,122 @@
         "missing-key": "AI açarı serverdə qurulmayıb.",
         "ai-failed": "AI analizi yüklənmədi — yenidən cəhd edin."
       }
+    },
+    "customerPersona": {
+      "title": "Müştəri Persona Yaradıcısı",
+      "subtitle": "Azərbaycan/Türkiyə kontekstinə uyğun müştəri profili yaradın",
+      "step1_title": "Restoran profili",
+      "step2_title": "Müştəri müşahidələri",
+      "restaurant_type": "Restoran növü",
+      "city": "Şəhər/Region",
+      "custom_city": "Şəhər adını yazın",
+      "avg_check": "Orta çek",
+      "service_model": "Xidmət modeli",
+      "age_range": "Yaş aralığı",
+      "gender_ratio": "Cins nisbəti",
+      "male": "Kişi",
+      "female": "Qadın",
+      "visit_time": "Gəliş vaxtı",
+      "visit_frequency": "Gəliş tezliyi",
+      "table_size": "Masa ölçüsü",
+      "person": "nəfər",
+      "payment_method": "Ödəmə üsulu",
+      "arrival_method": "Necə gəlirlər?",
+      "notes": "Xüsusi qeyd",
+      "notes_placeholder": "Müştəriləriniz haqqında əlavə nə bilirsiniz?",
+      "generate_btn": "Persona Yarat",
+      "generating": "Persona yaradılır...",
+      "new_persona_btn": "Yeni Persona Yarat",
+      "demographics_label": "Demografiya",
+      "psychographics_label": "Psixoqrafiya",
+      "behavior_label": "Davranış",
+      "digital_label": "Rəqəmsal iz",
+      "income": "Gəlir",
+      "family": "Ailə",
+      "education": "Təhsil",
+      "motivation": "Motivasiya",
+      "content_type": "Content növü",
+      "peak_online": "Aktiv saatlar",
+      "trigger": "Qərar tetikleyici",
+      "discovery": "Kəşf kanalı",
+      "loyalty": "Loyallıq amili",
+      "pain_points": "Problemlər",
+      "marketing_msg": "İdeal marketinq mesajı",
+      "best_channels": "Ən yaxşı kanallar",
+      "menu_rec": "Menyu tövsiyəsi",
+      "dos": "Etməli",
+      "donts": "Etməməli",
+      "history_title": "Son personalar",
+      "back_to_tools": "Bütün alətlər",
+      "copy_result": "Nəticəni kopyala",
+      "copied": "Kopyalandı",
+      "export_pdf": "PDF kimi yüklə",
+      "validation_error": "Xidmət modeli və yaş aralığı seçilməlidir.",
+      "tier_required_title": "Bu tool USTA üzvlüyü tələb edir",
+      "tier_required_body": "Müştəri Persona Yaradıcısı AI ilə detallı profil yaratdığı üçün USTA pilləsinə daxildir.",
+      "upgrade_cta": "USTA üzvlüyünə keç",
+      "restaurant_types": {
+        "milli_metbex": "Milli Mətbəx",
+        "fast_food": "Fast Food",
+        "cafe": "Cafe",
+        "fine_dining": "Fine Dining",
+        "pizza_burger": "Pizza/Burger",
+        "sushi_asiya": "Suşi/Asiya",
+        "cay_evi": "Çay Evi",
+        "diger": "Digər"
+      },
+      "cities": {
+        "baki": "Bakı",
+        "gence": "Gəncə",
+        "sumqayit": "Sumqayıt",
+        "istanbul": "İstanbul",
+        "ankara": "Ankara",
+        "diger": "Digər"
+      },
+      "service_models": {
+        "zal": "Zal",
+        "catdirilma": "Çatdırılma",
+        "takeaway": "Take-away",
+        "catering": "Catering"
+      },
+      "visit_times": {
+        "seher": "Səhər",
+        "nahar": "Nahar",
+        "axsam": "Axşam",
+        "gece": "Gecə"
+      },
+      "frequencies": {
+        "her_gun": "Hər gün",
+        "heftede_2_3": "Həftədə 2-3",
+        "heftede_1": "Həftədə 1",
+        "ayda_2_3": "Ayda 2-3",
+        "nadir": "Nadir"
+      },
+      "table_sizes": {
+        "1": "1",
+        "2": "2",
+        "3-4": "3-4",
+        "5+": "5+"
+      },
+      "payment_methods": {
+        "nagd": "Nağd",
+        "kart": "Kart",
+        "online": "Online"
+      },
+      "arrival_methods": {
+        "piyada": "Piyada",
+        "avtomobil": "Avtomobil",
+        "taksi": "Taksi",
+        "catdirilma_sifaris": "Çatdırılma sifariş edir"
+      },
+      "errors": {
+        "unauthorized": "Bu tool üçün USTA üzvlüyü tələb olunur.",
+        "rate-limited": "10 dəqiqədə 5 persona limiti doldu. Bir az sonra yenidən cəhd edin.",
+        "validation": "Zəhmət olmasa bütün sahələri doldurun.",
+        "missing-key": "AI açarı serverdə qurulmayıb.",
+        "ai-failed": "Persona yaradıla bilmədi — yenidən cəhd edin.",
+        "json-parse": "AI cavabı düzgün formatda deyil — yenidən cəhd edin."
+      }
     }
   }
 }

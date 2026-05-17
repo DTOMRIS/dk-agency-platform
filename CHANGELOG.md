@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0145] feat(marketinq): müştəri persona yaradıcısı — USTA + AI + AZ/TR kontekst`
 - `[TASK-0144] feat(marketinq): ROI kalkulatoru v2 — çoxlu kanal + CAC + LTV + payback`
 - `[TASK-0143] feat(marketinq): P&L simulyatoru — USTA tier + what-if + AI + breakeven`
 - `[TASK-0141] feat(marketinq): Menyu Analitiği — BCG matrix + AI tövsiyə + PDF export`

@@ -669,6 +669,122 @@
         "missing-key": "AI anahtarı sunucuda kurulu değil.",
         "ai-failed": "AI analizi yüklenmedi — tekrar deneyin."
       }
+    },
+    "customerPersona": {
+      "title": "Müşteri Persona Oluşturucu",
+      "subtitle": "AZ/TR pazarına uygun müşteri profili oluşturun",
+      "step1_title": "Restoran profili",
+      "step2_title": "Müşteri gözlemleri",
+      "restaurant_type": "Restoran türü",
+      "city": "Şehir/Bölge",
+      "custom_city": "Şehir adını yazın",
+      "avg_check": "Ortalama hesap",
+      "service_model": "Hizmet modeli",
+      "age_range": "Yaş aralığı",
+      "gender_ratio": "Cinsiyet oranı",
+      "male": "Erkek",
+      "female": "Kadın",
+      "visit_time": "Geliş zamanı",
+      "visit_frequency": "Ziyaret sıklığı",
+      "table_size": "Masa büyüklüğü",
+      "person": "kişi",
+      "payment_method": "Ödeme yöntemi",
+      "arrival_method": "Nasıl geliyorlar?",
+      "notes": "Ek notlar",
+      "notes_placeholder": "Müşterileriniz hakkında başka ne biliyorsunuz?",
+      "generate_btn": "Persona Oluştur",
+      "generating": "Persona oluşturuluyor...",
+      "new_persona_btn": "Yeni Persona",
+      "demographics_label": "Demografi",
+      "psychographics_label": "Psikografi",
+      "behavior_label": "Davranış",
+      "digital_label": "Dijital ayak izi",
+      "income": "Gelir",
+      "family": "Aile",
+      "education": "Eğitim",
+      "motivation": "Motivasyon",
+      "content_type": "İçerik türü",
+      "peak_online": "Aktif saatler",
+      "trigger": "Karar tetikleyici",
+      "discovery": "Keşif kanalı",
+      "loyalty": "Sadakat faktörü",
+      "pain_points": "Sorun noktaları",
+      "marketing_msg": "İdeal pazarlama mesajı",
+      "best_channels": "En iyi kanallar",
+      "menu_rec": "Menü önerisi",
+      "dos": "Yapılacaklar",
+      "donts": "Yapılmayacaklar",
+      "history_title": "Son personalar",
+      "back_to_tools": "Tüm araçlar",
+      "copy_result": "Sonucu kopyala",
+      "copied": "Kopyalandı",
+      "export_pdf": "PDF olarak indir",
+      "validation_error": "Hizmet modeli ve yaş aralığı seçilmelidir.",
+      "tier_required_title": "Bu araç USTA üyeliği gerektirir",
+      "tier_required_body": "Müşteri Persona Oluşturucu AI ile detaylı profil oluşturduğu için USTA seviyesindedir.",
+      "upgrade_cta": "USTA'ya geç",
+      "restaurant_types": {
+        "milli_metbex": "Milli Mutfak",
+        "fast_food": "Fast Food",
+        "cafe": "Kafe",
+        "fine_dining": "Fine Dining",
+        "pizza_burger": "Pizza/Burger",
+        "sushi_asiya": "Suşi/Asya",
+        "cay_evi": "Çay Evi",
+        "diger": "Diğer"
+      },
+      "cities": {
+        "baki": "Bakü",
+        "gence": "Gence",
+        "sumqayit": "Sumgayıt",
+        "istanbul": "İstanbul",
+        "ankara": "Ankara",
+        "diger": "Diğer"
+      },
+      "service_models": {
+        "zal": "Salon",
+        "catdirilma": "Teslimat",
+        "takeaway": "Paket servis",
+        "catering": "Catering"
+      },
+      "visit_times": {
+        "seher": "Sabah",
+        "nahar": "Öğle",
+        "axsam": "Akşam",
+        "gece": "Gece"
+      },
+      "frequencies": {
+        "her_gun": "Her gün",
+        "heftede_2_3": "Haftada 2-3",
+        "heftede_1": "Haftada 1",
+        "ayda_2_3": "Ayda 2-3",
+        "nadir": "Nadiren"
+      },
+      "table_sizes": {
+        "1": "1",
+        "2": "2",
+        "3-4": "3-4",
+        "5+": "5+"
+      },
+      "payment_methods": {
+        "nagd": "Nakit",
+        "kart": "Kart",
+        "online": "Online"
+      },
+      "arrival_methods": {
+        "piyada": "Yürüyerek",
+        "avtomobil": "Arabayla",
+        "taksi": "Taksiyle",
+        "catdirilma_sifaris": "Teslimat sipariş eder"
+      },
+      "errors": {
+        "unauthorized": "Bu araç için USTA üyeliği gereklidir.",
+        "rate-limited": "10 dakikada 5 persona limiti doldu. Lütfen daha sonra deneyin.",
+        "validation": "Lütfen tüm alanları doldurun.",
+        "missing-key": "AI anahtarı sunucuda kurulu değil.",
+        "ai-failed": "Persona oluşturulamadı — tekrar deneyin.",
+        "json-parse": "AI yanıtı doğru formatta değil — tekrar deneyin."
+      }
     }
   }
 }

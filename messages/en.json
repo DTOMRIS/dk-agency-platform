@@ -611,6 +611,122 @@
         "missing-key": "The AI key is not configured on the server.",
         "ai-failed": "AI analysis failed to load — try again."
       }
+    },
+    "customerPersona": {
+      "title": "Customer Persona Creator",
+      "subtitle": "Create a customer profile tailored to the AZ/TR market",
+      "step1_title": "Restaurant profile",
+      "step2_title": "Customer observations",
+      "restaurant_type": "Restaurant type",
+      "city": "City/Region",
+      "custom_city": "Enter city name",
+      "avg_check": "Average check",
+      "service_model": "Service model",
+      "age_range": "Age range",
+      "gender_ratio": "Gender ratio",
+      "male": "Male",
+      "female": "Female",
+      "visit_time": "Visit time",
+      "visit_frequency": "Visit frequency",
+      "table_size": "Table size",
+      "person": "person",
+      "payment_method": "Payment method",
+      "arrival_method": "How do they arrive?",
+      "notes": "Additional notes",
+      "notes_placeholder": "What else do you know about your customers?",
+      "generate_btn": "Create Persona",
+      "generating": "Creating persona...",
+      "new_persona_btn": "New Persona",
+      "demographics_label": "Demographics",
+      "psychographics_label": "Psychographics",
+      "behavior_label": "Behavior",
+      "digital_label": "Digital footprint",
+      "income": "Income",
+      "family": "Family",
+      "education": "Education",
+      "motivation": "Motivation",
+      "content_type": "Content type",
+      "peak_online": "Peak hours",
+      "trigger": "Decision trigger",
+      "discovery": "Discovery channel",
+      "loyalty": "Loyalty driver",
+      "pain_points": "Pain points",
+      "marketing_msg": "Ideal marketing message",
+      "best_channels": "Best channels",
+      "menu_rec": "Menu recommendation",
+      "dos": "Do's",
+      "donts": "Don'ts",
+      "history_title": "Recent personas",
+      "back_to_tools": "All tools",
+      "copy_result": "Copy result",
+      "copied": "Copied",
+      "export_pdf": "Download as PDF",
+      "validation_error": "Service model and age range must be selected.",
+      "tier_required_title": "This tool requires USTA membership",
+      "tier_required_body": "Customer Persona Creator uses AI to build detailed profiles, so it is part of the USTA tier.",
+      "upgrade_cta": "Upgrade to USTA",
+      "restaurant_types": {
+        "milli_metbex": "National Cuisine",
+        "fast_food": "Fast Food",
+        "cafe": "Cafe",
+        "fine_dining": "Fine Dining",
+        "pizza_burger": "Pizza/Burger",
+        "sushi_asiya": "Sushi/Asian",
+        "cay_evi": "Tea House",
+        "diger": "Other"
+      },
+      "cities": {
+        "baki": "Baku",
+        "gence": "Ganja",
+        "sumqayit": "Sumgait",
+        "istanbul": "Istanbul",
+        "ankara": "Ankara",
+        "diger": "Other"
+      },
+      "service_models": {
+        "zal": "Dine-in",
+        "catdirilma": "Delivery",
+        "takeaway": "Take-away",
+        "catering": "Catering"
+      },
+      "visit_times": {
+        "seher": "Morning",
+        "nahar": "Lunch",
+        "axsam": "Evening",
+        "gece": "Late night"
+      },
+      "frequencies": {
+        "her_gun": "Every day",
+        "heftede_2_3": "2-3 per week",
+        "heftede_1": "Once a week",
+        "ayda_2_3": "2-3 per month",
+        "nadir": "Rarely"
+      },
+      "table_sizes": {
+        "1": "1",
+        "2": "2",
+        "3-4": "3-4",
+        "5+": "5+"
+      },
+      "payment_methods": {
+        "nagd": "Cash",
+        "kart": "Card",
+        "online": "Online"
+      },
+      "arrival_methods": {
+        "piyada": "Walking",
+        "avtomobil": "Car",
+        "taksi": "Taxi",
+        "catdirilma_sifaris": "Orders delivery"
+      },
+      "errors": {
+        "unauthorized": "USTA membership is required for this tool.",
+        "rate-limited": "Limit of 5 personas per 10 minutes reached. Please try again later.",
+        "validation": "Please fill in all required fields.",
+        "missing-key": "The AI key is not configured on the server.",
+        "ai-failed": "Could not create persona — please try again.",
+        "json-parse": "AI response was not in the correct format — please try again."
+      }
     }
   }
 }

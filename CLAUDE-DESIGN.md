@@ -250,6 +250,18 @@ Benchmark qaydası:
 
 AZ terminologiya: istifadəçiyə "gross margin" kimi yad ifadəni əsas label kimi göstərmə. "Ümumi mənfəət", "xalis mənfəət", "yemək məsrəfi", "işçi xərci", "zərərsizlik nöqtəsi" istifadə et. DeepSeek çağırışı server action-da qalmalıdır; `DEEPSEEK_API_KEY` client bundle-a düşməməlidir.
 
+### TASK-0145 Müştəri Persona Yaradıcısı — USTA tier, AZ/TR kontekst
+Persona yaradıcısı USTA tier alətidir. Restoran sahibi restoran profili (növ, şəhər, orta çek, xidmət modeli) və müştəri müşahidələri (yaş, cins, gəliş vaxtı/tezliyi, ödəmə, gəliş üsulu) daxil edir. DeepSeek JSON formatında 18 sahəli persona kartı qaytarır.
+
+Persona 4-blok layout:
+- Sol panel: profil (ad + yaş + peşə + tagline + demografiya)
+- Sağ panel: insights (psixoqrafiya + rəqəmsal iz + davranış + pain points)
+- Alt panel: marketinq tövsiyələri (ideal mesaj + ən yaxşı kanallar + menyu tövsiyəsi + do/don't)
+
+AZ/TR lokalizasiya fərqi: Bakı, Gəncə, İstanbul müştərisi fərqli davranış nümunəsi göstərir. System prompt DeepSeek-ə yerli kontekst verir. Temperature: 0.7 (kreativ persona üçün). Rate limit: 5/10dəq (cookie-based). localStorage: son 3 persona tarixi.
+
+`musteri-persona` config tier-i `kalfa`-dan `usta`-ya dəyişdirildi. monthlyRunLimit: sagird=0, kalfa=0, usta=unlimited.
+
 ### TASK-0144 ROI Kalkulatoru v2 formula və kanal müqayisəsi
 ROI v2 KALFA tier alətidir. V1 `promosyon-roi` baz həftə vs promo həftə müqayisəsi idi; v2 çoxlu marketinq kanalını eyni ekranda müqayisə edir:
 - Kanal ROI % = (gəlir - xərc) / xərc * 100

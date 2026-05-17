@@ -669,6 +669,122 @@
         "missing-key": "AI ключ не настроен на сервере.",
         "ai-failed": "AI анализ не загрузился — попробуйте снова."
       }
+    },
+    "customerPersona": {
+      "title": "Генератор персон клиентов",
+      "subtitle": "Создайте профиль клиента для рынка AZ/TR",
+      "step1_title": "Профиль ресторана",
+      "step2_title": "Наблюдения о клиентах",
+      "restaurant_type": "Тип ресторана",
+      "city": "Город/Регион",
+      "custom_city": "Введите название города",
+      "avg_check": "Средний чек",
+      "service_model": "Модель обслуживания",
+      "age_range": "Возрастной диапазон",
+      "gender_ratio": "Соотношение полов",
+      "male": "Мужчины",
+      "female": "Женщины",
+      "visit_time": "Время визита",
+      "visit_frequency": "Частота визитов",
+      "table_size": "Размер стола",
+      "person": "чел.",
+      "payment_method": "Способ оплаты",
+      "arrival_method": "Как добираются?",
+      "notes": "Дополнительные заметки",
+      "notes_placeholder": "Что ещё вы знаете о своих клиентах?",
+      "generate_btn": "Создать персону",
+      "generating": "Создаём персону...",
+      "new_persona_btn": "Новая персона",
+      "demographics_label": "Демография",
+      "psychographics_label": "Психография",
+      "behavior_label": "Поведение",
+      "digital_label": "Цифровой след",
+      "income": "Доход",
+      "family": "Семья",
+      "education": "Образование",
+      "motivation": "Мотивация",
+      "content_type": "Тип контента",
+      "peak_online": "Активные часы",
+      "trigger": "Триггер решения",
+      "discovery": "Канал открытия",
+      "loyalty": "Фактор лояльности",
+      "pain_points": "Болевые точки",
+      "marketing_msg": "Идеальное маркетинговое сообщение",
+      "best_channels": "Лучшие каналы",
+      "menu_rec": "Рекомендация меню",
+      "dos": "Делать",
+      "donts": "Не делать",
+      "history_title": "Последние персоны",
+      "back_to_tools": "Все инструменты",
+      "copy_result": "Копировать результат",
+      "copied": "Скопировано",
+      "export_pdf": "Скачать как PDF",
+      "validation_error": "Необходимо выбрать модель обслуживания и возрастной диапазон.",
+      "tier_required_title": "Для этого инструмента нужна подписка USTA",
+      "tier_required_body": "Генератор персон использует AI для создания детальных профилей и входит в уровень USTA.",
+      "upgrade_cta": "Перейти на USTA",
+      "restaurant_types": {
+        "milli_metbex": "Национальная кухня",
+        "fast_food": "Фаст-фуд",
+        "cafe": "Кафе",
+        "fine_dining": "Ресторан высокой кухни",
+        "pizza_burger": "Пицца/Бургер",
+        "sushi_asiya": "Суши/Азиатская",
+        "cay_evi": "Чайная",
+        "diger": "Другое"
+      },
+      "cities": {
+        "baki": "Баку",
+        "gence": "Гянджа",
+        "sumqayit": "Сумгаит",
+        "istanbul": "Стамбул",
+        "ankara": "Анкара",
+        "diger": "Другой"
+      },
+      "service_models": {
+        "zal": "В зале",
+        "catdirilma": "Доставка",
+        "takeaway": "Навынос",
+        "catering": "Кейтеринг"
+      },
+      "visit_times": {
+        "seher": "Утро",
+        "nahar": "Обед",
+        "axsam": "Вечер",
+        "gece": "Ночь"
+      },
+      "frequencies": {
+        "her_gun": "Каждый день",
+        "heftede_2_3": "2-3 раза в неделю",
+        "heftede_1": "Раз в неделю",
+        "ayda_2_3": "2-3 раза в месяц",
+        "nadir": "Редко"
+      },
+      "table_sizes": {
+        "1": "1",
+        "2": "2",
+        "3-4": "3-4",
+        "5+": "5+"
+      },
+      "payment_methods": {
+        "nagd": "Наличные",
+        "kart": "Карта",
+        "online": "Онлайн"
+      },
+      "arrival_methods": {
+        "piyada": "Пешком",
+        "avtomobil": "Автомобиль",
+        "taksi": "Такси",
+        "catdirilma_sifaris": "Заказывает доставку"
+      },
+      "errors": {
+        "unauthorized": "Для этого инструмента нужна подписка USTA.",
+        "rate-limited": "Лимит 5 персон за 10 минут исчерпан. Попробуйте позже.",
+        "validation": "Заполните все обязательные поля.",
+        "missing-key": "AI ключ не настроен на сервере.",
+        "ai-failed": "Не удалось создать персону — попробуйте снова.",
+        "json-parse": "AI ответ был в неверном формате — попробуйте снова."
+      }
     }
   }
 }
