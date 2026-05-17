@@ -331,6 +331,7 @@
       "pageTitle": "Kullanıcılar",
       "pageSubtitle": "Kayıtlı üyeler ve abonelik durumları",
       "error": "Bir hata oluştu, tekrar deneyin",
+      "view": "Görüntüle",
       "stats": {
         "total": "Toplam üye",
         "verified": "Doğrulanmış",
@@ -414,6 +415,21 @@
         "member.deleted": "Üye silindi",
         "member.password_reset": "Şifre sıfırlandı"
       }
+    },
+    "memberDetail": {
+      "title": "Üye Detayları",
+      "back": "Geri",
+      "joined": "Kayıt tarihi",
+      "role": "Rol",
+      "status": "Durum",
+      "statusActive": "Aktif",
+      "statusPending": "Beklemede",
+      "recentActivity": "Son İşlemler",
+      "noActivity": "İşlem yok",
+      "quickActions": "Hızlı İşlemler",
+      "loading": "Yükleniyor...",
+      "notFound": "Üye bulunamadı",
+      "error": "Hata oluştu"
     }
   },
   "contact": {

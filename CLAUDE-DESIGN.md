@@ -392,3 +392,13 @@ Hər admin əməliyyatı immutable `admin_audit_logs` cədvəlinə yazılır.
 **GET API:** `/api/admin/audit-logs?page=1&action=member.created&from=2026-01-01&to=2026-12-31`
 
 **Hər yeni admin endpoint-ə:** uğurlu əməliyyatdan SONRA `writeAuditLog()` çağır. Əgər əməliyyat uğursuzsa — audit YAZILMIR.
+
+## TASK-0138 - Member Detail Page
+
+**Route:** `/dashboard/users/[id]` — admin-only, locale-prefix-siz
+
+**GET API:** `/api/admin/members/[id]` — eyni route faylında PATCH ilə birlikdə. Response: `{ user, recentActivity }`
+
+**Sensitiv sahə qaydası:** `memberProfiles`-dan named select istifadə et (explicit sütun siyahısı). Gələcəkdə cədvələ sensitiv sütun əlavə olunsa leak olmasın. `users.passwordHash` bu endpoint-dən HEÇ VAXT qaytarılmır.
+
+**Audit preview:** Detail page-də `adminAuditLogs.targetUserId = id` ilə son 10 log göstərilir. Ayrıca fetch yox — GET response-un içindədir.

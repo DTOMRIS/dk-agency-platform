@@ -273,6 +273,7 @@
       "pageTitle": "Users",
       "pageSubtitle": "Registered members and subscription statuses",
       "error": "An error occurred, please try again",
+      "view": "View",
       "stats": {
         "total": "Total members",
         "verified": "Verified",
@@ -356,6 +357,21 @@
         "member.deleted": "Member deleted",
         "member.password_reset": "Password reset"
       }
+    },
+    "memberDetail": {
+      "title": "Member Details",
+      "back": "Back",
+      "joined": "Joined",
+      "role": "Role",
+      "status": "Status",
+      "statusActive": "Active",
+      "statusPending": "Pending",
+      "recentActivity": "Recent Activity",
+      "noActivity": "No activity",
+      "quickActions": "Quick Actions",
+      "loading": "Loading...",
+      "notFound": "Member not found",
+      "error": "An error occurred"
     }
   },
   "contact": {

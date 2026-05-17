@@ -273,6 +273,7 @@
       "pageTitle": "İstifadəçilər",
       "pageSubtitle": "Qeydiyyatdan keçən üzvlər və abunəlik statusları",
       "error": "Xəta baş verdi, yenidən cəhd edin",
+      "view": "Bax",
       "stats": {
         "total": "Cəmi üzv",
         "verified": "Təsdiqlənmiş",
@@ -356,6 +357,21 @@
         "member.deleted": "İstifadəçi silindi",
         "member.password_reset": "Şifrə sıfırlandı"
       }
+    },
+    "memberDetail": {
+      "title": "İstifadəçi Detalları",
+      "back": "Geri",
+      "joined": "Qeydiyyat tarixi",
+      "role": "Rol",
+      "status": "Status",
+      "statusActive": "Aktiv",
+      "statusPending": "Gözləmədə",
+      "recentActivity": "Son Əməliyyatlar",
+      "noActivity": "Əməliyyat yoxdur",
+      "quickActions": "Sürətli Əməliyyatlar",
+      "loading": "Yüklənir...",
+      "notFound": "İstifadəçi tapılmadı",
+      "error": "Xəta baş verdi"
     }
   },
   "contact": {
