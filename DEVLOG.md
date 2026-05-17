@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-17 - TASK-0144 Marketinq: ROI Kalkulatoru v2
+
+**Niyə:** Mövcud Promosyon ROI v1 baz həftə ilə promo həftəni müqayisə edirdi. ROI v2 restoran sahibinin "hansı kanala pul xərcləməliyəm?" sualına cavab verir: Instagram, Google, WhatsApp, flyer və digər kanallar eyni cədvəldə ROI, ROAS, CAC, LTV:CAC və payback ilə müqayisə olunur.
+
+**Formula:** Kanal ROI % = (gəlir - xərc) / xərc * 100. ROAS = gəlir / xərc. CAC = xərc / yeni müştəri sayı. Payback gün = CAC / (orta çek * gündəlik ziyarət tezliyi). Ümumi ROI = (ümumi gəlir - ümumi xərc) / ümumi xərc * 100. LTV = orta çek * aylıq ziyarət * loyallıq müddəti. LTV:CAC = LTV / ümumi CAC.
+
+**Test dataseti nəticəsi:** Instagram 500 xərc, 1800 gəlir, 15 yeni müştəri -> ROI 260%, ROAS 3.6x, CAC 33.3 AZN. Google Ads 800/1200/8 -> ROI 50%, ROAS 1.5x, CAC 100 AZN. Flyer 200/300/3 -> ROI 50%, ROAS 1.5x, CAC 66.7 AZN. Orta çek 25 AZN, aylıq ziyarət 2, loyallıq 12 ay -> LTV 600 AZN, ümumi CAC 57.7 AZN, LTV:CAC 10.4:1. Ən yaxşı kanal Instagramdır.
+
+**AI təhlükəsizliyi:** DeepSeek çağırışı `app/actions/roi-ai-analysis.ts` server action-dadır. Input max 8 kanal, xərc > 0, gəlir >= 0 sanitizasiyası ilə qorunur. Cookie əsaslı limit: 10 dəqiqədə 3 analiz. `DEEPSEEK_API_KEY` client bundle-a düşmür.
+
+---
+
 ## 2026-05-17 - TASK-0143 Marketinq: P&L Simulyatoru
 
 **Niyə:** USTA tier üçün restoran sahibinin rəqəmləri real vaxtda görməsi lazımdır: satış, yemək məsrəfi, işçi xərci, əsas xərc, overhead, xalis mənfəət və zərərsizlik nöqtəsi eyni paneldə oxunur. Mövcud P&L səthi saxlanmadı; dashboard wrapper yeni mobil-first komponentə bağlandı ki iki fərqli P&L davranışı qalmasın.
