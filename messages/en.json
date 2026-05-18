@@ -1658,5 +1658,113 @@
       "loading": "Preparing recommendation...",
       "ahilikQuote": "In Ahilik, a good place is not only visible; it carries its cost, flow, and guest promise."
     }
+  },
+  "pricing": {
+    "title": "Marketinq Ocağı Pricing",
+    "slogan": "The mark of mastery, the digital guild seal",
+    "subtitle": "Choose the toolset that matches your restaurant stage: free start, KALFA management, or USTA-level analytics.",
+    "tiers": {
+      "sagird": {
+        "name": "SAGIRD",
+        "price": "Free",
+        "period": "",
+        "description": "For restaurants that want to start with simple calculations and core direction.",
+        "benefits": [
+          "Core free tools",
+          "Food cost and brand direction",
+          "Limited AI support",
+          "Simple entry for early decisions"
+        ],
+        "ctaLabel": "Start free"
+      },
+      "kalfa": {
+        "name": "KALFA",
+        "price": "89 AZN",
+        "period": "/ month",
+        "description": "For small restaurants that want data-backed decisions for sales, seasonality, ads, and operations.",
+        "benefits": [
+          "Core Marketinq Ocağı tools",
+          "Ad, season, and social metrics",
+          "Audit and location analysis",
+          "Practical support for growth decisions"
+        ],
+        "ctaLabel": "Ask on WhatsApp",
+        "popularBadge": "Most popular"
+      },
+      "usta": {
+        "name": "USTA",
+        "price": "149 AZN",
+        "period": "/ month",
+        "description": "For teams that need deeper finance, persona, and expansion analytics.",
+        "benefits": [
+          "Deeper analysis beyond KALFA",
+          "P&L and persona modules",
+          "Planned premium tools",
+          "Priority consulting guidance"
+        ],
+        "ctaLabel": "Talk on WhatsApp"
+      }
+    },
+    "toolListToggle": "View {count} tools",
+    "status": {
+      "live": "live",
+      "beta": "beta",
+      "planned": "planned"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "subtitle": "The common questions before starting a subscription.",
+      "items": [
+        {
+          "question": "How do I subscribe?",
+          "answer": "For KALFA and USTA, use the WhatsApp button and the team will send activation steps."
+        },
+        {
+          "question": "Can I change tiers?",
+          "answer": "Yes. As your restaurant grows, the package can be upgraded or adjusted."
+        },
+        {
+          "question": "How long does the free tier last?",
+          "answer": "SAGIRD is free for starting out and trying the core tools."
+        },
+        {
+          "question": "How does payment work?",
+          "answer": "There is no online payment on this page. Payment and activation are handled over WhatsApp."
+        },
+        {
+          "question": "Can I cancel?",
+          "answer": "Yes. Contact the team before the next period begins to stop the subscription."
+        }
+      ]
+    },
+    "bottomCta": {
+      "title": "Which package fits you?",
+      "body": "Send your restaurant type and current stage, and we will help choose the right package.",
+      "ctaLabel": "Contact on WhatsApp"
+    },
+    "whatsappMessage": "Hello, I would like information about the {tier} package",
+    "toolNames": {
+      "marka-kompasi": "Brand Compass",
+      "kst-yoxlayici": "QSC Checker",
+      "menyu-analitigi": "Menu Analytics",
+      "yemek-xerci": "Food Cost",
+      "promosyon-roi": "Promotion ROI",
+      "sezon-analitikasi": "Season Analytics",
+      "reklam-roi": "Advertising ROI",
+      "pnl-simulator": "P&L Simulator",
+      "sikayet-analitigi": "Complaint Analytics",
+      "sikayet-cavablandirici": "Complaint Responder",
+      "musteri-persona": "Customer Persona",
+      "sosial-metrik": "Social Metric",
+      "restoran-audit": "Restaurant Audit",
+      "trend-analiz": "Trend Analysis",
+      "lokasyon-analiz": "Location Analysis",
+      "sezon-planlama": "Season Planning",
+      "reklam-yazicisi": "Ad Writer",
+      "sosial-medya-plan": "Social Media Plan",
+      "audit-robotu": "Audit Robot",
+      "trend-analitigi": "Trend Analytics",
+      "lokasyon-secme": "Location Selection"
+    }
   }
 }

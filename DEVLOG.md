@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-18 - TASK-0152 Pricing Page
+
+**Why:** Marketinq Ocagi tools are already split by tier, but the public site did not answer the customer question: which package do I get, and what does it cost? The pricing page turns that gap into a sales entry point: three simple cards, expandable tool lists, and WhatsApp CTA.
+
+**Architecture:** Route `/[locale]/pricing`, component `components/pricing/PricingPage.tsx`. The page is static: no DB, no payment provider, no AI. Tool lists are rendered dynamically from `lib/marketing-tools-config.ts`.
+
+**Tier data:** The prompt mentioned 3/6/4, but the repo config currently returns 3/12/6. Following the source-of-truth rule, the code trusts config; counts and lists are not hardcoded in the component.
+
+**CTA:** SAGIRD goes to the existing auth register flow. KALFA/USTA open a `wa.me` link with a ready tier message.
+
 ## 2026-05-18 - TASK-0151 Marketinq: Lokasyon Analiz
 
 **Niyə:** Sprint 5-in son tool-u lokasyon qərarını generic xəritə yox, franchise səviyyəli müşahidə intizamına çevirir. Kiçik restoran üçün ən bahalı səhvlərdən biri zəif görünürlük, zəif trafik, park problemi və kirayə/marja uyğunsuzluğu olan nöqtəyə bağlanmaqdır.

@@ -1,5 +1,18 @@
 # HANDOFF
 
+## TASK-0152 - Pricing Page
+
+Status: DONE in `feature/task-0152-pricing-page`.
+
+Key points:
+- Public route: `/[locale]/pricing`.
+- Single component: `components/pricing/PricingPage.tsx`.
+- Tier cards read tool lists from `lib/marketing-tools-config.ts`.
+- Current source-of-truth tier counts are SAGIRD 3, KALFA 12, USTA 6.
+- KALFA and USTA use WhatsApp CTA; SAGIRD uses the existing register flow.
+
+Next: TASK-0153 Homepage 3-card pricing entry.
+
 ## TASK-0149 - Restoran Audit
 
 Status: DONE in `feature/task-0149-restoran-audit`.
