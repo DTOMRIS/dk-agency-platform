@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-18T15:19:26.807Z
+- GeneratedAt: 2026-05-18T15:48:54.083Z
 - BuildStatus: PASS
 
-## Routes (142)
+## Routes (143)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -41,6 +41,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/marketinq/sezon-analitikasi
 - /[locale]/marketinq/sosial-metrik
 - /[locale]/marketinq/trend-analiz
+- /[locale]/pricing
 - /[locale]/privacy
 - /[locale]/qiymet
 - /[locale]/randevu
