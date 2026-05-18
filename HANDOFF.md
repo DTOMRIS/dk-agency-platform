@@ -20,12 +20,20 @@ Key points:
 - AI failure path falls back to static first-step copy and keeps the tool usable.
 - Single component convention: `components/marketinq-ocagi/trend-analiz/TrendAnalizPage.tsx`.
 
-## Next - TASK-0151 Lokasyon
+## TASK-0151 - Lokasyon Analiz
 
-Continue Sprint 5 with the same L-008 pipeline:
-- branch from fresh `main`
-- PR
-- dk-validator/CI
-- squash merge only after success
+Status: DONE in `feature/task-0151-lokasyon-analiz`.
 
-Sprint 5 final tool has the highest risk. Keep external data and map dependencies tightly scoped, and preserve fallback behavior so the tool remains useful if an external provider fails.
+Key points:
+- Static franchise-style location KB is the source of truth; no Google Places, map, or demographic API dependency.
+- Two modes: new site selection with breakeven sales, and existing site review with risk flags.
+- DeepSeek is only an application-advice layer; fallback recommendations keep the tool usable.
+- Single component convention: `components/marketinq-ocagi/lokasyon-analiz/LokasyonAnalizPage.tsx`.
+
+## Sprint 5 Completed
+
+Marketinq Ocagi Sprint 5 is complete: TASK-0146..0151, 6/6 tools.
+
+Next work should be scoped separately:
+- Enrich TASK-0149 audit with the remaining restaurant evaluation and profitability sections.
+- Move the broader franchise manual sections into KAZAN AI knowledge base in a dedicated session.

@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0151] feat(marketinq): Lokasyon Analiz - franchise lokasyon KB + basabas formulu + DeepSeek fallback`
 - `[TASK-0150] feat(marketinq): Trend Analiz — statik 2026 HoReCa KB + DeepSeek tətbiq tövsiyəsi + fallback`
 - `[TASK-0149] feat(marketinq): Restoran Audit — 30 sual, kassa/POS, prime cost, top məhsul marjası və uyğunluq aksiyon planı`
 - `[TASK-0148] feat(marketinq): sosial media metrik analizatoru — KALFA + ER benchmark + content type ranking`

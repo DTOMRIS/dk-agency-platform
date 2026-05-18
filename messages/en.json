@@ -1487,6 +1487,176 @@
       },
       "aiUnavailableNote": "AI recommendation is currently unavailable; a general static recommendation is shown.",
       "ahilikQuote": "In the craft tradition, innovation is not chasing fashion; it is seeing customer need early and applying it with mastery."
+    },
+    "lokasyonAnaliz": {
+      "back_to_tools": "All tools",
+      "tier": "KALFA",
+      "title": "Location Analysis",
+      "subtitle": "Assess a new or existing restaurant site with franchise location criteria, breakeven sales, and risk cards.",
+      "lockedTitle": "Location Analysis is for KALFA members",
+      "lockedBody": "This tool provides a location score, breakeven sales target, and AI/fallback recommendations. KALFA access is required.",
+      "upgradeCta": "Upgrade membership",
+      "modes": {
+        "label": "Analysis mode",
+        "new": "New site selection",
+        "existing": "Existing site review"
+      },
+      "locationTypes": {
+        "label": "Location type",
+        "street": "Street store",
+        "mall": "Mall",
+        "plaza": "Plaza ground floor"
+      },
+      "answers": {
+        "yes": "Yes",
+        "partial": "Partial",
+        "no": "No"
+      },
+      "avmExtra": {
+        "title": "Mall extra checks",
+        "management": "Which company manages the mall?",
+        "entryCounts": "Are entrance counts and peak hours known?",
+        "deliveryHours": "Are delivery hours restricted?",
+        "freightLift": "Is freight lift and storage distance workable?"
+      },
+      "criteria": {
+        "title": "15 location criteria",
+        "corner_visibility": {
+          "label": "Corner store and visibility",
+          "tooltip": "Can the sign, facade, and entrance be seen from the main movement direction?"
+        },
+        "pedestrian_traffic": {
+          "label": "High pedestrian traffic",
+          "tooltip": "Is there enough real foot traffic passing the point?"
+        },
+        "car_traffic": {
+          "label": "High car traffic",
+          "tooltip": "Does car flow help discovery and spontaneous visits?"
+        },
+        "parking_access": {
+          "label": "Parking access",
+          "tooltip": "Is there real short-stop or longer parking access?"
+        },
+        "income_density": {
+          "label": "Middle-upper income area",
+          "tooltip": "Can the surrounding audience carry your price level?"
+        },
+        "education_nearby": {
+          "label": "Education nearby",
+          "tooltip": "Do universities, colleges, or learning centers create young demand?"
+        },
+        "office_residential_mix": {
+          "label": "Office and residential mix",
+          "tooltip": "Can the point create both lunch and evening demand?"
+        },
+        "ready_parking": {
+          "label": "Ready parking",
+          "tooltip": "Is there a nearby parking solution you can explain to guests?"
+        },
+        "day_evening_energy": {
+          "label": "Day and evening energy",
+          "tooltip": "Does the location work beyond a single daypart?"
+        },
+        "wide_entry": {
+          "label": "Wide entry and access",
+          "tooltip": "Is the entrance clear, open, and easy to choose?"
+        },
+        "busy_sidewalk_side": {
+          "label": "Busy sidewalk side",
+          "tooltip": "Is the point on the more-used side of the street?"
+        },
+        "low_sun_side": {
+          "label": "Lower sun exposure",
+          "tooltip": "Do sun and heat avoid hurting seating and facade comfort?"
+        },
+        "outdoor_seating": {
+          "label": "Outdoor seating option",
+          "tooltip": "Is even a small visible outdoor or waiting area possible?"
+        },
+        "mall_escalator_position": {
+          "label": "Mall escalator position",
+          "tooltip": "Is the point near the densest escalator flow or right-hand side?"
+        },
+        "mall_dedicated_seating": {
+          "label": "Mall dedicated seating",
+          "tooltip": "Is there owned seating and control beyond shared foodcourt space?"
+        }
+      },
+      "breakeven": {
+        "title": "Breakeven point",
+        "resultLabel": "Monthly breakeven sales",
+        "currency": "AZN",
+        "resultHelp": "After this sales level, the site has a realistic chance to enter profit zone.",
+        "unsustainable": "With this cost structure, gross margin is too low; the site does not look sustainable.",
+        "inputs": {
+          "rent": "Rent",
+          "labor": "Labor + insurance",
+          "gas": "Gas",
+          "electricity": "Electricity",
+          "water": "Water",
+          "telecom": "Telecom",
+          "insurance": "Insurance",
+          "maintenance": "Maintenance",
+          "other": "Other fixed cost",
+          "foodCostPercent": "Food cost %",
+          "royaltyPercent": "Royalty %",
+          "marketingPercent": "Marketing %"
+        }
+      },
+      "riskFlags": {
+        "title": "Risks requiring extra observation",
+        "resultTitle": "Risk cards",
+        "oversized_area": "Oversized area",
+        "above_market_rent": "Above-market rent",
+        "shared_usage": "Shared usage risk",
+        "seasonal_dependency": "Seasonal dependency",
+        "limited_hours": "Limited operating hours"
+      },
+      "results": {
+        "score": "Location score",
+        "chartTitle": "Criteria score map"
+      },
+      "levels": {
+        "strong": "Strong point",
+        "conditional": "Conditional — needs work",
+        "risky": "High risk — extra observation"
+      },
+      "recommendations": {
+        "title": "Recommendation {index}",
+        "marginWarning": "Recheck rent and variable costs; breakeven sales may be above realistic market demand.",
+        "observeDayparts": "Do not decide before observing lunch, evening, and weekend demand separately.",
+        "criteria": {
+          "corner_visibility": "If corner store and visibility is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "pedestrian_traffic": "If high pedestrian traffic is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "car_traffic": "If high car traffic is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "parking_access": "If parking access is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "income_density": "If middle-upper income area is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "education_nearby": "If education nearby is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "office_residential_mix": "If office and residential mix is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "ready_parking": "If ready parking is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "day_evening_energy": "If day and evening energy is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "wide_entry": "If wide entry and access is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "busy_sidewalk_side": "If busy sidewalk side is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "low_sun_side": "If lower sun exposure is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "outdoor_seating": "If outdoor seating option is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "mall_escalator_position": "If mall escalator position is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan.",
+          "mall_dedicated_seating": "If mall dedicated seating is weak, observe this point in 3 dayparts before deciding and prepare a simple fix plan."
+        },
+        "risk": {
+          "oversized_area": "If oversized area is selected, prepare a separate cost and operating scenario before signing.",
+          "above_market_rent": "If above-market rent is selected, prepare a separate cost and operating scenario before signing.",
+          "shared_usage": "If shared usage risk is selected, prepare a separate cost and operating scenario before signing.",
+          "seasonal_dependency": "If seasonal dependency is selected, prepare a separate cost and operating scenario before signing.",
+          "limited_hours": "If limited operating hours is selected, prepare a separate cost and operating scenario before signing."
+        },
+        "parkingCheck": "Simplify the guest path: show parking, entrance, and ordering directions separately in Google Business and Instagram highlights.",
+        "rentGate": "Judge rent by breakeven sales, not emotion; if the target is unrealistic, do not sign without renegotiation."
+      },
+      "aiUnavailableNote": "AI recommendation is currently unavailable; static franchise recommendation is shown.",
+      "estimateDisclaimer": "This is an estimate; real numbers appear after opening. Compare with similar restaurants.",
+      "cta": "Analyze location",
+      "loading": "Preparing recommendation...",
+      "ahilikQuote": "In Ahilik, a good place is not only visible; it carries its cost, flow, and guest promise."
     }
   }
 }

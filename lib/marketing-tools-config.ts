@@ -411,6 +411,26 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
+    slug: 'lokasyon-analiz',
+    category: 'analitika',
+    tier: 'kalfa',
+    iconName: 'MapPin',
+    status: 'live',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'mode', type: 'select', required: true },
+        { name: 'locationType', type: 'select', required: true },
+        { name: 'criteria', type: 'likert', required: true },
+        { name: 'breakeven', type: 'number', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0.0003,
+  },
+
+  {
     slug: 'sezon-planlama',
     category: 'emeliyyat',
     tier: 'kalfa',
