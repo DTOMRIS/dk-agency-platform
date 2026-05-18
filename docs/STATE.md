@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-18T14:25:46.328Z
+- GeneratedAt: 2026-05-18T15:08:05.674Z
 - BuildStatus: PASS
 
-## Routes (141)
+## Routes (142)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -31,6 +31,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/ilan-ver
 - /[locale]/ilanlar
 - /[locale]/kazan-ai
+- /[locale]/marketinq/lokasyon-analiz
 - /[locale]/marketinq/menyu-analitik
 - /[locale]/marketinq/musteri-persona
 - /[locale]/marketinq/pl-simulyatoru
