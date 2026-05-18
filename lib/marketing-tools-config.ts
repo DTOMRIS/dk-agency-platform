@@ -370,6 +370,28 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
+    slug: 'restoran-audit',
+    category: 'emeliyyat',
+    tier: 'kalfa',
+    iconName: 'ClipboardCheck',
+    status: 'live',
+    aiProvider: 'none',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'financeCash', type: 'likert', required: true },
+        { name: 'operationsKitchen', type: 'likert', required: true },
+        { name: 'staffService', type: 'likert', required: true },
+        { name: 'customerExperience', type: 'likert', required: true },
+        { name: 'digitalPresence', type: 'likert', required: true },
+        { name: 'complianceRisk', type: 'likert', required: true },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0,
+  },
+
+  {
     slug: 'sezon-planlama',
     category: 'emeliyyat',
     tier: 'kalfa',

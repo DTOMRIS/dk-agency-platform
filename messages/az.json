@@ -23,43 +23,93 @@
     "subtitle": "Restoranını idarə etmək üçün pulsuz alətlər. Food cost, P&L, checklist — hamısı bir yerdə.",
     "foodCost": "Food Cost Hesablayıcı",
     "foodCostDesc": "Porsiya maya dəyərini hesabla, ideal food cost faizini tap.",
-    "pnl": "P&L Simulyatoru",
-    "pnlDesc": "Aylıq gəlir-xərc hesabatı yarat, başabaş nöqtəsini tap.",
-    "checklist": "Restoran Açılış Checklist",
-    "checklistDesc": "43 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.",
-    "start": "Başla",
     "pnl": {
-      "navigation": { "toolkit": "Toolkit" },
+      "navigation": {
+        "toolkit": "Toolkit"
+      },
       "title": "P&L",
       "titleAccent": "Simulyatoru",
       "subtitle": "Aylıq qazanc və xərc analizi",
       "description": "Aylıq gəlir-xərc hesabatını modelləşdir. Nəzarət edilən və edilməyən xərcləri ayır, xalis mənfəəti izlə.",
       "inputs": {
-        "revenue": { "label": "Aylıq dövriyyə", "placeholder": "0", "hint": "Bütün satışların cəmi (ƏDV-siz)" },
-        "foodCost": { "label": "Qida maya dəyəri", "hint": "Adətən dövriyyənin {min}-{max}%-i" },
-        "packaging": { "label": "Qablaşdırma" },
-        "staffCost": { "label": "İşçi xərcləri", "hint": "Maaş + sosial sığorta" },
-        "management": { "label": "Rəhbərlik maaşı" },
-        "advertising": { "label": "Reklam / Marketinq" },
-        "promo": { "label": "Promo / İkram" },
-        "outsource": { "label": "Kənar xidmətlər" },
-        "uniform": { "label": "Uniforma / Təchizat" },
-        "supplies": { "label": "Sərf materialları" },
-        "repair": { "label": "Təmir / Texniki xidmət" },
-        "utilities": { "label": "Kommunal xərclər" },
-        "otherControllable": { "label": "Digər nəzarət edilən" },
-        "rent": { "label": "İcarə", "hint": "Kommunal istisna" },
-        "accounting": { "label": "Mühasibatlıq" },
-        "insurance": { "label": "Sığorta" },
-        "tax": { "label": "Vergilər" },
-        "depreciation": { "label": "Amortizasiya" }
+        "revenue": {
+          "label": "Aylıq dövriyyə",
+          "placeholder": "0",
+          "hint": "Bütün satışların cəmi (ƏDV-siz)"
+        },
+        "foodCost": {
+          "label": "Qida maya dəyəri",
+          "hint": "Adətən dövriyyənin {min}-{max}%-i"
+        },
+        "packaging": {
+          "label": "Qablaşdırma"
+        },
+        "staffCost": {
+          "label": "İşçi xərcləri",
+          "hint": "Maaş + sosial sığorta"
+        },
+        "management": {
+          "label": "Rəhbərlik maaşı"
+        },
+        "advertising": {
+          "label": "Reklam / Marketinq"
+        },
+        "promo": {
+          "label": "Promo / İkram"
+        },
+        "outsource": {
+          "label": "Kənar xidmətlər"
+        },
+        "uniform": {
+          "label": "Uniforma / Təchizat"
+        },
+        "supplies": {
+          "label": "Sərf materialları"
+        },
+        "repair": {
+          "label": "Təmir / Texniki xidmət"
+        },
+        "utilities": {
+          "label": "Kommunal xərclər"
+        },
+        "otherControllable": {
+          "label": "Digər nəzarət edilən"
+        },
+        "rent": {
+          "label": "İcarə",
+          "hint": "Kommunal istisna"
+        },
+        "accounting": {
+          "label": "Mühasibatlıq"
+        },
+        "insurance": {
+          "label": "Sığorta"
+        },
+        "tax": {
+          "label": "Vergilər"
+        },
+        "depreciation": {
+          "label": "Amortizasiya"
+        }
       },
       "outputs": {
-        "grossProfit": { "label": "Brüt mənfəət", "tooltip": "Dövriyyə - qida maya dəyəri" },
-        "operatingProfit": { "label": "Əməliyyat mənfəəti", "tooltip": "Dövriyyə - COGS" },
-        "controllableProfit": { "label": "Nəzarət edilə bilən mənfəət" },
-        "netProfit": { "label": "Xalis mənfəət" },
-        "margin": { "label": "Mənfəət marjı" }
+        "grossProfit": {
+          "label": "Brüt mənfəət",
+          "tooltip": "Dövriyyə - qida maya dəyəri"
+        },
+        "operatingProfit": {
+          "label": "Əməliyyat mənfəəti",
+          "tooltip": "Dövriyyə - COGS"
+        },
+        "controllableProfit": {
+          "label": "Nəzarət edilə bilən mənfəət"
+        },
+        "netProfit": {
+          "label": "Xalis mənfəət"
+        },
+        "margin": {
+          "label": "Mənfəət marjı"
+        }
       },
       "sections": {
         "cogs": "COGS (Satılmış malların dəyəri)",
@@ -73,7 +123,12 @@
         "rent": "İcarə",
         "targetMax": "hədəf ≤{value}%"
       },
-      "table": { "title": "P&L Hesabatı", "category": "Kateqoriya", "amount": "Məbləğ", "percent": "Faiz" },
+      "table": {
+        "title": "P&L Hesabatı",
+        "category": "Kateqoriya",
+        "amount": "Məbləğ",
+        "percent": "Faiz"
+      },
       "actions": {
         "calculate": "Hesabla",
         "reset": "Sıfırla",
@@ -97,15 +152,39 @@
       },
       "benchmark": {
         "title": "P&L Benchmark",
-        "netProfit": { "label": "Net mənfəət", "value": "10-15%" },
-        "primeCost": { "label": "Prime Cost", "value": "≤65%" },
-        "foodCost": { "label": "Food Cost", "value": "28-32%" },
-        "rent": { "label": "İcarə", "value": "≤10%" },
+        "netProfit": {
+          "label": "Net mənfəət",
+          "value": "10-15%"
+        },
+        "primeCost": {
+          "label": "Prime Cost",
+          "value": "≤65%"
+        },
+        "foodCost": {
+          "label": "Food Cost",
+          "value": "28-32%"
+        },
+        "rent": {
+          "label": "İcarə",
+          "value": "≤10%"
+        },
         "chips": {
-          "labor": { "label": "Labor", "value": "25-35%" },
-          "marketing": { "label": "Marketinq", "value": "3-6%" },
-          "utilities": { "label": "Kommunal", "value": "3-5%" },
-          "repair": { "label": "Təmir", "value": "1-2%" }
+          "labor": {
+            "label": "Labor",
+            "value": "25-35%"
+          },
+          "marketing": {
+            "label": "Marketinq",
+            "value": "3-6%"
+          },
+          "utilities": {
+            "label": "Kommunal",
+            "value": "3-5%"
+          },
+          "repair": {
+            "label": "Təmir",
+            "value": "1-2%"
+          }
         }
       },
       "education": {
@@ -165,25 +244,87 @@
         "title": "Daha Dərin Öyrən",
         "read": "Oxu",
         "articles": {
-          "pnl": { "title": "P&L Oxuya Bilmirsən?", "slug": "pnl-oxuya-bilmirsen", "tag": "Maliyyə" },
-          "foodCost": { "title": "Food Cost-un Qanlı Həqiqəti", "slug": "1-porsiya-food-cost-hesablama", "tag": "Maliyyə" },
-          "breakEven": { "title": "Başabaş Nöqtəsi Nədir?", "slug": "basabas-noqtesi", "tag": "Əməliyyat" }
+          "pnl": {
+            "title": "P&L Oxuya Bilmirsən?",
+            "slug": "pnl-oxuya-bilmirsen",
+            "tag": "Maliyyə"
+          },
+          "foodCost": {
+            "title": "Food Cost-un Qanlı Həqiqəti",
+            "slug": "1-porsiya-food-cost-hesablama",
+            "tag": "Maliyyə"
+          },
+          "breakEven": {
+            "title": "Başabaş Nöqtəsi Nədir?",
+            "slug": "basabas-noqtesi",
+            "tag": "Əməliyyat"
+          }
         }
       }
     },
+    "pnlDesc": "Aylıq gəlir-xərc hesabatı yarat, başabaş nöqtəsini tap.",
+    "checklist": "Restoran Açılış Checklist",
+    "checklistDesc": "43 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.",
+    "start": "Başla",
     "ad-writer": {
       "pageTitle": "Reklam Yazıcısı",
       "pageDescription": "AI ilə Instagram, Facebook, TikTok və Google Ads üçün reklam mətni yazın",
-      "form": { "platform": "Platform", "restaurantName": "Restoran adı (opsional)", "campaignDescription": "Kampaniya təsviri", "campaignDescriptionPlaceholder": "Məs: Yeni dolma menyusu, 30 May açılışı", "targetAudience": "Hədəf auditoriya", "callStyle": "Çağırış stili", "language": "Reklam dili", "submit": "Reklam Yarat", "submitting": "AI yazır..." },
-      "platforms": { "instagram": "Instagram", "facebook": "Facebook", "tiktok": "TikTok", "google_ads": "Google Ads" },
-      "audiences": { "youth_18_30": "Gənclər (18-30)", "family": "Ailə", "corporate": "Korporativ", "all": "Hamısı" },
-      "styles": { "discount": "Endirim", "new_product": "Yeni məhsul", "brand_awareness": "Brand tanınma", "event": "Event" },
-      "tones": { "attention": "Diqqət çəkən", "informative": "İnformativ", "sales": "Satış-yönlü" },
-      "actions": { "copy": "Kopyala", "copied": "Kopyalandı!", "regenerate": "Yenidən yarat" },
-      "fields": { "headline": "Başlıq", "body": "Mətn", "hashtags": "Hashtag-lar" },
-      "validation": { "minLength": "Kampaniya təsviri ən az 20 simvol olmalıdır", "maxLength": "Kampaniya təsviri maksimum 500 simvol" },
-      "errors": { "aiUnavailable": "AI xidməti müvəqqəti əlçatmazdır", "rateLimit": "Günlük limit doldu (30 reklam/gün)" },
-      "gating": { "kalfaRequired": "Bu alət KALFA tier üçündür", "upgradeCta": "KALFA-ya yüksəl (89 AZN/ay)" }
+      "form": {
+        "platform": "Platform",
+        "restaurantName": "Restoran adı (opsional)",
+        "campaignDescription": "Kampaniya təsviri",
+        "campaignDescriptionPlaceholder": "Məs: Yeni dolma menyusu, 30 May açılışı",
+        "targetAudience": "Hədəf auditoriya",
+        "callStyle": "Çağırış stili",
+        "language": "Reklam dili",
+        "submit": "Reklam Yarat",
+        "submitting": "AI yazır..."
+      },
+      "platforms": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "tiktok": "TikTok",
+        "google_ads": "Google Ads"
+      },
+      "audiences": {
+        "youth_18_30": "Gənclər (18-30)",
+        "family": "Ailə",
+        "corporate": "Korporativ",
+        "all": "Hamısı"
+      },
+      "styles": {
+        "discount": "Endirim",
+        "new_product": "Yeni məhsul",
+        "brand_awareness": "Brand tanınma",
+        "event": "Event"
+      },
+      "tones": {
+        "attention": "Diqqət çəkən",
+        "informative": "İnformativ",
+        "sales": "Satış-yönlü"
+      },
+      "actions": {
+        "copy": "Kopyala",
+        "copied": "Kopyalandı!",
+        "regenerate": "Yenidən yarat"
+      },
+      "fields": {
+        "headline": "Başlıq",
+        "body": "Mətn",
+        "hashtags": "Hashtag-lar"
+      },
+      "validation": {
+        "minLength": "Kampaniya təsviri ən az 20 simvol olmalıdır",
+        "maxLength": "Kampaniya təsviri maksimum 500 simvol"
+      },
+      "errors": {
+        "aiUnavailable": "AI xidməti müvəqqəti əlçatmazdır",
+        "rateLimit": "Günlük limit doldu (30 reklam/gün)"
+      },
+      "gating": {
+        "kalfaRequired": "Bu alət KALFA tier üçündür",
+        "upgradeCta": "KALFA-ya yüksəl (89 AZN/ay)"
+      }
     },
     "complaint-handler": {
       "pageTitle": "Şikayət Cavablandırıcı",
@@ -928,16 +1069,54 @@
         "addChannel": "Kanal əlavə et",
         "removeChannel": "Sil",
         "channelNumber": "Kanal #{number}",
-        "channelType": { "label": "Kanal tipi", "placeholder": "Kanal seçin", "validation": "Kanal tipi seçilməlidir." },
-        "budget": { "label": "Sərf olunan büdcə", "placeholder": "600", "validation": "Büdcə 0-dan böyük olmalıdır." },
-        "commissionPercent": { "label": "Komisyon faizi", "placeholder": "12", "validation": "Komisyon 0-50 aralığında olmalıdır." },
-        "newCustomers": { "label": "Gələn yeni müştəri sayı", "placeholder": "18", "validation": "Müştəri sayı mənfi ola bilməz." },
-        "averageOrderValue": { "label": "Orta çek (AOV)", "placeholder": "32", "validation": "Orta çek 0-dan böyük olmalıdır." },
-        "repeatPurchasePercent": { "label": "Təkrar alış faizi", "placeholder": "35", "validation": "Təkrar alış faizi 0-95 aralığında olmalıdır." },
-        "reach": { "label": "Çatım", "placeholder": "18000", "validation": "Çatım mənfi ola bilməz." },
-        "impressions": { "label": "Göstərim", "placeholder": "42000", "validation": "Göstərim mənfi ola bilməz." },
-        "organicValuePerReach": { "label": "Orta organik dəyər əmsalı", "placeholder": "0.03", "validation": "Organik dəyər əmsalı mənfi ola bilməz." },
-        "validation": { "channelBudget": "Ən azı bir kanal üçün büdcə daxil edin." }
+        "channelType": {
+          "label": "Kanal tipi",
+          "placeholder": "Kanal seçin",
+          "validation": "Kanal tipi seçilməlidir."
+        },
+        "budget": {
+          "label": "Sərf olunan büdcə",
+          "placeholder": "600",
+          "validation": "Büdcə 0-dan böyük olmalıdır."
+        },
+        "commissionPercent": {
+          "label": "Komisyon faizi",
+          "placeholder": "12",
+          "validation": "Komisyon 0-50 aralığında olmalıdır."
+        },
+        "newCustomers": {
+          "label": "Gələn yeni müştəri sayı",
+          "placeholder": "18",
+          "validation": "Müştəri sayı mənfi ola bilməz."
+        },
+        "averageOrderValue": {
+          "label": "Orta çek (AOV)",
+          "placeholder": "32",
+          "validation": "Orta çek 0-dan böyük olmalıdır."
+        },
+        "repeatPurchasePercent": {
+          "label": "Təkrar alış faizi",
+          "placeholder": "35",
+          "validation": "Təkrar alış faizi 0-95 aralığında olmalıdır."
+        },
+        "reach": {
+          "label": "Çatım",
+          "placeholder": "18000",
+          "validation": "Çatım mənfi ola bilməz."
+        },
+        "impressions": {
+          "label": "Göstərim",
+          "placeholder": "42000",
+          "validation": "Göstərim mənfi ola bilməz."
+        },
+        "organicValuePerReach": {
+          "label": "Orta organik dəyər əmsalı",
+          "placeholder": "0.03",
+          "validation": "Organik dəyər əmsalı mənfi ola bilməz."
+        },
+        "validation": {
+          "channelBudget": "Ən azı bir kanal üçün büdcə daxil edin."
+        }
       },
       "results": {
         "totalRoas": "Ümumi ROAS",
@@ -1070,6 +1249,241 @@
         "title": "ER metodologiyası",
         "body": "Bu alət follower-bazlı ER istifadə edir: (bəyənmə+şərh+save+paylaşım) / (post×follower) × 100. Reach-bazlı ER adətən daha yüksək çıxır. Mənbədən-mənbəyə fərq normal — bir metodologiyaya sadiq qalın."
       }
+    },
+    "restoranAudit": {
+      "title": "Restoran Audit",
+      "subtitle": "Kiçik restoran üçün 30 suallıq idarəetmə güzgüsü: kassa, xərc, mətbəx, xidmət, rəqəmsal mövcudluq və uyğunluq risklərini ölçün.",
+      "back_to_tools": "Bütün alətlər",
+      "tier": "KALFA",
+      "cta": "Audit nəticəsini hesabla",
+      "tier_required_title": "KALFA girişi tələb olunur",
+      "tier_required_body": "Restoran Audit KALFA planındadır. Tool kassa, prime cost, mətbəx və uyğunluq boşluqlarını aksiyon planına çevirir.",
+      "upgrade_cta": "Planı yüksəlt",
+      "progress": {
+        "title": "Audit irəliləyişi",
+        "answered": "{answered}/{total} sual cavablandı"
+      },
+      "answers": {
+        "0": "Xeyr / yoxdur",
+        "1": "Qismən",
+        "2": "Bəli / tam var"
+      },
+      "areas": {
+        "finance_cash": {
+          "name": "Maliyyə & kassa",
+          "description": "Kassa bağlanışı, fiskal intizam, aylıq xərc və marja görünürlüğü."
+        },
+        "operations_kitchen": {
+          "name": "Əməliyyat & mətbəx",
+          "description": "Qida təhlükəsizliyi, inventar, israf, FIFO və resept nəzarəti."
+        },
+        "staff_service": {
+          "name": "Personal & xidmət",
+          "description": "Təlim, protokol, upselling, növbə və kadr sabitliyi."
+        },
+        "customer_experience": {
+          "name": "Müştəri təcrübəsi",
+          "description": "Rəy, şikayət, sədaqət, masa dövriyyəsi və geri qayıtma."
+        },
+        "digital_presence": {
+          "name": "Rəqəmsal mövcudluq",
+          "description": "Google Business, onlayn sifariş, mobil menyu və sosial aktivlik."
+        },
+        "compliance_risk": {
+          "name": "Uyğunluq & risk",
+          "description": "AQTA qeydiyyatı, tibbi nəzarət, temperatur, dezinfeksiya və əmək riski."
+        }
+      },
+      "questions": {
+        "finance_cash_q1": {
+          "text": "Günlük kassa bağlanışı POS/Z-report ilə faktiki nağd və kart üzrə tutuşdurulur?",
+          "tooltip": "Gün sonu fərqi vaxtında görünməyəndə itki, səhv və ləğv idarədən çıxır."
+        },
+        "finance_cash_q2": {
+          "text": "Hər satış fiskal çeklə bağlanır və endirim, ləğv, qaytarma ayrıca izlənir?",
+          "tooltip": "Fiskal intizam satışın real izini saxlayır və daxili nəzarəti gücləndirir."
+        },
+        "finance_cash_q3": {
+          "text": "Aylıq xərc hesabatında satış, food, labor, icarə, kommunal, marketing və xalis mənfəət birlikdə görünür?",
+          "tooltip": "Ayrı-ayrı qeydlər qərar verməyə çatmır; restoran sahibi bir səhifədə mənzərəni görməlidir."
+        },
+        "finance_cash_q4": {
+          "text": "Prime cost, yəni food və labor faizi, aylıq izlənir və faktiki food cost resept dəyəri ilə müqayisə olunur?",
+          "tooltip": "Food və əmək xərci restoran marjasının əsas siqnalıdır. Kiçik sürüşmə il sonunda böyük itki yaradır."
+        },
+        "finance_cash_q5": {
+          "text": "Top-10 satılan məhsul həftəlik bilinir və hər birinin marjası hesablanır?",
+          "tooltip": "Çox satılan, amma qazandırmayan məhsul menyuda gizli zərər mənbəyidir."
+        },
+        "operations_kitchen_q1": {
+          "text": "HACCP və qida təhlükəsizliyi gündəlik mətbəx prosesinə çevrilib?",
+          "tooltip": "Prosedur kağızda yox, hazırlıq və servis anında işləməlidir."
+        },
+        "operations_kitchen_q2": {
+          "text": "İnventar sayımı dövri aparılır və sistemdəki qalıqla müqayisə olunur?",
+          "tooltip": "Sayım olmadan oğurluq, israf və satınalma səhvi görünməz qalır."
+        },
+        "operations_kitchen_q3": {
+          "text": "İsraf və itki ayrıca loglanır?",
+          "tooltip": "Atılan məhsulun səbəbi yazılmasa, food cost niyə qalxdığını tapmaq çətinləşir."
+        },
+        "operations_kitchen_q4": {
+          "text": "FIFO və tarix etiketləri bütün hazırlıq və saxlanma zonalarında işləyir?",
+          "tooltip": "Tarixsiz məhsul həm keyfiyyət, həm uyğunluq, həm də xərc riskidir."
+        },
+        "operations_kitchen_q5": {
+          "text": "Faktiki food cost ilə resept üzrə nəzəri food cost fərqi izlənir?",
+          "tooltip": "Reseptdən kənar porsiya, fire və qiymət dəyişimi burada görünür."
+        },
+        "staff_service_q1": {
+          "text": "Yeni işçi üçün yazılı təlim materialı və yoxlama siyahısı var?",
+          "tooltip": "Təlim şifahi qalanda xidmət standartı növbədən növbəyə dəyişir."
+        },
+        "staff_service_q2": {
+          "text": "Servis protokolu komanda tərəfindən eyni şəkildə tətbiq olunur?",
+          "tooltip": "Qarşılama, sifariş, şikayət və hesab prosesi eyni ritmdə olmalıdır."
+        },
+        "staff_service_q3": {
+          "text": "Komanda upselling üçün konkret məhsul və cümlə nümunələri bilir?",
+          "tooltip": "Upselling təsadüfi yox, marjalı məhsulun sistemli təklifidir."
+        },
+        "staff_service_q4": {
+          "text": "Növbə strukturu pik saat və ölü saat fərqinə görə planlanır?",
+          "tooltip": "Yanlış növbə həm xidmət sürətini, həm labor faizini zədələyir."
+        },
+        "staff_service_q5": {
+          "text": "Kadr dövriyyəsi və çıxış səbəbləri aylıq izlənir?",
+          "tooltip": "Eyni səbəbdən gedən işçi problemi menecer üçün erkən siqnaldır."
+        },
+        "customer_experience_q1": {
+          "text": "Google və sosial rəylər həftəlik monitorinq olunur?",
+          "tooltip": "Rəy axını restoranın bazardakı real güzgüsüdür."
+        },
+        "customer_experience_q2": {
+          "text": "Şikayət üçün cavab, düzəliş və geri dönüş prosesi var?",
+          "tooltip": "Şikayət yalnız cavab deyil, təkrar eyni səhvin qarşısını alma prosesidir."
+        },
+        "customer_experience_q3": {
+          "text": "Sədaqət və geri qayıtma mexanizmi işləyir?",
+          "tooltip": "Yeni müştəri baha gəlir; təkrar gələn müştəri marjanı qoruyur."
+        },
+        "customer_experience_q4": {
+          "text": "Masa dövriyyəsi və gözləmə vaxtı izlənir?",
+          "tooltip": "Pik saatda masa dövriyyəsi satış gücünü birbaşa dəyişir."
+        },
+        "customer_experience_q5": {
+          "text": "Geri qayıdan müştəri faizi və səbəbləri bilinir?",
+          "tooltip": "Loyalty hiss yox, ölçülən davranış olmalıdır."
+        },
+        "digital_presence_q1": {
+          "text": "Google Business profili aktualdır və foto, saat, menyu məlumatı yenilənir?",
+          "tooltip": "Axtarışda ilk təəssürat çox vaxt restorana gəlmə qərarını verir."
+        },
+        "digital_presence_q2": {
+          "text": "Onlayn sifariş və ya rezervasiya prosesi aydındır?",
+          "tooltip": "Müştəri yolunda artıq addım satış itkisidir."
+        },
+        "digital_presence_q3": {
+          "text": "Mobil menyu, qiymət və foto keyfiyyəti müştəri üçün rahatdır?",
+          "tooltip": "Mobil baxış restoran seçiminin əsas anlarından biridir."
+        },
+        "digital_presence_q4": {
+          "text": "Sosial media aktivliyi kampaniya və menyu prioritetləri ilə bağlıdır?",
+          "tooltip": "Post paylaşmaq kifayət deyil; kontent satış və reputasiya məqsədinə bağlanmalıdır."
+        },
+        "digital_presence_q5": {
+          "text": "Promo kod, UTM və ya kanal qeydi ilə kampaniya mənbəyi izlənir?",
+          "tooltip": "Mənbə bilinmirsə, hansı kanalın işlədiyini ayırmaq mümkün deyil."
+        },
+        "compliance_risk_q1": {
+          "text": "AQTA qida təhlükəsizliyi qeydiyyatı və sanitar sənədlər qaydasındadır?",
+          "tooltip": "Uyğunluq sənədi dəyişkən prosedur deyil, işlək nəzarət siyahısı kimi izlənməlidir."
+        },
+        "compliance_risk_q2": {
+          "text": "Qida ilə təmas edən işçilərin tibbi müayinəsi izlənir?",
+          "tooltip": "Tibbi nəzarət həm uyğunluq, həm də müştəri təhlükəsizliyi riskini azaldır."
+        },
+        "compliance_risk_q3": {
+          "text": "Çatdırılma varsa temperatur rejimi qorunur?",
+          "tooltip": "Yolda temperatur pozulması keyfiyyət və təhlükəsizlik riskidir."
+        },
+        "compliance_risk_q4": {
+          "text": "Təmizlik, dezinfeksiya və zərərverici nəzarəti loglanır?",
+          "tooltip": "Log olmayan proses audit zamanı sübut edilmir və daxildə də izlənmir."
+        },
+        "compliance_risk_q5": {
+          "text": "Əmək müqavilələri, sığorta və təhlükəsizlik prosesi qaydasındadır?",
+          "tooltip": "Komanda riski restoranın hüquqi və əməliyyat sabitliyinə birbaşa təsir edir."
+        }
+      },
+      "results": {
+        "scoreTitle": "Ümumi bal",
+        "areaChartTitle": "6 oblast üzrə nəticə"
+      },
+      "levels": {
+        "sagird": {
+          "name": "Şagird - kritik diqqət",
+          "description": "Əsas nəzarət boşluqları var; əvvəlcə qırmızı risklər bağlanmalıdır."
+        },
+        "kalfa": {
+          "name": "Kalfa - inkişafda",
+          "description": "Baza işləyir, amma sistemləşdirmə və ölçmə zəif yerləri bağlamalıdır."
+        },
+        "usta": {
+          "name": "Usta səviyyəsi",
+          "description": "Əsas proseslər ölçülür və idarə olunur; indi optimizasiya mərhələsidir."
+        }
+      },
+      "actionPlan": {
+        "title": "Prioritet aksiyon planı",
+        "actions": {
+          "finance_cash": {
+            "critical": "Əvvəlcə 7 günlük kassa bağlanışı və aylıq xərc hesabatını tək cədvəldə qurun.",
+            "warning": "Prime cost və top məhsul marjasını həftəlik izləmə ritminə salın.",
+            "stable": "Maliyyə ritmi sabitdir; indi marja optimizasiyasını dərinləşdirin."
+          },
+          "operations_kitchen": {
+            "critical": "FIFO, tarix etiketi və israf logunu bu həftə məcburi gündəlik prosesə çevirin.",
+            "warning": "İnventar sayımı ilə faktiki-resept fərqini aylıq hesabatda birləşdirin.",
+            "stable": "Mətbəx nəzarəti işləyir; indi fire səbəblərini daha detallı ayırın."
+          },
+          "staff_service": {
+            "critical": "Təlim checklist-i və servis protokolunu yazılı hala gətirib növbə liderinə verin.",
+            "warning": "Upselling cümlələrini və pik saat növbəsini həftəlik yoxlayın.",
+            "stable": "Komanda ritmi sabitdir; indi satış və xidmət keyfiyyətini ölçün."
+          },
+          "customer_experience": {
+            "critical": "Şikayət cavab prosesi və həftəlik rəy monitorinqini dərhal standartlaşdırın.",
+            "warning": "Masa dövriyyəsi və geri qayıtma göstəricisini sadə hesabatda izləyin.",
+            "stable": "Müştəri prosesi işləyir; indi loyalty səbəblərini seqmentləşdirin."
+          },
+          "digital_presence": {
+            "critical": "Google Business, mobil menyu və sifariş yolunu bu həftə yeniləyin.",
+            "warning": "Promo kod və kanal qeydləri ilə kampaniya mənbəyini izləməyə başlayın.",
+            "stable": "Rəqəmsal baza sabitdir; indi kanal ROI-sini optimizasiya edin."
+          },
+          "compliance_risk": {
+            "critical": "Sənəd, tibbi müayinə, temperatur və dezinfeksiya loglarını tək uyğunluq qovluğuna yığın.",
+            "warning": "Uyğunluq checklist-ini aylıq menecer yoxlamasına bağlayın.",
+            "stable": "Risk nəzarəti işləyir; indi sübut loglarının davamlılığını yoxlayın."
+          }
+        }
+      },
+      "primeCostWarning": {
+        "title": "Prime cost izlənmir",
+        "body": "Food və labor faizi görünmürsə, kiçik sürüşmə il sonunda böyük itkiyə çevrilə bilər."
+      },
+      "unknown": {
+        "title": "Nəyi bilmirsən?",
+        "body": "Bu kritik rəqəm və sənədləri bilmədən restoranı idarə etmək gözübağlı idarəetmədir.",
+        "empty": "Kritik idarəetmə suallarında tam yox cavabı yoxdur."
+      },
+      "urgent": {
+        "title": "Təcili siyahı",
+        "empty": "Sıfır bal alan sual yoxdur."
+      },
+      "sheddNote": "Bu daxili özünüqiymətləndirmədir; ŞEDD sertifikatı ayrı prosesdir.",
+      "ahilikQuote": "Ahilikdə ölçülməyən iş düzəldilə bilməz; ölçülən iş isə ustalıqla böyüyər."
     }
   }
 }

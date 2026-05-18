@@ -16,6 +16,7 @@ import PnlSimulatorPage from '@/components/marketinq-ocagi/pnl-simulator/PnlSimu
 import SezonPlanlamaPage from '@/components/marketinq-ocagi/sezon-planlama/SezonPlanlamaPage';
 import SezonAnalitikasiPage from '@/components/marketinq-ocagi/sezon-analitikasi/SezonAnalitikasiPage';
 import ReklamRoiPage from '@/components/marketinq-ocagi/reklam-roi/ReklamRoiPage';
+import RestoranAuditPage from '@/components/marketinq-ocagi/restoran-audit/RestoranAuditPage';
 import YemekXerciPage from '@/components/marketinq-ocagi/yemek-xerci/YemekXerciPage';
 import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
 import ReklamYazicisiPage from '@/components/marketinq-ocagi/reklam-yazicisi/ReklamYazicisiPage';
@@ -44,6 +45,7 @@ const pageCopy: Record<
       'yemek-xerci': { title: 'Yemək Xərci', subtitle: 'Resept kartı ilə porsiya maya dəyərini hesabla', why: 'Qiyməti göz ölçüsü ilə qoymaq marjanı yeyir. Bu alət ərzaq xərcini, trim loss-u və porsiya sayını bir yerdə hesablayır.' },
       'promosyon-roi': { title: 'ROI Kalkulatoru', subtitle: 'Kanal ROI, CAC, LTV və payback müqayisəsi', why: 'Restoran sahibi büdcəni çox kanala böləndə əsas sual hansı kanalın real müştəri gətirməsidir. Bu alət kanal ROI, CAC, LTV və payback-i birlikdə göstərir.' },
       'reklam-roi': { title: 'Reklam ROI', subtitle: 'Awareness və conversion kampaniyaları üçün kanal ROAS, CAC, LTV:CAC', why: 'Like və baxış qərar vermək üçün yetərli deyil. Bu alət Instagram, influencer, Telegram və WhatsApp kampaniyalarını real büdcə, müştəri və dəyər metriklərinə çevirir.' },
+      'restoran-audit': { title: 'Restoran Audit', subtitle: 'Kassa, mətbəx, xidmət və uyğunluq üzrə özünüqiymətləndirmə', why: 'Kiçik restoran üçün ən böyük risk bilmədiyi rəqəmlərdir: kassa tutuşdurması, aylıq xərc, prime cost, top məhsul marjası və sənəd intizamı. Bu audit zəif nöqtələri aksiyon planına çevirir.' },
       'sezon-analitikasi': { title: 'Sezon Analitikası', subtitle: 'AZ təqvimi ilə 12 aylıq cash-flow proqnozu', why: 'Cash-flow proqnozu olmayan restoran pik ayda fürsəti, ölü ayda isə nağd pulu itirir. Bu alət Novruz, Ramazan, turist piki və kurort sezonunu rəqəmə çevirir.' },
       'pnl-simulator': { title: 'P&L Simulyatoru', subtitle: 'Gəlir-xərc, what-if və zərərsizlik analizi', why: 'P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir.' },
       'sikayet-analitigi': { title: 'Şikayət Analitiği', subtitle: 'Müştəri şikayətlərini AI ilə analiz et', why: 'Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır.' },
@@ -70,6 +72,7 @@ const pageCopy: Record<
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
       'promosyon-roi': { title: 'ROI Calculator', subtitle: 'Channel ROI, CAC, LTV, and payback comparison', why: 'When budget is split across channels, the core question is which channel actually brings profitable customers.' },
       'reklam-roi': { title: 'Ad ROI', subtitle: 'Channel ROAS, CAC, and LTV:CAC for awareness and conversion campaigns', why: 'Likes and views are not enough to make budget decisions. This tool turns Instagram, influencer, Telegram, and WhatsApp campaigns into budget, customer, and value metrics.' },
+      'restoran-audit': { title: 'Restaurant Audit', subtitle: 'Self-assessment for cash, kitchen, service, and compliance discipline', why: 'Small restaurants lose control when core numbers are invisible: cash reconciliation, monthly expenses, prime cost, top product margin, and document discipline. This audit turns weak points into an action plan.' },
       'sezon-analitikasi': { title: 'Season Analytics', subtitle: '12-month cash-flow forecast with Azerbaijan calendar', why: 'A restaurant without cash-flow forecasting loses opportunity in peak months and cash in dead months. This tool turns Novruz, Ramadan, tourist peaks, and resort seasons into numbers.' },
       'pnl-simulator': { title: 'P&L Simulator', subtitle: 'Revenue, what-if, and breakeven analysis', why: 'Restaurants tracking P&L monthly outperform competitors.' },
       'sikayet-analitigi': { title: 'Complaint Analytics', subtitle: 'AI-powered complaint analysis', why: 'For every complaint, 26 unhappy customers stay silent.' },
@@ -96,6 +99,7 @@ const pageCopy: Record<
       'yemek-xerci': { title: 'Yemek Maliyeti', subtitle: 'Reçete kartı ile porsiyon maliyetini hesapla', why: 'Fiyatı göz kararı koymak marjı kaçırır. Bu araç ürün maliyeti, fire ve porsiyon sayısını birlikte hesaplar.' },
       'promosyon-roi': { title: 'ROI Hesaplayıcı', subtitle: 'Kanal ROI, CAC, LTV ve payback karşılaştırması', why: 'Bütçe kanallara bölündüğünde asıl soru hangi kanalın kârlı müşteri getirdiğidir.' },
       'reklam-roi': { title: 'Reklam ROI', subtitle: 'Awareness ve conversion kampanyaları için kanal ROAS, CAC, LTV:CAC', why: 'Beğeni ve görüntüleme bütçe kararı için yeterli değildir. Bu araç Instagram, influencer, Telegram ve WhatsApp kampanyalarını bütçe, müşteri ve değer metriklerine çevirir.' },
+      'restoran-audit': { title: 'Restoran Audit', subtitle: 'Kasa, mutfak, servis ve uygunluk disiplini için öz değerlendirme', why: 'Küçük restoran temel rakamları görmediğinde kontrolü kaybeder: kasa mutabakatı, aylık gider, prime cost, en çok satan ürün marjı ve belge disiplini. Bu audit zayıf noktaları aksiyon planına çevirir.' },
       'sezon-analitikasi': { title: 'Sezon Analitiği', subtitle: 'Azerbaycan takvimiyle 12 aylık cash-flow tahmini', why: 'Cash-flow tahmini olmayan restoran yoğun ayda fırsatı, ölü ayda nakdi kaybeder. Bu araç Novruz, Ramazan, turist piki ve kurort sezonunu rakama çevirir.' },
       'pnl-simulator': { title: 'P&L Simülatörü', subtitle: 'Gelir, what-if ve başabaş analizi', why: 'Aylık P&L hazırlayan restoran rakiplerinin önündedir.' },
       'sikayet-analitigi': { title: 'Şikayet Analitiği', subtitle: 'AI şikayet analizi', why: 'Her şikayetin arkasında 26 sessiz mutsuz müşteri var.' },
@@ -122,6 +126,7 @@ const pageCopy: Record<
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
       'promosyon-roi': { title: 'ROI Калькулятор', subtitle: 'Сравнение ROI, CAC, LTV и окупаемости каналов', why: 'Когда бюджет делится между каналами, главный вопрос — какой канал приводит прибыльных клиентов.' },
       'reklam-roi': { title: 'ROI рекламы', subtitle: 'ROAS, CAC и LTV:CAC по каналам для awareness и conversion кампаний', why: 'Лайки и просмотры недостаточны для решения о бюджете. Инструмент переводит Instagram, influencer, Telegram и WhatsApp в бюджет, клиентов и ценность.' },
+      'restoran-audit': { title: 'Ресторанный аудит', subtitle: 'Самооценка кассы, кухни, сервиса и соответствия требованиям', why: 'Малый ресторан теряет контроль, когда не видит ключевые цифры: сверку кассы, месячные расходы, prime cost, маржу топ-продуктов и порядок документов. Этот аудит превращает слабые места в план действий.' },
       'sezon-analitikasi': { title: 'Сезонная аналитика', subtitle: '12-месячный прогноз cash-flow с календарем Азербайджана', why: 'Без прогноза cash-flow ресторан теряет возможности в пиковые месяцы и деньги в слабые месяцы. Инструмент переводит Новруз, Рамадан, туристические пики и курортные сезоны в цифры.' },
       'pnl-simulator': { title: 'P&L Симулятор', subtitle: 'Доходы, what-if и безубыточность', why: 'Рестораны с ежемесячным P&L опережают конкурентов.' },
       'sikayet-analitigi': { title: 'Анализ Жалоб', subtitle: 'AI-анализ жалоб', why: 'За каждой жалобой стоят 26 молчаливых недовольных клиентов.' },
@@ -186,6 +191,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'reklam-roi' && tool.status === 'live') {
     return <ReklamRoiPage />;
+  }
+  if (slug === 'restoran-audit' && tool.status === 'live') {
+    return <RestoranAuditPage />;
   }
   if (slug === 'reklam-yazicisi' && tool.status === 'live') {
     return <ReklamYazicisiPage />;

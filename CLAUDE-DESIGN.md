@@ -263,6 +263,17 @@ Kontent tipi ranking (opsional): Reels > Carousel > Single (2025-2026 median). R
 
 Aksiyon kartları statikdir (AI çağırışı yoxdur). ER status-una görə fərqli tövsiyə set-i göstərilir.
 
+### TASK-0149 Restoran Audit — KALFA tier, AZ kiçik restoran nəzarəti
+Restoran Audit deterministik özünüqiymətləndirmə tool-udur. Sual sayı sabitdir: 6 oblast x 5 sual = 30. Yeni AZ-spesifik nəzarətlər əlavə sual kimi yox, generic sualların əvəzi kimi gəlməlidir.
+
+Oblastlar: Maliyyə & kassa, Əməliyyat & mətbəx, Personal & xidmət, Müştəri təcrübəsi, Rəqəmsal mövcudluq, Uyğunluq & risk.
+
+Maliyyə oblastı kiçik AZ restoran reallığını ölçür: günlük POS/Z-report kassa tutuşdurması, fiskal çek intizamı, aylıq xərc hesabatı, prime cost və top-10 məhsul marjası. Uyğunluq oblastı AQTA sənədləri, tibbi müayinə, çatdırılma temperaturu, dezinfeksiya logları və əmək/sığorta prosesini yoxlayır. AQTA üçün konkret rüsum/prosedur rəqəmi yazma; yalnız sənəd/qeydiyyatın qaydasında olub-olmadığını soruş.
+
+Scoring `lib/marketing-tools/restoran-audit.ts` util-indədir: Bəli=2, Qismən=1, Xeyr=0; oblast balı `raw/10*100`; ümumi bal 6 oblast ortası. `>=80` Usta, `50-79` Kalfa, `<50` Şagird. Nəticədə native SVG chart, ümumi bal dairəsi, ən zəif 3 oblast üçün aksiyon planı, 0 bal suallar üçün təcili siyahı və "Nəyi bilmirsən?" kritik idarəetmə kartı göstərilir.
+
+Tək real component `components/marketinq-ocagi/restoran-audit/RestoranAuditPage.tsx`-dir. Bütün UI string-ləri `marketinq.restoranAudit` namespace-indədir.
+
 ### TASK-0145 Müştəri Persona Yaradıcısı — USTA tier, AZ/TR kontekst
 Persona yaradıcısı USTA tier alətidir. Restoran sahibi restoran profili (növ, şəhər, orta çek, xidmət modeli) və müştəri müşahidələri (yaş, cins, gəliş vaxtı/tezliyi, ödəmə, gəliş üsulu) daxil edir. DeepSeek JSON formatında 18 sahəli persona kartı qaytarır.
 
