@@ -79,6 +79,12 @@ Bu fayl bütün rəng/font/spacing məlumatlarının single source of truth-udur
 **Slogan:** "Ustalığın Nişanı, Dijitalin Şeddi"
 **AZ:** "Mütəxəssislik möhürü, rəqəmsalın şəddi"
 
+### TASK-0152 Pricing Page
+- Public pricing route: `/[locale]/pricing`.
+- Component: `components/pricing/PricingPage.tsx`.
+- Pattern: three Ahilik tier cards with KALFA highlighted, expandable config-driven tool lists, FAQ, and WhatsApp CTA.
+- Data rule: tier tool lists come from `lib/marketing-tools-config.ts`; do not duplicate counts in the component.
+
 ## 5. DOSYA YAPISI (KRİTİK)
 
 ```

@@ -1656,5 +1656,113 @@
       "loading": "Tavsiye hazırlanıyor...",
       "ahilikQuote": "Ahilikte iyi yer sadece görünen yer değildir; maliyetini, akışını ve müşteri sözünü taşıyan yerdir."
     }
+  },
+  "pricing": {
+    "title": "Marketinq Ocağı Fiyatları",
+    "slogan": "Ustalığın nişanı, dijitalin şeddi",
+    "subtitle": "Restoranınızın aşamasına uygun araç setini seçin: ücretsiz başlangıç, KALFA yönetimi veya USTA analitiği.",
+    "tiers": {
+      "sagird": {
+        "name": "ŞAGIRD",
+        "price": "Ücretsiz",
+        "period": "",
+        "description": "İlk hesaplamalarını sisteme almak isteyen restoranlar için.",
+        "benefits": [
+          "Temel ücretsiz araçlar",
+          "Food cost ve marka yönü",
+          "Limitli AI desteği",
+          "Başlangıç için sade giriş"
+        ],
+        "ctaLabel": "Ücretsiz başla"
+      },
+      "kalfa": {
+        "name": "KALFA",
+        "price": "89 AZN",
+        "period": "/ ay",
+        "description": "Satış, sezon, reklam ve operasyon kararlarını data ile yöneten küçük restoranlar için.",
+        "benefits": [
+          "Marketinq Ocağı temel araçları",
+          "Reklam, sezon ve sosyal metrikler",
+          "Audit ve lokasyon analizi",
+          "Büyüme için pratik karar desteği"
+        ],
+        "ctaLabel": "WhatsApp ile sor",
+        "popularBadge": "En popüler"
+      },
+      "usta": {
+        "name": "USTA",
+        "price": "149 AZN",
+        "period": "/ ay",
+        "description": "Daha derin finans, persona ve genişleme analitiği isteyen ekipler için.",
+        "benefits": [
+          "KALFA üstünde derin analiz",
+          "P&L ve persona modülleri",
+          "Planlanan premium araçlar",
+          "Öncelikli danışmanlık yönlendirmesi"
+        ],
+        "ctaLabel": "WhatsApp ile konuş"
+      }
+    },
+    "toolListToggle": "{count} aracı gör",
+    "status": {
+      "live": "aktif",
+      "beta": "beta",
+      "planned": "planlı"
+    },
+    "faq": {
+      "title": "Sık sorulan sorular",
+      "subtitle": "Abonelik başlamadan önce en çok sorulan sorular.",
+      "items": [
+        {
+          "question": "Nasıl abone olurum?",
+          "answer": "KALFA ve USTA için WhatsApp düğmesine basın, ekip size aktivasyon adımlarını gönderecek."
+        },
+        {
+          "question": "Tier değiştirebilir miyim?",
+          "answer": "Evet. Restoranınız büyüdükçe paketi yükseltmek veya uyarlamak mümkündür."
+        },
+        {
+          "question": "Ücretsiz tier ne kadar sürer?",
+          "answer": "ŞAGIRD başlangıç için ücretsizdir ve temel araçları denemek içindir."
+        },
+        {
+          "question": "Ödeme nasıl olur?",
+          "answer": "Bu sayfada online ödeme yoktur. Ödeme ve aktivasyon WhatsApp üzerinden netleşir."
+        },
+        {
+          "question": "İptal edebilir miyim?",
+          "answer": "Evet. Bir sonraki dönem başlamadan önce aboneliği durdurmak için ekiple iletişime geçin."
+        }
+      ]
+    },
+    "bottomCta": {
+      "title": "Hangi paket size uygun?",
+      "body": "Restoran tipinizi ve mevcut aşamanızı yazın, size uygun paketi birlikte seçelim.",
+      "ctaLabel": "WhatsApp ile iletişim"
+    },
+    "whatsappMessage": "Salam, {tier} paketi hakkında bilgi almak istiyorum",
+    "toolNames": {
+      "marka-kompasi": "Marka Pusulası",
+      "kst-yoxlayici": "KST Kontrolü",
+      "menyu-analitigi": "Menü Analitiği",
+      "yemek-xerci": "Yemek Maliyeti",
+      "promosyon-roi": "Promosyon ROI",
+      "sezon-analitikasi": "Sezon Analitiği",
+      "reklam-roi": "Reklam ROI",
+      "pnl-simulator": "P&L Simülatörü",
+      "sikayet-analitigi": "Şikayet Analitiği",
+      "sikayet-cavablandirici": "Şikayet Yanıtlayıcı",
+      "musteri-persona": "Müşteri Persona",
+      "sosial-metrik": "Sosyal Metrik",
+      "restoran-audit": "Restoran Audit",
+      "trend-analiz": "Trend Analizi",
+      "lokasyon-analiz": "Lokasyon Analizi",
+      "sezon-planlama": "Sezon Planlama",
+      "reklam-yazicisi": "Reklam Yazıcısı",
+      "sosial-medya-plan": "Sosyal Medya Planı",
+      "audit-robotu": "Audit Robotu",
+      "trend-analitigi": "Trend Analitiği",
+      "lokasyon-secme": "Lokasyon Seçimi"
+    }
   }
 }
