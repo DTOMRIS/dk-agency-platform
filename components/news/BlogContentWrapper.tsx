@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CheckCircle, Lock, LogIn, Sparkles } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import ReadingProgress from './ReadingProgress';
 import { getGuestSession, hasFullArticleAccess, readMemberSession } from '@/lib/member-access';
 
@@ -19,6 +20,7 @@ export default function BlogContentWrapper({
   isPremium = true,
 }: BlogContentWrapperProps) {
   const pathname = usePathname();
+  const t = useTranslations('registrationGate');
   const [showPaywall, setShowPaywall] = useState(false);
   const [isScrollLocked, setIsScrollLocked] = useState(false);
   const [session, setSession] = useState(getGuestSession());
@@ -27,7 +29,7 @@ export default function BlogContentWrapper({
   const shouldGate = isPremium && !fullAccess;
   const nextUrl = pathname || '/haberler';
   const loginHref = `/auth/login?next=${encodeURIComponent(nextUrl)}`;
-  const registerHref = `/auth/register?next=${encodeURIComponent(nextUrl)}&source=paywall`;
+  const registerHref = `/auth/register?next=${encodeURIComponent(nextUrl)}&source=registration-gate`;
 
   useEffect(() => {
     const syncSession = () => {
@@ -96,21 +98,20 @@ export default function BlogContentWrapper({
 
             <div className="relative z-10 mx-4 w-full max-w-lg">
               <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
-                <div className="bg-gradient-to-r from-red-600 to-red-500 px-6 py-5 text-center text-white">
+                <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 px-6 py-5 text-center text-white">
                   <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white/15">
                     <Lock className="h-7 w-7" />
                   </div>
-                  <h3 className="text-xl font-bold">Bu yazının davamı üzvlərə açıqdır</h3>
-                  <p className="mt-1 text-sm text-red-100">
-                    {articleTitle} yazısının ilk 40%-ni oxudunuz. Davam etmək üçün daxil olun və ya üzv olun.
+                  <h3 className="text-xl font-bold">{t('title')}</h3>
+                  <p className="mt-1 text-sm text-emerald-100">
+                    {t('readPreview', { title: articleTitle })}
                   </p>
                 </div>
 
                 <div className="px-6 py-6">
-                  <div className="mb-6 rounded-xl bg-slate-50 p-3">
-                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Member Flow MVP</p>
-                    <p className="mt-2 text-sm text-slate-700">
-                      Bu mərhələdə login və register ilə tam giriş açılır. Sonrakı mərhələdə Supabase subscription və entitlement sistemi bağlanacaq.
+                  <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-100 p-4">
+                    <p className="text-sm leading-relaxed text-emerald-800">
+                      {t('description')}
                     </p>
                   </div>
 
@@ -119,7 +120,7 @@ export default function BlogContentWrapper({
                       <svg className="h-12 w-12 -rotate-90" viewBox="0 0 36 36">
                         <circle className="text-slate-200" stroke="currentColor" strokeWidth="3" fill="none" cx="18" cy="18" r="15.9" />
                         <circle
-                          className="text-red-600"
+                          className="text-emerald-600"
                           stroke="currentColor"
                           strokeWidth="3"
                           strokeLinecap="round"
@@ -134,7 +135,6 @@ export default function BlogContentWrapper({
                     </div>
                     <div className="flex-1">
                       <p className="line-clamp-1 text-sm font-semibold text-slate-800">{articleTitle}</p>
-                      <p className="text-xs text-slate-500">Tam oxu üçün member access lazımdır</p>
                     </div>
                   </div>
 
@@ -142,44 +142,45 @@ export default function BlogContentWrapper({
                     <div className="flex items-start gap-3">
                       <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" />
                       <div>
-                        <p className="text-sm font-medium text-slate-800">Tam məqalə girişi</p>
-                        <p className="text-xs text-slate-500">Uzunform blog yazıları və premium xəbər detalları</p>
+                        <p className="text-sm font-medium text-slate-800">{t('benefit1Title')}</p>
+                        <p className="text-xs text-slate-500">{t('benefit1Desc')}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" />
                       <div>
-                        <p className="text-sm font-medium text-slate-800">Toolkit və AI inteqrasiyası</p>
-                        <p className="text-xs text-slate-500">Food Cost, P&L, Başabaş və KAZAN AI qatına keçid</p>
+                        <p className="text-sm font-medium text-slate-800">{t('benefit2Title')}</p>
+                        <p className="text-xs text-slate-500">{t('benefit2Desc')}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" />
                       <div>
-                        <p className="text-sm font-medium text-slate-800">Gələcək sales layer</p>
-                        <p className="text-xs text-slate-500">Subscription, entitlements və member dashboard bunun üzərinə gələcək</p>
+                        <p className="text-sm font-medium text-slate-800">{t('benefit3Title')}</p>
+                        <p className="text-xs text-slate-500">{t('benefit3Desc')}</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <Link href={registerHref} className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3.5 font-bold text-white transition hover:bg-red-700">
+                    <Link href={registerHref} className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3.5 font-bold text-white transition hover:bg-emerald-700">
                       <Sparkles className="h-5 w-5" />
-                      Üzv ol və davam et
+                      {t('registerCta')}
                     </Link>
                     <Link href={loginHref} className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 py-3 font-medium text-slate-700 transition hover:bg-slate-200">
                       <LogIn className="h-4 w-4" />
-                      Artıq üzvəm, daxil ol
+                      {t('loginCta')}
                     </Link>
                   </div>
                 </div>
 
                 <div className="flex items-center justify-center gap-4 border-t border-slate-100 bg-slate-50 px-6 py-4 text-xs text-slate-500">
-                  <span>40% preview</span>
-                  <span>•</span>
-                  <span>member access</span>
-                  <span>•</span>
-                  <span>red paywall</span>
+                  {t('footer').split('·').map((part, i, arr) => (
+                    <span key={part.trim()}>
+                      {part.trim()}
+                      {i < arr.length - 1 && <span className="ml-4">·</span>}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>

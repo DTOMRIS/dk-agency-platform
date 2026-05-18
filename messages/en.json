@@ -1769,5 +1769,19 @@
       "trend-analitigi": "Trend Analytics",
       "lokasyon-secme": "Location Selection"
     }
+  },
+  "registrationGate": {
+    "title": "This content is free",
+    "description": "Just create a free account to continue — no payment required, all content and tools unlock instantly.",
+    "readPreview": "You have read the first 40% of {title}.",
+    "registerCta": "Join Free",
+    "loginCta": "Already a member? Sign in",
+    "benefit1Title": "Full content access",
+    "benefit1Desc": "Blog articles, news analysis, and premium details",
+    "benefit2Title": "All tools unlocked",
+    "benefit2Desc": "Food Cost, P&L, KAZAN AI and 17 marketing tools",
+    "benefit3Title": "Always free",
+    "benefit3Desc": "No payment required, just create an account",
+    "footer": "free access · registration · 40% preview"
   }
 }

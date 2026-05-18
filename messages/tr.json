@@ -1767,5 +1767,19 @@
       "trend-analitigi": "Trend Analitiği",
       "lokasyon-secme": "Lokasyon Seçimi"
     }
+  },
+  "registrationGate": {
+    "title": "Bu içerik ücretsizdir",
+    "description": "Devam etmek için sadece ücretsiz hesap oluşturun — ödeme yok, tüm içerik ve araçlar açılır.",
+    "readPreview": "{title} yazısının ilk %40'ını okudunuz.",
+    "registerCta": "Ücretsiz Üye Ol",
+    "loginCta": "Zaten üyeyim, giriş yap",
+    "benefit1Title": "Tam içerik erişimi",
+    "benefit1Desc": "Blog yazıları, haber analizleri ve premium detaylar",
+    "benefit2Title": "Tüm araçlar açık",
+    "benefit2Desc": "Food Cost, P&L, KAZAN AI ve 17 pazarlama aracı",
+    "benefit3Title": "Her zaman ücretsiz",
+    "benefit3Desc": "Ödeme gerekmiyor, hesap oluşturmak yeterli",
+    "footer": "ücretsiz erişim · kayıt · %40 önizleme"
   }
 }
