@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-18T04:13:49.363Z
+- GeneratedAt: 2026-05-18T07:03:11.222Z
 - BuildStatus: PASS
 
-## Routes (139)
+## Routes (140)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -35,6 +35,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/marketinq/musteri-persona
 - /[locale]/marketinq/pl-simulyatoru
 - /[locale]/marketinq/reklam-roi
+- /[locale]/marketinq/restoran-audit
 - /[locale]/marketinq/roi-kalkulator
 - /[locale]/marketinq/sezon-analitikasi
 - /[locale]/marketinq/sosial-metrik
