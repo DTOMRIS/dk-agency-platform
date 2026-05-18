@@ -100,7 +100,7 @@ export async function getMenuAnalyticsTips(input: MenuAnalyticsAIInput): Promise
   const auth = await getAuthFromCookie();
   if (!auth) return { ok: false, error: 'unauthorized' };
 
-  const access = await checkToolAccess(auth.userId, 'menyu-analitigi', auth.role);
+  const access = await checkToolAccess(auth.userId, 'menyu-analitik', auth.role);
   if (!access.allowed) return { ok: false, error: 'unauthorized' };
 
   const sanitizedItems = input.items

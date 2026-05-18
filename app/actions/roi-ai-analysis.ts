@@ -143,7 +143,7 @@ export async function getROIAIAnalysis(input: ROIAIInput): Promise<ROIAIResult> 
   const auth = await getAuthFromCookie();
   if (!auth) return { ok: false, error: 'unauthorized' };
 
-  const access = await checkToolAccess(auth.userId, 'promosyon-roi', auth.role);
+  const access = await checkToolAccess(auth.userId, 'roi-kalkulator', auth.role);
   if (!access.allowed) return { ok: false, error: 'unauthorized' };
 
   const sanitized = sanitizeInput(input);

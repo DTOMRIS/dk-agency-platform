@@ -142,7 +142,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
-    slug: 'menyu-analitigi',
+    slug: 'menyu-analitik',
     category: 'analitika',
     tier: 'kalfa',
     iconName: 'UtensilsCrossed',
@@ -184,7 +184,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
-    slug: 'promosyon-roi',
+    slug: 'roi-kalkulator',
     category: 'maliyye',
     tier: 'kalfa',
     iconName: 'TrendingUp',
@@ -248,7 +248,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
-    slug: 'pnl-simulator',
+    slug: 'pl-simulyatoru',
     category: 'maliyye',
     tier: 'usta',
     iconName: 'Calculator',

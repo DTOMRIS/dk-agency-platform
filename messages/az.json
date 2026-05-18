@@ -622,17 +622,17 @@
         "subtitle": "Keyfiyyət, Servis, Təmizlik öz-özünə audit",
         "why": "KST mükəmməlliyi bütün marketinq səylərinin təməlidir."
       },
-      "menyu-analitigi": {
+      "menyu-analitik": {
         "title": "Menyu Analitiği",
         "subtitle": "Menyu pozisiyalarının rentabelliyini analiz edin",
         "why": "Menyunun 20%-i satışın 80%-ni yaradır."
       },
-      "promosyon-roi": {
+      "roi-kalkulator": {
         "title": "Promosyon ROI",
         "subtitle": "Baz Hafta vs Promo Hafta — real ROI hesabla",
         "why": "Endirimsiz də gələcək müştərilərin əlavə endirimi marjını yeyir."
       },
-      "pnl-simulator": {
+      "pl-simulyatoru": {
         "title": "P&L Simulator",
         "subtitle": "Aylıq gəlir-xərc modelləşdirməsi",
         "why": "P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir."
@@ -1848,12 +1848,12 @@
     "toolNames": {
       "marka-kompasi": "Marka Kompası",
       "kst-yoxlayici": "KST Yoxlayıcı",
-      "menyu-analitigi": "Menyu Analitigi",
+      "menyu-analitik": "Menyu Analitigi",
       "yemek-xerci": "Yemək Xərci",
-      "promosyon-roi": "Promosyon ROI",
+      "roi-kalkulator": "Promosyon ROI",
       "sezon-analitikasi": "Sezon Analitikası",
       "reklam-roi": "Reklam ROI",
-      "pnl-simulator": "P&L Simulator",
+      "pl-simulyatoru": "P&L Simulator",
       "sikayet-analitigi": "Şikayət Analitigi",
       "sikayet-cavablandirici": "Şikayət Cavablandırıcı",
       "musteri-persona": "Müştəri Persona",

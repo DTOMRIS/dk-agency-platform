@@ -115,7 +115,7 @@ export async function POST(req: Request) {
     const auth = await getAuthFromCookie();
     if (!auth) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
-    const access = await checkToolAccess(auth.userId, 'menyu-analitigi', auth.role);
+    const access = await checkToolAccess(auth.userId, 'menyu-analitik', auth.role);
     if (!access.allowed) {
       return NextResponse.json(
         { error: access.reason, requiredTier: 'requiredTier' in access ? access.requiredTier : null },
@@ -130,7 +130,7 @@ export async function POST(req: Request) {
 
     const [run] = await db
       .insert(marketingToolRuns)
-      .values({ userId: auth.userId, toolSlug: 'menyu-analitigi', inputData: input, status: 'pending', locale: input.locale })
+      .values({ userId: auth.userId, toolSlug: 'menyu-analitik', inputData: input, status: 'pending', locale: input.locale })
       .returning();
 
     let aiResult: { data: unknown; meta: { provider: string; tokensUsed: number; costAzn: number } };
@@ -138,7 +138,7 @@ export async function POST(req: Request) {
     try {
       aiResult = await callAIJson<unknown>(
         { system: SYSTEM_PROMPT, prompt: buildUserPrompt(input), maxTokens: 2500, temperature: 0.5, timeout: 55000 },
-        { preferProvider: 'deepseek', toolSlug: 'menyu-analitigi', userId: auth.userId, locale: input.locale },
+        { preferProvider: 'deepseek', toolSlug: 'menyu-analitik', userId: auth.userId, locale: input.locale },
       );
     } catch (aiErr) {
       await db.update(marketingToolRuns)
@@ -186,7 +186,7 @@ export async function GET() {
     if (!db) return NextResponse.json({ hasRun: false, lastResult: null, completedAt: null });
 
     const [lastRun] = await db.select().from(marketingToolRuns)
-      .where(and(eq(marketingToolRuns.userId, auth.userId), eq(marketingToolRuns.toolSlug, 'menyu-analitigi'), eq(marketingToolRuns.status, 'success')))
+      .where(and(eq(marketingToolRuns.userId, auth.userId), eq(marketingToolRuns.toolSlug, 'menyu-analitik'), eq(marketingToolRuns.status, 'success')))
       .orderBy(desc(marketingToolRuns.createdAt)).limit(1);
 
     return NextResponse.json({ hasRun: !!lastRun, lastResult: lastRun?.outputData ?? null, completedAt: lastRun?.completedAt ?? null });

@@ -118,7 +118,7 @@ export async function POST(req: Request) {
     const auth = await getAuthFromCookie();
     if (!auth) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
-    const access = await checkToolAccess(auth.userId, 'pnl-simulator', auth.role);
+    const access = await checkToolAccess(auth.userId, 'pl-simulyatoru', auth.role);
     if (!access.allowed) {
       return NextResponse.json({ error: access.reason, requiredTier: 'requiredTier' in access ? access.requiredTier : null }, { status: 403 });
     }
@@ -131,7 +131,7 @@ export async function POST(req: Request) {
     const pnlResult = calculatePnl(input);
 
     const [run] = await db.insert(marketingToolRuns)
-      .values({ userId: auth.userId, toolSlug: 'pnl-simulator', inputData: input, status: 'pending', locale: input.locale })
+      .values({ userId: auth.userId, toolSlug: 'pl-simulyatoru', inputData: input, status: 'pending', locale: input.locale })
       .returning();
 
     let aiInsight: z.infer<typeof AIInsightSchema>;
@@ -140,7 +140,7 @@ export async function POST(req: Request) {
     try {
       const aiResult = await callAIJson<unknown>(
         { system: SYSTEM_PROMPT, prompt: `P&L NETICELERI:\n${JSON.stringify(pnlResult, null, 2)}`, maxTokens: 1500, temperature: 0.5, timeout: 55000 },
-        { preferProvider: 'deepseek', toolSlug: 'pnl-simulator', userId: auth.userId, locale: input.locale },
+        { preferProvider: 'deepseek', toolSlug: 'pl-simulyatoru', userId: auth.userId, locale: input.locale },
       );
       const parsed = AIInsightSchema.safeParse(aiResult.data);
       aiInsight = parsed.success ? parsed.data : {
@@ -183,7 +183,7 @@ export async function GET() {
     if (!db) return NextResponse.json({ hasRun: false, lastResult: null, completedAt: null });
 
     const [lastRun] = await db.select().from(marketingToolRuns)
-      .where(and(eq(marketingToolRuns.userId, auth.userId), eq(marketingToolRuns.toolSlug, 'pnl-simulator'), eq(marketingToolRuns.status, 'success')))
+      .where(and(eq(marketingToolRuns.userId, auth.userId), eq(marketingToolRuns.toolSlug, 'pl-simulyatoru'), eq(marketingToolRuns.status, 'success')))
       .orderBy(desc(marketingToolRuns.createdAt)).limit(1);
 
     return NextResponse.json({ hasRun: !!lastRun, lastResult: lastRun?.outputData ?? null, completedAt: lastRun?.completedAt ?? null });

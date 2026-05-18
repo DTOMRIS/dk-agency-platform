@@ -4,9 +4,9 @@ const TOOLS = [
   'sezon-planlama',
   'marka-kompasi',
   'kst-yoxlayici',
-  'menyu-analitigi',
+  'menyu-analitik',
   'sikayet-analitigi',
-  'promosyon-roi',
+  'roi-kalkulator',
   'musteri-persona',
 ];
 
@@ -49,7 +49,7 @@ test.describe('Marketing Tools Visual Verification', () => {
   });
 
   test('menyu — form inputs visible', async ({ page }) => {
-    await page.goto('/dashboard/marketinq-ocagi/menyu-analitigi');
+    await page.goto('/dashboard/marketinq-ocagi/menyu-analitik');
 
     // "Yemək adı" tam görünür (truncate yox)
     await expect(page.getByText('Yemək adı')).toBeVisible();

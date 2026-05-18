@@ -19,7 +19,7 @@ export default async function MenuAnalyticsPage({ params }: Props) {
     redirect(withLocalePrefix(locale, '/auth/login?next=/marketinq/menyu-analitik'));
   }
 
-  const access = await checkToolAccess(auth.userId, 'menyu-analitigi', auth.role);
+  const access = await checkToolAccess(auth.userId, 'menyu-analitik', auth.role);
   const t = await getTranslations('marketinq.menuAnalytics');
 
   if (!access.allowed) {

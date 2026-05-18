@@ -19,7 +19,7 @@ export default async function ROICalculatorPage({ params }: Props) {
     redirect(withLocalePrefix(locale, '/auth/login?next=/marketinq/roi-kalkulator'));
   }
 
-  const access = await checkToolAccess(auth.userId, 'promosyon-roi', auth.role);
+  const access = await checkToolAccess(auth.userId, 'roi-kalkulator', auth.role);
   const t = await getTranslations('marketinq.roiCalculator');
 
   if (!access.allowed) {

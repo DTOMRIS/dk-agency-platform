@@ -19,7 +19,7 @@ export default async function PLSimulatorPage({ params }: Props) {
     redirect(withLocalePrefix(locale, '/auth/login?next=/marketinq/pl-simulyatoru'));
   }
 
-  const access = await checkToolAccess(auth.userId, 'pnl-simulator', auth.role);
+  const access = await checkToolAccess(auth.userId, 'pl-simulyatoru', auth.role);
   const t = await getTranslations('marketinq.plSimulator');
 
   if (!access.allowed) {

@@ -8,9 +8,9 @@ export type ToolSlug =
   | 'sezon-planlama'
   | 'marka-kompasi'
   | 'kst-yoxlayici'
-  | 'menyu-analitigi'
+  | 'menyu-analitik'
   | 'sikayet-analitigi'
-  | 'promosyon-roi'
+  | 'roi-kalkulator'
   | 'musteri-persona';
 
 export function buildBrainContext(toolSlug: ToolSlug): string {
@@ -28,12 +28,12 @@ export function buildBrainContext(toolSlug: ToolSlug): string {
       sections.push(`=== 2026 TRENDLERI ===\nGEO/AEO: ${TRENDS_2026.geoAeo.description}\n\nAI Decisioning: ${TRENDS_2026.aiDecisioning.description}\n\nRCS: ${TRENDS_2026.rcs.description}`);
       sections.push(`=== ROI QAYDA ===\nMinimum ROI: ${METHODOLOGY.roiRules.minimumROI}%\nMax endirim: ${METHODOLOGY.roiRules.maxDiscount}%`);
       break;
-    case 'menyu-analitigi':
+    case 'menyu-analitik':
       sections.push(`=== KAHI NUMUNE: MENU ENGINEERING ===\n${KAHI_EXAMPLES.menuEngineering}`);
       sections.push(`=== BCG MATRISI ===\n${JSON.stringify(METHODOLOGY.bcgMatrix, null, 2)}`);
       sections.push(`=== TIER PRICING ===\n${JSON.stringify(METHODOLOGY.tierPricing, null, 2)}`);
       break;
-    case 'promosyon-roi':
+    case 'roi-kalkulator':
       sections.push(`=== ROI QAYDA ===\n${JSON.stringify(METHODOLOGY.roiRules, null, 2)}`);
       sections.push(`=== AI DECISIONING ===\n${TRENDS_2026.aiDecisioning.description}`);
       break;
