@@ -124,7 +124,7 @@ export async function getPLAIAnalysis(input: PLAnalysisInput): Promise<PLAnalysi
   const auth = await getAuthFromCookie();
   if (!auth) return { ok: false, error: 'unauthorized' };
 
-  const access = await checkToolAccess(auth.userId, 'pnl-simulator', auth.role);
+  const access = await checkToolAccess(auth.userId, 'pl-simulyatoru', auth.role);
   if (!access.allowed) return { ok: false, error: 'unauthorized' };
 
   const sanitized = sanitizeInput(input);

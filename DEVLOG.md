@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-18 - TASK-0155 Slug Uyğunsuzluğu Düzəlişi
+
+**Why:** 3 tool-un config slug-u public route adından fərqli idi (menyu-analitigi vs menyu-analitik, pnl-simulator vs pl-simulyatoru, promosyon-roi vs roi-kalkulator). CTO qərarı: route adları əsasdır, config slug-lar route-a uyğunlaşdırılır. Fayl/qovluq köçürmə yoxdur (SEO qorunur).
+
+**Cascade:** Slug 6 qat-da istifadə olunur — config, dashboard (if-statements + pageCopy 4 locale), public route (checkToolAccess), server actions, API routes (checkToolAccess + DB toolSlug), i18n keys, _brain type union, e2e tests. Grep ilə bir dəfə hamısı tapıldı, atomik patch edildi.
+
+**Risk:** DB-dəki köhnə `marketing_tool_runs.toolSlug` sütununda əvvəlki run-lar köhnə adla qalır — aylıq rate limit count sıfırlanır. Startup fazasında məqbul.
+
+**QOVLUQ KÖÇÜRMƏ YOX** (git diff --stat: 18 fayl, 70→70 string, 0 rename).
+
 ## 2026-05-18 - TASK-0154 Pulsuz Qeydiyyat-Gate (Blog + Xəbərlər)
 
 **Why:** News articles (haberler/xeberler) had zero registration gate — visitors could read everything anonymously. Blog had 40% scroll gate but with hardcoded AZ strings and "paywall" language implying payment. Business model is free registration wall, not paywall.

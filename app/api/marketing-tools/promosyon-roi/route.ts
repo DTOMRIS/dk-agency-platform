@@ -177,7 +177,7 @@ export async function POST(req: Request) {
     const auth = await getAuthFromCookie();
     if (!auth) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
-    const access = await checkToolAccess(auth.userId, 'promosyon-roi', auth.role);
+    const access = await checkToolAccess(auth.userId, 'roi-kalkulator', auth.role);
     if (!access.allowed) {
       return NextResponse.json(
         { error: access.reason, requiredTier: 'requiredTier' in access ? access.requiredTier : null },
@@ -196,7 +196,7 @@ export async function POST(req: Request) {
     // DB pending row
     const [run] = await db
       .insert(marketingToolRuns)
-      .values({ userId: auth.userId, toolSlug: 'promosyon-roi', inputData: input, status: 'pending', locale: input.locale })
+      .values({ userId: auth.userId, toolSlug: 'roi-kalkulator', inputData: input, status: 'pending', locale: input.locale })
       .returning();
 
     // AI insight
@@ -212,7 +212,7 @@ export async function POST(req: Request) {
           temperature: 0.5,
           timeout: 55000,
         },
-        { preferProvider: 'deepseek', toolSlug: 'promosyon-roi', userId: auth.userId, locale: input.locale },
+        { preferProvider: 'deepseek', toolSlug: 'roi-kalkulator', userId: auth.userId, locale: input.locale },
       );
       const parsed = AIInsightSchema.safeParse(aiResult.data);
       aiInsight = parsed.success ? parsed.data : {
@@ -264,7 +264,7 @@ export async function GET() {
     if (!db) return NextResponse.json({ hasRun: false, lastResult: null, completedAt: null });
 
     const [lastRun] = await db.select().from(marketingToolRuns)
-      .where(and(eq(marketingToolRuns.userId, auth.userId), eq(marketingToolRuns.toolSlug, 'promosyon-roi'), eq(marketingToolRuns.status, 'success')))
+      .where(and(eq(marketingToolRuns.userId, auth.userId), eq(marketingToolRuns.toolSlug, 'roi-kalkulator'), eq(marketingToolRuns.status, 'success')))
       .orderBy(desc(marketingToolRuns.createdAt)).limit(1);
 
     return NextResponse.json({ hasRun: !!lastRun, lastResult: lastRun?.outputData ?? null, completedAt: lastRun?.completedAt ?? null });

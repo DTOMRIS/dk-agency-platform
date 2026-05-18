@@ -43,14 +43,14 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Marka Kompası', subtitle: '5 sualda restoranınızın bazardakı yerini tapın', why: 'Konum ucuz/lüks etiketlərdən ibarət deyil — kim üçün, hansı problem, niyə fərqli?' },
       'kst-yoxlayici': { title: 'KST Yoxlayıcı', subtitle: 'Keyfiyyət, Servis, Təmizlik öz-özünə audit', why: 'KST mükəmməlliyi bütün marketinq səylərinin təməlidir.' },
-      'menyu-analitigi': { title: 'Menyu Analitiği', subtitle: 'Menyu pozisiyalarının rentabelliyini analiz edin', why: 'Menyunun 20%-i satışın 80%-ni yaradır. Hansı yemək ulduz, hansı yük olduğunu bilmək gəliri artırır.' },
+      'menyu-analitik': { title: 'Menyu Analitiği', subtitle: 'Menyu pozisiyalarının rentabelliyini analiz edin', why: 'Menyunun 20%-i satışın 80%-ni yaradır. Hansı yemək ulduz, hansı yük olduğunu bilmək gəliri artırır.' },
       'yemek-xerci': { title: 'Yemək Xərci', subtitle: 'Resept kartı ilə porsiya maya dəyərini hesabla', why: 'Qiyməti göz ölçüsü ilə qoymaq marjanı yeyir. Bu alət ərzaq xərcini, trim loss-u və porsiya sayını bir yerdə hesablayır.' },
-      'promosyon-roi': { title: 'ROI Kalkulatoru', subtitle: 'Kanal ROI, CAC, LTV və payback müqayisəsi', why: 'Restoran sahibi büdcəni çox kanala böləndə əsas sual hansı kanalın real müştəri gətirməsidir. Bu alət kanal ROI, CAC, LTV və payback-i birlikdə göstərir.' },
+      'roi-kalkulator': { title: 'ROI Kalkulatoru', subtitle: 'Kanal ROI, CAC, LTV və payback müqayisəsi', why: 'Restoran sahibi büdcəni çox kanala böləndə əsas sual hansı kanalın real müştəri gətirməsidir. Bu alət kanal ROI, CAC, LTV və payback-i birlikdə göstərir.' },
       'reklam-roi': { title: 'Reklam ROI', subtitle: 'Awareness və conversion kampaniyaları üçün kanal ROAS, CAC, LTV:CAC', why: 'Like və baxış qərar vermək üçün yetərli deyil. Bu alət Instagram, influencer, Telegram və WhatsApp kampaniyalarını real büdcə, müştəri və dəyər metriklərinə çevirir.' },
       'restoran-audit': { title: 'Restoran Audit', subtitle: 'Kassa, mətbəx, xidmət və uyğunluq üzrə özünüqiymətləndirmə', why: 'Kiçik restoran üçün ən böyük risk bilmədiyi rəqəmlərdir: kassa tutuşdurması, aylıq xərc, prime cost, top məhsul marjası və sənəd intizamı. Bu audit zəif nöqtələri aksiyon planına çevirir.' },
       'trend-analiz': { title: 'Trend Analiz', subtitle: '2026 HoReCa trendlərini restoranınıza uyğun prioritetləşdirin', why: 'Trend siyahısı çoxdur, amma kiçik restoranın resursu məhduddur. Bu alət 8 trendi profilinizə görə sıralayır və ilk ucuz tətbiq addımını verir.' },
       'sezon-analitikasi': { title: 'Sezon Analitikası', subtitle: 'AZ təqvimi ilə 12 aylıq cash-flow proqnozu', why: 'Cash-flow proqnozu olmayan restoran pik ayda fürsəti, ölü ayda isə nağd pulu itirir. Bu alət Novruz, Ramazan, turist piki və kurort sezonunu rəqəmə çevirir.' },
-      'pnl-simulator': { title: 'P&L Simulyatoru', subtitle: 'Gəlir-xərc, what-if və zərərsizlik analizi', why: 'P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir.' },
+      'pl-simulyatoru': { title: 'P&L Simulyatoru', subtitle: 'Gəlir-xərc, what-if və zərərsizlik analizi', why: 'P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir.' },
       'sikayet-analitigi': { title: 'Şikayət Analitiği', subtitle: 'Müştəri şikayətlərini AI ilə analiz et', why: 'Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır.' },
       'sikayet-cavablandirici': { title: 'Şikayət Cavablandırıcı', subtitle: 'AI ilə Google və TripAdvisor şikayətlərinə 3 fərqli tonda cavab', why: 'Hər cavabsız şikayət potensial müştəri itkisidir. AI 3 tonda peşəkar cavab yaradır.' },
       'musteri-persona': { title: 'Müştəri Persona', subtitle: 'Hədəf müştəri profilini yaradın', why: 'Hər kəsə satmaq heç kimə satmaq deməkdir. Persona ilə marketinq mesajı kəskinləşir.' },
@@ -71,14 +71,14 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Brand Compass', subtitle: 'Find your market position in 5 questions', why: 'Positioning is about who, what problem, why different.' },
       'kst-yoxlayici': { title: 'QSC Checker', subtitle: 'Quality, Service, Cleanliness self-audit', why: 'QSC excellence is the foundation of all marketing.' },
-      'menyu-analitigi': { title: 'Menu Analytics', subtitle: 'Analyze menu item profitability', why: '20% of your menu generates 80% of sales.' },
+      'menyu-analitik': { title: 'Menu Analytics', subtitle: 'Analyze menu item profitability', why: '20% of your menu generates 80% of sales.' },
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
-      'promosyon-roi': { title: 'ROI Calculator', subtitle: 'Channel ROI, CAC, LTV, and payback comparison', why: 'When budget is split across channels, the core question is which channel actually brings profitable customers.' },
+      'roi-kalkulator': { title: 'ROI Calculator', subtitle: 'Channel ROI, CAC, LTV, and payback comparison', why: 'When budget is split across channels, the core question is which channel actually brings profitable customers.' },
       'reklam-roi': { title: 'Ad ROI', subtitle: 'Channel ROAS, CAC, and LTV:CAC for awareness and conversion campaigns', why: 'Likes and views are not enough to make budget decisions. This tool turns Instagram, influencer, Telegram, and WhatsApp campaigns into budget, customer, and value metrics.' },
       'restoran-audit': { title: 'Restaurant Audit', subtitle: 'Self-assessment for cash, kitchen, service, and compliance discipline', why: 'Small restaurants lose control when core numbers are invisible: cash reconciliation, monthly expenses, prime cost, top product margin, and document discipline. This audit turns weak points into an action plan.' },
       'trend-analiz': { title: 'Trend Analysis', subtitle: 'Prioritize 2026 HoReCa trends for your restaurant', why: 'Trend lists are long, but small restaurants have limited resources. This tool ranks 8 trends for your profile and gives the first low-cost action.' },
       'sezon-analitikasi': { title: 'Season Analytics', subtitle: '12-month cash-flow forecast with Azerbaijan calendar', why: 'A restaurant without cash-flow forecasting loses opportunity in peak months and cash in dead months. This tool turns Novruz, Ramadan, tourist peaks, and resort seasons into numbers.' },
-      'pnl-simulator': { title: 'P&L Simulator', subtitle: 'Revenue, what-if, and breakeven analysis', why: 'Restaurants tracking P&L monthly outperform competitors.' },
+      'pl-simulyatoru': { title: 'P&L Simulator', subtitle: 'Revenue, what-if, and breakeven analysis', why: 'Restaurants tracking P&L monthly outperform competitors.' },
       'sikayet-analitigi': { title: 'Complaint Analytics', subtitle: 'AI-powered complaint analysis', why: 'For every complaint, 26 unhappy customers stay silent.' },
       'sikayet-cavablandirici': { title: 'Complaint Responder', subtitle: 'AI-generated responses to reviews in 3 tones', why: 'Every unanswered complaint is a potential lost customer. AI generates professional responses in 3 tones.' },
       'musteri-persona': { title: 'Customer Persona', subtitle: 'Build target customer profiles', why: 'Selling to everyone means selling to no one.' },
@@ -99,14 +99,14 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Marka Pusulası', subtitle: '5 soruda konumunuzu bulun', why: 'Konumlandırma ucuz/lüks etiketlerinden ibaret değil.' },
       'kst-yoxlayici': { title: 'KST Denetçisi', subtitle: 'Kalite, Servis, Temizlik denetimi', why: 'KST mükemmelliği tüm pazarlama çabalarının temelidir.' },
-      'menyu-analitigi': { title: 'Menü Analitiği', subtitle: 'Menü kalemlerinin karlılığı', why: 'Menünüzün %20\'si satışın %80\'ini yaratır.' },
+      'menyu-analitik': { title: 'Menü Analitiği', subtitle: 'Menü kalemlerinin karlılığı', why: 'Menünüzün %20\'si satışın %80\'ini yaratır.' },
       'yemek-xerci': { title: 'Yemek Maliyeti', subtitle: 'Reçete kartı ile porsiyon maliyetini hesapla', why: 'Fiyatı göz kararı koymak marjı kaçırır. Bu araç ürün maliyeti, fire ve porsiyon sayısını birlikte hesaplar.' },
-      'promosyon-roi': { title: 'ROI Hesaplayıcı', subtitle: 'Kanal ROI, CAC, LTV ve payback karşılaştırması', why: 'Bütçe kanallara bölündüğünde asıl soru hangi kanalın kârlı müşteri getirdiğidir.' },
+      'roi-kalkulator': { title: 'ROI Hesaplayıcı', subtitle: 'Kanal ROI, CAC, LTV ve payback karşılaştırması', why: 'Bütçe kanallara bölündüğünde asıl soru hangi kanalın kârlı müşteri getirdiğidir.' },
       'reklam-roi': { title: 'Reklam ROI', subtitle: 'Awareness ve conversion kampanyaları için kanal ROAS, CAC, LTV:CAC', why: 'Beğeni ve görüntüleme bütçe kararı için yeterli değildir. Bu araç Instagram, influencer, Telegram ve WhatsApp kampanyalarını bütçe, müşteri ve değer metriklerine çevirir.' },
       'restoran-audit': { title: 'Restoran Audit', subtitle: 'Kasa, mutfak, servis ve uygunluk disiplini için öz değerlendirme', why: 'Küçük restoran temel rakamları görmediğinde kontrolü kaybeder: kasa mutabakatı, aylık gider, prime cost, en çok satan ürün marjı ve belge disiplini. Bu audit zayıf noktaları aksiyon planına çevirir.' },
       'trend-analiz': { title: 'Trend Analiz', subtitle: '2026 HoReCa trendlerini restoranınıza göre önceliklendirin', why: 'Trend listeleri uzundur, küçük restoranın kaynağı sınırlıdır. Bu araç 8 trendi profilinize göre sıralar ve ilk düşük maliyetli adımı verir.' },
       'sezon-analitikasi': { title: 'Sezon Analitiği', subtitle: 'Azerbaycan takvimiyle 12 aylık cash-flow tahmini', why: 'Cash-flow tahmini olmayan restoran yoğun ayda fırsatı, ölü ayda nakdi kaybeder. Bu araç Novruz, Ramazan, turist piki ve kurort sezonunu rakama çevirir.' },
-      'pnl-simulator': { title: 'P&L Simülatörü', subtitle: 'Gelir, what-if ve başabaş analizi', why: 'Aylık P&L hazırlayan restoran rakiplerinin önündedir.' },
+      'pl-simulyatoru': { title: 'P&L Simülatörü', subtitle: 'Gelir, what-if ve başabaş analizi', why: 'Aylık P&L hazırlayan restoran rakiplerinin önündedir.' },
       'sikayet-analitigi': { title: 'Şikayet Analitiği', subtitle: 'AI şikayet analizi', why: 'Her şikayetin arkasında 26 sessiz mutsuz müşteri var.' },
       'sikayet-cavablandirici': { title: 'Şikayet Yanıtlayıcı', subtitle: 'Google ve TripAdvisor şikayetlerine AI ile 3 tonda yanıt', why: 'Her cevaplanmayan şikayet potansiyel müşteri kaybıdır. AI 3 tonda profesyonel yanıt üretir.' },
       'musteri-persona': { title: 'Müşteri Persona', subtitle: 'Hedef müşteri profili', why: 'Herkese satmak kimseye satmamak demektir.' },
@@ -127,14 +127,14 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Компас Бренда', subtitle: 'Найдите свою позицию за 5 вопросов', why: 'Позиционирование — это не про дёшево/дорого.' },
       'kst-yoxlayici': { title: 'KST Аудитор', subtitle: 'Самопроверка Качества, Сервиса, Чистоты', why: 'Совершенство KST — основа всех маркетинговых усилий.' },
-      'menyu-analitigi': { title: 'Анализ Меню', subtitle: 'Рентабельность позиций меню', why: '20% меню создаёт 80% продаж.' },
+      'menyu-analitik': { title: 'Анализ Меню', subtitle: 'Рентабельность позиций меню', why: '20% меню создаёт 80% продаж.' },
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
-      'promosyon-roi': { title: 'ROI Калькулятор', subtitle: 'Сравнение ROI, CAC, LTV и окупаемости каналов', why: 'Когда бюджет делится между каналами, главный вопрос — какой канал приводит прибыльных клиентов.' },
+      'roi-kalkulator': { title: 'ROI Калькулятор', subtitle: 'Сравнение ROI, CAC, LTV и окупаемости каналов', why: 'Когда бюджет делится между каналами, главный вопрос — какой канал приводит прибыльных клиентов.' },
       'reklam-roi': { title: 'ROI рекламы', subtitle: 'ROAS, CAC и LTV:CAC по каналам для awareness и conversion кампаний', why: 'Лайки и просмотры недостаточны для решения о бюджете. Инструмент переводит Instagram, influencer, Telegram и WhatsApp в бюджет, клиентов и ценность.' },
       'restoran-audit': { title: 'Ресторанный аудит', subtitle: 'Самооценка кассы, кухни, сервиса и соответствия требованиям', why: 'Малый ресторан теряет контроль, когда не видит ключевые цифры: сверку кассы, месячные расходы, prime cost, маржу топ-продуктов и порядок документов. Этот аудит превращает слабые места в план действий.' },
       'trend-analiz': { title: 'Анализ трендов', subtitle: 'Приоритизация HoReCa трендов 2026 под ваш ресторан', why: 'Списки трендов длинные, а ресурсы малого ресторана ограничены. Инструмент ранжирует 8 трендов под ваш профиль и дает первый недорогой шаг.' },
       'sezon-analitikasi': { title: 'Сезонная аналитика', subtitle: '12-месячный прогноз cash-flow с календарем Азербайджана', why: 'Без прогноза cash-flow ресторан теряет возможности в пиковые месяцы и деньги в слабые месяцы. Инструмент переводит Новруз, Рамадан, туристические пики и курортные сезоны в цифры.' },
-      'pnl-simulator': { title: 'P&L Симулятор', subtitle: 'Доходы, what-if и безубыточность', why: 'Рестораны с ежемесячным P&L опережают конкурентов.' },
+      'pl-simulyatoru': { title: 'P&L Симулятор', subtitle: 'Доходы, what-if и безубыточность', why: 'Рестораны с ежемесячным P&L опережают конкурентов.' },
       'sikayet-analitigi': { title: 'Анализ Жалоб', subtitle: 'AI-анализ жалоб', why: 'За каждой жалобой стоят 26 молчаливых недовольных клиентов.' },
       'sikayet-cavablandirici': { title: 'Ответчик на жалобы', subtitle: 'AI-ответы на отзывы в 3 тонах', why: 'Каждая неотвеченная жалоба — потенциальная потеря клиента. AI генерирует профессиональные ответы в 3 тонах.' },
       'musteri-persona': { title: 'Персона Клиента', subtitle: 'Профиль целевого клиента', why: 'Продавать всем — значит не продавать никому.' },
@@ -168,10 +168,10 @@ export default function ToolSlugPage() {
   if (slug === 'kst-yoxlayici' && tool.status === 'live') {
     return <KSTYoxlayiciPage />;
   }
-  if (slug === 'promosyon-roi' && tool.status === 'live') {
+  if (slug === 'roi-kalkulator' && tool.status === 'live') {
     return <PromoROIPage />;
   }
-  if (slug === 'menyu-analitigi' && tool.status === 'live') {
+  if (slug === 'menyu-analitik' && tool.status === 'live') {
     return <MenyuAnalitiyiPage />;
   }
   if (slug === 'yemek-xerci' && tool.status === 'live') {
@@ -186,7 +186,7 @@ export default function ToolSlugPage() {
   if (slug === 'musteri-persona' && tool.status === 'live') {
     return <MusteriPersonaPage />;
   }
-  if (slug === 'pnl-simulator' && tool.status === 'live') {
+  if (slug === 'pl-simulyatoru' && tool.status === 'live') {
     return <PnlSimulatorPage />;
   }
   if (slug === 'sezon-planlama' && tool.status === 'live') {
