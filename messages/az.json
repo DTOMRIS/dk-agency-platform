@@ -599,7 +599,7 @@
       "tierPrices": {
         "sagird": "Pulsuz",
         "kalfa": "89 AZN/ay",
-        "usta": "149 AZN/ay"
+        "usta": "99 AZN/ay"
       },
       "comingSoon": "Tezliklə",
       "explore": "Daxil ol",
@@ -1792,7 +1792,7 @@
       },
       "usta": {
         "name": "USTA",
-        "price": "149 AZN",
+        "price": "99 AZN",
         "period": "/ ay",
         "description": "Daha dərin maliyyə, persona və genişlənmə analitikası istəyən komandalar üçün.",
         "benefits": [
@@ -1805,6 +1805,9 @@
       }
     },
     "toolListToggle": "{count} alətə bax",
+    "plannedToolsLabel": "Tezliklə əlavə olunacaq ({count})",
+    "launchBadge": "Hazırda Pulsuz",
+    "launchNote": "Açılış kampaniyası: 1 Sentyabr 2026-a qədər bütün paketlər pulsuzdur. Sonra standart qiymətləndirmə tətbiq olunacaq.",
     "status": {
       "live": "aktiv",
       "beta": "beta",

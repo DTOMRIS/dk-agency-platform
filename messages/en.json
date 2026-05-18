@@ -1693,7 +1693,7 @@
       },
       "usta": {
         "name": "USTA",
-        "price": "149 AZN",
+        "price": "99 AZN",
         "period": "/ month",
         "description": "For teams that need deeper finance, persona, and expansion analytics.",
         "benefits": [
@@ -1706,6 +1706,9 @@
       }
     },
     "toolListToggle": "View {count} tools",
+    "plannedToolsLabel": "Coming soon ({count})",
+    "launchBadge": "Currently Free",
+    "launchNote": "Launch offer: all packages are free until September 1, 2026. Standard pricing applies after.",
     "status": {
       "live": "live",
       "beta": "beta",

@@ -1,5 +1,21 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-18 - TASK-0153 Tool Status Truth + Pricing Filter
+
+**Why:** Pricing page was rendering all 21 tools (including 4 "planned") without status filtering. This made USTA tier look like it had 6 usable tools when only 2 are live. Revenue page credibility issue.
+
+**Audit findings:** All 17 "live" tools genuinely work (have components + dashboard access). 4 "planned" tools have zero implementation. Config status field was accurate — the problem was the pricing page not filtering.
+
+**Fix:** `groupToolsByTier()` now splits tools into `live` and `planned` arrays. Live tools shown in expandable list as before. Planned tools shown separately in dashed-border "tezliklə" section (transparent, not hidden). i18n key `plannedToolsLabel` added in 4 locales.
+
+**Config comments:** Updated file header (14→21), tier comments to match real counts (3/12/6).
+
+**Result per tier:** ŞAGIRD shows 3 live, KALFA shows 12 live, USTA shows 2 live + 4 "tezliklə".
+
+**Popcorn pricing:** USTA price changed from 149→99 AZN/ay. 10 AZN gap from KALFA (89) makes upgrade obvious. All i18n files updated, grep confirms zero 149 remnants in live config/UI.
+
+**Launch campaign:** `LAUNCH_CAMPAIGN` config added to marketing-tools-config.ts with `endDateISO: "2026-09-01"`. `isLaunchActive()` auto-checks date. PricingPage shows strikethrough original price + "Hazırda Pulsuz" badge for KALFA/USTA during campaign. Green banner with campaign end date. Fully automatic — no manual switch needed when campaign expires.
+
 ## 2026-05-18 - TASK-0152 Pricing Page
 
 **Why:** Marketinq Ocagi tools are already split by tier, but the public site did not answer the customer question: which package do I get, and what does it cost? The pricing page turns that gap into a sales entry point: three simple cards, expandable tool lists, and WhatsApp CTA.

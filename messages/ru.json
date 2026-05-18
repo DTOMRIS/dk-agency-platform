@@ -1691,7 +1691,7 @@
       },
       "usta": {
         "name": "USTA",
-        "price": "149 AZN",
+        "price": "99 AZN",
         "period": "/ месяц",
         "description": "Для команд, которым нужна глубокая финансовая, persona и expansion аналитика.",
         "benefits": [
@@ -1704,6 +1704,9 @@
       }
     },
     "toolListToggle": "Показать {count} инструментов",
+    "plannedToolsLabel": "Скоро будет добавлено ({count})",
+    "launchBadge": "Сейчас бесплатно",
+    "launchNote": "Акция запуска: все пакеты бесплатны до 1 сентября 2026 года. После этого применяется стандартная цена.",
     "status": {
       "live": "активно",
       "beta": "beta",

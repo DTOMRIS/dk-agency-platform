@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0153] fix(pricing): tool status truth + USTA 149→99 AZN + açılış kampaniyası (1 Sent 2026) + planned/live filter`
 - `[TASK-0152] feat(pricing): Marketinq Ocagi 3 tier pricing page + config-driven tool list + WhatsApp CTA`
 - `[TASK-0151] feat(marketinq): Lokasyon Analiz - franchise lokasyon KB + basabas formulu + DeepSeek fallback`
 - `[TASK-0150] feat(marketinq): Trend Analiz — statik 2026 HoReCa KB + DeepSeek tətbiq tövsiyəsi + fallback`
