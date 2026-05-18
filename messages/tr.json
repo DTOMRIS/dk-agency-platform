@@ -1691,7 +1691,7 @@
       },
       "usta": {
         "name": "USTA",
-        "price": "149 AZN",
+        "price": "99 AZN",
         "period": "/ ay",
         "description": "Daha derin finans, persona ve genişleme analitiği isteyen ekipler için.",
         "benefits": [
@@ -1704,6 +1704,9 @@
       }
     },
     "toolListToggle": "{count} aracı gör",
+    "plannedToolsLabel": "Yakında eklenecek ({count})",
+    "launchBadge": "Şu An Ücretsiz",
+    "launchNote": "Açılış kampanyası: 1 Eylül 2026'ya kadar tüm paketler ücretsizdir. Sonra standart fiyatlandırma uygulanacaktır.",
     "status": {
       "live": "aktif",
       "beta": "beta",

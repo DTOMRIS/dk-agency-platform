@@ -1,8 +1,18 @@
 /**
  * @file marketing-tools-config.ts
- * @purpose Marketinq Ocagi 14 aletinin single source of truth konfiqurasiyasi
+ * @purpose Marketinq Ocagi 21 aletinin single source of truth konfiqurasiyasi
  * @critical Ozbahceci dersi — butun sehifeler, API, gating buradan oxuyur
- * @lastModified 2026-05-11 (Sprint 4 — 12→13 alet yenilenmesi)
+ * @lastModified 2026-05-18 (TASK-0153 — status audit, 17 live + 4 planned)
+ *
+ * TIER BÖLGÜSÜ (tier field-ə görə, fiziki sıra deyil):
+ *   ŞAGIRD: 3 alət (marka-kompasi, kst-yoxlayici, yemek-xerci)
+ *   KALFA:  12 alət (menyu-analitigi, promosyon-roi, sezon-analitikasi,
+ *           reklam-roi, sikayet-analitigi, sikayet-cavablandirici,
+ *           sosial-metrik, restoran-audit, trend-analiz, lokasyon-analiz,
+ *           sezon-planlama, reklam-yazicisi)
+ *   USTA:   6 alət (pnl-simulator, musteri-persona — live;
+ *           sosial-medya-plan, audit-robotu, trend-analitigi,
+ *           lokasyon-secme — planned)
  */
 
 // ── TIP TEYINLERI ──────────────────────────────────────────────────
@@ -50,10 +60,10 @@ export interface MarketingToolConfig {
   estimatedCostAznPerRun: number;
 }
 
-// ── 14 ALET KONFIQURASIYASI ─────────────────────────────────────────
+// ── 21 ALET KONFIQURASIYASI (17 live + 4 planned) ──────────────────
 
 export const MARKETING_TOOLS: MarketingToolConfig[] = [
-  // ── SAGIRD PILLESI (3 alet, pulsuz) ──────────────────────────────
+  // ── SAGIRD PILLESI (3 alət, pulsuz) ──────────────────────────────
 
   {
     slug: 'marka-kompasi',
@@ -150,7 +160,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     estimatedCostAznPerRun: 0.0003,
   },
 
-  // ── KALFA PILLESI (6 alet, 89 AZN/ay) ────────────────────────────
+  // ── KALFA PILLESI (12 alət, 89 AZN/ay) ───────────────────────────
 
   {
     slug: 'yemek-xerci',
@@ -492,7 +502,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     estimatedCostAznPerRun: 0.0002,
   },
 
-  // ── USTA PILLESI (4 alet, 149 AZN/ay) ────────────────────────────
+  // ── USTA PILLESI (6 alət: 2 live + 4 planned, 99 AZN/ay) ────────
 
   {
     slug: 'sosial-medya-plan',
@@ -573,6 +583,18 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     estimatedCostAznPerRun: 0.35,
   },
 ];
+
+// ── AÇILIŞ KAMPANİYASI ─────────────────────────────────────────────
+// Tarixi uzatmaq üçün yalnız endDateISO dəyişdir.
+// active=false edildikdə normal qiymətlər göstərilir.
+export const LAUNCH_CAMPAIGN = {
+  active: true,
+  endDateISO: '2026-09-01',
+} as const;
+
+export function isLaunchActive(): boolean {
+  return LAUNCH_CAMPAIGN.active && new Date() < new Date(LAUNCH_CAMPAIGN.endDateISO);
+}
 
 // ── HELPER FUNKSIYALAR ──────────────────────────────────────────────
 

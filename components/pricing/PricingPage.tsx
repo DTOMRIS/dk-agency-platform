@@ -6,7 +6,7 @@ import { Check, ChevronDown, MessageCircle, Sparkles } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { normalizeLocale, withLocalePrefix, type Locale } from '@/i18n/config';
-import { MARKETING_TOOLS, type MarketingToolConfig, type MarketingToolTier } from '@/lib/marketing-tools-config';
+import { MARKETING_TOOLS, isLaunchActive, type MarketingToolConfig, type MarketingToolTier } from '@/lib/marketing-tools-config';
 
 type TierKey = MarketingToolTier;
 
@@ -28,13 +28,26 @@ function normalizeWhatsappNumber(value: string | undefined): string {
   return digits || WHATSAPP_FALLBACK;
 }
 
-function groupToolsByTier(): Record<TierKey, MarketingToolConfig[]> {
-  return MARKETING_TOOLS.reduce<Record<TierKey, MarketingToolConfig[]>>(
+interface TierTools {
+  live: MarketingToolConfig[];
+  planned: MarketingToolConfig[];
+}
+
+function groupToolsByTier(): Record<TierKey, TierTools> {
+  return MARKETING_TOOLS.reduce<Record<TierKey, TierTools>>(
     (acc, tool) => {
-      acc[tool.tier].push(tool);
+      if (tool.status === 'live' || tool.status === 'beta') {
+        acc[tool.tier].live.push(tool);
+      } else {
+        acc[tool.tier].planned.push(tool);
+      }
       return acc;
     },
-    { sagird: [], kalfa: [], usta: [] },
+    {
+      sagird: { live: [], planned: [] },
+      kalfa: { live: [], planned: [] },
+      usta: { live: [], planned: [] },
+    },
   );
 }
 
@@ -43,6 +56,7 @@ export function PricingPage() {
   const locale = normalizeLocale(useLocale()) as Locale;
 
   const toolsByTier = useMemo(() => groupToolsByTier(), []);
+  const launchActive = isLaunchActive();
   const whatsappNumber = normalizeWhatsappNumber(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER);
 
   const faqItems = t.raw('faq.items') as Array<{ question: string; answer: string }>;
@@ -74,6 +88,11 @@ export function PricingPage() {
             </h1>
             <p className="mt-5 text-base leading-7 text-slate-700 sm:text-lg">{t('subtitle')}</p>
           </div>
+          {launchActive && (
+            <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm leading-6 text-emerald-800" data-testid="pricing-launch-banner">
+              {t('launchNote')}
+            </div>
+          )}
         </div>
       </section>
 
@@ -81,7 +100,7 @@ export function PricingPage() {
         {TIERS.map((tier) => {
           const tierName = t(`tiers.${tier.key}.name`);
           const benefits = t.raw(`tiers.${tier.key}.benefits`) as string[];
-          const tools = toolsByTier[tier.key];
+          const { live: liveTools, planned: plannedTools } = toolsByTier[tier.key];
           const ctaHref =
             tier.key === 'sagird' ? withLocalePrefix(locale, '/auth/register') : getWhatsappHref(tierName);
 
@@ -105,8 +124,21 @@ export function PricingPage() {
               </div>
 
               <div className="mt-7 flex items-end gap-2">
-                <span className="font-serif text-4xl font-bold text-[#1A1A2E]">{t(`tiers.${tier.key}.price`)}</span>
-                <span className="pb-1 text-sm font-semibold text-slate-500">{t(`tiers.${tier.key}.period`)}</span>
+                {launchActive && tier.key !== 'sagird' ? (
+                  <>
+                    <span className="font-serif text-4xl font-bold text-[#1A1A2E]" aria-label={t('launchBadge')}>
+                      {t('launchBadge')}
+                    </span>
+                    <span className="pb-1 text-sm font-semibold text-slate-400 line-through">
+                      {t(`tiers.${tier.key}.price`)} {t(`tiers.${tier.key}.period`)}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="font-serif text-4xl font-bold text-[#1A1A2E]">{t(`tiers.${tier.key}.price`)}</span>
+                    <span className="pb-1 text-sm font-semibold text-slate-500">{t(`tiers.${tier.key}.period`)}</span>
+                  </>
+                )}
               </div>
 
               <ul className="mt-7 space-y-3">
@@ -120,25 +152,45 @@ export function PricingPage() {
                 ))}
               </ul>
 
-              <details className="group mt-7 rounded-lg border border-[#1A1A2E]/10 bg-[#F8F5EF] p-4">
-                <summary
-                  className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold text-[#1A1A2E]"
-                  data-testid={`pricing-tool-toggle-${tier.key}`}
-                >
-                  <span>{t('toolListToggle', { count: tools.length })}</span>
-                  <ChevronDown className="h-4 w-4 transition group-open:rotate-180" aria-hidden="true" />
-                </summary>
-                <ul className="mt-4 space-y-2" data-testid={`pricing-tools-${tier.key}`}>
-                  {tools.map((tool) => (
-                    <li key={tool.slug} className="flex items-center justify-between gap-3 text-sm text-slate-700">
-                      <span>{getToolName(tool.slug)}</span>
-                      <span className="rounded-full bg-white px-2 py-1 text-[11px] font-bold uppercase text-slate-500">
-                        {t(`status.${tool.status}`)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
+              {liveTools.length > 0 && (
+                <details className="group mt-7 rounded-lg border border-[#1A1A2E]/10 bg-[#F8F5EF] p-4">
+                  <summary
+                    className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold text-[#1A1A2E]"
+                    data-testid={`pricing-tool-toggle-${tier.key}`}
+                  >
+                    <span>{t('toolListToggle', { count: liveTools.length })}</span>
+                    <ChevronDown className="h-4 w-4 transition group-open:rotate-180" aria-hidden="true" />
+                  </summary>
+                  <ul className="mt-4 space-y-2" data-testid={`pricing-tools-${tier.key}`}>
+                    {liveTools.map((tool) => (
+                      <li key={tool.slug} className="flex items-center justify-between gap-3 text-sm text-slate-700">
+                        <span>{getToolName(tool.slug)}</span>
+                        <span className="rounded-full bg-white px-2 py-1 text-[11px] font-bold uppercase text-slate-500">
+                          {t(`status.${tool.status}`)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+
+              {plannedTools.length > 0 && (
+                <div className="mt-3 rounded-lg border border-dashed border-[#1A1A2E]/10 bg-[#F8F5EF]/50 p-4">
+                  <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-400">
+                    {t('plannedToolsLabel', { count: plannedTools.length })}
+                  </p>
+                  <ul className="space-y-2">
+                    {plannedTools.map((tool) => (
+                      <li key={tool.slug} className="flex items-center justify-between gap-3 text-sm text-slate-400">
+                        <span>{getToolName(tool.slug)}</span>
+                        <span className="rounded-full border border-slate-200 bg-white/60 px-2 py-1 text-[11px] font-bold uppercase text-slate-400">
+                          {t('status.planned')}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               <Link
                 href={ctaHref}
