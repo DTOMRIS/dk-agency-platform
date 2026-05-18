@@ -283,6 +283,13 @@ DeepSeek yalnız top-3 trend üçün "bu restoran bu trendi necə tətbiq etsin?
 
 Tək real component `components/marketinq-ocagi/trend-analiz/TrendAnalizPage.tsx`-dir. Server action `app/actions/trend-ai-recommendations.ts` yeni API client yaratmadan mövcud AI router pattern-indən istifadə edir. Bütün UI string-ləri `marketinq.trendAnaliz` namespace-indədir.
 
+### TASK-0151 Lokasyon Analiz — KALFA tier, franchise KB + basabas formulu
+Lokasyon Analiz tool-u xəritə, Google Places və demoqrafiya API asılılığı daşımır. Source of truth `lib/marketing-tools/lokasyon-analiz.ts` statik franchise-style lokasyon KB-sidir. 15 meyar var: görünürlük, yaya və avtomobil trafiki, park, gəlir çevrəsi, təhsil/ofis/yaşayış yaxınlığı, gündüz-axşam enerji, giriş, səki tərəfi, günəş, açıq oturma və AVM xüsusi şərtləri.
+
+Hesablama deterministikdir: hər meyar `Var/Qismən/Yox` ilə 2/1/0 bal alır və lokasyon tipinə görə tətbiq olunan weighted score 0-100 skora çevrilir. Səviyyələr: `>=75` güclü, `50-74` şərtli, `<50` riskli. Yeni lokasyon rejimində aylıq başabaş satış `Sabit giderlər / Brüt Kar Marjı` formulu ilə çıxır; brüt marja çox aşağıdırsa lokasyon davamlı sayılmır.
+
+DeepSeek yalnız tətbiq tövsiyəsi qatıdır. `app/actions/lokasyon-ai-recommendations.ts` timeout, invalid JSON və ya `forceFallback=1` halında statik tövsiyəyə düşür. Tək real component `components/marketinq-ocagi/lokasyon-analiz/LokasyonAnalizPage.tsx`-dir; native SVG chart və 4 dil `marketinq.lokasyonAnaliz` namespace-i istifadə olunur.
+
 ### TASK-0145 Müştəri Persona Yaradıcısı — USTA tier, AZ/TR kontekst
 Persona yaradıcısı USTA tier alətidir. Restoran sahibi restoran profili (növ, şəhər, orta çek, xidmət modeli) və müştəri müşahidələri (yaş, cins, gəliş vaxtı/tezliyi, ödəmə, gəliş üsulu) daxil edir. DeepSeek JSON formatında 18 sahəli persona kartı qaytarır.
 

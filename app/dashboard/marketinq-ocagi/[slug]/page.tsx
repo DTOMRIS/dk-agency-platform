@@ -18,6 +18,7 @@ import SezonAnalitikasiPage from '@/components/marketinq-ocagi/sezon-analitikasi
 import ReklamRoiPage from '@/components/marketinq-ocagi/reklam-roi/ReklamRoiPage';
 import RestoranAuditPage from '@/components/marketinq-ocagi/restoran-audit/RestoranAuditPage';
 import TrendAnalizPage from '@/components/marketinq-ocagi/trend-analiz/TrendAnalizPage';
+import LokasyonAnalizPage from '@/components/marketinq-ocagi/lokasyon-analiz/LokasyonAnalizPage';
 import YemekXerciPage from '@/components/marketinq-ocagi/yemek-xerci/YemekXerciPage';
 import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
 import ReklamYazicisiPage from '@/components/marketinq-ocagi/reklam-yazicisi/ReklamYazicisiPage';
@@ -202,6 +203,9 @@ export default function ToolSlugPage() {
   }
   if (slug === 'trend-analiz' && tool.status === 'live') {
     return <TrendAnalizPage />;
+  }
+  if (slug === 'lokasyon-analiz' && tool.status === 'live') {
+    return <LokasyonAnalizPage />;
   }
   if (slug === 'reklam-yazicisi' && tool.status === 'live') {
     return <ReklamYazicisiPage />;

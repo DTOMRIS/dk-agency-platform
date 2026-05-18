@@ -1586,6 +1586,176 @@
       },
       "aiUnavailableNote": "AI tövsiyə hazırda əlçatmazdır; ümumi statik tövsiyə göstərilir.",
       "ahilikQuote": "Ahilikdə yenilik modaya qaçmaq deyil; müştərinin ehtiyacını vaxtında görüb ustalıqla tətbiq etməkdir."
+    },
+    "lokasyonAnaliz": {
+      "back_to_tools": "Bütün alətlər",
+      "tier": "KALFA",
+      "title": "Lokasyon Analiz",
+      "subtitle": "Yeni və mövcud restoran nöqtəsini franchise lokasyon meyarları, başabaş satışı və risk kartları ilə qiymətləndirin.",
+      "lockedTitle": "Lokasyon Analiz KALFA üzvləri üçündür",
+      "lockedBody": "Bu alət lokasyon skoru, başabaş satış həddi və AI/fallback tövsiyə verir. İstifadə üçün KALFA planı lazımdır.",
+      "upgradeCta": "Üzvlüyə keç",
+      "modes": {
+        "label": "Analiz rejimi",
+        "new": "Yeni lokasyon seçimi",
+        "existing": "Mövcud lokasyon"
+      },
+      "locationTypes": {
+        "label": "Lokasyon tipi",
+        "street": "Küçə mağazası",
+        "mall": "AVM",
+        "plaza": "Plaza altı"
+      },
+      "answers": {
+        "yes": "Var",
+        "partial": "Qismən",
+        "no": "Yox"
+      },
+      "avmExtra": {
+        "title": "AVM əlavə müşahidə",
+        "management": "AVM-ni hansı şirkət idarə edir?",
+        "entryCounts": "Giriş sayları və pik saatlar soruşulub?",
+        "deliveryHours": "Çatdırılma saat məhdudiyyəti var?",
+        "freightLift": "Yük lifti və anbar məsafəsi uyğundur?"
+      },
+      "criteria": {
+        "title": "15 lokasyon meyarı",
+        "corner_visibility": {
+          "label": "Künc mağaza və görünərlik",
+          "tooltip": "Tabela, fasad və giriş əsas hərəkət istiqamətindən görünür?"
+        },
+        "pedestrian_traffic": {
+          "label": "Yüksək yaya trafiki",
+          "tooltip": "Nöqtənin qarşısından kifayət qədər real piyada axını keçir?"
+        },
+        "car_traffic": {
+          "label": "Yüksək avtomobil trafiki",
+          "tooltip": "Avtomobil axını nöqtəni tanıtmağa və spontan girişə kömək edir?"
+        },
+        "parking_access": {
+          "label": "Park imkanı",
+          "tooltip": "Qısa dayanma və ya uzun park üçün real imkan var?"
+        },
+        "income_density": {
+          "label": "Orta-üstü gəlirli çevrə",
+          "tooltip": "Ətraf auditoriya qiymət səviyyənizi daşıya bilir?"
+        },
+        "education_nearby": {
+          "label": "Təhsil mərkəzi yaxınlığı",
+          "tooltip": "Universitet, kollec və ya dərs mərkəzi gənc dinamizmi yaradır?"
+        },
+        "office_residential_mix": {
+          "label": "Ofis və yaşayış qarışığı",
+          "tooltip": "Nöqtə həm nahar, həm axşam tələbi yarada bilir?"
+        },
+        "ready_parking": {
+          "label": "Hazır avtopark",
+          "tooltip": "Müştəriyə izah edilə bilən yaxın park həlli var?"
+        },
+        "day_evening_energy": {
+          "label": "Gündüz və axşam enerjisi",
+          "tooltip": "Lokasiya yalnız bir saat aralığında yox, gün boyu yaşayır?"
+        },
+        "wide_entry": {
+          "label": "Geniş giriş və əlçatanlıq",
+          "tooltip": "Giriş aydın, maneəsiz və qərar vermək üçün rahatdır?"
+        },
+        "busy_sidewalk_side": {
+          "label": "Sıx səki tərəfində olmaq",
+          "tooltip": "Nöqtə küçənin daha çox istifadə olunan səki tərəfindədir?"
+        },
+        "low_sun_side": {
+          "label": "Az günəş alan tərəf",
+          "tooltip": "Günəş və istilik oturma və vitrin komfortunu pozmur?"
+        },
+        "outdoor_seating": {
+          "label": "Açıq oturma imkanı",
+          "tooltip": "Kiçik də olsa görünən açıq oturma və ya gözləmə zonası mümkündür?"
+        },
+        "mall_escalator_position": {
+          "label": "AVM eskalator mövqeyi",
+          "tooltip": "Nöqtə ən sıx eskalator axınının başında və ya sağ tərəfindədir?"
+        },
+        "mall_dedicated_seating": {
+          "label": "AVM öz oturma sahəsi",
+          "tooltip": "Ortaq foodcourt-dan fərqli, öz oturma sahəsi və idarəsi var?"
+        }
+      },
+      "breakeven": {
+        "title": "Başabaş nöqtəsi",
+        "resultLabel": "Aylıq başabaş satış",
+        "currency": "AZN",
+        "resultHelp": "Bu satış həddindən sonra lokasyon mənfəət zonası üçün real şans yaradır.",
+        "unsustainable": "Bu xərc strukturu ilə brüt marja çox aşağıdır; lokasyon davamlı görünmür.",
+        "inputs": {
+          "rent": "Kirayə",
+          "labor": "İşçilik + sığorta",
+          "gas": "Qaz",
+          "electricity": "Elektrik",
+          "water": "Su",
+          "telecom": "Rabitə",
+          "insurance": "Sığorta",
+          "maintenance": "Təmir-baxım",
+          "other": "Digər sabit xərc",
+          "foodCostPercent": "Food cost %",
+          "royaltyPercent": "Royalty %",
+          "marketingPercent": "Reklam %"
+        }
+      },
+      "riskFlags": {
+        "title": "Ekstra müşahidə tələb edən risklər",
+        "resultTitle": "Risk kartları",
+        "oversized_area": "Ehtiyacdan böyük sahə",
+        "above_market_rent": "Orta bazardan yüksək kirayə",
+        "shared_usage": "Ortaq istifadə riski",
+        "seasonal_dependency": "Mövsümi asılılıq",
+        "limited_hours": "İş saatı məhdudiyyəti"
+      },
+      "results": {
+        "score": "Lokasyon skoru",
+        "chartTitle": "Meyar skor xəritəsi"
+      },
+      "levels": {
+        "strong": "Güclü nöqtə",
+        "conditional": "Şərtli — işlənməli",
+        "risky": "Yüksək risk — ekstra müşahidə"
+      },
+      "recommendations": {
+        "title": "Tövsiyə {index}",
+        "marginWarning": "Kirayə və dəyişən xərcləri yenidən yoxlayın; başabaş satış real bazar tələbindən yüksək ola bilər.",
+        "observeDayparts": "Nöqtəni nahar, axşam və həftəsonu ayrıca müşahidə etmədən qərar verməyin.",
+        "criteria": {
+          "corner_visibility": "Künc mağaza və görünərlik zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "pedestrian_traffic": "Yüksək yaya trafiki zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "car_traffic": "Yüksək avtomobil trafiki zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "parking_access": "Park imkanı zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "income_density": "Orta-üstü gəlirli çevrə zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "education_nearby": "Təhsil mərkəzi yaxınlığı zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "office_residential_mix": "Ofis və yaşayış qarışığı zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "ready_parking": "Hazır avtopark zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "day_evening_energy": "Gündüz və axşam enerjisi zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "wide_entry": "Geniş giriş və əlçatanlıq zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "busy_sidewalk_side": "Sıx səki tərəfində olmaq zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "low_sun_side": "Az günəş alan tərəf zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "outdoor_seating": "Açıq oturma imkanı zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "mall_escalator_position": "AVM eskalator mövqeyi zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın.",
+          "mall_dedicated_seating": "AVM öz oturma sahəsi zəifdirsə, qərardan əvvəl bu nöqtədə 3 fərqli saatda müşahidə aparın və sadə düzəliş planı hazırlayın."
+        },
+        "risk": {
+          "oversized_area": "Ehtiyacdan böyük sahə seçilibsə, müqavilə qərarından əvvəl ayrıca xərc və əməliyyat ssenarisi hazırlayın.",
+          "above_market_rent": "Orta bazardan yüksək kirayə seçilibsə, müqavilə qərarından əvvəl ayrıca xərc və əməliyyat ssenarisi hazırlayın.",
+          "shared_usage": "Ortaq istifadə riski seçilibsə, müqavilə qərarından əvvəl ayrıca xərc və əməliyyat ssenarisi hazırlayın.",
+          "seasonal_dependency": "Mövsümi asılılıq seçilibsə, müqavilə qərarından əvvəl ayrıca xərc və əməliyyat ssenarisi hazırlayın.",
+          "limited_hours": "İş saatı məhdudiyyəti seçilibsə, müqavilə qərarından əvvəl ayrıca xərc və əməliyyat ssenarisi hazırlayın."
+        },
+        "parkingCheck": "Müştəri yolunu sadələşdirin: park, giriş və sifariş istiqamətini Google Business və Instagram highlight-da ayrıca göstərin.",
+        "rentGate": "Kirayəni emosional deyil, başabaş satış hədəfi ilə qiymətləndirin; hədəf real deyilsə danışıqsız imza atmayın."
+      },
+      "aiUnavailableNote": "AI tövsiyə hazırda əlçatmazdır; statik franchise tövsiyəsi göstərilir.",
+      "estimateDisclaimer": "Bu təxminidir; real rəqəmlər açılışdan sonra görünür. Bənzər restoranlarla müqayisə edin.",
+      "cta": "Lokasiyanı analiz et",
+      "loading": "Tövsiyə hazırlanır...",
+      "ahilikQuote": "Ahilikdə yaxşı yer yalnız görünən yer deyil; xərcini, axınını və müştəri sözünü daşıyan yerdir."
     }
   }
 }

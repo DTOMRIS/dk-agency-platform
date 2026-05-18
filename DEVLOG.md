@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-18 - TASK-0151 Marketinq: Lokasyon Analiz
+
+**Niyə:** Sprint 5-in son tool-u lokasyon qərarını generic xəritə yox, franchise səviyyəli müşahidə intizamına çevirir. Kiçik restoran üçün ən bahalı səhvlərdən biri zəif görünürlük, zəif trafik, park problemi və kirayə/marja uyğunsuzluğu olan nöqtəyə bağlanmaqdır.
+
+**Arxitektura:** Source of truth `lib/marketing-tools/lokasyon-analiz.ts` statik lokasyon KB-sidir. 15 meyar lokasyon tipinə görə skorlanır, `Sabit giderlər / Brüt Kar Marjı` formulu ilə aylıq başabaş satış çıxarılır. Xarici xəritə, Google Places və demoqrafiya API yoxdur.
+
+**AI fallback:** `app/actions/lokasyon-ai-recommendations.ts` DeepSeek-i yalnız tətbiq tövsiyəsi üçün çağırır. AI timeout, invalid JSON və ya `forceFallback=1` halında component statik fallback tövsiyələri və xəbərdarlıq qeydi göstərir.
+
+**İki rejim:** Yeni lokasyon seçimi başabaş kartı ilə işləyir. Mövcud lokasyon rejimi eyni meyarlarla yanaşı əlavə risk flag-ləri göstərir: böyük sahə, yüksək kirayə, ortaq istifadə, mövsümi asılılıq və iş saatı məhdudiyyəti.
+
+**Sprint 5 yekunu:** TASK-0146..0151 altı tool tamamlandı: Sezon, Reklam ROI, Sosial Metrik, Restoran Audit, Trend Analiz, Lokasyon Analiz.
+
 ## 2026-05-18 - TASK-0150 Marketinq: Trend Analiz
 
 **Niyə:** 2026 HoReCa trend siyahısı uzundur, amma kiçik restoranın vaxtı və büdcəsi məhduddur. Sahibkar üçün əsas sual "hansı trend mənim restoranıma uyğundur və sabah nə etməliyəm?" sualıdır. Bu tool 8 prioritet trendi statik KB ilə skorlayır və top-3 üçün tətbiq addımı verir.
