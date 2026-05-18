@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-18 - TASK-0149 Marketinq: Restoran Audit
+
+**Niyə:** Kiçik restoranlarda problem çox vaxt audit kağızı deyil, idarəetmə görünməzliyidir: günlük kassa tutuşdurması, aylıq xərc hesabatı, prime cost, top məhsul marjası və uyğunluq sənədləri bilinmirsə sahibkar qərarı hisslə verir. Bu tool 30 suallıq qısa özünüqiymətləndirmə ilə zəif nöqtələri aksiyon planına çevirir.
+
+**Arxitektura:** Hesablama `lib/marketing-tools/restoran-audit.ts` util-indədir. Komponent `components/marketinq-ocagi/restoran-audit/RestoranAuditPage.tsx` tək mənbədir; native SVG chart, 6 oblast akkordeon UI və 0-100 ümumi bal göstərir. AI çağırışı yoxdur.
+
+**AZ-spesifik qat:** Maliyyə oblastı generic P&L yox, kassa/POS Z-report, fiskal çek, aylıq xərc hesabatı, prime cost və top-10 məhsul marjası üzərində quruldu. Uyğunluq oblastı AQTA qeydiyyatı, tibbi müayinə, temperatur, dezinfeksiya və əmək riski suallarını yoxlayır. Konkret rüsum/prosedur rəqəmi yazılmadı.
+
+**Scoring:** Hər sual 0/1/2 baldır. Oblast balı `toplanan / 10 * 100`, ümumi bal 6 oblastın ortasıdır. `>=80` Usta, `50-79` Kalfa, `<50` Şagird. Ən zəif 3 oblast üçün statik ilk addım tövsiyəsi, 0 bal alan suallar üçün təcili siyahı, kritik 0 cavablar üçün "Nəyi bilmirsən?" kartı göstərilir.
+
+**Test dataseti:** Bütün cavablar `2` -> 100, Usta. Bütün cavablar `0` -> 0, Şagird, 30 təcili sual, kritik kassa/xərc/marja/AQTA siyahısı dolu. Qarışıq cavablar -> orta bal və ən zəif 3 oblast düzgün sıralanmalıdır.
+
 ## 2026-05-17 - TASK-0148 Marketinq: Sosial Media Metrik Analizatoru
 
 **Niyə:** Restoran sahibləri "ER nədir, hansı kontent daha yaxşıdır" sualına cavab tapa bilmir. ER hesablama mənbədən-mənbəyə fərqlidir (follower-bazlı vs reach-bazlı vs impressions-bazlı) — istifadəçi qarışır. Bu tool bir formul seçir və HoReCa sektoru üçün doğru benchmark ilə müqayisə edir.

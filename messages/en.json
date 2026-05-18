@@ -23,43 +23,93 @@
     "subtitle": "Free tools to manage your restaurant. Food cost, P&L, checklist — all in one place.",
     "foodCost": "Food Cost Calculator",
     "foodCostDesc": "Calculate portion cost, find the ideal food cost percentage.",
-    "pnl": "P&L Simulator",
-    "pnlDesc": "Create monthly income-expense reports, find the break-even point.",
-    "checklist": "Restaurant Opening Checklist",
-    "checklistDesc": "43-item complete checklist — legal, venue, menu, staffing, marketing.",
-    "start": "Start",
     "pnl": {
-      "navigation": { "toolkit": "Toolkit" },
+      "navigation": {
+        "toolkit": "Toolkit"
+      },
       "title": "P&L",
       "titleAccent": "Simulator",
       "subtitle": "Monthly profit & expense analysis",
       "description": "Model your monthly income and expense report. Separate controllable and fixed costs, then track net profit.",
       "inputs": {
-        "revenue": { "label": "Monthly revenue", "placeholder": "0", "hint": "Total sales (excluding VAT)" },
-        "foodCost": { "label": "Food cost", "hint": "Typically {min}-{max}% of revenue" },
-        "packaging": { "label": "Packaging" },
-        "staffCost": { "label": "Labor cost", "hint": "Salaries + social insurance" },
-        "management": { "label": "Management salaries" },
-        "advertising": { "label": "Advertising / Marketing" },
-        "promo": { "label": "Promo / Complimentary" },
-        "outsource": { "label": "Outsourced services" },
-        "uniform": { "label": "Uniforms / Supplies" },
-        "supplies": { "label": "Consumables" },
-        "repair": { "label": "Repair / Maintenance" },
-        "utilities": { "label": "Utilities" },
-        "otherControllable": { "label": "Other controllable" },
-        "rent": { "label": "Rent", "hint": "Excluding utilities" },
-        "accounting": { "label": "Accounting" },
-        "insurance": { "label": "Insurance" },
-        "tax": { "label": "Taxes" },
-        "depreciation": { "label": "Depreciation" }
+        "revenue": {
+          "label": "Monthly revenue",
+          "placeholder": "0",
+          "hint": "Total sales (excluding VAT)"
+        },
+        "foodCost": {
+          "label": "Food cost",
+          "hint": "Typically {min}-{max}% of revenue"
+        },
+        "packaging": {
+          "label": "Packaging"
+        },
+        "staffCost": {
+          "label": "Labor cost",
+          "hint": "Salaries + social insurance"
+        },
+        "management": {
+          "label": "Management salaries"
+        },
+        "advertising": {
+          "label": "Advertising / Marketing"
+        },
+        "promo": {
+          "label": "Promo / Complimentary"
+        },
+        "outsource": {
+          "label": "Outsourced services"
+        },
+        "uniform": {
+          "label": "Uniforms / Supplies"
+        },
+        "supplies": {
+          "label": "Consumables"
+        },
+        "repair": {
+          "label": "Repair / Maintenance"
+        },
+        "utilities": {
+          "label": "Utilities"
+        },
+        "otherControllable": {
+          "label": "Other controllable"
+        },
+        "rent": {
+          "label": "Rent",
+          "hint": "Excluding utilities"
+        },
+        "accounting": {
+          "label": "Accounting"
+        },
+        "insurance": {
+          "label": "Insurance"
+        },
+        "tax": {
+          "label": "Taxes"
+        },
+        "depreciation": {
+          "label": "Depreciation"
+        }
       },
       "outputs": {
-        "grossProfit": { "label": "Gross profit", "tooltip": "Revenue minus food cost" },
-        "operatingProfit": { "label": "Operating profit", "tooltip": "Revenue minus COGS" },
-        "controllableProfit": { "label": "Controllable profit" },
-        "netProfit": { "label": "Net profit" },
-        "margin": { "label": "Profit margin" }
+        "grossProfit": {
+          "label": "Gross profit",
+          "tooltip": "Revenue minus food cost"
+        },
+        "operatingProfit": {
+          "label": "Operating profit",
+          "tooltip": "Revenue minus COGS"
+        },
+        "controllableProfit": {
+          "label": "Controllable profit"
+        },
+        "netProfit": {
+          "label": "Net profit"
+        },
+        "margin": {
+          "label": "Profit margin"
+        }
       },
       "sections": {
         "cogs": "COGS (Cost of goods sold)",
@@ -73,7 +123,12 @@
         "rent": "Rent",
         "targetMax": "target ≤{value}%"
       },
-      "table": { "title": "P&L Statement", "category": "Category", "amount": "Amount", "percent": "Percent" },
+      "table": {
+        "title": "P&L Statement",
+        "category": "Category",
+        "amount": "Amount",
+        "percent": "Percent"
+      },
       "actions": {
         "calculate": "Calculate",
         "reset": "Reset",
@@ -97,15 +152,39 @@
       },
       "benchmark": {
         "title": "P&L Benchmark",
-        "netProfit": { "label": "Net profit", "value": "10-15%" },
-        "primeCost": { "label": "Prime Cost", "value": "≤65%" },
-        "foodCost": { "label": "Food Cost", "value": "28-32%" },
-        "rent": { "label": "Rent", "value": "≤10%" },
+        "netProfit": {
+          "label": "Net profit",
+          "value": "10-15%"
+        },
+        "primeCost": {
+          "label": "Prime Cost",
+          "value": "≤65%"
+        },
+        "foodCost": {
+          "label": "Food Cost",
+          "value": "28-32%"
+        },
+        "rent": {
+          "label": "Rent",
+          "value": "≤10%"
+        },
         "chips": {
-          "labor": { "label": "Labor", "value": "25-35%" },
-          "marketing": { "label": "Marketing", "value": "3-6%" },
-          "utilities": { "label": "Utilities", "value": "3-5%" },
-          "repair": { "label": "Repair", "value": "1-2%" }
+          "labor": {
+            "label": "Labor",
+            "value": "25-35%"
+          },
+          "marketing": {
+            "label": "Marketing",
+            "value": "3-6%"
+          },
+          "utilities": {
+            "label": "Utilities",
+            "value": "3-5%"
+          },
+          "repair": {
+            "label": "Repair",
+            "value": "1-2%"
+          }
         }
       },
       "education": {
@@ -165,25 +244,87 @@
         "title": "Learn More",
         "read": "Read",
         "articles": {
-          "pnl": { "title": "Can't Read P&L?", "slug": "pnl-oxuya-bilmirsen", "tag": "Finance" },
-          "foodCost": { "title": "The Hard Truth About Food Cost", "slug": "1-porsiya-food-cost-hesablama", "tag": "Finance" },
-          "breakEven": { "title": "What Is Break-even Point?", "slug": "basabas-noqtesi", "tag": "Operations" }
+          "pnl": {
+            "title": "Can't Read P&L?",
+            "slug": "pnl-oxuya-bilmirsen",
+            "tag": "Finance"
+          },
+          "foodCost": {
+            "title": "The Hard Truth About Food Cost",
+            "slug": "1-porsiya-food-cost-hesablama",
+            "tag": "Finance"
+          },
+          "breakEven": {
+            "title": "What Is Break-even Point?",
+            "slug": "basabas-noqtesi",
+            "tag": "Operations"
+          }
         }
       }
     },
+    "pnlDesc": "Create monthly income-expense reports, find the break-even point.",
+    "checklist": "Restaurant Opening Checklist",
+    "checklistDesc": "43-item complete checklist — legal, venue, menu, staffing, marketing.",
+    "start": "Start",
     "ad-writer": {
       "pageTitle": "Ad Writer",
       "pageDescription": "AI-generated ad copy for Instagram, Facebook, TikTok and Google Ads",
-      "form": { "platform": "Platform", "restaurantName": "Restaurant name (optional)", "campaignDescription": "Campaign description", "campaignDescriptionPlaceholder": "E.g.: New dolma menu, May 30 launch", "targetAudience": "Target audience", "callStyle": "Call style", "language": "Ad language", "submit": "Generate Ad", "submitting": "AI is writing..." },
-      "platforms": { "instagram": "Instagram", "facebook": "Facebook", "tiktok": "TikTok", "google_ads": "Google Ads" },
-      "audiences": { "youth_18_30": "Youth (18-30)", "family": "Family", "corporate": "Corporate", "all": "All" },
-      "styles": { "discount": "Discount", "new_product": "New product", "brand_awareness": "Brand awareness", "event": "Event" },
-      "tones": { "attention": "Attention-grabbing", "informative": "Informative", "sales": "Sales-driven" },
-      "actions": { "copy": "Copy", "copied": "Copied!", "regenerate": "Regenerate" },
-      "fields": { "headline": "Headline", "body": "Body", "hashtags": "Hashtags" },
-      "validation": { "minLength": "Campaign description must be at least 20 characters", "maxLength": "Campaign description max 500 characters" },
-      "errors": { "aiUnavailable": "AI service temporarily unavailable", "rateLimit": "Daily limit reached (30 ads/day)" },
-      "gating": { "kalfaRequired": "This tool requires the PRO tier", "upgradeCta": "Upgrade to PRO (89 AZN/mo)" }
+      "form": {
+        "platform": "Platform",
+        "restaurantName": "Restaurant name (optional)",
+        "campaignDescription": "Campaign description",
+        "campaignDescriptionPlaceholder": "E.g.: New dolma menu, May 30 launch",
+        "targetAudience": "Target audience",
+        "callStyle": "Call style",
+        "language": "Ad language",
+        "submit": "Generate Ad",
+        "submitting": "AI is writing..."
+      },
+      "platforms": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "tiktok": "TikTok",
+        "google_ads": "Google Ads"
+      },
+      "audiences": {
+        "youth_18_30": "Youth (18-30)",
+        "family": "Family",
+        "corporate": "Corporate",
+        "all": "All"
+      },
+      "styles": {
+        "discount": "Discount",
+        "new_product": "New product",
+        "brand_awareness": "Brand awareness",
+        "event": "Event"
+      },
+      "tones": {
+        "attention": "Attention-grabbing",
+        "informative": "Informative",
+        "sales": "Sales-driven"
+      },
+      "actions": {
+        "copy": "Copy",
+        "copied": "Copied!",
+        "regenerate": "Regenerate"
+      },
+      "fields": {
+        "headline": "Headline",
+        "body": "Body",
+        "hashtags": "Hashtags"
+      },
+      "validation": {
+        "minLength": "Campaign description must be at least 20 characters",
+        "maxLength": "Campaign description max 500 characters"
+      },
+      "errors": {
+        "aiUnavailable": "AI service temporarily unavailable",
+        "rateLimit": "Daily limit reached (30 ads/day)"
+      },
+      "gating": {
+        "kalfaRequired": "This tool requires the PRO tier",
+        "upgradeCta": "Upgrade to PRO (89 AZN/mo)"
+      }
     },
     "complaint-handler": {
       "pageTitle": "Complaint Responder",
@@ -829,16 +970,54 @@
         "addChannel": "Add channel",
         "removeChannel": "Remove",
         "channelNumber": "Channel #{number}",
-        "channelType": { "label": "Channel type", "placeholder": "Select channel", "validation": "Channel type is required." },
-        "budget": { "label": "Budget spent", "placeholder": "600", "validation": "Budget must be greater than 0." },
-        "commissionPercent": { "label": "Commission percent", "placeholder": "12", "validation": "Commission must be between 0 and 50." },
-        "newCustomers": { "label": "New customers acquired", "placeholder": "18", "validation": "Customer count cannot be negative." },
-        "averageOrderValue": { "label": "Average order value", "placeholder": "32", "validation": "Average order value must be greater than 0." },
-        "repeatPurchasePercent": { "label": "Repeat purchase percent", "placeholder": "35", "validation": "Repeat purchase must be between 0 and 95." },
-        "reach": { "label": "Reach", "placeholder": "18000", "validation": "Reach cannot be negative." },
-        "impressions": { "label": "Impressions", "placeholder": "42000", "validation": "Impressions cannot be negative." },
-        "organicValuePerReach": { "label": "Average organic value coefficient", "placeholder": "0.03", "validation": "Organic value cannot be negative." },
-        "validation": { "channelBudget": "Enter budget for at least one channel." }
+        "channelType": {
+          "label": "Channel type",
+          "placeholder": "Select channel",
+          "validation": "Channel type is required."
+        },
+        "budget": {
+          "label": "Budget spent",
+          "placeholder": "600",
+          "validation": "Budget must be greater than 0."
+        },
+        "commissionPercent": {
+          "label": "Commission percent",
+          "placeholder": "12",
+          "validation": "Commission must be between 0 and 50."
+        },
+        "newCustomers": {
+          "label": "New customers acquired",
+          "placeholder": "18",
+          "validation": "Customer count cannot be negative."
+        },
+        "averageOrderValue": {
+          "label": "Average order value",
+          "placeholder": "32",
+          "validation": "Average order value must be greater than 0."
+        },
+        "repeatPurchasePercent": {
+          "label": "Repeat purchase percent",
+          "placeholder": "35",
+          "validation": "Repeat purchase must be between 0 and 95."
+        },
+        "reach": {
+          "label": "Reach",
+          "placeholder": "18000",
+          "validation": "Reach cannot be negative."
+        },
+        "impressions": {
+          "label": "Impressions",
+          "placeholder": "42000",
+          "validation": "Impressions cannot be negative."
+        },
+        "organicValuePerReach": {
+          "label": "Average organic value coefficient",
+          "placeholder": "0.03",
+          "validation": "Organic value cannot be negative."
+        },
+        "validation": {
+          "channelBudget": "Enter budget for at least one channel."
+        }
       },
       "results": {
         "totalRoas": "Total ROAS",
@@ -971,6 +1150,241 @@
         "title": "ER methodology",
         "body": "This tool uses follower-based ER: (likes+comments+saves+shares) / (posts×followers) × 100. Reach-based ER typically appears higher. Differences between sources are normal — stick to one methodology."
       }
+    },
+    "restoranAudit": {
+      "title": "Restaurant Audit",
+      "subtitle": "A 30-question management mirror for small restaurants: cash, costs, kitchen, service, digital presence, and compliance risks.",
+      "back_to_tools": "All tools",
+      "tier": "PRO",
+      "cta": "Calculate audit result",
+      "tier_required_title": "PRO access required",
+      "tier_required_body": "Restaurant Audit is included in the PRO plan. It turns cash, prime cost, kitchen, and compliance gaps into an action plan.",
+      "upgrade_cta": "Upgrade plan",
+      "progress": {
+        "title": "Audit progress",
+        "answered": "{answered}/{total} questions answered"
+      },
+      "answers": {
+        "0": "No / missing",
+        "1": "Partly",
+        "2": "Yes / fully in place"
+      },
+      "areas": {
+        "finance_cash": {
+          "name": "Finance & cash",
+          "description": "Cash closing, fiscal discipline, monthly cost and margin visibility."
+        },
+        "operations_kitchen": {
+          "name": "Operations & kitchen",
+          "description": "Food safety, inventory, waste, FIFO and recipe control."
+        },
+        "staff_service": {
+          "name": "Staff & service",
+          "description": "Training, service protocol, upselling, shifts and staff stability."
+        },
+        "customer_experience": {
+          "name": "Customer experience",
+          "description": "Reviews, complaints, loyalty, table turnover and return rate."
+        },
+        "digital_presence": {
+          "name": "Digital presence",
+          "description": "Google Business, online orders, mobile menu and social activity."
+        },
+        "compliance_risk": {
+          "name": "Compliance & risk",
+          "description": "Food safety registration, medical checks, temperature, disinfection and labor risk."
+        }
+      },
+      "questions": {
+        "finance_cash_q1": {
+          "text": "Is daily cash closing reconciled between POS/Z-report and actual cash/card totals?",
+          "tooltip": "If end-of-day gaps are not visible, losses, errors and cancellations escape control."
+        },
+        "finance_cash_q2": {
+          "text": "Is every sale closed with a fiscal receipt and are discounts, cancellations and refunds tracked separately?",
+          "tooltip": "Fiscal discipline keeps a real sales trail and strengthens internal control."
+        },
+        "finance_cash_q3": {
+          "text": "Does the monthly expense report show sales, food, labor, rent, utilities, marketing and net profit together?",
+          "tooltip": "Separate notes are not enough for decisions; the owner needs one-page visibility."
+        },
+        "finance_cash_q4": {
+          "text": "Is prime cost, food plus labor percentage, tracked monthly and is actual food cost compared with recipe cost?",
+          "tooltip": "Food and labor are the main margin signal. A small drift can create a large annual loss."
+        },
+        "finance_cash_q5": {
+          "text": "Are the weekly top-10 sold products known and is each product margin calculated?",
+          "tooltip": "A high-selling item with weak margin is a hidden loss source on the menu."
+        },
+        "operations_kitchen_q1": {
+          "text": "Are HACCP and food safety practices part of daily kitchen operations?",
+          "tooltip": "The procedure must work during prep and service, not only on paper."
+        },
+        "operations_kitchen_q2": {
+          "text": "Is inventory counted periodically and compared with system stock?",
+          "tooltip": "Without counts, theft, waste and purchasing errors stay invisible."
+        },
+        "operations_kitchen_q3": {
+          "text": "Are waste and loss recorded in a separate log?",
+          "tooltip": "If discarded product is not explained, rising food cost becomes hard to diagnose."
+        },
+        "operations_kitchen_q4": {
+          "text": "Do FIFO and date labels work across all prep and storage areas?",
+          "tooltip": "Undated product is a quality, compliance and cost risk."
+        },
+        "operations_kitchen_q5": {
+          "text": "Is the gap between actual food cost and theoretical recipe food cost tracked?",
+          "tooltip": "Portion drift, waste and price changes show up in this gap."
+        },
+        "staff_service_q1": {
+          "text": "Is there written onboarding material and a checklist for new staff?",
+          "tooltip": "When training stays verbal, service standards change from shift to shift."
+        },
+        "staff_service_q2": {
+          "text": "Is the service protocol applied consistently by the team?",
+          "tooltip": "Greeting, order taking, complaint handling and payment should follow the same rhythm."
+        },
+        "staff_service_q3": {
+          "text": "Does the team know specific products and phrases for upselling?",
+          "tooltip": "Upselling is a system for proposing higher-margin items, not random pressure."
+        },
+        "staff_service_q4": {
+          "text": "Are shifts planned around peak and quiet hours?",
+          "tooltip": "Wrong shifts damage both service speed and labor percentage."
+        },
+        "staff_service_q5": {
+          "text": "Is staff turnover and exit reason tracked monthly?",
+          "tooltip": "Repeated exit reasons are an early warning signal for management."
+        },
+        "customer_experience_q1": {
+          "text": "Are Google and social reviews monitored weekly?",
+          "tooltip": "Review flow is the real market mirror for the restaurant."
+        },
+        "customer_experience_q2": {
+          "text": "Is there a process for complaint response, correction and follow-up?",
+          "tooltip": "A complaint is not just a reply; it is a process to prevent repeated errors."
+        },
+        "customer_experience_q3": {
+          "text": "Is there a loyalty or return-visit mechanism in use?",
+          "tooltip": "New customers are expensive; returning customers protect margin."
+        },
+        "customer_experience_q4": {
+          "text": "Are table turnover and waiting time tracked?",
+          "tooltip": "During peak hours, table turnover directly changes sales capacity."
+        },
+        "customer_experience_q5": {
+          "text": "Is repeat customer percentage and reason for return known?",
+          "tooltip": "Loyalty should be measured behavior, not a feeling."
+        },
+        "digital_presence_q1": {
+          "text": "Is the Google Business profile current with photos, hours and menu information?",
+          "tooltip": "Search results often create the first decision to visit."
+        },
+        "digital_presence_q2": {
+          "text": "Is the online order or reservation process clear?",
+          "tooltip": "Extra steps in the customer journey create sales loss."
+        },
+        "digital_presence_q3": {
+          "text": "Are mobile menu, prices and photo quality comfortable for the customer?",
+          "tooltip": "Mobile viewing is one of the core restaurant selection moments."
+        },
+        "digital_presence_q4": {
+          "text": "Is social activity connected to campaign and menu priorities?",
+          "tooltip": "Posting is not enough; content should support sales and reputation goals."
+        },
+        "digital_presence_q5": {
+          "text": "Is campaign source tracked through promo code, UTM or channel notes?",
+          "tooltip": "If source is unknown, working channels cannot be separated from weak ones."
+        },
+        "compliance_risk_q1": {
+          "text": "Are food safety registration and sanitary documents in order?",
+          "tooltip": "Compliance should be tracked as a working checklist, without relying on memory."
+        },
+        "compliance_risk_q2": {
+          "text": "Are medical checks for food-contact staff tracked?",
+          "tooltip": "Medical monitoring reduces both compliance and customer safety risk."
+        },
+        "compliance_risk_q3": {
+          "text": "If delivery exists, is the temperature regime maintained?",
+          "tooltip": "Temperature drift during delivery is a quality and safety risk."
+        },
+        "compliance_risk_q4": {
+          "text": "Are cleaning, disinfection and pest-control actions logged?",
+          "tooltip": "A process without logs is hard to prove in audit and hard to manage internally."
+        },
+        "compliance_risk_q5": {
+          "text": "Are employment contracts, insurance and safety processes in order?",
+          "tooltip": "Team risk directly affects the restaurant legal and operational stability."
+        }
+      },
+      "results": {
+        "scoreTitle": "Overall score",
+        "areaChartTitle": "Result by 6 areas"
+      },
+      "levels": {
+        "sagird": {
+          "name": "Apprentice - critical attention",
+          "description": "Core control gaps exist; close red risks first."
+        },
+        "kalfa": {
+          "name": "Journeyman - developing",
+          "description": "The base works, but systems and measurement must close weak spots."
+        },
+        "usta": {
+          "name": "Master level",
+          "description": "Core processes are measured and managed; optimization comes next."
+        }
+      },
+      "actionPlan": {
+        "title": "Priority action plan",
+        "actions": {
+          "finance_cash": {
+            "critical": "Build a 7-day cash closing and monthly cost report in one table first.",
+            "warning": "Move prime cost and top product margin into a weekly review rhythm.",
+            "stable": "Finance rhythm is stable; now deepen margin optimization."
+          },
+          "operations_kitchen": {
+            "critical": "Make FIFO, date labels and waste log mandatory daily processes this week.",
+            "warning": "Connect inventory count with actual-vs-recipe variance in the monthly report.",
+            "stable": "Kitchen control works; now split waste reasons in more detail."
+          },
+          "staff_service": {
+            "critical": "Write the training checklist and service protocol, then assign it to the shift lead.",
+            "warning": "Review upselling phrases and peak-hour staffing every week.",
+            "stable": "Team rhythm is stable; now measure sales and service quality."
+          },
+          "customer_experience": {
+            "critical": "Standardize complaint response and weekly review monitoring immediately.",
+            "warning": "Track table turnover and return visits in a simple report.",
+            "stable": "Customer process works; now segment loyalty reasons."
+          },
+          "digital_presence": {
+            "critical": "Update Google Business, mobile menu and order path this week.",
+            "warning": "Start tracking campaign source with promo code and channel notes.",
+            "stable": "Digital base is stable; now optimize channel ROI."
+          },
+          "compliance_risk": {
+            "critical": "Collect documents, medical checks, temperature and disinfection logs in one compliance folder.",
+            "warning": "Attach the compliance checklist to a monthly manager review.",
+            "stable": "Risk control works; now check continuity of proof logs."
+          }
+        }
+      },
+      "primeCostWarning": {
+        "title": "Prime cost is not tracked",
+        "body": "If food and labor percentages are invisible, a small drift can become a large annual loss."
+      },
+      "unknown": {
+        "title": "What do you not know?",
+        "body": "Running a restaurant without these critical numbers and documents is blind management.",
+        "empty": "No full missing answer on critical management questions."
+      },
+      "urgent": {
+        "title": "Urgent list",
+        "empty": "No zero-score questions."
+      },
+      "sheddNote": "This is an internal self-assessment; SHEDD certification is a separate process.",
+      "ahilikQuote": "In the craft tradition, work that is not measured cannot be improved; measured work grows with mastery."
     }
   }
 }
