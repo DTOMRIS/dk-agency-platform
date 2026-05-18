@@ -55,6 +55,9 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 - **Conventional commits**: `[TASK-XXXX] type(scope): message`
 
 ## PR Disiplini
+- HƏR task = branch + PR + dk-validator. İSTİSNA YOXDUR.
+- `git push --no-verify` QƏTİ QADAĞAN (hook bypass = pozuntu, bax L-008).
+- ⚠️ Köhnə git tarixçəsində PR-sız commit-lər ola bilər (5-qat control-dan əvvəlki). Bunlar nümunə DEYİL.
 - Hər PR-da STATE.md + CHANGELOG.md yenilənməlidir
 - PR template-i (.github/pull_request_template.md) doldurulmalıdır
 - PROTECTED.md-dəki fayllara toxunulubsa TASK ID + CTO icazəsi lazımdır
