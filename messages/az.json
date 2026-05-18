@@ -1868,5 +1868,19 @@
       "trend-analitigi": "Trend Analitigi",
       "lokasyon-secme": "Lokasyon Seçmə"
     }
+  },
+  "registrationGate": {
+    "title": "Bu məzmun pulsuzdur",
+    "description": "Davam etmək üçün sadəcə pulsuz hesab yarat — heç bir ödəniş yoxdur, bütün məzmun və alətlər açılır.",
+    "readPreview": "{title} yazısının ilk 40%-ni oxudunuz.",
+    "registerCta": "Pulsuz Üzv Ol",
+    "loginCta": "Artıq üzvəm, daxil ol",
+    "benefit1Title": "Tam məzmun girişi",
+    "benefit1Desc": "Blog yazıları, xəbər analizləri və premium detallar",
+    "benefit2Title": "Bütün alətlər açıqdır",
+    "benefit2Desc": "Food Cost, P&L, KAZAN AI və 17 marketinq aləti",
+    "benefit3Title": "Həmişə pulsuz",
+    "benefit3Desc": "Heç bir ödəniş tələb olunmur, hesab yaratmaq kifayətdir",
+    "footer": "pulsuz giriş · qeydiyyat · 40% önizləmə"
   }
 }

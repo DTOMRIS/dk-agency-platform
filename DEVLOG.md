@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-18 - TASK-0154 Pulsuz Qeydiyyat-Gate (Blog + Xəbərlər)
+
+**Why:** News articles (haberler/xeberler) had zero registration gate — visitors could read everything anonymously. Blog had 40% scroll gate but with hardcoded AZ strings and "paywall" language implying payment. Business model is free registration wall, not paywall.
+
+**Approach:** Reused existing BlogContentWrapper (DRY — no duplicate component). Refactored hardcoded AZ strings to `useTranslations('registrationGate')` namespace across 4 locales. Wrapped `haberler/[slug]/page.tsx` with same component. `xeberler/[slug]` and `[locale]/haberler/[slug]` re-export from haberler — one file change covers all 3 routes.
+
+**UI changes:** Gate modal color changed from red (paywall feeling) to emerald (free/positive). "Member Flow MVP" developer note removed. All messaging now "pulsuz" focused: "Bu məzmun pulsuzdur", "Heç bir ödəniş yoxdur". Benefits list updated: "Həmişə pulsuz" replaces "Gələcək sales layer".
+
+**Protected:** `lib/member-access.ts` not modified (verified with git diff).
+
 ## 2026-05-18 - TASK-0153 Tool Status Truth + Pricing Filter
 
 **Why:** Pricing page was rendering all 21 tools (including 4 "planned") without status filtering. This made USTA tier look like it had 6 usable tools when only 2 are live. Revenue page credibility issue.
