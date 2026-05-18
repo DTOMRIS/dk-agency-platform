@@ -43,3 +43,10 @@ Bu sənəd hər Claude Code sessiyasının başlanğıcında CLAUDE.md tərəfin
 - **Kök səbəb:** Builder agent path-i tahmin edir, parallel UI yaranır
 - **Qayda:** Hər prompt absolute path + mövcud pattern referansı verir
 - **Skill:** `.claude/skills/task-prompt-writer/SKILL.md`
+
+## L-008: Köhnə sessiya pattern tələsi
+- **Səhv:** TASK-0148 PR-sız birbaşa main-ə push olundu (`git push --no-verify`)
+- **Kök səbəb:** Agent köhnə sessiya tasklarına (TASK-0144/0145 PR-sız idi) baxıb onları nümunə götürdü. 5-qat control (PR #129) o tasklardan SONRA qurulmuşdu.
+- **Qayda:** HƏR task = branch + PR + dk-validator. İSTİSNA YOXDUR. `git push --no-verify` QƏTİ QADAĞAN. Köhnə commit-lərdə PR-sız nümunə görsən belə, onları təkrarlama — köhnə git tarixçəsi ≠ cari qayda.
+- **Yoxlama:** ƏVVƏL TANIŞ OL fazasında git log-a baxanda, köhnə pattern-i nümunə kimi qəbul etmə. Yalnız CLAUDE.md + LESSONS.md cari qaydadır.
+- **Nəticə:** Post-merge manual audit ilə neytrallaşdırıldı (dublikat/PROTECTED/i18n/build təmiz). Amma audit xərci PR-dan 3x artıqdır — qaydaya riayət ucuzdur.
