@@ -274,6 +274,15 @@ Scoring `lib/marketing-tools/restoran-audit.ts` util-indədir: Bəli=2, Qismən=
 
 Tək real component `components/marketinq-ocagi/restoran-audit/RestoranAuditPage.tsx`-dir. Bütün UI string-ləri `marketinq.restoranAudit` namespace-indədir.
 
+### TASK-0150 Trend Analiz — KALFA tier, statik KB + AI tətbiq qatı
+Trend Analiz tool-u RSS və xarici data asılılığı daşımır. Source of truth `lib/marketing-tools/trend-analiz.ts` statik 2026 HoReCa trend bilik bazasıdır. 8 trend var: value pricing, delivery-first, AI/digital ordering, functional health, nostalgia/escape, beverage focus, sustainability/local, experience/human touch.
+
+Hesab deterministikdir: restoran tipi, auditoriya və hazırkı güclü tərəf matrisindən hər trend üçün 0-100 uyğunluq balı çıxır, top-3 seçilir. Vizual native SVG bar chart-dır; top-3 gold vurğu alır.
+
+DeepSeek yalnız top-3 trend üçün "bu restoran bu trendi necə tətbiq etsin?" qatında istifadə olunur. AI timeout, invalid JSON və ya provider problemi olarsa, tool çökməməlidir: `messages/*.json` içindəki `fallbackFirstStep` mətnləri göstərilir və `aiUnavailableNote` çıxır.
+
+Tək real component `components/marketinq-ocagi/trend-analiz/TrendAnalizPage.tsx`-dir. Server action `app/actions/trend-ai-recommendations.ts` yeni API client yaratmadan mövcud AI router pattern-indən istifadə edir. Bütün UI string-ləri `marketinq.trendAnaliz` namespace-indədir.
+
 ### TASK-0145 Müştəri Persona Yaradıcısı — USTA tier, AZ/TR kontekst
 Persona yaradıcısı USTA tier alətidir. Restoran sahibi restoran profili (növ, şəhər, orta çek, xidmət modeli) və müştəri müşahidələri (yaş, cins, gəliş vaxtı/tezliyi, ödəmə, gəliş üsulu) daxil edir. DeepSeek JSON formatında 18 sahəli persona kartı qaytarır.
 

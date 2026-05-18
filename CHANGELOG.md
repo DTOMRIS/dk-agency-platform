@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0150] feat(marketinq): Trend Analiz — statik 2026 HoReCa KB + DeepSeek tətbiq tövsiyəsi + fallback`
 - `[TASK-0149] feat(marketinq): Restoran Audit — 30 sual, kassa/POS, prime cost, top məhsul marjası və uyğunluq aksiyon planı`
 - `[TASK-0148] feat(marketinq): sosial media metrik analizatoru — KALFA + ER benchmark + content type ranking`
 - `[TASK-0147] feat(marketinq): Reklam ROI — awareness/conversion + ROAS/CAC/LTV:CAC + AZ kanal modulu`

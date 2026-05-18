@@ -1484,6 +1484,108 @@
       },
       "sheddNote": "Bu daxili özünüqiymətləndirmədir; ŞEDD sertifikatı ayrı prosesdir.",
       "ahilikQuote": "Ahilikdə ölçülməyən iş düzəldilə bilməz; ölçülən iş isə ustalıqla böyüyər."
+    },
+    "trendAnaliz": {
+      "title": "Trend Analiz",
+      "subtitle": "2026 HoReCa trendlərini restoran profilinizə görə sıralayın və ən uyğun 3 trend üçün tətbiq edilə bilən ilk addımı görün.",
+      "back_to_tools": "Bütün alətlər",
+      "tier": "KALFA",
+      "cta": "Trend uyğunluğunu hesabla",
+      "loading": "Tövsiyə hazırlanır",
+      "tier_required_title": "KALFA girişi tələb olunur",
+      "tier_required_body": "Trend Analiz KALFA planındadır. Tool 2026 HoReCa trendlərini profilinizə uyğun prioritetləşdirir.",
+      "upgrade_cta": "Planı yüksəlt",
+      "inputs": {
+        "restaurantType": "Restoran tipi",
+        "audience": "Hədəf auditoriya",
+        "strength": "Hazırkı güclü tərəf"
+      },
+      "restaurantTypes": {
+        "city": "Şəhər restoranı",
+        "coast": "Sahil-kurort",
+        "mountain": "Dağ-kurort",
+        "cafe": "Kafe-brunch",
+        "banquet": "Banket-catering"
+      },
+      "audience": {
+        "young": "Gənc auditoriya",
+        "family": "Ailə",
+        "business": "Biznes",
+        "tourist": "Turist",
+        "mixed": "Qarışıq"
+      },
+      "strength": {
+        "food_quality": "Yemək keyfiyyəti",
+        "price": "Qiymət",
+        "location": "Məkan",
+        "service": "Servis",
+        "online": "Onlayn"
+      },
+      "trends": {
+        "value_pricing": {
+          "title": "Dəyər və qiymət həssaslığı",
+          "description": "2026-da qonaq yalnız ucuz qiymət yox, ödədiyi məbləğin qarşılığını aydın görmək istəyir.",
+          "azContext": "Bakı və region kiçik restoranı üçün sadə value menyu, nahar seti və şəffaf porsiya mesajı daha tez işləyir.",
+          "fallbackFirstStep": "Ən çox satılan 3 məhsuldan biri üçün kiçik value set yaradın və menyuda ayrıca vurğulayın."
+        },
+        "delivery_first": {
+          "title": "Çatdırılma-öncəlikli format",
+          "description": "Delivery və takeaway menyusu restoran içi menyudan ayrı düşünülür: qablaşdırma, sürət və marja önə çıxır.",
+          "azContext": "WhatsApp sifariş, sadə zona xəritəsi və çatdırılmaya dözümlü məhsul seçimi kiçik restoran üçün real başlanğıcdır.",
+          "fallbackFirstStep": "Çatdırılmada keyfiyyəti pozulmayan 5 məhsulu seçin və ayrıca WhatsApp sifariş siyahısı hazırlayın."
+        },
+        "ai_ordering": {
+          "title": "AI və rəqəmsal sifariş",
+          "description": "Sifariş, personalizasiya və təkrar təkliflərdə rəqəmsal axınlar restoranın gündəlik əməliyyatına girir.",
+          "azContext": "Bahalı sistemdən əvvəl Google Business, Instagram DM və WhatsApp cavab şablonları ilə itən sifarişlər azaldıla bilər.",
+          "fallbackFirstStep": "WhatsApp üçün 5 hazır cavab və 3 təkrar satış təklifi yazıb komandanın telefonunda sabitləyin."
+        },
+        "functional_health": {
+          "title": "Sağlamlıq və funksional menyu",
+          "description": "Qonaq daha yüngül, allergenə diqqətli, funksional və porsiya baxımından rahat seçimlər axtarır.",
+          "azContext": "Kiçik restoran üçün tam menyu çevirmək yox, 2 yüngül porsiya və 1 allergen aydınlığı ilə başlamaq daha realdır.",
+          "fallbackFirstStep": "Menyuda 2 yüngül porsiyanı işarələyin və tərkib/allergen qeydini sadə ikonla göstərin."
+        },
+        "nostalgia_escape": {
+          "title": "Nostalji və ləzzət eskapizmi",
+          "description": "Comfort food, tanış dad və hekayəli təqdimat qonağın qeyri-müəyyənlik dövründə rahatlıq ehtiyacına cavab verir.",
+          "azContext": "Milli dadı modern təqdimatla vermək, ailə resepti hekayəsi və sezonlu comfort yemək AZ bazarında güclü siqnaldır.",
+          "fallbackFirstStep": "Bir imza yeməyi üçün qısa hekayə yazın və servis zamanı komandanın eyni cümlə ilə təqdim etməsini təmin edin."
+        },
+        "beverage_focus": {
+          "title": "İçki fokusu və yüksək marja",
+          "description": "Soyuq, kofeinli, fotogenik və funksional içkilər həm kontent, həm də marja üçün 2026-da güclü xəttdir.",
+          "azContext": "Kafe və sahil restoranı üçün ev limonadı, soyuq qəhvə və sezon mocktail menyusu aşağı riskli sınaqdır.",
+          "fallbackFirstStep": "1 soyuq qəhvə, 1 ev limonadı və 1 fotogenik sezon içkisini mini içki lövhəsinə çıxarın."
+        },
+        "sustainability_local": {
+          "title": "Davamlılıq və yerli mənbə",
+          "description": "Qonaq israfı azaldan, yerli mənbəni göstərən və daha məsuliyyətli menyu hekayəsinə reaksiya verir.",
+          "azContext": "Kiçik restoran üçün böyük ESG iddiası yox, yerli məhsul adı, israf logu və sezon məhsulu mesajı kifayətdir.",
+          "fallbackFirstStep": "Bir yerli təchizatçı və ya sezon məhsulunu menyuda adlandırın, israfı azaltmaq üçün gündəlik fire qeydini başladın."
+        },
+        "experience_human_touch": {
+          "title": "Təcrübə və insani toxunuş",
+          "description": "Texnologiya artsa da, masa kənarı servis, hekayə və icma hissi restoranı platforma sifarişindən fərqləndirir.",
+          "azContext": "Turist, ailə və banket formatlarında insan toxunuşu satış səbəbinə çevrilə bilər: qarşılanma, hekayə, masa diqqəti.",
+          "fallbackFirstStep": "Komandaya hər masa üçün 1 şəxsi toxunuş qaydası verin: adla müraciət, imza yemək hekayəsi və qısa geri dönüş sualı."
+        }
+      },
+      "results": {
+        "chartTitle": "8 trend uyğunluq skoru",
+        "topThree": "Top-3 vurğulanıb"
+      },
+      "topTrends": {
+        "rank": "Prioritet {rank}",
+        "aiStep": "DeepSeek tətbiq addımı",
+        "fallbackStep": "Ümumi ilk addım"
+      },
+      "sectorContext": {
+        "title": "2026 sektor istiqaməti",
+        "body": "Qonaq dəyəri, rahatlığı, rəqəmsal sifarişi, sağlam seçimləri və insani təcrübəni eyni anda gözləyir. Kiçik restoran üçün məqsəd bütün trendləri yox, ən uyğun 3 istiqaməti tez sınaqdan keçirməkdir."
+      },
+      "aiUnavailableNote": "AI tövsiyə hazırda əlçatmazdır; ümumi statik tövsiyə göstərilir.",
+      "ahilikQuote": "Ahilikdə yenilik modaya qaçmaq deyil; müştərinin ehtiyacını vaxtında görüb ustalıqla tətbiq etməkdir."
     }
   }
 }

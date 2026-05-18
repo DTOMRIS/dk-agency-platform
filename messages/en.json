@@ -1385,6 +1385,108 @@
       },
       "sheddNote": "This is an internal self-assessment; SHEDD certification is a separate process.",
       "ahilikQuote": "In the craft tradition, work that is not measured cannot be improved; measured work grows with mastery."
+    },
+    "trendAnaliz": {
+      "title": "Trend Analysis",
+      "subtitle": "Rank 2026 HoReCa trends for your restaurant profile and see the first practical step for the top 3.",
+      "back_to_tools": "All tools",
+      "tier": "PRO",
+      "cta": "Calculate trend fit",
+      "loading": "Preparing recommendation",
+      "tier_required_title": "PRO access required",
+      "tier_required_body": "Trend Analysis is included in the PRO plan. It prioritizes 2026 HoReCa trends for your profile.",
+      "upgrade_cta": "Upgrade plan",
+      "inputs": {
+        "restaurantType": "Restaurant type",
+        "audience": "Target audience",
+        "strength": "Current strength"
+      },
+      "restaurantTypes": {
+        "city": "City restaurant",
+        "coast": "Coastal resort",
+        "mountain": "Mountain resort",
+        "cafe": "Cafe-brunch",
+        "banquet": "Banquet-catering"
+      },
+      "audience": {
+        "young": "Young audience",
+        "family": "Family",
+        "business": "Business",
+        "tourist": "Tourist",
+        "mixed": "Mixed"
+      },
+      "strength": {
+        "food_quality": "Food quality",
+        "price": "Price",
+        "location": "Location",
+        "service": "Service",
+        "online": "Online"
+      },
+      "trends": {
+        "value_pricing": {
+          "title": "Value and price sensitivity",
+          "description": "In 2026 guests want clear value, not just a low price.",
+          "azContext": "For small restaurants, a value lunch set, clear portion message and simple bundle are easier than a full repositioning.",
+          "fallbackFirstStep": "Create one value set from 3 best sellers and highlight it separately on the menu."
+        },
+        "delivery_first": {
+          "title": "Delivery-first format",
+          "description": "Delivery and takeaway menus need separate thinking around packaging, speed and margin.",
+          "azContext": "WhatsApp ordering, a simple delivery zone and travel-safe menu items are realistic first steps.",
+          "fallbackFirstStep": "Pick 5 items that travel well and turn them into a separate WhatsApp order list."
+        },
+        "ai_ordering": {
+          "title": "AI and digital ordering",
+          "description": "Digital ordering, personalization and repeat offers are moving into daily restaurant operations.",
+          "azContext": "Before expensive software, improve Google Business, Instagram DM and WhatsApp reply templates.",
+          "fallbackFirstStep": "Write 5 WhatsApp quick replies and 3 repeat-order offers for the team phone."
+        },
+        "functional_health": {
+          "title": "Health and functional menu",
+          "description": "Guests are looking for lighter portions, allergen clarity and functional choices.",
+          "azContext": "A small restaurant can start with two lighter plates and simple allergen clarity instead of rebuilding the menu.",
+          "fallbackFirstStep": "Mark 2 lighter dishes and show ingredient or allergen clarity with a simple icon."
+        },
+        "nostalgia_escape": {
+          "title": "Nostalgia and flavor escape",
+          "description": "Comfort food, familiar taste and story-led presentation answer the guest need for reassurance.",
+          "azContext": "Modernizing a national flavor, family recipe or seasonal comfort dish works well in the local market.",
+          "fallbackFirstStep": "Write a short story for one signature dish and train the team to present it in the same sentence."
+        },
+        "beverage_focus": {
+          "title": "Beverage focus and margin",
+          "description": "Cold, caffeinated, photogenic and functional drinks are strong for both content and margin.",
+          "azContext": "Homemade lemonade, cold coffee and a seasonal mocktail are low-risk tests for cafes and coastal restaurants.",
+          "fallbackFirstStep": "Add one cold coffee, one homemade lemonade and one photogenic seasonal drink to a mini drink board."
+        },
+        "sustainability_local": {
+          "title": "Sustainability and local sourcing",
+          "description": "Guests respond to less waste, local sourcing and responsible menu stories.",
+          "azContext": "Small restaurants do not need big ESG claims; local product names, waste logging and seasonal messages are enough.",
+          "fallbackFirstStep": "Name one local supplier or seasonal ingredient on the menu and start a daily waste note."
+        },
+        "experience_human_touch": {
+          "title": "Experience and human touch",
+          "description": "As technology grows, tableside service, story and community feeling differentiate restaurants from platforms.",
+          "azContext": "For tourist, family and banquet formats, human touch can become a reason to choose the restaurant.",
+          "fallbackFirstStep": "Give the team one personal touch rule for each table: name, signature story and a short feedback question."
+        }
+      },
+      "results": {
+        "chartTitle": "8 trend fit scores",
+        "topThree": "Top 3 highlighted"
+      },
+      "topTrends": {
+        "rank": "Priority {rank}",
+        "aiStep": "DeepSeek action step",
+        "fallbackStep": "General first step"
+      },
+      "sectorContext": {
+        "title": "2026 sector direction",
+        "body": "Guests expect value, convenience, digital ordering, healthier choices and human experience at the same time. A small restaurant should test the 3 most relevant directions, not chase every trend."
+      },
+      "aiUnavailableNote": "AI recommendation is currently unavailable; a general static recommendation is shown.",
+      "ahilikQuote": "In the craft tradition, innovation is not chasing fashion; it is seeing customer need early and applying it with mastery."
     }
   }
 }

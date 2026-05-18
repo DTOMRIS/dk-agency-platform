@@ -10,7 +10,17 @@ Key points:
 - AQTA/compliance copy avoids fee and procedure numbers.
 - Single component convention: `components/marketinq-ocagi/restoran-audit/RestoranAuditPage.tsx`.
 
-## Next - TASK-0150 Trend
+## TASK-0150 - Trend Analiz
+
+Status: DONE in `feature/task-0150-trend-analiz`.
+
+Key points:
+- Static 2026 HoReCa trend KB is the source of truth; no RSS dependency in this task.
+- DeepSeek is only an application-advice layer.
+- AI failure path falls back to static first-step copy and keeps the tool usable.
+- Single component convention: `components/marketinq-ocagi/trend-analiz/TrendAnalizPage.tsx`.
+
+## Next - TASK-0151 Lokasyon
 
 Continue Sprint 5 with the same L-008 pipeline:
 - branch from fresh `main`
@@ -18,4 +28,4 @@ Continue Sprint 5 with the same L-008 pipeline:
 - dk-validator/CI
 - squash merge only after success
 
-Reuse TASK-0146/0147/0148/0149 structure: deterministic util, Pattern A i18n, native SVG, no duplicate component.
+Sprint 5 final tool has the highest risk. Keep external data and map dependencies tightly scoped, and preserve fallback behavior so the tool remains useful if an external provider fails.

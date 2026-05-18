@@ -392,6 +392,25 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
+    slug: 'trend-analiz',
+    category: 'analitika',
+    tier: 'kalfa',
+    iconName: 'LineChart',
+    status: 'live',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'restaurantType', type: 'select', required: true },
+        { name: 'audience', type: 'select', required: true },
+        { name: 'strength', type: 'select', required: true },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0.0003,
+  },
+
+  {
     slug: 'sezon-planlama',
     category: 'emeliyyat',
     tier: 'kalfa',

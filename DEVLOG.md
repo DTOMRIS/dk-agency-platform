@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-18 - TASK-0150 Marketinq: Trend Analiz
+
+**Niyə:** 2026 HoReCa trend siyahısı uzundur, amma kiçik restoranın vaxtı və büdcəsi məhduddur. Sahibkar üçün əsas sual "hansı trend mənim restoranıma uyğundur və sabah nə etməliyəm?" sualıdır. Bu tool 8 prioritet trendi statik KB ilə skorlayır və top-3 üçün tətbiq addımı verir.
+
+**Arxitektura:** Trend data mənbəyi RSS deyil, statik `lib/marketing-tools/trend-analiz.ts` bilik bazasıdır. Hesablama deterministikdir: restoran tipi, auditoriya və hazırkı güclü tərəf matrisindən 0-100 uyğunluq balı çıxarılır. DeepSeek yalnız top-3 trend üçün "ucuz və 7 günə sınanan ilk addım" tövsiyəsi verir.
+
+**AI fallback:** `app/actions/trend-ai-recommendations.ts` DeepSeek/AI xətası, timeout, invalid JSON və ya validation problemində tool-u çökdürmür. Komponent statik `fallbackFirstStep` mətnlərini göstərir və "AI tövsiyə əlçatmazdır" qeydini çıxarır.
+
+**Trend KB:** Dəyər/qiymət həssaslığı, çatdırılma-öncəlikli format, AI/rəqəmsal sifariş, sağlamlıq/funksional menyu, nostalji comfort, içki fokusu, davamlılıq/yerli mənbə, təcrübə/insani toxunuş.
+
+**Test dataseti:** City + young + online profilində digital ordering/delivery/beverage yüksək çıxmalıdır. Banquet + tourist + service profilində experience/human touch və nostalgia yuxarı çıxmalıdır. Cafe + family + food quality profilində functional health, nostalgia və value xətti prioritet olmalıdır.
+
 ## 2026-05-18 - TASK-0149 Marketinq: Restoran Audit
 
 **Niyə:** Kiçik restoranlarda problem çox vaxt audit kağızı deyil, idarəetmə görünməzliyidir: günlük kassa tutuşdurması, aylıq xərc hesabatı, prime cost, top məhsul marjası və uyğunluq sənədləri bilinmirsə sahibkar qərarı hisslə verir. Bu tool 30 suallıq qısa özünüqiymətləndirmə ilə zəif nöqtələri aksiyon planına çevirir.
