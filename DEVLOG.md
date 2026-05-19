@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-19 - TASK-0101 Toolkit i18n Batch 1 (staff-retention + branding + basabas)
+
+**Why:** 3 toolkit calculators had hardcoded AZ-only strings (Pattern C). Multi-lang users saw only AZ.
+
+**Fix:** 178 i18n keys added across 3 namespaces (staffRetention 48, branding 60, basabas 70). All 4 locales filled. Components refactored to useTranslations. Arrays moved inside component body so t() is in scope.
+
+**Remaining:** 6 more Pattern C tools in future batches (food-cost, delivery-calc, menu-matrix, aqta-checklist, insaat-checklist, checklist).
+
 ## 2026-05-19 - TASK-0100 P&L Simulator i18n
 
 **Why:** PnlForm + PnlResult used inline Record<Locale> pageCopy pattern while parent PLSimulator already used useTranslations. Pattern B→A migration for consistency.

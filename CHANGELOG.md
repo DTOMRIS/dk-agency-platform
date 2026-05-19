@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0101] feat(i18n): toolkit batch1 — staff-retention+branding+basabas (178 key, 4 dil)`
 - `[TASK-0100] feat(i18n): P&L Simulator PnlForm+PnlResult pageCopy→useTranslations (44 key, 4 dil)`
 - `[TASK-0156] chore(config): marketing-tools-config.ts reorq — 4 tool doğru tier bölməsinə köçürüldü`
 - `[TASK-0157] fix(i18n): dashboard sidebar + KAZAN widget + elan detay — 48 key, 4 dil, hardcoded→useTranslations`

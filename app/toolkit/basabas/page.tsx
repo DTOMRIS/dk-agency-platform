@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import {
   ArrowRight,
   BookOpen,
@@ -14,6 +15,8 @@ import {
 } from 'lucide-react';
 
 export default function BasabasPage() {
+  const t = useTranslations('toolkit.basabas');
+
   const [rent, setRent] = useState(3000);
   const [salaries, setSalaries] = useState(5000);
   const [utilities, setUtilities] = useState(800);
@@ -47,21 +50,27 @@ export default function BasabasPage() {
       ring: 'ring-emerald-500/20',
       text: 'text-emerald-600',
       bg: 'bg-emerald-50',
-      label: 'Təhlükəsizdə',
+      label: t('statusSafe'),
     },
     warning: {
       ring: 'ring-amber-500/20',
       text: 'text-amber-600',
       bg: 'bg-amber-50',
-      label: 'Diqqət',
+      label: t('statusWarning'),
     },
     danger: {
       ring: 'ring-red-500/20',
       text: 'text-red-600',
       bg: 'bg-red-50',
-      label: 'Zərər zonası',
+      label: t('statusDanger'),
     },
   }[calc.status];
+
+  const articles = [
+    { title: t('article1Title'), slug: t('article1Slug'), tag: t('article1Tag') },
+    { title: t('article2Title'), slug: t('article2Slug'), tag: t('article2Tag') },
+    { title: t('article3Title'), slug: t('article3Slug'), tag: t('article3Tag') },
+  ];
 
   const resetAll = () => {
     setRent(3000);
@@ -86,18 +95,18 @@ export default function BasabasPage() {
             className="group mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-300"
           >
             <ChevronLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
-            <span>Toolkit</span>
+            <span>{t('navigation.toolkit')}</span>
           </Link>
           <div className="max-w-2xl">
             <h1 className="mb-5 text-4xl font-display font-black leading-[1.1] tracking-tight text-white sm:text-5xl">
-              Başabaş
+              {t('title')}
               <br />
               <span className="bg-gradient-to-r from-amber-400 to-orange-300 bg-clip-text text-transparent">
-                Nöqtəsi
+                {t('titleAccent')}
               </span>
             </h1>
             <p className="max-w-lg text-lg leading-relaxed text-slate-400">
-              Aylıq minimum satış həddi, günlük müştəri sayı və təhlükəsizlik marjası üçün 3 əsas rəqəm.
+              {t('subtitle')}
             </p>
           </div>
         </div>
@@ -106,25 +115,25 @@ export default function BasabasPage() {
       <div className="relative z-10 mx-auto -mt-10 max-w-6xl px-6">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <div className="rounded-2xl bg-amber-50 p-5 ring-1 ring-amber-200/60">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">Başabaş nöqtəsi</div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statBreakEven')}</div>
             <div className="text-3xl font-black tabular-nums text-amber-600">
               {calc.breakEvenRevenue.toFixed(0)}
               <span className="ml-1 text-lg">₼</span>
             </div>
-            <div className="mt-1 text-[10px] text-slate-400">aylıq minimum</div>
+            <div className="mt-1 text-[10px] text-slate-400">{t('statMonthlyMin')}</div>
           </div>
 
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/60">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">Günlük müştəri</div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statDailyCustomers')}</div>
             <div className="text-3xl font-black tabular-nums text-slate-900">
               {calc.dailyCustomers}
-              <span className="ml-1 text-lg">nəfər</span>
+              <span className="ml-1 text-lg">{t('statPersonSuffix')}</span>
             </div>
-            <div className="mt-1 text-[10px] text-slate-400">orta çek {avgCheck} ₼</div>
+            <div className="mt-1 text-[10px] text-slate-400">{t('statAvgCheck')} {avgCheck} ₼</div>
           </div>
 
           <div className={`${statusStyles.bg} rounded-2xl p-5 ring-1 ${statusStyles.ring}`}>
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">Təhlükəsizlik marjası</div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statSafetyMargin')}</div>
             <div className={`text-3xl font-black tabular-nums ${statusStyles.text}`}>{calc.safetyMargin.toFixed(1)}%</div>
             <div className={`mt-1 flex items-center gap-1 text-xs font-semibold ${statusStyles.text}`}>
               <span className="h-1.5 w-1.5 rounded-full bg-current" />
@@ -133,12 +142,12 @@ export default function BasabasPage() {
           </div>
 
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/60">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">Sabit xərclər</div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statFixedCosts')}</div>
             <div className="text-3xl font-black tabular-nums text-slate-900">
               {calc.totalFixed.toFixed(0)}
               <span className="ml-1 text-lg">₼</span>
             </div>
-            <div className="mt-1 text-[10px] text-slate-400">aylıq cəm</div>
+            <div className="mt-1 text-[10px] text-slate-400">{t('statMonthlyCost')}</div>
           </div>
         </div>
       </div>
@@ -147,18 +156,18 @@ export default function BasabasPage() {
         <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
           <div className="rounded-2xl bg-white p-6 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
             <div className="mb-5 flex items-center justify-between">
-              <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Sabit xərclər (aylıq)</h3>
+              <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('fixedCostsTitle')}</h3>
               <button
                 onClick={resetAll}
                 className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500"
               >
-                <RotateCcw size={13} /> Sıfırla
+                <RotateCcw size={13} /> {t('reset')}
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="mb-1.5 block text-xs font-medium text-slate-500">İcarə (₼)</label>
+                <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelRent')}</label>
                 <input
                   type="number"
                   step="100"
@@ -168,7 +177,7 @@ export default function BasabasPage() {
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-xs font-medium text-slate-500">Maaşlar (₼)</label>
+                <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelSalaries')}</label>
                 <input
                   type="number"
                   step="100"
@@ -178,7 +187,7 @@ export default function BasabasPage() {
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-xs font-medium text-slate-500">Kommunal (₼)</label>
+                <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelUtilities')}</label>
                 <input
                   type="number"
                   step="50"
@@ -188,7 +197,7 @@ export default function BasabasPage() {
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-xs font-medium text-slate-500">Digər sabit (₼)</label>
+                <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelOtherFixed')}</label>
                 <input
                   type="number"
                   step="50"
@@ -201,11 +210,11 @@ export default function BasabasPage() {
           </div>
 
           <div className="rounded-2xl bg-white p-6 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
-            <h3 className="mb-5 text-[11px] font-bold uppercase tracking-widest text-slate-400">Dəyişən xərc və parametrlər</h3>
+            <h3 className="mb-5 text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('variableParamsTitle')}</h3>
 
             <div className="mb-6 grid grid-cols-3 gap-4">
               <div>
-                <label className="mb-1.5 block text-xs font-medium text-slate-500">Dəyişən xərc %</label>
+                <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelVariablePct')}</label>
                 <input
                   type="number"
                   min="0"
@@ -216,7 +225,7 @@ export default function BasabasPage() {
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-xs font-medium text-slate-500">Orta çek (₼)</label>
+                <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelAvgCheck')}</label>
                 <input
                   type="number"
                   step="0.5"
@@ -226,7 +235,7 @@ export default function BasabasPage() {
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-xs font-medium text-slate-500">Hazırkı satış (₼)</label>
+                <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelCurrentSales')}</label>
                 <input
                   type="number"
                   step="500"
@@ -240,15 +249,15 @@ export default function BasabasPage() {
             <div className="grid grid-cols-3 gap-4">
               <div className="rounded-xl bg-amber-50 p-3 text-center ring-1 ring-amber-200/60">
                 <div className="text-xl font-black text-amber-600">{calc.contributionPct.toFixed(0)}%</div>
-                <div className="mt-1 text-[11px] font-medium text-slate-500">Contribution əms.</div>
+                <div className="mt-1 text-[11px] font-medium text-slate-500">{t('contributionLabel')}</div>
               </div>
               <div className="rounded-xl bg-blue-50 p-3 text-center ring-1 ring-blue-200/60">
                 <div className="text-xl font-black text-blue-600">≥20%</div>
-                <div className="mt-1 text-[11px] font-medium text-slate-500">Ideal marja</div>
+                <div className="mt-1 text-[11px] font-medium text-slate-500">{t('idealMarginLabel')}</div>
               </div>
               <div className="rounded-xl bg-emerald-50 p-3 text-center ring-1 ring-emerald-200/60">
-                <div className="text-xl font-black text-emerald-600">30 gün</div>
-                <div className="mt-1 text-[11px] font-medium text-slate-500">Hesab dövrü</div>
+                <div className="text-xl font-black text-emerald-600">{t('calcPeriodValue')}</div>
+                <div className="mt-1 text-[11px] font-medium text-slate-500">{t('calcPeriodLabel')}</div>
               </div>
             </div>
           </div>
@@ -258,13 +267,13 @@ export default function BasabasPage() {
       <div className="mx-auto mt-16 max-w-6xl px-6">
         <div className="mb-10 text-center">
           <h2 className="text-2xl font-display font-black tracking-tight text-slate-900 sm:text-3xl">
-            Başabaşı{' '}
+            {t('educationTitle')}{' '}
             <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">
-              Anlamaq
+              {t('educationTitleAccent')}
             </span>
           </h2>
           <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
-            Satış həddi bilmədən restoran idarə etmək riskli oyundur.
+            {t('educationSubtitle')}
           </p>
         </div>
 
@@ -274,20 +283,20 @@ export default function BasabasPage() {
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100">
                 <Info size={15} className="text-amber-600" />
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Başabaş nədir?</h3>
+              <h3 className="text-sm font-bold text-slate-900">{t('whatTitle')}</h3>
             </div>
             <p className="mb-5 text-[13px] leading-relaxed text-slate-600">
-              Başabaş nöqtəsi restoranın nə mənfəət, nə də zərər etdiyi minimum satış həddidir. Bu rəqəmdən aşağı hər ay zərərdir.
+              {t('whatBody')}
             </p>
             <div className="mt-auto space-y-2 rounded-xl bg-slate-900 p-4">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-amber-400">Formul</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-amber-400">{t('formulaLabel')}</p>
               <div className="space-y-0.5 font-mono text-[12px] text-slate-300">
-                <p className="text-white">Sabit xərclər</p>
-                <p>÷ Contribution Margin %</p>
-                <p className="border-t border-slate-700 pt-1 font-bold text-amber-400">= Başabaş satış (₼)</p>
+                <p className="text-white">{t('formulaLine1')}</p>
+                <p>{t('formulaLine2')}</p>
+                <p className="border-t border-slate-700 pt-1 font-bold text-amber-400">{t('formulaResult')}</p>
               </div>
               <div className="border-t border-slate-700 pt-2">
-                <p className="font-mono text-[11px] font-bold text-white">CM% = 100% - Dəyişən xərc%</p>
+                <p className="font-mono text-[11px] font-bold text-white">{t('formulaCm')}</p>
               </div>
             </div>
           </div>
@@ -297,26 +306,26 @@ export default function BasabasPage() {
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100">
                 <TrendingDown size={15} className="text-slate-600" />
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Sabit vs dəyişən xərc</h3>
+              <h3 className="text-sm font-bold text-slate-900">{t('fixedVsVariableTitle')}</h3>
             </div>
-            <p className="mb-4 text-[12px] text-slate-500">Satış dəyişsə də, sabit xərc dəyişmir.</p>
+            <p className="mb-4 text-[12px] text-slate-500">{t('fixedVsVariableSubtitle')}</p>
             <div className="mt-auto space-y-2.5">
               <div className="rounded-xl bg-amber-50 p-3.5 ring-1 ring-amber-200/60">
-                <p className="text-xs font-bold text-amber-700">Sabit xərclər</p>
+                <p className="text-xs font-bold text-amber-700">{t('fixedCostsLabel')}</p>
                 <p className="mt-1 text-[11px] leading-relaxed text-amber-600/80">
-                  İcarə, maaş, sığorta, kredit ödənişi, lisenziya. Satış sıfır olsa da ödənəcək.
+                  {t('fixedCostsDesc')}
                 </p>
               </div>
               <div className="rounded-xl bg-blue-50 p-3.5 ring-1 ring-blue-200/60">
-                <p className="text-xs font-bold text-blue-700">Dəyişən xərclər</p>
+                <p className="text-xs font-bold text-blue-700">{t('variableCostsLabel')}</p>
                 <p className="mt-1 text-[11px] leading-relaxed text-blue-600/80">
-                  Ərzaq, içki, qablaşdırma, çatdırılma. Satış artdıqca artan xərclərdir.
+                  {t('variableCostsDesc')}
                 </p>
               </div>
               <div className="rounded-xl bg-emerald-50 p-3.5 ring-1 ring-emerald-200/60">
-                <p className="text-xs font-bold text-emerald-700">Contribution Margin</p>
+                <p className="text-xs font-bold text-emerald-700">{t('contributionMarginLabel')}</p>
                 <p className="mt-1 text-[11px] leading-relaxed text-emerald-600/80">
-                  Satışdan dəyişən xərci çıxandan sonra qalan hissə sabit xərcləri örtür.
+                  {t('contributionMarginDesc')}
                 </p>
               </div>
             </div>
@@ -327,25 +336,25 @@ export default function BasabasPage() {
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100">
                 <ShieldCheck size={15} className="text-emerald-600" />
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Təhlükəsizlik marjası</h3>
+              <h3 className="text-sm font-bold text-slate-900">{t('safetyMarginTitle')}</h3>
             </div>
             <p className="mb-5 text-[13px] leading-relaxed text-slate-600">
-              Hazırkı satışın başabaşdan nə qədər uzaq olduğunu göstərir. 20%-dən aşağıdırsa, risk zonasındasan.
+              {t('safetyMarginBody')}
             </p>
             <div className="mt-auto rounded-xl bg-white p-4 ring-1 ring-emerald-200/60">
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-emerald-700">Marja səviyyələri</p>
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-emerald-700">{t('marginLevelsLabel')}</p>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  <span className="text-[11px] text-slate-600"><strong className="text-emerald-700">≥20%</strong> - Təhlükəsizdə</span>
+                  <span className="text-[11px] text-slate-600">{t('marginSafe')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-amber-500" />
-                  <span className="text-[11px] text-slate-600"><strong className="text-amber-700">0-20%</strong> - Diqqət zonası</span>
+                  <span className="text-[11px] text-slate-600">{t('marginWarning')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-red-500" />
-                  <span className="text-[11px] text-slate-600"><strong className="text-red-700">&lt;0%</strong> - Zərər edirsən</span>
+                  <span className="text-[11px] text-slate-600">{t('marginDanger')}</span>
                 </div>
               </div>
             </div>
@@ -362,16 +371,16 @@ export default function BasabasPage() {
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/20">
                   <Lightbulb size={16} className="text-amber-400" />
                 </div>
-                <h3 className="text-base font-bold text-amber-400">DK Agency Məsləhəti</h3>
+                <h3 className="text-base font-bold text-amber-400">{t('dkAdviceTitle')}</h3>
               </div>
               <p className="mb-5 text-[13px] leading-relaxed text-slate-400">
-                Başabaş nöqtəsini aylıq yox, həftəlik də izlə. Çünki problem adətən ay sonunda yox, ayın ortasında başlayır.
+                {t('dkAdviceBody')}
               </p>
               <Link
                 href="/blog/basabas-noqtesi-hesablama"
                 className="group inline-flex items-center gap-2 text-sm font-bold text-amber-400 transition-colors hover:text-amber-300"
               >
-                Tam yazını oxu
+                {t('readArticle')}
                 <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -379,16 +388,16 @@ export default function BasabasPage() {
 
           <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-amber-600 to-orange-600 p-8 text-white shadow-xl shadow-orange-500/15">
             <div>
-              <h3 className="mb-3 text-xl font-display font-black">OCAQ Panel</h3>
+              <h3 className="mb-3 text-xl font-display font-black">{t('ocaqTitle')}</h3>
               <p className="mb-6 text-sm leading-relaxed text-white/85">
-                Başabaş satışını, günlük müştəri hədəfini və satış boşluğunu paneldə avtomatik izlə.
+                {t('ocaqBody')}
               </p>
             </div>
             <Link
               href="/auth/register"
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-black text-orange-600 transition-colors hover:bg-orange-50"
             >
-              OCAQ Panel-ə keç <ArrowRight size={15} />
+              {t('ocaqCta')} <ArrowRight size={15} />
             </Link>
           </div>
         </div>
@@ -398,14 +407,10 @@ export default function BasabasPage() {
         <div className="rounded-2xl bg-slate-50 p-8 sm:p-10">
           <div className="mb-8 flex items-center gap-2.5">
             <BookOpen size={18} className="text-orange-600" />
-            <h3 className="text-lg font-bold text-slate-900">Daha Dərin Öyrən</h3>
+            <h3 className="text-lg font-bold text-slate-900">{t('learnMoreTitle')}</h3>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
-            {[
-              { title: 'Başabaş Nöqtəsi Hesablama', slug: 'basabas-noqtesi-hesablama', tag: 'Maliyyə' },
-              { title: 'P&L Oxuya Bilmirsən?', slug: 'pnl-oxuya-bilmirsen', tag: 'Maliyyə' },
-              { title: 'Food Cost-un Qanlı Həqiqəti', slug: '1-porsiya-food-cost-hesablama', tag: 'Maliyyə' },
-            ].map((article) => (
+            {articles.map((article) => (
               <Link
                 key={article.slug}
                 href={`/blog/${article.slug}`}
@@ -416,7 +421,7 @@ export default function BasabasPage() {
                   {article.title}
                 </h4>
                 <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 transition-all group-hover:gap-2 group-hover:text-orange-600">
-                  Oxu <ArrowRight size={12} />
+                  {t('readLabel')} <ArrowRight size={12} />
                 </div>
               </Link>
             ))}
