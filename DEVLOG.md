@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-19 - TASK-0102 Toolkit i18n Batch 2 (food-cost + delivery-calc + menu-matrix)
+
+**Why:** 3 more Pattern C toolkit tools needed i18n. food-cost was the biggest single tool (~105 keys).
+
+**Fix:** 244 i18n keys added across 3 namespaces (foodCost 105, deliveryCalc 65, menuMatrix 74). All 4 locales filled. Same pattern as Batch 1.
+
+**Remaining:** 3 Pattern C tools for Batch 3 (aqta-checklist, insaat-checklist, checklist = ~400 strings).
+
 ## 2026-05-19 - TASK-0101 Toolkit i18n Batch 1 (staff-retention + branding + basabas)
 
 **Why:** 3 toolkit calculators had hardcoded AZ-only strings (Pattern C). Multi-lang users saw only AZ.
