@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-19 - TASK-0100 P&L Simulator i18n
+
+**Why:** PnlForm + PnlResult used inline Record<Locale> pageCopy pattern while parent PLSimulator already used useTranslations. Pattern B→A migration for consistency.
+
+**Audit result:** PLSimulator.tsx already i18n (75+ keys). Only PnlForm (23 strings) + PnlResult (20 strings) + 1 "USTA" badge needed migration. Total: 44 keys added to marketinq.plSimulator namespace, 4 locales.
+
+**Locale prop removed:** PnlForm/PnlResult no longer accept `locale` prop — useTranslations handles it internally. No external callers found (components are loaded via PnlSimulatorPage → PLSimulator, which doesn't use them directly).
+
 ## 2026-05-19 - TASK-0156 Config Fayl Reorqanizasiyası
 
 **Why:** 4 tool fiziki olaraq yanlış komment bölməsində idi (menyu-analitik ŞAGIRD-da, yemek-xerci/pl-simulyatoru/musteri-persona KALFA-da). Kod düzgün işləyirdi (tier field əsas), amma developer oxunaqlığı pozulurdu.
