@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import {
   ArrowRight,
   BookOpen,
@@ -13,13 +14,6 @@ import {
 
 type PlatformKey = 'wolt' | 'bolt' | 'yango' | 'own';
 
-const PLATFORM_LABELS: Record<PlatformKey, string> = {
-  wolt: 'Wolt',
-  bolt: 'Bolt Food',
-  yango: 'Yango',
-  own: 'Öz delivery',
-};
-
 const PLATFORM_DEFAULTS: Record<PlatformKey, number> = {
   wolt: 30,
   bolt: 30,
@@ -27,33 +21,42 @@ const PLATFORM_DEFAULTS: Record<PlatformKey, number> = {
   own: 10,
 };
 
-const DELIVERY_TIPS = [
-  'Delivery üçün ayrıca menyu qur və daşınmada keyfiyyət itirən məhsulları çıxar.',
-  'Delivery qiymətini dine-in menyusundan 10-20% yuxarı saxla.',
-  'Combo və set menyu ilə orta sifariş dəyərini artır.',
-  'Qablaşdırma ölçülərini standartlaşdır və toplu alış et.',
-  'Promo kampaniyasında endirimi kimin qarşıladığını ayrıca hesabla.',
-  'Platforma P&L-ni ümumi kassadan ayrıca izləməyə başla.',
-  'Sadiq müştərini zamanla öz kanalına yönləndir: sayt, WhatsApp, call-center.',
-];
-
-const CONTRACT_QUESTIONS = [
-  'Komissiya sabitdir, yoxsa promo və kateqoriyaya görə dəyişir?',
-  'Endirim kampaniyasının hansı hissəsini restoran qarşılayır?',
-  'Ödəniş dövrü və kəsinti tarixi nədir?',
-  'Müqavilədən çıxış üçün cərimə və notice müddəti varmı?',
-  'Delivery menyusunda ayrıca qiymət qoymaq mümkündürmü?',
-  'Boost, reklam və görünürlük alətləri əlavə ödənişlidirmi?',
-  'Refund və şikayət hallarında məsuliyyət necə bölünür?',
-];
-
-const BLOG_LINKS = [
-  { title: 'Wolt / Bolt Komissiya Riyaziyyatı', href: '/blog/wolt-bolt-komissiyon', tag: 'Blog' },
-  { title: 'P&L Simulyatoru', href: '/toolkit/pnl', tag: 'Alət' },
-  { title: 'Food Cost Hesablayıcı', href: '/toolkit/food-cost', tag: 'Alət' },
-];
-
 export default function DeliveryCalcPage() {
+  const t = useTranslations('toolkit.deliveryCalc');
+
+  const PLATFORM_LABELS: Record<PlatformKey, string> = {
+    wolt: 'Wolt',
+    bolt: 'Bolt Food',
+    yango: 'Yango',
+    own: t('platformOwn'),
+  };
+
+  const deliveryTips = [
+    t('tip1'),
+    t('tip2'),
+    t('tip3'),
+    t('tip4'),
+    t('tip5'),
+    t('tip6'),
+    t('tip7'),
+  ];
+
+  const contractQuestions = [
+    t('contractQ1'),
+    t('contractQ2'),
+    t('contractQ3'),
+    t('contractQ4'),
+    t('contractQ5'),
+    t('contractQ6'),
+    t('contractQ7'),
+  ];
+
+  const blogLinks = [
+    { title: t('blogLink1Title'), href: '/blog/wolt-bolt-komissiyon', tag: t('blogLink1Tag') },
+    { title: t('blogLink2Title'), href: '/toolkit/pnl', tag: t('blogLink2Tag') },
+    { title: t('blogLink3Title'), href: '/toolkit/food-cost', tag: t('blogLink3Tag') },
+  ];
+
   const [selectedPlatforms, setSelectedPlatforms] = useState<PlatformKey[]>(['wolt']);
   const [orderValue, setOrderValue] = useState(30);
   const [commissionPct, setCommissionPct] = useState(30);
@@ -119,19 +122,18 @@ export default function DeliveryCalcPage() {
             className="group mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-300"
           >
             <ChevronLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
-            <span>Toolkit</span>
+            <span>{t('navigation.toolkit')}</span>
           </Link>
           <div className="max-w-2xl">
             <h1 className="mb-5 text-4xl font-display font-black leading-[1.05] tracking-tight text-white sm:text-5xl">
-              Delivery
+              {t('title')}
               <br />
               <span className="bg-gradient-to-r from-orange-400 to-amber-300 bg-clip-text text-transparent">
-                Komissiya Kalkulyatoru
+                {t('titleAccent')}
               </span>
             </h1>
             <p className="max-w-lg text-base leading-relaxed text-slate-400 sm:text-lg">
-              Bakıda aktiv olan Wolt, Bolt Food və Yango ssenarilərini öz delivery xətti ilə müqayisə et.
-              Komissiya 30% və üstü olduqda real marjanın necə dəyişdiyini dərhal gör.
+              {t('subtitle')}
             </p>
           </div>
         </div>
@@ -140,19 +142,19 @@ export default function DeliveryCalcPage() {
       <div className="relative z-10 mx-auto -mt-10 max-w-6xl px-4 sm:px-6">
         <div className="grid gap-3 md:grid-cols-4">
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">Sifariş dəyəri</div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statOrderValue')}</div>
             <div className="text-3xl font-black text-slate-900">{orderValue.toFixed(2)}₼</div>
           </div>
           <div className="rounded-2xl bg-orange-50 p-5 ring-1 ring-orange-200/60">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">Komissiya</div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statCommission')}</div>
             <div className="text-3xl font-black text-orange-600">{commissionPct}%</div>
           </div>
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">Food cost</div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statFoodCost')}</div>
             <div className="text-3xl font-black text-slate-900">{foodCostPct}%</div>
           </div>
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70">
-            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">Aylıq sifariş</div>
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statMonthlyOrders')}</div>
             <div className="text-3xl font-black text-slate-900">{dailyOrders * monthlyDays}</div>
           </div>
         </div>
@@ -163,22 +165,22 @@ export default function DeliveryCalcPage() {
           <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="flex items-center justify-between border-b border-slate-100 px-6 py-5">
               <div>
-                <h2 className="text-base font-bold text-slate-900">Delivery kalkulyatoru</h2>
-                <p className="text-sm text-slate-500">Platforma və xərc quruluşunu dəyiş, nəticəni dərhal gör.</p>
+                <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
+                <p className="text-sm text-slate-500">{t('calculatorSubtitle')}</p>
               </div>
               <button
                 onClick={resetAll}
                 className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-orange-600"
               >
                 <RotateCcw size={13} />
-                Sıfırla
+                {t('reset')}
               </button>
             </div>
 
             <div className="space-y-6 p-6">
               <div>
                 <label className="mb-3 block text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                  Platform seçimi
+                  {t('platformSelectionLabel')}
                 </label>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {(Object.keys(PLATFORM_LABELS) as PlatformKey[]).map((platform) => {
@@ -204,7 +206,7 @@ export default function DeliveryCalcPage() {
                           />
                         </div>
                         <div className="mt-1 text-xs text-slate-500">
-                          Default komissiya: {PLATFORM_DEFAULTS[platform]}%
+                          {t('defaultCommission')}: {PLATFORM_DEFAULTS[platform]}%
                         </div>
                       </button>
                     );
@@ -214,7 +216,7 @@ export default function DeliveryCalcPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-500">Sifariş dəyəri (₼)</label>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelOrderValue')}</label>
                   <input
                     type="number"
                     step="0.5"
@@ -224,7 +226,7 @@ export default function DeliveryCalcPage() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-500">Komissiya faizi (%)</label>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelCommissionPct')}</label>
                   <input
                     type="number"
                     step="1"
@@ -234,7 +236,7 @@ export default function DeliveryCalcPage() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-500">Food cost faizi (%)</label>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelFoodCostPct')}</label>
                   <input
                     type="number"
                     step="1"
@@ -244,7 +246,7 @@ export default function DeliveryCalcPage() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-500">Qablaşdırma xərci (₼)</label>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelPackagingCost')}</label>
                   <input
                     type="number"
                     step="0.1"
@@ -254,7 +256,7 @@ export default function DeliveryCalcPage() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-500">İşçi xərci (₼)</label>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelLaborCost')}</label>
                   <input
                     type="number"
                     step="0.1"
@@ -264,7 +266,7 @@ export default function DeliveryCalcPage() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-500">Günlük sifariş sayı</label>
+                  <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelDailyOrders')}</label>
                   <input
                     type="number"
                     step="1"
@@ -279,24 +281,24 @@ export default function DeliveryCalcPage() {
 
           <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-100 px-6 py-5">
-              <h2 className="text-base font-bold text-slate-900">Restoran satışı vs delivery</h2>
-              <p className="text-sm text-slate-500">Eyni sifarişdən platforma üzrə nə qədər qalır.</p>
+              <h2 className="text-base font-bold text-slate-900">{t('comparisonTitle')}</h2>
+              <p className="text-sm text-slate-500">{t('comparisonSubtitle')}</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-slate-50 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                    <th className="px-5 py-3 text-left">Kanal</th>
-                    <th className="px-4 py-3 text-right">Satış</th>
-                    <th className="px-4 py-3 text-right">Komissiya</th>
-                    <th className="px-4 py-3 text-right">Food cost</th>
-                    <th className="px-4 py-3 text-right">Digər</th>
-                    <th className="px-5 py-3 text-right">Xalis</th>
+                    <th className="px-5 py-3 text-left">{t('colChannel')}</th>
+                    <th className="px-4 py-3 text-right">{t('colSales')}</th>
+                    <th className="px-4 py-3 text-right">{t('colCommission')}</th>
+                    <th className="px-4 py-3 text-right">{t('colFoodCost')}</th>
+                    <th className="px-4 py-3 text-right">{t('colOther')}</th>
+                    <th className="px-5 py-3 text-right">{t('colNet')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   <tr className="bg-white">
-                    <td className="px-5 py-4 font-semibold text-slate-900">Restoran satış</td>
+                    <td className="px-5 py-4 font-semibold text-slate-900">{t('dineInLabel')}</td>
                     <td className="px-4 py-4 text-right tabular-nums text-slate-900">{orderValue.toFixed(2)}₼</td>
                     <td className="px-4 py-4 text-right tabular-nums text-slate-400">0.00₼</td>
                     <td className="px-4 py-4 text-right tabular-nums text-slate-600">-{calc.dineInFoodCost.toFixed(2)}₼</td>
@@ -326,21 +328,21 @@ export default function DeliveryCalcPage() {
 
           <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-100 px-6 py-5">
-              <h2 className="text-base font-bold text-slate-900">Aylıq delivery P&amp;L</h2>
-              <p className="text-sm text-slate-500">Sifariş sayı artdıqca aylıq netto nəticə necə dəyişir.</p>
+              <h2 className="text-base font-bold text-slate-900">{t('monthlyPnlTitle')}</h2>
+              <p className="text-sm text-slate-500">{t('monthlyPnlSubtitle')}</p>
             </div>
             <div className="grid gap-4 p-6 md:grid-cols-2">
               {calc.rows.map((row) => (
                 <div key={row.platform} className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                   <div className="mb-2 text-sm font-bold text-slate-900">{PLATFORM_LABELS[row.platform]}</div>
                   <div className="text-xs text-slate-500">
-                    {dailyOrders} sifariş/gün × {monthlyDays} gün
+                    {dailyOrders} {t('ordersPerDay')} × {monthlyDays} {t('days')}
                   </div>
                   <div className="mt-4 text-3xl font-black tabular-nums text-slate-900">
                     {row.monthlyNet.toFixed(0)}₼
                   </div>
                   <div className={`mt-2 text-xs font-semibold ${row.monthlyNet >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-                    Aylıq netto nəticə
+                    {t('monthlyNetLabel')}
                   </div>
                 </div>
               ))}
@@ -352,22 +354,21 @@ export default function DeliveryCalcPage() {
           <div className="rounded-2xl border border-orange-200 bg-orange-50 p-6">
             <div className="mb-4 flex items-center gap-2">
               <Truck size={18} className="text-orange-600" />
-              <h2 className="text-base font-bold text-slate-900">Delivery riyaziyyatı</h2>
+              <h2 className="text-base font-bold text-slate-900">{t('deliveryMathTitle')}</h2>
             </div>
             <p className="text-sm leading-relaxed text-slate-600">
-              Bakıda aktiv 3 xətt: Wolt, Bolt Food və Yango. Merchant komissiyası açıq sabit price-list kimi verilmir
-              və müqaviləyə, promo paketinə, kateqoriyaya görə dəyişir. Buna görə kalkulyator manual faiz ilə işləyir.
+              {t('deliveryMathBody')}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <BookOpen size={18} className="text-orange-600" />
-              <h2 className="text-base font-bold text-slate-900">Mənfəətli etməyin 7 yolu</h2>
+              <h2 className="text-base font-bold text-slate-900">{t('tipsTitle')}</h2>
             </div>
             <div className="space-y-3">
-              {DELIVERY_TIPS.map((tip, index) => (
-                <div key={tip} className="flex items-start gap-3">
+              {deliveryTips.map((tip, index) => (
+                <div key={index} className="flex items-start gap-3">
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-100 text-[11px] font-black text-orange-600">
                     {index + 1}
                   </div>
@@ -380,11 +381,11 @@ export default function DeliveryCalcPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <BookOpen size={18} className="text-orange-600" />
-              <h2 className="text-base font-bold text-slate-900">Müqavilə bağlayarkən 7 sual</h2>
+              <h2 className="text-base font-bold text-slate-900">{t('contractQuestionsTitle')}</h2>
             </div>
             <div className="space-y-3">
-              {CONTRACT_QUESTIONS.map((question, index) => (
-                <div key={question} className="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
+              {contractQuestions.map((question, index) => (
+                <div key={index} className="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
                   <span className="mr-2 font-bold text-orange-600">{index + 1}.</span>
                   {question}
                 </div>
@@ -397,11 +398,10 @@ export default function DeliveryCalcPage() {
             <div className="relative">
               <div className="mb-4 flex items-center gap-2">
                 <Lightbulb size={18} className="text-orange-300" />
-                <h2 className="text-base font-bold text-orange-200">DK Agency məsləhəti</h2>
+                <h2 className="text-base font-bold text-orange-200">{t('dkAdviceLabel')}</h2>
               </div>
               <p className="text-sm leading-relaxed text-slate-300">
-                Delivery-ni “əlavə həcm” kimi yox, ayrıca unit economics xətti kimi idarə et. Qiymət, promo və qablaşdırma
-                eyni cədvəldə görünməsə, yüksək satış belə aşağı mənfəət gətirə bilər.
+                {t('dkAdviceBody')}
               </p>
             </div>
           </div>
@@ -409,17 +409,16 @@ export default function DeliveryCalcPage() {
           <div className="rounded-2xl bg-gradient-to-br from-orange-600 to-amber-500 p-6 text-white shadow-xl shadow-orange-500/15">
             <div className="mb-3 flex items-center gap-2">
               <Truck size={18} />
-              <h2 className="text-base font-bold">OCAQ Panel</h2>
+              <h2 className="text-base font-bold">{t('ocaqTitle')}</h2>
             </div>
             <p className="text-sm leading-relaxed text-white/85">
-              Platforma üzrə ayrı P&amp;L, kampaniya təsiri, sifariş marjası və combo performansını field-by-field izləmək
-              üçün delivery xəttini OCAQ workflow-a bağla.
+              {t('ocaqBody')}
             </p>
             <Link
               href="/auth/register"
               className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-black text-orange-600 transition-colors hover:bg-orange-50"
             >
-              Panelə keç <ArrowRight size={15} />
+              {t('ocaqCta')} <ArrowRight size={15} />
             </Link>
           </div>
         </aside>
@@ -429,10 +428,10 @@ export default function DeliveryCalcPage() {
         <div className="rounded-2xl bg-slate-50 p-6 sm:p-8">
           <div className="mb-6 flex items-center gap-2.5">
             <BookOpen size={18} className="text-orange-600" />
-            <h3 className="text-lg font-bold text-slate-900">Əlaqəli məzmun</h3>
+            <h3 className="text-lg font-bold text-slate-900">{t('learnMoreTitle')}</h3>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {BLOG_LINKS.map((link) => (
+            {blogLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -443,7 +442,7 @@ export default function DeliveryCalcPage() {
                   {link.title}
                 </h4>
                 <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 transition-all group-hover:gap-2 group-hover:text-orange-600">
-                  Bax <ArrowRight size={12} />
+                  {t('readLabel')} <ArrowRight size={12} />
                 </div>
               </Link>
             ))}

@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0102] feat(i18n): toolkit batch2 — food-cost+delivery-calc+menu-matrix (244 key, 4 dil)`
 - `[TASK-0101] feat(i18n): toolkit batch1 — staff-retention+branding+basabas (178 key, 4 dil)`
 - `[TASK-0100] feat(i18n): P&L Simulator PnlForm+PnlResult pageCopy→useTranslations (44 key, 4 dil)`
 - `[TASK-0156] chore(config): marketing-tools-config.ts reorq — 4 tool doğru tier bölməsinə köçürüldü`
