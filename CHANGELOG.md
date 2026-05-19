@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0156] chore(config): marketing-tools-config.ts reorq — 4 tool doğru tier bölməsinə köçürüldü`
 - `[TASK-0157] fix(i18n): dashboard sidebar + KAZAN widget + elan detay — 48 key, 4 dil, hardcoded→useTranslations`
 - `[TASK-0155] fix(config): 3 slug uyğunsuzluğu düzəlişi — config slug-lar public route adlarına uyğunlaşdırıldı`
 - `[TASK-0154] feat(news): pulsuz qeydiyyat-gate — blog + xəbərlər 40% scroll, i18n 4 dil, emerald UI`
