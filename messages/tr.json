@@ -1781,5 +1781,71 @@
     "benefit3Title": "Her zaman ücretsiz",
     "benefit3Desc": "Ödeme gerekmiyor, hesap oluşturmak yeterli",
     "footer": "ücretsiz erişim · kayıt · %40 önizleme"
+  },
+  "kazanWidget": {
+    "welcome": "Merhaba. Ben **KAZAN AI**'yım. Food cost, P&L, AQTA, delivery ve açılış kararlarını rakamlarla açıklıyorum.",
+    "prompt1": "Food cost'um %38. Nasıl %30-32'ye indirebilirim?",
+    "prompt2": "Restoran P&L raporunda ilk hangi rakamlara bakmalıyım?",
+    "prompt3": "AQTA denetimine hazırlanmak için bu hafta ne yapmalıyım?",
+    "prompt4": "Wolt ve Bolt Food komisyonuyla delivery menüsünü nasıl karlı tutabilirim?",
+    "businessType": {
+      "restoran": "Restoran",
+      "kafe": "Kafe",
+      "franchise": "Franchise",
+      "diger": "Diğer"
+    },
+    "toolAction": {
+      "pnl": "P&L hesapla",
+      "aqta": "AQTA checklist",
+      "delivery": "Delivery hesapla",
+      "foodCost": "Food cost hesapla"
+    },
+    "errorAiFailed": "KAZAN AI yanıt veremedi.",
+    "errorFallback": "Şu an canlı yanıt gecikiyor. Sorunu ölç: food cost, işçilik gideri, delivery komisyonu ve satış miksini ayrı yaz. Sonra ilgili toolkit'ten başla: [Toolkit](/toolkit).",
+    "leadGateRequired": "AI yanıtına devam etmek için önce iletişim bilgilerini kaydetmem gerekiyor.",
+    "leadNamePhoneRequired": "Ad ve telefon gir, sonra devam edelim.",
+    "leadSaveFailed": "Lead kaydedilemedi.",
+    "leadSaveError": "Veri kaydedilemedi. Telefon formatını kontrol et ve tekrar dene.",
+    "leadActionRequired": "Bu adımı açmak için önce adını ve telefonunu kaydet.",
+    "whatsappCta": "WhatsApp'ta yaz",
+    "meetingCta": "Görüşme planla",
+    "getMeeting": "Görüşme al",
+    "subtitle": "HoReCa karar asistanı",
+    "closePanel": "KAZAN AI panelini kapat",
+    "openPanel": "KAZAN AI panelini aç",
+    "leadFormTitle": "Sana daha doğru yanıt verebilmek için:",
+    "leadFormDesc": "Ad, telefon ve işletme tipini kaydedeyim, sonra soruya devam edelim.",
+    "namePlaceholder": "Ad",
+    "phonePlaceholder": "+994 50 000 00 00",
+    "emailPlaceholder": "Email (isteğe bağlı)",
+    "continueBtn": "Devam et",
+    "calculating": "KAZAN hesaplıyor...",
+    "inputPlaceholder": "Örn: food cost %38, ne yapmalıyım?",
+    "sendMessage": "Mesaj gönder",
+    "aiDisclaimer": "AI yanıtları karar desteği içindir.",
+    "contactPageFallback": "İletişim sayfasından geldi"
+  },
+  "dashboardSidebar": {
+    "title": "OCAQ Yönetim Paneli",
+    "role": "Admin"
+  },
+  "kazanLeadActions": {
+    "updating": "Güncelleniyor...",
+    "nextStatus": "Sonraki: {status}",
+    "dismiss": "Reddet"
+  },
+  "listingDetail": {
+    "loading": "İlan yükleniyor...",
+    "notFound": "İlan bulunamadı",
+    "notFoundDesc": "Bu ID ile eşleşen ilan yok.",
+    "backToList": "İlan listesine dön",
+    "statusUpdated": "Durum güncellendi.",
+    "noteNotAdded": "Not eklenemedi.",
+    "noteSaved": "Not kaydedildi.",
+    "leadStatusUpdated": "Lead durumu güncellendi.",
+    "trackingCopied": "Takip kodu kopyalandı.",
+    "backArrow": "← İlan listesine dön",
+    "yes": "Evet",
+    "no": "Hayır"
   }
 }

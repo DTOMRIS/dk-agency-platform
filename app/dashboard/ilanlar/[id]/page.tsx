@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { Check, Copy, Mail, MessageCircle, Phone, Star } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getFieldsForType } from '@/lib/data/listingFieldConfig';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
@@ -25,12 +26,13 @@ function formatDate(value: string) {
 
 function renderFieldValue(value: string | number | boolean | undefined) {
   if (value === undefined || value === null || value === '') return '—';
-  if (typeof value === 'boolean') return value ? '✅ Bəli' : '❌ Xeyr';
+  if (typeof value === 'boolean') return value ? '✅' : '❌';
   return String(value);
 }
 
 export default function DashboardIlanDetailPage() {
   const params = useParams<{ id: string }>();
+  const t = useTranslations('listingDetail');
   const [listing, setListing] = useState<MockListing | null>(null);
   const [activeImage, setActiveImage] = useState(0);
   const [status, setStatus] = useState<ListingWorkflowStatus>('submitted');
@@ -95,7 +97,7 @@ export default function DashboardIlanDetailPage() {
     return (
       <div className="min-h-screen bg-white p-6 lg:p-8">
         <div className="mx-auto max-w-3xl rounded-[28px] border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <p className="text-sm text-slate-500">Elan yüklənir...</p>
+          <p className="text-sm text-slate-500">{t('loading')}</p>
         </div>
       </div>
     );
@@ -105,13 +107,13 @@ export default function DashboardIlanDetailPage() {
     return (
       <div className="min-h-screen bg-white p-6 lg:p-8">
         <div className="mx-auto max-w-3xl rounded-[28px] border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <h1 className="font-display text-3xl font-black text-[var(--dk-navy)]">Elan tapılmadı</h1>
-          <p className="mt-3 text-sm text-slate-500">Bu ID ilə uyğun elan yoxdur.</p>
+          <h1 className="font-display text-3xl font-black text-[var(--dk-navy)]">{t('notFound')}</h1>
+          <p className="mt-3 text-sm text-slate-500">{t('notFoundDesc')}</p>
           <Link
             href="/dashboard/ilanlar"
             className="mt-6 inline-flex rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white"
           >
-            Elan siyahısına qayıt
+            {t('backToList')}
           </Link>
         </div>
       </div>
@@ -132,7 +134,7 @@ export default function DashboardIlanDetailPage() {
       }),
     }).catch(() => null);
     setStatus(nextStatus);
-    setToast('Status yeniləndi.');
+    setToast(t('statusUpdated'));
     setTimeout(() => setToast(''), 2400);
   };
 
@@ -141,7 +143,7 @@ export default function DashboardIlanDetailPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        notes: note.trim() || 'Qeyd elave edilmedi.',
+        notes: note.trim() || t('noteNotAdded'),
         score,
         decision:
           nextStatus === 'showcase_ready'
@@ -155,14 +157,14 @@ export default function DashboardIlanDetailPage() {
     const payload = await response?.json().catch(() => null);
     const next = payload?.data ?? {
       reviewer: 'Admin',
-      note: note.trim() || 'Qeyd elave edilmedi.',
+      note: note.trim() || t('noteNotAdded'),
       score,
       createdAt: new Date().toISOString(),
     };
 
     setNotes((prev) => [next, ...prev]);
     setNote('');
-    setToast('Qeyd saxlanildi.');
+    setToast(t('noteSaved'));
     setTimeout(() => setToast(''), 2400);
   };
 
@@ -170,14 +172,14 @@ export default function DashboardIlanDetailPage() {
     setLeads((prev) =>
       prev.map((lead, idx) => (idx === index ? { ...lead, status: 'contacted' as const } : lead))
     );
-    setToast('Lead statusu yeniləndi.');
+    setToast(t('leadStatusUpdated'));
     setTimeout(() => setToast(''), 2400);
   };
 
   const handleCopyTracking = async () => {
     if (!navigator.clipboard) return;
     await navigator.clipboard.writeText(listing.trackingCode);
-    setToast('Tracking code kopyalandı.');
+    setToast(t('trackingCopied'));
     setTimeout(() => setToast(''), 2400);
   };
 
@@ -187,7 +189,7 @@ export default function DashboardIlanDetailPage() {
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
             <Link href="/dashboard/ilanlar" className="text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
-              ← Elan siyahısına qayıt
+              ← {t('backToList')}
             </Link>
             <h1 className="mt-3 font-display text-4xl font-black text-[var(--dk-navy)]">{listing.title}</h1>
           </div>

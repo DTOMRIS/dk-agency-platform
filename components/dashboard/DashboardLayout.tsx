@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import { DashboardTopBar } from '@/components/dashboard/DashboardTopBar';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const t = useTranslations('dashboardSidebar');
 
   return (
     <div className="dashboard-scope min-h-screen bg-white">
@@ -20,8 +22,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         >
           <Menu size={20} />
         </button>
-        <div className="text-sm font-bold text-[var(--dk-navy)]">OCAQ İdarə Paneli</div>
-        <div className="text-xs font-semibold text-slate-500">Admin</div>
+        <div className="text-sm font-bold text-[var(--dk-navy)]">{t('title')}</div>
+        <div className="text-xs font-semibold text-slate-500">{t('role')}</div>
       </div>
 
       <div className="min-h-screen bg-white pt-16 lg:ml-72 lg:pt-0">

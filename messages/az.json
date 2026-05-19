@@ -1882,5 +1882,71 @@
     "benefit3Title": "Həmişə pulsuz",
     "benefit3Desc": "Heç bir ödəniş tələb olunmur, hesab yaratmaq kifayətdir",
     "footer": "pulsuz giriş · qeydiyyat · 40% önizləmə"
+  },
+  "kazanWidget": {
+    "welcome": "Salam. Mən **KAZAN AI**-yam. Food cost, P&L, AQTA, delivery və açılış qərarlarını rəqəmlə izah edirəm.",
+    "prompt1": "Food cost-um 38 faizdir. 30-32 faizə necə endirim?",
+    "prompt2": "Restoran P&L hesabatında ilk hansı rəqəmlərə baxmalıyam?",
+    "prompt3": "AQTA yoxlamasına hazırlaşmaq üçün bu həftə nə etməliyəm?",
+    "prompt4": "Wolt və Bolt Food komissiyası ilə delivery menyusunu necə mənfəətli saxlayım?",
+    "businessType": {
+      "restoran": "Restoran",
+      "kafe": "Kafe",
+      "franchise": "Franchise",
+      "diger": "Digər"
+    },
+    "toolAction": {
+      "pnl": "P&L hesabla",
+      "aqta": "AQTA checklist",
+      "delivery": "Delivery hesabla",
+      "foodCost": "Food cost hesabla"
+    },
+    "errorAiFailed": "KAZAN AI cavab verə bilmədi.",
+    "errorFallback": "Hazırda canlı cavab gecikir. Problemi ölç: food cost, əmək xərci, delivery komissiyası və satış mixini ayrı yaz. Sonra uyğun toolkit-dən başla: [Toolkit](/toolkit).",
+    "leadGateRequired": "AI cavabı davam etdirmək üçün əvvəl əlaqə məlumatını saxlamalıyam.",
+    "leadNamePhoneRequired": "Ad və telefon yaz, sonra davam edək.",
+    "leadSaveFailed": "Lead saxlanmadı.",
+    "leadSaveError": "Məlumat saxlanmadı. Telefon formatını yoxla və yenidən cəhd et.",
+    "leadActionRequired": "Bu addımı açmaq üçün əvvəl ad və telefonunu saxla.",
+    "whatsappCta": "WhatsApp-da yaz",
+    "meetingCta": "Görüş planla",
+    "getMeeting": "Görüş al",
+    "subtitle": "HoReCa qərar katibi",
+    "closePanel": "KAZAN AI panelini bağla",
+    "openPanel": "KAZAN AI panelini aç",
+    "leadFormTitle": "Sənə daha dəqiq cavab vermək üçün:",
+    "leadFormDesc": "Ad, telefon və işletmə tipini saxlayım, sonra sualına davam edim.",
+    "namePlaceholder": "Ad",
+    "phonePlaceholder": "+994 50 000 00 00",
+    "emailPlaceholder": "Email (istəyə bağlı)",
+    "continueBtn": "Davam et",
+    "calculating": "KAZAN hesablayır...",
+    "inputPlaceholder": "Məsələn: food cost 38%, nə edim?",
+    "sendMessage": "Mesaj göndər",
+    "aiDisclaimer": "AI cavabları qərar dəstəyi üçündür.",
+    "contactPageFallback": "Əlaqə səhifəsindən gəldi"
+  },
+  "dashboardSidebar": {
+    "title": "OCAQ İdarə Paneli",
+    "role": "Admin"
+  },
+  "kazanLeadActions": {
+    "updating": "Yenilənir...",
+    "nextStatus": "Növbəti: {status}",
+    "dismiss": "Rədd et"
+  },
+  "listingDetail": {
+    "loading": "Elan yüklənir...",
+    "notFound": "Elan tapılmadı",
+    "notFoundDesc": "Bu ID ilə uyğun elan yoxdur.",
+    "backToList": "Elan siyahısına qayıt",
+    "statusUpdated": "Status yeniləndi.",
+    "noteNotAdded": "Qeyd əlavə edilmədi.",
+    "noteSaved": "Qeyd saxlanıldı.",
+    "leadStatusUpdated": "Lead statusu yeniləndi.",
+    "trackingCopied": "Tracking code kopyalandı.",
+    "backArrow": "← Elan siyahısına qayıt",
+    "yes": "Bəli",
+    "no": "Xeyr"
   }
 }

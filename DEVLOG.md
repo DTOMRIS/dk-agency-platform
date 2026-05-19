@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-19 - TASK-0157 Dashboard i18n Fix (Launch-Blocker)
+
+**Why:** 3 dashboard area had hardcoded AZ-only strings: FloatingKazanWidget (~25 strings), DashboardLayout (2), KazanLeadStatusActions (3), ilanlar detail page (~10 toasts/UI). Multi-lang users saw AZ-only content.
+
+**Fix:** 4 new i18n namespaces added (kazanWidget 31 keys, dashboardSidebar 2, kazanLeadActions 3, listingDetail 12 = 48 keys total). All 4 locales filled (AZ/EN/TR/RU). Components refactored to `useTranslations()`. Brand names (KAZAN AI, OCAQ, P&L, AQTA) preserved as-is across locales.
+
+**PROTECTED:** `lib/member-access.ts` untouched.
+
 ## 2026-05-18 - TASK-0155 Slug Uyğunsuzluğu Düzəlişi
 
 **Why:** 3 tool-un config slug-u public route adından fərqli idi (menyu-analitigi vs menyu-analitik, pnl-simulator vs pl-simulyatoru, promosyon-roi vs roi-kalkulator). CTO qərarı: route adları əsasdır, config slug-lar route-a uyğunlaşdırılır. Fayl/qovluq köçürmə yoxdur (SEO qorunur).
