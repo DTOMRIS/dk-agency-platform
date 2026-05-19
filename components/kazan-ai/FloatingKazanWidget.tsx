@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { useTranslations } from 'next-intl';
 import { buildWhatsappLink } from '@/lib/utils/whatsapp';
 
 type Message = {
@@ -42,23 +43,6 @@ type LeadFormState = {
   businessType: BusinessType;
 };
 
-const welcomeMessage =
-  'Salam. Mən **KAZAN AI**-yam. Food cost, P&L, AQTA, delivery və açılış qərarlarını rəqəmlə izah edirəm.';
-
-const samplePrompts = [
-  'Food cost-um 38 faizdir. 30-32 faizə necə endirim?',
-  'Restoran P&L hesabatında ilk hansı rəqəmlərə baxmalıyam?',
-  'AQTA yoxlamasına hazırlaşmaq üçün bu həftə nə etməliyəm?',
-  'Wolt və Bolt Food komissiyası ilə delivery menyusunu necə mənfəətli saxlayım?',
-];
-
-const businessTypeLabels: Record<BusinessType, string> = {
-  restoran: 'Restoran',
-  kafe: 'Kafe',
-  franchise: 'Franchise',
-  diger: 'Digər',
-};
-
 function detectIntent(text: string): LeadIntent {
   const value = text.toLowerCase();
   if (value.includes('food') || value.includes('cost') || value.includes('maya')) return 'food_cost';
@@ -66,13 +50,6 @@ function detectIntent(text: string): LeadIntent {
   if (value.includes('aqta') || value.includes('gigiyena')) return 'aqta';
   if (value.includes('delivery') || value.includes('wolt') || value.includes('bolt')) return 'delivery';
   return 'general';
-}
-
-function toolkitAction(intent: LeadIntent) {
-  if (intent === 'pnl') return { label: 'P&L hesabla', href: '/toolkit/pnl' };
-  if (intent === 'aqta') return { label: 'AQTA checklist', href: '/toolkit/aqta-checklist' };
-  if (intent === 'delivery') return { label: 'Delivery hesabla', href: '/toolkit/delivery-calc' };
-  return { label: 'Food cost hesabla', href: '/toolkit/food-cost' };
 }
 
 function recentMessages(messages: Message[], pendingQuestion?: string) {
@@ -91,8 +68,9 @@ function lastUserQuestions(messages: Message[], pendingQuestion?: string) {
 }
 
 export default function FloatingKazanWidget() {
+  const t = useTranslations('kazanWidget');
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: welcomeMessage }]);
+  const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: t('welcome') }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [leadSaving, setLeadSaving] = useState(false);
@@ -108,6 +86,21 @@ export default function FloatingKazanWidget() {
   });
   const messagesRef = useRef<HTMLDivElement>(null);
   const contactContextAddedRef = useRef(false);
+
+  const samplePrompts = [t('prompt1'), t('prompt2'), t('prompt3'), t('prompt4')];
+  const businessTypeLabels: Record<BusinessType, string> = {
+    restoran: t('businessType.restoran'),
+    kafe: t('businessType.kafe'),
+    franchise: t('businessType.franchise'),
+    diger: t('businessType.diger'),
+  };
+
+  function toolkitAction(intent: LeadIntent) {
+    if (intent === 'pnl') return { label: t('toolAction.pnl'), href: '/toolkit/pnl' };
+    if (intent === 'aqta') return { label: t('toolAction.aqta'), href: '/toolkit/aqta-checklist' };
+    if (intent === 'delivery') return { label: t('toolAction.delivery'), href: '/toolkit/delivery-calc' };
+    return { label: t('toolAction.foodCost'), href: '/toolkit/food-cost' };
+  }
 
   const activeIntent = lead?.intent || detectIntent([pendingQuestion, ...messages.map((message) => message.content)].join(' '));
   const toolAction = toolkitAction(activeIntent);
@@ -129,7 +122,7 @@ export default function FloatingKazanWidget() {
         ...current,
         {
           role: 'assistant',
-          content: customEvent.detail?.context || 'Əlaqə səhifəsindən gəldi',
+          content: customEvent.detail?.context || t('contactPageFallback'),
         },
       ]);
     }
@@ -140,7 +133,7 @@ export default function FloatingKazanWidget() {
       window.removeEventListener('kazan:open', openFromContactPage);
       window.removeEventListener('dk:kazan-ai:open', openFromContactPage);
     };
-  }, []);
+  }, [t]);
 
   function scrollToBottom() {
     requestAnimationFrame(() => {
@@ -176,7 +169,7 @@ export default function FloatingKazanWidget() {
       });
       const payload = (await response.json()) as { message?: string; error?: string };
       if (!response.ok || !payload.message) {
-        throw new Error(payload.error || 'KAZAN AI cavab verə bilmədi.');
+        throw new Error(payload.error || t('errorAiFailed'));
       }
       setMessages((current) => [...current, { role: 'assistant', content: payload.message || '' }]);
     } catch {
@@ -184,8 +177,7 @@ export default function FloatingKazanWidget() {
         ...current,
         {
           role: 'assistant',
-          content:
-            'Hazırda canlı cavab gecikir. Problemi ölç: food cost, əmək xərci, delivery komissiyası və satış mixini ayrı yaz. Sonra uyğun toolkit-dən başla: [Toolkit](/toolkit).',
+          content: t('errorFallback'),
         },
       ]);
     } finally {
@@ -203,7 +195,7 @@ export default function FloatingKazanWidget() {
       setPendingQuestion(trimmed);
       setInput('');
       setLeadGateOpen(true);
-      setLeadError('AI cavabı davam etdirmək üçün əvvəl əlaqə məlumatını saxlamalıyam.');
+      setLeadError(t('leadGateRequired'));
       scrollToBottom();
       return;
     }
@@ -217,7 +209,7 @@ export default function FloatingKazanWidget() {
     const phone = leadForm.phone.trim();
 
     if (!name || !phone) {
-      setLeadError('Ad və telefon yaz, sonra davam edək.');
+      setLeadError(t('leadNamePhoneRequired'));
       return;
     }
 
@@ -237,7 +229,7 @@ export default function FloatingKazanWidget() {
       });
       const payload = (await response.json()) as { data?: KazanLead; error?: string };
       if (!response.ok || !payload.data) {
-        throw new Error(payload.error || 'Lead saxlanmadı.');
+        throw new Error(payload.error || t('leadSaveFailed'));
       }
 
       setLead(payload.data);
@@ -248,7 +240,7 @@ export default function FloatingKazanWidget() {
         await callAi(question, messages);
       }
     } catch {
-      setLeadError('Məlumat saxlanmadı. Telefon formatını yoxla və yenidən cəhd et.');
+      setLeadError(t('leadSaveError'));
     } finally {
       setLeadSaving(false);
       scrollToBottom();
@@ -264,7 +256,7 @@ export default function FloatingKazanWidget() {
     if (lead) return false;
     event.preventDefault();
     setLeadGateOpen(true);
-    setLeadError('Bu addımı açmaq üçün əvvəl ad və telefonunu saxla.');
+    setLeadError(t('leadActionRequired'));
     scrollToBottom();
     return true;
   }
@@ -282,7 +274,7 @@ export default function FloatingKazanWidget() {
           }}
           className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-2 text-[11px] font-black text-white transition hover:bg-emerald-700"
         >
-          WhatsApp-da yaz
+          {t('whatsappCta')}
           <ExternalLink size={13} />
         </a>
         <Link
@@ -293,7 +285,7 @@ export default function FloatingKazanWidget() {
           }}
           className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[11px] font-black text-slate-700 transition hover:border-[var(--dk-gold)]"
         >
-          Görüş planla
+          {t('meetingCta')}
         </Link>
         <Link
           href={toolAction.href}
@@ -328,13 +320,13 @@ export default function FloatingKazanWidget() {
                     KAZAN AI
                     <Sparkles size={15} className="text-[var(--dk-gold)]" />
                   </div>
-                  <p className="text-xs font-semibold text-white/65">HoReCa qərar katibi</p>
+                  <p className="text-xs font-semibold text-white/65">{t('subtitle')}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="KAZAN AI panelini bağla"
+                aria-label={t('closePanel')}
                 className="rounded-lg p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
               >
                 <X size={22} />
@@ -387,27 +379,27 @@ export default function FloatingKazanWidget() {
                       <Bot size={20} />
                     </div>
                     <div>
-                      <p className="text-sm font-black text-[var(--dk-navy)]">Sənə daha dəqiq cavab vermək üçün:</p>
-                      <p className="mt-1 text-xs leading-5 text-slate-500">Ad, telefon və işletmə tipini saxlayım, sonra sualına davam edim.</p>
+                      <p className="text-sm font-black text-[var(--dk-navy)]">{t('leadFormTitle')}</p>
+                      <p className="mt-1 text-xs leading-5 text-slate-500">{t('leadFormDesc')}</p>
                     </div>
                   </div>
                   <div className="grid gap-2">
                     <input
                       value={leadForm.name}
                       onChange={(event) => setLeadForm((current) => ({ ...current, name: event.target.value }))}
-                      placeholder="Ad"
+                      placeholder={t('namePlaceholder')}
                       className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <input
                       value={leadForm.phone}
                       onChange={(event) => setLeadForm((current) => ({ ...current, phone: event.target.value }))}
-                      placeholder="+994 50 000 00 00"
+                      placeholder={t('phonePlaceholder')}
                       className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <input
                       value={leadForm.email}
                       onChange={(event) => setLeadForm((current) => ({ ...current, email: event.target.value }))}
-                      placeholder="Email (istəyə bağlı)"
+                      placeholder={t('emailPlaceholder')}
                       className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <select
@@ -431,7 +423,7 @@ export default function FloatingKazanWidget() {
                     className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-[var(--dk-red)] px-4 text-sm font-black text-white transition hover:bg-rose-600 disabled:bg-slate-300"
                   >
                     {leadSaving ? <Loader2 size={16} className="mr-2 animate-spin" /> : null}
-                    Davam et
+                    {t('continueBtn')}
                   </button>
                 </form>
               ) : null}
@@ -440,7 +432,7 @@ export default function FloatingKazanWidget() {
                 <div className="flex justify-start">
                   <div className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
                     <Loader2 size={16} className="animate-spin" />
-                    KAZAN hesablayır...
+                    {t('calculating')}
                   </div>
                 </div>
               ) : null}
@@ -453,7 +445,7 @@ export default function FloatingKazanWidget() {
                   className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-50"
                 >
                   <CalendarCheck size={14} />
-                  Görüş al
+                  {t('getMeeting')}
                 </Link>
                 <Link
                   href={toolAction.href}
@@ -468,19 +460,19 @@ export default function FloatingKazanWidget() {
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   rows={1}
-                  placeholder="Məsələn: food cost 38%, nə edim?"
+                  placeholder={t('inputPlaceholder')}
                   className="max-h-28 min-h-11 flex-1 resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                 />
                 <button
                   type="submit"
                   disabled={loading || leadSaving || !input.trim()}
-                  aria-label="Mesaj göndər"
+                  aria-label={t('sendMessage')}
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--dk-red)] text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:bg-slate-300"
                 >
                   <Send size={17} />
                 </button>
               </form>
-              <p className="mt-2 text-center text-[11px] font-medium text-slate-400">AI cavabları qərar dəstəyi üçündür.</p>
+              <p className="mt-2 text-center text-[11px] font-medium text-slate-400">{t('aiDisclaimer')}</p>
             </div>
           </motion.section>
         ) : null}
@@ -491,7 +483,7 @@ export default function FloatingKazanWidget() {
         onClick={() => setOpen((value) => !value)}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
-        aria-label={open ? 'KAZAN AI panelini bağla' : 'KAZAN AI panelini aç'}
+        aria-label={open ? t('closePanel') : t('openPanel')}
         className="ml-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-[var(--dk-gold)] shadow-2xl shadow-[var(--dk-navy)]/30 sm:h-16 sm:w-16"
       >
         {open ? <X size={26} /> : <MessageCircle size={26} />}

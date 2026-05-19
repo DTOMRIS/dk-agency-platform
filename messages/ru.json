@@ -1781,5 +1781,71 @@
     "benefit3Title": "Всегда бесплатно",
     "benefit3Desc": "Оплата не требуется, достаточно создать аккаунт",
     "footer": "бесплатный доступ · регистрация · 40% превью"
+  },
+  "kazanWidget": {
+    "welcome": "Привет. Я **KAZAN AI**. Объясняю food cost, P&L, AQTA, delivery и решения об открытии в цифрах.",
+    "prompt1": "Мой food cost — 38%. Как снизить до 30-32%?",
+    "prompt2": "На какие цифры в отчёте P&L ресторана смотреть в первую очередь?",
+    "prompt3": "Что нужно сделать на этой неделе, чтобы подготовиться к проверке AQTA?",
+    "prompt4": "Как сохранить прибыльность delivery-меню при комиссии Wolt и Bolt Food?",
+    "businessType": {
+      "restoran": "Ресторан",
+      "kafe": "Кафе",
+      "franchise": "Франшиза",
+      "diger": "Другое"
+    },
+    "toolAction": {
+      "pnl": "Рассчитать P&L",
+      "aqta": "Чеклист AQTA",
+      "delivery": "Рассчитать delivery",
+      "foodCost": "Рассчитать food cost"
+    },
+    "errorAiFailed": "KAZAN AI не смог ответить.",
+    "errorFallback": "Живой ответ сейчас задерживается. Измерьте проблему: запишите food cost, расходы на персонал, комиссию delivery и sales mix отдельно. Затем начните с соответствующего toolkit: [Toolkit](/toolkit).",
+    "leadGateRequired": "Чтобы продолжить ответ AI, нужно сначала сохранить контактные данные.",
+    "leadNamePhoneRequired": "Введите имя и телефон, затем продолжим.",
+    "leadSaveFailed": "Лид не сохранён.",
+    "leadSaveError": "Данные не сохранились. Проверьте формат телефона и попробуйте снова.",
+    "leadActionRequired": "Чтобы открыть этот шаг, сначала сохраните имя и телефон.",
+    "whatsappCta": "Написать в WhatsApp",
+    "meetingCta": "Запланировать встречу",
+    "getMeeting": "Получить встречу",
+    "subtitle": "Ассистент решений HoReCa",
+    "closePanel": "Закрыть панель KAZAN AI",
+    "openPanel": "Открыть панель KAZAN AI",
+    "leadFormTitle": "Чтобы дать более точный ответ:",
+    "leadFormDesc": "Сохраню имя, телефон и тип бизнеса, затем продолжу с вашим вопросом.",
+    "namePlaceholder": "Имя",
+    "phonePlaceholder": "+994 50 000 00 00",
+    "emailPlaceholder": "Email (необязательно)",
+    "continueBtn": "Продолжить",
+    "calculating": "KAZAN считает...",
+    "inputPlaceholder": "Например: food cost 38%, что делать?",
+    "sendMessage": "Отправить сообщение",
+    "aiDisclaimer": "Ответы AI предназначены для поддержки принятия решений.",
+    "contactPageFallback": "Пришёл со страницы контактов"
+  },
+  "dashboardSidebar": {
+    "title": "Панель управления OCAQ",
+    "role": "Администратор"
+  },
+  "kazanLeadActions": {
+    "updating": "Обновление...",
+    "nextStatus": "Далее: {status}",
+    "dismiss": "Отклонить"
+  },
+  "listingDetail": {
+    "loading": "Загрузка объявления...",
+    "notFound": "Объявление не найдено",
+    "notFoundDesc": "Объявления с таким ID не существует.",
+    "backToList": "Вернуться к списку",
+    "statusUpdated": "Статус обновлён.",
+    "noteNotAdded": "Заметка не добавлена.",
+    "noteSaved": "Заметка сохранена.",
+    "leadStatusUpdated": "Статус лида обновлён.",
+    "trackingCopied": "Код отслеживания скопирован.",
+    "backArrow": "← Вернуться к списку",
+    "yes": "Да",
+    "no": "Нет"
   }
 }

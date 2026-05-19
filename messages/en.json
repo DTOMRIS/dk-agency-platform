@@ -1783,5 +1783,71 @@
     "benefit3Title": "Always free",
     "benefit3Desc": "No payment required, just create an account",
     "footer": "free access · registration · 40% preview"
+  },
+  "kazanWidget": {
+    "welcome": "Hello. I am **KAZAN AI**. I explain food cost, P&L, AQTA, delivery and opening decisions with numbers.",
+    "prompt1": "My food cost is 38%. How do I bring it down to 30-32%?",
+    "prompt2": "Which numbers should I look at first in a restaurant P&L report?",
+    "prompt3": "What should I do this week to prepare for an AQTA inspection?",
+    "prompt4": "How do I keep my delivery menu profitable with Wolt and Bolt Food commission?",
+    "businessType": {
+      "restoran": "Restaurant",
+      "kafe": "Cafe",
+      "franchise": "Franchise",
+      "diger": "Other"
+    },
+    "toolAction": {
+      "pnl": "Calculate P&L",
+      "aqta": "AQTA checklist",
+      "delivery": "Calculate delivery",
+      "foodCost": "Calculate food cost"
+    },
+    "errorAiFailed": "KAZAN AI could not respond.",
+    "errorFallback": "Live response is delayed right now. Measure the problem: write food cost, labor cost, delivery commission and sales mix separately. Then start with the relevant toolkit: [Toolkit](/toolkit).",
+    "leadGateRequired": "To continue the AI response, I need to save your contact details first.",
+    "leadNamePhoneRequired": "Enter your name and phone, then we can continue.",
+    "leadSaveFailed": "Lead was not saved.",
+    "leadSaveError": "Data was not saved. Check the phone format and try again.",
+    "leadActionRequired": "To unlock this step, save your name and phone number first.",
+    "whatsappCta": "Message on WhatsApp",
+    "meetingCta": "Schedule a meeting",
+    "getMeeting": "Get a meeting",
+    "subtitle": "HoReCa decision assistant",
+    "closePanel": "Close KAZAN AI panel",
+    "openPanel": "Open KAZAN AI panel",
+    "leadFormTitle": "To give you a more accurate answer:",
+    "leadFormDesc": "Let me save your name, phone and business type, then continue with your question.",
+    "namePlaceholder": "Name",
+    "phonePlaceholder": "+994 50 000 00 00",
+    "emailPlaceholder": "Email (optional)",
+    "continueBtn": "Continue",
+    "calculating": "KAZAN is calculating...",
+    "inputPlaceholder": "E.g.: food cost 38%, what should I do?",
+    "sendMessage": "Send message",
+    "aiDisclaimer": "AI responses are for decision support purposes.",
+    "contactPageFallback": "Came from contact page"
+  },
+  "dashboardSidebar": {
+    "title": "OCAQ Admin Panel",
+    "role": "Admin"
+  },
+  "kazanLeadActions": {
+    "updating": "Updating...",
+    "nextStatus": "Next: {status}",
+    "dismiss": "Dismiss"
+  },
+  "listingDetail": {
+    "loading": "Loading listing...",
+    "notFound": "Listing not found",
+    "notFoundDesc": "No matching listing exists for this ID.",
+    "backToList": "Back to listings",
+    "statusUpdated": "Status updated.",
+    "noteNotAdded": "Note was not added.",
+    "noteSaved": "Note saved.",
+    "leadStatusUpdated": "Lead status updated.",
+    "trackingCopied": "Tracking code copied.",
+    "backArrow": "← Back to listings",
+    "yes": "Yes",
+    "no": "No"
   }
 }

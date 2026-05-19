@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0157] fix(i18n): dashboard sidebar + KAZAN widget + elan detay — 48 key, 4 dil, hardcoded→useTranslations`
 - `[TASK-0155] fix(config): 3 slug uyğunsuzluğu düzəlişi — config slug-lar public route adlarına uyğunlaşdırıldı`
 - `[TASK-0154] feat(news): pulsuz qeydiyyat-gate — blog + xəbərlər 40% scroll, i18n 4 dil, emerald UI`
 - `[TASK-0153] fix(pricing): tool status truth + USTA 149→99 AZN + açılış kampaniyası (1 Sent 2026) + planned/live filter`

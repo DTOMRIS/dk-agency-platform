@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 type LeadStatus = 'new' | 'contacted' | 'qualified' | 'converted' | 'dismissed';
 
@@ -22,6 +23,7 @@ export default function KazanLeadStatusActions({
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const t = useTranslations('kazanLeadActions');
   const nextStatus = nextStatusMap[status];
 
   async function updateStatus(value: LeadStatus) {
@@ -47,7 +49,7 @@ export default function KazanLeadStatusActions({
           onClick={() => void updateStatus(nextStatus)}
           className="rounded-full bg-[var(--dk-red)] px-3 py-2 text-xs font-bold text-white disabled:opacity-60"
         >
-          {loading ? 'Yenilənir...' : `Növbəti: ${nextStatus}`}
+          {loading ? t('updating') : t('nextStatus', { status: nextStatus })}
         </button>
       ) : null}
       {status !== 'dismissed' ? (
@@ -57,7 +59,7 @@ export default function KazanLeadStatusActions({
           onClick={() => void updateStatus('dismissed')}
           className="rounded-full border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 disabled:opacity-60"
         >
-          Dismiss
+          {t('dismiss')}
         </button>
       ) : null}
     </div>
