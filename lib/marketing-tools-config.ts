@@ -142,27 +142,6 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
-    slug: 'menyu-analitik',
-    category: 'analitika',
-    tier: 'kalfa',
-    iconName: 'UtensilsCrossed',
-    status: 'live',
-    aiProvider: 'deepseek',
-    externalApis: [],
-    inputSchema: {
-      fields: [
-        { name: 'menuItems', type: 'textarea', required: true },
-        { name: 'category', type: 'select', required: true, options: [] },
-        { name: 'avgFoodCostPercent', type: 'number', required: true },
-      ],
-    },
-    monthlyRunLimit: { sagird: 0, kalfa: 10, usta: null },
-    estimatedCostAznPerRun: 0.0003,
-  },
-
-  // ── KALFA PILLESI (12 alət, 89 AZN/ay) ───────────────────────────
-
-  {
     slug: 'yemek-xerci',
     category: 'maliyye',
     tier: 'sagird',
@@ -181,6 +160,27 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     },
     monthlyRunLimit: { sagird: null, kalfa: null, usta: null },
     estimatedCostAznPerRun: 0,
+  },
+
+  // ── KALFA PILLESI (12 alət, 89 AZN/ay) ───────────────────────────
+
+  {
+    slug: 'menyu-analitik',
+    category: 'analitika',
+    tier: 'kalfa',
+    iconName: 'UtensilsCrossed',
+    status: 'live',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'menuItems', type: 'textarea', required: true },
+        { name: 'category', type: 'select', required: true, options: [] },
+        { name: 'avgFoodCostPercent', type: 'number', required: true },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 10, usta: null },
+    estimatedCostAznPerRun: 0.0003,
   },
 
   {
@@ -248,27 +248,6 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
-    slug: 'pl-simulyatoru',
-    category: 'maliyye',
-    tier: 'usta',
-    iconName: 'Calculator',
-    status: 'live',
-    aiProvider: 'deepseek',
-    externalApis: [],
-    inputSchema: {
-      fields: [
-        { name: 'revenue', type: 'number', required: true },
-        { name: 'foodCost', type: 'number', required: true },
-        { name: 'laborCost', type: 'number', required: true },
-        { name: 'rent', type: 'number', required: true },
-        { name: 'otherExpenses', type: 'number', required: false },
-      ],
-    },
-    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: null },
-    estimatedCostAznPerRun: 0.0003,
-  },
-
-  {
     slug: 'sikayet-analitigi',
     category: 'musteri',
     tier: 'kalfa',
@@ -322,34 +301,6 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
       ],
     },
     monthlyRunLimit: { sagird: 0, kalfa: 20, usta: null },
-    estimatedCostAznPerRun: 0.0005,
-  },
-
-  {
-    slug: 'musteri-persona',
-    category: 'musteri',
-    tier: 'usta',
-    iconName: 'UserCircle',
-    status: 'live',
-    aiProvider: 'deepseek',
-    externalApis: [],
-    inputSchema: {
-      fields: [
-        { name: 'restaurantType', type: 'select', required: true },
-        { name: 'city', type: 'select', required: true },
-        { name: 'avgCheckRange', type: 'select', required: true },
-        { name: 'serviceModels', type: 'multi-select', required: true },
-        { name: 'ageRanges', type: 'multi-select', required: true },
-        { name: 'genderFemalePercent', type: 'number', required: true },
-        { name: 'visitTimes', type: 'multi-select', required: false },
-        { name: 'visitFrequency', type: 'select', required: false },
-        { name: 'tableSize', type: 'select', required: false },
-        { name: 'paymentMethods', type: 'multi-select', required: false },
-        { name: 'arrivalMethods', type: 'multi-select', required: false },
-        { name: 'notes', type: 'textarea', required: false },
-      ],
-    },
-    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: null },
     estimatedCostAznPerRun: 0.0005,
   },
 
@@ -503,6 +454,55 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   // ── USTA PILLESI (6 alət: 2 live + 4 planned, 99 AZN/ay) ────────
+
+  {
+    slug: 'pl-simulyatoru',
+    category: 'maliyye',
+    tier: 'usta',
+    iconName: 'Calculator',
+    status: 'live',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'revenue', type: 'number', required: true },
+        { name: 'foodCost', type: 'number', required: true },
+        { name: 'laborCost', type: 'number', required: true },
+        { name: 'rent', type: 'number', required: true },
+        { name: 'otherExpenses', type: 'number', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: null },
+    estimatedCostAznPerRun: 0.0003,
+  },
+
+  {
+    slug: 'musteri-persona',
+    category: 'musteri',
+    tier: 'usta',
+    iconName: 'UserCircle',
+    status: 'live',
+    aiProvider: 'deepseek',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'restaurantType', type: 'select', required: true },
+        { name: 'city', type: 'select', required: true },
+        { name: 'avgCheckRange', type: 'select', required: true },
+        { name: 'serviceModels', type: 'multi-select', required: true },
+        { name: 'ageRanges', type: 'multi-select', required: true },
+        { name: 'genderFemalePercent', type: 'number', required: true },
+        { name: 'visitTimes', type: 'multi-select', required: false },
+        { name: 'visitFrequency', type: 'select', required: false },
+        { name: 'tableSize', type: 'select', required: false },
+        { name: 'paymentMethods', type: 'multi-select', required: false },
+        { name: 'arrivalMethods', type: 'multi-select', required: false },
+        { name: 'notes', type: 'textarea', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: null },
+    estimatedCostAznPerRun: 0.0005,
+  },
 
   {
     slug: 'sosial-medya-plan',

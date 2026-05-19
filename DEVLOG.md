@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-19 - TASK-0156 Config Fayl Reorqanizasiyası
+
+**Why:** 4 tool fiziki olaraq yanlış komment bölməsində idi (menyu-analitik ŞAGIRD-da, yemek-xerci/pl-simulyatoru/musteri-persona KALFA-da). Kod düzgün işləyirdi (tier field əsas), amma developer oxunaqlığı pozulurdu.
+
+**Fix:** 4 tool obyekti olduğu kimi (heç bir dəyər dəyişmədən) doğru tier bölməsinə köçürüldü. 1 fayl, 70→70 reorder, 0 dəyər dəyişikliyi.
+
 ## 2026-05-19 - TASK-0157 Dashboard i18n Fix (Launch-Blocker)
 
 **Why:** 3 dashboard area had hardcoded AZ-only strings: FloatingKazanWidget (~25 strings), DashboardLayout (2), KazanLeadStatusActions (3), ilanlar detail page (~10 toasts/UI). Multi-lang users saw AZ-only content.
