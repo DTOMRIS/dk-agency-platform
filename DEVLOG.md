@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-20 - TASK-0111 ComplaintAnalysis lint fix
+
+**Why:** `components/marketinq/ComplaintAnalysis.tsx` initialized localStorage history by calling `setHistory()` synchronously inside a mount effect. React lint flagged this as `react-hooks/set-state-in-effect`, blocking quality gates for unrelated PRs.
+
+**What:** History loading moved into a guarded `useState` lazy initializer. The same `dk_complaint_analysis_history` localStorage key is used, and save/clear behavior is unchanged.
+
+**Scope:** Only the ComplaintAnalysis hook initialization was changed. UI, form flow, server action, protected files, and other lint warnings were not touched.
+
+---
+
 ## 2026-05-20 - TASK-0108 KAZAN AI Page i18n
 
 **Why:** `/tr/kazan-ai`, `/en/kazan-ai`, and `/ru/kazan-ai` reused the flat `/kazan-ai` page and rendered AZ hardcoded UI copy. The floating KAZAN widget was already Pattern A; the full page was still Pattern C.
