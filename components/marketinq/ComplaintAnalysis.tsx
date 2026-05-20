@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import {
@@ -35,6 +35,17 @@ type HistoryItem = {
 };
 
 const HISTORY_KEY = 'dk_complaint_analysis_history';
+
+function readStoredHistory(): HistoryItem[] {
+  if (typeof window === 'undefined') return [];
+
+  try {
+    const stored = window.localStorage.getItem(HISTORY_KEY);
+    return stored ? (JSON.parse(stored) as HistoryItem[]) : [];
+  } catch {
+    return [];
+  }
+}
 
 const CHANNELS: ComplaintChannel[] = ['face_to_face', 'phone', 'whatsapp', 'google_maps', 'instagram', 'other'];
 const CUSTOMER_TYPES: CustomerType[] = ['first_time', 'regular', 'unknown'];
@@ -146,21 +157,12 @@ export default function ComplaintAnalysis({ backHref = '/dashboard/marketinq-oca
   const [result, setResult] = useState<ComplaintAnalysisResult | null>(null);
   const [activeTab, setActiveTab] = useState<ActiveTab>('response');
   const [error, setError] = useState<string | null>(null);
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [history, setHistory] = useState<HistoryItem[]>(readStoredHistory);
   const [isPending, startTransition] = useTransition();
 
   const detectedCategories = useMemo(() => detectCategories(complaintText), [complaintText]);
   const instantSeverity = useMemo(() => estimateSeverity(detectedCategories, complaintText), [detectedCategories, complaintText]);
   const canAnalyze = complaintText.trim().length >= 20 && complaintText.trim().length <= 1000;
-
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(HISTORY_KEY);
-      if (stored) setHistory(JSON.parse(stored) as HistoryItem[]);
-    } catch {
-      setHistory([]);
-    }
-  }, []);
 
   function saveHistory(next: HistoryItem[]) {
     setHistory(next);
