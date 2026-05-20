@@ -10,6 +10,7 @@ import { DoganNote, JoinCTA } from '@/components/CTASections';
 import Hero from '@/components/Hero';
 import NewsPreview from '@/components/NewsPreview';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
+import { PlatformCards } from '@/components/home/PlatformCards';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
@@ -150,6 +151,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <Hero />
+      <PlatformCards />
       <ToolkitShowcase />
 
       <section className="bg-white py-20">
