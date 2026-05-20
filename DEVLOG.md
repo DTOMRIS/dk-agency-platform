@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-20 - TASK-0107 B2B Panel Auth Guard
+
+**Why:** `/b2b-panel/*` rendered without a server-side auth check. Public visitors could see the mock B2B portal shell and mock listings. Dashboard routes were already guarded separately.
+
+**What:** `app/b2b-panel/layout.tsx` now calls `getServerMemberSession()` from `@/lib/members/server-session` before rendering the sidebar/shell. If `session.loggedIn` is false, it redirects to `/auth/login`. `[locale]/b2b-panel/layout.tsx` is a re-export, so locale-prefixed B2B routes use the same guard.
+
+**Scope:** `lib/member-access.ts`, `lib/members/server-session.ts`, `middleware.ts`, dashboard routes, and member auth APIs were not changed.
+
+---
+
 ## 2026-05-20 - TASK-0106 Trust Layer (DoganNote Pattern A + AhilikValues)
 
 **Why:** Homepage-dəki DoganNote CTASections.tsx-in içindəki Pattern C (inline copyByLocale) komponent idi. L-004 qaydası: yeni komponent = Pattern A. Ahilik dəyərləri isə platformanın marka kimliyi — 3-kart vizualı ilə ayrıca section olaraq əlavə edildi.
