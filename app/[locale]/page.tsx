@@ -6,11 +6,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import dynamic from 'next/dynamic';
-import { DoganNote, JoinCTA } from '@/components/CTASections';
+import { JoinCTA } from '@/components/CTASections';
 import Hero from '@/components/Hero';
 import NewsPreview from '@/components/NewsPreview';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
 import { PlatformCards } from '@/components/home/PlatformCards';
+import { DoganNote } from '@/components/home/DoganNote';
+import { AhilikValues } from '@/components/home/AhilikValues';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
@@ -179,6 +181,7 @@ export default function Home() {
       </section>
 
       <DoganNote />
+      <AhilikValues />
       <StageSelector />
 
       <section className="bg-slate-50 py-16 sm:py-20 lg:py-24">

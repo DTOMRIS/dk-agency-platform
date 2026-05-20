@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-20 - TASK-0106 Trust Layer (DoganNote Pattern A + AhilikValues)
+
+**Why:** Homepage-dəki DoganNote CTASections.tsx-in içindəki Pattern C (inline copyByLocale) komponent idi. L-004 qaydası: yeni komponent = Pattern A. Ahilik dəyərləri isə platformanın marka kimliyi — 3-kart vizualı ilə ayrıca section olaraq əlavə edildi.
+
+**What:** `components/home/DoganNote.tsx` yaradıldı (useTranslations, 2-col grid, 3 abzas, 2 CTA). `components/home/AhilikValues.tsx` yaradıldı (3-card grid, lucide icons, gold #C5A022). CTASections.tsx-dən köhnə DoganNote funksiyası + Image import-u silindi; JoinCTA toxunulmadı. `app/[locale]/page.tsx`-ə insert: ToolkitShowcase → "Necə işləyir" → DoganNote → AhilikValues → StageSelector. 14 key × 4 dil (az/en/tr/ru) `home.doganNote` + `home.ahilikValues` namespace-lərinə əlavə edildi.
+
+**Encoding fix:** Köhnə CTASections.tsx smart quotes (U+2018/U+2019) ilə idi — Turbopack build fail edirdi. Python ilə straight quote-a çevrildi.
+
+**Build:** PASS (0 error). tsc yeni xəta: 0 (köhnə 15 xəta əvvəldən var).
+
+---
+
 ## 2026-05-20 - TASK-0105 Homepage Platform 3-Card Section
 
 **Why:** Homepage-ə platforma ekosistemini göstərən yeni section lazım idi. KAZAN AI, Toolkit, OCAQ kartları bir arada deyildi.

@@ -2826,6 +2826,33 @@
         "body": "Lead management, invoice OCR, food cost dashboard, multilingual admin — your restaurant team in one place.",
         "cta": "Enter OCAQ"
       }
+    },
+    "doganNote": {
+      "eyebrow": "From the Founder",
+      "title": "Why DK Agency?",
+      "founderRole": "Founder",
+      "body1": "Thousands of restaurant owners in Azerbaijan and Turkey ask the same questions — why did food cost climb, why does the menu not sell, why does staff not stay. The answer lives inside every restaurant, but there is no time, no tool, no shared language.",
+      "body2": "DK Agency is the shared language of these kitchens. KAZAN answers questions, Toolkit calculates, OCAQ manages. All three work like the hand of one master — unhurried, precise, always on your side.",
+      "body3": "I learned this trade over 10+ years inside real restaurants — failures and victories alike. My promise: what you find here is not a tool being sold, it is an extension of your kitchen. — Doğan Tomris, founder",
+      "ctaPrimary": "Talk to KAZAN",
+      "ctaSecondary": "Open Toolkit"
+    },
+    "ahilikValues": {
+      "eyebrow": "Ahilik / Əxilik",
+      "title": "700 years of values, dressed in digital",
+      "subtitle": "The Anatolian guild tradition of craftsmen and entrepreneurs is our core principle.",
+      "mastery": {
+        "name": "Mastery",
+        "desc": "Every trade's secret is learned from a master — we share that experience on the shortest path."
+      },
+      "generosity": {
+        "name": "Cavanmərdlik",
+        "desc": "Knowledge is not hoarded, it is shared. Our gain is the gain of the whole ecosystem."
+      },
+      "integrity": {
+        "name": "Integrity",
+        "desc": "The ŞEDD mark we grant requires honesty as a condition — we gave our word, and we keep it."
+      }
     }
   }
 }

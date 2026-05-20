@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0106] feat(home): trust layer — DoganNote (Pattern A, ayrı komponent) + AhilikValues 3-card — 14 key × 4 dil, "Necə işləyir" sonrası, StageSelector öncəsi`
 - `[TASK-0105] feat(home): platform 3-card section KAZAN+Toolkit+OCAQ (Pattern A, brand colors) — 15 key × 4 dil, Hero altı, ToolkitShowcase üstü`
 - `[TASK-0142] feat(marketinq): complaint analysis tool — AI + keşf sualları + kanal-aware cavab`
 - `[TASK-0103] feat(i18n): toolkit batch3 FINAL — aqta+insaat+checklist (390 key, 4 dil) — 11/11 toolkit complete`
