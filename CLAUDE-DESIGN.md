@@ -220,6 +220,7 @@ CI/CD workflow (GitHub Actions):
 
 ## 11. ÖYRƏNILƏN DƏRSLƏR (POZMA!)
 
+<<<<<<< HEAD
 ### TASK-0141 Menyu Analitiği formula
 Menyu mühəndisliyi BCG matrisi yalnız verilən rəqəmlərlə hesablanır:
 - Contribution Margin = Satış qiyməti - Yemək məsrəfi
@@ -347,6 +348,17 @@ Benchmark qaydası:
 - Payback <180 gün restoran üçün ideal
 
 Pattern: kanal cədvəli ROI%-ə görə azalan sıralanır, ən yaxşı kanal gold highlight, ən pis kanal solğun göstərilir. AI yalnız büdcə yenidən bölüşdürmə tövsiyəsi verir; hesablamanı AI etmir. DeepSeek çağırışı server action-da qalmalıdır; `DEEPSEEK_API_KEY` client bundle-a düşməməlidir.
+
+### TASK-0142 Şikayət ele alınma biçimi
+Şikayət alətlərində əsas fəlsəfə: müştəri çox vaxt yalnız problemin səbəbindən yox, problemin necə ele alınmasından narazı qalır. Ona görə AI cavabı birbaşa "üzr istəyirik" şablonu olmamalıdır.
+
+Pattern:
+- Əvvəl şikayəti adlandır.
+- Sonra konkret addımı və sahibini göstər.
+- Cavabdan əvvəl kəşf sualları çıxar: gün/saat, stol/zona, işçi, əvvəl gəlib-gəlmədiyi, başqa marka ilə müqayisə edib-etmədiyi, kanal konteksti.
+- Daxili qeyddə CAPA mütləq olmalıdır: araşdırma, bağlama kriteriyası, düzəldici fəaliyyət, önləyici fəaliyyət, 7-14 günlük təkrar yoxlaması.
+- Google/Instagram kimi public kanallarda cavab həm müştəriyə, həm də oxuyan üçün güvən yaratmalıdır.
+- AI açarı server action-da qalmalıdır; client yalnız strukturlaşmış nəticə görməlidir.
 
 ### AzHealth dərsi (5 gün, 57 commit)
 "Field-by-field hazırdır" denildi, müştəri veri işləməyə başlayanda hər şeyin mock olduğu ortaya çıxdı.
