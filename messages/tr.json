@@ -2800,5 +2800,30 @@
     "backArrow": "← İlan listesine dön",
     "yes": "Evet",
     "no": "Hayır"
+  },
+  "home": {
+    "platformCards": {
+      "eyebrow": "Platform",
+      "heading": "Üç araç, bir ekosistem",
+      "subheading": "KAZAN sorar, Toolkit hesaplar, OCAQ yönetir — Ahilik dijital kıyafette.",
+      "kazan": {
+        "title": "KAZAN AI",
+        "subtitle": "Restoran uzmanı chatbot",
+        "body": "7/24 usta görüşü — food cost, menü, personel yönetimi sorularına anında cevap. WhatsApp aktarımı hazır.",
+        "cta": "KAZAN ile konuş"
+      },
+      "toolkit": {
+        "title": "Toolkit",
+        "subtitle": "11 hesaplama aracı",
+        "body": "P&L Simülatör, Food Cost, Menü Matrisi, AQTA Checklist ve dahası — açılış kampanyasında ücretsiz.",
+        "cta": "Araçlara bak"
+      },
+      "ocaq": {
+        "title": "OCAQ",
+        "subtitle": "İşletme paneli",
+        "body": "Lead yönetimi, fatura OCR, food cost dashboard, çok dilli admin — restoranın ekibi bir arada.",
+        "cta": "OCAQ'a gir"
+      }
+    }
   }
 }

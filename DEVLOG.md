@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-20 - TASK-0105 Homepage Platform 3-Card Section
+
+**Why:** Homepage-ə platforma ekosistemini göstərən yeni section lazım idi. KAZAN AI, Toolkit, OCAQ kartları bir arada deyildi.
+
+**What:** `components/home/PlatformCards.tsx` yaradıldı — Pattern A (useTranslations), framer-motion fade-in-up, brand rənglər (navy #1A1A2E, gold #C5A022, red #E94560). Hero-dan sonra, ToolkitShowcase-dən əvvəl insert edildi. 15 key × 4 dil (az/en/tr/ru) əlavə olundu `home.platformCards` namespace altında.
+
+**Routes confirmed:** `/kazan-ai`, `/toolkit`, `/dashboard/ilanlar` — hamısı mövcuddur, 404 yoxdur.
+
+**Build:** PASS (✓ Compiled successfully).
+
+---
+
 <<<<<<< HEAD
 ## 2026-05-20 - TASK-0103 Toolkit i18n Batch 3 FINAL (aqta + insaat + checklist)
 

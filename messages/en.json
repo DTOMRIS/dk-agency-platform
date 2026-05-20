@@ -2802,5 +2802,30 @@
     "backArrow": "← Back to listings",
     "yes": "Yes",
     "no": "No"
+  },
+  "home": {
+    "platformCards": {
+      "eyebrow": "Platform",
+      "heading": "Three tools, one ecosystem",
+      "subheading": "KAZAN asks, Toolkit calculates, OCAQ manages — Ahilik in digital form.",
+      "kazan": {
+        "title": "KAZAN AI",
+        "subtitle": "Restaurant expert chatbot",
+        "body": "24/7 master advice — instant answers on food cost, menu engineering, and staff management. WhatsApp handoff ready.",
+        "cta": "Talk to KAZAN"
+      },
+      "toolkit": {
+        "title": "Toolkit",
+        "subtitle": "11 calculation tools",
+        "body": "P&L Simulator, Food Cost, Menu Matrix, AQTA Checklist and more — free during launch campaign.",
+        "cta": "View tools"
+      },
+      "ocaq": {
+        "title": "OCAQ",
+        "subtitle": "Owner dashboard",
+        "body": "Lead management, invoice OCR, food cost dashboard, multilingual admin — your restaurant team in one place.",
+        "cta": "Enter OCAQ"
+      }
+    }
   }
 }
