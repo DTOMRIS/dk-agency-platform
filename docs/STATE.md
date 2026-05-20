@@ -3,24 +3,8 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-20T11:22:15.836Z
+- GeneratedAt: 2026-05-20T13:44:08.168Z
 - BuildStatus: PASS
-
-## Homepage Sections (order)
-1. Hero
-2. PlatformCards [TASK-0105] — KAZAN AI / Toolkit / OCAQ (3-card, Pattern A)
-3. ToolkitShowcase
-4. How It Works
-5. DoganNote
-6. StageSelector
-7. Blog Preview
-8. NewsPreview
-9. B2B Listings
-10. AdsPreview
-11. JoinCTA
-
-## i18n Namespaces Added (TASK-0105)
-- `home.platformCards` — 15 keys × 4 locales (az/en/tr/ru)
 
 ## Routes (144)
 - /[locale]
