@@ -56,6 +56,12 @@ Bu sənəd hər Claude Code sessiyasının başlanğıcında CLAUDE.md tərəfin
 - **Qayda:** Server-side member guard üçün helper `@/lib/members/server-session`-dədir. `getServerMemberSession()` null qaytarmır; guest halda `{ loggedIn: false }` qaytarır. Null check silent fail edə bilər.
 - **Nəticə:** B2B panel layout `session.loggedIn` yoxlayır və guest-i `/auth/login`-ə redirect edir. Protected fayllar (`lib/member-access.ts`, `middleware.ts`) toxunulmadı.
 
+## L-011: Locale re-export page metadata
+- **Səhv:** `/[locale]/kazan-ai` flat `/kazan-ai` page-ni re-export edirdi; UI ilə birlikdə AZ metadata da miras qalırdı.
+- **Kök səbəb:** Component i18n yetərli deyil; route metadata ayrıca locale-aware olmalıdır.
+- **Qayda:** Locale route üçün `generateMetadata({ params })` + `getTranslations({ locale, namespace })` istifadə et. Flat route yalnız default locale fallback kimi qalsın.
+- **Nəticə:** KAZAN AI UI Pattern A oldu, metadata da locale-aware edildi. System prompt dili ayrı task kimi saxlanıldı.
+
 ## L-008: Köhnə sessiya pattern tələsi
 - **Səhv:** TASK-0148 PR-sız birbaşa main-ə push olundu (`git push --no-verify`)
 - **Kök səbəb:** Agent köhnə sessiya tasklarına (TASK-0144/0145 PR-sız idi) baxıb onları nümunə götürdü. 5-qat control (PR #129) o tasklardan SONRA qurulmuşdu.

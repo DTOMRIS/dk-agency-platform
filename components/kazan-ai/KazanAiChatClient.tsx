@@ -6,25 +6,17 @@ import { FormEvent, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ArrowRight, Bot, Loader2, Send, Sparkles } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 type Message = {
   role: 'user' | 'assistant';
   content: string;
 };
 
-const SAMPLE_QUESTIONS = [
-  'Food cost-um %38, nə etməliyəm?',
-  'P&L necə oxunur?',
-  'AQTA yoxlamasına necə hazırlaşım?',
-  'Wolt komissiyon riyaziyyatı',
-  'Menyu neçə yemək olmalıdır?',
-];
-
-const INITIAL_ASSISTANT =
-  'Salam. Mən **KAZAN AI**-yam. Food cost, P&L, AQTA, delivery, açılış və marka qərarlarını Azərbaycan HoReCa reallığına görə şərh edirəm.\n\nBaşlamaq üçün belə soruş:\n- Food cost-um %38-dir, nə etməliyəm?\n- P&L-də ilk hansı rəqəmə baxım?\n- Delivery menyusunu necə mənfəətli edim?\n\nToolkit: [Food Cost kalkulyatoru](/toolkit/food-cost)\nBlog: [Food Cost yazısı](/blog/1-porsiya-food-cost-hesablama)';
-
 export default function KazanAiChatClient() {
-  const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: INITIAL_ASSISTANT }]);
+  const t = useTranslations('kazanAi');
+  const sampleQuestions = [t('samples.0'), t('samples.1'), t('samples.2'), t('samples.3'), t('samples.4')];
+  const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: t('chat.initialMessage') }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [lastSentAt, setLastSentAt] = useState(0);
@@ -36,7 +28,7 @@ export default function KazanAiChatClient() {
     const now = Date.now();
     const waitMs = 3000 - (now - lastSentAt);
     if (waitMs > 0) {
-      setThrottleError(`${Math.ceil(waitMs / 1000)} saniyə gözlə, sonra yenidən göndər.`);
+      setThrottleError(t('errors.throttle', { seconds: Math.ceil(waitMs / 1000) }));
       return;
     }
 
@@ -56,7 +48,7 @@ export default function KazanAiChatClient() {
 
       const payload = (await response.json()) as { message?: string; error?: string };
       if (!response.ok || !payload.message) {
-        throw new Error(payload.error || 'Server xətası');
+        throw new Error(payload.error || t('errors.server'));
       }
 
       setMessages((prev) => [...prev, { role: 'assistant', content: payload.message || '' }]);
@@ -65,8 +57,7 @@ export default function KazanAiChatClient() {
         ...prev,
         {
           role: 'assistant',
-          content:
-            'Hazırda server tərəfdə AI bağlantısı əlçatan deyil. Yenə də ölçünü itirmə:\n\n1. Problemi ölç\n2. Uyğun toolkit-i işə sal\n3. Sonra qərarı ver və ya görüş təyin et\n\nToolkit: [Bütün alətlər](/toolkit)\nBlog: [Bloq bölməsi](/blog)\nKonsultasiya: [DK Agency ilə görüş](/elaqe)',
+          content: t('errors.aiUnavailable'),
         },
       ]);
       if (error instanceof Error) console.error(error);
@@ -86,13 +77,13 @@ export default function KazanAiChatClient() {
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[var(--dk-navy)] px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-white">
             <Sparkles size={14} />
-            KAZAN AI Beta
+            {t('hero.badge')}
           </div>
           <h1 className="max-w-3xl text-4xl font-display font-black tracking-tight text-slate-900 sm:text-5xl">
-            KAZAN AI — Restoranının AI danışmanı
+            {t('hero.title')}
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-            KAZAN AI food cost, P&L, AQTA, delivery və açılış qərarlarını tək cavabla deyil, növbəti düzgün addımla verir.
+            {t('hero.intro')}
           </p>
         </div>
       </div>
@@ -105,12 +96,12 @@ export default function KazanAiChatClient() {
                 <Bot size={22} />
               </div>
               <div>
-                <div className="text-sm font-black uppercase tracking-[0.18em] text-[var(--dk-gold)]">Canlı Chat</div>
+                <div className="text-sm font-black uppercase tracking-[0.18em] text-[var(--dk-gold)]">{t('chat.header')}</div>
                 <div className="text-lg font-bold text-white">KAZAN AI</div>
               </div>
             </div>
             <Link href="/toolkit" className="text-sm font-bold text-[var(--dk-gold)] transition-colors hover:text-amber-200">
-              Toolkit →
+              {t('chat.toolkitLabel')}
             </Link>
           </div>
 
@@ -161,7 +152,7 @@ export default function KazanAiChatClient() {
               <div className="flex justify-start">
                 <div className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">
                   <Loader2 size={16} className="animate-spin" />
-                  KAZAN düşünür...
+                  {t('chat.loading')}
                 </div>
               </div>
             )}
@@ -172,7 +163,7 @@ export default function KazanAiChatClient() {
               <textarea
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
-                placeholder="Məsələn: Food cost-um %38-dir, 30%-ə necə düşürəm?"
+                placeholder={t('chat.placeholder')}
                 rows={3}
                 className="min-h-[84px] flex-1 resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
               />
@@ -181,7 +172,7 @@ export default function KazanAiChatClient() {
                 disabled={loading || !input.trim()}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--dk-red)] px-5 py-4 text-sm font-bold text-white transition-colors hover:bg-rose-600 disabled:cursor-not-allowed disabled:bg-slate-300"
               >
-                Göndər
+                {t('chat.sendButton')}
                 <Send size={16} />
               </button>
             </div>
@@ -192,7 +183,7 @@ export default function KazanAiChatClient() {
         <aside className="space-y-6">
           <Image
             src="/images/ai-consulting.png"
-            alt="KAZAN AI konsultasiya illüstrasiyası"
+            alt={t('chat.imageAlt')}
             width={420}
             height={320}
             priority
@@ -200,9 +191,9 @@ export default function KazanAiChatClient() {
           />
 
           <div className="rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-[var(--dk-gold)]">Nümunə suallar</div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-[var(--dk-gold)]">{t('sidebar.heading')}</div>
             <div className="mt-4 space-y-3">
-              {SAMPLE_QUESTIONS.map((question) => (
+              {sampleQuestions.map((question) => (
                 <button
                   key={question}
                   onClick={() => void sendMessage(question)}
@@ -215,30 +206,30 @@ export default function KazanAiChatClient() {
           </div>
 
           <div className="rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">İnteqrasiya</div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">{t('sidebar.integrationHeading')}</div>
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              Food Cost kalkulyatorunu sınadın? Nəticəni burada paylaş və KAZAN-dan onu necə yaxşılaşdıracağını soruş.
+              {t('sidebar.body')}
             </p>
             <div className="mt-4 space-y-3">
               <Link href="/toolkit/food-cost" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-900 transition-colors hover:bg-slate-100">
-                Food Cost kalkulyatoru
+                {t('sidebar.toolLinks.foodCost')}
               </Link>
               <Link href="/toolkit/pnl" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-900 transition-colors hover:bg-slate-100">
-                P&L simulyatoru
+                {t('sidebar.toolLinks.pnl')}
               </Link>
               <Link href="/toolkit/delivery-calc" className="block rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-900 transition-colors hover:bg-slate-100">
-                Delivery kalkulyatoru
+                {t('sidebar.toolLinks.delivery')}
               </Link>
             </div>
           </div>
 
           <div className="rounded-[1.6rem] border border-[var(--dk-red)]/20 bg-rose-50 p-6 shadow-sm">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-[var(--dk-red)]">Satış layer</div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-[var(--dk-red)]">{t('sales.heading')}</div>
             <p className="mt-3 text-sm leading-6 text-slate-700">
-              KAZAN AI problemi ölçməyə kömək edir. Sistem qurmaq, audit etmək və nəticəni real mənfəətə çevirmək üçün növbəti addım danışmanlıqdır.
+              {t('sales.body')}
             </p>
             <Link href="/elaqe" className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[var(--dk-red)] transition-colors hover:text-rose-700">
-              DK Agency ilə görüş
+              {t('sales.cta')}
               <ArrowRight size={16} />
             </Link>
           </div>

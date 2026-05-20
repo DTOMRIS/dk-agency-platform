@@ -2735,6 +2735,53 @@
     "benefit3Desc": "Оплата не требуется, достаточно создать аккаунт",
     "footer": "бесплатный доступ · регистрация · 40% превью"
   },
+  "kazanAi": {
+    "metadata": {
+      "title": "KAZAN AI — ваш HoReCa-консультант",
+      "description": "AI-поддержка для ресторанных операций, food cost, P&L, AQTA и решений по меню."
+    },
+    "hero": {
+      "badge": "KAZAN AI Beta",
+      "title": "KAZAN AI — AI-консультант вашего ресторана",
+      "intro": "KAZAN AI помогает с food cost, P&L, AQTA, delivery и решениями по запуску: не просто отвечает, а показывает следующий правильный шаг."
+    },
+    "chat": {
+      "header": "Живой чат",
+      "toolkitLabel": "Toolkit →",
+      "loading": "KAZAN думает...",
+      "placeholder": "Например: food cost 38%. Как снизить до 30%?",
+      "sendButton": "Отправить",
+      "imageAlt": "Иллюстрация консультации KAZAN AI",
+      "initialMessage": "Привет. Я **KAZAN AI**. Объясняю food cost, P&L, AQTA, delivery, запуск и бренд-решения для реальных HoReCa-операций.\n\nНачните с вопроса:\n- Food cost 38%. Что делать?\n- На какую цифру в P&L смотреть первой?\n- Как сделать delivery-меню прибыльным?\n\nToolkit: [Калькулятор Food Cost](/toolkit/food-cost)\nBlog: [Статья о Food Cost](/blog/1-porsiya-food-cost-hesablama)"
+    },
+    "samples": {
+      "0": "Food cost 38%. Что делать?",
+      "1": "Как читать P&L?",
+      "2": "Как подготовиться к проверке AQTA?",
+      "3": "Математика комиссии Wolt",
+      "4": "Сколько блюд должно быть в меню?"
+    },
+    "errors": {
+      "throttle": "Подождите {seconds} сек. и отправьте снова.",
+      "server": "Ошибка сервера",
+      "aiUnavailable": "AI-соединение на сервере сейчас недоступно. Но не теряйте управляемость:\n\n1. Измерьте проблему\n2. Запустите подходящий инструмент Toolkit\n3. Затем примите решение или назначьте встречу\n\nToolkit: [Все инструменты](/toolkit)\nBlog: [Раздел блога](/blog)\nКонсультация: [Встреча с DK Agency](/elaqe)"
+    },
+    "sidebar": {
+      "heading": "Примеры вопросов",
+      "integrationHeading": "Интеграция",
+      "body": "Уже пробовали калькулятор Food Cost? Поделитесь результатом здесь и спросите KAZAN, как его улучшить.",
+      "toolLinks": {
+        "foodCost": "Калькулятор Food Cost",
+        "pnl": "Симулятор P&L",
+        "delivery": "Калькулятор delivery"
+      }
+    },
+    "sales": {
+      "heading": "Слой продаж",
+      "body": "KAZAN AI помогает измерить проблему. Чтобы построить систему, провести аудит и превратить результат в реальную прибыль, следующий шаг — консультация.",
+      "cta": "Встретиться с DK Agency"
+    }
+  },
   "kazanWidget": {
     "welcome": "Привет. Я **KAZAN AI**. Объясняю food cost, P&L, AQTA, delivery и решения об открытии в цифрах.",
     "prompt1": "Мой food cost — 38%. Как снизить до 30-32%?",

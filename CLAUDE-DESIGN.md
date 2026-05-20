@@ -79,6 +79,11 @@ Bu fayl bütün rəng/font/spacing məlumatlarının single source of truth-udur
 **Slogan:** "Ustalığın Nişanı, Dijitalin Şeddi"
 **AZ:** "Mütəxəssislik möhürü, rəqəmsalın şəddi"
 
+### KAZAN AI i18n note
+- UI copy lives in `messages/*` under `kazanAi` and must use Pattern A (`useTranslations`).
+- Floating widget copy lives separately under `kazanWidget`; do not merge the two namespaces.
+- AI answer language is controlled by `lib/kazan-ai/system-prompt.ts` and is a separate behavior task from UI i18n.
+
 ### TASK-0152 Pricing Page
 - Public pricing route: `/[locale]/pricing`.
 - Component: `components/pricing/PricingPage.tsx`.

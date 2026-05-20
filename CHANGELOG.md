@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 ### Added
+- `[TASK-0108] feat(i18n): KAZAN AI page Pattern C→A — kazanAi namespace, 4 dil UI + locale-aware metadata`
 - `[TASK-0106] feat(home): trust layer — DoganNote (Pattern A, ayrı komponent) + AhilikValues 3-card — 14 key × 4 dil, "Necə işləyir" sonrası, StageSelector öncəsi`
 - `[TASK-0105] feat(home): platform 3-card section KAZAN+Toolkit+OCAQ (Pattern A, brand colors) — 15 key × 4 dil, Hero altı, ToolkitShowcase üstü`
 - `[TASK-0142] feat(marketinq): complaint analysis tool — AI + keşf sualları + kanal-aware cavab`

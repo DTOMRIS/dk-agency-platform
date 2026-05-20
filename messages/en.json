@@ -2737,6 +2737,53 @@
     "benefit3Desc": "No payment required, just create an account",
     "footer": "free access · registration · 40% preview"
   },
+  "kazanAi": {
+    "metadata": {
+      "title": "KAZAN AI — Your HoReCa Advisor",
+      "description": "AI support for restaurant operations, food cost, P&L, AQTA, and menu decisions."
+    },
+    "hero": {
+      "badge": "KAZAN AI Beta",
+      "title": "KAZAN AI — Your Restaurant AI Advisor",
+      "intro": "KAZAN AI helps with food cost, P&L, AQTA, delivery, and launch decisions by pointing you to the next right step, not just a quick answer."
+    },
+    "chat": {
+      "header": "Live Chat",
+      "toolkitLabel": "Toolkit →",
+      "loading": "KAZAN is thinking...",
+      "placeholder": "Example: My food cost is 38%. How do I bring it down to 30%?",
+      "sendButton": "Send",
+      "imageAlt": "KAZAN AI consulting illustration",
+      "initialMessage": "Hello. I am **KAZAN AI**. I explain food cost, P&L, AQTA, delivery, launch, and brand decisions for real HoReCa operations.\n\nStart with a question like:\n- My food cost is 38%. What should I do?\n- Which P&L number should I check first?\n- How do I make my delivery menu profitable?\n\nToolkit: [Food Cost calculator](/toolkit/food-cost)\nBlog: [Food Cost article](/blog/1-porsiya-food-cost-hesablama)"
+    },
+    "samples": {
+      "0": "My food cost is 38%. What should I do?",
+      "1": "How do I read a P&L?",
+      "2": "How should I prepare for an AQTA inspection?",
+      "3": "Wolt commission math",
+      "4": "How many items should be on a menu?"
+    },
+    "errors": {
+      "throttle": "Wait {seconds} seconds, then send again.",
+      "server": "Server error",
+      "aiUnavailable": "The AI connection is not available on the server right now. Keep the discipline anyway:\n\n1. Measure the problem\n2. Run the right Toolkit tool\n3. Then make the decision or book a meeting\n\nToolkit: [All tools](/toolkit)\nBlog: [Blog section](/blog)\nConsulting: [Meet DK Agency](/elaqe)"
+    },
+    "sidebar": {
+      "heading": "Sample questions",
+      "integrationHeading": "Integration",
+      "body": "Tried the Food Cost calculator? Share the result here and ask KAZAN how to improve it.",
+      "toolLinks": {
+        "foodCost": "Food Cost calculator",
+        "pnl": "P&L simulator",
+        "delivery": "Delivery calculator"
+      }
+    },
+    "sales": {
+      "heading": "Sales layer",
+      "body": "KAZAN AI helps you measure the problem. To build the system, run an audit, and turn the result into real profit, the next step is consulting.",
+      "cta": "Meet DK Agency"
+    }
+  },
   "kazanWidget": {
     "welcome": "Hello. I am **KAZAN AI**. I explain food cost, P&L, AQTA, delivery and opening decisions with numbers.",
     "prompt1": "My food cost is 38%. How do I bring it down to 30-32%?",
