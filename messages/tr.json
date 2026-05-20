@@ -2735,6 +2735,53 @@
     "benefit3Desc": "Ödeme gerekmiyor, hesap oluşturmak yeterli",
     "footer": "ücretsiz erişim · kayıt · %40 önizleme"
   },
+  "kazanAi": {
+    "metadata": {
+      "title": "KAZAN AI — HoReCa Danışmanın",
+      "description": "Restoran operasyonları, food cost, P&L, AQTA ve menü kararları için AI desteği."
+    },
+    "hero": {
+      "badge": "KAZAN AI Beta",
+      "title": "KAZAN AI — Restoranının AI danışmanı",
+      "intro": "KAZAN AI food cost, P&L, AQTA, delivery ve açılış kararlarını sadece cevapla değil, bir sonraki doğru adımla yorumlar."
+    },
+    "chat": {
+      "header": "Canlı Chat",
+      "toolkitLabel": "Toolkit →",
+      "loading": "KAZAN düşünüyor...",
+      "placeholder": "Örnek: Food cost'um %38, %30'a nasıl düşerim?",
+      "sendButton": "Gönder",
+      "imageAlt": "KAZAN AI danışmanlık illüstrasyonu",
+      "initialMessage": "Merhaba. Ben **KAZAN AI**. Food cost, P&L, AQTA, delivery, açılış ve marka kararlarını HoReCa gerçekliğine göre yorumlarım.\n\nBaşlamak için şöyle sor:\n- Food cost'um %38, ne yapmalıyım?\n- P&L'de ilk hangi rakama bakmalıyım?\n- Delivery menüsünü nasıl karlı hale getiririm?\n\nToolkit: [Food Cost hesaplayıcı](/toolkit/food-cost)\nBlog: [Food Cost yazısı](/blog/1-porsiya-food-cost-hesablama)"
+    },
+    "samples": {
+      "0": "Food cost'um %38, ne yapmalıyım?",
+      "1": "P&L nasıl okunur?",
+      "2": "AQTA denetimine nasıl hazırlanırım?",
+      "3": "Wolt komisyon matematiği",
+      "4": "Menüde kaç ürün olmalı?"
+    },
+    "errors": {
+      "throttle": "{seconds} saniye bekle, sonra tekrar gönder.",
+      "server": "Sunucu hatası",
+      "aiUnavailable": "Şu anda sunucu tarafında AI bağlantısı erişilebilir değil. Yine de ölçüyü kaybetme:\n\n1. Problemi ölç\n2. Uygun Toolkit aracını çalıştır\n3. Sonra karar ver veya görüşme planla\n\nToolkit: [Tüm araçlar](/toolkit)\nBlog: [Blog bölümü](/blog)\nDanışmanlık: [DK Agency ile görüş](/elaqe)"
+    },
+    "sidebar": {
+      "heading": "Örnek sorular",
+      "integrationHeading": "Entegrasyon",
+      "body": "Food Cost hesaplayıcısını denedin mi? Sonucu burada paylaş ve KAZAN'a nasıl iyileştireceğini sor.",
+      "toolLinks": {
+        "foodCost": "Food Cost hesaplayıcı",
+        "pnl": "P&L simülatörü",
+        "delivery": "Delivery hesaplayıcı"
+      }
+    },
+    "sales": {
+      "heading": "Satış katmanı",
+      "body": "KAZAN AI problemi ölçmeye yardımcı olur. Sistem kurmak, audit yapmak ve sonucu gerçek kara çevirmek için sonraki adım danışmanlıktır.",
+      "cta": "DK Agency ile görüş"
+    }
+  },
   "kazanWidget": {
     "welcome": "Merhaba. Ben **KAZAN AI**'yım. Food cost, P&L, AQTA, delivery ve açılış kararlarını rakamlarla açıklıyorum.",
     "prompt1": "Food cost'um %38. Nasıl %30-32'ye indirebilirim?",

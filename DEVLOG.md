@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-20 - TASK-0108 KAZAN AI Page i18n
+
+**Why:** `/tr/kazan-ai`, `/en/kazan-ai`, and `/ru/kazan-ai` reused the flat `/kazan-ai` page and rendered AZ hardcoded UI copy. The floating KAZAN widget was already Pattern A; the full page was still Pattern C.
+
+**What:** `components/kazan-ai/KazanAiChatClient.tsx` now uses `useTranslations('kazanAi')`. Added `kazanAi` namespace to AZ/EN/TR/RU messages for hero, chat copy, sample questions, errors, sidebar, sales CTA, and metadata. `[locale]/kazan-ai` now has locale-aware `generateMetadata`; flat `/kazan-ai` keeps AZ metadata fallback.
+
+**Scope:** `lib/kazan-ai/system-prompt.ts`, KAZAN widget, KAZAN lead actions, and `/api/kazan-ai/*` were not changed. AI response language remains a separate follow-up.
+
+---
+
 ## 2026-05-20 - TASK-0107 B2B Panel Auth Guard
 
 **Why:** `/b2b-panel/*` rendered without a server-side auth check. Public visitors could see the mock B2B portal shell and mock listings. Dashboard routes were already guarded separately.
