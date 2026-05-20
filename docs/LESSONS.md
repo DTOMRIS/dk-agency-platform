@@ -50,6 +50,12 @@ Bu sənəd hər Claude Code sessiyasının başlanğıcında CLAUDE.md tərəfin
 - **Qayda:** Hər mövcud Pattern C komponent ayrı task kimi yenidən yazılmalıdır. "Ayrı fayl deyilsə Pattern A tətbiq etmək çətindir" bəhanəsi qəbul edilmir.
 - **Nəticə:** DoganNote `components/home/DoganNote.tsx` kimi ayrı fayl, 4 dil, useTranslations. Köhnə CTASections.tsx smart-quote encoding xətası da düzəldildi.
 
+## L-010: B2B Panel auth guard
+- **Səhv:** `/b2b-panel/*` layout auth-suz idi; public visitor mock portal shell-i görürdü.
+- **Kök səbəb:** Dashboard layout JWT guard ilə qorunurdu, amma B2B panel layout `getServerMemberSession()` çağırmırdı.
+- **Qayda:** Server-side member guard üçün helper `@/lib/members/server-session`-dədir. `getServerMemberSession()` null qaytarmır; guest halda `{ loggedIn: false }` qaytarır. Null check silent fail edə bilər.
+- **Nəticə:** B2B panel layout `session.loggedIn` yoxlayır və guest-i `/auth/login`-ə redirect edir. Protected fayllar (`lib/member-access.ts`, `middleware.ts`) toxunulmadı.
+
 ## L-008: Köhnə sessiya pattern tələsi
 - **Səhv:** TASK-0148 PR-sız birbaşa main-ə push olundu (`git push --no-verify`)
 - **Kök səbəb:** Agent köhnə sessiya tasklarına (TASK-0144/0145 PR-sız idi) baxıb onları nümunə götürdü. 5-qat control (PR #129) o tasklardan SONRA qurulmuşdu.
