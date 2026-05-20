@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-20 - TASK-0110 next-intl INVALID_KEY normalize
+
+**Why:** Dashboard audit log action labels used DB action codes like `member.created`. JSON stored those as flat keys under `dashboard.auditLog.actions`, while next-intl interprets dots as nested path separators. This produced `INVALID_KEY` warnings for `actions.member.*`.
+
+**What:** `messages/az.json`, `messages/en.json`, `messages/tr.json`, and `messages/ru.json` now store audit log actions as `actions.member.created`, `actions.member.role_changed`, `actions.member.deleted`, and `actions.member.password_reset` via nested JSON objects. Text values were preserved.
+
+**Scope:** Dashboard components, DB action codes, audit APIs, migrations, protected auth files, and middleware were not changed.
+
+---
+
 ## 2026-05-20 - TASK-0111 ComplaintAnalysis lint fix
 
 **Why:** `components/marketinq/ComplaintAnalysis.tsx` initialized localStorage history by calling `setHistory()` synchronously inside a mount effect. React lint flagged this as `react-hooks/set-state-in-effect`, blocking quality gates for unrelated PRs.
@@ -54,7 +64,6 @@
 
 ---
 
-<<<<<<< HEAD
 ## 2026-05-20 - TASK-0103 Toolkit i18n Batch 3 FINAL (aqta + insaat + checklist)
 
 **Why:** Last 3 Pattern C toolkit tools. Toolkit i18n now 11/11 complete.

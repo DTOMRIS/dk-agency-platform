@@ -1336,10 +1336,12 @@
       "next": "Далее",
       "pageLabel": "Страница",
       "actions": {
-        "member.created": "Пользователь создан",
-        "member.role_changed": "Роль изменена",
-        "member.deleted": "Пользователь удалён",
-        "member.password_reset": "Пароль сброшен"
+        "member": {
+          "created": "Пользователь создан",
+          "role_changed": "Роль изменена",
+          "deleted": "Пользователь удалён",
+          "password_reset": "Пароль сброшен"
+        }
       }
     },
     "memberDetail": {

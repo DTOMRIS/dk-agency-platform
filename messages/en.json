@@ -1338,10 +1338,12 @@
       "next": "Next",
       "pageLabel": "Page",
       "actions": {
-        "member.created": "Member created",
-        "member.role_changed": "Role changed",
-        "member.deleted": "Member deleted",
-        "member.password_reset": "Password reset"
+        "member": {
+          "created": "Member created",
+          "role_changed": "Role changed",
+          "deleted": "Member deleted",
+          "password_reset": "Password reset"
+        }
       }
     },
     "memberDetail": {

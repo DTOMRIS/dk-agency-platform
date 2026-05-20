@@ -62,6 +62,12 @@ Bu sənəd hər Claude Code sessiyasının başlanğıcında CLAUDE.md tərəfin
 - **Qayda:** Locale route üçün `generateMetadata({ params })` + `getTranslations({ locale, namespace })` istifadə et. Flat route yalnız default locale fallback kimi qalsın.
 - **Nəticə:** KAZAN AI UI Pattern A oldu, metadata da locale-aware edildi. System prompt dili ayrı task kimi saxlanıldı.
 
+## L-012: next-intl dot key trap
+- **Səhv:** Audit log JSON-da DB action kodları `member.created` kimi flat key saxlanmışdı, amma next-intl nöqtəni nested path ayırıcısı kimi oxuyur.
+- **Kök səbəb:** Data enum shape-i (`member.created`) ilə i18n message shape-i qarışdırıldı.
+- **Qayda:** DB/API action kodu dot-lu qalırsa, JSON nested olmalıdır: `actions.member.created`. Kodda enum dəyişmək migration və data riski yaradır.
+- **Nəticə:** `dashboard.auditLog.actions.member.*` 4 dildə nested edildi; komponentlərə, DB enum-lara və API-lərə toxunulmadı.
+
 ## L-008: Köhnə sessiya pattern tələsi
 - **Səhv:** TASK-0148 PR-sız birbaşa main-ə push olundu (`git push --no-verify`)
 - **Kök səbəb:** Agent köhnə sessiya tasklarına (TASK-0144/0145 PR-sız idi) baxıb onları nümunə götürdü. 5-qat control (PR #129) o tasklardan SONRA qurulmuşdu.
