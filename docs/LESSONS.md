@@ -44,6 +44,12 @@ Bu sənəd hər Claude Code sessiyasının başlanğıcında CLAUDE.md tərəfin
 - **Qayda:** Hər prompt absolute path + mövcud pattern referansı verir
 - **Skill:** `.claude/skills/task-prompt-writer/SKILL.md`
 
+## L-009: Trust layer — DoganNote Pattern C-dən Pattern A-ya
+- **Səhv:** DoganNote CTASections.tsx-in içindəki inline `copyByLocale` (Pattern C) idi.
+- **Kök səbəb:** L-004 qaydası TASK-0105-dən əvvəl tətbiq edilməmişdi; köhnə Pattern C fayl başqa bir fayl içindəydi.
+- **Qayda:** Hər mövcud Pattern C komponent ayrı task kimi yenidən yazılmalıdır. "Ayrı fayl deyilsə Pattern A tətbiq etmək çətindir" bəhanəsi qəbul edilmir.
+- **Nəticə:** DoganNote `components/home/DoganNote.tsx` kimi ayrı fayl, 4 dil, useTranslations. Köhnə CTASections.tsx smart-quote encoding xətası da düzəldildi.
+
 ## L-008: Köhnə sessiya pattern tələsi
 - **Səhv:** TASK-0148 PR-sız birbaşa main-ə push olundu (`git push --no-verify`)
 - **Kök səbəb:** Agent köhnə sessiya tasklarına (TASK-0144/0145 PR-sız idi) baxıb onları nümunə götürdü. 5-qat control (PR #129) o tasklardan SONRA qurulmuşdu.

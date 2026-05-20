@@ -1,16 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
-import { BookOpen, Check, Send, Sparkles } from 'lucide-react';
+import { Check, Send, Sparkles } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 
 const copyByLocale: Record<Locale, {
-  founderBadge: string;
-  founderTitle: string;
-  founderBody: string;
-  founderSignature: string;
   joinBadge: string;
   joinTitle: [string, string];
   joinBody: string;
@@ -21,10 +16,6 @@ const copyByLocale: Record<Locale, {
   submit: string;
 }> = {
   az: {
-    founderBadge: 'Founder Note',
-    founderTitle: 'Doğan Notu',
-    founderBody: '“Mən 10 ildən çox HoReCa sektorunda çalışmışam. Restoranların 70%-i düzgün maliyyə hesabatı aparmır. DK Agency-ni bu problemi həll etmək üçün qurdum — pulsuz alətlər, şəffaf bilik, texnologiya dəstəyi.”',
-    founderSignature: '— Doğan Tomris, Təsisçi',
     joinBadge: 'İndi qoşulun',
     joinTitle: ['Agentlik əməliyyatlarınızı', 'növbəti səviyyəyə'],
     joinBody: 'Strateji alətlər, KAZAN AI dəstəyi və sistemli idarəetmə ilə daha güclü nəticə alın.',
@@ -35,10 +26,6 @@ const copyByLocale: Record<Locale, {
     submit: 'Göndər',
   },
   ru: {
-    founderBadge: 'Founder Note',
-    founderTitle: 'Заметка Doğan',
-    founderBody: '«Я более 10 лет работаю в HoReCa. Около 70% ресторанов не ведут корректную финансовую отчётность. Я создал DK Agency, чтобы решить эту проблему — через бесплатные инструменты, прозрачные знания и технологическую поддержку.»',
-    founderSignature: '— Doğan Tomris, основатель',
     joinBadge: 'Присоединиться сейчас',
     joinTitle: ['Выведите операции агентства', 'на следующий уровень'],
     joinBody: 'Получайте более сильный результат с помощью стратегических инструментов, поддержки KAZAN AI и системного управления.',
@@ -49,10 +36,6 @@ const copyByLocale: Record<Locale, {
     submit: 'Отправить',
   },
   en: {
-    founderBadge: 'Founder Note',
-    founderTitle: 'A Note from Doğan',
-    founderBody: '“I have worked in HoReCa for more than 10 years. Around 70% of restaurants still do not keep proper financial reporting. I built DK Agency to solve that problem with free tools, transparent knowledge, and technology support.”',
-    founderSignature: '— Doğan Tomris, Founder',
     joinBadge: 'Join now',
     joinTitle: ['Move your agency operations', 'to the next level'],
     joinBody: 'Get stronger outcomes with strategic tools, KAZAN AI support, and disciplined operations.',
@@ -63,10 +46,6 @@ const copyByLocale: Record<Locale, {
     submit: 'Send',
   },
   tr: {
-    founderBadge: 'Founder Note',
-    founderTitle: 'Doğan Notu',
-    founderBody: '“10 yıldan fazla süredir HoReCa sektöründe çalışıyorum. Restoranların yaklaşık %70’i doğru finansal raporlama yapmıyor. DK Agency’yi bu problemi ücretsiz araçlar, şeffaf bilgi ve teknoloji desteği ile çözmek için kurdum.”',
-    founderSignature: '— Doğan Tomris, Kurucu',
     joinBadge: 'Şimdi katılın',
     joinTitle: ['Ajans operasyonlarınızı', 'bir üst seviyeye'],
     joinBody: 'Stratejik araçlar, KAZAN AI desteği ve sistemli yönetim ile daha güçlü sonuç alın.',
@@ -77,42 +56,6 @@ const copyByLocale: Record<Locale, {
     submit: 'Gönder',
   },
 };
-
-export function DoganNote() {
-  const locale = normalizeLocale(useLocale());
-  const copy = copyByLocale[locale];
-
-  return (
-    <section className="bg-[#1A1A2E] py-20 text-white">
-      <div className="mx-auto max-w-3xl px-4 text-center">
-        <div className="rounded-[2rem] border border-[#C5A022]/30 bg-white/5 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)] sm:p-10">
-          <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-[#C5A022] bg-white/10 shadow-lg shadow-black/20 sm:h-28 sm:w-28">
-            <Image
-              src="/images/dogan-note-avatar.png"
-              alt="Doğan Tomris placeholder avatar"
-              width={300}
-              height={300}
-              className="h-full w-full object-cover"
-            />
-          </div>
-
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#C5A022]/35 bg-[#C5A022]/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-[#C5A022]">
-            <BookOpen size={14} />
-            {copy.founderBadge}
-          </div>
-
-          <h3 className="font-display text-3xl font-black text-white sm:text-4xl">{copy.founderTitle}</h3>
-
-          <p className="mt-6 text-lg leading-relaxed text-slate-200">{copy.founderBody}</p>
-
-          <span className="mt-6 block text-sm font-semibold tracking-wide text-[#C5A022]">
-            {copy.founderSignature}
-          </span>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export function JoinCTA() {
   const locale = normalizeLocale(useLocale());

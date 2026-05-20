@@ -2824,6 +2824,33 @@
         "body": "Lead yönetimi, fatura OCR, food cost dashboard, çok dilli admin — restoranın ekibi bir arada.",
         "cta": "OCAQ'a gir"
       }
+    },
+    "doganNote": {
+      "eyebrow": "Kurucudan",
+      "title": "Neden DK Agency?",
+      "founderRole": "Kurucu",
+      "body1": "Azerbaycan ve Türkiye'de binlerce restoran sahibi aynı soruları soruyor — food cost neden yükseldi, menü neden satmıyor, personel neden kalmıyor. Cevap her restoranda mevcut, ama zaman yok, araç yok, ortak dil yok.",
+      "body2": "DK Agency bu mutfakların ortak dilidir. KAZAN sorulara cevap verir, Toolkit hesaplar, OCAQ yönetir. Üçü de bir ustanın eli gibi çalışır — acele etmeden, tam, senin yanında.",
+      "body3": "Bu işi 10+ yıl restoranların içinde öğrendim — başarısızlıklar da, zaferler de. Sana söz veriyorum: burada satılan bir araç değil, mutfağının uzantısıdır. — Doğan Tomris, kurucu",
+      "ctaPrimary": "KAZAN ile konuş",
+      "ctaSecondary": "Toolkit aç"
+    },
+    "ahilikValues": {
+      "eyebrow": "Ahilik / Əxilik",
+      "title": "700 yıllık değer, dijital kıyafetle",
+      "subtitle": "Anadolu ve Azerbaycan'ın esnaf-girişimci geleneği temel prensibimizdir.",
+      "mastery": {
+        "name": "Ustalık",
+        "desc": "Her işin sırrı ustasından öğrenilir — deneyimi en kısa yoldan paylaşıyoruz."
+      },
+      "generosity": {
+        "name": "Cavanmərdlik",
+        "desc": "Bilgi saklanmaz, paylaşılır. Kazancımız ekosistemin kazancıdır."
+      },
+      "integrity": {
+        "name": "Doğruluk",
+        "desc": "ŞEDD rozetini verdiklerimizde dürüstlük şarttır — söz verdik, sözümüzde duruyoruz."
+      }
     }
   }
 }
