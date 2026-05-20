@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-20 - TASK-0103 Toolkit i18n Batch 3 FINAL (aqta + insaat + checklist)
+
+**Why:** Last 3 Pattern C toolkit tools. Toolkit i18n now 11/11 complete.
+
+**Fix:** 390 i18n keys added across 3 namespaces (aqtaChecklist 151, insaatChecklist 171, checklist 68). All 4 locales filled. AQTA regulatory text preserved accurately across translations.
+
+**Toolkit i18n COMPLETE:** All 11 tools now Pattern A (useTranslations). Total keys across all batches: 44 + 178 + 244 + 390 = 856 keys.
+
 ## 2026-05-19 - TASK-0102 Toolkit i18n Batch 2 (food-cost + delivery-calc + menu-matrix)
 
 **Why:** 3 more Pattern C toolkit tools needed i18n. food-cost was the biggest single tool (~105 keys).

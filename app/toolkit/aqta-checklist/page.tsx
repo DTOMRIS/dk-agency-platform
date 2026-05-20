@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import {
   AlertTriangle,
   ArrowRight,
@@ -38,299 +39,180 @@ type Section = {
 
 const STORAGE_KEY = 'dk-aqta-checklist';
 
-const sections: Section[] = [
-  {
-    id: 'storage',
-    title: 'Ərzaq saxlama',
-    subtitle: 'Soyuducu, FIFO, tarix etiketi və ayrılmış rəflər',
-    icon: Soup,
-    accent: 'text-red-600',
-    accentBg: 'bg-red-50',
-    accentRing: 'ring-red-200/60',
-    items: [
-      {
-        id: 'storage-1',
-        text: 'Soyuducu +2°C ilə +6°C arasındadır',
-        detail: 'Termometr gündəlik yoxlanır və qeyd də düşür.',
-      },
-      {
-        id: 'storage-2',
-        text: 'Dondurucu -18°C və aşağıdır',
-        detail: 'Normadan çıxırsa dərhal tədbir planı var.',
-      },
-      {
-        id: 'storage-3',
-        text: 'Çiy və hazır ərzaq ayrı saxlanır',
-        detail: 'Damcılama riski olmayan ayrı rəf və qab qaydası tətbiq edilir.',
-      },
-      {
-        id: 'storage-4',
-        text: 'Ərzaq yerdən yuxarı saxlanır',
-        detail: 'Rəf, palet və uyğun konteyner istifadəsi olunur.',
-      },
-      {
-        id: 'storage-5',
-        text: 'FIFO və son tarix etiketi görünür',
-        detail: 'Köhnə məhsul ön sıradadır, vaxtı keçmiş məhsul yoxdur.',
-      },
-    ],
-  },
-  {
-    id: 'hygiene',
-    title: 'Şəxsi gigiyena',
-    subtitle: 'Komanda davranışı, bone, tibbi arayış və əl yuma',
-    icon: Users,
-    accent: 'text-red-600',
-    accentBg: 'bg-red-50',
-    accentRing: 'ring-red-200/60',
-    items: [
-      {
-        id: 'hygiene-1',
-        text: 'Bütün işçilərin tibbi arayışı aktualdır',
-        detail: 'Tarix nəzarəti aylıq aparılır.',
-      },
-      {
-        id: 'hygiene-2',
-        text: 'İş geyimi təmiz və standartdır',
-        detail: 'Mətbəx komandasında açıq rəng forma və bone var.',
-      },
-      {
-        id: 'hygiene-3',
-        text: 'Əl yuma stansiyası işləkdir',
-        detail: 'Sabun, dezinfeksiya və quruducu həmişə doludur.',
-      },
-      {
-        id: 'hygiene-4',
-        text: 'Dırnaq, aksesuar və siqaret qaydası tətbiq olunur',
-        detail: 'Üzük, bilərzik və mətbəxdə siqaret qadağası pozulmur.',
-      },
-    ],
-  },
-  {
-    id: 'kitchen',
-    title: 'Mətbəx gigiyenası',
-    subtitle: 'Səthlər, taxtalar, zibil və zərərverici nəzarəti',
-    icon: Utensils,
-    accent: 'text-red-600',
-    accentBg: 'bg-red-50',
-    accentRing: 'ring-red-200/60',
-    items: [
-      {
-        id: 'kitchen-1',
-        text: 'İş səthləri və bıçaqlar hər istifadə sonrası təmizlənir',
-        detail: 'Təmizlik və dezinfeksiya ayrıdır, ikisi də tətbiq edilir.',
-      },
-      {
-        id: 'kitchen-2',
-        text: 'Rəng kodlu kəsmə taxtaları istifadə olunur',
-        detail: 'Çiy ət, toyuq, balıq və tərəvəz üçün ayrıca taxta ayrılıb.',
-      },
-      {
-        id: 'kitchen-3',
-        text: 'Zibil qutuları qapaqlı və pedallıdır',
-        detail: 'Daşma, qoxu və açıq zibil sahəsi yoxdur.',
-      },
-      {
-        id: 'kitchen-4',
-        text: 'Zərərverici izi yoxdur',
-        detail: 'Həftəlik yoxlama və peşəkar dərmanlama planı saxlanılır.',
-      },
-    ],
-  },
-  {
-    id: 'water',
-    title: 'Su keyfiyyəti',
-    subtitle: 'İçməli su, buz maşını və təhlükəsiz servis',
-    icon: Droplets,
-    accent: 'text-red-600',
-    accentBg: 'bg-red-50',
-    accentRing: 'ring-red-200/60',
-    items: [
-      {
-        id: 'water-1',
-        text: 'İçməli su mənbəyi təhlükəsizdir',
-        detail: 'Filtr, servis və baxım vaxtı nəzarətdədir.',
-      },
-      {
-        id: 'water-2',
-        text: 'Buz maşını təmizdir',
-        detail: 'Buz əl ilə deyil, maşa və ya kürək ilə götürülür.',
-      },
-      {
-        id: 'water-3',
-        text: 'Su ilə təmas edən qablar ayrıdır',
-        detail: 'Buz qabı, su qabı və qabyuyan axını qarışdırılmır.',
-      },
-    ],
-  },
-  {
-    id: 'prep',
-    title: 'Yemək hazırlama',
-    subtitle: 'Pişirmə temperaturu, saxlanma limiti və yenidən qızdırma',
-    icon: Flame,
-    accent: 'text-red-600',
-    accentBg: 'bg-red-50',
-    accentRing: 'ring-red-200/60',
-    items: [
-      {
-        id: 'prep-1',
-        text: 'Toyuq minimum 74°C daxili temperatura çatır',
-        detail: 'Termometr ilə yoxlanılır, gözə görə qərar verilmir.',
-      },
-      {
-        id: 'prep-2',
-        text: 'Hazır yemək 2 saatdan çox otaq temperaturunda qalmır',
-        detail: '2 saatdan sonra soyudulur və ya atılır.',
-      },
-      {
-        id: 'prep-3',
-        text: 'Yenidən qızdırılan məhsul 74°C üzərinə çıxır',
-        detail: 'Təkrar servis üçün eyni təhlükəsizlik sərhədi qorunur.',
-      },
-      {
-        id: 'prep-4',
-        text: 'Eyni əlcək fərqli məhsul qruplarında istifadə olunmur',
-        detail: 'Çarpaz kontaminasiya qaydası komanda tərəfindən bilinir.',
-      },
-    ],
-  },
-  {
-    id: 'docs',
-    title: 'Sənədləşdirmə',
-    subtitle: 'AQTA qeydiyyatı, jurnal və izlənə bilənlik',
-    icon: WalletCards,
-    accent: 'text-red-600',
-    accentBg: 'bg-red-50',
-    accentRing: 'ring-red-200/60',
-    items: [
-      {
-        id: 'docs-1',
-        text: 'AQTA qeydiyyatı tamamlanıb',
-        detail:
-          'AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət rüsumu yoxdur, müraciət pulsuzdur.',
-      },
-      {
-        id: 'docs-2',
-        text: 'Temperatur və gigiyena jurnalı doludur',
-        detail: 'Gündəlik qeydlər boş buraxılmır.',
-      },
-      {
-        id: 'docs-3',
-        text: 'Faktura və məhsul mənbə sənədləri arxivlənir',
-        detail: 'Traceability tələbi üçün sənəd çıxarmaq mümkündür.',
-      },
-      {
-        id: 'docs-4',
-        text: 'Tibbi arayış tarixləri ayrıca cədvəldə izlənir',
-        detail: 'Müddəti bitmədən yenilənmə xəbərdarlığı verilir.',
-      },
-    ],
-  },
-  {
-    id: 'hall',
-    title: 'Zal və ümumi sahələr',
-    subtitle: 'Tualet, havalandırma və ümumi sanitariya görünüşü',
-    icon: Waves,
-    accent: 'text-red-600',
-    accentBg: 'bg-red-50',
-    accentRing: 'ring-red-200/60',
-    items: [
-      {
-        id: 'hall-1',
-        text: 'Tualet təmiz və tam təchizatlıdır',
-        detail: 'Sabun, quruducu və işlək su mövcuddur.',
-      },
-      {
-        id: 'hall-2',
-        text: 'Mətbəx qoxusu zala keçmir',
-        detail: 'Havalandırma axını və filtr təmizliyi nəzarətdədir.',
-      },
-      {
-        id: 'hall-3',
-        text: 'Döşəmə, divar və tavan sanitariya baxımından uyğundur',
-        detail: 'Səthlərdə yağ, kif və açıq çirk görünmür.',
-      },
-    ],
-  },
-  {
-    id: 'allergen',
-    title: 'Allergen',
-    subtitle: 'Menyu məlumatı və qonağa aydın xəbərdarlıq',
-    icon: ShieldAlert,
-    accent: 'text-red-600',
-    accentBg: 'bg-red-50',
-    accentRing: 'ring-red-200/60',
-    items: [
-      {
-        id: 'allergen-1',
-        text: 'Menyuda əsas allergenlər qeyd olunub',
-        detail: 'Süd, gluten, yumurta, fındıq və s. aydın göstərilir.',
-      },
-      {
-        id: 'allergen-2',
-        text: 'Komanda allergen sualına düzgün cavab verir',
-        detail: 'Servis heyətində qısa cavab skripti var.',
-      },
-      {
-        id: 'allergen-3',
-        text: 'Allergen üçün ayrıca hazırlıq qaydası mövcuddur',
-        detail: 'Taxta, bıçaq və səth ayrımı məlumdur.',
-      },
-    ],
-  },
-];
-
-const frequencyPlan: Record<FrequencyTab, string[]> = {
-  daily: [
-    'Soyuducu və dondurucu temperaturlarını jurnala yaz.',
-    'İş səthlərini təmizlə və dezinfeksiya et.',
-    'FIFO və son istifadə tarixlərini yoxla.',
-    'Əl yuma stansiyalarında sabun və quruducu olub-olmadığını yoxla.',
-    'İş geyimi, bone və əlcək qaydasına nəzarət et.',
-  ],
-  weekly: [
-    'Soyuducuların içini tam təmizlə.',
-    'Zərərverici riski üçün künc və rəf arxalarını yoxla.',
-    'Kəsmə taxtalarının çat və aşınma vəziyyətini yoxla.',
-    'Havalandırma filtrini və tualet gigiyenasını dərin təmizlə.',
-  ],
-  monthly: [
-    'Tibbi arayış tarixlərini yenidən nəzərdən keçir.',
-    'Faktura və traceability sənədlərini arxivlə.',
-    'Avadanlığın texniki baxış siyahısını tamamla.',
-    'Komandaya 15 dəqiqəlik gigiyena refresher təlimi keç.',
-    'Peşəkar dərmanlama və ya yoxlama xidməti planlaşdır.',
-  ],
-};
-
-const fineReasons = [
-  'Tibbi arayışların olmaması',
-  'Vaxtı keçmiş ərzağın tapılması',
-  'Soyuducu temperaturunun normadan çıxması',
-  'Çiy və hazır ərzağın birlikdə saxlanması',
-  'Əl yuma imkanının olmaması',
-  'Gigiyena jurnalının boş qalması',
-  'Zərərverici izlərinin görünməsi',
-  'Mənbə sənədlərinin təqdim edilə bilməməsi',
-  'Uyğunsuz iş geyimi və bone qaydası',
-  'Tualet sanitariyasının zəif olması',
-];
-
-const crossBoards = [
-  { label: 'Qırmızı', use: 'Çiy ət', color: 'bg-red-500' },
-  { label: 'Sarı', use: 'Toyuq', color: 'bg-amber-400' },
-  { label: 'Mavi', use: 'Balıq', color: 'bg-blue-500' },
-  { label: 'Yaşıl', use: 'Tərəvəz', color: 'bg-emerald-500' },
-  { label: 'Ağ', use: 'Çörək və servis', color: 'bg-slate-200 text-slate-700' },
-];
-
-const blogLinks = [
-  { title: 'AQTA Cərimə Checklist', href: '/blog/aqta-cerime-checklist', tag: 'Blog' },
-  { title: 'Restoran Açılış Checklist', href: '/toolkit/checklist', tag: 'Alət' },
-  { title: 'İnşaatdan Açılışa', href: '/toolkit/insaat-checklist', tag: 'Alət' },
-];
-
 export default function AqtaChecklistPage() {
+  const t = useTranslations('toolkit.aqtaChecklist');
+
+  const sections: Section[] = [
+    {
+      id: 'storage',
+      title: t('storage_title'),
+      subtitle: t('storage_subtitle'),
+      icon: Soup,
+      accent: 'text-red-600',
+      accentBg: 'bg-red-50',
+      accentRing: 'ring-red-200/60',
+      items: [
+        { id: 'storage-1', text: t('storage_item1_text'), detail: t('storage_item1_detail') },
+        { id: 'storage-2', text: t('storage_item2_text'), detail: t('storage_item2_detail') },
+        { id: 'storage-3', text: t('storage_item3_text'), detail: t('storage_item3_detail') },
+        { id: 'storage-4', text: t('storage_item4_text'), detail: t('storage_item4_detail') },
+        { id: 'storage-5', text: t('storage_item5_text'), detail: t('storage_item5_detail') },
+      ],
+    },
+    {
+      id: 'hygiene',
+      title: t('hygiene_title'),
+      subtitle: t('hygiene_subtitle'),
+      icon: Users,
+      accent: 'text-red-600',
+      accentBg: 'bg-red-50',
+      accentRing: 'ring-red-200/60',
+      items: [
+        { id: 'hygiene-1', text: t('hygiene_item1_text'), detail: t('hygiene_item1_detail') },
+        { id: 'hygiene-2', text: t('hygiene_item2_text'), detail: t('hygiene_item2_detail') },
+        { id: 'hygiene-3', text: t('hygiene_item3_text'), detail: t('hygiene_item3_detail') },
+        { id: 'hygiene-4', text: t('hygiene_item4_text'), detail: t('hygiene_item4_detail') },
+      ],
+    },
+    {
+      id: 'kitchen',
+      title: t('kitchen_title'),
+      subtitle: t('kitchen_subtitle'),
+      icon: Utensils,
+      accent: 'text-red-600',
+      accentBg: 'bg-red-50',
+      accentRing: 'ring-red-200/60',
+      items: [
+        { id: 'kitchen-1', text: t('kitchen_item1_text'), detail: t('kitchen_item1_detail') },
+        { id: 'kitchen-2', text: t('kitchen_item2_text'), detail: t('kitchen_item2_detail') },
+        { id: 'kitchen-3', text: t('kitchen_item3_text'), detail: t('kitchen_item3_detail') },
+        { id: 'kitchen-4', text: t('kitchen_item4_text'), detail: t('kitchen_item4_detail') },
+      ],
+    },
+    {
+      id: 'water',
+      title: t('water_title'),
+      subtitle: t('water_subtitle'),
+      icon: Droplets,
+      accent: 'text-red-600',
+      accentBg: 'bg-red-50',
+      accentRing: 'ring-red-200/60',
+      items: [
+        { id: 'water-1', text: t('water_item1_text'), detail: t('water_item1_detail') },
+        { id: 'water-2', text: t('water_item2_text'), detail: t('water_item2_detail') },
+        { id: 'water-3', text: t('water_item3_text'), detail: t('water_item3_detail') },
+      ],
+    },
+    {
+      id: 'prep',
+      title: t('prep_title'),
+      subtitle: t('prep_subtitle'),
+      icon: Flame,
+      accent: 'text-red-600',
+      accentBg: 'bg-red-50',
+      accentRing: 'ring-red-200/60',
+      items: [
+        { id: 'prep-1', text: t('prep_item1_text'), detail: t('prep_item1_detail') },
+        { id: 'prep-2', text: t('prep_item2_text'), detail: t('prep_item2_detail') },
+        { id: 'prep-3', text: t('prep_item3_text'), detail: t('prep_item3_detail') },
+        { id: 'prep-4', text: t('prep_item4_text'), detail: t('prep_item4_detail') },
+      ],
+    },
+    {
+      id: 'docs',
+      title: t('docs_title'),
+      subtitle: t('docs_subtitle'),
+      icon: WalletCards,
+      accent: 'text-red-600',
+      accentBg: 'bg-red-50',
+      accentRing: 'ring-red-200/60',
+      items: [
+        { id: 'docs-1', text: t('docs_item1_text'), detail: t('docs_item1_detail') },
+        { id: 'docs-2', text: t('docs_item2_text'), detail: t('docs_item2_detail') },
+        { id: 'docs-3', text: t('docs_item3_text'), detail: t('docs_item3_detail') },
+        { id: 'docs-4', text: t('docs_item4_text'), detail: t('docs_item4_detail') },
+      ],
+    },
+    {
+      id: 'hall',
+      title: t('hall_title'),
+      subtitle: t('hall_subtitle'),
+      icon: Waves,
+      accent: 'text-red-600',
+      accentBg: 'bg-red-50',
+      accentRing: 'ring-red-200/60',
+      items: [
+        { id: 'hall-1', text: t('hall_item1_text'), detail: t('hall_item1_detail') },
+        { id: 'hall-2', text: t('hall_item2_text'), detail: t('hall_item2_detail') },
+        { id: 'hall-3', text: t('hall_item3_text'), detail: t('hall_item3_detail') },
+      ],
+    },
+    {
+      id: 'allergen',
+      title: t('allergen_title'),
+      subtitle: t('allergen_subtitle'),
+      icon: ShieldAlert,
+      accent: 'text-red-600',
+      accentBg: 'bg-red-50',
+      accentRing: 'ring-red-200/60',
+      items: [
+        { id: 'allergen-1', text: t('allergen_item1_text'), detail: t('allergen_item1_detail') },
+        { id: 'allergen-2', text: t('allergen_item2_text'), detail: t('allergen_item2_detail') },
+        { id: 'allergen-3', text: t('allergen_item3_text'), detail: t('allergen_item3_detail') },
+      ],
+    },
+  ];
+
+  const frequencyPlan: Record<FrequencyTab, string[]> = {
+    daily: [
+      t('daily_item1'),
+      t('daily_item2'),
+      t('daily_item3'),
+      t('daily_item4'),
+      t('daily_item5'),
+    ],
+    weekly: [
+      t('weekly_item1'),
+      t('weekly_item2'),
+      t('weekly_item3'),
+      t('weekly_item4'),
+    ],
+    monthly: [
+      t('monthly_item1'),
+      t('monthly_item2'),
+      t('monthly_item3'),
+      t('monthly_item4'),
+      t('monthly_item5'),
+    ],
+  };
+
+  const fineReasons = [
+    t('fine1'),
+    t('fine2'),
+    t('fine3'),
+    t('fine4'),
+    t('fine5'),
+    t('fine6'),
+    t('fine7'),
+    t('fine8'),
+    t('fine9'),
+    t('fine10'),
+  ];
+
+  const crossBoards = [
+    { label: t('cross_red_label'), use: t('cross_red_use'), color: 'bg-red-500' },
+    { label: t('cross_yellow_label'), use: t('cross_yellow_use'), color: 'bg-amber-400' },
+    { label: t('cross_blue_label'), use: t('cross_blue_use'), color: 'bg-blue-500' },
+    { label: t('cross_green_label'), use: t('cross_green_use'), color: 'bg-emerald-500' },
+    { label: t('cross_white_label'), use: t('cross_white_use'), color: 'bg-slate-200 text-slate-700' },
+  ];
+
+  const blogLinks = [
+    { title: t('related1Title'), href: '/blog/aqta-cerime-checklist', tag: t('related1Tag') },
+    { title: t('related2Title'), href: '/toolkit/checklist', tag: t('related2Tag') },
+    { title: t('related3Title'), href: '/toolkit/insaat-checklist', tag: t('related3Tag') },
+  ];
+
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [openSection, setOpenSection] = useState<string>(sections[0].id);
   const [frequencyTab, setFrequencyTab] = useState<FrequencyTab>('daily');
@@ -351,6 +233,7 @@ export default function AqtaChecklistPage() {
 
   const totalItems = useMemo(
     () => sections.reduce((sum, section) => sum + section.items.length, 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -367,6 +250,7 @@ export default function AqtaChecklistPage() {
           pct: Math.round((done / section.items.length) * 100),
         };
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [checked]
   );
 
@@ -397,19 +281,18 @@ export default function AqtaChecklistPage() {
             className="group mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-300"
           >
             <ChevronLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
-            <span>Toolkit</span>
+            <span>{t('backLink')}</span>
           </Link>
           <div className="max-w-2xl">
             <h1 className="mb-5 text-4xl font-display font-black leading-[1.05] tracking-tight text-white sm:text-5xl">
-              AQTA
+              {t('title')}
               <br />
               <span className="bg-gradient-to-r from-red-400 to-rose-300 bg-clip-text text-transparent">
-                Hazırlıq Checklist
+                {t('titleAccent')}
               </span>
             </h1>
             <p className="max-w-lg text-base leading-relaxed text-slate-400 sm:text-lg">
-              Gigiyena, sənədləşdirmə, cross-contamination və gündəlik nəzarət. Cərimə riskini
-              bölmə-bölmə gör və komandan üçün standart qur.
+              {t('description')}
             </p>
           </div>
         </div>
@@ -419,12 +302,12 @@ export default function AqtaChecklistPage() {
         <div className="grid gap-3 md:grid-cols-4">
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70 md:col-span-2">
             <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-              Ümumi irəliləyiş
+              {t('progressLabel')}
             </div>
             <div className="flex items-end gap-3">
               <div className="text-3xl font-black tabular-nums text-red-600">{progress}%</div>
               <div className="pb-1 text-sm text-slate-500">
-                {checked.size}/{totalItems} maddə tamamlandı
+                {checked.size}/{totalItems} {t('progressItems')}
               </div>
             </div>
             <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
@@ -436,17 +319,17 @@ export default function AqtaChecklistPage() {
           </div>
           <div className="rounded-2xl bg-red-50 p-5 ring-1 ring-red-200/60">
             <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">
-              Risk zonası
+              {t('riskZoneLabel')}
             </div>
             <div className="text-3xl font-black text-red-600">{fineReasons.length}</div>
-            <div className="mt-1 text-xs text-slate-500">Ən yayğın cərimə səbəbi</div>
+            <div className="mt-1 text-xs text-slate-500">{t('riskZoneSubtitle')}</div>
           </div>
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70">
             <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-              Rejim
+              {t('regimeLabel')}
             </div>
             <div className="text-3xl font-black text-slate-900">3</div>
-            <div className="mt-1 text-xs text-slate-500">Gündəlik, həftəlik, aylıq plan</div>
+            <div className="mt-1 text-xs text-slate-500">{t('regimeSubtitle')}</div>
           </div>
         </div>
       </div>
@@ -456,15 +339,15 @@ export default function AqtaChecklistPage() {
           <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
               <div>
-                <h2 className="text-lg font-bold text-slate-900">İnteraktiv checklist</h2>
-                <p className="text-sm text-slate-500">AQTA yoxlamasına hazır olmaq üçün 8 əsas blok.</p>
+                <h2 className="text-lg font-bold text-slate-900">{t('checklistTitle')}</h2>
+                <p className="text-sm text-slate-500">{t('checklistSubtitle')}</p>
               </div>
               <button
                 onClick={resetAll}
                 className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500"
               >
                 <RefreshCcw size={13} />
-                Sıfırla
+                {t('resetBtn')}
               </button>
             </div>
 
@@ -545,8 +428,8 @@ export default function AqtaChecklistPage() {
 
           <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-100 px-5 py-4">
-              <h2 className="text-lg font-bold text-slate-900">Gigiyena rejimi</h2>
-              <p className="text-sm text-slate-500">Komanda üçün gündəlik, həftəlik və aylıq ritm cədvəli.</p>
+              <h2 className="text-lg font-bold text-slate-900">{t('hygienePlanTitle')}</h2>
+              <p className="text-sm text-slate-500">{t('hygienePlanSubtitle')}</p>
             </div>
             <div className="px-5 pt-4">
               <div className="inline-flex rounded-xl bg-slate-100 p-1">
@@ -560,7 +443,7 @@ export default function AqtaChecklistPage() {
                         : 'text-slate-500 hover:text-slate-900'
                     }`}
                   >
-                    {tab === 'daily' ? 'Gündəlik' : tab === 'weekly' ? 'Həftəlik' : 'Aylıq'}
+                    {tab === 'daily' ? t('tabDaily') : tab === 'weekly' ? t('tabWeekly') : t('tabMonthly')}
                   </button>
                 ))}
               </div>
@@ -571,10 +454,10 @@ export default function AqtaChecklistPage() {
                   <thead className="bg-slate-50">
                     <tr>
                       <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                        Rejim
+                        {t('tableColRegime')}
                       </th>
                       <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                        Tapşırıq
+                        {t('tableColTask')}
                       </th>
                     </tr>
                   </thead>
@@ -598,24 +481,21 @@ export default function AqtaChecklistPage() {
           <div className="rounded-2xl border border-red-200 bg-red-50 p-6">
             <div className="mb-4 flex items-center gap-2">
               <Shield size={18} className="text-red-600" />
-              <h2 className="text-base font-bold text-slate-900">AQTA nədir?</h2>
+              <h2 className="text-base font-bold text-slate-900">{t('aqtaCardTitle')}</h2>
             </div>
             <p className="text-sm leading-relaxed text-slate-600">
-              AQTA qida təhlükəsizliyi, gigiyena, traceability və istehlakçı riskinə baxır.
-              Problem yalnız təmizlik deyil. Qaydaların sistemli izlənməsi və sənədləşdirilməsi
-              əsasdır. AQTA qeydiyyatı üçün müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət
-              rüsumu yoxdur, müraciət pulsuzdur.
+              {t('aqtaCardDesc')}
             </p>
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <AlertTriangle size={18} className="text-red-600" />
-              <h2 className="text-base font-bold text-slate-900">Ən yayğın 10 cərimə səbəbi</h2>
+              <h2 className="text-base font-bold text-slate-900">{t('fineReasonsTitle')}</h2>
             </div>
             <div className="space-y-3">
               {fineReasons.map((reason, index) => (
-                <div key={reason} className="flex items-start gap-3">
+                <div key={index} className="flex items-start gap-3">
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-[11px] font-black text-red-600">
                     {index + 1}
                   </div>
@@ -628,11 +508,10 @@ export default function AqtaChecklistPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2">
               <Droplets size={18} className="text-red-600" />
-              <h2 className="text-base font-bold text-slate-900">Cross-contamination</h2>
+              <h2 className="text-base font-bold text-slate-900">{t('crossContamTitle')}</h2>
             </div>
             <p className="mb-4 text-sm leading-relaxed text-slate-600">
-              Çiy məhsuldakı bakteriyanın hazır yeməyə keçməsi qida zəhərlənməsinin əsas
-              səbəbidir. Eyni taxta, eyni əlcək və yanlış soyuducu düzülüşü ən riskli üçlükdür.
+              {t('crossContamDesc')}
             </p>
             <div className="space-y-2">
               {crossBoards.map((board) => (
@@ -651,17 +530,16 @@ export default function AqtaChecklistPage() {
             <div className="relative">
               <div className="mb-4 flex items-center gap-2">
                 <Lightbulb size={18} className="text-red-400" />
-                <h2 className="text-base font-bold text-red-300">DK Agency məsləhəti</h2>
+                <h2 className="text-base font-bold text-red-300">{t('dkAdviceTitle')}</h2>
               </div>
               <p className="text-sm leading-relaxed text-slate-300">
-                  AQTA problemi adətən &quot;təmizlik problemi&quot; deyil, &quot;idarəetmə ritmi problemi&quot;dir.
-                Jurnal, məsul şəxs və gündəlik nəzarət saatı yoxdursa, cərimə riski yüksəlir.
+                {t('dkAdviceDesc')}
               </p>
               <Link
                 href="/blog/aqta-cerime-checklist"
                 className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-red-300 transition-colors hover:text-red-200"
               >
-                Tam yazını oxu <ArrowRight size={14} />
+                {t('dkAdviceLink')} <ArrowRight size={14} />
               </Link>
             </div>
           </div>
@@ -669,17 +547,16 @@ export default function AqtaChecklistPage() {
           <div className="rounded-2xl bg-gradient-to-br from-red-600 to-rose-600 p-6 text-white shadow-xl shadow-red-500/15">
             <div className="mb-3 flex items-center gap-2">
               <Waves size={18} />
-              <h2 className="text-base font-bold">OCAQ Panel</h2>
+              <h2 className="text-base font-bold">{t('ocaqTitle')}</h2>
             </div>
             <p className="text-sm leading-relaxed text-white/85">
-              Temperatur jurnalı, tibbi arayış tarixləri, gigiyena tapşırıqları və audit
-              qeydlərini komandaya field-by-field payla.
+              {t('ocaqDesc')}
             </p>
             <Link
               href="/auth/register"
               className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-black text-red-600 transition-colors hover:bg-red-50"
             >
-              OCAQ Panel-ə keç <ArrowRight size={15} />
+              {t('ocaqCta')} <ArrowRight size={15} />
             </Link>
           </div>
         </aside>
@@ -689,7 +566,7 @@ export default function AqtaChecklistPage() {
         <div className="rounded-2xl bg-slate-50 p-6 sm:p-8">
           <div className="mb-6 flex items-center gap-2.5">
             <BookOpen size={18} className="text-red-600" />
-            <h3 className="text-lg font-bold text-slate-900">Əlaqəli məzmun</h3>
+            <h3 className="text-lg font-bold text-slate-900">{t('relatedTitle')}</h3>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {blogLinks.map((link) => (
@@ -703,7 +580,7 @@ export default function AqtaChecklistPage() {
                   {link.title}
                 </h4>
                 <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 transition-all group-hover:gap-2 group-hover:text-red-600">
-                  Bax <ArrowRight size={12} />
+                  {t('relatedViewBtn')} <ArrowRight size={12} />
                 </div>
               </Link>
             ))}

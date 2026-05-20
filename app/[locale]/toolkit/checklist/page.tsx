@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle, Circle, ChevronLeft, Download, ChevronDown, ChevronUp } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { CheckCircle, Circle, ChevronLeft, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface ChecklistItem {
   id: string;
@@ -16,95 +17,97 @@ interface ChecklistSection {
   items: ChecklistItem[];
 }
 
-const CHECKLIST_DATA: ChecklistSection[] = [
-  {
-    title: 'Hüquqi və Rəsmi İşlər',
-    emoji: '\uD83D\uDCCB',
-    items: [
-      { id: 'h1', text: 'VÖEN alınması (Vergilər Nazirliyi)', detail: 'Fərdi sahibkar və ya MMC qeydiyyatı' },
-      { id: 'h2', text: 'AQTA icazəsi (qida təhlükəsizliyi)', detail: 'Ərizə + plan + gigiyena sertifikatı' },
-      { id: 'h3', text: 'Yanğın təhlükəsizliyi aktı (FHN)', detail: 'Yanğınsöndürmə sistemi quraşdırılmalı' },
-      { id: 'h4', text: 'SES (Sanitariya-Epidemioloji) rəyi' },
-      { id: 'h5', text: 'İcra Hakimiyyəti razılığı (reklam lövhəsi)' },
-      { id: 'h6', text: 'Əmək müqavilələri (işçilərlə)' },
-      { id: 'h7', text: 'Kassa aparatı qeydiyyatı' },
-    ],
-  },
-  {
-    title: 'Mekan və İnşaat',
-    emoji: '\uD83C\uDFD7\uFE0F',
-    items: [
-      { id: 'm1', text: 'Mekan seçimi (lokasiya analizi)', detail: 'Piyada trafiki, rəqib xəritəsi, icarə şərtləri' },
-      { id: 'm2', text: 'İcarə müqaviləsi imzalanması' },
-      { id: 'm3', text: 'Memariyyət planı (layout)', detail: 'Mətbəx, salon, anbar, tualet — axın sxemi' },
-      { id: 'm4', text: 'İnşaat / təmir işləri' },
-      { id: 'm5', text: 'Ventilyasiya sistemi', detail: 'Mətbəx hood + salon hava dövranı' },
-      { id: 'm6', text: 'Elektrik və su infrastrukturu' },
-      { id: 'm7', text: 'Mebel və dekorasiya' },
-    ],
-  },
-  {
-    title: 'Mətbəx və Avadanlıq',
-    emoji: '\uD83C\uDF73',
-    items: [
-      { id: 'a1', text: 'Əsas avadanlıq siyahısı', detail: 'Soba, soyuducu, frizər, grill, fryer...' },
-      { id: 'a2', text: 'Kiçik avadanlıqlar (blender, terazi, bıçaq dəsti)' },
-      { id: 'a3', text: 'Qab-qacaq (boşqab, stəkan, çəngəl-bıçaq)' },
-      { id: 'a4', text: 'POS sistemi / kassa proqramı' },
-      { id: 'a5', text: 'Anbar rəfləri + saxlama qabları' },
-    ],
-  },
-  {
-    title: 'Menyu və Təchizat',
-    emoji: '\uD83D\uDCDD',
-    items: [
-      { id: 'mn1', text: 'Menyu konsepti (target auditoriya uyğun)', detail: 'Qiymət aralığı, porsiya ölçüsü, food cost hədəfi' },
-      { id: 'mn2', text: 'Resept kartları hazırlanması', detail: 'Hər yeməyin ərzaq siyahısı + miqdar + maya dəyəri' },
-      { id: 'mn3', text: 'Food cost hesablaması (hər porsiya)' },
-      { id: 'mn4', text: 'Təchizatçı müqavilələri (ət, tərəvəz, içki)' },
-      { id: 'mn5', text: 'Menyu dizaynı və çapı' },
-      { id: 'mn6', text: 'Qiymət siyasəti (markup strategiyası)' },
-    ],
-  },
-  {
-    title: 'Kadr və Təlim',
-    emoji: '\uD83D\uDC65',
-    items: [
-      { id: 'k1', text: 'Baş aşpaz işə qəbul' },
-      { id: 'k2', text: 'Ofisiant heyəti (salon müdiri dahil)' },
-      { id: 'k3', text: 'Mətbəx köməkçiləri' },
-      { id: 'k4', text: 'Təmizlik heyəti' },
-      { id: 'k5', text: 'Təlim proqramı (xidmət standartları)', detail: 'Qarşılama, sifariş alma, şikayət idarəsi' },
-      { id: 'k6', text: 'Gigiyena təlimi (AQTA tələbi)' },
-    ],
-  },
-  {
-    title: 'Marketinq və Açılış',
-    emoji: '\uD83D\uDE80',
-    items: [
-      { id: 'mr1', text: 'Brend identifikasiyası (logo, rəng, font)' },
-      { id: 'mr2', text: 'Sosial media hesabları (Instagram, TikTok)' },
-      { id: 'mr3', text: 'Google Maps / Yandex qeydiyyatı' },
-      { id: 'mr4', text: 'Açılış tarixi təyini' },
-      { id: 'mr5', text: 'Soft opening (dəvətli test)', detail: 'Dostlar + ailə ilə 2-3 gün sınaq' },
-      { id: 'mr6', text: 'Grand opening kampaniyası' },
-      { id: 'mr7', text: 'Wolt / Bolt Food qeydiyyatı' },
-    ],
-  },
-  {
-    title: 'Maliyyə',
-    emoji: '\uD83D\uDCB0',
-    items: [
-      { id: 'f1', text: 'Başlanğıc büdcə planı', detail: 'İnşaat + avadanlıq + ilk 3 ay əməliyyat xərci' },
-      { id: 'f2', text: 'Başabaş nöqtəsi hesablaması (break-even)' },
-      { id: 'f3', text: 'Aylıq P&L şablonu hazırlanması' },
-      { id: 'f4', text: 'Bank hesabı açılması' },
-      { id: 'f5', text: 'Mühasibat xidməti / proqramı' },
-    ],
-  },
-];
-
 export default function ChecklistPage() {
+  const t = useTranslations('toolkit.checklist');
+
+  const CHECKLIST_DATA: ChecklistSection[] = [
+    {
+      title: t('sec_legal_title'),
+      emoji: '\uD83D\uDCCB',
+      items: [
+        { id: 'h1', text: t('sec_legal_item_h1_text'), detail: t('sec_legal_item_h1_detail') },
+        { id: 'h2', text: t('sec_legal_item_h2_text'), detail: t('sec_legal_item_h2_detail') },
+        { id: 'h3', text: t('sec_legal_item_h3_text'), detail: t('sec_legal_item_h3_detail') },
+        { id: 'h4', text: t('sec_legal_item_h4_text') },
+        { id: 'h5', text: t('sec_legal_item_h5_text') },
+        { id: 'h6', text: t('sec_legal_item_h6_text') },
+        { id: 'h7', text: t('sec_legal_item_h7_text') },
+      ],
+    },
+    {
+      title: t('sec_venue_title'),
+      emoji: '\uD83C\uDFD7\uFE0F',
+      items: [
+        { id: 'm1', text: t('sec_venue_item_m1_text'), detail: t('sec_venue_item_m1_detail') },
+        { id: 'm2', text: t('sec_venue_item_m2_text') },
+        { id: 'm3', text: t('sec_venue_item_m3_text'), detail: t('sec_venue_item_m3_detail') },
+        { id: 'm4', text: t('sec_venue_item_m4_text') },
+        { id: 'm5', text: t('sec_venue_item_m5_text'), detail: t('sec_venue_item_m5_detail') },
+        { id: 'm6', text: t('sec_venue_item_m6_text') },
+        { id: 'm7', text: t('sec_venue_item_m7_text') },
+      ],
+    },
+    {
+      title: t('sec_kitchen_title'),
+      emoji: '\uD83C\uDF73',
+      items: [
+        { id: 'a1', text: t('sec_kitchen_item_a1_text'), detail: t('sec_kitchen_item_a1_detail') },
+        { id: 'a2', text: t('sec_kitchen_item_a2_text') },
+        { id: 'a3', text: t('sec_kitchen_item_a3_text') },
+        { id: 'a4', text: t('sec_kitchen_item_a4_text') },
+        { id: 'a5', text: t('sec_kitchen_item_a5_text') },
+      ],
+    },
+    {
+      title: t('sec_menu_title'),
+      emoji: '\uD83D\uDCDD',
+      items: [
+        { id: 'mn1', text: t('sec_menu_item_mn1_text'), detail: t('sec_menu_item_mn1_detail') },
+        { id: 'mn2', text: t('sec_menu_item_mn2_text'), detail: t('sec_menu_item_mn2_detail') },
+        { id: 'mn3', text: t('sec_menu_item_mn3_text') },
+        { id: 'mn4', text: t('sec_menu_item_mn4_text') },
+        { id: 'mn5', text: t('sec_menu_item_mn5_text') },
+        { id: 'mn6', text: t('sec_menu_item_mn6_text') },
+      ],
+    },
+    {
+      title: t('sec_staff_title'),
+      emoji: '\uD83D\uDC65',
+      items: [
+        { id: 'k1', text: t('sec_staff_item_k1_text') },
+        { id: 'k2', text: t('sec_staff_item_k2_text') },
+        { id: 'k3', text: t('sec_staff_item_k3_text') },
+        { id: 'k4', text: t('sec_staff_item_k4_text') },
+        { id: 'k5', text: t('sec_staff_item_k5_text'), detail: t('sec_staff_item_k5_detail') },
+        { id: 'k6', text: t('sec_staff_item_k6_text') },
+      ],
+    },
+    {
+      title: t('sec_marketing_title'),
+      emoji: '\uD83D\uDE80',
+      items: [
+        { id: 'mr1', text: t('sec_marketing_item_mr1_text') },
+        { id: 'mr2', text: t('sec_marketing_item_mr2_text') },
+        { id: 'mr3', text: t('sec_marketing_item_mr3_text') },
+        { id: 'mr4', text: t('sec_marketing_item_mr4_text') },
+        { id: 'mr5', text: t('sec_marketing_item_mr5_text'), detail: t('sec_marketing_item_mr5_detail') },
+        { id: 'mr6', text: t('sec_marketing_item_mr6_text') },
+        { id: 'mr7', text: t('sec_marketing_item_mr7_text') },
+      ],
+    },
+    {
+      title: t('sec_finance_title'),
+      emoji: '\uD83D\uDCB0',
+      items: [
+        { id: 'f1', text: t('sec_finance_item_f1_text'), detail: t('sec_finance_item_f1_detail') },
+        { id: 'f2', text: t('sec_finance_item_f2_text') },
+        { id: 'f3', text: t('sec_finance_item_f3_text') },
+        { id: 'f4', text: t('sec_finance_item_f4_text') },
+        { id: 'f5', text: t('sec_finance_item_f5_text') },
+      ],
+    },
+  ];
+
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set([0, 1]));
 
@@ -137,14 +140,14 @@ export default function ChecklistPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/toolkit" className="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-300 text-sm transition-colors mb-8 group">
             <ChevronLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
-            <span>Toolkit</span>
+            <span>{t('backLink')}</span>
           </Link>
-          <span className="bg-amber-600 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-4 inline-block">Pulsuz Bələdçi</span>
+          <span className="bg-amber-600 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-4 inline-block">{t('badge')}</span>
           <h1 className="text-4xl font-display font-black tracking-tighter mb-4">
-            Restoran Açılış Checklist
+            {t('title')}
           </h1>
           <p className="text-slate-400 text-lg">
-            Restoran açmaq üçün lazım olan bütün addımlar — hüquqi, maliyyə, menyudan marketinqə qədər.
+            {t('description')}
           </p>
         </div>
       </div>
@@ -153,7 +156,7 @@ export default function ChecklistPage() {
       <div className="max-w-3xl mx-auto px-4 -mt-6">
         <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-bold text-slate-700">{checkedCount} / {totalItems} tamamlandı</span>
+            <span className="text-sm font-bold text-slate-700">{checkedCount} / {totalItems} {t('progressLabel')}</span>
             <span className="text-sm font-black text-brand-red">{progress}%</span>
           </div>
           <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
@@ -183,7 +186,7 @@ export default function ChecklistPage() {
                   <span className="text-2xl">{section.emoji}</span>
                   <div>
                     <h2 className="font-bold text-slate-900">{section.title}</h2>
-                    <p className="text-xs text-slate-400">{sectionChecked}/{section.items.length} tamamlandı</p>
+                    <p className="text-xs text-slate-400">{sectionChecked}/{section.items.length} {t('section_completed')}</p>
                   </div>
                 </div>
                 {isExpanded ? <ChevronUp size={20} className="text-slate-400" /> : <ChevronDown size={20} className="text-slate-400" />}
