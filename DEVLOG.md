@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-21 - TASK-0157C-1 Dashboard Pattern A pilot batch
+
+**Why:** TASK-0157A migrated 3 dashboard files, TASK-0157B added route mirrors. Now the remaining 13 Record<Locale> files need Pattern A migration. C1 pilot batch tackles the 4 simplest client-component pages.
+
+**What:** 4 files migrated from inline Record<Locale> to useTranslations(): settings (2 key), toolkit (18 key), site (32 key), trends (29 key). 4 new namespaces added to all 4 locale JSON files. Total: 81 leaf key × 4 dil = 324 translations.
+
+**Smoke:** Build PASS. 8 curl checks (AZ + TR × 4 pages) all 307 (auth redirect). No 500/404.
+
+---
+
 ## 2026-05-21 - TASK-0157B Dashboard locale route mirrors
 
 **Why:** TASK-0157A 65 i18n key-i 4 dilə əlavə etdi, lakin dashboard route-ları `/dashboard/` prefix-siz qalırdı. Language switcher `/tr/dashboard`-a yönləndirirdi → 404. Mövcud 2 ilanlar mirror-u `redirect()` pattern-i istifadə edirdi ki, locale kontekstini itirirdi.

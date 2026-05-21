@@ -2,15 +2,12 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import {
   Plus,
   MapPin,
   TrendingUp,
   Search,
   Filter,
-  MoreVertical,
   Edit2,
   Trash2,
   Eye,
@@ -18,169 +15,12 @@ import {
   Navigation,
   ArrowUpRight,
   Plane,
-  Tag
+  Tag,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { normalizeLocale, type Locale } from '@/i18n/config';
+import { useTranslations } from 'next-intl';
 
 import { initialDestinations } from '@/data/trends-mock';
-
-const pageCopy: Record<Locale, {
-  pageTitle: string;
-  pageBadge: string;
-  pageSubtitle: string;
-  newDestination: string;
-  statTotalDestinations: string;
-  statTrending: string;
-  statTotalViews: string;
-  searchPlaceholder: string;
-  filterButton: string;
-  allCountries: string;
-  statusActive: string;
-  statusDraft: string;
-  reservations: string;
-  discount: string;
-  showInTrend: string;
-  modalAddTitle: string;
-  modalEditTitle: string;
-  fieldDestination: string;
-  fieldDestinationPlaceholder: string;
-  fieldCountry: string;
-  fieldCountryPlaceholder: string;
-  fieldPrice: string;
-  fieldPricePlaceholder: string;
-  fieldDiscount: string;
-  fieldDiscountPlaceholder: string;
-  fieldImageUrl: string;
-  cancel: string;
-  save: string;
-  deleteConfirm: string;
-}> = {
-  az: {
-    pageTitle: 'Trendlərin İdarəedilməsi',
-    pageBadge: 'Aktual Səyahətlər',
-    pageSubtitle: 'Populyar istiqamətləri və trend səyahət paketlərini buradan idarə edin.',
-    newDestination: 'Yeni İstiqamət',
-    statTotalDestinations: 'Ümumi İstiqamət',
-    statTrending: 'Trenddə Olanlar',
-    statTotalViews: 'Toplam Baxış (Bu Ay)',
-    searchPlaceholder: 'İstiqamət və ya ölkə axtar...',
-    filterButton: 'Filtr',
-    allCountries: 'Bütün Ölkələr',
-    statusActive: 'Aktual',
-    statusDraft: 'Qaralama',
-    reservations: 'Rezerv',
-    discount: 'ENDİRİM',
-    showInTrend: 'Trenddə göstər',
-    modalAddTitle: 'Yeni İstiqamət Əlavə Et',
-    modalEditTitle: 'İstiqaməti Redaktə Et',
-    fieldDestination: 'İstiqamət',
-    fieldDestinationPlaceholder: 'Məs: Bakı',
-    fieldCountry: 'Ölkə',
-    fieldCountryPlaceholder: 'Məs: Azərbaycan',
-    fieldPrice: 'Qiymət',
-    fieldPricePlaceholder: 'Məs: 450 ₼',
-    fieldDiscount: 'Endirim (%)',
-    fieldDiscountPlaceholder: 'Məs: 15',
-    fieldImageUrl: 'Şəkil URL',
-    cancel: 'Ləğv Et',
-    save: 'Yadda Saxla',
-    deleteConfirm: 'Bu istiqaməti silmək istədiyinizə əminsiniz?',
-  },
-  ru: {
-    pageTitle: 'Управление трендами',
-    pageBadge: 'Актуальные путешествия',
-    pageSubtitle: 'Управляйте популярными направлениями и трендовыми пакетами путешествий.',
-    newDestination: 'Новое направление',
-    statTotalDestinations: 'Всего направлений',
-    statTrending: 'В тренде',
-    statTotalViews: 'Всего просмотров (за месяц)',
-    searchPlaceholder: 'Поиск направлений или стран...',
-    filterButton: 'Фильтр',
-    allCountries: 'Все страны',
-    statusActive: 'Активно',
-    statusDraft: 'Черновик',
-    reservations: 'Бронирований',
-    discount: 'СКИДКА',
-    showInTrend: 'Показать в тренде',
-    modalAddTitle: 'Добавить новое направление',
-    modalEditTitle: 'Редактировать направление',
-    fieldDestination: 'Направление',
-    fieldDestinationPlaceholder: 'Напр: Баку',
-    fieldCountry: 'Страна',
-    fieldCountryPlaceholder: 'Напр: Азербайджан',
-    fieldPrice: 'Цена',
-    fieldPricePlaceholder: 'Напр: 450 ₼',
-    fieldDiscount: 'Скидка (%)',
-    fieldDiscountPlaceholder: 'Напр: 15',
-    fieldImageUrl: 'URL изображения',
-    cancel: 'Отмена',
-    save: 'Сохранить',
-    deleteConfirm: 'Вы уверены, что хотите удалить это направление?',
-  },
-  en: {
-    pageTitle: 'Trends Management',
-    pageBadge: 'Current Trips',
-    pageSubtitle: 'Manage popular destinations and trending travel packages from here.',
-    newDestination: 'New Destination',
-    statTotalDestinations: 'Total Destinations',
-    statTrending: 'Trending',
-    statTotalViews: 'Total Views (This Month)',
-    searchPlaceholder: 'Search destinations or countries...',
-    filterButton: 'Filter',
-    allCountries: 'All Countries',
-    statusActive: 'Active',
-    statusDraft: 'Draft',
-    reservations: 'Bookings',
-    discount: 'DISCOUNT',
-    showInTrend: 'Show in trends',
-    modalAddTitle: 'Add New Destination',
-    modalEditTitle: 'Edit Destination',
-    fieldDestination: 'Destination',
-    fieldDestinationPlaceholder: 'E.g: Baku',
-    fieldCountry: 'Country',
-    fieldCountryPlaceholder: 'E.g: Azerbaijan',
-    fieldPrice: 'Price',
-    fieldPricePlaceholder: 'E.g: 450 ₼',
-    fieldDiscount: 'Discount (%)',
-    fieldDiscountPlaceholder: 'E.g: 15',
-    fieldImageUrl: 'Image URL',
-    cancel: 'Cancel',
-    save: 'Save',
-    deleteConfirm: 'Are you sure you want to delete this destination?',
-  },
-  tr: {
-    pageTitle: 'Trendlerin Yönetimi',
-    pageBadge: 'Güncel Seyahatler',
-    pageSubtitle: 'Popüler destinasyonları ve trend seyahat paketlerini buradan yönetin.',
-    newDestination: 'Yeni Destinasyon',
-    statTotalDestinations: 'Toplam Destinasyon',
-    statTrending: 'Trendde Olanlar',
-    statTotalViews: 'Toplam Görüntüleme (Bu Ay)',
-    searchPlaceholder: 'Destinasyon veya ülke ara...',
-    filterButton: 'Filtre',
-    allCountries: 'Tüm Ülkeler',
-    statusActive: 'Aktif',
-    statusDraft: 'Taslak',
-    reservations: 'Rezervasyon',
-    discount: 'İNDİRİM',
-    showInTrend: 'Trendde göster',
-    modalAddTitle: 'Yeni Destinasyon Ekle',
-    modalEditTitle: 'Destinasyonu Düzenle',
-    fieldDestination: 'Destinasyon',
-    fieldDestinationPlaceholder: 'Örn: Bakü',
-    fieldCountry: 'Ülke',
-    fieldCountryPlaceholder: 'Örn: Azerbaycan',
-    fieldPrice: 'Fiyat',
-    fieldPricePlaceholder: 'Örn: 450 ₼',
-    fieldDiscount: 'İndirim (%)',
-    fieldDiscountPlaceholder: 'Örn: 15',
-    fieldImageUrl: 'Görsel URL',
-    cancel: 'İptal',
-    save: 'Kaydet',
-    deleteConfirm: 'Bu destinasyonu silmek istediğinizden emin misiniz?',
-  },
-};
 
 interface Destination {
   id: number;
@@ -195,9 +35,7 @@ interface Destination {
 }
 
 export default function TrendsPage() {
-  const pathname = usePathname();
-  const locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = pageCopy[locale];
+  const t = useTranslations('dashboardTrends');
 
   const [destinations, setDestinations] = useState<Destination[]>(initialDestinations as Destination[]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -210,7 +48,7 @@ export default function TrendsPage() {
   );
 
   const handleDelete = (id: number) => {
-    if (window.confirm(copy.deleteConfirm)) {
+    if (window.confirm(t('deleteConfirm'))) {
       setDestinations(prev => prev.filter(d => d.id !== id));
     }
   };
@@ -265,13 +103,13 @@ export default function TrendsPage() {
       <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <div className="flex items-center gap-4 mb-2">
-            <h1 className="text-4xl font-serif text-[var(--dk-navy)] tracking-tight">{copy.pageTitle}</h1>
+            <h1 className="text-4xl font-serif text-[var(--dk-navy)] tracking-tight">{t('pageTitle')}</h1>
             <div className="px-3 py-1 bg-[color:color-mix(in_srgb,var(--dk-gold)_6%,transparent)] text-[var(--dk-gold)] text-[10px] font-bold rounded-full flex items-center gap-1.5 border border-[color:color-mix(in_srgb,var(--dk-gold)_13%,transparent)] uppercase tracking-widest">
               <TrendingUp size={12} />
-              {copy.pageBadge}
+              {t('pageBadge')}
             </div>
           </div>
-          <p className="text-[var(--dk-ink-soft)] text-base font-normal max-w-xl">{copy.pageSubtitle}</p>
+          <p className="text-[var(--dk-ink-soft)] text-base font-normal max-w-xl">{t('pageSubtitle')}</p>
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -279,7 +117,7 @@ export default function TrendsPage() {
             className="flex items-center gap-2 px-6 py-3 bg-[var(--dk-red)] text-white rounded-xl hover:bg-[var(--dk-gold)] transition-all shadow-lg shadow-[var(--dk-red)]/10 text-sm font-bold"
           >
             <Plus size={18} />
-            <span>{copy.newDestination}</span>
+            <span>{t('newDestination')}</span>
           </button>
         </div>
       </div>
@@ -291,21 +129,21 @@ export default function TrendsPage() {
             <Plane size={20} className="text-blue-600" />
           </div>
           <p className="text-3xl font-serif text-[var(--dk-navy)] mb-1">{destinations.length}</p>
-          <p className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest">{copy.statTotalDestinations}</p>
+          <p className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest">{t('statTotalDestinations')}</p>
         </div>
         <div className="bg-white p-6 rounded-[24px] border border-[var(--dk-border-soft)] shadow-sm">
           <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center mb-4">
             <TrendingUp size={20} className="text-orange-500" />
           </div>
           <p className="text-3xl font-serif text-[var(--dk-navy)] mb-1">{destinations.filter(d => d.trending).length}</p>
-          <p className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest">{copy.statTrending}</p>
+          <p className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest">{t('statTrending')}</p>
         </div>
         <div className="bg-white p-6 rounded-[24px] border border-[var(--dk-border-soft)] shadow-sm">
           <div className="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center mb-4">
             <Eye size={20} className="text-green-600" />
           </div>
           <p className="text-3xl font-serif text-[var(--dk-navy)] mb-1">7.4k</p>
-          <p className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest">{copy.statTotalViews}</p>
+          <p className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest">{t('statTotalViews')}</p>
         </div>
       </div>
 
@@ -315,7 +153,7 @@ export default function TrendsPage() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--dk-border-soft)]" size={18} />
           <input
             type="text"
-            placeholder={copy.searchPlaceholder}
+            placeholder={t('searchPlaceholder')}
             className="w-full pl-12 pr-4 py-3 bg-[var(--dk-paper)] border border-[var(--dk-border-soft)] rounded-xl text-sm outline-none focus:border-[var(--dk-gold)] transition-colors"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -324,11 +162,11 @@ export default function TrendsPage() {
         <div className="flex gap-2 w-full md:w-auto">
           <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white border border-[var(--dk-border-soft)] rounded-xl hover:bg-[var(--dk-paper)] transition-all text-sm font-semibold text-[var(--dk-navy)]">
             <Filter size={16} className="text-[var(--dk-muted)]" />
-            {copy.filterButton}
+            {t('filterButton')}
           </button>
           <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-white border border-[var(--dk-border-soft)] rounded-xl hover:bg-[var(--dk-paper)] transition-all text-sm font-semibold text-[var(--dk-navy)]">
             <Globe size={16} className="text-[var(--dk-muted)]" />
-            {copy.allCountries}
+            {t('allCountries')}
           </button>
         </div>
       </div>
@@ -362,7 +200,7 @@ export default function TrendsPage() {
                 {dest.discount && (
                   <div className="px-3 py-1 bg-[var(--dk-gold)] text-white text-[10px] font-bold rounded-full flex items-center gap-1.5 shadow-sm">
                     <Tag size={12} />
-                    {dest.discount} {copy.discount}
+                    {dest.discount} {t('discount')}
                   </div>
                 )}
               </div>
@@ -377,7 +215,7 @@ export default function TrendsPage() {
                     ? 'bg-green-500/20 text-green-400 border-green-500/30'
                     : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
                 }`}>
-                  {dest.status === 'active' ? copy.statusActive : copy.statusDraft}
+                  {dest.status === 'active' ? t('statusActive') : t('statusDraft')}
                 </div>
               </div>
 
@@ -422,7 +260,7 @@ export default function TrendsPage() {
                   </div>
                   <div className="flex items-center gap-1.5 text-[10px] font-bold text-[var(--dk-muted)]">
                     <Navigation size={14} className="text-[var(--dk-border-soft)]" />
-                    42 {copy.reservations}
+                    42 {t('reservations')}
                   </div>
                 </div>
                 <ArrowUpRight size={16} className="text-[var(--dk-border-soft)] group-hover:text-[var(--dk-gold)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
@@ -443,7 +281,7 @@ export default function TrendsPage() {
             <div className="p-8">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-2xl font-serif text-[var(--dk-navy)]">
-                  {editingDestination ? copy.modalEditTitle : copy.modalAddTitle}
+                  {editingDestination ? t('modalEditTitle') : t('modalAddTitle')}
                 </h2>
                 <button
                   onClick={() => setIsModalOpen(false)}
@@ -456,21 +294,21 @@ export default function TrendsPage() {
               <form onSubmit={handleSave} className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{copy.fieldDestination}</label>
+                    <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{t('fieldDestination')}</label>
                     <input
                       name="name"
                       defaultValue={editingDestination?.name}
-                      placeholder={copy.fieldDestinationPlaceholder}
+                      placeholder={t('fieldDestinationPlaceholder')}
                       required
                       className="w-full px-4 py-3 bg-[var(--dk-paper)] border border-[var(--dk-border-soft)] rounded-xl text-sm outline-none focus:border-[var(--dk-gold)] transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{copy.fieldCountry}</label>
+                    <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{t('fieldCountry')}</label>
                     <input
                       name="country"
                       defaultValue={editingDestination?.country}
-                      placeholder={copy.fieldCountryPlaceholder}
+                      placeholder={t('fieldCountryPlaceholder')}
                       required
                       className="w-full px-4 py-3 bg-[var(--dk-paper)] border border-[var(--dk-border-soft)] rounded-xl text-sm outline-none focus:border-[var(--dk-gold)] transition-colors"
                     />
@@ -479,28 +317,28 @@ export default function TrendsPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{copy.fieldPrice}</label>
+                    <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{t('fieldPrice')}</label>
                     <input
                       name="price"
                       defaultValue={editingDestination?.price}
-                      placeholder={copy.fieldPricePlaceholder}
+                      placeholder={t('fieldPricePlaceholder')}
                       required
                       className="w-full px-4 py-3 bg-[var(--dk-paper)] border border-[var(--dk-border-soft)] rounded-xl text-sm outline-none focus:border-[var(--dk-gold)] transition-colors"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{copy.fieldDiscount}</label>
+                    <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{t('fieldDiscount')}</label>
                     <input
                       name="discount"
                       defaultValue={editingDestination?.discount || ''}
-                      placeholder={copy.fieldDiscountPlaceholder}
+                      placeholder={t('fieldDiscountPlaceholder')}
                       className="w-full px-4 py-3 bg-[var(--dk-paper)] border border-[var(--dk-border-soft)] rounded-xl text-sm outline-none focus:border-[var(--dk-gold)] transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{copy.fieldImageUrl}</label>
+                  <label className="text-[10px] font-bold text-[var(--dk-muted)] uppercase tracking-widest px-1">{t('fieldImageUrl')}</label>
                   <input
                     name="image"
                     defaultValue={editingDestination?.image}
@@ -517,7 +355,7 @@ export default function TrendsPage() {
                     defaultChecked={editingDestination?.trending}
                     className="w-5 h-5 rounded-md border-[var(--dk-border-soft)] text-[var(--dk-gold)] focus:ring-[var(--dk-gold)]"
                   />
-                  <label htmlFor="trending" className="text-sm font-semibold text-[var(--dk-navy)]">{copy.showInTrend}</label>
+                  <label htmlFor="trending" className="text-sm font-semibold text-[var(--dk-navy)]">{t('showInTrend')}</label>
                 </div>
 
                 <div className="pt-4 flex gap-3">
@@ -526,13 +364,13 @@ export default function TrendsPage() {
                     onClick={() => setIsModalOpen(false)}
                     className="flex-1 px-6 py-4 bg-white border border-[var(--dk-border-soft)] text-[var(--dk-navy)] rounded-2xl hover:bg-gray-50 transition-all text-sm font-bold"
                   >
-                    {copy.cancel}
+                    {t('cancel')}
                   </button>
                   <button
                     type="submit"
                     className="flex-[2] px-6 py-4 bg-[var(--dk-navy)] text-white rounded-2xl hover:bg-[var(--dk-gold)] transition-all text-sm font-bold shadow-xl shadow-[var(--dk-navy)]/10"
                   >
-                    {copy.save}
+                    {t('save')}
                   </button>
                 </div>
               </form>
