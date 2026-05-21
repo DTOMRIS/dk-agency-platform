@@ -2831,7 +2831,81 @@
   },
   "dashboardSidebar": {
     "title": "OCAQ Admin Panel",
-    "role": "Admin"
+    "role": "Admin",
+    "panelTitle": "OCAQ Admin Panel",
+    "adminSubtitle": "Admin center",
+    "userAccess": "Full management access is active",
+    "closeSidebar": "Close sidebar",
+    "logout": "Logout",
+    "nav": {
+      "home": "Home",
+      "listings": "Listings",
+      "hero": "Hero",
+      "news": "News",
+      "blog": "Blog",
+      "kazanLeads": "KAZAN Leads",
+      "auditor": "Auditor",
+      "invoices": "Invoices",
+      "foodCost": "Food Cost",
+      "toolkit": "Toolkit",
+      "marketinqOcagi": "Marketing Hub",
+      "site": "Website",
+      "users": "Users",
+      "auditLog": "Audit Log",
+      "settings": "Settings"
+    }
+  },
+  "dashboardKazanLeads": {
+    "title": "KAZAN leads",
+    "subtitle": "Users who filled the widget form appear here from the real DB. Filter by status, intent, and business type.",
+    "emptyState": "No KAZAN leads found for this filter.",
+    "lastMessages": "Recent messages",
+    "actions": "Actions",
+    "openWhatsapp": "Open in WhatsApp",
+    "createdAt": "Created",
+    "whatsapp": "WhatsApp",
+    "meeting": "Meeting",
+    "yes": "yes",
+    "no": "no",
+    "requested": "requested",
+    "none": "none",
+    "summary": {
+      "new": "New",
+      "contacted": "Contacted",
+      "qualified": "Qualified",
+      "converted": "Converted"
+    },
+    "filters": {
+      "status": "Status",
+      "intent": "Intent",
+      "businessType": "Business type"
+    },
+    "statusOptions": {
+      "all": "All",
+      "new": "New",
+      "contacted": "Contacted",
+      "qualified": "Qualified",
+      "converted": "Converted",
+      "dismissed": "Dismissed"
+    },
+    "intentOptions": {
+      "all": "All",
+      "food_cost": "Food cost",
+      "pnl": "P&L",
+      "aqta": "AQTA",
+      "delivery": "Delivery",
+      "general": "General"
+    },
+    "businessTypeOptions": {
+      "all": "All",
+      "restoran": "Restaurant",
+      "kafe": "Cafe",
+      "franchise": "Franchise",
+      "diger": "Other"
+    },
+    "lead": "Lead",
+    "roleUser": "User",
+    "roleAi": "AI"
   },
   "kazanLeadActions": {
     "updating": "Updating...",
@@ -2850,7 +2924,10 @@
     "trackingCopied": "Tracking code copied.",
     "backArrow": "← Back to listings",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "labelName": "Name:",
+    "labelPhone": "Phone:",
+    "labelEmail": "Email:"
   },
   "home": {
     "platformCards": {

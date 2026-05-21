@@ -285,9 +285,9 @@ export default function DashboardIlanDetailPage() {
             <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
               <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Sahibkar</h2>
               <div className="mt-4 space-y-2 text-sm text-slate-600">
-                <div><strong>Ad:</strong> {listing.ownerName}</div>
-                <div><strong>Telefon:</strong> +{listing.phone}</div>
-                <div><strong>Email:</strong> {listing.email}</div>
+                <div><strong>{t('labelName')}</strong> {listing.ownerName}</div>
+                <div><strong>{t('labelPhone')}</strong> +{listing.phone}</div>
+                <div><strong>{t('labelEmail')}</strong> {listing.email}</div>
               </div>
               <div className="mt-5 flex flex-wrap gap-3">
                 <a href={`tel:+${listing.phone}`} className="rounded-full bg-[var(--dk-red)] px-5 py-2.5 text-sm font-bold text-white">

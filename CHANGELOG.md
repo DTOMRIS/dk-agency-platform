@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [TASK-0157A] Dashboard i18n Batch 1 — 2026-05-21
+
+### Added
+- `dashboardSidebar` namespace genişləndirildi (22 leaf key × 4 dil)
+- `dashboardKazanLeads` namespace yaradıldı (40 leaf key × 4 dil)
+- `listingDetail` namespace-ə 3 yeni label key (`labelName`, `labelPhone`, `labelEmail` × 4 dil)
+
+### Changed
+- `components/dashboard/DashboardSidebar.tsx`: Pattern B → Pattern A (`useTranslations`)
+- `app/dashboard/kazan-leads/page.tsx`: Pattern B → Pattern A (`getTranslations`, server component)
+- `app/dashboard/ilanlar/[id]/page.tsx`: 3 hardcoded label → `t('labelXxx')`
+
+### Notes
+- Scope: 3 fayl + 4 JSON. Qalan 13 `Record<Locale>` dashboard faylı növbəti batch-lərdə.
+- AZ runtime smoke PASS (4 səhifə × 2 viewport).
+- TR/RU/EN JSON key-ləri gələcəyə hazırdır, lakin TASK-0157B route mirror fix-i edilənə qədər runtime-da görünmür (dashboard locale-prefix-siz, switcher `/tr/dashboard`-a yönləndirir, route yoxdur).
+- L-007 sarmaldan qaçıldı: 16 `Record<Locale>` bir PR-da migrasiya edilmədi.
+
 ### Added
 - `[TASK-0108] feat(i18n): KAZAN AI page Pattern C→A — kazanAi namespace, 4 dil UI + locale-aware metadata`
 - `[TASK-0106] feat(home): trust layer — DoganNote (Pattern A, ayrı komponent) + AhilikValues 3-card — 14 key × 4 dil, "Necə işləyir" sonrası, StageSelector öncəsi`

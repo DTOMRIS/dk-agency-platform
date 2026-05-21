@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-21 - TASK-0157A Dashboard i18n Batch 1
+
+**Why:** Dashboard-da sidebar, KAZAN leads səhifəsi və elan detail owner label-ları inline `Record<Locale>` / hardcoded pattern-də qalırdı. Launch öncəsi dashboard i18n batch-lərə bölünməli idi ki, 16 `Record<Locale>` bir PR-da sarmala çevrilməsin.
+
+**What:** `DashboardSidebar` Pattern A-ya keçirildi (`useTranslations('dashboardSidebar')`). `app/dashboard/kazan-leads/page.tsx` server component olduğu üçün `getTranslations('dashboardKazanLeads')` istifadə edir. `app/dashboard/ilanlar/[id]/page.tsx` yalnız `Ad:`, `Telefon:`, `Email:` label-larını `listingDetail` key-lərinə bağladı. 65 yeni leaf key × 4 dil = 260 tərcümə əlavə edildi.
+
+**Discovery:** Dashboard route-ları locale-prefix-sizdir. `/tr/dashboard`, `/ru/dashboard`, `/en/dashboard` hazırda 404 verir; `DashboardTopBar` switcher-i bu route-lara yönləndirir. Route strategy TASK-0157B-yə ayrıldı. AZ runtime smoke PASS, TR/RU/EN JSON hazır gözləyir.
+
+**Scope:** Qalan 13 `Record<Locale>` dashboard faylı, mock data, middleware, protected files və dashboard route strategy dəyişdirilmədi.
+
+---
+
 ## 2026-05-20 - TASK-0110 next-intl INVALID_KEY normalize
 
 **Why:** Dashboard audit log action labels used DB action codes like `member.created`. JSON stored those as flat keys under `dashboard.auditLog.actions`, while next-intl interprets dots as nested path separators. This produced `INVALID_KEY` warnings for `actions.member.*`.

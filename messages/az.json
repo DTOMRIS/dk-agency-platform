@@ -2930,7 +2930,81 @@
   },
   "dashboardSidebar": {
     "title": "OCAQ İdarə Paneli",
-    "role": "Admin"
+    "role": "Admin",
+    "panelTitle": "OCAQ İdarə Paneli",
+    "adminSubtitle": "Admin mərkəzi",
+    "userAccess": "Tam idarəetmə girişi aktivdir",
+    "closeSidebar": "Sidebar bağla",
+    "logout": "Çıxış",
+    "nav": {
+      "home": "Əsas səhifə",
+      "listings": "Elanlar",
+      "hero": "Hero",
+      "news": "Xəbərlər",
+      "blog": "Bloq",
+      "kazanLeads": "KAZAN Leads",
+      "auditor": "Auditor",
+      "invoices": "Faturalar",
+      "foodCost": "Food Cost",
+      "toolkit": "Toolkit",
+      "marketinqOcagi": "Marketinq Ocağı",
+      "site": "Sayt",
+      "users": "İstifadəçilər",
+      "auditLog": "Audit Log",
+      "settings": "Parametrlər"
+    }
+  },
+  "dashboardKazanLeads": {
+    "title": "KAZAN leads",
+    "subtitle": "Widget-də form dolduran istifadəçilər burada real DB-dən görünür. Status, intent və biznes tipinə görə süzülür.",
+    "emptyState": "Bu filtrə uyğun KAZAN lead tapılmadı.",
+    "lastMessages": "Son mesajlar",
+    "actions": "Actions",
+    "openWhatsapp": "WhatsApp-a aç",
+    "createdAt": "Yaradılıb",
+    "whatsapp": "WhatsApp",
+    "meeting": "Görüş",
+    "yes": "bəli",
+    "no": "xeyr",
+    "requested": "istənib",
+    "none": "yoxdur",
+    "summary": {
+      "new": "Yeni",
+      "contacted": "Əlaqə saxlanıldı",
+      "qualified": "Uyğun",
+      "converted": "Çevrildi"
+    },
+    "filters": {
+      "status": "Status",
+      "intent": "Intent",
+      "businessType": "Biznes tipi"
+    },
+    "statusOptions": {
+      "all": "Hamısı",
+      "new": "Yeni",
+      "contacted": "Əlaqə saxlanıldı",
+      "qualified": "Uyğun",
+      "converted": "Çevrildi",
+      "dismissed": "Rədd edildi"
+    },
+    "intentOptions": {
+      "all": "Hamısı",
+      "food_cost": "Food cost",
+      "pnl": "P&L",
+      "aqta": "AQTA",
+      "delivery": "Çatdırılma",
+      "general": "Ümumi"
+    },
+    "businessTypeOptions": {
+      "all": "Hamısı",
+      "restoran": "Restoran",
+      "kafe": "Kafe",
+      "franchise": "Franchise",
+      "diger": "Digər"
+    },
+    "lead": "Lead",
+    "roleUser": "User",
+    "roleAi": "AI"
   },
   "kazanLeadActions": {
     "updating": "Yenilənir...",
@@ -2949,7 +3023,10 @@
     "trackingCopied": "Tracking code kopyalandı.",
     "backArrow": "← Elan siyahısına qayıt",
     "yes": "Bəli",
-    "no": "Xeyr"
+    "no": "Xeyr",
+    "labelName": "Ad:",
+    "labelPhone": "Telefon:",
+    "labelEmail": "Email:"
   },
   "home": {
     "platformCards": {
