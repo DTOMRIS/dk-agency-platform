@@ -1338,10 +1338,12 @@
       "next": "Növbəti",
       "pageLabel": "Səhifə",
       "actions": {
-        "member.created": "İstifadəçi yaradıldı",
-        "member.role_changed": "Rol dəyişdirildi",
-        "member.deleted": "İstifadəçi silindi",
-        "member.password_reset": "Şifrə sıfırlandı"
+        "member": {
+          "created": "İstifadəçi yaradıldı",
+          "role_changed": "Rol dəyişdirildi",
+          "deleted": "İstifadəçi silindi",
+          "password_reset": "Şifrə sıfırlandı"
+        }
       }
     },
     "memberDetail": {

@@ -1336,10 +1336,12 @@
       "next": "Sonraki",
       "pageLabel": "Sayfa",
       "actions": {
-        "member.created": "Üye oluşturuldu",
-        "member.role_changed": "Rol değiştirildi",
-        "member.deleted": "Üye silindi",
-        "member.password_reset": "Şifre sıfırlandı"
+        "member": {
+          "created": "Üye oluşturuldu",
+          "role_changed": "Rol değiştirildi",
+          "deleted": "Üye silindi",
+          "password_reset": "Şifre sıfırlandı"
+        }
       }
     },
     "memberDetail": {

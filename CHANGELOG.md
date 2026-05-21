@@ -34,6 +34,7 @@
 ### Debug
 - **TASK-0122** [#120]: Sezon Planlama raw DeepSeek output capture + Zod error detail. Zod validation fail statusu 502-den 422-ye kecirildi. Schema align Faza 2-de gelecek.
 ### Fixed
+- `[TASK-0110] fix(i18n): dashboard audit log actions.member.* JSON keys nested edildi — next-intl INVALID_KEY warning aradan qalxdı`
 - `[TASK-0111] fix(lint): ComplaintAnalysis localStorage history init lazy state-ə köçürüldü — react-hooks/set-state-in-effect error aradan qalxdı`
 - `[TASK-0107] fix(security): b2b-panel layout auth guard — /b2b-panel/* now requires member session before rendering portal shell`
 - **TASK-0125** [#124]: Marketing tools readability fix. 7 alətdə "Niyə bu vacibdir?" info box kontrastı artırıldı (blue info card), Şikayət Analitiği duplicate warning silindi, Mənbə select grid-i genişləndi və tarix üçün DD.MM.YYYY display label əlavə edildi.
