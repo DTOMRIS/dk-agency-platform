@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-21 - TASK-0157B Dashboard locale route mirrors
+
+**Why:** TASK-0157A 65 i18n key-i 4 dilə əlavə etdi, lakin dashboard route-ları `/dashboard/` prefix-siz qalırdı. Language switcher `/tr/dashboard`-a yönləndirirdi → 404. Mövcud 2 ilanlar mirror-u `redirect()` pattern-i istifadə edirdi ki, locale kontekstini itirirdi.
+
+**What:** 39 re-export mirror faylı yaradıldı `app/[locale]/dashboard/` altında (1 layout + 38 page). Hər fayl 1 sətirlik `export { default } from '@/app/dashboard/.../page'` pattern-i istifadə edir. DashboardSidebar-ın 15 nav link-i və logo link-i `withLocale()` ilə locale-aware edildi. DashboardTopBar profile link-i eyni pattern-ə keçdi. Auth guard layout re-export vasitəsilə qorunur — unauthenticated `/tr/dashboard` → `/auth/login`.
+
+**Discovery:** Middleware dəyişiklik tələb etmir: `/(az|ru|en|tr)/:path*` matcher artıq locale-prefixed dashboard route-larını tutur. AZ prefix middleware tərəfindən avtomatik silinir (`as-needed` strategiya). `isActive` sidebar funksiyası `stripLocalePrefix` ilə locale-agnostic edildi.
+
+**Smoke:** Build PASS. 4 dil × 6 səhifə HEAD test = 24/24 PASS (307 → /auth/login).
+
+---
+
 ## 2026-05-21 - TASK-0157A Dashboard i18n Batch 1
 
 **Why:** Dashboard-da sidebar, KAZAN leads səhifəsi və elan detail owner label-ları inline `Record<Locale>` / hardcoded pattern-də qalırdı. Launch öncəsi dashboard i18n batch-lərə bölünməli idi ki, 16 `Record<Locale>` bir PR-da sarmala çevrilməsin.

@@ -1,5 +1,1 @@
-import { redirect } from 'next/navigation';
-
-export default function LocalizedDashboardIlanlarPage() {
-  redirect('/dashboard/ilanlar');
-}
+export { default } from '@/app/dashboard/ilanlar/page';

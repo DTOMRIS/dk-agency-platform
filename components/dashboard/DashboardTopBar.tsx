@@ -11,6 +11,7 @@ import {
   normalizeLocale,
   stripLocalePrefix,
   switchLocalePath,
+  withLocale,
   type Locale,
 } from '@/i18n/config';
 import { clearMemberSession, getGuestSession, readMemberSession, type MemberSession } from '@/lib/member-access';
@@ -136,7 +137,7 @@ export function DashboardTopBar() {
           {userMenuOpen ? (
             <div className="absolute right-0 mt-2 w-52 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
               <Link
-                href="/dashboard/profile"
+                href={withLocale(currentLocale, '/dashboard/profile')}
                 className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
                 onClick={() => setUserMenuOpen(false)}
               >
