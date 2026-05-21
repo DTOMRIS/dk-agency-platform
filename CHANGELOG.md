@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [TASK-0157B] Dashboard locale route mirrors — 2026-05-21
+
+### Added
+- 39 re-export mirror files under `app/[locale]/dashboard/` (1 layout + 38 pages)
+- All 38 dashboard pages now accessible via `/tr/dashboard/...`, `/ru/dashboard/...`, `/en/dashboard/...`
+
+### Changed
+- `app/[locale]/dashboard/ilanlar/page.tsx`: redirect → re-export (preserves locale context)
+- `app/[locale]/dashboard/ilanlar/[id]/page.tsx`: redirect → re-export
+- `components/dashboard/DashboardSidebar.tsx`: nav links locale-aware via `withLocale()`
+- `components/dashboard/DashboardTopBar.tsx`: profile link locale-aware via `withLocale()`
+
+### Fixed
+- Language switcher → `/tr/dashboard/...` no longer 404
+- Sidebar navigation preserves locale when navigating between dashboard pages
+- `isActive()` detection works with locale-prefixed pathnames via `stripLocalePrefix()`
+
+### Notes
+- Middleware unchanged — `/(az|ru|en|tr)/:path*` matcher already handles locale-prefixed routes
+- Auth guard preserved via layout re-export
+- 4 locales × 6 pages = 24 HEAD tests PASS (307 → /auth/login)
+
 ## [TASK-0157A] Dashboard i18n Batch 1 — 2026-05-21
 
 ### Added

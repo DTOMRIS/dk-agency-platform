@@ -23,6 +23,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { normalizeLocale, stripLocalePrefix, withLocale } from '@/i18n/config';
 import { adminBlogPosts, adminNewsQueue } from '@/lib/data/adminContent';
 import { MOCK_LISTINGS } from '@/lib/data/mockListings';
 
@@ -66,7 +67,9 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
   const pathname = usePathname();
   const t = useTranslations('dashboardSidebar');
   const [kazanLeadCount, setKazanLeadCount] = useState<number | null>(null);
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const currentLocale = normalizeLocale(pathname.split('/')[1]);
+  const strippedPath = stripLocalePrefix(pathname);
+  const isActive = (href: string) => strippedPath === href || strippedPath.startsWith(`${href}/`);
 
   useEffect(() => {
     let cancelled = false;
@@ -118,7 +121,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
         }`}
       >
         <div className="flex h-20 items-center justify-between border-b border-slate-200 px-5">
-          <Link href="/dashboard" className="flex items-center gap-3">
+          <Link href={withLocale(currentLocale, '/dashboard')} className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-sm font-black text-white shadow-lg shadow-slate-900/15">
               DK
             </div>
@@ -152,7 +155,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
               return (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={withLocale(currentLocale, item.href)}
                   className={`group flex items-center gap-3 rounded-2xl border-l-4 px-4 py-3 transition ${
                     active
                       ? 'border-[var(--dk-gold)] bg-amber-50 text-[var(--dk-navy)]'
