@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-21T08:48:01.560Z
+- GeneratedAt: 2026-05-21T12:33:23.048Z
 - BuildStatus: PASS
 
-## Routes (144)
+## Routes (180)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -21,8 +21,44 @@ Auto-generated. Do not edit manually.
 - /[locale]/blog/[slug]
 - /[locale]/contact
 - /[locale]/cookies
+- /[locale]/dashboard
+- /[locale]/dashboard/aqta-checklist
+- /[locale]/dashboard/audit-logs
+- /[locale]/dashboard/auditor
+- /[locale]/dashboard/ayarlar
+- /[locale]/dashboard/b2b-yonetimi
+- /[locale]/dashboard/blog
+- /[locale]/dashboard/blog/[slug]
+- /[locale]/dashboard/blog/new
+- /[locale]/dashboard/blog/yeni
+- /[locale]/dashboard/deal-flow
+- /[locale]/dashboard/duyurular
+- /[locale]/dashboard/etkinlikler
+- /[locale]/dashboard/fatura-kateqoriyalar
+- /[locale]/dashboard/faturalar
+- /[locale]/dashboard/faturalar/[id]
+- /[locale]/dashboard/food-cost
+- /[locale]/dashboard/haberler
+- /[locale]/dashboard/hero
+- /[locale]/dashboard/ilan-onaylari
 - /[locale]/dashboard/ilanlar
 - /[locale]/dashboard/ilanlar/[id]
+- /[locale]/dashboard/kazan-leads
+- /[locale]/dashboard/loglar
+- /[locale]/dashboard/marketinq-ocagi
+- /[locale]/dashboard/marketinq-ocagi/[slug]
+- /[locale]/dashboard/mesajlar
+- /[locale]/dashboard/pipeline
+- /[locale]/dashboard/raporlar
+- /[locale]/dashboard/roller
+- /[locale]/dashboard/settings
+- /[locale]/dashboard/site
+- /[locale]/dashboard/toolkit
+- /[locale]/dashboard/trends
+- /[locale]/dashboard/users
+- /[locale]/dashboard/users/[id]
+- /[locale]/dashboard/xeberler
+- /[locale]/dashboard/xeberler/rss
 - /[locale]/elaqe
 - /[locale]/forgot-password
 - /[locale]/haberler
