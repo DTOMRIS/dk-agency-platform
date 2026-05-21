@@ -3,13 +3,8 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-21T04:45:44.245Z
+- GeneratedAt: 2026-05-21T08:48:01.560Z
 - BuildStatus: PASS
-
-## Dashboard i18n Status
-- Migrated: 3/16 files (`DashboardSidebar`, `dashboard/kazan-leads`, `dashboard/ilanlar/[id]` labels)
-- Remaining Pattern B: `dashboard/page`, `settings`, `site`, `toolkit`, `pipeline`, `raporlar`, `roller`, `food-cost`, `faturalar`, `loglar`, `mesajlar`, `trends`, `auditor`
-- Route locale strategy: TASK-0157B pending (route mirrors / locale strategy decision)
 
 ## Routes (144)
 - /[locale]
