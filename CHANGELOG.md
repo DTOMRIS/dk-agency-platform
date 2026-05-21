@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [TASK-0157C-1] Dashboard Pattern A — C1 Pilot — 2026-05-21
+
+### Changed
+- `app/dashboard/settings/page.tsx`: Record<Locale> → useTranslations('dashboardSettings')
+- `app/dashboard/toolkit/page.tsx`: Record<Locale> → useTranslations('dashboardToolkit')
+- `app/dashboard/site/page.tsx`: Record<Locale> → useTranslations('dashboardSite')
+- `app/dashboard/trends/page.tsx`: Record<Locale> → useTranslations('dashboardTrends')
+
+### Added
+- 4 new i18n namespaces in messages/{az,tr,ru,en}.json (81 leaf keys × 4 locales)
+
+### Notes
+- Dashboard Pattern A progress: 7/16 files (3 from 0157A + 4 from C1)
+- Remaining 9 files in C2/C3/C4 batches
+- faturalar/[id] excluded (no Record<Locale>, separate task)
+
 ## [TASK-0157B] Dashboard locale route mirrors — 2026-05-21
 
 ### Added
