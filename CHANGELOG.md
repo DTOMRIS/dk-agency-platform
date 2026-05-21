@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [TASK-0157C-2a] Dashboard Pattern A — C2a Batch — 2026-05-21
+
+### Changed
+- `app/dashboard/mesajlar/page.tsx`: Record<Locale> → useTranslations('dashboardMesajlar')
+- `app/dashboard/pipeline/page.tsx`: Record<Locale> → useTranslations('dashboardPipeline')
+- `app/dashboard/loglar/page.tsx`: Record<Locale> → useTranslations('dashboardLoglar')
+- `app/dashboard/raporlar/page.tsx`: Record<Locale> → useTranslations('dashboardRaporlar')
+
+### Added
+- 4 new i18n namespaces (99 leaf keys × 4 locales = 396 translations)
+
+### Notes
+- Dashboard Pattern A progress: 11/16 files
+- Mock data (İstanbul/HORECA) untouched — Devir M5 scope
+- Remaining: roller (C2b), food-cost + faturalar + auditor (C3), b2b-yonetimi (C4)
+
 ## [TASK-0157C-1] Dashboard Pattern A — C1 Pilot — 2026-05-21
 
 ### Changed
