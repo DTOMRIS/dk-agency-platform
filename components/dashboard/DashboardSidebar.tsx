@@ -22,9 +22,9 @@ import {
   Users,
   Wrench,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { adminBlogPosts, adminNewsQueue } from '@/lib/data/adminContent';
 import { MOCK_LISTINGS } from '@/lib/data/mockListings';
-import { normalizeLocale, type Locale } from '@/i18n/config';
 
 const pendingListings = MOCK_LISTINGS.filter((listing) =>
   ['submitted', 'committee_review', 'ai_checked'].includes(listing.status),
@@ -57,112 +57,6 @@ const navItemDefs: NavItemDef[] = [
   { titleKey: 'settings', href: '/dashboard/settings', icon: Settings },
 ];
 
-const sidebarCopy: Record<Locale, {
-  panelTitle: string;
-  adminSubtitle: string;
-  userAccess: string;
-  closeSidebar: string;
-  logout: string;
-  nav: Record<string, string>;
-}> = {
-  az: {
-    panelTitle: 'OCAQ İdarə Paneli',
-    adminSubtitle: 'Admin mərkəzi',
-    userAccess: 'Tam idarəetmə girişi aktivdir',
-    closeSidebar: 'Sidebar bağla',
-    logout: 'Çıxış',
-    nav: {
-      home: 'Əsas səhifə',
-      listings: 'Elanlar',
-      hero: 'Hero',
-      news: 'Xəbərlər',
-      blog: 'Bloq',
-      kazanLeads: 'KAZAN Leads',
-      auditor: 'Auditor',
-      invoices: 'Faturalar',
-      foodCost: 'Food Cost',
-      toolkit: 'Toolkit',
-      marketinqOcagi: 'Marketinq Ocağı',
-      site: 'Sayt',
-      users: 'İstifadəçilər',
-      auditLog: 'Audit Log',
-      settings: 'Parametrlər',
-    },
-  },
-  en: {
-    panelTitle: 'OCAQ Control Panel',
-    adminSubtitle: 'Admin centre',
-    userAccess: 'Full management access is active',
-    closeSidebar: 'Close sidebar',
-    logout: 'Log out',
-    nav: {
-      home: 'Home',
-      listings: 'Listings',
-      hero: 'Hero',
-      news: 'News',
-      blog: 'Blog',
-      kazanLeads: 'KAZAN Leads',
-      auditor: 'Auditor',
-      invoices: 'Invoices',
-      foodCost: 'Food Cost',
-      toolkit: 'Toolkit',
-      marketinqOcagi: 'Marketing Hub',
-      site: 'Website',
-      users: 'Users',
-      auditLog: 'Audit Log',
-      settings: 'Settings',
-    },
-  },
-  tr: {
-    panelTitle: 'OCAQ Yönetim Paneli',
-    adminSubtitle: 'Yönetim merkezi',
-    userAccess: 'Tam yönetim erişimi aktif',
-    closeSidebar: 'Kenar çubuğunu kapat',
-    logout: 'Çıkış',
-    nav: {
-      home: 'Ana Sayfa',
-      listings: 'İlanlar',
-      hero: 'Hero',
-      news: 'Haberler',
-      blog: 'Blog',
-      kazanLeads: 'KAZAN Leads',
-      auditor: 'Denetçi',
-      invoices: 'Faturalar',
-      foodCost: 'Food Cost',
-      toolkit: 'Toolkit',
-      marketinqOcagi: 'Pazarlama Ocağı',
-      site: 'Site',
-      users: 'Kullanıcılar',
-      auditLog: 'Denetim Günlüğü',
-      settings: 'Ayarlar',
-    },
-  },
-  ru: {
-    panelTitle: 'Панель управления OCAQ',
-    adminSubtitle: 'Центр администрирования',
-    userAccess: 'Полный доступ к управлению активен',
-    closeSidebar: 'Закрыть боковую панель',
-    logout: 'Выйти',
-    nav: {
-      home: 'Главная',
-      listings: 'Объявления',
-      hero: 'Hero',
-      news: 'Новости',
-      blog: 'Блог',
-      kazanLeads: 'KAZAN Leads',
-      auditor: 'Аудитор',
-      invoices: 'Счета',
-      foodCost: 'Food Cost',
-      toolkit: 'Toolkit',
-      marketinqOcagi: 'Маркетинг-Хаб',
-      site: 'Сайт',
-      users: 'Пользователи',
-      auditLog: 'Журнал действий',
-      settings: 'Настройки',
-    },
-  },
-};
-
 interface DashboardSidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -170,8 +64,7 @@ interface DashboardSidebarProps {
 
 export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarProps) {
   const pathname = usePathname();
-  const locale: Locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = sidebarCopy[locale];
+  const t = useTranslations('dashboardSidebar');
   const [kazanLeadCount, setKazanLeadCount] = useState<number | null>(null);
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
@@ -202,10 +95,10 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
     () =>
       navItemDefs.map((item) => ({
         ...item,
-        title: copy.nav[item.titleKey] ?? item.titleKey,
+        title: t(`nav.${item.titleKey}`),
         badge: item.href === '/dashboard/kazan-leads' ? (kazanLeadCount ?? undefined) : item.badge,
       })),
-    [kazanLeadCount, copy],
+    [kazanLeadCount, t],
   );
 
   return (
@@ -213,7 +106,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       {isOpen ? (
         <button
           type="button"
-          aria-label={copy.closeSidebar}
+          aria-label={t('closeSidebar')}
           className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
@@ -230,8 +123,8 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
               DK
             </div>
             <div>
-              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">{copy.panelTitle}</div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">{copy.adminSubtitle}</div>
+              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">{t('panelTitle')}</div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">{t('adminSubtitle')}</div>
             </div>
           </Link>
 
@@ -247,7 +140,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
         <div className="border-b border-slate-200 px-5 py-4">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <p className="text-sm font-bold text-[var(--dk-navy)]">Doğan Tomris</p>
-            <p className="mt-1 text-xs text-slate-500">{copy.userAccess}</p>
+            <p className="mt-1 text-xs text-slate-500">{t('userAccess')}</p>
           </div>
         </div>
 
@@ -296,7 +189,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
             className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]"
           >
             <LogOut size={18} />
-            {copy.logout}
+            {t('logout')}
           </button>
         </div>
       </aside>

@@ -2829,7 +2829,81 @@
   },
   "dashboardSidebar": {
     "title": "Панель управления OCAQ",
-    "role": "Администратор"
+    "role": "Администратор",
+    "panelTitle": "Панель управления OCAQ",
+    "adminSubtitle": "Центр администрирования",
+    "userAccess": "Полный доступ к управлению активен",
+    "closeSidebar": "Закрыть боковую панель",
+    "logout": "Выход",
+    "nav": {
+      "home": "Главная",
+      "listings": "Объявления",
+      "hero": "Hero",
+      "news": "Новости",
+      "blog": "Блог",
+      "kazanLeads": "KAZAN Лиды",
+      "auditor": "Аудитор",
+      "invoices": "Счета",
+      "foodCost": "Food Cost",
+      "toolkit": "Toolkit",
+      "marketinqOcagi": "Маркетинг-хаб",
+      "site": "Сайт",
+      "users": "Пользователи",
+      "auditLog": "Журнал аудита",
+      "settings": "Настройки"
+    }
+  },
+  "dashboardKazanLeads": {
+    "title": "KAZAN лиды",
+    "subtitle": "Пользователи, заполнившие форму в виджете, отображаются здесь из реальной БД. Фильтрация по статусу, намерению и типу бизнеса.",
+    "emptyState": "Лиды KAZAN по этому фильтру не найдены.",
+    "lastMessages": "Последние сообщения",
+    "actions": "Действия",
+    "openWhatsapp": "Открыть в WhatsApp",
+    "createdAt": "Создано",
+    "whatsapp": "WhatsApp",
+    "meeting": "Встреча",
+    "yes": "да",
+    "no": "нет",
+    "requested": "запрошена",
+    "none": "нет",
+    "summary": {
+      "new": "Новые",
+      "contacted": "Связались",
+      "qualified": "Квалифицированные",
+      "converted": "Конвертированы"
+    },
+    "filters": {
+      "status": "Статус",
+      "intent": "Намерение",
+      "businessType": "Тип бизнеса"
+    },
+    "statusOptions": {
+      "all": "Все",
+      "new": "Новые",
+      "contacted": "Связались",
+      "qualified": "Квалифицированные",
+      "converted": "Конвертированы",
+      "dismissed": "Отклонены"
+    },
+    "intentOptions": {
+      "all": "Все",
+      "food_cost": "Food cost",
+      "pnl": "P&L",
+      "aqta": "AQTA",
+      "delivery": "Доставка",
+      "general": "Общее"
+    },
+    "businessTypeOptions": {
+      "all": "Все",
+      "restoran": "Ресторан",
+      "kafe": "Кафе",
+      "franchise": "Франшиза",
+      "diger": "Другое"
+    },
+    "lead": "Лид",
+    "roleUser": "User",
+    "roleAi": "AI"
   },
   "kazanLeadActions": {
     "updating": "Обновление...",
@@ -2848,7 +2922,10 @@
     "trackingCopied": "Код отслеживания скопирован.",
     "backArrow": "← Вернуться к списку",
     "yes": "Да",
-    "no": "Нет"
+    "no": "Нет",
+    "labelName": "Имя:",
+    "labelPhone": "Телефон:",
+    "labelEmail": "Эл. почта:"
   },
   "home": {
     "platformCards": {
