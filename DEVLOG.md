@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-21 - TASK-0157C-2a Dashboard Pattern A server batch
+
+**Why:** C1 pilot batch validated the pattern (4 files). C2a continues with 4 more client-component dashboard pages that have mock data mixed in. Mock data untouched per Devir M5 scope.
+
+**What:** mesajlar (17 key), pipeline (24 key), loglar (25 key), raporlar (33 key) migrated from Record<Locale> to useTranslations(). 4 new namespaces, 99 leaf keys × 4 dil = 396 translations. Mock data (İstanbul/HORECA) preserved.
+
+**Smoke:** Build PASS. 8 curl (AZ+TR × 4 pages) all 307.
+
+---
+
 ## 2026-05-21 - TASK-0157C-1 Dashboard Pattern A pilot batch
 
 **Why:** TASK-0157A migrated 3 dashboard files, TASK-0157B added route mirrors. Now the remaining 13 Record<Locale> files need Pattern A migration. C1 pilot batch tackles the 4 simplest client-component pages.

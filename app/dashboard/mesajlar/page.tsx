@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import {
   Inbox,
   Send,
@@ -29,104 +29,6 @@ import {
   Plus,
   FileText
 } from 'lucide-react';
-import { normalizeLocale, type Locale } from '@/i18n/config';
-
-const pageCopy: Record<Locale, {
-  pageTitle: string;
-  pageSubtitle: string;
-  newMessage: string;
-  tabInbox: string;
-  tabStarred: string;
-  tabSent: string;
-  tabArchive: string;
-  categoriesLabel: string;
-  searchPlaceholder: string;
-  emptyState: string;
-  attachments: string;
-  reply: string;
-  forward: string;
-  catPartner: string;
-  catListing: string;
-  catGeneral: string;
-  catInvestment: string;
-}> = {
-  az: {
-    pageTitle: 'Mesaj Mərkəzi',
-    pageSubtitle: 'Tərəfdaş və investor kommunikasiyası',
-    newMessage: 'Yeni Mesaj',
-    tabInbox: 'Gələn Qutu',
-    tabStarred: 'Ulduzlu',
-    tabSent: 'Göndərilənlər',
-    tabArchive: 'Arxiv',
-    categoriesLabel: 'Kateqoriyalar',
-    searchPlaceholder: 'Mesajlarda axtar...',
-    emptyState: 'Mesaj tapılmadı',
-    attachments: 'Əlavələr',
-    reply: 'Cavabla',
-    forward: 'İrəli yönləndir',
-    catPartner: 'Tərəfdaş',
-    catListing: 'Elan',
-    catGeneral: 'Ümumi',
-    catInvestment: 'İnvestisiya',
-  },
-  ru: {
-    pageTitle: 'Центр сообщений',
-    pageSubtitle: 'Коммуникация с партнёрами и инвесторами',
-    newMessage: 'Новое сообщение',
-    tabInbox: 'Входящие',
-    tabStarred: 'Избранное',
-    tabSent: 'Отправленные',
-    tabArchive: 'Архив',
-    categoriesLabel: 'Категории',
-    searchPlaceholder: 'Поиск сообщений...',
-    emptyState: 'Сообщения не найдены',
-    attachments: 'Вложения',
-    reply: 'Ответить',
-    forward: 'Переслать',
-    catPartner: 'Партнёр',
-    catListing: 'Объявление',
-    catGeneral: 'Общее',
-    catInvestment: 'Инвестиции',
-  },
-  en: {
-    pageTitle: 'Message Center',
-    pageSubtitle: 'Partner and investor communication',
-    newMessage: 'New Message',
-    tabInbox: 'Inbox',
-    tabStarred: 'Starred',
-    tabSent: 'Sent',
-    tabArchive: 'Archive',
-    categoriesLabel: 'Categories',
-    searchPlaceholder: 'Search messages...',
-    emptyState: 'No messages found',
-    attachments: 'Attachments',
-    reply: 'Reply',
-    forward: 'Forward',
-    catPartner: 'Partner',
-    catListing: 'Listing',
-    catGeneral: 'General',
-    catInvestment: 'Investment',
-  },
-  tr: {
-    pageTitle: 'Mesaj Merkezi',
-    pageSubtitle: 'Partner ve yatırımcı iletişimi',
-    newMessage: 'Yeni Mesaj',
-    tabInbox: 'Gelen Kutusu',
-    tabStarred: 'Yıldızlı',
-    tabSent: 'Gönderilenler',
-    tabArchive: 'Arşiv',
-    categoriesLabel: 'Kategoriler',
-    searchPlaceholder: 'Mesajlarda ara...',
-    emptyState: 'Mesaj bulunamadı',
-    attachments: 'Ekler',
-    reply: 'Yanıtla',
-    forward: 'İlet',
-    catPartner: 'Partner',
-    catListing: 'İlan',
-    catGeneral: 'Genel',
-    catInvestment: 'Yatırım',
-  },
-};
 
 type Tab = 'inbox' | 'sent' | 'starred' | 'archive';
 
@@ -232,15 +134,13 @@ const categoryColors = {
 };
 
 export default function MessagesPage() {
-  const pathname = usePathname();
-  const locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = pageCopy[locale];
+  const t = useTranslations('dashboardMesajlar');
 
   const categoryLabels = {
-    partner: copy.catPartner,
-    ilan: copy.catListing,
-    genel: copy.catGeneral,
-    yatirim: copy.catInvestment,
+    partner: t('catPartner'),
+    ilan: t('catListing'),
+    genel: t('catGeneral'),
+    yatirim: t('catInvestment'),
   };
 
   const [activeTab, setActiveTab] = useState<Tab>('inbox');
@@ -265,12 +165,12 @@ export default function MessagesPage() {
       <div className="p-6 border-b border-gray-200 bg-white">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
-            <p className="text-sm text-gray-500 mt-1">{copy.pageSubtitle}</p>
+            <h1 className="text-2xl font-bold text-gray-900">{t('pageTitle')}</h1>
+            <p className="text-sm text-gray-500 mt-1">{t('pageSubtitle')}</p>
           </div>
           <button className="flex items-center gap-2 px-4 py-2 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors">
             <Plus size={18} />
-            {copy.newMessage}
+            {t('newMessage')}
           </button>
         </div>
       </div>
@@ -288,7 +188,7 @@ export default function MessagesPage() {
             >
               <div className="flex items-center gap-3">
                 <Inbox size={18} />
-                <span className="font-medium">{copy.tabInbox}</span>
+                <span className="font-medium">{t('tabInbox')}</span>
               </div>
               {unreadCount > 0 && (
                 <span className={`px-2 py-0.5 text-xs font-bold rounded-full ${
@@ -303,7 +203,7 @@ export default function MessagesPage() {
               }`}
             >
               <Star size={18} />
-              <span className="font-medium">{copy.tabStarred}</span>
+              <span className="font-medium">{t('tabStarred')}</span>
             </button>
             <button
               onClick={() => { setActiveTab('sent'); setSelectedMessage(null); }}
@@ -312,7 +212,7 @@ export default function MessagesPage() {
               }`}
             >
               <Send size={18} />
-              <span className="font-medium">{copy.tabSent}</span>
+              <span className="font-medium">{t('tabSent')}</span>
             </button>
             <button
               onClick={() => { setActiveTab('archive'); setSelectedMessage(null); }}
@@ -321,13 +221,13 @@ export default function MessagesPage() {
               }`}
             >
               <Archive size={18} />
-              <span className="font-medium">{copy.tabArchive}</span>
+              <span className="font-medium">{t('tabArchive')}</span>
             </button>
           </div>
 
           {/* Categories Filter */}
           <div className="p-4 border-t border-gray-200">
-            <p className="text-xs font-semibold text-gray-500 uppercase mb-3">{copy.categoriesLabel}</p>
+            <p className="text-xs font-semibold text-gray-500 uppercase mb-3">{t('categoriesLabel')}</p>
             <div className="space-y-2">
               {(Object.entries(categoryLabels) as [keyof typeof categoryLabels, string][]).map(([key, label]) => (
                 <div key={key} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-gray-100 cursor-pointer">
@@ -353,7 +253,7 @@ export default function MessagesPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={copy.searchPlaceholder}
+                placeholder={t('searchPlaceholder')}
                 className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
               />
             </div>
@@ -364,7 +264,7 @@ export default function MessagesPage() {
             {filteredMessages.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-gray-500">
                 <Mail size={48} className="mb-4 opacity-50" />
-                <p>{copy.emptyState}</p>
+                <p>{t('emptyState')}</p>
               </div>
             ) : (
               filteredMessages.map((message) => (
@@ -482,7 +382,7 @@ export default function MessagesPage() {
                 <div className="mt-6 p-4 bg-gray-50 rounded-xl">
                   <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                     <Paperclip size={16} />
-                    {copy.attachments} (2)
+                    {t('attachments')} (2)
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-gray-200">
@@ -513,11 +413,11 @@ export default function MessagesPage() {
               <div className="flex gap-3">
                 <button className="flex items-center gap-2 px-4 py-2.5 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors">
                   <Reply size={16} />
-                  {copy.reply}
+                  {t('reply')}
                 </button>
                 <button className="flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl font-medium transition-colors">
                   <Forward size={16} />
-                  {copy.forward}
+                  {t('forward')}
                 </button>
               </div>
             </div>
