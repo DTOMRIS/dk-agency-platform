@@ -1,5 +1,14 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-21 — Dashboard i18n Push (sessiya yekunu)
+
+**Session:** 7+ saat, 4 PR merged (#171, #172, #173, #174)
+**Progress:** Dashboard i18n 11/16 fayl (69%), 245 key × 4 dil = 980 tərcümə
+**Launch blocker:** Route mirrors bağlandı — switcher artıq /tr/dashboard 404 vermir
+**Handoff:** docs/handoff/TASK-0157C-CONTINUATION.md — qalan 5 fayl sabaha
+
+---
+
 ## 2026-05-21 - TASK-0157C-2a Dashboard Pattern A server batch
 
 **Why:** C1 pilot batch validated the pattern (4 files). C2a continues with 4 more client-component dashboard pages that have mock data mixed in. Mock data untouched per Devir M5 scope.
