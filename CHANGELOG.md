@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+## [TASK-0157C-2b] roller Pattern A — 2026-05-23
+
+### Added
+- dashboardRoller namespace (53 leaf key × 4 dil = 212 tərcümə)
+
+### Changed
+- `app/dashboard/roller/page.tsx`: Pattern B → A (Record<Locale> → useTranslations)
+
+### Notes
+- Permission/səlahiyyət terminologiyası CTO təsdiq: olduğu kimi saxlandı
+- Hardcoded role adları (Admin/Moderatör/Editör/İzleyici) toxunulmadı
+- Discovery server/client səhvi qeyd edildi (client idi, server deyil)
+- Dashboard i18n: 13/16 fayl (81%)
+
 ## [TASK-0157C-4] b2b-yonetimi Pattern A — 2026-05-22
 
 ### Added

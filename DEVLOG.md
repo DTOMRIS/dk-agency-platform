@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-23 - TASK-0157C-2b roller Pattern A
+
+**Why:** Dashboard i18n 12/16 bitib, roller növbəti tək fayl. Permission terminologiyası həssas — CTO təsdiqi alındı.
+
+**What:** 1 fayl Pattern B → A. 53 leaf key × 4 dil = 212 tərcümə. Namespace: dashboardRoller. Client component (Discovery "server" demişdi, səhv idi). Hardcoded role adları toxunulmadı.
+
+**Smoke:** Build PASS. 4 curl (AZ/TR/RU/EN) hamısı 307 auth redirect.
+
+---
+
 ## 2026-05-22/23 - TASK-0157C-4 b2b-yonetimi Pattern A
 
 **Why:** C2a batch (4 fayl) bitdi, sıra C4-ə gəldi. b2b-yonetimi page-də 4 Record<Locale> obyekt var idi (əsas copy, typeLabels, statusLabels, modal). Əvvəlki session yarımçıq qaldı (linter crash), JSON diskdə idi, kod miqrasiyası bu session-da tamamlandı.

@@ -4,7 +4,7 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import {
   Shield,
   Users,
@@ -24,288 +24,6 @@ import {
   ChevronDown,
   Search
 } from 'lucide-react';
-import { normalizeLocale, type Locale } from '@/i18n/config';
-
-const pageCopy: Record<Locale, {
-  pageTitle: string;
-  pageSubtitle: string;
-  newRole: string;
-  searchPlaceholder: string;
-  systemBadge: string;
-  systemLocked: string;
-  userCount: string;
-  permissions: string;
-  save: string;
-  edit: string;
-  selectRoleTitle: string;
-  selectRoleDesc: string;
-  // Permission labels
-  pUsersView: string;
-  pUsersCreate: string;
-  pUsersEdit: string;
-  pUsersDelete: string;
-  pListingsView: string;
-  pListingsCreate: string;
-  pListingsApprove: string;
-  pListingsDelete: string;
-  pPartnersView: string;
-  pPartnersManage: string;
-  pReportsView: string;
-  pReportsExport: string;
-  pSettingsView: string;
-  pSettingsEdit: string;
-  pLogsView: string;
-  pRolesManage: string;
-  // Permission descriptions
-  dUsersView: string;
-  dUsersCreate: string;
-  dUsersEdit: string;
-  dUsersDelete: string;
-  dListingsView: string;
-  dListingsCreate: string;
-  dListingsApprove: string;
-  dListingsDelete: string;
-  dPartnersView: string;
-  dPartnersManage: string;
-  dReportsView: string;
-  dReportsExport: string;
-  dSettingsView: string;
-  dSettingsEdit: string;
-  dLogsView: string;
-  dRolesManage: string;
-  // Permission categories
-  catUsers: string;
-  catListings: string;
-  catPartners: string;
-  catReports: string;
-  catSystem: string;
-  // Role descriptions
-  roleAdminDesc: string;
-  roleModeratorDesc: string;
-  roleEditorDesc: string;
-  roleViewerDesc: string;
-}> = {
-  az: {
-    pageTitle: 'Rol və İcazə İdarəetməsi',
-    pageSubtitle: 'İstifadəçi rolları və giriş icazələri',
-    newRole: 'Yeni Rol',
-    searchPlaceholder: 'Rol axtar...',
-    systemBadge: 'Sistem',
-    systemLocked: 'Sistem rolları redaktə edilə bilməz. Bu rol standart icazələrlə qorunur.',
-    userCount: 'istifadəçi',
-    permissions: 'icazə',
-    save: 'Saxla',
-    edit: 'Düzəlt',
-    selectRoleTitle: 'Rol Seçin',
-    selectRoleDesc: 'İcazələri görmək və düzəltmək üçün sol tərəfdən bir rol seçin.',
-    pUsersView: 'İstifadəçi Görüntüleme',
-    pUsersCreate: 'İstifadəçi Yaratma',
-    pUsersEdit: 'İstifadəçi Düzəltmə',
-    pUsersDelete: 'İstifadəçi Silmə',
-    pListingsView: 'Elan Görüntüleme',
-    pListingsCreate: 'Elan Yaratma',
-    pListingsApprove: 'Elan Təsdiqləmə',
-    pListingsDelete: 'Elan Silmə',
-    pPartnersView: 'Tərəfdaş Görüntüleme',
-    pPartnersManage: 'Tərəfdaş İdarəetmə',
-    pReportsView: 'Hesabat Görüntüleme',
-    pReportsExport: 'Hesabat İxracı',
-    pSettingsView: 'Ayarları Görüntüleme',
-    pSettingsEdit: 'Ayarları Düzəltmə',
-    pLogsView: 'Log Görüntüleme',
-    pRolesManage: 'Rol İdarəetmə',
-    dUsersView: 'İstifadəçi siyahısını görmə',
-    dUsersCreate: 'Yeni istifadəçi əlavə etmə',
-    dUsersEdit: 'İstifadəçi məlumatlarını yeniləmə',
-    dUsersDelete: 'İstifadəçi hesabını silmə',
-    dListingsView: 'Bütün elanları görüntüləmə',
-    dListingsCreate: 'Yeni elan əlavə etmə',
-    dListingsApprove: 'Elanları təsdiqləmə/rədd etmə',
-    dListingsDelete: 'Elan silmə',
-    dPartnersView: 'Tərəfdaş siyahısını görüntüləmə',
-    dPartnersManage: 'Tərəfdaş əlavə etmə/düzəltmə',
-    dReportsView: 'Hesabatlara giriş',
-    dReportsExport: 'Hesabatları yükləmə',
-    dSettingsView: 'Sistem ayarlarını görüntüləmə',
-    dSettingsEdit: 'Sistem ayarlarını dəyişdirmə',
-    dLogsView: 'Sistem loglarına giriş',
-    dRolesManage: 'Rol və icazə düzəltmə',
-    catUsers: 'İstifadəçilər',
-    catListings: 'Elanlar',
-    catPartners: 'Tərəfdaşlar',
-    catReports: 'Hesabatlar',
-    catSystem: 'Sistem',
-    roleAdminDesc: 'Tam icazə - Bütün xüsusiyyətlərə giriş',
-    roleModeratorDesc: 'Məzmun idarəetmə və təsdiq icazəsi',
-    roleEditorDesc: 'Xəbər və məzmun düzəltmə',
-    roleViewerDesc: 'Yalnız görüntüləmə icazəsi',
-  },
-  ru: {
-    pageTitle: 'Управление ролями и правами',
-    pageSubtitle: 'Роли пользователей и права доступа',
-    newRole: 'Новая роль',
-    searchPlaceholder: 'Поиск ролей...',
-    systemBadge: 'Система',
-    systemLocked: 'Системные роли недоступны для редактирования. Эта роль защищена правами по умолчанию.',
-    userCount: 'пользователей',
-    permissions: 'прав',
-    save: 'Сохранить',
-    edit: 'Редактировать',
-    selectRoleTitle: 'Выберите роль',
-    selectRoleDesc: 'Выберите роль слева, чтобы просмотреть и изменить права доступа.',
-    pUsersView: 'Просмотр пользователей',
-    pUsersCreate: 'Создание пользователей',
-    pUsersEdit: 'Редактирование пользователей',
-    pUsersDelete: 'Удаление пользователей',
-    pListingsView: 'Просмотр объявлений',
-    pListingsCreate: 'Создание объявлений',
-    pListingsApprove: 'Одобрение объявлений',
-    pListingsDelete: 'Удаление объявлений',
-    pPartnersView: 'Просмотр партнёров',
-    pPartnersManage: 'Управление партнёрами',
-    pReportsView: 'Просмотр отчётов',
-    pReportsExport: 'Экспорт отчётов',
-    pSettingsView: 'Просмотр настроек',
-    pSettingsEdit: 'Редактирование настроек',
-    pLogsView: 'Просмотр логов',
-    pRolesManage: 'Управление ролями',
-    dUsersView: 'Просмотр списка пользователей',
-    dUsersCreate: 'Добавление новых пользователей',
-    dUsersEdit: 'Обновление данных пользователей',
-    dUsersDelete: 'Удаление аккаунтов пользователей',
-    dListingsView: 'Просмотр всех объявлений',
-    dListingsCreate: 'Добавление новых объявлений',
-    dListingsApprove: 'Одобрение/отклонение объявлений',
-    dListingsDelete: 'Удаление объявлений',
-    dPartnersView: 'Просмотр списка партнёров',
-    dPartnersManage: 'Добавление/редактирование партнёров',
-    dReportsView: 'Доступ к отчётам',
-    dReportsExport: 'Скачивание отчётов',
-    dSettingsView: 'Просмотр системных настроек',
-    dSettingsEdit: 'Изменение системных настроек',
-    dLogsView: 'Доступ к системным логам',
-    dRolesManage: 'Редактирование ролей и прав',
-    catUsers: 'Пользователи',
-    catListings: 'Объявления',
-    catPartners: 'Партнёры',
-    catReports: 'Отчёты',
-    catSystem: 'Система',
-    roleAdminDesc: 'Полный доступ — доступ ко всем функциям',
-    roleModeratorDesc: 'Управление контентом и права на одобрение',
-    roleEditorDesc: 'Редактирование новостей и контента',
-    roleViewerDesc: 'Только права на просмотр',
-  },
-  en: {
-    pageTitle: 'Role & Permission Management',
-    pageSubtitle: 'User roles and access permissions',
-    newRole: 'New Role',
-    searchPlaceholder: 'Search roles...',
-    systemBadge: 'System',
-    systemLocked: 'System roles cannot be edited. This role is protected with default permissions.',
-    userCount: 'users',
-    permissions: 'permissions',
-    save: 'Save',
-    edit: 'Edit',
-    selectRoleTitle: 'Select a Role',
-    selectRoleDesc: 'Select a role from the left to view and edit its permissions.',
-    pUsersView: 'View Users',
-    pUsersCreate: 'Create Users',
-    pUsersEdit: 'Edit Users',
-    pUsersDelete: 'Delete Users',
-    pListingsView: 'View Listings',
-    pListingsCreate: 'Create Listings',
-    pListingsApprove: 'Approve Listings',
-    pListingsDelete: 'Delete Listings',
-    pPartnersView: 'View Partners',
-    pPartnersManage: 'Manage Partners',
-    pReportsView: 'View Reports',
-    pReportsExport: 'Export Reports',
-    pSettingsView: 'View Settings',
-    pSettingsEdit: 'Edit Settings',
-    pLogsView: 'View Logs',
-    pRolesManage: 'Manage Roles',
-    dUsersView: 'View user list',
-    dUsersCreate: 'Add new users',
-    dUsersEdit: 'Update user information',
-    dUsersDelete: 'Delete user accounts',
-    dListingsView: 'View all listings',
-    dListingsCreate: 'Add new listings',
-    dListingsApprove: 'Approve/reject listings',
-    dListingsDelete: 'Delete listings',
-    dPartnersView: 'View partner list',
-    dPartnersManage: 'Add/edit partners',
-    dReportsView: 'Access reports',
-    dReportsExport: 'Download reports',
-    dSettingsView: 'View system settings',
-    dSettingsEdit: 'Modify system settings',
-    dLogsView: 'Access system logs',
-    dRolesManage: 'Edit roles and permissions',
-    catUsers: 'Users',
-    catListings: 'Listings',
-    catPartners: 'Partners',
-    catReports: 'Reports',
-    catSystem: 'System',
-    roleAdminDesc: 'Full access — all features',
-    roleModeratorDesc: 'Content management and approval authority',
-    roleEditorDesc: 'News and content editing',
-    roleViewerDesc: 'View-only access',
-  },
-  tr: {
-    pageTitle: 'Rol ve Yetki Yönetimi',
-    pageSubtitle: 'Kullanıcı rolleri ve erişim izinleri',
-    newRole: 'Yeni Rol',
-    searchPlaceholder: 'Rol ara...',
-    systemBadge: 'Sistem',
-    systemLocked: 'Sistem rolleri düzenlenemez. Bu rol varsayılan izinlerle korunmaktadır.',
-    userCount: 'kullanıcı',
-    permissions: 'yetki',
-    save: 'Kaydet',
-    edit: 'Düzenle',
-    selectRoleTitle: 'Rol Seçin',
-    selectRoleDesc: 'Yetkileri görüntülemek ve düzenlemek için sol taraftan bir rol seçin.',
-    pUsersView: 'Kullanıcı Görüntüleme',
-    pUsersCreate: 'Kullanıcı Oluşturma',
-    pUsersEdit: 'Kullanıcı Düzenleme',
-    pUsersDelete: 'Kullanıcı Silme',
-    pListingsView: 'İlan Görüntüleme',
-    pListingsCreate: 'İlan Oluşturma',
-    pListingsApprove: 'İlan Onaylama',
-    pListingsDelete: 'İlan Silme',
-    pPartnersView: 'Partner Görüntüleme',
-    pPartnersManage: 'Partner Yönetimi',
-    pReportsView: 'Rapor Görüntüleme',
-    pReportsExport: 'Rapor Dışa Aktarma',
-    pSettingsView: 'Ayarları Görüntüleme',
-    pSettingsEdit: 'Ayarları Düzenleme',
-    pLogsView: 'Log Görüntüleme',
-    pRolesManage: 'Rol Yönetimi',
-    dUsersView: 'Kullanıcı listesini görüntüleme',
-    dUsersCreate: 'Yeni kullanıcı ekleme',
-    dUsersEdit: 'Kullanıcı bilgilerini güncelleme',
-    dUsersDelete: 'Kullanıcı hesabı silme',
-    dListingsView: 'Tüm ilanları görüntüleme',
-    dListingsCreate: 'Yeni ilan ekleme',
-    dListingsApprove: 'İlanları onaylama/reddetme',
-    dListingsDelete: 'İlan silme',
-    dPartnersView: 'Partner listesini görüntüleme',
-    dPartnersManage: 'Partner ekleme/düzenleme',
-    dReportsView: 'Raporlara erişim',
-    dReportsExport: 'Raporları indirme',
-    dSettingsView: 'Sistem ayarlarını görme',
-    dSettingsEdit: 'Sistem ayarlarını değiştirme',
-    dLogsView: 'Sistem loglarına erişim',
-    dRolesManage: 'Rol ve yetki düzenleme',
-    catUsers: 'Kullanıcılar',
-    catListings: 'İlanlar',
-    catPartners: 'Partnerler',
-    catReports: 'Raporlar',
-    catSystem: 'Sistem',
-    roleAdminDesc: 'Tam yetki - Tüm özelliklere erişim',
-    roleModeratorDesc: 'İçerik yönetimi ve onay yetkisi',
-    roleEditorDesc: 'Haber ve içerik düzenleme',
-    roleViewerDesc: 'Sadece görüntüleme yetkisi',
-  },
-};
 
 interface Permission {
   id: string;
@@ -325,34 +43,32 @@ interface Role {
 }
 
 export default function RollerPage() {
-  const pathname = usePathname();
-  const locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = pageCopy[locale];
+  const t = useTranslations('dashboardRoller');
 
   const permissions: Permission[] = [
-    { id: 'users_view', label: copy.pUsersView, description: copy.dUsersView, category: copy.catUsers },
-    { id: 'users_create', label: copy.pUsersCreate, description: copy.dUsersCreate, category: copy.catUsers },
-    { id: 'users_edit', label: copy.pUsersEdit, description: copy.dUsersEdit, category: copy.catUsers },
-    { id: 'users_delete', label: copy.pUsersDelete, description: copy.dUsersDelete, category: copy.catUsers },
-    { id: 'listings_view', label: copy.pListingsView, description: copy.dListingsView, category: copy.catListings },
-    { id: 'listings_create', label: copy.pListingsCreate, description: copy.dListingsCreate, category: copy.catListings },
-    { id: 'listings_approve', label: copy.pListingsApprove, description: copy.dListingsApprove, category: copy.catListings },
-    { id: 'listings_delete', label: copy.pListingsDelete, description: copy.dListingsDelete, category: copy.catListings },
-    { id: 'partners_view', label: copy.pPartnersView, description: copy.dPartnersView, category: copy.catPartners },
-    { id: 'partners_manage', label: copy.pPartnersManage, description: copy.dPartnersManage, category: copy.catPartners },
-    { id: 'reports_view', label: copy.pReportsView, description: copy.dReportsView, category: copy.catReports },
-    { id: 'reports_export', label: copy.pReportsExport, description: copy.dReportsExport, category: copy.catReports },
-    { id: 'settings_view', label: copy.pSettingsView, description: copy.dSettingsView, category: copy.catSystem },
-    { id: 'settings_edit', label: copy.pSettingsEdit, description: copy.dSettingsEdit, category: copy.catSystem },
-    { id: 'logs_view', label: copy.pLogsView, description: copy.dLogsView, category: copy.catSystem },
-    { id: 'roles_manage', label: copy.pRolesManage, description: copy.dRolesManage, category: copy.catSystem },
+    { id: 'users_view', label: t('pUsersView'), description: t('dUsersView'), category: t('catUsers') },
+    { id: 'users_create', label: t('pUsersCreate'), description: t('dUsersCreate'), category: t('catUsers') },
+    { id: 'users_edit', label: t('pUsersEdit'), description: t('dUsersEdit'), category: t('catUsers') },
+    { id: 'users_delete', label: t('pUsersDelete'), description: t('dUsersDelete'), category: t('catUsers') },
+    { id: 'listings_view', label: t('pListingsView'), description: t('dListingsView'), category: t('catListings') },
+    { id: 'listings_create', label: t('pListingsCreate'), description: t('dListingsCreate'), category: t('catListings') },
+    { id: 'listings_approve', label: t('pListingsApprove'), description: t('dListingsApprove'), category: t('catListings') },
+    { id: 'listings_delete', label: t('pListingsDelete'), description: t('dListingsDelete'), category: t('catListings') },
+    { id: 'partners_view', label: t('pPartnersView'), description: t('dPartnersView'), category: t('catPartners') },
+    { id: 'partners_manage', label: t('pPartnersManage'), description: t('dPartnersManage'), category: t('catPartners') },
+    { id: 'reports_view', label: t('pReportsView'), description: t('dReportsView'), category: t('catReports') },
+    { id: 'reports_export', label: t('pReportsExport'), description: t('dReportsExport'), category: t('catReports') },
+    { id: 'settings_view', label: t('pSettingsView'), description: t('dSettingsView'), category: t('catSystem') },
+    { id: 'settings_edit', label: t('pSettingsEdit'), description: t('dSettingsEdit'), category: t('catSystem') },
+    { id: 'logs_view', label: t('pLogsView'), description: t('dLogsView'), category: t('catSystem') },
+    { id: 'roles_manage', label: t('pRolesManage'), description: t('dRolesManage'), category: t('catSystem') },
   ];
 
   const initialRoles: Role[] = [
     {
       id: 'admin',
       name: 'Admin',
-      description: copy.roleAdminDesc,
+      description: t('roleAdminDesc'),
       color: 'bg-red-600',
       userCount: 2,
       permissions: permissions.map(p => p.id),
@@ -361,7 +77,7 @@ export default function RollerPage() {
     {
       id: 'moderator',
       name: 'Moderatör',
-      description: copy.roleModeratorDesc,
+      description: t('roleModeratorDesc'),
       color: 'bg-blue-600',
       userCount: 5,
       permissions: ['users_view', 'listings_view', 'listings_approve', 'partners_view', 'reports_view'],
@@ -370,7 +86,7 @@ export default function RollerPage() {
     {
       id: 'editor',
       name: 'Editör',
-      description: copy.roleEditorDesc,
+      description: t('roleEditorDesc'),
       color: 'bg-green-600',
       userCount: 8,
       permissions: ['listings_view', 'listings_create', 'reports_view'],
@@ -379,7 +95,7 @@ export default function RollerPage() {
     {
       id: 'viewer',
       name: 'İzleyici',
-      description: copy.roleViewerDesc,
+      description: t('roleViewerDesc'),
       color: 'bg-gray-600',
       userCount: 15,
       permissions: ['users_view', 'listings_view', 'partners_view', 'reports_view'],
@@ -414,12 +130,12 @@ export default function RollerPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
-          <p className="text-sm text-gray-500 mt-1">{copy.pageSubtitle}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('pageTitle')}</h1>
+          <p className="text-sm text-gray-500 mt-1">{t('pageSubtitle')}</p>
         </div>
         <button className="flex items-center gap-2 px-4 py-2 bg-dk-red text-white rounded-xl hover:bg-dk-red-strong transition-colors">
           <Plus size={16} />
-          <span className="text-sm font-bold">{copy.newRole}</span>
+          <span className="text-sm font-bold">{t('newRole')}</span>
         </button>
       </div>
 
@@ -432,7 +148,7 @@ export default function RollerPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={copy.searchPlaceholder}
+              placeholder={t('searchPlaceholder')}
               className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
             />
           </div>
@@ -456,12 +172,12 @@ export default function RollerPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900">{role.name}</h3>
-                    <p className="text-xs text-gray-500">{role.permissions.length} {copy.permissions}</p>
+                    <p className="text-xs text-gray-500">{role.permissions.length} {t('permissions')}</p>
                   </div>
                 </div>
                 {role.isSystem && (
                   <span className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-full">
-                    {copy.systemBadge}
+                    {t('systemBadge')}
                   </span>
                 )}
               </div>
@@ -469,7 +185,7 @@ export default function RollerPage() {
               <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                 <div className="flex items-center gap-1 text-gray-500">
                   <Users size={14} />
-                  <span className="text-xs">{role.userCount} {copy.userCount}</span>
+                  <span className="text-xs">{role.userCount} {t('userCount')}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
@@ -509,7 +225,7 @@ export default function RollerPage() {
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    {isEditing ? copy.save : copy.edit}
+                    {isEditing ? t('save') : t('edit')}
                   </button>
                 )}
               </div>
@@ -518,7 +234,7 @@ export default function RollerPage() {
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex items-center gap-3">
                   <Lock size={18} className="text-amber-600" />
                   <p className="text-sm text-amber-700">
-                    {copy.systemLocked}
+                    {t('systemLocked')}
                   </p>
                 </div>
               )}
@@ -568,9 +284,9 @@ export default function RollerPage() {
           ) : (
             <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
               <Shield size={48} className="text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">{copy.selectRoleTitle}</h3>
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">{t('selectRoleTitle')}</h3>
               <p className="text-sm text-gray-500">
-                {copy.selectRoleDesc}
+                {t('selectRoleDesc')}
               </p>
             </div>
           )}
