@@ -3,7 +3,7 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-22T16:34:34.416Z
+- GeneratedAt: 2026-05-23T10:56:16.404Z
 - BuildStatus: PASS
 
 ## Routes (180)
@@ -259,21 +259,5 @@ Auto-generated. Do not edit manually.
 - /api/test-email
 - /api/upload
 
-## Dashboard i18n Progress (13/16 — 81%)
-- [x] settings (C1)
-- [x] toolkit (C1)
-- [x] site (C1)
-- [x] trends (C1)
-- [x] mesajlar (C2a)
-- [x] pipeline (C2a)
-- [x] loglar (C2a)
-- [x] raporlar (C2a)
-- [x] deal-flow (0157A)
-- [x] etkinlikler (0157A)
-- [x] duyurular (0157A)
-- [x] b2b-yonetimi (C4)
-- [x] roller (C2b)
-- [ ] food-cost (54 key)
-- [ ] faturalar (65 key)
-- [ ] auditor (31 key)
-- [ ] faturalar/[id] (TBD)
+## i18n Namespaces (0)
+- none detected
