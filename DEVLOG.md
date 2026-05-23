@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-22/23 - TASK-0157C-4 b2b-yonetimi Pattern A
+
+**Why:** C2a batch (4 fayl) bitdi, sıra C4-ə gəldi. b2b-yonetimi page-də 4 Record<Locale> obyekt var idi (əsas copy, typeLabels, statusLabels, modal). Əvvəlki session yarımçıq qaldı (linter crash), JSON diskdə idi, kod miqrasiyası bu session-da tamamlandı.
+
+**What:** 1 fayl Pattern B → A. 51 leaf key × 4 dil = 204 tərcümə. Namespace: dashboardB2bYonetimi. CRM terminologiyası CTO təsdiq: Sövdələşmə/Anlaşma (Deal). Mock data (İstanbul HORECA Group) toxunulmadı.
+
+**Smoke:** Build PASS. Lint 0 yeni error. 4 curl (AZ/TR/RU/EN) hamısı 307 auth redirect.
+
+---
+
 ## 2026-05-21 - TASK-0157C-2a Dashboard Pattern A server batch
 
 **Why:** C1 pilot batch validated the pattern (4 files). C2a continues with 4 more client-component dashboard pages that have mock data mixed in. Mock data untouched per Devir M5 scope.
