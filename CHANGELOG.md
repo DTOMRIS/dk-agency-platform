@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+## [TASK-0157C-3a] auditor + food-cost Pattern A — 2026-05-23
+
+### Added
+- dashboardAuditor namespace (33 key × 4 dil = 132 tərcümə)
+- dashboardFoodCost namespace (29 key × 4 dil = 116 tərcümə, months/monthsShort array)
+
+### Changed
+- `app/dashboard/auditor/page.tsx`: Pattern B → A (Record<Locale> → useTranslations)
+- `app/dashboard/food-cost/page.tsx`: Pattern B → A (Record<Locale> → useTranslations)
+
+### Notes
+- Audit funnel statusları CTO təsdiq: statusConverted = "Müştəri" doğrudur
+- CATEGORIES array toxunulmadı (L-013)
+- MOCK_AUDITS toxunulmadı
+- months/monthsShort array-lar t.raw() ilə əldə edilir
+- Dashboard i18n: 15/16 fayl (94%)
+
 ## [TASK-0157C-2b] roller Pattern A — 2026-05-23
 
 ### Added

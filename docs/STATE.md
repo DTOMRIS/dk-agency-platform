@@ -259,5 +259,21 @@ Auto-generated. Do not edit manually.
 - /api/test-email
 - /api/upload
 
-## i18n Namespaces (0)
-- none detected
+## Dashboard i18n Progress (15/16 — 94%)
+- [x] settings (C1)
+- [x] toolkit (C1)
+- [x] site (C1)
+- [x] trends (C1)
+- [x] mesajlar (C2a)
+- [x] pipeline (C2a)
+- [x] loglar (C2a)
+- [x] raporlar (C2a)
+- [x] deal-flow (0157A)
+- [x] etkinlikler (0157A)
+- [x] duyurular (0157A)
+- [x] b2b-yonetimi (C4)
+- [x] roller (C2b)
+- [x] auditor (C3a)
+- [x] food-cost (C3a)
+- [ ] faturalar (65 key)
+- [ ] faturalar/[id] (TBD)
