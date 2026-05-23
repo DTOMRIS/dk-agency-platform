@@ -21,6 +21,15 @@
 - Linter recovery: əvvəlki session çöküntüsündən bərpa
 - Dashboard i18n: 12/16 fayl (75%)
 
+## 2026-05-21 — Dashboard i18n Push (4 PR, 11/16 fayl)
+- TASK-0157A: sidebar + kazan-leads + listing labels (PR #171)
+- TASK-0157B: route mirrors + locale-aware links (PR #172)
+- TASK-0157C-1: Pattern A pilot 4 fayl (PR #173)
+- TASK-0157C-2a: Pattern A batch 4 fayl (PR #174)
+- Cəmi: 245 leaf key × 4 dil = 980 tərcümə
+- Launch blocker bağlandı (route mirrors)
+- Qalan 5 fayl handoff edildi
+
 ## [TASK-0157C-2a] Dashboard Pattern A — C2a Batch — 2026-05-21
 
 ### Changed
