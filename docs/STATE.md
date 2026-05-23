@@ -259,7 +259,7 @@ Auto-generated. Do not edit manually.
 - /api/test-email
 - /api/upload
 
-## Dashboard i18n Progress (13/16 — 81%)
+## Dashboard i18n Progress (15/16 — 94%)
 - [x] settings (C1)
 - [x] toolkit (C1)
 - [x] site (C1)
@@ -273,7 +273,7 @@ Auto-generated. Do not edit manually.
 - [x] duyurular (0157A)
 - [x] b2b-yonetimi (C4)
 - [x] roller (C2b)
-- [ ] food-cost (54 key)
+- [x] auditor (C3a)
+- [x] food-cost (C3a)
 - [ ] faturalar (65 key)
-- [ ] auditor (31 key)
 - [ ] faturalar/[id] (TBD)

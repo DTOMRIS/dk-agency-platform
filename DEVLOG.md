@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-23 - TASK-0157C-3a auditor + food-cost Pattern A
+
+**Why:** Dashboard i18n 13/16 bitib. C3a batch: auditor (33 key) + food-cost (29 key). Auditor audit-sales funnel səhifəsidir — statusConverted = "Müştəri" CTO təsdiq.
+
+**What:** 2 fayl Pattern B → A. 62 leaf key × 4 dil = 248 tərcümə. 2 namespace: dashboardAuditor, dashboardFoodCost. food-cost months/monthsShort array — t.raw() pattern. CATEGORIES + MOCK_AUDITS toxunulmadı.
+
+**Smoke:** Build PASS. 8 curl (AZ/TR/RU/EN × 2 page) hamısı 307 auth redirect.
+
+---
+
 ## 2026-05-23 - TASK-0157C-2b roller Pattern A
 
 **Why:** Dashboard i18n 12/16 bitib, roller növbəti tək fayl. Permission terminologiyası həssas — CTO təsdiqi alındı.

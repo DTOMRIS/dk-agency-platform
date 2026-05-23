@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import {
   ArrowDown,
   ArrowUp,
@@ -18,168 +17,8 @@ import {
   ShoppingCart,
   TrendingUp,
 } from 'lucide-react';
-import { normalizeLocale, type Locale } from '@/i18n/config';
+import { useTranslations } from 'next-intl';
 
-// ── i18n ─────────────────────────────────────────────────────────────
-
-interface PageCopy {
-  pageTitle: string;
-  pageSubtitle: string;
-  kpiTotalCost: string;
-  kpiMonthlyTrend: string;
-  kpiAvgInvoice: string;
-  kpiCategories: string;
-  invoiceUnit: string;
-  prevMonthLabel: string;
-  noData: string;
-  perInvoice: string;
-  activeCategories: string;
-  trendChartTitle: string;
-  tabCategories: string;
-  tabSuppliers: string;
-  tabProducts: string;
-  goToInvoices: string;
-  emptyCategoriesMsg: string;
-  productUnit: string;
-  grandTotal: string;
-  emptySuppliersMsg: string;
-  supplierAvg: string;
-  emptyProductsMsg: string;
-  colProduct: string;
-  colCategory: string;
-  colQuantity: string;
-  colAvgPrice: string;
-  colTotal: string;
-  months: string[];
-  monthsShort: string[];
-}
-
-const pageCopy: Record<Locale, PageCopy> = {
-  az: {
-    pageTitle: 'Food Cost Analiz',
-    pageSubtitle: 'Kateqoriya üzrə xərc dağılımı və trendlər',
-    kpiTotalCost: 'Ümumi Xərc',
-    kpiMonthlyTrend: 'Aylıq Trend',
-    kpiAvgInvoice: 'Ort. Fatura',
-    kpiCategories: 'Kateqoriya',
-    invoiceUnit: 'fatura',
-    prevMonthLabel: 'Keçən ay:',
-    noData: 'Məlumat yox',
-    perInvoice: 'fatura başına',
-    activeCategories: 'aktiv kateqoriya',
-    trendChartTitle: 'Aylıq Xərc Trendi',
-    tabCategories: 'Kateqoriyalar',
-    tabSuppliers: 'Tədarükçülər',
-    tabProducts: 'Məhsullar',
-    goToInvoices: 'Faturalara keç',
-    emptyCategoriesMsg: 'Bu ay üçün kateqoriya məlumatı yoxdur.',
-    productUnit: 'məhsul',
-    grandTotal: 'CƏMİ',
-    emptySuppliersMsg: 'Bu ay üçün tədarükçü məlumatı yoxdur.',
-    supplierAvg: 'ort.',
-    emptyProductsMsg: 'Bu ay üçün məhsul məlumatı yoxdur.',
-    colProduct: 'Məhsul',
-    colCategory: 'Kateqoriya',
-    colQuantity: 'Miqdar',
-    colAvgPrice: 'Ort. qiymət',
-    colTotal: 'Cəmi',
-    months: ['', 'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'],
-    monthsShort: ['', 'Yan', 'Fev', 'Mar', 'Apr', 'May', 'İyn', 'İyl', 'Avq', 'Sen', 'Okt', 'Noy', 'Dek'],
-  },
-  ru: {
-    pageTitle: 'Анализ Food Cost',
-    pageSubtitle: 'Распределение расходов по категориям и тренды',
-    kpiTotalCost: 'Общий расход',
-    kpiMonthlyTrend: 'Месячный тренд',
-    kpiAvgInvoice: 'Ср. счёт',
-    kpiCategories: 'Категории',
-    invoiceUnit: 'счёт',
-    prevMonthLabel: 'Прошлый месяц:',
-    noData: 'Нет данных',
-    perInvoice: 'за счёт',
-    activeCategories: 'активных категорий',
-    trendChartTitle: 'Ежемесячный тренд расходов',
-    tabCategories: 'Категории',
-    tabSuppliers: 'Поставщики',
-    tabProducts: 'Продукты',
-    goToInvoices: 'Перейти к счетам',
-    emptyCategoriesMsg: 'Нет данных по категориям за этот месяц.',
-    productUnit: 'позиций',
-    grandTotal: 'ИТОГО',
-    emptySuppliersMsg: 'Нет данных по поставщикам за этот месяц.',
-    supplierAvg: 'ср.',
-    emptyProductsMsg: 'Нет данных по продуктам за этот месяц.',
-    colProduct: 'Продукт',
-    colCategory: 'Категория',
-    colQuantity: 'Кол-во',
-    colAvgPrice: 'Ср. цена',
-    colTotal: 'Итого',
-    months: ['', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-    monthsShort: ['', 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-  },
-  en: {
-    pageTitle: 'Food Cost Analysis',
-    pageSubtitle: 'Cost breakdown by category and trends',
-    kpiTotalCost: 'Total Cost',
-    kpiMonthlyTrend: 'Monthly Trend',
-    kpiAvgInvoice: 'Avg. Invoice',
-    kpiCategories: 'Categories',
-    invoiceUnit: 'invoices',
-    prevMonthLabel: 'Last month:',
-    noData: 'No data',
-    perInvoice: 'per invoice',
-    activeCategories: 'active categories',
-    trendChartTitle: 'Monthly Cost Trend',
-    tabCategories: 'Categories',
-    tabSuppliers: 'Suppliers',
-    tabProducts: 'Products',
-    goToInvoices: 'Go to Invoices',
-    emptyCategoriesMsg: 'No category data for this month.',
-    productUnit: 'items',
-    grandTotal: 'TOTAL',
-    emptySuppliersMsg: 'No supplier data for this month.',
-    supplierAvg: 'avg.',
-    emptyProductsMsg: 'No product data for this month.',
-    colProduct: 'Product',
-    colCategory: 'Category',
-    colQuantity: 'Quantity',
-    colAvgPrice: 'Avg. Price',
-    colTotal: 'Total',
-    months: ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    monthsShort: ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  },
-  tr: {
-    pageTitle: 'Food Cost Analizi',
-    pageSubtitle: 'Kategoriye göre maliyet dağılımı ve trendler',
-    kpiTotalCost: 'Toplam Maliyet',
-    kpiMonthlyTrend: 'Aylık Trend',
-    kpiAvgInvoice: 'Ort. Fatura',
-    kpiCategories: 'Kategoriler',
-    invoiceUnit: 'fatura',
-    prevMonthLabel: 'Geçen ay:',
-    noData: 'Veri yok',
-    perInvoice: 'fatura başına',
-    activeCategories: 'aktif kategori',
-    trendChartTitle: 'Aylık Maliyet Trendi',
-    tabCategories: 'Kategoriler',
-    tabSuppliers: 'Tedarikçiler',
-    tabProducts: 'Ürünler',
-    goToInvoices: 'Faturalara git',
-    emptyCategoriesMsg: 'Bu ay için kategori verisi bulunamadı.',
-    productUnit: 'ürün',
-    grandTotal: 'TOPLAM',
-    emptySuppliersMsg: 'Bu ay için tedarikçi verisi bulunamadı.',
-    supplierAvg: 'ort.',
-    emptyProductsMsg: 'Bu ay için ürün verisi bulunamadı.',
-    colProduct: 'Ürün',
-    colCategory: 'Kategori',
-    colQuantity: 'Miktar',
-    colAvgPrice: 'Ort. fiyat',
-    colTotal: 'Toplam',
-    months: ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
-    monthsShort: ['', 'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
-  },
-};
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -317,9 +156,9 @@ function getMonthRange(offset: number, months: string[]): { dateFrom: string; da
 // ── Component ───────────────────────────────────────────────────────
 
 export default function FoodCostDashboard() {
-  const pathname = usePathname();
-  const locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = pageCopy[locale];
+  const t = useTranslations('dashboardFoodCost');
+  const months = t.raw('months') as string[];
+  const monthsShort = t.raw('monthsShort') as string[];
 
   const [monthOffset, setMonthOffset] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -329,7 +168,7 @@ export default function FoodCostDashboard() {
   const [products, setProducts] = useState<TopProductItem[]>([]);
   const [activeTab, setActiveTab] = useState<'categories' | 'suppliers' | 'products'>('categories');
 
-  const { dateFrom, dateTo, label } = getMonthRange(monthOffset, copy.months);
+  const { dateFrom, dateTo, label } = getMonthRange(monthOffset, months);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -419,8 +258,8 @@ export default function FoodCostDashboard() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
-          <p className="mt-1 text-sm text-slate-500">{copy.pageSubtitle}</p>
+          <h1 className="text-2xl font-black text-[var(--dk-navy)]">{t('pageTitle')}</h1>
+          <p className="mt-1 text-sm text-slate-500">{t('pageSubtitle')}</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -461,30 +300,30 @@ export default function FoodCostDashboard() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <KpiCard
-          title={copy.kpiTotalCost}
+          title={t('kpiTotalCost')}
           value={`${formatMoney(currentMonthTotal)} ₼`}
-          sub={`${report?.invoiceCount ?? 0} ${copy.invoiceUnit}`}
+          sub={`${report?.invoiceCount ?? 0} ${t('invoiceUnit')}`}
           icon={<Receipt size={20} />}
           color="text-[var(--dk-navy)]"
         />
         <KpiCard
-          title={copy.kpiMonthlyTrend}
+          title={t('kpiMonthlyTrend')}
           value={`${trendChange >= 0 ? '+' : ''}${trendChange}%`}
-          sub={prevTrend ? `${copy.prevMonthLabel} ${formatMoney(prevTrend.totalAmount)} ₼` : copy.noData}
+          sub={prevTrend ? `${t('prevMonthLabel')} ${formatMoney(prevTrend.totalAmount)} ₼` : t('noData')}
           icon={trendChange >= 0 ? <ArrowUp size={20} /> : <ArrowDown size={20} />}
           color={trendChange > 5 ? 'text-red-600' : trendChange < -5 ? 'text-emerald-600' : 'text-amber-600'}
         />
         <KpiCard
-          title={copy.kpiAvgInvoice}
+          title={t('kpiAvgInvoice')}
           value={`${report && report.invoiceCount > 0 ? formatMoney(Math.round(currentMonthTotal / report.invoiceCount)) : '0.00'} ₼`}
-          sub={copy.perInvoice}
+          sub={t('perInvoice')}
           icon={<ShoppingCart size={20} />}
           color="text-[var(--dk-navy)]"
         />
         <KpiCard
-          title={copy.kpiCategories}
+          title={t('kpiCategories')}
           value={`${report?.categories.length ?? 0}`}
-          sub={copy.activeCategories}
+          sub={t('activeCategories')}
           icon={<Package size={20} />}
           color="text-[var(--dk-navy)]"
         />
@@ -494,7 +333,7 @@ export default function FoodCostDashboard() {
       <div className="rounded-2xl border border-slate-200 bg-white p-6">
         <div className="mb-4 flex items-center gap-2">
           <TrendingUp size={18} className="text-[var(--dk-gold)]" />
-          <h2 className="text-sm font-bold text-[var(--dk-navy)]">{copy.trendChartTitle}</h2>
+          <h2 className="text-sm font-bold text-[var(--dk-navy)]">{t('trendChartTitle')}</h2>
         </div>
         <div className="flex items-end gap-3" style={{ height: 180 }}>
           {trend.map((t) => {
@@ -506,9 +345,9 @@ export default function FoodCostDashboard() {
                 <div
                   className={`w-full rounded-t-lg transition-all ${isCurrentMonth ? 'bg-[var(--dk-gold)]' : 'bg-slate-200'}`}
                   style={{ height: h }}
-                  title={`${formatMoney(t.totalAmount)} ₼ — ${t.invoiceCount} ${copy.invoiceUnit}`}
+                  title={`${formatMoney(t.totalAmount)} ₼ — ${t.invoiceCount} ${t('invoiceUnit')}`}
                 />
-                <span className="text-[11px] font-medium text-slate-500">{formatMonth(t.month, copy.monthsShort)}</span>
+                <span className="text-[11px] font-medium text-slate-500">{formatMonth(t.month, monthsShort)}</span>
               </div>
             );
           })}
@@ -519,9 +358,9 @@ export default function FoodCostDashboard() {
       <div className="rounded-2xl border border-slate-200 bg-white">
         <div className="flex border-b border-slate-200">
           {[
-            { key: 'categories' as const, label: copy.tabCategories, icon: <BarChart3 size={16} /> },
-            { key: 'suppliers' as const, label: copy.tabSuppliers, icon: <ShoppingCart size={16} /> },
-            { key: 'products' as const, label: copy.tabProducts, icon: <Package size={16} /> },
+            { key: 'categories' as const, label: t('tabCategories'), icon: <BarChart3 size={16} /> },
+            { key: 'suppliers' as const, label: t('tabSuppliers'), icon: <ShoppingCart size={16} /> },
+            { key: 'products' as const, label: t('tabProducts'), icon: <Package size={16} /> },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -544,28 +383,28 @@ export default function FoodCostDashboard() {
             <CategoriesTab
               categories={report?.categories ?? []}
               grandTotal={currentMonthTotal}
-              emptyMsg={copy.emptyCategoriesMsg}
-              productUnit={copy.productUnit}
-              grandTotalLabel={copy.grandTotal}
+              emptyMsg={t('emptyCategoriesMsg')}
+              productUnit={t('productUnit')}
+              grandTotalLabel={t('grandTotal')}
             />
           )}
           {activeTab === 'suppliers' && (
             <SuppliersTab
               suppliers={suppliers}
-              emptyMsg={copy.emptySuppliersMsg}
-              invoiceUnit={copy.invoiceUnit}
-              avgLabel={copy.supplierAvg}
+              emptyMsg={t('emptySuppliersMsg')}
+              invoiceUnit={t('invoiceUnit')}
+              avgLabel={t('supplierAvg')}
             />
           )}
           {activeTab === 'products' && (
             <ProductsTab
               products={products}
-              emptyMsg={copy.emptyProductsMsg}
-              colProduct={copy.colProduct}
-              colCategory={copy.colCategory}
-              colQuantity={copy.colQuantity}
-              colAvgPrice={copy.colAvgPrice}
-              colTotal={copy.colTotal}
+              emptyMsg={t('emptyProductsMsg')}
+              colProduct={t('colProduct')}
+              colCategory={t('colCategory')}
+              colQuantity={t('colQuantity')}
+              colAvgPrice={t('colAvgPrice')}
+              colTotal={t('colTotal')}
             />
           )}
         </div>
@@ -577,7 +416,7 @@ export default function FoodCostDashboard() {
           href="/dashboard/faturalar"
           className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
         >
-          {copy.goToInvoices} &rarr;
+          {t('goToInvoices')} &rarr;
         </Link>
       </div>
     </div>
