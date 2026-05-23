@@ -5,13 +5,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import {
   Building2, Search, Plus, MoreHorizontal,
   CheckCircle, Clock, XCircle, TrendingUp, Users,
   FileText, Star, ChevronDown, ExternalLink, Mail, Phone, X
 } from 'lucide-react';
-import { normalizeLocale, type Locale } from '@/i18n/config';
 
 interface Partner {
   id: string;
@@ -101,267 +100,20 @@ const MOCK_PARTNERS: Partner[] = [
   },
 ];
 
-const pageCopy: Record<
-  Locale,
-  {
-    pageTitle: string;
-    pageSubtitle: string;
-    addPartnerBtn: string;
-    statTotalPartners: string;
-    statActivePartners: string;
-    statPending: string;
-    statTotalDeals: string;
-    searchPlaceholder: string;
-    filterAllTypes: string;
-    filterInvestors: string;
-    filterFranchisee: string;
-    filterSuppliers: string;
-    filterPartners: string;
-    filterAllStatuses: string;
-    filterActive: string;
-    filterPending: string;
-    filterInactive: string;
-    colPartner: string;
-    colType: string;
-    colContact: string;
-    colCity: string;
-    colDeals: string;
-    colRating: string;
-    colStatus: string;
-    emptyTitle: string;
-    emptySubtitle: string;
-    modalTitle: string;
-    modalLabelCompany: string;
-    modalPlaceholderCompany: string;
-    modalLabelType: string;
-    modalTypeSelect: string;
-    modalLabelSector: string;
-    modalPlaceholderSector: string;
-    modalLabelContact: string;
-    modalPlaceholderContact: string;
-    modalLabelEmail: string;
-    modalLabelPhone: string;
-    modalLabelCity: string;
-    modalPlaceholderCity: string;
-    modalLabelNotes: string;
-    modalPlaceholderNotes: string;
-    modalBtnCancel: string;
-    modalBtnAdd: string;
-    modalAddedDemo: string;
-    typeLabels: Record<string, string>;
-    statusLabels: Record<string, string>;
-  }
-> = {
-  az: {
-    pageTitle: 'B2B İdarəetmə',
-    pageSubtitle: 'Partner və investor münasibətləri',
-    addPartnerBtn: 'Yeni Partner Əlavə Et',
-    statTotalPartners: 'Ümumi Partner',
-    statActivePartners: 'Aktiv Partner',
-    statPending: 'Gözləyən',
-    statTotalDeals: 'Ümumi Əməliyyat',
-    searchPlaceholder: 'Partner, şəxs və ya şəhər axtar...',
-    filterAllTypes: 'Bütün Növlər',
-    filterInvestors: 'İnvestorlar',
-    filterFranchisee: 'Franchise',
-    filterSuppliers: 'Təchizatçılar',
-    filterPartners: 'Partnerlər',
-    filterAllStatuses: 'Bütün Statuslar',
-    filterActive: 'Aktiv',
-    filterPending: 'Gözləyən',
-    filterInactive: 'Passiv',
-    colPartner: 'Partner',
-    colType: 'Növ',
-    colContact: 'Əlaqə',
-    colCity: 'Şəhər',
-    colDeals: 'Əməliyyat',
-    colRating: 'Reytinq',
-    colStatus: 'Status',
-    emptyTitle: 'Partner tapılmadı',
-    emptySubtitle: 'Filtrləri dəyişin və ya yeni partner əlavə edin',
-    modalTitle: 'Yeni Partner Əlavə Et',
-    modalLabelCompany: 'Şirkət Adı',
-    modalPlaceholderCompany: 'Şirkət adını daxil edin',
-    modalLabelType: 'Partner Növü',
-    modalTypeSelect: 'Seçin',
-    modalLabelSector: 'Sektor',
-    modalPlaceholderSector: 'Sektor',
-    modalLabelContact: 'Səlahiyyətli Şəxs',
-    modalPlaceholderContact: 'Ad Soyad',
-    modalLabelEmail: 'E-poçt',
-    modalLabelPhone: 'Telefon',
-    modalLabelCity: 'Şəhər',
-    modalPlaceholderCity: 'Şəhər',
-    modalLabelNotes: 'Qeydlər',
-    modalPlaceholderNotes: 'Əlavə məlumat...',
-    modalBtnCancel: 'Ləğv et',
-    modalBtnAdd: 'Partner Əlavə Et',
-    modalAddedDemo: 'Partner əlavə edildi! (Demo)',
-    typeLabels: { investor: 'İnvestor', franchisee: 'Franchise', supplier: 'Təchizatçı', partner: 'Partner' },
-    statusLabels: { active: 'Aktiv', pending: 'Gözləyən', inactive: 'Passiv' },
-  },
-  ru: {
-    pageTitle: 'B2B Управление',
-    pageSubtitle: 'Отношения с партнёрами и инвесторами',
-    addPartnerBtn: 'Добавить партнёра',
-    statTotalPartners: 'Всего партнёров',
-    statActivePartners: 'Активных партнёров',
-    statPending: 'Ожидающих',
-    statTotalDeals: 'Всего сделок',
-    searchPlaceholder: 'Поиск по партнёру, контакту или городу...',
-    filterAllTypes: 'Все типы',
-    filterInvestors: 'Инвесторы',
-    filterFranchisee: 'Франшиза',
-    filterSuppliers: 'Поставщики',
-    filterPartners: 'Партнёры',
-    filterAllStatuses: 'Все статусы',
-    filterActive: 'Активный',
-    filterPending: 'Ожидающий',
-    filterInactive: 'Неактивный',
-    colPartner: 'Партнёр',
-    colType: 'Тип',
-    colContact: 'Контакт',
-    colCity: 'Город',
-    colDeals: 'Сделки',
-    colRating: 'Рейтинг',
-    colStatus: 'Статус',
-    emptyTitle: 'Партнёр не найден',
-    emptySubtitle: 'Измените фильтры или добавьте нового партнёра',
-    modalTitle: 'Добавить партнёра',
-    modalLabelCompany: 'Название компании',
-    modalPlaceholderCompany: 'Введите название компании',
-    modalLabelType: 'Тип партнёра',
-    modalTypeSelect: 'Выберите',
-    modalLabelSector: 'Сектор',
-    modalPlaceholderSector: 'Сектор',
-    modalLabelContact: 'Контактное лицо',
-    modalPlaceholderContact: 'Имя Фамилия',
-    modalLabelEmail: 'E-mail',
-    modalLabelPhone: 'Телефон',
-    modalLabelCity: 'Город',
-    modalPlaceholderCity: 'Город',
-    modalLabelNotes: 'Заметки',
-    modalPlaceholderNotes: 'Дополнительная информация...',
-    modalBtnCancel: 'Отмена',
-    modalBtnAdd: 'Добавить партнёра',
-    modalAddedDemo: 'Партнёр добавлен! (Демо)',
-    typeLabels: { investor: 'Инвестор', franchisee: 'Франшиза', supplier: 'Поставщик', partner: 'Партнёр' },
-    statusLabels: { active: 'Активный', pending: 'Ожидающий', inactive: 'Неактивный' },
-  },
-  en: {
-    pageTitle: 'B2B Management',
-    pageSubtitle: 'Partner and investor relationships',
-    addPartnerBtn: 'Add New Partner',
-    statTotalPartners: 'Total Partners',
-    statActivePartners: 'Active Partners',
-    statPending: 'Pending',
-    statTotalDeals: 'Total Deals',
-    searchPlaceholder: 'Search partner, contact or city...',
-    filterAllTypes: 'All Types',
-    filterInvestors: 'Investors',
-    filterFranchisee: 'Franchisee',
-    filterSuppliers: 'Suppliers',
-    filterPartners: 'Partners',
-    filterAllStatuses: 'All Statuses',
-    filterActive: 'Active',
-    filterPending: 'Pending',
-    filterInactive: 'Inactive',
-    colPartner: 'Partner',
-    colType: 'Type',
-    colContact: 'Contact',
-    colCity: 'City',
-    colDeals: 'Deals',
-    colRating: 'Rating',
-    colStatus: 'Status',
-    emptyTitle: 'No partner found',
-    emptySubtitle: 'Change filters or add a new partner',
-    modalTitle: 'Add New Partner',
-    modalLabelCompany: 'Company Name',
-    modalPlaceholderCompany: 'Enter company name',
-    modalLabelType: 'Partner Type',
-    modalTypeSelect: 'Select',
-    modalLabelSector: 'Sector',
-    modalPlaceholderSector: 'Sector',
-    modalLabelContact: 'Contact Person',
-    modalPlaceholderContact: 'Full Name',
-    modalLabelEmail: 'Email',
-    modalLabelPhone: 'Phone',
-    modalLabelCity: 'City',
-    modalPlaceholderCity: 'City',
-    modalLabelNotes: 'Notes',
-    modalPlaceholderNotes: 'Additional info...',
-    modalBtnCancel: 'Cancel',
-    modalBtnAdd: 'Add Partner',
-    modalAddedDemo: 'Partner added! (Demo)',
-    typeLabels: { investor: 'Investor', franchisee: 'Franchisee', supplier: 'Supplier', partner: 'Partner' },
-    statusLabels: { active: 'Active', pending: 'Pending', inactive: 'Inactive' },
-  },
-  tr: {
-    pageTitle: 'B2B Yönetimi',
-    pageSubtitle: 'Partner ve yatırımcı ilişkileri',
-    addPartnerBtn: 'Yeni Partner Ekle',
-    statTotalPartners: 'Toplam Partner',
-    statActivePartners: 'Aktif Partner',
-    statPending: 'Bekleyen',
-    statTotalDeals: 'Toplam İşlem',
-    searchPlaceholder: 'Partner, kişi veya şehir ara...',
-    filterAllTypes: 'Tüm Tipler',
-    filterInvestors: 'Yatırımcılar',
-    filterFranchisee: 'Franchise',
-    filterSuppliers: 'Tedarikçiler',
-    filterPartners: 'Partnerler',
-    filterAllStatuses: 'Tüm Durumlar',
-    filterActive: 'Aktif',
-    filterPending: 'Beklemede',
-    filterInactive: 'Pasif',
-    colPartner: 'Partner',
-    colType: 'Tip',
-    colContact: 'İletişim',
-    colCity: 'Şehir',
-    colDeals: 'İşlem',
-    colRating: 'Puan',
-    colStatus: 'Durum',
-    emptyTitle: 'Partner bulunamadı',
-    emptySubtitle: 'Filtreleri değiştirin veya yeni partner ekleyin',
-    modalTitle: 'Yeni Partner Ekle',
-    modalLabelCompany: 'Firma Adı',
-    modalPlaceholderCompany: 'Firma adını girin',
-    modalLabelType: 'Partner Tipi',
-    modalTypeSelect: 'Seçin',
-    modalLabelSector: 'Sektör',
-    modalPlaceholderSector: 'Sektör',
-    modalLabelContact: 'Yetkili Kişi',
-    modalPlaceholderContact: 'Ad Soyad',
-    modalLabelEmail: 'E-posta',
-    modalLabelPhone: 'Telefon',
-    modalLabelCity: 'Şehir',
-    modalPlaceholderCity: 'Şehir',
-    modalLabelNotes: 'Notlar',
-    modalPlaceholderNotes: 'Ek bilgiler...',
-    modalBtnCancel: 'İptal',
-    modalBtnAdd: 'Partner Ekle',
-    modalAddedDemo: 'Partner eklendi! (Demo)',
-    typeLabels: { investor: 'Yatırımcı', franchisee: 'Franchise', supplier: 'Tedarikçi', partner: 'Partner' },
-    statusLabels: { active: 'Aktif', pending: 'Beklemede', inactive: 'Pasif' },
-  },
-};
-
 export default function B2BYonetimiPage() {
-  const pathname = usePathname();
-  const locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = pageCopy[locale];
+  const t = useTranslations('dashboardB2bYonetimi');
 
   const TYPE_LABELS = {
-    investor: { label: copy.typeLabels.investor, color: 'bg-blue-100 text-blue-700' },
-    franchisee: { label: copy.typeLabels.franchisee, color: 'bg-purple-100 text-purple-700' },
-    supplier: { label: copy.typeLabels.supplier, color: 'bg-amber-100 text-amber-700' },
-    partner: { label: copy.typeLabels.partner, color: 'bg-green-100 text-green-700' },
+    investor: { label: t('typeLabels.investor'), color: 'bg-blue-100 text-blue-700' },
+    franchisee: { label: t('typeLabels.franchisee'), color: 'bg-purple-100 text-purple-700' },
+    supplier: { label: t('typeLabels.supplier'), color: 'bg-amber-100 text-amber-700' },
+    partner: { label: t('typeLabels.partner'), color: 'bg-green-100 text-green-700' },
   };
 
   const STATUS_CONFIG = {
-    active: { label: copy.statusLabels.active, icon: CheckCircle, color: 'text-green-600' },
-    pending: { label: copy.statusLabels.pending, icon: Clock, color: 'text-amber-600' },
-    inactive: { label: copy.statusLabels.inactive, icon: XCircle, color: 'text-gray-400' },
+    active: { label: t('statusLabels.active'), icon: CheckCircle, color: 'text-green-600' },
+    pending: { label: t('statusLabels.pending'), icon: Clock, color: 'text-amber-600' },
+    inactive: { label: t('statusLabels.inactive'), icon: XCircle, color: 'text-gray-400' },
   };
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -397,8 +149,8 @@ export default function B2BYonetimiPage() {
             <Building2 size={24} className="text-dk-red" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
-            <p className="text-gray-500 text-sm mt-0.5">{copy.pageSubtitle}</p>
+            <h1 className="text-2xl font-bold text-gray-900">{t('pageTitle')}</h1>
+            <p className="text-gray-500 text-sm mt-0.5">{t('pageSubtitle')}</p>
           </div>
         </div>
         <button
@@ -406,7 +158,7 @@ export default function B2BYonetimiPage() {
           className="flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-3 rounded-xl font-semibold transition-colors"
         >
           <Plus size={18} />
-          {copy.addPartnerBtn}
+          {t('addPartnerBtn')}
         </button>
       </div>
 
@@ -419,7 +171,7 @@ export default function B2BYonetimiPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
-              <p className="text-xs text-gray-500">{copy.statTotalPartners}</p>
+              <p className="text-xs text-gray-500">{t('statTotalPartners')}</p>
             </div>
           </div>
         </div>
@@ -430,7 +182,7 @@ export default function B2BYonetimiPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.active}</p>
-              <p className="text-xs text-gray-500">{copy.statActivePartners}</p>
+              <p className="text-xs text-gray-500">{t('statActivePartners')}</p>
             </div>
           </div>
         </div>
@@ -441,7 +193,7 @@ export default function B2BYonetimiPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.pending}</p>
-              <p className="text-xs text-gray-500">{copy.statPending}</p>
+              <p className="text-xs text-gray-500">{t('statPending')}</p>
             </div>
           </div>
         </div>
@@ -452,7 +204,7 @@ export default function B2BYonetimiPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900">{stats.totalDeals}</p>
-              <p className="text-xs text-gray-500">{copy.statTotalDeals}</p>
+              <p className="text-xs text-gray-500">{t('statTotalDeals')}</p>
             </div>
           </div>
         </div>
@@ -467,7 +219,7 @@ export default function B2BYonetimiPage() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder={copy.searchPlaceholder}
+              placeholder={t('searchPlaceholder')}
               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
             />
           </div>
@@ -478,11 +230,11 @@ export default function B2BYonetimiPage() {
                 onChange={(e) => setFilterType(e.target.value)}
                 className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
               >
-                <option value="all">{copy.filterAllTypes}</option>
-                <option value="investor">{copy.filterInvestors}</option>
-                <option value="franchisee">{copy.filterFranchisee}</option>
-                <option value="supplier">{copy.filterSuppliers}</option>
-                <option value="partner">{copy.filterPartners}</option>
+                <option value="all">{t('filterAllTypes')}</option>
+                <option value="investor">{t('filterInvestors')}</option>
+                <option value="franchisee">{t('filterFranchisee')}</option>
+                <option value="supplier">{t('filterSuppliers')}</option>
+                <option value="partner">{t('filterPartners')}</option>
               </select>
               <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
@@ -492,10 +244,10 @@ export default function B2BYonetimiPage() {
                 onChange={(e) => setFilterStatus(e.target.value)}
                 className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
               >
-                <option value="all">{copy.filterAllStatuses}</option>
-                <option value="active">{copy.filterActive}</option>
-                <option value="pending">{copy.filterPending}</option>
-                <option value="inactive">{copy.filterInactive}</option>
+                <option value="all">{t('filterAllStatuses')}</option>
+                <option value="active">{t('filterActive')}</option>
+                <option value="pending">{t('filterPending')}</option>
+                <option value="inactive">{t('filterInactive')}</option>
               </select>
               <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
@@ -509,13 +261,13 @@ export default function B2BYonetimiPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-100">
-                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{copy.colPartner}</th>
-                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{copy.colType}</th>
-                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{copy.colContact}</th>
-                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{copy.colCity}</th>
-                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{copy.colDeals}</th>
-                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{copy.colRating}</th>
-                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{copy.colStatus}</th>
+                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colPartner')}</th>
+                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colType')}</th>
+                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colContact')}</th>
+                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colCity')}</th>
+                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colDeals')}</th>
+                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colRating')}</th>
+                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colStatus')}</th>
                 <th className="p-4"></th>
               </tr>
             </thead>
@@ -601,8 +353,8 @@ export default function B2BYonetimiPage() {
         {filteredPartners.length === 0 && (
           <div className="p-12 text-center">
             <Building2 size={48} className="mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500 font-medium">{copy.emptyTitle}</p>
-            <p className="text-sm text-gray-400 mt-1">{copy.emptySubtitle}</p>
+            <p className="text-gray-500 font-medium">{t('emptyTitle')}</p>
+            <p className="text-sm text-gray-400 mt-1">{t('emptySubtitle')}</p>
           </div>
         )}
       </div>
@@ -613,7 +365,7 @@ export default function B2BYonetimiPage() {
           <div className="absolute inset-0 bg-black/50" onClick={() => setShowAddModal(false)} />
           <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-auto">
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="text-lg font-bold text-gray-900">{copy.modalTitle}</h2>
+              <h2 className="text-lg font-bold text-gray-900">{t('modal.title')}</h2>
               <button
                 onClick={() => setShowAddModal(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -624,47 +376,47 @@ export default function B2BYonetimiPage() {
 
             <form className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelCompany}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelCompany')}</label>
                 <input
                   type="text"
-                  placeholder={copy.modalPlaceholderCompany}
+                  placeholder={t('modal.placeholderCompany')}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelType}</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelType')}</label>
                   <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white">
-                    <option value="">{copy.modalTypeSelect}</option>
-                    <option value="investor">{copy.typeLabels.investor}</option>
-                    <option value="franchisee">{copy.typeLabels.franchisee}</option>
-                    <option value="supplier">{copy.typeLabels.supplier}</option>
-                    <option value="partner">{copy.typeLabels.partner}</option>
+                    <option value="">{t('modal.typeSelect')}</option>
+                    <option value="investor">{t('typeLabels.investor')}</option>
+                    <option value="franchisee">{t('typeLabels.franchisee')}</option>
+                    <option value="supplier">{t('typeLabels.supplier')}</option>
+                    <option value="partner">{t('typeLabels.partner')}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelSector}</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelSector')}</label>
                   <input
                     type="text"
-                    placeholder={copy.modalPlaceholderSector}
+                    placeholder={t('modal.placeholderSector')}
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelContact}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelContact')}</label>
                 <input
                   type="text"
-                  placeholder={copy.modalPlaceholderContact}
+                  placeholder={t('modal.placeholderContact')}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelEmail}</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelEmail')}</label>
                   <input
                     type="email"
                     placeholder="email@firma.com"
@@ -672,7 +424,7 @@ export default function B2BYonetimiPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelPhone}</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelPhone')}</label>
                   <input
                     type="tel"
                     placeholder="+90 5XX XXX XXXX"
@@ -682,19 +434,19 @@ export default function B2BYonetimiPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelCity}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelCity')}</label>
                 <input
                   type="text"
-                  placeholder={copy.modalPlaceholderCity}
+                  placeholder={t('modal.placeholderCity')}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{copy.modalLabelNotes}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelNotes')}</label>
                 <textarea
                   rows={3}
-                  placeholder={copy.modalPlaceholderNotes}
+                  placeholder={t('modal.placeholderNotes')}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red resize-none"
                 />
               </div>
@@ -705,16 +457,16 @@ export default function B2BYonetimiPage() {
                 onClick={() => setShowAddModal(false)}
                 className="px-5 py-2.5 text-gray-600 hover:bg-gray-100 rounded-xl font-medium transition-colors"
               >
-                {copy.modalBtnCancel}
+                {t('modal.btnCancel')}
               </button>
               <button
                 onClick={() => {
-                  alert(copy.modalAddedDemo);
+                  alert(t('modal.addedDemo'));
                   setShowAddModal(false);
                 }}
                 className="px-5 py-2.5 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors"
               >
-                {copy.modalBtnAdd}
+                {t('modal.btnAdd')}
               </button>
             </div>
           </div>

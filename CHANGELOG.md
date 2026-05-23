@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+## [TASK-0157C-4] b2b-yonetimi Pattern A — 2026-05-22
+
+### Added
+- dashboardB2bYonetimi namespace (51 leaf key × 4 dil = 204 tərcümə)
+- 4 Record obyekt miqrasiyası (əsas + typeLabels + statusLabels + modal)
+
+### Changed
+- `app/dashboard/b2b-yonetimi/page.tsx`: Pattern B → A (Record<Locale> → useTranslations)
+
+### Terminology (CTO təsdiq)
+- AZ "Sövdələşmə" / TR "Anlaşma" / RU "Сделки" / EN "Deals"
+- "Franchise alan" saxlandı (DK franchise consulting brend)
+
+### Notes
+- Mock data (İstanbul HORECA Group) toxunulmadı (Devir M5)
+- Discovery dərsi: 1 fayl 4 Record (L-008 genişlənməsi)
+- Linter recovery: əvvəlki session çöküntüsündən bərpa
+- Dashboard i18n: 12/16 fayl (75%)
+
 ## 2026-05-21 — Dashboard i18n Push (4 PR, 11/16 fayl)
 - TASK-0157A: sidebar + kazan-leads + listing labels (PR #171)
 - TASK-0157B: route mirrors + locale-aware links (PR #172)
