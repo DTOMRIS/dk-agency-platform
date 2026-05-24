@@ -301,12 +301,12 @@
         "structureTitle": "Yapı",
         "structure": {
           "revenue": "Satışlar",
-          "cogs": "Satış maliyeti",
+          "cogs": "− Satış maliyeti",
           "operatingProfit": "= Faaliyet kârı",
-          "controllable": "Kontrol edilebilir giderler",
+          "controllable": "− Kontrol edilebilir giderler",
           "controllableProfit": "= Kontrol edilebilir kâr",
-          "uncontrollable": "Kontrol edilemeyen giderler",
-          "netProfit": "Net kâr"
+          "uncontrollable": "− Kontrol edilemeyen giderler",
+          "netProfit": "= Net kâr"
         }
       },
       "knowledge": {

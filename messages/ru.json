@@ -301,12 +301,12 @@
         "structureTitle": "Структура",
         "structure": {
           "revenue": "Продажи",
-          "cogs": "Себестоимость",
+          "cogs": "− Себестоимость",
           "operatingProfit": "= Операционная прибыль",
-          "controllable": "Контролируемые расходы",
+          "controllable": "− Контролируемые расходы",
           "controllableProfit": "= Контролируемая прибыль",
-          "uncontrollable": "Неконтролируемые расходы",
-          "netProfit": "Чистая прибыль"
+          "uncontrollable": "− Неконтролируемые расходы",
+          "netProfit": "= Чистая прибыль"
         }
       },
       "knowledge": {
