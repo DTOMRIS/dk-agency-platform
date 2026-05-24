@@ -15,6 +15,21 @@
 amma ESLint local FS-i oxuduğu üçün error verirdi. Repo lint 4 error → 0.
 Build və tsc statusu dəyişməyib (TASK-0159 hələ açıqdır).
 
+**TASK-0158 (eyni gün, 3-cü PR):** i18n parity tam bərpa olundu.
+
+ADDIM 0 audit 185 missing key tapdı. ADDIM 1 runtime audit "marketing"
+namespace üçün 0 istifadə sübut etdi — qərar: sil (L-017 dərsi yarandı).
+
+ADDIM 4 gate kritik problem aşkar etdi: toolkit.pnl.education.structure
+4 dildə naming inconsistency. AZ/EN: 7 açar (revenue, netProfit, ...).
+RU/TR: 5 açar (sales, net, ...). Kod (page.tsx:615 formulaLines) AZ/EN
+naming-i çağırırdı → RU/TR P&L education-da istifadəçi xam açar adlarını
+görürdü. CANLI BUG.
+
+Fix: RU/TR-də orphan key-lər rename (sales→revenue, net→netProfit),
+2 yeni tərcümə əlavə. Yeni dərs: L-018 — Orphan i18n key audit-də
+görünmür, naming mismatch yoxla.
+
 ## 2026-05-15 — TASK-0130 Reklam Yazıcısı
 
 ### What

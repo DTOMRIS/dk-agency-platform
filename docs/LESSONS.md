@@ -83,3 +83,33 @@ fayl PASS-dursa, repo debt ayrı task-a köçür, mövcud task-ı bloklama.
 
 Misal: TASK-0157D — target file lint=0, repo lint=4 error (scripts/*.js, sənin
 yazmadığın). Davam et, debt ayrı task aç.
+
+### L-017 — Audit rəqəmi ≠ avtomatik tərcümə (24 May 2026)
+i18n parity audit-i missing key tapdıqda dərhal tərcümə yazma. Əvvəl
+runtime istifadəni təsdiq et:
+- useTranslations('ns') sayı
+- getTranslations('ns') sayı
+- Direct t('ns.X') istinadları
+- Type/config faylların istifadəsi
+
+Sıfır istifadə = ölü kod, tərcümə yox, sil.
+Misal: TASK-0158 — "marketing" namespace 59 leaf, runtime = 0, silindi.
+"marketinq" namespace 866 leaf, 25 yerdə istifadə, qoruyduq.
+
+### L-018 — Orphan i18n key audit-də görünmür (24 May 2026)
+jq ilə leaf saymaq paritet illüziyası verə bilər. RU/TR-də 5 açar,
+AZ/EN-də 7 açar olsa, audit "4 missing" deyir. Amma əslində 2 açar
+ORPHAN-dır (kod çağırmır), 4 açar tam YOXDUR.
+
+Audit-də həmişə hər iki istiqamətdə yoxla:
+- AZ var, X yox (missing)
+- X var, AZ yox (orphan)
+- Açar adları arasında naming mismatch (məs: sales vs revenue)
+
+Misal: TASK-0158 toolkit.pnl.education.structure — RU/TR-də sales/net
+orphan idi (legacy refactor qalığı), kod çağırmırdı, istifadəçi xam
+açar adlarını görürdü (canlı bug). Audit bunu "4 missing" kimi rapor
+etdi, əslində 2 orphan + 4 missing idi.
+
+Bu dərs L-017-nin əkizidir: ikisi də avtomatik audit reaksiyasının
+qarşısını alır.

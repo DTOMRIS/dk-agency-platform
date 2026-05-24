@@ -6,6 +6,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ### Added
 - Locale-aware tarix formatı (Intl.DateTimeFormat) — faturalar detail (TASK-0157D)
 - .gitignore: tests/screenshots/, playwright-report/, temp migration scripts (TASK-0157D)
+- toolkit.pnl.education.structure parity for RU/TR (operatingProfit, controllableProfit) (TASK-0158)
 - [TASK-0140] feat(admin): soft-delete single + bulk + login block + double confirm
   - `deletedAt` column: users + memberProfiles (migration 0004)
   - DELETE /api/admin/members/[id] — soft-delete, self-protection, audit log
@@ -50,9 +51,13 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 - faturalar/[id] səhifəsi Pattern A i18n (TASK-0157D)
 
 ### Removed
+- Unused "marketing" i18n namespace from AZ (59 leaf, TASK-0158)
+- Unused STATUS_CONFIG export (TASK-0158)
 - Köhnə C3 i18n migration script artifacts (TASK-0161) — 4 lokal fayl, 336 sətir
 
 ### Fixed
+- RU/TR P&L education orphan keys (canlı bug: istifadəçi açar adlarını görürdü)
+- i18n parity 4 dildə tam (185 missing/drift → 0)
 - Repo lint 4 error → 0 (TASK-0161)
 - [TASK-0134-FIX] fix(admin): resolve validator blocks — spec locale fix + i18n pageCopy
   - E2E spec: locale prefix (`/${locale}/dashboard/users`) silindi, dashboard route-ları locale-independent

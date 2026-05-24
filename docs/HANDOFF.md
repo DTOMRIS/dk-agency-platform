@@ -229,3 +229,7 @@ aktiv). Növbəti üçün TASK-0161 (scripts ES module) və TASK-0159 (TS strict
 
 **24 May 2026 — TASK-0161 bağlandı.** Repo lint tam yaşıl. TASK-0157D-də
 aşkar olunan scripts debt həll edildi.
+
+**24 May 2026 — TASK-0158 bağlandı.** i18n parity 100%. Canlı bug
+düzəldildi (RU/TR P&L education). Dashboard 17/17 + lint 0 + parity 100%
+= launch hazırlığı 3 əsas texniki blokda yaşıl.
