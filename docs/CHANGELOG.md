@@ -49,7 +49,11 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ### Changed
 - faturalar/[id] səhifəsi Pattern A i18n (TASK-0157D)
 
+### Removed
+- Köhnə C3 i18n migration script artifacts (TASK-0161) — 4 lokal fayl, 336 sətir
+
 ### Fixed
+- Repo lint 4 error → 0 (TASK-0161)
 - [TASK-0134-FIX] fix(admin): resolve validator blocks — spec locale fix + i18n pageCopy
   - E2E spec: locale prefix (`/${locale}/dashboard/users`) silindi, dashboard route-ları locale-independent
   - pageCopy inline obyekti component-dən çıxarıldı, `useTranslations('dashboard.members')` ilə əvəz
