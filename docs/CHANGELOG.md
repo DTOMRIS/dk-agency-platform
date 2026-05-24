@@ -4,6 +4,8 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- Locale-aware tarix formatı (Intl.DateTimeFormat) — faturalar detail (TASK-0157D)
+- .gitignore: tests/screenshots/, playwright-report/, temp migration scripts (TASK-0157D)
 - [TASK-0140] feat(admin): soft-delete single + bulk + login block + double confirm
   - `deletedAt` column: users + memberProfiles (migration 0004)
   - DELETE /api/admin/members/[id] — soft-delete, self-protection, audit log
@@ -43,6 +45,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
   - MembersTable: rol sütunu select dropdown ilə (cari admin badge-only)
   - i18n: dashboard.members.roles.* (4 dil — az/en/ru/tr)
   - E2E smoke: PATCH 401 + invalid role + invalid id tests
+
+### Changed
+- faturalar/[id] səhifəsi Pattern A i18n (TASK-0157D)
 
 ### Fixed
 - [TASK-0134-FIX] fix(admin): resolve validator blocks — spec locale fix + i18n pageCopy

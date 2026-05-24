@@ -472,6 +472,9 @@ Dashboard admin səhifələri (app/dashboard/) üçün i18n qaydası:
 **Fayl strukturu:**
 - Component: `useTranslations('dashboard.members')` hook istifadə edir
 - Açarlar: `messages/az.json`, `messages/en.json`, `messages/ru.json`, `messages/tr.json` — hər 4 dil TAM olmalı
+- **Re-export pattern dərsi (TASK-0157D):** `app/[locale]/dashboard/faturalar/[id]/page.tsx`
+  sadəcə `export { default } from '@/app/dashboard/faturalar/[id]/page'` ola bilər. Real
+  iş `app/dashboard/...` altındadır. Discovery-də mütləq hər iki yola bax.
 
 **Qadağan:**
 - Component içində inline `pageCopy`, `labels`, `translations` obyekti (L-004 pozuntusudur)
