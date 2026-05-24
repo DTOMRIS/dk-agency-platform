@@ -636,12 +636,3 @@ export const TIER_COLORS: Record<MarketingToolTier, { bg: string; text: string; 
   kalfa: { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
   usta: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' },
 };
-
-export const STATUS_CONFIG: Record<
-  MarketingToolConfig['status'],
-  { labelKey: string; disabled: boolean }
-> = {
-  planned: { labelKey: 'marketing.status.planned', disabled: true },
-  beta: { labelKey: 'marketing.status.beta', disabled: false },
-  live: { labelKey: 'marketing.status.live', disabled: false },
-};

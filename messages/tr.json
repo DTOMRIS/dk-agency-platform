@@ -300,11 +300,13 @@
         "whatBody": "Profit & Loss, restoranın aylık kârını hangi gelir ve giderlerin oluşturduğunu gösterir.",
         "structureTitle": "Yapı",
         "structure": {
-          "sales": "Satışlar",
+          "revenue": "Satışlar",
           "cogs": "Satış maliyeti",
+          "operatingProfit": "= Faaliyet kârı",
           "controllable": "Kontrol edilebilir giderler",
+          "controllableProfit": "= Kontrol edilebilir kâr",
           "uncontrollable": "Kontrol edilemeyen giderler",
-          "net": "Net kâr"
+          "netProfit": "Net kâr"
         }
       },
       "knowledge": {
