@@ -300,11 +300,13 @@
         "whatBody": "Profit & Loss показывает, какие доходы и расходы формируют месячную прибыль ресторана.",
         "structureTitle": "Структура",
         "structure": {
-          "sales": "Продажи",
+          "revenue": "Продажи",
           "cogs": "Себестоимость",
+          "operatingProfit": "= Операционная прибыль",
           "controllable": "Контролируемые расходы",
+          "controllableProfit": "= Контролируемая прибыль",
           "uncontrollable": "Неконтролируемые расходы",
-          "net": "Чистая прибыль"
+          "netProfit": "Чистая прибыль"
         }
       },
       "knowledge": {
