@@ -30,6 +30,18 @@ Fix: RU/TR-də orphan key-lər rename (sales→revenue, net→netProfit),
 2 yeni tərcümə əlavə. Yeni dərs: L-018 — Orphan i18n key audit-də
 görünmür, naming mismatch yoxla.
 
+**TASK-0163 (eyni gün, 4-cü PR):** TASK-0158 mərge sonrası audit RU/TR
+P&L education-da canlı UX bug aşkar etdi. AZ/EN-də font-mono terminal
+görünüşündə riyazi düstur format (− COGS, = Operating profit) render
+olunur. RU/TR-də operator işarələri əskik idi. Fix: 3 açar əvvəlinə
+`− ` (U+2212), 1 açar əvvəlinə `= ` əlavə edildi (2 dildə = 8 string).
+Açar adları toxunulmadı.
+
+Yeni dərs: **L-019 — Render kontekst i18n keyfiyyətinə təsir edir**.
+Mətnlər font-mono terminal stil və ya formal cədvəl daxilində render
+olunursa, operator simvolları (−, =, →) də tərcümənin bir parçasıdır.
+Açar parity yetmir, vizual parity də lazımdır.
+
 ## 2026-05-15 — TASK-0130 Reklam Yazıcısı
 
 ### What

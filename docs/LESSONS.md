@@ -113,3 +113,22 @@ etdi, əslində 2 orphan + 4 missing idi.
 
 Bu dərs L-017-nin əkizidir: ikisi də avtomatik audit reaksiyasının
 qarşısını alır.
+
+### L-019 — Render kontekst i18n keyfiyyətinə təsir edir (24 May 2026)
+i18n parity audit-i açar adları və leaf sayı yoxlayır, amma **vizual
+formatı** yoxlamır. Mətnlər font-mono terminal blok, formal cədvəl, və
+ya struktura görünüşdə render olunursa, formal simvollar (−, =, →, ✓,
+•) tərcümənin parçasıdır.
+
+Misal: TASK-0163 — RU/TR P&L education JSON parity 100% idi (TASK-0158
+sonrası), amma vizual render-də AZ/EN düstur (− COGS), RU/TR yarımçıq.
+Audit "missing" rapor etmədi — açar var idi, mətn də var idi, sadəcə
+operator yox idi.
+
+Audit pipeline-a əlavə etmək lazımdır:
+- Render konteksti yoxla (font-mono? formal layout?)
+- Bir dildən digərinə operator simvolu kopyalanır?
+- Vizual snapshot test (Playwright screenshot diff)
+
+Bu dərs L-017 (Audit ≠ tərcümə) və L-018 (Orphan key)-in 3-cüsüdür:
+i18n audit avtomatik fix vermir, kontekst və render də yoxlanmalıdır.

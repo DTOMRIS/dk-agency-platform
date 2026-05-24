@@ -478,6 +478,11 @@ Dashboard admin səhifələri (app/dashboard/) üçün i18n qaydası:
 
 **Qadağan:**
 - Component içində inline `pageCopy`, `labels`, `translations` obyekti (L-004 pozuntusudur)
+
+### TASK-0163 - Operator simvolları i18n-in parçasıdır
+
+- `−` (U+2212 MINUS SIGN), `=`, `→`, `•` kimi simvollar açar dəyərinin əvvəlində render kontekstə görə tələb oluna bilər.
+- Defis (`-`, U+002D) və minus (`−`, U+2212) fərqlidir; font-mono və ya formal tipografik kontekstdə minus istifadə olunmalıdır.
 - E2E spec-lərdə dashboard URL-lərinə locale prefix əlavə etmə (`/dashboard/users` doğrudur, `/${locale}/dashboard/users` YANLIŞ)
 
 **E2E spec pattern:**
