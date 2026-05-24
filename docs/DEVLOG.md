@@ -10,6 +10,11 @@
 - Verification: build ✓, target lint ✓, target tsc ✓, hardcoded AZ = 0
 - Repo debt aşkar: scripts/*.js require() və 10+ tsc error → TASK-0161/0159 açıldı
 
+**TASK-0161 (eyni gün):** TASK-0157D-də aşkar olunan lint debt-i təmizləndi.
+4 obsolete C3 migration script (336 sətir) lokal iş ağacından silindi. Bu fayllar tracked deyildi
+amma ESLint local FS-i oxuduğu üçün error verirdi. Repo lint 4 error → 0.
+Build və tsc statusu dəyişməyib (TASK-0159 hələ açıqdır).
+
 ## 2026-05-15 — TASK-0130 Reklam Yazıcısı
 
 ### What

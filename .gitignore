@@ -52,7 +52,3 @@ public/images/AQO*.jpeg
 tests/screenshots/
 test-results/
 playwright-report/
-
-# Temporary migration scripts (TASK-0161-də ES module-a çevriləcək)
-scripts/extract-i18n-c3*.js
-scripts/migrate-c3*.js

@@ -226,3 +226,6 @@ Dashboard i18n 16/16 əsas səhifə + 1 detail səhifəsi tamamlandı. Pattern A
 Repo debt aşkar edildi: scripts/*.js (4 lint error) və tsc strict errors (~10 fayl,
 TASK-0134/route.ts daxil) — production-a təsiri yoxdur (next.config ignoreBuildErrors
 aktiv). Növbəti üçün TASK-0161 (scripts ES module) və TASK-0159 (TS strict) açıldı.
+
+**24 May 2026 — TASK-0161 bağlandı.** Repo lint tam yaşıl. TASK-0157D-də
+aşkar olunan scripts debt həll edildi.
