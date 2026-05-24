@@ -56,6 +56,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 - Köhnə C3 i18n migration script artifacts (TASK-0161) — 4 lokal fayl, 336 sətir
 
 ### Fixed
+- RU/TR P&L education-da əskik riyazi operator işarələri (TASK-0163)
 - RU/TR P&L education orphan keys (canlı bug: istifadəçi açar adlarını görürdü)
 - i18n parity 4 dildə tam (185 missing/drift → 0)
 - Repo lint 4 error → 0 (TASK-0161)

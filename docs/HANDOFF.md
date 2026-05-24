@@ -233,3 +233,6 @@ aşkar olunan scripts debt həll edildi.
 **24 May 2026 — TASK-0158 bağlandı.** i18n parity 100%. Canlı bug
 düzəldildi (RU/TR P&L education). Dashboard 17/17 + lint 0 + parity 100%
 = launch hazırlığı 3 əsas texniki blokda yaşıl.
+
+**24 May 2026 — TASK-0163 bağlandı.** RU/TR P&L education vizual parity
+bərpa. 4-cü PR, eyni gündə. TASK-0158 audit-in davamı.
