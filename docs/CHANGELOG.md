@@ -4,6 +4,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- AZ/TR legal Markdown content import for terms, privacy, and cookie policy (TASK-0164)
 - Locale-aware tarix formatı (Intl.DateTimeFormat) — faturalar detail (TASK-0157D)
 - .gitignore: tests/screenshots/, playwright-report/, temp migration scripts (TASK-0157D)
 - toolkit.pnl.education.structure parity for RU/TR (operatingProfit, controllableProfit) (TASK-0158)
