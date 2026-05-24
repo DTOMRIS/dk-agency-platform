@@ -220,3 +220,9 @@ Use script:
   - PR #126 artiq merge oldugu ucun bu repair ayri PR ile getmelidir.
 - Sonraki adim:
   - Build/lint + real route smoke test; sonra PR merge ve Hostinger deploy.
+
+**24 May 2026 — TASK-0157D bağlandı.**
+Dashboard i18n 16/16 əsas səhifə + 1 detail səhifəsi tamamlandı. Pattern A təmiz.
+Repo debt aşkar edildi: scripts/*.js (4 lint error) və tsc strict errors (~10 fayl,
+TASK-0134/route.ts daxil) — production-a təsiri yoxdur (next.config ignoreBuildErrors
+aktiv). Növbəti üçün TASK-0161 (scripts ES module) və TASK-0159 (TS strict) açıldı.

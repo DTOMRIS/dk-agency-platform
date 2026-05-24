@@ -74,3 +74,12 @@ Bu sənəd hər Claude Code sessiyasının başlanğıcında CLAUDE.md tərəfin
 - **Qayda:** HƏR task = branch + PR + dk-validator. İSTİSNA YOXDUR. `git push --no-verify` QƏTİ QADAĞAN. Köhnə commit-lərdə PR-sız nümunə görsən belə, onları təkrarlama — köhnə git tarixçəsi ≠ cari qayda.
 - **Yoxlama:** ƏVVƏL TANIŞ OL fazasında git log-a baxanda, köhnə pattern-i nümunə kimi qəbul etmə. Yalnız CLAUDE.md + LESSONS.md cari qaydadır.
 - **Nəticə:** Post-merge manual audit ilə neytrallaşdırıldı (dublikat/PROTECTED/i18n/build təmiz). Amma audit xərci PR-dan 3x artıqdır — qaydaya riayət ucuzdur.
+
+### L-016 — Repo debt ≠ task fail (24 May 2026)
+Bir task-ın target faylları təmiz olsa da, repo-wide lint/tsc fail oluna bilər
+(köhnə fayllar üçün). next.config.ts-də ignoreBuildErrors aktivdirsə production-a
+təsir yoxdur. Verification gate-də **target fayl + repo fərqini** göstər: target
+fayl PASS-dursa, repo debt ayrı task-a köçür, mövcud task-ı bloklama.
+
+Misal: TASK-0157D — target file lint=0, repo lint=4 error (scripts/*.js, sənin
+yazmadığın). Davam et, debt ayrı task aç.

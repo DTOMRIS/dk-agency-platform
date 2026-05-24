@@ -47,3 +47,12 @@ page_list.txt
 # Local working images (not for repo)
 public/images/pl *.jpeg
 public/images/AQO*.jpeg
+
+# Playwright runtime artifacts
+tests/screenshots/
+test-results/
+playwright-report/
+
+# Temporary migration scripts (TASK-0161-də ES module-a çevriləcək)
+scripts/extract-i18n-c3*.js
+scripts/migrate-c3*.js

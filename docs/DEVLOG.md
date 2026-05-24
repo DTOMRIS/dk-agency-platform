@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-24 — TASK-0157D (faturalar detail i18n)
+
+- Discovery: re-export pattern aşkar (app/[locale]/faturalar/[id] → app/dashboard/faturalar/[id])
+- 481 sətir client component Pattern A-ya çevrildi
+- 23 yeni "detail*" prefix-li açar 4 dildə əlavə (parity: 114=114=114=114)
+- statusLabel obyekti getStatusLabel() helper-ə çevrildi (L-013 tətbiq)
+- useLocale + Intl.DateTimeFormat ilə locale-aware tarix (bonus fix)
+- Verification: build ✓, target lint ✓, target tsc ✓, hardcoded AZ = 0
+- Repo debt aşkar: scripts/*.js require() və 10+ tsc error → TASK-0161/0159 açıldı
+
 ## 2026-05-15 — TASK-0130 Reklam Yazıcısı
 
 ### What

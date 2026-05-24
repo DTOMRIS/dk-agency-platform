@@ -1,16 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ArrowLeft,
   Check,
-  ChevronDown,
   Loader2,
   Plus,
   Save,
   Trash2,
 } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -97,14 +97,24 @@ function buildMockDetail(id: string): InvoiceDetail {
 function qepikToAzn(q: number) { return (q / 100).toFixed(2); }
 function aznToQepik(a: string) { return Math.round((parseFloat(a) || 0) * 100); }
 
-function statusLabel(s: string) {
-  const m: Record<string, { label: string; cls: string }> = {
-    draft: { label: 'Qaralama', cls: 'bg-amber-100 text-amber-700' },
-    confirmed: { label: 'Təsdiqlənib', cls: 'bg-emerald-100 text-emerald-700' },
-    disputed: { label: 'Mübahisəli', cls: 'bg-red-100 text-red-700' },
-    archived: { label: 'Arxiv', cls: 'bg-slate-100 text-slate-600' },
+function getStatusLabel(status: string, t: ReturnType<typeof useTranslations>) {
+  const map: Record<string, string> = {
+    draft: t('statusDraft'),
+    confirmed: t('statusConfirmed'),
+    disputed: t('statusDisputed'),
+    archived: t('statusArchived'),
   };
-  return m[s] ?? { label: s, cls: 'bg-slate-100 text-slate-600' };
+  return map[status] ?? status;
+}
+
+function getStatusClass(status: string) {
+  const map: Record<string, string> = {
+    draft: 'bg-amber-100 text-amber-700',
+    confirmed: 'bg-emerald-100 text-emerald-700',
+    disputed: 'bg-red-100 text-red-700',
+    archived: 'bg-slate-100 text-slate-600',
+  };
+  return map[status] ?? 'bg-slate-100 text-slate-600';
 }
 
 // ── Page ────────────────────────────────────────────────────────────
@@ -112,6 +122,8 @@ function statusLabel(s: string) {
 export default function InvoiceDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations('dashboardFaturalar');
   const id = params.id as string;
 
   const [invoice, setInvoice] = useState<InvoiceDetail | null>(null);
@@ -120,6 +132,13 @@ export default function InvoiceDetailPage() {
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
+
+  const formatDate = (iso: string) =>
+    new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    }).format(new Date(iso));
 
   // Load data
   useEffect(() => {
@@ -256,12 +275,12 @@ export default function InvoiceDetailPage() {
 
       if (confirm) {
         setInvoice((prev) => prev ? { ...prev, status: 'confirmed' } : prev);
-        setFeedback('Fatura təsdiqləndi!');
+        setFeedback(t('detailConfirmedFeedback'));
       } else {
-        setFeedback('Dəyişikliklər saxlanıldı!');
+        setFeedback(t('detailSavedFeedback'));
       }
     } catch {
-      setFeedback('Saxlanıldı (lokal)');
+      setFeedback(t('detailSavedLocalFeedback'));
     }
     setSaving(false);
     setTimeout(() => setFeedback(null), 3000);
@@ -279,18 +298,19 @@ export default function InvoiceDetailPage() {
 
   if (!invoice) {
     return (
-      <div className="p-8 text-center text-slate-500">Fatura tapılmadı</div>
+      <div className="p-8 text-center text-slate-500">{t('detailNotFound')}</div>
     );
   }
 
-  const st = statusLabel(invoice.status);
+  const statusClass = getStatusClass(invoice.status);
+  const statusText = getStatusLabel(invoice.status, t);
 
   return (
     <div className="p-4 lg:p-8">
       {/* Header */}
       <div className="mb-6">
         <button onClick={() => router.push('/dashboard/faturalar')} className="mb-3 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700">
-          <ArrowLeft className="h-4 w-4" /> Faturalar
+          <ArrowLeft className="h-4 w-4" /> {t('detailBackToList')}
         </button>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -298,9 +318,9 @@ export default function InvoiceDetailPage() {
             <h1 className="text-xl font-bold text-slate-900">{invoice.supplierName}</h1>
             <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-slate-500">
               {invoice.invoiceNumber && <span>#{invoice.invoiceNumber}</span>}
-              <span>{invoice.invoiceDate}</span>
-              {invoice.supplierVoen && <span>VÖEN: {invoice.supplierVoen}</span>}
-              <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${st.cls}`}>{st.label}</span>
+              <span>{formatDate(invoice.invoiceDate)}</span>
+              {invoice.supplierVoen && <span>{t('detailVoenLabel')}: {invoice.supplierVoen}</span>}
+              <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${statusClass}`}>{statusText}</span>
               {invoice.ocrConfidence !== null && (
                 <span className="text-xs text-slate-400">OCR: {Math.round(invoice.ocrConfidence * 100)}%</span>
               )}
@@ -310,11 +330,11 @@ export default function InvoiceDetailPage() {
           <div className="flex gap-2">
             <button onClick={() => handleSave(false)} disabled={saving} className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-60">
               {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              Saxla
+              {t('detailSave')}
             </button>
             {invoice.status === 'draft' && (
               <button onClick={() => handleSave(true)} disabled={saving} className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-60 active:scale-[0.98]">
-                <Check className="h-4 w-4" /> Təsdiqlə
+                <Check className="h-4 w-4" /> {t('detailConfirm')}
               </button>
             )}
           </div>
@@ -328,7 +348,7 @@ export default function InvoiceDetailPage() {
 
       {/* Items Table */}
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-slate-700">Məhsullar ({invoice.items.length})</h2>
+        <h2 className="text-sm font-semibold text-slate-700">{t('detailProductsTitle')} ({invoice.items.length})</h2>
         <div className="flex gap-1">
           <button onClick={addItem} className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50">
             <Plus className="h-3 w-3" /> +1
@@ -341,9 +361,9 @@ export default function InvoiceDetailPage() {
       {/* Bulk delete bar */}
       {selectedItems.size > 0 && (
         <div className="mb-3 flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2">
-          <span className="text-xs font-medium text-amber-800">{selectedItems.size} seçilib</span>
+          <span className="text-xs font-medium text-amber-800">{selectedItems.size} {t('selectedCount')}</span>
           <button onClick={bulkDeleteItems} className="inline-flex items-center gap-1 rounded-lg bg-red-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-red-700">
-            <Trash2 className="h-3 w-3" /> Sil
+            <Trash2 className="h-3 w-3" /> {t('btnDelete')}
           </button>
         </div>
       )}
@@ -359,12 +379,12 @@ export default function InvoiceDetailPage() {
                   onChange={() => setSelectedItems(selectedItems.size === invoice.items.length ? new Set() : new Set(invoice.items.map(i => i.id)))}
                 />
               </th>
-              <th className="min-w-[180px] px-3 py-2.5 font-medium text-slate-500">Məhsul</th>
-              <th className="w-20 px-3 py-2.5 font-medium text-slate-500">Miqdar</th>
-              <th className="w-16 px-3 py-2.5 font-medium text-slate-500">Vahid</th>
-              <th className="w-24 px-3 py-2.5 font-medium text-slate-500">Qiymət</th>
-              <th className="w-24 px-3 py-2.5 font-medium text-slate-500 text-right">Cəmi</th>
-              <th className="w-32 px-3 py-2.5 font-medium text-slate-500">Kateqoriya</th>
+              <th className="min-w-[180px] px-3 py-2.5 font-medium text-slate-500">{t('detailProductHeader')}</th>
+              <th className="w-20 px-3 py-2.5 font-medium text-slate-500">{t('detailQuantityHeader')}</th>
+              <th className="w-16 px-3 py-2.5 font-medium text-slate-500">{t('detailUnitHeader')}</th>
+              <th className="w-24 px-3 py-2.5 font-medium text-slate-500">{t('detailPriceHeader')}</th>
+              <th className="w-24 px-3 py-2.5 font-medium text-slate-500 text-right">{t('detailTotalHeader')}</th>
+              <th className="w-32 px-3 py-2.5 font-medium text-slate-500">{t('detailCategoryHeader')}</th>
               <th className="w-10 px-3 py-2.5"></th>
             </tr>
           </thead>
@@ -375,20 +395,20 @@ export default function InvoiceDetailPage() {
                   <input type="checkbox" className="h-3.5 w-3.5 rounded border-slate-300" checked={selectedItems.has(item.id)} onChange={() => toggleItem(item.id)} />
                 </td>
                 <td className="px-3 py-2">
-                  <input value={item.name} onChange={(e) => updateItem(item.id, 'name', e.target.value)} className="h-8 w-full rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48] focus:ring-1 focus:ring-[#E11D48]" placeholder="Məhsul adı" />
+                  <input value={item.name} onChange={(e) => updateItem(item.id, 'name', e.target.value)} className="h-8 w-full rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48] focus:ring-1 focus:ring-[#E11D48]" placeholder={t('manualItemNamePlaceholder')} />
                 </td>
                 <td className="px-3 py-2">
                   <input type="number" step="0.1" value={item.quantity} onChange={(e) => updateItem(item.id, 'quantity', parseFloat(e.target.value) || 0)} className="h-8 w-full rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48]" />
                 </td>
                 <td className="px-3 py-2">
                   <select value={item.unit} onChange={(e) => updateItem(item.id, 'unit', e.target.value)} className="h-8 w-full rounded-lg border border-slate-200 bg-white px-1 text-xs outline-none">
-                    <option value="kq">kq</option>
-                    <option value="litr">litr</option>
-                    <option value="əd">əd</option>
-                    <option value="qutu">qutu</option>
-                    <option value="paket">paket</option>
-                    <option value="şüşə">şüşə</option>
-                    <option value="bağ">bağ</option>
+                    <option value="kq">{t('unitKg')}</option>
+                    <option value="litr">{t('unitLitre')}</option>
+                    <option value="əd">{t('unitPcs')}</option>
+                    <option value="qutu">{t('unitBox')}</option>
+                    <option value="paket">{t('unitPack')}</option>
+                    <option value="şüşə">{t('detailUnitBottle')}</option>
+                    <option value="bağ">{t('detailUnitBundle')}</option>
                   </select>
                 </td>
                 <td className="px-3 py-2">
@@ -399,7 +419,7 @@ export default function InvoiceDetailPage() {
                 </td>
                 <td className="px-3 py-2">
                   <select value={item.categoryId ?? ''} onChange={(e) => updateItem(item.id, 'categoryId', e.target.value ? Number(e.target.value) : null)} className="h-8 w-full rounded-lg border border-slate-200 bg-white px-1 text-xs outline-none">
-                    <option value="">— Seç —</option>
+                    <option value="">{t('detailSelectPlaceholder')}</option>
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>{c.name}</option>
                     ))}
@@ -422,21 +442,21 @@ export default function InvoiceDetailPage() {
           <div key={item.id} className={`rounded-xl border p-3 ${item.isEdited ? 'border-amber-200 bg-amber-50/40' : 'border-slate-200 bg-white'}`}>
             <div className="flex items-center gap-2">
               <input type="checkbox" className="h-4 w-4 rounded border-slate-300" checked={selectedItems.has(item.id)} onChange={() => toggleItem(item.id)} />
-              <input value={item.name} onChange={(e) => updateItem(item.id, 'name', e.target.value)} className="h-10 flex-1 rounded-lg border border-slate-200 px-2 text-sm outline-none focus:border-[#E11D48]" placeholder="Məhsul adı" />
+              <input value={item.name} onChange={(e) => updateItem(item.id, 'name', e.target.value)} className="h-10 flex-1 rounded-lg border border-slate-200 px-2 text-sm outline-none focus:border-[#E11D48]" placeholder={t('manualItemNamePlaceholder')} />
               <button onClick={() => removeItem(item.id)} className="h-10 w-10 shrink-0 rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500">
                 <Trash2 className="mx-auto h-4 w-4" />
               </button>
             </div>
             <div className="mt-2 grid grid-cols-4 gap-1.5">
-              <input type="number" step="0.1" value={item.quantity} onChange={(e) => updateItem(item.id, 'quantity', parseFloat(e.target.value) || 0)} className="h-9 rounded-lg border border-slate-200 px-2 text-sm outline-none" placeholder="Miq." />
+              <input type="number" step="0.1" value={item.quantity} onChange={(e) => updateItem(item.id, 'quantity', parseFloat(e.target.value) || 0)} className="h-9 rounded-lg border border-slate-200 px-2 text-sm outline-none" placeholder={t('manualItemQtyPlaceholder')} />
               <select value={item.unit} onChange={(e) => updateItem(item.id, 'unit', e.target.value)} className="h-9 rounded-lg border border-slate-200 px-1 text-xs outline-none">
-                <option value="kq">kq</option><option value="litr">litr</option><option value="əd">əd</option><option value="qutu">qutu</option>
+                <option value="kq">{t('unitKg')}</option><option value="litr">{t('unitLitre')}</option><option value="əd">{t('unitPcs')}</option><option value="qutu">{t('unitBox')}</option>
               </select>
-              <input type="number" step="0.01" value={qepikToAzn(item.unitPrice)} onChange={(e) => updateItem(item.id, 'unitPrice', aznToQepik(e.target.value))} className="h-9 rounded-lg border border-slate-200 px-2 text-sm outline-none" placeholder="Qiy." />
+              <input type="number" step="0.01" value={qepikToAzn(item.unitPrice)} onChange={(e) => updateItem(item.id, 'unitPrice', aznToQepik(e.target.value))} className="h-9 rounded-lg border border-slate-200 px-2 text-sm outline-none" placeholder={t('detailPriceShortPlaceholder')} />
               <div className="flex h-9 items-center justify-end text-sm font-medium text-slate-900">{qepikToAzn(item.totalPrice)} ₼</div>
             </div>
             <select value={item.categoryId ?? ''} onChange={(e) => updateItem(item.id, 'categoryId', e.target.value ? Number(e.target.value) : null)} className="mt-1.5 h-9 w-full rounded-lg border border-slate-200 px-2 text-xs outline-none">
-              <option value="">Kateqoriya seç...</option>
+              <option value="">{t('detailCategoryPlaceholder')}</option>
               {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </div>
@@ -447,16 +467,16 @@ export default function InvoiceDetailPage() {
       <div className="mt-4 flex justify-end">
         <div className="w-full rounded-2xl border border-slate-200 bg-white p-4 sm:w-72">
           <div className="flex justify-between text-sm text-slate-500">
-            <span>Ara cəm:</span>
+            <span>{t('detailSubtotalLabel')}</span>
             <span>{qepikToAzn(invoice.subtotal)} ₼</span>
           </div>
           <div className="mt-1 flex justify-between text-sm text-slate-500">
-            <span>ƏDV:</span>
+            <span>{t('detailVatLabel')}</span>
             <span>{qepikToAzn(invoice.vatAmount)} ₼</span>
           </div>
           <div className="mt-2 border-t border-slate-100 pt-2">
             <div className="flex justify-between text-lg font-bold text-slate-900">
-              <span>Yekun:</span>
+              <span>{t('detailGrandTotalLabel')}</span>
               <span>{qepikToAzn(invoice.grandTotal)} {invoice.currency}</span>
             </div>
           </div>
@@ -466,11 +486,11 @@ export default function InvoiceDetailPage() {
       {/* Bottom action bar — mobile */}
       <div className="fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 bg-white p-3 sm:hidden">
         <button onClick={() => handleSave(false)} disabled={saving} className="flex-1 inline-flex h-12 items-center justify-center gap-1.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700">
-          <Save className="h-4 w-4" /> Saxla
+          <Save className="h-4 w-4" /> {t('detailSave')}
         </button>
         {invoice.status === 'draft' && (
           <button onClick={() => handleSave(true)} disabled={saving} className="flex-1 inline-flex h-12 items-center justify-center gap-1.5 rounded-xl bg-emerald-600 text-sm font-medium text-white active:scale-[0.98]">
-            <Check className="h-4 w-4" /> Təsdiqlə
+            <Check className="h-4 w-4" /> {t('detailConfirm')}
           </button>
         )}
       </div>
