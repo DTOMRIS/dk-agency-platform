@@ -3500,5 +3500,8 @@
     "importScannedPdf": "is a scanned PDF — no text found. Upload as image via OCR.",
     "importRowsFound": "rows found,",
     "importErrors": "errors"
+  },
+  "legal": {
+    "fallbackNotice": "This document has not yet been translated to your language. The Azerbaijani version is shown."
   }
 }

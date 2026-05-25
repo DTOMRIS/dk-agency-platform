@@ -3500,5 +3500,8 @@
     "importScannedPdf": "taranmış PDF — metin bulunamadı. Görüntü olarak OCR ile yükleyin.",
     "importRowsFound": "satır bulundu,",
     "importErrors": "hata"
+  },
+  "legal": {
+    "fallbackNotice": "Bu belge henüz dilinize çevrilmedi, Azerbaycanca versiyon gösteriliyor."
   }
 }

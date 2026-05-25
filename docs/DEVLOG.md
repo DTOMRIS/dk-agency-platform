@@ -1,5 +1,27 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-25 — TASK-0169 (legal markdown render)
+
+**Qərar 1 — Blog MarkdownRenderer istifadə edilmədi (L-009 dərsi)**
+Blog renderer GuruQuoteBox, DoğanNote, warning/tip blokları, red accent
+rəngləri istifadə edir. Hüquqi mətndə bunlar absurd olardı. Ayrı
+`LegalRenderer` yaradıldı — sadə tipografiya, slate rənglər, cədvəl
+scrollu, rehype-sanitize ilə XSS qoruması.
+
+**Qərar 2 — Server component + client renderer split**
+`LegalPageLayout` (server) — `fs.readFile` ilə markdown oxuyur, locale
+fallback idarə edir, `getTranslations` ilə fallback banner göstərir.
+`LegalRenderer` (client) — `react-markdown` client-side render lazımdır.
+Bu split SSR perf saxlayır, interactivity client-ə buraxır.
+
+**Qərar 3 — Fallback strategi**
+RU/EN markdown hələ yoxdur. Route-lar 404 verməməli — AZ fallback +
+sarı banner ilə bildiriş. `getLegalContent` helper `{ content, isFallback }`
+qaytarır.
+
+**Cookie URL fix:** privacy.md-lərdə `/cookie-policy` → `/cookies`
+(AZ + TR).
+
 ## 2026-05-24 — TASK-0157D (faturalar detail i18n)
 
 - Discovery: re-export pattern aşkar (app/[locale]/faturalar/[id] → app/dashboard/faturalar/[id])

@@ -3500,5 +3500,8 @@
     "importScannedPdf": "skan edilmiş PDF-dir — text tapılmadı. Şəkil kimi OCR yükləyin.",
     "importRowsFound": "sətir tapıldı,",
     "importErrors": "xəta"
+  },
+  "legal": {
+    "fallbackNotice": "Bu sənəd hələ bu dilə tərcümə edilməyib, Azərbaycan dilindəki versiyası göstərilir."
   }
 }

@@ -1,5 +1,26 @@
 # HANDOFF
 
+## 2026-05-25 — TASK-0169 (legal markdown render)
+- Ne deyisdi:
+  - 3 placeholder legal page (privacy/terms/cookies) real markdown render-ə çevrildi
+  - Yeni shared components: `components/legal/LegalRenderer.tsx` (client), `components/legal/LegalPageLayout.tsx` (server)
+  - Yeni helper: `lib/legal/getLegalContent.ts` (AZ fallback mexanizmi ilə)
+  - `legal.fallbackNotice` i18n key 4 dildə əlavə edildi (messages/*.json)
+  - Cookie URL düzəldildi: privacy.md-lərdə `/cookie-policy` → `/cookies`
+- Ne deyismedi:
+  - Protected files untouched: middleware.ts, lib/member-access.ts, Header.tsx, Footer.tsx
+  - Blog MarkdownRenderer-ə toxunulmadı
+  - Footer-ə link əlavə edilmədi (TASK-0167)
+  - Register checkbox əlavə edilmədi (TASK-0168)
+  - RU/EN markdown faylları yaradılmadı (TASK-0170)
+- Riskler:
+  - RU/EN istifadəçilər AZ fallback görür — TASK-0170 ilə həll olunacaq
+  - `force-static` ISR lazımdır əgər markdown sıx yenilənərsə
+- Sonraki addim:
+  - TASK-0167: Footer-ə legal linklər əlavə et (artıq render hazır)
+  - TASK-0168: Register form-a checkbox əlavə et (artıq real URL-lər mövcud)
+  - TASK-0170: RU/EN markdown fayllarını əlavə et (yalnız .md, kod dəyişməz)
+
 ## 2026-05-17T00:00:00+04:00 — codex
 - Ne deyisdi:
   - TASK-0147 Reklam ROI KALFA tool-u əlavə edildi: awareness/conversion seçimi, lokal reklam kanalları, influencer komisyon modeli, ROAS/CAC/LTV:CAC və CPM/EMV nəticələri.

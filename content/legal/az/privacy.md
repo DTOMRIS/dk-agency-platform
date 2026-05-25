@@ -213,7 +213,7 @@ Platforma **B2B yönümlüdür və 18 yaşından kiçik şəxslər üçün nəz�
 
 ## 13. Cookie və İzləmə Texnologiyaları
 
-Platforma cookie və oxşar texnologiyalardan istifadə edir. Ətraflı məlumat üçün ayrı **[Cookie Siyasəti](/cookie-policy)** sənədinə baxın.
+Platforma cookie və oxşar texnologiyalardan istifadə edir. Ətraflı məlumat üçün ayrı **[Cookie Siyasəti](/cookies)** sənədinə baxın.
 
 ## 14. Avtomatlaşdırılmış Qərar Qəbulu və Profilləşdirmə
 
