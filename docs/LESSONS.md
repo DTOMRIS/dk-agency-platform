@@ -132,3 +132,15 @@ Audit pipeline-a əlavə etmək lazımdır:
 
 Bu dərs L-017 (Audit ≠ tərcümə) və L-018 (Orphan key)-in 3-cüsüdür:
 i18n audit avtomatik fix vermir, kontekst və render də yoxlanmalıdır.
+
+### L-020 — Blog renderer ≠ Legal renderer (25 May 2026)
+Blog markdown renderer-də xüsusi bloklar (GuruQuoteBox, DoğanNote,
+warning/tip) və brand rəngləri (red accent) var. Bunlar hüquqi mətnə
+uyğun deyil — cədvəlli, formal, minimal tipografiya tələb olunur.
+
+"Mövcud var, istifadə et" düşüncəsindən qaç — kontekst fərqlidir.
+Hər content sahəsi (blog, legal, email) öz renderer-ini tələb edə bilər.
+Yanlış reuse bug-dan pis — sahə qarışıqlığı yaradır.
+
+Doğru yanaşma: shared component yarat, amma blog-özəl blokları DAXIL
+ETMƏ. rehype-sanitize əlavə et (blog renderer-də yoxdur — XSS riski).

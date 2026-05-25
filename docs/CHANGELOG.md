@@ -4,6 +4,15 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- Wire AZ/TR markdown files to /privacy /terms /cookies routes (TASK-0169)
+- Shared LegalRenderer + LegalPageLayout components (TASK-0169)
+- RU/EN fallback to AZ with notice banner (TASK-0169)
+- legal.fallbackNotice i18n key in 4 languages (TASK-0169)
+
+### Fixed
+- Cookie URL in privacy.md: /cookie-policy → /cookies (TASK-0169)
+
+### Previous
 - AZ/TR legal Markdown content import for terms, privacy, and cookie policy (TASK-0164)
 - Locale-aware tarix formatı (Intl.DateTimeFormat) — faturalar detail (TASK-0157D)
 - .gitignore: tests/screenshots/, playwright-report/, temp migration scripts (TASK-0157D)

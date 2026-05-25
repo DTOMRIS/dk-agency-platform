@@ -201,7 +201,7 @@ Eğer 18 yaşın altındaki bir kişinin kişisel verilerinin toplandığı tesp
 
 ## 11. Çerezler (Cookies)
 
-Platform çerezler ve benzer teknolojiler kullanır. Detaylı bilgi için ayrı **[Çerez Politikası](/cookie-policy)** belgesine bakın.
+Platform çerezler ve benzer teknolojiler kullanır. Detaylı bilgi için ayrı **[Çerez Politikası](/cookies)** belgesine bakın.
 
 KVKK Çerez Rehberi (27 Eylül 2024) kapsamında zorunlu çerezler için açık rıza aranmamakta, ancak diğer çerez türleri için açık rıza alınmaktadır.
 

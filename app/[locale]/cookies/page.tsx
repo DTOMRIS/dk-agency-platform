@@ -1,38 +1,31 @@
-'use client';
+import { normalizeLocale, isLocale } from '@/i18n/config';
+import LegalPageLayout from '@/components/legal/LegalPageLayout';
+import { notFound } from 'next/navigation';
 
-import { usePathname } from 'next/navigation';
-import { normalizeLocale, type Locale } from '@/i18n/config';
+export const dynamic = 'force-static';
 
-const pageCopy: Record<Locale, { title: string; body: string }> = {
-  az: {
-    title: 'Çərəz Siyasəti',
-    body: 'Bu səhifə çərəz siyasəti üçün saxlayıcı məzmundur.',
-  },
-  ru: {
-    title: 'Политика файлов cookie',
-    body: 'Эта страница является заполнителем для политики использования файлов cookie.',
-  },
-  en: {
-    title: 'Cookie Policy',
-    body: 'This page is a placeholder for the cookie policy.',
-  },
-  tr: {
-    title: 'Çerez Politikası',
-    body: 'Bu sayfa çerez politikası için yer tutucudur.',
-  },
-};
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
-export default function CookiesPage() {
-  const pathname = usePathname();
-  const locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = pageCopy[locale];
+export default async function CookiesPage({ params }: PageProps) {
+  const { locale: rawLocale } = await params;
+  if (!isLocale(rawLocale)) notFound();
+  const locale = normalizeLocale(rawLocale);
 
-  return (
-    <div className="min-h-[70vh] px-4 py-16 bg-slate-50">
-      <div className="max-w-3xl mx-auto rounded-2xl border border-slate-200 bg-white p-8">
-        <h1 className="text-3xl font-bold text-slate-900">{copy.title}</h1>
-        <p className="mt-4 text-slate-600">{copy.body}</p>
-      </div>
-    </div>
-  );
+  return <LegalPageLayout locale={locale} document="cookie-policy" />;
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { locale: rawLocale } = await params;
+  const locale = normalizeLocale(rawLocale);
+
+  const titles: Record<string, string> = {
+    az: 'Çərəz Siyasəti — DK Agency',
+    ru: 'Политика файлов cookie — DK Agency',
+    en: 'Cookie Policy — DK Agency',
+    tr: 'Çerez Politikası — DK Agency',
+  };
+
+  return { title: titles[locale] };
 }
