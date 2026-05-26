@@ -1,5 +1,22 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-26 — TASK-0168-B (API consent validation)
+
+**Qərar 1 — termsAccepted + privacyAccepted məcburi**
+Register endpoint artıq `termsAccepted: true` və `privacyAccepted: true`
+olmadan 400 qaytarır. KVKK Md. 7(2) tələbi: razılıq olmadan data toplama
+qadağandır. Frontend checkbox-u göndərməsə, qeydiyyat rədd olunur.
+
+**Qərar 2 — IP + timestamp register zamanı yazılır**
+`getClientIp(request)` artıq rate-limit üçün istifadə olunurdu. Eyni IP
+consent sübutu üçün `terms_accepted_ip` və `privacy_accepted_ip` field-lərinə
+yazılır. Ayrı API çağrısı lazım deyil.
+
+**Qərar 3 — termsVersion default**
+Frontend `termsVersion` göndərə bilər. Göndərməsə, `2026-05-26` default
+istifadə olunur (ilk legal content import tarixi). Gələcəkdə content
+yeniləndikdə frontend yeni versiya nömrəsini göndərməlidir.
+
 ## 2026-05-26 — TASK-0168-A (DB consent fields)
 
 **Qərar 1 — 6 field, 7 yox**

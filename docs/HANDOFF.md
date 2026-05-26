@@ -1,5 +1,20 @@
 # HANDOFF
 
+## 2026-05-26 — TASK-0168-B (API consent validation)
+- Ne deyisdi:
+  - Register API artıq termsAccepted + privacyAccepted məcburi tələb edir
+  - Consent field-ləri (timestamp, IP, version, marketingConsent) DB-yə yazılır
+  - termsAccepted/privacyAccepted false → 400 error
+- Ne deyismedi:
+  - Response formatı eyni qaldı (ok, message, verificationRequired)
+  - Rate-limit, email verification, duplicate check toxunulmadı
+  - UI/frontend toxunulmadı
+- Riskler:
+  - Mövcud frontend termsAccepted/privacyAccepted göndərmir → register fail olacaq
+  - TASK-0168-C (UI checkbox) mərge olana qədər frontend uyğunlaşdırılmalıdır
+- Sonraki addim:
+  - TASK-0168-C: Register form-da consent checkbox (UI)
+
 ## 2026-05-26 — TASK-0168-A (DB consent fields)
 - Ne deyisdi:
   - users table-a 6 consent field əlavə edildi (schema + migration + snapshot)
