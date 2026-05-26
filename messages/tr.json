@@ -3503,5 +3503,36 @@
   },
   "legal": {
     "fallbackNotice": "Bu belge henüz dilinize çevrilmedi, Azerbaycanca versiyon gösteriliyor."
+  },
+  "ai_readiness": {
+    "section_title": "Restoranınızın AI Hazırlığını 60 Saniyede Öğrenin",
+    "section_description": "10 soruyu cevaplayın, dijital hazırlık puanınızı alın ve kişiselleştirilmiş tavsiyeler edinIn.",
+    "start_button": "Testi Başlat",
+    "questions": {
+      "q1_pos": { "label": "POS (kasa) sisteminiz var mı?", "options": { "yes_modern": "Evet, modern bulut POS", "yes_old": "Evet, eski çevrimdışı POS", "no": "Hayır, POS kullanmıyoruz" } },
+      "q2_inventory": { "label": "Stok sayımı ne sıklıkla yapılıyor?", "options": { "weekly": "Haftalık", "monthly": "Aylık", "no": "Yapılmıyor" } },
+      "q3_recipe": { "label": "Reçete kartlarınız mevcut mu?", "options": { "all": "Evet, tüm ürünler için", "partial": "Kısmen — sadece bazıları için", "no": "Hayır, reçete kartımız yok" } },
+      "q4_pnl": { "label": "P&L (Kâr/Zarar) raporunu okuyup yorumlayabiliyor musunuz?", "options": { "self": "Evet, kendim analiz ediyorum", "assistant": "Muhasebeci/yardımcı bakıyor", "no": "Hayır, P&L kullanmıyoruz" } },
+      "q5_staff": { "label": "Personel vardiyası nasıl planlanıyor?", "options": { "system": "Dijital sistem ile", "excel": "Excel/tablo ile", "manual": "Elle / sözlü" } },
+      "q6_food_cost": { "label": "Gerçek food cost ölçülüyor mu?", "options": { "weekly": "Haftalık hesaplanıyor", "monthly": "Aylık hesaplanıyor", "no": "Hayır, ölçmüyoruz" } },
+      "q7_feedback": { "label": "Müşteri geri bildirimleri nasıl toplanıyor?", "options": { "crm": "CRM / dijital sistem ile", "manual": "Elle / sözlü toplama", "no": "Toplanmıyor" } },
+      "q8_vendor": { "label": "Tedarikçi fiyat denetimi ne sıklıkla yapılıyor?", "options": { "monthly": "Aylık karşılaştırma", "yearly": "Yıllık / nadiren", "never": "Hiç yapılmıyor" } },
+      "q9_menu": { "label": "Menü performans analizi yapılıyor mu?", "options": { "matrix": "Menü matrisi / veriye dayalı", "intuition": "Sezgiye dayalı", "no": "Yapılmıyor" } },
+      "q10_team": { "label": "Ekibiniz dijital araçlara hazır mı?", "options": { "yes": "Evet, açık ve istekli", "partial": "Kısmen — bazıları hazır", "no": "Hayır, direnç var" } }
+    },
+    "segments": {
+      "not_ready": { "title": "Temel Atın", "description": "Restoranınız henüz AI'ya hazır değil. Önce temel süreçleri dijitalleştirin.", "kazan_cta": "KAZAN AI ile nereden başlayacağınızı öğrenin" },
+      "partial": { "title": "Kısmen Hazırsınız", "description": "AI bazı alanlarda hemen fayda sağlayacak. Boşlukları doldurun ve hızlanın.", "kazan_cta": "KAZAN AI ile önceliklerinizi belirleyin" },
+      "ready": { "title": "AI'ya Hazırsınız", "description": "Restoranınız AI optimizasyonuna hazır. Gelişmiş araçlarla ilerleyin.", "kazan_cta": "KAZAN AI ile gerçek zamanlı analiz başlatın" }
+    },
+    "result": {
+      "score_label": "Puanınız",
+      "out_of": "/ 30",
+      "recommended_tools_title": "Size tavsiye edilen araçlar",
+      "kazan_cta": "Bu sonuca göre KAZAN AI ile konuşun",
+      "detail_cta": "Detaylı analiz için üye olun",
+      "restart": "Yeniden başla"
+    },
+    "navigation": { "next": "İleri", "back": "Geri", "question_of": "/ 10 soru" }
   }
 }
