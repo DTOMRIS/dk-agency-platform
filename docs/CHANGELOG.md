@@ -4,6 +4,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- EN + RU legal markdown content: privacy, terms, cookie-policy — 4 locale tam (TASK-0170)
 - UI: consent checkboxes on register form — terms+privacy required, marketing optional (TASK-0168-C)
 - API: upgrade register endpoint to Zod schema validation with z.literal(true) consent (TASK-0168-B)
 - Centralized CONSENT_VERSION constant in lib/legal/consent-version.ts (TASK-0168-B)
@@ -14,6 +15,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 - Shared LegalRenderer + LegalPageLayout components (TASK-0169)
 - RU/EN fallback to AZ with notice banner (TASK-0169)
 - legal.fallbackNotice i18n key in 4 languages (TASK-0169)
+
+### Verified
+- E2E production test: KVKK register flow — DB consent fields, Zod validation, UI checkbox, 12 legal URLs 200 OK (TASK-0171)
 
 ### Fixed
 - Cookie URL in privacy.md: /cookie-policy → /cookies (TASK-0169)
