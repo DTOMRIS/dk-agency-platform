@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-26 — TASK-0167 (footer legal links)
+
+**Qərar 1 — Bottom-bar, sütun deyil (L-009)**
+Hüquqi linklər footer sütunlarına (Alətlər, Başla, Resurslar, Şirkət) əlavə
+edilmədi. Standart UX pattern: legal linklər bottom-bar-da, copyright ilə bir
+sırada (Google, GitHub, Stripe referans). Sütunlar tematik qalır.
+
+**Qərar 2 — Inline Record<Locale>, messages/*.json deyil**
+Footer artıq `footerCopy: Record<Locale, ...>` pattern istifadə edir. Yeni
+`legal` field eyni struktura əlavə olundu. L-004 qaydası messages/*.json
+üçündür — Footer/Header inline Record-u legitim Pattern B sayılır.
+
 ## 2026-05-25 — TASK-0169 (legal markdown render)
 
 **Qərar 1 — Blog MarkdownRenderer istifadə edilmədi (L-009 dərsi)**

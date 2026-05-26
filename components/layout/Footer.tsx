@@ -8,6 +8,7 @@ import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 const footerCopy: Record<Locale, {
   slogan: string;
   columns: Array<{ title: string; links: Array<{ label: string; href: string; localized?: boolean }> }>;
+  legal: Array<{ label: string; href: string }>;
   rights: string;
   poweredBy: string;
 }> = {
@@ -18,6 +19,11 @@ const footerCopy: Record<Locale, {
       { title: 'Başla', links: [{ label: 'Açılış Checklist', href: '/toolkit/checklist', localized: true }, { label: 'İnşaatdan Açılışa', href: '/toolkit/insaat-checklist', localized: true }, { label: 'Rəsmi İşlər', href: '/toolkit/aqta-checklist', localized: true }, { label: 'Məkan Seçimi', href: '/blog/mekan-secimi', localized: true }, { label: 'Menyu Mühəndisliyi', href: '/toolkit/menu-matrix', localized: true }] },
       { title: 'Resurslar', links: [{ label: 'Bloq', href: '/blog', localized: true }, { label: 'Sektor Nəbzi', href: '/haberler', localized: true }, { label: 'İlanlar', href: '/ilanlar', localized: true }, { label: 'Toolkit', href: '/toolkit', localized: true }] },
       { title: 'Şirkət', links: [{ label: 'Haqqımızda', href: '/haqqimizda', localized: true }, { label: 'Məsləhət', href: '/elaqe', localized: true }, { label: 'Əlaqə', href: '/elaqe', localized: true }, { label: 'ŞEDD Rozeti', href: '/sedd-rozeti', localized: true }] },
+    ],
+    legal: [
+      { label: 'Məxfilik', href: '/privacy' },
+      { label: 'Şərtlər', href: '/terms' },
+      { label: 'Cookies', href: '/cookies' },
     ],
     rights: 'Bütün hüquqlar qorunur.',
     poweredBy: 'Powered by DK Agency',
@@ -30,6 +36,11 @@ const footerCopy: Record<Locale, {
       { title: 'Ресурсы', links: [{ label: 'Блог', href: '/blog', localized: true }, { label: 'Пульс сектора', href: '/haberler', localized: true }, { label: 'Объявления', href: '/ilanlar', localized: true }, { label: 'Toolkit', href: '/toolkit', localized: true }] },
       { title: 'Компания', links: [{ label: 'О нас', href: '/haqqimizda', localized: true }, { label: 'Консультация', href: '/elaqe', localized: true }, { label: 'Контакты', href: '/elaqe', localized: true }, { label: 'ŞEDD Badge', href: '/sedd-rozeti', localized: true }] },
     ],
+    legal: [
+      { label: 'Конфиденциальность', href: '/privacy' },
+      { label: 'Условия', href: '/terms' },
+      { label: 'Cookies', href: '/cookies' },
+    ],
     rights: 'Все права защищены.',
     poweredBy: 'Powered by DK Agency',
   },
@@ -41,6 +52,11 @@ const footerCopy: Record<Locale, {
       { title: 'Resources', links: [{ label: 'Blog', href: '/blog', localized: true }, { label: 'Sector Pulse', href: '/haberler', localized: true }, { label: 'Listings', href: '/ilanlar', localized: true }, { label: 'Toolkit', href: '/toolkit', localized: true }] },
       { title: 'Company', links: [{ label: 'About', href: '/haqqimizda', localized: true }, { label: 'Consulting', href: '/elaqe', localized: true }, { label: 'Contact', href: '/elaqe', localized: true }, { label: 'ŞEDD Badge', href: '/sedd-rozeti', localized: true }] },
     ],
+    legal: [
+      { label: 'Privacy', href: '/privacy' },
+      { label: 'Terms', href: '/terms' },
+      { label: 'Cookies', href: '/cookies' },
+    ],
     rights: 'All rights reserved.',
     poweredBy: 'Powered by DK Agency',
   },
@@ -51,6 +67,11 @@ const footerCopy: Record<Locale, {
       { title: 'Başla', links: [{ label: 'Açılış Checklist', href: '/toolkit/checklist', localized: true }, { label: 'İnşaattan Açılışa', href: '/toolkit/insaat-checklist', localized: true }, { label: 'Resmi İşler', href: '/toolkit/aqta-checklist', localized: true }, { label: 'Mekan Seçimi', href: '/blog/mekan-secimi', localized: true }, { label: 'Menü Mühendisliği', href: '/toolkit/menu-matrix', localized: true }] },
       { title: 'Kaynaklar', links: [{ label: 'Blog', href: '/blog', localized: true }, { label: 'Sektör Nabzı', href: '/haberler', localized: true }, { label: 'İlanlar', href: '/ilanlar', localized: true }, { label: 'Toolkit', href: '/toolkit', localized: true }] },
       { title: 'Şirket', links: [{ label: 'Hakkımızda', href: '/haqqimizda', localized: true }, { label: 'Danışmanlık', href: '/elaqe', localized: true }, { label: 'İletişim', href: '/elaqe', localized: true }, { label: 'ŞEDD Rozeti', href: '/sedd-rozeti', localized: true }] },
+    ],
+    legal: [
+      { label: 'Gizlilik', href: '/privacy' },
+      { label: 'Şartlar', href: '/terms' },
+      { label: 'Çerezler', href: '/cookies' },
     ],
     rights: 'Tüm hakları saklıdır.',
     poweredBy: 'Powered by DK Agency',
@@ -97,15 +118,33 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 sm:flex-row">
-          <p className="text-xs text-gray-400">&copy; 2026 DK Agency. {copy.rights}</p>
-          <Link
-            href="https://dkagency.com.tr"
-            target="_blank"
-            className="text-xs font-semibold text-amber-600 transition-colors hover:text-amber-700"
-          >
-            {copy.poweredBy}
-          </Link>
+        <div className="mt-12 border-t border-gray-200 pt-6">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-xs text-gray-400">&copy; 2026 DK Agency. {copy.rights}</p>
+
+            <nav
+              aria-label="Legal"
+              className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2"
+            >
+              {copy.legal.map((link) => (
+                <Link
+                  key={link.href}
+                  href={withLocale(locale, link.href)}
+                  className="text-xs text-gray-500 transition-colors hover:text-slate-900"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            <Link
+              href="https://dkagency.com.tr"
+              target="_blank"
+              className="text-xs font-semibold text-amber-600 transition-colors hover:text-amber-700"
+            >
+              {copy.poweredBy}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
