@@ -16,6 +16,7 @@ import { AhilikValues } from '@/components/home/AhilikValues';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
+const AiReadinessScore = dynamic(() => import('@/components/sections/AiReadinessScore'), { ssr: false });
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 
 const featuredBlogs = [
@@ -153,6 +154,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <Hero />
+      <AiReadinessScore />
       <PlatformCards />
       <ToolkitShowcase />
 

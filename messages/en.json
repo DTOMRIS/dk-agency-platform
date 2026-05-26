@@ -3503,5 +3503,43 @@
   },
   "legal": {
     "fallbackNotice": "This document has not yet been translated to your language. The Azerbaijani version is shown."
+  },
+  "ai_readiness": {
+    "section_title": "Discover Your Restaurant's AI Readiness in 60 Seconds",
+    "section_description": "Answer 10 questions, get your digital readiness score, and receive personalized recommendations.",
+    "start_button": "Start the Test",
+    "questions": {
+      "q1_pos": {
+        "label": "Do you have a POS (point of sale) system?",
+        "options": {
+          "yes_modern": "Yes, modern cloud POS",
+          "yes_old": "Yes, older offline POS",
+          "no": "No, we don't use a POS"
+        }
+      },
+      "q2_inventory": { "label": "How often is inventory counted?", "options": { "weekly": "Weekly", "monthly": "Monthly", "no": "Not counted" } },
+      "q3_recipe": { "label": "Do you have recipe cards?", "options": { "all": "Yes, for all products", "partial": "Partially — only some", "no": "No recipe cards" } },
+      "q4_pnl": { "label": "Can you read and interpret a P&L statement?", "options": { "self": "Yes, I analyze it myself", "assistant": "Accountant/assistant handles it", "no": "No, we don't use P&L" } },
+      "q5_staff": { "label": "How are staff shifts planned?", "options": { "system": "Digital system", "excel": "Excel/spreadsheet", "manual": "Manually / verbal" } },
+      "q6_food_cost": { "label": "Is actual food cost measured?", "options": { "weekly": "Calculated weekly", "monthly": "Calculated monthly", "no": "Not measured" } },
+      "q7_feedback": { "label": "How is customer feedback collected?", "options": { "crm": "CRM / digital system", "manual": "Manual / verbal collection", "no": "Not collected" } },
+      "q8_vendor": { "label": "How often is vendor pricing audited?", "options": { "monthly": "Monthly comparison", "yearly": "Yearly / rarely", "never": "Never" } },
+      "q9_menu": { "label": "Is menu performance analyzed?", "options": { "matrix": "Menu matrix / data-driven", "intuition": "Based on intuition", "no": "Not analyzed" } },
+      "q10_team": { "label": "Is your team ready for digital tools?", "options": { "yes": "Yes, open and eager", "partial": "Partially — some are ready", "no": "No, there is resistance" } }
+    },
+    "segments": {
+      "not_ready": { "title": "Build the Foundation", "description": "Your restaurant is not yet ready for AI. Digitize core processes first.", "kazan_cta": "Learn where to start with KAZAN AI" },
+      "partial": { "title": "Partially Ready", "description": "AI can deliver immediate value in some areas. Fill the gaps and accelerate.", "kazan_cta": "Define your priorities with KAZAN AI" },
+      "ready": { "title": "AI-Ready", "description": "Your restaurant is ready for AI optimization. Advance with cutting-edge tools.", "kazan_cta": "Start real-time analysis with KAZAN AI" }
+    },
+    "result": {
+      "score_label": "Your score",
+      "out_of": "/ 30",
+      "recommended_tools_title": "Recommended tools for you",
+      "kazan_cta": "Talk to KAZAN AI based on this result",
+      "detail_cta": "Sign up for detailed analysis",
+      "restart": "Start over"
+    },
+    "navigation": { "next": "Next", "back": "Back", "question_of": "/ 10 questions" }
   }
 }

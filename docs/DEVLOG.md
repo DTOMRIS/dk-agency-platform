@@ -1,5 +1,26 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-27 — TASK-0173 (AI Readiness Score wizard)
+
+**Qərar 1 — Wizard pattern (1 sual/ekran)**
+Bütün 10 sualı 1 səhifədə göstərmək UX-i zəiflədərdi. 1 sual/ekran wizard
+pattern-i seçildi: progress bar, geri/irəli düymə, seçim saxlanır. Mövcud
+`CreateListingForm.tsx` 5-step pattern referans alındı, amma ayrı component
+olaraq quruldu (reuse deyil, kontekst fərqli — L-020).
+
+**Qərar 2 — Score config ayrı fayl**
+`lib/ai-readiness-score-config.ts` — 10 sual, 3 seqment, scoring funksiyası.
+Component-dən ayrıdır ki gələcəkdə API-da da istifadə oluna bilsin (KAZAN
+kontekst ötürmə). translationKey pattern — component yalnız i18n key bilir.
+
+**Qərar 3 — Dynamic import (ssr: false)**
+Wizard client-side interactivity tələb edir. `dynamic(() => import(...), { ssr: false })`
+homepage ilk yüklənmə sürətini qoruyur — wizard yalnız browser-da render olunur.
+
+**Qərar 4 — Segment seqment rengleri SVG-dən**
+ScoreCircle rəng seqmentə görə dəyişir: red (<37%), amber (37-70%), green (>70%).
+CSS var fallback ilə — design token olmasa hardcoded hex işləyir.
+
 ## 2026-05-26 — TASK-0168-C (UI consent checkbox)
 
 **Qərar 1 — 1 checkbox, 2 link (UX)**

@@ -1,5 +1,22 @@
 # HANDOFF
 
+## 2026-05-27 — TASK-0173 (AI Readiness Score)
+- Ne deyisdi:
+  - Homepage-ə Hero-dan sonra AI Readiness Score wizard əlavə edildi
+  - 10 sual, 3 seqment (NOT_READY/PARTIAL/READY), Toolkit + KAZAN CTA
+  - lib/ai-readiness-score-config.ts — schema + scoring
+  - components/sections/AiReadinessScore.tsx — wizard UI
+  - 4 dildə ai_readiness namespace (messages/*.json)
+- Ne deyismedi:
+  - Protected files toxunulmadı
+  - Mövcud homepage sections sırası qorundu (wizard Hero-dan sonra)
+  - Toolkit config toxunulmadı
+- Riskler:
+  - Homepage ilk yüklənmə sürəti — dynamic import ilə mitigasiya olunub
+  - Toolkit slug-ları config-da hardcoded — slug dəyişsə config yenilənməli
+- Sonraki addim:
+  - TASK-0174: "Bu həftə nə etməliyəm?" post-action recommendations
+
 ## 2026-05-26 — TASK-0168-C (UI consent checkbox)
 - Ne deyisdi:
   - Register form-a 2 checkbox əlavə edildi (terms+privacy required, marketing optional)

@@ -3503,5 +3503,122 @@
   },
   "legal": {
     "fallbackNotice": "Bu sənəd hələ bu dilə tərcümə edilməyib, Azərbaycan dilindəki versiyası göstərilir."
+  },
+  "ai_readiness": {
+    "section_title": "Restoranınızın AI Hazırlığını 60 Saniyəyə Öyrənin",
+    "section_description": "10 sual cavablayın, restoranınızın dijital hazırlıq skorunu alın və fərdiləşdirilmiş tövsiyələr əldə edin.",
+    "start_button": "Testi Başlat",
+    "questions": {
+      "q1_pos": {
+        "label": "POS (kassa) sisteminiz varmı?",
+        "options": {
+          "yes_modern": "Bəli, müasir bulud POS",
+          "yes_old": "Bəli, köhnə offline POS",
+          "no": "Xeyr, POS istifadə etmirik"
+        }
+      },
+      "q2_inventory": {
+        "label": "Stok sayımı nə tezliklə aparılır?",
+        "options": {
+          "weekly": "Həftəlik",
+          "monthly": "Aylıq",
+          "no": "Aparılmır"
+        }
+      },
+      "q3_recipe": {
+        "label": "Reçete kartlarınız mövcuddurmu?",
+        "options": {
+          "all": "Bəli, bütün məhsullar üçün",
+          "partial": "Qismən — yalnız bəziləri üçün",
+          "no": "Xeyr, reçete kartımız yoxdur"
+        }
+      },
+      "q4_pnl": {
+        "label": "P&L (Mənfəət/Zərər) hesabatını oxuyub şərh edə bilirsiniz?",
+        "options": {
+          "self": "Bəli, özüm analiz edirəm",
+          "assistant": "Mühasib/köməkçi baxır",
+          "no": "Xeyr, P&L istifadə etmirik"
+        }
+      },
+      "q5_staff": {
+        "label": "Personel vardiyası necə planlanır?",
+        "options": {
+          "system": "Rəqəmsal sistem ilə",
+          "excel": "Excel/cədvəl ilə",
+          "manual": "Əldə / şifahi"
+        }
+      },
+      "q6_food_cost": {
+        "label": "Faktiki food cost ölçülürmü?",
+        "options": {
+          "weekly": "Həftəlik hesablanır",
+          "monthly": "Aylıq hesablanır",
+          "no": "Xeyr, ölçmürük"
+        }
+      },
+      "q7_feedback": {
+        "label": "Müştəri rəyləri necə toplanır?",
+        "options": {
+          "crm": "CRM / rəqəmsal sistem ilə",
+          "manual": "Əldə / şifahi toplama",
+          "no": "Toplanmır"
+        }
+      },
+      "q8_vendor": {
+        "label": "Tədarükçü qiymət auditi nə tezliklə aparılır?",
+        "options": {
+          "monthly": "Aylıq müqayisə",
+          "yearly": "İllik / nadir",
+          "never": "Heç vaxt aparılmır"
+        }
+      },
+      "q9_menu": {
+        "label": "Menyu performans analizi aparılırmı?",
+        "options": {
+          "matrix": "Menyu matrisi / data əsaslı",
+          "intuition": "İntüisiyaya əsasən",
+          "no": "Aparılmır"
+        }
+      },
+      "q10_team": {
+        "label": "Komandanız dijital alətlərə hazırdırmı?",
+        "options": {
+          "yes": "Bəli, açıq və istəkli",
+          "partial": "Qismən — bəziləri hazır",
+          "no": "Xeyr, müqavimət var"
+        }
+      }
+    },
+    "segments": {
+      "not_ready": {
+        "title": "Təməl Atın",
+        "description": "Restoranınız AI üçün hələ hazır deyil. Əvvəlcə əsas prosesləri rəqəmsallaşdırın.",
+        "kazan_cta": "KAZAN AI ilə haradan başlamağı öyrənin"
+      },
+      "partial": {
+        "title": "Qismən Hazırsınız",
+        "description": "Bəzi sahələrdə AI dərhal fayda verəcək. Boşluqları doldurun və sürətlənin.",
+        "kazan_cta": "KAZAN AI ilə prioritetlərinizi müəyyənləşdirin"
+      },
+      "ready": {
+        "title": "AI-a Hazırsınız",
+        "description": "Restoranınız AI optimallaşdırmasına hazırdır. İndi qabaqcıl alətlərlə irəliləyin.",
+        "kazan_cta": "KAZAN AI ilə real vaxt analiz başladın"
+      }
+    },
+    "result": {
+      "score_label": "Sizin skor",
+      "out_of": "/ 30",
+      "recommended_tools_title": "Sizə tövsiyə olunan alətlər",
+      "kazan_cta": "Bu nəticəyə əsasən KAZAN AI ilə danışın",
+      "detail_cta": "Detaylı analiz üçün üzv olun",
+      "restart": "Yenidən başla"
+    },
+    "navigation": {
+      "next": "İrəli",
+      "back": "Geri",
+      "question_of": "/ 10 sual"
+    }
   }
 }
