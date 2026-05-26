@@ -1,21 +1,23 @@
 # DK Agency Platform — Dev Log
 
-## 2026-05-26 — TASK-0168-B (API consent validation)
+## 2026-05-26 — TASK-0168-B Zod upgrade (follow-up)
 
-**Qərar 1 — termsAccepted + privacyAccepted məcburi**
-Register endpoint artıq `termsAccepted: true` və `privacyAccepted: true`
-olmadan 400 qaytarır. KVKK Md. 7(2) tələbi: razılıq olmadan data toplama
-qadağandır. Frontend checkbox-u göndərməsə, qeydiyyat rədd olunur.
+**Qərar 1 — Zod z.literal(true) strict validation**
+İlk PR manual `if` validation istifadə edirdi. Spec Zod tələb etdi:
+`z.literal(true)` yalnız boolean `true` qəbul edir — `false`, `undefined`,
+`"true"` string hamısı reject olunur. Manual `=== true` eyni nəticə verir
+amma Zod digər field-ləri (email, password, name) də validasiya edir.
 
-**Qərar 2 — IP + timestamp register zamanı yazılır**
-`getClientIp(request)` artıq rate-limit üçün istifadə olunurdu. Eyni IP
-consent sübutu üçün `terms_accepted_ip` və `privacy_accepted_ip` field-lərinə
-yazılır. Ayrı API çağrısı lazım deyil.
+**Qərar 2 — CONSENT_VERSION centralized**
+`lib/legal/consent-version.ts` — tək source of truth. Server-side const,
+client manipulyasiya edə bilməz. İlk PR body-dən oxuyurdu (security risk).
 
-**Qərar 3 — termsVersion default**
-Frontend `termsVersion` göndərə bilər. Göndərməsə, `2026-05-26` default
-istifadə olunur (ilk legal content import tarixi). Gələcəkdə content
-yeniləndikdə frontend yeni versiya nömrəsini göndərməlidir.
+**Qərar 3 — Zod 4 API fərqləri**
+Repo Zod 4.4.3 istifadə edir. Zod 4-də:
+- `z.literal(true, { errorMap })` dəstəklənmir → düz `z.literal(true)`
+- `error.errors` yoxdur → `error.issues` istifadə et
+- `error.flatten()` mövcuddur (repo pattern ilə uyğun)
+Field-specific AZ error mesajları manual mapping ilə əlavə olundu.
 
 ## 2026-05-26 — TASK-0168-A (DB consent fields)
 

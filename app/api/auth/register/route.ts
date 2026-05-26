@@ -1,12 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { hash } from 'bcryptjs';
 import { eq } from 'drizzle-orm';
+import { z } from 'zod';
 import { db, dbAvailable } from '@/lib/db';
 import { users, emailVerificationTokens } from '@/lib/db/schema';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
 import { normalizeLocale } from '@/i18n/config';
 import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
+import { CONSENT_VERSION } from '@/lib/legal/consent-version';
+
+const registerSchema = z.object({
+  email: z.string().email().toLowerCase().trim(),
+  password: z.string().min(8, 'Şifrə ən az 8 simvol olmalıdır.'),
+  name: z.string().trim().min(1, 'Ad tələb olunur.'),
+  phone: z.string().trim().optional(),
+  company: z.string().trim().optional(),
+  locale: z.string().optional(),
+  termsAccepted: z.literal(true),
+  privacyAccepted: z.literal(true),
+  marketingConsent: z.boolean().optional().default(false),
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,35 +28,25 @@ export async function POST(request: NextRequest) {
     const rl = checkRateLimit(`auth-register:${ip}`, RATE_LIMITS.authRegister);
     if (!rl.success) return rateLimitExceeded(rl);
 
-    const body = await request.json();
-    const email = String(body?.email || '').trim().toLowerCase();
-    const password = String(body?.password || '');
-    const name = String(body?.name || '').trim();
-    const termsAccepted = body?.termsAccepted === true;
-    const privacyAccepted = body?.privacyAccepted === true;
-    const marketingConsent = body?.marketingConsent === true;
-    const termsVersion = String(body?.termsVersion || '2026-05-26').trim();
+    const rawBody = await request.json();
+    const parsed = registerSchema.safeParse(rawBody);
 
-    if (!email || !password || !name) {
+    if (!parsed.success) {
+      const firstIssue = parsed.error.issues[0];
+      const field = firstIssue.path[0];
+      const message =
+        field === 'termsAccepted'
+          ? 'İstifadə şərtləri qəbul edilməlidir.'
+          : field === 'privacyAccepted'
+            ? 'Məxfilik siyasəti qəbul edilməlidir.'
+            : firstIssue.message;
       return NextResponse.json(
-        { ok: false, error: 'Email, şifrə və ad tələb olunur.' },
+        { ok: false, error: message },
         { status: 400 },
       );
     }
 
-    if (password.length < 8) {
-      return NextResponse.json(
-        { ok: false, error: 'Şifrə ən az 8 simvol olmalıdır.' },
-        { status: 400 },
-      );
-    }
-
-    if (!termsAccepted || !privacyAccepted) {
-      return NextResponse.json(
-        { ok: false, error: 'İstifadə şərtləri və məxfilik siyasəti qəbul edilməlidir.' },
-        { status: 400 },
-      );
-    }
+    const body = parsed.data;
 
     if (!dbAvailable || !db) {
       return NextResponse.json(
@@ -55,7 +59,7 @@ export async function POST(request: NextRequest) {
     const existing = await db
       .select({ id: users.id })
       .from(users)
-      .where(eq(users.email, email))
+      .where(eq(users.email, body.email))
       .then((rows) => rows[0]);
 
     if (existing) {
@@ -65,25 +69,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Hash password and insert user
-    const passwordHash = await hash(password, 12);
+    // Hash password and insert user with consent tracking
+    const passwordHash = await hash(body.password, 12);
     const now = new Date();
+
     const inserted = await db
       .insert(users)
       .values({
-        email,
-        name,
+        email: body.email,
+        name: body.name,
         passwordHash,
-        phone: String(body?.phone || '').trim() || null,
-        company: String(body?.company || '').trim() || null,
+        phone: body.phone || null,
+        company: body.company || null,
         role: 'member',
         emailVerified: false,
         termsAcceptedAt: now,
         termsAcceptedIp: ip,
-        termsVersion,
+        termsVersion: CONSENT_VERSION,
         privacyAcceptedAt: now,
         privacyAcceptedIp: ip,
-        marketingConsent,
+        marketingConsent: body.marketingConsent,
       })
       .returning({ id: users.id, email: users.email });
 
@@ -94,14 +99,14 @@ export async function POST(request: NextRequest) {
     await db.insert(emailVerificationTokens).values({
       userId: newUser.id,
       token,
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
     // Send confirmation email
     const confirmUrl = `${getBaseUrl()}/api/auth/confirm?token=${token}`;
-    const locale = normalizeLocale(String(body?.locale || ''));
+    const locale = normalizeLocale(String(body.locale || ''));
 
-    await sendEmail(email, emailTemplates.emailVerification(confirmUrl, name, locale));
+    await sendEmail(body.email, emailTemplates.emailVerification(confirmUrl, body.name, locale));
 
     return NextResponse.json({
       ok: true,
