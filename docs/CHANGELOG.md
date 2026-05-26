@@ -4,6 +4,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- UI: consent checkboxes on register form — terms+privacy required, marketing optional (TASK-0168-C)
 - API: upgrade register endpoint to Zod schema validation with z.literal(true) consent (TASK-0168-B)
 - Centralized CONSENT_VERSION constant in lib/legal/consent-version.ts (TASK-0168-B)
 - DB: consent tracking fields on users table — terms/privacy accepted_at, ip, version + marketing_consent (TASK-0168-A)

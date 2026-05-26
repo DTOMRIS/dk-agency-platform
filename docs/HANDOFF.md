@@ -1,5 +1,22 @@
 # HANDOFF
 
+## 2026-05-26 — TASK-0168-C (UI consent checkbox)
+- Ne deyisdi:
+  - Register form-a 2 checkbox əlavə edildi (terms+privacy required, marketing optional)
+  - Submit button consent checkbox-suz disabled
+  - API payload-a termsAccepted, privacyAccepted, marketingConsent əlavə
+  - 4 dildə consent label-ləri (AZ/RU/EN/TR)
+  - Legal linklər target="_blank" ilə /terms və /privacy-yə gedir
+- Ne deyismedi:
+  - API endpoint toxunulmadı
+  - DB schema toxunulmadı
+  - Login form toxunulmadı
+- Riskler:
+  - Yoxdur — TASK-0168 tam (A+B+C) bitdi
+- Sonraki addim:
+  - TASK-0170: RU/EN markdown content
+  - Register form artıq production-ready
+
 ## 2026-05-26 — TASK-0168-B Zod upgrade
 - Ne deyisdi:
   - Register endpoint manual if → Zod schema validation-a keçirildi
