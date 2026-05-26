@@ -1,19 +1,18 @@
 # HANDOFF
 
-## 2026-05-26 — TASK-0168-B (API consent validation)
+## 2026-05-26 — TASK-0168-B Zod upgrade
 - Ne deyisdi:
-  - Register API artıq termsAccepted + privacyAccepted məcburi tələb edir
-  - Consent field-ləri (timestamp, IP, version, marketingConsent) DB-yə yazılır
-  - termsAccepted/privacyAccepted false → 400 error
+  - Register endpoint manual if → Zod schema validation-a keçirildi
+  - z.literal(true) ilə strict consent tələbi
+  - CONSENT_VERSION lib/legal/consent-version.ts-ə çıxarıldı (2026-05-24)
+  - termsVersion artıq body-dən gəlmir, server-side const
 - Ne deyismedi:
-  - Response formatı eyni qaldı (ok, message, verificationRequired)
-  - Rate-limit, email verification, duplicate check toxunulmadı
-  - UI/frontend toxunulmadı
+  - Response formatı, rate-limit, email verification toxunulmadı
 - Riskler:
-  - Mövcud frontend termsAccepted/privacyAccepted göndərmir → register fail olacaq
-  - TASK-0168-C (UI checkbox) mərge olana qədər frontend uyğunlaşdırılmalıdır
+  - Mövcud frontend termsAccepted/privacyAccepted göndərmir → register fail
+  - TASK-0168-C (UI) asap lazımdır
 - Sonraki addim:
-  - TASK-0168-C: Register form-da consent checkbox (UI)
+  - TASK-0168-C: Register form consent checkbox
 
 ## 2026-05-26 — TASK-0168-A (DB consent fields)
 - Ne deyisdi:
