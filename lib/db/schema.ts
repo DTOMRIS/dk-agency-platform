@@ -397,6 +397,15 @@ export const users = pgTable('users', {
   role: varchar('role', { length: 30 }).default('member'),
   emailVerified: boolean('email_verified').default(false),
   deletedAt: timestamp('deleted_at', { withTimezone: true }),
+
+  // KVKK Md. 7(2) + GDPR Art. 7(1) — consent tracking
+  termsAcceptedAt: timestamp('terms_accepted_at', { withTimezone: true }),
+  termsAcceptedIp: text('terms_accepted_ip'),
+  termsVersion: varchar('terms_version', { length: 20 }),
+  privacyAcceptedAt: timestamp('privacy_accepted_at', { withTimezone: true }),
+  privacyAcceptedIp: text('privacy_accepted_ip'),
+  marketingConsent: boolean('marketing_consent').default(false),
+
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });

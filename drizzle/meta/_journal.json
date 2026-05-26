@@ -36,6 +36,13 @@
       "when": 1779002017173,
       "tag": "0004_aspiring_rockslide",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779783149562,
+      "tag": "0005_consent_fields",
+      "breakpoints": true
     }
   ]
 }

@@ -1,5 +1,20 @@
 # HANDOFF
 
+## 2026-05-26 — TASK-0168-A (DB consent fields)
+- Ne deyisdi:
+  - users table-a 6 consent field əlavə edildi (schema + migration + snapshot)
+  - drizzle/0005_consent_fields.sql yaradıldı (ADD COLUMN only, revert güvənli)
+- Ne deyismedi:
+  - API endpoints toxunulmadı
+  - UI toxunulmadı
+  - messages/*.json toxunulmadı
+  - Protected files toxunulmadı
+- Riskler:
+  - Migration hələ DB-yə tətbiq olunmayıb — mərge sonrası `npx drizzle-kit migrate` lazımdır
+- Sonraki addim:
+  - TASK-0168-B: API endpoint — register route consent field-ləri yazır
+  - TASK-0168-C: UI checkbox — register form-da şərtlər razılıq checkbox-u
+
 ## 2026-05-26 — TASK-0167 (footer legal links)
 - Ne deyisdi:
   - Footer bottom-bar-a 3 hüquqi link əlavə edildi: Privacy, Terms, Cookies

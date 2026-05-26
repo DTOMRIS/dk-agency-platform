@@ -1,5 +1,21 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-26 — TASK-0168-A (DB consent fields)
+
+**Qərar 1 — 6 field, 7 yox**
+Privacy version ayrı saxlanmır — Terms və Privacy eyni anda qəbul olunur,
+eyni `termsVersion` ikisi üçün etibarlıdır. Gələcəkdə ayrı consent_log
+table yaranarsa, orada fərqləndirilə bilər.
+
+**Qərar 2 — ADD COLUMN only**
+Migration yalnız `ALTER TABLE ADD COLUMN` istifadə edir — DROP yox, ALTER
+TYPE yox. Production revert güvənlidir. Bütün field-lər nullable — mövcud
+istifadəçilər üçün backfill lazım deyil.
+
+**Qərar 3 — marketing_consent ayrı boolean**
+KVKK ayrı razılıq tələb edir: şərtləri qəbul etmək ≠ marketing email
+razılığı. Bu field false default ilə yaranır — opt-in model.
+
 ## 2026-05-26 — TASK-0167 (footer legal links)
 
 **Qərar 1 — Bottom-bar, sütun deyil (L-009)**
