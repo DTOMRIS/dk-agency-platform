@@ -1,5 +1,23 @@
 # HANDOFF
 
+## 2026-05-26 — TASK-0167 (footer legal links)
+- Ne deyisdi:
+  - Footer bottom-bar-a 3 hüquqi link əlavə edildi: Privacy, Terms, Cookies
+  - 4 dildə (AZ/RU/EN/TR) düzgün label-lər
+  - withLocale() ilə locale-aware routing
+  - aria-label="Legal" accessibility
+  - flex-wrap mobile layout
+- Ne deyismedi:
+  - Footer sütunları (lg:grid-cols-5) toxunulmadı
+  - Header.tsx toxunulmadı
+  - Heç bir yeni route yaradılmadı (TASK-0169-da hazırdır)
+  - messages/*.json toxunulmadı (inline Record pattern)
+- Riskler:
+  - Yoxdur — yalnız 1 fayl dəyişdi
+- Sonraki addim:
+  - TASK-0168: Register form-a legal consent checkbox
+  - TASK-0170: RU/EN markdown faylları
+
 ## 2026-05-25 — TASK-0169 (legal markdown render)
 - Ne deyisdi:
   - 3 placeholder legal page (privacy/terms/cookies) real markdown render-ə çevrildi

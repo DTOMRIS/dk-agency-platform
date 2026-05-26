@@ -4,6 +4,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- Footer bottom-bar legal links: privacy/terms/cookies in 4 languages (TASK-0167)
 - Wire AZ/TR markdown files to /privacy /terms /cookies routes (TASK-0169)
 - Shared LegalRenderer + LegalPageLayout components (TASK-0169)
 - RU/EN fallback to AZ with notice banner (TASK-0169)
