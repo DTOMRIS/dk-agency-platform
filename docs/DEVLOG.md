@@ -1,5 +1,21 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-26 — TASK-0168-C (UI consent checkbox)
+
+**Qərar 1 — 1 checkbox, 2 link (UX)**
+Ayrı-ayrı "Terms qəbul" + "Privacy qəbul" checkbox əvəzinə 1 birləşmiş
+checkbox: "Mən {terms} və {privacy} ilə razıyam." İstifadəçi 1 click ilə
+hər ikisini qəbul edir. API-ya `termsAccepted: true` + `privacyAccepted: true`
+eyni anda göndərilir.
+
+**Qərar 2 — Marketing ayrı (KVKK)**
+KVKK tələbi: marketing razılığı şərtlər razılığından ayrı olmalıdır. Optional
+checkbox, default false, ayrı state.
+
+**Qərar 3 — target="_blank" + noopener**
+Legal linklər yeni tab-da açılır — istifadəçi form datanı itirməsin. Security:
+`rel="noopener noreferrer"` əlavə edildi.
+
 ## 2026-05-26 — TASK-0168-B Zod upgrade (follow-up)
 
 **Qərar 1 — Zod z.literal(true) strict validation**

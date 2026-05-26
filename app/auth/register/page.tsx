@@ -29,6 +29,11 @@ const registerCopy: Record<Locale, {
   membershipPage: string;
   fallbackError: string;
   fallbackCreated: string;
+  consentLabel: string;
+  termsLink: string;
+  privacyLink: string;
+  marketingLabel: string;
+  consentRequiredError: string;
   panel: {
     title: string;
     premiumTitle: string;
@@ -65,6 +70,11 @@ const registerCopy: Record<Locale, {
     membershipPage: 'Üzvlük səhifəsi:',
     fallbackError: 'Qeydiyyat alınmadı.',
     fallbackCreated: 'Hesabınız yaradıldı!',
+    consentLabel: 'Mən {terms} və {privacy} ilə razıyam.',
+    termsLink: 'İstifadə şərtləri',
+    privacyLink: 'Məxfilik siyasəti',
+    marketingLabel: 'Marketing e-poçtlarını qəbul edirəm (istəyə bağlı)',
+    consentRequiredError: 'İstifadə şərtləri və Məxfilik siyasəti qəbul edilməlidir.',
     panel: {
       title: 'Üzvlük nə verir?',
       premiumTitle: 'Premium məqalələrə tam giriş',
@@ -101,6 +111,11 @@ const registerCopy: Record<Locale, {
     membershipPage: 'Membership page:',
     fallbackError: 'Registration failed.',
     fallbackCreated: 'Account created!',
+    consentLabel: 'I agree to the {terms} and {privacy}.',
+    termsLink: 'Terms of Service',
+    privacyLink: 'Privacy Policy',
+    marketingLabel: 'I want to receive marketing emails (optional)',
+    consentRequiredError: 'You must accept the Terms of Service and Privacy Policy.',
     panel: {
       title: 'What does membership offer?',
       premiumTitle: 'Full access to premium articles',
@@ -137,6 +152,11 @@ const registerCopy: Record<Locale, {
     membershipPage: 'Üyelik sayfası:',
     fallbackError: 'Kayıt başarısız.',
     fallbackCreated: 'Hesap oluşturuldu!',
+    consentLabel: '{terms} ve {privacy} kabul ediyorum.',
+    termsLink: 'Kullanım Şartları',
+    privacyLink: 'Gizlilik Politikası',
+    marketingLabel: 'Pazarlama e-postaları almak istiyorum (isteğe bağlı)',
+    consentRequiredError: 'Kullanım Şartları ve Gizlilik Politikası kabul edilmelidir.',
     panel: {
       title: 'Üyelik ne sağlar?',
       premiumTitle: 'Premium içeriklere tam erişim',
@@ -173,6 +193,11 @@ const registerCopy: Record<Locale, {
     membershipPage: 'Страница членства:',
     fallbackError: 'Регистрация не выполнена.',
     fallbackCreated: 'Аккаунт создан!',
+    consentLabel: 'Я согласен с {terms} и {privacy}.',
+    termsLink: 'Условиями использования',
+    privacyLink: 'Политикой конфиденциальности',
+    marketingLabel: 'Я хочу получать маркетинговые письма (необязательно)',
+    consentRequiredError: 'Необходимо принять Условия использования и Политику конфиденциальности.',
     panel: {
       title: 'Что даёт членство?',
       premiumTitle: 'Полный доступ к премиум-материалам',
@@ -206,6 +231,8 @@ export default function RegisterPage() {
     phone: '',
     password: '',
   });
+  const [consentAccepted, setConsentAccepted] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -219,6 +246,12 @@ export default function RegisterPage() {
     event.preventDefault();
     setError('');
     setNotice('');
+
+    if (!consentAccepted) {
+      setError(copy.consentRequiredError);
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -232,6 +265,9 @@ export default function RegisterPage() {
           company: formData.company.trim(),
           phone: formData.phone.trim(),
           locale,
+          termsAccepted: consentAccepted,
+          privacyAccepted: consentAccepted,
+          marketingConsent,
         }),
       });
 
@@ -364,9 +400,50 @@ export default function RegisterPage() {
                 </div>
               ) : null}
 
+              <div className="space-y-3">
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={consentAccepted}
+                    onChange={(e) => setConsentAccepted(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 rounded border-slate-300 text-dk-red focus:ring-2 focus:ring-dk-red/20"
+                  />
+                  <span className="text-sm text-slate-700">
+                    {copy.consentLabel.split('{terms}').map((part, i) => {
+                      if (i === 0) return <span key={i}>{part}</span>;
+                      const [beforePrivacy, afterPrivacy] = part.split('{privacy}');
+                      return (
+                        <span key={i}>
+                          <Link href={`/${locale}/terms`} target="_blank" rel="noopener noreferrer" className="font-semibold text-dk-red hover:underline">
+                            {copy.termsLink}
+                          </Link>
+                          {beforePrivacy}
+                          <Link href={`/${locale}/privacy`} target="_blank" rel="noopener noreferrer" className="font-semibold text-dk-red hover:underline">
+                            {copy.privacyLink}
+                          </Link>
+                          {afterPrivacy}
+                        </span>
+                      );
+                    })}
+                  </span>
+                </label>
+
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={marketingConsent}
+                    onChange={(e) => setMarketingConsent(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 rounded border-slate-300 text-dk-red focus:ring-2 focus:ring-dk-red/20"
+                  />
+                  <span className="text-sm text-slate-500">
+                    {copy.marketingLabel}
+                  </span>
+                </label>
+              </div>
+
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || !consentAccepted}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red py-3.5 font-bold text-white transition hover:bg-dk-red-strong disabled:cursor-not-allowed disabled:bg-dk-red/60"
               >
                 <Sparkles className="h-5 w-5" />
