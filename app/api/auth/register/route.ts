@@ -18,6 +18,10 @@ export async function POST(request: NextRequest) {
     const email = String(body?.email || '').trim().toLowerCase();
     const password = String(body?.password || '');
     const name = String(body?.name || '').trim();
+    const termsAccepted = body?.termsAccepted === true;
+    const privacyAccepted = body?.privacyAccepted === true;
+    const marketingConsent = body?.marketingConsent === true;
+    const termsVersion = String(body?.termsVersion || '2026-05-26').trim();
 
     if (!email || !password || !name) {
       return NextResponse.json(
@@ -29,6 +33,13 @@ export async function POST(request: NextRequest) {
     if (password.length < 8) {
       return NextResponse.json(
         { ok: false, error: 'Şifrə ən az 8 simvol olmalıdır.' },
+        { status: 400 },
+      );
+    }
+
+    if (!termsAccepted || !privacyAccepted) {
+      return NextResponse.json(
+        { ok: false, error: 'İstifadə şərtləri və məxfilik siyasəti qəbul edilməlidir.' },
         { status: 400 },
       );
     }
@@ -56,6 +67,7 @@ export async function POST(request: NextRequest) {
 
     // Hash password and insert user
     const passwordHash = await hash(password, 12);
+    const now = new Date();
     const inserted = await db
       .insert(users)
       .values({
@@ -66,6 +78,12 @@ export async function POST(request: NextRequest) {
         company: String(body?.company || '').trim() || null,
         role: 'member',
         emailVerified: false,
+        termsAcceptedAt: now,
+        termsAcceptedIp: ip,
+        termsVersion,
+        privacyAcceptedAt: now,
+        privacyAcceptedIp: ip,
+        marketingConsent,
       })
       .returning({ id: users.id, email: users.email });
 

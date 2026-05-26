@@ -4,6 +4,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- API: register endpoint validates + stores consent (termsAccepted, privacyAccepted, marketingConsent) (TASK-0168-B)
 - DB: consent tracking fields on users table — terms/privacy accepted_at, ip, version + marketing_consent (TASK-0168-A)
 - Migration: drizzle/0005_consent_fields.sql (KVKK Md. 7(2) + GDPR Art. 7(1))
 - Footer bottom-bar legal links: privacy/terms/cookies in 4 languages (TASK-0167)
