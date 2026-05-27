@@ -3534,5 +3534,30 @@
       "restart": "Yeniden başla"
     },
     "navigation": { "next": "İleri", "back": "Geri", "question_of": "/ 10 soru" }
+  },
+  "weekly_actions": {
+    "panel_title": "Bu hafta ne yapmalıyım?",
+    "panel_subtitle": "P&L sonuçlarınıza göre kişiselleştirilmiş aksiyonlar",
+    "kazan_cta": "Bu planı KAZAN AI ile tartışın",
+    "all_good_title": "Harika durumdasınız!",
+    "all_good_description": "Göstergeleriniz sektör benchmarkları dahilinde. Devam edin!",
+    "duration_unit": "dk",
+    "severity": { "ok": "Normal", "warning": "Dikkat", "critical": "Kritik" },
+    "benchmark": {
+      "food_cost_ok": "Food cost normal aralıkta (≤%32)", "food_cost_warning": "Food cost yüksek (33-38%)", "food_cost_critical": "Food cost kritik seviyede (>%38)",
+      "labor_cost_ok": "İşçilik maliyeti normal (≤%25)", "labor_cost_warning": "İşçilik maliyeti yüksek (26-30%)", "labor_cost_critical": "İşçilik maliyeti kritik (>%30)",
+      "net_profit_ok": "Net kâr sağlıklı (≥%12)", "net_profit_warning": "Net kâr düşük (8-11%)", "net_profit_critical": "Net kâr kritik (<8%)",
+      "rent_ok": "Kira oranı iyi (≤%8)", "rent_warning": "Kira oranı yüksek (9-12%)", "rent_critical": "Kira oranı kritik (>%12)"
+    },
+    "actions": {
+      "recipe_audit": { "title": "Reçete kartlarını denetleyin", "description": "En çok satan 5 ürünün reçete kartını güncel fiyatlarla yenileyin. Food cost sapmasını tespit etmenin en hızlı yolu.", "cta": "Food Cost aracını aç →" },
+      "portion_check": { "title": "Porsiyon standartlarını kontrol edin", "description": "Her porsiyon için tartı ile ölçüm yapın. 10g fazla porsiyon = ayda yüzlerce AZN kayıp.", "cta": "Food Cost aracını aç →" },
+      "supplier_compare": { "title": "Tedarikçi fiyatlarını karşılaştırın", "description": "En çok kullandığınız 10 hammadde için en az 2 tedarikçiden fiyat isteyin. %5-15 tasarruf mümkün.", "cta": "Başabaş aracını aç →" },
+      "waste_log": { "title": "İsraf günlüğü başlatın", "description": "Günlük israf kaydı: ne, ne kadar, neden. Bir hafta sonra pattern göreceksiniz.", "cta": "Food Cost aracını aç →" },
+      "menu_engineering": { "title": "Menü performansını analiz edin", "description": "Her yemeğin karlılığını ve satış hacmini ölçün. Zayıf ürünleri bulun, güçlüleri öne çıkarın.", "cta": "Menü Matrisi aracını aç →" },
+      "price_review": { "title": "Fiyat stratejisini gözden geçirin", "description": "Food cost >%35 olan ürünlerin fiyatını yenileyin. Pazarla karşılaştırın.", "cta": "Başabaş aracını aç →" },
+      "shift_optimization": { "title": "Vardiya planını optimize edin", "description": "Personel sayısını yoğun saatlerle uyumlu hale getirin. Boş saatlerde azaltın, yoğunlukta artırın.", "cta": "Staff Retention aracını aç →" },
+      "revenue_mix": { "title": "Satış miksini analiz edin", "description": "En çok kâr getiren kategorileri belirleyin. Upsell stratejisi oluşturun.", "cta": "Menü Matrisi aracını aç →" }
+    }
   }
 }

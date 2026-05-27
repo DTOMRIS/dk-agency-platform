@@ -3541,5 +3541,30 @@
       "restart": "Start over"
     },
     "navigation": { "next": "Next", "back": "Back", "question_of": "/ 10 questions" }
+  },
+  "weekly_actions": {
+    "panel_title": "What should I do this week?",
+    "panel_subtitle": "Personalized actions based on your P&L results",
+    "kazan_cta": "Discuss this plan with KAZAN AI",
+    "all_good_title": "You're in great shape!",
+    "all_good_description": "Your metrics are within sector benchmarks. Keep it up!",
+    "duration_unit": "min",
+    "severity": { "ok": "Normal", "warning": "Attention", "critical": "Critical" },
+    "benchmark": {
+      "food_cost_ok": "Food cost is within range (≤32%)", "food_cost_warning": "Food cost is elevated (33-38%)", "food_cost_critical": "Food cost is critical (>38%)",
+      "labor_cost_ok": "Labor cost is within range (≤25%)", "labor_cost_warning": "Labor cost is elevated (26-30%)", "labor_cost_critical": "Labor cost is critical (>30%)",
+      "net_profit_ok": "Net profit is healthy (≥12%)", "net_profit_warning": "Net profit is low (8-11%)", "net_profit_critical": "Net profit is critical (<8%)",
+      "rent_ok": "Rent ratio is good (≤8%)", "rent_warning": "Rent ratio is elevated (9-12%)", "rent_critical": "Rent ratio is critical (>12%)"
+    },
+    "actions": {
+      "recipe_audit": { "title": "Audit your recipe cards", "description": "Update the recipe cards of your top 5 sellers with actual prices. The fastest way to spot food cost deviations.", "cta": "Open Food Cost tool →" },
+      "portion_check": { "title": "Check portion standards", "description": "Weigh each portion with a scale. 10g extra per portion = hundreds of AZN lost per month.", "cta": "Open Food Cost tool →" },
+      "supplier_compare": { "title": "Compare supplier prices", "description": "Request quotes for your top 10 ingredients from at least 2 suppliers. 5-15% savings are possible.", "cta": "Open Break-even tool →" },
+      "waste_log": { "title": "Start a waste log", "description": "Daily waste tracking: what, how much, why. After a week, you'll see patterns.", "cta": "Open Food Cost tool →" },
+      "menu_engineering": { "title": "Analyze menu performance", "description": "Measure each dish's profitability and sales volume. Find weak items, promote strong ones.", "cta": "Open Menu Matrix tool →" },
+      "price_review": { "title": "Review pricing strategy", "description": "Reprice items with food cost >35%. Compare with the market.", "cta": "Open Break-even tool →" },
+      "shift_optimization": { "title": "Optimize shift planning", "description": "Align staff count with peak hours. Reduce during idle hours, increase during peaks.", "cta": "Open Staff Retention tool →" },
+      "revenue_mix": { "title": "Analyze revenue mix", "description": "Identify the most profitable categories. Build an upsell strategy.", "cta": "Open Menu Matrix tool →" }
+    }
   }
 }

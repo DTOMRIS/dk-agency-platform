@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
+import WeeklyActionsPanel from '@/components/toolkit/WeeklyActionsPanel';
 import {
   ArrowRight,
   BookOpen,
@@ -423,6 +424,18 @@ export default function PnlSimulator() {
           t={t}
           formatPercent={formatPercent}
         />
+
+        {revenue > 0 && (
+          <WeeklyActionsPanel
+            metrics={{
+              food_cost: Math.round(foodCostPct),
+              labor_cost: Math.round(staffCostPct),
+              net_profit: Math.round(netMargin),
+              rent_ratio: Math.round(calc.pct(rent)),
+            }}
+            context="p_l_simulator"
+          />
+        )}
 
         <div className="grid gap-6 lg:grid-cols-2">
           <BenchmarkPanel t={t} />

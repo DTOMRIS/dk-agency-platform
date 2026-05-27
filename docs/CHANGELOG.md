@@ -4,6 +4,8 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- P&L Simulator: "Bu həftə nə etməliyəm?" Weekly Actions panel with sector benchmarks (TASK-0174)
+- Recommendation engine: 8 actions, 4 metrics, 3 severity levels (TASK-0174)
 - Homepage: AI Readiness Score wizard — 10 questions, 3 segments, Toolkit/KAZAN integration (TASK-0173)
 - EN + RU legal markdown content: privacy, terms, cookie-policy — 4 locale tam (TASK-0170)
 - UI: consent checkboxes on register form — terms+privacy required, marketing optional (TASK-0168-C)

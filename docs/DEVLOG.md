@@ -1,5 +1,23 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-27 — TASK-0174 (Weekly Actions Panel)
+
+**Qərar 1 — Sector benchmarks hardcoded**
+AZ HoReCa benchmarkları recommendation-engine.ts-ə hardcoded: food_cost OK ≤32%,
+labor_cost OK ≤25%, net_profit OK ≥12%, rent OK ≤8%. Bunlar Crunchtime AI
+Buyer's Guide + DK Agency sektor təcrübəsindən gəlir. Gələcəkdə admin panel-dən
+konfiqurasiya oluna bilər.
+
+**Qərar 2 — Mövcud toolkit slug-ları istifadə**
+8 action-dan hamısı mövcud toolkit slug-larına (`food-cost`, `basabas`,
+`menu-matrix`, `staff-retention`) map edildi. Mövcud olmayan slug-lar
+(recipe, supplier, waste, portion, price, revenue) əvəzinə ən yaxın
+mövcud alət istifadə olundu. comingSoon flag hazırdır amma hələ false.
+
+**Qərar 3 — All-good state**
+Bütün metrikalar OK olduqda boş panel göstərilmir — yaşıl "Əla vəziyyətdə"
+kartı göstərilir. UX yaxşıdır: istifadəçi bilir ki heç bir problem yoxdur.
+
 ## 2026-05-27 — TASK-0173 (AI Readiness Score wizard)
 
 **Qərar 1 — Wizard pattern (1 sual/ekran)**

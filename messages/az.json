@@ -3620,5 +3620,74 @@
       "back": "Geri",
       "question_of": "/ 10 sual"
     }
+  },
+  "weekly_actions": {
+    "panel_title": "Bu həftə nə etməliyəm?",
+    "panel_subtitle": "P&L nəticənizə əsasən fərdiləşdirilmiş aksiyonlar",
+    "kazan_cta": "KAZAN AI ilə bu planı müzakirə edin",
+    "all_good_title": "Əla vəziyyətdəsiniz!",
+    "all_good_description": "Göstəriciləriniz sektor benchmarkları daxilindədir. Davam edin!",
+    "duration_unit": "dəq",
+    "severity": {
+      "ok": "Norma",
+      "warning": "Diqqət",
+      "critical": "Kritik"
+    },
+    "benchmark": {
+      "food_cost_ok": "Food cost norma daxilindədir (≤32%)",
+      "food_cost_warning": "Food cost yuxarıdır (33-38%)",
+      "food_cost_critical": "Food cost kritik həddə (>38%)",
+      "labor_cost_ok": "Əmək xərcləri norma daxilindədir (≤25%)",
+      "labor_cost_warning": "Əmək xərcləri yuxarıdır (26-30%)",
+      "labor_cost_critical": "Əmək xərcləri kritik həddə (>30%)",
+      "net_profit_ok": "Xalis mənfəət sağlamdır (≥12%)",
+      "net_profit_warning": "Xalis mənfəət aşağıdır (8-11%)",
+      "net_profit_critical": "Xalis mənfəət kritik həddə (<8%)",
+      "rent_ok": "İcarə nisbəti yaxşıdır (≤8%)",
+      "rent_warning": "İcarə nisbəti yuxarıdır (9-12%)",
+      "rent_critical": "İcarə nisbəti kritik həddə (>12%)"
+    },
+    "actions": {
+      "recipe_audit": {
+        "title": "Reçete kartlarını yoxlayın",
+        "description": "Ən çox satılan 5 məhsulun reçete kartını actual qiymətlərlə yeniləyin. Food cost sapmasının ən tez aşkarlanan yolu.",
+        "cta": "Food Cost alətini aç →"
+      },
+      "portion_check": {
+        "title": "Porsiya standartlarını yoxlayın",
+        "description": "Hər porsiya üçün tərəzi ilə ölçüm edin. 10q artıq porsiya = ayda yüzlərlə AZN itki.",
+        "cta": "Food Cost alətini aç →"
+      },
+      "supplier_compare": {
+        "title": "Tədarükçü qiymətlərini müqayisə edin",
+        "description": "Top 10 xammal maddəsinin qiymətini ən az 2 tədarükçüdə soruşun. 5-15% qənaət mümkündür.",
+        "cta": "Başabaş alətini aç →"
+      },
+      "waste_log": {
+        "title": "Tullantı jurnalı başladın",
+        "description": "Gündəlik tullantı qeydiyyatı: nə, nə qədər, niyə. Bir həftə sonra pattern görəcəksiniz.",
+        "cta": "Food Cost alətini aç →"
+      },
+      "menu_engineering": {
+        "title": "Menyu performansını analiz edin",
+        "description": "Hər yeməyin rentabelliyini və satış həcmini ölçün. Zəif məhsulları tapın, güclüləri önə çəkin.",
+        "cta": "Menyu Matrisi alətini aç →"
+      },
+      "price_review": {
+        "title": "Qiymət strategiyasını yenidən baxın",
+        "description": "Food cost >35% olan məhsulların qiymətini yeniləyin. Bazarla müqayisə edin.",
+        "cta": "Başabaş alətini aç →"
+      },
+      "shift_optimization": {
+        "title": "Vardiya planını optimallaşdırın",
+        "description": "Pik saatlarla personel sayını uyğunlaşdırın. Boş saatlarda azaldın, pik vaxtda artırın.",
+        "cta": "Staff Retention alətini aç →"
+      },
+      "revenue_mix": {
+        "title": "Satış mixini analiz edin",
+        "description": "Ən çox mənfəət gətirən kateqoriyaları müəyyənləşdirin. Upsell strategiyası qurun.",
+        "cta": "Menyu Matrisi alətini aç →"
+      }
+    }
   }
 }
