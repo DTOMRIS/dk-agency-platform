@@ -10,7 +10,7 @@ const STORAGE_KEY = 'dk-cookie-consent';
 interface CookieSettings {
   facebook: boolean;
   google: boolean;
-  hotjar: boolean;
+  yandex_metrica: boolean;
 }
 
 interface CookieConsent {
@@ -50,7 +50,7 @@ export default function CookiesBanner() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [facebook, setFacebook] = useState(false);
   const [google, setGoogle] = useState(false);
-  const [hotjar, setHotjar] = useState(false);
+  const [yandex_metrica, setYandexMetrica] = useState(false);
 
   useEffect(() => {
     try {
@@ -76,7 +76,7 @@ export default function CookiesBanner() {
   const handleAccept = () => {
     saveAndHide({
       accepted: true,
-      settings: { facebook: true, google: true, hotjar: true },
+      settings: { facebook: true, google: true, yandex_metrica: true },
       date: new Date().toISOString(),
     });
   };
@@ -84,15 +84,15 @@ export default function CookiesBanner() {
   const handleReject = () => {
     saveAndHide({
       accepted: false,
-      settings: { facebook: false, google: false, hotjar: false },
+      settings: { facebook: false, google: false, yandex_metrica: false },
       date: new Date().toISOString(),
     });
   };
 
   const handleSaveCustom = () => {
     saveAndHide({
-      accepted: facebook || google || hotjar,
-      settings: { facebook, google, hotjar },
+      accepted: facebook || google || yandex_metrica,
+      settings: { facebook, google, yandex_metrica },
       date: new Date().toISOString(),
     });
   };
@@ -100,10 +100,10 @@ export default function CookiesBanner() {
   const handleAcceptAll = () => {
     setFacebook(true);
     setGoogle(true);
-    setHotjar(true);
+    setYandexMetrica(true);
     saveAndHide({
       accepted: true,
-      settings: { facebook: true, google: true, hotjar: true },
+      settings: { facebook: true, google: true, yandex_metrica: true },
       date: new Date().toISOString(),
     });
   };
@@ -111,10 +111,10 @@ export default function CookiesBanner() {
   const handleToggleAll = (val: boolean) => {
     setFacebook(val);
     setGoogle(val);
-    setHotjar(val);
+    setYandexMetrica(val);
   };
 
-  const allOn = facebook && google && hotjar;
+  const allOn = facebook && google && yandex_metrica;
 
   return (
     <AnimatePresence>
@@ -207,10 +207,12 @@ export default function CookiesBanner() {
 
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-sm font-medium text-slate-900">Hotjar</p>
-                    <p className="text-xs text-gray-400">İstifadəçi davranışını izləyir</p>
+                    <p className="text-sm font-medium text-slate-900">Yandex Metrica</p>
+                    <p className="text-xs text-gray-400">
+                      Sayt istifadəsini anlamaq üçün anonim statistika toplayır
+                    </p>
                   </div>
-                  <Toggle checked={hotjar} onChange={setHotjar} />
+                  <Toggle checked={yandex_metrica} onChange={setYandexMetrica} />
                 </div>
               </div>
 

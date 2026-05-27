@@ -1,5 +1,23 @@
 # HANDOFF
 
+## 2026-05-27 — TASK-0175 (Yandex Metrica)
+- Ne deyisdi:
+  - Yandex Metrica consent-aware integration tamamlandı
+  - lib/analytics/yandex-metrica.ts + events.ts + YandexMetricaInit.tsx
+  - CSP whitelist: mc.yandex.ru, mc.webvisor.org
+  - CookiesBanner: Hotjar → Yandex Metrica
+  - 10 event wire-up: AI Readiness (2), Weekly Actions (1), Registration (future)
+  - L-024 dərsi: analytics yalnız consent ilə
+- Ne deyismedi:
+  - Cookie consent logic (localStorage pattern) toxunulmadı
+  - Protected middleware/root layout toxunulmadı
+- Riskler:
+  - Hostinger-də NEXT_PUBLIC_YANDEX_METRICA_ID env set olmalıdır
+  - Yandex dashboard-da counter aktiv olmalıdır
+- Sonraki addim:
+  - TASK-0176: Weekly Actions digər toolkit-lərə yayılma
+  - KAZAN kontekst integration (query param decoding)
+
 ## 2026-05-27 — TASK-0174 (Weekly Actions Panel)
 - Ne deyisdi:
   - P&L Simulator-a "Bu həftə nə etməliyəm?" paneli əlavə edildi

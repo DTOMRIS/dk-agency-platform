@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- Yandex Metrica: consent-aware integration with KVKK compliance (TASK-0175)
+- Analytics event taxonomy: 10 events for AI Readiness, Weekly Actions, Registration (TASK-0175)
+- CSP whitelist: mc.yandex.ru, mc.webvisor.org domains (TASK-0175)
 - P&L Simulator: "Bu həftə nə etməliyəm?" Weekly Actions panel with sector benchmarks (TASK-0174)
 - Recommendation engine: 8 actions, 4 metrics, 3 severity levels (TASK-0174)
 - Homepage: AI Readiness Score wizard — 10 questions, 3 segments, Toolkit/KAZAN integration (TASK-0173)

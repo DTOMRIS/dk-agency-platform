@@ -144,3 +144,13 @@ Yanlış reuse bug-dan pis — sahə qarışıqlığı yaradır.
 
 Doğru yanaşma: shared component yarat, amma blog-özəl blokları DAXIL
 ETMƏ. rehype-sanitize əlavə et (blog renderer-də yoxdur — XSS riski).
+
+### L-024 — Analytics yalnız consent ilə initialize edilir (27 May 2026)
+KVKK uyğunluğu: Yandex Metrica (və ya istənilən analytics) yalnız
+istifadəçi cookie consent vermiş olduqda yüklənir. Default vəziyyət:
+heç bir tracking script yüklənmir. CookiesBanner-dən "Qəbul edirəm"
+seçilmədikdə `localStorage['dk-cookie-consent']` boş qalır →
+`YandexMetricaInit` component init çağırmır.
+
+Bu qayda bütün gələcək analytics üçün tətbiq olunur: Google Analytics,
+PostHog, Facebook Pixel — consent olmadan initialize etmə.
