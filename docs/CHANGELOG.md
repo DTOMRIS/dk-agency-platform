@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- KAZAN AI: context-aware auto-greeting from P&L Simulator and AI Readiness (TASK-0176A)
+- KAZAN AI: system prompt injection with user metrics for personalized responses (TASK-0176A)
+- KAZAN AI: sanity check for impossible metric values (TASK-0176A)
 - Yandex Metrica: consent-aware integration with KVKK compliance (TASK-0175)
 - Analytics event taxonomy: 10 events for AI Readiness, Weekly Actions, Registration (TASK-0175)
 - CSP whitelist: mc.yandex.ru, mc.webvisor.org domains (TASK-0175)

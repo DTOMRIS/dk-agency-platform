@@ -1,5 +1,20 @@
 # HANDOFF
 
+## 2026-05-27 — TASK-0176A (KAZAN Context-Aware Greeting)
+- Ne deyisdi:
+  - KAZAN AI P&L Simulator və AI Readiness-dən gələn context-i oxuyur
+  - URL query param decode → dynamic greeting + system prompt injection
+  - Sanity check: food_cost>60%, net_profit<-30%, rent>25% → xəbərdarlıq
+  - lib/kazan-ai/context-greetings.ts — greeting builder + system prompt injection
+  - 4 dildə contextGreeting i18n keys (kazanAi namespace)
+- Ne deyismedi:
+  - KAZAN API məntiqi (DeepSeek/Claude provider) toxunulmadı
+  - Default greeting saxlanıldı (context olmadıqda)
+- Riskler:
+  - next-intl Translator type cast (any) — tip güvənliyi zəifdir
+- Sonraki addim:
+  - TASK-0176B: Weekly Actions digər toolkit-lərə yayılma
+
 ## 2026-05-27 — TASK-0175 (Yandex Metrica)
 - Ne deyisdi:
   - Yandex Metrica consent-aware integration tamamlandı

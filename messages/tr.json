@@ -2784,6 +2784,29 @@
       "heading": "Satış katmanı",
       "body": "KAZAN AI problemi ölçmeye yardımcı olur. Sistem kurmak, audit yapmak ve sonucu gerçek kara çevirmek için sonraki adım danışmanlıktır.",
       "cta": "DK Agency ile görüş"
+    },
+    "contextGreeting": {
+      "pnl": {
+        "intro": "Merhaba, P&L Simülatöründen geldiğini gördüm. Rakamlarını analiz ettim:",
+        "results_title": "Sonuçların",
+        "sector": "sektör",
+        "metric": { "food_cost": "Food Cost", "labor_cost": "İşçilik Maliyeti", "net_profit": "Net Kâr", "rent_ratio": "Kira Oranı" },
+        "sanity_title": "Dikkat — veri tutarsızlığı tespit edildi",
+        "sanity": { "food_cost_high": "Food cost %60'ın üzerinde — hesaplamada hata olabilir", "net_profit_critical": "Bu zarar seviyesi sürdürülemez, rakamları birlikte kontrol edelim", "rent_high": "Kira oranı çok yüksek — model sürdürülebilir değil", "sum_exceeds": "Giderler geliri aşıyor — doğru rakamları alalım" },
+        "questions_intro": "Nereden başlayalım?",
+        "question_1": "Bu rakamlar aylık satışın yüzdesi mi, yoksa farklı bir hesaplama mı?",
+        "question_2": "En çok sıkıntı yaratan maliyet hangisi — işçilik, hammadde mi kira mı?",
+        "question_3": "Bu ay ne değişti — fiyatlar arttı, satış düştü, yoksa ikisi birden mi?"
+      },
+      "readiness": {
+        "intro": "Merhaba, AI Hazırlık testinden geldiğini gördüm. Sonucunu analiz ettim:",
+        "score_label": "Puanın",
+        "segment_label": "Segment",
+        "segment": { "not_ready": "Temel atılmalı", "partial": "Kısmen hazır", "ready": "AI'ya hazır" },
+        "questions_intro": "Sorularınla başlayalım:",
+        "question_1": "Hangi alandan başlamak istiyorsun?",
+        "question_2": "En büyük operasyonel sorununuz ne?"
+      }
     }
   },
   "kazanWidget": {

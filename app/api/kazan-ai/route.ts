@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 import { buildKazanSystemPrompt } from '@/lib/kazan-ai/system-prompt';
 import { buildFoodCostContext } from '@/lib/kazan-ai/food-cost-context';
+import { buildSystemPromptInjection, type KazanContext } from '@/lib/kazan-ai/context-greetings';
 import ahilikQuotes from '@/data/kazan-kb/ahilik-quotes.json';
 
 type ChatRole = 'user' | 'assistant';
@@ -14,6 +15,7 @@ type ChatMessage = {
 type RequestBody = {
   messages?: ChatMessage[];
   locale?: string;
+  pnlContext?: KazanContext;
 };
 
 type AhilikQuote = { id: string; az: string; ru: string; en: string; tr: string; category: string };
@@ -220,6 +222,14 @@ export async function POST(request: NextRequest) {
     if (isFoodCostIntent(messages)) {
       const foodCostCtx = await buildFoodCostContext();
       systemPrompt = systemPrompt + '\n\n' + foodCostCtx;
+    }
+
+    // P&L / AI Readiness context injection
+    if (body.pnlContext) {
+      const contextInjection = buildSystemPromptInjection(body.pnlContext);
+      if (contextInjection) {
+        systemPrompt = systemPrompt + '\n\n' + contextInjection;
+      }
     }
 
     const deepseekApiKey = process.env.DEEPSEEK_API_KEY;
