@@ -12,22 +12,22 @@ const metricThresholds: Record<MetricKey, ThresholdRange[]> = {
   food_cost: [
     { min: 0, max: 32, severity: 'OK', benchmarkKey: 'weekly_actions.benchmark.food_cost_ok' },
     { min: 33, max: 38, severity: 'WARNING', benchmarkKey: 'weekly_actions.benchmark.food_cost_warning' },
-    { min: 39, max: 100, severity: 'CRITICAL', benchmarkKey: 'weekly_actions.benchmark.food_cost_critical' },
+    { min: 39, max: Infinity, severity: 'CRITICAL', benchmarkKey: 'weekly_actions.benchmark.food_cost_critical' },
   ],
   labor_cost: [
     { min: 0, max: 25, severity: 'OK', benchmarkKey: 'weekly_actions.benchmark.labor_cost_ok' },
     { min: 26, max: 30, severity: 'WARNING', benchmarkKey: 'weekly_actions.benchmark.labor_cost_warning' },
-    { min: 31, max: 100, severity: 'CRITICAL', benchmarkKey: 'weekly_actions.benchmark.labor_cost_critical' },
+    { min: 31, max: Infinity, severity: 'CRITICAL', benchmarkKey: 'weekly_actions.benchmark.labor_cost_critical' },
   ],
   net_profit: [
-    { min: 12, max: 100, severity: 'OK', benchmarkKey: 'weekly_actions.benchmark.net_profit_ok' },
+    { min: 12, max: Infinity, severity: 'OK', benchmarkKey: 'weekly_actions.benchmark.net_profit_ok' },
     { min: 8, max: 11, severity: 'WARNING', benchmarkKey: 'weekly_actions.benchmark.net_profit_warning' },
-    { min: -100, max: 7, severity: 'CRITICAL', benchmarkKey: 'weekly_actions.benchmark.net_profit_critical' },
+    { min: -Infinity, max: 7, severity: 'CRITICAL', benchmarkKey: 'weekly_actions.benchmark.net_profit_critical' },
   ],
   rent_ratio: [
     { min: 0, max: 8, severity: 'OK', benchmarkKey: 'weekly_actions.benchmark.rent_ok' },
     { min: 9, max: 12, severity: 'WARNING', benchmarkKey: 'weekly_actions.benchmark.rent_warning' },
-    { min: 13, max: 100, severity: 'CRITICAL', benchmarkKey: 'weekly_actions.benchmark.rent_critical' },
+    { min: 13, max: Infinity, severity: 'CRITICAL', benchmarkKey: 'weekly_actions.benchmark.rent_critical' },
   ],
 };
 
@@ -36,7 +36,7 @@ export function getSeverity(metric: MetricKey, value: number): Severity {
   for (const r of ranges) {
     if (value >= r.min && value <= r.max) return r.severity;
   }
-  return 'OK';
+  return 'CRITICAL';
 }
 
 export function getBenchmarkKey(metric: MetricKey, value: number): string {
@@ -44,7 +44,7 @@ export function getBenchmarkKey(metric: MetricKey, value: number): string {
   for (const r of ranges) {
     if (value >= r.min && value <= r.max) return r.benchmarkKey;
   }
-  return ranges[0].benchmarkKey;
+  return ranges[ranges.length - 1].benchmarkKey;
 }
 
 export interface Action {
