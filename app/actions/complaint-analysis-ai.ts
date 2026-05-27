@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
+import { AI_MODELS } from '@/lib/ai-models';
 
 export type ComplaintChannel = 'face_to_face' | 'phone' | 'whatsapp' | 'google_maps' | 'instagram' | 'other';
 export type CustomerType = 'first_time' | 'regular' | 'unknown';
@@ -208,7 +209,7 @@ export async function analyzeComplaint(input: ComplaintAnalysisInput): Promise<C
         authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: AI_MODELS.deepseek.chat,
         temperature: 0.35,
         max_tokens: 1400,
         response_format: { type: 'json_object' },

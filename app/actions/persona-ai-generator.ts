@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
+import { AI_MODELS } from '@/lib/ai-models';
 
 export interface PersonaInput {
   restaurantType: string;
@@ -287,7 +288,7 @@ export async function generatePersona(input: PersonaInput): Promise<PersonaResul
         authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: AI_MODELS.deepseek.chat,
         temperature: 0.7,
         max_tokens: 1800,
         response_format: { type: 'json_object' },

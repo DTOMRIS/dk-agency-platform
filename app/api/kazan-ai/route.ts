@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { AI_MODELS } from '@/lib/ai-models';
 import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 import { buildKazanSystemPrompt } from '@/lib/kazan-ai/system-prompt';
 import { buildFoodCostContext } from '@/lib/kazan-ai/food-cost-context';
@@ -144,7 +145,7 @@ async function callDeepSeekWithPrompt(messages: ChatMessage[], apiKey: string, s
       authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'deepseek-chat',
+      model: AI_MODELS.deepseek.chat,
       temperature: 0.2,
       max_tokens: 700,
       messages: [
@@ -189,7 +190,7 @@ async function callDeepSeekWithPrompt(messages: ChatMessage[], apiKey: string, s
     status: 200,
     body: {
       id: payload.id,
-      model: payload.model || 'deepseek-chat',
+      model: payload.model || AI_MODELS.deepseek.chat,
       provider: 'deepseek',
       message: text,
     },

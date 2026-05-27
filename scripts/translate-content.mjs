@@ -82,7 +82,7 @@ async function translateText(text, targetLang) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'deepseek-chat',
+      model: 'deepseek-v4-flash', // SST: lib/ai-models.ts
       temperature: 0.3,
       max_tokens: 4000,
       messages: [

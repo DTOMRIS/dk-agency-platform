@@ -1,4 +1,5 @@
 import Parser from 'rss-parser';
+import { AI_MODELS } from '@/lib/ai-models';
 
 import {
   createFetchedNewsArticle,
@@ -193,7 +194,7 @@ async function translateWithDeepSeek(title: string, summary: string, apiKey: str
       authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'deepseek-chat',
+      model: AI_MODELS.deepseek.chat,
       temperature: 0.3,
       max_tokens: 500,
       messages: [

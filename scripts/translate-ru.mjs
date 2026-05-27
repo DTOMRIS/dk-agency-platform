@@ -84,7 +84,7 @@ async function translateBatch(batch, apiKey) {
       authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'deepseek-chat',
+      model: 'deepseek-v4-flash', // SST: lib/ai-models.ts
       temperature: 0.2,
       response_format: { type: 'json_object' },
       messages: [

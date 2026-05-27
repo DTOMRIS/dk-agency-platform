@@ -87,7 +87,7 @@ async function translateWithDeepSeek(text, apiKey) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: 'deepseek-v4-flash', // SST: lib/ai-models.ts
         messages: [
           {
             role: 'user',
