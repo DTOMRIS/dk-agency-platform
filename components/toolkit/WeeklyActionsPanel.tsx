@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { Clock, ArrowRight, Sparkles, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics/yandex-metrica';
+import { ANALYTICS_EVENTS } from '@/lib/analytics/events';
 import {
   getRecommendedActions,
   getSeverity,
@@ -93,6 +96,12 @@ export default function WeeklyActionsPanel({ metrics, context }: WeeklyActionsPa
   ];
 
   const hasIssues = metricSeverities.some((m) => m.severity !== 'OK');
+
+  useEffect(() => {
+    if (hasIssues && actions.length > 0) {
+      trackEvent(ANALYTICS_EVENTS.WEEKLY_ACTIONS_SHOWN, { action_count: actions.length, context });
+    }
+  }, [hasIssues, actions.length, context]);
 
   if (!hasIssues) {
     return (

@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { defaultLocale, isLocale, normalizeLocale, withLocale } from '@/i18n/config';
 import { routing } from '@/i18n/routing';
 import { getAlternates } from '@/lib/seo/alternates';
+import YandexMetricaInit from '@/components/YandexMetricaInit';
 
 type Props = {
   children: React.ReactNode;
@@ -53,6 +54,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider messages={messages}>
       {children}
+      <YandexMetricaInit />
     </NextIntlClientProvider>
   );
 }

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import { ArrowRight, ArrowLeft, RotateCcw, Sparkles, Wrench } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics/yandex-metrica';
+import { ANALYTICS_EVENTS } from '@/lib/analytics/events';
 import {
   aiReadinessQuestions,
   AI_READINESS_MAX_SCORE,
@@ -86,6 +88,7 @@ export default function AiReadinessScore() {
 
   const handleFinish = () => {
     setStep(questions.length);
+    trackEvent(ANALYTICS_EVENTS.AI_READINESS_COMPLETED, { score: totalScore, segment: segment.id });
   };
 
   // Intro state
@@ -103,7 +106,7 @@ export default function AiReadinessScore() {
             {t('section_description')}
           </p>
           <button
-            onClick={() => setStarted(true)}
+            onClick={() => { setStarted(true); trackEvent(ANALYTICS_EVENTS.AI_READINESS_STARTED); }}
             className="mt-8 inline-flex items-center gap-2 rounded-xl bg-[var(--dk-red,#E94560)] px-8 py-3.5 font-bold text-white transition hover:opacity-90"
           >
             <Sparkles className="h-5 w-5" />

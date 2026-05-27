@@ -1,5 +1,26 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-27 — TASK-0175 (Yandex Metrica — Senaryo B)
+
+**Qərar 1 — KVKK L-024: consent-first analytics**
+Yandex Metrica yalnız CookiesBanner-dən "Qəbul edirəm" seçildikdən sonra
+initialize olunur. Default vəziyyət: script yüklənmir. localStorage-dəki
+`dk-cookie-consent.accepted === true` yoxlanır. Reject edilsə → heç bir
+tracking yox.
+
+**Qərar 2 — Senaryo B tətbiqi**
+Discovery audit: env var mövcud, cookie consent UI mövcud, amma initialization
+layer yox idi. Yeni fayllar: yandex-metrica.ts (helper), events.ts (taxonomy),
+YandexMetricaInit.tsx (consent-aware init + pageview tracking).
+
+**Qərar 3 — CookiesBanner-dən Hotjar çıxarıldı**
+Hotjar heç quraşdırılmamışdı — placeholder toggle idi. Yandex Metrica ilə
+əvəz olundu (eyni UX slot — analytics toggle).
+
+**Qərar 4 — CSP genişləndirildi**
+script-src və connect-src-yə mc.yandex.ru, mc.yandex.com, mc.webvisor.org
+əlavə olundu. Olmasa Yandex script CSP tərəfindən bloklanacaqdı.
+
 ## 2026-05-27 — TASK-0174 (Weekly Actions Panel)
 
 **Qərar 1 — Sector benchmarks hardcoded**
