@@ -6,6 +6,8 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ### Added
 - docs/ONBOARDING.md — 5-minute new developer guide (TASK-0179A)
 - docs/README.md — documentation index with all file links (TASK-0179A)
+- docs/ADR/ — 15 retroactive Architecture Decision Records (TASK-0179C)
+- docs/DATA-MODEL.md — 30 table inventory + Mermaid ERD (TASK-0179C)
 - docs/API-MAP.md — 69 endpoint inventory with auth, rate-limit, categories (TASK-0179B)
 - docs/archive/ — archived old reports (8 files moved) (TASK-0179A)
 
