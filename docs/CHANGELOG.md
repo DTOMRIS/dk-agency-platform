@@ -4,6 +4,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- Toolkit: Metro 3-block descriptions for KALFA tier 12 tools in 4 languages (TASK-0178B)
 - Toolkit: Metro 3-block descriptions for ŞAGIRD tier tools — Marka Kompası, KST Yoxlayıcı, Yemək Xərci (TASK-0178A)
 - Toolkit: ToolDescription.tsx reusable component with collapsible accordion (TASK-0178A)
 
