@@ -112,7 +112,7 @@ async function translateWithGemini(text, apiKey) {
     const { GoogleGenAI } = await import('@google/genai');
     const ai = new GoogleGenAI({ apiKey });
     const res = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash', // SST: lib/ai-models.ts (.mjs cannot import TS)
       contents: `Translate the following text (English or Turkish) to Azerbaijani (az-AZ). Return ONLY the translation.\n\n${text.slice(0, 2000)}`,
       config: { temperature: 0.2 },
     });

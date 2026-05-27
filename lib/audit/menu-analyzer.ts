@@ -3,6 +3,8 @@
  * @purpose Menyu fotosunu AI ilə analiz et — qiymət, kateqoriya, food cost təxmini
  */
 
+import { AI_MODELS } from '@/lib/ai-models';
+
 export interface MenuAnalysis {
   items: Array<{ name: string; price: number }>;
   avgPrice: number;
@@ -26,7 +28,7 @@ export async function analyzeMenu(menuPhotoUrl: string | null): Promise<MenuAnal
 }
 
 async function analyzeMenuWithGemini(url: string, apiKey: string): Promise<MenuAnalysis | null> {
-  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash-preview-04-17';
+  const model = process.env.GEMINI_MODEL || AI_MODELS.gemini.vision;
 
   try {
     const imgRes = await fetch(url);
