@@ -17,6 +17,8 @@
 ## Architecture
 
 - [API-MAP.md](API-MAP.md) — 69 endpoint inventory with auth, rate-limit, purpose
+- [DATA-MODEL.md](DATA-MODEL.md) — 30 table inventory + Mermaid ERD
+- [ADR/](ADR/README.md) — 15 Architecture Decision Records
 
 ## Specifications
 
