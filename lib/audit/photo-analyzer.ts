@@ -6,6 +6,8 @@
  * Fallback: DeepSeek text (foto URL + kontekst əsasında ümumi analiz)
  */
 
+import { AI_MODELS } from '@/lib/ai-models';
+
 export interface PhotoAnalysis {
   observations: string[];
   cleanliness: number; // 1-10
@@ -43,7 +45,7 @@ async function analyzeWithGemini(
   category: string,
   apiKey: string,
 ): Promise<PhotoAnalysis> {
-  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash-preview-04-17';
+  const model = process.env.GEMINI_MODEL || AI_MODELS.gemini.vision;
 
   const parts: Array<{ text: string } | { inlineData: { mimeType: string; data: string } }> = [];
 

@@ -5,6 +5,7 @@
 
 import { INVOICE_OCR_PROMPT, INVOICE_OCR_SYSTEM } from './ocr-prompt';
 import type { ParsedInvoice, OcrProvider, OcrProviderResult } from './types';
+import { AI_MODELS } from '@/lib/ai-models';
 
 // ── Gemini Vision (PRIMARY) ─────────────────────────────────────────
 
@@ -19,7 +20,7 @@ async function callGeminiVision(
     const { GoogleGenAI } = await import('@google/genai');
     const ai = new GoogleGenAI({ apiKey });
 
-    const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash-preview-04-17';
+    const model = process.env.GEMINI_MODEL || AI_MODELS.gemini.vision;
     const response = await ai.models.generateContent({
       model,
       contents: [

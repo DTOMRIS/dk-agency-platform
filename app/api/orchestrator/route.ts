@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { AI_MODELS } from '@/lib/ai-models';
 
 const AGENT_PROFILES = {
   AlmilaCloser:
@@ -34,7 +35,7 @@ async function runGemini(userPrompt: string, systemInstruction: string) {
   const ai = new GoogleGenAI({ apiKey });
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.0-flash',
+    model: AI_MODELS.gemini.text,
     contents: userPrompt,
     config: {
       systemInstruction,
