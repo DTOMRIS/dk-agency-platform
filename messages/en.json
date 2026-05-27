@@ -3589,5 +3589,40 @@
       "shift_optimization": { "title": "Optimize shift planning", "description": "Align staff count with peak hours. Reduce during idle hours, increase during peaks.", "cta": "Open Staff Retention tool →" },
       "revenue_mix": { "title": "Analyze revenue mix", "description": "Identify the most profitable categories. Build an upsell strategy.", "cta": "Open Menu Matrix tool →" }
     }
+  },
+  "marketing_tools": {
+    "marka_kompasi": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Answer 5 questions and AI generates your brand positioning. Ideal customer profile, competitive edge, tagline, and where to use it — all on one page.",
+        "block_2_title": "What you'll need",
+        "block_2_items": ["When your customers visit most (morning, lunch, evening)", "Why they come — hunger, meetings, celebrations?", "Your food story — traditional, fast, healthy?", "3 things your competitors can't do", "Why a customer would recommend you — 1 sentence"],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Newly opened restaurants, owners planning a rebrand, or anyone updating their Instagram bio. Especially useful when your brand message isn't clear."
+      }
+    },
+    "kst_yoxlayici": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Rate your restaurant across 30 questions in 3 areas: Quality, Service, Cleanliness. Each area is scored out of 100. AI finds your weakest points and builds a 30-day action plan.",
+        "block_2_title": "What you'll need",
+        "block_2_items": ["Rate 10 quality questions 1-5 (taste, portions, temperature)", "Rate 10 service questions 1-5 (speed, attitude, complaint handling)", "Rate 10 cleanliness questions 1-5 (kitchen, restrooms, equipment)", "Optional notes (e.g., last food safety inspection date)"],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Owners preparing for food safety inspections, facing rising customer complaints, or simply wanting to know where they're weak. Works for both new and experienced operators."
+      }
+    },
+    "yemek_xerci": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Build a recipe card, enter each ingredient's quantity and price. The tool calculates cost per portion, food cost percentage, and ideal selling price. No AI — pure math, precise results.",
+        "block_2_title": "What you'll need",
+        "block_2_items": ["Dish name and selling price (AZN)", "Number of portions per recipe batch", "Target food cost percentage (e.g., 30%)", "Each ingredient's name, quantity, and unit price", "Trim loss percentage (e.g., 5% for chicken breast)"],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Any restaurant owner pricing dishes by guesswork. Operators aiming to keep food cost below 33% and starting to build recipe cards. Export to CSV or Excel to share with your accountant."
+      }
+    }
   }
 }

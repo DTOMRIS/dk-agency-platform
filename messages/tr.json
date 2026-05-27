@@ -3582,5 +3582,40 @@
       "shift_optimization": { "title": "Vardiya planını optimize edin", "description": "Personel sayısını yoğun saatlerle uyumlu hale getirin. Boş saatlerde azaltın, yoğunlukta artırın.", "cta": "Staff Retention aracını aç →" },
       "revenue_mix": { "title": "Satış miksini analiz edin", "description": "En çok kâr getiren kategorileri belirleyin. Upsell stratejisi oluşturun.", "cta": "Menü Matrisi aracını aç →" }
     }
+  },
+  "marketing_tools": {
+    "marka_kompasi": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "5 soruyu cevapla, AI restoranının marka konumlandırmasını çıkarsın. İdeal müşteri profili, rakiplerden farkın, slogan ve nerede kullanacağın — hepsi tek sayfada.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": ["Müşterilerinin en çok ne zaman geldiğini bil (sabah, öğle, akşam)", "Neden geliyorlar — karnını doyurmak, toplantı, kutlama?", "Yemeğinin hikayesi — geleneksel, hızlı, sağlıklı?", "Rakiplerinin yapamadığı 3 şeyi yaz", "Müşteri seni neden tavsiye eder — 1 cümle"],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Yeni açılan restoran, yeniden marka yapmayı planlayan sahip veya Instagram bio'sunu güncellemek isteyen herkes. Özellikle marka mesajı net olmayan işletmeler için."
+      }
+    },
+    "kst_yoxlayici": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "30 soruyla restoranını 3 alanda değerlendirir: Kalite, Servis, Temizlik. Her alan 100 üzerinden puanlanır. AI en zayıf noktalarını bulur ve 30 günlük iyileştirme planı verir.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": ["10 kalite sorusuna 1-5 puan ver (lezzet, porsiyon, sıcaklık)", "10 servis sorusuna 1-5 puan ver (hız, tutum, şikayet yönetimi)", "10 temizlik sorusuna 1-5 puan ver (mutfak, tuvaletler, ekipman)", "İsteğe bağlı notlar (örn. son gıda güvenliği denetimi tarihi)"],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Gıda güvenliği denetimine hazırlanan, müşteri şikayetleri artan veya zayıf noktalarını bilmek isteyen restoran sahipleri. Hem yeni hem deneyimli işletmeciler için."
+      }
+    },
+    "yemek_xerci": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Reçete kartı oluştur, her malzemenin miktarını ve fiyatını gir. Araç porsiyon başına maliyeti, food cost yüzdesini ve ideal satış fiyatını hesaplar. AI yok — saf matematik, kesin sonuç.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": ["Yemeğin adı ve satış fiyatı (AZN)", "Bir reçeteden kaç porsiyon çıkıyor", "Hedef food cost yüzdesi (örn. %30)", "Her malzemenin adı, miktarı ve birim fiyatı", "Trim loss yüzdesi (örn. tavuk göğsünde %5 fire)"],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Menü fiyatını göz kararıyla belirleyen her restoran sahibi. Food cost'u %33'ün altında tutmak isteyen, reçete kartı oluşturmaya başlayan işletmeciler. CSV ve Excel export ile muhasebecinle paylaşabilirsin."
+      }
+    }
   }
 }

@@ -1,5 +1,14 @@
 # HANDOFF
 
+## 2026-05-27 — TASK-0178A (ŞAGIRD Tool Descriptions)
+- Ne deyisdi:
+  - 3 ŞAGIRD alət üçün Metro 3-block descriptions (4 dildə)
+  - ToolDescription.tsx reusable component (collapsible accordion)
+  - marketing_tools i18n namespace (~96 leaf)
+- Sonraki addim:
+  - TASK-0178B: KALFA 12 araç descriptions
+  - TASK-0178C: USTA 6 araç descriptions
+
 ## 2026-05-27 — TASK-0176A (KAZAN Context-Aware Greeting)
 - Ne deyisdi:
   - KAZAN AI P&L Simulator və AI Readiness-dən gələn context-i oxuyur
