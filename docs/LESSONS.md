@@ -154,3 +154,16 @@ seçilmədikdə `localStorage['dk-cookie-consent']` boş qalır →
 
 Bu qayda bütün gələcək analytics üçün tətbiq olunur: Google Analytics,
 PostHog, Facebook Pixel — consent olmadan initialize etmə.
+
+### L-027 — Range-based severity Infinity lazımdır (27 May 2026)
+Severity thresholds `max: 100` ilə yazılmışdı. 300% labor cost girdikdə
+heç bir range-ə düşmür → default `'OK'` qaytarır. Doğru yanaşma:
+açıq range-lar `Infinity` (və ya `-Infinity`) istifadə etməli. Default
+return da `'OK'` deyil `'CRITICAL'` olmalıdır — bilinməyən dəyər
+güvənli deyil.
+
+### L-028 — i18n validator nested key-ləri yoxlamalıdır (27 May 2026)
+AI Readiness sualları + label-lar i18n-da mövcud idi, amma option
+label-ları üçün component `.label` suffix əlavə edirdi — messages-da
+bu suffix yox idi. Validator yalnız top-level key mövcudluğunu yoxlayır,
+nested leaf-ləri yox. Audit-də runtime MISSING_MESSAGE check lazımdır.

@@ -3,6 +3,11 @@
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
+### Fixed
+- AI Readiness: option label i18n key mismatch — removed spurious `.label` suffix (TASK-0177)
+- Recommendation engine: severity ranges now use Infinity — values >100% correctly return CRITICAL (TASK-0177)
+- Recommendation engine: default fallback changed from OK to CRITICAL for out-of-range values (TASK-0177)
+
 ### Added
 - KAZAN AI: context-aware auto-greeting from P&L Simulator and AI Readiness (TASK-0176A)
 - KAZAN AI: system prompt injection with user metrics for personalized responses (TASK-0176A)

@@ -225,7 +225,7 @@ export default function AiReadinessScore() {
                       <span className="h-2 w-2 rounded-full bg-white" />
                     )}
                   </span>
-                  {t(`${optKey}.label`)}
+                  {t(optKey)}
                 </button>
               );
             })}
