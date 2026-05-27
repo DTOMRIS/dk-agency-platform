@@ -1,5 +1,11 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Quick Start
+
+Yeni başlayan? **[docs/ONBOARDING.md](docs/ONBOARDING.md)** — 5 dəqiqədə işə başla.
+
+Tam documentation index: **[docs/README.md](docs/README.md)**
+
 ## Getting Started
 
 First, run the development server:

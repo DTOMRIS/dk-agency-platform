@@ -4,6 +4,16 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 ### Added
+- docs/ONBOARDING.md — 5-minute new developer guide (TASK-0179A)
+- docs/README.md — documentation index with all file links (TASK-0179A)
+- docs/archive/ — archived old reports (8 files moved) (TASK-0179A)
+
+### Removed
+- docs/n8n-setup.md (duplicate of docs/n8n/SETUP.md) (TASK-0179A)
+- docs/NEWS-TRANSLATION.md (duplicate of XEBER-TERCUME-SISTEMI.md) (TASK-0179A)
+- Archived: DRIFT-REPORT, PROJECT-STATUS, CTO-DAILY-REPORT-TEMPLATE, WEEK-EXECUTION-PLAN, 4 audit reports (TASK-0179A)
+
+### Previous
 - Toolkit: Metro 3-block descriptions for KALFA tier 12 tools in 4 languages (TASK-0178B)
 - Toolkit: Metro 3-block descriptions for ŞAGIRD tier tools — Marka Kompası, KST Yoxlayıcı, Yemək Xərci (TASK-0178A)
 - Toolkit: ToolDescription.tsx reusable component with collapsible accordion (TASK-0178A)
