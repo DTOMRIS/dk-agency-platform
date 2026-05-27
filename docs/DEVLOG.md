@@ -1,5 +1,16 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-27 — TASK-0178A (ŞAGIRD Tool Descriptions)
+
+**Qərar 1 — Kod oxumasına əsaslanan content (L-023)**
+Hər alətin source code-u oxundu, GERÇEK input/output əsasında description
+yazıldı. Marka Kompası 5 sual + April Dunford positioning, KST 30 likert
++ 30 gün plan, Yemək Xərci reçete card + trim loss + CSV export.
+
+**Qərar 2 — ToolDescription reusable component**
+Collapsible accordion, `toolKey` prop ilə hər toolkit page-ə əlavə olunur.
+KALFA/USTA tier üçün eyni component istifadə olunacaq.
+
 ## 2026-05-27 — TASK-0176A (KAZAN Context-Aware Greeting)
 
 **Qərar 1 — Auto-greeting (seçim A)**

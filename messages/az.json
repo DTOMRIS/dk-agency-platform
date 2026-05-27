@@ -3726,5 +3726,57 @@
         "cta": "Menyu Matrisi alətini aç →"
       }
     }
+  },
+  "marketing_tools": {
+    "marka_kompasi": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "5 sualı cavablayırsan, AI sənin restoranın marka mövqelənməsini çıxarır. İdeal müştəri profili, rəqiblərdən fərqin, slogan və harada istifadə edəcəyin — hamısı 1 səhifədə.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Müştərilərin ən çox nə vaxt gəldiyini bil (səhər, nahar, axşam)",
+          "Onlar niyə gəlir — doyunmaq, iş görüşü, bayram?",
+          "Sənin yeməyin hekayəsi — ənənəvi, sürətli, sağlam?",
+          "Rəqiblərinin edə bilmədiyini 3 maddə ilə yaz",
+          "Müştəri səni niyə tövsiyə edər — 1 cümlə"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Yeni açılan restoran, rebrand planı olan sahibkar, ya da Instagram bio-sunu yeniləmək istəyən hər kəs. Xüsusən marka mesajı aydın olmayan bizneslər üçün."
+      }
+    },
+    "kst_yoxlayici": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "30 sualla restoranını 3 sahədə qiymətləndirir: Keyfiyyət, Servis, Təmizlik. Hər sahə 100 bal üzərindən ölçülür. AI sənin ən zəif nöqtələrini tapır və 30 günlük düzəliş planı verir.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "10 keyfiyyət sualına 1-5 bal ver (yeməyin dadı, porsiya, temperatur)",
+          "10 servis sualına 1-5 bal ver (sürət, xidmət, şikayət idarəsi)",
+          "10 təmizlik sualına 1-5 bal ver (mətbəx, tualet, avadanlıq)",
+          "İstəsən əlavə qeydlər yaz (məsələn, son AQTA yoxlaması)"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "AQTA yoxlamasına hazırlaşan, müştəri şikayətləri artan, ya da sadəcə harada zəif olduğunu bilmək istəyən restoran sahibi. Həm yeni, həm təcrübəli sahibkarlar üçün."
+      }
+    },
+    "yemek_xerci": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Reçete kartı yaradırsan, hər ingredientin miqdarını və qiymətini daxil edirsən. Alət porsiya başına maya dəyərini, food cost faizini və ideal satış qiymətini hesablayır. AI yoxdur — sırf riyaziyyat, dəqiq nəticə.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Yeməyin adı və satış qiyməti (AZN)",
+          "Neçə porsiya çıxır (1 reseptdən)",
+          "Hədəf food cost faizi (məsələn, 30%)",
+          "Hər ingredientin adı, miqdarı, vahid qiyməti",
+          "Trim loss faizi (məsələn, toyuq filesində 5% itki)"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Menyu qiyməti \"göz ölçüsü\" ilə qoyan hər restoran sahibi. Food cost-u 33%-dən aşağı saxlamaq istəyən, reçete kartı qurmağa başlayan sahibkarlar üçün. CSV və Excel export ilə mühasibə paylaşa bilərsən."
+      }
+    }
   }
 }

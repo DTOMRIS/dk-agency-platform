@@ -3,6 +3,10 @@
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
+### Added
+- Toolkit: Metro 3-block descriptions for ŞAGIRD tier tools — Marka Kompası, KST Yoxlayıcı, Yemək Xərci (TASK-0178A)
+- Toolkit: ToolDescription.tsx reusable component with collapsible accordion (TASK-0178A)
+
 ### Fixed
 - AI Readiness: option label i18n key mismatch — removed spurious `.label` suffix (TASK-0177)
 - Recommendation engine: severity ranges now use Infinity — values >100% correctly return CRITICAL (TASK-0177)
