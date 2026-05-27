@@ -2784,6 +2784,29 @@
       "heading": "Sales layer",
       "body": "KAZAN AI helps you measure the problem. To build the system, run an audit, and turn the result into real profit, the next step is consulting.",
       "cta": "Meet DK Agency"
+    },
+    "contextGreeting": {
+      "pnl": {
+        "intro": "Hey, I see you came from the P&L Simulator. I've analyzed your numbers:",
+        "results_title": "Your results",
+        "sector": "sector",
+        "metric": { "food_cost": "Food Cost", "labor_cost": "Labor Cost", "net_profit": "Net Profit", "rent_ratio": "Rent Ratio" },
+        "sanity_title": "Attention — data inconsistency detected",
+        "sanity": { "food_cost_high": "Food cost is above 60% — there may be a calculation error", "net_profit_critical": "This loss level is unsustainable, let's review the numbers together", "rent_high": "Rent ratio is very high — the model is not sustainable", "sum_exceeds": "Expenses exceed revenue — let's get the exact numbers" },
+        "questions_intro": "Where should we start?",
+        "question_1": "Are these numbers as a percentage of monthly sales, or calculated differently?",
+        "question_2": "Which cost is hurting the most — labor, ingredients, or rent?",
+        "question_3": "What changed this month — prices went up, sales dropped, or both?"
+      },
+      "readiness": {
+        "intro": "Hi, I see you came from the AI Readiness test. I've analyzed your result:",
+        "score_label": "Your score",
+        "segment_label": "Segment",
+        "segment": { "not_ready": "Foundation needs to be built", "partial": "Partially ready", "ready": "AI-ready" },
+        "questions_intro": "Let's start with your questions:",
+        "question_1": "Which area would you like to start with?",
+        "question_2": "What is your biggest operational challenge?"
+      }
     }
   },
   "kazanWidget": {

@@ -2,11 +2,18 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ArrowRight, Bot, Loader2, Send, Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import {
+  parseKazanContext,
+  hasContext,
+  buildPnlGreeting,
+  buildReadinessGreeting,
+} from '@/lib/kazan-ai/context-greetings';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -15,8 +22,26 @@ type Message = {
 
 export default function KazanAiChatClient() {
   const t = useTranslations('kazanAi');
+  const searchParams = useSearchParams();
   const sampleQuestions = [t('samples.0'), t('samples.1'), t('samples.2'), t('samples.3'), t('samples.4')];
-  const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: t('chat.initialMessage') }]);
+
+  const contextGreeting = useMemo(() => {
+    const ctx = parseKazanContext(searchParams);
+    if (!hasContext(ctx)) return null;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const translate = t as any;
+    if (ctx.context === 'weekly_actions' && ctx.metrics) {
+      return buildPnlGreeting(ctx.metrics, translate);
+    }
+    if (ctx.context === 'ai_readiness_result' && ctx.segment && ctx.score !== null) {
+      return buildReadinessGreeting(ctx.segment, ctx.score, translate);
+    }
+    return null;
+  }, [searchParams, t]);
+
+  const initialMessage = contextGreeting || t('chat.initialMessage');
+  const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: initialMessage }]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [lastSentAt, setLastSentAt] = useState(0);
@@ -40,10 +65,14 @@ export default function KazanAiChatClient() {
     setLastSentAt(now);
 
     try {
+      const ctx = parseKazanContext(searchParams);
       const response = await fetch('/api/kazan-ai', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({
+          messages: nextMessages,
+          ...(hasContext(ctx) ? { pnlContext: ctx } : {}),
+        }),
       });
 
       const payload = (await response.json()) as { message?: string; error?: string };

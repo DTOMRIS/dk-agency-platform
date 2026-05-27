@@ -2784,6 +2784,43 @@
       "heading": "Satış layer",
       "body": "KAZAN AI problemi ölçməyə kömək edir. Sistem qurmaq, audit etmək və nəticəni real mənfəətə çevirmək üçün növbəti addım danışmanlıqdır.",
       "cta": "DK Agency ilə görüş"
+    },
+    "contextGreeting": {
+      "pnl": {
+        "intro": "Salam paşam, P&L Simulator-dan gəldiyini gördüm. Rəqəmlərini analiz etdim:",
+        "results_title": "Sənin nəticələrin",
+        "sector": "sektor",
+        "metric": {
+          "food_cost": "Food Cost",
+          "labor_cost": "Əmək xərcləri",
+          "net_profit": "Xalis mənfəət",
+          "rent_ratio": "İcarə nisbəti"
+        },
+        "sanity_title": "Diqqət — rəqəmlərdə uyğunsuzluq",
+        "sanity": {
+          "food_cost_high": "Food cost 60%-dən yuxarıdır — hesablamada xəta ola bilər",
+          "net_profit_critical": "Bu zərər səviyyəsi sürdürülə bilməz, rəqəmləri birlikdə yoxlayaq",
+          "rent_high": "Kirayə nisbəti çox yüksək — model davamlı deyil",
+          "sum_exceeds": "Xərclər satışdan çoxdur — dəqiq rəqəmlər götürək"
+        },
+        "questions_intro": "Hansından başlayaq?",
+        "question_1": "Bu rəqəmlər aylıq satışın faizidir, yoxsa fərqli hesablamadır?",
+        "question_2": "Ən çox boğan xərc hansıdır — əmək, xammal, yoxsa kirayə?",
+        "question_3": "Bu ay nə dəyişdi — qiymətlər artdı, satış düşdü, yoxsa hər ikisi?"
+      },
+      "readiness": {
+        "intro": "Salam, AI Hazırlıq testindən gəldiyini gördüm. Nəticəni analiz etdim:",
+        "score_label": "Sənin skor",
+        "segment_label": "Seqment",
+        "segment": {
+          "not_ready": "Təməl atılmalıdır",
+          "partial": "Qismən hazırsınız",
+          "ready": "AI-a hazırsınız"
+        },
+        "questions_intro": "Suallarınla başlayaq:",
+        "question_1": "Hansı sahədən başlamaq istəyirsən?",
+        "question_2": "Ən böyük əməliyyat probleminiz nədir?"
+      }
     }
   },
   "kazanWidget": {

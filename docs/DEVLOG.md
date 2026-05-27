@@ -1,5 +1,24 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-27 — TASK-0176A (KAZAN Context-Aware Greeting)
+
+**Qərar 1 — Auto-greeting (seçim A)**
+Kullanıcı P&L Simulator-dan KAZAN-a keçdikdə, URL query param-ından
+metrics decode olunur və KAZAN özü danışmağa başlayır. Kullanıcı "food
+cost nədir" yazmağa ehtiyac yoxdur — veri artıq əldədir.
+
+**Qərar 2 — System prompt injection**
+DeepSeek/Claude API call-ına metrics system context olaraq inject olunur.
+AI cavablarında bu spesifik rəqəmlərə referans verir, ümumi məsləhət yox.
+
+**Qərar 3 — Sanity check**
+İmkansız rəqəmlər (food_cost>60%, net_profit<-30%, rent>25%, sum>100%)
+aşkarlandıqda xəbərdarlıq mesajı göstərilir: "hesablamada xəta ola bilər".
+
+**Qərar 4 — TranslatorFn type**
+next-intl `Translator` tipi generikdir və birbaşa `(key: string) => string`
+ilə uyğun gəlmir. `any` cast ilə həll — pragmatik yanaşma.
+
 ## 2026-05-27 — TASK-0175 (Yandex Metrica — Senaryo B)
 
 **Qərar 1 — KVKK L-024: consent-first analytics**
