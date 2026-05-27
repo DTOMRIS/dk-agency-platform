@@ -70,6 +70,38 @@
 2-3 dəfə eyni fix fail olarsa DUR. Web/Reddit araşdır.
 Kök səbəbi tap, bir dəfəyə həll et.
 
+## AI Provider Setup
+
+### DeepSeek (Primary — text/chat AI)
+1. https://platform.deepseek.com → API Keys → Create
+2. Model: `deepseek-v4-flash` (lib/ai-models.ts SST)
+3. Hostinger panel: `DEEPSEEK_API_KEY=sk-...`
+4. Smoke: KAZAN AI-a sual ver, cavab gəlsin
+
+### Gemini (Vision — OCR, photo/menu analysis)
+1. https://aistudio.google.com/apikey → Create API Key
+2. Model: `gemini-2.5-flash` (lib/ai-models.ts SST)
+3. Hostinger panel: `GEMINI_API_KEY=AIza...`
+4. Smoke: /dashboard/faturalar → fatura şəkli yüklə → OCR field-lər dolsun
+5. Opsional: `GEMINI_MODEL` env ilə override (default: gemini-2.5-flash)
+
+### Anthropic (Fallback — ai-router.ts)
+1. https://console.anthropic.com → API Keys
+2. Model: claude-sonnet-4-6 (default, lib/ai-router.ts)
+3. Hostinger panel: `ANTHROPIC_API_KEY=sk-ant-...`
+4. Smoke: DEEPSEEK_API_KEY sil, KAZAN yenə cavab versin (Claude fallback)
+
+### Model ID Source of Truth
+**Tək yer:** `lib/ai-models.ts` — provider yeni model çıxardıqda yalnız bu faylı dəyiş.
+Scripts (.mjs) import edə bilmir — əl ilə dəyiş + SST comment qoy.
+
+### Deprecation Deadlines
+| Model | Deadline | Replacement |
+|-------|----------|-------------|
+| gemini-2.0-flash | 2026-06-01 | gemini-2.5-flash |
+| deepseek-chat | 2026-07-24 | deepseek-v4-flash |
+| claude-sonnet-4 | 2026-06-15 | claude-sonnet-4-6 |
+
 ## Smoke Test Checklist (post-deploy)
 
 - [ ] dkagency.com.tr açılır

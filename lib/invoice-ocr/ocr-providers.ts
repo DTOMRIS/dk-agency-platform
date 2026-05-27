@@ -7,6 +7,11 @@ import { INVOICE_OCR_PROMPT, INVOICE_OCR_SYSTEM } from './ocr-prompt';
 import type { ParsedInvoice, OcrProvider, OcrProviderResult } from './types';
 import { AI_MODELS } from '@/lib/ai-models';
 
+// ── Startup warning ────────────────────────────────────────────────
+if (!process.env.GEMINI_API_KEY) {
+  console.warn('[AI] GEMINI_API_KEY missing — vision OCR + photo/menu analyzer disabled');
+}
+
 // ── Gemini Vision (PRIMARY) ─────────────────────────────────────────
 
 async function callGeminiVision(
