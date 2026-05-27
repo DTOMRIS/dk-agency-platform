@@ -14,6 +14,10 @@
 - [LESSONS.md](LESSONS.md) — L-001..L-028 keçmiş səhvlər
 - [STATE.md](STATE.md) — auto-generated repo snapshot
 
+## Architecture
+
+- [API-MAP.md](API-MAP.md) — 69 endpoint inventory with auth, rate-limit, purpose
+
 ## Specifications
 
 - [devir-satis-spec.md](devir-satis-spec.md) — Listing feature spec
