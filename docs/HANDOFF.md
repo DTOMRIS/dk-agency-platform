@@ -1,5 +1,23 @@
 # HANDOFF
 
+## 2026-05-27 — TASK-0174 (Weekly Actions Panel)
+- Ne deyisdi:
+  - P&L Simulator-a "Bu həftə nə etməliyəm?" paneli əlavə edildi
+  - lib/recommendation-engine.ts — 4 metrik, 8 action, severity scoring
+  - components/toolkit/WeeklyActionsPanel.tsx — card-based UI
+  - 4 dildə weekly_actions namespace (messages/*.json)
+  - InsightPanel-dən sonra, BenchmarkPanel-dən əvvəl yerləşdirildi
+- Ne deyismedi:
+  - P&L Simulator hesablama məntiqi toxunulmadı
+  - Toolkit config toxunulmadı
+  - Protected files toxunulmadı
+- Riskler:
+  - Toolkit slug-ları dəyişsə action catalog yenilənməlidir
+  - Benchmarklar sabit — admin panel konfiqurasiyası gələcək feature
+- Sonraki addim:
+  - TASK-0175: Yandex Metrica event tracking
+  - TASK-0176: Weekly Actions digər toolkit alətlərinə yayılması
+
 ## 2026-05-27 — TASK-0173 (AI Readiness Score)
 - Ne deyisdi:
   - Homepage-ə Hero-dan sonra AI Readiness Score wizard əlavə edildi
