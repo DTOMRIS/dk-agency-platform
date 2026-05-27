@@ -3777,6 +3777,195 @@
         "block_3_title": "Kimə uyğundur?",
         "block_3_content": "Menyu qiyməti \"göz ölçüsü\" ilə qoyan hər restoran sahibi. Food cost-u 33%-dən aşağı saxlamaq istəyən, reçete kartı qurmağa başlayan sahibkarlar üçün. CSV və Excel export ilə mühasibə paylaşa bilərsən."
       }
+    },
+    "menyu_analitik": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Hər yeməyin satış sayını, food cost-unu və satış qiymətini daxil edirsən. Alət 2x2 matrisdə qruplaşdırır: Ulduz, At, Puzzle, İt. AI mənfəət artırmaq üçün konkret addımlar təklif edir.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Hər menyu maddəsinin adı",
+          "Satış qiyməti və food cost (AZN)",
+          "Həftəlik və ya aylıq satış sayı",
+          "Kateqoriya seçimi (əsas yemək, içki, desert)"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Hansı yeməyi çıxarmaq, hansını önə çəkmək lazım olduğunu bilmək istəyən sahibkar. Xüsusən menyu 20+ maddədən ibarətdirsə və mənfəət aydın deyilsə."
+      }
+    },
+    "sezon_analitikasi": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Aylıq satışını, əmək və ərzaq xərc faizini daxil edirsən. Alət 12 aya sezon əmsalı tətbiq edib, gəlir proqnozu, əmək büdcəsi və stok büdcəsi hesablayır. Ramazan və ölü aylar avtomatik aşkarlanır.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Aylıq orta satış rəqəmi (AZN)",
+          "Restoran tipi (şəhər mərkəzi, kənar, AVM, sahil)",
+          "Əmək xərci faizi (15-45%)",
+          "Food cost faizi (20-45%)"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Yazda artıb qışda azalan satışı proqnozlaşdırmaq istəyən sahibkar. Xüsusən Ramazan dövründə personel və stok planlaması edən restoranlar üçün."
+      }
+    },
+    "sosial_metrik": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Instagram və ya TikTok hesabının əsas metrikalarını daxil edirsən. Alət Engagement Rate, sağlamlıq skoru və sektor benchmark-ını hesablayır. Hansı kontent tipinin (Reels, Carousel, Single) daha yaxşı işlədiyini göstərir.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Follower sayı",
+          "Toplam like, comment, save, share sayları",
+          "Post sayı (son dövr)",
+          "İstəsən: kontent tipinə görə ayrılmış statistika"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Instagram və ya TikTok-da aktiv olan, amma nəticəni ölçə bilməyən restoran. Like sayı yüksək, amma müştəri gəlişi artmırsa — bu alət problemi tapır."
+      }
+    },
+    "trend_analiz": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Restoran tipini, hədəf auditoriyasını və güclü tərəfini seçirsən. AI 10+ sektor trendini sıralayır, top 3-ü qızıl badge ilə göstərir. Hər trend üçün ilk tətbiq addımını verir.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Restoran tipi (şəhər, kənar, AVM, sahil)",
+          "Hədəf kütlə (ailə, cütlük, biznes, qarışıq)",
+          "Ən güclü tərəfin (yemək keyfiyyəti, xidmət, qiymət, gigiyena)"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Sektor trendlərindən xəbərdar olmaq istəyən, amma hansının öz restoranına uyğun olduğunu bilməyən sahibkar. Xüsusən yeni konsept düşünən və ya menyu yeniləyən restoranlar üçün."
+      }
+    },
+    "lokasyon_analiz": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Yeni məkan açırsan və ya mövcud yerin uyğunluğunu yoxlamaq istəyirsən — 12 kriteriya üzrə qiymətləndirir. Başabaş nöqtəsini hesablayır, risk bayraqlarını aşkarlayır. AI 3 konkret tövsiyə verir.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Məkan tipi (küçə, AVM, delivery hub)",
+          "12 kriteriyaya Bəli/Qismən/Xeyr cavab",
+          "Yeni məkan üçün: gündəlik satış hədəfi, aylıq xərclər",
+          "Mövcud məkan üçün: risk bayraqları seçimi"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Yeni filial açmaq planı olan və ya mövcud məkanın dəyişdirilməsi barədə düşünən sahibkar. Kirayə yüksəkdirsə, trafik azalıbsa — bu alət qərar verməyə kömək edir."
+      }
+    },
+    "roi_kalkulator": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Reklam kampaniyalarının ROI, ROAS, CAC və LTV:CAC nisbətini hesablayır. 8-ə qədər kanalı müqayisə edib, ən yaxşı və ən pisinı göstərir. AI strateji investisiya tövsiyəsi verir.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Kampaniya adı və müddəti",
+          "Orta çek (AZN) və aylıq ziyarət sayı",
+          "Hər kanal üçün: xərclənən büdcə, gəlir, yeni müştəri sayı",
+          "Loyalty müddəti (ay, adətən 12)"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Instagram, Google, WhatsApp reklam verən, amma hansı kanalın əslində pul gətirdiyini bilməyən sahibkar. Reklam büdcəsini artırmaq və ya kəsmək qərarı verən hər kəs."
+      }
+    },
+    "reklam_roi": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "İki rejim: Konversiya (satış) və ya Tanınırlıq (awareness). Konversiyada ROAS, CAC, ROI hesablayır. Tanınırlıqda CPM və EMV (qazanılmış media dəyəri) ölçür. Influencer komissiyası ayrıca hesablanır.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Kampaniya tipi: satış hədəfli və ya tanınırlıq?",
+          "Hər kanal üçün büdcə (AZN)",
+          "Konversiya: yeni müştəri sayı, orta çek",
+          "Tanınırlıq: reach və impression sayı",
+          "Influencer varsa: komissiya faizi"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Influencer ilə işləyən və ya TikTok/Instagram reklam verən restoran. \"Bu reklam işlədi mi?\" sualına rəqəmlə cavab almaq istəyən hər kəs."
+      }
+    },
+    "sikayet_analitigi": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Müştəri şikayətlərini yapışdırırsan, AI kök səbəbi tapır və kateqoriyalara ayırır. 1 yazılı şikayət = 26 susqun narazı müştəri. Pattern analizi ilə təkrarlanan problemləri aşkarlayır.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Şikayət mətni (Google, TripAdvisor, Yandex-dən kopyala)",
+          "Mənbə platforması seçimi",
+          "Şikayət tarixi (istəyə bağlı)"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Google Maps-da və ya TripAdvisor-da mənfi rəylər alan restoran. Şikayət sayı artırsa, amma dəqiq problemi tapa bilmirsənsə — bu alət kök səbəbi ortaya çıxarır."
+      }
+    },
+    "sikayet_cavablandirici": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Müştəri şikayətini yapışdırırsan, AI 3 fərqli tonda cavab yazır: formal, dostane, qısa. Hansı marka üslubuna uyğundursa, kopyalayıb birbaşa rəyə yapışdırırsan.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Şikayət mətni (rəy platformasından kopyala)",
+          "Restoran adı (istəyə bağlı — cavabda istifadə olunur)",
+          "Şikayət dili və cavab dili seçimi"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Hər gün müştəri rəylərinə cavab yazmaq vaxtı olmayan restoran müdiri. Google və ya TripAdvisor-da peşəkar cavab vermək istəyən, amma düzgün ton tapa bilməyən sahibkar."
+      }
+    },
+    "restoran_audit": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "6 sahədə restoranını audit edirsən: maliyyə, mətbəx, personel, müştəri təcrübəsi, dijital varlıq, uyğunluq. Hər sahə 100 bal üzərindən ölçülür. Ən zəif 3 sahə üçün prioritet plan verilir.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Hər sahədə 3-5 suala Bəli/Qismən/Xeyr cavab",
+          "POS sisteminiz varmı, gündəlik kassa hesablaşması edirsiniz?",
+          "Personel təlim proqramınız varmı?",
+          "Online rəylərinizi izləyirsiniz?"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Restoranın ümumi sağlamlığını ölçmək istəyən sahibkar. ŞEDD sertifikatı almaq istəyən, ya da müxtəlif sahələrdə harada zəif olduğunu görmək istəyən hər kəs."
+      }
+    },
+    "sezon_planlama": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "12 aylıq kampaniya təqvimi yaradır. Azərbaycan bayramları (Novruz, Ramazan), dünya günləri və sezon dəyişiklikləri avtomatik işarələnir. AI hər ay üçün kampaniya ideyası təklif edir.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Restoran tipi və hədəf seqmenti",
+          "İllik reklam büdcəsi (istəyə bağlı)",
+          "Hansı aylara fokuslanmaq istədiyin"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "\"Novruz axşamı nə kampaniya edim?\" deyən sahibkar. Bayramlar yaddan çıxır, son anda hazırlanırsansa — bu alət 12 aylıq planı əvvəlcədən verir."
+      }
+    },
+    "reklam_yazicisi": {
+      "description": {
+        "section_label": "Bu alət haqqında",
+        "block_1_title": "Nə edirik?",
+        "block_1_content": "Yeməyin adını, satış nöqtəsini və platformanı seçirsən. AI 3 fərqli tonda reklam mətni yazır: başlıq, gövdə, hashtag-lər. Instagram, Facebook, TikTok və Google Ads üçün uzunluq avtomatik uyğunlaşdırılır.",
+        "block_2_title": "Sənə nə lazım olacaq?",
+        "block_2_items": [
+          "Reklam ediləcək yemək və ya kampaniya adı",
+          "Əsas satış nöqtəsi (endirim? yeni məhsul? bayram?)",
+          "Hədəf kütlə (gənclər, ailə, korporativ)",
+          "Platforma seçimi (Instagram, Facebook, TikTok, Google Ads)"
+        ],
+        "block_3_title": "Kimə uyğundur?",
+        "block_3_content": "Instagram post-u üçün 30 dəqiqə caption yazan restoran sahibi. Peşəkar copywriter tutacaq büdcəsi olmayan, amma effektiv reklam mətni istəyən hər kəs."
+      }
     }
   }
 }
