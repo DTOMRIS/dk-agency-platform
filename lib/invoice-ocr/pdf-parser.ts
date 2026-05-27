@@ -6,6 +6,8 @@
  * Skan PDF (kağız skan) → text çıxmazsa → OCR pipeline-a yönləndir
  */
 
+import { AI_MODELS } from '@/lib/ai-models';
+
 // Server-side only — pdf-parse Node.js tələb edir
 // Bu fayl yalnız API route-dan çağrılır
 
@@ -125,7 +127,7 @@ ${text.slice(0, 8000)}`;
           authorization: `Bearer ${deepseekApiKey}`,
         },
         body: JSON.stringify({
-          model: 'deepseek-chat',
+          model: AI_MODELS.deepseek.chat,
           temperature: 0.1,
           max_tokens: 2000,
           messages: [

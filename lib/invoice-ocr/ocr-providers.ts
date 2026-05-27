@@ -65,7 +65,7 @@ async function callDeepSeekText(
         authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: AI_MODELS.deepseek.chat,
         temperature: 0.1,
         max_tokens: 2000,
         messages: [

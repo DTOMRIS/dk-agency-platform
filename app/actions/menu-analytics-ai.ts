@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
+import { AI_MODELS } from '@/lib/ai-models';
 
 export type MenuAnalyticsCategory = 'star' | 'plowhorse' | 'puzzle' | 'dog';
 
@@ -127,7 +128,7 @@ export async function getMenuAnalyticsTips(input: MenuAnalyticsAIInput): Promise
         authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: AI_MODELS.deepseek.chat,
         temperature: 0.35,
         max_tokens: 900,
         messages: [

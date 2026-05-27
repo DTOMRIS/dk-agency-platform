@@ -6,6 +6,8 @@
  * @lastModified 2026-05-13 (TASK-0120)
  */
 
+import { AI_MODELS } from '@/lib/ai-models';
+
 export type AIProviderName = 'deepseek' | 'claude';
 export type AIResponseFormat = 'json_object' | 'text';
 
@@ -126,7 +128,7 @@ async function callDeepSeek(
 
   const startedAt = Date.now();
   const payload: Record<string, unknown> = {
-    model: 'deepseek-chat',
+    model: AI_MODELS.deepseek.chat,
     temperature: req.temperature ?? 0.7,
     max_tokens: req.maxTokens ?? 1000,
     stream: req.stream ?? false,

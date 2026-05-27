@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
+import { AI_MODELS } from '@/lib/ai-models';
 
 export interface ROIChannelInput {
   name: string;
@@ -163,7 +164,7 @@ export async function getROIAIAnalysis(input: ROIAIInput): Promise<ROIAIResult> 
         authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: AI_MODELS.deepseek.chat,
         temperature: 0.35,
         max_tokens: 1200,
         messages: [

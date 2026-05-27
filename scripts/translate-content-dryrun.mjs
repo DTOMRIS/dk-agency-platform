@@ -47,7 +47,7 @@ async function translateOnce(text, targetLang) {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${DEEPSEEK_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: 'deepseek-chat',
+      model: 'deepseek-v4-flash', // SST: lib/ai-models.ts
       temperature: 0.3,
       max_tokens: 2000,
       messages: [

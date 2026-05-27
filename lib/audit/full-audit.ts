@@ -3,6 +3,8 @@
  * @purpose Tam restoran auditi — foto + menyu + sosial → AI SWOT + tövsiyə
  */
 
+import { AI_MODELS } from '@/lib/ai-models';
+
 import { analyzePhotos, type PhotoAnalysis } from './photo-analyzer';
 import { analyzeMenu, type MenuAnalysis } from './menu-analyzer';
 import { fetchInstagramPublic, fetchFacebookPublic, type SocialInfo } from './social-scraper';
@@ -158,7 +160,7 @@ QAYDALAR:
         authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: AI_MODELS.deepseek.chat,
         temperature: 0.3,
         max_tokens: 2000,
         messages: [
