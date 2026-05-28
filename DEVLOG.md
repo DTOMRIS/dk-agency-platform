@@ -1,6 +1,30 @@
 # DEVLOG — DK Agency Platform
 
-## 2026-05-23 - TASK-0157C-3a auditor + food-cost Pattern A
+## 2026-05-28 — Ahilik Studio Launch Sprint (16 PR, #204-#220)
+
+**Why:** Bütün platforma vahid "Ahilik Studio" dizayn dilinə keçməli idi. AI stack deprecated model-lərdən yenilənməli idi. Toolkit-lər canlı AI insight istəyirdi. Devir marketplace real CRUD təməlinə ehtiyac var idi.
+
+**What (16 PR):**
+- A02pre (#204-206): AI stack migration — deepseek-chat → v4-flash (17 yer), gemini-2.0 → 2.5-flash (5 yer), lib/ai-models.ts SST yaradıldı
+- A02a/b (#207-208): 10 toolkit səhifə ToolkitStudioLayout-a köçürüldü
+- A02c/d (#214-215): 9 toolkit səhifəyə real DeepSeek AI insight bağlandı
+- A03 (#209): Devir marketplace UI refresh, Pattern A, DK Onaylı badge
+- A05 (#210): Header + Footer Ahilik Studio, Pattern A (180 tərcümə)
+- A05fix (#211): Protected list reconcile (14 fayl sinxron)
+- A04 (#212): Dashboard/OCAQ warm palette, tier badge
+- A06 (#213): Blog/News Ahilik Studio, Pattern A
+- SYS (#216): SYSTEM-AUDIT.md auto-generator
+- M5.1 (#217): Listings schema expansion (15 sütun, 9 status)
+- M5.2 (#219): Cloudinary env + docs (upload artıq mövcud idi — L-032)
+- M5.3a (#220): owner_id JWT binding + equipment field render
+
+**Verification:** Production smoke 23/23 PASS, 0 kritik bug. Email backend LIVE (L-032: "eksik" sanılmışdı, hazır idi). Cloudinary upload test PASS.
+
+**Lessons:** L-031 (schema dublikat), L-032 (boşluq varsayma — email+OCR hazır idi)
+
+---
+
+## 2026-05-27 - TASK-A01 Homepage Full Refresh
 
 **Why:** Dashboard i18n 13/16 bitib. C3a batch: auditor (33 key) + food-cost (29 key). Auditor audit-sales funnel səhifəsidir — statusConverted = "Müştəri" CTO təsdiq.
 
