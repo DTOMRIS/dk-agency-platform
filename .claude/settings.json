@@ -1,17 +1,19 @@
 {
   "protectedFiles": [
+    "lib/data/listingFieldConfig.ts",
+    "lib/db/schema.ts",
+    "lib/member-access.ts",
+    "app/api/member/auth/route.ts",
+    "lib/utils/listingStatus.ts",
+    "middleware.ts",
+    "package.json",
+    "next.config.ts",
+    "tsconfig.json",
     "app/layout.tsx",
     "app/globals.css",
     "components/layout/Header.tsx",
     "components/layout/Footer.tsx",
-    "components/layout/MobileBottomNav.tsx",
-    "app/page.tsx",
-    "app/haberler/page.tsx",
-    "app/blog/page.tsx",
-    "app/b2b-panel/page.tsx",
-    "next.config.ts",
-    "package.json",
-    "tsconfig.json"
+    "components/layout/MobileBottomNav.tsx"
   ],
   "hooks": {
     "PreToolUse": [

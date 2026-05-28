@@ -3,6 +3,9 @@
 Bu fayllar yalnız açıq TASK tapşırığı və CTO icazəsi ilə dəyişdirilə bilər.
 Hər prompt başında bu siyahını oxu.
 
+> **SİNXRON QAYDA:** Bu siyahı `.claude/settings.json` → `protectedFiles` ilə
+> eyni olmalıdır. Biri dəyişəndə digəri də yenilənməlidir.
+
 ## Single Source of Truth
 - `lib/data/listingFieldConfig.ts` — field config, duplicate logic QADAĞAN
 
@@ -19,4 +22,13 @@ Hər prompt başında bu siyahını oxu.
 
 ## Config
 - `middleware.ts` — route middleware
-- `package.json` — ALLOW_PROTECTED=1 lazım
+- `package.json` — dependencies + scripts
+- `next.config.ts` — build configuration
+- `tsconfig.json` — TypeScript configuration
+
+## Global Layout
+- `app/layout.tsx` — root layout, fonts, providers
+- `app/globals.css` — CSS variables, theme palette
+- `components/layout/Header.tsx` — global navigation
+- `components/layout/Footer.tsx` — global footer
+- `components/layout/MobileBottomNav.tsx` — mobile bottom navigation
