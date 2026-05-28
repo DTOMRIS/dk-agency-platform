@@ -3976,5 +3976,31 @@
         "block_3_content": "Restaurant owners spending 30 minutes writing an Instagram caption. Anyone who needs effective ad copy but can't afford a professional copywriter."
       }
     }
+  },
+  "devir": {
+    "badge": "HoReCa Marketplace",
+    "title": "HoReCa Listings",
+    "subtitle": "Azerbaijan's largest HoReCa listing platform. Restaurant transfers, franchises, partnerships, venue rentals, and equipment — all in one place.",
+    "imageAlt": "HoReCa investor presentation",
+    "ctaPost": "Post a listing",
+    "ctaMyListings": "My listings",
+    "filterAll": "All categories",
+    "filterReset": "Reset",
+    "filterSearch": "Search listings...",
+    "filterStatus": "Status",
+    "loadingError": "Failed to load listings",
+    "emptyTitle": "No listings match this filter",
+    "emptyBody": "Reset filters or choose another category.",
+    "emptyReset": "Reset filters",
+    "activeTitle": "Active listings",
+    "activeCount": "{count} active listings",
+    "verifiedOnly": "Verified listings only",
+    "viewDetails": "View details",
+    "dkVerified": "DK Verified",
+    "featured": "Featured",
+    "statusActive": "Active",
+    "statusPending": "Pending",
+    "statusRejected": "Rejected",
+    "statusSold": "Sold"
   }
 }

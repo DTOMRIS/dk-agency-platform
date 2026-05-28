@@ -3976,5 +3976,31 @@
         "block_3_content": "Instagram post-u üçün 30 dəqiqə caption yazan restoran sahibi. Peşəkar copywriter tutacaq büdcəsi olmayan, amma effektiv reklam mətni istəyən hər kəs."
       }
     }
+  },
+  "devir": {
+    "badge": "HoReCa Marketplace",
+    "title": "HoReCa Elanları",
+    "subtitle": "Azərbaycanın ən böyük HoReCa elan platforması. Restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq bir vitrində.",
+    "imageAlt": "HoReCa investor təqdimatı",
+    "ctaPost": "Elan ver",
+    "ctaMyListings": "Elanlarıma bax",
+    "filterAll": "Bütün kateqoriyalar",
+    "filterReset": "Sıfırla",
+    "filterSearch": "Elan axtar...",
+    "filterStatus": "Status",
+    "loadingError": "Elanlar yüklənə bilmədi",
+    "emptyTitle": "Bu filtrə uyğun elan tapılmadı",
+    "emptyBody": "Filtrləri sıfırla və ya başqa kateqoriya seç.",
+    "emptyReset": "Filtrləri sıfırla",
+    "activeTitle": "Vitrində olan elanlar",
+    "activeCount": "{count} aktiv elan",
+    "verifiedOnly": "Yalnız təsdiqlənmiş elanlar",
+    "viewDetails": "Ətraflı bax",
+    "dkVerified": "DK Onaylı",
+    "featured": "Seçilmiş",
+    "statusActive": "Aktiv",
+    "statusPending": "Gözləyir",
+    "statusRejected": "Rədd",
+    "statusSold": "Satıldı"
   }
 }

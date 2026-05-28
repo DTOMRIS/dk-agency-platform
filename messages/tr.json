@@ -3976,5 +3976,31 @@
         "block_3_content": "Instagram postu için 30 dakika caption yazan restoran sahibi. Profesyonel metin yazarı tutacak bütçesi olmayan ama etkili reklam metni isteyen herkes."
       }
     }
+  },
+  "devir": {
+    "badge": "HoReCa Marketplace",
+    "title": "HoReCa İlanları",
+    "subtitle": "Azerbaycan'ın en büyük HoReCa ilan platformu. Restoran devri, franchise, ortak arayışı, mekan kiralama ve ekipman — tek vitrinde.",
+    "imageAlt": "HoReCa yatırımcı sunumu",
+    "ctaPost": "İlan ver",
+    "ctaMyListings": "İlanlarıma bak",
+    "filterAll": "Tüm kategoriler",
+    "filterReset": "Sıfırla",
+    "filterSearch": "İlan ara...",
+    "filterStatus": "Durum",
+    "loadingError": "İlanlar yüklenemedi",
+    "emptyTitle": "Bu filtreye uygun ilan bulunamadı",
+    "emptyBody": "Filtreleri sıfırla veya başka kategori seç.",
+    "emptyReset": "Filtreleri sıfırla",
+    "activeTitle": "Vitirindeki ilanlar",
+    "activeCount": "{count} aktif ilan",
+    "verifiedOnly": "Yalnızca onaylı ilanlar",
+    "viewDetails": "Detay gör",
+    "dkVerified": "DK Onaylı",
+    "featured": "Seçilmiş",
+    "statusActive": "Aktif",
+    "statusPending": "Bekliyor",
+    "statusRejected": "Reddedildi",
+    "statusSold": "Satıldı"
   }
 }
