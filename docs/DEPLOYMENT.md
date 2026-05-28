@@ -85,6 +85,14 @@ Kök səbəbi tap, bir dəfəyə həll et.
 4. Smoke: /dashboard/faturalar → fatura şəkli yüklə → OCR field-lər dolsun
 5. Opsional: `GEMINI_MODEL` env ilə override (default: gemini-2.5-flash)
 
+### Cloudinary (Image Upload — listings, blog, news)
+1. https://console.cloudinary.com → Dashboard → Account Details
+2. Hostinger panel: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
+3. Upload API: `/api/upload` (POST: upload, DELETE: remove by publicId)
+4. Auto WebP transform + 1400px limit
+5. Folder structure: `dk-agency/listings/{id}`, `dk-agency/blog/`, `dk-agency/news/`
+6. Smoke: dashboard → blog/news/elan → şəkil yüklə → Cloudinary URL qayıtsın
+
 ### Anthropic (Fallback — ai-router.ts)
 1. https://console.anthropic.com → API Keys
 2. Model: claude-sonnet-4-6 (default, lib/ai-router.ts)
