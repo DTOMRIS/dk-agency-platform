@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { MapPin } from 'lucide-react';
+import { MapPin, ShieldCheck } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { MockListing } from '@/lib/data/mockListings';
 import { getCategoryById } from '@/lib/data/listingCategories';
 
@@ -16,13 +17,14 @@ function formatPrice(listing: MockListing) {
 }
 
 export default function ListingCard({ listing, onOpen }: ListingCardProps) {
+  const t = useTranslations('devir');
   const category = getCategoryById(listing.type);
 
   return (
     <button
       type="button"
       onClick={() => onOpen(listing)}
-      className="group block overflow-hidden rounded-[28px] border border-slate-200 bg-white text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-2xl"
+      className="group block overflow-hidden rounded-2xl border border-slate-200/80 bg-white text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl ring-1 ring-slate-100"
     >
       <div className="relative aspect-[16/9] overflow-hidden">
         <Image
@@ -33,35 +35,44 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,26,46,0.55)] via-transparent to-transparent" />
-        <div className="absolute left-4 top-4">
+
+        {/* Category badge — sol üst */}
+        <div className="absolute left-3 top-3">
           <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold ${category?.badgeClass ?? 'bg-white text-slate-700'}`}>
             {category?.label ?? listing.type}
           </span>
         </div>
-        {listing.isFeatured ? (
-          <div className="absolute right-4 top-4">
-            <span className="inline-flex rounded-full bg-white/90 px-3 py-1 text-[11px] font-black text-[var(--dk-gold)] shadow">
-              ⭐ Seçilmiş
+
+        {/* Status / Featured badge — sağ üst */}
+        <div className="absolute right-3 top-3 flex flex-col gap-1.5 items-end">
+          {listing.isFeatured && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black text-[var(--dk-gold)] shadow-sm backdrop-blur-sm">
+              ⭐ {t('featured')}
             </span>
-          </div>
-        ) : null}
+          )}
+          {/* DK Onaylı badge (statik — M5-də real verification) */}
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-sm backdrop-blur-sm">
+            <ShieldCheck size={10} />
+            {t('dkVerified')}
+          </span>
+        </div>
       </div>
 
-      <div className="space-y-4 p-5">
+      <div className="space-y-3 p-5">
         <div>
-          <h3 className="truncate font-display text-2xl font-black text-[var(--dk-navy)]">{listing.title}</h3>
-          <div className="mt-2 inline-flex items-center gap-2 text-sm text-slate-500">
-            <MapPin className="h-4 w-4 text-[var(--dk-gold)]" />
+          <h3 className="truncate font-display text-xl font-black text-[var(--dk-navy)]">{listing.title}</h3>
+          <div className="mt-1.5 inline-flex items-center gap-1.5 text-sm text-slate-500">
+            <MapPin className="h-3.5 w-3.5 text-[var(--dk-gold)]" />
             {listing.city}{listing.district ? `, ${listing.district}` : ''}
           </div>
         </div>
 
         <div className="text-2xl font-black text-[var(--dk-gold)]">{formatPrice(listing)}</div>
 
-        <p className="line-clamp-2 text-sm leading-6 text-slate-600">{listing.description}</p>
+        <p className="line-clamp-2 text-sm leading-relaxed text-slate-500">{listing.description}</p>
 
-        <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--dk-red)]">
-          Ətraflı bax →
+        <div className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--dk-red)] transition-colors group-hover:text-[var(--dk-red-hover)]">
+          {t('viewDetails')} →
         </div>
       </div>
     </button>
