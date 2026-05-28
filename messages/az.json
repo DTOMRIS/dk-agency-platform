@@ -1208,6 +1208,15 @@
       "phase_opening_item6_detail": "Food cost və satış dili final haldadır.",
       "phase_opening_item7_text": "Grand opening planı",
       "phase_opening_item7_detail": "Marketinq, dəvətlilər və sosial media planı hazırdır."
+    },
+    "live": "CANLI",
+    "aiInsight": "AI ŞƏRH",
+    "aiInsightPending": "Hesablama tamamlandıqda AI şərhi görünəcək",
+    "backToToolkit": "Toolkit",
+    "tierBadge": {
+      "sagird": "ŞAGIRD",
+      "kalfa": "KALFA",
+      "usta": "USTA"
     }
   },
   "blog": {

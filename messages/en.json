@@ -1208,6 +1208,15 @@
       "phase_opening_item6_detail": "Food cost and sales language are finalized.",
       "phase_opening_item7_text": "Grand opening plan",
       "phase_opening_item7_detail": "Marketing, guest list and social media plan is ready."
+    },
+    "live": "LIVE",
+    "aiInsight": "AI INSIGHT",
+    "aiInsightPending": "AI insight will appear after calculation",
+    "backToToolkit": "Toolkit",
+    "tierBadge": {
+      "sagird": "APPRENTICE",
+      "kalfa": "JOURNEYMAN",
+      "usta": "MASTER"
     }
   },
   "blog": {
@@ -2790,9 +2799,19 @@
         "intro": "Hey, I see you came from the P&L Simulator. I've analyzed your numbers:",
         "results_title": "Your results",
         "sector": "sector",
-        "metric": { "food_cost": "Food Cost", "labor_cost": "Labor Cost", "net_profit": "Net Profit", "rent_ratio": "Rent Ratio" },
+        "metric": {
+          "food_cost": "Food Cost",
+          "labor_cost": "Labor Cost",
+          "net_profit": "Net Profit",
+          "rent_ratio": "Rent Ratio"
+        },
         "sanity_title": "Attention — data inconsistency detected",
-        "sanity": { "food_cost_high": "Food cost is above 60% — there may be a calculation error", "net_profit_critical": "This loss level is unsustainable, let's review the numbers together", "rent_high": "Rent ratio is very high — the model is not sustainable", "sum_exceeds": "Expenses exceed revenue — let's get the exact numbers" },
+        "sanity": {
+          "food_cost_high": "Food cost is above 60% — there may be a calculation error",
+          "net_profit_critical": "This loss level is unsustainable, let's review the numbers together",
+          "rent_high": "Rent ratio is very high — the model is not sustainable",
+          "sum_exceeds": "Expenses exceed revenue — let's get the exact numbers"
+        },
         "questions_intro": "Where should we start?",
         "question_1": "Are these numbers as a percentage of monthly sales, or calculated differently?",
         "question_2": "Which cost is hurting the most — labor, ingredients, or rent?",
@@ -2802,7 +2821,11 @@
         "intro": "Hi, I see you came from the AI Readiness test. I've analyzed your result:",
         "score_label": "Your score",
         "segment_label": "Segment",
-        "segment": { "not_ready": "Foundation needs to be built", "partial": "Partially ready", "ready": "AI-ready" },
+        "segment": {
+          "not_ready": "Foundation needs to be built",
+          "partial": "Partially ready",
+          "ready": "AI-ready"
+        },
         "questions_intro": "Let's start with your questions:",
         "question_1": "Which area would you like to start with?",
         "question_2": "What is your biggest operational challenge?"
@@ -3540,20 +3563,95 @@
           "no": "No, we don't use a POS"
         }
       },
-      "q2_inventory": { "label": "How often is inventory counted?", "options": { "weekly": "Weekly", "monthly": "Monthly", "no": "Not counted" } },
-      "q3_recipe": { "label": "Do you have recipe cards?", "options": { "all": "Yes, for all products", "partial": "Partially — only some", "no": "No recipe cards" } },
-      "q4_pnl": { "label": "Can you read and interpret a P&L statement?", "options": { "self": "Yes, I analyze it myself", "assistant": "Accountant/assistant handles it", "no": "No, we don't use P&L" } },
-      "q5_staff": { "label": "How are staff shifts planned?", "options": { "system": "Digital system", "excel": "Excel/spreadsheet", "manual": "Manually / verbal" } },
-      "q6_food_cost": { "label": "Is actual food cost measured?", "options": { "weekly": "Calculated weekly", "monthly": "Calculated monthly", "no": "Not measured" } },
-      "q7_feedback": { "label": "How is customer feedback collected?", "options": { "crm": "CRM / digital system", "manual": "Manual / verbal collection", "no": "Not collected" } },
-      "q8_vendor": { "label": "How often is vendor pricing audited?", "options": { "monthly": "Monthly comparison", "yearly": "Yearly / rarely", "never": "Never" } },
-      "q9_menu": { "label": "Is menu performance analyzed?", "options": { "matrix": "Menu matrix / data-driven", "intuition": "Based on intuition", "no": "Not analyzed" } },
-      "q10_team": { "label": "Is your team ready for digital tools?", "options": { "yes": "Yes, open and eager", "partial": "Partially — some are ready", "no": "No, there is resistance" } }
+      "q2_inventory": {
+        "label": "How often is inventory counted?",
+        "options": {
+          "weekly": "Weekly",
+          "monthly": "Monthly",
+          "no": "Not counted"
+        }
+      },
+      "q3_recipe": {
+        "label": "Do you have recipe cards?",
+        "options": {
+          "all": "Yes, for all products",
+          "partial": "Partially — only some",
+          "no": "No recipe cards"
+        }
+      },
+      "q4_pnl": {
+        "label": "Can you read and interpret a P&L statement?",
+        "options": {
+          "self": "Yes, I analyze it myself",
+          "assistant": "Accountant/assistant handles it",
+          "no": "No, we don't use P&L"
+        }
+      },
+      "q5_staff": {
+        "label": "How are staff shifts planned?",
+        "options": {
+          "system": "Digital system",
+          "excel": "Excel/spreadsheet",
+          "manual": "Manually / verbal"
+        }
+      },
+      "q6_food_cost": {
+        "label": "Is actual food cost measured?",
+        "options": {
+          "weekly": "Calculated weekly",
+          "monthly": "Calculated monthly",
+          "no": "Not measured"
+        }
+      },
+      "q7_feedback": {
+        "label": "How is customer feedback collected?",
+        "options": {
+          "crm": "CRM / digital system",
+          "manual": "Manual / verbal collection",
+          "no": "Not collected"
+        }
+      },
+      "q8_vendor": {
+        "label": "How often is vendor pricing audited?",
+        "options": {
+          "monthly": "Monthly comparison",
+          "yearly": "Yearly / rarely",
+          "never": "Never"
+        }
+      },
+      "q9_menu": {
+        "label": "Is menu performance analyzed?",
+        "options": {
+          "matrix": "Menu matrix / data-driven",
+          "intuition": "Based on intuition",
+          "no": "Not analyzed"
+        }
+      },
+      "q10_team": {
+        "label": "Is your team ready for digital tools?",
+        "options": {
+          "yes": "Yes, open and eager",
+          "partial": "Partially — some are ready",
+          "no": "No, there is resistance"
+        }
+      }
     },
     "segments": {
-      "not_ready": { "title": "Build the Foundation", "description": "Your restaurant is not yet ready for AI. Digitize core processes first.", "kazan_cta": "Learn where to start with KAZAN AI" },
-      "partial": { "title": "Partially Ready", "description": "AI can deliver immediate value in some areas. Fill the gaps and accelerate.", "kazan_cta": "Define your priorities with KAZAN AI" },
-      "ready": { "title": "AI-Ready", "description": "Your restaurant is ready for AI optimization. Advance with cutting-edge tools.", "kazan_cta": "Start real-time analysis with KAZAN AI" }
+      "not_ready": {
+        "title": "Build the Foundation",
+        "description": "Your restaurant is not yet ready for AI. Digitize core processes first.",
+        "kazan_cta": "Learn where to start with KAZAN AI"
+      },
+      "partial": {
+        "title": "Partially Ready",
+        "description": "AI can deliver immediate value in some areas. Fill the gaps and accelerate.",
+        "kazan_cta": "Define your priorities with KAZAN AI"
+      },
+      "ready": {
+        "title": "AI-Ready",
+        "description": "Your restaurant is ready for AI optimization. Advance with cutting-edge tools.",
+        "kazan_cta": "Start real-time analysis with KAZAN AI"
+      }
     },
     "result": {
       "score_label": "Your score",
@@ -3563,7 +3661,11 @@
       "detail_cta": "Sign up for detailed analysis",
       "restart": "Start over"
     },
-    "navigation": { "next": "Next", "back": "Back", "question_of": "/ 10 questions" }
+    "navigation": {
+      "next": "Next",
+      "back": "Back",
+      "question_of": "/ 10 questions"
+    }
   },
   "weekly_actions": {
     "panel_title": "What should I do this week?",
@@ -3572,22 +3674,66 @@
     "all_good_title": "You're in great shape!",
     "all_good_description": "Your metrics are within sector benchmarks. Keep it up!",
     "duration_unit": "min",
-    "severity": { "ok": "Normal", "warning": "Attention", "critical": "Critical" },
+    "severity": {
+      "ok": "Normal",
+      "warning": "Attention",
+      "critical": "Critical"
+    },
     "benchmark": {
-      "food_cost_ok": "Food cost is within range (≤32%)", "food_cost_warning": "Food cost is elevated (33-38%)", "food_cost_critical": "Food cost is critical (>38%)",
-      "labor_cost_ok": "Labor cost is within range (≤25%)", "labor_cost_warning": "Labor cost is elevated (26-30%)", "labor_cost_critical": "Labor cost is critical (>30%)",
-      "net_profit_ok": "Net profit is healthy (≥12%)", "net_profit_warning": "Net profit is low (8-11%)", "net_profit_critical": "Net profit is critical (<8%)",
-      "rent_ok": "Rent ratio is good (≤8%)", "rent_warning": "Rent ratio is elevated (9-12%)", "rent_critical": "Rent ratio is critical (>12%)"
+      "food_cost_ok": "Food cost is within range (≤32%)",
+      "food_cost_warning": "Food cost is elevated (33-38%)",
+      "food_cost_critical": "Food cost is critical (>38%)",
+      "labor_cost_ok": "Labor cost is within range (≤25%)",
+      "labor_cost_warning": "Labor cost is elevated (26-30%)",
+      "labor_cost_critical": "Labor cost is critical (>30%)",
+      "net_profit_ok": "Net profit is healthy (≥12%)",
+      "net_profit_warning": "Net profit is low (8-11%)",
+      "net_profit_critical": "Net profit is critical (<8%)",
+      "rent_ok": "Rent ratio is good (≤8%)",
+      "rent_warning": "Rent ratio is elevated (9-12%)",
+      "rent_critical": "Rent ratio is critical (>12%)"
     },
     "actions": {
-      "recipe_audit": { "title": "Audit your recipe cards", "description": "Update the recipe cards of your top 5 sellers with actual prices. The fastest way to spot food cost deviations.", "cta": "Open Food Cost tool →" },
-      "portion_check": { "title": "Check portion standards", "description": "Weigh each portion with a scale. 10g extra per portion = hundreds of AZN lost per month.", "cta": "Open Food Cost tool →" },
-      "supplier_compare": { "title": "Compare supplier prices", "description": "Request quotes for your top 10 ingredients from at least 2 suppliers. 5-15% savings are possible.", "cta": "Open Break-even tool →" },
-      "waste_log": { "title": "Start a waste log", "description": "Daily waste tracking: what, how much, why. After a week, you'll see patterns.", "cta": "Open Food Cost tool →" },
-      "menu_engineering": { "title": "Analyze menu performance", "description": "Measure each dish's profitability and sales volume. Find weak items, promote strong ones.", "cta": "Open Menu Matrix tool →" },
-      "price_review": { "title": "Review pricing strategy", "description": "Reprice items with food cost >35%. Compare with the market.", "cta": "Open Break-even tool →" },
-      "shift_optimization": { "title": "Optimize shift planning", "description": "Align staff count with peak hours. Reduce during idle hours, increase during peaks.", "cta": "Open Staff Retention tool →" },
-      "revenue_mix": { "title": "Analyze revenue mix", "description": "Identify the most profitable categories. Build an upsell strategy.", "cta": "Open Menu Matrix tool →" }
+      "recipe_audit": {
+        "title": "Audit your recipe cards",
+        "description": "Update the recipe cards of your top 5 sellers with actual prices. The fastest way to spot food cost deviations.",
+        "cta": "Open Food Cost tool →"
+      },
+      "portion_check": {
+        "title": "Check portion standards",
+        "description": "Weigh each portion with a scale. 10g extra per portion = hundreds of AZN lost per month.",
+        "cta": "Open Food Cost tool →"
+      },
+      "supplier_compare": {
+        "title": "Compare supplier prices",
+        "description": "Request quotes for your top 10 ingredients from at least 2 suppliers. 5-15% savings are possible.",
+        "cta": "Open Break-even tool →"
+      },
+      "waste_log": {
+        "title": "Start a waste log",
+        "description": "Daily waste tracking: what, how much, why. After a week, you'll see patterns.",
+        "cta": "Open Food Cost tool →"
+      },
+      "menu_engineering": {
+        "title": "Analyze menu performance",
+        "description": "Measure each dish's profitability and sales volume. Find weak items, promote strong ones.",
+        "cta": "Open Menu Matrix tool →"
+      },
+      "price_review": {
+        "title": "Review pricing strategy",
+        "description": "Reprice items with food cost >35%. Compare with the market.",
+        "cta": "Open Break-even tool →"
+      },
+      "shift_optimization": {
+        "title": "Optimize shift planning",
+        "description": "Align staff count with peak hours. Reduce during idle hours, increase during peaks.",
+        "cta": "Open Staff Retention tool →"
+      },
+      "revenue_mix": {
+        "title": "Analyze revenue mix",
+        "description": "Identify the most profitable categories. Build an upsell strategy.",
+        "cta": "Open Menu Matrix tool →"
+      }
     }
   },
   "marketing_tools": {
@@ -3597,7 +3743,13 @@
         "block_1_title": "What we do",
         "block_1_content": "Answer 5 questions and AI generates your brand positioning. Ideal customer profile, competitive edge, tagline, and where to use it — all on one page.",
         "block_2_title": "What you'll need",
-        "block_2_items": ["When your customers visit most (morning, lunch, evening)", "Why they come — hunger, meetings, celebrations?", "Your food story — traditional, fast, healthy?", "3 things your competitors can't do", "Why a customer would recommend you — 1 sentence"],
+        "block_2_items": [
+          "When your customers visit most (morning, lunch, evening)",
+          "Why they come — hunger, meetings, celebrations?",
+          "Your food story — traditional, fast, healthy?",
+          "3 things your competitors can't do",
+          "Why a customer would recommend you — 1 sentence"
+        ],
         "block_3_title": "Who it's for",
         "block_3_content": "Newly opened restaurants, owners planning a rebrand, or anyone updating their Instagram bio. Especially useful when your brand message isn't clear."
       }
@@ -3608,7 +3760,12 @@
         "block_1_title": "What we do",
         "block_1_content": "Rate your restaurant across 30 questions in 3 areas: Quality, Service, Cleanliness. Each area is scored out of 100. AI finds your weakest points and builds a 30-day action plan.",
         "block_2_title": "What you'll need",
-        "block_2_items": ["Rate 10 quality questions 1-5 (taste, portions, temperature)", "Rate 10 service questions 1-5 (speed, attitude, complaint handling)", "Rate 10 cleanliness questions 1-5 (kitchen, restrooms, equipment)", "Optional notes (e.g., last food safety inspection date)"],
+        "block_2_items": [
+          "Rate 10 quality questions 1-5 (taste, portions, temperature)",
+          "Rate 10 service questions 1-5 (speed, attitude, complaint handling)",
+          "Rate 10 cleanliness questions 1-5 (kitchen, restrooms, equipment)",
+          "Optional notes (e.g., last food safety inspection date)"
+        ],
         "block_3_title": "Who it's for",
         "block_3_content": "Owners preparing for food safety inspections, facing rising customer complaints, or simply wanting to know where they're weak. Works for both new and experienced operators."
       }
@@ -3619,22 +3776,205 @@
         "block_1_title": "What we do",
         "block_1_content": "Build a recipe card, enter each ingredient's quantity and price. The tool calculates cost per portion, food cost percentage, and ideal selling price. No AI — pure math, precise results.",
         "block_2_title": "What you'll need",
-        "block_2_items": ["Dish name and selling price (AZN)", "Number of portions per recipe batch", "Target food cost percentage (e.g., 30%)", "Each ingredient's name, quantity, and unit price", "Trim loss percentage (e.g., 5% for chicken breast)"],
+        "block_2_items": [
+          "Dish name and selling price (AZN)",
+          "Number of portions per recipe batch",
+          "Target food cost percentage (e.g., 30%)",
+          "Each ingredient's name, quantity, and unit price",
+          "Trim loss percentage (e.g., 5% for chicken breast)"
+        ],
         "block_3_title": "Who it's for",
         "block_3_content": "Any restaurant owner pricing dishes by guesswork. Operators aiming to keep food cost below 33% and starting to build recipe cards. Export to CSV or Excel to share with your accountant."
       }
     },
-    "menyu_analitik": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Enter each dish's sales count, food cost, and selling price. The tool plots them on a 2x2 matrix: Star, Plowhorse, Puzzle, Dog. AI suggests concrete steps to boost profit.", "block_2_title": "What you'll need", "block_2_items": ["Each menu item's name", "Selling price and food cost (AZN)", "Weekly or monthly sales count", "Category selection (main, drink, dessert)"], "block_3_title": "Who it's for", "block_3_content": "Owners who need to know which dishes to cut and which to promote. Especially useful when the menu has 20+ items and profit margins aren't clear." } },
-    "sezon_analitikasi": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Enter monthly sales, labor and food cost percentages. The tool applies seasonal coefficients to project 12 months of revenue, labor budget, and inventory budget. Ramadan and dead months are flagged automatically.", "block_2_title": "What you'll need", "block_2_items": ["Average monthly sales (AZN)", "Restaurant type (city center, suburban, mall, beach)", "Labor cost percentage (15-45%)", "Food cost percentage (20-45%)"], "block_3_title": "Who it's for", "block_3_content": "Owners whose sales spike in summer and drop in winter. Especially restaurants planning staff and inventory around Ramadan." } },
-    "sosial_metrik": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Enter your Instagram or TikTok metrics. The tool calculates Engagement Rate, health score, and sector benchmark comparison. Shows which content type (Reels, Carousel, Single) performs best.", "block_2_title": "What you'll need", "block_2_items": ["Follower count", "Total likes, comments, saves, shares", "Post count (recent period)", "Optional: content type breakdown stats"], "block_3_title": "Who it's for", "block_3_content": "Restaurants active on Instagram or TikTok but unable to measure results. If likes are high but foot traffic isn't growing — this tool finds the problem." } },
-    "trend_analiz": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Select your restaurant type, target audience, and strongest trait. AI ranks 10+ sector trends, highlights top 3 with gold badges, and gives the first implementation step for each.", "block_2_title": "What you'll need", "block_2_items": ["Restaurant type (city, suburban, mall, beach)", "Target audience (family, couples, business, mixed)", "Your strongest trait (food quality, service, price, hygiene)"], "block_3_title": "Who it's for", "block_3_content": "Owners who want to stay current but don't know which trends fit their restaurant. Especially those planning a new concept or menu refresh." } },
-    "lokasyon_analiz": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Evaluating a new spot or auditing your current one — rate 12 criteria. Calculates breakeven point, flags risks. AI provides 3 specific recommendations.", "block_2_title": "What you'll need", "block_2_items": ["Location type (street, mall, delivery hub)", "Yes/Partial/No answers for 12 criteria", "New location: daily sales target, monthly costs", "Existing location: risk flag selections"], "block_3_title": "Who it's for", "block_3_content": "Owners opening a new branch or considering relocating. If rent is high and traffic is dropping — this tool helps you decide." } },
-    "roi_kalkulator": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Calculates ROI, ROAS, CAC, and LTV:CAC ratio for your ad campaigns. Compare up to 8 channels side by side to find the best and worst performers. AI writes strategic investment advice.", "block_2_title": "What you'll need", "block_2_items": ["Campaign name and duration", "Average check (AZN) and monthly visit count", "Per channel: budget spent, revenue earned, new customers", "Loyalty period (months, typically 12)"], "block_3_title": "Who it's for", "block_3_content": "Owners running ads on Instagram, Google, WhatsApp but unsure which channel actually makes money. Anyone deciding whether to increase or cut ad spend." } },
-    "reklam_roi": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Two modes: Conversion (sales) or Awareness. Conversion mode calculates ROAS, CAC, ROI. Awareness mode measures CPM and EMV (earned media value). Influencer commissions handled separately.", "block_2_title": "What you'll need", "block_2_items": ["Campaign type: sales-focused or awareness?", "Per channel budget (AZN)", "Conversion: new customer count, average check", "Awareness: reach and impression count", "Influencer commission percentage if applicable"], "block_3_title": "Who it's for", "block_3_content": "Restaurants working with influencers or running TikTok/Instagram ads. Anyone wanting a data answer to 'Did this ad work?'" } },
-    "sikayet_analitigi": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Paste customer complaints and AI finds the root cause, categorizes them, and detects patterns. 1 written complaint = 26 silent dissatisfied customers. Generates an action plan.", "block_2_title": "What you'll need", "block_2_items": ["Complaint text (copy from Google, TripAdvisor, Yandex)", "Source platform selection", "Complaint date (optional)"], "block_3_title": "Who it's for", "block_3_content": "Restaurants getting negative reviews on Google Maps or TripAdvisor. If complaints are rising but you can't pinpoint the exact problem — this tool finds the root cause." } },
-    "sikayet_cavablandirici": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Paste a customer complaint and AI writes 3 response variants: formal, friendly, and short. Pick the one that fits your brand voice, copy, and paste directly into the review.", "block_2_title": "What you'll need", "block_2_items": ["Complaint text (copy from review platform)", "Restaurant name (optional — used in response)", "Complaint language and response language selection"], "block_3_title": "Who it's for", "block_3_content": "Restaurant managers who don't have time to write review responses every day. Owners wanting professional replies on Google or TripAdvisor but struggling to find the right tone." } },
-    "restoran_audit": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Audit your restaurant across 6 areas: finance, kitchen, staff, customer experience, digital presence, compliance. Each area scored out of 100. Top 3 weakest areas get a priority action plan.", "block_2_title": "What you'll need", "block_2_items": ["Yes/Partial/No answers for 3-5 questions per area", "Do you have a POS? Daily cash reconciliation?", "Staff training program?", "Online review monitoring?"], "block_3_title": "Who it's for", "block_3_content": "Owners wanting to measure overall restaurant health. Those pursuing SHEDD certification or simply wanting to see where they're weak across different areas." } },
-    "sezon_planlama": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Creates a 12-month campaign calendar. Azerbaijani holidays (Novruz, Ramadan), world days, and seasonal shifts are automatically highlighted. AI suggests campaign ideas for each month.", "block_2_title": "What you'll need", "block_2_items": ["Restaurant type and target segment", "Annual advertising budget (optional)", "Which months you want to focus on"], "block_3_title": "Who it's for", "block_3_content": "Owners who scramble last-minute for Novruz campaigns. If holidays sneak up on you — this tool gives you a 12-month plan in advance." } },
-    "reklam_yazicisi": { "description": { "section_label": "About this tool", "block_1_title": "What we do", "block_1_content": "Enter your dish name, selling point, and platform. AI writes 3 ad variants with different tones: headline, body, hashtags. Length auto-adjusts for Instagram, Facebook, TikTok, and Google Ads.", "block_2_title": "What you'll need", "block_2_items": ["Dish or campaign name to advertise", "Key selling point (discount? new item? holiday?)", "Target audience (youth, family, corporate)", "Platform (Instagram, Facebook, TikTok, Google Ads)"], "block_3_title": "Who it's for", "block_3_content": "Restaurant owners spending 30 minutes writing an Instagram caption. Anyone who needs effective ad copy but can't afford a professional copywriter." } }
+    "menyu_analitik": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Enter each dish's sales count, food cost, and selling price. The tool plots them on a 2x2 matrix: Star, Plowhorse, Puzzle, Dog. AI suggests concrete steps to boost profit.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Each menu item's name",
+          "Selling price and food cost (AZN)",
+          "Weekly or monthly sales count",
+          "Category selection (main, drink, dessert)"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Owners who need to know which dishes to cut and which to promote. Especially useful when the menu has 20+ items and profit margins aren't clear."
+      }
+    },
+    "sezon_analitikasi": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Enter monthly sales, labor and food cost percentages. The tool applies seasonal coefficients to project 12 months of revenue, labor budget, and inventory budget. Ramadan and dead months are flagged automatically.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Average monthly sales (AZN)",
+          "Restaurant type (city center, suburban, mall, beach)",
+          "Labor cost percentage (15-45%)",
+          "Food cost percentage (20-45%)"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Owners whose sales spike in summer and drop in winter. Especially restaurants planning staff and inventory around Ramadan."
+      }
+    },
+    "sosial_metrik": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Enter your Instagram or TikTok metrics. The tool calculates Engagement Rate, health score, and sector benchmark comparison. Shows which content type (Reels, Carousel, Single) performs best.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Follower count",
+          "Total likes, comments, saves, shares",
+          "Post count (recent period)",
+          "Optional: content type breakdown stats"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Restaurants active on Instagram or TikTok but unable to measure results. If likes are high but foot traffic isn't growing — this tool finds the problem."
+      }
+    },
+    "trend_analiz": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Select your restaurant type, target audience, and strongest trait. AI ranks 10+ sector trends, highlights top 3 with gold badges, and gives the first implementation step for each.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Restaurant type (city, suburban, mall, beach)",
+          "Target audience (family, couples, business, mixed)",
+          "Your strongest trait (food quality, service, price, hygiene)"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Owners who want to stay current but don't know which trends fit their restaurant. Especially those planning a new concept or menu refresh."
+      }
+    },
+    "lokasyon_analiz": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Evaluating a new spot or auditing your current one — rate 12 criteria. Calculates breakeven point, flags risks. AI provides 3 specific recommendations.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Location type (street, mall, delivery hub)",
+          "Yes/Partial/No answers for 12 criteria",
+          "New location: daily sales target, monthly costs",
+          "Existing location: risk flag selections"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Owners opening a new branch or considering relocating. If rent is high and traffic is dropping — this tool helps you decide."
+      }
+    },
+    "roi_kalkulator": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Calculates ROI, ROAS, CAC, and LTV:CAC ratio for your ad campaigns. Compare up to 8 channels side by side to find the best and worst performers. AI writes strategic investment advice.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Campaign name and duration",
+          "Average check (AZN) and monthly visit count",
+          "Per channel: budget spent, revenue earned, new customers",
+          "Loyalty period (months, typically 12)"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Owners running ads on Instagram, Google, WhatsApp but unsure which channel actually makes money. Anyone deciding whether to increase or cut ad spend."
+      }
+    },
+    "reklam_roi": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Two modes: Conversion (sales) or Awareness. Conversion mode calculates ROAS, CAC, ROI. Awareness mode measures CPM and EMV (earned media value). Influencer commissions handled separately.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Campaign type: sales-focused or awareness?",
+          "Per channel budget (AZN)",
+          "Conversion: new customer count, average check",
+          "Awareness: reach and impression count",
+          "Influencer commission percentage if applicable"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Restaurants working with influencers or running TikTok/Instagram ads. Anyone wanting a data answer to 'Did this ad work?'"
+      }
+    },
+    "sikayet_analitigi": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Paste customer complaints and AI finds the root cause, categorizes them, and detects patterns. 1 written complaint = 26 silent dissatisfied customers. Generates an action plan.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Complaint text (copy from Google, TripAdvisor, Yandex)",
+          "Source platform selection",
+          "Complaint date (optional)"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Restaurants getting negative reviews on Google Maps or TripAdvisor. If complaints are rising but you can't pinpoint the exact problem — this tool finds the root cause."
+      }
+    },
+    "sikayet_cavablandirici": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Paste a customer complaint and AI writes 3 response variants: formal, friendly, and short. Pick the one that fits your brand voice, copy, and paste directly into the review.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Complaint text (copy from review platform)",
+          "Restaurant name (optional — used in response)",
+          "Complaint language and response language selection"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Restaurant managers who don't have time to write review responses every day. Owners wanting professional replies on Google or TripAdvisor but struggling to find the right tone."
+      }
+    },
+    "restoran_audit": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Audit your restaurant across 6 areas: finance, kitchen, staff, customer experience, digital presence, compliance. Each area scored out of 100. Top 3 weakest areas get a priority action plan.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Yes/Partial/No answers for 3-5 questions per area",
+          "Do you have a POS? Daily cash reconciliation?",
+          "Staff training program?",
+          "Online review monitoring?"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Owners wanting to measure overall restaurant health. Those pursuing SHEDD certification or simply wanting to see where they're weak across different areas."
+      }
+    },
+    "sezon_planlama": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Creates a 12-month campaign calendar. Azerbaijani holidays (Novruz, Ramadan), world days, and seasonal shifts are automatically highlighted. AI suggests campaign ideas for each month.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Restaurant type and target segment",
+          "Annual advertising budget (optional)",
+          "Which months you want to focus on"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Owners who scramble last-minute for Novruz campaigns. If holidays sneak up on you — this tool gives you a 12-month plan in advance."
+      }
+    },
+    "reklam_yazicisi": {
+      "description": {
+        "section_label": "About this tool",
+        "block_1_title": "What we do",
+        "block_1_content": "Enter your dish name, selling point, and platform. AI writes 3 ad variants with different tones: headline, body, hashtags. Length auto-adjusts for Instagram, Facebook, TikTok, and Google Ads.",
+        "block_2_title": "What you'll need",
+        "block_2_items": [
+          "Dish or campaign name to advertise",
+          "Key selling point (discount? new item? holiday?)",
+          "Target audience (youth, family, corporate)",
+          "Platform (Instagram, Facebook, TikTok, Google Ads)"
+        ],
+        "block_3_title": "Who it's for",
+        "block_3_content": "Restaurant owners spending 30 minutes writing an Instagram caption. Anyone who needs effective ad copy but can't afford a professional copywriter."
+      }
+    }
   }
 }

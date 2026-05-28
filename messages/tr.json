@@ -1208,6 +1208,15 @@
       "phase_opening_item6_detail": "Yiyecek maliyeti ve satış dili finaldir.",
       "phase_opening_item7_text": "Büyük açılış planı",
       "phase_opening_item7_detail": "Pazarlama, davetliler ve sosyal medya planı hazır."
+    },
+    "live": "CANLI",
+    "aiInsight": "AI YORUM",
+    "aiInsightPending": "Hesaplama tamamlandığında AI yorumu görünecek",
+    "backToToolkit": "Toolkit",
+    "tierBadge": {
+      "sagird": "ÇIRAK",
+      "kalfa": "KALFA",
+      "usta": "USTA"
     }
   },
   "blog": {
@@ -2790,9 +2799,19 @@
         "intro": "Merhaba, P&L Simülatöründen geldiğini gördüm. Rakamlarını analiz ettim:",
         "results_title": "Sonuçların",
         "sector": "sektör",
-        "metric": { "food_cost": "Food Cost", "labor_cost": "İşçilik Maliyeti", "net_profit": "Net Kâr", "rent_ratio": "Kira Oranı" },
+        "metric": {
+          "food_cost": "Food Cost",
+          "labor_cost": "İşçilik Maliyeti",
+          "net_profit": "Net Kâr",
+          "rent_ratio": "Kira Oranı"
+        },
         "sanity_title": "Dikkat — veri tutarsızlığı tespit edildi",
-        "sanity": { "food_cost_high": "Food cost %60'ın üzerinde — hesaplamada hata olabilir", "net_profit_critical": "Bu zarar seviyesi sürdürülemez, rakamları birlikte kontrol edelim", "rent_high": "Kira oranı çok yüksek — model sürdürülebilir değil", "sum_exceeds": "Giderler geliri aşıyor — doğru rakamları alalım" },
+        "sanity": {
+          "food_cost_high": "Food cost %60'ın üzerinde — hesaplamada hata olabilir",
+          "net_profit_critical": "Bu zarar seviyesi sürdürülemez, rakamları birlikte kontrol edelim",
+          "rent_high": "Kira oranı çok yüksek — model sürdürülebilir değil",
+          "sum_exceeds": "Giderler geliri aşıyor — doğru rakamları alalım"
+        },
         "questions_intro": "Nereden başlayalım?",
         "question_1": "Bu rakamlar aylık satışın yüzdesi mi, yoksa farklı bir hesaplama mı?",
         "question_2": "En çok sıkıntı yaratan maliyet hangisi — işçilik, hammadde mi kira mı?",
@@ -2802,7 +2821,11 @@
         "intro": "Merhaba, AI Hazırlık testinden geldiğini gördüm. Sonucunu analiz ettim:",
         "score_label": "Puanın",
         "segment_label": "Segment",
-        "segment": { "not_ready": "Temel atılmalı", "partial": "Kısmen hazır", "ready": "AI'ya hazır" },
+        "segment": {
+          "not_ready": "Temel atılmalı",
+          "partial": "Kısmen hazır",
+          "ready": "AI'ya hazır"
+        },
         "questions_intro": "Sorularınla başlayalım:",
         "question_1": "Hangi alandan başlamak istiyorsun?",
         "question_2": "En büyük operasyonel sorununuz ne?"
@@ -3532,21 +3555,103 @@
     "section_description": "10 soruyu cevaplayın, dijital hazırlık puanınızı alın ve kişiselleştirilmiş tavsiyeler edinIn.",
     "start_button": "Testi Başlat",
     "questions": {
-      "q1_pos": { "label": "POS (kasa) sisteminiz var mı?", "options": { "yes_modern": "Evet, modern bulut POS", "yes_old": "Evet, eski çevrimdışı POS", "no": "Hayır, POS kullanmıyoruz" } },
-      "q2_inventory": { "label": "Stok sayımı ne sıklıkla yapılıyor?", "options": { "weekly": "Haftalık", "monthly": "Aylık", "no": "Yapılmıyor" } },
-      "q3_recipe": { "label": "Reçete kartlarınız mevcut mu?", "options": { "all": "Evet, tüm ürünler için", "partial": "Kısmen — sadece bazıları için", "no": "Hayır, reçete kartımız yok" } },
-      "q4_pnl": { "label": "P&L (Kâr/Zarar) raporunu okuyup yorumlayabiliyor musunuz?", "options": { "self": "Evet, kendim analiz ediyorum", "assistant": "Muhasebeci/yardımcı bakıyor", "no": "Hayır, P&L kullanmıyoruz" } },
-      "q5_staff": { "label": "Personel vardiyası nasıl planlanıyor?", "options": { "system": "Dijital sistem ile", "excel": "Excel/tablo ile", "manual": "Elle / sözlü" } },
-      "q6_food_cost": { "label": "Gerçek food cost ölçülüyor mu?", "options": { "weekly": "Haftalık hesaplanıyor", "monthly": "Aylık hesaplanıyor", "no": "Hayır, ölçmüyoruz" } },
-      "q7_feedback": { "label": "Müşteri geri bildirimleri nasıl toplanıyor?", "options": { "crm": "CRM / dijital sistem ile", "manual": "Elle / sözlü toplama", "no": "Toplanmıyor" } },
-      "q8_vendor": { "label": "Tedarikçi fiyat denetimi ne sıklıkla yapılıyor?", "options": { "monthly": "Aylık karşılaştırma", "yearly": "Yıllık / nadiren", "never": "Hiç yapılmıyor" } },
-      "q9_menu": { "label": "Menü performans analizi yapılıyor mu?", "options": { "matrix": "Menü matrisi / veriye dayalı", "intuition": "Sezgiye dayalı", "no": "Yapılmıyor" } },
-      "q10_team": { "label": "Ekibiniz dijital araçlara hazır mı?", "options": { "yes": "Evet, açık ve istekli", "partial": "Kısmen — bazıları hazır", "no": "Hayır, direnç var" } }
+      "q1_pos": {
+        "label": "POS (kasa) sisteminiz var mı?",
+        "options": {
+          "yes_modern": "Evet, modern bulut POS",
+          "yes_old": "Evet, eski çevrimdışı POS",
+          "no": "Hayır, POS kullanmıyoruz"
+        }
+      },
+      "q2_inventory": {
+        "label": "Stok sayımı ne sıklıkla yapılıyor?",
+        "options": {
+          "weekly": "Haftalık",
+          "monthly": "Aylık",
+          "no": "Yapılmıyor"
+        }
+      },
+      "q3_recipe": {
+        "label": "Reçete kartlarınız mevcut mu?",
+        "options": {
+          "all": "Evet, tüm ürünler için",
+          "partial": "Kısmen — sadece bazıları için",
+          "no": "Hayır, reçete kartımız yok"
+        }
+      },
+      "q4_pnl": {
+        "label": "P&L (Kâr/Zarar) raporunu okuyup yorumlayabiliyor musunuz?",
+        "options": {
+          "self": "Evet, kendim analiz ediyorum",
+          "assistant": "Muhasebeci/yardımcı bakıyor",
+          "no": "Hayır, P&L kullanmıyoruz"
+        }
+      },
+      "q5_staff": {
+        "label": "Personel vardiyası nasıl planlanıyor?",
+        "options": {
+          "system": "Dijital sistem ile",
+          "excel": "Excel/tablo ile",
+          "manual": "Elle / sözlü"
+        }
+      },
+      "q6_food_cost": {
+        "label": "Gerçek food cost ölçülüyor mu?",
+        "options": {
+          "weekly": "Haftalık hesaplanıyor",
+          "monthly": "Aylık hesaplanıyor",
+          "no": "Hayır, ölçmüyoruz"
+        }
+      },
+      "q7_feedback": {
+        "label": "Müşteri geri bildirimleri nasıl toplanıyor?",
+        "options": {
+          "crm": "CRM / dijital sistem ile",
+          "manual": "Elle / sözlü toplama",
+          "no": "Toplanmıyor"
+        }
+      },
+      "q8_vendor": {
+        "label": "Tedarikçi fiyat denetimi ne sıklıkla yapılıyor?",
+        "options": {
+          "monthly": "Aylık karşılaştırma",
+          "yearly": "Yıllık / nadiren",
+          "never": "Hiç yapılmıyor"
+        }
+      },
+      "q9_menu": {
+        "label": "Menü performans analizi yapılıyor mu?",
+        "options": {
+          "matrix": "Menü matrisi / veriye dayalı",
+          "intuition": "Sezgiye dayalı",
+          "no": "Yapılmıyor"
+        }
+      },
+      "q10_team": {
+        "label": "Ekibiniz dijital araçlara hazır mı?",
+        "options": {
+          "yes": "Evet, açık ve istekli",
+          "partial": "Kısmen — bazıları hazır",
+          "no": "Hayır, direnç var"
+        }
+      }
     },
     "segments": {
-      "not_ready": { "title": "Temel Atın", "description": "Restoranınız henüz AI'ya hazır değil. Önce temel süreçleri dijitalleştirin.", "kazan_cta": "KAZAN AI ile nereden başlayacağınızı öğrenin" },
-      "partial": { "title": "Kısmen Hazırsınız", "description": "AI bazı alanlarda hemen fayda sağlayacak. Boşlukları doldurun ve hızlanın.", "kazan_cta": "KAZAN AI ile önceliklerinizi belirleyin" },
-      "ready": { "title": "AI'ya Hazırsınız", "description": "Restoranınız AI optimizasyonuna hazır. Gelişmiş araçlarla ilerleyin.", "kazan_cta": "KAZAN AI ile gerçek zamanlı analiz başlatın" }
+      "not_ready": {
+        "title": "Temel Atın",
+        "description": "Restoranınız henüz AI'ya hazır değil. Önce temel süreçleri dijitalleştirin.",
+        "kazan_cta": "KAZAN AI ile nereden başlayacağınızı öğrenin"
+      },
+      "partial": {
+        "title": "Kısmen Hazırsınız",
+        "description": "AI bazı alanlarda hemen fayda sağlayacak. Boşlukları doldurun ve hızlanın.",
+        "kazan_cta": "KAZAN AI ile önceliklerinizi belirleyin"
+      },
+      "ready": {
+        "title": "AI'ya Hazırsınız",
+        "description": "Restoranınız AI optimizasyonuna hazır. Gelişmiş araçlarla ilerleyin.",
+        "kazan_cta": "KAZAN AI ile gerçek zamanlı analiz başlatın"
+      }
     },
     "result": {
       "score_label": "Puanınız",
@@ -3556,7 +3661,11 @@
       "detail_cta": "Detaylı analiz için üye olun",
       "restart": "Yeniden başla"
     },
-    "navigation": { "next": "İleri", "back": "Geri", "question_of": "/ 10 soru" }
+    "navigation": {
+      "next": "İleri",
+      "back": "Geri",
+      "question_of": "/ 10 soru"
+    }
   },
   "weekly_actions": {
     "panel_title": "Bu hafta ne yapmalıyım?",
@@ -3565,22 +3674,66 @@
     "all_good_title": "Harika durumdasınız!",
     "all_good_description": "Göstergeleriniz sektör benchmarkları dahilinde. Devam edin!",
     "duration_unit": "dk",
-    "severity": { "ok": "Normal", "warning": "Dikkat", "critical": "Kritik" },
+    "severity": {
+      "ok": "Normal",
+      "warning": "Dikkat",
+      "critical": "Kritik"
+    },
     "benchmark": {
-      "food_cost_ok": "Food cost normal aralıkta (≤%32)", "food_cost_warning": "Food cost yüksek (33-38%)", "food_cost_critical": "Food cost kritik seviyede (>%38)",
-      "labor_cost_ok": "İşçilik maliyeti normal (≤%25)", "labor_cost_warning": "İşçilik maliyeti yüksek (26-30%)", "labor_cost_critical": "İşçilik maliyeti kritik (>%30)",
-      "net_profit_ok": "Net kâr sağlıklı (≥%12)", "net_profit_warning": "Net kâr düşük (8-11%)", "net_profit_critical": "Net kâr kritik (<8%)",
-      "rent_ok": "Kira oranı iyi (≤%8)", "rent_warning": "Kira oranı yüksek (9-12%)", "rent_critical": "Kira oranı kritik (>%12)"
+      "food_cost_ok": "Food cost normal aralıkta (≤%32)",
+      "food_cost_warning": "Food cost yüksek (33-38%)",
+      "food_cost_critical": "Food cost kritik seviyede (>%38)",
+      "labor_cost_ok": "İşçilik maliyeti normal (≤%25)",
+      "labor_cost_warning": "İşçilik maliyeti yüksek (26-30%)",
+      "labor_cost_critical": "İşçilik maliyeti kritik (>%30)",
+      "net_profit_ok": "Net kâr sağlıklı (≥%12)",
+      "net_profit_warning": "Net kâr düşük (8-11%)",
+      "net_profit_critical": "Net kâr kritik (<8%)",
+      "rent_ok": "Kira oranı iyi (≤%8)",
+      "rent_warning": "Kira oranı yüksek (9-12%)",
+      "rent_critical": "Kira oranı kritik (>%12)"
     },
     "actions": {
-      "recipe_audit": { "title": "Reçete kartlarını denetleyin", "description": "En çok satan 5 ürünün reçete kartını güncel fiyatlarla yenileyin. Food cost sapmasını tespit etmenin en hızlı yolu.", "cta": "Food Cost aracını aç →" },
-      "portion_check": { "title": "Porsiyon standartlarını kontrol edin", "description": "Her porsiyon için tartı ile ölçüm yapın. 10g fazla porsiyon = ayda yüzlerce AZN kayıp.", "cta": "Food Cost aracını aç →" },
-      "supplier_compare": { "title": "Tedarikçi fiyatlarını karşılaştırın", "description": "En çok kullandığınız 10 hammadde için en az 2 tedarikçiden fiyat isteyin. %5-15 tasarruf mümkün.", "cta": "Başabaş aracını aç →" },
-      "waste_log": { "title": "İsraf günlüğü başlatın", "description": "Günlük israf kaydı: ne, ne kadar, neden. Bir hafta sonra pattern göreceksiniz.", "cta": "Food Cost aracını aç →" },
-      "menu_engineering": { "title": "Menü performansını analiz edin", "description": "Her yemeğin karlılığını ve satış hacmini ölçün. Zayıf ürünleri bulun, güçlüleri öne çıkarın.", "cta": "Menü Matrisi aracını aç →" },
-      "price_review": { "title": "Fiyat stratejisini gözden geçirin", "description": "Food cost >%35 olan ürünlerin fiyatını yenileyin. Pazarla karşılaştırın.", "cta": "Başabaş aracını aç →" },
-      "shift_optimization": { "title": "Vardiya planını optimize edin", "description": "Personel sayısını yoğun saatlerle uyumlu hale getirin. Boş saatlerde azaltın, yoğunlukta artırın.", "cta": "Staff Retention aracını aç →" },
-      "revenue_mix": { "title": "Satış miksini analiz edin", "description": "En çok kâr getiren kategorileri belirleyin. Upsell stratejisi oluşturun.", "cta": "Menü Matrisi aracını aç →" }
+      "recipe_audit": {
+        "title": "Reçete kartlarını denetleyin",
+        "description": "En çok satan 5 ürünün reçete kartını güncel fiyatlarla yenileyin. Food cost sapmasını tespit etmenin en hızlı yolu.",
+        "cta": "Food Cost aracını aç →"
+      },
+      "portion_check": {
+        "title": "Porsiyon standartlarını kontrol edin",
+        "description": "Her porsiyon için tartı ile ölçüm yapın. 10g fazla porsiyon = ayda yüzlerce AZN kayıp.",
+        "cta": "Food Cost aracını aç →"
+      },
+      "supplier_compare": {
+        "title": "Tedarikçi fiyatlarını karşılaştırın",
+        "description": "En çok kullandığınız 10 hammadde için en az 2 tedarikçiden fiyat isteyin. %5-15 tasarruf mümkün.",
+        "cta": "Başabaş aracını aç →"
+      },
+      "waste_log": {
+        "title": "İsraf günlüğü başlatın",
+        "description": "Günlük israf kaydı: ne, ne kadar, neden. Bir hafta sonra pattern göreceksiniz.",
+        "cta": "Food Cost aracını aç →"
+      },
+      "menu_engineering": {
+        "title": "Menü performansını analiz edin",
+        "description": "Her yemeğin karlılığını ve satış hacmini ölçün. Zayıf ürünleri bulun, güçlüleri öne çıkarın.",
+        "cta": "Menü Matrisi aracını aç →"
+      },
+      "price_review": {
+        "title": "Fiyat stratejisini gözden geçirin",
+        "description": "Food cost >%35 olan ürünlerin fiyatını yenileyin. Pazarla karşılaştırın.",
+        "cta": "Başabaş aracını aç →"
+      },
+      "shift_optimization": {
+        "title": "Vardiya planını optimize edin",
+        "description": "Personel sayısını yoğun saatlerle uyumlu hale getirin. Boş saatlerde azaltın, yoğunlukta artırın.",
+        "cta": "Staff Retention aracını aç →"
+      },
+      "revenue_mix": {
+        "title": "Satış miksini analiz edin",
+        "description": "En çok kâr getiren kategorileri belirleyin. Upsell stratejisi oluşturun.",
+        "cta": "Menü Matrisi aracını aç →"
+      }
     }
   },
   "marketing_tools": {
@@ -3590,7 +3743,13 @@
         "block_1_title": "Ne yapıyoruz?",
         "block_1_content": "5 soruyu cevapla, AI restoranının marka konumlandırmasını çıkarsın. İdeal müşteri profili, rakiplerden farkın, slogan ve nerede kullanacağın — hepsi tek sayfada.",
         "block_2_title": "Sana ne lazım olacak?",
-        "block_2_items": ["Müşterilerinin en çok ne zaman geldiğini bil (sabah, öğle, akşam)", "Neden geliyorlar — karnını doyurmak, toplantı, kutlama?", "Yemeğinin hikayesi — geleneksel, hızlı, sağlıklı?", "Rakiplerinin yapamadığı 3 şeyi yaz", "Müşteri seni neden tavsiye eder — 1 cümle"],
+        "block_2_items": [
+          "Müşterilerinin en çok ne zaman geldiğini bil (sabah, öğle, akşam)",
+          "Neden geliyorlar — karnını doyurmak, toplantı, kutlama?",
+          "Yemeğinin hikayesi — geleneksel, hızlı, sağlıklı?",
+          "Rakiplerinin yapamadığı 3 şeyi yaz",
+          "Müşteri seni neden tavsiye eder — 1 cümle"
+        ],
         "block_3_title": "Kime uygun?",
         "block_3_content": "Yeni açılan restoran, yeniden marka yapmayı planlayan sahip veya Instagram bio'sunu güncellemek isteyen herkes. Özellikle marka mesajı net olmayan işletmeler için."
       }
@@ -3601,7 +3760,12 @@
         "block_1_title": "Ne yapıyoruz?",
         "block_1_content": "30 soruyla restoranını 3 alanda değerlendirir: Kalite, Servis, Temizlik. Her alan 100 üzerinden puanlanır. AI en zayıf noktalarını bulur ve 30 günlük iyileştirme planı verir.",
         "block_2_title": "Sana ne lazım olacak?",
-        "block_2_items": ["10 kalite sorusuna 1-5 puan ver (lezzet, porsiyon, sıcaklık)", "10 servis sorusuna 1-5 puan ver (hız, tutum, şikayet yönetimi)", "10 temizlik sorusuna 1-5 puan ver (mutfak, tuvaletler, ekipman)", "İsteğe bağlı notlar (örn. son gıda güvenliği denetimi tarihi)"],
+        "block_2_items": [
+          "10 kalite sorusuna 1-5 puan ver (lezzet, porsiyon, sıcaklık)",
+          "10 servis sorusuna 1-5 puan ver (hız, tutum, şikayet yönetimi)",
+          "10 temizlik sorusuna 1-5 puan ver (mutfak, tuvaletler, ekipman)",
+          "İsteğe bağlı notlar (örn. son gıda güvenliği denetimi tarihi)"
+        ],
         "block_3_title": "Kime uygun?",
         "block_3_content": "Gıda güvenliği denetimine hazırlanan, müşteri şikayetleri artan veya zayıf noktalarını bilmek isteyen restoran sahipleri. Hem yeni hem deneyimli işletmeciler için."
       }
@@ -3612,22 +3776,205 @@
         "block_1_title": "Ne yapıyoruz?",
         "block_1_content": "Reçete kartı oluştur, her malzemenin miktarını ve fiyatını gir. Araç porsiyon başına maliyeti, food cost yüzdesini ve ideal satış fiyatını hesaplar. AI yok — saf matematik, kesin sonuç.",
         "block_2_title": "Sana ne lazım olacak?",
-        "block_2_items": ["Yemeğin adı ve satış fiyatı (AZN)", "Bir reçeteden kaç porsiyon çıkıyor", "Hedef food cost yüzdesi (örn. %30)", "Her malzemenin adı, miktarı ve birim fiyatı", "Trim loss yüzdesi (örn. tavuk göğsünde %5 fire)"],
+        "block_2_items": [
+          "Yemeğin adı ve satış fiyatı (AZN)",
+          "Bir reçeteden kaç porsiyon çıkıyor",
+          "Hedef food cost yüzdesi (örn. %30)",
+          "Her malzemenin adı, miktarı ve birim fiyatı",
+          "Trim loss yüzdesi (örn. tavuk göğsünde %5 fire)"
+        ],
         "block_3_title": "Kime uygun?",
         "block_3_content": "Menü fiyatını göz kararıyla belirleyen her restoran sahibi. Food cost'u %33'ün altında tutmak isteyen, reçete kartı oluşturmaya başlayan işletmeciler. CSV ve Excel export ile muhasebecinle paylaşabilirsin."
       }
     },
-    "menyu_analitik": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Her yemeğin satış adedi, food cost'u ve satış fiyatını gir. Araç 2x2 matriste grupluyor: Yıldız, At, Bulmaca, Köpek. AI kâr artırmak için somut adımlar öneriyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Her menü kaleminin adı", "Satış fiyatı ve food cost (AZN)", "Haftalık veya aylık satış adedi", "Kategori seçimi (ana yemek, içecek, tatlı)"], "block_3_title": "Kime uygun?", "block_3_content": "Hangi yemeği çıkaracağını, hangisini öne çıkaracağını bilmek isteyen sahip. Özellikle menü 20+ kalemden oluşuyorsa ve kâr marjı net değilse." } },
-    "sezon_analitikasi": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Aylık satış, işçilik ve food cost yüzdelerini gir. Araç 12 aya sezon katsayısı uygulayarak gelir tahmini, işçilik bütçesi ve stok bütçesi hesaplıyor. Ramazan ve ölü aylar otomatik tespit ediliyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Aylık ortalama satış (AZN)", "Restoran tipi (şehir merkezi, banliyö, AVM, sahil)", "İşçilik maliyeti yüzdesi (%15-45)", "Food cost yüzdesi (%20-45)"], "block_3_title": "Kime uygun?", "block_3_content": "Yazın satışı artıp kışın düşen sahipler. Özellikle Ramazan döneminde personel ve stok planlaması yapan restoranlar için." } },
-    "sosial_metrik": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Instagram veya TikTok metriklerini gir. Araç Engagement Rate, sağlık skoru ve sektör benchmark karşılaştırması hesaplıyor. Hangi içerik tipinin (Reels, Carousel, Single) daha iyi performans gösterdiğini gösteriyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Takipçi sayısı", "Toplam beğeni, yorum, kaydetme, paylaşım sayıları", "Post sayısı (son dönem)", "İsteğe bağlı: içerik tipine göre ayrılmış istatistik"], "block_3_title": "Kime uygun?", "block_3_content": "Instagram veya TikTok'ta aktif olan ama sonuçları ölçemeyen restoran. Beğeni yüksek ama müşteri artmıyorsa — bu araç sorunu buluyor." } },
-    "trend_analiz": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Restoran tipini, hedef kitlenizi ve güçlü yanınızı seçin. AI 10+ sektör trendini sıralıyor, top 3'ü altın rozet ile gösteriyor. Her trend için ilk uygulama adımını veriyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Restoran tipi (şehir, banliyö, AVM, sahil)", "Hedef kitle (aile, çift, iş, karışık)", "En güçlü yanınız (yemek kalitesi, servis, fiyat, hijyen)"], "block_3_title": "Kime uygun?", "block_3_content": "Sektör trendlerinden haberdar olmak isteyen ama hangisinin kendi restoranına uyduğunu bilemeyen sahip. Yeni konsept veya menü yenilemesi planlayan restoranlar için." } },
-    "lokasyon_analiz": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Yeni mekan mı açıyorsun yoksa mevcut yeri mi değerlendiriyorsun — 12 kriter üzerinden puanlıyor. Başabaş noktasını hesaplıyor, riskleri işaretliyor. AI 3 somut tavsiye veriyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Mekan tipi (cadde, AVM, delivery hub)", "12 kritere Evet/Kısmen/Hayır cevap", "Yeni mekan: günlük satış hedefi, aylık giderler", "Mevcut mekan: risk bayrakları seçimi"], "block_3_title": "Kime uygun?", "block_3_content": "Yeni şube açmayı planlayan veya mevcut mekanı değiştirmeyi düşünen sahip. Kira yüksekse, trafik düşüyorsa — bu araç karar vermeye yardımcı oluyor." } },
-    "roi_kalkulator": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Reklam kampanyalarının ROI, ROAS, CAC ve LTV:CAC oranını hesaplıyor. 8'e kadar kanalı karşılaştırıp en iyi ve en kötüyü gösteriyor. AI stratejik yatırım tavsiyesi veriyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Kampanya adı ve süresi", "Ortalama çek (AZN) ve aylık ziyaret sayısı", "Her kanal için: harcanan bütçe, gelir, yeni müşteri sayısı", "Sadakat süresi (ay, genellikle 12)"], "block_3_title": "Kime uygun?", "block_3_content": "Instagram, Google, WhatsApp'ta reklam veren ama hangi kanalın gerçekten para getirdiğini bilemeyen sahip. Reklam bütçesini artırmak veya kesmek kararı veren herkes." } },
-    "reklam_roi": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "İki mod: Dönüşüm (satış) veya Bilinirlik (awareness). Dönüşümde ROAS, CAC, ROI hesaplıyor. Bilinirlikte CPM ve EMV (kazanılmış medya değeri) ölçüyor. Influencer komisyonu ayrıca hesaplanıyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Kampanya tipi: satış odaklı mı bilinirlik mi?", "Her kanal için bütçe (AZN)", "Dönüşüm: yeni müşteri sayısı, ortalama çek", "Bilinirlik: erişim ve gösterim sayısı", "Influencer varsa: komisyon yüzdesi"], "block_3_title": "Kime uygun?", "block_3_content": "Influencer ile çalışan veya TikTok/Instagram reklam veren restoran. 'Bu reklam işe yaradı mı?' sorusuna rakamla cevap almak isteyen herkes." } },
-    "sikayet_analitigi": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Müşteri şikayetlerini yapıştır, AI kök nedeni buluyor ve kategorilere ayırıyor. 1 yazılı şikayet = 26 sessiz memnuniyetsiz müşteri. Pattern analizi ile tekrarlayan sorunları tespit ediyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Şikayet metni (Google, TripAdvisor, Yandex'ten kopyala)", "Kaynak platform seçimi", "Şikayet tarihi (isteğe bağlı)"], "block_3_title": "Kime uygun?", "block_3_content": "Google Maps veya TripAdvisor'da olumsuz yorum alan restoran. Şikayetler artıyorsa ama asıl sorunu bulamıyorsan — bu araç kök nedeni ortaya çıkarıyor." } },
-    "sikayet_cavablandirici": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Müşteri şikayetini yapıştır, AI 3 farklı tonda yanıt yazıyor: resmi, samimi, kısa. Marka sesinize uygun olanı seç, kopyala ve doğrudan yoruma yapıştır.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Şikayet metni (yorum platformundan kopyala)", "Restoran adı (isteğe bağlı — yanıtta kullanılır)", "Şikayet dili ve yanıt dili seçimi"], "block_3_title": "Kime uygun?", "block_3_content": "Her gün müşteri yorumlarına yanıt yazmaya vakti olmayan restoran müdürü. Google veya TripAdvisor'da profesyonel yanıt vermek isteyen ama doğru tonu bulamayan sahip." } },
-    "restoran_audit": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Restoranını 6 alanda denetliyor: finans, mutfak, personel, müşteri deneyimi, dijital varlık, uyumluluk. Her alan 100 üzerinden puanlanır. En zayıf 3 alan için öncelik planı verilir.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Her alanda 3-5 soruya Evet/Kısmen/Hayır cevap", "POS sisteminiz var mı, günlük kasa hesaplaşması yapıyor musunuz?", "Personel eğitim programınız var mı?", "Online yorumlarınızı takip ediyor musunuz?"], "block_3_title": "Kime uygun?", "block_3_content": "Restoranın genel sağlığını ölçmek isteyen sahip. ŞEDD sertifikası almak isteyen veya farklı alanlarda nerede zayıf olduğunu görmek isteyen herkes." } },
-    "sezon_planlama": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "12 aylık kampanya takvimi oluşturuyor. Azerbaycan bayramları (Nevruz, Ramazan), dünya günleri ve mevsim değişiklikleri otomatik işaretleniyor. AI her ay için kampanya fikri öneriyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Restoran tipi ve hedef segment", "Yıllık reklam bütçesi (isteğe bağlı)", "Hangi aylara odaklanmak istediğin"], "block_3_title": "Kime uygun?", "block_3_content": "'Nevruz akşamı ne kampanya yapayım?' diyen sahip. Bayramlar sürpriz oluyorsa — bu araç 12 aylık planı önceden veriyor." } },
-    "reklam_yazicisi": { "description": { "section_label": "Bu araç hakkında", "block_1_title": "Ne yapıyoruz?", "block_1_content": "Yemeğin adını, satış noktasını ve platformu seç. AI 3 farklı tonda reklam metni yazıyor: başlık, gövde, hashtag'ler. Instagram, Facebook, TikTok ve Google Ads için uzunluk otomatik ayarlanıyor.", "block_2_title": "Sana ne lazım olacak?", "block_2_items": ["Reklam yapılacak yemek veya kampanya adı", "Ana satış noktası (indirim? yeni ürün? bayram?)", "Hedef kitle (gençler, aile, kurumsal)", "Platform seçimi (Instagram, Facebook, TikTok, Google Ads)"], "block_3_title": "Kime uygun?", "block_3_content": "Instagram postu için 30 dakika caption yazan restoran sahibi. Profesyonel metin yazarı tutacak bütçesi olmayan ama etkili reklam metni isteyen herkes." } }
+    "menyu_analitik": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Her yemeğin satış adedi, food cost'u ve satış fiyatını gir. Araç 2x2 matriste grupluyor: Yıldız, At, Bulmaca, Köpek. AI kâr artırmak için somut adımlar öneriyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Her menü kaleminin adı",
+          "Satış fiyatı ve food cost (AZN)",
+          "Haftalık veya aylık satış adedi",
+          "Kategori seçimi (ana yemek, içecek, tatlı)"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Hangi yemeği çıkaracağını, hangisini öne çıkaracağını bilmek isteyen sahip. Özellikle menü 20+ kalemden oluşuyorsa ve kâr marjı net değilse."
+      }
+    },
+    "sezon_analitikasi": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Aylık satış, işçilik ve food cost yüzdelerini gir. Araç 12 aya sezon katsayısı uygulayarak gelir tahmini, işçilik bütçesi ve stok bütçesi hesaplıyor. Ramazan ve ölü aylar otomatik tespit ediliyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Aylık ortalama satış (AZN)",
+          "Restoran tipi (şehir merkezi, banliyö, AVM, sahil)",
+          "İşçilik maliyeti yüzdesi (%15-45)",
+          "Food cost yüzdesi (%20-45)"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Yazın satışı artıp kışın düşen sahipler. Özellikle Ramazan döneminde personel ve stok planlaması yapan restoranlar için."
+      }
+    },
+    "sosial_metrik": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Instagram veya TikTok metriklerini gir. Araç Engagement Rate, sağlık skoru ve sektör benchmark karşılaştırması hesaplıyor. Hangi içerik tipinin (Reels, Carousel, Single) daha iyi performans gösterdiğini gösteriyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Takipçi sayısı",
+          "Toplam beğeni, yorum, kaydetme, paylaşım sayıları",
+          "Post sayısı (son dönem)",
+          "İsteğe bağlı: içerik tipine göre ayrılmış istatistik"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Instagram veya TikTok'ta aktif olan ama sonuçları ölçemeyen restoran. Beğeni yüksek ama müşteri artmıyorsa — bu araç sorunu buluyor."
+      }
+    },
+    "trend_analiz": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Restoran tipini, hedef kitlenizi ve güçlü yanınızı seçin. AI 10+ sektör trendini sıralıyor, top 3'ü altın rozet ile gösteriyor. Her trend için ilk uygulama adımını veriyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Restoran tipi (şehir, banliyö, AVM, sahil)",
+          "Hedef kitle (aile, çift, iş, karışık)",
+          "En güçlü yanınız (yemek kalitesi, servis, fiyat, hijyen)"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Sektör trendlerinden haberdar olmak isteyen ama hangisinin kendi restoranına uyduğunu bilemeyen sahip. Yeni konsept veya menü yenilemesi planlayan restoranlar için."
+      }
+    },
+    "lokasyon_analiz": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Yeni mekan mı açıyorsun yoksa mevcut yeri mi değerlendiriyorsun — 12 kriter üzerinden puanlıyor. Başabaş noktasını hesaplıyor, riskleri işaretliyor. AI 3 somut tavsiye veriyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Mekan tipi (cadde, AVM, delivery hub)",
+          "12 kritere Evet/Kısmen/Hayır cevap",
+          "Yeni mekan: günlük satış hedefi, aylık giderler",
+          "Mevcut mekan: risk bayrakları seçimi"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Yeni şube açmayı planlayan veya mevcut mekanı değiştirmeyi düşünen sahip. Kira yüksekse, trafik düşüyorsa — bu araç karar vermeye yardımcı oluyor."
+      }
+    },
+    "roi_kalkulator": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Reklam kampanyalarının ROI, ROAS, CAC ve LTV:CAC oranını hesaplıyor. 8'e kadar kanalı karşılaştırıp en iyi ve en kötüyü gösteriyor. AI stratejik yatırım tavsiyesi veriyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Kampanya adı ve süresi",
+          "Ortalama çek (AZN) ve aylık ziyaret sayısı",
+          "Her kanal için: harcanan bütçe, gelir, yeni müşteri sayısı",
+          "Sadakat süresi (ay, genellikle 12)"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Instagram, Google, WhatsApp'ta reklam veren ama hangi kanalın gerçekten para getirdiğini bilemeyen sahip. Reklam bütçesini artırmak veya kesmek kararı veren herkes."
+      }
+    },
+    "reklam_roi": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "İki mod: Dönüşüm (satış) veya Bilinirlik (awareness). Dönüşümde ROAS, CAC, ROI hesaplıyor. Bilinirlikte CPM ve EMV (kazanılmış medya değeri) ölçüyor. Influencer komisyonu ayrıca hesaplanıyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Kampanya tipi: satış odaklı mı bilinirlik mi?",
+          "Her kanal için bütçe (AZN)",
+          "Dönüşüm: yeni müşteri sayısı, ortalama çek",
+          "Bilinirlik: erişim ve gösterim sayısı",
+          "Influencer varsa: komisyon yüzdesi"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Influencer ile çalışan veya TikTok/Instagram reklam veren restoran. 'Bu reklam işe yaradı mı?' sorusuna rakamla cevap almak isteyen herkes."
+      }
+    },
+    "sikayet_analitigi": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Müşteri şikayetlerini yapıştır, AI kök nedeni buluyor ve kategorilere ayırıyor. 1 yazılı şikayet = 26 sessiz memnuniyetsiz müşteri. Pattern analizi ile tekrarlayan sorunları tespit ediyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Şikayet metni (Google, TripAdvisor, Yandex'ten kopyala)",
+          "Kaynak platform seçimi",
+          "Şikayet tarihi (isteğe bağlı)"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Google Maps veya TripAdvisor'da olumsuz yorum alan restoran. Şikayetler artıyorsa ama asıl sorunu bulamıyorsan — bu araç kök nedeni ortaya çıkarıyor."
+      }
+    },
+    "sikayet_cavablandirici": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Müşteri şikayetini yapıştır, AI 3 farklı tonda yanıt yazıyor: resmi, samimi, kısa. Marka sesinize uygun olanı seç, kopyala ve doğrudan yoruma yapıştır.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Şikayet metni (yorum platformundan kopyala)",
+          "Restoran adı (isteğe bağlı — yanıtta kullanılır)",
+          "Şikayet dili ve yanıt dili seçimi"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Her gün müşteri yorumlarına yanıt yazmaya vakti olmayan restoran müdürü. Google veya TripAdvisor'da profesyonel yanıt vermek isteyen ama doğru tonu bulamayan sahip."
+      }
+    },
+    "restoran_audit": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Restoranını 6 alanda denetliyor: finans, mutfak, personel, müşteri deneyimi, dijital varlık, uyumluluk. Her alan 100 üzerinden puanlanır. En zayıf 3 alan için öncelik planı verilir.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Her alanda 3-5 soruya Evet/Kısmen/Hayır cevap",
+          "POS sisteminiz var mı, günlük kasa hesaplaşması yapıyor musunuz?",
+          "Personel eğitim programınız var mı?",
+          "Online yorumlarınızı takip ediyor musunuz?"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Restoranın genel sağlığını ölçmek isteyen sahip. ŞEDD sertifikası almak isteyen veya farklı alanlarda nerede zayıf olduğunu görmek isteyen herkes."
+      }
+    },
+    "sezon_planlama": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "12 aylık kampanya takvimi oluşturuyor. Azerbaycan bayramları (Nevruz, Ramazan), dünya günleri ve mevsim değişiklikleri otomatik işaretleniyor. AI her ay için kampanya fikri öneriyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Restoran tipi ve hedef segment",
+          "Yıllık reklam bütçesi (isteğe bağlı)",
+          "Hangi aylara odaklanmak istediğin"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "'Nevruz akşamı ne kampanya yapayım?' diyen sahip. Bayramlar sürpriz oluyorsa — bu araç 12 aylık planı önceden veriyor."
+      }
+    },
+    "reklam_yazicisi": {
+      "description": {
+        "section_label": "Bu araç hakkında",
+        "block_1_title": "Ne yapıyoruz?",
+        "block_1_content": "Yemeğin adını, satış noktasını ve platformu seç. AI 3 farklı tonda reklam metni yazıyor: başlık, gövde, hashtag'ler. Instagram, Facebook, TikTok ve Google Ads için uzunluk otomatik ayarlanıyor.",
+        "block_2_title": "Sana ne lazım olacak?",
+        "block_2_items": [
+          "Reklam yapılacak yemek veya kampanya adı",
+          "Ana satış noktası (indirim? yeni ürün? bayram?)",
+          "Hedef kitle (gençler, aile, kurumsal)",
+          "Platform seçimi (Instagram, Facebook, TikTok, Google Ads)"
+        ],
+        "block_3_title": "Kime uygun?",
+        "block_3_content": "Instagram postu için 30 dakika caption yazan restoran sahibi. Profesyonel metin yazarı tutacak bütçesi olmayan ama etkili reklam metni isteyen herkes."
+      }
+    }
   }
 }
