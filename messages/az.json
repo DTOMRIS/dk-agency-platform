@@ -1255,10 +1255,16 @@
     }
   },
   "blog": {
-    "title": "Bloq & Analizlər",
-    "subtitle": "Sektor peşəkarları üçün dərin analizlər.",
+    "title": "DK Agency Bloq",
+    "subtitle": "Restoran sektoru haqqında ekspert yazıları, addım-addım bələdçilər və sektor trendləri.",
     "viewAll": "Hamısını gör",
-    "readMore": "Daha çox oxu"
+    "readMore": "Daha çox oxu",
+    "badge": "Araşdırma & Analiz",
+    "filterAll": "Hamısı",
+    "empty": "Bu kateqoriyada hələ məqalə yoxdur.",
+    "read": "Oxu",
+    "minutes": "dəq",
+    "premium": "Premium"
   },
   "ilanlar": {
     "title": "İş Elanları",
@@ -4052,5 +4058,12 @@
     "statusPending": "Gözləyir",
     "statusRejected": "Rədd",
     "statusSold": "Satıldı"
+  },
+  "news": {
+    "latestBadge": "SON XƏBƏR",
+    "categoryHoreca": "HORECA",
+    "categoryYatirim": "Yatırım",
+    "categoryEgitim": "Təhsil",
+    "categoryOperasyon": "Əməliyyat"
   }
 }

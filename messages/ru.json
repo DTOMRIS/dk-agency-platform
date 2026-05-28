@@ -1255,10 +1255,16 @@
     }
   },
   "blog": {
-    "title": "Блог и аналитика",
-    "subtitle": "Глубокий анализ для профессионалов отрасли.",
+    "title": "Блог DK Agency",
+    "subtitle": "Экспертные статьи, пошаговые руководства и тренды ресторанного сектора.",
     "viewAll": "Посмотреть все",
-    "readMore": "Читать далее"
+    "readMore": "Читать далее",
+    "badge": "Аналитика и обзоры",
+    "filterAll": "Все",
+    "empty": "В этой категории пока нет статей.",
+    "read": "Читать",
+    "minutes": "мин",
+    "premium": "Premium"
   },
   "ilanlar": {
     "title": "Вакансии",
@@ -4052,5 +4058,12 @@
     "statusPending": "На проверке",
     "statusRejected": "Отклонено",
     "statusSold": "Продано"
+  },
+  "news": {
+    "latestBadge": "ПОСЛЕДНЕЕ",
+    "categoryHoreca": "HORECA",
+    "categoryYatirim": "Инвестиции",
+    "categoryEgitim": "Образование",
+    "categoryOperasyon": "Операции"
   }
 }

@@ -1,84 +1,48 @@
-// components/news/NewsCard.tsx
-// DK Agency - Haber Kartı
-
 import Link from 'next/link';
 import { Newspaper } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import type { NewsArticle } from '@/lib/data/mockNewsDB';
-
-const CATEGORY_LABELS: Record<string, string> = {
-  horeca: 'HORECA',
-  yatirim: 'Yatırım',
-  egitim: 'Eğitim',
-  operasyon: 'Operasyon',
-};
 
 function formatDate(dateStr: string | null) {
   if (!dateStr) return null;
-  try {
-    return new Date(dateStr).toLocaleDateString('tr-TR', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    });
-  } catch {
-    return null;
-  }
+  try { return new Date(dateStr).toLocaleDateString('az-AZ', { day: 'numeric', month: 'short', year: 'numeric' }); } catch { return null; }
 }
 
 export default function NewsCard({ post }: { post: NewsArticle }) {
-  const categoryLabel = CATEGORY_LABELS[post.category] || post.category;
+  const t = useTranslations('news');
+  const categoryKey = `category${post.category.charAt(0).toUpperCase() + post.category.slice(1)}` as 'categoryHoreca';
+  const categoryLabel = t.has(categoryKey) ? t(categoryKey) : post.category;
   const date = formatDate(post.publishDate);
 
   return (
     <Link href={`/haberler/${post.slug}`} className="group block">
-      <article className="flex flex-row md:flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:border-red-200 hover:shadow-lg">
-        {/* Image */}
-        <div className="relative w-24 h-24 md:w-full md:h-48 flex-shrink-0 overflow-hidden">
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--dk-ink)] to-[var(--dk-ink-soft)]">
+      <article className="flex flex-row overflow-hidden rounded-2xl border border-[var(--dk-warm-border)] bg-white shadow-sm transition-all hover:border-[var(--dk-gold)]/40 hover:shadow-lg md:flex-col">
+        <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden md:h-48 md:w-full">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--dk-navy)] to-[var(--dk-ink)]">
             <Newspaper size={28} className="text-white/30" />
           </div>
-          {/* Category badge on image (desktop only) */}
-          <span className="hidden md:inline-block absolute top-3 left-3 rounded-full bg-red-600/90 backdrop-blur-sm px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+          <span className="absolute left-3 top-3 hidden rounded-full bg-[var(--dk-gold)]/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[var(--dk-navy)] backdrop-blur-sm md:inline-block">
             {categoryLabel}
           </span>
-          {/* Premium badge */}
           {post.isPremium && (
-            <span className="hidden md:inline-block absolute top-3 right-3 rounded-full bg-yellow-500/90 backdrop-blur-sm px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-yellow-900">
+            <span className="absolute right-3 top-3 hidden rounded-full bg-yellow-500/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-yellow-900 backdrop-blur-sm md:inline-block">
               Premium
             </span>
           )}
         </div>
-
-        {/* Content */}
-        <div className="flex flex-1 flex-col justify-between p-3 md:p-4 min-w-0">
-          {/* Mobile category + date row */}
-          <div className="flex items-center gap-2 mb-1 md:mb-2">
-            <span className="md:hidden rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red-600">
+        <div className="flex min-w-0 flex-1 flex-col justify-between p-3 md:p-4">
+          <div className="mb-1 flex items-center gap-2 md:mb-2">
+            <span className="rounded-full bg-[var(--dk-gold)]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--dk-gold)] md:hidden">
               {categoryLabel}
             </span>
-            {post.isPremium && (
-              <span className="md:hidden rounded-full bg-yellow-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-yellow-700">
-                Premium
-              </span>
-            )}
-            {date && (
-              <span className="text-[11px] text-gray-400">{date}</span>
-            )}
+            {date && <span className="text-[11px] text-slate-400">{date}</span>}
           </div>
-
-          <h2 className="text-sm md:text-base font-bold leading-snug text-gray-900 line-clamp-2 md:line-clamp-3 group-hover:text-red-600 transition-colors">
+          <h2 className="line-clamp-2 text-sm font-bold leading-snug text-[var(--dk-ink)] transition-colors group-hover:text-[var(--dk-gold)] md:line-clamp-3 md:text-base">
             {post.title}
           </h2>
-
-          <p className="hidden md:block text-xs text-gray-500 mt-2 line-clamp-2">
-            {post.summary}
-          </p>
-
-          {/* Author */}
-          <div className="mt-1 md:mt-3 flex items-center justify-between">
-            <span className="text-[11px] text-gray-400 truncate">
-              {post.author}
-            </span>
+          <p className="mt-2 hidden line-clamp-2 text-xs text-slate-500 md:block">{post.summary}</p>
+          <div className="mt-1 flex items-center justify-between md:mt-3">
+            <span className="truncate text-[11px] text-slate-400">{post.author}</span>
           </div>
         </div>
       </article>
