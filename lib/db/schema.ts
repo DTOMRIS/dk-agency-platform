@@ -10,6 +10,7 @@ import {
   jsonb,
   uuid,
   real,
+  numeric,
   date,
   index,
 } from 'drizzle-orm/pg-core';
@@ -122,6 +123,8 @@ export const listingStatusEnum = pgEnum('listing_status', [
   'docs_requested',
   'showcase_ready',
   'rejected',
+  'sold',
+  'expired',
 ]);
 
 export const listingMediaTypeEnum = pgEnum('listing_media_type', [
@@ -194,11 +197,21 @@ export const listings = pgTable('listings', {
   status: listingStatusEnum('status').notNull().default('submitted'),
   isShowcase: boolean('is_showcase').notNull().default(false),
   isFeatured: boolean('is_featured').notNull().default(false),
+  // Owner (FK to users — M5.1)
+  ownerId: integer('owner_id').references(() => users.id),
+  // Legacy contact fields (preserved from mock, owner-dən fərqli ola bilər)
   ownerName: varchar('owner_name', { length: 150 }).notNull(),
   phone: varchar('phone', { length: 30 }).notNull(),
   email: varchar('email', { length: 255 }).notNull(),
+  contactName: varchar('contact_name', { length: 150 }),
+  contactPhone: varchar('contact_phone', { length: 30 }),
+  contactEmail: varchar('contact_email', { length: 255 }),
+  // Location
   city: varchar('city', { length: 120 }).notNull(),
   district: varchar('district', { length: 120 }),
+  lat: numeric('lat', { precision: 10, scale: 7 }),
+  lng: numeric('lng', { precision: 10, scale: 7 }),
+  // Content
   slug: varchar('slug', { length: 255 }).unique(),
   title: text('title').notNull(),
   titleAz: text('title_az'),
@@ -211,9 +224,23 @@ export const listings = pgTable('listings', {
   descriptionEn: text('description_en'),
   descriptionTr: text('description_tr'),
   price: integer('price'),
+  priceLabel: varchar('price_label', { length: 50 }),
   currency: varchar('currency', { length: 5 }).notNull().default('AZN'),
   typeSpecificData: jsonb('type_specific_data').$type<Record<string, unknown>>(),
+  equipment: jsonb('equipment').default([]),
+  images: jsonb('images').default([]),
+  // AI & review workflow
   aiAnalysis: jsonb('ai_analysis').$type<Record<string, unknown>>(),
+  aiCheckResult: jsonb('ai_check_result'),
+  committeeNotes: text('committee_notes'),
+  approvedAt: timestamp('approved_at', { withTimezone: true }),
+  approvedBy: integer('approved_by').references(() => users.id),
+  rejectedReason: text('rejected_reason'),
+  // Metrics
+  viewCount: integer('view_count').default(0),
+  // Lifecycle
+  expiredAt: timestamp('expired_at', { withTimezone: true }),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
   publishedAt: timestamp('published_at'),
@@ -678,3 +705,10 @@ export const adminAuditLogs = pgTable(
     createdIdx: index('idx_aal_created').on(table.createdAt),
   }),
 );
+
+// ── EQUIPMENT CONDITION ENUM (M5.1) ─────────────────────────────────
+
+export const equipmentConditionEnum = pgEnum('equipment_condition', ['new', 'used']);
+
+// NOTE: listings, listingLeads, listingMedia, listingReviews tables
+// are defined above (line ~191). M5.1 adds columns via Drizzle migration.
