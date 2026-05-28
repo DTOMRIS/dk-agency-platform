@@ -1252,7 +1252,11 @@
       "sagird": "УЧЕНИК",
       "kalfa": "ПОДМАСТЕРЬЕ",
       "usta": "МАСТЕР"
-    }
+    },
+    "aiInsightRequest": "Получить AI комментарий",
+    "aiInsightLoading": "AI комментарий загружается...",
+    "aiInsightError": "AI комментарий недоступен. Попробуйте позже.",
+    "aiInsightRetry": "Попробовать снова"
   },
   "blog": {
     "title": "Блог DK Agency",

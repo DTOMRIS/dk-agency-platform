@@ -1252,7 +1252,11 @@
       "sagird": "ŞAGIRD",
       "kalfa": "KALFA",
       "usta": "USTA"
-    }
+    },
+    "aiInsightRequest": "AI şərh al",
+    "aiInsightLoading": "AI şərh yüklənir...",
+    "aiInsightError": "AI şərh əlçatmaz. Bir az sonra yenidən cəhd edin.",
+    "aiInsightRetry": "Yenidən cəhd et"
   },
   "blog": {
     "title": "DK Agency Bloq",

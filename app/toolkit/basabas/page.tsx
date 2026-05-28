@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import {
   ArrowRight,
   BookOpen,
@@ -12,10 +12,13 @@ import {
   ShieldCheck,
   TrendingDown,
 } from 'lucide-react';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 export default function BasabasPage() {
   const t = useTranslations('toolkit.basabas');
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const [rent, setRent] = useState(3000);
   const [salaries, setSalaries] = useState(5000);
@@ -322,6 +325,13 @@ export default function BasabasPage() {
       inputSection={inputSection}
       resultSection={resultSection}
       bottomSection={bottomSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'basabas', locale, result: { breakEvenRevenue: calc.breakEvenRevenue, dailyCustomers: calc.dailyCustomers, safetyMargin: calc.safetyMargin, totalFixed: calc.totalFixed, contributionPct: calc.contributionPct } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
     />
   );
 }
