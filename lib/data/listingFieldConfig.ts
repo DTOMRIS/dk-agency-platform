@@ -3,11 +3,17 @@ import type { ListingCategory } from '@/lib/data/listingCategories';
 export interface FieldConfig {
   key: string;
   label: string;
-  type: 'text' | 'number' | 'textarea' | 'boolean' | 'select';
+  type: 'text' | 'number' | 'textarea' | 'boolean' | 'select' | 'equipment-list';
   required?: boolean;
   options?: string[];
   placeholder?: string;
   suffix?: string;
+}
+
+export interface EquipmentItem {
+  name: string;
+  condition: 'new' | 'used';
+  count?: number;
 }
 
 export const TYPE_SPECIFIC_FIELDS: Record<ListingCategory, FieldConfig[]> = {
@@ -31,6 +37,7 @@ export const TYPE_SPECIFIC_FIELDS: Record<ListingCategory, FieldConfig[]> = {
       required: true,
       options: ['İcarə (kirayə)', 'Mülkiyyət (satış)', 'İcarə + satınalma opsiyonu'],
     },
+    { key: 'equipment', label: 'Avadanlıq siyahısı', type: 'equipment-list' },
   ],
   'franchise-vermek': [
     { key: 'brandName', label: 'Brend adı', type: 'text', required: true },

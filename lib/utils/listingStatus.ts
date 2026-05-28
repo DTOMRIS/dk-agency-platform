@@ -5,7 +5,9 @@ export type ListingWorkflowStatus =
   | 'shortlisted'
   | 'docs_requested'
   | 'showcase_ready'
-  | 'rejected';
+  | 'rejected'
+  | 'sold'
+  | 'expired';
 
 export const LISTING_STATUSES = {
   submitted: { label: 'Göndərilib', color: 'gray', icon: 'Clock' },
@@ -15,6 +17,8 @@ export const LISTING_STATUSES = {
   docs_requested: { label: 'Sənəd İstənib', color: 'orange', icon: 'FileText' },
   showcase_ready: { label: 'Vitrində', color: 'green', icon: 'CheckCircle' },
   rejected: { label: 'Rədd edilib', color: 'red', icon: 'XCircle' },
+  sold: { label: 'Satıldı', color: 'teal', icon: 'BadgeCheck' },
+  expired: { label: 'Müddəti bitdi', color: 'gray', icon: 'TimerOff' },
 } satisfies Record<ListingWorkflowStatus, { label: string; color: string; icon: string }>;
 
 export const ALLOWED_TRANSITIONS: Record<ListingWorkflowStatus, ListingWorkflowStatus[]> = {
@@ -23,8 +27,10 @@ export const ALLOWED_TRANSITIONS: Record<ListingWorkflowStatus, ListingWorkflowS
   committee_review: ['showcase_ready', 'docs_requested', 'shortlisted', 'rejected'],
   shortlisted: ['showcase_ready', 'docs_requested', 'rejected'],
   docs_requested: ['committee_review', 'rejected'],
-  showcase_ready: ['rejected'],
+  showcase_ready: ['sold', 'expired', 'rejected'],
   rejected: ['committee_review'],
+  sold: [],
+  expired: ['showcase_ready'],
 };
 
 const COLOR_MAP: Record<string, string> = {
@@ -35,6 +41,7 @@ const COLOR_MAP: Record<string, string> = {
   orange: 'bg-orange-50 text-orange-700 border-orange-200',
   green: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   red: 'bg-rose-50 text-rose-700 border-rose-200',
+  teal: 'bg-teal-50 text-teal-700 border-teal-200',
 };
 
 export function getStatusBadge(status: ListingWorkflowStatus) {
