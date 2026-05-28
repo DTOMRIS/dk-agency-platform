@@ -3,6 +3,40 @@
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
+
+## [1.0.0] - 2026-05-28 — Ahilik Studio Launch Sprint (16 PR, #204-#220)
+
+### Added
+- AI Insight: real DeepSeek integration for 9/10 toolkit pages (#214, #215)
+- SYSTEM-AUDIT.md auto-generator: `npm run audit:system` (#216)
+- Listings schema: 15 new columns + 9-status workflow + equipment jsonb (#217)
+- Cloudinary env + deployment guide (#219)
+- owner_id binding: real JWT user in listings (#220)
+- Equipment field: dynamic add/remove in CreateListingForm (#220)
+- i18n: ~1,100 new translations (nav, footer, devir, blog, news, toolkit, dashboard)
+- L-031: schema duplicate prevention lesson
+- L-032: "boşluq varsayma" lesson (email+OCR already existed)
+
+### Changed
+- AI stack: deepseek-chat → deepseek-v4-flash, gemini-2.0 → 2.5-flash GA (#204-206)
+- lib/ai-models.ts: centralized model IDs (SST, 22 call sites)
+- Toolkit: 10 pages unified ToolkitStudioLayout (#207, #208)
+- Homepage: Ahilik Studio dark + gold palette (#A01)
+- Devir marketplace: Pattern A, DK Onaylı badge, search filter (#209)
+- Header/Footer: Pattern A, gold CTA, USTALIĞIN NİŞANI tagline (#210)
+- Dashboard/OCAQ: warm palette, tier badge, backdrop-blur (#212)
+- Blog/News: Pattern A, gold accent, 4-language hardcoded strings removed (#213)
+- Protected files: reconciled settings.json ↔ PROTECTED.md to 14 files (#211)
+- SYSTEM-AUDIT.md: email backend + OCR + Cloudinary auto-scan (#218)
+
+### Fixed
+- Gemini 2.0-flash → 2.5-flash (Jun 1 shutdown deadline)
+- deepseek-chat → v4-flash (Jul 24 deprecation deadline)
+- Protected file list sync (ghost app/page.tsx removed)
+
+### Security
+- AI insight: rate limit 20/hour, prompt injection sanitize
+- Listings: owner_id from server JWT (client cannot spoof)
 ### Added
 - docs/ONBOARDING.md — 5-minute new developer guide (TASK-0179A)
 - docs/README.md — documentation index with all file links (TASK-0179A)
