@@ -1255,10 +1255,16 @@
     }
   },
   "blog": {
-    "title": "Blog & Analysis",
-    "subtitle": "In-depth analysis for industry professionals.",
+    "title": "DK Agency Blog",
+    "subtitle": "Expert articles, step-by-step guides, and sector trends for the restaurant industry.",
     "viewAll": "View All",
-    "readMore": "Read More"
+    "readMore": "Read More",
+    "badge": "Insights & Intelligence",
+    "filterAll": "All",
+    "empty": "No articles in this category yet.",
+    "read": "Read",
+    "minutes": "min",
+    "premium": "Premium"
   },
   "ilanlar": {
     "title": "Job Listings",
@@ -4052,5 +4058,12 @@
     "statusPending": "Pending",
     "statusRejected": "Rejected",
     "statusSold": "Sold"
+  },
+  "news": {
+    "latestBadge": "LATEST",
+    "categoryHoreca": "HORECA",
+    "categoryYatirim": "Investment",
+    "categoryEgitim": "Education",
+    "categoryOperasyon": "Operations"
   }
 }
