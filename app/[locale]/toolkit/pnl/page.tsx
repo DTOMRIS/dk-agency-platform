@@ -4,11 +4,11 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import WeeklyActionsPanel from '@/components/toolkit/WeeklyActionsPanel';
+import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
 import {
   ArrowRight,
   BookOpen,
   ChevronDown,
-  ChevronLeft,
   ChevronUp,
   Info,
   Lightbulb,
@@ -238,67 +238,9 @@ export default function PnlSimulator() {
   const foodCostPct = calc.pct(foodCost);
   const staffCostPct = calc.pct(staffCost + management);
 
-  return (
-    <div className="bg-white pb-24">
-      <div className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-        <div className="absolute inset-0">
-          <div className="absolute top-[-20%] right-[-10%] h-[600px] w-[600px] rounded-full bg-blue-500/8 blur-[100px]" />
-          <div className="absolute bottom-[-30%] left-[-5%] h-[400px] w-[400px] rounded-full bg-indigo-500/5 blur-[80px]" />
-        </div>
-        <div className="relative mx-auto max-w-6xl px-6 pt-8 pb-20">
-          <Link
-            href="/toolkit"
-            className="group mb-8 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-300"
-          >
-            <ChevronLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
-            <span>{t('navigation.toolkit')}</span>
-          </Link>
-          <div className="max-w-2xl">
-            <h1 className="mb-5 font-display text-4xl leading-[1.1] font-black tracking-tight text-white sm:text-5xl">
-              {t('title')}{' '}
-              <span className="bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent">
-                {t('titleAccent')}
-              </span>
-            </h1>
-            <p className="max-w-lg text-lg leading-relaxed text-slate-400">{t('description')}</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="relative z-10 mx-auto -mt-10 max-w-6xl px-6">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <KpiCard
-            label={t('kpis.netProfit')}
-            value={formatCurrency(calc.netProfit)}
-            helper={formatPercent(netMargin)}
-            positive={calc.netProfit >= 0}
-          />
-          <KpiCard
-            label={t('kpis.primeCost')}
-            value={formatPercent(calc.pct(calc.primeCost))}
-            helper={t('kpis.targetMax', { value: 65 })}
-            positive={calc.pct(calc.primeCost) <= 65}
-            tone="blue"
-          />
-          <KpiCard
-            label={t('kpis.foodCost')}
-            value={formatPercent(foodCostPct)}
-            helper={t('kpis.targetMax', { value: 32 })}
-            positive={foodCostPct <= 32}
-            tone="amber"
-          />
-          <KpiCard
-            label={t('kpis.rent')}
-            value={formatPercent(calc.pct(rent))}
-            helper={t('kpis.targetMax', { value: 10 })}
-            positive={calc.pct(rent) <= 10}
-            tone="blue"
-          />
-        </div>
-      </div>
-
-      <div className="mx-auto mt-10 max-w-6xl space-y-6 px-6">
-        <div className="overflow-hidden rounded-2xl bg-white shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
+  const inputSection = (
+    <div className="space-y-6">
+      <div className="overflow-hidden rounded-xl ring-1 ring-slate-200/80">
           <div className="flex flex-col gap-4 border-b border-slate-100 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-base font-bold text-slate-900">{t('table.title')}</h2>
             <div className="flex flex-wrap items-center gap-3">
@@ -417,15 +359,20 @@ export default function PnlSimulator() {
           </div>
         </div>
 
-        <InsightPanel
-          netMargin={netMargin}
-          foodCostPct={foodCostPct}
-          staffCostPct={staffCostPct}
-          t={t}
-          formatPercent={formatPercent}
-        />
+        <InsightPanel netMargin={netMargin} foodCostPct={foodCostPct} staffCostPct={staffCostPct} t={t} formatPercent={formatPercent} />
+    </div>
+  );
 
-        {revenue > 0 && (
+  const resultSection = (
+    <div className="space-y-4">
+      <KpiCard label={t('kpis.netProfit')} value={formatCurrency(calc.netProfit)} helper={formatPercent(netMargin)} positive={calc.netProfit >= 0} />
+      <KpiCard label={t('kpis.primeCost')} value={formatPercent(calc.pct(calc.primeCost))} helper={t('kpis.targetMax', { value: 65 })} positive={calc.pct(calc.primeCost) <= 65} tone="blue" />
+      <KpiCard label={t('kpis.foodCost')} value={formatPercent(foodCostPct)} helper={t('kpis.targetMax', { value: 32 })} positive={foodCostPct <= 32} tone="amber" />
+      <KpiCard label={t('kpis.rent')} value={formatPercent(calc.pct(rent))} helper={t('kpis.targetMax', { value: 10 })} positive={calc.pct(rent) <= 10} tone="blue" />
+
+      {/* WeeklyActions — TASK-0174 inteqrasiyası, TOXUNMA */}
+      {revenue > 0 && (
+        <div className="border-t border-slate-100 pt-4">
           <WeeklyActionsPanel
             metrics={{
               food_cost: Math.round(foodCostPct),
@@ -435,25 +382,25 @@ export default function PnlSimulator() {
             }}
             context="p_l_simulator"
           />
-        )}
-
-        <div className="grid gap-6 lg:grid-cols-2">
-          <BenchmarkPanel t={t} />
-          <EducationPanel t={t} />
         </div>
+      )}
+    </div>
+  );
+
+  const bottomSection = (
+    <>
+      <div className="grid gap-6 lg:grid-cols-2 mb-10">
+        <BenchmarkPanel t={t} />
+        <EducationPanel t={t} />
       </div>
 
-      <div className="mx-auto mt-16 max-w-6xl px-6">
-        <div className="mb-10 text-center">
+      <div className="mb-10">
+        <div className="mb-8 text-center">
           <h2 className="font-display text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
-            {t('knowledge.title')}{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
-              {t('knowledge.titleAccent')}
-            </span>
+            {t('knowledge.title')} <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">{t('knowledge.titleAccent')}</span>
           </h2>
           <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">{t('knowledge.subtitle')}</p>
         </div>
-
         <div className="grid gap-5 md:grid-cols-3">
           <ControlKnowledgeCard t={t} />
           <PrimeCostKnowledgeCard t={t} />
@@ -461,70 +408,39 @@ export default function PnlSimulator() {
         </div>
       </div>
 
-      <div className="mx-auto mt-10 max-w-6xl px-6">
-        <div className="grid gap-5 md:grid-cols-2">
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-8">
-            <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-blue-500/10 blur-[50px]" />
-            <div className="relative">
-              <div className="mb-4 flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/20">
-                  <Lightbulb size={16} className="text-amber-400" />
-                </div>
-                <h3 className="text-base font-bold text-amber-400">{t('advice.title')}</h3>
-              </div>
-              <p className="mb-5 text-[13px] leading-relaxed text-slate-400">{t('advice.body')}</p>
-              <Link
-                href="/blog/pnl-oxuya-bilmirsen"
-                className="group inline-flex items-center gap-2 text-sm font-bold text-amber-400 transition-colors hover:text-amber-300"
-              >
-                {t('advice.readArticle')} <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            </div>
+      <div className="grid gap-5 md:grid-cols-2 mb-10">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-8">
+          <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-blue-500/10 blur-[50px]" />
+          <div className="relative">
+            <div className="mb-4 flex items-center gap-2.5"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/20"><Lightbulb size={16} className="text-amber-400" /></div><h3 className="text-base font-bold text-amber-400">{t('advice.title')}</h3></div>
+            <p className="mb-5 text-[13px] leading-relaxed text-slate-400">{t('advice.body')}</p>
+            <Link href="/blog/pnl-oxuya-bilmirsen" className="group inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300">{t('advice.readArticle')} <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" /></Link>
           </div>
+        </div>
+        <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-8 text-white shadow-xl shadow-red-500/15">
+          <div><h3 className="mb-3 font-display text-xl font-black">{t('ocaq.title')}</h3><p className="mb-6 text-sm leading-relaxed text-white/80">{t('ocaq.body')}</p></div>
+          <Link href="/auth/register" className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-[var(--dk-red)] hover:shadow-lg active:scale-[0.98]">{t('ocaq.cta')} <ArrowRight size={15} /></Link>
+        </div>
+      </div>
 
-          <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-8 text-white shadow-xl shadow-red-500/15">
-            <div>
-              <h3 className="mb-3 font-display text-xl font-black">{t('ocaq.title')}</h3>
-              <p className="mb-6 text-sm leading-relaxed text-white/80">{t('ocaq.body')}</p>
-            </div>
-            <Link
-              href="/auth/register"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-[var(--dk-red)] transition-all hover:shadow-lg active:scale-[0.98]"
-            >
-              {t('ocaq.cta')} <ArrowRight size={15} />
+      <div className="rounded-2xl bg-slate-50 p-8 sm:p-10">
+        <div className="mb-8 flex items-center gap-2.5"><BookOpen size={18} className="text-[var(--dk-red)]" /><h3 className="text-lg font-bold text-slate-900">{t('related.title')}</h3></div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {relatedArticles.map((key) => (
+            <Link key={key} href={`/blog/${t(`related.articles.${key}.slug`)}`} className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 hover:shadow-md transition-all">
+              <span className="text-[10px] font-bold tracking-widest text-[var(--dk-red)] uppercase">{t(`related.articles.${key}.tag`)}</span>
+              <h4 className="mt-2.5 text-sm leading-snug font-bold text-slate-900 group-hover:text-[var(--dk-red)]">{t(`related.articles.${key}.title`)}</h4>
+              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 group-hover:text-[var(--dk-red)]">{t('related.read')} <ArrowRight size={12} /></div>
             </Link>
-          </div>
+          ))}
         </div>
       </div>
+    </>
+  );
 
-      <div className="mx-auto mt-20 max-w-6xl px-6">
-        <div className="rounded-2xl bg-slate-50 p-8 sm:p-10">
-          <div className="mb-8 flex items-center gap-2.5">
-            <BookOpen size={18} className="text-[var(--dk-red)]" />
-            <h3 className="text-lg font-bold text-slate-900">{t('related.title')}</h3>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {relatedArticles.map((key) => (
-              <Link
-                key={key}
-                href={`/blog/${t(`related.articles.${key}.slug`)}`}
-                className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 transition-all duration-300 hover:ring-slate-300/60 hover:shadow-md"
-              >
-                <span className="text-[10px] font-bold tracking-widest text-[var(--dk-red)] uppercase">
-                  {t(`related.articles.${key}.tag`)}
-                </span>
-                <h4 className="mt-2.5 text-sm leading-snug font-bold text-slate-900 transition-colors group-hover:text-[var(--dk-red)]">
-                  {t(`related.articles.${key}.title`)}
-                </h4>
-                <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 transition-all group-hover:gap-2 group-hover:text-[var(--dk-red)]">
-                  {t('related.read')} <ArrowRight size={12} />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+  return (
+    <ToolkitStudioLayout toolId="pnl" toolName={t('title')} toolDescription={t('description')} tier="usta"
+      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection} showLiveBadge={false} />
   );
 }
 
