@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { AlertTriangle, ArrowRight, BookOpen, ChevronDown, ChevronUp, ClipboardCheck, Droplets, Flame, Lightbulb, RefreshCcw, Shield, ShieldAlert, Soup, Users, Utensils, WalletCards, Waves } from 'lucide-react';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 type FrequencyTab = 'daily' | 'weekly' | 'monthly';
 type Section = { id: string; title: string; subtitle: string; icon: typeof Shield; accent: string; accentBg: string; accentRing: string; items: { id: string; text: string; detail: string }[] };
@@ -12,6 +13,8 @@ const STORAGE_KEY = 'dk-aqta-checklist';
 
 export default function AqtaChecklistPage() {
   const t = useTranslations('toolkit.aqtaChecklist');
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const sections: Section[] = [
     { id: 'storage', title: t('storage_title'), subtitle: t('storage_subtitle'), icon: Soup, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
@@ -213,6 +216,14 @@ export default function AqtaChecklistPage() {
 
   return (
     <ToolkitStudioLayout toolId="aqta-checklist" toolName={t('title')} toolDescription={t('description')} tier="sagird"
-      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection} />
+      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'aqta-checklist', locale, result: { progress, checkedCount: checked.size, totalItems } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
+    />
   );
 }

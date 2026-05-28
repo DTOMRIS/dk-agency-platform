@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { AlertTriangle, ArrowRight, BookOpen, Camera, Check, ChevronDown, ChevronUp, HardHat, Lightbulb, Paintbrush, PartyPopper, RotateCcw, Video, Wrench, X } from 'lucide-react';
 import { isVideo, resizeImage, validateFile } from '@/lib/utils/image-resize';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 type PhaseKey = 'prep' | 'rough' | 'finish' | 'equipment' | 'opening';
 interface ChecklistItem { id: number; text: string; detail: string; }
@@ -18,6 +19,8 @@ const initialOpenState: Record<PhaseKey, boolean> = { prep: true, rough: false, 
 
 export default function InsaatChecklistPage() {
   const t = useTranslations('toolkit.insaatChecklist');
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const phases: Phase[] = [
     { key: 'prep', title: t('phase_prep_title'), subtitle: t('phase_prep_subtitle'), duration: t('phase_prep_duration'), icon: AlertTriangle, accent: 'text-amber-600', bg: 'bg-amber-50', items: Array.from({ length: 12 }, (_, i) => ({ id: i + 1, text: t(`phase_prep_item${i + 1}_text`), detail: t(`phase_prep_item${i + 1}_detail`) })) },
@@ -193,6 +196,14 @@ export default function InsaatChecklistPage() {
 
   return (
     <ToolkitStudioLayout toolId="insaat-checklist" toolName={t('pageTitle')} toolDescription={t('pageDesc')} tier="kalfa"
-      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection} />
+      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'insaat-checklist', locale, result: { progress, checkedCount: checked.length, totalItems } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
+    />
   );
 }

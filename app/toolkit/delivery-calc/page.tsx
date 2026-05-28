@@ -2,15 +2,18 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, Lightbulb, RotateCcw, Truck } from 'lucide-react';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 type PlatformKey = 'wolt' | 'bolt' | 'yango' | 'own';
 const PLATFORM_DEFAULTS: Record<PlatformKey, number> = { wolt: 30, bolt: 30, yango: 30, own: 10 };
 
 export default function DeliveryCalcPage() {
   const t = useTranslations('toolkit.deliveryCalc');
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const PLATFORM_LABELS: Record<PlatformKey, string> = { wolt: 'Wolt', bolt: 'Bolt Food', yango: 'Yango', own: t('platformOwn') };
   const deliveryTips = [t('tip1'), t('tip2'), t('tip3'), t('tip4'), t('tip5'), t('tip6'), t('tip7')];
@@ -263,6 +266,14 @@ export default function DeliveryCalcPage() {
 
   return (
     <ToolkitStudioLayout toolId="delivery-calc" toolName={t('title')} toolDescription={t('subtitle')} tier="kalfa"
-      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection} />
+      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'delivery-calc', locale, result: { orderValue, commissionPct, foodCostPct, dineInNet: calc.dineInNet, platformCount: selectedPlatforms.length } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
+    />
   );
 }

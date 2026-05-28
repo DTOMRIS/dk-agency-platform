@@ -1,15 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { CheckCircle, Circle, ChevronDown, ChevronUp } from 'lucide-react';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 interface ChecklistItem { id: string; text: string; detail?: string; }
 interface ChecklistSection { title: string; emoji: string; items: ChecklistItem[]; }
 
 export default function ChecklistPage() {
   const t = useTranslations('toolkit.checklist');
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const CHECKLIST_DATA: ChecklistSection[] = [
     { title: t('sec_legal_title'), emoji: '\uD83D\uDCCB', items: [
@@ -145,6 +148,14 @@ export default function ChecklistPage() {
 
   return (
     <ToolkitStudioLayout toolId="checklist" toolName={t('title')} toolDescription={t('description')} tier="sagird"
-      inputSection={inputSection} resultSection={resultSection} />
+      inputSection={inputSection} resultSection={resultSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'checklist', locale, result: { checkedCount, totalItems, progress } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
+    />
   );
 }

@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, ChevronDown, Palette, Sparkles } from 'lucide-react';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 type ChecklistGroup = { id: string; title: string; items: string[] };
 
@@ -12,6 +13,8 @@ const STORAGE_KEY = 'branding-guide-checklist';
 
 export default function BrandingGuidePage() {
   const t = useTranslations('toolkit.branding');
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const checklistGroups: ChecklistGroup[] = [
     { id: 'strategy', title: t('checklistStrategyTitle'), items: [t('checklistStrategyItem1'), t('checklistStrategyItem2'), t('checklistStrategyItem3')] },
@@ -219,6 +222,13 @@ export default function BrandingGuidePage() {
       inputSection={inputSection}
       resultSection={resultSection}
       bottomSection={bottomSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'branding-guide', locale, result: { completedItems, totalItems, progressPct } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
     />
   );
 }
