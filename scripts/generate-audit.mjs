@@ -72,6 +72,12 @@ for (const loc of ['az', 'en', 'ru', 'tr']) {
 const envLocal = fs.existsSync(path.join(root, '.env.local')) ? fs.readFileSync(path.join(root, '.env.local'), 'utf8') : '';
 const hasKey = (k) => envLocal.includes(`${k}=`) && !envLocal.match(new RegExp(`^#\\s*${k}`, 'm'));
 
+const emailRoutes = countInFiles('sendEmail', ['app'], '.ts');
+const emailTemplateExists = fs.existsSync(path.join(root, 'lib/email/templates.ts'));
+const smtpExists = fs.existsSync(path.join(root, 'lib/email/smtp.ts'));
+const hasSmtp = hasKey('SMTP_USER');
+const ocrExists = fs.existsSync(path.join(root, 'lib/invoice-ocr/ocr-providers.ts'));
+
 const lastCommit = git('git log -1 --format=%h');
 const branch = git('git branch --show-current');
 const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -112,8 +118,23 @@ ${protectedFiles.map(f => '- \`' + f + '\`').join('\n')}
 | Key | Status |
 |-----|--------|
 | DEEPSEEK_API_KEY | ${hasKey('DEEPSEEK_API_KEY') ? '✅' : '❌'} |
-| GEMINI_API_KEY | ${hasKey('GEMINI_API_KEY') ? '✅' : '⚠️ OCR kor'} |
+| GEMINI_API_KEY | ${hasKey('GEMINI_API_KEY') ? '✅' : '⚠️ yorum/yox'} |
 | ANTHROPIC_API_KEY | ${hasKey('ANTHROPIC_API_KEY') ? '✅' : '⚠️ fallback yox'} |
+| SMTP_USER | ${hasSmtp ? '✅' : '❌'} |
+
+## Email Backend
+| Komponent | Status |
+|-----------|--------|
+| Provider | ${smtpExists ? '✅ Hostinger SMTP (nodemailer)' : '❌ smtp.ts yox'} |
+| Templates | ${emailTemplateExists ? '✅ lib/email/templates.ts' : '❌ yox'} |
+| Routes | ${emailRoutes > 0 ? '✅ ' + emailRoutes + ' API route sendEmail()' : '⚠️ 0'} |
+| SMTP_USER | ${hasSmtp ? '✅ .env.local-da dolu' : '⚠️ boş → console.log mock'} |
+
+## Fatura OCR
+| Komponent | Status |
+|-----------|--------|
+| OCR pipeline | ${ocrExists ? '✅ lib/invoice-ocr/ mövcud' : '❌ yox'} |
+| GEMINI_API_KEY | ${hasKey('GEMINI_API_KEY') ? '✅ aktiv' : '⚠️ deaktiv → vision OCR kor'} |
 
 ---
 ## Manual (əl ilə güncəllə)

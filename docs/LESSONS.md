@@ -167,3 +167,25 @@ AI Readiness sualları + label-lar i18n-da mövcud idi, amma option
 label-ları üçün component `.label` suffix əlavə edirdi — messages-da
 bu suffix yox idi. Validator yalnız top-level key mövcudluğunu yoxlayır,
 nested leaf-ləri yox. Audit-də runtime MISSING_MESSAGE check lazımdır.
+
+### L-031 — Mövcud schema-nı tam oxu, dublikat yaratma (28 May 2026)
+M5.1-də listings table yaradıldı — amma schema.ts:191-də artıq mövcud
+idi. Build 3 xəta ilə fail oldu (duplicate export). Kök səbəb: 680
+sətirlik schema.ts-ni tam oxumadan yeni table əlavə edildi.
+
+Qayda: Hər schema/config dəyişikliyindən əvvəl mövcud export-ları grep
+et. `grep "export const listing" lib/db/schema.ts` — 30 saniyəlik
+yoxlama 30 dəqiqəlik debug-ı qaçırır.
+
+### L-032 — "Boşluq" varsayma, koda bax (28 May 2026)
+Email backend "MOCK/eksik" sanıldı — əslində tam hazır idi (Hostinger
+SMTP, nodemailer, 5 template × 4 dil, 5 API route). OCR sistemi də
+"yox" deyildi — əslində 10 faza bitmiş, Gemini Vision pipeline hazır.
+
+Qayda: "Bu yoxdur" demədən əvvəl 3 yeri yoxla:
+1. `grep -rn "sendEmail\|smtp\|resend" lib/` — kod mövcuddur mü?
+2. `.env.local` — credentials dolu mu?
+3. `grep -rn "import.*email" app/api/` — istifadə olunur mu?
+
+Üçü də varsa → sistem işləyir, "boşluq" audit illüziyasıdır.
+Bu dərs L-017 (audit rəqəmi ≠ runtime) ilə qardaşdır.
