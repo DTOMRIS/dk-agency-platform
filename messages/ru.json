@@ -1417,6 +1417,21 @@
       "deleteSuccess": "Пользователь удалён",
       "deleteAlready": "Пользователь уже удалён",
       "deleteError": "Произошла ошибка"
+    },
+    "tierBadge": {
+      "sagird": "УЧЕНИК",
+      "kalfa": "ПОДМАСТЕРЬЕ",
+      "usta": "МАСТЕР"
+    },
+    "emptyState": {
+      "invoices": "Счета ещё не загружены",
+      "invoicesCta": "Загрузить первый счёт",
+      "listings": "Объявления ещё не созданы",
+      "listingsCta": "Создать первое",
+      "leads": "Лидов пока нет",
+      "leadsCta": "Активировать KAZAN AI",
+      "foodCost": "Для отчёта нужны счета",
+      "foodCostCta": "Загрузить счёт"
     }
   },
   "contact": {

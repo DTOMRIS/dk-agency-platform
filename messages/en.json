@@ -1417,6 +1417,21 @@
       "deleteSuccess": "Member deleted",
       "deleteAlready": "Member already deleted",
       "deleteError": "An error occurred"
+    },
+    "tierBadge": {
+      "sagird": "APPRENTICE",
+      "kalfa": "JOURNEYMAN",
+      "usta": "MASTER"
+    },
+    "emptyState": {
+      "invoices": "No invoices uploaded yet",
+      "invoicesCta": "Upload first invoice",
+      "listings": "No listings created yet",
+      "listingsCta": "Create first listing",
+      "leads": "No leads yet",
+      "leadsCta": "Activate KAZAN AI",
+      "foodCost": "Invoices needed for food cost report",
+      "foodCostCta": "Upload invoice"
     }
   },
   "contact": {

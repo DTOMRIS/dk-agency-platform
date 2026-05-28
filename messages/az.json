@@ -1417,6 +1417,21 @@
       "deleteSuccess": "İstifadəçi silindi",
       "deleteAlready": "Bu istifadəçi artıq silinib",
       "deleteError": "Xəta baş verdi"
+    },
+    "tierBadge": {
+      "sagird": "ŞAGIRD",
+      "kalfa": "KALFA",
+      "usta": "USTA"
+    },
+    "emptyState": {
+      "invoices": "Hələ heç bir fatura yüklənməyib",
+      "invoicesCta": "İlk faturanı yüklə",
+      "listings": "Hələ heç bir elan yaradılmayıb",
+      "listingsCta": "İlk elanı yarat",
+      "leads": "Hələ heç bir lead yoxdur",
+      "leadsCta": "KAZAN AI-ı aktivləşdir",
+      "foodCost": "Food cost hesabatı üçün fatura lazımdır",
+      "foodCostCta": "Fatura yüklə"
     }
   },
   "contact": {
