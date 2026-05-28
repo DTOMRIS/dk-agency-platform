@@ -1417,6 +1417,21 @@
       "deleteSuccess": "Üye silindi",
       "deleteAlready": "Üye zaten silindi",
       "deleteError": "Hata oluştu"
+    },
+    "tierBadge": {
+      "sagird": "ÇIRAK",
+      "kalfa": "KALFA",
+      "usta": "USTA"
+    },
+    "emptyState": {
+      "invoices": "Henüz fatura yüklenmedi",
+      "invoicesCta": "İlk faturayı yükle",
+      "listings": "Henüz ilan oluşturulmadı",
+      "listingsCta": "İlk ilanı oluştur",
+      "leads": "Henüz lead yok",
+      "leadsCta": "KAZAN AI etkinleştir",
+      "foodCost": "Food cost raporu için fatura gerekli",
+      "foodCostCta": "Fatura yükle"
     }
   },
   "contact": {

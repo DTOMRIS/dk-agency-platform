@@ -41,7 +41,7 @@ function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-10 items-center rounded-lg border border-gray-200 bg-white px-1">
+    <div className="flex h-10 items-center rounded-lg border border-[var(--dk-warm-border)] bg-white px-1">
       {locales.map((locale) => (
         <Link
           key={locale}
@@ -100,7 +100,7 @@ export function DashboardTopBar() {
   };
 
   return (
-    <div className="sticky top-0 z-20 hidden h-16 items-center justify-between border-b border-gray-200 bg-white px-6 lg:flex">
+    <div className="sticky top-0 z-20 hidden h-16 items-center justify-between border-b border-[var(--dk-warm-border)] bg-white/95 backdrop-blur-md px-6 lg:flex">
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-400">OCAQ</p>
         <h2 className="text-base font-bold text-gray-950">{getPageTitle(pathname)}</h2>
