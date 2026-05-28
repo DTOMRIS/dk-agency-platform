@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-05-28 14:24:18 | Branch: feat/system-audit-generator | d4dcae2
+> Son güncəlləmə: 2026-05-28 15:53:21 | Branch: fix/system-audit-email-update | 17f67cf
 
 ## Route İnventarı
 | Kateqoriya | Say |
@@ -44,8 +44,23 @@ AI Insight bağlı səhifə: **9**
 | Key | Status |
 |-----|--------|
 | DEEPSEEK_API_KEY | ✅ |
-| GEMINI_API_KEY | ⚠️ OCR kor |
+| GEMINI_API_KEY | ⚠️ yorum/yox |
 | ANTHROPIC_API_KEY | ⚠️ fallback yox |
+| SMTP_USER | ✅ |
+
+## Email Backend
+| Komponent | Status |
+|-----------|--------|
+| Provider | ✅ Hostinger SMTP (nodemailer) |
+| Templates | ✅ lib/email/templates.ts |
+| Routes | ✅ 10 API route sendEmail() |
+| SMTP_USER | ✅ .env.local-da dolu |
+
+## Fatura OCR
+| Komponent | Status |
+|-----------|--------|
+| OCR pipeline | ✅ lib/invoice-ocr/ mövcud |
+| GEMINI_API_KEY | ⚠️ deaktiv → vision OCR kor |
 
 ---
 ## Manual (əl ilə güncəllə)
