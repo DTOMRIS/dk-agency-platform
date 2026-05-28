@@ -17,7 +17,7 @@ import {
   LISTING_CATEGORIES,
   type ListingCategory,
 } from '@/lib/data/listingCategories';
-import { getFieldsForType, type FieldConfig } from '@/lib/data/listingFieldConfig';
+import { getFieldsForType, type FieldConfig, type EquipmentItem } from '@/lib/data/listingFieldConfig';
 import { compressImage, generateThumbnail, validateImage } from '@/lib/utils/imageUtils';
 
 type FormStep = 1 | 2 | 3 | 4 | 5;
@@ -93,6 +93,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
   const [formData, setFormData] = useState<FormState>(() => INITIAL_FORM(session));
   const [images, setImages] = useState<UploadedImageItem[]>([]);
   const [coverIndex, setCoverIndex] = useState(0);
+  const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [toast, setToast] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -282,6 +283,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       const payload = {
         ...formData,
         trackingCode,
+        equipment: equipment.filter(e => e.name.trim()),
         images:
           uploadedImages.length > 0
             ? uploadedImages.map((image: { url: string }) => ({ url: image.url }))
@@ -592,6 +594,32 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                     />
                     {field.label}
                   </label>
+                ) : field.type === 'equipment-list' ? (
+                  <div className="space-y-3 md:col-span-2">
+                    {equipment.map((eq, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <input type="text" value={eq.name} placeholder="Avadanlıq adı"
+                          onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, name: e.target.value } : item))}
+                          className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[var(--dk-gold)]" />
+                        <select value={eq.condition}
+                          onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, condition: e.target.value as 'new' | 'used' } : item))}
+                          className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none">
+                          <option value="used">İşlənmiş</option>
+                          <option value="new">Yeni</option>
+                        </select>
+                        <input type="number" min="1" value={eq.count ?? ''} placeholder="Say"
+                          onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, count: Number(e.target.value) || undefined } : item))}
+                          className="w-20 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[var(--dk-gold)]" />
+                        <button type="button" onClick={() => setEquipment(prev => prev.filter((_, i) => i !== idx))}
+                          className="text-slate-400 hover:text-red-500"><Trash2 size={16} /></button>
+                      </div>
+                    ))}
+                    <button type="button"
+                      onClick={() => setEquipment(prev => [...prev, { name: '', condition: 'used' }])}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--dk-gold)] hover:text-amber-600">
+                      + Avadanlıq əlavə et
+                    </button>
+                  </div>
                 ) : field.type === 'select' ? (
                   <select
                     value={String(formData.typeSpecificData[field.key] ?? '')}
