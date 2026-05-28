@@ -1252,7 +1252,11 @@
       "sagird": "ÇIRAK",
       "kalfa": "KALFA",
       "usta": "USTA"
-    }
+    },
+    "aiInsightRequest": "AI yorum al",
+    "aiInsightLoading": "AI yorum yükleniyor...",
+    "aiInsightError": "AI yorum mevcut değil. Daha sonra tekrar deneyin.",
+    "aiInsightRetry": "Tekrar dene"
   },
   "blog": {
     "title": "DK Agency Blog",

@@ -1252,7 +1252,11 @@
       "sagird": "APPRENTICE",
       "kalfa": "JOURNEYMAN",
       "usta": "MASTER"
-    }
+    },
+    "aiInsightRequest": "Get AI insight",
+    "aiInsightLoading": "Loading AI insight...",
+    "aiInsightError": "AI insight unavailable. Try again later.",
+    "aiInsightRetry": "Try again"
   },
   "blog": {
     "title": "DK Agency Blog",

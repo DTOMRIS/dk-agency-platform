@@ -2,9 +2,10 @@
 
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Calculator, AlertTriangle, Database, Info, ShoppingCart, Tag, PieChart, Shield, ArrowRight, RotateCcw, Lightbulb, BookOpen, Plus, X } from 'lucide-react';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 const UNITS = ['kq', 'qr', 'litr', 'ml', 'ədəd'];
 
@@ -39,6 +40,8 @@ export default function FoodCostCalculator() {
   const [portions, setPortions] = useState(1);
   const [targetFoodCost, setTargetFoodCost] = useState(32);
   const { suggestions, activeIngId, hasInvoiceData, search, clear } = useProductLookup();
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const fourFactors = [
     { icon: ShoppingCart, title: t('factor1Title'), color: 'text-blue-600', iconBg: 'bg-blue-100', content: t('factor1Content') },
@@ -204,6 +207,14 @@ export default function FoodCostCalculator() {
 
   return (
     <ToolkitStudioLayout toolId="food-cost" toolName={t('title')} toolDescription={t('subtitle')} tier="sagird"
-      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection} />
+      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'food-cost', locale, result: { foodCostPct: calc.pct, portionCost: calc.perPortion, grossProfit: calc.gross, idealPrice: calc.ideal, menuPrice } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
+    />
   );
 }
