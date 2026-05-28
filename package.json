@@ -20,6 +20,7 @@
     "verify:task-range": "node scripts/verify-task-card.mjs --range",
     "snapshot:state": "node scripts/generate-state.mjs",
     "audit:drift": "node scripts/drift-audit.mjs",
+    "audit:system": "node scripts/generate-audit.mjs",
     "fetch:news": "node --env-file=.env.local scripts/fetch-news.mjs",
     "approve:news": "node scripts/approve-news.mjs",
     "db:seed": "npx tsx lib/db/seed.ts",
