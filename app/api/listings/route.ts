@@ -4,6 +4,7 @@ import { getListings } from '@/lib/db/listings-repository';
 import { getAdminListings } from '@/lib/repositories/listingRepository';
 import { listingMedia, listings } from '@/lib/db/schema';
 import { getServerMemberSession } from '@/lib/members/server-session';
+import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { generateTrackingCode } from '@/lib/utils/tracking';
 
 export async function GET(request: NextRequest) {
@@ -55,8 +56,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: false, error: 'Giriş tələb olunur.' }, { status: 401 });
   }
 
+  const auth = await getAuthFromCookie();
   const body = await request.json();
   const trackingCode = body?.trackingCode || generateTrackingCode();
+  const isDraft = body?.status === 'draft';
 
   if (!dbAvailable || !db) {
     return NextResponse.json({
@@ -71,20 +74,26 @@ export async function POST(request: NextRequest) {
     .values({
       trackingCode,
       type: body.type,
-      status: 'submitted',
+      status: isDraft ? 'submitted' : 'submitted',
       isShowcase: false,
       isFeatured: false,
+      ownerId: auth?.userId ?? null,
       slug: body.slug || null,
       title: body.title,
       description: body.description,
       price: body.price ? Number(body.price) : null,
+      priceLabel: body.priceLabel || null,
       currency: body.currency || 'AZN',
       city: body.city,
       district: body.district || null,
       ownerName: body.ownerName || session.name,
       phone: body.phone,
       email: body.email || session.email,
+      contactName: body.contactName || null,
+      contactPhone: body.contactPhone || null,
+      contactEmail: body.contactEmail || null,
       typeSpecificData: body.typeSpecificData || {},
+      equipment: Array.isArray(body.equipment) ? body.equipment : [],
       aiAnalysis: null,
     })
     .returning({ id: listings.id, trackingCode: listings.trackingCode });
