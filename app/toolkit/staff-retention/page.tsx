@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, Lightbulb, RotateCcw, Users } from 'lucide-react';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 function formatCurrency(value: number) {
   return `${Math.round(value).toLocaleString('az-AZ')} ₼`;
@@ -12,6 +13,8 @@ function formatCurrency(value: number) {
 
 export default function StaffRetentionPage() {
   const t = useTranslations('toolkit.staffRetention');
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const [employeeCount, setEmployeeCount] = useState(18);
   const [averageSalary, setAverageSalary] = useState(850);
@@ -193,6 +196,13 @@ export default function StaffRetentionPage() {
       inputSection={inputSection}
       resultSection={resultSection}
       bottomSection={bottomSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'staff-retention', locale, result: { turnoverRate: stats.turnoverRate, replacementCost: stats.replacementCostMid, annualLoss: stats.annualLoss, employeeCount } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
     />
   );
 }

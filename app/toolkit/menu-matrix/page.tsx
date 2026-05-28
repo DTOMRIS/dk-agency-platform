@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, Info, Lightbulb, Plus, RotateCcw, TrendingUp, UtensilsCrossed, X } from 'lucide-react';
-import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
+import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
 interface MenuItem { id: string; name: string; salesCount: number; contributionMargin: number; }
 type Category = 'star' | 'plowHorse' | 'puzzle' | 'dog';
@@ -23,6 +24,8 @@ function classify(items: MenuItem[]): { item: MenuItem; category: Category }[] {
 
 export default function MenuMatrixPage() {
   const t = useTranslations('toolkit.menuMatrix');
+  const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const CATEGORY_META: Record<Category, { emoji: string; label: string; labelEn: string; color: string; bg: string; ring: string; advice: string }> = {
     star: { emoji: '⭐', label: t('catStarLabel'), labelEn: 'Star', color: 'text-yellow-600', bg: 'bg-yellow-50', ring: 'ring-yellow-200/60', advice: t('catStarAdvice') },
@@ -208,6 +211,14 @@ export default function MenuMatrixPage() {
 
   return (
     <ToolkitStudioLayout toolId="menu-matrix" toolName={t('title')} toolDescription={t('subtitle')} tier="kalfa"
-      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection} />
+      inputSection={inputSection} resultSection={resultSection} bottomSection={bottomSection}
+      aiInsight={aiInsight}
+      onRequestInsight={async () => {
+        setAiInsight({ status: 'loading' });
+        const res = await getToolkitInsight({ toolId: 'menu-matrix', locale, result: { starCount: counts.star, plowHorseCount: counts.plowHorse, puzzleCount: counts.puzzle, dogCount: counts.dog, totalItems: items.length, avgMargin } });
+        if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
+        else setAiInsight({ status: 'error' });
+      }}
+    />
   );
 }
