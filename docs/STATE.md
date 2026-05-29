@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-28T18:17:41.148Z
+- GeneratedAt: 2026-05-29T05:45:39.366Z
 - BuildStatus: PASS
 
-## Routes (180)
+## Routes (184)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -14,6 +14,8 @@ Auto-generated. Do not edit manually.
 - /[locale]/auth/register
 - /[locale]/b2b-panel
 - /[locale]/b2b-panel/ilanlarim
+- /[locale]/b2b-panel/ilanlarim/[id]
+- /[locale]/b2b-panel/ilanlarim/[id]/edit
 - /[locale]/b2b-panel/mesajlar
 - /[locale]/b2b-panel/toolkit
 - /[locale]/b2b-panel/yeni-ilan
@@ -107,6 +109,8 @@ Auto-generated. Do not edit manually.
 - /b2b-panel
 - /b2b-panel/[slug]
 - /b2b-panel/ilanlarim
+- /b2b-panel/ilanlarim/[id]
+- /b2b-panel/ilanlarim/[id]/edit
 - /b2b-panel/mesajlar
 - /b2b-panel/toolkit
 - /b2b-panel/toolkit/financial-health
