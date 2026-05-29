@@ -6,6 +6,7 @@ import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/
 
 export interface ListingFilters {
   type?: string | null;
+  sector?: string | null;
   city?: string | null;
   status?: string | null;
   showcase?: boolean;
@@ -27,6 +28,7 @@ function mapDbListing(row: typeof listings.$inferSelect, media: typeof listingMe
     slug: row.slug || row.trackingCode.toLowerCase(),
     trackingCode: row.trackingCode,
     type: row.type,
+    sector: row.sector || null,
     status: row.status,
     title,
     description,
@@ -72,6 +74,7 @@ export async function getListings(filters: ListingFilters = {}, locale?: string)
 
   const conditions = [];
   if (filters.type) conditions.push(eq(listings.type, filters.type as typeof listings.$inferSelect.type));
+  if (filters.sector) conditions.push(eq(listings.sector, filters.sector));
   if (filters.city) conditions.push(eq(listings.city, filters.city));
   if (filters.status) conditions.push(eq(listings.status, filters.status as typeof listings.$inferSelect.status));
   if (filters.showcase === true) conditions.push(eq(listings.isShowcase, true));

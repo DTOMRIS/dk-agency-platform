@@ -12,6 +12,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const scope = searchParams.get('scope');
   const type = searchParams.get('type');
+  const sector = searchParams.get('sector');
   const city = searchParams.get('city');
   const status = searchParams.get('status');
   const query = searchParams.get('q');
@@ -50,6 +51,7 @@ export async function GET(request: NextRequest) {
 
   const results = await getListings({
     type,
+    sector,
     city,
     status,
     showcase: showcase || undefined,

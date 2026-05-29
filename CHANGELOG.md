@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [TASK-B-FIX] fix(listings): sector API filter + response — 2026-05-29
+
+### Fixed
+- `ListingFilters` interface: `sector` field əlavə edildi
+- `getListings()`: sector filter condition əlavə edildi
+- `mapDbListing()`: response-a `sector` field daxil edildi
+- API GET handler: `sector` query param oxunub `getListings()`-ə ötürülür
+
 ## [TASK-B] feat(listings): sector select + filter + badge — 2026-05-29
 
 ### Added
