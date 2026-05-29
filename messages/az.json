@@ -4061,7 +4061,8 @@
     "statusActive": "Aktiv",
     "statusPending": "Gözləyir",
     "statusRejected": "Rədd",
-    "statusSold": "Satıldı"
+    "statusSold": "Satıldı",
+    "filterAllSectors": "Bütün sektorlar"
   },
   "news": {
     "latestBadge": "SON XƏBƏR",

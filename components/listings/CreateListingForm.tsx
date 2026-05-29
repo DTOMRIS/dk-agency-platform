@@ -18,6 +18,7 @@ import {
   type ListingCategory,
 } from '@/lib/data/listingCategories';
 import { getFieldsForType, type FieldConfig, type EquipmentItem } from '@/lib/data/listingFieldConfig';
+import { getAllSectors } from '@/lib/data/listingSectors';
 import { compressImage, generateThumbnail, validateImage } from '@/lib/utils/imageUtils';
 
 type FormStep = 1 | 2 | 3 | 4 | 5;
@@ -40,6 +41,7 @@ interface UploadedImageItem {
 
 interface FormState {
   type: ListingCategory | '';
+  sector: string;
   title: string;
   description: string;
   price: string;
@@ -56,6 +58,7 @@ const STEP_LABELS = ['Kateqoriya', 'Məlumatlar', 'Detallar', 'Şəkillər', 'G�
 
 const INITIAL_FORM = (session?: SessionLike): FormState => ({
   type: '',
+  sector: '',
   title: '',
   description: '',
   price: '',
@@ -150,6 +153,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
     if (currentStep === 2) {
       if (!formData.title.trim()) nextErrors.title = 'Başlıq mütləqdir.';
+      if (!formData.sector) nextErrors.sector = 'Sektor seçilməlidir.';
       if (!formData.description.trim()) {
         nextErrors.description = 'Təsvir mütləqdir.';
       } else if (formData.description.trim().length < 50) {
@@ -503,6 +507,23 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
               </select>
             </div>
 
+            <div>
+              <label className="mb-2 block text-sm font-bold text-slate-700">Sektor *</label>
+              <select
+                value={formData.sector}
+                onChange={(event) => setField('sector', event.target.value)}
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+              >
+                <option value="">Seçin</option>
+                {getAllSectors('az').map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+              {errors.sector ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.sector}</p> : null}
+            </div>
+
             {formData.city === 'Bakı' ? (
               <div>
                 <label className="mb-2 block text-sm font-bold text-slate-700">Rayon</label>
@@ -742,7 +763,10 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                   <div className="mt-3 text-2xl font-black text-[var(--dk-gold)]">
                     {Number(formData.price || 0).toLocaleString('az-AZ')} {formData.currency}
                   </div>
-                  <p className="mt-3 text-sm text-slate-500">{formData.city}{formData.district ? `, ${formData.district}` : ''}</p>
+                  <p className="mt-3 text-sm text-slate-500">
+                    {formData.city}{formData.district ? `, ${formData.district}` : ''}
+                    {formData.sector ? ` · ${getAllSectors('az').find(s => s.value === formData.sector)?.label ?? formData.sector}` : ''}
+                  </p>
                   <div className="mt-5 rounded-2xl bg-slate-50 p-4 text-sm leading-7 text-slate-600">{formData.description}</div>
                   <button type="button" onClick={() => setStep(2)} className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
                     <Pencil className="h-4 w-4" />

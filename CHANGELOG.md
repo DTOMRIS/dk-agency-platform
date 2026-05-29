@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [TASK-B] feat(listings): sector select + filter + badge — 2026-05-29
+
+### Added
+- CreateListingForm Step 2: sector SELECT (məcburi, 7 sektor, listingSectors.ts SSOT-dan)
+- ListingsShowcasePage: sector filter dropdown (URL param sync)
+- B2B ilanlarım: sector filter dropdown
+- ListingCard: sector badge (category badge altında)
+- Admin ilanlar table: sector column
+- B2B ilanlarım row: sector badge
+- i18n: `filterAllSectors` key 4 dildə (az/en/ru/tr)
+- Mock data: 12 listing-ə sector dəyəri
+
+### Changed
+- CreateListingForm FormState: `sector` field əlavə
+- ListingsShowcasePage filter logic: sectorMatch əlavə
+
 ## [TASK-A] dk-validator blocking gate — 2026-05-29
 
 ### Added

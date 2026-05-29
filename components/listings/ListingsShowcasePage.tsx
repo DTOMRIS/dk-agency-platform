@@ -15,6 +15,7 @@ import {
   type ListingCategory,
 } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
+import { getAllSectors } from '@/lib/data/listingSectors';
 
 type FilterType = 'all' | ListingCategory;
 
@@ -38,6 +39,7 @@ export default function ListingsShowcasePage() {
   const searchParams = useSearchParams();
 
   const [type, setType] = useState<FilterType>('all');
+  const [sector, setSector] = useState('all');
   const [city, setCity] = useState('all');
   const [priceRange, setPriceRange] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -49,6 +51,7 @@ export default function ListingsShowcasePage() {
 
   useEffect(() => {
     setType(normalizeParam(searchParams.get('type')) as FilterType);
+    setSector(normalizeParam(searchParams.get('sector')));
     setCity(normalizeParam(searchParams.get('city')));
     setPriceRange(normalizeParam(searchParams.get('price')));
     setSearchQuery(searchParams.get('q') ?? '');
@@ -81,12 +84,13 @@ export default function ListingsShowcasePage() {
     if (!initialized) return;
     const params = new URLSearchParams();
     if (type !== 'all') params.set('type', type);
+    if (sector !== 'all') params.set('sector', sector);
     if (city !== 'all') params.set('city', city);
     if (priceRange !== 'all') params.set('price', priceRange);
     if (searchQuery) params.set('q', searchQuery);
     const next = params.toString() ? `${pathname}?${params.toString()}` : pathname;
     router.replace(next, { scroll: false });
-  }, [city, initialized, pathname, priceRange, router, searchQuery, type]);
+  }, [city, initialized, pathname, priceRange, router, searchQuery, sector, type]);
 
   const filteredListings = useMemo(() => {
     const range = PRICE_RANGE_OPTIONS.find((item) => item.value === priceRange) ?? PRICE_RANGE_OPTIONS[0];
@@ -94,14 +98,15 @@ export default function ListingsShowcasePage() {
 
     return listings.filter((listing) => {
       const typeMatch = type === 'all' || listing.type === type;
+      const sectorMatch = sector === 'all' || listing.sector === sector;
       const cityMatch = city === 'all' || normalizeCityForQuery(listing.city) === city;
       const priceMatch = priceRange === 'all' ? true : listing.price >= range.min && (range.max === null || listing.price <= range.max);
       const searchMatch = !query || listing.title.toLowerCase().includes(query) || listing.description?.toLowerCase().includes(query);
-      return listing.isShowcase && typeMatch && cityMatch && priceMatch && searchMatch;
+      return listing.isShowcase && typeMatch && sectorMatch && cityMatch && priceMatch && searchMatch;
     });
-  }, [city, listings, priceRange, searchQuery, type]);
+  }, [city, listings, priceRange, searchQuery, sector, type]);
 
-  const handleReset = () => { setType('all'); setCity('all'); setPriceRange('all'); setSearchQuery(''); };
+  const handleReset = () => { setType('all'); setSector('all'); setCity('all'); setPriceRange('all'); setSearchQuery(''); };
 
   const ilanVerHref = locale === 'az' ? '/ilan-ver' : `/${locale}/ilan-ver`;
   const ilanlarimHref = locale === 'az' ? '/b2b-panel/ilanlarim' : `/${locale}/b2b-panel/ilanlarim`;
@@ -161,6 +166,12 @@ export default function ListingsShowcasePage() {
               className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)]">
               <option value="all">{t('filterAll')}</option>
               {LISTING_CATEGORIES.map((cat) => (<option key={cat.id} value={cat.id}>{cat.label}</option>))}
+            </select>
+
+            <select value={sector} onChange={(e) => setSector(e.target.value)}
+              className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)]">
+              <option value="all">{t('filterAllSectors')}</option>
+              {getAllSectors(locale as 'az' | 'en' | 'ru' | 'tr').map((s) => (<option key={s.value} value={s.value}>{s.label}</option>))}
             </select>
 
             <select value={city} onChange={(e) => setCity(e.target.value)}

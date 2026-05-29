@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 import { MapPin, ShieldCheck } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { MockListing } from '@/lib/data/mockListings';
 import { getCategoryById } from '@/lib/data/listingCategories';
+import { getSectorLabel } from '@/lib/data/listingSectors';
 
 interface ListingCardProps {
   listing: MockListing;
@@ -18,6 +19,7 @@ function formatPrice(listing: MockListing) {
 
 export default function ListingCard({ listing, onOpen }: ListingCardProps) {
   const t = useTranslations('devir');
+  const locale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
   const category = getCategoryById(listing.type);
 
   return (
@@ -36,11 +38,16 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,26,46,0.55)] via-transparent to-transparent" />
 
-        {/* Category badge — sol üst */}
-        <div className="absolute left-3 top-3">
+        {/* Category + Sector badges — sol üst */}
+        <div className="absolute left-3 top-3 flex flex-col gap-1.5">
           <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold ${category?.badgeClass ?? 'bg-white text-slate-700'}`}>
             {category?.label ?? listing.type}
           </span>
+          {listing.sector ? (
+            <span className="inline-flex rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold text-slate-700 shadow-sm backdrop-blur-sm">
+              {getSectorLabel(listing.sector, locale)}
+            </span>
+          ) : null}
         </div>
 
         {/* Status / Featured badge — sağ üst */}
