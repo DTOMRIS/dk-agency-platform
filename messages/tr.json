@@ -4061,7 +4061,8 @@
     "statusActive": "Aktif",
     "statusPending": "Bekliyor",
     "statusRejected": "Reddedildi",
-    "statusSold": "Satıldı"
+    "statusSold": "Satıldı",
+    "filterAllSectors": "Tüm sektörler"
   },
   "news": {
     "latestBadge": "SON HABER",

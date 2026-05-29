@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-05-29 12:50:57 | Branch: chore/enforce-dk-validator-gate | 5bd670c
+> Son güncəlləmə: 2026-05-29 14:21:52 | Branch:  | 8dd4fd1
 
 ## Route İnventarı
 | Kateqoriya | Say |
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 3087 | 3087 | 3087 | 3087 | ✅ |
+| 3088 | 3088 | 3088 | 3088 | ✅ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`

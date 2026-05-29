@@ -8,6 +8,7 @@ import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import { getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import { getSectorLabel } from '@/lib/data/listingSectors';
 
 const PAGE_SIZE = 20;
 
@@ -448,6 +449,7 @@ export default function DashboardIlanlarPage() {
                   <th className="px-5 py-4">{copy.colTrackingCode}</th>
                   <th className="px-5 py-4">{copy.colTitle}</th>
                   <th className="px-5 py-4">{copy.colCategory}</th>
+                  <th className="px-5 py-4">Sektor</th>
                   <th className="px-5 py-4">{copy.colCity}</th>
                   <th className="px-5 py-4">{copy.colPrice}</th>
                   <th className="px-5 py-4">{copy.colStatus}</th>
@@ -477,6 +479,15 @@ export default function DashboardIlanlarPage() {
                         <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${category?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
                           {category?.label ?? listing.type}
                         </span>
+                      </td>
+                      <td className="px-5 py-4">
+                        {listing.sector ? (
+                          <span className="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-600">
+                            {getSectorLabel(listing.sector, locale)}
+                          </span>
+                        ) : (
+                          <span className="text-slate-300">—</span>
+                        )}
                       </td>
                       <td className="px-5 py-4">{listing.city}</td>
                       <td className="px-5 py-4 font-semibold text-[var(--dk-gold)]">

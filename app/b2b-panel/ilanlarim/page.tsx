@@ -13,12 +13,14 @@ import {
   Loader2, ExternalLink,
 } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import { getSectorLabel, SECTOR_KEYS } from '@/lib/data/listingSectors';
 
 interface Listing {
   id: number;
   title: string;
   trackingCode: string;
   type: string;
+  sector?: string | null;
   status: string;
   price: number;
   currency: string;
@@ -37,6 +39,7 @@ const pageCopy: Record<Locale, {
   searchPlaceholder: string;
   allStatuses: string;
   allCategories: string;
+  allSectors: string;
   noListings: string;
   noListingsHint: string;
   statTotal: string;
@@ -56,6 +59,7 @@ const pageCopy: Record<Locale, {
     searchPlaceholder: 'Elan axtar...',
     allStatuses: 'Bütün Statuslar',
     allCategories: 'Bütün Kateqoriyalar',
+    allSectors: 'Bütün Sektorlar',
     noListings: 'Elan tapılmadı',
     noListingsHint: 'Filtrləri dəyişin və ya yeni elan yaradın',
     statTotal: 'Ümumi',
@@ -93,6 +97,7 @@ const pageCopy: Record<Locale, {
     searchPlaceholder: 'Искать объявление...',
     allStatuses: 'Все статусы',
     allCategories: 'Все категории',
+    allSectors: 'Все секторы',
     noListings: 'Объявления не найдены',
     noListingsHint: 'Измените фильтры или создайте новое объявление',
     statTotal: 'Всего',
@@ -130,6 +135,7 @@ const pageCopy: Record<Locale, {
     searchPlaceholder: 'Search listing...',
     allStatuses: 'All Statuses',
     allCategories: 'All Categories',
+    allSectors: 'All Sectors',
     noListings: 'No listings found',
     noListingsHint: 'Change filters or create a new listing',
     statTotal: 'Total',
@@ -167,6 +173,7 @@ const pageCopy: Record<Locale, {
     searchPlaceholder: 'İlan ara...',
     allStatuses: 'Tüm Durumlar',
     allCategories: 'Tüm Kategoriler',
+    allSectors: 'Tüm Sektörler',
     noListings: 'İlan bulunamadı',
     noListingsHint: 'Filtreleri değiştirin veya yeni ilan oluşturun',
     statTotal: 'Toplam',
@@ -235,6 +242,7 @@ export default function IlanlarimPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCategory, setFilterCategory] = useState<string>('all');
+  const [filterSector, setFilterSector] = useState<string>('all');
 
   useEffect(() => {
     fetch('/api/listings?scope=owner')
@@ -253,7 +261,8 @@ export default function IlanlarimPage() {
       || listing.trackingCode.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'all' || listing.status === filterStatus;
     const matchesCategory = filterCategory === 'all' || listing.type === filterCategory;
-    return matchesSearch && matchesStatus && matchesCategory;
+    const matchesSector = filterSector === 'all' || listing.sector === filterSector;
+    return matchesSearch && matchesStatus && matchesCategory && matchesSector;
   });
 
   const stats = {
@@ -340,6 +349,19 @@ export default function IlanlarimPage() {
               </select>
               <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
+            <div className="relative">
+              <select
+                value={filterSector}
+                onChange={(e) => setFilterSector(e.target.value)}
+                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
+              >
+                <option value="all">{copy.allSectors}</option>
+                {SECTOR_KEYS.map((key) => (
+                  <option key={key} value={key}>{getSectorLabel(key, locale)}</option>
+                ))}
+              </select>
+              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+            </div>
           </div>
         </div>
       </div>
@@ -396,6 +418,11 @@ export default function IlanlarimPage() {
                       <div className="flex items-center gap-4 text-sm">
                         <span className="text-gray-400 text-xs">#{listing.trackingCode}</span>
                         <span className="text-gray-500">{copy.categoryLabels[listing.type] || listing.type}</span>
+                        {listing.sector ? (
+                          <span className="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600">
+                            {getSectorLabel(listing.sector, locale)}
+                          </span>
+                        ) : null}
                         {listing.price > 0 && (
                           <span className="font-semibold text-dk-red">
                             {listing.price.toLocaleString()} {listing.currency}

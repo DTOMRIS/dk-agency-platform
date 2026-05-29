@@ -1,5 +1,26 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-29 — TASK-B (sector select + filter + badge)
+
+**Qərar 1 — Sector SELECT formanın Step 2-sinə**
+CreateListingForm Step 2-yə `sector` select əlavə edildi. Şəhər/rayon ilə eyni grid-də.
+FormState-ə `sector` field, validation-a "Sektor seçilməlidir" əlavə edildi.
+API POST artıq sector-u qəbul edirdi (#224) — yalnız frontend bağlama lazım idi.
+
+**Qərar 2 — Filter UI pattern: pageCopy inline (b2b) + useTranslations (showcase)**
+Public showcase (ListingsShowcasePage) useTranslations Pattern A istifadə edir → `filterAllSectors` key 4 dildə messages/*.json-a əlavə edildi.
+B2B ilanlarım pageCopy pattern istifadə edir → `allSectors` key inline 4 dildə əlavə edildi.
+Sector label-ları: getSectorLabel(key, locale) — listingSectors.ts SSOT-dan gəlir, duplicate yox.
+
+**Qərar 3 — Badge: ListingCard + admin table + b2b row**
+ListingCard-da category badge-nin altında sector badge (bg-white/90 blur).
+Admin ilanlar table-ına sector column (category-dən sonra).
+B2B ilanlarım row-da category label-dən sonra sector badge.
+Null sector → dash (—) göstərilir, köhnə elanlar sınmır.
+
+**Qərar 4 — Mock data əhatəsi**
+12 mock listing-ə sektor: 6×restoran, 3×fast-food, 1×kafe, 1×catering, 1×diger.
+
 ## 2026-05-29 — TASK-A (dk-validator blocking gate)
 
 **Problem:** Son 3 PR-da (#222, #223, #224) dk-validator 8-check çıxışı görünmürdü.

@@ -4061,7 +4061,8 @@
     "statusActive": "Активно",
     "statusPending": "На проверке",
     "statusRejected": "Отклонено",
-    "statusSold": "Продано"
+    "statusSold": "Продано",
+    "filterAllSectors": "Все секторы"
   },
   "news": {
     "latestBadge": "ПОСЛЕДНЕЕ",

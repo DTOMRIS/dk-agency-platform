@@ -4061,7 +4061,8 @@
     "statusActive": "Active",
     "statusPending": "Pending",
     "statusRejected": "Rejected",
-    "statusSold": "Sold"
+    "statusSold": "Sold",
+    "filterAllSectors": "All sectors"
   },
   "news": {
     "latestBadge": "LATEST",
