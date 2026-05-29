@@ -1,12 +1,12 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-05-28 18:02:27 | Branch: fix/changelog-session-28may | 5f31027
+> Son güncəlləmə: 2026-05-29 07:54:34 | Branch: feat/listing-sector-axis | d76e9c3
 
 ## Route İnventarı
 | Kateqoriya | Say |
 |-----------|-----|
-| Toplam page.tsx | 180 |
+| Toplam page.tsx | 184 |
 | Dashboard | 76 |
 | Toolkit | 35 |
 

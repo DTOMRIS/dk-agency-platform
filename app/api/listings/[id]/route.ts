@@ -4,6 +4,7 @@ import { db, dbAvailable } from '@/lib/db';
 import { listings, listingMedia } from '@/lib/db/schema';
 import { getListingDetail } from '@/lib/repositories/listingRepository';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
+import { isValidSector } from '@/lib/data/listingSectors';
 import type { ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 
 export async function GET(
@@ -38,6 +39,7 @@ const ALLOWED_FIELDS = [
   'contactEmail',
   'typeSpecificData',
   'equipment',
+  'sector',
 ] as const;
 
 export async function PATCH(
@@ -81,6 +83,14 @@ export async function PATCH(
   }
 
   const body = await request.json();
+
+  // Sector validation if provided
+  if (body.sector && !isValidSector(body.sector)) {
+    return NextResponse.json(
+      { success: false, error: `Yanlış sektor dəyəri: "${body.sector}".` },
+      { status: 400 },
+    );
+  }
 
   // Build update payload from whitelist
   const update: Record<string, unknown> = { updatedAt: new Date() };
