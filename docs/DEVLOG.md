@@ -1,5 +1,24 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-29 — TASK-A (dk-validator blocking gate)
+
+**Problem:** Son 3 PR-da (#222, #223, #224) dk-validator 8-check çıxışı görünmürdü.
+dk-validator yalnız manual subagent idi — heç vaxt avtomatik tetiklənmirdi.
+
+**Qərar 1 — Stop hook genişləndirildi (5/8 check)**
+`pre-commit-gate.sh` 3 check-dən 5-ə artırıldı:
+- Check 4: Auth contract (auth.id → auth.userId enforcement)
+- Check 5: DB schema naming (input → inputData enforcement)
+Cədvəl formatında çıxış, PASS/BLOCK verdict.
+
+**Qərar 2 — Standalone dk-validate.sh (8/8 check)**
+`scripts/dk-validate.sh` yaradıldı, `npm run dk:validate` ilə işlədilir.
+Dev server çalışırsa 8/8 check, çalışmırsa 5/8 + 3 SKIP.
+
+**Qərar 3 — DoD + PR template yeniləndi**
+CLAUDE.md DoD-a madde 9 (dk-validator PASS məcburi) və 10 (audit:system) əlavə edildi.
+PR template-ə dk-validator çıxışı bölməsi əlavə edildi.
+
 ## 2026-05-27 — TASK-0178A (ŞAGIRD Tool Descriptions)
 
 **Qərar 1 — Kod oxumasına əsaslanan content (L-023)**
