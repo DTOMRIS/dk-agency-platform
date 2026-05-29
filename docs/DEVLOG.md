@@ -1,5 +1,16 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-29 — TASK-B-FIX (sector API filter + response fix)
+
+**Kök səbəb:** E2E smoke test-də sektor filter "No listings match" qaytarırdı.
+3 nöqtə missing idi:
+1. `ListingFilters` interface-də `sector` yox idi
+2. `getListings()` sector-a görə filter etmirdi
+3. `mapDbListing()` response-a `sector` field daxil etmirdi
+4. API GET handler `sector` query param-ı oxumurdu
+
+**Fix:** 2 fayl, 4 sətir — `listings-repository.ts` + `route.ts`
+
 ## 2026-05-29 — TASK-B (sector select + filter + badge)
 
 **Qərar 1 — Sector SELECT formanın Step 2-sinə**
