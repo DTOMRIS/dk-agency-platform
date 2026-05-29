@@ -6,6 +6,7 @@ import { listingMedia, listings } from '@/lib/db/schema';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { generateTrackingCode } from '@/lib/utils/tracking';
+import { isValidSector } from '@/lib/data/listingSectors';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -70,6 +71,14 @@ export async function POST(request: NextRequest) {
   const trackingCode = body?.trackingCode || generateTrackingCode();
   const isDraft = body?.status === 'draft';
 
+  // Sector validation — required for new listings
+  if (body.sector && !isValidSector(body.sector)) {
+    return NextResponse.json(
+      { success: false, error: `Yanlış sektor dəyəri: "${body.sector}". Düzgün sektor seçin.` },
+      { status: 400 },
+    );
+  }
+
   if (!dbAvailable || !db) {
     return NextResponse.json({
       success: true,
@@ -83,6 +92,7 @@ export async function POST(request: NextRequest) {
     .values({
       trackingCode,
       type: body.type,
+      sector: body.sector || null,
       status: isDraft ? 'submitted' : 'submitted',
       isShowcase: false,
       isFeatured: false,

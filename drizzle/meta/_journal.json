@@ -43,6 +43,13 @@
       "when": 1779783149562,
       "tag": "0005_consent_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1780039770479,
+      "tag": "0006_add_sector_column",
+      "breakpoints": true
     }
   ]
 }

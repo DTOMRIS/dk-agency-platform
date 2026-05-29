@@ -195,6 +195,8 @@ export const listings = pgTable('listings', {
   trackingCode: varchar('tracking_code', { length: 20 }).notNull().unique(),
   type: listingTypeEnum('type').notNull(),
   status: listingStatusEnum('status').notNull().default('submitted'),
+  // Business sector (orthogonal to type). varchar + config, NOT pgEnum.
+  sector: varchar('sector', { length: 50 }),
   isShowcase: boolean('is_showcase').notNull().default(false),
   isFeatured: boolean('is_featured').notNull().default(false),
   // Owner (FK to users — M5.1)

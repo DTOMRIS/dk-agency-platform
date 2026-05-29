@@ -29,6 +29,7 @@ function mapDbListing(
     slug: row.slug || row.trackingCode.toLowerCase(),
     trackingCode: row.trackingCode,
     type: row.type,
+    sector: row.sector || null,
     status: row.status,
     title: row.title,
     description: row.description,

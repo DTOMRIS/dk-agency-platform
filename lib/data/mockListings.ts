@@ -28,6 +28,7 @@ export interface MockListing {
   slug: string;
   trackingCode: string;
   type: ListingCategory;
+  sector?: string | null;
   status: ListingWorkflowStatus;
   title: string;
   description: string;
