@@ -45,6 +45,9 @@ export interface MockListing {
   typeSpecificData: Record<string, string | number | boolean>;
   reviewNotes: MockListingReviewNote[];
   leads: MockListingLead[];
+  aiAnalysis?: Record<string, unknown> | null;
+  aiCheckResult?: Record<string, unknown> | null;
+  rejectedReason?: string | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search, CheckSquare, Square, AlertTriangle, Loader2 } from 'lucide-react';
 import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
-import { getStatusBadge } from '@/lib/utils/listingStatus';
+import { getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 
 const PAGE_SIZE = 20;
@@ -199,6 +199,10 @@ export default function DashboardIlanlarPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [page, setPage] = useState(1);
+  // Batch selection
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const [batchLoading, setBatchLoading] = useState(false);
+  const [batchReason, setBatchReason] = useState('');
 
   useEffect(() => {
     let cancelled = false;
@@ -262,6 +266,61 @@ export default function DashboardIlanlarPage() {
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
+
+  // Batch helpers
+  const toggleSelect = useCallback((id: number) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
+
+  const toggleAll = useCallback(() => {
+    if (selectedIds.size === listings.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(listings.map((l) => l.id)));
+    }
+  }, [listings, selectedIds.size]);
+
+  const handleBatchStatus = useCallback(async (targetStatus: ListingWorkflowStatus) => {
+    if (selectedIds.size === 0) return;
+    if (targetStatus === 'rejected' && !batchReason.trim()) return;
+    setBatchLoading(true);
+    try {
+      const res = await fetch('/api/listings/batch-status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ids: Array.from(selectedIds),
+          status: targetStatus,
+          rejectedReason: targetStatus === 'rejected' ? batchReason.trim() : undefined,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        // Refresh listings
+        setSelectedIds(new Set());
+        setBatchReason('');
+        setPage(1);
+        setStatusFilter('all');
+      }
+    } catch {
+      // silent
+    } finally {
+      setBatchLoading(false);
+    }
+  }, [selectedIds, batchReason]);
+
+  function getAgeBadge(createdAt: string) {
+    const days = Math.floor((Date.now() - new Date(createdAt).getTime()) / 86400000);
+    if (days === 0) return { label: 'Yeni', color: 'bg-emerald-50 text-emerald-700' };
+    if (days <= 2) return { label: `${days} gün`, color: 'bg-blue-50 text-blue-700' };
+    if (days <= 7) return { label: `${days} gün`, color: 'bg-amber-50 text-amber-700' };
+    return { label: `${days} gün`, color: 'bg-rose-50 text-rose-700' };
+  }
 
   return (
     <div className="min-h-screen bg-white p-6 lg:p-8">
@@ -327,18 +386,72 @@ export default function DashboardIlanlarPage() {
           ))}
         </div>
 
+        {/* Batch action bar */}
+        {selectedIds.size > 0 && (
+          <div className="mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <span className="text-sm font-bold text-slate-700">
+              {selectedIds.size} elan seçildi
+            </span>
+            <button
+              type="button"
+              disabled={batchLoading}
+              onClick={() => handleBatchStatus('committee_review')}
+              className="rounded-full bg-amber-500 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+            >
+              İncələməyə göndər
+            </button>
+            <button
+              type="button"
+              disabled={batchLoading}
+              onClick={() => handleBatchStatus('showcase_ready')}
+              className="rounded-full bg-emerald-500 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+            >
+              Vitrinə al
+            </button>
+            <div className="flex items-center gap-2">
+              <input
+                value={batchReason}
+                onChange={(e) => setBatchReason(e.target.value)}
+                placeholder="Rədd səbəbi..."
+                className="rounded-xl border border-rose-200 bg-white px-3 py-2 text-xs outline-none focus:border-rose-400 w-48"
+              />
+              <button
+                type="button"
+                disabled={batchLoading || !batchReason.trim()}
+                onClick={() => handleBatchStatus('rejected')}
+                className="rounded-full bg-rose-500 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+              >
+                Rədd et
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setSelectedIds(new Set()); setBatchReason(''); }}
+              className="ml-auto text-xs font-semibold text-slate-500 hover:text-slate-700"
+            >
+              Ləğv et
+            </button>
+            {batchLoading && <Loader2 className="h-4 w-4 animate-spin text-slate-500" />}
+          </div>
+        )}
+
         <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="bg-slate-50">
                 <tr className="text-left text-xs font-black uppercase tracking-[0.16em] text-slate-500">
+                  <th className="px-3 py-4 w-10">
+                    <button type="button" onClick={toggleAll} className="text-slate-400 hover:text-slate-700">
+                      {selectedIds.size === listings.length && listings.length > 0 ? <CheckSquare className="h-4 w-4" /> : <Square className="h-4 w-4" />}
+                    </button>
+                  </th>
                   <th className="px-5 py-4">{copy.colTrackingCode}</th>
                   <th className="px-5 py-4">{copy.colTitle}</th>
                   <th className="px-5 py-4">{copy.colCategory}</th>
                   <th className="px-5 py-4">{copy.colCity}</th>
                   <th className="px-5 py-4">{copy.colPrice}</th>
                   <th className="px-5 py-4">{copy.colStatus}</th>
-                  <th className="px-5 py-4">{copy.colDate}</th>
+                  <th className="px-5 py-4">Yaş</th>
                   <th className="px-5 py-4">{copy.colReview}</th>
                 </tr>
               </thead>
@@ -346,9 +459,16 @@ export default function DashboardIlanlarPage() {
                 {listings.map((listing) => {
                   const category = LISTING_CATEGORIES.find((item) => item.id === listing.type);
                   const badge = getStatusBadge(listing.status);
+                  const age = getAgeBadge(listing.createdAt);
+                  const isSelected = selectedIds.has(listing.id);
 
                   return (
-                    <tr key={listing.id} className="text-sm text-slate-600">
+                    <tr key={listing.id} className={`text-sm text-slate-600 ${isSelected ? 'bg-blue-50/50' : ''}`}>
+                      <td className="px-3 py-4">
+                        <button type="button" onClick={() => toggleSelect(listing.id)} className="text-slate-400 hover:text-slate-700">
+                          {isSelected ? <CheckSquare className="h-4 w-4 text-[var(--dk-red)]" /> : <Square className="h-4 w-4" />}
+                        </button>
+                      </td>
                       <td className="px-5 py-4 font-bold text-[var(--dk-navy)]">{listing.trackingCode}</td>
                       <td className="max-w-[260px] px-5 py-4">
                         <div className="truncate font-semibold text-slate-900">{listing.title}</div>
@@ -367,7 +487,11 @@ export default function DashboardIlanlarPage() {
                           {badge.label}
                         </span>
                       </td>
-                      <td className="px-5 py-4">{formatDate(listing.createdAt)}</td>
+                      <td className="px-5 py-4">
+                        <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ${age.color}`}>
+                          {age.label}
+                        </span>
+                      </td>
                       <td className="px-5 py-4">
                         <Link
                           href={`/dashboard/ilanlar/${listing.id}`}

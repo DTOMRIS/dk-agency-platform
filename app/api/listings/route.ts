@@ -120,6 +120,11 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  // Fire-and-forget: AI analysis via DeepSeek
+  import('@/lib/listings/ai-analyze').then(({ analyzeListingAsync }) => {
+    analyzeListingAsync(listing.id).catch(() => {});
+  }).catch(() => {});
+
   // Send confirmation email to submitter (fire-and-forget)
   const submitterEmail = body.email || session.email;
   if (submitterEmail) {

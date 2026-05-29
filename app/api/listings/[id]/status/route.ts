@@ -21,6 +21,7 @@ export async function PATCH(
     status: body.status,
     isShowcase: body.isShowcase,
     isFeatured: body.isFeatured,
+    rejectedReason: body.rejectedReason || null,
   });
 
   // Send status change emails (fire-and-forget)
