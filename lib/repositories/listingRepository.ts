@@ -229,6 +229,20 @@ export async function getListingLeadsByListingId(listingId: number) {
   }));
 }
 
+export async function getOwnerListings(ownerId: number) {
+  if (!dbAvailable || !db) {
+    return { items: MOCK_LISTINGS, source: 'mock' as const };
+  }
+
+  const rows = await db
+    .select()
+    .from(listings)
+    .where(eq(listings.ownerId, ownerId))
+    .orderBy(desc(listings.createdAt));
+
+  return { items: await hydrateListings(rows), source: 'db' as const };
+}
+
 export async function getDashboardListingMetrics() {
   if (!dbAvailable || !db) {
     const startOfWeek = new Date();

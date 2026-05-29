@@ -1,27 +1,33 @@
 // app/b2b-panel/ilanlarim/page.tsx
-// DK Agency - B2B Portal - İlanlarım Sayfası
+// DK Agency - B2B Portal - İlanlarım Sayfası (Real API + Edit/View Actions)
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Plus, Search, Filter, MoreHorizontal, Eye, MessageSquare,
-  CheckCircle, Clock, AlertTriangle, Pencil, Trash2, Share2,
-  ChevronDown
+  Plus, Search, Filter, Eye, MessageSquare,
+  CheckCircle, Clock, AlertTriangle, Pencil, Share2,
+  ChevronDown, Bot, Star, FileText, XCircle, BadgeCheck, TimerOff,
+  Loader2, ExternalLink,
 } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 
 interface Listing {
-  id: string;
+  id: number;
   title: string;
-  category: string;
-  status: 'active' | 'pending' | 'rejected' | 'draft';
-  views: number;
-  inquiries: number;
+  trackingCode: string;
+  type: string;
+  status: string;
+  price: number;
+  currency: string;
+  city: string;
+  isShowcase: boolean;
+  images: Array<{ url: string }>;
+  leads: Array<{ name: string }>;
   createdAt: string;
-  price?: number;
+  updatedAt: string;
 }
 
 const pageCopy: Record<Locale, {
@@ -36,10 +42,11 @@ const pageCopy: Record<Locale, {
   statTotal: string;
   statActive: string;
   statPending: string;
-  statDraft: string;
-  views: string;
-  inquiries: string;
-  statusLabels: { active: string; pending: string; rejected: string; draft: string };
+  statRejected: string;
+  view: string;
+  edit: string;
+  loading: string;
+  statusLabels: Record<string, string>;
   categoryLabels: Record<string, string>;
 }> = {
   az: {
@@ -52,16 +59,27 @@ const pageCopy: Record<Locale, {
     noListings: 'Elan tapılmadı',
     noListingsHint: 'Filtrləri dəyişin və ya yeni elan yaradın',
     statTotal: 'Ümumi',
-    statActive: 'Aktiv',
+    statActive: 'Vitrində',
     statPending: 'Gözlənilir',
-    statDraft: 'Qaralama',
-    views: 'baxış',
-    inquiries: 'sual',
-    statusLabels: { active: 'Aktiv', pending: 'Gözlənilir', rejected: 'Rədd Edildi', draft: 'Qaralama' },
+    statRejected: 'Rədd',
+    view: 'Bax',
+    edit: 'Redaktə',
+    loading: 'Yüklənir...',
+    statusLabels: {
+      submitted: 'Göndərilib',
+      ai_checked: 'AI Yoxlanılıb',
+      committee_review: 'İncələnir',
+      shortlisted: 'Qısa siyahıda',
+      docs_requested: 'Sənəd İstənib',
+      showcase_ready: 'Vitrində',
+      rejected: 'Rədd edilib',
+      sold: 'Satıldı',
+      expired: 'Müddəti bitdi',
+    },
     categoryLabels: {
       'devir': 'İşletmə Devri',
       'franchise-vermek': 'Franchise Vermək',
-      'franchise-almak': 'Franchise Almaq',
+      'franchise-almaq': 'Franchise Almaq',
       'ortak-tapmaq': 'Ortaq Tapmaq',
       'yeni-investisiya': 'Yeni İnvestisiya',
       'obyekt-icaresi': 'Obyekt İcarəsi',
@@ -78,16 +96,27 @@ const pageCopy: Record<Locale, {
     noListings: 'Объявления не найдены',
     noListingsHint: 'Измените фильтры или создайте новое объявление',
     statTotal: 'Всего',
-    statActive: 'Активных',
+    statActive: 'Витрина',
     statPending: 'На проверке',
-    statDraft: 'Черновик',
-    views: 'просм.',
-    inquiries: 'запросов',
-    statusLabels: { active: 'Активно', pending: 'На проверке', rejected: 'Отклонено', draft: 'Черновик' },
+    statRejected: 'Отклонено',
+    view: 'Посмотреть',
+    edit: 'Редактировать',
+    loading: 'Загрузка...',
+    statusLabels: {
+      submitted: 'Отправлено',
+      ai_checked: 'AI Проверено',
+      committee_review: 'На рассмотрении',
+      shortlisted: 'В шортлисте',
+      docs_requested: 'Документы запрошены',
+      showcase_ready: 'На витрине',
+      rejected: 'Отклонено',
+      sold: 'Продано',
+      expired: 'Истекло',
+    },
     categoryLabels: {
       'devir': 'Передача бизнеса',
       'franchise-vermek': 'Продать франшизу',
-      'franchise-almak': 'Купить франшизу',
+      'franchise-almaq': 'Купить франшизу',
       'ortak-tapmaq': 'Найти партнёра',
       'yeni-investisiya': 'Новые инвестиции',
       'obyekt-icaresi': 'Аренда объекта',
@@ -104,16 +133,27 @@ const pageCopy: Record<Locale, {
     noListings: 'No listings found',
     noListingsHint: 'Change filters or create a new listing',
     statTotal: 'Total',
-    statActive: 'Active',
+    statActive: 'Showcase',
     statPending: 'Pending',
-    statDraft: 'Draft',
-    views: 'views',
-    inquiries: 'inquiries',
-    statusLabels: { active: 'Active', pending: 'Pending', rejected: 'Rejected', draft: 'Draft' },
+    statRejected: 'Rejected',
+    view: 'View',
+    edit: 'Edit',
+    loading: 'Loading...',
+    statusLabels: {
+      submitted: 'Submitted',
+      ai_checked: 'AI Checked',
+      committee_review: 'Under Review',
+      shortlisted: 'Shortlisted',
+      docs_requested: 'Docs Requested',
+      showcase_ready: 'Showcase',
+      rejected: 'Rejected',
+      sold: 'Sold',
+      expired: 'Expired',
+    },
     categoryLabels: {
       'devir': 'Business Transfer',
       'franchise-vermek': 'Sell Franchise',
-      'franchise-almak': 'Buy Franchise',
+      'franchise-almaq': 'Buy Franchise',
       'ortak-tapmaq': 'Find Partner',
       'yeni-investisiya': 'New Investment',
       'obyekt-icaresi': 'Venue Rental',
@@ -130,16 +170,27 @@ const pageCopy: Record<Locale, {
     noListings: 'İlan bulunamadı',
     noListingsHint: 'Filtreleri değiştirin veya yeni ilan oluşturun',
     statTotal: 'Toplam',
-    statActive: 'Aktif',
+    statActive: 'Vitrinde',
     statPending: 'Beklemede',
-    statDraft: 'Taslak',
-    views: 'görüntülenme',
-    inquiries: 'soru',
-    statusLabels: { active: 'Aktif', pending: 'Onay Bekliyor', rejected: 'Reddedildi', draft: 'Taslak' },
+    statRejected: 'Reddedildi',
+    view: 'Görüntüle',
+    edit: 'Düzenle',
+    loading: 'Yükleniyor...',
+    statusLabels: {
+      submitted: 'Gönderildi',
+      ai_checked: 'AI Kontrol Edildi',
+      committee_review: 'İnceleniyor',
+      shortlisted: 'Kısa Listede',
+      docs_requested: 'Belge İstendi',
+      showcase_ready: 'Vitrinde',
+      rejected: 'Reddedildi',
+      sold: 'Satıldı',
+      expired: 'Süresi Doldu',
+    },
     categoryLabels: {
       'devir': 'İşletme Devri',
       'franchise-vermek': 'Franchise Vermek',
-      'franchise-almak': 'Franchise Almak',
+      'franchise-almaq': 'Franchise Almak',
       'ortak-tapmaq': 'Ortak Bulmak',
       'yeni-investisiya': 'Yeni Yatırım',
       'obyekt-icaresi': 'Mekan Kiralama',
@@ -148,94 +199,68 @@ const pageCopy: Record<Locale, {
   },
 };
 
-const STATUS_ICON_MAP = {
-  active: CheckCircle,
-  pending: Clock,
-  rejected: AlertTriangle,
-  draft: Pencil,
-} as const;
+const STATUS_ICON_MAP: Record<string, typeof Clock> = {
+  submitted: Clock,
+  ai_checked: Bot,
+  committee_review: Eye,
+  shortlisted: Star,
+  docs_requested: FileText,
+  showcase_ready: CheckCircle,
+  rejected: XCircle,
+  sold: BadgeCheck,
+  expired: TimerOff,
+};
 
-const STATUS_COLOR_MAP = {
-  active: 'text-green-600 bg-green-50',
-  pending: 'text-amber-600 bg-amber-50',
-  rejected: 'text-red-600 bg-red-50',
-  draft: 'text-gray-600 bg-gray-100',
-} as const;
+const STATUS_COLOR_MAP: Record<string, string> = {
+  submitted: 'text-slate-700 bg-slate-100',
+  ai_checked: 'text-blue-700 bg-blue-50',
+  committee_review: 'text-amber-700 bg-amber-50',
+  shortlisted: 'text-purple-700 bg-purple-50',
+  docs_requested: 'text-orange-700 bg-orange-50',
+  showcase_ready: 'text-emerald-700 bg-emerald-50',
+  rejected: 'text-rose-700 bg-rose-50',
+  sold: 'text-teal-700 bg-teal-50',
+  expired: 'text-gray-600 bg-gray-100',
+};
 
-const MOCK_LISTINGS: Listing[] = [
-  {
-    id: '1',
-    title: 'Kadıköy Merkez Lokasyonda Cafe Devri',
-    category: 'devir',
-    status: 'active',
-    views: 1250,
-    inquiries: 5,
-    createdAt: '2024-01-15',
-    price: 850000,
-  },
-  {
-    id: '2',
-    title: 'Franchise Partner Aranıyor - Fast Food Markası',
-    category: 'franchise-vermek',
-    status: 'active',
-    views: 890,
-    inquiries: 3,
-    createdAt: '2024-01-20',
-    price: 450000,
-  },
-  {
-    id: '3',
-    title: '500.000₺ Yatırım İle Ortaklık Teklifi',
-    category: 'ortak-tapmaq',
-    status: 'pending',
-    views: 0,
-    inquiries: 0,
-    createdAt: '2024-02-01',
-    price: 500000,
-  },
-  {
-    id: '4',
-    title: 'Endüstriyel Mutfak Ekipmanları Satılık',
-    category: 'horeca-ekipman',
-    status: 'active',
-    views: 567,
-    inquiries: 8,
-    createdAt: '2024-02-05',
-    price: 120000,
-  },
-  {
-    id: '5',
-    title: 'Beşiktaş Restoran Uygun Mekan Kiralık',
-    category: 'obyekt-icaresi',
-    status: 'draft',
-    views: 0,
-    inquiries: 0,
-    createdAt: '2024-02-08',
-    price: 45000,
-  },
-];
+const EDITABLE_STATUSES = ['submitted', 'docs_requested'];
 
 export default function IlanlarimPage() {
   const pathname = usePathname();
   const locale = normalizeLocale(pathname.split('/')[1]);
   const copy = pageCopy[locale];
 
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCategory, setFilterCategory] = useState<string>('all');
 
-  const filteredListings = MOCK_LISTINGS.filter((listing) => {
-    const matchesSearch = listing.title.toLowerCase().includes(searchTerm.toLowerCase());
+  useEffect(() => {
+    fetch('/api/listings?scope=owner')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.data)) {
+          setListings(data.data);
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredListings = listings.filter((listing) => {
+    const matchesSearch = listing.title.toLowerCase().includes(searchTerm.toLowerCase())
+      || listing.trackingCode.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'all' || listing.status === filterStatus;
-    const matchesCategory = filterCategory === 'all' || listing.category === filterCategory;
+    const matchesCategory = filterCategory === 'all' || listing.type === filterCategory;
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
   const stats = {
-    total: MOCK_LISTINGS.length,
-    active: MOCK_LISTINGS.filter(l => l.status === 'active').length,
-    pending: MOCK_LISTINGS.filter(l => l.status === 'pending').length,
-    draft: MOCK_LISTINGS.filter(l => l.status === 'draft').length,
+    total: listings.length,
+    active: listings.filter((l) => l.status === 'showcase_ready').length,
+    pending: listings.filter((l) => ['submitted', 'ai_checked', 'committee_review', 'shortlisted', 'docs_requested'].includes(l.status)).length,
+    rejected: listings.filter((l) => l.status === 'rejected').length,
   };
 
   return (
@@ -270,8 +295,8 @@ export default function IlanlarimPage() {
           <p className="text-xs text-gray-500">{copy.statPending}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-4 text-center">
-          <p className="text-2xl font-bold text-gray-600">{stats.draft}</p>
-          <p className="text-xs text-gray-500">{copy.statDraft}</p>
+          <p className="text-2xl font-bold text-rose-600">{stats.rejected}</p>
+          <p className="text-xs text-gray-500">{copy.statRejected}</p>
         </div>
       </div>
 
@@ -296,8 +321,8 @@ export default function IlanlarimPage() {
                 className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
               >
                 <option value="all">{copy.allStatuses}</option>
-                {(Object.keys(copy.statusLabels) as Array<keyof typeof copy.statusLabels>).map((key) => (
-                  <option key={key} value={key}>{copy.statusLabels[key]}</option>
+                {Object.entries(copy.statusLabels).map(([key, label]) => (
+                  <option key={key} value={key}>{label}</option>
                 ))}
               </select>
               <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -321,7 +346,12 @@ export default function IlanlarimPage() {
 
       {/* Listings */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-        {filteredListings.length === 0 ? (
+        {loading ? (
+          <div className="p-12 text-center">
+            <Loader2 size={24} className="mx-auto animate-spin text-dk-red mb-3" />
+            <p className="text-sm text-gray-500">{copy.loading}</p>
+          </div>
+        ) : filteredListings.length === 0 ? (
           <div className="p-12 text-center">
             <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
               <Filter size={24} className="text-gray-400" />
@@ -332,67 +362,81 @@ export default function IlanlarimPage() {
         ) : (
           <div className="divide-y divide-gray-50">
             {filteredListings.map((listing) => {
-              const StatusIcon = STATUS_ICON_MAP[listing.status];
-              const statusColor = STATUS_COLOR_MAP[listing.status];
-              const statusLabel = copy.statusLabels[listing.status];
+              const StatusIcon = STATUS_ICON_MAP[listing.status] || Clock;
+              const statusColor = STATUS_COLOR_MAP[listing.status] || STATUS_COLOR_MAP.submitted;
+              const statusLabel = copy.statusLabels[listing.status] || listing.status;
+              const canEdit = EDITABLE_STATUSES.includes(listing.status);
 
               return (
                 <div key={listing.id} className="p-4 hover:bg-gray-50 transition-colors">
                   <div className="flex items-center gap-4">
+                    {/* Thumbnail */}
+                    {listing.images?.[0]?.url ? (
+                      <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 hidden sm:block">
+                        <img src={listing.images[0].url} alt="" className="w-full h-full object-cover" />
+                      </div>
+                    ) : (
+                      <div className="w-14 h-14 rounded-xl bg-gray-100 shrink-0 hidden sm:block" />
+                    )}
+
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-1">
-                        <h3 className="font-semibold text-gray-900 truncate">{listing.title}</h3>
-                        <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-lg ${statusColor}`}>
+                        <Link
+                          href={`/b2b-panel/ilanlarim/${listing.id}`}
+                          className="font-semibold text-gray-900 truncate hover:text-dk-red transition-colors"
+                        >
+                          {listing.title}
+                        </Link>
+                        <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-lg shrink-0 ${statusColor}`}>
                           <StatusIcon size={12} />
                           {statusLabel}
                         </span>
                       </div>
                       <div className="flex items-center gap-4 text-sm">
-                        <span className="text-gray-500">{copy.categoryLabels[listing.category]}</span>
-                        {listing.price && (
+                        <span className="text-gray-400 text-xs">#{listing.trackingCode}</span>
+                        <span className="text-gray-500">{copy.categoryLabels[listing.type] || listing.type}</span>
+                        {listing.price > 0 && (
                           <span className="font-semibold text-dk-red">
-                            {listing.price.toLocaleString()} ₺
+                            {listing.price.toLocaleString()} {listing.currency}
                           </span>
                         )}
-                        <span className="text-gray-400">
-                          {new Date(listing.createdAt).toLocaleDateString()}
+                        <span className="text-gray-400 text-xs">
+                          {listing.city}
                         </span>
                       </div>
                     </div>
 
                     {/* Stats */}
-                    <div className="hidden sm:flex items-center gap-4">
+                    <div className="hidden md:flex items-center gap-4">
                       <div className="text-center">
                         <div className="flex items-center gap-1 text-gray-600">
-                          <Eye size={16} />
-                          <span className="font-semibold">{listing.views}</span>
+                          <MessageSquare size={14} />
+                          <span className="font-semibold text-sm">{listing.leads?.length || 0}</span>
                         </div>
-                        <p className="text-xs text-gray-400">{copy.views}</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="flex items-center gap-1 text-gray-600">
-                          <MessageSquare size={16} />
-                          <span className="font-semibold">{listing.inquiries}</span>
-                        </div>
-                        <p className="text-xs text-gray-400">{copy.inquiries}</p>
                       </div>
                     </div>
 
                     {/* Actions */}
                     <div className="flex items-center gap-1">
-                      <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" title="Edit">
-                        <Pencil size={16} className="text-gray-400" />
-                      </button>
-                      <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" title="Share">
-                        <Share2 size={16} className="text-gray-400" />
-                      </button>
-                      <button className="p-2 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
-                        <Trash2 size={16} className="text-gray-400 hover:text-red-500" />
-                      </button>
-                      <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                        <MoreHorizontal size={16} className="text-gray-400" />
-                      </button>
+                      <Link
+                        href={`/b2b-panel/ilanlarim/${listing.id}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                        title={copy.view}
+                      >
+                        <ExternalLink size={14} />
+                        <span className="hidden lg:inline">{copy.view}</span>
+                      </Link>
+                      {canEdit && (
+                        <Link
+                          href={`/b2b-panel/ilanlarim/${listing.id}/edit`}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-dk-red hover:bg-red-50 rounded-lg transition-colors"
+                          title={copy.edit}
+                        >
+                          <Pencil size={14} />
+                          <span className="hidden lg:inline">{copy.edit}</span>
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
