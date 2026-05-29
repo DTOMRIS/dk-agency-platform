@@ -189,3 +189,13 @@ Qayda: "Bu yoxdur" demədən əvvəl 3 yeri yoxla:
 
 Üçü də varsa → sistem işləyir, "boşluq" audit illüziyasıdır.
 Bu dərs L-017 (audit rəqəmi ≠ runtime) ilə qardaşdır.
+
+### L-033 — Böyük fayl oxumaları token yandırır (29 May 2026)
+`messages/*.json` 830KB monolitdir — tam Read token büdcəni partladır.
+Hər dəfə namespace/açar üzrə `grep` ilə hədəflə, tam fayl açma.
+Eyni qayda: DEVLOG, SYSTEM-AUDIT, hər >200 sətir fayl → `offset`+`limit` ilə oxu.
+
+### L-034 — Hostinger cold start, self-ping işləməz (29 May 2026)
+Hostinger Web Apps idle prosesi öldürür → `setInterval` self-ping faydasızdır.
+Xarici ping lazımdır (VPS crontab, UptimeRobot, və s.).
+Script: `scripts/keep-alive.sh` — VPS crontab-a əlavə et.
