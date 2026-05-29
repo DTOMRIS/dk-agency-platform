@@ -67,6 +67,9 @@ function mapDbListing(
         status: item.status === 'converted' ? 'contacted' : (item.status as 'new' | 'contacted'),
         createdAt: item.createdAt?.toISOString() || new Date().toISOString(),
       })),
+    aiAnalysis: (row.aiAnalysis as Record<string, unknown>) || null,
+    aiCheckResult: (row.aiCheckResult as Record<string, unknown>) || null,
+    rejectedReason: row.rejectedReason || null,
     createdAt: row.createdAt?.toISOString() || new Date().toISOString(),
     updatedAt: row.updatedAt?.toISOString() || new Date().toISOString(),
   };
@@ -155,21 +158,32 @@ export async function updateListingStatus(
     status: ListingWorkflowStatus;
     isShowcase?: boolean;
     isFeatured?: boolean;
+    rejectedReason?: string | null;
   },
 ) {
   if (!dbAvailable || !db) {
     return { success: true, source: 'mock' as const };
   }
 
+  const set: Record<string, unknown> = {
+    status: input.status,
+    isShowcase: input.isShowcase ?? false,
+    isFeatured: input.isFeatured ?? false,
+    updatedAt: new Date(),
+    publishedAt: input.status === 'showcase_ready' ? new Date() : null,
+  };
+
+  if (input.status === 'rejected' && input.rejectedReason) {
+    set.rejectedReason = input.rejectedReason;
+  }
+
+  if (input.status === 'showcase_ready') {
+    set.approvedAt = new Date();
+  }
+
   await db
     .update(listings)
-    .set({
-      status: input.status,
-      isShowcase: input.isShowcase ?? false,
-      isFeatured: input.isFeatured ?? false,
-      updatedAt: new Date(),
-      publishedAt: input.status === 'showcase_ready' ? new Date() : null,
-    })
+    .set(set)
     .where(eq(listings.id, id));
 
   return { success: true, source: 'db' as const };

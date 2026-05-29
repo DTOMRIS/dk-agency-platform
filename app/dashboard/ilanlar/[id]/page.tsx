@@ -42,6 +42,7 @@ export default function DashboardIlanDetailPage() {
   const [note, setNote] = useState('');
   const [score, setScore] = useState(4);
   const [toast, setToast] = useState('');
+  const [rejectedReason, setRejectedReason] = useState('');
   const [notes, setNotes] = useState<MockListing['reviewNotes']>([]);
   const [leads, setLeads] = useState<MockListing['leads']>([]);
   const [loading, setLoading] = useState(true);
@@ -123,6 +124,11 @@ export default function DashboardIlanDetailPage() {
   const handleStatusUpdate = async () => {
     if (!listing) return;
     if (status !== nextStatus && !canTransition(status, nextStatus)) return;
+    if (nextStatus === 'rejected' && !rejectedReason.trim()) {
+      setToast('Rədd səbəbi yazılmalıdır!');
+      setTimeout(() => setToast(''), 2400);
+      return;
+    }
     // Email notifications are handled server-side in /api/listings/[id]/status PATCH
     const response = await fetch(`/api/listings/${listing.id}/status`, {
       method: 'PATCH',
@@ -131,9 +137,11 @@ export default function DashboardIlanDetailPage() {
         status: nextStatus,
         isFeatured,
         isShowcase,
+        rejectedReason: nextStatus === 'rejected' ? rejectedReason.trim() : undefined,
       }),
     }).catch(() => null);
     setStatus(nextStatus);
+    if (nextStatus === 'rejected') setRejectedReason('');
     setToast(t('statusUpdated'));
     setTimeout(() => setToast(''), 2400);
   };
@@ -307,6 +315,69 @@ export default function DashboardIlanDetailPage() {
           </div>
 
           <div className="space-y-6">
+            {/* AI Analysis Panel */}
+            {listing.aiAnalysis && (
+              <div className="rounded-[28px] border border-blue-200 bg-blue-50/50 p-6 shadow-sm">
+                <h2 className="font-display text-xl font-black text-[var(--dk-navy)] flex items-center gap-2">
+                  🤖 AI Analiz
+                  {(listing.aiAnalysis as Record<string, unknown>).qualityScore != null && (
+                    <span className={`ml-2 inline-flex rounded-full px-3 py-1 text-xs font-bold ${
+                      Number((listing.aiAnalysis as Record<string, unknown>).qualityScore) >= 70
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : Number((listing.aiAnalysis as Record<string, unknown>).qualityScore) >= 40
+                          ? 'bg-amber-100 text-amber-700'
+                          : 'bg-rose-100 text-rose-700'
+                    }`}>
+                      {String((listing.aiAnalysis as Record<string, unknown>).qualityScore)}/100
+                    </span>
+                  )}
+                </h2>
+                <p className="mt-3 text-sm text-slate-600">
+                  {String((listing.aiAnalysis as Record<string, unknown>).summary ?? '')}
+                </p>
+                {Array.isArray((listing.aiAnalysis as Record<string, unknown>).strengths) && (
+                  <div className="mt-3">
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-600 mb-1">Güclü tərəflər</div>
+                    <ul className="text-sm text-slate-600 space-y-1">
+                      {((listing.aiAnalysis as Record<string, unknown>).strengths as string[]).map((s, i) => (
+                        <li key={i} className="flex items-start gap-2"><span className="text-emerald-500">+</span>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {Array.isArray((listing.aiAnalysis as Record<string, unknown>).risks) && (
+                  <div className="mt-3">
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-rose-600 mb-1">Risklər</div>
+                    <ul className="text-sm text-slate-600 space-y-1">
+                      {((listing.aiAnalysis as Record<string, unknown>).risks as string[]).map((r, i) => (
+                        <li key={i} className="flex items-start gap-2"><span className="text-rose-500">!</span>{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {(listing.aiAnalysis as Record<string, unknown>).recommendation && (
+                  <div className="mt-3 text-xs">
+                    <span className="font-bold text-slate-500">Tövsiyə: </span>
+                    <span className={`font-bold ${
+                      (listing.aiAnalysis as Record<string, unknown>).recommendation === 'approve' ? 'text-emerald-600' :
+                      (listing.aiAnalysis as Record<string, unknown>).recommendation === 'review' ? 'text-amber-600' : 'text-rose-600'
+                    }`}>
+                      {(listing.aiAnalysis as Record<string, unknown>).recommendation === 'approve' ? 'Təsdiq et' :
+                       (listing.aiAnalysis as Record<string, unknown>).recommendation === 'review' ? 'İncələ' : 'Rədd et'}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Rejection Reason (if rejected) */}
+            {listing.rejectedReason && status === 'rejected' && (
+              <div className="rounded-[28px] border border-rose-200 bg-rose-50 p-6 shadow-sm">
+                <h2 className="font-display text-xl font-black text-rose-700">Rədd səbəbi</h2>
+                <p className="mt-2 text-sm text-rose-600">{listing.rejectedReason}</p>
+              </div>
+            )}
+
             <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
               <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Status idarəsi</h2>
               {badge ? (
@@ -327,6 +398,21 @@ export default function DashboardIlanDetailPage() {
                     </option>
                   ))}
                 </select>
+
+                {nextStatus === 'rejected' && (
+                  <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4">
+                    <label className="block text-xs font-bold uppercase tracking-[0.16em] text-rose-600 mb-2">
+                      Rədd səbəbi *
+                    </label>
+                    <textarea
+                      value={rejectedReason}
+                      onChange={(e) => setRejectedReason(e.target.value)}
+                      rows={3}
+                      placeholder="Rədd səbəbini yazın (owner-ə göstəriləcək)..."
+                      className="w-full rounded-xl border border-rose-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-rose-400"
+                    />
+                  </div>
+                )}
 
                 <label className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
                   <input type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]" />
