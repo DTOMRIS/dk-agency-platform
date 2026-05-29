@@ -46,6 +46,8 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 6. Lokal API POST → 401 əgər auth tələbi varsa (gating sübut)
 7. Yeni component-də `grep -rn "<turkish/azeri word>"` → 0 hit (hardcoded yox)
 8. DEVLOG.md + CHANGELOG.md yeniləndi
+9. **dk-validator PASS çıxışı PR-da/commit-də GÖRÜNMƏLI** — Stop hook 5/8 check avtomatik işləyir; tam 8-check üçün `npm run dk:validate` istifadə et
+10. `npm run audit:system` → SYSTEM-AUDIT.md yeniləndi
 
 ## Workflow standard
 - **Plan əvvəl, kod sonra**: hər task üçün specification yazılır, ekran qarşılığında təsdiq alınır, sonra kod

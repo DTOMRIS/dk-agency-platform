@@ -1,8 +1,8 @@
 ---
 name: dk-validator
-description: Use proactively after any builder agent claims a task is complete.
-             Verifies build, lint, route smoke, API smoke, and hardcoded i18n.
-             Independent context window. Read-only. Returns pass/fail with raw output.
+description: Full 8-check validator. Stop hook auto-runs 5/8 static checks (blocking).
+             This subagent adds checks 6-8 (route smoke, API gating, Playwright) which need
+             a running dev server. Use after builder claims task complete, or run `npm run dk:validate`.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

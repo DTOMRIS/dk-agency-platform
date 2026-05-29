@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [TASK-A] dk-validator blocking gate — 2026-05-29
+
+### Added
+- `scripts/dk-validate.sh` — full 8-check validation script (`npm run dk:validate`)
+- CLAUDE.md DoD madde 9-10: dk-validator PASS + audit:system məcburi
+- PR template: dk-validator çıxışı bölməsi
+
+### Changed
+- `.claude/scripts/pre-commit-gate.sh` — 3 check → 5 check (auth contract + DB schema naming)
+- `.claude/agents/dk-validator.md` — description updated (Stop hook 5/8 blocking, subagent 6-8)
+- `.github/pull_request_template.md` — dk-validator + audit:system checklist
+
 ## [TASK-0157C-3a] auditor + food-cost Pattern A — 2026-05-23
 
 ### Added
