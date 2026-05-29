@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { getListings } from '@/lib/db/listings-repository';
-import { getAdminListings } from '@/lib/repositories/listingRepository';
+import { getAdminListings, getOwnerListings } from '@/lib/repositories/listingRepository';
 import { listingMedia, listings } from '@/lib/db/schema';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
@@ -34,6 +34,15 @@ export async function GET(request: NextRequest) {
       total: result.total,
       source: result.source,
     });
+  }
+
+  if (scope === 'owner') {
+    const auth = await getAuthFromCookie();
+    if (!auth) {
+      return NextResponse.json({ success: false, error: 'Giriş tələb olunur.' }, { status: 401 });
+    }
+    const result = await getOwnerListings(auth.userId);
+    return NextResponse.json({ success: true, data: result.items, source: result.source });
   }
 
   const locale = searchParams.get('locale') || 'az';

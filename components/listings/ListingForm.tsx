@@ -40,11 +40,15 @@ interface ListingFormProps {
   categoryId: ListingCategory;
   onSubmit?: (data: Record<string, unknown>) => Promise<void>;
   onCancel?: () => void;
+  /** Pre-fill form data for edit mode */
+  initialData?: Record<string, unknown>;
+  /** Label for the submit button (defaults to "Göndər") */
+  submitLabel?: string;
 }
 
-export default function ListingForm({ categoryId, onSubmit, onCancel }: ListingFormProps) {
+export default function ListingForm({ categoryId, onSubmit, onCancel, initialData, submitLabel }: ListingFormProps) {
   const category = getCategoryById(categoryId);
-  const [formData, setFormData] = useState<Record<string, unknown>>({});
+  const [formData, setFormData] = useState<Record<string, unknown>>(initialData ?? {});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -554,7 +558,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel }: ListingF
             ) : (
               <>
                 <Send size={20} />
-                {aiResult ? 'İlanı Raporla Gönder' : 'İlanı Gönder'}
+                {submitLabel ? submitLabel : aiResult ? 'İlanı Raporla Gönder' : 'İlanı Gönder'}
               </>
             )}
           </button>
