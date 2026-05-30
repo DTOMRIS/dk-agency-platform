@@ -4241,6 +4241,15 @@
       "tooManyPriorities": "Maksimum 3 prioritet seçə bilərsiniz.",
       "duplicatePriority": "Dublikat prioritet.",
       "unauthenticated": "Giriş tələb olunur."
-    }
+    },
+    "title": "Platformanızı fərdiləşdirin",
+    "subtitle": "3 prioritet seçin — sizə ən uyğun alətləri tövsiyə edək.",
+    "whyWeAsk": "Cavablarınız yalnız tövsiyə motoru üçündür, istənilən vaxt dəyişdirə bilərsiniz.",
+    "pickCount": "{count}/3 seçildi",
+    "save": "Yadda saxla və davam et",
+    "skip": "Sonra edərəm",
+    "saving": "Yadda saxlanılır...",
+    "successToast": "Prioritetləriniz qeyd olundu!",
+    "gapNote": "Bu sahə üzrə daha çox alət hazırlanır."
   }
 }

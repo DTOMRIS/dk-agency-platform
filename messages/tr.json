@@ -4241,6 +4241,15 @@
       "tooManyPriorities": "En fazla 3 öncelik seçebilirsiniz.",
       "duplicatePriority": "Tekrar eden öncelik.",
       "unauthenticated": "Giriş gereklidir."
-    }
+    },
+    "title": "Platformunuzu kişiselleştirin",
+    "subtitle": "3 öncelik seçin — size en uygun araçları önerelim.",
+    "whyWeAsk": "Cevaplarınız sadece öneri motoru için kullanılır, istediğiniz zaman değiştirebilirsiniz.",
+    "pickCount": "{count}/3 seçildi",
+    "save": "Kaydet ve devam et",
+    "skip": "Sonra yaparım",
+    "saving": "Kaydediliyor...",
+    "successToast": "Öncelikleriniz kaydedildi!",
+    "gapNote": "Bu alan için daha fazla araç hazırlanıyor."
   }
 }
