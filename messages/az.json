@@ -4257,6 +4257,14 @@
       "tryButton": "Aç",
       "gapBadge": "Daha çox alət hazırlanır",
       "editPrioritiesLink": "Prioritetləri dəyiş"
+    },
+    "nudge": {
+      "set_priorities": { "message": "İlk addım: 3 prioritetini de, sənə aləti tapım.", "cta": "Prioritet seç" },
+      "try_first_tool": { "message": "Prioritetinə uyğun alət var — 2 dəqiqədə nəticə alacaqsan.", "cta": "Aləti aç" },
+      "listing_pending": { "message": "Elanın hələ moderasiyada — orta müddət 48 saatdır.", "cta": "Detala bax" },
+      "docs_needed": { "message": "Admin əlavə sənəd istədi — yoxla.", "cta": "Elanlarıma bax" },
+      "listing_live": { "message": "Elanın canlıdır — bu həftə baxışları izlə.", "cta": "Elanlarıma bax" },
+      "comeback": { "message": "Toolkit-də sənin üçün yeni alətlər var.", "cta": "Alətlərə bax" }
     }
   }
 }

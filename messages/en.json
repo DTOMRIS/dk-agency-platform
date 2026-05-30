@@ -4257,6 +4257,14 @@
       "tryButton": "Open",
       "gapBadge": "More tools coming soon",
       "editPrioritiesLink": "Change priorities"
+    },
+    "nudge": {
+      "set_priorities": { "message": "First step: tell us your 3 priorities and we'll find the right tools.", "cta": "Set priorities" },
+      "try_first_tool": { "message": "There's a tool matching your priority — get results in 2 minutes.", "cta": "Open tool" },
+      "listing_pending": { "message": "Your listing is still in review — average time is 48 hours.", "cta": "View details" },
+      "docs_needed": { "message": "Admin requested additional documents — check now.", "cta": "My listings" },
+      "listing_live": { "message": "Your listing is live — track this week's views.", "cta": "My listings" },
+      "comeback": { "message": "New tools are available in the toolkit for you.", "cta": "Browse tools" }
     }
   }
 }

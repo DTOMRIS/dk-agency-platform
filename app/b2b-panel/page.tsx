@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import RecommendationWidget from '@/components/dashboard/RecommendationWidget';
+import NudgeBanner from '@/components/dashboard/NudgeBanner';
 
 const pageCopy: Record<Locale, {
   welcome: string;
@@ -179,6 +180,7 @@ export default function B2BPanelPage() {
 
   return (
     <div className="p-6 lg:p-8">
+      <NudgeBanner />
       {/* Header */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
