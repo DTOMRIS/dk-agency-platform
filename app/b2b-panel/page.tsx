@@ -12,6 +12,7 @@ import {
   AlertTriangle, Star, Briefcase
 } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import RecommendationWidget from '@/components/dashboard/RecommendationWidget';
 
 const pageCopy: Record<Locale, {
   welcome: string;
@@ -215,6 +216,8 @@ export default function B2BPanelPage() {
           );
         })}
       </div>
+
+      <RecommendationWidget />
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* İlanlarım */}
