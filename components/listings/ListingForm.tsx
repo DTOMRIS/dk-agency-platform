@@ -179,8 +179,8 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
   const renderField = (field: FormField) => {
     const value = formData[field.name];
     const error = errors[field.name];
-    const baseInputClass = `w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors ${
-      error ? 'border-red-500 bg-red-50' : 'border-gray-200'
+    const baseInputClass = `w-full px-4 py-3 border rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors ${
+      error ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
     }`;
 
     switch (field.type) {
