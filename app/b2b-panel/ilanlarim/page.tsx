@@ -319,7 +319,7 @@ export default function IlanlarimPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder={copy.searchPlaceholder}
-              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
+              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl text-slate-900 placeholder:text-slate-400 bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
             />
           </div>
           <div className="flex gap-3">
@@ -327,7 +327,7 @@ export default function IlanlarimPage() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red text-slate-900 bg-white"
               >
                 <option value="all">{copy.allStatuses}</option>
                 {Object.entries(copy.statusLabels).map(([key, label]) => (
@@ -340,7 +340,7 @@ export default function IlanlarimPage() {
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red text-slate-900 bg-white"
               >
                 <option value="all">{copy.allCategories}</option>
                 {Object.entries(copy.categoryLabels).map(([key, label]) => (
@@ -353,7 +353,7 @@ export default function IlanlarimPage() {
               <select
                 value={filterSector}
                 onChange={(e) => setFilterSector(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red text-slate-900 bg-white"
               >
                 <option value="all">{copy.allSectors}</option>
                 {SECTOR_KEYS.map((key) => (

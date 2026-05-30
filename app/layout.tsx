@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { DM_Sans, Playfair_Display } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getLocale, getMessages } from 'next-intl/server';
 import './globals.css';
 import PublicChrome from '@/components/layout/PublicChrome';
 
@@ -27,12 +27,13 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const messages = await getMessages();
+  const locale = await getLocale();
+  const messages = await getMessages({ locale });
 
   return (
-    <html lang="az" className={`${dmSans.variable} ${playfair.variable}`}>
+    <html lang={locale} className={`${dmSans.variable} ${playfair.variable}`}>
       <body className="min-h-screen bg-white font-sans selection:bg-brand-red selection:text-white antialiased">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <PublicChrome>{children}</PublicChrome>
         </NextIntlClientProvider>
       </body>

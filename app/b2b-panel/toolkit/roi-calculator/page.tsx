@@ -74,7 +74,7 @@ export default function ROICalculatorPage() {
                     type="number"
                     value={initialInvestment}
                     onChange={(e) => setInitialInvestment(Number(e.target.value))}
-                    className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">₺</span>
                 </div>
@@ -86,7 +86,7 @@ export default function ROICalculatorPage() {
                 <select
                   value={projectionYears}
                   onChange={(e) => setProjectionYears(Number(e.target.value))}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                 >
                   <option value={1}>1 Yıl</option>
                   <option value={2}>2 Yıl</option>
@@ -110,7 +110,7 @@ export default function ROICalculatorPage() {
                     type="number"
                     value={monthlyRevenue}
                     onChange={(e) => setMonthlyRevenue(Number(e.target.value))}
-                    className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">₺</span>
                 </div>
@@ -124,7 +124,7 @@ export default function ROICalculatorPage() {
                     type="number"
                     value={monthlyCosts}
                     onChange={(e) => setMonthlyCosts(Number(e.target.value))}
-                    className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    className="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">₺</span>
                 </div>
