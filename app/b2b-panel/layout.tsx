@@ -4,6 +4,7 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import B2BSidebar from '@/components/b2b-panel/B2BSidebar';
+import OnboardingModal from '@/components/onboarding/OnboardingModal';
 import { getServerMemberSession } from '@/lib/members/server-session';
 
 export const metadata = {
@@ -28,6 +29,7 @@ export default async function B2BPanelLayout({
       <main className="flex-1 overflow-auto">
         {children}
       </main>
+      <OnboardingModal />
     </div>
   );
 }

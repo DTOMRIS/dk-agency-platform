@@ -4241,6 +4241,15 @@
       "tooManyPriorities": "You can select up to 3 priorities.",
       "duplicatePriority": "Duplicate priority.",
       "unauthenticated": "Login required."
-    }
+    },
+    "title": "Personalize your platform",
+    "subtitle": "Pick 3 priorities — we'll recommend the best tools for you.",
+    "whyWeAsk": "Your answers are only used for recommendations and can be changed anytime.",
+    "pickCount": "{count}/3 selected",
+    "save": "Save and continue",
+    "skip": "I'll do this later",
+    "saving": "Saving...",
+    "successToast": "Your priorities have been saved!",
+    "gapNote": "More tools are being developed for this area."
   }
 }
