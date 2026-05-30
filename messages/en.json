@@ -4234,5 +4234,13 @@
     "loginDesc": "You need to be logged in to create a listing, upload photos, and get a tracking code.",
     "loginButton": "Log in",
     "registerButton": "No account? Register"
+  },
+  "onboarding": {
+    "errors": {
+      "invalidPriority": "Invalid priority key.",
+      "tooManyPriorities": "You can select up to 3 priorities.",
+      "duplicatePriority": "Duplicate priority.",
+      "unauthenticated": "Login required."
+    }
   }
 }

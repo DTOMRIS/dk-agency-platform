@@ -435,6 +435,9 @@ export const users = pgTable('users', {
   privacyAcceptedIp: text('privacy_accepted_ip'),
   marketingConsent: boolean('marketing_consent').default(false),
 
+  // Adoption loop — user's top 1-3 HoReCa priorities (jsonb array of PriorityKey)
+  priorities: jsonb('priorities').$type<string[]>(),
+
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
