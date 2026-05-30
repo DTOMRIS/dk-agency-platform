@@ -4234,5 +4234,13 @@
     "loginDesc": "Elan yaratmaq, şəkil yükləmək və tracking code almaq üçün əvvəlcə üzv girişi lazımdır.",
     "loginButton": "Daxil ol",
     "registerButton": "Hesabınız yoxdur? Qeydiyyat"
+  },
+  "onboarding": {
+    "errors": {
+      "invalidPriority": "Yanlış prioritet açarı.",
+      "tooManyPriorities": "Maksimum 3 prioritet seçə bilərsiniz.",
+      "duplicatePriority": "Dublikat prioritet.",
+      "unauthenticated": "Giriş tələb olunur."
+    }
   }
 }

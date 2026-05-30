@@ -4234,5 +4234,13 @@
     "loginDesc": "İlan oluşturmak, fotoğraf yüklemek ve takip kodu almak için üye girişi gereklidir.",
     "loginButton": "Giriş yap",
     "registerButton": "Hesabınız yok mu? Kayıt ol"
+  },
+  "onboarding": {
+    "errors": {
+      "invalidPriority": "Geçersiz öncelik anahtarı.",
+      "tooManyPriorities": "En fazla 3 öncelik seçebilirsiniz.",
+      "duplicatePriority": "Tekrar eden öncelik.",
+      "unauthenticated": "Giriş gereklidir."
+    }
   }
 }
