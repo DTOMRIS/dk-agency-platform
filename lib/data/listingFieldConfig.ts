@@ -103,3 +103,128 @@ export const TYPE_SPECIFIC_FIELDS: Record<ListingCategory, FieldConfig[]> = {
 export function getFieldsForType(type: string): FieldConfig[] {
   return TYPE_SPECIFIC_FIELDS[type as ListingCategory] || [];
 }
+
+// ── SECTOR-CONDITIONAL LOCATION FIELDS (Heb's methodology) ──────────
+
+import type { ListingSector } from './listingSectors';
+
+export const SECTOR_LOCATION_FIELDS: Record<string, FieldConfig[]> = {
+  restoran: [
+    { key: 'cepheMetres', label: 'Cephə (m)', type: 'number', suffix: 'm' },
+    { key: 'metrekare', label: 'Sahə (m²)', type: 'number', suffix: 'm²' },
+    { key: 'tavanYuksekligi', label: 'Tavan hündürlüyü', type: 'number', suffix: 'm' },
+    { key: 'vitrinSeffaflik', label: 'Vitrin şəffaflığı', type: 'select', options: ['Tam', 'Qismən', 'Yoxdur'] },
+    { key: 'avmKuche', label: 'Məkan növü', type: 'select', options: ['AVM', 'Küçə', 'Qarışıq'] },
+    { key: 'kosheli', label: 'Köşə mövqe?', type: 'boolean' },
+    { key: 'disarOtura', label: 'Açıq otura zonası?', type: 'boolean' },
+  ],
+  kafe: [
+    { key: 'cepheMetres', label: 'Cephə (m)', type: 'number', suffix: 'm' },
+    { key: 'metrekare', label: 'Sahə (m²)', type: 'number', suffix: 'm²' },
+    { key: 'vitrinSeffaflik', label: 'Vitrin şəffaflığı', type: 'select', options: ['Tam', 'Qismən', 'Yoxdur'] },
+    { key: 'avmKuche', label: 'Məkan növü', type: 'select', options: ['AVM', 'Küçə', 'Qarışıq'] },
+    { key: 'kosheli', label: 'Köşə mövqe?', type: 'boolean' },
+    { key: 'disarOtura', label: 'Açıq otura zonası?', type: 'boolean' },
+  ],
+  'bar-pub': [
+    { key: 'cepheMetres', label: 'Cephə (m)', type: 'number', suffix: 'm' },
+    { key: 'metrekare', label: 'Sahə (m²)', type: 'number', suffix: 'm²' },
+    { key: 'tavanYuksekligi', label: 'Tavan hündürlüyü', type: 'number', suffix: 'm' },
+    { key: 'avmKuche', label: 'Məkan növü', type: 'select', options: ['AVM', 'Küçə', 'Qarışıq'] },
+    { key: 'disarOtura', label: 'Açıq otura zonası?', type: 'boolean' },
+  ],
+  'fast-food': [
+    { key: 'cepheMetres', label: 'Cephə (m)', type: 'number', suffix: 'm' },
+    { key: 'metrekare', label: 'Sahə (m²)', type: 'number', suffix: 'm²' },
+    { key: 'avmKuche', label: 'Məkan növü', type: 'select', options: ['AVM', 'Küçə', 'Qarışıq'] },
+    { key: 'kosheli', label: 'Köşə mövqe?', type: 'boolean' },
+  ],
+  'otel-pansiyon': [
+    { key: 'otaqSayi', label: 'Otaq sayı', type: 'number', required: true },
+    { key: 'metrekare', label: 'Ümumi sahə (m²)', type: 'number', suffix: 'm²' },
+    { key: 'ulduzSeviyye', label: 'Ulduz səviyyəsi', type: 'select', options: ['1', '2', '3', '4', '5', 'Yoxdur'] },
+    { key: 'disarOtura', label: 'Açıq zona / bağça?', type: 'boolean' },
+  ],
+  catering: [
+    { key: 'metrekare', label: 'Mətbəx sahəsi (m²)', type: 'number', suffix: 'm²' },
+    { key: 'eventTutum', label: 'Max. event tutumu', type: 'number', suffix: 'nəfər' },
+    { key: 'aylikEventSayi', label: 'Aylıq event sayı', type: 'number' },
+  ],
+};
+
+export function getLocationFieldsForSector(sector: string): FieldConfig[] {
+  return SECTOR_LOCATION_FIELDS[sector] ?? [];
+}
+
+// ── CONCEPT WARNINGS (Heb's recommendations) ────────────────────────
+
+export interface ConceptWarning {
+  conceptKeys: string[];
+  field: string;
+  condition: (value: unknown) => boolean;
+  message: { az: string; en: string; ru: string; tr: string };
+}
+
+export const CONCEPT_WARNINGS: ConceptWarning[] = [
+  {
+    conceptKeys: ['doner', 'fast-food-konsept', 'lahmacun-pide'],
+    field: 'cepheMetres',
+    condition: (v) => typeof v === 'number' && v > 0 && v < 4,
+    message: {
+      az: 'Döner/fast-food üçün cephə min 4m tövsiyə olunur',
+      en: 'Min 4m frontage recommended for döner/fast-food',
+      ru: 'Для дёнера/фастфуда рекомендуется фасад мин. 4м',
+      tr: 'Döner/fast-food için cephe min 4m önerilir',
+    },
+  },
+  {
+    conceptKeys: ['kebab-mangal'],
+    field: 'disarOtura',
+    condition: (v) => v === false,
+    message: {
+      az: 'Kebab/manqal üçün açıq otura zonası tövsiyə olunur',
+      en: 'Outdoor seating recommended for kebab/BBQ',
+      ru: 'Для кебаба/мангала рекомендуется открытая зона',
+      tr: 'Kebap/mangal için açık oturma alanı önerilir',
+    },
+  },
+  {
+    conceptKeys: ['specialty-coffee', 'brunch-breakfast', 'sirniyyat'],
+    field: 'cepheMetres',
+    condition: (v) => typeof v === 'number' && v > 0 && v < 3,
+    message: {
+      az: 'Kafe konseptləri üçün cephə min 3m tövsiyə olunur',
+      en: 'Min 3m frontage recommended for café concepts',
+      ru: 'Для кафе-концептов рекомендуется фасад мин. 3м',
+      tr: 'Kafe konseptleri için cephe min 3m önerilir',
+    },
+  },
+  {
+    conceptKeys: ['fine-dining'],
+    field: 'avmKuche',
+    condition: (v) => v === 'Küçə',
+    message: {
+      az: 'Fine dining üçün parking imkanı vacibdir (AVM/Qarışıq tövsiyə olunur)',
+      en: 'Parking is important for fine dining (mall/mixed recommended)',
+      ru: 'Для файн дайнинга важна парковка (ТЦ/смешанный рекомендуется)',
+      tr: 'Fine dining için otopark önemlidir (AVM/Karma önerilir)',
+    },
+  },
+];
+
+export function getWarningsForConcepts(
+  concepts: string[],
+  locationData: Record<string, unknown>,
+  locale: 'az' | 'en' | 'ru' | 'tr' = 'az',
+): string[] {
+  const warnings: string[] = [];
+  for (const w of CONCEPT_WARNINGS) {
+    if (concepts.some((c) => w.conceptKeys.includes(c))) {
+      const value = locationData[w.field];
+      if (value !== undefined && w.condition(value)) {
+        warnings.push(w.message[locale]);
+      }
+    }
+  }
+  return warnings;
+}

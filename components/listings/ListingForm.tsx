@@ -16,6 +16,8 @@ import {
   Building, Package, Send, Loader2, CheckCircle, X, Upload, Info,
   Sparkles, Brain, FileText, AlertCircle, TrendingDown, DollarSign
 } from 'lucide-react';
+import { getConceptsForSector, getConceptLabel, type ConceptKey } from '@/lib/data/listingConcepts';
+import { getLocationFieldsForSector, getWarningsForConcepts, type FieldConfig as LocationFieldConfig } from '@/lib/data/listingFieldConfig';
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   ArrowLeftRight,
@@ -53,6 +55,26 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   
+  // Concept + Location states
+  const [selectedConcepts, setSelectedConcepts] = useState<ConceptKey[]>([]);
+  const [locationData, setLocationData] = useState<Record<string, unknown>>({});
+  const sector = (formData.sector || formData.sektor || '') as string;
+  const availableConcepts = getConceptsForSector(sector);
+  const locationFields = getLocationFieldsForSector(sector);
+  const conceptWarnings = getWarningsForConcepts(selectedConcepts, locationData);
+
+  const toggleConcept = (key: ConceptKey) => {
+    setSelectedConcepts((prev) => {
+      if (prev.includes(key)) return prev.filter((k) => k !== key);
+      if (prev.length >= 3) return prev;
+      return [...prev, key];
+    });
+  };
+
+  const handleLocationChange = (key: string, value: unknown) => {
+    setLocationData((prev) => ({ ...prev, [key]: value }));
+  };
+
   // AI Integration States
   const [requestAIAnalysis, setRequestAIAnalysis] = useState(false);
   const [aiAnalyzing, setAiAnalyzing] = useState(false);
@@ -157,7 +179,12 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
       }
 
       if (onSubmit) {
-        await onSubmit({ ...formData, aiAnalysis: aiResult });
+        await onSubmit({
+          ...formData,
+          concepts: selectedConcepts.length > 0 ? selectedConcepts : undefined,
+          locationDetails: Object.keys(locationData).length > 0 ? locationData : undefined,
+          aiAnalysis: aiResult,
+        });
       } else {
         // Simülasyon
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -377,6 +404,99 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
           </div>
         ))}
       </div>
+
+      {/* Concept Selection (sector-dependent) */}
+      {availableConcepts.length > 0 && (
+        <div className="mt-8 pt-6 border-t border-gray-100">
+          <label className="block text-sm font-bold text-gray-900 mb-3">
+            Konsept seçin <span className="text-gray-400 font-normal">(maks. 3)</span>
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {availableConcepts.map((key) => {
+              const selected = selectedConcepts.includes(key);
+              const disabled = !selected && selectedConcepts.length >= 3;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => !disabled && toggleConcept(key)}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold border transition ${
+                    selected
+                      ? 'border-amber-500 bg-amber-50 text-amber-800'
+                      : disabled
+                        ? 'border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed'
+                        : 'border-gray-200 bg-white text-gray-700 hover:border-amber-300'
+                  }`}
+                >
+                  {getConceptLabel(key)}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Sector-Conditional Location Fields */}
+      {locationFields.length > 0 && (
+        <div className="mt-6 pt-6 border-t border-gray-100">
+          <h3 className="text-sm font-bold text-gray-900 mb-4">Lokasyon detalları</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {locationFields.map((field) => (
+              <div key={field.key}>
+                <label className="block text-xs font-medium text-gray-600 mb-1">
+                  {field.label} {field.required && <span className="text-red-500">*</span>}
+                </label>
+                {field.type === 'boolean' ? (
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={!!locationData[field.key]}
+                      onChange={(e) => handleLocationChange(field.key, e.target.checked)}
+                      className="w-5 h-5 rounded text-amber-600 focus:ring-amber-500 border-gray-300"
+                    />
+                    <span className="text-sm text-gray-700">Bəli</span>
+                  </label>
+                ) : field.type === 'select' ? (
+                  <select
+                    value={(locationData[field.key] as string) || ''}
+                    onChange={(e) => handleLocationChange(field.key, e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  >
+                    <option value="">Seçin...</option>
+                    {field.options?.map((opt) => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                ) : (
+                  <div className="relative">
+                    <input
+                      type={field.type === 'number' ? 'number' : 'text'}
+                      value={(locationData[field.key] as string | number) ?? ''}
+                      onChange={(e) => handleLocationChange(field.key, field.type === 'number' ? Number(e.target.value) : e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    />
+                    {field.suffix && (
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">{field.suffix}</span>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Concept Warnings (Heb's recommendations) */}
+      {conceptWarnings.length > 0 && (
+        <div className="mt-4 space-y-2">
+          {conceptWarnings.map((warning, i) => (
+            <div key={i} className="flex items-start gap-2 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3">
+              <AlertCircle size={16} className="text-amber-600 mt-0.5 flex-shrink-0" />
+              <p className="text-sm text-amber-800">{warning}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Submit */}
       <div className="mt-8 pt-6 border-t border-gray-100 space-y-6">
