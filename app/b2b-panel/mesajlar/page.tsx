@@ -284,7 +284,7 @@ export default function B2BMessagesPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={copy.searchPlaceholder}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-slate-900 placeholder:text-slate-400 bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
                 />
               </div>
               <div className="flex gap-2">

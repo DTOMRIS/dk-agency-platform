@@ -23,7 +23,7 @@ export function Footer() {
       { label: t('startChecklist'), href: '/toolkit/checklist' },
       { label: t('startInsaat'), href: '/toolkit/insaat-checklist' },
       { label: t('startAqta'), href: '/toolkit/aqta-checklist' },
-      { label: t('startLocation'), href: '/blog/mekan-secimi' },
+      { label: t('startLocation'), href: '/marketinq/lokasyon-analiz' },
       { label: t('startMenu'), href: '/toolkit/menu-matrix' },
     ]},
     { title: t('colResources'), links: [
