@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ChevronDown, Globe, LayoutGrid, LogOut, Menu, UserRound, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import MegaMenu from '@/components/layout/MegaMenu';
 import { clearMemberSession, getGuestSession, readMemberSession, type MemberSession } from '@/lib/member-access';
 import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale } from '@/i18n/config';
@@ -20,7 +20,7 @@ export default function Header() {
   const t = useTranslations('nav');
   const pathname = usePathname();
   const router = useRouter();
-  const currentLocale = normalizeLocale(pathname.split('/')[1]);
+  const currentLocale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
 
   const navItems = [
     { name: t('home'), href: withLocale(currentLocale, '/'), hasMegaMenu: false },

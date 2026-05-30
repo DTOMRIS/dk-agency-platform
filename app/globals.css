@@ -115,16 +115,25 @@ body {
  * @layer base = low specificity, won't override tools that set own color.
  * TASK-0131 — one-time systemic fix, not per-tool yamaq.
  */
-@layer base {
-  .dashboard-scope input,
-  .dashboard-scope textarea,
-  .dashboard-scope select {
-    color: #1e293b;
-  }
-  .dashboard-scope input::placeholder,
-  .dashboard-scope textarea::placeholder {
-    color: #94a3b8;
-  }
+/* Global input contrast — body color is #eaeaea (dark landing).
+ * ALL inputs on light backgrounds need explicit dark text.
+ * Covers: dashboard, b2b-panel, auth, public forms, toolkit.
+ * TASK-0119 — systemic fix, not per-component yamaq. */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+textarea,
+select {
+  color: #0f172a;
+  background-color: #ffffff;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
 }
 
 /* Scrollbar gizleme */

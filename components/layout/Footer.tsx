@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import FloatingKazanWidget from '@/components/kazan-ai/FloatingKazanWidget';
 import { normalizeLocale, withLocale } from '@/i18n/config';
 
 export function Footer() {
   const t = useTranslations('footer');
   const pathname = usePathname();
-  const locale = normalizeLocale(pathname.split('/')[1]);
+  const locale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
 
   const columns = [
     { title: t('colTools'), links: [
