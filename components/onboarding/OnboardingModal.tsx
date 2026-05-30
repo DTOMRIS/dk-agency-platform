@@ -10,6 +10,7 @@ import {
   type PriorityKey,
   hasGap,
 } from '@/lib/data/priorities';
+import { track } from '@/lib/track';
 
 const SKIP_STORAGE_KEY = 'dk_priorities_skipped_at';
 const SKIP_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000;
@@ -50,6 +51,7 @@ export default function OnboardingModal() {
           isSkipExpired()
         ) {
           setOpen(true);
+          track('modal_opened');
         }
       })
       .catch(() => setChecked(true));
@@ -61,6 +63,7 @@ export default function OnboardingModal() {
   const handleSkip = useCallback(() => {
     setSkipFlag();
     setOpen(false);
+    track('priorities_skipped');
   }, []);
 
   // ESC key
@@ -123,6 +126,7 @@ export default function OnboardingModal() {
       });
       if (res.ok) {
         setOpen(false);
+        track('priorities_set', { priorities: selected });
         router.refresh();
       }
     } finally {

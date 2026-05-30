@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, X, Lightbulb } from 'lucide-react';
 import type { NudgeMessage } from '@/lib/nudge/rules';
+import { track } from '@/lib/track';
 
 function getDismissKey(nudgeKey: string): string {
   const today = new Date().toISOString().slice(0, 10);
@@ -35,11 +36,19 @@ export default function NudgeBanner() {
       .catch(() => setLoaded(true));
   }, []);
 
+  // Track nudge impression once on first visible render
+  useEffect(() => {
+    if (loaded && nudge && !dismissed) {
+      track('nudge_shown', { key: nudge.key });
+    }
+  }, [loaded, nudge, dismissed]);
+
   if (!loaded || !nudge || dismissed) return null;
 
   const handleDismiss = () => {
     localStorage.setItem(getDismissKey(nudge.key), '1');
     setDismissed(true);
+    track('nudge_dismissed', { key: nudge.key });
   };
 
   let message: string;
@@ -59,6 +68,7 @@ export default function NudgeBanner() {
       <p className="flex-1 text-sm text-gray-700">{message}</p>
       <Link
         href={ctaHref}
+        onClick={() => track('nudge_clicked', { key: nudge.key })}
         className="inline-flex items-center gap-1 whitespace-nowrap rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-amber-600"
       >
         {cta}

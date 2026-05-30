@@ -711,6 +711,26 @@ export const adminAuditLogs = pgTable(
   }),
 );
 
+// ── USER EVENTS (adoption loop telemetry) ──────────────────────────
+
+export const userEvents = pgTable(
+  'user_events',
+  {
+    id: serial('id').primaryKey(),
+    userId: integer('user_id')
+      .references(() => users.id, { onDelete: 'cascade' })
+      .notNull(),
+    eventType: varchar('event_type', { length: 50 }).notNull(),
+    payload: jsonb('payload'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdx: index('idx_ue_user').on(table.userId),
+    typeIdx: index('idx_ue_type').on(table.eventType),
+    createdIdx: index('idx_ue_created').on(table.createdAt),
+  }),
+);
+
 // ── EQUIPMENT CONDITION ENUM (M5.1) ─────────────────────────────────
 
 export const equipmentConditionEnum = pgEnum('equipment_condition', ['new', 'used']);

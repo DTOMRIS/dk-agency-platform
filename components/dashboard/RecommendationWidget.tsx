@@ -10,6 +10,7 @@ import {
   hasGap,
 } from '@/lib/data/priorities';
 import { getToolConfig } from '@/lib/marketing-tools-config';
+import { track } from '@/lib/track';
 
 export default function RecommendationWidget() {
   const t = useTranslations('onboarding');
@@ -83,6 +84,7 @@ export default function RecommendationWidget() {
             <Link
               key={slug}
               href={`/${locale}/marketinq/${slug}`}
+              onClick={() => track('tool_recommended_clicked', { slug })}
               className="group flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 transition hover:border-amber-300 hover:shadow-sm"
             >
               <span className="text-sm font-semibold text-gray-900 group-hover:text-amber-700">
