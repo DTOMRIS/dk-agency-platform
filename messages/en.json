@@ -4250,6 +4250,13 @@
     "skip": "I'll do this later",
     "saving": "Saving...",
     "successToast": "Your priorities have been saved!",
-    "gapNote": "More tools are being developed for this area."
+    "gapNote": "More tools are being developed for this area.",
+    "recommendations": {
+      "title": "For you",
+      "subtitle": "Tools matching your priorities",
+      "tryButton": "Open",
+      "gapBadge": "More tools coming soon",
+      "editPrioritiesLink": "Change priorities"
+    }
   }
 }

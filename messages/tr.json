@@ -4250,6 +4250,13 @@
     "skip": "Sonra yaparım",
     "saving": "Kaydediliyor...",
     "successToast": "Öncelikleriniz kaydedildi!",
-    "gapNote": "Bu alan için daha fazla araç hazırlanıyor."
+    "gapNote": "Bu alan için daha fazla araç hazırlanıyor.",
+    "recommendations": {
+      "title": "Sizin için",
+      "subtitle": "Önceliklerinize uygun araçlar",
+      "tryButton": "Aç",
+      "gapBadge": "Daha fazla araç yakında",
+      "editPrioritiesLink": "Öncelikleri değiştir"
+    }
   }
 }

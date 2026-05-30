@@ -4250,6 +4250,13 @@
     "skip": "Sonra edərəm",
     "saving": "Yadda saxlanılır...",
     "successToast": "Prioritetləriniz qeyd olundu!",
-    "gapNote": "Bu sahə üzrə daha çox alət hazırlanır."
+    "gapNote": "Bu sahə üzrə daha çox alət hazırlanır.",
+    "recommendations": {
+      "title": "Sizin üçün",
+      "subtitle": "Prioritetlərinizə uyğun alətlər",
+      "tryButton": "Aç",
+      "gapBadge": "Daha çox alət hazırlanır",
+      "editPrioritiesLink": "Prioritetləri dəyiş"
+    }
   }
 }
