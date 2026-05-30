@@ -1,5 +1,19 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-30 — TASK-0111 (user events foundation: schema + API + instrumentation)
+
+**Problem:** Adoption loop ölçülmür — modal açılış, prioritet seçim, tool click, nudge
+engagement heç yerdə qeyd olunmur. Funnel kordur.
+
+**Fix:**
+1. `user_events` cədvəli yaradıldı (schema.ts + migration 0008)
+2. `lib/data/userEvents.ts` — 7 event type SSOT
+3. `lib/user/events.ts` — server-side fire-and-forget logEvent()
+4. `POST /api/user/events` — JWT auth + 10/dəq rate limit
+5. `lib/track.ts` — client-side fire-and-forget tracker
+6. Instrumented: OnboardingModal (modal_opened, priorities_set, priorities_skipped),
+   RecommendationWidget (tool_recommended_clicked), NudgeBanner (nudge_shown/clicked/dismissed)
+
 ## 2026-05-30 — TASK-0110 (gate hygiene: OOM fix + Playwright @smoke wire-up)
 
 **Problem:** dk-validate.sh #233-də OOM ilə çökdü (build 4096MB heap ilə çalışırdı).

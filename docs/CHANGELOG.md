@@ -4,13 +4,19 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `user_events` table (migration 0008) — adoption loop telemetry with cascade delete
+- `POST /api/user/events` — JWT auth, 10/min rate limit, 7 event types
+- `lib/track.ts` — fire-and-forget client tracker (keepalive, never blocks UI)
+- OnboardingModal: tracks modal_opened, priorities_set, priorities_skipped
+- RecommendationWidget: tracks tool_recommended_clicked
+- NudgeBanner: tracks nudge_shown, nudge_clicked, nudge_dismissed
+- `e2e/smoke.spec.ts` — 4 baseline @smoke tests (homepage, login, listings, API gating)
+- CLAUDE.md DoD item 11: dk-validator 8/8 PASS mandatory with skip justification
+
 ### Fixed
 - dk-validate.sh OOM: build now uses 8GB heap explicitly (#233 fix)
 - Playwright check 8 now always runs @smoke suite (not only changed specs)
-
-### Added
-- `e2e/smoke.spec.ts` — 4 baseline @smoke tests (homepage, login, listings, API gating)
-- CLAUDE.md DoD item 11: dk-validator 8/8 PASS mandatory with skip justification
 
 ## [1.0.0] - 2026-05-28 — Ahilik Studio Launch Sprint (16 PR, #204-#220)
 
