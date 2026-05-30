@@ -559,7 +559,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
             </div>
 
             {/* Strengths & Risks */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-green-50 rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp size={16} className="text-green-600" />
