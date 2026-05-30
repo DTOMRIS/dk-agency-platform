@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-30T17:45:44.365Z
+- GeneratedAt: 2026-05-30T18:14:54.821Z
 - BuildStatus: PASS
 
-## Routes (185)
+## Routes (192)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -108,10 +108,17 @@ Auto-generated. Do not edit manually.
 - /auth/register
 - /b2b-panel
 - /b2b-panel/[slug]
+- /b2b-panel/analizler
+- /b2b-panel/ayarlar
+- /b2b-panel/bildirimler
+- /b2b-panel/destek
+- /b2b-panel/favoriler
 - /b2b-panel/ilanlarim
 - /b2b-panel/ilanlarim/[id]
 - /b2b-panel/ilanlarim/[id]/edit
 - /b2b-panel/mesajlar
+- /b2b-panel/profil
+- /b2b-panel/teklifler
 - /b2b-panel/toolkit
 - /b2b-panel/toolkit/financial-health
 - /b2b-panel/toolkit/franchise-readiness
