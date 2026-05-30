@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
+  BarChart3,
   BookOpen,
   Bot,
   ChevronLeft,
@@ -54,6 +55,7 @@ const navItemDefs: NavItemDef[] = [
   { titleKey: 'marketinqOcagi', href: '/dashboard/marketinq-ocagi', icon: Sparkles },
   { titleKey: 'site', href: '/dashboard/site', icon: Globe },
   { titleKey: 'users', href: '/dashboard/users', icon: Users },
+  { titleKey: 'funnel', href: '/dashboard/funnel', icon: BarChart3 },
   { titleKey: 'auditLog', href: '/dashboard/audit-logs', icon: ScrollText },
   { titleKey: 'settings', href: '/dashboard/settings', icon: Settings },
 ];
