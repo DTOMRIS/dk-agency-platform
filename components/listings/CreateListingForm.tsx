@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useTranslations, useLocale } from 'next-intl';
 import {
   ArrowRight,
   Check,
@@ -22,6 +23,19 @@ import { getAllSectors } from '@/lib/data/listingSectors';
 import { compressImage, generateThumbnail, validateImage } from '@/lib/utils/imageUtils';
 
 type FormStep = 1 | 2 | 3 | 4 | 5;
+
+const STEP_KEYS = ['category', 'info', 'details', 'photos', 'submit'] as const;
+
+/** Map AZ option values (stored in DB) to i18n keys for display */
+const OPTION_I18N_MAP: Record<string, string> = {
+  'İcarə (kirayə)': 'fieldOptions.propertyRent',
+  'Mülkiyyət (satış)': 'fieldOptions.propertyOwn',
+  'İcarə + satınalma opsiyonu': 'fieldOptions.propertyRentBuy',
+  'Yeni': 'fieldOptions.conditionNew',
+  'İstifadə olunmuş - əla': 'fieldOptions.conditionExcellent',
+  'İstifadə olunmuş - yaxşı': 'fieldOptions.conditionGood',
+  'Təmirə ehtiyacı var': 'fieldOptions.conditionRepair',
+};
 
 interface SessionLike {
   email?: string;
@@ -54,8 +68,6 @@ interface FormState {
   typeSpecificData: Record<string, string | number | boolean>;
 }
 
-const STEP_LABELS = ['Kateqoriya', 'Məlumatlar', 'Detallar', 'Şəkillər', 'Göndər'] as const;
-
 const INITIAL_FORM = (session?: SessionLike): FormState => ({
   type: '',
   sector: '',
@@ -79,19 +91,10 @@ function normalizePhone(value: string) {
   return cleaned.startsWith('+') ? cleaned : `+994${cleaned}`;
 }
 
-function formatPreviewValue(field: FieldConfig, value: string | number | boolean | undefined) {
-  if (value === undefined || value === null || value === '') {
-    return <span className="italic text-slate-400">—</span>;
-  }
-
-  if (field.type === 'boolean') {
-    return value ? '✅ Bəli' : '❌ Xeyr';
-  }
-
-  return field.suffix ? `${value} ${field.suffix}` : String(value);
-}
-
 export default function CreateListingForm({ session }: { session?: SessionLike }) {
+  const t = useTranslations('createListing');
+  const locale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
+
   const [step, setStep] = useState<FormStep>(1);
   const [formData, setFormData] = useState<FormState>(() => INITIAL_FORM(session));
   const [images, setImages] = useState<UploadedImageItem[]>([]);
@@ -114,6 +117,38 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     () => DISTRICT_OPTIONS.filter((item) => item.city === formData.city),
     [formData.city],
   );
+
+  /** Resolve field label: use i18n key if available, fallback to field.label */
+  const fieldLabel = (field: FieldConfig) => {
+    try { return t(`fields.${field.key}`); } catch { return field.label; }
+  };
+
+  /** Resolve select option display: use i18n mapping if available */
+  const optionLabel = (option: string) => {
+    const key = OPTION_I18N_MAP[option];
+    if (!key) return option;
+    try { return t(key); } catch { return option; }
+  };
+
+  /** Category label from i18n */
+  const catLabel = (id: string) => {
+    try { return t(`categories.${id}.label`); } catch { return id; }
+  };
+
+  /** Category description from i18n */
+  const catDesc = (id: string) => {
+    try { return t(`categories.${id}.description`); } catch { return ''; }
+  };
+
+  const formatPreviewValue = (field: FieldConfig, value: string | number | boolean | undefined) => {
+    if (value === undefined || value === null || value === '') {
+      return <span className="italic text-slate-400">—</span>;
+    }
+    if (field.type === 'boolean') {
+      return value ? `✅ ${t('yes')}` : `❌ ${t('no')}`;
+    }
+    return field.suffix ? `${value} ${field.suffix}` : String(value);
+  };
 
   const pushToast = (message: string) => {
     setToast(message);
@@ -148,27 +183,27 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     const nextErrors: Record<string, string> = {};
 
     if (currentStep === 1 && !formData.type) {
-      nextErrors.type = 'Kateqoriya seçilməlidir.';
+      nextErrors.type = t('errors.categoryRequired');
     }
 
     if (currentStep === 2) {
-      if (!formData.title.trim()) nextErrors.title = 'Başlıq mütləqdir.';
-      if (!formData.sector) nextErrors.sector = 'Sektor seçilməlidir.';
+      if (!formData.title.trim()) nextErrors.title = t('errors.titleRequired');
+      if (!formData.sector) nextErrors.sector = t('errors.sectorRequired');
       if (!formData.description.trim()) {
-        nextErrors.description = 'Təsvir mütləqdir.';
+        nextErrors.description = t('errors.descriptionRequired');
       } else if (formData.description.trim().length < 50) {
-        nextErrors.description = 'Təsvir minimum 50 simvol olmalıdır.';
+        nextErrors.description = t('errors.descriptionMinLength');
       }
-      if (!formData.price || Number(formData.price) < 1) nextErrors.price = 'Qiymət 1 AZN-dən böyük olmalıdır.';
-      if (!formData.city) nextErrors.city = 'Şəhər seçilməlidir.';
-      if (!formData.ownerName.trim()) nextErrors.ownerName = 'Ad Soyad mütləqdir.';
+      if (!formData.price || Number(formData.price) < 1) nextErrors.price = t('errors.priceMin');
+      if (!formData.city) nextErrors.city = t('errors.cityRequired');
+      if (!formData.ownerName.trim()) nextErrors.ownerName = t('errors.nameRequired');
       if (!formData.phone.trim()) {
-        nextErrors.phone = 'Telefon mütləqdir.';
+        nextErrors.phone = t('errors.phoneRequired');
       } else if (!/^\+994\d{9}$/.test(normalizePhone(formData.phone))) {
-        nextErrors.phone = 'Telefon formatı +994 XX XXX XX XX olmalıdır.';
+        nextErrors.phone = t('errors.phoneFormat');
       }
       if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        nextErrors.email = 'Email formatı düzgün deyil.';
+        nextErrors.email = t('errors.emailFormat');
       }
     }
 
@@ -176,13 +211,13 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       for (const field of dynamicFields) {
         const value = formData.typeSpecificData[field.key];
         if (field.required && (value === undefined || value === null || value === '')) {
-          nextErrors[`dynamic:${field.key}`] = `${field.label} mütləqdir.`;
+          nextErrors[`dynamic:${field.key}`] = t('errors.fieldRequired', { label: fieldLabel(field) });
         }
       }
     }
 
     if (currentStep === 4 && images.length < 1) {
-      nextErrors.images = 'Minimum 1 şəkil yüklənməlidir.';
+      nextErrors.images = t('errors.minPhotos');
     }
 
     setErrors(nextErrors);
@@ -201,14 +236,14 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     if (!files.length) return;
 
     if (images.length + files.length > 10) {
-      pushToast('Maksimum 10 şəkil yükləyə bilərsiniz.');
+      pushToast(t('toast.maxPhotos'));
       return;
     }
 
     for (const file of files) {
       const validation = validateImage(file);
       if (!validation.valid) {
-        pushToast(validation.error || 'Şəkil faylı qəbul olunmadı.');
+        pushToast(validation.error || t('toast.invalidImage'));
         continue;
       }
 
@@ -268,7 +303,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       const response = await fetch('/api/upload', { method: 'POST', body });
       if (!response.ok) {
         const payload = await response.json().catch(() => ({}));
-        pushToast(payload.error || 'Şəkil yüklənməsi alınmadı.');
+        pushToast(payload.error || t('toast.uploadFailed'));
         return [];
       }
 
@@ -299,12 +334,11 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
         body: JSON.stringify(payload),
       });
       if (!response.ok) {
-        pushToast('Elan göndərilərkən xəta baş verdi.');
+        pushToast(t('toast.submitError'));
         return;
       }
-      // Email notification is handled server-side in /api/listings POST
       setSubmittedCode(trackingCode);
-      pushToast('Elanınız uğurla göndərildi!');
+      pushToast(t('toast.submitSuccess'));
     } finally {
       setSubmitting(false);
     }
@@ -330,7 +364,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
             <CheckCircle2 className="h-8 w-8" />
           </div>
           <h1 className="mt-5 font-display text-4xl font-black text-[var(--dk-navy)]">
-            Elanınız uğurla göndərildi!
+            {t('successTitle')}
           </h1>
           <div className="mt-5 inline-flex items-center gap-3 rounded-full bg-slate-50 px-5 py-3 text-lg font-black text-[var(--dk-navy)]">
             {submittedCode}
@@ -343,22 +377,21 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
             </button>
           </div>
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-500">
-            Komitəmiz 24 saat ərzində elanınızı incələyəcək. Nəticə barədə email ilə
-            məlumatlandırılacaqsınız.
+            {t('successDesc')}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href="/b2b-panel/ilanlarim"
               className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white"
             >
-              Elanlarıma bax →
+              {t('viewListings')}
             </Link>
             <button
               type="button"
               onClick={resetForm}
               className="rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700"
             >
-              Yeni elan ver →
+              {t('newListing')}
             </button>
           </div>
         </div>
@@ -370,13 +403,13 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     <div className="space-y-8">
       <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
         <div className="grid gap-4 md:grid-cols-5">
-          {STEP_LABELS.map((label, index) => {
+          {STEP_KEYS.map((key, index) => {
             const stepNumber = (index + 1) as FormStep;
             const isDone = step > stepNumber;
             const isActive = step === stepNumber;
 
             return (
-              <div key={label} className="flex items-center gap-3">
+              <div key={key} className="flex items-center gap-3">
                 <div
                   className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm font-black ${
                     isDone
@@ -389,8 +422,8 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                   {isDone ? <Check className="h-5 w-5" /> : stepNumber}
                 </div>
                 <div className={isActive ? 'text-[var(--dk-navy)]' : 'text-slate-500'}>
-                  <div className="text-xs font-black uppercase tracking-[0.18em]">Addım {stepNumber}</div>
-                  <div className="text-sm font-semibold">{label}</div>
+                  <div className="text-xs font-black uppercase tracking-[0.18em]">{t('stepLabel', { number: stepNumber })}</div>
+                  <div className="text-sm font-semibold">{t(`steps.${key}`)}</div>
                 </div>
               </div>
             );
@@ -406,9 +439,9 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
       {step === 1 ? (
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">Kateqoriya seçin</h2>
+          <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">{t('selectCategory')}</h2>
           <p className="mt-2 text-sm text-slate-500">
-            Elanınıza ən uyğun kateqoriyanı seçin. Sonrakı addımlarda yalnız həmin tipə uyğun sahələr açılacaq.
+            {t('selectCategoryDesc')}
           </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {LISTING_CATEGORIES.map((item) => {
@@ -426,7 +459,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                 >
                   <div className="flex items-start justify-between gap-3">
                     <span className={`inline-flex rounded-2xl px-3 py-2 text-xs font-bold ${item.badgeClass}`}>
-                      {item.label}
+                      {catLabel(item.id)}
                     </span>
                     {selected ? (
                       <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
@@ -434,8 +467,8 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                       </span>
                     ) : null}
                   </div>
-                  <h3 className="mt-4 font-display text-2xl font-black text-[var(--dk-navy)]">{item.label}</h3>
-                  <p className="mt-2 text-sm leading-7 text-slate-500">{item.description}</p>
+                  <h3 className="mt-4 font-display text-2xl font-black text-[var(--dk-navy)]">{catLabel(item.id)}</h3>
+                  <p className="mt-2 text-sm leading-7 text-slate-500">{catDesc(item.id)}</p>
                 </button>
               );
             })}
@@ -448,18 +481,18 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
           <div className="grid gap-5 md:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Başlıq *</label>
+              <label className="mb-2 block text-sm font-bold text-slate-700">{t('titleLabel')} *</label>
               <input
                 value={formData.title}
                 onChange={(event) => setField('title', event.target.value)}
-                placeholder="Məsələn: Nərimanov-da 120m² restoran devri"
+                placeholder={t('titlePlaceholder')}
                 className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
               />
               {errors.title ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.title}</p> : null}
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Qiymət *</label>
+              <label className="mb-2 block text-sm font-bold text-slate-700">{t('priceLabel')} *</label>
               <div className="flex items-center rounded-2xl border border-slate-200 bg-white">
                 <input
                   type="number"
@@ -474,26 +507,26 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
             </div>
 
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-bold text-slate-700">Təsvir *</label>
+              <label className="mb-2 block text-sm font-bold text-slate-700">{t('descriptionLabel')} *</label>
               <textarea
                 rows={5}
                 value={formData.description}
                 onChange={(event) => setField('description', event.target.value)}
-                placeholder="Elanınız haqqında ətraflı məlumat yazın..."
+                placeholder={t('descriptionPlaceholder')}
                 className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
               />
               <div className="mt-2 flex items-center justify-between text-xs">
                 {errors.description ? (
                   <span className="font-semibold text-[var(--dk-red)]">{errors.description}</span>
                 ) : (
-                  <span className="text-slate-400">Minimum 50 simvol</span>
+                  <span className="text-slate-400">{t('minChars', { count: 50 })}</span>
                 )}
-                <span className="font-semibold text-slate-500">{formData.description.length} simvol</span>
+                <span className="font-semibold text-slate-500">{t('charCount', { count: formData.description.length })}</span>
               </div>
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Şəhər *</label>
+              <label className="mb-2 block text-sm font-bold text-slate-700">{t('cityLabel')} *</label>
               <select
                 value={formData.city}
                 onChange={(event) => setField('city', event.target.value)}
@@ -508,14 +541,14 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Sektor *</label>
+              <label className="mb-2 block text-sm font-bold text-slate-700">{t('sectorLabel')} *</label>
               <select
                 value={formData.sector}
                 onChange={(event) => setField('sector', event.target.value)}
                 className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
               >
-                <option value="">Seçin</option>
-                {getAllSectors('az').map((item) => (
+                <option value="">{t('selectPlaceholder')}</option>
+                {getAllSectors(locale).map((item) => (
                   <option key={item.value} value={item.value}>
                     {item.label}
                   </option>
@@ -526,13 +559,13 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
             {formData.city === 'Bakı' ? (
               <div>
-                <label className="mb-2 block text-sm font-bold text-slate-700">Rayon</label>
+                <label className="mb-2 block text-sm font-bold text-slate-700">{t('districtLabel')}</label>
                 <select
                   value={formData.district}
                   onChange={(event) => setField('district', event.target.value)}
                   className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
                 >
-                  <option value="">Seçin</option>
+                  <option value="">{t('selectPlaceholder')}</option>
                   {currentDistricts.map((item) => (
                     <option key={item.value} value={item.value}>
                       {item.label}
@@ -544,12 +577,12 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
             <div className="md:col-span-2 pt-4">
               <div className="border-t border-slate-200 pt-5">
-                <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">Əlaqə məlumatları</div>
+                <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('contactInfo')}</div>
               </div>
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Ad Soyad *</label>
+              <label className="mb-2 block text-sm font-bold text-slate-700">{t('nameLabel')} *</label>
               <input
                 value={formData.ownerName}
                 onChange={(event) => setField('ownerName', event.target.value)}
@@ -559,7 +592,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Telefon *</label>
+              <label className="mb-2 block text-sm font-bold text-slate-700">{t('phoneLabel')} *</label>
               <input
                 value={formData.phone}
                 onChange={(event) => setField('phone', normalizePhone(event.target.value))}
@@ -570,7 +603,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
             </div>
 
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-bold text-slate-700">Email</label>
+              <label className="mb-2 block text-sm font-bold text-slate-700">{t('emailLabel')}</label>
               <input
                 type="email"
                 value={formData.email}
@@ -587,14 +620,14 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
           <div className="mb-5 flex items-center gap-3">
             <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${selectedCategory?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
-              Seçilmiş kateqoriya: {selectedCategory?.label}
+              {t('selectedCategory', { name: selectedCategory ? catLabel(selectedCategory.id) : '' })}
             </span>
           </div>
           <div className="grid gap-5 md:grid-cols-2">
             {dynamicFields.map((field) => (
               <div key={field.key} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
                 <label className="mb-2 block text-sm font-bold text-slate-700">
-                  {field.label}
+                  {fieldLabel(field)}
                   {field.required ? ' *' : ''}
                 </label>
                 {field.type === 'textarea' ? (
@@ -613,22 +646,22 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                       onChange={(event) => setDynamicField(field.key, event.target.checked)}
                       className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]"
                     />
-                    {field.label}
+                    {fieldLabel(field)}
                   </label>
                 ) : field.type === 'equipment-list' ? (
                   <div className="space-y-3 md:col-span-2">
                     {equipment.map((eq, idx) => (
                       <div key={idx} className="flex items-center gap-3">
-                        <input type="text" value={eq.name} placeholder="Avadanlıq adı"
+                        <input type="text" value={eq.name} placeholder={t('equipmentName')}
                           onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, name: e.target.value } : item))}
                           className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[var(--dk-gold)]" />
                         <select value={eq.condition}
                           onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, condition: e.target.value as 'new' | 'used' } : item))}
                           className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none">
-                          <option value="used">İşlənmiş</option>
-                          <option value="new">Yeni</option>
+                          <option value="used">{t('equipmentUsed')}</option>
+                          <option value="new">{t('equipmentNew')}</option>
                         </select>
-                        <input type="number" min="1" value={eq.count ?? ''} placeholder="Say"
+                        <input type="number" min="1" value={eq.count ?? ''} placeholder={t('equipmentCount')}
                           onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, count: Number(e.target.value) || undefined } : item))}
                           className="w-20 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[var(--dk-gold)]" />
                         <button type="button" onClick={() => setEquipment(prev => prev.filter((_, i) => i !== idx))}
@@ -638,7 +671,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                     <button type="button"
                       onClick={() => setEquipment(prev => [...prev, { name: '', condition: 'used' }])}
                       className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--dk-gold)] hover:text-amber-600">
-                      + Avadanlıq əlavə et
+                      {t('addEquipment')}
                     </button>
                   </div>
                 ) : field.type === 'select' ? (
@@ -647,10 +680,10 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                     onChange={(event) => setDynamicField(field.key, event.target.value)}
                     className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
                   >
-                    <option value="">Seçin</option>
+                    <option value="">{t('selectPlaceholder')}</option>
                     {field.options?.map((option) => (
                       <option key={option} value={option}>
-                        {option}
+                        {optionLabel(option)}
                       </option>
                     ))}
                   </select>
@@ -680,18 +713,18 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
       {step === 4 ? (
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">Şəkillər</h2>
+          <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">{t('photosTitle')}</h2>
           <p className="mt-2 text-sm leading-7 text-slate-500">
-            Elanınız üçün şəkillər yükləyin. İlk şəkil vitrin şəkli olacaq. Minimum 1, maksimum 10 şəkil.
+            {t('photosDesc')}
           </p>
 
           <label className="mt-6 flex cursor-pointer items-center justify-center gap-3 rounded-[28px] border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-sm font-semibold text-slate-600">
             <UploadCloud className="h-5 w-5 text-[var(--dk-gold)]" />
-            Şəkil əlavə et +
+            {t('addPhoto')}
             <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleImages} />
           </label>
 
-          <div className="mt-4 text-sm font-semibold text-slate-500">{images.length}/10 şəkil yüklənib</div>
+          <div className="mt-4 text-sm font-semibold text-slate-500">{t('photoCount', { count: images.length })}</div>
           {errors.images ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.images}</p> : null}
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -705,23 +738,23 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                 <div className="mt-1 text-xs font-semibold text-emerald-600">{image.sizeReduction}</div>
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   {coverIndex === index ? (
-                    <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-[var(--dk-gold)]">Vitrin şəkli</span>
+                    <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-[var(--dk-gold)]">{t('coverPhoto')}</span>
                   ) : (
                     <button type="button" onClick={() => setCoverIndex(index)} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-600">
-                      Vitrin şəkli et
+                      {t('setCover')}
                     </button>
                   )}
                   <button type="button" onClick={() => removeImage(index)} className="rounded-full border border-rose-200 px-3 py-1 text-xs font-bold text-[var(--dk-red)]">
                     <Trash2 className="mr-1 inline h-3.5 w-3.5" />
-                    Sil
+                    {t('delete')}
                   </button>
                 </div>
                 <div className="mt-3 flex gap-2">
                   <button type="button" disabled={index === 0} onClick={() => moveImage(index, index - 1)} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-600 disabled:opacity-40">
-                    Yuxarı
+                    {t('moveUp')}
                   </button>
                   <button type="button" disabled={index === images.length - 1} onClick={() => moveImage(index, index + 1)} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-600 disabled:opacity-40">
-                    Aşağı
+                    {t('moveDown')}
                   </button>
                 </div>
               </div>
@@ -734,8 +767,8 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">Elanınızın önizləməsi</h2>
-              <p className="mt-2 text-sm text-slate-500">Göndərdikdən sonra komitəmiz 24 saat ərzində elanınızı incələyəcək.</p>
+              <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">{t('previewTitle')}</h2>
+              <p className="mt-2 text-sm text-slate-500">{t('previewDesc')}</p>
             </div>
           </div>
 
@@ -743,17 +776,17 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
             {images[coverIndex] ? (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={images[coverIndex].preview} alt="Vitrin şəkli" className="aspect-[16/8] w-full object-cover" />
+                <img src={images[coverIndex].preview} alt={t('coverPhoto')} className="aspect-[16/8] w-full object-cover" />
               </>
             ) : null}
             <div className="p-6">
               <div className="mb-4 flex items-center justify-between gap-4">
                 <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${selectedCategory?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
-                  {selectedCategory?.label ?? 'Kateqoriya'}
+                  {selectedCategory ? catLabel(selectedCategory.id) : t('categoryFallback')}
                 </span>
                 <button type="button" onClick={() => setStep(1)} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
                   <Pencil className="h-4 w-4" />
-                  Düzəliş et
+                  {t('edit')}
                 </button>
               </div>
 
@@ -765,28 +798,28 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                   </div>
                   <p className="mt-3 text-sm text-slate-500">
                     {formData.city}{formData.district ? `, ${formData.district}` : ''}
-                    {formData.sector ? ` · ${getAllSectors('az').find(s => s.value === formData.sector)?.label ?? formData.sector}` : ''}
+                    {formData.sector ? ` · ${getAllSectors(locale).find(s => s.value === formData.sector)?.label ?? formData.sector}` : ''}
                   </p>
                   <div className="mt-5 rounded-2xl bg-slate-50 p-4 text-sm leading-7 text-slate-600">{formData.description}</div>
                   <button type="button" onClick={() => setStep(2)} className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
                     <Pencil className="h-4 w-4" />
-                    Əsas məlumatları düzəliş et
+                    {t('editMainInfo')}
                   </button>
                 </div>
 
                 <div className="space-y-4">
                   <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                     <div className="flex items-center justify-between">
-                      <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">Tipə görə detallar</div>
+                      <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('typeDetails')}</div>
                       <button type="button" onClick={() => setStep(3)} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
                         <Pencil className="h-4 w-4" />
-                        Düzəliş et
+                        {t('edit')}
                       </button>
                     </div>
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
                       {dynamicFields.map((field) => (
                         <div key={field.key} className="rounded-2xl bg-white p-4 text-sm">
-                          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{field.label}</div>
+                          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{fieldLabel(field)}</div>
                           <div className="mt-2 font-semibold text-slate-700">{formatPreviewValue(field, formData.typeSpecificData[field.key])}</div>
                         </div>
                       ))}
@@ -795,10 +828,10 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
                   <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                     <div className="flex items-center justify-between">
-                      <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">Şəkillər</div>
+                      <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('photosTitle')}</div>
                       <button type="button" onClick={() => setStep(4)} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
                         <Pencil className="h-4 w-4" />
-                        Düzəliş et
+                        {t('edit')}
                       </button>
                     </div>
                     <div className="mt-4 grid grid-cols-4 gap-2">
@@ -806,25 +839,25 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                         <div key={image.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={image.thumbnail} alt={image.file.name} className="aspect-square w-full object-cover" />
-                          {coverIndex === index ? <div className="px-2 py-1 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--dk-gold)]">Vitrin</div> : null}
+                          {coverIndex === index ? <div className="px-2 py-1 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--dk-gold)]">{t('vitrin')}</div> : null}
                         </div>
                       ))}
                     </div>
                   </div>
 
                   <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">Əlaqə</div>
+                    <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('contact')}</div>
                     <div className="mt-3 space-y-2 text-sm text-slate-600">
-                      <div><strong>Ad:</strong> {formData.ownerName}</div>
-                      <div><strong>Telefon:</strong> {formData.phone}</div>
-                      <div><strong>Email:</strong> {formData.email || '—'}</div>
+                      <div><strong>{t('nameField')}:</strong> {formData.ownerName}</div>
+                      <div><strong>{t('phoneField')}:</strong> {formData.phone}</div>
+                      <div><strong>{t('emailField')}:</strong> {formData.email || '—'}</div>
                     </div>
                   </div>
                 </div>
               </div>
 
               <button type="button" onClick={handleSubmit} disabled={submitting} className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--dk-red)] px-6 py-4 text-sm font-bold text-white disabled:opacity-60">
-                {submitting ? 'Göndərilir...' : 'Elanı Göndər'}
+                {submitting ? t('submitting') : t('submitButton')}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>
@@ -835,11 +868,11 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       {!submittedCode ? (
         <div className="flex items-center justify-between gap-4">
           <button type="button" onClick={handleBack} disabled={step === 1} className="rounded-full border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700 disabled:opacity-40">
-            Geri
+            {t('back')}
           </button>
           {step < 5 ? (
             <button type="button" onClick={handleContinue} className="rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white">
-              Davam et →
+              {t('continue')}
             </button>
           ) : null}
         </div>
