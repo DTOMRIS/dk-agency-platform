@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-30T08:05:36.286Z
+- GeneratedAt: 2026-05-30T08:15:50.130Z
 - BuildStatus: UNKNOWN
 
-## Routes (184)
+## Routes (185)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -141,6 +141,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/faturalar
 - /dashboard/faturalar/[id]
 - /dashboard/food-cost
+- /dashboard/funnel
 - /dashboard/haberler
 - /dashboard/hero
 - /dashboard/ilan-onaylari

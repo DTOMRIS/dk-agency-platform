@@ -5,6 +5,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `/dashboard/funnel` — admin-only activation funnel page (role gate: admin only)
+- `ActivationFunnelWidget` — 4-stage funnel bar chart (registered → priorities → tool click → D7 return)
+- Dashboard sidebar: "Aktivasiya funeli" nav item with BarChart3 icon (4 locales)
 - `user_events` table (migration 0008) — adoption loop telemetry with cascade delete
 - `POST /api/user/events` — JWT auth, 10/min rate limit, 7 event types
 - `lib/track.ts` — fire-and-forget client tracker (keepalive, never blocks UI)

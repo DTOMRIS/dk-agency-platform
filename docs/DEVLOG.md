@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-30 — TASK-0112 (admin activation funnel widget)
+
+**Problem:** Event veriləri var amma admin heç bir funnel görüntüsü yoxdur.
+Crunchtime raporu "ilk gündən KPI set" deyirdi.
+
+**Fix:**
+1. `lib/admin/funnelQuery.ts` — CTE ilə 4 stage aggregation (registered → priorities → tool click 24h → D7 return)
+2. `components/dashboard/ActivationFunnelWidget.tsx` — server component, 4 bar + benchmark note
+3. `app/dashboard/funnel/page.tsx` — admin-only role gate (non-admin → redirect /dashboard)
+4. DashboardSidebar-ə "funnel" nav item əlavə edildi (BarChart3 icon)
+5. 4 dildə i18n: AZ/EN/RU/TR — sidebar nav + widget copy inline
+
 ## 2026-05-30 — TASK-0111 (user events foundation: schema + API + instrumentation)
 
 **Problem:** Adoption loop ölçülmür — modal açılış, prioritet seçim, tool click, nudge
