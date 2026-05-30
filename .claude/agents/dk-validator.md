@@ -87,12 +87,17 @@ kill $DEV_PID 2>/dev/null
 ```
 Expect: HTTP 401 (auth gating works) or 400 (validation works). HTTP 200 without auth → BLOCK (gating broken).
 
-### 8. Playwright execution (not just file existence)
+### 8. Playwright @smoke execution (not just file existence)
 ```bash
-SPEC=$(git diff --name-only main HEAD | grep "e2e/.*\.spec\.ts$" | head -1)
-[ -n "$SPEC" ] && npx playwright test "$SPEC" --reporter=list 2>&1 | tail -30
+# Always run @smoke suite — not just changed specs
+npx playwright test --grep @smoke --reporter=list 2>&1 | tail -30
 ```
-Expect: tests run, majority pass. 0 tests run → BLOCK.
+Expect: @smoke tests run and pass. 0 tests run → BLOCK.
+Note: `e2e/smoke.spec.ts` is the baseline @smoke suite (GET /, login, ilanlar, API gating).
+Feature specs MAY also tag individual tests with @smoke for critical paths.
+
+**OOM note:** dk-validate.sh now exports `NODE_OPTIONS='--max-old-space-size=8192'`
+and builds with explicit 8GB heap. If OOM recurs, check if node_modules/.cache needs clearing.
 
 ## Report format (mandatory)
 

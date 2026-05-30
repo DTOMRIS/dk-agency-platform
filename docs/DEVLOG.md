@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-05-30 — TASK-0110 (gate hygiene: OOM fix + Playwright @smoke wire-up)
+
+**Problem:** dk-validate.sh #233-də OOM ilə çökdü (build 4096MB heap ilə çalışırdı).
+Playwright check 8 yalnız dəyişən spec-ləri test edirdi — @smoke suite yox idi.
+
+**Fix:**
+1. `NODE_OPTIONS='--max-old-space-size=8192'` export dk-validate.sh-ə əlavə edildi
+2. Build check birbaşa `node --max-old-space-size=8192` ilə çağrılır (package.json bypass)
+3. `e2e/smoke.spec.ts` yaradıldı — 4 @smoke test (GET /, login, ilanlar, API gating)
+4. Check 8 indi HƏMİŞƏ @smoke suite çalışdırır (dəyişən fayldan asılı deyil)
+5. CLAUDE.md DoD: maddə 11 əlavə — "8/8 PASS məcburi, skip izahla"
+
 ## 2026-05-29 — TASK-B-FIX (sector API filter + response fix)
 
 **Kök səbəb:** E2E smoke test-də sektor filter "No listings match" qaytarırdı.

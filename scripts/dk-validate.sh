@@ -6,6 +6,10 @@
 
 set -e
 
+# OOM prevention — ensures all child node processes (build, lint, tsc) get enough heap
+# Fix for #233 where validator OOM'd during build on large codebase
+export NODE_OPTIONS='--max-old-space-size=8192'
+
 BRANCH=$(git branch --show-current)
 COMMIT=$(git log -1 --format='%h %s')
 
@@ -43,9 +47,9 @@ fi
 NEW_COMPONENTS=$(echo "$CHANGED_FILES" | grep -E "components/.*\.tsx?$" || true)
 NEW_API=$(echo "$CHANGED_FILES" | grep -E "app/api/.*route\.ts$" || true)
 
-# --- 1. Build ---
+# --- 1. Build (with explicit 8GB heap to prevent OOM — #233) ---
 echo "  [1/8] Building..."
-if npm run build > /tmp/dk-build.log 2>&1; then
+if npm install --include=dev > /dev/null 2>&1 && node --max-old-space-size=8192 node_modules/next/dist/bin/next build > /tmp/dk-build.log 2>&1; then
   result 1 "Build" "PASS" "0 errors"
 else
   result 1 "Build" "FAIL" "$(tail -3 /tmp/dk-build.log | tr '\n' ' ')"
@@ -154,17 +158,23 @@ else
   fi
 fi
 
-# --- 8. Playwright ---
-echo "  [8/8] Playwright tests..."
-SPEC=$(echo "$CHANGED_FILES" | grep -E "e2e/.*\.spec\.ts$" || true)
-if [ -n "$SPEC" ]; then
-  if npx playwright test "$SPEC" --reporter=list > /tmp/dk-playwright.log 2>&1; then
-    result 8 "Playwright" "PASS" "$(tail -3 /tmp/dk-playwright.log | tr '\n' ' ')"
+# --- 8. Playwright @smoke ---
+echo "  [8/8] Playwright @smoke tests..."
+if [ -f playwright.config.ts ] || [ -f playwright.config.js ]; then
+  if npx playwright test --grep @smoke --reporter=list > /tmp/dk-playwright.log 2>&1; then
+    SMOKE_PASS=$(grep -c "passed" /tmp/dk-playwright.log 2>/dev/null || echo "0")
+    result 8 "Playwright @smoke" "PASS" "$(tail -3 /tmp/dk-playwright.log | tr '\n' ' ')"
   else
-    result 8 "Playwright" "FAIL" "$(tail -5 /tmp/dk-playwright.log | tr '\n' ' ')"
+    EXIT_CODE=$?
+    # Exit code 1 = test failures; other codes = setup/config issue
+    if grep -q "no tests matched" /tmp/dk-playwright.log 2>/dev/null; then
+      result 8 "Playwright @smoke" "SKIP" "no @smoke tests found — add @smoke tag to e2e specs"
+    else
+      result 8 "Playwright @smoke" "FAIL" "$(tail -5 /tmp/dk-playwright.log | tr '\n' ' ')"
+    fi
   fi
 else
-  result 8 "Playwright" "SKIP" "no e2e spec in changed files"
+  result 8 "Playwright @smoke" "SKIP" "no playwright config"
 fi
 
 # --- Summary ---

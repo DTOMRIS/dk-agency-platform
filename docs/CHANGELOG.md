@@ -4,6 +4,14 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- dk-validate.sh OOM: build now uses 8GB heap explicitly (#233 fix)
+- Playwright check 8 now always runs @smoke suite (not only changed specs)
+
+### Added
+- `e2e/smoke.spec.ts` — 4 baseline @smoke tests (homepage, login, listings, API gating)
+- CLAUDE.md DoD item 11: dk-validator 8/8 PASS mandatory with skip justification
+
 ## [1.0.0] - 2026-05-28 — Ahilik Studio Launch Sprint (16 PR, #204-#220)
 
 ### Added

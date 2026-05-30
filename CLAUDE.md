@@ -48,6 +48,7 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 8. DEVLOG.md + CHANGELOG.md yeniləndi
 9. **dk-validator PASS çıxışı PR-da/commit-də GÖRÜNMƏLI** — Stop hook 5/8 check avtomatik işləyir; tam 8-check üçün `npm run dk:validate` istifadə et
 10. `npm run audit:system` → SYSTEM-AUDIT.md yeniləndi
+11. **Completion report-da dk-validator 8/8 PASS məcburi** — skip yalnız texniki səbəblə (məs. dev server yox, Playwright browser yüklənməyib) + skip səbəbi raportda izah olunmalıdır
 
 ## Workflow standard
 - **Plan əvvəl, kod sonra**: hər task üçün specification yazılır, ekran qarşılığında təsdiq alınır, sonra kod
