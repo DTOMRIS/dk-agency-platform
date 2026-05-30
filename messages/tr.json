@@ -4257,6 +4257,14 @@
       "tryButton": "Aç",
       "gapBadge": "Daha fazla araç yakında",
       "editPrioritiesLink": "Öncelikleri değiştir"
+    },
+    "nudge": {
+      "set_priorities": { "message": "İlk adım: 3 önceliğini belirle, sana uygun aracı bulalım.", "cta": "Öncelik seç" },
+      "try_first_tool": { "message": "Önceliğine uygun bir araç var — 2 dakikada sonuç al.", "cta": "Aracı aç" },
+      "listing_pending": { "message": "İlanın hâlâ incelemede — ortalama süre 48 saat.", "cta": "Detaya bak" },
+      "docs_needed": { "message": "Admin ek belge istedi — kontrol et.", "cta": "İlanlarıma bak" },
+      "listing_live": { "message": "İlanın yayında — bu haftaki görüntülemeleri takip et.", "cta": "İlanlarıma bak" },
+      "comeback": { "message": "Araç kutusunda senin için yeni araçlar var.", "cta": "Araçlara bak" }
     }
   }
 }
