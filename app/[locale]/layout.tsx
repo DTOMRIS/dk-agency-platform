@@ -6,6 +6,7 @@ import { defaultLocale, isLocale, normalizeLocale, withLocale } from '@/i18n/con
 import { routing } from '@/i18n/routing';
 import { getAlternates } from '@/lib/seo/alternates';
 import YandexMetricaInit from '@/components/YandexMetricaInit';
+// PublicChrome is in root layout — [locale] only provides locale-scoped messages
 
 type Props = {
   children: React.ReactNode;
@@ -52,7 +53,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       {children}
       <YandexMetricaInit />
     </NextIntlClientProvider>

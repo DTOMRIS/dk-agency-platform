@@ -5,10 +5,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ChevronDown, Globe, LayoutGrid, LogOut, Menu, UserRound, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useLocale, useTranslations } from 'next-intl';
 import MegaMenu from '@/components/layout/MegaMenu';
 import { clearMemberSession, getGuestSession, readMemberSession, type MemberSession } from '@/lib/member-access';
-import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale } from '@/i18n/config';
+import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale, type Locale } from '@/i18n/config';
+
+// Inline nav copy — NOT dependent on NextIntlClientProvider (fixes stale locale on client nav)
+const NAV_COPY: Record<Locale, Record<string, string>> = {
+  az: { home:'Ana səhifə', tools:'Alətlər', listings:'İlanlar', news:'Sektor Nəbzi', blog:'Bloq', panel:'İdarə Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu' },
+  en: { home:'Home', tools:'Tools', listings:'Listings', news:'Sector Pulse', blog:'Blog', panel:'Control Panel', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu' },
+  ru: { home:'Главная', tools:'Инструменты', listings:'Объявления', news:'Пульс сектора', blog:'Блог', panel:'Панель управления', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню' },
+  tr: { home:'Ana sayfa', tools:'Araçlar', listings:'İlanlar', news:'Sektör Nabzı', blog:'Blog', panel:'Yönetim Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü' },
+};
 
 function getMemberInitials(session: MemberSession) {
   const source = session.name.trim() || session.email.trim();
@@ -17,10 +24,10 @@ function getMemberInitials(session: MemberSession) {
 }
 
 export default function Header() {
-  const t = useTranslations('nav');
   const pathname = usePathname();
   const router = useRouter();
-  const currentLocale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
+  const currentLocale = normalizeLocale(pathname.split('/')[1]);
+  const t = (key: string) => NAV_COPY[currentLocale]?.[key] ?? NAV_COPY.az[key] ?? key;
 
   const navItems = [
     { name: t('home'), href: withLocale(currentLocale, '/'), hasMegaMenu: false },
