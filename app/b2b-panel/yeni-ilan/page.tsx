@@ -151,7 +151,7 @@ export default function YeniIlanPage() {
       {!selectedCategory ? (
         <>
           {/* Category Selection */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {LISTING_CATEGORIES.map((category) => {
               const Icon = ICONS[category.icon] || Package;
 

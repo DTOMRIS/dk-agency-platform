@@ -236,7 +236,7 @@ export default function B2BMessagesPage() {
 
       <div className="p-6">
         {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="bg-white rounded-xl p-4 border border-gray-200">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
@@ -272,9 +272,9 @@ export default function B2BMessagesPage() {
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* Message List */}
-          <div className={`${selectedMessage ? 'w-[400px]' : 'flex-1'} bg-white rounded-2xl border border-gray-200 overflow-hidden`}>
+          <div className={`${selectedMessage ? 'hidden lg:block lg:w-[400px]' : 'flex-1'} bg-white rounded-2xl border border-gray-200 overflow-hidden`}>
             {/* Search & Filter */}
             <div className="p-4 border-b border-gray-100">
               <div className="relative mb-4">
@@ -389,7 +389,7 @@ export default function B2BMessagesPage() {
                 <div className="flex items-start gap-4">
                   <button
                     onClick={() => setSelectedMessage(null)}
-                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
+                    className="p-3 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
                   >
                     <ArrowLeft size={20} />
                   </button>

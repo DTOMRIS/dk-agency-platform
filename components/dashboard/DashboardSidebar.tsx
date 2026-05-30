@@ -25,14 +25,7 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { normalizeLocale, stripLocalePrefix, withLocale } from '@/i18n/config';
-import { adminBlogPosts, adminNewsQueue } from '@/lib/data/adminContent';
-import { MOCK_LISTINGS } from '@/lib/data/mockListings';
-
-const pendingListings = MOCK_LISTINGS.filter((listing) =>
-  ['submitted', 'committee_review', 'ai_checked'].includes(listing.status),
-).length;
-const pendingNews = adminNewsQueue.filter((item) => item.status === 'fetched').length;
-const draftBlogs = adminBlogPosts.filter((item) => item.status === 'draft').length;
+// Badge counts fetched from API (real DB), not mocks
 
 type NavItemDef = {
   titleKey: string;
@@ -43,10 +36,10 @@ type NavItemDef = {
 
 const navItemDefs: NavItemDef[] = [
   { titleKey: 'home', href: '/dashboard', icon: LayoutDashboard },
-  { titleKey: 'listings', href: '/dashboard/ilanlar', icon: Store, badge: pendingListings },
+  { titleKey: 'listings', href: '/dashboard/ilanlar', icon: Store },
   { titleKey: 'hero', href: '/dashboard/hero', icon: FilePenLine },
-  { titleKey: 'news', href: '/dashboard/xeberler', icon: Newspaper, badge: pendingNews },
-  { titleKey: 'blog', href: '/dashboard/blog', icon: BookOpen, badge: draftBlogs },
+  { titleKey: 'news', href: '/dashboard/xeberler', icon: Newspaper },
+  { titleKey: 'blog', href: '/dashboard/blog', icon: BookOpen },
   { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
   { titleKey: 'auditor', href: '/dashboard/auditor', icon: ClipboardCheck },
   { titleKey: 'invoices', href: '/dashboard/faturalar', icon: Receipt },
@@ -69,6 +62,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
   const pathname = usePathname();
   const t = useTranslations('dashboardSidebar');
   const [kazanLeadCount, setKazanLeadCount] = useState<number | null>(null);
+  const [pendingListings, setPendingListings] = useState<number>(0);
   const currentLocale = (() => {
     if (typeof document === 'undefined') return normalizeLocale(pathname.split('/')[1]);
     const match = document.cookie.match(/NEXT_LOCALE=(\w+)/);
@@ -94,7 +88,16 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       }
     }
 
+    async function loadPendingListings() {
+      try {
+        const res = await fetch('/api/listings?scope=admin&status=submitted');
+        const data = (await res.json()) as { data?: Array<unknown>; total?: number };
+        if (!cancelled) setPendingListings(data.total ?? data.data?.length ?? 0);
+      } catch { /* ignore */ }
+    }
+
     void loadKazanLeadCount();
+    void loadPendingListings();
     return () => {
       cancelled = true;
     };
@@ -105,9 +108,13 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       navItemDefs.map((item) => ({
         ...item,
         title: t(`nav.${item.titleKey}`),
-        badge: item.href === '/dashboard/kazan-leads' ? (kazanLeadCount ?? undefined) : item.badge,
+        badge: item.href === '/dashboard/kazan-leads'
+          ? (kazanLeadCount ?? undefined)
+          : item.href === '/dashboard/ilanlar'
+            ? (pendingListings || undefined)
+            : item.badge,
       })),
-    [kazanLeadCount, t],
+    [kazanLeadCount, pendingListings, t],
   );
 
   return (
