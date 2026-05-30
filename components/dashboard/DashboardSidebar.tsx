@@ -69,7 +69,11 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
   const pathname = usePathname();
   const t = useTranslations('dashboardSidebar');
   const [kazanLeadCount, setKazanLeadCount] = useState<number | null>(null);
-  const currentLocale = normalizeLocale(pathname.split('/')[1]);
+  const currentLocale = (() => {
+    if (typeof document === 'undefined') return normalizeLocale(pathname.split('/')[1]);
+    const match = document.cookie.match(/NEXT_LOCALE=(\w+)/);
+    return match ? normalizeLocale(match[1]) : normalizeLocale(pathname.split('/')[1]);
+  })();
   const strippedPath = stripLocalePrefix(pathname);
   const isActive = (href: string) => strippedPath === href || strippedPath.startsWith(`${href}/`);
 

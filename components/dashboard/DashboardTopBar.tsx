@@ -39,21 +39,45 @@ function getInitials(session: MemberSession) {
 
 function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
   const pathname = usePathname();
+  const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/b2b-panel');
+
+  const handleSwitch = (locale: Locale) => {
+    if (isDashboard) {
+      // Dashboard has no locale prefix — set cookie and reload
+      document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=${60 * 60 * 24 * 365}`;
+      window.location.reload();
+    }
+  };
 
   return (
     <div className="flex h-10 items-center rounded-lg border border-[var(--dk-warm-border)] bg-white px-1">
       {locales.map((locale) => (
-        <Link
-          key={locale}
-          href={switchLocalePath(pathname, locale)}
-          className={`rounded-md px-2.5 py-1.5 text-xs font-bold transition ${
-            currentLocale === locale
-              ? 'bg-[var(--dk-navy)] text-white'
-              : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
-          }`}
-        >
-          {localeLabels[locale]}
-        </Link>
+        isDashboard ? (
+          <button
+            key={locale}
+            type="button"
+            onClick={() => handleSwitch(locale)}
+            className={`rounded-md px-2.5 py-1.5 text-xs font-bold transition ${
+              currentLocale === locale
+                ? 'bg-[var(--dk-navy)] text-white'
+                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+            }`}
+          >
+            {localeLabels[locale]}
+          </button>
+        ) : (
+          <Link
+            key={locale}
+            href={switchLocalePath(pathname, locale)}
+            className={`rounded-md px-2.5 py-1.5 text-xs font-bold transition ${
+              currentLocale === locale
+                ? 'bg-[var(--dk-navy)] text-white'
+                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+            }`}
+          >
+            {localeLabels[locale]}
+          </Link>
+        )
       ))}
     </div>
   );
@@ -63,7 +87,12 @@ export function DashboardTopBar() {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('dashboard.topBar');
-  const currentLocale = normalizeLocale(pathname.split('/')[1]);
+  // Read locale from cookie (dashboard has no locale prefix in URL)
+  const currentLocale = (() => {
+    if (typeof document === 'undefined') return normalizeLocale(pathname.split('/')[1]);
+    const match = document.cookie.match(/NEXT_LOCALE=(\w+)/);
+    return match ? normalizeLocale(match[1]) : normalizeLocale(pathname.split('/')[1]);
+  })();
   const [memberSession, setMemberSession] = useState<MemberSession>(getGuestSession());
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
