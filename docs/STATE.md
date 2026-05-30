@@ -3,8 +3,8 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-30T08:05:36.286Z
-- BuildStatus: UNKNOWN
+- GeneratedAt: 2026-05-30T08:10:51.105Z
+- BuildStatus: PASS
 
 ## Routes (184)
 - /[locale]
@@ -192,8 +192,80 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (0)
-
+## API Routes (73)
+- /api/admin/audit-logs
+- /api/admin/members
+- /api/admin/members/[id]
+- /api/admin/members/[id]/reset-password
+- /api/admin/members/bulk
+- /api/admin/news/approve
+- /api/admin/news/pending
+- /api/admin/news/reject
+- /api/ai/ad-writer
+- /api/ai/complaint-response
+- /api/audit
+- /api/audit/[id]
+- /api/auth
+- /api/auth/change-password
+- /api/auth/confirm
+- /api/auth/forgot-password
+- /api/auth/login
+- /api/auth/logout
+- /api/auth/me
+- /api/auth/register
+- /api/auth/reset-password
+- /api/auth/verify-email
+- /api/blog
+- /api/blog/[slug]
+- /api/food-cost
+- /api/health
+- /api/invoice-categories
+- /api/invoice-ocr
+- /api/invoice-pdf
+- /api/invoices
+- /api/kazan-ai
+- /api/kazan-ai/leads
+- /api/leads/track
+- /api/leads/whatsapp
+- /api/listings
+- /api/listings/[id]
+- /api/listings/[id]/leads
+- /api/listings/[id]/reviews
+- /api/listings/[id]/status
+- /api/listings/batch-status
+- /api/marketing-tools/kst-yoxlayici
+- /api/marketing-tools/marka-kompasi
+- /api/marketing-tools/menyu-analitigi
+- /api/marketing-tools/musteri-persona
+- /api/marketing-tools/pnl-simulator
+- /api/marketing-tools/promosyon-roi
+- /api/marketing-tools/sezon-planlama
+- /api/marketing-tools/sikayet-analitigi
+- /api/member/auth
+- /api/member/checkout
+- /api/member/session
+- /api/member/webhook
+- /api/news
+- /api/news-pipeline/fetch
+- /api/news-pipeline/translate
+- /api/news/[slug]
+- /api/news/admin
+- /api/news/admin/[id]
+- /api/news/fetch
+- /api/news/sources/[id]
+- /api/news/translate
+- /api/newsletter/digest
+- /api/orchestrator
+- /api/rss/haberler
+- /api/rss/xeberler
+- /api/rss/xeberler/[locale]
+- /api/settings
+- /api/telegram/post
+- /api/test-email
+- /api/upload
+- /api/user/events
+- /api/user/nudge
+- /api/user/priorities
 
 ## i18n Namespaces (0)
 - none detected
