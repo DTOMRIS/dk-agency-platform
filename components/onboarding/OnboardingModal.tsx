@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { Check, Sparkles, X } from 'lucide-react';
 import {
@@ -10,15 +11,35 @@ import {
   hasGap,
 } from '@/lib/data/priorities';
 
+const SKIP_STORAGE_KEY = 'dk_priorities_skipped_at';
+const SKIP_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+function isSkipExpired(): boolean {
+  if (typeof window === 'undefined') return true;
+  const raw = localStorage.getItem(SKIP_STORAGE_KEY);
+  if (!raw) return true;
+  const diff = Date.now() - new Date(raw).getTime();
+  return diff > SKIP_EXPIRY_MS;
+}
+
+function setSkipFlag() {
+  localStorage.setItem(SKIP_STORAGE_KEY, new Date().toISOString());
+}
+
 export default function OnboardingModal() {
   const t = useTranslations('onboarding');
   const locale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<PriorityKey[]>([]);
   const [saving, setSaving] = useState(false);
   const [checked, setChecked] = useState(false);
 
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = 'onboarding-modal-title';
+
+  // Check if modal should open
   useEffect(() => {
     let cancelled = false;
     fetch('/api/user/priorities')
@@ -26,13 +47,56 @@ export default function OnboardingModal() {
       .then((data) => {
         if (cancelled) return;
         setChecked(true);
-        if (data.priorities === null || data.priorities === undefined) {
+        if (
+          (data.priorities === null || data.priorities === undefined) &&
+          isSkipExpired()
+        ) {
           setOpen(true);
         }
       })
       .catch(() => setChecked(true));
     return () => { cancelled = true; };
   }, []);
+
+  // ESC key handler
+  const handleSkip = useCallback(() => {
+    setSkipFlag();
+    setOpen(false);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleSkip();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open, handleSkip]);
+
+  // Focus trap
+  useEffect(() => {
+    if (!open || !dialogRef.current) return;
+    const dialog = dialogRef.current;
+    const focusable = dialog.querySelectorAll<HTMLElement>(
+      'button, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length > 0) focusable[0].focus();
+
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', trap);
+    return () => document.removeEventListener('keydown', trap);
+  }, [open]);
 
   if (!checked || !open) return null;
 
@@ -55,6 +119,7 @@ export default function OnboardingModal() {
       });
       if (res.ok) {
         setOpen(false);
+        router.refresh();
       }
     } finally {
       setSaving(false);
@@ -62,12 +127,21 @@ export default function OnboardingModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-2xl rounded-[32px] border border-slate-200 bg-white p-8 shadow-2xl">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+    >
+      <div
+        ref={dialogRef}
+        className="relative w-full max-w-2xl rounded-[32px] border border-slate-200 bg-white p-8 shadow-2xl"
+      >
         <button
           type="button"
-          onClick={() => setOpen(false)}
+          onClick={handleSkip}
           className="absolute right-6 top-6 rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+          aria-label="Close"
         >
           <X className="h-5 w-5" />
         </button>
@@ -76,28 +150,34 @@ export default function OnboardingModal() {
           <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-amber-50 text-amber-600">
             <Sparkles className="h-7 w-7" />
           </div>
-          <h2 className="mt-4 font-display text-2xl font-black text-[var(--dk-navy)]">
+          <h2
+            id={titleId}
+            className="mt-4 font-display text-2xl font-black text-[var(--dk-navy)]"
+          >
             {t('title')}
           </h2>
           <p className="mt-2 text-sm text-slate-500">{t('subtitle')}</p>
         </div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        <div className="mt-6 grid gap-3 sm:grid-cols-3" role="group" aria-label={t('title')}>
           {PRIORITY_KEYS.map((key) => {
             const isSelected = selected.includes(key);
-            const disabled = !isSelected && selected.length >= 3;
+            const isDisabled = !isSelected && selected.length >= 3;
             const gap = hasGap(key);
 
             return (
               <button
                 key={key}
                 type="button"
-                onClick={() => toggle(key)}
-                disabled={disabled}
+                role="checkbox"
+                aria-checked={isSelected}
+                aria-disabled={isDisabled}
+                onClick={() => !isDisabled && toggle(key)}
+                tabIndex={0}
                 className={`relative rounded-2xl border p-4 text-left transition ${
                   isSelected
                     ? 'border-[var(--dk-gold)] bg-amber-50 shadow-md'
-                    : disabled
+                    : isDisabled
                       ? 'border-slate-100 bg-slate-50 opacity-50 cursor-not-allowed'
                       : 'border-slate-200 bg-white hover:border-[var(--dk-gold)] hover:shadow-sm'
                 }`}
@@ -131,7 +211,7 @@ export default function OnboardingModal() {
         <div className="mt-6 flex items-center justify-between gap-3">
           <button
             type="button"
-            onClick={() => setOpen(false)}
+            onClick={handleSkip}
             className="rounded-full border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-500 hover:bg-slate-50"
           >
             {t('skip')}
