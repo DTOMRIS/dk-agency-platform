@@ -106,44 +106,38 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          query: `Bu ${category?.title || categoryId} ilanını analiz et ve yatırım değerlendirmesi yap:\n\n${JSON.stringify(formData, null, 2)}`,
-          context: {
-            categoryId,
-            categoryName: category?.title || categoryId,
-            formData,
-            requestType: 'listing_analysis'
-          },
-          targetAgent: 'almila'
+          taskType: 'AlmilaCloser',
+          userPrompt: `Bu ${category?.title || categoryId} ilanını analiz et ve yatırım değerlendirmesi yap:\n\n${JSON.stringify(formData, null, 2)}`,
         })
       });
 
       if (!response.ok) {
-        throw new Error('AI analizi başarısız oldu');
+        const errData = await response.json().catch(() => ({}));
+        const status = response.status;
+        if (status === 401 || status === 403) {
+          throw new Error('AI xidməti konfiqurasiya olunmayıb. Admin ilə əlaqə saxlayın.');
+        } else if (status === 429) {
+          throw new Error('Çox sayda sorğu. Bir neçə dəqiqə gözləyin.');
+        } else {
+          throw new Error(errData.error || 'AI analizi başarısız oldu');
+        }
       }
 
       const data = await response.json();
-      
-      // Parse AI response into structured format
+
       const aiAnalysis: AIAnalysisResult = {
-        score: Math.floor(Math.random() * 30) + 70, // Simulated score 70-100
+        score: 0,
         summary: data.response || 'İlan analizi tamamlandı.',
-        strengths: [
-          'Konum avantajı yüksek',
-          'Sektörel büyüme potansiyeli mevcut',
-          'Operasyonel verimlilik göstergeleri pozitif'
-        ],
-        risks: [
-          'Piyasa dalgalanmalarına duyarlılık',
-          'Rekabet yoğunluğu orta-yüksek'
-        ],
-        recommendation: 'Yatırım için uygun. Detaylı due diligence önerilir.',
+        strengths: [],
+        risks: [],
+        recommendation: data.response || 'Analiz nəticəsi yuxarıda.',
         estimatedValue: formData.fiyat ? `${(Number(formData.fiyat) * 0.9).toLocaleString('tr-TR')} - ${(Number(formData.fiyat) * 1.1).toLocaleString('tr-TR')} ₼` : undefined
       };
-      
+
       setAiResult(aiAnalysis);
     } catch (err) {
       console.error('AI Analysis error:', err);
-      setAiError('AI analizi sırasında bir hata oluştu. Lütfen tekrar deneyin.');
+      setAiError(err instanceof Error ? err.message : 'AI analizi sırasında bir hata oluştu.');
     } finally {
       setAiAnalyzing(false);
     }
