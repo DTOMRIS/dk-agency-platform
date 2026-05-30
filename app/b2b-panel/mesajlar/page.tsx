@@ -146,11 +146,11 @@ const messages: Message[] = [
   },
   {
     id: 2,
-    from: 'Almila AI Asistan',
+    from: 'DK Agency AI',
     avatar: 'AI',
     subject: 'Ön Değerleme Raporunuz Hazır',
     preview: 'Talep ettiğiniz AI destekli ön değerleme raporu oluşturuldu. Yatırım skoru: 82/100...',
-    content: 'Merhaba,\n\nTalep ettiğiniz yapay zeka destekli ön değerleme raporu hazırlandı.\n\n📊 RAPOR ÖZETİ\n\nYatırım Skoru: 82/100 (İyi)\n\n✅ Güçlü Yönler:\n- Konum avantajı (merkezi lokasyon)\n- Stabil müşteri tabanı\n- Pozitif nakit akışı\n\n⚠️ Dikkat Edilecek Noktalar:\n- Kira kontratı 18 ay içinde sona eriyor\n- Ekipman yaşı ortalamanın üzerinde\n\n💰 Tahmini Değer Aralığı:\n405,000 ₼ - 495,000 ₼\n\nDetaylı rapor ekte PDF olarak sunulmuştur.\n\n🤖 Almila AI\nDK Agency Yapay Zeka Asistanı',
+    content: 'Merhaba,\n\nTalep ettiğiniz yapay zeka destekli ön değerleme raporu hazırlandı.\n\n📊 RAPOR ÖZETİ\n\nYatırım Skoru: 82/100 (İyi)\n\n✅ Güçlü Yönler:\n- Konum avantajı (merkezi lokasyon)\n- Stabil müşteri tabanı\n- Pozitif nakit akışı\n\n⚠️ Dikkat Edilecek Noktalar:\n- Kira kontratı 18 ay içinde sona eriyor\n- Ekipman yaşı ortalamanın üzerinde\n\n💰 Tahmini Değer Aralığı:\n405,000 ₼ - 495,000 ₼\n\nDetaylı rapor ekte PDF olarak sunulmuştur.\n\n🤖 DK Agency AI\nYapay Zeka Asistanı',
     time: '1 gün önce',
     read: false,
     starred: true,

@@ -97,10 +97,10 @@ export default function B2BSidebar() {
         <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
           <div className="flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-dk-red/15 font-bold text-dk-red shadow-sm">
-              IH
+              DK
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-slate-900">Istanbul HORECA</p>
+              <p className="truncate text-sm font-semibold text-slate-900">DK Agency</p>
               <div className="mt-0.5 flex items-center gap-1.5">
                 <Shield size={10} className="text-amber-500" />
                 <span className="text-[10px] font-semibold uppercase text-amber-600">{t('premium')}</span>
@@ -184,9 +184,9 @@ export default function B2BSidebar() {
             <span className="text-sm font-bold text-slate-900">{t('kazanAiTitle')}</span>
           </div>
           <p className="mb-3 text-xs text-slate-600">{t('kazanAiDesc')}</p>
-          <button className="w-full rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 py-2 text-xs font-bold text-slate-900 transition-all hover:from-amber-300 hover:to-amber-400">
+          <Link href="/kazan-ai" className="block w-full rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 py-2 text-center text-xs font-bold text-slate-900 transition-all hover:from-amber-300 hover:to-amber-400">
             {t('kazanAiCta')}
-          </button>
+          </Link>
         </div>
       </div>
 

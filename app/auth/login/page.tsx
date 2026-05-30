@@ -202,6 +202,7 @@ export default function LoginPage() {
                   <input
                     type="email"
                     required
+                    autoComplete="username"
                     value={formData.email}
                     onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                     placeholder={copy.emailPlaceholder}
