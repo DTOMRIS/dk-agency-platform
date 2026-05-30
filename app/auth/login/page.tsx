@@ -148,11 +148,12 @@ export default function LoginPage() {
         return;
       }
 
+      const isAdmin = data.user.role === 'admin';
       const session: MemberSession = {
         email: data.user.email,
         name: data.user.name || '',
         loggedIn: true,
-        plan: data.user.role === 'admin' ? 'admin' : 'member',
+        plan: isAdmin ? 'admin' : 'member',
       };
       writeMemberSession(session);
       await fetch('/api/member/session', {
@@ -161,7 +162,10 @@ export default function LoginPage() {
         body: JSON.stringify(session),
       });
 
-      router.push(nextUrl);
+      // Role-based redirect: admin → dashboard, member → b2b-panel
+      const defaultRedirect = isAdmin ? '/dashboard' : '/b2b-panel';
+      const target = nextUrl === '/haberler' ? defaultRedirect : nextUrl;
+      router.push(target);
     } finally {
       setSubmitting(false);
     }
