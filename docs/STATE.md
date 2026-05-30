@@ -3,7 +3,7 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-30T19:34:27.897Z
+- GeneratedAt: 2026-05-30T19:51:17.032Z
 - BuildStatus: PASS
 
 ## Routes (193)
@@ -201,7 +201,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (73)
+## API Routes (74)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -275,6 +275,7 @@ Auto-generated. Do not edit manually.
 - /api/user/events
 - /api/user/nudge
 - /api/user/priorities
+- /api/user/profile
 
 ## i18n Namespaces (0)
 - none detected
