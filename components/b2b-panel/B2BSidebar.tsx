@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
@@ -70,6 +71,24 @@ const NAV_SECTIONS: NavSection[] = [
   },
 ];
 
+function getProfileFromStorage(): { logo?: string; form?: { companyName?: string } } | null {
+  if (typeof window === 'undefined') return null;
+  try { return JSON.parse(localStorage.getItem('dk_company_profile') || 'null'); } catch { return null; }
+}
+
+function CompanyLogo() {
+  const [logo, setLogo] = useState<string | null>(null);
+  useEffect(() => { setLogo(getProfileFromStorage()?.logo || null); }, []);
+  if (logo) return <img src={logo} alt="Logo" className="h-12 w-12 rounded-xl object-cover border border-slate-200" />;
+  return <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-dk-red/15 font-bold text-dk-red shadow-sm">DK</div>;
+}
+
+function CompanyName() {
+  const [name, setName] = useState('DK Agency');
+  useEffect(() => { setName(getProfileFromStorage()?.form?.companyName || 'DK Agency'); }, []);
+  return <p className="truncate text-sm font-semibold text-slate-900">{name}</p>;
+}
+
 export default function B2BSidebar() {
   const pathname = usePathname();
   const t = useTranslations('dashboard.sidebar');
@@ -96,11 +115,9 @@ export default function B2BSidebar() {
       <div className="border-b border-slate-200 p-4">
         <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-dk-red/15 font-bold text-dk-red shadow-sm">
-              DK
-            </div>
+            <CompanyLogo />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-slate-900">DK Agency</p>
+              <CompanyName />
               <div className="mt-0.5 flex items-center gap-1.5">
                 <Shield size={10} className="text-amber-500" />
                 <span className="text-[10px] font-semibold uppercase text-amber-600">{t('premium')}</span>

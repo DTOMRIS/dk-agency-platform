@@ -19,24 +19,34 @@ const SECTORS = [
 ];
 
 export default function ProfilPage() {
+  const STORAGE_KEY = 'dk_company_profile';
+
+  const loadSaved = () => {
+    if (typeof window === 'undefined') return null;
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; }
+  };
+
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string | null>(() => loadSaved()?.logo || null);
   const [isPublic, setIsPublic] = useState(true);
-  const [form, setForm] = useState({
-    companyName: '',
-    sector: '',
-    description: '',
-    city: '',
-    district: '',
-    address: '',
-    phone: '',
-    email: '',
-    website: '',
-    contactPerson: '',
-    contactRole: '',
-    language: 'az',
-    voen: '',
+  const [form, setForm] = useState(() => {
+    const s = loadSaved();
+    return s?.form || {
+      companyName: '',
+      sector: '',
+      description: '',
+      city: '',
+      district: '',
+      address: '',
+      phone: '',
+      email: '',
+      website: '',
+      contactPerson: '',
+      contactRole: '',
+      language: 'az',
+      voen: '',
+    };
   });
 
   const handleChange = (key: string, value: string) => {
@@ -60,7 +70,13 @@ export default function ProfilPage() {
         const ctx = canvas.getContext('2d');
         if (ctx) {
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          setLogoPreview(canvas.toDataURL('image/jpeg', 0.8));
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          setLogoPreview(dataUrl);
+          // Persist logo + form to localStorage
+          try {
+            const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...existing, logo: dataUrl }));
+          } catch { /* quota exceeded — ignore */ }
         }
       };
       img.src = reader.result as string;
@@ -70,7 +86,10 @@ export default function ProfilPage() {
 
   const handleSave = async () => {
     setSaving(true);
-    // TODO: POST /api/user/profile — admin onay gözləyəcək
+    // Persist to localStorage (real API: POST /api/user/profile → admin onay)
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ form, logo: logoPreview, isPublic, savedAt: new Date().toISOString() }));
+    } catch { /* ignore */ }
     await new Promise((r) => setTimeout(r, 800));
     setSaving(false);
     setSaved(true);
