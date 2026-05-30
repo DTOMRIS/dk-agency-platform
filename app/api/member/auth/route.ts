@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { type MemberSession } from '@/lib/member-access';
-import { loginMember, registerMember } from '@/lib/members/auth-adapter';
+import { loginMember } from '@/lib/members/auth-adapter';
 import { MEMBER_COOKIE_NAME, encodeMemberSession } from '@/lib/members/server-session';
 
 function withSession(response: NextResponse, session: MemberSession) {
@@ -17,13 +17,20 @@ function withSession(response: NextResponse, session: MemberSession) {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const action = body?.action as 'login' | 'register';
+  const action = body?.action as string;
 
-  if (action !== 'login' && action !== 'register') {
+  if (action === 'register') {
+    return NextResponse.json(
+      { ok: false, error: 'Bu endpoint-dən qeydiyyat deaktiv edilib. /api/auth/register istifadə edin.' },
+      { status: 410 },
+    );
+  }
+
+  if (action !== 'login') {
     return NextResponse.json({ ok: false, error: 'Yanlış auth action.' }, { status: 400 });
   }
 
-  const result = action === 'login' ? await loginMember(body) : await registerMember(body);
+  const result = await loginMember(body);
 
   if (!result.ok || !result.session) {
     if (result.ok && result.verificationRequired) {
