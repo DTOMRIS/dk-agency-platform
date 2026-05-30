@@ -336,18 +336,18 @@ export default function FoodCostDashboard() {
           <h2 className="text-sm font-bold text-[var(--dk-navy)]">{t('trendChartTitle')}</h2>
         </div>
         <div className="flex items-end gap-3" style={{ height: 180 }}>
-          {trend.map((t) => {
-            const h = Math.max((t.totalAmount / maxTrend) * 160, 8);
-            const isCurrentMonth = t.month === `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
+          {trend.map((item) => {
+            const h = Math.max((item.totalAmount / maxTrend) * 160, 8);
+            const isCurrentMonth = item.month === `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
             return (
-              <div key={t.month} className="flex flex-1 flex-col items-center gap-1">
-                <span className="text-[10px] font-semibold text-slate-500">{formatMoneyShort(t.totalAmount)}₼</span>
+              <div key={item.month} className="flex flex-1 flex-col items-center gap-1">
+                <span className="text-[10px] font-semibold text-slate-500">{formatMoneyShort(item.totalAmount)}₼</span>
                 <div
                   className={`w-full rounded-t-lg transition-all ${isCurrentMonth ? 'bg-[var(--dk-gold)]' : 'bg-slate-200'}`}
                   style={{ height: h }}
-                  title={`${formatMoney(t.totalAmount)} ₼ — ${t.invoiceCount} ${t('invoiceUnit')}`}
+                  title={`${formatMoney(item.totalAmount)} ₼ — ${item.invoiceCount} ${t('invoiceUnit')}`}
                 />
-                <span className="text-[11px] font-medium text-slate-500">{formatMonth(t.month, monthsShort)}</span>
+                <span className="text-[11px] font-medium text-slate-500">{formatMonth(item.month, monthsShort)}</span>
               </div>
             );
           })}
