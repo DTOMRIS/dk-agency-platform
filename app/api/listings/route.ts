@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
     type,
     sector,
     city,
-    status,
+    status: status || 'showcase_ready',
     showcase: showcase || undefined,
     minPrice: minPrice ? Number(minPrice) : undefined,
     maxPrice: maxPrice ? Number(maxPrice) : undefined,
