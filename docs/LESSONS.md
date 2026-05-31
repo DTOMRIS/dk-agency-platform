@@ -209,3 +209,13 @@ Qayda: middleware yalniz `/` ve real locale-prefixed path-lere next-intl
 uygulamali; unprefixed public path-ler `NextResponse.next()` ile app route-a
 buraxilmalidir. Regression test mutleq hem `/az/ilan-ver`, hem `/ilan-ver`,
 hem de RU/EN/TR public route-lari yoxlamalidir.
+
+**Yan effekt (31 May 2026, PR#252):** Fix sonrasi AZ default locale
+prefix-siz URL-ler (`/blog/slug`) Next.js route-a catir, amma
+`app/[locale]/blog/[slug]` strukturunda prefix-siz `app/blog/[slug]`
+route yox idi → 404. Həll: `app/blog/[slug]/page.tsx` re-export yaradildi.
+
+**Audit nəticəsi:** 14 route yoxlanildi (blog, ilanlar, ilan-ver, toolkit,
+xeberler, uzvluk, haqqimizda + sub-route-lar). Yan effekt YALNIZ blog
+`[slug]` detail-ə məxsus idi — digər səhifələr həm `/path` həm `/az/path`
+formatinda 200 qaytarir. Variant C (middleware rewrite) lazim deyil.
