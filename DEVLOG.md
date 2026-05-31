@@ -1,5 +1,25 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-05-31 - TASK-0180 Public CreateListingForm concept axis
+
+**Why:** Concept/location methodology existed in `ListingForm`, but public `/ilan-ver` uses `CreateListingForm`, so submissions were missing concept axis data.
+
+**What:** Public listing Step 3 now uses `listingConcepts.ts` and sector location fields from `listingFieldConfig.ts`, shows max-3 concept chips, records location indicators, renders recommendation warnings, previews the selected data, and stores it in `typeSpecificData`.
+
+**Verification:** Build PASS. Target lint PASS. Audit regenerated. API POST unauthenticated returns 401. Locale redirect loop was fixed in the follow-up route task below.
+
+---
+
+## 2026-05-31 - TASK-LOCALE-LOOP / TASK-DEBT-CLEANUP / TASK-I18N-IDEMPOTENT / TASK-BLOG-CONTENT-RUN
+
+**Why:** `/az/*` public routes could loop through next-intl default-locale redirects, field-config tests expected the pre-equipment field count, Windows audit scripts depended on `grep`, and the content translation script skipped whole rows when only `title_xx` existed.
+
+**What:** Middleware now lets unprefixed public paths bypass next-intl while preserving locale-prefixed handling; `/[locale]/listings` alias was added for English campaign links. Mobile listing/form surfaces were tightened. Field config test now expects 14 devir fields. Audit/state generators are Windows-safe. Content translation is per-field idempotent with dry/mock scripts. Blog DB content was translated for RU/EN/TR.
+
+**Verification:** Build PASS. Target lint PASS. `e2e/locale-routes.spec.ts` 6/6 PASS. `e2e/listing-field-config.test.ts` PASS. `npm run audit:system` reports routes=194, DeepSeek=19, Gemini=7, i18n parity 3298/3298/3298/3298. DB count after blog run: 13/13 title, summary, content filled for RU/EN/TR.
+
+---
+
 ## 2026-05-28 — Ahilik Studio Launch Sprint (16 PR, #204-#220)
 
 **Why:** Bütün platforma vahid "Ahilik Studio" dizayn dilinə keçməli idi. AI stack deprecated model-lərdən yenilənməli idi. Toolkit-lər canlı AI insight istəyirdi. Devir marketplace real CRUD təməlinə ehtiyac var idi.
@@ -760,5 +780,3 @@ Sprint 1 (Faza 0) — yalniz infrastruktur, hec bir alet implement edilmir:
 - Added Playwright smoke coverage for the P&L simulator in 4 locales.
 
 **Out of scope:** other toolkit calculators, migrations, protected files.
-
----

@@ -4,6 +4,7 @@ import { ChangeEvent, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import {
+  AlertCircle,
   ArrowRight,
   Check,
   CheckCircle2,
@@ -18,7 +19,14 @@ import {
   LISTING_CATEGORIES,
   type ListingCategory,
 } from '@/lib/data/listingCategories';
-import { getFieldsForType, type FieldConfig, type EquipmentItem } from '@/lib/data/listingFieldConfig';
+import {
+  getFieldsForType,
+  getLocationFieldsForSector,
+  getWarningsForConcepts,
+  type FieldConfig,
+  type EquipmentItem,
+} from '@/lib/data/listingFieldConfig';
+import { getConceptsForSector, getConceptLabel, type ConceptKey } from '@/lib/data/listingConcepts';
 import { getAllSectors } from '@/lib/data/listingSectors';
 import { compressImage, generateThumbnail, validateImage } from '@/lib/utils/imageUtils';
 
@@ -35,6 +43,15 @@ const OPTION_I18N_MAP: Record<string, string> = {
   'İstifadə olunmuş - əla': 'fieldOptions.conditionExcellent',
   'İstifadə olunmuş - yaxşı': 'fieldOptions.conditionGood',
   'Təmirə ehtiyacı var': 'fieldOptions.conditionRepair',
+};
+
+const LOCATION_OPTION_I18N_MAP: Record<string, string> = {
+  Tam: 'fieldOptions.full',
+  'Qismən': 'fieldOptions.partial',
+  Yoxdur: 'fieldOptions.none',
+  AVM: 'fieldOptions.mall',
+  'Küçə': 'fieldOptions.street',
+  'Qarışıq': 'fieldOptions.mixed',
 };
 
 interface SessionLike {
@@ -100,6 +117,8 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
   const [images, setImages] = useState<UploadedImageItem[]>([]);
   const [coverIndex, setCoverIndex] = useState(0);
   const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
+  const [selectedConcepts, setSelectedConcepts] = useState<ConceptKey[]>([]);
+  const [locationData, setLocationData] = useState<Record<string, string | number | boolean>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [toast, setToast] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -117,6 +136,18 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     () => DISTRICT_OPTIONS.filter((item) => item.city === formData.city),
     [formData.city],
   );
+  const availableConcepts = useMemo(
+    () => getConceptsForSector(formData.sector),
+    [formData.sector],
+  );
+  const locationFields = useMemo(
+    () => getLocationFieldsForSector(formData.sector),
+    [formData.sector],
+  );
+  const conceptWarnings = useMemo(
+    () => getWarningsForConcepts(selectedConcepts, locationData, locale),
+    [selectedConcepts, locationData, locale],
+  );
 
   /** Resolve field label: use i18n key if available, fallback to field.label */
   const fieldLabel = (field: FieldConfig) => {
@@ -125,7 +156,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
   /** Resolve select option display: use i18n mapping if available */
   const optionLabel = (option: string) => {
-    const key = OPTION_I18N_MAP[option];
+    const key = OPTION_I18N_MAP[option] ?? LOCATION_OPTION_I18N_MAP[option];
     if (!key) return option;
     try { return t(key); } catch { return option; }
   };
@@ -156,6 +187,10 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
   };
 
   const setField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+    if (key === 'sector') {
+      setSelectedConcepts([]);
+      setLocationData({});
+    }
     setFormData((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => {
       const next = { ...prev };
@@ -175,6 +210,23 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     setErrors((prev) => {
       const next = { ...prev };
       delete next[`dynamic:${key}`];
+      return next;
+    });
+  };
+
+  const toggleConcept = (key: ConceptKey) => {
+    setSelectedConcepts((prev) => {
+      if (prev.includes(key)) return prev.filter((item) => item !== key);
+      if (prev.length >= 3) return prev;
+      return [...prev, key];
+    });
+  };
+
+  const setLocationField = (key: string, value: string | number | boolean) => {
+    setLocationData((prev) => ({ ...prev, [key]: value }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next[`location:${key}`];
       return next;
     });
   };
@@ -212,6 +264,12 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
         const value = formData.typeSpecificData[field.key];
         if (field.required && (value === undefined || value === null || value === '')) {
           nextErrors[`dynamic:${field.key}`] = t('errors.fieldRequired', { label: fieldLabel(field) });
+        }
+      }
+      for (const field of locationFields) {
+        const value = locationData[field.key];
+        if (field.required && (value === undefined || value === null || value === '')) {
+          nextErrors[`location:${field.key}`] = t('errors.fieldRequired', { label: fieldLabel(field) });
         }
       }
     }
@@ -319,10 +377,19 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
     try {
       const uploadedImages = await uploadImagesIfPossible(trackingCode);
+      const conceptPayload = selectedConcepts.length > 0 ? selectedConcepts : undefined;
+      const locationPayload = Object.keys(locationData).length > 0 ? locationData : undefined;
       const payload = {
         ...formData,
         trackingCode,
         equipment: equipment.filter(e => e.name.trim()),
+        concepts: conceptPayload,
+        locationDetails: locationPayload,
+        typeSpecificData: {
+          ...formData.typeSpecificData,
+          ...(conceptPayload ? { concepts: conceptPayload } : {}),
+          ...(locationPayload ? { locationDetails: locationPayload } : {}),
+        },
         images:
           uploadedImages.length > 0
             ? uploadedImages.map((image: { url: string }) => ({ url: image.url }))
@@ -352,18 +419,20 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     setImages([]);
     setCoverIndex(0);
     setErrors({});
+    setSelectedConcepts([]);
+    setLocationData({});
     setStep(1);
     setSubmittedCode('');
   };
 
   if (submittedCode) {
     return (
-      <div className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-8">
         <div className="text-center">
           <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
             <CheckCircle2 className="h-8 w-8" />
           </div>
-          <h1 className="mt-5 font-display text-4xl font-black text-[var(--dk-navy)]">
+          <h1 className="mt-5 font-display text-2xl font-black text-[var(--dk-navy)] sm:text-4xl">
             {t('successTitle')}
           </h1>
           <div className="mt-5 inline-flex items-center gap-3 rounded-full bg-slate-50 px-5 py-3 text-lg font-black text-[var(--dk-navy)]">
@@ -401,15 +470,15 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
   return (
     <div className="space-y-8">
-      <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="grid gap-4 md:grid-cols-5">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
+        <div className="flex gap-3 overflow-x-auto pb-1 md:grid md:grid-cols-5 md:gap-4 md:overflow-visible md:pb-0">
           {STEP_KEYS.map((key, index) => {
             const stepNumber = (index + 1) as FormStep;
             const isDone = step > stepNumber;
             const isActive = step === stepNumber;
 
             return (
-              <div key={key} className="flex items-center gap-3">
+              <div key={key} className="flex min-w-[170px] items-center gap-3 md:min-w-0">
                 <div
                   className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm font-black ${
                     isDone
@@ -438,8 +507,8 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       ) : null}
 
       {step === 1 ? (
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">{t('selectCategory')}</h2>
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
+          <h2 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{t('selectCategory')}</h2>
           <p className="mt-2 text-sm text-slate-500">
             {t('selectCategoryDesc')}
           </p>
@@ -451,7 +520,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                   type="button"
                   key={item.id}
                   onClick={() => setField('type', item.id)}
-                  className={`rounded-[28px] border bg-white p-5 text-left transition ${
+                  className={`rounded-2xl border bg-white p-4 text-left transition sm:rounded-[28px] sm:p-5 ${
                     selected
                       ? 'border-[var(--dk-gold)] shadow-lg shadow-amber-100'
                       : 'border-slate-200 hover:border-[var(--dk-gold)] hover:shadow-md'
@@ -467,7 +536,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                       </span>
                     ) : null}
                   </div>
-                  <h3 className="mt-4 font-display text-2xl font-black text-[var(--dk-navy)]">{catLabel(item.id)}</h3>
+                  <h3 className="mt-4 font-display text-xl font-black text-[var(--dk-navy)] sm:text-2xl">{catLabel(item.id)}</h3>
                   <p className="mt-2 text-sm leading-7 text-slate-500">{catDesc(item.id)}</p>
                 </button>
               );
@@ -478,7 +547,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       ) : null}
 
       {step === 2 ? (
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
           <div className="grid gap-5 md:grid-cols-2">
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">{t('titleLabel')} *</label>
@@ -493,15 +562,15 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">{t('priceLabel')} *</label>
-              <div className="flex items-center rounded-2xl border border-slate-200 bg-white">
+              <div className="flex min-w-0 items-center rounded-2xl border border-slate-200 bg-white">
                 <input
                   type="number"
                   min={1}
                   value={formData.price}
                   onChange={(event) => setField('price', event.target.value)}
-                  className="w-full rounded-2xl bg-transparent px-4 py-3 text-sm text-slate-900 outline-none"
+                  className="min-w-0 w-full rounded-2xl bg-transparent px-4 py-3 text-sm text-slate-900 outline-none"
                 />
-                <span className="px-4 text-sm font-bold text-slate-500">AZN</span>
+                <span className="shrink-0 px-3 text-sm font-bold text-slate-500 sm:px-4">AZN</span>
               </div>
               {errors.price ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.price}</p> : null}
             </div>
@@ -617,7 +686,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       ) : null}
 
       {step === 3 ? (
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
           <div className="mb-5 flex items-center gap-3">
             <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${selectedCategory?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
               {t('selectedCategory', { name: selectedCategory ? catLabel(selectedCategory.id) : '' })}
@@ -688,7 +757,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                     ))}
                   </select>
                 ) : (
-                  <div className="flex items-center rounded-2xl border border-slate-200 bg-white">
+                  <div className="flex min-w-0 items-center rounded-2xl border border-slate-200 bg-white">
                     <input
                       type={field.type === 'number' ? 'number' : 'text'}
                       value={String(formData.typeSpecificData[field.key] ?? '')}
@@ -699,26 +768,134 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                         )
                       }
                       placeholder={field.placeholder}
-                      className="w-full rounded-2xl bg-transparent px-4 py-3 text-sm text-slate-900 outline-none"
+                      className="min-w-0 w-full rounded-2xl bg-transparent px-4 py-3 text-sm text-slate-900 outline-none"
                     />
-                    {field.suffix ? <span className="px-4 text-sm font-bold text-slate-500">{field.suffix}</span> : null}
+                    {field.suffix ? <span className="shrink-0 whitespace-nowrap px-3 text-sm font-bold text-slate-500 sm:px-4">{field.suffix}</span> : null}
                   </div>
                 )}
                 {errors[`dynamic:${field.key}`] ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors[`dynamic:${field.key}`]}</p> : null}
               </div>
             ))}
+
+            {availableConcepts.length > 0 ? (
+              <div className="md:col-span-2 border-t border-slate-200 pt-5">
+                <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('conceptTitle')}</div>
+                    <p className="mt-1 text-sm text-slate-500">{t('conceptHelp')}</p>
+                  </div>
+                  <span className="rounded-full bg-slate-50 px-3 py-1 text-xs font-bold text-slate-500">
+                    {t('conceptCount', { count: selectedConcepts.length })}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {availableConcepts.map((concept) => {
+                    const selected = selectedConcepts.includes(concept);
+                    const disabled = !selected && selectedConcepts.length >= 3;
+                    return (
+                      <button
+                        key={concept}
+                        type="button"
+                        disabled={disabled}
+                        onClick={() => toggleConcept(concept)}
+                        className={`rounded-full border px-3 py-2 text-sm font-bold transition sm:px-4 ${
+                          selected
+                            ? 'border-amber-300 bg-amber-50 text-amber-800'
+                            : disabled
+                              ? 'border-slate-100 bg-slate-50 text-slate-300'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-amber-300'
+                        }`}
+                      >
+                        {getConceptLabel(concept, locale)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : null}
+
+            {locationFields.length > 0 ? (
+              <div className="md:col-span-2 border-t border-slate-200 pt-5">
+                <div className="mb-4">
+                  <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('locationDetailsTitle')}</div>
+                  <p className="mt-1 text-sm text-slate-500">{t('locationDetailsHelp')}</p>
+                </div>
+                <div className="grid gap-5 md:grid-cols-2">
+                  {locationFields.map((field) => (
+                    <div key={field.key}>
+                      <label className="mb-2 block text-sm font-bold text-slate-700">
+                        {fieldLabel(field)}
+                        {field.required ? ' *' : ''}
+                      </label>
+                      {field.type === 'boolean' ? (
+                        <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(locationData[field.key])}
+                            onChange={(event) => setLocationField(field.key, event.target.checked)}
+                            className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]"
+                          />
+                          {fieldLabel(field)}
+                        </label>
+                      ) : field.type === 'select' ? (
+                        <select
+                          value={String(locationData[field.key] ?? '')}
+                          onChange={(event) => setLocationField(field.key, event.target.value)}
+                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                        >
+                          <option value="">{t('selectPlaceholder')}</option>
+                          {field.options?.map((option) => (
+                            <option key={option} value={option}>
+                              {optionLabel(option)}
+                            </option>
+                          ))}
+                        </select>
+                      ) : (
+                        <div className="flex min-w-0 items-center rounded-2xl border border-slate-200 bg-white">
+                          <input
+                            type={field.type === 'number' ? 'number' : 'text'}
+                            value={String(locationData[field.key] ?? '')}
+                            onChange={(event) =>
+                              setLocationField(
+                                field.key,
+                                field.type === 'number' ? Number(event.target.value) || '' : event.target.value,
+                              )
+                            }
+                            placeholder={field.placeholder}
+                            className="min-w-0 w-full rounded-2xl bg-transparent px-4 py-3 text-sm text-slate-900 outline-none"
+                          />
+                          {field.suffix ? <span className="shrink-0 whitespace-nowrap px-3 text-sm font-bold text-slate-500 sm:px-4">{field.suffix}</span> : null}
+                        </div>
+                      )}
+                      {errors[`location:${field.key}`] ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors[`location:${field.key}`]}</p> : null}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+            {conceptWarnings.length > 0 ? (
+              <div className="md:col-span-2 space-y-2">
+                {conceptWarnings.map((warning) => (
+                  <div key={warning} className="flex items-start gap-2 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                    {warning}
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}
 
       {step === 4 ? (
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">{t('photosTitle')}</h2>
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
+          <h2 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{t('photosTitle')}</h2>
           <p className="mt-2 text-sm leading-7 text-slate-500">
             {t('photosDesc')}
           </p>
 
-          <label className="mt-6 flex cursor-pointer items-center justify-center gap-3 rounded-[28px] border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-sm font-semibold text-slate-600">
+          <label className="mt-6 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-center text-sm font-semibold text-slate-600 sm:flex-row sm:rounded-[28px] sm:px-6 sm:py-10">
             <UploadCloud className="h-5 w-5 text-[var(--dk-gold)]" />
             {t('addPhoto')}
             <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleImages} />
@@ -764,23 +941,23 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       ) : null}
 
       {step === 5 ? (
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between gap-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">{t('previewTitle')}</h2>
+              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{t('previewTitle')}</h2>
               <p className="mt-2 text-sm text-slate-500">{t('previewDesc')}</p>
             </div>
           </div>
 
-          <div className="mt-6 overflow-hidden rounded-[28px] border border-slate-200 bg-white">
+          <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white sm:rounded-[28px]">
             {images[coverIndex] ? (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={images[coverIndex].preview} alt={t('coverPhoto')} className="aspect-[16/8] w-full object-cover" />
               </>
             ) : null}
-            <div className="p-6">
-              <div className="mb-4 flex items-center justify-between gap-4">
+            <div className="p-4 sm:p-6">
+              <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${selectedCategory?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
                   {selectedCategory ? catLabel(selectedCategory.id) : t('categoryFallback')}
                 </span>
@@ -792,8 +969,8 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
 
               <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
                 <div>
-                  <h3 className="font-display text-3xl font-black text-[var(--dk-navy)]">{formData.title}</h3>
-                  <div className="mt-3 text-2xl font-black text-[var(--dk-gold)]">
+                  <h3 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{formData.title}</h3>
+                  <div className="mt-3 text-xl font-black text-[var(--dk-gold)] sm:text-2xl">
                     {Number(formData.price || 0).toLocaleString('az-AZ')} {formData.currency}
                   </div>
                   <p className="mt-3 text-sm text-slate-500">
@@ -823,6 +1000,26 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                           <div className="mt-2 font-semibold text-slate-700">{formatPreviewValue(field, formData.typeSpecificData[field.key])}</div>
                         </div>
                       ))}
+                      {selectedConcepts.length > 0 ? (
+                        <div className="rounded-2xl bg-white p-4 text-sm sm:col-span-2">
+                          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{t('conceptTitle')}</div>
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {selectedConcepts.map((concept) => (
+                              <span key={concept} className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">
+                                {getConceptLabel(concept, locale)}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null}
+                      {locationFields
+                        .filter((field) => locationData[field.key] !== undefined && locationData[field.key] !== '')
+                        .map((field) => (
+                          <div key={field.key} className="rounded-2xl bg-white p-4 text-sm">
+                            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{fieldLabel(field)}</div>
+                            <div className="mt-2 font-semibold text-slate-700">{formatPreviewValue(field, locationData[field.key])}</div>
+                          </div>
+                        ))}
                     </div>
                   </div>
 
@@ -834,7 +1031,7 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                         {t('edit')}
                       </button>
                     </div>
-                    <div className="mt-4 grid grid-cols-4 gap-2">
+                    <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4">
                       {images.map((image, index) => (
                         <div key={image.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -866,12 +1063,12 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       ) : null}
 
       {!submittedCode ? (
-        <div className="flex items-center justify-between gap-4">
-          <button type="button" onClick={handleBack} disabled={step === 1} className="rounded-full border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700 disabled:opacity-40">
+        <div className="flex items-center justify-between gap-3">
+          <button type="button" onClick={handleBack} disabled={step === 1} className="min-w-0 rounded-full border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700 disabled:opacity-40 sm:px-5">
             {t('back')}
           </button>
           {step < 5 ? (
-            <button type="button" onClick={handleContinue} className="rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white">
+            <button type="button" onClick={handleContinue} className="min-w-0 rounded-full bg-[var(--dk-red)] px-4 py-3 text-sm font-bold text-white sm:px-5">
               {t('continue')}
             </button>
           ) : null}

@@ -149,8 +149,8 @@ export default function ListingsShowcasePage() {
         </section>
 
         {/* ── Filter Bar (sticky) ──────────────────────────── */}
-        <section className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/95 backdrop-blur-md shadow-sm">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <section className="sticky top-[64px] z-20 border-b border-slate-200/80 bg-white/95 backdrop-blur-md shadow-sm lg:top-0">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-3 px-4 py-3 sm:grid-cols-2 sm:px-6 lg:flex lg:px-8">
             <div className="relative flex-1 min-w-[180px]">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
@@ -163,29 +163,29 @@ export default function ListingsShowcasePage() {
             </div>
 
             <select value={type} onChange={(e) => setType(e.target.value as FilterType)}
-              className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)]">
+              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
               <option value="all">{t('filterAll')}</option>
               {LISTING_CATEGORIES.map((cat) => (<option key={cat.id} value={cat.id}>{cat.label}</option>))}
             </select>
 
             <select value={sector} onChange={(e) => setSector(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)]">
+              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
               <option value="all">{t('filterAllSectors')}</option>
               {getAllSectors(locale as 'az' | 'en' | 'ru' | 'tr').map((s) => (<option key={s.value} value={s.value}>{s.label}</option>))}
             </select>
 
             <select value={city} onChange={(e) => setCity(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)]">
+              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
               {CITY_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
             </select>
 
             <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)]">
+              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
               {PRICE_RANGE_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
             </select>
 
             <button type="button" onClick={handleReset}
-              className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]">
+              className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)] sm:col-span-2 lg:w-auto">
               {t('filterReset')}
             </button>
           </div>

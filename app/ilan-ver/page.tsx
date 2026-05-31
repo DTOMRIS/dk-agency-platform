@@ -15,12 +15,12 @@ export default async function IlanVerPage() {
 
   if (!session.loggedIn) {
     return (
-      <div className="min-h-screen bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl rounded-[32px] border border-slate-200 bg-white p-8 text-center shadow-sm">
+      <div className="min-h-screen bg-white px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm sm:rounded-[32px] sm:p-8">
           <span className="inline-flex rounded-full bg-[var(--dk-red)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
             {t('loginRequired')}
           </span>
-          <h1 className="mt-5 font-display text-4xl font-black text-[var(--dk-navy)]">
+          <h1 className="mt-5 font-display text-2xl font-black text-[var(--dk-navy)] sm:text-4xl">
             {t('loginTitle')}
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500">
@@ -46,7 +46,7 @@ export default async function IlanVerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white px-4 py-10 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-white px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <CreateListingForm session={{ name: session.name, email: session.email }} />
       </div>

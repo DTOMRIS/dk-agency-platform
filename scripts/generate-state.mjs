@@ -30,7 +30,7 @@ const pageRoutes = files
   .sort((a, b) => a.localeCompare(b));
 
 const apiRoutes = files
-  .filter((f) => f.includes('/api/') && (f.endsWith('/route.ts') || f.endsWith('\\route.ts')))
+  .filter((f) => f.replaceAll('\\', '/').includes('/api/') && (f.endsWith('/route.ts') || f.endsWith('\\route.ts')))
   .map((f) => toRoute(f, '/route.ts'))
   .sort((a, b) => a.localeCompare(b));
 

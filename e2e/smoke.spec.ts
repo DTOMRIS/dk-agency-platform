@@ -21,6 +21,11 @@ test.describe('@smoke Core smoke', () => {
     expect(res.status()).toBe(200);
   });
 
+  test('GET /az/ilanlar follows to 200 without loop', async ({ request }) => {
+    const res = await request.get('/az/ilanlar', { maxRedirects: 3 });
+    expect(res.status()).toBe(200);
+  });
+
   test('POST /api/member/auth without body returns 400 or 401', async ({ request }) => {
     const res = await request.post('/api/member/auth', {
       data: {},

@@ -31,13 +31,30 @@ function findPages(dir) {
   return results;
 }
 
+function walkFiles(dir) {
+  const results = [];
+  function walk(d) {
+    if (!fs.existsSync(d)) return;
+    for (const entry of fs.readdirSync(d, { withFileTypes: true })) {
+      if (entry.name === 'node_modules' || entry.name === '.next') continue;
+      const full = path.join(d, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else results.push(full);
+    }
+  }
+  walk(path.join(root, dir));
+  return results;
+}
+
 function countInFiles(pattern, dirs, ext) {
   let count = 0;
   for (const dir of dirs) {
-    try {
-      const out = execSync(`grep -rl "${pattern}" --include="*${ext}" ${dir}`, { encoding: 'utf8', cwd: root });
-      count += out.trim().split('\n').filter(Boolean).length;
-    } catch { /* no matches */ }
+    for (const file of walkFiles(dir)) {
+      if (!file.endsWith(ext)) continue;
+      try {
+        if (fs.readFileSync(file, 'utf8').includes(pattern)) count++;
+      } catch { /* unreadable file */ }
+    }
   }
   return count;
 }
