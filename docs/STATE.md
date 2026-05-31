@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-31T18:49:16.691Z
+- GeneratedAt: 2026-05-31T19:05:35.055Z
 - BuildStatus: PASS
 
-## Routes (195)
+## Routes (196)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -133,6 +133,7 @@ Auto-generated. Do not edit manually.
 - /b2b-panel/toolkit/workforce
 - /b2b-panel/yeni-ilan
 - /blog
+- /blog/[slug]
 - /dashboard
 - /dashboard/aqta-checklist
 - /dashboard/audit-logs
