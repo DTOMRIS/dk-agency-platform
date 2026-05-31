@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-31T17:52:25.042Z
+- GeneratedAt: 2026-05-31T18:49:16.691Z
 - BuildStatus: PASS
 
-## Routes (194)
+## Routes (195)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -162,6 +162,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/marketinq-ocagi/[slug]
 - /dashboard/mesajlar
 - /dashboard/pipeline
+- /dashboard/profil-onay
 - /dashboard/raporlar
 - /dashboard/roller
 - /dashboard/settings
@@ -202,7 +203,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (74)
+## API Routes (76)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -211,6 +212,8 @@ Auto-generated. Do not edit manually.
 - /api/admin/news/approve
 - /api/admin/news/pending
 - /api/admin/news/reject
+- /api/admin/profiles
+- /api/admin/profiles/[id]
 - /api/ai/ad-writer
 - /api/ai/complaint-response
 - /api/audit
