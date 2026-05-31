@@ -413,6 +413,42 @@ export const memberProfiles = pgTable('member_profiles', {
   deletedAt: timestamp('deleted_at', { withTimezone: true }),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
+
+  // V2 — company/business identity
+  logoUrl: text('logo_url'),
+  voen: varchar('voen', { length: 20 }),
+  sector: varchar('sector', { length: 80 }),
+  description: text('description'),
+
+  // V2 — contact person
+  authorizedPerson: varchar('authorized_person', { length: 150 }),
+  position: varchar('position', { length: 100 }),
+  contactPhone: varchar('contact_phone', { length: 30 }),
+  whatsapp: varchar('whatsapp', { length: 30 }),
+  website: varchar('website', { length: 255 }),
+
+  // V2 — location
+  city: varchar('city', { length: 80 }),
+  district: varchar('district', { length: 80 }),
+  streetAddress: text('street_address'),
+
+  // V2 — bio & social
+  bio: text('bio'),
+  instagram: varchar('instagram', { length: 120 }),
+  linkedin: varchar('linkedin', { length: 255 }),
+
+  // V2 — visibility per-field (jsonb: { phone: true, email: false, ... })
+  visibilitySettings: jsonb('visibility_settings').$type<Record<string, boolean>>().default({}),
+
+  // V2 — approval workflow
+  approvalStatus: varchar('approval_status', { length: 20 }).default('draft').notNull(),
+  reviewedBy: integer('reviewed_by').references(() => users.id),
+  reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+  rejectionReason: text('rejection_reason'),
+
+  // V2 — public slug & language
+  slug: varchar('slug', { length: 150 }),
+  language: varchar('language', { length: 5 }).default('az'),
 });
 
 // Generic users table for auth-related utilities and future adapter alignment
