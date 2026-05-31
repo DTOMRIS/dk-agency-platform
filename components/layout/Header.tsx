@@ -98,7 +98,7 @@ export default function Header() {
 
       {/* ── Main header ────────────────────────────────────── */}
       <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300 ${isScrolled ? 'border-b border-slate-200/80 shadow-sm' : ''}`}>
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           {/* Logo */}
           <Link href={withLocale(currentLocale, '/')} className="group flex items-center gap-2.5">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--dk-navy)] text-sm font-bold text-white">DK</div>
@@ -172,7 +172,7 @@ export default function Header() {
         <AnimatePresence>
           {isMobileOpen && (
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-              className="absolute left-4 right-4 top-full z-50 mt-2 rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl lg:hidden">
+              className="absolute left-3 right-3 top-full z-50 mt-2 max-h-[calc(100vh-88px)] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl sm:left-4 sm:right-4 sm:p-6 lg:hidden">
               <div className="flex flex-col gap-1">
                 {navItems.map((item) => (
                   <Link key={item.name} href={item.hasMegaMenu ? withLocale(currentLocale, '/toolkit') : item.href}

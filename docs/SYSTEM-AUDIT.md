@@ -1,12 +1,12 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-05-30 08:15:21 | Branch: feat/admin-activation-funnel | 92b638d
+> Son güncəlləmə: 2026-05-31 16:51:58 | Branch: feat/profil-api-admin-mobile | fb19383
 
 ## Route İnventarı
 | Kateqoriya | Say |
 |-----------|-----|
-| Toplam page.tsx | 185 |
+| Toplam page.tsx | 194 |
 | Dashboard | 77 |
 | Toolkit | 35 |
 
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 3276 | 3276 | 3276 | 3276 | ✅ |
+| 3298 | 3298 | 3298 | 3298 | ✅ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`

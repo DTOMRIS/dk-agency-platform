@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-05-30T19:34:27.897Z
-- BuildStatus: PASS
+- GeneratedAt: 2026-05-31T08:02:11.298Z
+- BuildStatus: UNKNOWN
 
-## Routes (193)
+## Routes (194)
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
@@ -69,6 +69,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/ilan-ver
 - /[locale]/ilanlar
 - /[locale]/kazan-ai
+- /[locale]/listings
 - /[locale]/marketinq
 - /[locale]/marketinq/lokasyon-analiz
 - /[locale]/marketinq/menyu-analitik
@@ -201,7 +202,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (73)
+## API Routes (74)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -275,6 +276,7 @@ Auto-generated. Do not edit manually.
 - /api/user/events
 - /api/user/nudge
 - /api/user/priorities
+- /api/user/profile
 
 ## i18n Namespaces (0)
 - none detected

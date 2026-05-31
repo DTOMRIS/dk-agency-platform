@@ -2,6 +2,50 @@
 
 ## [Unreleased]
 
+## [TASK-LOCALE-LOOP] fix(i18n): resolve localized public route loop - 2026-05-31
+
+### Fixed
+- Prevented next-intl middleware from re-processing unprefixed public paths and causing default-locale redirect loops.
+- Added `/[locale]/listings` as an alias for localized listings campaign links.
+- Added Playwright coverage for `/az/ilan-ver`, `/az/ilanlar`, `/ru/ilan-ver`, `/ru/ilanlar`, `/en/listings`, and `/tr/ilanlar`.
+
+### Changed
+- Improved mobile layout resilience for public listing form, listing filters, and mobile header drawer.
+
+## [TASK-DEBT-CLEANUP] chore: repair field config and audit gates - 2026-05-31
+
+### Fixed
+- Updated listing field config test to expect the current 14-field `devir` config including `equipment-list`.
+- Replaced Windows-incompatible `grep` usage in `generate-audit.mjs` with Node-native file scanning.
+- Fixed Windows API route detection in `generate-state.mjs`.
+
+## [TASK-I18N-IDEMPOTENT] feat(content): per-field translation runs - 2026-05-31
+
+### Added
+- Added `content:translate`, `content:translate:dry`, and `content:translate:mock` scripts.
+- Added deterministic `--mock` translation mode for safe script checks.
+
+### Fixed
+- `translate-content.mjs` now fills missing blog/news/listing fields individually instead of skipping a whole row when only `title_xx` exists.
+- Listings translation now selects `description_az` before using it as a source field.
+
+## [TASK-BLOG-CONTENT-RUN] chore(content): translate blog DB content - 2026-05-31
+
+### Changed
+- Filled `blog_posts` RU/EN/TR `title`, `summary`, and `content` columns for 13/13 AZ source posts via DeepSeek.
+
+## [TASK-0180] feat(listings): public concept axis - 2026-05-31
+
+### Added
+- Public `CreateListingForm` Step 3 now shows sector-based concept chips from `listingConcepts.ts` SSOT.
+- Sector-based location detail fields are collected in the public listing flow.
+- Concept/location warnings are displayed before submission and included in preview.
+- `createListing` i18n keys added for AZ/EN/RU/TR with parity preserved.
+
+### Changed
+- Listing submit payload now stores selected concepts and location details inside `typeSpecificData`.
+- `SYSTEM-AUDIT.md` regenerated after the change.
+
 ## [TASK-B-FIX] fix(listings): sector API filter + response — 2026-05-29
 
 ### Fixed
