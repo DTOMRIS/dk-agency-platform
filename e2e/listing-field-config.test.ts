@@ -17,9 +17,9 @@ function assert(condition: boolean, message: string) {
   }
 }
 
-// --- devir: 13 fields (10 original + 3 new) ---
+// --- devir: 14 fields (10 original + 3 PR#244 fields + equipment list) ---
 const devir = getFieldsForType('devir');
-assert(devir.length === 13, `devir field count = ${devir.length}, expected 13`);
+assert(devir.length === 14, `devir field count = ${devir.length}, expected 14`);
 
 const leaseDevir = devir.find(f => f.key === 'leaseTermMonths');
 assert(!!leaseDevir, 'devir has leaseTermMonths');
@@ -39,6 +39,10 @@ assert(propType?.options?.length === 3, `propertyType has ${propType?.options?.l
 assert(propType?.options?.[0] === 'İcarə (kirayə)', `option 0 = ${propType?.options?.[0]}`);
 assert(propType?.options?.[1] === 'Mülkiyyət (satış)', `option 1 = ${propType?.options?.[1]}`);
 assert(propType?.options?.[2] === 'İcarə + satınalma opsiyonu', `option 2 = ${propType?.options?.[2]}`);
+
+const equipment = devir.find(f => f.key === 'equipment');
+assert(!!equipment, 'devir has equipment list');
+assert(equipment?.type === 'equipment-list', 'equipment is equipment-list');
 
 // --- franchise-vermek: 10 fields (9 original + 1 new) ---
 const franchise = getFieldsForType('franchise-vermek');
