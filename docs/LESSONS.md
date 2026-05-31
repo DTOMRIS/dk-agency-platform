@@ -199,3 +199,13 @@ Eyni qayda: DEVLOG, SYSTEM-AUDIT, hər >200 sətir fayl → `offset`+`limit` il�
 Hostinger Web Apps idle prosesi öldürür → `setInterval` self-ping faydasızdır.
 Xarici ping lazımdır (VPS crontab, UptimeRobot, və s.).
 Script: `scripts/keep-alive.sh` — VPS crontab-a əlavə et.
+### L-036 - next-intl default-locale redirect loop (31 May 2026)
+`localePrefix: 'as-needed'` default locale path-larinda `/az/*` -> `/*`
+redirect edir. Eger middleware unprefixed public path-lere de tekrar
+next-intl uygularsa, `/*` yeniden internal `/az/*` rewrite alir ve loop
+yaranir.
+
+Qayda: middleware yalniz `/` ve real locale-prefixed path-lere next-intl
+uygulamali; unprefixed public path-ler `NextResponse.next()` ile app route-a
+buraxilmalidir. Regression test mutleq hem `/az/ilan-ver`, hem `/ilan-ver`,
+hem de RU/EN/TR public route-lari yoxlamalidir.
