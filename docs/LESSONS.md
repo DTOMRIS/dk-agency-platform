@@ -219,3 +219,14 @@ route yox idi → 404. Həll: `app/blog/[slug]/page.tsx` re-export yaradildi.
 xeberler, uzvluk, haqqimizda + sub-route-lar). Yan effekt YALNIZ blog
 `[slug]` detail-ə məxsus idi — digər səhifələr həm `/path` həm `/az/path`
 formatinda 200 qaytarir. Variant C (middleware rewrite) lazim deyil.
+
+### L-037 — Hardcoded blog override = test ediləməyən texniki borc (1 İyun 2026)
+BLOG_OVERRIDES (page.tsx:13-193) 2 blog post-un AZ content-ini hardcoded
+saxlayırdı, DB content-i əzirdi. Problemlər:
+- DB-dəki content DeepSeek ilə tərcümə olunurdu, amma AZ override DB-dən
+  gəlmirdi → AZ-da hardcoded, RU/EN/TR-də DB content → uyğunsuzluq
+- Tərcümə skripti DB-ni yeniləyirdi, amma sayt hardcoded göstərirdi
+- Content audit DB-yə baxırdı, real render fərqli idi
+
+Qayda: DB-first content sistemində hardcoded fallback QADAĞANDIR. Content
+yalnız DB-dən gəlməlidir. Override lazımdırsa, DB-də ayrı sütun istifadə et.

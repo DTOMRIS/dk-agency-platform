@@ -88,7 +88,7 @@ async function translateText(text, targetLang) {
     body: JSON.stringify({
       model: 'deepseek-v4-flash', // SST: lib/ai-models.ts
       temperature: 0.3,
-      max_tokens: 4000,
+      max_tokens: 8000,
       messages: [
         { role: 'system', content: buildSystemPrompt(targetLang) },
         { role: 'user', content: text },
