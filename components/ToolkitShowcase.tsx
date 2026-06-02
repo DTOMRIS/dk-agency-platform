@@ -70,7 +70,7 @@ export default function ToolkitShowcase() {
   const copy = copyByLocale[locale];
 
   return (
-    <section id="toolkit" className="bg-[color-mix(in_srgb,var(--dk-paper)_55%,white)] py-20">
+    <section id="toolkit" className="bg-[color-mix(in_srgb,var(--dk-paper)_55%,white)] py-20 overflow-x-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex items-center justify-between">
           <div className="flex-1 text-center md:text-left">
