@@ -11,7 +11,10 @@ export default function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const firstSegment = pathname.split('/')[1];
 
-  if (pathname !== '/' && !isLocale(firstSegment)) {
+  // Only run intlMiddleware for locale-prefixed paths (e.g. /ru/..., /en/...).
+  // All other paths (including /) bypass to root-level page aliases.
+  // This prevents the Next 16 proxy redirect loop on / (BUG-001 / L-036).
+  if (!isLocale(firstSegment)) {
     return NextResponse.next();
   }
 
@@ -20,7 +23,6 @@ export default function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/',
     '/(az|ru|en|tr)/:path*',
   ],
 };
