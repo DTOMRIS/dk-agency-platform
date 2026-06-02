@@ -152,7 +152,7 @@ export default function Home() {
   const copy = pageCopy[locale];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       <Hero />
       <AiReadinessScore />
       <PlatformCards />

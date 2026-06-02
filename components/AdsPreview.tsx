@@ -59,7 +59,7 @@ export default function AdsPreview() {
     activeCategory === 'Bütün' ? AD_ITEMS : AD_ITEMS.filter((ad) => ad.category === activeCategory);
 
   return (
-    <section id="ads" className="bg-slate-50 py-32">
+    <section id="ads" className="bg-slate-50 py-32 overflow-x-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <div>
@@ -79,12 +79,12 @@ export default function AdsPreview() {
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm">
+            <div className="flex items-center gap-2 overflow-x-auto rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm max-w-full scrollbar-hide">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`rounded-xl px-5 py-2.5 text-xs font-bold transition-all ${
+                  className={`shrink-0 rounded-xl px-5 py-2.5 text-xs font-bold transition-all ${
                     activeCategory === cat
                       ? 'bg-slate-900 text-white shadow-lg'
                       : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
