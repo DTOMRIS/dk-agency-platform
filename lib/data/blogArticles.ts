@@ -383,8 +383,8 @@ Bu fərq haradan gəlir? Oğurluq, waste, porsiyon nəzarətsizliyi, firma qiym�
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['pnl-oxuya-bilmirsen', 'basabas-noqtesi-hesablama'],
-    coverImage: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=400&fit=crop',
-    coverImageAlt: 'Profesyonel restoran mutfağında çalışan aşçılar',
+    coverImage: '/images/blog-01.png',
+    coverImageAlt: '1 porsiya food cost hesablama',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -669,8 +669,8 @@ Bu, 5 dəqiqəlik hesablamadır. Hər bazar günü otur, bu rəqəmləri yaz. **
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['1-porsiya-food-cost-hesablama', 'basabas-noqtesi-hesablama'],
-    coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop',
-    coverImageAlt: 'Finansal grafikler ve P&L hesabatı dashboard görüntüsü',
+    coverImage: '/images/blog-02.png',
+    coverImageAlt: 'P&L hesabatı analiz',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -929,8 +929,8 @@ Bu cavabları **yaz** və **nümunə axtar.** 3 nəfər eyni səbəbə görə ge
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['kurumsal-kitabca-emeliyyat', 'menyu-muhendisliyi-satis'],
-    coverImage: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop',
-    coverImageAlt: 'Restoran ekibi birlikte çalışırken güler yüzlü servis',
+    coverImage: '/images/blog-03.png',
+    coverImageAlt: 'İşçi saxlama strategiyaları',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1167,8 +1167,8 @@ Menyunu bir dəfə hazırlayıb unudursan? **Böyük səhv.**
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['1-porsiya-food-cost-hesablama', 'wolt-bolt-komissiyon'],
-    coverImage: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&h=400&fit=crop',
-    coverImageAlt: 'Profesyonel menü tasarımı ve yemek sunumu',
+    coverImage: '/images/blog-04.png',
+    coverImageAlt: 'Menyu mühəndisliyi',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1392,8 +1392,8 @@ Cross-contamination (çarpaz kontaminasiya) — çiy ərzaqdakı bakteriyaların
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['kurumsal-kitabca-emeliyyat', 'insaatdan-acilisa-checklist'],
-    coverImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&h=400&fit=crop',
-    coverImageAlt: 'Temiz ve hijyenik restoran mutfağı',
+    coverImage: '/images/blog-05.png',
+    coverImageAlt: 'AQTA yoxlama checklist',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1641,8 +1641,8 @@ Müqavilə imzalamadan əvvəl bu sualları soruşun:
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['menyu-muhendisliyi-satis', '1-porsiya-food-cost-hesablama'],
-    coverImage: 'https://images.unsplash.com/photo-1526367790999-0150786686a2?w=800&h=400&fit=crop',
-    coverImageAlt: 'Yemek delivery siparişi paketleme ve teslimat',
+    coverImage: '/images/blog-06.png',
+    coverImageAlt: 'Wolt Bolt Yango komissiyon analiz',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1890,8 +1890,8 @@ Kitabçanı bir gecədə yazmaq lazım deyil. **Hər həftə 1 bölmə** yaz:
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['aqta-cerime-checklist', 'isci-saxlama-7-strategiya'],
-    coverImage: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=400&fit=crop',
-    coverImageAlt: 'İş dökümanları ve kurumsal kitapça hazırlığı',
+    coverImage: '/images/blog-07.png',
+    coverImageAlt: 'Kurumsal kitabça əməliyyat',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -2263,8 +2263,8 @@ Açılış bitdi — indi **sağ qalmaq** lazımdır.
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['aqta-cerime-checklist', 'restoran-markalasma-konsept'],
-    coverImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=400&fit=crop',
-    coverImageAlt: 'Restoran inşaat ve şantiye çalışması',
+    coverImage: '/images/blog-08.png',
+    coverImageAlt: 'İnşaatdan açılışa checklist',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -2514,8 +2514,8 @@ Nusret Gökçe dünyada ən tanınan türk restoran markasıdır. Necə bacarıb
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['menyu-muhendisliyi-satis', 'kurumsal-kitabca-emeliyyat'],
-    coverImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=400&fit=crop',
-    coverImageAlt: 'Marka tasarımı ve branding çalışması',
+    coverImage: '/images/blog-09.png',
+    coverImageAlt: 'Restoran markalaşma konsept',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -2834,8 +2834,8 @@ Contribution Margin = 1 - Dəyişən Xərc %
 > 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['1-porsiya-food-cost-hesablama', 'pnl-oxuya-bilmirsen'],
-    coverImage: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=400&fit=crop',
-    coverImageAlt: 'Hesap makinesi ve finansal analiz',
+    coverImage: '/images/blog-10.png',
+    coverImageAlt: 'Başabaş nöqtəsi hesablama',
   },
 ];
 
