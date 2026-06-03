@@ -12,6 +12,7 @@ import {
 } from '@/lib/data/franchbookOutline';
 
 type ApiState = 'idle' | 'generating' | 'generated' | 'locked' | 'error' | 'saving' | 'saved';
+type ApiError = { message: string; field?: string } | null;
 
 function orderedContent(content: FranchbookContent) {
   return FRANCHBOOK_OUTLINE.map((section) => ({
@@ -68,6 +69,7 @@ export default function FranchbookGenerator() {
   const t = useTranslations('franchise.franchbook');
   const locale = useLocale();
   const [state, setState] = useState<ApiState>('idle');
+  const [apiError, setApiError] = useState<ApiError>(null);
   const [projectId, setProjectId] = useState<number | null>(null);
   const [brand, setBrand] = useState('');
   const [sector, setSector] = useState('');
@@ -89,6 +91,7 @@ export default function FranchbookGenerator() {
     ],
     onComplete: async (values) => {
       setState('generating');
+      setApiError(null);
       setBrand(values.brand || '');
       setSector(values.sector || '');
       const response = await fetch('/api/franchise/franchbook', {
@@ -103,6 +106,18 @@ export default function FranchbookGenerator() {
       }
 
       if (!response.ok) {
+        try {
+          const errData = await response.json() as { error?: string; issues?: Array<{ path?: string[]; message?: string }> };
+          if (errData.issues?.length) {
+            const issue = errData.issues[0];
+            const field = issue.path?.join('.') || '';
+            setApiError({ message: issue.message || t('error'), field });
+          } else {
+            setApiError({ message: errData.error || t('error') });
+          }
+        } catch {
+          setApiError({ message: t('error') });
+        }
         setState('error');
         return;
       }
@@ -159,8 +174,9 @@ export default function FranchbookGenerator() {
           </div>
         )}
         {state === 'error' && (
-          <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">
-            {t('error')}
+          <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            <p className="font-semibold">{t('error')}</p>
+            {apiError?.message && <p className="mt-1">{apiError.field ? `${apiError.field}: ` : ''}{apiError.message}</p>}
           </div>
         )}
         <FranchiseQuiz config={config} />

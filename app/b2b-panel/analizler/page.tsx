@@ -7,7 +7,7 @@ const tools = [
   {
     title: 'Lokasiya Analizi',
     desc: '16 kriterlə məkanınızın uyğunluğunu qiymətləndirin. AI dəstəkli tövsiyələr.',
-    href: '/marketinq/lokasyon-analiz',
+    href: '/dashboard/marketinq-ocagi/lokasyon-analiz',
     icon: MapPin,
     color: 'bg-emerald-50 text-emerald-600',
   },
