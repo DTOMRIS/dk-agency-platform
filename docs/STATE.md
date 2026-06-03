@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-03T12:10:03.684Z
+- GeneratedAt: 2026-06-03T16:30:41.979Z
 - BuildStatus: PASS
 
-## Routes (202)
+## Routes (206)
 - /
 - /[locale]
 - /[locale]/about
@@ -64,6 +64,8 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/xeberler/rss
 - /[locale]/elaqe
 - /[locale]/forgot-password
+- /[locale]/franchise/alici-cheklisti
+- /[locale]/franchise/francbuk-generatoru
 - /[locale]/franchise/hazirliq-testi
 - /[locale]/franchise/roi-kalkulyatoru
 - /[locale]/haberler
@@ -180,6 +182,8 @@ Auto-generated. Do not edit manually.
 - /docs/member-env-checklist
 - /elaqe
 - /forgot-password
+- /franchise/alici-cheklisti
+- /franchise/francbuk-generatoru
 - /franchise/hazirliq-testi
 - /franchise/roi-kalkulyatoru
 - /haberler
@@ -210,7 +214,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (78)
+## API Routes (79)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -238,6 +242,7 @@ Auto-generated. Do not edit manually.
 - /api/blog
 - /api/blog/[slug]
 - /api/food-cost
+- /api/franchise/franchbook
 - /api/franchise/readiness-report
 - /api/health
 - /api/invoice-categories
