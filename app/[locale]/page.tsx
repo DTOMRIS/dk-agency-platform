@@ -25,14 +25,14 @@ const featuredBlogs = [
     category: 'Food Cost',
     title: '1 porsiya food cost necə hesablanır?',
     excerpt: 'Porsiya maya dəyəri, resept kartı və düzgün qiymət arasında əlaqəni sadə nümunə ilə izah edirik.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80',
+    image: '/images/blog-01.png',
   },
   {
     slug: 'menyu-muhendisliyi-satis',
     category: 'Menyu',
     title: 'Menyu mühəndisliyi ilə satışı necə artırmaq olar?',
     excerpt: 'Ulduz, At, Puzzle və İt matrisi ilə menyunu data ilə idarə etməyin əsasları.',
-    image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80',
+    image: '/images/blog-04.png',
   },
 ];
 
