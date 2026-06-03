@@ -4340,13 +4340,18 @@
     "months": "ay",
     "noProfit": "kâr yok",
     "disclaimer": "Bu hesaplayıcı tahmini göstergeler sunar; yatırım kararı profesyonel fizibilite analizi gerektirir. © DK Agency",
+    "sectionOperating": "İşletme göstergeleri",
+    "sectionInvestment": "Başlangıç yatırımı",
+    "totalInvestment": "Toplam yatırım",
     "fields": {
       "revenue": { "label": "Beklenen yıllık ciro", "hint": "satışlardan elde edilen toplam gelir" },
       "marginPercent": { "label": "Brüt kâr marjı", "hint": "mal/hizmet maliyeti sonrası ciroda kalan %" },
       "opex": { "label": "Yıllık sabit işletme giderleri", "hint": "kira, maaş, faturalar, diğer" },
       "royaltyPercent": { "label": "Royalti oranı", "hint": "ciro üzerinden" },
       "adFundPercent": { "label": "Reklam fonu", "hint": "ciro üzerinden" },
-      "investment": { "label": "Başlangıç yatırımı", "hint": "franchise bedeli + dekorasyon + ekipman + 6 aylık işletme sermayesi" }
+      "entryFee": { "label": "Franchise giriş bedeli", "hint": "tek seferlik, sözleşme imzalandığında ödenir" },
+      "setupCost": { "label": "Dekorasyon + ekipman + kurulum", "hint": "mekan hazırlığı, ekipman, mobilya, dekor" },
+      "workingCapital": { "label": "İlk 6 ay işletme sermayesi", "hint": "kira, maaş, tedarik — ilk aylarda kasayı ayakta tutan" }
     },
     "results": {
       "grossProfit": "Brüt kâr",
@@ -4356,10 +4361,31 @@
       "payback": "Geri ödeme süresi"
     },
     "verdict": {
-      "good": "✓ Sağlıklı göstergeler: ROI %20+ ve geri ödeme ≤ 36 ay. Cazip franchise modeli.",
-      "mid": "~ Sınır bölge: ROI %15–20. İşe yarayabilir; ancak maliyet/royalti optimizasyonu faydalı olur.",
-      "bad": "⚠ Riskli: ROI %15'in altında. Ciro, marj veya maliyet yapısının yeniden değerlendirilmesi gerekiyor.",
-      "negative": "⚠ Bu senaryoda net kâr yok — model yeniden kurulmalıdır."
+      "good": "Sağlıklı göstergeler: ROI %20+ ve geri ödeme ≤ 36 ay. Cazip franchise modeli.",
+      "mid": "Sınır bölge: ROI %15–20 ve geri ödeme ≤ 48 ay. İşe yarayabilir; ancak maliyet/royalti optimizasyonu faydalı olur.",
+      "bad": "Riskli: ROI %15'in altında veya geri ödeme 48 ayı aşıyor. Ciro, marj veya maliyet yapısının yeniden değerlendirilmesi gerekiyor.",
+      "negative": "Bu senaryoda net kâr yok — model yeniden kurulmalıdır."
+    },
+    "explain": {
+      "toggle": "Anlamak önemlidir: ödeme türleri ve franchise modelleri",
+      "paymentTypesTitle": "Ödeme türleri",
+      "entryFeeTitle": "İlk giriş bedeli (tek seferlik):",
+      "entryFeeDesc": "Sisteme giriştir. Sözleşme imzalandığında BİR KEZ ödenir — markanın adını, sistemini ve eğitimini \"açar\". Aylık royalti ile karıştırılmamalıdır.",
+      "royaltyTitle": "Royalti (aylık, sürekli):",
+      "royaltyDesc": "Marka ve desteğin sürekli kullanım bedeli. Genellikle aylık cironun yüzdesidir.",
+      "adFundTitle": "Reklam fonu (aylık, sürekli):",
+      "adFundDesc": "Merkezi pazarlama için ortak fon, cironun yüzdesi.",
+      "franchiseTypesTitle": "Franchise türü — \"ülke benimdir\" yanılgısı",
+      "singleUnit": "Tek nokta franchise:",
+      "singleUnitDesc": "Yalnızca BİR mekanda, BİR işletme hakkı. En yaygın model. Sana bölge veya ülke VERMEZ.",
+      "area": "Bölge (area) franchise:",
+      "areaDesc": "Belirli bir alanda (şehir/ilçe) birden fazla şube açma hakkı.",
+      "master": "Master franchise:",
+      "masterDesc": "Tüm bir ÜLKE veya büyük bölge hakkı; başkalarına alt-franchise verebilirsin. En pahalı, en fazla yükümlülük.",
+      "sub": "Alt (sub) franchise:",
+      "subDesc": "Master veya bölge sahiplinin verdiği hak — doğrudan markadan değil.",
+      "warning": "Dikkat: \"Franchise aldım, demek ki ülke benim\" DOĞRU DEĞİL. Standart tek nokta franchise yalnızca bir mekan verir. Ülke hakkı = master franchise = ayrı ve kat kat yüksek bedel + yükümlülük.",
+      "tip": "Giriş bedeli türe göre değişir: tek nokta < bölge < master."
     }
   },
   "franchiseReadiness": {

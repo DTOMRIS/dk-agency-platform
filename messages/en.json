@@ -4340,13 +4340,18 @@
     "months": "months",
     "noProfit": "no profit",
     "disclaimer": "This calculator provides estimates only; investment decisions require professional feasibility analysis. © DK Agency",
+    "sectionOperating": "Operating metrics",
+    "sectionInvestment": "Initial investment",
+    "totalInvestment": "Total investment",
     "fields": {
       "revenue": { "label": "Expected annual turnover", "hint": "total revenue from sales" },
       "marginPercent": { "label": "Gross profit margin", "hint": "% of turnover remaining after cost of goods/services" },
       "opex": { "label": "Annual fixed operating expenses", "hint": "rent, payroll, utilities, other" },
       "royaltyPercent": { "label": "Royalty rate", "hint": "on turnover" },
       "adFundPercent": { "label": "Advertising fund", "hint": "on turnover" },
-      "investment": { "label": "Initial investment", "hint": "franchise fee + fit-out + equipment + 6-month working capital" }
+      "entryFee": { "label": "Franchise entry fee", "hint": "one-time payment upon signing the franchise agreement" },
+      "setupCost": { "label": "Fit-out + equipment + setup", "hint": "premises preparation, equipment, furniture, decor" },
+      "workingCapital": { "label": "First 6 months working capital", "hint": "rent, payroll, supplies — keeps cash flow going in early months" }
     },
     "results": {
       "grossProfit": "Gross profit",
@@ -4356,10 +4361,31 @@
       "payback": "Payback period"
     },
     "verdict": {
-      "good": "✓ Healthy metrics: ROI 20%+ and payback ≤ 36 months. Attractive franchise model.",
-      "mid": "~ Borderline: ROI 15–20%. Could work, but cost/royalty optimisation would help.",
-      "bad": "⚠ Risky: ROI below 15%. Turnover, margin or cost structure needs re-evaluation.",
-      "negative": "⚠ No net profit in this scenario — the model needs to be restructured."
+      "good": "Healthy metrics: ROI 20%+ and payback ≤ 36 months. Attractive franchise model.",
+      "mid": "Borderline: ROI 15–20% and payback ≤ 48 months. Could work, but cost/royalty optimisation would help.",
+      "bad": "Risky: ROI below 15% or payback over 48 months. Turnover, margin or cost structure needs re-evaluation.",
+      "negative": "No net profit in this scenario — the model needs to be restructured."
+    },
+    "explain": {
+      "toggle": "Important to understand: payment types and franchise models",
+      "paymentTypesTitle": "Payment types",
+      "entryFeeTitle": "Initial entry fee (one-time):",
+      "entryFeeDesc": "This is your access to the system. Paid ONCE when the contract is signed — it \"unlocks\" the brand name, system and training. Not to be confused with monthly royalties.",
+      "royaltyTitle": "Royalty (monthly, ongoing):",
+      "royaltyDesc": "An ongoing fee for continued use of the brand and support. Usually a percentage of monthly turnover.",
+      "adFundTitle": "Advertising fund (monthly, ongoing):",
+      "adFundDesc": "A shared fund for central marketing, also a percentage of turnover.",
+      "franchiseTypesTitle": "Franchise type — the \"the country is mine\" misconception",
+      "singleUnit": "Single-unit franchise:",
+      "singleUnitDesc": "The right to operate in ONE location only. The most common model. Does NOT give you a region or country.",
+      "area": "Area franchise:",
+      "areaDesc": "The right to open multiple outlets in a defined area (city/district).",
+      "master": "Master franchise:",
+      "masterDesc": "Rights for an entire COUNTRY or large region; you can grant sub-franchises to others. Most expensive, most obligations.",
+      "sub": "Sub-franchise:",
+      "subDesc": "Rights granted by the master or area franchisee — not directly from the brand.",
+      "warning": "Warning: \"I bought a franchise, so the country is mine\" is NOT TRUE. A standard single-unit franchise gives you just one location. Country rights = master franchise = separate and much higher fee + obligations.",
+      "tip": "Entry fee varies by type: single-unit < area < master."
     }
   },
   "franchiseReadiness": {

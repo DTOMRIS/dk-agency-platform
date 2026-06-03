@@ -4340,13 +4340,18 @@
     "months": "ay",
     "noProfit": "mənfəət yoxdur",
     "disclaimer": "Bu kalkulyator təxmini göstəricidir; investisiya qərarı peşəkar fizibilite tələb edir. © DK Agency",
+    "sectionOperating": "Əməliyyat göstəriciləri",
+    "sectionInvestment": "İlkin investisiya",
+    "totalInvestment": "Ümumi investisiya",
     "fields": {
       "revenue": { "label": "İllik gözlənilən dövriyyə", "hint": "satışdan gələn ümumi gəlir" },
       "marginPercent": { "label": "Brüt kar marjı", "hint": "dövriyyənin neçə %-i mal/xidmət sonrası qalır" },
       "opex": { "label": "İllik sabit əməliyyat xərcləri", "hint": "icarə, maaş, kommunal, digər" },
       "royaltyPercent": { "label": "Royalti dərəcəsi", "hint": "dövriyyə üzərindən" },
       "adFundPercent": { "label": "Reklam fondu", "hint": "dövriyyə üzərindən" },
-      "investment": { "label": "İlkin investisiya", "hint": "franchise haqqı + dizayn + avadanlıq + 6 ay kapital" }
+      "entryFee": { "label": "Franchise giriş haqqı", "hint": "birdəfəlik, müqavilə imzalananda ödənilir" },
+      "setupCost": { "label": "Dizayn + avadanlıq + quruluş", "hint": "məkan hazırlığı, avadanlıq, mebel, dekor" },
+      "workingCapital": { "label": "İlk 6 ay işlətmə kapitalı", "hint": "icarə, maaş, ərzaq — ilk aylarda kassanı saxlayan" }
     },
     "results": {
       "grossProfit": "Brüt kar",
@@ -4356,10 +4361,31 @@
       "payback": "Geri-qaytarma müddəti"
     },
     "verdict": {
-      "good": "✓ Sağlam göstərici: ROI %20+ və geri-qaytarma ≤ 36 ay. Cəlbedici franchise modeli.",
-      "mid": "~ Sərhəd zona: ROI %15-20. İşləyə bilər, amma xərc/royalti optimizasiyası faydalı olar.",
-      "bad": "⚠ Riskli: ROI %15-dən aşağı. Dövriyyə, marja və ya xərc strukturu yenidən qiymətləndirilməlidir.",
-      "negative": "⚠ Bu ssenaridə xalis mənfəət yoxdur — model yenidən qurulmalıdır."
+      "good": "Sağlam göstərici: ROI %20+ və geri-qaytarma 36 ay. Cəlbedici franchise modeli.",
+      "mid": "Orta zona: ROI %15-20 və geri-qaytarma 48 ay. İşləyə bilər, amma xərc/royalti optimizasiyası faydalı olar.",
+      "bad": "Riskli: ROI %15-dən aşağı və ya geri-qaytarma 48 aydan çox. Dövriyyə, marja və ya xərc strukturu yenidən qiymətləndirilməlidir.",
+      "negative": "Bu ssenaridə xalis mənfəət yoxdur — model yenidən qurulmalıdır."
+    },
+    "explain": {
+      "toggle": "Anlamaq vacibdir: ödəniş növləri və franchise modelləri",
+      "paymentTypesTitle": "Ödəniş növləri",
+      "entryFeeTitle": "İlk giriş haqqı (birdəfəlik):",
+      "entryFeeDesc": "Sistemə girişdir. Müqavilə imzalananda BİR DƏFƏ ödənilir — brendin adını, sistemini və təlimini \"açır\". Aylıq royalti ilə qarışdırılmamalıdır.",
+      "royaltyTitle": "Royalti (aylıq, davamlı):",
+      "royaltyDesc": "Brendi və dəstəyi davamlı istifadə haqqı. Adətən aylıq dövriyyənin faizidir.",
+      "adFundTitle": "Reklam fondu (aylıq, davamlı):",
+      "adFundDesc": "Mərkəzi marketinq üçün ortaq fond, dövriyyənin faizi.",
+      "franchiseTypesTitle": "Franchise növü — \"ölkə mənimdir\" yanılması",
+      "singleUnit": "Tək nöqtə franchise:",
+      "singleUnitDesc": "Yalnız BİR məkanda, BİR işlətmə hüququ. Ən yayğın model. Sənə bölgə və ya ölkə VERMİR.",
+      "area": "Bölgə (area) franchise:",
+      "areaDesc": "Müəyyən ərazidə (şəhər/rayon) bir neçə şöbə açmaq hüququ.",
+      "master": "Master franchise:",
+      "masterDesc": "Bütöv bir ÖLKƏ və ya böyük region hüququ; başqalarına alt-franchise verə bilirsən. Ən bahalı, ən çox öhdəlikli.",
+      "sub": "Alt (sub) franchise:",
+      "subDesc": "Master və ya bölgə alanın verdiyi hüquq — ana brenddən deyil.",
+      "warning": "Diqqət: \"Franchise aldım, deməli ölkə mənimdir\" DOĞRU DEYİL. Standart tək nöqtə franchise yalnız bir məkan verir. Ölkə hüququ = master franchise = ayrı və qat-qat yüksək haqq + öhdəlik.",
+      "tip": "Giriş haqqı növə görə dəyişir: tək nöqtə < bölgə < master."
     }
   },
   "franchiseReadiness": {
