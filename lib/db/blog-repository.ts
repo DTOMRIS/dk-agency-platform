@@ -44,6 +44,13 @@ function mapStaticArticle(article: BlogArticle): DbBlogPost {
   };
 }
 
+function resolveLocalCover(slug: string, dbImage: string | null): string {
+  if (dbImage && dbImage.startsWith('/')) return dbImage;
+  const staticMatch = STATIC_BLOG_ARTICLES.find((a) => a.slug === slug);
+  if (staticMatch?.coverImage) return staticMatch.coverImage;
+  return dbImage || '';
+}
+
 function mapDbArticle(
   row: typeof blogPosts.$inferSelect,
   boxRows: typeof guruBoxes.$inferSelect[] = [],
@@ -73,7 +80,7 @@ function mapDbArticle(
     content,
     isPremium: Boolean(row.hasPaywall),
     relatedArticles: [],
-    coverImage: row.featuredImage || '',
+    coverImage: resolveLocalCover(row.slug, row.featuredImage),
     coverImageAlt: title,
     seoTitle: row.seoTitle || title,
     seoDescription: row.seoDescription || summary || '',

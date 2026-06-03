@@ -505,6 +505,30 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
   },
 
   {
+    slug: 'franchbook-generator',
+    category: 'emeliyyat',
+    tier: 'usta',
+    iconName: 'BookOpen',
+    status: 'beta',
+    aiProvider: 'deepseek',
+    aiFallback: 'claude',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'brand', type: 'text', required: true },
+        { name: 'sector', type: 'text', required: true },
+        { name: 'operationDescription', type: 'textarea', required: true },
+        { name: 'standards', type: 'textarea', required: true },
+        { name: 'staff', type: 'textarea', required: true },
+        { name: 'supply', type: 'textarea', required: true },
+        { name: 'openingProcess', type: 'textarea', required: true },
+      ],
+    },
+    monthlyRunLimit: { sagird: 0, kalfa: 0, usta: 5 },
+    estimatedCostAznPerRun: 0.01,
+  },
+
+  {
     slug: 'sosial-medya-plan',
     category: 'kontent',
     tier: 'usta',

@@ -37,14 +37,17 @@ function getInitials(session: MemberSession) {
     .toUpperCase();
 }
 
+function setLocaleCookie(locale: string) {
+  globalThis.document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=${60 * 60 * 24 * 365}`;
+}
+
 function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
   const pathname = usePathname();
   const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/b2b-panel');
 
   const handleSwitch = (locale: Locale) => {
     if (isDashboard) {
-      // Dashboard has no locale prefix — set cookie and reload
-      document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=${60 * 60 * 24 * 365}`;
+      setLocaleCookie(locale);
       window.location.reload();
     }
   };

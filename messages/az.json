@@ -4290,6 +4290,48 @@
       "comeback": { "message": "Toolkit-də sənin üçün yeni alətlər var.", "cta": "Alətlərə bax" }
     }
   },
+  "franchise": {
+    "franchbook": {
+      "badge": "AI Françbuk · USTA · BETA",
+      "title": "AI ilə franchise əl kitabı skeleti yaradın",
+      "subtitle": "6 mərhələ · sabit AFA Akademiya outline · redaktə edilə bilən sənəd",
+      "letter": "Bu alət əməliyyat bilginizi françbuk skeletinə çevirir. AI bölmə icad etmir; yalnız sabit strukturu sizin cavablarınızla doldurur.",
+      "letterSign": "— DK Agency",
+      "startCta": "Françbuk skeletinə başla",
+      "stepLabel": "Mərhələ {current} / {total}",
+      "back": "Geri",
+      "next": "Növbəti",
+      "submit": "Yarat",
+      "generate": "AI skeleti yarat",
+      "submitting": "Yaradılır...",
+      "generating": "AI sabit outline üzrə françbuk skeletini hazırlayır. Bu proses bir az çəkə bilər.",
+      "error": "Françbuk yaradıla bilmədi. Zəhmət olmasa yenidən cəhd edin.",
+      "locked": { "badge": "USTA tələb olunur", "title": "AI Françbuk USTA üzvləri üçündür", "body": "ŞAGIRD və KALFA istifadəçiləri burada maraq sorğusu göndərə bilər. Komanda USTA aktivləşdirmə üçün sizinlə əlaqə saxlayacaq." },
+      "banner": { "title": "Bu SKELETDİR.", "body": "Yayımdan və franchise alanlara verilmədən əvvəl insan nəzərdən keçirməsi tələb olunur." },
+      "steps": {
+        "brand": { "eyebrow": "Əsas məlumat", "title": "Brend və sektor" },
+        "operations": { "eyebrow": "Əməliyyat", "title": "Gündəlik əməliyyat necə işləyir?" },
+        "standards": { "eyebrow": "Standartlar", "title": "Hazır qaydalar və keyfiyyət standartları" },
+        "staff": { "eyebrow": "Personal", "title": "Komanda, rollar və təlim" },
+        "supply": { "eyebrow": "Təchizat", "title": "Təchizat, anbar və avadanlıq" },
+        "opening": { "eyebrow": "Açılış", "title": "Yeni filial açılış prosesi" }
+      },
+      "fields": {
+        "brand": { "label": "Brend adı", "placeholder": "Məsələn: DK Coffee" },
+        "sector": { "label": "Sektor", "placeholder": "Məsələn: qəhvə, fast casual, təhsil" },
+        "operationDescription": { "label": "Əməliyyat təsviri", "placeholder": "Müştəri gələndən xidmət bitənə qədər əsas axını yazın." },
+        "standards": { "label": "Mövcud standartlar", "placeholder": "Hazır qaydalar, SOP-lar, keyfiyyət ölçüləri və brend tələbləri." },
+        "staff": { "label": "Personal modeli", "placeholder": "Rollar, növbələr, təlim və məsuliyyət bölgüsü." },
+        "supply": { "label": "Təchizat modeli", "placeholder": "Təchizatçılar, anbar, logistika, avadanlıq və kritik materiallar." },
+        "openingProcess": { "label": "Açılış prosesi", "placeholder": "Yeni filial üçün lokasiya, hazırlıq, soft opening və audit ardıcıllığı." }
+      },
+      "sections": {
+        "communication": "Ünsiyyət", "sales_service_culture": "Satış və xidmət mədəniyyəti", "equipment": "Avadanlıq", "logistics_warehouse": "Logistika və anbar", "cashier_pos": "Kassa/POS", "cleaning_safety": "Təmizlik və təhlükəsizlik", "team": "Komanda", "leadership": "Liderlik", "education_training": "Təhsil və təlim", "order_work_satisfaction": "Sifariş və iş məmnuniyyəti", "accounting_finance": "Hesab və maliyyə", "sales_marketing": "Satış və marketinq", "targets": "Hədəflər", "rules_inventory": "Qaydalar və inventar", "facility_location": "Təsis və lokasiya", "opening": "Açılış", "chain_management": "Zəncir idarəetmə", "brand_identity": "Brend kimliyi", "quality_control": "Keyfiyyət nəzarəti", "audit_procedures": "Denetim prosedurları"
+      },
+      "result": { "purpose": "Məqsəd", "procedure": "Addım-addım prosedur", "controls": "Nəzarət nöqtələri", "template": "Nümunə şablon", "save": "Dəyişiklikləri saxla", "saving": "Saxlanır...", "saved": "Saxlandı", "export": "Markdown export" },
+      "export": { "defaultBrand": "Françbuk", "defaultSector": "Sektor" }
+    }
+  },
   "franchiseRoi": {
     "badge": "Franchise ROI Kalkulyatoru",
     "title": "Bu franchise investisiyaya dəyərmi?",
@@ -4334,6 +4376,7 @@
     "resultBadge": "Nəticə",
     "weakestLabel": "Ən zəif sahəniz",
     "weakestBody": "Bu sahə franchise uğuru üçün kritikdir. DK Agency komandası ilk olaraq burada sizə dəstək verə bilər.",
+    "franchbookCta": "Sənədləşmə zəifdirsə: AI ilə Françbuk skeleti qur",
     "aiLoading": "AI hesabatınız hazırlanır...",
     "aiReportTitle": "Şəxsi Hesabat",
     "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir; tam dəyərləndirmə peşəkar audit tələb edir. © DK Agency",
@@ -4368,5 +4411,40 @@
     "cta": "Pulsuz dəyərləndirmə istə",
     "success": "Təşəkkürlər! Komandamız sizinlə əlaqə saxlayacaq.",
     "error": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
+  },
+  "franchiseBuyer": {
+    "badge": "Franchise Alıcı Çek-listi",
+    "title": "Bu franchise almağa dəyərmi?",
+    "subtitle": "9 sahə · təxminən 3 dəqiqə · sonunda hazırlıq hesabatı",
+    "letter": "Franchise almaq böyük qərardır. Bu çek-list investisiyanızı qorumaq üçün franchisor-u düzgün qiymətləndirməyinizə kömək edir. Hər sahəni diqqətlə oxuyun və ən doğru cavabı seçin.",
+    "letterSign": "— Doğan Tomris, DK Agency",
+    "startCta": "Çek-listə başla →",
+    "stepLabel": "Sahə {current} / {total}",
+    "back": "Geri",
+    "next": "Növbəti →",
+    "seeResult": "Nəticəni gör →",
+    "resultBadge": "Nəticə",
+    "weakestLabel": "Ən zəif sahəniz",
+    "weakestBody": "Bu sahədə əlavə araşdırma və franchisor-dan açıqlama tələb olunur.",
+    "aiLoading": "AI hesabatınız hazırlanır...",
+    "aiReportTitle": "Şəxsi Hesabat",
+    "disclaimer": "Bu çek-list ilkin qiymətləndirmə alətidir; investisiya qərarı peşəkar hüquqi və maliyyə məsləhəti tələb edir. © DK Agency",
+    "verdict": {
+      "risky": { "title": "Yüksək risk", "sub": "Bu franchise-da ciddi suallar var. İnvestisiya etmədən əvvəl hər sahəni dərindən araşdırın." },
+      "cautious": { "title": "Ehtiyatlı yanaşın", "sub": "Bəzi sahələr ümidvericidir, amma zəif nöqtələr diqqət tələb edir." },
+      "promising": { "title": "Perspektivli", "sub": "Franchise əksər meyarlara uyğundur. Son qərar üçün bir neçə sahəni dəqiqləşdirin." },
+      "strong": { "title": "Güclü namizəd", "sub": "Bu franchise əsas meyarlara cavab verir. Hüquqi və maliyyə yoxlamasına keçə bilərsiniz." }
+    },
+    "questions": {
+      "0": { "cat": "İnvestisiya & xərclər", "q": "İlkin investisiya, davamlı ödənişlər (royalti/reklam) aydındırmı və maliyyə gücünüz yetərlidirmi?", "options": { "0": "Xeyr, məlumat natamamdır və ya büdcə çatmır", "1": "Qismən — bəzi rəqəmlər aydındır, amma bütöv mənzərə yoxdur", "2": "Bəli — bütün xərclər şəffafdır və maliyyə imkanlarım yetərlidir" } },
+      "1": { "cat": "Bazar tələbi", "q": "Məhsul/xidmətə kifayət qədər bazar tələbi varmı və sektor trendi müsbətdirmi?", "options": { "0": "Xeyr, tələb azalır və ya sektor doymuşdur", "1": "Qismən — tələb var, amma trend qeyri-müəyyəndir", "2": "Bəli — güclü tələb, müsbət böyümə trendi" } },
+      "2": { "cat": "Rəqabət", "q": "Rəqibləriniz kimdir, sayı artırmı? Franchise sizə rəqabət üstünlüyü verirmi?", "options": { "0": "Xeyr, rəqabət çox güclüdür, franchise üstünlük vermir", "1": "Qismən — üstünlük var amma rəqabət sıxdır", "2": "Bəli — aydın rəqabət üstünlüyü var" } },
+      "3": { "cat": "Konsept əməliyyatı", "q": "Əməliyyat səmərəli qurulubmu? Bu işi idarə edəcək bacarığınız varmı?", "options": { "0": "Xeyr, əməliyyat qarışıqdır və ya təcrübəm yoxdur", "1": "Qismən — sistem var amma bəzi sahələr zəifdir", "2": "Bəli — əməliyyat səmərəlidir, bacarığım var" } },
+      "4": { "cat": "Brend imici", "q": "Franchisor hörmətli, aydın imicli markadırmı?", "options": { "0": "Xeyr, brend tanınmır və ya mənfi rəyləri var", "1": "Qismən — tanınır amma imic qarışıqdır", "2": "Bəli — güclü, müsbət brend imici" } },
+      "5": { "cat": "Marketinq proqramları", "q": "Müştəri cəlb etmə və saxlama proqramları varmı?", "options": { "0": "Xeyr, marketinq dəstəyi yoxdur", "1": "Qismən — bəzi proqramlar var amma sistemsizdir", "2": "Bəli — güclü marketinq sistemi və dəstəyi" } },
+      "6": { "cat": "Təlim & dəstək", "q": "Ödədiyiniz haqqın qarşılığında real təlim və davamlı dəstək alırsınızmı?", "options": { "0": "Xeyr, təlim/dəstək demək olar yoxdur", "1": "Qismən — ilkin təlim var amma davamlı dəstək zəifdir", "2": "Bəli — hərtərəfli təlim və davamlı dəstək sistemi" } },
+      "7": { "cat": "Böyümə imkanı", "q": "Şəbəkə böyüyürmü, sizin böyümə imkanınız varmı?", "options": { "0": "Xeyr, şəbəkə daralır və ya duruqdur", "1": "Qismən — böyümə var amma yavaşdır", "2": "Bəli — şəbəkə aktiv böyüyür, mənə də imkan var" } },
+      "8": { "cat": "Franchisor güvəni", "q": "Franchisora güvənirsinizmi? Müqavilə şərtləri ədalətlidirmi?", "options": { "0": "Xeyr, narahatlıqlarım var, müqavilə birtərəflidir", "1": "Qismən — ümumiyyətlə normal amma bəzi maddələr narahat edir", "2": "Bəli — tam güvənirəm, müqavilə ədalətlidir" } }
+    }
   }
 }

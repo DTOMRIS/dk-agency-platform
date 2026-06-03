@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
@@ -78,14 +78,20 @@ function getProfileFromStorage(): { logo?: string; form?: { companyName?: string
 
 function CompanyLogo() {
   const [logo, setLogo] = useState<string | null>(null);
-  useEffect(() => { setLogo(getProfileFromStorage()?.logo || null); }, []);
+  useEffect(() => {
+    const stored = getProfileFromStorage()?.logo || null;
+    startTransition(() => setLogo(stored));
+  }, []);
   if (logo) return <img src={logo} alt="Logo" className="h-12 w-12 rounded-xl object-cover border border-slate-200" />;
   return <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-dk-red/15 font-bold text-dk-red shadow-sm">DK</div>;
 }
 
 function CompanyName() {
   const [name, setName] = useState('DK Agency');
-  useEffect(() => { setName(getProfileFromStorage()?.form?.companyName || 'DK Agency'); }, []);
+  useEffect(() => {
+    const stored = getProfileFromStorage()?.form?.companyName || 'DK Agency';
+    startTransition(() => setName(stored));
+  }, []);
   return <p className="truncate text-sm font-semibold text-slate-900">{name}</p>;
 }
 

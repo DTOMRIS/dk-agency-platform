@@ -11,14 +11,14 @@ type LeadInput = {
   name: string;
   brand?: string;
   contact: string;
-  toolSource: 'readiness_test' | 'roi_calc' | 'buyer_checklist' | 'academy' | 'consulting';
+  toolSource: 'readiness_test' | 'roi_calc' | 'buyer_checklist' | 'franchbook_gate' | 'academy' | 'consulting';
   score?: Record<string, unknown>;
   locale?: string;
   consentKvkk: boolean;
   consentVersion?: string;
 };
 
-const VALID_SOURCES = ['readiness_test', 'roi_calc', 'buyer_checklist', 'academy', 'consulting'] as const;
+const VALID_SOURCES = ['readiness_test', 'roi_calc', 'buyer_checklist', 'franchbook_gate', 'academy', 'consulting'] as const;
 const VALID_LOCALES = ['az', 'ru', 'en', 'tr'];
 
 function validate(body: unknown): { ok: true; data: LeadInput } | { ok: false; error: string } {
@@ -74,6 +74,7 @@ const TOOL_LABELS: Record<string, string> = {
   readiness_test: 'Franchise Hazırlıq Testi',
   roi_calc: 'ROI Kalkulyatoru',
   buyer_checklist: 'Alıcı Çek-listi',
+  franchbook_gate: 'AI Françbuk USTA Gate',
   academy: 'Franchise Akademiyası',
   consulting: 'Məsləhət Sorğusu',
 };

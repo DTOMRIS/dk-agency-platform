@@ -1,5 +1,19 @@
 # HANDOFF
 
+## 2026-06-03 - TASK-0186 (AI Franchbook Generator)
+- Ne deyisdi:
+  - USTA-gated AI Franchbook generator added at `/franchise/francbuk-generatoru`.
+  - Fixed AFA Akademiya outline stored in `lib/data/franchbookOutline.ts`.
+  - AI output saved to `franchbook_projects` with real JWT `owner_id`.
+  - Result screen is editable and can be saved with PATCH.
+  - Markdown export is client-side; no new dependency added.
+- Deploy:
+  - Apply `drizzle/0011_franchbook_projects.sql` before opening the tool.
+- Riskler:
+  - `checkToolAccess` maps JWT role `admin` to USTA; normal `member` remains KALFA.
+  - Gemini secondary is not wired into the shared `ai-router`; current provider path is DeepSeek with Claude fallback plus safe schema fallback.
+  - Unrelated `public/images/menu-muhendisligi.png` deletion existed before this task and was not touched.
+
 ## 2026-05-27 — TASK-0178A (ŞAGIRD Tool Descriptions)
 - Ne deyisdi:
   - 3 ŞAGIRD alət üçün Metro 3-block descriptions (4 dildə)
