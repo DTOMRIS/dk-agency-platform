@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
+import { withSentryConfig } from '@sentry/nextjs';
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -58,7 +59,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' data:",
               "style-src 'self' 'unsafe-inline'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.com",
-              "connect-src 'self' https: https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org",
+              "connect-src 'self' https: https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://*.sentry.io",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",
@@ -70,4 +71,14 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default withSentryConfig(withNextIntl(nextConfig), {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: !process.env.CI,
+  disableSourceMapUpload: !process.env.SENTRY_AUTH_TOKEN,
+  tunnelRoute: '/api/monitoring',
+  disableLogger: true,
+  autoInstrumentServerFunctions: true,
+  autoInstrumentMiddleware: true,
+  autoInstrumentAppDirectory: true,
+});

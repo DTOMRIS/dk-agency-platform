@@ -33,6 +33,7 @@
   "dependencies": {
     "@google/genai": "^1.42.0",
     "@neondatabase/serverless": "^1.0.2",
+    "@sentry/nextjs": "^10.56.0",
     "@tailwindcss/postcss": "^4",
     "@types/jsonwebtoken": "^9.0.10",
     "autoprefixer": "^10.4.27",
