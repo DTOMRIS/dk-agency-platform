@@ -5,6 +5,26 @@ import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import LeadForm from './LeadForm';
 
+/** Minimal markdown→HTML for AI report output (trusted source, no user input). */
+function renderMarkdown(md: string): string {
+  return md
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, (m) => `<ul>${m}</ul>`)
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/\n/g, '<br/>')
+    .replace(/^/, '<p>').replace(/$/, '</p>')
+    .replace(/<p><h([123])>/g, '<h$1>').replace(/<\/h([123])><\/p>/g, '</h$1>')
+    .replace(/<p><ul>/g, '<ul>').replace(/<\/ul><\/p>/g, '</ul>')
+    .replace(/<p><\/p>/g, '');
+}
+
 type ScoreQuizConfig = {
   variant?: 'score';
   namespace: string;
@@ -417,7 +437,7 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
 
           return (
             <div key={i}>
-              <div className="flex justify-between text-xs font-semibold">
+              <div className="flex justify-between text-xs font-semibold text-slate-900">
                 <span>{t(`questions.${i}.cat`)}</span>
                 <span>{val}</span>
               </div>
@@ -453,7 +473,10 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
       {aiReport && (
         <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
           <h3 className="mb-2 text-sm font-bold text-slate-900">{t('aiReportTitle')}</h3>
-          <div className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">{aiReport}</div>
+          <div
+            className="prose prose-sm prose-slate max-w-none text-sm leading-relaxed text-slate-700 [&_strong]:text-slate-900 [&_h1]:text-lg [&_h1]:font-bold [&_h1]:text-slate-900 [&_h2]:text-base [&_h2]:font-bold [&_h2]:text-slate-900 [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-slate-900 [&_ul]:list-disc [&_ul]:pl-4 [&_ol]:list-decimal [&_ol]:pl-4 [&_li]:mb-1"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(aiReport) }}
+          />
         </div>
       )}
 
