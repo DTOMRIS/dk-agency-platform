@@ -36,6 +36,7 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 - `text-white` forbidden inside article body, blog cards, news content, forms, CMS prose, or any light container
 - Light text allowed only on provably dark surfaces: image heroes with dark overlay, dark CTA sections, dark nav, dark footer
 - A white-on-white or low-contrast article body is a release-blocking bug, not a cosmetic issue
+- **Interaktif elementlər (WCAG AA mütləq):** Quiz option, radio, checkbox, dropdown, tab label — HƏMİŞƏ `text-slate-700` (seçilməmiş) / `text-slate-900` (seçilmiş). Default/muted/inherited rəng QADAĞAN. Heç bir `<button>` və ya `<label>` text-color class-sız buraxılmamalı. Kontrast ≥4.5:1. Bu qayda nəticə ekranlarına da aiddir (bar label, skor, kateqoriya adı).
 
 ## Definition of Done — bütün maddələr keçməli (Stop hook yoxlayır)
 1. `npm run build` → 0 TS error
