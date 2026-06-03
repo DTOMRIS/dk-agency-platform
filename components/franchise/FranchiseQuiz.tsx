@@ -1,0 +1,280 @@
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
+import LeadForm from './LeadForm';
+
+export type QuizConfig = {
+  namespace: string;
+  questionCount: number;
+  scoreOptions: readonly number[];
+  storageKey: string;
+  toolSource: 'readiness_test' | 'roi_calc' | 'buyer_checklist' | 'academy' | 'consulting';
+  aiReportPath: string | null;
+  reportType?: 'FranchiseReadinessReport' | 'FranchiseBuyerReport';
+  getVerdict: (avgScore: number) => string;
+  getWeakestIndex: (scores: number[]) => number;
+};
+
+function ScoreRing({ score }: { score: number }) {
+  const radius = 74;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (circumference * score) / 100;
+
+  return (
+    <div className="relative mx-auto mb-4 h-44 w-44">
+      <svg width="176" height="176" className="-rotate-90">
+        <circle cx="88" cy="88" r={radius} fill="none" stroke="#eee" strokeWidth="13" />
+        <circle
+          cx="88"
+          cy="88"
+          r={radius}
+          fill="none"
+          stroke="url(#ring-grad)"
+          strokeWidth="13"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className="transition-all duration-1000"
+        />
+        <defs>
+          <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#C5A022" />
+            <stop offset="1" stopColor="#E94560" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center font-display text-5xl font-extrabold text-slate-900">
+        {score}
+      </div>
+    </div>
+  );
+}
+
+export default function FranchiseQuiz({ config }: { config: QuizConfig }) {
+  const t = useTranslations(config.namespace);
+  const locale = useLocale();
+  const { questionCount, scoreOptions, storageKey, toolSource, aiReportPath } = config;
+
+  const [step, setStep] = useState(-1);
+  const [answers, setAnswers] = useState<(number | null)[]>(new Array(questionCount).fill(null));
+  const [aiReport, setAiReport] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return;
+
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed.answers) && typeof parsed.step === 'number') {
+        setAnswers(parsed.answers.slice(0, questionCount));
+        setStep(parsed.step);
+      }
+    } catch {
+      // Ignore corrupt local progress.
+    }
+  }, [questionCount, storageKey]);
+
+  useEffect(() => {
+    if (step >= 0 && step < questionCount) {
+      localStorage.setItem(storageKey, JSON.stringify({ answers, step }));
+    }
+    if (step === questionCount) {
+      localStorage.removeItem(storageKey);
+    }
+  }, [answers, questionCount, step, storageKey]);
+
+  const pick = useCallback((optIdx: number) => {
+    setAnswers((prev) => {
+      const next = [...prev];
+      next[step] = scoreOptions[optIdx];
+      return next;
+    });
+  }, [scoreOptions, step]);
+
+  const validAnswers = answers.filter((answer): answer is number => answer !== null);
+  const avgScore = validAnswers.length > 0
+    ? Math.round(validAnswers.reduce((sum, value) => sum + value, 0) / questionCount)
+    : 0;
+
+  const fetchAiReport = useCallback(async () => {
+    if (!aiReportPath) return;
+
+    setAiLoading(true);
+    try {
+      const scores: Record<string, number> = {};
+      for (let i = 0; i < questionCount; i++) {
+        scores[t(`questions.${i}.cat`)] = answers[i] ?? 0;
+      }
+
+      const response = await fetch(aiReportPath, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          scores,
+          locale,
+          avgScore,
+          taskType: config.reportType,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setAiReport(data.report || null);
+      }
+    } catch {
+      // AI is an enhancement; the quiz result remains usable without it.
+    }
+    setAiLoading(false);
+  }, [aiReportPath, answers, avgScore, config.reportType, locale, questionCount, t]);
+
+  useEffect(() => {
+    if (step === questionCount && !aiReport && aiReportPath) {
+      fetchAiReport();
+    }
+  }, [aiReport, aiReportPath, fetchAiReport, questionCount, step]);
+
+  const verdict = config.getVerdict(avgScore);
+  const weakIdx = config.getWeakestIndex(validAnswers);
+
+  if (step === -1) {
+    return (
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        <span className="mb-3 inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-700">
+          {t('badge')}
+        </span>
+        <h1 className="mb-3 font-display text-3xl font-extrabold text-slate-900">{t('title')}</h1>
+        <p className="mb-2 text-base text-slate-500">{t('subtitle')}</p>
+        <div className="my-6 border-l-[3px] border-[var(--dk-gold)] pl-5 text-sm text-slate-600">
+          <p>{t('letter')}</p>
+          <p className="mt-2 font-display font-bold text-slate-900">{t('letterSign')}</p>
+        </div>
+        <button
+          onClick={() => setStep(0)}
+          className="rounded-full bg-[var(--dk-gold)] px-7 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-400"
+        >
+          {t('startCta')}
+        </button>
+      </div>
+    );
+  }
+
+  if (step >= 0 && step < questionCount) {
+    const progress = (step / questionCount) * 100;
+
+    return (
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        <div className="mb-1 flex justify-between text-xs font-semibold text-slate-400">
+          <span>{t('stepLabel', { current: step + 1, total: questionCount })}</span>
+          <span>{Math.round(progress)}%</span>
+        </div>
+        <div className="mb-6 h-2 overflow-hidden rounded-full bg-amber-50">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-[var(--dk-gold)] to-[var(--dk-red)] transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        <div className="mb-1 text-xs font-bold uppercase tracking-widest text-[var(--dk-red)]">
+          {t(`questions.${step}.cat`)}
+        </div>
+        <h2 className="mb-5 font-display text-xl font-bold text-slate-900">{t(`questions.${step}.q`)}</h2>
+
+        <div className="space-y-3">
+          {scoreOptions.map((score, optIdx) => (
+            <button
+              key={optIdx}
+              onClick={() => pick(optIdx)}
+              className={`block w-full rounded-xl border p-4 text-left text-sm transition ${
+                answers[step] === score
+                  ? 'border-[var(--dk-navy)] bg-amber-50 font-semibold'
+                  : 'border-slate-200 hover:border-[var(--dk-gold)]'
+              }`}
+            >
+              <span className="mr-2 font-bold text-slate-900">{String.fromCharCode(65 + optIdx)}.</span>
+              {t(`questions.${step}.options.${optIdx}`)}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-6 flex gap-3">
+          {step > 0 && (
+            <button
+              onClick={() => setStep((current) => current - 1)}
+              className="rounded-full bg-slate-100 px-5 py-3 text-sm font-bold text-slate-700"
+            >
+              {'<'} {t('back')}
+            </button>
+          )}
+          <button
+            onClick={() => setStep((current) => current + 1)}
+            disabled={answers[step] === null}
+            className="rounded-full bg-[var(--dk-gold)] px-6 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-400 disabled:opacity-40"
+          >
+            {step === questionCount - 1 ? t('seeResult') : t('next')}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const scoreData: Record<string, number> = {};
+  for (let i = 0; i < questionCount; i++) {
+    scoreData[t(`questions.${i}.cat`)] = answers[i] ?? 0;
+  }
+
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <span className="mb-4 inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-700">
+        {t('resultBadge')}
+      </span>
+      <ScoreRing score={avgScore} />
+      <h2 className="text-center font-display text-2xl font-extrabold text-slate-900">{t(`verdict.${verdict}.title`)}</h2>
+      <p className="mb-6 text-center text-sm text-slate-500">{t(`verdict.${verdict}.sub`)}</p>
+
+      <div className="mb-6 space-y-2">
+        {Array.from({ length: questionCount }, (_, i) => {
+          const val = answers[i] ?? 0;
+          const maxScore = scoreOptions[scoreOptions.length - 1] || 100;
+          const pct = Math.max(0, Math.min(100, (val / maxScore) * 100));
+          const color = pct >= 75 ? 'bg-[var(--dk-gold)]' : pct >= 50 ? 'bg-amber-400' : 'bg-[var(--dk-red)]';
+
+          return (
+            <div key={i}>
+              <div className="flex justify-between text-xs font-semibold">
+                <span>{t(`questions.${i}.cat`)}</span>
+                <span>{val}</span>
+              </div>
+              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+                <div className={`h-full rounded-full ${color} transition-all`} style={{ width: `${pct}%` }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
+        <h3 className="mb-1 text-sm font-bold text-slate-900">
+          {t('weakestLabel')}: {t(`questions.${weakIdx}.cat`)}
+        </h3>
+        <p className="text-sm text-slate-600">{t('weakestBody')}</p>
+      </div>
+
+      {aiLoading && (
+        <div className="mb-6 rounded-xl bg-slate-50 p-4 text-center text-sm text-slate-500">
+          {t('aiLoading')}
+        </div>
+      )}
+      {aiReport && (
+        <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
+          <h3 className="mb-2 text-sm font-bold text-slate-900">{t('aiReportTitle')}</h3>
+          <div className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">{aiReport}</div>
+        </div>
+      )}
+
+      <LeadForm toolSource={toolSource} score={scoreData} />
+      <p className="mt-6 text-center text-xs text-slate-400">{t('disclaimer')}</p>
+    </div>
+  );
+}
