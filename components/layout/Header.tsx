@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, ChevronDown, Globe, LayoutGrid, LogOut, Menu, UserRound, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, ClipboardCheck, FileText, Globe, LayoutGrid, LogOut, Menu, PieChart, UserRound, Wand2, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import MegaMenu from '@/components/layout/MegaMenu';
@@ -11,10 +11,10 @@ import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale, t
 
 // Inline nav copy — NOT dependent on NextIntlClientProvider (fixes stale locale on client nav)
 const NAV_COPY: Record<Locale, Record<string, string>> = {
-  az: { home:'Ana səhifə', tools:'Alətlər', listings:'İlanlar', news:'Sektor Nəbzi', blog:'Bloq', panel:'İdarə Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu' },
-  en: { home:'Home', tools:'Tools', listings:'Listings', news:'Sector Pulse', blog:'Blog', panel:'Control Panel', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu' },
-  ru: { home:'Главная', tools:'Инструменты', listings:'Объявления', news:'Пульс сектора', blog:'Блог', panel:'Панель управления', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню' },
-  tr: { home:'Ana sayfa', tools:'Araçlar', listings:'İlanlar', news:'Sektör Nabzı', blog:'Blog', panel:'Yönetim Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü' },
+  az: { home:'Ana səhifə', tools:'Alətlər', franchise:'Franchise', listings:'İlanlar', news:'Sektor Nəbzi', blog:'Bloq', panel:'İdarə Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu', frReadiness:'Hazırlıq Testi', frRoi:'ROI Kalkulyatoru', frBuyer:'Alıcı Çek-listi', frBook:'AI Françbuk' },
+  en: { home:'Home', tools:'Tools', franchise:'Franchise', listings:'Listings', news:'Sector Pulse', blog:'Blog', panel:'Control Panel', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu', frReadiness:'Readiness Test', frRoi:'ROI Calculator', frBuyer:'Buyer Checklist', frBook:'AI Franchbook' },
+  ru: { home:'Главная', tools:'Инструменты', franchise:'Франшиза', listings:'Объявления', news:'Пульс сектора', blog:'Блог', panel:'Панель управления', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню', frReadiness:'Тест готовности', frRoi:'ROI Калькулятор', frBuyer:'Чек-лист покупателя', frBook:'AI Франчбук' },
+  tr: { home:'Ana sayfa', tools:'Araçlar', franchise:'Franchise', listings:'İlanlar', news:'Sektör Nabzı', blog:'Blog', panel:'Yönetim Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü', frReadiness:'Hazırlık Testi', frRoi:'ROI Hesaplayıcı', frBuyer:'Alıcı Kontrol Listesi', frBook:'AI Franchise Kitabı' },
 };
 
 function getMemberInitials(session: MemberSession) {
@@ -29,13 +29,21 @@ export default function Header() {
   const currentLocale = normalizeLocale(pathname.split('/')[1]);
   const t = (key: string) => NAV_COPY[currentLocale]?.[key] ?? NAV_COPY.az[key] ?? key;
 
+  const franchiseLinks = [
+    { icon: ClipboardCheck, label: t('frReadiness'), href: withLocale(currentLocale, '/franchise/hazirliq-testi') },
+    { icon: PieChart, label: t('frRoi'), href: withLocale(currentLocale, '/franchise/roi-kalkulyatoru') },
+    { icon: FileText, label: t('frBuyer'), href: withLocale(currentLocale, '/franchise/alici-cheklisti') },
+    { icon: Wand2, label: t('frBook'), href: withLocale(currentLocale, '/franchise/francbuk-generatoru'), beta: true },
+  ] as const;
+
   const navItems = [
-    { name: t('home'), href: withLocale(currentLocale, '/'), hasMegaMenu: false },
-    { name: t('tools'), href: '#', hasMegaMenu: true },
-    { name: t('listings'), href: withLocale(currentLocale, '/ilanlar'), hasMegaMenu: false },
-    { name: t('news'), href: withLocale(currentLocale, '/haberler'), hasMegaMenu: false },
-    { name: t('blog'), href: withLocale(currentLocale, '/blog'), hasMegaMenu: false },
-    { name: t('panel'), href: withLocale(currentLocale, '/b2b-panel'), hasMegaMenu: false },
+    { name: t('home'), href: withLocale(currentLocale, '/'), hasMegaMenu: false, hasFranchise: false },
+    { name: t('tools'), href: '#', hasMegaMenu: true, hasFranchise: false },
+    { name: t('franchise'), href: '#', hasMegaMenu: false, hasFranchise: true },
+    { name: t('listings'), href: withLocale(currentLocale, '/ilanlar'), hasMegaMenu: false, hasFranchise: false },
+    { name: t('news'), href: withLocale(currentLocale, '/haberler'), hasMegaMenu: false, hasFranchise: false },
+    { name: t('blog'), href: withLocale(currentLocale, '/blog'), hasMegaMenu: false, hasFranchise: false },
+    { name: t('panel'), href: withLocale(currentLocale, '/b2b-panel'), hasMegaMenu: false, hasFranchise: false },
   ] as const;
 
   const memberLinks = [
@@ -46,13 +54,15 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [isFranchiseOpen, setIsFranchiseOpen] = useState(false);
+  const [isMobileFranchiseOpen, setIsMobileFranchiseOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [memberSession, setMemberSession] = useState<MemberSession>(getGuestSession());
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { const h = () => setIsScrolled(window.scrollY > 10); window.addEventListener('scroll', h); return () => window.removeEventListener('scroll', h); }, []);
   useEffect(() => { const s = () => setMemberSession(readMemberSession()); s(); window.addEventListener('storage', s); window.addEventListener('member-session-updated', s); return () => { window.removeEventListener('storage', s); window.removeEventListener('member-session-updated', s); }; }, []);
-  useEffect(() => { const t = window.setTimeout(() => { setIsMobileOpen(false); setIsMegaMenuOpen(false); setIsUserMenuOpen(false); }, 0); return () => window.clearTimeout(t); }, [pathname]);
+  useEffect(() => { const t = window.setTimeout(() => { setIsMobileOpen(false); setIsMegaMenuOpen(false); setIsFranchiseOpen(false); setIsMobileFranchiseOpen(false); setIsUserMenuOpen(false); }, 0); return () => window.clearTimeout(t); }, [pathname]);
   useEffect(() => { const h = (e: MouseEvent) => { if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) setIsUserMenuOpen(false); }; document.addEventListener('mousedown', h); return () => document.removeEventListener('mousedown', h); }, []);
 
   const handleLogout = async () => {
@@ -118,6 +128,32 @@ export default function Header() {
                   </button>
                   <MegaMenu isOpen={isMegaMenuOpen} onClose={() => setIsMegaMenuOpen(false)} />
                 </div>
+              ) : item.hasFranchise ? (
+                <div key={item.name} className="relative" onMouseEnter={() => setIsFranchiseOpen(true)} onMouseLeave={() => setIsFranchiseOpen(false)}>
+                  <button type="button" className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] ${pathname.includes('/franchise') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
+                    {item.name} <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isFranchiseOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {isFranchiseOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}
+                        className="absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 rounded-2xl border border-[var(--dk-border-soft)] bg-white p-2 shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
+                        {franchiseLinks.map((fl) => {
+                          const Icon = fl.icon;
+                          const isActive = pathname.includes(fl.href.split('/').pop() || '');
+                          return (
+                            <Link key={fl.href} href={fl.href}
+                              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors hover:bg-slate-50 ${isActive ? 'bg-slate-50 font-bold text-[var(--dk-navy)]' : 'text-slate-600'}`}>
+                              <Icon className="h-4 w-4 text-[var(--dk-gold)]" />
+                              <span className="flex-1">{fl.label}</span>
+                              {'beta' in fl && fl.beta && <span className="rounded-full bg-[var(--dk-gold)]/15 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[var(--dk-gold)]">BETA</span>}
+                            </Link>
+                          );
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               ) : (
                 <Link key={item.name} href={item.href} className="rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]">
                   {item.name}
@@ -174,13 +210,45 @@ export default function Header() {
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
               className="absolute left-3 right-3 top-full z-50 mt-2 max-h-[calc(100vh-88px)] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl sm:left-4 sm:right-4 sm:p-6 lg:hidden">
               <div className="flex flex-col gap-1">
-                {navItems.map((item) => (
-                  <Link key={item.name} href={item.hasMegaMenu ? withLocale(currentLocale, '/toolkit') : item.href}
-                    className="rounded-xl p-3 text-base font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]"
-                    onClick={() => setIsMobileOpen(false)}>
-                    {item.name}
-                  </Link>
-                ))}
+                {navItems.map((item) =>
+                  item.hasFranchise ? (
+                    <div key={item.name}>
+                      <button type="button"
+                        className={`flex w-full items-center justify-between rounded-xl p-3 text-base font-medium transition-colors hover:bg-slate-50 ${pathname.includes('/franchise') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-700'}`}
+                        onClick={() => setIsMobileFranchiseOpen((p) => !p)}>
+                        {item.name}
+                        <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform ${isMobileFranchiseOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                      <AnimatePresence>
+                        {isMobileFranchiseOpen && (
+                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}
+                            className="overflow-hidden">
+                            <div className="ml-3 flex flex-col gap-0.5 border-l-2 border-[var(--dk-gold)]/30 pl-3 pb-2">
+                              {franchiseLinks.map((fl) => {
+                                const Icon = fl.icon;
+                                return (
+                                  <Link key={fl.href} href={fl.href}
+                                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]"
+                                    onClick={() => setIsMobileOpen(false)}>
+                                    <Icon className="h-4 w-4 text-[var(--dk-gold)]" />
+                                    <span className="flex-1">{fl.label}</span>
+                                    {'beta' in fl && fl.beta && <span className="rounded-full bg-[var(--dk-gold)]/15 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[var(--dk-gold)]">BETA</span>}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <Link key={item.name} href={item.hasMegaMenu ? withLocale(currentLocale, '/toolkit') : item.href}
+                      className="rounded-xl p-3 text-base font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]"
+                      onClick={() => setIsMobileOpen(false)}>
+                      {item.name}
+                    </Link>
+                  ),
+                )}
                 <Link href={withLocale(currentLocale, '/ilan-ver')}
                   className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-gold)] py-3 font-bold text-[var(--dk-navy)]"
                   onClick={() => setIsMobileOpen(false)}>
