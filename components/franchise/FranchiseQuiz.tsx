@@ -76,8 +76,12 @@ function ScoreRing({ score }: { score: number }) {
   );
 }
 
-function fieldIsComplete(value: string | undefined, required: boolean | undefined) {
-  return !required || Boolean(value?.trim());
+function fieldIsComplete(value: string | undefined, field: WizardField) {
+  if (!field.required) return true;
+  const trimmed = value?.trim() || '';
+  if (!trimmed) return false;
+  const minLen = field.type === 'textarea' ? 10 : 2;
+  return trimmed.length >= minLen;
 }
 
 function WizardQuiz({ config }: { config: WizardQuizConfig }) {
@@ -130,7 +134,7 @@ function WizardQuiz({ config }: { config: WizardQuizConfig }) {
 
   const current = config.steps[step];
   const progress = (step / config.steps.length) * 100;
-  const canContinue = current.fields.every((field) => fieldIsComplete(values[field.name], field.required));
+  const canContinue = current.fields.every((field) => fieldIsComplete(values[field.name], field));
 
   async function submitWizard() {
     setSubmitting(true);
@@ -359,8 +363,8 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
               onClick={() => pick(optIdx)}
               className={`block w-full rounded-xl border p-4 text-left text-sm transition ${
                 answers[step] === score
-                  ? 'border-[var(--dk-navy)] bg-amber-50 font-semibold'
-                  : 'border-slate-200 hover:border-[var(--dk-gold)]'
+                  ? 'border-[var(--dk-navy)] bg-amber-50 font-semibold text-slate-900'
+                  : 'border-slate-200 text-slate-700 hover:border-[var(--dk-gold)] hover:text-slate-900'
               }`}
             >
               <span className="mr-2 font-bold text-slate-900">{String.fromCharCode(65 + optIdx)}.</span>
