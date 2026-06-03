@@ -1,5 +1,18 @@
 # DK Agency Platform — Dev Log
 
+## 2026-06-03 - TASK-0186 (AI Franchbook Generator)
+
+**Problem:** Franchise funnel needed a monetizable USTA product after free readiness/ROI/buyer tools.
+
+**Fix:**
+1. `franchbook_projects` table + migration `0011_franchbook_projects.sql`
+2. `lib/data/franchbookOutline.ts` - fixed AFA Akademiya outline SSOT
+3. `FranchiseQuiz` now supports score quizzes and wizard input flows
+4. `POST/PATCH /api/franchise/franchbook` - JWT owner binding, USTA gate, DB save, edit save
+5. `lib/ai/franchbookGenerator.ts` - fixed-section AI generation with schema validation
+6. `/franchise/francbuk-generatoru` + locale route - wizard, editor, markdown export
+7. 4-language Pattern A namespace: `franchise.franchbook`
+
 ## 2026-05-30 — TASK-0112 (admin activation funnel widget)
 
 **Problem:** Event veriləri var amma admin heç bir funnel görüntüsü yoxdur.

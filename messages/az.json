@@ -4290,6 +4290,48 @@
       "comeback": { "message": "Toolkit-də sənin üçün yeni alətlər var.", "cta": "Alətlərə bax" }
     }
   },
+  "franchise": {
+    "franchbook": {
+      "badge": "AI Françbuk · USTA · BETA",
+      "title": "AI ilə franchise əl kitabı skeleti yaradın",
+      "subtitle": "6 mərhələ · sabit AFA Akademiya outline · redaktə edilə bilən sənəd",
+      "letter": "Bu alət əməliyyat bilginizi françbuk skeletinə çevirir. AI bölmə icad etmir; yalnız sabit strukturu sizin cavablarınızla doldurur.",
+      "letterSign": "— DK Agency",
+      "startCta": "Françbuk skeletinə başla",
+      "stepLabel": "Mərhələ {current} / {total}",
+      "back": "Geri",
+      "next": "Növbəti",
+      "submit": "Yarat",
+      "generate": "AI skeleti yarat",
+      "submitting": "Yaradılır...",
+      "generating": "AI sabit outline üzrə françbuk skeletini hazırlayır. Bu proses bir az çəkə bilər.",
+      "error": "Françbuk yaradıla bilmədi. Zəhmət olmasa yenidən cəhd edin.",
+      "locked": { "badge": "USTA tələb olunur", "title": "AI Françbuk USTA üzvləri üçündür", "body": "ŞAGIRD və KALFA istifadəçiləri burada maraq sorğusu göndərə bilər. Komanda USTA aktivləşdirmə üçün sizinlə əlaqə saxlayacaq." },
+      "banner": { "title": "Bu SKELETDİR.", "body": "Yayımdan və franchise alanlara verilmədən əvvəl insan nəzərdən keçirməsi tələb olunur." },
+      "steps": {
+        "brand": { "eyebrow": "Əsas məlumat", "title": "Brend və sektor" },
+        "operations": { "eyebrow": "Əməliyyat", "title": "Gündəlik əməliyyat necə işləyir?" },
+        "standards": { "eyebrow": "Standartlar", "title": "Hazır qaydalar və keyfiyyət standartları" },
+        "staff": { "eyebrow": "Personal", "title": "Komanda, rollar və təlim" },
+        "supply": { "eyebrow": "Təchizat", "title": "Təchizat, anbar və avadanlıq" },
+        "opening": { "eyebrow": "Açılış", "title": "Yeni filial açılış prosesi" }
+      },
+      "fields": {
+        "brand": { "label": "Brend adı", "placeholder": "Məsələn: DK Coffee" },
+        "sector": { "label": "Sektor", "placeholder": "Məsələn: qəhvə, fast casual, təhsil" },
+        "operationDescription": { "label": "Əməliyyat təsviri", "placeholder": "Müştəri gələndən xidmət bitənə qədər əsas axını yazın." },
+        "standards": { "label": "Mövcud standartlar", "placeholder": "Hazır qaydalar, SOP-lar, keyfiyyət ölçüləri və brend tələbləri." },
+        "staff": { "label": "Personal modeli", "placeholder": "Rollar, növbələr, təlim və məsuliyyət bölgüsü." },
+        "supply": { "label": "Təchizat modeli", "placeholder": "Təchizatçılar, anbar, logistika, avadanlıq və kritik materiallar." },
+        "openingProcess": { "label": "Açılış prosesi", "placeholder": "Yeni filial üçün lokasiya, hazırlıq, soft opening və audit ardıcıllığı." }
+      },
+      "sections": {
+        "communication": "Ünsiyyət", "sales_service_culture": "Satış və xidmət mədəniyyəti", "equipment": "Avadanlıq", "logistics_warehouse": "Logistika və anbar", "cashier_pos": "Kassa/POS", "cleaning_safety": "Təmizlik və təhlükəsizlik", "team": "Komanda", "leadership": "Liderlik", "education_training": "Təhsil və təlim", "order_work_satisfaction": "Sifariş və iş məmnuniyyəti", "accounting_finance": "Hesab və maliyyə", "sales_marketing": "Satış və marketinq", "targets": "Hədəflər", "rules_inventory": "Qaydalar və inventar", "facility_location": "Təsis və lokasiya", "opening": "Açılış", "chain_management": "Zəncir idarəetmə", "brand_identity": "Brend kimliyi", "quality_control": "Keyfiyyət nəzarəti", "audit_procedures": "Denetim prosedurları"
+      },
+      "result": { "purpose": "Məqsəd", "procedure": "Addım-addım prosedur", "controls": "Nəzarət nöqtələri", "template": "Nümunə şablon", "save": "Dəyişiklikləri saxla", "saving": "Saxlanır...", "saved": "Saxlandı", "export": "Markdown export" },
+      "export": { "defaultBrand": "Françbuk", "defaultSector": "Sektor" }
+    }
+  },
   "franchiseRoi": {
     "badge": "Franchise ROI Kalkulyatoru",
     "title": "Bu franchise investisiyaya dəyərmi?",
@@ -4334,6 +4376,7 @@
     "resultBadge": "Nəticə",
     "weakestLabel": "Ən zəif sahəniz",
     "weakestBody": "Bu sahə franchise uğuru üçün kritikdir. DK Agency komandası ilk olaraq burada sizə dəstək verə bilər.",
+    "franchbookCta": "Sənədləşmə zəifdirsə: AI ilə Françbuk skeleti qur",
     "aiLoading": "AI hesabatınız hazırlanır...",
     "aiReportTitle": "Şəxsi Hesabat",
     "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir; tam dəyərləndirmə peşəkar audit tələb edir. © DK Agency",

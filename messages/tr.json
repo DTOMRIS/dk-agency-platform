@@ -4290,6 +4290,48 @@
       "comeback": { "message": "Araç kutusunda senin için yeni araçlar var.", "cta": "Araçlara bak" }
     }
   },
+  "franchise": {
+    "franchbook": {
+      "badge": "AI Franchise El Kitabı · USTA · BETA",
+      "title": "AI ile franchise el kitabı iskeleti oluşturun",
+      "subtitle": "6 adım · sabit AFA Akademi outline · düzenlenebilir doküman",
+      "letter": "Bu araç operasyon bilginizi franchise el kitabı iskeletine çevirir. AI bölüm icat etmez; yalnızca sabit yapıyı cevaplarınızla doldurur.",
+      "letterSign": "— DK Agency",
+      "startCta": "El kitabı iskeletine başla",
+      "stepLabel": "Adım {current} / {total}",
+      "back": "Geri",
+      "next": "Sonraki",
+      "submit": "Oluştur",
+      "generate": "AI iskeleti oluştur",
+      "submitting": "Oluşturuluyor...",
+      "generating": "AI sabit outline üzerinden el kitabı iskeletini hazırlıyor. Bu biraz sürebilir.",
+      "error": "El kitabı oluşturulamadı. Lütfen tekrar deneyin.",
+      "locked": { "badge": "USTA gerekli", "title": "AI Franchise El Kitabı USTA üyeleri içindir", "body": "ŞAGIRD ve KALFA kullanıcıları burada ilgi talebi gönderebilir. Ekip USTA aktivasyonu için sizinle iletişime geçecektir." },
+      "banner": { "title": "Bu bir İSKELETTİR.", "body": "Yayınlamadan veya franchise alanlarla paylaşmadan önce insan incelemesi gerekir." },
+      "steps": {
+        "brand": { "eyebrow": "Temel bilgi", "title": "Marka ve sektör" },
+        "operations": { "eyebrow": "Operasyon", "title": "Günlük operasyon nasıl çalışır?" },
+        "standards": { "eyebrow": "Standartlar", "title": "Mevcut kurallar ve kalite standartları" },
+        "staff": { "eyebrow": "Personel", "title": "Ekip, roller ve eğitim" },
+        "supply": { "eyebrow": "Tedarik", "title": "Tedarik, depo ve ekipman" },
+        "opening": { "eyebrow": "Açılış", "title": "Yeni şube açılış süreci" }
+      },
+      "fields": {
+        "brand": { "label": "Marka adı", "placeholder": "Örnek: DK Coffee" },
+        "sector": { "label": "Sektör", "placeholder": "Örnek: kahve, fast casual, eğitim" },
+        "operationDescription": { "label": "Operasyon açıklaması", "placeholder": "Müşteri gelişinden hizmet bitimine kadar ana akışı yazın." },
+        "standards": { "label": "Mevcut standartlar", "placeholder": "Hazır kurallar, SOP'ler, kalite ölçüleri ve marka gereklilikleri." },
+        "staff": { "label": "Personel modeli", "placeholder": "Roller, vardiyalar, eğitim ve sorumluluk dağılımı." },
+        "supply": { "label": "Tedarik modeli", "placeholder": "Tedarikçiler, depo, lojistik, ekipman ve kritik malzemeler." },
+        "openingProcess": { "label": "Açılış süreci", "placeholder": "Yeni şube için lokasyon, hazırlık, soft opening ve denetim sırası." }
+      },
+      "sections": {
+        "communication": "İletişim", "sales_service_culture": "Satış ve hizmet kültürü", "equipment": "Ekipman", "logistics_warehouse": "Lojistik ve depo", "cashier_pos": "Kasa/POS", "cleaning_safety": "Temizlik ve güvenlik", "team": "Ekip", "leadership": "Liderlik", "education_training": "Eğitim", "order_work_satisfaction": "Sipariş ve iş memnuniyeti", "accounting_finance": "Muhasebe ve finans", "sales_marketing": "Satış ve pazarlama", "targets": "Hedefler", "rules_inventory": "Kurallar ve envanter", "facility_location": "Tesis ve lokasyon", "opening": "Açılış", "chain_management": "Zincir yönetimi", "brand_identity": "Marka kimliği", "quality_control": "Kalite kontrol", "audit_procedures": "Denetim prosedürleri"
+      },
+      "result": { "purpose": "Amaç", "procedure": "Adım adım prosedür", "controls": "Kontrol noktaları", "template": "Örnek şablon", "save": "Değişiklikleri kaydet", "saving": "Kaydediliyor...", "saved": "Kaydedildi", "export": "Markdown export" },
+      "export": { "defaultBrand": "Franchise El Kitabı", "defaultSector": "Sektör" }
+    }
+  },
   "franchiseRoi": {
     "badge": "Franchise ROI Hesaplayıcısı",
     "title": "Bu franchise yatırımı değer mi?",
@@ -4334,6 +4376,7 @@
     "resultBadge": "Sonuç",
     "weakestLabel": "En zayıf alanınız",
     "weakestBody": "Bu alan franchise başarısı için kritik öneme sahiptir. DK Agency ekibi size öncelikle burada destek verebilir.",
+    "franchbookCta": "Dokümantasyon zayıfsa: AI ile franchise el kitabı iskeleti kur",
     "aiLoading": "AI raporunuz hazırlanıyor...",
     "aiReportTitle": "Kişisel Rapor",
     "disclaimer": "Bu test ön değerlendirme aracıdır; tam değerlendirme profesyonel denetim gerektirir. © DK Agency",

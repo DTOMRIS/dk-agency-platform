@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 
 type LeadFormProps = {
-  toolSource: 'readiness_test' | 'roi_calc' | 'buyer_checklist' | 'academy' | 'consulting';
+  toolSource: 'readiness_test' | 'roi_calc' | 'buyer_checklist' | 'franchbook_gate' | 'academy' | 'consulting';
   score?: Record<string, unknown>;
 };
 

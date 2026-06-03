@@ -4290,6 +4290,48 @@
       "comeback": { "message": "New tools are available in the toolkit for you.", "cta": "Browse tools" }
     }
   },
+  "franchise": {
+    "franchbook": {
+      "badge": "AI Franchise Manual · USTA · BETA",
+      "title": "Generate a franchise manual skeleton with AI",
+      "subtitle": "6 steps · fixed AFA Academy outline · editable document",
+      "letter": "This tool turns your operational knowledge into a franchise manual skeleton. AI does not invent sections; it only fills the fixed structure with your answers.",
+      "letterSign": "— DK Agency",
+      "startCta": "Start the manual skeleton",
+      "stepLabel": "Step {current} / {total}",
+      "back": "Back",
+      "next": "Next",
+      "submit": "Generate",
+      "generate": "Generate AI skeleton",
+      "submitting": "Generating...",
+      "generating": "AI is preparing the manual skeleton using the fixed outline. This may take a little while.",
+      "error": "The manual could not be generated. Please try again.",
+      "locked": { "badge": "USTA required", "title": "AI Franchise Manual is for USTA members", "body": "SAGIRD and KALFA users can send an interest request here. The team will contact you about USTA activation." },
+      "banner": { "title": "This is a SKELETON.", "body": "Human review is required before publishing or sharing it with franchisees." },
+      "steps": {
+        "brand": { "eyebrow": "Basics", "title": "Brand and sector" },
+        "operations": { "eyebrow": "Operations", "title": "How does daily operation work?" },
+        "standards": { "eyebrow": "Standards", "title": "Existing rules and quality standards" },
+        "staff": { "eyebrow": "Staff", "title": "Team, roles and training" },
+        "supply": { "eyebrow": "Supply", "title": "Supply, warehouse and equipment" },
+        "opening": { "eyebrow": "Opening", "title": "New branch opening process" }
+      },
+      "fields": {
+        "brand": { "label": "Brand name", "placeholder": "Example: DK Coffee" },
+        "sector": { "label": "Sector", "placeholder": "Example: coffee, fast casual, education" },
+        "operationDescription": { "label": "Operation description", "placeholder": "Describe the main flow from customer arrival to service completion." },
+        "standards": { "label": "Existing standards", "placeholder": "Current rules, SOPs, quality measures and brand requirements." },
+        "staff": { "label": "Staff model", "placeholder": "Roles, shifts, training and responsibility split." },
+        "supply": { "label": "Supply model", "placeholder": "Suppliers, warehouse, logistics, equipment and critical materials." },
+        "openingProcess": { "label": "Opening process", "placeholder": "Location, preparation, soft opening and audit sequence for a new branch." }
+      },
+      "sections": {
+        "communication": "Communication", "sales_service_culture": "Sales and service culture", "equipment": "Equipment", "logistics_warehouse": "Logistics and warehouse", "cashier_pos": "Cashier/POS", "cleaning_safety": "Cleaning and safety", "team": "Team", "leadership": "Leadership", "education_training": "Education and training", "order_work_satisfaction": "Order and work satisfaction", "accounting_finance": "Accounting and finance", "sales_marketing": "Sales and marketing", "targets": "Targets", "rules_inventory": "Rules and inventory", "facility_location": "Facility and location", "opening": "Opening", "chain_management": "Chain management", "brand_identity": "Brand identity", "quality_control": "Quality control", "audit_procedures": "Audit procedures"
+      },
+      "result": { "purpose": "Purpose", "procedure": "Step-by-step procedure", "controls": "Control points", "template": "Sample template", "save": "Save edits", "saving": "Saving...", "saved": "Saved", "export": "Markdown export" },
+      "export": { "defaultBrand": "Franchise Manual", "defaultSector": "Sector" }
+    }
+  },
   "franchiseRoi": {
     "badge": "Franchise ROI Calculator",
     "title": "Is this franchise investment worth it?",
@@ -4334,6 +4376,7 @@
     "resultBadge": "Result",
     "weakestLabel": "Your weakest area",
     "weakestBody": "This area is critical for franchise success. The DK Agency team can support you here first.",
+    "franchbookCta": "Documentation is weak: build an AI franchise manual skeleton",
     "aiLoading": "Your AI report is being prepared...",
     "aiReportTitle": "Personal Report",
     "disclaimer": "This test is an initial self-assessment tool; full evaluation requires professional audit. © DK Agency",

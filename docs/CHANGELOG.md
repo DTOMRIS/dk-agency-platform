@@ -5,6 +5,12 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0186` AI Franchbook Generator: USTA-gated franchise manual skeleton tool
+- `franchbook_projects` table and `0011_franchbook_projects.sql` migration
+- Fixed AFA Akademiya franchbook outline SSOT
+- `/franchise/francbuk-generatoru` and `/{locale}/franchise/francbuk-generatoru`
+- `POST/PATCH /api/franchise/franchbook` with JWT owner binding, USTA gate, AI generation, and edit save
+- `franchbook_gate` lead source for lower-tier upgrade interest
 - `/dashboard/funnel` — admin-only activation funnel page (role gate: admin only)
 - `ActivationFunnelWidget` — 4-stage funnel bar chart (registered → priorities → tool click → D7 return)
 - Dashboard sidebar: "Aktivasiya funeli" nav item with BarChart3 icon (4 locales)

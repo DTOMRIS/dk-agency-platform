@@ -773,6 +773,7 @@ export const franchiseToolSourceEnum = pgEnum('franchise_tool_source', [
   'readiness_test',
   'roi_calc',
   'buyer_checklist',
+  'franchbook_gate',
   'academy',
   'consulting',
 ]);
@@ -797,6 +798,29 @@ export const franchiseLeads = pgTable(
   (table) => ({
     sourceIdx: index('idx_fl_source').on(table.toolSource),
     createdIdx: index('idx_fl_created').on(table.createdAt),
+  }),
+);
+
+export const franchbookProjects = pgTable(
+  'franchbook_projects',
+  {
+    id: serial('id').primaryKey(),
+    ownerId: integer('owner_id')
+      .notNull()
+      .references(() => users.id),
+    brand: text('brand').notNull(),
+    sector: text('sector').notNull(),
+    inputs: jsonb('inputs').$type<Record<string, unknown>>().notNull(),
+    content: jsonb('content').$type<Record<string, unknown>>(),
+    status: text('status').notNull().default('draft'),
+    locale: varchar('locale', { length: 2 }).notNull().default('az'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    ownerIdx: index('idx_fbp_owner').on(table.ownerId),
+    statusIdx: index('idx_fbp_status').on(table.status),
+    createdIdx: index('idx_fbp_created').on(table.createdAt),
   }),
 );
 
