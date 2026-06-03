@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-03T09:27:46.152Z
+- GeneratedAt: 2026-06-03T12:10:03.684Z
 - BuildStatus: PASS
 
-## Routes (198)
+## Routes (202)
 - /
 - /[locale]
 - /[locale]/about
@@ -64,6 +64,8 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/xeberler/rss
 - /[locale]/elaqe
 - /[locale]/forgot-password
+- /[locale]/franchise/hazirliq-testi
+- /[locale]/franchise/roi-kalkulyatoru
 - /[locale]/haberler
 - /[locale]/haberler/[slug]
 - /[locale]/haqqimizda
@@ -178,6 +180,8 @@ Auto-generated. Do not edit manually.
 - /docs/member-env-checklist
 - /elaqe
 - /forgot-password
+- /franchise/hazirliq-testi
+- /franchise/roi-kalkulyatoru
 - /haberler
 - /haberler/[slug]
 - /haqqimizda
@@ -206,7 +210,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (76)
+## API Routes (78)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -234,6 +238,7 @@ Auto-generated. Do not edit manually.
 - /api/blog
 - /api/blog/[slug]
 - /api/food-cost
+- /api/franchise/readiness-report
 - /api/health
 - /api/invoice-categories
 - /api/invoice-ocr
@@ -259,6 +264,7 @@ Auto-generated. Do not edit manually.
 - /api/marketing-tools/sikayet-analitigi
 - /api/member/auth
 - /api/member/checkout
+- /api/member/lead
 - /api/member/session
 - /api/member/webhook
 - /api/news
