@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Building2, Camera, Check, Globe, Mail, MapPin, Phone,
   Save, Shield, User, FileText, AlertCircle, Loader2, Send,
@@ -67,42 +67,45 @@ export default function ProfilPage() {
   const [rejectionReason, setRejectionReason] = useState<string | null>(null);
   const [error, setError] = useState('');
 
-  const fetchProfile = useCallback(async () => {
-    try {
-      const res = await fetch('/api/user/profile');
-      if (!res.ok) return;
-      const data = await res.json();
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/api/user/profile');
+        if (!res.ok || cancelled) return;
+        const data = await res.json();
+        if (cancelled) return;
 
-      if (data.memberProfile) {
-        const mp = data.memberProfile;
-        setForm({
-          company: mp.company || '',
-          sector: mp.sector || '',
-          description: mp.description || '',
-          voen: mp.voen || '',
-          city: mp.city || '',
-          district: mp.district || '',
-          streetAddress: mp.streetAddress || '',
-          contactPhone: mp.contactPhone || '',
-          whatsapp: mp.whatsapp || '',
-          website: mp.website || '',
-          authorizedPerson: mp.authorizedPerson || '',
-          position: mp.position || '',
-          bio: mp.bio || '',
-          instagram: mp.instagram || '',
-          linkedin: mp.linkedin || '',
-          language: mp.language || 'az',
-        });
-        setLogoPreview(mp.logoUrl || null);
-        setApprovalStatus(mp.approvalStatus || 'draft');
-        setRejectionReason(mp.rejectionReason || null);
-        setIsPublic(mp.visibilitySettings?.isPublic !== false);
-      }
-    } catch { /* network error */ }
-    setLoading(false);
+        if (data.memberProfile) {
+          const mp = data.memberProfile;
+          setForm({
+            company: mp.company || '',
+            sector: mp.sector || '',
+            description: mp.description || '',
+            voen: mp.voen || '',
+            city: mp.city || '',
+            district: mp.district || '',
+            streetAddress: mp.streetAddress || '',
+            contactPhone: mp.contactPhone || '',
+            whatsapp: mp.whatsapp || '',
+            website: mp.website || '',
+            authorizedPerson: mp.authorizedPerson || '',
+            position: mp.position || '',
+            bio: mp.bio || '',
+            instagram: mp.instagram || '',
+            linkedin: mp.linkedin || '',
+            language: mp.language || 'az',
+          });
+          setLogoPreview(mp.logoUrl || null);
+          setApprovalStatus(mp.approvalStatus || 'draft');
+          setRejectionReason(mp.rejectionReason || null);
+          setIsPublic(mp.visibilitySettings?.isPublic !== false);
+        }
+      } catch { /* network error */ }
+      if (!cancelled) setLoading(false);
+    })();
+    return () => { cancelled = true; };
   }, []);
-
-  useEffect(() => { fetchProfile(); }, [fetchProfile]);
 
   const handleChange = (key: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));

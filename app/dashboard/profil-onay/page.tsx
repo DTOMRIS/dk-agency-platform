@@ -56,7 +56,8 @@ export default function ProfilOnayPage() {
     setLoading(false);
   }, [statusFilter, search]);
 
-  useEffect(() => { fetchProfiles(); }, [fetchProfiles]);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch-on-mount with reusable callback
+  useEffect(() => { void fetchProfiles(); }, [fetchProfiles]);
 
   const handleAction = async (id: number, action: 'approve' | 'reject') => {
     setActionLoading(true);

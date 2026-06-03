@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { startTransition, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, ChevronDown, Palette, Sparkles } from 'lucide-react';
@@ -44,7 +44,8 @@ export default function BrandingGuidePage() {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
-        setChecked(JSON.parse(saved) as Record<string, boolean>);
+        const parsed = JSON.parse(saved) as Record<string, boolean>;
+        startTransition(() => setChecked(parsed));
       } catch { window.localStorage.removeItem(STORAGE_KEY); }
     }
   }, []);
