@@ -6,30 +6,37 @@ export const ROI_DEFAULTS = {
   opex: 96_000,
   royaltyPercent: 5,
   adFundPercent: 2,
-  investment: 180_000,
+  entryFee: 30_000,
+  setupCost: 100_000,
+  workingCapital: 50_000,
 } as const;
 
 export type RoiVerdict = 'good' | 'mid' | 'bad' | 'negative';
 
-export function calcRoi(input: {
+export interface RoiInput {
   revenue: number;
   marginPercent: number;
   opex: number;
   royaltyPercent: number;
   adFundPercent: number;
-  investment: number;
-}) {
+  entryFee: number;
+  setupCost: number;
+  workingCapital: number;
+}
+
+export function calcRoi(input: RoiInput) {
+  const investment = input.entryFee + input.setupCost + input.workingCapital;
   const grossProfit = input.revenue * input.marginPercent / 100;
   const royaltyAdFund = input.revenue * (input.royaltyPercent + input.adFundPercent) / 100;
   const netProfit = grossProfit - royaltyAdFund - input.opex;
-  const roi = input.investment > 0 ? (netProfit / input.investment) * 100 : 0;
-  const paybackMonths = netProfit > 0 ? input.investment / (netProfit / 12) : Infinity;
+  const roi = investment > 0 ? (netProfit / investment) * 100 : 0;
+  const paybackMonths = netProfit > 0 ? investment / (netProfit / 12) : Infinity;
 
   let verdict: RoiVerdict;
   if (netProfit <= 0) verdict = 'negative';
   else if (roi >= 20 && paybackMonths <= 36) verdict = 'good';
-  else if (roi >= 15) verdict = 'mid';
+  else if (roi >= 15 && paybackMonths <= 48) verdict = 'mid';
   else verdict = 'bad';
 
-  return { grossProfit, royaltyAdFund, netProfit, roi, paybackMonths, verdict };
+  return { investment, grossProfit, royaltyAdFund, netProfit, roi, paybackMonths, verdict };
 }
