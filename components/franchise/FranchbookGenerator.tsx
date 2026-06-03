@@ -111,12 +111,12 @@ export default function FranchbookGenerator() {
           if (errData.issues?.length) {
             const issue = errData.issues[0];
             const field = issue.path?.join('.') || '';
-            setApiError({ message: issue.message || t('error'), field });
+            setApiError({ message: issue.message || 'validation error', field });
           } else {
-            setApiError({ message: errData.error || t('error') });
+            setApiError({ message: errData.error || 'error' });
           }
         } catch {
-          setApiError({ message: t('error') });
+          setApiError({ message: 'error' });
         }
         setState('error');
         return;
