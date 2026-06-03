@@ -4289,5 +4289,84 @@
       "listing_live": { "message": "Your listing is live — track this week's views.", "cta": "My listings" },
       "comeback": { "message": "New tools are available in the toolkit for you.", "cta": "Browse tools" }
     }
+  },
+  "franchiseRoi": {
+    "badge": "Franchise ROI Calculator",
+    "title": "Is this franchise investment worth it?",
+    "subtitle": "Results update live as you change the numbers. Healthy franchise target: annual ROI ≥ 20%, payback ≤ 36 months.",
+    "roiLabel": "annual return on investment (ROI)",
+    "months": "months",
+    "noProfit": "no profit",
+    "disclaimer": "This calculator provides estimates only; investment decisions require professional feasibility analysis. © DK Agency",
+    "fields": {
+      "revenue": { "label": "Expected annual turnover", "hint": "total revenue from sales" },
+      "marginPercent": { "label": "Gross profit margin", "hint": "% of turnover remaining after cost of goods/services" },
+      "opex": { "label": "Annual fixed operating expenses", "hint": "rent, payroll, utilities, other" },
+      "royaltyPercent": { "label": "Royalty rate", "hint": "on turnover" },
+      "adFundPercent": { "label": "Advertising fund", "hint": "on turnover" },
+      "investment": { "label": "Initial investment", "hint": "franchise fee + fit-out + equipment + 6-month working capital" }
+    },
+    "results": {
+      "grossProfit": "Gross profit",
+      "royaltyAdFund": "Royalty + advertising fund",
+      "opex": "Fixed operating expenses",
+      "netProfit": "Annual net profit",
+      "payback": "Payback period"
+    },
+    "verdict": {
+      "good": "✓ Healthy metrics: ROI 20%+ and payback ≤ 36 months. Attractive franchise model.",
+      "mid": "~ Borderline: ROI 15–20%. Could work, but cost/royalty optimisation would help.",
+      "bad": "⚠ Risky: ROI below 15%. Turnover, margin or cost structure needs re-evaluation.",
+      "negative": "⚠ No net profit in this scenario — the model needs to be restructured."
+    }
+  },
+  "franchiseReadiness": {
+    "badge": "Franchise Readiness Test",
+    "title": "Is your brand ready to franchise?",
+    "subtitle": "12 questions · approx. 4 minutes · personalised readiness report at the end",
+    "letter": "Dear entrepreneur, successful franchising enhances your brand's value and ensures sustainable growth of your business. The brand you have built over the years is a trust we hold dear. This test is the first step to jointly identify your brand's strengths and areas for development.",
+    "letterSign": "— Doğan Tomris, DK Agency",
+    "startCta": "Start the test →",
+    "stepLabel": "Question {current} / {total}",
+    "back": "Back",
+    "next": "Next →",
+    "seeResult": "See result →",
+    "resultBadge": "Result",
+    "weakestLabel": "Your weakest area",
+    "weakestBody": "This area is critical for franchise success. The DK Agency team can support you here first.",
+    "aiLoading": "Your AI report is being prepared...",
+    "aiReportTitle": "Personal Report",
+    "disclaimer": "This test is an initial self-assessment tool; full evaluation requires professional audit. © DK Agency",
+    "verdict": {
+      "not_ready": { "title": "Not ready yet", "sub": "Core areas need strengthening. This is not a problem — it is a roadmap." },
+      "developing": { "title": "Developing stage", "sub": "There is potential, but some areas need to be solidified before franchising." },
+      "almost": { "title": "Close to ready", "sub": "Your brand is strong. A few more steps and you will be ready to franchise." },
+      "ready": { "title": "Ready to franchise", "sub": "Your brand is a strong franchise candidate. We can move to systemisation." }
+    },
+    "questions": {
+      "0": { "cat": "Credibility", "q": "How long has your brand been operating and what is its level of recognition?", "options": { "0": "We are new, limited recognition", "1": "1–2 years, local recognition", "2": "3–5 years, strong regional recognition", "3": "5+ years, widely recognised brand" } },
+      "1": { "cat": "Differentiation", "q": "What is your unique value proposition (USP) that sets you apart from competitors?", "options": { "0": "No significant difference from competitors", "1": "Some advantages but not clearly defined", "2": "Clear differentiation exists", "3": "Strong, easily explained unique concept" } },
+      "2": { "cat": "Teachability", "q": "How long would it take to fully train a new franchisee in your business?", "options": { "0": "Very complex, would take years", "1": "More than 6 months", "2": "3–6 months", "3": "Less than 3 months — it is systemised" } },
+      "3": { "cat": "Adaptability", "q": "How well can your concept adapt to different cities, locations and sizes?", "options": { "0": "Only works in the current location", "1": "Limited adaptability", "2": "Suitable for most regions", "3": "Fully adaptable to any region/size" } },
+      "4": { "cat": "Prototype performance", "q": "What is the financial performance of your existing unit(s)?", "options": { "0": "Not yet profitable", "1": "At break-even", "2": "Consistently profitable", "3": "Highly and sustainably profitable" } },
+      "5": { "cat": "Documentation", "q": "To what extent are your operating processes documented (manual, SOPs)?", "options": { "0": "No written documentation", "1": "Partially, mostly in my head", "2": "Core processes written down", "3": "Full manual + quality control" } },
+      "6": { "cat": "Affordable investment", "q": "How affordable is the initial investment for a target franchisee?", "options": { "0": "Very high, few people can afford it", "1": "High", "2": "Moderate, accessible", "3": "Affordable and attractive" } },
+      "7": { "cat": "Payback (ROI)", "q": "How long and at what return does a franchisee recover their investment?", "options": { "0": "Unknown / not calculated", "1": "More than 4 years", "2": "2–3 years, ROI ~15%", "3": "≤2 years, ROI 20%+" } },
+      "8": { "cat": "Market trend", "q": "What is the growth trend and outlook for your sector?", "options": { "0": "Shrinking market", "1": "Stable", "2": "Growing", "3": "Rapidly growing, strong future" } },
+      "9": { "cat": "Capital", "q": "Do you have capital to build the franchise system (legal, manual, support team)?", "options": { "0": "No", "1": "Limited", "2": "Partially ready", "3": "Fully allocated" } },
+      "10": { "cat": "Relationship management", "q": "Do you have a model for long-term franchisee relations and performance monitoring?", "options": { "0": "Not planned", "1": "General idea exists", "2": "Plan is ready", "3": "System + monitoring in place" } },
+      "11": { "cat": "Management capability", "q": "What is the experience level of the team that will manage franchise operations?", "options": { "0": "Limited experience", "1": "Managing alone", "2": "Small experienced team", "3": "Strong, experienced management team" } }
+    }
+  },
+  "franchiseLead": {
+    "title": "Next step",
+    "subtitle": "Get a free evaluation of your report with a DK Agency specialist.",
+    "name": "Full name",
+    "brand": "Brand / business name",
+    "contact": "Email or phone",
+    "kvkk": "I consent to the processing of my personal data by DK Agency.",
+    "cta": "Request a free evaluation",
+    "success": "Thank you! Our team will be in touch shortly.",
+    "error": "Something went wrong. Please try again."
   }
 }

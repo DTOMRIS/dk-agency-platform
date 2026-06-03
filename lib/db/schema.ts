@@ -767,6 +767,39 @@ export const userEvents = pgTable(
   }),
 );
 
+// ── FRANCHISE LEADS ─────────────────────────────────────────────────
+
+export const franchiseToolSourceEnum = pgEnum('franchise_tool_source', [
+  'readiness_test',
+  'roi_calc',
+  'buyer_checklist',
+  'academy',
+  'consulting',
+]);
+
+export const franchiseLeads = pgTable(
+  'franchise_leads',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: text('name').notNull(),
+    brand: text('brand'),
+    contact: text('contact').notNull(),
+    toolSource: franchiseToolSourceEnum('tool_source').notNull(),
+    score: jsonb('score'),
+    locale: varchar('locale', { length: 2 }).notNull().default('az'),
+    consentKvkk: boolean('consent_kvkk').notNull().default(false),
+    consentVersion: text('consent_version'),
+    ipHash: text('ip_hash'),
+    userAgent: text('user_agent'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
+  },
+  (table) => ({
+    sourceIdx: index('idx_fl_source').on(table.toolSource),
+    createdIdx: index('idx_fl_created').on(table.createdAt),
+  }),
+);
+
 // ── EQUIPMENT CONDITION ENUM (M5.1) ─────────────────────────────────
 
 export const equipmentConditionEnum = pgEnum('equipment_condition', ['new', 'used']);
