@@ -4289,5 +4289,84 @@
       "listing_live": { "message": "Elanın canlıdır — bu həftə baxışları izlə.", "cta": "Elanlarıma bax" },
       "comeback": { "message": "Toolkit-də sənin üçün yeni alətlər var.", "cta": "Alətlərə bax" }
     }
+  },
+  "franchiseRoi": {
+    "badge": "Franchise ROI Kalkulyatoru",
+    "title": "Bu franchise investisiyaya dəyərmi?",
+    "subtitle": "Rəqəmləri dəyişdikcə nəticə canlı yenilənir. Sağlam franchise üçün hədəf: illik ROI ≥ %20, geri-qaytarma ≤ 36 ay.",
+    "roiLabel": "illik investisiya gəlirliliyi (ROI)",
+    "months": "ay",
+    "noProfit": "mənfəət yoxdur",
+    "disclaimer": "Bu kalkulyator təxmini göstəricidir; investisiya qərarı peşəkar fizibilite tələb edir. © DK Agency",
+    "fields": {
+      "revenue": { "label": "İllik gözlənilən dövriyyə", "hint": "satışdan gələn ümumi gəlir" },
+      "marginPercent": { "label": "Brüt kar marjı", "hint": "dövriyyənin neçə %-i mal/xidmət sonrası qalır" },
+      "opex": { "label": "İllik sabit əməliyyat xərcləri", "hint": "icarə, maaş, kommunal, digər" },
+      "royaltyPercent": { "label": "Royalti dərəcəsi", "hint": "dövriyyə üzərindən" },
+      "adFundPercent": { "label": "Reklam fondu", "hint": "dövriyyə üzərindən" },
+      "investment": { "label": "İlkin investisiya", "hint": "franchise haqqı + dizayn + avadanlıq + 6 ay kapital" }
+    },
+    "results": {
+      "grossProfit": "Brüt kar",
+      "royaltyAdFund": "Royalti + reklam fondu",
+      "opex": "Sabit əməliyyat xərcləri",
+      "netProfit": "İllik xalis mənfəət",
+      "payback": "Geri-qaytarma müddəti"
+    },
+    "verdict": {
+      "good": "✓ Sağlam göstərici: ROI %20+ və geri-qaytarma ≤ 36 ay. Cəlbedici franchise modeli.",
+      "mid": "~ Sərhəd zona: ROI %15-20. İşləyə bilər, amma xərc/royalti optimizasiyası faydalı olar.",
+      "bad": "⚠ Riskli: ROI %15-dən aşağı. Dövriyyə, marja və ya xərc strukturu yenidən qiymətləndirilməlidir.",
+      "negative": "⚠ Bu ssenaridə xalis mənfəət yoxdur — model yenidən qurulmalıdır."
+    }
+  },
+  "franchiseReadiness": {
+    "badge": "Franchise Hazırlıq Testi",
+    "title": "Markanız franchise verməyə hazırdırmı?",
+    "subtitle": "12 sual · təxminən 4 dəqiqə · sonunda şəxsi hazırlıq hesabatı",
+    "letter": "Hörmətli sahibkar, uğurlu françayzinq markanızın dəyərini artırır və müəssisənizin dayanıqlı böyüməsini təmin edir. İllərlə qurduğunuz brend bizim üçün əmanətdir. Bu test markanızın güclü və inkişaf etdiriləcək tərəflərini birlikdə görmək üçün ilk addımdır.",
+    "letterSign": "— Doğan Tomris, DK Agency",
+    "startCta": "Testə başla →",
+    "stepLabel": "Sual {current} / {total}",
+    "back": "Geri",
+    "next": "Növbəti →",
+    "seeResult": "Nəticəni gör →",
+    "resultBadge": "Nəticə",
+    "weakestLabel": "Ən zəif sahəniz",
+    "weakestBody": "Bu sahə franchise uğuru üçün kritikdir. DK Agency komandası ilk olaraq burada sizə dəstək verə bilər.",
+    "aiLoading": "AI hesabatınız hazırlanır...",
+    "aiReportTitle": "Şəxsi Hesabat",
+    "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir; tam dəyərləndirmə peşəkar audit tələb edir. © DK Agency",
+    "verdict": {
+      "not_ready": { "title": "Hələ hazır deyil", "sub": "Təməl sahələri gücləndirmək lazımdır. Bu, problem deyil — yol xəritəsidir." },
+      "developing": { "title": "İnkişaf mərhələsi", "sub": "Potensial var, amma bəzi sahələr franchise öncəsi möhkəmləndirilməlidir." },
+      "almost": { "title": "Hazırlığa yaxın", "sub": "Markanız güclüdür. Bir neçə addımla franchise verməyə hazır olacaq." },
+      "ready": { "title": "Franchise verməyə hazır", "sub": "Markanız güclü françayzinq namizədidir. Sistemləşməyə keçə bilərik." }
+    },
+    "questions": {
+      "0": { "cat": "Etibarlılıq", "q": "Markanız neçə müddətdir fəaliyyət göstərir və tanınırlığı nə səviyyədədir?", "options": { "0": "Yeni başlamışıq, tanınırlıq məhduddur", "1": "1-2 il, yerli tanınırlıq", "2": "3-5 il, bölgədə güclü tanınırlıq", "3": "5+ il, geniş tanınan brend" } },
+      "1": { "cat": "Fərqlilik", "q": "Sizi rəqiblərdən ayıran bənzərsiz dəyər təklifiniz (USP) nədir?", "options": { "0": "Rəqiblərdən ciddi fərqimiz yoxdur", "1": "Bəzi üstünlüklər var, amma aydın deyil", "2": "Aydın fərq var", "3": "Güclü, asan izah olunan bənzərsiz konsept" } },
+      "2": { "cat": "Öyrədilə bilmə", "q": "İşinizi yeni bir franchise alana nə qədər müddətə tam öyrədə bilərsiniz?", "options": { "0": "Çox mürəkkəbdir, illər lazımdır", "1": "6 aydan çox", "2": "3-6 ay", "3": "3 aydan az — sistemləşib" } },
+      "3": { "cat": "Adaptasiya", "q": "Konseptiniz fərqli şəhər/məkan və ölçülərə nə qədər uyğunlaşa bilər?", "options": { "0": "Yalnız mövcud yerdə işləyir", "1": "Məhdud adaptasiya", "2": "Əksər bölgələrə uyğun", "3": "İstənilən bölgə/ölçüyə tam uyğun" } },
+      "4": { "cat": "Prototip performansı", "q": "Mövcud şöbə(ləriniz)in maliyyə performansı necədir?", "options": { "0": "Hələ karlı deyil", "1": "Zərərsizlik həddində", "2": "Sabit karlı", "3": "Yüksək və davamlı karlı" } },
+      "5": { "cat": "Sənədləşmə", "q": "Əməliyyat prosesləriniz nə dərəcədə sənədləşib (əl kitabı, SOP)?", "options": { "0": "Yazılı sənəd yoxdur", "1": "Qismən, başın içindədir", "2": "Əsas proseslər yazılıb", "3": "Tam əl kitabı + keyfiyyət nəzarəti" } },
+      "6": { "cat": "Münasib investisiya", "q": "Bir franchise üçün ilkin investisiya hədəf sahibkar üçün nə qədər münasibdir?", "options": { "0": "Çox yüksək, az adam ödəyə bilər", "1": "Yüksək", "2": "Orta, əlçatandır", "3": "Münasib və cəlbedici" } },
+      "7": { "cat": "Geri-qaytarma (ROI)", "q": "Franchise alan investisiyasını nə qədər müddətə və hansı gəliriliklə qaytarır?", "options": { "0": "Bilmirik / hesablanmayıb", "1": "4 ildən çox", "2": "2-3 il, ROI ~%15", "3": "≤2 il, ROI %20+" } },
+      "8": { "cat": "Bazar trendi", "q": "Sektorunuzun böyümə trendi və gələcəyi necədir?", "options": { "0": "Daralan bazar", "1": "Sabit", "2": "Böyüyür", "3": "Sürətlə böyüyür, gələcəyi güclü" } },
+      "9": { "cat": "Kapital", "q": "Franchise sistemini qurmaq üçün (hüquq, əl kitabı, dəstək komandası) kapitalınız varmı?", "options": { "0": "Yoxdur", "1": "Məhduddur", "2": "Qismən hazırdır", "3": "Tam ayrılıb" } },
+      "10": { "cat": "Əlaqə idarəetməsi", "q": "Franchise alanlarla uzunmüddətli əlaqə və performans izləmə modeliniz varmı?", "options": { "0": "Planlaşdırılmayıb", "1": "Ümumi fikir var", "2": "Plan hazırdır", "3": "Sistem + izləmə qurulub" } },
+      "11": { "cat": "İdarəetmə gücü", "q": "Franchise əməliyyatını idarə edəcək komanda təcrübəniz nə səviyyədədir?", "options": { "0": "Təcrübə azdır", "1": "Tək özüm idarə edirəm", "2": "Kiçik təcrübəli komanda", "3": "Güclü, təcrübəli idarəetmə komandası" } }
+    }
+  },
+  "franchiseLead": {
+    "title": "Növbəti addım",
+    "subtitle": "Hesabatınızı DK Agency mütəxəssisi ilə pulsuz dəyərləndirin.",
+    "name": "Ad, Soyad",
+    "brand": "Marka / müəssisə adı",
+    "contact": "E-poçt və ya telefon",
+    "kvkk": "Şəxsi məlumatlarımın DK Agency tərəfindən emal edilməsinə razıyam.",
+    "cta": "Pulsuz dəyərləndirmə istə",
+    "success": "Təşəkkürlər! Komandamız sizinlə əlaqə saxlayacaq.",
+    "error": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
   }
 }
