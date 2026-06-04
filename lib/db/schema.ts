@@ -83,6 +83,7 @@ export const blogPosts = pgTable('blog_posts', {
   doganNote: text('dogan_note'),
   seoTitle: varchar('seo_title', { length: 160 }),
   seoDescription: varchar('seo_description', { length: 320 }),
+  stage: varchar('stage', { length: 20 }),
   hasPaywall: boolean('has_paywall').default(true),
   status: varchar('status', { length: 20 }).default('draft'),
   publishedAt: timestamp('published_at'),

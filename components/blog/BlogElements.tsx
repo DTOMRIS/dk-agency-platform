@@ -230,16 +230,24 @@ export function SummaryTable({ title, rows, totalLabel = 'TOPLAM' }: SummaryTabl
 // KATEQORİYA BADGE
 // ═══════════════════════════════════════════════════════════════
 interface CategoryBadgeProps {
-  category: 'maliyye' | 'kadr' | 'emeliyyat' | 'konsept' | 'acilis' | 'satis';
+  category: string;
 }
 
-const categoryConfig = {
+const categoryConfig: Record<string, { emoji: string; label: string; color: string }> = {
   maliyye: { emoji: '💰', label: 'Maliyyə', color: 'bg-green-100 text-green-700 border-green-200' },
+  'Maliyyə': { emoji: '💰', label: 'Maliyyə', color: 'bg-green-100 text-green-700 border-green-200' },
   kadr: { emoji: '👥', label: 'Kadr', color: 'bg-blue-100 text-blue-700 border-blue-200' },
+  'Kadr': { emoji: '👥', label: 'Kadr', color: 'bg-blue-100 text-blue-700 border-blue-200' },
   emeliyyat: { emoji: '🔧', label: 'Əməliyyat', color: 'bg-purple-100 text-purple-700 border-purple-200' },
+  'Əməliyyat': { emoji: '🔧', label: 'Əməliyyat', color: 'bg-purple-100 text-purple-700 border-purple-200' },
   konsept: { emoji: '🎨', label: 'Konsept', color: 'bg-pink-100 text-pink-700 border-pink-200' },
   acilis: { emoji: '🏗️', label: 'Açılış', color: 'bg-orange-100 text-orange-700 border-orange-200' },
   satis: { emoji: '📈', label: 'Satış', color: 'bg-cyan-100 text-cyan-700 border-cyan-200' },
+  'Satış': { emoji: '📈', label: 'Satış', color: 'bg-cyan-100 text-cyan-700 border-cyan-200' },
+  huquqi: { emoji: '⚖️', label: 'Hüquqi', color: 'bg-amber-100 text-amber-700 border-amber-200' },
+  'Hüquqi': { emoji: '⚖️', label: 'Hüquqi', color: 'bg-amber-100 text-amber-700 border-amber-200' },
+  marketinq: { emoji: '📣', label: 'Marketinq', color: 'bg-rose-100 text-rose-700 border-rose-200' },
+  'Marketinq': { emoji: '📣', label: 'Marketinq', color: 'bg-rose-100 text-rose-700 border-rose-200' },
 };
 
 export function CategoryBadge({ category }: CategoryBadgeProps) {
@@ -248,6 +256,26 @@ export function CategoryBadge({ category }: CategoryBadgeProps) {
     <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium border ${config?.color || 'bg-slate-100 text-slate-700 border-slate-200'}`}>
       <span>{config?.emoji || '📝'}</span>
       <span>{config?.label || 'Digər'}</span>
+    </span>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STAGE BADGE
+// ═══════════════════════════════════════════════════════════════
+const stageConfig: Record<string, { emoji: string; label: string; color: string }> = {
+  'Başla': { emoji: '🏗️', label: 'Başla', color: 'bg-red-50 text-red-700 border-red-200' },
+  'Böyüt': { emoji: '📊', label: 'Böyüt', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+  'Devir': { emoji: '🔄', label: 'Devir', color: 'bg-purple-50 text-purple-700 border-purple-200' },
+};
+
+export function StageBadge({ stage }: { stage: string }) {
+  const config = stageConfig[stage];
+  if (!config) return null;
+  return (
+    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${config.color}`}>
+      <span>{config.emoji}</span>
+      <span>{config.label}</span>
     </span>
   );
 }

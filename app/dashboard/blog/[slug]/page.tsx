@@ -12,6 +12,7 @@ function toDraft(post: RawPost): BlogDraft {
     titleEn: post.title_en || '',
     titleRu: post.title_ru || '',
     category: post.category || 'Maliyyə',
+    stage: post.stage || '',
     author: post.author || 'DK Agency',
     readTime: post.readTime || 8,
     status: (post.status as BlogDraft['status']) || 'draft',
