@@ -39,26 +39,26 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,26,46,0.55)] via-transparent to-transparent" />
 
         {/* Category + Sector badges — sol üst */}
-        <div className="absolute left-3 top-3 flex flex-col gap-1.5">
-          <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold ${category?.badgeClass ?? 'bg-white text-slate-700'}`}>
+        <div className="absolute left-3 top-3 flex max-w-[55%] flex-col gap-1.5">
+          <span className={`inline-flex truncate rounded-full px-3 py-1 text-[11px] font-bold ${category?.badgeClass ?? 'bg-white text-slate-700'}`}>
             {category?.label ?? listing.type}
           </span>
           {listing.sector ? (
-            <span className="inline-flex rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold text-slate-700 shadow-sm backdrop-blur-sm">
+            <span className="inline-flex truncate rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold text-slate-700 shadow-sm backdrop-blur-sm">
               {getSectorLabel(listing.sector, locale)}
             </span>
           ) : null}
         </div>
 
         {/* Status / Featured badge — sağ üst */}
-        <div className="absolute right-3 top-3 flex flex-col gap-1.5 items-end">
+        <div className="absolute right-3 top-3 flex max-w-[42%] flex-col items-end gap-1.5">
           {listing.isFeatured && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black text-[var(--dk-gold)] shadow-sm backdrop-blur-sm">
+            <span className="inline-flex items-center gap-1 truncate rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black text-[var(--dk-gold)] shadow-sm backdrop-blur-sm">
               ⭐ {t('featured')}
             </span>
           )}
           {/* DK Onaylı badge (statik — M5-də real verification) */}
-          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-sm backdrop-blur-sm">
+          <span className="inline-flex items-center gap-1 truncate rounded-full bg-emerald-500/90 px-2.5 py-1 text-[10px] font-bold text-white shadow-sm backdrop-blur-sm">
             <ShieldCheck size={10} />
             {t('dkVerified')}
           </span>
