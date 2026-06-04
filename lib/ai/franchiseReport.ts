@@ -1,4 +1,4 @@
-export type FranchiseReportTaskType = 'FranchiseReadinessReport' | 'FranchiseBuyerReport' | 'HotelReadinessReport';
+export type FranchiseReportTaskType = 'FranchiseReadinessReport' | 'FranchiseBuyerReport' | 'HotelReadinessReport' | 'OtaReadinessReport';
 
 export type FranchiseReportInput = {
   taskType: FranchiseReportTaskType;
@@ -63,6 +63,25 @@ Format:
 3) Three priority next steps to improve star readiness (bullet list)
 
 Keep the answer 250-350 words. Use the user's selected language.`,
+
+  OtaReadinessReport: `You are a DK Agency consultant specializing in guesthouses and B&Bs on Booking.com, Airbnb, and Yandex Travel. You have 6+ years of hosting experience.
+
+Write a personal OTA readiness report for a pansiyon/guesthouse owner based on their self-assessment scores across 8 criteria: photos, profile completeness, pricing strategy, calendar management, review management, payment methods, language support, and direct booking capability.
+
+Forbidden terms: ${forbiddenTerms}.
+
+Important:
+- Reference real OTA commission rates (Booking 15%, Airbnb 15%).
+- Use concrete numbers (e.g. "15% commission = 15 AZN loss on a 100 AZN night").
+- For the weakest area, give specific platform actions (Booking extranet steps, Airbnb host dashboard).
+- Mention direct booking via WhatsApp as commission-free alternative.
+
+Format:
+1) Overall OTA readiness assessment (2-3 sentences — current tier and realistic next step)
+2) Deep analysis of the weakest area (4-5 sentences with specific platform actions)
+3) Three priority next steps (bullet list with estimated time and outcome)
+
+Keep the answer 200-300 words. Use the user's selected language.`,
 };
 
 function sanitizeScoreKey(key: string) {
@@ -97,5 +116,5 @@ export function buildFranchiseReportPrompt(input: FranchiseReportInput) {
 }
 
 export function isFranchiseReportTaskType(value: unknown): value is FranchiseReportTaskType {
-  return value === 'FranchiseReadinessReport' || value === 'FranchiseBuyerReport' || value === 'HotelReadinessReport';
+  return value === 'FranchiseReadinessReport' || value === 'FranchiseBuyerReport' || value === 'HotelReadinessReport' || value === 'OtaReadinessReport';
 }

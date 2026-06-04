@@ -4981,5 +4981,264 @@
         }
       }
     }
+  },
+  "otaReadiness": {
+    "badge": "OTA Hazırlıq Testi",
+    "title": "Pansiyonun Booking və Airbnb-yə hazırdırmı?",
+    "subtitle": "8 sual, 3 dəqiqə, sonunda şəxsi AI hesabat",
+    "letter": "Hörmətli pansiyon və qonaq evi sahibi — Azərbaycanda 800+ pansiyon mövcuddur, lakin 80%-i Booking.com-da yoxdur.",
+    "letterSign": "— Doğan Tomris, DK Agency",
+    "startCta": "Testə başla →",
+    "stepLabel": "Sual {current} / {total}",
+    "back": "Geri",
+    "next": "Növbəti →",
+    "seeResult": "Nəticəni gör →",
+    "resultBadge": "Nəticə",
+    "weakestLabel": "Ən zəif sahəniz",
+    "weakestBody": "Bu sahə OTA uğurunuz üçün kritikdir.",
+    "aiLoading": "AI hesabatınız hazırlanır...",
+    "aiReportTitle": "Şəxsi Hesabat",
+    "shareDownload": "Nəticəni yüklə (PNG)",
+    "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir. © DK Agency",
+    "verdict": {
+      "not_ready": {
+        "title": "Hələ hazır deyil",
+        "sub": "Əsas OTA tələbləri qarşılanmayıb."
+      },
+      "booking_start": {
+        "title": "Booking.com-a hazır",
+        "sub": "Booking profiliniz açıla bilər."
+      },
+      "airbnb_expand": {
+        "title": "Airbnb genişlənməsi real",
+        "sub": "Booking-dən əlavə Airbnb açmağın vaxtıdır."
+      },
+      "direct_strategy": {
+        "title": "Direct booking strategiyası",
+        "sub": "WhatsApp ilə komissiya xərcini azaltmağın vaxtıdır."
+      },
+      "multi_pro": {
+        "title": "Multi-platform peşəkar",
+        "sub": "Bütün OTA kanalları güclüdür!"
+      }
+    },
+    "questions": {
+      "0": {
+        "cat": "Foto keyfiyyəti",
+        "q": "Fotoları nə səviyyədədir?",
+        "options": {
+          "0": "3-5 foto, qaranlıq",
+          "1": "10+ foto, gündüz çəkilmiş",
+          "2": "15+ keyfiyyətli foto",
+          "3": "Peşəkar foto sessiyası, 20+ şəkil"
+        }
+      },
+      "1": {
+        "cat": "OTA profil",
+        "q": "Booking/Airbnb profiliniz nə vəziyyətdədir?",
+        "options": {
+          "0": "Heç bir OTA-da yoxam",
+          "1": "Booking-də var amma natamam",
+          "2": "Booking tam, Airbnb yeni",
+          "3": "Booking + Airbnb + Yandex Travel hamısı aktiv"
+        }
+      },
+      "2": {
+        "cat": "Qiymət strategiyası",
+        "q": "Gecəlik qiymətinizi necə təyin edirsiniz?",
+        "options": {
+          "0": "Qonşu nə yazıb, mən də",
+          "1": "2 qiymətim var (yay/qış)",
+          "2": "Həftə sonu, bayram ayrı",
+          "3": "Dinamik qiymətləndirmə, rəqib analizi"
+        }
+      },
+      "3": {
+        "cat": "Təqvim idarəsi",
+        "q": "Mövcudluq təqviminizi necə idarə edirsiniz?",
+        "options": {
+          "0": "Təqvim yoxdur",
+          "1": "Booking təqvimini vaxtaşırı yeniləyirəm",
+          "2": "Manual senkron",
+          "3": "iCal sync və ya channel manager"
+        }
+      },
+      "4": {
+        "cat": "Rəy idarəsi",
+        "q": "Qonaq rəyləri ilə necə işləyirsiniz?",
+        "options": {
+          "0": "Cavab yazmıram",
+          "1": "Bəzən yazıram",
+          "2": "48 saat içində cavab",
+          "3": "24 saat + mənfi rəylərdən dərs"
+        }
+      },
+      "5": {
+        "cat": "Ödəmə",
+        "q": "Ödəmə qəbulu necədir?",
+        "options": {
+          "0": "Yalnız nağd",
+          "1": "Nağd + bank köçürməsi",
+          "2": "Booking Payments aktiv",
+          "3": "Booking + Airbnb + POS"
+        }
+      },
+      "6": {
+        "cat": "Dil bacarığı",
+        "q": "Xarici qonaqlarla necə ünsiyyət qurursunuz?",
+        "options": {
+          "0": "Yalnız AZ dili",
+          "1": "Az-çox RU",
+          "2": "RU + basic EN",
+          "3": "EN + RU + TR, rahat"
+        }
+      },
+      "7": {
+        "cat": "Direct booking",
+        "q": "WhatsApp və ya direct kanalınız varmı?",
+        "options": {
+          "0": "Yalnız OTA-dan gəlir",
+          "1": "WhatsApp nömrəm var",
+          "2": "WhatsApp Business + QR",
+          "3": "WhatsApp + Instagram + Google Maps + qonaq bazası"
+        }
+      }
+    }
+  },
+  "guesthouseRoi": {
+    "meta": {
+      "badge": "Qonaq Evi ROI"
+    },
+    "intro": {
+      "heading": "Pansiyonum ayda nə qədər qazandırır?",
+      "subheading": "Rəqəmləri dəyiş, nəticə canlı yenilənir."
+    },
+    "inputs": {
+      "nightlyPrice": {
+        "label": "Gecəlik qiymət",
+        "hint": "Otaq başına"
+      },
+      "roomCount": {
+        "label": "Otaq sayı",
+        "hint": "Ümumi otaq sayı"
+      },
+      "occupancyPercent": {
+        "label": "Aylıq doluluq",
+        "hint": "Neçə % dolu?"
+      },
+      "avgCommissionPercent": {
+        "label": "OTA komissiyası",
+        "hint": "Booking/Airbnb 15%"
+      },
+      "otaSharePercent": {
+        "label": "OTA-dan gələn qonaq payı",
+        "hint": "Neçə % OTA-dan?"
+      },
+      "monthlyFixedCost": {
+        "label": "Aylıq sabit xərc",
+        "hint": "Təmizlik, kommunal"
+      },
+      "initialInvestment": {
+        "label": "İlkin investisiya",
+        "hint": "Mebel, dizayn"
+      }
+    },
+    "results": {
+      "monthlyGrossLabel": "Aylıq qros",
+      "otaRevenueLabel": "OTA gəlir",
+      "directRevenueLabel": "Direct gəlir",
+      "otaCommissionLabel": "OTA komissiya",
+      "monthlyNetLabel": "Aylıq xalis",
+      "annualNetLabel": "İllik xalis",
+      "paybackLabel": "Geri qaytarma",
+      "paybackMonthsUnit": "{count} ay",
+      "noProfitText": "mənfəət yoxdur"
+    },
+    "verdicts": {
+      "healthy": "Sağlam pansiyon modeli: ROI sürətli.",
+      "borderline": "Sərhəd zona: xərc optimizasiyası düşün.",
+      "risky": "Riskli: investisiya yavaş qayıdır.",
+      "unprofitable": "Pansiyon zərər verir."
+    }
+  },
+  "whatsappTemplates": {
+    "meta": {
+      "badge": "WhatsApp Template Paketi"
+    },
+    "intro": {
+      "heading": "10 Hazır WhatsApp Mətni",
+      "subheading": "Pansiyon sahibinin hər gün ehtiyac duyduğu mətnlər.",
+      "instruction": "Klikləyib kopyala."
+    },
+    "categories": {
+      "arrival": "Qarşılama",
+      "pricing": "Qiymət",
+      "checkInOut": "Check-in/out",
+      "review": "Rəy",
+      "loyalty": "Sədaqət",
+      "inquiry": "Soruq"
+    },
+    "scenarios": {
+      "firstArrival": {
+        "title": "İlk Qarşılama",
+        "description": "Yeni qonağa göndər.",
+        "copy": "Salam {{guestName}}! Mən {{hostName}}, xoş gəlmisiniz. Check-in: {{checkInDate}}. Wi-Fi: {{wifiPassword}}."
+      },
+      "directBookingOffer": {
+        "title": "Direct Endirim",
+        "description": "Booking-dən endirim təklif et.",
+        "copy": "{{guestName}}, növbəti dəfə birbaşa yazsan {{discountPercent}}% endirim. Booking: {{bookingPrice}}, bizdə: {{directPrice}} AZN."
+      },
+      "checkInInstructions": {
+        "title": "Check-in Təlimatı",
+        "description": "Gəliş günü göndər.",
+        "copy": "Xoş gəlmisiniz! Check-in: {{checkInTime}}. Açar: {{keyLocation}}. Wi-Fi: {{wifiPassword}}. Səhər: {{breakfastTime}}."
+      },
+      "checkOutReminder": {
+        "title": "Check-out Xatırlatma",
+        "description": "Çıxış əvvəli göndər.",
+        "copy": "{{guestName}}, sabah check-out {{checkOutTime}}. Açarı resepsiyaya buraxın. Təşəkkürlər!"
+      },
+      "negativeReviewResponse": {
+        "title": "Mənfi Rəyə Cavab",
+        "description": "Anlayış göstər, müdafiə deyil.",
+        "copy": "{{guestName}}, rəyiniz üçün təşəkkür. {{specificIssue}} barədə addım atdıq."
+      },
+      "positiveReviewThanks": {
+        "title": "Müsbət Rəyə Təşəkkür",
+        "description": "Qonağın anını referans ver.",
+        "copy": "{{guestName}}, gözəl rəy üçün sağ olun! {{specificMoment}} xüsusi idi. Növbəti dəfə endirim gözləyir!"
+      },
+      "seasonalPromo": {
+        "title": "Mövsümi Təklif",
+        "description": "Off-peak endirim.",
+        "copy": "Bu {{seasonName}}: {{discountPercent}}% endirim! {{validUntilDate}} qədər keçərli."
+      },
+      "priceInquiry": {
+        "title": "Qiymət Cavabı",
+        "description": "Aydın qiymət söylə.",
+        "copy": "Salam! Gecəlik {{nightlyPrice}} AZN. Daxildir: {{includesBreakfast}}, Wi-Fi, park."
+      },
+      "availabilityInquiry": {
+        "title": "Otaq Mövcudluğu",
+        "description": "Tarix + nəfər soruş.",
+        "copy": "Salam! Hansı tarixlərə baxırsınız, neçə nəfərsiniz?"
+      },
+      "loyaltyVipOffer": {
+        "title": "VIP Təklif",
+        "description": "Sadiq qonağa xüsusi.",
+        "copy": "{{guestName}}, siz {{loyaltyTier}} qonağımızsınız! {{specialDiscount}}% endirim + erkən check-in!"
+      }
+    },
+    "actions": {
+      "copyButton": "Kopyala",
+      "copiedConfirmation": "Kopyalandı",
+      "downloadAllPdf": "PDF yüklə"
+    },
+    "leadCta": {
+      "heading": "Qalanını aç",
+      "body": "7 daha çox professional şablon.",
+      "buttonText": "Tam paketi al"
+    }
   }
 }
