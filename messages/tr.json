@@ -4405,6 +4405,7 @@
     "franchbookCta": "Dokümantasyon zayıfsa: AI ile franchise el kitabı iskeleti kur",
     "aiLoading": "AI raporunuz hazırlanıyor...",
     "aiReportTitle": "Kişisel Rapor",
+    "shareDownload": "Sonucu indir (PNG)",
     "disclaimer": "Bu test ön değerlendirme aracıdır; tam değerlendirme profesyonel denetim gerektirir. © DK Agency",
     "verdict": {
       "not_ready": { "title": "Henüz hazır değil", "sub": "Temel alanların güçlendirilmesi gerekiyor. Bu bir sorun değil — bir yol haritasıdır." },
@@ -4454,6 +4455,7 @@
     "weakestBody": "Bu alan ek araştırma ve franchisörden açıklama gerektiriyor.",
     "aiLoading": "AI raporunuz hazırlanıyor...",
     "aiReportTitle": "Kişisel Rapor",
+    "shareDownload": "Sonucu indir (PNG)",
     "disclaimer": "Bu kontrol listesi ön değerlendirme aracıdır; yatırım kararı profesyonel hukuki ve finansal danışmanlık gerektirir. © DK Agency",
     "verdict": {
       "risky": { "title": "Yüksek risk", "sub": "Bu franchise'da ciddi sorular var. Yatırım yapmadan önce her alanı derinlemesine araştırın." },

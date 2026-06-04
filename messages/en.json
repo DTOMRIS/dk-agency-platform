@@ -4405,6 +4405,7 @@
     "franchbookCta": "Documentation is weak: build an AI franchise manual skeleton",
     "aiLoading": "Your AI report is being prepared...",
     "aiReportTitle": "Personal Report",
+    "shareDownload": "Download result (PNG)",
     "disclaimer": "This test is an initial self-assessment tool; full evaluation requires professional audit. © DK Agency",
     "verdict": {
       "not_ready": { "title": "Not ready yet", "sub": "Core areas need strengthening. This is not a problem — it is a roadmap." },
@@ -4454,6 +4455,7 @@
     "weakestBody": "This area requires further research and clarification from the franchisor.",
     "aiLoading": "Your AI report is being prepared...",
     "aiReportTitle": "Personal Report",
+    "shareDownload": "Download result (PNG)",
     "disclaimer": "This checklist is a preliminary assessment tool; an investment decision requires professional legal and financial advice. © DK Agency",
     "verdict": {
       "risky": { "title": "High risk", "sub": "There are serious questions about this franchise. Research every area thoroughly before investing." },
