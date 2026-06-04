@@ -4162,13 +4162,34 @@
       "submitSuccess": "İlanınız başarıyla gönderildi!"
     },
     "categories": {
-      "devir": { "label": "Devir", "description": "Hazır restoran, kafe veya şube noktalarının devri için vitrin." },
-      "franchise-vermek": { "label": "Franchise Ver", "description": "Markasını büyütmek isteyen markalar için franchise vitrini." },
-      "franchise-almaq": { "label": "Franchise Al", "description": "Hazır markayla pazara girmek isteyen yatırımcı ve operatörler için." },
-      "ortak-tapmaq": { "label": "Ortak Bul", "description": "Sermaye veya operasyon ortağı arayan projeler için ilan akışı." },
-      "yeni-investisiya": { "label": "Yeni Yatırım", "description": "Yeni konsept veya açılış öncesi projeler için yatırımcı vitrini." },
-      "obyekt-icaresi": { "label": "Mekân Kiralama", "description": "HoReCa'ya uygun mekânların kiralanması ve lokasyon arama." },
-      "horeca-ekipman": { "label": "HORECA Ekipman", "description": "Profesyonel mutfak ekipmanları ve servis hatları." }
+      "devir": {
+        "label": "Devir",
+        "description": "Hazır restoran, kafe veya şube noktalarının devri için vitrin."
+      },
+      "franchise-vermek": {
+        "label": "Franchise Ver",
+        "description": "Markasını büyütmek isteyen markalar için franchise vitrini."
+      },
+      "franchise-almaq": {
+        "label": "Franchise Al",
+        "description": "Hazır markayla pazara girmek isteyen yatırımcı ve operatörler için."
+      },
+      "ortak-tapmaq": {
+        "label": "Ortak Bul",
+        "description": "Sermaye veya operasyon ortağı arayan projeler için ilan akışı."
+      },
+      "yeni-investisiya": {
+        "label": "Yeni Yatırım",
+        "description": "Yeni konsept veya açılış öncesi projeler için yatırımcı vitrini."
+      },
+      "obyekt-icaresi": {
+        "label": "Mekân Kiralama",
+        "description": "HoReCa'ya uygun mekânların kiralanması ve lokasyon arama."
+      },
+      "horeca-ekipman": {
+        "label": "HORECA Ekipman",
+        "description": "Profesyonel mutfak ekipmanları ve servis hatları."
+      }
     },
     "fields": {
       "area": "Alan",
@@ -4282,12 +4303,30 @@
       "editPrioritiesLink": "Öncelikleri değiştir"
     },
     "nudge": {
-      "set_priorities": { "message": "İlk adım: 3 önceliğini belirle, sana uygun aracı bulalım.", "cta": "Öncelik seç" },
-      "try_first_tool": { "message": "Önceliğine uygun bir araç var — 2 dakikada sonuç al.", "cta": "Aracı aç" },
-      "listing_pending": { "message": "İlanın hâlâ incelemede — ortalama süre 48 saat.", "cta": "Detaya bak" },
-      "docs_needed": { "message": "Admin ek belge istedi — kontrol et.", "cta": "İlanlarıma bak" },
-      "listing_live": { "message": "İlanın yayında — bu haftaki görüntülemeleri takip et.", "cta": "İlanlarıma bak" },
-      "comeback": { "message": "Araç kutusunda senin için yeni araçlar var.", "cta": "Araçlara bak" }
+      "set_priorities": {
+        "message": "İlk adım: 3 önceliğini belirle, sana uygun aracı bulalım.",
+        "cta": "Öncelik seç"
+      },
+      "try_first_tool": {
+        "message": "Önceliğine uygun bir araç var — 2 dakikada sonuç al.",
+        "cta": "Aracı aç"
+      },
+      "listing_pending": {
+        "message": "İlanın hâlâ incelemede — ortalama süre 48 saat.",
+        "cta": "Detaya bak"
+      },
+      "docs_needed": {
+        "message": "Admin ek belge istedi — kontrol et.",
+        "cta": "İlanlarıma bak"
+      },
+      "listing_live": {
+        "message": "İlanın yayında — bu haftaki görüntülemeleri takip et.",
+        "cta": "İlanlarıma bak"
+      },
+      "comeback": {
+        "message": "Araç kutusunda senin için yeni araçlar var.",
+        "cta": "Araçlara bak"
+      }
     }
   },
   "franchise": {
@@ -4306,30 +4345,107 @@
       "submitting": "Oluşturuluyor...",
       "generating": "AI sabit outline üzerinden el kitabı iskeletini hazırlıyor. Bu biraz sürebilir.",
       "error": "El kitabı oluşturulamadı. Lütfen tekrar deneyin.",
-      "locked": { "badge": "USTA gerekli", "title": "AI Franchise El Kitabı USTA üyeleri içindir", "body": "ŞAGIRD ve KALFA kullanıcıları burada ilgi talebi gönderebilir. Ekip USTA aktivasyonu için sizinle iletişime geçecektir." },
-      "banner": { "title": "Bu bir İSKELETTİR.", "body": "Yayınlamadan veya franchise alanlarla paylaşmadan önce insan incelemesi gerekir." },
+      "locked": {
+        "badge": "USTA gerekli",
+        "title": "AI Franchise El Kitabı USTA üyeleri içindir",
+        "body": "ŞAGIRD ve KALFA kullanıcıları burada ilgi talebi gönderebilir. Ekip USTA aktivasyonu için sizinle iletişime geçecektir."
+      },
+      "banner": {
+        "title": "Bu bir İSKELETTİR.",
+        "body": "Yayınlamadan veya franchise alanlarla paylaşmadan önce insan incelemesi gerekir."
+      },
       "steps": {
-        "brand": { "eyebrow": "Temel bilgi", "title": "Marka ve sektör" },
-        "operations": { "eyebrow": "Operasyon", "title": "Günlük operasyon nasıl çalışır?" },
-        "standards": { "eyebrow": "Standartlar", "title": "Mevcut kurallar ve kalite standartları" },
-        "staff": { "eyebrow": "Personel", "title": "Ekip, roller ve eğitim" },
-        "supply": { "eyebrow": "Tedarik", "title": "Tedarik, depo ve ekipman" },
-        "opening": { "eyebrow": "Açılış", "title": "Yeni şube açılış süreci" }
+        "brand": {
+          "eyebrow": "Temel bilgi",
+          "title": "Marka ve sektör"
+        },
+        "operations": {
+          "eyebrow": "Operasyon",
+          "title": "Günlük operasyon nasıl çalışır?"
+        },
+        "standards": {
+          "eyebrow": "Standartlar",
+          "title": "Mevcut kurallar ve kalite standartları"
+        },
+        "staff": {
+          "eyebrow": "Personel",
+          "title": "Ekip, roller ve eğitim"
+        },
+        "supply": {
+          "eyebrow": "Tedarik",
+          "title": "Tedarik, depo ve ekipman"
+        },
+        "opening": {
+          "eyebrow": "Açılış",
+          "title": "Yeni şube açılış süreci"
+        }
       },
       "fields": {
-        "brand": { "label": "Marka adı", "placeholder": "Örnek: DK Coffee" },
-        "sector": { "label": "Sektör", "placeholder": "Örnek: kahve, fast casual, eğitim" },
-        "operationDescription": { "label": "Operasyon açıklaması", "placeholder": "Müşteri gelişinden hizmet bitimine kadar ana akışı yazın." },
-        "standards": { "label": "Mevcut standartlar", "placeholder": "Hazır kurallar, SOP'ler, kalite ölçüleri ve marka gereklilikleri." },
-        "staff": { "label": "Personel modeli", "placeholder": "Roller, vardiyalar, eğitim ve sorumluluk dağılımı." },
-        "supply": { "label": "Tedarik modeli", "placeholder": "Tedarikçiler, depo, lojistik, ekipman ve kritik malzemeler." },
-        "openingProcess": { "label": "Açılış süreci", "placeholder": "Yeni şube için lokasyon, hazırlık, soft opening ve denetim sırası." }
+        "brand": {
+          "label": "Marka adı",
+          "placeholder": "Örnek: DK Coffee"
+        },
+        "sector": {
+          "label": "Sektör",
+          "placeholder": "Örnek: kahve, fast casual, eğitim"
+        },
+        "operationDescription": {
+          "label": "Operasyon açıklaması",
+          "placeholder": "Müşteri gelişinden hizmet bitimine kadar ana akışı yazın."
+        },
+        "standards": {
+          "label": "Mevcut standartlar",
+          "placeholder": "Hazır kurallar, SOP'ler, kalite ölçüleri ve marka gereklilikleri."
+        },
+        "staff": {
+          "label": "Personel modeli",
+          "placeholder": "Roller, vardiyalar, eğitim ve sorumluluk dağılımı."
+        },
+        "supply": {
+          "label": "Tedarik modeli",
+          "placeholder": "Tedarikçiler, depo, lojistik, ekipman ve kritik malzemeler."
+        },
+        "openingProcess": {
+          "label": "Açılış süreci",
+          "placeholder": "Yeni şube için lokasyon, hazırlık, soft opening ve denetim sırası."
+        }
       },
       "sections": {
-        "communication": "İletişim", "sales_service_culture": "Satış ve hizmet kültürü", "equipment": "Ekipman", "logistics_warehouse": "Lojistik ve depo", "cashier_pos": "Kasa/POS", "cleaning_safety": "Temizlik ve güvenlik", "team": "Ekip", "leadership": "Liderlik", "education_training": "Eğitim", "order_work_satisfaction": "Sipariş ve iş memnuniyeti", "accounting_finance": "Muhasebe ve finans", "sales_marketing": "Satış ve pazarlama", "targets": "Hedefler", "rules_inventory": "Kurallar ve envanter", "facility_location": "Tesis ve lokasyon", "opening": "Açılış", "chain_management": "Zincir yönetimi", "brand_identity": "Marka kimliği", "quality_control": "Kalite kontrol", "audit_procedures": "Denetim prosedürleri"
+        "communication": "İletişim",
+        "sales_service_culture": "Satış ve hizmet kültürü",
+        "equipment": "Ekipman",
+        "logistics_warehouse": "Lojistik ve depo",
+        "cashier_pos": "Kasa/POS",
+        "cleaning_safety": "Temizlik ve güvenlik",
+        "team": "Ekip",
+        "leadership": "Liderlik",
+        "education_training": "Eğitim",
+        "order_work_satisfaction": "Sipariş ve iş memnuniyeti",
+        "accounting_finance": "Muhasebe ve finans",
+        "sales_marketing": "Satış ve pazarlama",
+        "targets": "Hedefler",
+        "rules_inventory": "Kurallar ve envanter",
+        "facility_location": "Tesis ve lokasyon",
+        "opening": "Açılış",
+        "chain_management": "Zincir yönetimi",
+        "brand_identity": "Marka kimliği",
+        "quality_control": "Kalite kontrol",
+        "audit_procedures": "Denetim prosedürleri"
       },
-      "result": { "purpose": "Amaç", "procedure": "Adım adım prosedür", "controls": "Kontrol noktaları", "template": "Örnek şablon", "save": "Değişiklikleri kaydet", "saving": "Kaydediliyor...", "saved": "Kaydedildi", "export": "Markdown export" },
-      "export": { "defaultBrand": "Franchise El Kitabı", "defaultSector": "Sektör" }
+      "result": {
+        "purpose": "Amaç",
+        "procedure": "Adım adım prosedür",
+        "controls": "Kontrol noktaları",
+        "template": "Örnek şablon",
+        "save": "Değişiklikleri kaydet",
+        "saving": "Kaydediliyor...",
+        "saved": "Kaydedildi",
+        "export": "Markdown export"
+      },
+      "export": {
+        "defaultBrand": "Franchise El Kitabı",
+        "defaultSector": "Sektör"
+      }
     }
   },
   "franchiseRoi": {
@@ -4344,14 +4460,38 @@
     "sectionInvestment": "Başlangıç yatırımı",
     "totalInvestment": "Toplam yatırım",
     "fields": {
-      "revenue": { "label": "Beklenen yıllık ciro", "hint": "satışlardan elde edilen toplam gelir" },
-      "marginPercent": { "label": "Brüt kâr marjı", "hint": "mal/hizmet maliyeti sonrası ciroda kalan %" },
-      "opex": { "label": "Yıllık sabit işletme giderleri", "hint": "kira, maaş, faturalar, diğer" },
-      "royaltyPercent": { "label": "Royalti oranı", "hint": "ciro üzerinden" },
-      "adFundPercent": { "label": "Reklam fonu", "hint": "ciro üzerinden" },
-      "entryFee": { "label": "Franchise giriş bedeli", "hint": "tek seferlik, sözleşme imzalandığında ödenir" },
-      "setupCost": { "label": "Dekorasyon + ekipman + kurulum", "hint": "mekan hazırlığı, ekipman, mobilya, dekor" },
-      "workingCapital": { "label": "İlk 6 ay işletme sermayesi", "hint": "kira, maaş, tedarik — ilk aylarda kasayı ayakta tutan" }
+      "revenue": {
+        "label": "Beklenen yıllık ciro",
+        "hint": "satışlardan elde edilen toplam gelir"
+      },
+      "marginPercent": {
+        "label": "Brüt kâr marjı",
+        "hint": "mal/hizmet maliyeti sonrası ciroda kalan %"
+      },
+      "opex": {
+        "label": "Yıllık sabit işletme giderleri",
+        "hint": "kira, maaş, faturalar, diğer"
+      },
+      "royaltyPercent": {
+        "label": "Royalti oranı",
+        "hint": "ciro üzerinden"
+      },
+      "adFundPercent": {
+        "label": "Reklam fonu",
+        "hint": "ciro üzerinden"
+      },
+      "entryFee": {
+        "label": "Franchise giriş bedeli",
+        "hint": "tek seferlik, sözleşme imzalandığında ödenir"
+      },
+      "setupCost": {
+        "label": "Dekorasyon + ekipman + kurulum",
+        "hint": "mekan hazırlığı, ekipman, mobilya, dekor"
+      },
+      "workingCapital": {
+        "label": "İlk 6 ay işletme sermayesi",
+        "hint": "kira, maaş, tedarik — ilk aylarda kasayı ayakta tutan"
+      }
     },
     "results": {
       "grossProfit": "Brüt kâr",
@@ -4408,24 +4548,144 @@
     "shareDownload": "Sonucu indir (PNG)",
     "disclaimer": "Bu test ön değerlendirme aracıdır; tam değerlendirme profesyonel denetim gerektirir. © DK Agency",
     "verdict": {
-      "not_ready": { "title": "Henüz hazır değil", "sub": "Temel alanların güçlendirilmesi gerekiyor. Bu bir sorun değil — bir yol haritasıdır." },
-      "developing": { "title": "Gelişme aşaması", "sub": "Potansiyel var; ancak bazı alanların franchising öncesinde sağlamlaştırılması gerekiyor." },
-      "almost": { "title": "Hazırlığa yakın", "sub": "Markanız güçlü. Birkaç adım daha ve franchise vermeye hazır olacaksınız." },
-      "ready": { "title": "Franchise vermeye hazır", "sub": "Markanız güçlü bir franchise adayıdır. Sistemleştirmeye geçebiliriz." }
+      "not_ready": {
+        "title": "Henüz hazır değil",
+        "sub": "Temel alanların güçlendirilmesi gerekiyor. Bu bir sorun değil — bir yol haritasıdır."
+      },
+      "developing": {
+        "title": "Gelişme aşaması",
+        "sub": "Potansiyel var; ancak bazı alanların franchising öncesinde sağlamlaştırılması gerekiyor."
+      },
+      "almost": {
+        "title": "Hazırlığa yakın",
+        "sub": "Markanız güçlü. Birkaç adım daha ve franchise vermeye hazır olacaksınız."
+      },
+      "ready": {
+        "title": "Franchise vermeye hazır",
+        "sub": "Markanız güçlü bir franchise adayıdır. Sistemleştirmeye geçebiliriz."
+      }
     },
     "questions": {
-      "0": { "cat": "Güvenilirlik", "q": "Markanız ne zamandır faaliyet gösteriyor ve tanınırlık düzeyi nedir?", "options": { "0": "Yeni başladık, tanınırlık sınırlı", "1": "1–2 yıl, yerel tanınırlık", "2": "3–5 yıl, bölgesel güçlü tanınırlık", "3": "5+ yıl, geniş çapta tanınan marka" } },
-      "1": { "cat": "Farklılaşma", "q": "Sizi rakiplerden ayıran benzersiz değer teklifiniz (USP) nedir?", "options": { "0": "Rakiplerden belirgin bir farkımız yok", "1": "Bazı avantajlar var ama net değil", "2": "Net farklılık mevcut", "3": "Güçlü, kolayca açıklanabilen benzersiz konsept" } },
-      "2": { "cat": "Öğretilebilirlik", "q": "Yeni bir franchise alanı işinizi tam olarak öğretmek ne kadar sürer?", "options": { "0": "Çok karmaşık, yıllar alır", "1": "6 aydan fazla", "2": "3–6 ay", "3": "3 aydan az — sistemleştirilmiş" } },
-      "3": { "cat": "Uyarlanabilirlik", "q": "Konseptiniz farklı şehir, konum ve boyutlara ne kadar uyum sağlayabilir?", "options": { "0": "Yalnızca mevcut konumda çalışıyor", "1": "Sınırlı uyum", "2": "Çoğu bölgeye uygun", "3": "Her bölgeye/boyuta tam uyum" } },
-      "4": { "cat": "Prototip performansı", "q": "Mevcut şube(leriniz)in finansal performansı nasıl?", "options": { "0": "Henüz kârlı değil", "1": "Başa baş noktasında", "2": "İstikrarlı biçimde kârlı", "3": "Yüksek ve sürdürülebilir kârlılık" } },
-      "5": { "cat": "Dokümantasyon", "q": "Operasyonel süreçleriniz ne ölçüde belgelenmiş durumda (el kitabı, SOP)?", "options": { "0": "Yazılı belge yok", "1": "Kısmen, çoğu zihinde", "2": "Temel süreçler yazıya geçirilmiş", "3": "Tam el kitabı + kalite kontrolü" } },
-      "6": { "cat": "Uygun yatırım", "q": "Hedef franchise alan için başlangıç yatırımı ne kadar uygun?", "options": { "0": "Çok yüksek, az kişi karşılayabilir", "1": "Yüksek", "2": "Orta düzeyde, erişilebilir", "3": "Uygun fiyatlı ve cazip" } },
-      "7": { "cat": "Geri ödeme (ROI)", "q": "Franchise alan yatırımını ne sürede ve hangi getiriyle geri kazanıyor?", "options": { "0": "Bilinmiyor / hesaplanmadı", "1": "4 yıldan fazla", "2": "2–3 yıl, ROI ~%15", "3": "≤2 yıl, ROI %20+" } },
-      "8": { "cat": "Pazar trendi", "q": "Sektörünüzün büyüme trendi ve geleceği nasıl?", "options": { "0": "Daralan pazar", "1": "İstikrarlı", "2": "Büyüyor", "3": "Hızla büyüyor, güçlü gelecek" } },
-      "9": { "cat": "Sermaye", "q": "Franchise sistemini kurmak için (hukuk, el kitabı, destek ekibi) sermayeniz var mı?", "options": { "0": "Yok", "1": "Sınırlı", "2": "Kısmen hazır", "3": "Tamamen ayrılmış" } },
-      "10": { "cat": "İlişki yönetimi", "q": "Franchise alanlarla uzun vadeli ilişki ve performans takibi için bir modeliniz var mı?", "options": { "0": "Planlanmadı", "1": "Genel bir fikir var", "2": "Plan hazır", "3": "Sistem + takip kurulmuş" } },
-      "11": { "cat": "Yönetim kapasitesi", "q": "Franchise operasyonlarını yönetecek ekibin deneyim düzeyi nedir?", "options": { "0": "Deneyim sınırlı", "1": "Tek başıma yönetiyorum", "2": "Küçük deneyimli ekip", "3": "Güçlü, deneyimli yönetim ekibi" } }
+      "0": {
+        "cat": "Güvenilirlik",
+        "q": "Markanız ne zamandır faaliyet gösteriyor ve tanınırlık düzeyi nedir?",
+        "options": {
+          "0": "Yeni başladık, tanınırlık sınırlı",
+          "1": "1–2 yıl, yerel tanınırlık",
+          "2": "3–5 yıl, bölgesel güçlü tanınırlık",
+          "3": "5+ yıl, geniş çapta tanınan marka"
+        }
+      },
+      "1": {
+        "cat": "Farklılaşma",
+        "q": "Sizi rakiplerden ayıran benzersiz değer teklifiniz (USP) nedir?",
+        "options": {
+          "0": "Rakiplerden belirgin bir farkımız yok",
+          "1": "Bazı avantajlar var ama net değil",
+          "2": "Net farklılık mevcut",
+          "3": "Güçlü, kolayca açıklanabilen benzersiz konsept"
+        }
+      },
+      "2": {
+        "cat": "Öğretilebilirlik",
+        "q": "Yeni bir franchise alanı işinizi tam olarak öğretmek ne kadar sürer?",
+        "options": {
+          "0": "Çok karmaşık, yıllar alır",
+          "1": "6 aydan fazla",
+          "2": "3–6 ay",
+          "3": "3 aydan az — sistemleştirilmiş"
+        }
+      },
+      "3": {
+        "cat": "Uyarlanabilirlik",
+        "q": "Konseptiniz farklı şehir, konum ve boyutlara ne kadar uyum sağlayabilir?",
+        "options": {
+          "0": "Yalnızca mevcut konumda çalışıyor",
+          "1": "Sınırlı uyum",
+          "2": "Çoğu bölgeye uygun",
+          "3": "Her bölgeye/boyuta tam uyum"
+        }
+      },
+      "4": {
+        "cat": "Prototip performansı",
+        "q": "Mevcut şube(leriniz)in finansal performansı nasıl?",
+        "options": {
+          "0": "Henüz kârlı değil",
+          "1": "Başa baş noktasında",
+          "2": "İstikrarlı biçimde kârlı",
+          "3": "Yüksek ve sürdürülebilir kârlılık"
+        }
+      },
+      "5": {
+        "cat": "Dokümantasyon",
+        "q": "Operasyonel süreçleriniz ne ölçüde belgelenmiş durumda (el kitabı, SOP)?",
+        "options": {
+          "0": "Yazılı belge yok",
+          "1": "Kısmen, çoğu zihinde",
+          "2": "Temel süreçler yazıya geçirilmiş",
+          "3": "Tam el kitabı + kalite kontrolü"
+        }
+      },
+      "6": {
+        "cat": "Uygun yatırım",
+        "q": "Hedef franchise alan için başlangıç yatırımı ne kadar uygun?",
+        "options": {
+          "0": "Çok yüksek, az kişi karşılayabilir",
+          "1": "Yüksek",
+          "2": "Orta düzeyde, erişilebilir",
+          "3": "Uygun fiyatlı ve cazip"
+        }
+      },
+      "7": {
+        "cat": "Geri ödeme (ROI)",
+        "q": "Franchise alan yatırımını ne sürede ve hangi getiriyle geri kazanıyor?",
+        "options": {
+          "0": "Bilinmiyor / hesaplanmadı",
+          "1": "4 yıldan fazla",
+          "2": "2–3 yıl, ROI ~%15",
+          "3": "≤2 yıl, ROI %20+"
+        }
+      },
+      "8": {
+        "cat": "Pazar trendi",
+        "q": "Sektörünüzün büyüme trendi ve geleceği nasıl?",
+        "options": {
+          "0": "Daralan pazar",
+          "1": "İstikrarlı",
+          "2": "Büyüyor",
+          "3": "Hızla büyüyor, güçlü gelecek"
+        }
+      },
+      "9": {
+        "cat": "Sermaye",
+        "q": "Franchise sistemini kurmak için (hukuk, el kitabı, destek ekibi) sermayeniz var mı?",
+        "options": {
+          "0": "Yok",
+          "1": "Sınırlı",
+          "2": "Kısmen hazır",
+          "3": "Tamamen ayrılmış"
+        }
+      },
+      "10": {
+        "cat": "İlişki yönetimi",
+        "q": "Franchise alanlarla uzun vadeli ilişki ve performans takibi için bir modeliniz var mı?",
+        "options": {
+          "0": "Planlanmadı",
+          "1": "Genel bir fikir var",
+          "2": "Plan hazır",
+          "3": "Sistem + takip kurulmuş"
+        }
+      },
+      "11": {
+        "cat": "Yönetim kapasitesi",
+        "q": "Franchise operasyonlarını yönetecek ekibin deneyim düzeyi nedir?",
+        "options": {
+          "0": "Deneyim sınırlı",
+          "1": "Tek başıma yönetiyorum",
+          "2": "Küçük deneyimli ekip",
+          "3": "Güçlü, deneyimli yönetim ekibi"
+        }
+      }
     }
   },
   "franchiseLead": {
@@ -4458,21 +4718,268 @@
     "shareDownload": "Sonucu indir (PNG)",
     "disclaimer": "Bu kontrol listesi ön değerlendirme aracıdır; yatırım kararı profesyonel hukuki ve finansal danışmanlık gerektirir. © DK Agency",
     "verdict": {
-      "risky": { "title": "Yüksek risk", "sub": "Bu franchise'da ciddi sorular var. Yatırım yapmadan önce her alanı derinlemesine araştırın." },
-      "cautious": { "title": "Dikkatli yaklaşın", "sub": "Bazı alanlar umut verici, ancak zayıf noktalar dikkat gerektiriyor." },
-      "promising": { "title": "Umut verici", "sub": "Franchise çoğu kritere uyuyor. Son karar için birkaç alanı netleştirin." },
-      "strong": { "title": "Güçlü aday", "sub": "Bu franchise temel kriterleri karşılıyor. Hukuki ve finansal incelemeye geçebilirsiniz." }
+      "risky": {
+        "title": "Yüksek risk",
+        "sub": "Bu franchise'da ciddi sorular var. Yatırım yapmadan önce her alanı derinlemesine araştırın."
+      },
+      "cautious": {
+        "title": "Dikkatli yaklaşın",
+        "sub": "Bazı alanlar umut verici, ancak zayıf noktalar dikkat gerektiriyor."
+      },
+      "promising": {
+        "title": "Umut verici",
+        "sub": "Franchise çoğu kritere uyuyor. Son karar için birkaç alanı netleştirin."
+      },
+      "strong": {
+        "title": "Güçlü aday",
+        "sub": "Bu franchise temel kriterleri karşılıyor. Hukuki ve finansal incelemeye geçebilirsiniz."
+      }
     },
     "questions": {
-      "0": { "cat": "Yatırım ve maliyetler", "q": "Başlangıç yatırımı ve süregelen ödemeler (royalti/reklam) net mi, finansal gücünüz yeterli mi?", "options": { "0": "Hayır, bilgi eksik ya da bütçe yetersiz", "1": "Kısmen — bazı rakamlar net, ancak tam tablo yok", "2": "Evet — tüm maliyetler şeffaf ve mali durumum yeterli" } },
-      "1": { "cat": "Pazar talebi", "q": "Ürün/hizmete yeterli pazar talebi var mı ve sektör trendi olumlu mu?", "options": { "0": "Hayır, talep azalıyor ya da sektör doymuş", "1": "Kısmen — talep var, ancak trend belirsiz", "2": "Evet — güçlü talep, olumlu büyüme trendi" } },
-      "2": { "cat": "Rekabet", "q": "Rakipleriniz kim, sayıları artıyor mu? Franchise size rekabet avantajı sağlıyor mu?", "options": { "0": "Hayır, rekabet çok güçlü ve franchise avantaj sağlamıyor", "1": "Kısmen — avantaj var ama rekabet yoğun", "2": "Evet — net rekabet avantajı var" } },
-      "3": { "cat": "Konsept ve operasyon", "q": "Operasyon verimli kurulmuş mu? Bu işi yönetecek beceriye sahip misiniz?", "options": { "0": "Hayır, operasyon karmaşık ya da deneyimim yok", "1": "Kısmen — sistem var ama bazı alanlar zayıf", "2": "Evet — operasyon verimli, becerim var" } },
-      "4": { "cat": "Marka imajı", "q": "Franchisör saygın, net imajlı bir marka mı?", "options": { "0": "Hayır, marka bilinmiyor ya da olumsuz yorumlar var", "1": "Kısmen — biliniyor ama imaj karışık", "2": "Evet — güçlü, olumlu marka imajı" } },
-      "5": { "cat": "Pazarlama programları", "q": "Müşteri kazanma ve elde tutma programları var mı?", "options": { "0": "Hayır, pazarlama desteği yok", "1": "Kısmen — bazı programlar var ama sistemsiz", "2": "Evet — güçlü pazarlama sistemi ve desteği" } },
-      "6": { "cat": "Eğitim ve destek", "q": "Ödediğiniz ücret karşılığında gerçek eğitim ve süregelen destek alıyor musunuz?", "options": { "0": "Hayır, eğitim/destek neredeyse yok", "1": "Kısmen — başlangıç eğitimi var ama süregelen destek zayıf", "2": "Evet — kapsamlı eğitim ve sürekli destek sistemi" } },
-      "7": { "cat": "Büyüme potansiyeli", "q": "Ağ büyüyor mu, sizin için büyüme imkânı var mı?", "options": { "0": "Hayır, ağ küçülüyor ya da durgun", "1": "Kısmen — büyüme var ama yavaş", "2": "Evet — ağ aktif büyüyor, benim için de imkân var" } },
-      "8": { "cat": "Franchisöre güven", "q": "Franchisöre güveniyor musunuz? Sözleşme şartları adil mi?", "options": { "0": "Hayır, endişelerim var, sözleşme tek taraflı", "1": "Kısmen — genel olarak normal ama bazı maddeler endişe veriyor", "2": "Evet — tam güveniyorum, sözleşme adil" } }
+      "0": {
+        "cat": "Yatırım ve maliyetler",
+        "q": "Başlangıç yatırımı ve süregelen ödemeler (royalti/reklam) net mi, finansal gücünüz yeterli mi?",
+        "options": {
+          "0": "Hayır, bilgi eksik ya da bütçe yetersiz",
+          "1": "Kısmen — bazı rakamlar net, ancak tam tablo yok",
+          "2": "Evet — tüm maliyetler şeffaf ve mali durumum yeterli"
+        }
+      },
+      "1": {
+        "cat": "Pazar talebi",
+        "q": "Ürün/hizmete yeterli pazar talebi var mı ve sektör trendi olumlu mu?",
+        "options": {
+          "0": "Hayır, talep azalıyor ya da sektör doymuş",
+          "1": "Kısmen — talep var, ancak trend belirsiz",
+          "2": "Evet — güçlü talep, olumlu büyüme trendi"
+        }
+      },
+      "2": {
+        "cat": "Rekabet",
+        "q": "Rakipleriniz kim, sayıları artıyor mu? Franchise size rekabet avantajı sağlıyor mu?",
+        "options": {
+          "0": "Hayır, rekabet çok güçlü ve franchise avantaj sağlamıyor",
+          "1": "Kısmen — avantaj var ama rekabet yoğun",
+          "2": "Evet — net rekabet avantajı var"
+        }
+      },
+      "3": {
+        "cat": "Konsept ve operasyon",
+        "q": "Operasyon verimli kurulmuş mu? Bu işi yönetecek beceriye sahip misiniz?",
+        "options": {
+          "0": "Hayır, operasyon karmaşık ya da deneyimim yok",
+          "1": "Kısmen — sistem var ama bazı alanlar zayıf",
+          "2": "Evet — operasyon verimli, becerim var"
+        }
+      },
+      "4": {
+        "cat": "Marka imajı",
+        "q": "Franchisör saygın, net imajlı bir marka mı?",
+        "options": {
+          "0": "Hayır, marka bilinmiyor ya da olumsuz yorumlar var",
+          "1": "Kısmen — biliniyor ama imaj karışık",
+          "2": "Evet — güçlü, olumlu marka imajı"
+        }
+      },
+      "5": {
+        "cat": "Pazarlama programları",
+        "q": "Müşteri kazanma ve elde tutma programları var mı?",
+        "options": {
+          "0": "Hayır, pazarlama desteği yok",
+          "1": "Kısmen — bazı programlar var ama sistemsiz",
+          "2": "Evet — güçlü pazarlama sistemi ve desteği"
+        }
+      },
+      "6": {
+        "cat": "Eğitim ve destek",
+        "q": "Ödediğiniz ücret karşılığında gerçek eğitim ve süregelen destek alıyor musunuz?",
+        "options": {
+          "0": "Hayır, eğitim/destek neredeyse yok",
+          "1": "Kısmen — başlangıç eğitimi var ama süregelen destek zayıf",
+          "2": "Evet — kapsamlı eğitim ve sürekli destek sistemi"
+        }
+      },
+      "7": {
+        "cat": "Büyüme potansiyeli",
+        "q": "Ağ büyüyor mu, sizin için büyüme imkânı var mı?",
+        "options": {
+          "0": "Hayır, ağ küçülüyor ya da durgun",
+          "1": "Kısmen — büyüme var ama yavaş",
+          "2": "Evet — ağ aktif büyüyor, benim için de imkân var"
+        }
+      },
+      "8": {
+        "cat": "Franchisöre güven",
+        "q": "Franchisöre güveniyor musunuz? Sözleşme şartları adil mi?",
+        "options": {
+          "0": "Hayır, endişelerim var, sözleşme tek taraflı",
+          "1": "Kısmen — genel olarak normal ama bazı maddeler endişe veriyor",
+          "2": "Evet — tam güveniyorum, sözleşme adil"
+        }
+      }
+    }
+  },
+  "hotelReadiness": {
+    "badge": "Otel Hazırlıq Testi",
+    "title": "Mehmanxananız AHA ulduz sertifikatına hazırdırmı?",
+    "subtitle": "12 sual · təxminən 4 dəqiqə · sonunda AHA tələblərinə əsaslanan şəxsi hesabat",
+    "letter": "Hörmətli mehmanxana, otel və pansiyon sahibi — Azərbaycanda Milli Ulduz Təsnifatı sisteminə müraciət edən hər 100 mehmanxanadan yalnız 30-u uğurla ulduz alır. Səbəb istedadsızlıq deyil — qoyulan tələblərin sistemli şəkildə qarşılanmamasıdır. Bu test otelinizin hansı sahələrdə hazır, hansılarda inkişaf etdirilməli olduğunu göstərir. Bizim üçün hər otel sahibi əmanətdir.",
+    "letterSign": "— Doğan Tomris, DK Agency",
+    "startCta": "Testə başla →",
+    "stepLabel": "Sual {current} / {total}",
+    "back": "Geri",
+    "next": "Növbəti →",
+    "seeResult": "Nəticəni gör →",
+    "resultBadge": "Nəticə",
+    "weakestLabel": "Ən zəif sahəniz",
+    "weakestBody": "Bu sahə ulduz sertifikasiyası üçün kritikdir. DK Agency komandası ilk olaraq burada — infrastruktur, sənədləşmə və ya təlim planı ilə — sizə dəstək verə bilər.",
+    "aiLoading": "AI hesabatınız hazırlanır...",
+    "aiReportTitle": "Şəxsi Hesabat",
+    "shareDownload": "Nəticəni yüklə (PNG)",
+    "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir. Tam dəyərləndirmə və AHA müraciəti peşəkar audit tələb edir. © DK Agency",
+    "verdict": {
+      "pansion": {
+        "title": "Pansiyon səviyyəsi",
+        "sub": "Hələ formal ulduz sertifikasiyası üçün hazır deyilsiniz. Bu, problem deyil — pansiyon olaraq qeydiyyat və turist marşrutlarına qoşulma realdır. Daha sonra 1-2 ulduz hədəfi etmək olar."
+      },
+      "tier12": {
+        "title": "1-2 ulduz potensialı",
+        "sub": "Təməl infrastruktur var, kiçik mehmanxana statusu real. Bəzi sahələrin gücləndirilməsi ilə AHA müraciətinə hazır olacaqsınız."
+      },
+      "tier3": {
+        "title": "3 ulduz hədəfi əlçatandır",
+        "sub": "Otelinizin əksər sahələri yaxşı vəziyyətdədir. Bir neçə kritik düzəlişlə 3 ulduz sertifikatı almağa hazırsınız."
+      },
+      "tier4": {
+        "title": "4 ulduz hədəfi əlçatandır",
+        "sub": "Markanız güclüdür. 4 ulduz tələblərinə yaxınsınız, kiçik tənzimləmələrlə müraciət edə bilərsiniz."
+      },
+      "tier5": {
+        "title": "5 ulduz potensialı",
+        "sub": "Otelinizin standartları yüksək səviyyədədir. 5 ulduz Milli Ulduz Təsnifatı üçün güclü namizədsiniz — AHA müraciətinə keçə bilərik."
+      }
+    },
+    "questions": {
+      "0": {
+        "cat": "İnfrastruktur",
+        "q": "Otelinizin fiziki infrastrukturu — otaq sayı, lift və avtomobil park yeri necədir?",
+        "options": {
+          "0": "10-dan az otaq, lift yoxdur, park yeri yoxdur",
+          "1": "10-20 otaq, lift var, lakin park yeri məhduddur",
+          "2": "20-40 otaq, lift və park yeri var",
+          "3": "40+ otaq, çoxsaylı lift, geniş və örtülü park yeri"
+        }
+      },
+      "1": {
+        "cat": "Otaq Standartı",
+        "q": "Otaqların ölçüsü, mebel keyfiyyəti və iqlim sistemi nə səviyyədədir?",
+        "options": {
+          "0": "Otaq sahəsi 12 m²-dən az, köhnə mebel, iqlim sistemi yoxdur",
+          "1": "12-16 m², standart mebel, fan və ya elektrik qızdırıcı",
+          "2": "16-22 m², yeni mebel, fərdi kombi və ya split sistem",
+          "3": "22 m²+ premium mebel, mərkəzi iqlim, smart room özəllikləri"
+        }
+      },
+      "2": {
+        "cat": "Sanitariya & Təmizlik",
+        "q": "Təmizlik və yataq dəyişdirmə sistematikanız necə qurulub?",
+        "options": {
+          "0": "Yataq dəyişdirmə qonağa görə, yazılı qrafik yoxdur",
+          "1": "Hər 3-4 gündə bir, ümumi qrafik var",
+          "2": "Hər gün otaq təmizliyi, 2 gündə bir yataq dəyişdirmə",
+          "3": "Gündəlik tam təmizlik, audit checklist, professional servis komandası"
+        }
+      },
+      "3": {
+        "cat": "Resepsiya & Qonaq Qəbulu",
+        "q": "Resepsiya xidməti necə işləyir — saat rejimi, dil bacarıqları, texnologiya?",
+        "options": {
+          "0": "Yalnız gündüz, yalnız AZ dili, kağız-üzərində qeydiyyat",
+          "1": "24 saat, AZ + RU dilləri, kompüter qeydiyyat sistemi yoxdur",
+          "2": "24 saat, AZ/RU/EN dilləri, PMS (idarəetmə sistemi) var",
+          "3": "24 saat, multilingual personal, premium PMS, mobil check-in"
+        }
+      },
+      "4": {
+        "cat": "Yemək Xidməti",
+        "q": "Otel yemək xidməti hansı səviyyədədir?",
+        "options": {
+          "0": "Otel daxili yemək xidməti yoxdur",
+          "1": "Səhər yeməyi var, ayrıca restoran yoxdur",
+          "2": "Səhər yeməyi + tam fəaliyyət göstərən restoran",
+          "3": "Səhər + restoran + bar + 24 saat otaq xidməti"
+        }
+      },
+      "5": {
+        "cat": "Personal Təlimi",
+        "q": "Personalın peşəkar təlim səviyyəsi və dil bacarıqları necədir?",
+        "options": {
+          "0": "Formal təlim sistemi yoxdur, xarici dil bilgisi məhduddur",
+          "1": "Informal təlim, əsasən AZ dili",
+          "2": "Formal təlim proqramı, AZ və RU dilləri",
+          "3": "Sertifikatlı peşəkarlar, multilingual komanda, davamlı təlim sistemi"
+        }
+      },
+      "6": {
+        "cat": "Texnologiya",
+        "q": "Otel texnologiya infrastrukturu (Wi-Fi, idarəetmə sistemi, mobil) hansı səviyyədədir?",
+        "options": {
+          "0": "Wi-Fi yoxdur, kağız əsaslı sistem",
+          "1": "Wi-Fi var, kompüter idarəetmə sistemi yoxdur",
+          "2": "Sürətli Wi-Fi və PMS sistemi mövcuddur",
+          "3": "PMS + mobil tətbiq + smart otaq + IoT inteqrasiyası"
+        }
+      },
+      "7": {
+        "cat": "Təhlükəsizlik",
+        "q": "Təhlükəsizlik sistemləri (yanğın, kamera, otaq seyfi) hansı vəziyyətdədir?",
+        "options": {
+          "0": "Yanğın söndürücü yoxdur, kamera sistemi yoxdur",
+          "1": "Yanğın söndürücülər var, kamera sistemi natamam",
+          "2": "Tam yanğın sistemi, kamera + hər otaqda seyf",
+          "3": "Tam yanğın sistem + 24 saat təhlükəsizlik + smart seyf + key card sistemi"
+        }
+      },
+      "8": {
+        "cat": "Əlavə Xidmətlər",
+        "q": "Əlavə xidmətlər (SPA, fitness, konfrans zalı) mövcuddurmu?",
+        "options": {
+          "0": "Əlavə xidmət yoxdur",
+          "1": "Kiçik fitness küncü mövcuddur",
+          "2": "Fitness + sauna + kiçik konfrans zalı",
+          "3": "Tam SPA + bassein + fitness + konfrans + biznes mərkəzi"
+        }
+      },
+      "9": {
+        "cat": "Sənədləşmə",
+        "q": "AHA müraciəti üçün lazımi sənədlər (vergi, gigiyena, yanğın sertifikat) hazırdırmı?",
+        "options": {
+          "0": "Heç bir sənəd hazır deyildir",
+          "1": "Vergi sənədi var, qalanları natamam",
+          "2": "Sənədlərin əksəriyyəti hazırdır, kiçik çatışmazlıqlar var",
+          "3": "Bütün sənədlər tam, yeni tarixli və əlçatandır"
+        }
+      },
+      "10": {
+        "cat": "Onlayn Varlıq",
+        "q": "Booking.com, TripAdvisor və TrustYou platformalarında reytinqiniz nə səviyyədədir?",
+        "options": {
+          "0": "Onlayn varlıq yoxdur",
+          "1": "Profil var, lakin reyting 7.0-dan aşağı",
+          "2": "7.0-8.5 arası reyting, müntəzəm qonaq rəyləri",
+          "3": "8.5+ reyting, yüksək rəy sayı, TrustYou platformada güclü performans"
+        }
+      },
+      "11": {
+        "cat": "AHA Müraciət Hazırlığı",
+        "q": "AHA müraciəti üçün maliyyə və vaxt baxımından hazırlığınız nədir?",
+        "options": {
+          "0": "Rüsum və sənəd hazırlığı üçün büdcə ayrılmayıb",
+          "1": "Rüsum hazırdır, sənəd hazırlığı başlamayıb",
+          "2": "Rüsum hazır, sənədlər hazır, hələ müraciət etməmişik",
+          "3": "Müraciət göndərildi, audit ziyarəti gözləyirik"
+        }
+      }
     }
   }
 }

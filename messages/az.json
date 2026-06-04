@@ -4474,5 +4474,45 @@
       "7": { "cat": "Böyümə imkanı", "q": "Şəbəkə böyüyürmü, sizin böyümə imkanınız varmı?", "options": { "0": "Xeyr, şəbəkə daralır və ya duruqdur", "1": "Qismən — böyümə var amma yavaşdır", "2": "Bəli — şəbəkə aktiv böyüyür, mənə də imkan var" } },
       "8": { "cat": "Franchisor güvəni", "q": "Franchisora güvənirsinizmi? Müqavilə şərtləri ədalətlidirmi?", "options": { "0": "Xeyr, narahatlıqlarım var, müqavilə birtərəflidir", "1": "Qismən — ümumiyyətlə normal amma bəzi maddələr narahat edir", "2": "Bəli — tam güvənirəm, müqavilə ədalətlidir" } }
     }
+  },
+  "hotelReadiness": {
+    "badge": "Otel Hazırlıq Testi",
+    "title": "Mehmanxananız AHA ulduz sertifikatına hazırdırmı?",
+    "subtitle": "12 sual · təxminən 4 dəqiqə · sonunda AHA tələblərinə əsaslanan şəxsi hesabat",
+    "letter": "Hörmətli mehmanxana, otel və pansiyon sahibi — Azərbaycanda Milli Ulduz Təsnifatı sisteminə müraciət edən hər 100 mehmanxanadan yalnız 30-u uğurla ulduz alır. Səbəb istedadsızlıq deyil — qoyulan tələblərin sistemli şəkildə qarşılanmamasıdır. Bu test otelinizin hansı sahələrdə hazır, hansılarda inkişaf etdirilməli olduğunu göstərir. Bizim üçün hər otel sahibi əmanətdir.",
+    "letterSign": "— Doğan Tomris, DK Agency",
+    "startCta": "Testə başla →",
+    "stepLabel": "Sual {current} / {total}",
+    "back": "Geri",
+    "next": "Növbəti →",
+    "seeResult": "Nəticəni gör →",
+    "resultBadge": "Nəticə",
+    "weakestLabel": "Ən zəif sahəniz",
+    "weakestBody": "Bu sahə ulduz sertifikasiyası üçün kritikdir. DK Agency komandası ilk olaraq burada — infrastruktur, sənədləşmə və ya təlim planı ilə — sizə dəstək verə bilər.",
+    "aiLoading": "AI hesabatınız hazırlanır...",
+    "aiReportTitle": "Şəxsi Hesabat",
+    "shareDownload": "Nəticəni yüklə (PNG)",
+    "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir. Tam dəyərləndirmə və AHA müraciəti peşəkar audit tələb edir. © DK Agency",
+    "verdict": {
+      "pansion": { "title": "Pansiyon səviyyəsi", "sub": "Hələ formal ulduz sertifikasiyası üçün hazır deyilsiniz. Bu, problem deyil — pansiyon olaraq qeydiyyat və turist marşrutlarına qoşulma realdır. Daha sonra 1-2 ulduz hədəfi etmək olar." },
+      "tier12": { "title": "1-2 ulduz potensialı", "sub": "Təməl infrastruktur var, kiçik mehmanxana statusu real. Bəzi sahələrin gücləndirilməsi ilə AHA müraciətinə hazır olacaqsınız." },
+      "tier3": { "title": "3 ulduz hədəfi əlçatandır", "sub": "Otelinizin əksər sahələri yaxşı vəziyyətdədir. Bir neçə kritik düzəlişlə 3 ulduz sertifikatı almağa hazırsınız." },
+      "tier4": { "title": "4 ulduz hədəfi əlçatandır", "sub": "Markanız güclüdür. 4 ulduz tələblərinə yaxınsınız, kiçik tənzimləmələrlə müraciət edə bilərsiniz." },
+      "tier5": { "title": "5 ulduz potensialı", "sub": "Otelinizin standartları yüksək səviyyədədir. 5 ulduz Milli Ulduz Təsnifatı üçün güclü namizədsiniz — AHA müraciətinə keçə bilərik." }
+    },
+    "questions": {
+      "0": { "cat": "İnfrastruktur", "q": "Otelinizin fiziki infrastrukturu — otaq sayı, lift və avtomobil park yeri necədir?", "options": { "0": "10-dan az otaq, lift yoxdur, park yeri yoxdur", "1": "10-20 otaq, lift var, lakin park yeri məhduddur", "2": "20-40 otaq, lift və park yeri var", "3": "40+ otaq, çoxsaylı lift, geniş və örtülü park yeri" } },
+      "1": { "cat": "Otaq Standartı", "q": "Otaqların ölçüsü, mebel keyfiyyəti və iqlim sistemi nə səviyyədədir?", "options": { "0": "Otaq sahəsi 12 m²-dən az, köhnə mebel, iqlim sistemi yoxdur", "1": "12-16 m², standart mebel, fan və ya elektrik qızdırıcı", "2": "16-22 m², yeni mebel, fərdi kombi və ya split sistem", "3": "22 m²+ premium mebel, mərkəzi iqlim, smart room özəllikləri" } },
+      "2": { "cat": "Sanitariya & Təmizlik", "q": "Təmizlik və yataq dəyişdirmə sistematikanız necə qurulub?", "options": { "0": "Yataq dəyişdirmə qonağa görə, yazılı qrafik yoxdur", "1": "Hər 3-4 gündə bir, ümumi qrafik var", "2": "Hər gün otaq təmizliyi, 2 gündə bir yataq dəyişdirmə", "3": "Gündəlik tam təmizlik, audit checklist, professional servis komandası" } },
+      "3": { "cat": "Resepsiya & Qonaq Qəbulu", "q": "Resepsiya xidməti necə işləyir — saat rejimi, dil bacarıqları, texnologiya?", "options": { "0": "Yalnız gündüz, yalnız AZ dili, kağız-üzərində qeydiyyat", "1": "24 saat, AZ + RU dilləri, kompüter qeydiyyat sistemi yoxdur", "2": "24 saat, AZ/RU/EN dilləri, PMS (idarəetmə sistemi) var", "3": "24 saat, multilingual personal, premium PMS, mobil check-in" } },
+      "4": { "cat": "Yemək Xidməti", "q": "Otel yemək xidməti hansı səviyyədədir?", "options": { "0": "Otel daxili yemək xidməti yoxdur", "1": "Səhər yeməyi var, ayrıca restoran yoxdur", "2": "Səhər yeməyi + tam fəaliyyət göstərən restoran", "3": "Səhər + restoran + bar + 24 saat otaq xidməti" } },
+      "5": { "cat": "Personal Təlimi", "q": "Personalın peşəkar təlim səviyyəsi və dil bacarıqları necədir?", "options": { "0": "Formal təlim sistemi yoxdur, xarici dil bilgisi məhduddur", "1": "Informal təlim, əsasən AZ dili", "2": "Formal təlim proqramı, AZ və RU dilləri", "3": "Sertifikatlı peşəkarlar, multilingual komanda, davamlı təlim sistemi" } },
+      "6": { "cat": "Texnologiya", "q": "Otel texnologiya infrastrukturu (Wi-Fi, idarəetmə sistemi, mobil) hansı səviyyədədir?", "options": { "0": "Wi-Fi yoxdur, kağız əsaslı sistem", "1": "Wi-Fi var, kompüter idarəetmə sistemi yoxdur", "2": "Sürətli Wi-Fi və PMS sistemi mövcuddur", "3": "PMS + mobil tətbiq + smart otaq + IoT inteqrasiyası" } },
+      "7": { "cat": "Təhlükəsizlik", "q": "Təhlükəsizlik sistemləri (yanğın, kamera, otaq seyfi) hansı vəziyyətdədir?", "options": { "0": "Yanğın söndürücü yoxdur, kamera sistemi yoxdur", "1": "Yanğın söndürücülər var, kamera sistemi natamam", "2": "Tam yanğın sistemi, kamera + hər otaqda seyf", "3": "Tam yanğın sistem + 24 saat təhlükəsizlik + smart seyf + key card sistemi" } },
+      "8": { "cat": "Əlavə Xidmətlər", "q": "Əlavə xidmətlər (SPA, fitness, konfrans zalı) mövcuddurmu?", "options": { "0": "Əlavə xidmət yoxdur", "1": "Kiçik fitness küncü mövcuddur", "2": "Fitness + sauna + kiçik konfrans zalı", "3": "Tam SPA + bassein + fitness + konfrans + biznes mərkəzi" } },
+      "9": { "cat": "Sənədləşmə", "q": "AHA müraciəti üçün lazımi sənədlər (vergi, gigiyena, yanğın sertifikat) hazırdırmı?", "options": { "0": "Heç bir sənəd hazır deyildir", "1": "Vergi sənədi var, qalanları natamam", "2": "Sənədlərin əksəriyyəti hazırdır, kiçik çatışmazlıqlar var", "3": "Bütün sənədlər tam, yeni tarixli və əlçatandır" } },
+      "10": { "cat": "Onlayn Varlıq", "q": "Booking.com, TripAdvisor və TrustYou platformalarında reytinqiniz nə səviyyədədir?", "options": { "0": "Onlayn varlıq yoxdur", "1": "Profil var, lakin reyting 7.0-dan aşağı", "2": "7.0-8.5 arası reyting, müntəzəm qonaq rəyləri", "3": "8.5+ reyting, yüksək rəy sayı, TrustYou platformada güclü performans" } },
+      "11": { "cat": "AHA Müraciət Hazırlığı", "q": "AHA müraciəti üçün maliyyə və vaxt baxımından hazırlığınız nədir?", "options": { "0": "Rüsum və sənəd hazırlığı üçün büdcə ayrılmayıb", "1": "Rüsum hazırdır, sənəd hazırlığı başlamayıb", "2": "Rüsum hazır, sənədlər hazır, hələ müraciət etməmişik", "3": "Müraciət göndərildi, audit ziyarəti gözləyirik" } }
+    }
   }
 }
