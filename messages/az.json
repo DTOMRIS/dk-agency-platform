@@ -5103,7 +5103,122 @@
           "3": "WhatsApp + Instagram + Google Maps + qonaq bazası"
         }
       }
-    }
+    },
+    "meta": {
+      "pageTitle": "OTA Hazırlıq Testi — Pansiyonun Booking və Airbnb-də Görünməyə Hazırdırmı?",
+      "pageDescription": "8 sual, 3 dəqiqə. Pansiyon, qonaq evi və günlük kirayə sahibləri üçün Booking.com və Airbnb hazırlıq qiymətləndirməsi. Şəxsi AI hesabat.",
+      "badge": "Qonaq Evi Bələdçisi"
+    },
+    "intro": {
+      "heading": "Qonaq eviniz Booking-də və Airbnb-də pul qazanmağa hazırdırmı?",
+      "subheading": "8 sual · 3 dəqiqə · sonunda real rəqəmlərlə fərdi hesabat",
+      "letter": "Hörmətli pansiyon sahibi — Xınalıqda, Lahıcda, Şəkidə, Qəbələdə, Bakıda və ya hər hansı bir guşədə qonaq evi açmısınızsa, bu test sizin üçündür. Booking 15% komissiya götürür, Airbnb də təxminən eyni. Düzgün qurulmuş bir profil sizə ayda 3,000-8,000 AZN əlavə gəlir gətirə bilər. Səhv qurulmuşsa, qonaq sizdən qaçır. Bu test hansı sahələriniz hazır, hansılarında inkişaf lazım olduğunu göstərəcək.",
+      "letterSign": "— Doğan Tomris, DK Agency",
+      "startButton": "Testə başla →"
+    },
+    "categories": {
+      "photos": "Fotoğraflar",
+      "profile": "Profil Doluluğu",
+      "pricing": "Qiymət Strategiyası",
+      "calendar": "Takvim İdarəsi",
+      "reviews": "Qonaq Rəyləri",
+      "payment": "Ödəmə Qəbulu",
+      "language": "Dil Bacarığı",
+      "directBooking": "Birbaşa Sifariş Strategiyası"
+    },
+    "options": {
+      "photos": {
+        "a": "Telefon ilə tez çəkilmiş 2-3 foto, qaranlıq və ya bulanıq",
+        "b": "5-10 foto, gündüz çəkilmiş, lakin yalnız ümumi görünüş",
+        "c": "10+ foto, 3+ açı (otaq, vanna, eyvan, mətbəx), aydın işıq",
+        "d": "Professional fotoçu çəkmiş 15+ foto, hər otaqdan 3 açı, virtual tur"
+      },
+      "profile": {
+        "a": "Yalnız ad və qiymət, açıqlama yoxdur",
+        "b": "Qısa açıqlama var, lakin xüsusiyyətlər və qaydalar boşdur",
+        "c": "Tam açıqlama, ev qaydaları və check-in saatları doldurulub",
+        "d": "Açıqlama 3 dildə (AZ/RU/EN), bütün xüsusiyyətlər seçilib, qaydalar aydın"
+      },
+      "pricing": {
+        "a": "İl boyu eyni qiymət",
+        "b": "Yay/qış mövsümünə görə fərqli qiymət",
+        "c": "Mövsümi + həftə sonu / iş günü fərqi",
+        "d": "Dinamik qiymət — bayramlar, festivallar, hava şəraitinə görə"
+      },
+      "calendar": {
+        "a": "Yalnız bir platformada (Booking VƏ YA Airbnb)",
+        "b": "Hər iki platformada, lakin əl ilə yeniləyirəm",
+        "c": "Booking və Airbnb arasında avtomatik sinxronizasiya (iCal)",
+        "d": "Channel manager (Lodgify, Hospitable, Smoobu) — bütün platformalar sinxron"
+      },
+      "reviews": {
+        "a": "Rəylərə cavab vermirəm",
+        "b": "Yalnız mənfi rəylərə cavab verirəm",
+        "c": "Hər rəyə peşəkar cavab verirəm",
+        "d": "Hər rəyə cavab + qonaqlardan aktiv rəy istəyirəm (Booking-də 9.0+, Airbnb Superhost)"
+      },
+      "payment": {
+        "a": "Yalnız nağd",
+        "b": "Nağd və ya bank köçürməsi",
+        "c": "Booking ödəmə sistemi + IBAN + kart POS",
+        "d": "Multi-method: Booking, IBAN, kart, kripto, Western Union (xarici qonaq üçün)"
+      },
+      "language": {
+        "a": "Yalnız Azərbaycan dilində",
+        "b": "Azərbaycan və Rus",
+        "c": "Azərbaycan, Rus və İngilis",
+        "d": "AZ/RU/EN + Google Translate ilə hər dil — chat-bot köməkçi quruluyor"
+      },
+      "directBooking": {
+        "a": "Yalnız Booking/Airbnb-dən qonaq gəlir, eyni qonaq 2-ci dəfə də platformadan gəlir",
+        "b": "Qonaqlara WhatsApp nömrəmi verirəm, bəzi qayıt qonaqlar oradan yazır",
+        "c": "Direct booking-də 10-15% endirim təklif edirəm, qonaq özüm ilə yazışır",
+        "d": "Öz veb-saytım + WhatsApp Business + loyalty proqram (3-cü dəfə 20% endirim)"
+      }
+    },
+    "verdicts": {
+      "notReady": {
+        "heading": "Hələ OTA-ya hazır deyilsən",
+        "subline": "Profilin və fotolar üzərində 2-3 həftə işləmək lazımdır. Booking-də indi açılarsansa, qonaq cəlb edə bilməyəcəksən, reytinq düşə bilər. İlk addım: 10+ peşəkar foto və tam profil doluluq."
+      },
+      "bookingStart": {
+        "heading": "Booking.com-da başlamağa hazırsan",
+        "subline": "Təməl hazırdır. Booking-də profilini yarat, ilk 3 ay diqqətlə qonaq rəylərini topla. 8.0+ reytinq aldıqdan sonra Airbnb-ə də əlavə et."
+      },
+      "airbnbExpand": {
+        "heading": "Airbnb əlavə edib Superhost hədəfi qoyar",
+        "subline": "Booking-də artıq təcrübən var. Airbnb əlavə et, 6 ayda Superhost statusuna çat. Hər iki platforma birlikdə aylıq gəliri 40-60% artırır."
+      },
+      "directStrategy": {
+        "heading": "Direct booking strategiyası qur",
+        "subline": "Multi-platform-da güclüsən. İndi məqsəd komissiyaları azaltmaqdır. WhatsApp Business, öz veb-sayt və loyalty proqram ilə hər 100 qonaqdan 30-40-ını direct booking-ə keçir — komissiyanın yarısını qoru."
+      },
+      "multiPlatformPro": {
+        "heading": "Multi-platform expert — kanal manageri düşün",
+        "subline": "Hər şey yüksək səviyyədə işləyir. Növbəti addım: 3+ otaq idarəsi üçün professional channel manager (Lodgify, Hospitable). Bu səviyyədə real biznes qurursan."
+      }
+    },
+    "weakBox": {
+      "heading": "Ən zəif sahən: {category}",
+      "body": "Bu sahə Booking və Airbnb-də qazancın əsas tıxacıdır. DK Agency komandası bu sahədə sənə konkret addım planı və lazımi şablonlarla kömək edə bilər."
+    },
+    "leadCta": {
+      "heading": "Birlikdə Booking-ə hazırlaşaq",
+      "body": "DK Agency Qonaq Evi Bələdçisi və WhatsApp template paketi ilə Booking və Airbnb-də ilk 90 günü uğurla keç.",
+      "namePlaceholder": "Ad, Soyad",
+      "brandPlaceholder": "Qonaq evi / pansiyon adı",
+      "contactPlaceholder": "WhatsApp nömrəsi və ya e-poçt",
+      "kvkkConsent": "KVKK razılaşmasını qəbul edirəm və DK Agency ilə əlaqə üçün məlumatımın saxlanmasına icazə verirəm.",
+      "submitButton": "Pulsuz bələdçi və WhatsApp template paketini al",
+      "submitSuccess": "✓ Təşəkkürlər! 24 saat ərzində WhatsApp-da əlaqə saxlayacağıq.",
+      "retryButton": "Yenidən test et"
+    },
+    "shareCard": {
+      "title": "Qonaq Evimin Hazırlıq Skoru",
+      "tagline": "Ustalığın Nişanı · Dijitalın Şeddi",
+      "downloadButton": "Nəticəni yüklə (PNG)"
+    },
+    "footer": "Bu test ilkin özünüqiymətləndirmə alətidir. Tam plan üçün fərdi məsləhət tövsiyə olunur."
   },
   "guesthouseRoi": {
     "meta": {
