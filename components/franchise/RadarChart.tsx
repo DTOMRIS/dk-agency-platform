@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { startTransition, useEffect, useRef, useState } from 'react';
 
 interface RadarChartProps {
   labels: string[];
@@ -22,10 +22,10 @@ export default function RadarChart({ labels, values, maxValue = 100, size = 300 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
-      setDrawn(true);
+      startTransition(() => setDrawn(true));
       return;
     }
-    const t = window.setTimeout(() => setDrawn(true), 100);
+    const t = window.setTimeout(() => startTransition(() => setDrawn(true)), 100);
     return () => window.clearTimeout(t);
   }, []);
 
