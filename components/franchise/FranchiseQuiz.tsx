@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { startTransition, useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import LeadForm from './LeadForm';
@@ -67,12 +67,12 @@ function useCountUp(target: number, duration = 1200) {
   const rafRef = useRef(0);
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) { setValue(target); return; }
+    if (prefersReduced) { startTransition(() => setValue(target)); return; }
     const start = performance.now();
     function tick(now: number) {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(target * eased));
+      startTransition(() => setValue(Math.round(target * eased)));
       if (progress < 1) rafRef.current = requestAnimationFrame(tick);
     }
     rafRef.current = requestAnimationFrame(tick);
