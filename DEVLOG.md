@@ -1,5 +1,24 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-06-04 — TASK-0194/0195: OTA Funnel + Blog Sprint + Cleanup
+
+**Why:** Qonaq evi / pansiyon sektoru üçün toolkit alətləri lazım idi (F2.5 roadmap). Blog sisteminə stage lifecycle + callout h3 + yeni kateqoriyalar əlavə olunmalı idi. Repo 170+ köhnə branch və 3 stash ilə dolu idi.
+
+**What:**
+- 3 yeni toolkit: OTA Readiness Quiz, Guesthouse ROI Calculator, WhatsApp Template Paketi (freemium)
+- Blog: stage field (Başla/Böyüt/Devir), 14 callout h3 pattern, LegalDisclaimer, Hüquqi+Marketinq kateqoriyaları
+- 12 yeni blog məqaləsi stash-dan recover edildi (blog-011 → blog-022)
+- P0 fix: otaReadiness.ts git-ə commit edilməmişdi — runtime crash riski
+- Cleanup: 170 branch, 3 stash, 2 worktree silindi
+
+**PRs:** #271, #272, #273, #274
+
+**Verification:** Build PASS. Prod smoke 4/4 route 200 (prefix-siz). Hostinger 503 (server restart lazım — infra, kod deyil).
+
+**Dərs (L-038):** Yeni fayl yaradılanda `git status` ilə untracked yoxla — Next.js dynamic import build-i keçirir, runtime-da crash edir.
+
+---
+
 ## 2026-05-31 - TASK-0180 Public CreateListingForm concept axis
 
 **Why:** Concept/location methodology existed in `ListingForm`, but public `/ilan-ver` uses `CreateListingForm`, so submissions were missing concept axis data.
