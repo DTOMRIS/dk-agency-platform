@@ -4176,6 +4176,230 @@ DK Agency və AFA dövlətin qastronomiya strategiyasının bir parçasıdır �
     coverImageAlt: 'Azərbaycan qastronomiyası 2030 dövlət planı',
   },
 
+  // ═══════════════════════════════════════════════════════════════
+  // YAZI 23: GARSON UPSELL — SALONDAKI GİZLİ GƏLİR
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'blog-023',
+    slug: 'garson-satis-upsell-salon-gelir',
+    title: 'Garson Sifariş Almır, Satış Edir: Salondakı Gizli Gəlir',
+    subtitle: 'Bir cümlə ilə çeki 10-15% artırmağın yolu',
+    category: 'satis',
+    categoryEmoji: '📈',
+    stage: 'Başla',
+    readingTime: 5,
+    wordCount: 820,
+    author: 'Doğan Tomris',
+    publishDate: '2026-06-04T09:00:00Z',
+    updatedAt: '2026-06-04T09:00:00Z',
+    tags: ['upsell', 'garson', 'satış', 'salon', 'orta çek', 'servis'],
+    metaDescription: 'Garson sifariş alan deyil, satışçıdır. Upsell texnikası ilə restoranın orta çekini 10-15% artırmağın 5 sadə yolu.',
+    focusKeyword: 'garson upsell satış',
+    summary: 'Çox restoran sahibi garsonu "sifariş alan" adam kimi görür. Halbuki yaxşı garson satışçıdır — bir cümlə ilə çeki 10-15% artıra bilər. Heç bir əlavə müştəri, heç bir əlavə reklam xərci olmadan.',
+    content: `# Garson Sifariş Almır, Satış Edir: Salondakı Gizli Gəlir
+
+*Kateqoriya: 📈 Satış | Oxu müddəti: 5 dəq*
+
+---
+
+Çox restoran sahibi garsonu "sifariş alan" adam kimi görür. Halbuki yaxşı garson **satışçıdır** — və bir cümlə ilə çeki 10-15% artıra bilər. Heç bir əlavə müştəri, heç bir əlavə reklam xərci olmadan. Bu, salonda gizlənmiş gəlirdir — sadəcə açılmağı gözləyir.
+
+---
+
+## 1. Problem: "sifariş alıcı" garson
+
+Tipik səhnə: müştəri "bir kabab" deyir, garson yazır, gedir. Bitdi. Halbuki həmin anda garson soruşa bilərdi: "Yanında ayran və ya təzə salat istəyirsiniz?" — və çek böyüyərdi.
+
+Garson satış fürsətini görməyəndə, restoran hər masada **pul itirir** — özü də bunu heç hiss etmədən.
+
+## 2. Upsell (yuxarı satış) sənəti
+
+Upsell zorla satmaq deyil — **kömək etmək**dir. Müştəriyə təcrübəsini yaxşılaşdıracaq bir şey təklif etmək:
+
+- **Tamamlayıcı**: "Bu yeməyin yanında ən çox X içkisi sevilir."
+- **Premium**: "Adi yox, böyük porsiya alsanız, ikiyə bölüb paylaşa bilərsiniz."
+- **Şirniyyat/içki**: yeməyin sonunda "Çay və ya ev şirniyyatımız var, dadmaq istəyərsiniz?"
+
+Hər biri bir cümlə — amma birlikdə çeki ciddi böyüdür.
+
+> ╔══════════════════════════════════════════════════════════╗
+> ║ 💡 **5 SADƏ UPSELL CÜMLƏSİ**                            ║
+> ║                                                           ║
+> ║ 1. "Yanında nə içək gətirim?"                            ║
+> ║ 2. "Bu yeməklə ən çox X gedir"                           ║
+> ║ 3. "Başlanğıc üçün salat/şorba istəyirsiniz?"            ║
+> ║ 4. "Böyük porsiya cəmi bir az fərqlidir, paylaşmaq       ║
+> ║     üçün idealdır"                                        ║
+> ║ 5. "Sonunda çay və ev şirniyyatımızı dadın"              ║
+> ║                                                           ║
+> ║ 🔗 Beş cümlə — sıfır xərc.                              ║
+> ╚══════════════════════════════════════════════════════════╝
+
+## 3. Doğru an + doğru söz
+
+Upsell-in sirri **zamanlamadır:**
+
+- **Sifariş anında** — tamamlayıcı təklif (içki, başlanğıc).
+- **Ana yemək gələndə** — "hər şey qaydasındadırmı?" + kiçik əlavə.
+- **Yemək bitəndə** — şirniyyat və çay (ən yüksək qəbul anı).
+
+Söz təbii olmalıdır — əzbər yox, səmimi tövsiyə kimi. Müştəri "satılır" hiss etməməlidir, "qayğı görür" hiss etməlidir.
+
+## 4. Garsonu satışa motivasiya et
+
+Garson niyə satış etsin? Çünki ona dəyər. Sadə motivasiya sistemləri:
+
+- Kiçik bonus (ən çox şirniyyat/içki satan garsona həftəlik mükafat).
+- Kiçik yarış (komanda arasında oyunlaşdırma).
+- Tanınma (ayın garsonu).
+
+Motivasiya olan garson satır; olmayan sadəcə sifariş alır.
+
+## 5. Aşırıya qaçma — bu, ən vacib qaydadır
+
+Zorla, təkrar-təkrar satış müştərini **qaçırır.** Qayda sadədir: bir dəfə təklif et, "yox" deyilsə geri çəkil. Upsell köməkdir — təzyiq deyil.
+
+---
+
+> ╔══════════════════════════════════════════════════════════╗
+> ║ 🎤 **DOĞAN NOTU**                                        ║
+> ║                                                           ║
+> ║ *"40 ildir bu sektordayam — və ən böyük gəlir artımı     ║
+> ║  çox vaxt yeni müştəridən yox, mövcud müştəriyə düzgün   ║
+> ║  təklifdən gəlir. Bir garsona 'sifariş alma, qayğı       ║
+> ║  göstər' deməyi öyrətdiyimdə restoranın orta çeki         ║
+> ║  gözlə görünən şəkildə artdı."*                          ║
+> ╚══════════════════════════════════════════════════════════╝
+
+---
+
+## Yekun
+
+Garson təkcə sifariş daşıyan deyil — restoranın salondakı satış komandasıdır. Doğru anda, səmimi bir tövsiyə ilə çek böyüyür, müştəri təcrübəsi yaxşılaşır və restoran heç bir əlavə xərc olmadan daha çox qazanır. Sirr: kömək et, satma.
+
+---
+
+> 💡 **DK Agency:** Komandanın satış bacarığını artırmaq istəyirsən? DK Agency / TQTA təlim proqramları üçün əlaqə saxla.
+>
+> 📧 info@dkagency.com.tr | 🌐 dkagency.com.tr/danismanlik`,
+    isPremium: false,
+    relatedArticles: ['basabas-noqtesi-hesablama', 'menyu-muhendisliyi-satis'],
+    coverImage: '/images/blog-23-garson-upsell.png',
+    coverImageAlt: 'Garson upsell satış salondakı gizli gəlir',
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // YAZI 24: COĞRAFİ İŞARƏ — YERLİ LƏZZƏTİ QIZILA ÇEVİRMƏK
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'blog-024',
+    slug: 'cografi-isare-yerli-lezzet',
+    title: 'Antep Baklavasından Şəki Halvasına: Coğrafi İşarə ilə Yerli Ləzzəti Qızıla Çevirmək',
+    subtitle: 'Coğrafi işarə bir məhsulu "ucuz qida"dan "qorunan marka"ya çevirir',
+    category: 'huquqi',
+    categoryEmoji: '⚖️',
+    stage: 'Böyüt',
+    readingTime: 7,
+    wordCount: 1100,
+    author: 'Doğan Tomris',
+    publishDate: '2026-06-04T10:00:00Z',
+    updatedAt: '2026-06-04T10:00:00Z',
+    tags: ['coğrafi işarə', 'hüquqi', 'marka qorunması', 'qastronomiya turizm', 'Şəki halvası', 'franchise'],
+    metaDescription: 'Coğrafi işarə nədir, sahibkara nə qazandırır? Türkiyə nümunəsi, Azərbaycan strategiyası və yerli ləzzəti beynəlxalq markaya çevirmə yolu.',
+    focusKeyword: 'coğrafi işarə Azərbaycan',
+    summary: 'Niyə "Antep baklavası" adı bu qədər dəyərlidir? Çünki qorunur. Azərbaycanın da belə xəzinələri var — Şəki halvası, Quba alması, Lənkəran çayı. Bu yazı coğrafi işarənin sahibkara nə qazandırdığını izah edir.',
+    content: `# Antep Baklavasından Şəki Halvasına: Coğrafi İşarə ilə Yerli Ləzzəti Qızıla Çevirmək
+
+*Kateqoriya: ⚖️ Hüquqi | Oxu müddəti: 7 dəq*
+
+---
+
+Niyə dünyada "Antep baklavası" adı bu qədər dəyərlidir? Çünki bu ad **qorunur.** Onu yalnız Qaziantepdə, müəyyən üsulla istehsal edən istifadə edə bilər. Bu qoruma məhsulu adi bir şirniyyatdan beynəlxalq markaya çevirir.
+
+Azərbaycanın da belə xəzinələri var — Şəki halvası, Quba alması, Lənkəran çayı, Abşeron zəfəranı. Sual budur: biz də onları qoruyub qızıla çevirə bilərikmi?
+
+---
+
+## 1. Coğrafi işarə nədir?
+
+**Coğrafi işarə** — bir məhsulun müəyyən bir yerlə bağlı adının hüquqi qorunmasıdır. Yəni "Şəki halvası" adını yalnız Şəkidə, ənənəvi üsulla istehsal edən şəxs istifadə edə bilər. Başqa bölgədə hazırlanan halva "Şəki halvası" adı ilə satıla bilməz.
+
+Bu, sadəcə hüquqi formal deyil — bir bölgənin ləzzətini, əməyini və adını **mənimsənilməkdən qoruyan** mexanizmdir.
+
+## 2. Türkiyə nümunəsi: ad qorunanda dəyər artır
+
+Türkiyə bu yolda dünya nümunəsidir. Bu gün Türkiyədə mindən çox qeydiyyatdan keçmiş coğrafi işarə var; təkcə Qaziantep şəhərinin yüzdən çox tescilli məhsulu mövcuddur. Ən simvoliki isə Antep baklavasıdır — Avropa İttifaqında qeydiyyatdan keçən ilk Türk məhsulu oldu.
+
+Nəticə nə oldu? Ad qorunanda:
+- Təqlid azaldı, əsl məhsulun dəyəri artdı.
+- İxrac qiyməti yüksəldi — "qorunan ad" beynəlxalq bazarda pul deməkdir.
+- Bölgə turizm üçün cəlbedici oldu — insanlar "əslini yerində dadmaq" üçün gəldi.
+
+> Bir cümlə ilə: coğrafi işarə bir məhsulu "ucuz qida"dan "qorunan marka"ya çevirir.
+
+## 3. Azərbaycan üçün fürsət
+
+Yaxşı xəbər: Azərbaycan bu istiqamətdə artıq hərəkətə keçib. Dövlətin Qastronomiya Turizmi Strateji Planı **2027-ci ilə qədər 25-dən çox məhsulun coğrafi işarə kimi qeydiyyatını** hədəfləyir. Qeydiyyatı **Əqli Mülkiyyət Agentliyi** aparır.
+
+Hədəfdəki məhsullardan bəziləri: Şəki halvası, Quba alması, Lənkəran çayı, Abşeron zəfəranı.
+
+> ╔══════════════════════════════════════════════════════════╗
+> ║ 💡 **COĞRAFİ İŞARƏ SAHİBKARA NƏ QAZANDIRIR?**           ║
+> ║                                                           ║
+> ║ 1. Təqliddən hüquqi qorunma                              ║
+> ║ 2. Daha yüksək satış qiyməti                             ║
+> ║ 3. İxrac üstünlüyü                                       ║
+> ║ 4. Turizm cəlbi ("əslini yerində dad")                   ║
+> ║ 5. Bölgənin bütöv bir marka kimi tanınması               ║
+> ║                                                           ║
+> ║ 🔗 Bir məhsul — beş fayda.                               ║
+> ╚══════════════════════════════════════════════════════════╝
+
+## 4. İstehsalçı/sahibkar üçün praktik məna
+
+Əgər müəyyən bölgədə ənənəvi bir məhsul istehsal edirsənsə, coğrafi işarə sənin üçün:
+
+- **Qalxan**dır — adını başqası mənimsəyə bilməz.
+- **Qiymət gücü**dür — "qorunan əsl məhsul" daha baha satılır.
+- **Turizm bağı**dır — qastro turist əsl məhsulu yerində axtarır, sənin bölgənə gəlir.
+
+Yəni coğrafi işarə təkcə bir kağız deyil — bölgə iqtisadiyyatını canlandıran bir alətdir.
+
+## 5. Necə müraciət edilir? (qısa)
+
+Müraciət **Əqli Mülkiyyət Agentliyinə** edilir; məhsul "mənşə adı" və ya "coğrafi göstəriş" kimi qeydiyyatdan keçirilir. Proses bölgə ilə əlaqəni, istehsal üsulunu və ənənəni sənədləşdirməyi tələb edir. Bu, çox vaxt fərdi yox, **bölgədəki istehsalçıların birliyi** tərəfindən aparılır.
+
+---
+
+> ╔══════════════════════════════════════════════════════════╗
+> ║ 🎤 **DOĞAN NOTU**                                        ║
+> ║                                                           ║
+> ║ *"Bizim hər bölgəmizin bir ləzzəti var — amma çoxu       ║
+> ║  qorunmadığı üçün başqaları onu istənilən yerdə,          ║
+> ║  istənilən keyfiyyətdə satır. Coğrafi işarə həmin         ║
+> ║  ləzzəti həm qoruyur, həm də bölgəyə pul və turist       ║
+> ║  gətirir. Türkiyə bunu illərlə əvvəl başladı və          ║
+> ║  qazandı. Bizim üçün gecikmiş deyil."*                    ║
+> ╚══════════════════════════════════════════════════════════╝
+
+---
+
+## Yekun
+
+Coğrafi işarə yerli ləzzəti qızıla çevirən mexanizmdir. Türkiyə bunu sübut etdi; Azərbaycan isə dövlət dəstəyi ilə həmin yola çıxıb. Bir bölgədə ənənəvi məhsul istehsal edirsənsə, adını qorumaq — onu beynəlxalq markaya çevirməyin ilk addımıdır.
+
+---
+
+> 💡 **DK Agency:** Yerli məhsulunu və ya markanı qorumağı düşünürsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.
+>
+> 📧 info@dkagency.com.tr | 🌐 dkagency.com.tr/danismanlik
+
+*Mənbə: T.C. coğrafi işarə qeydiyyatı statistikası; Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025-2030); Əqli Mülkiyyət Agentliyi. Bu yazı ümumi məlumatdır, hüquqi məsləhət deyil.*`,
+    isPremium: true,
+    relatedArticles: ['marka-qeydiyyati-azerbaycan', 'insaatdan-acilisa-checklist'],
+    coverImage: '/images/blog-24-cografi-isare.png',
+    coverImageAlt: 'Coğrafi işarə yerli ləzzət qorunması',
+  },
 ];
 
 // Helper functions

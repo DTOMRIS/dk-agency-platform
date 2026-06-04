@@ -52,3 +52,6 @@ public/images/AQO*.jpeg
 tests/screenshots/
 test-results/
 playwright-report/
+
+# Claude Code local settings (personal permissions — never commit)
+.claude/settings.local.json
