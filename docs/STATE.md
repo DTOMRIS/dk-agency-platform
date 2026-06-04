@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-04T06:21:45.185Z
+- GeneratedAt: 2026-06-04T13:50:56.389Z
 - BuildStatus: PASS
 
-## Routes (208)
+## Routes (214)
 - /
 - /[locale]
 - /[locale]/about
@@ -105,10 +105,13 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/food-cost
 - /[locale]/toolkit/insaat-checklist
 - /[locale]/toolkit/menu-matrix
+- /[locale]/toolkit/ota-hazirlig-testi
 - /[locale]/toolkit/otel-hazirlig-testi
 - /[locale]/toolkit/pnl
 - /[locale]/toolkit/pnl-simulator
+- /[locale]/toolkit/qonaq-evi-roi-kalkulyatoru
 - /[locale]/toolkit/staff-retention
+- /[locale]/toolkit/whatsapp-template-paketi
 - /[locale]/uzvluk
 - /[locale]/verify-email
 - /auth/forgot-password
@@ -207,10 +210,13 @@ Auto-generated. Do not edit manually.
 - /toolkit/food-cost
 - /toolkit/insaat-checklist
 - /toolkit/menu-matrix
+- /toolkit/ota-hazirlig-testi
 - /toolkit/otel-hazirlig-testi
 - /toolkit/pnl
 - /toolkit/pnl-simulator
+- /toolkit/qonaq-evi-roi-kalkulyatoru
 - /toolkit/staff-retention
+- /toolkit/whatsapp-template-paketi
 - /uzvluk
 - /verify-email
 - /xeberler
