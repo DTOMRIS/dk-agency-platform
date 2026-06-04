@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import { ArrowRight, PackageSearch, Search } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronUp, PackageSearch, Search, SlidersHorizontal } from 'lucide-react';
 import ListingCard from '@/components/listings/ListingCard';
 import ListingModal from '@/components/listings/ListingModal';
 import {
@@ -48,6 +48,7 @@ export default function ListingsShowcasePage() {
   const [loadError, setLoadError] = useState('');
   const [activeListing, setActiveListing] = useState<MockListing | null>(null);
   const [initialized, setInitialized] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     setType(normalizeParam(searchParams.get('type')) as FilterType);
@@ -149,45 +150,66 @@ export default function ListingsShowcasePage() {
         </section>
 
         {/* ── Filter Bar (sticky) ──────────────────────────── */}
-        <section className="sticky top-[64px] z-20 border-b border-slate-200/80 bg-white/95 backdrop-blur-md shadow-sm lg:top-0">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-3 px-4 py-3 sm:grid-cols-2 sm:px-6 lg:flex lg:px-8">
-            <div className="relative flex-1 min-w-[180px]">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t('filterSearch')}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20"
-              />
+        <section className="sticky top-[64px] z-20 border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-md lg:top-0">
+          {/* Mobile toggle button */}
+          <button
+            type="button"
+            onClick={() => setFiltersOpen((v) => !v)}
+            className="flex w-full items-center justify-between px-4 py-3 text-sm font-bold text-slate-700 lg:hidden"
+          >
+            <span className="flex items-center gap-2">
+              <SlidersHorizontal size={16} />
+              {t('filterSearch')}
+              {(type !== 'all' || sector !== 'all' || city !== 'all' || priceRange !== 'all' || searchQuery) && (
+                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[var(--dk-gold)] text-[10px] font-black text-[var(--dk-navy)]">
+                  {[type !== 'all', sector !== 'all', city !== 'all', priceRange !== 'all', !!searchQuery].filter(Boolean).length}
+                </span>
+              )}
+            </span>
+            {filtersOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </button>
+
+          {/* Filter controls — always visible on lg+, collapsible on mobile */}
+          <div className={`${filtersOpen ? 'block' : 'hidden'} border-t border-slate-100 px-4 pb-3 lg:block lg:border-t-0 lg:px-0 lg:pb-0`}>
+            <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-3 py-3 sm:grid-cols-2 sm:px-6 lg:flex lg:px-8">
+              <div className="relative min-w-[180px] flex-1">
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={t('filterSearch')}
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-9 pr-4 text-sm text-slate-700 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+                />
+              </div>
+
+              <select value={type} onChange={(e) => setType(e.target.value as FilterType)}
+                className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
+                <option value="all">{t('filterAll')}</option>
+                {LISTING_CATEGORIES.map((cat) => (<option key={cat.id} value={cat.id}>{cat.label}</option>))}
+              </select>
+
+              <select value={sector} onChange={(e) => setSector(e.target.value)}
+                className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
+                <option value="all">{t('filterAllSectors')}</option>
+                {getAllSectors(locale as 'az' | 'en' | 'ru' | 'tr').map((s) => (<option key={s.value} value={s.value}>{s.label}</option>))}
+              </select>
+
+              <select value={city} onChange={(e) => setCity(e.target.value)}
+                className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
+                {CITY_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
+              </select>
+
+              <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
+                className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
+                {PRICE_RANGE_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
+              </select>
+
+              <button type="button" onClick={handleReset}
+                className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)] sm:col-span-2 lg:w-auto">
+                {t('filterReset')}
+              </button>
             </div>
-
-            <select value={type} onChange={(e) => setType(e.target.value as FilterType)}
-              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
-              <option value="all">{t('filterAll')}</option>
-              {LISTING_CATEGORIES.map((cat) => (<option key={cat.id} value={cat.id}>{cat.label}</option>))}
-            </select>
-
-            <select value={sector} onChange={(e) => setSector(e.target.value)}
-              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
-              <option value="all">{t('filterAllSectors')}</option>
-              {getAllSectors(locale as 'az' | 'en' | 'ru' | 'tr').map((s) => (<option key={s.value} value={s.value}>{s.label}</option>))}
-            </select>
-
-            <select value={city} onChange={(e) => setCity(e.target.value)}
-              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
-              {CITY_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
-            </select>
-
-            <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)}
-              className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 outline-none focus:border-[var(--dk-gold)] lg:w-auto">
-              {PRICE_RANGE_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
-            </select>
-
-            <button type="button" onClick={handleReset}
-              className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)] sm:col-span-2 lg:w-auto">
-              {t('filterReset')}
-            </button>
           </div>
         </section>
 
