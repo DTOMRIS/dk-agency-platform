@@ -2,6 +2,38 @@
 
 ## [Unreleased]
 
+## [TASK-0195] feat(blog): stage lifecycle + callout h3 + 12 new articles — 2026-06-04
+
+### Added
+- Blog stage lifecycle field (Başla / Böyüt / Devir) — schema, editor, grid cards, detail page
+- StageBadge component with color-coded badges (red/amber/purple)
+- MarkdownRenderer h3 callout system — 14 patterns (Guru Kutusu, Faydalı Məlumat, Hüquqi Risk, Doğan Notu, etc.)
+- LegalDisclaimer auto-appended to Hüquqi category blog posts
+- 2 new blog categories: Hüquqi + Marketinq (case-insensitive fallback)
+- 12 new blog articles (blog-011 through blog-022): AI FAVÖK, garson upsell, coğrafi işarə, AHA ulduz, Şəki pansiyon, M2 Lounge, franchise müqavilə, patent, qastronomiya 2030
+- Missing otaReadiness i18n keys added to az.json
+- Migration: `0012_add_blog_stage_column.sql`
+
+## [TASK-0194] feat(ota): 3 toolkit tools — OTA quiz + ROI calc + WhatsApp freemium — 2026-06-04
+
+### Added
+- OTA Readiness Quiz (`/toolkit/ota-hazirlig-testi`) — 8 questions, 5 tiers, AI report via FranchiseQuiz parametric reuse
+- Guesthouse ROI Calculator (`/toolkit/qonaq-evi-roi-kalkulyatoru`) — OTA commission math with Booking 15% + Airbnb comparison
+- WhatsApp Templates (`/toolkit/whatsapp-template-paketi`) — 3 free + 7 gated freemium model, clipboard copy
+- `OtaReadinessReport` AI taskType added to franchiseReport.ts
+- SSOT data files: `guesthouseRoi.ts`, `whatsappTemplates.ts`, `otaReadiness.ts`
+
+### Fixed
+- `otaReadiness.ts` was missing from git (P0 prod crash risk) — committed separately
+- React compiler lint: `startTransition` wrapper for `FranchiseQuiz` + `RadarChart` setState-in-effect
+
+## Cleanup Sprint — 2026-06-04
+
+### Changed
+- 170 stale branches deleted (106 merged + 64 squash-merged)
+- 3 stashes dropped (content recovered first)
+- 2 git worktrees removed (dogan-notu, ru-locale — both already in main)
+
 ## [TASK-LOCALE-LOOP] fix(i18n): resolve localized public route loop - 2026-05-31
 
 ### Fixed
