@@ -4162,13 +4162,34 @@
       "submitSuccess": "Your listing has been submitted successfully!"
     },
     "categories": {
-      "devir": { "label": "Transfer", "description": "Showcase for transferring ready-made restaurants, cafes, or branch locations." },
-      "franchise-vermek": { "label": "Offer Franchise", "description": "Franchise showcase for brands looking to expand." },
-      "franchise-almaq": { "label": "Buy Franchise", "description": "For investors and operators wanting to enter the market with an established brand." },
-      "ortak-tapmaq": { "label": "Find Partner", "description": "Listing feed for projects seeking investment or operational partners." },
-      "yeni-investisiya": { "label": "New Investment", "description": "Investor showcase for new concepts or pre-opening projects." },
-      "obyekt-icaresi": { "label": "Property Lease", "description": "For leasing HoReCa-suitable properties and location search." },
-      "horeca-ekipman": { "label": "HORECA Equipment", "description": "For professional kitchen equipment and service lines." }
+      "devir": {
+        "label": "Transfer",
+        "description": "Showcase for transferring ready-made restaurants, cafes, or branch locations."
+      },
+      "franchise-vermek": {
+        "label": "Offer Franchise",
+        "description": "Franchise showcase for brands looking to expand."
+      },
+      "franchise-almaq": {
+        "label": "Buy Franchise",
+        "description": "For investors and operators wanting to enter the market with an established brand."
+      },
+      "ortak-tapmaq": {
+        "label": "Find Partner",
+        "description": "Listing feed for projects seeking investment or operational partners."
+      },
+      "yeni-investisiya": {
+        "label": "New Investment",
+        "description": "Investor showcase for new concepts or pre-opening projects."
+      },
+      "obyekt-icaresi": {
+        "label": "Property Lease",
+        "description": "For leasing HoReCa-suitable properties and location search."
+      },
+      "horeca-ekipman": {
+        "label": "HORECA Equipment",
+        "description": "For professional kitchen equipment and service lines."
+      }
     },
     "fields": {
       "area": "Area",
@@ -4282,12 +4303,30 @@
       "editPrioritiesLink": "Change priorities"
     },
     "nudge": {
-      "set_priorities": { "message": "First step: tell us your 3 priorities and we'll find the right tools.", "cta": "Set priorities" },
-      "try_first_tool": { "message": "There's a tool matching your priority — get results in 2 minutes.", "cta": "Open tool" },
-      "listing_pending": { "message": "Your listing is still in review — average time is 48 hours.", "cta": "View details" },
-      "docs_needed": { "message": "Admin requested additional documents — check now.", "cta": "My listings" },
-      "listing_live": { "message": "Your listing is live — track this week's views.", "cta": "My listings" },
-      "comeback": { "message": "New tools are available in the toolkit for you.", "cta": "Browse tools" }
+      "set_priorities": {
+        "message": "First step: tell us your 3 priorities and we'll find the right tools.",
+        "cta": "Set priorities"
+      },
+      "try_first_tool": {
+        "message": "There's a tool matching your priority — get results in 2 minutes.",
+        "cta": "Open tool"
+      },
+      "listing_pending": {
+        "message": "Your listing is still in review — average time is 48 hours.",
+        "cta": "View details"
+      },
+      "docs_needed": {
+        "message": "Admin requested additional documents — check now.",
+        "cta": "My listings"
+      },
+      "listing_live": {
+        "message": "Your listing is live — track this week's views.",
+        "cta": "My listings"
+      },
+      "comeback": {
+        "message": "New tools are available in the toolkit for you.",
+        "cta": "Browse tools"
+      }
     }
   },
   "franchise": {
@@ -4306,30 +4345,107 @@
       "submitting": "Generating...",
       "generating": "AI is preparing the manual skeleton using the fixed outline. This may take a little while.",
       "error": "The manual could not be generated. Please try again.",
-      "locked": { "badge": "USTA required", "title": "AI Franchise Manual is for USTA members", "body": "SAGIRD and KALFA users can send an interest request here. The team will contact you about USTA activation." },
-      "banner": { "title": "This is a SKELETON.", "body": "Human review is required before publishing or sharing it with franchisees." },
+      "locked": {
+        "badge": "USTA required",
+        "title": "AI Franchise Manual is for USTA members",
+        "body": "SAGIRD and KALFA users can send an interest request here. The team will contact you about USTA activation."
+      },
+      "banner": {
+        "title": "This is a SKELETON.",
+        "body": "Human review is required before publishing or sharing it with franchisees."
+      },
       "steps": {
-        "brand": { "eyebrow": "Basics", "title": "Brand and sector" },
-        "operations": { "eyebrow": "Operations", "title": "How does daily operation work?" },
-        "standards": { "eyebrow": "Standards", "title": "Existing rules and quality standards" },
-        "staff": { "eyebrow": "Staff", "title": "Team, roles and training" },
-        "supply": { "eyebrow": "Supply", "title": "Supply, warehouse and equipment" },
-        "opening": { "eyebrow": "Opening", "title": "New branch opening process" }
+        "brand": {
+          "eyebrow": "Basics",
+          "title": "Brand and sector"
+        },
+        "operations": {
+          "eyebrow": "Operations",
+          "title": "How does daily operation work?"
+        },
+        "standards": {
+          "eyebrow": "Standards",
+          "title": "Existing rules and quality standards"
+        },
+        "staff": {
+          "eyebrow": "Staff",
+          "title": "Team, roles and training"
+        },
+        "supply": {
+          "eyebrow": "Supply",
+          "title": "Supply, warehouse and equipment"
+        },
+        "opening": {
+          "eyebrow": "Opening",
+          "title": "New branch opening process"
+        }
       },
       "fields": {
-        "brand": { "label": "Brand name", "placeholder": "Example: DK Coffee" },
-        "sector": { "label": "Sector", "placeholder": "Example: coffee, fast casual, education" },
-        "operationDescription": { "label": "Operation description", "placeholder": "Describe the main flow from customer arrival to service completion." },
-        "standards": { "label": "Existing standards", "placeholder": "Current rules, SOPs, quality measures and brand requirements." },
-        "staff": { "label": "Staff model", "placeholder": "Roles, shifts, training and responsibility split." },
-        "supply": { "label": "Supply model", "placeholder": "Suppliers, warehouse, logistics, equipment and critical materials." },
-        "openingProcess": { "label": "Opening process", "placeholder": "Location, preparation, soft opening and audit sequence for a new branch." }
+        "brand": {
+          "label": "Brand name",
+          "placeholder": "Example: DK Coffee"
+        },
+        "sector": {
+          "label": "Sector",
+          "placeholder": "Example: coffee, fast casual, education"
+        },
+        "operationDescription": {
+          "label": "Operation description",
+          "placeholder": "Describe the main flow from customer arrival to service completion."
+        },
+        "standards": {
+          "label": "Existing standards",
+          "placeholder": "Current rules, SOPs, quality measures and brand requirements."
+        },
+        "staff": {
+          "label": "Staff model",
+          "placeholder": "Roles, shifts, training and responsibility split."
+        },
+        "supply": {
+          "label": "Supply model",
+          "placeholder": "Suppliers, warehouse, logistics, equipment and critical materials."
+        },
+        "openingProcess": {
+          "label": "Opening process",
+          "placeholder": "Location, preparation, soft opening and audit sequence for a new branch."
+        }
       },
       "sections": {
-        "communication": "Communication", "sales_service_culture": "Sales and service culture", "equipment": "Equipment", "logistics_warehouse": "Logistics and warehouse", "cashier_pos": "Cashier/POS", "cleaning_safety": "Cleaning and safety", "team": "Team", "leadership": "Leadership", "education_training": "Education and training", "order_work_satisfaction": "Order and work satisfaction", "accounting_finance": "Accounting and finance", "sales_marketing": "Sales and marketing", "targets": "Targets", "rules_inventory": "Rules and inventory", "facility_location": "Facility and location", "opening": "Opening", "chain_management": "Chain management", "brand_identity": "Brand identity", "quality_control": "Quality control", "audit_procedures": "Audit procedures"
+        "communication": "Communication",
+        "sales_service_culture": "Sales and service culture",
+        "equipment": "Equipment",
+        "logistics_warehouse": "Logistics and warehouse",
+        "cashier_pos": "Cashier/POS",
+        "cleaning_safety": "Cleaning and safety",
+        "team": "Team",
+        "leadership": "Leadership",
+        "education_training": "Education and training",
+        "order_work_satisfaction": "Order and work satisfaction",
+        "accounting_finance": "Accounting and finance",
+        "sales_marketing": "Sales and marketing",
+        "targets": "Targets",
+        "rules_inventory": "Rules and inventory",
+        "facility_location": "Facility and location",
+        "opening": "Opening",
+        "chain_management": "Chain management",
+        "brand_identity": "Brand identity",
+        "quality_control": "Quality control",
+        "audit_procedures": "Audit procedures"
       },
-      "result": { "purpose": "Purpose", "procedure": "Step-by-step procedure", "controls": "Control points", "template": "Sample template", "save": "Save edits", "saving": "Saving...", "saved": "Saved", "export": "Markdown export" },
-      "export": { "defaultBrand": "Franchise Manual", "defaultSector": "Sector" }
+      "result": {
+        "purpose": "Purpose",
+        "procedure": "Step-by-step procedure",
+        "controls": "Control points",
+        "template": "Sample template",
+        "save": "Save edits",
+        "saving": "Saving...",
+        "saved": "Saved",
+        "export": "Markdown export"
+      },
+      "export": {
+        "defaultBrand": "Franchise Manual",
+        "defaultSector": "Sector"
+      }
     }
   },
   "franchiseRoi": {
@@ -4344,14 +4460,38 @@
     "sectionInvestment": "Initial investment",
     "totalInvestment": "Total investment",
     "fields": {
-      "revenue": { "label": "Expected annual turnover", "hint": "total revenue from sales" },
-      "marginPercent": { "label": "Gross profit margin", "hint": "% of turnover remaining after cost of goods/services" },
-      "opex": { "label": "Annual fixed operating expenses", "hint": "rent, payroll, utilities, other" },
-      "royaltyPercent": { "label": "Royalty rate", "hint": "on turnover" },
-      "adFundPercent": { "label": "Advertising fund", "hint": "on turnover" },
-      "entryFee": { "label": "Franchise entry fee", "hint": "one-time payment upon signing the franchise agreement" },
-      "setupCost": { "label": "Fit-out + equipment + setup", "hint": "premises preparation, equipment, furniture, decor" },
-      "workingCapital": { "label": "First 6 months working capital", "hint": "rent, payroll, supplies — keeps cash flow going in early months" }
+      "revenue": {
+        "label": "Expected annual turnover",
+        "hint": "total revenue from sales"
+      },
+      "marginPercent": {
+        "label": "Gross profit margin",
+        "hint": "% of turnover remaining after cost of goods/services"
+      },
+      "opex": {
+        "label": "Annual fixed operating expenses",
+        "hint": "rent, payroll, utilities, other"
+      },
+      "royaltyPercent": {
+        "label": "Royalty rate",
+        "hint": "on turnover"
+      },
+      "adFundPercent": {
+        "label": "Advertising fund",
+        "hint": "on turnover"
+      },
+      "entryFee": {
+        "label": "Franchise entry fee",
+        "hint": "one-time payment upon signing the franchise agreement"
+      },
+      "setupCost": {
+        "label": "Fit-out + equipment + setup",
+        "hint": "premises preparation, equipment, furniture, decor"
+      },
+      "workingCapital": {
+        "label": "First 6 months working capital",
+        "hint": "rent, payroll, supplies — keeps cash flow going in early months"
+      }
     },
     "results": {
       "grossProfit": "Gross profit",
@@ -4408,24 +4548,144 @@
     "shareDownload": "Download result (PNG)",
     "disclaimer": "This test is an initial self-assessment tool; full evaluation requires professional audit. © DK Agency",
     "verdict": {
-      "not_ready": { "title": "Not ready yet", "sub": "Core areas need strengthening. This is not a problem — it is a roadmap." },
-      "developing": { "title": "Developing stage", "sub": "There is potential, but some areas need to be solidified before franchising." },
-      "almost": { "title": "Close to ready", "sub": "Your brand is strong. A few more steps and you will be ready to franchise." },
-      "ready": { "title": "Ready to franchise", "sub": "Your brand is a strong franchise candidate. We can move to systemisation." }
+      "not_ready": {
+        "title": "Not ready yet",
+        "sub": "Core areas need strengthening. This is not a problem — it is a roadmap."
+      },
+      "developing": {
+        "title": "Developing stage",
+        "sub": "There is potential, but some areas need to be solidified before franchising."
+      },
+      "almost": {
+        "title": "Close to ready",
+        "sub": "Your brand is strong. A few more steps and you will be ready to franchise."
+      },
+      "ready": {
+        "title": "Ready to franchise",
+        "sub": "Your brand is a strong franchise candidate. We can move to systemisation."
+      }
     },
     "questions": {
-      "0": { "cat": "Credibility", "q": "How long has your brand been operating and what is its level of recognition?", "options": { "0": "We are new, limited recognition", "1": "1–2 years, local recognition", "2": "3–5 years, strong regional recognition", "3": "5+ years, widely recognised brand" } },
-      "1": { "cat": "Differentiation", "q": "What is your unique value proposition (USP) that sets you apart from competitors?", "options": { "0": "No significant difference from competitors", "1": "Some advantages but not clearly defined", "2": "Clear differentiation exists", "3": "Strong, easily explained unique concept" } },
-      "2": { "cat": "Teachability", "q": "How long would it take to fully train a new franchisee in your business?", "options": { "0": "Very complex, would take years", "1": "More than 6 months", "2": "3–6 months", "3": "Less than 3 months — it is systemised" } },
-      "3": { "cat": "Adaptability", "q": "How well can your concept adapt to different cities, locations and sizes?", "options": { "0": "Only works in the current location", "1": "Limited adaptability", "2": "Suitable for most regions", "3": "Fully adaptable to any region/size" } },
-      "4": { "cat": "Prototype performance", "q": "What is the financial performance of your existing unit(s)?", "options": { "0": "Not yet profitable", "1": "At break-even", "2": "Consistently profitable", "3": "Highly and sustainably profitable" } },
-      "5": { "cat": "Documentation", "q": "To what extent are your operating processes documented (manual, SOPs)?", "options": { "0": "No written documentation", "1": "Partially, mostly in my head", "2": "Core processes written down", "3": "Full manual + quality control" } },
-      "6": { "cat": "Affordable investment", "q": "How affordable is the initial investment for a target franchisee?", "options": { "0": "Very high, few people can afford it", "1": "High", "2": "Moderate, accessible", "3": "Affordable and attractive" } },
-      "7": { "cat": "Payback (ROI)", "q": "How long and at what return does a franchisee recover their investment?", "options": { "0": "Unknown / not calculated", "1": "More than 4 years", "2": "2–3 years, ROI ~15%", "3": "≤2 years, ROI 20%+" } },
-      "8": { "cat": "Market trend", "q": "What is the growth trend and outlook for your sector?", "options": { "0": "Shrinking market", "1": "Stable", "2": "Growing", "3": "Rapidly growing, strong future" } },
-      "9": { "cat": "Capital", "q": "Do you have capital to build the franchise system (legal, manual, support team)?", "options": { "0": "No", "1": "Limited", "2": "Partially ready", "3": "Fully allocated" } },
-      "10": { "cat": "Relationship management", "q": "Do you have a model for long-term franchisee relations and performance monitoring?", "options": { "0": "Not planned", "1": "General idea exists", "2": "Plan is ready", "3": "System + monitoring in place" } },
-      "11": { "cat": "Management capability", "q": "What is the experience level of the team that will manage franchise operations?", "options": { "0": "Limited experience", "1": "Managing alone", "2": "Small experienced team", "3": "Strong, experienced management team" } }
+      "0": {
+        "cat": "Credibility",
+        "q": "How long has your brand been operating and what is its level of recognition?",
+        "options": {
+          "0": "We are new, limited recognition",
+          "1": "1–2 years, local recognition",
+          "2": "3–5 years, strong regional recognition",
+          "3": "5+ years, widely recognised brand"
+        }
+      },
+      "1": {
+        "cat": "Differentiation",
+        "q": "What is your unique value proposition (USP) that sets you apart from competitors?",
+        "options": {
+          "0": "No significant difference from competitors",
+          "1": "Some advantages but not clearly defined",
+          "2": "Clear differentiation exists",
+          "3": "Strong, easily explained unique concept"
+        }
+      },
+      "2": {
+        "cat": "Teachability",
+        "q": "How long would it take to fully train a new franchisee in your business?",
+        "options": {
+          "0": "Very complex, would take years",
+          "1": "More than 6 months",
+          "2": "3–6 months",
+          "3": "Less than 3 months — it is systemised"
+        }
+      },
+      "3": {
+        "cat": "Adaptability",
+        "q": "How well can your concept adapt to different cities, locations and sizes?",
+        "options": {
+          "0": "Only works in the current location",
+          "1": "Limited adaptability",
+          "2": "Suitable for most regions",
+          "3": "Fully adaptable to any region/size"
+        }
+      },
+      "4": {
+        "cat": "Prototype performance",
+        "q": "What is the financial performance of your existing unit(s)?",
+        "options": {
+          "0": "Not yet profitable",
+          "1": "At break-even",
+          "2": "Consistently profitable",
+          "3": "Highly and sustainably profitable"
+        }
+      },
+      "5": {
+        "cat": "Documentation",
+        "q": "To what extent are your operating processes documented (manual, SOPs)?",
+        "options": {
+          "0": "No written documentation",
+          "1": "Partially, mostly in my head",
+          "2": "Core processes written down",
+          "3": "Full manual + quality control"
+        }
+      },
+      "6": {
+        "cat": "Affordable investment",
+        "q": "How affordable is the initial investment for a target franchisee?",
+        "options": {
+          "0": "Very high, few people can afford it",
+          "1": "High",
+          "2": "Moderate, accessible",
+          "3": "Affordable and attractive"
+        }
+      },
+      "7": {
+        "cat": "Payback (ROI)",
+        "q": "How long and at what return does a franchisee recover their investment?",
+        "options": {
+          "0": "Unknown / not calculated",
+          "1": "More than 4 years",
+          "2": "2–3 years, ROI ~15%",
+          "3": "≤2 years, ROI 20%+"
+        }
+      },
+      "8": {
+        "cat": "Market trend",
+        "q": "What is the growth trend and outlook for your sector?",
+        "options": {
+          "0": "Shrinking market",
+          "1": "Stable",
+          "2": "Growing",
+          "3": "Rapidly growing, strong future"
+        }
+      },
+      "9": {
+        "cat": "Capital",
+        "q": "Do you have capital to build the franchise system (legal, manual, support team)?",
+        "options": {
+          "0": "No",
+          "1": "Limited",
+          "2": "Partially ready",
+          "3": "Fully allocated"
+        }
+      },
+      "10": {
+        "cat": "Relationship management",
+        "q": "Do you have a model for long-term franchisee relations and performance monitoring?",
+        "options": {
+          "0": "Not planned",
+          "1": "General idea exists",
+          "2": "Plan is ready",
+          "3": "System + monitoring in place"
+        }
+      },
+      "11": {
+        "cat": "Management capability",
+        "q": "What is the experience level of the team that will manage franchise operations?",
+        "options": {
+          "0": "Limited experience",
+          "1": "Managing alone",
+          "2": "Small experienced team",
+          "3": "Strong, experienced management team"
+        }
+      }
     }
   },
   "franchiseLead": {
@@ -4458,21 +4718,268 @@
     "shareDownload": "Download result (PNG)",
     "disclaimer": "This checklist is a preliminary assessment tool; an investment decision requires professional legal and financial advice. © DK Agency",
     "verdict": {
-      "risky": { "title": "High risk", "sub": "There are serious questions about this franchise. Research every area thoroughly before investing." },
-      "cautious": { "title": "Proceed with caution", "sub": "Some areas are promising, but weak points require attention." },
-      "promising": { "title": "Promising", "sub": "The franchise meets most criteria. Clarify a few areas before making your final decision." },
-      "strong": { "title": "Strong candidate", "sub": "This franchise meets the key criteria. You can proceed to legal and financial due diligence." }
+      "risky": {
+        "title": "High risk",
+        "sub": "There are serious questions about this franchise. Research every area thoroughly before investing."
+      },
+      "cautious": {
+        "title": "Proceed with caution",
+        "sub": "Some areas are promising, but weak points require attention."
+      },
+      "promising": {
+        "title": "Promising",
+        "sub": "The franchise meets most criteria. Clarify a few areas before making your final decision."
+      },
+      "strong": {
+        "title": "Strong candidate",
+        "sub": "This franchise meets the key criteria. You can proceed to legal and financial due diligence."
+      }
     },
     "questions": {
-      "0": { "cat": "Investment & costs", "q": "Are the initial investment and ongoing fees (royalty/advertising) clear, and is your financial capacity sufficient?", "options": { "0": "No, information is incomplete or the budget is insufficient", "1": "Partially — some figures are clear, but the full picture is missing", "2": "Yes — all costs are transparent and my finances are sufficient" } },
-      "1": { "cat": "Market demand", "q": "Is there sufficient market demand for the product/service, and is the sector trend positive?", "options": { "0": "No, demand is declining or the sector is saturated", "1": "Partially — there is demand, but the trend is uncertain", "2": "Yes — strong demand, positive growth trend" } },
-      "2": { "cat": "Competition", "q": "Who are your competitors, and are their numbers growing? Does the franchise give you a competitive advantage?", "options": { "0": "No, competition is very strong and the franchise offers no advantage", "1": "Partially — there is an advantage but competition is intense", "2": "Yes — clear competitive advantage" } },
-      "3": { "cat": "Concept & operations", "q": "Is the operation set up efficiently? Do you have the skills to manage this business?", "options": { "0": "No, the operation is chaotic or I lack the experience", "1": "Partially — there is a system but some areas are weak", "2": "Yes — efficient operation and I have the skills" } },
-      "4": { "cat": "Brand image", "q": "Is the franchisor a reputable brand with a clear image?", "options": { "0": "No, the brand is unknown or has negative reviews", "1": "Partially — it is known but the image is mixed", "2": "Yes — strong, positive brand image" } },
-      "5": { "cat": "Marketing programs", "q": "Are there programs for customer acquisition and retention?", "options": { "0": "No, there is no marketing support", "1": "Partially — some programs exist but they are unsystematic", "2": "Yes — strong marketing system and support" } },
-      "6": { "cat": "Training & support", "q": "In return for the fees you pay, do you receive real training and ongoing support?", "options": { "0": "No, training/support is virtually non-existent", "1": "Partially — there is initial training but ongoing support is weak", "2": "Yes — comprehensive training and a continuous support system" } },
-      "7": { "cat": "Growth potential", "q": "Is the network growing, and do you have room to grow?", "options": { "0": "No, the network is shrinking or stagnant", "1": "Partially — there is growth but it is slow", "2": "Yes — the network is actively growing and so can I" } },
-      "8": { "cat": "Franchisor trust", "q": "Do you trust the franchisor? Are the contract terms fair?", "options": { "0": "No, I have concerns and the contract is one-sided", "1": "Partially — generally acceptable but some clauses are worrying", "2": "Yes — I fully trust them and the contract is fair" } }
+      "0": {
+        "cat": "Investment & costs",
+        "q": "Are the initial investment and ongoing fees (royalty/advertising) clear, and is your financial capacity sufficient?",
+        "options": {
+          "0": "No, information is incomplete or the budget is insufficient",
+          "1": "Partially — some figures are clear, but the full picture is missing",
+          "2": "Yes — all costs are transparent and my finances are sufficient"
+        }
+      },
+      "1": {
+        "cat": "Market demand",
+        "q": "Is there sufficient market demand for the product/service, and is the sector trend positive?",
+        "options": {
+          "0": "No, demand is declining or the sector is saturated",
+          "1": "Partially — there is demand, but the trend is uncertain",
+          "2": "Yes — strong demand, positive growth trend"
+        }
+      },
+      "2": {
+        "cat": "Competition",
+        "q": "Who are your competitors, and are their numbers growing? Does the franchise give you a competitive advantage?",
+        "options": {
+          "0": "No, competition is very strong and the franchise offers no advantage",
+          "1": "Partially — there is an advantage but competition is intense",
+          "2": "Yes — clear competitive advantage"
+        }
+      },
+      "3": {
+        "cat": "Concept & operations",
+        "q": "Is the operation set up efficiently? Do you have the skills to manage this business?",
+        "options": {
+          "0": "No, the operation is chaotic or I lack the experience",
+          "1": "Partially — there is a system but some areas are weak",
+          "2": "Yes — efficient operation and I have the skills"
+        }
+      },
+      "4": {
+        "cat": "Brand image",
+        "q": "Is the franchisor a reputable brand with a clear image?",
+        "options": {
+          "0": "No, the brand is unknown or has negative reviews",
+          "1": "Partially — it is known but the image is mixed",
+          "2": "Yes — strong, positive brand image"
+        }
+      },
+      "5": {
+        "cat": "Marketing programs",
+        "q": "Are there programs for customer acquisition and retention?",
+        "options": {
+          "0": "No, there is no marketing support",
+          "1": "Partially — some programs exist but they are unsystematic",
+          "2": "Yes — strong marketing system and support"
+        }
+      },
+      "6": {
+        "cat": "Training & support",
+        "q": "In return for the fees you pay, do you receive real training and ongoing support?",
+        "options": {
+          "0": "No, training/support is virtually non-existent",
+          "1": "Partially — there is initial training but ongoing support is weak",
+          "2": "Yes — comprehensive training and a continuous support system"
+        }
+      },
+      "7": {
+        "cat": "Growth potential",
+        "q": "Is the network growing, and do you have room to grow?",
+        "options": {
+          "0": "No, the network is shrinking or stagnant",
+          "1": "Partially — there is growth but it is slow",
+          "2": "Yes — the network is actively growing and so can I"
+        }
+      },
+      "8": {
+        "cat": "Franchisor trust",
+        "q": "Do you trust the franchisor? Are the contract terms fair?",
+        "options": {
+          "0": "No, I have concerns and the contract is one-sided",
+          "1": "Partially — generally acceptable but some clauses are worrying",
+          "2": "Yes — I fully trust them and the contract is fair"
+        }
+      }
+    }
+  },
+  "hotelReadiness": {
+    "badge": "Otel Hazırlıq Testi",
+    "title": "Mehmanxananız AHA ulduz sertifikatına hazırdırmı?",
+    "subtitle": "12 sual · təxminən 4 dəqiqə · sonunda AHA tələblərinə əsaslanan şəxsi hesabat",
+    "letter": "Hörmətli mehmanxana, otel və pansiyon sahibi — Azərbaycanda Milli Ulduz Təsnifatı sisteminə müraciət edən hər 100 mehmanxanadan yalnız 30-u uğurla ulduz alır. Səbəb istedadsızlıq deyil — qoyulan tələblərin sistemli şəkildə qarşılanmamasıdır. Bu test otelinizin hansı sahələrdə hazır, hansılarda inkişaf etdirilməli olduğunu göstərir. Bizim üçün hər otel sahibi əmanətdir.",
+    "letterSign": "— Doğan Tomris, DK Agency",
+    "startCta": "Testə başla →",
+    "stepLabel": "Sual {current} / {total}",
+    "back": "Geri",
+    "next": "Növbəti →",
+    "seeResult": "Nəticəni gör →",
+    "resultBadge": "Nəticə",
+    "weakestLabel": "Ən zəif sahəniz",
+    "weakestBody": "Bu sahə ulduz sertifikasiyası üçün kritikdir. DK Agency komandası ilk olaraq burada — infrastruktur, sənədləşmə və ya təlim planı ilə — sizə dəstək verə bilər.",
+    "aiLoading": "AI hesabatınız hazırlanır...",
+    "aiReportTitle": "Şəxsi Hesabat",
+    "shareDownload": "Nəticəni yüklə (PNG)",
+    "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir. Tam dəyərləndirmə və AHA müraciəti peşəkar audit tələb edir. © DK Agency",
+    "verdict": {
+      "pansion": {
+        "title": "Pansiyon səviyyəsi",
+        "sub": "Hələ formal ulduz sertifikasiyası üçün hazır deyilsiniz. Bu, problem deyil — pansiyon olaraq qeydiyyat və turist marşrutlarına qoşulma realdır. Daha sonra 1-2 ulduz hədəfi etmək olar."
+      },
+      "tier12": {
+        "title": "1-2 ulduz potensialı",
+        "sub": "Təməl infrastruktur var, kiçik mehmanxana statusu real. Bəzi sahələrin gücləndirilməsi ilə AHA müraciətinə hazır olacaqsınız."
+      },
+      "tier3": {
+        "title": "3 ulduz hədəfi əlçatandır",
+        "sub": "Otelinizin əksər sahələri yaxşı vəziyyətdədir. Bir neçə kritik düzəlişlə 3 ulduz sertifikatı almağa hazırsınız."
+      },
+      "tier4": {
+        "title": "4 ulduz hədəfi əlçatandır",
+        "sub": "Markanız güclüdür. 4 ulduz tələblərinə yaxınsınız, kiçik tənzimləmələrlə müraciət edə bilərsiniz."
+      },
+      "tier5": {
+        "title": "5 ulduz potensialı",
+        "sub": "Otelinizin standartları yüksək səviyyədədir. 5 ulduz Milli Ulduz Təsnifatı üçün güclü namizədsiniz — AHA müraciətinə keçə bilərik."
+      }
+    },
+    "questions": {
+      "0": {
+        "cat": "İnfrastruktur",
+        "q": "Otelinizin fiziki infrastrukturu — otaq sayı, lift və avtomobil park yeri necədir?",
+        "options": {
+          "0": "10-dan az otaq, lift yoxdur, park yeri yoxdur",
+          "1": "10-20 otaq, lift var, lakin park yeri məhduddur",
+          "2": "20-40 otaq, lift və park yeri var",
+          "3": "40+ otaq, çoxsaylı lift, geniş və örtülü park yeri"
+        }
+      },
+      "1": {
+        "cat": "Otaq Standartı",
+        "q": "Otaqların ölçüsü, mebel keyfiyyəti və iqlim sistemi nə səviyyədədir?",
+        "options": {
+          "0": "Otaq sahəsi 12 m²-dən az, köhnə mebel, iqlim sistemi yoxdur",
+          "1": "12-16 m², standart mebel, fan və ya elektrik qızdırıcı",
+          "2": "16-22 m², yeni mebel, fərdi kombi və ya split sistem",
+          "3": "22 m²+ premium mebel, mərkəzi iqlim, smart room özəllikləri"
+        }
+      },
+      "2": {
+        "cat": "Sanitariya & Təmizlik",
+        "q": "Təmizlik və yataq dəyişdirmə sistematikanız necə qurulub?",
+        "options": {
+          "0": "Yataq dəyişdirmə qonağa görə, yazılı qrafik yoxdur",
+          "1": "Hər 3-4 gündə bir, ümumi qrafik var",
+          "2": "Hər gün otaq təmizliyi, 2 gündə bir yataq dəyişdirmə",
+          "3": "Gündəlik tam təmizlik, audit checklist, professional servis komandası"
+        }
+      },
+      "3": {
+        "cat": "Resepsiya & Qonaq Qəbulu",
+        "q": "Resepsiya xidməti necə işləyir — saat rejimi, dil bacarıqları, texnologiya?",
+        "options": {
+          "0": "Yalnız gündüz, yalnız AZ dili, kağız-üzərində qeydiyyat",
+          "1": "24 saat, AZ + RU dilləri, kompüter qeydiyyat sistemi yoxdur",
+          "2": "24 saat, AZ/RU/EN dilləri, PMS (idarəetmə sistemi) var",
+          "3": "24 saat, multilingual personal, premium PMS, mobil check-in"
+        }
+      },
+      "4": {
+        "cat": "Yemək Xidməti",
+        "q": "Otel yemək xidməti hansı səviyyədədir?",
+        "options": {
+          "0": "Otel daxili yemək xidməti yoxdur",
+          "1": "Səhər yeməyi var, ayrıca restoran yoxdur",
+          "2": "Səhər yeməyi + tam fəaliyyət göstərən restoran",
+          "3": "Səhər + restoran + bar + 24 saat otaq xidməti"
+        }
+      },
+      "5": {
+        "cat": "Personal Təlimi",
+        "q": "Personalın peşəkar təlim səviyyəsi və dil bacarıqları necədir?",
+        "options": {
+          "0": "Formal təlim sistemi yoxdur, xarici dil bilgisi məhduddur",
+          "1": "Informal təlim, əsasən AZ dili",
+          "2": "Formal təlim proqramı, AZ və RU dilləri",
+          "3": "Sertifikatlı peşəkarlar, multilingual komanda, davamlı təlim sistemi"
+        }
+      },
+      "6": {
+        "cat": "Texnologiya",
+        "q": "Otel texnologiya infrastrukturu (Wi-Fi, idarəetmə sistemi, mobil) hansı səviyyədədir?",
+        "options": {
+          "0": "Wi-Fi yoxdur, kağız əsaslı sistem",
+          "1": "Wi-Fi var, kompüter idarəetmə sistemi yoxdur",
+          "2": "Sürətli Wi-Fi və PMS sistemi mövcuddur",
+          "3": "PMS + mobil tətbiq + smart otaq + IoT inteqrasiyası"
+        }
+      },
+      "7": {
+        "cat": "Təhlükəsizlik",
+        "q": "Təhlükəsizlik sistemləri (yanğın, kamera, otaq seyfi) hansı vəziyyətdədir?",
+        "options": {
+          "0": "Yanğın söndürücü yoxdur, kamera sistemi yoxdur",
+          "1": "Yanğın söndürücülər var, kamera sistemi natamam",
+          "2": "Tam yanğın sistemi, kamera + hər otaqda seyf",
+          "3": "Tam yanğın sistem + 24 saat təhlükəsizlik + smart seyf + key card sistemi"
+        }
+      },
+      "8": {
+        "cat": "Əlavə Xidmətlər",
+        "q": "Əlavə xidmətlər (SPA, fitness, konfrans zalı) mövcuddurmu?",
+        "options": {
+          "0": "Əlavə xidmət yoxdur",
+          "1": "Kiçik fitness küncü mövcuddur",
+          "2": "Fitness + sauna + kiçik konfrans zalı",
+          "3": "Tam SPA + bassein + fitness + konfrans + biznes mərkəzi"
+        }
+      },
+      "9": {
+        "cat": "Sənədləşmə",
+        "q": "AHA müraciəti üçün lazımi sənədlər (vergi, gigiyena, yanğın sertifikat) hazırdırmı?",
+        "options": {
+          "0": "Heç bir sənəd hazır deyildir",
+          "1": "Vergi sənədi var, qalanları natamam",
+          "2": "Sənədlərin əksəriyyəti hazırdır, kiçik çatışmazlıqlar var",
+          "3": "Bütün sənədlər tam, yeni tarixli və əlçatandır"
+        }
+      },
+      "10": {
+        "cat": "Onlayn Varlıq",
+        "q": "Booking.com, TripAdvisor və TrustYou platformalarında reytinqiniz nə səviyyədədir?",
+        "options": {
+          "0": "Onlayn varlıq yoxdur",
+          "1": "Profil var, lakin reyting 7.0-dan aşağı",
+          "2": "7.0-8.5 arası reyting, müntəzəm qonaq rəyləri",
+          "3": "8.5+ reyting, yüksək rəy sayı, TrustYou platformada güclü performans"
+        }
+      },
+      "11": {
+        "cat": "AHA Müraciət Hazırlığı",
+        "q": "AHA müraciəti üçün maliyyə və vaxt baxımından hazırlığınız nədir?",
+        "options": {
+          "0": "Rüsum və sənəd hazırlığı üçün büdcə ayrılmayıb",
+          "1": "Rüsum hazırdır, sənəd hazırlığı başlamayıb",
+          "2": "Rüsum hazır, sənədlər hazır, hələ müraciət etməmişik",
+          "3": "Müraciət göndərildi, audit ziyarəti gözləyirik"
+        }
+      }
     }
   }
 }
