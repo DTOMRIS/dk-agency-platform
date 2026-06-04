@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import LeadForm from './LeadForm';
+import RadarChart from './RadarChart';
 
 /** Minimal markdown→HTML for AI report output (trusted source, no user input). */
 function renderMarkdown(md: string): string {
@@ -61,10 +62,30 @@ type WizardQuizConfig = {
 
 export type QuizConfig = ScoreQuizConfig | WizardQuizConfig;
 
+function useCountUp(target: number, duration = 1200) {
+  const [value, setValue] = useState(0);
+  const rafRef = useRef(0);
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) { setValue(target); return; }
+    const start = performance.now();
+    function tick(now: number) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(target * eased));
+      if (progress < 1) rafRef.current = requestAnimationFrame(tick);
+    }
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [target, duration]);
+  return value;
+}
+
 function ScoreRing({ score }: { score: number }) {
+  const displayScore = useCountUp(score);
   const radius = 74;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (circumference * score) / 100;
+  const offset = circumference - (circumference * displayScore) / 100;
 
   return (
     <div className="relative mx-auto mb-4 h-44 w-44">
@@ -80,7 +101,7 @@ function ScoreRing({ score }: { score: number }) {
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          className="transition-all duration-1000"
+          className="transition-all duration-100"
         />
         <defs>
           <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1">
@@ -90,7 +111,7 @@ function ScoreRing({ score }: { score: number }) {
         </defs>
       </svg>
       <div className="absolute inset-0 flex items-center justify-center font-display text-5xl font-extrabold text-slate-900">
-        {score}
+        {displayScore}
       </div>
     </div>
   );
@@ -427,6 +448,26 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
       <ScoreRing score={avgScore} />
       <h2 className="text-center font-display text-2xl font-extrabold text-slate-900">{t(`verdict.${verdict}.title`)}</h2>
       <p className="mb-6 text-center text-sm text-slate-500">{t(`verdict.${verdict}.sub`)}</p>
+
+      {/* Radar Chart */}
+      <div className="mb-6">
+        <RadarChart
+          labels={Array.from({ length: questionCount }, (_, i) => t(`questions.${i}.cat`))}
+          values={answers.map((a) => a ?? 0)}
+          maxValue={scoreOptions[scoreOptions.length - 1] || 100}
+        />
+      </div>
+
+      {/* Share / Download */}
+      <div className="mb-6 flex justify-center gap-3">
+        <a
+          href={`/api/franchise/result-card?type=${config.reportType === 'FranchiseBuyerReport' ? 'buyer' : 'readiness'}&score=${avgScore}&verdict=${encodeURIComponent(t(`verdict.${verdict}.title`))}&locale=${locale}`}
+          download={`dk-franchise-${avgScore}.png`}
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+        >
+          {t('shareDownload')}
+        </a>
+      </div>
 
       <div className="mb-6 space-y-2">
         {Array.from({ length: questionCount }, (_, i) => {

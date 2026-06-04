@@ -4405,6 +4405,7 @@
     "franchbookCta": "Sənədləşmə zəifdirsə: AI ilə Françbuk skeleti qur",
     "aiLoading": "AI hesabatınız hazırlanır...",
     "aiReportTitle": "Şəxsi Hesabat",
+    "shareDownload": "Nəticəni yüklə (PNG)",
     "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir; tam dəyərləndirmə peşəkar audit tələb edir. © DK Agency",
     "verdict": {
       "not_ready": { "title": "Hələ hazır deyil", "sub": "Təməl sahələri gücləndirmək lazımdır. Bu, problem deyil — yol xəritəsidir." },
@@ -4454,6 +4455,7 @@
     "weakestBody": "Bu sahədə əlavə araşdırma və franchisor-dan açıqlama tələb olunur.",
     "aiLoading": "AI hesabatınız hazırlanır...",
     "aiReportTitle": "Şəxsi Hesabat",
+    "shareDownload": "Nəticəni yüklə (PNG)",
     "disclaimer": "Bu çek-list ilkin qiymətləndirmə alətidir; investisiya qərarı peşəkar hüquqi və maliyyə məsləhəti tələb edir. © DK Agency",
     "verdict": {
       "risky": { "title": "Yüksək risk", "sub": "Bu franchise-da ciddi suallar var. İnvestisiya etmədən əvvəl hər sahəni dərindən araşdırın." },
