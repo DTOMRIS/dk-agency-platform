@@ -68,6 +68,7 @@ function mapDbArticle(
     subtitle: undefined,
     category: (row.category as BlogArticle['category']) || 'maliyye',
     categoryEmoji: '',
+    stage: (row.stage as BlogArticle['stage']) || undefined,
     readingTime: row.readTime || 8,
     wordCount: content?.split(/\s+/).filter(Boolean).length || 0,
     author: row.author || 'DK Agency',
@@ -192,6 +193,7 @@ export async function createBlogPostInDb(input: {
   doganNote?: string;
   seoTitle?: string;
   seoDescription?: string;
+  stage?: string;
   paywall: boolean;
   status: string;
   guruBoxes?: Array<{ guru: string; quote: string; book: string }>;
@@ -214,6 +216,7 @@ export async function createBlogPostInDb(input: {
       content_en: input.contentEn || null,
       content_ru: input.contentRu || null,
       category: input.category,
+      stage: input.stage || null,
       author: input.author,
       readTime: input.readTime,
       featuredImage: input.featuredImage || null,
@@ -266,6 +269,7 @@ export async function updateBlogPostInDb(
       content_en: input.contentEn || null,
       content_ru: input.contentRu || null,
       category: input.category,
+      stage: input.stage || null,
       author: input.author,
       readTime: input.readTime,
       featuredImage: input.featuredImage || null,

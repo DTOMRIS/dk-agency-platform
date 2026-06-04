@@ -7,8 +7,9 @@ export interface BlogArticle {
   slug: string;
   title: string;
   subtitle?: string;
-  category: 'maliyye' | 'kadr' | 'emeliyyat' | 'konsept' | 'acilis' | 'satis';
+  category: string;
   categoryEmoji: string;
+  stage?: 'Başla' | 'Böyüt' | 'Devir';
   readingTime: number; // dəqiqə - 160 söz/dəq ilə hesablanır
   wordCount: number;
   author: string;
@@ -2863,11 +2864,19 @@ export function getRelatedArticles(slug: string): BlogArticle[] {
 }
 
 // Kateqoriya konfiqurasiyası
-export const CATEGORY_CONFIG = {
+export const CATEGORY_CONFIG: Record<string, { emoji: string; label: string; color: string }> = {
   maliyye: { emoji: '💰', label: 'Maliyyə', color: 'green' },
+  'Maliyyə': { emoji: '💰', label: 'Maliyyə', color: 'green' },
   kadr: { emoji: '👥', label: 'Kadr', color: 'blue' },
+  'Kadr': { emoji: '👥', label: 'Kadr', color: 'blue' },
   emeliyyat: { emoji: '🔧', label: 'Əməliyyat', color: 'purple' },
+  'Əməliyyat': { emoji: '🔧', label: 'Əməliyyat', color: 'purple' },
   konsept: { emoji: '🎨', label: 'Konsept', color: 'pink' },
   acilis: { emoji: '🏗️', label: 'Açılış', color: 'orange' },
   satis: { emoji: '📈', label: 'Satış', color: 'cyan' },
+  'Satış': { emoji: '📈', label: 'Satış', color: 'cyan' },
+  huquqi: { emoji: '⚖️', label: 'Hüquqi', color: 'amber' },
+  'Hüquqi': { emoji: '⚖️', label: 'Hüquqi', color: 'amber' },
+  marketinq: { emoji: '📣', label: 'Marketinq', color: 'rose' },
+  'Marketinq': { emoji: '📣', label: 'Marketinq', color: 'rose' },
 };

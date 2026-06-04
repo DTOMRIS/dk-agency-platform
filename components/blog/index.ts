@@ -12,5 +12,7 @@ export {
   SectionDivider,
   SummaryTable,
   CategoryBadge,
+  StageBadge,
   Duello,
 } from './BlogElements';
+export { default as LegalDisclaimer } from './LegalDisclaimer';

@@ -6,6 +6,7 @@ import { compressImage, validateImage } from '@/lib/utils/imageUtils';
 
 const AUTHOR_OPTIONS = ['Doğan Tomris', 'DK Agency', 'Qonaq Müəllif'] as const;
 const CATEGORY_OPTIONS = ['Maliyyə', 'Əməliyyat', 'Kadr', 'Hüquqi', 'Satış', 'Marketinq'] as const;
+const STAGE_OPTIONS = ['', 'Başla', 'Böyüt', 'Devir'] as const;
 const STATUS_OPTIONS = [
   { value: 'draft', label: 'Qaralama' },
   { value: 'published', label: 'Dərc edilmiş' },
@@ -19,6 +20,7 @@ export interface BlogDraft {
   titleEn: string;
   titleRu: string;
   category: string;
+  stage: string;
   author: string;
   readTime: number;
   status: 'draft' | 'published' | 'archived';
@@ -75,6 +77,7 @@ const EMPTY_DRAFT: BlogDraft = {
   titleEn: '',
   titleRu: '',
   category: 'Maliyyə',
+  stage: '',
   author: 'DK Agency',
   readTime: 8,
   status: 'draft',
@@ -250,6 +253,15 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               <select value={post.category} onChange={(e) => setField('category', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none">
                 {CATEGORY_OPTIONS.map((item) => (
                   <option key={item}>{item}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-bold text-slate-700">Mərhələ (Stage)</label>
+              <select value={post.stage} onChange={(e) => setField('stage', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none">
+                {STAGE_OPTIONS.map((item) => (
+                  <option key={item} value={item}>{item || '— Seçilməyib —'}</option>
                 ))}
               </select>
             </div>

@@ -161,11 +161,42 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
               {children}
             </h2>
           ),
-          h3: ({ children }) => (
-            <h3 className="mt-10 mb-3 text-xl font-semibold text-slate-900">
-              {children}
-            </h3>
-          ),
+          h3: ({ children }) => {
+            const text = React.Children.toArray(children).join('').toLowerCase();
+            const calloutMap: Record<string, { icon: string; color: string; border: string }> = {
+              'guru kutusu': { icon: '🎓', color: 'bg-[color:color-mix(in_srgb,var(--dk-gold)_13%,transparent)]', border: 'border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)]' },
+              'faydalı məlumat': { icon: 'ℹ️', color: 'bg-blue-50', border: 'border-blue-200' },
+              'praktik tətbiq': { icon: '🔧', color: 'bg-emerald-50', border: 'border-emerald-200' },
+              'investor qutusu': { icon: '💼', color: 'bg-indigo-50', border: 'border-indigo-200' },
+              'final investor': { icon: '🏁', color: 'bg-indigo-50', border: 'border-indigo-200' },
+              'sadə nümunə': { icon: '📊', color: 'bg-slate-50', border: 'border-slate-200' },
+              'sadə müqayisə': { icon: '⚖️', color: 'bg-slate-50', border: 'border-slate-200' },
+              'hüquqi risk': { icon: '🚨', color: 'bg-red-50', border: 'border-red-200' },
+              'qırmızı bayraq': { icon: '🚩', color: 'bg-red-50', border: 'border-red-200' },
+              'favök yoxlama': { icon: '📋', color: 'bg-amber-50', border: 'border-amber-200' },
+              'vacib qeyd': { icon: '⚠️', color: 'bg-amber-50', border: 'border-amber-200' },
+              'franchise üçün qırmızı': { icon: '🚩', color: 'bg-red-50', border: 'border-red-200' },
+              'faydalı alət': { icon: '🔗', color: 'bg-emerald-50', border: 'border-emerald-200' },
+              'doğan notu': { icon: '📋', color: 'bg-red-50', border: 'border-red-200' },
+            };
+            for (const [key, style] of Object.entries(calloutMap)) {
+              if (text.includes(key)) {
+                return (
+                  <div className={`mt-8 mb-1 flex items-center gap-2 rounded-t-xl ${style.color} border ${style.border} border-b-0 px-5 py-3`}>
+                    <span className="text-lg">{style.icon}</span>
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-slate-700">
+                      {children}
+                    </h3>
+                  </div>
+                );
+              }
+            }
+            return (
+              <h3 className="mt-10 mb-3 text-xl font-semibold text-slate-900">
+                {children}
+              </h3>
+            );
+          },
           h4: ({ children }) => (
             <h4 className="mt-8 mb-2 text-lg font-semibold text-slate-900">
               {children}

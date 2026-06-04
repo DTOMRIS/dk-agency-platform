@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight, Bookmark, Calendar, ChevronLeft, Clock, Share2, Tag, User } from 'lucide-react';
 
-import { MarkdownRenderer } from '@/components/blog';
+import { MarkdownRenderer, LegalDisclaimer } from '@/components/blog';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import { CATEGORY_CONFIG, getRelatedArticles } from '@/lib/data/blogArticles';
 import { getBlogPostDetail } from '@/lib/db/blog-repository';
@@ -110,9 +110,18 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 lg:p-16">
             <div className="mx-auto max-w-4xl">
               <div className="space-y-3 sm:space-y-4">
-                <span className="rounded-full bg-brand-red px-3 py-1 sm:px-4 sm:py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
-                  {cat?.emoji} {cat?.label}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full bg-brand-red px-3 py-1 sm:px-4 sm:py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
+                    {cat?.emoji} {cat?.label}
+                  </span>
+                  {article.stage && (
+                    <span className={`rounded-full px-3 py-1 sm:px-4 sm:py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl ${
+                      article.stage === 'Başla' ? 'bg-red-500' : article.stage === 'Böyüt' ? 'bg-amber-500' : 'bg-purple-500'
+                    }`}>
+                      {article.stage === 'Başla' ? '🏗️' : article.stage === 'Böyüt' ? '📊' : '🔄'} {article.stage}
+                    </span>
+                  )}
+                </div>
                 <h1 className="text-xl font-display font-black leading-tight tracking-tighter text-white sm:text-3xl lg:text-5xl">
                   {article.title}
                 </h1>
@@ -169,6 +178,10 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
               )}
 
               <MarkdownRenderer content={renderedContent} />
+
+              {(article.category === 'Hüquqi' || article.category === 'huquqi') && (
+                <LegalDisclaimer />
+              )}
             </article>
 
             <aside className="space-y-8 lg:col-span-4">

@@ -89,10 +89,19 @@ function BlogCard({ article, t }: { article: BlogArticle; t: ReturnType<typeof u
         ) : (
           <div className="h-full w-full bg-gradient-to-br from-[color-mix(in_srgb,var(--dk-gold)_22%,white)] to-[color-mix(in_srgb,var(--dk-red)_24%,white)]" />
         )}
-        <div className="absolute left-4 top-4">
+        <div className="absolute left-4 top-4 flex items-center gap-2">
           <span className="rounded-full bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-slate-900 backdrop-blur-md">
             {cat.emoji} {cat.label}
           </span>
+          {article.stage && (
+            <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider backdrop-blur-md ${
+              article.stage === 'Başla' ? 'bg-red-500/90 text-white' :
+              article.stage === 'Böyüt' ? 'bg-amber-500/90 text-white' :
+              'bg-purple-500/90 text-white'
+            }`}>
+              {article.stage === 'Başla' ? '🏗️' : article.stage === 'Böyüt' ? '📊' : '🔄'} {article.stage}
+            </span>
+          )}
         </div>
         {article.isPremium && (
           <div className="absolute right-4 top-4">
