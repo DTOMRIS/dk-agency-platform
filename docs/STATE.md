@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-04T04:20:35.317Z
+- GeneratedAt: 2026-06-04T06:21:45.185Z
 - BuildStatus: PASS
 
-## Routes (206)
+## Routes (208)
 - /
 - /[locale]
 - /[locale]/about
@@ -105,6 +105,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/food-cost
 - /[locale]/toolkit/insaat-checklist
 - /[locale]/toolkit/menu-matrix
+- /[locale]/toolkit/otel-hazirlig-testi
 - /[locale]/toolkit/pnl
 - /[locale]/toolkit/pnl-simulator
 - /[locale]/toolkit/staff-retention
@@ -206,6 +207,7 @@ Auto-generated. Do not edit manually.
 - /toolkit/food-cost
 - /toolkit/insaat-checklist
 - /toolkit/menu-matrix
+- /toolkit/otel-hazirlig-testi
 - /toolkit/pnl
 - /toolkit/pnl-simulator
 - /toolkit/staff-retention
