@@ -5,6 +5,11 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0197` F2.7: Yandex Metrica events for sektor pages (`trackSektorEvent` wrapper + 5 component wire)
+- `TASK-0197` OG social card: dynamic 1200x630 `opengraph-image.tsx` for `/sektor/qonaq-evi`
+- `TASK-0197` OTA Guide PDF: 8-section jsPDF generator, auto-sent as email attachment on lead capture
+- `TASK-0197` SMTP attachment support: `EmailAttachment` interface in `lib/email/smtp.ts`
+- `TASK-0197` Sektor analytics constants added to `lib/analytics/events.ts`
 - `TASK-0186` AI Franchbook Generator: USTA-gated franchise manual skeleton tool
 - `franchbook_projects` table and `0011_franchbook_projects.sql` migration
 - Fixed AFA Akademiya franchbook outline SSOT
