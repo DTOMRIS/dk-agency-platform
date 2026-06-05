@@ -1,5 +1,69 @@
 # HANDOFF
 
+## Session 4-5 İyun 2026 — Nəticə
+
+**Repo:** `C:/codelar/dk-agency-platform` — main branch, təmiz, stash boş, 1 branch (main).
+
+### Tamamlanan işlər (6 PR merged)
+| PR | İçərik |
+|----|--------|
+| #271 | OTA Funnel: 3 toolkit (quiz + ROI calc + WhatsApp freemium) |
+| #272 | Blog sprint: stage lifecycle + callout h3 + legal disclaimer |
+| #273 | P0 fix: otaReadiness.ts commit (prod crash riski) |
+| #274 | 12 yeni blog məqaləsi (011-022) stash-dan recover |
+| #277 | **F2.6: /sektor/qonaq-evi landing + POST /api/lead/ota-guide** |
+| #278 | CHANGELOG + DEVLOG |
+
+### Repo təmizliyi
+- 170 branch silindi (106 merged + 64 stale)
+- 3 stash drop edildi
+- 2 git worktree silindi
+
+### Prod smoke (5 İyun verified)
+- `/sektor/qonaq-evi` → 200
+- `/ru/sektor/qonaq-evi` → 200
+- `/en/sektor/qonaq-evi` → 200
+- `/tr/sektor/qonaq-evi` → 200
+- `/az/sektor/qonaq-evi` → 307 (default locale redirect, gözlənilən)
+- `POST /api/lead/ota-guide {}` → 400 (validation işləyir)
+
+### Hostinger 503 — AÇIQ PROBLEM
+Bütün sayt 503 verir (arada). Hostinger hPanel-dən Node.js restart lazımdır. Kod problemi deyil, infra issue.
+
+---
+
+## Növbəti sessiya üçün prioritetlər
+
+### Seçim A: F2.7 (tövsiyə olunan)
+1. **Yandex Metrica events** — `components/sektor/*.tsx`-ə event track əlavə et
+   - Mövcud analytics pattern yoxdur, yeni `lib/analytics.ts` helper lazımdır
+   - Event-lər: `sektor_qonaqEvi_view`, `_cta_test`, `_cta_roi`, `_lead_submitted`, `_faq_open`
+2. **OG cover image** — `/public/images/sektor-qonaq-evi-og.png` hazırla (1200×630)
+3. **Real PDF generation** — Puppeteer + `lib/data/otaGuide.ts` (hələ yaradılmayıb) → `/api/lead/ota-guide` cavabında real PDF link
+
+### Seçim B: Sektor genişlənmə
+- `/sektor/otel` — eyni 7 komponent, fərqli config (SektorHero, StatGrid, ToolGrid...)
+- `/sektor/restoran` — eyni pattern
+- `/sektor/kafe` — eyni pattern
+- Fayllar: `app/[locale]/sektor/{slug}/page.tsx` + `messages/*.json` yeni namespace
+
+### Seçim C: F4 KAZAN AI grounding
+
+### Əsas fayllar (yeni session üçün oxu)
+```
+components/sektor/*.tsx          — 7 parametrik komponent (F2.6)
+app/sektor/qonaq-evi/page.tsx   — landing page config
+app/api/lead/ota-guide/route.ts — lead endpoint
+lib/data/otaReadiness.ts        — OTA quiz SSOT
+lib/data/guesthouseRoi.ts       — ROI calc SSOT
+lib/data/whatsappTemplates.ts   — WhatsApp şablonlar SSOT
+messages/az.json → sektorQonaqEvi namespace
+CHANGELOG.md, DEVLOG.md         — session log
+docs/tasks/TASK-0196.md         — F2.6 task card
+```
+
+---
+
 ## TASK-0152 - Pricing Page
 
 Status: DONE in `feature/task-0152-pricing-page`.
