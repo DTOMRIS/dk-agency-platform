@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { franchiseLeads } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
+import { generateOtaGuidePdf } from '@/lib/pdf/otaGuidePdf';
 import { sql } from 'drizzle-orm';
 import { createHash } from 'crypto';
 
@@ -80,12 +81,12 @@ function adminHtml(data: ValidData, leadId: string): string {
   `;
 }
 
-function userHtml(data: ValidData): string {
-  const t: Record<string, { subject: string; greeting: string; body: string; closing: string }> = {
-    az: { subject: 'DK Agency — OTA Bələdçiniz hazırdır', greeting: `Hörmətli ${data.name},`, body: 'OTA Açma Bələdçisi sorğunuz qəbul olundu. Komandamız 24 saat ərzində WhatsApp və ya email ilə əlaqə saxlayacaq.', closing: 'Uğurlar!' },
-    ru: { subject: 'DK Agency — Ваш OTA гид готов', greeting: `Уважаемый(ая) ${data.name},`, body: 'Ваш запрос на OTA гид успешно получен. Наша команда свяжется с вами в течение 24 часов.', closing: 'Успехов!' },
-    en: { subject: 'DK Agency — Your OTA Guide is ready', greeting: `Dear ${data.name},`, body: 'Your OTA Guide request has been received. Our team will reach out within 24 hours via WhatsApp or email.', closing: 'Best regards!' },
-    tr: { subject: 'DK Agency — OTA Rehberiniz hazır', greeting: `Sayın ${data.name},`, body: 'OTA Rehberi talebiniz alındı. Ekibimiz 24 saat içinde WhatsApp veya email ile iletişime geçecektir.', closing: 'Başarılar!' },
+function userHtml(data: ValidData, hasPdf: boolean): string {
+  const t: Record<string, { subject: string; greeting: string; body: string; pdfNote: string; closing: string }> = {
+    az: { subject: 'DK Agency — OTA Bələdçiniz hazırdır', greeting: `Hörmətli ${data.name},`, body: 'OTA Açma Bələdçisi sorğunuz qəbul olundu.', pdfNote: 'PDF bələdçiniz bu emailə əlavə olunub. Komandamız 24 saat ərzində əlaqə saxlayacaq.', closing: 'Uğurlar!' },
+    ru: { subject: 'DK Agency — Ваш OTA гид готов', greeting: `Уважаемый(ая) ${data.name},`, body: 'Ваш запрос на OTA гид успешно получен.', pdfNote: 'PDF-гид прикреплён к этому письму. Наша команда свяжется с вами в течение 24 часов.', closing: 'Успехов!' },
+    en: { subject: 'DK Agency — Your OTA Guide is ready', greeting: `Dear ${data.name},`, body: 'Your OTA Guide request has been received.', pdfNote: 'Your PDF guide is attached to this email. Our team will reach out within 24 hours.', closing: 'Best regards!' },
+    tr: { subject: 'DK Agency — OTA Rehberiniz hazır', greeting: `Sayın ${data.name},`, body: 'OTA Rehberi talebiniz alındı.', pdfNote: 'PDF rehberiniz bu emaile eklenmiştir. Ekibimiz 24 saat içinde iletişime geçecektir.', closing: 'Başarılar!' },
   };
   const c = t[data.locale] || t.az;
   return `
@@ -96,6 +97,7 @@ function userHtml(data: ValidData): string {
       <div style="background:#fff;padding:32px">
         <h2 style="color:#1A1A2E;margin:0 0 12px">${c.greeting}</h2>
         <p style="color:#334155;line-height:1.7">${c.body}</p>
+        ${hasPdf ? `<p style="color:#334155;line-height:1.7;margin-top:8px;font-weight:600">${c.pdfNote}</p>` : ''}
         <p style="color:#334155;margin-top:16px">${c.closing}</p>
         <p style="color:#94a3b8;font-size:13px;margin-top:24px">— DK Agency komandası</p>
       </div>
@@ -139,12 +141,28 @@ export async function POST(req: NextRequest) {
 
   const leadId = inserted[0]?.id || 'unknown';
 
+  // Generate PDF (non-blocking for admin email, but needed for user email)
+  let pdfBuffer: Buffer | null = null;
+  try {
+    pdfBuffer = await generateOtaGuidePdf();
+  } catch {
+    // PDF generation failure should not block lead capture
+  }
+
   const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
   sendSmtpEmail(adminEmail, 'Yeni OTA Lead — Bələdçi Sorğusu', adminHtml(data, leadId)).catch(() => {});
 
   if (data.contact.includes('@')) {
-    const t: Record<string, string> = { az: 'DK Agency — OTA Bələdçiniz hazırdır', ru: 'DK Agency — Ваш OTA гид готов', en: 'DK Agency — Your OTA Guide is ready', tr: 'DK Agency — OTA Rehberiniz hazır' };
-    sendSmtpEmail(data.contact, t[data.locale] || t.az, userHtml(data)).catch(() => {});
+    const subjects: Record<string, string> = { az: 'DK Agency — OTA Bələdçiniz hazırdır', ru: 'DK Agency — Ваш OTA гид готов', en: 'DK Agency — Your OTA Guide is ready', tr: 'DK Agency — OTA Rehberiniz hazır' };
+    const attachments = pdfBuffer
+      ? [{ filename: 'OTA-Beledcisi-DK-Agency.pdf', content: pdfBuffer, contentType: 'application/pdf' }]
+      : undefined;
+    sendSmtpEmail(
+      data.contact,
+      subjects[data.locale] || subjects.az,
+      userHtml(data, !!pdfBuffer),
+      attachments,
+    ).catch(() => {});
   }
 
   return NextResponse.json({ success: true, leadId });

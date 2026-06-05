@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { trackSektorEvent } from '@/lib/analytics/sektorEvents';
 
 interface SektorHeroProps {
   namespace: string;
@@ -12,6 +13,7 @@ interface SektorHeroProps {
   primaryCta: { key: string; href: string };
   secondaryCta: { key: string; href: string };
   heroImage?: string;
+  sektorSlug?: string;
 }
 
 export default function SektorHero({
@@ -22,6 +24,7 @@ export default function SektorHero({
   primaryCta,
   secondaryCta,
   heroImage,
+  sektorSlug,
 }: SektorHeroProps) {
   const t = useTranslations(namespace);
 
@@ -48,12 +51,14 @@ export default function SektorHero({
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
             <Link
               href={primaryCta.href}
+              onClick={() => sektorSlug && trackSektorEvent({ sektor: sektorSlug, action: 'cta_test', label: t(primaryCta.key) })}
               className="inline-flex items-center gap-2 rounded-2xl bg-[var(--dk-red)] px-8 py-4 text-sm font-bold text-white shadow-xl shadow-[var(--dk-red)]/20 transition hover:brightness-110"
             >
               {t(primaryCta.key)} →
             </Link>
             <Link
               href={secondaryCta.href}
+              onClick={() => sektorSlug && trackSektorEvent({ sektor: sektorSlug, action: 'cta_roi', label: t(secondaryCta.key) })}
               className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-8 py-4 text-sm font-bold text-white transition hover:bg-white/10"
             >
               {t(secondaryCta.key)}

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { ClipboardCheck, Calculator, MessageCircle } from 'lucide-react';
+import { trackSektorEvent, iconToAction } from '@/lib/analytics/sektorEvents';
 
 interface ToolItem {
   titleKey: string;
@@ -17,6 +18,7 @@ interface SektorToolGridProps {
   namespace: string;
   sectionTitleKey: string;
   tools: ToolItem[];
+  sektorSlug?: string;
 }
 
 const ICONS = {
@@ -25,7 +27,7 @@ const ICONS = {
   whatsapp: MessageCircle,
 } as const;
 
-export default function SektorToolGrid({ namespace, sectionTitleKey, tools }: SektorToolGridProps) {
+export default function SektorToolGrid({ namespace, sectionTitleKey, tools, sektorSlug }: SektorToolGridProps) {
   const t = useTranslations(namespace);
 
   return (
@@ -62,6 +64,7 @@ export default function SektorToolGrid({ namespace, sectionTitleKey, tools }: Se
 
                 <Link
                   href={tool.href}
+                  onClick={() => sektorSlug && trackSektorEvent({ sektor: sektorSlug, action: iconToAction(tool.icon), label: t(tool.titleKey) })}
                   className="inline-flex items-center gap-1 text-sm font-bold text-[var(--dk-red)] transition hover:underline"
                 >
                   {t(tool.ctaKey)}
