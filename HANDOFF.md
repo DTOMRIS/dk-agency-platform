@@ -1,6 +1,22 @@
 # HANDOFF
 
-## Session 4-5 İyun 2026 — Nəticə
+## Session 4 İyun 2026 (axşam) — F2.7 Sprint
+
+**Repo:** `C:/codelar/dk-agency-platform` — main branch, təmiz.
+
+### Tamamlanan işlər (1 PR merged)
+| PR | İçərik |
+|----|--------|
+| #280 | **F2.7: Yandex Metrica events + OG image + OTA PDF generation** |
+
+#### F2.7 detalları
+- **D1:** `lib/analytics/sektorEvents.ts` — `trackSektorEvent()` wrapper, 5 komponentə wire edildi (view, cta_test, cta_roi, lead_submitted, faq_open, footer_cta_click)
+- **D2:** `app/[locale]/sektor/qonaq-evi/opengraph-image.tsx` — dynamic 1200×630 social card
+- **D3:** `lib/pdf/otaGuidePdf.ts` — jsPDF ilə 8-bölmə OTA bələdçi, `lib/email/smtp.ts`-ə attachment dəstəyi, lead submit-də PDF email-ə əlavə olunur
+
+---
+
+## Session 4-5 İyun 2026 — Əvvəlki Nəticə
 
 **Repo:** `C:/codelar/dk-agency-platform` — main branch, təmiz, stash boş, 1 branch (main).
 
@@ -34,14 +50,7 @@ Bütün sayt 503 verir (arada). Hostinger hPanel-dən Node.js restart lazımdır
 
 ## Növbəti sessiya üçün prioritetlər
 
-### Seçim A: F2.7 (tövsiyə olunan)
-1. **Yandex Metrica events** — `components/sektor/*.tsx`-ə event track əlavə et
-   - Mövcud analytics pattern yoxdur, yeni `lib/analytics.ts` helper lazımdır
-   - Event-lər: `sektor_qonaqEvi_view`, `_cta_test`, `_cta_roi`, `_lead_submitted`, `_faq_open`
-2. **OG cover image** — `/public/images/sektor-qonaq-evi-og.png` hazırla (1200×630)
-3. **Real PDF generation** — Puppeteer + `lib/data/otaGuide.ts` (hələ yaradılmayıb) → `/api/lead/ota-guide` cavabında real PDF link
-
-### Seçim B: Sektor genişlənmə
+### Seçim A: F2.8 — Sektor genişlənmə (tövsiyə olunan)
 - `/sektor/otel` — eyni 7 komponent, fərqli config (SektorHero, StatGrid, ToolGrid...)
 - `/sektor/restoran` — eyni pattern
 - `/sektor/kafe` — eyni pattern

@@ -1,5 +1,25 @@
 # DK Agency Platform — Dev Log
 
+## 2026-06-04 — TASK-0197 (F2.7: Sektor Analytics + OG Image + OTA PDF)
+
+**Problem:** F2.6 sektor landing hazir idi amma: (1) hec bir user interaction olculmurdu, (2) social share-de image yox idi, (3) lead capture PDF vermir, sadece email notification gonderirdi.
+
+**Fix:**
+1. `lib/analytics/sektorEvents.ts` — `trackSektorEvent({ sektor, action, label?, faqIndex? })` wrapper, Yandex Metrica `reachGoal` API istifade edir
+2. 5 sektor komponentine `sektorSlug` prop + onClick/onSubmit tracking elave edildi (SektorHero, SektorLeadCapture, SektorToolGrid, SektorFaqAccordion, SektorFooterCta)
+3. `app/[locale]/sektor/qonaq-evi/opengraph-image.tsx` — Next.js `ImageResponse` ile dinamik 1200x630 PNG (dark theme, DK branding, 3 tool badge)
+4. `lib/data/otaGuide.ts` — 8 bolmeli OTA beledcisi content SSOT (bazar datasi, foto hazirligi, qiymet strategiyasi, review idareetmesi, WhatsApp sablonlari, ROI numunesi)
+5. `lib/pdf/otaGuidePdf.ts` — server-side jsPDF generator: branded cover page + content pages + CTA page, `sanitize()` ile Azerbaycan herfleri
+6. `lib/email/smtp.ts` — `EmailAttachment` interface, `sendSmtpEmail()` indi attachments qebul edir
+7. `app/api/lead/ota-guide/route.ts` — lead submit-de PDF generate + user email-e attachment kimi gonderilir
+
+**Key decisions:**
+- jsPDF secildi (Puppeteer yerine) — artiq package.json-da, audit-pdf.ts-de subut olunub, Hostinger-de problem yaratmir
+- Event-ler generic: `sektor_{slug}_{action}` formati — gelecek sektor sehifeleri ucun reusable
+- DB enum migration bu sprint-e daxil edilmedi — `toolSource: 'consulting'` + `score.source: 'ota_guide_pdf'` JSONB yanasmasi saxlandi
+
+**PR:** #280
+
 ## 2026-06-03 - TASK-0186 (AI Franchbook Generator)
 
 **Problem:** Franchise funnel needed a monetizable USTA product after free readiness/ROI/buyer tools.
