@@ -1,5 +1,24 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-06-05 — TASK-0196: F2.6 Sektor Landing + Lead Endpoint
+
+**Why:** Qonaq evi / pansiyon sektoru üçün sektor-spesifik landing page lazım idi. 600 sertifikasız tesis × qanuni məcburiyyət × sıfır rəqib = blue ocean. Alətlər artıq canlı idi (PR #271), lakin funnel-in giriş nöqtəsi yox idi.
+
+**What:**
+- 7 parametrik komponent (`components/sektor/`) — gələcək `/sektor/otel`, `/sektor/restoran` üçün eyni backbone
+- `/sektor/qonaq-evi` landing: Hero + 3 stat (AirDNA/Booking/DTA) + 3 tool (ROI = hero card) + blog teasers + lead form + FAQ + footer CTA
+- `POST /api/lead/ota-guide` — Zod-free validation, IP rate limit 3/hr, KVKK consent, admin + user email
+- i18n `sektorQonaqEvi` namespace: AZ/EN/RU/TR
+- ROI Kalkulyatoru "Fərqləndirici" badge ilə — araşdırmadan gələn gap (dünyada NET gəlir göstərən alət yoxdur)
+
+**PRs:** #277
+
+**Verification:** Build PASS. Route `/sektor/qonaq-evi` + `/[locale]/sektor/qonaq-evi` build output-da görünür.
+
+**Deferred:** Real PDF (Puppeteer F2.7), OG image (Agent 3), Yandex Metrica events.
+
+---
+
 ## 2026-06-04 — TASK-0194/0195: OTA Funnel + Blog Sprint + Cleanup
 
 **Why:** Qonaq evi / pansiyon sektoru üçün toolkit alətləri lazım idi (F2.5 roadmap). Blog sisteminə stage lifecycle + callout h3 + yeni kateqoriyalar əlavə olunmalı idi. Repo 170+ köhnə branch və 3 stash ilə dolu idi.

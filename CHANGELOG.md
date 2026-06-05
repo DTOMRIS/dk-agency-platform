@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [TASK-0196] feat(sektor): /sektor/qonaq-evi landing + lead endpoint — 2026-06-05
+
+### Added
+- 7 parametric components in `components/sektor/` (SektorHero, StatGrid, ToolGrid, BlogTeaserGrid, LeadCapture, FaqAccordion, FooterCta) — reusable for future `/sektor/otel`, `/sektor/restoran`, `/sektor/kafe`
+- Landing page `/sektor/qonaq-evi` — Hero + 3 stats + 3 tools (ROI calc = hero card) + blog teasers + lead form + FAQ accordion + footer CTA
+- Lead endpoint `POST /api/lead/ota-guide` — validation, IP rate limit 3/hr, KVKK consent, dual email notifications (user + admin)
+- i18n `sektorQonaqEvi` namespace in 4 locales (AZ/EN/RU/TR)
+
+### Deferred
+- Real PDF generation (Puppeteer) — F2.7
+- OG cover image — content team
+- Yandex Metrica events — next sprint
+
 ## [TASK-0195] feat(blog): stage lifecycle + callout h3 + 12 new articles — 2026-06-04
 
 ### Added
