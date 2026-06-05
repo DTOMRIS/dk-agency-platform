@@ -5240,5 +5240,63 @@
       "body": "7 daha çox professional şablon.",
       "buttonText": "Tam paketi al"
     }
+  },
+  "sektorQonaqEvi": {
+    "pageTitle": "Гостевой дом — Гид для Booking, Airbnb, Yandex Travel | DK Agency",
+    "hero": {
+      "headline": "Подготовьте гостевой дом к OTA",
+      "subline": "Бесплатные инструменты для пансионов и хостов Airbnb.",
+      "statBadge": "1 134 Airbnb + 800+ пансионов в АЗ",
+      "primaryCtaText": "Начать тест OTA",
+      "secondaryCtaText": "Получить гид"
+    },
+    "stats": {
+      "stat1Label": "Airbnb в Баку",
+      "stat1Value": "1 134",
+      "stat1Source": "AirDNA 2026",
+      "stat2Label": "Booking пансионов",
+      "stat2Value": "800+",
+      "stat2Source": "Booking partner data",
+      "stat3Label": "Без сертификата",
+      "stat3Value": "600+",
+      "stat3Source": "Гос. агентство туризма"
+    },
+    "tools": {
+      "sectionTitle": "3 инструмента для сектора",
+      "tool1Title": "Тест OTA-готовности",
+      "tool1Desc": "8 вопросов, 3 мин, AI-отчёт",
+      "tool1Cta": "Начать →",
+      "tool2Title": "Калькулятор ROI",
+      "tool2Desc": "Комиссия Booking + Airbnb, окупаемость",
+      "tool2Cta": "Рассчитать →",
+      "tool3Title": "Шаблоны WhatsApp",
+      "tool3Desc": "10 сообщений — от приветствия до VIP",
+      "tool3Cta": "Смотреть →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Обязательно к прочтению"
+    },
+    "leadCapture": {
+      "heading": "Бесплатный гид по OTA",
+      "body": "Руководство по Booking, Airbnb и Yandex Travel.",
+      "buttonText": "Получить гид"
+    },
+    "faq": {
+      "sectionTitle": "ЧаВо",
+      "q1": "Почему Booking 15%?",
+      "a1": "За маркетинг. Прямое бронирование — 0%.",
+      "q2": "Airbnb нужен?",
+      "a2": "Да — молодые туристы. Booking + Airbnb + прямой канал.",
+      "q3": "Налоги?",
+      "a3": "Упрощённый режим.",
+      "q4": "Рейтинг?",
+      "a4": "Чистота, отзывы, профессиональные ответы.",
+      "q5": "Стоимость?",
+      "a5": "Тест и калькулятор бесплатны."
+    },
+    "footerCta": {
+      "heading": "Первый шаг — бесплатный тест",
+      "buttonText": "Начать тест →"
+    }
   }
 }

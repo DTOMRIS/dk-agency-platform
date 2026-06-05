@@ -5240,5 +5240,63 @@
       "body": "7 daha çox professional şablon.",
       "buttonText": "Tam paketi al"
     }
+  },
+  "sektorQonaqEvi": {
+    "pageTitle": "Konuk Evi — Booking, Airbnb, Yandex Travel Rehberi | DK Agency",
+    "hero": {
+      "headline": "Konuk Evinizi OTA Platformlarına Hazırlayın",
+      "subline": "Pansiyon ve Airbnb ev sahipleri için ücretsiz araçlar.",
+      "statBadge": "1.134 Airbnb + 800+ pansiyon",
+      "primaryCtaText": "OTA Testine başla",
+      "secondaryCtaText": "Ücretsiz rehber al"
+    },
+    "stats": {
+      "stat1Label": "Airbnb ilanı",
+      "stat1Value": "1.134",
+      "stat1Source": "AirDNA 2026",
+      "stat2Label": "Booking pansiyon",
+      "stat2Value": "800+",
+      "stat2Source": "Booking partner data",
+      "stat3Label": "Sertifikasız tesis",
+      "stat3Value": "600+",
+      "stat3Source": "Devlet Turizm Ajansı"
+    },
+    "tools": {
+      "sectionTitle": "Bu sektör için 3 araç",
+      "tool1Title": "OTA Hazırlık Testi",
+      "tool1Desc": "8 soru, 3 dk, AI rapor",
+      "tool1Cta": "Teste başla →",
+      "tool2Title": "ROI Hesaplayıcı",
+      "tool2Desc": "Booking + Airbnb komisyon hesabı",
+      "tool2Cta": "Hesapla →",
+      "tool3Title": "WhatsApp Şablonları",
+      "tool3Desc": "10 hazır mesaj",
+      "tool3Cta": "Bak →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Bu sektörden okunmalı"
+    },
+    "leadCapture": {
+      "heading": "Ücretsiz OTA Rehberi",
+      "body": "Booking, Airbnb ve Yandex Travel profil rehberi.",
+      "buttonText": "Ücretsiz Al"
+    },
+    "faq": {
+      "sectionTitle": "SSS",
+      "q1": "Booking neden %15?",
+      "a1": "Pazarlama karşılığı. Doğrudan rezervasyon sıfıra indirir.",
+      "q2": "Airbnb eklemeli mi?",
+      "a2": "Evet — genç turist segmenti.",
+      "q3": "Vergi?",
+      "a3": "Basitleştirilmiş rejim.",
+      "q4": "Puan?",
+      "a4": "Temizlik, yorum isteyin.",
+      "q5": "DK Agency?",
+      "a5": "Test ve hesaplayıcı ücretsiz."
+    },
+    "footerCta": {
+      "heading": "İlk adım — ücretsiz test",
+      "buttonText": "OTA Testine başla →"
+    }
   }
 }

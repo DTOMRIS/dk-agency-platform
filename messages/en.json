@@ -5240,5 +5240,63 @@
       "body": "7 daha çox professional şablon.",
       "buttonText": "Tam paketi al"
     }
+  },
+  "sektorQonaqEvi": {
+    "pageTitle": "Guesthouse & B&B — Complete Guide for Booking, Airbnb, Yandex Travel | DK Agency",
+    "hero": {
+      "headline": "Get Your Guesthouse OTA-Ready",
+      "subline": "Free tools for guesthouses and Airbnb hosts — from Khinalig to Baku.",
+      "statBadge": "1,134 Airbnb listings + 800+ guesthouses in AZ",
+      "primaryCtaText": "Start OTA Readiness Test",
+      "secondaryCtaText": "Get free guide"
+    },
+    "stats": {
+      "stat1Label": "Airbnb listings in Baku",
+      "stat1Value": "1,134",
+      "stat1Source": "AirDNA 2026",
+      "stat2Label": "Booking guesthouses in AZ",
+      "stat2Value": "800+",
+      "stat2Source": "Booking partner data",
+      "stat3Label": "Uncertified properties",
+      "stat3Value": "600+",
+      "stat3Source": "State Tourism Agency"
+    },
+    "tools": {
+      "sectionTitle": "3 tools for this sector",
+      "tool1Title": "OTA Readiness Test",
+      "tool1Desc": "8 questions, 3 minutes, personal AI report",
+      "tool1Cta": "Start test →",
+      "tool2Title": "Guesthouse ROI Calculator",
+      "tool2Desc": "Booking + Airbnb commission, payback period",
+      "tool2Cta": "Calculate →",
+      "tool3Title": "WhatsApp Template Kit",
+      "tool3Desc": "10 ready-made messages — from welcome to VIP guest",
+      "tool3Cta": "View templates →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Must-read from this sector"
+    },
+    "leadCapture": {
+      "heading": "Free OTA Setup Guide",
+      "body": "Step-by-step guide for Booking, Airbnb and Yandex Travel — free.",
+      "buttonText": "Get Free Guide"
+    },
+    "faq": {
+      "sectionTitle": "FAQ",
+      "q1": "Why does Booking charge 15%?",
+      "a1": "For marketing and technology. Direct booking reduces this to zero.",
+      "q2": "Should I list on Airbnb?",
+      "a2": "Yes — reaches young tourists. Booking + Airbnb + direct channel is best.",
+      "q3": "Guesthouse taxes?",
+      "a3": "Simplified tax regime in Azerbaijan.",
+      "q4": "How to improve ratings?",
+      "a4": "Cleanliness, communication, easy check-in. Ask for reviews.",
+      "q5": "DK Agency cost?",
+      "a5": "Test and calculator are free. Full support via contact form."
+    },
+    "footerCta": {
+      "heading": "Take the first step — start with a free test",
+      "buttonText": "Start OTA Readiness Test →"
+    }
   }
 }

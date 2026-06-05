@@ -5355,5 +5355,63 @@
       "body": "7 daha çox professional şablon.",
       "buttonText": "Tam paketi al"
     }
+  },
+  "sektorQonaqEvi": {
+    "pageTitle": "Qonaq Evi & Pansiyon — Booking, Airbnb, Yandex Travel üçün Tam Bələdçi | DK Agency",
+    "hero": {
+      "headline": "Qonaq Evinizi OTA Platformalarına Hazırlayın",
+      "subline": "Pansiyon, qonaq evi və Airbnb host-ları üçün pulsuz alətlər — Xınalıqdan Bakıya, DK Agency dəstəyi ilə.",
+      "statBadge": "1,134 Airbnb ilanı + 800+ pansiyon AZ-də",
+      "primaryCtaText": "OTA Hazırlıq Testinə başla",
+      "secondaryCtaText": "Pulsuz bələdçi al"
+    },
+    "stats": {
+      "stat1Label": "Bakıda Airbnb ilanı",
+      "stat1Value": "1,134",
+      "stat1Source": "AirDNA 2026",
+      "stat2Label": "AZ-də Booking pansiyon",
+      "stat2Value": "800+",
+      "stat2Source": "Booking partner data",
+      "stat3Label": "Sertifikasız tesis",
+      "stat3Value": "600+",
+      "stat3Source": "Dövlət Turizm Agentliyi"
+    },
+    "tools": {
+      "sectionTitle": "Bu sektor üçün 3 alət",
+      "tool1Title": "OTA Hazırlıq Testi",
+      "tool1Desc": "8 sual, 3 dəqiqə, şəxsi AI hesabat",
+      "tool1Cta": "Testə başla →",
+      "tool2Title": "Qonaq Evi ROI Kalkulyatoru",
+      "tool2Desc": "Booking + Airbnb komissiya hesabı, geri qaytarma müddəti",
+      "tool2Cta": "Hesabla →",
+      "tool3Title": "WhatsApp Template Paketi",
+      "tool3Desc": "10 hazır mətn — qarşılamadan VIP qonağa qədər",
+      "tool3Cta": "Şablonlara bax →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Bu sektordan oxumalı"
+    },
+    "leadCapture": {
+      "heading": "Pulsuz OTA Açma Bələdçisi",
+      "body": "Booking, Airbnb və Yandex Travel-da profil açmağın addım-addım bələdçisi — pulsuz.",
+      "buttonText": "Pulsuz Bələdçini Al"
+    },
+    "faq": {
+      "sectionTitle": "Tez-tez verilən suallar",
+      "q1": "Booking 15% komissiya niyə alır?",
+      "a1": "Booking.com hər uğurlu rezervasiya üçün 15% komissiya tutur. Birbaşa rezervasiya ilə bu xərci sıfıra endirmək mümkündür.",
+      "q2": "Airbnb-ə də əlavə etməliyəm?",
+      "a2": "Bəli — Airbnb fərqli müştəri seqmentinə çatmağınıza kömək edir. Booking + Airbnb + birbaşa kanal ən yaxşı strategiyadır.",
+      "q3": "Pansiyon vergisi nə qədərdir?",
+      "a3": "Azərbaycanda qonaq evləri sadələşdirilmiş vergi ilə tənzimlənir.",
+      "q4": "Reyting necə qaldırılır?",
+      "a4": "Təmizlik, ünsiyyət, check-in rahatlığı. Hər qonaqdan review istəyin.",
+      "q5": "DK Agency dəstəyi nə qədərdir?",
+      "a5": "OTA Hazırlıq Testi və ROI Kalkulyatoru pulsuzdur. Tam dəstək üçün əlaqə formundan müraciət edin."
+    },
+    "footerCta": {
+      "heading": "İlk addımı indi at — pulsuz test ilə başla",
+      "buttonText": "OTA Hazırlıq Testinə başla →"
+    }
   }
 }
