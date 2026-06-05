@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-04T19:45:00.388Z
+- GeneratedAt: 2026-06-05T13:34:45.816Z
 - BuildStatus: PASS
 
-## Routes (214)
+## Routes (216)
 - /
 - /[locale]
 - /[locale]/about
@@ -93,6 +93,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/randevu
 - /[locale]/reset-password
 - /[locale]/sedd-rozeti
+- /[locale]/sektor/qonaq-evi
 - /[locale]/settings
 - /[locale]/terefdashlar
 - /[locale]/terms
@@ -200,6 +201,7 @@ Auto-generated. Do not edit manually.
 - /news
 - /reset-password
 - /sedd-rozeti
+- /sektor/qonaq-evi
 - /settings
 - /toolkit
 - /toolkit/aqta-checklist
@@ -222,7 +224,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (79)
+## API Routes (80)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -259,6 +261,7 @@ Auto-generated. Do not edit manually.
 - /api/invoices
 - /api/kazan-ai
 - /api/kazan-ai/leads
+- /api/lead/ota-guide
 - /api/leads/track
 - /api/leads/whatsapp
 - /api/listings
