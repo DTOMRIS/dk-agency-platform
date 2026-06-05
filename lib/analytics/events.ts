@@ -14,6 +14,15 @@ export const ANALYTICS_EVENTS = {
   REGISTER_STARTED: 'register_started',
   REGISTER_COMPLETED: 'register_completed',
   REGISTER_CONSENT_GIVEN: 'register_consent_given',
+
+  // Sektor pages
+  SEKTOR_VIEW: 'sektor_view',
+  SEKTOR_CTA_TEST: 'sektor_cta_test',
+  SEKTOR_CTA_ROI: 'sektor_cta_roi',
+  SEKTOR_CTA_WHATSAPP: 'sektor_cta_whatsapp',
+  SEKTOR_LEAD_SUBMITTED: 'sektor_lead_submitted',
+  SEKTOR_FAQ_OPEN: 'sektor_faq_open',
+  SEKTOR_FOOTER_CTA: 'sektor_footer_cta_click',
 } as const;
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];

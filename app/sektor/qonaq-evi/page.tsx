@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import {
   SektorHero,
   SektorStatGrid,
@@ -9,8 +10,10 @@ import {
   SektorFaqAccordion,
   SektorFooterCta,
 } from '@/components/sektor';
+import { trackSektorEvent } from '@/lib/analytics/sektorEvents';
 
 const NS = 'sektorQonaqEvi';
+const SEKTOR_SLUG = 'qonaqEvi';
 
 const STATS = [
   { labelKey: 'stats.stat1Label', valueKey: 'stats.stat1Value', sourceKey: 'stats.stat1Source' },
@@ -58,6 +61,10 @@ const FAQ_ITEMS = [
 ];
 
 export default function QonaqEviSektorPage() {
+  useEffect(() => {
+    trackSektorEvent({ sektor: SEKTOR_SLUG, action: 'view' });
+  }, []);
+
   return (
     <>
       <SektorHero
@@ -67,6 +74,7 @@ export default function QonaqEviSektorPage() {
         statBadgeKey="hero.statBadge"
         primaryCta={{ key: 'hero.primaryCtaText', href: '/toolkit/ota-hazirlig-testi' }}
         secondaryCta={{ key: 'hero.secondaryCtaText', href: '#lead-capture' }}
+        sektorSlug={SEKTOR_SLUG}
       />
 
       <SektorStatGrid namespace={NS} stats={STATS} />
@@ -75,6 +83,7 @@ export default function QonaqEviSektorPage() {
         namespace={NS}
         sectionTitleKey="tools.sectionTitle"
         tools={TOOLS}
+        sektorSlug={SEKTOR_SLUG}
       />
 
       <SektorBlogTeaserGrid
@@ -89,12 +98,14 @@ export default function QonaqEviSektorPage() {
         bodyKey="leadCapture.body"
         buttonKey="leadCapture.buttonText"
         toolSource="ota_guide_pdf"
+        sektorSlug={SEKTOR_SLUG}
       />
 
       <SektorFaqAccordion
         namespace={NS}
         sectionTitleKey="faq.sectionTitle"
         items={FAQ_ITEMS}
+        sektorSlug={SEKTOR_SLUG}
       />
 
       <SektorFooterCta
@@ -102,6 +113,7 @@ export default function QonaqEviSektorPage() {
         headlineKey="footerCta.heading"
         ctaKey="footerCta.buttonText"
         href="/toolkit/ota-hazirlig-testi"
+        sektorSlug={SEKTOR_SLUG}
       />
     </>
   );

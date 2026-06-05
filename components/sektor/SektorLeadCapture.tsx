@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
+import { trackSektorEvent } from '@/lib/analytics/sektorEvents';
 
 interface SektorLeadCaptureProps {
   namespace: string;
@@ -9,6 +10,7 @@ interface SektorLeadCaptureProps {
   bodyKey: string;
   buttonKey: string;
   toolSource: string;
+  sektorSlug?: string;
 }
 
 export default function SektorLeadCapture({
@@ -17,6 +19,7 @@ export default function SektorLeadCapture({
   bodyKey,
   buttonKey,
   toolSource,
+  sektorSlug,
 }: SektorLeadCaptureProps) {
   const t = useTranslations(namespace);
   const locale = useLocale();
@@ -52,6 +55,9 @@ export default function SektorLeadCapture({
         throw new Error(data.error || 'Xəta baş verdi');
       }
       setStatus('success');
+      if (sektorSlug) {
+        trackSektorEvent({ sektor: sektorSlug, action: 'lead_submitted' });
+      }
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Xəta baş verdi');
       setStatus('error');

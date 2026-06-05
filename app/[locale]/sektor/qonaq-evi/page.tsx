@@ -9,6 +9,14 @@ export const metadata: Metadata = {
     title: 'Qonaq Evi & Pansiyon Sektoru | DK Agency',
     description: 'OTA hazırlıq testi, ROI kalkulyatoru və WhatsApp şablonları — pulsuz alətlər.',
     type: 'website',
+    images: [
+      {
+        url: '/sektor/qonaq-evi/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Qonaq Evi & Pansiyon — DK Agency',
+      },
+    ],
   },
 };
 

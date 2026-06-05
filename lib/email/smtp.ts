@@ -32,10 +32,17 @@ export interface SmtpSendResult {
   error?: string;
 }
 
+export interface EmailAttachment {
+  filename: string;
+  content: Buffer;
+  contentType: string;
+}
+
 export async function sendSmtpEmail(
   to: string,
   subject: string,
   html: string,
+  attachments?: EmailAttachment[],
 ): Promise<SmtpSendResult> {
   const transport = getTransporter();
 
@@ -50,6 +57,11 @@ export async function sendSmtpEmail(
       to,
       subject,
       html,
+      attachments: attachments?.map((a) => ({
+        filename: a.filename,
+        content: a.content,
+        contentType: a.contentType,
+      })),
     });
 
     console.log('[smtp] Sent:', info.messageId, '→', to);

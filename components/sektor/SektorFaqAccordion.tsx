@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { ChevronDown } from 'lucide-react';
+import { trackSektorEvent } from '@/lib/analytics/sektorEvents';
 
 interface FaqItem {
   questionKey: string;
@@ -13,9 +14,10 @@ interface SektorFaqAccordionProps {
   namespace: string;
   sectionTitleKey: string;
   items: FaqItem[];
+  sektorSlug?: string;
 }
 
-export default function SektorFaqAccordion({ namespace, sectionTitleKey, items }: SektorFaqAccordionProps) {
+export default function SektorFaqAccordion({ namespace, sectionTitleKey, items, sektorSlug }: SektorFaqAccordionProps) {
   const t = useTranslations(namespace);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -35,7 +37,13 @@ export default function SektorFaqAccordion({ namespace, sectionTitleKey, items }
                 className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
               >
                 <button
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
+                  onClick={() => {
+                    const opening = !isOpen;
+                    setOpenIndex(opening ? i : null);
+                    if (opening && sektorSlug) {
+                      trackSektorEvent({ sektor: sektorSlug, action: 'faq_open', faqIndex: i });
+                    }
+                  }}
                   className="flex w-full items-center justify-between px-6 py-5 text-left"
                 >
                   <span className="pr-4 text-sm font-bold text-slate-900">{t(item.questionKey)}</span>
