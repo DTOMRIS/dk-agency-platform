@@ -28,6 +28,39 @@
 - `generateStaticParams` intentionally omitted to match the codebase's dynamic `[locale]` rendering (blog/[slug] pattern)
 - **Verified in production** (`next build` + `next start`): `/sektor/{qonaq-evi,otel,restoran,kafe}` (az) → 200, `/sektor/bilinmeyen` → 404 (SektorNotFound), `/az/sektor/otel` → 307, `/sektor` → 200, `/en/sektor/otel` → 200, `/sektor/otel/opengraph-image` → 200. Integrity test PASS, lint + TS clean. Build needs `NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1` (Google Fonts TLS). See L-038.
 
+## [TASK-0200] content(blog): Peşə Məktəbi yazısını genişləndir — 2026-06-06
+
+### Changed
+- `pese-mektebi-olke-meselesi` yazısı Koç modeli, TQTA, TİKA, CTH və milli kadr platforması təklifi ilə 1.778 sözə genişləndirildi.
+- İki faydalı məlumat qutusu və xüsusi Doğan Notu bloku renderer konvensiyasına uyğunlaşdırıldı.
+- Mənbəsi dəqiqləşdirilməyən `290.000` və ILO iddiaları bu yazıdan çıxarıldı; Koç və CTH rəsmi məlumatları əsas götürüldü.
+
+### Added
+- Tək bir statik blog yazısını slug üzrə production DB-yə təhlükəsiz sync edən `scripts/sync-static-blog-article.ts` əlavə edildi.
+
+## [TASK-0199] fix(blog): production DB-yə çatışmayan 14 yazını sync et — 2026-06-06
+
+### Fixed
+- Statik blog mənbəsində mövcud olub production Neon DB-də olmayan 14 yazı idempotent seed ilə yayımlandı.
+- Blog seed artıq `stage` sahəsini də yazır və əlavə edilən/keçilən qeyd sayını göstərir.
+
+## [TASK-0198] content(franchise): Fəsil 11 hüquqi redaksiya — 2026-06-06
+
+### Added
+- `DK Agency Franchise Bələdçisi` üçün AZ/TR Fəsil 11 mənbə faylı əlavə edildi və `status: ready` olaraq işarələndi.
+
+### Changed
+- Yerli markalar haqqında hüquqi risk yaradan uğursuzluq iddiaları çıxarıldı; Krispy Kreme, Quiznos və Burger King-in qlobal operator nümunələri saxlanıldı.
+
+## [TASK-0183] feat(blog): wire 14 covers slug→blog-NN (drift-safe) — 2026-06-06
+
+### Added
+- 14 cover images `public/images/blog-12.png … blog-25.png` (committed separately)
+
+### Fixed
+- Wired `coverImage` for 14 articles by SLUG to the canonical `/images/blog-12..25.png` scheme. The previous descriptive filenames (`blog-11-ai-favok.png` …) were off-by-one vs the canonical numbering — a NUMBER-based wire would have shown the wrong cover. Done by slug to avoid that drift (see launch spec).
+- Verified (prod `next build` + `next start`): `/blog` 200, cover assets 200, and each of the 14 slugs renders its correct cover (e.g. ai-ile-favok-qorumasi → blog-12, cografi-isare-yerli-lezzet → blog-25). All 24 referenced cover files exist on disk (0 broken).
+
 ## [TASK-0196] feat(sektor): /sektor/qonaq-evi landing + lead endpoint — 2026-06-05
 
 ### Added

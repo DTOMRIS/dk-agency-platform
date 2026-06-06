@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-06T06:36:09.438Z
-- BuildStatus: UNKNOWN
+- GeneratedAt: 2026-06-06T08:47:50.110Z
+- BuildStatus: PASS
 
-## Routes (218)
+## Routes (216)
 - /
 - /[locale]
 - /[locale]/about
@@ -93,8 +93,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/randevu
 - /[locale]/reset-password
 - /[locale]/sedd-rozeti
-- /[locale]/sektor
-- /[locale]/sektor/[slug]
+- /[locale]/sektor/qonaq-evi
 - /[locale]/settings
 - /[locale]/terefdashlar
 - /[locale]/terms
@@ -202,8 +201,7 @@ Auto-generated. Do not edit manually.
 - /news
 - /reset-password
 - /sedd-rozeti
-- /sektor
-- /sektor/[slug]
+- /sektor/qonaq-evi
 - /settings
 - /toolkit
 - /toolkit/aqta-checklist

@@ -11,6 +11,9 @@ async function seedBlog() {
 
   console.log('Blog seeding...');
 
+  let insertedCount = 0;
+  let skippedCount = 0;
+
   for (const article of BLOG_ARTICLES) {
     const inserted = await db
       .insert(blogPosts)
@@ -26,6 +29,7 @@ async function seedBlog() {
         content_tr: null,
         content_en: null,
         category: article.category,
+        stage: article.stage || null,
         author: article.author,
         readTime: article.readingTime,
         featuredImage: article.coverImage,
@@ -40,7 +44,12 @@ async function seedBlog() {
       .returning({ id: blogPosts.id });
 
     const postId = inserted[0]?.id;
-    if (!postId) continue;
+    if (!postId) {
+      skippedCount += 1;
+      continue;
+    }
+
+    insertedCount += 1;
 
     if ('guruBoxes' in article && Array.isArray((article as { guruBoxes?: unknown[] }).guruBoxes)) {
       const boxes = (article as { guruBoxes?: Array<{ guru?: string; quote?: string; book?: string }> }).guruBoxes || [];
@@ -56,7 +65,7 @@ async function seedBlog() {
     }
   }
 
-  console.log('✅ Blog seed tamamlandı!');
+  console.log(`Blog seed tamamlandı: ${insertedCount} əlavə edildi, ${skippedCount} mövcud olduğu üçün keçildi.`);
 }
 
 seedBlog()
