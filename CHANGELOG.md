@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+## [TASK-0230] feat(toolkit): Personel Planlayıcısı (Restoran + Kafe) — 2026-06-06
+
+### Added
+- `/toolkit/personel-planlayici` — vardiya bazında optimal personel hesablayıcısı (restoran casual/fine, kafe, bar)
+- Calc engine (client-side): açılış/peak/axşam briqadası, əmək maliyyəti + faiz (status: ideal/diqqət/kritik), skeleton minimum — Cornell/Shifty benchmark formulları
+- `components/marketinq-ocagi/personel-planlayici/PersonelPlanlayiciPage.tsx` + root mirror (`app/toolkit/...`) + locale wrapper (`app/[locale]/toolkit/...`, metadata)
+- i18n `toolkit.personelPlanlayici` namespace (AZ/RU/EN/TR)
+- AI insight: mövcud `getToolkitInsight` server action-a `personel-planlayici` prompt əlavə olundu (yeni API route YOX — L-009, DRY)
+
+### Note
+- `lib/marketing-tools-config.ts`-ə slug Doğan tərəfindən əl ilə əlavə olunacaq (PROTECTED, toxunulmadı).
+
+## [TASK-0204] content(blog): unsourced statistics softened + 2 real sources — 2026-06-06
+
+### Changed
+- Blog atıf auditi (`scripts/blog-citation-audit.ts` + `docs/BLOG-CITATION-AUDIT.md`) əlavə olundu — iddia→mənbə tiered tarama.
+- 6 mənbəsiz real-dünya statistikası müşahidə dilinə yumşaldıldı (food-cost, başabaş, kurumsal, delivery yazıları) — uydurma rəqəm/iddia çıxarıldı.
+- 2 yoxlanıla bilən iddiaya real mənbə əlavə olundu: food cost sənaye standartı (28-35%); restoran işçi dönüşümü (ABŞ Milli Restoran Assosiasiyası / NRA).
+- Sitatlar (Roger Fields, Danny Meyer, David Scott Peters) və DK Agency Notu anekdotları atributlu olduğu üçün toxunulmadı.
+
+### Note
+- Dəyişən 4 yazı production DB-yə sync olunmalıdır: `npx tsx scripts/sync-static-blog-article.ts <slug>` (1-porsiya-food-cost-hesablama, isci-saxlama-7-strategiya, kurumsal-kitabca-emeliyyat, wolt-bolt-komissiyon).
+
 ## [TASK-0109] feat(ai): KAZAN AI system prompt locale-aware response — 2026-06-06
 
 ### Added

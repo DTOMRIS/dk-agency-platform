@@ -58,7 +58,7 @@ Sən bir porsiya Toyuq Sac-ı 18₼-a satırsan. Ərzaq xərci 6₼ çıxır. "1
 
 O 18₼-ın içindən icarə çıxır, işçi maaşı çıxır, qaz çıxır, elektrik çıxır, qırılan boşqab çıxır, atılan materialın xərci çıxır, DSMF çıxır, vergi çıxır. Sonda baxırsan ki, 18₼-dan əlində **1-2₼ qalıb.** Bəlkə heç qalmayıb. Bəlkə **mənfi**dir — amma sən bilmirsən, çünki hesablamamısan.
 
-Bu, Azərbaycanda restoranların **90%-inin** xəstəliyidir: food cost-u (ərzaq maya dəyərini) bilmədən işləyirlər. Menyu qiymətlərini "rəqib nə yazıb, mən də o qədər" prinsipi ilə qoyurlar. Nəticə? Hər satışda pul itirirlər, amma bunu **aylar sonra** anlayırlar — kassada pul qalmayanda.
+Bu, Azərbaycanda, müşahidələrimizə görə, əksər restoranların xəstəliyidir: food cost-u (ərzaq maya dəyərini) bilmədən işləyirlər. Menyu qiymətlərini "rəqib nə yazıb, mən də o qədər" prinsipi ilə qoyurlar. Nəticə? Hər satışda pul itirirlər, amma bunu **aylar sonra** anlayırlar — kassada pul qalmayanda.
 
 ---
 
@@ -107,7 +107,7 @@ Dünya standartı:
 | Kafe / qəhvəxana | 25-35% |
 | Pizza / xəmir bazalı | 20-28% |
 
-**Azərbaycan reallığı:** Bakıda əksər restoranlar **35-45%** food cost ilə işləyir. Bu, çox yüksəkdir. Niyə? Çünki:
+**Azərbaycan reallığı:** Müşahidələrimizə görə Bakıda bir çox restoran **35-45%** food cost ilə işləyir. Sənaye standartına görə sağlam food cost **28-35%** aralığında olmalıdır — deməli bu, çox yüksəkdir. Niyə? Çünki:
 - Resept standartlaşdırması yoxdur (hər aşpaz öz istədiyi qədər qoyur)
 - Porsiyon ölçüsü nəzarətsizdir
 - Ərzaq itkisi (waste — tullantı) hesablanmır
@@ -232,7 +232,7 @@ Satış qiyməti = Ərzaq xərci ÷ Hədəf food cost %
 
 Hər restoranda ərzaq itkisi var. Sual budur: **nə qədər?**
 
-Dünya ortası: restoranlar aldığı ərzağın **4-10%-ini** itirir. Bakıda bu rəqəm **10-20%** arasındadır, çünki:
+Dünya ortası: restoranlar aldığı ərzağın **4-10%-ini** itirir. Bakıda isə müşahidələrimizə görə bu itki daha yüksək ola bilir, çünki:
 
 - **Yanlış saxlama:** Soyuducunun temperaturu düzgün deyil, ərzaq vaxtından əvvəl xarab olur
 - **Həddindən artıq hazırlıq (over-prep):** Sabah 50 porsiya lazımdır, aşpaz 80 porsiyalıq hazırlayır — 30-u atılır
@@ -269,7 +269,7 @@ Dünya ortası: restoranlar aldığı ərzağın **4-10%-ini** itirir. Bakıda b
 
 Bu, "Gizli Xərclər" yazımızda "kresloya yapışan sahibkar" sindromu ilə bağlıdır. Təkrar edirəm, çünki **food cost-un 50%-i firmalardan asılıdır.**
 
-Problem: Aşpazbaşı "öz adamı" olan firmadan alır. Qiymət müqayisəsi yoxdur. Sahibkar bilmir ki eyni toyuğu başqa firmadan **10-15% ucuza** ala bilərdi.
+Problem: Aşpazbaşı "öz adamı" olan firmadan alır. Qiymət müqayisəsi yoxdur. Sahibkar bilmir ki eyni toyuğu başqa firmadan daha ucuza ala bilərdi.
 
 **Həll:**
 
@@ -707,7 +707,7 @@ Doğru sual budur: **"Niyə qalmalı idi?"**
 
 Əgər bu suala konkret cavab verə bilmirsənsə — problem işçidə deyil. Problem **səndədir.** Daha dəqiq desək — sənin **sistemindədir.** Çünki insanlar işdən getmir, **sahibkardan** gedir. Pis idarəetmədən gedir. Görünməzlikdən gedir. Perspektivsizlikdən gedir.
 
-Azərbaycan HoReCa sektorunda işçi dönüşüm nisbəti (staff turnover rate — işçi axını) dünya ortasından çox yüksəkdir. Dünyada restoran sektoru üçün orta **60-80%**-dir (yəni hər il işçilərin yarıdan çoxu dəyişir). Bakıda bu rəqəm bəzi yerlərdə **100-150%**-ə çatır — yəni **il ərzində bütün komanda 1-1.5 dəfə tamamilə dəyişir.**
+Azərbaycan HoReCa sektorunda işçi dönüşüm nisbəti (staff turnover rate — işçi axını) dünya ortasından çox yüksəkdir. ABŞ Milli Restoran Assosiasiyasının (NRA) məlumatlarına görə beynəlxalq restoran sektorunda illik dönüşüm tarixən çox yüksək — 70%-dən yuxarı — olub (yəni hər il işçilərin yarıdan çoxu dəyişir). Bakıda bu rəqəm bəzi yerlərdə **100-150%**-ə çatır — yəni **il ərzində bütün komanda 1-1.5 dəfə tamamilə dəyişir.**
 
 Hər gedən işçi sənə **pul itirir:** təlim xərci, verimlilik itkisi, müştəri memnuniyyəti düşüşü, digər işçilərin moral itkisi. Bir hesablamaya görə, bir ofisiantın dəyişdirilməsi restorana **2-3 aylıq maaşı** qədər xərc çıxarır.
 
@@ -1518,11 +1518,11 @@ Bütün menyunu delivery-yə qoşma. Yalnız **food cost-u aşağı, qablaşdır
 **Delivery-yə uyğun:** Burger, wrap, pizza, plov, qutab, pasta, soyuq sandviç
 **Delivery-yə uyğun DEYİL:** Dondurma (əriyir), qızardılmış balıq (yumuşayır), steyk (soyuyur, keyfiyyəti düşür), çorba (tökülür)
 
-Delivery menyusu restoran menyusunun **40-60%-i** olmalıdır — yalnız mənfəətli və daşınabilən hissəsi.
+Delivery menyusu restoran menyusunun yalnız bir hissəsi olmalıdır — yalnız mənfəətli və daşınabilən hissəsi.
 
 ### 2. Delivery qiymətini artır
 
-Bir çox restoran delivery menyusunda qiymətləri **10-20% yuxarı** yazır. Müştəri bunu qəbul edir — çünki rahatlıq üçün ödəyir. Platformalar buna icazə verir.
+Bir çox restoran delivery menyusunda qiymətləri bir qədər yuxarı yazır. Müştəri bunu qəbul edir — çünki rahatlıq üçün ödəyir. Platformalar buna icazə verir.
 
 **Nümunə:**
 - Restoranda Toyuq Sac: 18₼
@@ -1677,7 +1677,7 @@ Ofisiant yenidir. "Müştəri hesab istəyir — kart qəbul edirik?" Heç kim d
 
 Təmizlik vaxtı gəldi. Kim nəyi təmizləyir? Heç kim bilmir. Hamı bir-birini gözləyir. Heç kim etmir.
 
-**Bu, sistem yoxluğunun nəticəsidir.** Və bu, Bakıdakı restoranların **90%-inin** gündəlik reallığıdır. Hər kəs öz başının diktəsi ilə işləyir, çünki **yazılı standart yoxdur.**
+**Bu, sistem yoxluğunun nəticəsidir.** Və bu, Bakıdakı əksər restoranın gündəlik reallığıdır. Hər kəs öz başının diktəsi ilə işləyir, çünki **yazılı standart yoxdur.**
 
 Kurumsal kitabça (operations manual — əməliyyat təlimatnamələri) bu xaosu bitirən sənəddir. Bu yazıda nə olduğunu, niyə lazım olduğunu və necə hazırlanacağını izah edirəm.
 

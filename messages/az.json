@@ -53,6 +53,55 @@
     "companyName": "DENİS TOMRİS MMC"
   },
   "toolkit": {
+    "personelPlanlayici": {
+      "title": "Personel Planlayıcısı",
+      "description": "Restoran və kafe üçün vardiya bazında optimal personel sayını hesabla",
+      "badge": "Personel",
+      "concept": {
+        "label": "Konsept",
+        "restoranCasual": "Restoran (Casual Dining)",
+        "restoranFine": "Restoran (Fine Dining)",
+        "kafe": "Kafe",
+        "bar": "Bar / Lounge"
+      },
+      "koltukSayisi": "Oturacaq sayı",
+      "gunlukFis": "Günlük təxmini fiş sayı",
+      "gunTipi": {
+        "label": "Gün tipi",
+        "isgunu": "İş günü (B.e – C.a)",
+        "cuma": "Cümə",
+        "haftaSonu": "Həftəsonu (Şənbə/Bazar)"
+      },
+      "achilis": "Açılış saatı",
+      "kapanis": "Bağlanış saatı",
+      "hesabla": "Personel Hesabla",
+      "result": {
+        "acilisBrigadasi": "Açılış Briqadası",
+        "peakBrigada": "Peak Saatlar",
+        "axsamBrigadasi": "Axşam Briqadası",
+        "garson": "Qarson",
+        "barista": "Barista",
+        "asci": "Aşpaz / Mətbəx",
+        "host": "Host / Qarşılayıcı",
+        "kasa": "Kassa",
+        "ekstra": "Əlavə (peak)",
+        "toplam": "Cəmi",
+        "laborMaliyyeti": "Əmək maliyyəti",
+        "aylig": "Aylıq",
+        "laborFaizi": "Əmək faizi",
+        "ideal": "İdeal",
+        "dikkat": "Diqqət",
+        "kritik": "Kritik",
+        "skeletonMinimum": "Minimum açılış kadrosu",
+        "benchmark": "Sektor benchmarkı",
+        "aiInsight": "KAZAN AI Tövsiyəsi",
+        "peakNote": "Peak-dən azaldıla bilər"
+      },
+      "seo": {
+        "title": "Personel Planlayıcısı — DK Agency",
+        "description": "Restoran və kafe üçün optimal personel sayı hesablayıcısı. Vardiya bazında, əmək faizi ilə."
+      }
+    },
     "badge": "Pulsuz Alətlər",
     "title": "DK Agency Toolkit",
     "subtitle": "Restoranını idarə etmək üçün pulsuz alətlər. Food cost, P&L, checklist — hamısı bir yerdə.",
