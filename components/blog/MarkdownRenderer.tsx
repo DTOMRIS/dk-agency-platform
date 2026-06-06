@@ -73,7 +73,7 @@ function parseGuruBox(text: string): {
 }
 
 // Detect special blockquote types
-function detectBlockquoteType(text: string): 'guru' | 'warning' | 'dogan-note' | 'tip' | 'normal' {
+function detectBlockquoteType(text: string): 'guru' | 'warning' | 'dogan-note' | 'tool' | 'tip' | 'normal' {
   const normalizedText = text.toLowerCase();
   
   if (text.includes('╔') || text.includes('║') || text.includes('🎤')) {
@@ -84,6 +84,9 @@ function detectBlockquoteType(text: string): 'guru' | 'warning' | 'dogan-note' |
   }
   if (normalizedText.includes('📝') && (normalizedText.includes('doğan') || normalizedText.includes('notu'))) {
     return 'dogan-note';
+  }
+  if (normalizedText.includes('faydalı alət')) {
+    return 'tool';
   }
   if (normalizedText.includes('💡') || normalizedText.includes('tip')) {
     return 'tip';
@@ -288,6 +291,20 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
                         DT
                       </div>
                       <span className="text-[var(--dk-muted)] text-sm">— Doğan Tomris</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
+            // Tool Box
+            if (blockType === 'tool') {
+              return (
+                <div className="my-8 rounded-xl border border-emerald-200 border-l-4 border-l-emerald-600 bg-emerald-50 p-5">
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl flex-shrink-0">🔧</span>
+                    <div className="text-slate-700 [&>p]:mb-0 [&_a]:font-semibold [&_a]:text-emerald-800 [&_a]:underline [&_a]:underline-offset-2">
+                      {children}
                     </div>
                   </div>
                 </div>

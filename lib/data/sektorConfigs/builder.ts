@@ -27,6 +27,7 @@ export interface SektorConfigInput {
   blogSlugs: string[];
   footerCtaHref: string;
   og: SektorOgConfig;
+  heroImage?: string;
 }
 
 export function buildSektorConfig(input: SektorConfigInput): SektorConfig {
@@ -41,6 +42,7 @@ export function buildSektorConfig(input: SektorConfigInput): SektorConfig {
       statBadgeKey: 'hero.statBadge',
       primaryCta: { key: 'hero.primaryCtaText', href: input.primaryCtaHref },
       secondaryCta: { key: 'hero.secondaryCtaText', href: '#lead-capture' },
+      heroImage: input.heroImage,
     },
     stats: [1, 2, 3].map((n) => ({
       labelKey: `stats.stat${n}Label`,

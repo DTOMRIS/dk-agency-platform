@@ -25,4 +25,5 @@ export const qonaqEviConfig = buildSektorConfig({
     subtitle: 'Booking.com | Airbnb | Yandex Travel',
     badges: ['OTA Test', 'ROI Kalkulyator', 'WhatsApp Sablonlar'],
   },
+  heroImage: '/images/franchise-buyume.png',
 });

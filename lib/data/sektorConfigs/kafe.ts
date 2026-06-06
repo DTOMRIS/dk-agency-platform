@@ -25,4 +25,5 @@ export const kafeConfig = buildSektorConfig({
     subtitle: 'Food Cost | Basabas | Menyu Matrix',
     badges: ['Food Cost', 'Basabas', 'Menyu Matrix'],
   },
+  heroImage: '/images/supplier-laptop.png',
 });

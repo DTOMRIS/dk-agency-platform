@@ -5,9 +5,10 @@ import { blogPosts } from '../lib/db/schema';
 
 async function main() {
   const slug = process.argv[2];
+  const previousSlug = process.argv[3];
 
   if (!slug) {
-    throw new Error('Usage: npx tsx scripts/sync-static-blog-article.ts <slug>');
+    throw new Error('Usage: npx tsx scripts/sync-static-blog-article.ts <slug> [previous-slug]');
   }
 
   if (!dbAvailable || !db) {
@@ -23,16 +24,17 @@ async function main() {
   const existing = await db
   .select({ id: blogPosts.id })
   .from(blogPosts)
-  .where(eq(blogPosts.slug, slug))
+  .where(eq(blogPosts.slug, previousSlug || slug))
   .then((rows) => rows[0]);
 
   if (!existing) {
-    throw new Error(`Database blog article not found: ${slug}`);
+    throw new Error(`Database blog article not found: ${previousSlug || slug}`);
   }
 
   await db
   .update(blogPosts)
   .set({
+    slug: article.slug,
     title_az: article.title,
     title_tr: null,
     title_en: null,

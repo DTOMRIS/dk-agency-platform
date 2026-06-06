@@ -22,4 +22,5 @@ export const restoranConfig = buildSektorConfig({
     subtitle: 'Food Cost | Menyu Matrix | AQTA',
     badges: ['Food Cost', 'Menyu Matrix', 'AQTA Checklist'],
   },
+  heroImage: '/images/menu-muhendisligi.png',
 });

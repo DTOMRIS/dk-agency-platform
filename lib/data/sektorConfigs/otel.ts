@@ -25,4 +25,5 @@ export const otelConfig = buildSektorConfig({
     subtitle: 'Booking | Expedia | AHA Sertifikat',
     badges: ['AHA Test', 'ROI Kalkulyator', 'OTA Hazirliq'],
   },
+  heroImage: '/images/training-seminar.png',
 });
