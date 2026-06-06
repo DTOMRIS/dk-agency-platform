@@ -405,6 +405,29 @@ export const KAZAN_KNOWLEDGE = {
     ],
     blogSlug: 'restoran-markalasma-konsept',
   },
+  personelPlanlayici: {
+    definition:
+      'Personel planlayıcı aləti restoran və ya kafe üçün optimal işçi sayını, növbələri (açılış, peak saatlar və axşam) və əmək xərci (labor cost) faizini hesablamaq üçün Cornell və Shifty standartlarını tətbiq edir.',
+    idealRanges: {
+      casualRestoran: '30-35%',
+      fineDining: '30-35%',
+      cafe: '28-32%',
+      bar: '28-32%',
+    },
+    actionSteps: [
+      'Növbə cədvəlini müştəri axını (peak) saatlarına görə qur',
+      'Açılış, peak və axşam növbələrinin heyət sayını ayrılıqda planla',
+      'Əmək maliyyəti faizinin (Labor Cost %) hədəfi aşmadığını yoxla',
+      'İşçi dövriyyəsini azaltmaq üçün onboarding və motivasiya sistemlərini tətbiq et',
+    ],
+    commonMistakes: [
+      'Bütün gün eyni sayda işçi saxlamaq (peak saatları nəzərə almadan)',
+      'Labor cost faizini aylıq gəlirə nisbətdə izləməmək',
+      'Skeletal minimum heyət həddini aşmaq',
+    ],
+    blogSlug: 'isci-saxlama-7-strategiya',
+    toolkitLink: '/toolkit/personel-planlayici',
+  },
 } as const;
 
 export function serializeKazanKnowledge(): string {

@@ -38,7 +38,11 @@ function shouldAppendQuote(text: string): boolean {
 function appendQuote(text: string, locale: string): string {
   if (!shouldAppendQuote(text)) return text;
   const quote = pickRandomQuote(locale);
-  return `${text}\n\n---\n☕ *${quote}* — Əhilik`;
+  let suffix = 'Əhilik';
+  if (locale === 'tr') suffix = 'Ahilik';
+  else if (locale === 'ru') suffix = 'Ахилик';
+  else if (locale === 'en') suffix = 'Ahilik';
+  return `${text}\n\n---\n☕ *${quote}* — ${suffix}`;
 }
 
 function normalizeMessages(messages: ChatMessage[]): ChatMessage[] {
@@ -219,7 +223,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Food cost intent olduqda real veri inject et
-    let systemPrompt = buildKazanSystemPrompt();
+    let systemPrompt = buildKazanSystemPrompt(locale);
     if (isFoodCostIntent(messages)) {
       const foodCostCtx = await buildFoodCostContext();
       systemPrompt = systemPrompt + '\n\n' + foodCostCtx;
