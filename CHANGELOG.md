@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [TASK-0202] feat(toolkit): add Hospitality/OTA section to /toolkit — 2026-06-06
+
+### Added
+- `/toolkit` index 3-cü bölmə: **Qonaqlama / Otel & Pansiyon (OTA)** — mövcud `ToolGrid` ilə, 4 dildə (AZ/TR/EN/RU)
+- 4 tool listələndi (route-lar əvvəldən mövcud idi, sadəcə index-ə əlavə olunmamışdı): `ota-hazirlig-testi`, `otel-hazirlig-testi`, `qonaq-evi-roi-kalkulyatoru`, `whatsapp-template-paketi`
+
+### Fixed
+- Bu tool-lar yalnız `/sektor/*` səhifələrindən əlçatan idi; indi `/toolkit` index-ində də görünür.
+
 ## [TASK-0201] fix(home): complete join CTA title + drop "Agentlik"/"agency" wording — 2026-06-06
 
 ### Fixed
