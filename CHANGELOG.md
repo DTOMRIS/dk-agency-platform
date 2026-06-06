@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [TASK-0199] fix(blog): production DB-yə çatışmayan 14 yazını sync et — 2026-06-06
+
+### Fixed
+- Statik blog mənbəsində mövcud olub production Neon DB-də olmayan 14 yazı idempotent seed ilə yayımlandı.
+- Blog seed artıq `stage` sahəsini də yazır və əlavə edilən/keçilən qeyd sayını göstərir.
+
 ## [TASK-0198] content(franchise): Fəsil 11 hüquqi redaksiya — 2026-06-06
 
 ### Added
