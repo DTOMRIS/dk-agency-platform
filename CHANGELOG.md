@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [TASK-0198] content(franchise): Fəsil 11 hüquqi redaksiya — 2026-06-06
+
+### Added
+- `DK Agency Franchise Bələdçisi` üçün AZ/TR Fəsil 11 mənbə faylı əlavə edildi və `status: ready` olaraq işarələndi.
+
+### Changed
+- Yerli markalar haqqında hüquqi risk yaradan uğursuzluq iddiaları çıxarıldı; Krispy Kreme, Quiznos və Burger King-in qlobal operator nümunələri saxlanıldı.
+
 ## [TASK-0183] feat(blog): wire 14 covers slug→blog-NN (drift-safe) — 2026-06-06
 
 ### Added
