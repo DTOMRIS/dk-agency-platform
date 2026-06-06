@@ -3086,6 +3086,28 @@
     "labelEmail": "Эл. почта:"
   },
   "home": {
+    "sectors": {
+      "badge": "Выберите сектор",
+      "title": "Какой у вас сектор?",
+      "subtitle": "Особые инструменты, советы и гайды для каждого сектора",
+      "items": {
+        "restoran": "Ресторан",
+        "restoranSub": "Полный сервис / Casual",
+        "kafe": "Кафе",
+        "kafeSub": "Specialty / Сеть",
+        "otel": "Отель и пансион",
+        "otelSub": "Бутик / Mid-scale",
+        "fastFood": "Fast Food",
+        "fastFoodSub": "QSR / Dark kitchen",
+        "catering": "Кейтеринг",
+        "cateringSub": "Банкет / Корпоратив"
+      }
+    },
+    "listings": {
+      "badge": "Передача и продажа",
+      "title": "Последние объявления",
+      "viewAll": "Смотреть все"
+    },
     "platformCards": {
       "eyebrow": "Платформа",
       "heading": "Три инструмента, одна экосистема",

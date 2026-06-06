@@ -3086,6 +3086,28 @@
     "labelEmail": "E-posta:"
   },
   "home": {
+    "sectors": {
+      "badge": "Sektörünüzü seçin",
+      "title": "Hangi sektördesiniz?",
+      "subtitle": "Her sektör için özel araçlar, tavsiyeler ve rehberler",
+      "items": {
+        "restoran": "Restoran",
+        "restoranSub": "Tam servis / Casual",
+        "kafe": "Kafe",
+        "kafeSub": "Specialty / Zincir",
+        "otel": "Otel & Pansiyon",
+        "otelSub": "Butik / Mid-scale",
+        "fastFood": "Fast Food",
+        "fastFoodSub": "QSR / Dark kitchen",
+        "catering": "Catering",
+        "cateringSub": "Banket / Kurumsal"
+      }
+    },
+    "listings": {
+      "badge": "Devir & Satış",
+      "title": "Son ilanlar",
+      "viewAll": "Tümünü gör"
+    },
     "platformCards": {
       "eyebrow": "Platform",
       "heading": "Üç araç, bir ekosistem",

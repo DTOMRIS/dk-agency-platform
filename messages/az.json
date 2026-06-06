@@ -3086,6 +3086,28 @@
     "labelEmail": "Email:"
   },
   "home": {
+    "sectors": {
+      "badge": "Sektorunuzu seçin",
+      "title": "Sən hansı sektordasan?",
+      "subtitle": "Hər sektor üçün xüsusi alətlər, məsləhətlər və bələdçilər",
+      "items": {
+        "restoran": "Restoran",
+        "restoranSub": "Tam servis / Casual",
+        "kafe": "Kafe",
+        "kafeSub": "Specialty / Şəbəkə",
+        "otel": "Otel & Pansiyon",
+        "otelSub": "Butik / Mid-scale",
+        "fastFood": "Fast Food",
+        "fastFoodSub": "QSR / Dark kitchen",
+        "catering": "Catering",
+        "cateringSub": "Banket / Korporativ"
+      }
+    },
+    "listings": {
+      "badge": "Devir & Satış",
+      "title": "Son elanlar",
+      "viewAll": "Hamısına bax"
+    },
     "platformCards": {
       "eyebrow": "Platforma",
       "heading": "Üç alət, bir ekosistem",

@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [TASK-0232] feat(home): sektor seçici + son elanlar bloku (light, brend-tutarlı) — 2026-06-06
+
+### Added
+- `components/home/SectorSelector.tsx` — 5 sektor kartı (restoran/kafe/otel → /sektor/[slug], fast-food → /toolkit/metbex-istasyon, catering → /ilanlar; 404 yox, HALT-3)
+- `components/home/RecentListings.tsx` — son 3 showcase elan (client fetch `GET /api/listings?showcase=true&limit=3`; elan yoxdursa blok gizlənir)
+- i18n `home.sectors` + `home.listings` (AZ/RU/EN/TR)
+- Hər ikisi ana səhifəyə yerləşdirildi (SectorSelector: Toolkit-dən əvvəl; RecentListings: blogdan əvvəl, warm `--dk-paper` zona)
+
+### Note
+- **Brend-tutarlı LIGHT** dizayn: spec-dəki AI-Studio dark token-ləri (`accent-1`, `bg-surface`) bu layihədə yoxdur → `--dk-red/--dk-gold/--dk-paper` + slate istifadə edildi.
+- Tam dark/light/warm **zona konversiyası** (Hero/blog dark) bu pasda EDİLMƏDİ — invaziv/subyektivdir; lokal vizual baxışdan sonra təsdiqlə davam ediləcək.
+- Status: lokal review üçün hazır (merge edilməyib).
+
 ## [TASK-0230] feat(toolkit): Personel Planlayıcısı (Restoran + Kafe) — 2026-06-06
 
 ### Added

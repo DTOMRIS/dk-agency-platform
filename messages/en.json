@@ -3086,6 +3086,28 @@
     "labelEmail": "Email:"
   },
   "home": {
+    "sectors": {
+      "badge": "Choose your sector",
+      "title": "What's your sector?",
+      "subtitle": "Tailored tools, tips and guides for every sector",
+      "items": {
+        "restoran": "Restaurant",
+        "restoranSub": "Full service / Casual",
+        "kafe": "Café",
+        "kafeSub": "Specialty / Chain",
+        "otel": "Hotel & Guesthouse",
+        "otelSub": "Boutique / Mid-scale",
+        "fastFood": "Fast Food",
+        "fastFoodSub": "QSR / Dark kitchen",
+        "catering": "Catering",
+        "cateringSub": "Banquet / Corporate"
+      }
+    },
+    "listings": {
+      "badge": "Transfer & Sale",
+      "title": "Latest listings",
+      "viewAll": "View all"
+    },
     "platformCards": {
       "eyebrow": "Platform",
       "heading": "Three tools, one ecosystem",

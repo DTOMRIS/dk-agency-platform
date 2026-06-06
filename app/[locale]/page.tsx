@@ -13,6 +13,8 @@ import ToolkitShowcase from '@/components/ToolkitShowcase';
 import { PlatformCards } from '@/components/home/PlatformCards';
 import { DoganNote } from '@/components/home/DoganNote';
 import { AhilikValues } from '@/components/home/AhilikValues';
+import { SectorSelector } from '@/components/home/SectorSelector';
+import { RecentListings } from '@/components/home/RecentListings';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
@@ -156,6 +158,7 @@ export default function Home() {
       <Hero />
       <AiReadinessScore />
       <PlatformCards />
+      <SectorSelector />
       <ToolkitShowcase />
 
       <section className="bg-white py-20">
@@ -185,6 +188,8 @@ export default function Home() {
       <DoganNote />
       <AhilikValues />
       <StageSelector />
+
+      <RecentListings />
 
       <section className="bg-slate-50 py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
