@@ -74,6 +74,8 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
     session,
     article.isPremium
   );
+  const cleanMarkdownContent = (renderedContent || '').replace(/^#\s+.+$/m, '').trim();
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -101,52 +103,45 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
     <BlogContentWrapper articleTitle={article.title} isPremium={article.isPremium}>
       <div className="min-h-screen bg-[var(--dk-paper)] pb-20 text-slate-900">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
-        <div className="relative h-[240px] w-full overflow-hidden sm:h-[320px] lg:h-[420px]">
-          <img
-            src={article.coverImage}
-            alt={article.coverImageAlt || article.title}
-            className="h-full w-full max-w-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-
-          <Link
-            href="/blog"
-            className="absolute left-6 top-6 z-10 flex items-center gap-2 text-sm font-medium text-white/80 transition-colors hover:text-white"
-          >
-            <ChevronLeft size={18} /> Bloga qayıt
-          </Link>
-
-          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 lg:p-16">
-            <div className="mx-auto max-w-4xl">
-              <div className="space-y-3 sm:space-y-4">
-                <div className="flex items-center gap-2">
-                  <span className="rounded-full bg-brand-red px-3 py-1 sm:px-4 sm:py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
-                    {cat?.emoji} {cat?.label}
+        
+        {/* Clean Header Area with Title & Subtitle */}
+        <div className="bg-white border-b border-slate-100 py-10 sm:py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-brand-red mb-6"
+            >
+              <ChevronLeft size={18} /> Bloga qayıt
+            </Link>
+            
+            <div className="space-y-4 max-w-4xl">
+              <div className="flex items-center gap-2">
+                <span className="rounded-full bg-brand-red px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
+                  {cat?.emoji} {cat?.label}
+                </span>
+                {article.stage && (
+                  <span className={`rounded-full px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl ${
+                    article.stage === 'Başla' ? 'bg-red-500' : article.stage === 'Böyüt' ? 'bg-amber-500' : 'bg-purple-500'
+                  }`}>
+                    {article.stage === 'Başla' ? '🏗️' : article.stage === 'Böyüt' ? '📊' : '🔄'} {article.stage}
                   </span>
-                  {article.stage && (
-                    <span className={`rounded-full px-3 py-1 sm:px-4 sm:py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl ${
-                      article.stage === 'Başla' ? 'bg-red-500' : article.stage === 'Böyüt' ? 'bg-amber-500' : 'bg-purple-500'
-                    }`}>
-                      {article.stage === 'Başla' ? '🏗️' : article.stage === 'Böyüt' ? '📊' : '🔄'} {article.stage}
-                    </span>
-                  )}
-                </div>
-                <h1 className="text-xl font-display font-black leading-tight tracking-tighter text-white sm:text-3xl lg:text-5xl">
-                  {article.title}
-                </h1>
-                {article.subtitle && (
-                  <p className="max-w-2xl text-sm text-white/70 sm:text-base sm:text-lg">{article.subtitle}</p>
                 )}
               </div>
+              <h1 className="font-display text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+                {article.title}
+              </h1>
+              {article.subtitle && (
+                <p className="max-w-3xl text-base text-slate-500 sm:text-lg leading-relaxed">{article.subtitle}</p>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="mx-auto mt-6 sm:mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:gap-12 lg:grid-cols-12">
             <article className="text-slate-900 lg:col-span-8">
-              <div className="mb-6 sm:mb-10 flex flex-wrap items-center gap-3 sm:gap-6 border-b border-slate-200 pb-6 sm:pb-8 text-xs font-bold uppercase tracking-widest text-slate-400">
+              {/* Metadata Bar */}
+              <div className="mb-8 flex flex-wrap items-center gap-3 sm:gap-6 border-b border-slate-200 pb-6 text-xs font-bold uppercase tracking-widest text-slate-400">
                 <div className="flex items-center gap-2">
                   <User size={16} className="text-brand-red" />
                   {article.author}
@@ -163,10 +158,6 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
                   <Clock size={16} className="text-brand-red" />
                   {article.readingTime} dəq oxu
                 </div>
-                <div className="flex items-center gap-2">
-                  <Tag size={16} className="text-brand-red" />
-                  {cat?.label}
-                </div>
                 <div className="ml-auto flex items-center gap-4">
                   <button className="transition-colors hover:text-brand-red">
                     <Share2 size={18} />
@@ -176,6 +167,18 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
                   </button>
                 </div>
               </div>
+
+              {/* Cover Image inside rounded Aspect-Ratio Box */}
+              {article.coverImage && (
+                <div className="mb-10 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-slate-50 shadow-lg shadow-slate-100/50 aspect-[16/10] relative">
+                  <img
+                    src={article.coverImage}
+                    alt={article.coverImageAlt || article.title}
+                    className="h-full w-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              )}
 
               {article.tags && article.tags.length > 0 && (
                 <div className="mb-8 flex flex-wrap gap-2">
@@ -187,7 +190,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
                 </div>
               )}
 
-              <MarkdownRenderer content={renderedContent} />
+              <MarkdownRenderer content={cleanMarkdownContent} />
 
               {(article.category === 'Hüquqi' || article.category === 'huquqi') && (
                 <LegalDisclaimer />

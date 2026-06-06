@@ -1,5 +1,21 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-06-06 — TASK-0200: fix(blog): cover images 404 & slug synchronization
+
+**Why:** Blog cover images looked correct on `/blog` (index) but were broken (404) on the detail page (`/blog/[slug]`) because relative paths from the database (e.g. `images/blog-13.png`) resolved relative to the `/blog/` route segment. Furthermore, slug mismatch for the article "İşləyən Franchise'i Almaq" (`isleyen-franchise-təhvil almaq` in static config containing a space vs `isleyen-franchise-devralmaq` in DB) prevented local static mapping fallbacks.
+
+**What:**
+- Renamed the slug `isleyen-franchise-təhvil almaq` to `isleyen-franchise-devralmaq` in `lib/data/blogArticles.ts` along with all `relatedArticles` array references.
+- Made `resolveLocalCover()` in `lib/db/blog-repository.ts` robust by prefixing any non-absolute, non-external DB featured image with `/` so they always render correctly on the detail pages.
+- Re-ran `npm run audit:system` to refresh `docs/SYSTEM-AUDIT.md`.
+
+**Verification:**
+- Ran `npm run audit:blogs` → 0 findings.
+- Ran `$env:ALLOW_PROTECTED="1"; npm run verify` → PASS.
+- Ran `$env:ALLOW_PROTECTED="1"; npm run build` → Compiled successfully (200 routes, 0 errors).
+
+---
+
 ## 2026-06-06 — TASK-F28: F2.8 Sektor Dynamic [slug] Route
 
 **Why:** 3 statik sektor route = 3× eyni kod. Config-driven dinamik `[slug]` route ilə yeni sektor = 1 config + 1 i18n namespace (kod yox). Gələcək `/sektor/catering` üçün kopya lazım olmayacaq.

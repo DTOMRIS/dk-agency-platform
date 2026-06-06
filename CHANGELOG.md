@@ -9,6 +9,12 @@
 - `export const maxDuration = 60` əlavə olundu (uzun generasiyada vaxt aşımı/erkən kəsilmənin qarşısını alır).
 - Bu endpoint 4 quiz tool-unu idarə edir (Otel, OTA, Franchise Readiness, Buyer Checklist) — hamısı düzəlir.
 
+## [TASK-0200] fix(blog): cover images 404 & slug synchronization — 2026-06-06
+
+### Fixed
+- Fixed a bug where relative image paths from the database (e.g. `images/blog-13.png`) resolved to `/blog/images/blog-13.png` (404) on the blog detail page. Added a leading slash fallback inside `resolveLocalCover`.
+- Synchronized static blog slug `isleyen-franchise-təhvil almaq` with database slug `isleyen-franchise-devralmaq` to resolve matching problems and support correct local cover image resolving.
+
 ## [TASK-0202] feat(toolkit): add Hospitality/OTA section to /toolkit — 2026-06-06
 
 ### Added

@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-06-06 10:09:38 | Branch: feat/f28-sektor-dynamic-route | f67719b
+> Son güncəlləmə: 2026-06-06 11:40:34 | Branch: feat/blog-14-covers | 3867880
 
 ## Route İnventarı
 | Kateqoriya | Say |
@@ -43,10 +43,10 @@ AI Insight bağlı səhifə: **9**
 ## ENV (.env.local)
 | Key | Status |
 |-----|--------|
-| DEEPSEEK_API_KEY | ❌ |
+| DEEPSEEK_API_KEY | ✅ |
 | GEMINI_API_KEY | ⚠️ yorum/yox |
 | ANTHROPIC_API_KEY | ⚠️ fallback yox |
-| SMTP_USER | ❌ |
+| SMTP_USER | ✅ |
 
 ## Email Backend
 | Komponent | Status |
@@ -54,7 +54,7 @@ AI Insight bağlı səhifə: **9**
 | Provider | ✅ Hostinger SMTP (nodemailer) |
 | Templates | ✅ lib/email/templates.ts |
 | Routes | ✅ 10 API route sendEmail() |
-| SMTP_USER | ⚠️ boş → console.log mock |
+| SMTP_USER | ✅ .env.local-da dolu |
 
 ## Fatura OCR
 | Komponent | Status |

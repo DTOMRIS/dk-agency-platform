@@ -4,6 +4,10 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0200` Fixed cover image 404s on the blog detail page by ensuring relative DB paths (e.g. `images/blog-13.png`) are resolved with a leading slash `/` inside `resolveLocalCover`.
+- `TASK-0200` Synchronized static config slug `isleyen-franchise-təhvil almaq` to `isleyen-franchise-devralmaq` to match the database and support proper fallback resolutions.
+
 ### Added
 - `TASK-0197` F2.7: Yandex Metrica events for sektor pages (`trackSektorEvent` wrapper + 5 component wire)
 - `TASK-0197` OG social card: dynamic 1200x630 `opengraph-image.tsx` for `/sektor/qonaq-evi`
