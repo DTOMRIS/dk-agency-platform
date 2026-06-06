@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [TASK-0204] content(blog): unsourced statistics softened + 2 real sources — 2026-06-06
+
+### Changed
+- Blog atıf auditi (`scripts/blog-citation-audit.ts` + `docs/BLOG-CITATION-AUDIT.md`) əlavə olundu — iddia→mənbə tiered tarama.
+- 6 mənbəsiz real-dünya statistikası müşahidə dilinə yumşaldıldı (food-cost, başabaş, kurumsal, delivery yazıları) — uydurma rəqəm/iddia çıxarıldı.
+- 2 yoxlanıla bilən iddiaya real mənbə əlavə olundu: food cost sənaye standartı (28-35%); restoran işçi dönüşümü (ABŞ Milli Restoran Assosiasiyası / NRA).
+- Sitatlar (Roger Fields, Danny Meyer, David Scott Peters) və DK Agency Notu anekdotları atributlu olduğu üçün toxunulmadı.
+
+### Note
+- Dəyişən 4 yazı production DB-yə sync olunmalıdır: `npx tsx scripts/sync-static-blog-article.ts <slug>` (1-porsiya-food-cost-hesablama, isci-saxlama-7-strategiya, kurumsal-kitabca-emeliyyat, wolt-bolt-komissiyon).
+
 ## [TASK-0203] fix(ai): readiness report truncation — raise token ceiling — 2026-06-06
 
 ### Fixed
