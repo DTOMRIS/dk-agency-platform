@@ -7,16 +7,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 
-const heroCopy: Record<Locale, {
-  badge: string;
-  title: [string, string, string];
-  body: string;
-  note: string;
-  primaryCta: string;
-  secondaryCta: string;
-  stats: Array<{ value: string; label: string }>;
-  illustrationAlt: string;
-}> = {
+const heroCopy: Record<
+  Locale,
+  {
+    badge: string;
+    title: [string, string, string];
+    body: string;
+    note: string;
+    primaryCta: string;
+    secondaryCta: string;
+    stats: Array<{ value: string; label: string }>;
+    illustrationAlt: string;
+  }
+> = {
   az: {
     badge: 'Azərbaycanın ilk AI-dəstəkli HoReCa platforması',
     title: ['Restoranın niyə', 'pul itirdiyini', 'bilmirsən?'],
@@ -24,7 +27,11 @@ const heroCopy: Record<Locale, {
     note: 'Bu sektorda duz-çörək haqqını qoruyan sistem qururuq.',
     primaryCta: 'İndi başla',
     secondaryCta: 'Alətləri kəşf et',
-    stats: [{ value: 'BETA', label: 'Pilot proqram açıqdır' }, { value: '10+', label: 'Pulsuz alət' }, { value: 'AI', label: 'KAZAN dəstəyi' }],
+    stats: [
+      { value: 'BETA', label: 'Pilot proqram açıqdır' },
+      { value: '10+', label: 'Pulsuz alət' },
+      { value: 'AI', label: 'KAZAN dəstəyi' },
+    ],
     illustrationAlt: 'DK Agency HoReCa idarəetmə illüstrasiyası',
   },
   ru: {
@@ -34,7 +41,11 @@ const heroCopy: Record<Locale, {
     note: 'Мы строим систему, которая защищает справедливый труд и ремесленную этику сектора.',
     primaryCta: 'Начать сейчас',
     secondaryCta: 'Изучить инструменты',
-    stats: [{ value: 'BETA', label: 'Открыта пилотная программа' }, { value: '10+', label: 'Бесплатных инструментов' }, { value: 'AI', label: 'Поддержка KAZAN' }],
+    stats: [
+      { value: 'BETA', label: 'Открыта пилотная программа' },
+      { value: '10+', label: 'Бесплатных инструментов' },
+      { value: 'AI', label: 'Поддержка KAZAN' },
+    ],
     illustrationAlt: 'Иллюстрация управления HoReCa от DK Agency',
   },
   en: {
@@ -44,7 +55,11 @@ const heroCopy: Record<Locale, {
     note: 'We are building a system that protects the craft and the earned bread of this sector.',
     primaryCta: 'Start now',
     secondaryCta: 'Explore tools',
-    stats: [{ value: 'BETA', label: 'Pilot program is open' }, { value: '10+', label: 'Free tools' }, { value: 'AI', label: 'KAZAN support' }],
+    stats: [
+      { value: 'BETA', label: 'Pilot program is open' },
+      { value: '10+', label: 'Free tools' },
+      { value: 'AI', label: 'KAZAN support' },
+    ],
     illustrationAlt: 'DK Agency HoReCa operations illustration',
   },
   tr: {
@@ -54,7 +69,11 @@ const heroCopy: Record<Locale, {
     note: 'Bu sektörde emeğin ve duz-çörək haqqının korunduğu bir sistem kuruyoruz.',
     primaryCta: 'Şimdi başla',
     secondaryCta: 'Araçları keşfet',
-    stats: [{ value: 'BETA', label: 'Pilot program açık' }, { value: '10+', label: 'Ücretsiz araç' }, { value: 'AI', label: 'KAZAN desteği' }],
+    stats: [
+      { value: 'BETA', label: 'Pilot program açık' },
+      { value: '10+', label: 'Ücretsiz araç' },
+      { value: 'AI', label: 'KAZAN desteği' },
+    ],
     illustrationAlt: 'DK Agency HoReCa yönetim illüstrasyonu',
   },
 };
@@ -64,8 +83,9 @@ export default function Hero() {
   const copy = heroCopy[locale];
 
   return (
-    <section className="relative overflow-hidden bg-[var(--dk-paper)] pb-20 pt-32">
-      <div className="pointer-events-none absolute right-0 top-0 h-[60%] w-[60%] bg-[radial-gradient(ellipse_at_top_right,rgba(233,69,96,0.10)_0%,transparent_70%)]" />
+    <section className="relative overflow-hidden bg-[linear-gradient(135deg,var(--dk-night)_0%,var(--dk-navy)_55%,var(--dk-surface-deep)_100%)] pb-20 pt-32">
+      <div className="pointer-events-none absolute right-0 top-0 h-[70%] w-[70%] bg-[radial-gradient(ellipse_at_top_right,rgba(233,69,96,0.20)_0%,transparent_70%)]" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-[50%] w-[50%] bg-[radial-gradient(ellipse_at_bottom_left,rgba(197,160,34,0.10)_0%,transparent_70%)]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-16 lg:grid-cols-2">
@@ -74,13 +94,13 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-1.5">
-              <Award size={14} className="text-amber-600" />
-              <span className="text-xs font-semibold text-amber-700">{copy.badge}</span>
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
+              <Award size={14} className="text-[var(--dk-gold)]" />
+              <span className="text-xs font-semibold text-[var(--dk-gold)]">{copy.badge}</span>
             </div>
 
             <h1
-              className="mb-5 font-display font-extrabold leading-[1.06] tracking-tight text-slate-900"
+              className="mb-5 font-display font-extrabold leading-[1.06] tracking-tight text-white"
               style={{ fontSize: 'clamp(2.25rem, 5vw, 3.5rem)' }}
             >
               {copy.title[0]}
@@ -90,8 +110,8 @@ export default function Hero() {
               {copy.title[2]}
             </h1>
 
-            <p className="mb-2 max-w-lg text-lg leading-relaxed text-slate-700">{copy.body}</p>
-            <p className="mb-8 text-sm italic text-amber-700">{copy.note}</p>
+            <p className="mb-2 max-w-lg text-lg leading-relaxed text-slate-300">{copy.body}</p>
+            <p className="mb-8 text-sm italic text-[var(--dk-gold)]">{copy.note}</p>
 
             <div className="flex flex-wrap gap-3">
               <Link
@@ -103,7 +123,7 @@ export default function Hero() {
               </Link>
               <Link
                 href={withLocale(locale, '/toolkit')}
-                className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-7 py-3.5 text-base font-semibold text-slate-900 transition-colors hover:bg-gray-50"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/10"
               >
                 <Play size={16} fill="currentColor" />
                 {copy.secondaryCta}
@@ -113,8 +133,8 @@ export default function Hero() {
             <div className="mt-12 flex gap-8">
               {copy.stats.map((stat) => (
                 <div key={stat.label}>
-                  <div className="text-2xl font-extrabold text-slate-900">{stat.value}</div>
-                  <div className="mt-1 text-[11px] uppercase tracking-wider text-gray-500">
+                  <div className="text-2xl font-extrabold text-[var(--dk-gold)]">{stat.value}</div>
+                  <div className="mt-1 text-[11px] uppercase tracking-wider text-slate-400">
                     {stat.label}
                   </div>
                 </div>
