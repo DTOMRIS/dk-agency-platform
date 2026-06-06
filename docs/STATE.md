@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-06T15:50:32.686Z
+- GeneratedAt: 2026-06-06T16:17:43.732Z
 - BuildStatus: PASS
 
-## Routes (220)
+## Routes (222)
 - /
 - /[locale]
 - /[locale]/about
