@@ -53,6 +53,74 @@
     "companyName": "DENİS TOMRİS MMC"
   },
   "toolkit": {
+    "metbexIstasyon": {
+      "title": "Mətbəx İstasyon Kalkulyatoru",
+      "description": "Fast food və QSR mətbəxlər üçün menyu SKU sayına görə istasyon sayı və kadrolar",
+      "badge": "QSR / Fast Food",
+      "concept": {
+        "label": "Konsept",
+        "fastFood": "Fast Food",
+        "qsrBurger": "QSR — Burger / Sandviç",
+        "qsrPizza": "QSR — Pizza / Pasta",
+        "darkKitchen": "Dark Kitchen",
+        "catering": "Catering / Banket"
+      },
+      "menuSku": "Menyu SKU sayı (məhsul sayı)",
+      "menuSkuHelp": "Menyunuzdakı fərqli məhsulların ümumi sayı",
+      "gunlukFis": "Günlük ortalama fiş / sifariş",
+      "mutfaqMetrekare": "Mətbəx sahəsi (m²)",
+      "kanallar": {
+        "label": "Servis kanalları",
+        "dineIn": "Salondan servis",
+        "takeaway": "Götür-get",
+        "delivery": "Çatdırılma (Delivery)",
+        "driveThru": "Drive-thru"
+      },
+      "hesabla": "İstasyonları Hesabla",
+      "result": {
+        "istasyonlar": "Mətbəx İstasyonları",
+        "istasyonXeritesi": "İstasyon Xəritəsi",
+        "istiIstasyon": "İsti İstasyon",
+        "soyuqIstasyon": "Soyuq İstasyon",
+        "neferPerIstasyon": "nəfər",
+        "kadrolar": "Kadrolar",
+        "sabahVardiyasi": "Səhər vardiyası",
+        "ogleRush": "Öğlə rush",
+        "axsamVardiyasi": "Axşam vardiyası",
+        "shiftLeader": "Shift Leader",
+        "shiftLeaderLazim": "Lazımdır (200+ fiş norması)",
+        "shiftLeaderLazimDeyil": "Hələ lazım deyil",
+        "laborMaliyyeti": "Əmək maliyyəti",
+        "aylig": "Aylıq (təxmini)",
+        "laborFaizi": "Əmək faizi",
+        "qsrHedep": "QSR hədəf: < 32%",
+        "aiInsight": "KAZAN AI Tövsiyəsi",
+        "ideal": "Hədəfdə",
+        "dikkat": "Diqqət",
+        "kritik": "Kritik",
+        "baza": "Baza",
+        "peak": "Peak",
+        "stations": {
+          "grillFryer": "Izqara / Fritöz",
+          "assemblyCashier": "Montaj / Kassa",
+          "grillHot": "Izqara / İsti",
+          "fryerCold": "Fritöz / Soyuq",
+          "assemblySauce": "Montaj / Souslar",
+          "hotKitchen": "İsti Mətbəx (izqara)",
+          "fryer": "Fritöz İstasyonu",
+          "coldSalad": "Soyuq / Salat",
+          "assemblyPack": "Montaj / Qablaşdırma",
+          "hotKitchenA": "İsti Mətbəx A",
+          "hotKitchenB": "İsti Mətbəx B",
+          "assembly": "Montaj",
+          "expeditor": "Expeditor / Keyfiyyət"
+        }
+      },
+      "seo": {
+        "title": "Mətbəx İstasyon Kalkulyatoru — DK Agency",
+        "description": "Fast food və QSR mətbəxlər üçün SKU sayına görə istasyon planlaması. Kadrolar, əmək faizi."
+      }
+    },
     "badge": "Pulsuz Alətlər",
     "title": "DK Agency Toolkit",
     "subtitle": "Restoranını idarə etmək üçün pulsuz alətlər. Food cost, P&L, checklist — hamısı bir yerdə.",

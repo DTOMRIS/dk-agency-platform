@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [TASK-0231] feat(toolkit): Mətbəx İstasyon Kalkulyatoru (QSR / Fast Food) — 2026-06-06
+
+### Added
+- `/toolkit/metbex-istasyon` — menyu SKU sayına görə istasyon sayı + kadrolar (fast food, QSR burger/pizza, dark kitchen, catering)
+- Calc engine (client-side): SKU→istasyon (2/3/4/6), fiş+kanal bazlı baza/peak/axşam kadro, shift leader (200+ fiş), istasyon xəritəsi (isti/soyuq), əmək faizi — QSROnline/araşdırma formulları
+- `components/marketinq-ocagi/metbex-istasyon/MetbexIstasyonPage.tsx` + root mirror + locale wrapper
+- i18n `toolkit.metbexIstasyon` (AZ/RU/EN/TR), 13 istasyon ad açarı daxil
+- AI insight: `getToolkitInsight`-a `metbex-istasyon` prompt (yeni API route YOX — L-009)
+
+### Note
+- Slug Doğan tərəfindən `lib/marketing-tools-config.ts`-ə əl ilə əlavə olunacaq (PROTECTED).
+- Əmək faizi spec sabitlərindən (380 AZN, cek, 26 gün) hesablanır; product-owner kalibrasiyası ilə dəqiqləşdirilə bilər.
+
 ## [TASK-0204] content(blog): unsourced statistics softened + 2 real sources — 2026-06-06
 
 ### Changed

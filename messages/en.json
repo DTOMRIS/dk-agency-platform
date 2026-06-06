@@ -53,6 +53,74 @@
     "companyName": "DENIS TOMRIS LLC"
   },
   "toolkit": {
+    "metbexIstasyon": {
+      "title": "Kitchen Station Calculator",
+      "description": "Station count and staffing for fast food / QSR kitchens based on menu SKU count",
+      "badge": "QSR / Fast Food",
+      "concept": {
+        "label": "Concept",
+        "fastFood": "Fast Food",
+        "qsrBurger": "QSR — Burger / Sandwich",
+        "qsrPizza": "QSR — Pizza / Pasta",
+        "darkKitchen": "Dark Kitchen",
+        "catering": "Catering / Banquet"
+      },
+      "menuSku": "Menu SKU count (items)",
+      "menuSkuHelp": "Total number of distinct menu items",
+      "gunlukFis": "Average daily checks / orders",
+      "mutfaqMetrekare": "Kitchen area (m²)",
+      "kanallar": {
+        "label": "Service channels",
+        "dineIn": "Dine-in",
+        "takeaway": "Takeaway",
+        "delivery": "Delivery",
+        "driveThru": "Drive-thru"
+      },
+      "hesabla": "Calculate Stations",
+      "result": {
+        "istasyonlar": "Kitchen Stations",
+        "istasyonXeritesi": "Station Map",
+        "istiIstasyon": "Hot Station",
+        "soyuqIstasyon": "Cold Station",
+        "neferPerIstasyon": "ppl",
+        "kadrolar": "Staffing",
+        "sabahVardiyasi": "Morning shift",
+        "ogleRush": "Lunch rush",
+        "axsamVardiyasi": "Evening shift",
+        "shiftLeader": "Shift Leader",
+        "shiftLeaderLazim": "Required (200+ checks norm)",
+        "shiftLeaderLazimDeyil": "Not yet required",
+        "laborMaliyyeti": "Labor cost",
+        "aylig": "Monthly (est.)",
+        "laborFaizi": "Labor %",
+        "qsrHedep": "QSR target: < 32%",
+        "aiInsight": "KAZAN AI Advice",
+        "ideal": "On target",
+        "dikkat": "Caution",
+        "kritik": "Critical",
+        "baza": "Base",
+        "peak": "Peak",
+        "stations": {
+          "grillFryer": "Grill / Fryer",
+          "assemblyCashier": "Assembly / Cashier",
+          "grillHot": "Grill / Hot",
+          "fryerCold": "Fryer / Cold",
+          "assemblySauce": "Assembly / Sauces",
+          "hotKitchen": "Hot Kitchen (grill)",
+          "fryer": "Fryer Station",
+          "coldSalad": "Cold / Salad",
+          "assemblyPack": "Assembly / Packing",
+          "hotKitchenA": "Hot Kitchen A",
+          "hotKitchenB": "Hot Kitchen B",
+          "assembly": "Assembly",
+          "expeditor": "Expeditor / Quality"
+        }
+      },
+      "seo": {
+        "title": "Kitchen Station Calculator — DK Agency",
+        "description": "Station planning for fast food / QSR kitchens by SKU count. Staffing, labor percentage."
+      }
+    },
     "badge": "Free Tools",
     "title": "DK Agency Toolkit",
     "subtitle": "Free tools to manage your restaurant. Food cost, P&L, checklist — all in one place.",
