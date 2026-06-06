@@ -8,9 +8,12 @@ import { usePathname } from 'next/navigation';
 import {
   ArrowRight,
   BarChart3,
+  BedDouble,
   Calculator,
   ClipboardList,
+  Globe,
   HardHat,
+  MessageCircle,
   Palette,
   Shield,
   Target,
@@ -42,6 +45,10 @@ interface PageCopy {
   cta: string;
   startTools: Omit<ToolCard, 'icon' | 'color' | 'href'>[];
   growthTools: Omit<ToolCard, 'icon' | 'color' | 'href'>[];
+  otaBadge: string;
+  otaHeading: string;
+  otaBody: string;
+  otaTools: Omit<ToolCard, 'icon' | 'color' | 'href'>[];
 }
 
 const copy: Record<Locale, PageCopy> = {
@@ -60,24 +67,74 @@ const copy: Record<Locale, PageCopy> = {
       'Buradakı 5 alət əməliyyat, marja, komanda və delivery performansını ölçmək üçündür. Məqsəd intuisiya ilə yox, rəqəmlə idarə etməkdir.',
     cta: 'Başla',
     startTools: [
-      { title: 'Açılış Checklist', desc: 'Hüquqi işlər, məkan, menyu, komanda və marketinq addımlarını yoxla.' },
-      { title: 'İnşaat Checklist', desc: 'İnşaatdan açılışa qədər fazalı iş planını və sahə qeydlərini izləyin.' },
-      { title: 'AQTA Hazırlıq', desc: 'Gigiyena, sənədləşdirmə və cərimə risklərini bölmə-bölmə yoxla.' },
-      { title: 'Markalaşma Guide', desc: 'Marka sözü, vizual kimlik və sosial media xəttini workbook ilə qur.' },
-      { title: 'Başabaş Nöqtəsi', desc: 'Aylıq minimum satış, günlük müştəri sayı və təhlükəsizlik marjasını hesabla.' },
+      {
+        title: 'Açılış Checklist',
+        desc: 'Hüquqi işlər, məkan, menyu, komanda və marketinq addımlarını yoxla.',
+      },
+      {
+        title: 'İnşaat Checklist',
+        desc: 'İnşaatdan açılışa qədər fazalı iş planını və sahə qeydlərini izləyin.',
+      },
+      {
+        title: 'AQTA Hazırlıq',
+        desc: 'Gigiyena, sənədləşdirmə və cərimə risklərini bölmə-bölmə yoxla.',
+      },
+      {
+        title: 'Markalaşma Guide',
+        desc: 'Marka sözü, vizual kimlik və sosial media xəttini workbook ilə qur.',
+      },
+      {
+        title: 'Başabaş Nöqtəsi',
+        desc: 'Aylıq minimum satış, günlük müştəri sayı və təhlükəsizlik marjasını hesabla.',
+      },
     ],
     growthTools: [
-      { title: 'Food Cost Kalkulyator', desc: 'Porsiya maya dəyərini hesabla və ideal food cost faizinə görə qiymət qur.' },
-      { title: 'P&L Simulyator', desc: 'Gəlir-xərc hesabatı yarat, prime cost və xalis mənfəəti nəzarətdə saxla.' },
+      {
+        title: 'Food Cost Kalkulyator',
+        desc: 'Porsiya maya dəyərini hesabla və ideal food cost faizinə görə qiymət qur.',
+      },
+      {
+        title: 'P&L Simulyator',
+        desc: 'Gəlir-xərc hesabatı yarat, prime cost və xalis mənfəəti nəzarətdə saxla.',
+      },
       { title: 'Menyu Matrisi', desc: 'Yeməkləri Ulduz, At, Puzzle və İt kateqoriyalarına ayır.' },
-      { title: 'İşçi Saxlama', desc: 'Turnover faizini, dəyişmə xərcini və illik kadr itkisini hesabla.' },
-      { title: 'Delivery Kalkulyator', desc: 'Wolt, Bolt Food, Yango və öz delivery üçün komissiya marjasını hesabla.' },
+      {
+        title: 'İşçi Saxlama',
+        desc: 'Turnover faizini, dəyişmə xərcini və illik kadr itkisini hesabla.',
+      },
+      {
+        title: 'Delivery Kalkulyator',
+        desc: 'Wolt, Bolt Food, Yango və öz delivery üçün komissiya marjasını hesabla.',
+      },
+    ],
+    otaBadge: 'QONAQLAMA',
+    otaHeading: 'Otel, Pansiyon & Qonaq Evi',
+    otaBody:
+      'Booking, Airbnb və OTA kanalları üçün hazırlıq testləri, gəlir hesabı və hazır mətnlər.',
+    otaTools: [
+      {
+        title: 'OTA Hazırlıq Testi',
+        desc: 'Booking, Airbnb və Yandex Travel profilinin hazırlığını yoxla.',
+      },
+      {
+        title: 'Otel Hazırlıq Testi',
+        desc: 'AHA ulduz standartına uyğunluğu 3 dəqiqədə qiymətləndir.',
+      },
+      {
+        title: 'Qonaq Evi ROI Kalkulyatoru',
+        desc: 'OTA komissiyası, otaq gəliri və geri qaytarma müddətini hesabla.',
+      },
+      {
+        title: 'WhatsApp Şablon Paketi',
+        desc: 'Qarşılamadan VIP qonağa qədər 10 hazır mətn.',
+      },
     ],
   },
   tr: {
     badge: 'Ücretsiz Araçlar',
     heroTitle: 'DK Agency Toolkit',
-    heroSubtitle: 'Araçları aşamaya göre ayırdık: önce açılış sistemini kur, sonra rakamlarla büyüt.',
+    heroSubtitle:
+      'Araçları aşamaya göre ayırdık: önce açılış sistemini kur, sonra rakamlarla büyüt.',
     imageAlt: 'Restoran stok ve sipariş akışı',
     startBadge: 'BAŞLA',
     startHeading: 'Restoran Açıyor musun?',
@@ -89,24 +146,77 @@ const copy: Record<Locale, PageCopy> = {
       'Bu 5 araç operasyon, marj, ekip ve delivery performansını ölçmek içindir. Amaç sezgiyle değil, rakamlarla yönetmektir.',
     cta: 'Başla',
     startTools: [
-      { title: 'Açılış Checklist', desc: 'Hukuki işler, mekan, menü, ekip ve pazarlama adımlarını kontrol et.' },
-      { title: 'İnşaat Checklist', desc: 'İnşaattan açılışa kadar aşamalı iş planını ve saha notlarını takip edin.' },
-      { title: 'AQTA Hazırlık', desc: 'Hijyen, belgeleme ve ceza risklerini bölüm bölüm kontrol et.' },
-      { title: 'Markalaşma Rehberi', desc: 'Marka sesi, görsel kimlik ve sosyal medya hattını workbook ile oluştur.' },
-      { title: 'Başabaş Noktası', desc: 'Aylık minimum satış, günlük müşteri sayısı ve güvenlik marjını hesapla.' },
+      {
+        title: 'Açılış Checklist',
+        desc: 'Hukuki işler, mekan, menü, ekip ve pazarlama adımlarını kontrol et.',
+      },
+      {
+        title: 'İnşaat Checklist',
+        desc: 'İnşaattan açılışa kadar aşamalı iş planını ve saha notlarını takip edin.',
+      },
+      {
+        title: 'AQTA Hazırlık',
+        desc: 'Hijyen, belgeleme ve ceza risklerini bölüm bölüm kontrol et.',
+      },
+      {
+        title: 'Markalaşma Rehberi',
+        desc: 'Marka sesi, görsel kimlik ve sosyal medya hattını workbook ile oluştur.',
+      },
+      {
+        title: 'Başabaş Noktası',
+        desc: 'Aylık minimum satış, günlük müşteri sayısı ve güvenlik marjını hesapla.',
+      },
     ],
     growthTools: [
-      { title: 'Food Cost Hesaplayıcı', desc: 'Porsiyon maliyetini hesapla ve ideal food cost yüzdesine göre fiyatlandır.' },
-      { title: 'P&L Simülatörü', desc: 'Gelir-gider raporu oluştur, prime cost ve net kârı kontrol altında tut.' },
-      { title: 'Menü Matrisi', desc: 'Yemekleri Yıldız, At, Bulmaca ve Köpek kategorilerine ayır.' },
-      { title: 'Personel Tutma', desc: 'Turnover oranını, değişim maliyetini ve yıllık kayıpları hesapla.' },
-      { title: 'Delivery Hesaplayıcı', desc: 'Wolt, Bolt Food, Yango ve kendi deliveryn için komisyon marjını hesapla.' },
+      {
+        title: 'Food Cost Hesaplayıcı',
+        desc: 'Porsiyon maliyetini hesapla ve ideal food cost yüzdesine göre fiyatlandır.',
+      },
+      {
+        title: 'P&L Simülatörü',
+        desc: 'Gelir-gider raporu oluştur, prime cost ve net kârı kontrol altında tut.',
+      },
+      {
+        title: 'Menü Matrisi',
+        desc: 'Yemekleri Yıldız, At, Bulmaca ve Köpek kategorilerine ayır.',
+      },
+      {
+        title: 'Personel Tutma',
+        desc: 'Turnover oranını, değişim maliyetini ve yıllık kayıpları hesapla.',
+      },
+      {
+        title: 'Delivery Hesaplayıcı',
+        desc: 'Wolt, Bolt Food, Yango ve kendi deliveryn için komisyon marjını hesapla.',
+      },
+    ],
+    otaBadge: 'KONAKLAMA',
+    otaHeading: 'Otel, Pansiyon & Misafirhane',
+    otaBody:
+      'Booking, Airbnb ve OTA kanalları için hazırlık testleri, gelir hesabı ve hazır metinler.',
+    otaTools: [
+      {
+        title: 'OTA Hazırlık Testi',
+        desc: 'Booking, Airbnb ve Yandex Travel profil hazırlığını kontrol et.',
+      },
+      {
+        title: 'Otel Hazırlık Testi',
+        desc: 'AHA yıldız standardına uygunluğu 3 dakikada değerlendir.',
+      },
+      {
+        title: 'Misafirhane ROI Hesaplayıcı',
+        desc: 'OTA komisyonu, oda geliri ve geri dönüş süresini hesapla.',
+      },
+      {
+        title: 'WhatsApp Şablon Paketi',
+        desc: 'Karşılamadan VIP misafire kadar 10 hazır metin.',
+      },
     ],
   },
   en: {
     badge: 'Free Tools',
     heroTitle: 'DK Agency Toolkit',
-    heroSubtitle: 'We divided the tools by stage: first build your launch system, then grow with data.',
+    heroSubtitle:
+      'We divided the tools by stage: first build your launch system, then grow with data.',
     imageAlt: 'Restaurant stock and order flow',
     startBadge: 'LAUNCH',
     startHeading: 'Opening a Restaurant?',
@@ -119,23 +229,73 @@ const copy: Record<Locale, PageCopy> = {
     cta: 'Start',
     startTools: [
       { title: 'Opening Checklist', desc: 'Track legal, venue, menu, team, and marketing steps.' },
-      { title: 'Construction Checklist', desc: 'Follow a phased work plan and site notes from build to opening.' },
-      { title: 'AQTA Readiness', desc: 'Audit hygiene, documentation, and penalty risks section by section.' },
-      { title: 'Branding Guide', desc: 'Build your brand voice, visual identity, and social media line with a workbook.' },
-      { title: 'Break-Even Point', desc: 'Calculate minimum monthly sales, daily customer count, and safety margin.' },
+      {
+        title: 'Construction Checklist',
+        desc: 'Follow a phased work plan and site notes from build to opening.',
+      },
+      {
+        title: 'AQTA Readiness',
+        desc: 'Audit hygiene, documentation, and penalty risks section by section.',
+      },
+      {
+        title: 'Branding Guide',
+        desc: 'Build your brand voice, visual identity, and social media line with a workbook.',
+      },
+      {
+        title: 'Break-Even Point',
+        desc: 'Calculate minimum monthly sales, daily customer count, and safety margin.',
+      },
     ],
     growthTools: [
-      { title: 'Food Cost Calculator', desc: 'Calculate portion cost and price according to your ideal food cost percentage.' },
-      { title: 'P&L Simulator', desc: 'Generate an income-expense report and keep prime cost and net profit in check.' },
-      { title: 'Menu Matrix', desc: 'Classify dishes into Star, Ploughhouse, Puzzle, and Dog categories.' },
-      { title: 'Staff Retention', desc: 'Calculate turnover rate, replacement cost, and annual talent loss.' },
-      { title: 'Delivery Calculator', desc: 'Calculate commission margins for Wolt, Bolt Food, Yango, and your own delivery.' },
+      {
+        title: 'Food Cost Calculator',
+        desc: 'Calculate portion cost and price according to your ideal food cost percentage.',
+      },
+      {
+        title: 'P&L Simulator',
+        desc: 'Generate an income-expense report and keep prime cost and net profit in check.',
+      },
+      {
+        title: 'Menu Matrix',
+        desc: 'Classify dishes into Star, Ploughhouse, Puzzle, and Dog categories.',
+      },
+      {
+        title: 'Staff Retention',
+        desc: 'Calculate turnover rate, replacement cost, and annual talent loss.',
+      },
+      {
+        title: 'Delivery Calculator',
+        desc: 'Calculate commission margins for Wolt, Bolt Food, Yango, and your own delivery.',
+      },
+    ],
+    otaBadge: 'HOSPITALITY',
+    otaHeading: 'Hotel, Guesthouse & B&B',
+    otaBody:
+      'Readiness tests, revenue math and ready-to-send copy for Booking, Airbnb and OTA channels.',
+    otaTools: [
+      {
+        title: 'OTA Readiness Test',
+        desc: 'Check your Booking, Airbnb and Yandex Travel profile readiness.',
+      },
+      {
+        title: 'Hotel Readiness Test',
+        desc: 'Assess AHA star-standard compliance in 3 minutes.',
+      },
+      {
+        title: 'Guesthouse ROI Calculator',
+        desc: 'Calculate OTA commission, room revenue and payback period.',
+      },
+      {
+        title: 'WhatsApp Template Pack',
+        desc: '10 ready messages from welcome to VIP guest.',
+      },
     ],
   },
   ru: {
     badge: 'Бесплатные инструменты',
     heroTitle: 'DK Agency Toolkit',
-    heroSubtitle: 'Инструменты разделены по этапам: сначала выстроите систему запуска, затем растите с цифрами.',
+    heroSubtitle:
+      'Инструменты разделены по этапам: сначала выстроите систему запуска, затем растите с цифрами.',
     imageAlt: 'Поток запасов и заказов ресторана',
     startBadge: 'ЗАПУСК',
     startHeading: 'Открываете ресторан?',
@@ -147,23 +307,78 @@ const copy: Record<Locale, PageCopy> = {
       'Эти 5 инструментов предназначены для измерения операционных показателей, маржи, командной работы и эффективности доставки. Цель — управлять цифрами, а не интуицией.',
     cta: 'Начать',
     startTools: [
-      { title: 'Чеклист открытия', desc: 'Проверьте юридические вопросы, помещение, меню, команду и маркетинг.' },
-      { title: 'Строительный чеклист', desc: 'Следите за поэтапным планом работ и полевыми заметками от стройки до открытия.' },
-      { title: 'Готовность к AQTA', desc: 'Проверьте гигиену, документацию и риски штрафов по разделам.' },
-      { title: 'Руководство по брендингу', desc: 'Создайте голос бренда, визуальную идентичность и линию в соцсетях с воркбуком.' },
-      { title: 'Точка безубыточности', desc: 'Рассчитайте минимальные ежемесячные продажи, ежедневное количество клиентов и запас прочности.' },
+      {
+        title: 'Чеклист открытия',
+        desc: 'Проверьте юридические вопросы, помещение, меню, команду и маркетинг.',
+      },
+      {
+        title: 'Строительный чеклист',
+        desc: 'Следите за поэтапным планом работ и полевыми заметками от стройки до открытия.',
+      },
+      {
+        title: 'Готовность к AQTA',
+        desc: 'Проверьте гигиену, документацию и риски штрафов по разделам.',
+      },
+      {
+        title: 'Руководство по брендингу',
+        desc: 'Создайте голос бренда, визуальную идентичность и линию в соцсетях с воркбуком.',
+      },
+      {
+        title: 'Точка безубыточности',
+        desc: 'Рассчитайте минимальные ежемесячные продажи, ежедневное количество клиентов и запас прочности.',
+      },
     ],
     growthTools: [
-      { title: 'Калькулятор food cost', desc: 'Рассчитайте стоимость порции и установите цену по идеальному проценту food cost.' },
-      { title: 'P&L симулятор', desc: 'Создайте отчёт доходов и расходов, держите prime cost и чистую прибыль под контролем.' },
-      { title: 'Матрица меню', desc: 'Классифицируйте блюда на Звезду, Рабочую лошадку, Загадку и Собаку.' },
-      { title: 'Удержание персонала', desc: 'Рассчитайте коэффициент текучести, стоимость замены и годовые потери кадров.' },
-      { title: 'Калькулятор доставки', desc: 'Рассчитайте комиссионную маржу для Wolt, Bolt Food, Yango и собственной доставки.' },
+      {
+        title: 'Калькулятор food cost',
+        desc: 'Рассчитайте стоимость порции и установите цену по идеальному проценту food cost.',
+      },
+      {
+        title: 'P&L симулятор',
+        desc: 'Создайте отчёт доходов и расходов, держите prime cost и чистую прибыль под контролем.',
+      },
+      {
+        title: 'Матрица меню',
+        desc: 'Классифицируйте блюда на Звезду, Рабочую лошадку, Загадку и Собаку.',
+      },
+      {
+        title: 'Удержание персонала',
+        desc: 'Рассчитайте коэффициент текучести, стоимость замены и годовые потери кадров.',
+      },
+      {
+        title: 'Калькулятор доставки',
+        desc: 'Рассчитайте комиссионную маржу для Wolt, Bolt Food, Yango и собственной доставки.',
+      },
+    ],
+    otaBadge: 'ГОСТЕПРИИМСТВО',
+    otaHeading: 'Отель, пансион и гостевой дом',
+    otaBody: 'Тесты готовности, расчёт дохода и готовые тексты для Booking, Airbnb и OTA-каналов.',
+    otaTools: [
+      {
+        title: 'Тест готовности OTA',
+        desc: 'Проверьте готовность профиля Booking, Airbnb и Yandex Travel.',
+      },
+      {
+        title: 'Тест готовности отеля',
+        desc: 'Оцените соответствие звёздному стандарту AHA за 3 минуты.',
+      },
+      {
+        title: 'ROI-калькулятор гостевого дома',
+        desc: 'Рассчитайте комиссию OTA, доход номера и срок окупаемости.',
+      },
+      {
+        title: 'Пакет шаблонов WhatsApp',
+        desc: '10 готовых сообщений от приветствия до VIP-гостя.',
+      },
     ],
   },
 };
 
-const START_TOOL_META: Array<{ href: string; color: string; icon: ComponentType<{ size?: number; className?: string }> }> = [
+const START_TOOL_META: Array<{
+  href: string;
+  color: string;
+  icon: ComponentType<{ size?: number; className?: string }>;
+}> = [
   { href: '/toolkit/checklist', icon: ClipboardList, color: 'bg-rose-500' },
   { href: '/toolkit/insaat-checklist', icon: HardHat, color: 'bg-orange-500' },
   { href: '/toolkit/aqta-checklist', icon: Shield, color: 'bg-red-500' },
@@ -171,12 +386,27 @@ const START_TOOL_META: Array<{ href: string; color: string; icon: ComponentType<
   { href: '/toolkit/basabas', icon: Target, color: 'bg-amber-500' },
 ];
 
-const GROWTH_TOOL_META: Array<{ href: string; color: string; icon: ComponentType<{ size?: number; className?: string }> }> = [
+const GROWTH_TOOL_META: Array<{
+  href: string;
+  color: string;
+  icon: ComponentType<{ size?: number; className?: string }>;
+}> = [
   { href: '/toolkit/food-cost', icon: Calculator, color: 'bg-emerald-500' },
   { href: '/toolkit/pnl', icon: BarChart3, color: 'bg-blue-500' },
   { href: '/toolkit/menu-matrix', icon: UtensilsCrossed, color: 'bg-purple-500' },
   { href: '/toolkit/staff-retention', icon: Users, color: 'bg-indigo-500' },
   { href: '/toolkit/delivery-calc', icon: Truck, color: 'bg-orange-500' },
+];
+
+const OTA_TOOL_META: Array<{
+  href: string;
+  color: string;
+  icon: ComponentType<{ size?: number; className?: string }>;
+}> = [
+  { href: '/toolkit/ota-hazirlig-testi', icon: Globe, color: 'bg-sky-500' },
+  { href: '/toolkit/otel-hazirlig-testi', icon: BedDouble, color: 'bg-teal-500' },
+  { href: '/toolkit/qonaq-evi-roi-kalkulyatoru', icon: Calculator, color: 'bg-cyan-500' },
+  { href: '/toolkit/whatsapp-template-paketi', icon: MessageCircle, color: 'bg-green-500' },
 ];
 
 function useLocaleFromPath(): Locale {
@@ -191,7 +421,11 @@ function ToolGrid({
   cta,
 }: {
   tools: Omit<ToolCard, 'icon' | 'color' | 'href'>[];
-  meta: Array<{ href: string; color: string; icon: ComponentType<{ size?: number; className?: string }> }>;
+  meta: Array<{
+    href: string;
+    color: string;
+    icon: ComponentType<{ size?: number; className?: string }>;
+  }>;
   cta: string;
 }) {
   return (
@@ -205,7 +439,9 @@ function ToolGrid({
             href={m.href}
             className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:border-brand-red/20 hover:shadow-xl"
           >
-            <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${m.color}`}>
+            <div
+              className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${m.color}`}
+            >
               <Icon size={24} className="text-white" />
             </div>
             <h2 className="mb-2 text-lg font-bold text-slate-900 transition-colors group-hover:text-brand-red">
@@ -292,6 +528,17 @@ export default function ToolkitPage() {
             <p className="mt-3 text-base leading-7 text-slate-500">{c.growthBody}</p>
           </div>
           <ToolGrid tools={c.growthTools} meta={GROWTH_TOOL_META} cta={c.cta} />
+        </section>
+
+        <section className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+          <div className="mb-8 max-w-2xl">
+            <div className="mb-3 inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-sky-600">
+              {c.otaBadge}
+            </div>
+            <h2 className="text-3xl font-display font-black text-slate-900">{c.otaHeading}</h2>
+            <p className="mt-3 text-base leading-7 text-slate-500">{c.otaBody}</p>
+          </div>
+          <ToolGrid tools={c.otaTools} meta={OTA_TOOL_META} cta={c.cta} />
         </section>
       </div>
     </div>
