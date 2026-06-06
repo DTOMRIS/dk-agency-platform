@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [TASK-0203] fix(ai): readiness report truncation — raise token ceiling — 2026-06-06
+
+### Fixed
+- `/api/franchise/readiness-report` AI hesabatı yarıda kəsilirdi (AZ 3-bölməli mətn `max_tokens: 1200`-ə sığmırdı). DeepSeek `max_tokens` 1200→3000, Gemini fallback `maxOutputTokens` 800→3000 qaldırıldı.
+- `export const maxDuration = 60` əlavə olundu (uzun generasiyada vaxt aşımı/erkən kəsilmənin qarşısını alır).
+- Bu endpoint 4 quiz tool-unu idarə edir (Otel, OTA, Franchise Readiness, Buyer Checklist) — hamısı düzəlir.
+
 ## [TASK-0202] feat(toolkit): add Hospitality/OTA section to /toolkit — 2026-06-06
 
 ### Added

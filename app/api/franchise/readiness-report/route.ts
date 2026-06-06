@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AI_MODELS } from '@/lib/ai-models';
-import { buildFranchiseReportPrompt, isFranchiseReportTaskType, type FranchiseReportTaskType } from '@/lib/ai/franchiseReport';
+import {
+  buildFranchiseReportPrompt,
+  isFranchiseReportTaskType,
+  type FranchiseReportTaskType,
+} from '@/lib/ai/franchiseReport';
+
+// Long-form AZ reports (3 sections) need generation headroom; allow up to 60s
+// on platforms that honor this (prevents premature cut-off / timeout).
+export const maxDuration = 60;
 
 type ReportRequestBody = {
   scores?: Record<string, number>;
@@ -18,12 +26,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  const {
-    scores,
-    locale = 'az',
-    avgScore = 0,
-    referrer = '',
-  } = body;
+  const { scores, locale = 'az', avgScore = 0, referrer = '' } = body;
 
   if (!scores || typeof scores !== 'object') {
     return NextResponse.json({ error: 'scores required' }, { status: 400 });
@@ -56,7 +59,7 @@ export async function POST(req: NextRequest) {
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        max_tokens: 1200,
+        max_tokens: 3000,
         temperature: 0.7,
       }),
     });
@@ -78,7 +81,7 @@ export async function POST(req: NextRequest) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               contents: [{ parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }] }],
-              generationConfig: { maxOutputTokens: 800, temperature: 0.7 },
+              generationConfig: { maxOutputTokens: 3000, temperature: 0.7 },
             }),
           }
         );
