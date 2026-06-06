@@ -1,69 +1,82 @@
-/** Sektor Landing Page — shared type definitions */
+/**
+ * Sektor landing config types.
+ *
+ * F2.8: a single config-driven `[slug]` route renders every sektor landing.
+ * Each sektor supplies a config; the 7 `Sektor*` components are already
+ * namespace-driven (`useTranslations(namespace)`), so a config only needs the
+ * i18n namespace + the per-sektor variable bits (hrefs, icons, blog slugs).
+ */
 
-export type SektorToolIcon = 'quiz' | 'calculator' | 'whatsapp' | 'checklist';
+export type SektorIcon = 'quiz' | 'calculator' | 'whatsapp';
 
-export interface SektorToolItem {
-  titleKey: string;
-  descKey: string;
-  ctaKey: string;
-  href: string;
-  icon: SektorToolIcon;
-  isHero?: boolean;
-}
-
-export interface SektorStatItem {
+export interface SektorStatConfig {
   labelKey: string;
   valueKey: string;
   sourceKey: string;
 }
 
-export interface SektorFaqItem {
+export interface SektorToolConfig {
+  titleKey: string;
+  descKey: string;
+  ctaKey: string;
+  /** Real toolkit route, e.g. `/toolkit/food-cost` */
+  href: string;
+  icon: SektorIcon;
+  isHero?: boolean;
+}
+
+export interface SektorFaqConfig {
   questionKey: string;
   answerKey: string;
 }
 
+export interface SektorCtaConfig {
+  key: string;
+  href: string;
+}
+
+/** OpenGraph image fields — kept ASCII/latin to render safely in satori. */
+export interface SektorOgConfig {
+  title: string;
+  subtitle: string;
+  badges: string[];
+}
+
 export interface SektorConfig {
-  /** URL slug: 'qonaq-evi', 'otel', 'restoran', 'kafe' */
+  /** URL slug, e.g. `qonaq-evi` */
   slug: string;
-  /** Analytics slug (camelCase): 'qonaqEvi', 'otel', 'restoran', 'kafe' */
-  sektorSlug: string;
-  /** i18n namespace in messages/{locale}.json */
+  /** i18n namespace, e.g. `sektorQonaqEvi` */
   namespace: string;
-  /** Page metadata */
-  meta: {
-    titleKey: string;
-    descriptionKey: string;
-    ogTitleKey: string;
-    ogDescriptionKey: string;
-  };
-  /** Hero section keys */
+  /** analytics slug, e.g. `qonaqEvi` */
+  sektorSlug: string;
+  /** Plain-text meta description (AZ) — avoids touching the qonaqEvi namespace. */
+  metaDescription: string;
   hero: {
     headlineKey: string;
     sublineKey: string;
     statBadgeKey: string;
-    primaryCta: { key: string; href: string };
-    secondaryCta: { key: string; href: string };
+    primaryCta: SektorCtaConfig;
+    secondaryCta: SektorCtaConfig;
     heroImage?: string;
   };
-  /** Stats grid */
-  stats: SektorStatItem[];
-  /** Tools grid */
-  tools: SektorToolItem[];
-  /** Blog teaser slugs */
+  stats: SektorStatConfig[];
+  toolsSectionTitleKey: string;
+  tools: SektorToolConfig[];
+  blogSectionTitleKey: string;
   blogSlugs: string[];
-  /** Lead capture */
   leadCapture: {
     headingKey: string;
     bodyKey: string;
     buttonKey: string;
+    /** Client analytics tag only; the lead API hardcodes its own source. */
     toolSource: string;
   };
-  /** FAQ items */
-  faqItems: SektorFaqItem[];
-  /** Footer CTA */
+  faqSectionTitleKey: string;
+  faqItems: SektorFaqConfig[];
   footerCta: {
     headlineKey: string;
     ctaKey: string;
     href: string;
   };
+  og: SektorOgConfig;
 }

@@ -13,11 +13,18 @@ import {
 import { trackSektorEvent } from '@/lib/analytics/sektorEvents';
 import type { SektorConfig } from '@/lib/data/sektorConfigs';
 
-interface SektorPageClientProps {
+interface SektorLandingProps {
   config: SektorConfig;
 }
 
-export default function SektorPageClient({ config }: SektorPageClientProps) {
+/**
+ * Config-driven sektor landing. Receives a serialisable {@link SektorConfig}
+ * from the server `[slug]` page and renders the shared, namespace-driven
+ * sektor sections. Fires the `view` analytics event once per sektor.
+ */
+export default function SektorLanding({ config }: SektorLandingProps) {
+  const ns = config.namespace;
+
   useEffect(() => {
     trackSektorEvent({ sektor: config.sektorSlug, action: 'view' });
   }, [config.sektorSlug]);
@@ -25,7 +32,7 @@ export default function SektorPageClient({ config }: SektorPageClientProps) {
   return (
     <>
       <SektorHero
-        namespace={config.namespace}
+        namespace={ns}
         headlineKey={config.hero.headlineKey}
         sublineKey={config.hero.sublineKey}
         statBadgeKey={config.hero.statBadgeKey}
@@ -35,23 +42,23 @@ export default function SektorPageClient({ config }: SektorPageClientProps) {
         sektorSlug={config.sektorSlug}
       />
 
-      <SektorStatGrid namespace={config.namespace} stats={config.stats} />
+      <SektorStatGrid namespace={ns} stats={config.stats} />
 
       <SektorToolGrid
-        namespace={config.namespace}
-        sectionTitleKey="tools.sectionTitle"
+        namespace={ns}
+        sectionTitleKey={config.toolsSectionTitleKey}
         tools={config.tools}
         sektorSlug={config.sektorSlug}
       />
 
       <SektorBlogTeaserGrid
-        namespace={config.namespace}
-        sectionTitleKey="blogTeasers.sectionTitle"
+        namespace={ns}
+        sectionTitleKey={config.blogSectionTitleKey}
         blogSlugs={config.blogSlugs}
       />
 
       <SektorLeadCapture
-        namespace={config.namespace}
+        namespace={ns}
         headingKey={config.leadCapture.headingKey}
         bodyKey={config.leadCapture.bodyKey}
         buttonKey={config.leadCapture.buttonKey}
@@ -60,14 +67,14 @@ export default function SektorPageClient({ config }: SektorPageClientProps) {
       />
 
       <SektorFaqAccordion
-        namespace={config.namespace}
-        sectionTitleKey="faq.sectionTitle"
+        namespace={ns}
+        sectionTitleKey={config.faqSectionTitleKey}
         items={config.faqItems}
         sektorSlug={config.sektorSlug}
       />
 
       <SektorFooterCta
-        namespace={config.namespace}
+        namespace={ns}
         headlineKey={config.footerCta.headlineKey}
         ctaKey={config.footerCta.ctaKey}
         href={config.footerCta.href}

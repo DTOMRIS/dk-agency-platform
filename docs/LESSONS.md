@@ -230,3 +230,28 @@ saxlayırdı, DB content-i əzirdi. Problemlər:
 
 Qayda: DB-first content sistemində hardcoded fallback QADAĞANDIR. Content
 yalnız DB-dən gəlməlidir. Override lazımdırsa, DB-də ayrı sütun istifadə et.
+
+### L-038 — Default-locale (az) prefix-siz route üçün ROOT-LEVEL mirror MƏCBURİDİR (6 İyun 2026)
+F2.8-də dinamik `[slug]` sektor route əlavə edildi. `app/[locale]/sektor/[slug]` yaradıldı,
+köhnə root-level `app/sektor/qonaq-evi` silindi. Nəticə: `/en/sektor/otel` → 200, amma
+`/sektor/otel` (az, prefix-siz) → 404 — **HƏM dev HƏM production** (real bug, dev kvirki yox).
+
+Kök səbəb: bu codebase default-locale (az) prefix-siz route-ları middleware rewrite ilə
+DEYİL, hər route üçün ROOT-LEVEL mirror ilə servis edir. `app-paths-manifest.json`-da
+işləyən route üçün HƏM `/[locale]/blog` HƏM `/blog` qeydi var:
+```
+app/blog/page.tsx        → export { default } from '@/app/[locale]/blog/page';
+app/blog/[slug]/page.tsx → export { default, generateMetadata } from '@/app/[locale]/blog/[slug]/page';
+```
+`as-needed`: `/az/sektor/otel` → 307 → `/sektor/otel`; əgər root `app/sektor` yoxdursa → 404.
+
+Düzəliş: hər yeni `[locale]` route üçün eyni adlı root mirror yarat (page + [slug] + lazımsa
+opengraph-image + not-found). Mirror-da `params.locale` YOXDUR → `[locale]` səhifədə locale-i
+`params`-dan deyil, `getLocale()` (`next-intl/server`)-dən al ki, həm `[locale]` həm root işləsin.
+
+Yoxlama qaydası: yeni route-u HƏMİŞƏ prefix-siz default-locale URL ilə test et
+(`/sektor/otel`, `/blog`), təkcə `/en/...` ilə yox. Diaqnostika: `next build` + `next start`
++ `app-paths-manifest.json`-da `/X` (locale-siz) qeydinin varlığını yoxla.
+
+Qeyd: bu mühitdə `next build` üçün `NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1`
+lazımdır (Google Fonts TLS fetch), yoxsa font-da fail edir — bu env kod problemi deyil.

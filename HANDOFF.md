@@ -1,5 +1,29 @@
 # HANDOFF
 
+## Session 6 İyun 2026 — F2.8 Sektor Dynamic [slug] Route
+
+**Branch:** `feat/f28-sektor-dynamic-route` (origin/main üstündə)
+
+### Tamamlanan
+- Config-driven dinamik `app/[locale]/sektor/[slug]/` route — `lib/data/sektorConfigs/` SSOT
+- 3 yeni sektor: **otel, restoran, kafe** (+ migrasiya olunmuş qonaq-evi) — config + i18n (4 dil)
+- Sektor index `app/[locale]/sektor/page.tsx`, slug-aware OG, lokalizə not-found
+- `e2e/sektor-config.test.ts` integrity test (PASS)
+- Köhnə statik qonaq-evi route-ları silindi (A1)
+
+### ✅ Production-da doğrulandı (`next build` + `next start`)
+- `/sektor/{qonaq-evi,otel,restoran,kafe}` (az, prefix-siz) → **200**
+- `/sektor/bilinmeyen` → **404** (SektorNotFound) ; `/az/sektor/otel` → **307** ; `/sektor` → **200** ; `/en/sektor/otel` → **200** ; `/sektor/otel/opengraph-image` → **200 png**
+- Kritik dərs (L-038): default-locale (az) prefix-siz route **root-level mirror** tələb edir (`app/sektor/...` → `app/[locale]/sektor/...`). Köhnə root route silinmişdi → əvvəlcə 404 verdi, mirror əlavə edilib düzəldildi.
+- Qeyd: bu mühitdə `next build` üçün `NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1` lazımdır (Google Fonts TLS).
+
+### Növbəti
+- `/sektor` index-i naviqasiyaya (Header MegaMenu) bağla
+- Yeni sektor: **catering** — 1 config + 1 i18n namespace + (lazımsa) root mirror; kod yox
+- Yeni `[locale]` route əlavə edən hər kəs: ROOT MIRROR yaratmağı unutma (L-038)
+
+---
+
 ## Session 4 İyun 2026 (axşam) — F2.7 Sprint
 
 **Repo:** `C:/codelar/dk-agency-platform` — main branch, təmiz.

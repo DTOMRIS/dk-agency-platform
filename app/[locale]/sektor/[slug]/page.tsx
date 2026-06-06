@@ -1,47 +1,45 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getTranslations } from 'next-intl/server';
-import { getSektorConfig, VALID_SEKTOR_SLUGS } from '@/lib/data/sektorConfigs';
-import SektorPageClient from './SektorPageClient';
+import { getLocale, getTranslations } from 'next-intl/server';
 
-interface PageProps {
-  params: Promise<{ locale: string; slug: string }>;
+import SektorLanding from '@/components/sektor/SektorLanding';
+import { getSektorConfig } from '@/lib/data/sektorConfigs';
+
+// Only `slug` is read from params — the locale comes from `getLocale()` so this
+// page works both at `/[locale]/sektor/[slug]` and via the locale-less root
+// mirror `app/sektor/[slug]` (where `params` has no `locale`).
+interface SektorPageParams {
+  params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return VALID_SEKTOR_SLUGS.map((slug) => ({ slug }));
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: SektorPageParams): Promise<Metadata> {
   const { slug } = await params;
   const config = getSektorConfig(slug);
-  if (!config) return {};
+  if (!config) {
+    return { title: 'Sektor tapılmadı | DK Agency' };
+  }
 
-  const t = await getTranslations(config.namespace);
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: config.namespace });
+  const title = t('pageTitle');
 
   return {
-    title: t(config.meta.titleKey),
-    description: t(config.meta.descriptionKey),
+    title,
+    description: config.metaDescription,
     openGraph: {
-      title: t(config.meta.ogTitleKey),
-      description: t(config.meta.ogDescriptionKey),
+      title,
+      description: config.metaDescription,
       type: 'website',
-      images: [
-        {
-          url: `/sektor/${slug}/opengraph-image`,
-          width: 1200,
-          height: 630,
-          alt: `${t(config.meta.ogTitleKey)} — DK Agency`,
-        },
-      ],
     },
   };
 }
 
-export default async function SektorPage({ params }: PageProps) {
+export default async function SektorSlugPage({ params }: SektorPageParams) {
   const { slug } = await params;
   const config = getSektorConfig(slug);
-  if (!config) notFound();
+  if (!config) {
+    notFound();
+  }
 
-  return <SektorPageClient config={config} />;
+  return <SektorLanding config={config} />;
 }
