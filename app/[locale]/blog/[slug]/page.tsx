@@ -170,7 +170,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
 
               {/* Cover Image inside rounded Aspect-Ratio Box */}
               {article.coverImage && (
-                <div className="mb-10 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-slate-50 shadow-lg shadow-slate-100/50 aspect-[16/10] relative">
+                <div className="mb-10 overflow-hidden rounded-3xl sm:rounded-[2.5rem] border border-slate-200 bg-slate-50 shadow-lg shadow-slate-100/50 aspect-[16/10] relative">
                   <img
                     src={article.coverImage}
                     alt={article.coverImageAlt || article.title}
