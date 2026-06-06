@@ -53,6 +53,74 @@
     "companyName": "DENİS TOMRİS LLC"
   },
   "toolkit": {
+    "metbexIstasyon": {
+      "title": "Mutfak İstasyon Hesaplayıcı",
+      "description": "Fast food ve QSR mutfaklar için menü SKU sayısına göre istasyon sayısı ve kadrolar",
+      "badge": "QSR / Fast Food",
+      "concept": {
+        "label": "Konsept",
+        "fastFood": "Fast Food",
+        "qsrBurger": "QSR — Burger / Sandviç",
+        "qsrPizza": "QSR — Pizza / Makarna",
+        "darkKitchen": "Dark Kitchen",
+        "catering": "Catering / Banket"
+      },
+      "menuSku": "Menü SKU sayısı (ürün sayısı)",
+      "menuSkuHelp": "Menünüzdeki farklı ürünlerin toplam sayısı",
+      "gunlukFis": "Günlük ortalama fiş / sipariş",
+      "mutfaqMetrekare": "Mutfak alanı (m²)",
+      "kanallar": {
+        "label": "Servis kanalları",
+        "dineIn": "Salon servisi",
+        "takeaway": "Paket",
+        "delivery": "Teslimat (Delivery)",
+        "driveThru": "Drive-thru"
+      },
+      "hesabla": "İstasyonları Hesapla",
+      "result": {
+        "istasyonlar": "Mutfak İstasyonları",
+        "istasyonXeritesi": "İstasyon Haritası",
+        "istiIstasyon": "Sıcak İstasyon",
+        "soyuqIstasyon": "Soğuk İstasyon",
+        "neferPerIstasyon": "kişi",
+        "kadrolar": "Kadrolar",
+        "sabahVardiyasi": "Sabah vardiyası",
+        "ogleRush": "Öğle rush",
+        "axsamVardiyasi": "Akşam vardiyası",
+        "shiftLeader": "Shift Leader",
+        "shiftLeaderLazim": "Gerekli (200+ fiş normu)",
+        "shiftLeaderLazimDeyil": "Henüz gerekli değil",
+        "laborMaliyyeti": "Personel maliyeti",
+        "aylig": "Aylık (tahmini)",
+        "laborFaizi": "Personel yüzdesi",
+        "qsrHedep": "QSR hedef: < 32%",
+        "aiInsight": "KAZAN AI Tavsiyesi",
+        "ideal": "Hedefte",
+        "dikkat": "Dikkat",
+        "kritik": "Kritik",
+        "baza": "Baz",
+        "peak": "Peak",
+        "stations": {
+          "grillFryer": "Izgara / Fritöz",
+          "assemblyCashier": "Montaj / Kasa",
+          "grillHot": "Izgara / Sıcak",
+          "fryerCold": "Fritöz / Soğuk",
+          "assemblySauce": "Montaj / Soslar",
+          "hotKitchen": "Sıcak Mutfak (ızgara)",
+          "fryer": "Fritöz İstasyonu",
+          "coldSalad": "Soğuk / Salata",
+          "assemblyPack": "Montaj / Paketleme",
+          "hotKitchenA": "Sıcak Mutfak A",
+          "hotKitchenB": "Sıcak Mutfak B",
+          "assembly": "Montaj",
+          "expeditor": "Expeditor / Kalite"
+        }
+      },
+      "seo": {
+        "title": "Mutfak İstasyon Hesaplayıcı — DK Agency",
+        "description": "Fast food ve QSR mutfaklar için SKU sayısına göre istasyon planlaması. Kadrolar, personel yüzdesi."
+      }
+    },
     "personelPlanlayici": {
       "title": "Personel Planlayıcı",
       "description": "Restoran ve kafe için vardiya bazında optimal personel sayısını hesapla",

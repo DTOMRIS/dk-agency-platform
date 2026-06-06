@@ -1,16 +1,18 @@
 /**
  * @file marketing-tools-config.ts
- * @purpose Marketinq Ocagi 21 aletinin single source of truth konfiqurasiyasi
+ * @purpose Marketinq Ocagi 24 aletinin single source of truth konfiqurasiyasi
  * @critical Ozbahceci dersi — butun sehifeler, API, gating buradan oxuyur
- * @lastModified 2026-05-18 (TASK-0153 — status audit, 17 live + 4 planned)
+ * @lastModified 2026-06-06 (TASK-0231 — 19 live + 1 beta + 4 planned)
  *
  * TIER BÖLGÜSÜ (tier field-ə görə, fiziki sıra deyil):
- *   ŞAGIRD: 3 alət (marka-kompasi, kst-yoxlayici, yemek-xerci)
+ *   ŞAGIRD: 5 alət (marka-kompasi, kst-yoxlayici, yemek-xerci,
+ *           personel-planlayici, metbex-istasyon)
  *   KALFA:  12 alət (menyu-analitigi, promosyon-roi, sezon-analitikasi,
  *           reklam-roi, sikayet-analitigi, sikayet-cavablandirici,
  *           sosial-metrik, restoran-audit, trend-analiz, lokasyon-analiz,
  *           sezon-planlama, reklam-yazicisi)
- *   USTA:   6 alət (pnl-simulator, musteri-persona — live;
+ *   USTA:   7 alət (pnl-simulator, musteri-persona — live;
+ *           franchbook-generator — beta;
  *           sosial-medya-plan, audit-robotu, trend-analitigi,
  *           lokasyon-secme — planned)
  */
@@ -60,10 +62,10 @@ export interface MarketingToolConfig {
   estimatedCostAznPerRun: number;
 }
 
-// ── 21 ALET KONFIQURASIYASI (17 live + 4 planned) ──────────────────
+// ── 24 ALET KONFIQURASIYASI (19 live + 1 beta + 4 planned) ─────────
 
 export const MARKETING_TOOLS: MarketingToolConfig[] = [
-  // ── SAGIRD PILLESI (3 alət, pulsuz) ──────────────────────────────
+  // ── SAGIRD PILLESI (5 alət, pulsuz) ──────────────────────────────
 
   {
     slug: 'marka-kompasi',
@@ -605,6 +607,51 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     },
     monthlyRunLimit: { sagird: 0, kalfa: 0, usta: 10 },
     estimatedCostAznPerRun: 0.35,
+  },
+
+  {
+    slug: 'personel-planlayici',
+    category: 'emeliyyat',
+    tier: 'sagird',
+    iconName: 'Users',
+    status: 'live',
+    aiProvider: 'deepseek',
+    aiFallback: 'claude',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'concept', type: 'text', required: true },
+        { name: 'koltukSayisi', type: 'number', required: true },
+        { name: 'gunlukFis', type: 'number', required: true },
+        { name: 'gunTipi', type: 'text', required: true },
+        { name: 'achilisVaxti', type: 'number', required: true },
+        { name: 'kapanisSaati', type: 'number', required: true },
+      ],
+    },
+    monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
+    estimatedCostAznPerRun: 0.0003,
+  },
+
+  {
+    slug: 'metbex-istasyon',
+    category: 'emeliyyat',
+    tier: 'sagird',
+    iconName: 'ChefHat',
+    status: 'live',
+    aiProvider: 'deepseek',
+    aiFallback: 'claude',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'concept', type: 'text', required: true },
+        { name: 'menuSkuSayisi', type: 'number', required: true },
+        { name: 'gunlukFisSayisi', type: 'number', required: true },
+        { name: 'mutfaqMetrekare', type: 'number', required: true },
+        { name: 'servisKanallar', type: 'textarea', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: 3, kalfa: 10, usta: null },
+    estimatedCostAznPerRun: 0.0003,
   },
 ];
 

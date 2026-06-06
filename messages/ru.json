@@ -53,6 +53,74 @@
     "companyName": "ДЕНИС ТОМРИС ООО"
   },
   "toolkit": {
+    "metbexIstasyon": {
+      "title": "Калькулятор кухонных станций",
+      "description": "Число станций и персонала для fast food и QSR кухонь по количеству SKU меню",
+      "badge": "QSR / Fast Food",
+      "concept": {
+        "label": "Концепция",
+        "fastFood": "Fast Food",
+        "qsrBurger": "QSR — Бургер / Сэндвич",
+        "qsrPizza": "QSR — Пицца / Паста",
+        "darkKitchen": "Dark Kitchen",
+        "catering": "Кейтеринг / Банкет"
+      },
+      "menuSku": "Число SKU меню (позиций)",
+      "menuSkuHelp": "Общее число разных позиций в меню",
+      "gunlukFis": "Среднее число чеков / заказов в день",
+      "mutfaqMetrekare": "Площадь кухни (м²)",
+      "kanallar": {
+        "label": "Каналы обслуживания",
+        "dineIn": "Зал",
+        "takeaway": "Навынос",
+        "delivery": "Доставка",
+        "driveThru": "Drive-thru"
+      },
+      "hesabla": "Рассчитать станции",
+      "result": {
+        "istasyonlar": "Кухонные станции",
+        "istasyonXeritesi": "Карта станций",
+        "istiIstasyon": "Горячая станция",
+        "soyuqIstasyon": "Холодная станция",
+        "neferPerIstasyon": "чел.",
+        "kadrolar": "Персонал",
+        "sabahVardiyasi": "Утренняя смена",
+        "ogleRush": "Обеденный пик",
+        "axsamVardiyasi": "Вечерняя смена",
+        "shiftLeader": "Shift Leader",
+        "shiftLeaderLazim": "Нужен (норма 200+ чеков)",
+        "shiftLeaderLazimDeyil": "Пока не нужен",
+        "laborMaliyyeti": "Затраты на персонал",
+        "aylig": "В месяц (примерно)",
+        "laborFaizi": "Доля затрат на персонал",
+        "qsrHedep": "Цель QSR: < 32%",
+        "aiInsight": "Совет KAZAN AI",
+        "ideal": "В цели",
+        "dikkat": "Внимание",
+        "kritik": "Критично",
+        "baza": "База",
+        "peak": "Пик",
+        "stations": {
+          "grillFryer": "Гриль / Фритюр",
+          "assemblyCashier": "Сборка / Касса",
+          "grillHot": "Гриль / Горячий",
+          "fryerCold": "Фритюр / Холодный",
+          "assemblySauce": "Сборка / Соусы",
+          "hotKitchen": "Горячий цех (гриль)",
+          "fryer": "Станция фритюра",
+          "coldSalad": "Холодный / Салаты",
+          "assemblyPack": "Сборка / Упаковка",
+          "hotKitchenA": "Горячий цех A",
+          "hotKitchenB": "Горячий цех B",
+          "assembly": "Сборка",
+          "expeditor": "Экспедитор / Контроль"
+        }
+      },
+      "seo": {
+        "title": "Калькулятор кухонных станций — DK Agency",
+        "description": "Планирование станций для fast food и QSR кухонь по числу SKU. Персонал, доля затрат."
+      }
+    },
     "personelPlanlayici": {
       "title": "Планировщик персонала",
       "description": "Рассчитайте оптимальное число персонала по сменам для ресторана и кафе",

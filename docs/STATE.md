@@ -107,6 +107,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/food-cost
 - /[locale]/toolkit/insaat-checklist
 - /[locale]/toolkit/menu-matrix
+- /[locale]/toolkit/metbex-istasyon
 - /[locale]/toolkit/ota-hazirlig-testi
 - /[locale]/toolkit/otel-hazirlig-testi
 - /[locale]/toolkit/personel-planlayici
@@ -215,6 +216,7 @@ Auto-generated. Do not edit manually.
 - /toolkit/food-cost
 - /toolkit/insaat-checklist
 - /toolkit/menu-matrix
+- /toolkit/metbex-istasyon
 - /toolkit/ota-hazirlig-testi
 - /toolkit/otel-hazirlig-testi
 - /toolkit/personel-planlayici
