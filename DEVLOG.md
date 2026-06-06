@@ -1,5 +1,38 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-06-06 — TASK-F28: F2.8 Sektor Dynamic [slug] Route
+
+**Why:** 3 statik sektor route = 3× eyni kod. Config-driven dinamik `[slug]` route ilə yeni sektor = 1 config + 1 i18n namespace (kod yox). Gələcək `/sektor/catering` üçün kopya lazım olmayacaq.
+
+**What:**
+- `lib/data/sektorConfigs/` SSOT (types + builder + qonaqEvi/otel/restoran/kafe + index) — `getSektorConfig`, `VALID_SEKTOR_SLUGS`
+- `app/[locale]/sektor/[slug]/` — server page (generateMetadata + notFound) + slug-aware OG image + lokalizə not-found
+- `components/sektor/SektorLanding.tsx` — client; config → 7 namespace-driven komponent + view event
+- `app/[locale]/sektor/page.tsx` — sektor index (kartlar)
+- i18n: `sektorOtel`/`sektorRestoran`/`sektorKafe` + `sektorNotFound` + `sektorIndex` × 4 dil
+- Köhnə statik qonaq-evi route-ları silindi (A1), data config-ə köçdü, URL dəyişmədi
+- `e2e/sektor-config.test.ts` — integrity test (icra olundu, PASS)
+
+**Decisions:**
+- **A1**: statik qonaq-evi silindi, dinamik route əhatə edir (URL eyni qalır)
+- **Real toolkit slug-ları** (food-cost / pnl / basabas / delivery-calc) — spec-dəki yanlış slug-lar (food-cost-hesablayici və s.) 404 verərdi (L-001)
+- `SektorToolGrid` icon yalnız quiz|calculator|whatsapp → aqta-checklist `quiz` ikonu (ClipboardCheck) istifadə edir
+- `generateStaticParams` buraxıldı — codebase dinamik `[locale]` render edir (blog/[slug] pattern); SSG `setRequestLocale` istəyər, heç bir route istifadə etmir
+- `middleware.ts` TOXUNULMADI (hard rule); locale fix artıq `i18n/routing.ts`-də (`as-needed`)
+- **ROOT-LEVEL MIRROR** (kritik): default-locale (az) prefix-siz route bu codebase-də middleware rewrite ilə yox, root mirror ilə işləyir (`app/blog/...` → `app/[locale]/blog/...`). Köhnə `app/sektor/qonaq-evi`-ni silməklə `/sektor/*` (az) 404 verdi (real bug, dev/prod hər ikisi). Fix: `app/sektor/page.tsx` + `app/sektor/[slug]/{page,opengraph-image,not-found}.tsx` re-export mirror-ları yaradıldı; `[locale]` səhifələr locale-i `params`-dan yox `getLocale()`-dan alır (mirror-da params.locale yoxdur). Bax L-038.
+
+**Verification (production — `next build` + `next start`):**
+- `/sektor/{qonaq-evi,otel,restoran,kafe}` (az, prefix-siz) → **200** ✓ (otel = AHA/Booking məzmunu render)
+- `/sektor/bilinmeyen` → **404** (SektorNotFound render) ✓
+- `/az/sektor/otel` → **307** ✓ ; `/sektor` index → **200** ✓ ; `/en/sektor/otel` → **200** ✓
+- `/sektor/otel/opengraph-image` → **200 image/png** ✓
+- integrity test PASS, i18n 4 dil tam, lint + TS təmiz (yeni fayllar), PROTECTED toxunulmadı
+- Qeyd: `next build` üçün `NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1` lazımdır (Google Fonts TLS).
+
+**Lessons:** L-038 (default-locale prefix-siz route üçün root-level mirror məcburidir)
+
+---
+
 ## 2026-06-05 — TASK-0196: F2.6 Sektor Landing + Lead Endpoint
 
 **Why:** Qonaq evi / pansiyon sektoru üçün sektor-spesifik landing page lazım idi. 600 sertifikasız tesis × qanuni məcburiyyət × sıfır rəqib = blue ocean. Alətlər artıq canlı idi (PR #271), lakin funnel-in giriş nöqtəsi yox idi.

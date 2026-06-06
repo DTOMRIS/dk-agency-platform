@@ -2,6 +2,32 @@
 
 ## [Unreleased]
 
+## [TASK-F28] feat(sektor): config-driven dynamic slug route — 2026-06-06
+
+### Added
+- `lib/data/sektorConfigs/` SSOT — `getSektorConfig(slug)`, `VALID_SEKTOR_SLUGS`, builder + per-sektor configs (qonaqEvi, otel, restoran, kafe)
+- Dynamic route `app/[locale]/sektor/[slug]/` — single config-driven page + slug-aware `opengraph-image` + localized `not-found`
+- `app/[locale]/sektor/page.tsx` — sektor index (cards for all active sektors)
+- `components/sektor/SektorLanding.tsx` — client landing rendering the 7 sektor sections from a config
+- i18n namespaces `sektorOtel`, `sektorRestoran`, `sektorKafe` (+ `sektorNotFound`, `sektorIndex`) in 4 locales (AZ/EN/RU/TR)
+- `e2e/sektor-config.test.ts` — integrity test (tool hrefs → real toolkit routes, blog slugs exist, unknown slug → null)
+
+### Changed
+- `/sektor/qonaq-evi` now served by the dynamic `[slug]` route (data moved into config); URL unchanged
+
+### Removed
+- Static `app/[locale]/sektor/qonaq-evi/` and `app/sektor/qonaq-evi/` routes (superseded by the dynamic route)
+
+### Added (root mirror — default-locale fix)
+- `app/sektor/page.tsx` + `app/sektor/[slug]/{page,opengraph-image,not-found}.tsx` — locale-less root mirrors so the default locale (az) is served without a prefix (matches the `app/blog/` pattern). Deleting the old root route had broken `/sektor/*` for az.
+- `[locale]/sektor` pages now resolve locale via `getLocale()` instead of `params.locale`, so they work under both the `[locale]` route and the root mirror.
+
+### Notes
+- Stats sourced from State Statistics Committee (otel/restoran) and WTTC 2025 (kafe) — provided by product owner
+- Tool CTAs use real toolkit routes (food-cost, pnl, basabas, delivery-calc), not the spec's illustrative slugs which would 404 (L-001)
+- `generateStaticParams` intentionally omitted to match the codebase's dynamic `[locale]` rendering (blog/[slug] pattern)
+- **Verified in production** (`next build` + `next start`): `/sektor/{qonaq-evi,otel,restoran,kafe}` (az) → 200, `/sektor/bilinmeyen` → 404 (SektorNotFound), `/az/sektor/otel` → 307, `/sektor` → 200, `/en/sektor/otel` → 200, `/sektor/otel/opengraph-image` → 200. Integrity test PASS, lint + TS clean. Build needs `NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1` (Google Fonts TLS). See L-038.
+
 ## [TASK-0200] content(blog): Peşə Məktəbi yazısını genişləndir — 2026-06-06
 
 ### Changed

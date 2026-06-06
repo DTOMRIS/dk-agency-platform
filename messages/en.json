@@ -5298,5 +5298,191 @@
       "heading": "Take the first step — start with a free test",
       "buttonText": "Start OTA Readiness Test →"
     }
+  },
+  "sektorOtel": {
+    "pageTitle": "Hotel Sector — AHA Readiness, OTA & ROI Tools | DK Agency",
+    "hero": {
+      "headline": "Get Your Hotel Ready for the AHA Star Standard",
+      "subline": "Free tools for hoteliers — from AHA certification to OTA channels and revenue math, with DK Agency support.",
+      "statBadge": "+42% hotel revenue in 2024, 859 active hotels",
+      "primaryCtaText": "Start the AHA Readiness Test",
+      "secondaryCtaText": "Get the free guide"
+    },
+    "stats": {
+      "stat1Label": "2024 revenue growth",
+      "stat1Value": "+42%",
+      "stat1Source": "State Statistics Committee",
+      "stat2Label": "Active hotels",
+      "stat2Value": "859",
+      "stat2Source": "State Statistics Committee",
+      "stat3Label": "Nights per year",
+      "stat3Value": "4.28M",
+      "stat3Source": "State Statistics Committee"
+    },
+    "tools": {
+      "sectionTitle": "3 tools for this sector",
+      "tool1Title": "Hotel Readiness Test",
+      "tool1Desc": "AHA star-standard compliance — a 3-minute AI assessment",
+      "tool1Cta": "Start the test →",
+      "tool2Title": "Hotel ROI Calculator",
+      "tool2Desc": "Booking + Expedia commissions, room revenue and payback period",
+      "tool2Cta": "Calculate →",
+      "tool3Title": "OTA Readiness Test",
+      "tool3Desc": "Booking, Expedia, Airbnb profile prep — a channel-by-channel check",
+      "tool3Cta": "Start the test →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Worth reading in this sector"
+    },
+    "leadCapture": {
+      "heading": "Free Hotel AHA Readiness Guide",
+      "body": "A step-by-step guide to AHA star certification and connecting OTA channels — free.",
+      "buttonText": "Get the Free Guide"
+    },
+    "faq": {
+      "sectionTitle": "Frequently asked questions",
+      "q1": "How do I get the AHA star certificate?",
+      "a1": "Compliance with AHA (Azerbaijan Hotel Association) standards is assessed: infrastructure, service and safety. The Hotel Readiness Test prepares you for this assessment.",
+      "q2": "What is Booking's commission for a hotel?",
+      "a2": "Booking.com usually charges 15-18% commission. Direct bookings and an Expedia balance help optimise this cost.",
+      "q3": "Which OTA channels matter for a hotel?",
+      "a3": "Booking.com and Expedia are the main international channels; Airbnb and Yandex Travel add a segment. A multi-channel strategy raises occupancy.",
+      "q4": "How do I raise a hotel's rating?",
+      "a4": "Cleanliness, check-in speed and consistent service. Ask every guest for a review and reply to negatives within 24 hours.",
+      "q5": "How much is DK Agency hotel support?",
+      "a5": "The Hotel Readiness Test and ROI Calculator are free. For full consulting, apply via the contact form."
+    },
+    "footerCta": {
+      "heading": "Take the first step now — start with the free AHA test",
+      "buttonText": "Start the AHA Readiness Test →"
+    }
+  },
+  "sektorRestoran": {
+    "pageTitle": "Restaurant Sector — Food Cost, Menu Engineering & AQTA | DK Agency",
+    "hero": {
+      "headline": "Run Your Restaurant's Profit by the Numbers",
+      "subline": "Free tools for restaurateurs — from food cost to menu engineering and AQTA readiness, with DK Agency support.",
+      "statBadge": "+12.8% real sector growth in 2024",
+      "primaryCtaText": "Calculate Food Cost",
+      "secondaryCtaText": "Get the free guide"
+    },
+    "stats": {
+      "stat1Label": "Annual sector growth",
+      "stat1Value": "+12.8%",
+      "stat1Source": "State Statistics Committee",
+      "stat2Label": "Quarterly turnover",
+      "stat2Value": "294.9M₼",
+      "stat2Source": "SSC Q1 2024",
+      "stat3Label": "Business structure",
+      "stat3Value": "50/50",
+      "stat3Source": "Legal / individual"
+    },
+    "tools": {
+      "sectionTitle": "3 tools for this sector",
+      "tool1Title": "Food Cost Calculator",
+      "tool1Desc": "Cost of every portion and its ideal price — instantly",
+      "tool1Cta": "Calculate →",
+      "tool2Title": "Menu Engineering Matrix",
+      "tool2Desc": "Star, plough-horse, puzzle, dog — classify your menu by profit",
+      "tool2Cta": "Analyse menu →",
+      "tool3Title": "AQTA Checklist",
+      "tool3Desc": "Zero out fine risk before inspection — a step-by-step list",
+      "tool3Cta": "Open checklist →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Worth reading in this sector"
+    },
+    "leadCapture": {
+      "heading": "Free Restaurant Profit Guide",
+      "body": "A practical guide to food cost control, menu pricing and AQTA readiness — free.",
+      "buttonText": "Get the Free Guide"
+    },
+    "faq": {
+      "sectionTitle": "Frequently asked questions",
+      "q1": "What percentage should food cost be?",
+      "a1": "In healthy restaurants food cost is usually 28-35%. The Food Cost Calculator shows each dish’s percentage precisely.",
+      "q2": "What is menu engineering?",
+      "a2": "Classifying dishes by popularity and profit. You promote stars, remove loss-making dishes or re-price them.",
+      "q3": "What does an AQTA inspection check?",
+      "a3": "Food safety: storage temperature, hygiene, labelling and documentation. The checklist covers the most-fined points.",
+      "q4": "How does delivery commission eat profit?",
+      "a4": "Wolt and Bolt can take 25-35% commission. Menu price and portion must be planned accordingly.",
+      "q5": "How much is DK Agency restaurant support?",
+      "a5": "Food Cost, Menu Matrix and AQTA Checklist are free. For full consulting, apply via the contact form."
+    },
+    "footerCta": {
+      "heading": "Take the first step now — calculate food cost for free",
+      "buttonText": "Calculate Food Cost →"
+    }
+  },
+  "sektorKafe": {
+    "pageTitle": "Café Sector — Cost, Break-even & Menu Tools | DK Agency",
+    "hero": {
+      "headline": "Squeeze Maximum Profit From a Small Kitchen",
+      "subline": "Free tools for café owners — from cost calculation to break-even point and the menu matrix, with DK Agency support.",
+      "statBadge": "Tourism contributes ₼10.3B to GDP",
+      "primaryCtaText": "Calculate Cost",
+      "secondaryCtaText": "Get the free guide"
+    },
+    "stats": {
+      "stat1Label": "Tourism GDP contribution",
+      "stat1Value": "₼10.3B",
+      "stat1Source": "WTTC 2025",
+      "stat2Label": "Annual growth",
+      "stat2Value": "+32%",
+      "stat2Source": "WTTC 2025",
+      "stat3Label": "Sector employment",
+      "stat3Value": "472K",
+      "stat3Source": "WTTC 2025"
+    },
+    "tools": {
+      "sectionTitle": "3 tools for this sector",
+      "tool1Title": "Cost (Food Cost) Calculator",
+      "tool1Desc": "Cost of every drink and dish — an instant result",
+      "tool1Cta": "Calculate →",
+      "tool2Title": "Break-even Point Calculator",
+      "tool2Desc": "How many monthly sales put you in the black — the exact point",
+      "tool2Cta": "Calculate →",
+      "tool3Title": "Menu Engineering Matrix",
+      "tool3Desc": "Identify your best-selling and most profitable items",
+      "tool3Cta": "Analyse menu →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Worth reading in this sector"
+    },
+    "leadCapture": {
+      "heading": "Free Café Profit Guide",
+      "body": "A simple guide to cost control, pricing and break-even planning — free.",
+      "buttonText": "Get the Free Guide"
+    },
+    "faq": {
+      "sectionTitle": "Frequently asked questions",
+      "q1": "What cost percentage for a small café?",
+      "a1": "In drink-led cafés cost can be 20-30%. The Cost Calculator shows each item’s exact percentage.",
+      "q2": "What is the break-even point?",
+      "a2": "The minimum sales volume to cover all costs (rent, wages, utilities). Profit starts after this point.",
+      "q3": "How do I price coffee?",
+      "a3": "Add a target margin on top of cost. Premium drinks can carry a higher margin; the Calculator gives a starting point.",
+      "q4": "Can I run a café with a small range?",
+      "a4": "Yes — a focused menu makes cost control easier and cuts waste. The Menu Matrix helps you keep the most profitable items.",
+      "q5": "How much is DK Agency café support?",
+      "a5": "Cost, Break-even and the Menu Matrix are free. For full consulting, apply via the contact form."
+    },
+    "footerCta": {
+      "heading": "Take the first step now — calculate cost for free",
+      "buttonText": "Calculate Cost →"
+    }
+  },
+  "sektorNotFound": {
+    "title": "This sector doesn't exist",
+    "body": "The sector page you're looking for wasn't found. Browse all sectors with the button below.",
+    "cta": "Browse all sectors"
+  },
+  "sektorIndex": {
+    "pageTitle": "Sectors — HoReCa Guides | DK Agency",
+    "heading": "Choose your sector",
+    "subline": "Free tools, calculators and guides for every HoReCa sector.",
+    "toolsLabel": "tools",
+    "ctaLabel": "Open"
   }
 }
