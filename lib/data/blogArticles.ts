@@ -2859,7 +2859,7 @@ Contribution Margin = 1 - Dəyişən Xərc %
     summary: 'HoReCa-da ciro artımını uğur sayma. FAVÖK marjasını AI ilə qorumaq franchise sistemlərində xüsusilə kritikdir — görünməyən əməliyyat sızmalarını vaxtında göstərir.',
     isPremium: true,
     relatedArticles: ['1-porsiya-food-cost-hesablama', 'pnl-oxuya-bilmirsen'],
-    coverImage: '/images/blog-11-ai-favok.png',
+    coverImage: '/images/blog-12.png',
     coverImageAlt: 'AI ilə FAVÖK qoruması',
     content: `# AI ilə FAVÖK Qoruması
 
@@ -2962,7 +2962,7 @@ DK Agency-nin **KAZAN AI** və **OCAQ** sahibkar paneli məhz bu FAVÖK qoruma s
     summary: 'Franchise dünyasında devir — mövcud franchise sahibinin işini olduğu kimi almaq. Risk aşağıdır, ilk gündən qazanc var, real rəqəmlər masadadır.',
     isPremium: false,
     relatedArticles: ['sifirdan-yoxsa-isleyen-franchise-devri', 'mulki-mecelle-726-franchise-devri'],
-    coverImage: '/images/blog-12-isleyen-franchise.png',
+    coverImage: '/images/blog-13.png',
     coverImageAlt: 'İşləyən franchise devralmaq',
     content: `# İşləyən Franchise'i Almaq: Sıfırdan Qurmaqdan Niyə Daha Ağıllıdır?
 
@@ -3044,7 +3044,7 @@ DK Agency-nin **Devir** platforması məhz bunun üçün qurulub: işləyən fra
     summary: 'Franchise verməyi düşünürsənsə markan rəsmi qeydiyyatdan keçməlidir. Qeydiyyatdan keçməyən markanı franchise vermək, sahibi olmadığın evi icarəyə vermək kimidir.',
     isPremium: false,
     relatedArticles: ['mulki-mecelle-726-franchise-devri'],
-    coverImage: '/images/blog-13-marka-qeydiyyati.png',
+    coverImage: '/images/blog-14.png',
     coverImageAlt: 'Marka qeydiyyatı Azərbaycanda',
     content: `# Markanı Azərbaycanda Necə Qeydiyyatdan Keçirirsən?
 
@@ -3112,7 +3112,7 @@ DK Agency franchise yolunun hər addımında yanındadır — marka hazırlığ�
     summary: 'Franchise devri yalnız hazır biznes almaq deyil. Hüquqi, maliyyə və operativ risklərin birlikdə yoxlandığı prosesdir. M.726 investoru necə qoruyur?',
     isPremium: true,
     relatedArticles: ['isleyen-franchise-devralmaq', 'marka-qeydiyyati-azerbaycan'],
-    coverImage: '/images/blog-14-mulki-mecelle.png',
+    coverImage: '/images/blog-15.png',
     coverImageAlt: 'Mülki Məcəllə və franchise devri',
     content: `# Mülki Məcəllə m.726 və Franchise Devri
 
@@ -3223,7 +3223,7 @@ DK Agency **Devir** platforması və franchise danışmanlığı ilə devrin hü
     summary: '2026-da investor üçün əsas sual: brend qururam, yoxsa işləyən nakit axınını alıram? FAVÖK baxışı ilə sıfırdan vs devir müqayisəsi.',
     isPremium: true,
     relatedArticles: ['isleyen-franchise-devralmaq', 'ai-ile-favok-qorumasi'],
-    coverImage: '/images/blog-15-sifirdan-yoxsa-devir.png',
+    coverImage: '/images/blog-16.png',
     coverImageAlt: 'Sıfırdan yoxsa franchise devri',
     content: `# Sıfırdan HoReCa Yatırımı, yoxsa İşləyən Franchise Devralmaq?
 
@@ -3553,7 +3553,7 @@ AHA Milli Ulduz Təsnifatı **bir bürokratik addım deyil** — Azərbaycan ote
 *Mənbə: AHA (Azərbaycan Hotel Assosiasiyası), Dövlət Turizm Agentliyi rəsmi açıqlamaları, Hotelstars Union 2024 standartları.*`,
     isPremium: false,
     relatedArticles: [],
-    coverImage: '/images/blog-16-aha-ulduz.png',
+    coverImage: '/images/blog-17.png',
     coverImageAlt: 'AHA Ulduz Sertifikatı otel hazırlığı',
   },
 
@@ -3634,7 +3634,7 @@ DK Agency kiçik ev və otel sahiblərinə qonaq təcrübəsini sistemə çevirm
 > **Növbəti addım:** Qonaqlarını daimi müştəriyə çevirmək istəyirsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.`,
     isPremium: false,
     relatedArticles: ['bir-elan-on-platforma-ev-kirayesi', 'rayonda-ev-kirayesi-sistem'],
-    coverImage: '/images/blog-17-ilk-5-deqiqe.png',
+    coverImage: '/images/blog-18.png',
     coverImageAlt: 'İlk 5 dəqiqə qonaq qarşılama',
   },
 
@@ -3716,7 +3716,7 @@ DK Agency kiçik ev və otel sahiblərinə rəqəmsal görünürlük qurmaqda k�
 > **Növbəti addım:** Evini daha çox doldurmaq istəyirsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.`,
     isPremium: false,
     relatedArticles: ['ilk-5-deqiqe-qonaq-qarsilama', 'rayonda-ev-kirayesi-sistem'],
-    coverImage: '/images/blog-18-bir-elan-on-platforma.png',
+    coverImage: '/images/blog-19.png',
     coverImageAlt: 'Bir elan on platforma ev kirayəsi',
   },
 
@@ -3829,7 +3829,7 @@ DK Agency rayon ev sahiblərinə kirayəni sistemə çevirməkdə kömək edir �
 > **Növbəti addım:** Rayonda evin var, amma necə kirayə verəcəyini bilmirsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.`,
     isPremium: false,
     relatedArticles: ['ilk-5-deqiqe-qonaq-qarsilama', 'bir-elan-on-platforma-ev-kirayesi'],
-    coverImage: '/images/blog-19-rayonda-ev-kirayesi.png',
+    coverImage: '/images/blog-20.png',
     coverImageAlt: 'Rayonda ev kirayəsi sistemi',
   },
 
@@ -3942,7 +3942,7 @@ DK Agency və TQTA (Turan Qastro Turizm Akademiyası) sektora təlimli, sertifik
 *Mənbə: Koç Holdinq «Meslek Lisesi Memleket Meselesi» proqramı açıqlamaları; Beynəlxalq Əmək Təşkilatı (ILO); Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025-2030).*`,
     isPremium: true,
     relatedArticles: ['sertifikatli-komanda-cth-online-tehsil', 'azerbaycan-qastronomiya-2030-dovlet-plani'],
-    coverImage: '/images/blog-20-pese-mektebi.png',
+    coverImage: '/images/blog-21.png',
     coverImageAlt: 'Peşə məktəbi ölkə məsələsidir',
   },
 
@@ -4060,7 +4060,7 @@ TQTA (Turan Qastro Turizm Akademiyası) — DK Agency ekosisteminin təhsil qolu
 *CTH (Confederation of Tourism & Hospitality) Böyük Britaniya mərkəzli beynəlxalq qonaqpərvərlik təhsil qurumudur. TQTA — CTH Approved Teaching Centre, Sumqayıt, Azərbaycan.*`,
     isPremium: false,
     relatedArticles: ['pese-mektebi-olke-meselesi', 'aha-ulduz-sertifikati-otel-hazirliq', 'azerbaycan-qastronomiya-2030-dovlet-plani'],
-    coverImage: '/images/blog-21-cth-sertifikat.png',
+    coverImage: '/images/blog-22.png',
     coverImageAlt: 'CTH sertifikatlı komanda TQTA',
   },
 
@@ -4172,7 +4172,7 @@ DK Agency və AFA dövlətin qastronomiya strategiyasının bir parçasıdır �
 *Mənbə: Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025-2030).*`,
     isPremium: true,
     relatedArticles: ['pese-mektebi-olke-meselesi', 'sertifikatli-komanda-cth-online-tehsil', 'ai-ile-favok-qorumasi'],
-    coverImage: '/images/blog-22-qastronomiya-2030.png',
+    coverImage: '/images/blog-23.png',
     coverImageAlt: 'Azərbaycan qastronomiyası 2030 dövlət planı',
   },
 
@@ -4284,7 +4284,7 @@ Garson təkcə sifariş daşıyan deyil — restoranın salondakı satış koman
 > 📧 info@dkagency.com.tr | 🌐 dkagency.com.tr/danismanlik`,
     isPremium: false,
     relatedArticles: ['basabas-noqtesi-hesablama', 'menyu-muhendisliyi-satis'],
-    coverImage: '/images/blog-23-garson-upsell.png',
+    coverImage: '/images/blog-24.png',
     coverImageAlt: 'Garson upsell satış salondakı gizli gəlir',
   },
 
@@ -4397,7 +4397,7 @@ Coğrafi işarə yerli ləzzəti qızıla çevirən mexanizmdir. Türkiyə bunu 
 *Mənbə: T.C. coğrafi işarə qeydiyyatı statistikası; Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025-2030); Əqli Mülkiyyət Agentliyi. Bu yazı ümumi məlumatdır, hüquqi məsləhət deyil.*`,
     isPremium: true,
     relatedArticles: ['marka-qeydiyyati-azerbaycan', 'insaatdan-acilisa-checklist'],
-    coverImage: '/images/blog-24-cografi-isare.png',
+    coverImage: '/images/blog-25.png',
     coverImageAlt: 'Coğrafi işarə yerli ləzzət qorunması',
   },
 ];

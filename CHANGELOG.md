@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [TASK-0183] feat(blog): wire 14 covers slug→blog-NN (drift-safe) — 2026-06-06
+
+### Added
+- 14 cover images `public/images/blog-12.png … blog-25.png` (committed separately)
+
+### Fixed
+- Wired `coverImage` for 14 articles by SLUG to the canonical `/images/blog-12..25.png` scheme. The previous descriptive filenames (`blog-11-ai-favok.png` …) were off-by-one vs the canonical numbering — a NUMBER-based wire would have shown the wrong cover. Done by slug to avoid that drift (see launch spec).
+- Verified (prod `next build` + `next start`): `/blog` 200, cover assets 200, and each of the 14 slugs renders its correct cover (e.g. ai-ile-favok-qorumasi → blog-12, cografi-isare-yerli-lezzet → blog-25). All 24 referenced cover files exist on disk (0 broken).
+
 ## [TASK-0196] feat(sektor): /sektor/qonaq-evi landing + lead endpoint — 2026-06-05
 
 ### Added
