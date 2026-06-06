@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-06T15:10:40.327Z
-- BuildStatus: PASS
+- GeneratedAt: 2026-06-06T15:24:11.963Z
+- BuildStatus: UNKNOWN
 
-## Routes (218)
+## Routes (220)
 - /
 - /[locale]
 - /[locale]/about
@@ -109,6 +109,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/menu-matrix
 - /[locale]/toolkit/ota-hazirlig-testi
 - /[locale]/toolkit/otel-hazirlig-testi
+- /[locale]/toolkit/personel-planlayici
 - /[locale]/toolkit/pnl
 - /[locale]/toolkit/pnl-simulator
 - /[locale]/toolkit/qonaq-evi-roi-kalkulyatoru
@@ -216,6 +217,7 @@ Auto-generated. Do not edit manually.
 - /toolkit/menu-matrix
 - /toolkit/ota-hazirlig-testi
 - /toolkit/otel-hazirlig-testi
+- /toolkit/personel-planlayici
 - /toolkit/pnl
 - /toolkit/pnl-simulator
 - /toolkit/qonaq-evi-roi-kalkulyatoru
