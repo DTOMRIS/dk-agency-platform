@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { ArrowRight, Bookmark, Calendar, ChevronLeft, Clock, Share2, Tag, User } from 'lucide-react';
 
 import { MarkdownRenderer, LegalDisclaimer } from '@/components/blog';
@@ -9,12 +9,18 @@ import { getBlogPostDetail } from '@/lib/db/blog-repository';
 import { getProtectedArticleContent } from '@/lib/members/article-access';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAlternates } from '@/lib/seo/alternates';
+import { normalizeLocale, withLocale } from '@/i18n/config';
 
 // BLOG_OVERRIDES removed — all content served from DB (L-037)
 
+const LEGACY_BLOG_SLUGS: Record<string, string> = {
+  'sertifikatli-komanda-cth-online-tehsil': 'sertifikatli-komanda-cth-portal-karyera',
+  'azerbaycan-qastronomiya-2030-dovlet-plani': 'azerbaycan-qastronomiya-2030-strateji-yol-xeritesi',
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
-  const article = await getBlogPostDetail(slug, locale);
+  const article = await getBlogPostDetail(LEGACY_BLOG_SLUGS[slug] || slug, locale);
 
   if (!article) {
     return {
@@ -50,6 +56,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
+  const canonicalSlug = LEGACY_BLOG_SLUGS[slug];
+  if (canonicalSlug) {
+    redirect(withLocale(normalizeLocale(locale), `/blog/${canonicalSlug}`));
+  }
   const article = await getBlogPostDetail(slug, locale);
   const session = await getServerMemberSession();
 

@@ -177,7 +177,7 @@ Bu, sağlam rəqəmdir. Amma gəlin trim loss-u (hazırlıq itkisini) əlavə ed
 
 **Trim loss nədir?** Toyuq aldın 1 kq — təmizlədikdən sonra əlində 800-850 qr qalır. Yəni 15-20% itki var. Kartof soyulur — 10% itki. Bibər təmizlənir — 15% itki.
 
-| İnqrediyent | Satın alınan | Trim loss | İstifadə olunan | Düzəldilmiş xərc |
+| İnqrediyent | Alınan miqdar | Trim loss | İstifadə olunan | Düzəldilmiş xərc |
 |---|---|---|---|---|
 | Toyuq but | 295 qr | 15% | 250 qr | 3.54₼ |
 | Kartof | 167 qr | 10% | 150 qr | 0.25₼ |
@@ -232,7 +232,7 @@ Satış qiyməti = Ərzaq xərci ÷ Hədəf food cost %
 
 Hər restoranda ərzaq itkisi var. Sual budur: **nə qədər?**
 
-Dünya ortalaması: restoranlar satın aldığı ərzağın **4-10%-ini** itirir. Bakıda bu rəqəm **10-20%** arasındadır, çünki:
+Dünya ortası: restoranlar aldığı ərzağın **4-10%-ini** itirir. Bakıda bu rəqəm **10-20%** arasındadır, çünki:
 
 - **Yanlış saxlama:** Soyuducunun temperaturu düzgün deyil, ərzaq vaxtından əvvəl xarab olur
 - **Həddindən artıq hazırlıq (over-prep):** Sabah 50 porsiya lazımdır, aşpaz 80 porsiyalıq hazırlayır — 30-u atılır
@@ -299,8 +299,8 @@ Pomidorun qiyməti yayda 2₼/kq, qışda 6₼/kq olur. Bu, **3 qat** fərqdir. 
 > ║ 🎤 **JIM SULLIVAN**                                      ║
 > ║ Sullivision.com qurucusu, restoran satış ustası            ║
 > ║                                                           ║
-> ║ *"Hər ofisiant satıcıdır — ya bilinçli satır,              ║
-> ║  ya bilinçsiz itirdir."*                                    ║
+> ║ *"Hər ofisiant satıcıdır — ya şüurlu satır,              ║
+> ║  ya şüursuz şəkildə itirir."*                                    ║
 > ║                                                           ║
 > ║ 📖 Multiunit Leadership                                   ║
 > ║ 🔗 Menyunun ən yüksək marjlı yeməyini ofisiant bilmirsə,  ║
@@ -327,7 +327,7 @@ Food cost-u aşağı saxlamağın ən effektiv yolu **satınalma prosesini siste
 ### Aylıq:
 - ☐ Firma müqayisəsi — minimum 3 firmadan qiymət yenilə
 - ☐ Resept kartlarını yenilə — qiymətlər dəyişibsə, food cost yenidən hesabla
-- ☐ Menyu analizi — hansı yemək qazandırır, hansı itirdirir?
+- ☐ Menyu analizi — hansı yemək qazandırır, hansı itirir?
 - ☐ **Actual vs Theoretical food cost** (real vs nəzəri food cost) müqayisəsi: nəzəri olaraq 30% olmalıdır, reallıqda neçədir? Fərq **2%-dən** çoxdursa — problem var.
 
 ---
@@ -381,7 +381,7 @@ Bu fərq haradan gəlir? Oğurluq, waste, porsiyon nəzarətsizliyi, firma qiym�
 
 > **💡 DK Agency Danışmanlıq:** Resept kartı hazırlamağı bilmirsən? DK Agency Toolkit-də **hazır resept kartı şablonu** var — doldurursan, food cost avtomatik hesablanır. Aylıq food cost auditi, satınalma sistemi qurulması, menyu optimallaşdırması üçün danışmanlıq xidmətimiz mövcuddur.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [Food Cost Kalkulyatorunu aç →](/toolkit/food-cost) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['pnl-oxuya-bilmirsen', 'basabas-noqtesi-hesablama'],
     coverImage: '/images/blog-01.png',
@@ -667,7 +667,7 @@ Bu, 5 dəqiqəlik hesablamadır. Hər bazar günü otur, bu rəqəmləri yaz. **
 
 > **💡 DK Agency Danışmanlıq:** P&L şablonunu hazır istəyirsən? DK Agency Toolkit-də **Azərbaycan reallığına uyğun P&L şablonu** var — doldurmağa başla, rəqəmlər özü danışacaq. Aylıq maliyyə auditi, food cost optimallaşdırması, büdcə planlaşdırması üçün danışmanlıq xidmətimiz mövcuddur.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [P&L Simulyatorunu aç →](/toolkit/pnl) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['1-porsiya-food-cost-hesablama', 'basabas-noqtesi-hesablama'],
     coverImage: '/images/blog-02.png',
@@ -707,7 +707,7 @@ Doğru sual budur: **"Niyə qalmalı idi?"**
 
 Əgər bu suala konkret cavab verə bilmirsənsə — problem işçidə deyil. Problem **səndədir.** Daha dəqiq desək — sənin **sistemindədir.** Çünki insanlar işdən getmir, **sahibkardan** gedir. Pis idarəetmədən gedir. Görünməzlikdən gedir. Perspektivsizlikdən gedir.
 
-Azərbaycan HoReCa sektorunda işçi dönüşüm nisbəti (staff turnover rate — işçi axını) dünya ortalamasından çox yüksəkdir. Dünyada restoran sektoru üçün orta **60-80%**-dir (yəni hər il işçilərin yarıdan çoxu dəyişir). Bakıda bu rəqəm bəzi yerlərdə **100-150%**-ə çatır — yəni **il ərzində bütün komanda 1-1.5 dəfə tamamilə dəyişir.**
+Azərbaycan HoReCa sektorunda işçi dönüşüm nisbəti (staff turnover rate — işçi axını) dünya ortasından çox yüksəkdir. Dünyada restoran sektoru üçün orta **60-80%**-dir (yəni hər il işçilərin yarıdan çoxu dəyişir). Bakıda bu rəqəm bəzi yerlərdə **100-150%**-ə çatır — yəni **il ərzində bütün komanda 1-1.5 dəfə tamamilə dəyişir.**
 
 Hər gedən işçi sənə **pul itirir:** təlim xərci, verimlilik itkisi, müştəri memnuniyyəti düşüşü, digər işçilərin moral itkisi. Bir hesablamaya görə, bir ofisiantın dəyişdirilməsi restorana **2-3 aylıq maaşı** qədər xərc çıxarır.
 
@@ -927,7 +927,7 @@ Bu cavabları **yaz** və **nümunə axtar.** 3 nəfər eyni səbəbə görə ge
 
 > **💡 DK Agency Danışmanlıq:** İşçi saxlama sistemi qurmaq istəyirsən? DK Agency Toolkit-də **işə qəbul forması, onboarding checklist, çıxış müsahibəsi şablonu, pre-shift meeting planı** hazırdır. Kadr auditi, təlim proqramı dizaynı, motivasiya sistemi qurulması üçün danışmanlıq xidmətimiz mövcuddur.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [İşçi Saxlama alətini aç →](/toolkit/staff-retention) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['kurumsal-kitabca-emeliyyat', 'menyu-muhendisliyi-satis'],
     coverImage: '/images/blog-03.png',
@@ -952,14 +952,14 @@ Bu cavabları **yaz** və **nümunə axtar.** 3 nəfər eyni səbəbə görə ge
     tags: ['menyu', 'satış', 'food cost', 'restoran', 'mənfəətlilik'],
     metaDescription: 'Menyu mühəndisliyi nədir? BCG matrisi ilə yeməkləri necə analiz etmək? Hansı yeməyi menyudan çıxarmalı?',
     focusKeyword: 'menyu mühəndisliyi',
-    summary: 'Menyunda 45 yemək var. Hansı 5-i sənə pul qazandırır, hansı 10-u pul itirdirir? Bilmirsənsə — bu yazı sənin üçündür.',
+    summary: 'Menyunda 45 yemək var. Hansı 5-i sənə pul qazandırır, hansı 10-u pul itirir? Bilmirsənsə — bu yazı sənin üçündür.',
     content: `# Menyu Mühəndisliyi: Hansı Yemək Sənə Pul Qazandırır, Hansını Öldür
 
 *Kateqoriya: 📈 Satış & Menyu | Oxu müddəti: 10-12 dəq*
 
 ---
 
-Menyunda 45 yemək var. Bildin ki hansı 5-i sənə pul qazandırır, hansı 10-u pul itirdirir? Bilmirsən. Çünki menyuya **"yemək siyahısı"** kimi baxırsan, amma əslində menyu **satış alətidir.**
+Menyunda 45 yemək var. Bildin ki hansı 5-i sənə pul qazandırır, hansı 10-u pul itirir? Bilmirsən. Çünki menyuya **"yemək siyahısı"** kimi baxırsan, amma əslində menyu **satış alətidir.**
 
 Menyu mühəndisliyi (menu engineering) — hər yeməyi 2 ölçüyə görə qiymətləndirmək: **nə qədər satılır** (populyarlıq) və **nə qədər qazandırır** (mənfəətlilik). Bu iki ölçünü birləşdirəndə 4 kateqoriya yaranır — və sənin hər yeməyin bu 4 kateqoriyadan birindədir.
 
@@ -971,8 +971,8 @@ Bu yazıda sənə bu sistemi sıfırdan öyrədirəm. Heç bir MBA lazım deyil.
 > ║ 🎤 **JIM SULLIVAN**                                      ║
 > ║ Sullivision.com qurucusu, restoran satış ustası            ║
 > ║                                                           ║
-> ║ *"Hər ofisiant satıcıdır — ya bilinçli satır,              ║
-> ║  ya bilinçsiz itirdir."*                                    ║
+> ║ *"Hər ofisiant satıcıdır — ya şüurlu satır,              ║
+> ║  ya şüursuz şəkildə itirir."*                                    ║
 > ║                                                           ║
 > ║ 📖 Multiunit Leadership                                   ║
 > ║ 🔗 Menyu mühəndisliyi ofisiantın nəyi satacağını da         ║
@@ -1165,7 +1165,7 @@ Menyunu bir dəfə hazırlayıb unudursan? **Böyük səhv.**
 
 > **💡 DK Agency Danışmanlıq:** Menyu analizini özün etmək çətindir? DK Agency Toolkit-də **menyu matrix şablonu** var — satış sayı və food cost-u daxil et, sistem yeməkləri avtomatik kateqoriyalara ayırır. Menyu optimallaşdırması, qiymətləndirmə strategiyası, ofisiant satış təlimi üçün danışmanlıq xidmətimiz mövcuddur.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [Menyu Matrisini aç →](/toolkit/menu-matrix) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['1-porsiya-food-cost-hesablama', 'wolt-bolt-komissiyon'],
     coverImage: '/images/blog-04.png',
@@ -1390,7 +1390,7 @@ Cross-contamination (çarpaz kontaminasiya) — çiy ərzaqdakı bakteriyaların
 
 > **💡 DK Agency Danışmanlıq:** AQTA yoxlamasına hazır olduğunuzdan əmin deyilsiniz? DK Agency danışmanlıq komandası **gigiyena auditi** həyata keçirir — AQTA müfəttişinin baxdığı hər maddəni yoxlayırıq, yazılı hesabat və düzəltmə planı təqdim edirik. Gigiyena təlimi, HACCP planı hazırlanması, sənədləşdirmə sistemi qurulması üçün bizimlə əlaqə saxlayın.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [AQTA Hazırlıq checklistini aç →](/toolkit/aqta-checklist) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['kurumsal-kitabca-emeliyyat', 'insaatdan-acilisa-checklist'],
     coverImage: '/images/blog-05.png',
@@ -1476,7 +1476,7 @@ Bu rəqəmlər müqaviləyə, sifarişin tipinə, promosyonlara görə dəyişə
 | Digər əməliyyat xərcləri | -25₼ | -15₼ |
 | **Xalis nəticə** | **+17₼** | **-11₼** |
 
-Bu hesablama **şokdur** — amma realdır. Əgər food cost-un yüksəkdirsə və qiymətini uyğunlaşdırmamısansa, delivery hər sifarişdə sənə **pul itirdirə bilər.**
+Bu hesablama **şokdur** — amma realdır. Əgər food cost-un yüksəkdirsə və qiymətini uyğunlaşdırmamısansa, delivery hər sifarişdə sənə **pul itirə bilər.**
 
 ---
 
@@ -1639,7 +1639,7 @@ Müqavilə imzalamadan əvvəl bu sualları soruşun:
 
 > **💡 DK Agency Danışmanlıq:** Delivery kanalınızı optimallaşdırmaq istəyirsiniz? DK Agency Toolkit-də **delivery P&L şablonu** var — hər platformanın mənfəətliliyini ayrıca hesablayır. Delivery menyu strategiyası, qiymətləndirmə, qablaşdırma optimallaşdırması üçün danışmanlıq xidmətimiz mövcuddur.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [Delivery Kalkulyatorunu aç →](/toolkit/delivery-calc) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['menyu-muhendisliyi-satis', '1-porsiya-food-cost-hesablama'],
     coverImage: '/images/blog-06.png',
@@ -1888,7 +1888,7 @@ Kitabçanı bir gecədə yazmaq lazım deyil. **Hər həftə 1 bölmə** yaz:
 
 > **💡 DK Agency Danışmanlıq:** Kurumsal kitabça hazırlamaq vaxt alır — biz sizin üçün hazırlayırıq. DK Agency danışmanlıq komandası restoranınıza gəlir, bütün prosesləri qeydə alır, standartlaşdırır, **hazır kitabça** təqdim edir. Xidmət SOP-ları, resept kartları, gigiyena qaydaları, təlim materialları — hamısı daxildir.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [Açılış Checklistini aç →](/toolkit/checklist) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['aqta-cerime-checklist', 'isci-saxlama-7-strategiya'],
     coverImage: '/images/blog-07.png',
@@ -1916,7 +1916,7 @@ Kitabçanı bir gecədə yazmaq lazım deyil. **Hər həftə 1 bölmə** yaz:
     summary: 'İcarə bağladın. Açar əlində. İndi nə? 3 aylıq işi 6 aya çıxarmamaq üçün bu checklist-i istifadə et.',
     content: `# İnşaatdan Açılışa: Restoran Açmağın 100+ Maddəlik Checklist-i
 
-*Kateqoriya: 🚀 Açılış & Yatırım | Oxu müddəti: 15-20 dəq*
+*Kateqoriya: 🚀 Açılış & İnvestisiya | Oxu müddəti: 15-20 dəq*
 
 ---
 
@@ -2261,7 +2261,7 @@ Açılış bitdi — indi **sağ qalmaq** lazımdır.
 
 > **💡 DK Agency Danışmanlıq:** Restoran açmaq prosesi kompleksdir — bir çox sahibkar yarı yolda səhvlər edir. DK Agency olaraq sizə **açılış danışmanlığı** xidməti təklif edirik: məkan seçimindən açılış gününə qədər bütün prosesi sizinlə birlikdə planlaşdırırıq.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [İnşaat Checklistini aç →](/toolkit/insaat-checklist) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['aqta-cerime-checklist', 'restoran-markalasma-konsept'],
     coverImage: '/images/blog-08.png',
@@ -2512,7 +2512,7 @@ Nusret Gökçe dünyada ən tanınan türk restoran markasıdır. Necə bacarıb
 
 > **💡 DK Agency Danışmanlıq:** Marka yaratmaq dizayndan başlayır, amma dizaynla bitmir. DK Agency olaraq restoranınız üçün **tam brend strategiyası** hazırlayırıq: vizual kimlik, marka dili, müştəri təcrübəsi, heyət təlimi — hamısı bir paket.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [Markalaşma bələdçisini aç →](/toolkit/branding-guide) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['menyu-muhendisliyi-satis', 'kurumsal-kitabca-emeliyyat'],
     coverImage: '/images/blog-09.png',
@@ -2832,7 +2832,7 @@ Contribution Margin = 1 - Dəyişən Xərc %
 
 > **💡 DK Agency Toolkit:** Başabaş hesablamaq çətin gəlir? DK Agency Toolkit-də avtomatik Break-even Calculator var — sadəcə xərcləri daxil et, sistem gündəlik müştəri hədəfini hesablayır.
 >
-> 📧 info@dkagency.com.tr | 🔧 dkagency.com.tr/toolkit | 🌐 dkagency.com.tr/danismanlik`,
+> 🔧 **Faydalı alət:** [Başabaş Kalkulyatorunu aç →](/toolkit/basabas) | [DK Agency ilə əlaqə →](/elaqe)`,
     isPremium: false,
     relatedArticles: ['1-porsiya-food-cost-hesablama', 'pnl-oxuya-bilmirsen'],
     coverImage: '/images/blog-10.png',
@@ -2891,7 +2891,7 @@ AI-nin əsl faydası "robot kimi qərar vermək" deyil — **problem böyüməd�
 5-20 şöbəli sistemdə hər şöbənin kirayəsi, personalı, müştərisi, food cost davranışı fərqlidir. Mərkəz bunu eyni sistemdə izləmirsə, problem yalnız aylıq hesabatda görünür — və o zaman gec olur. AI burada **mərkəzi sinir sistemi** kimi işləyir.
 
 ### Franchise mərkəzi panelində görünməli 10 göstərici
-Şöbə üzrə günlük ciro · FAVÖK marjası · food cost sapması · əməkhaqqı/ciro · ortalama çek · saatlıq satış · ən çox qazandıran məhsullar · fire/zay · müştəri şikayətləri · royalty/reklam ödəniş uyğunluğu.
+Şöbə üzrə günlük ciro · FAVÖK marjası · food cost sapması · əməkhaqqı/ciro · orta çek · saatlıq satış · ən çox qazandıran məhsullar · fire/zay · müştəri şikayətləri · royalty/reklam ödəniş uyğunluğu.
 
 ### Franchise üçün qırmızı bayraq
 Franchise verən yalnız royalty alır, amma food cost, xidmət keyfiyyəti, POS datası və müştəri təcrübəsini izləmirsə — bu franchise deyil, **sadəcə ad istifadəsidir.**
@@ -2902,14 +2902,14 @@ Franchise verən yalnız royalty alır, amma food cost, xidmət keyfiyyəti, POS
 
 **1. Data təmizliyi:** məhsul adları standart, resept kartları rəqəmsal, porsiya sabit, təchizat qiymətləri sistemdə. Data qarışıqdırsa, AI səhv nəticə verir.
 
-**2. KPI xəritəsi:** food cost %, labor cost %, prime cost, FAVÖK marjası, ortalama çek, müştəri təkrarlanması, delivery marjası, fire %, məhsul üzrə gross margin.
+**2. KPI xəritəsi:** food cost %, labor cost %, prime cost, FAVÖK marjası, orta çek, müştəri təkrarlanması, delivery marjası, fire %, məhsul üzrə gross margin.
 
 **3. Erkən xəbərdarlıq:** hər gün — hansı şöbədə food cost normadan çıxıb? hansı məhsul marjanı aşağı salır? hansı şöbədə FAVÖK düşür amma ciro artdığı üçün gizlənir?
 
 **4. Müdaxilə planı:** hər siqnalın qarşısında aksiyon olmalıdır (food cost↑ → resept/porsiya/alış yoxla; labor cost↑ → növbə planı; FAVÖK↓ → 7 günlük operativ audit).
 
 ### ⚠️ Vacib qeyd (halüsinasyon)
-AI yalnız **mövcud SSOT datadan** oxumalıdır. Sistemə uydurma kampaniya/qiymət "icad etmək" qadağandır — hər çıxış real data ilə məhdudlaşmalıdır.
+AI yalnız **mövcud SSOT datadan** oxumalıdır. Sistemə uydurma kampaniya/qiymət "icad etmək" qadağandır — hər çıxış real məlumat ilə məhdudlaşmalıdır.
 
 ### Guru Kutusu
 > **Edwards Deming (idarəetmə):** "Allaha güvənirik — qalan hamı data gətirsin."
@@ -2921,7 +2921,7 @@ AI yalnız **mövcud SSOT datadan** oxumalıdır. Sistemə uydurma kampaniya/qiy
 **Kiçik başla, düzgün qur.** İlk mərhələdə 3–5 şöbə üçün kifayətdir: POS datasının gündəlik çıxarılması, məhsul üzrə satış analizi, food cost kartlarının yenilənməsi, personal saatlarının satışla müqayisəsi, delivery marjasının ayrıca analizi, şöbə üzrə FAVÖK paneli, həftəlik risk siqnalı.
 
 ### Praktik tətbiq qutusu
-İlk 5 siqnal: (1) food cost normadan 3% yuxarı, (2) labor cost +2%, (3) ortalama çek 10 gün ardıcıl azaldı, (4) delivery artdı amma marja düşdü, (5) ən çox satılan məhsulun marjası mənfiyə yaxınlaşdı.
+İlk 5 siqnal: (1) food cost normadan 3% yuxarı, (2) labor cost +2%, (3) orta çek 10 gün ardıcıl azaldı, (4) delivery artdı amma marja düşdü, (5) ən çox satılan məhsulun marjası mənfiyə yaxınlaşdı.
 
 ---
 
@@ -2935,7 +2935,7 @@ Restoranınız bu gün işləyir. Bəs sisteminiz sabah siz olmadan da işləyə
 
 ### Faydalı alətlər
 - [KAZAN AI — Restoran süni intellekt köməkçisi →](/kazan-ai)
-- [Restoran Audit aləti →](/toolkit?tool=restoran-audit)
+- [Restoran Audit aləti →](/marketinq/restoran-audit)
 
 ## DK Agency necə kömək edir?
 DK Agency-nin **KAZAN AI** və **OCAQ** sahibkar paneli məhz bu FAVÖK qoruma sistemini qurur: data görünür hala gəlir, şöbələr müqayisə olunur, risk siqnalları erkən gəlir. AI Restoran Operasiya Audit xidməti ilə hansı sızmanın harada olduğunu göstəririk. *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
@@ -2945,7 +2945,7 @@ DK Agency-nin **KAZAN AI** və **OCAQ** sahibkar paneli məhz bu FAVÖK qoruma s
 
   {
     id: 'blog-012',
-    slug: 'isleyen-franchise-devralmaq',
+    slug: 'isleyen-franchise-təhvil almaq',
     title: 'İşləyən Franchise\'i Almaq: Sıfırdan Qurmaqdan Niyə Daha Ağıllıdır?',
     subtitle: 'Yeni bir kafe açmaq romantik səslənir — amma ağıllı sahibkar devr edir',
     category: 'Satış',
@@ -2956,19 +2956,19 @@ DK Agency-nin **KAZAN AI** və **OCAQ** sahibkar paneli məhz bu FAVÖK qoruma s
     author: 'Doğan Tomris',
     publishDate: '2026-06-04T09:00:00Z',
     updatedAt: '2026-06-04T09:00:00Z',
-    tags: ['franchise', 'devir', 'satış', 'yatırım', 'due diligence'],
+    tags: ['franchise', 'devir', 'satış', 'investisiya', 'due diligence'],
     metaDescription: 'İşləyən franchise almaq niyə sıfırdan qurmaqdan daha ağıllıdır? Risk, vaxt, büdcə müqayisəsi və due diligence bələdçisi.',
     focusKeyword: 'işləyən franchise almaq',
     summary: 'Franchise dünyasında devir — mövcud franchise sahibinin işini olduğu kimi almaq. Risk aşağıdır, ilk gündən qazanc var, real rəqəmlər masadadır.',
     isPremium: false,
     relatedArticles: ['sifirdan-yoxsa-isleyen-franchise-devri', 'mulki-mecelle-726-franchise-devri'],
     coverImage: '/images/blog-13.png',
-    coverImageAlt: 'İşləyən franchise devralmaq',
+    coverImageAlt: 'İşləyən franchise təhvil almaq',
     content: `# İşləyən Franchise'i Almaq: Sıfırdan Qurmaqdan Niyə Daha Ağıllıdır?
 
 Yeni bir kafe və ya restoran açmaq romantik səslənir. Amma 2026-da ağıllı sahibkar bir sual verir: niyə sıfırdan qurum, əgər artıq işləyən, müştərisi olan bir biznesi ala bilərəmsə?
 
-Franchise dünyasında buna **devir** deyilir — yəni mövcud franchise sahibinin işini olduğu kimi almaq. İki yol var: ya boş bir məkanı sıfırdan qurursan, ya da artıq pul qazanan bir şöbəni devralırsan. Fərq sadəcə zövq məsələsi deyil — pul və risk məsələsidir.
+Franchise dünyasında buna **devir** deyilir — yəni mövcud franchise sahibinin işini olduğu kimi almaq. İki yol var: ya boş bir məkanı sıfırdan qurursan, ya da artıq pul qazanan bir şöbəni təhvil alırsan. Fərq sadəcə zövq məsələsi deyil — pul və risk məsələsidir.
 
 ## 1. Sıfırdan qurmaq: uzun və qeyri-müəyyən
 
@@ -2984,7 +2984,7 @@ Sıfırdan açanda ən böyük problem **vaxt və gözlənilməz xərclərdir.**
 
 - **İlk gündən pul qazanırsan.** Müştəri var, komanda var, avadanlıq qurulub. Sən sıfırdan başlamırsan — gedən bir maşına minirsən.
 - **Risk daha aşağıdır**, çünki lokasiya və müştəri kütləsi artıq sınanıb. "Bura işləyirmi?" sualının cavabı bəlli.
-- **Real rəqəmlər masadadır:** keçmiş satışlar, vergi bəyannamələri, kâr/zərər cədvəli. Sən təxminlə yox, faktla qərar verirsən.
+- **Real rəqəmlər masadadır:** keçmiş satışlar, vergi bəyannamələri, mənfəət/zərər cədvəli. Sən təxminlə yox, faktla qərar verirsən.
 
 > **Praktik fərq:** Sıfırdan qurulumda əlində bir Excel proqnozu olur — arzu. Devirdə isə əlində bank hesabı çıxarışı olur — həqiqət.
 
@@ -3002,7 +3002,7 @@ Pul qazanan bir şöbəni almaq banklar üçün də daha etibarlı profildir. İ
 | Qərar nəyə əsaslanır | Təxminə (proqnoz) | Real rəqəmə (keçmiş satış) |
 | Komanda | Sıfırdan işə qəbul | Hazır, təcrübəli komanda |
 
-## Bir şərt: ön yoxlama (due diligence)
+## Bir şərt: ilkin yoxlama (due diligence)
 
 Devirin tək riski var — satıcının rəqəmlərinin doğru olub-olmadığını yoxlamamaq. Buna görə devirdən əvvəl mütləq:
 
@@ -3010,7 +3010,7 @@ Devirin tək riski var — satıcının rəqəmlərinin doğru olub-olmadığın
 2. Satıcıya "niyə satırsan?" sualını ver. *(Qeyd: dünyada franchise satışlarının yarıdan çoxu biznesin batması yox, sahibin təqaüdə çıxması və ya köçməsi kimi şəxsi səbəblərlədir — yəni satılan biznes çox vaxt sağlamdır.)*
 3. Müqavilədə devir hüququnu yoxla — franchise verən bu devri təsdiqləməlidir.
 
-> **Qızıl qayda:** Sermayeni xərcləməzdən əvvəl biznesin "sağlamlıq skorunu" gör. Şəffaf rəqəm olmadan devir alma.
+> **Qızıl qayda:** Kapitalı xərcləməzdən əvvəl biznesin "sağlamlıq göstəricisini" gör. Şəffaf rəqəm olmadan devir alma.
 
 ---
 
@@ -3020,7 +3020,7 @@ Devirin tək riski var — satıcının rəqəmlərinin doğru olub-olmadığın
 
 ## DK Agency necə kömək edir?
 
-DK Agency-nin **Devir** platforması məhz bunun üçün qurulub: işləyən franchise və biznesləri şəffaf, yoxlanıla bilən formada bir araya gətirir. Beləcə alıcı sermayeni xərcləməzdən əvvəl operasiyanı görür, satıcı isə düzgün alıcı tapır. Çünki bizim üçün devir təkcə alqı-satqı deyil, etibarın nişanıdır: *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+DK Agency-nin **Devir** platforması məhz bunun üçün qurulub: işləyən franchise və biznesləri şəffaf, yoxlanıla bilən formada bir araya gətirir. Beləcə alıcı kapitalını xərcləməzdən əvvəl operasiyanı görür, satıcı isə düzgün alıcı tapır. Çünki bizim üçün devir təkcə alqı-satqı deyil, etibarın nişanıdır: *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
 
 > **Növbəti addım:** İşləyən bir franchise almaq və ya öz biznesini devr etmək istəyirsən? DK Agency Devir platformasına bax və ya pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.`,
   },
@@ -3097,7 +3097,7 @@ DK Agency franchise yolunun hər addımında yanındadır — marka hazırlığ�
     id: 'blog-014',
     slug: 'mulki-mecelle-726-franchise-devri',
     title: 'Mülki Məcəllə m.726 və Franchise Devri: İnvestor üçün Hüquqi Due Diligence',
-    subtitle: 'İnvestor üçün hüquqi due diligence (ön yoxlama) rəhbəri',
+    subtitle: 'İnvestor üçün hüquqi due diligence (ilkin yoxlama) rəhbəri',
     category: 'Hüquqi',
     categoryEmoji: '⚖️',
     stage: 'Devir',
@@ -3111,14 +3111,14 @@ DK Agency franchise yolunun hər addımında yanındadır — marka hazırlığ�
     focusKeyword: 'franchise devri due diligence',
     summary: 'Franchise devri yalnız hazır biznes almaq deyil. Hüquqi, maliyyə və operativ risklərin birlikdə yoxlandığı prosesdir. M.726 investoru necə qoruyur?',
     isPremium: true,
-    relatedArticles: ['isleyen-franchise-devralmaq', 'marka-qeydiyyati-azerbaycan'],
+    relatedArticles: ['isleyen-franchise-təhvil almaq', 'marka-qeydiyyati-azerbaycan'],
     coverImage: '/images/blog-15.png',
     coverImageAlt: 'Mülki Məcəllə və franchise devri',
     content: `# Mülki Məcəllə m.726 və Franchise Devri
 
-## İnvestor üçün hüquqi due diligence (ön yoxlama) rəhbəri
+## İnvestor üçün hüquqi due diligence (ilkin yoxlama) rəhbəri
 
-Franchise devri yalnız hazır biznes almaq deyil. Burada üç aktiv birlikdə devr olunur: **marka istifadə hüququ, işləyən əməliyyat sistemi və gələcək nakit axını.** Buna görə devir sadə alqı-satqı kimi yox, hüquqi, maliyyə və operativ risklərin birlikdə yoxlandığı proses kimi aparılmalıdır.
+Franchise devri yalnız hazır biznes almaq deyil. Burada üç aktiv birlikdə devr olunur: **marka istifadə hüququ, işləyən əməliyyat sistemi və gələcək pul axını.** Buna görə devir sadə alqı-satqı kimi yox, hüquqi, maliyyə və operativ risklərin birlikdə yoxlandığı proses kimi aparılmalıdır.
 
 Azərbaycanda bu mövzunun hüquqi dayağı Mülki Məcəllənin **Françayzinq fəslidir (m.723–731)**, xüsusən **726-cı maddə**: tərəflər franchise sistemi ilə bağlı şərtləri bir-birinə açıq və dürüst bildirməli, əldə etdikləri məxfi məlumatları müqavilə bağlanmasa belə qorumağa borcludurlar. *(Qeyd: Mülki Məcəlləd"Kommersiya konsessiyası" (m.800–807) ayrı bir fəsildir — françayzinq ilə qarışdırılmamalıdır.)*
 
@@ -3145,7 +3145,7 @@ Buna görə yalnız satıcı ilə razılaşmaq kifayət deyil. Marka sahibinin d
 
 ## 3. İnvestor hansı sənədləri görməlidir?
 
-**Maliyyə:** son 12–24 aylıq POS satışları, vergi bəyannamələri, bank hərəkətləri, kâr/zərər hesabatları, təchizatçı borcları, əməkhaqqı, royalty/reklam ödənişləri, delivery komissiyaları, kommunal/kirayə.
+**Maliyyə:** son 12–24 aylıq POS satışları, vergi bəyannamələri, bank hərəkətləri, mənfəət/zərər hesabatları, təchizatçı borcları, əməkhaqqı, royalty/reklam ödənişləri, delivery komissiyaları, kommunal/kirayə.
 
 **Hüquqi:** franchise müqaviləsi, devrə icazə maddəsi, marka istifadə şərtləri, ərazi qoruması, müqavilə bitmə tarixi, xitam/uzatma, kirayə müqaviləsi, lisenziyalar, işçi və təchizatçı müqavilələri.
 
@@ -3193,11 +3193,11 @@ Hüquq və maliyyə ayrı düşünülməməlidir: ən yaxşı satış datası be
 ---
 
 ### Faydalı alətlər
-- [Franchise Alıcı Çek-listi — devrdan əvvəl yoxla →](/franchise/alici-cheklisti)
+- [Franchise Alıcı Çek-listi — təhvil prosesindən əvvəl yoxla →](/franchise/alici-cheklisti)
 - [Devir elanlarına bax →](/ilanlar?type=devir)
 
 ## DK Agency necə kömək edir?
-DK Agency **Devir** platforması və franchise danışmanlığı ilə devrin hüquqi və maliyyə ön yoxlamasını sistemləşdirir. *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+DK Agency **Devir** platforması və franchise danışmanlığı ilə devrin hüquqi və maliyyə ilkin yoxlamasını sistemləşdirir. *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
 
 > **Növbəti addım:** Devir düşünürsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.
 
@@ -3207,8 +3207,8 @@ DK Agency **Devir** platforması və franchise danışmanlığı ilə devrin hü
   {
     id: 'blog-015',
     slug: 'sifirdan-yoxsa-isleyen-franchise-devri',
-    title: 'Sıfırdan HoReCa Yatırımı, yoxsa İşləyən Franchise Devralmaq?',
-    subtitle: '2026 bazarında risk, nakit axını və FAVÖK baxışı',
+    title: 'Sıfırdan HoReCa İnvestisiyası, yoxsa İşləyən Franchise-i Təhvil Almaq?',
+    subtitle: '2026 bazarında risk, pul axını və FAVÖK baxışı',
     category: 'Maliyyə',
     categoryEmoji: '💰',
     stage: 'Böyüt',
@@ -3217,23 +3217,23 @@ DK Agency **Devir** platforması və franchise danışmanlığı ilə devrin hü
     author: 'Doğan Tomris',
     publishDate: '2026-06-04T09:00:00Z',
     updatedAt: '2026-06-04T09:00:00Z',
-    tags: ['yatırım', 'franchise', 'devir', 'FAVÖK', 'maliyyə', 'greenfield', 'due diligence'],
-    metaDescription: 'Sıfırdan restoran açmaq, yoxsa işləyən franchise devralmaq? 2026 bazarında risk, nakit axını və FAVÖK müqayisəsi.',
-    focusKeyword: 'franchise devir yatırım',
-    summary: '2026-da investor üçün əsas sual: brend qururam, yoxsa işləyən nakit axınını alıram? FAVÖK baxışı ilə sıfırdan vs devir müqayisəsi.',
+    tags: ['investisiya', 'franchise', 'devir', 'FAVÖK', 'maliyyə', 'greenfield', 'due diligence'],
+    metaDescription: 'Sıfırdan restoran açmaq, yoxsa işləyən franchise təhvil almaq? 2026 bazarında risk, pul axını və FAVÖK müqayisəsi.',
+    focusKeyword: 'franchise devir investisiya',
+    summary: '2026-da investor üçün əsas sual: brend qururam, yoxsa işləyən pul axınını alıram? FAVÖK baxışı ilə sıfırdan vs devir müqayisəsi.',
     isPremium: true,
-    relatedArticles: ['isleyen-franchise-devralmaq', 'ai-ile-favok-qorumasi'],
+    relatedArticles: ['isleyen-franchise-təhvil almaq', 'ai-ile-favok-qorumasi'],
     coverImage: '/images/blog-16.png',
     coverImageAlt: 'Sıfırdan yoxsa franchise devri',
-    content: `# Sıfırdan HoReCa Yatırımı, yoxsa İşləyən Franchise Devralmaq?
+    content: `# Sıfırdan HoReCa İnvestisiyası, yoxsa İşləyən Franchise-i Təhvil Almaq?
 
-## 2026 bazarında risk, nakit axını və FAVÖK baxışı
+## 2026 bazarında risk, pul axını və FAVÖK baxışı
 
-2026-cı ildə HoReCa sektorunda yatırım qərarı artıq "gözəl məkan açaq" düşüncəsi ilə verilmir. Kirayə xərcləri, əməkhaqqı təzyiqi, food cost dalğalanması, avadanlıq qiymətləri və istehlakçının daha seçici davranması restoran yatırımını texniki bir qərara çevirib.
+2026-cı ildə HoReCa sektorunda investisiya qərarı artıq "gözəl məkan açaq" düşüncəsi ilə verilmir. Kirayə xərcləri, əməkhaqqı təzyiqi, food cost dalğalanması, avadanlıq qiymətləri və istehlakçının daha seçici davranması restoran investisiyasını texniki bir qərara çevirib.
 
-Bu bazarda investor üçün əsas sual dəyişib: **"Mən brend qururam, yoxsa artıq işləyən nakit axınını satın alıram?"**
+Bu bazarda investor üçün əsas sual dəyişib: **"Mən brend qururam, yoxsa artıq işləyən pul axınını alıram?"**
 
-Sıfırdan restoran yaratmaq hələ də mümkündür, amma yüksək qeyri-müəyyənlik daşıyır. İşləyən franchise şöbəsini devralmaq isə doğru analiz edildikdə daha ölçülə bilən, daha tez test edilən və daha sürətli geri dönüş potensialı yaradır. Məsələ yalnız restoran almaq deyil — **riskin qiymətini düzgün hesablamaqdır.**
+Sıfırdan restoran yaratmaq hələ də mümkündür, amma yüksək qeyri-müəyyənlik daşıyır. İşləyən franchise şöbəsini təhvil almaq isə doğru analiz edildikdə daha ölçülə bilən, daha tez test edilən və daha sürətli geri dönüş potensialı yaradır. Məsələ yalnız restoran almaq deyil — **riskin qiymətini düzgün hesablamaqdır.**
 
 ---
 
@@ -3246,18 +3246,18 @@ Sıfırdan restoran yaratmaq hələ də mümkündür, amma yüksək qeyri-müəy
 **Üçüncüsü, bazar uyğunluğu riski.** Lokasiya, menyu, qiymət və xidmət sürəti yalnız açılışdan sonra real test olunur. Açılış öncəsi Excel modeli bazarın davranışını tam göstərmir.
 
 ### Investor qutusu
-**Greenfield yatırımda əsas sual:** "Bu konseptin işləyəcəyinə inanırıq, yoxsa bunu sübut edən real satış datası var?" Cavab yalnız "inanırıq"dırsa, bu investisiya yox, yüksək riskli konsept testidir.
+**Greenfield investisiyada əsas sual:** "Bu konseptin işləyəcəyinə inanırıq, yoxsa bunu sübut edən real satış datası var?" Cavab yalnız "inanırıq"dırsa, bu investisiya yox, yüksək riskli konsept testidir.
 
 ---
 
-## 2. İşləyən franchise devri: "real data" üstünlüyü
+## 2. İşləyən franchise devri: "real məlumat" üstünlüyü
 
-İşləyən şöbəni devralanda investor sıfırdan mətbəx qurmur, komanda axtarmır, müştəri davranışını təxmin etmir — artıq işləyən sistemin içinə daxil olur. Masaya bu məlumatlarla otura bilər: son 12–24 aylıq satışlar, food cost, əməkhaqqı yükü, kirayə/ciro nisbəti, müştəri təkrarlanması, online satış payı, ortalama çek, FAVÖK marjası, mövsümi dəyişikliklər və vergi tarixçəsi.
+İşləyən şöbəni təhvil alanda investor sıfırdan mətbəx qurmur, komanda axtarmır, müştəri davranışını təxmin etmir — artıq işləyən sistemin içinə daxil olur. Masaya bu məlumatlarla otura bilər: son 12–24 aylıq satışlar, food cost, əməkhaqqı yükü, kirayə/ciro nisbəti, müştəri təkrarlanması, online satış payı, orta çek, FAVÖK marjası, mövsümi dəyişikliklər və vergi tarixçəsi.
 
 Bu, riski azaldır — çünki qərar "gələcək ehtimalı"na yox, **keçmiş performansa** əsaslanır.
 
 ### Faydalı məlumat qutusu
-İşləyən franchise devrində investor yalnız avadanlıq almır. O, bunları alır: kanıtlanmış lokasiya, hazır müştəri bazası, təlim keçmiş personal, oturmuş tədarük, marka tanınması, gündəlik nakit axını və ölçülə bilən FAVÖK. Yəni fiziki məkana yox, **işləyən iqtisadi vahidə** pul ödəyir.
+İşləyən franchise devrində investor yalnız avadanlıq almır. O, bunları alır: sübut edilmiş lokasiya, hazır müştəri bazası, təlim keçmiş personal, oturmuş tədarük, marka tanınması, gündəlik pul axını və ölçülə bilən FAVÖK. Yəni fiziki məkana yox, **işləyən iqtisadi vahidə** pul ödəyir.
 
 ### Guru Kutusu
 > **Warren Buffett:** "Qiymət ödədiyindir, dəyər aldığındır."
@@ -3271,7 +3271,7 @@ Sıfırdan qurulan restoranda pul əvvəl layihəyə, tikintiyə, komandaya, aç
 
 ### Sadə müqayisə
 
-| Kriteriya | Sıfırdan yatırım | İşləyən franchise devri |
+| Meyar | Sıfırdan investisiya | İşləyən franchise devri |
 |---|---|---|
 | Satışın başlanması | 3–6 ay sonra | İlk gündən |
 | İlkin xərc sapması | Yüksək | Aşağı |
@@ -3294,7 +3294,7 @@ Devirdən əvvəl bu sualları ver:
 - Food cost artanda marja necə qorunub?
 - Kirayə yenilənəndə FAVÖK nə qədər azalacaq?
 - Royalty və reklam fondu tam nəzərə alınıbmı?
-- Sahibkarın şəxsi xərcləri kâr/zərər cədvəlindən təmizlənibmi?
+- Sahibkarın şəxsi xərcləri mənfəət/zərər cədvəlindən təmizlənibmi?
 - Delivery komissiyaları real hesablanıbmı?
 
 ---
@@ -3307,12 +3307,12 @@ Devir zamanı üç sahə ayrıca analiz edilməlidir: **hüquqi uyğunluq** (mü
 
 ---
 
-## Nəticə: romantika yox, ölçülə bilən yatırım
+## Nəticə: romantika yox, ölçülə bilən investisiya
 
-İnvestor üçün sual sadədir: "Bu kapital nə vaxt və hansı risklə geri dönəcək?" İşləyən franchise devri düzgün ön yoxlama (due diligence) ilə aparıldıqda daha rasional seçimdir — burada fikir yox performans, dekorasiya yox nakit axını alınır.
+İnvestor üçün sual sadədir: "Bu kapital nə vaxt və hansı risklə geri dönəcək?" İşləyən franchise devri düzgün ilkin yoxlama (due diligence) ilə aparıldıqda daha rasional seçimdir — burada fikir yox performans, dekorasiya yox pul axını alınır.
 
 ### Final investor qutusu
-Devirdən əvvəl son sual: **"Bu biznes mənsiz də işləyirmi?"** Cavab bəlidirsə, bu artıq restoran deyil — yatırım aktividir.
+Devirdən əvvəl son sual: **"Bu biznes mənsiz də işləyirmi?"** Cavab bəlidirsə, bu artıq restoran deyil — investisiya aktividir.
 
 ---
 
@@ -3320,7 +3320,7 @@ Devirdən əvvəl son sual: **"Bu biznes mənsiz də işləyirmi?"** Cavab bəli
 - [ROI Kalkulyatoru — franchise geri dönüş hesabla →](/franchise/roi-kalkulyatoru)
 
 ## DK Agency necə kömək edir?
-DK Agency-nin **Devir** platforması işləyən franchise və bizneslərin şəffaf, yoxlanıla bilən devrini təmin edir — alıcı sermayəni xərcləməzdən əvvəl operasiyanın "sağlamlıq skorunu" görür. *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+DK Agency-nin **Devir** platforması işləyən franchise və bizneslərin şəffaf, yoxlanıla bilən devrini təmin edir — alıcı kapitalı xərcləməzdən əvvəl operasiyanın "sağlamlıq göstəricisini" görür. *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
 
 > **Növbəti addım:** Devir platformasına bax və ya ROI Kalkulyatoru ilə öz rəqəmlərini hesabla.`,
   },
@@ -3441,7 +3441,7 @@ Uğurlu nəticədə sertifikat verilir, 3 il etibarlıdır. Bu müddət ərzind�
 > ║ 🎤 **GÜNAY SAĞLAM**                                       ║
 > ║ Azərbaycan Hotel Assosiasiyası icraçı direktoru            ║
 > ║                                                            ║
-> ║ *"Hotellərin ulduz təsnifatı ilə bağlı 248 kriteriyamız   ║
+> ║ *"Hotellərin ulduz təsnifatı ilə bağlı 248 meyarmız   ║
 > ║  var. Bəzi otellərdə qonaq qəbulunu hələ də kağızda       ║
 > ║  qeyd edirlər. Belə vəziyyətdə 3 ulduz almaq mümkün       ║
 > ║  deyil."*                                                  ║
@@ -3459,7 +3459,7 @@ Uğurlu nəticədə sertifikat verilir, 3 il etibarlıdır. Bu müddət ərzind�
 
 Sahibkar deyir: "Otelimə 4 ulduz layiqdir." Auditor gəlir, otaq sahəsi 13 m² — 4 ulduz üçün minimum 16 m² lazımdır. Müraciət rədd edilir, **rüsum geri qaytarılmır**.
 
-**Həll:** İddiadan əvvəl **özünüqiymətləndirmə** ilə real tier müəyyən et. [Otel Hazırlıq Testimiz](/toolkit/otel-hazirlig-testi) bu addımı sistemli edir — 12 meyar üzrə real skor göstərir.
+**Həll:** İddiadan əvvəl **özünüqiymətləndirmə** ilə real tier müəyyən et. [Otel Hazırlıq Testimiz](/toolkit/otel-hazirlig-testi) bu addımı sistemli edir — 12 meyar üzrə real nəticə göstərir.
 
 ### Səhv 2: TrustYou Reytinqini Saymamaq
 
@@ -3546,7 +3546,7 @@ AHA Milli Ulduz Təsnifatı **bir bürokratik addım deyil** — Azərbaycan ote
 
 İlk addım: 4 dəqiqəlik testimizdə real tier-inizi müəyyən edin. Sonrası — birlikdə qurarıq.
 
-[Otel Hazırlıq Testinə başla →](/toolkit/otel-hazirlig-testi) | [Pulsuz məsləhət istə →](/franchise/meslehet)
+[Otel Hazırlıq Testinə başla →](/toolkit/otel-hazirlig-testi) | [Pulsuz məsləhət istə →](/elaqe)
 
 ---
 
@@ -3626,6 +3626,8 @@ Qonaq ən məmnun olduğu an — adətən gəlişin ilk günü və ya əla bir t
 Qonaq təcrübəsi qapıda başlayır. İlk 5 dəqiqədə isti, şəxsi və yerli bir qarşılama qur; kiçik jestlərlə qonağı aşiq et; məmnun anda rəy iste. Bu, ən ucuz, amma ən güclü marketinqdir — çünki onu **qonağın özü** danışır.
 
 ---
+
+> 🔧 **Faydalı alət:** Qonaqla ilk təmas və sonrakı mesajlaşmanı sistemləşdirmək üçün [WhatsApp Şablon Paketini aç →](/toolkit/whatsapp-template-paketi).
 
 ## DK Agency necə kömək edir?
 
@@ -3708,6 +3710,8 @@ Platformalar yeni qonaq gətirir — bu yaxşıdır. Amma hər rezervasiyada kom
 Kiçik ev sahibi üçün qayda sadədir: **bir yerdə görünmək azdır.** Bir elan hazırla, onu bir neçə platformaya yay, təqvimi sinxronla və öz birbaşa qonağını qur. Beləcə ev daha çox dolur, daha az komissiya verirsən və idarəetmə bir paneldən keçir.
 
 ---
+
+> 🔧 **Faydalı alət:** Elan və reklam büdcəsinin geri dönüşünü ölçmək üçün [Reklam ROI alətini aç →](/marketinq/reklam-roi).
 
 ## DK Agency necə kömək edir?
 
@@ -3822,9 +3826,11 @@ Rayonda ev kirayəsi şans işi deyil — sistemdir. Evi minimum standarta hazı
 
 ---
 
+> 🔧 **Faydalı alət:** Evin doluluq, komissiya və gəlir ssenarisini hesablamaq üçün [Qonaq Evi ROI Kalkulyatorunu aç →](/toolkit/qonaq-evi-roi-kalkulyatoru).
+
 ## DK Agency necə kömək edir?
 
-DK Agency rayon ev sahiblərinə kirayəni sistemə çevirməkdə kömək edir — hazırlıqdan qiymətə, təhlükəsizlikdən rəqəmsal görünürlüyə qədər. [DK Agency alət dəsti](/toolkit) ilə qonaq təcrübəsini ölçülə bilən hala gətir. *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+DK Agency rayon ev sahiblərinə kirayəni sistemə çevirməkdə kömək edir — hazırlıqdan qiymətə, təhlükəsizlikdən rəqəmsal görünürlüyə qədər. [Qonaq Evi ROI Kalkulyatoru](/toolkit/qonaq-evi-roi-kalkulyatoru) ilə gəlir ssenarisini ölçülə bilən hala gətir. *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
 
 > **Növbəti addım:** Rayonda evin var, amma necə kirayə verəcəyini bilmirsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.`,
     isPremium: false,
@@ -4053,6 +4059,8 @@ Xidmətin kökü kadrdadır.
 Kadrın kökü təhsildədir.
 Təhsilin gücü isə sistemdədir.
 
+> 🔧 **Faydalı alət:** Komandanın dəyişmə xərcini və saxlama riskini ölçmək üçün [İşçi Saxlama alətini aç →](/toolkit/staff-retention).
+
 ## DK Agency necə kömək edir?
 
 DK Agency və TQTA — Turan Qastro Turizm Akademiyası — HoReCa və turizm sektorunda təlimli, sertifikatlı və işə hazır kadrların yetişdirilməsi üçün çalışır.
@@ -4067,7 +4075,7 @@ Məqsədimiz yalnız kurs keçmək deyil. Məqsədimiz Azərbaycan HoReCa sektor
 
 *Mənbə qeydi: Koç Holdinq “Meslek Lisesi Memleket Meselesi” proqramının rəsmi açıqlamaları; CTH-nin TQTA Approved Teaching Centre məlumatı; TQTA və TİKA dəstəkli akademiya materialları.*`,
     isPremium: true,
-    relatedArticles: ['sertifikatli-komanda-cth-online-tehsil', 'azerbaycan-qastronomiya-2030-dovlet-plani'],
+    relatedArticles: ['sertifikatli-komanda-cth-portal-karyera', 'azerbaycan-qastronomiya-2030-strateji-yol-xeritesi'],
     coverImage: '/images/blog-21.png',
     coverImageAlt: 'Peşə məktəbi və HoReCa kadr hazırlığı modeli',
   },
@@ -4077,117 +4085,139 @@ Məqsədimiz yalnız kurs keçmək deyil. Məqsədimiz Azərbaycan HoReCa sektor
   // ═══════════════════════════════════════════════════════════════
   {
     id: 'blog-021',
-    slug: 'sertifikatli-komanda-cth-online-tehsil',
-    title: 'Sertifikatlı Komanda Necə Qurulur? CTH Standartı və Online Təhsil',
-    subtitle: 'Sertifikat bir kağız parçası deyil — standartın zəmanətidir',
+    slug: 'sertifikatli-komanda-cth-portal-karyera',
+    title: 'Sertifikatlı Komanda Necə Qurulur? CTH Standartı, Portal və Karyera Sistemi',
+    subtitle: 'Təlim, portal, praktika və karyera yolunu bir sistemdə birləşdirən model',
     category: 'Kadr',
     categoryEmoji: '👥',
     stage: 'Başla',
-    readingTime: 8,
-    wordCount: 1100,
+    readingTime: 6,
+    wordCount: 838,
     author: 'Doğan Tomris',
     publishDate: '2026-06-04T15:00:00Z',
-    updatedAt: '2026-06-04T15:00:00Z',
-    tags: ['CTH', 'sertifikat', 'TQTA', 'kadr', 'online təhsil', 'otel', 'Qastro Turizm seriyası'],
-    metaDescription: 'CTH beynəlxalq sertifikatı ilə sertifikatlı komanda necə qurulur? TQTA Akademiya, online + üz-üzə hibrid təhsil, Level 2-4 proqramlar.',
-    focusKeyword: 'CTH sertifikat komanda',
-    summary: 'CTH (Confederation of Tourism & Hospitality) beynəlxalq standartı + TQTA hibrid təhsili ilə işçini işindən ayırmadan sertifikatlı kadra çevir. Stabil keyfiyyət, məmnun qonaq, güclü marka.',
-    content: `# Sertifikatlı Komanda Necə Qurulur? CTH Standartı və Online Təhsil
+    updatedAt: '2026-06-06T13:00:00Z',
+    tags: ["CTH","sertifikat","TQTA","kadr","tələbə portalı","audio dərs","karyera portalı","Qastro Turizm seriyası"],
+    metaDescription: 'CTH standartı, TQTA tələbə portalı, audio dərslər, praktiki təlim və karyera sistemi ilə sertifikatlı komanda necə qurulur?',
+    focusKeyword: 'CTH sertifikatlı komanda TQTA portal',
+    summary: 'CTH standartını tələbə portalı, audio dərslər, üz-üzə praktika və karyera sistemi ilə birləşdirərək izlənə bilən, işə hazır komanda qur.',
+    content: `# Sertifikatlı Komanda Necə Qurulur? CTH Standartı, Portal və Karyera Sistemi
 
-Əvvəlki yazımızda dedik: xidmətin pis olmasının kökü təlimsiz kadrdadır *(bax: [Peşə Məktəbi Ölkə Məsələsidir](/blog/pese-mektebi-olke-meselesi))*. Bəs həll? Gözləmədən, bu gün **sertifikatlı, beynəlxalq standartda kadr** yetişdirmək. Bu yazı bunun necə mümkün olduğunu göstərir.
+Əvvəlki yazımızda dedik: xidmətin pis olmasının kökü çox vaxt təlimsiz kadrdadır *(bax: [Peşə Məktəbi Ölkə Məsələsidir](/blog/pese-mektebi-olke-meselesi))*. Bəs həll nədir? Gözləmədən, bu gün **sertifikatlı, izlənə bilən və beynəlxalq standartda kadr** yetişdirmək.
 
----
+TQTA-da məqsəd təkcə dərs keçmək deyil. Məqsəd tələbənin öyrənməsini, praktikasını, davamiyyətini və karyera yolunu sistemli şəkildə izləməkdir.
 
 ## 1. Niyə sertifikat vacibdir?
 
-Sertifikat bir kağız parçası deyil — **standartın zəmanətidir.** Sertifikatlı işçi:
+Sertifikat bir kağız parçası deyil — **standartın sübutudur.** Sertifikatlı işçi:
 
-- Eyni keyfiyyəti hər dəfə təkrarlayır (qonaq sürpriz görmür).
-- Beynəlxalq qaydaları (gigiyena, servis, təhlükəsizlik) bilir.
-- Otelin ulduz təsnifatı üçün tələb olunan kadr şərtini ödəyir *(AHA 3-5 ulduz təlimli personal istəyir)*.
-- İşlətmənin "təsadüfən yaxşı" yox, **sistemli yaxşı** olmasını təmin edir.
+- Eyni keyfiyyəti hər dəfə təkrarlayır.
+- Gigiyena, təhlükəsizlik, servis və əməliyyat qaydalarını bilir.
+- İşlədiyi müəssisənin xidmət səviyyəsini sabit saxlayır.
+- Komandaya “kim necə öyrənibsə elə işləyir” yox, ortaq standart gətirir.
+- İşçinin karyera yolunu görünən və ölçülə bilən hala gətirir.
 
-Yəni sertifikat həm işçinin karyerası, həm də işlətmənin keyfiyyət zəmanətidir.
-
----
+Yəni sertifikat həm işçinin şəxsi inkişafı, həm də sahibkarın keyfiyyət zəmanətidir.
 
 ## 2. CTH nədir?
 
-**CTH (Confederation of Tourism & Hospitality)** — Böyük Britaniya mərkəzli, turizm və qonaqpərvərlik sahəsində beynəlxalq tanınan təhsil və sertifikatlaşdırma qurumudur. Təlimlər səviyyələrə bölünür (Level 2, 3, 4) — başlanğıcdan menecer səviyyəsinə qədər.
+**CTH (Confederation of Tourism & Hospitality)** — Böyük Britaniya mərkəzli, turizm və qonaqpərvərlik sahəsində beynəlxalq tanınan təhsil və sertifikatlaşdırma qurumudur.
 
-**Azərbaycanda CTH akkreditasiyalı mərkəz mövcuddur:** TQTA (Turan Qastro Turizm Akademiyası), Sumqayıt — **CTH Approved Teaching Centre, Centre No. 2501.** Ünvan: Səməd Vurğun küç. 84, Sumqayıt. TİKA (Türk Əməkdaşlıq və Koordinasiya Agentliyi) dəstəyi ilə qurulub.
+CTH proqramları fərqli səviyyələr üzrə qurulur. Başlanğıc və əməliyyat bacarıqlarından idarəetmə və rəhbərlik kompetensiyalarına qədər mərhələli inkişaf yolu yaradır. TQTA CTH tərəfindən təsdiqlənmiş tədris mərkəzi kimi aşpazlıq, barista bacarıqları, restoran xidməti və turizm-qonaqpərvərlik ingiliscəsi proqramları təqdim edir.
 
-**TQTA-da CTH proqramları:**
-- **Level 2 Award in Cookery Skills** — aşpaz başlanğıc
-- **Level 2 Award in Barista Skills** — barista peşə
-- **Level 2 Certificate in Professional Restaurant Front of House Service** — garson/ofisiant peşəkarlıq
-- **Level 1 Certificate in English for Tourism and Hospitality** — turizm ingilis dili
+Bu yanaşma nəzəri biliklə praktiki bacarığı birləşdirir. TQTA-da bu standartlar tələbənin real öyrənmə prosesi ilə birlikdə izlənir.
 
-### Faydalı məlumat qutusu
-CTH səviyyələri sadə dillə: **Level 1-2** — başlanğıc/əməliyyat (yeni işçi, əsas bacarıqlar); **Level 3** — orta/məsul (təcrübəli işçi, komanda lideri); **Level 4** — idarəetmə (menecer, şöbə rəhbəri). Hər səviyyə nəzəri biliklə praktiki bacarığı birləşdirir (təxminən 40% nəzəri, 60% praktiki).
+> 💡 **Faydalı məlumat:** CTH-nin rəsmi mərkəz məlumatında TQTA Sumqayıtda Approved Teaching Centre kimi göstərilir. Təklif olunan proqramlar arasında Level 2 Cookery Skills, Level 2 Barista Skills, Level 2 Professional Restaurant Front of House Service və Level 1 English for Tourism and Hospitality yer alır.
 
----
+## 3. TQTA fərqi: tələbə portalı ilə izlənən təhsil
 
-## 3. Online + üz-üzə: işləyən insan üçün uyğun
+Bu gün təhsil yalnız sinifdə deyil. Tələbə dərsdən sonra da sistemdə qalmalıdır. TQTA-da bunun üçün tələbə portalı var.
 
-Ən böyük maneə adətən budur: "İşçim işləyir, təlimə vaxtı yoxdur." Həll — **hibrid təhsil:**
+Tələbə portalda:
 
-- **Online modullar** — nəzəri hissəni işçi öz vaxtında, telefondan və ya kompüterdən keçir.
-- **Üz-üzə praktika** — bacarıq tələb edən hissə (mətbəx, servis) TQTA-nın müasir təlim mətbəxlərində öyrədilir.
-- **Modullu struktur** — hər modul ayrıca, addım-addım; işçi işini buraxmadan irəliləyir.
+- Öz dərslərini və modullarını görə bilir.
+- Keçdiyi mövzuları izləyir.
+- Dərs materiallarına yenidən baxır.
+- Audio dərsləri dinləyə bilir.
+- Tapşırıqları və gündəlik öyrənmə addımlarını izləyir.
+- Öz inkişafını təkcə müəllimdən deyil, sistemdən də görür.
 
-Beləcə təlim işin yükünə çevrilmir — işin bir hissəsi olur.
+Bu, işləyən və ya vaxtı məhdud olan tələbə üçün böyük üstünlükdür. Çünki öyrənmə yalnız dərs saatı ilə məhdudlaşmır. Tələbə yolda, evdə, fasilədə audio dərsi dinləyib mövzunu təkrar edə bilir.
 
----
+## 4. Onlayn + üz-üzə: işləyən insan üçün real model
 
-## 4. Kimə uyğundur?
+Ən böyük maneə adətən budur: “İşçim işləyir, təlimə vaxtı yoxdur.”
 
-- **Aşpaz** — mətbəx standartı, resept, gigiyena, food cost (Level 2 Cookery Skills).
-- **Barista** — qəhvə hazırlama, servis, standart (Level 2 Barista Skills).
-- **Ofisiant** — servis, satış, qonaq təcrübəsi (Level 2 Front of House Service).
-- **Otel personalı** — resepsiya, qonaqpərvərlik, beynəlxalq standart.
-- **Menecer** — komanda idarəetməsi, əməliyyat, keyfiyyət nəzarəti (Level 3-4).
-- **İngilis dili** — turizm sahəsində xarici qonaqla ünsiyyət (Level 1 English).
+TQTA modeli bunu daha praktik həll edir:
 
-Yəni komandanın hər həlqəsi üçün uyğun səviyyə var.
+- **Onlayn modullar** — nəzəri hissə portal üzərindən izlənir.
+- **Audio dərslər** — tələbə mövzunu dinləyərək təkrar edə bilir.
+- **Üz-üzə praktika** — mətbəx, servis və bacarıq tələb edən hissə canlı öyrədilir.
+- **Modullu struktur** — tələbə addım-addım irəliləyir.
+- **İzlənən inkişaf** — sistem tələbənin harada olduğunu göstərir.
 
----
+Beləliklə təlim işdən ayrı bir yükə çevrilmir. İşin bir hissəsinə çevrilir.
 
-## 5. Sahibkara faydası
+## 5. Karyera portalı: təlimdən işə gedən yol
+
+Sertifikatlı təhsil yalnız dərs bitirmək deyil. Əsas sual budur: bu tələbə sonra hara gedəcək?
+
+TQTA sistemində karyera tərəfi də ayrıca düşünülüb. Karyera portalı vasitəsilə:
+
+- Tələbənin CV və müraciətləri izlənir.
+- İş elanları və uyğunluq prosesi sistemə düşür.
+- İşəgötürənlər və tərəfdaş şirkətlər karyera zəncirinə qoşulur.
+- Təklif, qəbul və yerləşdirmə mərhələləri izlənə bilir.
+
+Bu, “kurs bitdi, tələbə getdi” modeli deyil. Məqsəd tələbənin təlimdən sonra real iş dünyasına bağlanmasıdır.
+
+Sahibkar üçün də bu vacibdir: o, sadəcə “işçi axtarmır”; təlim keçmiş, izlənmiş və uyğunluğu görünən namizədlə qarşılaşır.
+
+## 6. Kimə uyğundur?
+
+Bu sistem komandanın fərqli həlqələri üçün uyğundur:
+
+- **Aşpaz** — resept, gigiyena, food cost, mətbəx intizamı.
+- **Ofisiant** — servis, satış, qonaq təcrübəsi.
+- **Otel personalı** — resepsiya, qonaqpərvərlik, əməliyyat qaydaları.
+- **Menecer** — komanda idarəetməsi, keyfiyyət nəzarəti, proses qurmaq.
+
+Hər kəs üçün məqsəd eynidir: işi təsadüfə yox, standarta bağlamaq.
+
+## 7. Sahibkara faydası
+
+Sertifikatlı və sistemlə izlənən təhsil sahibkara bir neçə üstünlük verir:
 
 - **Hazır təlimli kadr** — sıfırdan öyrətmə yükü azalır.
-- **AHA ulduz uyğunluğu** — sertifikatlı personal [otel təsnifatı tələbini](/blog/aha-ulduz-sertifikati-otel-hazirliq) ödəyir.
-- **Stabil keyfiyyət** — kadr dəyişsə belə, standart eyni qalır.
-- **İşçi sadiqliyi** — karyera və sertifikat verən işəgötürəni işçi tərk etmir.
-- **Beynəlxalq tanınma** — CTH sertifikatı yalnız Azərbaycanda yox, 60+ ölkədə dəyər.
+- **Stabil keyfiyyət** — kadr dəyişsə belə, standart qalır.
+- **İzlənən inkişaf** — tələbənin hansı mərhələdə olduğu görünür.
+- **Karyera bağlantısı** — təlim iş dünyası ilə bağlanır.
+- **İşçi sadiqliyi** — inkişaf yolu olan işçi özünü daha dəyərli hiss edir.
 
----
-
-> 📝 **DOĞAN NOTU:** "TQTA-nı (Turan Qastro Turizm Akademiyası) məhz bu boşluğu doldurmaq üçün qurduq — Sumqayıtda CTH Approved Centre (No. 2501), Xankəndidə yeni şöbə. 40 illik təcrübəmdə öyrəndiyim budur: sahibkar 'kadr tapmıram' deyə şikayət edir, amma kadrı yetişdirməyə vaxt ayırmır. Sertifikatlı təlim bu döngünü qırır — bir dəfə qurursan, sonra komandan özü standartı daşıyır. Kadr xərc deyil, ən böyük investisiyadır."
-
----
+> 📝 **DOĞAN NOTU:** “TQTA-nı bu boşluğu doldurmaq üçün qurduq. Mənim üçün təhsil yalnız dərs deyil; sistemdir. Tələbə portala girə bilməli, dərsini təkrar dinləyə bilməli, müəllim onun inkişafını görə bilməli, sahibkar isə qarşısındakı namizədin hansı standartdan keçdiyini bilməlidir. Kadr tapılmır deyə şikayət etmək asandır. Çətin olan kadr yetişdirən sistemi qurmaqdır. Biz TQTA-da məhz bunu edirik: təlim, portal, praktika və karyera yolunu bir xəttə bağlayırıq.”
 
 ## Yekun
 
-Sertifikatlı komanda təsadüf deyil — qərardır. CTH kimi beynəlxalq standart + online və üz-üzə hibrid təhsil ilə, işçini işindən ayırmadan, beynəlxalq səviyyədə yetişdirə bilərsən. Nəticə: stabil keyfiyyət, məmnun qonaq və güclü marka.
+Sertifikatlı komanda təsadüf deyil — qərardır. CTH standartı, tələbə portalı, audio dərslər, üz-üzə praktika və karyera portalı birlikdə işləyəndə təhsil real nəticəyə çevrilir.
 
-**Bu yazı "Qastro Turizm seriyası"nın 2-ci hissəsidir:**
-1. [Peşə Məktəbi Ölkə Məsələsidir: Koç Modeli](/blog/pese-mektebi-olke-meselesi) (problem + dünya nümunəsi)
-2. **Bu yazı** — Sertifikatlı Komanda Necə Qurulur (həll + CTH)
+Nəticə: daha hazırlıqlı işçi, daha sabit xidmət, daha güclü müəssisə və daha görünən karyera yolu.
 
----
+> 🔧 **Faydalı alət:** Mövcud komandanın turnover və inkişaf ehtiyacını ölçmək üçün [İşçi Saxlama alətini aç →](/toolkit/staff-retention).
 
 ## DK Agency necə kömək edir?
 
-TQTA (Turan Qastro Turizm Akademiyası) — DK Agency ekosisteminin təhsil qoludur. **CTH Approved Teaching Centre (No. 2501)**, Sumqayıt. CTH standartında, online və üz-üzə təlimlərlə aşpaz, barista, ofisiant, otel personalı və menecerləri sertifikatlı kadra çeviririk. TİKA dəstəyi ilə qurulub, Dövlət Məşğulluq Agentliyi ilə əməkdaşlıq. *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+TQTA (Turan Qastro Turizm Akademiyası) — DK Agency ekosisteminin təhsil qoludur. Burada məqsəd yalnız kurs keçmək deyil; qastro və turizm sektorunda ölçülə bilən, izlənən və karyeraya bağlanan təhsil modeli qurmaqdır.
 
-> **Növbəti addım:** Komandanı sertifikatlı kadra çevirmək və ya özün sertifikat almaq istəyirsən? [**TQTA təlim proqramlarına bax →**](/toolkit) və ya əlaqə saxla.
+CTH standartı, tələbə portalı, audio dərslər, praktiki təlim və karyera portalı ilə aşpaz, ofisiant, otel personalı və menecerlərin inkişaf yolunu sistemə bağlayırıq.
 
-*CTH (Confederation of Tourism & Hospitality) Böyük Britaniya mərkəzli beynəlxalq qonaqpərvərlik təhsil qurumudur. TQTA — CTH Approved Teaching Centre, Sumqayıt, Azərbaycan.*`,
+Bizim üçün kadr markanın görünməyən təməlidir: *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+
+> **Növbəti addım:** Komandanı sertifikatlı kadra çevirmək və ya özün sertifikat almaq istəyirsənsə, [TQTA proqramları üçün əlaqə saxla →](/elaqe).
+
+*Qeyd: CTH (Confederation of Tourism & Hospitality) Böyük Britaniya mərkəzli beynəlxalq qonaqpərvərlik təhsil qurumudur.*`,
     isPremium: false,
-    relatedArticles: ['pese-mektebi-olke-meselesi', 'aha-ulduz-sertifikati-otel-hazirliq', 'azerbaycan-qastronomiya-2030-dovlet-plani'],
+    relatedArticles: ["pese-mektebi-olke-meselesi","aha-ulduz-sertifikati-otel-hazirliq","azerbaycan-qastronomiya-2030-strateji-yol-xeritesi"],
     coverImage: '/images/blog-22.png',
-    coverImageAlt: 'CTH sertifikatlı komanda TQTA',
+    coverImageAlt: 'CTH standartı, tələbə portalı və karyera sistemi',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -4195,111 +4225,212 @@ TQTA (Turan Qastro Turizm Akademiyası) — DK Agency ekosisteminin təhsil qolu
   // ═══════════════════════════════════════════════════════════════
   {
     id: 'blog-022',
-    slug: 'azerbaycan-qastronomiya-2030-dovlet-plani',
-    title: 'Azərbaycan Qastronomiyası 2030: Dövlət Planı Sahibkara Nə Vəd Edir?',
-    subtitle: 'Qastronomiya Turizmi Strateji Planı (2025-2030) — sahibkar üçün fürsət xəritəsi',
+    slug: 'azerbaycan-qastronomiya-2030-strateji-yol-xeritesi',
+    title: 'Azərbaycan Qastronomiyası 2030: Strateji Yol Xəritəsi Sahibkara Nə Vəd Edir?',
+    subtitle: 'Dövlət hədəfləri ilə uyğun strateji yol xəritəsi — sahibkar üçün fürsət və hazırlıq çərçivəsi',
     category: 'Marketinq',
     categoryEmoji: '📣',
     stage: 'Böyüt',
-    readingTime: 10,
-    wordCount: 1400,
+    readingTime: 9,
+    wordCount: 1421,
     author: 'Doğan Tomris',
     publishDate: '2026-06-04T16:00:00Z',
-    updatedAt: '2026-06-04T16:00:00Z',
-    tags: ['qastronomiya', '2030', 'dövlət planı', 'Michelin', 'coğrafi işarə', 'sertifikat', 'turizm', 'Qastro Turizm seriyası'],
-    metaDescription: 'Azərbaycan Qastronomiya Turizmi 2030 planı: Michelin 2028, 25 coğrafi işarə, 25.000 sertifikat, 290.000 təlimli kadr. Sahibkar üçün fürsət xəritəsi.',
-    focusKeyword: 'Azərbaycan qastronomiya 2030 plan',
-    summary: 'Dövlətin qastronomiya turizmi planı sahibkara 4 qapı açır: Michelin, coğrafi işarə, sertifikatlaşma, təlimli kadr. Erkən hazırlaşan qazanır.',
-    content: `# Azərbaycan Qastronomiyası 2030: Dövlət Planı Sahibkara Nə Vəd Edir?
+    updatedAt: '2026-06-06T13:00:00Z',
+    tags: ["qastronomiya","turizm","2030","strateji yol xəritəsi","Michelin","coğrafi işarə","sertifikat","Qastro Turizm seriyası"],
+    metaDescription: 'Azərbaycan Qastronomiya Turizmi 2025–2030 strateji yol xəritəsi sahibkara Michelin, coğrafi işarə, sertifikat, kadr və marka baxımından nə vəd edir?',
+    focusKeyword: 'Azərbaycan qastronomiya 2030 strateji yol xəritəsi',
+    summary: 'Qastronomiya turizmi üçün 2025–2030 yol xəritəsini sahibkar gözü ilə oxu: standart, kadr, coğrafi işarə, təcrübə dizaynı və rəqəmsallaşma fürsətləri.',
+    content: `# Azərbaycan Qastronomiyası 2030: Strateji Yol Xəritəsi Sahibkara Nə Vəd Edir?
 
-Dövlət ilk dəfə qastronomiya turizmi üçün ciddi bir yol xəritəsi açıqladı: Qastronomiya Turizmi Strateji İnkişaf Planı (2025-2030). Bu, sadəcə rəsmi sənəd deyil — HoReCa sahibkarı üçün **fürsət xəritəsidir.** Bəs bu plan sənə, restoran/otel/ev sahibinə nə vəd edir? Bu yazı planı sahibkar gözüylə açır.
+Azərbaycan qastronomiyası artıq yalnız “dadlı mətbəx” mövzusu deyil. Bu sahə turizm, ixrac, yerli məhsul, kadr hazırlığı, regional inkişaf və ölkə brendi ilə birbaşa bağlı strateji istiqamətə çevrilir.
 
----
+Bu baxımdan **“Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025–2030)”** sektor üçün önəmli bir yol xəritəsi kimi oxunmalıdır. Sənəd Dövlət Turizm Agentliyinin elan etdiyi strateji hədəflərlə ahəng təşkil edən, dövlət–özəl sektor əməkdaşlığını, assosiasiyaları, sahibkarları və təhsil qurumlarını eyni masa ətrafında düşünməyə çağıran fəaliyyət çərçivəsi kimi dəyərləndirilə bilər.
 
-## 1. Dövlətin hədəfləri = sənin arxandakı dəstək
+Bu yazıda sənədə sahibkar gözü ilə baxırıq: restoran, otel, kafe, yerli məhsul istehsalçısı və turizm xidməti göstərən biznes üçün bu yol xəritəsi nə deməkdir?
 
-Planın əsas hədəfləri belədir:
+## 1. Qastronomiya artıq təkcə yemək deyil — ölkə brendidir
 
-- **2028-ci ildə ilk Michelin ulduzu** — Azərbaycan dünya gastronomiya xəritəsinə girir.
-- **2027-yə qədər 25-dən çox coğrafi işarə** — yerli məhsullar hüquqi qorunur.
-- **25.000 işlətmənin sertifikatlaşdırılması** — keyfiyyət standartı oturur.
-- **290.000 işçinin peşə səviyyəsinin artırılması** — təlimli kadr axını.
+Planın əsas fəlsəfəsi sadədir: Azərbaycan mətbəxi yalnız süfrə mədəniyyəti kimi deyil, qlobal turizm məhsulu kimi təqdim olunmalıdır.
 
-Bu rəqəmlər sənə nə deyir? Dövlət sertifikat, təlim, marka qoruması və beynəlxalq tanınma üçün **arxanda duracaq.** Erkən hərəkət edən sahibkar bu dalğanın önündə olur.
+Bu yanaşma sahibkar üçün çox vacibdir. Çünki gələcəkdə qastronomiya sahəsində rəqabət yalnız “dadlı yemək” üzərindən getməyəcək. Rəqabət daha geniş olacaq:
 
-### Faydalı məlumat qutusu
-Planın 4 açar rəqəmi: **2028** (ilk Michelin), **25+** (coğrafi işarə), **25.000** (sertifikatlı işlətmə), **290.000** (təlimli işçi). Bunları yadda saxla — hər biri bir fürsət qapısıdır.
+- məhsulun hekayəsi,
+- xidmət standartı,
+- qonaq təcrübəsi,
+- yerli irsə bağlılıq,
+- sertifikat və keyfiyyət sistemi,
+- rəqəmsal görünürlük,
+- beynəlxalq tanınma.
 
----
+Yəni gələcəyin qastronomiya biznesi təkcə mətbəxdə deyil, marka, təcrübə və sistem üzərində qurulacaq.
 
-## 2. Beş Duyu Rotası: təcrübə sat, təkcə yemək yox
+## 2. Dörd böyük hədəf: sahibkar üçün siqnal
 
-Plan turist təcrübəsini beş duyu üzərində qurur — qoxu, dad, görmə, səs, toxunma. Məsələn, Lənkəran "Subtropik Simfoniya" rotası: çay plantasiyalarının ətri, təzə çayın dadı, yamyaşıl tarlaların görüntüsü, Xəzərin səsi, ipək kimi çay yarpağına toxunuş.
+Sənəddə 2030-a qədər iddialı və ölçülə bilən hədəflər göstərilir:
 
-**Sahibkara mənası:** sən təkcə yemək satmırsan — bir təcrübə satırsan. İşlətmən bu rotaların bir hissəsi ola bilər. Təcrübə nə qədər zəngin olsa, qonaq o qədər çox ödəyir və danışır.
+- **2028-ci ildə ilk Michelin ulduzunun əldə edilməsi**
+- **25-dən çox coğrafi işarə qeydiyyatı**
+- **25.000 müəssisənin sertifikatlaşdırılması**
+- **290.000 işçinin peşə səviyyəsinin artırılması**
 
----
+Bu rəqəmlər yalnız makro hədəf deyil. Hər biri sahibkar üçün ayrıca fürsət qapısıdır.
 
-## 3. Küçə yeməkləri: kiçik satıcıya böyük qapı
+Michelin hədəfi restoranlara deyir ki, beynəlxalq səviyyədə servis, məhsul, təqdimat və davamlı keyfiyyət artıq gündəmə gəlir.
 
-Plan qutab, təndir çörəyi, dönər kimi ənənəvi küçə ləzzətlərini "Taste of Azerbaijan Street Food" adı altında beynəlxalq festivallarda tanıtmağı hədəfləyir. Bakıda və bölgələrdə (Şəki, Qəbələ, Lənkəran) gigiyena standartlı küçə yeməkləri zonaları qurulacaq.
+Coğrafi işarə hədəfi yerli məhsul istehsalçılarına deyir ki, Şəki halvası, Lənkəran çayı, Qarabağ mətbəxi, regional pendirlər, mürəbbələr, bal və digər yerli dəyərlər sadəcə məhsul deyil, qorunan brendə çevrilə bilər.
 
-**Sahibkara mənası:** kiçik bir küçə satıcısı belə — gigiyena sertifikatı + düzgün brend ilə — bu beynəlxalq dalğanın parçası ola bilər.
+Sertifikatlaşdırma hədəfi HoReCa sahibkarına deyir ki, gələcək bazarda standartı olan müəssisə daha güclü mövqe tutacaq.
 
----
+290.000 işçinin peşə səviyyəsinin artırılması isə sektorun ən ağrılı yerinə toxunur: kadr.
 
-## 4. Yerli məhsul: coğrafi işarə + Slow Food
+> 💡 **Faydalı məlumat:** Bu yol xəritəsini oxuyarkən 4 rəqəmi yadda saxlamaq lazımdır: **2028**, **25+**, **25.000**, **290.000**. Bunlar sadəcə statistik göstərici deyil; sahibkar üçün gələcək investisiya, təlim, sertifikat və marka qərarlarının istiqamətidir.
 
-Plan yerli məhsulların coğrafi işarə ilə qorunmasını (Şəki halvası, Lənkəran çayı) və Slow Food fəlsəfəsi ilə agro-qastro turizmi inkişaf etdirməyi nəzərdə tutur.
+## 3. “Beş Duyu” yanaşması: yemək yox, təcrübə satmaq
 
-**Sahibkara mənası:** yerli, orijinal, qorunan məhsul = yüksək dəyər + turizm cəlbi.
+Planın ən maraqlı tərəflərindən biri qastronomiya turizmini beş duyğu üzərindən qurmasıdır: dad, qoxu, görmə, səs və toxunuş.
 
----
+Bu yanaşma restoran və turizm sahibkarı üçün çox dəyərlidir. Çünki müasir turist yalnız yemək yemək istəmir. O, hekayə, atmosfer, mədəniyyət və xatirə axtarır.
 
-## 5. Sahibkar bu gün nə etməli?
+Məsələn, Lənkəran çayı yalnız stəkanda təqdim olunan içki deyil. O, çay plantasiyasının qoxusu, armudu stəkanın forması, samovarın səsi, çay yarpağının toxunuşu və süfrənin vizual mədəniyyəti ilə birlikdə tam təcrübəyə çevrilə bilər.
 
-Plan dövlətin işidir — amma fürsət sənin əlindədir. Hazırlanmaq üçün 5 addım:
+Eyni məntiq Şəki halvası, Quba alması, Qarabağ mətbəxi, Naxçıvan məhsulları, Abşeron ənənələri və Bakı restoran konseptləri üçün də keçərlidir.
 
-1. **Sertifikatlaş** — işlətməni və kadrını standarta uyğunlaşdır. [CTH təlimi ilə sertifikatlı komanda qur →](/blog/sertifikatli-komanda-cth-online-tehsil)
-2. **Kadrını yetişdir** — təlimli, sertifikatlı komanda qur. [Peşə Məktəbi Ölkə Məsələsidir →](/blog/pese-mektebi-olke-meselesi)
-3. **Markanı qoru** — yerli məhsulunu coğrafi işarə ilə qeydiyyatdan keçir. [Marka qeydiyyatı bələdçisi →](/blog/marka-qeydiyyati-azerbaycan)
-4. **Təcrübə qur** — beş duyu məntiqiylə qonağa yaddaqalan an yaşat. [İlk 5 dəqiqə strategiyası →](/blog/ilk-5-deqiqe-qonaq-qarsilama)
-5. **Rəqəmsallaş** — onlayn görün, data ilə idarə et. [AI ilə FAVÖK qoruması →](/blog/ai-ile-favok-qorumasi)
+Sahibkar üçün nəticə sadədir: **Təkcə yemək satma. Təcrübə dizayn et.**
 
-Bu beşini edən sahibkar 2030-a hazır olur; etməyən geridə qalır.
+## 4. Küçə yeməkləri: kiçik biznes üçün böyük fürsət
 
----
+Qastronomiya turizminin ən sürətli böyüyən sahələrindən biri küçə yeməkləridir. Qutab, təndir çörəyi, dönər, peraşki, düşbərə, qutab növləri, şirniyyatlar və regional qəlyanaltılar düzgün standartlaşdırıldıqda turizm məhsuluna çevrilə bilər.
 
-> 📝 **DOĞAN NOTU:** "Bu plan təsadüfən yaranmadı — illərlə danışdığımız şeyin rəsmi sənədə çevrilməsidir. Ən qürurverici tərəfi: planın partnyorları arasında AFA — Azərbaycan Françayzinq Assosiasiyası — adı keçir; yəni qurucusu olduğumuz təşkilat dövlət strategiyasının bir parçasıdır. Bu o deməkdir ki, biz kənardan baxmırıq — masadayıq. Sən də bu masaya erkən otur — 2030 uzaq deyil."
+Amma bunun üçün üç şərt vacibdir:
 
----
+- gigiyena,
+- standart resept və porsiya,
+- düzgün brend təqdimatı.
+
+Kiçik bir satıcı belə, bu üç məsələni həll etdikdə beynəlxalq turist üçün maraqlı nöqtəyə çevrilə bilər. Burada fürsət yalnız böyük restoranlarda deyil. Əksinə, yerli və kiçik biznes üçün də böyük qapı açılır.
+
+Sahibkar üçün mesaj budur: **Ənənəvi məhsulu sadəcə satma — onu standartlaşdır, paketlə, hekayələşdir və görünən et.**
+
+## 5. Coğrafi işarə: yerli məhsulun hüquqi və ticari dəyəri
+
+Planın əsas istiqamətlərindən biri coğrafi işarələrin artırılmasıdır. Bu, sahibkar üçün çox strateji mövzudur.
+
+Coğrafi işarə yalnız hüquqi qoruma deyil. O, məhsula premium dəyər qazandırır. Müştəri bilir ki, aldığı məhsul konkret coğrafiya, ənənə və keyfiyyətlə bağlıdır.
+
+Bu yanaşma Azərbaycan üçün çox önəmlidir. Çünki ölkənin bölgələrində ciddi məhsul potensialı var:
+
+- Şəki halvası,
+- Lənkəran çayı,
+- Quba alması,
+- Qarabağ mətbəx nümunələri,
+- Naxçıvan məhsulları,
+- regional bal, pendir, mürəbbə və un məmulatları.
+
+Bu məhsullar sadəcə yerli bazarda satılmamalıdır. Onlar turizm, e-ticarət, ixrac və hədiyyəlik məhsul bazarına çıxarılmalıdır.
+
+Sahibkar üçün nəticə: **Qorunan məhsul daha yüksək qiymətlə satılır. Hekayəsi olan məhsul daha rahat ixrac olunur.**
+
+Bu mövzunu praktik şəkildə davam etdirmək üçün [Coğrafi işarə ilə yerli ləzzəti qoruma bələdçisinə](/blog/cografi-isare-yerli-lezzet) bax.
+
+## 6. Sertifikatlaşma: gələcəyin bazarında seçim meyarı
+
+25.000 müəssisənin sertifikatlaşdırılması hədəfi HoReCa sektoru üçün çox ciddi siqnaldır.
+
+Bu o deməkdir ki, gələcəkdə restoran, kafe, otel və qida xidməti göstərən müəssisələr üçün keyfiyyət standartı daha vacib olacaq. Gigiyena, xidmət, məhsul təhlükəsizliyi, kadr hazırlığı, müştəri təcrübəsi və əməliyyat sistemi artıq daha çox ölçüləcək.
+
+Sahibkar üçün bu, risk deyil — fürsətdir.
+
+Çünki standartı erkən quran müəssisə bazarda daha güclü mövqe tutur. Sertifikatlı biznes həm müştəri qarşısında, həm tərəfdaş qarşısında, həm də turizm ekosistemində daha etibarlı görünür.
+
+Bu gün sistem quran sahibkar sabah sertifikat prosesində çətinlik çəkmir.
+
+## 7. Kadr hazırlığı: planın ən kritik hissəsi
+
+290.000 işçinin peşə səviyyəsinin artırılması hədəfi sektorun əsas problemini göstərir: kadr.
+
+Restoran, otel və kafe sahiblərinin ən böyük çətinliyi keyfiyyətli aşpaz, ofisiant, barista, barmen, housekeeping və resepsion personalı tapmaqdır.
+
+Bu problem yalnız iş elanları ilə həll olunmur. Bunun üçün peşə təhsili, sertifikatlı proqramlar, staj, işəgötürənlərlə əməkdaşlıq və real iş mühiti lazımdır.
+
+Bu nöqtədə TQTA kimi akademiyalar strateji əhəmiyyət daşıyır. Çünki qastronomiya turizmi yalnız yaxşı konseptlə böyümür; yaxşı hazırlanmış insan kapitalı ilə böyüyür.
+
+Sahibkar üçün ən doğru yanaşma budur:
+
+- kadrı təsadüfi seçmə,
+- daxili təlim sistemi qur,
+- sertifikatlı təlim mərkəzləri ilə əməkdaşlıq et,
+- stajyer və məzun bazasını izləməyə başla,
+- xidmət standartlarını yazılı hala gətir.
+
+## 8. Dövlət–özəl sektor əməkdaşlığı: masada olmaq lazımdır
+
+Planın ruhunda bir məqam çox aydındır: qastronomiya turizmi yalnız dövlət qurumlarının işi deyil. Burada sahibkarlar, assosiasiyalar, təlim qurumları, istehsalçılar, aşpazlar, dizaynerlər, turizm şirkətləri və yerli icmalar birlikdə işləməlidir.
+
+Sənəddə Dövlət Turizm Agentliyi nəzdində **“Azərbaycan Qastronomiya Turizmi Koordinasiya Şurası”** yaradılması təklifi də bu əməkdaşlıq ehtiyacını göstərir.
+
+Bu, DK Agency üçün də önəmli mövqedir. Çünki gələcək dövrdə uğurlu sahibkar yalnız öz restoranına baxan sahibkar olmayacaq. O, ekosistemin içində yer alan, əməkdaşlığa açıq, standartlara uyğunlaşan və öz markasını ölkə brendi ilə əlaqələndirən sahibkar olacaq.
+
+Bu səbəbdən sahibkarın sualı belə olmalıdır:
+
+“Mən bu strategiyadan necə faydalanaram?” yox, **“Mən bu strategiyanın hansı hissəsində rol ala bilərəm?”**
+
+## 9. Sahibkar bu gün nə etməlidir?
+
+2030 uzaq görünə bilər, amma HoReCa sektorunda hazırlıq vaxt alır. Bu gün başlayan sahibkar üstünlük qazanacaq.
+
+### 1. Müəssisəni standartlaşdır
+
+Resept, porsiya, servis, gigiyena, şikayət idarəetməsi və personal davranışı yazılı standartlara çevrilməlidir.
+
+### 2. Kadrı sistemli yetişdir
+
+Təlimsiz komanda ilə qlobal səviyyəyə çıxmaq mümkün deyil. Kadr hazırlığı büdcə maddəsi deyil, marka investisiyasıdır.
+
+### 3. Yerli məhsulunu hekayələşdir
+
+Məhsulun haradan gəldiyini, kim tərəfindən hazırlandığını, hansı ənənəyə bağlı olduğunu izah et.
+
+### 4. Sertifikat prosesinə hazırlaş
+
+Gələcəkdə standart və sertifikat rəqabət üstünlüyünə çevriləcək. Bu gündən gigiyena, əməliyyat və xidmət sistemini düzəlt.
+
+### 5. Rəqəmsallaş
+
+Onlayn görünürlük, rezervasiya, menyu, müştəri datası, satış analizi və reputasiya idarəetməsi artıq seçim deyil, zərurətdir.
+
+### 6. Təcrübə dizayn et
+
+Qonaq yalnız yeməyi yox, atmosferi, hekayəni, təqdimatı və xatirəni alır.
+
+> 🔧 **Faydalı alət:** Müəssisənin marketinq və əməliyyat boşluqlarını görmək üçün [Restoran Audit alətini aç →](/marketinq/restoran-audit). Marka hekayəsini sistemləşdirmək üçün [Markalaşma bələdçisindən istifadə et →](/toolkit/branding-guide).
+
+> 📝 **DOĞAN NOTU:** “Bu sənədi düzgün oxumaq lazımdır. Burada əsas məsələ ‘kim hazırladı?’ sualından daha böyükdür: bu sənəd sektorun hara getməli olduğunu göstərən ciddi bir istiqamət sənədidir. İllərdir dediyimiz məsələ artıq daha açıq görünür: qastronomiya turizmi yeməkdən ibarət deyil. Bu, kadr, məhsul, standart, marka, servis, coğrafi işarə, rəqəmsal görünürlük və dövlət–özəl sektor əməkdaşlığı məsələsidir. Sahibkar üçün ən böyük risk gözləməkdir. ‘Plan həyata keçsin, sonra baxarıq’ deyən geridə qalacaq. Bu gün standart quran, kadr yetişdirən, yerli məhsulunu qoruyan və təcrübə dizayn edən sahibkar 2030-un qalibi olacaq. 2030 uzaq deyil. Hazırlıq bu gündən başlayır.”
 
 ## Yekun
 
-Azərbaycan qastronomiyası "yerli ləzzət"dən "qlobal marka"ya doğru gedir — və dövlət bu yolu rəsmi planla dəstəkləyir. Michelin, coğrafi işarə, sertifikatlaşma, təlim — hamısı sahibkar üçün açılan qapılardır. Erkən hazırlaşan qazanır. Yol xəritəsi hazırdır; qalan — addım atmaqdır.
+Azərbaycan qastronomiyası yerli ləzzətdən qlobal markaya doğru gedə bilər. Bunun üçün yalnız gözəl yeməklər kifayət deyil. Sistemli təlim, sertifikatlaşma, coğrafi işarə, qonaq təcrübəsi, rəqəmsallaşma və dövlət–özəl sektor əməkdaşlığı lazımdır.
 
-**Bu yazı "Qastro Turizm seriyası"nın capstone hissəsidir:**
-1. [Peşə Məktəbi Ölkə Məsələsidir](/blog/pese-mektebi-olke-meselesi) — problem + dünya nümunəsi
-2. [Sertifikatlı Komanda: CTH Standartı](/blog/sertifikatli-komanda-cth-online-tehsil) — həll + CTH
-3. **Bu yazı** — dövlət planı + sahibkar fürsət xəritəsi
+Qastronomiya Turizmi Strateji İnkişaf Planı bu baxımdan sahibkar üçün bir xəbərdarlıq və fürsət xəritəsidir.
 
----
+Kim erkən hazırlaşsa, gələcək bazarda daha güclü mövqe tutacaq. Kim gözləsə, standartlar formalaşanda uyğunlaşmaqda çətinlik çəkəcək.
 
-### Faydalı alətlər
-- [Franchise Hazırlıq Testi →](/franchise/hazirliq-testi)
-- [Otel Hazırlıq Testi →](/toolkit/otel-hazirlig-testi)
+Yol xəritəsi var. İndi məsələ sahibkarın öz yolunu bu xəritəyə necə bağlamasıdır.
 
 ## DK Agency necə kömək edir?
 
-DK Agency və AFA dövlətin qastronomiya strategiyasının bir parçasıdır — sertifikatlaşmadan marka qorumasına, kadr təlimindən franchise sisteminə qədər. Bu yolun hər addımında yanındayıq. Çünki bizim üçün qastronomiya təkcə yemək deyil, ölkənin dünyaya açılan qapısıdır: *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+DK Agency HoReCa və qastronomiya sektorunda sahibkarlara bu keçid prosesində dəstək verir: əməliyyat standartları, kadr təlimi, marka yerləşdirməsi, franchise sistemi, yerli məhsulun kommersiyalaşdırılması və rəqəmsal idarəetmə.
 
-> **Növbəti addım:** 2030-a hazırlaşmaq istəyirsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.
+TQTA — Turan Qastro Turizm Akademiyası ilə birlikdə isə sektor üçün təlimli və sertifikatlı kadr hazırlığı istiqamətində çalışırıq.
 
-*Mənbə: Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025-2030).*`,
+Bizim üçün qastronomiya yalnız yemək deyil. Bu, ölkənin dünyaya açılan mədəni, iqtisadi və turizm qapısıdır.
+
+> **Növbəti addım:** Restoranınızı, kafenizi, otelinizi və ya yerli məhsul markanızı 2030 qastronomiya turizmi dalğasına hazırlamaq istəyirsinizsə, [DK Agency ilə əlaqə saxlayın →](/elaqe).
+
+*Mənbə qeydi: “Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025–2030)” sənədi və sənəddə göstərilən qastronomiya turizmi hədəfləri.*`,
     isPremium: true,
-    relatedArticles: ['pese-mektebi-olke-meselesi', 'sertifikatli-komanda-cth-online-tehsil', 'ai-ile-favok-qorumasi'],
+    relatedArticles: ["pese-mektebi-olke-meselesi","sertifikatli-komanda-cth-portal-karyera","ai-ile-favok-qorumasi"],
     coverImage: '/images/blog-23.png',
-    coverImageAlt: 'Azərbaycan qastronomiyası 2030 dövlət planı',
+    coverImageAlt: 'Azərbaycan qastronomiyası 2030 strateji yol xəritəsi',
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -4405,9 +4536,11 @@ Garson təkcə sifariş daşıyan deyil — restoranın salondakı satış koman
 
 ---
 
+> 🔧 **Faydalı alət:** Hansı məhsulun upsell üçün daha doğru olduğunu görmək üçün [Menyu Matrisini aç →](/toolkit/menu-matrix).
+
 > 💡 **DK Agency:** Komandanın satış bacarığını artırmaq istəyirsən? DK Agency / TQTA təlim proqramları üçün əlaqə saxla.
 >
-> 📧 info@dkagency.com.tr | 🌐 dkagency.com.tr/danismanlik`,
+> 📧 info@dkagency.com.tr | 🌐 [DK Agency ilə əlaqə](/elaqe)`,
     isPremium: false,
     relatedArticles: ['basabas-noqtesi-hesablama', 'menyu-muhendisliyi-satis'],
     coverImage: '/images/blog-24.png',
@@ -4516,9 +4649,11 @@ Coğrafi işarə yerli ləzzəti qızıla çevirən mexanizmdir. Türkiyə bunu 
 
 ---
 
+> 🔧 **Faydalı alət:** Yerli məhsulun marka hekayəsini və vizual xəttini qurmaq üçün [Markalaşma bələdçisini aç →](/toolkit/branding-guide).
+
 > 💡 **DK Agency:** Yerli məhsulunu və ya markanı qorumağı düşünürsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.
 >
-> 📧 info@dkagency.com.tr | 🌐 dkagency.com.tr/danismanlik
+> 📧 info@dkagency.com.tr | 🌐 [DK Agency ilə əlaqə](/elaqe)
 
 *Mənbə: T.C. coğrafi işarə qeydiyyatı statistikası; Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025-2030); Əqli Mülkiyyət Agentliyi. Bu yazı ümumi məlumatdır, hüquqi məsləhət deyil.*`,
     isPremium: true,
