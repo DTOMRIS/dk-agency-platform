@@ -48,7 +48,13 @@ function resolveLocalCover(slug: string, dbImage: string | null): string {
   if (dbImage && dbImage.startsWith('/')) return dbImage;
   const staticMatch = STATIC_BLOG_ARTICLES.find((a) => a.slug === slug);
   if (staticMatch?.coverImage) return staticMatch.coverImage;
-  return dbImage || '';
+  if (dbImage) {
+    if (dbImage.startsWith('http://') || dbImage.startsWith('https://')) {
+      return dbImage;
+    }
+    return '/' + dbImage;
+  }
+  return '';
 }
 
 function mapDbArticle(

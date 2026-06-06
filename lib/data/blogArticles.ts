@@ -2945,7 +2945,7 @@ DK Agency-nin **KAZAN AI** və **OCAQ** sahibkar paneli məhz bu FAVÖK qoruma s
 
   {
     id: 'blog-012',
-    slug: 'isleyen-franchise-təhvil almaq',
+    slug: 'isleyen-franchise-devralmaq',
     title: 'İşləyən Franchise\'i Almaq: Sıfırdan Qurmaqdan Niyə Daha Ağıllıdır?',
     subtitle: 'Yeni bir kafe açmaq romantik səslənir — amma ağıllı sahibkar devr edir',
     category: 'Satış',
@@ -3111,7 +3111,7 @@ DK Agency franchise yolunun hər addımında yanındadır — marka hazırlığ�
     focusKeyword: 'franchise devri due diligence',
     summary: 'Franchise devri yalnız hazır biznes almaq deyil. Hüquqi, maliyyə və operativ risklərin birlikdə yoxlandığı prosesdir. M.726 investoru necə qoruyur?',
     isPremium: true,
-    relatedArticles: ['isleyen-franchise-təhvil almaq', 'marka-qeydiyyati-azerbaycan'],
+    relatedArticles: ['isleyen-franchise-devralmaq', 'marka-qeydiyyati-azerbaycan'],
     coverImage: '/images/blog-15.png',
     coverImageAlt: 'Mülki Məcəllə və franchise devri',
     content: `# Mülki Məcəllə m.726 və Franchise Devri
@@ -3222,7 +3222,7 @@ DK Agency **Devir** platforması və franchise danışmanlığı ilə devrin hü
     focusKeyword: 'franchise devir investisiya',
     summary: '2026-da investor üçün əsas sual: brend qururam, yoxsa işləyən pul axınını alıram? FAVÖK baxışı ilə sıfırdan vs devir müqayisəsi.',
     isPremium: true,
-    relatedArticles: ['isleyen-franchise-təhvil almaq', 'ai-ile-favok-qorumasi'],
+    relatedArticles: ['isleyen-franchise-devralmaq', 'ai-ile-favok-qorumasi'],
     coverImage: '/images/blog-16.png',
     coverImageAlt: 'Sıfırdan yoxsa franchise devri',
     content: `# Sıfırdan HoReCa İnvestisiyası, yoxsa İşləyən Franchise-i Təhvil Almaq?
