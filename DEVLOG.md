@@ -19,10 +19,17 @@
 - `SektorToolGrid` icon yalnız quiz|calculator|whatsapp → aqta-checklist `quiz` ikonu (ClipboardCheck) istifadə edir
 - `generateStaticParams` buraxıldı — codebase dinamik `[locale]` render edir (blog/[slug] pattern); SSG `setRequestLocale` istəyər, heç bir route istifadə etmir
 - `middleware.ts` TOXUNULMADI (hard rule); locale fix artıq `i18n/routing.ts`-də (`as-needed`)
+- **ROOT-LEVEL MIRROR** (kritik): default-locale (az) prefix-siz route bu codebase-də middleware rewrite ilə yox, root mirror ilə işləyir (`app/blog/...` → `app/[locale]/blog/...`). Köhnə `app/sektor/qonaq-evi`-ni silməklə `/sektor/*` (az) 404 verdi (real bug, dev/prod hər ikisi). Fix: `app/sektor/page.tsx` + `app/sektor/[slug]/{page,opengraph-image,not-found}.tsx` re-export mirror-ları yaradıldı; `[locale]` səhifələr locale-i `params`-dan yox `getLocale()`-dan alır (mirror-da params.locale yoxdur). Bax L-038.
 
-**Verification:** `/en/sektor/{otel,restoran,kafe}` = 200 (tam render), integrity test PASS, i18n 4 dil tam, lint + TS təmiz (yeni fayllar), PROTECTED toxunulmadı. Default-locale (az, prefix-siz) route bu cloud sandbox-da doğrulana bilmədi: trivial throwaway route da eyni 404 verdi → env kvirki (bütün yeni route-lar), kod problemi deyil. `npm run build` Google Fonts network bloku ilə fail (layout.tsx PROTECTED → font stub olmaz). → Vercel preview deploy doğrulayacaq. Bax L-038.
+**Verification (production — `next build` + `next start`):**
+- `/sektor/{qonaq-evi,otel,restoran,kafe}` (az, prefix-siz) → **200** ✓ (otel = AHA/Booking məzmunu render)
+- `/sektor/bilinmeyen` → **404** (SektorNotFound render) ✓
+- `/az/sektor/otel` → **307** ✓ ; `/sektor` index → **200** ✓ ; `/en/sektor/otel` → **200** ✓
+- `/sektor/otel/opengraph-image` → **200 image/png** ✓
+- integrity test PASS, i18n 4 dil tam, lint + TS təmiz (yeni fayllar), PROTECTED toxunulmadı
+- Qeyd: `next build` üçün `NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1` lazımdır (Google Fonts TLS).
 
-**Lessons:** L-038 (cloud sandbox-da default-locale routing + font-blocked build doğrulana bilmir)
+**Lessons:** L-038 (default-locale prefix-siz route üçün root-level mirror məcburidir)
 
 ---
 

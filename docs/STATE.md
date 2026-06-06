@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-06T06:19:10.033Z
+- GeneratedAt: 2026-06-06T06:36:09.438Z
 - BuildStatus: UNKNOWN
 
-## Routes (216)
+## Routes (218)
 - /
 - /[locale]
 - /[locale]/about
@@ -202,6 +202,8 @@ Auto-generated. Do not edit manually.
 - /news
 - /reset-password
 - /sedd-rozeti
+- /sektor
+- /sektor/[slug]
 - /settings
 - /toolkit
 - /toolkit/aqta-checklist

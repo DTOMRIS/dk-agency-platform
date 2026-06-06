@@ -1,16 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { SEKTOR_CONFIG_LIST } from '@/lib/data/sektorConfigs';
 
-interface SektorIndexParams {
-  params: Promise<{ locale: string }>;
-}
-
-export async function generateMetadata({ params }: SektorIndexParams): Promise<Metadata> {
-  const { locale } = await params;
+// Locale comes from `getLocale()` (not params) so this page works both at
+// `/[locale]/sektor` and via the locale-less root mirror `app/sektor`.
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const t = await getTranslations({ locale, namespace: 'sektorIndex' });
   return {
     title: t('pageTitle'),
@@ -19,8 +17,8 @@ export async function generateMetadata({ params }: SektorIndexParams): Promise<M
   };
 }
 
-export default async function SektorIndexPage({ params }: SektorIndexParams) {
-  const { locale } = await params;
+export default async function SektorIndexPage() {
+  const locale = await getLocale();
   const tIndex = await getTranslations({ locale, namespace: 'sektorIndex' });
 
   const cards = await Promise.all(

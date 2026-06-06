@@ -11,16 +11,16 @@
 - `e2e/sektor-config.test.ts` integrity test (PASS)
 - Köhnə statik qonaq-evi route-ları silindi (A1)
 
-### ⚠️ Preview-də doğrulanmalı (sandbox-da mümkün olmadı)
-- `/sektor/qonaq-evi`, `/sektor/otel`, `/sektor/restoran`, `/sektor/kafe` (az, prefix-siz) → **200** olmalı
-- `/sektor/bilinmeyen` → **404** (notFound → SektorNotFound)
-- `/az/sektor/otel` → **307** (as-needed redirect)
-- Səbəb: cloud sandbox-da default-locale prefix-siz route bütün yeni route-larda 404 (env kvirki); prod build Google Fonts network bloku. `/en/sektor/*` = 200 sübut edildi. Bax L-038.
+### ✅ Production-da doğrulandı (`next build` + `next start`)
+- `/sektor/{qonaq-evi,otel,restoran,kafe}` (az, prefix-siz) → **200**
+- `/sektor/bilinmeyen` → **404** (SektorNotFound) ; `/az/sektor/otel` → **307** ; `/sektor` → **200** ; `/en/sektor/otel` → **200** ; `/sektor/otel/opengraph-image` → **200 png**
+- Kritik dərs (L-038): default-locale (az) prefix-siz route **root-level mirror** tələb edir (`app/sektor/...` → `app/[locale]/sektor/...`). Köhnə root route silinmişdi → əvvəlcə 404 verdi, mirror əlavə edilib düzəldildi.
+- Qeyd: bu mühitdə `next build` üçün `NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1` lazımdır (Google Fonts TLS).
 
 ### Növbəti
-- Preview deploy-da az route-larını təsdiqlə; problem çıxsa next-intl as-needed + Turbopack araşdır
 - `/sektor` index-i naviqasiyaya (Header MegaMenu) bağla
-- Yeni sektor: **catering** — yalnız 1 config + 1 i18n namespace lazımdır (kod yox)
+- Yeni sektor: **catering** — 1 config + 1 i18n namespace + (lazımsa) root mirror; kod yox
+- Yeni `[locale]` route əlavə edən hər kəs: ROOT MIRROR yaratmağı unutma (L-038)
 
 ---
 
