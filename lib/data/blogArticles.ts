@@ -3840,110 +3840,236 @@ DK Agency rayon ev sahiblərinə kirayəni sistemə çevirməkdə kömək edir �
     id: 'blog-020',
     slug: 'pese-mektebi-olke-meselesi',
     title: 'Peşə Məktəbi Ölkə Məsələsidir: Koç Modeli Azərbaycana Necə Tətbiq Olunar?',
-    subtitle: 'Bu problemi bir restoran tək başına həll edə bilməz. Bu, bir ölkə məsələsidir.',
+    subtitle: 'Kadr tapmaqla yox, məktəb, sənaye və sertifikat sistemini birləşdirməklə davamlı xidmət keyfiyyəti qurulur.',
     category: 'Kadr',
     categoryEmoji: '👥',
     stage: 'Böyüt',
-    readingTime: 10,
-    wordCount: 1350,
+    readingTime: 12,
+    wordCount: 1778,
     author: 'Doğan Tomris',
     publishDate: '2026-06-04T14:00:00Z',
-    updatedAt: '2026-06-04T14:00:00Z',
-    tags: ['kadr', 'peşə təhsili', 'Koç Holdinq', 'TQTA', 'qastronomiya', 'Əxilik', 'Qastro Turizm seriyası'],
-    metaDescription: 'Restoran sahibi "yaxşı kadr tapmıram" deyir — çünki sistemli peşə təhsili yoxdur. Koç modelinin Azərbaycana tətbiqi və 290.000 kadr hədəfi.',
+    updatedAt: '2026-06-06T12:00:00Z',
+    tags: ['kadr', 'peşə təhsili', 'Koç Holdinq', 'TQTA', 'TİKA', 'CTH', 'Qastro Turizm seriyası'],
+    metaDescription: 'Koç Holdinqin peşə təhsili modelindən TQTA-nın Sumqayıt təcrübəsinə: Azərbaycan HoReCa sektoru üçün sertifikatlı kadr sistemi necə qurula bilər?',
     focusKeyword: 'peşə təhsili HoReCa Azərbaycan',
-    summary: 'Xidmətin pis olmasının kökü kadrdadır, kadrın kökü isə təhsildədir. Türkiyə Koç modeli ilə sübut etdi. Azərbaycan dövlət planı 290.000 kadr hədəfləyir — sahibkar gözləmədən başlaya bilər.',
+    summary: 'HoReCa-da kadr çatışmazlığı elanla həll olunan işçi problemi deyil. Koç modelinin dərsləri və TQTA-nın Sumqayıt təcrübəsi milli kadr sisteminə gedən praktik yolu göstərir.',
     content: `# Peşə Məktəbi Ölkə Məsələsidir: Koç Modeli Azərbaycana Necə Tətbiq Olunar?
 
-Restoran sahibindən ən çox eşitdiyim şikayət budur: "Yaxşı aşpaz, yaxşı garson tapa bilmirəm." Bu, təsadüf deyil. Çünki sektorda **sistemli peşə təhsili yoxdur** — hər işlətmə kadrı sıfırdan öyrədir, kadr gedir, keyfiyyət dəyişkən qalır.
+Restoran sahibindən ən çox eşitdiyim şikayət budur: **“Yaxşı aşpaz, yaxşı garson tapa bilmirəm.”**
 
-Bu problemi bir restoran tək başına həll edə bilməz. Bu, bir **ölkə məsələsidir.** Və bu sözün arxasında güclü bir dünya nümunəsi var.
+Bu cümlə təkcə bir restoranın problemi deyil. Bu, bütün HoReCa sektorunun struktur problemidir. Çünki bazarda kadr var, amma **sistemli hazırlanmış, ölçülə bilən, sertifikatlı və işə hazır kadr** azdır.
 
----
+Bir restoran işçi götürür, sıfırdan öyrədir, işçi gedir, keyfiyyət yenidən düşür. Bir otel yeni personal qəbul edir, yenidən eyni təlimi verir. Bir kafe barista yetişdirir, sonra həmin əməkdaş başqa yerə keçir. Nəticədə sahibkar davamlı olaraq eyni problemi yaşayır: **kadr tapmaq, kadr yetişdirmək, kadr saxlamaq.**
 
-## 1. Problem: təlimli, sertifikatlı kadr yoxdur
+Bu problem yalnız maaşla, elanla və ya “tanış vasitəsilə işçi tapmaqla” həll olunmur. Çünki məsələ fərdi işçi problemi deyil — **peşə təhsili sisteminin zəifliyidir.**
 
-Xidmət niyə pisdir? Çünki:
+Ona görə bu mövzu artıq bir restoranın yox, bir sektorun; bir sektorun yox, bir ölkənin məsələsidir.
 
-- Aşpaz, garson, otel personalı çox vaxt **heç bir formal təlim** almadan işə başlayır.
-- Hər işlətmə öz kadrını sıfırdan öyrətməyə məcburdur — bu, vaxt və pul itkisidir.
-- Öyrətdiyin kadr gedir, yenisi gəlir, keyfiyyət hər dəfə yenidən düşür.
+## 1. Problem: təlimli və sertifikatlı kadr çatışmazlığı
 
-Nəticədə qonaq dəyişkən, çox vaxt zəif xidmət görür. Problem işçidə deyil — **onu yetişdirən sistemin olmamasındadır.**
+Xidmət niyə dəyişkən olur?
 
----
+Çünki aşpaz, ofisiant, barista, barmen, housekeeping əməkdaşı və resepsionist çox vaxt işə başlamazdan əvvəl sistemli peşə təlimindən keçmir. Bir çox halda gənc işə daxil olur və peşəni iş yerində öyrənməyə başlayır.
 
-## 2. Türkiyə nümunəsi: «Meslek Lisesi Memleket Meselesi»
+Bu isə üç ciddi nəticə yaradır:
 
-Türkiyədə bir şirkət bu problemi milli məsələyə çevirdi. Koç Holdinq 2006-cı ildə Təhsil Nazirliyi və Vehbi Koç Vəqfi ilə birgə **"Meslek Lisesi Memleket Meselesi"** (Peşə Məktəbi Ölkə Məsələsidir) proqramını başlatdı.
+- Sahibkar hər yeni işçiyə zaman və pul xərcləyir.
+- Xidmət keyfiyyəti işçinin şəxsi bacarığından asılı qalır.
+- Standartlaşma olmadığı üçün qonaq təcrübəsi dəyişkən olur.
 
-Rəqəmlər nəticəni göstərir:
-- Proqram **264 peşə məktəbini** əhatə etdi.
-- **8000-dən çox şagirdə təqaüd** və təcrübə imkanı verildi.
-- Beynəlxalq Əmək Təşkilatı (ILO) tərəfindən **Avropada nümunə təcrübə** kimi seçildi.
+Restoran və otel biznesində ən təhlükəli vəziyyət budur: **keyfiyyətin sistemə yox, təsadüfə bağlı qalması.**
 
-Əsas fikir: bir şirkət dövlətlə birləşib peşə təhsilini "kiminsə problemi" olmaqdan çıxarıb **bütün ölkənin məsələsi** elan etdi — və sənayeyə təlimli kadr axını yaratdı.
+Bir gün yaxşı xidmət, bir gün zəif xidmət; bir filialda yaxşı servis, digər filialda qarışıq əməliyyat; bir aşpazla stabil dad, o aşpaz gedəndə dağılan mətbəx sistemi.
 
-### Faydalı məlumat qutusu
-Koç modelinin sirri üç tərəfin birləşməsidir: **dövlət** (məktəb və proqram), **sənaye** (təcrübə yeri və iş), **vəqf/şirkət** (təqaüd və davamlılıq). Üçü ayrı işləyəndə nəticə yoxdur; birləşəndə isə milli kadr sistemi qurulur.
+Bu problemin kökü işçidə deyil. Kök problem, onu yetişdirən sistemin tam formalaşmamasındadır.
 
----
+## 2. Türkiyə nümunəsi: “Meslek Lisesi Memleket Meselesi”
 
-## 3. Niyə "ölkə məsələsi"?
+Türkiyədə bu mövzuya strateji yanaşan ən güclü nümunələrdən biri Koç Holdinqin başlatdığı **“Meslek Lisesi Memleket Meselesi”** proqramıdır.
 
-Çünki bir restoran, bir otel, hətta bir şəbəkə tək başına kadr problemini həll edə bilməz. Lazım olan:
+2006-cı ildə Koç Holdinq, Türkiyə Milli Təhsil Nazirliyi və Vehbi Koç Vəqfi ilə birlikdə peşə təhsilini sadəcə təhsil layihəsi kimi yox, ölkənin iqtisadi gələcəyi üçün əsas məsələ kimi gündəmə gətirdi.
 
-- Peşə **məktəbi** (təlim verir),
-- **Sənaye** (təcrübə və iş yeri verir),
-- **Davamlı dəstək** (təqaüd, sertifikat, karyera yolu).
+Bu modelin gücü yalnız verdiyi təqaüddə deyildi. Əsas güc onun sistem qurmasında idi:
 
-Bu üçü birləşməyəndə, kadr boşluğu heç vaxt dolmur. Birləşəndə isə həm sahibkar təlimli işçi tapır, həm gənc peşə qazanır, həm də ölkə xidmət keyfiyyətini yüksəldir.
+- Peşə məktəbləri prosesə daxil edildi.
+- Şirkətlər məktəblərlə əlaqələndirildi.
+- Şagirdlərə təqaüd, mentorluq və staj imkanları yaradıldı.
+- İş dünyası ilə təhsil sistemi arasında real körpü quruldu.
+- Peşə təhsili “ikinci dərəcəli seçim” olmaqdan çıxarılaraq iqtisadi inkişafın vacib elementi kimi təqdim edildi.
 
----
+Koç Holdinqin rəsmi məlumatına görə proqram 264 peşə məktəbini əhatə etdi və 8 mindən çox şagirdə dəstək verdi. Model zamanla **“Məktəb–Müəssisə Əməkdaşlığı”** yanaşması kimi formalaşdı.
 
-## 4. Azərbaycan üçün: fürsət indidir
+Əsas mesaj sadə idi: **Peşə məktəbi yalnız məktəbin məsələsi deyil. Sənayenin, dövlətin və cəmiyyətin ortaq məsələsidir.**
 
-Azərbaycanda bu boşluq açıq görünür — dövlətin Qastronomiya Turizmi Strateji Planı bunu etiraf edir və **290.000 işçinin peşə səviyyəsinin artırılmasını** hədəfləyir. Plan həmçinin Qastronomiya Akademiyasının qurulmasını və "usta-şagird" ənənəsinin canlandırılmasını nəzərdə tutur.
+## 3. Koç modelinin sirri nə idi?
 
-Yəni dövlət istiqaməti hazırdır. İndi lazım olan — bu istiqaməti **real təlim sistemlərinə** çevirmək. Bu, məhz Əxilik fəlsəfəsinin müasir tərcüməsidir: usta şagirdə peşə öyrədir, şagird öz ocağını qurub icmaya dəyər qaytarır.
+Koç modelini uğurlu edən məsələ yalnız böyük şirkət adı deyildi. Model üç dayağın üzərində qurulmuşdu:
 
----
+### Dövlət
 
-## 5. Sahibkara nə düşür?
+Dövlət məktəbi, təhsil infrastrukturu və rəsmi çərçivəni təmin edir.
 
-Dövlət sistemi qurulanadək gözləmək lazım deyil. Sahibkar bu gün:
+### Sənaye
 
-- Kadrını **sistemli təlimə** qoşa bilər (sertifikatlı təlim mərkəzləri, akademiyalar).
-- Daxili "usta-şagird" sistemi qura bilər — təcrübəli işçi yenini yetişdirir.
-- Sertifikatlı kadrı üstün tutub **stabil keyfiyyət** qura bilər.
+Şirkətlər real iş mühitini, staj imkanını, mentorluğu və gələcək iş imkanlarını verir.
 
-Sertifikatlı, təlimli kadr = dəyişməz keyfiyyət = məmnun qonaq = daha çox qazanc.
+### Vəqf və korporativ dəstək
 
-Konkret necə sertifikatlı komanda quracağını növbəti yazımızda izah edirik — [**"Sertifikatlı Komanda Necə Qurulur? CTH Standartı və Online Təhsil" →**](/blog/sertifikatli-komanda-cth-online-tehsil)
+Təqaüd, davamlılıq, layihə idarəçiliyi və sosial məsuliyyət tərəfi təmin olunur.
 
----
+> 💡 **Faydalı məlumat:** Koç modelinin gücü dövlət, sənaye və korporativ dəstəyin eyni nəticəyə bağlanmasındadır. Bu tərəflər ayrı işləyəndə təsir məhdud qalır; birlikdə işləyəndə sadə kurs deyil, milli kadr hazırlığı sistemi yaranır.
 
-> 📝 **DOĞAN NOTU:** "40 ildir bu sektordayam və hər zaman eyni həqiqəti gördüm: marka tabela ilə yox, **insanla** qurulur. Ən gözəl menyu, ən gözəl interyer — zəif xidmətlə çökür. Türkiyə peşə təhsilini ölkə məsələsi elan edəndə sektoru dəyişdi. Bizim də vaxtımız gəlib. Kadrı 'tapmağa' çalışma — **yetişdir.** Sistemli yetişdirilmiş işçi, ən bahalı avadanlıqdan dəyərlidir."
+Bu model Azərbaycan üçün də çox qiymətlidir. Çünki bizim HoReCa və turizm sektorunda problem eynidir: bazar böyüyür, restoranlar artır, otellər genişlənir, qastronomiya turizmi gündəmə gəlir, amma işə hazır kadr bazası eyni sürətlə böyümür.
 
----
+## 4. Azərbaycan üçün fürsət: kadr məsələsini milli sistemə çevirmək
+
+Azərbaycanda qastronomiya və turizm sahəsi son illərdə daha çox strateji əhəmiyyət qazanır. Regionların turizm potensialı, yerli mətbəxin tanıdılması, qastronomiya marşrutları, xidmət keyfiyyəti və beynəlxalq qonaq təcrübəsi artıq ölkə brendinin bir hissəsinə çevrilir.
+
+Amma bu brendin arxasında insan dayanır.
+
+Ən gözəl restoran konsepti, ən bahalı avadanlıq, ən yaxşı interyer belə zəif xidmətlə dəyərini itirir. Qonaq üçün marka yalnız loqo deyil; onu qarşılayan ofisiant, yeməyi hazırlayan aşpaz, qəhvəni təqdim edən barista, otağı hazırlayan housekeeping əməkdaşı və ilk təəssüratı yaradan resepsionistdir.
+
+Bu səbəbdən Azərbaycanın turizm və qastronomiya hədəfləri üçün kadr hazırlığı artıq ikinci dərəcəli məsələ deyil. Bu, sektorun böyüməsi üçün əsas infrastruktur məsələsidir.
+
+Bu nöqtədə TİKA dəstəyi ilə qurulan Turan Qastro Turizm Akademiyası — TQTA — Azərbaycan üçün real və tətbiq edilə bilən model kimi önə çıxır.
+
+## 5. TQTA: Koç modelinin Azərbaycan üçün praktik tərcüməsi
+
+Turan Qastro Turizm Akademiyası Sumqayıtda qurulmuş müasir qastronomiya və turizm təhsil mərkəzidir. Akademiya TİKA-nın dəstəyi ilə yaradılmış təlim infrastrukturu və sektor tərəfdaşlıqları üzərində fəaliyyət göstərir.
+
+Bu, sadəcə bir kurs mərkəzi deyil. Doğru idarə edildikdə TQTA Azərbaycan üçün **“Məktəb–Sənaye Əməkdaşlığı Sumqayıt Modeli”** ola bilər.
+
+Modelin əsas məntiqi belədir:
+
+- Tələbə peşəni yalnız nəzəriyyə ilə yox, real avadanlıq və praktiki mühitdə öyrənir.
+- Sənaye müəssisələri tələbələr üçün staj və təcrübə sahəsi yaradır.
+- Sahibkar hazır və sınaqdan keçmiş kadrla tanış olur.
+- Gənc işsiz və ya peşə axtaran şəxs bazarın tələb etdiyi bacarıqları qazanır.
+- Akademiya isə sektorla dövlət və iş dünyası arasında körpü rolunu oynayır.
+
+Bu model düzgün böyüdülərsə, Sumqayıtdan başlayıb Bakı, Gəncə, Şəki, Qəbələ, Lənkəran, Naftalan və digər turizm bölgələrinə yayıla bilər.
+
+## 6. TİKA-nın rolu: avadanlıqdan daha böyük təsir
+
+TİKA-nın bu layihədə rolu yalnız avadanlıq təmin etmək kimi oxunmamalıdır. Burada daha strateji məsələ var: **Türkiyə təcrübəsinin Azərbaycan peşə təhsili sisteminə transferi.**
+
+Layihə yanaşmasında bu istiqamətlər önə çıxır:
+
+- Turizm və xidmət sektorunda ara kadr ehtiyacına cavab vermək.
+- Gəncləri işə hazır bacarıqlarla təmin etmək.
+- Aşpazlıq, ofisiantlıq, barista, housekeeping, resepsion və turizm xidmətləri kimi sahələrdə praktiki təlim yaratmaq.
+- Təlimi işəgötürənlərlə əməkdaşlıq və məşğulluq imkanları ilə bağlamaq.
+- Sumqayıtda qurulan modeli digər bölgələr üçün də tətbiq edilə bilən hala gətirmək.
+
+Bu yanaşma çox vacibdir. Çünki peşə təhsili yalnız dərs keçmək deyil; **məşğulluq, sosial inkişaf, sektor keyfiyyəti və regional iqtisadiyyat** məsələsidir.
+
+TİKA dəstəyi ilə qurulan mətbəx, təlim zalları və praktiki təlim infrastrukturu bu baxımdan bir başlanğıcdır. Əsl dəyər isə bu infrastrukturu davamlı kadr sisteminə çevirməkdədir.
+
+## 7. CTH əməkdaşlığı: yerli təlimə beynəlxalq çərçivə
+
+TQTA-nın digər vacib üstünlüyü CTH — Confederation of Tourism and Hospitality tərəfindən təsdiqlənmiş tədris mərkəzi olmasıdır.
+
+Bu, Azərbaycan üçün iki səbəbdən önəmlidir.
+
+Birincisi, yerli təlim beynəlxalq standartlarla uyğunlaşır. Bu, proqramların yalnız “yerli kurs” kimi yox, daha ölçülə bilən və keyfiyyətə bağlı sistem kimi qurulmasına imkan verir.
+
+İkincisi, məzun üçün sertifikatın dəyəri artır. HoReCa və turizm sektoru getdikcə daha mobil bazara çevrilir. Yaxşı aşpaz, yaxşı barista və yaxşı otel personalı yalnız bir şəhərdə deyil, ölkə daxilində və beynəlxalq bazarda da tələb olunur.
+
+CTH-nin rəsmi mərkəz məlumatında TQTA-nın aşpazlıq, barista bacarıqları, restoran xidməti və turizm-qonaqpərvərlik ingiliscəsi proqramları təqdim etdiyi göstərilir.
+
+Bu baxımdan TQTA modeli Azərbaycan gənclərinə yalnız peşə yox, **karyera yolu** təqdim etməlidir.
+
+## 8. Sahibkara nə düşür?
+
+Dövlətin böyük sistemi qurmasını gözləmək düzgün yanaşma deyil. Sahibkar bu gündən prosesin bir parçası ola bilər.
+
+### 1. Kadrı təsadüfi yox, sistemli yetişdirmək
+
+Yeni işçini sadəcə “yanında öyrənsin” prinsipi ilə buraxmaq doğru deyil. Hər vəzifə üçün standart təlim planı olmalıdır: giriş təlimi, gigiyena, məhsul bilgisi, servis qaydası, satış bacarığı, qonaqla davranış, şikayət idarəetməsi və komanda intizamı.
+
+### 2. Akademiyalarla əməkdaşlıq etmək
+
+TQTA kimi mərkəzlərlə əməkdaşlıq edən sahibkar həm stajyer kadr bazası qazanır, həm də gələcək əməkdaşlarını real iş mühitində tanımaq imkanı əldə edir. Bu, işə qəbul riskini azaldır.
+
+### 3. Sertifikatlı kadrı üstün tutmaq
+
+Sertifikat təkcə kağız deyil. Doğru sistemdə sertifikat işçinin müəyyən standartdan keçdiyini göstərir. Sahibkar üçün bu, işə qəbulda ilkin filtr rolunu oynayır.
+
+> 💡 **Praktik nəticə:** Sertifikatlı və təlimli kadr daha stabil xidmət yaradır. Stabil xidmət daha məmnun qonaq, təkrar satış və daha güclü marka deməkdir.
+
+## 9. Sahibkar üçün iqtisadi məntiq
+
+Kadr hazırlığı çox vaxt xərc kimi görülür. Əslində isə bu, gizli zərərin qarşısını alan investisiyadır.
+
+Təlimsiz kadrın sahibkara yaratdığı xərclər çox vaxt görünmür:
+
+- Yanlış servis səbəbindən itirilən qonaq.
+- İsraf edilən məhsul.
+- Səhv porsiya və food cost problemi.
+- Şikayətlər.
+- Komanda daxilində intizamsızlıq.
+- Menecerin davamlı eyni problemi həll etməyə sərf etdiyi vaxt.
+- Brend reputasiyasının zəifləməsi.
+
+Təlimli kadr isə yalnız işi icra etmir. O, sistemi qoruyur. Sahibkarın qurduğu markanı qonaq qarşısında təmsil edir.
+
+Bu səbəbdən kadr hazırlığı restoran və otel biznesində **xərc maddəsi deyil, risk idarəetmə alətidir.**
+
+## 10. Azərbaycan üçün təklif: Sumqayıt Modelindən Milli Kadr Platformasına
+
+TQTA təcrübəsi daha geniş sistemə çevrilə bilər. Bunun üçün model mərhələli şəkildə qurulmalıdır.
+
+### Birinci mərhələ: Sumqayıt pilot modeli
+
+TQTA-nın mövcud infrastrukturu, tədris mətbəxi, barista və barmen avadanlığı, servis təlimləri və turizm proqramları strukturlaşdırılmalıdır. Hər proqram üzrə nəticə ölçülməlidir: neçə tələbə başladı, neçə nəfər bitirdi, neçə nəfər staj keçdi, neçə nəfər işə yerləşdi.
+
+### İkinci mərhələ: İşəgötürən şəbəkəsi
+
+Restoranlar, otellər, kafelər, turizm şirkətləri və qida istehsalı müəssisələri ilə rəsmi əməkdaşlıq şəbəkəsi qurulmalıdır. Hər müəssisə hansı sahədə neçə stajyer və neçə məzun qəbul edə biləcəyini bildirməlidir.
+
+### Üçüncü mərhələ: Sertifikat və keyfiyyət sistemi
+
+Təlim proqramları yalnız iştirak sertifikatı ilə məhdudlaşmamalıdır. Praktiki imtahan, bacarıq matrisi, işə hazırlıq qiymətləndirməsi və davranış standartları da ölçülməlidir.
+
+### Dördüncü mərhələ: Regional genişlənmə
+
+Model Sumqayıtdan sonra turizm potensialı olan bölgələrə uyğunlaşdırıla bilər. Hər regionun ehtiyacı fərqlidir: Naftalanda sağlamlıq turizmi personalı, Qəbələdə otel və servis kadrları, Şəkidə yerli qastronomiya, Lənkəranda regional mətbəx və turizm bələdçiliyi daha ön planda ola bilər.
+
+### Beşinci mərhələ: Rəqəmsal kadr platforması
+
+Məzunların portfeli, sertifikatları, staj keçdiyi müəssisələr, bacarıq səviyyəsi və işə uyğunluğu rəqəmsal sistemdə izlənməlidir. Bu, sahibkar üçün işə qəbul prosesini sürətləndirər, akademiya üçün isə nəticələri ölçülə bilən edər.
+
+> 📝 **DOĞAN NOTU:** “36 ildir bu sektorun içindəyəm və hər dəfə eyni həqiqəti görmüşəm: marka tabela ilə yox, insanla qurulur. Ən gözəl menyu, ən bahalı avadanlıq, ən yaxşı interyer — zəif xidmətlə dəyərini itirir. Qonaq restoranı təkcə yeməklə yox, ona göstərilən münasibətlə xatırlayır. Türkiyə peşə təhsilini ‘memleket meselesi’ elan edəndə böyük bir cümlə qurdu: ölkənin sənayesi, xidməti və gələcəyi peşəli insandan başlayır. Bizim də vaxtımız gəlib. Kadrı yalnız ‘tapmağa’ çalışma. Kadrı yetişdir. Çünki sistemli yetişdirilmiş işçi ən bahalı avadanlıqdan daha dəyərlidir.”
 
 ## Yekun
 
-Xidmətin pis olmasının kökü kadrdadır, kadrın kökü isə təhsildədir. Bu, bir işlətmənin yox, bütün ölkənin məsələsidir. Türkiyə bunu sübut etdi; Azərbaycanın dövlət planı da bu istiqaməti göstərir. Sahibkar isə gözləmədən başlaya bilər — kadrını sistemli yetişdirərək.
+Azərbaycanda HoReCa və turizm sektoru böyüyür. Amma sektorun böyüməsi üçün yalnız yeni restoran, yeni otel və yeni konsept kifayət deyil. Bu böyümənin arxasında sistemli hazırlanmış insan kapitalı olmalıdır.
 
----
+Koç modelinin Türkiyədə göstərdiyi əsas dərs budur: peşə təhsili yalnız məktəbin işi deyil. Dövlət, sənaye, vəqf, akademiya və sahibkar birlikdə işləməlidir.
+
+TİKA dəstəyi ilə Sumqayıtda qurulan TQTA bu baxımdan Azərbaycan üçün real başlanğıc nöqtəsidir. Bu model düzgün idarə olunarsa, təkcə bir akademiya yox, ölkə miqyasında kadr hazırlığı sisteminin nüvəsinə çevrilə bilər.
+
+Xidmətin kökü kadrdadır.
+Kadrın kökü təhsildədir.
+Təhsilin gücü isə sistemdədir.
 
 ## DK Agency necə kömək edir?
 
-DK Agency və TQTA (Turan Qastro Turizm Akademiyası) sektora təlimli, sertifikatlı kadr yetişdirmək üçün çalışır — aşpazdan otel personalına, garsondan menecerə qədər. Dövlətin qastronomiya kadr hədəfinin bir parçasıyıq. Çünki bizim üçün kadr xərc deyil, markanın əsl təməlidir: *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+DK Agency və TQTA — Turan Qastro Turizm Akademiyası — HoReCa və turizm sektorunda təlimli, sertifikatlı və işə hazır kadrların yetişdirilməsi üçün çalışır.
 
-> **Növbəti addım:** Komandanı sistemli yetişdirmək istəyirsən? [**TQTA Akademiya təlim proqramlarına bax →**](/toolkit) və ya əlaqə saxla.
+Bizim yanaşmamız sadədir: kadr xərc deyil, markanın təməlidir.
 
-*Mənbə: Koç Holdinq «Meslek Lisesi Memleket Meselesi» proqramı açıqlamaları; Beynəlxalq Əmək Təşkilatı (ILO); Azərbaycan Respublikası Qastronomiya Turizmi Strateji İnkişaf Planı (2025-2030).*`,
+TQTA aşpazlıq, qənnadçılıq, ofisiantlıq, barista, barmen, housekeeping, resepsion, turizm və xidmət sahələrində praktiki təlim proqramları ilə gəncləri və mövcud sektor əməkdaşlarını işə hazırlayır. DK Agency isə sahibkarlara bu kadr sistemini restoran, kafe və otel əməliyyatlarına inteqrasiya etməkdə dəstək verir.
+
+Məqsədimiz yalnız kurs keçmək deyil. Məqsədimiz Azərbaycan HoReCa sektorunda ölçülə bilən, davamlı və sertifikatlı kadr ekosistemi qurmaqdır.
+
+> **Növbəti addım:** Komandanı sistemli yetişdirmək və işə hazır kadr bazasına qoşulmaq istəyirsinizsə, DK Agency / TQTA təlim proqramları üçün əlaqə saxlayın.
+
+*Mənbə qeydi: Koç Holdinq “Meslek Lisesi Memleket Meselesi” proqramının rəsmi açıqlamaları; CTH-nin TQTA Approved Teaching Centre məlumatı; TQTA və TİKA dəstəkli akademiya materialları.*`,
     isPremium: true,
     relatedArticles: ['sertifikatli-komanda-cth-online-tehsil', 'azerbaycan-qastronomiya-2030-dovlet-plani'],
     coverImage: '/images/blog-21.png',
-    coverImageAlt: 'Peşə məktəbi ölkə məsələsidir',
+    coverImageAlt: 'Peşə məktəbi və HoReCa kadr hazırlığı modeli',
   },
 
   // ═══════════════════════════════════════════════════════════════
