@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [TASK-0201] fix(home): complete join CTA title + drop "Agentlik"/"agency" wording — 2026-06-06
+
+### Fixed
+- `CTASections` join CTA başlığı yarımçıq idi (feil yox) və qadağan "Agentlik"/"agency" sözündən istifadə edirdi. 4 dildə tam, qadağan-sözsüz başlığa yenidən yazıldı:
+  - AZ: `Biznesinizi növbəti səviyyəyə daşıyın`
+  - TR: `İşinizi bir üst seviyeye taşıyın`
+  - RU: `Выведите бизнес на следующий уровень`
+  - EN: `Take your business to the next level`
+
 ## [TASK-F28] feat(sektor): config-driven dynamic slug route — 2026-06-06
 
 ### Added
