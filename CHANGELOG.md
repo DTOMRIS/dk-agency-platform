@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [TASK-0200] content(blog): Peşə Məktəbi yazısını genişləndir — 2026-06-06
+
+### Changed
+- `pese-mektebi-olke-meselesi` yazısı Koç modeli, TQTA, TİKA, CTH və milli kadr platforması təklifi ilə 1.778 sözə genişləndirildi.
+- İki faydalı məlumat qutusu və xüsusi Doğan Notu bloku renderer konvensiyasına uyğunlaşdırıldı.
+- Mənbəsi dəqiqləşdirilməyən `290.000` və ILO iddiaları bu yazıdan çıxarıldı; Koç və CTH rəsmi məlumatları əsas götürüldü.
+
+### Added
+- Tək bir statik blog yazısını slug üzrə production DB-yə təhlükəsiz sync edən `scripts/sync-static-blog-article.ts` əlavə edildi.
+
 ## [TASK-0199] fix(blog): production DB-yə çatışmayan 14 yazını sync et — 2026-06-06
 
 ### Fixed
