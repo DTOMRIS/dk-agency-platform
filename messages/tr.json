@@ -5298,5 +5298,179 @@
       "heading": "İlk adım — ücretsiz test",
       "buttonText": "OTA Testine başla →"
     }
+  },
+  "sektorOtel": {
+    "pageTitle": "Otel & Pansiyon — AHA Yıldız Sertifikası ve OTA Yönetim Rehberi | DK Agency",
+    "hero": {
+      "headline": "Otelerinizi AHA Yıldız Sertifikasına ve OTA Satışlarına Hazırlayın",
+      "subline": "Oteller ve pansiyonlar için AHA (Azerbaycan Otel Birliği) yıldız sınıflandırma testi, çevrimiçi satış kanalları (OTA) hazırlık testi ve ROI analiz araçları.",
+      "statBadge": "Oteller için Yıldız Sertifikası ve Satış Dəstəyi",
+      "primaryCtaText": "Yıldız Hazırlık Testine başla",
+      "secondaryCtaText": "Ücretsiz danışmanlık al"
+    },
+    "stats": {
+      "stat1Label": "Başarılı Yıldız Sertifikası",
+      "stat1Value": "%30",
+      "stat1Source": "AHA 2025-2026 İstatistikleri",
+      "stat2Label": "Zorunlu Yıldız Sınıflandırması",
+      "stat2Value": "200+",
+      "stat2Source": "Devlet Turizm Ajansı",
+      "stat3Label": "Booking Satış Artışı",
+      "stat3Value": "%40+",
+      "stat3Source": "DK Agency Ortak Verisi"
+    },
+    "tools": {
+      "sectionTitle": "Otel sahipleri için 3 araç",
+      "tool1Title": "Otel Hazırlık Testi",
+      "tool1Desc": "12 soruyla otelinizin AHA yıldız sertifikasına hazırlık seviyesini kontrol edin ve kişisel rapor alın.",
+      "tool1Cta": "Teste başla →",
+      "tool2Title": "OTA Hazırlık Testi",
+      "tool2Desc": "Booking.com ve Airbnb platformlarında satışlarınızı artırmak için profilinizi kontrol edin.",
+      "tool2Cta": "Teste başla →",
+      "tool3Title": "Pansiyon ROI Hesaplayıcı",
+      "tool3Desc": "Başlangıç yatırımı ve doluluk oranınıza göre geri ödeme süresini hesaplayın.",
+      "tool3Cta": "Hesapla →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Oteller için uzman yazıları"
+    },
+    "leadCapture": {
+      "heading": "Oteline Özel Ücretsiz Değerlendirme",
+      "body": "Uzmanlarımızla otelinizin yıldız sertifikasyonu ve çevrimiçi satış stratejilerini görüşün.",
+      "buttonText": "Danışmanlık Talebi Gönder"
+    },
+    "faq": {
+      "sectionTitle": "Sıkça Sorulan Sorular",
+      "q1": "AHA yıldız sertifikası nasıl alınır?",
+      "a1": "Azerbaycan'da oteller AHA (Azerbaycan Otel Birliği) tarafından Milli Yıldız Sınıflandırması kapsamında değerlendirilir. Bunun için özel altyapı, dokümantasyon ve hizmet standartları gerekir.",
+      "q2": "Komisyon giderleri nasıl düşürülür?",
+      "a2": "OTA platformlarının (Booking/Airbnb) yanı sıra WhatsApp Business ve doğrudan rezervasyon (direct booking) sistemi kurarak komisyon giderlerini sıfırlayabilirsiniz.",
+      "q3": "4 yıldız sertifikası için en kritik şart nedir?",
+      "a3": "Fiziksel alanlar (oda ölçüleri, asansör, otopark), 24 saat resepsiyon hizmeti, profesyonel ve İngilizce konuşan personel ile güvenlik standartları esastır.",
+      "q4": "Personel eğitimleri neden önemlidir?",
+      "a4": "Hizmet kalitesi doğrudan otel puanına yansır. Booking puanı 8.5 ve üzeri olan otellerin satışları diğerlerine kıyasla %40 daha yüksektir.",
+      "q5": "DK Agency otelinize nasıl destek olur?",
+      "a5": "Otelleri yıldız başvurusu için denetler, operasyonel el kitaplarını (SOP) hazırlar ve OTA kanallarındaki doluluk oranını artırırız."
+    },
+    "footerCta": {
+      "heading": "Otelinizin potansiyelini keşfedin — testi şimdi tamamlayın",
+      "buttonText": "Yıldız Hazırlık Testine başla →"
+    }
+  },
+  "sektorRestoran": {
+    "pageTitle": "Restoran Sektörü — Food Cost ve Kârlılık Rehberi | DK Agency",
+    "hero": {
+      "headline": "Restoranınızın Kârlılığını ve Satışlarını Artırın",
+      "subline": "Restoran ve kafeler için anlık food cost hesaplamaları, menü mühendisliği araçları ve kâr/zarar (P&L) simülasyonu.",
+      "statBadge": "Restoranlar için Sistemleştirme ve Finansal Yönetim",
+      "primaryCtaText": "Food Cost Hesaplayıcı",
+      "secondaryCtaText": "Ücretsiz danışmanlık al"
+    },
+    "stats": {
+      "stat1Label": "Restoranların Kapanma Oranı",
+      "stat1Value": "%70",
+      "stat1Source": "İlk 3 yıl içinde (sistemsizlikten)",
+      "stat2Label": "Ortalama Gıda Firesi",
+      "stat2Value": "%10-15",
+      "stat2Source": "Kontrolsüz mutfaklarda",
+      "stat3Label": "Menü Optimizasyon Geliri",
+      "stat3Value": "%25+",
+      "stat3Source": "DK Agency Ortak Verisi"
+    },
+    "tools": {
+      "sectionTitle": "Restoran sahipleri için 3 araç",
+      "tool1Title": "Food Cost Hesaplayıcı",
+      "tool1Desc": "Her yemeğin gerçek reçete maliyetini hesaplayarak kâr marjınızı net olarak görün.",
+      "tool1Cta": "Hesapla →",
+      "tool2Title": "Menü Matrisi",
+      "tool2Desc": "Menünüzdeki hangi yemeklerin popüler ve kârlı (yıldız), hangilerinin zarar ettirdiğini analiz edin.",
+      "tool2Cta": "Analiz et →",
+      "tool3Title": "P&L Simülasyonu",
+      "tool3Desc": "Malzeme maliyetleri, personel ve kira giderlerini girerek aylık net kârınızı simüle edin.",
+      "tool3Cta": "Hesapla →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Restoran işletmeciliği üzerine yazılar"
+    },
+    "leadCapture": {
+      "heading": "Restoranınız için Finansal Denetim",
+      "body": "Uzmanlarımızla menü reçete maliyetini, personel giderlerini ve kaçakları optimize etme yollarını görüşün.",
+      "buttonText": "Ücretsiz Denetim İste"
+    },
+    "faq": {
+      "sectionTitle": "Sıkça Sorulan Sorular",
+      "q1": "Hedef food cost yüzdesi kaç olmalıdır?",
+      "a1": "İdeal food cost oranları restoran konseptine göre %28 ile %35 arasında değişmelidir. %35'in üzeri risk sınırıdır.",
+      "q2": "Menü Matrisi nedir ve nasıl katkı sağlar?",
+      "a2": "Menü matrisi yemekleri popülerlik ve kârlılık durumuna göre 4 gruba ayırır (Yıldız, Beygir, Bilmece, Köpek). Kârlı yemekleri öne çıkararak kârı artırır.",
+      "q3": "P&L tablosu ne sıklıkla kontrol edilmelidir?",
+      "a3": "Her ay bittikten sonra en geç sonraki ayın 10'una kadar P&L (Kâr ve Zarar) tablosu hazırlanmalı ve bütçeyle kıyaslanmalıdır.",
+      "q4": "Garson satış eğitimlerinin kâra etkisi nedir?",
+      "a4": "Doğru ek satış (upsell) teknikleri uygulayan garsonlar restoranın ortalama kuver/çek değerini %15 ile %25 arasında artırabilmektedir.",
+      "q5": "DK Agency restoranınıza nasıl destek olur?",
+      "a5": "Menü mühendisliğinizi yapar, ERP entegrasyonu kurar, food cost oranını düşürür ve yönetim ekibine P&L eğitimleri veririz."
+    },
+    "footerCta": {
+      "heading": "Maliyetleri kontrol altına alın — kârlılığınızı koruyun",
+      "buttonText": "Food Cost Hesaplayıcıya geç →"
+    }
+  },
+  "sektorKafe": {
+    "pageTitle": "Kafe Sektörü — Başabaş Noktası ve Marja Rehberi | DK Agency",
+    "hero": {
+      "headline": "Kafenizin Günlük Satışlarını ve Kahve Marjını Yönetin",
+      "subline": "Kahve dükkanları, pastaneler ve butik kafeler için food cost hesaplamaları, başabaş noktası hesaplayıcı ve menü optimizasyon araçları.",
+      "statBadge": "Kafeler için Finansal Yönetim",
+      "primaryCtaText": "Maliyet Hesapla",
+      "secondaryCtaText": "Ücretsiz danışmanlık al"
+    },
+    "stats": {
+      "stat1Label": "Kahve Satış Marjı",
+      "stat1Value": "%75+",
+      "stat1Source": "Standart kahve marjı",
+      "stat2Label": "Ortalama Aylık Fire",
+      "stat2Value": "%8-12",
+      "stat2Source": "Tatlı ve unlu mamullerde",
+      "stat3Label": "Başabaş Noktası Süresi",
+      "stat3Value": "18 Ay",
+      "stat3Source": "Yeni açılan kafeler için"
+    },
+    "tools": {
+      "sectionTitle": "Kafe sahipleri için 3 araç",
+      "tool1Title": "Food Cost Hesaplayıcı",
+      "tool1Desc": "Her fincan kahvenin ve tatlının gerçek reçete maliyetini kuruşu kuruşuna hesaplayın.",
+      "tool1Cta": "Hesapla →",
+      "tool2Title": "Başabaş Noktası Hesaplayıcı",
+      "tool2Desc": "Sabit ve değişken giderlerinize göre kafenizin başabaş noktasına gelmesi için günde kaç çek kesmesi gerektiğini bulun.",
+      "tool2Cta": "Hesapla →",
+      "tool3Title": "Menü Matrisi",
+      "tool3Desc": "Hangi tatlıların veya içeceklerin size en çok para kazandırdığını görsel olarak analiz edin.",
+      "tool3Cta": "Analiz et →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Kafeler için yararlı makaleler"
+    },
+    "leadCapture": {
+      "heading": "Kafe İşletmenizi Büyütün",
+      "body": "Uzmanlarımızla firesiz kahve marjı yönetimi, tatlı planlaması ve personel giderlerini optimize etmeyi görüşün.",
+      "buttonText": "Ücretsiz Danışmanlık Al"
+    },
+    "faq": {
+      "sectionTitle": "Sıkça Sorulan Sorular",
+      "q1": "Bir fincan kahvenin food cost'u nasıl hesaplanır?",
+      "a1": "Kahve çekirdeği, süt, şeker, bardak, kapak, pipet ve marka etiket maliyeti toplanarak bulunur. Genellikle satış fiyatının %15-20'sidir.",
+      "q2": "Kafelerde başabaş noktası (breakeven) neden hayatidir?",
+      "a2": "Kafenizin zarar etmemesi için gün içinde minimum ne kadarlık ciro veya çek adeti yapması gerektiğini gösteren temel finansal kılavuzdur.",
+      "q3": "Kafe menüsü nasıl sadeleştirilir?",
+      "a3": "Çok fazla çeşit yerine yüksek marjlı ve hızlı hazırlanan ürünler seçilmeli, fire oranı yüksek olan az satan tatlılar çıkarılmalıdır.",
+      "q4": "Tatlılarda firenin önüne nasıl geçilir?",
+      "a4": "Günlük satış verisine dayalı sipariş tahmini, FIFO (ilk giren ilk çıkar) kuralı ve doğru dolap yönetimiyle tatlı firesi %5'in altına çekilebilir.",
+      "q5": "DK Agency kafenize nasıl yardımcı olur?",
+      "a5": "Standart reçetelerinizi hazırlar, başabaş noktanızı hesaplar ve menünüzdeki en kârlı yıldızları öne çıkarırız."
+    },
+    "footerCta": {
+      "heading": "Kafenizi kârlı bir işletmeye dönüştürün — food cost analiziyle başlayın",
+      "buttonText": "Maliyet Hesapla →"
+    }
   }
 }

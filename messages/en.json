@@ -5298,5 +5298,179 @@
       "heading": "Take the first step — start with a free test",
       "buttonText": "Start OTA Readiness Test →"
     }
+  },
+  "sektorOtel": {
+    "pageTitle": "Hotel & Lodging — AHA Star Certification & OTA Management Guide | DK Agency",
+    "hero": {
+      "headline": "Prepare Your Hotel for AHA Star Certification & OTA Sales",
+      "subline": "AHA (Azerbaijan Hotel Association) star classification test, online travel agency (OTA) readiness test, and ROI analysis tools for hotels and lodgings.",
+      "statBadge": "Star Certification & Sales Support for Hotels",
+      "primaryCtaText": "Start Star Readiness Test",
+      "secondaryCtaText": "Get Free Consultation"
+    },
+    "stats": {
+      "stat1Label": "Successful Star Certification",
+      "stat1Value": "30%",
+      "stat1Source": "AHA 2025-2026 Statistics",
+      "stat2Label": "Mandatory Star Classification",
+      "stat2Value": "200+",
+      "stat2Source": "State Tourism Agency",
+      "stat3Label": "Booking Sales Increase",
+      "stat3Value": "40%+",
+      "stat3Source": "DK Agency Partner Data"
+    },
+    "tools": {
+      "sectionTitle": "3 tools for hotel owners",
+      "tool1Title": "Hotel Readiness Test",
+      "tool1Desc": "Evaluate your hotel's AHA star certification readiness with 12 questions and get a personalized report.",
+      "tool1Cta": "Start test →",
+      "tool2Title": "OTA Readiness Test",
+      "tool2Desc": "Audit your profile to increase sales on Booking.com and Airbnb.",
+      "tool2Cta": "Start test →",
+      "tool3Title": "Guesthouse ROI Calculator",
+      "tool3Desc": "Calculate payback period based on initial investment and occupancy rate.",
+      "tool3Cta": "Calculate →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Expert articles for hotels"
+    },
+    "leadCapture": {
+      "heading": "Free Evaluation for Your Hotel",
+      "body": "Discuss your hotel's star certification and online sales strategy with our experts.",
+      "buttonText": "Submit Consultation Request"
+    },
+    "faq": {
+      "sectionTitle": "Frequently Asked Questions",
+      "q1": "How to get the AHA star certificate?",
+      "a1": "Hotels in Azerbaijan are evaluated by the AHA (Azerbaijan Hotel Association) under the National Star Classification. Specific infrastructure, documentation, and service standards are required.",
+      "q2": "How to reduce commission expenses?",
+      "a2": "You can minimize commission costs by setting up a WhatsApp Business channel and direct booking system alongside OTA platforms (Booking/Airbnb).",
+      "q3": "What is the most critical requirement for a 4-star certificate?",
+      "a3": "Physical spaces (room size, elevator, parking), 24-hour reception, professional English-speaking staff, and safety standards are key.",
+      "q4": "Why is staff training important?",
+      "a4": "Service quality directly impacts hotel rating. Hotels with Booking ratings above 8.5 have 40% higher sales.",
+      "q5": "How does DK Agency support your hotel?",
+      "a5": "We perform pre-audits for your star application, draft operational SOPs, and boost occupancy on OTA channels."
+    },
+    "footerCta": {
+      "heading": "Discover your hotel's potential — complete the test now",
+      "buttonText": "Start Star Readiness Test →"
+    }
+  },
+  "sektorRestoran": {
+    "pageTitle": "Restaurant Sector — Food Cost & Profitability Guide | DK Agency",
+    "hero": {
+      "headline": "Increase Your Restaurant's Profitability & Sales",
+      "subline": "Real-time food cost calculations, menu engineering tools, and P&L simulations for restaurants and cafes.",
+      "statBadge": "Systemisation & Financial Management for Restaurants",
+      "primaryCtaText": "Food Cost Calculator",
+      "secondaryCtaText": "Get Free Consultation"
+    },
+    "stats": {
+      "stat1Label": "Restaurant Failure Risk",
+      "stat1Value": "70%",
+      "stat1Source": "Within first 3 years (due to lack of systems)",
+      "stat2Label": "Average Food Waste",
+      "stat2Value": "10-15%",
+      "stat2Source": "In uncontrolled kitchens",
+      "stat3Label": "Menu Optimisation Revenue",
+      "stat3Value": "25%+",
+      "stat3Source": "DK Agency Partner Data"
+    },
+    "tools": {
+      "sectionTitle": "3 tools for restaurant owners",
+      "tool1Title": "Food Cost Calculator",
+      "tool1Desc": "Calculate the real recipe cost of each dish and know your margins precisely.",
+      "tool1Cta": "Calculate →",
+      "tool2Title": "Menu Matrix",
+      "tool2Desc": "Analyze which items on your menu are popular and profitable (stars), and which ones are losing money.",
+      "tool2Cta": "Analyze →",
+      "tool3Title": "P&L Simulator",
+      "tool3Desc": "Simulate your monthly net profit by entering material costs, staff, and rent.",
+      "tool3Cta": "Calculate →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Articles on restaurant management"
+    },
+    "leadCapture": {
+      "heading": "Financial Audit for Your Restaurant",
+      "body": "Discuss optimizing menu recipe cost, labor cost, and leakages with our experts.",
+      "buttonText": "Request Free Audit"
+    },
+    "faq": {
+      "sectionTitle": "Frequently Asked Questions",
+      "q1": "What should the target food cost percentage be?",
+      "a1": "Ideal food cost should range between 28% and 35% depending on the restaurant concept. Above 35% is considered risky.",
+      "q2": "What is a Menu Matrix and how does it help?",
+      "a2": "A Menu Matrix categorizes dishes into 4 groups based on popularity and profitability (Stars, Plowhorses, Puzzles, Dogs). It boosts profit by highlighting high-margin dishes.",
+      "q3": "How often should P&L reports be checked?",
+      "a3": "A Profit & Loss (P&L) report should be prepared monthly, no later than the 10th of the following month, and compared with the budget.",
+      "q4": "What is the impact of waiter sales training on profit?",
+      "a4": "Waiters applying correct upselling techniques can increase the restaurant's average check value by 15% to 25%.",
+      "q5": "How does DK Agency support your restaurant?",
+      "a5": "We handle menu engineering, set up ERP integrations, lower food cost, and provide P&L training for management."
+    },
+    "footerCta": {
+      "heading": "Take control of food costs — protect your margin",
+      "buttonText": "Go to Food Cost Calculator →"
+    }
+  },
+  "sektorKafe": {
+    "pageTitle": "Cafe Sector — Break-even Point & Margin Guide | DK Agency",
+    "hero": {
+      "headline": "Manage Your Cafe's Daily Sales & Coffee Margin",
+      "subline": "Food cost calculations, break-even point calculator, and menu optimization tools for coffee shops, bakeries, and boutique cafes.",
+      "statBadge": "Financial Management for Cafes",
+      "primaryCtaText": "Calculate Cost",
+      "secondaryCtaText": "Get Free Consultation"
+    },
+    "stats": {
+      "stat1Label": "Coffee Sales Margin",
+      "stat1Value": "75%+",
+      "stat1Source": "Standard coffee margin",
+      "stat2Label": "Average Monthly Waste",
+      "stat2Value": "8-12%",
+      "stat2Source": "In desserts and bakery items",
+      "stat3Label": "Break-even Point Target",
+      "stat3Value": "18 Months",
+      "stat3Source": "For newly opened cafes"
+    },
+    "tools": {
+      "sectionTitle": "3 tools for cafe owners",
+      "tool1Title": "Food Cost Calculator",
+      "tool1Desc": "Precisely calculate the real food cost of every cup of coffee and dessert.",
+      "tool1Cta": "Calculate →",
+      "tool2Title": "Break-even Point Calculator",
+      "tool2Desc": "Find out how many checks your cafe must print daily to break even based on fixed and variable expenses.",
+      "tool2Cta": "Calculate →",
+      "tool3Title": "Menu Matrix",
+      "tool3Desc": "Visually analyze which desserts or drinks make you the most money.",
+      "tool3Cta": "Analyze →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Useful articles for cafes"
+    },
+    "leadCapture": {
+      "heading": "Grow Your Cafe Business",
+      "body": "Discuss waste reduction, coffee margin protection, and labor cost optimization with our experts.",
+      "buttonText": "Get Free Consultation"
+    },
+    "faq": {
+      "sectionTitle": "Frequently Asked Questions",
+      "q1": "How is the food cost of a cup of coffee calculated?",
+      "a1": "It is calculated by summing the costs of coffee beans, milk, sugar, cup, lid, straw, and brand sticker. It is typically 15-20% of the sale price.",
+      "q2": "Why is the break-even point critical for cafes?",
+      "a2": "The break-even point is the key financial metric that shows the minimum daily turnover or transaction volume needed so the cafe does not operate at a loss.",
+      "q3": "How to optimize a cafe menu?",
+      "a3": "Focus on high-margin, fast-prep items instead of excessive variety, and remove slow-selling desserts with high wastage rates.",
+      "q4": "How to prevent waste in desserts?",
+      "a4": "Waste can be reduced to under 5% through daily sales data-driven ordering, FIFO (First In, First Out) rules, and proper display fridge management.",
+      "q5": "How does DK Agency help your cafe?",
+      "a5": "We prepare standard recipes, calculate your break-even point, and highlight the most profitable stars on your menu."
+    },
+    "footerCta": {
+      "heading": "Turn your cafe into a profitable business — start with a food cost analysis",
+      "buttonText": "Calculate Cost →"
+    }
   }
 }

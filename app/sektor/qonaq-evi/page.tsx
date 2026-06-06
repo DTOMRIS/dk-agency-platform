@@ -74,6 +74,7 @@ export default function QonaqEviSektorPage() {
         statBadgeKey="hero.statBadge"
         primaryCta={{ key: 'hero.primaryCtaText', href: '/toolkit/ota-hazirlig-testi' }}
         secondaryCta={{ key: 'hero.secondaryCtaText', href: '#lead-capture' }}
+        heroImage="/images/franchise-buyume.png"
         sektorSlug={SEKTOR_SLUG}
       />
 
