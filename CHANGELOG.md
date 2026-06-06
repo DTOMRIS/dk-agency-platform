@@ -12,8 +12,20 @@
 - AI insight: `getToolkitInsight`-a `metbex-istasyon` prompt (yeni API route YOX — L-009)
 
 ### Note
-- Slug Doğan tərəfindən `lib/marketing-tools-config.ts`-ə əl ilə əlavə olunacaq (PROTECTED).
+- Slug Doğan tərəfindən `lib/marketing-tools-config.ts`-ə əl ilə əlavə olunacak (PROTECTED).
 - Əmək faizi spec sabitlərindən (380 AZN, cek, 26 gün) hesablanır; product-owner kalibrasiyası ilə dəqiqləşdirilə bilər.
+
+## [TASK-0230] feat(toolkit): Personel Planlayıcısı (Restoran + Kafe) — 2026-06-06
+
+### Added
+- `/toolkit/personel-planlayici` — vardiya bazında optimal personel hesablayıcısı (restoran casual/fine, kafe, bar)
+- Calc engine (client-side): açılış/peak/axşam briqadası, əmək maliyyəti + faiz (status: ideal/diqqət/kritik), skeleton minimum — Cornell/Shifty benchmark formulları
+- `components/marketinq-ocagi/personel-planlayici/PersonelPlanlayiciPage.tsx` + root mirror (`app/toolkit/...`) + locale wrapper (`app/[locale]/toolkit/...`, metadata)
+- i18n `toolkit.personelPlanlayici` namespace (AZ/RU/EN/TR)
+- AI insight: mövcud `getToolkitInsight` server action-a `personel-planlayici` prompt əlavə olundu (yeni API route YOX — L-009, DRY)
+
+### Note
+- `lib/marketing-tools-config.ts`-ə slug Doğan tərəfindən əl ilə əlavə olunacaq (PROTECTED, toxunulmadı).
 
 ## [TASK-0204] content(blog): unsourced statistics softened + 2 real sources — 2026-06-06
 

@@ -121,6 +121,55 @@
         "description": "Station planning for fast food / QSR kitchens by SKU count. Staffing, labor percentage."
       }
     },
+    "personelPlanlayici": {
+      "title": "Staff Planner",
+      "description": "Calculate the optimal shift-based headcount for restaurants and cafés",
+      "badge": "Staff",
+      "concept": {
+        "label": "Concept",
+        "restoranCasual": "Restaurant (Casual Dining)",
+        "restoranFine": "Restaurant (Fine Dining)",
+        "kafe": "Café",
+        "bar": "Bar / Lounge"
+      },
+      "koltukSayisi": "Number of seats",
+      "gunlukFis": "Estimated daily checks",
+      "gunTipi": {
+        "label": "Day type",
+        "isgunu": "Weekday (Mon–Fri)",
+        "cuma": "Friday",
+        "haftaSonu": "Weekend (Sat/Sun)"
+      },
+      "achilis": "Opening hour",
+      "kapanis": "Closing hour",
+      "hesabla": "Calculate Staff",
+      "result": {
+        "acilisBrigadasi": "Opening Crew",
+        "peakBrigada": "Peak Hours",
+        "axsamBrigadasi": "Evening Crew",
+        "garson": "Server",
+        "barista": "Barista",
+        "asci": "Cook / Kitchen",
+        "host": "Host",
+        "kasa": "Cashier",
+        "ekstra": "Extra (peak)",
+        "toplam": "Total",
+        "laborMaliyyeti": "Labor cost",
+        "aylig": "Monthly",
+        "laborFaizi": "Labor %",
+        "ideal": "Ideal",
+        "dikkat": "Caution",
+        "kritik": "Critical",
+        "skeletonMinimum": "Minimum opening crew",
+        "benchmark": "Sector benchmark",
+        "aiInsight": "KAZAN AI Advice",
+        "peakNote": "Can be reduced from peak"
+      },
+      "seo": {
+        "title": "Staff Planner — DK Agency",
+        "description": "Optimal staff headcount calculator for restaurants and cafés. Shift-based, with labor percentage."
+      }
+    },
     "badge": "Free Tools",
     "title": "DK Agency Toolkit",
     "subtitle": "Free tools to manage your restaurant. Food cost, P&L, checklist — all in one place.",

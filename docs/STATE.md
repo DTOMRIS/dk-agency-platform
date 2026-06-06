@@ -4,7 +4,7 @@ Auto-generated. Do not edit manually.
 
 ## Snapshot
 - GeneratedAt: 2026-06-06T15:31:27.542Z
-- BuildStatus: UNKNOWN
+- BuildStatus: PASS
 
 ## Routes (220)
 - /
@@ -110,6 +110,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/metbex-istasyon
 - /[locale]/toolkit/ota-hazirlig-testi
 - /[locale]/toolkit/otel-hazirlig-testi
+- /[locale]/toolkit/personel-planlayici
 - /[locale]/toolkit/pnl
 - /[locale]/toolkit/pnl-simulator
 - /[locale]/toolkit/qonaq-evi-roi-kalkulyatoru
@@ -218,6 +219,7 @@ Auto-generated. Do not edit manually.
 - /toolkit/metbex-istasyon
 - /toolkit/ota-hazirlig-testi
 - /toolkit/otel-hazirlig-testi
+- /toolkit/personel-planlayici
 - /toolkit/pnl
 - /toolkit/pnl-simulator
 - /toolkit/qonaq-evi-roi-kalkulyatoru
