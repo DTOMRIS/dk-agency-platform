@@ -41,7 +41,7 @@ add_result() {
 
 # --- Check 1: Build ---
 echo "  [1/5] Build..." >&2
-if npm run build > /tmp/dk-build.log 2>&1; then
+if NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1 npm run build > /tmp/dk-build.log 2>&1; then
   add_result 1 "Build" "PASS" "0 errors"
 else
   add_result 1 "Build" "FAIL" "$(tail -3 /tmp/dk-build.log | tr '\n' ' ')"
