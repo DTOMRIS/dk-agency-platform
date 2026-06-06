@@ -1,5 +1,29 @@
 # HANDOFF
 
+## Session 6 İyun 2026 — F2.8 Sektor Dynamic [slug] Route
+
+**Branch:** `feat/f28-sektor-dynamic-route` (origin/main üstündə)
+
+### Tamamlanan
+- Config-driven dinamik `app/[locale]/sektor/[slug]/` route — `lib/data/sektorConfigs/` SSOT
+- 3 yeni sektor: **otel, restoran, kafe** (+ migrasiya olunmuş qonaq-evi) — config + i18n (4 dil)
+- Sektor index `app/[locale]/sektor/page.tsx`, slug-aware OG, lokalizə not-found
+- `e2e/sektor-config.test.ts` integrity test (PASS)
+- Köhnə statik qonaq-evi route-ları silindi (A1)
+
+### ⚠️ Preview-də doğrulanmalı (sandbox-da mümkün olmadı)
+- `/sektor/qonaq-evi`, `/sektor/otel`, `/sektor/restoran`, `/sektor/kafe` (az, prefix-siz) → **200** olmalı
+- `/sektor/bilinmeyen` → **404** (notFound → SektorNotFound)
+- `/az/sektor/otel` → **307** (as-needed redirect)
+- Səbəb: cloud sandbox-da default-locale prefix-siz route bütün yeni route-larda 404 (env kvirki); prod build Google Fonts network bloku. `/en/sektor/*` = 200 sübut edildi. Bax L-038.
+
+### Növbəti
+- Preview deploy-da az route-larını təsdiqlə; problem çıxsa next-intl as-needed + Turbopack araşdır
+- `/sektor` index-i naviqasiyaya (Header MegaMenu) bağla
+- Yeni sektor: **catering** — yalnız 1 config + 1 i18n namespace lazımdır (kod yox)
+
+---
+
 ## Session 4 İyun 2026 (axşam) — F2.7 Sprint
 
 **Repo:** `C:/codelar/dk-agency-platform` — main branch, təmiz.

@@ -1,5 +1,31 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-06-06 — TASK-F28: F2.8 Sektor Dynamic [slug] Route
+
+**Why:** 3 statik sektor route = 3× eyni kod. Config-driven dinamik `[slug]` route ilə yeni sektor = 1 config + 1 i18n namespace (kod yox). Gələcək `/sektor/catering` üçün kopya lazım olmayacaq.
+
+**What:**
+- `lib/data/sektorConfigs/` SSOT (types + builder + qonaqEvi/otel/restoran/kafe + index) — `getSektorConfig`, `VALID_SEKTOR_SLUGS`
+- `app/[locale]/sektor/[slug]/` — server page (generateMetadata + notFound) + slug-aware OG image + lokalizə not-found
+- `components/sektor/SektorLanding.tsx` — client; config → 7 namespace-driven komponent + view event
+- `app/[locale]/sektor/page.tsx` — sektor index (kartlar)
+- i18n: `sektorOtel`/`sektorRestoran`/`sektorKafe` + `sektorNotFound` + `sektorIndex` × 4 dil
+- Köhnə statik qonaq-evi route-ları silindi (A1), data config-ə köçdü, URL dəyişmədi
+- `e2e/sektor-config.test.ts` — integrity test (icra olundu, PASS)
+
+**Decisions:**
+- **A1**: statik qonaq-evi silindi, dinamik route əhatə edir (URL eyni qalır)
+- **Real toolkit slug-ları** (food-cost / pnl / basabas / delivery-calc) — spec-dəki yanlış slug-lar (food-cost-hesablayici və s.) 404 verərdi (L-001)
+- `SektorToolGrid` icon yalnız quiz|calculator|whatsapp → aqta-checklist `quiz` ikonu (ClipboardCheck) istifadə edir
+- `generateStaticParams` buraxıldı — codebase dinamik `[locale]` render edir (blog/[slug] pattern); SSG `setRequestLocale` istəyər, heç bir route istifadə etmir
+- `middleware.ts` TOXUNULMADI (hard rule); locale fix artıq `i18n/routing.ts`-də (`as-needed`)
+
+**Verification:** `/en/sektor/{otel,restoran,kafe}` = 200 (tam render), integrity test PASS, i18n 4 dil tam, lint + TS təmiz (yeni fayllar), PROTECTED toxunulmadı. Default-locale (az, prefix-siz) route bu cloud sandbox-da doğrulana bilmədi: trivial throwaway route da eyni 404 verdi → env kvirki (bütün yeni route-lar), kod problemi deyil. `npm run build` Google Fonts network bloku ilə fail (layout.tsx PROTECTED → font stub olmaz). → Vercel preview deploy doğrulayacaq. Bax L-038.
+
+**Lessons:** L-038 (cloud sandbox-da default-locale routing + font-blocked build doğrulana bilmir)
+
+---
+
 ## 2026-06-05 — TASK-0196: F2.6 Sektor Landing + Lead Endpoint
 
 **Why:** Qonaq evi / pansiyon sektoru üçün sektor-spesifik landing page lazım idi. 600 sertifikasız tesis × qanuni məcburiyyət × sıfır rəqib = blue ocean. Alətlər artıq canlı idi (PR #271), lakin funnel-in giriş nöqtəsi yox idi.

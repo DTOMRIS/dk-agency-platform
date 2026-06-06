@@ -5298,5 +5298,191 @@
       "heading": "İlk adım — ücretsiz test",
       "buttonText": "OTA Testine başla →"
     }
+  },
+  "sektorOtel": {
+    "pageTitle": "Otel Sektörü — AHA Hazırlık, OTA ve ROI Araçları | DK Agency",
+    "hero": {
+      "headline": "Otelinizi AHA Yıldız Standardına Hazırlayın",
+      "subline": "Otel sahipleri için ücretsiz araçlar — AHA sertifikasından OTA kanallarına ve gelir hesabına kadar, DK Agency desteğiyle.",
+      "statBadge": "2024'te +%42 otel geliri, 859 aktif otel",
+      "primaryCtaText": "AHA Hazırlık Testine başla",
+      "secondaryCtaText": "Ücretsiz rehber al"
+    },
+    "stats": {
+      "stat1Label": "2024 gelir artışı",
+      "stat1Value": "+42%",
+      "stat1Source": "Devlet İstatistik Komitesi",
+      "stat2Label": "Aktif otel",
+      "stat2Value": "859",
+      "stat2Source": "Devlet İstatistik Komitesi",
+      "stat3Label": "Yıllık geceleme",
+      "stat3Value": "4.28M",
+      "stat3Source": "Devlet İstatistik Komitesi"
+    },
+    "tools": {
+      "sectionTitle": "Bu sektör için 3 araç",
+      "tool1Title": "Otel Hazırlık Testi",
+      "tool1Desc": "AHA yıldız standardına uygunluk — 3 dakikalık AI değerlendirme",
+      "tool1Cta": "Teste başla →",
+      "tool2Title": "Otel ROI Hesaplayıcı",
+      "tool2Desc": "Booking + Expedia komisyonu, oda geliri ve geri dönüş süresi",
+      "tool2Cta": "Hesapla →",
+      "tool3Title": "OTA Hazırlık Testi",
+      "tool3Desc": "Booking, Expedia, Airbnb profil hazırlığı — kanal kanal kontrol",
+      "tool3Cta": "Teste başla →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Bu sektörden okunmalı"
+    },
+    "leadCapture": {
+      "heading": "Ücretsiz Otel AHA Hazırlık Rehberi",
+      "body": "AHA yıldız sertifikasına ve OTA kanallarına hazırlığın adım adım rehberi — ücretsiz.",
+      "buttonText": "Ücretsiz Rehberi Al"
+    },
+    "faq": {
+      "sectionTitle": "Sıkça sorulan sorular",
+      "q1": "AHA yıldız sertifikası nasıl alınır?",
+      "a1": "AHA (Azerbaycan Otel Birliği) standartlarına uygunluk değerlendirilir: altyapı, hizmet ve güvenlik. Otel Hazırlık Testi sizi bu değerlendirmeye hazırlar.",
+      "q2": "Otel için Booking komisyonu ne kadar?",
+      "a2": "Booking.com genelde %15-18 komisyon alır. Doğrudan rezervasyon ve Expedia dengesiyle bu maliyet optimize edilebilir.",
+      "q3": "Otel için hangi OTA kanalları önemli?",
+      "a3": "Booking.com ve Expedia ana uluslararası kanallardır; Airbnb ve Yandex Travel ek segment getirir. Çok kanallı strateji doluluğu artırır.",
+      "q4": "Otel puanı nasıl yükseltilir?",
+      "a4": "Temizlik, check-in hızı ve tutarlı hizmet. Her misafirden yorum isteyin ve olumsuz yorumlara 24 saat içinde yanıt verin.",
+      "q5": "DK Agency otel desteği ne kadar?",
+      "a5": "Otel Hazırlık Testi ve ROI Hesaplayıcı ücretsizdir. Tam danışmanlık için iletişim formundan başvurun."
+    },
+    "footerCta": {
+      "heading": "İlk adımı şimdi at — ücretsiz AHA testiyle başla",
+      "buttonText": "AHA Hazırlık Testine başla →"
+    }
+  },
+  "sektorRestoran": {
+    "pageTitle": "Restoran Sektörü — Food Cost, Menü Mühendisliği ve AQTA | DK Agency",
+    "hero": {
+      "headline": "Restoranınızın Kârını Rakamlarla Yönetin",
+      "subline": "Restoran sahipleri için ücretsiz araçlar — food cost'tan menü mühendisliğine ve AQTA hazırlığına kadar, DK Agency desteğiyle.",
+      "statBadge": "Sektörde 2024'te +%12.8 reel büyüme",
+      "primaryCtaText": "Food Cost Hesapla",
+      "secondaryCtaText": "Ücretsiz rehber al"
+    },
+    "stats": {
+      "stat1Label": "Sektörde yıllık büyüme",
+      "stat1Value": "+12.8%",
+      "stat1Source": "Devlet İstatistik Komitesi",
+      "stat2Label": "Üç aylık ciro",
+      "stat2Value": "294.9M₼",
+      "stat2Source": "DSK Ç1 2024",
+      "stat3Label": "Girişimci yapısı",
+      "stat3Value": "50/50",
+      "stat3Source": "Tüzel / bireysel"
+    },
+    "tools": {
+      "sectionTitle": "Bu sektör için 3 araç",
+      "tool1Title": "Food Cost Hesaplayıcı",
+      "tool1Desc": "Her porsiyonun maliyeti ve ideal fiyatı — anında hesap",
+      "tool1Cta": "Hesapla →",
+      "tool2Title": "Menü Mühendisliği Matrisi",
+      "tool2Desc": "Yıldız, at, sorun, köpek — menüyü kâra göre sınıflandır",
+      "tool2Cta": "Menüyü analiz et →",
+      "tool3Title": "AQTA Kontrol Listesi",
+      "tool3Desc": "Denetimden önce ceza riskini sıfırla — adım adım liste",
+      "tool3Cta": "Listeye bak →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Bu sektörden okunmalı"
+    },
+    "leadCapture": {
+      "heading": "Ücretsiz Restoran Kâr Rehberi",
+      "body": "Food cost kontrolü, menü fiyatlama ve AQTA hazırlığının pratik rehberi — ücretsiz.",
+      "buttonText": "Ücretsiz Rehberi Al"
+    },
+    "faq": {
+      "sectionTitle": "Sıkça sorulan sorular",
+      "q1": "Food cost yüzde kaç olmalı?",
+      "a1": "Sağlıklı restoranlarda food cost genelde %28-35 aralığındadır. Food Cost Hesaplayıcı her yemeğin yüzdesini net gösterir.",
+      "q2": "Menü mühendisliği nedir?",
+      "a2": "Her yemeği popülerlik ve kâra göre sınıflandırmak. Yıldızları öne çıkarır, zararlı yemekleri çıkarır veya yeniden fiyatlandırırsınız.",
+      "q3": "AQTA denetimi neye bakar?",
+      "a3": "Gıda güvenliği: saklama sıcaklığı, hijyen, etiketleme ve belgelendirme. Liste en çok ceza alınan noktaları kapsar.",
+      "q4": "Delivery komisyonu kârı nasıl yer?",
+      "a4": "Wolt ve Bolt %25-35 komisyon alabilir. Menü fiyatını ve porsiyonu buna göre planlamak gerekir.",
+      "q5": "DK Agency restoran desteği ne kadar?",
+      "a5": "Food Cost, Menü Matrisi ve AQTA Listesi ücretsizdir. Tam danışmanlık için iletişim formundan başvurun."
+    },
+    "footerCta": {
+      "heading": "İlk adımı şimdi at — food cost'u ücretsiz hesapla",
+      "buttonText": "Food Cost Hesapla →"
+    }
+  },
+  "sektorKafe": {
+    "pageTitle": "Kafe Sektörü — Maliyet, Başabaş ve Menü Araçları | DK Agency",
+    "hero": {
+      "headline": "Küçük Mutfaktan Maksimum Kâr Çıkarın",
+      "subline": "Kafe sahipleri için ücretsiz araçlar — maliyet hesabından başabaş noktasına ve menü matrisine kadar, DK Agency desteğiyle.",
+      "statBadge": "Turizm sektöründen GSYİH'ye ₼10.3B katkı",
+      "primaryCtaText": "Maliyet Hesapla",
+      "secondaryCtaText": "Ücretsiz rehber al"
+    },
+    "stats": {
+      "stat1Label": "Turizm GSYİH katkısı",
+      "stat1Value": "₼10.3B",
+      "stat1Source": "WTTC 2025",
+      "stat2Label": "Yıllık büyüme",
+      "stat2Value": "+32%",
+      "stat2Source": "WTTC 2025",
+      "stat3Label": "Sektör çalışan sayısı",
+      "stat3Value": "472K",
+      "stat3Source": "WTTC 2025"
+    },
+    "tools": {
+      "sectionTitle": "Bu sektör için 3 araç",
+      "tool1Title": "Maliyet (Food Cost) Hesaplayıcı",
+      "tool1Desc": "Her içecek ve yemeğin maliyeti — anında sonuç",
+      "tool1Cta": "Hesapla →",
+      "tool2Title": "Başabaş Noktası Hesaplayıcı",
+      "tool2Desc": "Ayda kaç satışta zarardan çıkıyorsun — net nokta",
+      "tool2Cta": "Hesapla →",
+      "tool3Title": "Menü Mühendisliği Matrisi",
+      "tool3Desc": "En çok satan ve en kârlı ürünleri belirle",
+      "tool3Cta": "Menüyü analiz et →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Bu sektörden okunmalı"
+    },
+    "leadCapture": {
+      "heading": "Ücretsiz Kafe Kâr Rehberi",
+      "body": "Maliyet kontrolü, fiyatlama ve başabaş planlamasının basit rehberi — ücretsiz.",
+      "buttonText": "Ücretsiz Rehberi Al"
+    },
+    "faq": {
+      "sectionTitle": "Sıkça sorulan sorular",
+      "q1": "Küçük kafede maliyet yüzde kaç olmalı?",
+      "a1": "İçecek ağırlıklı kafelerde maliyet %20-30 olabilir. Maliyet Hesaplayıcı her ürünün net yüzdesini gösterir.",
+      "q2": "Başabaş noktası nedir?",
+      "a2": "Tüm giderleri (kira, maaş, fatura) karşılamak için gereken minimum satış hacmi. Bu noktadan sonra kâr başlar.",
+      "q3": "Kahve fiyatını nasıl belirlemeliyim?",
+      "a3": "Maliyetin üzerine hedef kâr marjı ekleyin. Premium içeceklerde marj daha yüksek olabilir; Maliyet Hesaplayıcı başlangıç noktası verir.",
+      "q4": "Az çeşitle kafe işletebilir miyim?",
+      "a4": "Evet — odaklı menü maliyet kontrolünü kolaylaştırır ve israfı azaltır. Menü Matrisi en kârlı ürünleri tutmanıza yardım eder.",
+      "q5": "DK Agency kafe desteği ne kadar?",
+      "a5": "Maliyet, Başabaş ve Menü Matrisi ücretsizdir. Tam danışmanlık için iletişim formundan başvurun."
+    },
+    "footerCta": {
+      "heading": "İlk adımı şimdi at — maliyeti ücretsiz hesapla",
+      "buttonText": "Maliyet Hesapla →"
+    }
+  },
+  "sektorNotFound": {
+    "title": "Bu sektör mevcut değil",
+    "body": "Aradığınız sektör sayfası bulunamadı. Aşağıdaki düğmeyle tüm sektörlere göz atın.",
+    "cta": "Tüm sektörlere bak"
+  },
+  "sektorIndex": {
+    "pageTitle": "Sektörler — HoReCa Rehberleri | DK Agency",
+    "heading": "Sektörünüzü seçin",
+    "subline": "Her HoReCa sektörü için ücretsiz araçlar, hesaplayıcılar ve rehberler.",
+    "toolsLabel": "araç",
+    "ctaLabel": "Bak"
   }
 }

@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [TASK-F28] feat(sektor): config-driven dynamic slug route — 2026-06-06
+
+### Added
+- `lib/data/sektorConfigs/` SSOT — `getSektorConfig(slug)`, `VALID_SEKTOR_SLUGS`, builder + per-sektor configs (qonaqEvi, otel, restoran, kafe)
+- Dynamic route `app/[locale]/sektor/[slug]/` — single config-driven page + slug-aware `opengraph-image` + localized `not-found`
+- `app/[locale]/sektor/page.tsx` — sektor index (cards for all active sektors)
+- `components/sektor/SektorLanding.tsx` — client landing rendering the 7 sektor sections from a config
+- i18n namespaces `sektorOtel`, `sektorRestoran`, `sektorKafe` (+ `sektorNotFound`, `sektorIndex`) in 4 locales (AZ/EN/RU/TR)
+- `e2e/sektor-config.test.ts` — integrity test (tool hrefs → real toolkit routes, blog slugs exist, unknown slug → null)
+
+### Changed
+- `/sektor/qonaq-evi` now served by the dynamic `[slug]` route (data moved into config); URL unchanged
+
+### Removed
+- Static `app/[locale]/sektor/qonaq-evi/` and `app/sektor/qonaq-evi/` routes (superseded by the dynamic route)
+
+### Notes
+- Stats sourced from State Statistics Committee (otel/restoran) and WTTC 2025 (kafe) — provided by product owner
+- Tool CTAs use real toolkit routes (food-cost, pnl, basabas, delivery-calc), not the spec's illustrative slugs which would 404 (L-001)
+- `generateStaticParams` intentionally omitted to match the codebase's dynamic `[locale]` rendering (blog/[slug] pattern); SSG would require `setRequestLocale`, which no route uses
+- Verified: `/en/sektor/{otel,restoran,kafe}` → 200 + integrity test PASS. Default-locale (az, no-prefix) routing not verifiable in the cloud sandbox (env quirk affects all new routes; prod build blocked by Google Fonts network + protected `layout.tsx`) → Vercel preview verifies. See L-038.
+
 ## [TASK-0196] feat(sektor): /sektor/qonaq-evi landing + lead endpoint — 2026-06-05
 
 ### Added

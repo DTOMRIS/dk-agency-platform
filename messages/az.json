@@ -5413,5 +5413,191 @@
       "heading": "İlk addımı indi at — pulsuz test ilə başla",
       "buttonText": "OTA Hazırlıq Testinə başla →"
     }
+  },
+  "sektorOtel": {
+    "pageTitle": "Otel Sektoru — AHA Hazırlıq, OTA və ROI Alətləri | DK Agency",
+    "hero": {
+      "headline": "Otelinizi AHA Ulduz Standartına Hazırlayın",
+      "subline": "Otel sahibləri üçün pulsuz alətlər — AHA sertifikatından OTA kanallarına və gəlir hesabına qədər, DK Agency dəstəyi ilə.",
+      "statBadge": "2024-də +42% otel gəliri, 859 aktiv otel",
+      "primaryCtaText": "AHA Hazırlıq Testinə başla",
+      "secondaryCtaText": "Pulsuz bələdçi al"
+    },
+    "stats": {
+      "stat1Label": "2024 gəlir artımı",
+      "stat1Value": "+42%",
+      "stat1Source": "Dövlət Statistika Komitəsi",
+      "stat2Label": "Aktiv otel",
+      "stat2Value": "859",
+      "stat2Source": "Dövlət Statistika Komitəsi",
+      "stat3Label": "İllik gecələmə",
+      "stat3Value": "4.28M",
+      "stat3Source": "Dövlət Statistika Komitəsi"
+    },
+    "tools": {
+      "sectionTitle": "Bu sektor üçün 3 alət",
+      "tool1Title": "Otel Hazırlıq Testi",
+      "tool1Desc": "AHA ulduz standartına uyğunluq — 3 dəqiqəlik AI qiymətləndirmə",
+      "tool1Cta": "Testə başla →",
+      "tool2Title": "Otel ROI Kalkulyatoru",
+      "tool2Desc": "Booking + Expedia komissiyası, otaq gəliri və geri qaytarma müddəti",
+      "tool2Cta": "Hesabla →",
+      "tool3Title": "OTA Hazırlıq Testi",
+      "tool3Desc": "Booking, Expedia, Airbnb profil hazırlığı — kanal-kanal yoxlama",
+      "tool3Cta": "Testə başla →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Bu sektordan oxumalı"
+    },
+    "leadCapture": {
+      "heading": "Pulsuz Otel AHA Hazırlıq Bələdçisi",
+      "body": "AHA ulduz sertifikatına və OTA kanallarına hazırlığın addım-addım bələdçisi — pulsuz.",
+      "buttonText": "Pulsuz Bələdçini Al"
+    },
+    "faq": {
+      "sectionTitle": "Tez-tez verilən suallar",
+      "q1": "AHA ulduz sertifikatı necə alınır?",
+      "a1": "AHA (Azərbaycan Otel Assosiasiyası) standartlarına uyğunluq qiymətləndirilir: infrastruktur, xidmət və təhlükəsizlik. Otel Hazırlıq Testi sizi bu qiymətləndirməyə hazırlayır.",
+      "q2": "Booking komissiyası otel üçün nə qədərdir?",
+      "a2": "Booking.com adətən 15-18% komissiya tutur. Birbaşa rezervasiya və Expedia balansı ilə bu xərci optimallaşdırmaq olar.",
+      "q3": "Hansı OTA kanalları otel üçün vacibdir?",
+      "a3": "Booking.com və Expedia əsas beynəlxalq kanallardır; Airbnb və Yandex Travel əlavə seqment gətirir. Çoxkanallı strategiya doluluğu artırır.",
+      "q4": "Otel reytinqini necə qaldırmaq olar?",
+      "a4": "Təmizlik, check-in sürəti və ardıcıl xidmət. Hər qonaqdan rəy istəyin və mənfi rəylərə 24 saat içində cavab verin.",
+      "q5": "DK Agency otel dəstəyi nə qədərdir?",
+      "a5": "Otel Hazırlıq Testi və ROI Kalkulyatoru pulsuzdur. Tam konsaltinq üçün əlaqə formundan müraciət edin."
+    },
+    "footerCta": {
+      "heading": "İlk addımı indi at — pulsuz AHA testi ilə başla",
+      "buttonText": "AHA Hazırlıq Testinə başla →"
+    }
+  },
+  "sektorRestoran": {
+    "pageTitle": "Restoran Sektoru — Food Cost, Menyu Mühəndisliyi və AQTA | DK Agency",
+    "hero": {
+      "headline": "Restoranınızın Mənfəətini Rəqəmlərlə İdarə Edin",
+      "subline": "Restoran sahibləri üçün pulsuz alətlər — food cost-dan menyu mühəndisliyinə və AQTA hazırlığına qədər, DK Agency dəstəyi ilə.",
+      "statBadge": "Sektorda 2024-də +12.8% real artım",
+      "primaryCtaText": "Food Cost Hesabla",
+      "secondaryCtaText": "Pulsuz bələdçi al"
+    },
+    "stats": {
+      "stat1Label": "Sektorda illik artım",
+      "stat1Value": "+12.8%",
+      "stat1Source": "Dövlət Statistika Komitəsi",
+      "stat2Label": "Rüblük dövriyyə",
+      "stat2Value": "294.9M₼",
+      "stat2Source": "DSK Q1 2024",
+      "stat3Label": "Sahibkar strukturu",
+      "stat3Value": "50/50",
+      "stat3Source": "Hüquqi / fərdi"
+    },
+    "tools": {
+      "sectionTitle": "Bu sektor üçün 3 alət",
+      "tool1Title": "Food Cost Hesablayıcı",
+      "tool1Desc": "Hər porsiyanın maya dəyəri və ideal qiymət — anında hesab",
+      "tool1Cta": "Hesabla →",
+      "tool2Title": "Menyu Mühəndisliyi Matrisi",
+      "tool2Desc": "Ulduz, at, problem, it — menyunu mənfəətə görə təsnif et",
+      "tool2Cta": "Menyunu analiz et →",
+      "tool3Title": "AQTA Yoxlama Siyahısı",
+      "tool3Desc": "Yoxlamadan əvvəl cərimə riskini sıfırla — addım-addım checklist",
+      "tool3Cta": "Siyahıya bax →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Bu sektordan oxumalı"
+    },
+    "leadCapture": {
+      "heading": "Pulsuz Restoran Mənfəət Bələdçisi",
+      "body": "Food cost nəzarəti, menyu qiymətləndirmə və AQTA hazırlığının praktik bələdçisi — pulsuz.",
+      "buttonText": "Pulsuz Bələdçini Al"
+    },
+    "faq": {
+      "sectionTitle": "Tez-tez verilən suallar",
+      "q1": "Food cost neçə faiz olmalıdır?",
+      "a1": "Sağlam restoranlarda food cost adətən 28-35% aralığındadır. Food Cost Hesablayıcı hər yeməyin faizini dəqiq göstərir.",
+      "q2": "Menyu mühəndisliyi nədir?",
+      "a2": "Hər yeməyi populyarlıq və mənfəətə görə təsnif etmək. Ulduzları önə çıxarır, zərərli yeməkləri çıxarır və ya yenidən qiymətləndirirsiniz.",
+      "q3": "AQTA yoxlaması nəyə baxır?",
+      "a3": "Qida təhlükəsizliyi: saxlama temperaturu, gigiyena, etiketləmə və sənədləşmə. Checklist ən çox cərimə alınan nöqtələri əhatə edir.",
+      "q4": "Delivery komissiyası mənfəəti necə yeyir?",
+      "a4": "Wolt və Bolt 25-35% komissiya tuta bilər. Menyu qiymətini və porsiyanı buna uyğun planlamaq lazımdır.",
+      "q5": "DK Agency restoran dəstəyi nə qədərdir?",
+      "a5": "Food Cost, Menyu Matrisi və AQTA Checklist pulsuzdur. Tam konsaltinq üçün əlaqə formundan müraciət edin."
+    },
+    "footerCta": {
+      "heading": "İlk addımı indi at — food cost-u pulsuz hesabla",
+      "buttonText": "Food Cost Hesabla →"
+    }
+  },
+  "sektorKafe": {
+    "pageTitle": "Kafe Sektoru — Maya, Başabaş və Menyu Alətləri | DK Agency",
+    "hero": {
+      "headline": "Kiçik Mətbəxdən Maksimum Mənfəət Çıxarın",
+      "subline": "Kafe sahibləri üçün pulsuz alətlər — maya hesabından başabaş nöqtəsinə və menyu matrisinə qədər, DK Agency dəstəyi ilə.",
+      "statBadge": "Turizm sektoru ÜDM-ə ₼10.3B töhfə",
+      "primaryCtaText": "Maya Hesabla",
+      "secondaryCtaText": "Pulsuz bələdçi al"
+    },
+    "stats": {
+      "stat1Label": "Turizm ÜDM töhfəsi",
+      "stat1Value": "₼10.3B",
+      "stat1Source": "WTTC 2025",
+      "stat2Label": "İllik artım",
+      "stat2Value": "+32%",
+      "stat2Source": "WTTC 2025",
+      "stat3Label": "Sektor işçi sayı",
+      "stat3Value": "472K",
+      "stat3Source": "WTTC 2025"
+    },
+    "tools": {
+      "sectionTitle": "Bu sektor üçün 3 alət",
+      "tool1Title": "Maya (Food Cost) Hesablayıcı",
+      "tool1Desc": "Hər içki və yeməyin maya dəyəri — anında nəticə",
+      "tool1Cta": "Hesabla →",
+      "tool2Title": "Başabaş Nöqtəsi Hesablayıcı",
+      "tool2Desc": "Aylıq neçə satışda zərərdən çıxırsan — dəqiq nöqtə",
+      "tool2Cta": "Hesabla →",
+      "tool3Title": "Menyu Mühəndisliyi Matrisi",
+      "tool3Desc": "Ən çox satılan və ən mənfəətli məhsulları müəyyən et",
+      "tool3Cta": "Menyunu analiz et →"
+    },
+    "blogTeasers": {
+      "sectionTitle": "Bu sektordan oxumalı"
+    },
+    "leadCapture": {
+      "heading": "Pulsuz Kafe Mənfəət Bələdçisi",
+      "body": "Maya nəzarəti, qiymətləndirmə və başabaş planlamasının sadə bələdçisi — pulsuz.",
+      "buttonText": "Pulsuz Bələdçini Al"
+    },
+    "faq": {
+      "sectionTitle": "Tez-tez verilən suallar",
+      "q1": "Kiçik kafedə maya neçə faiz olmalıdır?",
+      "a1": "İçki üstünlüklü kafelərdə maya 20-30% ola bilər. Maya Hesablayıcı hər məhsulun dəqiq faizini göstərir.",
+      "q2": "Başabaş nöqtəsi nədir?",
+      "a2": "Bütün xərcləri (kirayə, maaş, kommunal) ödəmək üçün lazım olan minimum satış həcmi. Bu nöqtədən sonra qazanc başlayır.",
+      "q3": "Kofe qiymətini necə təyin etməliyəm?",
+      "a3": "Maya üzərinə hədəf mənfəət marjını əlavə edin. Premium içkilərdə marj daha yüksək ola bilər; Maya Hesablayıcı başlanğıc nöqtəsi verir.",
+      "q4": "Az çeşidlə kafe işlədə bilərəm?",
+      "a4": "Bəli — fokuslanmış menyu maya nəzarətini asanlaşdırır və israfı azaldır. Menyu Matrisi ən gəlirli məhsulları saxlamağa kömək edir.",
+      "q5": "DK Agency kafe dəstəyi nə qədərdir?",
+      "a5": "Maya, Başabaş və Menyu Matrisi pulsuzdur. Tam konsaltinq üçün əlaqə formundan müraciət edin."
+    },
+    "footerCta": {
+      "heading": "İlk addımı indi at — mayanı pulsuz hesabla",
+      "buttonText": "Maya Hesabla →"
+    }
+  },
+  "sektorNotFound": {
+    "title": "Bu sektor mövcud deyil",
+    "body": "Axtardığınız sektor səhifəsi tapılmadı. Aşağıdakı düymə ilə bütün sektorlara baxın.",
+    "cta": "Bütün sektorlara bax"
+  },
+  "sektorIndex": {
+    "pageTitle": "Sektorlar — HoReCa Bələdçiləri | DK Agency",
+    "heading": "Sektorunuzu seçin",
+    "subline": "Hər HoReCa sektoru üçün pulsuz alətlər, hesablayıcılar və bələdçilər.",
+    "toolsLabel": "alət",
+    "ctaLabel": "Bax"
   }
 }

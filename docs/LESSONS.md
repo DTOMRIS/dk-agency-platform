@@ -230,3 +230,20 @@ saxlayırdı, DB content-i əzirdi. Problemlər:
 
 Qayda: DB-first content sistemində hardcoded fallback QADAĞANDIR. Content
 yalnız DB-dən gəlməlidir. Override lazımdırsa, DB-də ayrı sütun istifadə et.
+
+### L-038 — Cloud sandbox-da default-locale routing + font-blocked build doğrulana bilmir (6 İyun 2026)
+F2.8-də config-driven dinamik `[slug]` sektor route əlavə edildi. Verification-da:
+- `/en/sektor/otel` → 200 (tam render — page + config + i18n işləyir), amma
+  `/sektor/otel` (az, prefix-siz) → 404
+- Trivial throwaway route (`zsektortest`) də eyni davranış göstərdi → bu KOD
+  problemi DEYİL: bu cloud sandbox-da Turbopack dev default-locale (prefix-siz)
+  rewrite-ı yalnız əvvəlcədən mövcud route-lar üçün işlədir; BÜTÜN yeni route-lar
+  az-da 404, en-də 200 verir. Mövcud route-lar (blog) az-da işləyir.
+- `npm run build` Google Fonts (DM Sans / Playfair) fetch-ində fail oldu — outbound
+  network bağlıdır (eyni DeepSeek 403). `app/layout.tsx` PROTECTED → font stub edilə bilməz.
+
+Qayda: Cloud sandbox-da YENİ route-un default-locale davranışını və ya font-asılı
+prod build-i 100% doğrulamaq mümkün olmaya bilər. Belə halda: (1) explicit-locale
+route ilə render-i sübut et, (2) integrity test yaz və icra et, (3) qalan
+doğrulamanı Vercel preview deploy-a burax, completion report-da skip səbəbini açıq
+yaz. "Build/route keçmədi" ≠ "kod səhvdir" — kök səbəbi (env vs kod) ayır.
