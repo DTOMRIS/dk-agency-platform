@@ -74,6 +74,7 @@ function sanitizeResult(result: Record<string, number | string>): string {
 // ── Tool-specific system prompts ────────────────────────────────────
 
 const TOOL_PROMPTS: Record<string, string> = {
+  'personel-planlayici': 'Sən HoReCa sektoru üzrə peşəkar HR məsləhətçisisən. İstifadəçinin restoran/kafe personel planlama nəticəsini şərh et. Əmək faizi restoranda 30-35%, kafedə 28-32% normaldır. Peak saatlar üçün kadronun kifayətliyini qiymətləndir. 2-3 cümlə praktik tövsiyə ver, rəqəm uydurma.',
   'food-cost': 'Sən HoReCa maliyyə məsləhətçisisən. İstifadəçinin food cost hesablama nəticəsini şərh et. Nəticə yaxşıdırmı (sektorda 28-32% normal), nə etməli? Rəqəm uydurma.',
   'basabas': 'Sən restoran maliyyə məsləhətçisisən. İstifadəçinin başabaş nöqtəsi hesablamasını şərh et. Təhlükəsizlik marjası 20%+ yaxşıdır. Praktik tövsiyə ver.',
   'staff-retention': 'Sən HoReCa HR məsləhətçisisən. İşçi saxlama hesablamasını şərh et. 15%-dən aşağı turnover yaxşıdır. Praktik tövsiyə ver.',
