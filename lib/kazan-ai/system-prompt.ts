@@ -27,6 +27,7 @@ export function buildKazanSystemPrompt(locale: string = 'az'): string {
 - P&L konusu: [P&L Aracına Geç](${getLocalizedLink('/toolkit/pnl', 'tr')})
 - AQTA konusu: [AQTA Kontrol Listesi](${getLocalizedLink('/toolkit/aqta-checklist', 'tr')})
 - Delivery konusu: [Teslimat Hesaplayıcı](${getLocalizedLink('/toolkit/delivery-calc', 'tr')})
+- Kadro/Vardiya konusu: [Personel Planlayıcı](${getLocalizedLink('/toolkit/personel-planlayici', 'tr')})
 - Genel soru: WhatsApp'ta görüşelim veya [iletişime geç](${getLocalizedLink('/elaqe', 'tr')})
 `;
   } else if (cleanLocale === 'ru') {
@@ -38,6 +39,7 @@ export function buildKazanSystemPrompt(locale: string = 'az'): string {
 - Тема P&L: [Перейти к P&L](${getLocalizedLink('/toolkit/pnl', 'ru')})
 - Тема AQTA: [Чек-лист AQTA](${getLocalizedLink('/toolkit/aqta-checklist', 'ru')})
 - Тема Доставки: [Калькулятор доставки](${getLocalizedLink('/toolkit/delivery-calc', 'ru')})
+- Тема Кадров/Смен: [Планировщик Персонала](${getLocalizedLink('/toolkit/personel-planlayici', 'ru')})
 - Общие вопросы: Связаться в WhatsApp или [написать нам](${getLocalizedLink('/elaqe', 'ru')})
 `;
   } else if (cleanLocale === 'en') {
@@ -49,6 +51,7 @@ export function buildKazanSystemPrompt(locale: string = 'az'): string {
 - P&L topic: [Go to P&L Tool](${getLocalizedLink('/toolkit/pnl', 'en')})
 - AQTA topic: [AQTA Checklist](${getLocalizedLink('/toolkit/aqta-checklist', 'en')})
 - Delivery topic: [Delivery Calculator](${getLocalizedLink('/toolkit/delivery-calc', 'en')})
+- Staffing/Shift topic: [Staff Planner](${getLocalizedLink('/toolkit/personel-planlayici', 'en')})
 - General question: Chat on WhatsApp or [contact us](${getLocalizedLink('/elaqe', 'en')})
 `;
   } else {
@@ -61,6 +64,7 @@ export function buildKazanSystemPrompt(locale: string = 'az'): string {
 - P&L mövzusu: [P&L alətinə keç](${getLocalizedLink('/toolkit/pnl', 'az')})
 - AQTA mövzusu: [AQTA checklist](${getLocalizedLink('/toolkit/aqta-checklist', 'az')})
 - Delivery mövzusu: [Delivery kalkulyatoru](${getLocalizedLink('/toolkit/delivery-calc', 'az')})
+- Kadr/Növbə mövzusu: [Personel Planlayıcı](${getLocalizedLink('/toolkit/personel-planlayici', 'az')})
 - Ümumi sual: WhatsApp-da görüşək və ya [əlaqə saxla](${getLocalizedLink('/elaqe', 'az')})
 `;
   }
@@ -106,7 +110,7 @@ SATIŞ LAYERİ:
 - Uyğundursa konsultasiya, audit və ya sistem qurulumu sat.
 
 SAYT KONTEKSTİ:
-- Əsas alətlər: food cost, pnl, checklist, menu matrix, break-even, AQTA checklist, delivery calc, insaat checklist
+- Əsas alətlər: food cost, pnl, checklist, menu matrix, break-even, AQTA checklist, delivery calc, insaat checklist, personel-planlayici
 - AI məhsulu: KAZAN AI
 - İdarəetmə məhsulu: OCAQ Panel
 
