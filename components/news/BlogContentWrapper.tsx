@@ -93,24 +93,26 @@ export default function BlogContentWrapper({
         {children}
 
         {showPaywall && shouldGate && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/95 to-white/80" />
+          <div className="fixed inset-0 z-50 overflow-y-auto">
+            {/* Backdrop */}
+            <div className="fixed inset-0 bg-gradient-to-t from-white via-white/95 to-white/80" />
 
-            <div className="relative z-10 mx-4 w-full max-w-lg">
-              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
-                <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 px-6 py-5 text-center text-white">
+            {/* Modal Container */}
+            <div className="relative flex min-h-screen items-center justify-center p-4 py-8">
+              <div className="relative z-10 w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                <div className="bg-gradient-to-r from-[var(--dk-red)] to-[var(--dk-red-strong)] px-6 py-5 text-center text-white">
                   <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white/15">
                     <Lock className="h-7 w-7" />
                   </div>
                   <h3 className="text-xl font-bold">{t('title')}</h3>
-                  <p className="mt-1 text-sm text-emerald-100">
+                  <p className="mt-1 text-sm text-white/85">
                     {t('readPreview', { title: articleTitle })}
                   </p>
                 </div>
 
                 <div className="px-6 py-6">
-                  <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-100 p-4">
-                    <p className="text-sm leading-relaxed text-emerald-800">
+                  <div className="mb-6 rounded-xl bg-red-50/70 border border-red-100/70 p-4">
+                    <p className="text-sm leading-relaxed text-red-900">
                       {t('description')}
                     </p>
                   </div>
@@ -120,7 +122,7 @@ export default function BlogContentWrapper({
                       <svg className="h-12 w-12 -rotate-90" viewBox="0 0 36 36">
                         <circle className="text-slate-200" stroke="currentColor" strokeWidth="3" fill="none" cx="18" cy="18" r="15.9" />
                         <circle
-                          className="text-emerald-600"
+                          className="text-[var(--dk-red)]"
                           stroke="currentColor"
                           strokeWidth="3"
                           strokeLinecap="round"
@@ -140,21 +142,21 @@ export default function BlogContentWrapper({
 
                   <div className="mb-6 space-y-3">
                     <div className="flex items-start gap-3">
-                      <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" />
+                      <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--dk-red)]" />
                       <div>
                         <p className="text-sm font-medium text-slate-800">{t('benefit1Title')}</p>
                         <p className="text-xs text-slate-500">{t('benefit1Desc')}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" />
+                      <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--dk-red)]" />
                       <div>
                         <p className="text-sm font-medium text-slate-800">{t('benefit2Title')}</p>
                         <p className="text-xs text-slate-500">{t('benefit2Desc')}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" />
+                      <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--dk-red)]" />
                       <div>
                         <p className="text-sm font-medium text-slate-800">{t('benefit3Title')}</p>
                         <p className="text-xs text-slate-500">{t('benefit3Desc')}</p>
@@ -163,7 +165,7 @@ export default function BlogContentWrapper({
                   </div>
 
                   <div className="space-y-3">
-                    <Link href={registerHref} className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3.5 font-bold text-white transition hover:bg-emerald-700">
+                    <Link href={registerHref} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] py-3.5 font-bold text-white transition hover:bg-[var(--dk-red-strong)]">
                       <Sparkles className="h-5 w-5" />
                       {t('registerCta')}
                     </Link>

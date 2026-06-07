@@ -249,6 +249,7 @@ export default function RegisterPage() {
 
     if (!consentAccepted) {
       setError(copy.consentRequiredError);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
@@ -275,15 +276,18 @@ export default function RegisterPage() {
 
       if (!response.ok) {
         setError(data?.error || copy.fallbackError);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
 
       if (data?.verificationRequired) {
         setNotice(data?.message || copy.verificationNotice);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
 
       setNotice(data?.message || copy.fallbackCreated);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setSubmitting(false);
     }
@@ -414,11 +418,11 @@ export default function RegisterPage() {
                       const [beforePrivacy, afterPrivacy] = part.split('{privacy}');
                       return (
                         <span key={i}>
-                          <Link href={`/${locale}/terms`} target="_blank" rel="noopener noreferrer" className="font-semibold text-dk-red hover:underline">
+                          <Link href={locale === 'az' ? '/terms' : `/${locale}/terms`} target="_blank" rel="noopener noreferrer" className="font-semibold text-dk-red hover:underline">
                             {copy.termsLink}
                           </Link>
                           {beforePrivacy}
-                          <Link href={`/${locale}/privacy`} target="_blank" rel="noopener noreferrer" className="font-semibold text-dk-red hover:underline">
+                          <Link href={locale === 'az' ? '/privacy' : `/${locale}/privacy`} target="_blank" rel="noopener noreferrer" className="font-semibold text-dk-red hover:underline">
                             {copy.privacyLink}
                           </Link>
                           {afterPrivacy}

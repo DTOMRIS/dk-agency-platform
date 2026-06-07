@@ -31,13 +31,13 @@ export function verifyToken(token: string): JwtPayload | null {
   }
 }
 
-export function authCookieOptions(isProduction: boolean) {
+export function authCookieOptions(isProduction: boolean, rememberMe: boolean = true) {
   return {
     httpOnly: true,
     secure: isProduction,
     sameSite: 'lax' as const,
     path: '/',
-    maxAge: AUTH_COOKIE_MAX_AGE,
+    maxAge: rememberMe ? AUTH_COOKIE_MAX_AGE : undefined,
   };
 }
 

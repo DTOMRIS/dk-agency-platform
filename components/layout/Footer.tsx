@@ -52,9 +52,7 @@ export function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-1">
             <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--dk-navy)]">
-                <span className="text-xs font-bold text-white">DK</span>
-              </div>
+              <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-9 w-9 shrink-0 object-contain" />
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-[var(--dk-ink)]">DK Agency</span>
                 <span className="text-[9px] font-medium tracking-wider text-[var(--dk-gold)]">USTALIĞIN NİŞANI</span>

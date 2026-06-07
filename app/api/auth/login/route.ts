@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const email = String(body?.email || '').trim().toLowerCase();
     const password = String(body?.password || '');
+    const rememberMe = body?.rememberMe !== false;
 
     if (!email || !password) {
       return NextResponse.json(
@@ -92,7 +93,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    response.cookies.set(AUTH_COOKIE_NAME, token, authCookieOptions(isProduction));
+    response.cookies.set(AUTH_COOKIE_NAME, token, authCookieOptions(isProduction, rememberMe));
 
     return withRateLimitHeaders(response, rl);
   } catch (err) {

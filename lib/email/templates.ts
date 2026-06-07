@@ -13,8 +13,8 @@ function resolveLocale(locale?: Locale | string): Locale {
 function wrapEmail(content: string) {
   return `
     <div style="font-family: Inter, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc;">
-      <div style="background: #1A1A2E; padding: 24px; text-align: center;">
-        <div style="color: #C5A022; font-size: 24px; font-weight: 800;">DK Agency</div>
+      <div style="background: #E94560; padding: 24px; text-align: center;">
+        <img src="https://dkagency.com.tr/images/logo-mobil.png" alt="DK Agency Logo" style="height: 40px; width: auto; display: block; margin: 0 auto;" />
       </div>
       <div style="background: #ffffff; padding: 32px;">
         ${content}
@@ -163,9 +163,9 @@ export const emailTemplates = {
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);overflow:hidden;">
 
   <!-- Header -->
-  <tr><td style="background:#1A1A2E;padding:28px 32px;text-align:center;">
-    <div style="font-family:'Playfair Display',Georgia,serif;color:#C5A022;font-size:28px;font-weight:800;letter-spacing:1px;">DK Agency</div>
-    <div style="color:#ffffff80;font-size:12px;margin-top:4px;letter-spacing:2px;">USTALI\u011eIN N\u0130\u015eANI, D\u0130J\u0130TALIN \u015eEDD\u0130</div>
+  <tr><td style="background:#E94560;padding:28px 32px;text-align:center;">
+    <img src="${baseUrl}/images/logo-mobil.png" alt="DK Agency Logo" style="height: 48px; width: auto; display: block; margin: 0 auto 12px;" />
+    <div style="color:#ffffffbf;font-size:12px;letter-spacing:2px;">USTALI\u011eIN N\u0130\u015eANI, D\u0130J\u0130TALIN \u015eEDD\u0130</div>
   </td></tr>
 
   <!-- Body -->
