@@ -38,6 +38,21 @@ const commits = safe('git log -3 --format=%s') || '(no commits)';
 const dirty = safe('git status --porcelain');
 const dirtyLine = dirty ? `${dirty.split('\n').length} uncommitted file(s)` : 'clean working tree';
 
+// Read back the auto-journal (written at commit-time by scripts/auto-journal.mjs).
+let journalTail = [];
+try {
+  const journalPath = path.join(root, 'docs', 'SESSION-JOURNAL.md');
+  if (fs.existsSync(journalPath)) {
+    journalTail = fs
+      .readFileSync(journalPath, 'utf8')
+      .split('\n')
+      .filter((l) => l.startsWith('- '))
+      .slice(-8);
+  }
+} catch {
+  journalTail = [];
+}
+
 const live = [
   '',
   '## 🔴 CANLI REPO VƏZİYYƏTİ (session başı)',
@@ -45,6 +60,9 @@ const live = [
   `- Working tree: ${dirtyLine}`,
   '- Son 3 commit:',
   ...commits.split('\n').map((c) => `  - ${c}`),
+  ...(journalTail.length
+    ? ['- Son əməliyyatlar (auto-journal):', ...journalTail.map((l) => `  ${l}`)]
+    : []),
 ].join('\n');
 
 const context =

@@ -5,6 +5,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0208` infra(memory): automatic git-persistent session journal — `scripts/auto-journal.mjs` runs as a git pre-commit step and appends one memory line per commit to `docs/SESSION-JOURNAL.md`, staged inside the same commit so it persists in git (survives ephemeral containers) with no dirty-state side effects. `scripts/session-brain.mjs` now reads back the last 8 entries at SessionStart, closing the write→read memory loop (step 2/3).
 - `TASK-0207` infra(memory): SessionStart "brain" injection — `.claude/memory/CLAUDE-BRAIN.md` (curated rules, architecture invariants, deploy reality, recurring traps) is auto-loaded into every new session via `scripts/session-brain.mjs` so Claude starts with full project knowledge instead of from zero (compact-context-loss fix; step 1/3 of the Claude memory/skill infrastructure).
 
 ### Fixed

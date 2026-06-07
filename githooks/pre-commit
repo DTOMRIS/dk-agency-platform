@@ -3,3 +3,6 @@ set -eu
 
 echo "[pre-commit] Running staged verification..."
 npm run verify:staged
+
+# Auto-memory: append a journal line for this commit and stage it (persists in git).
+node scripts/auto-journal.mjs
