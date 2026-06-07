@@ -59,3 +59,38 @@ primary islenir. Spec-de Claude primary qeyd edilmisdir
 ### Elaqeli
 - lib/ai-router.ts (callClaude funksiyasi)
 - DEVLOG TASK-0102 netice bolmesi
+
+---
+
+## TD-003 — b2b-panel ana sehife Pattern C (inline Record<Locale>)
+
+**Tarix:** 2026-06-07
+**Status:** ACIQ
+**Prioritet:** Orta (qayda pozuntusu, amma islenir)
+
+### Problem
+`app/b2b-panel/page.tsx` ~180 setirlik `pageCopy: Record<Locale, ...>`
+inline tercume bloku (Pattern C) saxlayir — L-004/L-009 qaydasina ziddir.
+Eyni qovluqdaki `components/b2b-panel/B2BSidebar.tsx` ARTIQ Pattern A
+(`useTranslations`) islenir, yeni uygunsuzdur. PR #298 ile genislendi.
+
+### Niye derhal duzelmedi
+30+ istinad noktasi (`copy.statLabels[0]`, `copy.categoryLabels[cat]`,
+`copy.offerItems[i]` ...) + array/nested obyekt strukturlari var. Teze
+merge olunmus auth-yaxin faylda telesik refaktor runtime MISSING_MESSAGE
+bug riski yaradir. Ayrica fokuslu task lazimdir (L-016: kohne borc cari
+isi bloklamamalidir).
+
+### Hell (gelecek task — TASK-0212 namizedi)
+1. `b2bPanel` namespace-i `messages/{az,ru,en,tr}.json`-a kocur
+   (string-ler artiq movcuddur — VERBATIM kocurme, yeni tercume yox).
+2. Array-lar ucun `t.raw('statLabels')`, nested ucun `t('statusLabels.active')`.
+3. `pageCopy` + `normalizeLocale(pathname)` copy mentiqini sil,
+   `useTranslations('b2bPanel')` ile evez et (locale provider-den gelir).
+4. Hemise prefix-siz `/b2b-panel` HEM de `/en/b2b-panel` smoke et;
+   build + MISSING_MESSAGE konsol yoxlamasi.
+
+### Elaqeli
+- app/b2b-panel/page.tsx (Pattern C)
+- components/b2b-panel/B2BSidebar.tsx (Pattern A referans)
+- docs/LESSONS.md L-004, L-009
