@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [TASK-0205] content(blog): add blog-026, blog-027 and blog-028 — 2026-06-07
+
+### Added
+- Blog-026: "Servis Haqqı: Kimin Pulu və Necə Paylanmalıdır?" (`/blog/servis-haqqi-kimin-pulu-nece-paylanmalidir`) and cover image `/images/blog-26.png`.
+- Blog-027: "Orta Çeki Necə Böyüdürsən? Satma — Sual Ver, Ehtiyacı Tap" (`/blog/orta-cek-acik-suallar-ehtiyac`) and cover image `/images/blog-27.png`.
+- Blog-028: "Müştəri Həmişə Haqlıdır? Şikayət — Sistem Diaqnostikasıdır" (`/blog/musteri-her-zaman-haqli-sikayet`) and cover image `/images/blog-28.png`.
+
 ## [TASK-0231] feat(toolkit): Mətbəx İstasyon Kalkulyatoru (QSR / Fast Food) — 2026-06-06
 
 ### Added
