@@ -58,3 +58,22 @@ Amac: Ayni hatalarin tekrarini azaltmak ve is akislarini standardize etmek.
 - Her task acilirken en fazla 2 ana skill secilir.
 - PR acilmadan once "hangi skill(ler) uygulandi" notu zorunludur.
 - Skill disi is yapildiysa kisa gerekce yazilir.
+
+## Implemented skills (v2 — agentskills.io format, `.claude/skills/*/SKILL.md`)
+
+The abstract 10 above were paper-only. These are the real, loaded skills, built around
+actual recurring pain. Reference skills auto-load; task skills run via `/name`.
+
+| Skill | Type | Covers |
+| :--- | :--- | :--- |
+| `dk-deploy-reality` | reference (auto) | merge≠live, 503/OOM, L-038 root-mirror, Hostinger deploy |
+| `dk-i18n-pattern` | reference (auto) | Pattern A, 4 langs, mojibake, WCAG contrast |
+| `dk-design-system` | reference (auto) | brand, tokens, Header/Footer, visible-change workflow |
+| `/dk-new-tool` | task | scaffold a toolkit/marketinq tool correctly (root mirror + AI-insight reuse + i18n + config) |
+| `/dk-release` | task | pre-merge DoD + post-merge "is it actually live" gate |
+| `/dk-blog-publish` | task | blog number/slug/cover/4-lang/DB-sync |
+| `task-prompt-writer` | task | full TASK prompt generator |
+
+Agent `dk-validator` now has `memory: project` (native persistent memory) — records repeat
+failure patterns across runs. Memory infra: `.claude/memory/CLAUDE-BRAIN.md` (SessionStart brain) +
+`docs/SESSION-JOURNAL.md` (auto git-journal).
