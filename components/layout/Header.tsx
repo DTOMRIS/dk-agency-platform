@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ChevronDown, ClipboardCheck, FileText, Globe, LayoutGrid, LogOut, Menu, PieChart, UserRound, Wand2, X } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import MegaMenu from '@/components/layout/MegaMenu';
@@ -11,10 +12,10 @@ import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale, t
 
 // Inline nav copy — NOT dependent on NextIntlClientProvider (fixes stale locale on client nav)
 const NAV_COPY: Record<Locale, Record<string, string>> = {
-  az: { home:'Ana səhifə', tools:'Alətlər', franchise:'Franchise', listings:'İlanlar', news:'Sektor Nəbzi', blog:'Bloq', panel:'İdarə Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu', frReadiness:'Hazırlıq Testi', frRoi:'ROI Kalkulyatoru', frBuyer:'Alıcı Çek-listi', frBook:'AI Françbuk' },
-  en: { home:'Home', tools:'Tools', franchise:'Franchise', listings:'Listings', news:'Sector Pulse', blog:'Blog', panel:'Control Panel', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu', frReadiness:'Readiness Test', frRoi:'ROI Calculator', frBuyer:'Buyer Checklist', frBook:'AI Franchbook' },
-  ru: { home:'Главная', tools:'Инструменты', franchise:'Франшиза', listings:'Объявления', news:'Пульс сектора', blog:'Блог', panel:'Панель управления', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню', frReadiness:'Тест готовности', frRoi:'ROI Калькулятор', frBuyer:'Чек-лист покупателя', frBook:'AI Франчбук' },
-  tr: { home:'Ana sayfa', tools:'Araçlar', franchise:'Franchise', listings:'İlanlar', news:'Sektör Nabzı', blog:'Blog', panel:'Yönetim Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü', frReadiness:'Hazırlık Testi', frRoi:'ROI Hesaplayıcı', frBuyer:'Alıcı Kontrol Listesi', frBook:'AI Franchise Kitabı' },
+  az: { home:'Ana səhifə', tools:'Alətlər', franchise:'Franchise', listings:'İlanlar', news:'Sektor Nəbzi', blog:'Bloq', panel:'İdarə Paneli', tagline:'AI HoReCa Platforması', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu', frReadiness:'Hazırlıq Testi', frRoi:'ROI Kalkulyatoru', frBuyer:'Alıcı Çek-listi', frBook:'AI Françbuk' },
+  en: { home:'Home', tools:'Tools', franchise:'Franchise', listings:'Listings', news:'Sector Pulse', blog:'Blog', panel:'Control Panel', tagline:'AI HoReCa Platform', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu', frReadiness:'Readiness Test', frRoi:'ROI Calculator', frBuyer:'Buyer Checklist', frBook:'AI Franchbook' },
+  ru: { home:'Главная', tools:'Инструменты', franchise:'Франшиза', listings:'Объявления', news:'Пульс сектора', blog:'Блог', panel:'Панель управления', tagline:'AI HoReCa Платформа', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню', frReadiness:'Тест готовности', frRoi:'ROI Калькулятор', frBuyer:'Чек-лист покупателя', frBook:'AI Франчбук' },
+  tr: { home:'Ana sayfa', tools:'Araçlar', franchise:'Franchise', listings:'İlanlar', news:'Sektör Nabzı', blog:'Blog', panel:'Yönetim Paneli', tagline:'AI HoReCa Platformu', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü', frReadiness:'Hazırlık Testi', frRoi:'ROI Hesaplayıcı', frBuyer:'Alıcı Kontrol Listesi', frBook:'AI Franchise Kitabı' },
 };
 
 function getMemberInitials(session: MemberSession) {
@@ -107,14 +108,14 @@ export default function Header() {
       </div>
 
       {/* ── Main header ────────────────────────────────────── */}
-      <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300 ${isScrolled ? 'border-b border-slate-200/80 shadow-sm' : ''}`}>
+      <header className={`sticky top-0 z-50 border-b border-white/10 bg-[var(--dk-navy)]/95 backdrop-blur-md transition-all duration-300 ${isScrolled ? 'shadow-lg shadow-black/10' : ''}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
           {/* Logo */}
           <Link href={withLocale(currentLocale, '/')} className="group flex items-center gap-2.5">
-            <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-9 w-9 shrink-0 object-contain" />
-            <div className="flex flex-col">
-              <span className="text-base font-bold text-[var(--dk-navy)]">DK Agency</span>
-              <span className="hidden text-[9px] font-medium tracking-wider text-[var(--dk-gold)] sm:block">USTALIĞIN NİŞANI</span>
+            <Image src="/images/logo-mobil.png" alt="DK Agency" width={40} height={40} priority className="h-10 w-10 shrink-0 rounded-lg object-contain" />
+            <div className="flex flex-col leading-none">
+              <span className="text-base font-semibold text-white">DK Agency</span>
+              <span className="mt-1 hidden text-[9px] font-mono uppercase tracking-wider text-[var(--dk-gold)] sm:block">{t('tagline')}</span>
             </div>
           </Link>
 
@@ -123,14 +124,14 @@ export default function Header() {
             {navItems.map((item) =>
               item.hasMegaMenu ? (
                 <div key={item.name} className="relative" onMouseEnter={() => setIsMegaMenuOpen(true)} onMouseLeave={() => setIsMegaMenuOpen(false)}>
-                  <button type="button" className="inline-block rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]">
+                  <button type="button" className="inline-block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-white">
                     {item.name}
                   </button>
                   <MegaMenu isOpen={isMegaMenuOpen} onClose={() => setIsMegaMenuOpen(false)} />
                 </div>
               ) : item.hasFranchise ? (
                 <div key={item.name} className="relative" onMouseEnter={() => setIsFranchiseOpen(true)} onMouseLeave={() => setIsFranchiseOpen(false)}>
-                  <button type="button" className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] ${pathname.includes('/franchise') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
+                  <button type="button" className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-white/5 hover:text-white ${pathname.includes('/franchise') ? 'font-bold text-white' : 'text-slate-300'}`}>
                     {item.name} <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isFranchiseOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
@@ -155,7 +156,7 @@ export default function Header() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <Link key={item.name} href={item.href} className="rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]">
+                <Link key={item.name} href={item.href} className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-white">
                   {item.name}
                 </Link>
               ),
@@ -193,12 +194,12 @@ export default function Header() {
               </div>
             ) : (
               <>
-                <Link href="/auth/login" className="hidden text-sm text-slate-500 transition-colors hover:text-[var(--dk-navy)] sm:inline-block">{t('login')}</Link>
-                <Link href="/auth/register" className="hidden rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] sm:inline-block">{t('register')}</Link>
+                <Link href="/auth/login" className="hidden text-sm text-slate-300 transition-colors hover:text-white sm:inline-block">{t('login')}</Link>
+                <Link href="/auth/register" className="hidden rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white transition hover:border-[var(--dk-gold)] hover:bg-white/5 sm:inline-block">{t('register')}</Link>
               </>
             )}
 
-            <button className="rounded-xl p-2.5 text-slate-600 transition-colors hover:bg-slate-100 lg:hidden" onClick={() => setIsMobileOpen((p) => !p)} aria-label={t('menu')}>
+            <button className="rounded-xl p-2.5 text-slate-200 transition-colors hover:bg-white/10 lg:hidden" onClick={() => setIsMobileOpen((p) => !p)} aria-label={t('menu')}>
               {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>

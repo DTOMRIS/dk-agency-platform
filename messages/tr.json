@@ -44,6 +44,7 @@
     ]
   },
   "nav": {
+    "tagline": "AI HoReCa Platformu",
     "home": "Ana sayfa",
     "tools": "Araçlar",
     "listings": "İlanlar",
@@ -3198,6 +3199,11 @@
     "labelEmail": "E-posta:"
   },
   "home": {
+    "hero": {
+      "imageAlt": "Restoran yönetimi",
+      "imagePlaceholder": "Fotoğraf yakında",
+      "stat": { "value": "+34%", "label": "Operasyon verimliliği" }
+    },
     "platformCards": {
       "eyebrow": "Platform",
       "heading": "Üç araç, bir ekosistem",

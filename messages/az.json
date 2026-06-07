@@ -44,6 +44,7 @@
     ]
   },
   "nav": {
+    "tagline": "AI HoReCa Platforması",
     "home": "Ana səhifə",
     "tools": "Alətlər",
     "listings": "İlanlar",
@@ -3198,6 +3199,11 @@
     "labelEmail": "Email:"
   },
   "home": {
+    "hero": {
+      "imageAlt": "Restoran idarəetmə",
+      "imagePlaceholder": "Foto tezliklə",
+      "stat": { "value": "+34%", "label": "Əməliyyat effektivliyi" }
+    },
     "platformCards": {
       "eyebrow": "Platforma",
       "heading": "Üç alət, bir ekosistem",

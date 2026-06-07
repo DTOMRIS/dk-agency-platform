@@ -44,6 +44,7 @@
     ]
   },
   "nav": {
+    "tagline": "AI HoReCa Platform",
     "home": "Home",
     "tools": "Tools",
     "listings": "Listings",
@@ -3198,6 +3199,11 @@
     "labelEmail": "Email:"
   },
   "home": {
+    "hero": {
+      "imageAlt": "Restaurant operations",
+      "imagePlaceholder": "Photo coming soon",
+      "stat": { "value": "+34%", "label": "Operational efficiency" }
+    },
     "platformCards": {
       "eyebrow": "Platform",
       "heading": "Three tools, one ecosystem",

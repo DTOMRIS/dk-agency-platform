@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `TASK-0234` feat(home): launch sprint block 1/9 adds the optimized DK logo and localized AI HoReCa tagline to the dark navigation zone, converts the hero to the dark Zona 1 treatment, and adds a desktop photo placeholder with a localized `+34%` floating operations-efficiency stat card. Existing hero copy, CTAs, mobile hiding behavior, and Header auth/session logic remain intact.
+
 ### Changed
 - `TASK-0212` refactor(b2b): converted `app/b2b-panel/page.tsx` from Pattern C (inline `Record<Locale>` pageCopy, ~180 lines) to Pattern A (`useTranslations('b2bPanel')`), resolving TD-003 / L-004. Strings moved verbatim to `messages/{az,ru,en,tr}.json`; a local `copy` object preserves all 23 usage sites. Build PASS, 4-lang key completeness verified (no MISSING_MESSAGE), `/b2b-panel` 307→200 (L-010 guest guard intact).
 

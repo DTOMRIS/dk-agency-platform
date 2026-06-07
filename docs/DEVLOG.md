@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-06-07 — TASK-0234 (NAV Logo + Hero, Zona 1 Dark)
+
+**Scope:** Launch sprint block 1/9. Upgrade the first viewport without changing Header authentication behavior or existing hero messaging.
+
+**Changes:**
+1. `Header.tsx` now renders `/images/logo-mobil.png` through `next/image`, shows a localized AI HoReCa tagline, and uses the navy dark-zone treatment for desktop navigation.
+2. `components/Hero.tsx` keeps the existing badge, title, body, CTAs, and stats while moving the section to the navy dark zone.
+3. The former right illustration is replaced by the approved CSS gradient photo fallback and a floating white stat card; the entire visual remains `hidden lg:block`.
+4. `nav.tagline` and `home.hero` image/stat keys were added for AZ, EN, RU, and TR.
+
+**Guardrails:** `Header.tsx` PROTECTED edit was explicitly approved in TASK-0234. Auth/member session logic and all other protected files were left unchanged. The `+34%` metric is a launch placeholder pending a verified DK metric.
+
 ## 2026-06-04 — TASK-0197 (F2.7: Sektor Analytics + OG Image + OTA PDF)
 
 **Problem:** F2.6 sektor landing hazir idi amma: (1) hec bir user interaction olculmurdu, (2) social share-de image yox idi, (3) lead capture PDF vermir, sadece email notification gonderirdi.
