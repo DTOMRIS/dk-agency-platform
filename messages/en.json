@@ -1,4 +1,66 @@
 {
+  "franchiseRadar": {
+    "meta": {
+      "title": "Franchise Radar — brands not yet in Azerbaijan | DK Agency",
+      "description": "Global franchise brands not yet in Azerbaijan: investment range, origin and entry model. Pick the brand you are interested in."
+    },
+    "hero": {
+      "badge": "Franchise Radar",
+      "title": "Brands not yet in Azerbaijan",
+      "subtitle": "A catalog of global franchise brands — with investment range, origin and entry model. Pick a brand and the DK team will reach out."
+    },
+    "filters": {
+      "all": "All"
+    },
+    "card": {
+      "investment": "Investment",
+      "notDisclosed": "Not disclosed",
+      "interested": "I'm interested"
+    },
+    "disclaimer": "DK Agency is not an official representative of these brands. Data is gathered from open sources and may change. Verify the official franchise documents (FDD) before any investment decision.",
+    "lead": {
+      "title": "I'm interested",
+      "subtitle": "Request — brand:",
+      "namePlaceholder": "Your name",
+      "contactPlaceholder": "Email or phone",
+      "consent": "I consent to the processing of my personal data.",
+      "submit": "Send",
+      "required": "Name, contact and consent are required.",
+      "error": "Something went wrong, please try again.",
+      "successTitle": "Thank you!",
+      "success": "Your request has been received. The DK team will contact you soon.",
+      "done": "Close",
+      "close": "Close"
+    },
+    "sectors": {
+      "qsr": "Fast Food (QSR)",
+      "coffee": "Coffee",
+      "dessert": "Dessert",
+      "fast_casual": "Fast Casual",
+      "education": "Education",
+      "hotel": "Hotel"
+    },
+    "entryModel": {
+      "unit_franchise": "Unit Franchise",
+      "master_license": "Master License",
+      "country_license": "Country License"
+    },
+    "status": {
+      "not_present": "Not in Azerbaijan",
+      "under_research": "Under research",
+      "coming_soon": "Coming soon"
+    },
+    "brandDesc": {
+      "fiveGuys": "The premium burger segment is open in Baku. Five Guys’ \"fresh, never frozen\" model is a strong opportunity for the mid-to-upper income customer.",
+      "wendys": "The \"square burger\" differentiation and strong drive-thru model; a recognized-brand gap in Baku’s growing fast-food market.",
+      "tacoBell": "Mexican cuisine is under-represented in Azerbaijan. As a global QSR brand, Taco Bell could open a new category.",
+      "shakeShack": "Expands only via country license — Turkey already has it, Azerbaijan does not. A country-level exclusive opportunity.",
+      "dunkin": "The coffee + donut category is weakly contested in Baku. Dunkin’s wide price range allows building a network quickly.",
+      "baskinRobbins": "The 31-flavor ice-cream brand is known to families and youth; strong in central locations with a low entry investment.",
+      "kumon": "Japanese math and reading methodology; steady subscription revenue at low investment in education-hungry Baku.",
+      "gonulKahvesi": "Turkish coffee brand with a cultural-proximity advantage; investment data to be confirmed."
+    }
+  },
   "b2bPanel": {
     "welcome": "Welcome!",
     "subtitle": "Istanbul HORECA Group - B2B Portal",

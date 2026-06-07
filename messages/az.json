@@ -1,4 +1,66 @@
 {
+  "franchiseRadar": {
+    "meta": {
+      "title": "Franchise Radar — Azərbaycana gəlməmiş markalar | DK Agency",
+      "description": "Azərbaycanda hələ olmayan qlobal franchise markaları: investisiya aralığı, mənşə və giriş modeli. Maraqlandığınız markanı seçin."
+    },
+    "hero": {
+      "badge": "Franchise Radar",
+      "title": "Azərbaycana hələ gəlməmiş markalar",
+      "subtitle": "Qlobal franchise markalarının kataloqu — investisiya aralığı, mənşə və giriş modeli ilə. Maraqlandığınız markanı seçin, DK komandası əlaqə saxlasın."
+    },
+    "filters": {
+      "all": "Hamısı"
+    },
+    "card": {
+      "investment": "İnvestisiya",
+      "notDisclosed": "Açıqlanmayıb",
+      "interested": "Maraqlanıram"
+    },
+    "disclaimer": "DK Agency bu markaların rəsmi nümayəndəsi deyil. Məlumatlar açıq mənbələrdən toplanıb və dəyişə bilər. İnvestisiya qərarı vermədən əvvəl rəsmi franchise sənədlərini (FDD) yoxlayın.",
+    "lead": {
+      "title": "Maraqlanıram",
+      "subtitle": "Müraciət — marka:",
+      "namePlaceholder": "Adınız",
+      "contactPlaceholder": "Email və ya telefon",
+      "consent": "Şəxsi məlumatlarımın emalına razıyam (KVKK).",
+      "submit": "Göndər",
+      "required": "Ad, əlaqə və razılıq tələb olunur.",
+      "error": "Xəta baş verdi, yenidən cəhd edin.",
+      "successTitle": "Təşəkkürlər!",
+      "success": "Müraciətiniz alındı. DK komandası tezliklə əlaqə saxlayacaq.",
+      "done": "Bağla",
+      "close": "Bağla"
+    },
+    "sectors": {
+      "qsr": "Fast Food (QSR)",
+      "coffee": "Qəhvə",
+      "dessert": "Desert",
+      "fast_casual": "Fast Casual",
+      "education": "Təhsil",
+      "hotel": "Otel"
+    },
+    "entryModel": {
+      "unit_franchise": "Unit Franchise",
+      "master_license": "Master Lisenziya",
+      "country_license": "Ölkə Lisenziyası"
+    },
+    "status": {
+      "not_present": "Azərbaycanda yoxdur",
+      "under_research": "Araşdırılır",
+      "coming_soon": "Tezliklə"
+    },
+    "brandDesc": {
+      "fiveGuys": "Premium burger seqmenti Bakıda boşdur. Five Guys-ın \"fresh, never frozen\" modeli orta-yuxarı gəlirli müştəri üçün güclü fürsətdir.",
+      "wendys": "QSR-də kvadrat burger fərqləndirməsi və güclü drive-thru modeli; Bakının böyüyən fast-food bazarında tanınmış brend boşluğu.",
+      "tacoBell": "Meksika mətbəxi Azərbaycanda az təmsil olunur. Taco Bell qlobal QSR brendi kimi yeni kateqoriya aça bilər.",
+      "shakeShack": "Yalnız ölkə-lisenziya ilə genişlənir — Türkiyə artıq var, Azərbaycan yox. Bu, ölkə-səviyyə eksklüziv fürsətdir.",
+      "dunkin": "Qəhvə və donut kateqoriyası Bakıda zəif rəqabətlidir. Dunkin-in geniş qiymət aralığı sürətli şəbəkə qurmağa imkan verir.",
+      "baskinRobbins": "31 dadlı dondurma brendi ailə və gənc seqment üçün tanınır; aşağı giriş investisiyası ilə mərkəz lokasyonlarda güclüdür.",
+      "kumon": "Yapon riyaziyyat və oxu metodologiyası; təhsilə yüksək tələbatlı Bakıda aşağı investisiya ilə davamlı abunə gəliri.",
+      "gonulKahvesi": "Türk qəhvə brendi, mədəni yaxınlıq üstünlüyü; investisiya datası dəqiqləşdirilir."
+    }
+  },
   "b2bPanel": {
     "welcome": "Xoş Gəldiniz!",
     "subtitle": "İstanbul HORECA Group - B2B Portalı",
