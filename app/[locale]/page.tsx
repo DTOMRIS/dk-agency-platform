@@ -8,6 +8,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { JoinCTA } from '@/components/CTASections';
 import Hero from '@/components/Hero';
+import SiteJsonLd from '@/components/seo/SiteJsonLd';
 import NewsPreview from '@/components/NewsPreview';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
 import { PlatformCards } from '@/components/home/PlatformCards';
@@ -16,7 +17,9 @@ import { AhilikValues } from '@/components/home/AhilikValues';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
-const AiReadinessScore = dynamic(() => import('@/components/sections/AiReadinessScore'), { ssr: false });
+const AiReadinessScore = dynamic(() => import('@/components/sections/AiReadinessScore'), {
+  ssr: false,
+});
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 
 const featuredBlogs = [
@@ -24,7 +27,8 @@ const featuredBlogs = [
     slug: '1-porsiya-food-cost-hesablama',
     category: 'Food Cost',
     title: '1 porsiya food cost necə hesablanır?',
-    excerpt: 'Porsiya maya dəyəri, resept kartı və düzgün qiymət arasında əlaqəni sadə nümunə ilə izah edirik.',
+    excerpt:
+      'Porsiya maya dəyəri, resept kartı və düzgün qiymət arasında əlaqəni sadə nümunə ilə izah edirik.',
     image: '/images/blog-01.png',
   },
   {
@@ -36,25 +40,43 @@ const featuredBlogs = [
   },
 ];
 
-const pageCopy: Record<Locale, {
-  howItWorks: string;
-  steps: Array<{ title: string; body: string; tone: string; marker: string }>;
-  consultingAlt: string;
-  blogTitle: string;
-  blogSubtitle: string;
-  viewAll: string;
-  b2bBadge: string;
-  b2bTitle: string;
-  b2bBody: string;
-  listingsCta: string;
-  b2bCards: Array<{ title: string; desc: string; emoji: string }>;
-}> = {
+const pageCopy: Record<
+  Locale,
+  {
+    howItWorks: string;
+    steps: Array<{ title: string; body: string; tone: string; marker: string }>;
+    consultingAlt: string;
+    blogTitle: string;
+    blogSubtitle: string;
+    viewAll: string;
+    b2bBadge: string;
+    b2bTitle: string;
+    b2bBody: string;
+    listingsCta: string;
+    b2bCards: Array<{ title: string; desc: string; emoji: string }>;
+  }
+> = {
   az: {
     howItWorks: 'Necə işləyir?',
     steps: [
-      { title: 'Pulsuz alətləri sına', body: 'Food cost, P&L, menyu matrisi — 10 pulsuz alət ilə restoranını analiz et.', tone: 'bg-red-50', marker: '1️⃣' },
-      { title: 'Bilikləri öyrən', body: '10 ekspert yazısı və KAZAN AI danışmanı ilə HoReCa biliyini artır.', tone: 'bg-amber-50', marker: '2️⃣' },
-      { title: 'OCAQ Panelə keç', body: 'Bütün alətlər bir yerdə, avtomatik hesabat və real-time nəzarət.', tone: 'bg-emerald-50', marker: '3️⃣' },
+      {
+        title: 'Pulsuz alətləri sına',
+        body: 'Food cost, P&L, menyu matrisi — 10 pulsuz alət ilə restoranını analiz et.',
+        tone: 'bg-red-50',
+        marker: '1️⃣',
+      },
+      {
+        title: 'Bilikləri öyrən',
+        body: '10 ekspert yazısı və KAZAN AI danışmanı ilə HoReCa biliyini artır.',
+        tone: 'bg-amber-50',
+        marker: '2️⃣',
+      },
+      {
+        title: 'OCAQ Panelə keç',
+        body: 'Bütün alətlər bir yerdə, avtomatik hesabat və real-time nəzarət.',
+        tone: 'bg-emerald-50',
+        marker: '3️⃣',
+      },
     ],
     consultingAlt: 'Restoran sahibi ilə biznes konsultasiyası',
     blogTitle: 'Bloq & Analizlər',
@@ -65,9 +87,17 @@ const pageCopy: Record<Locale, {
     b2bBody: 'Restoran devri, franchise, ortaq axtarışı, investisiya — bir platformada.',
     listingsCta: 'Bütün elanları gör',
     b2bCards: [
-      { title: 'Restoran Devri', desc: 'İşlətmənizi devir edin və ya hazır restoran alın', emoji: '🍽️' },
+      {
+        title: 'Restoran Devri',
+        desc: 'İşlətmənizi devir edin və ya hazır restoran alın',
+        emoji: '🍽️',
+      },
       { title: 'Franchise', desc: 'Franchise verin və ya hazır brend ilə başlayın', emoji: '🤝' },
-      { title: 'Ortaq Tapmaq', desc: 'Layihəniz üçün sərmayə və ya əməliyyat ortağı tapın', emoji: '👥' },
+      {
+        title: 'Ortaq Tapmaq',
+        desc: 'Layihəniz üçün sərmayə və ya əməliyyat ortağı tapın',
+        emoji: '👥',
+      },
       { title: 'Yeni İnvestisiya', desc: 'Yatırımçı axtaran yeni layihələr', emoji: '📈' },
       { title: 'Obyekt İcarəsi', desc: 'HoReCa uyğun məkan kiralayın', emoji: '🏢' },
       { title: 'HORECA Ekipman', desc: 'Peşəkar avadanlıq alın və ya satın', emoji: '⚙️' },
@@ -76,9 +106,24 @@ const pageCopy: Record<Locale, {
   ru: {
     howItWorks: 'Как это работает?',
     steps: [
-      { title: 'Протестируй бесплатные инструменты', body: 'Food cost, P&L, матрица меню — проанализируй ресторан через 10 бесплатных инструментов.', tone: 'bg-red-50', marker: '1️⃣' },
-      { title: 'Прокачай знания', body: 'Углуби экспертизу HoReCa через 10 материалов экспертов и консультанта KAZAN AI.', tone: 'bg-amber-50', marker: '2️⃣' },
-      { title: 'Перейди в OCAQ Panel', body: 'Все инструменты в одном месте: автоматические отчёты и контроль в реальном времени.', tone: 'bg-emerald-50', marker: '3️⃣' },
+      {
+        title: 'Протестируй бесплатные инструменты',
+        body: 'Food cost, P&L, матрица меню — проанализируй ресторан через 10 бесплатных инструментов.',
+        tone: 'bg-red-50',
+        marker: '1️⃣',
+      },
+      {
+        title: 'Прокачай знания',
+        body: 'Углуби экспертизу HoReCa через 10 материалов экспертов и консультанта KAZAN AI.',
+        tone: 'bg-amber-50',
+        marker: '2️⃣',
+      },
+      {
+        title: 'Перейди в OCAQ Panel',
+        body: 'Все инструменты в одном месте: автоматические отчёты и контроль в реальном времени.',
+        tone: 'bg-emerald-50',
+        marker: '3️⃣',
+      },
     ],
     consultingAlt: 'Бизнес-консультация с владельцем ресторана',
     blogTitle: 'Блог и аналитика',
@@ -89,20 +134,47 @@ const pageCopy: Record<Locale, {
     b2bBody: 'Передача ресторана, франшиза, поиск партнёра, инвестиции — в одной платформе.',
     listingsCta: 'Смотреть все объявления',
     b2bCards: [
-      { title: 'Передача ресторана', desc: 'Передайте действующий объект или купите готовый ресторан', emoji: '🍽️' },
+      {
+        title: 'Передача ресторана',
+        desc: 'Передайте действующий объект или купите готовый ресторан',
+        emoji: '🍽️',
+      },
       { title: 'Франшиза', desc: 'Запустите франшизу или войдите в готовый бренд', emoji: '🤝' },
-      { title: 'Поиск партнёра', desc: 'Найдите капитал или операционного партнёра для проекта', emoji: '👥' },
+      {
+        title: 'Поиск партнёра',
+        desc: 'Найдите капитал или операционного партнёра для проекта',
+        emoji: '👥',
+      },
       { title: 'Новая инвестиция', desc: 'Новые проекты в поиске инвестора', emoji: '📈' },
       { title: 'Аренда помещения', desc: 'Арендуйте локацию, подходящую для HoReCa', emoji: '🏢' },
-      { title: 'Оборудование HORECA', desc: 'Покупайте или продавайте профессиональное оборудование', emoji: '⚙️' },
+      {
+        title: 'Оборудование HORECA',
+        desc: 'Покупайте или продавайте профессиональное оборудование',
+        emoji: '⚙️',
+      },
     ],
   },
   en: {
     howItWorks: 'How it works',
     steps: [
-      { title: 'Try the free tools', body: 'Analyze your restaurant with 10 free tools across food cost, P&L, and menu matrix.', tone: 'bg-red-50', marker: '1️⃣' },
-      { title: 'Learn the knowledge', body: 'Level up your HoReCa knowledge with 10 expert articles and the KAZAN AI advisor.', tone: 'bg-amber-50', marker: '2️⃣' },
-      { title: 'Move into OCAQ Panel', body: 'Keep every tool in one place with automated reporting and real-time control.', tone: 'bg-emerald-50', marker: '3️⃣' },
+      {
+        title: 'Try the free tools',
+        body: 'Analyze your restaurant with 10 free tools across food cost, P&L, and menu matrix.',
+        tone: 'bg-red-50',
+        marker: '1️⃣',
+      },
+      {
+        title: 'Learn the knowledge',
+        body: 'Level up your HoReCa knowledge with 10 expert articles and the KAZAN AI advisor.',
+        tone: 'bg-amber-50',
+        marker: '2️⃣',
+      },
+      {
+        title: 'Move into OCAQ Panel',
+        body: 'Keep every tool in one place with automated reporting and real-time control.',
+        tone: 'bg-emerald-50',
+        marker: '3️⃣',
+      },
     ],
     consultingAlt: 'Business consulting with a restaurant owner',
     blogTitle: 'Blog & Analysis',
@@ -110,12 +182,21 @@ const pageCopy: Record<Locale, {
     viewAll: 'View all',
     b2bBadge: 'B2B Ecosystem',
     b2bTitle: 'HORECA B2B Listings',
-    b2bBody: 'Restaurant transfer, franchise, partner search, and investment — all on one platform.',
+    b2bBody:
+      'Restaurant transfer, franchise, partner search, and investment — all on one platform.',
     listingsCta: 'View all listings',
     b2bCards: [
-      { title: 'Restaurant Transfer', desc: 'Transfer your operation or acquire a ready restaurant', emoji: '🍽️' },
+      {
+        title: 'Restaurant Transfer',
+        desc: 'Transfer your operation or acquire a ready restaurant',
+        emoji: '🍽️',
+      },
       { title: 'Franchise', desc: 'Offer a franchise or launch with a ready brand', emoji: '🤝' },
-      { title: 'Find a Partner', desc: 'Find capital or an operating partner for your project', emoji: '👥' },
+      {
+        title: 'Find a Partner',
+        desc: 'Find capital or an operating partner for your project',
+        emoji: '👥',
+      },
       { title: 'New Investment', desc: 'New projects looking for investors', emoji: '📈' },
       { title: 'Venue Lease', desc: 'Lease a HoReCa-ready space', emoji: '🏢' },
       { title: 'HORECA Equipment', desc: 'Buy or sell professional equipment', emoji: '⚙️' },
@@ -124,9 +205,24 @@ const pageCopy: Record<Locale, {
   tr: {
     howItWorks: 'Nasıl çalışır?',
     steps: [
-      { title: 'Ücretsiz araçları dene', body: 'Food cost, P&L ve menü matrisi ile restoranını 10 ücretsiz araçla analiz et.', tone: 'bg-red-50', marker: '1️⃣' },
-      { title: 'Bilgiyi öğren', body: '10 uzman yazısı ve KAZAN AI danışmanı ile HoReCa bilgisini büyüt.', tone: 'bg-amber-50', marker: '2️⃣' },
-      { title: 'OCAQ Panel’e geç', body: 'Tüm araçlar tek yerde, otomatik rapor ve gerçek zamanlı kontrol.', tone: 'bg-emerald-50', marker: '3️⃣' },
+      {
+        title: 'Ücretsiz araçları dene',
+        body: 'Food cost, P&L ve menü matrisi ile restoranını 10 ücretsiz araçla analiz et.',
+        tone: 'bg-red-50',
+        marker: '1️⃣',
+      },
+      {
+        title: 'Bilgiyi öğren',
+        body: '10 uzman yazısı ve KAZAN AI danışmanı ile HoReCa bilgisini büyüt.',
+        tone: 'bg-amber-50',
+        marker: '2️⃣',
+      },
+      {
+        title: 'OCAQ Panel’e geç',
+        body: 'Tüm araçlar tek yerde, otomatik rapor ve gerçek zamanlı kontrol.',
+        tone: 'bg-emerald-50',
+        marker: '3️⃣',
+      },
     ],
     consultingAlt: 'Restoran sahibi ile iş danışmanlığı',
     blogTitle: 'Blog & Analizler',
@@ -137,7 +233,11 @@ const pageCopy: Record<Locale, {
     b2bBody: 'Restoran devri, franchise, ortak arayışı ve yatırım — tek platformda.',
     listingsCta: 'Tüm ilanları gör',
     b2bCards: [
-      { title: 'Restoran Devri', desc: 'İşletmeni devret ya da hazır restoran satın al', emoji: '🍽️' },
+      {
+        title: 'Restoran Devri',
+        desc: 'İşletmeni devret ya da hazır restoran satın al',
+        emoji: '🍽️',
+      },
       { title: 'Franchise', desc: 'Franchise ver ya da hazır markayla başla', emoji: '🤝' },
       { title: 'Ortak Bul', desc: 'Projen için sermaye veya operasyon ortağı bul', emoji: '👥' },
       { title: 'Yeni Yatırım', desc: 'Yatırımcı arayan yeni projeler', emoji: '📈' },
@@ -153,6 +253,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
+      <SiteJsonLd />
       <Hero />
       <AiReadinessScore />
       <PlatformCards />
@@ -160,11 +261,15 @@ export default function Home() {
 
       <section className="bg-white py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <h2 className="mb-12 text-3xl font-display font-black text-slate-900">{copy.howItWorks}</h2>
+          <h2 className="mb-12 text-3xl font-display font-black text-slate-900">
+            {copy.howItWorks}
+          </h2>
           <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-1">
             {copy.steps.map((step) => (
               <div key={step.title}>
-                <div className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl ${step.tone}`}>
+                <div
+                  className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl ${step.tone}`}
+                >
                   <span className="text-2xl">{step.marker}</span>
                 </div>
                 <h3 className="mb-2 text-lg font-bold text-slate-900">{step.title}</h3>
@@ -199,13 +304,18 @@ export default function Home() {
               href={withLocale(locale, '/blog')}
               className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-xs font-black uppercase tracking-widest transition-all hover:border-brand-red hover:bg-brand-red hover:text-white sm:w-auto sm:px-6"
             >
-              {copy.viewAll} <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              {copy.viewAll}{' '}
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
 
           <div className="grid gap-12 md:grid-cols-2">
             {featuredBlogs.map((post) => (
-              <Link key={post.slug} href={withLocale(locale, `/blog/${post.slug}`)} className="group block">
+              <Link
+                key={post.slug}
+                href={withLocale(locale, `/blog/${post.slug}`)}
+                className="group block"
+              >
                 <div className="mb-8 aspect-[16/9] overflow-hidden rounded-[2.5rem] shadow-2xl shadow-slate-200/50">
                   <img
                     src={post.image}
@@ -237,9 +347,7 @@ export default function Home() {
             <h2 className="mt-4 text-3xl font-display font-black text-slate-900 sm:text-4xl">
               {copy.b2bTitle}
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base text-slate-500">
-              {copy.b2bBody}
-            </p>
+            <p className="mx-auto mt-3 max-w-2xl text-base text-slate-500">{copy.b2bBody}</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {copy.b2bCards.map((item) => (
@@ -249,7 +357,9 @@ export default function Home() {
                 className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-[var(--dk-gold)] hover:shadow-lg"
               >
                 <span className="text-2xl">{item.emoji}</span>
-                <h3 className="mt-3 text-lg font-bold text-slate-900 group-hover:text-[var(--dk-red)]">{item.title}</h3>
+                <h3 className="mt-3 text-lg font-bold text-slate-900 group-hover:text-[var(--dk-red)]">
+                  {item.title}
+                </h3>
                 <p className="mt-1 text-sm text-slate-500">{item.desc}</p>
               </Link>
             ))}

@@ -23,6 +23,8 @@ import {
   articleNode,
   breadcrumbNode,
   organizationNode,
+  faqNode,
+  extractFaqFromMarkdown,
   jsonLdGraph,
 } from '@/lib/seo/structured-data';
 import { normalizeLocale, withLocale } from '@/i18n/config';
@@ -123,6 +125,7 @@ export default async function BlogDetailPage({
       { name: article.title, url: pageUrl },
     ]),
     organizationNode(),
+    faqNode(extractFaqFromMarkdown(cleanMarkdownContent)),
   ]);
 
   return (
