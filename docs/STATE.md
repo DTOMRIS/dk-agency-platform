@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-07T17:07:40.578Z
+- GeneratedAt: 2026-06-07T17:18:57.422Z
 - BuildStatus: PASS
 
-## Routes (233)
+## Routes (235)
 - /
 - /[locale]
 - /[locale]/about
@@ -67,6 +67,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/franchise/alici-cheklisti
 - /[locale]/franchise/francbuk-generatoru
 - /[locale]/franchise/hazirliq-testi
+- /[locale]/franchise/radar
 - /[locale]/franchise/roi-kalkulyatoru
 - /[locale]/haberler
 - /[locale]/haberler/[slug]
@@ -193,6 +194,7 @@ Auto-generated. Do not edit manually.
 - /franchise/alici-cheklisti
 - /franchise/francbuk-generatoru
 - /franchise/hazirliq-testi
+- /franchise/radar
 - /franchise/roi-kalkulyatoru
 - /haberler
 - /haberler/[slug]
@@ -241,7 +243,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (80)
+## API Routes (81)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -278,6 +280,7 @@ Auto-generated. Do not edit manually.
 - /api/invoices
 - /api/kazan-ai
 - /api/kazan-ai/leads
+- /api/lead/franchise-radar
 - /api/lead/ota-guide
 - /api/leads/track
 - /api/leads/whatsapp
