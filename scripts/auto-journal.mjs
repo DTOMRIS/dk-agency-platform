@@ -35,15 +35,13 @@ try {
   // Nothing meaningful staged → don't journal (avoids empty/self-only entries).
   if (staged.length === 0) process.exit(0);
 
-  // Task id from branch (e.g. feat/task-0231-... → TASK-0231) or commit msg.
+  // Task id from branch (e.g. feat/task-0231-... → TASK-0231). The commit
+  // message is NOT reliably available at pre-commit time (COMMIT_EDITMSG /
+  // git log point at the previous commit), so we do not guess from it — a
+  // wrong id is worse than none for memory integrity.
   let taskId = '';
   const fromBranch = branch.match(/task-(\d{3,4})/i);
   if (fromBranch) taskId = `TASK-${fromBranch[1]}`;
-  if (!taskId) {
-    const msg = safe('cat .git/COMMIT_EDITMSG 2>/dev/null') || safe('git log -1 --format=%s');
-    const fromMsg = msg.match(/TASK-(\d{3,4})/i);
-    if (fromMsg) taskId = `TASK-${fromMsg[1]}`;
-  }
 
   const fileList =
     staged.length <= 6
