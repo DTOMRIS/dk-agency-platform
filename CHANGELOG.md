@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [TASK-0206] fix(marketinq): root mirrors for default-locale tool routes (P0 404) — 2026-06-07
+
+### Fixed
+- Bütün 11 Marketinq Aləti detal səhifəsi default-locale (az, prefix-siz) URL-də 404 verirdi (`/marketinq/menyu-analitik` və s.) — yalnız `/az/...` işləyirdi. Səbəb: `app/[locale]/marketinq/<slug>/` var idi, amma root mirror (`app/marketinq/<slug>/`) yox idi (L-038).
+- 11 root mirror əlavə olundu (`app/marketinq/<slug>/page.tsx` → `@/app/[locale]/marketinq/<slug>/page` re-export): lokasyon-analiz, menyu-analitik, musteri-persona, pl-simulyatoru, reklam-roi, restoran-audit, roi-kalkulator, sezon-analitikasi, sikayat-analizi, sosial-metrik, trend-analiz.
+- Doğrulama: prefix-siz route-lar artıq 307 (auth redirect) verir, 404 yox; naməlum slug hələ 404.
+
+### Note
+- Giriş etmiş üzv tool-a çatacaq; tier kifayət etmirsə "KALFA upgrade" paneli görünür (gating — ayrı məsələ, 404 deyil).
+
 ## [TASK-0205] content(blog): add blog-026, blog-027 and blog-028 — 2026-06-07
 
 ### Added
