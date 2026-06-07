@@ -5546,6 +5546,89 @@ Biz bu mövzuya yalnız “müştəriyə nə cavab verək?” kimi baxmırıq. �
     coverImage: '/images/blog-28.png',
     coverImageAlt: 'Restoranda müştəri şikayətinin menecer tərəfindən peşəkar idarə olunması',
   },
+
+  // ═══════════════════════════════════════════════════════════════
+  // YAZI 29: MARKA STARBUCKS / BURGER KING DƏRSİ
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'blog-029',
+    slug: 'marka-starbucks-sansi-burger-king-dersi',
+    title: 'Orada Bir Starbucks Var Uzaqda — Sən O Qədər Şanslı Olmaya Bilərsən',
+    subtitle: 'Marka şansdır yoxsa qeydiyyatdır? Starbucks və Burger King dərsləri',
+    category: 'marketinq',
+    categoryEmoji: '📊',
+    stage: 'Böyüt',
+    readingTime: 9,
+    wordCount: 1420,
+    author: 'Doğan Tomris',
+    publishDate: '2026-06-07T10:00:00Z',
+    updatedAt: '2026-06-07T10:00:00Z',
+    tags: ['marka', 'marka qeydiyyatı', 'Starbucks', 'Burger King', 'Hungry Jacks', 'franchise', 'ticarət nişanı', 'brend qorunması'],
+    metaDescription: 'Starbucks Doğubeyazıt hekayəsi gözəldir, amma şansdır. Burger King Avstraliyada adını itirdi. Marka qeydiyyatı niyə hər sahibkarın ilk addımı olmalıdır?',
+    focusKeyword: 'marka qeydiyyatı sahibkar',
+    summary: 'Starbucks kiçik çay evinə cömərdlik göstərdi, çünki adına tam sahibdir. Burger King isə Avstraliyada adını işlədə bilmədi. Fərq şansda yox, qeydiyyatdadır. Markanı qeydiyyatdan keçirmək hər sahibkarın ilk addımı olmalıdır.',
+    content: `# Orada Bir Starbucks Var Uzaqda — Sən O Qədər Şanslı Olmaya Bilərsən
+
+Ağrı dağının ətəyində, Doğubeyazıtda mütəvazı bir çay evi "Starbucks" adıyla məşhurlaşdı. Əsl Starbucks bunu görəndə nə etdi? Məhkəməyə verib bağlaya bilərdi. Amma **getdi, kahvə dəmlədi, hədiyyə verdi** və bu hekayəni öz markasının bir parçasına çevirdi — hətta sənədli film ("The Sweetest Branch") çəkildi.
+
+Gözəl hekayə. Amma diqqət: bu, **şansdır, qayda deyil.** Sən o qədər şanslı olmaya bilərsən. Bu yazı markada həm şansı, həm də real riski göstərir.
+
+## 1. Şanslı hekayə: marka özünə güvənəndə
+
+Starbucks niyə belə davrandı? Çünki marka **öz adına tam sahibdir** — heç bir təhdid hiss etmir. Ona görə münaqişəni reklama çevirə bildi. Bu, güclü markanın lüksüdür: əvəzində dünyaca yayılan müsbət bir hekayə qazandı.
+
+Bir neçə dünya markası da oxşar "nəzakətli" yol seçib — məsələn, bəzi böyük brendlər kiçik pərəstişkarlara sərt məhkəmə əvəzinə dostca, hətta yumoristik xəbərdarlıq göndərib və bundan müsbət reputasiya qazanıb. Amma bunlar **istisnadır** — xəbər olur, çünki nadirdir.
+
+## 2. Amma sən o qədər şanslı olmaya bilərsən
+
+Reallıq budur: markaların çoxu belə davranmır. Adını icazəsiz işlədən kiçik biznesi **xəbərdarlıq, məhkəmə və bağlanma** gözləyir. Sən nə Starbucks-san ki, böyük bir marka sənə gəlib kahvə dəmləsin — əksinə, böyük marka sənin qapına vəkil məktubu ilə gələ bilər.
+
+Başqasının markası üzərində biznes qurmaq — **onun mərhəmətinə qalmaqdır.** İstədiyi gün adından məhrum olarsan, illərin əməyi, tabela, müştəri tanınırlığı bir anda gedər.
+
+## 3. Burger King'in dərsi: dev belə bloklana bilər
+
+Ən güclü nümunə bir nəhəngdir. 1971-ci ildə Burger King Avstraliyaya girmək istəyəndə gördü ki, "Burger King" adı **artıq yerli bir sahibkar tərəfindən qeydiyyatdan keçirilib** (Adelaidedə, 1962-dən, onlarla restoranla).
+
+Nəticə? Dünyanın ən böyük fast-food markalarından biri **öz adını işlədə bilmədi** və Avstraliyada "Hungry Jack's" adı ilə fəaliyyətə başladı — şirkətin tarixində adını dəyişməyə məcbur olduğu yeganə yer. Sonradan adını geri almağa çalışdı, məhkəmədə uduzdu və yerli franchise alana təxminən 47 milyon dollar təzminat ödədi.
+
+Dərs aydındır: **bir ölkədə qeydiyyat başqa ölkədə hüquq vermir; yerli qeydiyyat qlobal şöhrətdən güclüdür.** Əgər Burger King belə bloklana bilirsə, kiçik bir sahibkar daha asanlıqla bloklanar.
+
+### Faydalı məlumat qutusu
+
+Markada 3 sərt həqiqət: (1) **Əvvəl qeydiyyat** — adını qeydiyyatdan keçirməsən, başqası keçirə bilər və səni öz adından məhrum edər. (2) **Bir ölkə ≠ dünya** — hər bazarda ayrıca qeydiyyat lazımdır. (3) **Başqasının adı üstündə qurma** — bu, sənin yox, onun aktividir.
+
+## 4. "Squatter" riski: adını səndən əvvəl alanlar
+
+Daha bir təhlükə: kimsə sənin marka adını **səndən əvvəl** qeydiyyatdan keçirə bilər. Sonra ya onu səndən baha qiymətə "geri satar", ya da ümumiyyətlə verməz — və sən tamamilə yeni bir ad qurmağa məcbur olarsan. Bu, həm pul, həm vaxt, həm də biznes dəyəri itkisidir.
+
+Üstəlik, marka qorunmayanda **ümumi sözə** çevrilib hüquqi qorumasını da itirə bilər — tarixdə bir çox məşhur ad bu yolla müstəsna hüququnu itirib.
+
+## 5. Dərs: marka şans işi deyil
+
+Starbucks şanslı idi — daha doğrusu, **güclü idi**, çünki adına sahib idi. Sən də o gücü qazana bilərsən, amma yalnız bir yolla: **öz markanı, öz adını — əvvəlcədən — qeydiyyatdan keçirməklə.**
+
+### Doğan Notu
+
+"Hamı Starbucks'ın o gözəl hekayəsini paylaşır — amma əsl dərsi qaçırır. Starbucks ona görə cömərd ola bildi ki, adı möhkəm onundur. Burger King isə dünya nəhəngi olduğu halda, bir kiçik sahibkar onu öz ölkəsində adından etdi. Fərq şansda yox, **qeydiyyatdadır.** Mən sahibkarlara hər zaman deyirəm: tabelanı asmadan əvvəl adını qeydiyyatdan keçir. Marka sənin ən dəyərli, amma ən çox unutduğun sərmayəndir."
+
+## Yekun
+
+"Orada bir Starbucks var uzaqda" — gözəl hekayə, amma bir şans hekayəsidir. Sən şansa güvənə bilməzsən. Burger King kimi nəhəng belə öz adını qoruya bilmədikdə, kiçik sahibkar üçün qayda daha sərtdir: **markanı əvvəlcədən qeydiyyatdan keçir, başqasının adı üzərində qurma.** Əsl güc cömərdlikdə yox, sahiblikdədir.
+
+---
+
+## DK Agency necə kömək edir?
+
+DK Agency sahibkarları öz markalarını qurmaq, qeydiyyatdan keçirmək və qorumaqda dəstəkləyir — coğrafi işarədən franchise sisteminə qədər. AFA-nın qurucusu olaraq, marka hüququ bizim işimizin mərkəzindədir. Çünki bizim üçün marka təkcə ad deyil, qorunmalı bir aktivdir: *Ustalığın Nişanı, Rəqəmsalın Şəddi.*
+
+> **Növbəti addım:** Markanı qeydiyyatdan keçirməyi düşünürsən? DK Agency ilə pulsuz ilkin dəyərləndirmə üçün əlaqə saxla.
+
+*Mənbə: Starbucks Türkiyə rəsmi paylaşımı və "The Sweetest Branch / Ağrı Dağı Çay Evi'ndən Starbucks'a" (2024) sənədli filmi; Burger King – Hungry Jack's Avstraliya marka mübahisəsi (Wikipedia, CWB IP, World Trademark Review). Bu yazı ümumi məlumatdır, hüquqi məsləhət deyil.*`,
+    isPremium: true,
+    relatedArticles: ['marka-qeydiyyati-azerbaycan', 'restoran-markalasma-konsept', 'cografi-isare-yerli-lezzet'],
+    coverImage: '/images/blog-29.png',
+    coverImageAlt: 'Starbucks Doğubeyazıt çay evi hekayəsi və Burger King Hungry Jacks marka qeydiyyatı dərsi',
+  },
 ];
 
 // Helper functions
