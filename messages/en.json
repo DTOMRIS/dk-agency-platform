@@ -5280,82 +5280,82 @@
   },
   "whatsappTemplates": {
     "meta": {
-      "badge": "WhatsApp Template Paketi"
+      "badge": "WhatsApp Template Package"
     },
     "intro": {
-      "heading": "10 Hazır WhatsApp Mətni",
-      "subheading": "Pansiyon sahibinin hər gün ehtiyac duyduğu mətnlər.",
-      "instruction": "Klikləyib kopyala."
+      "heading": "10 Ready-to-Use WhatsApp Templates",
+      "subheading": "Essential texts that every guesthouse/B&B host needs daily.",
+      "instruction": "Click to copy."
     },
     "categories": {
-      "arrival": "Qarşılama",
-      "pricing": "Qiymət",
+      "arrival": "Welcome",
+      "pricing": "Pricing",
       "checkInOut": "Check-in/out",
-      "review": "Rəy",
-      "loyalty": "Sədaqət",
-      "inquiry": "Soruq"
+      "review": "Reviews",
+      "loyalty": "Loyalty",
+      "inquiry": "Inquiries"
     },
     "scenarios": {
       "firstArrival": {
-        "title": "İlk Qarşılama",
-        "description": "Yeni qonağa göndər.",
-        "copy": "Salam {{guestName}}! Mən {{hostName}}, xoş gəlmisiniz. Check-in: {{checkInDate}}. Wi-Fi: {{wifiPassword}}."
+        "title": "First Welcome",
+        "description": "Send to new guests upon booking.",
+        "copy": "Hello {{guestName}}! I am {{hostName}}, welcome. Check-in: {{checkInDate}}. Wi-Fi: {{wifiPassword}}."
       },
       "directBookingOffer": {
-        "title": "Direct Endirim",
-        "description": "Booking-dən endirim təklif et.",
-        "copy": "{{guestName}}, növbəti dəfə birbaşa yazsan {{discountPercent}}% endirim. Booking: {{bookingPrice}}, bizdə: {{directPrice}} AZN."
+        "title": "Direct Booking Discount",
+        "description": "Offer a discount to shift bookings from OTA to direct.",
+        "copy": "Dear {{guestName}}, book directly next time and get {{discountPercent}}% off. Booking.com price: {{bookingPrice}}, direct rate: {{directPrice}} AZN."
       },
       "checkInInstructions": {
-        "title": "Check-in Təlimatı",
-        "description": "Gəliş günü göndər.",
-        "copy": "Xoş gəlmisiniz! Check-in: {{checkInTime}}. Açar: {{keyLocation}}. Wi-Fi: {{wifiPassword}}. Səhər: {{breakfastTime}}."
+        "title": "Check-in Instructions",
+        "description": "Send on the arrival day.",
+        "copy": "Welcome! Check-in: {{checkInTime}}. Key collection: {{keyLocation}}. Wi-Fi: {{wifiPassword}}. Breakfast: {{breakfastTime}}."
       },
       "checkOutReminder": {
-        "title": "Check-out Xatırlatma",
-        "description": "Çıxış əvvəli göndər.",
-        "copy": "{{guestName}}, sabah check-out {{checkOutTime}}. Açarı resepsiyaya buraxın. Təşəkkürlər!"
+        "title": "Check-out Reminder",
+        "description": "Send the evening before check-out.",
+        "copy": "{{guestName}}, tomorrow check-out is at {{checkOutTime}}. Please leave the key at the reception. Thank you!"
       },
       "negativeReviewResponse": {
-        "title": "Mənfi Rəyə Cavab",
-        "description": "Anlayış göstər, müdafiə deyil.",
-        "copy": "{{guestName}}, rəyiniz üçün təşəkkür. {{specificIssue}} barədə addım atdıq."
+        "title": "Negative Review Response",
+        "description": "Show empathy, avoid defensive tone.",
+        "copy": "{{guestName}}, thank you for your feedback. We have addressed the issue regarding {{specificIssue}}."
       },
       "positiveReviewThanks": {
-        "title": "Müsbət Rəyə Təşəkkür",
-        "description": "Qonağın anını referans ver.",
-        "copy": "{{guestName}}, gözəl rəy üçün sağ olun! {{specificMoment}} xüsusi idi. Növbəti dəfə endirim gözləyir!"
+        "title": "Positive Review Thanks",
+        "description": "Thank the guest and reference a highlight.",
+        "copy": "{{guestName}}, thank you for the wonderful review! Glad to hear {{specificMoment}} was special. Discount awaits you on your next visit!"
       },
       "seasonalPromo": {
-        "title": "Mövsümi Təklif",
-        "description": "Off-peak endirim.",
-        "copy": "Bu {{seasonName}}: {{discountPercent}}% endirim! {{validUntilDate}} qədər keçərli."
+        "title": "Seasonal Promotion",
+        "description": "Off-peak period discount.",
+        "copy": "Enjoy our {{seasonName}} promo: {{discountPercent}}% discount! Valid until {{validUntilDate}}."
       },
       "priceInquiry": {
-        "title": "Qiymət Cavabı",
-        "description": "Aydın qiymət söylə.",
-        "copy": "Salam! Gecəlik {{nightlyPrice}} AZN. Daxildir: {{includesBreakfast}}, Wi-Fi, park."
+        "title": "Price Response",
+        "description": "Clear response to pricing inquiries.",
+        "copy": "Hello! Nightly rate: {{nightlyPrice}} AZN. Includes: {{includesBreakfast}}, Wi-Fi, parking."
       },
       "availabilityInquiry": {
-        "title": "Otaq Mövcudluğu",
-        "description": "Tarix + nəfər soruş.",
-        "copy": "Salam! Hansı tarixlərə baxırsınız, neçə nəfərsiniz?"
+        "title": "Availability Request",
+        "description": "Ask for dates and headcount.",
+        "copy": "Hello! What dates are you looking for, and how many guests?"
       },
       "loyaltyVipOffer": {
-        "title": "VIP Təklif",
-        "description": "Sadiq qonağa xüsusi.",
-        "copy": "{{guestName}}, siz {{loyaltyTier}} qonağımızsınız! {{specialDiscount}}% endirim + erkən check-in!"
+        "title": "VIP Loyalty Offer",
+        "description": "Exclusive offer for returning/loyal guests.",
+        "copy": "{{guestName}}, as a valued {{loyaltyTier}} guest, we have a {{specialDiscount}}% discount + early check-in for you!"
       }
     },
     "actions": {
-      "copyButton": "Kopyala",
-      "copiedConfirmation": "Kopyalandı",
-      "downloadAllPdf": "PDF yüklə"
+      "copyButton": "Copy",
+      "copiedConfirmation": "Copied",
+      "downloadAllPdf": "Download PDF"
     },
     "leadCta": {
-      "heading": "Qalanını aç",
-      "body": "7 daha çox professional şablon.",
-      "buttonText": "Tam paketi al"
+      "heading": "Unlock Remaining Templates",
+      "body": "Get the remaining 7 professional templates out of 10.",
+      "buttonText": "Get the Full Package"
     }
   },
   "sektorQonaqEvi": {

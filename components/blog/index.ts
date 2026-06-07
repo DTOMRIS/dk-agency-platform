@@ -16,3 +16,4 @@ export {
   Duello,
 } from './BlogElements';
 export { default as LegalDisclaimer } from './LegalDisclaimer';
+export { default as BlogActionBar } from './BlogActionBar';

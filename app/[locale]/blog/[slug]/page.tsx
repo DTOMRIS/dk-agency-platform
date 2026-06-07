@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { ArrowRight, Bookmark, Calendar, ChevronLeft, Clock, Share2, Tag, User } from 'lucide-react';
 
-import { MarkdownRenderer, LegalDisclaimer } from '@/components/blog';
+import { MarkdownRenderer, LegalDisclaimer, BlogActionBar } from '@/components/blog';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import { CATEGORY_CONFIG, getRelatedArticles } from '@/lib/data/blogArticles';
 import { getBlogPostDetail } from '@/lib/db/blog-repository';
@@ -158,14 +158,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ loc
                   <Clock size={16} className="text-brand-red" />
                   {article.readingTime} dəq oxu
                 </div>
-                <div className="ml-auto flex items-center gap-4">
-                  <button className="transition-colors hover:text-brand-red">
-                    <Share2 size={18} />
-                  </button>
-                  <button className="transition-colors hover:text-brand-red">
-                    <Bookmark size={18} />
-                  </button>
-                </div>
+                <BlogActionBar title={article.title} slug={article.slug} />
               </div>
 
               {/* Cover Image inside rounded Aspect-Ratio Box */}

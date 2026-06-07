@@ -83,7 +83,7 @@ function CompanyLogo() {
     startTransition(() => setLogo(stored));
   }, []);
   if (logo) return <img src={logo} alt="Logo" className="h-12 w-12 rounded-xl object-cover border border-slate-200" />;
-  return <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-dk-red/15 font-bold text-dk-red shadow-sm">DK</div>;
+  return <img src="/images/logo-mobil.png" alt="Logo" className="h-12 w-12 rounded-xl object-contain border border-slate-200 bg-slate-50 p-1 shadow-sm" />;
 }
 
 function CompanyName() {
@@ -105,12 +105,10 @@ export default function B2BSidebar() {
   };
 
   return (
-    <aside className="flex min-h-screen w-72 flex-col border-r border-slate-200 bg-white">
+    <aside className="flex min-h-screen w-72 flex-col border-r border-slate-200 bg-white/80 backdrop-blur-md">
       <div className="border-b border-slate-200 p-5">
         <Link href="/b2b-panel" className="group flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--dk-navy)] shadow-sm transition-all group-hover:shadow-md">
-            <span className="text-lg font-bold text-white">DK</span>
-          </div>
+          <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-11 w-11 shrink-0 object-contain shadow-sm transition-all group-hover:shadow-md" />
           <div>
             <h1 className="font-bold text-slate-900">DK Agency</h1>
             <p className="text-[10px] uppercase tracking-wider text-slate-500">B2B Portal</p>
@@ -119,7 +117,7 @@ export default function B2BSidebar() {
       </div>
 
       <div className="border-b border-slate-200 p-4">
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <div className="rounded-xl border border-slate-200 bg-slate-50/50 backdrop-blur-sm p-4">
           <div className="flex items-center gap-3">
             <CompanyLogo />
             <div className="min-w-0 flex-1">

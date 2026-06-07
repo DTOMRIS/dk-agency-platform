@@ -16,6 +16,7 @@ const loginCopy: Record<Locale, {
   emailPlaceholder: string;
   passwordLabel: string;
   forgotPassword: string;
+  rememberMe: string;
   submitting: string;
   submitBtn: string;
   noAccount: string;
@@ -35,6 +36,7 @@ const loginCopy: Record<Locale, {
     emailPlaceholder: 'email@example.com',
     passwordLabel: 'Şifrə',
     forgotPassword: 'Şifrəni unutdum?',
+    rememberMe: 'Yadda sakla',
     submitting: 'Yoxlanır...',
     submitBtn: 'Daxil ol və davam et',
     noAccount: 'Hesabın yoxdur?',
@@ -54,6 +56,7 @@ const loginCopy: Record<Locale, {
     emailPlaceholder: 'email@example.com',
     passwordLabel: 'Password',
     forgotPassword: 'Forgot password?',
+    rememberMe: 'Remember me',
     submitting: 'Verifying...',
     submitBtn: 'Sign in and continue',
     noAccount: "Don't have an account?",
@@ -73,6 +76,7 @@ const loginCopy: Record<Locale, {
     emailPlaceholder: 'email@example.com',
     passwordLabel: 'Şifre',
     forgotPassword: 'Şifremi unuttum?',
+    rememberMe: 'Beni hatırla',
     submitting: 'Doğrulanıyor...',
     submitBtn: 'Giriş yap ve devam et',
     noAccount: 'Hesabınız yok mu?',
@@ -92,6 +96,7 @@ const loginCopy: Record<Locale, {
     emailPlaceholder: 'email@example.com',
     passwordLabel: 'Пароль',
     forgotPassword: 'Забыли пароль?',
+    rememberMe: 'Запомнить меня',
     submitting: 'Проверяем...',
     submitBtn: 'Войти и продолжить',
     noAccount: 'Нет аккаунта?',
@@ -117,6 +122,7 @@ export default function LoginPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [locale, setLocale] = useState<Locale>('az');
+  const [rememberMe, setRememberMe] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -138,6 +144,7 @@ export default function LoginPage() {
         body: JSON.stringify({
           email: formData.email.trim(),
           password: formData.password,
+          rememberMe,
         }),
       });
 
@@ -227,7 +234,16 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <div className="text-right">
+              <div className="flex items-center justify-between">
+                <label className="flex cursor-pointer items-center gap-2 select-none">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="h-4 w-4 rounded border-slate-300 text-dk-red focus:ring-2 focus:ring-dk-red/20 cursor-pointer"
+                  />
+                  <span className="text-sm text-slate-600">{copy.rememberMe}</span>
+                </label>
                 <Link href="/forgot-password" className="text-sm font-semibold text-dk-red hover:text-dk-red-strong">
                   {copy.forgotPassword}
                 </Link>
