@@ -9,6 +9,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 - `TASK-0200` Synchronized static config slug `isleyen-franchise-təhvil almaq` to `isleyen-franchise-devralmaq` to match the database and support proper fallback resolutions.
 
 ### Added
+- `TASK-0205` content(blog): added blog-026, blog-027, and blog-028 (müşteri şikayet yönetimi) including cover images.
 - `TASK-0109` Localized KAZAN AI system prompt to respond in user's locale (AZ/TR/RU/EN) with localized markdown CTA links and Ahilik quote suffix.
 - `TASK-0197` F2.7: Yandex Metrica events for sektor pages (`trackSektorEvent` wrapper + 5 component wire)
 - `TASK-0197` OG social card: dynamic 1200x630 `opengraph-image.tsx` for `/sektor/qonaq-evi`

@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-06-07 — TASK-0205: content(blog): add blog-026, blog-027 and blog-028
+
+**Why:** The marketing and educational resources needed to be expanded to cover crucial Horeca topics such as Tip/Service Charge distribution policies (blog-026), average check building strategies via customer needs (blog-027), and professional handling of customer complaints (blog-028).
+
+**What:**
+- Registered three new static blog posts under indexes `blog-026`, `blog-027`, and `blog-028` inside [blogArticles.ts](file:///C:/codelar/dk-agency-platform/lib/data/blogArticles.ts).
+- Integrated correct internal routes such as `sikayat-analizi` (complaint analysis) inside the article contents.
+- Checked out and resolved the separate workspace issue where the uploaded cover images (`blog-26.png`, `blog-27.png`, `blog-28.png`) were not visible to the content branch.
+- Regenerated the system audit report [SYSTEM-AUDIT.md](file:///C:/codelar/dk-agency-platform/docs/SYSTEM-AUDIT.md).
+
+---
+
 ## 2026-06-06 — TASK-0109: feat(ai): KAZAN AI system prompt locale-aware response
 
 **Why:** KAZAN AI was only aware of Azerbaijani (`az`) prompt context, meaning any inquiries in English, Russian, or Turkish would receive responses using Azerbaijani system prompt constraints, and all markdown CTA links were hardcoded to the default locale.
