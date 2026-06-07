@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AI_MODELS } from '@/lib/ai-models';
-import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
+import {
+  checkRateLimit,
+  getClientIp,
+  rateLimitExceeded,
+  RATE_LIMITS,
+} from '@/lib/utils/rate-limit';
 import { buildKazanSystemPrompt } from '@/lib/kazan-ai/system-prompt';
 import { buildFoodCostContext } from '@/lib/kazan-ai/food-cost-context';
 import { buildSystemPromptInjection, type KazanContext } from '@/lib/kazan-ai/context-greetings';
@@ -24,7 +29,7 @@ type AhilikQuote = { id: string; az: string; ru: string; en: string; tr: string;
 function pickRandomQuote(locale: string): string {
   const quotes = ahilikQuotes as AhilikQuote[];
   const q = quotes[Math.floor(Math.random() * quotes.length)];
-  const lang = (locale === 'ru' || locale === 'en' || locale === 'tr') ? locale : 'az';
+  const lang = locale === 'ru' || locale === 'en' || locale === 'tr' ? locale : 'az';
   return q[lang as keyof AhilikQuote] || q.az;
 }
 
@@ -47,7 +52,10 @@ function appendQuote(text: string, locale: string): string {
 
 function normalizeMessages(messages: ChatMessage[]): ChatMessage[] {
   return messages
-    .filter((message) => (message.role === 'user' || message.role === 'assistant') && message.content.trim())
+    .filter(
+      (message) =>
+        (message.role === 'user' || message.role === 'assistant') && message.content.trim()
+    )
     .slice(-10)
     .map((message) => ({
       role: message.role,
@@ -56,7 +64,11 @@ function normalizeMessages(messages: ChatMessage[]): ChatMessage[] {
 }
 
 function buildStaticFallback(messages: ChatMessage[]) {
-  const lastUserMessage = [...messages].reverse().find((message) => message.role === 'user')?.content.toLowerCase() ?? '';
+  const lastUserMessage =
+    [...messages]
+      .reverse()
+      .find((message) => message.role === 'user')
+      ?.content.toLowerCase() ?? '';
 
   if (lastUserMessage.includes('food cost')) {
     return `Food cost-un yüksəkdirsə əvvəl 3 rəqəmə bax: ideal aralıq çox restoran üçün 28-32%-dir, sən 38%-dəsənsə ən azı 6 bənd aşağı enməlisən. 1) Resept kartını sabitlə. 2) Trim loss-u ölç. 3) Satış mix-ini ulduz yeməklərə çək. 4) Alış qiymətini yenidən danış. 5) Həftəlik inventar say.\n\n[Food Cost hesabla](/toolkit/food-cost)`;
@@ -77,25 +89,48 @@ function buildStaticFallback(messages: ChatMessage[]) {
   return `Bakıda restoran idarəetməsində qərarı rəqəmlə vermək lazımdır: food cost, labor, AQTA, delivery və kadr axını eyni sistemdə baxılmalıdır. Sualını bir az konkret yaz, mən sənə rəqəm və addım planı ilə cavab verim.\n\n[Əlaqə saxla](/elaqe)`;
 }
 
-async function callAnthropicWithPrompt(messages: ChatMessage[], apiKey: string, systemPrompt: string) {
+async function fetchWithTimeout(url: string, init: RequestInit, ms = 30000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function callAnthropicWithPrompt(
+  messages: ChatMessage[],
+  apiKey: string,
+  systemPrompt: string
+) {
   const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-20250514';
   const baseUrl = process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com';
 
-  const response = await fetch(`${baseUrl}/v1/messages`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model,
-      system: systemPrompt,
-      max_tokens: 700,
-      temperature: 0.2,
-      messages,
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetchWithTimeout(`${baseUrl}/v1/messages`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model,
+        system: systemPrompt,
+        max_tokens: 700,
+        temperature: 0.2,
+        messages,
+      }),
+    });
+  } catch (err) {
+    return {
+      ok: false as const,
+      status: 504,
+      body: { error: 'Anthropic əlçatmaz və ya timeout.', details: String(err).slice(0, 300) },
+    };
+  }
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -141,26 +176,39 @@ async function callAnthropicWithPrompt(messages: ChatMessage[], apiKey: string, 
   };
 }
 
-async function callDeepSeekWithPrompt(messages: ChatMessage[], apiKey: string, systemPrompt: string) {
-  const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: AI_MODELS.deepseek.chat,
-      temperature: 0.2,
-      max_tokens: 700,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        ...messages.map((message) => ({
-          role: message.role,
-          content: message.content,
-        })),
-      ],
-    }),
-  });
+async function callDeepSeekWithPrompt(
+  messages: ChatMessage[],
+  apiKey: string,
+  systemPrompt: string
+) {
+  let response: Response;
+  try {
+    response = await fetchWithTimeout('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: AI_MODELS.deepseek.chat,
+        temperature: 0.2,
+        max_tokens: 700,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          ...messages.map((message) => ({
+            role: message.role,
+            content: message.content,
+          })),
+        ],
+      }),
+    });
+  } catch (err) {
+    return {
+      ok: false as const,
+      status: 504,
+      body: { error: 'DeepSeek əlçatmaz və ya timeout.', details: String(err).slice(0, 300) },
+    };
+  }
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -204,7 +252,19 @@ async function callDeepSeekWithPrompt(messages: ChatMessage[], apiKey: string, s
 function isFoodCostIntent(messages: ChatMessage[]): boolean {
   const last3 = messages.slice(-3);
   const text = last3.map((m) => m.content.toLowerCase()).join(' ');
-  const keywords = ['food cost', 'xərc', 'kateqoriya', 'nəyə xərcləmişəm', 'nə qədər', 'fatura', 'tədarükçü', 'ən bahalı', 'maya dəyəri', 'qida xərci', 'aylıq xərc'];
+  const keywords = [
+    'food cost',
+    'xərc',
+    'kateqoriya',
+    'nəyə xərcləmişəm',
+    'nə qədər',
+    'fatura',
+    'tədarükçü',
+    'ən bahalı',
+    'maya dəyəri',
+    'qida xərci',
+    'aylıq xərc',
+  ];
   return keywords.some((kw) => text.includes(kw));
 }
 
@@ -262,7 +322,7 @@ export async function POST(request: NextRequest) {
         model: 'kazan-static-sample',
         message: appendQuote(buildStaticFallback(messages), locale),
       },
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(
@@ -270,7 +330,7 @@ export async function POST(request: NextRequest) {
         error: 'KAZAN AI sorğusu zamanı xəta baş verdi.',
         details: String(error),
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
