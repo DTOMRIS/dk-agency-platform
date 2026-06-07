@@ -1,4 +1,66 @@
 {
+  "franchiseRadar": {
+    "meta": {
+      "title": "Franchise Radar — Azerbaycan'a gelmemiş markalar | DK Agency",
+      "description": "Azerbaycan'da henüz olmayan küresel franchise markaları: yatırım aralığı, menşe ve giriş modeli. İlgilendiğiniz markayı seçin."
+    },
+    "hero": {
+      "badge": "Franchise Radar",
+      "title": "Azerbaycan'a henüz gelmemiş markalar",
+      "subtitle": "Küresel franchise markaları kataloğu — yatırım aralığı, menşe ve giriş modeli ile. Bir marka seçin, DK ekibi sizinle iletişime geçsin."
+    },
+    "filters": {
+      "all": "Tümü"
+    },
+    "card": {
+      "investment": "Yatırım",
+      "notDisclosed": "Açıklanmadı",
+      "interested": "İlgileniyorum"
+    },
+    "disclaimer": "DK Agency bu markaların resmi temsilcisi değildir. Veriler açık kaynaklardan derlenmiştir ve değişebilir. Yatırım kararı vermeden önce resmi franchise belgelerini (FDD) inceleyin.",
+    "lead": {
+      "title": "İlgileniyorum",
+      "subtitle": "Başvuru — marka:",
+      "namePlaceholder": "Adınız",
+      "contactPlaceholder": "E-posta veya telefon",
+      "consent": "Kişisel verilerimin işlenmesine onay veriyorum (KVKK).",
+      "submit": "Gönder",
+      "required": "Ad, iletişim ve onay gereklidir.",
+      "error": "Bir hata oluştu, tekrar deneyin.",
+      "successTitle": "Teşekkürler!",
+      "success": "Başvurunuz alındı. DK ekibi en kısa sürede iletişime geçecek.",
+      "done": "Kapat",
+      "close": "Kapat"
+    },
+    "sectors": {
+      "qsr": "Fast Food (QSR)",
+      "coffee": "Kahve",
+      "dessert": "Tatlı",
+      "fast_casual": "Fast Casual",
+      "education": "Eğitim",
+      "hotel": "Otel"
+    },
+    "entryModel": {
+      "unit_franchise": "Tekil Franchise",
+      "master_license": "Master Lisans",
+      "country_license": "Ülke Lisansı"
+    },
+    "status": {
+      "not_present": "Azerbaycan'da yok",
+      "under_research": "Araştırılıyor",
+      "coming_soon": "Yakında"
+    },
+    "brandDesc": {
+      "fiveGuys": "Premium burger segmenti Bakü’de boş. Five Guys’ın \"fresh, never frozen\" modeli orta-üst gelirli müşteri için güçlü bir fırsat.",
+      "wendys": "QSR’de kare burger farklılaşması ve güçlü drive-thru modeli; Bakü’nün büyüyen fast-food pazarında tanınmış marka boşluğu.",
+      "tacoBell": "Meksika mutfağı Azerbaycan’da az temsil ediliyor. Taco Bell küresel bir QSR markası olarak yeni bir kategori açabilir.",
+      "shakeShack": "Yalnızca ülke lisansı ile büyüyor — Türkiye zaten var, Azerbaycan yok. Ülke düzeyinde özel bir fırsat.",
+      "dunkin": "Kahve ve donut kategorisi Bakü’de zayıf rekabetli. Dunkin’in geniş fiyat aralığı hızlı zincir kurmaya imkan verir.",
+      "baskinRobbins": "31 çeşit dondurma markası aile ve genç segment için tanınır; düşük giriş yatırımıyla merkez lokasyonlarda güçlü.",
+      "kumon": "Japon matematik ve okuma metodolojisi; eğitime yüksek talepli Bakü’de düşük yatırımla sürekli abonelik geliri.",
+      "gonulKahvesi": "Türk kahve markası, kültürel yakınlık avantajı; yatırım verisi netleştiriliyor."
+    }
+  },
   "b2bPanel": {
     "welcome": "Hoş Geldiniz!",
     "subtitle": "İstanbul HORECA Group - B2B Portal",

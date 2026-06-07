@@ -255,3 +255,19 @@ Yoxlama qaydası: yeni route-u HƏMİŞƏ prefix-siz default-locale URL ilə tes
 
 Qeyd: bu mühitdə `next build` üçün `NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1`
 lazımdır (Google Fonts TLS fetch), yoxsa font-da fail edir — bu env kod problemi deyil.
+
+### L-039 — Brend logolarini icazesiz HOST ETME (8 İyun 2026, F-RADAR-01)
+Franchise Radar kataloqu ucun rekabet/brend markalari (Five Guys, Wendy's, ...)
+gosterilir. Brend ADI + faktiki melumat (investisiya araligi, mense, tesis ili)
+ACIQ FAKTDIR — problem deyil. Amma brend LOGOLARINI host etmek ticaret nisani
+huququ riski yaradir.
+
+Qayda: logo evezine sektor IKONU (lucide) + brend adi (metn). Hemise
+"DK Agency bu markalarin resmi numayendesi deyil. Melumatlar aciq menbelerden
+toplanib, deyise biler" disclaimer-i goster. Her brend uchun sourceNote saxla
+(audit izi). Investisiya datasinda menbe (FDD / aciq menbe) qeyd et.
+
+Texniki: toolSource enum-dur (franchiseToolSourceEnum) ve schema.ts PROTECTED-dir
+— yeni enum deyeri elave etme. Movcud deyeri ('consulting') isit + real menbeni
+score jsonb-de saxla: score: { source: 'franchise_radar', brandSlug } (ota-guide
+route patterni ile eyni).
