@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `TASK-0215` feat(seo): AI SEO (SEO + AEO + GEO) structured-data upgrade for blog. New reusable `lib/seo/structured-data.ts` and an enriched JSON-LD `@graph` on every blog post (BlogPosting + BreadcrumbList + Organization) so ChatGPT/Perplexity/Google AI Overviews can extract & cite content. Adds the previously-missing `publisher.logo`, `mainEntityOfPage` object, `articleSection`, `wordCount`, breadcrumb trail, and a standalone Organization entity. `faqNode` helper ready for Phase-2 FAQPage.
+
 ### Changed
 - `TASK-0212` refactor(b2b): converted `app/b2b-panel/page.tsx` from Pattern C (inline `Record<Locale>` pageCopy, ~180 lines) to Pattern A (`useTranslations('b2bPanel')`), resolving TD-003 / L-004. Strings moved verbatim to `messages/{az,ru,en,tr}.json`; a local `copy` object preserves all 23 usage sites. Build PASS, 4-lang key completeness verified (no MISSING_MESSAGE), `/b2b-panel` 307→200 (L-010 guest guard intact).
 
