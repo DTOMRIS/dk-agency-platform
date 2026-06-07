@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Changed
+- `TASK-0212` refactor(b2b): converted `app/b2b-panel/page.tsx` from Pattern C (inline `Record<Locale>` pageCopy, ~180 lines) to Pattern A (`useTranslations('b2bPanel')`), resolving TD-003 / L-004. Strings moved verbatim to `messages/{az,ru,en,tr}.json`; a local `copy` object preserves all 23 usage sites. Build PASS, 4-lang key completeness verified (no MISSING_MESSAGE), `/b2b-panel` 307→200 (L-010 guest guard intact).
+
 ### Fixed
 - `TASK-0211` perf(logo): optimized `logo-mobil.png` from 1.2 MB / 1254×1254 to ~9 KB / 144×144. The logo (Header, Footer, B2B sidebar — displayed at ≤48px) was shipping a >1 MB image on every page load. Filename unchanged, so no PROTECTED file edits.
 
