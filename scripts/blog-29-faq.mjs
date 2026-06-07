@@ -47,7 +47,7 @@ async function findPost() {
     SELECT id, slug, content_az FROM blog_posts
     WHERE content_az ILIKE '%Hungry Jack%'
        OR content_az ILIKE '%Starbucks Var Uzaqda%'
-       OR title ILIKE '%Starbucks%'
+       OR title_az ILIKE '%Starbucks%'
     LIMIT 5`;
   if (rows.length === 1) {
     console.log(`ℹ️  Slug avtomatik tapıldı: '${rows[0].slug}'`);
@@ -70,8 +70,8 @@ async function main() {
   const post = await findPost();
   if (!post) {
     console.error('Tapılmadı. Son 10 blog slug-u (blog-29-u seç, sonra arqument kimi ver):');
-    const recent = await sql`SELECT slug, title FROM blog_posts ORDER BY created_at DESC LIMIT 10`;
-    recent.forEach((r) => console.error(`  - ${r.slug}  (${r.title})`));
+    const recent = await sql`SELECT slug, title_az FROM blog_posts ORDER BY created_at DESC LIMIT 10`;
+    recent.forEach((r) => console.error(`  - ${r.slug}  (${r.title_az})`));
     process.exit(1);
   }
 
