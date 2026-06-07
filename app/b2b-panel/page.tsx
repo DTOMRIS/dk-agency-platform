@@ -5,124 +5,22 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import {
-  FileText, Eye, MessageSquare, TrendingUp,
-  Plus, ArrowRight, Clock, CheckCircle,
-  AlertTriangle, Star, Briefcase
+  FileText,
+  Eye,
+  MessageSquare,
+  TrendingUp,
+  Plus,
+  ArrowRight,
+  Clock,
+  CheckCircle,
+  AlertTriangle,
+  Star,
+  Briefcase,
 } from 'lucide-react';
-import { normalizeLocale, type Locale } from '@/i18n/config';
 import RecommendationWidget from '@/components/dashboard/RecommendationWidget';
 import NudgeBanner from '@/components/dashboard/NudgeBanner';
-
-const pageCopy: Record<Locale, {
-  welcome: string;
-  subtitle: string;
-  newListing: string;
-  myListings: string;
-  viewAll: string;
-  recentOffers: string;
-  quickActions: string;
-  statLabels: [string, string, string, string];
-  statusLabels: { active: string; pending: string; rejected: string };
-  categoryLabels: Record<string, string>;
-  offerItems: [string, string, string];
-  offerTimes: [string, string, string];
-  quickLinks: [string, string, string];
-}> = {
-  az: {
-    welcome: 'Xoş Gəldiniz!',
-    subtitle: 'İstanbul HORECA Group - B2B Portalı',
-    newListing: 'Yeni Elan Yarat',
-    myListings: 'Elanlarım',
-    viewAll: 'Hamısını Gör',
-    recentOffers: 'Son Təkliflər',
-    quickActions: 'Sürətli Əməliyyatlar',
-    statLabels: ['Aktiv Elanlar', 'Ümumi Baxış', 'Gələn Təkliflər', 'Mesajlar'],
-    statusLabels: { active: 'Aktiv', pending: 'Gözlənilir', rejected: 'Rədd Edildi' },
-    categoryLabels: {
-      'devir': 'İşletmə Devri',
-      'franchise-vermek': 'Franchise Vermək',
-      'franchise-almak': 'Franchise Almaq',
-      'ortak-tapmaq': 'Ortaq Tapmaq',
-      'yeni-investisiya': 'Yeni İnvestisiya',
-      'obyekt-icaresi': 'Obyekt İcarəsi',
-      'horeca-ekipman': 'HORECA Ekipman',
-    },
-    offerItems: ['Kafe Devri üçün yeni təklif', 'Franchise sualı', 'Elanınız seçilənlərə əlavə edildi'],
-    offerTimes: ['2 saat əvvəl', '5 saat əvvəl', '1 gün əvvəl'],
-    quickLinks: ['Yeni Elan', 'Analiz Alətləri', 'Profili Yenilə'],
-  },
-  ru: {
-    welcome: 'Добро пожаловать!',
-    subtitle: 'Istanbul HORECA Group - B2B Портал',
-    newListing: 'Создать объявление',
-    myListings: 'Мои объявления',
-    viewAll: 'Показать все',
-    recentOffers: 'Последние предложения',
-    quickActions: 'Быстрые действия',
-    statLabels: ['Активные объявления', 'Всего просмотров', 'Входящие предложения', 'Сообщения'],
-    statusLabels: { active: 'Активно', pending: 'На проверке', rejected: 'Отклонено' },
-    categoryLabels: {
-      'devir': 'Передача бизнеса',
-      'franchise-vermek': 'Продать франшизу',
-      'franchise-almak': 'Купить франшизу',
-      'ortak-tapmaq': 'Найти партнёра',
-      'yeni-investisiya': 'Новые инвестиции',
-      'obyekt-icaresi': 'Аренда объекта',
-      'horeca-ekipman': 'Оборудование HORECA',
-    },
-    offerItems: ['Новое предложение по передаче кафе', 'Вопрос о франшизе', 'Объявление добавлено в избранное'],
-    offerTimes: ['2 часа назад', '5 часов назад', '1 день назад'],
-    quickLinks: ['Новое объявление', 'Аналитика', 'Обновить профиль'],
-  },
-  en: {
-    welcome: 'Welcome!',
-    subtitle: 'Istanbul HORECA Group - B2B Portal',
-    newListing: 'Create Listing',
-    myListings: 'My Listings',
-    viewAll: 'View All',
-    recentOffers: 'Recent Offers',
-    quickActions: 'Quick Actions',
-    statLabels: ['Active Listings', 'Total Views', 'Incoming Offers', 'Messages'],
-    statusLabels: { active: 'Active', pending: 'Pending', rejected: 'Rejected' },
-    categoryLabels: {
-      'devir': 'Business Transfer',
-      'franchise-vermek': 'Sell Franchise',
-      'franchise-almak': 'Buy Franchise',
-      'ortak-tapmaq': 'Find Partner',
-      'yeni-investisiya': 'New Investment',
-      'obyekt-icaresi': 'Venue Rental',
-      'horeca-ekipman': 'HORECA Equipment',
-    },
-    offerItems: ['New offer for Cafe Transfer', 'Franchise enquiry', 'Your listing was favourited'],
-    offerTimes: ['2 hours ago', '5 hours ago', '1 day ago'],
-    quickLinks: ['New Listing', 'Analytics', 'Update Profile'],
-  },
-  tr: {
-    welcome: 'Hoş Geldiniz!',
-    subtitle: 'İstanbul HORECA Group - B2B Portal',
-    newListing: 'Yeni İlan Oluştur',
-    myListings: 'İlanlarım',
-    viewAll: 'Tümünü Gör',
-    recentOffers: 'Son Teklifler',
-    quickActions: 'Hızlı İşlemler',
-    statLabels: ['Aktif İlanlar', 'Toplam Görüntülenme', 'Gelen Teklifler', 'Mesajlar'],
-    statusLabels: { active: 'Aktif', pending: 'Onay Bekliyor', rejected: 'Reddedildi' },
-    categoryLabels: {
-      'devir': 'İşletme Devri',
-      'franchise-vermek': 'Franchise Vermek',
-      'franchise-almak': 'Franchise Almak',
-      'ortak-tapmaq': 'Ortak Bulmak',
-      'yeni-investisiya': 'Yeni Yatırım',
-      'obyekt-icaresi': 'Mekan Kiralama',
-      'horeca-ekipman': 'HORECA Ekipman',
-    },
-    offerItems: ['Cafe Devri için yeni teklif', 'Franchise sorusu', 'İlanınız favorilere eklendi'],
-    offerTimes: ['2 saat önce', '5 saat önce', '1 gün önce'],
-    quickLinks: ['Yeni İlan', 'Analiz Araçları', 'Profili Güncelle'],
-  },
-};
 
 const MY_LISTINGS = [
   {
@@ -196,9 +94,24 @@ function Sparkline({ points, color }: { points: number[]; color: string }) {
 }
 
 export default function B2BPanelPage() {
-  const pathname = usePathname();
-  const locale = normalizeLocale(pathname.split('/')[1]);
-  const copy = pageCopy[locale];
+  const t = useTranslations('b2bPanel');
+  // Pattern A (useTranslations) — local `copy` mirrors the old shape so all
+  // downstream usages stay unchanged. Arrays/objects come via t.raw.
+  const copy = {
+    welcome: t('welcome'),
+    subtitle: t('subtitle'),
+    newListing: t('newListing'),
+    myListings: t('myListings'),
+    viewAll: t('viewAll'),
+    recentOffers: t('recentOffers'),
+    quickActions: t('quickActions'),
+    statLabels: t.raw('statLabels') as string[],
+    statusLabels: t.raw('statusLabels') as Record<string, string>,
+    categoryLabels: t.raw('categoryLabels') as Record<string, string>,
+    offerItems: t.raw('offerItems') as string[],
+    offerTimes: t.raw('offerTimes') as string[],
+    quickLinks: t.raw('quickLinks') as string[],
+  };
 
   const STATS = [
     {
@@ -269,7 +182,9 @@ export default function B2BPanelPage() {
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <div className={`w-10 h-10 rounded-xl ${stat.color} flex items-center justify-center`}>
+                  <div
+                    className={`w-10 h-10 rounded-xl ${stat.color} flex items-center justify-center`}
+                  >
                     <Icon size={20} />
                   </div>
                   <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
@@ -282,7 +197,9 @@ export default function B2BPanelPage() {
                 <p className="text-xs font-semibold text-slate-500 mt-1">{stat.label}</p>
               </div>
               <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Trend (Son 7 gün)</span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                  Trend (Son 7 gün)
+                </span>
                 <Sparkline points={stat.sparklineData} color={stat.sparklineColor} />
               </div>
             </div>
@@ -304,7 +221,10 @@ export default function B2BPanelPage() {
                 className="text-xs text-[var(--dk-red)] font-bold hover:text-[var(--dk-red-strong)] flex items-center gap-1 group/link transition-colors"
               >
                 {copy.viewAll}{' '}
-                <ArrowRight size={13} className="group-hover/link:translate-x-0.5 transition-transform" />
+                <ArrowRight
+                  size={13}
+                  className="group-hover/link:translate-x-0.5 transition-transform"
+                />
               </Link>
             </div>
             <div className="divide-y divide-slate-100">
@@ -364,8 +284,12 @@ export default function B2BPanelPage() {
                   <Briefcase size={18} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">{copy.offerItems[0]}</p>
-                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">{copy.offerTimes[0]}</p>
+                  <p className="text-sm font-semibold text-slate-900 truncate">
+                    {copy.offerItems[0]}
+                  </p>
+                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">
+                    {copy.offerTimes[0]}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors">
@@ -373,8 +297,12 @@ export default function B2BPanelPage() {
                   <MessageSquare size={18} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">{copy.offerItems[1]}</p>
-                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">{copy.offerTimes[1]}</p>
+                  <p className="text-sm font-semibold text-slate-900 truncate">
+                    {copy.offerItems[1]}
+                  </p>
+                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">
+                    {copy.offerTimes[1]}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors">
@@ -382,8 +310,12 @@ export default function B2BPanelPage() {
                   <Star size={18} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">{copy.offerItems[2]}</p>
-                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">{copy.offerTimes[2]}</p>
+                  <p className="text-sm font-semibold text-slate-900 truncate">
+                    {copy.offerItems[2]}
+                  </p>
+                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">
+                    {copy.offerTimes[2]}
+                  </p>
                 </div>
               </div>
             </div>
@@ -392,7 +324,10 @@ export default function B2BPanelPage() {
               className="mt-4 inline-flex items-center gap-1 text-xs text-[var(--dk-red)] font-bold hover:text-[var(--dk-red-strong)] group/link transition-colors"
             >
               {copy.viewAll}{' '}
-              <ArrowRight size={13} className="group-hover/link:translate-x-0.5 transition-transform" />
+              <ArrowRight
+                size={13}
+                className="group-hover/link:translate-x-0.5 transition-transform"
+              />
             </Link>
           </div>
 

@@ -1,4 +1,48 @@
 {
+  "b2bPanel": {
+    "welcome": "Hoş Geldiniz!",
+    "subtitle": "İstanbul HORECA Group - B2B Portal",
+    "newListing": "Yeni İlan Oluştur",
+    "myListings": "İlanlarım",
+    "viewAll": "Tümünü Gör",
+    "recentOffers": "Son Teklifler",
+    "quickActions": "Hızlı İşlemler",
+    "statLabels": [
+      "Aktif İlanlar",
+      "Toplam Görüntülenme",
+      "Gelen Teklifler",
+      "Mesajlar"
+    ],
+    "statusLabels": {
+      "active": "Aktif",
+      "pending": "Onay Bekliyor",
+      "rejected": "Reddedildi"
+    },
+    "categoryLabels": {
+      "devir": "İşletme Devri",
+      "franchise-vermek": "Franchise Vermek",
+      "franchise-almak": "Franchise Almak",
+      "ortak-tapmaq": "Ortak Bulmak",
+      "yeni-investisiya": "Yeni Yatırım",
+      "obyekt-icaresi": "Mekan Kiralama",
+      "horeca-ekipman": "HORECA Ekipman"
+    },
+    "offerItems": [
+      "Cafe Devri için yeni teklif",
+      "Franchise sorusu",
+      "İlanınız favorilere eklendi"
+    ],
+    "offerTimes": [
+      "2 saat önce",
+      "5 saat önce",
+      "1 gün önce"
+    ],
+    "quickLinks": [
+      "Yeni İlan",
+      "Analiz Araçları",
+      "Profili Güncelle"
+    ]
+  },
   "nav": {
     "home": "Ana sayfa",
     "tools": "Araçlar",

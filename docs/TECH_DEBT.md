@@ -65,8 +65,13 @@ primary islenir. Spec-de Claude primary qeyd edilmisdir
 ## TD-003 — b2b-panel ana sehife Pattern C (inline Record<Locale>)
 
 **Tarix:** 2026-06-07
-**Status:** ACIQ
+**Status:** HELL OLUNDU (TASK-0212, 2026-06-07)
 **Prioritet:** Orta (qayda pozuntusu, amma islenir)
+
+> HELL: `app/b2b-panel/page.tsx` Pattern A-ya (`useTranslations('b2bPanel')`)
+> kecirildi; string-ler `messages/{az,ru,en,tr}.json`-a verbatim kocuruldu.
+> Lokal `copy` obyekti kohne shape-i sakladi → 23 istifade noktasi deyismedi.
+> Build PASS, 4 dil acar-butovluyu PASS, /b2b-panel 307->200 (L-010 saglam).
 
 ### Problem
 `app/b2b-panel/page.tsx` ~180 setirlik `pageCopy: Record<Locale, ...>`

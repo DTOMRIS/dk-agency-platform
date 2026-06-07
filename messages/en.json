@@ -1,4 +1,48 @@
 {
+  "b2bPanel": {
+    "welcome": "Welcome!",
+    "subtitle": "Istanbul HORECA Group - B2B Portal",
+    "newListing": "Create Listing",
+    "myListings": "My Listings",
+    "viewAll": "View All",
+    "recentOffers": "Recent Offers",
+    "quickActions": "Quick Actions",
+    "statLabels": [
+      "Active Listings",
+      "Total Views",
+      "Incoming Offers",
+      "Messages"
+    ],
+    "statusLabels": {
+      "active": "Active",
+      "pending": "Pending",
+      "rejected": "Rejected"
+    },
+    "categoryLabels": {
+      "devir": "Business Transfer",
+      "franchise-vermek": "Sell Franchise",
+      "franchise-almak": "Buy Franchise",
+      "ortak-tapmaq": "Find Partner",
+      "yeni-investisiya": "New Investment",
+      "obyekt-icaresi": "Venue Rental",
+      "horeca-ekipman": "HORECA Equipment"
+    },
+    "offerItems": [
+      "New offer for Cafe Transfer",
+      "Franchise enquiry",
+      "Your listing was favourited"
+    ],
+    "offerTimes": [
+      "2 hours ago",
+      "5 hours ago",
+      "1 day ago"
+    ],
+    "quickLinks": [
+      "New Listing",
+      "Analytics",
+      "Update Profile"
+    ]
+  },
   "nav": {
     "home": "Home",
     "tools": "Tools",
