@@ -45,10 +45,18 @@ type LeadFormState = {
 
 function detectIntent(text: string): LeadIntent {
   const value = text.toLowerCase();
-  if (value.includes('food') || value.includes('cost') || value.includes('maya')) return 'food_cost';
-  if (value.includes('p&l') || value.includes('pnl') || value.includes('mənfəət') || value.includes('menfeet')) return 'pnl';
+  if (value.includes('food') || value.includes('cost') || value.includes('maya'))
+    return 'food_cost';
+  if (
+    value.includes('p&l') ||
+    value.includes('pnl') ||
+    value.includes('mənfəət') ||
+    value.includes('menfeet')
+  )
+    return 'pnl';
   if (value.includes('aqta') || value.includes('gigiyena')) return 'aqta';
-  if (value.includes('delivery') || value.includes('wolt') || value.includes('bolt')) return 'delivery';
+  if (value.includes('delivery') || value.includes('wolt') || value.includes('bolt'))
+    return 'delivery';
   return 'general';
 }
 
@@ -70,7 +78,9 @@ function lastUserQuestions(messages: Message[], pendingQuestion?: string) {
 export default function FloatingKazanWidget() {
   const t = useTranslations('kazanWidget');
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: t('welcome') }]);
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'assistant', content: t('welcome') },
+  ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [leadSaving, setLeadSaving] = useState(false);
@@ -98,18 +108,21 @@ export default function FloatingKazanWidget() {
   function toolkitAction(intent: LeadIntent) {
     if (intent === 'pnl') return { label: t('toolAction.pnl'), href: '/toolkit/pnl' };
     if (intent === 'aqta') return { label: t('toolAction.aqta'), href: '/toolkit/aqta-checklist' };
-    if (intent === 'delivery') return { label: t('toolAction.delivery'), href: '/toolkit/delivery-calc' };
+    if (intent === 'delivery')
+      return { label: t('toolAction.delivery'), href: '/toolkit/delivery-calc' };
     return { label: t('toolAction.foodCost'), href: '/toolkit/food-cost' };
   }
 
-  const activeIntent = lead?.intent || detectIntent([pendingQuestion, ...messages.map((message) => message.content)].join(' '));
+  const activeIntent =
+    lead?.intent ||
+    detectIntent([pendingQuestion, ...messages.map((message) => message.content)].join(' '));
   const toolAction = toolkitAction(activeIntent);
   const whatsappHref = buildWhatsappLink(
     {
       name: lead?.name || leadForm.name,
       businessType: lead?.businessType || leadForm.businessType,
     },
-    lastUserQuestions(messages, pendingQuestion),
+    lastUserQuestions(messages, pendingQuestion)
   );
 
   useEffect(() => {
@@ -141,7 +154,9 @@ export default function FloatingKazanWidget() {
     });
   }
 
-  async function patchLead(payload: Partial<{ whatsappHandoff: boolean; meetingRequested: boolean; status: string }>) {
+  async function patchLead(
+    payload: Partial<{ whatsappHandoff: boolean; meetingRequested: boolean; status: string }>
+  ) {
     if (!lead?.id) return;
     try {
       await fetch('/api/kazan-ai/leads', {
@@ -215,7 +230,10 @@ export default function FloatingKazanWidget() {
 
     setLeadSaving(true);
     setLeadError('');
-    const questionForIntent = pendingQuestion || messages.filter((message) => message.role === 'user').at(-1)?.content || '';
+    const questionForIntent =
+      pendingQuestion ||
+      messages.filter((message) => message.role === 'user').at(-1)?.content ||
+      '';
 
     try {
       const response = await fetch('/api/kazan-ai/leads', {
@@ -307,7 +325,7 @@ export default function FloatingKazanWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.2 }}
-            className="mb-3 flex h-[min(680px,calc(100vh-96px))] w-[calc(100vw-20px)] max-w-[460px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:mb-4 sm:h-[min(720px,calc(100vh-110px))] sm:w-[calc(100vw-32px)]"
+            className="mb-3 flex h-[min(680px,calc(100dvh-96px))] w-[calc(100vw-20px)] max-w-[460px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:mb-4 sm:h-[min(720px,calc(100dvh-110px))] sm:w-[calc(100vw-32px)]"
           >
             <div className="flex items-center justify-between bg-[var(--dk-navy)] px-5 py-4 text-white">
               <div className="flex items-center gap-3">
@@ -333,9 +351,15 @@ export default function FloatingKazanWidget() {
               </button>
             </div>
 
-            <div ref={messagesRef} className="flex-1 space-y-3 overflow-y-auto bg-slate-50 px-4 py-4">
+            <div
+              ref={messagesRef}
+              className="flex-1 space-y-3 overflow-y-auto bg-slate-50 px-4 py-4"
+            >
               {messages.map((message, index) => (
-                <div key={`${message.role}-${index}`} className={message.role === 'user' ? 'flex justify-end' : 'flex justify-start'}>
+                <div
+                  key={`${message.role}-${index}`}
+                  className={message.role === 'user' ? 'flex justify-end' : 'flex justify-start'}
+                >
                   <div
                     className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-6 ${
                       message.role === 'user'
@@ -346,7 +370,9 @@ export default function FloatingKazanWidget() {
                     {message.role === 'assistant' ? (
                       <>
                         <div className="prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-1 prose-a:text-[var(--dk-red)]">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {message.content}
+                          </ReactMarkdown>
                         </div>
                         {index > 0 ? renderAssistantActions() : null}
                       </>
@@ -373,39 +399,53 @@ export default function FloatingKazanWidget() {
               ) : null}
 
               {leadGateOpen ? (
-                <form onSubmit={submitLead} className="rounded-2xl border border-[var(--dk-gold)] bg-white p-4">
+                <form
+                  onSubmit={submitLead}
+                  className="rounded-2xl border border-[var(--dk-gold)] bg-white p-4"
+                >
                   <div className="mb-3 flex items-start gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-[var(--dk-gold)]">
                       <Bot size={20} />
                     </div>
                     <div>
-                      <p className="text-sm font-black text-[var(--dk-navy)]">{t('leadFormTitle')}</p>
+                      <p className="text-sm font-black text-[var(--dk-navy)]">
+                        {t('leadFormTitle')}
+                      </p>
                       <p className="mt-1 text-xs leading-5 text-slate-500">{t('leadFormDesc')}</p>
                     </div>
                   </div>
                   <div className="grid gap-2">
                     <input
                       value={leadForm.name}
-                      onChange={(event) => setLeadForm((current) => ({ ...current, name: event.target.value }))}
+                      onChange={(event) =>
+                        setLeadForm((current) => ({ ...current, name: event.target.value }))
+                      }
                       placeholder={t('namePlaceholder')}
                       className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <input
                       value={leadForm.phone}
-                      onChange={(event) => setLeadForm((current) => ({ ...current, phone: event.target.value }))}
+                      onChange={(event) =>
+                        setLeadForm((current) => ({ ...current, phone: event.target.value }))
+                      }
                       placeholder={t('phonePlaceholder')}
                       className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <input
                       value={leadForm.email}
-                      onChange={(event) => setLeadForm((current) => ({ ...current, email: event.target.value }))}
+                      onChange={(event) =>
+                        setLeadForm((current) => ({ ...current, email: event.target.value }))
+                      }
                       placeholder={t('emailPlaceholder')}
                       className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
                     />
                     <select
                       value={leadForm.businessType}
                       onChange={(event) =>
-                        setLeadForm((current) => ({ ...current, businessType: event.target.value as BusinessType }))
+                        setLeadForm((current) => ({
+                          ...current,
+                          businessType: event.target.value as BusinessType,
+                        }))
                       }
                       className="min-h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[var(--dk-gold)]"
                     >
@@ -416,7 +456,9 @@ export default function FloatingKazanWidget() {
                       ))}
                     </select>
                   </div>
-                  {leadError ? <p className="mt-2 text-xs font-semibold text-[var(--dk-red)]">{leadError}</p> : null}
+                  {leadError ? (
+                    <p className="mt-2 text-xs font-semibold text-[var(--dk-red)]">{leadError}</p>
+                  ) : null}
                   <button
                     type="submit"
                     disabled={leadSaving}
@@ -472,7 +514,9 @@ export default function FloatingKazanWidget() {
                   <Send size={17} />
                 </button>
               </form>
-              <p className="mt-2 text-center text-[11px] font-medium text-slate-400">{t('aiDisclaimer')}</p>
+              <p className="mt-2 text-center text-[11px] font-medium text-slate-400">
+                {t('aiDisclaimer')}
+              </p>
             </div>
           </motion.section>
         ) : null}
