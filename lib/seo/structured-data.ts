@@ -30,6 +30,18 @@ export function organizationNode(): JsonLd {
   };
 }
 
+/** WebSite entity — reinforces the brand site in AI knowledge graphs. */
+export function websiteNode(): JsonLd {
+  return {
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    name: ORG_NAME,
+    url: SITE_URL,
+    inLanguage: 'az',
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  };
+}
+
 /** Breadcrumb trail — helps AI understand site structure. */
 export function breadcrumbNode(items: Array<{ name: string; url: string }>): JsonLd {
   return {
@@ -77,6 +89,71 @@ export function articleNode(input: ArticleNodeInput): JsonLd {
     wordCount: input.wordCount,
     isAccessibleForFree: input.isAccessibleForFree,
   };
+}
+
+/**
+ * Extract FAQ pairs from markdown. Looks for an FAQ section heading
+ * (FAQ / Suallar / Sual-Cavab / Tez-tez verilən suallar) then reads the
+ * questions under it as `### question` headings or `**question?**` bold lines.
+ * Returns [] when no FAQ section is present (so no FAQPage is emitted).
+ */
+export function extractFaqFromMarkdown(md: string): Array<{ question: string; answer: string }> {
+  if (!md) return [];
+  const lines = md.split('\n');
+  const headingRe = /^(#{2,4})\s*(.+?)\s*$/;
+  const faqLabel = /(faq|sual-?cavab|tez-?tez ver|suallar)/i;
+
+  let start = -1;
+  let faqLevel = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(headingRe);
+    if (m && faqLabel.test(m[2])) {
+      start = i + 1;
+      faqLevel = m[1].length;
+      break;
+    }
+  }
+  if (start === -1) return [];
+
+  // Section ends at the next heading of level <= faqLevel.
+  let end = lines.length;
+  for (let i = start; i < lines.length; i++) {
+    const m = lines[i].match(headingRe);
+    if (m && m[1].length <= faqLevel) {
+      end = i;
+      break;
+    }
+  }
+
+  const section = lines.slice(start, end);
+  const faqs: Array<{ question: string; answer: string }> = [];
+  let q = '';
+  let a: string[] = [];
+
+  const pushPair = () => {
+    const answer = a.join(' ').replace(/\s+/g, ' ').trim();
+    if (q && answer) faqs.push({ question: q, answer });
+  };
+
+  for (const raw of section) {
+    const line = raw.trim();
+    const sub = line.match(/^#{3,4}\s*(.+?)\s*$/);
+    const bold = line.match(/^\*\*(.+?\?)\*\*\s*(.*)$/);
+    if (sub) {
+      pushPair();
+      q = sub[1].replace(/[*_`]/g, '').trim();
+      a = [];
+    } else if (bold) {
+      pushPair();
+      q = bold[1].replace(/[*_`]/g, '').trim();
+      a = bold[2] ? [bold[2]] : [];
+    } else if (q && line) {
+      // strip leading list/quote/heading markers + emphasis, keep in-word hyphens
+      a.push(line.replace(/^[-*>#\s]+/, '').replace(/[*_`]/g, ''));
+    }
+  }
+  pushPair();
+  return faqs.slice(0, 10);
 }
 
 /** FAQPage entity — highest immediate impact for answer engines (AEO). */
