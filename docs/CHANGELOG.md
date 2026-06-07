@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0211` perf(logo): optimized `logo-mobil.png` from 1.2 MB / 1254×1254 to ~9 KB / 144×144. The logo (Header, Footer, B2B sidebar — displayed at ≤48px) was shipping a >1 MB image on every page load. Filename unchanged, so no PROTECTED file edits.
+
 ### Added
 - `TASK-0210` infra(agents): `AGENTS.md` — thin cross-tool agent instruction file (open AGENTS.md standard) so Codex and other agents load the same rules as Claude Code, pointing to canonical sources (CLAUDE.md, CLAUDE-BRAIN.md, LESSONS.md) without duplication.
 - `TASK-0209` infra(skills): real Agent Skills (agentskills.io format) replacing the paper SKILL-MATRIX — 3 auto-loading reference skills (`dk-deploy-reality`, `dk-i18n-pattern`, `dk-design-system`) and 3 task skills (`/dk-new-tool`, `/dk-release`, `/dk-blog-publish`), built around real recurring pain (404/503/deploy gap, i18n, blog drift). `dk-validator` agent gained `memory: project` (native persistent memory). Step 3/3 of the Claude memory/skill infrastructure.
