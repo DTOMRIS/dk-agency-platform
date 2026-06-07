@@ -1,18 +1,20 @@
 /**
- * Append an FAQ section to blog-29 (marka / trademark article) in the DB so it
- * gets an FAQPage JSON-LD (TASK-0217 parser) and shows a FAQ block on the page.
+ * Append an FAQ section to the trademark blog post (blog-29) in the DB so it
+ * earns an FAQPage JSON-LD (TASK-0217 parser) and shows a FAQ block.
  *
  * DB-first (L-037): content lives in blog_posts.content_az. Run locally where
  * DATABASE_URL is reachable:
  *   node --env-file=.env.local scripts/blog-29-faq.mjs
+ *   node --env-file=.env.local scripts/blog-29-faq.mjs <slug>   # optional override
  *
- * Idempotent: skips if the FAQ section already exists.
+ * Self-discovering: if the slug is unknown it finds the post by the unique
+ * "Hungry Jack" phrase. Idempotent: skips if the FAQ already exists.
  */
 import { neon } from '@neondatabase/serverless';
 
 const sql = neon(process.env.DATABASE_URL);
 
-const SLUG = 'marka-starbucks-sansi-burger-king-dersi';
+const SLUG_GUESS = process.argv[2] || 'marka-starbucks-sansi-burger-king-dersi';
 
 const FAQ_MD = `## Suallar və cavablar
 
@@ -35,34 +37,58 @@ Tabelanı asmadan əvvəl adını qeydiyyatdan keçir. Addım-addım proses üç
 
 const MARKER = '## DK Agency necə kömək edir?';
 
+async function findPost() {
+  // 1) exact slug
+  let rows = await sql`SELECT id, slug, content_az FROM blog_posts WHERE slug = ${SLUG_GUESS}`;
+  if (rows.length) return rows[0];
+
+  // 2) self-discover by the unique "Hungry Jack" phrase (or title)
+  rows = await sql`
+    SELECT id, slug, content_az FROM blog_posts
+    WHERE content_az ILIKE '%Hungry Jack%'
+       OR content_az ILIKE '%Starbucks Var Uzaqda%'
+       OR title ILIKE '%Starbucks%'
+    LIMIT 5`;
+  if (rows.length === 1) {
+    console.log(`ℹ️  Slug avtomatik tapıldı: '${rows[0].slug}'`);
+    return rows[0];
+  }
+  if (rows.length > 1) {
+    console.error('Birdən çox uyğunluq — slug-u arqument kimi ver:');
+    rows.forEach((r) => console.error(`  - ${r.slug}`));
+    return null;
+  }
+  return null;
+}
+
 async function main() {
   if (!process.env.DATABASE_URL) {
     console.error('DATABASE_URL yoxdur. İşlət: node --env-file=.env.local scripts/blog-29-faq.mjs');
     process.exit(1);
   }
 
-  const rows = await sql`SELECT id, content_az FROM blog_posts WHERE slug = ${SLUG}`;
-  if (!rows.length) {
-    console.error(`Tapılmadı: slug='${SLUG}'. Düzgün slug-u ver.`);
+  const post = await findPost();
+  if (!post) {
+    console.error('Tapılmadı. Son 10 blog slug-u (blog-29-u seç, sonra arqument kimi ver):');
+    const recent = await sql`SELECT slug, title FROM blog_posts ORDER BY created_at DESC LIMIT 10`;
+    recent.forEach((r) => console.error(`  - ${r.slug}  (${r.title})`));
     process.exit(1);
   }
 
-  const { id, content_az } = rows[0];
-  if (content_az.includes('## Suallar və cavablar')) {
-    console.log('FAQ artıq var — dəyişiklik edilmədi (idempotent).');
+  if (post.content_az.includes('## Suallar və cavablar')) {
+    console.log(`FAQ artıq var (slug='${post.slug}') — dəyişiklik edilmədi (idempotent).`);
     return;
   }
 
   let next;
-  if (content_az.includes(MARKER)) {
-    // insert the FAQ right before the "DK Agency necə kömək edir?" CTA section
-    next = content_az.replace(MARKER, `${FAQ_MD}---\n\n${MARKER}`);
+  if (post.content_az.includes(MARKER)) {
+    next = post.content_az.replace(MARKER, `${FAQ_MD}---\n\n${MARKER}`);
   } else {
-    next = `${content_az.trimEnd()}\n\n${FAQ_MD}`;
+    next = `${post.content_az.trimEnd()}\n\n${FAQ_MD}`;
   }
 
-  await sql`UPDATE blog_posts SET content_az = ${next}, updated_at = now() WHERE id = ${id}`;
-  console.log(`✅ FAQ əlavə olundu (blog id=${id}). FAQPage avtomatik işə düşəcək (deploy sonrası).`);
+  await sql`UPDATE blog_posts SET content_az = ${next}, updated_at = now() WHERE id = ${post.id}`;
+  console.log(`✅ FAQ əlavə olundu (slug='${post.slug}', id=${post.id}). FAQPage avtomatik işə düşəcək (deploy sonrası).`);
 }
 
 main().catch((e) => {
