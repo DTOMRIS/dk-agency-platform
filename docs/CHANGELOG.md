@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `TASK-0207` infra(memory): SessionStart "brain" injection — `.claude/memory/CLAUDE-BRAIN.md` (curated rules, architecture invariants, deploy reality, recurring traps) is auto-loaded into every new session via `scripts/session-brain.mjs` so Claude starts with full project knowledge instead of from zero (compact-context-loss fix; step 1/3 of the Claude memory/skill infrastructure).
+
 ### Fixed
 - `TASK-0200` Fixed cover image 404s on the blog detail page by ensuring relative DB paths (e.g. `images/blog-13.png`) are resolved with a leading slash `/` inside `resolveLocalCover`.
 - `TASK-0200` Synchronized static config slug `isleyen-franchise-təhvil almaq` to `isleyen-franchise-devralmaq` to match the database and support proper fallback resolutions.

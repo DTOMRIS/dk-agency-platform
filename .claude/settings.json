@@ -66,8 +66,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"additionalContext\": \"Branch: '$(git branch --show-current)' | Last commit: '$(git log -1 --format=%s)' | Read docs/LESSONS.md before any task.\"}'",
-            "timeout": 5
+            "command": "node scripts/session-brain.mjs",
+            "timeout": 10
           }
         ]
       }
