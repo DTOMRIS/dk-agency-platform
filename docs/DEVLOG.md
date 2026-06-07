@@ -1,5 +1,18 @@
 # DK Agency Platform — Dev Log
 
+## 2026-06-07 — TASK-0235 (Sector Cards, Zona 2 Light)
+
+**Scope:** Launch sprint block 2/9. Add the AI Studio-inspired sector selector beneath the dark Hero without changing the existing Hero or Header work.
+
+**Changes:**
+1. Added a five-card `SectorSelector` for Restaurant, Cafe, Hotel, Fast Food, and Catering with localized names and descriptions.
+2. Restaurant is the featured card with the brand-red border; all cards lift softly and reveal the localized explore action on hover or keyboard focus.
+3. The grid renders two columns on mobile, three on medium screens, and five on desktop.
+4. Restaurant, Cafe, and Hotel use their dedicated sector routes. Fast Food and Catering use locale-aware filtered Toolkit links because dedicated sector configs do not exist.
+5. Added complete `home.sectors` translations for AZ, EN, RU, and TR and placed the component immediately after Hero.
+
+**Guardrails:** No protected files changed. TASK-0235 is based on TASK-0234 for local review and merge ordering only; neither task is merged automatically.
+
 ## 2026-06-07 — TASK-0234 (NAV Logo + Hero, Zona 1 Dark)
 
 **Scope:** Launch sprint block 1/9. Upgrade the first viewport without changing Header authentication behavior or existing hero messaging.

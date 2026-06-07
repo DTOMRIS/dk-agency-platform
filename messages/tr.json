@@ -3204,6 +3204,24 @@
       "imagePlaceholder": "Fotoğraf yakında",
       "stat": { "value": "+34%", "label": "Operasyon verimliliği" }
     },
+    "sectors": {
+      "badge": "Sektörünüzü seçin",
+      "title": "Hangi sektördesiniz?",
+      "subtitle": "Her sektör için özel araçlar, tavsiyeler ve rehberler hazırladık",
+      "explore": "Keşfet",
+      "items": {
+        "restoran": "Restoran",
+        "restoranSub": "Tam servis / Casual",
+        "kafe": "Kafe",
+        "kafeSub": "Specialty / Zincir",
+        "otel": "Otel & Pansiyon",
+        "otelSub": "Butik / Mid-scale",
+        "fastFood": "Fast Food",
+        "fastFoodSub": "QSR / Dark kitchen",
+        "catering": "Catering",
+        "cateringSub": "Banket / Kurumsal"
+      }
+    },
     "platformCards": {
       "eyebrow": "Platform",
       "heading": "Üç araç, bir ekosistem",

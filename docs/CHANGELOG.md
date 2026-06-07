@@ -5,6 +5,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0235` feat(home): adds the localized five-card sector selector directly after the dark Hero. The light-zone grid highlights Restaurant, reveals the explore action on hover/focus, uses two columns on mobile and five on desktop, and routes unsupported Fast Food/Catering sector pages to filtered Toolkit destinations.
 - `TASK-0234` feat(home): launch sprint block 1/9 adds the optimized DK logo and localized AI HoReCa tagline to the dark navigation zone, converts the hero to the dark Zona 1 treatment, and adds a desktop photo placeholder with a localized `+34%` floating operations-efficiency stat card. Existing hero copy, CTAs, mobile hiding behavior, and Header auth/session logic remain intact.
 
 ### Changed

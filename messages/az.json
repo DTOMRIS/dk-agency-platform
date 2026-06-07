@@ -3204,6 +3204,24 @@
       "imagePlaceholder": "Foto tezliklə",
       "stat": { "value": "+34%", "label": "Əməliyyat effektivliyi" }
     },
+    "sectors": {
+      "badge": "Sektorunuzu seçin",
+      "title": "Sən hansı sektordasan?",
+      "subtitle": "Hər sektor üçün xüsusi alətlər, məsləhətlər və bələdçilər hazırladıq",
+      "explore": "Kəşf et",
+      "items": {
+        "restoran": "Restoran",
+        "restoranSub": "Tam servis / Casual",
+        "kafe": "Kafe",
+        "kafeSub": "Specialty / Şəbəkə",
+        "otel": "Otel & Pansiyon",
+        "otelSub": "Butik / Mid-scale",
+        "fastFood": "Fast Food",
+        "fastFoodSub": "QSR / Dark kitchen",
+        "catering": "Catering",
+        "cateringSub": "Banket / Korporativ"
+      }
+    },
     "platformCards": {
       "eyebrow": "Platforma",
       "heading": "Üç alət, bir ekosistem",

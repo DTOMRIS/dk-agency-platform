@@ -13,6 +13,7 @@ import ToolkitShowcase from '@/components/ToolkitShowcase';
 import { PlatformCards } from '@/components/home/PlatformCards';
 import { DoganNote } from '@/components/home/DoganNote';
 import { AhilikValues } from '@/components/home/AhilikValues';
+import { SectorSelector } from '@/components/home/SectorSelector';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
@@ -154,6 +155,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
       <Hero />
+      <SectorSelector />
       <AiReadinessScore />
       <PlatformCards />
       <ToolkitShowcase />

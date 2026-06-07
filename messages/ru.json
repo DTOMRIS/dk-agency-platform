@@ -3204,6 +3204,24 @@
       "imagePlaceholder": "Фото скоро появится",
       "stat": { "value": "+34%", "label": "Эффективность операций" }
     },
+    "sectors": {
+      "badge": "Выберите сектор",
+      "title": "Какой у вас сектор?",
+      "subtitle": "Для каждого сектора мы подготовили специальные инструменты, советы и руководства",
+      "explore": "Открыть",
+      "items": {
+        "restoran": "Ресторан",
+        "restoranSub": "Полный сервис / Casual",
+        "kafe": "Кафе",
+        "kafeSub": "Specialty / Сеть",
+        "otel": "Отель и пансион",
+        "otelSub": "Бутик / Mid-scale",
+        "fastFood": "Фастфуд",
+        "fastFoodSub": "QSR / Dark kitchen",
+        "catering": "Кейтеринг",
+        "cateringSub": "Банкеты / Корпоративы"
+      }
+    },
     "platformCards": {
       "eyebrow": "Платформа",
       "heading": "Три инструмента, одна экосистема",

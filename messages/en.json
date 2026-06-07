@@ -3204,6 +3204,24 @@
       "imagePlaceholder": "Photo coming soon",
       "stat": { "value": "+34%", "label": "Operational efficiency" }
     },
+    "sectors": {
+      "badge": "Choose your sector",
+      "title": "What's your sector?",
+      "subtitle": "Explore purpose-built tools, advice, and guides for every sector",
+      "explore": "Explore",
+      "items": {
+        "restoran": "Restaurant",
+        "restoranSub": "Full service / Casual",
+        "kafe": "Cafe",
+        "kafeSub": "Specialty / Chain",
+        "otel": "Hotel & Guesthouse",
+        "otelSub": "Boutique / Mid-scale",
+        "fastFood": "Fast Food",
+        "fastFoodSub": "QSR / Dark kitchen",
+        "catering": "Catering",
+        "cateringSub": "Banquet / Corporate"
+      }
+    },
     "platformCards": {
       "eyebrow": "Platform",
       "heading": "Three tools, one ecosystem",
