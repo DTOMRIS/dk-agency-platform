@@ -7,7 +7,7 @@
 
 export type FranchiseEntryModel = 'unit_franchise' | 'master_license' | 'country_license';
 
-export type FranchiseSector = 'qsr' | 'coffee' | 'dessert' | 'fast_casual' | 'education' | 'hotel';
+export type FranchiseSector = 'qsr' | 'coffee' | 'dessert' | 'fast_casual' | 'education' | 'hotel' | 'convenience';
 
 export type AzStatus = 'not_present' | 'under_research' | 'coming_soon';
 

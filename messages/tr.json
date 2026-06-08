@@ -38,7 +38,8 @@
       "dessert": "Tatlı",
       "fast_casual": "Fast Casual",
       "education": "Eğitim",
-      "hotel": "Otel"
+      "hotel": "Otel",
+      "convenience": "Market (Convenience)"
     },
     "entryModel": {
       "unit_franchise": "Tekil Franchise",
@@ -58,7 +59,9 @@
       "dunkin": "Kahve ve donut kategorisi Bakü’de zayıf rekabetli. Dunkin’in geniş fiyat aralığı hızlı zincir kurmaya imkan verir.",
       "baskinRobbins": "31 çeşit dondurma markası aile ve genç segment için tanınır; düşük giriş yatırımıyla merkez lokasyonlarda güçlü.",
       "kumon": "Japon matematik ve okuma metodolojisi; eğitime yüksek talepli Bakü’de düşük yatırımla sürekli abonelik geliri.",
-      "gonulKahvesi": "Türk kahve markası, kültürel yakınlık avantajı; yatırım verisi netleştiriliyor."
+      "gonulKahvesi": "Türk kahve markası, kültürel yakınlık avantajı; yatırım verisi netleştiriliyor.",
+      "sevenEleven": "Dünyada 84.000+ mağazayla en büyük convenience store ağı. Azerbaycan'da SPAR benzeri marketler zaten in-store gurme alanları açıyor — 7-Eleven bu modele birebir uyar.",
+      "arbys": "Roast beef QSR lideri, Inspire Brands ailesinden. Türkiye'de zaten faaliyet gösteriyor (TAB Gıda). Azerbaycan'a en yakın bölgesel master franchise sahipleri mevcut."
     }
   },
   "b2bPanel": {
