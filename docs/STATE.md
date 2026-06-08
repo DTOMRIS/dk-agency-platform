@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-07T18:25:17.731Z
+- GeneratedAt: 2026-06-08T05:08:45.149Z
 - BuildStatus: PASS
 
-## Routes (235)
+## Routes (239)
 - /
 - /[locale]
 - /[locale]/about
@@ -34,6 +34,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/blog/[slug]
 - /[locale]/dashboard/blog/new
 - /[locale]/dashboard/blog/yeni
+- /[locale]/dashboard/contact-tracking
 - /[locale]/dashboard/deal-flow
 - /[locale]/dashboard/duyurular
 - /[locale]/dashboard/etkinlikler
@@ -41,6 +42,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/faturalar
 - /[locale]/dashboard/faturalar/[id]
 - /[locale]/dashboard/food-cost
+- /[locale]/dashboard/franchise-leads
 - /[locale]/dashboard/haberler
 - /[locale]/dashboard/hero
 - /[locale]/dashboard/ilan-onaylari
@@ -158,6 +160,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/blog/[slug]
 - /dashboard/blog/new
 - /dashboard/blog/yeni
+- /dashboard/contact-tracking
 - /dashboard/deal-flow
 - /dashboard/duyurular
 - /dashboard/etkinlikler
@@ -165,6 +168,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/faturalar
 - /dashboard/faturalar/[id]
 - /dashboard/food-cost
+- /dashboard/franchise-leads
 - /dashboard/funnel
 - /dashboard/haberler
 - /dashboard/hero
