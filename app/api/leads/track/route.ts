@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
+import { wrapEmail } from '@/lib/email/templates';
 
 const ALLOWED_CHANNELS = ['kazan', 'whatsapp', 'telegram'] as const;
 const ALLOWED_SOURCES = ['contact_page'] as const;
@@ -67,14 +68,19 @@ export async function POST(req: NextRequest) {
 
     if (channel === 'whatsapp' || channel === 'telegram') {
       const adminEmail = process.env.ADMIN_EMAIL ?? 'info@dkagency.com.tr';
-      const subject = `[DK Lead] Əlaqə səhifəsi — ${channel}`;
-      const html = `
-        <table style="font-family:sans-serif;font-size:14px;color:#1a1a1a;border-collapse:collapse;width:100%;max-width:480px">
-          <tr><td style="padding:8px 0;border-bottom:1px solid #e5e7eb"><strong>Kanal</strong></td><td style="padding:8px 0;border-bottom:1px solid #e5e7eb">${channel}</td></tr>
-          <tr><td style="padding:8px 0;border-bottom:1px solid #e5e7eb"><strong>Dil</strong></td><td style="padding:8px 0;border-bottom:1px solid #e5e7eb">${locale}</td></tr>
-          <tr><td style="padding:8px 0"><strong>Vaxt</strong></td><td style="padding:8px 0">${createdAt.toISOString()}</td></tr>
+      const channelLabel = channel === 'whatsapp' ? 'WhatsApp' : 'Telegram';
+      const subject = `[DK Lead] Əlaqə səhifəsi — ${channelLabel}`;
+      const html = wrapEmail(`
+        <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">Əlaqə Səhifəsi — ${channelLabel}</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <tr><td style="padding:8px 0;color:#64748b;width:100px">Kanal:</td><td style="padding:8px 0;font-weight:700">${channelLabel}</td></tr>
+          <tr><td style="padding:8px 0;color:#64748b">Dil:</td><td style="padding:8px 0">${locale.toUpperCase()}</td></tr>
+          <tr><td style="padding:8px 0;color:#64748b">Vaxt:</td><td style="padding:8px 0">${createdAt.toISOString()}</td></tr>
         </table>
-      `;
+        <p style="margin-top:20px;">
+          <a href="https://dkagency.com.tr/dashboard/contact-tracking" style="display:inline-block;background:#E11D48;color:#ffffff;padding:12px 24px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:14px;">Tracking-ə bax</a>
+        </p>
+      `);
       sendSmtpEmail(adminEmail, subject, html).catch(() => undefined);
     }
 

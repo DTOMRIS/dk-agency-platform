@@ -290,6 +290,30 @@ export const leads = pgTable(
   }),
 );
 
+// ── EMAIL PREFERENCES (KVKK/GDPR consent) ───────────────────────────
+
+export const emailPreferences = pgTable(
+  'email_preferences',
+  {
+    id: serial('id').primaryKey(),
+    userId: integer('user_id').references(() => users.id, { onDelete: 'cascade' }),
+    email: varchar('email', { length: 255 }).notNull().unique(),
+    newsletterSubscribed: boolean('newsletter_subscribed').notNull().default(true),
+    blogDigestSubscribed: boolean('blog_digest_subscribed').notNull().default(true),
+    productUpdatesSubscribed: boolean('product_updates_subscribed').notNull().default(true),
+    adminDigestSubscribed: boolean('admin_digest_subscribed').notNull().default(true),
+    consentGivenAt: timestamp('consent_given_at', { withTimezone: true }).defaultNow(),
+    consentSource: varchar('consent_source', { length: 50 }).default('signup_form'),
+    unsubscribeToken: varchar('unsubscribe_token', { length: 64 }).unique(),
+    lastUpdatedAt: timestamp('last_updated_at', { withTimezone: true }).defaultNow(),
+  },
+  (table) => ({
+    emailIdx: index('idx_ep_email').on(table.email),
+    userIdx: index('idx_ep_user').on(table.userId),
+    tokenIdx: index('idx_ep_token').on(table.unsubscribeToken),
+  }),
+);
+
 export const kazanLeads = pgTable('kazan_leads', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 150 }).notNull(),
