@@ -10,23 +10,60 @@ function resolveLocale(locale?: Locale | string): Locale {
   return defaultLocale;
 }
 
-function wrapEmail(content: string) {
-  return `
-    <div style="font-family: Inter, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc;">
-      <div style="background: #E94560; padding: 24px; text-align: center;">
-        <img src="https://dkagency.com.tr/images/logo-mobil.png" alt="DK Agency Logo" style="height: 40px; width: auto; display: block; margin: 0 auto;" />
-      </div>
-      <div style="background: #ffffff; padding: 32px;">
-        ${content}
-      </div>
-      <div style="padding: 16px 24px; color: #64748b; font-size: 12px; text-align: center;">
-        &copy; 2026 DK Agency
-      </div>
-    </div>
-  `;
+const BASE_URL = 'https://dkagency.com.tr';
+
+function wrapEmail(content: string, opts?: { unsubscribeUrl?: string }) {
+  const unsub = opts?.unsubscribeUrl
+    ? `<a href="${opts.unsubscribeUrl}" style="color:#94a3b8;text-decoration:underline;">Abunəlikdən çıx</a> &middot; `
+    : '';
+  return `<!DOCTYPE html>
+<html lang="az">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Inter',sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden;">
+
+  <!-- Header — Navy + Logo + Gold Accent -->
+  <tr><td style="background:#1A1A2E;padding:28px 32px;text-align:center;">
+    <img src="${BASE_URL}/images/logo-mobil.png" alt="DK Agency" style="height:44px;width:auto;display:block;margin:0 auto 10px;" />
+    <div style="width:40px;height:2px;background:#C5A022;margin:0 auto 10px;"></div>
+    <div style="color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;">Ustalığın Nişanı &middot; Rəqəmsalın Şəddi</div>
+  </td></tr>
+
+  <!-- Body -->
+  <tr><td style="padding:36px 32px;color:#1F2937;font-size:15px;line-height:1.7;">
+    ${content}
+  </td></tr>
+
+  <!-- Footer -->
+  <tr><td style="background:#f8fafc;padding:20px 32px;text-align:center;border-top:1px solid #E5E7EB;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+      <tr><td align="center" style="padding:0 0 10px;">
+        <a href="mailto:info@dkagency.com.tr" style="color:#64748b;font-size:13px;text-decoration:none;">info@dkagency.com.tr</a>
+        &nbsp;&middot;&nbsp;
+        <a href="https://wa.me/994502566279" style="color:#64748b;font-size:13px;text-decoration:none;">WhatsApp</a>
+        &nbsp;&middot;&nbsp;
+        <a href="https://instagram.com/dkagency.az" style="color:#64748b;font-size:13px;text-decoration:none;">Instagram</a>
+      </td></tr>
+      <tr><td align="center">
+        <p style="margin:0;color:#94a3b8;font-size:11px;">
+          ${unsub}&copy; 2026 DK Agency &middot; Bakı, Azərbaycan
+        </p>
+      </td></tr>
+    </table>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>`;
 }
 
-const ctaStyle = 'display:inline-block;background:#E94560;color:#fff;padding:12px 28px;border-radius:999px;text-decoration:none;font-weight:700;';
+export { wrapEmail, BASE_URL };
+
+const ctaStyle = 'display:inline-block;background:#E11D48;color:#ffffff;padding:14px 32px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:15px;';
 
 export const emailTemplates = {
   emailVerification: (verifyUrl: string, userName: string, locale?: Locale | string): EmailTemplate => {

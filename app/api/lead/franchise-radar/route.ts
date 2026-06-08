@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { franchiseLeads } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
+import { wrapEmail } from '@/lib/email/templates';
 import { getFranchiseBrand } from '@/lib/data/franchiseDirectory';
 import { sql } from 'drizzle-orm';
 import { createHash } from 'crypto';
@@ -68,24 +69,19 @@ async function isRateLimited(ipHash: string): Promise<boolean> {
 }
 
 function adminHtml(data: ValidData, leadId: string): string {
-  return `
-    <div style="font-family:Inter,Arial,sans-serif;max-width:600px;margin:0 auto;background:#f8fafc">
-      <div style="background:#1A1A2E;padding:24px;text-align:center">
-        <div style="color:#C5A022;font-size:24px;font-weight:800">DK Agency</div>
-      </div>
-      <div style="background:#fff;padding:32px">
-        <h2 style="color:#1A1A2E;margin:0 0 16px">Yeni Franchise Radar Lead</h2>
-        <table style="width:100%;border-collapse:collapse;font-size:14px">
-          <tr><td style="padding:8px 0;color:#64748b;width:120px">Brend:</td><td style="padding:8px 0;font-weight:700">${data.brandName}</td></tr>
-          <tr><td style="padding:8px 0;color:#64748b">Ad:</td><td style="padding:8px 0">${data.name}</td></tr>
-          <tr><td style="padding:8px 0;color:#64748b">Əlaqə:</td><td style="padding:8px 0">${data.contact}</td></tr>
-          <tr><td style="padding:8px 0;color:#64748b">Dil:</td><td style="padding:8px 0">${data.locale.toUpperCase()}</td></tr>
-          <tr><td style="padding:8px 0;color:#64748b">Lead ID:</td><td style="padding:8px 0;font-size:12px;color:#94a3b8">${leadId}</td></tr>
-        </table>
-      </div>
-      <div style="padding:16px 24px;color:#64748b;font-size:12px;text-align:center">&copy; 2026 DK Agency</div>
-    </div>
-  `;
+  return wrapEmail(`
+    <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">Yeni Franchise Radar Lead</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <tr><td style="padding:8px 0;color:#64748b;width:120px">Brend:</td><td style="padding:8px 0;font-weight:700">${data.brandName}</td></tr>
+      <tr><td style="padding:8px 0;color:#64748b">Ad:</td><td style="padding:8px 0">${data.name}</td></tr>
+      <tr><td style="padding:8px 0;color:#64748b">Əlaqə:</td><td style="padding:8px 0">${data.contact}</td></tr>
+      <tr><td style="padding:8px 0;color:#64748b">Dil:</td><td style="padding:8px 0">${data.locale.toUpperCase()}</td></tr>
+      <tr><td style="padding:8px 0;color:#64748b">Lead ID:</td><td style="padding:8px 0;font-size:12px;color:#94a3b8">${leadId}</td></tr>
+    </table>
+    <p style="margin-top:20px;">
+      <a href="https://dkagency.com.tr/dashboard/franchise-leads" style="display:inline-block;background:#E11D48;color:#ffffff;padding:12px 24px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:14px;">Lead-ə bax</a>
+    </p>
+  `);
 }
 
 export async function POST(req: NextRequest) {
