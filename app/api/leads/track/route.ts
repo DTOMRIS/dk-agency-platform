@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
+import { sendSmtpEmail } from '@/lib/email/smtp';
 
 const ALLOWED_CHANNELS = ['kazan', 'whatsapp', 'telegram'] as const;
 const ALLOWED_SOURCES = ['contact_page'] as const;
@@ -52,14 +53,30 @@ export async function POST(req: NextRequest) {
     const salt = process.env.IP_HASH_SALT ?? 'fallback-salt-change-me';
     const ipHash = crypto.createHash('sha256').update(ip + salt).digest('hex');
 
+    const locale = normalizeLocale(body.locale);
+    const createdAt = new Date();
+
     await db.insert(leads).values({
       source,
       channel,
-      locale: normalizeLocale(body.locale),
+      locale,
       userAgent: req.headers.get('user-agent'),
       ipHash,
-      createdAt: new Date(),
+      createdAt,
     });
+
+    if (channel === 'whatsapp' || channel === 'telegram') {
+      const adminEmail = process.env.ADMIN_EMAIL ?? 'info@dkagency.com.tr';
+      const subject = `[DK Lead] Əlaqə səhifəsi — ${channel}`;
+      const html = `
+        <table style="font-family:sans-serif;font-size:14px;color:#1a1a1a;border-collapse:collapse;width:100%;max-width:480px">
+          <tr><td style="padding:8px 0;border-bottom:1px solid #e5e7eb"><strong>Kanal</strong></td><td style="padding:8px 0;border-bottom:1px solid #e5e7eb">${channel}</td></tr>
+          <tr><td style="padding:8px 0;border-bottom:1px solid #e5e7eb"><strong>Dil</strong></td><td style="padding:8px 0;border-bottom:1px solid #e5e7eb">${locale}</td></tr>
+          <tr><td style="padding:8px 0"><strong>Vaxt</strong></td><td style="padding:8px 0">${createdAt.toISOString()}</td></tr>
+        </table>
+      `;
+      sendSmtpEmail(adminEmail, subject, html).catch(() => undefined);
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {
