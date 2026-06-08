@@ -97,7 +97,10 @@ export default function EmailPreferencesPage() {
 
   useEffect(() => {
     if (!token) return;
-    void fetchPreferences(token);
+    const timer = setTimeout(() => {
+      void fetchPreferences(token);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [token, fetchPreferences]);
 
   async function handleSave() {
