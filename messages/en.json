@@ -38,7 +38,8 @@
       "dessert": "Dessert",
       "fast_casual": "Fast Casual",
       "education": "Education",
-      "hotel": "Hotel"
+      "hotel": "Hotel",
+      "convenience": "Convenience Store"
     },
     "entryModel": {
       "unit_franchise": "Unit Franchise",
@@ -58,7 +59,9 @@
       "dunkin": "The coffee + donut category is weakly contested in Baku. Dunkin’s wide price range allows building a network quickly.",
       "baskinRobbins": "The 31-flavor ice-cream brand is known to families and youth; strong in central locations with a low entry investment.",
       "kumon": "Japanese math and reading methodology; steady subscription revenue at low investment in education-hungry Baku.",
-      "gonulKahvesi": "Turkish coffee brand with a cultural-proximity advantage; investment data to be confirmed."
+      "gonulKahvesi": "Turkish coffee brand with a cultural-proximity advantage; investment data to be confirmed.",
+      "sevenEleven": "World's largest convenience store chain with 84K+ locations. Azerbaijan already has SPAR-type markets with in-store gourmet areas — 7-Eleven fits this model perfectly.",
+      "arbys": "Roast beef QSR leader, part of Inspire Brands. Already operating in Turkey (TAB Gıda). Regional master franchisees are the closest entry point for Azerbaijan."
     }
   },
   "b2bPanel": {

@@ -24,6 +24,7 @@ const ICONS: Record<string, LucideIcon> = {
   Coffee,
   IceCream,
   GraduationCap,
+  Store,
 };
 
 const ORIGIN_FLAG: Record<string, string> = { US: '🇺🇸', TR: '🇹🇷', JP: '🇯🇵' };

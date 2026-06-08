@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, ChevronDown, ClipboardCheck, FileText, Globe, LayoutGrid, LogOut, Menu, PieChart, UserRound, Wand2, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, ClipboardCheck, FileText, Globe, LayoutGrid, LogOut, Menu, PieChart, Radar, UserRound, Wand2, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import MegaMenu from '@/components/layout/MegaMenu';
@@ -11,10 +11,10 @@ import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale, t
 
 // Inline nav copy — NOT dependent on NextIntlClientProvider (fixes stale locale on client nav)
 const NAV_COPY: Record<Locale, Record<string, string>> = {
-  az: { home:'Ana səhifə', tools:'Alətlər', franchise:'Franchise', listings:'İlanlar', news:'Sektor Nəbzi', blog:'Bloq', panel:'İdarə Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu', frReadiness:'Hazırlıq Testi', frRoi:'ROI Kalkulyatoru', frBuyer:'Alıcı Çek-listi', frBook:'AI Françbuk' },
-  en: { home:'Home', tools:'Tools', franchise:'Franchise', listings:'Listings', news:'Sector Pulse', blog:'Blog', panel:'Control Panel', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu', frReadiness:'Readiness Test', frRoi:'ROI Calculator', frBuyer:'Buyer Checklist', frBook:'AI Franchbook' },
-  ru: { home:'Главная', tools:'Инструменты', franchise:'Франшиза', listings:'Объявления', news:'Пульс сектора', blog:'Блог', panel:'Панель управления', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню', frReadiness:'Тест готовности', frRoi:'ROI Калькулятор', frBuyer:'Чек-лист покупателя', frBook:'AI Франчбук' },
-  tr: { home:'Ana sayfa', tools:'Araçlar', franchise:'Franchise', listings:'İlanlar', news:'Sektör Nabzı', blog:'Blog', panel:'Yönetim Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü', frReadiness:'Hazırlık Testi', frRoi:'ROI Hesaplayıcı', frBuyer:'Alıcı Kontrol Listesi', frBook:'AI Franchise Kitabı' },
+  az: { home:'Ana səhifə', tools:'Alətlər', franchise:'Franchise', listings:'İlanlar', news:'Sektor Nəbzi', blog:'Bloq', panel:'İdarə Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu', frReadiness:'Hazırlıq Testi', frRoi:'ROI Kalkulyatoru', frBuyer:'Alıcı Çek-listi', frBook:'AI Françbuk', frRadar:'Franchise Radar' },
+  en: { home:'Home', tools:'Tools', franchise:'Franchise', listings:'Listings', news:'Sector Pulse', blog:'Blog', panel:'Control Panel', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu', frReadiness:'Readiness Test', frRoi:'ROI Calculator', frBuyer:'Buyer Checklist', frBook:'AI Franchbook', frRadar:'Franchise Radar' },
+  ru: { home:'Главная', tools:'Инструменты', franchise:'Франшиза', listings:'Объявления', news:'Пульс сектора', blog:'Блог', panel:'Панель управления', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню', frReadiness:'Тест готовности', frRoi:'ROI Калькулятор', frBuyer:'Чек-лист покупателя', frBook:'AI Франчбук', frRadar:'Franchise Radar' },
+  tr: { home:'Ana sayfa', tools:'Araçlar', franchise:'Franchise', listings:'İlanlar', news:'Sektör Nabzı', blog:'Blog', panel:'Yönetim Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü', frReadiness:'Hazırlık Testi', frRoi:'ROI Hesaplayıcı', frBuyer:'Alıcı Kontrol Listesi', frBook:'AI Franchise Kitabı', frRadar:'Franchise Radar' },
 };
 
 function getMemberInitials(session: MemberSession) {
@@ -30,6 +30,7 @@ export default function Header() {
   const t = (key: string) => NAV_COPY[currentLocale]?.[key] ?? NAV_COPY.az[key] ?? key;
 
   const franchiseLinks = [
+    { icon: Radar, label: t('frRadar'), href: withLocale(currentLocale, '/franchise/radar') },
     { icon: ClipboardCheck, label: t('frReadiness'), href: withLocale(currentLocale, '/franchise/hazirliq-testi') },
     { icon: PieChart, label: t('frRoi'), href: withLocale(currentLocale, '/franchise/roi-kalkulyatoru') },
     { icon: FileText, label: t('frBuyer'), href: withLocale(currentLocale, '/franchise/alici-cheklisti') },

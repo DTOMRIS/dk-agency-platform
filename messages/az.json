@@ -38,7 +38,8 @@
       "dessert": "Desert",
       "fast_casual": "Fast Casual",
       "education": "Təhsil",
-      "hotel": "Otel"
+      "hotel": "Otel",
+      "convenience": "Convenience Store"
     },
     "entryModel": {
       "unit_franchise": "Unit Franchise",
@@ -58,7 +59,9 @@
       "dunkin": "Qəhvə və donut kateqoriyası Bakıda zəif rəqabətlidir. Dunkin-in geniş qiymət aralığı sürətli şəbəkə qurmağa imkan verir.",
       "baskinRobbins": "31 dadlı dondurma brendi ailə və gənc seqment üçün tanınır; aşağı giriş investisiyası ilə mərkəz lokasyonlarda güclüdür.",
       "kumon": "Yapon riyaziyyat və oxu metodologiyası; təhsilə yüksək tələbatlı Bakıda aşağı investisiya ilə davamlı abunə gəliri.",
-      "gonulKahvesi": "Türk qəhvə brendi, mədəni yaxınlıq üstünlüyü; investisiya datası dəqiqləşdirilir."
+      "gonulKahvesi": "Türk qəhvə brendi, mədəni yaxınlıq üstünlüyü; investisiya datası dəqiqləşdirilir.",
+      "sevenEleven": "Dünyada 84K+ mağaza ilə ən böyük convenience store şəbəkəsi. Azərbaycanda SPAR kimi marketlər artıq in-store gurme alanları açır — 7-Eleven bu modelə tam uyğundur.",
+      "arbys": "Roast beef QSR lideri, Inspire Brands ailəsi. Türkiyədə artıq fəaliyyətdədir (TAB Gıda). Azərbaycana ən yaxın region master-ları mövcuddur."
     }
   },
   "b2bPanel": {
