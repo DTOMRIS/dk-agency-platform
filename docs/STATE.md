@@ -3,7 +3,7 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-08T07:32:19.031Z
+- GeneratedAt: 2026-06-08T18:30:46.999Z
 - BuildStatus: PASS
 
 ## Routes (241)
@@ -249,7 +249,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (83)
+## API Routes (86)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -276,6 +276,9 @@ Auto-generated. Do not edit manually.
 - /api/auth/verify-email
 - /api/blog
 - /api/blog/[slug]
+- /api/cron/admin-digest
+- /api/cron/onboarding-drip
+- /api/cron/weekly-digest
 - /api/email/preferences
 - /api/email/unsubscribe
 - /api/food-cost
