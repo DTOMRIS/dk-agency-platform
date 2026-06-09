@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerMemberSession } from '@/lib/members/server-session';
-import { updateListingStatus } from '@/lib/repositories/listingRepository';
 import type { ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 import { canTransition } from '@/lib/utils/listingStatus';
 import { db, dbAvailable } from '@/lib/db';
 import { listings } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
 import { inArray } from 'drizzle-orm';
 
 export async function PATCH(request: NextRequest) {
@@ -37,6 +35,7 @@ export async function PATCH(request: NextRequest) {
     .from(listings)
     .where(inArray(listings.id, ids));
 
+  const validIds: number[] = [];
   const results = { updated: 0, skipped: 0, errors: [] as string[] };
 
   for (const row of rows) {
@@ -46,12 +45,30 @@ export async function PATCH(request: NextRequest) {
       results.errors.push(`#${row.id}: ${currentStatus} → ${targetStatus} keçid mümkün deyil`);
       continue;
     }
+    validIds.push(row.id);
+  }
 
-    await updateListingStatus(row.id, {
+  if (validIds.length > 0) {
+    const set: Record<string, unknown> = {
       status: targetStatus,
-      rejectedReason: targetStatus === 'rejected' ? rejectedReason : undefined,
-    });
-    results.updated++;
+      updatedAt: new Date(),
+      publishedAt: targetStatus === 'showcase_ready' ? new Date() : null,
+    };
+
+    if (targetStatus === 'rejected' && rejectedReason) {
+      set.rejectedReason = rejectedReason;
+    }
+
+    if (targetStatus === 'showcase_ready') {
+      set.approvedAt = new Date();
+    }
+
+    await db
+      .update(listings)
+      .set(set)
+      .where(inArray(listings.id, validIds));
+
+    results.updated = validIds.length;
   }
 
   return NextResponse.json({ success: true, source: 'db', ...results });

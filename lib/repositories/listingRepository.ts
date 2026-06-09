@@ -110,9 +110,20 @@ export async function getAdminListings(filters: AdminListingFilters = {}) {
 
     const offset = filters.offset || 0;
     const limit = filters.limit || 20;
+
+    const stats = {
+      total: MOCK_LISTINGS.length,
+      pending: MOCK_LISTINGS.filter((item) =>
+        ['submitted', 'ai_checked', 'committee_review'].includes(item.status),
+      ).length,
+      showcase: MOCK_LISTINGS.filter((item) => item.status === 'showcase_ready').length,
+      rejected: MOCK_LISTINGS.filter((item) => item.status === 'rejected').length,
+    };
+
     return {
       items: filtered.slice(offset, offset + limit),
       total: filtered.length,
+      stats,
       source: 'mock' as const,
     };
   }
@@ -130,14 +141,23 @@ export async function getAdminListings(filters: AdminListingFilters = {}) {
   const limit = filters.limit || 20;
   const offset = filters.offset || 0;
 
-  const [rows, countResult] = await Promise.all([
+  const [rows, countResult, statsResult] = await Promise.all([
     db.select().from(listings).where(where).orderBy(desc(listings.createdAt)).limit(limit).offset(offset),
     db.select({ count: sql<number>`count(*)::int` }).from(listings).where(where),
+    db.select({
+      pending: sql<number>`count(*) filter (where status in ('submitted', 'ai_checked', 'committee_review'))::int`,
+      showcase: sql<number>`count(*) filter (where status = 'showcase_ready')::int`,
+      rejected: sql<number>`count(*) filter (where status = 'rejected')::int`,
+      total: sql<number>`count(*)::int`
+    }).from(listings)
   ]);
+
+  const stats = statsResult[0] || { pending: 0, showcase: 0, rejected: 0, total: 0 };
 
   return {
     items: await hydrateListings(rows),
     total: countResult[0]?.count || 0,
+    stats,
     source: 'db' as const,
   };
 }
