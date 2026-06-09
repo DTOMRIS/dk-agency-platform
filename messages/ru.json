@@ -3244,7 +3244,12 @@
   "kazanLeadActions": {
     "updating": "Обновление...",
     "nextStatus": "Далее: {status}",
-    "dismiss": "Отклонить"
+    "dismiss": "Отклонить",
+    "noteToggle": "Заметка / контакт",
+    "noNotes": "Заметок пока нет",
+    "notePlaceholder": "Заметка (напр. позвонил, заинтересован)…",
+    "nextContact": "Следующий контакт:",
+    "saveNote": "Сохранить"
   },
   "listingDetail": {
     "loading": "Загрузка объявления...",

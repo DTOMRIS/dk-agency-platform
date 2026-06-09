@@ -3244,7 +3244,12 @@
   "kazanLeadActions": {
     "updating": "Updating...",
     "nextStatus": "Next: {status}",
-    "dismiss": "Dismiss"
+    "dismiss": "Dismiss",
+    "noteToggle": "Note / contact",
+    "noNotes": "No notes yet",
+    "notePlaceholder": "Note (e.g. called, interested)…",
+    "nextContact": "Next contact:",
+    "saveNote": "Save"
   },
   "listingDetail": {
     "loading": "Loading listing...",
