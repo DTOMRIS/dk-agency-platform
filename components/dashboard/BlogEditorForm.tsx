@@ -106,7 +106,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
 
   const [seoTitleCount, seoDescriptionCount, doganNoteCount] = useMemo(
     () => [post.seoTitle.length, post.seoDescription.length, post.doganNote.length],
-    [post],
+    [post]
   );
 
   const setField = (key: keyof BlogDraft, value: string | number | boolean) =>
@@ -115,12 +115,50 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
   const setGuruBoxField = (index: number, key: 'guru' | 'quote' | 'book', value: string) =>
     setPost((prev) => ({
       ...prev,
-      guruBoxes: prev.guruBoxes.map((item, idx) => (idx === index ? { ...item, [key]: value } : item)),
+      guruBoxes: prev.guruBoxes.map((item, idx) =>
+        idx === index ? { ...item, [key]: value } : item
+      ),
     }));
 
   const showToast = (message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(''), 2200);
+  };
+
+  const [translating, setTranslating] = useState(false);
+  const [translateMsg, setTranslateMsg] = useState('');
+
+  const translateNow = async () => {
+    const slug = initialPost?.slug;
+    if (!slug || translating) return;
+    setTranslating(true);
+    setTranslateMsg('');
+    try {
+      const res = await fetch('/api/blog/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ slug }),
+      });
+      const data = (await res.json()) as {
+        ok?: boolean;
+        langs?: Record<string, string>;
+        error?: string;
+      };
+      if (!res.ok || data.error) {
+        setTranslateMsg(`Tərcümə alınmadı: ${data.error || res.status}`);
+        return;
+      }
+      const l = data.langs || {};
+      const mark = (s?: string) => (s === 'done' ? '✓' : s === 'failed' ? '✗' : '—');
+      setTranslateMsg(
+        `RU ${mark(l.ru)} · EN ${mark(l.en)} · TR ${mark(l.tr)}${data.ok ? '' : ' — bəziləri alınmadı, yenidən cəhd et'}`
+      );
+      router.refresh();
+    } catch {
+      setTranslateMsg('Tərcümə xidməti əlçatmadı — yenidən cəhd et');
+    } finally {
+      setTranslating(false);
+    }
   };
 
   const translateField = (_field: 'title' | 'content', _locale: 'tr' | 'en') => {
@@ -137,7 +175,11 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
       return;
     }
 
-    const compressed = await compressImage(file, { maxWidth: 1200, maxHeight: 1200, maxSizeKB: 500 });
+    const compressed = await compressImage(file, {
+      maxWidth: 1200,
+      maxHeight: 1200,
+      maxSizeKB: 500,
+    });
     setImagePreview(compressed.preview);
     setField('featuredImage', compressed.preview);
     showToast(`Şəkil hazırlandı: ${compressed.reduction}`);
@@ -219,10 +261,31 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             })}
           </div>
 
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => void translateNow()}
+              disabled={!initialPost || translating}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--dk-navy)] px-4 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-slate-300"
+            >
+              {translating ? '⏳ Tərcümə olunur…' : '🌐 Avtomatik tərcümə (RU/EN/TR)'}
+            </button>
+            {!initialPost ? (
+              <span className="text-xs text-slate-500">Əvvəlcə yazını yadda saxla</span>
+            ) : null}
+            {translateMsg ? (
+              <span className="text-xs font-semibold text-slate-700">{translateMsg}</span>
+            ) : null}
+          </div>
+
           <div>
             <label className="mb-2 block text-sm font-bold text-slate-700">
               Başlıq ({activeLocale.toUpperCase()})
-              {activeLocale !== 'az' ? <span className="ml-2 text-xs font-normal text-slate-400">Boşdursa AZ göstərilir</span> : null}
+              {activeLocale !== 'az' ? (
+                <span className="ml-2 text-xs font-normal text-slate-400">
+                  Boşdursa AZ göstərilir
+                </span>
+              ) : null}
             </label>
             <input
               value={post[titleKey(activeLocale)] as string}
@@ -234,7 +297,9 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} tərcümə...` : ''}
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
             />
-            {activeLocale === 'az' && errors.titleAz ? <p className="mt-2 text-xs text-red-600">{errors.titleAz}</p> : null}
+            {activeLocale === 'az' && errors.titleAz ? (
+              <p className="mt-2 text-xs text-red-600">{errors.titleAz}</p>
+            ) : null}
           </div>
 
           <div>
@@ -250,7 +315,11 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           <div className="grid gap-4 md:grid-cols-3">
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Kateqoriya</label>
-              <select value={post.category} onChange={(e) => setField('category', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none">
+              <select
+                value={post.category}
+                onChange={(e) => setField('category', e.target.value)}
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              >
                 {CATEGORY_OPTIONS.map((item) => (
                   <option key={item}>{item}</option>
                 ))}
@@ -259,16 +328,26 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
 
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Mərhələ (Stage)</label>
-              <select value={post.stage} onChange={(e) => setField('stage', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none">
+              <select
+                value={post.stage}
+                onChange={(e) => setField('stage', e.target.value)}
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              >
                 {STAGE_OPTIONS.map((item) => (
-                  <option key={item} value={item}>{item || '— Seçilməyib —'}</option>
+                  <option key={item} value={item}>
+                    {item || '— Seçilməyib —'}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">Müəllif</label>
-              <select value={post.author} onChange={(e) => setField('author', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none">
+              <select
+                value={post.author}
+                onChange={(e) => setField('author', e.target.value)}
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              >
                 {AUTHOR_OPTIONS.map((item) => (
                   <option key={item}>{item}</option>
                 ))}
@@ -294,38 +373,83 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             <label className="mb-2 block text-sm font-bold text-slate-700">Önə çıxan şəkil</label>
             <label className="flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-slate-300 px-4 py-6 text-sm font-semibold text-slate-600">
               Şəkil yüklə
-              <input type="file" accept="image/*" className="hidden" onChange={(e) => void handleImage(e)} />
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => void handleImage(e)}
+              />
             </label>
-            {imagePreview ? <img src={imagePreview} alt="Preview" className="mt-4 h-52 w-full rounded-3xl object-cover" /> : null}
+            {imagePreview ? (
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="mt-4 h-52 w-full rounded-3xl object-cover"
+              />
+            ) : null}
           </div>
         </div>
 
         <div className="space-y-4 rounded-[28px] bg-slate-50 p-5">
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">SEO title ({seoTitleCount}/60)</label>
-            <input maxLength={60} value={post.seoTitle} onChange={(e) => setField('seoTitle', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+            <label className="mb-2 block text-sm font-bold text-slate-700">
+              SEO title ({seoTitleCount}/60)
+            </label>
+            <input
+              maxLength={60}
+              value={post.seoTitle}
+              onChange={(e) => setField('seoTitle', e.target.value)}
+              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+            />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">SEO description ({seoDescriptionCount}/160)</label>
-            <textarea maxLength={160} rows={4} value={post.seoDescription} onChange={(e) => setField('seoDescription', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+            <label className="mb-2 block text-sm font-bold text-slate-700">
+              SEO description ({seoDescriptionCount}/160)
+            </label>
+            <textarea
+              maxLength={160}
+              rows={4}
+              value={post.seoDescription}
+              onChange={(e) => setField('seoDescription', e.target.value)}
+              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+            />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">Doğan notu ({doganNoteCount}/200)</label>
-            <textarea maxLength={200} rows={4} value={post.doganNote} onChange={(e) => setField('doganNote', e.target.value)} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+            <label className="mb-2 block text-sm font-bold text-slate-700">
+              Doğan notu ({doganNoteCount}/200)
+            </label>
+            <textarea
+              maxLength={200}
+              rows={4}
+              value={post.doganNote}
+              onChange={(e) => setField('doganNote', e.target.value)}
+              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+            />
           </div>
 
           <label className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-700">
-            <input type="checkbox" checked={post.paywall} onChange={(e) => setField('paywall', e.target.checked)} />
+            <input
+              type="checkbox"
+              checked={post.paywall}
+              onChange={(e) => setField('paywall', e.target.checked)}
+            />
             30%-dən sonra paywall tətbiq et
           </label>
 
           <div className="space-y-2">
             <div className="text-sm font-bold text-slate-700">Status</div>
             {STATUS_OPTIONS.map((item) => (
-              <label key={item.value} className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm text-slate-700">
-                <input type="radio" checked={post.status === item.value} onChange={() => setField('status', item.value)} />
+              <label
+                key={item.value}
+                className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm text-slate-700"
+              >
+                <input
+                  type="radio"
+                  checked={post.status === item.value}
+                  onChange={() => setField('status', item.value)}
+                />
                 {item.label}
               </label>
             ))}
@@ -338,7 +462,11 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           <div className="flex items-center justify-between">
             <label className="block text-sm font-bold text-slate-700">
               Məzmun ({activeLocale.toUpperCase()})
-              {activeLocale !== 'az' ? <span className="ml-2 text-xs font-normal text-slate-400">Boşdursa AZ göstərilir</span> : null}
+              {activeLocale !== 'az' ? (
+                <span className="ml-2 text-xs font-normal text-slate-400">
+                  Boşdursa AZ göstərilir
+                </span>
+              ) : null}
             </label>
             {activeLocale !== 'az' ? (
               <button
@@ -354,15 +482,24 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             rows={activeLocale === 'az' ? 12 : 10}
             value={post[contentKey(activeLocale)] as string}
             onChange={(e) => setField(contentKey(activeLocale), e.target.value)}
-            placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} məzmun tərcüməsi...` : ''}
+            placeholder={
+              activeLocale !== 'az' ? `${activeLocale.toUpperCase()} məzmun tərcüməsi...` : ''
+            }
             className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
           />
-          {activeLocale === 'az' && errors.contentAz ? <p className="mt-2 text-xs text-red-600">{errors.contentAz}</p> : null}
+          {activeLocale === 'az' && errors.contentAz ? (
+            <p className="mt-2 text-xs text-red-600">{errors.contentAz}</p>
+          ) : null}
 
           {activeLocale !== 'az' && post.contentAz ? (
             <details className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-              <summary className="cursor-pointer text-xs font-bold text-slate-500">AZ mənbə məzmunu (referans)</summary>
-              <pre className="mt-3 max-h-48 overflow-y-auto whitespace-pre-wrap text-xs leading-6 text-slate-600">{post.contentAz.slice(0, 500)}{post.contentAz.length > 500 ? '...' : ''}</pre>
+              <summary className="cursor-pointer text-xs font-bold text-slate-500">
+                AZ mənbə məzmunu (referans)
+              </summary>
+              <pre className="mt-3 max-h-48 overflow-y-auto whitespace-pre-wrap text-xs leading-6 text-slate-600">
+                {post.contentAz.slice(0, 500)}
+                {post.contentAz.length > 500 ? '...' : ''}
+              </pre>
             </details>
           ) : null}
         </div>
@@ -375,7 +512,10 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             type="button"
             onClick={() =>
               post.guruBoxes.length < 5 &&
-              setPost((prev) => ({ ...prev, guruBoxes: [...prev.guruBoxes, { guru: '', quote: '', book: '' }] }))
+              setPost((prev) => ({
+                ...prev,
+                guruBoxes: [...prev.guruBoxes, { guru: '', quote: '', book: '' }],
+              }))
             }
             className="rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700"
           >
@@ -385,11 +525,38 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
 
         <div className="mt-5 grid gap-4">
           {post.guruBoxes.map((box, index) => (
-            <div key={`${box.guru}-${index}`} className="grid gap-4 rounded-3xl bg-slate-50 p-5 md:grid-cols-[1fr_1fr_1fr_auto]">
-              <input value={box.guru} onChange={(e) => setGuruBoxField(index, 'guru', e.target.value)} placeholder="Guru adı" className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-              <input value={box.quote} onChange={(e) => setGuruBoxField(index, 'quote', e.target.value)} placeholder="Sitat" className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-              <input value={box.book} onChange={(e) => setGuruBoxField(index, 'book', e.target.value)} placeholder="Kitab adı" className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-              <button type="button" onClick={() => setPost((prev) => ({ ...prev, guruBoxes: prev.guruBoxes.filter((_, idx) => idx !== index) }))} className="rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700">
+            <div
+              key={`${box.guru}-${index}`}
+              className="grid gap-4 rounded-3xl bg-slate-50 p-5 md:grid-cols-[1fr_1fr_1fr_auto]"
+            >
+              <input
+                value={box.guru}
+                onChange={(e) => setGuruBoxField(index, 'guru', e.target.value)}
+                placeholder="Guru adı"
+                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              />
+              <input
+                value={box.quote}
+                onChange={(e) => setGuruBoxField(index, 'quote', e.target.value)}
+                placeholder="Sitat"
+                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              />
+              <input
+                value={box.book}
+                onChange={(e) => setGuruBoxField(index, 'book', e.target.value)}
+                placeholder="Kitab adı"
+                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setPost((prev) => ({
+                    ...prev,
+                    guruBoxes: prev.guruBoxes.filter((_, idx) => idx !== index),
+                  }))
+                }
+                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700"
+              >
                 ✕
               </button>
             </div>
@@ -398,13 +565,27 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <button type="button" onClick={() => void submitPost('draft')} disabled={submitting} className="rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700 disabled:opacity-60">
+        <button
+          type="button"
+          onClick={() => void submitPost('draft')}
+          disabled={submitting}
+          className="rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700 disabled:opacity-60"
+        >
           Qaralama olaraq saxla
         </button>
-        <button type="button" onClick={() => void submitPost('published')} disabled={submitting} className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white disabled:opacity-60">
+        <button
+          type="button"
+          onClick={() => void submitPost('published')}
+          disabled={submitting}
+          className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
+        >
           Dərc et
         </button>
-        <button type="button" onClick={() => window.open(`/blog/${post.slug || ''}`, '_blank')} className="rounded-full border border-amber-200 bg-amber-50 px-6 py-3 text-sm font-bold text-amber-700">
+        <button
+          type="button"
+          onClick={() => window.open(`/blog/${post.slug || ''}`, '_blank')}
+          className="rounded-full border border-amber-200 bg-amber-50 px-6 py-3 text-sm font-bold text-amber-700"
+        >
           Önizlə
         </button>
       </div>

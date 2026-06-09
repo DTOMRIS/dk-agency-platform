@@ -10,6 +10,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 - `TASK-0223` (SEC-P0) fix(invoices): `/api/invoices` was a P0 IDOR — it trusted a `userId` from the request and had no auth, so anyone could read any user's invoices and **delete ANY invoice by id**. Now GET/POST/DELETE require a logged-in session, the userId is derived from the session (request userId ignored), and `bulkDeleteInvoices` is ownership-scoped. Verified: all endpoints → 401 without session.
 
 ### Added
+- `TASK-0225` feat(blog): auto-translate AZ → ru/en/tr on publish. New `lib/ai/translate.ts` (server-side DeepSeek, timeout, brand guard) + `autoTranslateBlogPost` fills only empty locale fields; `POST /api/blog` fires it fire-and-forget on publish (Hostinger long-running, no serverless timeout). New blog no longer stays AZ-only.
+
+### Added
 - `TASK-0220` feat(leads): WhatsApp/Telegram contact clicks now send admin email notification to `info@dkagency.com.tr`. New `/dashboard/franchise-leads` panel (filter by toolSource, summary cards, full lead table). New `/dashboard/contact-tracking` panel (WhatsApp/Telegram/KAZAN click tracking, last 100 entries, channel filter).
 - `TASK-0219` feat(franchise-radar): Franchise Radar added to navbar as first item in Franchise dropdown. 7-Eleven (convenience sector, master_license, 84K+ units) and Arby's (QSR, Inspire Brands, already in Turkey) added to catalog — now 10 brands. New `convenience` sector type with 4-lang i18n.
 - `TASK-0218` content(blog): blog-29 "Orada Bir Starbucks Var Uzaqda" (Starbucks/Burger King marka qeydiyyatı) added to static config + DB sync (id=149, published, paywall=true, stage=Böyüt, category=marketinq).
