@@ -154,7 +154,10 @@ async function runDripStage(dayOffset: number, builder: EmailBuilder): Promise<D
 
     const unsubscribeUrl = `${BASE_URL}/api/email/unsubscribe?token=${token}&type=product_updates`;
     const { subject, html } = builder(user.name, unsubscribeUrl);
-    const result = await sendSmtpEmail(user.email, subject, html);
+    const result = await sendSmtpEmail(user.email, subject, html, {
+      unsubscribeUrl,
+      listId: 'product-updates.dkagency.com.tr',
+    });
 
     if (result.success) {
       sent++;

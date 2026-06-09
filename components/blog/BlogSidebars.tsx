@@ -8,13 +8,26 @@ import { CATEGORY_CONFIG, type BlogArticle } from '@/lib/data/blogArticles';
 export function NewsletterWidget() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    setLoading(true);
+    setError(false);
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'blog_newsletter' }),
+      });
+      if (!response.ok) throw new Error('Subscription failed');
       setSubscribed(true);
-      setTimeout(() => setSubscribed(false), 3000);
       setEmail('');
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,10 +46,12 @@ export function NewsletterWidget() {
           placeholder="E-poçt ünvanınız"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
           className="mb-3 w-full rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] bg-[var(--dk-night)] px-4 py-3 text-sm text-[var(--dk-text)] placeholder:text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)] transition-all focus:border-[var(--dk-gold)] focus:outline-none"
         />
         <button
           type="submit"
+          disabled={loading}
           className={`w-full rounded-xl py-3 text-sm font-bold transition-all ${
             subscribed ? 'bg-[var(--dk-success)] text-white' : 'bg-[var(--dk-red)] text-white hover:bg-[var(--dk-red-hover)]'
           }`}
@@ -49,6 +64,7 @@ export function NewsletterWidget() {
             'Abunə ol'
           )}
         </button>
+        {error && <p className="mt-2 text-xs text-[var(--dk-red)]">Abunəlik tamamlanmadı. Yenidən cəhd edin.</p>}
       </form>
     </div>
   );
@@ -321,4 +337,3 @@ export function MobileShareBar({ title, url }: ShareButtonsProps) {
     </div>
   );
 }
-
