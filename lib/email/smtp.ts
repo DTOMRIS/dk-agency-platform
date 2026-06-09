@@ -1,29 +1,25 @@
 import nodemailer from 'nodemailer';
 
+import { htmlToPlainText } from './content';
+
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.hostinger.com';
-const SMTP_PORT = Number(process.env.SMTP_PORT || '465');
+const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
-const SMTP_FROM = process.env.SMTP_FROM || 'DK Agency <info@dkagency.com.tr>';
-
-let transporter: nodemailer.Transporter | null = null;
+const SMTP_FROM = process.env.SMTP_FROM || `DK Agency <${SMTP_USER}>`;
 
 function getTransporter() {
-  if (transporter) return transporter;
+  if (!SMTP_USER || !SMTP_PASS) return null;
 
-  if (!SMTP_USER || !SMTP_PASS) {
-    console.warn('[smtp] SMTP_USER or SMTP_PASS not set — emails will be logged only');
-    return null;
-  }
-
-  transporter = nodemailer.createTransport({
+  return nodemailer.createTransport({
     host: SMTP_HOST,
     port: SMTP_PORT,
     secure: SMTP_PORT === 465,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    connectionTimeout: 15_000,
+    greetingTimeout: 15_000,
+    socketTimeout: 30_000,
   });
-
-  return transporter;
 }
 
 export interface SmtpSendResult {
@@ -34,22 +30,42 @@ export interface SmtpSendResult {
 
 export interface EmailAttachment {
   filename: string;
-  content: Buffer;
-  contentType: string;
+  content: Buffer | string;
+  contentType?: string;
+}
+
+export interface SmtpSendOptions {
+  attachments?: EmailAttachment[];
+  text?: string;
+  replyTo?: string;
+  unsubscribeUrl?: string;
+  listId?: string;
 }
 
 export async function sendSmtpEmail(
   to: string,
   subject: string,
   html: string,
-  attachments?: EmailAttachment[],
+  attachmentsOrOptions?: EmailAttachment[] | SmtpSendOptions,
 ): Promise<SmtpSendResult> {
   const transport = getTransporter();
-
   if (!transport) {
-    console.log('[smtp] MOCK — To:', to, '| Subject:', subject);
-    return { success: true, messageId: 'mock-' + Date.now() };
+    return {
+      success: false,
+      error: 'SMTP credentials are not configured',
+    };
   }
+
+  const options = Array.isArray(attachmentsOrOptions)
+    ? { attachments: attachmentsOrOptions }
+    : attachmentsOrOptions || {};
+
+  const headers: Record<string, string> = {};
+  if (options.unsubscribeUrl) {
+    headers['List-Unsubscribe'] = `<${options.unsubscribeUrl}>`;
+    headers['List-Unsubscribe-Post'] = 'List-Unsubscribe=One-Click';
+  }
+  if (options.listId) headers['List-ID'] = options.listId;
 
   try {
     const info = await transport.sendMail({
@@ -57,18 +73,20 @@ export async function sendSmtpEmail(
       to,
       subject,
       html,
-      attachments: attachments?.map((a) => ({
-        filename: a.filename,
-        content: a.content,
-        contentType: a.contentType,
+      text: options.text || htmlToPlainText(html),
+      replyTo: options.replyTo || SMTP_USER,
+      headers,
+      attachments: options.attachments?.map((attachment) => ({
+        filename: attachment.filename,
+        content: attachment.content,
+        contentType: attachment.contentType,
       })),
     });
 
-    console.log('[smtp] Sent:', info.messageId, '→', to);
     return { success: true, messageId: info.messageId };
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    console.error('[smtp] Failed:', message);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown SMTP error';
+    console.error('[smtp] Send failed:', message);
     return { success: false, error: message };
   }
 }

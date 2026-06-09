@@ -73,28 +73,9 @@ const CATEGORIES = [
 
 const STATUSES = ['draft', 'sent', 'meeting', 'converted', 'rejected'] as const;
 
-// ── Mock Data ───────────────────────────────────────────────────────
+// ── Mock Data (Empty Fallbacks) ───────────────────────────────────────
 
-const MOCK_AUDITS: AuditRow[] = [
-  {
-    id: 1, name: 'Şuşa Restoran', address: 'Nizami küç. 45, Bakı', phone: '+994501234567',
-    category: 'restoran', photos: ['https://picsum.photos/400/300?random=1'], status: 'draft',
-    aiAnalysis: { strengths: ['Gözəl interyerə sahib məkan', 'Müştəri rəyləri əsasən müsbətdir'], weaknesses: ['Sosial media aktivliyi aşağıdır', 'Menyu dizaynı köhnəlmişdir'], recommendations: [{ priority: 'yüksək', area: 'Sosial media', action: 'Instagram strategiyası hazırlayın', dkAgencyHelp: 'DK Agency SMM idarəetmə' }], estimatedRevenue: { min: 8000, max: 15000, currency: 'AZN' }, redFlags: [], whatsappTemplate: 'Salam Şuşa Restoran 👋\n\nDK Agency olaraq sizin restoranı araşdırdıq...', summary: 'Güclü interyerə sahib, sosial media inkişaf etdirilməlidir.' },
-    createdAt: '2026-04-29T10:00:00Z',
-  },
-  {
-    id: 2, name: 'Baku Burger', address: 'Əhmədli, Bakı', phone: null,
-    category: 'fast-food', photos: [], status: 'sent',
-    aiAnalysis: { strengths: ['Sürətli xidmət', 'Delivery mövcuddur'], weaknesses: ['Brending zəifdir'], recommendations: [], estimatedRevenue: { min: 5000, max: 10000, currency: 'AZN' }, redFlags: [], whatsappTemplate: '', summary: 'Delivery güclüdür, brending yenilənməlidir.' },
-    createdAt: '2026-04-28T14:00:00Z',
-  },
-  {
-    id: 3, name: 'Nərgiz Kafe', address: 'Xətai pr. 12', phone: '+994551112233',
-    category: 'kafe', photos: ['https://picsum.photos/400/300?random=3', 'https://picsum.photos/400/300?random=4'], status: 'meeting',
-    aiAnalysis: { strengths: ['Rahat atmosfer', 'Heyət dostcasına'], weaknesses: ['Menyu limitlidir'], recommendations: [], estimatedRevenue: { min: 3000, max: 7000, currency: 'AZN' }, redFlags: [], whatsappTemplate: '', summary: 'Kafe seqmentində güclü namizəd.' },
-    createdAt: '2026-04-27T09:00:00Z',
-  },
-];
+const MOCK_AUDITS: AuditRow[] = [];
 
 // ── Helpers ─────────────────────────────────────────────────────────
 

@@ -97,6 +97,7 @@ export default function EmailPreferencesPage() {
 
   useEffect(() => {
     if (!token) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void fetchPreferences(token);
   }, [token, fetchPreferences]);
 

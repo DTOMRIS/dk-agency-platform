@@ -1,7 +1,8 @@
 'use client';
 
-import { startTransition, useEffect, useState } from 'react';
+import { Suspense, startTransition, useEffect, useState } from 'react';
 import Link from 'next/link';
+import PortalEngagementTracker from '@/components/analytics/PortalEngagementTracker';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import {
@@ -105,7 +106,11 @@ export default function B2BSidebar() {
   };
 
   return (
-    <aside className="flex min-h-screen w-72 flex-col border-r border-slate-200 bg-white/80 backdrop-blur-md">
+    <>
+      <Suspense fallback={null}>
+        <PortalEngagementTracker />
+      </Suspense>
+      <aside className="flex min-h-screen w-72 flex-col border-r border-slate-200 bg-white/80 backdrop-blur-md">
       <div className="border-b border-slate-200 p-5">
         <Link href="/b2b-panel" className="group flex items-center gap-3">
           <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-11 w-11 shrink-0 object-contain shadow-sm transition-all group-hover:shadow-md" />
@@ -220,5 +225,5 @@ export default function B2BSidebar() {
         </button>
       </div>
     </aside>
-  );
+  </>);
 }

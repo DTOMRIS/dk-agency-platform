@@ -69,58 +69,21 @@ interface AllData {
   products: TopProductItem[];
 }
 
-// ── Mock Data ───────────────────────────────────────────────────────
+// ── Mock Data (Empty Fallbacks) ───────────────────────────────────────
 
 const MOCK_REPORT: FoodCostReport = {
-  categories: [
-    { categoryId: 1, categoryName: 'Ət və balıq məhsulları', categoryColor: '#DC2626', categoryIcon: 'beef', totalAmount: 245000, itemCount: 47, percentage: 28.16 },
-    { categoryId: 3, categoryName: 'Meyvə və tərəvəz', categoryColor: '#22C55E', categoryIcon: 'apple', totalAmount: 120000, itemCount: 61, percentage: 13.79 },
-    { categoryId: 6, categoryName: 'İçkilər (alkoqolsuz)', categoryColor: '#06B6D4', categoryIcon: 'cup-soda', totalAmount: 110000, itemCount: 34, percentage: 12.64 },
-    { categoryId: 2, categoryName: 'Süd və süd məhsulları', categoryColor: '#3B82F6', categoryIcon: 'milk', totalAmount: 89000, itemCount: 23, percentage: 10.23 },
-    { categoryId: 4, categoryName: 'Dənli və un məhsulları', categoryColor: '#F59E0B', categoryIcon: 'wheat', totalAmount: 78000, itemCount: 18, percentage: 8.97 },
-    { categoryId: 8, categoryName: 'Baharatlar və souslar', categoryColor: '#F97316', categoryIcon: 'flame', totalAmount: 45000, itemCount: 15, percentage: 5.17 },
-    { categoryId: 5, categoryName: 'Yağlar', categoryColor: '#EAB308', categoryIcon: 'droplet', totalAmount: 38000, itemCount: 9, percentage: 4.37 },
-    { categoryId: 7, categoryName: 'İçkilər (alkoqollu)', categoryColor: '#8B5CF6', categoryIcon: 'wine', totalAmount: 72000, itemCount: 12, percentage: 8.28 },
-    { categoryId: 9, categoryName: 'Qablaşdırma materialları', categoryColor: '#78716C', categoryIcon: 'box', totalAmount: 35000, itemCount: 8, percentage: 4.02 },
-    { categoryId: 10, categoryName: 'Təmizlik və gigiyena', categoryColor: '#14B8A6', categoryIcon: 'sparkles', totalAmount: 28000, itemCount: 6, percentage: 3.22 },
-    { categoryId: 12, categoryName: 'Sair', categoryColor: '#6B7280', categoryIcon: 'package', totalAmount: 10000, itemCount: 4, percentage: 1.15 },
-  ],
-  grandTotal: 870000,
-  invoiceCount: 156,
-  dateFrom: '2026-04-01',
-  dateTo: '2026-04-30',
+  categories: [],
+  grandTotal: 0,
+  invoiceCount: 0,
+  dateFrom: '',
+  dateTo: '',
 };
 
-const MOCK_TREND: MonthlyTrendItem[] = [
-  { month: '2025-11', totalAmount: 720000, invoiceCount: 112 },
-  { month: '2025-12', totalAmount: 890000, invoiceCount: 134 },
-  { month: '2026-01', totalAmount: 780000, invoiceCount: 121 },
-  { month: '2026-02', totalAmount: 810000, invoiceCount: 128 },
-  { month: '2026-03', totalAmount: 850000, invoiceCount: 145 },
-  { month: '2026-04', totalAmount: 870000, invoiceCount: 156 },
-];
+const MOCK_TREND: MonthlyTrendItem[] = [];
 
-const MOCK_SUPPLIERS: SupplierCostItem[] = [
-  { supplierName: 'Metro Cash & Carry', totalAmount: 285000, invoiceCount: 45, avgAmount: 6333 },
-  { supplierName: 'Bravo Supermarket', totalAmount: 178000, invoiceCount: 23, avgAmount: 7739 },
-  { supplierName: 'Araz Supermarket', totalAmount: 124000, invoiceCount: 18, avgAmount: 6889 },
-  { supplierName: 'Qafqaz Distribusiya', totalAmount: 98000, invoiceCount: 12, avgAmount: 8167 },
-  { supplierName: 'Bazarstore', totalAmount: 67000, invoiceCount: 15, avgAmount: 4467 },
-  { supplierName: 'Şirin Çörək', totalAmount: 45000, invoiceCount: 20, avgAmount: 2250 },
-];
+const MOCK_SUPPLIERS: SupplierCostItem[] = [];
 
-const MOCK_PRODUCTS: TopProductItem[] = [
-  { name: 'Toyuq eti', categoryName: 'Ət və balıq', totalQuantity: 120, unit: 'kq', totalAmount: 102000, avgUnitPrice: 850 },
-  { name: 'Dana əti', categoryName: 'Ət və balıq', totalQuantity: 45, unit: 'kq', totalAmount: 81000, avgUnitPrice: 1800 },
-  { name: 'Zeytun yağı', categoryName: 'Yağlar', totalQuantity: 30, unit: 'litr', totalAmount: 36000, avgUnitPrice: 1200 },
-  { name: 'Coca Cola 1L', categoryName: 'İçkilər (alkoqolsuz)', totalQuantity: 200, unit: 'əd', totalAmount: 34000, avgUnitPrice: 170 },
-  { name: 'Kartof', categoryName: 'Meyvə və tərəvəz', totalQuantity: 250, unit: 'kq', totalAmount: 30000, avgUnitPrice: 120 },
-  { name: 'Pomidor', categoryName: 'Meyvə və tərəvəz', totalQuantity: 180, unit: 'kq', totalAmount: 27000, avgUnitPrice: 150 },
-  { name: 'Pendir (ağ)', categoryName: 'Süd və süd məhsulları', totalQuantity: 40, unit: 'kq', totalAmount: 24000, avgUnitPrice: 600 },
-  { name: 'Un (1 sort)', categoryName: 'Dənli və un', totalQuantity: 300, unit: 'kq', totalAmount: 21000, avgUnitPrice: 70 },
-  { name: 'Soğan', categoryName: 'Meyvə və tərəvəz', totalQuantity: 200, unit: 'kq', totalAmount: 16000, avgUnitPrice: 80 },
-  { name: 'Kərə yağı', categoryName: 'Süd və süd məhsulları', totalQuantity: 15, unit: 'kq', totalAmount: 15000, avgUnitPrice: 1000 },
-];
+const MOCK_PRODUCTS: TopProductItem[] = [];
 
 // ── Helpers ─────────────────────────────────────────────────────────
 
