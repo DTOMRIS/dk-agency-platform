@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import PortalEngagementTracker from '@/components/analytics/PortalEngagementTracker';
 import { usePathname } from 'next/navigation';
@@ -138,7 +139,14 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       >
         <div className="flex h-20 items-center justify-between border-b border-[var(--dk-warm-border)] px-5">
           <Link href={withLocale(currentLocale, '/dashboard')} className="flex items-center gap-3">
-            <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-11 w-11 shrink-0 object-contain shadow-sm" />
+            <Image
+              src="/images/logo-mobil.png"
+              alt="DK Agency"
+              width={44}
+              height={44}
+              priority
+              className="h-11 w-11 shrink-0 rounded-2xl object-contain"
+            />
             <div className="flex flex-col">
               <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">
                 {t('panelTitle')}

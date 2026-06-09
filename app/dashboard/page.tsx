@@ -9,35 +9,39 @@ import { getDashboardListingMetrics } from '@/lib/repositories/listingRepository
 import { getLocale } from 'next-intl/server';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 
-const dashCopy: Record<Locale, {
-  badge: string;
-  title: string;
-  subtitle: string;
-  totalMembers: string;
-  totalMembersNote: string;
-  totalMembersFallback: string;
-  activeListings: string;
-  activeListingsNote: string;
-  pendingListings: string;
-  pendingListingsNote: string;
-  weeklyLeads: string;
-  weeklyLeadsNote: string;
-  blogPosts: string;
-  blogPostsNote: string;
-  recentActivity: string;
-  recentActivitySub: string;
-  last5Listings: string;
-  last5Leads: string;
-  quickActions: string;
-  recentBlog: string;
-  actionReviewListing: string;
-  actionWriteBlog: string;
-  actionCheckRss: string;
-}> = {
+const dashCopy: Record<
+  Locale,
+  {
+    badge: string;
+    title: string;
+    subtitle: string;
+    totalMembers: string;
+    totalMembersNote: string;
+    totalMembersFallback: string;
+    activeListings: string;
+    activeListingsNote: string;
+    pendingListings: string;
+    pendingListingsNote: string;
+    weeklyLeads: string;
+    weeklyLeadsNote: string;
+    blogPosts: string;
+    blogPostsNote: string;
+    recentActivity: string;
+    recentActivitySub: string;
+    last5Listings: string;
+    last5Leads: string;
+    quickActions: string;
+    recentBlog: string;
+    actionReviewListing: string;
+    actionWriteBlog: string;
+    actionCheckRss: string;
+  }
+> = {
   az: {
     badge: 'OCAQ',
     title: 'İdarəetmə mərkəzi',
-    subtitle: 'Dashboard artıq real listing, blog və member veriləri ilə dolur. DB bağlantısı yoxdursa eyni ekran kontrollu fallback ilə açılır.',
+    subtitle:
+      'Dashboard artıq real listing, blog və member veriləri ilə dolur. DB bağlantısı yoxdursa eyni ekran kontrollu fallback ilə açılır.',
     totalMembers: 'Ümumi üzv sayı',
     totalMembersNote: 'Member profiles cədvəlindən',
     totalMembersFallback: 'fallback profil',
@@ -62,7 +66,8 @@ const dashCopy: Record<Locale, {
   ru: {
     badge: 'OCAQ',
     title: 'Центр управления',
-    subtitle: 'Дашборд показывает реальные данные объявлений, блога и участников. При отсутствии БД работает с fallback.',
+    subtitle:
+      'Дашборд показывает реальные данные объявлений, блога и участников. При отсутствии БД работает с fallback.',
     totalMembers: 'Всего участников',
     totalMembersNote: 'Из таблицы профилей',
     totalMembersFallback: 'fallback профиль',
@@ -87,7 +92,8 @@ const dashCopy: Record<Locale, {
   en: {
     badge: 'OCAQ',
     title: 'Control centre',
-    subtitle: 'Dashboard displays real listing, blog, and member data. Falls back gracefully when DB is unavailable.',
+    subtitle:
+      'Dashboard displays real listing, blog, and member data. Falls back gracefully when DB is unavailable.',
     totalMembers: 'Total members',
     totalMembersNote: 'From member profiles table',
     totalMembersFallback: 'fallback profile',
@@ -112,7 +118,8 @@ const dashCopy: Record<Locale, {
   tr: {
     badge: 'OCAQ',
     title: 'Yönetim merkezi',
-    subtitle: 'Dashboard artık gerçek ilan, blog ve üye verileri ile doluyor. DB bağlantısı yoksa kontrollü fallback ile açılır.',
+    subtitle:
+      'Dashboard artık gerçek ilan, blog ve üye verileri ile doluyor. DB bağlantısı yoksa kontrollü fallback ile açılır.',
     totalMembers: 'Toplam üye sayısı',
     totalMembersNote: 'Üye profilleri tablosundan',
     totalMembersFallback: 'fallback profil',
@@ -163,73 +170,92 @@ export default async function DashboardPage() {
     {
       label: copy.totalMembers,
       value: String(memberCount[0]?.count || 0),
-      note: dbAvailable ? copy.totalMembersNote : `${adminUsers.length} ${copy.totalMembersFallback}`,
-      tone: 'bg-slate-900/50 text-slate-300 border border-slate-800/50',
+      note: dbAvailable
+        ? copy.totalMembersNote
+        : `${adminUsers.length} ${copy.totalMembersFallback}`,
+      tone: 'bg-slate-50 text-slate-700 border-slate-200',
     },
     {
       label: copy.activeListings,
       value: String(listingMetrics.active),
       note: copy.activeListingsNote,
-      tone: 'bg-emerald-950/40 text-emerald-300 border border-emerald-900/30',
+      tone: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     },
     {
       label: copy.pendingListings,
       value: String(listingMetrics.pending),
       note: copy.pendingListingsNote,
-      tone: 'bg-amber-950/40 text-amber-300 border border-amber-900/30',
+      tone: 'bg-amber-50 text-amber-700 border-amber-200',
     },
     {
       label: copy.weeklyLeads,
       value: String(listingMetrics.weeklyLeads),
       note: copy.weeklyLeadsNote,
-      tone: 'bg-rose-950/40 text-rose-300 border border-rose-900/30',
+      tone: 'bg-rose-50 text-rose-700 border-rose-200',
     },
     {
       label: copy.blogPosts,
       value: String(blogCount[0]?.count || 0),
       note: copy.blogPostsNote,
-      tone: 'bg-blue-950/40 text-blue-300 border border-blue-900/30',
+      tone: 'bg-blue-50 text-blue-700 border-blue-200',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#0e0f22] p-6 lg:p-8 text-[#eaeaea]">
+    <div className="min-h-screen bg-[var(--dk-paper)] p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
-        <div className="dk-glass-card p-6">
-          <span className="rounded-full bg-[var(--dk-gold)]/10 border border-[var(--dk-gold)]/35 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--dk-gold)]">
+        <div className="relative overflow-hidden rounded-[28px] border border-[var(--dk-warm-border)] bg-white p-7 shadow-sm">
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[var(--dk-gold)] via-[var(--dk-red)] to-[var(--dk-gold)]" />
+          <span className="inline-flex items-center rounded-full border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--dk-gold)]">
             {copy.badge}
           </span>
-          <h1 className="mt-4 font-display text-4xl font-black text-white">{copy.title}</h1>
-          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-400">{copy.subtitle}</p>
+          <h1 className="mt-4 font-display text-4xl font-black text-[var(--dk-navy)]">
+            {copy.title}
+          </h1>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">{copy.subtitle}</p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
           {stats.map((item) => (
-            <div key={item.label} className="dk-glass-card p-5 dk-hover-glow">
-              <div className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold border ${item.tone}`}>{item.label}</div>
-              <div className="mt-4 text-4xl font-black text-white">{item.value}</div>
-              <p className="mt-2 text-sm text-slate-400">{item.note}</p>
+            <div
+              key={item.label}
+              className="rounded-3xl border border-[var(--dk-warm-border)] bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--dk-gold)]/50 hover:shadow-md"
+            >
+              <div
+                className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-bold ${item.tone}`}
+              >
+                {item.label}
+              </div>
+              <div className="mt-4 text-4xl font-black text-[var(--dk-navy)]">{item.value}</div>
+              <p className="mt-2 text-sm text-slate-500">{item.note}</p>
             </div>
           ))}
         </div>
 
         <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-          <div className="dk-glass-card p-6">
+          <div className="rounded-[28px] border border-[var(--dk-warm-border)] bg-white p-6 shadow-sm">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <h2 className="font-display text-2xl font-black text-white">{copy.recentActivity}</h2>
-                <p className="mt-1 text-sm text-slate-400">{copy.recentActivitySub}</p>
+                <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">
+                  {copy.recentActivity}
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">{copy.recentActivitySub}</p>
               </div>
             </div>
 
             <div className="mt-5 grid gap-4 lg:grid-cols-2">
-              <div className="rounded-3xl bg-[#13142d]/40 border border-slate-800/50 p-5">
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-500">{copy.last5Listings}</h3>
+              <div className="rounded-3xl border border-slate-100 bg-slate-50/70 p-5">
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">
+                  {copy.last5Listings}
+                </h3>
                 <div className="mt-4 space-y-3">
                   {listingMetrics.latestListings.map((item) => (
-                    <div key={item.id} className="rounded-2xl bg-[#0e0f22]/50 border border-slate-800/40 p-4 transition-all duration-300 hover:border-[var(--dk-gold)]/30 hover:bg-[#0e0f22]/80">
-                      <div className="text-sm font-bold text-white">{item.title}</div>
-                      <div className="mt-1 text-xs text-slate-400">
+                    <div
+                      key={item.id}
+                      className="rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:border-[var(--dk-gold)]/40 hover:shadow-sm"
+                    >
+                      <div className="text-sm font-bold text-[var(--dk-navy)]">{item.title}</div>
+                      <div className="mt-1 text-xs text-slate-500">
                         {item.trackingCode} • {item.city}
                       </div>
                     </div>
@@ -237,13 +263,18 @@ export default async function DashboardPage() {
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-[#13142d]/40 border border-slate-800/50 p-5">
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-500">{copy.last5Leads}</h3>
+              <div className="rounded-3xl border border-slate-100 bg-slate-50/70 p-5">
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">
+                  {copy.last5Leads}
+                </h3>
                 <div className="mt-4 space-y-3">
                   {listingMetrics.latestLeads.map((item, index) => (
-                    <div key={`${item.trackingCode}-${index}`} className="rounded-2xl bg-[#0e0f22]/50 border border-slate-800/40 p-4 transition-all duration-300 hover:border-[var(--dk-gold)]/30 hover:bg-[#0e0f22]/80">
-                      <div className="text-sm font-bold text-white">{item.name}</div>
-                      <div className="mt-1 text-xs text-slate-400">
+                    <div
+                      key={`${item.trackingCode}-${index}`}
+                      className="rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:border-[var(--dk-gold)]/40 hover:shadow-sm"
+                    >
+                      <div className="text-sm font-bold text-[var(--dk-navy)]">{item.name}</div>
+                      <div className="mt-1 text-xs text-slate-500">
                         {item.trackingCode} • {item.phone}
                       </div>
                     </div>
@@ -254,8 +285,10 @@ export default async function DashboardPage() {
           </div>
 
           <div className="space-y-6">
-            <div className="dk-glass-card p-6">
-              <h2 className="font-display text-2xl font-black text-white">{copy.quickActions}</h2>
+            <div className="rounded-[28px] border border-[var(--dk-warm-border)] bg-white p-6 shadow-sm">
+              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">
+                {copy.quickActions}
+              </h2>
               <div className="mt-5 space-y-3">
                 {quickActions.map((item) => {
                   const Icon = item.icon;
@@ -263,32 +296,34 @@ export default async function DashboardPage() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="flex items-center justify-between rounded-2xl border border-slate-800 bg-[#13142d]/50 px-4 py-4 text-sm font-semibold text-slate-300 transition-all dk-hover-glow hover:border-[var(--dk-gold)] hover:text-white"
+                      className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm font-semibold text-slate-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] hover:shadow-sm"
                     >
                       <span className="flex items-center gap-3">
-                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950/60 border border-slate-800/50 text-[var(--dk-red)]">
+                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--dk-red)]/10 text-[var(--dk-red)]">
                           <Icon size={18} />
                         </span>
                         {item.label}
                       </span>
-                      <ArrowRight size={16} />
+                      <ArrowRight size={16} className="text-slate-400" />
                     </Link>
                   );
                 })}
               </div>
             </div>
 
-            <div className="dk-glass-card p-6">
-              <h2 className="font-display text-2xl font-black text-white">{copy.recentBlog}</h2>
+            <div className="rounded-[28px] border border-[var(--dk-warm-border)] bg-white p-6 shadow-sm">
+              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">
+                {copy.recentBlog}
+              </h2>
               <div className="mt-4 space-y-3">
                 {blogResult.posts.map((post) => (
                   <Link
                     key={post.slug}
                     href={`/dashboard/blog/${post.slug}`}
-                    className="block rounded-2xl border border-slate-800 bg-[#13142d]/50 p-4 transition-all duration-300 hover:border-[var(--dk-gold)] hover:bg-[#13142d]/80"
+                    className="block rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:border-[var(--dk-gold)] hover:shadow-sm"
                   >
-                    <div className="text-sm font-bold text-white">{post.title}</div>
-                    <div className="mt-1 text-xs text-slate-400">{post.category}</div>
+                    <div className="text-sm font-bold text-[var(--dk-navy)]">{post.title}</div>
+                    <div className="mt-1 text-xs text-slate-500">{post.category}</div>
                   </Link>
                 ))}
               </div>
