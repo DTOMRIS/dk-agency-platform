@@ -12,21 +12,30 @@ if [ "$(echo "$INPUT" | jq -r '.stop_hook_active // false')" = "true" ]; then
   exit 0
 fi
 
-# Only enforce on feature branches
+# Only enforce on feature branches (incl. web-session claude/* branches — L: web
+# konteyneri həmişə claude/* branch-ində işləyir, əvvəl gate burada tam keçilirdi)
 BRANCH=$(git branch --show-current)
 case "$BRANCH" in
-  feat/*|fix/*|chore/*) ;;
+  feat/*|fix/*|chore/*|claude/*) ;;
   *) exit 0 ;;
 esac
 
-# Only enforce if there are staged or unstaged changes
-if [ -z "$(git diff --cached --name-only)" ] && [ -z "$(git diff --name-only)" ]; then
+# Collect every file touched on this branch: committed range (vs base) + working tree.
+# Branch-aware, ona görə artıq commit edilmiş kod da Check 6 (changelog) tərəfindən tutulur.
+BASE=$(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD main 2>/dev/null || echo "")
+RANGE_FILES=""
+[ -n "$BASE" ] && RANGE_FILES=$(git diff --name-only "$BASE" HEAD 2>/dev/null)
+WT_FILES=$(git status --porcelain 2>/dev/null | awk '{print $NF}')
+ALL_TOUCHED=$(printf '%s\n%s\n' "$RANGE_FILES" "$WT_FILES" | sort -u | grep -v '^$' || true)
+
+# Nothing changed on the branch or in the working tree → allow stop.
+if [ -z "$ALL_TOUCHED" ]; then
   exit 0
 fi
 
 echo "" >&2
 echo "╔══════════════════════════════════════╗" >&2
-echo "║   DK VALIDATOR GATE (5/8 checks)    ║" >&2
+echo "║   DK VALIDATOR GATE (6/8 checks)    ║" >&2
 echo "╚══════════════════════════════════════╝" >&2
 echo "" >&2
 
@@ -40,7 +49,7 @@ add_result() {
 }
 
 # --- Check 1: Build ---
-echo "  [1/5] Build..." >&2
+echo "  [1/6] Build..." >&2
 if NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1 npm run build > /tmp/dk-build.log 2>&1; then
   add_result 1 "Build" "PASS" "0 errors"
 else
@@ -49,7 +58,7 @@ else
 fi
 
 # --- Check 2: Lint (changed files only — L-016 repo debt ≠ task fail) ---
-echo "  [2/5] Lint..." >&2
+echo "  [2/6] Lint..." >&2
 LINT_FILES=$(git diff --name-only HEAD 2>/dev/null | grep -E "\.(ts|tsx)$")
 if [ -z "$LINT_FILES" ]; then
   LINT_FILES=$(git diff --cached --name-only 2>/dev/null | grep -E "\.(ts|tsx)$")
@@ -67,7 +76,7 @@ else
 fi
 
 # --- Check 3: Hardcoded i18n scan ---
-echo "  [3/5] Hardcoded i18n..." >&2
+echo "  [3/6] Hardcoded i18n..." >&2
 NEW_FILES=$(git diff --name-only HEAD 2>/dev/null | grep -E "components/.*\.tsx?$")
 if [ -z "$NEW_FILES" ]; then
   NEW_FILES=$(git diff --cached --name-only 2>/dev/null | grep -E "components/.*\.tsx?$")
@@ -86,7 +95,7 @@ if [ $I18N_FAIL -eq 0 ]; then
 fi
 
 # --- Check 4: Auth contract (dk-validator #4) ---
-echo "  [4/5] Auth contract..." >&2
+echo "  [4/6] Auth contract..." >&2
 NEW_API=$(git diff --name-only HEAD 2>/dev/null | grep -E "app/api/.*route\.ts$")
 if [ -z "$NEW_API" ]; then
   NEW_API=$(git diff --cached --name-only 2>/dev/null | grep -E "app/api/.*route\.ts$")
@@ -105,7 +114,7 @@ if [ $AUTH_FAIL -eq 0 ]; then
 fi
 
 # --- Check 5: DB schema naming (dk-validator #5) ---
-echo "  [5/5] DB schema naming..." >&2
+echo "  [5/6] DB schema naming..." >&2
 DB_FAIL=0
 if [ -n "$NEW_API" ]; then
   BAD_DB=$(echo "$NEW_API" | xargs grep -nE "\.(input|output|provider)[^A-Za-z]" 2>/dev/null | grep -v "inputData\|outputData\|aiProvider\|tool_input\|provider_id\|providerName\|provider:" || true)
@@ -117,6 +126,19 @@ if [ -n "$NEW_API" ]; then
 fi
 if [ $DB_FAIL -eq 0 ]; then
   add_result 5 "DB schema naming" "PASS" "correct suffixes"
+fi
+
+# --- Check 6: Changelog / handoff updated (DoD #8) ---
+# Bu, "neden handoff/changelog yazılmadı" boşluğunun bağlanması: kod dəyişib amma
+# docs/(CHANGELOG|DEVLOG|HANDOFF).md toxunulmayıbsa → turn bitə bilməz.
+echo "  [6/6] Changelog/handoff..." >&2
+CODE_TOUCHED=$(echo "$ALL_TOUCHED" | grep -E '^(app|components|lib)/.*\.(ts|tsx)$' || true)
+DOC_TOUCHED=$(echo "$ALL_TOUCHED" | grep -E '^docs/(CHANGELOG|DEVLOG|HANDOFF)\.md$' || true)
+if [ -n "$CODE_TOUCHED" ] && [ -z "$DOC_TOUCHED" ]; then
+  add_result 6 "Changelog/handoff" "FAIL" "kod dəyişdi, docs/CHANGELOG.md (və ya DEVLOG/HANDOFF) yenilənmədi — DoD #8"
+  FAILED=1
+else
+  add_result 6 "Changelog/handoff" "PASS" "docs yeniləndi və ya kod dəyişməyib"
 fi
 
 # --- Print report ---
@@ -142,7 +164,7 @@ EOF
   exit 2
 fi
 
-echo "  Verdict: PASS (5/5 static checks)" >&2
+echo "  Verdict: PASS (6/6 static checks)" >&2
 echo "  Note: Run 'npm run dk:validate' for full 8-check (needs dev server)." >&2
 echo "" >&2
 exit 0

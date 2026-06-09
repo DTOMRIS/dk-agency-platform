@@ -1,5 +1,13 @@
 # DK Agency Platform — Dev Log
 
+## 2026-06-09 — TASK-0242 (Blog: strukturlu Doğan notu + Guru qutuları route-a bağlandı)
+
+**Problem:** Yeni yayınlanan bloq yazısında ("Süni İntellekt çağında franchise…") guru qutusu və Doğan notu görünmürdü — "field by field doldururuq amma çıxmır". Araşdırma: editor (`BlogEditorForm.tsx`) `doganNote` (textarea) + `guruBoxes` (5-ə qədər guru/quote/book) sahələrini toplayır; API (`/api/blog/[slug]`) DB-yə yazır; `mapDbArticle` (blog-repository.ts:101,103) `doganNote` + `guruBoxes` qaytarır. **Amma** public render `app/[locale]/blog/[slug]/page.tsx` yalnız `MarkdownRenderer content` çağırırdı — strukturlu sahələri heç istifadə etmirdi. Köhnə yazılarda qutular markdown mətninə (ASCII `╔║`, `### guru kutusu`, `> 📝 Doğan notu`) gömülmüşdü, ona görə MarkdownRenderer onları tuturdu. Strukturlu sahələrlə yazılan yeni yazılar boş çıxırdı.
+
+**Fix:** `app/[locale]/blog/[slug]/page.tsx` — markdown-dan sonra `article.guruBoxes.map(GuruQuoteBox)` + `article.doganNote → DoganNote` render olundu. Barrel-dən (`components/blog/index.ts`) import. Root-mirror `app/blog/[slug]/page.tsx` re-export olduğu üçün avtomatik miras alır. Markdown marker yolu (MarkdownRenderer) toxunulmadı — additiv dəyişiklik, köhnə yazılar pozulmur.
+
+**Diaqnoz qeydi (404 ayrı):** `/blog/suni-i-ntellekt-...` 404 verir. Route dinamikdir (`generateStaticParams`/`dynamic` yox), `getBlogPostDetail` status filtri olmadan slug-la sorğu edir → 404 yalnız o halda olur ki URL slug DB-dəki slug-la üst-üstə düşmür (ya prod-da DB env düşüb statik fallback olur). Həmçinin `slugify` (BlogEditorForm.tsx:59) böyük **İ** hərfini idarə etmir: `"İ".toLowerCase()` → `i`+U+0307 (birləşən nöqtə) → regex `-`-ə çevirir → `suni-i-ntellekt`. Slug fix bu sessiyada tətbiq EDİLMƏDİ (sahibin qərarı) — açıq qalır.
+
 ## 2026-06-04 — TASK-0197 (F2.7: Sektor Analytics + OG Image + OTA PDF)
 
 **Problem:** F2.6 sektor landing hazir idi amma: (1) hec bir user interaction olculmurdu, (2) social share-de image yox idi, (3) lead capture PDF vermir, sadece email notification gonderirdi.
