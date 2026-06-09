@@ -20,3 +20,4 @@ Auto-appended by `scripts/auto-journal.mjs` (git pre-commit). One line per commi
 - 2026-06-07T17:47:13.409Z · `fix/blog-29-faq-autofind` · — · 1 file(s): scripts/blog-29-faq.mjs
 - 2026-06-07T18:01:49.708Z · `fix/blog-29-faq-title-col` · — · 1 file(s): scripts/blog-29-faq.mjs
 - 2026-06-09T11:05:33.682Z · `feat/auto-translate-publish` · — · 5 file(s): app/api/blog/route.ts, docs/CHANGELOG.md, docs/tasks/TASK-0225.md, lib/ai/translate.ts, lib/db/blog-repository.ts
+- 2026-06-09T13:49:57.172Z · `feat/auto-translate-publish` · — · 3 file(s): app/api/blog/translate/route.ts, components/dashboard/BlogEditorForm.tsx, lib/db/blog-repository.ts

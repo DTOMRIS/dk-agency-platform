@@ -351,39 +351,77 @@ export function getStaticBlogSeedSource() {
 /**
  * Best-effort auto-translation of a blog post's AZ fields into ru/en/tr.
  * Fills only EMPTY target fields (never overwrites manual translations).
- * Fire-and-forget on publish; never throws (translation failure leaves AZ).
+ * Returns a per-language result so callers can show the admin what happened
+ * (no silent failure). Never throws.
  */
-export async function autoTranslateBlogPost(id: number): Promise<void> {
-  if (!dbAvailable || !db) return;
+export type BlogTranslateResult = {
+  ok: boolean;
+  langs: Record<'ru' | 'en' | 'tr', 'done' | 'failed' | 'skipped'>;
+  error?: string;
+};
+
+const EMPTY_RESULT = (): BlogTranslateResult => ({
+  ok: false,
+  langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
+});
+
+export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateResult> {
+  const result: BlogTranslateResult = {
+    ok: true,
+    langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
+  };
+  if (!dbAvailable || !db) return { ...EMPTY_RESULT(), error: 'db-unavailable' };
   try {
     const [row] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
-    if (!row) return;
+    if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
 
     const updates: Record<string, string> = {};
     const langs = ['ru', 'en', 'tr'] as const;
 
     for (const lang of langs) {
-      if (!row[`title_${lang}` as keyof typeof row] && row.title_az) {
-        const v = await translateText(row.title_az, lang);
-        if (v) updates[`title_${lang}`] = v;
+      const fields: Array<['title' | 'summary' | 'content', string]> = [];
+      if (!row[`title_${lang}` as keyof typeof row] && row.title_az)
+        fields.push(['title', row.title_az]);
+      if (!row[`summary_${lang}` as keyof typeof row] && row.summary_az)
+        fields.push(['summary', row.summary_az]);
+      if (!row[`content_${lang}` as keyof typeof row] && row.content_az)
+        fields.push(['content', row.content_az]);
+
+      if (fields.length === 0) {
+        result.langs[lang] = 'skipped';
+        continue;
       }
-      if (!row[`summary_${lang}` as keyof typeof row] && row.summary_az) {
-        const v = await translateText(row.summary_az, lang);
-        if (v) updates[`summary_${lang}`] = v;
+      let anyFail = false;
+      for (const [name, src] of fields) {
+        const v = await translateText(src, lang);
+        if (v) updates[`${name}_${lang}`] = v;
+        else anyFail = true;
       }
-      if (!row[`content_${lang}` as keyof typeof row] && row.content_az) {
-        const v = await translateText(row.content_az, lang);
-        if (v) updates[`content_${lang}`] = v;
-      }
+      result.langs[lang] = anyFail ? 'failed' : 'done';
+      if (anyFail) result.ok = false;
     }
 
     if (Object.keys(updates).length > 0) {
       await db
         .update(blogPosts)
-        .set({ ...updates, updatedAt: new Date() } as unknown as Partial<typeof blogPosts.$inferInsert>)
+        .set({ ...updates, updatedAt: new Date() } as unknown as Partial<
+          typeof blogPosts.$inferInsert
+        >)
         .where(eq(blogPosts.id, id));
     }
-  } catch {
-    // best-effort: never block publishing on a translation error
+    return result;
+  } catch (e) {
+    return { ...EMPTY_RESULT(), error: String(e).slice(0, 200) };
   }
+}
+
+/** Translate by slug (admin manual trigger). */
+export async function translateBlogPostBySlug(slug: string): Promise<BlogTranslateResult> {
+  if (!dbAvailable || !db) return { ...EMPTY_RESULT(), error: 'db-unavailable' };
+  const [row] = await db
+    .select({ id: blogPosts.id })
+    .from(blogPosts)
+    .where(eq(blogPosts.slug, slug));
+  if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
+  return autoTranslateBlogPost(row.id);
 }
