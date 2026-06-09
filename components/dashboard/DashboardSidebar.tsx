@@ -138,15 +138,10 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       >
         <div className="flex h-20 items-center justify-between border-b border-[var(--dk-warm-border)] px-5">
           <Link href={withLocale(currentLocale, '/dashboard')} className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-sm font-black text-white shadow-lg shadow-slate-900/15">
-              DK
-            </div>
-            <div>
+            <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-11 w-11 shrink-0 object-contain shadow-sm" />
+            <div className="flex flex-col">
               <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">
                 {t('panelTitle')}
-              </div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                {t('adminSubtitle')}
               </div>
             </div>
           </Link>
@@ -158,18 +153,6 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
           >
             <ChevronLeft size={18} />
           </button>
-        </div>
-
-        <div className="border-b border-[var(--dk-warm-border)] px-5 py-4">
-          <div className="rounded-2xl border border-[var(--dk-warm-border)] bg-[var(--dk-paper)] p-4">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-bold text-[var(--dk-navy)]">Doğan Tomris</p>
-              <span className="inline-flex rounded-full bg-[var(--dk-gold)]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--dk-gold)]">
-                USTA
-              </span>
-            </div>
-            <p className="mt-1 text-xs text-slate-500">{t('userAccess')}</p>
-          </div>
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3 py-5">
@@ -209,11 +192,6 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
         </nav>
 
         <div className="border-t border-[var(--dk-warm-border)] p-4">
-          <div className="mb-3 rounded-2xl bg-slate-50 px-4 py-3">
-            <p className="text-sm font-bold text-[var(--dk-navy)]">Admin</p>
-            <p className="mt-1 text-xs text-slate-500">admin@dkagency.com.tr</p>
-          </div>
-
           <button
             type="button"
             className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]"
