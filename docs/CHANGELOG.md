@@ -5,6 +5,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0228` feat(skills): `dk-content-engine` skill — human-in-the-loop content pipeline (scout → propose → draft → approve → publish). Builds on `dk-blog-publish` + auto-translate (TASK-0225) + AI SEO (TASK-0215/0217). Seeds the franchise topic backlog (Economist "AI-proof" angle, Para fee categories — 8 posts), scout source list, DK draft template (FAQ for AEO), multi-channel repurposing, and HALT rules (no auto-publish; legal/AQTA review). Never auto-publishes.
 - TASK-0227 feat(kazan): KAZAN Leads CRM — notes timeline, lead scoring (computeLeadScore), and next-contact reminder. PATCH /api/kazan-ai/leads accepts addNote/leadScore/nextContactAt; lead actions show score + reminder badges + notes panel. Uses migration 0008 columns (notes/lead_score/next_contact_at). i18n 4 langs.
 
 ### Added
