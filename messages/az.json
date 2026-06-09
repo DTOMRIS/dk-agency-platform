@@ -3244,7 +3244,12 @@
   "kazanLeadActions": {
     "updating": "Yenilənir...",
     "nextStatus": "Növbəti: {status}",
-    "dismiss": "Rədd et"
+    "dismiss": "Rədd et",
+    "noteToggle": "Qeyd / əlaqə",
+    "noNotes": "Hələ qeyd yoxdur",
+    "notePlaceholder": "Qeyd yaz (məs. zəng etdim, maraqlıdır)…",
+    "nextContact": "Növbəti əlaqə:",
+    "saveNote": "Saxla"
   },
   "listingDetail": {
     "loading": "Elan yüklənir...",

@@ -28,7 +28,39 @@ export type UpdateKazanLeadInput = {
   whatsappHandoff?: boolean;
   meetingRequested?: boolean;
   status?: KazanLeadStatus;
+  addNote?: string;
+  leadScore?: number;
+  nextContactAt?: string | null;
 };
+
+/** Heuristic lead score 0-100 (hotter = more buying intent + further in pipeline). */
+export function computeLeadScore(input: {
+  intent?: string | null;
+  status?: string | null;
+  whatsappHandoff?: boolean;
+  meetingRequested?: boolean;
+}): number {
+  let score = 30;
+  const intentWeight: Record<string, number> = {
+    pnl: 25,
+    aqta: 20,
+    food_cost: 20,
+    delivery: 15,
+    general: 5,
+  };
+  score += intentWeight[input.intent ?? 'general'] ?? 5;
+  const statusWeight: Record<string, number> = {
+    new: 0,
+    contacted: 10,
+    qualified: 25,
+    converted: 40,
+    dismissed: -30,
+  };
+  score += statusWeight[input.status ?? 'new'] ?? 0;
+  if (input.meetingRequested) score += 15;
+  if (input.whatsappHandoff) score += 10;
+  return Math.max(0, Math.min(100, score));
+}
 
 export type GetKazanLeadsFilters = {
   status?: string | null;
@@ -44,15 +76,25 @@ let ensured = false;
 
 export function detectKazanIntent(text: string): KazanLeadIntent {
   const value = text.toLowerCase();
-  if (value.includes('food') || value.includes('cost') || value.includes('maya')) return 'food_cost';
-  if (value.includes('p&l') || value.includes('pnl') || value.includes('mənfəət') || value.includes('menfeet')) return 'pnl';
+  if (value.includes('food') || value.includes('cost') || value.includes('maya'))
+    return 'food_cost';
+  if (
+    value.includes('p&l') ||
+    value.includes('pnl') ||
+    value.includes('mənfəət') ||
+    value.includes('menfeet')
+  )
+    return 'pnl';
   if (value.includes('aqta') || value.includes('gigiyena')) return 'aqta';
-  if (value.includes('delivery') || value.includes('wolt') || value.includes('bolt')) return 'delivery';
+  if (value.includes('delivery') || value.includes('wolt') || value.includes('bolt'))
+    return 'delivery';
   return 'general';
 }
 
 export function normalizeBusinessType(value: string): KazanBusinessType {
-  return validBusinessTypes.includes(value as KazanBusinessType) ? (value as KazanBusinessType) : 'diger';
+  return validBusinessTypes.includes(value as KazanBusinessType)
+    ? (value as KazanBusinessType)
+    : 'diger';
 }
 
 export function normalizeIntent(value: string): KazanLeadIntent {
@@ -135,8 +177,29 @@ export async function updateKazanLead(input: UpdateKazanLeadInput) {
   if (typeof input.whatsappHandoff === 'boolean') values.whatsappHandoff = input.whatsappHandoff;
   if (typeof input.meetingRequested === 'boolean') values.meetingRequested = input.meetingRequested;
   if (input.status) values.status = input.status;
+  if (typeof input.leadScore === 'number') {
+    values.leadScore = Math.max(0, Math.min(100, Math.round(input.leadScore)));
+  }
+  if (input.nextContactAt !== undefined) {
+    values.nextContactAt = input.nextContactAt ? new Date(input.nextContactAt) : null;
+  }
 
-  const [lead] = await db.update(kazanLeads).set(values).where(eq(kazanLeads.id, input.id)).returning();
+  // Append a dated note to the existing timeline (never overwrites).
+  const noteText = input.addNote?.trim();
+  if (noteText) {
+    const [current] = await db
+      .select({ notes: kazanLeads.notes })
+      .from(kazanLeads)
+      .where(eq(kazanLeads.id, input.id));
+    const existing = Array.isArray(current?.notes) ? current.notes : [];
+    values.notes = [...existing, { at: new Date().toISOString(), text: noteText.slice(0, 2000) }];
+  }
+
+  const [lead] = await db
+    .update(kazanLeads)
+    .set(values)
+    .where(eq(kazanLeads.id, input.id))
+    .returning();
   return lead;
 }
 
@@ -145,8 +208,10 @@ export async function getKazanLeads(filters: GetKazanLeadsFilters = {}) {
   await ensureKazanLeadsTable();
 
   const conditions = [];
-  if (filters.status && filters.status !== 'all') conditions.push(eq(kazanLeads.status, normalizeStatus(filters.status)));
-  if (filters.intent && filters.intent !== 'all') conditions.push(eq(kazanLeads.intent, normalizeIntent(filters.intent)));
+  if (filters.status && filters.status !== 'all')
+    conditions.push(eq(kazanLeads.status, normalizeStatus(filters.status)));
+  if (filters.intent && filters.intent !== 'all')
+    conditions.push(eq(kazanLeads.intent, normalizeIntent(filters.intent)));
   if (filters.businessType && filters.businessType !== 'all') {
     conditions.push(eq(kazanLeads.businessType, normalizeBusinessType(filters.businessType)));
   }
