@@ -54,18 +54,11 @@ interface ManualItem {
 
 type ModalType = null | 'ocr' | 'manual' | 'import';
 
-// ── Mock Data ───────────────────────────────────────────────────────
+// ── Mock Data (Empty Fallbacks) ───────────────────────────────────────
 
-const MOCK_INVOICES: InvoiceRow[] = [
-  { id: 1, supplierName: 'Metro Cash & Carry', supplierVoen: '1234567890', invoiceNumber: 'FC-004521', invoiceDate: '2026-04-27', grandTotal: 24580, currency: 'AZN', status: 'confirmed', source: 'ocr_upload', ocrConfidence: 0.92, createdAt: '2026-04-27T10:00:00Z' },
-  { id: 2, supplierName: 'Bravo Supermarket', supplierVoen: '9876543210', invoiceNumber: 'BRV-00891', invoiceDate: '2026-04-26', grandTotal: 8920, currency: 'AZN', status: 'draft', source: 'ocr_camera', ocrConfidence: 0.78, createdAt: '2026-04-26T14:30:00Z' },
-  { id: 3, supplierName: 'Bazarstore', supplierVoen: null, invoiceNumber: null, invoiceDate: '2026-04-25', grandTotal: 15600, currency: 'AZN', status: 'confirmed', source: 'manual', ocrConfidence: null, createdAt: '2026-04-25T09:15:00Z' },
-  { id: 4, supplierName: 'Araz Supermarket', supplierVoen: '5678901234', invoiceNumber: 'ARZ-2204', invoiceDate: '2026-04-24', grandTotal: 124000, currency: 'AZN', status: 'confirmed', source: 'excel', ocrConfidence: null, createdAt: '2026-04-24T11:00:00Z' },
-  { id: 5, supplierName: 'Şirin Çörək', supplierVoen: null, invoiceNumber: 'SC-055', invoiceDate: '2026-04-23', grandTotal: 4500, currency: 'AZN', status: 'draft', source: 'ocr_camera', ocrConfidence: 0.65, createdAt: '2026-04-23T08:00:00Z' },
-  { id: 6, supplierName: 'Qafqaz Distribusiya', supplierVoen: '1122334455', invoiceNumber: 'QD-10042', invoiceDate: '2026-04-22', grandTotal: 67800, currency: 'AZN', status: 'confirmed', source: 'pdf', ocrConfidence: 0.88, createdAt: '2026-04-22T16:45:00Z' },
-];
+const MOCK_INVOICES: InvoiceRow[] = [];
 
-const MOCK_STATS: InvoiceStats = { totalCount: 6, totalAmount: 245400, avgAmount: 40900, draftCount: 2, confirmedCount: 4 };
+const MOCK_STATS: InvoiceStats = { totalCount: 0, totalAmount: 0, avgAmount: 0, draftCount: 0, confirmedCount: 0 };
 
 // ── Helpers ─────────────────────────────────────────────────────────
 

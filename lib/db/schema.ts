@@ -13,6 +13,7 @@ import {
   numeric,
   date,
   index,
+  smallint,
 } from 'drizzle-orm/pg-core';
 
 // Hero section content (field by field admin)
@@ -325,6 +326,9 @@ export const kazanLeads = pgTable('kazan_leads', {
   status: kazanLeadStatusEnum('status').notNull().default('new'),
   whatsappHandoff: boolean('whatsapp_handoff').notNull().default(false),
   meetingRequested: boolean('meeting_requested').notNull().default(false),
+  notes: jsonb('notes').$type<Array<{ at: string; text: string }>>().default([]),
+  leadScore: smallint('lead_score'),
+  nextContactAt: timestamp('next_contact_at'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
@@ -855,3 +859,24 @@ export const equipmentConditionEnum = pgEnum('equipment_condition', ['new', 'use
 
 // NOTE: listings, listingLeads, listingMedia, listingReviews tables
 // are defined above (line ~191). M5.1 adds columns via Drizzle migration.
+
+// Visitor Analytics (Web Conversion Events)
+export const webConversionEvents = pgTable(
+  'web_conversion_events',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    sessionId: varchar('session_id', { length: 255 }).notNull(),
+    pagePath: text('page_path').notNull(),
+    eventName: varchar('event_name', { length: 100 }).notNull(), // 'page_view', 'dwell_30s', 'portal_exit'
+    source: varchar('source', { length: 100 }),
+    campaign: varchar('campaign', { length: 100 }),
+    metadata: jsonb('metadata'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    sessionIdx: index('idx_wce_session').on(table.sessionId),
+    eventIdx: index('idx_wce_event').on(table.eventName),
+    createdIdx: index('idx_wce_created').on(table.createdAt),
+  })
+);
+

@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import PortalEngagementTracker from '@/components/analytics/PortalEngagementTracker';
 import { usePathname } from 'next/navigation';
 import {
   BarChart3,
@@ -118,6 +119,9 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
 
   return (
     <>
+      <Suspense fallback={null}>
+        <PortalEngagementTracker />
+      </Suspense>
       {isOpen ? (
         <button
           type="button"

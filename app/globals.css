@@ -273,3 +273,34 @@ hr, .blog-content hr, .news-content hr {
   font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 700;
 }
+
+/* ── 2026 AESTHETICS (MIDNIGHT NAVY GLASSMORPHISM & GOLD GLOW) ─────── */
+
+.dk-glass-card {
+  background: rgba(22, 23, 48, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(197, 160, 34, 0.18) !important;
+  box-shadow: 0 8px 32px 0 rgba(10, 10, 26, 0.25), 0 0 15px rgba(197, 160, 34, 0.04) !important;
+  border-radius: 1.5rem !important; /* rounded-3xl equivalent */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dk-glass-card:hover {
+  border-color: rgba(197, 160, 34, 0.35) !important;
+  box-shadow: 0 8px 32px 0 rgba(10, 10, 26, 0.4), 0 0 20px rgba(197, 160, 34, 0.12) !important;
+  transform: translateY(-2px) !important;
+}
+
+.dk-hover-glow {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dk-hover-glow:hover {
+  transform: scale(1.02) !important;
+  box-shadow: 0 0 15px rgba(197, 160, 34, 0.25) !important;
+}
+
+.dk-hover-glow:active {
+  transform: scale(0.98) !important;
+}
+

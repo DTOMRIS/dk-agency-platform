@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { db, dbAvailable } from '@/lib/db';
 import { users, emailVerificationTokens } from '@/lib/db/schema';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
+import { saveEmailPreferences } from '@/lib/email/preferences';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
 import { normalizeLocale } from '@/i18n/config';
 import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
@@ -94,6 +95,15 @@ export async function POST(request: NextRequest) {
 
     const newUser = inserted[0];
 
+    await saveEmailPreferences({
+      userId: newUser.id,
+      email: body.email,
+      source: 'registration',
+      newsletterSubscribed: body.marketingConsent,
+      blogDigestSubscribed: body.marketingConsent,
+      productUpdatesSubscribed: body.marketingConsent,
+    });
+
     // Create email verification token
     const token = crypto.randomUUID();
     await db.insert(emailVerificationTokens).values({
@@ -106,12 +116,25 @@ export async function POST(request: NextRequest) {
     const confirmUrl = `${getBaseUrl()}/api/auth/confirm?token=${token}`;
     const locale = normalizeLocale(String(body.locale || ''));
 
-    await sendEmail(body.email, emailTemplates.emailVerification(confirmUrl, body.name, locale));
+    const delivery = await sendEmail(
+      body.email,
+      emailTemplates.emailVerification(confirmUrl, body.name, locale),
+    );
+
+    if (!delivery.success) {
+      return NextResponse.json({
+        ok: true,
+        message: 'Hesabınız yaradıldı, amma təsdiq emaili göndərilə bilmədi. Bir az sonra yenidən cəhd edin.',
+        verificationRequired: true,
+        emailSent: false,
+      });
+    }
 
     return NextResponse.json({
       ok: true,
       message: 'Hesabınız yaradıldı! Email ünvanınıza təsdiq linki göndərildi.',
       verificationRequired: true,
+      emailSent: true,
     });
   } catch (err) {
     console.error('[auth/register] Error:', err);
