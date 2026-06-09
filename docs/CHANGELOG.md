@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Security
+- `TASK-0223` (SEC-P0) fix(invoices): `/api/invoices` was a P0 IDOR — it trusted a `userId` from the request and had no auth, so anyone could read any user's invoices and **delete ANY invoice by id**. Now GET/POST/DELETE require a logged-in session, the userId is derived from the session (request userId ignored), and `bulkDeleteInvoices` is ownership-scoped. Verified: all endpoints → 401 without session.
+
 ### Added
 - `TASK-0225` feat(blog): auto-translate AZ → ru/en/tr on publish. New `lib/ai/translate.ts` (server-side DeepSeek, timeout, brand guard) + `autoTranslateBlogPost` fills only empty locale fields; `POST /api/blog` fires it fire-and-forget on publish (Hostinger long-running, no serverless timeout). New blog no longer stays AZ-only.
 
