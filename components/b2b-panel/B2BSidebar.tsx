@@ -17,6 +17,7 @@ import {
   Settings,
   Shield,
   Sparkles,
+  Receipt,
   Star,
   Wrench,
   type LucideIcon,
@@ -57,6 +58,7 @@ const NAV_SECTIONS: NavSection[] = [
     titleKey: 'sectionTools',
     items: [
       { href: '/b2b-panel/toolkit', labelKey: 'toolkit', icon: Wrench, pro: true },
+      { href: '/b2b-panel/faturalar', labelKey: 'invoices', icon: Receipt },
       { href: '/b2b-panel/favoriler', labelKey: 'favorites', icon: Star },
       { href: '/b2b-panel/analizler', labelKey: 'aiAnalysis', icon: Sparkles },
     ],
@@ -73,7 +75,11 @@ const NAV_SECTIONS: NavSection[] = [
 
 function getProfileFromStorage(): { logo?: string; form?: { companyName?: string } } | null {
   if (typeof window === 'undefined') return null;
-  try { return JSON.parse(localStorage.getItem('dk_company_profile') || 'null'); } catch { return null; }
+  try {
+    return JSON.parse(localStorage.getItem('dk_company_profile') || 'null');
+  } catch {
+    return null;
+  }
 }
 
 function CompanyLogo() {
@@ -82,8 +88,21 @@ function CompanyLogo() {
     const stored = getProfileFromStorage()?.logo || null;
     startTransition(() => setLogo(stored));
   }, []);
-  if (logo) return <img src={logo} alt="Logo" className="h-12 w-12 rounded-xl object-cover border border-slate-200" />;
-  return <img src="/images/logo-mobil.png" alt="Logo" className="h-12 w-12 rounded-xl object-contain border border-slate-200 bg-slate-50 p-1 shadow-sm" />;
+  if (logo)
+    return (
+      <img
+        src={logo}
+        alt="Logo"
+        className="h-12 w-12 rounded-xl object-cover border border-slate-200"
+      />
+    );
+  return (
+    <img
+      src="/images/logo-mobil.png"
+      alt="Logo"
+      className="h-12 w-12 rounded-xl object-contain border border-slate-200 bg-slate-50 p-1 shadow-sm"
+    />
+  );
 }
 
 function CompanyName() {
@@ -108,7 +127,11 @@ export default function B2BSidebar() {
     <aside className="flex min-h-screen w-72 flex-col border-r border-slate-200 bg-white/80 backdrop-blur-md">
       <div className="border-b border-slate-200 p-5">
         <Link href="/b2b-panel" className="group flex items-center gap-3">
-          <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-11 w-11 shrink-0 object-contain shadow-sm transition-all group-hover:shadow-md" />
+          <img
+            src="/images/logo-mobil.png"
+            alt="DK Agency Logo"
+            className="h-11 w-11 shrink-0 object-contain shadow-sm transition-all group-hover:shadow-md"
+          />
           <div>
             <h1 className="font-bold text-slate-900">DK Agency</h1>
             <p className="text-[10px] uppercase tracking-wider text-slate-500">B2B Portal</p>
@@ -124,7 +147,9 @@ export default function B2BSidebar() {
               <CompanyName />
               <div className="mt-0.5 flex items-center gap-1.5">
                 <Shield size={10} className="text-amber-500" />
-                <span className="text-[10px] font-semibold uppercase text-amber-600">{t('premium')}</span>
+                <span className="text-[10px] font-semibold uppercase text-amber-600">
+                  {t('premium')}
+                </span>
               </div>
             </div>
           </div>
@@ -205,7 +230,10 @@ export default function B2BSidebar() {
             <span className="text-sm font-bold text-slate-900">{t('kazanAiTitle')}</span>
           </div>
           <p className="mb-3 text-xs text-slate-600">{t('kazanAiDesc')}</p>
-          <Link href="/kazan-ai" className="block w-full rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 py-2 text-center text-xs font-bold text-slate-900 transition-all hover:from-amber-300 hover:to-amber-400">
+          <Link
+            href="/kazan-ai"
+            className="block w-full rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 py-2 text-center text-xs font-bold text-slate-900 transition-all hover:from-amber-300 hover:to-amber-400"
+          >
             {t('kazanAiCta')}
           </Link>
         </div>

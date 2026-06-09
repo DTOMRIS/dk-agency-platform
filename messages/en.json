@@ -1523,7 +1523,8 @@
       "premium": "PREMIUM",
       "kazanAiTitle": "KAZAN AI",
       "kazanAiDesc": "Analyze food cost, P&L and operational decisions faster.",
-      "kazanAiCta": "Open"
+      "kazanAiCta": "Open",
+      "invoices": "Invoices"
     },
     "topBar": {
       "notifications": "Notifications",

@@ -1523,7 +1523,8 @@
       "premium": "PREMIUM",
       "kazanAiTitle": "KAZAN AI",
       "kazanAiDesc": "Food cost, P&L ve operasyon kararlarını daha hızlı yorumla.",
-      "kazanAiCta": "Şimdi Bak"
+      "kazanAiCta": "Şimdi Bak",
+      "invoices": "Faturalar"
     },
     "topBar": {
       "notifications": "Bildirimler",

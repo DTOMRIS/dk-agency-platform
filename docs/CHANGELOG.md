@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `TASK-0226` feat(invoices): **Fatura B2B + September launch campaign (PR-4)**. OCR invoice module opened to members at `/b2b-panel/faturalar` (+ `/[locale]` L-038 mirror); data is session-scoped via `/api/invoices` (SEC-P0 #318). `LaunchCampaignBanner`: free until 2026-09-01, ≤30-day countdown warning, then grace notice (old invoices + CSV/PDF export always open; only new upload/OCR/AI become premium — no data hostage). B2B sidebar "Faturalar" entry (4 langs). Post-Sept upload-gating enforcement is a follow-up (free period active now).
+
 ### Fixed
 - `TASK-0224` (LAUNCH-P0) fix: hide mock/half-finished admin surfaces + remove fake stats before launch. Homepage `StatsBarSection` hidden (was "6.7M impressions"/"99.9%" vanity numbers); admin sidebar no longer shows `auditor`/`faturalar`/`site` (mock data / no-op save); `/dashboard/site` save buttons disabled (previously faked a "saved" toast); b2b panel KPI stats show 0/"—" instead of fabricated 4/2847/8/15.
 ### Security
