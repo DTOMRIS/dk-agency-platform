@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Search, CheckSquare, Square, AlertTriangle, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search, CheckSquare, Square, Loader2 } from 'lucide-react';
 import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import { getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
@@ -196,6 +196,7 @@ export default function DashboardIlanlarPage() {
 
   const [listings, setListings] = useState<MockListing[]>([]);
   const [total, setTotal] = useState(0);
+  const [stats, setStats] = useState({ total: 0, pending: 0, showcase: 0, rejected: 0 });
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
@@ -222,11 +223,18 @@ export default function DashboardIlanlarPage() {
 
         const response = await fetch(`/api/listings?${params.toString()}`);
         if (!response.ok) throw new Error('load failed');
-        const payload = (await response.json()) as { data?: MockListing[]; total?: number };
+        const payload = (await response.json()) as {
+          data?: MockListing[];
+          total?: number;
+          stats?: { total: number; pending: number; showcase: number; rejected: number };
+        };
 
         if (!cancelled) {
           setListings(Array.isArray(payload.data) ? payload.data : []);
           setTotal(payload.total ?? 0);
+          if (payload.stats) {
+            setStats(payload.stats);
+          }
         }
       } catch {
         if (!cancelled) {
@@ -242,8 +250,18 @@ export default function DashboardIlanlarPage() {
             return matchesStatus && matchesQuery;
           }).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
+          const allStats = {
+            total: MOCK_LISTINGS.length,
+            pending: MOCK_LISTINGS.filter((item) =>
+              ['submitted', 'ai_checked', 'committee_review'].includes(item.status),
+            ).length,
+            showcase: MOCK_LISTINGS.filter((item) => item.status === 'showcase_ready').length,
+            rejected: MOCK_LISTINGS.filter((item) => item.status === 'rejected').length,
+          };
+
           setTotal(fallback.length);
           setListings(fallback.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
+          setStats(allStats);
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -255,15 +273,6 @@ export default function DashboardIlanlarPage() {
       cancelled = true;
     };
   }, [page, search, statusFilter]);
-
-  const stats = useMemo(() => {
-    const pending = listings.filter((listing) =>
-      ['submitted', 'ai_checked', 'committee_review'].includes(listing.status),
-    ).length;
-    const showcase = listings.filter((listing) => listing.status === 'showcase_ready').length;
-    const rejected = listings.filter((listing) => listing.status === 'rejected').length;
-    return { total, pending, showcase, rejected };
-  }, [listings, total]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);

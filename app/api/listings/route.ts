@@ -34,6 +34,7 @@ export async function GET(request: NextRequest) {
       success: true,
       data: result.items,
       total: result.total,
+      stats: (result as { stats?: unknown }).stats,
       source: result.source,
     });
   }
