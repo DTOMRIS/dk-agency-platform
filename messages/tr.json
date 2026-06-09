@@ -3244,7 +3244,12 @@
   "kazanLeadActions": {
     "updating": "Güncelleniyor...",
     "nextStatus": "Sonraki: {status}",
-    "dismiss": "Reddet"
+    "dismiss": "Reddet",
+    "noteToggle": "Not / iletişim",
+    "noNotes": "Henüz not yok",
+    "notePlaceholder": "Not (örn. aradım, ilgileniyor)…",
+    "nextContact": "Sonraki iletişim:",
+    "saveNote": "Kaydet"
   },
   "listingDetail": {
     "loading": "İlan yükleniyor...",

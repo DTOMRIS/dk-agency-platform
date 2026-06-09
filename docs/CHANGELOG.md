@@ -5,6 +5,10 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0228` feat(skills): `dk-content-engine` skill — human-in-the-loop content pipeline (scout → propose → draft → approve → publish). Builds on `dk-blog-publish` + auto-translate (TASK-0225) + AI SEO (TASK-0215/0217). Seeds the franchise topic backlog (Economist "AI-proof" angle, Para fee categories — 8 posts), scout source list, DK draft template (FAQ for AEO), multi-channel repurposing, and HALT rules (no auto-publish; legal/AQTA review). Never auto-publishes.
+- TASK-0227 feat(kazan): KAZAN Leads CRM — notes timeline, lead scoring (computeLeadScore), and next-contact reminder. PATCH /api/kazan-ai/leads accepts addNote/leadScore/nextContactAt; lead actions show score + reminder badges + notes panel. Uses migration 0008 columns (notes/lead_score/next_contact_at). i18n 4 langs.
+
+### Added
 - `TASK-0226` feat(invoices): **Fatura B2B + September launch campaign (PR-4)**. OCR invoice module opened to members at `/b2b-panel/faturalar` (+ `/[locale]` L-038 mirror); data is session-scoped via `/api/invoices` (SEC-P0 #318). `LaunchCampaignBanner`: free until 2026-09-01, ≤30-day countdown warning, then grace notice (old invoices + CSV/PDF export always open; only new upload/OCR/AI become premium — no data hostage). B2B sidebar "Faturalar" entry (4 langs). Post-Sept upload-gating enforcement is a follow-up (free period active now).
 
 ### Fixed

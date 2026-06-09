@@ -26,6 +26,9 @@ type LeadPatchBody = {
   whatsappHandoff?: boolean;
   meetingRequested?: boolean;
   status?: string;
+  addNote?: string;
+  leadScore?: number;
+  nextContactAt?: string | null;
 };
 
 function cleanText(value: unknown, maxLength: number) {
@@ -63,14 +66,17 @@ export async function POST(request: NextRequest) {
     const phone = cleanText(body.phone, 30);
     const email = cleanText(body.email, 255);
     const conversationContext = normalizeConversation(body.conversationContext);
-    const intentSeed = cleanText(body.intent, 50) || conversationContext.map((message) => message.content).join(' ');
+    const intentSeed =
+      cleanText(body.intent, 50) || conversationContext.map((message) => message.content).join(' ');
 
     if (!name || !phone) {
       return NextResponse.json({ error: 'Ad və telefon məcburidir.' }, { status: 400 });
     }
 
     const businessType = normalizeBusinessType(cleanText(body.businessType, 50));
-    const intent = cleanText(body.intent, 50) ? normalizeIntent(cleanText(body.intent, 50)) : detectKazanIntent(intentSeed);
+    const intent = cleanText(body.intent, 50)
+      ? normalizeIntent(cleanText(body.intent, 50))
+      : detectKazanIntent(intentSeed);
 
     const lead = await createKazanLead({
       name,
@@ -82,10 +88,15 @@ export async function POST(request: NextRequest) {
     });
 
     // Admin notification (fire-and-forget)
-    import('@/lib/email/templates').then(({ emailTemplates, sendEmail }) => {
-      const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
-      sendEmail(adminEmail, emailTemplates.kazanLeadAdmin(name, phone, businessType, intent)).catch(() => {});
-    }).catch(() => {});
+    import('@/lib/email/templates')
+      .then(({ emailTemplates, sendEmail }) => {
+        const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
+        sendEmail(
+          adminEmail,
+          emailTemplates.kazanLeadAdmin(name, phone, businessType, intent)
+        ).catch(() => {});
+      })
+      .catch(() => {});
 
     return NextResponse.json({
       success: true,
@@ -98,7 +109,7 @@ export async function POST(request: NextRequest) {
         error: 'KAZAN lead yaradılmadı.',
         details: String(error),
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -114,8 +125,15 @@ export async function PATCH(request: NextRequest) {
     const lead = await updateKazanLead({
       id,
       whatsappHandoff: typeof body.whatsappHandoff === 'boolean' ? body.whatsappHandoff : undefined,
-      meetingRequested: typeof body.meetingRequested === 'boolean' ? body.meetingRequested : undefined,
+      meetingRequested:
+        typeof body.meetingRequested === 'boolean' ? body.meetingRequested : undefined,
       status: body.status ? normalizeStatus(body.status) : undefined,
+      addNote: typeof body.addNote === 'string' ? body.addNote : undefined,
+      leadScore: typeof body.leadScore === 'number' ? body.leadScore : undefined,
+      nextContactAt:
+        body.nextContactAt === null || typeof body.nextContactAt === 'string'
+          ? body.nextContactAt
+          : undefined,
     });
 
     return NextResponse.json({ success: true, data: lead });
@@ -125,7 +143,7 @@ export async function PATCH(request: NextRequest) {
         error: 'KAZAN lead yenilənmədi.',
         details: String(error),
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
