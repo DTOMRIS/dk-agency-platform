@@ -109,6 +109,13 @@
     ]
   },
   "nav": {
+    "solutions": "Solutions",
+    "sector": "Sector",
+    "successStories": "Success Stories",
+    "support": "Support",
+    "kazan": "AI Advisor",
+    "contact": "Contact",
+    "country": "Azerbaijan",
     "home": "Home",
     "tools": "Tools",
     "listings": "Listings",
@@ -3263,6 +3270,18 @@
     "labelEmail": "Email:"
   },
   "home": {
+    "hero": {
+      "eyebrow": "Azerbaijan's first AI HoReCa platform",
+      "line1": "Do you know why your restaurant",
+      "line2": "loses money?",
+      "subtitle": "Manage food cost, menu, and staff with data. KAZAN AI handles Q&A, Toolkit handles calculations, and OCAQ handles operations. Like the hand of one master.",
+      "ctaPrimary": "Get started",
+      "ctaSecondary": "Explore tools",
+      "imageAlt": "Restaurant operations",
+      "imagePlaceholder": "Photo coming soon",
+      "statValue": "+34%",
+      "statLabel": "Operational efficiency"
+    },
     "platformCards": {
       "eyebrow": "Platform",
       "heading": "Three tools, one ecosystem",

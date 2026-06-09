@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { ArrowRight, ChevronDown, ClipboardCheck, FileText, Globe, LayoutGrid, LogOut, Menu, PieChart, Radar, UserRound, Wand2, X } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import MegaMenu from '@/components/layout/MegaMenu';
 import { clearMemberSession, getGuestSession, readMemberSession, type MemberSession } from '@/lib/member-access';
 import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale, type Locale } from '@/i18n/config';
 
@@ -28,6 +29,7 @@ export default function Header() {
   const router = useRouter();
   const currentLocale = normalizeLocale(pathname.split('/')[1]);
   const t = (key: string) => NAV_COPY[currentLocale]?.[key] ?? NAV_COPY.az[key] ?? key;
+  const navT = useTranslations('nav');
 
   const franchiseLinks = [
     { icon: Radar, label: t('frRadar'), href: withLocale(currentLocale, '/franchise/radar') },
@@ -47,6 +49,14 @@ export default function Header() {
     { name: t('panel'), href: withLocale(currentLocale, '/b2b-panel'), hasMegaMenu: false, hasFranchise: false },
   ] as const;
 
+  const desktopNavItems = [
+    { name: navT('solutions'), href: withLocale(currentLocale, '/aletler') },
+    { name: navT('sector'), href: `${withLocale(currentLocale, '/')}#sektor` },
+    { name: navT('successStories'), href: `${withLocale(currentLocale, '/')}#case` },
+    { name: navT('support'), href: `${withLocale(currentLocale, '/')}#destek` },
+    { name: navT('blog'), href: withLocale(currentLocale, '/bloq') },
+  ] as const;
+
   const memberLinks = [
     { label: t('account'), href: withLocale(currentLocale, '/settings'), icon: UserRound },
     { label: t('myListings'), href: withLocale(currentLocale, '/b2b-panel/ilanlarim'), icon: LayoutGrid },
@@ -54,8 +64,6 @@ export default function Header() {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
-  const [isFranchiseOpen, setIsFranchiseOpen] = useState(false);
   const [isMobileFranchiseOpen, setIsMobileFranchiseOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [memberSession, setMemberSession] = useState<MemberSession>(getGuestSession());
@@ -63,7 +71,7 @@ export default function Header() {
 
   useEffect(() => { const h = () => setIsScrolled(window.scrollY > 10); window.addEventListener('scroll', h); return () => window.removeEventListener('scroll', h); }, []);
   useEffect(() => { const s = () => setMemberSession(readMemberSession()); s(); window.addEventListener('storage', s); window.addEventListener('member-session-updated', s); return () => { window.removeEventListener('storage', s); window.removeEventListener('member-session-updated', s); }; }, []);
-  useEffect(() => { const t = window.setTimeout(() => { setIsMobileOpen(false); setIsMegaMenuOpen(false); setIsFranchiseOpen(false); setIsMobileFranchiseOpen(false); setIsUserMenuOpen(false); }, 0); return () => window.clearTimeout(t); }, [pathname]);
+  useEffect(() => { const t = window.setTimeout(() => { setIsMobileOpen(false); setIsMobileFranchiseOpen(false); setIsUserMenuOpen(false); }, 0); return () => window.clearTimeout(t); }, [pathname]);
   useEffect(() => { const h = (e: MouseEvent) => { if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) setIsUserMenuOpen(false); }; document.addEventListener('mousedown', h); return () => document.removeEventListener('mousedown', h); }, []);
 
   const handleLogout = async () => {
@@ -108,67 +116,55 @@ export default function Header() {
       </div>
 
       {/* ── Main header ────────────────────────────────────── */}
-      <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300 ${isScrolled ? 'border-b border-slate-200/80 shadow-sm' : ''}`}>
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+      <header className={`sticky top-0 z-50 w-full border-b border-[#e8e6e1] bg-white/95 backdrop-blur-sm ${isScrolled ? 'shadow-sm' : ''}`}>
+        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6">
           {/* Logo */}
-          <Link href={withLocale(currentLocale, '/')} className="group flex items-center gap-2.5">
-            <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-9 w-9 shrink-0 object-contain" />
-            <div className="flex flex-col">
-              <span className="text-base font-bold text-[var(--dk-navy)]">DK Agency</span>
-              <span className="hidden text-[9px] font-medium tracking-wider text-[var(--dk-gold)] sm:block">USTALIĞIN NİŞANI</span>
+          <Link href={withLocale(currentLocale, '/')} className="flex shrink-0 items-center gap-2.5">
+            <Image
+              src="/images/logo-mobil.png"
+              alt="DK Agency"
+              width={42}
+              height={42}
+              className="rounded-[10px]"
+              priority
+            />
+            <div className="flex flex-col leading-tight">
+              <span className="text-[17px] font-bold tracking-tight text-[#1a1a2e]">DK Agency</span>
+              <span className="-mt-0.5 w-fit rounded bg-[#e94560]/8 px-1.5 py-0.5 font-mono text-[9px] font-medium uppercase tracking-[0.18em] text-[#e94560]">
+                {navT('country')}
+              </span>
             </div>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-1 lg:flex">
-            {navItems.map((item) =>
-              item.hasMegaMenu ? (
-                <div key={item.name} className="relative" onMouseEnter={() => setIsMegaMenuOpen(true)} onMouseLeave={() => setIsMegaMenuOpen(false)}>
-                  <button type="button" className="inline-block rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]">
-                    {item.name}
-                  </button>
-                  <MegaMenu isOpen={isMegaMenuOpen} onClose={() => setIsMegaMenuOpen(false)} />
-                </div>
-              ) : item.hasFranchise ? (
-                <div key={item.name} className="relative" onMouseEnter={() => setIsFranchiseOpen(true)} onMouseLeave={() => setIsFranchiseOpen(false)}>
-                  <button type="button" className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] ${pathname.includes('/franchise') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
-                    {item.name} <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isFranchiseOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                    {isFranchiseOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}
-                        className="absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 rounded-2xl border border-[var(--dk-border-soft)] bg-white p-2 shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
-                        {franchiseLinks.map((fl) => {
-                          const Icon = fl.icon;
-                          const isActive = pathname.includes(fl.href.split('/').pop() || '');
-                          return (
-                            <Link key={fl.href} href={fl.href}
-                              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors hover:bg-slate-50 ${isActive ? 'bg-slate-50 font-bold text-[var(--dk-navy)]' : 'text-slate-600'}`}>
-                              <Icon className="h-4 w-4 text-[var(--dk-gold)]" />
-                              <span className="flex-1">{fl.label}</span>
-                              {'beta' in fl && fl.beta && <span className="rounded-full bg-[var(--dk-gold)]/15 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[var(--dk-gold)]">BETA</span>}
-                            </Link>
-                          );
-                        })}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ) : (
-                <Link key={item.name} href={item.href} className="rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]">
-                  {item.name}
-                </Link>
-              ),
-            )}
+          <nav className="hidden items-center gap-8 lg:flex">
+            {desktopNavItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-[14px] font-medium text-[#1a1a2e] transition-colors hover:text-[#e94560]"
+              >
+                {item.name}
+              </Link>
+            ))}
           </nav>
 
           {/* Right actions */}
           <div className="flex items-center gap-3">
-            <Link href={withLocale(currentLocale, '/ilan-ver')}
-              className="hidden items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-5 py-2.5 text-sm font-bold text-[var(--dk-navy)] transition-all hover:opacity-90 active:scale-95 sm:inline-flex">
-              {t('postListing')} <ArrowRight size={16} />
-            </Link>
+            <div className="hidden items-center gap-3 lg:flex">
+              <Link
+                href={withLocale(currentLocale, '/kazan-ai')}
+                className="flex items-center gap-1.5 rounded-lg border border-[#10b981]/40 px-4 py-2 font-mono text-[13px] uppercase tracking-wide text-[#10b981] transition hover:bg-[#10b981]/5"
+              >
+                ✦ {navT('kazan')}
+              </Link>
+              <Link
+                href={withLocale(currentLocale, '/elaqe')}
+                className="rounded-lg bg-[#e94560] px-5 py-2 font-mono text-[13px] uppercase tracking-wide text-white transition hover:bg-[#d12d48]"
+              >
+                {navT('contact')}
+              </Link>
+            </div>
 
             {memberSession.loggedIn ? (
               <div className="relative hidden sm:block" ref={userMenuRef}>
@@ -194,12 +190,12 @@ export default function Header() {
               </div>
             ) : (
               <>
-                <Link href="/auth/login" className="hidden text-sm text-slate-500 transition-colors hover:text-[var(--dk-navy)] sm:inline-block">{t('login')}</Link>
-                <Link href="/auth/register" className="hidden rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] sm:inline-block">{t('register')}</Link>
+                <Link href="/auth/login" className="hidden">{t('login')}</Link>
+                <Link href="/auth/register" className="hidden">{t('register')}</Link>
               </>
             )}
 
-            <button className="rounded-xl p-2.5 text-slate-600 transition-colors hover:bg-slate-100 lg:hidden" onClick={() => setIsMobileOpen((p) => !p)} aria-label={t('menu')}>
+            <button className="p-2 text-[#1a1a2e] lg:hidden" onClick={() => setIsMobileOpen((p) => !p)} aria-label={t('menu')}>
               {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>

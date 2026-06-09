@@ -1,13 +1,13 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-06-07 04:54:02 | Branch: content/blog-26-28 | 234ac03
+> Son güncəlləmə: 2026-06-09 05:11:38 | Branch: feat/task-0234-nav-hero-fullspec | 23e4df5
 
 ## Route İnventarı
 | Kateqoriya | Say |
 |-----------|-----|
-| Toplam page.tsx | 222 |
-| Dashboard | 78 |
+| Toplam page.tsx | 241 |
+| Dashboard | 82 |
 | Toolkit | 47 |
 
 ## AI Stack (lib/ai-models.ts SST)
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 4198 | 4125 | 4125 | 4125 | ⚠️ |
+| 4281 | 4208 | 4208 | 4208 | ⚠️ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`
@@ -43,10 +43,10 @@ AI Insight bağlı səhifə: **9**
 ## ENV (.env.local)
 | Key | Status |
 |-----|--------|
-| DEEPSEEK_API_KEY | ✅ |
+| DEEPSEEK_API_KEY | ❌ |
 | GEMINI_API_KEY | ⚠️ yorum/yox |
 | ANTHROPIC_API_KEY | ⚠️ fallback yox |
-| SMTP_USER | ✅ |
+| SMTP_USER | ❌ |
 
 ## Email Backend
 | Komponent | Status |
@@ -54,7 +54,7 @@ AI Insight bağlı səhifə: **9**
 | Provider | ✅ Hostinger SMTP (nodemailer) |
 | Templates | ✅ lib/email/templates.ts |
 | Routes | ✅ 10 API route sendEmail() |
-| SMTP_USER | ✅ .env.local-da dolu |
+| SMTP_USER | ⚠️ boş → console.log mock |
 
 ## Fatura OCR
 | Komponent | Status |

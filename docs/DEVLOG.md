@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-06-09 — TASK-0234 (NAV + Hero AI Studio Fullspec)
+
+**Scope:** Launch sprint block 1/9. Apply the supplied light navbar and hero pixel spec without changing Header authentication behavior.
+
+**Changes:**
+1. `Header.tsx` now renders the 42px DK logo, Azerbaijan badge, five centered desktop links, green KAZAN outline CTA, and red contact CTA using the exact supplied classes.
+2. `components/Hero.tsx` keeps its Framer Motion entrance wrappers while replacing the inner content with the supplied light two-column layout, typography, copy, and CTAs.
+3. Since `hero-placeholder.jpg` is absent, the approved CSS gradient fallback is used with the floating `+34%` emerald stat card; the image panel stacks below the copy on mobile.
+4. `nav` and `home.hero` keys were completed for AZ, EN, RU, and TR.
+
+**Guardrails:** `Header.tsx` PROTECTED edit was explicitly approved in TASK-0234. Auth/member session logic and all other protected files were left unchanged.
+
 ## 2026-06-04 — TASK-0197 (F2.7: Sektor Analytics + OG Image + OTA PDF)
 
 **Problem:** F2.6 sektor landing hazir idi amma: (1) hec bir user interaction olculmurdu, (2) social share-de image yox idi, (3) lead capture PDF vermir, sadece email notification gonderirdi.

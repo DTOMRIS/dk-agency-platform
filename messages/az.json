@@ -109,6 +109,13 @@
     ]
   },
   "nav": {
+    "solutions": "Həllərimiz",
+    "sector": "Sektor",
+    "successStories": "Uğur Hekayələri",
+    "support": "Dəstək",
+    "kazan": "AI Məsləhətçi",
+    "contact": "Müraciət et",
+    "country": "Azərbaycan",
     "home": "Ana səhifə",
     "tools": "Alətlər",
     "listings": "İlanlar",
@@ -3263,6 +3270,18 @@
     "labelEmail": "Email:"
   },
   "home": {
+    "hero": {
+      "eyebrow": "Azərbaycanın ilk AI HoReCa platforması",
+      "line1": "Restoranının niyə pul itirdiyini",
+      "line2": "bilirsənmi?",
+      "subtitle": "Food cost, menyu, personel — hamısını data ilə idarə et. KAZAN AI sual-cavab, Toolkit hesablama, OCAQ idarəetmə. Bir ustanın əli kimi.",
+      "ctaPrimary": "İndi başla",
+      "ctaSecondary": "Alətləri kəşf et",
+      "imageAlt": "Restoran idarəetmə",
+      "imagePlaceholder": "Foto tezliklə",
+      "statValue": "+34%",
+      "statLabel": "Əməliyyat effektivliyi"
+    },
     "platformCards": {
       "eyebrow": "Platforma",
       "heading": "Üç alət, bir ekosistem",

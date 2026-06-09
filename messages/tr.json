@@ -109,6 +109,13 @@
     ]
   },
   "nav": {
+    "solutions": "Çözümlerimiz",
+    "sector": "Sektör",
+    "successStories": "Başarı Hikayeleri",
+    "support": "Destek",
+    "kazan": "AI Danışman",
+    "contact": "İletişim",
+    "country": "Azerbaycan",
     "home": "Ana sayfa",
     "tools": "Araçlar",
     "listings": "İlanlar",
@@ -3263,6 +3270,18 @@
     "labelEmail": "E-posta:"
   },
   "home": {
+    "hero": {
+      "eyebrow": "Azerbaycan'ın ilk AI HoReCa platformu",
+      "line1": "Restoranın neden para kaybettiğini",
+      "line2": "biliyor musun?",
+      "subtitle": "Food cost, menü ve personeli verilerle yönet. KAZAN AI soru-cevap, Toolkit hesaplama, OCAQ operasyon yönetimi sunar. Bir ustanın eli gibi.",
+      "ctaPrimary": "Hemen başla",
+      "ctaSecondary": "Araçları keşfet",
+      "imageAlt": "Restoran yönetimi",
+      "imagePlaceholder": "Fotoğraf yakında",
+      "statValue": "+34%",
+      "statLabel": "Operasyon verimliliği"
+    },
     "platformCards": {
       "eyebrow": "Platform",
       "heading": "Üç araç, bir ekosistem",

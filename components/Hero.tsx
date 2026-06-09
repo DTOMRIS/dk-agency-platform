@@ -1,141 +1,80 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useLocale } from 'next-intl';
-import { ArrowRight, Award, Play } from 'lucide-react';
-import Image from 'next/image';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
-
-const heroCopy: Record<Locale, {
-  badge: string;
-  title: [string, string, string];
-  body: string;
-  note: string;
-  primaryCta: string;
-  secondaryCta: string;
-  stats: Array<{ value: string; label: string }>;
-  illustrationAlt: string;
-}> = {
-  az: {
-    badge: 'Azərbaycanın ilk AI-dəstəkli HoReCa platforması',
-    title: ['Restoranın niyə', 'pul itirdiyini', 'bilmirsən?'],
-    body: 'Biz tapırıq, düzəldirik. Pulsuz alətlər, ekspert bilikləri və AI dəstəyi bir platformada.',
-    note: 'Bu sektorda duz-çörək haqqını qoruyan sistem qururuq.',
-    primaryCta: 'İndi başla',
-    secondaryCta: 'Alətləri kəşf et',
-    stats: [{ value: 'BETA', label: 'Pilot proqram açıqdır' }, { value: '10+', label: 'Pulsuz alət' }, { value: 'AI', label: 'KAZAN dəstəyi' }],
-    illustrationAlt: 'DK Agency HoReCa idarəetmə illüstrasiyası',
-  },
-  ru: {
-    badge: 'Первая AI-платформа для HoReCa в Азербайджане',
-    title: ['Не понимаешь, почему', 'ресторан теряет', 'деньги?'],
-    body: 'Мы находим причину и исправляем её. Бесплатные инструменты, экспертные знания и AI-поддержка в одной платформе.',
-    note: 'Мы строим систему, которая защищает справедливый труд и ремесленную этику сектора.',
-    primaryCta: 'Начать сейчас',
-    secondaryCta: 'Изучить инструменты',
-    stats: [{ value: 'BETA', label: 'Открыта пилотная программа' }, { value: '10+', label: 'Бесплатных инструментов' }, { value: 'AI', label: 'Поддержка KAZAN' }],
-    illustrationAlt: 'Иллюстрация управления HoReCa от DK Agency',
-  },
-  en: {
-    badge: "Azerbaijan's first AI-powered HoReCa platform",
-    title: ['Not sure why your', 'restaurant is', 'losing money?'],
-    body: 'We find the problem and fix it. Free tools, expert know-how, and AI support in one platform.',
-    note: 'We are building a system that protects the craft and the earned bread of this sector.',
-    primaryCta: 'Start now',
-    secondaryCta: 'Explore tools',
-    stats: [{ value: 'BETA', label: 'Pilot program is open' }, { value: '10+', label: 'Free tools' }, { value: 'AI', label: 'KAZAN support' }],
-    illustrationAlt: 'DK Agency HoReCa operations illustration',
-  },
-  tr: {
-    badge: "Azerbaycan'ın ilk AI destekli HoReCa platformu",
-    title: ['Restoranının neden', 'para kaybettiğini', 'bilmiyor musun?'],
-    body: 'Biz buluruz, düzeltiriz. Ücretsiz araçlar, uzman bilgisi ve AI desteği tek platformda.',
-    note: 'Bu sektörde emeğin ve duz-çörək haqqının korunduğu bir sistem kuruyoruz.',
-    primaryCta: 'Şimdi başla',
-    secondaryCta: 'Araçları keşfet',
-    stats: [{ value: 'BETA', label: 'Pilot program açık' }, { value: '10+', label: 'Ücretsiz araç' }, { value: 'AI', label: 'KAZAN desteği' }],
-    illustrationAlt: 'DK Agency HoReCa yönetim illüstrasyonu',
-  },
-};
+import { normalizeLocale, withLocale } from '@/i18n/config';
 
 export default function Hero() {
   const locale = normalizeLocale(useLocale());
-  const copy = heroCopy[locale];
+  const t = useTranslations('home.hero');
 
   return (
-    <section className="relative overflow-hidden bg-[var(--dk-paper)] pb-20 pt-32">
-      <div className="pointer-events-none absolute right-0 top-0 h-[60%] w-[60%] bg-[radial-gradient(ellipse_at_top_right,rgba(233,69,96,0.10)_0%,transparent_70%)]" />
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
+    <section className="relative overflow-hidden bg-[#f8f7f4]">
+      <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-200/50 bg-white px-4 py-1.5">
-              <Award size={14} className="text-amber-600" />
-              <span className="text-xs font-semibold text-amber-700">{copy.badge}</span>
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#e94560]/15 bg-[#e94560]/8 px-3.5 py-1.5">
+              <span className="text-sm text-[#e94560]">✦</span>
+              <span className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-[#e94560]">
+                {t('eyebrow')}
+              </span>
             </div>
 
-            <h1
-              className="mb-5 font-display font-extrabold leading-[1.06] tracking-tight text-slate-900"
-              style={{ fontSize: 'clamp(2.25rem, 5vw, 3.5rem)' }}
-            >
-              {copy.title[0]}
-              <br />
-              <span className="text-[var(--dk-red)]">{copy.title[1]}</span>
-              <br />
-              {copy.title[2]}
+            <h1 className="mb-6 text-[clamp(38px,5vw,62px)] font-bold leading-[1.05] tracking-tight text-[#1a1a2e]">
+              {t('line1')}{' '}
+              <span className="text-[#e94560]">{t('line2')}</span>
             </h1>
 
-            <p className="mb-2 max-w-lg text-lg leading-relaxed text-slate-700">{copy.body}</p>
-            <p className="mb-8 text-sm italic text-amber-700">{copy.note}</p>
+            <p className="mb-9 max-w-lg text-[17px] leading-[1.6] text-[#6b6b7b]">
+              {t('subtitle')}
+            </p>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-4">
               <Link
-                href="/auth/register"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-red)] px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-red-500/25 transition-shadow hover:shadow-xl"
+                href={withLocale(locale, '/aletler')}
+                className="flex items-center gap-2 rounded-xl bg-[#1a1a2e] px-7 py-4 font-mono text-[13px] uppercase tracking-wide text-white transition hover:bg-[#2a2a40]"
               >
-                {copy.primaryCta}
-                <ArrowRight size={18} />
+                {t('ctaPrimary')} <span>✦</span>
               </Link>
               <Link
-                href={withLocale(locale, '/toolkit')}
-                className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-7 py-3.5 text-base font-semibold text-slate-900 transition-colors hover:bg-gray-50"
+                href={`${withLocale(locale, '/')}#sektor`}
+                className="flex items-center gap-2 rounded-xl border border-[#1a1a2e]/20 px-7 py-4 font-mono text-[13px] uppercase tracking-wide text-[#1a1a2e] transition hover:border-[#1a1a2e]/40"
               >
-                <Play size={16} fill="currentColor" />
-                {copy.secondaryCta}
+                {t('ctaSecondary')} <span>›</span>
               </Link>
-            </div>
-
-            <div className="mt-12 flex gap-8">
-              {copy.stats.map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-2xl font-extrabold text-slate-900">{stat.value}</div>
-                  <div className="mt-1 text-[11px] uppercase tracking-wider text-gray-500">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, x: 20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:block"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="relative"
           >
-            <Image
-              src="/images/dk-hero-illustration.png"
-              alt={copy.illustrationAlt}
-              width={720}
-              height={520}
-              priority
-              className="ml-auto max-h-[400px] w-full object-contain"
-            />
+            <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-3xl border border-[#e8e6e1] bg-gradient-to-br from-[#e94560]/15 via-[#f8f7f4] to-[#10b981]/10 shadow-xl">
+              <span className="font-mono text-sm uppercase tracking-wider text-[#6b6b7b]/40">
+                {t('imagePlaceholder')}
+              </span>
+            </div>
+
+            <div className="absolute -bottom-6 -left-6 flex items-center gap-4 rounded-2xl border-l-4 border-[#10b981] bg-white py-4 pl-4 pr-6 shadow-lg">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#10b981]/10">
+                <span className="text-xl text-[#10b981]">↗</span>
+              </span>
+              <div>
+                <p className="text-[22px] font-bold leading-none text-[#1a1a2e]">
+                  {t('statValue')}
+                </p>
+                <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#6b6b7b]">
+                  {t('statLabel')}
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
