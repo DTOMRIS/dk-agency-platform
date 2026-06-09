@@ -59,9 +59,10 @@ try {
     );
   }
   fs.appendFileSync(journal, line, 'utf8');
-
-  // Stage the journal so it rides inside this commit (persistent, no dirty state).
-  execSync(`git add ${REL_JOURNAL}`, { stdio: 'ignore' });
+  // NOTE: the journal is gitignored (local-only). We do NOT `git add` it —
+  // staging it inside every commit caused recurring CHANGELOG/JOURNAL merge
+  // conflicts across parallel PRs (GitHub does not apply the .gitattributes
+  // union driver). session-brain.mjs still reads the local file at SessionStart.
 } catch {
   // Never block a commit because of journaling.
 }
