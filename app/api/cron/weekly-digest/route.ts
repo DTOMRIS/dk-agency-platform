@@ -152,7 +152,10 @@ export async function GET(request: NextRequest): Promise<NextResponse<DigestResu
         : undefined;
 
       const html = wrapEmail(bodyContent, { unsubscribeUrl });
-      return sendSmtpEmail(pref.email, SUBJECT, html);
+      return sendSmtpEmail(pref.email, SUBJECT, html, {
+        unsubscribeUrl,
+        listId: 'newsletter.dkagency.com.tr',
+      });
     }),
   );
 
