@@ -24,6 +24,11 @@ export async function saveEmailPreferences(input: SaveEmailPreferencesInput) {
     .select({
       id: emailPreferences.id,
       unsubscribeToken: emailPreferences.unsubscribeToken,
+      newsletterSubscribed: emailPreferences.newsletterSubscribed,
+      blogDigestSubscribed: emailPreferences.blogDigestSubscribed,
+      productUpdatesSubscribed: emailPreferences.productUpdatesSubscribed,
+      adminDigestSubscribed: emailPreferences.adminDigestSubscribed,
+      consentGivenAt: emailPreferences.consentGivenAt,
     })
     .from(emailPreferences)
     .where(eq(emailPreferences.email, email))
@@ -31,14 +36,27 @@ export async function saveEmailPreferences(input: SaveEmailPreferencesInput) {
     .then((rows) => rows[0]);
 
   const unsubscribeToken = existing?.unsubscribeToken || randomBytes(32).toString('hex');
+  const registrationWithoutMarketing = input.source === 'registration' && !input.newsletterSubscribed;
+  const newsletterSubscribed = registrationWithoutMarketing
+    ? existing?.newsletterSubscribed ?? false
+    : input.newsletterSubscribed;
+  const blogDigestSubscribed = registrationWithoutMarketing
+    ? existing?.blogDigestSubscribed ?? false
+    : input.blogDigestSubscribed;
+  const productUpdatesSubscribed = input.source === 'registration'
+    ? registrationWithoutMarketing
+      ? existing?.productUpdatesSubscribed ?? false
+      : input.productUpdatesSubscribed
+    : existing?.productUpdatesSubscribed ?? false;
+  const hasConsent = newsletterSubscribed || blogDigestSubscribed || productUpdatesSubscribed;
   const values = {
     userId: input.userId,
     email,
-    newsletterSubscribed: input.newsletterSubscribed,
-    blogDigestSubscribed: input.blogDigestSubscribed,
-    productUpdatesSubscribed: input.productUpdatesSubscribed,
-    adminDigestSubscribed: false,
-    consentGivenAt: new Date(),
+    newsletterSubscribed,
+    blogDigestSubscribed,
+    productUpdatesSubscribed,
+    adminDigestSubscribed: existing?.adminDigestSubscribed ?? false,
+    consentGivenAt: hasConsent ? existing?.consentGivenAt || new Date() : null,
     consentSource: input.source,
     unsubscribeToken,
     lastUpdatedAt: new Date(),

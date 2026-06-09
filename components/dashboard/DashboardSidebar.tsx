@@ -145,14 +145,11 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
               width={44}
               height={44}
               priority
-              className="h-11 w-11 rounded-2xl object-contain"
+              className="h-11 w-11 shrink-0 rounded-2xl object-contain"
             />
-            <div>
+            <div className="flex flex-col">
               <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">
                 {t('panelTitle')}
-              </div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                {t('adminSubtitle')}
               </div>
             </div>
           </Link>
@@ -203,11 +200,6 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
         </nav>
 
         <div className="border-t border-[var(--dk-warm-border)] p-4">
-          <div className="mb-3 rounded-2xl bg-slate-50 px-4 py-3">
-            <p className="text-sm font-bold text-[var(--dk-navy)]">Admin</p>
-            <p className="mt-1 text-xs text-slate-500">admin@dkagency.com.tr</p>
-          </div>
-
           <button
             type="button"
             className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]"

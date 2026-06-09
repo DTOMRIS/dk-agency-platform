@@ -89,27 +89,18 @@ function CompanyLogo() {
     const stored = getProfileFromStorage()?.logo || null;
     startTransition(() => setLogo(stored));
   }, []);
-  if (logo)
-    return (
-      <img
-        src={logo}
-        alt="Logo"
-        className="h-12 w-12 rounded-xl object-cover border border-slate-200"
-      />
-    );
+  if (logo) return <img src={logo} alt="Logo" className="h-12 w-12 rounded-xl object-cover border border-slate-200" />;
   return (
-    <img
-      src="/images/logo-mobil.png"
-      alt="Logo"
-      className="h-12 w-12 rounded-xl object-contain border border-slate-200 bg-slate-50 p-1 shadow-sm"
-    />
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-400 shadow-sm">
+      <Building2 size={22} />
+    </div>
   );
 }
 
 function CompanyName() {
-  const [name, setName] = useState('DK Agency');
+  const [name, setName] = useState('Mənim Şirkətim');
   useEffect(() => {
-    const stored = getProfileFromStorage()?.form?.companyName || 'DK Agency';
+    const stored = getProfileFromStorage()?.form?.companyName || 'Mənim Şirkətim';
     startTransition(() => setName(stored));
   }, []);
   return <p className="truncate text-sm font-semibold text-slate-900">{name}</p>;

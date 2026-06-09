@@ -15,7 +15,10 @@ import {
  */
 export default function LaunchCampaignBanner() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
   if (!mounted) return null;
 
   const active = isLaunchActive();

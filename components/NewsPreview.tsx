@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
+import { useState } from 'react';
 import { Calendar, ArrowRight, Tag, Bookmark } from 'lucide-react';
 import Link from 'next/link';
 import { NEWS_ITEMS } from '@/components/constants';
@@ -64,11 +65,37 @@ const copyByLocale: Record<Locale, {
   },
 };
 
+const newsletterStatusByLocale: Record<Locale, { success: string; error: string; loading: string }> = {
+  az: { success: 'Abunəliyiniz təsdiqləndi.', error: 'Abunəlik tamamlanmadı.', loading: 'Göndərilir...' },
+  ru: { success: 'Подписка подтверждена.', error: 'Не удалось оформить подписку.', loading: 'Отправка...' },
+  en: { success: 'Your subscription is confirmed.', error: 'Subscription could not be completed.', loading: 'Submitting...' },
+  tr: { success: 'Aboneliğiniz onaylandı.', error: 'Abonelik tamamlanamadı.', loading: 'Gönderiliyor...' },
+};
+
 export default function NewsPreview() {
   const locale = normalizeLocale(useLocale());
   const copy = copyByLocale[locale];
+  const [email, setEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const featuredNews = NEWS_ITEMS[0];
   const sideNews = NEWS_ITEMS.slice(1);
+
+  const subscribe = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setNewsletterStatus('loading');
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'homepage_newsletter' }),
+      });
+      if (!response.ok) throw new Error('Subscription failed');
+      setEmail('');
+      setNewsletterStatus('success');
+    } catch {
+      setNewsletterStatus('error');
+    }
+  };
 
   return (
     <section id="news" className="bg-white py-16 sm:py-24 lg:py-32">
@@ -184,16 +211,21 @@ export default function NewsPreview() {
               <p className="relative z-10 mb-6 text-sm leading-relaxed text-slate-400 sm:mb-8">
                 {copy.newsletterBody}
               </p>
-              <div className="relative z-10 space-y-4">
+              <form className="relative z-10 space-y-4" onSubmit={subscribe}>
                 <input
                   type="email"
                   placeholder={copy.emailPlaceholder}
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
                   className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm backdrop-blur-sm transition-colors focus:border-brand-red focus:outline-none sm:px-5 sm:py-4"
                 />
-                <button className="w-full rounded-2xl bg-brand-red py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95 sm:py-4">
-                  {copy.subscribe}
+                <button disabled={newsletterStatus === 'loading'} className="w-full rounded-2xl bg-brand-red py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95 disabled:cursor-wait disabled:opacity-60 sm:py-4">
+                  {newsletterStatus === 'loading' ? newsletterStatusByLocale[locale].loading : copy.subscribe}
                 </button>
-              </div>
+                {newsletterStatus === 'success' && <p className="text-sm text-emerald-400">{newsletterStatusByLocale[locale].success}</p>}
+                {newsletterStatus === 'error' && <p className="text-sm text-rose-400">{newsletterStatusByLocale[locale].error}</p>}
+              </form>
             </div>
           </div>
         </div>
