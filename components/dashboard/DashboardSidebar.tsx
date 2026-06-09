@@ -4,13 +4,12 @@ import { Suspense, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import PortalEngagementTracker from '@/components/analytics/PortalEngagementTracker';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   BarChart3,
   BookOpen,
   Bot,
   ChevronLeft,
-  CookingPot,
   FilePenLine,
   LayoutDashboard,
   LogOut,
@@ -41,8 +40,7 @@ const navItemDefs: NavItemDef[] = [
   { titleKey: 'blog', href: '/dashboard/blog', icon: BookOpen },
   { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
   // auditor + invoices(faturalar) + site hidden until backend is real (mock data / no-op save).
-  // Re-enable once auditor persistence, invoice API, and site-settings save are implemented.
-  { titleKey: 'foodCost', href: '/dashboard/food-cost', icon: CookingPot },
+  // foodCost is a MEMBER tool — it lives in the B2B portal (/b2b-panel), not the admin panel.
   { titleKey: 'toolkit', href: '/dashboard/toolkit', icon: Wrench },
   { titleKey: 'marketinqOcagi', href: '/dashboard/marketinq-ocagi', icon: Sparkles },
   { titleKey: 'users', href: '/dashboard/users', icon: Users },
@@ -58,9 +56,11 @@ interface DashboardSidebarProps {
 
 export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const t = useTranslations('dashboardSidebar');
   const [kazanLeadCount, setKazanLeadCount] = useState<number | null>(null);
   const [pendingListings, setPendingListings] = useState<number>(0);
+  const [loggingOut, setLoggingOut] = useState(false);
   const currentLocale = (() => {
     if (typeof document === 'undefined') return normalizeLocale(pathname.split('/')[1]);
     const match = document.cookie.match(/NEXT_LOCALE=(\w+)/);
@@ -68,6 +68,18 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
   })();
   const strippedPath = stripLocalePrefix(pathname);
   const isActive = (href: string) => strippedPath === href || strippedPath.startsWith(`${href}/`);
+
+  async function handleLogout() {
+    if (loggingOut) return;
+    setLoggingOut(true);
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+      /* ignore — clear client state regardless */
+    }
+    router.push(withLocale(currentLocale, '/auth/login'));
+    router.refresh();
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -202,7 +214,9 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
         <div className="border-t border-[var(--dk-warm-border)] p-4">
           <button
             type="button"
-            className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]"
+            onClick={handleLogout}
+            disabled={loggingOut}
+            className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <LogOut size={18} />
             {t('logout')}
