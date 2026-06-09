@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0236` fix(dashboard): dashboard home **premium LIGHT 2026** redesign — TASK-0235 dashboard-u dark Midnight Navy (`bg-[#0e0f22]`) etmişdi, bu layihənin "Light theme only / Premium light for dashboard" qaydasını pozurdu və yalnız 1 səhifəyə tətbiq olunduğundan qalan light alt-səhifələrlə uyumsuz idi. AQTA admin referansı ilə premium light-a qaytarıldı (brand tokens, qızıl aksent xətti, yumşaq kölgə, incə hover lift). Sidebar: "DK" mətn qutusu → həqiqi logo (`/images/logo-mobil.png`); təkrar "Doğan Tomris USTA" identity kartı silindi. `dk-glass-card`/`dk-hover-glow` (login işlədir) toxunulmadı; 503 dərsi — heavy blur yoxdur.
+
 ### Added
 - `TASK-0228` feat(skills): `dk-content-engine` skill — human-in-the-loop content pipeline (scout → propose → draft → approve → publish). Builds on `dk-blog-publish` + auto-translate (TASK-0225) + AI SEO (TASK-0215/0217). Seeds the franchise topic backlog (Economist "AI-proof" angle, Para fee categories — 8 posts), scout source list, DK draft template (FAQ for AEO), multi-channel repurposing, and HALT rules (no auto-publish; legal/AQTA review). Never auto-publishes.
 - TASK-0227 feat(kazan): KAZAN Leads CRM — notes timeline, lead scoring (computeLeadScore), and next-contact reminder. PATCH /api/kazan-ai/leads accepts addNote/leadScore/nextContactAt; lead actions show score + reminder badges + notes panel. Uses migration 0008 columns (notes/lead_score/next_contact_at). i18n 4 langs.

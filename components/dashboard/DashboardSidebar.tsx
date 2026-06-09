@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import PortalEngagementTracker from '@/components/analytics/PortalEngagementTracker';
 import { usePathname } from 'next/navigation';
@@ -138,9 +139,14 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       >
         <div className="flex h-20 items-center justify-between border-b border-[var(--dk-warm-border)] px-5">
           <Link href={withLocale(currentLocale, '/dashboard')} className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-sm font-black text-white shadow-lg shadow-slate-900/15">
-              DK
-            </div>
+            <Image
+              src="/images/logo-mobil.png"
+              alt="DK Agency"
+              width={44}
+              height={44}
+              priority
+              className="h-11 w-11 rounded-2xl object-contain"
+            />
             <div>
               <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">
                 {t('panelTitle')}
@@ -158,18 +164,6 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
           >
             <ChevronLeft size={18} />
           </button>
-        </div>
-
-        <div className="border-b border-[var(--dk-warm-border)] px-5 py-4">
-          <div className="rounded-2xl border border-[var(--dk-warm-border)] bg-[var(--dk-paper)] p-4">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-bold text-[var(--dk-navy)]">Doğan Tomris</p>
-              <span className="inline-flex rounded-full bg-[var(--dk-gold)]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--dk-gold)]">
-                USTA
-              </span>
-            </div>
-            <p className="mt-1 text-xs text-slate-500">{t('userAccess')}</p>
-          </div>
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3 py-5">
