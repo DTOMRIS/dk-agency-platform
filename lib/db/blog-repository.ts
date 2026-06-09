@@ -8,6 +8,7 @@ import {
   type BlogArticle,
 } from '@/lib/data/blogArticles';
 import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
+import { translateText } from '@/lib/ai/translate';
 
 export interface BlogListFilters {
   category?: string | null;
@@ -30,7 +31,11 @@ export interface DbBlogPost extends BlogArticle {
 }
 
 function excerpt(content: string, length: number = 180) {
-  return content.replace(/[#>*`]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, length);
+  return content
+    .replace(/[#>*`]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, length);
 }
 
 function mapStaticArticle(article: BlogArticle): DbBlogPost {
@@ -59,8 +64,8 @@ function resolveLocalCover(slug: string, dbImage: string | null): string {
 
 function mapDbArticle(
   row: typeof blogPosts.$inferSelect,
-  boxRows: typeof guruBoxes.$inferSelect[] = [],
-  locale: ContentLocale = 'az',
+  boxRows: (typeof guruBoxes.$inferSelect)[] = [],
+  locale: ContentLocale = 'az'
 ): DbBlogPost {
   const r = row as unknown as Record<string, unknown>;
   const title = localizedField(r, 'title', locale) || row.title_az;
@@ -78,8 +83,10 @@ function mapDbArticle(
     readingTime: row.readTime || 8,
     wordCount: content?.split(/\s+/).filter(Boolean).length || 0,
     author: row.author || 'DK Agency',
-    publishDate: row.publishedAt?.toISOString() || row.createdAt?.toISOString() || new Date().toISOString(),
-    updatedAt: row.updatedAt?.toISOString() || row.createdAt?.toISOString() || new Date().toISOString(),
+    publishDate:
+      row.publishedAt?.toISOString() || row.createdAt?.toISOString() || new Date().toISOString(),
+    updatedAt:
+      row.updatedAt?.toISOString() || row.createdAt?.toISOString() || new Date().toISOString(),
     tags: [],
     metaDescription: row.seoDescription || summary || excerpt(content, 160),
     focusKeyword: '',
@@ -119,7 +126,10 @@ export async function getBlogPostsFromDb(filters: BlogListFilters = {}, locale?:
       return categoryMatch && statusMatch;
     });
     return {
-      posts: filtered.slice(filters.offset || 0, (filters.offset || 0) + (filters.limit || filtered.length)),
+      posts: filtered.slice(
+        filters.offset || 0,
+        (filters.offset || 0) + (filters.limit || filtered.length)
+      ),
       total: filtered.length,
       source: 'static' as const,
     };
@@ -127,7 +137,8 @@ export async function getBlogPostsFromDb(filters: BlogListFilters = {}, locale?:
 
   const conditions = [];
   if (filters.category) conditions.push(eq(blogPosts.category, filters.category));
-  if (filters.status && filters.status !== 'all') conditions.push(eq(blogPosts.status, filters.status));
+  if (filters.status && filters.status !== 'all')
+    conditions.push(eq(blogPosts.status, filters.status));
 
   let query = db
     .select()
@@ -164,7 +175,11 @@ export async function getBlogPostDetail(slug: string, locale?: string) {
     return article ? mapStaticArticle(article) : null;
   }
 
-  const row = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).then((items) => items[0]);
+  const row = await db
+    .select()
+    .from(blogPosts)
+    .where(eq(blogPosts.slug, slug))
+    .then((items) => items[0]);
   if (!row) return null;
 
   const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, row.id));
@@ -175,7 +190,11 @@ export async function getBlogPostDetail(slug: string, locale?: string) {
 export async function getBlogPostRaw(slug: string) {
   if (!dbAvailable || !db) return null;
 
-  const row = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).then((items) => items[0]);
+  const row = await db
+    .select()
+    .from(blogPosts)
+    .where(eq(blogPosts.slug, slug))
+    .then((items) => items[0]);
   if (!row) return null;
 
   const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, row.id));
@@ -252,13 +271,17 @@ export async function createBlogPostInDb(input: {
 
 export async function updateBlogPostInDb(
   slug: string,
-  input: Parameters<typeof createBlogPostInDb>[0],
+  input: Parameters<typeof createBlogPostInDb>[0]
 ) {
   if (!dbAvailable || !db) {
     return { slug, source: 'static' as const };
   }
 
-  const existing = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).then((items) => items[0]);
+  const existing = await db
+    .select()
+    .from(blogPosts)
+    .where(eq(blogPosts.slug, slug))
+    .then((items) => items[0]);
   if (!existing) return null;
 
   await db
@@ -284,7 +307,8 @@ export async function updateBlogPostInDb(
       seoDescription: input.seoDescription || null,
       hasPaywall: input.paywall,
       status: input.status,
-      publishedAt: input.status === 'published' ? existing.publishedAt || new Date() : existing.publishedAt,
+      publishedAt:
+        input.status === 'published' ? existing.publishedAt || new Date() : existing.publishedAt,
       updatedAt: new Date(),
     })
     .where(eq(blogPosts.id, existing.id));
@@ -322,4 +346,82 @@ export async function archiveBlogPostInDb(slug: string) {
 
 export function getStaticBlogSeedSource() {
   return STATIC_BLOG_ARTICLES;
+}
+
+/**
+ * Best-effort auto-translation of a blog post's AZ fields into ru/en/tr.
+ * Fills only EMPTY target fields (never overwrites manual translations).
+ * Returns a per-language result so callers can show the admin what happened
+ * (no silent failure). Never throws.
+ */
+export type BlogTranslateResult = {
+  ok: boolean;
+  langs: Record<'ru' | 'en' | 'tr', 'done' | 'failed' | 'skipped'>;
+  error?: string;
+};
+
+const EMPTY_RESULT = (): BlogTranslateResult => ({
+  ok: false,
+  langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
+});
+
+export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateResult> {
+  const result: BlogTranslateResult = {
+    ok: true,
+    langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
+  };
+  if (!dbAvailable || !db) return { ...EMPTY_RESULT(), error: 'db-unavailable' };
+  try {
+    const [row] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
+
+    const updates: Record<string, string> = {};
+    const langs = ['ru', 'en', 'tr'] as const;
+
+    for (const lang of langs) {
+      const fields: Array<['title' | 'summary' | 'content', string]> = [];
+      if (!row[`title_${lang}` as keyof typeof row] && row.title_az)
+        fields.push(['title', row.title_az]);
+      if (!row[`summary_${lang}` as keyof typeof row] && row.summary_az)
+        fields.push(['summary', row.summary_az]);
+      if (!row[`content_${lang}` as keyof typeof row] && row.content_az)
+        fields.push(['content', row.content_az]);
+
+      if (fields.length === 0) {
+        result.langs[lang] = 'skipped';
+        continue;
+      }
+      let anyFail = false;
+      for (const [name, src] of fields) {
+        const v = await translateText(src, lang);
+        if (v) updates[`${name}_${lang}`] = v;
+        else anyFail = true;
+      }
+      result.langs[lang] = anyFail ? 'failed' : 'done';
+      if (anyFail) result.ok = false;
+    }
+
+    if (Object.keys(updates).length > 0) {
+      await db
+        .update(blogPosts)
+        .set({ ...updates, updatedAt: new Date() } as unknown as Partial<
+          typeof blogPosts.$inferInsert
+        >)
+        .where(eq(blogPosts.id, id));
+    }
+    return result;
+  } catch (e) {
+    return { ...EMPTY_RESULT(), error: String(e).slice(0, 200) };
+  }
+}
+
+/** Translate by slug (admin manual trigger). */
+export async function translateBlogPostBySlug(slug: string): Promise<BlogTranslateResult> {
+  if (!dbAvailable || !db) return { ...EMPTY_RESULT(), error: 'db-unavailable' };
+  const [row] = await db
+    .select({ id: blogPosts.id })
+    .from(blogPosts)
+    .where(eq(blogPosts.slug, slug));
+  if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
+  return autoTranslateBlogPost(row.id);
 }
