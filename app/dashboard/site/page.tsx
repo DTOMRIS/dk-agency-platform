@@ -29,7 +29,9 @@ export default function DashboardSitePage() {
       return;
     }
     const compressed = await compressImage(file, { maxWidth: 600, maxHeight: 600, maxSizeKB: 250 });
-    setPartners((prev) => prev.map((item) => (item.id === partnerId ? { ...item, logo: compressed.preview } : item)));
+    setPartners((prev) =>
+      prev.map((item) => (item.id === partnerId ? { ...item, logo: compressed.preview } : item))
+    );
     notify(`Logo hazırlandı: ${compressed.reduction}`);
   };
 
@@ -63,15 +65,26 @@ export default function DashboardSitePage() {
     <div className="min-h-screen bg-white p-6 lg:p-8">
       <div className="mx-auto max-w-6xl space-y-6">
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">{t('pageTitle')}</h1>
+          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">
+            {t('pageTitle')}
+          </h1>
           <p className="mt-3 text-sm text-slate-500">{t('pageSubtitle')}</p>
         </div>
 
-        {toast ? <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">{toast}</div> : null}
+        {toast ? (
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+            {toast}
+          </div>
+        ) : null}
 
         <div className="flex flex-wrap gap-3">
           {tabs.map(([value, label]) => (
-            <button key={value} type="button" onClick={() => setTab(value)} className={`rounded-full px-5 py-3 text-sm font-bold ${tab === value ? 'bg-[var(--dk-red)] text-white' : 'border border-slate-200 text-slate-700'}`}>
+            <button
+              key={value}
+              type="button"
+              onClick={() => setTab(value)}
+              className={`rounded-full px-5 py-3 text-sm font-bold ${tab === value ? 'bg-[var(--dk-red)] text-white' : 'border border-slate-200 text-slate-700'}`}
+            >
               {label}
             </button>
           ))}
@@ -82,40 +95,124 @@ export default function DashboardSitePage() {
             {footerFields.map(([key, label]) => (
               <div key={key}>
                 <label className="mb-2 block text-sm font-bold text-slate-700">{label}</label>
-                <input value={settings[key as keyof typeof settings] as string} onChange={(e) => setSettings((prev) => ({ ...prev, [key]: e.target.value }))} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+                <input
+                  value={settings[key as keyof typeof settings] as string}
+                  onChange={(e) => setSettings((prev) => ({ ...prev, [key]: e.target.value }))}
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                />
               </div>
             ))}
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('footerDescription')}</label>
-              <textarea rows={4} value={settings.footerDescription} onChange={(e) => setSettings((prev) => ({ ...prev, footerDescription: e.target.value }))} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+              <label className="mb-2 block text-sm font-bold text-slate-700">
+                {t('footerDescription')}
+              </label>
+              <textarea
+                rows={4}
+                value={settings.footerDescription}
+                onChange={(e) =>
+                  setSettings((prev) => ({ ...prev, footerDescription: e.target.value }))
+                }
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              />
             </div>
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('footerAddress')}</label>
-              <textarea rows={3} value={settings.address} onChange={(e) => setSettings((prev) => ({ ...prev, address: e.target.value }))} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+              <label className="mb-2 block text-sm font-bold text-slate-700">
+                {t('footerAddress')}
+              </label>
+              <textarea
+                rows={3}
+                value={settings.address}
+                onChange={(e) => setSettings((prev) => ({ ...prev, address: e.target.value }))}
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              />
             </div>
             <div className="md:col-span-2">
-              <button type="button" onClick={() => { notify(t('toastFooterSaved')); }} className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">{t('saveFooter')}</button>
+              <button
+                type="button"
+                disabled
+                aria-disabled
+                className="cursor-not-allowed rounded-full bg-slate-300 px-6 py-3 text-sm font-bold text-white opacity-70"
+              >
+                {t('saveFooter')}
+              </button>
             </div>
           </div>
         ) : null}
 
         {tab === 'partners' ? (
           <div className="space-y-4">
-            <button type="button" onClick={() => setPartners((prev) => [...prev, { id: `p${Date.now()}`, name: '', logo: '', link: '' }])} className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">{t('addPartner')}</button>
+            <button
+              type="button"
+              onClick={() =>
+                setPartners((prev) => [
+                  ...prev,
+                  { id: `p${Date.now()}`, name: '', logo: '', link: '' },
+                ])
+              }
+              className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white"
+            >
+              {t('addPartner')}
+            </button>
             {partners.map((partner) => (
-              <div key={partner.id} className="grid gap-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-[120px_1fr_auto]">
+              <div
+                key={partner.id}
+                className="grid gap-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-[120px_1fr_auto]"
+              >
                 <div className="flex h-24 items-center justify-center rounded-3xl bg-slate-50">
-                  {partner.logo ? <img src={partner.logo} alt={partner.name || 'Logo'} className="h-16 w-16 rounded-2xl object-cover" /> : <span className="text-xs text-slate-400">Logo</span>}
+                  {partner.logo ? (
+                    <img
+                      src={partner.logo}
+                      alt={partner.name || 'Logo'}
+                      className="h-16 w-16 rounded-2xl object-cover"
+                    />
+                  ) : (
+                    <span className="text-xs text-slate-400">Logo</span>
+                  )}
                 </div>
                 <div className="grid gap-4 md:grid-cols-2">
-                  <input value={partner.name} onChange={(e) => setPartners((prev) => prev.map((item) => (item.id === partner.id ? { ...item, name: e.target.value } : item)))} placeholder={t('partnerNamePlaceholder')} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
-                  <input value={partner.link} onChange={(e) => setPartners((prev) => prev.map((item) => (item.id === partner.id ? { ...item, link: e.target.value } : item)))} placeholder={t('partnerLinkPlaceholder')} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+                  <input
+                    value={partner.name}
+                    onChange={(e) =>
+                      setPartners((prev) =>
+                        prev.map((item) =>
+                          item.id === partner.id ? { ...item, name: e.target.value } : item
+                        )
+                      )
+                    }
+                    placeholder={t('partnerNamePlaceholder')}
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                  />
+                  <input
+                    value={partner.link}
+                    onChange={(e) =>
+                      setPartners((prev) =>
+                        prev.map((item) =>
+                          item.id === partner.id ? { ...item, link: e.target.value } : item
+                        )
+                      )
+                    }
+                    placeholder={t('partnerLinkPlaceholder')}
+                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                  />
                   <label className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-slate-300 px-4 py-3 text-sm font-semibold text-slate-600">
                     {t('logoUpload')}
-                    <input type="file" accept="image/*" className="hidden" onChange={(e) => void onPartnerLogo(e, partner.id)} />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => void onPartnerLogo(e, partner.id)}
+                    />
                   </label>
                 </div>
-                <button type="button" onClick={() => setPartners((prev) => prev.filter((item) => item.id !== partner.id))} className="rounded-full border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700">{t('deletePartner')}</button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setPartners((prev) => prev.filter((item) => item.id !== partner.id))
+                  }
+                  className="rounded-full border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700"
+                >
+                  {t('deletePartner')}
+                </button>
               </div>
             ))}
           </div>
@@ -126,15 +223,35 @@ export default function DashboardSitePage() {
             {generalFields.map(([key, label]) => (
               <div key={key}>
                 <label className="mb-2 block text-sm font-bold text-slate-700">{label}</label>
-                <input value={settings[key as keyof typeof settings] as string} onChange={(e) => setSettings((prev) => ({ ...prev, [key]: e.target.value }))} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+                <input
+                  value={settings[key as keyof typeof settings] as string}
+                  onChange={(e) => setSettings((prev) => ({ ...prev, [key]: e.target.value }))}
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                />
               </div>
             ))}
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('generalSeoDescription')}</label>
-              <textarea rows={4} value={settings.seoDescription} onChange={(e) => setSettings((prev) => ({ ...prev, seoDescription: e.target.value }))} className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none" />
+              <label className="mb-2 block text-sm font-bold text-slate-700">
+                {t('generalSeoDescription')}
+              </label>
+              <textarea
+                rows={4}
+                value={settings.seoDescription}
+                onChange={(e) =>
+                  setSettings((prev) => ({ ...prev, seoDescription: e.target.value }))
+                }
+                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              />
             </div>
             <div className="md:col-span-2">
-              <button type="button" onClick={() => { notify(t('toastGeneralSaved')); }} className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">{t('saveGeneral')}</button>
+              <button
+                type="button"
+                disabled
+                aria-disabled
+                className="cursor-not-allowed rounded-full bg-slate-300 px-6 py-3 text-sm font-bold text-white opacity-70"
+              >
+                {t('saveGeneral')}
+              </button>
             </div>
           </div>
         ) : null}

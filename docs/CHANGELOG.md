@@ -4,6 +4,8 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0224` (LAUNCH-P0) fix: hide mock/half-finished admin surfaces + remove fake stats before launch. Homepage `StatsBarSection` hidden (was "6.7M impressions"/"99.9%" vanity numbers); admin sidebar no longer shows `auditor`/`faturalar`/`site` (mock data / no-op save); `/dashboard/site` save buttons disabled (previously faked a "saved" toast); b2b panel KPI stats show 0/"—" instead of fabricated 4/2847/8/15.
 ### Security
 - `TASK-0223` (SEC-P0) fix(invoices): `/api/invoices` was a P0 IDOR — it trusted a `userId` from the request and had no auth, so anyone could read any user's invoices and **delete ANY invoice by id**. Now GET/POST/DELETE require a logged-in session, the userId is derived from the session (request userId ignored), and `bulkDeleteInvoices` is ownership-scoped. Verified: all endpoints → 401 without session.
 
