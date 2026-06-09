@@ -49,7 +49,7 @@
     "status": {
       "not_present": "Azərbaycanda yoxdur",
       "under_research": "Araşdırılır",
-      "coming_soon": "Tezliklə"
+      "coming_soon": "Yaxında"
     },
     "brandDesc": {
       "fiveGuys": "Premium burger seqmenti Bakıda boşdur. Five Guys-ın \"fresh, never frozen\" modeli orta-yuxarı gəlirli müştəri üçün güclü fürsətdir.",
@@ -2957,7 +2957,7 @@
       }
     },
     "toolListToggle": "{count} alətə bax",
-    "plannedToolsLabel": "Tezliklə əlavə olunacaq ({count})",
+    "plannedToolsLabel": "Yaxında əlavə olunacaq ({count})",
     "launchBadge": "Hazırda Pulsuz",
     "launchNote": "Açılış kampaniyası: 1 Sentyabr 2026-a qədər bütün paketlər pulsuzdur. Sonra standart qiymətləndirmə tətbiq olunacaq.",
     "status": {
