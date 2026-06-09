@@ -113,42 +113,44 @@ export default function B2BPanelPage() {
     quickLinks: t.raw('quickLinks') as string[],
   };
 
+  // Real per-user metrics not wired yet — show honest empty (0 / "—") instead of
+  // fabricated numbers. Replace with live values once analytics is connected.
   const STATS = [
     {
       label: copy.statLabels[0],
-      value: 4,
+      value: 0,
       icon: FileText,
       color: 'bg-indigo-50 text-indigo-600',
       sparklineColor: '#6366f1',
-      sparklineData: [2, 3, 3, 4, 4],
-      change: '+1',
+      sparklineData: [0, 0, 0, 0, 0],
+      change: '—',
     },
     {
       label: copy.statLabels[1],
-      value: 2847,
+      value: 0,
       icon: Eye,
       color: 'bg-emerald-50 text-emerald-600',
       sparklineColor: '#10b981',
-      sparklineData: [1800, 2100, 2400, 2600, 2847],
-      change: '+12%',
+      sparklineData: [0, 0, 0, 0, 0],
+      change: '—',
     },
     {
       label: copy.statLabels[2],
-      value: 8,
+      value: 0,
       icon: Briefcase,
       color: 'bg-purple-50 text-purple-600',
       sparklineColor: '#a855f7',
-      sparklineData: [4, 5, 6, 7, 8],
-      change: '+3',
+      sparklineData: [0, 0, 0, 0, 0],
+      change: '—',
     },
     {
       label: copy.statLabels[3],
-      value: 15,
+      value: 0,
       icon: MessageSquare,
       color: 'bg-rose-50 text-[var(--dk-red)]',
       sparklineColor: '#e94560',
-      sparklineData: [9, 11, 10, 13, 15],
-      change: '+5',
+      sparklineData: [0, 0, 0, 0, 0],
+      change: '—',
     },
   ];
 

@@ -19,3 +19,4 @@ Auto-appended by `scripts/auto-journal.mjs` (git pre-commit). One line per commi
 - 2026-06-07T17:37:59.327Z · `feat/blog-29-faq` · — · 7 file(s): app/[locale]/blog/[slug]/page.tsx, app/[locale]/page.tsx, components/seo/SiteJsonLd.tsx, docs/CHANGELOG.md, docs/STATE.md, docs/tasks/TASK-0217.md (+1 more)
 - 2026-06-07T17:47:13.409Z · `fix/blog-29-faq-autofind` · — · 1 file(s): scripts/blog-29-faq.mjs
 - 2026-06-07T18:01:49.708Z · `fix/blog-29-faq-title-col` · — · 1 file(s): scripts/blog-29-faq.mjs
+- 2026-06-09T10:37:16.985Z · `fix/hide-mock-surfaces` · — · 6 file(s): app/b2b-panel/page.tsx, app/dashboard/site/page.tsx, components/dashboard/DashboardSidebar.tsx, components/home/StatsBarSection.tsx, docs/CHANGELOG.md, docs/tasks/TASK-0224.md

@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0224` (LAUNCH-P0) fix: hide mock/half-finished admin surfaces + remove fake stats before launch. Homepage `StatsBarSection` hidden (was "6.7M impressions"/"99.9%" vanity numbers); admin sidebar no longer shows `auditor`/`faturalar`/`site` (mock data / no-op save); `/dashboard/site` save buttons disabled (previously faked a "saved" toast); b2b panel KPI stats show 0/"—" instead of fabricated 4/2847/8/15.
+
 ### Added
 - `TASK-0220` feat(leads): WhatsApp/Telegram contact clicks now send admin email notification to `info@dkagency.com.tr`. New `/dashboard/franchise-leads` panel (filter by toolSource, summary cards, full lead table). New `/dashboard/contact-tracking` panel (WhatsApp/Telegram/KAZAN click tracking, last 100 entries, channel filter).
 - `TASK-0219` feat(franchise-radar): Franchise Radar added to navbar as first item in Franchise dropdown. 7-Eleven (convenience sector, master_license, 84K+ units) and Arby's (QSR, Inspire Brands, already in Turkey) added to catalog — now 10 brands. New `convenience` sector type with 4-lang i18n.
