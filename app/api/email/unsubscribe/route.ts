@@ -1,7 +1,8 @@
+import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
+
 import { db } from '@/lib/db';
 import { emailPreferences } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
 
 const VALID_TYPES = ['all', 'newsletter', 'blog_digest', 'product_updates'] as const;
@@ -11,59 +12,63 @@ function isValidType(value: string | null): value is UnsubscribeType {
   return VALID_TYPES.includes(value as UnsubscribeType);
 }
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = request.nextUrl;
-  const token = searchParams.get('token');
-  const typeParam = searchParams.get('type') ?? 'all';
+async function unsubscribe(token: string, type: UnsubscribeType) {
+  if (!db) return { ok: false as const, status: 503, error: 'Service unavailable.' };
 
-  if (!token) {
-    return NextResponse.json({ error: 'Token tələb olunur.' }, { status: 400 });
-  }
-
-  if (!isValidType(typeParam)) {
-    return NextResponse.json({ error: 'Yanlış abunəlik növü.' }, { status: 400 });
-  }
-
-  if (!db) {
-    return NextResponse.json({ error: 'Xidmət müvəqqəti əlçatmazdır.' }, { status: 503 });
-  }
-
-  const rows = await db
-    .select()
+  const preference = await db
+    .select({ id: emailPreferences.id })
     .from(emailPreferences)
     .where(eq(emailPreferences.unsubscribeToken, token))
-    .limit(1);
+    .limit(1)
+    .then((rows) => rows[0]);
 
-  if (rows.length === 0) {
-    return NextResponse.json({ error: 'Token tapılmadı.' }, { status: 404 });
-  }
+  if (!preference) return { ok: false as const, status: 404, error: 'Token not found.' };
 
-  const updates: Partial<typeof emailPreferences.$inferInsert> = {
-    lastUpdatedAt: new Date(),
-  };
-
-  if (typeParam === 'all') {
+  const updates: Partial<typeof emailPreferences.$inferInsert> = { lastUpdatedAt: new Date() };
+  if (type === 'all') {
     updates.newsletterSubscribed = false;
     updates.blogDigestSubscribed = false;
     updates.productUpdatesSubscribed = false;
     updates.adminDigestSubscribed = false;
-  } else if (typeParam === 'newsletter') {
+  } else if (type === 'newsletter') {
     updates.newsletterSubscribed = false;
-  } else if (typeParam === 'blog_digest') {
+  } else if (type === 'blog_digest') {
     updates.blogDigestSubscribed = false;
-  } else if (typeParam === 'product_updates') {
+  } else {
     updates.productUpdatesSubscribed = false;
   }
 
-  await db
-    .update(emailPreferences)
-    .set(updates)
-    .where(eq(emailPreferences.unsubscribeToken, token));
+  await db.update(emailPreferences).set(updates).where(eq(emailPreferences.id, preference.id));
+  return { ok: true as const };
+}
 
-  const base = getBaseUrl();
-  const redirectUrl = new URL('/email-preferences', base);
+function readRequest(request: NextRequest) {
+  const token = request.nextUrl.searchParams.get('token');
+  const type = request.nextUrl.searchParams.get('type') ?? 'all';
+  if (!token) return { error: 'Token is required.', status: 400 as const };
+  if (!isValidType(type)) return { error: 'Invalid subscription type.', status: 400 as const };
+  return { token, type };
+}
+
+export async function GET(request: NextRequest) {
+  const input = readRequest(request);
+  if ('error' in input) return NextResponse.json({ error: input.error }, { status: input.status });
+
+  const result = await unsubscribe(input.token, input.type);
+  if (!result.ok) return NextResponse.json({ error: result.error }, { status: result.status });
+
+  const redirectUrl = new URL('/email-preferences', getBaseUrl());
   redirectUrl.searchParams.set('success', 'true');
-  redirectUrl.searchParams.set('token', token);
-
+  redirectUrl.searchParams.set('token', input.token);
   return NextResponse.redirect(redirectUrl.toString(), { status: 302 });
+}
+
+export async function POST(request: NextRequest) {
+  const input = readRequest(request);
+  if ('error' in input) return NextResponse.json({ error: input.error }, { status: input.status });
+
+  const result = await unsubscribe(input.token, input.type);
+  if (!result.ok) return NextResponse.json({ error: result.error }, { status: result.status });
+
+  return NextResponse.json({ ok: true });
 }

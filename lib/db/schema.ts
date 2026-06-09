@@ -13,6 +13,7 @@ import {
   numeric,
   date,
   index,
+  smallint,
 } from 'drizzle-orm/pg-core';
 
 // Hero section content (field by field admin)
@@ -325,6 +326,9 @@ export const kazanLeads = pgTable('kazan_leads', {
   status: kazanLeadStatusEnum('status').notNull().default('new'),
   whatsappHandoff: boolean('whatsapp_handoff').notNull().default(false),
   meetingRequested: boolean('meeting_requested').notNull().default(false),
+  notes: jsonb('notes').$type<Array<{ at: string; text: string }>>().default([]),
+  leadScore: smallint('lead_score'),
+  nextContactAt: timestamp('next_contact_at'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });

@@ -9,14 +9,11 @@ import {
   BookOpen,
   Bot,
   ChevronLeft,
-  ClipboardCheck,
   CookingPot,
   FilePenLine,
-  Globe,
   LayoutDashboard,
   LogOut,
   Newspaper,
-  Receipt,
   ScrollText,
   Settings,
   Sparkles,
@@ -42,12 +39,11 @@ const navItemDefs: NavItemDef[] = [
   { titleKey: 'news', href: '/dashboard/xeberler', icon: Newspaper },
   { titleKey: 'blog', href: '/dashboard/blog', icon: BookOpen },
   { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
-  { titleKey: 'auditor', href: '/dashboard/auditor', icon: ClipboardCheck },
-  { titleKey: 'invoices', href: '/dashboard/faturalar', icon: Receipt },
+  // auditor + invoices(faturalar) + site hidden until backend is real (mock data / no-op save).
+  // Re-enable once auditor persistence, invoice API, and site-settings save are implemented.
   { titleKey: 'foodCost', href: '/dashboard/food-cost', icon: CookingPot },
   { titleKey: 'toolkit', href: '/dashboard/toolkit', icon: Wrench },
   { titleKey: 'marketinqOcagi', href: '/dashboard/marketinq-ocagi', icon: Sparkles },
-  { titleKey: 'site', href: '/dashboard/site', icon: Globe },
   { titleKey: 'users', href: '/dashboard/users', icon: Users },
   { titleKey: 'funnel', href: '/dashboard/funnel', icon: BarChart3 },
   { titleKey: 'auditLog', href: '/dashboard/audit-logs', icon: ScrollText },
@@ -94,7 +90,9 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
         const res = await fetch('/api/listings?scope=admin&status=submitted');
         const data = (await res.json()) as { data?: Array<unknown>; total?: number };
         if (!cancelled) setPendingListings(data.total ?? data.data?.length ?? 0);
-      } catch { /* ignore */ }
+      } catch {
+        /* ignore */
+      }
     }
 
     void loadKazanLeadCount();
@@ -109,13 +107,14 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       navItemDefs.map((item) => ({
         ...item,
         title: t(`nav.${item.titleKey}`),
-        badge: item.href === '/dashboard/kazan-leads'
-          ? (kazanLeadCount ?? undefined)
-          : item.href === '/dashboard/ilanlar'
-            ? (pendingListings || undefined)
-            : item.badge,
+        badge:
+          item.href === '/dashboard/kazan-leads'
+            ? (kazanLeadCount ?? undefined)
+            : item.href === '/dashboard/ilanlar'
+              ? pendingListings || undefined
+              : item.badge,
       })),
-    [kazanLeadCount, pendingListings, t],
+    [kazanLeadCount, pendingListings, t]
   );
 
   return (
@@ -143,8 +142,12 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
               DK
             </div>
             <div>
-              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">{t('panelTitle')}</div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">{t('adminSubtitle')}</div>
+              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">
+                {t('panelTitle')}
+              </div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                {t('adminSubtitle')}
+              </div>
             </div>
           </Link>
 
@@ -161,7 +164,9 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
           <div className="rounded-2xl border border-[var(--dk-warm-border)] bg-[var(--dk-paper)] p-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-bold text-[var(--dk-navy)]">Doğan Tomris</p>
-              <span className="inline-flex rounded-full bg-[var(--dk-gold)]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--dk-gold)]">USTA</span>
+              <span className="inline-flex rounded-full bg-[var(--dk-gold)]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--dk-gold)]">
+                USTA
+              </span>
             </div>
             <p className="mt-1 text-xs text-slate-500">{t('userAccess')}</p>
           </div>
@@ -184,7 +189,9 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
                 >
                   <span
                     className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${
-                      active ? 'bg-white text-[var(--dk-red)] shadow-sm' : 'bg-slate-100 text-slate-500'
+                      active
+                        ? 'bg-white text-[var(--dk-red)] shadow-sm'
+                        : 'bg-slate-100 text-slate-500'
                     }`}
                   >
                     <Icon size={18} />

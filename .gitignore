@@ -55,3 +55,6 @@ playwright-report/
 
 # Claude Code local settings (personal permissions — never commit)
 .claude/settings.local.json
+
+# Auto-journal: local-only rolling log (untracked to avoid parallel-branch merge conflicts)
+docs/SESSION-JOURNAL.md

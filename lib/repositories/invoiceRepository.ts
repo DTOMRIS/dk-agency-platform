@@ -80,7 +80,14 @@ export async function createCategory(data: {
 
 export async function updateCategory(
   id: number,
-  data: Partial<{ name: string; slug: string; color: string; icon: string; sortOrder: number; isActive: boolean }>,
+  data: Partial<{
+    name: string;
+    slug: string;
+    color: string;
+    icon: string;
+    sortOrder: number;
+    isActive: boolean;
+  }>
 ) {
   if (!db) return null;
   const [row] = await db
@@ -94,10 +101,7 @@ export async function updateCategory(
 export async function deleteCategory(id: number) {
   if (!db) return false;
   // "Sair" kateqoriyasına köçür (id=12 seed-də)
-  await db
-    .update(invoiceItems)
-    .set({ categoryId: null })
-    .where(eq(invoiceItems.categoryId, id));
+  await db.update(invoiceItems).set({ categoryId: null }).where(eq(invoiceItems.categoryId, id));
   await db.delete(invoiceCategoryRules).where(eq(invoiceCategoryRules.categoryId, id));
   await db.delete(invoiceCategories).where(eq(invoiceCategories.id, id));
   return true;
@@ -156,7 +160,7 @@ export async function createInvoice(input: CreateInvoiceInput) {
         totalPrice: item.totalPrice,
         sortOrder: item.sortOrder ?? i,
         isEdited: item.isEdited ?? false,
-      })),
+      }))
     );
   }
 
@@ -201,10 +205,7 @@ export async function getInvoices(filters: InvoiceFilters = {}) {
 export async function getInvoiceById(id: number) {
   if (!db) return null;
 
-  const [invoice] = await db
-    .select()
-    .from(invoices)
-    .where(eq(invoices.id, id));
+  const [invoice] = await db.select().from(invoices).where(eq(invoices.id, id));
 
   if (!invoice) return null;
 
@@ -231,7 +232,7 @@ export async function updateInvoice(
     notes: string | null;
     confirmedAt: Date;
     confirmedBy: number;
-  }>,
+  }>
 ) {
   if (!db) return null;
   const [row] = await db
@@ -257,9 +258,10 @@ export async function deleteInvoice(id: number) {
   return true;
 }
 
-export async function bulkDeleteInvoices(ids: number[]) {
+export async function bulkDeleteInvoices(ids: number[], userId: number) {
   if (!db || ids.length === 0) return false;
-  await db.delete(invoices).where(inArray(invoices.id, ids));
+  // Ownership-scoped: only delete invoices that belong to this user.
+  await db.delete(invoices).where(and(inArray(invoices.id, ids), eq(invoices.userId, userId)));
   return true;
 }
 
@@ -284,10 +286,7 @@ export async function addInvoiceItem(invoiceId: number, item: InvoiceItemInput) 
   return row;
 }
 
-export async function updateInvoiceItem(
-  itemId: number,
-  data: Partial<InvoiceItemInput>,
-) {
+export async function updateInvoiceItem(itemId: number, data: Partial<InvoiceItemInput>) {
   if (!db) return null;
   const updateData: Record<string, unknown> = {};
   if (data.categoryId !== undefined) updateData.categoryId = data.categoryId;
@@ -334,7 +333,7 @@ export async function bulkAddInvoiceItems(invoiceId: number, items: InvoiceItemI
         totalPrice: item.totalPrice,
         sortOrder: item.sortOrder ?? i,
         isEdited: item.isEdited ?? false,
-      })),
+      }))
     )
     .returning();
   return rows;
@@ -368,7 +367,7 @@ export async function updateImportLog(
     failedRows: number;
     errorLog: Array<{ row: number; field: string; value: string; error: string }>;
     status: 'processing' | 'completed' | 'failed';
-  }>,
+  }>
 ) {
   if (!db) return null;
   const [row] = await db
@@ -444,12 +443,17 @@ export interface FoodCostReport {
   dateTo: string;
 }
 
-export async function getFoodCostReport(filters: FoodCostFilters = {}): Promise<FoodCostReport | null> {
+export async function getFoodCostReport(
+  filters: FoodCostFilters = {}
+): Promise<FoodCostReport | null> {
   if (!db) return null;
 
   const now = new Date();
-  const dateFrom = filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
-  const dateTo = filters.dateTo ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
+  const dateFrom =
+    filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+  const dateTo =
+    filters.dateTo ??
+    `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
 
   const invoiceConditions = [
     gte(invoices.invoiceDate, dateFrom),
@@ -473,7 +477,12 @@ export async function getFoodCostReport(filters: FoodCostFilters = {}): Promise<
     .innerJoin(invoices, eq(invoiceItems.invoiceId, invoices.id))
     .leftJoin(invoiceCategories, eq(invoiceItems.categoryId, invoiceCategories.id))
     .where(and(...invoiceConditions))
-    .groupBy(invoiceItems.categoryId, invoiceCategories.name, invoiceCategories.color, invoiceCategories.icon)
+    .groupBy(
+      invoiceItems.categoryId,
+      invoiceCategories.name,
+      invoiceCategories.color,
+      invoiceCategories.icon
+    )
     .orderBy(sql`sum(${invoiceItems.totalPrice}) desc`);
 
   const grandTotal = rows.reduce((sum, r) => sum + r.totalAmount, 0);
@@ -509,7 +518,10 @@ export interface MonthlyTrendItem {
   invoiceCount: number;
 }
 
-export async function getMonthlyTrend(months: number = 6, filters: FoodCostFilters = {}): Promise<MonthlyTrendItem[]> {
+export async function getMonthlyTrend(
+  months: number = 6,
+  filters: FoodCostFilters = {}
+): Promise<MonthlyTrendItem[]> {
   if (!db) return [];
 
   const now = new Date();
@@ -544,12 +556,17 @@ export interface SupplierCostItem {
   avgAmount: number;
 }
 
-export async function getSupplierComparison(filters: FoodCostFilters = {}): Promise<SupplierCostItem[]> {
+export async function getSupplierComparison(
+  filters: FoodCostFilters = {}
+): Promise<SupplierCostItem[]> {
   if (!db) return [];
 
   const now = new Date();
-  const dateFrom = filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
-  const dateTo = filters.dateTo ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
+  const dateFrom =
+    filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+  const dateTo =
+    filters.dateTo ??
+    `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
 
   const conditions = [
     gte(invoices.invoiceDate, dateFrom),
@@ -584,12 +601,18 @@ export interface TopProductItem {
   avgUnitPrice: number;
 }
 
-export async function getTopProducts(filters: FoodCostFilters = {}, limit: number = 20): Promise<TopProductItem[]> {
+export async function getTopProducts(
+  filters: FoodCostFilters = {},
+  limit: number = 20
+): Promise<TopProductItem[]> {
   if (!db) return [];
 
   const now = new Date();
-  const dateFrom = filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
-  const dateTo = filters.dateTo ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
+  const dateFrom =
+    filters.dateFrom ?? `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+  const dateTo =
+    filters.dateTo ??
+    `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()).padStart(2, '0')}`;
 
   const conditions = [
     gte(invoices.invoiceDate, dateFrom),
@@ -631,7 +654,10 @@ export interface ProductPriceLookup {
   lastSeen: string;
 }
 
-export async function lookupProductPrices(query?: string, limit: number = 20): Promise<ProductPriceLookup[]> {
+export async function lookupProductPrices(
+  query?: string,
+  limit: number = 20
+): Promise<ProductPriceLookup[]> {
   if (!db) return [];
 
   // Son 90 günün confirmed faturalarından

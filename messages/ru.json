@@ -1523,7 +1523,8 @@
       "premium": "PREMIUM",
       "kazanAiTitle": "KAZAN AI",
       "kazanAiDesc": "Быстрее анализируйте food cost, P&L и операционные решения.",
-      "kazanAiCta": "Открыть"
+      "kazanAiCta": "Открыть",
+      "invoices": "Счета"
     },
     "topBar": {
       "notifications": "Уведомления",

@@ -1,8 +1,12 @@
 import { type Locale, defaultLocale } from '@/i18n/config';
+import { escapeEmailHtml, htmlToPlainText } from './content';
 
 type EmailTemplate = {
   subject: string;
   html: string;
+  text?: string;
+  unsubscribeUrl?: string;
+  listId?: string;
 };
 
 function resolveLocale(locale?: Locale | string): Locale {
@@ -12,21 +16,23 @@ function resolveLocale(locale?: Locale | string): Locale {
 
 const BASE_URL = 'https://dkagency.com.tr';
 
-function wrapEmail(content: string, opts?: { unsubscribeUrl?: string }) {
+function wrapEmail(content: string, opts?: { unsubscribeUrl?: string; locale?: Locale; preheader?: string }) {
   const unsub = opts?.unsubscribeUrl
     ? `<a href="${opts.unsubscribeUrl}" style="color:#94a3b8;text-decoration:underline;">Abunəlikdən çıx</a> &middot; `
     : '';
   return `<!DOCTYPE html>
-<html lang="az">
+<html lang="${opts?.locale || 'az'}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Inter',sans-serif;">
+${opts?.preheader ? `<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${escapeEmailHtml(opts.preheader)}</div>` : ''}
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;">
 <tr><td align="center" style="padding:32px 16px;">
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden;">
 
   <!-- Header — Navy + Logo + Gold Accent -->
-  <tr><td style="background:#1A1A2E;padding:28px 32px;text-align:center;">
+  <tr><td bgcolor="#1A1A2E" style="background:#1A1A2E;padding:28px 32px;text-align:center;">
     <img src="${BASE_URL}/images/logo-mobil.png" alt="DK Agency" style="height:44px;width:auto;display:block;margin:0 auto 10px;" />
+    <div style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:.2px;margin:0 auto 8px;">DK Agency</div>
     <div style="width:40px;height:2px;background:#C5A022;margin:0 auto 10px;"></div>
     <div style="color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;">Ustalığın Nişanı &middot; Rəqəmsalın Şəddi</div>
   </td></tr>
@@ -63,7 +69,7 @@ function wrapEmail(content: string, opts?: { unsubscribeUrl?: string }) {
 
 export { wrapEmail, BASE_URL };
 
-const ctaStyle = 'display:inline-block;background:#E11D48;color:#ffffff;padding:14px 32px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:15px;';
+const ctaStyle = 'display:inline-block;background:#E94560;color:#ffffff;padding:14px 32px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:15px;';
 
 export const emailTemplates = {
   emailVerification: (verifyUrl: string, userName: string, locale?: Locale | string): EmailTemplate => {
@@ -197,11 +203,12 @@ export const emailTemplates = {
 <body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;">
 <tr><td align="center" style="padding:32px 16px;">
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);overflow:hidden;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);overflow:hidden;">
 
   <!-- Header -->
-  <tr><td style="background:#E94560;padding:28px 32px;text-align:center;">
+  <tr><td bgcolor="#1A1A2E" style="background:#1A1A2E;padding:28px 32px;text-align:center;">
     <img src="${baseUrl}/images/logo-mobil.png" alt="DK Agency Logo" style="height: 48px; width: auto; display: block; margin: 0 auto 12px;" />
+    <div style="color:#ffffff;font-size:18px;font-weight:700;margin:0 auto 8px;">DK Agency</div>
     <div style="color:#ffffffbf;font-size:12px;letter-spacing:2px;">USTALI\u011eIN N\u0130\u015eANI, D\u0130J\u0130TALIN \u015eEDD\u0130</div>
   </td></tr>
 
@@ -216,16 +223,16 @@ export const emailTemplates = {
     <!-- CTA -->
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       <tr><td align="center" style="padding:0 0 28px;">
-        <a href="${baseUrl}/dashboard" style="display:inline-block;background:#E94560;color:#ffffff;padding:14px 32px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:15px;">${c.cta}</a>
+        <a href="${baseUrl}/${loc}/b2b-panel" style="display:inline-block;background:#E94560;color:#ffffff;padding:14px 32px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:15px;">${c.cta}</a>
       </td></tr>
     </table>
 
     <!-- Quick Links -->
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #E5E7EB;padding-top:20px;">
       <tr>
-        <td align="center" style="padding:8px;"><a href="${baseUrl}/kazan" style="color:#E94560;font-size:13px;text-decoration:none;font-weight:600;">KAZAN AI</a></td>
-        <td align="center" style="padding:8px;"><a href="${baseUrl}/toolkit" style="color:#E94560;font-size:13px;text-decoration:none;font-weight:600;">Toolkit</a></td>
-        <td align="center" style="padding:8px;"><a href="${baseUrl}/devir" style="color:#E94560;font-size:13px;text-decoration:none;font-weight:600;">Devir & Sat\u0131\u015F</a></td>
+        <td align="center" style="padding:8px;"><a href="${baseUrl}/${loc}/kazan-ai" style="color:#E94560;font-size:13px;text-decoration:none;font-weight:600;">KAZAN AI</a></td>
+        <td align="center" style="padding:8px;"><a href="${baseUrl}/${loc}/toolkit" style="color:#E94560;font-size:13px;text-decoration:none;font-weight:600;">Toolkit</a></td>
+        <td align="center" style="padding:8px;"><a href="${baseUrl}/${loc}/listings" style="color:#E94560;font-size:13px;text-decoration:none;font-weight:600;">Devir & Sat\u0131\u015F</a></td>
       </tr>
     </table>
   </td></tr>
@@ -579,5 +586,9 @@ export const emailTemplates = {
 
 export async function sendEmail(to: string, template: EmailTemplate) {
   const { sendSmtpEmail } = await import('./smtp');
-  return sendSmtpEmail(to, template.subject, template.html);
+  return sendSmtpEmail(to, template.subject, template.html, {
+    text: template.text || htmlToPlainText(template.html),
+    unsubscribeUrl: template.unsubscribeUrl,
+    listId: template.listId,
+  });
 }

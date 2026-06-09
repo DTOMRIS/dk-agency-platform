@@ -5,6 +5,17 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0226` feat(invoices): **Fatura B2B + September launch campaign (PR-4)**. OCR invoice module opened to members at `/b2b-panel/faturalar` (+ `/[locale]` L-038 mirror); data is session-scoped via `/api/invoices` (SEC-P0 #318). `LaunchCampaignBanner`: free until 2026-09-01, ≤30-day countdown warning, then grace notice (old invoices + CSV/PDF export always open; only new upload/OCR/AI become premium — no data hostage). B2B sidebar "Faturalar" entry (4 langs). Post-Sept upload-gating enforcement is a follow-up (free period active now).
+
+### Fixed
+- `TASK-0224` (LAUNCH-P0) fix: hide mock/half-finished admin surfaces + remove fake stats before launch. Homepage `StatsBarSection` hidden (was "6.7M impressions"/"99.9%" vanity numbers); admin sidebar no longer shows `auditor`/`faturalar`/`site` (mock data / no-op save); `/dashboard/site` save buttons disabled (previously faked a "saved" toast); b2b panel KPI stats show 0/"—" instead of fabricated 4/2847/8/15.
+### Security
+- `TASK-0223` (SEC-P0) fix(invoices): `/api/invoices` was a P0 IDOR — it trusted a `userId` from the request and had no auth, so anyone could read any user's invoices and **delete ANY invoice by id**. Now GET/POST/DELETE require a logged-in session, the userId is derived from the session (request userId ignored), and `bulkDeleteInvoices` is ownership-scoped. Verified: all endpoints → 401 without session.
+
+### Added
+- `TASK-0225` feat(blog): auto-translate AZ → ru/en/tr on publish. New `lib/ai/translate.ts` (server-side DeepSeek, timeout, brand guard) + `autoTranslateBlogPost` fills only empty locale fields; `POST /api/blog` fires it fire-and-forget on publish (Hostinger long-running, no serverless timeout). New blog no longer stays AZ-only.
+
+### Added
 - `TASK-0220` feat(leads): WhatsApp/Telegram contact clicks now send admin email notification to `info@dkagency.com.tr`. New `/dashboard/franchise-leads` panel (filter by toolSource, summary cards, full lead table). New `/dashboard/contact-tracking` panel (WhatsApp/Telegram/KAZAN click tracking, last 100 entries, channel filter).
 - `TASK-0219` feat(franchise-radar): Franchise Radar added to navbar as first item in Franchise dropdown. 7-Eleven (convenience sector, master_license, 84K+ units) and Arby's (QSR, Inspire Brands, already in Turkey) added to catalog — now 10 brands. New `convenience` sector type with 4-lang i18n.
 - `TASK-0218` content(blog): blog-29 "Orada Bir Starbucks Var Uzaqda" (Starbucks/Burger King marka qeydiyyatı) added to static config + DB sync (id=149, published, paywall=true, stage=Böyüt, category=marketinq).

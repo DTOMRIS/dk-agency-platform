@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { MapPin, ShieldCheck } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { MapPin, ShieldCheck, Star } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { MockListing } from '@/lib/data/mockListings';
 import { getCategoryById } from '@/lib/data/listingCategories';
@@ -22,11 +23,36 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
   const locale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
   const category = getCategoryById(listing.type);
 
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const favorites = JSON.parse(localStorage.getItem('dk_favorites') || '[]') as number[];
+      setIsFavorite(favorites.includes(listing.id));
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [listing.id]);
+
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const favorites = JSON.parse(localStorage.getItem('dk_favorites') || '[]') as number[];
+    let nextFavs: number[];
+    if (favorites.includes(listing.id)) {
+      nextFavs = favorites.filter((id) => id !== listing.id);
+      setIsFavorite(false);
+    } else {
+      nextFavs = [...favorites, listing.id];
+      setIsFavorite(true);
+    }
+    localStorage.setItem('dk_favorites', JSON.stringify(nextFavs));
+    window.dispatchEvent(new Event('dk_favorites_changed'));
+  };
+
   return (
     <button
       type="button"
       onClick={() => onOpen(listing)}
-      className="group block overflow-hidden rounded-2xl border border-slate-200/80 bg-white text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl ring-1 ring-slate-100"
+      className="group block overflow-hidden rounded-2xl border border-slate-200/80 bg-white text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl ring-1 ring-slate-100 relative"
     >
       <div className="relative aspect-[16/9] overflow-hidden">
         <Image
@@ -63,6 +89,16 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
             {t('dkVerified')}
           </span>
         </div>
+
+        {/* Favorite overlay button — sağ alt */}
+        <button
+          type="button"
+          onClick={toggleFavorite}
+          className="absolute right-3 bottom-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-500 shadow-sm backdrop-blur-sm transition hover:scale-110 hover:text-amber-500 z-10"
+          title={isFavorite ? "Sevimlilərdən çıxart" : "Sevimlilərə əlavə et"}
+        >
+          <Star size={16} className={isFavorite ? 'fill-amber-500 text-amber-500' : ''} />
+        </button>
       </div>
 
       <div className="space-y-3 p-5">

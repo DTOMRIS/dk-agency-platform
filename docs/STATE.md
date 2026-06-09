@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-08T18:30:46.999Z
+- GeneratedAt: 2026-06-09T14:20:23.115Z
 - BuildStatus: PASS
 
-## Routes (241)
+## Routes (243)
 - /
 - /[locale]
 - /[locale]/about
@@ -14,6 +14,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/auth/login
 - /[locale]/auth/register
 - /[locale]/b2b-panel
+- /[locale]/b2b-panel/faturalar
 - /[locale]/b2b-panel/ilanlarim
 - /[locale]/b2b-panel/ilanlarim/[id]
 - /[locale]/b2b-panel/ilanlarim/[id]/edit
@@ -131,6 +132,7 @@ Auto-generated. Do not edit manually.
 - /b2b-panel/ayarlar
 - /b2b-panel/bildirimler
 - /b2b-panel/destek
+- /b2b-panel/faturalar
 - /b2b-panel/favoriler
 - /b2b-panel/ilanlarim
 - /b2b-panel/ilanlarim/[id]
@@ -249,7 +251,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (86)
+## API Routes (87)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -276,6 +278,7 @@ Auto-generated. Do not edit manually.
 - /api/auth/verify-email
 - /api/blog
 - /api/blog/[slug]
+- /api/blog/translate
 - /api/cron/admin-digest
 - /api/cron/onboarding-drip
 - /api/cron/weekly-digest
