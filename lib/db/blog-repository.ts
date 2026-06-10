@@ -1,4 +1,4 @@
-import { and, desc, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, or, sql } from 'drizzle-orm';
 import { db, dbAvailable } from './index';
 import { blogPosts, guruBoxes } from './schema';
 import {
@@ -9,6 +9,33 @@ import {
 } from '@/lib/data/blogArticles';
 import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
 import { translateText } from '@/lib/ai/translate';
+
+const LEGACY_SLUGS_MAP: Record<string, string[]> = {
+  'sertifikatli-komanda-cth-portal-karyera': ['sertifikatli-komanda-cth-online-tehsil'],
+  'azerbaycan-qastronomiya-2030-strateji-yol-xeritesi': ['azerbaycan-qastronomiya-2030-dovlet-plani'],
+  'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun': [
+    'Franchise Bedelleri: isim Hakkı, Royalti, Reklam — Neye, Niye Ödüyorsun',
+    'Franchise Bedelleri: isim Hakkı, Royalti, Reklam — Neye, Niye Ödüyorsun?',
+    'Franchise%20Bedelleri:%20isim%20Hakk%C4%B1,%20Royalti,%20Reklam%20%E2%80%94%20Neye,%20Niye%20%C3%96d%C3%BCyorsun',
+    'Franchise%20Bedelleri:%20isim%20Hakk%C4%B1,%20Royalti,%20Reklam%20%E2%80%94%20Neye,%20Niye%20%C3%96d%C3%BCyorsun?'
+  ]
+};
+
+function getSlugsToTry(slug: string): string[] {
+  const list = [slug];
+  if (LEGACY_SLUGS_MAP[slug]) {
+    list.push(...LEGACY_SLUGS_MAP[slug]);
+  }
+  for (const [canonical, legacyList] of Object.entries(LEGACY_SLUGS_MAP)) {
+    if (legacyList.includes(slug)) {
+      if (!list.includes(canonical)) list.push(canonical);
+      for (const leg of legacyList) {
+        if (!list.includes(leg)) list.push(leg);
+      }
+    }
+  }
+  return list;
+}
 
 export interface BlogListFilters {
   category?: string | null;
@@ -183,10 +210,11 @@ export async function getBlogPostDetail(slug: string, locale?: string) {
     return article ? mapStaticArticle(article) : null;
   }
 
+  const slugsToTry = getSlugsToTry(slug);
   const row = await db
     .select()
     .from(blogPosts)
-    .where(eq(blogPosts.slug, slug))
+    .where(or(...slugsToTry.map((s) => eq(blogPosts.slug, s))))
     .then((items) => items[0]);
   if (!row) return null;
 
@@ -198,10 +226,11 @@ export async function getBlogPostDetail(slug: string, locale?: string) {
 export async function getBlogPostRaw(slug: string) {
   if (!dbAvailable || !db) return null;
 
+  const slugsToTry = getSlugsToTry(slug);
   const row = await db
     .select()
     .from(blogPosts)
-    .where(eq(blogPosts.slug, slug))
+    .where(or(...slugsToTry.map((s) => eq(blogPosts.slug, s))))
     .then((items) => items[0]);
   if (!row) return null;
 
@@ -285,10 +314,11 @@ export async function updateBlogPostInDb(
     return { slug, source: 'static' as const };
   }
 
+  const slugsToTry = getSlugsToTry(slug);
   const existing = await db
     .select()
     .from(blogPosts)
-    .where(eq(blogPosts.slug, slug))
+    .where(or(...slugsToTry.map((s) => eq(blogPosts.slug, s))))
     .then((items) => items[0]);
   if (!existing) return null;
 
@@ -341,13 +371,14 @@ export async function archiveBlogPostInDb(slug: string) {
     return true;
   }
 
+  const slugsToTry = getSlugsToTry(slug);
   await db
     .update(blogPosts)
     .set({
       status: 'archived',
       updatedAt: new Date(),
     })
-    .where(eq(blogPosts.slug, slug));
+    .where(or(...slugsToTry.map((s) => eq(blogPosts.slug, s))));
 
   return true;
 }
@@ -532,10 +563,11 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
 /** Translate by slug (admin manual trigger). */
 export async function translateBlogPostBySlug(slug: string): Promise<BlogTranslateResult> {
   if (!dbAvailable || !db) return { ...EMPTY_RESULT(), error: 'db-unavailable' };
+  const slugsToTry = getSlugsToTry(slug);
   const [row] = await db
     .select({ id: blogPosts.id })
     .from(blogPosts)
-    .where(eq(blogPosts.slug, slug));
+    .where(or(...slugsToTry.map((s) => eq(blogPosts.slug, s))));
   if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
   return autoTranslateBlogPost(row.id);
 }

@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [TASK-0257] fix(blog): robust slug lookup and capital 'İ' slugification fix (P0 404) — 2026-06-10
+
+### Fixed
+- Fixed 404 error on franchise blog details page by implementing robust slug queries in `lib/db/blog-repository.ts` (`getBlogPostDetail`, `getBlogPostRaw`, `updateBlogPostInDb`, `archiveBlogPostInDb`, `translateBlogPostBySlug`). If a query is made for either the canonical or legacy/un-slugified slug (such as with spaces/colons), the repository checks all variants and returns the correct post.
+- Fixed the capital letter 'İ' lowercasing issue in `slugify` (in `BlogEditorForm.tsx`, `NewsEditorForm.tsx`, `rss-pipeline.ts`, and `fetch-news.mjs`) where "Süni İntellekt" was converted to "suni-i-ntellekt" (due to Combining Dot U+0307 above) instead of "suni-intellekt". The function now replaces `İ`/`I`/`ı` with `i` and strips U+0307 before lowercasing.
+- Fixed potential undefined locale crash in `app/[locale]/blog/[slug]/page.tsx` (`generateMetadata` and `BlogDetailPage`) on prefix-less root routes.
+
 ## [TASK-0206] fix(marketinq): root mirrors for default-locale tool routes (P0 404) — 2026-06-07
 
 ### Fixed
