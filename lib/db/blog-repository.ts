@@ -521,6 +521,186 @@ export async function getBlogTranslationMatrix(): Promise<PostTranslationStatus[
   return out;
 }
 
+// ─── Dual content-model migration (admin endpoint, server-run, no node CLI) ───
+// Parse old markdown-embedded guru (╔═╗) + Doğan note into structured DB fields
+// (guru_boxes + dogan_note) and strip them from content_az, so every post renders
+// through the single structured path. Idempotent + supports dry-run preview.
+
+const GURU_BLOCK = />\s*╔[═╗\n>║\s\S]*?╚[═╝]+/g;
+
+function parseGuruBlock(block: string): { name: string; quote: string; source: string } | null {
+  const lines = block
+    .split('\n')
+    .map((l) =>
+      l
+        .replace(/^>\s*/, '')
+        .replace(/[╔╗╚╝║═]/g, '')
+        .trim()
+    )
+    .filter(Boolean);
+
+  let name = '';
+  let quote = '';
+  let source = '';
+  for (const line of lines) {
+    if (line.includes('🎤') || (line.startsWith('**') && !quote)) {
+      name = line.replace(/🎤\s*/, '').replace(/\*\*/g, '').trim();
+    } else if (
+      line.startsWith('*"') ||
+      line.startsWith('"') ||
+      (line.startsWith('*') && line.endsWith('*'))
+    ) {
+      quote += ' ' + line.replace(/^\*["']?|["']?\*$/g, '').replace(/^["']|["']$/g, '');
+    } else if (line.includes('📖')) {
+      source = line.replace('📖', '').replace('Mənbə:', '').trim();
+    }
+  }
+  return name && quote.trim() ? { name, quote: quote.trim(), source } : null;
+}
+
+function extractDoganNote(content: string): { raw: string; text: string } | null {
+  const lines = content.split('\n');
+  let start = -1;
+  let end = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim().startsWith('>')) {
+      const probe = lines[i].toLowerCase();
+      if (probe.includes('📝') && (probe.includes('doğan') || probe.includes('notu'))) {
+        start = i;
+        while (start > 0 && lines[start - 1].trim().startsWith('>')) start -= 1;
+        end = i;
+        while (end < lines.length - 1 && lines[end + 1].trim().startsWith('>')) end += 1;
+        break;
+      }
+    }
+  }
+  if (start === -1) return null;
+
+  const raw = lines.slice(start, end + 1).join('\n');
+  const text = lines
+    .slice(start, end + 1)
+    .map((l) => l.replace(/^>\s*/, ''))
+    .join('\n')
+    .replace(/📝/g, '')
+    .replace(/\*\*DOĞAN NOTU:\*\*/i, '')
+    .replace(/DOĞAN NOTU:/i, '')
+    .replace(/—\s*Doğan Tomris/i, '')
+    .replace(/["“”]/g, '')
+    .trim();
+
+  return { raw, text };
+}
+
+export interface MigrationPostDetail {
+  id: number;
+  slug: string;
+  guruExtracted: Array<{ name: string; quotePreview: string }>;
+  doganPreview: string | null;
+  contentStripped: boolean;
+}
+export interface MigrationResult {
+  apply: boolean;
+  postsScanned: number;
+  guruInserted: number;
+  doganSet: number;
+  contentStripped: number;
+  details: MigrationPostDetail[];
+}
+
+/**
+ * Migrate every blog post's markdown-embedded guru/Doğan blocks into structured
+ * fields. `apply=false` = dry-run preview (no writes). Idempotent: skips guru
+ * insert if the post already has guru_boxes, skips dogan if dogan_note is set;
+ * still strips leftover markdown duplicates either way.
+ */
+export async function migrateBlogStructure(apply: boolean): Promise<MigrationResult> {
+  const result: MigrationResult = {
+    apply,
+    postsScanned: 0,
+    guruInserted: 0,
+    doganSet: 0,
+    contentStripped: 0,
+    details: [],
+  };
+  if (!dbAvailable || !db) return result;
+
+  const rows = await db.select().from(blogPosts).orderBy(blogPosts.id);
+  result.postsScanned = rows.length;
+
+  for (const row of rows) {
+    const content = row.content_az || '';
+    let newContent = content;
+    const detail: MigrationPostDetail = {
+      id: row.id,
+      slug: row.slug,
+      guruExtracted: [],
+      doganPreview: null,
+      contentStripped: false,
+    };
+
+    // Guru boxes
+    const existing = await db
+      .select({ id: guruBoxes.id })
+      .from(guruBoxes)
+      .where(eq(guruBoxes.blogPostId, row.id));
+    const hasBoxes = existing.length > 0;
+    const guruMatches = content.match(GURU_BLOCK) || [];
+
+    if (guruMatches.length > 0 && !hasBoxes) {
+      let order = 0;
+      for (const block of guruMatches) {
+        const parsed = parseGuruBlock(block);
+        if (!parsed) continue;
+        detail.guruExtracted.push({ name: parsed.name, quotePreview: parsed.quote.slice(0, 80) });
+        if (apply) {
+          await db.insert(guruBoxes).values({
+            blogPostId: row.id,
+            guruName: parsed.name,
+            quote_az: parsed.quote,
+            book: parsed.source || null,
+            sortOrder: order,
+          });
+        }
+        order += 1;
+        newContent = newContent.replace(block, '').trim();
+      }
+    } else if (guruMatches.length > 0 && hasBoxes) {
+      for (const block of guruMatches) newContent = newContent.replace(block, '').trim();
+    }
+
+    // Doğan note
+    const doganAlreadySet = Boolean(row.doganNote && row.doganNote.trim());
+    const dogan = extractDoganNote(newContent);
+    if (dogan) {
+      if (!doganAlreadySet && dogan.text) {
+        detail.doganPreview = dogan.text.slice(0, 80);
+        if (apply) {
+          await db.update(blogPosts).set({ doganNote: dogan.text }).where(eq(blogPosts.id, row.id));
+        }
+      }
+      newContent = newContent.replace(dogan.raw, '').trim();
+    }
+
+    // Persist stripped content
+    if (newContent !== content) {
+      newContent = newContent.replace(/\n{3,}/g, '\n\n');
+      detail.contentStripped = true;
+      if (apply) {
+        await db.update(blogPosts).set({ content_az: newContent }).where(eq(blogPosts.id, row.id));
+      }
+    }
+
+    if (detail.guruExtracted.length > 0 || detail.doganPreview || detail.contentStripped) {
+      result.guruInserted += detail.guruExtracted.length;
+      if (detail.doganPreview) result.doganSet += 1;
+      if (detail.contentStripped) result.contentStripped += 1;
+      result.details.push(detail);
+    }
+  }
+
+  return result;
+}
+
 const EMPTY_RESULT = (): BlogTranslateResult => ({
   ok: false,
   langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },

@@ -4,6 +4,7 @@ import {
   type PostLangStatus,
 } from '@/lib/db/blog-repository';
 import TranslateAllButton from '@/components/dashboard/TranslateAllButton';
+import MigrateStructureButtons from '@/components/dashboard/MigrateStructureButtons';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,6 +62,18 @@ export default async function TranslationStatusPage() {
           </p>
         </div>
         <TranslateAllButton />
+      </div>
+
+      <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50/60 p-4">
+        <h2 className="text-sm font-bold text-slate-800">
+          Struktur migration (köhnə → strukturlu)
+        </h2>
+        <p className="mb-3 text-xs text-slate-600">
+          Köhnə blogların markdown içindəki guru/Doğan bloklarını strukturlu sahələrə köçürür. Əvvəl{' '}
+          <strong>Öncəbaxış</strong> bas, çıxışı yoxla, sonra <strong>Tətbiq et</strong>. ⚠️
+          Tətbiqdən əvvəl Neon backup al.
+        </p>
+        <MigrateStructureButtons />
       </div>
 
       <div className="mb-6 flex flex-wrap gap-4 text-sm font-semibold text-slate-700">
