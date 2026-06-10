@@ -41,11 +41,13 @@ export interface PublicNewsArticle {
   slug: string;
   title: string;
   summary: string;
+  content: string;
   category: Exclude<NewsCategoryKey, 'all'>;
   imageUrl: string | null;
   author: string | null;
   sourceName: string | null;
   externalUrl: string;
+  isManual: boolean;
   publishedAt: string;
   isEditorPick: boolean;
 }
@@ -356,29 +358,41 @@ function mapPublicArticle(row: {
   summaryRu?: string | null;
   summaryEn?: string | null;
   summaryTr?: string | null;
+  contentAz?: string | null;
+  contentRu?: string | null;
+  contentEn?: string | null;
+  contentTr?: string | null;
 }, locale: ContentLocale = 'az'): PublicNewsArticle {
-  const r = row as unknown as Record<string, unknown>;
-  // News uses titleAz (camelCase) not title_az — remap for localizedField
   const titleByLocale: Record<ContentLocale, string | null | undefined> = {
     az: row.titleAz, ru: row.titleRu, en: row.titleEn, tr: row.titleTr,
   };
   const summaryByLocale: Record<ContentLocale, string | null | undefined> = {
     az: row.summaryAz, ru: row.summaryRu, en: row.summaryEn, tr: row.summaryTr,
   };
+  const contentByLocale: Record<ContentLocale, string | null | undefined> = {
+    az: row.contentAz, ru: row.contentRu, en: row.contentEn, tr: row.contentTr,
+  };
 
   const title = titleByLocale[locale]?.trim() || row.titleAz || row.title;
   const summary = summaryByLocale[locale]?.trim() || row.summaryAz || row.summary || '';
+  const content = contentByLocale[locale]?.trim() || row.contentAz || '';
+
+  // Manual news has synthetic externalUrl like "manual:slug:timestamp" —
+  // it's not a real source link and shouldn't be exposed as "read full article".
+  const isManual = typeof row.externalUrl === 'string' && row.externalUrl.startsWith('manual:');
 
   return {
     id: row.id,
     slug: row.slug || `news-${row.id}`,
     title,
     summary,
+    content,
     category: row.category,
     imageUrl: row.imageUrl,
     author: row.author,
     sourceName: row.sourceName,
     externalUrl: row.externalUrl,
+    isManual,
     publishedAt: row.publishedAt?.toISOString() || new Date().toISOString(),
     isEditorPick: row.isEditorPick,
   };
@@ -398,6 +412,10 @@ function buildPublicArticleSelect() {
     summaryRu: newsArticles.summaryRu,
     summaryEn: newsArticles.summaryEn,
     summaryTr: newsArticles.summaryTr,
+    contentAz: newsArticles.contentAz,
+    contentRu: newsArticles.contentRu,
+    contentEn: newsArticles.contentEn,
+    contentTr: newsArticles.contentTr,
     category: newsArticles.category,
     imageUrl: newsArticles.imageUrl,
     author: newsArticles.author,
@@ -418,11 +436,13 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, l
         slug: item.slug,
         title: item.title,
         summary: item.summary,
+        content: '',
         category: 'market' as const,
         imageUrl: null,
         author: item.author,
         sourceName: item.author,
         externalUrl: `https://dkagency.com.tr/haberler/${item.slug}`,
+        isManual: false,
         publishedAt: item.publishDate,
         isEditorPick: index === 0,
       }))
