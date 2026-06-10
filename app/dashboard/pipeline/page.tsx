@@ -91,7 +91,7 @@ const deals: Deal[] = [
     contact: 'Mehmet Yılmaz',
     phone: '+90 532 345 6789',
     email: 'mehmet@turkmutfagi.com',
-    location: 'İstanbul, Türkiye',
+    location: 'Bakı, Azərbaycan',
     category: 'Franchise',
     probability: 30,
     nextAction: 'Franchise paketi gönder',

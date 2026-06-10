@@ -35,13 +35,13 @@ export const initialDestinations = [
   },
   {
     id: 4,
-    name: 'İstanbul',
-    country: 'Türkiyə',
-    price: '650 ₼',
-    discount: '20%',
-    image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=800&q=80',
-    status: 'draft',
-    views: '3.1k',
+    name: 'Gəncə',
+    country: 'Azərbaycan',
+    price: '350 ₼',
+    discount: '15%',
+    image: 'https://images.unsplash.com/photo-1597466599360-3b9775841aec?auto=format&fit=crop&w=800&q=80',
+    status: 'active',
+    views: '1.8k',
     trending: true
   }
 ];
