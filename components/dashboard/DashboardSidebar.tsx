@@ -19,7 +19,6 @@ import {
   Sparkles,
   Store,
   Users,
-  Wrench,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { normalizeLocale, stripLocalePrefix, withLocale } from '@/i18n/config';
@@ -40,8 +39,10 @@ const navItemDefs: NavItemDef[] = [
   { titleKey: 'blog', href: '/dashboard/blog', icon: BookOpen },
   { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
   // auditor + invoices(faturalar) + site hidden until backend is real (mock data / no-op save).
-  // foodCost is a MEMBER tool — it lives in the B2B portal (/b2b-panel), not the admin panel.
-  { titleKey: 'toolkit', href: '/dashboard/toolkit', icon: Wrench },
+  // foodCost + toolkit are MEMBER tools — they live in the B2B portal
+  // (/b2b-panel/toolkit), not the admin panel.
+  // marketinqOcagi stays: it is the canonical hub the public /marketinq/* tools
+  // (and b2b-panel/analizler) link back to, not a member-only tool.
   { titleKey: 'marketinqOcagi', href: '/dashboard/marketinq-ocagi', icon: Sparkles },
   { titleKey: 'users', href: '/dashboard/users', icon: Users },
   { titleKey: 'funnel', href: '/dashboard/funnel', icon: BarChart3 },

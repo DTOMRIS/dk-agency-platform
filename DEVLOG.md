@@ -1,6 +1,14 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-10 — TASK-0245: fix(dashboard): drop member tool "toolkit" from admin sidebar
+
+**Why:** Audit said both toolkit and marketinq-ocagi should leave the admin sidebar to finish role separation. Investigation showed only toolkit qualifies: it has a member home at /b2b-panel/toolkit (same as the foodCost precedent). marketinq-ocagi is the canonical hub that 11 public /marketinq/* tools and b2b-panel/analizler link back to — removing it would orphan the admin's own access, not clean up roles.
+
+**What:** Removed the `toolkit` nav item (and the now-unused `Wrench` import) from `components/dashboard/DashboardSidebar.tsx`. Kept `marketinqOcagi`. Routes untouched — only the sidebar link.
+
+**Verification:** eslint → 0 errors. grep confirms toolkit/Wrench gone, marketinqOcagi present.
+
 ## 2026-06-10 — TASK-0244: fix(i18n): purge forbidden word "Tezliklə" → "Yaxında"
 
 **Why:** CLAUDE.md forbids "Tezliklə"; the audit claimed TASK-0240/PR#330 fixed it, but 9 live hits remained across 8 files (including the very az.json line the audit said was done).
