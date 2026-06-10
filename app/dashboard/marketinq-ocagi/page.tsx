@@ -63,7 +63,7 @@ const pageCopy: Record<
   az: {
     title: 'Marketinq Ocağı',
     subtitle: 'Restoran sahibi üçün AI-powered marketinq alətləri',
-    comingSoon: 'Tezliklə',
+    comingSoon: 'Yaxında',
     categories: {
       analitika: 'Analitika',
       maliyye: 'Maliyyə',

@@ -8,7 +8,7 @@ export default function Page() {
       </div>
       <h1 className="text-xl font-bold text-slate-900">Gələn təkliflər</h1>
       <p className="mt-2 text-sm text-slate-500 max-w-sm">
-        Bu bölmə hazırlanır. Tezliklə istifadəyə veriləcək.
+        Bu bölmə hazırlanır. Yaxında istifadəyə veriləcək.
       </p>
     </div>
   );
