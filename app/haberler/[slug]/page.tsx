@@ -141,19 +141,28 @@ export default async function HaberDetailPage({
               </div>
             ) : null}
 
-            <div className="mt-8 max-w-[720px] text-[17px] leading-[1.8] text-slate-700 md:text-[18px]">
-              <p>{article.summary}</p>
+            <div className="mt-8 max-w-[720px] space-y-4 text-[17px] leading-[1.8] text-slate-700 md:text-[18px]">
+              {article.summary ? (
+                <p className="font-semibold text-slate-800">{article.summary}</p>
+              ) : null}
+              {article.content
+                ? article.content
+                    .split(/\n{2,}/)
+                    .map((para, idx) => (para.trim() ? <p key={idx}>{para.trim()}</p> : null))
+                : null}
             </div>
 
             <footer className="mt-10 flex max-w-[720px] flex-col gap-5 border-t border-slate-200 pt-8">
-              <a
-                href={article.externalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-fit items-center rounded-full bg-[#E94560] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#d73753]"
-              >
-                Mənbədə tam xəbəri oxu →
-              </a>
+              {!article.isManual && article.externalUrl ? (
+                <a
+                  href={article.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-fit items-center rounded-full bg-[#E94560] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#d73753]"
+                >
+                  Mənbədə tam xəbəri oxu →
+                </a>
+              ) : null}
               <div className="max-w-[280px]">
                 <ShareButtons title={article.title} url={shareUrl} locale={locale} />
               </div>
