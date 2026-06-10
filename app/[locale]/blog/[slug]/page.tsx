@@ -12,7 +12,7 @@ import {
 } from '@/components/blog';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import { CATEGORY_CONFIG } from '@/lib/data/blogArticles';
-import { getBlogPostDetail, getRelatedBlogPosts } from '@/lib/db/blog-repository';
+import { getBlogPostDetail, getRelatedBlogPosts, getSlugRedirect } from '@/lib/db/blog-repository';
 import { getProtectedArticleContent } from '@/lib/members/article-access';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAlternates } from '@/lib/seo/alternates';
@@ -112,6 +112,13 @@ export default async function BlogDetailPage({
   if (canonicalSlug) {
     redirect(withLocale(normalizedLocale, `/blog/${canonicalSlug}`));
   }
+
+  // DB slug redirect — köhnə slug yeni slug-a 301
+  const redirectTarget = await getSlugRedirect(slug);
+  if (redirectTarget) {
+    redirect(withLocale(normalizedLocale, `/blog/${redirectTarget}`));
+  }
+
   const article = await getBlogPostDetail(slug, normalizedLocale);
   const session = await getServerMemberSession();
   const t = await getTranslations({ locale: normalizedLocale, namespace: 'blogDetail' });

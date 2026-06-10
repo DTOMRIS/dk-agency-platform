@@ -1,6 +1,6 @@
 import { and, desc, eq, inArray, or, sql } from 'drizzle-orm';
 import { db, dbAvailable } from './index';
-import { blogPosts, guruBoxes } from './schema';
+import { blogPosts, guruBoxes, slugRedirects } from './schema';
 import {
   BLOG_ARTICLES as STATIC_BLOG_ARTICLES,
   getAllBlogArticles,
@@ -363,6 +363,15 @@ export async function updateBlogPostInDb(
     .where(or(...slugsToTry.map((s) => eq(blogPosts.slug, s))))
     .then((items) => items[0]);
   if (!existing) return null;
+
+  // Slug dəyişibsə → köhnə slug-ı redirect cədvəlinə yaz
+  if (input.slug && input.slug !== existing.slug) {
+    await db.insert(slugRedirects).values({
+      oldSlug: existing.slug,
+      newSlug: input.slug,
+      type: 'blog',
+    }).onConflictDoNothing();
+  }
 
   await db
     .update(blogPosts)
@@ -940,4 +949,15 @@ export async function bulkUpdateBlogStatus(ids: number[], action: BulkBlogAction
     .set({ status: statusMap[action], updatedAt: new Date() })
     .where(inArray(blogPosts.id, ids));
   return result.rowCount ?? ids.length;
+}
+
+/** Look up slug redirect — returns new slug if old slug has a redirect */
+export async function getSlugRedirect(oldSlug: string): Promise<string | null> {
+  if (!dbAvailable || !db) return null;
+  const [row] = await db
+    .select({ newSlug: slugRedirects.newSlug })
+    .from(slugRedirects)
+    .where(eq(slugRedirects.oldSlug, oldSlug))
+    .limit(1);
+  return row?.newSlug ?? null;
 }
