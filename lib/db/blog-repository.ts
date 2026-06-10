@@ -1,4 +1,4 @@
-import { and, desc, eq, or, sql } from 'drizzle-orm';
+import { and, desc, eq, inArray, or, sql } from 'drizzle-orm';
 import { db, dbAvailable } from './index';
 import { blogPosts, guruBoxes } from './schema';
 import {
@@ -919,4 +919,25 @@ export async function translateBlogPostBySlug(slug: string): Promise<BlogTransla
     .where(or(...slugsToTry.map((s) => eq(blogPosts.slug, s))));
   if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
   return autoTranslateBlogPost(row.id);
+}
+
+// ─── Bulk operations ─────────────────────────────────────────────
+
+export type BulkBlogAction = 'archive' | 'publish' | 'draft' | 'delete';
+
+export async function bulkUpdateBlogStatus(ids: number[], action: BulkBlogAction): Promise<number> {
+  if (!dbAvailable || !db || ids.length === 0) return 0;
+
+  if (action === 'delete') {
+    await db.delete(guruBoxes).where(inArray(guruBoxes.blogPostId, ids));
+    const result = await db.delete(blogPosts).where(inArray(blogPosts.id, ids));
+    return result.rowCount ?? ids.length;
+  }
+
+  const statusMap: Record<string, string> = { archive: 'archived', publish: 'published', draft: 'draft' };
+  const result = await db
+    .update(blogPosts)
+    .set({ status: statusMap[action], updatedAt: new Date() })
+    .where(inArray(blogPosts.id, ids));
+  return result.rowCount ?? ids.length;
 }
