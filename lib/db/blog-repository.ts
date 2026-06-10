@@ -194,6 +194,44 @@ export async function getBlogPostDetail(slug: string, locale?: string) {
   return mapDbArticle(row, boxes, loc);
 }
 
+/**
+ * Locale-aware related posts from DB (same category first, excludes current slug,
+ * fills remaining from recent published). Replaces the static-AZ getRelatedArticles
+ * so related-article titles/links follow the active locale (fixes "related hep AZ").
+ */
+export async function getRelatedBlogPosts(
+  slug: string,
+  category: string | undefined,
+  locale?: string,
+  limit = 3
+): Promise<DbBlogPost[]> {
+  const loc = sanitizeLocale(locale);
+  const pool: DbBlogPost[] = [];
+  const seen = new Set<string>([slug]);
+
+  const push = (posts: DbBlogPost[]) => {
+    for (const p of posts) {
+      if (seen.has(p.slug)) continue;
+      seen.add(p.slug);
+      pool.push(p);
+      if (pool.length >= limit) break;
+    }
+  };
+
+  if (category) {
+    const sameCat = await getBlogPostsFromDb(
+      { category, status: 'published', limit: limit + 3 },
+      loc
+    );
+    push(sameCat.posts);
+  }
+  if (pool.length < limit) {
+    const recent = await getBlogPostsFromDb({ status: 'published', limit: limit + 6 }, loc);
+    push(recent.posts);
+  }
+  return pool;
+}
+
 /** Returns raw DB row with all locale columns — for admin editor */
 export async function getBlogPostRaw(slug: string) {
   if (!dbAvailable || !db) return null;
@@ -382,7 +420,7 @@ const AZ_CHARS = /[əöüğışçƏÖÜĞIŞÇ]/;
 function needsTranslation(
   targetValue: unknown,
   azSource: string | null | undefined,
-  targetLang?: string,
+  targetLang?: string
 ): boolean {
   if (!azSource || !azSource.trim()) return false;
   if (typeof targetValue !== 'string' || !targetValue.trim()) return true;
@@ -392,7 +430,9 @@ function needsTranslation(
   if (target === source) return true;
   // Case-insensitive match (DeepSeek copies with case change = not translated)
   if (target.toLowerCase() === source.toLowerCase()) return true;
-  // AZ chars in RU/EN target = still AZ text, not translated
+  // `ə` (schwa) is Azerbaijani-only (absent in tr/ru/en) → reliable AZ signal for ALL targets, incl tr
+  if (/[əƏ]/.test(target)) return true;
+  // Full AZ char set is only meaningful for ru/en (tr legitimately shares ö/ü/ğ/ı/ş/ç)
   if ((targetLang === 'ru' || targetLang === 'en') && AZ_CHARS.test(target)) return true;
   return false;
 }
@@ -441,11 +481,15 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
         const v = await translateText(src, lang);
         if (v) {
           langUpdates[`${name}_${lang}`] = v;
-          console.log(`[translate] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`);
+          console.log(
+            `[translate] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`
+          );
         } else {
           anyFail = true;
           failedFields.push(`${name}_${lang}`);
-          console.error(`[translate] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars, 3 retries exhausted)`);
+          console.error(
+            `[translate] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars, 3 retries exhausted)`
+          );
         }
       }
       if (needsDogan) {

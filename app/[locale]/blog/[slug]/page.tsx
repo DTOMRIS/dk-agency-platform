@@ -1,12 +1,6 @@
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-import {
-  ArrowRight,
-  Calendar,
-  ChevronLeft,
-  Clock,
-  User,
-} from 'lucide-react';
+import { ArrowRight, Calendar, ChevronLeft, Clock, User } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
 import {
@@ -17,8 +11,8 @@ import {
   DoganNote,
 } from '@/components/blog';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
-import { CATEGORY_CONFIG, getRelatedArticles } from '@/lib/data/blogArticles';
-import { getBlogPostDetail } from '@/lib/db/blog-repository';
+import { CATEGORY_CONFIG } from '@/lib/data/blogArticles';
+import { getBlogPostDetail, getRelatedBlogPosts } from '@/lib/db/blog-repository';
 import { getProtectedArticleContent } from '@/lib/members/article-access';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAlternates } from '@/lib/seo/alternates';
@@ -54,9 +48,9 @@ const CATEGORY_I18N_MAP: Record<string, string> = {
 };
 
 const STAGE_I18N_MAP: Record<string, string> = {
-  'Başla': 'stageBasla',
-  'Böyüt': 'stageBoyut',
-  'Devir': 'stageDevir',
+  Başla: 'stageBasla',
+  Böyüt: 'stageBoyut',
+  Devir: 'stageDevir',
 };
 
 const LEGACY_BLOG_SLUGS: Record<string, string> = {
@@ -126,7 +120,7 @@ export default async function BlogDetailPage({
 
   const cat = CATEGORY_CONFIG[article.category];
   const catLabel = t(CATEGORY_I18N_MAP[article.category] || 'catMaliyye');
-  const related = getRelatedArticles(slug);
+  const related = await getRelatedBlogPosts(slug, article.category, locale);
   const renderedContent = getProtectedArticleContent(
     article.content || '',
     session,
@@ -343,9 +337,7 @@ export default async function BlogDetailPage({
                   <h3 className="mb-3 text-xl font-display font-black leading-tight">
                     {t('freeToolkit')}
                   </h3>
-                  <p className="mb-6 text-sm leading-relaxed text-white/80">
-                    {t('toolkitDesc')}
-                  </p>
+                  <p className="mb-6 text-sm leading-relaxed text-white/80">{t('toolkitDesc')}</p>
                   <Link
                     href={withLocale(normalizedLocale, '/toolkit')}
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3 text-sm font-black uppercase tracking-widest text-brand-red transition-all hover:bg-slate-50"

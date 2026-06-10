@@ -37,6 +37,21 @@ function sleep(ms: number): Promise<void> {
 }
 
 /**
+ * Detect a DeepSeek response that is STILL Azerbaijani (the echo bug).
+ * `ə` (schwa) exists only in Azerbaijani — not in tr/ru/en — so it is a
+ * zero-false-positive signal for ALL targets. For ru we additionally require
+ * at least one Cyrillic char. Brand names are stripped first so a Latin brand
+ * (e.g. "KAZAN AI") cannot fool the ru/Cyrillic check.
+ */
+function looksUntranslated(output: string, targetLang: string): boolean {
+  let probe = output;
+  for (const brand of KEEP) probe = probe.split(brand).join(' ');
+  if (/[əƏ]/.test(probe)) return true;
+  if (targetLang === 'ru' && !/[Ѐ-ӿ]/.test(probe)) return true;
+  return false;
+}
+
+/**
  * Split long markdown by ## headings so each chunk fits token limits.
  * Returns array of chunks. Short texts return single-element array.
  */
@@ -69,7 +84,7 @@ function chunkByHeadings(text: string): string[] {
 async function callDeepSeek(
   text: string,
   targetLang: string,
-  apiKey: string,
+  apiKey: string
 ): Promise<string | null> {
   const estimatedTokens = Math.ceil(text.length / 2);
   const maxTokens = Math.max(8000, Math.min(estimatedTokens * 2, 32000));
@@ -94,7 +109,9 @@ async function callDeepSeek(
       });
 
       if (res.status === 429 || res.status >= 500) {
-        console.error(`[translate] DeepSeek ${res.status} on attempt ${attempt}/${MAX_RETRIES} for ${targetLang} (${text.length} chars)`);
+        console.error(
+          `[translate] DeepSeek ${res.status} on attempt ${attempt}/${MAX_RETRIES} for ${targetLang} (${text.length} chars)`
+        );
         if (attempt < MAX_RETRIES) {
           await sleep(RETRY_DELAY_MS * attempt);
           continue;
@@ -114,11 +131,15 @@ async function callDeepSeek(
       const finishReason = data.choices?.[0]?.finish_reason;
 
       if (finishReason === 'length') {
-        console.error(`[translate] DeepSeek output TRUNCATED for ${targetLang} (${text.length} chars input, maxTokens=${maxTokens})`);
+        console.error(
+          `[translate] DeepSeek output TRUNCATED for ${targetLang} (${text.length} chars input, maxTokens=${maxTokens})`
+        );
       }
 
       if (!content) {
-        console.error(`[translate] DeepSeek returned empty content for ${targetLang} attempt ${attempt}`);
+        console.error(
+          `[translate] DeepSeek returned empty content for ${targetLang} attempt ${attempt}`
+        );
         if (attempt < MAX_RETRIES) {
           await sleep(RETRY_DELAY_MS * attempt);
           continue;
@@ -126,10 +147,25 @@ async function callDeepSeek(
         return null;
       }
 
+      // Echo guard: DeepSeek sometimes returns the Azerbaijani source unchanged
+      // (esp. short, brand-heavy titles). Reject and retry instead of saving AZ.
+      if (looksUntranslated(content, targetLang)) {
+        console.error(
+          `[translate] OUTPUT STILL AZ for ${targetLang} attempt ${attempt}/${MAX_RETRIES}: "${content.slice(0, 60)}"`
+        );
+        if (attempt < MAX_RETRIES) {
+          await sleep(RETRY_DELAY_MS * attempt);
+          continue;
+        }
+        return null; // retries exhausted → flag failed, NEVER persist AZ as a translation
+      }
+
       return content;
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      console.error(`[translate] DeepSeek error attempt ${attempt}/${MAX_RETRIES} for ${targetLang}: ${msg}`);
+      console.error(
+        `[translate] DeepSeek error attempt ${attempt}/${MAX_RETRIES} for ${targetLang}: ${msg}`
+      );
       if (attempt < MAX_RETRIES) {
         await sleep(RETRY_DELAY_MS * attempt);
         continue;
@@ -161,7 +197,6 @@ export async function translateText(
   }
 
   // Translate chunks independently, rejoin
-  console.log(`[translate] Chunked ${targetLang}: ${chunks.length} chunks (${text.length} chars total)`);
   const translated: string[] = [];
   for (const chunk of chunks) {
     const result = await callDeepSeek(chunk, targetLang, key);
