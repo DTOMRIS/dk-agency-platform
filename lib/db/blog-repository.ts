@@ -103,7 +103,10 @@ function mapDbArticle(
     coverImageAlt: title,
     seoTitle: row.seoTitle || title,
     seoDescription: row.seoDescription || summary || '',
-    doganNote: row.doganNote || '',
+    doganNote:
+      (locale !== 'az' ? (r[`doganNote_${locale}`] as string | undefined) : undefined) ||
+      row.doganNote ||
+      '',
     status: row.status || 'draft',
     guruBoxes: boxRows
       .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
@@ -392,7 +395,10 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
       if (!row[`content_${lang}` as keyof typeof row] && row.content_az)
         fields.push(['content', row.content_az]);
 
-      if (fields.length === 0) {
+      // Doğan Notu: single AZ source column (dogan_note) → dogan_note_<lang>.
+      const needsDogan = !row[`doganNote_${lang}` as keyof typeof row] && row.doganNote;
+
+      if (fields.length === 0 && !needsDogan) {
         result.langs[lang] = 'skipped';
         continue;
       }
@@ -400,6 +406,11 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
       for (const [name, src] of fields) {
         const v = await translateText(src, lang);
         if (v) updates[`${name}_${lang}`] = v;
+        else anyFail = true;
+      }
+      if (needsDogan) {
+        const v = await translateText(row.doganNote as string, lang);
+        if (v) updates[`doganNote_${lang}`] = v;
         else anyFail = true;
       }
       result.langs[lang] = anyFail ? 'failed' : 'done';
@@ -414,6 +425,27 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
         >)
         .where(eq(blogPosts.id, id));
     }
+
+    // Guru sitat qutuları: quote_az → quote_<lang>. Ayrı cədvəl (guru_boxes),
+    // ona görə posts update-dən sonra hər qutu üçün ayrıca tərcümə + update.
+    const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, id));
+    for (const box of boxes) {
+      const boxUpdates: Record<string, string> = {};
+      for (const lang of langs) {
+        if (!box[`quote_${lang}` as keyof typeof box] && box.quote_az) {
+          const v = await translateText(box.quote_az, lang);
+          if (v) boxUpdates[`quote_${lang}`] = v;
+          else result.ok = false;
+        }
+      }
+      if (Object.keys(boxUpdates).length > 0) {
+        await db
+          .update(guruBoxes)
+          .set(boxUpdates as unknown as Partial<typeof guruBoxes.$inferInsert>)
+          .where(eq(guruBoxes.id, box.id));
+      }
+    }
+
     return result;
   } catch (e) {
     return { ...EMPTY_RESULT(), error: String(e).slice(0, 200) };
