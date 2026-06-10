@@ -74,7 +74,7 @@ export const pendingApprovals = [
   { id: 1, type: 'ilan', title: 'Yeni Devir İlanı: Sumqayıt Restaurant', submitter: 'Can Investments', time: '2 saat önce', priority: 'high' },
   { id: 2, type: 'partner', title: 'B2B Partner Başvurusu', submitter: 'Azer Food Group', time: '4 saat önce', priority: 'medium' },
   { id: 3, type: 'haber', title: 'HORECA Sektör Raporu 2025', submitter: 'Editör Ekibi', time: '6 saat önce', priority: 'low' },
-  { id: 4, type: 'ilan', title: 'Franchise Başvurusu: Türk Mutfağı', submitter: 'Istanbul Lezzet', time: '1 gün önce', priority: 'high' },
+  { id: 4, type: 'ilan', title: 'Franchise Başvurusu: Milli Mətbəx', submitter: 'Bakı HoReCa', time: '1 gün önce', priority: 'high' },
 ];
 
 export const unreadMessages = [

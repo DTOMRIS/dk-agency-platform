@@ -50,7 +50,7 @@ const MOCK_PARTNERS: Partner[] = [
     contactPerson: 'Ahmet Yılmaz',
     email: 'ahmet@ihoreca.com',
     phone: '+90 532 111 2233',
-    city: 'İstanbul',
+    city: 'Bakı',
     joinDate: '2024-01-15',
     deals: 12,
     rating: 4.8,
