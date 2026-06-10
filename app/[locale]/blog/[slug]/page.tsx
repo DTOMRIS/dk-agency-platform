@@ -133,7 +133,6 @@ export default async function BlogDetailPage({
     article.isPremium
   );
   const cleanMarkdownContent = (renderedContent || '').replace(/^#\s+.+$/m, '').trim();
-  const normalizedLocale = normalizeLocale(locale);
 
   const stageKey = article.stage ? STAGE_I18N_MAP[article.stage] : null;
   const stageLabel = stageKey ? t(stageKey) : article.stage;
