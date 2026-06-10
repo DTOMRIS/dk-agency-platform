@@ -50,14 +50,19 @@ function mapStaticArticle(article: BlogArticle): DbBlogPost {
 }
 
 function resolveLocalCover(slug: string, dbImage: string | null): string {
-  if (dbImage && dbImage.startsWith('/')) return dbImage;
+  // blob:/data: values are browser-only artifacts that should never have been
+  // persisted (legacy editor bug). Treat them as missing so a fallback shows
+  // instead of a broken image.
+  const usable =
+    dbImage && !dbImage.startsWith('blob:') && !dbImage.startsWith('data:') ? dbImage : null;
+  if (usable && usable.startsWith('/')) return usable;
   const staticMatch = STATIC_BLOG_ARTICLES.find((a) => a.slug === slug);
   if (staticMatch?.coverImage) return staticMatch.coverImage;
-  if (dbImage) {
-    if (dbImage.startsWith('http://') || dbImage.startsWith('https://')) {
-      return dbImage;
+  if (usable) {
+    if (usable.startsWith('http://') || usable.startsWith('https://')) {
+      return usable;
     }
-    return '/' + dbImage;
+    return '/' + usable;
   }
   return '';
 }

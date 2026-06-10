@@ -1,5 +1,17 @@
 # DEVLOG — DK Agency Platform
 
+
+## 2026-06-10 — TASK-0243: fix(blog): wire blog editor image upload to Cloudinary
+
+**Why:** Admin uploaded cover images on 2 new blog posts; neither image appeared on the public page. Root cause: `BlogEditorForm.handleImage` never uploaded anything to the server — `compressImage()` returns `URL.createObjectURL()` (a `blob:` URL valid only in the current browser tab's memory). That `blob:` string was written to the DB `featured_image` column and died on reload; `resolveLocalCover` then turned it into `/blob:...`, a broken image.
+
+**What:**
+- `components/dashboard/BlogEditorForm.tsx`: `handleImage` now POSTs the compressed file to the existing `/api/upload` route (Cloudinary) and stores the returned durable `https` `secure_url` in `featuredImage`. Blob preview kept only for instant UI feedback. Added `uploadingImage` state (disables save buttons + file input while uploading); submit drops any `blob:`/`data:` value so a broken URL can never be persisted.
+- `lib/db/blog-repository.ts`: `resolveLocalCover` now treats legacy `blob:`/`data:` values as missing (falls back to static cover or empty) instead of emitting a broken `/blob:...` src.
+
+**Verification:** `npx eslint` on both files → 0 errors. `npx tsc --noEmit` → no errors in changed files (pre-existing unrelated errors only). `npm run build` blocked locally by Google Fonts fetch (sandbox network), not by these changes.
+
+**Note for admin:** the 2 already-saved posts still hold dead `blob:` URLs in the DB — re-upload the cover image in the editor and save; it will now persist correctly.
 ## 2026-06-07 — TASK-0205: content(blog): add blog-026, blog-027 and blog-028
 
 **Why:** The marketing and educational resources needed to be expanded to cover crucial Horeca topics such as Tip/Service Charge distribution policies (blog-026), average check building strategies via customer needs (blog-027), and professional handling of customer complaints (blog-028).
