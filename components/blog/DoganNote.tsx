@@ -7,42 +7,31 @@ import React from 'react';
 interface DoganNoteProps {
   children: React.ReactNode;
   variant?: 'default' | 'warning' | 'insight' | 'story';
+  variantLabel?: string;
 }
 
-export default function DoganNote({ children, variant = 'default' }: DoganNoteProps) {
-  const variants = {
-    default: {
-      icon: '📋',
-      label: 'DK AGENCY NOTU',
-    },
-    warning: {
-      icon: '⚠️',
-      label: 'XƏBƏRDARLIQ',
-    },
-    insight: {
-      icon: '💡',
-      label: 'DOĞAN İNSİGHT',
-    },
-    story: {
-      icon: '🎯',
-      label: 'DOĞAN HEKAYƏSİ',
-    },
-  };
+const VARIANT_ICONS: Record<string, string> = {
+  default: '📋',
+  warning: '⚠️',
+  insight: '💡',
+  story: '🎯',
+};
 
-  const v = variants[variant];
+export default function DoganNote({ children, variant = 'default', variantLabel }: DoganNoteProps) {
+  const icon = VARIANT_ICONS[variant] || '📋';
 
   return (
     <div className="my-8 rounded-2xl overflow-hidden bg-[var(--dk-surface-dark)] border border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)]">
       {/* Header */}
       <div className="px-6 py-4 flex items-center gap-3 border-b border-[color:color-mix(in_srgb,var(--dk-gold)_8%,transparent)]">
         <div className="w-10 h-10 rounded-full bg-[color:color-mix(in_srgb,var(--dk-gold)_13%,transparent)] flex items-center justify-center flex-shrink-0">
-          <span className="text-lg">{v.icon}</span>
+          <span className="text-lg">{icon}</span>
         </div>
         <h4 className="text-[var(--dk-gold)] font-bold text-[14px] uppercase tracking-wide">
-          {v.label}
+          {variantLabel || variant.toUpperCase()}
         </h4>
       </div>
-      
+
       {/* Content */}
       <div className="px-6 py-5">
         <div className="border-l-[3px] border-[var(--dk-gold)] pl-5">
@@ -50,7 +39,7 @@ export default function DoganNote({ children, variant = 'default' }: DoganNotePr
             {children}
           </div>
         </div>
-        
+
         {/* İmza */}
         <div className="flex items-center gap-2 mt-4">
           <div className="w-7 h-7 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] text-[11px] font-bold">

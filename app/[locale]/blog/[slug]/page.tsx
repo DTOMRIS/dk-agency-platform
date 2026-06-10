@@ -2,14 +2,12 @@ import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import {
   ArrowRight,
-  Bookmark,
   Calendar,
   ChevronLeft,
   Clock,
-  Share2,
-  Tag,
   User,
 } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 
 import {
   MarkdownRenderer,
@@ -37,6 +35,30 @@ import { normalizeLocale, withLocale } from '@/i18n/config';
 
 // BLOG_OVERRIDES removed — all content served from DB (L-037)
 
+const DATE_LOCALE_MAP: Record<string, string> = {
+  az: 'az-AZ',
+  ru: 'ru-RU',
+  en: 'en-US',
+  tr: 'tr-TR',
+};
+
+const CATEGORY_I18N_MAP: Record<string, string> = {
+  maliyye: 'catMaliyye',
+  kadr: 'catKadr',
+  emeliyyat: 'catEmeliyyat',
+  konsept: 'catKonsept',
+  acilis: 'catAcilis',
+  satis: 'catSatis',
+  huquqi: 'catHuquqi',
+  marketinq: 'catMarketinq',
+};
+
+const STAGE_I18N_MAP: Record<string, string> = {
+  'Başla': 'stageBasla',
+  'Böyüt': 'stageBoyut',
+  'Devir': 'stageDevir',
+};
+
 const LEGACY_BLOG_SLUGS: Record<string, string> = {
   'sertifikatli-komanda-cth-online-tehsil': 'sertifikatli-komanda-cth-portal-karyera',
   'azerbaycan-qastronomiya-2030-dovlet-plani': 'azerbaycan-qastronomiya-2030-strateji-yol-xeritesi',
@@ -48,12 +70,13 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: 'blogDetail' });
   const article = await getBlogPostDetail(LEGACY_BLOG_SLUGS[slug] || slug, locale);
 
   if (!article) {
     return {
-      title: 'Blog yazısı tapılmadı',
-      description: 'Axtardığınız yazı tapılmadı.',
+      title: t('notFoundTitle'),
+      description: t('notFoundDesc'),
     };
   }
 
@@ -95,12 +118,14 @@ export default async function BlogDetailPage({
   }
   const article = await getBlogPostDetail(slug, locale);
   const session = await getServerMemberSession();
+  const t = await getTranslations({ locale, namespace: 'blogDetail' });
 
   if (!article) {
     notFound();
   }
 
   const cat = CATEGORY_CONFIG[article.category];
+  const catLabel = t(CATEGORY_I18N_MAP[article.category] || 'catMaliyye');
   const related = getRelatedArticles(slug);
   const renderedContent = getProtectedArticleContent(
     article.content || '',
@@ -108,6 +133,10 @@ export default async function BlogDetailPage({
     article.isPremium
   );
   const cleanMarkdownContent = (renderedContent || '').replace(/^#\s+.+$/m, '').trim();
+  const normalizedLocale = normalizeLocale(locale);
+
+  const stageKey = article.stage ? STAGE_I18N_MAP[article.stage] : null;
+  const stageLabel = stageKey ? t(stageKey) : article.stage;
 
   const pageUrl = localeUrl(locale, `/blog/${article.slug}`);
   const jsonLd = jsonLdGraph([
@@ -121,12 +150,12 @@ export default async function BlogDetailPage({
       dateModified: article.updatedAt || article.publishDate,
       inLanguage: locale || 'az',
       keywords: article.tags?.join(', ') || undefined,
-      articleSection: cat?.label || article.category,
+      articleSection: catLabel,
       wordCount: article.wordCount,
       isAccessibleForFree: !article.isPremium,
     }),
     breadcrumbNode([
-      { name: 'Ana səhifə', url: localeUrl(locale, '/') },
+      { name: t('home'), url: localeUrl(locale, '/') },
       { name: 'Blog', url: localeUrl(locale, '/blog') },
       { name: article.title, url: pageUrl },
     ]),
@@ -143,16 +172,16 @@ export default async function BlogDetailPage({
         <div className="bg-white border-b border-slate-100 py-10 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Link
-              href="/blog"
+              href={withLocale(normalizedLocale, '/blog')}
               className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-brand-red mb-6"
             >
-              <ChevronLeft size={18} /> Bloga qayıt
+              <ChevronLeft size={18} /> {t('backToBlog')}
             </Link>
 
             <div className="space-y-4 max-w-4xl">
               <div className="flex items-center gap-2">
                 <span className="rounded-full bg-brand-red px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
-                  {cat?.emoji} {cat?.label}
+                  {cat?.emoji} {catLabel}
                 </span>
                 {article.stage && (
                   <span
@@ -165,7 +194,7 @@ export default async function BlogDetailPage({
                     }`}
                   >
                     {article.stage === 'Başla' ? '🏗️' : article.stage === 'Böyüt' ? '📊' : '🔄'}{' '}
-                    {article.stage}
+                    {stageLabel}
                   </span>
                 )}
               </div>
@@ -192,17 +221,25 @@ export default async function BlogDetailPage({
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar size={16} className="text-brand-red" />
-                  {new Date(article.publishDate).toLocaleDateString('az-AZ', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
+                  {new Date(article.publishDate).toLocaleDateString(
+                    DATE_LOCALE_MAP[locale] || 'az-AZ',
+                    { day: 'numeric', month: 'long', year: 'numeric' }
+                  )}
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock size={16} className="text-brand-red" />
-                  {article.readingTime} dəq oxu
+                  {t('minRead', { time: article.readingTime })}
                 </div>
-                <BlogActionBar title={article.title} slug={article.slug} />
+                <BlogActionBar
+                  title={article.title}
+                  slug={article.slug}
+                  labels={{
+                    linkCopied: t('linkCopied'),
+                    share: t('share'),
+                    save: t('save'),
+                    unsave: t('unsave'),
+                  }}
+                />
               </div>
 
               {/* Cover Image inside rounded Aspect-Ratio Box */}
@@ -244,6 +281,8 @@ export default async function BlogDetailPage({
                       quote={box.quote}
                       source={box.book}
                       tqtaContext=""
+                      sourceLabel={t('source')}
+                      contextLabel={t('context')}
                     />
                   ))}
                 </div>
@@ -251,12 +290,12 @@ export default async function BlogDetailPage({
 
               {article.doganNote && (
                 <div className="mt-10">
-                  <DoganNote>{article.doganNote}</DoganNote>
+                  <DoganNote variantLabel={t('doganNoteDefault')}>{article.doganNote}</DoganNote>
                 </div>
               )}
 
               {(article.category === 'Hüquqi' || article.category === 'huquqi') && (
-                <LegalDisclaimer />
+                <LegalDisclaimer title={t('legalTitle')} text={t('legalText')} />
               )}
             </article>
 
@@ -264,7 +303,7 @@ export default async function BlogDetailPage({
               <div className="sticky top-32 space-y-8">
                 <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
                   <h3 className="mb-3 text-sm font-bold uppercase tracking-widest text-slate-400">
-                    Xülasə
+                    {t('summary')}
                   </h3>
                   <p className="text-sm leading-relaxed text-slate-700">{article.summary}</p>
                 </div>
@@ -272,11 +311,15 @@ export default async function BlogDetailPage({
                 {related.length > 0 && (
                   <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
                     <h3 className="mb-4 text-sm font-bold uppercase tracking-widest text-slate-400">
-                      Əlaqəli yazılar
+                      {t('relatedPosts')}
                     </h3>
                     <div className="space-y-4">
                       {related.map((rel) => (
-                        <Link key={rel.slug} href={`/blog/${rel.slug}`} className="group block">
+                        <Link
+                          key={rel.slug}
+                          href={withLocale(normalizedLocale, `/blog/${rel.slug}`)}
+                          className="group block"
+                        >
                           <div className="flex items-start gap-3">
                             <div className="flex-shrink-0 text-lg">
                               {CATEGORY_CONFIG[rel.category]?.emoji}
@@ -286,7 +329,7 @@ export default async function BlogDetailPage({
                                 {rel.title}
                               </h4>
                               <p className="mt-1 text-xs text-slate-400">
-                                {rel.readingTime} dəq oxu
+                                {t('minRead', { time: rel.readingTime })}
                               </p>
                             </div>
                           </div>
@@ -298,16 +341,16 @@ export default async function BlogDetailPage({
 
                 <div className="rounded-2xl bg-brand-red p-8 text-white shadow-2xl shadow-brand-red/20">
                   <h3 className="mb-3 text-xl font-display font-black leading-tight">
-                    Pulsuz Toolkit
+                    {t('freeToolkit')}
                   </h3>
                   <p className="mb-6 text-sm leading-relaxed text-white/80">
-                    Food cost, P&amp;L, menyu matrisi və digər alətlərlə restoranını optimallaşdır.
+                    {t('toolkitDesc')}
                   </p>
                   <Link
-                    href="/toolkit"
+                    href={withLocale(normalizedLocale, '/toolkit')}
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3 text-sm font-black uppercase tracking-widest text-brand-red transition-all hover:bg-slate-50"
                   >
-                    Alətlərə bax <ArrowRight size={16} />
+                    {t('viewTools')} <ArrowRight size={16} />
                   </Link>
                 </div>
               </div>
