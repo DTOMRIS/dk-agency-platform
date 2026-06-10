@@ -1,5 +1,28 @@
 # HANDOFF
 
+## 2026-06-09 — Portal/Dashboard polish + 2026 roadmap (TASK-0236/0238/0239/0240)
+
+### Edilən + REAL yoxlanan (dev server + minted-JWT HTML, build yox)
+- **TASK-0236 (#326, MERGED):** dashboard home dark Midnight Navy → **premium LIGHT** (brand tokens, qızıl aksent, soft shadow). Sidebar: "DK" qutu → həqiqi logo. HTML sübut: dark=0, dk-paper=1, logo=1.
+- **TASK-0238 (#327, MERGED):** `dk-content-engine` skill ARES ruhunda zənginləşdirildi (yaddaş faylı, iş sırası, keyfiyyət/hüquq qapısı).
+- **TASK-0239 (#328, MERGED):** çıxış (logout) düymələri admin+b2b ölü idi (onClick yox) → `/api/auth/logout` POST + redirect (HTML sübut: logout 200 + cookie silinir, /dashboard 307). b2b `mesajlar` 5 mock mesaj → boş; sidebar mock badge (3/5) silindi; **Food Cost admin sidebar-dan çıxdı** (üzv aləti). "Tezliklə"→"Yaxında" (inline pageCopy).
+- **TASK-0240 (#329, AÇIQ — merge gözləyir):** `messages/az.json`-da "Tezliklə" **hələ canlı idi** (i18n; #328 squash bunu qaçırdı). marketinq-ocagi render-də hələ "Tezliklə" göstərirdi → 2 string "Yaxında". Real HTML ilə təsdiqləndi.
+
+### Qərarlar (Doğan təsdiqlədi — gələcək iş üçün)
+- **Toolkit access modeli:** bütün alətlər HƏRKƏSƏ görünür + hər premium alət **1 dəfə pulsuz sınaq**, sonra yumşaq upgrade. (DB usage-tracking lazımdır.)
+- **Hazır olmayan alətlər:** "Yaxında" kart + **"Xəbər ver"** lead-capture (dead-end → lead). "Tezliklə" sözü QADAĞAN (CLAUDE.md).
+
+### EDİLMƏYİB — açıq roadmap (növbəti session buradan davam etsin)
+- **A — 2026 dashboard redesign (ƏN BÖYÜK):** mobil-uyğun (60%+ mobil), F-pattern, 5-7 KPI, drill-down (özət→detal), funksional minimalizm (Stripe/Linear). + **Funnel** (`/dashboard/funnel`) sadə/anlaşılmaz — mənalı et (hər mərhələdə "niyə düşdü" + əməl). Doğan-ın əsas şikayəti (#1, #3).
+- **B — Toolkit "1 pulsuz sınaq" access:** qərar var, kod yox. DB izi (per-user, per-tool usage) → SQL Doğan-a verilməli, Neon-da işlədilməli. SSOT: `lib/marketing-tools-config.ts` (19 live, 5 planned, 1 beta).
+- **C — "Yaxında" + Xəbər ver kartları:** söz dəyişdi, amma Xəbər-ver lead-capture UI yox. Sosial Medya Plan / Audit Robotu / Fatura = `status:'planned'`.
+- **D — admin vs üzv ayrılığı tamamlanmayıb:** yalnız Food Cost köçdü; **Toolkit + Marketinq Ocağı hələ admin sidebar-da**. Üzv alətləri b2b portala. + b2b/public `/toolkit` ilə KAZAN toolkit siyahısı uyğunsuz.
+- **Qalan b2b mock:** profil "78%/PREMIUM" (localStorage), 3 placeholder səhifə ("Bu bölmə hazırlanır": bildirimlər/təkliflər/dəstək). **`/toolkit` (public) heç toxunulmadı** — redizayn A/D-yə aiddir (Doğan bunu soruşdu: dəyişməyib çünki ona toxunulmayıb).
+
+### Deploy reallığı (vacib)
+- Hostinger main-dən deploy edir, amma **merge ≠ canlı** (deploy gap + 503/resurs — `dk-deploy-reality`). Canlıda görünmürsə: (1) PR merge olubmu, (2) Hostinger redeploy etdimi yoxla.
+- **Yoxlama üsulu (sandbox-da DB yox):** `JWT_SECRET=x npm run dev` + `jwt.sign({userId,email,role})` ilə cookie → `curl -H "Cookie: dk_auth_token=..."` ilə gated HTML çək → grep. "build keçdi" YETMİR.
+
 ## 2026-06-03 - TASK-0186 (AI Franchbook Generator)
 - Ne deyisdi:
   - USTA-gated AI Franchbook generator added at `/franchise/francbuk-generatoru`.

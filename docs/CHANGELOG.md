@@ -5,6 +5,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Fixed
+- `TASK-0240` fix(i18n): qadağan söz "Tezliklə" `messages/az.json`-da hələ CANLI idi → "Yaxında" (2 string: `coming_soon`, `plannedToolsLabel`). TASK-0239 (#328) bu i18n hissəsini push etməzdən əvvəl squash-merge olunduğu üçün `/dashboard/marketinq-ocagi` render-də hələ "Tezliklə" göstərirdi. Real dev-server HTML yoxlaması ilə tutuldu (minted-JWT), "build keçdi" aldatmırdı.
 - `TASK-0239` fix(portal): çalışmayan çıxış düymələri + b2b mock təmizliyi. (1) Çıxış (logout) həm admin həm b2b sidebar-da ölü düymə idi (`onClick` yox) → `/api/auth/logout` POST + `/auth/login` redirect. (2) `b2b-panel/mesajlar` 5 uydurma mesaj silindi → real boş state; "AI Hesabatları" sərt `2` → real sayım. (3) b2b sidebar mock badge-lər (`incomingOffers:3`, `messages:5`) silindi. (4) Food Cost admin sidebar-dan çıxdı — üzv alətidir, B2B portalda qalır.
 - `TASK-0236` fix(dashboard): dashboard home **premium LIGHT 2026** redesign — TASK-0235 dashboard-u dark Midnight Navy (`bg-[#0e0f22]`) etmişdi, bu layihənin "Light theme only / Premium light for dashboard" qaydasını pozurdu və yalnız 1 səhifəyə tətbiq olunduğundan qalan light alt-səhifələrlə uyumsuz idi. AQTA admin referansı ilə premium light-a qaytarıldı (brand tokens, qızıl aksent xətti, yumşaq kölgə, incə hover lift). Sidebar: "DK" mətn qutusu → həqiqi logo (`/images/logo-mobil.png`); təkrar "Doğan Tomris USTA" identity kartı silindi. `dk-glass-card`/`dk-hover-glow` (login işlədir) toxunulmadı; 503 dərsi — heavy blur yoxdur.
 ### Changed
