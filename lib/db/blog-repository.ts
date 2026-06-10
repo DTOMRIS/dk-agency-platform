@@ -194,6 +194,51 @@ export async function getBlogPostDetail(slug: string, locale?: string) {
   return mapDbArticle(row, boxes, loc);
 }
 
+/**
+ * Locale-aware related posts from DB (same category first, excludes current slug,
+ * fills remaining from recent published). Replaces the static-AZ getRelatedArticles
+ * so related-article titles/links follow the active locale (fixes "related hep AZ").
+ */
+export async function getRelatedBlogPosts(
+  slug: string,
+  category: string | undefined,
+  locale?: string,
+  limit = 3
+): Promise<DbBlogPost[]> {
+  const loc = sanitizeLocale(locale);
+  const pool: DbBlogPost[] = [];
+  const seen = new Set<string>([slug]);
+
+  const push = (posts: DbBlogPost[]) => {
+    for (const p of posts) {
+      if (seen.has(p.slug)) continue;
+      seen.add(p.slug);
+      pool.push(p);
+      if (pool.length >= limit) break;
+    }
+  };
+
+  if (category) {
+    const sameCat = await getBlogPostsFromDb(
+      { category, status: 'published', limit: limit + 3 },
+      loc
+    );
+    push(sameCat.posts);
+  }
+  if (pool.length < limit) {
+    const recent = await getBlogPostsFromDb({ status: 'published', limit: limit + 6 }, loc);
+    push(recent.posts);
+  }
+  return pool;
+}
+
+/** All blog post IDs (for admin batch re-translation). */
+export async function getAllBlogPostIds(): Promise<number[]> {
+  if (!dbAvailable || !db) return [];
+  const rows = await db.select({ id: blogPosts.id }).from(blogPosts);
+  return rows.map((r) => r.id);
+}
+
 /** Returns raw DB row with all locale columns — for admin editor */
 export async function getBlogPostRaw(slug: string) {
   if (!dbAvailable || !db) return null;
@@ -382,7 +427,7 @@ const AZ_CHARS = /[əöüğışçƏÖÜĞIŞÇ]/;
 function needsTranslation(
   targetValue: unknown,
   azSource: string | null | undefined,
-  targetLang?: string,
+  targetLang?: string
 ): boolean {
   if (!azSource || !azSource.trim()) return false;
   if (typeof targetValue !== 'string' || !targetValue.trim()) return true;
@@ -392,9 +437,268 @@ function needsTranslation(
   if (target === source) return true;
   // Case-insensitive match (DeepSeek copies with case change = not translated)
   if (target.toLowerCase() === source.toLowerCase()) return true;
-  // AZ chars in RU/EN target = still AZ text, not translated
+  // `ə` (schwa) is Azerbaijani-only (absent in tr/ru/en) → reliable AZ signal for ALL targets, incl tr
+  if (/[əƏ]/.test(target)) return true;
+  // Full AZ char set is only meaningful for ru/en (tr legitimately shares ö/ü/ğ/ı/ş/ç)
   if ((targetLang === 'ru' || targetLang === 'en') && AZ_CHARS.test(target)) return true;
   return false;
+}
+
+// ─── Live translation status (admin "self-proving" screen — no SQL needed) ───
+export type FieldStatus = 'ok' | 'missing' | 'untranslated';
+
+const TR_BRANDS = /DK Agency|KAZAN AI|OCAQ|AQTA|ASAN|KOB[İI]A|Sedd Rozeti|Doğan Tomris/g;
+
+/** Per-field truth derived from the actual DB value (never a stored flag that can lie). */
+function fieldStatus(
+  target: unknown,
+  azSource: string | null | undefined,
+  lang: 'ru' | 'en' | 'tr'
+): FieldStatus {
+  if (!azSource || !azSource.trim()) return 'ok'; // nothing to translate
+  if (typeof target !== 'string' || !target.trim()) return 'missing';
+  const t = target.trim();
+  if (needsTranslation(t, azSource, lang)) return 'untranslated';
+  // ru must contain Cyrillic (brand names stripped so a Latin brand can't fool it)
+  if (lang === 'ru' && !/[Ѐ-ӿ]/.test(t.replace(TR_BRANDS, ' '))) return 'untranslated';
+  return 'ok';
+}
+
+export interface PostLangStatus {
+  title: FieldStatus;
+  summary: FieldStatus;
+  content: FieldStatus;
+  doganNote: FieldStatus;
+  guru: FieldStatus;
+}
+export interface PostTranslationStatus {
+  id: number;
+  slug: string;
+  titleAz: string;
+  langs: Record<'ru' | 'en' | 'tr', PostLangStatus>;
+}
+
+/**
+ * Every blog post × {ru,en,tr} × {title,summary,content,doganNote,guru} status,
+ * computed live from DB values. Powers the admin status matrix so Doğan can SEE
+ * green/red instead of running SQL.
+ */
+export async function getBlogTranslationMatrix(): Promise<PostTranslationStatus[]> {
+  if (!dbAvailable || !db) return [];
+  const rows = await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+  const out: PostTranslationStatus[] = [];
+
+  for (const row of rows) {
+    const r = row as unknown as Record<string, unknown>;
+    const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, row.id));
+    const langs = {} as Record<'ru' | 'en' | 'tr', PostLangStatus>;
+
+    for (const lang of ['ru', 'en', 'tr'] as const) {
+      // guru = worst status across every box's quote + name
+      let guru: FieldStatus = 'ok';
+      for (const box of boxes) {
+        const b = box as unknown as Record<string, unknown>;
+        for (const s of [
+          fieldStatus(b[`quote_${lang}`], b.quote_az as string, lang),
+          fieldStatus(b[`guruName_${lang}`], b.guruName as string, lang),
+        ]) {
+          if (s === 'missing') guru = 'missing';
+          else if (s === 'untranslated' && guru !== 'missing') guru = 'untranslated';
+        }
+      }
+
+      langs[lang] = {
+        title: fieldStatus(r[`title_${lang}`], row.title_az, lang),
+        summary: fieldStatus(r[`summary_${lang}`], row.summary_az, lang),
+        content: fieldStatus(r[`content_${lang}`], row.content_az, lang),
+        doganNote: fieldStatus(r[`doganNote_${lang}`], row.doganNote as string, lang),
+        guru,
+      };
+    }
+
+    out.push({ id: row.id, slug: row.slug, titleAz: row.title_az, langs });
+  }
+  return out;
+}
+
+// ─── Dual content-model migration (admin endpoint, server-run, no node CLI) ───
+// Parse old markdown-embedded guru (╔═╗) + Doğan note into structured DB fields
+// (guru_boxes + dogan_note) and strip them from content_az, so every post renders
+// through the single structured path. Idempotent + supports dry-run preview.
+
+const GURU_BLOCK = />\s*╔[═╗\n>║\s\S]*?╚[═╝]+/g;
+
+function parseGuruBlock(block: string): { name: string; quote: string; source: string } | null {
+  const lines = block
+    .split('\n')
+    .map((l) =>
+      l
+        .replace(/^>\s*/, '')
+        .replace(/[╔╗╚╝║═]/g, '')
+        .trim()
+    )
+    .filter(Boolean);
+
+  let name = '';
+  let quote = '';
+  let source = '';
+  for (const line of lines) {
+    if (line.includes('🎤') || (line.startsWith('**') && !quote)) {
+      name = line.replace(/🎤\s*/, '').replace(/\*\*/g, '').trim();
+    } else if (
+      line.startsWith('*"') ||
+      line.startsWith('"') ||
+      (line.startsWith('*') && line.endsWith('*'))
+    ) {
+      quote += ' ' + line.replace(/^\*["']?|["']?\*$/g, '').replace(/^["']|["']$/g, '');
+    } else if (line.includes('📖')) {
+      source = line.replace('📖', '').replace('Mənbə:', '').trim();
+    }
+  }
+  return name && quote.trim() ? { name, quote: quote.trim(), source } : null;
+}
+
+function extractDoganNote(content: string): { raw: string; text: string } | null {
+  const lines = content.split('\n');
+  let start = -1;
+  let end = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim().startsWith('>')) {
+      const probe = lines[i].toLowerCase();
+      if (probe.includes('📝') && (probe.includes('doğan') || probe.includes('notu'))) {
+        start = i;
+        while (start > 0 && lines[start - 1].trim().startsWith('>')) start -= 1;
+        end = i;
+        while (end < lines.length - 1 && lines[end + 1].trim().startsWith('>')) end += 1;
+        break;
+      }
+    }
+  }
+  if (start === -1) return null;
+
+  const raw = lines.slice(start, end + 1).join('\n');
+  const text = lines
+    .slice(start, end + 1)
+    .map((l) => l.replace(/^>\s*/, ''))
+    .join('\n')
+    .replace(/📝/g, '')
+    .replace(/\*\*DOĞAN NOTU:\*\*/i, '')
+    .replace(/DOĞAN NOTU:/i, '')
+    .replace(/—\s*Doğan Tomris/i, '')
+    .replace(/["“”]/g, '')
+    .trim();
+
+  return { raw, text };
+}
+
+export interface MigrationPostDetail {
+  id: number;
+  slug: string;
+  guruExtracted: Array<{ name: string; quotePreview: string }>;
+  doganPreview: string | null;
+  contentStripped: boolean;
+}
+export interface MigrationResult {
+  apply: boolean;
+  postsScanned: number;
+  guruInserted: number;
+  doganSet: number;
+  contentStripped: number;
+  details: MigrationPostDetail[];
+}
+
+/**
+ * Migrate every blog post's markdown-embedded guru/Doğan blocks into structured
+ * fields. `apply=false` = dry-run preview (no writes). Idempotent: skips guru
+ * insert if the post already has guru_boxes, skips dogan if dogan_note is set;
+ * still strips leftover markdown duplicates either way.
+ */
+export async function migrateBlogStructure(apply: boolean): Promise<MigrationResult> {
+  const result: MigrationResult = {
+    apply,
+    postsScanned: 0,
+    guruInserted: 0,
+    doganSet: 0,
+    contentStripped: 0,
+    details: [],
+  };
+  if (!dbAvailable || !db) return result;
+
+  const rows = await db.select().from(blogPosts).orderBy(blogPosts.id);
+  result.postsScanned = rows.length;
+
+  for (const row of rows) {
+    const content = row.content_az || '';
+    let newContent = content;
+    const detail: MigrationPostDetail = {
+      id: row.id,
+      slug: row.slug,
+      guruExtracted: [],
+      doganPreview: null,
+      contentStripped: false,
+    };
+
+    // Guru boxes
+    const existing = await db
+      .select({ id: guruBoxes.id })
+      .from(guruBoxes)
+      .where(eq(guruBoxes.blogPostId, row.id));
+    const hasBoxes = existing.length > 0;
+    const guruMatches = content.match(GURU_BLOCK) || [];
+
+    if (guruMatches.length > 0 && !hasBoxes) {
+      let order = 0;
+      for (const block of guruMatches) {
+        const parsed = parseGuruBlock(block);
+        if (!parsed) continue;
+        detail.guruExtracted.push({ name: parsed.name, quotePreview: parsed.quote.slice(0, 80) });
+        if (apply) {
+          await db.insert(guruBoxes).values({
+            blogPostId: row.id,
+            guruName: parsed.name,
+            quote_az: parsed.quote,
+            book: parsed.source || null,
+            sortOrder: order,
+          });
+        }
+        order += 1;
+        newContent = newContent.replace(block, '').trim();
+      }
+    } else if (guruMatches.length > 0 && hasBoxes) {
+      for (const block of guruMatches) newContent = newContent.replace(block, '').trim();
+    }
+
+    // Doğan note
+    const doganAlreadySet = Boolean(row.doganNote && row.doganNote.trim());
+    const dogan = extractDoganNote(newContent);
+    if (dogan) {
+      if (!doganAlreadySet && dogan.text) {
+        detail.doganPreview = dogan.text.slice(0, 80);
+        if (apply) {
+          await db.update(blogPosts).set({ doganNote: dogan.text }).where(eq(blogPosts.id, row.id));
+        }
+      }
+      newContent = newContent.replace(dogan.raw, '').trim();
+    }
+
+    // Persist stripped content
+    if (newContent !== content) {
+      newContent = newContent.replace(/\n{3,}/g, '\n\n');
+      detail.contentStripped = true;
+      if (apply) {
+        await db.update(blogPosts).set({ content_az: newContent }).where(eq(blogPosts.id, row.id));
+      }
+    }
+
+    if (detail.guruExtracted.length > 0 || detail.doganPreview || detail.contentStripped) {
+      result.guruInserted += detail.guruExtracted.length;
+      if (detail.doganPreview) result.doganSet += 1;
+      if (detail.contentStripped) result.contentStripped += 1;
+      result.details.push(detail);
+    }
+  }
+
+  return result;
 }
 
 const EMPTY_RESULT = (): BlogTranslateResult => ({
@@ -441,11 +745,15 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
         const v = await translateText(src, lang);
         if (v) {
           langUpdates[`${name}_${lang}`] = v;
-          console.log(`[translate] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`);
+          console.log(
+            `[translate] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`
+          );
         } else {
           anyFail = true;
           failedFields.push(`${name}_${lang}`);
-          console.error(`[translate] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars, 3 retries exhausted)`);
+          console.error(
+            `[translate] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars, 3 retries exhausted)`
+          );
         }
       }
       if (needsDogan) {

@@ -3,19 +3,22 @@ import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import { getLocale } from 'next-intl/server';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 
-const blogCopy: Record<Locale, {
-  title: string;
-  subtitle: string;
-  newPost: string;
-  colTitle: string;
-  colCategory: string;
-  colAuthor: string;
-  colStatus: string;
-  colPaywall: string;
-  colDate: string;
-  colEdit: string;
-  edit: string;
-}> = {
+const blogCopy: Record<
+  Locale,
+  {
+    title: string;
+    subtitle: string;
+    newPost: string;
+    colTitle: string;
+    colCategory: string;
+    colAuthor: string;
+    colStatus: string;
+    colPaywall: string;
+    colDate: string;
+    colEdit: string;
+    edit: string;
+  }
+> = {
   az: {
     title: 'Bloq idarəetmə',
     subtitle: 'Yazıları DB və statik fallback üzərindən idarə edin.',
@@ -84,20 +87,41 @@ export default async function DashboardBlogPage() {
             <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">{copy.title}</h1>
             <p className="mt-3 text-sm text-slate-500">{copy.subtitle}</p>
           </div>
-          <Link href="/dashboard/blog/new" className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white">
-            {copy.newPost}
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/dashboard/blog/translation-status"
+              className="rounded-full border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
+            >
+              Tərcümə statusu
+            </Link>
+            <Link
+              href="/dashboard/blog/new"
+              className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white"
+            >
+              {copy.newPost}
+            </Link>
+          </div>
         </div>
 
         <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-left text-slate-400">
               <tr>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colTitle}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colCategory}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colAuthor}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colStatus}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colPaywall}</th>
+                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">
+                  {copy.colTitle}
+                </th>
+                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">
+                  {copy.colCategory}
+                </th>
+                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">
+                  {copy.colAuthor}
+                </th>
+                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">
+                  {copy.colStatus}
+                </th>
+                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">
+                  {copy.colPaywall}
+                </th>
                 <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colDate}</th>
                 <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colEdit}</th>
               </tr>
@@ -123,10 +147,21 @@ export default async function DashboardBlogPage() {
                   </td>
                   <td className="px-5 py-4 text-slate-600">{post.isPremium ? '✓' : '✗'}</td>
                   <td className="px-5 py-4 text-slate-500">
-                    {new Date(post.publishDate).toLocaleDateString(locale === 'az' ? 'az-AZ' : locale === 'ru' ? 'ru-RU' : locale === 'tr' ? 'tr-TR' : 'en-GB')}
+                    {new Date(post.publishDate).toLocaleDateString(
+                      locale === 'az'
+                        ? 'az-AZ'
+                        : locale === 'ru'
+                          ? 'ru-RU'
+                          : locale === 'tr'
+                            ? 'tr-TR'
+                            : 'en-GB'
+                    )}
                   </td>
                   <td className="px-5 py-4">
-                    <Link href={`/dashboard/blog/${post.slug}`} className="rounded-full bg-[var(--dk-red)] px-4 py-2 text-xs font-bold text-white">
+                    <Link
+                      href={`/dashboard/blog/${post.slug}`}
+                      className="rounded-full bg-[var(--dk-red)] px-4 py-2 text-xs font-bold text-white"
+                    >
                       {copy.edit}
                     </Link>
                   </td>
