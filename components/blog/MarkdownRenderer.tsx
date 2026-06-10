@@ -343,7 +343,7 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             </ol>
           ),
           li: ({ children }) => (
-            <li className="leading-[1.7]">{children}</li>
+            <li className="leading-[1.85]">{children}</li>
           ),
           code: ({ className, children, ...props }) => {
             const isInline = !className;

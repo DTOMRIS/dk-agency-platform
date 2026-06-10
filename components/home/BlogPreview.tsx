@@ -3,8 +3,10 @@
 import { getAllBlogArticles } from '@/lib/data/blogArticles';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
 export default function BlogPreview() {
+  const locale = useLocale();
   const articles = getAllBlogArticles().slice(0, 2);
 
   return (
@@ -25,7 +27,7 @@ export default function BlogPreview() {
 
         <div className="grid md:grid-cols-2 gap-12">
           {articles.map((article) => (
-            <Link key={article.id} href={`/blog/${article.slug}`} className="group block">
+            <Link key={article.id} href={`/${locale}/blog/${article.slug}`} className="group block">
               <div className="aspect-[16/9] rounded-2xl overflow-hidden mb-8 shadow-[0_20px_40px_-12px_rgba(26,26,46,0.1)] border border-[var(--dk-border-soft)]">
                 <img src={article.coverImage} alt={article.coverImageAlt} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" referrerPolicy="no-referrer" />
               </div>

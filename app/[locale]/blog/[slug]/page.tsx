@@ -143,7 +143,7 @@ export default async function BlogDetailPage({
       authorName: article.author,
       datePublished: article.publishDate,
       dateModified: article.updatedAt || article.publishDate,
-      inLanguage: locale || 'az',
+      inLanguage: normalizedLocale || 'az',
       keywords: article.tags?.join(', ') || undefined,
       articleSection: catLabel,
       wordCount: article.wordCount,
@@ -217,7 +217,7 @@ export default async function BlogDetailPage({
                 <div className="flex items-center gap-2">
                   <Calendar size={16} className="text-brand-red" />
                   {new Date(article.publishDate).toLocaleDateString(
-                    DATE_LOCALE_MAP[locale] || 'az-AZ',
+                    DATE_LOCALE_MAP[normalizedLocale] || 'az-AZ',
                     { day: 'numeric', month: 'long', year: 'numeric' }
                   )}
                 </div>
