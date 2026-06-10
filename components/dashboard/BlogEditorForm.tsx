@@ -531,14 +531,117 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               </button>
             ) : null}
           </div>
+
+          {/* Markdown toolbar + Toolkit insert */}
+          <div className="flex flex-wrap items-center gap-1 rounded-t-2xl border border-b-0 border-slate-200 bg-slate-50 px-3 py-2">
+            {[
+              { label: 'B', md: '**', tip: 'Bold' },
+              { label: 'I', md: '*', tip: 'İtalik' },
+              { label: 'H2', md: '## ', tip: 'Başlıq' },
+              { label: 'H3', md: '### ', tip: 'Alt başlıq' },
+              { label: '•', md: '- ', tip: 'Siyahı' },
+              { label: '1.', md: '1. ', tip: 'Nömrəli siyahı' },
+              { label: '❝', md: '> ', tip: 'Sitat' },
+            ].map((btn) => (
+              <button
+                key={btn.label}
+                type="button"
+                title={btn.tip}
+                className="rounded-lg px-2.5 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors"
+                onClick={() => {
+                  const ta = document.getElementById('blog-content-textarea') as HTMLTextAreaElement | null;
+                  if (!ta) return;
+                  const { selectionStart: s, selectionEnd: e } = ta;
+                  const val = ta.value;
+                  const sel = val.slice(s, e);
+                  const isWrap = btn.md.length <= 2;
+                  const insert = isWrap ? `${btn.md}${sel || btn.tip}${btn.md}` : `${btn.md}${sel || btn.tip}`;
+                  const next = val.slice(0, s) + insert + val.slice(e);
+                  setField(contentKey(activeLocale), next);
+                  setTimeout(() => { ta.focus(); ta.selectionStart = s + btn.md.length; ta.selectionEnd = s + btn.md.length + (sel || btn.tip).length; }, 0);
+                }}
+              >
+                {btn.label}
+              </button>
+            ))}
+
+            <span className="mx-1 h-5 w-px bg-slate-300" />
+
+            {/* Callout insert */}
+            <select
+              className="rounded-lg border-0 bg-transparent px-2 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-200 cursor-pointer"
+              value=""
+              onChange={(ev) => {
+                const key = ev.target.value;
+                if (!key) return;
+                const ta = document.getElementById('blog-content-textarea') as HTMLTextAreaElement | null;
+                if (!ta) return;
+                const { selectionStart: s } = ta;
+                const val = ta.value;
+                const insert = `\n### ${key}\n\nMəzmun buraya...\n\n`;
+                setField(contentKey(activeLocale), val.slice(0, s) + insert + val.slice(s));
+                ev.target.value = '';
+              }}
+            >
+              <option value="">📦 Callout əlavə et</option>
+              <option value="Guru kutusu">🎓 Guru kutusu</option>
+              <option value="Faydalı məlumat">ℹ️ Faydalı məlumat</option>
+              <option value="Praktik tətbiq">🔧 Praktik tətbiq</option>
+              <option value="Vacib qeyd">⚠️ Vacib qeyd</option>
+              <option value="Hüquqi risk">🚨 Hüquqi risk</option>
+              <option value="Doğan notu">📋 Doğan notu</option>
+              <option value="Faydalı alət">🔗 Faydalı alət</option>
+            </select>
+
+            <span className="mx-1 h-5 w-px bg-slate-300" />
+
+            {/* Toolkit link insert */}
+            <select
+              className="rounded-lg border-0 bg-transparent px-2 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-50 cursor-pointer"
+              value=""
+              onChange={(ev) => {
+                const val = ev.target.value;
+                if (!val) return;
+                const [path, name] = val.split('|');
+                const ta = document.getElementById('blog-content-textarea') as HTMLTextAreaElement | null;
+                if (!ta) return;
+                const { selectionStart: s } = ta;
+                const content = ta.value;
+                const insert = `\n> 🔧 **Faydalı alət:** [${name} →](${path}) | [DK Agency ilə əlaqə →](/elaqe)\n`;
+                setField(contentKey(activeLocale), content.slice(0, s) + insert + content.slice(s));
+                ev.target.value = '';
+              }}
+            >
+              <option value="">🔗 Toolkit link əlavə et</option>
+              <option value="/toolkit/food-cost|Food Cost Kalkulyatoru">💰 Food Cost</option>
+              <option value="/toolkit/pnl|P&L Simulyatoru">📊 P&L Simulyator</option>
+              <option value="/toolkit/pnl-simulator|P&L Simulator">📈 P&L Simulator</option>
+              <option value="/toolkit/menu-matrix|Menyu Matrisi">🍽️ Menyu Matrisi</option>
+              <option value="/toolkit/staff-retention|İşçi Saxlama aləti">👥 İşçi Saxlama</option>
+              <option value="/toolkit/basabas|Başabaş Kalkulyatoru">⚖️ Başabaş</option>
+              <option value="/toolkit/checklist|Açılış Checklisti">✅ Açılış Checklisti</option>
+              <option value="/toolkit/aqta-checklist|AQTA Hazırlıq">🏥 AQTA Checklist</option>
+              <option value="/toolkit/delivery-calc|Delivery Kalkulyatoru">🚚 Delivery Calc</option>
+              <option value="/toolkit/branding-guide|Markalaşma bələdçisi">🎨 Markalaşma</option>
+              <option value="/toolkit/insaat-checklist|İnşaat Checklisti">🏗️ İnşaat Checklist</option>
+              <option value="/toolkit/personel-planlayici|Personal Planlayıcı">📋 Personal Plan</option>
+              <option value="/toolkit/metbex-istasyon|Mətbəx İstasyon">🍳 Mətbəx İstasyon</option>
+              <option value="/toolkit/otel-hazirlig-testi|Otel Hazırlıq Testi">🏨 Otel Test</option>
+              <option value="/toolkit/ota-hazirlig-testi|OTA Hazırlıq Testi">🌐 OTA Test</option>
+              <option value="/toolkit/qonaq-evi-roi-kalkulyatoru|Qonaq Evi ROI">🏠 Qonaq Evi ROI</option>
+              <option value="/toolkit/whatsapp-template-paketi|WhatsApp Şablon Paketi">💬 WhatsApp Şablon</option>
+            </select>
+          </div>
+
           <textarea
-            rows={activeLocale === 'az' ? 12 : 10}
+            id="blog-content-textarea"
+            rows={activeLocale === 'az' ? 16 : 10}
             value={post[contentKey(activeLocale)] as string}
             onChange={(e) => setField(contentKey(activeLocale), e.target.value)}
             placeholder={
               activeLocale !== 'az' ? `${activeLocale.toUpperCase()} məzmun tərcüməsi...` : ''
             }
-            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+            className="w-full rounded-b-2xl border border-t-0 border-slate-200 bg-white px-4 py-3 font-mono text-sm text-slate-900 outline-none"
           />
           {activeLocale === 'az' && errors.contentAz ? (
             <p className="mt-2 text-xs text-red-600">{errors.contentAz}</p>
