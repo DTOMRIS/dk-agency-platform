@@ -5,6 +5,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Fixed
+- `TASK-0251` fix(blog): **guru kutusu başlığı locale-aware** — "MİCHAEL H. SEİD YANAŞMASI" hər locale-da AZ qalırdı (guruName tek sütun). Schema-ya `guru_name_ru/en/tr` əlavə olundu (migration 0015), `mapDbArticle` locale-a uyğun guru adı qaytarır, `autoTranslateBlogPost` guru adını da tərcümə edir.
 - `TASK-0250` fix(blog): **blog detay səhifəsi tam i18n** — 11 hardcoded AZ string `getTranslations('blogDetail')` ilə əvəz olundu (Bloga qayıt, dəq oxu, Xülasə, Əlaqəli yazılar, Pulsuz Toolkit, Alətlərə bax, 404 metadata, breadcrumb). Tarix formatı sabit `az-AZ` → dinamik locale map (`ru-RU`/`en-US`/`tr-TR`). 3 locale-suz link (`/blog`, `/toolkit`, related articles) `withLocale()` ilə prefix aldı. Kateqoriya (8) və stage (3) etiketləri 4 dilə çevrildi. **5 component i18n-ləşdi:** BlogActionBar (share/save/unsave/linkCopied label-ləri prop ilə), DoganNote (variantLabel prop), GuruQuoteBox (sourceLabel/contextLabel prop), LegalDisclaimer (title/text prop). BlogActionBar-dan `console.log` silindi (production qaydası). Header navbar-da Rusça sıxışma düzəldildi: nav item padding `px-3` → `px-2 xl:px-3`, gap `gap-1` → `gap-0.5 xl:gap-1`, "Elan ver" butonu `lg:inline-flex xl:px-5`. 4 dil faylına `blogDetail` namespace əlavə olundu (30+ key).
 
 ### Fixed (prior)

@@ -113,7 +113,7 @@ function mapDbArticle(
       .map((item) => {
         const boxR = item as unknown as Record<string, unknown>;
         return {
-          guruName: item.guruName || '',
+          guruName: localizedField(boxR, 'guruName', locale) || item.guruName || '',
           quote: localizedField(boxR, 'quote', locale) || item.quote_az || '',
           book: item.book || '',
           sortOrder: item.sortOrder || 0,
@@ -439,8 +439,8 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
         .where(eq(blogPosts.id, id));
     }
 
-    // Guru sitat qutuları: quote_az → quote_<lang>. Ayrı cədvəl (guru_boxes),
-    // ona görə posts update-dən sonra hər qutu üçün ayrıca tərcümə + update.
+    // Guru sitat qutuları: quote_az + guruName → quote_<lang> + guruName_<lang>.
+    // Ayrı cədvəl (guru_boxes), hər qutu üçün ayrıca tərcümə + update.
     const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, id));
     for (const box of boxes) {
       const boxUpdates: Record<string, string> = {};
@@ -448,6 +448,13 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
         if (needsTranslation(box[`quote_${lang}` as keyof typeof box], box.quote_az)) {
           const v = await translateText(box.quote_az as string, lang);
           if (v) boxUpdates[`quote_${lang}`] = v;
+          else result.ok = false;
+        }
+        // Guru adı (məs. "Michael H. Seid yanaşması" → "Michael H. Seid's approach")
+        const nameKey = `guruName_${lang}` as keyof typeof box;
+        if (needsTranslation(box[nameKey], box.guruName)) {
+          const v = await translateText(box.guruName as string, lang);
+          if (v) boxUpdates[`guruName_${lang}`] = v;
           else result.ok = false;
         }
       }

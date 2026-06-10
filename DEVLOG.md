@@ -1,6 +1,17 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-10 — TASK-0251: fix(blog): guru box header locale-aware
+
+**Why:** Guru box header "MİCHAEL H. SEİD YANAŞMASI" was hardcoded AZ in all locales because `guruName` was a single column with no locale variants. EN/RU/TR users saw AZ guru name.
+
+**What:**
+- `lib/db/schema.ts`: added `guru_name_ru/en/tr` columns to `guru_boxes` table
+- `lib/db/blog-repository.ts`: `mapDbArticle` now uses `localizedField(boxR, 'guruName', locale)` with AZ fallback. `autoTranslateBlogPost` now translates guru names alongside quotes.
+- `drizzle/0015_add_guru_name_locale_columns.sql`: idempotent migration
+
+**Action required:** Run migration 0015 on Neon, then press "Tərcümə et" on affected blog posts.
+
 ## 2026-06-10 — TASK-0249: fix(blog): self-healing title/field translation
 
 **Why:** Admin reported RU blog pages where the body translated but the title stayed in Azerbaijani. The editor confirmed `title_ru` in the DB held the AZ title (an untranslated copy), and `autoTranslateBlogPost` only filled EMPTY targets — so a non-empty-but-AZ field was skipped forever.
