@@ -370,12 +370,31 @@ export type BlogTranslateResult = {
   error?: string;
 };
 
-// A target locale value needs (re)translation when it is empty or identical to
-// the AZ source — the latter means it was never really translated.
-function needsTranslation(targetValue: unknown, azSource: string | null | undefined): boolean {
+// AZ-specific characters that don't exist in Russian or English.
+// If a "translated" RU/EN field contains these → it's still AZ text, not translated.
+const AZ_CHARS = /[əöüğışçƏÖÜĞIŞÇ]/;
+
+// A target locale value needs (re)translation when:
+// 1. Target is empty/null
+// 2. Target is identical to AZ source (exact copy)
+// 3. Target is case-insensitive equal to AZ (DeepSeek sometimes copies with case changes)
+// 4. Target contains AZ-specific chars for ru/en targets (means it was never translated)
+function needsTranslation(
+  targetValue: unknown,
+  azSource: string | null | undefined,
+  targetLang?: string,
+): boolean {
   if (!azSource || !azSource.trim()) return false;
   if (typeof targetValue !== 'string' || !targetValue.trim()) return true;
-  return targetValue.trim() === azSource.trim();
+  const target = targetValue.trim();
+  const source = azSource.trim();
+  // Exact match
+  if (target === source) return true;
+  // Case-insensitive match (DeepSeek copies with case change = not translated)
+  if (target.toLowerCase() === source.toLowerCase()) return true;
+  // AZ chars in RU/EN target = still AZ text, not translated
+  if ((targetLang === 'ru' || targetLang === 'en') && AZ_CHARS.test(target)) return true;
+  return false;
 }
 
 const EMPTY_RESULT = (): BlogTranslateResult => ({
@@ -393,82 +412,120 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
     const [row] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
     if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
 
-    const updates: Record<string, string> = {};
     const langs = ['ru', 'en', 'tr'] as const;
+    const failedFields: string[] = [];
 
     for (const lang of langs) {
+      const langUpdates: Record<string, string> = {};
       const fields: Array<['title' | 'summary' | 'content', string]> = [];
-      if (needsTranslation(row[`title_${lang}` as keyof typeof row], row.title_az))
+      if (needsTranslation(row[`title_${lang}` as keyof typeof row], row.title_az, lang))
         fields.push(['title', row.title_az]);
-      if (needsTranslation(row[`summary_${lang}` as keyof typeof row], row.summary_az))
+      if (needsTranslation(row[`summary_${lang}` as keyof typeof row], row.summary_az, lang))
         fields.push(['summary', row.summary_az as string]);
-      if (needsTranslation(row[`content_${lang}` as keyof typeof row], row.content_az))
+      if (needsTranslation(row[`content_${lang}` as keyof typeof row], row.content_az, lang))
         fields.push(['content', row.content_az]);
 
-      // Doğan Notu: single AZ source column (dogan_note) → dogan_note_<lang>.
       const needsDogan = needsTranslation(
         row[`doganNote_${lang}` as keyof typeof row],
-        row.doganNote
+        row.doganNote,
+        lang
       );
 
       if (fields.length === 0 && !needsDogan) {
         result.langs[lang] = 'skipped';
         continue;
       }
+
       let anyFail = false;
       for (const [name, src] of fields) {
         const v = await translateText(src, lang);
-        if (v) updates[`${name}_${lang}`] = v;
-        else anyFail = true;
+        if (v) {
+          langUpdates[`${name}_${lang}`] = v;
+          console.log(`[translate] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`);
+        } else {
+          anyFail = true;
+          failedFields.push(`${name}_${lang}`);
+          console.error(`[translate] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars, 3 retries exhausted)`);
+        }
       }
       if (needsDogan) {
         const v = await translateText(row.doganNote as string, lang);
-        if (v) updates[`doganNote_${lang}`] = v;
-        else anyFail = true;
+        if (v) {
+          langUpdates[`doganNote_${lang}`] = v;
+          console.log(`[translate] ✅ ${row.slug} doganNote_${lang}`);
+        } else {
+          anyFail = true;
+          failedFields.push(`doganNote_${lang}`);
+          console.error(`[translate] ❌ FAIL ${row.slug} doganNote_${lang}`);
+        }
       }
+
+      // Write successful translations for THIS language immediately
+      // (don't let one language failure block another)
+      if (Object.keys(langUpdates).length > 0) {
+        await db
+          .update(blogPosts)
+          .set({ ...langUpdates, updatedAt: new Date() } as unknown as Partial<
+            typeof blogPosts.$inferInsert
+          >)
+          .where(eq(blogPosts.id, id));
+      }
+
       result.langs[lang] = anyFail ? 'failed' : 'done';
       if (anyFail) result.ok = false;
     }
 
-    if (Object.keys(updates).length > 0) {
-      await db
-        .update(blogPosts)
-        .set({ ...updates, updatedAt: new Date() } as unknown as Partial<
-          typeof blogPosts.$inferInsert
-        >)
-        .where(eq(blogPosts.id, id));
-    }
-
     // Guru sitat qutuları: quote_az + guruName → quote_<lang> + guruName_<lang>.
-    // Ayrı cədvəl (guru_boxes), hər qutu üçün ayrıca tərcümə + update.
     const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, id));
     for (const box of boxes) {
-      const boxUpdates: Record<string, string> = {};
       for (const lang of langs) {
-        if (needsTranslation(box[`quote_${lang}` as keyof typeof box], box.quote_az)) {
+        const boxUpdates: Record<string, string> = {};
+
+        if (needsTranslation(box[`quote_${lang}` as keyof typeof box], box.quote_az, lang)) {
           const v = await translateText(box.quote_az as string, lang);
-          if (v) boxUpdates[`quote_${lang}`] = v;
-          else result.ok = false;
+          if (v) {
+            boxUpdates[`quote_${lang}`] = v;
+            console.log(`[translate] ✅ guru_box#${box.id} quote_${lang}`);
+          } else {
+            result.ok = false;
+            failedFields.push(`guru_box#${box.id}.quote_${lang}`);
+            console.error(`[translate] ❌ FAIL guru_box#${box.id} quote_${lang}`);
+          }
         }
-        // Guru adı (məs. "Michael H. Seid yanaşması" → "Michael H. Seid's approach")
+
         const nameKey = `guruName_${lang}` as keyof typeof box;
-        if (needsTranslation(box[nameKey], box.guruName)) {
+        if (needsTranslation(box[nameKey], box.guruName, lang)) {
           const v = await translateText(box.guruName as string, lang);
-          if (v) boxUpdates[`guruName_${lang}`] = v;
-          else result.ok = false;
+          if (v) {
+            boxUpdates[`guruName_${lang}`] = v;
+            console.log(`[translate] ✅ guru_box#${box.id} guruName_${lang}`);
+          } else {
+            result.ok = false;
+            failedFields.push(`guru_box#${box.id}.guruName_${lang}`);
+            console.error(`[translate] ❌ FAIL guru_box#${box.id} guruName_${lang}`);
+          }
+        }
+
+        // Write each language for each box independently
+        if (Object.keys(boxUpdates).length > 0) {
+          await db
+            .update(guruBoxes)
+            .set(boxUpdates as unknown as Partial<typeof guruBoxes.$inferInsert>)
+            .where(eq(guruBoxes.id, box.id));
         }
       }
-      if (Object.keys(boxUpdates).length > 0) {
-        await db
-          .update(guruBoxes)
-          .set(boxUpdates as unknown as Partial<typeof guruBoxes.$inferInsert>)
-          .where(eq(guruBoxes.id, box.id));
-      }
+    }
+
+    if (failedFields.length > 0) {
+      result.error = `Failed fields: ${failedFields.join(', ')}`;
+      console.error(`[translate] ${row.slug} INCOMPLETE — failed: ${failedFields.join(', ')}`);
     }
 
     return result;
   } catch (e) {
-    return { ...EMPTY_RESULT(), error: String(e).slice(0, 200) };
+    const msg = String(e).slice(0, 300);
+    console.error(`[translate] CRASH for post id=${id}: ${msg}`);
+    return { ...EMPTY_RESULT(), error: msg };
   }
 }
 

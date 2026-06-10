@@ -339,10 +339,11 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
   const [activeLocale, setActiveLocale] = useState<LocaleTab>('az');
   const [translating, setTranslating] = useState(false);
   const [translateMsg, setTranslateMsg] = useState('');
+  const [savedSlug, setSavedSlug] = useState<string | null>(initialDraft?.slug || null);
   const autoSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const translateNow = async () => {
-    const slug = initialDraft?.slug;
+    const slug = savedSlug;
     if (!slug || translating) return;
     setTranslating(true);
     setTranslateMsg('');
@@ -499,9 +500,24 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
         // ignore
       }
 
+      // Capture saved slug so translate button activates without leaving page.
+      const savedRow = (data as { data?: { id?: number; slug?: string } } | null)?.data;
+      if (savedRow?.slug) {
+        setSavedSlug(savedRow.slug);
+        if (savedRow.slug !== draft.slug) {
+          setStringField('slug', savedRow.slug);
+        }
+      }
+
       showToast(nextStatus === 'approved' ? copy.toastPublished : copy.toastDraft);
-      router.push('/dashboard/xeberler');
-      router.refresh();
+
+      // Published goes to list (final). Drafts stay on page for translation.
+      if (nextStatus === 'approved') {
+        router.push('/dashboard/xeberler');
+        router.refresh();
+      } else {
+        router.refresh();
+      }
     } finally {
       setSubmitting(false);
     }
@@ -581,12 +597,12 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
             <button
               type="button"
               onClick={() => void translateNow()}
-              disabled={!initialDraft?.slug || translating}
+              disabled={!savedSlug || translating}
               className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--dk-navy)] px-4 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-slate-300"
             >
               {translating ? '⏳ Tərcümə olunur…' : '🌐 Avtomatik tərcümə (RU/EN/TR)'}
             </button>
-            {!initialDraft?.slug ? (
+            {!savedSlug ? (
               <span className="text-xs text-slate-500">Əvvəlcə yadda saxla, sonra tərcümə et</span>
             ) : null}
             {translateMsg ? (
