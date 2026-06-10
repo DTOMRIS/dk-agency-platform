@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { compressImage, validateImage } from '@/lib/utils/imageUtils';
 import { normalizeLocale, type Locale } from '@/i18n/config';
@@ -482,12 +483,12 @@ export default function DashboardXeberlerPage() {
               <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
               <p className="mt-3 text-sm text-slate-500">{copy.pageSubtitle}</p>
             </div>
-            <a
+            <Link
               href="/dashboard/xeberler/yeni"
               className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
             >
               + Yeni Xəbər
-            </a>
+            </Link>
           </div>
         </div>
 
