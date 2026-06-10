@@ -232,6 +232,13 @@ export async function getRelatedBlogPosts(
   return pool;
 }
 
+/** All blog post IDs (for admin batch re-translation). */
+export async function getAllBlogPostIds(): Promise<number[]> {
+  if (!dbAvailable || !db) return [];
+  const rows = await db.select({ id: blogPosts.id }).from(blogPosts);
+  return rows.map((r) => r.id);
+}
+
 /** Returns raw DB row with all locale columns — for admin editor */
 export async function getBlogPostRaw(slug: string) {
   if (!dbAvailable || !db) return null;
@@ -435,6 +442,83 @@ function needsTranslation(
   // Full AZ char set is only meaningful for ru/en (tr legitimately shares ö/ü/ğ/ı/ş/ç)
   if ((targetLang === 'ru' || targetLang === 'en') && AZ_CHARS.test(target)) return true;
   return false;
+}
+
+// ─── Live translation status (admin "self-proving" screen — no SQL needed) ───
+export type FieldStatus = 'ok' | 'missing' | 'untranslated';
+
+const TR_BRANDS = /DK Agency|KAZAN AI|OCAQ|AQTA|ASAN|KOB[İI]A|Sedd Rozeti|Doğan Tomris/g;
+
+/** Per-field truth derived from the actual DB value (never a stored flag that can lie). */
+function fieldStatus(
+  target: unknown,
+  azSource: string | null | undefined,
+  lang: 'ru' | 'en' | 'tr'
+): FieldStatus {
+  if (!azSource || !azSource.trim()) return 'ok'; // nothing to translate
+  if (typeof target !== 'string' || !target.trim()) return 'missing';
+  const t = target.trim();
+  if (needsTranslation(t, azSource, lang)) return 'untranslated';
+  // ru must contain Cyrillic (brand names stripped so a Latin brand can't fool it)
+  if (lang === 'ru' && !/[Ѐ-ӿ]/.test(t.replace(TR_BRANDS, ' '))) return 'untranslated';
+  return 'ok';
+}
+
+export interface PostLangStatus {
+  title: FieldStatus;
+  summary: FieldStatus;
+  content: FieldStatus;
+  doganNote: FieldStatus;
+  guru: FieldStatus;
+}
+export interface PostTranslationStatus {
+  id: number;
+  slug: string;
+  titleAz: string;
+  langs: Record<'ru' | 'en' | 'tr', PostLangStatus>;
+}
+
+/**
+ * Every blog post × {ru,en,tr} × {title,summary,content,doganNote,guru} status,
+ * computed live from DB values. Powers the admin status matrix so Doğan can SEE
+ * green/red instead of running SQL.
+ */
+export async function getBlogTranslationMatrix(): Promise<PostTranslationStatus[]> {
+  if (!dbAvailable || !db) return [];
+  const rows = await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+  const out: PostTranslationStatus[] = [];
+
+  for (const row of rows) {
+    const r = row as unknown as Record<string, unknown>;
+    const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, row.id));
+    const langs = {} as Record<'ru' | 'en' | 'tr', PostLangStatus>;
+
+    for (const lang of ['ru', 'en', 'tr'] as const) {
+      // guru = worst status across every box's quote + name
+      let guru: FieldStatus = 'ok';
+      for (const box of boxes) {
+        const b = box as unknown as Record<string, unknown>;
+        for (const s of [
+          fieldStatus(b[`quote_${lang}`], b.quote_az as string, lang),
+          fieldStatus(b[`guruName_${lang}`], b.guruName as string, lang),
+        ]) {
+          if (s === 'missing') guru = 'missing';
+          else if (s === 'untranslated' && guru !== 'missing') guru = 'untranslated';
+        }
+      }
+
+      langs[lang] = {
+        title: fieldStatus(r[`title_${lang}`], row.title_az, lang),
+        summary: fieldStatus(r[`summary_${lang}`], row.summary_az, lang),
+        content: fieldStatus(r[`content_${lang}`], row.content_az, lang),
+        doganNote: fieldStatus(r[`doganNote_${lang}`], row.doganNote as string, lang),
+        guru,
+      };
+    }
+
+    out.push({ id: row.id, slug: row.slug, titleAz: row.title_az, langs });
+  }
+  return out;
 }
 
 const EMPTY_RESULT = (): BlogTranslateResult => ({
