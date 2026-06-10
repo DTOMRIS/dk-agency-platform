@@ -98,7 +98,7 @@ export const blogPosts = pgTable('blog_posts', {
 // Blog guru boxes
 export const guruBoxes = pgTable('guru_boxes', {
   id: serial('id').primaryKey(),
-  blogPostId: integer('blog_post_id').references(() => blogPosts.id),
+  blogPostId: integer('blog_post_id').references(() => blogPosts.id, { onDelete: 'cascade' }),
   guruName: varchar('guru_name', { length: 100 }),
   guruName_ru: varchar('guru_name_ru', { length: 100 }),
   guruName_en: varchar('guru_name_en', { length: 100 }),
@@ -111,6 +111,15 @@ export const guruBoxes = pgTable('guru_boxes', {
   note_az: text('note_az'),
   note_ru: text('note_ru'),
   sortOrder: integer('sort_order'),
+});
+
+// Slug redirects — when a blog slug changes, old URL → 301 → new slug
+export const slugRedirects = pgTable('slug_redirects', {
+  id: serial('id').primaryKey(),
+  oldSlug: varchar('old_slug', { length: 255 }).notNull(),
+  newSlug: varchar('new_slug', { length: 255 }).notNull(),
+  type: varchar('type', { length: 20 }).notNull().default('blog'),
+  createdAt: timestamp('created_at').defaultNow(),
 });
 
 export const listingTypeEnum = pgEnum('listing_type', [
