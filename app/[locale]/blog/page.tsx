@@ -11,7 +11,7 @@ import {
   getAllBlogArticles,
   type BlogArticle,
 } from '@/lib/data/blogArticles';
-import { normalizeLocale, type Locale } from '@/i18n/config';
+import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 
 type BlogListItem = BlogArticle & {
   seoTitle?: string;
@@ -162,7 +162,7 @@ export default function BlogGridPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.06 }}
                 >
-                  <Link href={`/blog/${article.slug}`} className="group block bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-brand-red/10 transition-all">
+                  <Link href={withLocale(locale, `/blog/${article.slug}`)} className="group block bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-brand-red/10 transition-all">
                     <div className="aspect-[16/10] overflow-hidden relative">
                       <Image
                         src={article.coverImage}

@@ -337,7 +337,43 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
   const [uploadingImage, setUploadingImage] = useState(false);
   const [errors, setErrors] = useState<{ titleAz?: string; slug?: string }>({});
   const [activeLocale, setActiveLocale] = useState<LocaleTab>('az');
+  const [translating, setTranslating] = useState(false);
+  const [translateMsg, setTranslateMsg] = useState('');
+  const [savedSlug, setSavedSlug] = useState<string | null>(initialDraft?.slug || null);
   const autoSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const translateNow = async () => {
+    const slug = savedSlug;
+    if (!slug || translating) return;
+    setTranslating(true);
+    setTranslateMsg('');
+    try {
+      const res = await fetch('/api/news/admin/translate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ slug }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        langs?: Record<string, string>;
+        error?: string;
+      };
+      if (!res.ok || data.error) {
+        setTranslateMsg(`Tərcümə alınmadı: ${data.error || res.status}`);
+        return;
+      }
+      const l = data.langs || {};
+      const mark = (s?: string) => (s === 'done' ? '✓' : s === 'failed' ? '✗' : '—');
+      setTranslateMsg(
+        `RU ${mark(l.ru)} · EN ${mark(l.en)} · TR ${mark(l.tr)}${data.ok ? '' : ' — bəziləri alınmadı, yenidən cəhd et'}`,
+      );
+      router.refresh();
+    } catch {
+      setTranslateMsg('Tərcümə xidməti əlçatmadı — yenidən cəhd et');
+    } finally {
+      setTranslating(false);
+    }
+  };
 
   const seoTitleCount = useMemo(() => draft.seoTitle.length, [draft.seoTitle]);
   const seoDescCount = useMemo(() => draft.seoDescription.length, [draft.seoDescription]);
@@ -464,9 +500,24 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
         // ignore
       }
 
+      // Capture saved slug so translate button activates without leaving page.
+      const savedRow = (data as { data?: { id?: number; slug?: string } } | null)?.data;
+      if (savedRow?.slug) {
+        setSavedSlug(savedRow.slug);
+        if (savedRow.slug !== draft.slug) {
+          setStringField('slug', savedRow.slug);
+        }
+      }
+
       showToast(nextStatus === 'approved' ? copy.toastPublished : copy.toastDraft);
-      router.push('/dashboard/xeberler');
-      router.refresh();
+
+      // Published goes to list (final). Drafts stay on page for translation.
+      if (nextStatus === 'approved') {
+        router.push('/dashboard/xeberler');
+        router.refresh();
+      } else {
+        router.refresh();
+      }
     } finally {
       setSubmitting(false);
     }
@@ -540,6 +591,23 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
                 </button>
               );
             })}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => void translateNow()}
+              disabled={!savedSlug || translating}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--dk-navy)] px-4 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-slate-300"
+            >
+              {translating ? '⏳ Tərcümə olunur…' : '🌐 Avtomatik tərcümə (RU/EN/TR)'}
+            </button>
+            {!savedSlug ? (
+              <span className="text-xs text-slate-500">Əvvəlcə yadda saxla, sonra tərcümə et</span>
+            ) : null}
+            {translateMsg ? (
+              <span className="text-xs font-semibold text-slate-700">{translateMsg}</span>
+            ) : null}
           </div>
 
           {/* TODO B-step: AI title suggest button */}
