@@ -10,31 +10,28 @@ import {
 import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
 import { translateText } from '@/lib/ai/translate';
 
-const LEGACY_SLUGS_MAP: Record<string, string[]> = {
-  'sertifikatli-komanda-cth-portal-karyera': ['sertifikatli-komanda-cth-online-tehsil'],
-  'azerbaycan-qastronomiya-2030-strateji-yol-xeritesi': ['azerbaycan-qastronomiya-2030-dovlet-plani'],
-  'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun': [
-    'Franchise Bedelleri: isim Hakkı, Royalti, Reklam — Neye, Niye Ödüyorsun',
-    'Franchise Bedelleri: isim Hakkı, Royalti, Reklam — Neye, Niye Ödüyorsun?',
-    'Franchise%20Bedelleri:%20isim%20Hakk%C4%B1,%20Royalti,%20Reklam%20%E2%80%94%20Neye,%20Niye%20%C3%96d%C3%BCyorsun',
-    'Franchise%20Bedelleri:%20isim%20Hakk%C4%B1,%20Royalti,%20Reklam%20%E2%80%94%20Neye,%20Niye%20%C3%96d%C3%BCyorsun?'
-  ]
-};
-
+/** Generate all slug variants to try — handles dirty slugs, ? suffix, URL encoding */
 function getSlugsToTry(slug: string): string[] {
-  const list = [slug];
-  if (LEGACY_SLUGS_MAP[slug]) {
-    list.push(...LEGACY_SLUGS_MAP[slug]);
+  const set = new Set<string>();
+  set.add(slug);
+
+  // ? is a query-string delimiter in URLs — DB may have slug WITH ? but URL strips it
+  if (slug.endsWith('?')) {
+    set.add(slug.slice(0, -1));
+  } else {
+    set.add(slug + '?');
   }
-  for (const [canonical, legacyList] of Object.entries(LEGACY_SLUGS_MAP)) {
-    if (legacyList.includes(slug)) {
-      if (!list.includes(canonical)) list.push(canonical);
-      for (const leg of legacyList) {
-        if (!list.includes(leg)) list.push(leg);
-      }
+
+  // URL-decoded variant (Next.js usually decodes, but be safe)
+  try {
+    const decoded = decodeURIComponent(slug);
+    if (decoded !== slug) {
+      set.add(decoded);
+      set.add(decoded.endsWith('?') ? decoded.slice(0, -1) : decoded + '?');
     }
-  }
-  return list;
+  } catch { /* invalid encoding, skip */ }
+
+  return [...set];
 }
 
 export interface BlogListFilters {
