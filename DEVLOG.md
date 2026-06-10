@@ -1,6 +1,24 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-10 — TASK-0248: fix(blog): translate Doğan Notu + guru quotes; structure-preserving prompt
+
+**Why:** Admin reported RU blog pages where the title, Doğan Notu and guru quotes were untranslated, and section numbering appeared in RU but not AZ. Root cause: `autoTranslateBlogPost` only translated `title/summary/content`. Doğan Notu and guru-box quotes were never sent to the translator, and `dogan_note` was a single AZ-only column with no place to store a translation.
+
+**What:**
+- `lib/db/schema.ts` + `drizzle/0014_add_dogan_note_locale_columns.sql`: added `dogan_note_ru/en/tr` columns (migration is idempotent, `IF NOT EXISTS`, must be run manually on Neon).
+- `lib/db/blog-repository.ts`: `mapDbArticle` now returns locale-aware `doganNote` (`dogan_note_<locale>` → AZ fallback). `autoTranslateBlogPost` now also translates `doganNote` (→ `dogan_note_<lang>`) and every guru box quote (`quote_az` → `quote_<lang>`, columns already existed from migration 0001). Guru rows are updated per-box after the posts update.
+- `lib/ai/translate.ts`: hardened the system prompt to mirror source structure 1:1 — no added/removed/renumbered headings, list items or section numbers (fixes the RU-only numbering drift).
+
+**No editor change needed:** the existing "Avtomatik tərcümə (RU/EN/TR)" button (→ `/api/blog/translate` → `translateBlogPostBySlug`) now covers Doğan Notu + guru quotes. Flow: save the post (with Doğan Notu + guru boxes filled), then click translate.
+
+**Verification:** `npx tsc --noEmit` → 0 errors in changed files; `npx eslint` → 0 errors. Build/live not verifiable here (Google Fonts + prod DB are outside the sandbox allowlist).
+
+**ACTION REQUIRED (admin):**
+1. Run `drizzle/0014_add_dogan_note_locale_columns.sql` on Neon.
+2. Re-run "Avtomatik tərcümə" on the affected post(s) so the new columns get filled.
+3. "Image still missing" + "boxes don't show even in AZ" are likely deploy-lag (merge≠live) or Cloudinary env not set on Hostinger — confirm TASK-0243 is merged & live and that `CLOUDINARY_*` env vars exist.
+
 ## 2026-06-10 — TASK-0247: fix(b2b): dynamic profile completion + plan badge in sidebar
 
 **Why:** The B2B sidebar showed a hardcoded 78% completion bar and a permanent PREMIUM badge — neither reflected the user's real DB state.
