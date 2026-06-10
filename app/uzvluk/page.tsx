@@ -72,7 +72,7 @@ export default async function MembershipPage() {
 
             <div className="mt-6 rounded-2xl border border-red-100 bg-red-50 p-6">
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-red-600">Member Monthly</p>
-              <p className="mt-3 text-4xl font-black text-slate-900">{capability.hasPayment ? 'Checkout hazır' : 'Tezliklə'}</p>
+              <p className="mt-3 text-4xl font-black text-slate-900">{capability.hasPayment ? 'Checkout hazır' : 'Yaxında'}</p>
               <p className="mt-3 text-sm text-slate-600">
                 Ödəniş provideri veriləndə CTA birbaşa checkout-a çıxacaq. İndilik placeholder axını qalır.
               </p>

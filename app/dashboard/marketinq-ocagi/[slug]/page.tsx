@@ -37,8 +37,8 @@ const pageCopy: Record<
   az: {
     backToList: 'Bütün alətlər',
     whyTitle: 'Niyə bu vacibdir?',
-    comingSoon: 'Tezliklə',
-    comingSoonDesc: 'Bu alət hazırlanır. Tezliklə istifadəyə veriləcək.',
+    comingSoon: 'Yaxında',
+    comingSoonDesc: 'Bu alət hazırlanır. Yaxında istifadəyə veriləcək.',
     tiers: { sagird: 'ŞAGIRD', kalfa: 'KALFA', usta: 'USTA' },
     tools: {
       'marka-kompasi': { title: 'Marka Kompası', subtitle: '5 sualda restoranınızın bazardakı yerini tapın', why: 'Konum ucuz/lüks etiketlərdən ibarət deyil — kim üçün, hansı problem, niyə fərqli?' },
