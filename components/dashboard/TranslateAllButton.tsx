@@ -4,9 +4,9 @@ import { useState } from 'react';
 
 type RunState = 'idle' | 'running' | 'done' | 'error';
 
-// One-click batch re-translation of ALL blog posts. Hits the admin-gated
-// /api/blog/translate/all (which routes through the echo-guarded
-// autoTranslateBlogPost), then surfaces a summary. No per-blog clicking, no SQL.
+// Batch re-translation that survives Hostinger limits: the server does a short
+// (~40s) slice per call and we loop here until it reports done. Each slice saves
+// its work, so closing the tab just pauses — re-open and click to resume.
 export default function TranslateAllButton() {
   const [state, setState] = useState<RunState>('idle');
   const [summary, setSummary] = useState('');
@@ -21,29 +21,57 @@ export default function TranslateAllButton() {
       return;
     }
     setState('running');
-    setSummary('');
-    try {
-      const res = await fetch('/api/blog/translate/all', { method: 'POST' });
-      const data = (await res.json()) as {
-        ok?: boolean;
-        total?: number;
-        okCount?: number;
-        failCount?: number;
-        error?: string;
-      };
-      if (!res.ok) {
+    setSummary('Başlanır…');
+
+    for (let i = 0; i < 80; i++) {
+      let res: Response;
+      try {
+        res = await fetch('/api/blog/translate/all', { method: 'POST' });
+      } catch {
         setState('error');
-        setSummary(data.error || `Xəta: ${res.status}`);
+        setSummary('Şəbəkə xətası — bir az gözlə, yenidən bas.');
         return;
       }
-      setState('done');
+
+      if (!res.ok) {
+        // 503/HTML when the server is overloaded — pause, let the user retry.
+        setState('error');
+        setSummary(
+          `Server ${res.status} (yüklü). Gördüyü işlər yadda qaldı — bir az sonra yenə bas, qaldığı yerdən davam edəcək.`
+        );
+        return;
+      }
+
+      let data: {
+        ok?: boolean;
+        done?: boolean;
+        processed?: number;
+        total?: number;
+        translated?: number;
+      };
+      try {
+        data = await res.json();
+      } catch {
+        setState('error');
+        setSummary('Server JSON qaytarmadı (503/HTML). Bir az sonra yenə bas.');
+        return;
+      }
+
       setSummary(
-        `${data.okCount ?? 0}/${data.total ?? 0} blog tam · ${data.failCount ?? 0} qismən/xəta. Statusu görmək üçün səhifəni yeniləyin.`
+        `${data.processed ?? 0}/${data.total ?? 0} blog yoxlandı · ${data.translated ?? 0} tərcümə olundu…`
       );
-    } catch (err) {
-      setState('error');
-      setSummary(err instanceof Error ? err.message : 'Şəbəkə xətası');
+
+      if (data.done) {
+        setState('done');
+        setSummary(
+          `Bitdi · ${data.total ?? 0} blog yoxlandı. Statusu görmək üçün səhifəni yeniləyin.`
+        );
+        return;
+      }
     }
+
+    setState('error');
+    setSummary('Çox uzun çəkdi — yenidən bas, qaldığı yerdən davam edəcək.');
   }
 
   return (

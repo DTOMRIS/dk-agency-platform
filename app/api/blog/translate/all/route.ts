@@ -1,25 +1,20 @@
 import { NextResponse } from 'next/server';
 
-import {
-  autoTranslateBlogPost,
-  getAllBlogPostIds,
-  type BlogTranslateResult,
-} from '@/lib/db/blog-repository';
+import { autoTranslateBlogPost, getAllBlogPostIds } from '@/lib/db/blog-repository';
 import { getServerMemberSession } from '@/lib/members/server-session';
 
-// Allow a long-running batch on the (long-lived) Node server.
-export const maxDuration = 300;
+// Keep each invocation short so it never trips Hostinger's proxy timeout / OOM.
+export const maxDuration = 60;
 
-type PostResult = { id: number } & BlogTranslateResult;
+// Time budget per request — well under the proxy/OOM ceiling. The client calls
+// this repeatedly until { done: true }. autoTranslateBlogPost is idempotent and
+// cheap on already-translated posts (no DeepSeek calls), so re-scanning from the
+// start each call is fine and self-converging.
+const BUDGET_MS = 40_000;
 
-// Admin-triggered RE-translation of ALL blog posts (AZ → ru/en/tr).
-// Routes every post through autoTranslateBlogPost, which:
-//  - re-translates fields that are empty OR still Azerbaijian (needsTranslation),
-//    so already-broken (AZ-echoed) values are healed, not skipped;
-//  - covers title / summary / content + doganNote + guru quote + guru name;
-//  - uses the echo-guarded translateText (never persists AZ as a translation);
-//  - reports per-language status (no silent failure).
-// Idempotent: re-running only touches fields that still need work.
+// Admin-triggered batch re-translation of blog posts (AZ → ru/en/tr), one short
+// slice per call. Routes through the echo-guarded autoTranslateBlogPost
+// (empty OR still-AZ fields; title/summary/content + doganNote + guru).
 export async function POST() {
   const session = await getServerMemberSession();
   if (!session.loggedIn || session.plan !== 'admin') {
@@ -27,22 +22,26 @@ export async function POST() {
   }
 
   const ids = await getAllBlogPostIds();
-  const results: PostResult[] = [];
-  let okCount = 0;
-  let failCount = 0;
+  const startedAt = Date.now();
+  let processed = 0;
+  let translated = 0;
+  const failed: number[] = [];
 
   for (const id of ids) {
     const r = await autoTranslateBlogPost(id);
-    results.push({ id, ...r });
-    if (r.ok) okCount += 1;
-    else failCount += 1;
+    processed += 1;
+    if (Object.values(r.langs).some((s) => s === 'done')) translated += 1;
+    if (!r.ok) failed.push(id);
+    if (Date.now() - startedAt > BUDGET_MS) break;
   }
 
+  const done = processed >= ids.length;
   return NextResponse.json({
-    ok: failCount === 0,
+    ok: true,
+    done,
+    processed,
     total: ids.length,
-    okCount,
-    failCount,
-    results,
+    translated,
+    failed,
   });
 }

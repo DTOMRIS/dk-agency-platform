@@ -26,6 +26,7 @@ import {
   jsonLdGraph,
 } from '@/lib/seo/structured-data';
 import { normalizeLocale, withLocale } from '@/i18n/config';
+import { slugify } from '@/lib/utils/slug';
 
 // BLOG_OVERRIDES removed — all content served from DB (L-037)
 
@@ -115,6 +116,12 @@ export default async function BlogDetailPage({
   const t = await getTranslations({ locale, namespace: 'blogDetail' });
 
   if (!article) {
+    // Fallback: a raw-title or legacy URL (e.g. "/blog/Franchise Bedelleri: …")
+    // resolves to its canonical slug instead of 404'ing.
+    const normalized = slugify(slug);
+    if (normalized && normalized !== slug && (await getBlogPostDetail(normalized, locale))) {
+      redirect(withLocale(normalizeLocale(locale), `/blog/${normalized}`));
+    }
     notFound();
   }
 
