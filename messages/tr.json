@@ -66,18 +66,13 @@
   },
   "b2bPanel": {
     "welcome": "Hoş Geldiniz!",
-    "subtitle": "İstanbul HORECA Group - B2B Portal",
+    "subtitle": "DK Agency - B2B Portal",
     "newListing": "Yeni İlan Oluştur",
     "myListings": "İlanlarım",
     "viewAll": "Tümünü Gör",
     "recentOffers": "Son Teklifler",
     "quickActions": "Hızlı İşlemler",
-    "statLabels": [
-      "Aktif İlanlar",
-      "Toplam Görüntülenme",
-      "Gelen Teklifler",
-      "Mesajlar"
-    ],
+    "statLabels": ["Aktif İlanlar", "Toplam Görüntülenme", "Gelen Teklifler", "Mesajlar"],
     "statusLabels": {
       "active": "Aktif",
       "pending": "Onay Bekliyor",
@@ -97,16 +92,8 @@
       "Franchise sorusu",
       "İlanınız favorilere eklendi"
     ],
-    "offerTimes": [
-      "2 saat önce",
-      "5 saat önce",
-      "1 gün önce"
-    ],
-    "quickLinks": [
-      "Yeni İlan",
-      "Analiz Araçları",
-      "Profili Güncelle"
-    ],
+    "offerTimes": ["2 saat önce", "5 saat önce", "1 gün önce"],
+    "quickLinks": ["Yeni İlan", "Analiz Araçları", "Profili Güncelle"],
     "noOffers": "Henüz teklif yok",
     "noListings": "Henüz ilanınız yok"
   },

@@ -66,18 +66,13 @@
   },
   "b2bPanel": {
     "welcome": "Welcome!",
-    "subtitle": "Istanbul HORECA Group - B2B Portal",
+    "subtitle": "DK Agency - B2B Portal",
     "newListing": "Create Listing",
     "myListings": "My Listings",
     "viewAll": "View All",
     "recentOffers": "Recent Offers",
     "quickActions": "Quick Actions",
-    "statLabels": [
-      "Active Listings",
-      "Total Views",
-      "Incoming Offers",
-      "Messages"
-    ],
+    "statLabels": ["Active Listings", "Total Views", "Incoming Offers", "Messages"],
     "statusLabels": {
       "active": "Active",
       "pending": "Pending",
@@ -97,16 +92,8 @@
       "Franchise enquiry",
       "Your listing was favourited"
     ],
-    "offerTimes": [
-      "2 hours ago",
-      "5 hours ago",
-      "1 day ago"
-    ],
-    "quickLinks": [
-      "New Listing",
-      "Analytics",
-      "Update Profile"
-    ],
+    "offerTimes": ["2 hours ago", "5 hours ago", "1 day ago"],
+    "quickLinks": ["New Listing", "Analytics", "Update Profile"],
     "noOffers": "No offers yet",
     "noListings": "You have no listings yet"
   },
