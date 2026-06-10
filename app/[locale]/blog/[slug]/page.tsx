@@ -300,7 +300,7 @@ export default async function BlogDetailPage({
                 <p className="mb-6 text-sm leading-relaxed text-slate-600">{t('ctaDesc')}</p>
                 <div className="flex flex-wrap items-center gap-3">
                   <a
-                    href={`https://wa.me/905301234567?text=${encodeURIComponent(`Salam, "${article.title}" yazısı ilə bağlı sualım var.`)}`}
+                    href={`https://wa.me/994502566279?text=${encodeURIComponent(`Salam, "${article.title}" yazısı ilə bağlı sualım var.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#1da851]"
