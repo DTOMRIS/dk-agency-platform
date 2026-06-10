@@ -3,7 +3,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import {
@@ -16,41 +16,29 @@ import {
   Clock,
   CheckCircle,
   AlertTriangle,
-  Star,
   Briefcase,
+  Inbox,
 } from 'lucide-react';
 import RecommendationWidget from '@/components/dashboard/RecommendationWidget';
 import NudgeBanner from '@/components/dashboard/NudgeBanner';
 
-const MY_LISTINGS = [
-  {
-    id: '1',
-    title: 'Kadıköy Merkez Lokasyonda Cafe Devri',
-    category: 'devir',
-    status: 'active',
-    views: 1250,
-    inquiries: 5,
-    createdAt: '2024-01-15',
-  },
-  {
-    id: '2',
-    title: 'Franchise Partner Aranıyor - Fast Food',
-    category: 'franchise-vermek',
-    status: 'active',
-    views: 890,
-    inquiries: 3,
-    createdAt: '2024-01-20',
-  },
-  {
-    id: '3',
-    title: '500.000₺ Yatırım - Ortaklık Teklifi',
-    category: 'ortak-tapmaq',
-    status: 'pending',
-    views: 0,
-    inquiries: 0,
-    createdAt: '2024-02-01',
-  },
-];
+// Shape returned by GET /api/listings?scope=owner (mapDbListing).
+interface OwnerListing {
+  id: number;
+  title: string;
+  type: string;
+  status: string;
+  viewCount?: number;
+  leads?: Array<unknown>;
+  createdAt: string;
+}
+
+// DB workflow status → the 3 UI buckets the sidebar copy defines.
+function toUiStatus(dbStatus: string): 'active' | 'pending' | 'rejected' {
+  if (dbStatus === 'showcase_ready') return 'active';
+  if (dbStatus === 'rejected') return 'rejected';
+  return 'pending';
+}
 
 const STATUS_ICON_MAP = {
   active: CheckCircle,
@@ -63,35 +51,6 @@ const STATUS_COLOR_MAP = {
   pending: 'text-amber-600 bg-amber-50',
   rejected: 'text-red-600 bg-red-50',
 } as const;
-
-// Sparkline helper component for trend graphs
-function Sparkline({ points, color }: { points: number[]; color: string }) {
-  const width = 60;
-  const height = 24;
-  const max = Math.max(...points);
-  const min = Math.min(...points);
-  const range = max - min || 1;
-  const strokePoints = points
-    .map((p, i) => {
-      const x = (i / (points.length - 1)) * width;
-      const y = height - ((p - min) / range) * height + 2; // padding
-      return `${x},${y}`;
-    })
-    .join(' ');
-
-  return (
-    <svg width={width} height={height} className="overflow-visible opacity-80">
-      <polyline
-        fill="none"
-        stroke={color}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        points={strokePoints}
-      />
-    </svg>
-  );
-}
 
 export default function B2BPanelPage() {
   const t = useTranslations('b2bPanel');
@@ -108,51 +67,59 @@ export default function B2BPanelPage() {
     statLabels: t.raw('statLabels') as string[],
     statusLabels: t.raw('statusLabels') as Record<string, string>,
     categoryLabels: t.raw('categoryLabels') as Record<string, string>,
-    offerItems: t.raw('offerItems') as string[],
-    offerTimes: t.raw('offerTimes') as string[],
     quickLinks: t.raw('quickLinks') as string[],
   };
 
-  // Real per-user metrics not wired yet — show honest empty (0 / "—") instead of
-  // fabricated numbers. Replace with live values once analytics is connected.
+  const [listings, setListings] = useState<OwnerListing[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/listings?scope=owner')
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .then((data: { data?: OwnerListing[] }) => {
+        if (!cancelled) setListings(Array.isArray(data.data) ? data.data : []);
+      })
+      .catch(() => {
+        if (!cancelled) setListings([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Real metrics derived from the owner's own listings. "Gələn Təkliflər" has no
+  // backend yet → honest 0 (no fabricated offers).
+  const activeCount = listings.filter((l) => l.status === 'showcase_ready').length;
+  const totalViews = listings.reduce((sum, l) => sum + (l.viewCount ?? 0), 0);
+  const totalMessages = listings.reduce((sum, l) => sum + (l.leads?.length ?? 0), 0);
+
   const STATS = [
     {
       label: copy.statLabels[0],
-      value: 0,
+      value: activeCount,
       icon: FileText,
       color: 'bg-indigo-50 text-indigo-600',
-      sparklineColor: '#6366f1',
-      sparklineData: [0, 0, 0, 0, 0],
-      change: '—',
     },
     {
       label: copy.statLabels[1],
-      value: 0,
+      value: totalViews,
       icon: Eye,
       color: 'bg-emerald-50 text-emerald-600',
-      sparklineColor: '#10b981',
-      sparklineData: [0, 0, 0, 0, 0],
-      change: '—',
     },
-    {
-      label: copy.statLabels[2],
-      value: 0,
-      icon: Briefcase,
-      color: 'bg-purple-50 text-purple-600',
-      sparklineColor: '#a855f7',
-      sparklineData: [0, 0, 0, 0, 0],
-      change: '—',
-    },
+    { label: copy.statLabels[2], value: 0, icon: Briefcase, color: 'bg-purple-50 text-purple-600' },
     {
       label: copy.statLabels[3],
-      value: 0,
+      value: totalMessages,
       icon: MessageSquare,
       color: 'bg-rose-50 text-[var(--dk-red)]',
-      sparklineColor: '#e94560',
-      sparklineData: [0, 0, 0, 0, 0],
-      change: '—',
     },
   ];
+
+  const recentListings = listings.slice(0, 3);
 
   return (
     <div className="p-6 lg:p-8 space-y-8 max-w-7xl mx-auto">
@@ -180,30 +147,17 @@ export default function B2BPanelPage() {
           return (
             <div
               key={stat.label}
-              className="group bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200/60 p-5 hover:border-[var(--dk-red)]/35 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.04)] transition-all duration-300 flex flex-col justify-between"
+              className="group bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200/60 p-5 hover:border-[var(--dk-red)]/35 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.04)] transition-all duration-300"
             >
-              <div>
-                <div className="flex items-center justify-between">
-                  <div
-                    className={`w-10 h-10 rounded-xl ${stat.color} flex items-center justify-center`}
-                  >
-                    <Icon size={20} />
-                  </div>
-                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">
-                    {stat.change}
-                  </span>
-                </div>
-                <p className="text-3xl font-black tracking-tight text-slate-900 mt-4">
-                  {stat.value.toLocaleString()}
-                </p>
-                <p className="text-xs font-semibold text-slate-500 mt-1">{stat.label}</p>
+              <div
+                className={`w-10 h-10 rounded-xl ${stat.color} flex items-center justify-center`}
+              >
+                <Icon size={20} />
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-                  Trend (Son 7 gün)
-                </span>
-                <Sparkline points={stat.sparklineData} color={stat.sparklineColor} />
-              </div>
+              <p className="text-3xl font-black tracking-tight text-slate-900 mt-4">
+                {loading ? '—' : stat.value.toLocaleString()}
+              </p>
+              <p className="text-xs font-semibold text-slate-500 mt-1">{stat.label}</p>
             </div>
           );
         })}
@@ -230,47 +184,69 @@ export default function B2BPanelPage() {
               </Link>
             </div>
             <div className="divide-y divide-slate-100">
-              {MY_LISTINGS.map((listing) => {
-                const status = listing.status as keyof typeof STATUS_ICON_MAP;
-                const StatusIcon = STATUS_ICON_MAP[status];
-                const statusColor = STATUS_COLOR_MAP[status];
-                const statusLabel = copy.statusLabels[status];
-
-                return (
-                  <div
-                    key={listing.id}
-                    className="p-5 hover:bg-slate-50/50 transition-colors duration-200"
+              {loading ? (
+                <div className="p-8 text-center text-sm font-semibold text-slate-400">
+                  {copy.myListings}…
+                </div>
+              ) : recentListings.length === 0 ? (
+                <div className="flex flex-col items-center justify-center gap-3 p-10 text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+                    <Inbox size={26} />
+                  </div>
+                  <p className="text-sm font-semibold text-slate-500">{t('noListings')}</p>
+                  <Link
+                    href="/b2b-panel/yeni-ilan"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-red)] px-4 py-2 text-xs font-bold text-white transition hover:bg-[var(--dk-red-strong)]"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                      <div className="flex-1 min-w-0 space-y-1">
-                        <p className="font-bold text-slate-900 truncate hover:text-[var(--dk-red)] transition-colors">
-                          {listing.title}
-                        </p>
-                        <div className="flex flex-wrap items-center gap-2.5">
-                          <span className="text-xs font-medium text-slate-500">
-                            {copy.categoryLabels[listing.category]}
+                    <Plus size={14} />
+                    {copy.newListing}
+                  </Link>
+                </div>
+              ) : (
+                recentListings.map((listing) => {
+                  const status = toUiStatus(listing.status);
+                  const StatusIcon = STATUS_ICON_MAP[status];
+                  const statusColor = STATUS_COLOR_MAP[status];
+                  const statusLabel = copy.statusLabels[status];
+
+                  return (
+                    <Link
+                      key={listing.id}
+                      href={`/b2b-panel/ilanlarim/${listing.id}`}
+                      className="block p-5 hover:bg-slate-50/50 transition-colors duration-200"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div className="flex-1 min-w-0 space-y-1">
+                          <p className="font-bold text-slate-900 truncate hover:text-[var(--dk-red)] transition-colors">
+                            {listing.title}
+                          </p>
+                          <div className="flex flex-wrap items-center gap-2.5">
+                            <span className="text-xs font-medium text-slate-500">
+                              {copy.categoryLabels[listing.type] ?? listing.type}
+                            </span>
+                            <span className="text-slate-300 text-xs">•</span>
+                            <span
+                              className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md ${statusColor}`}
+                            >
+                              <StatusIcon size={10} />
+                              {statusLabel}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-center sm:justify-end gap-4 text-xs font-semibold text-slate-500">
+                          <span className="flex items-center gap-1 bg-slate-100/60 px-2 py-1 rounded-md">
+                            <Eye size={12} className="text-slate-400" /> {listing.viewCount ?? 0}
                           </span>
-                          <span className="text-slate-300 text-xs">•</span>
-                          <span
-                            className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md ${statusColor}`}
-                          >
-                            <StatusIcon size={10} />
-                            {statusLabel}
+                          <span className="flex items-center gap-1 bg-slate-100/60 px-2 py-1 rounded-md">
+                            <MessageSquare size={12} className="text-slate-400" />{' '}
+                            {listing.leads?.length ?? 0}
                           </span>
                         </div>
                       </div>
-                      <div className="flex items-center sm:justify-end gap-4 text-xs font-semibold text-slate-500">
-                        <span className="flex items-center gap-1 bg-slate-100/60 px-2 py-1 rounded-md">
-                          <Eye size={12} className="text-slate-400" /> {listing.views}
-                        </span>
-                        <span className="flex items-center gap-1 bg-slate-100/60 px-2 py-1 rounded-md">
-                          <MessageSquare size={12} className="text-slate-400" /> {listing.inquiries}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                    </Link>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
@@ -280,57 +256,13 @@ export default function B2BPanelPage() {
           {/* Son Teklifler */}
           <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200/60 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.015)]">
             <h3 className="font-black text-slate-950 tracking-tight mb-4">{copy.recentOffers}</h3>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
-                  <Briefcase size={18} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">
-                    {copy.offerItems[0]}
-                  </p>
-                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">
-                    {copy.offerTimes[0]}
-                  </p>
-                </div>
+            {/* No offers backend yet — honest empty state instead of fabricated items. */}
+            <div className="flex flex-col items-center justify-center gap-2 py-6 text-center">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+                <Inbox size={22} />
               </div>
-              <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                  <MessageSquare size={18} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">
-                    {copy.offerItems[1]}
-                  </p>
-                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">
-                    {copy.offerTimes[1]}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
-                  <Star size={18} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">
-                    {copy.offerItems[2]}
-                  </p>
-                  <p className="text-[10px] font-bold text-slate-400 mt-0.5">
-                    {copy.offerTimes[2]}
-                  </p>
-                </div>
-              </div>
+              <p className="text-sm font-semibold text-slate-500">{t('noOffers')}</p>
             </div>
-            <Link
-              href="/b2b-panel/teklifler"
-              className="mt-4 inline-flex items-center gap-1 text-xs text-[var(--dk-red)] font-bold hover:text-[var(--dk-red-strong)] group/link transition-colors"
-            >
-              {copy.viewAll}{' '}
-              <ArrowRight
-                size={13}
-                className="group-hover/link:translate-x-0.5 transition-transform"
-              />
-            </Link>
           </div>
 
           {/* Quick Actions */}

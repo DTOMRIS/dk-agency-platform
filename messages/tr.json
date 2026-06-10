@@ -106,7 +106,9 @@
       "Yeni İlan",
       "Analiz Araçları",
       "Profili Güncelle"
-    ]
+    ],
+    "noOffers": "Henüz teklif yok",
+    "noListings": "Henüz ilanınız yok"
   },
   "nav": {
     "home": "Ana sayfa",

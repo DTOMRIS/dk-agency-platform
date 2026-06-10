@@ -106,7 +106,9 @@
       "Yeni Elan",
       "Analiz Alətləri",
       "Profili Yenilə"
-    ]
+    ],
+    "noOffers": "Hələ təklif yoxdur",
+    "noListings": "Hələ elanınız yoxdur"
   },
   "nav": {
     "home": "Ana səhifə",

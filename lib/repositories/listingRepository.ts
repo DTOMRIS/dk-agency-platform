@@ -20,9 +20,9 @@ export interface ListingReviewInput {
 
 function mapDbListing(
   row: typeof listings.$inferSelect,
-  media: typeof listingMedia.$inferSelect[],
-  leads: typeof listingLeads.$inferSelect[],
-  reviews: typeof listingReviews.$inferSelect[],
+  media: (typeof listingMedia.$inferSelect)[],
+  leads: (typeof listingLeads.$inferSelect)[],
+  reviews: (typeof listingReviews.$inferSelect)[]
 ): MockListing {
   return {
     id: row.id,
@@ -49,6 +49,7 @@ function mapDbListing(
       })),
     isShowcase: row.isShowcase,
     isFeatured: row.isFeatured,
+    viewCount: row.viewCount ?? 0,
     typeSpecificData: (row.typeSpecificData as Record<string, string | number | boolean>) || {},
     reviewNotes: reviews
       .sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0))
@@ -91,8 +92,8 @@ async function hydrateListings(rows: Array<typeof listings.$inferSelect>) {
       row,
       mediaRows.filter((item) => item.listingId === row.id),
       leadRows.filter((item) => item.listingId === row.id),
-      reviewRows.filter((item) => item.listingId === row.id),
-    ),
+      reviewRows.filter((item) => item.listingId === row.id)
+    )
   );
 }
 
@@ -100,7 +101,8 @@ export async function getAdminListings(filters: AdminListingFilters = {}) {
   if (!dbAvailable || !db) {
     const query = filters.query?.trim().toLowerCase();
     const filtered = MOCK_LISTINGS.filter((item) => {
-      const matchesStatus = !filters.status || filters.status === 'all' ? true : item.status === filters.status;
+      const matchesStatus =
+        !filters.status || filters.status === 'all' ? true : item.status === filters.status;
       const matchesQuery =
         !query ||
         item.title.toLowerCase().includes(query) ||
@@ -114,7 +116,7 @@ export async function getAdminListings(filters: AdminListingFilters = {}) {
     const stats = {
       total: MOCK_LISTINGS.length,
       pending: MOCK_LISTINGS.filter((item) =>
-        ['submitted', 'ai_checked', 'committee_review'].includes(item.status),
+        ['submitted', 'ai_checked', 'committee_review'].includes(item.status)
       ).length,
       showcase: MOCK_LISTINGS.filter((item) => item.status === 'showcase_ready').length,
       rejected: MOCK_LISTINGS.filter((item) => item.status === 'rejected').length,
@@ -142,14 +144,25 @@ export async function getAdminListings(filters: AdminListingFilters = {}) {
   const offset = filters.offset || 0;
 
   const [rows, countResult, statsResult] = await Promise.all([
-    db.select().from(listings).where(where).orderBy(desc(listings.createdAt)).limit(limit).offset(offset),
-    db.select({ count: sql<number>`count(*)::int` }).from(listings).where(where),
-    db.select({
-      pending: sql<number>`count(*) filter (where status in ('submitted', 'ai_checked', 'committee_review'))::int`,
-      showcase: sql<number>`count(*) filter (where status = 'showcase_ready')::int`,
-      rejected: sql<number>`count(*) filter (where status = 'rejected')::int`,
-      total: sql<number>`count(*)::int`
-    }).from(listings)
+    db
+      .select()
+      .from(listings)
+      .where(where)
+      .orderBy(desc(listings.createdAt))
+      .limit(limit)
+      .offset(offset),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(listings)
+      .where(where),
+    db
+      .select({
+        pending: sql<number>`count(*) filter (where status in ('submitted', 'ai_checked', 'committee_review'))::int`,
+        showcase: sql<number>`count(*) filter (where status = 'showcase_ready')::int`,
+        rejected: sql<number>`count(*) filter (where status = 'rejected')::int`,
+        total: sql<number>`count(*)::int`,
+      })
+      .from(listings),
   ]);
 
   const stats = statsResult[0] || { pending: 0, showcase: 0, rejected: 0, total: 0 };
@@ -167,7 +180,11 @@ export async function getListingDetail(id: number) {
     return MOCK_LISTINGS.find((item) => item.id === id) || null;
   }
 
-  const row = await db.select().from(listings).where(eq(listings.id, id)).then((items) => items[0]);
+  const row = await db
+    .select()
+    .from(listings)
+    .where(eq(listings.id, id))
+    .then((items) => items[0]);
   if (!row) return null;
   const [item] = await hydrateListings([row]);
   return item || null;
@@ -180,7 +197,7 @@ export async function updateListingStatus(
     isShowcase?: boolean;
     isFeatured?: boolean;
     rejectedReason?: string | null;
-  },
+  }
 ) {
   if (!dbAvailable || !db) {
     return { success: true, source: 'mock' as const };
@@ -202,10 +219,7 @@ export async function updateListingStatus(
     set.approvedAt = new Date();
   }
 
-  await db
-    .update(listings)
-    .set(set)
-    .where(eq(listings.id, id));
+  await db.update(listings).set(set).where(eq(listings.id, id));
 
   return { success: true, source: 'db' as const };
 }
@@ -287,15 +301,21 @@ export async function getDashboardListingMetrics() {
       total: MOCK_LISTINGS.length,
       active: MOCK_LISTINGS.filter((item) => item.status === 'showcase_ready').length,
       pending: MOCK_LISTINGS.filter((item) =>
-        ['submitted', 'ai_checked', 'committee_review'].includes(item.status),
+        ['submitted', 'ai_checked', 'committee_review'].includes(item.status)
       ).length,
       rejected: MOCK_LISTINGS.filter((item) => item.status === 'rejected').length,
       weeklyLeads: MOCK_LISTINGS.flatMap((item) => item.leads).filter(
-        (lead) => new Date(lead.createdAt) >= startOfWeek,
+        (lead) => new Date(lead.createdAt) >= startOfWeek
       ).length,
-      latestListings: MOCK_LISTINGS.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 5),
+      latestListings: MOCK_LISTINGS.slice()
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .slice(0, 5),
       latestLeads: MOCK_LISTINGS.flatMap((listing) =>
-        listing.leads.map((lead) => ({ ...lead, trackingCode: listing.trackingCode, title: listing.title })),
+        listing.leads.map((lead) => ({
+          ...lead,
+          trackingCode: listing.trackingCode,
+          title: listing.title,
+        }))
       )
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
         .slice(0, 5),

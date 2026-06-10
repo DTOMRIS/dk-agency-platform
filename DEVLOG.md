@@ -1,6 +1,19 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-10 — TASK-0246: fix(b2b): wire /b2b-panel home to real owner data
+
+**Why:** The B2B dashboard home shipped pure mock data: MY_LISTINGS was a hardcoded array with Turkish leftovers (Kadıköy, ₺), the 4 stat cards were 0 with fake [0,0,0,0,0] sparklines, and "Son Təkliflər" rendered 3 fabricated offers from the translation file. No real per-user data reached the page.
+
+**What:**
+- `app/b2b-panel/page.tsx`: now fetches `GET /api/listings?scope=owner` (the member's own listings) in a useEffect; renders top 3 with loading + honest empty state, each linking to /b2b-panel/ilanlarim/[id]. Stats computed from real listings — Active (showcase_ready), Total Views (sum viewCount), Messages (sum leads); "Incoming Offers" stays 0 (no offers backend). Removed the fabricated trend sparkline, "Son 7 gün" footer and change %. Offers panel replaced with an honest empty state.
+- `lib/repositories/listingRepository.ts` + `lib/data/mockListings.ts`: expose `viewCount` (additive, optional on MockListing) so the views stat is real.
+- `messages/{az,ru,en,tr}.json`: added b2bPanel.noOffers + noListings.
+
+**Verification:** eslint on all changed files → 0 errors; tsc → no errors in changed files; grep confirms no Kadıköy/İstanbul/₺/MY_LISTINGS/Sparkline leftovers. All 4 message files valid JSON.
+
+**Note:** the top welcome subtitle "İstanbul HORECA Group - B2B Portalı" is a separate hardcoded i18n value (another wrong-geography mock) — left untouched here, flag for a follow-up.
+
 ## 2026-06-10 — TASK-0245: fix(dashboard): drop member tool "toolkit" from admin sidebar
 
 **Why:** Audit said both toolkit and marketinq-ocagi should leave the admin sidebar to finish role separation. Investigation showed only toolkit qualifies: it has a member home at /b2b-panel/toolkit (same as the foodCost precedent). marketinq-ocagi is the canonical hub that 11 public /marketinq/* tools and b2b-panel/analizler link back to — removing it would orphan the admin's own access, not clean up roles.
