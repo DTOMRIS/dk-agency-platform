@@ -40,6 +40,9 @@ const parser = new Parser<Record<string, never>, FeedItem>({
 
 function slugify(value: string) {
   return value
+    .replace(/İ/g, 'i')
+    .replace(/ı/g, 'i')
+    .replace(/I/g, 'i')
     .toLowerCase()
     .replace(/ə/g, 'e')
     .replace(/ö/g, 'o')
@@ -47,7 +50,7 @@ function slugify(value: string) {
     .replace(/ş/g, 's')
     .replace(/ç/g, 'c')
     .replace(/ğ/g, 'g')
-    .replace(/ı/g, 'i')
+    .replace(/\u0307/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 120);

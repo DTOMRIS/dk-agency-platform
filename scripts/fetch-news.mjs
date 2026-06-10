@@ -63,7 +63,17 @@ function savePending(items) {
 
 function slugify(text) {
   return text
+    .replace(/İ/g, 'i')
+    .replace(/ı/g, 'i')
+    .replace(/I/g, 'i')
     .toLowerCase()
+    .replace(/ə/g, 'e')
+    .replace(/ö/g, 'o')
+    .replace(/ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/ç/g, 'c')
+    .replace(/ğ/g, 'g')
+    .replace(/\u0307/g, '')
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')

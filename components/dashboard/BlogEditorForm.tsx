@@ -58,6 +58,9 @@ function contentKey(locale: LocaleTab): keyof BlogDraft {
 
 function slugify(value: string) {
   return value
+    .replace(/İ/g, 'i')
+    .replace(/ı/g, 'i')
+    .replace(/I/g, 'i')
     .toLowerCase()
     .replace(/ə/g, 'e')
     .replace(/ö/g, 'o')
@@ -65,7 +68,7 @@ function slugify(value: string) {
     .replace(/ş/g, 's')
     .replace(/ç/g, 'c')
     .replace(/ğ/g, 'g')
-    .replace(/ı/g, 'i')
+    .replace(/\u0307/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 }
@@ -240,9 +243,10 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
     const safeImage =
       durableImage.startsWith('blob:') || durableImage.startsWith('data:') ? '' : durableImage;
 
-    setSubmitting(true);
+    const cleanSlug = slugify(post.slug);
     const payload = {
       ...post,
+      slug: cleanSlug,
       status: nextStatus,
       featuredImage: safeImage,
     };
@@ -350,6 +354,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             <input
               value={post.slug}
               onChange={(e) => setField('slug', e.target.value)}
+              onBlur={() => setField('slug', slugify(post.slug))}
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
             />
             {errors.slug ? <p className="mt-2 text-xs text-red-600">{errors.slug}</p> : null}

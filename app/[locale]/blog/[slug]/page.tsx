@@ -56,6 +56,10 @@ const STAGE_I18N_MAP: Record<string, string> = {
 const LEGACY_BLOG_SLUGS: Record<string, string> = {
   'sertifikatli-komanda-cth-online-tehsil': 'sertifikatli-komanda-cth-portal-karyera',
   'azerbaycan-qastronomiya-2030-dovlet-plani': 'azerbaycan-qastronomiya-2030-strateji-yol-xeritesi',
+  'Franchise Bedelleri: isim Hakkı, Royalti, Reklam — Neye, Niye Ödüyorsun': 'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun',
+  'Franchise Bedelleri: isim Hakkı, Royalti, Reklam — Neye, Niye Ödüyorsun?': 'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun',
+  'Franchise%20Bedelleri:%20isim%20Hakk%C4%B1,%20Royalti,%20Reklam%20%E2%80%94%20Neye,%20Niye%20%C3%96d%C3%BCyorsun': 'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun',
+  'Franchise%20Bedelleri:%20isim%20Hakk%C4%B1,%20Royalti,%20Reklam%20%E2%80%94%20Neye,%20Niye%20%C3%96d%C3%BCyorsun?': 'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun',
 };
 
 export async function generateMetadata({
@@ -64,8 +68,9 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const t = await getTranslations({ locale, namespace: 'blogDetail' });
-  const article = await getBlogPostDetail(LEGACY_BLOG_SLUGS[slug] || slug, locale);
+  const normalizedLocale = normalizeLocale(locale);
+  const t = await getTranslations({ locale: normalizedLocale, namespace: 'blogDetail' });
+  const article = await getBlogPostDetail(LEGACY_BLOG_SLUGS[slug] || slug, normalizedLocale);
 
   if (!article) {
     return {
@@ -74,17 +79,17 @@ export async function generateMetadata({
     };
   }
 
-  const localePrefix = locale === 'az' ? '' : `/${locale}`;
+  const localePrefix = normalizedLocale === 'az' ? '' : `/${normalizedLocale}`;
 
   return {
     metadataBase: new URL('https://dkagency.com.tr'),
     title: article.seoTitle || article.title,
     description: article.seoDescription || article.summary,
-    alternates: getAlternates(locale, `/blog/${article.slug}`),
+    alternates: getAlternates(normalizedLocale, `/blog/${article.slug}`),
     openGraph: {
       type: 'article',
       locale:
-        locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
+        normalizedLocale === 'az' ? 'az_AZ' : normalizedLocale === 'ru' ? 'ru_RU' : normalizedLocale === 'tr' ? 'tr_TR' : 'en_US',
       url: `https://dkagency.com.tr${localePrefix}/blog/${article.slug}`,
       title: article.seoTitle || article.title,
       description: article.seoDescription || article.summary,
@@ -107,12 +112,13 @@ export default async function BlogDetailPage({
 }) {
   const { locale, slug } = await params;
   const canonicalSlug = LEGACY_BLOG_SLUGS[slug];
+  const normalizedLocale = normalizeLocale(locale);
   if (canonicalSlug) {
-    redirect(withLocale(normalizeLocale(locale), `/blog/${canonicalSlug}`));
+    redirect(withLocale(normalizedLocale, `/blog/${canonicalSlug}`));
   }
-  const article = await getBlogPostDetail(slug, locale);
+  const article = await getBlogPostDetail(slug, normalizedLocale);
   const session = await getServerMemberSession();
-  const t = await getTranslations({ locale, namespace: 'blogDetail' });
+  const t = await getTranslations({ locale: normalizedLocale, namespace: 'blogDetail' });
 
   if (!article) {
     notFound();
