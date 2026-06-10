@@ -477,8 +477,18 @@ export default function DashboardXeberlerPage() {
     <div className="min-h-screen bg-white p-6 lg:p-8">
       <div className="mx-auto max-w-6xl space-y-6">
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
-          <p className="mt-3 text-sm text-slate-500">{copy.pageSubtitle}</p>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
+              <p className="mt-3 text-sm text-slate-500">{copy.pageSubtitle}</p>
+            </div>
+            <a
+              href="/dashboard/xeberler/yeni"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
+            >
+              + Yeni Xəbər
+            </a>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-3">

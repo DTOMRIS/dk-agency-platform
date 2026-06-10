@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
-import { ShareButtons } from '@/components/blog/BlogSidebars';
+import { ShareButtons } from '@/components/news/ShareButtons';
 import { formatDateAz } from '@/lib/formatDate';
 import { getNewsArticleBySlug, getRelatedApprovedNewsArticles } from '@/lib/repositories/newsRepository';
 
@@ -155,7 +155,7 @@ export default async function HaberDetailPage({
                 Mənbədə tam xəbəri oxu →
               </a>
               <div className="max-w-[280px]">
-                <ShareButtons title={article.title} url={shareUrl} />
+                <ShareButtons title={article.title} url={shareUrl} locale={locale} />
               </div>
             </footer>
           </article>
