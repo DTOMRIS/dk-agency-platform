@@ -1,6 +1,17 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-10 — TASK-0249: fix(blog): self-healing title/field translation
+
+**Why:** Admin reported RU blog pages where the body translated but the title stayed in Azerbaijani. The editor confirmed `title_ru` in the DB held the AZ title (an untranslated copy), and `autoTranslateBlogPost` only filled EMPTY targets — so a non-empty-but-AZ field was skipped forever.
+
+**What:**
+- `lib/db/blog-repository.ts`: added `needsTranslation(target, azSource)` — true when the target is empty OR equals the AZ source. `autoTranslateBlogPost` now uses it for title/summary/content/doganNote and guru quotes, so polluted "copy of AZ" fields get re-translated on the next run. Genuine manual translations (different from AZ) are still never overwritten.
+
+**Verification:** `npx tsc --noEmit` → 0 errors in changed file; `npx eslint` → 0 errors.
+
+**Note:** this is on the feature branch with TASK-0242…0248, which are NOT yet on `main` (live deploy is still at TASK-0240). None of these fixes take effect until the branch is merged and Hostinger redeploys.
+
 ## 2026-06-10 — TASK-0248: fix(blog): translate Doğan Notu + guru quotes; structure-preserving prompt
 
 **Why:** Admin reported RU blog pages where the title, Doğan Notu and guru quotes were untranslated, and section numbering appeared in RU but not AZ. Root cause: `autoTranslateBlogPost` only translated `title/summary/content`. Doğan Notu and guru-box quotes were never sent to the translator, and `dogan_note` was a single AZ-only column with no place to store a translation.
