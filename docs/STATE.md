@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-10T12:34:13.479Z
+- GeneratedAt: 2026-06-10T16:12:18.759Z
 - BuildStatus: PASS
 
-## Routes (245)
+## Routes (247)
 - /
 - /[locale]
 - /[locale]/about
@@ -34,6 +34,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/blog
 - /[locale]/dashboard/blog/[slug]
 - /[locale]/dashboard/blog/new
+- /[locale]/dashboard/blog/translation-status
 - /[locale]/dashboard/blog/yeni
 - /[locale]/dashboard/contact-tracking
 - /[locale]/dashboard/deal-flow
@@ -163,6 +164,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/blog
 - /dashboard/blog/[slug]
 - /dashboard/blog/new
+- /dashboard/blog/translation-status
 - /dashboard/blog/yeni
 - /dashboard/contact-tracking
 - /dashboard/deal-flow
@@ -253,7 +255,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (90)
+## API Routes (92)
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
@@ -281,7 +283,9 @@ Auto-generated. Do not edit manually.
 - /api/auth/verify-email
 - /api/blog
 - /api/blog/[slug]
+- /api/blog/migrate-structure
 - /api/blog/translate
+- /api/blog/translate/all
 - /api/cron/admin-digest
 - /api/cron/onboarding-drip
 - /api/cron/weekly-digest
