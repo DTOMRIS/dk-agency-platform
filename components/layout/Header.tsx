@@ -120,18 +120,18 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-0.5 lg:flex xl:gap-1">
             {navItems.map((item) =>
               item.hasMegaMenu ? (
                 <div key={item.name} className="relative" onMouseEnter={() => setIsMegaMenuOpen(true)} onMouseLeave={() => setIsMegaMenuOpen(false)}>
-                  <button type="button" className="inline-block rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]">
+                  <button type="button" className="inline-block rounded-lg px-2 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3">
                     {item.name}
                   </button>
                   <MegaMenu isOpen={isMegaMenuOpen} onClose={() => setIsMegaMenuOpen(false)} />
                 </div>
               ) : item.hasFranchise ? (
                 <div key={item.name} className="relative" onMouseEnter={() => setIsFranchiseOpen(true)} onMouseLeave={() => setIsFranchiseOpen(false)}>
-                  <button type="button" className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] ${pathname.includes('/franchise') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
+                  <button type="button" className={`inline-flex items-center gap-1 rounded-lg px-2 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3 ${pathname.includes('/franchise') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
                     {item.name} <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isFranchiseOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
@@ -156,7 +156,7 @@ export default function Header() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <Link key={item.name} href={item.href} className="rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]">
+                <Link key={item.name} href={item.href} className="rounded-lg px-2 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3">
                   {item.name}
                 </Link>
               ),
@@ -166,7 +166,7 @@ export default function Header() {
           {/* Right actions */}
           <div className="flex items-center gap-3">
             <Link href={withLocale(currentLocale, '/ilan-ver')}
-              className="hidden items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-5 py-2.5 text-sm font-bold text-[var(--dk-navy)] transition-all hover:opacity-90 active:scale-95 sm:inline-flex">
+              className="hidden items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-4 py-2.5 text-sm font-bold text-[var(--dk-navy)] transition-all hover:opacity-90 active:scale-95 lg:inline-flex xl:px-5">
               {t('postListing')} <ArrowRight size={16} />
             </Link>
 

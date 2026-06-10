@@ -11,18 +11,21 @@ interface GuruQuoteBoxProps {
   source: string;
   tqtaContext: string;
   image?: string;
+  sourceLabel?: string;
+  contextLabel?: string;
 }
 
-export default function GuruQuoteBox({ 
-  name, 
-  title, 
-  quote, 
-  source, 
+export default function GuruQuoteBox({
+  name,
+  title,
+  quote,
+  source,
   tqtaContext,
-  image 
+  sourceLabel = 'Mənbə:',
+  contextLabel = 'Kontekst:',
 }: GuruQuoteBoxProps) {
   const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2);
-  
+
   return (
     <div className="my-8 rounded-2xl overflow-hidden bg-[var(--dk-surface-dark)] border border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)]">
       {/* Header */}
@@ -37,7 +40,7 @@ export default function GuruQuoteBox({
           {title && <p className="text-[var(--dk-muted)] text-[12px]">{title}</p>}
         </div>
       </div>
-      
+
       {/* Quote */}
       <div className="px-6 py-5">
         <div className="border-l-[3px] border-[var(--dk-gold)] pl-5">
@@ -45,7 +48,7 @@ export default function GuruQuoteBox({
             {"\u201C"}{quote}{"\u201D"}
           </p>
         </div>
-        
+
         {/* İmza */}
         <div className="flex items-center gap-2 mt-4">
           <div className="w-7 h-7 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] text-[11px] font-bold">
@@ -54,18 +57,18 @@ export default function GuruQuoteBox({
           <span className="text-[13px] text-[var(--dk-muted)]">— {name}</span>
         </div>
       </div>
-      
+
       {/* Source + Context */}
       {(source || tqtaContext) && (
         <div className="px-6 pb-5 space-y-1.5">
           {source && (
             <p className="text-[12px] text-[var(--dk-muted)]">
-              📖 <span className="font-medium">Mənbə:</span> {source}
+              📖 <span className="font-medium">{sourceLabel}</span> {source}
             </p>
           )}
           {tqtaContext && (
             <p className="text-[12px] text-[var(--dk-muted)]">
-              <span className="text-[var(--dk-gold)]">🔗 Kontekst:</span> {tqtaContext}
+              <span className="text-[var(--dk-gold)]">🔗 {contextLabel}</span> {tqtaContext}
             </p>
           )}
         </div>
@@ -75,14 +78,14 @@ export default function GuruQuoteBox({
 }
 
 // Kompakt versiya — yan-yana guru sitatları üçün
-export function GuruQuoteBoxCompact({ 
-  name, 
-  title, 
-  quote, 
-  source 
+export function GuruQuoteBoxCompact({
+  name,
+  title,
+  quote,
+  source
 }: Omit<GuruQuoteBoxProps, 'tqtaContext'>) {
   const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2);
-  
+
   return (
     <div className="p-5 rounded-xl bg-[var(--dk-surface-dark)] border border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)] hover:border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)] transition-colors">
       <div className="flex items-center gap-3 mb-3">

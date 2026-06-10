@@ -6,22 +6,35 @@ import { Share2, Bookmark, Check } from 'lucide-react';
 interface BlogActionBarProps {
   title: string;
   slug: string;
+  labels?: {
+    linkCopied: string;
+    share: string;
+    save: string;
+    unsave: string;
+  };
 }
 
-export default function BlogActionBar({ title, slug }: BlogActionBarProps) {
+const DEFAULT_LABELS = {
+  linkCopied: 'Link kopyalandı!',
+  share: 'Paylaş',
+  save: 'Yadda saxla',
+  unsave: 'Yaddaşdan sil',
+};
+
+export default function BlogActionBar({ title, slug, labels }: BlogActionBarProps) {
+  const l = labels || DEFAULT_LABELS;
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    // Check if the article is saved in localStorage
     if (typeof window !== 'undefined') {
       try {
         const savedBlogs = JSON.parse(localStorage.getItem('dk_saved_blogs') || '[]');
         startTransition(() => {
           setSaved(savedBlogs.includes(slug));
         });
-      } catch (e) {
-        console.error('Error reading saved blogs:', e);
+      } catch {
+        // localStorage read failed — ignore
       }
     }
   }, [slug]);
@@ -30,21 +43,17 @@ export default function BlogActionBar({ title, slug }: BlogActionBarProps) {
     const url = window.location.href;
     if (navigator.share) {
       try {
-        await navigator.share({
-          title,
-          url,
-        });
-      } catch (err) {
-        console.log('Share aborted or failed:', err);
+        await navigator.share({ title, url });
+      } catch {
+        // Share aborted — ignore
       }
     } else {
-      // Fallback to copy link
       try {
         await navigator.clipboard.writeText(url);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
-      } catch (err) {
-        console.error('Clipboard copy failed:', err);
+      } catch {
+        // Clipboard copy failed — ignore
       }
     }
   };
@@ -64,10 +73,9 @@ export default function BlogActionBar({ title, slug }: BlogActionBarProps) {
       }
 
       localStorage.setItem('dk_saved_blogs', JSON.stringify(updated));
-      // Dispatch custom event to notify other components (e.g. favorites page)
       window.dispatchEvent(new CustomEvent('dk-saved-blogs-updated'));
-    } catch (e) {
-      console.error('Error saving blog:', e);
+    } catch {
+      // localStorage write failed — ignore
     }
   };
 
@@ -75,15 +83,15 @@ export default function BlogActionBar({ title, slug }: BlogActionBarProps) {
     <div className="ml-auto flex items-center gap-4 relative">
       {copied && (
         <span className="absolute -top-8 right-12 rounded bg-slate-800 px-2 py-1 text-[10px] font-bold text-white shadow animate-fade-in-up">
-          Link kopyalandı!
+          {l.linkCopied}
         </span>
       )}
-      
+
       <button
         onClick={handleShare}
         className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-all hover:border-[var(--dk-red)] hover:text-[var(--dk-red)] shadow-sm hover:shadow"
-        title="Paylaş"
-        aria-label="Paylaş"
+        title={l.share}
+        aria-label={l.share}
       >
         {copied ? <Check size={16} className="text-[var(--dk-success)]" /> : <Share2 size={16} />}
       </button>
@@ -95,8 +103,8 @@ export default function BlogActionBar({ title, slug }: BlogActionBarProps) {
             ? 'border-[var(--dk-red)] bg-red-50 text-[var(--dk-red)]'
             : 'border-slate-200 bg-white text-slate-500 hover:border-[var(--dk-red)] hover:text-[var(--dk-red)]'
         }`}
-        title={saved ? "Yaddaşdan sil" : "Yadda saxla"}
-        aria-label={saved ? "Yaddaşdan sil" : "Yadda saxla"}
+        title={saved ? l.unsave : l.save}
+        aria-label={saved ? l.unsave : l.save}
       >
         <Bookmark size={16} className={saved ? 'fill-[var(--dk-red)]' : ''} />
       </button>

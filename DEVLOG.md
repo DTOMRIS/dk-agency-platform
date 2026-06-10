@@ -1,6 +1,21 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-10 — TASK-0250: fix(blog): blog detail page full i18n + navbar RU fix
+
+**Why:** Blog detail page had 11 hardcoded Azerbaijani strings visible to RU/EN/TR users — sidebar headings (Xülasə, Əlaqəli yazılar), CTA (Pulsuz Toolkit, Alətlərə bax), reading time (dəq oxu), back button (Bloga qayıt), 404 metadata, breadcrumb. Date format was hardcoded `az-AZ` so Russian users saw "iyun" instead of "июнь". Three links lacked locale prefix (`/blog`, `/toolkit`, related articles). Five blog components had hardcoded AZ labels (BlogActionBar, DoganNote, GuruQuoteBox, LegalDisclaimer). Header navbar was squished with Russian text at lg breakpoint.
+
+**What:**
+- `app/[locale]/blog/[slug]/page.tsx`: imported `getTranslations('blogDetail')`, replaced all 11 hardcoded strings with `t()` calls, added `DATE_LOCALE_MAP` for dynamic date formatting, added `CATEGORY_I18N_MAP` (8 categories) and `STAGE_I18N_MAP` (3 stages) for locale-aware labels, fixed 3 locale-less links with `withLocale()`.
+- `components/blog/BlogActionBar.tsx`: added `labels` prop (linkCopied/share/save/unsave), removed `console.log` (production rule), kept AZ defaults for backward compat.
+- `components/blog/DoganNote.tsx`: added `variantLabel` prop, removed hardcoded variant map.
+- `components/blog/GuruQuoteBox.tsx`: added `sourceLabel`/`contextLabel` props, removed unused `image` prop.
+- `components/blog/LegalDisclaimer.tsx`: added `title`/`text` props with AZ defaults.
+- `components/layout/Header.tsx`: nav padding `px-3` → `px-2 xl:px-3`, gap `gap-1` → `gap-0.5 xl:gap-1`, postListing button `sm:inline-flex` → `lg:inline-flex xl:px-5`.
+- `messages/{az,ru,en,tr}.json`: added `blogDetail` namespace (30+ keys each).
+
+**Verification:** `npx tsc --noEmit` → 0 errors in changed files; `npx eslint` → 0 errors, 4 pre-existing warnings.
+
 ## 2026-06-10 — TASK-0249: fix(blog): self-healing title/field translation
 
 **Why:** Admin reported RU blog pages where the body translated but the title stayed in Azerbaijani. The editor confirmed `title_ru` in the DB held the AZ title (an untranslated copy), and `autoTranslateBlogPost` only filled EMPTY targets — so a non-empty-but-AZ field was skipped forever.
