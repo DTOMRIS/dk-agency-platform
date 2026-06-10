@@ -292,6 +292,30 @@ export default async function BlogDetailPage({
               {(article.category === 'Hüquqi' || article.category === 'huquqi') && (
                 <LegalDisclaimer title={t('legalTitle')} text={t('legalText')} />
               )}
+
+              <div className="mt-12 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-8">
+                <h3 className="mb-3 text-xl font-display font-black text-[var(--dk-navy)]">
+                  {t('ctaTitle')}
+                </h3>
+                <p className="mb-6 text-sm leading-relaxed text-slate-600">{t('ctaDesc')}</p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={`https://wa.me/905301234567?text=${encodeURIComponent(`Salam, "${article.title}" yazısı ilə bağlı sualım var.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#1da851]"
+                  >
+                    <span>💬</span>
+                    {t('ctaWhatsapp')}
+                  </a>
+                  <Link
+                    href={withLocale(normalizedLocale, '/elaqe')}
+                    className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+                  >
+                    {t('ctaContact')}
+                  </Link>
+                </div>
+              </div>
             </article>
 
             <aside className="space-y-8 lg:col-span-4">
