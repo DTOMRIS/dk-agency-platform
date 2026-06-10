@@ -1526,7 +1526,8 @@
       "kazanAiTitle": "KAZAN AI",
       "kazanAiDesc": "Быстрее анализируйте food cost, P&L и операционные решения.",
       "kazanAiCta": "Открыть",
-      "invoices": "Счета"
+      "invoices": "Счета",
+      "freePlan": "Бесплатный"
     },
     "topBar": {
       "notifications": "Уведомления",

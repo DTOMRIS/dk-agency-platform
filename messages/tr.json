@@ -1526,7 +1526,8 @@
       "kazanAiTitle": "KAZAN AI",
       "kazanAiDesc": "Food cost, P&L ve operasyon kararlarını daha hızlı yorumla.",
       "kazanAiCta": "Şimdi Bak",
-      "invoices": "Faturalar"
+      "invoices": "Faturalar",
+      "freePlan": "Ücretsiz"
     },
     "topBar": {
       "notifications": "Bildirimler",

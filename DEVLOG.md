@@ -1,6 +1,19 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-10 — TASK-0247: fix(b2b): dynamic profile completion + plan badge in sidebar
+
+**Why:** The B2B sidebar showed a hardcoded 78% completion bar and a permanent PREMIUM badge — neither reflected the user's real DB state.
+
+**What:**
+- `app/api/user/profile/route.ts` GET: returns `profileCompletion` (filled / 16 core fields, rounded) as the single source of truth.
+- `components/b2b-panel/B2BSidebar.tsx`: fetches `/api/user/profile` (completion) and `/api/member/session` (plan). Bar width + label now reflect real completion (`—` while loading). Badge: member/admin → PREMIUM (amber), free → "Pulsuz" (slate).
+- `messages/{az,ru,en,tr}.json`: added dashboard.sidebar.freePlan.
+
+**Verification:** eslint → 0 errors (only pre-existing <img> warnings); tsc → no errors in changed files; grep confirms no static 78% remains; all 4 message files valid JSON.
+
+**Note:** plan granularity is limited to admin/member/free from the session; finer tiers (member_subscriptions) can refine the badge later.
+
 ## 2026-06-10 — TASK-0246: fix(b2b): wire /b2b-panel home to real owner data
 
 **Why:** The B2B dashboard home shipped pure mock data: MY_LISTINGS was a hardcoded array with Turkish leftovers (Kadıköy, ₺), the 4 stat cards were 0 with fake [0,0,0,0,0] sparklines, and "Son Təkliflər" rendered 3 fabricated offers from the translation file. No real per-user data reached the page.
