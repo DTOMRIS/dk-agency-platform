@@ -56,7 +56,7 @@ const copy: Record<Locale, PageCopy> = {
       {
         key: 'kalfa',
         name: 'Kalfa',
-        price: 'Tezlikle',
+        price: 'Yaxında',
         badge: 'Populyar',
         features: [
           'Butun Sagird ozellik + ',

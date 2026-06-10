@@ -1,6 +1,14 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-10 — TASK-0244: fix(i18n): purge forbidden word "Tezliklə" → "Yaxında"
+
+**Why:** CLAUDE.md forbids "Tezliklə"; the audit claimed TASK-0240/PR#330 fixed it, but 9 live hits remained across 8 files (including the very az.json line the audit said was done).
+
+**What:** Replaced "Tezliklə"/"Tezlikle" with "Yaxında" in b2b-panel/{bildirimler,teklifler,destek}, qiymet, uzvluk, dashboard/marketinq-ocagi (page + [slug]), and az.json (coming_soon + plannedToolsLabel). Left "Tezlik" (=frequency) in persona-ai-generator.ts and SikayetResult.tsx untouched — different word.
+
+**Verification:** az.json valid JSON; eslint on changed TSX → 0 errors; grep "Tezlikl" → 0 hits.
+
 ## 2026-06-10 — TASK-0243: fix(blog): wire blog editor image upload to Cloudinary
 
 **Why:** Admin uploaded cover images on 2 new blog posts; neither image appeared on the public page. Root cause: `BlogEditorForm.handleImage` never uploaded anything to the server — `compressImage()` returns `URL.createObjectURL()` (a `blob:` URL valid only in the current browser tab's memory). That `blob:` string was written to the DB `featured_image` column and died on reload; `resolveLocalCover` then turned it into `/blob:...`, a broken image.
