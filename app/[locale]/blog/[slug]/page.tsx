@@ -56,10 +56,6 @@ const STAGE_I18N_MAP: Record<string, string> = {
 const LEGACY_BLOG_SLUGS: Record<string, string> = {
   'sertifikatli-komanda-cth-online-tehsil': 'sertifikatli-komanda-cth-portal-karyera',
   'azerbaycan-qastronomiya-2030-dovlet-plani': 'azerbaycan-qastronomiya-2030-strateji-yol-xeritesi',
-  'Franchise Bedelleri: isim Hakkı, Royalti, Reklam — Neye, Niye Ödüyorsun': 'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun',
-  'Franchise Bedelleri: isim Hakkı, Royalti, Reklam — Neye, Niye Ödüyorsun?': 'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun',
-  'Franchise%20Bedelleri:%20isim%20Hakk%C4%B1,%20Royalti,%20Reklam%20%E2%80%94%20Neye,%20Niye%20%C3%96d%C3%BCyorsun': 'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun',
-  'Franchise%20Bedelleri:%20isim%20Hakk%C4%B1,%20Royalti,%20Reklam%20%E2%80%94%20Neye,%20Niye%20%C3%96d%C3%BCyorsun?': 'franchise-bedelleri-isim-hakki-royalti-reklam-neye-niye-oduyorsun',
 };
 
 export async function generateMetadata({
