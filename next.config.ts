@@ -13,7 +13,10 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     trustHostHeader: true,
+    webpackMemoryOptimizations: true,
+    preloadEntriesOnStart: false,
   },
+  productionBrowserSourceMaps: false,
   serverExternalPackages: ['nodemailer'],
   images: {
     remotePatterns: [
