@@ -106,7 +106,9 @@
       "New Listing",
       "Analytics",
       "Update Profile"
-    ]
+    ],
+    "noOffers": "No offers yet",
+    "noListings": "You have no listings yet"
   },
   "nav": {
     "home": "Home",
@@ -1524,7 +1526,8 @@
       "kazanAiTitle": "KAZAN AI",
       "kazanAiDesc": "Analyze food cost, P&L and operational decisions faster.",
       "kazanAiCta": "Open",
-      "invoices": "Invoices"
+      "invoices": "Invoices",
+      "freePlan": "Free"
     },
     "topBar": {
       "notifications": "Notifications",

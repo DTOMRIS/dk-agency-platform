@@ -100,6 +100,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
   const [imagePreview, setImagePreview] = useState(initialPost?.featuredImage || '');
   const [toast, setToast] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [errors, setErrors] = useState<{ titleAz?: string; slug?: string; contentAz?: string }>({});
 
   const [activeLocale, setActiveLocale] = useState<LocaleTab>('az');
@@ -175,14 +176,46 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
       return;
     }
 
-    const compressed = await compressImage(file, {
-      maxWidth: 1200,
-      maxHeight: 1200,
-      maxSizeKB: 500,
-    });
-    setImagePreview(compressed.preview);
-    setField('featuredImage', compressed.preview);
-    showToast(`Şəkil hazırlandı: ${compressed.reduction}`);
+    setUploadingImage(true);
+    try {
+      const compressed = await compressImage(file, {
+        maxWidth: 1200,
+        maxHeight: 1200,
+        maxSizeKB: 500,
+      });
+      // Instant local preview while the Cloudinary upload runs.
+      setImagePreview(compressed.preview);
+
+      // Persist the file to Cloudinary and store the durable https URL — NOT
+      // the in-memory blob: URL, which dies on reload and never reaches the DB.
+      const formData = new FormData();
+      formData.append('file', compressed.file);
+      formData.append('folder', 'dk-agency/blog');
+
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = (await res.json().catch(() => null)) as {
+        success?: boolean;
+        url?: string;
+        error?: string;
+      } | null;
+
+      if (!res.ok || !data?.success || !data?.url) {
+        setImagePreview('');
+        setField('featuredImage', '');
+        showToast(data?.error || 'Şəkil serverə yüklənmədi. Yenidən cəhd edin.');
+        return;
+      }
+
+      setImagePreview(data.url);
+      setField('featuredImage', data.url);
+      showToast(`Şəkil yükləndi: ${compressed.reduction}`);
+    } catch {
+      setImagePreview('');
+      setField('featuredImage', '');
+      showToast('Şəkil yüklənərkən xəta baş verdi.');
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const validateForm = () => {
@@ -196,12 +229,22 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
 
   const submitPost = async (nextStatus: BlogDraft['status']) => {
     if (!validateForm()) return;
+    if (uploadingImage) {
+      showToast('Şəkil hələ yüklənir, gözləyin.');
+      return;
+    }
+
+    // Only ever persist a durable URL. A blob:/data: value means the upload
+    // did not finish — drop it rather than save a broken cover image.
+    const durableImage = post.featuredImage || '';
+    const safeImage =
+      durableImage.startsWith('blob:') || durableImage.startsWith('data:') ? '' : durableImage;
 
     setSubmitting(true);
     const payload = {
       ...post,
       status: nextStatus,
-      featuredImage: imagePreview || post.featuredImage || '',
+      featuredImage: safeImage,
     };
 
     try {
@@ -371,12 +414,17 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
 
           <div>
             <label className="mb-2 block text-sm font-bold text-slate-700">Önə çıxan şəkil</label>
-            <label className="flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-slate-300 px-4 py-6 text-sm font-semibold text-slate-600">
-              Şəkil yüklə
+            <label
+              className={`flex items-center justify-center rounded-2xl border border-dashed border-slate-300 px-4 py-6 text-sm font-semibold text-slate-600 ${
+                uploadingImage ? 'cursor-wait opacity-60' : 'cursor-pointer'
+              }`}
+            >
+              {uploadingImage ? '⏳ Şəkil yüklənir…' : 'Şəkil yüklə'}
               <input
                 type="file"
                 accept="image/*"
                 className="hidden"
+                disabled={uploadingImage}
                 onChange={(e) => void handleImage(e)}
               />
             </label>
@@ -568,7 +616,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
         <button
           type="button"
           onClick={() => void submitPost('draft')}
-          disabled={submitting}
+          disabled={submitting || uploadingImage}
           className="rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700 disabled:opacity-60"
         >
           Qaralama olaraq saxla
@@ -576,7 +624,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
         <button
           type="button"
           onClick={() => void submitPost('published')}
-          disabled={submitting}
+          disabled={submitting || uploadingImage}
           className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
         >
           Dərc et

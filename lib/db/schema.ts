@@ -82,6 +82,9 @@ export const blogPosts = pgTable('blog_posts', {
   readTime: integer('read_time'),
   featuredImage: text('featured_image'),
   doganNote: text('dogan_note'),
+  doganNote_ru: text('dogan_note_ru'),
+  doganNote_en: text('dogan_note_en'),
+  doganNote_tr: text('dogan_note_tr'),
   seoTitle: varchar('seo_title', { length: 160 }),
   seoDescription: varchar('seo_description', { length: 320 }),
   stage: varchar('stage', { length: 20 }),
@@ -129,11 +132,7 @@ export const listingStatusEnum = pgEnum('listing_status', [
   'expired',
 ]);
 
-export const listingMediaTypeEnum = pgEnum('listing_media_type', [
-  'image',
-  'video',
-  'document',
-]);
+export const listingMediaTypeEnum = pgEnum('listing_media_type', ['image', 'video', 'document']);
 
 export const listingLeadStatusEnum = pgEnum('listing_lead_status', [
   'new',
@@ -170,11 +169,7 @@ export const kazanLeadStatusEnum = pgEnum('kazan_lead_status', [
   'dismissed',
 ]);
 
-export const newsSourceLanguageEnum = pgEnum('news_source_language', [
-  'en',
-  'tr',
-  'az',
-]);
+export const newsSourceLanguageEnum = pgEnum('news_source_language', ['en', 'tr', 'az']);
 
 export const newsArticleCategoryEnum = pgEnum('news_article_category', [
   'operations',
@@ -288,7 +283,7 @@ export const leads = pgTable(
   },
   (table) => ({
     sourceChannelIdx: index('idx_leads_source_channel').on(table.source, table.channel),
-  }),
+  })
 );
 
 // ── EMAIL PREFERENCES (KVKK/GDPR consent) ───────────────────────────
@@ -312,7 +307,7 @@ export const emailPreferences = pgTable(
     emailIdx: index('idx_ep_email').on(table.email),
     userIdx: index('idx_ep_user').on(table.userId),
     tokenIdx: index('idx_ep_token').on(table.unsubscribeToken),
-  }),
+  })
 );
 
 export const kazanLeads = pgTable('kazan_leads', {
@@ -321,7 +316,8 @@ export const kazanLeads = pgTable('kazan_leads', {
   phone: varchar('phone', { length: 30 }).notNull(),
   email: varchar('email', { length: 255 }),
   businessType: kazanBusinessTypeEnum('business_type').notNull(),
-  conversationContext: jsonb('conversation_context').$type<Array<{ role: string; content: string }>>(),
+  conversationContext:
+    jsonb('conversation_context').$type<Array<{ role: string; content: string }>>(),
   intent: kazanLeadIntentEnum('intent').notNull().default('general'),
   status: kazanLeadStatusEnum('status').notNull().default('new'),
   whatsappHandoff: boolean('whatsapp_handoff').notNull().default(false),
@@ -657,7 +653,8 @@ export const invoiceImports = pgTable('invoice_imports', {
   totalRows: integer('total_rows').default(0),
   successRows: integer('success_rows').default(0),
   failedRows: integer('failed_rows').default(0),
-  errorLog: jsonb('error_log').$type<Array<{ row: number; field: string; value: string; error: string }>>(),
+  errorLog:
+    jsonb('error_log').$type<Array<{ row: number; field: string; value: string; error: string }>>(),
   status: invoiceImportStatusEnum('status').default('processing'),
   createdAt: timestamp('created_at').defaultNow(),
 });
@@ -693,7 +690,12 @@ export const restaurantAudits = pgTable('restaurant_audits', {
   aiAnalysis: jsonb('ai_analysis').$type<{
     strengths: string[];
     weaknesses: string[];
-    recommendations: Array<{ priority: string; area: string; action: string; dkAgencyHelp: string }>;
+    recommendations: Array<{
+      priority: string;
+      area: string;
+      action: string;
+      dkAgencyHelp: string;
+    }>;
     estimatedRevenue: { min: number; max: number; currency: string };
     redFlags: string[];
     whatsappTemplate: string;
@@ -752,7 +754,7 @@ export const marketingToolRuns = pgTable(
     userIdx: index('idx_mtr_user').on(table.userId),
     slugIdx: index('idx_mtr_slug').on(table.toolSlug),
     createdIdx: index('idx_mtr_created').on(table.createdAt),
-  }),
+  })
 );
 
 // ── ADMIN AUDIT LOG (OWASP 2025 — immutable) ─────────────────────────
@@ -773,7 +775,7 @@ export const adminAuditLogs = pgTable(
     adminIdx: index('idx_aal_admin').on(table.adminId),
     actionIdx: index('idx_aal_action').on(table.action),
     createdIdx: index('idx_aal_created').on(table.createdAt),
-  }),
+  })
 );
 
 // ── USER EVENTS (adoption loop telemetry) ──────────────────────────
@@ -793,7 +795,7 @@ export const userEvents = pgTable(
     userIdx: index('idx_ue_user').on(table.userId),
     typeIdx: index('idx_ue_type').on(table.eventType),
     createdIdx: index('idx_ue_created').on(table.createdAt),
-  }),
+  })
 );
 
 // ── FRANCHISE LEADS ─────────────────────────────────────────────────
@@ -827,7 +829,7 @@ export const franchiseLeads = pgTable(
   (table) => ({
     sourceIdx: index('idx_fl_source').on(table.toolSource),
     createdIdx: index('idx_fl_created').on(table.createdAt),
-  }),
+  })
 );
 
 export const franchbookProjects = pgTable(
@@ -850,7 +852,7 @@ export const franchbookProjects = pgTable(
     ownerIdx: index('idx_fbp_owner').on(table.ownerId),
     statusIdx: index('idx_fbp_status').on(table.status),
     createdIdx: index('idx_fbp_created').on(table.createdAt),
-  }),
+  })
 );
 
 // ── EQUIPMENT CONDITION ENUM (M5.1) ─────────────────────────────────
@@ -879,4 +881,3 @@ export const webConversionEvents = pgTable(
     createdIdx: index('idx_wce_created').on(table.createdAt),
   })
 );
-

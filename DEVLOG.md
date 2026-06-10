@@ -1,5 +1,88 @@
 # DEVLOG — DK Agency Platform
 
+
+## 2026-06-10 — TASK-0249: fix(blog): self-healing title/field translation
+
+**Why:** Admin reported RU blog pages where the body translated but the title stayed in Azerbaijani. The editor confirmed `title_ru` in the DB held the AZ title (an untranslated copy), and `autoTranslateBlogPost` only filled EMPTY targets — so a non-empty-but-AZ field was skipped forever.
+
+**What:**
+- `lib/db/blog-repository.ts`: added `needsTranslation(target, azSource)` — true when the target is empty OR equals the AZ source. `autoTranslateBlogPost` now uses it for title/summary/content/doganNote and guru quotes, so polluted "copy of AZ" fields get re-translated on the next run. Genuine manual translations (different from AZ) are still never overwritten.
+
+**Verification:** `npx tsc --noEmit` → 0 errors in changed file; `npx eslint` → 0 errors.
+
+**Note:** this is on the feature branch with TASK-0242…0248, which are NOT yet on `main` (live deploy is still at TASK-0240). None of these fixes take effect until the branch is merged and Hostinger redeploys.
+
+## 2026-06-10 — TASK-0248: fix(blog): translate Doğan Notu + guru quotes; structure-preserving prompt
+
+**Why:** Admin reported RU blog pages where the title, Doğan Notu and guru quotes were untranslated, and section numbering appeared in RU but not AZ. Root cause: `autoTranslateBlogPost` only translated `title/summary/content`. Doğan Notu and guru-box quotes were never sent to the translator, and `dogan_note` was a single AZ-only column with no place to store a translation.
+
+**What:**
+- `lib/db/schema.ts` + `drizzle/0014_add_dogan_note_locale_columns.sql`: added `dogan_note_ru/en/tr` columns (migration is idempotent, `IF NOT EXISTS`, must be run manually on Neon).
+- `lib/db/blog-repository.ts`: `mapDbArticle` now returns locale-aware `doganNote` (`dogan_note_<locale>` → AZ fallback). `autoTranslateBlogPost` now also translates `doganNote` (→ `dogan_note_<lang>`) and every guru box quote (`quote_az` → `quote_<lang>`, columns already existed from migration 0001). Guru rows are updated per-box after the posts update.
+- `lib/ai/translate.ts`: hardened the system prompt to mirror source structure 1:1 — no added/removed/renumbered headings, list items or section numbers (fixes the RU-only numbering drift).
+
+**No editor change needed:** the existing "Avtomatik tərcümə (RU/EN/TR)" button (→ `/api/blog/translate` → `translateBlogPostBySlug`) now covers Doğan Notu + guru quotes. Flow: save the post (with Doğan Notu + guru boxes filled), then click translate.
+
+**Verification:** `npx tsc --noEmit` → 0 errors in changed files; `npx eslint` → 0 errors. Build/live not verifiable here (Google Fonts + prod DB are outside the sandbox allowlist).
+
+**ACTION REQUIRED (admin):**
+1. Run `drizzle/0014_add_dogan_note_locale_columns.sql` on Neon.
+2. Re-run "Avtomatik tərcümə" on the affected post(s) so the new columns get filled.
+3. "Image still missing" + "boxes don't show even in AZ" are likely deploy-lag (merge≠live) or Cloudinary env not set on Hostinger — confirm TASK-0243 is merged & live and that `CLOUDINARY_*` env vars exist.
+
+## 2026-06-10 — TASK-0247: fix(b2b): dynamic profile completion + plan badge in sidebar
+
+**Why:** The B2B sidebar showed a hardcoded 78% completion bar and a permanent PREMIUM badge — neither reflected the user's real DB state.
+
+**What:**
+- `app/api/user/profile/route.ts` GET: returns `profileCompletion` (filled / 16 core fields, rounded) as the single source of truth.
+- `components/b2b-panel/B2BSidebar.tsx`: fetches `/api/user/profile` (completion) and `/api/member/session` (plan). Bar width + label now reflect real completion (`—` while loading). Badge: member/admin → PREMIUM (amber), free → "Pulsuz" (slate).
+- `messages/{az,ru,en,tr}.json`: added dashboard.sidebar.freePlan.
+
+**Verification:** eslint → 0 errors (only pre-existing <img> warnings); tsc → no errors in changed files; grep confirms no static 78% remains; all 4 message files valid JSON.
+
+**Note:** plan granularity is limited to admin/member/free from the session; finer tiers (member_subscriptions) can refine the badge later.
+
+## 2026-06-10 — TASK-0246: fix(b2b): wire /b2b-panel home to real owner data
+
+**Why:** The B2B dashboard home shipped pure mock data: MY_LISTINGS was a hardcoded array with Turkish leftovers (Kadıköy, ₺), the 4 stat cards were 0 with fake [0,0,0,0,0] sparklines, and "Son Təkliflər" rendered 3 fabricated offers from the translation file. No real per-user data reached the page.
+
+**What:**
+- `app/b2b-panel/page.tsx`: now fetches `GET /api/listings?scope=owner` (the member's own listings) in a useEffect; renders top 3 with loading + honest empty state, each linking to /b2b-panel/ilanlarim/[id]. Stats computed from real listings — Active (showcase_ready), Total Views (sum viewCount), Messages (sum leads); "Incoming Offers" stays 0 (no offers backend). Removed the fabricated trend sparkline, "Son 7 gün" footer and change %. Offers panel replaced with an honest empty state.
+- `lib/repositories/listingRepository.ts` + `lib/data/mockListings.ts`: expose `viewCount` (additive, optional on MockListing) so the views stat is real.
+- `messages/{az,ru,en,tr}.json`: added b2bPanel.noOffers + noListings.
+
+**Verification:** eslint on all changed files → 0 errors; tsc → no errors in changed files; grep confirms no Kadıköy/İstanbul/₺/MY_LISTINGS/Sparkline leftovers. All 4 message files valid JSON.
+
+**Note:** the top welcome subtitle "İstanbul HORECA Group - B2B Portalı" is a separate hardcoded i18n value (another wrong-geography mock) — left untouched here, flag for a follow-up.
+
+## 2026-06-10 — TASK-0245: fix(dashboard): drop member tool "toolkit" from admin sidebar
+
+**Why:** Audit said both toolkit and marketinq-ocagi should leave the admin sidebar to finish role separation. Investigation showed only toolkit qualifies: it has a member home at /b2b-panel/toolkit (same as the foodCost precedent). marketinq-ocagi is the canonical hub that 11 public /marketinq/* tools and b2b-panel/analizler link back to — removing it would orphan the admin's own access, not clean up roles.
+
+**What:** Removed the `toolkit` nav item (and the now-unused `Wrench` import) from `components/dashboard/DashboardSidebar.tsx`. Kept `marketinqOcagi`. Routes untouched — only the sidebar link.
+
+**Verification:** eslint → 0 errors. grep confirms toolkit/Wrench gone, marketinqOcagi present.
+
+## 2026-06-10 — TASK-0244: fix(i18n): purge forbidden word "Tezliklə" → "Yaxında"
+
+**Why:** CLAUDE.md forbids "Tezliklə"; the audit claimed TASK-0240/PR#330 fixed it, but 9 live hits remained across 8 files (including the very az.json line the audit said was done).
+
+**What:** Replaced "Tezliklə"/"Tezlikle" with "Yaxında" in b2b-panel/{bildirimler,teklifler,destek}, qiymet, uzvluk, dashboard/marketinq-ocagi (page + [slug]), and az.json (coming_soon + plannedToolsLabel). Left "Tezlik" (=frequency) in persona-ai-generator.ts and SikayetResult.tsx untouched — different word.
+
+**Verification:** az.json valid JSON; eslint on changed TSX → 0 errors; grep "Tezlikl" → 0 hits.
+
+## 2026-06-10 — TASK-0243: fix(blog): wire blog editor image upload to Cloudinary
+
+**Why:** Admin uploaded cover images on 2 new blog posts; neither image appeared on the public page. Root cause: `BlogEditorForm.handleImage` never uploaded anything to the server — `compressImage()` returns `URL.createObjectURL()` (a `blob:` URL valid only in the current browser tab's memory). That `blob:` string was written to the DB `featured_image` column and died on reload; `resolveLocalCover` then turned it into `/blob:...`, a broken image.
+
+**What:**
+- `components/dashboard/BlogEditorForm.tsx`: `handleImage` now POSTs the compressed file to the existing `/api/upload` route (Cloudinary) and stores the returned durable `https` `secure_url` in `featuredImage`. Blob preview kept only for instant UI feedback. Added `uploadingImage` state (disables save buttons + file input while uploading); submit drops any `blob:`/`data:` value so a broken URL can never be persisted.
+- `lib/db/blog-repository.ts`: `resolveLocalCover` now treats legacy `blob:`/`data:` values as missing (falls back to static cover or empty) instead of emitting a broken `/blob:...` src.
+
+**Verification:** `npx eslint` on both files → 0 errors. `npx tsc --noEmit` → no errors in changed files (pre-existing unrelated errors only). `npm run build` blocked locally by Google Fonts fetch (sandbox network), not by these changes.
+
+**Note for admin:** the 2 already-saved posts still hold dead `blob:` URLs in the DB — re-upload the cover image in the editor and save; it will now persist correctly.
 ## 2026-06-07 — TASK-0205: content(blog): add blog-026, blog-027 and blog-028
 
 **Why:** The marketing and educational resources needed to be expanded to cover crucial Horeca topics such as Tip/Service Charge distribution policies (blog-026), average check building strategies via customer needs (blog-027), and professional handling of customer complaints (blog-028).

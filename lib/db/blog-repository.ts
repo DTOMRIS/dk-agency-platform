@@ -50,14 +50,19 @@ function mapStaticArticle(article: BlogArticle): DbBlogPost {
 }
 
 function resolveLocalCover(slug: string, dbImage: string | null): string {
-  if (dbImage && dbImage.startsWith('/')) return dbImage;
+  // blob:/data: values are browser-only artifacts that should never have been
+  // persisted (legacy editor bug). Treat them as missing so a fallback shows
+  // instead of a broken image.
+  const usable =
+    dbImage && !dbImage.startsWith('blob:') && !dbImage.startsWith('data:') ? dbImage : null;
+  if (usable && usable.startsWith('/')) return usable;
   const staticMatch = STATIC_BLOG_ARTICLES.find((a) => a.slug === slug);
   if (staticMatch?.coverImage) return staticMatch.coverImage;
-  if (dbImage) {
-    if (dbImage.startsWith('http://') || dbImage.startsWith('https://')) {
-      return dbImage;
+  if (usable) {
+    if (usable.startsWith('http://') || usable.startsWith('https://')) {
+      return usable;
     }
-    return '/' + dbImage;
+    return '/' + usable;
   }
   return '';
 }
@@ -98,7 +103,10 @@ function mapDbArticle(
     coverImageAlt: title,
     seoTitle: row.seoTitle || title,
     seoDescription: row.seoDescription || summary || '',
-    doganNote: row.doganNote || '',
+    doganNote:
+      (locale !== 'az' ? (r[`doganNote_${locale}`] as string | undefined) : undefined) ||
+      row.doganNote ||
+      '',
     status: row.status || 'draft',
     guruBoxes: boxRows
       .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
@@ -350,7 +358,9 @@ export function getStaticBlogSeedSource() {
 
 /**
  * Best-effort auto-translation of a blog post's AZ fields into ru/en/tr.
- * Fills only EMPTY target fields (never overwrites manual translations).
+ * Fills EMPTY target fields AND re-translates fields that are just an
+ * untranslated copy of the AZ source (self-healing for polluted rows, e.g.
+ * title_ru === title_az). Never overwrites a genuine manual translation.
  * Returns a per-language result so callers can show the admin what happened
  * (no silent failure). Never throws.
  */
@@ -359,6 +369,14 @@ export type BlogTranslateResult = {
   langs: Record<'ru' | 'en' | 'tr', 'done' | 'failed' | 'skipped'>;
   error?: string;
 };
+
+// A target locale value needs (re)translation when it is empty or identical to
+// the AZ source — the latter means it was never really translated.
+function needsTranslation(targetValue: unknown, azSource: string | null | undefined): boolean {
+  if (!azSource || !azSource.trim()) return false;
+  if (typeof targetValue !== 'string' || !targetValue.trim()) return true;
+  return targetValue.trim() === azSource.trim();
+}
 
 const EMPTY_RESULT = (): BlogTranslateResult => ({
   ok: false,
@@ -380,14 +398,20 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
 
     for (const lang of langs) {
       const fields: Array<['title' | 'summary' | 'content', string]> = [];
-      if (!row[`title_${lang}` as keyof typeof row] && row.title_az)
+      if (needsTranslation(row[`title_${lang}` as keyof typeof row], row.title_az))
         fields.push(['title', row.title_az]);
-      if (!row[`summary_${lang}` as keyof typeof row] && row.summary_az)
-        fields.push(['summary', row.summary_az]);
-      if (!row[`content_${lang}` as keyof typeof row] && row.content_az)
+      if (needsTranslation(row[`summary_${lang}` as keyof typeof row], row.summary_az))
+        fields.push(['summary', row.summary_az as string]);
+      if (needsTranslation(row[`content_${lang}` as keyof typeof row], row.content_az))
         fields.push(['content', row.content_az]);
 
-      if (fields.length === 0) {
+      // Doğan Notu: single AZ source column (dogan_note) → dogan_note_<lang>.
+      const needsDogan = needsTranslation(
+        row[`doganNote_${lang}` as keyof typeof row],
+        row.doganNote
+      );
+
+      if (fields.length === 0 && !needsDogan) {
         result.langs[lang] = 'skipped';
         continue;
       }
@@ -395,6 +419,11 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
       for (const [name, src] of fields) {
         const v = await translateText(src, lang);
         if (v) updates[`${name}_${lang}`] = v;
+        else anyFail = true;
+      }
+      if (needsDogan) {
+        const v = await translateText(row.doganNote as string, lang);
+        if (v) updates[`doganNote_${lang}`] = v;
         else anyFail = true;
       }
       result.langs[lang] = anyFail ? 'failed' : 'done';
@@ -409,6 +438,27 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
         >)
         .where(eq(blogPosts.id, id));
     }
+
+    // Guru sitat qutuları: quote_az → quote_<lang>. Ayrı cədvəl (guru_boxes),
+    // ona görə posts update-dən sonra hər qutu üçün ayrıca tərcümə + update.
+    const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, id));
+    for (const box of boxes) {
+      const boxUpdates: Record<string, string> = {};
+      for (const lang of langs) {
+        if (needsTranslation(box[`quote_${lang}` as keyof typeof box], box.quote_az)) {
+          const v = await translateText(box.quote_az as string, lang);
+          if (v) boxUpdates[`quote_${lang}`] = v;
+          else result.ok = false;
+        }
+      }
+      if (Object.keys(boxUpdates).length > 0) {
+        await db
+          .update(guruBoxes)
+          .set(boxUpdates as unknown as Partial<typeof guruBoxes.$inferInsert>)
+          .where(eq(guruBoxes.id, box.id));
+      }
+    }
+
     return result;
   } catch (e) {
     return { ...EMPTY_RESULT(), error: String(e).slice(0, 200) };

@@ -18,6 +18,7 @@ function systemPrompt(lang: string): string {
   return `You are a professional translator for a HoReCa B2B platform. Translate the user's text from Azerbaijani into ${LANG_NAME[lang] ?? lang}.
 Rules:
 - Preserve ALL Markdown formatting, links, image refs and placeholders exactly (e.g. {name}, [text](url), ## headings).
+- Mirror the source structure 1:1. Do NOT add, remove or renumber headings, list items, bullets or section numbers. If the source has no leading numbers ("1.", "2.") on its sections, the translation must not add them, and vice-versa.
 - Do NOT translate these brand/proper names: ${KEEP.join(', ')}.
 - Keep numbers, currency and dates intact.
 - Output ONLY the translation — no notes, no quotes around it.`;

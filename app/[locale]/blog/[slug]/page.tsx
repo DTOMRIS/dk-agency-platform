@@ -11,7 +11,13 @@ import {
   User,
 } from 'lucide-react';
 
-import { MarkdownRenderer, LegalDisclaimer, BlogActionBar } from '@/components/blog';
+import {
+  MarkdownRenderer,
+  LegalDisclaimer,
+  BlogActionBar,
+  GuruQuoteBox,
+  DoganNote,
+} from '@/components/blog';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import { CATEGORY_CONFIG, getRelatedArticles } from '@/lib/data/blogArticles';
 import { getBlogPostDetail } from '@/lib/db/blog-repository';
@@ -225,6 +231,29 @@ export default async function BlogDetailPage({
               )}
 
               <MarkdownRenderer content={cleanMarkdownContent} />
+
+              {/* Strukturlu sahələr (editor field-by-field saxlayır) — L-037/Özbahçeci:
+                  guruBoxes + doganNote artıq route-a bağlıdır, markdown marker-dən asılı deyil */}
+              {article.guruBoxes && article.guruBoxes.length > 0 && (
+                <div className="mt-10 space-y-6">
+                  {article.guruBoxes.map((box, index) => (
+                    <GuruQuoteBox
+                      key={`${box.guruName}-${index}`}
+                      name={box.guruName}
+                      title=""
+                      quote={box.quote}
+                      source={box.book}
+                      tqtaContext=""
+                    />
+                  ))}
+                </div>
+              )}
+
+              {article.doganNote && (
+                <div className="mt-10">
+                  <DoganNote>{article.doganNote}</DoganNote>
+                </div>
+              )}
 
               {(article.category === 'Hüquqi' || article.category === 'huquqi') && (
                 <LegalDisclaimer />

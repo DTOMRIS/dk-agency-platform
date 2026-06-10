@@ -54,7 +54,38 @@ export async function GET() {
 
   const memberProfile = await resolveMemberProfile(session.email);
 
+  // Real profile-completion %: filled fields / total. Single source of truth so
+  // the sidebar bar reflects DB data instead of a hardcoded value.
+  const COMPLETION_FIELDS = [
+    'company',
+    'sector',
+    'description',
+    'voen',
+    'logoUrl',
+    'authorizedPerson',
+    'position',
+    'contactPhone',
+    'whatsapp',
+    'website',
+    'city',
+    'district',
+    'streetAddress',
+    'bio',
+    'instagram',
+    'linkedin',
+  ] as const;
+  let profileCompletion = 0;
+  if (memberProfile) {
+    const mp = memberProfile as Record<string, unknown>;
+    const filled = COMPLETION_FIELDS.filter((key) => {
+      const value = mp[key];
+      return typeof value === 'string' ? value.trim().length > 0 : Boolean(value);
+    }).length;
+    profileCompletion = Math.round((filled / COMPLETION_FIELDS.length) * 100);
+  }
+
   return NextResponse.json({
+    profileCompletion,
     profile: user,
     memberProfile: memberProfile
       ? {
@@ -86,10 +117,24 @@ export async function GET() {
 }
 
 const PROFILE_FIELDS = [
-  'company', 'sector', 'description', 'voen', 'logoUrl',
-  'authorizedPerson', 'position', 'contactPhone', 'whatsapp', 'website',
-  'city', 'district', 'streetAddress', 'bio', 'instagram', 'linkedin',
-  'language', 'visibilitySettings',
+  'company',
+  'sector',
+  'description',
+  'voen',
+  'logoUrl',
+  'authorizedPerson',
+  'position',
+  'contactPhone',
+  'whatsapp',
+  'website',
+  'city',
+  'district',
+  'streetAddress',
+  'bio',
+  'instagram',
+  'linkedin',
+  'language',
+  'visibilitySettings',
 ] as const;
 
 export async function PATCH(request: NextRequest) {
@@ -160,7 +205,10 @@ export async function PATCH(request: NextRequest) {
         ...profileUpdates,
         approvalStatus: body.submitForReview ? 'submitted' : 'draft',
       };
-      const [inserted] = await db.insert(memberProfiles).values(newProfile).returning({ id: memberProfiles.id });
+      const [inserted] = await db
+        .insert(memberProfiles)
+        .values(newProfile)
+        .returning({ id: memberProfiles.id });
       if (inserted && profileUpdates.company) {
         const slug = generateSlug(String(profileUpdates.company), inserted.id);
         await db.update(memberProfiles).set({ slug }).where(eq(memberProfiles.id, inserted.id));
@@ -171,7 +219,10 @@ export async function PATCH(request: NextRequest) {
   // Handle explicit submit action
   if (body.submitForReview && Object.keys(profileUpdates).length === 0) {
     const existing = await resolveMemberProfile(session.email);
-    if (existing && (existing.approvalStatus === 'draft' || existing.approvalStatus === 'rejected')) {
+    if (
+      existing &&
+      (existing.approvalStatus === 'draft' || existing.approvalStatus === 'rejected')
+    ) {
       await db
         .update(memberProfiles)
         .set({ approvalStatus: 'submitted', updatedAt: new Date() })

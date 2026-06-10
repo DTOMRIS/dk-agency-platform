@@ -118,6 +118,37 @@ export default function B2BSidebar() {
   const router = useRouter();
   const t = useTranslations('dashboard.sidebar');
   const [loggingOut, setLoggingOut] = useState(false);
+  const [plan, setPlan] = useState<'admin' | 'member' | 'free' | null>(null);
+  const [completion, setCompletion] = useState<number | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/member/session')
+      .then((r) => r.json())
+      .then((d: { session?: { plan?: string } }) => {
+        if (cancelled) return;
+        const p = d.session?.plan;
+        setPlan(p === 'admin' || p === 'member' ? p : 'free');
+      })
+      .catch(() => {
+        if (!cancelled) setPlan('free');
+      });
+    fetch('/api/user/profile')
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((d: { profileCompletion?: number }) => {
+        if (!cancelled)
+          setCompletion(typeof d.profileCompletion === 'number' ? d.profileCompletion : 0);
+      })
+      .catch(() => {
+        if (!cancelled) setCompletion(0);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const isPremium = plan === 'member' || plan === 'admin';
+  const pct = completion ?? 0;
 
   async function handleLogout() {
     if (loggingOut) return;
@@ -163,9 +194,13 @@ export default function B2BSidebar() {
               <div className="min-w-0 flex-1">
                 <CompanyName />
                 <div className="mt-0.5 flex items-center gap-1.5">
-                  <Shield size={10} className="text-amber-500" />
-                  <span className="text-[10px] font-semibold uppercase text-amber-600">
-                    {t('premium')}
+                  <Shield size={10} className={isPremium ? 'text-amber-500' : 'text-slate-400'} />
+                  <span
+                    className={`text-[10px] font-semibold uppercase ${
+                      isPremium ? 'text-amber-600' : 'text-slate-500'
+                    }`}
+                  >
+                    {isPremium ? t('premium') : t('freePlan')}
                   </span>
                 </div>
               </div>
@@ -173,10 +208,15 @@ export default function B2BSidebar() {
             <div className="mt-3 border-t border-slate-200 pt-3">
               <div className="mb-1 flex items-center justify-between text-[10px] text-slate-500">
                 <span>{t('profileCompletion')}</span>
-                <span className="font-medium text-slate-900">78%</span>
+                <span className="font-medium text-slate-900">
+                  {completion === null ? '—' : `${pct}%`}
+                </span>
               </div>
               <div className="h-1.5 overflow-hidden rounded-full bg-slate-200">
-                <div className="h-full w-[78%] rounded-full bg-gradient-to-r from-dk-red to-dk-red-strong" />
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-dk-red to-dk-red-strong transition-all"
+                  style={{ width: `${pct}%` }}
+                />
               </div>
             </div>
           </div>

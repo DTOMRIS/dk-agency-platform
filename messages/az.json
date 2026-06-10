@@ -106,7 +106,9 @@
       "Yeni Elan",
       "Analiz Alətləri",
       "Profili Yenilə"
-    ]
+    ],
+    "noOffers": "Hələ təklif yoxdur",
+    "noListings": "Hələ elanınız yoxdur"
   },
   "nav": {
     "home": "Ana səhifə",
@@ -1524,7 +1526,8 @@
       "kazanAiTitle": "KAZAN AI",
       "kazanAiDesc": "Food cost, P&L və əməliyyat qərarlarını daha sürətli şərh et.",
       "kazanAiCta": "İndi bax",
-      "invoices": "Faturalar"
+      "invoices": "Faturalar",
+      "freePlan": "Pulsuz"
     },
     "topBar": {
       "notifications": "Bildirişlər",
