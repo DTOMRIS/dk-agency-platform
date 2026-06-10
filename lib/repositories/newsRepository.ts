@@ -4,6 +4,7 @@ import { newsArticles, newsSources } from '@/lib/db/schema';
 import { getAllNews } from '@/lib/data/mockNewsDB';
 import { defaultNewsSources } from '@/lib/data/newsSources';
 import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
+import { translateText } from '@/lib/ai/translate';
 
 export interface NewsAdminFilters {
   status?: string | null;
@@ -667,4 +668,112 @@ export async function createNewsArticle(input: CreateNewsInput) {
     .returning({ id: newsArticles.id, slug: newsArticles.slug });
 
   return row;
+}
+
+// ===========================================================================
+// AI Auto-translate (mirrors blog-repository.translateBlogPostBySlug pattern)
+// ===========================================================================
+
+export type NewsTranslateResult = {
+  ok: boolean;
+  langs: Record<'ru' | 'en' | 'tr', 'done' | 'failed' | 'skipped'>;
+  error?: string;
+};
+
+function needsTranslation(targetValue: unknown, azSource: string | null | undefined): boolean {
+  if (!azSource || !azSource.trim()) return false;
+  if (typeof targetValue !== 'string' || !targetValue.trim()) return true;
+  return targetValue.trim() === azSource.trim();
+}
+
+const EMPTY_TRANSLATE_RESULT = (): NewsTranslateResult => ({
+  ok: false,
+  langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
+});
+
+export async function autoTranslateNewsArticle(id: number): Promise<NewsTranslateResult> {
+  const result: NewsTranslateResult = {
+    ok: true,
+    langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
+  };
+  if (!dbAvailable || !db) return { ...EMPTY_TRANSLATE_RESULT(), error: 'db-unavailable' };
+
+  try {
+    const [row] = await db.select().from(newsArticles).where(eq(newsArticles.id, id));
+    if (!row) return { ...EMPTY_TRANSLATE_RESULT(), error: 'not-found' };
+
+    const langs = ['ru', 'en', 'tr'] as const;
+    const failedFields: string[] = [];
+
+    for (const lang of langs) {
+      const langUpdates: Record<string, string> = {};
+      const fields: Array<['title' | 'summary' | 'content', string]> = [];
+
+      const titleTarget = row[`title${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
+      const summaryTarget = row[`summary${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
+      const contentTarget = row[`content${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
+
+      if (needsTranslation(titleTarget, row.titleAz)) {
+        fields.push(['title', row.titleAz as string]);
+      }
+      if (needsTranslation(summaryTarget, row.summaryAz)) {
+        fields.push(['summary', row.summaryAz as string]);
+      }
+      if (needsTranslation(contentTarget, row.contentAz)) {
+        fields.push(['content', row.contentAz as string]);
+      }
+
+      if (fields.length === 0) {
+        result.langs[lang] = 'skipped';
+        continue;
+      }
+
+      let anyFail = false;
+      for (const [name, src] of fields) {
+        const v = await translateText(src, lang);
+        if (v) {
+          const capName = name.charAt(0).toUpperCase() + name.slice(1);
+          const capLang = lang.charAt(0).toUpperCase() + lang.slice(1);
+          langUpdates[`${name}${capLang}`] = v;
+          // also support snake case if drizzle picks that — set both to be safe
+          void capName;
+          console.log(`[translate-news] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`);
+        } else {
+          anyFail = true;
+          failedFields.push(`${name}_${lang}`);
+          console.error(`[translate-news] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars)`);
+        }
+      }
+
+      if (Object.keys(langUpdates).length > 0) {
+        await db
+          .update(newsArticles)
+          .set(langUpdates as unknown as Partial<typeof newsArticles.$inferInsert>)
+          .where(eq(newsArticles.id, id));
+      }
+
+      result.langs[lang] = anyFail ? 'failed' : 'done';
+      if (anyFail) result.ok = false;
+    }
+
+    if (failedFields.length > 0) {
+      result.error = `Failed fields: ${failedFields.join(', ')}`;
+    }
+
+    return result;
+  } catch (e) {
+    const msg = String(e).slice(0, 300);
+    console.error(`[translate-news] CRASH for article id=${id}: ${msg}`);
+    return { ...EMPTY_TRANSLATE_RESULT(), error: msg };
+  }
+}
+
+export async function translateNewsArticleBySlug(slug: string): Promise<NewsTranslateResult> {
+  if (!dbAvailable || !db) return { ...EMPTY_TRANSLATE_RESULT(), error: 'db-unavailable' };
+  const [row] = await db
+    .select({ id: newsArticles.id })
+    .from(newsArticles)
+    .where(eq(newsArticles.slug, slug));
+  if (!row) return { ...EMPTY_TRANSLATE_RESULT(), error: 'not-found' };
+  return autoTranslateNewsArticle(row.id);
 }
