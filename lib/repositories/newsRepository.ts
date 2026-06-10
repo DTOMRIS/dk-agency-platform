@@ -546,3 +546,125 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
 
   return rows.map((row) => mapPublicArticle(row, loc));
 }
+
+type NewsCategoryDb = typeof newsArticles.$inferInsert.category;
+type NewsStatusDb = typeof newsArticles.$inferInsert.status;
+
+export interface CreateNewsInput {
+  slug?: string | null;
+  titleAz?: string | null;
+  titleRu?: string | null;
+  titleEn?: string | null;
+  titleTr?: string | null;
+  summaryAz?: string | null;
+  summaryRu?: string | null;
+  summaryEn?: string | null;
+  summaryTr?: string | null;
+  contentAz?: string | null;
+  contentRu?: string | null;
+  contentEn?: string | null;
+  contentTr?: string | null;
+  category?: NewsCategoryDb;
+  author?: string | null;
+  publishedAt?: string | null;
+  status?: NewsStatusDb;
+  imageUrl?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  isEditorPick?: boolean;
+  isManset?: boolean;
+  isTop?: boolean;
+  isGundem?: boolean;
+  newsType?: string | null;
+  telegramSend?: boolean;
+  logoOverlay?: boolean;
+  externalUrl?: string | null;
+  sourceId?: number | null;
+}
+
+export async function createNewsArticle(input: CreateNewsInput) {
+  if (!dbAvailable || !db) {
+    throw new Error('DB unavailable — cannot create news article');
+  }
+
+  const slugBase =
+    input.slug?.trim() ||
+    input.titleAz?.trim() ||
+    input.titleTr?.trim() ||
+    input.titleEn?.trim() ||
+    input.titleRu?.trim() ||
+    'haber';
+
+  const slug = slugBase
+    .toLowerCase()
+    .replace(/ə/g, 'e')
+    .replace(/ö/g, 'o')
+    .replace(/ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/ç/g, 'c')
+    .replace(/ğ/g, 'g')
+    .replace(/ı/g, 'i')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 240);
+
+  const externalUrl =
+    input.externalUrl && input.externalUrl.trim().length > 0
+      ? input.externalUrl.trim()
+      : `manual:${slug}:${Date.now()}`;
+
+  const title =
+    input.titleAz?.trim() ||
+    input.titleTr?.trim() ||
+    input.titleEn?.trim() ||
+    input.titleRu?.trim() ||
+    'Başlıqsız xəbər';
+
+  const summary =
+    input.summaryAz?.trim() ||
+    input.summaryTr?.trim() ||
+    input.summaryEn?.trim() ||
+    input.summaryRu?.trim() ||
+    null;
+
+  const publishedAt = input.publishedAt ? new Date(input.publishedAt) : new Date();
+
+  const [row] = await db
+    .insert(newsArticles)
+    .values({
+      sourceId: input.sourceId ?? null,
+      externalUrl,
+      slug,
+      title,
+      titleAz: input.titleAz ?? null,
+      titleRu: input.titleRu ?? null,
+      titleEn: input.titleEn ?? null,
+      titleTr: input.titleTr ?? null,
+      summary,
+      summaryAz: input.summaryAz ?? null,
+      summaryRu: input.summaryRu ?? null,
+      summaryEn: input.summaryEn ?? null,
+      summaryTr: input.summaryTr ?? null,
+      contentAz: input.contentAz ?? null,
+      contentRu: input.contentRu ?? null,
+      contentEn: input.contentEn ?? null,
+      contentTr: input.contentTr ?? null,
+      category: input.category ?? 'market',
+      imageUrl: input.imageUrl?.trim() || null,
+      author: input.author?.trim() || null,
+      publishedAt,
+      status: input.status ?? 'fetched',
+      isEditorPick: input.isEditorPick ?? false,
+      isManset: input.isManset ?? false,
+      isTop: input.isTop ?? false,
+      isGundem: input.isGundem ?? false,
+      newsType: input.newsType ?? 'none',
+      telegramSend: input.telegramSend ?? false,
+      logoOverlay: input.logoOverlay ?? false,
+      seoTitle: input.seoTitle?.trim()?.slice(0, 70) || null,
+      seoDescription: input.seoDescription?.trim()?.slice(0, 160) || null,
+    })
+    .returning({ id: newsArticles.id, slug: newsArticles.slug });
+
+  return row;
+}
