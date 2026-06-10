@@ -7,9 +7,22 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import {
-  Building2, Search, Plus, MoreHorizontal,
-  CheckCircle, Clock, XCircle, TrendingUp, Users,
-  FileText, Star, ChevronDown, ExternalLink, Mail, Phone, X
+  Building2,
+  Search,
+  Plus,
+  MoreHorizontal,
+  CheckCircle,
+  Clock,
+  XCircle,
+  TrendingUp,
+  Users,
+  FileText,
+  Star,
+  ChevronDown,
+  ExternalLink,
+  Mail,
+  Phone,
+  X,
 } from 'lucide-react';
 
 interface Partner {
@@ -30,7 +43,7 @@ interface Partner {
 const MOCK_PARTNERS: Partner[] = [
   {
     id: '1',
-    name: 'İstanbul HORECA Group',
+    name: 'DK Agency',
     type: 'investor',
     sector: 'Restoran & Cafe',
     status: 'active',
@@ -135,8 +148,8 @@ export default function B2BYonetimiPage() {
 
   const stats = {
     total: MOCK_PARTNERS.length,
-    active: MOCK_PARTNERS.filter(p => p.status === 'active').length,
-    pending: MOCK_PARTNERS.filter(p => p.status === 'pending').length,
+    active: MOCK_PARTNERS.filter((p) => p.status === 'active').length,
+    pending: MOCK_PARTNERS.filter((p) => p.status === 'pending').length,
     totalDeals: MOCK_PARTNERS.reduce((sum, p) => sum + p.deals, 0),
   };
 
@@ -236,7 +249,10 @@ export default function B2BYonetimiPage() {
                 <option value="supplier">{t('filterSuppliers')}</option>
                 <option value="partner">{t('filterPartners')}</option>
               </select>
-              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+              <ChevronDown
+                size={16}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+              />
             </div>
             <div className="relative">
               <select
@@ -249,7 +265,10 @@ export default function B2BYonetimiPage() {
                 <option value="pending">{t('filterPending')}</option>
                 <option value="inactive">{t('filterInactive')}</option>
               </select>
-              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+              <ChevronDown
+                size={16}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+              />
             </div>
           </div>
         </div>
@@ -261,13 +280,27 @@ export default function B2BYonetimiPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-100">
-                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colPartner')}</th>
-                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colType')}</th>
-                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colContact')}</th>
-                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colCity')}</th>
-                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colDeals')}</th>
-                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colRating')}</th>
-                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('colStatus')}</th>
+                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {t('colPartner')}
+                </th>
+                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {t('colType')}
+                </th>
+                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {t('colContact')}
+                </th>
+                <th className="text-left p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {t('colCity')}
+                </th>
+                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {t('colDeals')}
+                </th>
+                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {t('colRating')}
+                </th>
+                <th className="text-center p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {t('colStatus')}
+                </th>
                 <th className="p-4"></th>
               </tr>
             </thead>
@@ -278,7 +311,10 @@ export default function B2BYonetimiPage() {
                 const StatusIcon = statusConfig.icon;
 
                 return (
-                  <tr key={partner.id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                  <tr
+                    key={partner.id}
+                    className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors"
+                  >
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center text-white font-bold text-sm">
@@ -291,7 +327,9 @@ export default function B2BYonetimiPage() {
                       </div>
                     </td>
                     <td className="p-4">
-                      <span className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium ${typeConfig.color}`}>
+                      <span
+                        className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium ${typeConfig.color}`}
+                      >
                         {typeConfig.label}
                       </span>
                     </td>
@@ -299,10 +337,16 @@ export default function B2BYonetimiPage() {
                       <div>
                         <p className="text-sm font-medium text-gray-900">{partner.contactPerson}</p>
                         <div className="flex items-center gap-3 mt-1">
-                          <a href={`mailto:${partner.email}`} className="text-gray-400 hover:text-dk-red transition-colors">
+                          <a
+                            href={`mailto:${partner.email}`}
+                            className="text-gray-400 hover:text-dk-red transition-colors"
+                          >
                             <Mail size={14} />
                           </a>
-                          <a href={`tel:${partner.phone}`} className="text-gray-400 hover:text-dk-red transition-colors">
+                          <a
+                            href={`tel:${partner.phone}`}
+                            className="text-gray-400 hover:text-dk-red transition-colors"
+                          >
                             <Phone size={14} />
                           </a>
                         </div>
@@ -328,7 +372,9 @@ export default function B2BYonetimiPage() {
                       )}
                     </td>
                     <td className="p-4 text-center">
-                      <span className={`inline-flex items-center gap-1 text-sm font-medium ${statusConfig.color}`}>
+                      <span
+                        className={`inline-flex items-center gap-1 text-sm font-medium ${statusConfig.color}`}
+                      >
                         <StatusIcon size={14} />
                         {statusConfig.label}
                       </span>
@@ -376,7 +422,9 @@ export default function B2BYonetimiPage() {
 
             <form className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelCompany')}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {t('modal.labelCompany')}
+                </label>
                 <input
                   type="text"
                   placeholder={t('modal.placeholderCompany')}
@@ -386,7 +434,9 @@ export default function B2BYonetimiPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelType')}</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('modal.labelType')}
+                  </label>
                   <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red bg-white">
                     <option value="">{t('modal.typeSelect')}</option>
                     <option value="investor">{t('typeLabels.investor')}</option>
@@ -396,7 +446,9 @@ export default function B2BYonetimiPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelSector')}</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('modal.labelSector')}
+                  </label>
                   <input
                     type="text"
                     placeholder={t('modal.placeholderSector')}
@@ -406,7 +458,9 @@ export default function B2BYonetimiPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelContact')}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {t('modal.labelContact')}
+                </label>
                 <input
                   type="text"
                   placeholder={t('modal.placeholderContact')}
@@ -416,7 +470,9 @@ export default function B2BYonetimiPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelEmail')}</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('modal.labelEmail')}
+                  </label>
                   <input
                     type="email"
                     placeholder="email@firma.com"
@@ -424,7 +480,9 @@ export default function B2BYonetimiPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelPhone')}</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('modal.labelPhone')}
+                  </label>
                   <input
                     type="tel"
                     placeholder="+90 5XX XXX XXXX"
@@ -434,7 +492,9 @@ export default function B2BYonetimiPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelCity')}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {t('modal.labelCity')}
+                </label>
                 <input
                   type="text"
                   placeholder={t('modal.placeholderCity')}
@@ -443,7 +503,9 @@ export default function B2BYonetimiPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('modal.labelNotes')}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {t('modal.labelNotes')}
+                </label>
                 <textarea
                   rows={3}
                   placeholder={t('modal.placeholderNotes')}
