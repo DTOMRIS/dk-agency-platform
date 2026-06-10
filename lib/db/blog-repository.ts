@@ -528,7 +528,9 @@ export async function getBlogTranslationMatrix(): Promise<PostTranslationStatus[
 
 const GURU_BLOCK = />\s*╔[═╗\n>║\s\S]*?╚[═╝]+/g;
 
-function parseGuruBlock(block: string): { name: string; quote: string; source: string } | null {
+function parseGuruBlock(
+  block: string
+): { name: string; quote: string; source: string; isDogan: boolean } | null {
   const lines = block
     .split('\n')
     .map((l) =>
@@ -540,22 +542,55 @@ function parseGuruBlock(block: string): { name: string; quote: string; source: s
     .filter(Boolean);
 
   let name = '';
-  let quote = '';
-  let source = '';
+  let isDogan = false;
+  const sourceParts: string[] = [];
+  const quoteLines: string[] = [];
+  let inQuote = false;
+
   for (const line of lines) {
-    if (line.includes('🎤') || (line.startsWith('**') && !quote)) {
+    // Name line (🎤 or leading bold)
+    if (line.includes('🎤') || (!name && line.startsWith('**'))) {
       name = line.replace(/🎤\s*/, '').replace(/\*\*/g, '').trim();
-    } else if (
-      line.startsWith('*"') ||
-      line.startsWith('"') ||
-      (line.startsWith('*') && line.endsWith('*'))
-    ) {
-      quote += ' ' + line.replace(/^\*["']?|["']?\*$/g, '').replace(/^["']|["']$/g, '');
-    } else if (line.includes('📖')) {
-      source = line.replace('📖', '').replace('Mənbə:', '').trim();
+      if (/doğan|notu/i.test(name)) isDogan = true;
+      continue;
     }
+    // Source/book line
+    if (line.includes('📖')) {
+      sourceParts.push(
+        line
+          .replace('📖', '')
+          .replace(/Mənbə:/i, '')
+          .trim()
+      );
+      continue;
+    }
+    // Context line — ends the quote, not part of it
+    if (line.includes('🔗')) {
+      inQuote = false;
+      continue;
+    }
+    // The real quote is the ITALIC block: starts at a line with *" and runs
+    // (across continuation lines) until a line ending the italic ("* or trailing *).
+    if (!inQuote && /\*\s*["'“]/.test(line)) inQuote = true;
+    if (inQuote) {
+      quoteLines.push(line);
+      if (/["'”]\s*\*/.test(line) || line.endsWith('*')) inQuote = false;
+      continue;
+    }
+    // Anything else (the plain-quoted byline/role) is intentionally ignored so it
+    // does NOT leak into the quote.
   }
-  return name && quote.trim() ? { name, quote: quote.trim(), source } : null;
+
+  const quote = quoteLines
+    .join(' ')
+    .replace(/\*+/g, '')
+    .replace(/^["'“]+|["'”]+$/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const source = sourceParts.join(' ').trim();
+
+  if (!name || !quote) return null;
+  return { name, quote, source, isDogan };
 }
 
 function extractDoganNote(content: string): { raw: string; text: string } | null {
@@ -645,12 +680,20 @@ export async function migrateBlogStructure(apply: boolean): Promise<MigrationRes
       .where(eq(guruBoxes.blogPostId, row.id));
     const hasBoxes = existing.length > 0;
     const guruMatches = content.match(GURU_BLOCK) || [];
+    // A Doğan note written in guru-box ASCII (name = "DOĞAN NOTU") → routed to
+    // dogan_note, NOT stored as a fake guru.
+    let doganFromGuru: string | null = null;
 
     if (guruMatches.length > 0 && !hasBoxes) {
       let order = 0;
       for (const block of guruMatches) {
         const parsed = parseGuruBlock(block);
         if (!parsed) continue;
+        if (parsed.isDogan) {
+          if (!doganFromGuru) doganFromGuru = parsed.quote;
+          newContent = newContent.replace(block, '').trim();
+          continue;
+        }
         detail.guruExtracted.push({ name: parsed.name, quotePreview: parsed.quote.slice(0, 80) });
         if (apply) {
           await db.insert(guruBoxes).values({
@@ -668,17 +711,18 @@ export async function migrateBlogStructure(apply: boolean): Promise<MigrationRes
       for (const block of guruMatches) newContent = newContent.replace(block, '').trim();
     }
 
-    // Doğan note
+    // Doğan note: prefer the guru-format one, else the `>` 📝 blockquote.
     const doganAlreadySet = Boolean(row.doganNote && row.doganNote.trim());
-    const dogan = extractDoganNote(newContent);
-    if (dogan) {
-      if (!doganAlreadySet && dogan.text) {
-        detail.doganPreview = dogan.text.slice(0, 80);
-        if (apply) {
-          await db.update(blogPosts).set({ doganNote: dogan.text }).where(eq(blogPosts.id, row.id));
-        }
+    const blockquoteDogan = extractDoganNote(newContent);
+    const doganText = doganFromGuru || blockquoteDogan?.text || null;
+    if (doganText && !doganAlreadySet) {
+      detail.doganPreview = doganText.slice(0, 80);
+      if (apply) {
+        await db.update(blogPosts).set({ doganNote: doganText }).where(eq(blogPosts.id, row.id));
       }
-      newContent = newContent.replace(dogan.raw, '').trim();
+    }
+    if (blockquoteDogan) {
+      newContent = newContent.replace(blockquoteDogan.raw, '').trim();
     }
 
     // Persist stripped content
