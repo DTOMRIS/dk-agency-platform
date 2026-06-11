@@ -50,6 +50,9 @@ export interface PublicNewsArticle {
   isManual: boolean;
   publishedAt: string;
   isEditorPick: boolean;
+  isManset: boolean;
+  isTop: boolean;
+  isGundem: boolean;
 }
 
 function getTranslatedNewsConditions() {
@@ -451,6 +454,9 @@ function mapPublicArticle(row: {
     isManual,
     publishedAt: row.publishedAt?.toISOString() || new Date().toISOString(),
     isEditorPick: row.isEditorPick,
+    isManset: row.isManset ?? false,
+    isTop: row.isTop ?? false,
+    isGundem: row.isGundem ?? false,
   };
 }
 
@@ -479,6 +485,9 @@ function buildPublicArticleSelect() {
     externalUrl: newsArticles.externalUrl,
     publishedAt: newsArticles.publishedAt,
     isEditorPick: newsArticles.isEditorPick,
+    isManset: newsArticles.isManset,
+    isTop: newsArticles.isTop,
+    isGundem: newsArticles.isGundem,
   };
 }
 

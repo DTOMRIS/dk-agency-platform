@@ -226,8 +226,12 @@ export default async function HaberlerPage({
   );
 
   const editorPick = offset === 0 ? await getApprovedEditorPick(category, locale) : null;
-  const hero = editorPick || result.items[0];
+  // Priority: isManset > isEditorPick > first item
+  const mansetItem = offset === 0 ? result.items.find((item) => item.isManset) : null;
+  const hero = mansetItem || editorPick || result.items[0];
   const gridItems = result.items.filter((item) => item.id !== hero?.id);
+  // isTop items first in grid
+  gridItems.sort((a, b) => (b.isTop ? 1 : 0) - (a.isTop ? 1 : 0));
   const totalPages = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
 
   return (
@@ -271,9 +275,14 @@ export default async function HaberlerPage({
                 <NewsVisual item={hero} c={c} className="h-full w-full" />
               </div>
               <div className="p-8">
-                <span className="inline-flex rounded-full bg-[#FFF8E7] px-3 py-1 text-xs font-bold text-[#C5A022]">
-                  {hero.isEditorPick ? c.editorPick : c.featured}
-                </span>
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex rounded-full bg-[#FFF8E7] px-3 py-1 text-xs font-bold text-[#C5A022]">
+                    {hero.isManset ? 'Manşet' : hero.isEditorPick ? c.editorPick : c.featured}
+                  </span>
+                  {hero.isGundem ? (
+                    <span className="inline-flex rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-600">Gündəm</span>
+                  ) : null}
+                </div>
                 <h2 className="mt-4 font-display text-4xl font-black leading-tight">{hero.title}</h2>
                 <p className="mt-4 text-sm leading-7 text-slate-600">{hero.summary}</p>
                 <div className="mt-6 flex flex-wrap gap-3 text-xs font-semibold text-slate-500">
@@ -303,7 +312,11 @@ export default async function HaberlerPage({
                 <NewsVisual item={item} c={c} className="h-full w-full" compact />
               </div>
               <div className="p-6">
-                <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">{item.category}</div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">{item.category}</span>
+                  {item.isTop ? <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-600">TOP</span> : null}
+                  {item.isGundem ? <span className="rounded-full bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-600">Gündəm</span> : null}
+                </div>
                 <h3 className="mt-2 text-xl font-bold leading-snug">{item.title}</h3>
                 <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{item.summary}</p>
                 <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-slate-500">
