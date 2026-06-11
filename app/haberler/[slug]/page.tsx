@@ -158,15 +158,17 @@ export default async function HaberDetailPage({
             </div>
 
             <footer className="mt-10 flex max-w-[720px] flex-col gap-5 border-t border-slate-200 pt-8">
-              {!article.isManual && article.externalUrl ? (
-                article.content ? (
+              {!article.isManual && article.externalUrl ? (() => {
+                let hostname = '';
+                try { hostname = new URL(article.externalUrl).hostname.replace('www.', ''); } catch { hostname = ''; }
+                return article.content && hostname ? (
                   <p className="text-xs text-slate-400">
                     Mənbə:{' '}
                     <a href={article.externalUrl} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-600">
-                      {new URL(article.externalUrl).hostname.replace('www.', '')}
+                      {hostname}
                     </a>
                   </p>
-                ) : (
+                ) : !article.content && hostname ? (
                   <a
                     href={article.externalUrl}
                     target="_blank"
@@ -175,18 +177,18 @@ export default async function HaberDetailPage({
                   >
                     Mənbədə tam xəbəri oxu →
                   </a>
-                )
-              ) : null}
+                ) : null;
+              })() : null}
               <div className="max-w-[280px]">
                 <ShareButtons title={article.title} url={shareUrl} locale={locale} />
               </div>
             </footer>
 
-            {article.relatedToolkits?.length > 0 ? (
+            {(article as { relatedToolkits?: string[] }).relatedToolkits?.length ? (
               <div className="mt-10">
                 <RelatedToolkitsBox
-                  toolkitSlugs={article.relatedToolkits}
-                  blogSlug={article.relatedBlogSlug}
+                  toolkitSlugs={(article as { relatedToolkits?: string[] }).relatedToolkits || []}
+                  blogSlug={(article as { relatedBlogSlug?: string }).relatedBlogSlug || null}
                   locale={locale}
                 />
               </div>
