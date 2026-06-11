@@ -397,6 +397,8 @@ export const newsArticles = pgTable('news_articles', {
   logoOverlay: boolean('logo_overlay').notNull().default(false),
   seoTitle: varchar('seo_title', { length: 70 }),
   seoDescription: varchar('seo_description', { length: 160 }),
+  relatedToolkits: jsonb('related_toolkits').$type<string[]>().default([]),
+  relatedBlogSlug: text('related_blog_slug'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 

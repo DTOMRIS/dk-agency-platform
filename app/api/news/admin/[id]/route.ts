@@ -55,9 +55,26 @@ export async function PATCH(
     seoDescription: body.seoDescription,
   });
 
-  // Auto-translate on approve (fire-and-forget — don't block response)
+  // Auto-translate + auto-match toolkits on approve (fire-and-forget)
   if (body.status === 'approved' && article.slug) {
     translateNewsArticleBySlug(article.slug).catch(() => {});
+
+    // Match related toolkits via DeepSeek
+    import('@/lib/news/match-toolkits').then(({ matchToolkitsForArticle }) => {
+      const tAz = body.titleAz || article.titleAz || '';
+      const sAz = body.summaryAz || article.summaryAz || '';
+      const cAz = body.contentAz || (article as Record<string, unknown>).contentAz as string || '';
+      matchToolkitsForArticle(tAz, sAz, cAz).then((match) => {
+        if (match.toolkits.length > 0 || match.blogSlug) {
+          import('@/lib/repositories/newsRepository').then(({ updateNewsArticleAdmin }) => {
+            updateNewsArticleAdmin(articleId, {
+              relatedToolkits: match.toolkits,
+              relatedBlogSlug: match.blogSlug,
+            } as Record<string, unknown>).catch(() => {});
+          }).catch(() => {});
+        }
+      }).catch(() => {});
+    }).catch(() => {});
   }
 
   return NextResponse.json({ success: true, source: result.source });
