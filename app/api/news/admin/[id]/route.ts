@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
-import { getAdminNewsArticleById, updateNewsArticleAdmin, deleteNewsArticle } from '@/lib/repositories/newsRepository';
+import { getAdminNewsArticleById, updateNewsArticleAdmin, deleteNewsArticle, translateNewsArticleBySlug } from '@/lib/repositories/newsRepository';
 
 export async function PATCH(
   request: NextRequest,
@@ -54,6 +54,11 @@ export async function PATCH(
     seoTitle: body.seoTitle,
     seoDescription: body.seoDescription,
   });
+
+  // Auto-translate on approve (fire-and-forget — don't block response)
+  if (body.status === 'approved' && article.slug) {
+    translateNewsArticleBySlug(article.slug).catch(() => {});
+  }
 
   return NextResponse.json({ success: true, source: result.source });
 }
