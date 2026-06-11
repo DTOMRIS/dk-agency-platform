@@ -482,6 +482,13 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
         return;
       }
 
+      // Warn if saved to mock (DB not connected — data will be lost)
+      const responseSource = (data as { source?: string } | null)?.source;
+      if (responseSource === 'mock') {
+        showToast('⚠️ DİQQƏT: Verilənlər bazası əlçatmazdır. Xəbər müvəqqəti saxlanıb, lakin itə bilər!');
+        return;
+      }
+
       try {
         localStorage.removeItem(LOCAL_STORAGE_KEY);
       } catch {
