@@ -191,6 +191,8 @@ export async function updateNewsArticleAdmin(
     imageUrl?: string | null;
     seoTitle?: string | null;
     seoDescription?: string | null;
+    relatedToolkits?: string[];
+    relatedBlogSlug?: string | null;
   },
 ) {
   if (!dbAvailable || !db) {
@@ -606,6 +608,8 @@ export async function getNewsArticleBySlug(slug: string, locale?: string, previe
       publishedAt: newsArticles.publishedAt,
       isEditorPick: newsArticles.isEditorPick,
       status: newsArticles.status,
+      relatedToolkits: newsArticles.relatedToolkits,
+      relatedBlogSlug: newsArticles.relatedBlogSlug,
     })
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
@@ -619,6 +623,8 @@ export async function getNewsArticleBySlug(slug: string, locale?: string, previe
     ...mapPublicArticle(row, loc),
     originalTitle: row.title,
     originalSummary: row.summary || '',
+    relatedToolkits: (row.relatedToolkits as string[] | null) || [],
+    relatedBlogSlug: row.relatedBlogSlug || null,
   };
 }
 

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
+import RelatedToolkitsBox from '@/components/news/RelatedToolkitsBox';
 import { ShareButtons } from '@/components/news/ShareButtons';
 import { formatDateAz } from '@/lib/formatDate';
 import { getNewsArticleBySlug, getRelatedApprovedNewsArticles } from '@/lib/repositories/newsRepository';
@@ -180,6 +181,16 @@ export default async function HaberDetailPage({
                 <ShareButtons title={article.title} url={shareUrl} locale={locale} />
               </div>
             </footer>
+
+            {article.relatedToolkits?.length > 0 ? (
+              <div className="mt-10">
+                <RelatedToolkitsBox
+                  toolkitSlugs={article.relatedToolkits}
+                  blogSlug={article.relatedBlogSlug}
+                  locale={locale}
+                />
+              </div>
+            ) : null}
           </article>
 
           {related.length > 0 ? (
