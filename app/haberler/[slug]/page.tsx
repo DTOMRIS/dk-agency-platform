@@ -69,12 +69,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function HaberDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }) {
   const { slug } = await params;
+  const sp = await searchParams;
+  const isPreview = sp.preview === 'true';
   const locale = await getLocale();
-  const article = await getNewsArticleBySlug(slug, locale);
+  const article = await getNewsArticleBySlug(slug, locale, isPreview);
 
   if (!article) {
     notFound();

@@ -107,6 +107,22 @@ export async function getListings(filters: ListingFilters = {}, locale?: string)
   );
 }
 
+export async function getListingBySlug(slug: string, locale?: string) {
+  const loc = sanitizeLocale(locale);
+  if (!db) return MOCK_LISTINGS.find((item) => item.slug === slug) || null;
+
+  const row = await db.select().from(listings).where(eq(listings.slug, slug)).then((items) => items[0]);
+  if (!row) return null;
+
+  const [mediaRows, leadRows, reviewRows] = await Promise.all([
+    db.select().from(listingMedia).where(eq(listingMedia.listingId, row.id)),
+    db.select().from(listingLeads).where(eq(listingLeads.listingId, row.id)),
+    db.select().from(listingReviews).where(eq(listingReviews.listingId, row.id)),
+  ]);
+
+  return mapDbListing(row, mediaRows, leadRows, reviewRows, loc);
+}
+
 export async function getListingById(id: number, locale?: string) {
   const loc = sanitizeLocale(locale);
   if (!db) return MOCK_LISTINGS.find((item) => item.id === id) || null;

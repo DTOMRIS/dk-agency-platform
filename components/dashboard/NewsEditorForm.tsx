@@ -3,6 +3,7 @@
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { compressImage, validateImage } from '@/lib/utils/imageUtils';
+import { slugifyAz } from '@/lib/utils/slugify-az';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { usePathname } from 'next/navigation';
 
@@ -266,22 +267,6 @@ const COPY: Record<
 
 const LOCAL_STORAGE_KEY = 'dk-news-editor-draft';
 
-function slugify(value: string) {
-  return value
-    .replace(/İ/g, 'i')
-    .replace(/ı/g, 'i')
-    .replace(/I/g, 'i')
-    .toLowerCase()
-    .replace(/ə/g, 'e')
-    .replace(/ö/g, 'o')
-    .replace(/ü/g, 'u')
-    .replace(/ş/g, 's')
-    .replace(/ç/g, 'c')
-    .replace(/ğ/g, 'g')
-    .replace(/\u0307/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
 
 const EMPTY_DRAFT: NewsDraft = {
   slug: '',
@@ -627,7 +612,7 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
               onChange={(e) => {
                 const title = e.target.value;
                 setStringField(titleKey(activeLocale), title);
-                if (!initialDraft && activeLocale === 'az') setField('slug', slugify(title));
+                if (!initialDraft && activeLocale === 'az') setField('slug', slugifyAz(title));
               }}
               placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} başlıq...` : ''}
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
@@ -943,7 +928,7 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
         </button>
         <button
           type="button"
-          onClick={() => window.open(`/haberler/${draft.slug || ''}`, '_blank')}
+          onClick={() => window.open(`/haberler/${draft.slug || ''}?preview=true`, '_blank')}
           className="min-h-[44px] rounded-full border border-amber-200 bg-amber-50 px-6 py-3 text-sm font-bold text-amber-700"
         >
           {copy.preview}

@@ -167,26 +167,57 @@ export async function updateNewsArticleAdmin(
   input: {
     status?: 'fetched' | 'translated' | 'approved' | 'rejected';
     isEditorPick?: boolean;
+    isManset?: boolean;
+    isTop?: boolean;
+    isGundem?: boolean;
     titleAz?: string | null;
     summaryAz?: string | null;
+    contentAz?: string | null;
+    contentRu?: string | null;
+    contentEn?: string | null;
+    contentTr?: string | null;
+    titleRu?: string | null;
+    titleEn?: string | null;
+    titleTr?: string | null;
+    summaryRu?: string | null;
+    summaryEn?: string | null;
+    summaryTr?: string | null;
+    category?: string;
+    author?: string | null;
     imageUrl?: string | null;
+    seoTitle?: string | null;
+    seoDescription?: string | null;
   },
 ) {
   if (!dbAvailable || !db) {
     return { success: true, source: 'mock' as const };
   }
 
+  const setData: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(input)) {
+    if (value !== undefined) {
+      setData[key] = value;
+    }
+  }
+
+  if (Object.keys(setData).length === 0) {
+    return { success: true, source: 'db' as const };
+  }
+
   await db
     .update(newsArticles)
-    .set({
-      status: input.status,
-      isEditorPick: input.isEditorPick,
-      titleAz: input.titleAz,
-      summaryAz: input.summaryAz,
-      imageUrl: input.imageUrl,
-    })
+    .set(setData)
     .where(eq(newsArticles.id, id));
 
+  return { success: true, source: 'db' as const };
+}
+
+export async function deleteNewsArticle(id: number) {
+  if (!dbAvailable || !db) {
+    return { success: true, source: 'mock' as const };
+  }
+
+  await db.delete(newsArticles).where(eq(newsArticles.id, id));
   return { success: true, source: 'db' as const };
 }
 
@@ -196,10 +227,34 @@ export async function getAdminNewsArticleById(id: number) {
   return db
     .select({
       id: newsArticles.id,
+      slug: newsArticles.slug,
+      title: newsArticles.title,
       titleAz: newsArticles.titleAz,
+      titleRu: newsArticles.titleRu,
+      titleEn: newsArticles.titleEn,
+      titleTr: newsArticles.titleTr,
+      summary: newsArticles.summary,
       summaryAz: newsArticles.summaryAz,
+      summaryRu: newsArticles.summaryRu,
+      summaryEn: newsArticles.summaryEn,
+      summaryTr: newsArticles.summaryTr,
+      contentAz: newsArticles.contentAz,
+      contentRu: newsArticles.contentRu,
+      contentEn: newsArticles.contentEn,
+      contentTr: newsArticles.contentTr,
+      category: newsArticles.category,
+      imageUrl: newsArticles.imageUrl,
+      author: newsArticles.author,
+      externalUrl: newsArticles.externalUrl,
       status: newsArticles.status,
       isEditorPick: newsArticles.isEditorPick,
+      isManset: newsArticles.isManset,
+      isTop: newsArticles.isTop,
+      isGundem: newsArticles.isGundem,
+      seoTitle: newsArticles.seoTitle,
+      seoDescription: newsArticles.seoDescription,
+      publishedAt: newsArticles.publishedAt,
+      createdAt: newsArticles.createdAt,
     })
     .from(newsArticles)
     .where(eq(newsArticles.id, id))
@@ -506,10 +561,14 @@ export async function getApprovedEditorPick(category?: NewsCategoryKey, locale?:
   return row ? mapPublicArticle(row, loc) : null;
 }
 
-export async function getNewsArticleBySlug(slug: string, locale?: string) {
+export async function getNewsArticleBySlug(slug: string, locale?: string, preview = false) {
   const loc = sanitizeLocale(locale);
 
   if (!dbAvailable || !db) return null;
+
+  const conditions = preview
+    ? [eq(newsArticles.slug, slug), isNotNull(newsArticles.slug)]
+    : [eq(newsArticles.slug, slug), ...getPublicNewsConditions()];
 
   const row = await db
     .select({
@@ -525,6 +584,10 @@ export async function getNewsArticleBySlug(slug: string, locale?: string) {
       summaryRu: newsArticles.summaryRu,
       summaryEn: newsArticles.summaryEn,
       summaryTr: newsArticles.summaryTr,
+      contentAz: newsArticles.contentAz,
+      contentRu: newsArticles.contentRu,
+      contentEn: newsArticles.contentEn,
+      contentTr: newsArticles.contentTr,
       category: newsArticles.category,
       imageUrl: newsArticles.imageUrl,
       author: newsArticles.author,
@@ -536,10 +599,12 @@ export async function getNewsArticleBySlug(slug: string, locale?: string) {
     })
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
-    .where(and(eq(newsArticles.slug, slug), ...getPublicNewsConditions()))
+    .where(and(...conditions))
     .then((rows) => rows[0] || null);
 
-  if (!row || row.status !== 'approved') return null;
+  if (!row) return null;
+  if (!preview && row.status !== 'approved') return null;
+
   return {
     ...mapPublicArticle(row, loc),
     originalTitle: row.title,
