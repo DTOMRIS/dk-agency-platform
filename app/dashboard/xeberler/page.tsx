@@ -61,6 +61,8 @@ const pageCopy: Record<
     actionApprove: string;
     actionReject: string;
     actionEditorPick: string;
+    actionDelete: string;
+    confirmDelete: string;
     emptyState: string;
     editorTitle: string;
     editorSubtitle: string;
@@ -117,6 +119,8 @@ const pageCopy: Record<
     actionApprove: 'Təsdiqlə',
     actionReject: 'Rədd et',
     actionEditorPick: 'Editor Pick',
+    actionDelete: 'Sil',
+    confirmDelete: 'Bu xəbəri silmək istədiyinizdən əminsiniz?',
     emptyState: 'Bu filtrə görə xəbər tapılmadı.',
     editorTitle: 'Xəbər redaktoru',
     editorSubtitle: 'Orijinal məzmundan AZ versiya hazırla, şəkil əlavə et, sonra translated və ya approved et.',
@@ -172,6 +176,8 @@ const pageCopy: Record<
     actionApprove: 'Одобрить',
     actionReject: 'Отклонить',
     actionEditorPick: 'Выбор редактора',
+    actionDelete: 'Удалить',
+    confirmDelete: 'Вы уверены, что хотите удалить эту новость?',
     emptyState: 'По данному фильтру новости не найдены.',
     editorTitle: 'Редактор новостей',
     editorSubtitle: 'Подготовьте AZ-версию из оригинала, добавьте изображение, затем переведите или одобрите.',
@@ -227,6 +233,8 @@ const pageCopy: Record<
     actionApprove: 'Approve',
     actionReject: 'Reject',
     actionEditorPick: 'Editor Pick',
+    actionDelete: 'Delete',
+    confirmDelete: 'Are you sure you want to delete this article?',
     emptyState: 'No news found for this filter.',
     editorTitle: 'News editor',
     editorSubtitle: 'Prepare the AZ version from the original, add an image, then mark as translated or approved.',
@@ -282,6 +290,8 @@ const pageCopy: Record<
     actionApprove: 'Onayla',
     actionReject: 'Reddet',
     actionEditorPick: 'Editör Seçimi',
+    actionDelete: 'Sil',
+    confirmDelete: 'Bu haberi silmek istediğinizden emin misiniz?',
     emptyState: 'Bu filtreye göre haber bulunamadı.',
     editorTitle: 'Haber editörü',
     editorSubtitle: 'Orijinalden AZ versiyonu hazırla, görsel ekle, ardından translated veya approved yap.',
@@ -363,6 +373,22 @@ export default function DashboardXeberlerPage() {
   useEffect(() => {
     void loadNews(filter);
   }, [filter]);
+
+  async function deleteItem(id: number) {
+    if (!window.confirm(copy.confirmDelete)) return;
+    setError(null);
+    setToast(null);
+    try {
+      const response = await fetch(`/api/news/admin/${id}`, { method: 'DELETE' });
+      const payload = (await response.json()) as { success?: boolean; error?: string };
+      if (!response.ok) throw new Error(payload.error || `delete failed (${response.status})`);
+      setToast('Xəbər silindi.');
+      await loadNews(filter);
+    } catch (deleteError) {
+      const message = deleteError instanceof Error ? deleteError.message : 'Xəbər silinmədi';
+      setError(message);
+    }
+  }
 
   async function updateItem(id: number, body: { status?: FilterStatus; isEditorPick?: boolean }) {
     setError(null);
@@ -613,6 +639,13 @@ export default function DashboardXeberlerPage() {
                         className="rounded-full bg-amber-50 px-3 py-2 text-xs font-bold text-amber-700"
                       >
                         {copy.actionEditorPick}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void deleteItem(item.id)}
+                        className="rounded-full bg-slate-100 px-3 py-2 text-xs font-bold text-slate-500 hover:bg-red-50 hover:text-red-600"
+                      >
+                        {copy.actionDelete}
                       </button>
                     </div>
                   </td>
