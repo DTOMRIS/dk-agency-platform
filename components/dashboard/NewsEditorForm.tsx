@@ -26,7 +26,7 @@ const AUTHOR_OPTIONS = ['Doğan Tomris', 'DK Agency', 'Qonaq Müəllif'] as cons
 
 const NEWS_TYPE_OPTIONS = [
   { value: 'none', label: 'Heç biri' },
-  { value: 'foto', label: 'Foto xəbər' },
+  { value: 'photo', label: 'Foto xəbər' },
   { value: 'video', label: 'Video xəbər' },
 ] as const;
 
@@ -55,7 +55,7 @@ export interface NewsDraft {
   isManset: boolean;
   isTop: boolean;
   isGundem: boolean;
-  newsType: 'none' | 'foto' | 'video';
+  newsType: 'none' | 'photo' | 'video';
   telegramSend: boolean;
   logoOverlay: boolean;
   externalUrl: string;
@@ -328,6 +328,7 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
   const [translating, setTranslating] = useState(false);
   const [translateMsg, setTranslateMsg] = useState('');
   const [savedSlug, setSavedSlug] = useState<string | null>(initialDraft?.slug || null);
+  const [savedId, setSavedId] = useState<number | null>(null);
   const autoSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const translateNow = async () => {
@@ -470,8 +471,14 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
     };
 
     try {
-      const response = await fetch('/api/news/admin', {
-        method: 'POST',
+      // If article was already created (savedId exists), PATCH instead of POST
+      // This prevents UNIQUE slug collision → 500 → silent content loss
+      const isUpdate = !!savedId;
+      const url = isUpdate ? `/api/news/admin/${savedId}` : '/api/news/admin';
+      const method = isUpdate ? 'PATCH' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
@@ -495,8 +502,11 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
         // ignore
       }
 
-      // Capture saved slug so translate button activates without leaving page.
+      // Capture saved id+slug so subsequent saves use PATCH
       const savedRow = (data as { data?: { id?: number; slug?: string } } | null)?.data;
+      if (savedRow?.id) {
+        setSavedId(savedRow.id);
+      }
       if (savedRow?.slug) {
         setSavedSlug(savedRow.slug);
         if (savedRow.slug !== draft.slug) {

@@ -41,18 +41,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${article.title} | DK Agency`,
     description: article.summary,
     alternates: {
-      canonical: `${localePrefix}/sektor-nebzi/${article.slug}`,
+      canonical: `${localePrefix}/haberler/${article.slug}`,
       languages: {
-        az: `/sektor-nebzi/${article.slug}`,
-        ru: `/ru/sektor-nebzi/${article.slug}`,
-        en: `/en/sektor-nebzi/${article.slug}`,
-        tr: `/tr/sektor-nebzi/${article.slug}`,
+        az: `/haberler/${article.slug}`,
+        ru: `/ru/haberler/${article.slug}`,
+        en: `/en/haberler/${article.slug}`,
+        tr: `/tr/haberler/${article.slug}`,
       },
     },
     openGraph: {
       type: 'article',
       locale: locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
-      url: `https://dkagency.com.tr${localePrefix}/sektor-nebzi/${article.slug}`,
+      url: `https://dkagency.com.tr${localePrefix}/haberler/${article.slug}`,
       title: `${article.title} | DK Agency`,
       description: article.summary,
       images: article.imageUrl
@@ -158,14 +158,23 @@ export default async function HaberDetailPage({
 
             <footer className="mt-10 flex max-w-[720px] flex-col gap-5 border-t border-slate-200 pt-8">
               {!article.isManual && article.externalUrl ? (
-                <a
-                  href={article.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-fit items-center rounded-full bg-[#E94560] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#d73753]"
-                >
-                  Mənbədə tam xəbəri oxu →
-                </a>
+                article.content ? (
+                  <p className="text-xs text-slate-400">
+                    Mənbə:{' '}
+                    <a href={article.externalUrl} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-600">
+                      {new URL(article.externalUrl).hostname.replace('www.', '')}
+                    </a>
+                  </p>
+                ) : (
+                  <a
+                    href={article.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-fit items-center rounded-full bg-[#E94560] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#d73753]"
+                  >
+                    Mənbədə tam xəbəri oxu →
+                  </a>
+                )
               ) : null}
               <div className="max-w-[280px]">
                 <ShareButtons title={article.title} url={shareUrl} locale={locale} />
