@@ -14,7 +14,10 @@ export async function GET(request: NextRequest) {
   const status = searchParams.get('status');
 
   if (!auth.allowed) {
-    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
+    return NextResponse.json(
+      { success: false, error: 'Admin girisi teleb olunur.' },
+      { status: 403 }
+    );
   }
 
   if (resource === 'sources') {
@@ -23,7 +26,12 @@ export async function GET(request: NextRequest) {
   }
 
   const result = await getAdminNewsArticles({ status });
-  return NextResponse.json({ success: true, data: result.items, total: result.total, source: result.source });
+  return NextResponse.json({
+    success: true,
+    data: result.items,
+    total: result.total,
+    source: result.source,
+  });
 }
 
 const NewsCategoryEnum = z.enum(['finance', 'operations', 'growth', 'market', 'technology']);
@@ -66,11 +74,11 @@ const CreateNewsSchema = z
     (data) =>
       Boolean(
         (data.titleAz && data.titleAz.trim()) ||
-          (data.titleTr && data.titleTr.trim()) ||
-          (data.titleEn && data.titleEn.trim()) ||
-          (data.titleRu && data.titleRu.trim()),
+        (data.titleTr && data.titleTr.trim()) ||
+        (data.titleEn && data.titleEn.trim()) ||
+        (data.titleRu && data.titleRu.trim())
       ),
-    { message: 'Ən azı bir dildə başlıq tələb olunur.' },
+    { message: 'Ən azı bir dildə başlıq tələb olunur.' }
   );
 
 export async function POST(request: NextRequest) {
@@ -78,7 +86,7 @@ export async function POST(request: NextRequest) {
   if (!auth.allowed) {
     return NextResponse.json(
       { success: false, error: 'Admin girisi teleb olunur.' },
-      { status: 403 },
+      { status: 403 }
     );
   }
 
@@ -98,7 +106,7 @@ export async function POST(request: NextRequest) {
         error: firstIssue?.message || 'Yanlış məlumat.',
         details: parsed.error.issues,
       },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -106,8 +114,10 @@ export async function POST(request: NextRequest) {
     const row = await createNewsArticle(parsed.data);
     return NextResponse.json({ success: true, data: row }, { status: 201 });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : 'Xəbər yaradılarkən xəta baş verdi.';
+    const message = error instanceof Error ? error.message : 'Xəbər yaradılarkən xəta baş verdi.';
+    if ((error as { code?: string })?.code === 'SLUG_EXISTS') {
+      return NextResponse.json({ success: false, error: message }, { status: 409 });
+    }
     return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

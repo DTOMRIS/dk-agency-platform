@@ -6,7 +6,18 @@ import { getLocale } from 'next-intl/server';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import { ShareButtons } from '@/components/news/ShareButtons';
 import { formatDateAz } from '@/lib/formatDate';
-import { getNewsArticleBySlug, getRelatedApprovedNewsArticles } from '@/lib/repositories/newsRepository';
+import {
+  getNewsArticleBySlug,
+  getRelatedApprovedNewsArticles,
+} from '@/lib/repositories/newsRepository';
+
+function safeHostname(url: string) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
 
 function getCategoryLabel(category: string) {
   switch (category) {
@@ -25,7 +36,11 @@ function getCategoryLabel(category: string) {
   }
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const locale = await getLocale();
   const article = await getNewsArticleBySlug(slug, locale);
@@ -41,18 +56,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${article.title} | DK Agency`,
     description: article.summary,
     alternates: {
-      canonical: `${localePrefix}/sektor-nebzi/${article.slug}`,
+      canonical: `${localePrefix}/haberler/${article.slug}`,
       languages: {
-        az: `/sektor-nebzi/${article.slug}`,
-        ru: `/ru/sektor-nebzi/${article.slug}`,
-        en: `/en/sektor-nebzi/${article.slug}`,
-        tr: `/tr/sektor-nebzi/${article.slug}`,
+        az: `/haberler/${article.slug}`,
+        ru: `/ru/haberler/${article.slug}`,
+        en: `/en/haberler/${article.slug}`,
+        tr: `/tr/haberler/${article.slug}`,
       },
     },
     openGraph: {
       type: 'article',
-      locale: locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
-      url: `https://dkagency.com.tr${localePrefix}/sektor-nebzi/${article.slug}`,
+      locale:
+        locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
+      url: `https://dkagency.com.tr${localePrefix}/haberler/${article.slug}`,
       title: `${article.title} | DK Agency`,
       description: article.summary,
       images: article.imageUrl
@@ -110,7 +126,10 @@ export default async function HaberDetailPage({
   return (
     <BlogContentWrapper articleTitle={article.title} isPremium>
       <main className="min-h-screen bg-[#FAFAF8] px-4 py-10 text-[#1A1A2E]">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
           <article className="rounded-[32px] border border-slate-200 bg-white px-6 py-8 text-[#1A1A2E] shadow-sm md:px-10 md:py-10">
             <Link
@@ -126,7 +145,9 @@ export default async function HaberDetailPage({
                   {getCategoryLabel(article.category)}
                 </span>
                 <span>
-                  {(article.sourceName || 'Mənbə yoxdur') + ' · ' + formatDateAz(article.publishedAt)}
+                  {(article.sourceName || 'Mənbə yoxdur') +
+                    ' · ' +
+                    formatDateAz(article.publishedAt)}
                 </span>
               </div>
               <h1 className="mt-5 max-w-[720px] font-display text-[30px] font-bold leading-tight text-[#1A1A2E] sm:text-[36px] md:text-[42px]">
@@ -167,6 +188,19 @@ export default async function HaberDetailPage({
                   Mənbədə tam xəbəri oxu →
                 </a>
               ) : null}
+              {article.isManual && article.externalUrl.startsWith('http') ? (
+                <p className="text-sm text-slate-500">
+                  Mənbə:{' '}
+                  <a
+                    href={article.externalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[#C5A022] underline-offset-2 hover:underline"
+                  >
+                    {safeHostname(article.externalUrl)}
+                  </a>
+                </p>
+              ) : null}
               <div className="max-w-[280px]">
                 <ShareButtons title={article.title} url={shareUrl} locale={locale} />
               </div>
@@ -186,7 +220,9 @@ export default async function HaberDetailPage({
                     <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">
                       {getCategoryLabel(item.category)}
                     </div>
-                    <div className="mt-2 text-sm font-bold leading-6 text-[#1A1A2E]">{item.title}</div>
+                    <div className="mt-2 text-sm font-bold leading-6 text-[#1A1A2E]">
+                      {item.title}
+                    </div>
                     <div className="mt-2 text-xs text-slate-500">
                       {(item.sourceName || 'Mənbə yoxdur') + ' · ' + formatDateAz(item.publishedAt)}
                     </div>
@@ -200,4 +236,3 @@ export default async function HaberDetailPage({
     </BlogContentWrapper>
   );
 }
-

@@ -24,9 +24,11 @@ const NEWS_STATUS_OPTIONS = [
 
 const AUTHOR_OPTIONS = ['Doğan Tomris', 'DK Agency', 'Qonaq Müəllif'] as const;
 
+// value 'photo' — API zod enum is ['none','photo','video']; the old 'foto'
+// value failed the whole POST with 400.
 const NEWS_TYPE_OPTIONS = [
   { value: 'none', label: 'Heç biri' },
-  { value: 'foto', label: 'Foto xəbər' },
+  { value: 'photo', label: 'Foto xəbər' },
   { value: 'video', label: 'Video xəbər' },
 ] as const;
 
@@ -55,7 +57,7 @@ export interface NewsDraft {
   isManset: boolean;
   isTop: boolean;
   isGundem: boolean;
-  newsType: 'none' | 'foto' | 'video';
+  newsType: 'none' | 'photo' | 'video';
   telegramSend: boolean;
   logoOverlay: boolean;
   externalUrl: string;
@@ -245,7 +247,7 @@ const COPY: Record<
     top: 'Üst habere eklensin mi?',
     gundem: 'Gündem olsun mu?',
     newsType: 'Haber tipi?',
-    telegram: "Telegram kanalına gönderilsin mi?",
+    telegram: 'Telegram kanalına gönderilsin mi?',
     logoOverlay: 'Görselin üzerine logo vurulsun mu?',
     searchImageLib: 'Kütüphaneden görsel ara',
     editorPick: 'Editör seçimi',
@@ -266,7 +268,6 @@ const COPY: Record<
 };
 
 const LOCAL_STORAGE_KEY = 'dk-news-editor-draft';
-
 
 const EMPTY_DRAFT: NewsDraft = {
   slug: '',
@@ -311,7 +312,12 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-        if (saved) return JSON.parse(saved) as NewsDraft;
+        if (saved) {
+          const parsed = JSON.parse(saved) as NewsDraft;
+          // drafts saved before the foto→photo enum fix
+          if ((parsed.newsType as string) === 'foto') parsed.newsType = 'photo';
+          return parsed;
+        }
       } catch {
         // ignore
       }
@@ -328,6 +334,9 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
   const [translating, setTranslating] = useState(false);
   const [translateMsg, setTranslateMsg] = useState('');
   const [savedSlug, setSavedSlug] = useState<string | null>(initialDraft?.slug || null);
+  // After the first successful POST every save must go through PATCH —
+  // slug is UNIQUE, a second POST means duplicate insert and lost content.
+  const [savedId, setSavedId] = useState<number | null>(null);
   const autoSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const translateNow = async () => {
@@ -353,7 +362,7 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
       const l = data.langs || {};
       const mark = (s?: string) => (s === 'done' ? '✓' : s === 'failed' ? '✗' : '—');
       setTranslateMsg(
-        `RU ${mark(l.ru)} · EN ${mark(l.en)} · TR ${mark(l.tr)}${data.ok ? '' : ' — bəziləri alınmadı, yenidən cəhd et'}`,
+        `RU ${mark(l.ru)} · EN ${mark(l.en)} · TR ${mark(l.tr)}${data.ok ? '' : ' — bəziləri alınmadı, yenidən cəhd et'}`
       );
       router.refresh();
     } catch {
@@ -466,19 +475,24 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
       ...draft,
       status: nextStatus,
       imageUrl: safeImage,
-      publishedAt: draft.publishedAt ? new Date(draft.publishedAt).toISOString() : new Date().toISOString(),
+      publishedAt: draft.publishedAt
+        ? new Date(draft.publishedAt).toISOString()
+        : new Date().toISOString(),
     };
 
     try {
-      const response = await fetch('/api/news/admin', {
-        method: 'POST',
+      const isUpdate = savedId !== null;
+      const response = await fetch(isUpdate ? `/api/news/admin/${savedId}` : '/api/news/admin', {
+        method: isUpdate ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
       const data = await response.json().catch(() => null);
       if (!response.ok) {
-        showToast((data as { error?: string } | null)?.error || 'Xəbər saxlanmadı.');
+        const err = data as { error?: string; details?: Array<{ message?: string }> } | null;
+        const detail = err?.details?.[0]?.message ? ` (${err.details[0].message})` : '';
+        showToast((err?.error || 'Xəbər saxlanmadı.') + detail);
         return;
       }
 
@@ -488,8 +502,12 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
         // ignore
       }
 
-      // Capture saved slug so translate button activates without leaving page.
+      // Capture saved id+slug so the next save PATCHes the same row and the
+      // translate button activates without leaving the page.
       const savedRow = (data as { data?: { id?: number; slug?: string } } | null)?.data;
+      if (typeof savedRow?.id === 'number') {
+        setSavedId(savedRow.id);
+      }
       if (savedRow?.slug) {
         setSavedSlug(savedRow.slug);
         if (savedRow.slug !== draft.slug) {
@@ -627,8 +645,14 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
             <input
               value={draft.slug}
               onChange={(e) => setField('slug', e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 font-mono text-sm text-slate-900 outline-none"
+              disabled={savedId !== null}
+              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 font-mono text-sm text-slate-900 outline-none disabled:bg-slate-50 disabled:text-slate-500"
             />
+            {savedId !== null ? (
+              <p className="mt-2 text-xs text-slate-500">
+                Slug saxlanılandan sonra dəyişdirilə bilməz (köhnə link 404 olmasın deyə).
+              </p>
+            ) : null}
             {errors.slug ? <p className="mt-2 text-xs text-red-600">{errors.slug}</p> : null}
           </div>
 
@@ -739,7 +763,9 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">{copy.externalUrl}</label>
+            <label className="mb-2 block text-sm font-bold text-slate-700">
+              {copy.externalUrl}
+            </label>
             <input
               type="url"
               value={draft.externalUrl}
@@ -862,7 +888,10 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
               <label className="mb-2 block text-sm font-bold text-slate-700">{copy.newsType}</label>
               <div className="flex gap-3 flex-wrap">
                 {NEWS_TYPE_OPTIONS.map((item) => (
-                  <label key={item.value} className="flex items-center gap-2 text-sm text-slate-700">
+                  <label
+                    key={item.value}
+                    className="flex items-center gap-2 text-sm text-slate-700"
+                  >
                     <input
                       type="radio"
                       name="newsType"

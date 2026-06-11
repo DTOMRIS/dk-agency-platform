@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-06-11 — TASK-0300 + TASK-0301 (Xəbər: 360° audit → spine fix)
+
+**Audit (TASK-0300):** 10 paralel agent (4 kod auditi + 5 dünya/bölgə + 1 müstəqil CTO denetleyici) — tam raport `docs/reports/2026-06-11-news-360-audit-plan.md`. "Məzmun yazdım, itdi" şikayətinin kök səbəbi: `NewsEditorForm.submitDraft` HƏMİŞƏ POST edirdi (update yolu yox idi); "əvvəl saxla, sonra tərcümə et" axınında ikinci saxlama eyni UNIQUE slug ilə ikinci INSERT → 500 → content səssiz itirdi. Üstəlik `newsType: 'foto'` vs zod `'photo'` uyğunsuzluğu "Foto xəbər" seçiləndə bütün POST-u 400-lə öldürürdü. Display tərəfdə: manual xəbərdə real `externalUrl` yazılanda `isManual=false` olurdu (sentinel yoxlaması) → böyük qırmızı "Mənbədə tam xəbəri oxu" düyməsi öz content-i üstələyirdi. Bonus: hər xəbərin canonical/hreflang/OG-u mövcud olmayan `/sektor-nebzi/` route-una işarə edirdi.
+
+**Fix (TASK-0301, PR-A):** Form ilk uğurlu POST-dan `id` tutur, sonrakı saxlamalar `PATCH /api/news/admin/{id}`; slug saxlamadan sonra kilidli. `foto`→`photo` + localStorage draft miqrasiyası. `createNewsArticle` slug pre-check → typed `SLUG_EXISTS` → API 409 + insan dili mesaj. `updateNewsArticleAdmin` + PATCH route: publishedAt/newsType/telegramSend/logoOverlay/externalUrl əlavə olundu (externalUrl yalnız non-empty — NOT NULL UNIQUE). `mapPublicArticle.isManual = sourceId === null` (sentinel geriyə-uyumlu fallback); public select-lərə `sourceId` əlavə olundu. Detail page: manual xəbərdə düymə yox, kiçik "Mənbə: hostname" sətri; canonical `/haberler/`.
+
+**Verifikasiya:** tsc baseline 32 köhnə xəta (main) → 32 (dəyişikliklərlə), toxunulan fayllarda 0; eslint 0 error. `next build` bu sandbox-da Google Fonts şəbəkə blokuna görə MÜMKÜN DEYİL (DoD skip qaydası) — Hostinger build + canlı curl/Neon təsdiqi merge sonrası borc: (1) draft→content→re-save→200, (2) `SELECT length(content_az)` > 0, (3) dublikat slug → 409, (4) `curl | grep canonical` → `/haberler/`.
+
+**Sonrakı:** PR-B = TASK-0302 (edit səhifəsi `xeberler/[id]` + delete UI), PR-C = TASK-0303 (Manşet/Top/Gündəm consumer + ölü toggle-ları gizlət). Auth bypass (`canAccessNewsAdmin` Origin/Referer) ayrıca təcili PR gözləyir — CEO qərarı.
+
 ## 2026-06-09 — TASK-0242 (Blog: strukturlu Doğan notu + Guru qutuları route-a bağlandı)
 
 **Problem:** Yeni yayınlanan bloq yazısında ("Süni İntellekt çağında franchise…") guru qutusu və Doğan notu görünmürdü — "field by field doldururuq amma çıxmır". Araşdırma: editor (`BlogEditorForm.tsx`) `doganNote` (textarea) + `guruBoxes` (5-ə qədər guru/quote/book) sahələrini toplayır; API (`/api/blog/[slug]`) DB-yə yazır; `mapDbArticle` (blog-repository.ts:101,103) `doganNote` + `guruBoxes` qaytarır. **Amma** public render `app/[locale]/blog/[slug]/page.tsx` yalnız `MarkdownRenderer content` çağırırdı — strukturlu sahələri heç istifadə etmirdi. Köhnə yazılarda qutular markdown mətninə (ASCII `╔║`, `### guru kutusu`, `> 📝 Doğan notu`) gömülmüşdü, ona görə MarkdownRenderer onları tuturdu. Strukturlu sahələrlə yazılan yeni yazılar boş çıxırdı.

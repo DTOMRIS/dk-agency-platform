@@ -1,14 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
-import { getAdminNewsArticleById, updateNewsArticleAdmin, deleteNewsArticle } from '@/lib/repositories/newsRepository';
+import {
+  getAdminNewsArticleById,
+  updateNewsArticleAdmin,
+  deleteNewsArticle,
+} from '@/lib/repositories/newsRepository';
 
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await canAccessNewsAdmin(request);
   if (!auth.allowed) {
-    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
+    return NextResponse.json(
+      { success: false, error: 'Admin girisi teleb olunur.' },
+      { status: 403 }
+    );
   }
 
   const { id } = await params;
@@ -23,10 +27,13 @@ export async function PATCH(
   const nextTitleAz = typeof body.titleAz === 'string' ? body.titleAz : article.titleAz;
   const nextSummaryAz = typeof body.summaryAz === 'string' ? body.summaryAz : article.summaryAz;
 
-  if (body.status === 'approved' && (!nextTitleAz || !nextTitleAz.trim() || !nextSummaryAz || !nextSummaryAz.trim())) {
+  if (
+    body.status === 'approved' &&
+    (!nextTitleAz || !nextTitleAz.trim() || !nextSummaryAz || !nextSummaryAz.trim())
+  ) {
     return NextResponse.json(
       { success: false, error: 'Tərcümə olunmamış xəbər approve edilə bilməz.' },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -53,6 +60,11 @@ export async function PATCH(
     imageUrl: body.imageUrl,
     seoTitle: body.seoTitle,
     seoDescription: body.seoDescription,
+    publishedAt: body.publishedAt,
+    newsType: body.newsType,
+    telegramSend: body.telegramSend,
+    logoOverlay: body.logoOverlay,
+    externalUrl: body.externalUrl,
   });
 
   return NextResponse.json({ success: true, source: result.source });
@@ -60,11 +72,14 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const auth = await canAccessNewsAdmin(request);
   if (!auth.allowed) {
-    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
+    return NextResponse.json(
+      { success: false, error: 'Admin girisi teleb olunur.' },
+      { status: 403 }
+    );
   }
 
   const { id } = await params;
@@ -79,13 +94,13 @@ export async function DELETE(
   return NextResponse.json({ success: true, source: result.source });
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const auth = await canAccessNewsAdmin(request);
   if (!auth.allowed) {
-    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
+    return NextResponse.json(
+      { success: false, error: 'Admin girisi teleb olunur.' },
+      { status: 403 }
+    );
   }
 
   const { id } = await params;

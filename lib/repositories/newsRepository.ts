@@ -95,14 +95,22 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
         status: item.isPremium ? 'translated' : 'approved',
         isEditorPick: index === 0,
       }))
-      .filter((item) => (!filters.status || filters.status === 'all' ? true : item.status === filters.status));
+      .filter((item) =>
+        !filters.status || filters.status === 'all' ? true : item.status === filters.status
+      );
 
-    return { items: mockRows as AdminNewsArticle[], total: mockRows.length, source: 'mock' as const };
+    return {
+      items: mockRows as AdminNewsArticle[],
+      total: mockRows.length,
+      source: 'mock' as const,
+    };
   }
 
   const conditions = [];
   if (filters.status && filters.status !== 'all') {
-    conditions.push(eq(newsArticles.status, filters.status as typeof newsArticles.$inferSelect.status));
+    conditions.push(
+      eq(newsArticles.status, filters.status as typeof newsArticles.$inferSelect.status)
+    );
   }
 
   const rows = await db
@@ -145,7 +153,7 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
 
 export async function updateNewsArticleReviewState(
   id: number,
-  input: { status?: 'fetched' | 'translated' | 'approved' | 'rejected'; isEditorPick?: boolean },
+  input: { status?: 'fetched' | 'translated' | 'approved' | 'rejected'; isEditorPick?: boolean }
 ) {
   if (!dbAvailable || !db) {
     return { success: true, source: 'mock' as const };
@@ -187,7 +195,12 @@ export async function updateNewsArticleAdmin(
     imageUrl?: string | null;
     seoTitle?: string | null;
     seoDescription?: string | null;
-  },
+    publishedAt?: string | null;
+    newsType?: string | null;
+    telegramSend?: boolean;
+    logoOverlay?: boolean;
+    externalUrl?: string | null;
+  }
 ) {
   if (!dbAvailable || !db) {
     return { success: true, source: 'mock' as const };
@@ -195,19 +208,24 @@ export async function updateNewsArticleAdmin(
 
   const setData: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(input)) {
-    if (value !== undefined) {
-      setData[key] = value;
+    if (value === undefined) continue;
+    if (key === 'publishedAt') {
+      if (typeof value === 'string' && value.trim()) setData[key] = new Date(value);
+      continue;
     }
+    // external_url is NOT NULL UNIQUE — empty string would collide across rows
+    if (key === 'externalUrl') {
+      if (typeof value === 'string' && value.trim()) setData[key] = value.trim();
+      continue;
+    }
+    setData[key] = value;
   }
 
   if (Object.keys(setData).length === 0) {
     return { success: true, source: 'db' as const };
   }
 
-  await db
-    .update(newsArticles)
-    .set(setData)
-    .where(eq(newsArticles.id, id));
+  await db.update(newsArticles).set(setData).where(eq(newsArticles.id, id));
 
   return { success: true, source: 'db' as const };
 }
@@ -377,7 +395,7 @@ export async function getFetchedNewsArticles(limit: number = 10) {
 
 export async function updateTranslatedNewsArticle(
   id: number,
-  input: { titleAz: string; summaryAz: string },
+  input: { titleAz: string; summaryAz: string }
 ) {
   if (!dbAvailable || !db) return { success: true, source: 'mock' as const };
 
@@ -393,48 +411,65 @@ export async function updateTranslatedNewsArticle(
   return { success: true, source: 'db' as const };
 }
 
-function mapPublicArticle(row: {
-  id: number;
-  slug: string | null;
-  title: string;
-  titleAz: string | null;
-  summary: string | null;
-  summaryAz: string | null;
-  category: typeof newsArticles.$inferSelect.category;
-  imageUrl: string | null;
-  author: string | null;
-  sourceName: string | null;
-  externalUrl: string;
-  publishedAt: Date | null;
-  isEditorPick: boolean;
-  titleRu?: string | null;
-  titleEn?: string | null;
-  titleTr?: string | null;
-  summaryRu?: string | null;
-  summaryEn?: string | null;
-  summaryTr?: string | null;
-  contentAz?: string | null;
-  contentRu?: string | null;
-  contentEn?: string | null;
-  contentTr?: string | null;
-}, locale: ContentLocale = 'az'): PublicNewsArticle {
+function mapPublicArticle(
+  row: {
+    id: number;
+    slug: string | null;
+    title: string;
+    titleAz: string | null;
+    summary: string | null;
+    summaryAz: string | null;
+    category: typeof newsArticles.$inferSelect.category;
+    imageUrl: string | null;
+    author: string | null;
+    sourceName: string | null;
+    externalUrl: string;
+    publishedAt: Date | null;
+    isEditorPick: boolean;
+    titleRu?: string | null;
+    titleEn?: string | null;
+    titleTr?: string | null;
+    summaryRu?: string | null;
+    summaryEn?: string | null;
+    summaryTr?: string | null;
+    contentAz?: string | null;
+    contentRu?: string | null;
+    contentEn?: string | null;
+    contentTr?: string | null;
+    sourceId?: number | null;
+  },
+  locale: ContentLocale = 'az'
+): PublicNewsArticle {
   const titleByLocale: Record<ContentLocale, string | null | undefined> = {
-    az: row.titleAz, ru: row.titleRu, en: row.titleEn, tr: row.titleTr,
+    az: row.titleAz,
+    ru: row.titleRu,
+    en: row.titleEn,
+    tr: row.titleTr,
   };
   const summaryByLocale: Record<ContentLocale, string | null | undefined> = {
-    az: row.summaryAz, ru: row.summaryRu, en: row.summaryEn, tr: row.summaryTr,
+    az: row.summaryAz,
+    ru: row.summaryRu,
+    en: row.summaryEn,
+    tr: row.summaryTr,
   };
   const contentByLocale: Record<ContentLocale, string | null | undefined> = {
-    az: row.contentAz, ru: row.contentRu, en: row.contentEn, tr: row.contentTr,
+    az: row.contentAz,
+    ru: row.contentRu,
+    en: row.contentEn,
+    tr: row.contentTr,
   };
 
   const title = titleByLocale[locale]?.trim() || row.titleAz || row.title;
   const summary = summaryByLocale[locale]?.trim() || row.summaryAz || row.summary || '';
   const content = contentByLocale[locale]?.trim() || row.contentAz || '';
 
-  // Manual news has synthetic externalUrl like "manual:slug:timestamp" —
-  // it's not a real source link and shouldn't be exposed as "read full article".
-  const isManual = typeof row.externalUrl === 'string' && row.externalUrl.startsWith('manual:');
+  // Manual = written in our admin (no RSS source). sourceId === null is the
+  // authoritative signal; the legacy "manual:slug:timestamp" sentinel is kept
+  // for rows whose query didn't select sourceId. A manual article with a real
+  // externalUrl is still manual — the URL is a reference, not "read at source".
+  const isManual =
+    row.sourceId === null ||
+    (typeof row.externalUrl === 'string' && row.externalUrl.startsWith('manual:'));
 
   return {
     id: row.id,
@@ -475,6 +510,7 @@ function buildPublicArticleSelect() {
     imageUrl: newsArticles.imageUrl,
     author: newsArticles.author,
     sourceName: newsSources.name,
+    sourceId: newsArticles.sourceId,
     externalUrl: newsArticles.externalUrl,
     publishedAt: newsArticles.publishedAt,
     isEditorPick: newsArticles.isEditorPick,
@@ -501,7 +537,9 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, l
         publishedAt: item.publishDate,
         isEditorPick: index === 0,
       }))
-      .filter((item) => (filters.category && filters.category !== 'all' ? item.category === filters.category : true));
+      .filter((item) =>
+        filters.category && filters.category !== 'all' ? item.category === filters.category : true
+      );
 
     return {
       items: mockItems.slice(filters.offset ?? 0, (filters.offset ?? 0) + (filters.limit ?? 12)),
@@ -523,7 +561,10 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, l
       .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
       .limit(limit)
       .offset(offset),
-    db.select({ count: sql<number>`count(*)::int` }).from(newsArticles).where(where),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(newsArticles)
+      .where(where),
   ]);
 
   return {
@@ -551,8 +592,8 @@ export async function getApprovedEditorPick(category?: NewsCategoryKey, locale?:
         sql`trim(coalesce(${newsArticles.titleAz}, '')) <> ''`,
         isNotNull(newsArticles.summaryAz),
         sql`trim(coalesce(${newsArticles.summaryAz}, '')) <> ''`,
-        ...(category && category !== 'all' ? [eq(newsArticles.category, category)] : []),
-      ),
+        ...(category && category !== 'all' ? [eq(newsArticles.category, category)] : [])
+      )
     )
     .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
     .limit(1)
@@ -592,6 +633,7 @@ export async function getNewsArticleBySlug(slug: string, locale?: string, previe
       imageUrl: newsArticles.imageUrl,
       author: newsArticles.author,
       sourceName: newsSources.name,
+      sourceId: newsArticles.sourceId,
       externalUrl: newsArticles.externalUrl,
       publishedAt: newsArticles.publishedAt,
       isEditorPick: newsArticles.isEditorPick,
@@ -612,7 +654,11 @@ export async function getNewsArticleBySlug(slug: string, locale?: string, previe
   };
 }
 
-export async function getRelatedApprovedNewsArticles(articleId: number, category: Exclude<NewsCategoryKey, 'all'>, locale?: string) {
+export async function getRelatedApprovedNewsArticles(
+  articleId: number,
+  category: Exclude<NewsCategoryKey, 'all'>,
+  locale?: string
+) {
   const loc = sanitizeLocale(locale);
 
   if (!dbAvailable || !db) return [];
@@ -621,12 +667,7 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
     .select(buildPublicArticleSelect())
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
-    .where(
-      and(
-        ...getPublicNewsConditions(category),
-        ne(newsArticles.id, articleId),
-      ),
-    )
+    .where(and(...getPublicNewsConditions(category), ne(newsArticles.id, articleId)))
     .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
     .limit(3);
 
@@ -693,6 +734,20 @@ export async function createNewsArticle(input: CreateNewsInput) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 240);
+
+  // slug is UNIQUE — without this check a duplicate insert surfaced as a
+  // generic 500 and the editor's freshly typed content was silently lost.
+  const existing = await db
+    .select({ id: newsArticles.id })
+    .from(newsArticles)
+    .where(eq(newsArticles.slug, slug))
+    .limit(1);
+  if (existing.length > 0) {
+    throw Object.assign(
+      new Error('Bu slug artıq mövcuddur — mövcud xəbəri redaktə et və ya slug-ı dəyiş.'),
+      { code: 'SLUG_EXISTS' }
+    );
+  }
 
   const externalUrl =
     input.externalUrl && input.externalUrl.trim().length > 0
@@ -794,9 +849,12 @@ export async function autoTranslateNewsArticle(id: number): Promise<NewsTranslat
       const langUpdates: Record<string, string> = {};
       const fields: Array<['title' | 'summary' | 'content', string]> = [];
 
-      const titleTarget = row[`title${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
-      const summaryTarget = row[`summary${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
-      const contentTarget = row[`content${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
+      const titleTarget =
+        row[`title${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
+      const summaryTarget =
+        row[`summary${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
+      const contentTarget =
+        row[`content${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
 
       if (needsTranslation(titleTarget, row.titleAz)) {
         fields.push(['title', row.titleAz as string]);
@@ -822,11 +880,15 @@ export async function autoTranslateNewsArticle(id: number): Promise<NewsTranslat
           langUpdates[`${name}${capLang}`] = v;
           // also support snake case if drizzle picks that — set both to be safe
           void capName;
-          console.log(`[translate-news] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`);
+          console.log(
+            `[translate-news] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`
+          );
         } else {
           anyFail = true;
           failedFields.push(`${name}_${lang}`);
-          console.error(`[translate-news] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars)`);
+          console.error(
+            `[translate-news] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars)`
+          );
         }
       }
 
