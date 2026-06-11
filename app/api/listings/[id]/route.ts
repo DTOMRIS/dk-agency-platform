@@ -1,9 +1,10 @@
 import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
-import { listings, listingMedia } from '@/lib/db/schema';
+import { listings, listingMedia, listingLeads } from '@/lib/db/schema';
 import { getListingDetail } from '@/lib/repositories/listingRepository';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
+import { getServerMemberSession } from '@/lib/members/server-session';
 import { isValidSector } from '@/lib/data/listingSectors';
 import type { ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 
@@ -69,17 +70,23 @@ export async function PATCH(
     return NextResponse.json({ success: false, error: 'Elan tapılmadı.' }, { status: 404 });
   }
 
-  // Ownership check
-  if (row.ownerId !== auth.userId) {
-    return NextResponse.json({ success: false, error: 'Bu elana düzəliş etmək hüququnuz yoxdur.' }, { status: 403 });
-  }
+  // Admin bypass — admins can edit any listing in any status
+  const session = await getServerMemberSession();
+  const isAdmin = session.loggedIn && session.plan === 'admin';
 
-  // Status guard
-  if (!OWNER_EDITABLE_STATUSES.includes(row.status as ListingWorkflowStatus)) {
-    return NextResponse.json(
-      { success: false, error: `"${row.status}" statusunda olan elanı redaktə etmək mümkün deyil.` },
-      { status: 409 },
-    );
+  if (!isAdmin) {
+    // Ownership check
+    if (row.ownerId !== auth.userId) {
+      return NextResponse.json({ success: false, error: 'Bu elana düzəliş etmək hüququnuz yoxdur.' }, { status: 403 });
+    }
+
+    // Status guard
+    if (!OWNER_EDITABLE_STATUSES.includes(row.status as ListingWorkflowStatus)) {
+      return NextResponse.json(
+        { success: false, error: `"${row.status}" statusunda olan elanı redaktə etmək mümkün deyil.` },
+        { status: 409 },
+      );
+    }
   }
 
   const body = await request.json();
@@ -116,6 +123,34 @@ export async function PATCH(
       });
     }
   }
+
+  return NextResponse.json({ success: true, source: 'db' });
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const session = await getServerMemberSession();
+  if (!session.loggedIn || session.plan !== 'admin') {
+    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
+  }
+
+  if (!dbAvailable || !db) {
+    return NextResponse.json({ success: false, error: 'Verilənlər bazası əlçatmazdır.' }, { status: 503 });
+  }
+
+  const { id } = await params;
+  const listingId = Number(id);
+
+  const [row] = await db.select({ id: listings.id }).from(listings).where(eq(listings.id, listingId));
+  if (!row) {
+    return NextResponse.json({ success: false, error: 'Elan tapılmadı.' }, { status: 404 });
+  }
+
+  await db.delete(listingLeads).where(eq(listingLeads.listingId, listingId));
+  await db.delete(listingMedia).where(eq(listingMedia.listingId, listingId));
+  await db.delete(listings).where(eq(listings.id, listingId));
 
   return NextResponse.json({ success: true, source: 'db' });
 }

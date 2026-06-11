@@ -1,3 +1,4 @@
+import { and, eq, ne } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { getListings } from '@/lib/db/listings-repository';
@@ -7,6 +8,8 @@ import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { generateTrackingCode } from '@/lib/utils/tracking';
 import { isValidSector } from '@/lib/data/listingSectors';
+
+const MAX_FREE_LISTINGS = 2;
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -88,6 +91,23 @@ export async function POST(request: NextRequest) {
       source: 'mock',
       data: { id: Date.now(), trackingCode, ...body },
     });
+  }
+
+  // Free listing limit: max 2 per non-admin user (until September 2026)
+  const isAdmin = session.plan === 'admin';
+  if (!isAdmin && auth?.userId) {
+    const existingCount = await db
+      .select({ id: listings.id })
+      .from(listings)
+      .where(and(eq(listings.ownerId, auth.userId), ne(listings.status, 'rejected')))
+      .then((rows) => rows.length);
+
+    if (existingCount >= MAX_FREE_LISTINGS) {
+      return NextResponse.json(
+        { success: false, error: `Pulsuz dövrdə maksimum ${MAX_FREE_LISTINGS} elan yerləşdirə bilərsiniz.` },
+        { status: 403 },
+      );
+    }
   }
 
   const inserted = await db

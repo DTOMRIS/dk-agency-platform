@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
-import { getAdminNewsArticleById, updateNewsArticleAdmin } from '@/lib/repositories/newsRepository';
+import { getAdminNewsArticleById, updateNewsArticleAdmin, deleteNewsArticle } from '@/lib/repositories/newsRepository';
 
 export async function PATCH(
   request: NextRequest,
@@ -33,10 +33,68 @@ export async function PATCH(
   const result = await updateNewsArticleAdmin(articleId, {
     status: body.status,
     isEditorPick: body.isEditorPick,
+    isManset: body.isManset,
+    isTop: body.isTop,
+    isGundem: body.isGundem,
     titleAz: body.titleAz,
+    titleRu: body.titleRu,
+    titleEn: body.titleEn,
+    titleTr: body.titleTr,
     summaryAz: body.summaryAz,
+    summaryRu: body.summaryRu,
+    summaryEn: body.summaryEn,
+    summaryTr: body.summaryTr,
+    contentAz: body.contentAz,
+    contentRu: body.contentRu,
+    contentEn: body.contentEn,
+    contentTr: body.contentTr,
+    category: body.category,
+    author: body.author,
     imageUrl: body.imageUrl,
+    seoTitle: body.seoTitle,
+    seoDescription: body.seoDescription,
   });
 
   return NextResponse.json({ success: true, source: result.source });
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const auth = await canAccessNewsAdmin(request);
+  if (!auth.allowed) {
+    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
+  }
+
+  const { id } = await params;
+  const articleId = Number(id);
+  const article = await getAdminNewsArticleById(articleId);
+
+  if (!article) {
+    return NextResponse.json({ success: false, error: 'Xeber tapilmadi.' }, { status: 404 });
+  }
+
+  const result = await deleteNewsArticle(articleId);
+  return NextResponse.json({ success: true, source: result.source });
+}
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const auth = await canAccessNewsAdmin(request);
+  if (!auth.allowed) {
+    return NextResponse.json({ success: false, error: 'Admin girisi teleb olunur.' }, { status: 403 });
+  }
+
+  const { id } = await params;
+  const articleId = Number(id);
+  const article = await getAdminNewsArticleById(articleId);
+
+  if (!article) {
+    return NextResponse.json({ success: false, error: 'Xeber tapilmadi.' }, { status: 404 });
+  }
+
+  return NextResponse.json({ success: true, data: article });
 }
