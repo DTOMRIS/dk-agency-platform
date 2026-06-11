@@ -855,25 +855,7 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
               {copy.editorPick}
             </label>
 
-            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-slate-700">
-              <input
-                type="checkbox"
-                checked={draft.telegramSend}
-                onChange={(e) => setField('telegramSend', e.target.checked)}
-                className="h-4 w-4 rounded"
-              />
-              {copy.telegram}
-            </label>
-
-            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-slate-700">
-              <input
-                type="checkbox"
-                checked={draft.logoOverlay}
-                onChange={(e) => setField('logoOverlay', e.target.checked)}
-                className="h-4 w-4 rounded"
-              />
-              {copy.logoOverlay}
-            </label>
+            {/* Telegram + Logo overlay — backend inteqrasiyası hələ yoxdur, gizlədilib */}
 
             <div>
               <label className="mb-2 block text-sm font-bold text-slate-700">{copy.newsType}</label>
