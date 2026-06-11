@@ -27,6 +27,7 @@ interface AdminNewsRow {
 
 interface EditorDraft {
   id: number;
+  slug: string | null;
   title: string;
   summary: string | null;
   titleAz: string;
@@ -338,6 +339,7 @@ export default function DashboardXeberlerPage() {
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [savingEditor, setSavingEditor] = useState(false);
+  const [translatingEditor, setTranslatingEditor] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [editorDraft, setEditorDraft] = useState<EditorDraft | null>(null);
 
@@ -390,6 +392,28 @@ export default function DashboardXeberlerPage() {
     }
   }
 
+  async function translateItem(slug: string) {
+    if (!slug) return;
+    setTranslatingEditor(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/news/admin/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { results?: Record<string, string> };
+      if (!res.ok) throw new Error('Tərcümə uğursuz oldu');
+      const results = data.results || {};
+      const parts = Object.entries(results).map(([lang, status]) => `${lang}: ${status}`);
+      setToast(`Tərcümə: ${parts.join(', ')}`);
+    } catch {
+      setError('Tərcümə uğursuz oldu. Yenidən cəhd edin.');
+    } finally {
+      setTranslatingEditor(false);
+    }
+  }
+
   async function updateItem(id: number, body: { status?: FilterStatus; isEditorPick?: boolean }) {
     setError(null);
     setToast(null);
@@ -419,6 +443,7 @@ export default function DashboardXeberlerPage() {
     setToast(null);
     setEditorDraft({
       id: item.id,
+      slug: item.slug,
       title: item.title,
       summary: item.summary,
       titleAz: item.titleAz || '',
@@ -710,8 +735,8 @@ export default function DashboardXeberlerPage() {
                         prev
                           ? {
                               ...prev,
-                              titleAz: prev.titleAz || prev.title,
-                              summaryAz: prev.summaryAz || prev.summary || '',
+                              titleAz: prev.title || prev.titleAz,
+                              summaryAz: prev.summary || prev.summaryAz,
                             }
                           : prev,
                       )
@@ -817,7 +842,17 @@ export default function DashboardXeberlerPage() {
                 </div>
               </div>
 
-              <div className="mt-6 flex flex-wrap justify-end gap-3">
+              <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+                {editorDraft.slug ? (
+                  <button
+                    type="button"
+                    disabled={translatingEditor}
+                    onClick={() => void translateItem(editorDraft.slug || '')}
+                    className="rounded-full bg-[var(--dk-navy)] px-5 py-3 text-sm font-bold text-white disabled:opacity-60"
+                  >
+                    {translatingEditor ? '⏳ Tərcümə olunur…' : '🌐 Tərcümə et (RU/EN/TR)'}
+                  </button>
+                ) : null}
                 <button
                   type="button"
                   disabled={savingEditor}
