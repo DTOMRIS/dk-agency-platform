@@ -20,14 +20,14 @@ export async function PATCH(
     return NextResponse.json({ success: false, error: 'Xeber tapilmadi.' }, { status: 404 });
   }
 
-  const nextTitleAz = typeof body.titleAz === 'string' ? body.titleAz : article.titleAz;
-  const nextSummaryAz = typeof body.summaryAz === 'string' ? body.summaryAz : article.summaryAz;
+  // If titleAz/summaryAz missing, fall back to original English — don't block approve
+  const nextTitleAz = typeof body.titleAz === 'string' ? body.titleAz : (article.titleAz || article.title);
+  const nextSummaryAz = typeof body.summaryAz === 'string' ? body.summaryAz : (article.summaryAz || article.summary || '');
 
-  if (body.status === 'approved' && (!nextTitleAz || !nextTitleAz.trim() || !nextSummaryAz || !nextSummaryAz.trim())) {
-    return NextResponse.json(
-      { success: false, error: 'Tərcümə olunmamış xəbər approve edilə bilməz.' },
-      { status: 400 },
-    );
+  // Auto-fill titleAz/summaryAz from original if empty (so approve always works)
+  if (body.status === 'approved' && (!article.titleAz || !article.summaryAz)) {
+    body.titleAz = body.titleAz || nextTitleAz;
+    body.summaryAz = body.summaryAz || nextSummaryAz;
   }
 
   const result = await updateNewsArticleAdmin(articleId, {
