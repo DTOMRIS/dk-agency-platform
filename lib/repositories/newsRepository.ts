@@ -116,6 +116,7 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
       titleAz: newsArticles.titleAz,
       summary: newsArticles.summary,
       summaryAz: newsArticles.summaryAz,
+      contentAz: newsArticles.contentAz,
       category: newsArticles.category,
       imageUrl: newsArticles.imageUrl,
       author: newsArticles.author,

@@ -31,6 +31,7 @@ interface EditorDraft {
   summary: string | null;
   titleAz: string;
   summaryAz: string;
+  contentAz: string;
   imageUrl: string;
   externalUrl: string | null;
   status: FilterStatus;
@@ -42,6 +43,10 @@ const pageCopy: Record<
     pageTitle: string;
     pageSubtitle: string;
     filterAll: string;
+    filterFetched: string;
+    filterTranslated: string;
+    filterApproved: string;
+    filterRejected: string;
     errorPrefix: string;
     colOriginal: string;
     colAzTranslation: string;
@@ -92,8 +97,12 @@ const pageCopy: Record<
 > = {
   az: {
     pageTitle: 'Xəbərlər idarəsi',
-    pageSubtitle: 'Review paneli artiq `news_articles` və `news_sources` cədvəllərindən qidalanır.',
+    pageSubtitle: 'Xəbərləri idarə edin: təsdiqlə, redaktə et, rədd et.',
     filterAll: 'Hamısı',
+    filterFetched: 'Gözləyən',
+    filterTranslated: 'Tərcümə olunmuş',
+    filterApproved: 'Təsdiqlənmiş',
+    filterRejected: 'Rədd edilmiş',
     errorPrefix: 'Xəbər siyahısı yüklənmədi',
     colOriginal: 'Original',
     colAzTranslation: 'AZ tərcümə',
@@ -145,6 +154,10 @@ const pageCopy: Record<
     pageTitle: 'Управление новостями',
     pageSubtitle: 'Панель просмотра питается из таблиц `news_articles` и `news_sources`.',
     filterAll: 'Все',
+    filterFetched: 'Ожидающие',
+    filterTranslated: 'Переведённые',
+    filterApproved: 'Одобренные',
+    filterRejected: 'Отклонённые',
     errorPrefix: 'Список новостей не загружен',
     colOriginal: 'Оригинал',
     colAzTranslation: 'Перевод AZ',
@@ -196,6 +209,10 @@ const pageCopy: Record<
     pageTitle: 'News management',
     pageSubtitle: 'The review panel feeds from `news_articles` and `news_sources` tables.',
     filterAll: 'All',
+    filterFetched: 'Pending',
+    filterTranslated: 'Translated',
+    filterApproved: 'Approved',
+    filterRejected: 'Rejected',
     errorPrefix: 'News list failed to load',
     colOriginal: 'Original',
     colAzTranslation: 'AZ translation',
@@ -247,6 +264,10 @@ const pageCopy: Record<
     pageTitle: 'Haber yönetimi',
     pageSubtitle: 'İnceleme paneli `news_articles` ve `news_sources` tablolarından beslenmektedir.',
     filterAll: 'Tümü',
+    filterFetched: 'Bekleyen',
+    filterTranslated: 'Çevrilen',
+    filterApproved: 'Onaylanan',
+    filterRejected: 'Reddedilen',
     errorPrefix: 'Haber listesi yüklenemedi',
     colOriginal: 'Orijinal',
     colAzTranslation: 'AZ çeviri',
@@ -376,6 +397,7 @@ export default function DashboardXeberlerPage() {
       summary: item.summary,
       titleAz: item.titleAz || '',
       summaryAz: item.summaryAz || '',
+      contentAz: (item as unknown as { contentAz?: string }).contentAz || '',
       imageUrl: item.imageUrl || '',
       externalUrl: item.externalUrl,
       status: item.status,
@@ -438,9 +460,10 @@ export default function DashboardXeberlerPage() {
     setError(null);
     setToast(null);
     try {
-      const payload = {
+      const payload: Record<string, unknown> = {
         titleAz: editorDraft.titleAz.trim(),
         summaryAz: editorDraft.summaryAz.trim(),
+        contentAz: editorDraft.contentAz?.trim() || null,
         imageUrl: editorDraft.imageUrl.trim() || null,
         status: nextStatus || (editorDraft.status === 'fetched' ? 'translated' : editorDraft.status),
       };
@@ -468,10 +491,10 @@ export default function DashboardXeberlerPage() {
 
   const filterButtons: [FilterStatus, string][] = [
     ['all', copy.filterAll],
-    ['fetched', 'Fetched'],
-    ['translated', 'Translated'],
-    ['approved', 'Approved'],
-    ['rejected', 'Rejected'],
+    ['fetched', copy.filterFetched],
+    ['translated', copy.filterTranslated],
+    ['approved', copy.filterApproved],
+    ['rejected', copy.filterRejected],
   ];
 
   return (
@@ -696,6 +719,22 @@ export default function DashboardXeberlerPage() {
                       className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-[15px] leading-8 text-slate-900 outline-none transition focus:border-[var(--dk-gold)] focus:bg-white"
                     />
                   </div>
+                  <div>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <label className="block text-sm font-black uppercase tracking-[0.14em] text-slate-500">Məzmun (AZ)</label>
+                      <span className="text-xs font-semibold text-slate-400">{(editorDraft.contentAz || '').length} {copy.characters}</span>
+                    </div>
+                    <textarea
+                      rows={10}
+                      value={editorDraft.contentAz || ''}
+                      onChange={(event) =>
+                        setEditorDraft((prev) => (prev ? { ...prev, contentAz: event.target.value } : prev))
+                      }
+                      placeholder="Xəbərin tam məzmununu buraya daxil edin (xülasədən fərqli olaraq ətraflı mətn)..."
+                      className="w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 font-mono text-sm leading-7 text-slate-900 outline-none transition focus:border-[var(--dk-gold)] focus:bg-white"
+                    />
+                  </div>
+
                   <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div>
