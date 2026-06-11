@@ -145,6 +145,38 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
       });
     }
 
+    // Process :::images{cols=N} blocks → HTML grid
+    processed = processed.replace(
+      /:::images\{cols=(\d)\}\n([\s\S]*?):::/g,
+      (_match, cols, inner) => {
+        const urls = inner.trim().split('\n').map((line: string) => line.trim()).filter(Boolean);
+        const imgs = urls.map((url: string) => `<div class="overflow-hidden rounded-2xl border border-slate-200"><img src="${url}" alt="" class="w-full h-full object-cover" loading="lazy" /></div>`).join('\n');
+        return `<div class="dk-image-grid grid gap-3 my-8" style="grid-template-columns: repeat(${cols}, 1fr)">${imgs}</div>`;
+      }
+    );
+
+    // Process :::gallery blocks → image gallery (masonry-like)
+    processed = processed.replace(
+      /:::gallery\n([\s\S]*?):::/g,
+      (_match, inner) => {
+        const urls = inner.trim().split('\n').map((line: string) => line.trim()).filter(Boolean);
+        const imgs = urls.map((url: string) => `<div class="overflow-hidden rounded-2xl border border-slate-200"><img src="${url}" alt="" class="w-full object-cover" loading="lazy" /></div>`).join('\n');
+        return `<div class="dk-gallery grid grid-cols-2 md:grid-cols-3 gap-3 my-8">${imgs}</div>`;
+      }
+    );
+
+    // Process :::video{src=URL} → lazy YouTube/video embed
+    processed = processed.replace(
+      /:::video\{src="?([^"}\s]+)"?\}/g,
+      (_match, src) => {
+        const ytMatch = src.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+        if (ytMatch) {
+          return `<div class="my-8 overflow-hidden rounded-2xl border border-slate-200 aspect-video"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}" class="w-full h-full" loading="lazy" allowfullscreen title="Video"></iframe></div>`;
+        }
+        return `<div class="my-8 overflow-hidden rounded-2xl border border-slate-200 aspect-video"><video src="${src}" controls class="w-full h-full object-cover"></video></div>`;
+      }
+    );
+
     return { processed, guruBoxes };
   }, [content]);
 

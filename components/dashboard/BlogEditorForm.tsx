@@ -1,8 +1,9 @@
 'use client';
 
-import { ChangeEvent, useMemo, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { compressImage, validateImage } from '@/lib/utils/imageUtils';
+import { slugifyAz } from '@/lib/utils/slugify-az';
 
 const AUTHOR_OPTIONS = ['Doğan Tomris', 'DK Agency', 'Qonaq Müəllif'] as const;
 const CATEGORY_OPTIONS = ['Maliyyə', 'Əməliyyat', 'Kadr', 'Hüquqi', 'Satış', 'Marketinq'] as const;
@@ -56,22 +57,6 @@ function contentKey(locale: LocaleTab): keyof BlogDraft {
   return `content${locale.charAt(0).toUpperCase() + locale.slice(1)}` as keyof BlogDraft;
 }
 
-function slugify(value: string) {
-  return value
-    .replace(/İ/g, 'i')
-    .replace(/ı/g, 'i')
-    .replace(/I/g, 'i')
-    .toLowerCase()
-    .replace(/ə/g, 'e')
-    .replace(/ö/g, 'o')
-    .replace(/ü/g, 'u')
-    .replace(/ş/g, 's')
-    .replace(/ç/g, 'c')
-    .replace(/ğ/g, 'g')
-    .replace(/\u0307/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
 
 const EMPTY_DRAFT: BlogDraft = {
   slug: '',
@@ -97,16 +82,56 @@ const EMPTY_DRAFT: BlogDraft = {
   guruBoxes: [],
 };
 
+const LOCAL_STORAGE_KEY = 'dk-blog-editor-draft';
+
 export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraft }) {
   const router = useRouter();
-  const [post, setPost] = useState<BlogDraft>(initialPost ?? EMPTY_DRAFT);
-  const [imagePreview, setImagePreview] = useState(initialPost?.featuredImage || '');
+  const draftRestoredRef = useRef(false);
+
+  const [post, setPost] = useState<BlogDraft>(() => {
+    if (initialPost) return initialPost;
+    if (typeof window === 'undefined') return EMPTY_DRAFT;
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        draftRestoredRef.current = true;
+        return { ...EMPTY_DRAFT, ...JSON.parse(saved) };
+      }
+    } catch { /* ignore */ }
+    return EMPTY_DRAFT;
+  });
+
+  const [imagePreview, setImagePreview] = useState(initialPost?.featuredImage || post.featuredImage || '');
   const [toast, setToast] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [errors, setErrors] = useState<{ titleAz?: string; slug?: string; contentAz?: string }>({});
 
   const [activeLocale, setActiveLocale] = useState<LocaleTab>('az');
+
+  // Draft restored notification
+  useEffect(() => {
+    if (draftRestoredRef.current) {
+      setToast('📝 Qaralama bərpa edildi');
+      draftRestoredRef.current = false;
+    }
+  }, []);
+
+  // Auto-save to localStorage (debounce 1s, only new posts)
+  useEffect(() => {
+    if (initialPost) return;
+    const timer = setTimeout(() => {
+      try { localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(post)); } catch { /* ignore */ }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [post, initialPost]);
+
+  const clearLocalDraft = () => {
+    try { localStorage.removeItem(LOCAL_STORAGE_KEY); } catch { /* ignore */ }
+    setPost(EMPTY_DRAFT);
+    setImagePreview('');
+    setToast('Qaralama təmizləndi');
+  };
 
   const [seoTitleCount, seoDescriptionCount, doganNoteCount] = useMemo(
     () => [post.seoTitle.length, post.seoDescription.length, post.doganNote.length],
@@ -243,7 +268,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
     const safeImage =
       durableImage.startsWith('blob:') || durableImage.startsWith('data:') ? '' : durableImage;
 
-    const cleanSlug = slugify(post.slug);
+    const cleanSlug = slugifyAz(post.slug);
     const payload = {
       ...post,
       slug: cleanSlug,
@@ -264,6 +289,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
         return;
       }
 
+      try { localStorage.removeItem(LOCAL_STORAGE_KEY); } catch { /* ignore */ }
       showToast(nextStatus === 'published' ? 'Yazı dərc edildi.' : 'Qaralama saxlanıldı.');
       router.push('/dashboard/blog');
       router.refresh();
@@ -339,7 +365,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               onChange={(e) => {
                 const title = e.target.value;
                 setField(titleKey(activeLocale), title);
-                if (!initialPost && activeLocale === 'az') setField('slug', slugify(title));
+                if (!initialPost && activeLocale === 'az') setField('slug', slugifyAz(title));
               }}
               placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} tərcümə...` : ''}
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
@@ -354,7 +380,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             <input
               value={post.slug}
               onChange={(e) => setField('slug', e.target.value)}
-              onBlur={() => setField('slug', slugify(post.slug))}
+              onBlur={() => setField('slug', slugifyAz(post.slug))}
               className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
             />
             {errors.slug ? <p className="mt-2 text-xs text-red-600">{errors.slug}</p> : null}
@@ -631,6 +657,64 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               <option value="/toolkit/qonaq-evi-roi-kalkulyatoru|Qonaq Evi ROI">🏠 Qonaq Evi ROI</option>
               <option value="/toolkit/whatsapp-template-paketi|WhatsApp Şablon Paketi">💬 WhatsApp Şablon</option>
             </select>
+
+            <span className="mx-1 h-5 w-px bg-slate-300" />
+
+            {/* Image grid insert */}
+            <select
+              className="rounded-lg border-0 bg-transparent px-2 py-1 text-xs font-semibold text-violet-700 hover:bg-violet-50 cursor-pointer"
+              value=""
+              onChange={(ev) => {
+                const cols = ev.target.value;
+                if (!cols) return;
+                const ta = document.getElementById('blog-content-textarea') as HTMLTextAreaElement | null;
+                if (!ta) return;
+                const { selectionStart: s } = ta;
+                const val = ta.value;
+                const placeholder = Array.from({ length: Number(cols) }, (_, i) => `https://res.cloudinary.com/.../image${i + 1}.webp`).join('\n');
+                const insert = `\n:::images{cols=${cols}}\n${placeholder}\n:::\n`;
+                setField(contentKey(activeLocale), val.slice(0, s) + insert + val.slice(s));
+                ev.target.value = '';
+              }}
+            >
+              <option value="">🖼️ Şəkil düzəni</option>
+              <option value="1">1 sütun (tam en)</option>
+              <option value="2">2 sütun (yan-yana)</option>
+              <option value="3">3 sütun</option>
+              <option value="4">4 sütun</option>
+            </select>
+
+            {/* Gallery insert */}
+            <button
+              type="button"
+              className="rounded-lg px-2 py-1 text-xs font-semibold text-violet-700 hover:bg-violet-50"
+              onClick={() => {
+                const ta = document.getElementById('blog-content-textarea') as HTMLTextAreaElement | null;
+                if (!ta) return;
+                const { selectionStart: s } = ta;
+                const val = ta.value;
+                const insert = `\n:::gallery\nhttps://res.cloudinary.com/.../photo1.webp\nhttps://res.cloudinary.com/.../photo2.webp\nhttps://res.cloudinary.com/.../photo3.webp\n:::\n`;
+                setField(contentKey(activeLocale), val.slice(0, s) + insert + val.slice(s));
+              }}
+            >
+              🖼️ Qalereya
+            </button>
+
+            {/* Video insert */}
+            <button
+              type="button"
+              className="rounded-lg px-2 py-1 text-xs font-semibold text-violet-700 hover:bg-violet-50"
+              onClick={() => {
+                const ta = document.getElementById('blog-content-textarea') as HTMLTextAreaElement | null;
+                if (!ta) return;
+                const { selectionStart: s } = ta;
+                const val = ta.value;
+                const insert = `\n:::video{src="https://youtube.com/watch?v=VIDEO_ID"}\n`;
+                setField(contentKey(activeLocale), val.slice(0, s) + insert + val.slice(s));
+              }}
+            >
+              🎞️ Video
+            </button>
           </div>
 
           <textarea
