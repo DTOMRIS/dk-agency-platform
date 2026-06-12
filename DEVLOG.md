@@ -1,6 +1,26 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-12 — TASK-0308: fix(email): HTML injection + delivery logging + newsletter
+
+**Why:** CTO audit found user-supplied values (leadName, message, reason, title) injected raw into email HTML — production injection vulnerability. Also 14 email send failures silently swallowed.
+
+**What:**
+- `lib/email/templates.ts`: 5 template functions now use `escapeEmailHtml()` for all user input. `sendEmail()` auto-logs to `email_logs` table.
+- 8 API route files: `.catch(() => {})` → `.catch((err) => console.error('[email] ...', err))`
+- `lib/db/schema.ts` + `drizzle/0017_add_email_logs.sql`: new `email_logs` table (queued/sent/failed)
+- `components/layout/Footer.tsx`: newsletter form → `POST /api/newsletter/subscribe`
+
+**Action required:** Migration 0017 already run on Neon.
+
+## 2026-06-12 — TASK-0306: fix(listings): remove mock fallback from public ilanlar
+
+**Why:** DB hiccup during production would show 10 fake listings to real users. Mock fallback removed from public pages; clean empty state instead.
+
+**What:**
+- `lib/db/listings-repository.ts`: `getListings()` returns `[]`, `getListingBySlug/ById()` returns `null` when `!db`
+- `components/listings/ListingsShowcasePage.tsx`: initial state `[]`, catch fallback `[]`
+
 ## 2026-06-10 — TASK-0251: fix(blog): guru box header locale-aware
 
 **Why:** Guru box header "MİCHAEL H. SEİD YANAŞMASI" was hardcoded AZ in all locales because `guruName` was a single column with no locale variants. EN/RU/TR users saw AZ guru name.
