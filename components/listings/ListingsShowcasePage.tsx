@@ -14,7 +14,7 @@ import {
   PRICE_RANGE_OPTIONS,
   type ListingCategory,
 } from '@/lib/data/listingCategories';
-import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
+import { type MockListing } from '@/lib/data/mockListings';
 import { getAllSectors } from '@/lib/data/listingSectors';
 
 type FilterType = 'all' | ListingCategory;
@@ -44,7 +44,7 @@ export default function ListingsShowcasePage() {
   const [priceRange, setPriceRange] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
-  const [listings, setListings] = useState<MockListing[]>(MOCK_LISTINGS);
+  const [listings, setListings] = useState<MockListing[]>([]);
   const [loadError, setLoadError] = useState('');
   const [activeListing, setActiveListing] = useState<MockListing | null>(null);
   const [initialized, setInitialized] = useState(false);
@@ -72,7 +72,7 @@ export default function ListingsShowcasePage() {
           setLoadError('');
         }
       } catch {
-        if (!cancelled) { setListings(MOCK_LISTINGS); setLoadError(t('loadingError')); }
+        if (!cancelled) { setListings([]); setLoadError(t('loadingError')); }
       } finally {
         if (!cancelled) window.setTimeout(() => setLoading(false), 220);
       }
