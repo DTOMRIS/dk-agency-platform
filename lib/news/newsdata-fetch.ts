@@ -172,10 +172,10 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
           sourceUrlHash: hash,
           slug: buildSlug(article.title),
           title: article.title,
-          summary: article.description ?? '',
+          summary: (article.description ?? '').slice(0, 2000),
           category: mapCategory(article.category ?? []),
           imageUrl: article.image_url ?? null,
-          author: article.source_name ?? null,
+          author: article.source_name?.slice(0, 150) ?? null,
           publishedAt: article.pubDate ? new Date(article.pubDate) : new Date(),
           status: 'fetched',
           origin: 'newsdata',
@@ -183,12 +183,13 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
         });
         result.fetched++;
       } catch (err) {
-        const msg = err instanceof Error ? err.message : 'Insert error';
+        const cause = (err as { cause?: Error })?.cause;
+        const msg = cause?.message || (err instanceof Error ? err.message : 'Insert error');
         // Unique constraint = duplicate (race condition safe)
-        if (msg.includes('unique') || msg.includes('duplicate')) {
+        if (msg.includes('unique') || msg.includes('duplicate') || msg.includes('23505')) {
           result.duplicates++;
         } else {
-          result.errors.push(`[insert] ${msg}`);
+          result.errors.push(`[insert] ${msg.slice(0, 200)}`);
         }
       }
     }
