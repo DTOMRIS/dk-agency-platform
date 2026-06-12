@@ -4327,7 +4327,10 @@
     "categoryHoreca": "HORECA",
     "categoryYatirim": "Yatırım",
     "categoryEgitim": "Təhsil",
-    "categoryOperasyon": "Əməliyyat"
+    "categoryOperasyon": "Əməliyyat",
+    "relatedToolkitsTitle": "DK Alətləri",
+    "relatedToolkitsSubtitle": "Bu mövzu ilə bağlı hesablama alətləri",
+    "relatedBlogLink": "Əlaqəli bloq yazısı"
   },
   "createListing": {
     "steps": {

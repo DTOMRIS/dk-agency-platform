@@ -4327,7 +4327,10 @@
     "categoryHoreca": "HORECA",
     "categoryYatirim": "Yatırım",
     "categoryEgitim": "Eğitim",
-    "categoryOperasyon": "Operasyon"
+    "categoryOperasyon": "Operasyon",
+    "relatedToolkitsTitle": "DK Araçları",
+    "relatedToolkitsSubtitle": "Bu konuyla ilgili hesaplama araçları",
+    "relatedBlogLink": "İlgili blog yazısı"
   },
   "createListing": {
     "steps": {

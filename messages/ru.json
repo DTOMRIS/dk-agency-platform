@@ -4327,7 +4327,10 @@
     "categoryHoreca": "HORECA",
     "categoryYatirim": "Инвестиции",
     "categoryEgitim": "Образование",
-    "categoryOperasyon": "Операции"
+    "categoryOperasyon": "Операции",
+    "relatedToolkitsTitle": "Инструменты DK",
+    "relatedToolkitsSubtitle": "Калькуляторы по этой теме",
+    "relatedBlogLink": "Связанная статья в блоге"
   },
   "createListing": {
     "steps": {
