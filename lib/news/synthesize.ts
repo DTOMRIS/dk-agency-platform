@@ -49,6 +49,20 @@ QAYDA:
 ÇIXIŞ JSON:
 {"title_az": "string", "body_az": "string (markdown)", "publishable": true/false, "reason": "string"}`;
 
+/** Extract first real content line (skip markdown headings/bold labels) */
+function extractSummary(body: string, fallback: string): string {
+  const lines = body.split('\n').map((l) => l.trim()).filter(Boolean);
+  for (const line of lines) {
+    // Skip markdown headings and bold-only labels like "**Nə baş verdi:**"
+    if (/^#{1,3}\s/.test(line)) continue;
+    if (/^\*\*[^*]+:\*\*$/.test(line)) continue;
+    // Strip leading bold label if line has content after it
+    const cleaned = line.replace(/^\*\*[^*]+:\*\*\s*/, '').trim();
+    if (cleaned.length > 20) return cleaned.slice(0, 300);
+  }
+  return fallback;
+}
+
 function containsForbidden(text: string): string | null {
   for (const term of FORBIDDEN_TERMS) {
     if (text.includes(term)) return term;
@@ -169,7 +183,7 @@ export async function synthesizeFetchedNews(limit = 10): Promise<SynthesizeResul
         .set({
           titleAz: parsed.title_az,
           contentAz: parsed.body_az,
-          summaryAz: parsed.body_az.split('\n')[0]?.slice(0, 300) || parsed.title_az,
+          summaryAz: extractSummary(parsed.body_az, parsed.title_az),
           origin: 'synthesized',
           status: 'translated',
         })
