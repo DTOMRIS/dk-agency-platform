@@ -26,6 +26,7 @@
     "content:translate:dry": "node --env-file=.env.local scripts/translate-content.mjs --dry-run",
     "content:translate:mock": "node --env-file=.env.local scripts/translate-content.mjs --dry-run --mock --limit=1",
     "fetch:news": "node --env-file=.env.local scripts/fetch-news.mjs",
+    "news:fetch": "tsx --env-file=.env.local scripts/newsdata-fetch.ts",
     "approve:news": "node scripts/approve-news.mjs",
     "db:seed": "npx tsx lib/db/seed.ts",
     "db:seed-blog": "npx tsx lib/db/seed-blog.ts",
