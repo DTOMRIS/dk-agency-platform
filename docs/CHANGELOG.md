@@ -8,6 +8,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 - `TASK-0308` fix(email): **HTML injection kapatıldı** — 5 email template-də `leadName`, `ownerName`, `title`, `reason`, `message`, `phone`, `businessType`, `intent` dəyərləri `escapeEmailHtml()` ilə escape olunur. 14 sessiz `.catch(() => {})` → `console.error` ilə əvəz olundu.
 
 ### Added
+- `TASK-0404` feat(news): **Manşet vitrini** — /haberler səhifəsində 8 xəbərli auto-advance slider (6 san). Resim solda (yazı üstünə binmir) + məzmun sağda. Ok + nöqtə naviqasiyası. Reklam slotu.
 - `TASK-0403` feat(infra): **News pipeline GitHub Actions cron** — günde 2× (06:00+14:00 UTC) NewsData.io fetch + DeepSeek sentez. Failure → CTO-ya SMTP alert. Hostinger'a sıfır dokunuş.
 - `TASK-0402` feat(news): **DeepSeek Model-B sentez** — fetched siqnaldan orijinal DK HoReCa analizi yaradır (5-blok: nə baş verdi / niyə önəmli / AZ dərsi / risk / DK baxışı). Forbidden terms guard, unpublishable flag. `npm run news:synthesize`. TASK-0254 bağlandı.
 - `TASK-0401` feat(news): **NewsData.io keşif + scoring + draft insert** — `npm run news:fetch` ilə HoReCa/franchise/turizm xəbərləri çəkilir, keyword+source əsasında skorlanır (eşik ≥4), URL hash ilə dedup olunur, `origin='newsdata'` draft kimi DB-yə yazılır. Migration: `drizzle/0018_add_news_origin_columns.sql`.

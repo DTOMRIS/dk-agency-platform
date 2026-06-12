@@ -11,6 +11,7 @@ import {
   type PublicNewsArticle,
 } from '@/lib/repositories/newsRepository';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import MansetVitrin from '@/components/news/MansetVitrin';
 
 /* ------------------------------------------------------------------ */
 /*  i18n copy                                                          */
@@ -225,11 +226,11 @@ export default async function HaberlerPage({
     locale,
   );
 
-  const editorPick = offset === 0 ? await getApprovedEditorPick(category, locale) : null;
-  // Priority: isManset > isEditorPick > first item
-  const mansetItem = offset === 0 ? result.items.find((item) => item.isManset) : null;
-  const hero = mansetItem || editorPick || result.items[0];
-  const gridItems = result.items.filter((item) => item.id !== hero?.id);
+  const VITRIN_COUNT = 8;
+  // Vitrin: first page shows top 8 as slider, rest as grid
+  const vitrinItems = offset === 0 ? result.items.slice(0, VITRIN_COUNT) : [];
+  const vitrinIds = new Set(vitrinItems.map((item) => item.id));
+  const gridItems = result.items.filter((item) => !vitrinIds.has(item.id));
   // isTop items first in grid
   gridItems.sort((a, b) => (b.isTop ? 1 : 0) - (a.isTop ? 1 : 0));
   const totalPages = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
@@ -265,39 +266,18 @@ export default async function HaberlerPage({
           })}
         </div>
 
-        {hero ? (
-          <Link
-            href={`/haberler/${hero.slug}`}
-            className="block overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg"
-          >
-            <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
-              <div className="relative min-h-[320px] bg-slate-100">
-                <NewsVisual item={hero} c={c} className="h-full w-full" />
-              </div>
-              <div className="p-8">
-                <div className="flex flex-wrap gap-2">
-                  <span className="inline-flex rounded-full bg-[#FFF8E7] px-3 py-1 text-xs font-bold text-[#C5A022]">
-                    {hero.isManset ? 'Manşet' : hero.isEditorPick ? c.editorPick : c.featured}
-                  </span>
-                  {hero.isGundem ? (
-                    <span className="inline-flex rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-600">Gündəm</span>
-                  ) : null}
-                </div>
-                <h2 className="mt-4 font-display text-4xl font-black leading-tight">{hero.title}</h2>
-                <p className="mt-4 text-sm leading-7 text-slate-600">{hero.summary}</p>
-                <div className="mt-6 flex flex-wrap gap-3 text-xs font-semibold text-slate-500">
-                  <span>{hero.sourceName || c.noSource}</span>
-                  <span>&bull;</span>
-                  <span>{formatDateAz(hero.publishedAt)}</span>
-                  <span>&bull;</span>
-                  <span>{hero.category}</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-        ) : (
+        {vitrinItems.length > 0 ? (
+          <MansetVitrin items={vitrinItems} noSource={c.noSource} />
+        ) : offset === 0 ? (
           <div className="rounded-3xl border border-slate-200 bg-white p-8 text-sm text-slate-500 shadow-sm">
             {c.noArticles}
+          </div>
+        ) : null}
+
+        {/* Reklam slotu */}
+        {offset === 0 && (
+          <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Reklam sahəsi</span>
           </div>
         )}
 

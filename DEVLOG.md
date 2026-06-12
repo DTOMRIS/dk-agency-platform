@@ -1,6 +1,14 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-13 — TASK-0404: feat(news): manşet vitrin (8-article slider)
+
+**Why:** Single hero shows only 1 article. User wants Sport Arena-style slider showing top 8 headlines with auto-advance.
+
+**What:**
+- `components/news/MansetVitrin.tsx`: Client component — image left (no text overlay), content right, arrow + dot navigation, auto-advance 6 seconds
+- `app/haberler/page.tsx`: Replaced single hero with MansetVitrin (first 8 articles), added reklam slot placeholder
+
 ## 2026-06-12 — TASK-0403: feat(infra): news pipeline GitHub Actions cron
 
 **Why:** F1a (fetch) and F1b (synthesize) work as manual scripts. Need automated daily execution without touching Hostinger (no deploy, no 503 risk).
