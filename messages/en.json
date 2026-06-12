@@ -4327,7 +4327,10 @@
     "categoryHoreca": "HORECA",
     "categoryYatirim": "Investment",
     "categoryEgitim": "Education",
-    "categoryOperasyon": "Operations"
+    "categoryOperasyon": "Operations",
+    "relatedToolkitsTitle": "DK Tools",
+    "relatedToolkitsSubtitle": "Calculator tools related to this topic",
+    "relatedBlogLink": "Related blog post"
   },
   "createListing": {
     "steps": {

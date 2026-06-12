@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
   }
 
   const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
-  sendSmtpEmail(adminEmail, 'Yeni OTA Lead — Bələdçi Sorğusu', adminHtml(data, leadId)).catch(() => {});
+  sendSmtpEmail(adminEmail, 'Yeni OTA Lead — Bələdçi Sorğusu', adminHtml(data, leadId)).catch((err) => console.error('[email] OTA lead admin mail failed:', err));
 
   if (data.contact.includes('@')) {
     const subjects: Record<string, string> = { az: 'DK Agency — OTA Bələdçiniz hazırdır', ru: 'DK Agency — Ваш OTA гид готов', en: 'DK Agency — Your OTA Guide is ready', tr: 'DK Agency — OTA Rehberiniz hazır' };
@@ -162,7 +162,7 @@ export async function POST(req: NextRequest) {
       subjects[data.locale] || subjects.az,
       userHtml(data, !!pdfBuffer),
       attachments,
-    ).catch(() => {});
+    ).catch((err) => console.error('[email] OTA lead user mail failed:', err));
   }
 
   return NextResponse.json({ success: true, leadId });

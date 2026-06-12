@@ -94,9 +94,9 @@ export async function POST(request: NextRequest) {
         sendEmail(
           adminEmail,
           emailTemplates.kazanLeadAdmin(name, phone, businessType, intent)
-        ).catch(() => {});
+        ).catch((err) => console.error('[email] KAZAN lead admin mail failed:', err));
       })
-      .catch(() => {});
+      .catch((err) => console.error('[email] KAZAN lead admin import failed:', err));
 
     return NextResponse.json({
       success: true,

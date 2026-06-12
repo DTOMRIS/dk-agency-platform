@@ -451,6 +451,25 @@ export const emailTemplates = pgTable('email_templates', {
   updatedAt: timestamp('updated_at').defaultNow(),
 });
 
+// Email delivery log
+export const emailLogStatusEnum = pgEnum('email_log_status', [
+  'queued',
+  'sent',
+  'failed',
+]);
+
+export const emailLogs = pgTable('email_logs', {
+  id: serial('id').primaryKey(),
+  recipient: varchar('recipient', { length: 255 }).notNull(),
+  subject: varchar('subject', { length: 500 }).notNull(),
+  templateType: varchar('template_type', { length: 80 }).notNull(),
+  status: emailLogStatusEnum('status').notNull().default('queued'),
+  messageId: varchar('message_id', { length: 255 }),
+  errorMessage: text('error_message'),
+  metadata: jsonb('metadata'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
+
 // Membership profiles
 export const memberProfiles = pgTable('member_profiles', {
   id: serial('id').primaryKey(),

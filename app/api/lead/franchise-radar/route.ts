@@ -136,7 +136,7 @@ export async function POST(req: NextRequest) {
     adminEmail,
     `Yeni Franchise Radar Lead — ${data.brandName}`,
     adminHtml(data, leadId)
-  ).catch(() => {});
+  ).catch((err) => console.error('[email] Franchise radar admin mail failed:', err));
 
   return NextResponse.json({ success: true, leadId });
 }

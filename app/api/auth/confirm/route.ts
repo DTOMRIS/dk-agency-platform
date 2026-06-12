@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       if (user?.email) {
         const baseUrl = getBaseUrl();
         const locale = request.nextUrl.searchParams.get('locale') || 'az';
-        sendEmail(user.email, emailTemplates.welcome(user.name, baseUrl, locale)).catch(() => {});
+        sendEmail(user.email, emailTemplates.welcome(user.name, baseUrl, locale)).catch((err) => console.error('[email] Welcome mail failed:', err));
       }
     }
 

@@ -1,6 +1,37 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-12 — TASK-0307: feat(listings): admin listing create
+
+**Why:** Listing motor fully built (CRUD, moderation, AI, schema) but admin had no way to create listings from dashboard — only members could via `/b2b-panel/yeni-ilan`.
+
+**What:**
+- `app/dashboard/ilanlar/yarat/page.tsx`: new admin create route
+- `app/dashboard/ilanlar/page.tsx`: "Yeni elan yarat" button added
+- `components/listings/CreateListingForm.tsx`: `isAdmin` prop — direct status selection (submitted/committee_review/showcase_ready), isFeatured/isShowcase toggles, internal admin note, YouTube/Instagram video embed (ID-only regex, safe iframe), bulk image delete with checkbox
+- `app/api/listings/route.ts`: accepts admin fields (initialStatus, isShowcase, isFeatured)
+- No schema/migration changes
+
+## 2026-06-12 — TASK-0308: fix(email): HTML injection + delivery logging + newsletter
+
+**Why:** CTO audit found user-supplied values (leadName, message, reason, title) injected raw into email HTML — production injection vulnerability. Also 14 email send failures silently swallowed.
+
+**What:**
+- `lib/email/templates.ts`: 5 template functions now use `escapeEmailHtml()` for all user input. `sendEmail()` auto-logs to `email_logs` table.
+- 8 API route files: `.catch(() => {})` → `.catch((err) => console.error('[email] ...', err))`
+- `lib/db/schema.ts` + `drizzle/0017_add_email_logs.sql`: new `email_logs` table (queued/sent/failed)
+- `components/layout/Footer.tsx`: newsletter form → `POST /api/newsletter/subscribe`
+
+**Action required:** Migration 0017 already run on Neon.
+
+## 2026-06-12 — TASK-0306: fix(listings): remove mock fallback from public ilanlar
+
+**Why:** DB hiccup during production would show 10 fake listings to real users. Mock fallback removed from public pages; clean empty state instead.
+
+**What:**
+- `lib/db/listings-repository.ts`: `getListings()` returns `[]`, `getListingBySlug/ById()` returns `null` when `!db`
+- `components/listings/ListingsShowcasePage.tsx`: initial state `[]`, catch fallback `[]`
+
 ## 2026-06-10 — TASK-0251: fix(blog): guru box header locale-aware
 
 **Why:** Guru box header "MİCHAEL H. SEİD YANAŞMASI" was hardcoded AZ in all locales because `guruName` was a single column with no locale variants. EN/RU/TR users saw AZ guru name.

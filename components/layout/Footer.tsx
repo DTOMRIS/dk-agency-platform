@@ -1,10 +1,62 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import FloatingKazanWidget from '@/components/kazan-ai/FloatingKazanWidget';
 import { normalizeLocale, withLocale } from '@/i18n/config';
+
+function FooterNewsletter() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || status === 'loading') return;
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'homepage_newsletter' }),
+      });
+      if (res.ok) {
+        setStatus('success');
+        setEmail('');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+    setTimeout(() => setStatus('idle'), 4000);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="mt-5">
+      <div className="flex gap-2">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="E-posta"
+          required
+          className="min-w-0 flex-1 rounded-lg border border-[var(--dk-warm-border)] bg-white px-3 py-2 text-xs text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+        />
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="shrink-0 rounded-lg bg-[var(--dk-red)] px-3 py-2 text-xs font-bold text-white disabled:opacity-60"
+        >
+          {status === 'loading' ? '...' : 'Abunə ol'}
+        </button>
+      </div>
+      {status === 'success' && <p className="mt-2 text-xs font-semibold text-emerald-600">Abunə oldunuz!</p>}
+      {status === 'error' && <p className="mt-2 text-xs font-semibold text-rose-600">Xəta baş verdi.</p>}
+    </form>
+  );
+}
 
 export function Footer() {
   const t = useTranslations('footer');
@@ -59,6 +111,7 @@ export function Footer() {
               </div>
             </div>
             <p className="max-w-[240px] text-sm leading-relaxed text-[var(--dk-ink-soft)]">{t('slogan')}</p>
+            <FooterNewsletter />
           </div>
 
           {/* Link columns */}

@@ -4,7 +4,18 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Security
+- `TASK-0308` fix(email): **HTML injection kapatıldı** — 5 email template-də `leadName`, `ownerName`, `title`, `reason`, `message`, `phone`, `businessType`, `intent` dəyərləri `escapeEmailHtml()` ilə escape olunur. 14 sessiz `.catch(() => {})` → `console.error` ilə əvəz olundu.
+
+### Added
+- `TASK-0307` feat(listings): **Admin elan yaratma** — `/dashboard/ilanlar/yarat` route, "Yeni elan yarat" düyməsi, admin avantajları (birbaşa status seçimi, isFeatured/isShowcase toggle, daxili admin qeydi), YouTube/Instagram video embed (link-based), toplu foto silmə (checkbox seçimi). Migration yox, mövcud motora toxunulmadı.
+- `TASK-0308` feat(email): **email_logs cədvəli** — hər `sendEmail()` çağırışı `email_logs`-a yazılır (sent/failed + messageId + errorMessage). Migration: `drizzle/0017_add_email_logs.sql`.
+- `TASK-0308` feat(newsletter): **Footer newsletter formu** — ana səhifə footer-ında email abunə formu `POST /api/newsletter/subscribe` endpointinə bağlandı (`source: homepage_newsletter`).
+
 ### Fixed
+- `TASK-0306` fix(listings): **Public `/ilanlar` mock fallback kaldırıldı** — DB əlçatmaz olanda uydurma 10 elan yerinə təmiz boş vəziyyət göstərilir. Dashboard admin mock fallback saxlandı.
+
+### Fixed (prior)
 - `TASK-0262` fix(brand): **"İstanbul HORECA Group" → "DK Agency"** (6 yer, kökündən). B2B portal welcome subtitle 4 dildə (`messages/{az,ru,en,tr}.json:69`), homepage `B2BDashboardMock` (ad + "IH" inisialları → "DK"), `app/dashboard/b2b-yonetimi` mock partner adı. Əvvəl təkrar qayıdırdı çünki 6 nüsxədən yalnız bəzisi silinirdi — `grep -rni "HORECA Group"` indi **0 nəticə**.
 - `TASK-0261` fix(blog): **struktur migration parser düzəldildi (apply-dan əvvəl)**. Dry-run çıxışını yoxlayanda 3 real parse buqu tapıldı: (1) düz-dırnaqlı byline/rol sətri (`"The Restaurant Coach", …danışmanı`) guru sitatına qarışırdı; (2) çoxsətirli italic sitatın davam sətirləri itirdi (yalnız ilk `*"` sətri tutulurdu); (3) ASCII guru-box formatında yazılmış Doğan notu (`DOĞAN NOTU`) saxta guru kimi `guru_boxes`-a gedirdi (garson-satis, cografi-isare). `parseGuruBlock` indi italic sitat blokunu bütün davam sətirləri ilə tutur, byline-ı görməzdən gəlir, `isDogan` qaytarır; migration `isDogan` bloklarını `dogan_note`-a yönləndirir. Data korlanmasının qarşısı — apply-dan əvvəl dry-run yenidən yoxlanmalıdır.
 - `TASK-0260` feat(blog): **struktur migration node CLI → admin endpoint**. `scripts/migrate-blog-structure.mjs` silindi; məntiq `migrateBlogStructure(apply)` (Drizzle) kimi repo-ya köçdü. `POST /api/blog/migrate-structure?dryRun=true|apply=true` (admin-gated, default dry-run). Status səhifəsində **[Öncəbaxış (dry-run)]** + **[Tətbiq et (apply)]** düymələri: dry-run hər blogun tapılan guru adı + sitat preview-i + Doğan preview-i göstərir (yazmadan), apply confirm tələb edir. Doğan node işlətmir — admin-də basır, server işlədir.
