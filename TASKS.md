@@ -1,5 +1,11 @@
 # TASKS
 
+## TASK-0305 - News detail schema compatibility hotfix
+
+- Status: implementation and verification complete; PR pending.
+- Scope: Stop public news detail 500s when optional related-toolkit columns are not yet present in Neon.
+- Task card: `docs/tasks/TASK-0305.md`.
+
 ## TASK-0304 - News editor spine
 
 - Status: implementation and local verification complete; PR pending.
