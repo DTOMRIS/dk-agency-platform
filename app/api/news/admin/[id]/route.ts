@@ -30,6 +30,17 @@ export async function PATCH(
     body.summaryAz = body.summaryAz || nextSummaryAz;
   }
 
+  const publishedAt =
+    typeof body.publishedAt === 'string' && !Number.isNaN(Date.parse(body.publishedAt))
+      ? new Date(body.publishedAt)
+      : undefined;
+  const externalUrl =
+    typeof body.externalUrl === 'string' &&
+    body.externalUrl.trim() === '' &&
+    article.externalUrl?.startsWith('manual:')
+      ? article.externalUrl
+      : body.externalUrl;
+
   const result = await updateNewsArticleAdmin(articleId, {
     status: body.status,
     isEditorPick: body.isEditorPick,
@@ -53,11 +64,19 @@ export async function PATCH(
     imageUrl: body.imageUrl,
     seoTitle: body.seoTitle,
     seoDescription: body.seoDescription,
+    slug: body.slug,
+    publishedAt,
+    externalUrl,
+    sourceId: body.sourceId,
+    newsType: body.newsType,
+    telegramSend: body.telegramSend,
+    logoOverlay: body.logoOverlay,
   });
 
   // Auto-translate + auto-match toolkits on approve (fire-and-forget)
-  if (body.status === 'approved' && article.slug) {
-    translateNewsArticleBySlug(article.slug).catch(() => {});
+  const savedSlug = typeof body.slug === 'string' && body.slug.trim() ? body.slug.trim() : article.slug;
+  if (body.status === 'approved' && savedSlug) {
+    translateNewsArticleBySlug(savedSlug).catch(() => {});
 
     // Match related toolkits via DeepSeek
     import('@/lib/news/match-toolkits').then(({ matchToolkitsForArticle }) => {
@@ -77,7 +96,11 @@ export async function PATCH(
     }).catch(() => {});
   }
 
-  return NextResponse.json({ success: true, source: result.source });
+  return NextResponse.json({
+    success: true,
+    source: result.source,
+    data: { id: articleId, slug: savedSlug },
+  });
 }
 
 export async function DELETE(

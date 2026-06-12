@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [TASK-0304] feat(news): shared full-page editor for existing articles - 2026-06-12
+
+### Changed
+- Replaced the incomplete news-list edit modal with `/dashboard/xeberler/[id]` and its locale mirror.
+- Reused `NewsEditorForm` for create and edit; existing articles load all four locales, SEO, source, date, status flags, type, and cover data into the same editor.
+- Added PATCH round-trip support for slug, publication date, source fields, news type, Telegram flag, and logo overlay.
+- Added cover image add/replace/remove and article delete actions to the edit page.
+- Applied the same admin-plan guard to the server-rendered edit page as the news admin API.
+- Preserved manual-news source markers when an editor saves an empty visible source field.
+
+### Verification
+- `npm run lint`: PASS with pre-existing warnings only.
+- Production build: PASS; root and locale `/dashboard/xeberler/[id]` routes registered.
+- Local production smoke: root edit route `307` to login, locale route `307` to root mirror, and unauthenticated admin GET/PATCH/DELETE all `403`.
+- DK validator: PASS 8/8 via Git Bash.
+
 ## [TASK-0257] fix(blog): robust slug lookup and capital 'İ' slugification fix (P0 404) — 2026-06-10
 
 ### Fixed

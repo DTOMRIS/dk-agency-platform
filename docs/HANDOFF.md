@@ -435,3 +435,14 @@ düzəldildi (RU/TR P&L education). Dashboard 17/17 + lint 0 + parity 100%
 
 **24 May 2026 — TASK-0163 bağlandı.** RU/TR P&L education vizual parity
 bərpa. 4-cü PR, eyni gündə. TASK-0158 audit-in davamı.
+
+
+## 2026-06-12T03:15:54.457Z — codex
+- Ne değişti:
+  - TASK-0304: news list edit modal removed; shared NewsEditorForm now powers /dashboard/xeberler/[id] with full field round-trip, cover add/replace/remove, preview, translation, publish, and delete.
+- Ne değişmedi:
+  - Protected files, database schema, ingestion pipeline, and existing user changes in lib/news/rss-pipeline.ts and .claude/agent-memory/scout were not modified.
+- Riskler:
+  - Production DB-backed edit requires an authenticated live smoke after deploy; repo-wide strict tsc still has unrelated pre-existing errors.
+- Sonraki adım:
+  - Open TASK-0304 PR with the completed dk-validator 8/8 evidence, then run an authenticated live DB edit smoke after deploy.

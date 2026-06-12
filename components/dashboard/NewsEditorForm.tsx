@@ -100,6 +100,9 @@ const COPY: Record<
     saveDraft: string;
     publish: string;
     preview: string;
+    deleteArticle: string;
+    confirmDeleteArticle: string;
+    toastDeleted: string;
     errorTitleAz: string;
     errorSlug: string;
     toastDraft: string;
@@ -139,6 +142,9 @@ const COPY: Record<
     saveDraft: 'Qaralama olaraq saxla',
     publish: 'Təsdiqlə və dərc et',
     preview: 'Önizlə',
+    deleteArticle: 'Xəbəri sil',
+    confirmDeleteArticle: 'Bu xəbəri birdəfəlik silmək istədiyinizdən əminsiniz?',
+    toastDeleted: 'Xəbər silindi.',
     errorTitleAz: 'AZ başlıq vacibdir.',
     errorSlug: 'Slug vacibdir.',
     toastDraft: 'Qaralama saxlanıldı.',
@@ -177,6 +183,9 @@ const COPY: Record<
     saveDraft: 'Сохранить как черновик',
     publish: 'Одобрить и опубликовать',
     preview: 'Предпросмотр',
+    deleteArticle: 'Удалить новость',
+    confirmDeleteArticle: 'Вы уверены, что хотите навсегда удалить эту новость?',
+    toastDeleted: 'Новость удалена.',
     errorTitleAz: 'Заголовок AZ обязателен.',
     errorSlug: 'Slug обязателен.',
     toastDraft: 'Черновик сохранён.',
@@ -215,6 +224,9 @@ const COPY: Record<
     saveDraft: 'Save as draft',
     publish: 'Approve & publish',
     preview: 'Preview',
+    deleteArticle: 'Delete article',
+    confirmDeleteArticle: 'Are you sure you want to permanently delete this article?',
+    toastDeleted: 'Article deleted.',
     errorTitleAz: 'AZ title is required.',
     errorSlug: 'Slug is required.',
     toastDraft: 'Draft saved.',
@@ -253,6 +265,9 @@ const COPY: Record<
     saveDraft: 'Taslak olarak kaydet',
     publish: 'Onayla ve yayınla',
     preview: 'Önizle',
+    deleteArticle: 'Haberi sil',
+    confirmDeleteArticle: 'Bu haberi kalıcı olarak silmek istediğinizden emin misiniz?',
+    toastDeleted: 'Haber silindi.',
     errorTitleAz: 'AZ başlık zorunludur.',
     errorSlug: 'Slug zorunludur.',
     toastDraft: 'Taslak kaydedildi.',
@@ -300,7 +315,13 @@ const EMPTY_DRAFT: NewsDraft = {
   sourceId: null,
 };
 
-export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDraft }) {
+export default function NewsEditorForm({
+  initialDraft,
+  articleId,
+}: {
+  initialDraft?: NewsDraft;
+  articleId?: number;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const locale = normalizeLocale(pathname.split('/')[1]);
@@ -322,13 +343,14 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
   const [imagePreview, setImagePreview] = useState(initialDraft?.imageUrl || draft.imageUrl || '');
   const [toast, setToast] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [errors, setErrors] = useState<{ titleAz?: string; slug?: string }>({});
   const [activeLocale, setActiveLocale] = useState<LocaleTab>('az');
   const [translating, setTranslating] = useState(false);
   const [translateMsg, setTranslateMsg] = useState('');
   const [savedSlug, setSavedSlug] = useState<string | null>(initialDraft?.slug || null);
-  const [savedId, setSavedId] = useState<number | null>(null);
+  const [savedId, setSavedId] = useState<number | null>(articleId ?? null);
   const autoSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const translateNow = async () => {
@@ -525,6 +547,33 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
       }
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const deleteArticle = async () => {
+    if (!savedId || deleting || !window.confirm(copy.confirmDeleteArticle)) return;
+
+    setDeleting(true);
+    try {
+      const response = await fetch(`/api/news/admin/${savedId}`, { method: 'DELETE' });
+      const data = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        showToast(data?.error || 'Xəbər silinmədi.');
+        return;
+      }
+
+      try {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+      } catch {
+        // ignore
+      }
+      showToast(copy.toastDeleted);
+      router.push('/dashboard/xeberler');
+      router.refresh();
+    } catch {
+      showToast('Xəbər silinmədi.');
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -909,10 +958,20 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
       </div>
 
       <div className="flex flex-wrap gap-3">
+        {articleId ? (
+          <button
+            type="button"
+            onClick={() => void deleteArticle()}
+            disabled={submitting || deleting || uploadingImage}
+            className="min-h-[44px] rounded-full border border-rose-200 bg-rose-50 px-6 py-3 text-sm font-bold text-rose-700 disabled:opacity-60"
+          >
+            {copy.deleteArticle}
+          </button>
+        ) : null}
         <button
           type="button"
           onClick={() => void submitDraft('fetched')}
-          disabled={submitting || uploadingImage}
+          disabled={submitting || deleting || uploadingImage}
           className="min-h-[44px] rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700 disabled:opacity-60"
         >
           {copy.saveDraft}
@@ -920,7 +979,7 @@ export default function NewsEditorForm({ initialDraft }: { initialDraft?: NewsDr
         <button
           type="button"
           onClick={() => void submitDraft('approved')}
-          disabled={submitting || uploadingImage}
+          disabled={submitting || deleting || uploadingImage}
           className="min-h-[44px] rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
         >
           {copy.publish}
