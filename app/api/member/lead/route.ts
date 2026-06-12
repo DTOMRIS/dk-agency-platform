@@ -166,13 +166,13 @@ export async function POST(req: NextRequest) {
 
   // Fire-and-forget emails
   const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
-  sendSmtpEmail(adminEmail, `Yeni Franchise Lead — ${TOOL_LABELS[data.toolSource]}`, adminNotificationHtml(data, leadId)).catch(() => {});
+  sendSmtpEmail(adminEmail, `Yeni Franchise Lead — ${TOOL_LABELS[data.toolSource]}`, adminNotificationHtml(data, leadId)).catch((err) => console.error('[email] Franchise lead admin mail failed:', err));
 
   // User thank-you (only if contact looks like email)
   if (data.contact.includes('@')) {
     const locale = data.locale || 'az';
     const t: Record<string, string> = { az: 'DK Agency — Müraciətiniz qəbul olundu', ru: 'DK Agency — Ваша заявка принята', en: 'DK Agency — Your request received', tr: 'DK Agency — Başvurunuz alındı' };
-    sendSmtpEmail(data.contact, t[locale] || t.az, userThankYouHtml(data)).catch(() => {});
+    sendSmtpEmail(data.contact, t[locale] || t.az, userThankYouHtml(data)).catch((err) => console.error('[email] Franchise lead thank-you mail failed:', err));
   }
 
   return NextResponse.json({ success: true, leadId });

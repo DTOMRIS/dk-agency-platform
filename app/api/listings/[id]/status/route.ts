@@ -39,7 +39,7 @@ export async function PATCH(
           return sendEmail(row.email!, template);
         });
       })
-      .catch(() => {});
+      .catch((err) => console.error('[email] Listing status notification failed:', err));
   }
 
   return NextResponse.json({ success: true, source: result.source });
