@@ -1,6 +1,17 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-12 — TASK-0402: feat(news): DeepSeek Model-B synthesis
+
+**Why:** Fetched signals are raw English headlines. Need original DK-branded AZ analysis — NOT copy/paraphrase, legal-safe original content with HoReCa sector insight.
+
+**What:**
+- `lib/news/synthesize.ts`: DeepSeek JSON mode synthesis. System prompt enforces 5-block structure (nə baş verdi / niyə önəmli / AZ dərsi / risk / DK baxışı). Forbidden terms guard (CRM/Pipeline/Agentlik/Holdinq/Tezliklə). Unpublishable signals flagged in seoDescription, not written to content.
+- `scripts/newsdata-synthesize.ts`: CLI for `npm run news:synthesize`
+- Toolkit matching + translation already work at approve time — NOT rebuilt.
+
+**Verified:** 7/8 articles synthesized, 1 weak signal correctly rejected. Re-run idempotent (only processes articles without contentAz).
+
 ## 2026-06-12 — TASK-0401: feat(news): NewsData.io discovery + scoring
 
 **Why:** Manual news curation doesn't scale. Need automated HoReCa/franchise/tourism signal discovery from global sources, scored by relevance, with deduplication.
