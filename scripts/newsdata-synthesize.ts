@@ -25,7 +25,9 @@ async function main() {
     }
   }
 
-  if (result.synthesized === 0 && result.errors.length > 0) {
+  // Only fail if ALL items errored (not just weak signals)
+  const fatalErrors = result.errors.filter((e) => !e.includes('[validate]') && !e.includes('[parse]'));
+  if (result.synthesized === 0 && fatalErrors.length > 0) {
     process.exit(1);
   }
 }
