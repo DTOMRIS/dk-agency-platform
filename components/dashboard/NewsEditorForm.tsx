@@ -934,14 +934,109 @@ export default function NewsEditorForm({
           ) : null}
         </label>
 
-        {/* TODO B-step: AI content translate button (line ~430) */}
+        {/* Markdown toolbar + Visual block inserts */}
+        <div className="flex flex-wrap items-center gap-1 rounded-t-2xl border border-b-0 border-slate-200 bg-slate-50 px-3 py-2 mt-2">
+          {[
+            { label: 'B', md: '**', tip: 'Bold' },
+            { label: 'I', md: '*', tip: 'İtalik' },
+            { label: 'H2', md: '## ', tip: 'Başlıq' },
+            { label: 'H3', md: '### ', tip: 'Alt başlıq' },
+            { label: '•', md: '- ', tip: 'Siyahı' },
+            { label: '1.', md: '1. ', tip: 'Nömrəli siyahı' },
+            { label: '❝', md: '> ', tip: 'Sitat' },
+          ].map((btn) => (
+            <button
+              key={btn.label}
+              type="button"
+              title={btn.tip}
+              className="rounded-lg px-2.5 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors"
+              onClick={() => {
+                const ta = document.getElementById('news-content-textarea') as HTMLTextAreaElement | null;
+                if (!ta) return;
+                const { selectionStart: s, selectionEnd: e } = ta;
+                const val = ta.value;
+                const sel = val.slice(s, e);
+                const isWrap = btn.md.length <= 2;
+                const insert = isWrap ? `${btn.md}${sel || btn.tip}${btn.md}` : `${btn.md}${sel || btn.tip}`;
+                const next = val.slice(0, s) + insert + val.slice(e);
+                setStringField(contentKey(activeLocale), next);
+                setTimeout(() => {
+                  ta.focus();
+                  ta.selectionStart = s + btn.md.length;
+                  ta.selectionEnd = s + btn.md.length + (sel || btn.tip).length;
+                }, 0);
+              }}
+            >
+              {btn.label}
+            </button>
+          ))}
+
+          <span className="mx-1 h-5 w-px bg-slate-300" />
+
+          {/* Image grid insert */}
+          <select
+            className="rounded-lg border-0 bg-transparent px-2 py-1 text-xs font-semibold text-violet-700 hover:bg-violet-50 cursor-pointer"
+            value=""
+            onChange={(ev) => {
+              const cols = ev.target.value;
+              if (!cols) return;
+              const ta = document.getElementById('news-content-textarea') as HTMLTextAreaElement | null;
+              if (!ta) return;
+              const { selectionStart: s } = ta;
+              const val = ta.value;
+              const placeholder = Array.from({ length: Number(cols) }, (_, i) => `https://res.cloudinary.com/.../image${i + 1}.webp`).join('\n');
+              const insert = `\n:::images{cols=${cols}}\n${placeholder}\n:::\n`;
+              setStringField(contentKey(activeLocale), val.slice(0, s) + insert + val.slice(s));
+              ev.target.value = '';
+            }}
+          >
+            <option value="">🖼️ Şəkil düzəni</option>
+            <option value="1">1 sütun (tam en)</option>
+            <option value="2">2 sütun (yan-yana)</option>
+            <option value="3">3 sütun</option>
+            <option value="4">4 sütun</option>
+          </select>
+
+          {/* Gallery insert */}
+          <button
+            type="button"
+            className="rounded-lg px-2 py-1 text-xs font-semibold text-violet-700 hover:bg-violet-50"
+            onClick={() => {
+              const ta = document.getElementById('news-content-textarea') as HTMLTextAreaElement | null;
+              if (!ta) return;
+              const { selectionStart: s } = ta;
+              const val = ta.value;
+              const insert = `\n:::gallery\nhttps://res.cloudinary.com/.../photo1.webp\nhttps://res.cloudinary.com/.../photo2.webp\nhttps://res.cloudinary.com/.../photo3.webp\n:::\n`;
+              setStringField(contentKey(activeLocale), val.slice(0, s) + insert + val.slice(s));
+            }}
+          >
+            🖼️ Qalereya
+          </button>
+
+          {/* Video insert */}
+          <button
+            type="button"
+            className="rounded-lg px-2 py-1 text-xs font-semibold text-violet-700 hover:bg-violet-50"
+            onClick={() => {
+              const ta = document.getElementById('news-content-textarea') as HTMLTextAreaElement | null;
+              if (!ta) return;
+              const { selectionStart: s } = ta;
+              const val = ta.value;
+              const insert = `\n:::video{src="https://youtube.com/watch?v=VIDEO_ID"}\n`;
+              setStringField(contentKey(activeLocale), val.slice(0, s) + insert + val.slice(s));
+            }}
+          >
+            🎞️ Video
+          </button>
+        </div>
 
         <textarea
+          id="news-content-textarea"
           rows={activeLocale === 'az' ? 14 : 10}
           value={draft[contentKey(activeLocale)] as string}
           onChange={(e) => setStringField(contentKey(activeLocale), e.target.value)}
           placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} məzmun...` : ''}
-          className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+          className="w-full rounded-b-2xl border border-t-0 border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
         />
 
         {activeLocale !== 'az' && draft.contentAz ? (
