@@ -619,8 +619,10 @@ export async function getNewsArticleBySlug(slug: string, locale?: string, previe
       publishedAt: newsArticles.publishedAt,
       isEditorPick: newsArticles.isEditorPick,
       status: newsArticles.status,
-      relatedToolkits: newsArticles.relatedToolkits,
-      relatedBlogSlug: newsArticles.relatedBlogSlug,
+      // to_jsonb keeps the query compatible while the idempotent 0017 migration
+      // is pending, then starts returning the real columns without another deploy.
+      relatedToolkits: sql<string[]>`coalesce(to_jsonb(news_articles)->'related_toolkits', '[]'::jsonb)`,
+      relatedBlogSlug: sql<string | null>`to_jsonb(news_articles)->>'related_blog_slug'`,
     })
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))

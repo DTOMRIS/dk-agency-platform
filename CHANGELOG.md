@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+## [TASK-0305] fix(news): make detail query compatible with pending DB migration - 2026-06-12
+
+### Fixed
+- Public `/haberler/[slug]` pages no longer fail when production Neon lacks `related_toolkits` and `related_blog_slug`.
+- The detail query now reads optional fields through `to_jsonb(news_articles)`, returning empty/null before migration and real values after migration.
+- Added idempotent migration `drizzle/0017_add_news_related_columns.sql`.
+- Added `/favicon.ico` redirect to the existing `/icon.png` asset.
+
+### Root Cause Proof
+- Live news list returned `200` while multiple live detail routes returned `500`.
+- Production-shaped Neon schema inspection showed both optional columns were absent.
+- The corrected repository query successfully loaded the affected Subway article and returned `relatedToolkits: []` against the same schema.
+- Production build and DK validator both pass; validator verdict is 8/8.
+
 ## [TASK-0304] feat(news): shared full-page editor for existing articles - 2026-06-12
 
 ### Changed

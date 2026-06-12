@@ -446,3 +446,14 @@ bərpa. 4-cü PR, eyni gündə. TASK-0158 audit-in davamı.
   - Production DB-backed edit requires an authenticated live smoke after deploy; repo-wide strict tsc still has unrelated pre-existing errors.
 - Sonraki adım:
   - Open TASK-0304 PR with the completed dk-validator 8/8 evidence, then run an authenticated live DB edit smoke after deploy.
+
+
+## 2026-06-12T11:41:43.786Z — codex
+- Ne değişti:
+  - TASK-0305: public news detail query now tolerates missing related_toolkits/related_blog_slug via to_jsonb, idempotent 0017 migration added, and /favicon.ico redirects to /icon.png.
+- Ne değişmedi:
+  - No production database writes were performed; protected files and the user RSS/scout changes remain untouched.
+- Riskler:
+  - Migration 0017 still needs Dogan to apply it in Neon for toolkit matching persistence; code works before migration with empty toolkit data.
+- Sonraki adım:
+  - Merge/deploy the hotfix, restart Hostinger, verify affected live Subway detail returns 200, then apply drizzle/0017_add_news_related_columns.sql in Neon.

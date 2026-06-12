@@ -1006,3 +1006,22 @@ Sprint 1 (Faza 0) — yalniz infrastruktur, hec bir alet implement edilmir:
 - Repo-wide strict `tsc`: still fails on documented pre-existing debt outside TASK-0304; no TASK-0304 file appeared in the error list.
 
 **Out of scope:** ingestion pipeline, RSS changes, database migration, protected files.
+
+## 2026-06-12 - TASK-0305: News detail 500 root-cause hotfix
+
+**Root cause:**
+- `getNewsArticleBySlug` directly selected two columns that existed in Drizzle schema but not in production Neon.
+- Render-level optional chaining could not catch the database SELECT failure.
+
+**Changed:**
+- Optional related-toolkit fields now use schema-compatible `to_jsonb` expressions.
+- Added the missing additive/idempotent SQL migration.
+- Added a favicon redirect route to remove the unrelated `/favicon.ico` 404.
+
+**Proof:**
+- The affected Subway row exists and is approved.
+- Old live detail route: HTTP 500.
+- New query against the same DB: article found with an empty toolkit array.
+- Local Next detail route: HTTP 200; production build PASS; DK validator PASS 8/8.
+
+**Out of scope:** Browser-extension message-channel warnings; these are not emitted by the application.
