@@ -191,6 +191,13 @@ export async function updateNewsArticleAdmin(
     imageUrl?: string | null;
     seoTitle?: string | null;
     seoDescription?: string | null;
+    slug?: string | null;
+    publishedAt?: Date | null;
+    externalUrl?: string | null;
+    sourceId?: number | null;
+    newsType?: string | null;
+    telegramSend?: boolean;
+    logoOverlay?: boolean;
     relatedToolkits?: string[];
     relatedBlogSlug?: string | null;
   },
@@ -233,6 +240,7 @@ export async function getAdminNewsArticleById(id: number) {
   return db
     .select({
       id: newsArticles.id,
+      sourceId: newsArticles.sourceId,
       slug: newsArticles.slug,
       title: newsArticles.title,
       titleAz: newsArticles.titleAz,
@@ -259,6 +267,9 @@ export async function getAdminNewsArticleById(id: number) {
       isGundem: newsArticles.isGundem,
       seoTitle: newsArticles.seoTitle,
       seoDescription: newsArticles.seoDescription,
+      newsType: newsArticles.newsType,
+      telegramSend: newsArticles.telegramSend,
+      logoOverlay: newsArticles.logoOverlay,
       publishedAt: newsArticles.publishedAt,
       createdAt: newsArticles.createdAt,
     })
@@ -608,8 +619,10 @@ export async function getNewsArticleBySlug(slug: string, locale?: string, previe
       publishedAt: newsArticles.publishedAt,
       isEditorPick: newsArticles.isEditorPick,
       status: newsArticles.status,
-      relatedToolkits: newsArticles.relatedToolkits,
-      relatedBlogSlug: newsArticles.relatedBlogSlug,
+      // to_jsonb keeps the query compatible while the idempotent 0017 migration
+      // is pending, then starts returning the real columns without another deploy.
+      relatedToolkits: sql<string[]>`coalesce(to_jsonb(news_articles)->'related_toolkits', '[]'::jsonb)`,
+      relatedBlogSlug: sql<string | null>`to_jsonb(news_articles)->>'related_blog_slug'`,
     })
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))

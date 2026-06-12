@@ -1,7 +1,7 @@
 import { and, asc, eq, gte, inArray, lte } from 'drizzle-orm';
 import { db } from './index';
 import { listingLeads, listingMedia, listingReviews, listings } from './schema';
-import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
+import { type MockListing } from '@/lib/data/mockListings';
 import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
 
 export interface ListingFilters {
@@ -70,7 +70,7 @@ function mapDbListing(row: typeof listings.$inferSelect, media: typeof listingMe
 
 export async function getListings(filters: ListingFilters = {}, locale?: string) {
   const loc = sanitizeLocale(locale);
-  if (!db) return MOCK_LISTINGS;
+  if (!db) return [];
 
   const conditions = [];
   if (filters.type) conditions.push(eq(listings.type, filters.type as typeof listings.$inferSelect.type));
@@ -109,7 +109,7 @@ export async function getListings(filters: ListingFilters = {}, locale?: string)
 
 export async function getListingBySlug(slug: string, locale?: string) {
   const loc = sanitizeLocale(locale);
-  if (!db) return MOCK_LISTINGS.find((item) => item.slug === slug) || null;
+  if (!db) return null;
 
   const row = await db.select().from(listings).where(eq(listings.slug, slug)).then((items) => items[0]);
   if (!row) return null;
@@ -125,7 +125,7 @@ export async function getListingBySlug(slug: string, locale?: string) {
 
 export async function getListingById(id: number, locale?: string) {
   const loc = sanitizeLocale(locale);
-  if (!db) return MOCK_LISTINGS.find((item) => item.id === id) || null;
+  if (!db) return null;
 
   const row = await db.select().from(listings).where(eq(listings.id, id)).then((items) => items[0]);
   if (!row) return null;

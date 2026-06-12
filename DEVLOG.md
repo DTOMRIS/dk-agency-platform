@@ -988,3 +988,40 @@ Sprint 1 (Faza 0) — yalniz infrastruktur, hec bir alet implement edilmir:
 - Added Playwright smoke coverage for the P&L simulator in 4 locales.
 
 **Out of scope:** other toolkit calculators, migrations, protected files.
+
+## 2026-06-12 - TASK-0304: News editor spine
+
+**Changed:**
+- Removed the separate news-list edit modal.
+- Added `/dashboard/xeberler/[id]` and locale mirror routes backed by the existing shared `NewsEditorForm`.
+- Added complete edit PATCH mapping, article deletion, and cover image removal from the same page.
+- Guarded the server edit page with the existing admin member-session contract.
+- Preserved manual source markers during edit saves.
+
+**Verification:**
+- `npm run lint`: 0 errors.
+- `npm run build`: PASS; both edit routes appear in the Next.js route inventory.
+- Local production smoke: edit routes returned expected `307` redirects and admin GET/PATCH/DELETE returned `403` without a session.
+- DK validator: PASS 8/8 via `C:\Program Files\Git\bin\bash.exe scripts/dk-validate.sh`.
+- Repo-wide strict `tsc`: still fails on documented pre-existing debt outside TASK-0304; no TASK-0304 file appeared in the error list.
+
+**Out of scope:** ingestion pipeline, RSS changes, database migration, protected files.
+
+## 2026-06-12 - TASK-0305: News detail 500 root-cause hotfix
+
+**Root cause:**
+- `getNewsArticleBySlug` directly selected two columns that existed in Drizzle schema but not in production Neon.
+- Render-level optional chaining could not catch the database SELECT failure.
+
+**Changed:**
+- Optional related-toolkit fields now use schema-compatible `to_jsonb` expressions.
+- Added the missing additive/idempotent SQL migration.
+- Added a favicon redirect route to remove the unrelated `/favicon.ico` 404.
+
+**Proof:**
+- The affected Subway row exists and is approved.
+- Old live detail route: HTTP 500.
+- New query against the same DB: article found with an empty toolkit array.
+- Local Next detail route: HTTP 200; production build PASS; DK validator PASS 8/8.
+
+**Out of scope:** Browser-extension message-channel warnings; these are not emitted by the application.
