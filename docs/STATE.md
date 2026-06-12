@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-12T17:27:13.078Z
+- GeneratedAt: 2026-06-12T17:29:10.813Z
 - BuildStatus: PASS
 
-## Routes (250)
+## Routes (251)
 - /
 - /[locale]
 - /[locale]/about
@@ -183,6 +183,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/ilan-onaylari
 - /dashboard/ilanlar
 - /dashboard/ilanlar/[id]
+- /dashboard/ilanlar/yarat
 - /dashboard/kazan-leads
 - /dashboard/loglar
 - /dashboard/marketinq-ocagi
