@@ -6,6 +6,7 @@ import { getLocale } from 'next-intl/server';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import RelatedToolkitsBox from '@/components/news/RelatedToolkitsBox';
 import { ShareButtons } from '@/components/news/ShareButtons';
+import { MarkdownRenderer } from '@/components/blog';
 import { formatDateAz } from '@/lib/formatDate';
 import { getNewsArticleBySlug, getRelatedApprovedNewsArticles } from '@/lib/repositories/newsRepository';
 
@@ -150,11 +151,9 @@ export default async function HaberDetailPage({
               {article.summary ? (
                 <p className="font-semibold text-slate-800">{article.summary}</p>
               ) : null}
-              {article.content
-                ? article.content
-                    .split(/\n{2,}/)
-                    .map((para, idx) => (para.trim() ? <p key={idx}>{para.trim()}</p> : null))
-                : null}
+              {article.content ? (
+                <MarkdownRenderer content={article.content} className="text-slate-700 md:text-[18px]" />
+              ) : null}
             </div>
 
             <footer className="mt-10 flex max-w-[720px] flex-col gap-5 border-t border-slate-200 pt-8">
