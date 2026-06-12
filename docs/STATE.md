@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-11T18:50:00.527Z
-- BuildStatus: PASS
+- GeneratedAt: 2026-06-12T03:15:56.226Z
+- BuildStatus: UNKNOWN
 
-## Routes (248)
+## Routes (250)
 - /
 - /[locale]
 - /[locale]/about
@@ -65,6 +65,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/users
 - /[locale]/dashboard/users/[id]
 - /[locale]/dashboard/xeberler
+- /[locale]/dashboard/xeberler/[id]
 - /[locale]/dashboard/xeberler/rss
 - /[locale]/dashboard/xeberler/yeni
 - /[locale]/elaqe
@@ -198,6 +199,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/users
 - /dashboard/users/[id]
 - /dashboard/xeberler
+- /dashboard/xeberler/[id]
 - /dashboard/xeberler/rss
 - /dashboard/xeberler/yeni
 - /docs/member-env-checklist

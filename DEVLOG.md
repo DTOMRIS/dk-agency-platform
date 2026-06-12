@@ -988,3 +988,21 @@ Sprint 1 (Faza 0) — yalniz infrastruktur, hec bir alet implement edilmir:
 - Added Playwright smoke coverage for the P&L simulator in 4 locales.
 
 **Out of scope:** other toolkit calculators, migrations, protected files.
+
+## 2026-06-12 - TASK-0304: News editor spine
+
+**Changed:**
+- Removed the separate news-list edit modal.
+- Added `/dashboard/xeberler/[id]` and locale mirror routes backed by the existing shared `NewsEditorForm`.
+- Added complete edit PATCH mapping, article deletion, and cover image removal from the same page.
+- Guarded the server edit page with the existing admin member-session contract.
+- Preserved manual source markers during edit saves.
+
+**Verification:**
+- `npm run lint`: 0 errors.
+- `npm run build`: PASS; both edit routes appear in the Next.js route inventory.
+- Local production smoke: edit routes returned expected `307` redirects and admin GET/PATCH/DELETE returned `403` without a session.
+- DK validator: PASS 8/8 via `C:\Program Files\Git\bin\bash.exe scripts/dk-validate.sh`.
+- Repo-wide strict `tsc`: still fails on documented pre-existing debt outside TASK-0304; no TASK-0304 file appeared in the error list.
+
+**Out of scope:** ingestion pipeline, RSS changes, database migration, protected files.
