@@ -8,6 +8,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 - `TASK-0308` fix(email): **HTML injection kapatıldı** — 5 email template-də `leadName`, `ownerName`, `title`, `reason`, `message`, `phone`, `businessType`, `intent` dəyərləri `escapeEmailHtml()` ilə escape olunur. 14 sessiz `.catch(() => {})` → `console.error` ilə əvəz olundu.
 
 ### Added
+- `TASK-0307` feat(listings): **Admin elan yaratma** — `/dashboard/ilanlar/yarat` route, "Yeni elan yarat" düyməsi, admin avantajları (birbaşa status seçimi, isFeatured/isShowcase toggle, daxili admin qeydi), YouTube/Instagram video embed (link-based), toplu foto silmə (checkbox seçimi). Migration yox, mövcud motora toxunulmadı.
 - `TASK-0308` feat(email): **email_logs cədvəli** — hər `sendEmail()` çağırışı `email_logs`-a yazılır (sent/failed + messageId + errorMessage). Migration: `drizzle/0017_add_email_logs.sql`.
 - `TASK-0308` feat(newsletter): **Footer newsletter formu** — ana səhifə footer-ında email abunə formu `POST /api/newsletter/subscribe` endpointinə bağlandı (`source: homepage_newsletter`).
 

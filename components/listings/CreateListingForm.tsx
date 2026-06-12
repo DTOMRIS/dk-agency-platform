@@ -9,9 +9,13 @@ import {
   Check,
   CheckCircle2,
   Copy,
+  Eye,
+  Film,
   Pencil,
+  Star,
   Trash2,
   UploadCloud,
+  X,
 } from 'lucide-react';
 import {
   CITY_OPTIONS,
@@ -108,7 +112,24 @@ function normalizePhone(value: string) {
   return cleaned.startsWith('+') ? cleaned : `+994${cleaned}`;
 }
 
-export default function CreateListingForm({ session }: { session?: SessionLike }) {
+/** Valid YouTube/Instagram embed URL pattern */
+function parseVideoUrl(url: string): { type: 'youtube' | 'instagram'; embedUrl: string } | null {
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/);
+  if (ytMatch) return { type: 'youtube', embedUrl: `https://www.youtube.com/embed/${ytMatch[1]}` };
+  const igMatch = url.match(/instagram\.com\/(?:p|reel)\/([\w-]+)/);
+  if (igMatch) return { type: 'instagram', embedUrl: `https://www.instagram.com/p/${igMatch[1]}/embed` };
+  return null;
+}
+
+interface AdminOptions {
+  initialStatus: string;
+  isFeatured: boolean;
+  isShowcase: boolean;
+  adminNote: string;
+  videoUrl: string;
+}
+
+export default function CreateListingForm({ session, isAdmin = false }: { session?: SessionLike; isAdmin?: boolean }) {
   const t = useTranslations('createListing');
   const locale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
 
@@ -123,6 +144,14 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
   const [toast, setToast] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submittedCode, setSubmittedCode] = useState('');
+  const [selectedForDelete, setSelectedForDelete] = useState<Set<string>>(new Set());
+  const [adminOpts, setAdminOpts] = useState<AdminOptions>({
+    initialStatus: 'showcase_ready',
+    isFeatured: false,
+    isShowcase: true,
+    adminNote: '',
+    videoUrl: '',
+  });
 
   const selectedCategory = useMemo(
     () => LISTING_CATEGORIES.find((item) => item.id === formData.type),
@@ -371,6 +400,29 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
     return uploaded;
   };
 
+  const toggleDeleteSelection = (id: string) => {
+    setSelectedForDelete((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const bulkDeleteImages = () => {
+    if (selectedForDelete.size === 0) return;
+    setImages((prev) => {
+      const kept = prev.filter((img) => !selectedForDelete.has(img.id));
+      prev.filter((img) => selectedForDelete.has(img.id)).forEach((img) => {
+        if (img.preview.startsWith('blob:')) URL.revokeObjectURL(img.preview);
+      });
+      if (coverIndex >= kept.length) setCoverIndex(Math.max(0, kept.length - 1));
+      return kept;
+    });
+    setSelectedForDelete(new Set());
+    pushToast(`${selectedForDelete.size} foto silindi`);
+  };
+
   const handleSubmit = async () => {
     setSubmitting(true);
     const trackingCode = `DK-${new Date().getFullYear()}-${String(Math.floor(1000 + Math.random() * 9000))}`;
@@ -379,7 +431,8 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
       const uploadedImages = await uploadImagesIfPossible(trackingCode);
       const conceptPayload = selectedConcepts.length > 0 ? selectedConcepts : undefined;
       const locationPayload = Object.keys(locationData).length > 0 ? locationData : undefined;
-      const payload = {
+      const videoEmbed = adminOpts.videoUrl ? parseVideoUrl(adminOpts.videoUrl) : null;
+      const payload: Record<string, unknown> = {
         ...formData,
         trackingCode,
         equipment: equipment.filter(e => e.name.trim()),
@@ -389,12 +442,21 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
           ...formData.typeSpecificData,
           ...(conceptPayload ? { concepts: conceptPayload } : {}),
           ...(locationPayload ? { locationDetails: locationPayload } : {}),
+          ...(videoEmbed ? { videoUrl: adminOpts.videoUrl, videoEmbed: videoEmbed.embedUrl, videoType: videoEmbed.type } : {}),
         },
         images:
           uploadedImages.length > 0
             ? uploadedImages.map((image: { url: string }) => ({ url: image.url }))
             : images.map((image) => ({ url: image.preview })),
       };
+      if (isAdmin) {
+        payload.initialStatus = adminOpts.initialStatus;
+        payload.isFeatured = adminOpts.isFeatured;
+        payload.isShowcase = adminOpts.isShowcase;
+        if (adminOpts.adminNote.trim()) {
+          payload.adminNote = adminOpts.adminNote.trim();
+        }
+      }
       const response = await fetch('/api/listings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -450,10 +512,10 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
-              href="/b2b-panel/ilanlarim"
+              href={isAdmin ? '/dashboard/ilanlar' : '/b2b-panel/ilanlarim'}
               className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white"
             >
-              {t('viewListings')}
+              {isAdmin ? 'Elan idarəetmə' : t('viewListings')}
             </Link>
             <button
               type="button"
@@ -901,15 +963,35 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
             <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleImages} />
           </label>
 
-          <div className="mt-4 text-sm font-semibold text-slate-500">{t('photoCount', { count: images.length })}</div>
+          <div className="mt-4 flex items-center justify-between">
+            <div className="text-sm font-semibold text-slate-500">{t('photoCount', { count: images.length })}</div>
+            {selectedForDelete.size > 0 && (
+              <button
+                type="button"
+                onClick={bulkDeleteImages}
+                className="inline-flex items-center gap-2 rounded-full bg-rose-500 px-4 py-2 text-xs font-bold text-white"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+                {selectedForDelete.size} foto sil
+              </button>
+            )}
+          </div>
           {errors.images ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.images}</p> : null}
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {images.map((image, index) => (
-              <div key={image.id} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+              <div key={image.id} className={`rounded-[24px] border bg-white p-4 shadow-sm ${selectedForDelete.has(image.id) ? 'border-rose-300 ring-2 ring-rose-100' : 'border-slate-200'}`}>
                 <div className="relative overflow-hidden rounded-2xl bg-slate-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={image.preview} alt={image.file.name} className="aspect-[4/3] w-full object-cover" />
+                  <label className="absolute left-3 top-3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-lg bg-white/90 shadow">
+                    <input
+                      type="checkbox"
+                      checked={selectedForDelete.has(image.id)}
+                      onChange={() => toggleDeleteSelection(image.id)}
+                      className="h-4 w-4 rounded border-slate-300 text-rose-500"
+                    />
+                  </label>
                 </div>
                 <div className="mt-3 text-sm font-semibold text-slate-700">{image.file.name}</div>
                 <div className="mt-1 text-xs font-semibold text-emerald-600">{image.sizeReduction}</div>
@@ -936,6 +1018,44 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Video embed — YouTube / Instagram link */}
+          <div className="mt-8 border-t border-slate-200 pt-6">
+            <div className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-slate-400">
+              <Film className="h-4 w-4" />
+              Video (YouTube / Instagram)
+            </div>
+            <div className="mt-3 flex gap-3">
+              <input
+                type="url"
+                value={adminOpts.videoUrl}
+                onChange={(e) => setAdminOpts((prev) => ({ ...prev, videoUrl: e.target.value }))}
+                placeholder="https://youtube.com/watch?v=... və ya https://instagram.com/reel/..."
+                className="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+              />
+              {adminOpts.videoUrl && (
+                <button type="button" onClick={() => setAdminOpts((prev) => ({ ...prev, videoUrl: '' }))} className="rounded-2xl border border-slate-200 px-3 text-slate-400 hover:text-slate-700">
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+            {adminOpts.videoUrl && parseVideoUrl(adminOpts.videoUrl) && (
+              <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
+                <iframe
+                  src={parseVideoUrl(adminOpts.videoUrl)!.embedUrl}
+                  className="aspect-video w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="Video preview"
+                />
+              </div>
+            )}
+            {adminOpts.videoUrl && !parseVideoUrl(adminOpts.videoUrl) && (
+              <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">
+                YouTube və ya Instagram linki daxil edin
+              </p>
+            )}
           </div>
         </div>
       ) : null}
@@ -1053,8 +1173,64 @@ export default function CreateListingForm({ session }: { session?: SessionLike }
                 </div>
               </div>
 
+              {/* Admin controls */}
+              {isAdmin && (
+                <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50/50 p-5">
+                  <div className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-amber-700">
+                    <Star className="h-4 w-4" />
+                    Admin idarəetmə
+                  </div>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm font-bold text-slate-700">Başlanğıc status</label>
+                      <select
+                        value={adminOpts.initialStatus}
+                        onChange={(e) => setAdminOpts((prev) => ({ ...prev, initialStatus: e.target.value }))}
+                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                      >
+                        <option value="submitted">Göndərildi (standart axın)</option>
+                        <option value="committee_review">Komitə baxışı</option>
+                        <option value="showcase_ready">Vitrində (birbaşa yayımla)</option>
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                      <label className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={adminOpts.isShowcase}
+                          onChange={(e) => setAdminOpts((prev) => ({ ...prev, isShowcase: e.target.checked }))}
+                          className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]"
+                        />
+                        <Eye className="h-4 w-4 text-slate-400" />
+                        Vitrində göstər
+                      </label>
+                      <label className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={adminOpts.isFeatured}
+                          onChange={(e) => setAdminOpts((prev) => ({ ...prev, isFeatured: e.target.checked }))}
+                          className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]"
+                        />
+                        <Star className="h-4 w-4 text-slate-400" />
+                        Seçilmiş elan
+                      </label>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <label className="mb-2 block text-sm font-bold text-slate-700">Admin qeydi (üzv görməz)</label>
+                    <textarea
+                      value={adminOpts.adminNote}
+                      onChange={(e) => setAdminOpts((prev) => ({ ...prev, adminNote: e.target.value }))}
+                      rows={3}
+                      placeholder="Daxili qeyd — yalnız admin panelində görünür"
+                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                    />
+                  </div>
+                </div>
+              )}
+
               <button type="button" onClick={handleSubmit} disabled={submitting} className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--dk-red)] px-6 py-4 text-sm font-bold text-white disabled:opacity-60">
-                {submitting ? t('submitting') : t('submitButton')}
+                {submitting ? t('submitting') : (isAdmin ? 'Elan yarat (Admin)' : t('submitButton'))}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>

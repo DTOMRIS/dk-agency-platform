@@ -1,6 +1,17 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-12 — TASK-0307: feat(listings): admin listing create
+
+**Why:** Listing motor fully built (CRUD, moderation, AI, schema) but admin had no way to create listings from dashboard — only members could via `/b2b-panel/yeni-ilan`.
+
+**What:**
+- `app/dashboard/ilanlar/yarat/page.tsx`: new admin create route
+- `app/dashboard/ilanlar/page.tsx`: "Yeni elan yarat" button added
+- `components/listings/CreateListingForm.tsx`: `isAdmin` prop — direct status selection (submitted/committee_review/showcase_ready), isFeatured/isShowcase toggles, internal admin note, YouTube/Instagram video embed (ID-only regex, safe iframe), bulk image delete with checkbox
+- `app/api/listings/route.ts`: accepts admin fields (initialStatus, isShowcase, isFeatured)
+- No schema/migration changes
+
 ## 2026-06-12 — TASK-0308: fix(email): HTML injection + delivery logging + newsletter
 
 **Why:** CTO audit found user-supplied values (leadName, message, reason, title) injected raw into email HTML — production injection vulnerability. Also 14 email send failures silently swallowed.
