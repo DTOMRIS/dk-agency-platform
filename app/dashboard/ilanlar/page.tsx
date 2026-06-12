@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Search, CheckSquare, Square, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Search, CheckSquare, Square, Loader2 } from 'lucide-react';
 import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import { getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
@@ -344,6 +344,16 @@ export default function DashboardIlanlarPage() {
             <p className="mt-2 text-sm text-slate-500">
               {copy.pageSubtitle}
             </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Link
+              href="/dashboard/ilanlar/yarat"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:shadow-md"
+            >
+              <Plus className="h-4 w-4" />
+              Yeni elan yarat
+            </Link>
           </div>
 
           <div className="relative max-w-md flex-1">
