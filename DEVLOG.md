@@ -1,6 +1,16 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-12 — TASK-0403: feat(infra): news pipeline GitHub Actions cron
+
+**Why:** F1a (fetch) and F1b (synthesize) work as manual scripts. Need automated daily execution without touching Hostinger (no deploy, no 503 risk).
+
+**What:**
+- `.github/workflows/news-ingest.yml`: schedule 06:00+14:00 UTC, workflow_dispatch for manual test. Runs `news:fetch` then `news:synthesize` against Neon via `DATABASE_URL` secret. On failure: SMTP alert to CTO via `dawidd6/action-send-mail@v3`.
+- No Hostinger build/deploy triggered — Actions runner only writes to Neon DB.
+
+**Secrets required:** `DATABASE_URL`, `NEWSDATA_API_KEY`, `DEEPSEEK_API_KEY`, `SMTP_USER`, `SMTP_PASS`
+
 ## 2026-06-12 — TASK-0402: feat(news): DeepSeek Model-B synthesis
 
 **Why:** Fetched signals are raw English headlines. Need original DK-branded AZ analysis — NOT copy/paraphrase, legal-safe original content with HoReCa sector insight.
