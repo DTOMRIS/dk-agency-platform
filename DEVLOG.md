@@ -1,6 +1,18 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-12 — TASK-0401: feat(news): NewsData.io discovery + scoring
+
+**Why:** Manual news curation doesn't scale. Need automated HoReCa/franchise/tourism signal discovery from global sources, scored by relevance, with deduplication.
+
+**What:**
+- `lib/news/newsdata-fetch.ts`: NewsData.io API client with 4 query sets (restaurant/hotel/franchise/food-safety, AZ/TR focus). Fetches → scores → dedup (sha256 URL hash) → inserts as `origin='newsdata', status='fetched'`.
+- `lib/news/scoring-config.ts`: SSOT for keyword weights (restoran +3, franchise +3, PR -2, spam -3), source domain weights (reuters +3, prnewswire -2), threshold ≥4.
+- `scripts/newsdata-fetch.ts`: CLI for `npm run news:fetch`
+- `lib/db/schema.ts` + `drizzle/0018`: `origin`, `source_url_hash` (unique index), `relevance_score` columns
+
+**Action required:** Migration 0018 on Neon. `NEWSDATA_API_KEY` in `.env.local`.
+
 ## 2026-06-12 — TASK-0307: feat(listings): admin listing create
 
 **Why:** Listing motor fully built (CRUD, moderation, AI, schema) but admin had no way to create listings from dashboard — only members could via `/b2b-panel/yeni-ilan`.

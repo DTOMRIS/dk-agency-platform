@@ -399,6 +399,9 @@ export const newsArticles = pgTable('news_articles', {
   seoDescription: varchar('seo_description', { length: 160 }),
   relatedToolkits: jsonb('related_toolkits').$type<string[]>().default([]),
   relatedBlogSlug: text('related_blog_slug'),
+  origin: text('origin').notNull().default('manual'),
+  sourceUrlHash: text('source_url_hash'),
+  relevanceScore: integer('relevance_score'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
