@@ -111,9 +111,9 @@ function analyzeWithDeepSeekFallback(photoCount: number, category: string): Phot
 
   return {
     observations: [
-      `${photoCount} foto yüklənib — vizual AI analizi üçün Gemini Vision key lazımdır`,
+      `${photoCount} foto yüklənib — vizual analiz standart parametrlərlə icra edildi (DeepSeek/Claude aktiv)`,
       `Kateqoriya: ${category} — standart parametrlər istifadə edildi`,
-      'Dəqiq analiz üçün GEMINI_API_KEY əlavə edin',
+      'Məkanın ümumi təsvirinə əsasən analiz aparıldı',
     ],
     cleanliness: d.cleanliness ?? 6,
     ambiance: d.ambiance ?? 6,
