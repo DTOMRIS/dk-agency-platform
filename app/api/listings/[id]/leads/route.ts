@@ -74,8 +74,8 @@ export async function POST(
           body.phone || '-',
           body.message || '',
         ),
-      ).catch(() => {});
-    }).catch(() => {});
+      ).catch((err) => console.error('[email] Listing lead admin mail failed:', err));
+    }).catch((err) => console.error('[email] Listing lead admin import failed:', err));
   }
 
   return NextResponse.json({ success: true, source: 'db', data: inserted[0] }, { status: 201 });

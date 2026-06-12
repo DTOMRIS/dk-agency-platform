@@ -155,15 +155,15 @@ export async function POST(request: NextRequest) {
 
   // Fire-and-forget: AI analysis via DeepSeek
   import('@/lib/listings/ai-analyze').then(({ analyzeListingAsync }) => {
-    analyzeListingAsync(listing.id).catch(() => {});
-  }).catch(() => {});
+    analyzeListingAsync(listing.id).catch((err) => console.error('[ai] Listing analysis failed:', err));
+  }).catch((err) => console.error('[ai] Listing analysis import failed:', err));
 
   // Send confirmation email to submitter (fire-and-forget)
   const submitterEmail = body.email || session.email;
   if (submitterEmail) {
     import('@/lib/email/templates').then(({ emailTemplates, sendEmail }) => {
-      sendEmail(submitterEmail, emailTemplates.listingSubmitted(trackingCode, body.ownerName || session.name || 'Üzv')).catch(() => {});
-    }).catch(() => {});
+      sendEmail(submitterEmail, emailTemplates.listingSubmitted(trackingCode, body.ownerName || session.name || 'Üzv')).catch((err) => console.error('[email] Listing submitted mail failed:', err));
+    }).catch((err) => console.error('[email] Listing submitted import failed:', err));
   }
 
   return NextResponse.json({ success: true, source: 'db', data: listing }, { status: 201 });

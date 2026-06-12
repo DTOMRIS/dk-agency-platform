@@ -444,26 +444,28 @@ export const emailTemplates = {
 
   listingApproved: (trackingCode: string, title: string, userName: string, locale?: Locale | string): EmailTemplate => {
     const loc = resolveLocale(locale);
+    const safeTitle = escapeEmailHtml(title);
+    const safeName = escapeEmailHtml(userName);
     const t: Record<Locale, { subject: string; greeting: string; body: string }> = {
       az: {
         subject: `DK Agency \u2014 Elan\u0131n\u0131z vitrin\u0259 \u00E7\u0131xd\u0131 (${trackingCode})`,
-        greeting: `Salam ${userName},`,
-        body: `<strong>${title}</strong> adl\u0131 elan\u0131n\u0131z vitrind\u0259 yay\u0131mland\u0131. Tracking kodu: <strong>${trackingCode}</strong>.`,
+        greeting: `Salam ${safeName},`,
+        body: `<strong>${safeTitle}</strong> adl\u0131 elan\u0131n\u0131z vitrind\u0259 yay\u0131mland\u0131. Tracking kodu: <strong>${trackingCode}</strong>.`,
       },
       ru: {
         subject: `DK Agency \u2014 \u041E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E (${trackingCode})`,
-        greeting: `\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${userName}!`,
-        body: `\u041E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435 <strong>${title}</strong> \u043E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E \u043D\u0430 \u0432\u0438\u0442\u0440\u0438\u043D\u0435. \u041A\u043E\u0434: <strong>${trackingCode}</strong>.`,
+        greeting: `\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${safeName}!`,
+        body: `\u041E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435 <strong>${safeTitle}</strong> \u043E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E \u043D\u0430 \u0432\u0438\u0442\u0440\u0438\u043D\u0435. \u041A\u043E\u0434: <strong>${trackingCode}</strong>.`,
       },
       en: {
         subject: `DK Agency \u2014 Listing published (${trackingCode})`,
-        greeting: `Hello ${userName},`,
-        body: `Your listing <strong>${title}</strong> is now published. Tracking code: <strong>${trackingCode}</strong>.`,
+        greeting: `Hello ${safeName},`,
+        body: `Your listing <strong>${safeTitle}</strong> is now published. Tracking code: <strong>${trackingCode}</strong>.`,
       },
       tr: {
         subject: `DK Agency \u2014 \u0130lan\u0131n\u0131z yay\u0131nland\u0131 (${trackingCode})`,
-        greeting: `Merhaba ${userName},`,
-        body: `<strong>${title}</strong> ba\u015Fl\u0131kl\u0131 ilan\u0131n\u0131z vitrine \u00E7\u0131kt\u0131. Takip kodu: <strong>${trackingCode}</strong>.`,
+        greeting: `Merhaba ${safeName},`,
+        body: `<strong>${safeTitle}</strong> ba\u015Fl\u0131kl\u0131 ilan\u0131n\u0131z vitrine \u00E7\u0131kt\u0131. Takip kodu: <strong>${trackingCode}</strong>.`,
       },
     };
     const c = t[loc];
@@ -478,28 +480,30 @@ export const emailTemplates = {
 
   listingRejected: (trackingCode: string, reason: string, userName: string, locale?: Locale | string): EmailTemplate => {
     const loc = resolveLocale(locale);
+    const safeReason = escapeEmailHtml(reason);
+    const safeName = escapeEmailHtml(userName);
     const t: Record<Locale, { subject: string; greeting: string; body: string; reasonLabel: string }> = {
       az: {
         subject: `DK Agency \u2014 Elan statusu (${trackingCode})`,
-        greeting: `Salam ${userName},`,
+        greeting: `Salam ${safeName},`,
         body: 'Elan\u0131n\u0131z haz\u0131rda vitrin\u0259 \u00E7\u0131xar\u0131lmad\u0131.',
         reasonLabel: 'S\u0259b\u0259b',
       },
       ru: {
         subject: `DK Agency \u2014 \u0421\u0442\u0430\u0442\u0443\u0441 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u044F (${trackingCode})`,
-        greeting: `\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${userName}!`,
+        greeting: `\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${safeName}!`,
         body: '\u041E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435 \u043D\u0435 \u0431\u044B\u043B\u043E \u043E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E.',
         reasonLabel: '\u041F\u0440\u0438\u0447\u0438\u043D\u0430',
       },
       en: {
         subject: `DK Agency \u2014 Listing status (${trackingCode})`,
-        greeting: `Hello ${userName},`,
+        greeting: `Hello ${safeName},`,
         body: 'Your listing was not published at this time.',
         reasonLabel: 'Reason',
       },
       tr: {
         subject: `DK Agency \u2014 \u0130lan durumu (${trackingCode})`,
-        greeting: `Merhaba ${userName},`,
+        greeting: `Merhaba ${safeName},`,
         body: '\u0130lan\u0131n\u0131z \u015Fu anda vitrine al\u0131nmad\u0131.',
         reasonLabel: 'Sebep',
       },
@@ -510,7 +514,7 @@ export const emailTemplates = {
       html: wrapEmail(`
         <p>${c.greeting}</p>
         <p>${c.body}</p>
-        <p>${c.reasonLabel}: <strong>${reason}</strong></p>
+        <p>${c.reasonLabel}: <strong>${safeReason}</strong></p>
         <p>Tracking kodu: <strong>${trackingCode}</strong>.</p>
       `),
     };
@@ -518,26 +522,28 @@ export const emailTemplates = {
 
   newLead: (trackingCode: string, leadName: string, ownerName: string, locale?: Locale | string): EmailTemplate => {
     const loc = resolveLocale(locale);
+    const safeLead = escapeEmailHtml(leadName);
+    const safeOwner = escapeEmailHtml(ownerName);
     const t: Record<Locale, { subject: string; greeting: string; body: string }> = {
       az: {
         subject: `DK Agency \u2014 Yeni maraq bildiri\u015Fi (${trackingCode})`,
-        greeting: `Salam ${ownerName},`,
-        body: `<strong>${leadName}</strong> sizin elan\u0131n\u0131zla maraqland\u0131. Tracking kodu: <strong>${trackingCode}</strong>.`,
+        greeting: `Salam ${safeOwner},`,
+        body: `<strong>${safeLead}</strong> sizin elan\u0131n\u0131zla maraqland\u0131. Tracking kodu: <strong>${trackingCode}</strong>.`,
       },
       ru: {
         subject: `DK Agency \u2014 \u041D\u043E\u0432\u044B\u0439 \u0438\u043D\u0442\u0435\u0440\u0435\u0441 (${trackingCode})`,
-        greeting: `\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${ownerName}!`,
-        body: `<strong>${leadName}</strong> \u0437\u0430\u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043E\u0432\u0430\u043B\u0441\u044F \u0432\u0430\u0448\u0438\u043C \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435\u043C. \u041A\u043E\u0434: <strong>${trackingCode}</strong>.`,
+        greeting: `\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435, ${safeOwner}!`,
+        body: `<strong>${safeLead}</strong> \u0437\u0430\u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043E\u0432\u0430\u043B\u0441\u044F \u0432\u0430\u0448\u0438\u043C \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0435\u043C. \u041A\u043E\u0434: <strong>${trackingCode}</strong>.`,
       },
       en: {
         subject: `DK Agency \u2014 New interest (${trackingCode})`,
-        greeting: `Hello ${ownerName},`,
-        body: `<strong>${leadName}</strong> showed interest in your listing. Tracking code: <strong>${trackingCode}</strong>.`,
+        greeting: `Hello ${safeOwner},`,
+        body: `<strong>${safeLead}</strong> showed interest in your listing. Tracking code: <strong>${trackingCode}</strong>.`,
       },
       tr: {
         subject: `DK Agency \u2014 Yeni ilgi bildirimi (${trackingCode})`,
-        greeting: `Merhaba ${ownerName},`,
-        body: `<strong>${leadName}</strong> ilan\u0131n\u0131zla ilgilendi. Takip kodu: <strong>${trackingCode}</strong>.`,
+        greeting: `Merhaba ${safeOwner},`,
+        body: `<strong>${safeLead}</strong> ilan\u0131n\u0131zla ilgilendi. Takip kodu: <strong>${trackingCode}</strong>.`,
       },
     };
     const c = t[loc];
@@ -552,14 +558,14 @@ export const emailTemplates = {
 
   // Admin-only notifications — always AZ
   kazanLeadAdmin: (leadName: string, phone: string, businessType: string, intent: string): EmailTemplate => ({
-    subject: `KAZAN AI \u2014 Yeni lead: ${leadName}`,
+    subject: `KAZAN AI \u2014 Yeni lead: ${escapeEmailHtml(leadName)}`,
     html: wrapEmail(`
       <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">KAZAN AI Lead</h2>
       <table style="width:100%;border-collapse:collapse;font-size:14px;">
-        <tr><td style="padding:8px 0;color:#64748b;">Ad</td><td style="padding:8px 0;font-weight:600;">${leadName}</td></tr>
-        <tr><td style="padding:8px 0;color:#64748b;">Telefon</td><td style="padding:8px 0;font-weight:600;">${phone}</td></tr>
-        <tr><td style="padding:8px 0;color:#64748b;">Biznes tipi</td><td style="padding:8px 0;font-weight:600;">${businessType}</td></tr>
-        <tr><td style="padding:8px 0;color:#64748b;">Maraq</td><td style="padding:8px 0;font-weight:600;">${intent}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Ad</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(leadName)}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Telefon</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(phone)}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Biznes tipi</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(businessType)}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Maraq</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(intent)}</td></tr>
       </table>
       <p style="margin-top:20px;">
         <a href="https://dkagency.com.tr/dashboard/kazan-leads" style="${ctaStyle}font-size:14px;">Lead-\u0259 bax</a>
@@ -568,14 +574,14 @@ export const emailTemplates = {
   }),
 
   listingLeadAdmin: (trackingCode: string, listingTitle: string, leadName: string, phone: string, message: string): EmailTemplate => ({
-    subject: `Elan Lead \u2014 ${listingTitle} (${trackingCode})`,
+    subject: `Elan Lead \u2014 ${escapeEmailHtml(listingTitle)} (${trackingCode})`,
     html: wrapEmail(`
       <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">Yeni Elan Maraq\u0131</h2>
       <table style="width:100%;border-collapse:collapse;font-size:14px;">
-        <tr><td style="padding:8px 0;color:#64748b;">Elan</td><td style="padding:8px 0;font-weight:600;">${listingTitle} (${trackingCode})</td></tr>
-        <tr><td style="padding:8px 0;color:#64748b;">Maraq bildir\u0259n</td><td style="padding:8px 0;font-weight:600;">${leadName}</td></tr>
-        <tr><td style="padding:8px 0;color:#64748b;">Telefon</td><td style="padding:8px 0;font-weight:600;">${phone}</td></tr>
-        <tr><td style="padding:8px 0;color:#64748b;">Mesaj</td><td style="padding:8px 0;">${message || 'Mesaj yoxdur'}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Elan</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(listingTitle)} (${trackingCode})</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Maraq bildir\u0259n</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(leadName)}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Telefon</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(phone)}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Mesaj</td><td style="padding:8px 0;">${escapeEmailHtml(message) || 'Mesaj yoxdur'}</td></tr>
       </table>
       <p style="margin-top:20px;">
         <a href="https://dkagency.com.tr/dashboard/ilanlar" style="${ctaStyle}font-size:14px;">Dashboard-a ke\u00E7</a>
@@ -584,11 +590,31 @@ export const emailTemplates = {
   }),
 };
 
-export async function sendEmail(to: string, template: EmailTemplate) {
+async function logEmailDelivery(recipient: string, subject: string, templateType: string, result: { success: boolean; messageId?: string; error?: string }) {
+  try {
+    const { db } = await import('@/lib/db');
+    const { emailLogs } = await import('@/lib/db/schema');
+    if (!db) return;
+    await db.insert(emailLogs).values({
+      recipient,
+      subject: subject.slice(0, 500),
+      templateType,
+      status: result.success ? 'sent' : 'failed',
+      messageId: result.messageId ?? null,
+      errorMessage: result.error ?? null,
+    });
+  } catch {
+    // Logging should never block email flow
+  }
+}
+
+export async function sendEmail(to: string, template: EmailTemplate, templateType = 'generic') {
   const { sendSmtpEmail } = await import('./smtp');
-  return sendSmtpEmail(to, template.subject, template.html, {
+  const result = await sendSmtpEmail(to, template.subject, template.html, {
     text: template.text || htmlToPlainText(template.html),
     unsubscribeUrl: template.unsubscribeUrl,
     listId: template.listId,
   });
+  logEmailDelivery(to, template.subject, templateType, result).catch(() => {});
+  return result;
 }
