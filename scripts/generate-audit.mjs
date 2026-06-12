@@ -135,7 +135,7 @@ ${protectedFiles.map(f => '- \`' + f + '\`').join('\n')}
 | Key | Status |
 |-----|--------|
 | DEEPSEEK_API_KEY | ${hasKey('DEEPSEEK_API_KEY') ? '✅' : '❌'} |
-| GEMINI_API_KEY | ${hasKey('GEMINI_API_KEY') ? '✅' : '⚠️ yorum/yox'} |
+| GEMINI_API_KEY | ❌ Yoxdur / İstifadə edilmir (DeepSeek/Claude aktiv) |
 | ANTHROPIC_API_KEY | ${hasKey('ANTHROPIC_API_KEY') ? '✅' : '⚠️ fallback yox'} |
 | SMTP_USER | ${hasSmtp ? '✅' : '❌'} |
 
@@ -151,14 +151,14 @@ ${protectedFiles.map(f => '- \`' + f + '\`').join('\n')}
 | Komponent | Status |
 |-----------|--------|
 | OCR pipeline | ${ocrExists ? '✅ lib/invoice-ocr/ mövcud' : '❌ yox'} |
-| GEMINI_API_KEY | ${hasKey('GEMINI_API_KEY') ? '✅ aktiv' : '⚠️ deaktiv → vision OCR kor'} |
+| GEMINI_API_KEY | ❌ Yoxdur (Sistem tamamilə DeepSeek və Claude üzərindədir) |
 
 ---
 ## Manual (əl ilə güncəllə)
 
 ### Production
 - Son smoke: 2026-05-28 — 23/23 PASS, 0 kritik
-- Hostinger GEMINI_API_KEY: yoxlanmalı
+- Hostinger key: DeepSeek & Claude aktivdir
 
 ### Tech Debt
 - Route [locale] uyğunsuzluğu

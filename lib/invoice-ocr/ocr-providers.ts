@@ -9,7 +9,7 @@ import { AI_MODELS } from '@/lib/ai-models';
 
 // ── Startup warning ────────────────────────────────────────────────
 if (!process.env.GEMINI_API_KEY) {
-  console.warn('[AI] GEMINI_API_KEY missing — vision OCR + photo/menu analyzer disabled');
+  console.info('[AI] GEMINI_API_KEY yoxdur — Vision OCR + foto/menyu analizi üçün DeepSeek/Claude istifadə olunur');
 }
 
 // ── Gemini Vision (PRIMARY) ─────────────────────────────────────────

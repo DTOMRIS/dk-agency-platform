@@ -1,19 +1,19 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-06-12 11:41:29 | Branch: feature/task-0304-news-editor-spine | 1a37e7f
+> Son güncəlləmə: 2026-06-12 20:20:30 | Branch: main | b28123e
 
 ## Route İnventarı
 | Kateqoriya | Say |
 |-----------|-----|
-| Toplam page.tsx | 250 |
-| Dashboard | 88 |
+| Toplam page.tsx | 251 |
+| Dashboard | 89 |
 | Toolkit | 47 |
 
 ## AI Stack (lib/ai-models.ts SST)
 | Provider | Model | Fayl sayı |
 |----------|-------|-----------|
-| DeepSeek | v4-flash | 22 |
+| DeepSeek | v4-flash | 23 |
 | Gemini | 2.5-flash | 8 |
 | Anthropic | claude-sonnet-4-6 | fallback |
 
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 4306 | 4233 | 4233 | 4233 | ⚠️ |
+| 4309 | 4236 | 4236 | 4236 | ⚠️ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`
@@ -44,7 +44,7 @@ AI Insight bağlı səhifə: **9**
 | Key | Status |
 |-----|--------|
 | DEEPSEEK_API_KEY | ✅ |
-| GEMINI_API_KEY | ⚠️ yorum/yox |
+| GEMINI_API_KEY | ❌ Yoxdur / İstifadə edilmir (DeepSeek/Claude aktiv) |
 | ANTHROPIC_API_KEY | ⚠️ fallback yox |
 | SMTP_USER | ✅ |
 
@@ -60,14 +60,14 @@ AI Insight bağlı səhifə: **9**
 | Komponent | Status |
 |-----------|--------|
 | OCR pipeline | ✅ lib/invoice-ocr/ mövcud |
-| GEMINI_API_KEY | ⚠️ deaktiv → vision OCR kor |
+| GEMINI_API_KEY | ❌ Yoxdur (Sistem tamamilə DeepSeek və Claude üzərindədir) |
 
 ---
 ## Manual (əl ilə güncəllə)
 
 ### Production
 - Son smoke: 2026-05-28 — 23/23 PASS, 0 kritik
-- Hostinger GEMINI_API_KEY: yoxlanmalı
+- Hostinger key: DeepSeek & Claude aktivdir
 
 ### Tech Debt
 - Route [locale] uyğunsuzluğu
