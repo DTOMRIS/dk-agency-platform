@@ -19,14 +19,26 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL('https://dkagency.com.tr'),
   title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
-  description: 'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+  description:
+    'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+  openGraph: {
+    type: 'website',
+    siteName: 'DK Agency',
+    locale: 'az_AZ',
+    url: 'https://dkagency.com.tr',
+    title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
+    description:
+      'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
+    description:
+      'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+  },
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
   const messages = await getMessages({ locale });
 
