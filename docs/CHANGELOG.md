@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0312` fix(news): **RSS feed real xəbər yayımlayır** — `/api/rss/haberler` artıq `getAllBlogArticles()` (blog mock) əvəzinə `getApprovedNewsArticles()` çağırır. Əvvəl "DK Agency Xəbərlər" başlıqlı feed blog mock verir, `/haberler/<blog-slug>` linkləri 404 olurdu. GET indi async + `dynamic='force-dynamic'`. (TASK-0300 audit tapıntısı.)
+
 ### Security
 - `TASK-0308` fix(email): **HTML injection kapatıldı** — 5 email template-də `leadName`, `ownerName`, `title`, `reason`, `message`, `phone`, `businessType`, `intent` dəyərləri `escapeEmailHtml()` ilə escape olunur. 14 sessiz `.catch(() => {})` → `console.error` ilə əvəz olundu.
 
