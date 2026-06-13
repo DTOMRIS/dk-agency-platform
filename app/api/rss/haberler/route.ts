@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getAllBlogArticles } from '@/lib/data/blogArticles';
+import { getApprovedNewsArticles } from '@/lib/repositories/newsRepository';
+
+export const dynamic = 'force-dynamic';
 
 function xmlEscape(value: string) {
   return value
@@ -10,28 +12,31 @@ function xmlEscape(value: string) {
     .replaceAll("'", '&apos;');
 }
 
-export function GET() {
-  const articles = getAllBlogArticles();
+export async function GET() {
   const baseUrl = 'https://dkagency.com.tr';
+
+  // Real approved news from the DB — this feed previously served blog mock data
+  // (getAllBlogArticles), producing /haberler/<blog-slug> links that 404.
+  const { items } = await getApprovedNewsArticles({ limit: 50 });
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <title>DK Agency Xəbərlər</title>
 <link>${baseUrl}/haberler</link>
-<description>HoReCa sektoru üzrə DK Agency ekspert yazıları, analizlər və praktik məqalələr.</description>
+<description>HoReCa sektoru üzrə DK Agency xəbərləri, analizlər və sektor nəbzi.</description>
 <atom:link href="${baseUrl}/api/rss/haberler" rel="self" type="application/rss+xml"/>
 <language>az</language>
-${articles
+${items
   .map(
     (a) =>
       `<item>
 <title>${xmlEscape(a.title)}</title>
 <link>${baseUrl}/haberler/${a.slug}</link>
 <guid isPermaLink="true">${baseUrl}/haberler/${a.slug}</guid>
-<pubDate>${new Date(a.publishDate).toUTCString()}</pubDate>
-<description>${xmlEscape(a.summary)}</description>
-</item>`,
+<pubDate>${new Date(a.publishedAt).toUTCString()}</pubDate>
+<description>${xmlEscape(a.summary || '')}</description>
+</item>`
   )
   .join('\n')}
 </channel>
