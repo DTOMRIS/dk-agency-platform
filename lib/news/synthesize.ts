@@ -34,20 +34,24 @@ QADAĞAN:
 - Bu sözləri HEÇVAXT istifadə etmə: CRM, Pipeline, Agentlik, Holdinq, Tezliklə.
 - Reklam dili istifadə etmə.
 
-VƏZİFƏ: Yalnız FAKTLARı götür, DK dili ilə TAM ORİJİNAL qısa analiz yaz:
-1) Nə baş verdi (öz sözünlə, 2-3 cümlə)
-2) Niyə önəmli (sektor konteksti)
-3) Azərbaycan HoReCa/franchise üçün dərs
-4) Risk (1-2 cümlə)
-5) DK baxışı (1 cümlə — qısa, kəskin)
+VƏZİFƏ: Yalnız FAKTLARı götür, DK dili ilə TAM ORİJİNAL qısa analiz yaz.
+Mətn axıcı olmalıdır — bölmə başlıqları istifadə etmə, heading (#) istifadə etmə.
+Sadəcə düz abzaslar yaz, hər biri 2-3 cümlə:
+- Əvvəlcə nə baş verdiyini öz sözünlə izah et.
+- Sonra bunun niyə önəmli olduğunu sektor kontekstində yaz.
+- Azərbaycan HoReCa/franchise üçün praktik dərs çıxar.
+- Risk və ya diqqət ediləcək məqamları qeyd et.
+- Son abzasda DK baxışını 1 kəskin cümlə ilə bitir.
 
 QAYDA:
 - Azərbaycan dilində yaz (AZ).
-- Hər bölmə qısa olsun (cəmi 150-300 söz).
-- Zəif/irrelevant siqnal olsa publishable:false qaytaar.
+- Cəmi 150-300 söz. Axıcı, jurnalist üslubunda.
+- Markdown heading (#, ##, ###) QADAĞAN — düz mətn yaz.
+- **Bold** yalnız şirkət/brend adları üçün istifadə et.
+- Zəif/irrelevant siqnal olsa publishable:false qaytar.
 
 ÇIXIŞ JSON:
-{"title_az": "string", "body_az": "string (markdown)", "publishable": true/false, "reason": "string"}`;
+{"title_az": "string", "body_az": "string (plain paragraphs, no headings)", "publishable": true/false, "reason": "string"}`;
 
 /** Extract first real content line (skip markdown headings/bold labels) */
 function extractSummary(body: string, fallback: string): string {

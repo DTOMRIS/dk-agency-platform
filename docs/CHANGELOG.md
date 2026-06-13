@@ -5,6 +5,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0319` fix(news): **Xəbər detay + listing UX sprint 1** — (1) Summary-dəki raw markdown (`### Nə baş verdi`) strip olundu, (2) DeepSeek sentez prompt-u yeniləndi — heading əvəzinə axıcı abzaslar, (3) Əlaqəli xəbərlər sidebar-ı `translated` + `approved` qəbul edir (daha dolu sidebar), (4) MansetVitrin slider hər səhifədə göstərilir (`getVitrinNewsArticles` ayrı sorğu).
 - `TASK-0318` fix(news): **Xəbər detay UX** — Əlaqəli xəbərlər 1→5 (əvvəl eyni kateqoriya, sonra digərlər ilə doldur), oxuma müddəti badge, sidebar kartlarına resim + hover efekti.
 - `TASK-0317` feat(ads): **bloq-sidebar slotu** — bloq detay səhifəsinin sticky sidebar-ına `<AdSlot placement="blog-sidebar" />`. Slot əhatəsi tamamlandı (news + blog). Aktiv reklam yoxdursa sidebar dəyişmir.
 - `TASK-0316` feat(ads): **banner reklam sistemi PR-2 — public AdSlot + tracking**. `<AdSlot placement>` server komponenti (aktiv reklam yoxdursa `null`, DB-side `random()` rotasiya) + `<AdView>` client (image/gif/video render, mount-da göstərim beacon, klik-tracking link, "Reklam" açıqlama nişanı). Tracking API: `POST /api/ads/[id]/impression` (204) + `GET /api/ads/[id]/click` (302 + open-redirect qoruması). Repository read/increment-lər try/catch ilə müdafiəli — cədvəl yoxdursa belə public səhifə sınmır. İlk slot: xəbər detay sidebar (`news-sidebar`). CSP toxunulmadı (html5/lottie PR-3).

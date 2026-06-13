@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [TASK-0319] fix(news): detail + listing UX — 4 fixes - 2026-06-13
+
+### Fixed
+- **Summary raw markdown**: `### Nə baş verdi` was shown as plain text in detail page summary. Added `stripMarkdown()` to clean summary display.
+- **Synthesis headings**: Updated DeepSeek prompt to write flowing paragraphs instead of markdown headings (`###`). Existing articles cleaned via stripMarkdown at render time.
+- **Empty related sidebar**: Related articles now include `translated` + `approved` status, filling the sidebar even when few articles are approved.
+- **Slider missing on page 2+**: Vitrin slider (MansetVitrin) now shows on all pages via dedicated `getVitrinNewsArticles()` query instead of slicing from page results.
+
 ## [TASK-0305] fix(news): make detail query compatible with pending DB migration - 2026-06-12
 
 ### Fixed

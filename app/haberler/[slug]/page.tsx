@@ -19,6 +19,17 @@ function estimateReadTime(text: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
+/** Strip markdown syntax from summary for plain-text display */
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/^#{1,6}\s+/gm, '')       // headings
+    .replace(/\*\*([^*]+)\*\*/g, '$1')  // bold
+    .replace(/\*([^*]+)\*/g, '$1')      // italic
+    .replace(/`([^`]+)`/g, '$1')        // inline code
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links
+    .trim();
+}
+
 function getCategoryLabel(category: string) {
   switch (category) {
     case 'finance':
@@ -177,7 +188,7 @@ export default async function HaberDetailPage({
 
             <div className="mt-8 max-w-[720px] space-y-4 text-[17px] leading-[1.8] text-slate-700 md:text-[18px]">
               {article.summary ? (
-                <p className="font-semibold text-slate-800">{article.summary}</p>
+                <p className="font-semibold text-slate-800">{stripMarkdown(article.summary)}</p>
               ) : null}
               {article.content ? (
                 <MarkdownRenderer
