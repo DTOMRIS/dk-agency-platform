@@ -1,6 +1,16 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-13 — TASK-0319: fix(news): detail + listing UX sprint 1
+
+**Why:** 3 user-reported bugs: (1) raw markdown `### Nə baş verdi` visible in detail summary, (2) related articles sidebar empty, (3) slider missing on page 2+. Plus synthesis prompt producing heading-heavy output.
+
+**What:**
+- `app/haberler/[slug]/page.tsx`: Added `stripMarkdown()` — strips `#`, `**`, backticks, links from summary before display
+- `lib/news/synthesize.ts`: Rewrote SYSTEM_PROMPT — no headings allowed, flowing journalist-style paragraphs, bold only for brand names
+- `lib/repositories/newsRepository.ts`: New `getRelatedNewsConditions()` accepts `translated` + `approved` for related sidebar. New `getVitrinNewsArticles()` fetches top 8 articles ordered by isManset/isTop/publishedAt
+- `app/haberler/page.tsx`: Vitrin slider now fetched via dedicated query, shown on all pages (not just page 1)
+
 ## 2026-06-13 — TASK-0404: feat(news): manşet vitrin (8-article slider)
 
 **Why:** Single hero shows only 1 article. User wants Sport Arena-style slider showing top 8 headlines with auto-advance.

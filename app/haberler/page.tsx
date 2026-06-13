@@ -7,6 +7,7 @@ import { formatDateAz } from '@/lib/formatDate';
 import {
   getApprovedEditorPick,
   getApprovedNewsArticles,
+  getVitrinNewsArticles,
   type NewsCategoryKey,
   type PublicNewsArticle,
 } from '@/lib/repositories/newsRepository';
@@ -217,18 +218,11 @@ export default async function HaberlerPage({
   const page = Math.max(1, Number(params.page || '1'));
   const offset = (page - 1) * PAGE_SIZE;
 
-  const result = await getApprovedNewsArticles(
-    {
-      category,
-      limit: PAGE_SIZE,
-      offset,
-    },
-    locale,
-  );
+  const [result, vitrinItems] = await Promise.all([
+    getApprovedNewsArticles({ category, limit: PAGE_SIZE, offset }, locale),
+    getVitrinNewsArticles(8, locale),
+  ]);
 
-  const VITRIN_COUNT = 8;
-  // Vitrin: first page shows top 8 as slider, rest as grid
-  const vitrinItems = offset === 0 ? result.items.slice(0, VITRIN_COUNT) : [];
   const vitrinIds = new Set(vitrinItems.map((item) => item.id));
   const gridItems = result.items.filter((item) => !vitrinIds.has(item.id));
   // isTop items first in grid
@@ -268,18 +262,16 @@ export default async function HaberlerPage({
 
         {vitrinItems.length > 0 ? (
           <MansetVitrin items={vitrinItems} noSource={c.noSource} />
-        ) : offset === 0 ? (
+        ) : gridItems.length === 0 ? (
           <div className="rounded-3xl border border-slate-200 bg-white p-8 text-sm text-slate-500 shadow-sm">
             {c.noArticles}
           </div>
         ) : null}
 
         {/* Reklam slotu */}
-        {offset === 0 && (
-          <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Reklam sahəsi</span>
-          </div>
-        )}
+        <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Reklam sahəsi</span>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {gridItems.map((item) => (
