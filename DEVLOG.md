@@ -1097,3 +1097,11 @@ Sprint 1 (Faza 0) — yalniz infrastruktur, hec bir alet implement edilmir:
 - Local Next detail route: HTTP 200; production build PASS; DK validator PASS 8/8.
 
 **Out of scope:** Browser-extension message-channel warnings; these are not emitted by the application.
+
+## 2026-06-13 - TASK-0406: cross-sector viability + working capital
+
+**Why:** New businesses commonly confuse sales with cash and underfund inventory, receivables, deposits, ramp-up losses, and operating reserves.
+
+**What:** The existing `/toolkit/basabas` screen now supports five business types and produces deterministic viability metrics, conditional verdicts, three sensitivity levers, and a shareable single-file HTML report. The existing toolkit AI action is reused only for grounded commentary.
+
+**Verification:** Build, focused lint, and deterministic multi-sector smoke checks passed. A final Playwright rerun remains for the next session.

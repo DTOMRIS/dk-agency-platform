@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [TASK-0406] feat(finance): cross-sector viability and working-capital report - 2026-06-13
+
+### Added
+- Extended the existing `/toolkit/basabas` tool for cafe, restaurant, hotel, retail, and service planning without creating a parallel UI.
+- Added deterministic budget, break-even, daily demand, working-capital, funding-gap, runway, payback, verdict, and sensitivity calculations.
+- Added a downloadable mobile single-file HTML report and four-language labels.
+- Reused the existing toolkit insight action with a grounded cross-sector financial prompt; all report numbers remain deterministic.
+
+### Verification
+- Production build, focused lint, and deterministic cafe/hotel/service smoke checks passed.
+- Mobile E2E coverage was added; its final rerun after accessibility label fixes was deferred to avoid another heavy local browser run.
+
 ## [TASK-0305] fix(news): make detail query compatible with pending DB migration - 2026-06-12
 
 ### Fixed
