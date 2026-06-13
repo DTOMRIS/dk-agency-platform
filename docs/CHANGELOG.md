@@ -5,6 +5,7 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0314` feat(seo): **brendli default OG şəkli** (`app/opengraph-image.tsx`) — homepage və cover-siz səhifələr üçün 1200×630 brendli sosial paylaşım şəkli (gradient #1A1A2E→#E94560 + DK loqo + tagline). File-based opengraph-image avtomatik og:image + twitter:image doldurur; məqalə öz şəkli varsa onu üstələyir. Konkret hex rənglər (Satori CSS dəyişənlərini resolv etmir — mövcud `app/xeberler/opengraph-image.tsx` `var(--dk-*)` işlədir, render olmur; burada qaçınıldı). TASK-0313 follow-up.
 - `TASK-0313` feat(seo): **sayt-geneli Open Graph + Twitter Card** — root `app/layout.tsx`-ə OG (website, siteName, locale, url) + Twitter (`summary_large_image`) əlavə olundu; homepage client component olduğu üçün metadata layout-da olmalıdır. Blog + news detay səhifələrinə mövcud openGraph-ı əks etdirən `twitter` bloku (şəkil cover/imageUrl-dan). Əvvəl sosial paylaşımda preview yox idi. (TASK-0300 audit.) Follow-up: cover-siz məqalələr üçün brendli default OG şəkli.
 
 ### Fixed
