@@ -72,7 +72,7 @@ export async function getActiveAdsByPlacement(placement: string) {
           or(isNull(ads.endsAt), gte(ads.endsAt, now))
         )
       )
-      .orderBy(desc(ads.createdAt));
+      .orderBy(sql`random()`);
   } catch {
     return [];
   }
@@ -131,16 +131,24 @@ export async function deleteAd(id: number) {
 
 export async function incrementAdImpression(id: number) {
   if (!dbAvailable || !db) return;
-  await db
-    .update(ads)
-    .set({ impressions: sql`${ads.impressions} + 1` })
-    .where(eq(ads.id, id));
+  try {
+    await db
+      .update(ads)
+      .set({ impressions: sql`${ads.impressions} + 1` })
+      .where(eq(ads.id, id));
+  } catch {
+    // tracking is best-effort — never surface to the caller
+  }
 }
 
 export async function incrementAdClick(id: number) {
   if (!dbAvailable || !db) return;
-  await db
-    .update(ads)
-    .set({ clicks: sql`${ads.clicks} + 1` })
-    .where(eq(ads.id, id));
+  try {
+    await db
+      .update(ads)
+      .set({ clicks: sql`${ads.clicks} + 1` })
+      .where(eq(ads.id, id));
+  } catch {
+    // tracking is best-effort
+  }
 }

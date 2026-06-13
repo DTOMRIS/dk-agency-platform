@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
+import AdSlot from '@/components/ads/AdSlot';
 import RelatedToolkitsBox from '@/components/news/RelatedToolkitsBox';
 import { ShareButtons } from '@/components/news/ShareButtons';
 import { MarkdownRenderer } from '@/components/blog';
@@ -227,30 +228,36 @@ export default async function HaberDetailPage({
             ) : null}
           </article>
 
-          {related.length > 0 ? (
-            <aside className="rounded-[32px] border border-slate-200 bg-white p-6 text-[#1A1A2E] shadow-sm">
-              <h3 className="font-display text-2xl font-bold text-[#1A1A2E]">Əlaqəli xəbərlər</h3>
-              <div className="mt-5 space-y-4">
-                {related.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`/haberler/${item.slug}`}
-                    className="block rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-[#C5A022] hover:bg-white"
-                  >
-                    <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">
-                      {getCategoryLabel(item.category)}
-                    </div>
-                    <div className="mt-2 text-sm font-bold leading-6 text-[#1A1A2E]">
-                      {item.title}
-                    </div>
-                    <div className="mt-2 text-xs text-slate-500">
-                      {(item.sourceName || 'Mənbə yoxdur') + ' · ' + formatDateAz(item.publishedAt)}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </aside>
-          ) : null}
+          <div className="space-y-6">
+            <AdSlot placement="news-sidebar" />
+
+            {related.length > 0 ? (
+              <aside className="rounded-[32px] border border-slate-200 bg-white p-6 text-[#1A1A2E] shadow-sm">
+                <h3 className="font-display text-2xl font-bold text-[#1A1A2E]">Əlaqəli xəbərlər</h3>
+                <div className="mt-5 space-y-4">
+                  {related.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={`/haberler/${item.slug}`}
+                      className="block rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-[#C5A022] hover:bg-white"
+                    >
+                      <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">
+                        {getCategoryLabel(item.category)}
+                      </div>
+                      <div className="mt-2 text-sm font-bold leading-6 text-[#1A1A2E]">
+                        {item.title}
+                      </div>
+                      <div className="mt-2 text-xs text-slate-500">
+                        {(item.sourceName || 'Mənbə yoxdur') +
+                          ' · ' +
+                          formatDateAz(item.publishedAt)}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </aside>
+            ) : null}
+          </div>
         </div>
       </main>
     </BlogContentWrapper>
