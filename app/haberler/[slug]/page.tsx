@@ -8,7 +8,10 @@ import RelatedToolkitsBox from '@/components/news/RelatedToolkitsBox';
 import { ShareButtons } from '@/components/news/ShareButtons';
 import { MarkdownRenderer } from '@/components/blog';
 import { formatDateAz } from '@/lib/formatDate';
-import { getNewsArticleBySlug, getRelatedApprovedNewsArticles } from '@/lib/repositories/newsRepository';
+import {
+  getNewsArticleBySlug,
+  getRelatedApprovedNewsArticles,
+} from '@/lib/repositories/newsRepository';
 
 function getCategoryLabel(category: string) {
   switch (category) {
@@ -27,7 +30,11 @@ function getCategoryLabel(category: string) {
   }
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const locale = await getLocale();
   const article = await getNewsArticleBySlug(slug, locale);
@@ -53,7 +60,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     openGraph: {
       type: 'article',
-      locale: locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
+      locale:
+        locale === 'az' ? 'az_AZ' : locale === 'ru' ? 'ru_RU' : locale === 'tr' ? 'tr_TR' : 'en_US',
       url: `https://dkagency.com.tr${localePrefix}/haberler/${article.slug}`,
       title: `${article.title} | DK Agency`,
       description: article.summary,
@@ -65,6 +73,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             },
           ]
         : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${article.title} | DK Agency`,
+      description: article.summary,
+      images: article.imageUrl ? [article.imageUrl] : [],
     },
   };
 }
@@ -112,7 +126,10 @@ export default async function HaberDetailPage({
   return (
     <BlogContentWrapper articleTitle={article.title} isPremium>
       <main className="min-h-screen bg-[#FAFAF8] px-4 py-10 text-[#1A1A2E]">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
           <article className="rounded-[32px] border border-slate-200 bg-white px-6 py-8 text-[#1A1A2E] shadow-sm md:px-10 md:py-10">
             <Link
@@ -128,7 +145,9 @@ export default async function HaberDetailPage({
                   {getCategoryLabel(article.category)}
                 </span>
                 <span>
-                  {(article.sourceName || 'Mənbə yoxdur') + ' · ' + formatDateAz(article.publishedAt)}
+                  {(article.sourceName || 'Mənbə yoxdur') +
+                    ' · ' +
+                    formatDateAz(article.publishedAt)}
                 </span>
               </div>
               <h1 className="mt-5 max-w-[720px] font-display text-[30px] font-bold leading-tight text-[#1A1A2E] sm:text-[36px] md:text-[42px]">
@@ -152,32 +171,46 @@ export default async function HaberDetailPage({
                 <p className="font-semibold text-slate-800">{article.summary}</p>
               ) : null}
               {article.content ? (
-                <MarkdownRenderer content={article.content} className="text-slate-700 md:text-[18px]" />
+                <MarkdownRenderer
+                  content={article.content}
+                  className="text-slate-700 md:text-[18px]"
+                />
               ) : null}
             </div>
 
             <footer className="mt-10 flex max-w-[720px] flex-col gap-5 border-t border-slate-200 pt-8">
-              {!article.isManual && article.externalUrl ? (() => {
-                let hostname = '';
-                try { hostname = new URL(article.externalUrl).hostname.replace('www.', ''); } catch { hostname = ''; }
-                return article.content && hostname ? (
-                  <p className="text-xs text-slate-400">
-                    Mənbə:{' '}
-                    <a href={article.externalUrl} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-600">
-                      {hostname}
-                    </a>
-                  </p>
-                ) : !article.content && hostname ? (
-                  <a
-                    href={article.externalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-fit items-center rounded-full bg-[#E94560] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#d73753]"
-                  >
-                    Mənbədə tam xəbəri oxu →
-                  </a>
-                ) : null;
-              })() : null}
+              {!article.isManual && article.externalUrl
+                ? (() => {
+                    let hostname = '';
+                    try {
+                      hostname = new URL(article.externalUrl).hostname.replace('www.', '');
+                    } catch {
+                      hostname = '';
+                    }
+                    return article.content && hostname ? (
+                      <p className="text-xs text-slate-400">
+                        Mənbə:{' '}
+                        <a
+                          href={article.externalUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:text-slate-600"
+                        >
+                          {hostname}
+                        </a>
+                      </p>
+                    ) : !article.content && hostname ? (
+                      <a
+                        href={article.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex w-fit items-center rounded-full bg-[#E94560] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#d73753]"
+                      >
+                        Mənbədə tam xəbəri oxu →
+                      </a>
+                    ) : null;
+                  })()
+                : null}
               <div className="max-w-[280px]">
                 <ShareButtons title={article.title} url={shareUrl} locale={locale} />
               </div>
@@ -207,7 +240,9 @@ export default async function HaberDetailPage({
                     <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">
                       {getCategoryLabel(item.category)}
                     </div>
-                    <div className="mt-2 text-sm font-bold leading-6 text-[#1A1A2E]">{item.title}</div>
+                    <div className="mt-2 text-sm font-bold leading-6 text-[#1A1A2E]">
+                      {item.title}
+                    </div>
                     <div className="mt-2 text-xs text-slate-500">
                       {(item.sourceName || 'Mənbə yoxdur') + ' · ' + formatDateAz(item.publishedAt)}
                     </div>
@@ -221,4 +256,3 @@ export default async function HaberDetailPage({
     </BlogContentWrapper>
   );
 }
-

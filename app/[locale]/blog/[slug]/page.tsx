@@ -85,7 +85,13 @@ export async function generateMetadata({
     openGraph: {
       type: 'article',
       locale:
-        normalizedLocale === 'az' ? 'az_AZ' : normalizedLocale === 'ru' ? 'ru_RU' : normalizedLocale === 'tr' ? 'tr_TR' : 'en_US',
+        normalizedLocale === 'az'
+          ? 'az_AZ'
+          : normalizedLocale === 'ru'
+            ? 'ru_RU'
+            : normalizedLocale === 'tr'
+              ? 'tr_TR'
+              : 'en_US',
       url: `https://dkagency.com.tr${localePrefix}/blog/${article.slug}`,
       title: article.seoTitle || article.title,
       description: article.seoDescription || article.summary,
@@ -97,6 +103,12 @@ export async function generateMetadata({
             },
           ]
         : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.seoTitle || article.title,
+      description: article.seoDescription || article.summary,
+      images: article.coverImage ? [article.coverImage] : [],
     },
   };
 }

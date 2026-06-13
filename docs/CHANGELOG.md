@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `TASK-0313` feat(seo): **sayt-geneli Open Graph + Twitter Card** — root `app/layout.tsx`-ə OG (website, siteName, locale, url) + Twitter (`summary_large_image`) əlavə olundu; homepage client component olduğu üçün metadata layout-da olmalıdır. Blog + news detay səhifələrinə mövcud openGraph-ı əks etdirən `twitter` bloku (şəkil cover/imageUrl-dan). Əvvəl sosial paylaşımda preview yox idi. (TASK-0300 audit.) Follow-up: cover-siz məqalələr üçün brendli default OG şəkli.
+
 ### Fixed
 - `TASK-0312` fix(news): **RSS feed real xəbər yayımlayır** — `/api/rss/haberler` artıq `getAllBlogArticles()` (blog mock) əvəzinə `getApprovedNewsArticles()` çağırır. Əvvəl "DK Agency Xəbərlər" başlıqlı feed blog mock verir, `/haberler/<blog-slug>` linkləri 404 olurdu. GET indi async + `dynamic='force-dynamic'`. (TASK-0300 audit tapıntısı.)
 
