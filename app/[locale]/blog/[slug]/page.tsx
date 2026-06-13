@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { ArrowRight, Calendar, ChevronLeft, Clock, User } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import AdSlot from '@/components/ads/AdSlot';
 
 import {
   MarkdownRenderer,
@@ -339,6 +340,8 @@ export default async function BlogDetailPage({
 
             <aside className="space-y-8 lg:col-span-4">
               <div className="sticky top-32 space-y-8">
+                <AdSlot placement="blog-sidebar" />
+
                 <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
                   <h3 className="mb-3 text-sm font-bold uppercase tracking-widest text-slate-400">
                     {t('summary')}
