@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-13T07:14:57.696Z
+- GeneratedAt: 2026-06-13T12:52:29.421Z
 - BuildStatus: PASS
 
-## Routes (251)
+## Routes (253)
 - /
 - /[locale]
 - /[locale]/about
@@ -57,6 +57,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/mesajlar
 - /[locale]/dashboard/pipeline
 - /[locale]/dashboard/raporlar
+- /[locale]/dashboard/reklamlar
 - /[locale]/dashboard/roller
 - /[locale]/dashboard/settings
 - /[locale]/dashboard/site
@@ -192,6 +193,7 @@ Auto-generated. Do not edit manually.
 - /dashboard/pipeline
 - /dashboard/profil-onay
 - /dashboard/raporlar
+- /dashboard/reklamlar
 - /dashboard/roller
 - /dashboard/settings
 - /dashboard/site
@@ -259,7 +261,9 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (93)
+## API Routes (95)
+- /api/admin/ads
+- /api/admin/ads/[id]
 - /api/admin/audit-logs
 - /api/admin/members
 - /api/admin/members/[id]
