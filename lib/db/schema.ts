@@ -929,3 +929,30 @@ export const webConversionEvents = pgTable(
     createdIdx: index('idx_wce_created').on(table.createdAt),
   })
 );
+
+// ── ADVERTISEMENTS (banner ads — TASK-0315 PR-1) ────────────────────
+// Format kept text (not pgEnum) so html5/lottie can be added later without an
+// ALTER TYPE. PR-1 renders image|gif|video; html5/lottie need CSP work first.
+export const ads = pgTable(
+  'ads',
+  {
+    id: serial('id').primaryKey(),
+    title: varchar('title', { length: 150 }).notNull(),
+    format: varchar('format', { length: 10 }).notNull().default('image'),
+    mediaUrl: text('media_url').notNull(),
+    targetUrl: text('target_url').notNull(),
+    placement: varchar('placement', { length: 40 }).notNull(),
+    altText: varchar('alt_text', { length: 200 }),
+    advertiser: varchar('advertiser', { length: 150 }),
+    isActive: boolean('is_active').notNull().default(false),
+    startsAt: timestamp('starts_at', { withTimezone: true }),
+    endsAt: timestamp('ends_at', { withTimezone: true }),
+    impressions: integer('impressions').notNull().default(0),
+    clicks: integer('clicks').notNull().default(0),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    placementActiveIdx: index('idx_ads_placement_active').on(table.placement, table.isActive),
+  })
+);

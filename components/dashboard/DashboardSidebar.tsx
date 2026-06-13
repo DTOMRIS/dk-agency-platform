@@ -13,6 +13,7 @@ import {
   FilePenLine,
   LayoutDashboard,
   LogOut,
+  Megaphone,
   Newspaper,
   ScrollText,
   Settings,
@@ -37,6 +38,7 @@ const navItemDefs: NavItemDef[] = [
   { titleKey: 'hero', href: '/dashboard/hero', icon: FilePenLine },
   { titleKey: 'news', href: '/dashboard/xeberler', icon: Newspaper },
   { titleKey: 'blog', href: '/dashboard/blog', icon: BookOpen },
+  { titleKey: 'ads', href: '/dashboard/reklamlar', icon: Megaphone },
   { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
   // auditor + invoices(faturalar) + site hidden until backend is real (mock data / no-op save).
   // foodCost + toolkit are MEMBER tools — they live in the B2B portal
