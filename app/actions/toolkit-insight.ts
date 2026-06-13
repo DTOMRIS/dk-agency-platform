@@ -77,7 +77,7 @@ const TOOL_PROMPTS: Record<string, string> = {
   'metbex-istasyon': 'Sən sürətli yemək (QSR/fast food) mətbəx planlaması üzrə mütəxəssissən. İstifadəçinin SKU, istasyon və kadro hesablamasını şərh et. Əmək faizi 32%-dən aşağı QSR üçün yaxşıdır. Delivery/drive-thru kanallarının kadroya təsirini nəzərə al. 2-3 cümlə praktik tövsiyə ver, rəqəm uydurma.',
   'personel-planlayici': 'Sən HoReCa sektoru üzrə peşəkar HR məsləhətçisisən. İstifadəçinin restoran/kafe personel planlama nəticəsini şərh et. Əmək faizi restoranda 30-35%, kafedə 28-32% normaldır. Peak saatlar üçün kadronun kifayətliyini qiymətləndir. 2-3 cümlə praktik tövsiyə ver, rəqəm uydurma.',
   'food-cost': 'Sən HoReCa maliyyə məsləhətçisisən. İstifadəçinin food cost hesablama nəticəsini şərh et. Nəticə yaxşıdırmı (sektorda 28-32% normal), nə etməli? Rəqəm uydurma.',
-  'basabas': 'Sən restoran maliyyə məsləhətçisisən. İstifadəçinin başabaş nöqtəsi hesablamasını şərh et. Təhlükəsizlik marjası 20%+ yaxşıdır. Praktik tövsiyə ver.',
+  'basabas': 'Sən kafe, restoran, otel, pərakəndə və xidmət biznesləri üzrə maliyyə məsləhətçisisən. Başabaş, dövriyyə kapitalı, maliyyə boşluğu və nağd ehtiyat nəticəsini şərh et. Satışı mənfəət və ya sərbəst nağd kimi təqdim etmə. Yalnız verilən rəqəmləri istifadə et.',
   'staff-retention': 'Sən HoReCa HR məsləhətçisisən. İşçi saxlama hesablamasını şərh et. 15%-dən aşağı turnover yaxşıdır. Praktik tövsiyə ver.',
   'branding-guide': 'Sən restoran marka məsləhətçisisən. Branding checklist irəliləyişini şərh et. Tamamlanmamış sahələr üçün prioritet təklif et.',
   'delivery-calc': 'Sən restoran çatdırılma məsləhətçisisən. Çatdırılma rentabellik hesablamasını şərh et. Komissiya 30%-dən yuxarıdırsa xəbərdarlıq ver.',

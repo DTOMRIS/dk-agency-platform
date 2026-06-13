@@ -1,11 +1,12 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import {
   ArrowRight,
   BookOpen,
+  Download,
   Info,
   Lightbulb,
   RotateCcw,
@@ -14,12 +15,17 @@ import {
 } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import { calculateFinancialViability, type BusinessType } from '@/lib/financial/viability';
+import { buildFinancialReportHtml } from '@/lib/financial/report-html';
 
 export default function BasabasPage() {
   const t = useTranslations('toolkit.basabas');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
+  const [businessType, setBusinessType] = useState<BusinessType>('cafe');
+  const [availableBudget, setAvailableBudget] = useState(50000);
+  const [openingInvestment, setOpeningInvestment] = useState(30000);
   const [rent, setRent] = useState(3000);
   const [salaries, setSalaries] = useState(5000);
   const [utilities, setUtilities] = useState(800);
@@ -27,30 +33,102 @@ export default function BasabasPage() {
   const [variablePct, setVariablePct] = useState(35);
   const [avgCheck, setAvgCheck] = useState(25);
   const [currentSales, setCurrentSales] = useState(18000);
+  const [operatingDays, setOperatingDays] = useState(30);
+  const [inventoryDays, setInventoryDays] = useState(14);
+  const [receivableDays, setReceivableDays] = useState(0);
+  const [payableDays, setPayableDays] = useState(15);
+  const [depositsAndPrepaids, setDepositsAndPrepaids] = useState(6000);
+  const [rampUpMonths, setRampUpMonths] = useState(3);
+  const [openingSalesPct, setOpeningSalesPct] = useState(40);
+  const [reserveMonths, setReserveMonths] = useState(3);
 
-  const calc = useMemo(() => {
-    const totalFixed = rent + salaries + utilities + otherFixed;
-    const contributionPct = 100 - variablePct;
-    const breakEvenRevenue = contributionPct > 0 ? totalFixed / (contributionPct / 100) : 0;
-    const dailyCustomers = avgCheck > 0 ? Math.ceil(breakEvenRevenue / 30 / avgCheck) : 0;
-    const safetyMargin = currentSales > 0 ? ((currentSales - breakEvenRevenue) / currentSales) * 100 : 0;
-
-    const status: 'safe' | 'warning' | 'danger' =
-      safetyMargin >= 20 ? 'safe' : safetyMargin >= 0 ? 'warning' : 'danger';
-
-    return { totalFixed, contributionPct, breakEvenRevenue, dailyCustomers, safetyMargin, status };
-  }, [rent, salaries, utilities, otherFixed, variablePct, avgCheck, currentSales]);
+  const financialInput = useMemo(() => ({
+    businessType,
+    availableBudget,
+    openingInvestment,
+    monthlySales: currentSales,
+    averageTransaction: avgCheck,
+    operatingDays,
+    rent,
+    salaries,
+    utilities,
+    otherFixedCosts: otherFixed,
+    variableCostPct: variablePct,
+    inventoryDays,
+    receivableDays,
+    payableDays,
+    depositsAndPrepaids,
+    rampUpMonths,
+    openingSalesPct,
+    reserveMonths,
+  }), [businessType, availableBudget, openingInvestment, currentSales, avgCheck, operatingDays,
+    rent, salaries, utilities, otherFixed, variablePct, inventoryDays, receivableDays,
+    payableDays, depositsAndPrepaids, rampUpMonths, openingSalesPct, reserveMonths]);
+  const calc = useMemo(() => calculateFinancialViability(financialInput), [financialInput]);
+  const status: 'safe' | 'warning' | 'danger' =
+    calc.safetyMarginPct >= 20 ? 'safe' : calc.safetyMarginPct >= 0 ? 'warning' : 'danger';
+  const isValid = availableBudget > 0 && currentSales > 0 && avgCheck > 0 &&
+    operatingDays > 0 && variablePct >= 0 && variablePct < 100;
 
   const statusStyles = {
     safe: { ring: 'ring-emerald-500/20', text: 'text-emerald-600', bg: 'bg-emerald-50', label: t('statusSafe') },
     warning: { ring: 'ring-amber-500/20', text: 'text-amber-600', bg: 'bg-amber-50', label: t('statusWarning') },
     danger: { ring: 'ring-red-500/20', text: 'text-red-600', bg: 'bg-red-50', label: t('statusDanger') },
-  }[calc.status];
+  }[status];
 
   const resetAll = () => {
+    setBusinessType('cafe'); setAvailableBudget(50000); setOpeningInvestment(30000);
     setRent(3000); setSalaries(5000); setUtilities(800); setOtherFixed(700);
     setVariablePct(35); setAvgCheck(25); setCurrentSales(18000);
+    setOperatingDays(30); setInventoryDays(14); setReceivableDays(0); setPayableDays(15);
+    setDepositsAndPrepaids(6000); setRampUpMonths(3); setOpeningSalesPct(40); setReserveMonths(3);
   };
+
+  const conditionTexts = calc.conditionKeys.map((key) => t(`conditions.${key}`));
+  const sensitivityTexts = calc.sensitivities.map((item) => t(`sensitivities.${item.key}`, {
+    change: Math.abs(item.changePct),
+    breakEven: Math.round(item.breakEvenRevenue),
+    daily: item.dailyTransactions,
+    profit: Math.round(item.monthlyOperatingProfit),
+  }));
+
+  function downloadReport() {
+    if (!isValid) return;
+    const html = buildFinancialReportHtml(financialInput, calc, {
+      locale,
+      title: t('report.title'),
+      generatedAt: t('report.generatedAt', { date: new Date().toLocaleDateString(locale) }),
+      businessType: t(`businessTypes.${businessType}`),
+      verdict: t(`verdicts.${calc.verdict}.title`),
+      summary: t(`verdicts.${calc.verdict}.body`),
+      fundingTitle: t('report.fundingTitle'),
+      operatingTitle: t('report.operatingTitle'),
+      sensitivityTitle: t('sensitivityTitle'),
+      conditionsTitle: t('conditionsTitle'),
+      methodology: t('report.methodology'),
+      labels: {
+        availableBudget: t('labelAvailableBudget'), openingInvestment: t('labelOpeningInvestment'),
+        workingCapital: t('statWorkingCapital'), totalFunding: t('statTotalFunding'),
+        inventory: t('breakdown.inventory'), receivables: t('breakdown.receivables'),
+        supplierFinancing: t('breakdown.supplierFinancing'), deposits: t('breakdown.deposits'),
+        rampLoss: t('breakdown.rampLoss'), reserve: t('breakdown.reserve'),
+        fundingGap: t('statFundingGap'), runway: t('statRunway'), months: t('months'),
+        monthlySales: t('labelCurrentSales'), breakEven: t('statBreakEven'),
+        dailyTransactions: t('statDailyCustomers'), monthlyProfit: t('statMonthlyProfit'),
+        safetyMargin: t('statSafetyMargin'), payback: t('statPayback'),
+        notAvailable: t('notAvailable'),
+      },
+      conditions: conditionTexts.length > 0 ? conditionTexts : [t('conditions.ready')],
+      sensitivities: sensitivityTexts,
+    });
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `dk-financial-report-${businessType}.html`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
 
   const articles = [
     { title: t('article1Title'), slug: t('article1Slug'), tag: t('article1Tag') },
@@ -63,25 +141,47 @@ export default function BasabasPage() {
   const inputSection = (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('fixedCostsTitle')}</h3>
+        <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('planningTitle')}</h3>
         <button
+          type="button"
           onClick={resetAll}
-          className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500"
+          className="flex items-center gap-1.5 text-xs font-medium text-slate-700 transition-colors hover:text-red-600"
         >
           <RotateCcw size={13} /> {t('reset')}
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div>
+          <label htmlFor="financial-business-type" className="mb-1.5 block text-xs font-medium text-slate-700">{t('labelBusinessType')}</label>
+          <select
+            id="financial-business-type"
+            value={businessType}
+            onChange={(event) => setBusinessType(event.target.value as BusinessType)}
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300"
+          >
+            {(['cafe', 'restaurant', 'hotel', 'retail', 'service'] as BusinessType[]).map((type) => (
+              <option key={type} value={type}>{t(`businessTypes.${type}`)}</option>
+            ))}
+          </select>
+        </div>
+        <NumberField label={t('labelAvailableBudget')} value={availableBudget} setValue={setAvailableBudget} step={1000} />
+        <NumberField label={t('labelOpeningInvestment')} value={openingInvestment} setValue={setOpeningInvestment} step={1000} />
+      </div>
+
+      <div className="border-t border-slate-100 pt-5">
+        <h3 className="mb-4 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('fixedCostsTitle')}</h3>
+        <div className="grid grid-cols-2 gap-4">
         {[
-          { label: t('labelRent'), value: rent, set: setRent, step: 100 },
-          { label: t('labelSalaries'), value: salaries, set: setSalaries, step: 100 },
-          { label: t('labelUtilities'), value: utilities, set: setUtilities, step: 50 },
-          { label: t('labelOtherFixed'), value: otherFixed, set: setOtherFixed, step: 50 },
+          { id: 'financial-rent', label: t('labelRent'), value: rent, set: setRent, step: 100 },
+          { id: 'financial-salaries', label: t('labelSalaries'), value: salaries, set: setSalaries, step: 100 },
+          { id: 'financial-utilities', label: t('labelUtilities'), value: utilities, set: setUtilities, step: 50 },
+          { id: 'financial-other-fixed', label: t('labelOtherFixed'), value: otherFixed, set: setOtherFixed, step: 50 },
         ].map((field) => (
           <div key={field.label}>
-            <label className="mb-1.5 block text-xs font-medium text-slate-500">{field.label}</label>
+            <label htmlFor={field.id} className="mb-1.5 block text-xs font-medium text-slate-700">{field.label}</label>
             <input
+              id={field.id}
               type="number"
               step={field.step}
               value={field.value || ''}
@@ -90,19 +190,22 @@ export default function BasabasPage() {
             />
           </div>
         ))}
+        </div>
       </div>
 
       <div className="border-t border-slate-100 pt-5">
-        <h3 className="mb-4 text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('variableParamsTitle')}</h3>
-        <div className="grid grid-cols-3 gap-4">
+        <h3 className="mb-4 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('variableParamsTitle')}</h3>
+        <div className="grid gap-4 sm:grid-cols-4">
           {[
-            { label: t('labelVariablePct'), value: variablePct, set: setVariablePct, min: 0, max: 99 },
-            { label: t('labelAvgCheck'), value: avgCheck, set: setAvgCheck, step: 0.5 },
-            { label: t('labelCurrentSales'), value: currentSales, set: setCurrentSales, step: 500 },
+            { id: 'financial-variable-pct', label: t('labelVariablePct'), value: variablePct, set: setVariablePct, min: 0, max: 99 },
+            { id: 'financial-average-transaction', label: t('labelAvgCheck'), value: avgCheck, set: setAvgCheck, step: 0.5 },
+            { id: 'financial-monthly-sales', label: t('labelCurrentSales'), value: currentSales, set: setCurrentSales, step: 500 },
+            { id: 'financial-operating-days', label: t('labelOperatingDays'), value: operatingDays, set: setOperatingDays, step: 1 },
           ].map((field) => (
             <div key={field.label}>
-              <label className="mb-1.5 block text-xs font-medium text-slate-500">{field.label}</label>
+              <label htmlFor={field.id} className="mb-1.5 block text-xs font-medium text-slate-700">{field.label}</label>
               <input
+                id={field.id}
                 type="number"
                 min={('min' in field) ? field.min : undefined}
                 max={('max' in field) ? field.max : undefined}
@@ -115,6 +218,24 @@ export default function BasabasPage() {
           ))}
         </div>
       </div>
+
+      <div className="border-t border-slate-100 pt-5">
+        <h3 className="mb-1 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('workingCapitalTitle')}</h3>
+        <p className="mb-4 text-xs leading-5 text-slate-500">{t('workingCapitalHelp')}</p>
+        <div className="grid gap-4 sm:grid-cols-4">
+          <NumberField label={t('labelInventoryDays')} value={inventoryDays} setValue={setInventoryDays} />
+          <NumberField label={t('labelReceivableDays')} value={receivableDays} setValue={setReceivableDays} />
+          <NumberField label={t('labelPayableDays')} value={payableDays} setValue={setPayableDays} />
+          <NumberField label={t('labelDeposits')} value={depositsAndPrepaids} setValue={setDepositsAndPrepaids} step={500} />
+          <NumberField label={t('labelRampMonths')} value={rampUpMonths} setValue={setRampUpMonths} />
+          <NumberField label={t('labelOpeningSalesPct')} value={openingSalesPct} setValue={setOpeningSalesPct} />
+          <NumberField label={t('labelReserveMonths')} value={reserveMonths} setValue={setReserveMonths} />
+        </div>
+      </div>
+
+      {!isValid && (
+        <p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{t('validationError')}</p>
+      )}
     </div>
   );
 
@@ -133,14 +254,14 @@ export default function BasabasPage() {
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statDailyCustomers')}</div>
         <div className="mt-1 text-3xl font-black tabular-nums text-slate-900">
-          {calc.dailyCustomers}<span className="ml-1 text-lg">{t('statPersonSuffix')}</span>
+          {calc.dailyTransactions}<span className="ml-1 text-lg">{t(`businessUnits.${businessType}`)}</span>
         </div>
         <div className="mt-1 text-[10px] text-slate-400">{t('statAvgCheck')} {avgCheck} ₼</div>
       </div>
 
       <div className={`${statusStyles.bg} rounded-xl p-4 ring-1 ${statusStyles.ring}`}>
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statSafetyMargin')}</div>
-        <div className={`mt-1 text-3xl font-black tabular-nums ${statusStyles.text}`}>{calc.safetyMargin.toFixed(1)}%</div>
+        <div className={`mt-1 text-3xl font-black tabular-nums ${statusStyles.text}`}>{calc.safetyMarginPct.toFixed(1)}%</div>
         <div className={`mt-1 flex items-center gap-1 text-xs font-semibold ${statusStyles.text}`}>
           <span className="h-1.5 w-1.5 rounded-full bg-current" />
           {statusStyles.label}
@@ -150,7 +271,7 @@ export default function BasabasPage() {
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statFixedCosts')}</div>
         <div className="mt-1 text-3xl font-black tabular-nums text-slate-900">
-          {calc.totalFixed.toFixed(0)}<span className="ml-1 text-lg">₼</span>
+          {calc.totalFixedCosts.toFixed(0)}<span className="ml-1 text-lg">₼</span>
         </div>
       </div>
 
@@ -168,6 +289,53 @@ export default function BasabasPage() {
           <div className="text-[9px] font-medium text-slate-500">{t('calcPeriodLabel')}</div>
         </div>
       </div>
+
+      <div className="rounded-xl bg-slate-950 p-4 text-white">
+        <div className="text-[11px] font-bold uppercase tracking-widest text-amber-300">{t('statWorkingCapital')}</div>
+        <div className="mt-1 text-3xl font-black tabular-nums">{calc.workingCapitalNeed.toFixed(0)} ₼</div>
+        <div className="mt-2 grid grid-cols-2 gap-2 text-xs text-slate-300">
+          <span>{t('statTotalFunding')}: {calc.totalFundingNeed.toFixed(0)} ₼</span>
+          <span>{t('statFundingGap')}: {calc.fundingGap.toFixed(0)} ₼</span>
+          <span>{t('statRunway')}: {calc.runwayMonths.toFixed(1)} {t('months')}</span>
+          <span>{t('statPayback')}: {calc.paybackMonths === null ? t('notAvailable') : `${calc.paybackMonths.toFixed(1)} ${t('months')}`}</span>
+        </div>
+        <div className="mt-3 space-y-1 border-t border-white/10 pt-3 text-[11px] text-slate-400">
+          <div className="flex justify-between"><span>{t('breakdown.inventory')}</span><span>{calc.inventoryInvestment.toFixed(0)} ₼</span></div>
+          <div className="flex justify-between"><span>{t('breakdown.receivables')}</span><span>{calc.receivablesFunding.toFixed(0)} ₼</span></div>
+          <div className="flex justify-between"><span>{t('breakdown.supplierFinancing')}</span><span>-{calc.supplierFinancing.toFixed(0)} ₼</span></div>
+          <div className="flex justify-between"><span>{t('breakdown.deposits')}</span><span>{depositsAndPrepaids.toFixed(0)} ₼</span></div>
+          <div className="flex justify-between"><span>{t('breakdown.rampLoss')}</span><span>{calc.rampUpLoss.toFixed(0)} ₼</span></div>
+          <div className="flex justify-between"><span>{t('breakdown.reserve')}</span><span>{calc.operatingReserve.toFixed(0)} ₼</span></div>
+        </div>
+      </div>
+
+      <div className="rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+        <div className="text-xs font-black uppercase tracking-wider text-slate-700">{t(`verdicts.${calc.verdict}.title`)}</div>
+        <p className="mt-2 text-xs leading-5 text-slate-600">{t(`verdicts.${calc.verdict}.body`)}</p>
+        <ol className="mt-3 list-decimal space-y-1 pl-5 text-xs text-slate-700">
+          {(conditionTexts.length > 0 ? conditionTexts : [t('conditions.ready')]).map((condition) => (
+            <li key={condition}>{condition}</li>
+          ))}
+        </ol>
+      </div>
+
+      <div>
+        <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('sensitivityTitle')}</div>
+        <div className="space-y-2">
+          {sensitivityTexts.map((text) => (
+            <div key={text} className="rounded-lg bg-blue-50 p-3 text-xs leading-5 text-blue-900">{text}</div>
+          ))}
+        </div>
+      </div>
+
+      <button
+        type="button"
+        onClick={downloadReport}
+        disabled={!isValid}
+        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        <Download size={16} /> {t('downloadReport')}
+      </button>
     </div>
   );
 
@@ -328,10 +496,48 @@ export default function BasabasPage() {
       aiInsight={aiInsight}
       onRequestInsight={async () => {
         setAiInsight({ status: 'loading' });
-        const res = await getToolkitInsight({ toolId: 'basabas', locale, result: { breakEvenRevenue: calc.breakEvenRevenue, dailyCustomers: calc.dailyCustomers, safetyMargin: calc.safetyMargin, totalFixed: calc.totalFixed, contributionPct: calc.contributionPct } });
+        const res = await getToolkitInsight({ toolId: 'basabas', locale, result: {
+          businessType,
+          breakEvenRevenue: calc.breakEvenRevenue,
+          dailyTransactions: calc.dailyTransactions,
+          safetyMargin: calc.safetyMarginPct,
+          totalFixed: calc.totalFixedCosts,
+          contributionPct: calc.contributionPct,
+          workingCapitalNeed: calc.workingCapitalNeed,
+          fundingGap: calc.fundingGap,
+          runwayMonths: calc.runwayMonths,
+        } });
         if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
         else setAiInsight({ status: 'error' });
       }}
     />
+  );
+}
+
+function NumberField({
+  label,
+  value,
+  setValue,
+  step = 1,
+}: {
+  label: string;
+  value: number;
+  setValue: (value: number) => void;
+  step?: number;
+}) {
+  const id = useId();
+  return (
+    <div>
+      <label htmlFor={id} className="mb-1.5 block text-xs font-medium text-slate-700">{label}</label>
+      <input
+        id={id}
+        type="number"
+        min={0}
+        step={step}
+        value={value || ''}
+        onChange={(event) => setValue(Number(event.target.value) || 0)}
+        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
+      />
+    </div>
   );
 }

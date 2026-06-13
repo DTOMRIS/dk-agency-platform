@@ -1,5 +1,13 @@
 # HANDOFF
 
+## 2026-06-13 - TASK-0406 financial viability
+
+- Existing `/toolkit/basabas` UI was extended; no parallel advisor UI or paid Places dependency was added.
+- Supports cafe, restaurant, hotel, retail, and service businesses.
+- Core outputs: opening budget, break-even, daily required units, working capital, total funding need, funding gap, runway, payback, deterministic verdict, and three sensitivities.
+- Downloadable report is a self-contained mobile HTML file and does not depend on AI at download time.
+- Build, focused lint, and deterministic smoke passed. Playwright was added and the label issue found on its first run was fixed; rerun is intentionally deferred because the user stopped heavy local work.
+
 ## 2026-06-09 — Portal/Dashboard polish + 2026 roadmap (TASK-0236/0238/0239/0240)
 
 ### Edilən + REAL yoxlanan (dev server + minted-JWT HTML, build yox)

@@ -1,5 +1,11 @@
 # TASKS
 
+## TASK-0406 - Cross-sector financial viability and working capital
+
+- Status: implementation complete; commit pending.
+- Scope: Extend `/toolkit/basabas` for cafe, restaurant, hotel, retail, and service businesses with working capital, funding gap, runway, payback, sensitivities, conditional verdict, and downloadable HTML report.
+- Task card: `docs/tasks/TASK-0406.md`.
+
 ## TASK-0305 - News detail schema compatibility hotfix
 
 - Status: implementation and verification complete; PR pending.
