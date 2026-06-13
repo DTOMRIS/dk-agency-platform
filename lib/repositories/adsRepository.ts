@@ -30,38 +30,52 @@ export interface AdInput {
 
 export async function listAds() {
   if (!dbAvailable || !db) return [];
-  return db.select().from(ads).orderBy(desc(ads.createdAt));
+  try {
+    return await db.select().from(ads).orderBy(desc(ads.createdAt));
+  } catch {
+    // Table may not exist yet (migration not run) — degrade to empty.
+    return [];
+  }
 }
 
 export async function getAdById(id: number) {
   if (!dbAvailable || !db) return null;
-  const rows = await db.select().from(ads).where(eq(ads.id, id)).limit(1);
-  return rows[0] || null;
+  try {
+    const rows = await db.select().from(ads).where(eq(ads.id, id)).limit(1);
+    return rows[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 // Public: active ads for a placement whose schedule window includes now.
+// Must NEVER throw — a missing/empty ads table must not break a public page.
 export async function getActiveAdsByPlacement(placement: string) {
   if (!dbAvailable || !db) return [];
   const now = new Date();
-  return db
-    .select({
-      id: ads.id,
-      format: ads.format,
-      mediaUrl: ads.mediaUrl,
-      targetUrl: ads.targetUrl,
-      altText: ads.altText,
-      placement: ads.placement,
-    })
-    .from(ads)
-    .where(
-      and(
-        eq(ads.placement, placement),
-        eq(ads.isActive, true),
-        or(isNull(ads.startsAt), lte(ads.startsAt, now)),
-        or(isNull(ads.endsAt), gte(ads.endsAt, now))
+  try {
+    return await db
+      .select({
+        id: ads.id,
+        format: ads.format,
+        mediaUrl: ads.mediaUrl,
+        targetUrl: ads.targetUrl,
+        altText: ads.altText,
+        placement: ads.placement,
+      })
+      .from(ads)
+      .where(
+        and(
+          eq(ads.placement, placement),
+          eq(ads.isActive, true),
+          or(isNull(ads.startsAt), lte(ads.startsAt, now)),
+          or(isNull(ads.endsAt), gte(ads.endsAt, now))
+        )
       )
-    )
-    .orderBy(desc(ads.createdAt));
+      .orderBy(desc(ads.createdAt));
+  } catch {
+    return [];
+  }
 }
 
 function toDate(value?: string | null): Date | null {
