@@ -1,4 +1,4 @@
-import { and, desc, eq, isNotNull, ne, sql } from 'drizzle-orm';
+import { and, desc, eq, inArray, isNotNull, ne, sql } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { newsArticles, newsSources } from '@/lib/db/schema';
 import { getAllNews } from '@/lib/data/mockNewsDB';
@@ -584,6 +584,23 @@ export async function getApprovedEditorPick(category?: NewsCategoryKey, locale?:
   return row ? mapPublicArticle(row, loc) : null;
 }
 
+/** Fetch up to `limit` vitrin articles for the slider (all pages) */
+export async function getVitrinNewsArticles(limit = 8, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
+  if (!dbAvailable || !db) return [];
+
+  const rows = await db
+    .select(buildPublicArticleSelect())
+    .from(newsArticles)
+    .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
+    .where(and(...getPublicNewsConditions()))
+    .orderBy(desc(newsArticles.isManset), desc(newsArticles.isTop), desc(newsArticles.publishedAt))
+    .limit(limit);
+
+  return rows.map((row) => mapPublicArticle(row, loc));
+}
+
 export async function getNewsArticleBySlug(slug: string, locale?: string, preview = false) {
   const loc = sanitizeLocale(locale);
 
@@ -641,19 +658,34 @@ export async function getNewsArticleBySlug(slug: string, locale?: string, previe
   };
 }
 
+/** Conditions for related articles — includes both approved and translated for fuller sidebar */
+function getRelatedNewsConditions(category?: NewsCategoryKey) {
+  const conditions = [
+    inArray(newsArticles.status, ['approved', 'translated']),
+    isNotNull(newsArticles.slug),
+    ...getTranslatedNewsConditions(),
+  ];
+
+  if (category && category !== 'all') {
+    conditions.push(eq(newsArticles.category, category));
+  }
+
+  return conditions;
+}
+
 export async function getRelatedApprovedNewsArticles(articleId: number, category: Exclude<NewsCategoryKey, 'all'>, locale?: string) {
   const loc = sanitizeLocale(locale);
 
   if (!dbAvailable || !db) return [];
 
-  // First try same category
+  // First try same category (approved + translated)
   const sameCategory = await db
     .select(buildPublicArticleSelect())
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
     .where(
       and(
-        ...getPublicNewsConditions(category),
+        ...getRelatedNewsConditions(category),
         ne(newsArticles.id, articleId),
       ),
     )
@@ -669,7 +701,7 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
       .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
       .where(
         and(
-          ...getPublicNewsConditions(),
+          ...getRelatedNewsConditions(),
           ...existingIds.map((eid) => ne(newsArticles.id, eid)),
         ),
       )
