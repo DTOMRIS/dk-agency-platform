@@ -14,6 +14,11 @@ import {
   getRelatedApprovedNewsArticles,
 } from '@/lib/repositories/newsRepository';
 
+function estimateReadTime(text: string): number {
+  const words = text.split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
 function getCategoryLabel(category: string) {
   switch (category) {
     case 'finance':
@@ -150,6 +155,9 @@ export default async function HaberDetailPage({
                     ' · ' +
                     formatDateAz(article.publishedAt)}
                 </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-600">
+                  ⏱ {estimateReadTime(article.content || article.summary || '')} dəq oxu
+                </span>
               </div>
               <h1 className="mt-5 max-w-[720px] font-display text-[30px] font-bold leading-tight text-[#1A1A2E] sm:text-[36px] md:text-[42px]">
                 {article.title}
@@ -233,24 +241,32 @@ export default async function HaberDetailPage({
 
             {related.length > 0 ? (
               <aside className="rounded-[32px] border border-slate-200 bg-white p-6 text-[#1A1A2E] shadow-sm">
-                <h3 className="font-display text-2xl font-bold text-[#1A1A2E]">Əlaqəli xəbərlər</h3>
-                <div className="mt-5 space-y-4">
+                <h3 className="font-display text-xl font-bold text-[#1A1A2E]">Əlaqəli xəbərlər</h3>
+                <div className="mt-4 space-y-3">
                   {related.map((item) => (
                     <Link
                       key={item.id}
                       href={`/haberler/${item.slug}`}
-                      className="block rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-[#C5A022] hover:bg-white"
+                      className="group block overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 transition hover:border-[#C5A022] hover:bg-white hover:shadow-sm"
                     >
-                      <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">
-                        {getCategoryLabel(item.category)}
-                      </div>
-                      <div className="mt-2 text-sm font-bold leading-6 text-[#1A1A2E]">
-                        {item.title}
-                      </div>
-                      <div className="mt-2 text-xs text-slate-500">
-                        {(item.sourceName || 'Mənbə yoxdur') +
-                          ' · ' +
-                          formatDateAz(item.publishedAt)}
+                      {item.imageUrl ? (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="aspect-[16/9] w-full object-cover"
+                          referrerPolicy="no-referrer"
+                        />
+                      ) : null}
+                      <div className="p-3">
+                        <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">
+                          {getCategoryLabel(item.category)}
+                        </div>
+                        <div className="mt-1 text-sm font-bold leading-5 text-[#1A1A2E] group-hover:text-[#E94560]">
+                          {item.title}
+                        </div>
+                        <div className="mt-1.5 text-[11px] text-slate-500">
+                          {formatDateAz(item.publishedAt)}
+                        </div>
                       </div>
                     </Link>
                   ))}

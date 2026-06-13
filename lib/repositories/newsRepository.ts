@@ -646,7 +646,8 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
 
   if (!dbAvailable || !db) return [];
 
-  const rows = await db
+  // First try same category
+  const sameCategory = await db
     .select(buildPublicArticleSelect())
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
@@ -657,9 +658,27 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
       ),
     )
     .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
-    .limit(3);
+    .limit(5);
 
-  return rows.map((row) => mapPublicArticle(row, loc));
+  // If not enough, fill with other categories
+  if (sameCategory.length < 5) {
+    const existingIds = [articleId, ...sameCategory.map((r) => r.id)];
+    const fill = await db
+      .select(buildPublicArticleSelect())
+      .from(newsArticles)
+      .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
+      .where(
+        and(
+          ...getPublicNewsConditions(),
+          ...existingIds.map((eid) => ne(newsArticles.id, eid)),
+        ),
+      )
+      .orderBy(desc(newsArticles.publishedAt))
+      .limit(5 - sameCategory.length);
+    sameCategory.push(...fill);
+  }
+
+  return sameCategory.map((row) => mapPublicArticle(row, loc));
 }
 
 type NewsCategoryDb = typeof newsArticles.$inferInsert.category;
