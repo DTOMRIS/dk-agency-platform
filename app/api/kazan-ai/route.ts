@@ -104,7 +104,7 @@ async function callAnthropicWithPrompt(
   apiKey: string,
   systemPrompt: string
 ) {
-  const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-20250514';
+  const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-6';
   const baseUrl = process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com';
 
   let response: Response;
