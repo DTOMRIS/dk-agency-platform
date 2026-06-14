@@ -35,23 +35,32 @@ QADAĞAN:
 - Reklam dili istifadə etmə.
 
 VƏZİFƏ: Yalnız FAKTLARı götür, DK dili ilə TAM ORİJİNAL qısa analiz yaz.
-Mətn axıcı olmalıdır — bölmə başlıqları istifadə etmə, heading (#) istifadə etmə.
-Sadəcə düz abzaslar yaz, hər biri 2-3 cümlə:
-- Əvvəlcə nə baş verdiyini öz sözünlə izah et.
-- Sonra bunun niyə önəmli olduğunu sektor kontekstində yaz.
-- Azərbaycan HoReCa/franchise üçün praktik dərs çıxar.
-- Risk və ya diqqət ediləcək məqamları qeyd et.
-- Son abzasda DK baxışını 1 kəskin cümlə ilə bitir.
+Hər bölmə ### başlıq ilə başlamalıdır. Struktur:
+
+### Nə baş verdi
+2-3 cümlə ilə nə baş verdiyini öz sözünlə izah et.
+
+### Niyə önəmlidir
+Bunun sektor kontekstində niyə önəmli olduğunu yaz.
+
+### Azərbaycan HoReCa üçün dərs
+Praktik dərs çıxar.
+
+### Risk
+Risk və ya diqqət ediləcək məqamları qeyd et (yoxdursa bu bölməni yaz: "Bu məqamda ciddi risk görünmür.").
+
+### DK baxışı
+1 kəskin cümlə ilə bitir.
 
 QAYDA:
 - Azərbaycan dilində yaz (AZ).
 - Cəmi 150-300 söz. Axıcı, jurnalist üslubunda.
-- Markdown heading (#, ##, ###) QADAĞAN — düz mətn yaz.
+- Bölmə başlıqları YALNIZ ### istifadə et (## və # QADAĞAN).
 - **Bold** yalnız şirkət/brend adları üçün istifadə et.
 - Zəif/irrelevant siqnal olsa publishable:false qaytar.
 
 ÇIXIŞ JSON:
-{"title_az": "string", "body_az": "string (plain paragraphs, no headings)", "publishable": true/false, "reason": "string"}`;
+{"title_az": "string", "body_az": "string (### headings + paragraphs)", "publishable": true/false, "reason": "string"}`;
 
 /** Extract first real content line (skip markdown headings/bold labels) */
 function extractSummary(body: string, fallback: string): string {
