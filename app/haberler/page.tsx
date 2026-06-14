@@ -223,8 +223,7 @@ export default async function HaberlerPage({
     getVitrinNewsArticles(8, locale),
   ]);
 
-  const vitrinIds = new Set(vitrinItems.map((item) => item.id));
-  const gridItems = result.items.filter((item) => !vitrinIds.has(item.id));
+  const gridItems = [...result.items];
   // isTop items first in grid
   gridItems.sort((a, b) => (b.isTop ? 1 : 0) - (a.isTop ? 1 : 0));
   const totalPages = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
