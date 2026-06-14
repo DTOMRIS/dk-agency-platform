@@ -92,6 +92,7 @@
   --color-dk-warning: var(--dk-warning);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
 body {
