@@ -3,11 +3,12 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-14T14:37:20.845Z
+- GeneratedAt: 2026-06-14T16:16:18.590Z
 - BuildStatus: PASS
 
-## Routes (253)
+## Routes (254)
 - /
+- /(dev)/heromotif
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
