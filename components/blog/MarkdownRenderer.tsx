@@ -177,19 +177,6 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
       }
     );
 
-    // Convert standalone bold lines to H3 headings
-    // Matches lines where the ENTIRE line is **bold text** (common in news articles)
-    processed = processed.replace(
-      /^\*\*([^*\n]+)\*\*$/gm,
-      '### $1'
-    );
-
-    // Convert bold at start of line followed by text → H3 + separate paragraph
-    processed = processed.replace(
-      /^\*\*([^*\n]+)\*\*[ \t]+(\S.*)/gm,
-      '### $1\n\n$2'
-    );
-
     return { processed, guruBoxes };
   }, [content]);
 

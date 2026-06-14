@@ -50,15 +50,17 @@ function getCategoryLabel(category: string) {
 /* ── News section parsing ── */
 
 interface NewsSection {
-  type: 'event' | 'important' | 'lesson' | 'content';
+  type: 'event' | 'important' | 'lesson' | 'risk' | 'opinion' | 'content';
   title?: string;
   body: string;
 }
 
 const SECTION_PATTERNS: Array<{ re: RegExp; type: NewsSection['type'] }> = [
-  { re: /\*\*(N[əe] ba[şs] verdi)\*\*/i, type: 'event' },
-  { re: /\*\*(Niy[əe] [öo]n[əe]mli(?:dir)?)\*\*/i, type: 'important' },
-  { re: /\*\*([^*]*?[üu][çc][üu]n\s+(?:d[əe]rs|n[əe]tic[əe]))\*\*/i, type: 'lesson' },
+  { re: /###\s+(N[əe] ba[şs] verdi)/i, type: 'event' },
+  { re: /###\s+(Niy[əe] [öo]n[əe]mli(?:dir)?)/i, type: 'important' },
+  { re: /###\s+(.*?(?:[üu][çc][üu]n\s+d[əe]rs|[üu][çc][üu]n\s+n[əe]tic[əe]))/i, type: 'lesson' },
+  { re: /###\s+(Risk)/i, type: 'risk' },
+  { re: /###\s+(DK bax[ıi][şs][ıi])/i, type: 'opinion' },
 ];
 
 function parseNewsContent(content: string): NewsSection[] {
@@ -114,6 +116,20 @@ const SECTION_STYLES: Record<string, { icon: string; hdr: string; hdrText: strin
     hdrText: 'text-amber-900',
     border: 'border-amber-200',
     body: 'bg-amber-50/30',
+  },
+  risk: {
+    icon: '⚠️',
+    hdr: 'bg-red-50',
+    hdrText: 'text-red-800',
+    border: 'border-red-200',
+    body: 'bg-red-50/30',
+  },
+  opinion: {
+    icon: '🔍',
+    hdr: 'bg-[#1A1A2E]',
+    hdrText: 'text-white',
+    border: 'border-[#1A1A2E]',
+    body: 'bg-slate-50',
   },
 };
 
@@ -248,7 +264,7 @@ export default async function HaberDetailPage({
                   {getCategoryLabel(article.category)}
                 </span>
                 <span>
-                  {(article.sourceName || 'Mənbə yoxdur') +
+                  {(article.sourceName || 'DK Agency') +
                     ' · ' +
                     formatDateAz(article.publishedAt)}
                 </span>

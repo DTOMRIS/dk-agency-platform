@@ -41,7 +41,7 @@ const newsCopy: Record<Locale, NewsCopy> = {
     noArticles: 'Hələ approved xəbər yoxdur.',
     featured: 'Önə çıxan',
     editorPick: 'Editor Pick',
-    noSource: 'Mənbə yoxdur',
+    noSource: 'DK Agency',
     categoryTabs: [
       { key: 'all', label: 'Hamısı' },
       { key: 'finance', label: 'Maliyyə' },
