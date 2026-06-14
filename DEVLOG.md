@@ -1,6 +1,22 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-14 — feat(news): detail page world-class redesign
+
+**Why:** Haber detay sayfası yarım kalmıştı — `**Nə baş verdi**` düz bold text olarak render oluyordu, section structure yok, share butonları altta, breadcrumb yok, sidebar CTA yok. CEO: "dünya çapında iş yapın dedik, bakıyorum tırt."
+
+**What:**
+- `app/haberler/[slug]/page.tsx`: `parseNewsContent()` — content'i section'lara böler (`event`/`important`/`lesson`), her biri renkli callout box olarak render edilir (📰 gri / 💡 mavi / 🎯 amber)
+- Breadcrumb eklendi: Xəbərlər / Kategori / Başlıq
+- ShareButtons header'a taşındı (başlık altı) + footer'da da kaldı
+- Sidebar: "Son İlanlar" dark gradient CTA kutusu eklendi
+- Newsletter CTA: "Həftəlik HoReCa xülasəsi" makale sonunda
+- `components/news/ShareButtons.tsx`: LinkedIn butonu eklendi (WhatsApp + LinkedIn zorunlu)
+- `components/blog/MarkdownRenderer.tsx`: H2 headings'e `font-display` (serif) eklendi
+- `app/globals.css`: `--font-display` Tailwind theme token eklendi (Playfair Display)
+
+**Referanslar:** Hospitality Net, Franchise Times, NRN — 12 agent araştırması sonucu
+
 ## 2026-06-13 — TASK-0319: fix(news): detail + listing UX sprint 1
 
 **Why:** 3 user-reported bugs: (1) raw markdown `### Nə baş verdi` visible in detail summary, (2) related articles sidebar empty, (3) slider missing on page 2+. Plus synthesis prompt producing heading-heavy output.

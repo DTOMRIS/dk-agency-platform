@@ -192,7 +192,7 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="mt-12 mb-4 text-2xl font-bold leading-tight text-slate-950 md:text-[26px]">
+            <h2 className="mt-12 mb-4 font-display text-2xl font-bold leading-tight text-slate-950 md:text-[26px]">
               {children}
             </h2>
           ),

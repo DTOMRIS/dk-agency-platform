@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check, MessageCircle, Send, Facebook } from 'lucide-react';
+import { Copy, Check, MessageCircle, Send, Facebook, Linkedin } from 'lucide-react';
 
 interface ShareButtonsProps {
   title: string;
@@ -60,6 +60,16 @@ export function ShareButtons({ title, url, locale = 'az' }: ShareButtonsProps) {
         className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:border-transparent hover:bg-[#229ED9] hover:text-white"
       >
         <Send className="h-4 w-4" />
+      </a>
+
+      <a
+        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:border-transparent hover:bg-[#0A66C2] hover:text-white"
+      >
+        <Linkedin className="h-4 w-4" />
       </a>
 
       <a

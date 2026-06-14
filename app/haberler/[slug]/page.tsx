@@ -47,6 +47,76 @@ function getCategoryLabel(category: string) {
   }
 }
 
+/* ── News section parsing ── */
+
+interface NewsSection {
+  type: 'event' | 'important' | 'lesson' | 'content';
+  title?: string;
+  body: string;
+}
+
+const SECTION_PATTERNS: Array<{ re: RegExp; type: NewsSection['type'] }> = [
+  { re: /\*\*(N[əe] ba[şs] verdi)\*\*/i, type: 'event' },
+  { re: /\*\*(Niy[əe] [öo]n[əe]mli(?:dir)?)\*\*/i, type: 'important' },
+  { re: /\*\*([^*]*?[üu][çc][üu]n\s+(?:d[əe]rs|n[əe]tic[əe]))\*\*/i, type: 'lesson' },
+];
+
+function parseNewsContent(content: string): NewsSection[] {
+  const markers: Array<{ index: number; end: number; type: NewsSection['type']; title: string }> = [];
+
+  for (const sp of SECTION_PATTERNS) {
+    const m = sp.re.exec(content);
+    if (m) {
+      markers.push({ index: m.index, end: m.index + m[0].length, type: sp.type, title: m[1] });
+    }
+  }
+
+  if (markers.length === 0) {
+    return [{ type: 'content', body: content }];
+  }
+
+  markers.sort((a, b) => a.index - b.index);
+  const sections: NewsSection[] = [];
+
+  const before = content.slice(0, markers[0].index).trim();
+  if (before) sections.push({ type: 'content', body: before });
+
+  for (let i = 0; i < markers.length; i++) {
+    const bodyEnd = i < markers.length - 1 ? markers[i + 1].index : content.length;
+    sections.push({
+      type: markers[i].type,
+      title: markers[i].title,
+      body: content.slice(markers[i].end, bodyEnd).trim(),
+    });
+  }
+
+  return sections;
+}
+
+const SECTION_STYLES: Record<string, { icon: string; hdr: string; hdrText: string; border: string; body: string }> = {
+  event: {
+    icon: '📰',
+    hdr: 'bg-slate-100',
+    hdrText: 'text-slate-700',
+    border: 'border-slate-200',
+    body: 'bg-slate-50/50',
+  },
+  important: {
+    icon: '💡',
+    hdr: 'bg-blue-50',
+    hdrText: 'text-blue-800',
+    border: 'border-blue-200',
+    body: 'bg-blue-50/30',
+  },
+  lesson: {
+    icon: '🎯',
+    hdr: 'bg-amber-50',
+    hdrText: 'text-amber-900',
+    border: 'border-amber-200',
+    body: 'bg-amber-50/30',
+  },
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -149,12 +219,28 @@ export default async function HaberDetailPage({
         />
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
           <article className="rounded-[32px] border border-slate-200 bg-white px-6 py-8 text-[#1A1A2E] shadow-sm md:px-10 md:py-10">
-            <Link
-              href="/haberler"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-[#C5A022]"
-            >
-              ← Bütün xəbərlər
-            </Link>
+            <nav aria-label="Breadcrumb" className="text-sm">
+              <ol className="flex flex-wrap items-center gap-1.5 text-slate-500">
+                <li>
+                  <Link href="/haberler" className="transition hover:text-[#C5A022]">
+                    Xəbərlər
+                  </Link>
+                </li>
+                <li className="text-slate-300">/</li>
+                <li>
+                  <Link
+                    href={`/haberler?category=${article.category}`}
+                    className="transition hover:text-[#C5A022]"
+                  >
+                    {getCategoryLabel(article.category)}
+                  </Link>
+                </li>
+                <li className="text-slate-300">/</li>
+                <li className="max-w-[300px] truncate text-slate-400">
+                  {article.title}
+                </li>
+              </ol>
+            </nav>
 
             <header className="mt-6 border-b border-slate-200 pb-8">
               <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
@@ -173,6 +259,9 @@ export default async function HaberDetailPage({
               <h1 className="mt-5 max-w-[720px] font-display text-[30px] font-bold leading-tight text-[#1A1A2E] sm:text-[36px] md:text-[42px]">
                 {article.title}
               </h1>
+              <div className="mt-5">
+                <ShareButtons title={article.title} url={shareUrl} locale={locale} />
+              </div>
             </header>
 
             {article.imageUrl ? (
@@ -186,16 +275,68 @@ export default async function HaberDetailPage({
               </div>
             ) : null}
 
-            <div className="mt-8 max-w-[720px] space-y-4 text-[17px] leading-[1.8] text-slate-700 md:text-[18px]">
+            <div className="mt-8 max-w-[720px] text-[17px] leading-[1.8] text-slate-700 md:text-[18px]">
               {article.summary ? (
-                <p className="font-semibold text-slate-800">{stripMarkdown(article.summary)}</p>
+                <p className="mb-6 font-semibold text-slate-800">{stripMarkdown(article.summary)}</p>
               ) : null}
-              {article.content ? (
-                <MarkdownRenderer
-                  content={article.content}
-                  className="text-slate-700 md:text-[18px]"
-                />
-              ) : null}
+              {article.content
+                ? parseNewsContent(article.content).map((section, i) =>
+                    section.type === 'content' ? (
+                      <MarkdownRenderer
+                        key={i}
+                        content={section.body}
+                        className="text-slate-700 md:text-[18px]"
+                      />
+                    ) : (
+                      <div
+                        key={i}
+                        className={`my-8 overflow-hidden rounded-2xl border ${SECTION_STYLES[section.type].border}`}
+                      >
+                        <div
+                          className={`flex items-center gap-2.5 px-5 py-3.5 ${SECTION_STYLES[section.type].hdr}`}
+                        >
+                          <span className="text-lg">{SECTION_STYLES[section.type].icon}</span>
+                          <h2
+                            className={`text-sm font-bold uppercase tracking-wider ${SECTION_STYLES[section.type].hdrText}`}
+                          >
+                            {section.title}
+                          </h2>
+                        </div>
+                        <div className={`px-5 py-4 ${SECTION_STYLES[section.type].body}`}>
+                          <MarkdownRenderer
+                            content={section.body}
+                            className="text-slate-700 md:text-[18px]"
+                          />
+                        </div>
+                      </div>
+                    ),
+                  )
+                : null}
+            </div>
+
+            <div className="mt-10 max-w-[720px] overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 to-[#FFF8E7]">
+              <div className="px-6 py-6 sm:px-8">
+                <h3 className="font-display text-lg font-bold text-[#1A1A2E]">
+                  Həftəlik HoReCa xülasəsi
+                </h3>
+                <p className="mt-1 text-sm text-slate-500">
+                  Hər həftə sektor xəbərləri, trend analizləri və praktik tövsiyələr.
+                </p>
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                  <input
+                    type="email"
+                    placeholder="E-poçt adresiniz"
+                    readOnly
+                    className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none"
+                  />
+                  <Link
+                    href="/auth/register?source=newsletter"
+                    className="rounded-xl bg-[#1A1A2E] px-6 py-2.5 text-center text-sm font-bold text-white transition hover:bg-[#16213E]"
+                  >
+                    Abunə ol
+                  </Link>
+                </div>
+              </div>
             </div>
 
             <footer className="mt-10 flex max-w-[720px] flex-col gap-5 border-t border-slate-200 pt-8">
@@ -234,6 +375,7 @@ export default async function HaberDetailPage({
               <div className="max-w-[280px]">
                 <ShareButtons title={article.title} url={shareUrl} locale={locale} />
               </div>
+              {/* Share buttons also appear in header above */}
             </footer>
 
             {(article as { relatedToolkits?: string[] }).relatedToolkits?.length ? (
@@ -249,6 +391,19 @@ export default async function HaberDetailPage({
 
           <div className="space-y-6">
             <AdSlot placement="news-sidebar" />
+
+            <aside className="rounded-[32px] border border-slate-200 bg-gradient-to-br from-[#1A1A2E] to-[#16213E] p-6 text-white shadow-sm">
+              <h3 className="font-display text-lg font-bold">Son İlanlar</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                Franchise, devir və B2B imkanlarını kəşf edin.
+              </p>
+              <Link
+                href="/ilanlar"
+                className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#E94560] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#d73753]"
+              >
+                İlanlara bax →
+              </Link>
+            </aside>
 
             {related.length > 0 ? (
               <aside className="rounded-[32px] border border-slate-200 bg-white p-6 text-[#1A1A2E] shadow-sm">
