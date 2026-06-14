@@ -185,7 +185,7 @@ async function callClaude(
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY not configured');
 
   const startedAt = Date.now();
-  const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-20250514';
+  const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-6';
   const baseUrl = process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com';
   const system = req.responseFormat === 'json_object'
     ? `${req.system ?? ''}\n\nRespond with valid JSON only. Do not include markdown fences or explanatory text.`
