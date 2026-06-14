@@ -690,10 +690,10 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
       ),
     )
     .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
-    .limit(5);
+    .limit(8);
 
   // If not enough, fill with other categories
-  if (sameCategory.length < 5) {
+  if (sameCategory.length < 8) {
     const existingIds = [articleId, ...sameCategory.map((r) => r.id)];
     const fill = await db
       .select(buildPublicArticleSelect())
@@ -706,7 +706,7 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
         ),
       )
       .orderBy(desc(newsArticles.publishedAt))
-      .limit(5 - sameCategory.length);
+      .limit(8 - sameCategory.length);
     sameCategory.push(...fill);
   }
 
