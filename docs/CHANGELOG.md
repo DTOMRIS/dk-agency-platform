@@ -4,6 +4,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `TASK-0410` feat(sektor): **generateStaticParams for dynamic [slug] route** — Next.js build zamanı 4 sektor slug-ını (qonaq-evi, otel, restoran, kafe) statik olaraq pre-render edir.
+
 ### Fixed
 - `TASK-0408` fix(ui): **HeroMotif build fix** — `glyphs.ts`-dən `GLYPHS` export eksik idi, `motifEngine.ts` import edirdi amma `glyphs.ts`-də 5×5 dot-matrix pattern tanımlı deyildi → build FAIL. Spark (diamond) + sprig (branch) glyph pattern-ləri əlavə edildi.
 
