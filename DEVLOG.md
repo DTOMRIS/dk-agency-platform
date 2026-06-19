@@ -1,6 +1,17 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-19 — TASK-0411: fix(finance): basabas format + EBITDA band + runway
+
+**Why:** Branch-opening canlıya çıxdı, Doğan ekran görüntüsü göndərdi — rəqəmlər ayraçsız (239804), EBITDA %49 "Zəif" (qırmızı) görünür, runway "-3.4 ay".
+
+**What (3 düzəliş):**
+- `fmt0` helper (`Intl.NumberFormat(locale)`) → 24 manat dəyəri minlik ayraçla (səhifə + HTML hesabat)
+- EBITDA yaşıl band `max 30→1000` — %49 marj artıq yaşıl (band fallback bug)
+- `runwayMonths` `Math.max(0,…)` — mənfi ay göstərmir
+
+**Verify:** 0 TS/lint; band %49→yaşıl, %10→amber, %5→red; mobil stack OK (studio `lg:grid-cols`, input `sm:` grid).
+
 ## 2026-06-18 — TASK-0409: feat(finance): branch-opening engine on basabas
 
 **Why:** Mövcud `basabas` aləti break-even verirdi, amma "yeni şöbə açmaq" üçün CAPEX + vergi + ramp-up + benchmark qatı yox idi. Ayrı tool yaratmaq əvəzinə mövcud motorun üstünə additive qat qoyuldu.

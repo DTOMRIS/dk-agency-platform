@@ -181,7 +181,7 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
   const totalFundingNeed = round(openingInvestment + workingCapital);
   const fundingGap = round(Math.max(0, totalFundingNeed - finite(input.openingBudget)));
   const cashRunwayMonths = monthlyFixedCosts > 0 ? round(Math.max(0, finite(input.openingBudget) - openingInvestment) / monthlyFixedCosts) : 0;
-  const runwayMonths = monthlyFixedCosts > 0 ? round((finite(input.openingBudget) - openingInvestment + workingCapital) / monthlyFixedCosts) : 0;
+  const runwayMonths = monthlyFixedCosts > 0 ? round(Math.max(0, finite(input.openingBudget) - openingInvestment + workingCapital) / monthlyFixedCosts) : 0;
   const paybackMonths = netProfit > 0 ? round(totalFundingNeed / netProfit) : null;
 
   const scenarios: BranchScenarioResult[] = [
