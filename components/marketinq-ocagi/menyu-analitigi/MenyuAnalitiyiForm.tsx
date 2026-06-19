@@ -233,7 +233,7 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
                   <span className="text-blue-900">
                     <strong>Marja:</strong> {((1 - item.costPercent / item.price) * 100).toFixed(1)}%
                     {' • '}
-                    <strong>Aylıq mənfəət:</strong> {((item.price - item.costPercent) * (item.monthlySales || 0)).toFixed(2)} AZN
+                    <strong>Aylıq mənfəət:</strong> {new Intl.NumberFormat('az-AZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((item.price - item.costPercent) * (item.monthlySales || 0))} AZN
                   </span>
                 </div>
               )}

@@ -1,6 +1,16 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-19 — TASK-0412: fix(toolkit): number format in 4 more tools
+
+**Why:** Doğan "diğer toolkitlere de bak" dedi. 3 paralel review agenti basabas hata sınıflarını (ayraçsız sayı, band bug, negatif, kontrast) bütün tool-larda taradı.
+
+**What:** Təsdiqlənmiş minlik-ayraç boşluqları düzəldildi — delivery-calc (`fmt0` + monthlyNet), menu-matrix (`fmt0` + avgSales), yemek-xerci (mərkəzi `money()` → bütün tool), menyu-analitigi (aylıq mənfəət).
+
+**Tapıldı amma bu task-da deyil:** ~16 kontrast nöqtəsi (LikertScale text-slate-300, muted label) → ayrı WCAG sweep. menyu-analitigi hardcoded AZ mətn → ayrı i18n task. div-by-zero iddiası false positive (`item.price &&` guard var).
+
+**Verify:** 4 fayl 0 lint error (1 pre-existing warning).
+
 ## 2026-06-19 — TASK-0411: fix(finance): basabas format + EBITDA band + runway
 
 **Why:** Branch-opening canlıya çıxdı, Doğan ekran görüntüsü göndərdi — rəqəmlər ayraçsız (239804), EBITDA %49 "Zəif" (qırmızı) görünür, runway "-3.4 ay".
