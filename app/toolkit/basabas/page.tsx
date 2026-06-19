@@ -15,8 +15,13 @@ import {
 } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import { BRANCH_OPENING_PRESETS } from '@/lib/financial/branch-opening-presets';
+import {
+  calculateBranchOpeningModel,
+  type BranchOpeningResult,
+  type BranchOpeningInput,
+} from '@/lib/financial/branch-opening-model';
 import { calculateFinancialViability, type BusinessType } from '@/lib/financial/viability';
-import { buildFinancialReportHtml } from '@/lib/financial/report-html';
 
 export default function BasabasPage() {
   const t = useTranslations('toolkit.basabas');
@@ -41,6 +46,71 @@ export default function BasabasPage() {
   const [rampUpMonths, setRampUpMonths] = useState(3);
   const [openingSalesPct, setOpeningSalesPct] = useState(40);
   const [reserveMonths, setReserveMonths] = useState(3);
+
+  const [branchFormat, setBranchFormat] = useState<BranchOpeningInput['format']>('cafe');
+  const [areaSqm, setAreaSqm] = useState(100);
+  const [seats, setSeats] = useState(25);
+  const [branchRent, setBranchRent] = useState(3000);
+  const [dailyChecks, setDailyChecks] = useState(100);
+  const [branchAverageCheck, setBranchAverageCheck] = useState(25);
+  const [openingBudget, setOpeningBudget] = useState(50000);
+  const [fitoutCostPerSqm, setFitoutCostPerSqm] = useState(900);
+  const [ventilationCostPerSqm, setVentilationCostPerSqm] = useState(250);
+  const [kitchenEquipmentCost, setKitchenEquipmentCost] = useState(12000);
+  const [barEquipmentCost, setBarEquipmentCost] = useState(4000);
+  const [furnitureCostPerSeat, setFurnitureCostPerSeat] = useState(520);
+  const [branchInventoryDays, setBranchInventoryDays] = useState(12);
+  const [branchStaffCosts, setBranchStaffCosts] = useState(5000);
+  const [branchUtilities, setBranchUtilities] = useState(800);
+  const [branchOtherFixedCosts, setBranchOtherFixedCosts] = useState(700);
+  const [branchVariableCostPct, setBranchVariableCostPct] = useState(36);
+  const [rentTaxType, setRentTaxType] = useState<BranchOpeningInput['rentTaxType']>('individual');
+  const [branchRampUpMonths, setBranchRampUpMonths] = useState(4);
+  const [branchOpeningSalesPct, setBranchOpeningSalesPct] = useState(40);
+  const [branchReserveMonths, setBranchReserveMonths] = useState(3);
+  const [openingMarketingPct, setOpeningMarketingPct] = useState(12);
+  const [documentsCost, setDocumentsCost] = useState(1200);
+  const [unexpectedPct, setUnexpectedPct] = useState(10);
+  const [startWorkingCapitalPct, setStartWorkingCapitalPct] = useState(20);
+
+  const branchInput: BranchOpeningInput = useMemo(() => ({
+    format: branchFormat,
+    areaSqm,
+    seats,
+    monthlyRent: branchRent,
+    dailyChecks,
+    averageCheck: branchAverageCheck,
+    openingBudget,
+    fitoutCostPerSqm,
+    ventilationCostPerSqm,
+    kitchenEquipmentCost,
+    barEquipmentCost,
+    furnitureCostPerSeat,
+    inventoryDays: branchInventoryDays,
+    staffCosts: branchStaffCosts,
+    utilities: branchUtilities,
+    otherFixedCosts: branchOtherFixedCosts,
+    variableCostPct: branchVariableCostPct,
+    rentTaxType,
+    rampUpMonths: branchRampUpMonths,
+    openingSalesPct: branchOpeningSalesPct,
+    reserveMonths: branchReserveMonths,
+    operatingDays,
+    openingMarketingPct,
+    documentsCost,
+    unexpectedPct,
+    startWorkingCapitalPct,
+  }), [branchFormat, areaSqm, seats, branchRent, dailyChecks, branchAverageCheck, openingBudget,
+    fitoutCostPerSqm, ventilationCostPerSqm, kitchenEquipmentCost, barEquipmentCost,
+    furnitureCostPerSeat, branchInventoryDays, branchStaffCosts, branchUtilities,
+    branchOtherFixedCosts, branchVariableCostPct, rentTaxType, branchRampUpMonths,
+    branchOpeningSalesPct, branchReserveMonths, operatingDays, openingMarketingPct,
+    documentsCost, unexpectedPct, startWorkingCapitalPct]);
+
+  const branchResult: BranchOpeningResult = useMemo(
+    () => calculateBranchOpeningModel(branchInput),
+    [branchInput],
+  );
 
   const financialInput = useMemo(() => ({
     businessType,
@@ -70,6 +140,8 @@ export default function BasabasPage() {
   const isValid = availableBudget > 0 && currentSales > 0 && avgCheck > 0 &&
     operatingDays > 0 && variablePct >= 0 && variablePct < 100;
 
+  const branchIsValid = openingBudget > 0 && areaSqm > 0 && seats > 0 && dailyChecks > 0 && branchAverageCheck > 0;
+
   const statusStyles = {
     safe: { ring: 'ring-emerald-500/20', text: 'text-emerald-600', bg: 'bg-emerald-50', label: t('statusSafe') },
     warning: { ring: 'ring-amber-500/20', text: 'text-amber-600', bg: 'bg-amber-50', label: t('statusWarning') },
@@ -82,6 +154,16 @@ export default function BasabasPage() {
     setVariablePct(35); setAvgCheck(25); setCurrentSales(18000);
     setOperatingDays(30); setInventoryDays(14); setReceivableDays(0); setPayableDays(15);
     setDepositsAndPrepaids(6000); setRampUpMonths(3); setOpeningSalesPct(40); setReserveMonths(3);
+    setBranchFormat('cafe'); setAreaSqm(100); setSeats(25); setBranchRent(3000);
+    setDailyChecks(100); setBranchAverageCheck(25); setOpeningBudget(50000);
+    setFitoutCostPerSqm(BRANCH_OPENING_PRESETS.cafe.fitoutPerSqm);
+    setVentilationCostPerSqm(BRANCH_OPENING_PRESETS.cafe.ventilationPerSqm);
+    setKitchenEquipmentCost(12000); setBarEquipmentCost(4000); setFurnitureCostPerSeat(BRANCH_OPENING_PRESETS.cafe.furniturePerSeat);
+    setBranchInventoryDays(BRANCH_OPENING_PRESETS.cafe.inventoryDays); setBranchStaffCosts(5000);
+    setBranchUtilities(800); setBranchOtherFixedCosts(700); setBranchVariableCostPct(BRANCH_OPENING_PRESETS.cafe.variableCostPct);
+    setRentTaxType('individual'); setBranchRampUpMonths(BRANCH_OPENING_PRESETS.cafe.rampUpMonths);
+    setBranchOpeningSalesPct(BRANCH_OPENING_PRESETS.cafe.openingSalesPct); setBranchReserveMonths(BRANCH_OPENING_PRESETS.cafe.reserveMonths);
+    setOpeningMarketingPct(12); setDocumentsCost(1200); setUnexpectedPct(10); setStartWorkingCapitalPct(20);
   };
 
   const conditionTexts = calc.conditionKeys.map((key) => t(`conditions.${key}`));
@@ -93,39 +175,18 @@ export default function BasabasPage() {
   }));
 
   function downloadReport() {
-    if (!isValid) return;
-    const html = buildFinancialReportHtml(financialInput, calc, {
-      locale,
-      title: t('report.title'),
-      generatedAt: t('report.generatedAt', { date: new Date().toLocaleDateString(locale) }),
-      businessType: t(`businessTypes.${businessType}`),
-      verdict: t(`verdicts.${calc.verdict}.title`),
-      summary: t(`verdicts.${calc.verdict}.body`),
-      fundingTitle: t('report.fundingTitle'),
-      operatingTitle: t('report.operatingTitle'),
-      sensitivityTitle: t('sensitivityTitle'),
-      conditionsTitle: t('conditionsTitle'),
-      methodology: t('report.methodology'),
-      labels: {
-        availableBudget: t('labelAvailableBudget'), openingInvestment: t('labelOpeningInvestment'),
-        workingCapital: t('statWorkingCapital'), totalFunding: t('statTotalFunding'),
-        inventory: t('breakdown.inventory'), receivables: t('breakdown.receivables'),
-        supplierFinancing: t('breakdown.supplierFinancing'), deposits: t('breakdown.deposits'),
-        rampLoss: t('breakdown.rampLoss'), reserve: t('breakdown.reserve'),
-        fundingGap: t('statFundingGap'), runway: t('statRunway'), months: t('months'),
-        monthlySales: t('labelCurrentSales'), breakEven: t('statBreakEven'),
-        dailyTransactions: t('statDailyCustomers'), monthlyProfit: t('statMonthlyProfit'),
-        safetyMargin: t('statSafetyMargin'), payback: t('statPayback'),
-        notAvailable: t('notAvailable'),
-      },
-      conditions: conditionTexts.length > 0 ? conditionTexts : [t('conditions.ready')],
-      sensitivities: sensitivityTexts,
-    });
+    if (!branchIsValid) return;
+    const benchmarkClass = (band: 'green' | 'amber' | 'red') => ({
+      green: 'background:#dcfce7;color:#166534',
+      amber: 'background:#fef3c7;color:#92400e',
+      red: 'background:#fee2e2;color:#991b1b',
+    }[band]);
+    const html = `<!doctype html><html lang="${locale}"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>${t('branchReportTitle')}</title><style>body{margin:0;background:#fafaf8;color:#172033;font-family:Arial,sans-serif;line-height:1.5}main{max-width:900px;margin:auto;padding:24px}.hero,.card{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:22px;margin-bottom:16px}.hero{background:#1a1a2e;color:#fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.row{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid #edf2f7}.row:last-child{border:0}.pill{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}.muted{color:#64748b;font-size:12px}</style></head><body><main><section class="hero"><div class="muted">DK Agency · ${branchResult.preset.label}</div><h1>${t('branchReportTitle')}</h1><p>${t('branchReportGeneratedAt', { date: new Date().toLocaleDateString(locale) })}</p><span class="pill" style="background:#fff;color:#1a1a2e">${branchResult.paybackMonths === null ? t('notAvailable') : `${branchResult.paybackMonths.toFixed(1)} ${t('months')}`}</span></section><div class="grid"><section class="card"><h2>${t('capexTitle')}</h2><div class="row"><span>${t('branchStatTotalCapex')}</span><strong>${branchResult.totalCapex.toFixed(0)} ₼</strong></div><div class="row"><span>${t('branchStatOpeningInvestment')}</span><strong>${branchResult.openingInvestment.toFixed(0)} ₼</strong></div><div class="row"><span>${t('branchStatWorkingCapital')}</span><strong>${branchResult.workingCapital.toFixed(0)} ₼</strong></div><div class="row"><span>${t('branchStatRampLoss')}</span><strong>${branchResult.rampUpLoss.toFixed(0)} ₼</strong></div><div class="row"><span>${t('statFundingGap')}</span><strong>${branchResult.fundingGap.toFixed(0)} ₼</strong></div></section><section class="card"><h2>${t('benchmarkTitle')}</h2>${branchResult.benchmarkFlags.map((flag) => `<div class="row"><span>${t(`benchmark.${flag.key}`)}: ${t(`benchmarkState.${flag.key}.${flag.band}`)}</span><strong><span class="pill" style="${benchmarkClass(flag.band)}">${flag.value.toFixed(1)}${flag.key === 'payback' ? ` ${t('months')}` : '%'} </span></strong></div>`).join('')}</section></div><section class="card"><h2>${t('scenarioTitle')}</h2>${branchResult.scenarios.map((scenario) => `<div class="row"><span>${t(`scenario.${scenario.label}`)}</span><strong>${scenario.monthlyRevenue.toFixed(0)} ₼</strong></div>`).join('')}</section><section class="card muted">${t('branchReportMethodology')}</section></main></body></html>`;
     const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = `dk-financial-report-${businessType}.html`;
+    anchor.download = `dk-branch-opening-report-${branchFormat}.html`;
     anchor.click();
     URL.revokeObjectURL(url);
   }
@@ -140,6 +201,96 @@ export default function BasabasPage() {
 
   const inputSection = (
     <div className="space-y-6">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <div>
+            <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('branchTitle')}</h3>
+            <p className="mt-1 text-sm text-slate-500">{t('branchSubtitle')}</p>
+          </div>
+          <button
+            type="button"
+            onClick={resetAll}
+            className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-slate-300 hover:text-slate-900"
+          >
+            {t('reset')}
+          </button>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <label htmlFor="branch-format" className="mb-1.5 block text-xs font-medium text-slate-700">{t('formatLabel')}</label>
+            <select
+              id="branch-format"
+              value={branchFormat}
+              onChange={(event) => setBranchFormat(event.target.value as BranchOpeningInput['format'])}
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300"
+            >
+              {(['coffee', 'cafe', 'fastFood', 'bar', 'lounge', 'fineDining'] as BranchOpeningInput['format'][]).map((format) => (
+                <option key={format} value={format}>{t(`formats.${format}`)}</option>
+              ))}
+            </select>
+          </div>
+          <NumberField label={t('areaLabel')} value={areaSqm} setValue={setAreaSqm} step={5} />
+          <NumberField label={t('seatsLabel')} value={seats} setValue={setSeats} step={1} />
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <NumberField label={t('openingBudgetLabel')} value={openingBudget} setValue={setOpeningBudget} step={1000} />
+          <NumberField label={t('branchRentLabel')} value={branchRent} setValue={setBranchRent} step={500} />
+          <div>
+            <label htmlFor="rent-tax-type" className="mb-1.5 block text-xs font-medium text-slate-700">{t('rentTaxTypeLabel')}</label>
+            <select
+              id="rent-tax-type"
+              value={rentTaxType}
+              onChange={(event) => setRentTaxType(event.target.value as BranchOpeningInput['rentTaxType'])}
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300"
+            >
+              <option value="individual">{t('rentTaxIndividual')}</option>
+              <option value="legalEntity">{t('rentTaxLegal')}</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-4">
+          <NumberField label={t('dailyChecksLabel')} value={dailyChecks} setValue={setDailyChecks} step={5} />
+          <NumberField label={t('labelAvgCheck')} value={branchAverageCheck} setValue={setBranchAverageCheck} step={0.5} />
+          <NumberField label={t('labelOperatingDays')} value={operatingDays} setValue={setOperatingDays} step={1} />
+          <NumberField label={t('branchInventoryDaysLabel')} value={branchInventoryDays} setValue={setBranchInventoryDays} step={1} />
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <NumberField label={t('labelFitoutPerSqm')} value={fitoutCostPerSqm} setValue={setFitoutCostPerSqm} step={50} />
+          <NumberField label={t('labelVentilationPerSqm')} value={ventilationCostPerSqm} setValue={setVentilationCostPerSqm} step={50} />
+          <NumberField label={t('labelFurniturePerSeat')} value={furnitureCostPerSeat} setValue={setFurnitureCostPerSeat} step={25} />
+          <NumberField label={t('labelDocumentsCost')} value={documentsCost} setValue={setDocumentsCost} step={100} />
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-4">
+          <NumberField label={t('labelKitchenEquipment')} value={kitchenEquipmentCost} setValue={setKitchenEquipmentCost} step={250} />
+          <NumberField label={t('labelBarEquipment')} value={barEquipmentCost} setValue={setBarEquipmentCost} step={250} />
+          <NumberField label={t('labelOpeningMarketingPct')} value={openingMarketingPct} setValue={setOpeningMarketingPct} step={1} />
+          <NumberField label={t('labelUnexpectedPct')} value={unexpectedPct} setValue={setUnexpectedPct} step={1} />
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-4">
+          <NumberField label={t('labelBranchStaffCosts')} value={branchStaffCosts} setValue={setBranchStaffCosts} step={100} />
+          <NumberField label={t('labelUtilities')} value={branchUtilities} setValue={setBranchUtilities} step={50} />
+          <NumberField label={t('labelOtherFixed')} value={branchOtherFixedCosts} setValue={setBranchOtherFixedCosts} step={50} />
+          <NumberField label={t('labelVariablePct')} value={branchVariableCostPct} setValue={setBranchVariableCostPct} step={1} />
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-4">
+          <NumberField label={t('labelRampMonths')} value={branchRampUpMonths} setValue={setBranchRampUpMonths} step={1} />
+          <NumberField label={t('labelOpeningSalesPct')} value={branchOpeningSalesPct} setValue={setBranchOpeningSalesPct} step={1} />
+          <NumberField label={t('labelReserveMonths')} value={branchReserveMonths} setValue={setBranchReserveMonths} step={1} />
+          <NumberField label={t('labelStartWorkingCapitalPct')} value={startWorkingCapitalPct} setValue={setStartWorkingCapitalPct} step={1} />
+        </div>
+
+        {!branchIsValid && (
+          <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{t('branchValidationError')}</p>
+        )}
+      </div>
+
       <div className="flex items-center justify-between">
         <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('planningTitle')}</h3>
         <button
@@ -243,6 +394,64 @@ export default function BasabasPage() {
 
   const resultSection = (
     <div className="space-y-4">
+      <div className="rounded-2xl bg-slate-950 p-4 text-white">
+        <div className="text-[11px] font-bold uppercase tracking-widest text-amber-300">{t('branchTitle')}</div>
+        <div className="mt-1 text-3xl font-black tabular-nums">{branchResult.totalFundingNeed.toFixed(0)}<span className="ml-1 text-lg">₼</span></div>
+        <div className="mt-2 grid grid-cols-2 gap-2 text-xs text-slate-300">
+          <span>{t('branchStatTotalCapex')}: {branchResult.totalCapex.toFixed(0)} ₼</span>
+          <span>{t('branchStatOpeningInvestment')}: {branchResult.openingInvestment.toFixed(0)} ₼</span>
+          <span>{t('branchStatWorkingCapital')}: {branchResult.workingCapital.toFixed(0)} ₼</span>
+          <span>{t('branchStatTaxBurden')}: {branchResult.taxBurden.toFixed(0)} ₼</span>
+        </div>
+        <div className="mt-3 space-y-1 border-t border-white/10 pt-3 text-[11px] text-slate-400">
+          <div className="flex justify-between"><span>{t('branchStatPrimeCost')}</span><span>{branchResult.primeCostPct.toFixed(1)}%</span></div>
+          <div className="flex justify-between"><span>{t('branchStatEbitda')}</span><span>{branchResult.ebitda.toFixed(0)} ₼</span></div>
+          <div className="flex justify-between"><span>{t('branchStatNetProfit')}</span><span>{branchResult.netProfit.toFixed(0)} ₼</span></div>
+          <div className="flex justify-between"><span>{t('branchStatPayback')}</span><span>{branchResult.paybackMonths === null ? t('notAvailable') : `${branchResult.paybackMonths.toFixed(1)} ${t('months')}`}</span></div>
+          <div className="flex justify-between"><span>{t('branchStatRunway')}</span><span>{branchResult.runwayMonths.toFixed(1)} {t('months')}</span></div>
+          <div className="flex justify-between"><span>{t('branchStatCashRunway')}</span><span>{branchResult.cashRunwayMonths.toFixed(1)} {t('months')}</span></div>
+          <div className="flex justify-between"><span>{t('branchStatRampLoss')}</span><span>{branchResult.rampUpLoss.toFixed(0)} ₼</span></div>
+          <div className="flex justify-between"><span>{t('statFundingGap')}</span><span>{branchResult.fundingGap.toFixed(0)} ₼</span></div>
+        </div>
+      </div>
+
+      <div className="grid gap-2 sm:grid-cols-2">
+        {branchResult.benchmarkFlags.map((flag) => {
+          const colorClasses = {
+            green: 'bg-emerald-50 ring-emerald-200 text-emerald-700',
+            amber: 'bg-amber-50 ring-amber-200 text-amber-700',
+            red: 'bg-red-50 ring-red-200 text-red-700',
+          }[flag.band];
+          return (
+            <div key={flag.key} className={`rounded-xl p-3 ring-1 ${colorClasses}`}>
+              <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{t(`benchmark.${flag.key}`)}</div>
+              <div className="mt-1 text-sm font-semibold">{t(`benchmarkState.${flag.key}.${flag.band}`)}</div>
+              <div className="mt-1 text-lg font-black tabular-nums">{flag.value.toFixed(1)}{flag.key === 'payback' ? ` ${t('months')}` : '%'}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+        <div className="text-xs font-black uppercase tracking-wider text-slate-700">{t('scenarioTitle')}</div>
+        <div className="mt-3 space-y-2 text-xs text-slate-700">
+          {branchResult.scenarios.map((scenario) => (
+            <div key={scenario.label} className="rounded-lg bg-white p-3 ring-1 ring-slate-200">
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-bold uppercase tracking-wider text-slate-500">{t(`scenario.${scenario.label}`)}</span>
+                <span className="font-black tabular-nums text-slate-900">{scenario.monthlyRevenue.toFixed(0)} ₼</span>
+              </div>
+              <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] text-slate-500 sm:grid-cols-4">
+                <span>{t('branchStatPrimeCost')}: {scenario.primeCostPct.toFixed(1)}%</span>
+                <span>{t('branchStatEbitda')}: {scenario.ebitda.toFixed(0)} ₼</span>
+                <span>{t('branchStatPayback')}: {scenario.paybackMonths === null ? t('notAvailable') : `${scenario.paybackMonths.toFixed(1)} ${t('months')}`}</span>
+                <span>{t('branchStatRentShare')}: {scenario.rentSharePct.toFixed(1)}%</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="rounded-xl bg-amber-50 p-4 ring-1 ring-amber-200/60">
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statBreakEven')}</div>
         <div className="mt-1 text-3xl font-black tabular-nums text-amber-600">
@@ -331,7 +540,7 @@ export default function BasabasPage() {
       <button
         type="button"
         onClick={downloadReport}
-        disabled={!isValid}
+        disabled={!branchIsValid}
         className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"
       >
         <Download size={16} /> {t('downloadReport')}
