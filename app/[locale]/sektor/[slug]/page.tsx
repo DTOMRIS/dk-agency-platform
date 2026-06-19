@@ -3,13 +3,17 @@ import { notFound } from 'next/navigation';
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import SektorLanding from '@/components/sektor/SektorLanding';
-import { getSektorConfig } from '@/lib/data/sektorConfigs';
+import { getSektorConfig, VALID_SEKTOR_SLUGS } from '@/lib/data/sektorConfigs';
 
 // Only `slug` is read from params — the locale comes from `getLocale()` so this
 // page works both at `/[locale]/sektor/[slug]` and via the locale-less root
 // mirror `app/sektor/[slug]` (where `params` has no `locale`).
 interface SektorPageParams {
   params: Promise<{ slug: string }>;
+}
+
+export function generateStaticParams() {
+  return VALID_SEKTOR_SLUGS.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: SektorPageParams): Promise<Metadata> {

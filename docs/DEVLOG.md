@@ -1,5 +1,13 @@
 # DK Agency Platform — Dev Log
 
+## 2026-06-19 — TASK-0410 (F2.8: Sektor dynamic [slug] route — generateStaticParams)
+
+**Problem:** Dinamik `[slug]` sektor route-u `generateStaticParams` export etmirdi — Next.js build zamanı slug-ları statik olaraq pre-render etmirdi.
+
+**Fix:** `app/[locale]/sektor/[slug]/page.tsx`-ə `generateStaticParams()` əlavə edildi — `VALID_SEKTOR_SLUGS` (qonaq-evi, otel, restoran, kafe) map olunur. Build keçdi, 5 route 200, invalid slug 404.
+
+**Qeyd:** F2.8 sprint-in əsas işi (config sistemi, builder, 4 sektor config, SektorLanding, index page, i18n, OG image, not-found, root mirrors) əvvəlki session-da tamamlanmışdı. Bu commit yalnız `generateStaticParams` boşluğunu bağlayır.
+
 ## 2026-06-09 — TASK-0242 (Blog: strukturlu Doğan notu + Guru qutuları route-a bağlandı)
 
 **Problem:** Yeni yayınlanan bloq yazısında ("Süni İntellekt çağında franchise…") guru qutusu və Doğan notu görünmürdü — "field by field doldururuq amma çıxmır". Araşdırma: editor (`BlogEditorForm.tsx`) `doganNote` (textarea) + `guruBoxes` (5-ə qədər guru/quote/book) sahələrini toplayır; API (`/api/blog/[slug]`) DB-yə yazır; `mapDbArticle` (blog-repository.ts:101,103) `doganNote` + `guruBoxes` qaytarır. **Amma** public render `app/[locale]/blog/[slug]/page.tsx` yalnız `MarkdownRenderer content` çağırırdı — strukturlu sahələri heç istifadə etmirdi. Köhnə yazılarda qutular markdown mətninə (ASCII `╔║`, `### guru kutusu`, `> 📝 Doğan notu`) gömülmüşdü, ona görə MarkdownRenderer onları tuturdu. Strukturlu sahələrlə yazılan yeni yazılar boş çıxırdı.

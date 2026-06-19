@@ -5,6 +5,13 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Added
+- `TASK-0410` feat(sektor): **generateStaticParams for dynamic [slug] route** — Next.js build zamanı 4 sektor slug-ını (qonaq-evi, otel, restoran, kafe) statik olaraq pre-render edir.
+
+### Fixed
+- `TASK-0408` fix(ui): **HeroMotif build fix** — `glyphs.ts`-dən `GLYPHS` export eksik idi, `motifEngine.ts` import edirdi amma `glyphs.ts`-də 5×5 dot-matrix pattern tanımlı deyildi → build FAIL. Spark (diamond) + sprig (branch) glyph pattern-ləri əlavə edildi.
+
+### Added
+- `TASK-0408` feat(ui): **HeroMotif reusable animated canvas component** — 3 preset (brand/kazan/editorial), palette + cluster + glyph sistemi, IntersectionObserver + visibility pause, reduced-motion dəstəyi, dev preview route.
 - `TASK-0319` fix(news): **Xəbər detay + listing UX sprint 1** — (1) Summary-dəki raw markdown (`### Nə baş verdi`) strip olundu, (2) DeepSeek sentez prompt-u yeniləndi — heading əvəzinə axıcı abzaslar, (3) Əlaqəli xəbərlər sidebar-ı `translated` + `approved` qəbul edir (daha dolu sidebar), (4) MansetVitrin slider hər səhifədə göstərilir (`getVitrinNewsArticles` ayrı sorğu).
 - `TASK-0318` fix(news): **Xəbər detay UX** — Əlaqəli xəbərlər 1→5 (əvvəl eyni kateqoriya, sonra digərlər ilə doldur), oxuma müddəti badge, sidebar kartlarına resim + hover efekti.
 - `TASK-0317` feat(ads): **bloq-sidebar slotu** — bloq detay səhifəsinin sticky sidebar-ına `<AdSlot placement="blog-sidebar" />`. Slot əhatəsi tamamlandı (news + blog). Aktiv reklam yoxdursa sidebar dəyişmir.

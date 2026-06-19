@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+## [TASK-0409] feat(finance): branch-opening financial engine on basabas - 2026-06-18
+
+### Added
+- New deterministic branch-opening engine layered onto the existing `/toolkit/basabas` tool (no parallel route): CAPEX build-up, Azerbaijan tax constants (simplified 8/4%, profit 20%, lease 14%, social 24.5%), ramp-up loss, working capital, funding gap, runway, payback, three scenarios (base/conservative/optimistic), and benchmark flags.
+- Six format presets (fastFood/coffee/bar/cafe/lounge/fineDining) and four-language labels with full key parity.
+
+### Fixed
+- Profit tax was applied to revenue instead of profit (`netProfit` and both scenarios) — corrected to `max(0, EBITDA) × 20%`, which restores finite payback in thin-margin cases.
+- EBITDA benchmark compared an absolute manat value against a percentage band (always flagged red) — now uses EBITDA margin %.
+- `taxBurden` double-counted simplified turnover tax and general profit tax — now a single regime: profit tax + lease tax + social contribution.
+
+### Verification
+- New files: 0 TS errors, 0 lint errors; i18n key parity intact; deterministic numeric replay confirms sane figures. Route smoke deferred to the commit step (needs dev server).
+
 ## [TASK-0406] feat(finance): cross-sector viability and working-capital report - 2026-06-13
 
 ### Added
