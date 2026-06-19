@@ -71,14 +71,14 @@ export default function DeliveryCalcPage() {
           <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
           <p className="text-sm text-slate-500">{t('calculatorSubtitle')}</p>
         </div>
-        <button onClick={resetAll} className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-orange-600">
+        <button onClick={resetAll} className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 transition-colors hover:text-orange-600">
           <RotateCcw size={13} /> {t('reset')}
         </button>
       </div>
 
       {/* Platform selection */}
       <div>
-        <label className="mb-3 block text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('platformSelectionLabel')}</label>
+        <label className="mb-3 block text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('platformSelectionLabel')}</label>
         <div className="grid gap-3 sm:grid-cols-2">
           {(Object.keys(PLATFORM_LABELS) as PlatformKey[]).map((platform) => {
             const active = selectedPlatforms.includes(platform);
@@ -121,7 +121,7 @@ export default function DeliveryCalcPage() {
         <div className="overflow-x-auto rounded-xl ring-1 ring-slate-200">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-slate-50 text-[11px] font-bold uppercase tracking-widest text-slate-400">
+              <tr className="bg-slate-50 text-[11px] font-bold uppercase tracking-widest text-slate-600">
                 <th className="px-4 py-3 text-left">{t('colChannel')}</th>
                 <th className="px-3 py-3 text-right">{t('colSales')}</th>
                 <th className="px-3 py-3 text-right">{t('colCommission')}</th>
@@ -134,7 +134,7 @@ export default function DeliveryCalcPage() {
               <tr className="bg-white">
                 <td className="px-4 py-3 font-semibold text-slate-900">{t('dineInLabel')}</td>
                 <td className="px-3 py-3 text-right tabular-nums text-slate-900">{orderValue.toFixed(2)}₼</td>
-                <td className="px-3 py-3 text-right tabular-nums text-slate-400">0.00₼</td>
+                <td className="px-3 py-3 text-right tabular-nums text-slate-600">0.00₼</td>
                 <td className="px-3 py-3 text-right tabular-nums text-slate-600">-{calc.dineInFoodCost.toFixed(2)}₼</td>
                 <td className="px-3 py-3 text-right tabular-nums text-slate-600">-{laborCost.toFixed(2)}₼</td>
                 <td className="px-4 py-3 text-right font-black tabular-nums text-emerald-600">{calc.dineInNet.toFixed(2)}₼</td>
@@ -176,7 +176,7 @@ export default function DeliveryCalcPage() {
   const resultSection = (
     <div className="space-y-4">
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statOrderValue')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statOrderValue')}</div>
         <div className="mt-1 text-3xl font-black text-slate-900">{orderValue.toFixed(2)}₼</div>
       </div>
       <div className="rounded-xl bg-orange-50 p-4 ring-1 ring-orange-200/60">
@@ -184,11 +184,11 @@ export default function DeliveryCalcPage() {
         <div className="mt-1 text-3xl font-black text-orange-600">{commissionPct}%</div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statFoodCost')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statFoodCost')}</div>
         <div className="mt-1 text-3xl font-black text-slate-900">{foodCostPct}%</div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statMonthlyOrders')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statMonthlyOrders')}</div>
         <div className="mt-1 text-3xl font-black text-slate-900">{dailyOrders * monthlyDays}</div>
       </div>
 
@@ -257,7 +257,7 @@ export default function DeliveryCalcPage() {
             <Link key={link.href} href={link.href} className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/70 transition-all hover:shadow-md">
               <span className="text-[10px] font-bold uppercase tracking-widest text-orange-600">{link.tag}</span>
               <h4 className="mt-2 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-orange-600">{link.title}</h4>
-              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 group-hover:text-orange-600">{t('readLabel')} <ArrowRight size={12} /></div>
+              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-600 group-hover:text-orange-600">{t('readLabel')} <ArrowRight size={12} /></div>
             </Link>
           ))}
         </div>

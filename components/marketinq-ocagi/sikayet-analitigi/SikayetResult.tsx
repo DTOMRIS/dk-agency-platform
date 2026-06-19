@@ -93,19 +93,19 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
       {/* Summary */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-          <p className="text-[10px] font-semibold uppercase text-slate-400">{t.total}</p>
+          <p className="text-[10px] font-semibold uppercase text-slate-600">{t.total}</p>
           <p className="mt-1 text-2xl font-bold text-[var(--dk-navy)]">{summary.totalComplaints}</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-          <p className="text-[10px] font-semibold uppercase text-slate-400">{t.topCat}</p>
+          <p className="text-[10px] font-semibold uppercase text-slate-600">{t.topCat}</p>
           <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{summary.topCategory}</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-          <p className="text-[10px] font-semibold uppercase text-slate-400">{t.sentiment}</p>
+          <p className="text-[10px] font-semibold uppercase text-slate-600">{t.sentiment}</p>
           <p className={`mt-1 text-2xl font-bold ${summary.sentimentScore > 60 ? 'text-green-600' : summary.sentimentScore > 30 ? 'text-amber-600' : 'text-red-600'}`}>{summary.sentimentScore}</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-          <p className="text-[10px] font-semibold uppercase text-slate-400">{t.urgency}</p>
+          <p className="text-[10px] font-semibold uppercase text-slate-600">{t.urgency}</p>
           <span className={`mt-1 inline-block rounded-full px-3 py-1 text-xs font-bold ${urgencyColors[summary.urgencyLevel] ?? ''}`}>
             {t.urgencyLevels[summary.urgencyLevel] ?? summary.urgencyLevel}
           </span>
@@ -185,7 +185,7 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
       )}
 
       {/* Ahilik */}
-      <p className="text-center text-xs italic text-slate-400">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
 
       {/* Actions */}
       <div className="flex gap-3">

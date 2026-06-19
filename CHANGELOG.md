@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [TASK-0413] fix(toolkit): WCAG contrast sweep — light-bg muted labels - 2026-06-19
+
+### Fixed
+- Raised muted `text-slate-400/300` labels on light backgrounds to `text-slate-600` across 19 tool files + the shared `LikertScale` (unselected star `slate-300→400`, question badge `slate-400→500`). Verified per-occurrence to skip dark surfaces (DK-advice cards, process boxes), icon-only lucide buttons, and `slate-500`+ which already passes AA.
+- 88 lines, all pure 1:1 contrast-class swaps (no logic/number changes); build + lint pass.
+
 ## [TASK-0412] fix(toolkit): locale thousand separators in 4 more financial tools - 2026-06-19
 
 ### Fixed

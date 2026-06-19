@@ -24,7 +24,7 @@ export const LikertScale = memo(function LikertScale({
         id={questionId}
         className="flex-1 text-sm font-medium text-[var(--dk-navy)]"
       >
-        <span className="mr-2 text-xs font-bold text-slate-400">{questionId}</span>
+        <span className="mr-2 text-xs font-bold text-slate-500">{questionId}</span>
         {label}
       </label>
       <div className="flex gap-0.5" role="radiogroup" aria-labelledby={questionId}>
@@ -44,7 +44,7 @@ export const LikertScale = memo(function LikertScale({
               className={
                 value !== null && star <= value
                   ? 'fill-yellow-400 text-yellow-400'
-                  : 'text-slate-300'
+                  : 'text-slate-400'
               }
             />
           </button>

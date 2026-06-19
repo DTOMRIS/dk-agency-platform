@@ -79,12 +79,12 @@ export default function FoodCostCalculator() {
         <div className="flex items-center gap-3"><h2 className="text-base font-bold text-slate-900">{t('recipeCardTitle')}</h2>
           {hasInvoiceData && <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 ring-1 ring-emerald-200/60"><Database size={10} /> {t('invoiceDataActive')}</span>}
         </div>
-        <button onClick={resetAll} className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-red-500"><RotateCcw size={13} /> {t('reset')}</button>
+        <button onClick={resetAll} className="flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-red-500"><RotateCcw size={13} /> {t('reset')}</button>
       </div>
 
       <div className="overflow-x-auto rounded-xl ring-1 ring-slate-200">
         <table className="w-full text-sm">
-          <thead><tr className="text-[10px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100 bg-slate-50/60">
+          <thead><tr className="text-[10px] font-bold text-slate-600 uppercase tracking-widest border-b border-slate-100 bg-slate-50/60">
             <th className="px-4 py-3 text-left">{t('colProduct')}</th><th className="px-3 py-3 text-center w-[90px]">{t('colQuantity')}</th><th className="px-3 py-3 text-center w-[80px]">{t('colUnit')}</th><th className="px-3 py-3 text-center w-[100px]">{t('colPricePerUnit')}</th><th className="px-3 py-3 text-center w-[70px]">{t('colTrimPct')}</th><th className="px-3 py-3 text-right w-[90px]">{t('colTotal')}</th><th className="w-8" />
           </tr></thead>
           <tbody className="divide-y divide-slate-100">
@@ -95,7 +95,7 @@ export default function FoodCostCalculator() {
                   {activeIngId === ing.id && suggestions.length > 0 && (
                     <div className="absolute left-3 top-full z-20 mt-1 w-64 rounded-xl border border-slate-200 bg-white shadow-xl">
                       {suggestions.map((sug) => (<button key={`${sug.name}-${sug.unit}`} type="button" onMouseDown={() => applySuggestion(ing.id, sug)} className="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-emerald-50 first:rounded-t-xl last:rounded-b-xl"><div><span className="font-medium text-slate-800">{sug.name}</span><span className="ml-1 text-xs text-slate-400">({sug.unit})</span></div><div className="text-right"><span className="font-semibold text-emerald-600">{(sug.avgUnitPrice / 100).toFixed(2)} ₼</span><span className="ml-1 text-[10px] text-slate-400">x{sug.occurrences}</span></div></button>))}
-                      <div className="border-t border-slate-100 px-3 py-1.5 text-[10px] text-slate-400"><Database size={10} className="mr-1 inline" />{t('invoiceDataHint')}</div>
+                      <div className="border-t border-slate-100 px-3 py-1.5 text-[10px] text-slate-600"><Database size={10} className="mr-1 inline" />{t('invoiceDataHint')}</div>
                     </div>
                   )}
                 </td>
@@ -115,7 +115,7 @@ export default function FoodCostCalculator() {
 
       {/* Parameters */}
       <div className="border-t border-slate-100 pt-5">
-        <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">{t('parametersTitle')}</h3>
+        <h3 className="text-[11px] font-bold text-slate-600 uppercase tracking-widest mb-4">{t('parametersTitle')}</h3>
         <div className="grid grid-cols-3 gap-4">
           <div><label className="text-xs font-medium text-slate-500 mb-1.5 block">{t('labelMenuPrice')}</label><input type="number" step="0.5" value={menuPrice || ''} onChange={(e) => setMenuPrice(parseFloat(e.target.value) || 0)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-semibold text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-300" /></div>
           <div><label className="text-xs font-medium text-slate-500 mb-1.5 block">{t('labelPortions')}</label><input type="number" min="1" value={portions || ''} onChange={(e) => setPortions(parseInt(e.target.value) || 1)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-semibold text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-300" /></div>
@@ -134,22 +134,22 @@ export default function FoodCostCalculator() {
         <div className={`text-xs font-semibold ${ss.text} mt-1 flex items-center gap-1`}><span className="w-1.5 h-1.5 rounded-full bg-current" />{ss.label}</div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">{t('statPortionCost')}</div>
+        <div className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">{t('statPortionCost')}</div>
         <div className="text-3xl font-black text-slate-900 tabular-nums mt-1">{calc.perPortion.toFixed(2)}<span className="text-lg ml-1">₼</span></div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">{t('statGrossProfit')}</div>
+        <div className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">{t('statGrossProfit')}</div>
         <div className="text-3xl font-black text-emerald-600 tabular-nums mt-1">{calc.gross.toFixed(2)}<span className="text-lg ml-1">₼</span></div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">{t('statIdealPrice')}</div>
+        <div className="text-[11px] font-bold text-slate-600 uppercase tracking-widest">{t('statIdealPrice')}</div>
         <div className="text-3xl font-black text-blue-600 tabular-nums mt-1">{calc.ideal.toFixed(2)}<span className="text-lg ml-1">₼</span></div>
-        <div className="text-[10px] text-slate-400 mt-1">{t('statIdealPriceHint', { pct: targetFoodCost })}</div>
+        <div className="text-[10px] text-slate-600 mt-1">{t('statIdealPriceHint', { pct: targetFoodCost })}</div>
       </div>
 
       {/* Sector standards */}
       <div className="border-t border-slate-100 pt-4">
-        <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">{t('sectorStandardsTitle')}</h4>
+        <h4 className="text-[11px] font-bold text-slate-600 uppercase tracking-widest mb-3">{t('sectorStandardsTitle')}</h4>
         <div className="space-y-2">
           <div className="bg-emerald-50 rounded-lg p-3 text-center ring-1 ring-emerald-200/60"><div className="text-lg font-black text-emerald-600">28-32%</div><div className="text-[10px] text-slate-500 font-medium">{t('sectorRestaurant')}</div></div>
           <div className="bg-blue-50 rounded-lg p-3 text-center ring-1 ring-blue-200/60"><div className="text-lg font-black text-blue-600">22-28%</div><div className="text-[10px] text-slate-500 font-medium">{t('sectorFastFood')}</div></div>
@@ -200,7 +200,7 @@ export default function FoodCostCalculator() {
       </div>
 
       <div className="rounded-2xl bg-slate-50 p-8 sm:p-10"><div className="flex items-center gap-2.5 mb-8"><BookOpen size={18} className="text-[var(--dk-red)]" /><h3 className="text-lg font-bold text-slate-900">{t('learnMoreTitle')}</h3></div>
-        <div className="grid sm:grid-cols-3 gap-4">{blogLinks.map((a) => (<Link key={a.slug} href={`/blog/${a.slug}`} className="group block bg-white rounded-xl p-5 ring-1 ring-slate-200/60 hover:shadow-md transition-all"><span className="text-[10px] font-bold text-[var(--dk-red)] uppercase tracking-widest">{a.tag}</span><h4 className="text-sm font-bold text-slate-900 mt-2.5 leading-snug group-hover:text-[var(--dk-red)]">{a.title}</h4><div className="flex items-center gap-1 text-xs text-slate-400 font-semibold mt-4 group-hover:text-[var(--dk-red)]">{t('readLabel')} <ArrowRight size={12} /></div></Link>))}</div>
+        <div className="grid sm:grid-cols-3 gap-4">{blogLinks.map((a) => (<Link key={a.slug} href={`/blog/${a.slug}`} className="group block bg-white rounded-xl p-5 ring-1 ring-slate-200/60 hover:shadow-md transition-all"><span className="text-[10px] font-bold text-[var(--dk-red)] uppercase tracking-widest">{a.tag}</span><h4 className="text-sm font-bold text-slate-900 mt-2.5 leading-snug group-hover:text-[var(--dk-red)]">{a.title}</h4><div className="flex items-center gap-1 text-xs text-slate-600 font-semibold mt-4 group-hover:text-[var(--dk-red)]">{t('readLabel')} <ArrowRight size={12} /></div></Link>))}</div>
       </div>
     </>
   );

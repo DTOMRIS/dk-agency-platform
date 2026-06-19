@@ -86,7 +86,7 @@ export default function ChecklistPage() {
                 <span className="text-xl">{section.emoji}</span>
                 <div>
                   <h2 className="font-bold text-slate-900 text-sm">{section.title}</h2>
-                  <p className="text-xs text-slate-400">{sectionChecked}/{section.items.length} {t('section_completed')}</p>
+                  <p className="text-xs text-slate-600">{sectionChecked}/{section.items.length} {t('section_completed')}</p>
                 </div>
               </div>
               {isExpanded ? <ChevronUp size={18} className="text-slate-400" /> : <ChevronDown size={18} className="text-slate-400" />}
@@ -101,7 +101,7 @@ export default function ChecklistPage() {
                       {isDone ? <CheckCircle size={18} className="text-emerald-500 flex-shrink-0 mt-0.5" /> : <Circle size={18} className="text-slate-300 flex-shrink-0 mt-0.5" />}
                       <div>
                         <span className={`text-sm font-medium ${isDone ? 'text-emerald-700 line-through' : 'text-slate-800'}`}>{item.text}</span>
-                        {item.detail && <p className="text-xs text-slate-400 mt-0.5">{item.detail}</p>}
+                        {item.detail && <p className="text-xs text-slate-600 mt-0.5">{item.detail}</p>}
                       </div>
                     </button>
                   );
@@ -119,7 +119,7 @@ export default function ChecklistPage() {
   const resultSection = (
     <div className="space-y-4">
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('progressLabel')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('progressLabel')}</div>
         <div className="mt-1 text-3xl font-black text-slate-900">{checkedCount}/{totalItems}</div>
       </div>
       <div className="rounded-xl bg-[var(--dk-red)]/5 p-4 ring-1 ring-[var(--dk-red)]/20">
@@ -138,7 +138,7 @@ export default function ChecklistPage() {
           return (
             <div key={idx} className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
               <span className="text-xs text-slate-600">{section.emoji} {section.title}</span>
-              <span className={`text-xs font-bold ${pct === 100 ? 'text-emerald-600' : 'text-slate-400'}`}>{done}/{section.items.length}</span>
+              <span className={`text-xs font-bold ${pct === 100 ? 'text-emerald-600' : 'text-slate-600'}`}>{done}/{section.items.length}</span>
             </div>
           );
         })}

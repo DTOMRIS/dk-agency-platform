@@ -155,7 +155,7 @@ export default function SikayetForm({ locale, onResult, onError }: Props) {
           className="inline-flex items-center gap-1 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-xs font-semibold text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]">
           <Plus size={14} />{t.addComplaint}
         </button>
-        <span className="text-xs text-slate-400">{filled.length} / {complaints.length}</span>
+        <span className="text-xs text-slate-600">{filled.length} / {complaints.length}</span>
       </div>
 
       {filled.length < 3 && <p className="text-xs text-amber-600">{t.minItems}</p>}

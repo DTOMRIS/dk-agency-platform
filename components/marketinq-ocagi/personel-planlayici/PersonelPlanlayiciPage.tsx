@@ -359,7 +359,7 @@ export default function PersonelPlanlayiciPage() {
           <span className="font-bold text-slate-900">{t('result.toplam')}</span>
           <span className="font-black tabular-nums text-blue-600">{calc.axsamToplam}</span>
         </div>
-        <div className="mt-1 text-[10px] text-slate-400">{t('result.peakNote')}</div>
+        <div className="mt-1 text-[10px] text-slate-600">{t('result.peakNote')}</div>
       </div>
 
       {/* Labor */}
@@ -372,7 +372,7 @@ export default function PersonelPlanlayiciPage() {
         </div>
         <div className="flex items-end justify-between">
           <div>
-            <div className="text-[10px] uppercase tracking-wider text-slate-400">
+            <div className="text-[10px] uppercase tracking-wider text-slate-600">
               {t('result.aylig')}
             </div>
             <div className="text-2xl font-black tabular-nums text-slate-900">
@@ -380,7 +380,7 @@ export default function PersonelPlanlayiciPage() {
             </div>
           </div>
           <div className="text-right">
-            <div className="text-[10px] uppercase tracking-wider text-slate-400">
+            <div className="text-[10px] uppercase tracking-wider text-slate-600">
               {t('result.laborFaizi')}
             </div>
             <div className={`text-2xl font-black tabular-nums ${statusStyle.text}`}>

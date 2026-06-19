@@ -95,7 +95,7 @@ export default function SikayetAnalitiyiPage() {
         </div>
       )}
 
-      {view === 'loading' && <div className="py-12 text-center text-sm text-slate-400">{c.loading}</div>}
+      {view === 'loading' && <div className="py-12 text-center text-sm text-slate-600">{c.loading}</div>}
       {view === 'form' && <SikayetForm locale={locale} onResult={(d) => { setResult(d); setError(null); setView('result'); }} onError={setError} />}
       {view === 'result' && result && <SikayetResult result={result as Parameters<typeof SikayetResult>[0]['result']} locale={locale} onRedo={() => { setView('form'); setError(null); }} />}
     </div>

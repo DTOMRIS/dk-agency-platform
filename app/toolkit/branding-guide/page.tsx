@@ -132,7 +132,7 @@ export default function BrandingGuidePage() {
     <div className="space-y-4">
       {/* Progress stats */}
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statCompleted')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statCompleted')}</div>
         <div className="mt-1 text-3xl font-black text-slate-900">{completedItems}/{totalItems}</div>
       </div>
       <div className="rounded-xl bg-pink-50 p-4 ring-1 ring-pink-200/60">
@@ -140,7 +140,7 @@ export default function BrandingGuidePage() {
         <div className="mt-1 text-3xl font-black text-pink-600">{progressPct.toFixed(0)}%</div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statVisualElements')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statVisualElements')}</div>
         <div className="mt-1 text-3xl font-black text-slate-900">{visualElements.length}</div>
       </div>
 
@@ -203,7 +203,7 @@ export default function BrandingGuidePage() {
             <Link key={item.href} href={item.href}
               className="group flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 transition-colors hover:border-pink-200 hover:bg-pink-50">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">{item.tag}</div>
+                <div className="text-xs uppercase tracking-widest text-slate-600">{item.tag}</div>
                 <div className="text-sm font-semibold text-slate-900">{item.title}</div>
               </div>
               <ArrowRight size={16} className="text-slate-400 transition-transform group-hover:translate-x-0.5" />
