@@ -1,6 +1,22 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-18 — TASK-0409: feat(finance): branch-opening engine on basabas
+
+**Why:** Mövcud `basabas` aləti break-even verirdi, amma "yeni şöbə açmaq" üçün CAPEX + vergi + ramp-up + benchmark qatı yox idi. Ayrı tool yaratmaq əvəzinə mövcud motorun üstünə additive qat qoyuldu.
+
+**What:**
+- `lib/financial/azerbaijan-tax-config.ts` — AZ vergi sabitləri + benchmark band-ları (SSOT)
+- `lib/financial/branch-opening-presets.ts` — 6 format preset
+- `lib/financial/branch-opening-model.ts` — deterministik motor (CAPEX, working capital, funding gap, ramp loss, runway, payback, 3 ssenari, benchmark)
+- `app/toolkit/basabas/page.tsx` + 4 dil mesajı
+
+**Kök səbəb düzəlişi (build keçdi ≠ bitdi):** TS təmiz idi amma 3 səssiz hesablama xətası vardı —
+1. mənfəət vergisi **gəlir** üzərindən hesablanırdı → düzgün baza mənfəət;
+2. EBITDA benchmark mütləq manatı faiz bandı ilə müqayisə edirdi (həmişə red) → EBITDA marjı %;
+3. taxBurden iki vergi rejimini ikiqat toplayırdı → tək rejim.
+Numeric replay: net mənfəət müsbət, payback ≈5.5 ay, marj düzgün faiz.
+
 ## 2026-06-14 — feat(news): detail page world-class redesign
 
 **Why:** Haber detay sayfası yarım kalmıştı — `**Nə baş verdi**` düz bold text olarak render oluyordu, section structure yok, share butonları altta, breadcrumb yok, sidebar CTA yok. CEO: "dünya çapında iş yapın dedik, bakıyorum tırt."
