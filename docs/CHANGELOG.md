@@ -4,6 +4,11 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0413` fix(toolkit): **WCAG kontrast sweep** — açıq zəmində oxunması çətin `text-slate-400/300` etiketlər `text-slate-600`-a qaldırıldı (19 fayl + shared `LikertScale`: ulduz slate-300→400, badge slate-400→500). 2 builder agent hər occurrence-ın bg-bağlamını doğruladı; koyu panel/ikon/slate-500+ toxunulmadı. 88 satır saf contrast swap, build ✓.
+- `TASK-0412` fix(toolkit): **locale minlik ayraç — 4 alət** (delivery-calc, menu-matrix, yemek-xerci `money()` helperi, menyu-analitigi). 3 review agent denetimi ilə tapılan böyük-rəqəm ayraç boşluqları + finite guard.
+- `TASK-0411` fix(finance): **basabas rəqəm formatı + EBITDA band + runway** — bütün manat dəyərləri locale-aware ayraçla (`fmt0`), EBITDA yaşıl band max 30→1000 (%49 marj artıq yaşıl), `runwayMonths` mənfi göstərmir.
+
 ### Added
 - `TASK-0410` feat(sektor): **generateStaticParams for dynamic [slug] route** — Next.js build zamanı 4 sektor slug-ını (qonaq-evi, otel, restoran, kafe) statik olaraq pre-render edir.
 
