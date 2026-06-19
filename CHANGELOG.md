@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [TASK-0411] fix(finance): basabas number format + EBITDA band + runway - 2026-06-19
+
+### Fixed
+- All manat figures now render with locale-aware thousand separators via a `fmt0` helper (az `239.804`, ru `239 804`, en `239,804`, tr `239.804`) — 24 sites across the page and the downloadable HTML report; percentages untouched.
+- EBITDA benchmark green band capped at 30, so a healthy ~49% margin fell through to `red` ("Zəif"). Raised green `max` 30→1000 → high margins now show green/"Güclü".
+- `runwayMonths` could display negative months when budget < opening investment; floored at 0 to match `cashRunwayMonths`.
+
+### Verification
+- 0 TS / 0 lint errors; deterministic band + format checks pass; mobile layout (studio `lg:grid-cols`, input `sm:` grids) stacks without overflow.
+
 ## [TASK-0409] feat(finance): branch-opening financial engine on basabas - 2026-06-18
 
 ### Added

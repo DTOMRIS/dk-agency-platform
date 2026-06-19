@@ -34,7 +34,7 @@ export const TAX_BENCHMARK_BANDS = {
     { min: 10, max: 100, labelKey: 'red' },
   ] satisfies TaxBenchmarkBand[],
   ebitda: [
-    { min: 12, max: 30, labelKey: 'green' },
+    { min: 12, max: 1000, labelKey: 'green' },
     { min: 8, max: 12, labelKey: 'amber' },
     { min: -100, max: 8, labelKey: 'red' },
   ] satisfies TaxBenchmarkBand[],
