@@ -25,6 +25,7 @@ function classify(items: MenuItem[]): { item: MenuItem; category: Category }[] {
 export default function MenuMatrixPage() {
   const t = useTranslations('toolkit.menuMatrix');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const fmt0 = (n: number) => new Intl.NumberFormat(locale).format(Math.round(Number.isFinite(n) ? n : 0));
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const CATEGORY_META: Record<Category, { emoji: string; label: string; labelEn: string; color: string; bg: string; ring: string; advice: string }> = {
@@ -68,7 +69,7 @@ export default function MenuMatrixPage() {
         <h2 className="text-base font-bold text-slate-900">{t('itemListTitle')}</h2>
         <div className="flex items-center gap-4">
           <div className="text-xs text-slate-400">
-            {t('avgSalesLabel')}: <strong className="text-slate-600">{avgSales.toFixed(0)}</strong> | {t('avgMarginLabel')}: <strong className="text-slate-600">{avgMargin.toFixed(1)} ₼</strong>
+            {t('avgSalesLabel')}: <strong className="text-slate-600">{fmt0(avgSales)}</strong> | {t('avgMarginLabel')}: <strong className="text-slate-600">{avgMargin.toFixed(1)} ₼</strong>
           </div>
           <button onClick={resetAll} className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500">
             <RotateCcw size={13} /> {t('reset')}

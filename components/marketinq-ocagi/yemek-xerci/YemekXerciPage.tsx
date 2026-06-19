@@ -196,7 +196,8 @@ function toNumber(value: string) {
 }
 
 function money(value: number) {
-  return `${value.toFixed(2)} AZN`;
+  const safe = Number.isFinite(value) ? value : 0;
+  return `${new Intl.NumberFormat('az-AZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(safe)} AZN`;
 }
 
 function lineCost(ingredient: Ingredient) {

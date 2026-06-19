@@ -13,6 +13,7 @@ const PLATFORM_DEFAULTS: Record<PlatformKey, number> = { wolt: 30, bolt: 30, yan
 export default function DeliveryCalcPage() {
   const t = useTranslations('toolkit.deliveryCalc');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
+  const fmt0 = (n: number) => new Intl.NumberFormat(locale).format(Math.round(Number.isFinite(n) ? n : 0));
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const PLATFORM_LABELS: Record<PlatformKey, string> = { wolt: 'Wolt', bolt: 'Bolt Food', yango: 'Yango', own: t('platformOwn') };
@@ -161,7 +162,7 @@ export default function DeliveryCalcPage() {
             <div key={row.platform} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
               <div className="text-sm font-bold text-slate-900">{PLATFORM_LABELS[row.platform]}</div>
               <div className="text-xs text-slate-500">{dailyOrders} {t('ordersPerDay')} × {monthlyDays} {t('days')}</div>
-              <div className="mt-3 text-2xl font-black tabular-nums text-slate-900">{row.monthlyNet.toFixed(0)}₼</div>
+              <div className="mt-3 text-2xl font-black tabular-nums text-slate-900">{fmt0(row.monthlyNet)}₼</div>
               <div className={`mt-1 text-xs font-semibold ${row.monthlyNet >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>{t('monthlyNetLabel')}</div>
             </div>
           ))}

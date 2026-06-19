@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [TASK-0412] fix(toolkit): locale thousand separators in 4 more financial tools - 2026-06-19
+
+### Fixed
+- Applied the basabas number-format pass to the remaining tools flagged by a 3-agent audit: delivery-calc (monthly net), menu-matrix (avg sales), yemek-xerci (central `money()` helper → covers whole tool), menyu-analitigi (monthly profit). Locale-aware separators + finite guards; percentages untouched.
+- Audit also surfaced ~16 contrast spots (LikertScale `text-slate-300`, muted stat labels) — tracked for a separate focused WCAG sweep, not in this PR.
+
 ## [TASK-0411] fix(finance): basabas number format + EBITDA band + runway - 2026-06-19
 
 ### Fixed
