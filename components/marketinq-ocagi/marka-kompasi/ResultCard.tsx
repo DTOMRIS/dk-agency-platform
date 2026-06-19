@@ -146,7 +146,7 @@ export default function ResultCard({ result, locale, onRedo }: ResultCardProps) 
       </div>
 
       {/* Ahilik quote */}
-      <p className="text-center text-xs italic text-slate-400">
+      <p className="text-center text-xs italic text-slate-600">
         &ldquo;{copy.ahilikQuote}&rdquo;
       </p>
 

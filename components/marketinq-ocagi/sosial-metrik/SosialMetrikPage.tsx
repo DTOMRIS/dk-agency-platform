@@ -206,7 +206,7 @@ export default function SosialMetrikPage({ backHref = '/dashboard/marketinq-ocag
                 <input value={igPostCount} onChange={(e) => { setIgPostCount(e.target.value); setSubmitted(false); }} inputMode="numeric" className={inputClass} />
               </label>
               <label className="sm:col-span-2 lg:col-span-3">
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('inputs.avg_reach')} <span className="font-normal text-slate-400">({t('inputs.optional')})</span></span>
+                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('inputs.avg_reach')} <span className="font-normal text-slate-600">({t('inputs.optional')})</span></span>
                 <input value={igReach} onChange={(e) => { setIgReach(e.target.value); setSubmitted(false); }} inputMode="numeric" className={inputClass} placeholder={t('inputs.reach_placeholder')} />
               </label>
             </div>

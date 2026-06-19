@@ -50,7 +50,7 @@ function Metric({ label, value, suffix, positive }: { label: string; value: stri
   const color = positive === true ? 'text-green-600' : positive === false ? 'text-amber-600' : 'text-[var(--dk-navy)]';
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
-      <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400">{label}</p>
+      <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-600">{label}</p>
       <p className={`text-lg font-bold ${color}`}>{value}{suffix}</p>
     </div>
   );
@@ -134,7 +134,7 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
             <p>{t.soi}: <span className="font-bold">{mp.estimatedMonthlySOIUplift.toLocaleString()} ₼</span></p>
             <p>{t.breakEven}: <span className="font-bold">{mp.breakEvenWeeks} {t.weeks}</span></p>
           </div>
-          <p className="mt-3 text-[10px] italic text-slate-400">{mp.note}</p>
+          <p className="mt-3 text-[10px] italic text-slate-600">{mp.note}</p>
         </div>
       </div>
 
@@ -170,7 +170,7 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
             <ul className="space-y-1 text-sm text-slate-600">{ai.recommendations.map((r, i) => <li key={i}>• {r}</li>)}</ul>
           </div>
         )}
-        <p className="mt-4 text-center text-xs italic text-slate-400">&ldquo;{ai.ahilikQuote}&rdquo; — Əhilik</p>
+        <p className="mt-4 text-center text-xs italic text-slate-600">&ldquo;{ai.ahilikQuote}&rdquo; — Əhilik</p>
       </div>
 
       {/* Actions */}

@@ -80,19 +80,19 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
       {/* Summary */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-          <p className="text-[10px] font-semibold uppercase text-slate-400">{t.total}</p>
+          <p className="text-[10px] font-semibold uppercase text-slate-600">{t.total}</p>
           <p className="mt-1 text-2xl font-bold text-[var(--dk-navy)]">{result.totalCampaigns}</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-          <p className="text-[10px] font-semibold uppercase text-slate-400">{t.budget}</p>
+          <p className="text-[10px] font-semibold uppercase text-slate-600">{t.budget}</p>
           <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{result.budgetSummary.allocated}</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-          <p className="text-[10px] font-semibold uppercase text-slate-400">{t.perMonth}</p>
+          <p className="text-[10px] font-semibold uppercase text-slate-600">{t.perMonth}</p>
           <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{result.budgetSummary.perMonth}</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
-          <p className="text-[10px] font-semibold uppercase text-slate-400">{t.topCat}</p>
+          <p className="text-[10px] font-semibold uppercase text-slate-600">{t.topCat}</p>
           <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{result.budgetSummary.topCategory}</p>
         </div>
       </div>
@@ -146,7 +146,7 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
           <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-[var(--dk-navy)]">
             <Calendar size={16} className="text-[var(--dk-gold)]" />
             {month.monthName}
-            <span className="text-xs text-slate-400">({month.campaigns.length})</span>
+            <span className="text-xs text-slate-600">({month.campaigns.length})</span>
           </h3>
           <div className="space-y-3">
             {month.campaigns.map((c, i) => (
@@ -156,7 +156,7 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
                     {t.types[c.type] ?? c.type}
                   </span>
                   <span className="text-sm font-bold text-[var(--dk-navy)]">{c.name}</span>
-                  <span className="text-[10px] text-slate-400">{c.startDay}-{c.endDay}</span>
+                  <span className="text-[10px] text-slate-600">{c.startDay}-{c.endDay}</span>
                 </div>
                 <p className="mb-2 text-xs text-slate-600">{c.description}</p>
                 {c.methodology && <p className="mb-1 text-xs italic text-slate-600">{c.methodology}</p>}
@@ -182,7 +182,7 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
         </ol>
       </div>
 
-      <p className="text-center text-xs italic text-slate-400">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
 
       <div className="flex gap-3">
         <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>

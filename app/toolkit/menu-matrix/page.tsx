@@ -68,10 +68,10 @@ export default function MenuMatrixPage() {
       <div className="flex items-center justify-between">
         <h2 className="text-base font-bold text-slate-900">{t('itemListTitle')}</h2>
         <div className="flex items-center gap-4">
-          <div className="text-xs text-slate-400">
+          <div className="text-xs text-slate-600">
             {t('avgSalesLabel')}: <strong className="text-slate-600">{fmt0(avgSales)}</strong> | {t('avgMarginLabel')}: <strong className="text-slate-600">{avgMargin.toFixed(1)} ₼</strong>
           </div>
-          <button onClick={resetAll} className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500">
+          <button onClick={resetAll} className="flex items-center gap-1.5 text-xs font-medium text-slate-600 transition-colors hover:text-red-500">
             <RotateCcw size={13} /> {t('reset')}
           </button>
         </div>
@@ -80,7 +80,7 @@ export default function MenuMatrixPage() {
       <div className="overflow-x-auto rounded-xl ring-1 ring-slate-200">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-100 bg-slate-50/60 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+            <tr className="border-b border-slate-100 bg-slate-50/60 text-[10px] font-bold uppercase tracking-widest text-slate-600">
               <th className="px-4 py-3 text-left">{t('colFoodName')}</th>
               <th className="w-[120px] px-3 py-3 text-center">{t('colSalesCount')}</th>
               <th className="w-[140px] px-3 py-3 text-center">{t('colContributionMargin')}</th>
@@ -137,7 +137,7 @@ export default function MenuMatrixPage() {
           <div key={cat} className={`${meta.bg} rounded-xl p-4 ring-1 ${meta.ring}`}>
             <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{meta.emoji} {meta.label}</div>
             <div className={`mt-1 text-3xl font-black tabular-nums ${meta.color}`}>{counts[cat]}</div>
-            <div className="mt-1 text-[10px] text-slate-400">{meta.labelEn}</div>
+            <div className="mt-1 text-[10px] text-slate-600">{meta.labelEn}</div>
           </div>
         );
       })}
@@ -202,7 +202,7 @@ export default function MenuMatrixPage() {
             <Link key={a.slug} href={`/blog/${a.slug}`} className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 transition-all duration-300 hover:shadow-md">
               <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--dk-red)]">{a.tag}</span>
               <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 group-hover:text-[var(--dk-red)]">{a.title}</h4>
-              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 group-hover:text-[var(--dk-red)]">{t('readLabel')} <ArrowRight size={12} /></div>
+              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-600 group-hover:text-[var(--dk-red)]">{t('readLabel')} <ArrowRight size={12} /></div>
             </Link>
           ))}
         </div>

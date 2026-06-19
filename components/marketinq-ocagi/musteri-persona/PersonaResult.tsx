@@ -66,12 +66,12 @@ function PersonaCard({ persona, title, locale }: { persona: Persona; title: stri
       </div>
 
       <div className="mb-4 grid grid-cols-3 gap-2 text-xs">
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-400">{t.age}</span><span className="font-semibold">{persona.age}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-400">{t.job}</span><span className="font-semibold">{persona.occupation}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-400">{t.income}</span><span className="font-semibold">{persona.income}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-400">{t.lifestyle}</span><span className="font-semibold">{persona.lifestyle}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-400">{t.visits}</span><span className="font-semibold">{persona.visitFrequency}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-400">{t.spend}</span><span className="font-semibold">{persona.avgSpend}</span></div>
+        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.age}</span><span className="font-semibold">{persona.age}</span></div>
+        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.job}</span><span className="font-semibold">{persona.occupation}</span></div>
+        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.income}</span><span className="font-semibold">{persona.income}</span></div>
+        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.lifestyle}</span><span className="font-semibold">{persona.lifestyle}</span></div>
+        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.visits}</span><span className="font-semibold">{persona.visitFrequency}</span></div>
+        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.spend}</span><span className="font-semibold">{persona.avgSpend}</span></div>
       </div>
 
       <div className="space-y-3 text-sm">

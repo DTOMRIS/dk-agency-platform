@@ -97,7 +97,7 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-xs italic text-slate-400">—</p>
+                  <p className="text-xs italic text-slate-600">—</p>
                 )}
               </div>
             );
@@ -113,7 +113,7 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
             <div key={cat} className="flex items-start justify-between rounded-lg border border-slate-100 px-3 py-2">
               <div>
                 <span className="text-xs font-bold text-[var(--dk-navy)] capitalize">{cat}</span>
-                <span className="ml-2 text-[10px] text-slate-400">{info.count} yemək, ort. {info.avgPrice} ₼</span>
+                <span className="ml-2 text-[10px] text-slate-600">{info.count} yemək, ort. {info.avgPrice} ₼</span>
               </div>
               <p className="max-w-[50%] text-right text-[10px] text-slate-600">{info.recommendation}</p>
             </div>
@@ -140,7 +140,7 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
       </div>
 
       {/* Ahilik */}
-      <p className="text-center text-xs italic text-slate-400">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
 
       {/* Actions */}
       <div className="flex gap-3">

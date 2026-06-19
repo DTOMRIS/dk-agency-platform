@@ -170,7 +170,7 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
               <ul className="space-y-1.5 text-sm text-slate-600">
                 {result.actionPlan[week].steps.map((step, i) => (
                   <li key={i} className="flex gap-2">
-                    <span className="mt-1 shrink-0 text-slate-400">•</span>
+                    <span className="mt-1 shrink-0 text-slate-600">•</span>
                     <span>{step}</span>
                   </li>
                 ))}
@@ -183,7 +183,7 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
       {/* Ahilik + encouragement */}
       <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center">
         <p className="text-sm italic text-slate-500">&ldquo;{result.ahilikQuote}&rdquo;</p>
-        <p className="mt-1 text-xs text-slate-400">— Əhilik ənənəsi</p>
+        <p className="mt-1 text-xs text-slate-600">— Əhilik ənənəsi</p>
         <p className="mt-4 text-sm font-medium text-[var(--dk-navy)]">{result.encouragement}</p>
       </div>
 

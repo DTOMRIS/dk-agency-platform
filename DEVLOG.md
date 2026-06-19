@@ -1,6 +1,14 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-06-19 — TASK-0413: fix(toolkit): WCAG contrast sweep
+
+**Why:** "diğer toolkitlere de bak" denetiminin 2. kümesi — kontrast. Açık zeminde `text-slate-400/300` (≈2.9/1.6:1) AA-dan keçmir (CLAUDE.md release-blocking).
+
+**What:** 2 strict-kurallı builder agent her occurrence'ın bg-bağlamını doğrulayıp açık zemindeki muted etiketleri `slate-600`'a çıkardı (19 fayl) + shared LikertScale (ulduz slate-300→400, badge slate-400→500). 88 satır, hamısı saf contrast class swap.
+
+**Doğrulama:** diff pattern (88+/88-, yalnız slate class), 0 lint error, build PASS. Koyu panel/ikon/slate-500+ toxunulmadı (false positive elendi).
+
 ## 2026-06-19 — TASK-0412: fix(toolkit): number format in 4 more tools
 
 **Why:** Doğan "diğer toolkitlere de bak" dedi. 3 paralel review agenti basabas hata sınıflarını (ayraçsız sayı, band bug, negatif, kontrast) bütün tool-larda taradı.

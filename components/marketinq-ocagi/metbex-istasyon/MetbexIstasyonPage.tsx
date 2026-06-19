@@ -204,7 +204,7 @@ export default function MetbexIstasyonPage() {
           onChange={(e) => setMenuSkuSayisi(parseInt(e.target.value) || 0)}
           className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
         />
-        <p className="mt-1 text-[11px] text-slate-400">{t('menuSkuHelp')}</p>
+        <p className="mt-1 text-[11px] text-slate-600">{t('menuSkuHelp')}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -275,7 +275,7 @@ export default function MetbexIstasyonPage() {
                 ) : (
                   <Snowflake size={13} className="text-sky-500" />
                 )}
-                <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400">
+                <span className="text-[10px] font-bold uppercase tracking-wide text-slate-600">
                   {i + 1}
                 </span>
               </div>
@@ -306,7 +306,7 @@ export default function MetbexIstasyonPage() {
             </span>
             <span className="font-semibold tabular-nums text-slate-900">
               {calc.bazaKadro}{' '}
-              <span className="text-[10px] text-slate-400">({t('result.baza')})</span>
+              <span className="text-[10px] text-slate-600">({t('result.baza')})</span>
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -316,7 +316,7 @@ export default function MetbexIstasyonPage() {
             </span>
             <span className="font-semibold tabular-nums text-purple-600">
               {calc.peakKadro}{' '}
-              <span className="text-[10px] text-slate-400">({t('result.peak')})</span>
+              <span className="text-[10px] text-slate-600">({t('result.peak')})</span>
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -341,7 +341,7 @@ export default function MetbexIstasyonPage() {
           {t('result.shiftLeader')}
         </span>
         <span
-          className={`text-xs font-bold ${calc.shiftLeaderLazim ? 'text-amber-600' : 'text-slate-400'}`}
+          className={`text-xs font-bold ${calc.shiftLeaderLazim ? 'text-amber-600' : 'text-slate-600'}`}
         >
           {calc.shiftLeaderLazim ? t('result.shiftLeaderLazim') : t('result.shiftLeaderLazimDeyil')}
         </span>
@@ -357,7 +357,7 @@ export default function MetbexIstasyonPage() {
         </div>
         <div className="flex items-end justify-between">
           <div>
-            <div className="text-[10px] uppercase tracking-wider text-slate-400">
+            <div className="text-[10px] uppercase tracking-wider text-slate-600">
               {t('result.aylig')}
             </div>
             <div className="text-2xl font-black tabular-nums text-slate-900">
@@ -365,7 +365,7 @@ export default function MetbexIstasyonPage() {
             </div>
           </div>
           <div className="text-right">
-            <div className="text-[10px] uppercase tracking-wider text-slate-400">
+            <div className="text-[10px] uppercase tracking-wider text-slate-600">
               {t('result.laborFaizi')}
             </div>
             <div className={`text-2xl font-black tabular-nums ${statusStyle.text}`}>
@@ -376,7 +376,7 @@ export default function MetbexIstasyonPage() {
             </div>
           </div>
         </div>
-        <div className="mt-2 text-[10px] text-slate-400">{t('result.qsrHedep')}</div>
+        <div className="mt-2 text-[10px] text-slate-600">{t('result.qsrHedep')}</div>
       </div>
     </div>
   );

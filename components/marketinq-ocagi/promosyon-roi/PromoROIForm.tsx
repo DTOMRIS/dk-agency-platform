@@ -118,7 +118,7 @@ function NumberInput({
           className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
           placeholder="0"
         />
-        {suffix && <span className="text-xs text-slate-400">{suffix}</span>}
+        {suffix && <span className="text-xs text-slate-600">{suffix}</span>}
       </div>
     </div>
   );
@@ -191,7 +191,7 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
                 disabled={loading}
                 className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
               />
-              <span className="text-xs text-slate-400">{t.days}</span>
+              <span className="text-xs text-slate-600">{t.days}</span>
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
             <NumberInput label={t.sales} value={form.baseline.totalSales} onChange={(v) => setBaseline('totalSales', v)} disabled={loading} />
             <NumberInput label={t.tc} value={form.baseline.transactionCount} onChange={(v) => setBaseline('transactionCount', v)} disabled={loading} />
             <NumberInput label={t.margin} value={form.baseline.grossMarginPercent} onChange={(v) => setBaseline('grossMarginPercent', v)} suffix="%" disabled={loading} tooltip={TOOLTIPS.bruteMargin} />
-            {baseAvg && <p className="text-xs text-slate-400">{t.avgTicket}: {baseAvg} AZN</p>}
+            {baseAvg && <p className="text-xs text-slate-600">{t.avgTicket}: {baseAvg} AZN</p>}
           </div>
         </div>
 
@@ -216,7 +216,7 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
             <NumberInput label={t.margin} value={form.promo.grossMarginPercent} onChange={(v) => setPromo('grossMarginPercent', v)} suffix="%" disabled={loading} tooltip={TOOLTIPS.bruteMargin} />
             <NumberInput label={t.promoCost} value={form.promo.promoCost} onChange={(v) => setPromo('promoCost', v)} disabled={loading} tooltip={TOOLTIPS.promoCost} />
             <NumberInput label={t.marketingSpend} value={form.promo.marketingSpend} onChange={(v) => setPromo('marketingSpend', v)} disabled={loading} tooltip={TOOLTIPS.marketingCost} />
-            {promoAvg && <p className="text-xs text-slate-400">{t.avgTicket}: {promoAvg} AZN</p>}
+            {promoAvg && <p className="text-xs text-slate-600">{t.avgTicket}: {promoAvg} AZN</p>}
 
             <div className="mt-4 border-t border-[var(--dk-gold)]/20 pt-4">
               <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-[var(--dk-navy)]">
@@ -224,7 +224,7 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
                 <Tooltip text={TOOLTIPS.workingCapital} />
               </h4>
               <NumberInput label={t.stokTampoon} value={form.promo.stokTampoon} onChange={(v) => setPromo('stokTampoon', v)} disabled={loading} />
-              <p className="mt-1 text-[11px] text-slate-400">{t.stokHelp}</p>
+              <p className="mt-1 text-[11px] text-slate-600">{t.stokHelp}</p>
             </div>
           </div>
         </div>

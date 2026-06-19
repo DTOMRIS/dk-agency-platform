@@ -130,7 +130,7 @@ export default function ReklamForm({ locale, onResult, onError }: ReklamFormProp
         <label className={labelCls}>{c.campaignDescription}</label>
         <textarea value={campaignDescription} onChange={(e) => setCampaignDescription(e.target.value)}
           placeholder={c.campaignDescriptionPlaceholder} rows={4} maxLength={500} className={`${inputCls} resize-none`} required />
-        <div className="mt-1 flex justify-between text-xs text-slate-400">
+        <div className="mt-1 flex justify-between text-xs text-slate-600">
           {validationError && <span className="text-red-500">{validationError}</span>}
           <span className="ml-auto">{charCount}/500</span>
         </div>

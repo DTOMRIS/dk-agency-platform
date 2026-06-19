@@ -94,7 +94,7 @@ export default function AqtaChecklistPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div><h2 className="text-base font-bold text-slate-900">{t('checklistTitle')}</h2><p className="text-sm text-slate-500">{t('checklistSubtitle')}</p></div>
-        <button onClick={resetAll} className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500"><RefreshCcw size={13} /> {t('resetBtn')}</button>
+        <button onClick={resetAll} className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 transition-colors hover:text-red-500"><RefreshCcw size={13} /> {t('resetBtn')}</button>
       </div>
 
       <div className="space-y-3">
@@ -143,7 +143,7 @@ export default function AqtaChecklistPage() {
         </div>
         <div className="overflow-hidden rounded-xl ring-1 ring-slate-200/80">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50"><tr><th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('tableColRegime')}</th><th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('tableColTask')}</th></tr></thead>
+            <thead className="bg-slate-50"><tr><th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('tableColRegime')}</th><th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('tableColTask')}</th></tr></thead>
             <tbody className="divide-y divide-slate-100 bg-white">
               {frequencyPlan[frequencyTab].map((item, index) => (<tr key={item}><td className="px-4 py-3 text-xs font-bold text-red-600">{String(index + 1).padStart(2, '0')}</td><td className="px-4 py-3 text-sm text-slate-700">{item}</td></tr>))}
             </tbody>
@@ -158,7 +158,7 @@ export default function AqtaChecklistPage() {
   const resultSection = (
     <div className="space-y-4">
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('progressLabel')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('progressLabel')}</div>
         <div className="flex items-end gap-2 mt-1"><div className="text-3xl font-black tabular-nums text-red-600">{progress}%</div><div className="pb-1 text-sm text-slate-500">{checked.size}/{totalItems}</div></div>
         <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-gradient-to-r from-red-600 to-rose-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
       </div>
@@ -208,7 +208,7 @@ export default function AqtaChecklistPage() {
       <div className="rounded-2xl bg-slate-50 p-6 sm:p-8">
         <div className="mb-6 flex items-center gap-2.5"><BookOpen size={18} className="text-red-600" /><h3 className="text-lg font-bold text-slate-900">{t('relatedTitle')}</h3></div>
         <div className="grid gap-4 md:grid-cols-3">
-          {blogLinks.map((link) => (<Link key={link.href} href={link.href} className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/70 transition-all hover:shadow-md"><span className="text-[10px] font-bold uppercase tracking-widest text-red-600">{link.tag}</span><h4 className="mt-2 text-sm font-bold leading-snug text-slate-900 group-hover:text-red-600">{link.title}</h4><div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 group-hover:text-red-600">{t('relatedViewBtn')} <ArrowRight size={12} /></div></Link>))}
+          {blogLinks.map((link) => (<Link key={link.href} href={link.href} className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/70 transition-all hover:shadow-md"><span className="text-[10px] font-bold uppercase tracking-widest text-red-600">{link.tag}</span><h4 className="mt-2 text-sm font-bold leading-snug text-slate-900 group-hover:text-red-600">{link.title}</h4><div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-600 group-hover:text-red-600">{t('relatedViewBtn')} <ArrowRight size={12} /></div></Link>))}
         </div>
       </div>
     </>
