@@ -1077,9 +1077,12 @@
       "sec_legal_item_h3_text": "Yanğın təhlükəsizliyi aktı (FHN)",
       "sec_legal_item_h3_detail": "Yanğınsöndürmə sistemi quraşdırılmalı",
       "sec_legal_item_h4_text": "SES (Sanitariya-Epidemioloji) rəyi",
-      "sec_legal_item_h5_text": "İcra Hakimiyyəti razılığı (reklam lövhəsi)",
+      "sec_legal_item_h5_text": "ADRA icazəsi (açıq məkanda reklam lövhəsi)",
+      "sec_legal_item_h5_detail": "Azərbaycan Respublikasının Dövlət Reklam Agentliyinə müraciət edilməli",
       "sec_legal_item_h6_text": "Əmək müqavilələri (işçilərlə)",
       "sec_legal_item_h7_text": "Kassa aparatı qeydiyyatı",
+      "sec_legal_item_h8_text": "Obyektin vergi uçotuna alınması (obyekt kodu)",
+      "sec_legal_item_h8_detail": "Fəaliyyət ünvanı üzrə 15 rəqəmli obyekt kodunu əks etdirən arayış alınmalı",
       "sec_venue_title": "Mekan və İnşaat",
       "sec_venue_item_m1_text": "Mekan seçimi (lokasiya analizi)",
       "sec_venue_item_m1_detail": "Piyada trafiki, rəqib xəritəsi, icarə şərtləri",
@@ -1132,7 +1135,7 @@
       "sec_finance_item_f4_text": "Bank hesabı açılması",
       "sec_finance_item_f5_text": "Mühasibat xidməti / proqramı"
     },
-    "checklistDesc": "43 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.",
+    "checklistDesc": "44 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.",
     "start": "Başla",
     "ad-writer": {
       "pageTitle": "Reklam Yazıcısı",

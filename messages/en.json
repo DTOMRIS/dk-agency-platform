@@ -1077,9 +1077,12 @@
       "sec_legal_item_h3_text": "Fire safety act (FHN)",
       "sec_legal_item_h3_detail": "Fire suppression system must be installed",
       "sec_legal_item_h4_text": "SES (Sanitary-Epidemiological) opinion",
-      "sec_legal_item_h5_text": "Executive Authority approval (advertising board)",
+      "sec_legal_item_h5_text": "ADRA permit (outdoor advertising board)",
+      "sec_legal_item_h5_detail": "Apply to the State Advertising Agency of the Republic of Azerbaijan",
       "sec_legal_item_h6_text": "Employment contracts (with staff)",
       "sec_legal_item_h7_text": "Cash register device registration",
+      "sec_legal_item_h8_text": "Tax registration of the business premises (premises code)",
+      "sec_legal_item_h8_detail": "Obtain the certificate showing the 15-digit premises code for the operating address",
       "sec_venue_title": "Venue and Construction",
       "sec_venue_item_m1_text": "Venue selection (location analysis)",
       "sec_venue_item_m1_detail": "Pedestrian traffic, competitor map, lease terms",
@@ -1132,7 +1135,7 @@
       "sec_finance_item_f4_text": "Bank account opening",
       "sec_finance_item_f5_text": "Accounting service / software"
     },
-    "checklistDesc": "43-item complete checklist — legal, venue, menu, staffing, marketing.",
+    "checklistDesc": "44-item complete checklist — legal, venue, menu, staffing, marketing.",
     "start": "Start",
     "ad-writer": {
       "pageTitle": "Ad Writer",

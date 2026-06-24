@@ -1077,9 +1077,12 @@
       "sec_legal_item_h3_text": "Yangın güvenliği belgesi (FHN)",
       "sec_legal_item_h3_detail": "Yangın söndürme sistemi kurulmalı",
       "sec_legal_item_h4_text": "SES (Sağlık-Epidemiyoloji) görüşü",
-      "sec_legal_item_h5_text": "Yürütme makamı onayı (reklam panosu)",
+      "sec_legal_item_h5_text": "ADRA izni (açık alandaki reklam panosu)",
+      "sec_legal_item_h5_detail": "Azerbaycan Cumhuriyeti Devlet Reklam Ajansına başvurulmalıdır",
       "sec_legal_item_h6_text": "İş sözleşmeleri (çalışanlarla)",
       "sec_legal_item_h7_text": "Yazar kasa kaydı",
+      "sec_legal_item_h8_text": "İşletme yerinin vergi kaydı (işletme kodu)",
+      "sec_legal_item_h8_detail": "Faaliyet adresi için 15 haneli işletme kodunu gösteren belge alınmalıdır",
       "sec_venue_title": "Mekan ve İnşaat",
       "sec_venue_item_m1_text": "Mekan seçimi (konum analizi)",
       "sec_venue_item_m1_detail": "Yaya trafiği, rakip haritası, kira koşulları",
@@ -1132,7 +1135,7 @@
       "sec_finance_item_f4_text": "Banka hesabı açılması",
       "sec_finance_item_f5_text": "Muhasebe hizmeti / yazılımı"
     },
-    "checklistDesc": "43 maddelik tam kontrol listesi — hukuki, mekan, menü, kadro, pazarlama.",
+    "checklistDesc": "44 maddelik tam kontrol listesi — hukuki, mekan, menü, kadro, pazarlama.",
     "start": "Başla",
     "ad-writer": {
       "pageTitle": "Reklam Yazıcı",

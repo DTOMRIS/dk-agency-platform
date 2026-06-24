@@ -1,4 +1,6 @@
-# Changelog
+# CHANGELOG
+
+- `TASK-0414` fix(toolkit): **Açılış checklist hüquqi dəqiqləşdirmə** — “İcra Hakimiyyəti razılığı” ADRA icazəsi ilə əvəz edildi; Azərbaycan Respublikasının Dövlət Reklam Agentliyinin tam adı və fəaliyyət ünvanı üzrə 15 rəqəmli obyekt kodu maddəsi AZ/RU/EN/TR dillərində əlavə edildi. Checklist 43→44.
 
 Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
