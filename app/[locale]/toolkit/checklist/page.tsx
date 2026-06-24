@@ -19,8 +19,11 @@ export default function ChecklistPage() {
       { id: 'h1', text: t('sec_legal_item_h1_text'), detail: t('sec_legal_item_h1_detail') },
       { id: 'h2', text: t('sec_legal_item_h2_text'), detail: t('sec_legal_item_h2_detail') },
       { id: 'h3', text: t('sec_legal_item_h3_text'), detail: t('sec_legal_item_h3_detail') },
-      { id: 'h4', text: t('sec_legal_item_h4_text') }, { id: 'h5', text: t('sec_legal_item_h5_text') },
-      { id: 'h6', text: t('sec_legal_item_h6_text') }, { id: 'h7', text: t('sec_legal_item_h7_text') },
+      { id: 'h4', text: t('sec_legal_item_h4_text') },
+      { id: 'h5', text: t('sec_legal_item_h5_text'), detail: t('sec_legal_item_h5_detail') },
+      { id: 'h6', text: t('sec_legal_item_h6_text') },
+      { id: 'h7', text: t('sec_legal_item_h7_text') },
+      { id: 'h8', text: t('sec_legal_item_h8_text'), detail: t('sec_legal_item_h8_detail') },
     ]},
     { title: t('sec_venue_title'), emoji: '\uD83C\uDFD7\uFE0F', items: [
       { id: 'm1', text: t('sec_venue_item_m1_text'), detail: t('sec_venue_item_m1_detail') },
