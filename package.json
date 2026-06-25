@@ -34,7 +34,7 @@
     "dk:validate": "bash scripts/dk-validate.sh"
   },
   "dependencies": {
-    "@google/genai": "^1.42.0",
+    "@google/genai": "^2.10.0",
     "@neondatabase/serverless": "^1.0.2",
     "@sentry/nextjs": "^10.56.0",
     "@tailwindcss/postcss": "^4",
@@ -42,18 +42,17 @@
     "autoprefixer": "^10.4.27",
     "bcryptjs": "^3.0.3",
     "browser-image-compression": "^2.0.2",
-    "cloudinary": "^2.9.0",
-    "drizzle-kit": "^0.31.10",
-    "drizzle-orm": "^0.45.1",
+    "cloudinary": "^2.10.0",
+    "drizzle-orm": "^0.45.2",
     "framer-motion": "^12.34.3",
     "jsonwebtoken": "^9.0.3",
     "jspdf": "^4.2.1",
     "lucide-react": "^0.575.0",
-    "next": "16.1.6",
-    "next-intl": "^4.8.3",
-    "nodemailer": "^8.0.6",
+    "next": "^16.2.9",
+    "next-intl": "^4.13.0",
+    "nodemailer": "^9.0.1",
     "pdf-parse": "^2.4.5",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.15",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
@@ -64,7 +63,7 @@
     "sharp": "^0.34.5",
     "tailwindcss": "^4.2.2",
     "tsx": "^4.21.0",
-    "xlsx": "^0.18.5",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -74,8 +73,24 @@
     "@types/nodemailer": "^8.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "^16.2.9",
     "typescript": "^5"
+  },
+  "overrides": {
+    "protobufjs": "7.6.3",
+    "@protobufjs/utf8": "1.1.1",
+    "ws": "8.21.0",
+    "lodash": "4.18.1",
+    "dompurify": "3.4.11",
+    "@opentelemetry/core": "2.8.0",
+    "@opentelemetry/resources": "2.8.0",
+    "@opentelemetry/sdk-trace-base": "2.8.0",
+    "@babel/core": "7.29.7",
+    "esbuild": "0.28.1",
+    "flatted": "3.4.2",
+    "picomatch": "4.0.4",
+    "js-yaml": "5.1.0"
   }
 }
