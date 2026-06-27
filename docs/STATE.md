@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-06-25T17:54:51.598Z
+- GeneratedAt: 2026-06-27T08:09:00.472Z
 - BuildStatus: PASS
 
-## Routes (254)
+## Routes (255)
 - /
 - /(dev)/heromotif
 - /[locale]
@@ -46,6 +46,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/faturalar/[id]
 - /[locale]/dashboard/food-cost
 - /[locale]/dashboard/franchise-leads
+- /[locale]/dashboard/funnel
 - /[locale]/dashboard/haberler
 - /[locale]/dashboard/hero
 - /[locale]/dashboard/ilan-onaylari
