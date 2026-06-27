@@ -465,3 +465,14 @@ bərpa. 4-cü PR, eyni gündə. TASK-0158 audit-in davamı.
   - Migration 0017 still needs Dogan to apply it in Neon for toolkit matching persistence; code works before migration with empty toolkit data.
 - Sonraki adım:
   - Merge/deploy the hotfix, restart Hostinger, verify affected live Subway detail returns 200, then apply drizzle/0017_add_news_related_columns.sql in Neon.
+
+
+## 2026-06-27T07:46:15.887Z — codex
+- Ne değişti:
+  - TASK-0416: /tr/dashboard/funnel 404 fix. Missing locale mirror app/[locale]/dashboard/funnel/page.tsx added as re-export of app/dashboard/funnel/page.tsx.
+- Ne değişmedi:
+  - Existing root funnel page, auth guard, dashboard layout, database query, protected files, and unrelated untracked decision-log/report/script files were not modified.
+- Riskler:
+  - Production still returns 404 until this PR is merged, Hostinger deploy completes, and the Node app is restarted. Repo-wide strict tsc still has unrelated pre-existing errors, but npm run build passes because project build skips type validation.
+- Sonraki adım:
+  - Merge PR, wait for Hostinger redeploy/restart, then verify https://dkagency.com.tr/tr/dashboard/funnel returns 307 to /auth/login or the admin funnel when authenticated.

@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - `TASK-0415` fix(security): **dependency vulnerability sweep** — direct runtime packages upgraded (`next` 16.2.9, `drizzle-orm` 0.45.2, `@google/genai` 2.10.0, `cloudinary` 2.10.0, `nodemailer` 9.0.1, SheetJS `xlsx` 0.20.3 tarball), `drizzle-kit` moved to devDependencies, and vulnerable transitive packages pinned with npm overrides. Audit reduced to **0 critical / 0 high / 4 moderate**; remaining moderate chain is upstream Next bundled PostCSS. Lint + production build pass.
+- `TASK-0416` fix(dashboard): **locale funnel route mirror** — `/tr/dashboard/funnel` canlıda 404 verirdi, çünki yalnız root `app/dashboard/funnel/page.tsx` vardı; `app/[locale]/dashboard/funnel/page.tsx` re-export mirror-u əlavə edildi. Build route list-də `ƒ /[locale]/dashboard/funnel` göründü; lokal built smoke `307 /auth/login` qaytardı (404 yox).
 
 - `TASK-0414` fix(toolkit): **Açılış checklist hüquqi dəqiqləşdirmə** — “İcra Hakimiyyəti razılığı” ADRA icazəsi ilə əvəz edildi; Azərbaycan Respublikasının Dövlət Reklam Agentliyinin tam adı və fəaliyyət ünvanı üzrə 15 rəqəmli obyekt kodu maddəsi AZ/RU/EN/TR dillərində əlavə edildi. Checklist 43→44.
 
