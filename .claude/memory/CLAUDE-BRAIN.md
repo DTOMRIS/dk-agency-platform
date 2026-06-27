@@ -56,3 +56,6 @@ Deploy: **Hostinger Web Apps, `main`-dən auto-deploy.**
 - Acı dərslər: `docs/LESSONS.md` · State: `docs/STATE.md` · Qərarlar: `docs/DECISIONS.md` · Handoff: `docs/HANDOFF.md`
 - Listing SST: `lib/listingFieldConfig.ts` · Marketing tools: `lib/marketing-tools-config.ts` · Member access: `lib/member-access.ts`
 - Skill matrisi: `docs/SKILL-MATRIX.md` · Agent: `.claude/agents/` · Skills: `.claude/skills/`
+## 7) RECENT MEMORY - 2026-06-27
+- **TASK-0416 route mirror:** `/dashboard/X` root route live-da ishlese de `/tr/dashboard/X` 404 ola biler. Dashboard alt route elave/audit edende hem root, hem locale mirror cutunu yoxla: `app/dashboard/X` + `app/[locale]/dashboard/X`. Smoke gozlenen: root 307 auth, locale 307 auth; 404 yox.
+- **TASK-0417 news preview:** Manual xeber editorunda preview URL-ni DB yazisi olmadan acma. `Onizle` evvel `/api/news/admin` POST/PATCH ile draft-i saxlamali, API-nin qaytardigi real `slug` ile `/haberler/{slug}?preview=true` acmalidir. 404 gorsen evvel `news_articles.slug` DB-de varmi yoxla.
