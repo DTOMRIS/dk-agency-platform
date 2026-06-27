@@ -456,3 +456,10 @@ Hostinger runs Next.js standalone behind a reverse proxy. The internal server bi
 ### Added
 - `/toolkit/pnl-simulator` aliases for existing P&L page compatibility.
 - Playwright smoke tests for 4 locale rendering and number formatting.
+## 2026-06-27 — TASK-0416 (Dashboard funnel locale route)
+
+**Problem:** Canlı `https://dkagency.com.tr/tr/dashboard/funnel` 404 qaytarırdı, amma root `https://dkagency.com.tr/dashboard/funnel` mövcud idi və auth guard ilə `307 /auth/login` dönürdü.
+
+**Fix:** `app/[locale]/dashboard/funnel/page.tsx` əlavə edildi və mövcud `app/dashboard/funnel/page.tsx` re-export olundu. Bu, mövcud dashboard locale mirror pattern-i ilə eynidir və funnel auth/locale məntiqini dublikatlamır.
+
+**Verification:** `npm run build` keçdi və route cədvəlində `ƒ /[locale]/dashboard/funnel` göründü. Lokal built app-də `/tr/dashboard/funnel` artıq 404 deyil, gözlənən `307 /auth/login` qaytarır.
