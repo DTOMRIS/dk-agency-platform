@@ -2,7 +2,17 @@
 
 ## [Unreleased]
 
-## [TASK-0413] fix(toolkit): WCAG contrast sweep — light-bg muted labels - 2026-06-19
+## [TASK-0418] feat(ui): UX navigation restructuring, homepage streamlining & mobile bottom nav - 2026-06-28
+
+### Added
+- Added `MobileBottomNav` component providing an app-like bottom navigation bar on mobile viewports (`<lg`) with direct links to Home, Tools, KAZAN AI, Listings, and Profile.
+- Added `DeviceLanguageDetector` client component to automatically detect browser/phone language (`az`, `tr`, `ru`, `en`) on first visit and direct users to their native locale.
+- Added `DoganNote` (Kurucu Məktubu) and `AhilikValues` sections to the `/haqqimizda` (About Us) page.
+
+### Changed
+- Streamlined top navigation header (`Header.tsx`) into 4 macro hubs: Alətlər & Həllər ▾, İlanlar, Resurslar ▾ (Blog + News), and Haqqımızda.
+- Dynamically hidden "İdarə Paneli" from top header for anonymous guest visitors.
+- Removed `DoganNote` and `AhilikValues` from homepage (`page.tsx`) to focus on conversion and action, and improved section background visual rhythm.
 
 ### Fixed
 - Raised muted `text-slate-400/300` labels on light backgrounds to `text-slate-600` across 19 tool files + the shared `LikertScale` (unselected star `slate-300→400`, question badge `slate-400→500`). Verified per-occurrence to skip dark surfaces (DK-advice cards, process boxes), icon-only lucide buttons, and `slate-500`+ which already passes AA.

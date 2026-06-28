@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowLeft, Flame, Shield, BarChart3, Store } from 'lucide-react';
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
+import { DoganNote } from '@/components/home/DoganNote';
+import { AhilikValues } from '@/components/home/AhilikValues';
 
 const aboutCopy: Record<Locale, {
   back: string;
@@ -154,6 +156,10 @@ export default function HaqqimizaPage() {
         </div>
 
         <p className="mt-10 text-xl font-bold text-[var(--dk-navy)]">{copy.closing}</p>
+      </div>
+      <div className="mt-16 border-t border-slate-200 pt-12">
+        <DoganNote />
+        <AhilikValues />
       </div>
     </div>
   );
