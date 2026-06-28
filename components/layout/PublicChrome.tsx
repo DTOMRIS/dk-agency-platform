@@ -3,7 +3,9 @@
 import { usePathname } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import { Footer, KazanAIBot } from '@/components/layout/Footer';
+import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import LazyCookiesBanner from '@/components/ui/LazyCookiesBanner';
+import DeviceLanguageDetector from '@/components/DeviceLanguageDetector';
 import { stripLocalePrefix } from '@/i18n/config';
 
 function isDashboardRoute(pathname: string) {
@@ -20,10 +22,12 @@ export default function PublicChrome({ children }: { children: React.ReactNode }
 
   return (
     <>
+      <DeviceLanguageDetector />
       <Header />
-      <main>{children}</main>
+      <main className="pb-16 lg:pb-0">{children}</main>
       <Footer />
       <KazanAIBot />
+      <MobileBottomNav />
       <LazyCookiesBanner />
     </>
   );

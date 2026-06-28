@@ -463,3 +463,10 @@ Hostinger runs Next.js standalone behind a reverse proxy. The internal server bi
 **Fix:** `app/[locale]/dashboard/funnel/page.tsx` əlavə edildi və mövcud `app/dashboard/funnel/page.tsx` re-export olundu. Bu, mövcud dashboard locale mirror pattern-i ilə eynidir və funnel auth/locale məntiqini dublikatlamır.
 
 **Verification:** `npm run build` keçdi və route cədvəlində `ƒ /[locale]/dashboard/funnel` göründü. Lokal built app-də `/tr/dashboard/funnel` artıq 404 deyil, gözlənən `307 /auth/login` qaytarır.
+## 2026-06-27 - TASK-0417 (News preview saves before opening)
+
+**Problem:** Manual xəbər editorunda `Önizle` düyməsi məqaləni DB-yə yazmadan `/haberler/{draftSlug}?preview=true` URL-ni açırdı. Yeni xəbər hələ saxlanmayıbsa public detail route slug tapa bilmir və 404 verir.
+
+**Fix:** `NewsEditorForm` save məntiqi reusable `saveArticle()` helper-inə çıxarıldı. `Önizle` indi əvvəl `fetched` statusu ilə POST/PATCH edir, API-nin qaytardığı real `slug`-u state-ə yazır, sonra `/haberler/{savedSlug}?preview=true` açır.
+
+**Verification:** Canlıda verilən preview URL 404 qaytardı və DB-də həmin slug yoxdur. Fix yeni preview axınında əvvəl DB yazısı yaratmağa məcbur edir.

@@ -12,8 +12,6 @@ import SiteJsonLd from '@/components/seo/SiteJsonLd';
 import NewsPreview from '@/components/NewsPreview';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
 import { PlatformCards } from '@/components/home/PlatformCards';
-import { DoganNote } from '@/components/home/DoganNote';
-import { AhilikValues } from '@/components/home/AhilikValues';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
@@ -259,7 +257,7 @@ export default function Home() {
       <PlatformCards />
       <ToolkitShowcase />
 
-      <section className="bg-white py-20">
+      <section className="bg-slate-50 py-20 border-y border-slate-200/60">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <h2 className="mb-12 text-3xl font-display font-black text-slate-900">
             {copy.howItWorks}
@@ -287,8 +285,6 @@ export default function Home() {
         </div>
       </section>
 
-      <DoganNote />
-      <AhilikValues />
       <StageSelector />
 
       <section className="bg-slate-50 py-16 sm:py-20 lg:py-24">

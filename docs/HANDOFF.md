@@ -476,3 +476,14 @@ bərpa. 4-cü PR, eyni gündə. TASK-0158 audit-in davamı.
   - Production still returns 404 until this PR is merged, Hostinger deploy completes, and the Node app is restarted. Repo-wide strict tsc still has unrelated pre-existing errors, but npm run build passes because project build skips type validation.
 - Sonraki adım:
   - Merge PR, wait for Hostinger redeploy/restart, then verify https://dkagency.com.tr/tr/dashboard/funnel returns 307 to /auth/login or the admin funnel when authenticated.
+
+
+## 2026-06-27T09:51:01.375Z — codex
+- Ne değişti:
+  - TASK-0417: News editor preview now saves/PATCHes the article as fetched before opening preview, then uses the API-returned saved slug.
+- Ne değişmedi:
+  - Public news detail route, admin auth guard, DB schema, upload flow, and unrelated untracked decision-log/report/script files were not modified.
+- Riskler:
+  - Existing live URL /haberler/turkiye-restoranlarinda-yeni-dovr?preview=true returns 404 because no DB row exists for that slug. After deploy, newly clicked previews will create/update the draft first; old unsaved browser draft still needs Preview clicked again to save.
+- Sonraki adım:
+  - Merge/deploy/restart, then create a new manual news draft and click Preview before saving; expected: draft is saved and preview opens with 307/200 instead of 404.

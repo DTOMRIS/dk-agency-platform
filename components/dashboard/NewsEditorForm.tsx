@@ -472,11 +472,14 @@ export default function NewsEditorForm({
     return Object.keys(nextErrors).length === 0;
   };
 
-  const submitDraft = async (nextStatus: NewsDraft['status']) => {
-    if (!validateForm()) return;
+  const saveArticle = async (
+    nextStatus: NewsDraft['status'],
+    options: { redirectOnPublish?: boolean } = {},
+  ): Promise<{ id: number | null; slug: string } | null | undefined> => {
+    if (!validateForm()) return null;
     if (uploadingImage) {
       showToast(copy.toastImageUploading);
-      return;
+      return null;
     }
 
     const durableImage = draft.imageUrl || '';
@@ -526,6 +529,8 @@ export default function NewsEditorForm({
 
       // Capture saved id+slug so subsequent saves use PATCH
       const savedRow = (data as { data?: { id?: number; slug?: string } } | null)?.data;
+      const nextSavedId = savedRow?.id ?? savedId;
+      const nextSavedSlug = savedRow?.slug || draft.slug;
       if (savedRow?.id) {
         setSavedId(savedRow.id);
       }
@@ -539,15 +544,27 @@ export default function NewsEditorForm({
       showToast(nextStatus === 'approved' ? copy.toastPublished : copy.toastDraft);
 
       // Published goes to list (final). Drafts stay on page for translation.
-      if (nextStatus === 'approved') {
+      if (nextStatus === 'approved' && options.redirectOnPublish !== false) {
         router.push('/dashboard/xeberler');
         router.refresh();
       } else {
         router.refresh();
       }
+
+      return { id: nextSavedId, slug: nextSavedSlug };
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const submitDraft = async (nextStatus: NewsDraft['status']) => {
+    await saveArticle(nextStatus);
+  };
+
+  const previewArticle = async () => {
+    const saved = await saveArticle('fetched', { redirectOnPublish: false });
+    if (!saved?.slug) return;
+    window.open(`/haberler/${saved.slug}?preview=true`, '_blank');
   };
 
   const deleteArticle = async () => {
@@ -1081,8 +1098,9 @@ export default function NewsEditorForm({
         </button>
         <button
           type="button"
-          onClick={() => window.open(`/haberler/${draft.slug || ''}?preview=true`, '_blank')}
-          className="min-h-[44px] rounded-full border border-amber-200 bg-amber-50 px-6 py-3 text-sm font-bold text-amber-700"
+          onClick={() => void previewArticle()}
+          disabled={submitting || deleting || uploadingImage}
+          className="min-h-[44px] rounded-full border border-amber-200 bg-amber-50 px-6 py-3 text-sm font-bold text-amber-700 disabled:opacity-60"
         >
           {copy.preview}
         </button>
