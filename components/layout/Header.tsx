@@ -131,7 +131,7 @@ export default function Header() {
               if (item.type === 'mega') {
                 return (
                   <div key={item.name} className="relative" onMouseEnter={() => setIsMegaMenuOpen(true)} onMouseLeave={() => setIsMegaMenuOpen(false)}>
-                    <button type="button" className="inline-block rounded-lg px-2 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3">
+                    <button type="button" onClick={() => setIsMegaMenuOpen((p) => !p)} className="inline-block rounded-lg px-2 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3">
                       {item.name}
                     </button>
                     <MegaMenu isOpen={isMegaMenuOpen} onClose={() => setIsMegaMenuOpen(false)} />
@@ -141,7 +141,7 @@ export default function Header() {
               if (item.type === 'franchise') {
                 return (
                   <div key={item.name} className="relative" onMouseEnter={() => setIsFranchiseOpen(true)} onMouseLeave={() => setIsFranchiseOpen(false)}>
-                    <button type="button" className={`inline-flex items-center gap-1 rounded-lg px-2 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3 ${pathname.includes('/franchise') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
+                    <button type="button" onClick={() => setIsFranchiseOpen((p) => !p)} className={`inline-flex items-center gap-1 rounded-lg px-2 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3 ${pathname.includes('/franchise') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
                       {item.name} <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isFranchiseOpen ? 'rotate-180' : ''}`} />
                     </button>
                     <AnimatePresence>
@@ -152,7 +152,7 @@ export default function Header() {
                             const Icon = fl.icon;
                             const isActive = pathname.includes(fl.href.split('/').pop() || '');
                             return (
-                              <Link key={fl.href} href={fl.href}
+                              <Link key={fl.href} href={fl.href} onClick={() => setIsFranchiseOpen(false)}
                                 className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors hover:bg-slate-50 ${isActive ? 'bg-slate-50 font-bold text-[var(--dk-navy)]' : 'text-slate-600'}`}>
                                 <Icon className="h-4 w-4 text-[var(--dk-gold)]" />
                                 <span className="flex-1">{fl.label}</span>
@@ -169,7 +169,7 @@ export default function Header() {
               if (item.type === 'resources') {
                 return (
                   <div key={item.name} className="relative" onMouseEnter={() => setIsResourcesOpen(true)} onMouseLeave={() => setIsResourcesOpen(false)}>
-                    <button type="button" className={`inline-flex items-center gap-1 rounded-lg px-2 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3 ${pathname.includes('/blog') || pathname.includes('/haberler') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
+                    <button type="button" onClick={() => setIsResourcesOpen((p) => !p)} className={`inline-flex items-center gap-1 rounded-lg px-2 py-2 text-sm font-medium transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3 ${pathname.includes('/blog') || pathname.includes('/haberler') ? 'text-[var(--dk-navy)] font-bold' : 'text-slate-500'}`}>
                       {item.name} <ChevronDown className={`h-3.5 w-3.5 transition-transform ${isResourcesOpen ? 'rotate-180' : ''}`} />
                     </button>
                     <AnimatePresence>
@@ -177,7 +177,7 @@ export default function Header() {
                         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}
                           className="absolute left-1/2 top-full z-50 w-52 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
                           {resourceLinks.map((rl) => (
-                            <Link key={rl.href} href={rl.href}
+                            <Link key={rl.href} href={rl.href} onClick={() => setIsResourcesOpen(false)}
                               className="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[var(--dk-navy)]">
                               {rl.label}
                             </Link>

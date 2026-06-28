@@ -89,6 +89,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
             <div className="flex shrink-0 items-center gap-2">
               <Link
                 href="/toolkit"
+                onClick={onClose}
                 className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
               >
                 <Wrench size={14} />
@@ -110,6 +111,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                   <Link
                     key={`${item.href}-${item.label}`}
                     href={item.href}
+                    onClick={onClose}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-red-50/50"
                   >
                     <item.icon
@@ -137,6 +139,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                   <Link
                     key={`${item.href}-${item.label}`}
                     href={item.href}
+                    onClick={onClose}
                     className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-amber-50/50"
                   >
                     <item.icon
@@ -169,6 +172,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
                 <Link
                   key={`${item.href}-${item.label}`}
                   href={item.href}
+                  onClick={onClose}
                   className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[var(--dk-purple)]"
                 >
                   <item.icon size={16} />
@@ -185,7 +189,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
             {popularItems.map((item, index) => (
               <span key={item.href} className="flex items-center gap-2">
                 {index > 0 && <span className="text-gray-300">&middot;</span>}
-                <Link href={item.href} className="text-gray-500 transition-colors hover:text-[var(--dk-red)]">
+                <Link href={item.href} onClick={onClose} className="text-gray-500 transition-colors hover:text-[var(--dk-red)]">
                   {item.label}
                 </Link>
               </span>
