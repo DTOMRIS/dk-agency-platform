@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0420` fix(onboarding): modal mobile polish — responsive padding, ≥44px tap targets (min-h-11), WCAG contrast bumps on OnboardingModal; className-only, no design/logic change; selected-first reorder deliberately skipped.
 - `TASK-0419` fix(onboarding): onboarding dead-end → in-modal Step 2 result screen; removed 5 route-less tool slugs from `PRIORITY_TOOL_MAP` (fixed live 404s in RecommendationWidget + nudge); recovered Complaint Analysis tool via `getToolRoute()` resolver (PROTECTED config untouched); gap priority coming-soon + notify card; 4-language `onboarding.result.*`.
 
 ## [TASK-0418] feat(ui): UX navigation restructuring, homepage streamlining & mobile bottom nav - 2026-06-28

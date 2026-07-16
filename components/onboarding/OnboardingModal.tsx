@@ -190,7 +190,7 @@ export default function OnboardingModal() {
 
         {step === 'select' ? (
           <div className="flex min-h-0 flex-1 flex-col">
-            <div className="min-h-0 flex-1 overflow-y-auto p-8">
+            <div className="min-h-0 flex-1 overflow-y-auto p-5 sm:p-8">
               <div className="text-center">
                 <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-amber-50 text-amber-600">
                   <Sparkles className="h-7 w-7" />
@@ -245,18 +245,18 @@ export default function OnboardingModal() {
                 })}
               </div>
 
-              <div className="mt-4 text-center text-xs text-slate-400">
+              <div className="mt-4 text-center text-xs text-slate-500">
                 {t('pickCount', { count: selected.length })}
               </div>
 
-              <p className="mt-3 text-center text-xs text-slate-400">{t('whyWeAsk')}</p>
+              <p className="mt-3 text-center text-xs text-slate-500">{t('whyWeAsk')}</p>
             </div>
 
-            <div className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-100 bg-white px-8 py-5">
+            <div className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-100 bg-white px-5 py-4 sm:px-8 sm:py-5">
               <button
                 type="button"
                 onClick={handleSkip}
-                className="rounded-full border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-500 hover:bg-slate-50"
+                className="inline-flex min-h-11 items-center rounded-full border border-slate-200 px-5 text-sm font-bold text-slate-600 hover:bg-slate-50"
               >
                 {t('skip')}
               </button>
@@ -264,7 +264,7 @@ export default function OnboardingModal() {
                 type="button"
                 onClick={handleSave}
                 disabled={selected.length < 1 || saving}
-                className="rounded-full bg-[var(--dk-red)] px-6 py-2.5 text-sm font-bold text-white disabled:opacity-50"
+                className="inline-flex min-h-11 items-center rounded-full bg-[var(--dk-red)] px-6 text-sm font-bold text-white disabled:opacity-50"
               >
                 {saving ? t('saving') : t('save')}
               </button>
@@ -272,7 +272,7 @@ export default function OnboardingModal() {
           </div>
         ) : (
           <div className="flex min-h-0 flex-1 flex-col">
-            <div className="min-h-0 flex-1 overflow-y-auto p-8">
+            <div className="min-h-0 flex-1 overflow-y-auto p-5 sm:p-8">
               <div className="text-center">
                 <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
                   <CheckCircle2 className="h-8 w-8" />
@@ -344,7 +344,7 @@ export default function OnboardingModal() {
                         type="button"
                         onClick={() => handleNotify(key)}
                         disabled={isNotified}
-                        className={`inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold transition ${
+                        className={`inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full px-4 text-xs font-bold transition ${
                           isNotified
                             ? 'bg-emerald-50 text-emerald-700'
                             : 'border border-slate-300 bg-white text-slate-700 hover:border-slate-400'
@@ -368,11 +368,11 @@ export default function OnboardingModal() {
               </div>
             </div>
 
-            <div className="flex shrink-0 items-center justify-center border-t border-slate-100 bg-white px-8 py-5">
+            <div className="flex shrink-0 items-center justify-center border-t border-slate-100 bg-white px-5 py-4 sm:px-8 sm:py-5">
               <button
                 type="button"
                 onClick={handleFinish}
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-navy)] px-6 py-2.5 text-sm font-bold text-white hover:opacity-90"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--dk-navy)] px-6 text-sm font-bold text-white hover:opacity-90"
               >
                 {t('result.goToDashboard')}
                 <ArrowRight className="h-4 w-4" />
