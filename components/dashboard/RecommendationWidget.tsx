@@ -7,6 +7,7 @@ import { Sparkles, ArrowRight, Info } from 'lucide-react';
 import {
   type PriorityKey,
   getSuggestedToolSlugs,
+  getToolRoute,
   hasGap,
 } from '@/lib/data/priorities';
 import { getToolConfig } from '@/lib/marketing-tools-config';
@@ -83,7 +84,7 @@ export default function RecommendationWidget() {
           return (
             <Link
               key={slug}
-              href={`/${locale}/marketinq/${slug}`}
+              href={`/${locale}/marketinq/${getToolRoute(slug)}`}
               onClick={() => track('tool_recommended_clicked', { slug })}
               className="group flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 transition hover:border-amber-300 hover:shadow-sm"
             >

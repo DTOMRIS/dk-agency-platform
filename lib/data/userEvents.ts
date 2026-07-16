@@ -11,6 +11,8 @@ export const EVENT_TYPES = [
   'nudge_shown',
   'nudge_clicked',
   'nudge_dismissed',
+  'onboarding_completed',
+  'gap_interest',
 ] as const;
 
 export type UserEventType = (typeof EVENT_TYPES)[number];

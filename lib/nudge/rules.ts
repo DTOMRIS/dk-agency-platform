@@ -7,7 +7,7 @@
 import { db, dbAvailable } from '@/lib/db';
 import { listings, users } from '@/lib/db/schema';
 import { eq, desc } from 'drizzle-orm';
-import { type PriorityKey, getSuggestedToolSlugs } from '@/lib/data/priorities';
+import { type PriorityKey, getSuggestedToolSlugs, getToolRoute } from '@/lib/data/priorities';
 
 export interface NudgeMessage {
   key: string;
@@ -42,7 +42,7 @@ export async function pickNudge(ctx: NudgeContext): Promise<NudgeMessage | null>
       if (userListings.length === 0) {
         return {
           key: 'try_first_tool',
-          ctaHref: `/${ctx.locale}/marketinq/${slugs[0]}`,
+          ctaHref: `/${ctx.locale}/marketinq/${getToolRoute(slugs[0])}`,
         };
       }
 
