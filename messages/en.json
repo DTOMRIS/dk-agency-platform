@@ -743,7 +743,14 @@
       "branchTitle": "Branch opening model",
       "branchSubtitle": "Check the opening decision with CAPEX, tax, ramp-up, break-even, Prime Cost, RevPASH and cash runway.",
       "formatLabel": "Format",
-      "formats": { "coffee": "Coffee shop", "cafe": "Cafe", "fastFood": "Fast Food / QSR", "bar": "Bar", "lounge": "Lounge", "fineDining": "Fine Dining" },
+      "formats": {
+        "coffee": "Coffee shop",
+        "cafe": "Cafe",
+        "fastFood": "Fast Food / QSR",
+        "bar": "Bar",
+        "lounge": "Lounge",
+        "fineDining": "Fine Dining"
+      },
       "areaLabel": "Area (m²)",
       "seatsLabel": "Seat count",
       "openingBudgetLabel": "Opening budget (₼)",
@@ -778,7 +785,12 @@
       "branchStatRentShare": "Rent share",
       "capexTitle": "Capital expenditure (CAPEX)",
       "benchmarkTitle": "Health indicators",
-      "benchmark": { "primeCost": "Prime Cost", "rentShare": "Rent share", "ebitda": "EBITDA", "payback": "Payback" },
+      "benchmark": {
+        "primeCost": "Prime Cost",
+        "rentShare": "Rent share",
+        "ebitda": "EBITDA",
+        "payback": "Payback"
+      },
       "benchmarkState": {
         "primeCost": { "green": "Green zone", "amber": "Watch", "red": "Risk" },
         "rentShare": { "green": "Healthy", "amber": "Borderline", "red": "Too high" },
@@ -816,8 +828,20 @@
       "labelCurrentSales": "Current sales (₼)",
       "planningTitle": "Business financial plan",
       "labelBusinessType": "Business type",
-      "businessTypes": { "cafe": "Cafe", "restaurant": "Restaurant", "hotel": "Hotel / lodging", "retail": "Retail", "service": "Service business" },
-      "businessUnits": { "cafe": "checks", "restaurant": "checks", "hotel": "bookings", "retail": "transactions", "service": "orders" },
+      "businessTypes": {
+        "cafe": "Cafe",
+        "restaurant": "Restaurant",
+        "hotel": "Hotel / lodging",
+        "retail": "Retail",
+        "service": "Service business"
+      },
+      "businessUnits": {
+        "cafe": "checks",
+        "restaurant": "checks",
+        "hotel": "bookings",
+        "retail": "transactions",
+        "service": "orders"
+      },
       "labelAvailableBudget": "Available budget (₼)",
       "labelOpeningInvestment": "Opening investment (₼)",
       "labelOperatingDays": "Operating days / month",
@@ -839,11 +863,27 @@
       "statMonthlyProfit": "Monthly operating result",
       "months": "months",
       "notAvailable": "not available",
-      "breakdown": { "inventory": "Inventory funding", "receivables": "Receivables funding", "supplierFinancing": "Supplier financing", "deposits": "Deposits and prepayments", "rampLoss": "Ramp-up loss", "reserve": "Operating reserve" },
+      "breakdown": {
+        "inventory": "Inventory funding",
+        "receivables": "Receivables funding",
+        "supplierFinancing": "Supplier financing",
+        "deposits": "Deposits and prepayments",
+        "rampLoss": "Ramp-up loss",
+        "reserve": "Operating reserve"
+      },
       "verdicts": {
-        "go": { "title": "Financially viable", "body": "Based on the entered figures, capital and operating margin support opening." },
-        "conditional": { "title": "Conditionally viable", "body": "The model can work, but opening is risky until the conditions below are resolved." },
-        "no-go": { "title": "Do not open yet", "body": "Available capital or unit economics cannot currently absorb the opening losses." }
+        "go": {
+          "title": "Financially viable",
+          "body": "Based on the entered figures, capital and operating margin support opening."
+        },
+        "conditional": {
+          "title": "Conditionally viable",
+          "body": "The model can work, but opening is risky until the conditions below are resolved."
+        },
+        "no-go": {
+          "title": "Do not open yet",
+          "body": "Available capital or unit economics cannot currently absorb the opening losses."
+        }
       },
       "conditionsTitle": "Opening conditions",
       "conditions": {
@@ -4663,6 +4703,17 @@
     "saving": "Saving...",
     "successToast": "Your priorities have been saved!",
     "gapNote": "More tools are being developed for this area.",
+    "result": {
+      "title": "Great choice! 🎯",
+      "subtitle": "Recommended tools for you",
+      "chosen": "Your picks",
+      "tryTool": "Try it",
+      "goToDashboard": "Go to dashboard",
+      "comingSoon": "Coming soon",
+      "comingSoonBody": "A tool for this area is in the works — we'll let you know when it's ready.",
+      "notifyMe": "Notify me when ready",
+      "notifyThanks": "We'll let you know ✓"
+    },
     "recommendations": {
       "title": "For you",
       "subtitle": "Tools matching your priorities",

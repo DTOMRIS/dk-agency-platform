@@ -1,5 +1,13 @@
 # DK Agency Platform — Dev Log
 
+## 2026-07-16 — TASK-0419 (Onboarding dead-end fix + broken tool-link repair, P0)
+
+**Problem:** Yeni üzv prioritet seçib Save basırdı → modal bağlanırdı, başqa heç nə (dead-end, `OnboardingModal.tsx:127-131` köhnə hal). Araşdırma daha pis, artıq canlı bug tapdı: `PRIORITY_TOOL_MAP` route-u olmayan 5 slug-a istinad edirdi (`yemek-xerci`, `sikayet-analitigi` [route qovluğu `sikayat-analizi`], `sikayet-cavablandirici`, `reklam-yazicisi`, `kst-yoxlayici`) → `RecommendationWidget` və `try_first_tool` nudge artıq 404-lərə link verirdi. Ən pis: `inventory` yeganə aləti də 404 idi.
+
+**Fix (P0):** (1) `priorities.ts` — xəritə yalnız route-backed slug-larla təmizləndi; `SLUG_ROUTE_OVERRIDES`+`getToolRoute()` əlavə edildi ki, işləyən Şikayət Analizi aləti PROTECTED `marketing-tools-config.ts`-ə toxunulmadan `sikayat-analizi` route-una çatsın. (2) `OnboardingModal.tsx` — `step`/`savedPriorities`/`notified` state; Save nəticə ekranı açır (recap chip, ≤3 alət kartı, 0-alət prioritet üçün «Tezliklə»+xəbər ver painted-door kartı, dashboard CTA); mobil flex-col `max-h-[90vh]` sticky footer; result step-də ESC/close skip flag-i yox, finish edir. (3) `RecommendationWidget` + `nudge/rules.ts` URL-ləri `getToolRoute()`-dan keçir → canlı 404-lər düzəldi. (4) `userEvents.ts` +`onboarding_completed`/`gap_interest`. (5) 4 dil `onboarding.result.*`.
+
+**Qeyd:** Yeni route yaratılmadı (L-038 tətbiq olunmur). `npm run build`/lint sandbox-da işləmədi — build script-in `npm install`-u pin edilmiş `xlsx` (cdn.sheetjs.com, TASK-0415) egress siyasəti ilə 403 bloklanır; bu infra məhdudiyyətidir, dəyişikliklə əlaqəsi yox. encoding + protected verify PASS, 4 JSON valid, any/console.log yox. Build Hostinger/CI-də icra olunacaq.
+
 ## 2026-06-19 — TASK-0410 (F2.8: Sektor dynamic [slug] route — generateStaticParams)
 
 **Problem:** Dinamik `[slug]` sektor route-u `generateStaticParams` export etmirdi — Next.js build zamanı slug-ları statik olaraq pre-render etmirdi.

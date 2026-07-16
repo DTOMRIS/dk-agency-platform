@@ -743,7 +743,14 @@
       "branchTitle": "Şube açılış modeli",
       "branchSubtitle": "CAPEX, vergi, ramp-up, break-even, Prime Cost, RevPASH və cash runway ilə açılış qərarını yoxla.",
       "formatLabel": "Format",
-      "formats": { "coffee": "Kafe / Coffee", "cafe": "Cafe", "fastFood": "Fast Food / QSR", "bar": "Bar", "lounge": "Lounge", "fineDining": "Fine Dining" },
+      "formats": {
+        "coffee": "Kafe / Coffee",
+        "cafe": "Cafe",
+        "fastFood": "Fast Food / QSR",
+        "bar": "Bar",
+        "lounge": "Lounge",
+        "fineDining": "Fine Dining"
+      },
       "areaLabel": "Sahə (m²)",
       "seatsLabel": "Oturacaq sayı",
       "openingBudgetLabel": "Açılış büdcəsi (₼)",
@@ -778,7 +785,12 @@
       "branchStatRentShare": "İcarə payı",
       "capexTitle": "Kapital xərcləri (CAPEX)",
       "benchmarkTitle": "Sağlamlıq göstəriciləri",
-      "benchmark": { "primeCost": "Prime Cost", "rentShare": "İcarə payı", "ebitda": "EBITDA", "payback": "Payback" },
+      "benchmark": {
+        "primeCost": "Prime Cost",
+        "rentShare": "İcarə payı",
+        "ebitda": "EBITDA",
+        "payback": "Payback"
+      },
       "benchmarkState": {
         "primeCost": { "green": "Yaşıl zona", "amber": "Diqqət", "red": "Risk" },
         "rentShare": { "green": "Sağlam", "amber": "Sərhəddə", "red": "Çox yüksək" },
@@ -816,8 +828,20 @@
       "labelCurrentSales": "Hazırkı satış (₼)",
       "planningTitle": "Biznes maliyyə planı",
       "labelBusinessType": "Biznes növü",
-      "businessTypes": { "cafe": "Kafe", "restaurant": "Restoran", "hotel": "Otel / qonaqlama", "retail": "Pərakəndə satış", "service": "Xidmət biznesi" },
-      "businessUnits": { "cafe": "çek", "restaurant": "çek", "hotel": "rezervasiya", "retail": "əməliyyat", "service": "sifariş" },
+      "businessTypes": {
+        "cafe": "Kafe",
+        "restaurant": "Restoran",
+        "hotel": "Otel / qonaqlama",
+        "retail": "Pərakəndə satış",
+        "service": "Xidmət biznesi"
+      },
+      "businessUnits": {
+        "cafe": "çek",
+        "restaurant": "çek",
+        "hotel": "rezervasiya",
+        "retail": "əməliyyat",
+        "service": "sifariş"
+      },
       "labelAvailableBudget": "Mövcud büdcə (₼)",
       "labelOpeningInvestment": "Açılış investisiyası (₼)",
       "labelOperatingDays": "İş günü / ay",
@@ -839,11 +863,27 @@
       "statMonthlyProfit": "Aylıq əməliyyat nəticəsi",
       "months": "ay",
       "notAvailable": "hesablanmır",
-      "breakdown": { "inventory": "Stok maliyyəsi", "receivables": "Alacaq maliyyəsi", "supplierFinancing": "Təchizatçı maliyyəsi", "deposits": "Depozit və önödəmə", "rampLoss": "Açılış rampası zərəri", "reserve": "Əməliyyat ehtiyatı" },
+      "breakdown": {
+        "inventory": "Stok maliyyəsi",
+        "receivables": "Alacaq maliyyəsi",
+        "supplierFinancing": "Təchizatçı maliyyəsi",
+        "deposits": "Depozit və önödəmə",
+        "rampLoss": "Açılış rampası zərəri",
+        "reserve": "Əməliyyat ehtiyatı"
+      },
       "verdicts": {
-        "go": { "title": "Maliyyə baxımından keçərli", "body": "Daxil edilən rəqəmlərə görə kapital və əməliyyat marjası açılışı dəstəkləyir." },
-        "conditional": { "title": "Şərtli keçərli", "body": "Model işləyə bilər, amma aşağıdakı şərtlər həll edilmədən açılış risklidir." },
-        "no-go": { "title": "Hazırda açma", "body": "Mövcud kapital və ya vahid iqtisadiyyat zərəri daşımağa kifayət etmir." }
+        "go": {
+          "title": "Maliyyə baxımından keçərli",
+          "body": "Daxil edilən rəqəmlərə görə kapital və əməliyyat marjası açılışı dəstəkləyir."
+        },
+        "conditional": {
+          "title": "Şərtli keçərli",
+          "body": "Model işləyə bilər, amma aşağıdakı şərtlər həll edilmədən açılış risklidir."
+        },
+        "no-go": {
+          "title": "Hazırda açma",
+          "body": "Mövcud kapital və ya vahid iqtisadiyyat zərəri daşımağa kifayət etmir."
+        }
       },
       "conditionsTitle": "Açılış şərtləri",
       "conditions": {
@@ -4663,6 +4703,17 @@
     "saving": "Yadda saxlanılır...",
     "successToast": "Prioritetləriniz qeyd olundu!",
     "gapNote": "Bu sahə üzrə daha çox alət hazırlanır.",
+    "result": {
+      "title": "Əla seçim! 🎯",
+      "subtitle": "Sizin üçün tövsiyə olunan alətlər",
+      "chosen": "Seçdikləriniz",
+      "tryTool": "Sına",
+      "goToDashboard": "Dashboard-a keç",
+      "comingSoon": "Tezliklə",
+      "comingSoonBody": "Bu sahə üçün alət hazırlanır — hazır olanda sizə xəbər verəcəyik.",
+      "notifyMe": "Hazır olanda xəbər ver",
+      "notifyThanks": "Xəbər verəcəyik ✓"
+    },
     "recommendations": {
       "title": "Sizin üçün",
       "subtitle": "Prioritetlərinizə uyğun alətlər",

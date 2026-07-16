@@ -743,7 +743,14 @@
       "branchTitle": "Модель открытия филиала",
       "branchSubtitle": "Проверьте решение об открытии через CAPEX, налоги, ramp-up, break-even, Prime Cost, RevPASH и cash runway.",
       "formatLabel": "Формат",
-      "formats": { "coffee": "Кофейня", "cafe": "Кафе", "fastFood": "Fast Food / QSR", "bar": "Бар", "lounge": "Lounge", "fineDining": "Fine Dining" },
+      "formats": {
+        "coffee": "Кофейня",
+        "cafe": "Кафе",
+        "fastFood": "Fast Food / QSR",
+        "bar": "Бар",
+        "lounge": "Lounge",
+        "fineDining": "Fine Dining"
+      },
       "areaLabel": "Площадь (м²)",
       "seatsLabel": "Количество мест",
       "openingBudgetLabel": "Бюджет открытия (₼)",
@@ -778,7 +785,12 @@
       "branchStatRentShare": "Доля аренды",
       "capexTitle": "Капитальные затраты (CAPEX)",
       "benchmarkTitle": "Показатели здоровья",
-      "benchmark": { "primeCost": "Prime Cost", "rentShare": "Доля аренды", "ebitda": "EBITDA", "payback": "Payback" },
+      "benchmark": {
+        "primeCost": "Prime Cost",
+        "rentShare": "Доля аренды",
+        "ebitda": "EBITDA",
+        "payback": "Payback"
+      },
       "benchmarkState": {
         "primeCost": { "green": "Зелёная зона", "amber": "Внимание", "red": "Риск" },
         "rentShare": { "green": "Здорово", "amber": "На границе", "red": "Слишком высоко" },
@@ -786,7 +798,11 @@
         "payback": { "green": "Быстро", "amber": "Средне", "red": "Долго" }
       },
       "scenarioTitle": "3 сценария",
-      "scenario": { "base": "База", "conservative": "Консервативный", "optimistic": "Оптимистичный" },
+      "scenario": {
+        "base": "База",
+        "conservative": "Консервативный",
+        "optimistic": "Оптимистичный"
+      },
       "branchReportTitle": "Финансовый отчёт открытия филиала",
       "branchReportGeneratedAt": "Дата подготовки: {date}",
       "branchReportMethodology": "Все цифры рассчитаны из входных данных и детерминированных формул. Продажи не считаются прибылью или свободным кэшем.",
@@ -816,8 +832,20 @@
       "labelCurrentSales": "Текущая выручка (₼)",
       "planningTitle": "Финансовый план бизнеса",
       "labelBusinessType": "Тип бизнеса",
-      "businessTypes": { "cafe": "Кафе", "restaurant": "Ресторан", "hotel": "Отель / размещение", "retail": "Розница", "service": "Сервисный бизнес" },
-      "businessUnits": { "cafe": "чеков", "restaurant": "чеков", "hotel": "бронирований", "retail": "операций", "service": "заказов" },
+      "businessTypes": {
+        "cafe": "Кафе",
+        "restaurant": "Ресторан",
+        "hotel": "Отель / размещение",
+        "retail": "Розница",
+        "service": "Сервисный бизнес"
+      },
+      "businessUnits": {
+        "cafe": "чеков",
+        "restaurant": "чеков",
+        "hotel": "бронирований",
+        "retail": "операций",
+        "service": "заказов"
+      },
       "labelAvailableBudget": "Доступный бюджет (₼)",
       "labelOpeningInvestment": "Инвестиции в открытие (₼)",
       "labelOperatingDays": "Рабочих дней / месяц",
@@ -839,11 +867,27 @@
       "statMonthlyProfit": "Месячный операционный результат",
       "months": "мес.",
       "notAvailable": "не рассчитывается",
-      "breakdown": { "inventory": "Финансирование запасов", "receivables": "Финансирование дебиторки", "supplierFinancing": "Финансирование поставщиков", "deposits": "Депозиты и предоплаты", "rampLoss": "Убыток периода запуска", "reserve": "Операционный резерв" },
+      "breakdown": {
+        "inventory": "Финансирование запасов",
+        "receivables": "Финансирование дебиторки",
+        "supplierFinancing": "Финансирование поставщиков",
+        "deposits": "Депозиты и предоплаты",
+        "rampLoss": "Убыток периода запуска",
+        "reserve": "Операционный резерв"
+      },
       "verdicts": {
-        "go": { "title": "Финансово жизнеспособно", "body": "По введённым данным капитал и операционная маржа поддерживают открытие." },
-        "conditional": { "title": "Условно жизнеспособно", "body": "Модель может работать, но открытие рискованно до выполнения условий ниже." },
-        "no-go": { "title": "Пока не открывать", "body": "Капитала или юнит-экономики недостаточно для покрытия стартовых убытков." }
+        "go": {
+          "title": "Финансово жизнеспособно",
+          "body": "По введённым данным капитал и операционная маржа поддерживают открытие."
+        },
+        "conditional": {
+          "title": "Условно жизнеспособно",
+          "body": "Модель может работать, но открытие рискованно до выполнения условий ниже."
+        },
+        "no-go": {
+          "title": "Пока не открывать",
+          "body": "Капитала или юнит-экономики недостаточно для покрытия стартовых убытков."
+        }
       },
       "conditionsTitle": "Условия открытия",
       "conditions": {
@@ -4663,6 +4707,17 @@
     "saving": "Сохранение...",
     "successToast": "Ваши приоритеты сохранены!",
     "gapNote": "Для этой области разрабатываются дополнительные инструменты.",
+    "result": {
+      "title": "Отличный выбор! 🎯",
+      "subtitle": "Рекомендуемые инструменты для вас",
+      "chosen": "Ваш выбор",
+      "tryTool": "Попробовать",
+      "goToDashboard": "Перейти к панели",
+      "comingSoon": "Скоро",
+      "comingSoonBody": "Инструмент для этой области в разработке — мы сообщим, когда он будет готов.",
+      "notifyMe": "Сообщить, когда будет готово",
+      "notifyThanks": "Мы сообщим вам ✓"
+    },
     "recommendations": {
       "title": "Для вас",
       "subtitle": "Инструменты по вашим приоритетам",
