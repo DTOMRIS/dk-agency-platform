@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { eq, and, isNull } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
-import { users, emailVerificationTokens } from '@/lib/db/schema';
+import { users, memberProfiles, emailVerificationTokens } from '@/lib/db/schema';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
-import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
+import {
+  checkRateLimit,
+  getClientIp,
+  rateLimitExceeded,
+  RATE_LIMITS,
+} from '@/lib/utils/rate-limit';
 
 export async function GET(request: NextRequest) {
   try {
@@ -26,20 +31,23 @@ export async function GET(request: NextRequest) {
     const record = await db
       .select()
       .from(emailVerificationTokens)
-      .where(
-        and(
-          eq(emailVerificationTokens.token, token),
-          isNull(emailVerificationTokens.usedAt),
-        ),
-      )
+      .where(and(eq(emailVerificationTokens.token, token), isNull(emailVerificationTokens.usedAt)))
       .then((rows) => rows[0]);
 
     if (!record) {
-      return redirectWithMessage(request, 'error', 'Təsdiq linki etibarsız və ya artıq istifadə olunub.');
+      return redirectWithMessage(
+        request,
+        'error',
+        'Təsdiq linki etibarsız və ya artıq istifadə olunub.'
+      );
     }
 
     if (record.expiresAt < new Date()) {
-      return redirectWithMessage(request, 'error', 'Təsdiq linkinin müddəti bitib. Yenidən qeydiyyatdan keçin.');
+      return redirectWithMessage(
+        request,
+        'error',
+        'Təsdiq linkinin müddəti bitib. Yenidən qeydiyyatdan keçin.'
+      );
     }
 
     // Mark token as used
@@ -57,9 +65,17 @@ export async function GET(request: NextRequest) {
         .returning({ name: users.name, email: users.email });
 
       if (user?.email) {
+        // Keep member_profiles in sync so the admin panel shows the verified badge
+        await db
+          .update(memberProfiles)
+          .set({ emailVerified: true, updatedAt: new Date() })
+          .where(eq(memberProfiles.email, user.email));
+
         const baseUrl = getBaseUrl();
         const locale = request.nextUrl.searchParams.get('locale') || 'az';
-        sendEmail(user.email, emailTemplates.welcome(user.name, baseUrl, locale)).catch((err) => console.error('[email] Welcome mail failed:', err));
+        sendEmail(user.email, emailTemplates.welcome(user.name, baseUrl, locale)).catch((err) =>
+          console.error('[email] Welcome mail failed:', err)
+        );
       }
     }
 

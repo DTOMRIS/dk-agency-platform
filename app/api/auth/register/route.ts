@@ -3,12 +3,17 @@ import { hash } from 'bcryptjs';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { db, dbAvailable } from '@/lib/db';
-import { users, emailVerificationTokens } from '@/lib/db/schema';
+import { users, memberProfiles, emailVerificationTokens } from '@/lib/db/schema';
 import { sendEmail, emailTemplates } from '@/lib/email/templates';
 import { saveEmailPreferences } from '@/lib/email/preferences';
 import { getBaseUrl } from '@/lib/utils/get-base-url';
 import { normalizeLocale } from '@/i18n/config';
-import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
+import {
+  checkRateLimit,
+  getClientIp,
+  rateLimitExceeded,
+  RATE_LIMITS,
+} from '@/lib/utils/rate-limit';
 import { CONSENT_VERSION } from '@/lib/legal/consent-version';
 
 const registerSchema = z.object({
@@ -41,10 +46,7 @@ export async function POST(request: NextRequest) {
           : field === 'privacyAccepted'
             ? 'Məxfilik siyasəti qəbul edilməlidir.'
             : firstIssue.message;
-      return NextResponse.json(
-        { ok: false, error: message },
-        { status: 400 },
-      );
+      return NextResponse.json({ ok: false, error: message }, { status: 400 });
     }
 
     const body = parsed.data;
@@ -52,7 +54,7 @@ export async function POST(request: NextRequest) {
     if (!dbAvailable || !db) {
       return NextResponse.json(
         { ok: false, error: 'Verilənlər bazası əlçatan deyil.' },
-        { status: 503 },
+        { status: 503 }
       );
     }
 
@@ -66,7 +68,7 @@ export async function POST(request: NextRequest) {
     if (existing) {
       return NextResponse.json(
         { ok: false, error: 'Bu email artıq qeydiyyatdadır.' },
-        { status: 409 },
+        { status: 409 }
       );
     }
 
@@ -95,6 +97,26 @@ export async function POST(request: NextRequest) {
 
     const newUser = inserted[0];
 
+    // Mirror into member_profiles so the member is visible in the admin panel
+    // (SST: users ⇄ member_profiles). Non-blocking — a profile failure must not
+    // fail account creation.
+    try {
+      await db
+        .insert(memberProfiles)
+        .values({
+          email: body.email,
+          fullName: body.name,
+          phone: body.phone || null,
+          company: body.company || null,
+          role: 'member',
+          emailVerified: false,
+          source: 'registration',
+        })
+        .onConflictDoNothing();
+    } catch (profileErr) {
+      console.error('[auth/register] member_profiles create failed:', profileErr);
+    }
+
     await saveEmailPreferences({
       userId: newUser.id,
       email: body.email,
@@ -118,13 +140,14 @@ export async function POST(request: NextRequest) {
 
     const delivery = await sendEmail(
       body.email,
-      emailTemplates.emailVerification(confirmUrl, body.name, locale),
+      emailTemplates.emailVerification(confirmUrl, body.name, locale)
     );
 
     if (!delivery.success) {
       return NextResponse.json({
         ok: true,
-        message: 'Hesabınız yaradıldı, amma təsdiq emaili göndərilə bilmədi. Bir az sonra yenidən cəhd edin.',
+        message:
+          'Hesabınız yaradıldı, amma təsdiq emaili göndərilə bilmədi. Bir az sonra yenidən cəhd edin.',
         verificationRequired: true,
         emailSent: false,
       });
@@ -138,9 +161,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (err) {
     console.error('[auth/register] Error:', err);
-    return NextResponse.json(
-      { ok: false, error: 'Daxili xəta baş verdi.' },
-      { status: 500 },
-    );
+    return NextResponse.json({ ok: false, error: 'Daxili xəta baş verdi.' }, { status: 500 });
   }
 }
