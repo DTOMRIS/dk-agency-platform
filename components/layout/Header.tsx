@@ -314,6 +314,11 @@ export default function Header() {
                     </Link>
                   );
                 })}
+                <Link href={withLocale(currentLocale, '/blog')}
+                  className="rounded-xl p-3 text-base font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)]"
+                  onClick={() => setIsMobileOpen(false)}>
+                  {t('blog')}
+                </Link>
                 <Link href={withLocale(currentLocale, '/ilan-ver')}
                   className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-gold)] py-3 font-bold text-[var(--dk-navy)]"
                   onClick={() => setIsMobileOpen(false)}>

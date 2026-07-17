@@ -25,8 +25,11 @@ export default function BlogContentWrapper({
   const [isScrollLocked, setIsScrollLocked] = useState(false);
   const [session, setSession] = useState(getGuestSession());
 
+  // Paywall disabled for now — everyone reads the full article; registration is
+  // encouraged via on-page CTAs instead of a hard 40% gate. Flip PAYWALL_ENABLED to re-enable.
+  const PAYWALL_ENABLED = false;
   const fullAccess = hasFullArticleAccess(session);
-  const shouldGate = isPremium && !fullAccess;
+  const shouldGate = PAYWALL_ENABLED && isPremium && !fullAccess;
   const nextUrl = pathname || '/haberler';
   const loginHref = `/auth/login?next=${encodeURIComponent(nextUrl)}`;
   const registerHref = `/auth/register?next=${encodeURIComponent(nextUrl)}&source=registration-gate`;

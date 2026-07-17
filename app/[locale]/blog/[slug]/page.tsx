@@ -146,7 +146,7 @@ export default async function BlogDetailPage({
   const renderedContent = getProtectedArticleContent(
     article.content || '',
     session,
-    article.isPremium
+    false // paywall disabled — serve full content (see BlogContentWrapper PAYWALL_ENABLED)
   );
   const cleanMarkdownContent = (renderedContent || '').replace(/^#\s+.+$/m, '').trim();
 
