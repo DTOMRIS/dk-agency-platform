@@ -92,7 +92,7 @@ export default function MansetVitrin({ items, noSource }: MansetVitrinProps) {
 
           {/* Navigation */}
           {total > 1 && (
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-6 flex items-center gap-2 sm:gap-4">
               <button
                 type="button"
                 onClick={prev}
@@ -102,7 +102,7 @@ export default function MansetVitrin({ items, noSource }: MansetVitrinProps) {
               </button>
 
               {/* Dots */}
-              <div className="flex gap-2">
+              <div className="hidden gap-2 sm:flex">
                 {items.map((_, i) => (
                   <button
                     key={i}
@@ -125,7 +125,7 @@ export default function MansetVitrin({ items, noSource }: MansetVitrinProps) {
                 <ChevronRight className="h-5 w-5" />
               </button>
 
-              <span className="ml-auto text-xs font-bold text-slate-400">
+              <span className="ml-auto shrink-0 whitespace-nowrap text-xs font-bold text-slate-400">
                 {current + 1} / {total}
               </span>
             </div>
