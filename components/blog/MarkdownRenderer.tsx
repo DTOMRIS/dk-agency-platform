@@ -259,7 +259,7 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
             }
 
             return (
-              <p className="mb-6 text-[17px] leading-[1.85] text-slate-600">
+              <p className="mb-6 break-words text-[17px] leading-[1.85] text-slate-600">
                 {children}
               </p>
             );
@@ -400,7 +400,7 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
           a: ({ href, children }) => (
             <a 
               href={href} 
-              className="text-red-600 underline underline-offset-2 transition-colors hover:text-red-800" 
+              className="break-words text-red-600 underline underline-offset-2 transition-colors hover:text-red-800" 
               target="_blank" 
               rel="noopener noreferrer"
             >
