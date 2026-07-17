@@ -146,6 +146,8 @@ textarea::placeholder {
   font-family: 'DM Sans', Georgia, serif;
   line-height: 1.85;
   color: var(--dk-ink-soft);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .blog-content > *:first-child {
