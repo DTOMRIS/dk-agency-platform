@@ -2,28 +2,47 @@
 
 import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar, ArrowRight, Tag, Bookmark } from 'lucide-react';
 import Link from 'next/link';
-import { NEWS_ITEMS } from '@/components/constants';
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 
-const copyByLocale: Record<Locale, {
-  badge: string;
-  title: [string, string];
-  cta: string;
-  tagLabel: string;
-  readMore: string;
-  newsletterTitle: string;
-  newsletterBody: string;
-  emailPlaceholder: string;
-  subscribe: string;
-}> = {
+interface NewsItem {
+  id: number;
+  slug: string;
+  title: string;
+  summary: string;
+  category: string;
+  imageUrl: string | null;
+  publishedAt: string;
+}
+
+const dateLocaleMap: Record<Locale, string> = {
+  az: 'az-AZ',
+  ru: 'ru-RU',
+  en: 'en-US',
+  tr: 'tr-TR',
+};
+
+const copyByLocale: Record<
+  Locale,
+  {
+    badge: string;
+    title: [string, string];
+    cta: string;
+    tagLabel: string;
+    readMore: string;
+    newsletterTitle: string;
+    newsletterBody: string;
+    emailPlaceholder: string;
+    subscribe: string;
+  }
+> = {
   az: {
     badge: 'Xəbərlər & Blog',
     title: ['Sektordan ən son', 'yeniliklər'],
     cta: 'Bütün xəbərlər',
-    tagLabel: 'AQTA, Gigiyena',
+    tagLabel: 'Sektor Nəbzi',
     readMore: 'Davamını oxu',
     newsletterTitle: 'Həftəlik bülleten',
     newsletterBody: 'Sektordakı ən son xəbərləri və analizləri birbaşa e-poçtunuza alın.',
@@ -34,7 +53,7 @@ const copyByLocale: Record<Locale, {
     badge: 'Новости и блог',
     title: ['Последние', 'обновления сектора'],
     cta: 'Все новости',
-    tagLabel: 'AQTA, Гигиена',
+    tagLabel: 'Пульс сектора',
     readMore: 'Читать дальше',
     newsletterTitle: 'Еженедельный дайджест',
     newsletterBody: 'Получайте последние новости и аналитику сектора прямо на почту.',
@@ -45,7 +64,7 @@ const copyByLocale: Record<Locale, {
     badge: 'News & Blog',
     title: ['Latest', 'sector updates'],
     cta: 'All news',
-    tagLabel: 'AQTA, Hygiene',
+    tagLabel: 'Sector Pulse',
     readMore: 'Read more',
     newsletterTitle: 'Weekly digest',
     newsletterBody: 'Receive the latest sector news and analysis directly in your inbox.',
@@ -56,7 +75,7 @@ const copyByLocale: Record<Locale, {
     badge: 'Haberler & Blog',
     title: ['Sektörden en son', 'güncellemeler'],
     cta: 'Tüm haberler',
-    tagLabel: 'AQTA, Hijyen',
+    tagLabel: 'Sektör Nabzı',
     readMore: 'Devamını oku',
     newsletterTitle: 'Haftalık bülten',
     newsletterBody: 'Sektördeki son haberleri ve analizleri doğrudan e-posta kutuna al.',
@@ -65,20 +84,91 @@ const copyByLocale: Record<Locale, {
   },
 };
 
-const newsletterStatusByLocale: Record<Locale, { success: string; error: string; loading: string }> = {
-  az: { success: 'Abunəliyiniz təsdiqləndi.', error: 'Abunəlik tamamlanmadı.', loading: 'Göndərilir...' },
-  ru: { success: 'Подписка подтверждена.', error: 'Не удалось оформить подписку.', loading: 'Отправка...' },
-  en: { success: 'Your subscription is confirmed.', error: 'Subscription could not be completed.', loading: 'Submitting...' },
-  tr: { success: 'Aboneliğiniz onaylandı.', error: 'Abonelik tamamlanamadı.', loading: 'Gönderiliyor...' },
+const newsletterStatusByLocale: Record<
+  Locale,
+  { success: string; error: string; loading: string }
+> = {
+  az: {
+    success: 'Abunəliyiniz təsdiqləndi.',
+    error: 'Abunəlik tamamlanmadı.',
+    loading: 'Göndərilir...',
+  },
+  ru: {
+    success: 'Подписка подтверждена.',
+    error: 'Не удалось оформить подписку.',
+    loading: 'Отправка...',
+  },
+  en: {
+    success: 'Your subscription is confirmed.',
+    error: 'Subscription could not be completed.',
+    loading: 'Submitting...',
+  },
+  tr: {
+    success: 'Aboneliğiniz onaylandı.',
+    error: 'Abonelik tamamlanamadı.',
+    loading: 'Gönderiliyor...',
+  },
 };
+
+function NewsImage({ item, className }: { item: NewsItem; className?: string }) {
+  if (item.imageUrl) {
+    return (
+      <img
+        src={item.imageUrl}
+        alt={item.title}
+        className={className || 'h-full w-full object-cover'}
+        referrerPolicy="no-referrer"
+      />
+    );
+  }
+  return (
+    <div
+      className={`flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 ${className || 'h-full w-full'}`}
+    >
+      <span className="text-5xl font-black uppercase tracking-[0.2em] text-white/10">DK</span>
+    </div>
+  );
+}
 
 export default function NewsPreview() {
   const locale = normalizeLocale(useLocale());
   const copy = copyByLocale[locale];
+  const [items, setItems] = useState<NewsItem[]>([]);
   const [email, setEmail] = useState('');
-  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const featuredNews = NEWS_ITEMS[0];
-  const sideNews = NEWS_ITEMS.slice(1);
+  const [newsletterStatus, setNewsletterStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle');
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/api/news?limit=4&locale=${locale}`)
+      .then((r) => r.json())
+      .then((json) => {
+        if (cancelled) return;
+        if (json?.success && Array.isArray(json.data)) {
+          setItems(json.data.filter((n: NewsItem) => n.slug));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  const formatDate = (iso: string) => {
+    try {
+      return new Date(iso).toLocaleDateString(dateLocaleMap[locale], {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+    } catch {
+      return '';
+    }
+  };
+
+  const featuredNews = items[0];
+  const sideNews = items.slice(1);
 
   const subscribe = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -126,53 +216,64 @@ export default function NewsPreview() {
         </div>
 
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-16">
-          <Link href={withLocale(locale, '/haberler')} className="group block cursor-pointer lg:col-span-2">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-[1.75rem] shadow-2xl shadow-slate-200/50 sm:mb-8 sm:rounded-[2.5rem]">
-                <img
-                  src={featuredNews.image}
-                  alt={featuredNews.title}
-                  className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
-                <div className="absolute left-4 top-4 sm:left-8 sm:top-8">
-                  <span className="rounded-full bg-brand-red px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white shadow-lg shadow-brand-red/20 sm:px-5 sm:py-2 sm:tracking-widest">
-                    {featuredNews.category}
+          {featuredNews && (
+            <Link
+              href={withLocale(locale, `/haberler/${featuredNews.slug}`)}
+              className="group block cursor-pointer lg:col-span-2"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-[1.75rem] shadow-2xl shadow-slate-200/50 sm:mb-8 sm:rounded-[2.5rem]">
+                  <NewsImage
+                    item={featuredNews}
+                    className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+                  <div className="absolute left-4 top-4 sm:left-8 sm:top-8">
+                    <span className="rounded-full bg-brand-red px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white shadow-lg shadow-brand-red/20 sm:px-5 sm:py-2 sm:tracking-widest">
+                      {featuredNews.category}
+                    </span>
+                  </div>
+                  <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition-all group-hover:bg-white group-hover:text-slate-900 sm:right-8 sm:top-8 sm:h-12 sm:w-12">
+                    <Bookmark size={18} />
                   </span>
                 </div>
-                <button className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition-all hover:bg-white hover:text-slate-900 sm:right-8 sm:top-8 sm:h-12 sm:w-12">
-                  <Bookmark size={18} />
-                </button>
-              </div>
 
-              <div className="mb-4 flex flex-col gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400 sm:mb-6 sm:flex-row sm:items-center sm:gap-6 sm:text-xs sm:tracking-widest">
-                <div className="flex items-center gap-2">
-                  <Calendar size={16} className="text-brand-red" />
-                  {featuredNews.date}
+                <div className="mb-4 flex flex-col gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400 sm:mb-6 sm:flex-row sm:items-center sm:gap-6 sm:text-xs sm:tracking-widest">
+                  <div className="flex items-center gap-2">
+                    <Calendar size={16} className="text-brand-red" />
+                    {formatDate(featuredNews.publishedAt)}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Tag size={16} className="text-brand-red" />
+                    {copy.tagLabel}
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Tag size={16} className="text-brand-red" />
-                  {copy.tagLabel}
-                </div>
-              </div>
 
-              <h4 className="mb-4 text-3xl font-display font-extrabold leading-tight text-slate-900 transition-colors group-hover:text-brand-red sm:mb-6 sm:text-4xl">
-                {featuredNews.title}
-              </h4>
-              <p className="mb-6 text-base font-medium leading-relaxed text-slate-500 sm:mb-8 sm:text-xl">
-                {featuredNews.excerpt}
-              </p>
-              <div className="flex items-center gap-3 font-bold text-slate-900 transition-all group-hover:gap-5">
-                {copy.readMore}
-                <ArrowRight size={20} className="text-brand-red" />
-              </div>
-            </motion.div>
-          </Link>
+                <h4 className="mb-4 text-3xl font-display font-extrabold leading-tight text-slate-900 transition-colors group-hover:text-brand-red sm:mb-6 sm:text-4xl">
+                  {featuredNews.title}
+                </h4>
+                <p className="mb-6 text-base font-medium leading-relaxed text-slate-500 sm:mb-8 sm:text-xl">
+                  {featuredNews.summary}
+                </p>
+                <div className="flex items-center gap-3 font-bold text-slate-900 transition-all group-hover:gap-5">
+                  {copy.readMore}
+                  <ArrowRight size={20} className="text-brand-red" />
+                </div>
+              </motion.div>
+            </Link>
+          )}
 
           <div className="space-y-8 sm:space-y-10 lg:space-y-12">
             {sideNews.map((news, index) => (
-              <Link key={news.id} href={withLocale(locale, '/haberler')} className="group block cursor-pointer">
+              <Link
+                key={news.id}
+                href={withLocale(locale, `/haberler/${news.slug}`)}
+                className="group block cursor-pointer"
+              >
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -181,11 +282,9 @@ export default function NewsPreview() {
                 >
                   <div className="flex gap-4 sm:gap-6 lg:gap-8">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-2xl shadow-lg shadow-slate-200/50 sm:h-28 sm:w-28 sm:rounded-3xl">
-                      <img
-                        src={news.image}
-                        alt={news.title}
+                      <NewsImage
+                        item={news}
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        referrerPolicy="no-referrer"
                       />
                     </div>
                     <div className="min-w-0 flex-1 py-1">
@@ -197,7 +296,7 @@ export default function NewsPreview() {
                       </h5>
                       <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 sm:tracking-wider">
                         <Calendar size={12} />
-                        {news.date}
+                        {formatDate(news.publishedAt)}
                       </div>
                     </div>
                   </div>
@@ -207,7 +306,9 @@ export default function NewsPreview() {
 
             <div className="relative overflow-hidden rounded-[1.75rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-900/20 sm:rounded-[2.5rem] sm:p-10">
               <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-brand-red/10 blur-3xl" />
-              <h5 className="relative z-10 mb-4 text-xl font-display font-bold sm:text-2xl">{copy.newsletterTitle}</h5>
+              <h5 className="relative z-10 mb-4 text-xl font-display font-bold sm:text-2xl">
+                {copy.newsletterTitle}
+              </h5>
               <p className="relative z-10 mb-6 text-sm leading-relaxed text-slate-400 sm:mb-8">
                 {copy.newsletterBody}
               </p>
@@ -220,11 +321,22 @@ export default function NewsPreview() {
                   required
                   className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm backdrop-blur-sm transition-colors focus:border-brand-red focus:outline-none sm:px-5 sm:py-4"
                 />
-                <button disabled={newsletterStatus === 'loading'} className="w-full rounded-2xl bg-brand-red py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95 disabled:cursor-wait disabled:opacity-60 sm:py-4">
-                  {newsletterStatus === 'loading' ? newsletterStatusByLocale[locale].loading : copy.subscribe}
+                <button
+                  disabled={newsletterStatus === 'loading'}
+                  className="w-full rounded-2xl bg-brand-red py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95 disabled:cursor-wait disabled:opacity-60 sm:py-4"
+                >
+                  {newsletterStatus === 'loading'
+                    ? newsletterStatusByLocale[locale].loading
+                    : copy.subscribe}
                 </button>
-                {newsletterStatus === 'success' && <p className="text-sm text-emerald-400">{newsletterStatusByLocale[locale].success}</p>}
-                {newsletterStatus === 'error' && <p className="text-sm text-rose-400">{newsletterStatusByLocale[locale].error}</p>}
+                {newsletterStatus === 'success' && (
+                  <p className="text-sm text-emerald-400">
+                    {newsletterStatusByLocale[locale].success}
+                  </p>
+                )}
+                {newsletterStatus === 'error' && (
+                  <p className="text-sm text-rose-400">{newsletterStatusByLocale[locale].error}</p>
+                )}
               </form>
             </div>
           </div>

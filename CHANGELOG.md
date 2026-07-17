@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0425` fix(home): homepage "Sektordan ən son yeniliklər" section now shows real approved news from GET /api/news and links each card to /haberler/<slug>, replacing hardcoded placeholder NEWS_ITEMS. Design unchanged.
 - `TASK-0424` fix(ui): mobile menu top-level Blog link; 40% paywall disabled (everyone reads full blog+news, PAYWALL_ENABLED flag); MansetVitrin carousel counter no longer wraps on mobile.
 - `TASK-0423` fix(blog): mobile horizontal overflow — blog article bodies scrolled sideways on phones; added overflow-wrap/word-break to .blog-content + break-words on p/a renderers. body overflow-x-hidden was only masking it (leaks on iOS Safari). 4-line diff.
 - `TASK-0422` fix(blog): all blog detail pages crashed ("xəta baş verdi") because getSlugRedirect (slug_redirects) and the guru_boxes query lacked try/catch — a missing table (unrun migration) threw and crashed every post's detail page. Both wrapped defensively (ads-repo "never throw" pattern); operator applies migrations 0015/0016 on prod to restore redirects/boxes.
