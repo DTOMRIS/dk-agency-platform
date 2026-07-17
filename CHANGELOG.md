@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- SESSION 2026-07-16/17: onboarding dead-end + tool-link repair (0419), mobile onboarding polish (0420), member visibility fix + backfill (0421), blog crash fix + slug_redirects table (0422), blog mobile overflow (0423), mobile blog menu + 40% paywall off + carousel counter (0424), homepage real news (0425). All merged, CI-green; deploy build failure diagnosed as platform infra (not code) and resolved on retry.
 - `TASK-0425` fix(home): homepage "Sektordan ən son yeniliklər" section now shows real approved news from GET /api/news and links each card to /haberler/<slug>, replacing hardcoded placeholder NEWS_ITEMS. Design unchanged.
 - `TASK-0424` fix(ui): mobile menu top-level Blog link; 40% paywall disabled (everyone reads full blog+news, PAYWALL_ENABLED flag); MansetVitrin carousel counter no longer wraps on mobile.
 - `TASK-0423` fix(blog): mobile horizontal overflow — blog article bodies scrolled sideways on phones; added overflow-wrap/word-break to .blog-content + break-words on p/a renderers. body overflow-x-hidden was only masking it (leaks on iOS Safari). 4-line diff.

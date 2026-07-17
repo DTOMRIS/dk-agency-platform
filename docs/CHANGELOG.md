@@ -11,6 +11,19 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Session xülasəsi — 2026-07-16/17 (onboarding + blog/news + üzv görünmə sprinti)
+
+Canlı sayt baxışı əsasında ardıcıl 7 fix (TASK-0419 → 0425), hamısı ayrıca PR + CI (quality-gates) yaşıl + merge. Kök səbəblər sübutla tapıldı (təxminlə deyil):
+
+- **Onboarding dead-end (0419):** prioritet seçib «Yadda saxla» → modal bağlanırdı, heç nə. İndi modal daxilində Step 2 nəticə ekranı (recap chip + ≤3 alət kartı + gap üçün «Tezliklə»+xəbər ver + dashboard CTA). Gizli canlı bug: `PRIORITY_TOOL_MAP`-də 5 route-suz slug 404 verirdi → təmizləndi; işləyən Şikayət Analizi aləti `getToolRoute()` resolver-i ilə (PROTECTED config toxunulmadan) bərpa; `RecommendationWidget` + nudge linkləri düzəldi.
+- **Onboarding mobil polish (0420):** sticky CTA, ≥44px tap-target, WCAG kontrast; zərərli «seçiləni yuxarı sırala» qəsdən EDİLMƏDİ.
+- **Üzv görünmə (0421):** admin panel `member_profiles`-dən oxuyur, amma register yalnız `users`-ə yazırdı → 7 üzvdən 6-sı görünmürdü. Register+confirm indi `member_profiles` yaradır/sinxronlaşdırır; mövcudlar üçün birdəfəlik Neon backfill (canlıda işlədildi, 7/7 göründü).
+- **Blog crash — bütün bloglar (0422):** hər blog detayı «Xəta baş verdi» ilə çökürdü. Kök səbəb: `slug_redirects` cədvəli prod-da yox idi (migration 0016 işlədilməyib) və `getSlugRedirect` try/catch-siz idi → hər detay dərhal throw. Kod müdafiəli edildi (ads-repo «never throw» pattern-i) + cədvəl Neon-da yaradıldı → bloglar açıldı.
+- **Blog mobil overflow (0423):** məqalələr mobil-də sağa daşırdı (`body overflow-x-hidden` iOS Safari-də sızır). `.blog-content`-ə `overflow-wrap/word-break` + `p`/`a` render-lərinə `break-words`.
+- **Blog/news UX (0424):** mobil menyuya üst-səviyyə Blog linki; **%40 paywall söndürüldü** (`PAYWALL_ENABLED=false` — news bütün xəbərləri gate edirdi, indi hamı tam oxuyur); MansetVitrin `N/total` sayğacı mobil-də sarınmır.
+- **Homepage real xəbər (0425):** «Sektordan ən son yeniliklər» hardcoded saxta `NEWS_ITEMS` əvəzinə `GET /api/news`-dən real xəbər çəkir, hər kart `/haberler/<slug>`-a linkləyir.
+- **Deploy diaqnozu:** deploy build fail (bir müddət) — sübutla **kod deyil** (GHA `ci.yml` bütün commit-ləri, hətta kodsuz STATE-snapshot-ı build edir; `ignoreBuildErrors=true`). Platforma infra (OOM/keçici) idi; retry ilə deploy **Tamamlandı**. Hamısı canlıya çıxdı.
+
 ### Fixed
 - `TASK-0425` fix(home): **"Sektordan ən son yeniliklər" real xəbər göstərir** — `NewsPreview` hardcoded saxta `NEWS_ITEMS` əvəzinə `GET /api/news`-dən real approved xəbər çəkir və hər kartı öz məqaləsinə (`/haberler/<slug>`) linkləyir. Dizayn/copy/newsletter dəyişmir, yalnız data mənbəyi + linklər. Şəkil yoxdursa DK gradient fallback. tsc 0 error.
 - `TASK-0424` fix(ui): **blog/news UX (mobil menyu + paywall + carousel)** — (A) mobil hamburger menyuya üst-səviyyə Blog linki (Header.tsx); (C) %40 paywall söndürüldü — `BlogContentWrapper` `PAYWALL_ENABLED=false`, blog+news tam oxunur (news bütün xəbərləri gate edirdi), CTA-lar qalır; (Extra) MansetVitrin `N / total` sayğacı mobil-də `whitespace-nowrap`, nöqtələr `sm`-də. Minimal 13 sətir diff, tsc 0 error. (B — homepage NewsPreview saxta NEWS_ITEMS — ayrı, owner təsdiqi gözləyir.)
