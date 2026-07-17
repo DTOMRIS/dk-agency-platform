@@ -29,7 +29,9 @@ function getSlugsToTry(slug: string): string[] {
       set.add(decoded);
       set.add(decoded.endsWith('?') ? decoded.slice(0, -1) : decoded + '?');
     }
-  } catch { /* invalid encoding, skip */ }
+  } catch {
+    /* invalid encoding, skip */
+  }
 
   return [...set];
 }
@@ -215,7 +217,14 @@ export async function getBlogPostDetail(slug: string, locale?: string) {
     .then((items) => items[0]);
   if (!row) return null;
 
-  const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, row.id));
+  let boxes: (typeof guruBoxes.$inferSelect)[] = [];
+  try {
+    boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, row.id));
+  } catch {
+    // guru_boxes table may be missing (migration not run) — render the article
+    // without guru boxes rather than crashing the whole blog detail page.
+    boxes = [];
+  }
   return mapDbArticle(row, boxes, loc);
 }
 
@@ -366,11 +375,14 @@ export async function updateBlogPostInDb(
 
   // Slug dəyişibsə → köhnə slug-ı redirect cədvəlinə yaz
   if (input.slug && input.slug !== existing.slug) {
-    await db.insert(slugRedirects).values({
-      oldSlug: existing.slug,
-      newSlug: input.slug,
-      type: 'blog',
-    }).onConflictDoNothing();
+    await db
+      .insert(slugRedirects)
+      .values({
+        oldSlug: existing.slug,
+        newSlug: input.slug,
+        type: 'blog',
+      })
+      .onConflictDoNothing();
   }
 
   await db
@@ -943,7 +955,11 @@ export async function bulkUpdateBlogStatus(ids: number[], action: BulkBlogAction
     return result.rowCount ?? ids.length;
   }
 
-  const statusMap: Record<string, string> = { archive: 'archived', publish: 'published', draft: 'draft' };
+  const statusMap: Record<string, string> = {
+    archive: 'archived',
+    publish: 'published',
+    draft: 'draft',
+  };
   const result = await db
     .update(blogPosts)
     .set({ status: statusMap[action], updatedAt: new Date() })
@@ -954,10 +970,16 @@ export async function bulkUpdateBlogStatus(ids: number[], action: BulkBlogAction
 /** Look up slug redirect — returns new slug if old slug has a redirect */
 export async function getSlugRedirect(oldSlug: string): Promise<string | null> {
   if (!dbAvailable || !db) return null;
-  const [row] = await db
-    .select({ newSlug: slugRedirects.newSlug })
-    .from(slugRedirects)
-    .where(eq(slugRedirects.oldSlug, oldSlug))
-    .limit(1);
-  return row?.newSlug ?? null;
+  try {
+    const [row] = await db
+      .select({ newSlug: slugRedirects.newSlug })
+      .from(slugRedirects)
+      .where(eq(slugRedirects.oldSlug, oldSlug))
+      .limit(1);
+    return row?.newSlug ?? null;
+  } catch {
+    // slug_redirects table may not exist yet (migration not run). A missing
+    // redirect lookup must NEVER crash a public blog page — degrade to "no redirect".
+    return null;
+  }
 }
