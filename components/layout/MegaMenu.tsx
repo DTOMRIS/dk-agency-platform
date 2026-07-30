@@ -76,7 +76,7 @@ export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="absolute top-full left-1/2 z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[var(--dk-border-soft)] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+          className="absolute top-full left-0 right-0 z-50 mx-auto w-[90vw] max-w-[880px] rounded-2xl border border-[var(--dk-border-soft)] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
           onMouseLeave={onClose}
         >
           <div className="flex items-start justify-between">

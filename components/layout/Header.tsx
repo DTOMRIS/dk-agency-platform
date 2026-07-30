@@ -130,7 +130,7 @@ export default function Header() {
             {navItems.map((item) => {
               if (item.type === 'mega') {
                 return (
-                  <div key={item.name} className="relative" onMouseEnter={() => setIsMegaMenuOpen(true)} onMouseLeave={() => setIsMegaMenuOpen(false)}>
+                  <div key={item.name} className="static" onMouseEnter={() => setIsMegaMenuOpen(true)} onMouseLeave={() => setIsMegaMenuOpen(false)}>
                     <button type="button" className="inline-block rounded-lg px-2 py-2 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-[var(--dk-navy)] xl:px-3">
                       {item.name}
                     </button>
