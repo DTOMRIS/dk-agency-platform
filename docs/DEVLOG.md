@@ -1,5 +1,44 @@
 # DK Agency Platform — Dev Log
 
+## 2026-08-01 — TASK-0429 (`sharp` 0.35.3: son production runtime HIGH)
+
+**Kontekst:** TASK-0428-dən sonra 9 advisory qalmışdı. `sharp` onların arasında **yeganə production runtime HIGH** idi (libvips CVE-2026-33327/33328/35590/35591 — şəkil dekodlaması; platformada elan fotosu və fatura OCR var). Sahib icazəsi alındı, çünki `package.json` PROTECTED-dir.
+
+**Kəşfiyyat birinci:** `grep` göstərdi ki, `sharp` kod bazasında **heç yerdə birbaşa import olunmur** — yeganə istifadəçi `next/image` optimizasiyasıdır. Risk səthi buna görə məhduddur.
+
+**Sadə bump İŞLƏMİRDİ — bu taskın əsas tapıntısı:** `next@16.2.12` `optionalDependencies.sharp = ^0.34.5` elan edir, yəni `>=0.34.5 <0.35.0`. `0.35.3` bu aralığa **düşmür**. İzolyasiya edilmiş nüsxədə sınandı və nəticə təsdiqləndi:
+
+```
+node_modules/sharp                     0.35.3   ← yeni, amma İSTİFADƏSİZ
+node_modules/next/node_modules/sharp   0.34.5   ← zəif, next/image MƏHZ BUNU işlədir
+```
+
+`npm audit` bump-dan **sonra da** HIGH bildirirdi. Yəni sadəcə versiyanı qaldırmaq: ikinci nüsxə əlavə edir, hücum səthini toxunulmaz saxlayır və yalançı təhlükəsizlik hissi yaradır. Təxminlə getsəydik, «düzəltdik» deyib heç nə düzəltməmiş olardıq.
+
+**Alternativ axtarıldı:** heç bir **stabil** `next` versiyası `sharp ^0.35`-i qəbul etmir — `latest` 16.2.12-dir, yalnız `16.3.0-preview.10` / `canary` yuxarıdadır, production üçün uyğun deyil.
+
+**Həll:** `overrides: { "sharp": "$sharp" }`. (`"sharp": "0.35.3"` forması `Override for sharp@^0.35.3 conflicts with direct dependency` xətası verir — npm birbaşa asılılığa `$` istinadı tələb edir.) Nəticə: ağacda tək `sharp 0.35.3`, `sharp` audit-dən təmizləndi, **advisory 9 → 8**, paket 11 → 10.
+
+**Risk və necə azaldıldı:** bu, `next`-i öz elan etdiyi aralıqdan kənar versiyaya məcbur edir — Vercel bu birləşməni test etməyib. Ona görə **soruşmaqdansa sübut etməyi** seçdim: `sharp@0.35.3` + `@img/sharp-linux-x64` + `@img/sharp-libvips-linux-x64` registry-dən çəkilib quraşdırıldı (`libvips 8.18.3`), sonra real `/_next/image` sorğuları icra edildi.
+
+| en | HTTP | çıxış formatı | ölçü |
+|---|---|---|---|
+| 256 | 200 | AVIF | 256×144 |
+| 640 | 200 | AVIF | 640×360 |
+| 828 | 200 | AVIF | 828×466 |
+| 1200 | 200 | AVIF | 1200×675 |
+| 1920 | 200 | AVIF | 1672×941 |
+
+AVIF kodlaması libvips-in ən ağır yoludur — o keçirsə, sadə resize onsuz da keçir. Çıxışlar `sharp` ilə geri dekod edilib ölçüləri təsdiqləndi.
+
+**Diaqnoz tələsi:** ilk testdə `w=1200&q=90` və `q=80` **HTTP 400** verdi və `sharp` reqressiyası kimi görünürdü. Cavab gövdəsinə baxanda çıxdı: `"q" parameter (quality) of 80 is not allowed` — Next 16-nın konfiqurasiya validasiyası, `sharp`-la əlaqəsi yoxdur. Yalnız `q=75` icazəlidir. Gövdəyə baxmasaydım, işləyən dəyişikliyi «sınıq» sayıb geri qaytaracaqdım.
+
+**Digər sübutlar:** `▲ Next.js 16.2.12` · `✓ Compiled successfully` · 206 statik səhifə · route smoke (`/`, `/toolkit`, `/ilanlar`, `/haberler`, `/kazan-ai`, `/uzvluk`, `/franchise/radar`) → 200 · auth gating qorunub (`/dashboard` 307, `POST /api/admin/ads` 403) · TASK-0426 mega menyu 4/4 PASS.
+
+**PROTECTED:** `package.json` sahib icazəsi ilə `ALLOW_PROTECTED=1` altında dəyişdirildi. Diff cəmi 2 sətir (sharp versiyası + override). `xlsx` pin-i toxunulmadı — lockfile diff-ində `sheetjs` yalnız kontekst sətri kimi görünür, `+/-` dəyişikliyi yoxdur.
+
+**Qalan 8 advisory:** `postcss@8.4.31` (next-in pin etdiyi upstream, build vaxtı), `js-yaml` (eslint → devDependency), `dompurify` (LOW), `protobufjs` — hamısı `overrides` ilə pin edilib və heç biri production runtime deyil. Təcili deyil.
+
 ## 2026-08-01 — TASK-0428 (Hostinger təhlükəsizlik skanı: advisory 24 → 9)
 
 **Siqnal:** Hostinger e-poçtu — `dkagency.com.tr`, 885 paket skan olundu, **25 zəiflik** (13 high, 11 moderate, 1 low).
