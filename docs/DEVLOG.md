@@ -1,5 +1,41 @@
 # DK Agency Platform — Dev Log
 
+## 2026-08-01 — TASK-0428 (Hostinger təhlükəsizlik skanı: advisory 24 → 9)
+
+**Siqnal:** Hostinger e-poçtu — `dkagency.com.tr`, 885 paket skan olundu, **25 zəiflik** (13 high, 11 moderate, 1 low).
+
+**Əvvəlcə ziddiyyət həll edildi:** CHANGELOG-dakı TASK-0415 «0 critical / 0 high / 4 moderate» yazırdı, Hostinger isə 13 high. `npm audit` yerli olaraq 11 paket göstərdi. Səbəb: **Hostinger CVE/advisory sayır, npm paket qruplaşdırır.** npm-in özü advisory saydıqda **24** verir — yəni Hostinger yeni bir şey tapmayıb, eyni reallığı fərqli sayır. TASK-0415-dən bəri mövcud versiyalara qarşı yeni CVE-lər yayımlanıb; bu normal sürüşmədir, kimsə səhv etməyib.
+
+**Kök tapıntı:** `next` **16.2.9**-da idi. Paketin 9 advisory-si var və **hamısının düzəlişi 16.2.11-dədir**:
+- HIGH — Middleware / Proxy bypass (App Router + Turbopack + tək locale)
+- HIGH — SSRF, Server Actions (custom server)
+- HIGH — SSRF, rewrites (hücumçunun idarə etdiyi hostname)
+- HIGH — DoS, App Router Server Actions
+- MODERATE ×5 — cache confusion ×2, Edge payload, SVG DoS, daxili endpoint açıqlanması
+
+Birincisi bu platformada xüsusi çəkiyə malikdir: `middleware.ts` auth gating edir, yəni bypass = üzv qapısının keçilməsi.
+
+**Diaqnoz qeydi (məni bir dəfə yanıltdı):** `npm audit`-in paket səviyyəsindəki `range` sahəsi birləşdirilmiş aralıqdır (`>=9.3.4-canary.0 <16.3.0-preview.7`) və «stabil düzəliş yoxdur» təəssüratı yaradır. Advisory-lərə **ayrı-ayrı** baxanda hamısının aralığı `>=16.0.0 <16.2.11` çıxdı. Paket səviyyəsindəki aralığa baxıb qərar vermək səhv olardı.
+
+**Fix:** `package.json`-dakı `^16.2.9` aralığı 16.2.12-yə onsuz da icazə verirdi — problem yalnız lockfile-ın köhnə olması idi. Ona görə **PROTECTED `package.json` toxunulmadı**, yalnız `package-lock.json` yeniləndi. Sandbox məhdudiyyəti aşıldı: tam `npm install` `cdn.sheetjs.com` blokuna dəyir, amma **hədəflənmiş** `npm update next --package-lock-only` + `npm audit fix --package-lock-only` CDN-ə toxunmur (xlsx alt-ağacı dəyişmir). `xlsx` girişi diff-də yoxdur.
+
+**Nəticə: 24 → 9 advisory.**
+
+**Build necə yoxlandı (bu vacibdir):** lokal `npm install` CDN blokuna görə mümkün deyil, yəni yeni lockfile-ı adi yolla quraşdıra bilmirdim. Əvəzində `next@16.2.12` + `@next/env` + SWC binarları registry-dən (`npm pack`, allowlist-dədir) çəkilib `node_modules`-a açıldı. Əvvəlcə 16.2.9 və 16.2.12-nin `dependencies` dəstləri müqayisə olundu — `@next/env` pin-i istisna **eynidir**, ona görə bu quraşdırma sadiqdir.
+
+**Sübut:** `▲ Next.js 16.2.12` · `✓ Compiled successfully` · 206 statik səhifə · route smoke `/`, `/toolkit`, `/ilanlar`, `/haberler`, `/kazan-ai`, `/uzvluk`, `/franchise/radar`, `/franchise/roi-kalkulyatoru` → **200** · auth gating qorunub: `/dashboard` → **307**, `POST /api/admin/ads` → **403** · TASK-0426 mega menyu Playwright testi 4/4 PASS (framework bump reqressiya vermədi).
+
+**`/franchise` → 404 reqressiya DEYİL:** `app/franchise/page.tsx` heç vaxt olmayıb, yalnız alt-route-lar var və Header də yalnız onlara link verir. Yoxlanıldı, təsdiqləndi.
+
+**Qalan 9 advisory — ayrıca qərar tələb edir:**
+| Paket | Səviyyə | Niyə bu task-da bağlanmadı |
+|---|---|---|
+| `sharp` 0.34.5 → 0.35.3 | HIGH | major/breaking; `package.json` (PROTECTED) + şəkil yollarının testi lazımdır. **Yeganə production runtime HIGH** — libvips CVE-ləri, platformada şəkil yükləmə var (elan foto, fatura OCR) |
+| `postcss@8.4.31` (next daxili) | HIGH ×3 | next-in pin etdiyi upstream asılılıq; yalnız build vaxtı CSS emalı (öz repo-muzdakı CSS), request runtime-ında deyil |
+| `js-yaml` | HIGH ×3 | `eslint` → devDependency, canlıya düşmür; `overrides` ilə pin edilib |
+| `dompurify` | LOW | jspdf transitive, `overrides` pin |
+| `protobufjs` | MODERATE | @google/genai transitive, `overrides` pin |
+
 ## 2026-08-01 — TASK-0427 (Claude fallback: `temperature` 400 minası + model SST)
 
 **Necə tapıldı:** Doğan son bir ayın Anthropic yeniliklərini soruşdu. Araşdırma zamanı məlum oldu ki, `temperature`/`top_p`/`top_k` Claude-un yeni nəsillərində API-dən silinib. Sonra kod yoxlanıldı — platformada məhz o parametr göndərilirdi.
