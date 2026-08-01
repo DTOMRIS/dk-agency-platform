@@ -12,6 +12,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Fixed
+- `TASK-0427` fix(ai): **Claude fallback yeni modellərə keçəndə 400 verməyəcək** — hər iki Claude çağırışı (`lib/ai-router.ts`, `app/api/kazan-ai/route.ts`) sorğuya `temperature` qoyurdu. Bu parametr Claude-un yeni nəsillərində (Opus 4.7+, Sonnet 5, Opus 5, Fable 5) API-dən silinib və göndərilsə sorğu **400** qaytarır — yəni `KAZAN_ANTHROPIC_MODEL` env-ini yeni modelə çevirmək (kod deploy-u olmadan) fallback yolunu sındırırdı. İndi `claudeAcceptsTemperature()` allowlist-i ilə yalnız qəbul edən modellərə göndərilir; tanınmayan model ID-də **göndərilmir** (fail-safe — göndərmək sorğunu sındırır, göndərməmək yalnız default dəyər deməkdir). Həmçinin SST pozuntusu bağlandı: `claude-sonnet-4-6` 3 yerdə hardcoded idi, indi `lib/ai-models.ts`-dəki `AI_MODELS.claude.fallback` + `resolveClaudeModel()`-dən oxunur (`generate-audit.mjs` daxil). Davranış dəyişmir — köhnə modeldə `temperature` əvvəlki kimi gedir. Sübut: saxta Anthropic endpoint-inə qarşı wire-level test, hər iki çağırış yolu, **10/10 PASS**.
+
+### Fixed
 - `TASK-0426` fix(nav): **«Alətlər» mega menyusu artıq ekrandan daşmır** — kök səbəb: panel `absolute left-1/2 -translate-x-1/2` ilə **trigger düyməsinin** mərkəzinə görə yerləşirdi, viewport-a görə yox; düymə header-in solunda olduğu üçün 880px-lik panelin sol kənarı mənfi X-ə düşürdü (1280px-də ≈ −200px). Panel `MegaMenuPanel` komponentinə çıxarıldı, üfüqi mövqe `useLayoutEffect`-də ölçülür və 16px gutter ilə viewport daxilinə clamp olunur (`resize` ilə yenilənir); alçaq ekranlar üçün `max-h-[calc(100vh-8rem)] overflow-y-auto`. PROTECTED `Header.tsx`-ə toxunulmadı. Playwright sübut: 1024/1280/1440/1920 → 4/4 PASS (`panel.x ≥ 0`, `scrollWidth == clientWidth`). Build ✓, lint ✓.
 
 ### Session xülasəsi — 2026-07-16/17 (onboarding + blog/news + üzv görünmə sprinti)

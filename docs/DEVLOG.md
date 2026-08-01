@@ -1,5 +1,23 @@
 # DK Agency Platform — Dev Log
 
+## 2026-08-01 — TASK-0427 (Claude fallback: `temperature` 400 minası + model SST)
+
+**Necə tapıldı:** Doğan son bir ayın Anthropic yeniliklərini soruşdu. Araşdırma zamanı məlum oldu ki, `temperature`/`top_p`/`top_k` Claude-un yeni nəsillərində API-dən silinib. Sonra kod yoxlanıldı — platformada məhz o parametr göndərilirdi.
+
+**Problem (bu gün partlamır, sabah partlaya bilər):** Hər iki Claude çağırışı sorğuya `temperature` qoyurdu — `lib/ai-router.ts` (`req.temperature ?? 0.7`) və `app/api/kazan-ai/route.ts` (`0.2`). Cari model `claude-sonnet-4-6`-dır və onu qəbul edir, ona görə heç nə sınmır. Amma Opus 4.7+, Sonnet 5, Opus 5 və Fable 5-də parametr **silinib** — göndərilsə API 400 qaytarır. Yəni Hostinger-də `KAZAN_ANTHROPIC_MODEL=claude-sonnet-5` yazmaq — **kod deploy-u belə lazım deyil** — fallback yolunu sındırırdı.
+
+**Təsir iki yolda fərqlidir (ikisi də oxundu, fərqi vacibdir):**
+- `kazan-ai/route.ts` — sonda `buildStaticFallback` var, istifadəçi hazır şablon cavab alır. Pis, amma çökmə yox.
+- `lib/ai-router.ts` (marketinq alətləri) — static fallback **yoxdur**, `Both AI providers failed` atır. Sərt xəta.
+
+Hər iki halda xəta yalnız **DeepSeek onsuz da çökəndə** görünərdi — yəni ən pis anda, ikiqat sıradan çıxma.
+
+**Fix:** `lib/ai-models.ts`-ə `AI_MODELS.claude.fallback` + `resolveClaudeModel()` + `claudeAcceptsTemperature()` əlavə edildi. Allowlist **qəsdəndir**: tanınmayan model ID gələndə parametr göndərilmir, çünki göndərmək sorğunu sındırır, göndərməmək isə yalnız default dəyər deməkdir. Hər iki çağırış yerində `temperature` şərtli oldu; `generate-audit.mjs` model adını SST-dən regex ilə oxuyur (əvvəl hardcoded idi, halbuki cədvəlin başlığı «lib/ai-models.ts SST» yazırdı).
+
+**Sübut (mock yox, wire-level):** saxta Anthropic HTTP endpoint qaldırıldı, `ANTHROPIC_BASE_URL` ora yönəldildi və **real göndərilən body** yoxlanıldı. ai-router: 7/7 PASS (sonnet-4-6-da `temperature` var; sonnet-5/opus-5/opus-4-8/fable-5-də yox; tanınmayan ID-də yox; env yoxdursa SST default-a düşür). kazan-ai route handler: 3/3 PASS. Cəmi **10/10**. `next build` ✓ 206 səhifə, eslint 0, tsc 0.
+
+**Qeyd:** `COST_PER_TOKEN.claude = 0.000005` ($5/M) Opus 5 giriş qiymətidir, halbuki işlədilən model Sonnet 4.6-dır ($3/M) — xərc hesabı təxminidir. Bu task-da toxunulmadı, ayrıca qərar tələb edir.
+
 ## 2026-08-01 — TASK-0426 (Alətlər mega menyusu ekrandan daşırdı — desktop)
 
 **Problem:** Canlı saytda header-dəki «Alətlər» mega menyusu ekranın sol kənarından kəsilirdi (owner ekran görüntüsü ilə sübut). Bu, əvvəllər «düzəldildi» deyilmiş, amma davam edən problem idi.

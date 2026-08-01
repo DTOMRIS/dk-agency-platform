@@ -76,6 +76,16 @@ const dashboard = allPages.filter(p => p.includes('dashboard/'));
 
 const dsCount = countInFiles('AI_MODELS.deepseek', ['app', 'lib'], '.ts') + countInFiles('deepseek-v4-flash', ['scripts'], '.mjs');
 const gmCount = countInFiles('AI_MODELS.gemini', ['app', 'lib'], '.ts') + countInFiles('gemini-2.5-flash', ['scripts'], '.mjs');
+
+/** Model ID-sini lib/ai-models.ts SST-den oxu — bu faylda hardcode saxlama. */
+function sstModel(providerKey, fieldKey) {
+  try {
+    const src = fs.readFileSync(path.join(root, 'lib/ai-models.ts'), 'utf8');
+    const block = src.match(new RegExp(`${providerKey}:\\s*\\{([\\s\\S]*?)\\n  \\}`));
+    return block?.[1].match(new RegExp(`${fieldKey}:\\s*'([^']+)'`))?.[1] || '?';
+  } catch { return '?'; }
+}
+const claudeModel = sstModel('claude', 'fallback');
 const insightCount = countInFiles('getToolkitInsight', ['app'], '.tsx');
 
 let protectedFiles = [];
@@ -119,7 +129,7 @@ const md = `# DK Agency — System Audit (CANLI)
 |----------|-------|-----------|
 | DeepSeek | v4-flash | ${dsCount} |
 | Gemini | 2.5-flash | ${gmCount} |
-| Anthropic | claude-sonnet-4-6 | fallback |
+| Anthropic | ${claudeModel} | fallback |
 
 AI Insight bağlı səhifə: **${insightCount}**
 
