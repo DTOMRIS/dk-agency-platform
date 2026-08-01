@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AI_MODELS } from '@/lib/ai-models';
+import { AI_MODELS, claudeAcceptsTemperature, resolveClaudeModel } from '@/lib/ai-models';
 import {
   checkRateLimit,
   getClientIp,
@@ -104,8 +104,20 @@ async function callAnthropicWithPrompt(
   apiKey: string,
   systemPrompt: string
 ) {
-  const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-6';
+  const model = resolveClaudeModel();
   const baseUrl = process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com';
+
+  const requestBody: Record<string, unknown> = {
+    model,
+    system: systemPrompt,
+    max_tokens: 700,
+    messages,
+  };
+
+  // Yalniz qebul eden modellere gonder — yenilerinde parametr silinib, 400 qaytarir.
+  if (claudeAcceptsTemperature(model)) {
+    requestBody.temperature = 0.2;
+  }
 
   let response: Response;
   try {
@@ -116,13 +128,7 @@ async function callAnthropicWithPrompt(
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01',
       },
-      body: JSON.stringify({
-        model,
-        system: systemPrompt,
-        max_tokens: 700,
-        temperature: 0.2,
-        messages,
-      }),
+      body: JSON.stringify(requestBody),
     });
   } catch (err) {
     return {

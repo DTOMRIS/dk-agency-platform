@@ -6,7 +6,7 @@
  * @lastModified 2026-05-13 (TASK-0120)
  */
 
-import { AI_MODELS } from '@/lib/ai-models';
+import { AI_MODELS, claudeAcceptsTemperature, resolveClaudeModel } from '@/lib/ai-models';
 
 export type AIProviderName = 'deepseek' | 'claude';
 export type AIResponseFormat = 'json_object' | 'text';
@@ -48,10 +48,7 @@ export function isAIAbortError(err: unknown): boolean {
   return err instanceof Error && err.name === 'AbortError';
 }
 
-export async function callAI(
-  req: AIRequest,
-  opts: AIRouterOptions,
-): Promise<AIResponse> {
+export async function callAI(req: AIRequest, opts: AIRouterOptions): Promise<AIResponse> {
   const normalizedReq: AIRequest = {
     ...req,
     stream: req.stream ?? false,
@@ -73,7 +70,7 @@ export async function callAI(
       logProviderError(fallback, normalizedReq, opts, fallbackErr);
       if (isAIAbortError(fallbackErr)) throw fallbackErr;
       throw new Error(
-        `Both AI providers failed for ${opts.toolSlug}. Primary: ${primary}, Fallback: ${fallback}`,
+        `Both AI providers failed for ${opts.toolSlug}. Primary: ${primary}, Fallback: ${fallback}`
       );
     }
   }
@@ -81,15 +78,12 @@ export async function callAI(
 
 export async function callAIJson<T>(
   req: AIRequest,
-  opts: AIRouterOptions,
+  opts: AIRouterOptions
 ): Promise<{ data: T; meta: Omit<AIResponse, 'text'> }> {
   const jsonInstruction =
     '\n\nVacib: Cavabini YALNIZ kecerli JSON formatinda ver. Basqa hec bir metn, izahat ve ya markdown kod bloku olmasin. Yalniz xam JSON.';
 
-  const response = await callAI(
-    { ...req, system: (req.system ?? '') + jsonInstruction },
-    opts,
-  );
+  const response = await callAI({ ...req, system: (req.system ?? '') + jsonInstruction }, opts);
 
   const cleaned = response.text
     .replace(/^```(?:json)?\s*/i, '')
@@ -113,16 +107,13 @@ export async function callAIJson<T>(
 async function callProvider(
   provider: AIProviderName,
   req: AIRequest,
-  opts: AIRouterOptions,
+  opts: AIRouterOptions
 ): Promise<AIResponse> {
   if (provider === 'deepseek') return callDeepSeek(req, opts);
   return callClaude(req, opts);
 }
 
-async function callDeepSeek(
-  req: AIRequest,
-  opts: AIRouterOptions,
-): Promise<AIResponse> {
+async function callDeepSeek(req: AIRequest, opts: AIRouterOptions): Promise<AIResponse> {
   const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!apiKey) throw new Error('DEEPSEEK_API_KEY not configured');
 
@@ -170,35 +161,37 @@ async function callDeepSeek(
       result.text,
       result.inputTokens,
       result.outputTokens,
-      result.totalTokens,
+      result.totalTokens
     );
     logProviderSuccess('deepseek', req, opts, aiResponse, Date.now() - startedAt);
     return aiResponse;
   });
 }
 
-async function callClaude(
-  req: AIRequest,
-  opts: AIRouterOptions,
-): Promise<AIResponse> {
+async function callClaude(req: AIRequest, opts: AIRouterOptions): Promise<AIResponse> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY not configured');
 
   const startedAt = Date.now();
-  const model = process.env.KAZAN_ANTHROPIC_MODEL || 'claude-sonnet-4-6';
+  const model = resolveClaudeModel();
   const baseUrl = process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com';
-  const system = req.responseFormat === 'json_object'
-    ? `${req.system ?? ''}\n\nRespond with valid JSON only. Do not include markdown fences or explanatory text.`
-    : req.system;
+  const system =
+    req.responseFormat === 'json_object'
+      ? `${req.system ?? ''}\n\nRespond with valid JSON only. Do not include markdown fences or explanatory text.`
+      : req.system;
 
   const payload: Record<string, unknown> = {
     model,
     system,
     max_tokens: req.maxTokens ?? 1000,
-    temperature: req.temperature ?? 0.7,
     stream: req.stream ?? false,
     messages: [{ role: 'user', content: req.prompt }],
   };
+
+  // Yalniz qebul eden modellere gonder — yenilerinde parametr silinib, 400 qaytarir.
+  if (claudeAcceptsTemperature(model)) {
+    payload.temperature = req.temperature ?? 0.7;
+  }
 
   return withTimeout(req.timeout ?? DEFAULT_TIMEOUT_MS, async (signal) => {
     const response = await fetch(`${baseUrl}/v1/messages`, {
@@ -217,11 +210,14 @@ async function callClaude(
       throw new Error(`Claude HTTP ${response.status}: ${errText.slice(0, 300)}`);
     }
 
-    const result = req.stream
-      ? await readClaudeStream(response)
-      : await readClaudeJson(response);
+    const result = req.stream ? await readClaudeStream(response) : await readClaudeJson(response);
 
-    const aiResponse = buildAIResponse('claude', result.text, result.inputTokens, result.outputTokens);
+    const aiResponse = buildAIResponse(
+      'claude',
+      result.text,
+      result.inputTokens,
+      result.outputTokens
+    );
     logProviderSuccess('claude', req, opts, aiResponse, Date.now() - startedAt);
     return aiResponse;
   });
@@ -229,7 +225,7 @@ async function callClaude(
 
 async function withTimeout<T>(
   timeoutMs: number,
-  operation: (signal: AbortSignal) => Promise<T>,
+  operation: (signal: AbortSignal) => Promise<T>
 ): Promise<T> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -250,10 +246,9 @@ async function withTimeout<T>(
 }
 
 function isAbortLikeError(err: unknown): boolean {
-  return err instanceof Error && (
-    err.name === 'AbortError' ||
-    err.name === 'TimeoutError' ||
-    /aborted|abort/i.test(err.message)
+  return (
+    err instanceof Error &&
+    (err.name === 'AbortError' || err.name === 'TimeoutError' || /aborted|abort/i.test(err.message))
   );
 }
 
@@ -350,10 +345,7 @@ async function readClaudeStream(response: Response) {
   return { text: trimmed, inputTokens, outputTokens };
 }
 
-async function readSse(
-  response: Response,
-  onData: (data: string) => void,
-): Promise<void> {
+async function readSse(response: Response, onData: (data: string) => void): Promise<void> {
   if (!response.body) throw new Error('Streaming response has no body');
 
   const reader = response.body.getReader();
@@ -380,10 +372,7 @@ async function readSse(
   if (buffer.trim()) dispatchSseEvent(buffer, onData);
 }
 
-function dispatchSseEvent(
-  rawEvent: string,
-  onData: (data: string) => void,
-) {
+function dispatchSseEvent(rawEvent: string, onData: (data: string) => void) {
   const data = rawEvent
     .split(/\r?\n/)
     .filter((line) => line.startsWith('data:'))
@@ -399,7 +388,7 @@ function buildAIResponse(
   text: string,
   inputTokens: number,
   outputTokens: number,
-  totalTokens?: number,
+  totalTokens?: number
 ): AIResponse {
   const tokensUsed = totalTokens && totalTokens > 0 ? totalTokens : inputTokens + outputTokens;
   return {
@@ -421,7 +410,7 @@ function logProviderSuccess(
   req: AIRequest,
   opts: AIRouterOptions,
   response: AIResponse,
-  durationMs: number,
+  durationMs: number
 ) {
   console.info('[ai-router] provider success', {
     provider,
@@ -441,7 +430,7 @@ function logProviderError(
   provider: AIProviderName,
   req: AIRequest,
   opts: AIRouterOptions,
-  err: unknown,
+  err: unknown
 ) {
   console.error('[ai-router] provider failed', {
     provider,
