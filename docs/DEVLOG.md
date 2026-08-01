@@ -1,5 +1,19 @@
 # DK Agency Platform — Dev Log
 
+## 2026-08-01 — TASK-0426 (Alətlər mega menyusu ekrandan daşırdı — desktop)
+
+**Problem:** Canlı saytda header-dəki «Alətlər» mega menyusu ekranın sol kənarından kəsilirdi (owner ekran görüntüsü ilə sübut). Bu, əvvəllər «düzəldildi» deyilmiş, amma davam edən problem idi.
+
+**Kök səbəb (təxmin deyil, ölçülüb):** `Header.tsx:133` trigger sarğısı `relative`, `MegaMenu.tsx` isə paneli `absolute left-1/2 -translate-x-1/2 w-[90vw] max-w-[880px]` ilə yerləşdirirdi. Yəni 880px-lik panel **kiçik «Alətlər» düyməsinin mərkəzinə** görə mərkəzlənirdi, viewport-a görə yox. Düymə header-in solunda olduğu üçün panelin sol kənarı mənfi X-ə düşürdü (1280px-də təqr. −200px). Panel nə qədər genişdirsə, daşma bir o qədər çox olurdu.
+
+**Fix:** Panel ayrıca `MegaMenuPanel` komponentinə çıxarıldı; `left-1/2 -translate-x-1/2` silindi, üfüqi mövqe `useLayoutEffect`-də ölçülür: mümkün olduqda trigger-in mərkəzinə, əks halda viewport daxilinə 16px gutter ilə clamp olunur (`resize` listener ilə yenilənir). Əlavə: `max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain` — alçaq ekranlarda panel səhifəni uzatmır, öz içində sürüşür.
+
+**PROTECTED:** `Header.tsx`-ə toxunulmadı — fix tam olaraq `MegaMenu.tsx` daxilindədir.
+
+**Sübut (Playwright, built prod server 127.0.0.1:3001):** 1024/1280/1440/1920 en-lərində panel açılır və `panel.x ≥ 0`, `panel.right ≤ clientWidth`, `document.scrollWidth == clientWidth` → 4/4 PASS. Əvvəl: 1280-də panel.x mənfi. `next build` ✓ Compiled successfully (206 static page), eslint MegaMenu.tsx 0 error, tsc MegaMenu 0 error (repo-da mövcud 36 pre-existing error toxunulmadı).
+
+**Qeyd (sandbox):** `npm install` `cdn.sheetjs.com` egress bloku ilə 403 verir (TASK-0415 pinned xlsx tarball) — validasiya üçün müvəqqəti registry versiyası ilə install edildi, `package.json`/`package-lock.json` commit-dən əvvəl geri qaytarıldı (diff-də yoxdur). Bu infra məhdudiyyətidir, dəyişikliklə əlaqəsi yoxdur.
+
 ## 2026-07-16 — TASK-0419 (Onboarding dead-end fix + broken tool-link repair, P0)
 
 **Problem:** Yeni üzv prioritet seçib Save basırdı → modal bağlanırdı, başqa heç nə (dead-end, `OnboardingModal.tsx:127-131` köhnə hal). Araşdırma daha pis, artıq canlı bug tapdı: `PRIORITY_TOOL_MAP` route-u olmayan 5 slug-a istinad edirdi (`yemek-xerci`, `sikayet-analitigi` [route qovluğu `sikayat-analizi`], `sikayet-cavablandirici`, `reklam-yazicisi`, `kst-yoxlayici`) → `RecommendationWidget` və `try_first_tool` nudge artıq 404-lərə link verirdi. Ən pis: `inventory` yeganə aləti də 404 idi.

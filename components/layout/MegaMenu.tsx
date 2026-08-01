@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
+import { useLayoutEffect, useRef, useState } from 'react';
 import {
   BarChart3,
   Bot,
@@ -67,136 +68,182 @@ const popularItems = [
   { label: 'Food Cost', href: '/toolkit/food-cost' },
 ];
 
-export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+/** Panel ilə viewport kənarı arasında saxlanılan minimum boşluq (px). */
+const VIEWPORT_GUTTER = 16;
+
+/**
+ * Panel `absolute` olaraq "Alətlər" düyməsinə bağlıdır, düymə isə header-in solundadır.
+ * Sadə `left-1/2 -translate-x-1/2` 880px-lik paneli düymənin mərkəzinə görə yerləşdirir
+ * və panel ekranın sol kənarından daşırdı. Ona görə üfüqi mövqe ölçülür: mümkün olduqda
+ * trigger-in mərkəzinə, əks halda viewport daxilinə clamp olunur.
+ */
+function MegaMenuPanel({ onClose }: { onClose: () => void }) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [left, setLeft] = useState(0);
+
+  useLayoutEffect(() => {
+    const align = () => {
+      const panel = panelRef.current;
+      const anchor = panel?.offsetParent as HTMLElement | null;
+      if (!panel || !anchor) return;
+
+      const anchorRect = anchor.getBoundingClientRect();
+      const viewportWidth = document.documentElement.clientWidth;
+      const panelWidth = panel.offsetWidth;
+
+      const centered = anchorRect.left + anchorRect.width / 2 - panelWidth / 2;
+      const maxLeft = Math.max(VIEWPORT_GUTTER, viewportWidth - panelWidth - VIEWPORT_GUTTER);
+      const clamped = Math.min(Math.max(centered, VIEWPORT_GUTTER), maxLeft);
+
+      setLeft(clamped - anchorRect.left);
+    };
+
+    align();
+    window.addEventListener('resize', align);
+    return () => window.removeEventListener('resize', align);
+  }, []);
+
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.2 }}
-          className="absolute top-full left-1/2 z-50 w-[90vw] max-w-[880px] -translate-x-1/2 rounded-2xl border border-[var(--dk-border-soft)] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
-          onMouseLeave={onClose}
-        >
-          <div className="flex items-start justify-between">
-            <div>
-              <p className="font-bold text-gray-900">DK Agency Platforması</p>
-              <p className="mt-0.5 text-sm text-gray-500">
-                Restoranını planla, idarə et, böyüt, bir platformada.
-              </p>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
+    <motion.div
+      ref={panelRef}
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.2 }}
+      style={{ left }}
+      className="absolute top-full z-50 max-h-[calc(100vh-8rem)] w-[90vw] max-w-[880px] overflow-y-auto overscroll-contain rounded-2xl border border-[var(--dk-border-soft)] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+      onMouseLeave={onClose}
+    >
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="font-bold text-gray-900">DK Agency Platforması</p>
+          <p className="mt-0.5 text-sm text-gray-500">
+            Restoranını planla, idarə et, böyüt, bir platformada.
+          </p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <Link
+            href="/toolkit"
+            onClick={onClose}
+            className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+          >
+            <Wrench size={14} />
+            Bütün alətlər
+          </Link>
+        </div>
+      </div>
+
+      <div className="my-6 h-px bg-gray-100" />
+
+      <div className="grid grid-cols-2 gap-8">
+        <div>
+          <div className="mb-3">
+            <p className="text-xs font-extrabold uppercase tracking-widest text-[var(--dk-red)]">
+              Başla
+            </p>
+            <div className="mt-1 h-0.5 w-6 bg-[var(--dk-red)]" />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            {baslaItems.map((item) => (
               <Link
-                href="/toolkit"
+                key={`${item.href}-${item.label}`}
+                href={item.href}
                 onClick={onClose}
-                className="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+                className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-red-50/50"
               >
-                <Wrench size={14} />
-                Bütün alətlər
+                <item.icon
+                  size={18}
+                  className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[var(--dk-red)]"
+                />
+                <div>
+                  <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[var(--dk-red)]">
+                    {item.label}
+                  </p>
+                  <p className="text-xs text-gray-400">{item.desc}</p>
+                </div>
               </Link>
-            </div>
-          </div>
-
-          <div className="my-6 h-px bg-gray-100" />
-
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <div className="mb-3">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-[var(--dk-red)]">Başla</p>
-                <div className="mt-1 h-0.5 w-6 bg-[var(--dk-red)]" />
-              </div>
-              <div className="flex flex-col gap-0.5">
-                {baslaItems.map((item) => (
-                  <Link
-                    key={`${item.href}-${item.label}`}
-                    href={item.href}
-                    onClick={onClose}
-                    className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-red-50/50"
-                  >
-                    <item.icon
-                      size={18}
-                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[var(--dk-red)]"
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[var(--dk-red)]">
-                        {item.label}
-                      </p>
-                      <p className="text-xs text-gray-400">{item.desc}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-3">
-                <p className="text-xs font-extrabold uppercase tracking-widest text-[var(--dk-gold)]">Böyüt</p>
-                <div className="mt-1 h-0.5 w-6 bg-[var(--dk-gold)]" />
-              </div>
-              <div className="flex flex-col gap-0.5">
-                {boyutItems.map((item) => (
-                  <Link
-                    key={`${item.href}-${item.label}`}
-                    href={item.href}
-                    onClick={onClose}
-                    className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-amber-50/50"
-                  >
-                    <item.icon
-                      size={18}
-                      className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[var(--dk-gold)]"
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[var(--dk-gold)]">
-                        {item.label}
-                        {item.badge && (
-                          <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 align-middle text-[10px] font-bold text-amber-800">
-                            {item.badge}
-                          </span>
-                        )}
-                      </p>
-                      <p className="text-xs text-gray-400">{item.desc}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="my-6 h-px bg-gray-100" />
-
-          <div>
-            <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[var(--dk-purple)]">Devir & Satış</p>
-            <div className="flex flex-wrap gap-1">
-              {devirItems.map((item) => (
-                <Link
-                  key={`${item.href}-${item.label}`}
-                  href={item.href}
-                  onClick={onClose}
-                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[var(--dk-purple)]"
-                >
-                  <item.icon size={16} />
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="my-4 h-px bg-gray-100" />
-
-          <div className="flex items-center gap-2 text-xs">
-            <span className="font-bold text-[var(--dk-red)]">Populyar:</span>
-            {popularItems.map((item, index) => (
-              <span key={item.href} className="flex items-center gap-2">
-                {index > 0 && <span className="text-gray-300">&middot;</span>}
-                <Link href={item.href} onClick={onClose} className="text-gray-500 transition-colors hover:text-[var(--dk-red)]">
-                  {item.label}
-                </Link>
-              </span>
             ))}
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+
+        <div>
+          <div className="mb-3">
+            <p className="text-xs font-extrabold uppercase tracking-widest text-[var(--dk-gold)]">
+              Böyüt
+            </p>
+            <div className="mt-1 h-0.5 w-6 bg-[var(--dk-gold)]" />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            {boyutItems.map((item) => (
+              <Link
+                key={`${item.href}-${item.label}`}
+                href={item.href}
+                onClick={onClose}
+                className="group flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-amber-50/50"
+              >
+                <item.icon
+                  size={18}
+                  className="mt-0.5 shrink-0 text-gray-400 transition-colors group-hover:text-[var(--dk-gold)]"
+                />
+                <div>
+                  <p className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-[var(--dk-gold)]">
+                    {item.label}
+                    {item.badge && (
+                      <span className="ml-2 inline-block rounded-full bg-amber-100 px-2 align-middle text-[10px] font-bold text-amber-800">
+                        {item.badge}
+                      </span>
+                    )}
+                  </p>
+                  <p className="text-xs text-gray-400">{item.desc}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="my-6 h-px bg-gray-100" />
+
+      <div>
+        <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[var(--dk-purple)]">
+          Devir & Satış
+        </p>
+        <div className="flex flex-wrap gap-1">
+          {devirItems.map((item) => (
+            <Link
+              key={`${item.href}-${item.label}`}
+              href={item.href}
+              onClick={onClose}
+              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-purple-50/50 hover:text-[var(--dk-purple)]"
+            >
+              <item.icon size={16} />
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="my-4 h-px bg-gray-100" />
+
+      <div className="flex items-center gap-2 text-xs">
+        <span className="font-bold text-[var(--dk-red)]">Populyar:</span>
+        {popularItems.map((item, index) => (
+          <span key={item.href} className="flex items-center gap-2">
+            {index > 0 && <span className="text-gray-300">&middot;</span>}
+            <Link
+              href={item.href}
+              onClick={onClose}
+              className="text-gray-500 transition-colors hover:text-[var(--dk-red)]"
+            >
+              {item.label}
+            </Link>
+          </span>
+        ))}
+      </div>
+    </motion.div>
   );
+}
+
+export default function MegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  return <AnimatePresence>{isOpen && <MegaMenuPanel onClose={onClose} />}</AnimatePresence>;
 }
