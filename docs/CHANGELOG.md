@@ -11,6 +11,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0426` fix(nav): **«Alətlər» mega menyusu artıq ekrandan daşmır** — kök səbəb: panel `absolute left-1/2 -translate-x-1/2` ilə **trigger düyməsinin** mərkəzinə görə yerləşirdi, viewport-a görə yox; düymə header-in solunda olduğu üçün 880px-lik panelin sol kənarı mənfi X-ə düşürdü (1280px-də ≈ −200px). Panel `MegaMenuPanel` komponentinə çıxarıldı, üfüqi mövqe `useLayoutEffect`-də ölçülür və 16px gutter ilə viewport daxilinə clamp olunur (`resize` ilə yenilənir); alçaq ekranlar üçün `max-h-[calc(100vh-8rem)] overflow-y-auto`. PROTECTED `Header.tsx`-ə toxunulmadı. Playwright sübut: 1024/1280/1440/1920 → 4/4 PASS (`panel.x ≥ 0`, `scrollWidth == clientWidth`). Build ✓, lint ✓.
+
 ### Session xülasəsi — 2026-07-16/17 (onboarding + blog/news + üzv görünmə sprinti)
 
 Canlı sayt baxışı əsasında ardıcıl 7 fix (TASK-0419 → 0425), hamısı ayrıca PR + CI (quality-gates) yaşıl + merge. Kök səbəblər sübutla tapıldı (təxminlə deyil):
