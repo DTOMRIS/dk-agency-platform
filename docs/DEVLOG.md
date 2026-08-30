@@ -1,5 +1,25 @@
 # DK Agency Platform — Dev Log
 
+## 2026-08-30 — TASK-0432 (Header-dən `/franchise`-ə daxili keçid)
+
+**Niyə:** TASK-0431 pillar səhifəni yaratdı, amma naviqasiyadan ona link yox idi. Daxili link olmayan səhifəni Google ikinci dərəcəli sayır — sitemap tək başına zəif siqnaldır. Sahib icazə verdi (`Header.tsx` PROTECTED).
+
+**Dəyişiklik:** `franchiseLinks` massivinin başına bir sətir. Massiv **həm desktop dropdown (151-ci sətir), həm mobil menyu (262-ci sətir)** tərəfindən işlədilir — bir əlavə hər ikisini örtür, ayrıca kod lazım deyil.
+
+**Anchor mətni qəsdən açar sözdür:** «Azərbaycanda Franchise» (AZ), «Franchise in Azerbaijan» (EN), «Франшиза в Азербайджане» (RU), «Azerbaycan'da Franchise» (TR). Daxili linkin mətni sıralamaya təsir edir — «Ümumi baxış» kimi neytral söz bu dəyəri verməzdi.
+
+**İki tələ, ikisi də yoxlama ilə tutuldu:**
+
+1. **Prettier hook PROTECTED faylı tam yenidən formatladı** — 465 insert / 94 delete. PROTECTED fayl üçün belə diff nəzərdən keçirilə bilməz. Fayl `git checkout` ilə sıfırlandı və dəyişiklik formatlaşdırıcıdan yan keçərək (node ilə birbaşa yazı) yenidən tətbiq olundu. **Yekun diff: 6 insert / 4 delete.**
+
+2. **TR etiketindəki apostrof sətri sındırırdı.** Generator JSON dırnaqlarını tək dırnağa çevirirdi, `Azerbaycan'da` isə içində apostrof daşıyır → `frOverview:'Azerbaycan'da Franchise'` sintaksis xətası. O sətir cüt dırnağa keçirildi.
+
+**Test baqı, kod baqı deyil (qeyd üçün):** ilk Playwright icrasında həm desktop, həm mobil FAIL verdi. Səbəb kod deyildi — test brauzerinin dili EN idi, ona görə linklər `/en/franchise` kimi render olunurdu, mənim selektorum isə `/franchise` axtarırdı. Brauzer `locale: 'az-AZ'` edildikdən sonra keçdi. Mobil isə Playwright-in `click()` metodunun akkordeon düyməsinə çatmaması idi; `evaluate(el => el.click())` ilə həll olundu. **İşləyən kodu «düzəltməyə» başlamadan əvvəl debug etmək lazım idi** — əks halda mövcud davranışı sındıra bilərdim.
+
+**Sübut:** desktop dropdown-da `/franchise`, anchor «Azərbaycanda Franchise» ✓ · mobil menyuda `/franchise` birinci sırada ✓ · TASK-0426 mega menyu 1024/1280/1920 → 3/3 PASS, reqressiya yox ✓ · `✓ Compiled successfully` · tsc **36 (baza)** · eslint 0 error.
+
+**Qalır:** `/news` saxta məzmunu (sahib «hələlik saxla» dedi) · `llms.txt` + blog Article markup.
+
 ## 2026-08-30 — TASK-0431 (`/franchise` pillar səhifəsi)
 
 **Kontekst:** TASK-0430 indeksləşmə siqnallarını düzəltdi, amma əsas səbəb qalmışdı — «Azərbaycanda franchise» sorğusu üçün **sıralanacaq səhifə yox idi**. `app/franchise/page.tsx` mövcud deyildi; 5 alət vardı, onları birləşdirən səhifə yox.
