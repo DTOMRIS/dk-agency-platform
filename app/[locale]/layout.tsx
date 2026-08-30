@@ -4,7 +4,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { defaultLocale, isLocale, normalizeLocale, withLocale } from '@/i18n/config';
 import { routing } from '@/i18n/routing';
-import { getAlternates } from '@/lib/seo/alternates';
 import YandexMetricaInit from '@/components/YandexMetricaInit';
 // PublicChrome is in root layout — [locale] only provides locale-scoped messages
 
@@ -16,19 +15,23 @@ type Props = {
 const localeMetadata: Record<'az' | 'ru' | 'en' | 'tr', { title: string; description: string }> = {
   az: {
     title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
-    description: 'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+    description:
+      'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
   },
   ru: {
     title: 'DK Agency | Первая AI-платформа для HoReCa в Азербайджане',
-    description: 'Бесплатные инструменты, экспертный блог, продажа ресторанов и франшизы для HoReCa-сектора Азербайджана.',
+    description:
+      'Бесплатные инструменты, экспертный блог, продажа ресторанов и франшизы для HoReCa-сектора Азербайджана.',
   },
   en: {
     title: "DK Agency | Azerbaijan's First AI-Powered HoReCa Platform",
-    description: 'Free tools, expert blog, restaurant transfers and franchise support for Azerbaijan HoReCa operators.',
+    description:
+      'Free tools, expert blog, restaurant transfers and franchise support for Azerbaijan HoReCa operators.',
   },
   tr: {
     title: "DK Agency | Azerbaycan'ın İlk AI Destekli HoReCa Platformu",
-    description: "Azerbaycan HoReCa sektörü için ücretsiz araçlar, uzman blog, restoran devri ve franchise desteği.",
+    description:
+      'Azerbaycan HoReCa sektörü için ücretsiz araçlar, uzman blog, restoran devri ve franchise desteği.',
   },
 };
 
@@ -39,7 +42,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: localeMetadata[locale].title,
     description: localeMetadata[locale].description,
-    alternates: getAlternates(locale, '/'),
+    // `getAlternates(locale, '/')` burada HARDCODE '/' idi — yəni /ru/toolkit
+    // kimi ALT səhifələr də canonical olaraq /ru göstərirdi, yəni özlərini
+    // ana səhifənin dublikatı elan edirdilər və indeksdən düşürdülər.
+    // Layout generateMetadata-da cari pathname mövcud deyil, ona görə nisbi
+    // './' işlədilir — Next onu hər səhifənin öz ünvanına görə həll edir.
+    // Tam hreflang dəsti yolu bilən səhifələrdə (blog/[slug], ilanlar,
+    // franchise/radar) getAlternates ilə verilir.
+    alternates: { canonical: './' },
   };
 }
 

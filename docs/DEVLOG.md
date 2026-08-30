@@ -1,5 +1,30 @@
 # DK Agency Platform — Dev Log
 
+## 2026-08-29/30 — TASK-0430 (Texniki SEO təməli: canonical + sitemap + metadata)
+
+**Siqnal:** Doğan — «Azərbaycanda franchising axtardım, saytım çıxmadı. 30 yazımız var, panelimiz var, AI SEO lazımdır.»
+
+**Diaqnoz:** problem məzmun deyil. 30 yazı var, amma Google-a gedən indeksləşmə siqnalları ziddiyyətli və natamamdır. Beş ayrı problem tapıldı, üçü canonical ətrafında.
+
+**1. Canonical redirect-ə işarə edirdi.** `lib/seo/alternates.ts` hər AZ səhifəsi üçün `canonical: /az/{path}` qururdu. Amma `i18n/routing.ts` → `localePrefix: 'as-needed'`, yəni `/az/X` → `/X` redirect olunur (L-038). Nəticə: səhifə Google-a «əsl ünvanım budur» deyir, Google ora gedir, geri atılır. Ziddiyyətli siqnal indeksləşməni boğur. **Sübut ki, bu qərar deyil səhvdir:** eyni layihədə `lib/seo/structured-data.ts → localeUrl()` artıq `az = prefiksiz` qaydasını tətbiq edir. İki fayl bir-birinə zidd idi.
+
+**2. Prefiksiz səhifələrdə canonical ÜMUMİYYƏTLƏ yox idi.** `getAlternates` yalnız `[locale]` ağacında çağırılır; `/`, `/toolkit`, `/blog`, `/ilanlar` kimi əsl AZ ünvanları heç bir canonical emit etmirdi. Yoxlandı: `curl | grep canonical` → 0 nəticə. Həll: root layout-a bir sətir `alternates: { canonical: './' }` — Next onu hər səhifənin öz yoluna görə həll edir. `app/layout.tsx` PROTECTED olduğu üçün əvvəlcə lokal sınandı, işlədiyi sübut olundu, sonra sahibdən icazə alındı.
+
+**3. `[locale]/layout.tsx` canonical-ı `'/'`-ə hardcode etmişdi.** `getAlternates(locale, '/')` — layout bütün alt səhifələrə şamil olduğu üçün `/ru/toolkit` canonical olaraq `/ru` göstərirdi. Yəni **hər RU/EN/TR alt səhifəsi özünü ana səhifənin dublikatı elan edirdi** — Google belə səhifələri indeksdən çıxarır. Bu, 1-ci problemdən də ağırdır və yalnız yoxlama zamanı üzə çıxdı. Layout `generateMetadata`-da pathname mövcud olmadığı üçün nisbi `'./'` işlədildi. Ödəniş: layout səviyyəsində hreflang itdi — amma o hreflang onsuz da **səhv** idi (hər səhifə üçün ana səhifəni göstərirdi). Yolu bilən səhifələr (blog/[slug], ilanlar, franchise/radar) `getAlternates` ilə düzgün hreflang verməyə davam edir.
+
+**4. Sitemap ~25 səhifəni buraxırdı və redirect göndərirdi.** Bütün toolkit alətləri, bütün franchise alətləri, sektor səhifələri, `/ilanlar`, `/uzvluk`, `/haqqimizda` kənarda idi. Üstəlik sitemap `/az/...` URL-ləri göndərirdi — hamısı redirect. Yenidən yazıldı: `entriesFor()` helper-i AZ-ı prefiksiz, digər dilləri prefiksli verir. Nəticə **296 URL, `/az/` sıfır**.
+
+**5. 17 səhifədə başlıq/təsvir yox idi.** Struktur gözlədiyimdən fərqli çıxdı: bəzi route-larda `app/toolkit/X/page.tsx` **mirror deyil, tam `'use client'` komponentdir** — belə səhifə metadata ixrac edə bilmir. Onlar üçün komponenti bölmək əvəzinə yanına `layout.tsx` qoyuldu (risksiz, 7 fayl). Qalan 10 mirror-a birbaşa `export const metadata`. Mətnlər **uydurulmadı** — mövcud `[locale]` metadata bloklarından və `messages/az.json`-dan (`otaReadiness`, `hotelReadiness`, `guesthouseRoi`, `whatsappTemplates`, `franchiseRoi`, `franchiseReadiness`, `franchiseBuyer`, `franchbook`) götürüldü, açar sözlə zənginləşdirildi.
+
+**Sübut:** `✓ Compiled successfully` · canonical 10 route × 4 dil üzrə yoxlandı, hamısı öz-özünə istinad edir (`/ru/toolkit` → `/ru/toolkit`, əvvəl `/ru`) · sitemap 296 URL / 0 ədəd `/az/` · başlıqlar render olunur (`/toolkit/basabas` → «Başabaş Nöqtəsi Kalkulyatoru — Restoran») · auth gating toxunulmayıb (`/dashboard` 307, `POST /api/admin/ads` 403) · route smoke 200 · eslint 0 error · tsc **36 error — əvvəlki sessiya ilə eyni say**, yeni error yoxdur.
+
+**Gözlənti (dürüst):** bunlar indeksləşməni **mümkün edir**, sıralamanı **zəmanət vermir**. Google-un yenidən taraması 2-6 həftə çəkir. Search Console-da sitemap yenidən göndərilməlidir.
+
+**Növbəti (bu task-da DEYİL):**
+- `/franchise` **pillar səhifəsi yoxdur** — `app/franchise/page.tsx` mövcud deyil, yəni «Azərbaycanda franchise» sorğusu üçün sıralanacaq səhifə yoxdur. Sitemap-a qəsdən salınmadı (404 elan etməmək üçün). Məzmun qərarı sahibindir → TASK-0431.
+- `/news` səhifəsi hardcoded saxta `NEXT_ITEMS` məzmunu ilə indekslənə bilir (TASK-0425 ana səhifədə düzəltmişdi, bu səhifə qalıb) — nazik/saxta məzmun SEO-ya zərərlidir. Silinsin, yoxsa real datadan qidalansın? Sahib qərarı.
+- `llms.txt`, blog yazılarına Article + FAQ + Breadcrumb markup → TASK-0432.
+
 ## 2026-08-01 — TASK-0429 (`sharp` 0.35.3: son production runtime HIGH)
 
 **Kontekst:** TASK-0428-dən sonra 9 advisory qalmışdı. `sharp` onların arasında **yeganə production runtime HIGH** idi (libvips CVE-2026-33327/33328/35590/35591 — şəkil dekodlaması; platformada elan fotosu və fatura OCR var). Sahib icazəsi alındı, çünki `package.json` PROTECTED-dir.
