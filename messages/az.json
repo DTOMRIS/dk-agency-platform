@@ -72,7 +72,12 @@
     "viewAll": "Hamısını Gör",
     "recentOffers": "Son Təkliflər",
     "quickActions": "Sürətli Əməliyyatlar",
-    "statLabels": ["Aktiv Elanlar", "Ümumi Baxış", "Gələn Təkliflər", "Mesajlar"],
+    "statLabels": [
+      "Aktiv Elanlar",
+      "Ümumi Baxış",
+      "Gələn Təkliflər",
+      "Mesajlar"
+    ],
     "statusLabels": {
       "active": "Aktiv",
       "pending": "Gözlənilir",
@@ -92,8 +97,16 @@
       "Franchise sualı",
       "Elanınız seçilənlərə əlavə edildi"
     ],
-    "offerTimes": ["2 saat əvvəl", "5 saat əvvəl", "1 gün əvvəl"],
-    "quickLinks": ["Yeni Elan", "Analiz Alətləri", "Profili Yenilə"],
+    "offerTimes": [
+      "2 saat əvvəl",
+      "5 saat əvvəl",
+      "1 gün əvvəl"
+    ],
+    "quickLinks": [
+      "Yeni Elan",
+      "Analiz Alətləri",
+      "Profili Yenilə"
+    ],
     "noOffers": "Hələ təklif yoxdur",
     "noListings": "Hələ elanınız yoxdur"
   },
@@ -792,13 +805,33 @@
         "payback": "Payback"
       },
       "benchmarkState": {
-        "primeCost": { "green": "Yaşıl zona", "amber": "Diqqət", "red": "Risk" },
-        "rentShare": { "green": "Sağlam", "amber": "Sərhəddə", "red": "Çox yüksək" },
-        "ebitda": { "green": "Güclü", "amber": "Müşahidə et", "red": "Zəif" },
-        "payback": { "green": "Sürətli", "amber": "Orta", "red": "Uzun" }
+        "primeCost": {
+          "green": "Yaşıl zona",
+          "amber": "Diqqət",
+          "red": "Risk"
+        },
+        "rentShare": {
+          "green": "Sağlam",
+          "amber": "Sərhəddə",
+          "red": "Çox yüksək"
+        },
+        "ebitda": {
+          "green": "Güclü",
+          "amber": "Müşahidə et",
+          "red": "Zəif"
+        },
+        "payback": {
+          "green": "Sürətli",
+          "amber": "Orta",
+          "red": "Uzun"
+        }
       },
       "scenarioTitle": "3 ssenari",
-      "scenario": { "base": "Baza", "conservative": "Mühafizəkar", "optimistic": "Optimist" },
+      "scenario": {
+        "base": "Baza",
+        "conservative": "Mühafizəkar",
+        "optimistic": "Optimist"
+      },
       "branchReportTitle": "Şube açılış maliyyə hesabatı",
       "branchReportGeneratedAt": "Hazırlanma tarixi: {date}",
       "branchReportMethodology": "Bütün rakamlar girişlərdən və deterministik formullardan hesablanıb. Satış mənfəət və ya sərbəst nağd kimi qəbul edilmir.",
@@ -6018,5 +6051,74 @@
     "subline": "Hər HoReCa sektoru üçün pulsuz alətlər, hesablayıcılar və bələdçilər.",
     "toolsLabel": "alət",
     "ctaLabel": "Bax"
+  },
+  "franchisePillar": {
+    "meta": {
+      "title": "Azərbaycanda Franchise — Almaq və Vermək | DK Agency",
+      "description": "Azərbaycanda franchise almaq və ya markanızı franchise vermək. Pulsuz alətlər: hazırlıq testi, ROI kalkulyatoru, alıcı çeklisti və Azərbaycana gəlməmiş markaların kataloqu."
+    },
+    "hero": {
+      "badge": "Franchise",
+      "title": "Azərbaycanda franchise",
+      "subtitle": "İki yol var: markanızı franchise verirsiniz, ya da hazır bir franchise alırsınız. Hər ikisi üçün pulsuz alət, şəxsi hesabat və addım planı burada."
+    },
+    "giver": {
+      "eyebrow": "Marka sahibi üçün",
+      "title": "Markanızı franchise vermək",
+      "desc": "İllərlə qurduğunuz brendi təkrarlana bilən sistemə çevirmək. Əvvəlcə hazırlığı ölçün, sonra əl kitabının skeletini qurun."
+    },
+    "taker": {
+      "eyebrow": "İnvestor və sahibkar üçün",
+      "title": "Franchise almaq",
+      "desc": "Marka seçimindən rəqəmə qədər: hansı markalar mövcuddur, investisiya geri qayıdırmı, müqavilədə nəyə baxmaq lazımdır."
+    },
+    "tools": {
+      "readiness": {
+        "title": "Franchise Hazırlıq Testi",
+        "desc": "Markanız franchise verməyə hazırdırmı? 12 sual, təxminən 4 dəqiqə, sonunda şəxsi hazırlıq hesabatı."
+      },
+      "franchbook": {
+        "title": "AI Françbuk Generatoru",
+        "desc": "AI ilə franchise əl kitabı skeleti: 6 mərhələ, sabit AFA Akademiya outline-ı, redaktə edilə bilən sənəd.",
+        "badge": "BETA"
+      },
+      "radar": {
+        "title": "Franchise Radar",
+        "desc": "Azərbaycana hələ gəlməmiş qlobal markalar: investisiya aralığı, mənşə və giriş modeli ilə."
+      },
+      "roi": {
+        "title": "Franchise ROI Kalkulyatoru",
+        "desc": "Bu franchise investisiyaya dəyərmi? Rəqəmləri dəyişdikcə nəticə canlı yenilənir."
+      },
+      "buyer": {
+        "title": "Franchise Alıcı Çeklisti",
+        "desc": "9 sahə, təxminən 3 dəqiqə: investisiya və xərclərdən müqavilə şərtlərinə qədər."
+      },
+      "open": "Alətə keç"
+    },
+    "note": {
+      "quote": "Hörmətli sahibkar, uğurlu françayzinq markanızın dəyərini artırır və müəssisənizin dayanıqlı böyüməsini təmin edir. İllərlə qurduğunuz brend bizim üçün əmanətdir.",
+      "author": "Doğan Tomris, DK Agency"
+    },
+    "faq": {
+      "title": "Tez-tez verilən suallar",
+      "q1": "Franchise almaq üçün hansı ödənişlər var?",
+      "a1": "Adətən üç əsas bədəl olur: ad haqqı, royalti və reklam bədəli. Çox sahibkar bu rəqəmlərə ayrı-ayrı baxır — halbuki üçü birləşəndə aylıq yükün real ölçüsü görünür. ROI kalkulyatoru ilə hamısını bir yerdə hesablaya bilərsiniz.",
+      "q2": "Markamı franchise vermək üçün nə lazımdır?",
+      "a2": "Ən əvvəl markanız rəsmi qeydiyyatdan keçməlidir. Qeydiyyatdan keçməyən markanı franchise vermək, sahibi olmadığın evi icarəyə vermək kimidir. Sonrakı addım hazırlığı ölçmək və əl kitabını qurmaqdır.",
+      "q3": "Franchise investisiyası nə vaxt sağlam sayılır?",
+      "a3": "Ümumi hədəf: illik ROI ən azı %20, geri-qaytarma müddəti isə 36 aydan çox olmasın. Öz rəqəmlərinizi ROI kalkulyatorunda yoxlaya bilərsiniz.",
+      "q4": "Azərbaycanda hansı qlobal markalar hələ yoxdur?",
+      "a4": "Franchise Radar kataloqunda Azərbaycana hələ gəlməmiş markalar investisiya aralığı, mənşə və giriş modeli ilə sıralanır. Maraqlandığınız markanı seçirsiniz, DK komandası əlaqə saxlayır."
+    },
+    "blog": {
+      "title": "Franchise haqqında yazılarımız",
+      "cta": "Bütün yazılar"
+    },
+    "cta": {
+      "title": "Hansı tərəfdə olduğunuzu bilmirsinizsə",
+      "desc": "Vəziyyətinizi yazın — hansı alətdən başlamaq lazım olduğunu birlikdə müəyyən edək.",
+      "button": "Əlaqə saxla"
+    }
   }
 }

@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-08-30T15:44:49.134Z
-- BuildStatus: PASS
+- GeneratedAt: 2026-08-30T16:18:58.089Z
+- BuildStatus: UNKNOWN
 
-## Routes (255)
+## Routes (257)
 - /
 - /(dev)/heromotif
 - /[locale]
@@ -74,6 +74,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/elaqe
 - /[locale]/email-preferences
 - /[locale]/forgot-password
+- /[locale]/franchise
 - /[locale]/franchise/alici-cheklisti
 - /[locale]/franchise/francbuk-generatoru
 - /[locale]/franchise/hazirliq-testi
@@ -211,6 +212,7 @@ Auto-generated. Do not edit manually.
 - /elaqe
 - /email-preferences
 - /forgot-password
+- /franchise
 - /franchise/alici-cheklisti
 - /franchise/francbuk-generatoru
 - /franchise/hazirliq-testi
