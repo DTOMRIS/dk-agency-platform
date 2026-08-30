@@ -72,7 +72,12 @@
     "viewAll": "View All",
     "recentOffers": "Recent Offers",
     "quickActions": "Quick Actions",
-    "statLabels": ["Active Listings", "Total Views", "Incoming Offers", "Messages"],
+    "statLabels": [
+      "Active Listings",
+      "Total Views",
+      "Incoming Offers",
+      "Messages"
+    ],
     "statusLabels": {
       "active": "Active",
       "pending": "Pending",
@@ -92,8 +97,16 @@
       "Franchise enquiry",
       "Your listing was favourited"
     ],
-    "offerTimes": ["2 hours ago", "5 hours ago", "1 day ago"],
-    "quickLinks": ["New Listing", "Analytics", "Update Profile"],
+    "offerTimes": [
+      "2 hours ago",
+      "5 hours ago",
+      "1 day ago"
+    ],
+    "quickLinks": [
+      "New Listing",
+      "Analytics",
+      "Update Profile"
+    ],
     "noOffers": "No offers yet",
     "noListings": "You have no listings yet"
   },
@@ -792,13 +805,33 @@
         "payback": "Payback"
       },
       "benchmarkState": {
-        "primeCost": { "green": "Green zone", "amber": "Watch", "red": "Risk" },
-        "rentShare": { "green": "Healthy", "amber": "Borderline", "red": "Too high" },
-        "ebitda": { "green": "Strong", "amber": "Monitor", "red": "Weak" },
-        "payback": { "green": "Fast", "amber": "Medium", "red": "Long" }
+        "primeCost": {
+          "green": "Green zone",
+          "amber": "Watch",
+          "red": "Risk"
+        },
+        "rentShare": {
+          "green": "Healthy",
+          "amber": "Borderline",
+          "red": "Too high"
+        },
+        "ebitda": {
+          "green": "Strong",
+          "amber": "Monitor",
+          "red": "Weak"
+        },
+        "payback": {
+          "green": "Fast",
+          "amber": "Medium",
+          "red": "Long"
+        }
       },
       "scenarioTitle": "3 scenarios",
-      "scenario": { "base": "Base", "conservative": "Conservative", "optimistic": "Optimistic" },
+      "scenario": {
+        "base": "Base",
+        "conservative": "Conservative",
+        "optimistic": "Optimistic"
+      },
       "branchReportTitle": "Branch opening financial report",
       "branchReportGeneratedAt": "Generated: {date}",
       "branchReportMethodology": "All figures are calculated from inputs and deterministic formulas. Sales are not treated as profit or free cash.",
@@ -5903,5 +5936,74 @@
     "subline": "Free tools, calculators and guides for every HoReCa sector.",
     "toolsLabel": "tools",
     "ctaLabel": "Open"
+  },
+  "franchisePillar": {
+    "meta": {
+      "title": "Franchise in Azerbaijan — Buying and Franchising | DK Agency",
+      "description": "Buy a franchise in Azerbaijan or franchise your own brand. Free tools: readiness test, ROI calculator, buyer checklist, and a catalogue of brands not yet in Azerbaijan."
+    },
+    "hero": {
+      "badge": "Franchise",
+      "title": "Franchise in Azerbaijan",
+      "subtitle": "Two paths: you franchise your own brand, or you buy an existing one. Free tools, a personal report, and a step plan for both are here."
+    },
+    "giver": {
+      "eyebrow": "For brand owners",
+      "title": "Franchising your brand",
+      "desc": "Turning the brand you built over years into a repeatable system. Measure readiness first, then build the skeleton of your manual."
+    },
+    "taker": {
+      "eyebrow": "For investors and entrepreneurs",
+      "title": "Buying a franchise",
+      "desc": "From choosing a brand to running the numbers: what is available, whether the investment returns, and what to check in the contract."
+    },
+    "tools": {
+      "readiness": {
+        "title": "Franchise Readiness Test",
+        "desc": "Is your brand ready to franchise? 12 questions, about 4 minutes, with a personal readiness report at the end."
+      },
+      "franchbook": {
+        "title": "AI Franchbook Generator",
+        "desc": "A franchise manual skeleton built with AI: 6 stages, a fixed AFA Academy outline, an editable document.",
+        "badge": "BETA"
+      },
+      "radar": {
+        "title": "Franchise Radar",
+        "desc": "Global brands not yet in Azerbaijan, with investment range, origin, and entry model."
+      },
+      "roi": {
+        "title": "Franchise ROI Calculator",
+        "desc": "Is this franchise worth the investment? The result updates live as you change the numbers."
+      },
+      "buyer": {
+        "title": "Franchise Buyer Checklist",
+        "desc": "9 areas, about 3 minutes: from investment and running costs to contract terms."
+      },
+      "open": "Open the tool"
+    },
+    "note": {
+      "quote": "Dear entrepreneur, successful franchising raises the value of your brand and secures the sustainable growth of your business. The brand you built over years is a trust placed in our hands.",
+      "author": "Doğan Tomris, DK Agency"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "q1": "What fees are involved in buying a franchise?",
+      "a1": "There are usually three: the initial franchise fee, royalties, and an advertising fee. Most entrepreneurs look at these separately — yet only together do they show the real size of the monthly burden. The ROI calculator lets you work them out in one place.",
+      "q2": "What do I need in order to franchise my brand?",
+      "a2": "Above all, your trademark must be formally registered. Franchising an unregistered brand is like renting out a house you do not own. The next step is measuring readiness and building the manual.",
+      "q3": "When is a franchise investment considered sound?",
+      "a3": "The general target: an annual ROI of at least 20% and a payback period no longer than 36 months. You can test your own numbers in the ROI calculator.",
+      "q4": "Which global brands are not yet in Azerbaijan?",
+      "a4": "The Franchise Radar catalogue lists brands that have not yet entered Azerbaijan, with investment range, origin, and entry model. You pick the brand you are interested in and the DK team gets in touch."
+    },
+    "blog": {
+      "title": "Our writing on franchising",
+      "cta": "All articles"
+    },
+    "cta": {
+      "title": "If you are not sure which side you are on",
+      "desc": "Describe your situation and we will work out together which tool to start with.",
+      "button": "Get in touch"
+    }
   }
 }

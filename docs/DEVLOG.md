@@ -1,5 +1,38 @@
 # DK Agency Platform — Dev Log
 
+## 2026-08-30 — TASK-0431 (`/franchise` pillar səhifəsi)
+
+**Kontekst:** TASK-0430 indeksləşmə siqnallarını düzəltdi, amma əsas səbəb qalmışdı — «Azərbaycanda franchise» sorğusu üçün **sıralanacaq səhifə yox idi**. `app/franchise/page.tsx` mövcud deyildi; 5 alət vardı, onları birləşdirən səhifə yox.
+
+**Mənim səhvim:** sahibdən məzmun istədim. O haqlı olaraq etiraz etdi — material onsuz da saytda idi: alət səhifələrinin öz mətnləri, Doğan Tomrisin sahibkarlara müraciəti, 30-dan çox blog yazısı. Boş yerə soruşmuşam.
+
+**Məzmun mənbəyi (uydurulmayıb):**
+| Bölmə | Mənbə |
+|---|---|
+| Hero, alət təsvirləri | mövcud alət səhifələri (`franchiseRadar`, `franchiseRoi`, `franchiseReadiness`, `franchiseBuyer`, `franchbook`) |
+| Doğan Tomris notu | hazırlıq testindəki müraciəti, olduğu kimi |
+| FAQ 1 (bədəllər) | blog yazısı: ad haqqı / royalti / reklam bədəli — «çox sahibkar bu rəqəmlərə ayrı-ayrı baxır» |
+| FAQ 2 (marka qeydiyyatı) | blog yazısı: «qeydiyyatdan keçməyən markanı franchise vermək, sahibi olmadığın evi icarəyə vermək kimidir» |
+| FAQ 3 (sağlam ROI) | ROI kalkulyatorunun öz hədəfi: illik ROI ≥ %20, geri-qaytarma ≤ 36 ay |
+| FAQ 4 (radar) | radar səhifəsinin öz təsviri |
+
+**Struktur — iki yol.** Alətlərin özü iki auditoriyaya işləyir, ona görə səhifə də belə bölündü: **franchise VERMƏK** (marka sahibi → hazırlıq testi, AI françbuk) və **franchise ALMAQ** (investor → radar, ROI, alıcı çeklisti). Bu bölgü icad edilmədi, mövcud alət dəstindən çıxdı.
+
+**Texniki qeydlər:**
+- Bloq bölməsi DB-dən **real** franchise yazılarını çəkir. Filtr `title` + `summary` + `focusKeyword` + `tags` üzrə. Əvvəlcə `excerpt` sahəsini işlətmişdim — tsc onun mövcud olmadığını göstərdi, `BlogArticle` tipinə baxıldı, `summary` düzgün ad çıxdı və filtr `tags`/`focusKeyword` ilə daha dəqiq edildi.
+- `getFranchisePosts` try/catch ilə sarınıb — DB əlçatmaz olsa səhifə **sınmır**, sadəcə bloq bölməsi göstərilmir (TASK-0422 dərsi: repo funksiyaları səhifəni çökdürməməlidir).
+- JSON-LD: Organization + BreadcrumbList + **FAQPage**. Mövcud `lib/seo/structured-data.ts` helper-ləri işlədildi. FAQPage həm Google rich result, həm də AI cavab motorları üçün faydalıdır — TASK-0432-nin bir hissəsi bu səhifədə artıq gəldi.
+- L-038 root-mirror: `app/franchise/page.tsx` → `export { default, generateMetadata }`. Manifest yoxlanıldı, `/franchise/page` var.
+- i18n Pattern A, 4 dildə 39 açar, parity ✓. AZ Doğanın öz dilidir; RU/EN/TR mənim tərcümələrimdir və **sahib nəzərdən keçirməlidir**.
+- `messages/*.json` yenidən serializasiya olundu (tək sətirlik massivlər çox sətrə açıldı). Məzmun itkisi olmadığı parse-edib müqayisə ilə **sübut edildi** — köhnə obyekt yeni obyektlə (yalnız `franchisePillar` çıxılmaqla) bayt-bayt eynidir.
+
+**Sübut:** `✓ Compiled successfully` · `/franchise`, `/ru/franchise`, `/en/franchise`, `/tr/franchise` → **200** · title «Azərbaycanda Franchise — Almaq və Vermək | DK Agency» · canonical `/franchise` (prefiksiz) · h1 «Azərbaycanda franchise» · JSON-LD-də FAQPage + BreadcrumbList render olunur · 5 alət linki · sitemap **300 URL**, pillar 4 dildə, `/az/` sıfır · auth gating toxunulmayıb (307/403) · tsc **36 — baza ilə eyni**, eslint 0, hardcoded mətn 0.
+
+**Növbəti:**
+- **Header-də daxili keçid yoxdur.** `components/layout/Header.tsx`-də «Franchise» düyməsi yalnız dropdown açır, `/franchise`-ə link vermir. Daxili keçid SEO üçün əhəmiyyətlidir, amma Header PROTECTED-dir → sahib icazəsi lazımdır.
+- `/news` hələ də hardcoded saxta məzmunla indekslənə bilir — qərar gözləyir.
+- `llms.txt` + blog yazılarına Article markup → TASK-0432.
+
 ## 2026-08-29/30 — TASK-0430 (Texniki SEO təməli: canonical + sitemap + metadata)
 
 **Siqnal:** Doğan — «Azərbaycanda franchising axtardım, saytım çıxmadı. 30 yazımız var, panelimiz var, AI SEO lazımdır.»

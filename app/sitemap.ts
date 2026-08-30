@@ -64,11 +64,7 @@ const TOOLKIT_SLUGS = [
   'whatsapp-template-paketi',
 ];
 
-/**
- * Franchise aletleri. Diqqet: `/franchise` esas sehifesi HELE YOXDUR
- * (app/franchise/page.tsx mövcud deyil) — ona gore buraya salinmir,
- * yoxsa sitemap 404 elan edir. Pillar sehife ayrica task-dir.
- */
+/** Franchise aletleri. Pillar sehife `/franchise` STATIC_PATHS-dedir. */
 const FRANCHISE_SLUGS = [
   'alici-cheklisti',
   'francbuk-generatoru',
@@ -88,6 +84,7 @@ const STATIC_PATHS: Array<{
   { path: '/haberler', changeFrequency: 'daily', priority: 0.9 },
   { path: '/xeberler', changeFrequency: 'daily', priority: 0.9 },
   { path: '/toolkit', changeFrequency: 'weekly', priority: 0.9 },
+  { path: '/franchise', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/sektor', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/ilanlar', changeFrequency: 'daily', priority: 0.8 },
   { path: '/haqqimizda', changeFrequency: 'monthly', priority: 0.7 },

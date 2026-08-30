@@ -72,7 +72,12 @@
     "viewAll": "Tümünü Gör",
     "recentOffers": "Son Teklifler",
     "quickActions": "Hızlı İşlemler",
-    "statLabels": ["Aktif İlanlar", "Toplam Görüntülenme", "Gelen Teklifler", "Mesajlar"],
+    "statLabels": [
+      "Aktif İlanlar",
+      "Toplam Görüntülenme",
+      "Gelen Teklifler",
+      "Mesajlar"
+    ],
     "statusLabels": {
       "active": "Aktif",
       "pending": "Onay Bekliyor",
@@ -92,8 +97,16 @@
       "Franchise sorusu",
       "İlanınız favorilere eklendi"
     ],
-    "offerTimes": ["2 saat önce", "5 saat önce", "1 gün önce"],
-    "quickLinks": ["Yeni İlan", "Analiz Araçları", "Profili Güncelle"],
+    "offerTimes": [
+      "2 saat önce",
+      "5 saat önce",
+      "1 gün önce"
+    ],
+    "quickLinks": [
+      "Yeni İlan",
+      "Analiz Araçları",
+      "Profili Güncelle"
+    ],
     "noOffers": "Henüz teklif yok",
     "noListings": "Henüz ilanınız yok"
   },
@@ -792,13 +805,33 @@
         "payback": "Payback"
       },
       "benchmarkState": {
-        "primeCost": { "green": "Yeşil", "amber": "Dikkat", "red": "Risk" },
-        "rentShare": { "green": "Sağlıklı", "amber": "Sınırda", "red": "Çok yüksek" },
-        "ebitda": { "green": "Güçlü", "amber": "İzle", "red": "Zayıf" },
-        "payback": { "green": "Hızlı", "amber": "Orta", "red": "Uzun" }
+        "primeCost": {
+          "green": "Yeşil",
+          "amber": "Dikkat",
+          "red": "Risk"
+        },
+        "rentShare": {
+          "green": "Sağlıklı",
+          "amber": "Sınırda",
+          "red": "Çok yüksek"
+        },
+        "ebitda": {
+          "green": "Güçlü",
+          "amber": "İzle",
+          "red": "Zayıf"
+        },
+        "payback": {
+          "green": "Hızlı",
+          "amber": "Orta",
+          "red": "Uzun"
+        }
       },
       "scenarioTitle": "3 senaryo",
-      "scenario": { "base": "Baz", "conservative": "İhtiyatlı", "optimistic": "İyimser" },
+      "scenario": {
+        "base": "Baz",
+        "conservative": "İhtiyatlı",
+        "optimistic": "İyimser"
+      },
       "branchReportTitle": "Şube açılış finansal raporu",
       "branchReportGeneratedAt": "Hazırlanma tarihi: {date}",
       "branchReportMethodology": "Tüm rakamlar girişlerden ve deterministik formüllerden hesaplanır. Satış kâr veya serbest nakit olarak kabul edilmez.",
@@ -5903,5 +5936,74 @@
     "subline": "Her HoReCa sektörü için ücretsiz araçlar, hesaplayıcılar ve rehberler.",
     "toolsLabel": "araç",
     "ctaLabel": "Bak"
+  },
+  "franchisePillar": {
+    "meta": {
+      "title": "Azerbaycan'da Franchise — Almak ve Vermek | DK Agency",
+      "description": "Azerbaycan'da franchise almak veya markanızı franchise vermek. Ücretsiz araçlar: hazırlık testi, ROI hesaplayıcı, alıcı kontrol listesi ve Azerbaycan'a gelmemiş markaların kataloğu."
+    },
+    "hero": {
+      "badge": "Franchise",
+      "title": "Azerbaycan'da franchise",
+      "subtitle": "İki yol var: markanızı franchise veriyorsunuz ya da hazır bir franchise alıyorsunuz. Her ikisi için ücretsiz araç, kişisel rapor ve adım planı burada."
+    },
+    "giver": {
+      "eyebrow": "Marka sahibi için",
+      "title": "Markanızı franchise vermek",
+      "desc": "Yıllarca kurduğunuz markayı tekrarlanabilir bir sisteme dönüştürmek. Önce hazırlığı ölçün, sonra el kitabının iskeletini kurun."
+    },
+    "taker": {
+      "eyebrow": "Yatırımcı ve girişimci için",
+      "title": "Franchise almak",
+      "desc": "Marka seçiminden rakama kadar: hangi markalar mevcut, yatırım geri dönüyor mu, sözleşmede neye bakmak gerekir."
+    },
+    "tools": {
+      "readiness": {
+        "title": "Franchise Hazırlık Testi",
+        "desc": "Markanız franchise vermeye hazır mı? 12 soru, yaklaşık 4 dakika, sonunda kişisel hazırlık raporu."
+      },
+      "franchbook": {
+        "title": "AI Franchbook Üreticisi",
+        "desc": "AI ile franchise el kitabı iskeleti: 6 aşama, sabit AFA Akademi outline, düzenlenebilir belge.",
+        "badge": "BETA"
+      },
+      "radar": {
+        "title": "Franchise Radar",
+        "desc": "Azerbaycan'a henüz gelmemiş global markalar: yatırım aralığı, menşe ve giriş modeliyle."
+      },
+      "roi": {
+        "title": "Franchise ROI Hesaplayıcı",
+        "desc": "Bu franchise yatırıma değer mi? Rakamları değiştirdikçe sonuç canlı güncellenir."
+      },
+      "buyer": {
+        "title": "Franchise Alıcı Kontrol Listesi",
+        "desc": "9 alan, yaklaşık 3 dakika: yatırım ve giderlerden sözleşme şartlarına kadar."
+      },
+      "open": "Araca git"
+    },
+    "note": {
+      "quote": "Sayın girişimci, başarılı franchising markanızın değerini artırır ve işletmenizin sürdürülebilir büyümesini sağlar. Yıllarca kurduğunuz marka bizim için emanettir.",
+      "author": "Doğan Tomris, DK Agency"
+    },
+    "faq": {
+      "title": "Sık sorulan sorular",
+      "q1": "Franchise almak için hangi ödemeler var?",
+      "a1": "Genellikle üç temel bedel olur: isim hakkı, royalti ve reklam bedeli. Çoğu girişimci bu rakamlara ayrı ayrı bakar — oysa üçü birleştiğinde aylık yükün gerçek boyutu görünür. ROI hesaplayıcı ile hepsini bir arada hesaplayabilirsiniz.",
+      "q2": "Markamı franchise vermek için ne gerekir?",
+      "a2": "Her şeyden önce markanız resmi olarak tescil edilmelidir. Tescilli olmayan bir markayı franchise vermek, sahibi olmadığınız evi kiraya vermek gibidir. Sonraki adım hazırlığı ölçmek ve el kitabını kurmaktır.",
+      "q3": "Franchise yatırımı ne zaman sağlıklı sayılır?",
+      "a3": "Genel hedef: yıllık ROI en az %20, geri dönüş süresi ise 36 ayı geçmesin. Kendi rakamlarınızı ROI hesaplayıcıda test edebilirsiniz.",
+      "q4": "Azerbaycan'da hangi global markalar henüz yok?",
+      "a4": "Franchise Radar kataloğunda Azerbaycan'a henüz gelmemiş markalar yatırım aralığı, menşe ve giriş modeliyle listelenir. İlgilendiğiniz markayı seçersiniz, DK ekibi iletişime geçer."
+    },
+    "blog": {
+      "title": "Franchise hakkında yazılarımız",
+      "cta": "Tüm yazılar"
+    },
+    "cta": {
+      "title": "Hangi tarafta olduğunuzu bilmiyorsanız",
+      "desc": "Durumunuzu yazın — hangi araçtan başlamanız gerektiğini birlikte belirleyelim.",
+      "button": "İletişime geç"
+    }
   }
 }
