@@ -1,5 +1,34 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-02 — TASK-0433 (`/llms.txt` + başlıqsız 6 səhifə)
+
+**Planlanan iş yarıya endi, çünki yarısı onsuz da vardı.** Task «llms.txt + bloq yazılarına Article markup» kimi yazılmışdı. Kod oxunanda məlum oldu ki, **Article markup artıq var** — `app/[locale]/blog/[slug]/page.tsx:157` `articleNode()` çağırır və BlogPosting + BreadcrumbList + Organization + (FAQ varsa) FAQPage buraxır. İddianı sözlə buraxmadım: canlı yazının HTML-i çəkildi, JSON-LD parse edildi — `datePublished=2026-06-07T10:00:00Z` (ISO, schema.org-un tələb etdiyi format), `author=Doğan Tomris`, `publisher.logo=true`, `wordCount=1420`. **Yazılası kod yox idi.** Bunun əvəzinə boş vaxt real boşluğa yönləndirildi.
+
+**Boşluq necə tapıldı:** sitemap-dakı 16 giriş səhifəsinin hamısı süpürüldü və `<title>`-ları kök layout-un başlığı ilə tutuşduruldu. **6-sı öz başlığına sahib deyildi** — hamısı kök layout-un «DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması» başlığını miras alırdı, yəni Google-un nəticə səhifəsində altısı da eyni adla görünürdü:
+
+| Səhifə | Sitemap priority | Vəziyyət |
+|---|---|---|
+| `/blog` | 0.9 | başlıq yox |
+| `/toolkit` | 0.9 | başlıq yox |
+| `/haqqimizda` | 0.7 | başlıq yox |
+| `/marketinq` | 0.7 | başlıq yox |
+| `/sedd-rozeti` | 0.6 | başlıq yox |
+| `/elaqe` | 0.6 | başlıq yox |
+
+**`/haqqimizda` sadəcə bir səhifə deyil:** hər bloq yazısındakı Article JSON-LD-də `author.url` məhz bu ünvanı göstərir (`structured-data.ts` → `ABOUT_URL`). Yəni Google müəllifin kim olduğunu yoxlamaq üçün gəldiyi səhifənin öz adı yox idi — E-E-A-T zəncirinin ortasında qırıq halqa.
+
+**Həll TASK-0430-dakı nümunə ilə eynidir** (yeni nümunə uydurulmadı): `'use client'` səhifələr metadata ixrac edə bilmir, ona görə yanlarına `layout.tsx`; `sedd-rozeti` server komponenti olduğu üçün birbaşa `export const metadata`. **Mətnlər səhifələrin öz kopyasındandır** — `/blog` və `/marketinq` üçün `PAGE_COPY.az`, `/elaqe` üçün `contact` namespace-inin `title`+`lead`-i, `/toolkit` üçün `toolkit` namespace-i, `/haqqimizda` üçün səhifənin öz cümlələri («2010-da qurdum», «40 ildir HoReCa sektorundayam», «ilk AI dəstəkli HoReCa B2B platformasıyıq»). Uydurma kopya yoxdur.
+
+**Bir tələ yoxlama ilə tutuldu:** `app/blog/layout.tsx` təkcə `/blog`-u yox, `/blog/[slug]`-ı da bürüyür. Əgər yazı səhifəsinin öz metadata-sı olmasaydı, 28 bloq yazısı birdən eyni başlığı alardı — reqressiya. `app/blog/[slug]/page.tsx` `generateMetadata`-nı re-export edir, Next dərin seqmentə üstünlük verir; canlı yoxlandı: yazı öz başlığını («Orada Bir Starbucks Var Uzaqda…») saxladı.
+
+**`/llms.txt` niyə sitemap-ın təkrarı deyil:** sitemap crawler-ə «bu URL-lər var» deyir və başqa heç nə. llms.txt cavab mühərriklərinə (ChatGPT, Perplexity, Claude) **hər ünvanın nə etdiyini** bir cümlə ilə deyir, yəni model 300 səhifəni gəzmədən hansını sitat gətirəcəyini seçə bilir. Fayl tam SSOT-lardan qurulur — `TOOLKIT_CATALOG`, sektor configlərinin `metaDescription`-ları, `franchisePillar` mesajları, bloq isə DB-dən canlı (`revalidate = 3600`). Ona görə **əl ilə sinxronlaşdırma tələb etmir**: alət təsviri dəyişəndə llms.txt də dəyişir. DB düşərsə try/catch bloq bölməsini atır, fayl qalan bölmələrlə qaytarılır.
+
+**Bir formatlaşdırma baqı öz testimdə tutuldu:** blokları birləşdirən `.filter(block => block !== '')` boş bölmələri atmaq üçün idi, amma mənim qəsdən qoyduğum boş sətirləri də atırdı — nəticədə `# DK Agency` ilə `>` arasında boş sətir qalmırdı və fayl markdown olaraq düzgün oxunmurdu. Bloklar bir-birinə yapışmışdı. Struktur dəyişdirildi: hər element tam blokdur, `join('\n\n')` aralarına boş sətir qoyur. `cat -A` ilə təsdiqləndi.
+
+**Sübut:** `/llms.txt` 200, `text/plain; charset=utf-8`, **63 link / 6 bölmə / 13.7 KB**, 28 bloq yazısı · 6 səhifə öz başlığını render edir · bloq yazısı öz başlığını saxlayır (reqressiya yox) · bloq JSON-LD parse edilib təsdiqləndi · `✓ Compiled successfully` · tsc **36 (baza ilə eyni)** · eslint 0 error.
+
+**Qalır:** `[locale]` variantları (`/en/blog`, `/ru/toolkit` və s.) hələ də kök başlığı miras alır — AZ prefikssiz ünvanlar canonical olduğu və hədəf bazar Azərbaycan olduğu üçün bu addımda kök mirror-lar düzəldildi · `/news` saxta məzmunu (sahib «hələlik saxla» dedi).
+
 ## 2026-08-30 — TASK-0432 (Header-dən `/franchise`-ə daxili keçid)
 
 **Niyə:** TASK-0431 pillar səhifəni yaratdı, amma naviqasiyadan ona link yox idi. Daxili link olmayan səhifəni Google ikinci dərəcəli sayır — sitemap tək başına zəif siqnaldır. Sahib icazə verdi (`Header.tsx` PROTECTED).
