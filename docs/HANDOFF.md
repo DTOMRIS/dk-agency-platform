@@ -1,5 +1,30 @@
 # HANDOFF
 
+## 2026-09-12 — Platform audit + TASK-0433/0434 (Doğan sessiyası)
+
+### Kontekst
+Sahib canlı `/dashboard/contact-tracking?channel=whatsapp`-da «veri gəlib amma görmürəm» dedi + tam audit istədi. Təzə sessiya; pastel audit raportu **canlı kod üzərində yenidən doğrulandı** (olduğu kimi qəbul edilmədi).
+
+### Shipped
+- **TASK-0433** fix(campaign): `LAUNCH_CAMPAIGN.endDateISO` 2026-09-01 (11 gün əvvəl bitmişdi) → **2026-12-31**. Pulsuz giriş/OCR yenidən aktiv. Sahib «kampanya davam etsin» dedi. Real tarix dəqiqləşməlidir.
+- **TASK-0434** feat(tracking): əlaqə kanalı klik izləməsi zənginləşdirildi (bax CHANGELOG/DEVLOG). Yeni sütunlar + migration 0020 + track API + SST contact-channels + səhifə sütunları + sayğac bug fix + sidebar link + i18n×4.
+
+### Doğrulanmış tapıntılar
+- 🔴 **Dashboard auth (P0, HƏLƏ AÇIQ):** `app/dashboard/layout.tsx` yalnız session yoxlayır, `role==='admin'` YOX. 46 dashboard səhifəsindən yalnız 2-də admin yoxlaması var (`ilanlar/yarat`, `funnel`). AMMA `/dashboard` = OCAQ (owner) — layout-a kor-koranə `role!=='admin'` qoymaq **bütün üzvləri kilidləyər**. Düzgün həll: əvvəl 46 səhifəni member/admin deyə xəritələ, sonra admin qrupunu qoru. **Kor-koranə fix ETMƏ.**
+- 🟠 `next.config.ts` `ignoreBuildErrors:true` + `ignoreDuringBuilds:true` — real TS errorları gizlənir. Tədricən aç (P3).
+- 🟠 Docs: STATE/CHANGELOG 30 Avqust (2.5 ay yox); **`CLAUDE-BRAIN.md` + `docs/SESSION-JOURNAL.md` MÖVCUD DEYİL** (AGENTS.md istinad edir) — yaradılmalı.
+- ✅ contact-tracking sayğac uyğunsuzluğu (TASK-0434-də düzəldildi).
+
+### Açıq roadmap (növbəti sessiya)
+- **P0 — Auth access-model:** 46 səhifəni xəritələ → admin qrupunu qoru (member kilidləmədən). Client `session.plan==='admin'` localStorage-dan oxunur — manipulyasiya riski.
+- **P1 — contact-tracking `[locale]` mirror:** admin non-AZ locale-də `/tr/dashboard/contact-tracking` 404 verə bilər (TASK-0416 funnel presedenti) — yoxla.
+- **P2 — Dashboard mobil-first redesign:** bottom-nav (başparmaq zonası), discoverability (global axtarış), undo (optimistik + «geri al» snackbar / soft-delete). Sahibin əsas şikayəti.
+- **P3 — `ignoreBuildErrors` triage;** OCR Gemini fallback yoxdur; npm audit CI.
+- **P4 — WhatsApp Business Cloud API** (mesaj oxuma/cavab) — «ne yazmış» sualının tam həlli.
+
+### Sandbox məhdudiyyəti
+`npm` 403 (xlsx CDN) → `node_modules` quraşdırılmır → `tsc`/`eslint`/build sandbox-da icra olunmur (DoD #11 texniki skip). Yoxlama CI/deploy-də. Kod diff + review ilə təsdiqlənir.
+
 ## 2026-06-13 - TASK-0406 financial viability
 
 - Existing `/toolkit/basabas` UI was extended; no parallel advisor UI or paid Places dependency was added.

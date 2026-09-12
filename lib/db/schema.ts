@@ -291,6 +291,12 @@ export const leads = pgTable(
     locale: varchar('locale', { length: 2 }),
     userAgent: text('user_agent'),
     ipHash: varchar('ip_hash', { length: 64 }),
+    // TASK-0434: click-intent detail — where the click came from, the
+    // pre-filled message we seeded, and the destination handle/number.
+    // Nullable so existing rows and the click event stay backward-compatible.
+    sourceUrl: text('source_url'),
+    prefillText: text('prefill_text'),
+    destinationPhone: varchar('destination_phone', { length: 32 }),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },
   (table) => ({

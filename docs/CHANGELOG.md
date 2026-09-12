@@ -11,6 +11,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `TASK-0434` feat(tracking): **əlaqə kanalı klik izləməsi zənginləşdirildi** — `leads` cədvəlinə `source_url`, `prefill_text`, `destination_phone` (nullable, migration `0020` idempotent). `/api/leads/track` yeni sahələri sanitize edərək saxlayır və admin email-ində göstərir (**client dəyərləri HTML-escape** — injection qoruması). SST `lib/contact-channels.ts` (WhatsApp nömrəsi + Telegram URL) — `ContactFunnel` və wa.me redirect oradan oxuyur. contact-tracking səhifəsi: Səhifə / Hazır mesaj / Hədəf / Cihaz sütunları; **sayğac uyğunsuzluğu düzəldildi** (total indi `GROUP BY count(*)`, display limitindən asılı deyil). Sidebar-a «Əlaqə Kanalları» (4 dil). Qeyd: klik mesajın məzmununu deyil (WhatsApp söhbəti sayta gəlmir), niyyətini göstərir. Yoxlama: sandbox npm 403 səbəbindən tsc/eslint icra olunmadı (DoD #11 texniki skip), diff + review ilə təsdiqləndi.
+
 ### Fixed
 - `TASK-0433` fix(campaign): **açılış kampaniyası bərpa olundu** — `LAUNCH_CAMPAIGN.endDateISO` 2026-09-01-də bitmişdi, ona görə `isLaunchActive()` `false` qaytarırdı və kampaniyaya bağlı pulsuz giriş / OCR yükləmə deaktiv idi. Sahib göstərişi ilə (kampaniya davam etsin) bitmə tarixi **2026-12-31**-ə uzadıldı (`lib/marketing-tools-config.ts:663`). Bir sətirlik, geri-dönümlü konfiq dəyişikliyi — real bitmə tarixi dəqiqləşəndə yenilənməlidir. Səbəb: 12.09.2026 audit sessiyası, WhatsApp tracking araşdırması zamanı kampaniyanın 11 gün əvvəl bitdiyi aşkarlandı.
 

@@ -1,5 +1,23 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-12 — TASK-0434 (Əlaqə kanalı tracking-i zənginləşdirmə)
+
+**Niyə:** Sahib «WhatsApp verisi gəlib, amma nə yazdığını, haradan gəldiyini görmürəm» dedi. Araşdırma: `/api/leads/track` yalnız `channel, locale, userAgent, ipHash, tarix` yazırdı; `/api/leads/whatsapp` redirect prefill `?text=`-i qəbul edib **log etmədən atırdı**; contact-tracking səhifəsi sidebar-da linksiz idi (kəşf olunmurdu); sayğaclar filtrə görə gah son 100, gah son 1000 qeyddən hesablanırdı (uyğunsuz total).
+
+**Vacib həqiqət (sahibə izah olundu):** Sayt bir WhatsApp klikindən **müştərinin nə yazdığını görə bilməz** — mesaj `wa.me`-dən sonra birbaşa WhatsApp-a gedir, sayta toxunmur. Görünə bilən: hansı səhifədən klikləndi (`sourceUrl`), bizim hazırladığımız mesaj (`prefillText`), hədəf (`destinationPhone`). Mesaj məzmununu oxumaq üçün WhatsApp Business Cloud API + webhook lazımdır — ayrıca, böyük iş, roadmap.
+
+**Dəyişiklik:**
+- `leads`-ə 3 nullable sütun (`source_url`, `prefill_text`, `destination_phone`) — geri-uyğun, mövcud sətirlər NULL alır. Migration `0020` idempotent (`ADD COLUMN IF NOT EXISTS`), Neon-da təhlükəsiz.
+- `/api/leads/track`: yeni sahələri uzunluq-limitli sanitize edərək saxlayır. Admin email-i indi səhifə + hazır mesaj + hədəfi göstərir; **client-dən gələn dəyərlər HTML-ə escape olunur** (email injection qoruması).
+- SST: `lib/contact-channels.ts` (WhatsApp nömrəsi + Telegram URL bir yerdə). `whatsapp` route və `ContactFunnel` oradan oxuyur — nömrə dublikatı qalxdı.
+- `ContactFunnel`: `track()` indi `sourceUrl` (window.location) + prefill + hədəf göndərir.
+- contact-tracking səhifəsi: mənalı sütunlar (Səhifə / Hazır mesaj / Hədəf / Cihaz). **Sayğac bug-ı düzəldildi** — total artıq `GROUP BY channel count(*)` ilə bütün qeydlər üzrədir, display limitindən asılı deyil.
+- Kəşf: sidebar-a «Əlaqə Kanalları» nav item (4 dildə i18n).
+
+**Yoxlama (məhdudiyyət):** Sandbox-da `npm` 403 (xlsx CDN) səbəbindən `node_modules` quraşdırılmayıb — `tsc`/`eslint` icra oluna bilmədi (bütün xətalar `Cannot find module 'next/server'` tipli resolution, kod xətası deyil). Kod diff + əl-baxışla yoxlandı; semantik diff-lər təmiz (prettier səs-küyü python-insert ilə önləndi). Tam build/route/Playwright CI/deploy-də. — DoD #11 texniki skip.
+
+**Qalır:** WhatsApp Business Cloud API (mesaj oxuma) roadmap; contact-tracking `[locale]` mirror-u yoxlanmalı (admin non-AZ locale-də `/tr/...` — TASK-0416 funnel presedenti).
+
 ## 2026-08-30 — TASK-0432 (Header-dən `/franchise`-ə daxili keçid)
 
 **Niyə:** TASK-0431 pillar səhifəni yaratdı, amma naviqasiyadan ona link yox idi. Daxili link olmayan səhifəni Google ikinci dərəcəli sayır — sitemap tək başına zəif siqnaldır. Sahib icazə verdi (`Header.tsx` PROTECTED).

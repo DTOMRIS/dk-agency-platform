@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-const WHATSAPP_NUMBER = '994502566279';
+import { WHATSAPP_NUMBER } from '@/lib/contact-channels';
 
 export function GET(req: NextRequest) {
   const message = req.nextUrl.searchParams.get('text') ?? '';
