@@ -660,7 +660,7 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
 // active=false edildikdə normal qiymətlər göstərilir.
 export const LAUNCH_CAMPAIGN = {
   active: true,
-  endDateISO: '2026-09-01',
+  endDateISO: '2026-12-31',
 } as const;
 
 export function isLaunchActive(): boolean {

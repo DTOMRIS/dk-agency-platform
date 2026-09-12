@@ -11,6 +11,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0433` fix(campaign): **açılış kampaniyası bərpa olundu** — `LAUNCH_CAMPAIGN.endDateISO` 2026-09-01-də bitmişdi, ona görə `isLaunchActive()` `false` qaytarırdı və kampaniyaya bağlı pulsuz giriş / OCR yükləmə deaktiv idi. Sahib göstərişi ilə (kampaniya davam etsin) bitmə tarixi **2026-12-31**-ə uzadıldı (`lib/marketing-tools-config.ts:663`). Bir sətirlik, geri-dönümlü konfiq dəyişikliyi — real bitmə tarixi dəqiqləşəndə yenilənməlidir. Səbəb: 12.09.2026 audit sessiyası, WhatsApp tracking araşdırması zamanı kampaniyanın 11 gün əvvəl bitdiyi aşkarlandı.
+
 ### Added
 - `TASK-0432` feat(seo): **Header-dən `/franchise` pillar səhifəsinə daxili keçid** (4 dildə). Pillar səhifə naviqasiyadan link almasa Google onu ikinci dərəcəli sayır — TASK-0431-in təsirini tamamlayan addımdır. `franchiseLinks` massivinin başına bir sətir əlavə edildi; massiv həm desktop dropdown (Header.tsx:151), həm də mobil menyu (Header.tsx:262) tərəfindən işlədilir, yəni bir dəyişiklik hər ikisini örtür. **Anchor mətni qəsdən açar sözdür** — «Azərbaycanda Franchise» / «Franchise in Azerbaijan» / «Франшиза в Азербайджане» / «Azerbaycan'da Franchise» — daxili link mətni sıralamaya təsir edir. PROTECTED `components/layout/Header.tsx` sahib icazəsi ilə dəyişdirildi (`ALLOW_PROTECTED=1`); prettier hook faylı tam yenidən formatlayıb 465 sətirlik diff yaratdığı üçün dəyişiklik orijinal formatı qoruyaraq yenidən tətbiq olundu — **yekun diff 6 sətir**. Yoxlama: desktop dropdown-da link mövcuddur (anchor «Azərbaycanda Franchise»), mobil menyuda mövcuddur, TASK-0426 mega menyu 3 endə reqressiya vermir, tsc 36 (baza), eslint 0 error.
 
