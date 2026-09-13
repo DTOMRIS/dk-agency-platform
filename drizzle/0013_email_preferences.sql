@@ -1,3 +1,6 @@
+-- TASK-0440: CREATE INDEX-lər IF NOT EXISTS-siz idi — runner təkrar
+-- işləyəndə "relation already exists" ilə sınırdı. Miqrasiya təkrar
+-- icraya davamlı olmalıdır.
 CREATE TABLE IF NOT EXISTS email_preferences (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
@@ -13,6 +16,6 @@ CREATE TABLE IF NOT EXISTS email_preferences (
   UNIQUE(email)
 );
 
-CREATE INDEX idx_ep_email ON email_preferences(email);
-CREATE INDEX idx_ep_user ON email_preferences(user_id);
-CREATE INDEX idx_ep_token ON email_preferences(unsubscribe_token);
+CREATE INDEX IF NOT EXISTS idx_ep_email ON email_preferences(email);
+CREATE INDEX IF NOT EXISTS idx_ep_user ON email_preferences(user_id);
+CREATE INDEX IF NOT EXISTS idx_ep_token ON email_preferences(unsubscribe_token);
