@@ -805,6 +805,9 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
     langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
   };
   if (!dbAvailable || !db) return { ...EMPTY_RESULT(), error: 'db-unavailable' };
+  // db modul səviyyəli dəyişəndir: aşağıdakı Promise.all callback-lərində
+  // TypeScript narrowing-i itirir, ona görə guard-dan sonra sabit local tutulur.
+  const database = db;
   try {
     const [row] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
     if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
@@ -867,7 +870,7 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
       // Write successful translations for THIS language immediately
       // (don't let one language failure block another)
       if (Object.keys(langUpdates).length > 0) {
-        await db
+        await database
           .update(blogPosts)
           .set({ ...langUpdates, updatedAt: new Date() } as unknown as Partial<
             typeof blogPosts.$inferInsert

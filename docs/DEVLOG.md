@@ -1,5 +1,20 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — PR #437 konflikt həlli + 2 tip xətası
+
+**Niyə:** PR #437 (TASK-0433…0438) `main`-ə merge oluna bilmirdi — `docs/DEVLOG.md`-də konflikt. Səbəb sadə idi: hər iki tərəf faylın başına yeni yazı əlavə etmişdi (branch 6 task, `main` isə `/llms.txt` task-ı). **Heç bir yazı atılmadı** — hər ikisi saxlanıldı, tarix sırası ilə düzüldü (09-13 → 09-02 → 08-30). `docs/CHANGELOG.md` avtomatik birləşdi.
+
+**Konfliktdən sonra tapılan iki gerçək baq.** Branch-ın öz qeydlərində `sandbox npm 403 → build/tsc yox (DoD #11 skip)` yazılmışdı — yəni bu kod heç vaxt tip yoxlamasından keçməmişdi. Burada `node_modules` mövcud olduğu üçün yoxlanıldı: **tsc 38, baza isə 36 → 2 yeni xəta**:
+
+1. `DashboardBottomNav.tsx:36` — `links` massivi `as const` ilə union yaradır və `highlight` yalnız bir üzvdə var, ona görə destructuring tip xətası verirdi. Digər üç üzvə `highlight: false` verildi (semantik olaraq da doğrudur — həmin elementlər vurğulanmır).
+2. `blog-repository.ts:870` — `db` modul səviyyəli dəyişəndir; TASK-0435 yazını `Promise.all` callback-inə köçürəndə TypeScript `if (!dbAvailable || !db) return` guard-ının narrowing-ini itirdi. Guard-dan sonra `const database = db` tutulur və paralel yazıda o işlədilir.
+
+**Qeyd — TASK ID toqquşması:** `TASK-0433` iki dəfə istifadə olunub (bu branch-da `fix(campaign)`, `main`-də `/llms.txt`). Commit tarixçəsi yenidən yazılmadı; gələcək task-lar **0439**-dan başlamalıdır.
+
+**Qeyd — PROTECTED:** `lib/db/schema.ts` dəyişib (`leads`-ə 3 nullable sütun). Miqrasiya var və idempotentdir (`drizzle/0020_add_leads_tracking_columns.sql`, `ADD COLUMN IF NOT EXISTS`), yəni "migration olmadan dəyişməz" qaydası pozulmayıb. Sahib icazəsi PR-da qeyd olunmalıdır.
+
+**Yoxlama:** tsc **36 — bazaya qayıtdı** · eslint 0 error (12 warning, hamısı əvvəldən var) · `✓ Compiled successfully in 32.7s` · konflikt markerləri 0 · hər iki tərəfin bütün DEVLOG yazıları yerindədir.
+
 ## 2026-09-13 — TASK-0438 (/ilanlar 20-cap fix + axtarış planı)
 
 **Niyə:** Axtarış audit tapdı — açıq `/ilanlar` yalnız ilk 20 elanı yükləyib client-də süzürdü; `/api/listings` q/type/sector/city/price dəstəkləyir, amma səhifə istifadə etmirdi. Müştəri 20-dən sonrakı elanı tapa bilmir = biznes itkisi.

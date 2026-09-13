@@ -24,10 +24,10 @@ export default function DashboardBottomNav({ onMore }: { onMore: () => void }) {
   const isActive = (href: string) => strippedPath === href || strippedPath.startsWith(`${href}/`);
 
   const links = [
-    { key: 'home', href: '/dashboard', icon: LayoutDashboard },
-    { key: 'listings', href: '/dashboard/ilanlar', icon: Store },
+    { key: 'home', href: '/dashboard', icon: LayoutDashboard, highlight: false },
+    { key: 'listings', href: '/dashboard/ilanlar', icon: Store, highlight: false },
     { key: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot, highlight: true },
-    { key: 'news', href: '/dashboard/xeberler', icon: Newspaper },
+    { key: 'news', href: '/dashboard/xeberler', icon: Newspaper, highlight: false },
   ] as const;
 
   return (
