@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0437 (mobil alt menyu + cədvəl kəsilmə)
+
+**Niyə:** Sahib «mobil alt menü apple gibi olmalı» dedi; audit təsdiqlədi — açıq saytda `MobileBottomNav` var, amma dashboard-da yoxdur (`PublicChrome` onu /dashboard-da render etmir). Menyu yalnız yuxarı-solda = başparmaq çatmır. `blog`/`xeberler` cədvəlləri `overflow-hidden` içində `min-w-full` → telefonda kəsilir.
+
+**Dəyişiklik:** Yeni `DashboardBottomNav` (public pattern təkrar, dashboard route-larına yönəlir; `MobileBottomNav`-ı təkrar İSTİFADƏ ETMƏDİM — onun linkləri public-dir). 5 slot, KAZAN ortada gold pill, ≥44px, «Daha çox»→`setSidebarOpen(true)`. `DashboardLayout`-a sibling mount + content `pb-20 lg:pb-0`. blog/xeberler wrapper `overflow-x-auto`.
+
+**Qalır:** bottom-nav-da badge-lər (pending/kazan sayı) yoxdur — state `DashboardLayout`-a lift olunmalıdır (ayrıca, kiçik). users/contact-tracking/ilanlar geniş cədvəlləri üçün mobil kart-görünüşü (`faturalar` nümunəsi) — ayrıca task.
+
+**Yoxlama:** sandbox npm 403 → build/tsc yox (DoD #11 skip); diff+review; **deploy-da telefonda test:** alt menyu görünür, KAZAN highlight, «Daha çox» drawer açır, blog/xəbər cədvəli üfüqi sürüşür.
+
 ## 2026-09-13 — TASK-0436 (roller yalançı düymələri)
 
 **Niyə:** Dashboard audit (agent) tapdı: `roller` səhifəsi istifadəçini aldadır — silmə/redaktə düymələri işləmir, icazə dəyişikliyi saxlanmır (100% mock data + local state). Sahibin qaydası: UI yalan danışmamalıdır.

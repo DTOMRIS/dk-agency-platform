@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
+import DashboardBottomNav from '@/components/dashboard/DashboardBottomNav';
 import { DashboardTopBar } from '@/components/dashboard/DashboardTopBar';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -26,10 +27,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="text-xs font-semibold text-slate-500">{t('role')}</div>
       </div>
 
-      <div className="min-h-screen bg-[var(--dk-paper)] pt-16 lg:ml-72 lg:pt-0">
+      <div className="min-h-screen bg-[var(--dk-paper)] pt-16 pb-20 lg:ml-72 lg:pt-0 lg:pb-0">
         <DashboardTopBar />
         <main>{children}</main>
       </div>
+
+      <DashboardBottomNav onMore={() => setSidebarOpen(true)} />
     </div>
   );
 }

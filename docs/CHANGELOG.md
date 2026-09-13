@@ -11,6 +11,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Added
+- `TASK-0437` feat(dashboard-mobile): **Apple-vari alt naviqasiya + kəsilən cədvəllər düzəldildi** — dashboard-da mobil naviqasiya yalnız yuxarı-soldakı hamburger idi (başparmaq çatmır). Yeni `DashboardBottomNav`: 5 slot (Ana / İlanlar / **KAZAN** ortada highlight / Xəbərlər / Daha çox), `fixed bottom-0 pb-safe lg:hidden`, ≥44px toxunuş sahəsi, aktiv-state sidebar məntiqi ilə eyni; «Daha çox» tam sidebar-ı açır (13 element əlçatan qalır). `DashboardLayout`-a mount + content `pb-20 lg:pb-0`. i18n `nav.more` 4 dil. Əlavə: `blog` və `xeberler` cədvəl konteynerləri `overflow-hidden` → `overflow-x-auto` (telefonda kəsilmə → üfüqi sürüşmə). Mənbə: 12-13.09 mobil audit. (DoD #11: sandbox npm 403 → build/tsc icra olunmadı, deploy-da test.)
+
 ### Fixed
 - `TASK-0436` fix(dashboard): **`roller` səhifəsi artıq yalan danışmır** — rollar səhifəsi tam mock idi: «Yeni rol», per-rol «Redaktə»/«Sil» düymələrinin `onClick`-i yox idi, icazə dəyişiklikləri yalnız local state-də qalıb **saxlanmırdı**. İşləməyən düymələr `disabled` + izahlı `title` edildi, «Redaktə/Saxla» toggle-ı deaktiv oxu-rejiminə keçdi, yuxarıya «hazırlanır — dəyişikliklər saxlanmır» bildirişi əlavə olundu (i18n `previewNotice`, 4 dil). `HospitalityHeader`-dəki ölü axtarış qutusu heç yerdə render olunmadığı üçün toxunulmadı. Mənbə: 12-13.09 dashboard audit. (DoD #11: sandbox npm 403 → build/tsc icra olunmadı, deploy-da baxılmalı.)
 
