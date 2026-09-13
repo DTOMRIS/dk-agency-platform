@@ -9,6 +9,32 @@ export interface HomeEventPayload {
   timestamp: string;
 }
 
+/**
+ * TASK-0439: beacon `/api/orchestrator`-a gedirdi — yəni AI endpoint-inə.
+ * O route `taskType` + `userPrompt` tələb edir, analitika hadisəsində isə
+ * bunlar yoxdur, ona görə hər beacon 400 alırdı: ana səhifə hadisələri
+ * **heç vaxt qeydə düşməyib**, üstəlik hər ziyarətçi AI endpoint-inə dəyirdi.
+ * Doğru ünvan `/api/analytics/track`-dir — o, sendBeacon üçün qurulub
+ * (text/plain + Blob qəbul edir) və `webConversionEvents`-ə yazır.
+ *
+ * Sessiya id-si `PortalEngagementTracker` ilə eyni nümunədədir, amma ayrı
+ * açarda saxlanır ki, açıq sayt və portal ölçmələri qarışmasın.
+ */
+const SESSION_KEY = 'dk_home_analytics_session_id';
+
+function getAnalyticsSessionId(): string {
+  try {
+    const existing = window.sessionStorage.getItem(SESSION_KEY);
+    if (existing) return existing;
+    const created = `sess_${Math.random().toString(36).slice(2, 15)}_${Date.now()}`;
+    window.sessionStorage.setItem(SESSION_KEY, created);
+    return created;
+  } catch {
+    // Private mode / bloklanmış storage — ölçmə UX-i sındırmamalıdır.
+    return 'sess_ephemeral';
+  }
+}
+
 export function trackHomeEvent(payload: Omit<HomeEventPayload, 'timestamp' | 'path'>) {
   if (typeof window === 'undefined') {
     return;
@@ -35,7 +61,12 @@ export function trackHomeEvent(payload: Omit<HomeEventPayload, 'timestamp' | 'pa
   }
 
   if (navigator.sendBeacon) {
-    const body = JSON.stringify(event);
-    navigator.sendBeacon('/api/orchestrator', new Blob([body], { type: 'application/json' }));
+    const body = JSON.stringify({
+      sessionId: getAnalyticsSessionId(),
+      pagePath: event.path,
+      eventName: event.event,
+      metadata: { section: event.section, ctaLabel: event.ctaLabel, tab: event.tab },
+    });
+    navigator.sendBeacon('/api/analytics/track', new Blob([body], { type: 'application/json' }));
   }
 }

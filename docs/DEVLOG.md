@@ -1,5 +1,47 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0439 (açıq API qapıları + 2 gizli baq)
+
+**Kontekst:** sahib «yama yapma, detaylara odaklan» dedi. Bu taskda o göstəriş iki dəfə özünü doğrultdu — kor-koranə auth əlavə etsəydim iki işlək funksiyanı sındıracaqdım.
+
+**Kök səbəb:** `middleware.ts` matcher-i `/(az|ru|en|tr)/:path*`-dir, yəni **`/api/*` heç vaxt middleware-dən keçmir**. Route öz yoxlamasını yazmasa, qapı açıqdır. Dörd route yazmamışdı.
+
+**Ən ciddisi `/api/orchestrator` idi:** sərbəst `userPrompt`-u Gemini-yə ötürür, `GEMINI_API_KEY` server tərəfdədir. İnternetdən istənilən adam DK-nın AI büdcəsini yandıra bilirdi. Maraqlısı: çağıran tərəf (`ListingForm.tsx:139`) onsuz da **401/403 emal edirdi** — yəni auth nəzərdə tutulub, sadəcə server tərəfdə heç vaxt yazılmayıb.
+
+**`/api/food-cost` — yamaq ilə düzgün iş arasındakı fərq:** route iki auditoriyaya xidmət edir. `type=lookup` **açıq** `/toolkit/food-cost` alətindən çağırılır (pulsuz alət, giriş yoxdur); `report/trend/suppliers/products/all` isə **real faktura və təchizatçı datasını** qaytarır və yalnız dashboard-dan çağırılır.
+
+- Bütün route-a admin qoysaydım → **pulsuz alət sınardı**.
+- Olduğu kimi saxlasaydım → **şirkətin alış datası internetə açıq qalırdı**.
+
+Ona görə qorunma route yox, **əməliyyat səviyyəsindədir**. Bunu tapmaq üçün hər route-un çağıranlarını `grep` ilə izləmək lazım idi — audit hesabatındakı «4 route-a auth əlavə et» tövsiyəsini olduğu kimi tətbiq etsəydim, açıq aləti sındırardım.
+
+**Yanaşma — kopyalanan yoxlama yox, tək modul:** `lib/api/guards.ts` (`requireApiAdmin` / `requireApiMember`). Dörd route-un yoxlamasız qalmasının səbəbi məhz kopyalama idi: nümunə `/api/settings`-də vardı, amma hər yeni route onu əl ilə təkrarlamalı idi və bəziləri unutdu.
+
+**Yanaşı iki baq tapıldı:**
+
+1. **Ana səhifə analitikası heç vaxt işləməyib.** `lib/analytics/homeEvents.ts:39` beacon-u `/api/orchestrator`-a — **AI endpoint-inə** — göndərirdi. O route `taskType`+`userPrompt` tələb edir, analitika hadisəsində isə bunlar yoxdur → **hər beacon 400 alırdı**. Yəni `home_cta_click`, `home_tab_switch`, `kazan_ai_click` hadisələri **heç vaxt qeydə düşməyib**, üstəlik hər ana səhifə ziyarətçisi AI endpoint-inə dəyirdi. Doğru ünvan onsuz da mövcud idi: `/api/analytics/track` — sendBeacon üçün qurulub (text/plain + Blob qəbul edir) və `webConversionEvents`-ə yazır. Sessiya id nümunəsi `PortalEngagementTracker`-dən götürüldü, ayrı açarda.
+
+2. **`rate-limit.ts:51` ölü kod idi.** `request.ip` Next 15-də `NextRequest`-dən silinib — sətir heç vaxt icra olunmurdu və daimi tip xətası verirdi. İndi `getClientIp`-i yeni yerdə işlətdiyim üçün təmizləndi: **tsc 36 → 35**.
+
+**Öz səhvim (qeyd üçün):** 11 handler-ə guard əlavə etmək üçün yazdığım bash-içi node skriptində `$1` əvəzləməsi pozuldu və `export async function GET()` → `1GET()` oldu. `git checkout` ilə geri qaytarıb skripti ayrıca fayla yazdım. **Dərs:** çox sətirli regex əvəzləməsini bash sətrinin içində yazma — shell escaping-i sındırır.
+
+**Sübut (canlı HTTP, mock deyil):**
+
+| Yoxlama | Nəticə |
+|---|---|
+| `POST /api/orchestrator` auth-suz | 401 ✅ |
+| `GET/DELETE /api/audit` auth-suz | 401 ✅ |
+| `DELETE /api/invoice-categories` auth-suz | 401 ✅ |
+| `food-cost?type=lookup` (açıq qalmalı) | **200 ✅** |
+| `food-cost?type=report/suppliers/all/trend/products` | 401 ✅ (5/5) |
+| `/toolkit/food-cost` səhifəsi (reqressiya) | 200 ✅ |
+| Rate-limit 70 sorğu | 59×200 → **11×429** + `x-ratelimit-*` başlıqları + AZ mesaj ✅ |
+| `/api/analytics/track` yeni payload | 200 ✅ |
+
+tsc **35** (36-dan aşağı) · eslint 0 error · `✓ Compiled successfully in 28.0s`
+
+**Qalır:** `TD-004` — iki paralel auth sistemi (`role` vs `plan`). `app/dashboard/layout.tsx` yalnız token varlığını yoxlayır, rol yoxlamır: `member` planlı istifadəçi bütün dashboard səhifələrini aça bilir. Bu, ayrıca task-dır.
+
 ## 2026-09-13 — PR #437 konflikt həlli + 2 tip xətası
 
 **Niyə:** PR #437 (TASK-0433…0438) `main`-ə merge oluna bilmirdi — `docs/DEVLOG.md`-də konflikt. Səbəb sadə idi: hər iki tərəf faylın başına yeni yazı əlavə etmişdi (branch 6 task, `main` isə `/llms.txt` task-ı). **Heç bir yazı atılmadı** — hər ikisi saxlanıldı, tarix sırası ilə düzüldü (09-13 → 09-02 → 08-30). `docs/CHANGELOG.md` avtomatik birləşdi.
