@@ -1,5 +1,27 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0444 (34 route → 19, sidebar bölmələri)
+
+**Qərar sahibindir:** «C sil, B okey». C = hardcoded data ilə işləyən 14 səhifə + boş `settings`; B = real data ilə işləyən amma menyuda olmayan 8 səhifə.
+
+**Niyə əvvəl istinad taraması:** silmə geri dönüşü çətin əməliyyatdır. `app/ components/ lib/ tests/ scripts/ .github/` — silinən 15 route adının heç birinə istinad **yox** (yalnız sidebar/bottom-nav, onlar da dəyişir). `mockNewsDB` isə `haberler`-dən başqa 6 açıq xəbər komponentində işlənir — **silinmədi**; `trends-mock` yalnız `trends`-in idi — silindi.
+
+**i18n təmizliyi:** 10 namespace yalnız silinən səhifələrdə işlənirdi; 4 dildən skriptlə silindi, top-level namespace sayı 49/49/49/49. `nav.toolkit`/`nav.site` ölü açarları da getdi. Diff hədəflidir: 52 əlavə / 1256 silinmə, tam reformat yox — `JSON.stringify(…, null, 2)` mövcud formatla üst-üstə düşür, git diff yalnız real dəyişiklikləri göstərir.
+
+**Sidebar:** 13 + 8 − 1 = 20 link. Düz siyahı oxunmur; audit də bölmə tövsiyə etmişdi. `navSections` massivi (6 bölmə, `sections.*` açarları 4 dildə), `navItemDefs` ondan `flatMap` ilə çıxır ki, badge memo-su (KAZAN lead sayı, gözləyən elan) olduğu kimi işləsin. Köhnə şərhdəki qərarlar nəzərə alındı: `marketinqOcagi` qalır (public /marketinq/* alətlərinin hub-ı); `food-cost` üzv alətinin `/b2b-panel` versiyası deyil, admin analitika görünüşüdür (TASK-0439-da admin auth aldı) — sahib B-ni təsdiqlədiyi üçün girdi.
+
+**Bir TS xətası mənim idi.** tsc 36 (baza 35). Hansının yeni olduğunu təxmin etmədim: `origin/main` müvəqqəti worktree-də (`node_modules` symlink) tsc işlətdim və iki siyahını `comm` ilə tutuşdurdum. 5 `app/haberler` xətası hər iki tərəfdə eynidir (yalnız union tipinin yazılış sırası fərqli — baza). Yeni olan tək: `DashboardSidebar.tsx:274` — `sidebarItems.find(...) ?? def` union-unda `'title' in item` daraltması `item.title`-ı `unknown` edir. `in` fəndi atıldı; href → `{title, badge}` `Map`-i ilə açıq tiplə oxunur.
+
+**İki yalançı siqnal, ikisi də test/alət tərəfində:**
+1. tsc əvvəl **66** verdi — 31-i `.next/types/validator.ts`-də, silinən route-ların `page.js`-inə istinad. Generasiya faylıdır, `next build` yenidən yaradır; silindi. (TASK-0440-dakı `.next/dev` dərsinin eynisi.)
+2. Smoke test 20 səhifənin **hamısında** «error boundary» dedi — amma eyni anda Playwright `/dashboard`-ı sidebar ilə düzgün render etmişdi. Ziddiyyət → regex raw HTML-də **həmişə mövcud** olan `error.tsx` fallback mətnini tuturdu, göstərilən xətanı yox. Test görünürlük əsaslı oldu (`getByText(...).isVisible()` + sidebar mövcudluğu) → 20/20.
+
+**Sübut:** 30/30 → 404 (kök + `/tr`) · 20/20 render, görünən xəta yox · sidebar 6 bölmə, 8 yeni link, silinənə link 0, `settings` → `ayarlar` · 390px daşma yox · tsc baza · eslint 0 · STATE 257 → 227 route.
+
+**Üsul dərsi (özümə):** smoke test bir dəfə 20/20 səhifədə 500 verdi. Kod deyildi — mənim proses idarəm idi: (1) əvvəlki dev serveri `ss -ltnp` ilə axtardım, o pid-i göstərmədi, «port boşdur» sandım; server sağ idi. (2) Yeni start əmrindəki `rm -rf .next/dev` **işləyən** serverin build qovluğunu sildi → hər sorğu 500; yeni proses isə `EADDRINUSE` ilə öldü. Düzgün üsul: prosesi `pgrep -f next-server` ilə dəqiq pid-dən tap və öldür, port boşalana qədər gözlə, **yalnız sonra** `.next/dev`-i sil və başlat. Eyni qaydanın tərsi də doğrudur: canlı dev serverin altında heç vaxt `.next`-ə toxunma.
+
+**Qalır:** `hero`-nun saxta «Saxla»sı (sahib cavab vermədi) · `ilanlar`-ın səssiz `MOCK_LISTINGS` fallback-i (6 istinad; xəbərdarlıqsız saxta rəqəm) · `.dk-card` rollout · `<DashboardPageHeader>`.
+
 ## 2026-09-13 — TASK-0443 (dizayn təməli + mobil)
 
 **Sahibin göstərişi:** «yamaq etmə, detala fokuslan, mobilə bax». Ona görə üç mərkəzi dəyişiklik, yüz səhifəni ayrı-ayrı yamamaq yox.
