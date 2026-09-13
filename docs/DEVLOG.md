@@ -1,5 +1,37 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0442 (runner Neon-da sındı)
+
+**Sahib canlı bazada işlətdi:**
+
+```
+→ 0001_add_ru_locale_columns.sql … XƏTA
+  cannot insert multiple commands into a prepared statement
+```
+
+**Bu, TASK-0440-ın PR-ında öz yazdığım riskin məhz özü idi:** «runner-in icra döngüsü canlı Neon-a qarşı yoxlanmayıb». Riski görüb yazmışam, amma onu bağlamağa çalışmamışam — sadəcə qeyd edib buraxmışam. Riski sənədləşdirmək onu həll etmək deyil.
+
+**İki ayrı problem üst-üstə düşürdü:**
+
+1. **Neon-un HTTP drayveri hər sorğunu prepared statement kimi göndərir**, prepared statement isə bir neçə ifadə qəbul etmir. Mən fayl mətnini bütöv göndərirdim — 34 ifadəlik fayl birinci sətirdə sınırdı.
+
+2. **Daha gizli olanı:** `BEGIN` və `COMMIT`-i ayrı-ayrı `sql.query()` ilə göndərmək neon-http-də **transaksiya yaratmır** — hər sorğu müstəqil HTTP çağırışıdır. Yəni PR-da yazdığım «hər fayl öz transaksiyasındadır, sınarsa geri alınır» vədi **yanlış idi**. Birinci baq olmasaydı, bu ikincisi bir gün yarımçıq tətbiq olunmuş miqrasiya kimi çıxacaqdı — və tapılması çox çətin olacaqdı.
+
+**Həll:**
+
+- `splitStatements()` — vəziyyət izləyən parser. Sadə `split(';')` yaramır: `DO $$ BEGIN … END $$;` blokunun içində nöqtəli vergüllər var və blok parçalanardı. İzlənən vəziyyətlər: tək dırnaqlı sətir (`''` escape daxil), dollar-quoted blok (`$$` və adlandırılmış `$tag$`), `--` sətir şərhi, `/* */` blok şərhi.
+- İcra `sql.transaction([...])`-ə keçdi — drayverin öz metodu, bütün ifadələri **bir HTTP sorğusunda, real transaksiya daxilində** icra edir. İzləmə qeydi də eyni massivə qoşuldu: fayl tətbiq olunubsa qeyd var, qeyd varsa fayl tətbiq olunub.
+
+**Bu dəfə uğur yolunu sınadım** (əvvəlki iki dəfə yalnız xəta yolunu sınamışdım):
+
+| Test | Nəticə |
+|---|---|
+| Lokal Postgres 16, hər ifadə **ayrıca** icra (Neon davranışı) | **100 ifadə, 0 xəta** |
+| Eyni bazada ikinci keçid (idempotentlik) | **100 ifadə, 0 xəta** |
+| `fetch` tutularaq `sql.transaction()` gövdəsi | 3 sorğu **bir çağırışda**, `DO $$` bütöv, `$1` parametri bağlanıb ✓ |
+
+**Dərs (üçüncü dəfə eyni kökdən):** bu skriptdə ardıcıl üç baq çıxdı — `*/` şərhi bağladı, `.env.local` oxunmadı, indi isə çox-ifadəli sorğu. Üçünün də səbəbi eynidir: **sandbox-da uğur yolunu icra edə bilmədiyim halda «sintaksis keçir / xəta mesajı düzgündür» yoxlamasını kifayət saydım.** Lokal Postgres qaldırmaq mümkün idi və bunu birinci gündən etməli idim.
+
 ## 2026-09-13 — TASK-0441 (`db:migrate` lokalda işləmirdi)
 
 **Sahib ilk dəfə işlətdi və sındı:**

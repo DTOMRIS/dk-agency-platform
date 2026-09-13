@@ -12,6 +12,20 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Fixed
+- `TASK-0442` fix(db): **miqrasiya runner-i Neon-da işləmirdi — `cannot insert multiple commands into a prepared statement`**. Sahib ilk dəfə canlı bazada işlətdi və birinci faylda sındı. **Səbəb:** Neon-un HTTP drayveri hər sorğunu prepared statement kimi göndərir, prepared statement isə **bir neçə SQL ifadəsini qəbul etmir**; mən isə fayl mətnini olduğu kimi göndərirdim. **İkinci, gizli problem:** `BEGIN`/`COMMIT`-i ayrı sorğularla göndərmək neon-http-də transaksiya yaratmır — hər sorğu müstəqil HTTP çağırışıdır, yəni «hər fayl öz transaksiyasında» vədim də **əslində işləmirdi**. **Həll:** (1) `splitStatements()` — SQL-i ifadələrə bölən parser; sadə `split(';')` yaramır, çünki `DO $ … $` bloklarının içində nöqtəli vergül var, ona görə tək dırnaqlı sətirlər (`''` escape daxil), dollar-quoted bloklar (`$` və `$tag# CHANGELOG
+
+- `TASK-0417` fix(news): **preview saves before opening** — manual news editor preview no longer opens an unsaved `/haberler/{draftSlug}?preview=true` URL. It first saves/PATCHes the article as `fetched`, captures the API returned slug, then opens preview with the saved slug so new drafts do not 404.
+
+- `TASK-0415` fix(security): **dependency vulnerability sweep** — direct runtime packages upgraded (`next` 16.2.9, `drizzle-orm` 0.45.2, `@google/genai` 2.10.0, `cloudinary` 2.10.0, `nodemailer` 9.0.1, SheetJS `xlsx` 0.20.3 tarball), `drizzle-kit` moved to devDependencies, and vulnerable transitive packages pinned with npm overrides. Audit reduced to **0 critical / 0 high / 4 moderate**; remaining moderate chain is upstream Next bundled PostCSS. Lint + production build pass.
+- `TASK-0416` fix(dashboard): **locale funnel route mirror** — `/tr/dashboard/funnel` canlıda 404 verirdi, çünki yalnız root `app/dashboard/funnel/page.tsx` vardı; `app/[locale]/dashboard/funnel/page.tsx` re-export mirror-u əlavə edildi. Build route list-də `ƒ /[locale]/dashboard/funnel` göründü; lokal built smoke `307 /auth/login` qaytardı (404 yox).
+
+- `TASK-0414` fix(toolkit): **Açılış checklist hüquqi dəqiqləşdirmə** — “İcra Hakimiyyəti razılığı” ADRA icazəsi ilə əvəz edildi; Azərbaycan Respublikasının Dövlət Reklam Agentliyinin tam adı və fəaliyyət ünvanı üzrə 15 rəqəmli obyekt kodu maddəsi AZ/RU/EN/TR dillərində əlavə edildi. Checklist 43→44.
+
+Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
+
+), `--` və `/* */` şərhləri izlənir. (2) İcra `sql.transaction([...])`-ə keçirildi — bütün ifadələr **bir HTTP sorğusunda, real transaksiya daxilində**; izləmə qeydi də eyni massivdədir, yəni «fayl tətbiq olunub amma qeyd yoxdur» vəziyyəti mümkün deyil. Sübut: **lokal Postgres 16-da 100 ifadə × 2 keçid, 0 xəta** (hər ifadə ayrıca icra olunub — Neon-un davranışı təqlid edilib), üstəlik `fetch` tutularaq `sql.transaction()`-in göndərdiyi gövdə yoxlanılıb: 3 sorğu bir çağırışda, `DO $` bloku bütöv, parametrlər düzgün bağlanıb.
+
+### Fixed
 - `TASK-0441` fix(db): **`db:migrate` lokalda `.env.local`-ı oxumurdu**. TASK-0440-da göndərdiyim skript `process.env.DATABASE_URL`-ə baxırdı, amma Next.js-dən fərqli olaraq sadə `node` skripti `.env.local`-ı avtomatik yükləmir — nəticədə dəyər faylda mövcud olduğu halda `DATABASE_URL təyin edilməyib` verirdi və skript lokalda **ümumiyyətlə işlədilə bilmirdi**. Node-un `--env-file` bayrağı 20.6-dan əvvəl yoxdur və fayl olmayanda sınır, ona görə oxuma asılılıqsız şəkildə skriptin içinə salındı: `.env.local`, sonra `.env`; `export ` prefiksi, tək/cüt dırnaq və `#` şərh sətirləri emal olunur. **Mövcud mühit dəyişəni üstündür** — Hostinger/CI-ın verdiyi dəyər əzilmir. Fayllara **yazılmır**, yalnız oxunur (layihə qaydası: `.env*` fayllarına yazma). Xəta mesajı da dəqiqləşdirildi — harada axtarıldığını sadalayır.
 
 ### Fixed
