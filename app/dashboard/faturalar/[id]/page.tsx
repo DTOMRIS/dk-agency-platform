@@ -291,7 +291,7 @@ export default function InvoiceDetailPage() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+        <Loader2 className="h-6 w-6 animate-spin text-slate-600" />
       </div>
     );
   }
@@ -322,7 +322,7 @@ export default function InvoiceDetailPage() {
               {invoice.supplierVoen && <span>{t('detailVoenLabel')}: {invoice.supplierVoen}</span>}
               <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${statusClass}`}>{statusText}</span>
               {invoice.ocrConfidence !== null && (
-                <span className="text-xs text-slate-400">OCR: {Math.round(invoice.ocrConfidence * 100)}%</span>
+                <span className="text-xs text-slate-600">OCR: {Math.round(invoice.ocrConfidence * 100)}%</span>
               )}
             </div>
           </div>
@@ -426,7 +426,7 @@ export default function InvoiceDetailPage() {
                   </select>
                 </td>
                 <td className="px-3 py-2">
-                  <button onClick={() => removeItem(item.id)} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500">
+                  <button onClick={() => removeItem(item.id)} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-500">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </td>
@@ -443,7 +443,7 @@ export default function InvoiceDetailPage() {
             <div className="flex items-center gap-2">
               <input type="checkbox" className="h-4 w-4 rounded border-slate-300" checked={selectedItems.has(item.id)} onChange={() => toggleItem(item.id)} />
               <input value={item.name} onChange={(e) => updateItem(item.id, 'name', e.target.value)} className="h-10 flex-1 rounded-lg border border-slate-200 px-2 text-sm outline-none focus:border-[#E11D48]" placeholder={t('manualItemNamePlaceholder')} />
-              <button onClick={() => removeItem(item.id)} className="h-10 w-10 shrink-0 rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500">
+              <button onClick={() => removeItem(item.id)} className="h-10 w-10 shrink-0 rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-500">
                 <Trash2 className="mx-auto h-4 w-4" />
               </button>
             </div>

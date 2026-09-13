@@ -120,7 +120,7 @@ export default function KazanLeadStatusActions({
             <ul className="mb-3 space-y-1.5">
               {notes.map((n, i) => (
                 <li key={i} className="text-xs text-slate-700">
-                  <span className="font-semibold text-slate-400">
+                  <span className="font-semibold text-slate-600">
                     {new Date(n.at).toLocaleString('az-AZ')}:
                   </span>{' '}
                   {n.text}
@@ -128,14 +128,14 @@ export default function KazanLeadStatusActions({
               ))}
             </ul>
           ) : (
-            <p className="mb-3 text-xs text-slate-400">{t('noNotes')}</p>
+            <p className="mb-3 text-xs text-slate-600">{t('noNotes')}</p>
           )}
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder={t('notePlaceholder')}
             rows={2}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
+            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-600 focus:border-[var(--dk-gold)]"
           />
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <label className="text-xs font-semibold text-slate-700">{t('nextContact')}</label>

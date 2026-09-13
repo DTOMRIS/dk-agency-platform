@@ -166,7 +166,7 @@ export default function DashboardSitePage() {
                       className="h-16 w-16 rounded-2xl object-cover"
                     />
                   ) : (
-                    <span className="text-xs text-slate-400">Logo</span>
+                    <span className="text-xs text-slate-600">Logo</span>
                   )}
                 </div>
                 <div className="grid gap-4 md:grid-cols-2">

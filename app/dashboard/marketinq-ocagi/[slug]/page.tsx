@@ -252,7 +252,7 @@ export default function ToolSlugPage() {
       {tool.status === 'planned' && (
         <div className="rounded-2xl border-2 border-dashed border-slate-300 p-8 text-center">
           <p className="text-lg font-bold text-slate-500">{copy.comingSoon}</p>
-          <p className="mt-2 text-sm text-slate-400">{copy.comingSoonDesc}</p>
+          <p className="mt-2 text-sm text-slate-600">{copy.comingSoonDesc}</p>
         </div>
       )}
     </div>

@@ -211,7 +211,7 @@ export default function FoodCostDashboard() {
   if (loading) {
     return (
       <div className="flex h-96 items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
+        <Loader2 className="h-8 w-8 animate-spin text-slate-600" />
       </div>
     );
   }
@@ -398,7 +398,7 @@ function KpiCard({ title, value, sub, icon, color }: {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{title}</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-600">{title}</p>
         <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 ${color}`}>
           {icon}
         </span>
@@ -417,7 +417,7 @@ function CategoriesTab({ categories, grandTotal, emptyMsg, productUnit, grandTot
   grandTotalLabel: string;
 }) {
   if (categories.length === 0) {
-    return <p className="py-8 text-center text-sm text-slate-400">{emptyMsg}</p>;
+    return <p className="py-8 text-center text-sm text-slate-600">{emptyMsg}</p>;
   }
 
   return (
@@ -430,7 +430,7 @@ function CategoriesTab({ categories, grandTotal, emptyMsg, productUnit, grandTot
           {/* Name + item count */}
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold text-slate-800">{cat.categoryName}</p>
-            <p className="text-xs text-slate-400">{cat.itemCount} {productUnit}</p>
+            <p className="text-xs text-slate-600">{cat.itemCount} {productUnit}</p>
           </div>
 
           {/* Progress bar */}
@@ -469,7 +469,7 @@ function SuppliersTab({ suppliers, emptyMsg, invoiceUnit, avgLabel }: {
   avgLabel: string;
 }) {
   if (suppliers.length === 0) {
-    return <p className="py-8 text-center text-sm text-slate-400">{emptyMsg}</p>;
+    return <p className="py-8 text-center text-sm text-slate-600">{emptyMsg}</p>;
   }
 
   const maxAmount = Math.max(...suppliers.map((s) => s.totalAmount), 1);
@@ -483,7 +483,7 @@ function SuppliersTab({ suppliers, emptyMsg, invoiceUnit, avgLabel }: {
           </span>
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-semibold text-slate-800">{s.supplierName}</p>
-            <p className="text-xs text-slate-400">{s.invoiceCount} {invoiceUnit} &middot; {avgLabel} {formatMoney(s.avgAmount)} ₼</p>
+            <p className="text-xs text-slate-600">{s.invoiceCount} {invoiceUnit} &middot; {avgLabel} {formatMoney(s.avgAmount)} ₼</p>
           </div>
           <div className="hidden w-32 sm:block">
             <div className="h-2 rounded-full bg-slate-100">
@@ -510,14 +510,14 @@ function ProductsTab({ products, emptyMsg, colProduct, colCategory, colQuantity,
   colTotal: string;
 }) {
   if (products.length === 0) {
-    return <p className="py-8 text-center text-sm text-slate-400">{emptyMsg}</p>;
+    return <p className="py-8 text-center text-sm text-slate-600">{emptyMsg}</p>;
   }
 
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-slate-200 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <tr className="border-b border-slate-200 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
             <th className="pb-2 pr-4">#</th>
             <th className="pb-2 pr-4">{colProduct}</th>
             <th className="pb-2 pr-4">{colCategory}</th>
@@ -529,7 +529,7 @@ function ProductsTab({ products, emptyMsg, colProduct, colCategory, colQuantity,
         <tbody>
           {products.map((p, i) => (
             <tr key={`${p.name}-${p.unit}`} className="border-b border-slate-100 last:border-0">
-              <td className="py-2.5 pr-4 text-xs font-bold text-slate-400">{i + 1}</td>
+              <td className="py-2.5 pr-4 text-xs font-bold text-slate-600">{i + 1}</td>
               <td className="py-2.5 pr-4 font-semibold text-slate-800">{p.name}</td>
               <td className="py-2.5 pr-4 text-slate-500">{p.categoryName}</td>
               <td className="py-2.5 pr-4 text-right text-slate-600">{p.totalQuantity} {p.unit}</td>

@@ -94,7 +94,7 @@ export default function ProfilOnayPage() {
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         <div className="relative flex-1 min-w-[200px] max-w-md">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" />
           <input
             type="text"
             value={search}
@@ -125,7 +125,7 @@ export default function ProfilOnayPage() {
         </div>
       ) : profiles.length === 0 ? (
         <div className="text-center py-20">
-          <Shield size={48} className="mx-auto mb-4 text-slate-300" />
+          <Shield size={48} className="mx-auto mb-4 text-slate-500" />
           <p className="text-sm text-slate-500">Bu statusda profil yoxdur.</p>
         </div>
       ) : (
@@ -152,7 +152,7 @@ export default function ProfilOnayPage() {
                           <img src={p.logoUrl} alt="" className="w-8 h-8 rounded-lg object-cover" />
                         ) : (
                           <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                            <Building2 size={14} className="text-slate-400" />
+                            <Building2 size={14} className="text-slate-600" />
                           </div>
                         )}
                         <span className="font-medium text-slate-900">{p.company || '—'}</span>
@@ -185,7 +185,7 @@ export default function ProfilOnayPage() {
           <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl">
             <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
               <h2 className="text-lg font-bold text-slate-900">Profil detalları</h2>
-              <button onClick={() => { setDetail(null); setRejectionReason(''); }} className="text-slate-400 hover:text-slate-600">
+              <button onClick={() => { setDetail(null); setRejectionReason(''); }} className="text-slate-600 hover:text-slate-600">
                 <X size={20} />
               </button>
             </div>
@@ -196,7 +196,7 @@ export default function ProfilOnayPage() {
                   <img src={detail.logoUrl} alt="" className="w-16 h-16 rounded-2xl object-cover border border-slate-200" />
                 ) : (
                   <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center">
-                    <Building2 size={28} className="text-slate-400" />
+                    <Building2 size={28} className="text-slate-600" />
                   </div>
                 )}
                 <div>
@@ -275,9 +275,9 @@ export default function ProfilOnayPage() {
 function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | null | undefined }) {
   return (
     <div className="flex items-start gap-2 rounded-xl bg-slate-50 px-3 py-2">
-      <span className="text-slate-400 mt-0.5">{icon}</span>
+      <span className="text-slate-600 mt-0.5">{icon}</span>
       <div>
-        <p className="text-xs text-slate-400">{label}</p>
+        <p className="text-xs text-slate-600">{label}</p>
         <p className="text-sm font-medium text-slate-700">{value || '—'}</p>
       </div>
     </div>

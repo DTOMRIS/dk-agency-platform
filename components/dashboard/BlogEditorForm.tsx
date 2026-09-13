@@ -355,7 +355,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             <label className="mb-2 block text-sm font-bold text-slate-700">
               Başlıq ({activeLocale.toUpperCase()})
               {activeLocale !== 'az' ? (
-                <span className="ml-2 text-xs font-normal text-slate-400">
+                <span className="ml-2 text-xs font-normal text-slate-600">
                   Boşdursa AZ göstərilir
                 </span>
               ) : null}
@@ -438,7 +438,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                   onChange={(e) => setField('readTime', Number(e.target.value))}
                   className="w-full bg-transparent text-slate-900 outline-none"
                 />
-                <span className="text-sm text-slate-400">dəq</span>
+                <span className="text-sm text-slate-600">dəq</span>
               </div>
             </div>
           </div>
@@ -542,7 +542,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             <label className="block text-sm font-bold text-slate-700">
               Məzmun ({activeLocale.toUpperCase()})
               {activeLocale !== 'az' ? (
-                <span className="ml-2 text-xs font-normal text-slate-400">
+                <span className="ml-2 text-xs font-normal text-slate-600">
                   Boşdursa AZ göstərilir
                 </span>
               ) : null}

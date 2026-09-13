@@ -213,7 +213,7 @@ export default function TrendsPage() {
                 <div className={`px-2.5 py-1 rounded-lg text-[9px] font-bold uppercase tracking-wider backdrop-blur-md border ${
                   dest.status === 'active'
                     ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                    : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+                    : 'bg-gray-500/20 text-gray-600 border-gray-500/30'
                 }`}>
                   {dest.status === 'active' ? t('statusActive') : t('statusDraft')}
                 </div>
@@ -285,7 +285,7 @@ export default function TrendsPage() {
                 </h2>
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-400 transition-colors"
+                  className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-600 transition-colors"
                 >
                   <Plus className="rotate-45" size={24} />
                 </button>

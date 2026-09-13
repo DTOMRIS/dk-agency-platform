@@ -251,7 +251,7 @@ export default function PipelinePage() {
       </div>
 
       {/* Stats Bar */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 gap-4 mb-6 lg:grid-cols-4">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <BarChart3 size={16} />
@@ -284,7 +284,7 @@ export default function PipelinePage() {
 
       {/* Search */}
       <div className="relative max-w-md mb-6">
-        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" />
         <input
           type="text"
           value={searchQuery}
@@ -347,7 +347,7 @@ export default function PipelinePage() {
 
                     <div className="pt-3 border-t border-gray-100">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-xs text-gray-400">
+                        <div className="flex items-center gap-1 text-xs text-gray-600">
                           <Clock size={12} />
                           {deal.daysInStage} {t('days')}
                         </div>
@@ -365,7 +365,7 @@ export default function PipelinePage() {
                 ))}
 
                 {stageDeals.length === 0 && (
-                  <div className="text-center py-8 text-gray-400">
+                  <div className="text-center py-8 text-gray-600">
                     <p className="text-sm">{t('emptyStage')}</p>
                   </div>
                 )}
@@ -379,7 +379,7 @@ export default function PipelinePage() {
       {selectedDeal && (
         <div className="fixed inset-0 bg-black/50 z-50" onClick={() => setSelectedDeal(null)}>
           <div
-            className="absolute right-0 top-0 h-full w-[500px] bg-white shadow-2xl overflow-y-auto"
+            className="absolute right-0 top-0 h-full w-full max-w-[500px] bg-white shadow-2xl overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6">
@@ -418,19 +418,19 @@ export default function PipelinePage() {
                 <h3 className="font-semibold text-gray-900 mb-3">{t('drawerContact')}</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <User size={16} className="text-gray-400" />
+                    <User size={16} className="text-gray-600" />
                     <span className="text-sm text-gray-700">{selectedDeal.contact}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Phone size={16} className="text-gray-400" />
+                    <Phone size={16} className="text-gray-600" />
                     <span className="text-sm text-gray-700">{selectedDeal.phone}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Mail size={16} className="text-gray-400" />
+                    <Mail size={16} className="text-gray-600" />
                     <span className="text-sm text-gray-700">{selectedDeal.email}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <MapPin size={16} className="text-gray-400" />
+                    <MapPin size={16} className="text-gray-600" />
                     <span className="text-sm text-gray-700">{selectedDeal.location}</span>
                   </div>
                 </div>

@@ -130,7 +130,7 @@ function ModalShell({ open, onClose, title, children }: {
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-slate-900">{title}</h2>
-          <button onClick={onClose} className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-600">
+          <button onClick={onClose} className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-600">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -251,7 +251,7 @@ function OcrUploadModal({ open, onClose, onSuccess }: { open: boolean; onClose: 
           </button>
           <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void handleFile(f); }} />
 
-          <p className="text-center text-xs text-slate-400">{t('ocrFileHint')}</p>
+          <p className="text-center text-xs text-slate-600">{t('ocrFileHint')}</p>
         </div>
       ) : (
         <div className="flex flex-col gap-4">
@@ -489,7 +489,7 @@ function ManualEntryModal({ open, onClose, onSuccess }: { open: boolean; onClose
                   <option value="paket">{t('unitPack')}</option>
                 </select>
                 <input value={item.unitPrice} onChange={(e) => updateItem(idx, 'unitPrice', e.target.value)} placeholder="0.00" type="number" step="0.01" className="h-9 w-20 rounded-lg border border-slate-200 bg-white px-2 text-sm outline-none focus:border-[#E11D48]" />
-                <button onClick={() => removeItem(idx)} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500" title={t('btnDelete')}>
+                <button onClick={() => removeItem(idx)} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-500" title={t('btnDelete')}>
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -728,7 +728,7 @@ function ImportModal({ open, onClose, onSuccess }: { open: boolean; onClose: () 
               </table>
             </div>
             {parsedRows.length > 10 && (
-              <div className="text-center text-xs text-slate-400">+ {parsedRows.length - 10} {t('importMoreRows')}</div>
+              <div className="text-center text-xs text-slate-600">+ {parsedRows.length - 10} {t('importMoreRows')}</div>
             )}
           </>
         )}
@@ -962,7 +962,7 @@ export default function DashboardFaturalarPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
             <div className="text-xs font-medium text-slate-500">{t('statPending')}</div>
             <div className="mt-1 text-2xl font-bold text-amber-600">{stats.draftCount}</div>
-            <div className="text-xs text-slate-400">{stats.confirmedCount} {t('statConfirmed')}</div>
+            <div className="text-xs text-slate-600">{stats.confirmedCount} {t('statConfirmed')}</div>
           </div>
         </div>
       )}
@@ -970,10 +970,10 @@ export default function DashboardFaturalarPage() {
       {/* Filters */}
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-600" />
           <input type="text" placeholder={t('searchPlaceholder')} value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} className="h-10 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 outline-none focus:border-[#E11D48] focus:ring-1 focus:ring-[#E11D48]" />
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none">
             {STATUS_FILTERS.map((f) => <option key={f.key} value={f.key}>{f.label}</option>)}
           </select>
@@ -1015,9 +1015,9 @@ export default function DashboardFaturalarPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-400">{t('loading')}</td></tr>
+              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-600">{t('loading')}</td></tr>
             ) : invoices.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-400">{t('empty')}</td></tr>
+              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-600">{t('empty')}</td></tr>
             ) : invoices.map((inv) => {
               const src = sourceLabel(inv.source, t);
               return (
@@ -1025,7 +1025,7 @@ export default function DashboardFaturalarPage() {
                   <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}><input type="checkbox" checked={selected.has(inv.id)} onChange={() => toggleSelect(inv.id)} className="h-4 w-4 rounded border-slate-300" /></td>
                   <td className="px-4 py-3">
                     <div className="font-medium text-slate-900">{inv.supplierName}</div>
-                    <div className="text-xs text-slate-400">{inv.invoiceNumber ?? '—'}{inv.supplierVoen ? ` · VÖEN: ${inv.supplierVoen}` : ''}</div>
+                    <div className="text-xs text-slate-600">{inv.invoiceNumber ?? '—'}{inv.supplierVoen ? ` · VÖEN: ${inv.supplierVoen}` : ''}</div>
                   </td>
                   <td className="px-4 py-3 text-slate-600">{formatDate(inv.invoiceDate)}</td>
                   <td className="px-4 py-3 text-right font-semibold text-slate-900">{formatMoney(inv.grandTotal, inv.currency)}</td>
@@ -1042,9 +1042,9 @@ export default function DashboardFaturalarPage() {
       {/* Cards — Mobile */}
       <div className="flex flex-col gap-3 sm:hidden">
         {loading ? (
-          <div className="py-12 text-center text-slate-400">{t('loading')}</div>
+          <div className="py-12 text-center text-slate-600">{t('loading')}</div>
         ) : invoices.length === 0 ? (
-          <div className="py-12 text-center text-slate-400">{t('empty')}</div>
+          <div className="py-12 text-center text-slate-600">{t('empty')}</div>
         ) : invoices.map((inv) => {
           const src = sourceLabel(inv.source, t);
           return (
@@ -1054,7 +1054,7 @@ export default function DashboardFaturalarPage() {
                   <input type="checkbox" checked={selected.has(inv.id)} onChange={() => toggleSelect(inv.id)} onClick={(e) => e.stopPropagation()} className="mt-0.5 h-4 w-4 rounded border-slate-300" />
                   <div>
                     <div className="font-medium text-slate-900">{inv.supplierName}</div>
-                    <div className="text-xs text-slate-400">{inv.invoiceNumber ?? '—'} · {formatDate(inv.invoiceDate)}</div>
+                    <div className="text-xs text-slate-600">{inv.invoiceNumber ?? '—'} · {formatDate(inv.invoiceDate)}</div>
                   </div>
                 </div>
                 <div className="font-semibold text-slate-900">{formatMoney(inv.grandTotal, inv.currency)}</div>

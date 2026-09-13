@@ -152,7 +152,7 @@ export default function RollerPage() {
         {/* Roles List */}
         <div className="lg:col-span-1 space-y-4">
           <div className="relative mb-4">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" />
             <input
               type="text"
               value={searchQuery}
@@ -198,7 +198,7 @@ export default function RollerPage() {
                 </div>
                 <div className="flex items-center gap-1">
                   <button disabled title={t('previewNotice')} className="p-1.5 rounded-lg opacity-40 cursor-not-allowed">
-                    <Edit2 size={14} className="text-gray-400" />
+                    <Edit2 size={14} className="text-gray-600" />
                   </button>
                   {!role.isSystem && (
                     <button disabled title={t('previewNotice')} className="p-1.5 rounded-lg opacity-40 cursor-not-allowed">
@@ -229,7 +229,7 @@ export default function RollerPage() {
                   <button
                     disabled
                     title={t('previewNotice')}
-                    className="px-4 py-2 rounded-xl text-sm font-medium bg-gray-100 text-gray-400 opacity-60 cursor-not-allowed"
+                    className="px-4 py-2 rounded-xl text-sm font-medium bg-gray-100 text-gray-600 opacity-60 cursor-not-allowed"
                   >
                     {t('edit')}
                   </button>
@@ -289,7 +289,7 @@ export default function RollerPage() {
             </div>
           ) : (
             <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-              <Shield size={48} className="text-gray-300 mx-auto mb-4" />
+              <Shield size={48} className="text-gray-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-700 mb-2">{t('selectRoleTitle')}</h3>
               <p className="text-sm text-gray-500">
                 {t('selectRoleDesc')}

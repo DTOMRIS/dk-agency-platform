@@ -98,7 +98,7 @@ export default function DashboardBlogPage() {
       archived: 'Arxivdə',
     };
     return (
-      <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider ${map[s] || 'bg-slate-50 text-slate-400'}`}>
+      <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider ${map[s] || 'bg-slate-50 text-slate-600'}`}>
         {labelMap[s] || s}
       </span>
     );
@@ -136,10 +136,10 @@ export default function DashboardBlogPage() {
         {/* Table */}
         <div className="overflow-x-auto rounded-[32px] border border-slate-200 bg-white shadow-sm">
           {loading ? (
-            <div className="flex items-center justify-center py-20 text-slate-400">Yüklənir...</div>
+            <div className="flex items-center justify-center py-20 text-slate-600">Yüklənir...</div>
           ) : (
             <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left text-slate-400">
+              <thead className="bg-slate-50 text-left text-slate-600">
                 <tr>
                   <th className="w-12 px-4 py-4">
                     <input
@@ -190,7 +190,7 @@ export default function DashboardBlogPage() {
                         <button
                           type="button"
                           onClick={() => void deleteOne(post)}
-                          className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                          className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
                           title="Sil"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -244,7 +244,7 @@ export default function DashboardBlogPage() {
           <button
             type="button"
             onClick={() => setSelected(new Set())}
-            className="rounded-full border border-slate-600 px-4 py-2 text-xs font-bold text-slate-400 transition hover:text-white"
+            className="rounded-full border border-slate-600 px-4 py-2 text-xs font-bold text-slate-600 transition hover:text-white"
           >
             Ləğv et
           </button>

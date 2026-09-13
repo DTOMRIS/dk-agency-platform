@@ -453,7 +453,7 @@ export default function DashboardXeberlerPage() {
 
         <div className="overflow-x-auto rounded-[32px] border border-slate-200 bg-white shadow-sm">
           <table className="min-w-full text-sm">
-            <thead className="bg-slate-50 text-left text-slate-400">
+            <thead className="bg-slate-50 text-left text-slate-600">
               <tr>
                 <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colOriginal}</th>
                 <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colAzTranslation}</th>
@@ -468,7 +468,7 @@ export default function DashboardXeberlerPage() {
                 <tr key={item.id} className="border-t border-slate-100 align-top">
                   <td className="px-5 py-4 font-semibold text-[var(--dk-navy)]">
                     <div>{item.title}</div>
-                    <div className="mt-1 text-xs text-slate-400">{item.category}</div>
+                    <div className="mt-1 text-xs text-slate-600">{item.category}</div>
                   </td>
                   <td className="px-5 py-4 text-slate-600">{item.titleAz || copy.pendingTranslation}</td>
                   <td className="px-5 py-4 text-slate-600">{item.sourceName || copy.noSource}</td>

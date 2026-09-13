@@ -248,7 +248,7 @@ export default function MessagesPage() {
           {/* Search */}
           <div className="p-4 border-b border-gray-100">
             <div className="relative">
-              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" />
               <input
                 type="text"
                 value={searchQuery}
@@ -291,7 +291,7 @@ export default function MessagesPage() {
                         </p>
                         <div className="flex items-center gap-2 shrink-0">
                           {message.starred && <Star size={14} className="text-amber-500 fill-amber-500" />}
-                          <span className="text-xs text-gray-400">{message.time}</span>
+                          <span className="text-xs text-gray-600">{message.time}</span>
                         </div>
                       </div>
                       <p className="text-xs text-gray-500 mb-1">{message.fromCompany}</p>
@@ -303,7 +303,7 @@ export default function MessagesPage() {
                           {categoryLabels[message.category]}
                         </span>
                         {message.hasAttachment && (
-                          <Paperclip size={12} className="text-gray-400" />
+                          <Paperclip size={12} className="text-gray-600" />
                         )}
                       </div>
                     </div>
@@ -339,14 +339,14 @@ export default function MessagesPage() {
                     <h2 className="text-lg font-bold text-gray-900">{selectedMessage.subject}</h2>
                     <div className="flex items-center gap-2 mt-1">
                       <p className="text-sm text-gray-600">{selectedMessage.from}</p>
-                      <span className="text-gray-300">•</span>
+                      <span className="text-gray-500">•</span>
                       <p className="text-sm text-gray-500">{selectedMessage.fromCompany}</p>
                     </div>
                     <div className="flex items-center gap-2 mt-2">
                       <span className={`text-xs px-2 py-0.5 rounded-full ${categoryColors[selectedMessage.category]}`}>
                         {categoryLabels[selectedMessage.category]}
                       </span>
-                      <span className="text-xs text-gray-400 flex items-center gap-1">
+                      <span className="text-xs text-gray-600 flex items-center gap-1">
                         <Clock size={12} />
                         {selectedMessage.time}
                       </span>
@@ -355,16 +355,16 @@ export default function MessagesPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <Star size={18} className={selectedMessage.starred ? 'text-amber-500 fill-amber-500' : 'text-gray-400'} />
+                    <Star size={18} className={selectedMessage.starred ? 'text-amber-500 fill-amber-500' : 'text-gray-600'} />
                   </button>
                   <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <Archive size={18} className="text-gray-400" />
+                    <Archive size={18} className="text-gray-600" />
                   </button>
                   <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <Trash2 size={18} className="text-gray-400" />
+                    <Trash2 size={18} className="text-gray-600" />
                   </button>
                   <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                    <MoreVertical size={18} className="text-gray-400" />
+                    <MoreVertical size={18} className="text-gray-600" />
                   </button>
                 </div>
               </div>

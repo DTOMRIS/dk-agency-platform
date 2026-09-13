@@ -687,7 +687,7 @@ export default function NewsEditorForm({
             <label className="mb-2 block text-sm font-bold text-slate-700">
               {copy.titleLabel} ({activeLocale.toUpperCase()})
               {activeLocale !== 'az' ? (
-                <span className="ml-2 text-xs font-normal text-slate-400">{copy.fallbackNote}</span>
+                <span className="ml-2 text-xs font-normal text-slate-600">{copy.fallbackNote}</span>
               ) : null}
             </label>
             <input
@@ -719,7 +719,7 @@ export default function NewsEditorForm({
             <label className="mb-2 block text-sm font-bold text-slate-700">
               {copy.summaryLabel} ({activeLocale.toUpperCase()})
               {activeLocale !== 'az' ? (
-                <span className="ml-2 text-xs font-normal text-slate-400">{copy.fallbackNote}</span>
+                <span className="ml-2 text-xs font-normal text-slate-600">{copy.fallbackNote}</span>
               ) : null}
             </label>
             <textarea
@@ -877,7 +877,7 @@ export default function NewsEditorForm({
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
-            <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+            <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">
               Xüsusi parametrlər
             </div>
 
@@ -947,7 +947,7 @@ export default function NewsEditorForm({
         <label className="mb-2 block text-sm font-bold text-slate-700">
           {copy.contentLabel} ({activeLocale.toUpperCase()})
           {activeLocale !== 'az' ? (
-            <span className="ml-2 text-xs font-normal text-slate-400">{copy.fallbackNote}</span>
+            <span className="ml-2 text-xs font-normal text-slate-600">{copy.fallbackNote}</span>
           ) : null}
         </label>
 

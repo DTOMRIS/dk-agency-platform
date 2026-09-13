@@ -207,7 +207,7 @@ export default function RaporlarPage() {
               <h3 className="font-bold text-gray-900 mb-1">{report.title}</h3>
               <p className="text-sm text-gray-500 mb-4">{report.description}</p>
               <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                <span className="text-xs text-gray-400">{report.date}</span>
+                <span className="text-xs text-gray-600">{report.date}</span>
                 <button className="flex items-center gap-1 text-dk-red hover:text-dk-red-strong text-sm font-medium">
                   <Download size={14} />
                   {t('download')}
@@ -233,7 +233,7 @@ export default function RaporlarPage() {
         </div>
         <div className="h-64 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl flex items-center justify-center">
           <div className="text-center">
-            <BarChart3 size={48} className="text-gray-300 mx-auto mb-3" />
+            <BarChart3 size={48} className="text-gray-500 mx-auto mb-3" />
             <p className="text-gray-500 text-sm">{t('chartLoading')}</p>
           </div>
         </div>

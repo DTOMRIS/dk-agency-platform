@@ -126,7 +126,7 @@ export default function B2BYonetimiPage() {
   const STATUS_CONFIG = {
     active: { label: t('statusLabels.active'), icon: CheckCircle, color: 'text-green-600' },
     pending: { label: t('statusLabels.pending'), icon: Clock, color: 'text-amber-600' },
-    inactive: { label: t('statusLabels.inactive'), icon: XCircle, color: 'text-gray-400' },
+    inactive: { label: t('statusLabels.inactive'), icon: XCircle, color: 'text-gray-600' },
   };
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -227,7 +227,7 @@ export default function B2BYonetimiPage() {
       <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1 relative">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" />
             <input
               type="text"
               value={searchTerm}
@@ -251,7 +251,7 @@ export default function B2BYonetimiPage() {
               </select>
               <ChevronDown
                 size={16}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none"
               />
             </div>
             <div className="relative">
@@ -267,7 +267,7 @@ export default function B2BYonetimiPage() {
               </select>
               <ChevronDown
                 size={16}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none"
               />
             </div>
           </div>
@@ -339,13 +339,13 @@ export default function B2BYonetimiPage() {
                         <div className="flex items-center gap-3 mt-1">
                           <a
                             href={`mailto:${partner.email}`}
-                            className="text-gray-400 hover:text-dk-red transition-colors"
+                            className="text-gray-600 hover:text-dk-red transition-colors"
                           >
                             <Mail size={14} />
                           </a>
                           <a
                             href={`tel:${partner.phone}`}
-                            className="text-gray-400 hover:text-dk-red transition-colors"
+                            className="text-gray-600 hover:text-dk-red transition-colors"
                           >
                             <Phone size={14} />
                           </a>
@@ -357,7 +357,7 @@ export default function B2BYonetimiPage() {
                     </td>
                     <td className="p-4 text-center">
                       <span className="inline-flex items-center gap-1 text-sm font-semibold text-gray-900">
-                        <FileText size={14} className="text-gray-400" />
+                        <FileText size={14} className="text-gray-600" />
                         {partner.deals}
                       </span>
                     </td>
@@ -368,7 +368,7 @@ export default function B2BYonetimiPage() {
                           {partner.rating.toFixed(1)}
                         </span>
                       ) : (
-                        <span className="text-xs text-gray-400">-</span>
+                        <span className="text-xs text-gray-600">-</span>
                       )}
                     </td>
                     <td className="p-4 text-center">
@@ -382,10 +382,10 @@ export default function B2BYonetimiPage() {
                     <td className="p-4">
                       <div className="flex items-center gap-2">
                         <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                          <ExternalLink size={16} className="text-gray-400" />
+                          <ExternalLink size={16} className="text-gray-600" />
                         </button>
                         <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                          <MoreHorizontal size={16} className="text-gray-400" />
+                          <MoreHorizontal size={16} className="text-gray-600" />
                         </button>
                       </div>
                     </td>
@@ -398,9 +398,9 @@ export default function B2BYonetimiPage() {
 
         {filteredPartners.length === 0 && (
           <div className="p-12 text-center">
-            <Building2 size={48} className="mx-auto text-gray-300 mb-4" />
+            <Building2 size={48} className="mx-auto text-gray-500 mb-4" />
             <p className="text-gray-500 font-medium">{t('emptyTitle')}</p>
-            <p className="text-sm text-gray-400 mt-1">{t('emptySubtitle')}</p>
+            <p className="text-sm text-gray-600 mt-1">{t('emptySubtitle')}</p>
           </div>
         )}
       </div>

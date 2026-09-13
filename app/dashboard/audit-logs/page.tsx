@@ -81,7 +81,7 @@ export default function AuditLogsPage() {
 
         {/* Filters */}
         <div className="flex flex-wrap items-center gap-3">
-          <Filter size={16} className="text-slate-400" />
+          <Filter size={16} className="text-slate-600" />
           <select
             value={actionFilter}
             onChange={(e) => { setActionFilter(e.target.value); setPage(1); }}
@@ -111,9 +111,9 @@ export default function AuditLogsPage() {
         {/* Table */}
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
           {loading ? (
-            <div className="py-16 text-center text-sm text-slate-400">{t('loading')}</div>
+            <div className="py-16 text-center text-sm text-slate-600">{t('loading')}</div>
           ) : logs.length === 0 ? (
-            <div className="py-16 text-center text-sm text-slate-400">{t('empty')}</div>
+            <div className="py-16 text-center text-sm text-slate-600">{t('empty')}</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
@@ -137,7 +137,7 @@ export default function AuditLogsPage() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-slate-600">{log.targetEmail || '-'}</td>
-                      <td className="px-4 py-3 text-xs text-slate-400">
+                      <td className="px-4 py-3 text-xs text-slate-600">
                         {log.metadata ? JSON.stringify(log.metadata) : '-'}
                       </td>
                     </tr>
@@ -159,7 +159,7 @@ export default function AuditLogsPage() {
               <ChevronLeft size={14} />
               {t('prev')}
             </button>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-slate-600">
               {t('pageLabel')} {page} / {totalPages}
             </span>
             <button

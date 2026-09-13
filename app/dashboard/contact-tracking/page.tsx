@@ -159,11 +159,11 @@ export default async function ContactTrackingPage({
                   : 'border-slate-200 bg-slate-50 hover:border-slate-300'
               }`}
             >
-              <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+              <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                 {label}
               </div>
               <div className="mt-3 text-3xl font-black text-[var(--dk-navy)]">{value}</div>
-              <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">
+              <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
                 Ümumi klik
               </div>
             </Link>
@@ -172,7 +172,7 @@ export default async function ContactTrackingPage({
 
         {/* Filter bar */}
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
             Kanal filtri
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -207,25 +207,25 @@ export default async function ContactTrackingPage({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-slate-200">
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-400">
+                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
                       Kanal
                     </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-400">
+                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
                       Dil
                     </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-400">
+                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
                       Səhifə
                     </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-400">
+                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
                       Hazır mesaj
                     </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-400">
+                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
                       Hədəf
                     </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-400">
+                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
                       Cihaz
                     </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-400">
+                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
                       Tarix
                     </th>
                   </tr>
@@ -270,7 +270,7 @@ export default async function ContactTrackingPage({
                       </td>
                       <td className="px-5 py-3 text-xs text-slate-700">
                         {row.createdAt.toLocaleDateString('az-AZ')}{' '}
-                        <span className="text-slate-400">
+                        <span className="text-slate-600">
                           {row.createdAt.toLocaleTimeString('az-AZ')}
                         </span>
                       </td>
@@ -282,7 +282,7 @@ export default async function ContactTrackingPage({
           )}
         </div>
 
-        <p className="px-1 text-xs text-slate-400">
+        <p className="px-1 text-xs text-slate-600">
           Cədvəldə son {ROW_LIMIT} giriş göstərilir · Yuxarıdakı sayğaclar bütün qeydlər üzrədir ·
           Ən yeni əvvəldə
         </p>

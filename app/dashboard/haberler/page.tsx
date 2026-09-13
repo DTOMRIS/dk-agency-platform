@@ -239,7 +239,7 @@ export default function DashboardHaberlerPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-3">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
           <p className="text-sm text-gray-500">{copy.statTotal}</p>
@@ -259,7 +259,7 @@ export default function DashboardHaberlerPage() {
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1 relative">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" />
             <input
               type="text"
               placeholder={copy.searchPlaceholder}
@@ -299,7 +299,7 @@ export default function DashboardHaberlerPage() {
           </div>
         ) : posts.length === 0 ? (
           <div className="text-center py-20">
-            <Newspaper size={48} className="mx-auto text-gray-300 mb-4" />
+            <Newspaper size={48} className="mx-auto text-gray-500 mb-4" />
             <p className="text-gray-500">{copy.emptyState}</p>
           </div>
         ) : (
@@ -330,7 +330,7 @@ export default function DashboardHaberlerPage() {
                     <td className="px-4 py-4">
                       <div className="flex items-start gap-3">
                         <div className="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                          <Newspaper size={20} className="text-gray-400" />
+                          <Newspaper size={20} className="text-gray-600" />
                         </div>
                         <div className="min-w-0">
                           <p className="font-medium text-gray-900 truncate max-w-md">{post.title}</p>
@@ -355,7 +355,7 @@ export default function DashboardHaberlerPage() {
                           </>
                         ) : (
                           <>
-                            <ToggleLeft size={20} className="text-gray-400" />
+                            <ToggleLeft size={20} className="text-gray-600" />
                             <span className="text-xs font-medium text-gray-500">{copy.publicLabel}</span>
                           </>
                         )}
@@ -370,20 +370,20 @@ export default function DashboardHaberlerPage() {
                       <div className="flex items-center justify-end gap-2">
                         <Link
                           href={`/haberler/${post.slug}`}
-                          className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                          className="p-2 text-gray-600 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                           target="_blank"
                         >
                           <Eye size={16} />
                         </Link>
                         <Link
                           href={`/dashboard/haberler/${post.id}/duzenle`}
-                          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         >
                           <Edit3 size={16} />
                         </Link>
                         <button
                           onClick={() => handleDelete(post.id)}
-                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                         >
                           <Trash2 size={16} />
                         </button>
