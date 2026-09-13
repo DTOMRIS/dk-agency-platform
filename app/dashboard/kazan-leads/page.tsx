@@ -68,7 +68,7 @@ export default async function DashboardKazanLeadsPage({
             [t('summary.converted'), summary.converted],
           ].map(([label, value]) => (
             <div key={label} className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-              <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+              <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                 {label}
               </div>
               <div className="mt-3 text-3xl font-black text-[var(--dk-navy)]">{value}</div>
@@ -78,7 +78,7 @@ export default async function DashboardKazanLeadsPage({
 
         <div className="space-y-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
           <div>
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
               {t('filters.status')}
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -98,7 +98,7 @@ export default async function DashboardKazanLeadsPage({
             </div>
           </div>
           <div>
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
               {t('filters.intent')}
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -118,7 +118,7 @@ export default async function DashboardKazanLeadsPage({
             </div>
           </div>
           <div>
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
               {t('filters.businessType')}
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -160,7 +160,7 @@ export default async function DashboardKazanLeadsPage({
                 <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                   <div className="space-y-4">
                     <div>
-                      <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+                      <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
                         {t('lead')}
                       </div>
                       <h2 className="mt-2 text-2xl font-black text-[var(--dk-navy)]">
@@ -183,7 +183,7 @@ export default async function DashboardKazanLeadsPage({
                     </div>
 
                     <div>
-                      <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+                      <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
                         {t('lastMessages')}
                       </div>
                       <div className="mt-3 space-y-2">
@@ -203,7 +203,7 @@ export default async function DashboardKazanLeadsPage({
                   </div>
 
                   <div className="w-full max-w-sm space-y-3 rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+                    <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
                       {t('actions')}
                     </div>
                     <a

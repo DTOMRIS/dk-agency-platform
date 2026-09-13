@@ -357,7 +357,7 @@ export default function DashboardIlanlarPage() {
           </div>
 
           <div className="relative max-w-md flex-1">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-600" />
             <input
               value={search}
               onChange={(event) => {
@@ -461,7 +461,7 @@ export default function DashboardIlanlarPage() {
               <thead className="bg-slate-50">
                 <tr className="text-left text-xs font-black uppercase tracking-[0.16em] text-slate-500">
                   <th className="px-3 py-4 w-10">
-                    <button type="button" onClick={toggleAll} className="text-slate-400 hover:text-slate-700">
+                    <button type="button" onClick={toggleAll} className="text-slate-600 hover:text-slate-700">
                       {selectedIds.size === listings.length && listings.length > 0 ? <CheckSquare className="h-4 w-4" /> : <Square className="h-4 w-4" />}
                     </button>
                   </th>
@@ -486,7 +486,7 @@ export default function DashboardIlanlarPage() {
                   return (
                     <tr key={listing.id} className={`text-sm text-slate-600 ${isSelected ? 'bg-blue-50/50' : ''}`}>
                       <td className="px-3 py-4">
-                        <button type="button" onClick={() => toggleSelect(listing.id)} className="text-slate-400 hover:text-slate-700">
+                        <button type="button" onClick={() => toggleSelect(listing.id)} className="text-slate-600 hover:text-slate-700">
                           {isSelected ? <CheckSquare className="h-4 w-4 text-[var(--dk-red)]" /> : <Square className="h-4 w-4" />}
                         </button>
                       </td>
@@ -505,7 +505,7 @@ export default function DashboardIlanlarPage() {
                             {getSectorLabel(listing.sector, locale)}
                           </span>
                         ) : (
-                          <span className="text-slate-300">—</span>
+                          <span className="text-slate-500">—</span>
                         )}
                       </td>
                       <td className="px-5 py-4">{listing.city}</td>

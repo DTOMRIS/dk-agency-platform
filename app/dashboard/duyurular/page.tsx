@@ -357,7 +357,7 @@ export default function DashboardDuyurularPage() {
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    <Icon size={24} className={isActive ? '' : 'text-gray-400'} />
+                    <Icon size={24} className={isActive ? '' : 'text-gray-600'} />
                     <p className={`text-sm font-medium mt-2 ${isActive ? '' : 'text-gray-600'}`}>
                       {opt.label}
                     </p>
@@ -393,7 +393,7 @@ export default function DashboardDuyurularPage() {
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    <Icon size={24} className={isSelected ? 'text-dk-red' : 'text-gray-400'} />
+                    <Icon size={24} className={isSelected ? 'text-dk-red' : 'text-gray-600'} />
                     <p className={`font-medium mt-2 ${isSelected ? 'text-dk-red' : 'text-gray-700'}`}>
                       {role.label}
                     </p>

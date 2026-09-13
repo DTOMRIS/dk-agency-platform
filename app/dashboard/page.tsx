@@ -245,7 +245,7 @@ export default async function DashboardPage() {
 
             <div className="mt-5 grid gap-4 lg:grid-cols-2">
               <div className="rounded-3xl border border-slate-100 bg-slate-50/70 p-5">
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-600">
                   {copy.last5Listings}
                 </h3>
                 <div className="mt-4 space-y-3">
@@ -264,7 +264,7 @@ export default async function DashboardPage() {
               </div>
 
               <div className="rounded-3xl border border-slate-100 bg-slate-50/70 p-5">
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-600">
                   {copy.last5Leads}
                 </h3>
                 <div className="mt-4 space-y-3">
@@ -304,7 +304,7 @@ export default async function DashboardPage() {
                         </span>
                         {item.label}
                       </span>
-                      <ArrowRight size={16} className="text-slate-400" />
+                      <ArrowRight size={16} className="text-slate-600" />
                     </Link>
                   );
                 })}

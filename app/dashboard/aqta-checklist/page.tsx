@@ -672,7 +672,7 @@ export default function DashboardAqtaChecklistPage() {
 
       <div className="mb-8 grid gap-4 md:grid-cols-4">
         <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm md:col-span-2">
-          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-gray-400">
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-gray-600">
             {copy.auditProgressLabel}
           </div>
           <div className="flex items-end gap-3">
@@ -696,7 +696,7 @@ export default function DashboardAqtaChecklistPage() {
           <div className="mt-1 text-xs text-gray-500">{copy.openRiskSub}</div>
         </div>
         <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-gray-400">
+          <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-gray-600">
             {copy.rhythmLabel}
           </div>
           <div className="text-3xl font-black text-gray-900">3</div>
@@ -730,7 +730,7 @@ export default function DashboardAqtaChecklistPage() {
                         </div>
                         <p className="mt-1 text-xs text-gray-500">{copy.sectionOwnerLabel}: {section.owner}</p>
                       </div>
-                      {isOpen ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
+                      {isOpen ? <ChevronUp size={18} className="text-gray-600" /> : <ChevronDown size={18} className="text-gray-600" />}
                     </button>
 
                     {isOpen && (
@@ -832,7 +832,7 @@ export default function DashboardAqtaChecklistPage() {
               <ShieldCheck size={18} className="text-red-300" />
               <h2 className="font-bold">{copy.upsellTitle}</h2>
             </div>
-            <p className="text-sm leading-relaxed text-slate-300">{copy.upsellDesc}</p>
+            <p className="text-sm leading-relaxed text-slate-500">{copy.upsellDesc}</p>
             <Link
               href="/auth/register"
               className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-red-300 hover:text-red-200"

@@ -73,7 +73,7 @@ export default function AddMemberModal({ open, onClose, onSuccess }: AddMemberMo
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+            className="rounded-lg p-1.5 text-slate-600 transition hover:bg-slate-100 hover:text-slate-600"
           >
             <X size={18} />
           </button>

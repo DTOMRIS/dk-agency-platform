@@ -80,7 +80,7 @@ export default async function ActivationFunnelWidget({ locale, days = 30 }: Prop
     return (
       <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
         <h3 className="font-display text-xl font-black text-[var(--dk-navy)]">{c.title}</h3>
-        <p className="mt-2 text-sm text-slate-400">{c.noData}</p>
+        <p className="mt-2 text-sm text-slate-600">{c.noData}</p>
       </div>
     );
   }
@@ -124,7 +124,7 @@ export default async function ActivationFunnelWidget({ locale, days = 30 }: Prop
               <div className="flex items-baseline justify-between text-sm">
                 <span className="font-semibold text-slate-700">{stageLabels[key]}</span>
                 <span className="font-bold text-[var(--dk-navy)]">
-                  {val} <span className="text-xs font-normal text-slate-400">({pct}%)</span>
+                  {val} <span className="text-xs font-normal text-slate-600">({pct}%)</span>
                 </span>
               </div>
               <div className="mt-1.5 h-3 w-full overflow-hidden rounded-full bg-slate-100">
@@ -139,7 +139,7 @@ export default async function ActivationFunnelWidget({ locale, days = 30 }: Prop
       </div>
 
       {data.prioritiesSkipped > 0 && (
-        <p className="mt-3 text-xs text-slate-400">
+        <p className="mt-3 text-xs text-slate-600">
           {c.skipped}: {data.prioritiesSkipped}
         </p>
       )}

@@ -253,13 +253,13 @@ export default function DashboardIlanDetailPage() {
               <p className="text-sm leading-7 text-slate-600">{listing.description}</p>
               <div className="mt-5 grid gap-4 md:grid-cols-2">
                 <div className="rounded-2xl bg-slate-50 p-4">
-                  <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Qiymət</div>
+                  <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">Qiymət</div>
                   <div className="mt-2 text-2xl font-black text-[var(--dk-gold)]">
                     {formatPrice(listing.price, listing.currency, listing.priceLabel)}
                   </div>
                 </div>
                 <div className="rounded-2xl bg-slate-50 p-4">
-                  <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Tarix</div>
+                  <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">Tarix</div>
                   <div className="mt-2 text-base font-semibold text-slate-700">{formatDate(listing.createdAt)}</div>
                 </div>
               </div>
@@ -278,7 +278,7 @@ export default function DashboardIlanDetailPage() {
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {fields.map((field) => (
                   <div key={field.key} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{field.label}</div>
+                    <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">{field.label}</div>
                     <div className="mt-2 text-sm font-semibold text-slate-700">
                       {renderFieldValue(listing.typeSpecificData[field.key])}
                       {field.suffix && listing.typeSpecificData[field.key] !== undefined && typeof listing.typeSpecificData[field.key] !== 'boolean'
@@ -448,7 +448,7 @@ export default function DashboardIlanDetailPage() {
                     type="button"
                     key={index}
                     onClick={() => setScore(index + 1)}
-                    className={index < score ? 'text-[var(--dk-gold)]' : 'text-slate-300'}
+                    className={index < score ? 'text-[var(--dk-gold)]' : 'text-slate-500'}
                   >
                     <Star className="h-5 w-5 fill-current" />
                   </button>
@@ -466,7 +466,7 @@ export default function DashboardIlanDetailPage() {
                   <div key={`${item.createdAt}-${index}`} className="rounded-2xl bg-slate-50 p-4">
                     <div className="flex items-center justify-between gap-3">
                       <div className="text-sm font-bold text-slate-800">{item.reviewer}</div>
-                      <div className="text-xs text-slate-400">{formatDate(item.createdAt)}</div>
+                      <div className="text-xs text-slate-600">{formatDate(item.createdAt)}</div>
                     </div>
                     <div className="mt-2 text-sm text-slate-600">{item.note}</div>
                     <div className="mt-2 text-xs font-semibold text-[var(--dk-gold)]">{item.score}/5 bal</div>
@@ -489,7 +489,7 @@ export default function DashboardIlanDetailPage() {
                       </div>
                       <div className="mt-2 text-sm text-slate-600">{item.phone}</div>
                       <div className="mt-1 text-sm text-slate-500">{item.message}</div>
-                      <div className="mt-2 text-xs text-slate-400">{formatDate(item.createdAt)}</div>
+                      <div className="mt-2 text-xs text-slate-600">{formatDate(item.createdAt)}</div>
                       {item.status === 'new' ? (
                         <button
                           type="button"

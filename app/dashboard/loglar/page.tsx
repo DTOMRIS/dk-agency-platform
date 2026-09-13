@@ -190,7 +190,7 @@ export default function LoglarPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-5 gap-4 mb-6">
+      <div className="grid grid-cols-2 gap-4 mb-6 lg:grid-cols-5">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
           <p className="text-xs text-gray-500">{t('statTotal')}</p>
@@ -216,7 +216,7 @@ export default function LoglarPage() {
       {/* Filters */}
       <div className="flex items-center gap-4 mb-6">
         <div className="relative flex-1 max-w-md">
-          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" />
           <input
             type="text"
             value={searchQuery}
@@ -225,7 +225,7 @@ export default function LoglarPage() {
             className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {(['all', 'info', 'success', 'warning', 'error'] as LogLevel[]).map((level) => (
             <button
               key={level}
@@ -279,7 +279,7 @@ export default function LoglarPage() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <CategoryIcon size={14} className="text-gray-400" />
+                        <CategoryIcon size={14} className="text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">{log.category}</span>
                       </div>
                     </td>
@@ -298,7 +298,7 @@ export default function LoglarPage() {
                           <span className="text-sm text-gray-600">{log.user}</span>
                         </div>
                       ) : (
-                        <span className="text-sm text-gray-400">{t('system')}</span>
+                        <span className="text-sm text-gray-600">{t('system')}</span>
                       )}
                     </td>
                   </tr>
@@ -330,7 +330,7 @@ export default function LoglarPage() {
                 onClick={() => setSelectedLog(null)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <XCircle size={20} className="text-gray-400" />
+                <XCircle size={20} className="text-gray-600" />
               </button>
             </div>
             <div className="space-y-4">

@@ -134,7 +134,7 @@ export function DashboardTopBar() {
   return (
     <div className="sticky top-0 z-20 hidden h-16 items-center justify-between border-b border-[var(--dk-warm-border)] bg-white/95 backdrop-blur-md px-6 lg:flex">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-400">OCAQ</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-600">OCAQ</p>
         <h2 className="text-base font-bold text-gray-950">{getPageTitle(pathname)}</h2>
       </div>
 

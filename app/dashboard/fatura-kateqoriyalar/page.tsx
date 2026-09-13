@@ -247,14 +247,14 @@ export default function FaturaKateqoriyalarPage() {
           <input type="color" value={newColor} onChange={(e) => setNewColor(e.target.value)} className="h-9 w-9 cursor-pointer rounded-lg border-0" />
           <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder={copy.addPlaceholder} autoFocus className="h-9 flex-1 rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-[#E11D48]" onKeyDown={(e) => e.key === 'Enter' && handleAdd()} />
           <button onClick={handleAdd} className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"><Check className="h-4 w-4" /></button>
-          <button onClick={() => setAdding(false)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"><X className="h-4 w-4" /></button>
+          <button onClick={() => setAdding(false)} className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100"><X className="h-4 w-4" /></button>
         </div>
       )}
 
       {/* Table */}
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
         {loading ? (
-          <div className="flex items-center justify-center py-12"><Loader2 className="h-5 w-5 animate-spin text-slate-400" /></div>
+          <div className="flex items-center justify-center py-12"><Loader2 className="h-5 w-5 animate-spin text-slate-600" /></div>
         ) : (
           <table className="w-full text-left text-sm">
             <thead>
@@ -297,12 +297,12 @@ export default function FaturaKateqoriyalarPage() {
                       {editingId === cat.id ? (
                         <>
                           <button onClick={saveEdit} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-emerald-600 hover:bg-emerald-50"><Check className="h-3.5 w-3.5" /></button>
-                          <button onClick={() => setEditingId(null)} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"><X className="h-3.5 w-3.5" /></button>
+                          <button onClick={() => setEditingId(null)} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100"><X className="h-3.5 w-3.5" /></button>
                         </>
                       ) : (
                         <>
-                          <button onClick={() => startEdit(cat)} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600"><Pencil className="h-3.5 w-3.5" /></button>
-                          <button onClick={() => handleDelete([cat.id])} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
+                          <button onClick={() => startEdit(cat)} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-600"><Pencil className="h-3.5 w-3.5" /></button>
+                          <button onClick={() => handleDelete([cat.id])} className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-600 hover:bg-red-50 hover:text-red-500"><Trash2 className="h-3.5 w-3.5" /></button>
                         </>
                       )}
                     </div>
@@ -314,7 +314,7 @@ export default function FaturaKateqoriyalarPage() {
         )}
       </div>
 
-      <p className="mt-3 text-xs text-slate-400">{copy.footerNote}</p>
+      <p className="mt-3 text-xs text-slate-600">{copy.footerNote}</p>
     </div>
   );
 }

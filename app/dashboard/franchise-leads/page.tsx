@@ -137,7 +137,7 @@ export default async function DashboardFranchiseLeadsPage({
               key={label}
               className="rounded-3xl border border-slate-200 bg-slate-50 p-5"
             >
-              <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+              <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                 {label}
               </div>
               <div className="mt-3 text-3xl font-black text-[var(--dk-navy)]">{value}</div>
@@ -147,7 +147,7 @@ export default async function DashboardFranchiseLeadsPage({
 
         {/* Filter chips */}
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
             Mənbəyə görə filter
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -178,22 +178,22 @@ export default async function DashboardFranchiseLeadsPage({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-slate-100">
-                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                       Ad
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                       Əlaqə
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                       Brend
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                       Mənbə
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                       Dil
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-400">
+                    <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-[0.16em] text-slate-600">
                       Tarix
                     </th>
                   </tr>
@@ -205,7 +205,7 @@ export default async function DashboardFranchiseLeadsPage({
                       <td className="px-6 py-4 text-slate-700">{lead.contact}</td>
                       <td className="px-6 py-4 text-slate-700">
                         {lead.brand ?? (
-                          <span className="text-slate-400">—</span>
+                          <span className="text-slate-600">—</span>
                         )}
                       </td>
                       <td className="px-6 py-4">

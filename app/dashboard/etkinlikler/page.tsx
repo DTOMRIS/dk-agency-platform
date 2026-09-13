@@ -292,7 +292,7 @@ export default function EtkinliklerPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 gap-4 mb-6 lg:grid-cols-4">
         <div className="bg-white rounded-xl border border-gray-200 p-4">
           <div className="flex items-center gap-2 text-gray-500 mb-1">
             <Activity size={16} />
@@ -326,7 +326,7 @@ export default function EtkinliklerPage() {
       {/* Filters */}
       <div className="flex items-center gap-4 mb-6">
         <div className="relative flex-1 max-w-md">
-          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" />
           <input
             type="text"
             value={searchQuery}
@@ -335,7 +335,7 @@ export default function EtkinliklerPage() {
             className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20"
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {(['all', 'listing', 'partner', 'deal', 'message', 'system'] as ActivityType[]).map((type) => (
             <button
               key={type}
@@ -380,10 +380,10 @@ export default function EtkinliklerPage() {
                       <div className="flex items-center gap-2 text-xs text-gray-500">
                         <User size={12} />
                         <span>{activity.user}</span>
-                        <span className="text-gray-300">•</span>
+                        <span className="text-gray-500">•</span>
                         <span>{activity.userRole}</span>
                       </div>
-                      <div className="flex items-center gap-1 text-xs text-gray-400">
+                      <div className="flex items-center gap-1 text-xs text-gray-600">
                         <Clock size={12} />
                         {activity.timestamp}
                       </div>
@@ -404,7 +404,7 @@ export default function EtkinliklerPage() {
                     )}
                   </div>
                   <button className="p-2 hover:bg-gray-100 rounded-lg">
-                    <ChevronRight size={16} className="text-gray-400" />
+                    <ChevronRight size={16} className="text-gray-600" />
                   </button>
                 </div>
               </div>

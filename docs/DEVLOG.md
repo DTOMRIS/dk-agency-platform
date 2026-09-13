@@ -1,5 +1,32 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0443 (dizayn təməli + mobil)
+
+**Sahibin göstərişi:** «yamaq etmə, detala fokuslan, mobilə bax». Ona görə üç mərkəzi dəyişiklik, yüz səhifəni ayrı-ayrı yamamaq yox.
+
+**Kök səbəb 1 — işıq teması yazılmayıb.** `DashboardLayout.tsx:15` `className="dashboard-scope …"` yazır; `grep -rn dashboard-scope` bütün repoda **yalnız o sətri** tapır — CSS qaydası yoxdur. `body { color: #eaeaea }` isə qaranlıq landing üçündür. Nəticə: dashboard-da rəng verilməyən hər mətn ağ üstündə ağ. Canlı nümunə haberler «Yenilə» düyməsi (`haberler/page.tsx:284-290`) — nə düymədə, nə ikonda, nə valideyn zəncirində rəng var. Kimsə bunu görüb TASK-0131-də **yalnız input-ları** yamamışdı (`globals.css:128-137`, şərh hərfi mənada «root cause: body color» deyir), mətni yox. **Bu, həm də `text-slate-400` epidemiyasının səbəbidir**: developer mətnin görünmədiyini görür, tələsik bir boz yapışdırır — 200 yamaq belə yığılıb.
+
+Düzəliş bir sətirdir: `.dashboard-scope { color: var(--dk-ink) }`. Token onsuz da vardı (`--dk-ink: #0f172a`), sadəcə bağlanmamışdı.
+
+**Kontrast süpürgəsi:** `text-slate-400` = `#94A3B8` ağda **2.56:1** — AA (4.5) və böyük mətn üçün AA (3.0) ikisini də keçmir. Və dekorativ yerdə deyil: ana səhifənin «Son 5 elan» başlıqları, contact-tracking-in 7 sütun başlığı, bütün KPI etiketləri. 40 faylda 200 istifadə `400→600`, `300→500`. Süpürgədən əvvəl dashboard-da qaranlıq fon (`bg-slate-900` və s.) üzərində açıq mətn istisnası olub-olmadığı yoxlanıldı — **yoxdur**, ona görə kor süpürgə təhlükəsizdir.
+
+**Real test nə tapdı (ilkin düzəlişdən sonra):** auditin göstərdiyi 5 daşmanı düzəldib Playwright-i 390px-də işlətdim — **3 səhifə hələ daşırdı**. Kök səbəbi tapmaq üçün iki alət yazdım: (a) 390-ı aşan elementləri en üzrə sıralayan, (b) yalnız sürüşmə konteynerindən **kənarda** olanları göstərən. Birincisi loglar-da yalançı iz verdi — `<circle>` nöqtələri `overflow-x-auto` cədvəlin içində idi, səhifəni genişləndirmirdi; ikincisi əsl səbəbi tapdı:
+
+| Səhifə | Səbəb | Düzəliş |
+|---|---|---|
+| etkinlikler, loglar, deal-flow, faturalar | filtr çip-zolağı `flex gap-2` sarılmır (525 / 451px) | `flex-wrap` — yalnız `.map(`-lı çip sətirləri; faturalar-dakı digər 2 `flex gap-2` toxunulmadı |
+| deal-flow | grid uşağı `min-width:auto` → içindəki `overflow-x-auto` cədvəl sütunu 426px-ə itələyir | grid uşaqlarına `min-w-0` (`deal-flow/page.tsx:365, 423`) |
+
+Deal-flow tələsi öyrədicidir: cədvəl **düzgün** `overflow-x-auto` içində idi, amma CSS grid uşağı daxili enə görə böyüyür və sarğı heç vaxt sıxılmır. Audit `min-w-0`-ın yalnız 7 yerdə olduğunu qeyd etmişdi — bu, həmin çatışmazlığın canlı nümunəsidir.
+
+**Test səhvi (kod deyil):** `text-slate-600` iddiası `rgb(71,85,105)` gözləyirdi, Chromium isə `lab(35.56 -1.75 -15.43)` qaytardı — Tailwind v4 rəngləri lab/oklch ilə verir. Rəng düzgün idi, test köhnə idi. Canvas ilə rgb-yə çevirib ±3 tolerantlıqla müqayisə etdim; kodu dəyişmədim (TASK-0432 dərsi: işləyən kodu test baqına görə «düzəltmə»).
+
+**Üsul qeydi:** `pkill -f "next dev"` öz əmr sətrimi də tutub shell-i öldürürdü (exit 144) — iki dəfə. Server tool-un arxa plan rejimi ilə qaldırıldı, port pid-i ilə dayandırıldı. Dashboard auth-u üçün `JWT_SECRET` ilə server + `jsonwebtoken` ilə imzalanmış admin token cookie-si.
+
+**Sübut — Playwright 390px, auth-lu, 13/13 PASS:** 8 səhifədə `scrollWidth == clientWidth == 390` · «Yenilə» düyməsi `rgb(15,23,42)` · `.dashboard-scope` rəngi `--dk-ink` · `text-slate-600` tətbiq (canvas rgb 69,85,108) · ana səhifədə `-400` mətn 0 · tsc 35 (baza) · eslint 0 error · `✓ Compiled successfully in 29.1s`.
+
+**Qalır (ayrı task-lar):** `.dk-card` rollout-u — 9 radius / 4 sərhəd rəngini bu primitivə yığmaq · tək `<DashboardPageHeader>` + TopBar başlığını i18n-dən oxumaq · naviqasiya təmizliyi (34 route, 13 link — sahib qərarı) · brend qırmızısı `#E11D48` vs `#E94560` (sayt-boyu təsir, sahib qərarı) · `[locale]` dashboard layout-u cookie-dən oxuyur, `params.locale`-dən yox.
+
 ## 2026-09-13 — TASK-0442 (runner Neon-da sındı)
 
 **Sahib canlı bazada işlətdi:**

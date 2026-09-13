@@ -45,7 +45,7 @@ export default function DashboardBottomNav({ onMore }: { onMore: () => void }) {
             >
               <span className={highlight ? 'rounded-full bg-[var(--dk-gold)]/20 p-1.5' : ''}>
                 <Icon
-                  className={`h-6 w-6 ${active || highlight ? 'text-[var(--dk-navy)]' : 'text-slate-400'}`}
+                  className={`h-6 w-6 ${active || highlight ? 'text-[var(--dk-navy)]' : 'text-slate-600'}`}
                 />
               </span>
               <span className="text-[10px] tracking-tight">{t(`nav.${key}`)}</span>
@@ -58,7 +58,7 @@ export default function DashboardBottomNav({ onMore }: { onMore: () => void }) {
           className="flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 py-2 text-slate-500"
         >
           <span>
-            <Menu className="h-6 w-6 text-slate-400" />
+            <Menu className="h-6 w-6 text-slate-600" />
           </span>
           <span className="text-[10px] tracking-tight">{t('nav.more')}</span>
         </button>

@@ -149,7 +149,7 @@ export default function MembersTable(props: MembersTableProps) {
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" />
           <input
             type="text"
             value={search}
@@ -190,9 +190,9 @@ export default function MembersTable(props: MembersTableProps) {
 
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
         {loading ? (
-          <div className="py-16 text-center text-sm text-slate-400">{t('states.loading')}</div>
+          <div className="py-16 text-center text-sm text-slate-600">{t('states.loading')}</div>
         ) : members.length === 0 ? (
-          <div className="py-16 text-center text-sm text-slate-400">{t('states.empty')}</div>
+          <div className="py-16 text-center text-sm text-slate-600">{t('states.empty')}</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
@@ -254,7 +254,7 @@ export default function MembersTable(props: MembersTableProps) {
                             {m.plan in PLAN_BADGE ? t(`plans.${getPlanKey(m.plan)}`) : m.plan}
                           </span>
                         ) : (
-                          <span className="text-slate-300">-</span>
+                          <span className="text-slate-500">-</span>
                         )}
                       </td>
                       <td className="px-4 py-3">
@@ -265,7 +265,7 @@ export default function MembersTable(props: MembersTableProps) {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-slate-500">{m.phone || '-'}</td>
-                      <td className="px-4 py-3 text-slate-400">{formatDate(m.createdAt)}</td>
+                      <td className="px-4 py-3 text-slate-600">{formatDate(m.createdAt)}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <Link
@@ -305,7 +305,7 @@ export default function MembersTable(props: MembersTableProps) {
             <ChevronLeft size={14} />
             {t('pagination.prev')}
           </button>
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-slate-600">
             {t('pagination.pageLabel')} {page} / {totalPages}
           </span>
           <button

@@ -96,7 +96,7 @@ export default function MemberDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-32">
-        <span className="text-sm text-slate-400">{t('loading')}</span>
+        <span className="text-sm text-slate-600">{t('loading')}</span>
       </div>
     );
   }
@@ -145,27 +145,27 @@ export default function MemberDetailPage() {
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <div className="flex items-center gap-3 text-sm text-slate-600">
-              <Mail size={16} className="text-slate-400" />
+              <Mail size={16} className="text-slate-600" />
               {user.email}
             </div>
             {user.phone && (
               <div className="flex items-center gap-3 text-sm text-slate-600">
-                <Phone size={16} className="text-slate-400" />
+                <Phone size={16} className="text-slate-600" />
                 {user.phone}
               </div>
             )}
             {user.company && (
               <div className="flex items-center gap-3 text-sm text-slate-600">
-                <Building2 size={16} className="text-slate-400" />
+                <Building2 size={16} className="text-slate-600" />
                 {user.company}
               </div>
             )}
             <div className="flex items-center gap-3 text-sm text-slate-600">
-              <Calendar size={16} className="text-slate-400" />
+              <Calendar size={16} className="text-slate-600" />
               {t('joined')}: {formatDate(user.createdAt)}
             </div>
             <div className="flex items-center gap-3 text-sm text-slate-600">
-              <Shield size={16} className="text-slate-400" />
+              <Shield size={16} className="text-slate-600" />
               {t('role')}: {role}
             </div>
           </div>
@@ -178,7 +178,7 @@ export default function MemberDetailPage() {
         <div className="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 className="font-display text-lg font-bold text-[var(--dk-navy)]">{t('recentActivity')}</h2>
           {activity.length === 0 ? (
-            <p className="mt-4 text-sm text-slate-400">{t('noActivity')}</p>
+            <p className="mt-4 text-sm text-slate-600">{t('noActivity')}</p>
           ) : (
             <div className="mt-4 space-y-3">
               {activity.map((log) => (
@@ -189,7 +189,7 @@ export default function MemberDetailPage() {
                     </span>
                     <span className="text-xs text-slate-500">{log.adminEmail}</span>
                   </div>
-                  <span className="text-xs text-slate-400 whitespace-nowrap">{formatDateTime(log.createdAt)}</span>
+                  <span className="text-xs text-slate-600 whitespace-nowrap">{formatDateTime(log.createdAt)}</span>
                 </div>
               ))}
             </div>
@@ -276,7 +276,7 @@ function QuickActions({ userId, isSelf, t, onSuccess, onDeleted }: { userId: num
           </button>
         )}
         {isSelf && (
-          <span className="inline-flex items-center gap-2 rounded-xl border border-slate-100 px-4 py-2.5 text-sm text-slate-400 cursor-not-allowed" title={t('deleteSelfForbidden')}>
+          <span className="inline-flex items-center gap-2 rounded-xl border border-slate-100 px-4 py-2.5 text-sm text-slate-600 cursor-not-allowed" title={t('deleteSelfForbidden')}>
             <Trash2 size={16} />
             {t('deleteAccount')}
           </span>

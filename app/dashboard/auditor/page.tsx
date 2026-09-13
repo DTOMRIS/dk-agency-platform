@@ -184,13 +184,13 @@ export default function AuditorDashboard() {
         })}
 
         <div className="ml-auto flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2">
-          <Search size={14} className="text-slate-400" />
+          <Search size={14} className="text-slate-600" />
           <input
             type="text"
             placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-32 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400 sm:w-48"
+            className="w-32 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-600 sm:w-48"
           />
         </div>
       </div>
@@ -198,7 +198,7 @@ export default function AuditorDashboard() {
       {/* Audit Cards */}
       {loading ? (
         <div className="flex h-48 items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+          <Loader2 className="h-6 w-6 animate-spin text-slate-600" />
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -208,7 +208,7 @@ export default function AuditorDashboard() {
               <AuditCard key={audit.id} audit={audit} onClick={() => openDetail(audit.id)} aiPending={t('aiPending')} statusConfig={STATUS_CONFIG} />
             ))}
           {audits.length === 0 && (
-            <div className="col-span-full py-16 text-center text-sm text-slate-400">
+            <div className="col-span-full py-16 text-center text-sm text-slate-600">
               {t('emptyState')}
             </div>
           )}
@@ -237,7 +237,7 @@ function AuditCard({ audit, onClick, aiPending, statusConfig }: { audit: AuditRo
         </div>
       ) : (
         <div className="mb-3 flex h-36 w-full items-center justify-center rounded-xl bg-slate-100">
-          <Store size={32} className="text-slate-300" />
+          <Store size={32} className="text-slate-500" />
         </div>
       )}
 
@@ -250,7 +250,7 @@ function AuditCard({ audit, onClick, aiPending, statusConfig }: { audit: AuditRo
       </div>
 
       {audit.address && (
-        <p className="mt-1 flex items-center gap-1 text-xs text-slate-400">
+        <p className="mt-1 flex items-center gap-1 text-xs text-slate-600">
           <MapPin size={10} /> {audit.address}
         </p>
       )}
@@ -258,8 +258,8 @@ function AuditCard({ audit, onClick, aiPending, statusConfig }: { audit: AuditRo
       <p className="mt-2 line-clamp-2 text-xs text-slate-500">{summary}</p>
 
       <div className="mt-3 flex items-center justify-between">
-        <span className="text-[10px] text-slate-400">{formatDate(audit.createdAt)}</span>
-        <ChevronRight size={14} className="text-slate-300 transition group-hover:text-[var(--dk-gold)]" />
+        <span className="text-[10px] text-slate-600">{formatDate(audit.createdAt)}</span>
+        <ChevronRight size={14} className="text-slate-500 transition group-hover:text-[var(--dk-gold)]" />
       </div>
     </button>
   );
@@ -393,7 +393,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
             <button
               type="button"
               onClick={() => photoRef.current?.click()}
-              className="flex h-20 w-20 items-center justify-center rounded-xl border-2 border-dashed border-slate-300 text-slate-400 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+              className="flex h-20 w-20 items-center justify-center rounded-xl border-2 border-dashed border-slate-300 text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
             >
               <Camera size={24} />
             </button>
@@ -407,7 +407,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
             className="hidden"
             onChange={handlePhotoUpload}
           />
-          <p className="mt-1 text-[10px] text-slate-400">{t('photoHint')}</p>
+          <p className="mt-1 text-[10px] text-slate-600">{t('photoHint')}</p>
         </div>
 
         {/* Social & Delivery */}
@@ -505,7 +505,7 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
   if (loading || !audit) {
     return (
       <div className="flex h-48 items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-slate-400" />
+        <Loader2 className="h-6 w-6 animate-spin text-slate-600" />
       </div>
     );
   }
@@ -565,7 +565,7 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
             <h2 className="mb-2 text-sm font-bold text-[var(--dk-navy)]">{t('sectionSummary')}</h2>
             <p className="text-sm text-slate-600">{analysis.summary}</p>
             {analysis.estimatedRevenue && (
-              <p className="mt-2 text-xs text-slate-400">
+              <p className="mt-2 text-xs text-slate-600">
                 {t('estimatedRevenue')} {analysis.estimatedRevenue.min.toLocaleString()}-{analysis.estimatedRevenue.max.toLocaleString()} {analysis.estimatedRevenue.currency}
               </p>
             )}
@@ -637,7 +637,7 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
             {audit.actions.map((action) => (
               <div key={action.id} className="flex items-center gap-3 text-xs">
                 <span className="rounded-full bg-slate-100 px-2 py-0.5 font-semibold text-slate-600">{action.actionType}</span>
-                <span className="text-slate-400">{formatDate(action.date)}</span>
+                <span className="text-slate-600">{formatDate(action.date)}</span>
                 {action.notes && <span className="text-slate-500">{action.notes}</span>}
               </div>
             ))}

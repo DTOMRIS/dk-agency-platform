@@ -228,7 +228,7 @@ function ToolCard({
       <div className="mb-3 flex items-start justify-between">
         <span
           className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${
-            isPlanned ? 'bg-slate-100 text-slate-400' : 'bg-slate-100 text-[var(--dk-navy)]'
+            isPlanned ? 'bg-slate-100 text-slate-600' : 'bg-slate-100 text-[var(--dk-navy)]'
           }`}
         >
           <Icon size={20} />

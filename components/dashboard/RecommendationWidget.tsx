@@ -104,7 +104,7 @@ export default function RecommendationWidget() {
         <button
           type="button"
           onClick={handleEditPriorities}
-          className="text-xs font-medium text-gray-400 hover:text-amber-600"
+          className="text-xs font-medium text-gray-600 hover:text-amber-600"
         >
           {t('recommendations.editPrioritiesLink')}
         </button>

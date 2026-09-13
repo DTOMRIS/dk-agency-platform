@@ -236,7 +236,7 @@ export default function DealFlowPage() {
           <h1 className="text-2xl font-bold text-gray-900">{copy.pageTitle}</h1>
           <p className="text-sm text-gray-500 mt-1">{copy.pageSubtitle}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {(['3m', '6m', '12m'] as const).map((p) => (
             <button
               key={p}
@@ -311,7 +311,7 @@ export default function DealFlowPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-semibold text-gray-900">{copy.monthlyTrendTitle}</h3>
-            <BarChart3 size={18} className="text-gray-400" />
+            <BarChart3 size={18} className="text-gray-600" />
           </div>
           <div className="space-y-3">
             {monthlyData.map((data) => {
@@ -338,7 +338,7 @@ export default function DealFlowPage() {
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-semibold text-gray-900">{copy.funnelTitle}</h3>
-            <PieChart size={18} className="text-gray-400" />
+            <PieChart size={18} className="text-gray-600" />
           </div>
           <div className="space-y-4">
             {funnelData.map((item, i) => (
@@ -362,7 +362,7 @@ export default function DealFlowPage() {
       {/* Top Deals & Team Performance */}
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Top Deals */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
+        <div className="lg:col-span-2 min-w-0 bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-semibold text-gray-900">{copy.topDealsTitle}</h3>
             <Zap size={18} className="text-amber-500" />
@@ -420,7 +420,7 @@ export default function DealFlowPage() {
         </div>
 
         {/* Team Performance */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div className="min-w-0 bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="font-semibold text-gray-900">{copy.teamTitle}</h3>
             <Award size={18} className="text-amber-500" />
