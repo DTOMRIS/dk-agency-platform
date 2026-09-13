@@ -1,5 +1,22 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0441 (`db:migrate` lokalda işləmirdi)
+
+**Sahib ilk dəfə işlətdi və sındı:**
+
+```
+$ npm run db:migrate:status
+  ✗ DATABASE_URL təyin edilməyib.
+```
+
+Halbuki dəyər `.env.local`-da var idi. **Səbəb:** Next.js `.env.local`-ı özü yükləyir, sadə `node` skripti isə yükləmir. TASK-0440-da bunu nəzərə almamışam — skripti sandbox-da `DATABASE_URL` olmadan sınadım, «təmiz xəta mesajı verir» deyib keçdim. **Əslində o mesaj həmin anda baqın özü idi**: skript real istifadədə heç vaxt işləyə bilməzdi.
+
+**Dərs:** «xəta yolu düzgün işləyir» ilə «uğur yolu düzgün işləyir» eyni şey deyil. Sandbox-da uğur yolunu sınaya bilmədiyim üçün yalnız xəta yolunu yoxladım və onu kifayət saydım.
+
+**Həll:** `loadEnvFiles()` — asılılıqsız, `.env.local` → `.env` sırası ilə oxuyur. `--env-file` bayrağını işlətmədim, çünki Node 20.6-dan əvvəl yoxdur və fayl olmayanda sınır. Mövcud `process.env` dəyəri **üstündür** ki, Hostinger-in verdiyi dəyər əzilməsin. Fayla yazmır — yalnız oxuyur.
+
+**Sübut:** env faylı yoxdursa → aydın mesaj + exit 1 ✓ · `.env.local`-da `export DATABASE_URL="…"` varsa → oxuyur və qoşulma mərhələsinə keçir ✓ (şərh sətri, `export` prefiksi, dırnaqlar emal olunur).
+
 ## 2026-09-13 — TASK-0440 (miqrasiya sistemi)
 
 **Problem:** `drizzle/`-də 25 .sql faylı, journal-da 9-u. `db:migrate` scripti yox, migrator çağırışı yox. Yəni **0009-dan sonrakı hər miqrasiya yetim** — yalnız kimsə əl ilə işlədəndə tətbiq olunur. `/dashboard/contact-tracking` çökməsinin kök səbəbi bu idi, və növbəti hər sütun eyni baqı yaradacaqdı.
