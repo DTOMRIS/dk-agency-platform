@@ -3786,6 +3786,7 @@
     "pageTitle": "Role & Permission Management",
     "pageSubtitle": "User roles and access permissions",
     "newRole": "New Role",
+    "previewNotice": "This page is in preview — roles are not yet connected to the database and changes are not saved.",
     "searchPlaceholder": "Search roles...",
     "systemBadge": "System",
     "systemLocked": "System roles cannot be edited. This role is protected with default permissions.",

@@ -3786,6 +3786,7 @@
     "pageTitle": "Rol ve Yetki Yönetimi",
     "pageSubtitle": "Kullanıcı rolleri ve erişim izinleri",
     "newRole": "Yeni Rol",
+    "previewNotice": "Bu sayfa hazırlanıyor — roller henüz veritabanına bağlı değil, değişiklikler kaydedilmiyor.",
     "searchPlaceholder": "Rol ara...",
     "systemBadge": "Sistem",
     "systemLocked": "Sistem rolleri düzenlenemez. Bu rol varsayılan izinlerle korunmaktadır.",

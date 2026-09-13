@@ -12,6 +12,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Fixed
+- `TASK-0436` fix(dashboard): **`roller` səhifəsi artıq yalan danışmır** — rollar səhifəsi tam mock idi: «Yeni rol», per-rol «Redaktə»/«Sil» düymələrinin `onClick`-i yox idi, icazə dəyişiklikləri yalnız local state-də qalıb **saxlanmırdı**. İşləməyən düymələr `disabled` + izahlı `title` edildi, «Redaktə/Saxla» toggle-ı deaktiv oxu-rejiminə keçdi, yuxarıya «hazırlanır — dəyişikliklər saxlanmır» bildirişi əlavə olundu (i18n `previewNotice`, 4 dil). `HospitalityHeader`-dəki ölü axtarış qutusu heç yerdə render olunmadığı üçün toxunulmadı. Mənbə: 12-13.09 dashboard audit. (DoD #11: sandbox npm 403 → build/tsc icra olunmadı, deploy-da baxılmalı.)
+
+### Fixed
 - `TASK-0435` perf(blog): **tərcümə 3 dili paralel edir + blog şəkilləri lazy-load** — (1) `autoTranslateBlogPost` 3 dili (ru/en/tr) ardıcıl əvəzinə `Promise.all` ilə eyni anda tərcümə edir → admin «Tərcümə et» **~3× sürətli**, brauzer donması azalır; hər dil yalnız öz sütunlarını yazdığı üçün concurrent row update təhlükəsizdir. (2) `BlogGridPageClient` blog kartı şəkillərinə `loading="lazy" decoding="async"` — ekran-altı şəkillər əvvəlcədən yüklənmir. Kök səbəb: şəkillər hər yerdə xam `<img>` (next/image yox), tərcümə isə tam ardıcıl idi. Qeyd: sandbox npm 403 → tsc/build icra olunmadı (DoD #11 texniki skip), deploy-dan sonra test lazımdır. Qalır: next/image miqrasiyası + xəbər şəkli cloudinary proxy (ayrıca task).
 
 ### Added

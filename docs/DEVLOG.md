@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0436 (roller yalançı düymələri)
+
+**Niyə:** Dashboard audit (agent) tapdı: `roller` səhifəsi istifadəçini aldadır — silmə/redaktə düymələri işləmir, icazə dəyişikliyi saxlanmır (100% mock data + local state). Sahibin qaydası: UI yalan danışmamalıdır.
+
+**Dəyişiklik:** Ölü düymələr (Yeni rol / Redaktə / Sil) `disabled`+`title`; Redaktə/Saxla toggle deaktiv → səhifə honest read-only preview; amber bildiriş banneri. i18n `previewNotice` 4 dildə.
+
+**Niyə wire etmədim:** roles üçün backend/API yoxdur (rol `user.role`-dan gəlir) — real CRUD ayrıca böyük backend işidir. İndi ən doğrusu yalanı dayandırmaqdır.
+
+**Yoxlama:** sandbox npm 403 → build/tsc yox (DoD #11 skip); diff+review; deploy-da baxılmalı.
+
 ## 2026-09-13 — TASK-0435 (tərcümə paralel + blog şəkil lazy)
 
 **Niyə:** Sahib «tərcümədə ağır işliyor» + «blog resimleri ağır yükleniyor» dedi. Diaqnoz: (1) `autoTranslateBlogPost` 3 dili × sahələri tam ARDICIL `await` edirdi (~12 DeepSeek çağırışı, sinxron sorğuda → 1-3 dəq donma, timeout riski); (2) blog/xəbər şəkilləri xam `<img>`, `next/image` yox, lazy yox → tam ölçüdə və hamısı birdən yüklənir.
