@@ -4,6 +4,49 @@ Texniki borc qeydleri. Her giris prioritet, sprint ve hell plani ile.
 
 ---
 
+## TD-004 — İki paralel auth sistemi
+
+**Tarix:** 2026-09-13
+**Sprint:** TASK-0439 zamanı aşkarlandı
+**Status:** ACIQ
+**Prioritet:** Orta
+
+### Problem
+Eyni ağacda iki müstəqil sessiya sistemi işləyir:
+
+1. `lib/auth/guards.ts` → JWT cookie, `user.role === 'admin'`
+   (məs. `app/dashboard/funnel/page.tsx:10`)
+2. `lib/members/server-session.ts` → `session.plan === 'admin'`
+   (məs. `app/api/settings/route.ts:10-12`, `/ilan-ver`)
+
+Nəticə: `role` və `plan` ayrı-ayrı mənbələrdən gəlir və biri
+dəyişəndə digəri xəbərsiz qalır. Hansının hara aid olduğu yazılı deyil,
+ona görə yeni route yazan adam təsadüfi seçir — TASK-0439-da dörd
+route-un ümumiyyətlə yoxlamasız qalmasının səbəblərindən biri budur.
+
+### Müvəqqəti vəziyyət
+`lib/api/guards.ts` (TASK-0439) API route-ları üçün tək giriş nöqtəsi
+yaradır və 2-ci sistemin üzərində qurulub, çünki dashboard API-larının
+əksəriyyəti onu işlədir. Bu, problemi həll etmir — yalnız sərhədi
+bir yerə toplayır.
+
+### Hell
+1. Hansı sistemin SST olduğuna qərar ver (`plan` tövsiyə olunur —
+   daha çox route onu işlədir və üzvlük məntiqi ona bağlıdır)
+2. `role` istifadələrini ona köçür
+3. `app/dashboard/layout.tsx`-ə tək rol yoxlaması qoy — hazırda
+   layout yalnız token varlığını yoxlayır, yəni `member` planlı
+   istifadəçi bütün dashboard səhifələrini aça bilir
+4. Köhnə sistemi sil
+
+### Elaqeli
+- lib/api/guards.ts
+- lib/auth/guards.ts
+- lib/members/server-session.ts
+- app/dashboard/layout.tsx
+
+---
+
 ## TD-001 — Marketing tier mapping role-a baglidir
 
 **Tarix:** 2026-05-09

@@ -45,10 +45,12 @@ function cleanup(windowMs: number) {
  * Extract client IP from request headers (behind Hostinger/Cloudflare proxy)
  */
 export function getClientIp(request: NextRequest): string {
+  // `request.ip` Next 15-də NextRequest-dən silinib — burada həmişə tip xətası
+  // verirdi və heç vaxt icra olunmurdu (TASK-0439). Hostinger/Cloudflare arxasında
+  // real IP onsuz da bu iki başlıqdan gəlir.
   return (
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     request.headers.get('x-real-ip') ||
-    request.ip ||
     'unknown'
   );
 }
@@ -72,9 +74,10 @@ export function checkRateLimit(key: string, config: RateLimitConfig): RateLimitR
   entry.timestamps = entry.timestamps.filter((t) => t > cutoff);
 
   const remaining = Math.max(0, config.maxRequests - entry.timestamps.length);
-  const reset = entry.timestamps.length > 0
-    ? Math.ceil((entry.timestamps[0] + config.windowMs) / 1000)
-    : Math.ceil((now + config.windowMs) / 1000);
+  const reset =
+    entry.timestamps.length > 0
+      ? Math.ceil((entry.timestamps[0] + config.windowMs) / 1000)
+      : Math.ceil((now + config.windowMs) / 1000);
 
   if (entry.timestamps.length >= config.maxRequests) {
     return { success: false, limit: config.maxRequests, remaining: 0, reset };
@@ -87,7 +90,10 @@ export function checkRateLimit(key: string, config: RateLimitConfig): RateLimitR
 /**
  * Apply rate limit headers to a response
  */
-export function withRateLimitHeaders(response: NextResponse, result: RateLimitResult): NextResponse {
+export function withRateLimitHeaders(
+  response: NextResponse,
+  result: RateLimitResult
+): NextResponse {
   response.headers.set('X-RateLimit-Limit', String(result.limit));
   response.headers.set('X-RateLimit-Remaining', String(result.remaining));
   response.headers.set('X-RateLimit-Reset', String(result.reset));
@@ -109,7 +115,7 @@ export function rateLimitExceeded(result: RateLimitResult, locale?: string): Nex
 
   const response = NextResponse.json(
     { error: messages[locale || 'az'] || messages.az },
-    { status: 429 },
+    { status: 429 }
   );
 
   return withRateLimitHeaders(response, result);
@@ -118,11 +124,17 @@ export function rateLimitExceeded(result: RateLimitResult, locale?: string): Nex
 // ── Pre-configured limiters for common endpoints ──────────────
 
 export const RATE_LIMITS = {
-  authLogin: { maxRequests: 5, windowMs: 15 * 60 * 1000 },       // 5 / 15 min
-  authRegister: { maxRequests: 3, windowMs: 60 * 60 * 1000 },    // 3 / 1 hour
+  authLogin: { maxRequests: 5, windowMs: 15 * 60 * 1000 }, // 5 / 15 min
+  authRegister: { maxRequests: 3, windowMs: 60 * 60 * 1000 }, // 3 / 1 hour
   authForgotPassword: { maxRequests: 3, windowMs: 60 * 60 * 1000 }, // 3 / 1 hour
-  authResetPassword: { maxRequests: 5, windowMs: 60 * 60 * 1000 },  // 5 / 1 hour
+  authResetPassword: { maxRequests: 5, windowMs: 60 * 60 * 1000 }, // 5 / 1 hour
   authVerifyEmail: { maxRequests: 10, windowMs: 60 * 60 * 1000 }, // 10 / 1 hour
-  kazanAi: { maxRequests: 30, windowMs: 60 * 1000 },             // 30 / 1 min
-  invoiceOcr: { maxRequests: 20, windowMs: 60 * 60 * 1000 },     // 20 / 1 hour
+  kazanAi: { maxRequests: 30, windowMs: 60 * 1000 }, // 30 / 1 min
+  invoiceOcr: { maxRequests: 20, windowMs: 60 * 60 * 1000 }, // 20 / 1 hour
+  // TASK-0439: /api/orchestrator sərbəst mətni AI-a göndərir — hər çağırış
+  // xərcdir. Elan yaratmaq nadir əməliyyatdır, ona görə saatda 10 bol-bol
+  // kifayətdir və tək hesabın açarı yandırmasının qarşısını alır.
+  orchestratorAi: { maxRequests: 10, windowMs: 60 * 60 * 1000 }, // 10 / 1 hour
+  // Açıq toolkit qiymət axtarışı — giriş tələb etmir, ona görə IP üzrə.
+  foodCostLookup: { maxRequests: 60, windowMs: 60 * 1000 }, // 60 / 1 min
 } as const;

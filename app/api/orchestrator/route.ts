@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AI_MODELS } from '@/lib/ai-models';
+import { requireApiMember } from '@/lib/api/guards';
+import { checkRateLimit, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 const AGENT_PROFILES = {
   AlmilaCloser:
@@ -71,32 +73,52 @@ async function runOpenAi(userPrompt: string, systemInstruction: string) {
 
 export async function POST(request: NextRequest) {
   try {
+    // TASK-0439: bu endpoint sərbəst mətni AI provayderinə göndərir, yəni hər
+    // çağırış pul xərcləyir. Əvvəllər heç bir yoxlama yox idi — internetdən
+    // istənilən adam GEMINI_API_KEY ilə istədiyini işlədə bilirdi.
+    // Yeganə qanuni çağıran `ListingForm`-dur və o, yalnız girişli
+    // səhifələrdə (`/ilan-ver`, `/b2b-panel`, `/dashboard`) render olunur,
+    // ona görə giriş tələbi mövcud axını sındırmır — ListingForm onsuz da
+    // 401/403 cavabını emal edir.
+    const guard = await requireApiMember();
+    if (!guard.ok) return guard.response;
+
+    // Giriş tək başına kifayət deyil: bir hesab da açarı yandıra bilər.
+    const limit = checkRateLimit(`orchestrator:${guard.session.email}`, RATE_LIMITS.orchestratorAi);
+    if (!limit.success) return rateLimitExceeded(limit);
+
     const body: OrchestratorRequest = await request.json();
     const { taskType, userPrompt } = body;
     const provider: Provider = body.provider ?? 'openai';
 
     if (!taskType || !userPrompt) {
-      return NextResponse.json({ error: 'taskType ve userPrompt parametreleri zorunludur.' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'taskType ve userPrompt parametreleri zorunludur.' },
+        { status: 400 }
+      );
     }
 
     const systemInstruction = AGENT_PROFILES[taskType];
     if (!systemInstruction) {
       return NextResponse.json(
-        { error: `Gecersiz taskType: ${taskType}. Gecerli degerler: AlmilaCloser, PazarAnalisti, ProjeYoneticisi` },
-        { status: 400 },
+        {
+          error: `Gecersiz taskType: ${taskType}. Gecerli degerler: AlmilaCloser, PazarAnalisti, ProjeYoneticisi`,
+        },
+        { status: 400 }
       );
     }
 
-    const result = provider === 'gemini'
-      ? await runGemini(userPrompt, systemInstruction)
-      : await runOpenAi(userPrompt, systemInstruction);
+    const result =
+      provider === 'gemini'
+        ? await runGemini(userPrompt, systemInstruction)
+        : await runOpenAi(userPrompt, systemInstruction);
 
     return NextResponse.json(
       {
         agent: taskType,
         ...result.payload,
       },
-      { status: result.status },
+      { status: result.status }
     );
   } catch (error) {
     console.error('Orchestrator API Hatasi:', error);
@@ -107,7 +129,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { error: 'Orkestrator islemi sirasinda bir hata olustu.', details: String(error) },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

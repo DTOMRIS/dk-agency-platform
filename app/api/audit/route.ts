@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireApiAdmin } from '@/lib/api/guards';
 import {
   createAudit,
   getAudits,
@@ -8,7 +9,14 @@ import {
 import { generateFullAudit } from '@/lib/audit/full-audit';
 
 // GET /api/audit?status=draft&category=restoran&q=metro&limit=20&offset=0&stats=1
+// TASK-0439: bu route-un heç bir handler-ində auth yoxlaması yox idi —
+// middleware də /api/* yolunu tutmur (matcher yalnız locale prefiksi üçündür),
+// yəni DELETE daxil hər əməliyyat internetdən açıq idi. Yalnız dashboard
+// səhifələri çağırdığı üçün hamısı admin tələb edir.
 export async function GET(request: NextRequest) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const { searchParams } = request.nextUrl;
 
@@ -37,6 +45,9 @@ export async function GET(request: NextRequest) {
 
 // POST /api/audit — yeni audit yarat + AI analiz
 export async function POST(request: NextRequest) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const body = (await request.json()) as {
       name: string;
@@ -115,6 +126,9 @@ export async function POST(request: NextRequest) {
 
 // DELETE /api/audit — bulk delete
 export async function DELETE(request: NextRequest) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const body = (await request.json()) as { ids: number[] };
     if (!body.ids?.length) {

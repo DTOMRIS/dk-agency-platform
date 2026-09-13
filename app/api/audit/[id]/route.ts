@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireApiAdmin } from '@/lib/api/guards';
 import {
   getAuditById,
   updateAudit,
@@ -9,7 +10,14 @@ import {
 type Params = { params: Promise<{ id: string }> };
 
 // GET /api/audit/[id]
+// TASK-0439: bu route-un heç bir handler-ində auth yoxlaması yox idi —
+// middleware də /api/* yolunu tutmur (matcher yalnız locale prefiksi üçündür),
+// yəni DELETE daxil hər əməliyyat internetdən açıq idi. Yalnız dashboard
+// səhifələri çağırdığı üçün hamısı admin tələb edir.
 export async function GET(_request: NextRequest, { params }: Params) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const { id } = await params;
     const audit = await getAuditById(Number(id));
@@ -27,6 +35,9 @@ export async function GET(_request: NextRequest, { params }: Params) {
 
 // PATCH /api/audit/[id] — status, notes update
 export async function PATCH(request: NextRequest, { params }: Params) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const { id } = await params;
     const body = (await request.json()) as {
@@ -55,6 +66,9 @@ export async function PATCH(request: NextRequest, { params }: Params) {
 
 // DELETE /api/audit/[id]
 export async function DELETE(_request: NextRequest, { params }: Params) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const { id } = await params;
     await deleteAudit(Number(id));
@@ -69,6 +83,9 @@ export async function DELETE(_request: NextRequest, { params }: Params) {
 
 // POST /api/audit/[id] — action log
 export async function POST(request: NextRequest, { params }: Params) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const { id } = await params;
     const body = (await request.json()) as { actionType: string; notes?: string };

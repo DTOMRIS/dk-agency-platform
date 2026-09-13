@@ -1,4 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireApiAdmin } from '@/lib/api/guards';
+import {
+  checkRateLimit,
+  getClientIp,
+  rateLimitExceeded,
+  RATE_LIMITS,
+} from '@/lib/utils/rate-limit';
 import {
   getFoodCostReport,
   getMonthlyTrend,
@@ -7,14 +14,44 @@ import {
   lookupProductPrices,
 } from '@/lib/repositories/invoiceRepository';
 
+/**
+ * TASK-0439 — bu route iki fərqli auditoriyaya xidmət edir, ona görə qorunma
+ * route səviyyəsində yox, ƏMƏLİYYAT səviyyəsindədir:
+ *
+ *  - `lookup`  → açıq `/toolkit/food-cost` alətindən çağırılır (pulsuz alət,
+ *                giriş tələb etmir). Açıq qalır, IP üzrə rate-limit ilə.
+ *  - qalanı    → `report`/`trend`/`suppliers`/`products`/`all` real faktura,
+ *                təchizatçı və məbləğ datasını qaytarır. Bunlar əvvəllər
+ *                qorunmasız idi, yəni şirkətin alış datası internetə açıq idi.
+ *                İndi admin tələb olunur.
+ *
+ * Bütün route-a admin qoymaq açıq aləti sındırardı; heç nə qoymamaq datanı
+ * açıq saxlayırdı — ona görə ayırma məhz burada aparılır.
+ */
+const PUBLIC_TYPES = new Set(['lookup']);
+
 // GET /api/food-cost?dateFrom=2026-04-01&dateTo=2026-04-30&branchId=1&type=report|trend|suppliers|products
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
     const type = searchParams.get('type') ?? 'report';
+
+    if (PUBLIC_TYPES.has(type)) {
+      const limit = checkRateLimit(
+        `food-cost-lookup:${getClientIp(request)}`,
+        RATE_LIMITS.foodCostLookup
+      );
+      if (!limit.success) return rateLimitExceeded(limit);
+    } else {
+      const guard = await requireApiAdmin();
+      if (!guard.ok) return guard.response;
+    }
+
     const dateFrom = searchParams.get('dateFrom') ?? undefined;
     const dateTo = searchParams.get('dateTo') ?? undefined;
-    const branchId = searchParams.get('branchId') ? Number(searchParams.get('branchId')) : undefined;
+    const branchId = searchParams.get('branchId')
+      ? Number(searchParams.get('branchId'))
+      : undefined;
     const userId = searchParams.get('userId') ? Number(searchParams.get('userId')) : undefined;
 
     const filters = { dateFrom, dateTo, branchId, userId };
@@ -53,9 +90,12 @@ export async function GET(request: NextRequest) {
           getSupplierComparison(filters),
           getTopProducts(filters, 10),
         ]);
-        return NextResponse.json({
-          data: { report, trend, suppliers, products },
-        }, { status: 200 });
+        return NextResponse.json(
+          {
+            data: { report, trend, suppliers, products },
+          },
+          { status: 200 }
+        );
       }
 
       case 'lookup': {
@@ -71,7 +111,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { error: 'Food cost sorğusu uğursuz oldu.', details: String(error) },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

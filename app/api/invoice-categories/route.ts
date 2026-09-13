@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireApiAdmin } from '@/lib/api/guards';
 import { dbAvailable } from '@/lib/db';
 import { DEFAULT_INVOICE_CATEGORIES } from '@/lib/data/invoice-category-seeds';
 
+// TASK-0439: bu route-un heç bir handler-ində auth yoxlaması yox idi —
+// middleware də /api/* yolunu tutmur (matcher yalnız locale prefiksi üçündür),
+// yəni DELETE daxil hər əməliyyat internetdən açıq idi. Yalnız dashboard
+// səhifələri çağırdığı üçün hamısı admin tələb edir.
 export async function GET() {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     if (!dbAvailable) {
       // DB yoxdursa seed data-dan göstər
@@ -20,6 +28,9 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const body = (await request.json()) as { name: string; slug: string; color?: string; icon?: string; sortOrder?: number };
 
@@ -41,6 +52,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const body = (await request.json()) as { id: number; name?: string; slug?: string; color?: string; icon?: string; sortOrder?: number; isActive?: boolean };
 
@@ -63,6 +77,9 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   try {
     const body = (await request.json()) as { ids: number[] };
     if (!body.ids || body.ids.length === 0) {
