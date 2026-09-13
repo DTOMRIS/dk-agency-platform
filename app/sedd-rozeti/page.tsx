@@ -1,4 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
+
+/**
+ * Səhifə sitemap-da idi, amma öz başlığı yox idi — kök layout-un başlığını
+ * miras alırdı (TASK-0433). Mətn səhifənin öz H1 və giriş abzasıdır.
+ */
+export const metadata: Metadata = {
+  title: 'Şədd Rozeti — DK Agency HoReCa Audit Nişanı',
+  description:
+    'Şədd Rozeti HoReCa bizneslərinin əməliyyat, gigiyena, maliyyə və marka standartlarını yoxlayan DK Agency audit nişanıdır.',
+};
 
 export default function SeddRozetiPage() {
   return (
