@@ -11,6 +11,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0438` fix(listings): **açıq /ilanlar bütün elanları yükləyir (20-cap aradan qalxdı)** — səhifə `/api/listings?showcase=true` sorğusunu limit-siz atırdı, API default 20-də kəsirdi, sonra süzgəc/axtarış yalnız həmin 20 sətir üzərində işləyirdi → **müştəri 20-dən sonrakı elanı tapa bilmirdi (biznes itkisi)**. Sorğuya `&limit=500` əlavə edildi (API-də max cap yoxdur). Səhifə onsuz da URL-ə sync olur və client süzgəci ani olduğundan başqa dəyişiklik lazım deyil. 500-dən çox showcase elan olsa server-side pagination lazımdır (ayrıca). Mənbə: axtarış audit. (DoD #11: sandbox npm 403, deploy-da test.)
+
 ### Added
 - `TASK-0437` feat(dashboard-mobile): **Apple-vari alt naviqasiya + kəsilən cədvəllər düzəldildi** — dashboard-da mobil naviqasiya yalnız yuxarı-soldakı hamburger idi (başparmaq çatmır). Yeni `DashboardBottomNav`: 5 slot (Ana / İlanlar / **KAZAN** ortada highlight / Xəbərlər / Daha çox), `fixed bottom-0 pb-safe lg:hidden`, ≥44px toxunuş sahəsi, aktiv-state sidebar məntiqi ilə eyni; «Daha çox» tam sidebar-ı açır (13 element əlçatan qalır). `DashboardLayout`-a mount + content `pb-20 lg:pb-0`. i18n `nav.more` 4 dil. Əlavə: `blog` və `xeberler` cədvəl konteynerləri `overflow-hidden` → `overflow-x-auto` (telefonda kəsilmə → üfüqi sürüşmə). Mənbə: 12-13.09 mobil audit. (DoD #11: sandbox npm 403 → build/tsc icra olunmadı, deploy-da test.)
 

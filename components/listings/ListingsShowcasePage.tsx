@@ -64,7 +64,7 @@ export default function ListingsShowcasePage() {
     async function loadListings() {
       setLoading(true);
       try {
-        const response = await fetch(`/api/listings?showcase=true&locale=${locale}`);
+        const response = await fetch(`/api/listings?showcase=true&locale=${locale}&limit=500`);
         if (!response.ok) throw new Error('load failed');
         const payload = (await response.json()) as { data?: MockListing[] };
         if (!cancelled && Array.isArray(payload.data) && payload.data.length > 0) {

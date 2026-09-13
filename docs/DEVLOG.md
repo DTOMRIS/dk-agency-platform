@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0438 (/ilanlar 20-cap fix + axtarış planı)
+
+**Niyə:** Axtarış audit tapdı — açıq `/ilanlar` yalnız ilk 20 elanı yükləyib client-də süzürdü; `/api/listings` q/type/sector/city/price dəstəkləyir, amma səhifə istifadə etmirdi. Müştəri 20-dən sonrakı elanı tapa bilmir = biznes itkisi.
+
+**Dəyişiklik:** fetch-ə `&limit=500` (API-də max cap yoxdur). Səhifə URL-sync + ani client süzgəc onsuz da düzgün işləyir → minimal fix seçdim.
+
+**Niyə tam server-side refetch etmədim:** price-range→min/max + city normalize map-larını API ilə uyğunlaşdırmaq + debounce + pagination = daha böyük, test tələb edən iş. DK erkən mərhələ (az elan) → 500 limit indi kifayət və sıfır risk.
+
+**Qalır (search consistency — ayrıca task):** ümumi `<SearchFilterBar>` + `useListQuery`; dashboard client-only axtarışları (pipeline/mesajlar/etkinlikler) real API-yə; no-results state-ləri standartlaşdır; mock fallback maskalamasını dayandır (ilanlar-admin/faturalar); istəyə görə qlobal `/api/search` + command palette. `HospitalityHeader` ölü search input render olunmur → toxunulmadı.
+
+**Yoxlama:** sandbox npm 403 → build/tsc yox (DoD #11 skip); diff+review; deploy-da 20-dən çox elanla süzgəci yoxla.
+
 ## 2026-09-13 — TASK-0437 (mobil alt menyu + cədvəl kəsilmə)
 
 **Niyə:** Sahib «mobil alt menü apple gibi olmalı» dedi; audit təsdiqlədi — açıq saytda `MobileBottomNav` var, amma dashboard-da yoxdur (`PublicChrome` onu /dashboard-da render etmir). Menyu yalnız yuxarı-solda = başparmaq çatmır. `blog`/`xeberler` cədvəlləri `overflow-hidden` içində `min-w-full` → telefonda kəsilir.
