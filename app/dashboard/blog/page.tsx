@@ -134,7 +134,7 @@ export default function DashboardBlogPage() {
         </div>
 
         {/* Table */}
-        <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-[32px] border border-slate-200 bg-white shadow-sm">
           {loading ? (
             <div className="flex items-center justify-center py-20 text-slate-400">Yüklənir...</div>
           ) : (

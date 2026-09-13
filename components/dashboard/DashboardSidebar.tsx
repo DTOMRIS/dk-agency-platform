@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   LogOut,
   Megaphone,
+  MessageCircle,
   Newspaper,
   ScrollText,
   Settings,
@@ -40,6 +41,7 @@ const navItemDefs: NavItemDef[] = [
   { titleKey: 'blog', href: '/dashboard/blog', icon: BookOpen },
   { titleKey: 'ads', href: '/dashboard/reklamlar', icon: Megaphone },
   { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
+  { titleKey: 'contactTracking', href: '/dashboard/contact-tracking', icon: MessageCircle },
   // auditor + invoices(faturalar) + site hidden until backend is real (mock data / no-op save).
   // foodCost + toolkit are MEMBER tools — they live in the B2B portal
   // (/b2b-panel/toolkit), not the admin panel.

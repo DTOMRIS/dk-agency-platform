@@ -133,10 +133,19 @@ export default function RollerPage() {
           <h1 className="text-2xl font-bold text-gray-900">{t('pageTitle')}</h1>
           <p className="text-sm text-gray-500 mt-1">{t('pageSubtitle')}</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-dk-red text-white rounded-xl hover:bg-dk-red-strong transition-colors">
+        <button
+          disabled
+          title={t('previewNotice')}
+          className="flex items-center gap-2 px-4 py-2 bg-dk-red text-white rounded-xl opacity-50 cursor-not-allowed transition-colors"
+        >
           <Plus size={16} />
           <span className="text-sm font-bold">{t('newRole')}</span>
         </button>
+      </div>
+
+      <div className="mb-6 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
+        <Lock size={18} className="mt-0.5 shrink-0 text-amber-600" />
+        <p className="text-sm text-amber-800">{t('previewNotice')}</p>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
@@ -188,11 +197,11 @@ export default function RollerPage() {
                   <span className="text-xs">{role.userCount} {t('userCount')}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <button className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
+                  <button disabled title={t('previewNotice')} className="p-1.5 rounded-lg opacity-40 cursor-not-allowed">
                     <Edit2 size={14} className="text-gray-400" />
                   </button>
                   {!role.isSystem && (
-                    <button className="p-1.5 hover:bg-red-50 rounded-lg transition-colors">
+                    <button disabled title={t('previewNotice')} className="p-1.5 rounded-lg opacity-40 cursor-not-allowed">
                       <Trash2 size={14} className="text-red-400" />
                     </button>
                   )}
@@ -218,14 +227,11 @@ export default function RollerPage() {
                 </div>
                 {!selectedRole.isSystem && (
                   <button
-                    onClick={() => setIsEditing(!isEditing)}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-                      isEditing
-                        ? 'bg-green-600 text-white hover:bg-green-700'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                    disabled
+                    title={t('previewNotice')}
+                    className="px-4 py-2 rounded-xl text-sm font-medium bg-gray-100 text-gray-400 opacity-60 cursor-not-allowed"
                   >
-                    {isEditing ? t('save') : t('edit')}
+                    {t('edit')}
                   </button>
                 )}
               </div>

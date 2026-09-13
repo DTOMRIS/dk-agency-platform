@@ -22,7 +22,28 @@ function isAllowedSource(value: unknown): value is Source {
 }
 
 function normalizeLocale(value: unknown): Locale {
-  return typeof value === 'string' && ALLOWED_LOCALES.includes(value as Locale) ? (value as Locale) : 'az';
+  return typeof value === 'string' && ALLOWED_LOCALES.includes(value as Locale)
+    ? (value as Locale)
+    : 'az';
+}
+
+// Optional, client-supplied strings — trim, drop empties, cap length so a
+// manipulated POST cannot bloat the row.
+function cleanStr(value: unknown, max: number): string | null {
+  if (typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  return trimmed.slice(0, max);
+}
+
+// These values are attacker-controllable (client POST) and land in an admin
+// email's HTML body, so escape before interpolation to prevent HTML injection.
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 function getClientIp(request: NextRequest) {
@@ -39,7 +60,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });
     }
 
-    const body = (await req.json()) as { source?: unknown; channel?: unknown; locale?: unknown };
+    const body = (await req.json()) as {
+      source?: unknown;
+      channel?: unknown;
+      locale?: unknown;
+      sourceUrl?: unknown;
+      prefillText?: unknown;
+      destinationPhone?: unknown;
+    };
     const { source, channel } = body;
 
     if (!isAllowedChannel(channel)) {
@@ -52,9 +80,15 @@ export async function POST(req: NextRequest) {
 
     const ip = getClientIp(req);
     const salt = process.env.IP_HASH_SALT ?? 'fallback-salt-change-me';
-    const ipHash = crypto.createHash('sha256').update(ip + salt).digest('hex');
+    const ipHash = crypto
+      .createHash('sha256')
+      .update(ip + salt)
+      .digest('hex');
 
     const locale = normalizeLocale(body.locale);
+    const sourceUrl = cleanStr(body.sourceUrl, 2048);
+    const prefillText = cleanStr(body.prefillText, 1000);
+    const destinationPhone = cleanStr(body.destinationPhone, 32);
     const createdAt = new Date();
 
     await db.insert(leads).values({
@@ -63,6 +97,9 @@ export async function POST(req: NextRequest) {
       locale,
       userAgent: req.headers.get('user-agent'),
       ipHash,
+      sourceUrl,
+      prefillText,
+      destinationPhone,
       createdAt,
     });
 
@@ -75,6 +112,9 @@ export async function POST(req: NextRequest) {
         <table style="width:100%;border-collapse:collapse;font-size:14px;">
           <tr><td style="padding:8px 0;color:#64748b;width:100px">Kanal:</td><td style="padding:8px 0;font-weight:700">${channelLabel}</td></tr>
           <tr><td style="padding:8px 0;color:#64748b">Dil:</td><td style="padding:8px 0">${locale.toUpperCase()}</td></tr>
+          ${destinationPhone ? `<tr><td style="padding:8px 0;color:#64748b">Hədəf:</td><td style="padding:8px 0">${escapeHtml(destinationPhone)}</td></tr>` : ''}
+          ${sourceUrl ? `<tr><td style="padding:8px 0;color:#64748b">Səhifə:</td><td style="padding:8px 0">${escapeHtml(sourceUrl)}</td></tr>` : ''}
+          ${prefillText ? `<tr><td style="padding:8px 0;color:#64748b">Hazır mesaj:</td><td style="padding:8px 0">${escapeHtml(prefillText)}</td></tr>` : ''}
           <tr><td style="padding:8px 0;color:#64748b">Vaxt:</td><td style="padding:8px 0">${createdAt.toISOString()}</td></tr>
         </table>
         <p style="margin-top:20px;">

@@ -451,7 +451,7 @@ export default function DashboardXeberlerPage() {
           </div>
         ) : null}
 
-        <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-[32px] border border-slate-200 bg-white shadow-sm">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-left text-slate-400">
               <tr>

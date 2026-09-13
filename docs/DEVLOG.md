@@ -1,5 +1,80 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — PR #437 konflikt həlli + 2 tip xətası
+
+**Niyə:** PR #437 (TASK-0433…0438) `main`-ə merge oluna bilmirdi — `docs/DEVLOG.md`-də konflikt. Səbəb sadə idi: hər iki tərəf faylın başına yeni yazı əlavə etmişdi (branch 6 task, `main` isə `/llms.txt` task-ı). **Heç bir yazı atılmadı** — hər ikisi saxlanıldı, tarix sırası ilə düzüldü (09-13 → 09-02 → 08-30). `docs/CHANGELOG.md` avtomatik birləşdi.
+
+**Konfliktdən sonra tapılan iki gerçək baq.** Branch-ın öz qeydlərində `sandbox npm 403 → build/tsc yox (DoD #11 skip)` yazılmışdı — yəni bu kod heç vaxt tip yoxlamasından keçməmişdi. Burada `node_modules` mövcud olduğu üçün yoxlanıldı: **tsc 38, baza isə 36 → 2 yeni xəta**:
+
+1. `DashboardBottomNav.tsx:36` — `links` massivi `as const` ilə union yaradır və `highlight` yalnız bir üzvdə var, ona görə destructuring tip xətası verirdi. Digər üç üzvə `highlight: false` verildi (semantik olaraq da doğrudur — həmin elementlər vurğulanmır).
+2. `blog-repository.ts:870` — `db` modul səviyyəli dəyişəndir; TASK-0435 yazını `Promise.all` callback-inə köçürəndə TypeScript `if (!dbAvailable || !db) return` guard-ının narrowing-ini itirdi. Guard-dan sonra `const database = db` tutulur və paralel yazıda o işlədilir.
+
+**Qeyd — TASK ID toqquşması:** `TASK-0433` iki dəfə istifadə olunub (bu branch-da `fix(campaign)`, `main`-də `/llms.txt`). Commit tarixçəsi yenidən yazılmadı; gələcək task-lar **0439**-dan başlamalıdır.
+
+**Qeyd — PROTECTED:** `lib/db/schema.ts` dəyişib (`leads`-ə 3 nullable sütun). Miqrasiya var və idempotentdir (`drizzle/0020_add_leads_tracking_columns.sql`, `ADD COLUMN IF NOT EXISTS`), yəni "migration olmadan dəyişməz" qaydası pozulmayıb. Sahib icazəsi PR-da qeyd olunmalıdır.
+
+**Yoxlama:** tsc **36 — bazaya qayıtdı** · eslint 0 error (12 warning, hamısı əvvəldən var) · `✓ Compiled successfully in 32.7s` · konflikt markerləri 0 · hər iki tərəfin bütün DEVLOG yazıları yerindədir.
+
+## 2026-09-13 — TASK-0438 (/ilanlar 20-cap fix + axtarış planı)
+
+**Niyə:** Axtarış audit tapdı — açıq `/ilanlar` yalnız ilk 20 elanı yükləyib client-də süzürdü; `/api/listings` q/type/sector/city/price dəstəkləyir, amma səhifə istifadə etmirdi. Müştəri 20-dən sonrakı elanı tapa bilmir = biznes itkisi.
+
+**Dəyişiklik:** fetch-ə `&limit=500` (API-də max cap yoxdur). Səhifə URL-sync + ani client süzgəc onsuz da düzgün işləyir → minimal fix seçdim.
+
+**Niyə tam server-side refetch etmədim:** price-range→min/max + city normalize map-larını API ilə uyğunlaşdırmaq + debounce + pagination = daha böyük, test tələb edən iş. DK erkən mərhələ (az elan) → 500 limit indi kifayət və sıfır risk.
+
+**Qalır (search consistency — ayrıca task):** ümumi `<SearchFilterBar>` + `useListQuery`; dashboard client-only axtarışları (pipeline/mesajlar/etkinlikler) real API-yə; no-results state-ləri standartlaşdır; mock fallback maskalamasını dayandır (ilanlar-admin/faturalar); istəyə görə qlobal `/api/search` + command palette. `HospitalityHeader` ölü search input render olunmur → toxunulmadı.
+
+**Yoxlama:** sandbox npm 403 → build/tsc yox (DoD #11 skip); diff+review; deploy-da 20-dən çox elanla süzgəci yoxla.
+
+## 2026-09-13 — TASK-0437 (mobil alt menyu + cədvəl kəsilmə)
+
+**Niyə:** Sahib «mobil alt menü apple gibi olmalı» dedi; audit təsdiqlədi — açıq saytda `MobileBottomNav` var, amma dashboard-da yoxdur (`PublicChrome` onu /dashboard-da render etmir). Menyu yalnız yuxarı-solda = başparmaq çatmır. `blog`/`xeberler` cədvəlləri `overflow-hidden` içində `min-w-full` → telefonda kəsilir.
+
+**Dəyişiklik:** Yeni `DashboardBottomNav` (public pattern təkrar, dashboard route-larına yönəlir; `MobileBottomNav`-ı təkrar İSTİFADƏ ETMƏDİM — onun linkləri public-dir). 5 slot, KAZAN ortada gold pill, ≥44px, «Daha çox»→`setSidebarOpen(true)`. `DashboardLayout`-a sibling mount + content `pb-20 lg:pb-0`. blog/xeberler wrapper `overflow-x-auto`.
+
+**Qalır:** bottom-nav-da badge-lər (pending/kazan sayı) yoxdur — state `DashboardLayout`-a lift olunmalıdır (ayrıca, kiçik). users/contact-tracking/ilanlar geniş cədvəlləri üçün mobil kart-görünüşü (`faturalar` nümunəsi) — ayrıca task.
+
+**Yoxlama:** sandbox npm 403 → build/tsc yox (DoD #11 skip); diff+review; **deploy-da telefonda test:** alt menyu görünür, KAZAN highlight, «Daha çox» drawer açır, blog/xəbər cədvəli üfüqi sürüşür.
+
+## 2026-09-13 — TASK-0436 (roller yalançı düymələri)
+
+**Niyə:** Dashboard audit (agent) tapdı: `roller` səhifəsi istifadəçini aldadır — silmə/redaktə düymələri işləmir, icazə dəyişikliyi saxlanmır (100% mock data + local state). Sahibin qaydası: UI yalan danışmamalıdır.
+
+**Dəyişiklik:** Ölü düymələr (Yeni rol / Redaktə / Sil) `disabled`+`title`; Redaktə/Saxla toggle deaktiv → səhifə honest read-only preview; amber bildiriş banneri. i18n `previewNotice` 4 dildə.
+
+**Niyə wire etmədim:** roles üçün backend/API yoxdur (rol `user.role`-dan gəlir) — real CRUD ayrıca böyük backend işidir. İndi ən doğrusu yalanı dayandırmaqdır.
+
+**Yoxlama:** sandbox npm 403 → build/tsc yox (DoD #11 skip); diff+review; deploy-da baxılmalı.
+
+## 2026-09-13 — TASK-0435 (tərcümə paralel + blog şəkil lazy)
+
+**Niyə:** Sahib «tərcümədə ağır işliyor» + «blog resimleri ağır yükleniyor» dedi. Diaqnoz: (1) `autoTranslateBlogPost` 3 dili × sahələri tam ARDICIL `await` edirdi (~12 DeepSeek çağırışı, sinxron sorğuda → 1-3 dəq donma, timeout riski); (2) blog/xəbər şəkilləri xam `<img>`, `next/image` yox, lazy yox → tam ölçüdə və hamısı birdən yüklənir.
+
+**Dəyişiklik:** (1) dil döngüsü `Promise.all(langs.map(...))` — 3 dil eyni anda; sahələr dil içində ardıcıl qalır (rate-limit təhlükəsizliyi üçün). Hər dil öz sütunlarını yazır, concurrent update təhlükəsiz. (2) blog kartı `img`-ə `loading=lazy`+`decoding=async`.
+
+**Qalır:** `next/image` miqrasiyası (avto resize+AVIF) — domen qərarı + test lazım, ayrıca task; xəbər şəkilləri xarici hotlink → cloudinary proxy/cache; `translateText` içində chunk-lar hələ ardıcıl (istəsə sonra paralel). Mobil bottom-nav + global search + ara/düzelt/geri al trilogiyası → 3 audit agenti tarayır, nəticəyə görə plan.
+
+**Yoxlama:** sandbox npm 403 → build/tsc/eslint icra olunmadı (DoD #11 texniki skip); diff + əl-baxış ilə təsdiq; **deploy-dan sonra bir blogda tərcümə sürəti + şəkil yüklənməsi test edilməli.**
+
+## 2026-09-12 — TASK-0434 (Əlaqə kanalı tracking-i zənginləşdirmə)
+
+**Niyə:** Sahib «WhatsApp verisi gəlib, amma nə yazdığını, haradan gəldiyini görmürəm» dedi. Araşdırma: `/api/leads/track` yalnız `channel, locale, userAgent, ipHash, tarix` yazırdı; `/api/leads/whatsapp` redirect prefill `?text=`-i qəbul edib **log etmədən atırdı**; contact-tracking səhifəsi sidebar-da linksiz idi (kəşf olunmurdu); sayğaclar filtrə görə gah son 100, gah son 1000 qeyddən hesablanırdı (uyğunsuz total).
+
+**Vacib həqiqət (sahibə izah olundu):** Sayt bir WhatsApp klikindən **müştərinin nə yazdığını görə bilməz** — mesaj `wa.me`-dən sonra birbaşa WhatsApp-a gedir, sayta toxunmur. Görünə bilən: hansı səhifədən klikləndi (`sourceUrl`), bizim hazırladığımız mesaj (`prefillText`), hədəf (`destinationPhone`). Mesaj məzmununu oxumaq üçün WhatsApp Business Cloud API + webhook lazımdır — ayrıca, böyük iş, roadmap.
+
+**Dəyişiklik:**
+- `leads`-ə 3 nullable sütun (`source_url`, `prefill_text`, `destination_phone`) — geri-uyğun, mövcud sətirlər NULL alır. Migration `0020` idempotent (`ADD COLUMN IF NOT EXISTS`), Neon-da təhlükəsiz.
+- `/api/leads/track`: yeni sahələri uzunluq-limitli sanitize edərək saxlayır. Admin email-i indi səhifə + hazır mesaj + hədəfi göstərir; **client-dən gələn dəyərlər HTML-ə escape olunur** (email injection qoruması).
+- SST: `lib/contact-channels.ts` (WhatsApp nömrəsi + Telegram URL bir yerdə). `whatsapp` route və `ContactFunnel` oradan oxuyur — nömrə dublikatı qalxdı.
+- `ContactFunnel`: `track()` indi `sourceUrl` (window.location) + prefill + hədəf göndərir.
+- contact-tracking səhifəsi: mənalı sütunlar (Səhifə / Hazır mesaj / Hədəf / Cihaz). **Sayğac bug-ı düzəldildi** — total artıq `GROUP BY channel count(*)` ilə bütün qeydlər üzrədir, display limitindən asılı deyil.
+- Kəşf: sidebar-a «Əlaqə Kanalları» nav item (4 dildə i18n).
+
+**Yoxlama (məhdudiyyət):** Sandbox-da `npm` 403 (xlsx CDN) səbəbindən `node_modules` quraşdırılmayıb — `tsc`/`eslint` icra oluna bilmədi (bütün xətalar `Cannot find module 'next/server'` tipli resolution, kod xətası deyil). Kod diff + əl-baxışla yoxlandı; semantik diff-lər təmiz (prettier səs-küyü python-insert ilə önləndi). Tam build/route/Playwright CI/deploy-də. — DoD #11 texniki skip.
+
+**Qalır:** WhatsApp Business Cloud API (mesaj oxuma) roadmap; contact-tracking `[locale]` mirror-u yoxlanmalı (admin non-AZ locale-də `/tr/...` — TASK-0416 funnel presedenti).
+
 ## 2026-09-02 — TASK-0433 (`/llms.txt` + başlıqsız 6 səhifə)
 
 **Planlanan iş yarıya endi, çünki yarısı onsuz da vardı.** Task «llms.txt + bloq yazılarına Article markup» kimi yazılmışdı. Kod oxunanda məlum oldu ki, **Article markup artıq var** — `app/[locale]/blog/[slug]/page.tsx:157` `articleNode()` çağırır və BlogPosting + BreadcrumbList + Organization + (FAQ varsa) FAQPage buraxır. İddianı sözlə buraxmadım: canlı yazının HTML-i çəkildi, JSON-LD parse edildi — `datePublished=2026-06-07T10:00:00Z` (ISO, schema.org-un tələb etdiyi format), `author=Doğan Tomris`, `publisher.logo=true`, `wordCount=1420`. **Yazılası kod yox idi.** Bunun əvəzinə boş vaxt real boşluğa yönləndirildi.
