@@ -58,7 +58,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const MIGRATIONS_DIR = path.join(__dirname, '..', 'drizzle');
+const ROOT_DIR = path.join(__dirname, '..');
+const MIGRATIONS_DIR = path.join(ROOT_DIR, 'drizzle');
 
 const args = new Set(process.argv.slice(2));
 const STATUS_ONLY = args.has('--status');
@@ -67,6 +68,44 @@ const DRY_RUN = args.has('--dry-run');
 function fail(message) {
   console.error(`\n  ✗ ${message}\n`);
   process.exit(1);
+}
+
+/**
+ * `.env.local` / `.env`-i oxuyur (TASK-0441).
+ *
+ * Next.js bu faylları özü yükləyir, sadə `node` skripti isə yükləmir — ona görə
+ * ilk buraxılışda skript lokalda `DATABASE_URL təyin edilməyib` verirdi, halbuki
+ * dəyər `.env.local`-da mövcud idi. `--env-file` bayrağı Node 20.6-dan əvvəl
+ * yoxdur və fayl olmayanda sınır, ona görə oxuma burada, asılılıqsız edilir.
+ *
+ * Yalnız OXUYUR — `.env*` fayllarına heç nə yazılmır (layihə qaydası).
+ * Mövcud mühit dəyişəni üstündür: CI/Hostinger-in verdiyi dəyər əzilmir.
+ */
+function loadEnvFiles() {
+  for (const name of ['.env.local', '.env']) {
+    const file = path.join(ROOT_DIR, name);
+    if (!fs.existsSync(file)) continue;
+
+    for (const rawLine of fs.readFileSync(file, 'utf8').split('\n')) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith('#')) continue;
+
+      const eq = line.indexOf('=');
+      if (eq === -1) continue;
+
+      const key = line.slice(0, eq).replace(/^export\s+/, '').trim();
+      if (!key || process.env[key] !== undefined) continue;
+
+      let value = line.slice(eq + 1).trim();
+      if (
+        (value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))
+      ) {
+        value = value.slice(1, -1);
+      }
+      process.env[key] = value;
+    }
+  }
 }
 
 /** `_journal.json`-da qeydli tag-lar — bunlar drizzle-kit-in məsuliyyətidir. */
@@ -87,11 +126,14 @@ function listMigrationFiles() {
 }
 
 async function connect() {
+  loadEnvFiles();
   const url = process.env.DATABASE_URL;
   if (!url) {
     fail(
-      'DATABASE_URL təyin edilməyib.\n' +
-        '    Lokal:      DATABASE_URL=postgres://… npm run db:migrate\n' +
+      'DATABASE_URL tapılmadı.\n' +
+        '    Axtarıldı: mühit dəyişəni, .env.local, .env\n\n' +
+        '    Lokal:      .env.local faylına DATABASE_URL=postgres://… əlavə edin\n' +
+        '    və ya:      DATABASE_URL=postgres://… npm run db:migrate:status\n' +
         '    Hostinger:  panel → Node app → Environment variables'
     );
   }
