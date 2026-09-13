@@ -319,7 +319,7 @@ export default function FoodCostDashboard() {
 
       {/* Tabs: Categories / Suppliers / Products */}
       <div className="rounded-2xl border border-slate-200 bg-white">
-        <div className="flex border-b border-slate-200">
+        <div className="flex overflow-x-auto border-b border-slate-200">
           {[
             { key: 'categories' as const, label: t('tabCategories'), icon: <BarChart3 size={16} /> },
             { key: 'suppliers' as const, label: t('tabSuppliers'), icon: <ShoppingCart size={16} /> },
@@ -329,7 +329,7 @@ export default function FoodCostDashboard() {
               key={tab.key}
               type="button"
               onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 border-b-2 px-5 py-3 text-sm font-semibold transition ${
+              className={`flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 px-5 py-3 text-sm font-semibold transition ${
                 activeTab === tab.key
                   ? 'border-[var(--dk-gold)] text-[var(--dk-navy)]'
                   : 'border-transparent text-slate-500 hover:text-slate-700'

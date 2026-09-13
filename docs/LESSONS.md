@@ -341,3 +341,9 @@ route patterni ile eyni).
 - **Kök səbəb:** (1) `--env-file` opsional deyil, məcburidir; opsional forması `--env-file-if-exists`-dir (`--env-file-if-missing` mövcud deyil). (2) Scheduled workflow-ların nəticəsi PR-da görünmür; qırmızı cron heç kimin axınına düşmür.
 - **Qayda:** npm script-lərində env faylı həmişə `--env-file-if-exists=` ilə (və ya skript içində `loadEnvFiles()` — L-040). Workflow Node versiyası `engines`-ə uyğun olmalıdır. Sessiya başlanğıcında `Actions` səhifəsində scheduled workflow-ların son nəticəsinə bax — HANDOFF checklist-inə əlavə.
 - **Nəticə:** TASK-0446 — 4 script `--env-file-if-exists`, workflow Node 22.
+
+## L-051: Prettier PostToolUse hook 2 sətirlik düzəlişi 160 sətirlik diff-ə çevirir
+- **Səhv:** TASK-0447-də `Edit` ilə `blog`/`food-cost`/`adminContent`-də 1–2 sətir dəyişdim; hook bütün faylı formatladı — 27 / 160 / 314 sətir kollateral. Reviewer 2 sətirlik fix-i 500 sətirin içində axtarmalı olardı.
+- **Kök səbəb:** Repo faylları prettier ilə formatlanmayıb; hook isə hər `Edit`-dən sonra tam faylı formatlayır. Yalnız formatlanmamış fayllarda baş verir (`e2e/*.spec.ts` kimi yeni fayllarda problem yoxdur).
+- **Qayda:** `Edit`-dən sonra `git diff --stat` — dəyişən sətir sayı gözləniləndən böyükdürsə `git checkout -- <fayl>` + `perl -0pi` / `sed` ilə minimal tətbiq. Diff yalnız nəyi düzəltdiyini göstərməlidir. Formatlama ayrıca «chore(format)» PR-ıdır.
+- **Nəticə:** TASK-0447 diff: blog 6, food-cost 4, adminContent −21 sətir.

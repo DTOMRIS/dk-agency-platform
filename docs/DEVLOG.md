@@ -1,5 +1,19 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0447 (mobil daşma blog/food-cost, hero silindi)
+
+**Sahib:** «blog + food-cost mobil daşması, hero Saxla — hallet». İki iş: biri ölçülmüş CSS düzəlişi, digəri qərar.
+
+**Mobil — əvvəl ölçü, sonra düzəliş.** 0445-dən sonra 20 səhifəni 390 və 360px-də skriptlə gəzdim: 18 təmiz, 2 daşır. Sonra yarpaq elementləri tapdım (viewport-dan sağa çıxan, uşağı çıxmayan): `blog`-da `a "Yeni yazı +" right=432` — başlıq sətri `flex items-center justify-between` sarılmır; `food-cost`-da `button "Məhsullar" right=437` — tab zolağı `flex` sarılmır. Düzəliş hər birinə 2 sətir: blog `flex-wrap` (+ `min-w-0`), food-cost tab zolağına `overflow-x-auto` + tablara `shrink-0 whitespace-nowrap` — tab-ları sarmaq deyil, sürüşdürmək standartdır (alt xətt qırılmır). Smoke spec-in `MOBILE_PAGES` siyahısı 5 səhifə idi və məhz bu ikisini əhatə etmirdi — indi `KEPT`-in hamısı.
+
+**hero — niyə silmək, niyə «işlək etmək» yox.** Araşdırma: (1) landing `components/Hero.tsx` mətni 4 dildə kodun içindədir, heç bir DB oxumur; (2) `hero_content` cədvəli 0000 miqrasiyasından var, amma `grep` — tətbiq kodunda sıfır istifadə, yalnız `translate-content` skriptləri; (3) redaktorun sahə modeli canlı Hero-ya uymur — RU dili yox, CTA linki redaktə olunur amma Hero-da `/auth/register` sabitdir, «Ahilik» mətni Hero-da `note`-dur; (4) `defaultHeroContent` = «150+ aktiv restoran», «32% xərc azalması» — canlı Hero dürüstdür (BETA / 10+ / AI). «Saxla»nı real etmək = API + repo + landing-in DB-dən oxuması + 4 dil + revalidate — orta ölçülü feature, üstəlik ilk basışda saxta rəqəmləri canlıya aparardı. Sahib 0444-də eyni sinif üçün «C sil» demişdi (`toolkit`/`site` saxta Saxla). Eyni qərar tətbiq olundu: səhifə, mirror, sidebar linki, `nav.hero` i18n (4 dildə skriptlə, 1 sətirlik diff), `defaultHeroContent`. DB cədvəli qaldı — schema PROTECTED-dir və silmək üçün səbəb yoxdur.
+
+**Prettier hook tələsi.** `Edit` ilə 2 sətir dəyişdim, PostToolUse hook faylı tam formatladı: blog 27, food-cost 160, adminContent 314 sətir. Dashboard faylları heç vaxt prettier-dən keçməyib. `git checkout -- <fayl>` + `perl -0pi` ilə yenidən: diff 6 / 4 / −21. L-051: `Edit`-dən sonra `git diff --stat` bax.
+
+**Proses gigiyenası (yenə).** Smoke 3/5 sındı — 404 və 390px keçdi, auth tələb edən üçü yox. Səbəb: 3034-də əvvəlki mobil ölçmədən qalan server (sirr 0445) sağ idi, yenisi `EADDRINUSE` ilə ölmüşdü, testlər köhnəyə getdi, cookie başqa sirlə imzalanmışdı → 307 login. `ps -eo pid,args | grep "[n]ext"` ilə 5 pid tapılıb öldürüldü (L-042-nin davamı: `pgrep -x next-server` yalnız uşağı görür, valideyn `next dev` yenidən doğurur). Təzə server, 5/5.
+
+**Sübut:** spec 5/5 (16.4s): 16 route × 2 → 404, 19/19 render, sidebar 6/8, 19 × 390px daşma yox, `.dashboard-scope` rəngi · `next build` OK · tsc baza · eslint 0 error · i18n 20/20/20/20 nav, 6 sections · `verify-lessons` 38/38 · dashboard 18 route.
+
 ## 2026-09-13 — TASK-0446 (Daily News Fetch cron-u sınırdı)
 
 **Sahib:** Actions-da qırmızı `fetch` job-u göstərdi: «hata var düzelt». PR #444 ilə əlaqəsi yoxdur — `main`-də bot commit-inə (STATE snapshot) bağlı scheduled run-un yenidən icrasıdır.

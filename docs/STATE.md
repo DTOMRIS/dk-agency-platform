@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-09-13T16:32:26.939Z
-- BuildStatus: PASS
+- GeneratedAt: 2026-09-13T16:45:16.977Z
+- BuildStatus: UNKNOWN
 
-## Routes (227)
+## Routes (225)
 - /
 - /(dev)/heromotif
 - /[locale]
@@ -43,7 +43,6 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/food-cost
 - /[locale]/dashboard/franchise-leads
 - /[locale]/dashboard/funnel
-- /[locale]/dashboard/hero
 - /[locale]/dashboard/ilanlar
 - /[locale]/dashboard/ilanlar/[id]
 - /[locale]/dashboard/kazan-leads
@@ -163,7 +162,6 @@ Auto-generated. Do not edit manually.
 - /dashboard/food-cost
 - /dashboard/franchise-leads
 - /dashboard/funnel
-- /dashboard/hero
 - /dashboard/ilanlar
 - /dashboard/ilanlar/[id]
 - /dashboard/ilanlar/yarat
