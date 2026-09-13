@@ -33,6 +33,7 @@ const REMOVED = [
   'site',
   'ilan-onaylari',
   'settings',
+  'hero', // 0447: saxta «Saxla» redaktoru silindi (TD-005)
 ];
 
 const KEPT = [
@@ -40,7 +41,6 @@ const KEPT = [
   'ilanlar',
   'xeberler',
   'blog',
-  'hero',
   'reklamlar',
   'kazan-leads',
   'franchise-leads',
@@ -69,8 +69,8 @@ const NEW_IN_MENU = [
   '/dashboard/ayarlar',
 ];
 
-/** 390px-də daşma yoxlanan səhifələr (0443-də düzəldilənlərdən qalanlar + ana). */
-const MOBILE_PAGES = ['', 'faturalar', 'fatura-kateqoriyalar', 'kazan-leads', 'contact-tracking'];
+/** 390px-də daşma yoxlanan səhifələr — hamısı (0447: 5 səhifəlik siyahı blog və food-cost daşmasını qaçırmışdı). */
+const MOBILE_PAGES = KEPT;
 
 async function signIn(context: BrowserContext, baseURL: string) {
   const token = jwt.sign(
@@ -103,10 +103,10 @@ test.describe('@smoke Dashboard', () => {
     }
   });
 
-  test('qalan 19 səhifə + ana səhifə auth ilə render olunur, görünən xəta yoxdur', async ({
+  test('qalan 18 səhifə + ana səhifə auth ilə render olunur, görünən xəta yoxdur', async ({
     page,
   }) => {
-    // 20 səhifə ardıcıl yüklənir (~30s) — config-in 30s limiti flaky olardı.
+    // 19 səhifə ardıcıl yüklənir (~30s) — config-in 30s limiti flaky olardı.
     test.setTimeout(120_000);
     for (const r of KEPT) {
       const res = await page.goto(`/dashboard${r ? '/' + r : ''}`);

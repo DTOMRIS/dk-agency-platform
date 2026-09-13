@@ -1,27 +1,6 @@
 export type AdminBlogStatus = 'draft' | 'published' | 'archived';
 export type AdminNewsStatus = 'fetched' | 'approved' | 'rejected';
 
-export const defaultHeroContent = {
-  badgeAz: 'Azərbaycanın İlk HoReCa Platforması',
-  badgeTr: "Azerbaycan'ın İlk HoReCa Platformu",
-  badgeEn: "Azerbaijan's First HoReCa Platform",
-  titleLine1Az: 'Restoranın niyə pul itirdiyini',
-  titleHighlightAz: 'gör',
-  titleLine2Az: 'və nəzarəti geri al',
-  subtitleAz:
-    'Food cost, P&L, AQTA və böyümə qərarlarını bir platformada idarə et. DK Agency restoran sahibinə rəqəmlə düşünməyi öyrədir.',
-  ahilikAz:
-    'Ahilikdən gələn ustalıq, bugünün dataya dayanan qərarları ilə birləşir. OCAQ paneli bu fəlsəfənin rəqəmsal idarəetmə mərkəzidir.',
-  stat1Value: '150+',
-  stat1Label: 'Aktiv restoran',
-  stat2Value: '10',
-  stat2Label: 'Pulsuz alət',
-  stat3Value: '32%',
-  stat3Label: 'Xərc azalması',
-  ctaText: 'Pulsuz Alətlərə Başla',
-  ctaLink: '/toolkit',
-};
-
 export const adminBlogPosts = [
   {
     slug: '1-porsiya-food-cost-hesablama',

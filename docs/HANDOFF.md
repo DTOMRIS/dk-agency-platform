@@ -4,7 +4,8 @@
 
 ### Sessiya başlanğıcı checklist-inə əlavə (L-050)
 - GitHub **Actions → scheduled workflow-lar** (`Daily News Fetch` və s.) son nəticəsinə bax. Onlar PR check-i deyil; qırmızı olanda heç kimə bildiriş gəlmir — `fetch-news` 3 ay (100/100 icra) səssiz sınmışdı.
-- Mobil daşma ölçüsü (0445 sonrası): 20 dashboard səhifəsi × 390/360px → **18 təmiz, 2 daşır**: `blog` (başlıq sətri `flex justify-between` sarılmır, 432px) və `food-cost` (tab zolağı `flex` sarılmır, 437px). Düzəliş `flex-wrap`/`overflow-x-auto`; smoke spec-in 390px siyahısı 5 → 20 səhifəyə çıxarılmalı. Sahib təsdiqi gözlənilir.
+- Mobil daşma ölçüsü (0445 sonrası): 20 dashboard səhifəsi × 390/360px → 18 təmiz, 2 daşırdı (`blog` başlıq sətri 432px, `food-cost` tab zolağı 437px) — **TASK-0447-də düzəldildi**; smoke spec 390px yoxlaması indi bütün səhifələri əhatə edir.
+- `hero` saxta «Saxla» (TD-005) — **TASK-0447-də səhifə silindi** (0444 «C sil» presedenti). Real hero redaktoru istənərsə: `hero_content` 4 dilli API/repo + landing `Hero.tsx`-in DB-dən oxuması + revalidate — ayrıca task.
 
 ### Kontekst
 Sahib «yamaq etmə, detala fokuslan, dünya standartına və mobilə bax; CTO kimi təklif gətir» dedi. Üç agent audit (funksiya, dizayn, dünya standartı) + hər tapıntı canlı kodda təkrar yoxlandı. Bütün PR-lar merge + Hostinger deploy olundu; canlıda `npm run db:migrate` 16/16 OK; `contact-tracking` və `/llms.txt` canlıda işləyir.

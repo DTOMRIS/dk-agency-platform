@@ -110,14 +110,14 @@ export default function DashboardBlogPage() {
     <div className="min-h-screen bg-white p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between gap-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <div>
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="min-w-0">
             <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">Bloq idarəetmə</h1>
             <p className="mt-3 text-sm text-slate-500">
               {posts.length} yazı · {posts.filter((p) => p.status === 'published').length} dərc edilib
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/dashboard/blog/translation-status"
               className="rounded-full border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400"

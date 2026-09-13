@@ -8,14 +8,14 @@ Texniki borc qeydleri. Her giris prioritet, sprint ve hell plani ile.
 
 **Tarix:** 2026-09-13
 **Sprint:** TASK-0445 zamanı qeydə alındı
-**Status:** ACIQ
+**Status:** HELL EDILDI — TASK-0447 (səhifə silindi)
 **Prioritet:** Orta
 
 ### Problem
 `app/dashboard/hero/page.tsx` — 0 `fetch`. «Saxla» (`:235`) və «Dərc et» (`:243`) yalnız toast göstərir; TR/EN tərcümə düymələri `onClick={() => undefined}`. Saxta «Saxlanıldı ✓» etibarı ən çox zədələyən şeydir (CLAUDE.md: mock ilə «tamam» demə).
 
 ### Hell
-1. Sahib qərarı: işlək et (hero content API/repo var mı? `hero_content` cədvəli 0001 miqrasiyasında mövcuddur) və ya düymələri deaktiv + «hazırlanır» etiketi. 2. Tərcümə düymələrini ya `autoTranslate`-ə bağla, ya sil.
+Sahib «hallet» dedi (2026-09-13). Araşdırma: landing `components/Hero.tsx` mətni 4 dildə kodda yazılıb, `hero_content` cədvəlini tətbiq kodu heç yerdə oxumur (yalnız tərcümə skriptləri); redaktorun sahə modeli canlı Hero ilə uyğun deyil (RU yox, CTA sabit `/auth/register`); `defaultHeroContent` saxta rəqəmlər daşıyırdı («150+ aktiv restoran», «32% xərc azalması») — «Saxla» real olsaydı bunlar canlıya gedərdi. Qərar: 0444 presedenti («C sil») — səhifə + `[locale]` mirror + sidebar linki + `nav.hero` i18n (4 dil) + `defaultHeroContent` silindi. Real hero redaktoru = ayrıca feature: 4 dilli `hero_content` API/repo + landing Hero-nun DB-dən oxuması + revalidate — HANDOFF yol xəritəsində.
 
 ### Elaqeli
 - app/dashboard/hero/page.tsx
