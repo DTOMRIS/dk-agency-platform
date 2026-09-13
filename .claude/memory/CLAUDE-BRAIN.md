@@ -59,3 +59,15 @@ Deploy: **Hostinger Web Apps, `main`-dən auto-deploy.**
 ## 7) RECENT MEMORY - 2026-06-27
 - **TASK-0416 route mirror:** `/dashboard/X` root route live-da ishlese de `/tr/dashboard/X` 404 ola biler. Dashboard alt route elave/audit edende hem root, hem locale mirror cutunu yoxla: `app/dashboard/X` + `app/[locale]/dashboard/X`. Smoke gozlenen: root 307 auth, locale 307 auth; 404 yox.
 - **TASK-0417 news preview:** Manual xeber editorunda preview URL-ni DB yazisi olmadan acma. `Onizle` evvel `/api/news/admin` POST/PATCH ile draft-i saxlamali, API-nin qaytardigi real `slug` ile `/haberler/{slug}?preview=true` acmalidir. 404 gorsen evvel `news_articles.slug` DB-de varmi yoxla.
+
+## 9) 2026-09-13 SESSİYA İNVARİANTLARI (0439–0445)
+- **API auth:** `middleware` `/api/*`-ı TUTMUR — hər route `lib/api/guards.ts` (`requireApiAdmin`/`requireApiMember`) ilə özü qorunur. Kopyalanan yoxlama yazma. Route-a guard qoymazdan əvvəl çağıranları grep et (L-046: food-cost `lookup` açıq alətdir).
+- **Miqrasiya:** `npm run db:migrate:status` → `npm run db:migrate` → Node restart. `drizzle-kit push` canlıda QADAĞAN; `db:migrate:bootstrap` yalnız sıfırdan baza. Yeni sütun = `schema.ts` + idempotent `drizzle/00XX_*.sql` (`IF NOT EXISTS`) — journal-a toxunma (L-049). Neon-http: tək ifadə/prepared statement, `sql.transaction([...])` (L-041).
+- **Dashboard:** 19 route, sidebar 6 bölmə (`navSections`, `DashboardSidebar.tsx`). Kök rəng `.dashboard-scope{color:var(--dk-ink)}`; `text-slate-400` əsas mətn üçün QADAĞAN (L-048). Kart primitivi `.dk-card`. Saxta səhifə/«Saxla» yaratma — silindi, geri gətirmə.
+- **Mobil (390px məcburi):** `scrollWidth == clientWidth`; grid uşağına `min-w-0`, çip sırasına `flex-wrap`, KPI `grid-cols-2 lg:grid-cols-N` (L-045).
+- **Test dürüstlüyü:** uğur yolu sınanmayıbsa «hazırdır» demə (L-040). Sandbox-da lokal Postgres 16 var (`postgres` useri, `initdb`) — DB skriptini orada işlət. tsc-dən əvvəl `rm -rf .next/dev .next/types`; baza ilə fərqi worktree+`comm` ilə çıxar (L-043). Playwright: Tailwind rəngi `lab()`, error.tsx mətni həmişə HTML-dədir → görünürlük yoxla (L-044).
+- **Proses:** `pgrep -x next-server` (naxışlı `-f` öz shell-ini vurur, exit 144); canlı dev serverin altında `.next`-ə toxunma (L-042). Serveri tool-un arxa plan rejimi ilə qaldır.
+- **Sənəd:** `scripts/verify-lessons.mjs` — kodda istinad edilən hər `L-0XX` LESSONS.md-də olmalıdır (dk-validate 5b). Task kartı `docs/tasks/TASK-XXXX.md` məcburidir. Növbəti task ID: **0446**.
+- **Sahib qərarları:** brend qırmızısı `#E94560` qalır · saxta dashboard səhifələri silinib (geri yox) · `/news` placeholder hələlik qalır.
+- **Açıq borc:** TD-004 (iki auth sistemi; layout rol yoxlamır — kor fix ETMƏ), TD-005 hero saxta Saxla, TD-006 ilanlar mock fallback, TD-007 [locale] dashboard layout, TD-008 dk-card/page-header rollout, TD-009 push qadağası gate-siz.
+

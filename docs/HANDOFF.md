@@ -1,5 +1,37 @@
 # HANDOFF
 
+## 2026-09-13 — Sahib sessiyası: TASK-0439 → 0445 (təhlükəsizlik, miqrasiya, dizayn təməli, route təmizliyi, sistem)
+
+### Kontekst
+Sahib «yamaq etmə, detala fokuslan, dünya standartına və mobilə bax; CTO kimi təklif gətir» dedi. Üç agent audit (funksiya, dizayn, dünya standartı) + hər tapıntı canlı kodda təkrar yoxlandı. Bütün PR-lar merge + Hostinger deploy olundu; canlıda `npm run db:migrate` 16/16 OK; `contact-tracking` və `/llms.txt` canlıda işləyir.
+
+### Shipped (hamısı main-də)
+- **0439** security: `/api/orchestrator` (GEMINI açarı ilə açıq!), `/api/audit` DELETE, `/api/invoice-categories`, `/api/food-cost` (admin növləri) bağlandı; `lib/api/guards.ts`; ana səhifə analitika beacon-u AI endpoint-inə gedirdi (heç vaxt qeydə düşməyib) → `/api/analytics/track`.
+- **0440–0442** db: miqrasiya sistemi (`npm run db:migrate` / `:status` / `:bootstrap`), 16 yetim miqrasiya, `.env.local` yükləmə, Neon çox-ifadə + real transaksiya. RUNBOOK §6.
+- **0443** dashboard: `.dashboard-scope{color:var(--dk-ink)}` (görünməz düymələr), 200 `text-slate-400`→600, `.dk-card`, 8 səhifə 390px daşma.
+- **0444** dashboard: 34 route→19 (15 saxta/boş silindi), 8 real səhifə menyuya, sidebar 6 bölmə, 10 ölü i18n namespace.
+- **0445** sistem: L-013/L-023 bərpa + L-040…049; `scripts/verify-lessons.mjs` (dk-validate 5b); task kartları 0426–0444; DEPLOYMENT miqrasiya proseduru; CLAUDE.md qırmızı `#E94560`; CLAUDE-BRAIN; `e2e/dashboard-smoke.spec.ts` @smoke.
+
+### Sahib qərarları (ADR-ə bax)
+- Brend qırmızısı **olduğu kimi qalır** (`#E94560`); CLAUDE.md düzəldildi.
+- Dashboard: saxta səhifələr **silindi** («C sil»), real olanlar **menyuya** («B okey»).
+- `/news` placeholder: «hələlik saxla» (dəyişməyib).
+
+### Düzəldilən yanlış iddia
+Səhər «LESSONS.md-də 13 dərs itib» dedim — əslində **2** (L-013, L-023); qalanı `### L-0XX —` formatında var idi. `verify-lessons.mjs` bunu bir daha yaşatmaz.
+
+### Açıq (növbəti sessiya) — TECH_DEBT TD-004…TD-009
+- **TD-004 auth:** iki paralel sessiya sistemi (`role` vs `plan`); `app/dashboard/layout.tsx` yalnız token yoxlayır, rol yoxlamır — 46 səhifəni xəritələmədən kor `role!=='admin'` qoyma (üzvləri kilidləyər).
+- **TD-005** `hero` saxta «Saxla» — sahib cavab vermədi (işlək et / deaktiv).
+- **TD-006** `ilanlar` səssiz `MOCK_LISTINGS` fallback-i — saxta rəqəm xəbərdarlıqsız.
+- **TD-007** `[locale]/dashboard/layout` locale-i cookie-dən oxuyur, `params`-dan yox.
+- **TD-008** `.dk-card` rollout + `<DashboardPageHeader>` + TopBar başlığı i18n-dən («B2b Yonetimi», UUID).
+- **TD-009** `drizzle-kit push` canlıda qadağan — yalnız `db:migrate` (DEPLOYMENT yeniləndi; gate yoxdur).
+- Dünya standartı (ARAŞDIRMA): undo+soft-delete+Səbət (30 gün), bloq revizyon+autosave, tək `<DataTable>`, ana səhifə «iş növbəsi», lead ekranında tap-to-call, gündəlik e-poçt xülasəsi. **AI yazma yolu bunlardan əvvəl YOX.**
+
+### Sandbox məhdudiyyəti (dəyişməyib)
+`npm install` `cdn.sheetjs.com` 403 → gate Build FAIL; `next build` ayrıca keçir, CI `quality-gates` əsl qapıdır. Lokal Postgres 16 mövcuddur (`postgres` useri) — DB skriptlərini orada sına (L-040). Dev server: `pgrep -x next-server` (L-042).
+
 ## 2026-09-12 — Platform audit + TASK-0433/0434 (Doğan sessiyası)
 
 ### Kontekst

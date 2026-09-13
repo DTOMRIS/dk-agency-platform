@@ -1,5 +1,24 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0445 (sessiya sistemə yazıldı)
+
+**Sahib:** «hər şeyi sistemə əlavə et». Sistem = layihənin sessiyalar arası yaddaşı: LESSONS, task kartları, HANDOFF, DEPLOYMENT, CLAUDE.md/BRAIN, TECH_DEBT, ADR, və ən vacibi — bu günün birdəfəlik yoxlamalarının **daimi test** olması.
+
+**Öz iddiamı düzəltdim.** Səhər «LESSONS.md-də 13 dərs itib, ona görə geridən gəlirsən» demişdim. `grep '^## L-'` yalnız bir formatı görürdü; fayl `### L-016 — …` formatında da dərs saxlayır. Bütün başlıq səviyyələri ilə sayanda **yalnız L-013 və L-023 itmişdi.** Səhv iddia L-023-ün özüdür (fakt/şərh/hipotez ayrımı) — ona görə həmin dərsi bərpa edərkən bu hadisəni nümunə kimi yazdım. Bir də `verify-lessons.mjs`: istinad var, dərs yoxdursa dk-validate FAIL — bu, bir daha «hiss» ilə deyil, sayla yoxlanır.
+
+**Nə əlavə olundu:**
+- LESSONS: L-013, L-023 (istinad kontekstindən bərpa) + L-040…L-049 (bu günün 10 dərsi, hər biri konkret TASK-a bağlı).
+- `scripts/verify-lessons.mjs` + `dk-validate.sh` 5b. 36 istinad ✓.
+- `docs/tasks/TASK-0426…0444.md` — 19 kart. Konvensiya (ADR-0014) 0425-də dayanmışdı; paralel sessiyanın 0433–0438-i CHANGELOG/DEVLOG-dan rekonstruksiya edilib və kartda belə qeyd olunub. 0433 ID toqquşması kartın özündədir.
+- HANDOFF (sessiya), DEPLOYMENT (miqrasiya proseduru; `drizzle-kit push` canlıda qadağan; yeni route → restart), CLAUDE.md (`#E94560`; guards; db:migrate), CLAUDE-BRAIN §9, TECH_DEBT TD-005…009, ADR-0016.
+- **`e2e/dashboard-smoke.spec.ts`**: `mobile-check.mjs` + `nav-check.mjs`-in daimi forması. `JWT_SECRET` ilə cookie imzalanır, yoxdursa suite SKIP (sınmır). Runner-də 5/5 (42s). 20 səhifəlik render testi 29.2s çəkdi — 30s limitinə söykənirdi, `test.setTimeout(120_000)`.
+
+**Mühit tələsi (qeyd):** runner `chrome-headless-shell-1217` axtarırdı, `/opt/pw-browsers`-də yoxdur və `playwright install` qadağandır. `playwright.config.ts`-ə istəyə bağlı `PW_CHROMIUM_PATH` → `launchOptions.executablePath`; CI-da env boşdur, davranış dəyişmir.
+
+**Sübut:** `verify-lessons` 36/36 ✓ · spec 5/5 passed · tsc 35 · eslint 0 · STATE 227 route.
+
+**Qalır:** TD-004 auth modeli (46 səhifəni xəritələmədən kor fix ETMƏ) · TD-005 hero «Saxla» (sahib qərarı) · TD-006 ilanlar mock fallback · dünya standartı yol xəritəsi (undo/soft-delete, revizyon, DataTable, iş növbəsi, tap-to-call, e-poçt xülasəsi) — HANDOFF-da.
+
 ## 2026-09-13 — TASK-0444 (34 route → 19, sidebar bölmələri)
 
 **Qərar sahibindir:** «C sil, B okey». C = hardcoded data ilə işləyən 14 səhifə + boş `settings`; B = real data ilə işləyən amma menyuda olmayan 8 səhifə.
