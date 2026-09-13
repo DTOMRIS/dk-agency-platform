@@ -1,6 +1,10 @@
 # HANDOFF
 
-## 2026-09-13 — Sahib sessiyası: TASK-0439 → 0445 (təhlükəsizlik, miqrasiya, dizayn təməli, route təmizliyi, sistem)
+## 2026-09-13 — Sahib sessiyası: TASK-0439 → 0446 (təhlükəsizlik, miqrasiya, dizayn təməli, route təmizliyi, sistem, cron)
+
+### Sessiya başlanğıcı checklist-inə əlavə (L-050)
+- GitHub **Actions → scheduled workflow-lar** (`Daily News Fetch` və s.) son nəticəsinə bax. Onlar PR check-i deyil; qırmızı olanda heç kimə bildiriş gəlmir — `fetch-news` 3 ay (100/100 icra) səssiz sınmışdı.
+- Mobil daşma ölçüsü (0445 sonrası): 20 dashboard səhifəsi × 390/360px → **18 təmiz, 2 daşır**: `blog` (başlıq sətri `flex justify-between` sarılmır, 432px) və `food-cost` (tab zolağı `flex` sarılmır, 437px). Düzəliş `flex-wrap`/`overflow-x-auto`; smoke spec-in 390px siyahısı 5 → 20 səhifəyə çıxarılmalı. Sahib təsdiqi gözlənilir.
 
 ### Kontekst
 Sahib «yamaq etmə, detala fokuslan, dünya standartına və mobilə bax; CTO kimi təklif gətir» dedi. Üç agent audit (funksiya, dizayn, dünya standartı) + hər tapıntı canlı kodda təkrar yoxlandı. Bütün PR-lar merge + Hostinger deploy olundu; canlıda `npm run db:migrate` 16/16 OK; `contact-tracking` və `/llms.txt` canlıda işləyir.
@@ -11,6 +15,7 @@ Sahib «yamaq etmə, detala fokuslan, dünya standartına və mobilə bax; CTO k
 - **0443** dashboard: `.dashboard-scope{color:var(--dk-ink)}` (görünməz düymələr), 200 `text-slate-400`→600, `.dk-card`, 8 səhifə 390px daşma.
 - **0444** dashboard: 34 route→19 (15 saxta/boş silindi), 8 real səhifə menyuya, sidebar 6 bölmə, 10 ölü i18n namespace.
 - **0445** sistem: L-013/L-023 bərpa + L-040…049; `scripts/verify-lessons.mjs` (dk-validate 5b); task kartları 0426–0444; DEPLOYMENT miqrasiya proseduru; CLAUDE.md qırmızı `#E94560`; CLAUDE-BRAIN; `e2e/dashboard-smoke.spec.ts` @smoke.
+- **0446** ci: `Daily News Fetch` cron-u `node --env-file=.env.local` üzündən exit 9 (CI-da fayl yoxdur) — 4 script `--env-file-if-exists`, workflow Node 22. Merge-dən sonra `workflow_dispatch` ilə yaşıl icra **təsdiqlənməlidir** (sandbox-da `Done`-dan sonra proses çıxmadı — proxy şübhəsi).
 
 ### Sahib qərarları (ADR-ə bax)
 - Brend qırmızısı **olduğu kimi qalır** (`#E94560`); CLAUDE.md düzəldildi.
