@@ -1,5 +1,19 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0446 (Daily News Fetch cron-u sınırdı)
+
+**Sahib:** Actions-da qırmızı `fetch` job-u göstərdi: «hata var düzelt». PR #444 ilə əlaqəsi yoxdur — `main`-də bot commit-inə (STATE snapshot) bağlı scheduled run-un yenidən icrasıdır.
+
+**Diaqnoz logdan bir sətirdir:** `node: .env.local: not found` → exit 9. `fetch:news` = `node --env-file=.env.local scripts/fetch-news.mjs`. `--env-file` faylı tapmasa Node başlamır; CI-da `.env.local` heç vaxt yoxdur, `DEEPSEEK_API_KEY` workflow `env:` ilə gəlir. `git log -S'--env-file' -- package.json` → PR #394 (2026-06-14). Run tarixçəsi: son 100 icra **0 uğur / 100 uğursuz**, ən köhnəsi 2026-06-06 — yəni 3 aydır hər səhər 08:00 UTC sınır və heç kim görmür. Scheduled workflow-lar PR check-i deyil; qırmızı olanda bildiriş gəlmir.
+
+**Yol seçimi:** (a) workflow-da `npm run` əvəzinə `node scripts/…` çağırmaq — CI düzəlir, lokal `npm run fetch:news` `.env.local`-sız yenə sınır; (b) skriptə `loadEnvFiles()` (L-040) əlavə etmək — 4 skriptə kopyalamaq lazımdır; (c) bayrağı opsional formaya çevirmək. **(c)**: Node-un opsional forması `--env-file-if-exists` (v22.9+). Əvvəl `--env-file-if-missing` yazdım — Node 22.22 «bad option» dedi; `node --help | grep env-file` ilə düzgün adı tapdım. Eyni səhv 3 `content:translate*` script-ində də var — 4-ü birlikdə düzəldildi. Workflow `node-version: 20` → `22`: `engines >=22`, logda EBADENGINE xəbərdarlığı vardı, bayraq da 22-də zəmanətlidir.
+
+**Sübut (sandbox, `.env.local` yoxdur):** `npm run fetch:news -- --limit=1 --no-translate` → `.env.local not found. Continuing without it.` → `[fetch-news] Starting…` → RSS 403 ×6 (sandbox proxy) → `Done.` Env mərhələsi keçdi; əvvəl bu nöqtəyə çatmırdı. Qeyd: `Done`-dan sonra proses sandbox-da 40s içində çıxmadı (timeout) — böyük ehtimal proxy soketləri; CI-da `workflow_dispatch` ilə yoxlanacaq, sonra qərar. `pendingNews.json` test sonrası `git checkout` ilə geri qaytarıldı (diff-ə girmir).
+
+**Build/lint:** TS dəyişikliyi yoxdur (package.json script + YAML); `next build` bu diff-dən təsirlənmir, icra edilmədi. `verify-lessons` 37/37 ✓.
+
+**Sistem dərsi (L-050):** npm script-lərində env faylı həmişə `--env-file-if-exists=`; workflow Node versiyası `engines`-ə uyğun; sessiya başında Actions → scheduled workflow-ların son nəticəsinə bax (HANDOFF checklist-inə əlavə edildi).
+
 ## 2026-09-13 — TASK-0445 (sessiya sistemə yazıldı)
 
 **Sahib:** «hər şeyi sistemə əlavə et». Sistem = layihənin sessiyalar arası yaddaşı: LESSONS, task kartları, HANDOFF, DEPLOYMENT, CLAUDE.md/BRAIN, TECH_DEBT, ADR, və ən vacibi — bu günün birdəfəlik yoxlamalarının **daimi test** olması.

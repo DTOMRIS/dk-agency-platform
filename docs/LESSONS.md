@@ -335,3 +335,9 @@ route patterni ile eyni).
 - **Qayda:** Əl ilə yazılan hər miqrasiya `IF NOT EXISTS`/`DO $$ … EXCEPTION` ilə təkrar icraya davamlı olsun. Drizzle-in generasiya etdiyi faylları idempotent etmə. Runner `_journal.json`-dakıları atlayır. Canlıda `npm run db:migrate`; `db:migrate:bootstrap` yalnız sıfırdan baza. `drizzle-kit push` canlıda QADAĞAN.
 - **Nəticə:** TASK-0440–0442; RUNBOOK §6.
 
+
+## L-050: `node --env-file` fayl yoxdursa sərt dayanır — cron 3 ay səssiz sındı
+- **Səhv:** `fetch:news` script-i `node --env-file=.env.local …` idi. CI-da `.env.local` heç vaxt olmur (sirlər `env:` ilə gəlir) → Node exit 9 «not found». «Daily News Fetch» cron-u son 100 icrada 100 dəfə FAIL etdi (2026-06-06-dan), heç kim baxmadı — pendingNews 3 ay yenilənmədi.
+- **Kök səbəb:** (1) `--env-file` opsional deyil, məcburidir; opsional forması `--env-file-if-exists`-dir (`--env-file-if-missing` mövcud deyil). (2) Scheduled workflow-ların nəticəsi PR-da görünmür; qırmızı cron heç kimin axınına düşmür.
+- **Qayda:** npm script-lərində env faylı həmişə `--env-file-if-exists=` ilə (və ya skript içində `loadEnvFiles()` — L-040). Workflow Node versiyası `engines`-ə uyğun olmalıdır. Sessiya başlanğıcında `Actions` səhifəsində scheduled workflow-ların son nəticəsinə bax — HANDOFF checklist-inə əlavə.
+- **Nəticə:** TASK-0446 — 4 script `--env-file-if-exists`, workflow Node 22.
