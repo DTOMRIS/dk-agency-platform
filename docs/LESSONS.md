@@ -271,3 +271,67 @@ Texniki: toolSource enum-dur (franchiseToolSourceEnum) ve schema.ts PROTECTED-di
 — yeni enum deyeri elave etme. Movcud deyeri ('consulting') isit + real menbeni
 score jsonb-de saxla: score: { source: 'franchise_radar', brandSlug } (ota-guide
 route patterni ile eyni).
+
+## L-013: Skorlar datadır, UI etiketi deyil (SSOT)
+- **Səhv:** Test/checklist skor cədvəlləri və status etiketləri UI komponentinin içində, tərcümə mətni ilə qarışıq yazılırdı; eyni məntiq bir neçə yerdə təkrarlanırdı.
+- **Kök səbəb:** «Görünən mətn» ilə «hesablanan dəyər» eyni yerdə saxlanılırdı — biri dəyişəndə digəri sürüşürdü.
+- **Qayda:** Skor, hədd və status dəyərləri `lib/data/*` SSOT faylında yaşayır (`franchiseReadiness.ts`, `franchiseBuyer.ts`); UI yalnız `getStatusLabel()` kimi helper ilə etiketi i18n-dən alır. Data faylında tərcümə mətni olmaz, komponentdə skor cədvəli olmaz.
+- **Nəticə:** TASK-0157D — `statusLabel` obyekti helper-ə çevrildi; franchise test/checklist skorları data faylına köçdü.
+
+## L-023: Fakt / şərh / hipotez ayrımı — məzmun kod oxumasına əsaslanır
+- **Səhv:** Alət təsvirləri və audit tapıntıları «belədir» deyə yazılırdı, amma qaynağı təxmin idi; sonra kod başqa şey edirdi.
+- **Kök səbəb:** Fakt (kodda var), şərh (mənim yozumum) və hipotez (yoxlanmayıb) eyni tonda yazılırdı.
+- **Qayda:** Məzmun yazmazdan əvvəl mənbə kodu oxu və GERÇƏK input/output-a əsaslan (TASK-0178A). Raportda hər iddianı işarələ: fakt (fayl:sətir), şərh, hipotez. Agent hesabatını olduğu kimi qəbul etmə — kritik iddiaları özün yenidən yoxla.
+- **Nəticə:** TASK-0178A alət təsvirləri; 2026-09-13 auditlərində hər agent tapıntısı təkrar yoxlandı (bəziləri yanlış çıxdı: «13 dərs itib» → əslində 2).
+
+## L-040: Xəta yolu keçdi ≠ uğur yolu keçdi
+- **Səhv:** `scripts/migrate.mjs` sandbox-da yalnız «DATABASE_URL yoxdur → təmiz mesaj» yolu ilə sınandı; canlıda ardıcıl 3 baq çıxdı (`*/` şərh, `.env.local` oxunmur, çox-ifadəli sorğu).
+- **Kök səbəb:** Uğur yolunu icra edə bilmədiyim halda «sintaksis keçir, xəta mesajı düzgündür»ü sübut saydım.
+- **Qayda:** Uğur yolu sınanmayıbsa «hazırdır» demə — «yoxlanmayıb» yaz. Sandbox-da real Postgres qaldırmaq mümkündür (`/usr/lib/postgresql/16/bin`, `postgres` useri ilə `initdb`): DB toxunan hər skript orada uçdan-uca işlədilməlidir.
+- **Nəticə:** TASK-0440/0441/0442 — üçüncü PR-da lokal Postgres-də 100 ifadə × 2 keçid sınandı.
+
+## L-041: Neon-http — prepared statement tək ifadə qəbul edir; ayrı BEGIN/COMMIT transaksiya deyil
+- **Səhv:** Miqrasiya faylı bütöv göndərildi → `cannot insert multiple commands into a prepared statement`. `BEGIN`/`COMMIT` ayrı `sql.query()` ilə gedirdi — hər çağırış müstəqil HTTP sorğusudur, transaksiya yaranmır.
+- **Qayda:** SQL-i ifadələrə böl (`$$…$$`, `'…'`, `--`, blok şərhi nəzərə alınmaqla) və `sql.transaction([...])` ilə bir sorğuda göndər; izləmə qeydini eyni massivə qoş.
+- **Nəticə:** TASK-0442 — `splitStatements()` + `sql.transaction`; canlıda 16/16 OK.
+
+## L-042: Naxışlı `pkill/pgrep -f` öz shell-ini vurur; canlı dev serverin altında `.next`-ə toxunma
+- **Səhv:** `pkill -f "next dev"` / `pgrep -f "…next dev"` mənim öz bash əmrimin mətninə uyğun gəldi → shell exit 144, build başlamadı (3 dəfə). `rm -rf .next/dev` işləyən serverin build qovluğunu sildi → hər sorğu 500; `ss -ltnp` pid-i göstərmədi, «port boşdur» sandım.
+- **Qayda:** Prosesi `pgrep -x next-server` (dəqiq ad) ilə tap; port boşalana qədər gözlə; **yalnız sonra** `.next/dev` sil. Uzunmüddətli serveri tool-un arxa plan rejimi ilə qaldır.
+- **Nəticə:** TASK-0443/0444 — smoke test təmiz serverdə 7/7.
+
+## L-043: Köhnə `.next` artefaktları yalançı tsc xətası verir; ümumi saya yox, main ilə fərqə bax
+- **Səhv:** tsc 482 (`.next/dev/types/routes.d.ts`) və 66 (`.next/types/validator.ts`, silinən route-lara istinad) — heç biri mənbə deyildi.
+- **Qayda:** Saymazdan əvvəl `rm -rf .next/dev .next/types`. Baza ilə fərq üçün `origin/main`-i müvəqqəti worktree-də (`node_modules` symlink) tsc-dən keçirib `comm` ilə tutuşdur — «36 vs 35» yalnız fərq siyahısı ilə mənalıdır.
+- **Nəticə:** TASK-0444 — 5 «yeni» xəta bazada da vardı; tək gerçək xəta tapılıb düzəldildi.
+
+## L-044: Playwright — Tailwind v4 rəngi `lab()` verir; error.tsx mətni raw HTML-də həmişə var
+- **Səhv:** `color === 'rgb(71,85,105)'` düzgün rəngdə FAIL verdi (`lab(35.56 …)` qayıdır). Raw HTML-də «Xəta baş verdi» axtaran regex 20/20 səhifədə «error boundary» dedi — mətn fallback kimi həmişə mövcuddur.
+- **Qayda:** Rəngi canvas ilə rgb-yə çevir, ±3 tolerantlıq. Xəta boundary-ni `getByText(...).isVisible()` + səhifəyə məxsus element (sidebar) ilə yoxla. Test FAIL verəndə əvvəl testi şübhə altına al, işləyən kodu «düzəltmə».
+- **Nəticə:** TASK-0443/0444 — hər iki test düzəldildi, kod dəyişmədi.
+
+## L-045: Grid uşağı `min-width:auto` `overflow-x-auto`-nu ləğv edir; çip zolağı `flex-wrap` istəyir
+- **Səhv:** deal-flow-da cədvəl düzgün `overflow-x-auto` içində idi, amma səhifə 426px-ə daşırdı. 4 səhifədə filtr çipləri `flex gap-2`-də sarılmırdı (525px).
+- **Qayda:** `overflow-x-auto` sarğısı grid/flex uşağındadırsa uşağa `min-w-0` ver. Çip/düymə sıraları `flex flex-wrap`. KPI şəbəkələri prefikssiz `grid-cols-N` olmasın. 390px-də `scrollWidth == clientWidth` yoxlaması məcburidir.
+- **Nəticə:** TASK-0443 — 8 səhifə 390px-də təmiz.
+
+## L-046: «Route-a auth əlavə et» tövsiyəsindən əvvəl çağıranları izlə
+- **Səhv (az qala):** Audit `/api/food-cost`-a admin qoymağı dedi; `type=lookup` açıq `/toolkit/food-cost` alətindən çağırılırdı — kor guard pulsuz aləti sındırardı.
+- **Qayda:** `grep -rn "api/<route>"` ilə bütün çağıranları tap; qorunma lazımdırsa **əməliyyat səviyyəsində** ayır. Kopyalanan yoxlama əvəzinə `lib/api/guards.ts`. `middleware` `/api/*`-ı tutmur — hər route özü qorunmalıdır.
+- **Nəticə:** TASK-0439 — lookup açıq (IP limit), qalan növlər admin.
+
+## L-047: JSDoc içində `*/` şərhi bağlayır
+- **Səhv:** Şərhdə `drizzle-orm/*/migrator` yazıldı → şərh erkən bağlandı, `SyntaxError`.
+- **Qayda:** Blok şərhində yol/glob yazarkən `*/` ardıcıllığından qaç; `node --check` ilə yoxla.
+- **Nəticə:** TASK-0440.
+
+## L-048: Qaydası olmayan class səssiz no-op-dur — simptomu yox, kökü düzəlt
+- **Səhv:** `DashboardLayout` `className="dashboard-scope"` yazırdı, CSS-də qayda yox idi; `body{color:#eaeaea}` qaranlıq landing üçündür → dashboard-da rəngsiz mətn ağ üstündə ağ. 200 `text-slate-400` yamağı bu simptomu örtmək üçün yığılmışdı.
+- **Qayda:** Görünməz mətn görəndə yerinə boz yapışdırma; `grep -rn <class>` ilə qaydanın mövcudluğunu yoxla və kökü düzəlt. Dashboard kök rəngi `.dashboard-scope{color:var(--dk-ink)}`. `text-slate-400` əsas mətn üçün QADAĞAN (2.56:1).
+- **Nəticə:** TASK-0443 — bir sətir + 200 istifadə → 600.
+
+## L-049: Miqrasiya — əl ilə yazılan idempotent, drizzle-kit-inki redaktəsiz, runner journal-ı atlayır
+- **Səhv:** 25 SQL faylı, journal-da 9; `db:migrate` yox idi. Eyni nömrəli fayllar (`0007_*` ×2) əlifba sırası ilə toqquşurdu. `0013`-də `CREATE INDEX` `IF NOT EXISTS`-siz idi.
+- **Qayda:** Əl ilə yazılan hər miqrasiya `IF NOT EXISTS`/`DO $$ … EXCEPTION` ilə təkrar icraya davamlı olsun. Drizzle-in generasiya etdiyi faylları idempotent etmə. Runner `_journal.json`-dakıları atlayır. Canlıda `npm run db:migrate`; `db:migrate:bootstrap` yalnız sıfırdan baza. `drizzle-kit push` canlıda QADAĞAN.
+- **Nəticə:** TASK-0440–0442; RUNBOOK §6.
+

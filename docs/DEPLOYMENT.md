@@ -3,6 +3,7 @@
 ## Hosting: Hostinger Web Apps
 
 - Auto-deploy: GitHub push → Hostinger pull → build → restart
+- **Yeni route** (məs. `/llms.txt`) restart olmadan 404 verir — deploy sonrası Node restart yoxla
 - Branch: `main`
 - SCP / manual deploy QADAĞAN
 - Config: hPanel → Web App → Git
@@ -37,7 +38,12 @@
 
 - Dev = Prod (eyni DB)
 - Drizzle ORM
-- Migration: `drizzle-kit push` (manual, schema dəyişdikdə)
+- Migration: **`npm run db:migrate`** (TASK-0440). `drizzle-kit push` canlıda QADAĞAN — sütun silə bilər və iz qoymur (L-049).
+  1. `npm run db:migrate:status` — yalnız oxuyur
+  2. `npm run db:migrate` — əl ilə yazılmış idempotent miqrasiyalar (journal-dakılar drizzle-kit-indir, toxunulmur)
+  3. Hostinger → Node app → **Restart**
+  - `db:migrate:bootstrap` yalnız SIFIRDAN yeni baza (canlıda işlətmə). Tam prosedur: RUNBOOK §6.
+  - Dev = Prod (eyni Neon DB) → miqrasiya öz kompüterindən işlədilə bilər (`.env.local` DATABASE_URL).
 
 ## Auth
 

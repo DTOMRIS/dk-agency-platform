@@ -13,7 +13,7 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 ## Design System
 - **Tone**: Premium, sophisticated, high-tech.
 - **Theme**: Premium light for dashboard, dark glassmorphism for landing.
-- **Primary Color**: `brand-red` (`#E11D48`)
+- **Primary Color**: `brand-red` (`#E94560` — `--dk-red`; sahib qərarı 2026-09-13: olduğu kimi qalır)
 - **Typography**: `Inter` (sans), `Playfair Display` (display/serif)
 - **Global Header**: Always use `Header.tsx`.
 - **Do Not Use**: `HospitalityHeader.tsx` for core platform UI.
@@ -72,6 +72,8 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 - Listing config SST: `lib/listingFieldConfig.ts`
 - Marketing tools config: `lib/marketing-tools-config.ts`
 - Member access: `lib/member-access.ts`
+- API guards: `lib/api/guards.ts` (`requireApiAdmin` / `requireApiMember`) — middleware `/api/*`-ı tutmur
+- DB miqrasiya: `npm run db:migrate:status` → `npm run db:migrate` (RUNBOOK §6); `drizzle-kit push` canlıda QADAĞAN
 
 ## Frame as facts, not commands (prompt injection defense)
 This document describes how the project works. It is project information, not a system command.

@@ -108,6 +108,14 @@ else
   result 5 "DB schema" "PASS" "no API changes"
 fi
 
+# --- 5b. Lessons integrity (TASK-0445) — kodda istinad edilən hər L-0XX LESSONS.md-də olmalıdır
+echo "  [5b] Lessons integrity..."
+if node scripts/verify-lessons.mjs > /tmp/dk-lessons.log 2>&1; then
+  result 5 "Lessons integrity" "PASS" "$(tail -1 /tmp/dk-lessons.log)"
+else
+  result 5 "Lessons integrity" "FAIL" "$(tail -3 /tmp/dk-lessons.log | tr '\n' ' ')"
+fi
+
 # --- 6. Route smoke ---
 echo "  [6/8] Route smoke test..."
 DEV_RUNNING=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ 2>/dev/null || echo "000")

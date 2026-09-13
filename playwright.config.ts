@@ -6,6 +6,8 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL || 'http://localhost:3000',
     headless: true,
+    // Sandbox/CI-da hazır Chromium-u işlətmək üçün (playwright install qadağandır); boşdursa təsirsiz.
+    ...(process.env.PW_CHROMIUM_PATH ? { launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } } : {}),
   },
   projects: [{ name: 'chromium', use: { browserName: 'chromium' } }],
 });
