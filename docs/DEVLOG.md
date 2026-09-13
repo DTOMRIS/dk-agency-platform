@@ -1,5 +1,55 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0440 (miqrasiya sistemi)
+
+**Problem:** `drizzle/`-də 25 .sql faylı, journal-da 9-u. `db:migrate` scripti yox, migrator çağırışı yox. Yəni **0009-dan sonrakı hər miqrasiya yetim** — yalnız kimsə əl ilə işlədəndə tətbiq olunur. `/dashboard/contact-tracking` çökməsinin kök səbəbi bu idi, və növbəti hər sütun eyni baqı yaradacaqdı.
+
+**İlk dizaynım səhv idi — real test tapdı.** Fikrim belə idi: «bütün fayllar idempotentdir, hamısını ad sırası ilə işlət». Lokal Postgres qaldırıb sınadım və **sındı**:
+
+```
+✗ 0007_tidy_monster_badoon.sql
+  ERROR: column "priorities" of relation "users" already exists
+```
+
+İki səbəb üst-üstə düşdü:
+
+1. **İki fayl eyni `0007` nömrəsindədir** — `0007_add_user_priorities` (əl ilə) və `0007_tidy_monster_badoon` (drizzle). Əlifba sırası birincini önə salır, ikincisi isə həmin sütunu çılpaq `ADD COLUMN` ilə yaratmağa çalışır.
+2. **Drizzle-in generasiya etdiyi miqrasiyalar idempotent deyil — və olmamalıdır.** Onlar çılpaq `CREATE TABLE`/`ADD COLUMN` işlədir, çünki drizzle onları `__drizzle_migrations`-da izləyir və heç vaxt təkrar işlətmir. Əl ilə idempotent etsəydim, növbəti `drizzle-kit generate` bunu geri qaytarardı.
+
+**Düzgün dizayn — iş bölgüsü, tək sistem deyil:**
+
+| | Kim icra edir |
+|---|---|
+| journal-dakı 9 fayl | `drizzle-kit migrate` (toxunulmur) |
+| qalan 16 əl ilə yazılmış fayl | `scripts/migrate.mjs` |
+
+Runner `_journal.json`-u oxuyur və orada qeydli faylları atlayır. Qalanını ad sırası ilə, hər birini öz transaksiyasında icra edir, `dk_migrations` cədvəlində izləyir. Hamısı idempotent olduğu üçün izləmə cədvəli boş olan MÖVCUD bazada da təhlükəsizdir — `--baseline` rejimi lazım deyil, sürüşmə özü-özünə sağalır.
+
+**Niyə journal-a əlavə etmədim:** `drizzle-kit` tətbiq olunanları **hash** ilə izləyir. 16 faylı journal-a salmaq mövcud hash-ləri dəyişir; canlı bazada bəziləri artıq əl ilə tətbiq olunduğu üçün bu, ya təkrar icraya, ya uyğunsuzluq xətasına gətirərdi.
+
+**Təhlükəsizlik qərarı:** `npm run db:migrate` **yalnız** runner-i işlədir. `drizzle-kit migrate` ayrıca `db:migrate:bootstrap`-dadır, çünki canlıda `__drizzle_migrations` boş olarsa idempotent olmayan 0000–0008-i təkrar tətbiq etməyə çalışıb sınayar. RUNBOOK §6-da açıq xəbərdarlıq var.
+
+**İkinci baq (təkrar icra testi):** `0013_email_preferences.sql`-də üç `CREATE INDEX` `IF NOT EXISTS`-siz idi. Birinci icrada keçir, ikincidə sınır. Düzəldildi.
+
+**Öz səhvim:** şərh blokunda `drizzle-orm/*/migrator` yazdım — `*/` **şərhi erkən bağladı** və fayl `SyntaxError` verdi. `node --check` ilə tutuldu. **Dərs:** JSDoc blokunun içində yol yazarkən `*/` ardıcıllığından qaç.
+
+**Yalançı həyəcan (qeyd üçün):** yoxlama zamanı tsc **482** xəta verdi. Hamısı `.next/dev/types/routes.d.ts`-də idi — əvvəl işlətdiyim dev serverin qalıq generasiya faylı. `.next/dev` silindi, tsc **35**-ə qayıtdı. Rəqəmi olduğu kimi raport etsəydim, olmayan bir reqressiya bildirmiş olardım.
+
+**Sübut — lokal Postgres 16-da real icra (mock deyil):**
+
+| Test | Nəticə |
+|---|---|
+| Təmiz bazada tam bootstrap (9 drizzle + 16 runner) | **25/25 OK** |
+| Eyni bazada runner-in təkrar icrası (idempotentlik) | **16/16 OK** |
+| Canlı ssenari: 0020 sütunları silindi | sorğu `column "source_url" does not exist` ✓ (xəta təkrar yaradıldı) |
+| → runner 0020-ni tətbiq etdi | səhifə sorğusu işlədi ✓ |
+| → `/api/leads/track` insert-i | işlədi ✓ (`whatsapp \| .../elaqe \| 994502566279`) |
+| `DATABASE_URL` olmadan | təmiz mesaj + exit 1 ✓ |
+
+tsc **35** (baza) · `✓ Compiled successfully in 28.6s` · `node --check` OK
+
+**Qalır:** runner-in icra döngüsü **canlı Neon-a qarşı yoxlanmayıb** — sandbox-da `DATABASE_URL` yoxdur və neon-http drayveri lokal Postgres-ə qoşulmur. SQL-in özü və fayl seçimi məntiqi real bazada yoxlanılıb. Sahib əvvəlcə `npm run db:migrate:status` (yalnız oxuyur) işlətməlidir.
+
 ## 2026-09-13 — TASK-0439 (açıq API qapıları + 2 gizli baq)
 
 **Kontekst:** sahib «yama yapma, detaylara odaklan» dedi. Bu taskda o göstəriş iki dəfə özünü doğrultdu — kor-koranə auth əlavə etsəydim iki işlək funksiyanı sındıracaqdım.

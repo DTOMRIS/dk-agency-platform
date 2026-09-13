@@ -29,6 +29,9 @@
     "news:fetch": "tsx scripts/newsdata-fetch.ts",
     "news:synthesize": "tsx scripts/newsdata-synthesize.ts",
     "approve:news": "node scripts/approve-news.mjs",
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:migrate:status": "node scripts/migrate.mjs --status",
+    "db:migrate:bootstrap": "drizzle-kit migrate && node scripts/migrate.mjs",
     "db:seed": "npx tsx lib/db/seed.ts",
     "db:seed-blog": "npx tsx lib/db/seed-blog.ts",
     "dk:validate": "bash scripts/dk-validate.sh"

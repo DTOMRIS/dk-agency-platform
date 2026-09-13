@@ -29,3 +29,38 @@
 - Son commit geri al: `git revert <sha>`
 - Unstaged temizlemeden önce: `git stash -u`
 - Belirli dosyayı eski haline al (dikkatli): `git restore --source=<sha> <file>`
+
+## 6) «column does not exist» — miqrasiya tətbiq olunmayıb
+
+**Simptom:** dashboard səhifəsi «Xəta baş verdi» verir, loglarda
+`column "X" does not exist`. Ən çox yeni sütun əlavə edildikdən sonra.
+
+**Səbəb:** `drizzle/` qovluğunda əl ilə yazılmış miqrasiyalar var və
+onlar avtomatik tətbiq olunmur (TASK-0440-a qədər ümumiyyətlə heç bir
+mexanizm yox idi).
+
+**Addımlar:**
+
+```bash
+# 1. ƏVVƏLCƏ oxu — heç nə yazmır
+npm run db:migrate:status
+
+# 2. Gözləyən varsa tətbiq et
+npm run db:migrate
+
+# 3. Node prosesini restart et (Hostinger panel)
+```
+
+`db:migrate` təkrar işlədilə bilər — bütün əl ilə yazılmış miqrasiyalar
+idempotentdir (`IF NOT EXISTS`, `DO $$ … EXCEPTION`), artıq mövcud olan
+obyektlər atlanır.
+
+**DİQQƏT — `db:migrate:bootstrap` canlıda işlətmə.** O, `drizzle-kit migrate`
+ilə başlayır; drizzle-in generasiya etdiyi 0000–0008 miqrasiyaları idempotent
+DEYİL və `__drizzle_migrations` cədvəli boş olarsa təkrar tətbiq olunmağa
+çalışıb sınacaq. `bootstrap` yalnız SIFIRDAN yeni baza qurarkən işlədilir.
+
+**Yeni sütun əlavə edəndə sıra:** `lib/db/schema.ts` → `drizzle/00XX_ad.sql`
+(idempotent yaz) → PR → merge → deploy → `npm run db:migrate` → restart.
+
+---
