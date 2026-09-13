@@ -108,6 +108,85 @@ function loadEnvFiles() {
   }
 }
 
+/**
+ * SQL mətnini ayrı-ayrı ifadələrə bölür (TASK-0442).
+ *
+ * Niyə lazımdır: Neon-un HTTP drayveri hər sorğunu **prepared statement** kimi
+ * göndərir, prepared statement isə bir neçə ifadəni qəbul etmir —
+ * `cannot insert multiple commands into a prepared statement`. Fayl olduğu kimi
+ * göndəriləndə məhz bu baş verirdi.
+ *
+ * Sadə `split(';')` YARAMIR: `DO $$ BEGIN … END $$;` blokunun içində nöqtəli
+ * vergüllər var və blok parçalanardı. Ona görə vəziyyət izlənir:
+ *   • tək dırnaqlı sətir  '…'  (içində '' escape)
+ *   • dollar-quoted blok  $$…$$ və ya $tag$…$tag$
+ *   • sətir şərhi  -- …
+ *   • blok şərhi   /* … *​/
+ */
+function splitStatements(sql) {
+  const statements = [];
+  let current = '';
+  let i = 0;
+
+  while (i < sql.length) {
+    const rest = sql.slice(i);
+
+    // Sətir şərhi — sonuna qədər at (amma sətir sonunu saxla)
+    if (rest.startsWith('--')) {
+      const nl = sql.indexOf('\n', i);
+      i = nl === -1 ? sql.length : nl;
+      continue;
+    }
+
+    // Blok şərhi
+    if (rest.startsWith('/*')) {
+      const end = sql.indexOf('*/', i + 2);
+      i = end === -1 ? sql.length : end + 2;
+      continue;
+    }
+
+    // Tək dırnaqlı sətir
+    if (sql[i] === "'") {
+      let j = i + 1;
+      while (j < sql.length) {
+        if (sql[j] === "'" && sql[j + 1] === "'") j += 2;
+        else if (sql[j] === "'") break;
+        else j += 1;
+      }
+      current += sql.slice(i, j + 1);
+      i = j + 1;
+      continue;
+    }
+
+    // Dollar-quoted blok: $$ … $$  və ya  $tag$ … $tag$
+    const dollar = rest.match(/^\$([A-Za-z_][A-Za-z0-9_]*)?\$/);
+    if (dollar) {
+      const tag = dollar[0];
+      const end = sql.indexOf(tag, i + tag.length);
+      const stop = end === -1 ? sql.length : end + tag.length;
+      current += sql.slice(i, stop);
+      i = stop;
+      continue;
+    }
+
+    // İfadə sonu
+    if (sql[i] === ';') {
+      const trimmed = current.trim();
+      if (trimmed) statements.push(trimmed);
+      current = '';
+      i += 1;
+      continue;
+    }
+
+    current += sql[i];
+    i += 1;
+  }
+
+  const tail = current.trim();
+  if (tail) statements.push(tail);
+  return statements;
+}
+
 /** `_journal.json`-da qeydli tag-lar — bunlar drizzle-kit-in məsuliyyətidir. */
 function journalTags() {
   const journalPath = path.join(MIGRATIONS_DIR, 'meta', '_journal.json');
@@ -139,15 +218,11 @@ async function connect() {
   }
 
   const { neon } = await import('@neondatabase/serverless');
-  const sql = neon(url);
-  // neon() şablon-literal funksiyasıdır; sərbəst mətn üçün .query() lazımdır.
-  return {
-    query: (text) => sql.query(text),
-  };
+  return neon(url);
 }
 
-async function ensureTrackingTable(db) {
-  await db.query(`
+async function ensureTrackingTable(sql) {
+  await sql.query(`
     CREATE TABLE IF NOT EXISTS dk_migrations (
       filename    text PRIMARY KEY,
       applied_at  timestamptz NOT NULL DEFAULT now()
@@ -155,18 +230,43 @@ async function ensureTrackingTable(db) {
   `);
 }
 
-async function appliedSet(db) {
-  const rows = await db.query('SELECT filename FROM dk_migrations');
+async function appliedSet(sql) {
+  const rows = await sql.query('SELECT filename FROM dk_migrations');
   return new Set(rows.map((row) => row.filename));
+}
+
+/**
+ * Bir miqrasiya faylını tək transaksiyada tətbiq edir (TASK-0442).
+ *
+ * `BEGIN` / `COMMIT`-i ayrı-ayrı göndərmək neon-http-də İŞLƏMİR: hər sorğu
+ * müstəqil HTTP çağırışıdır, ona görə onlar bir transaksiya təşkil etmir.
+ * Drayverin `sql.transaction([...])` metodu bütün ifadələri bir sorğuda,
+ * real transaksiya daxilində icra edir — ya hamısı, ya heç biri.
+ *
+ * İzləmə qeydi də eyni massivə qoşulur: fayl tətbiq olunubsa qeyd mütləq var,
+ * qeyd varsa fayl mütləq tətbiq olunub — ikisi arasında boşluq qalmır.
+ */
+async function applyMigration(sql, filename, sqlText) {
+  const statements = splitStatements(sqlText);
+  if (statements.length === 0) return 0;
+
+  await sql.transaction([
+    ...statements.map((statement) => sql.query(statement)),
+    sql.query('INSERT INTO dk_migrations (filename) VALUES ($1) ON CONFLICT DO NOTHING', [
+      filename,
+    ]),
+  ]);
+
+  return statements.length;
 }
 
 async function main() {
   const files = listMigrationFiles();
   if (files.length === 0) fail(`Miqrasiya faylı tapılmadı: ${MIGRATIONS_DIR}`);
 
-  const db = await connect();
-  await ensureTrackingTable(db);
-  const applied = await appliedSet(db);
+  const sql = await connect();
+  await ensureTrackingTable(sql);
+  const applied = await appliedSet(sql);
   const pending = files.filter((file) => !applied.has(file));
 
   console.log(`\n  DK miqrasiya — ${files.length} fayl, ${applied.size} tətbiq olunub, ${pending.length} gözləyir\n`);
@@ -198,19 +298,15 @@ async function main() {
     const sqlText = fs.readFileSync(path.join(MIGRATIONS_DIR, file), 'utf8');
     process.stdout.write(`  → ${file} … `);
     try {
-      // Hər miqrasiya öz transaksiyasında: sınarsa heç nə qalmır.
-      await db.query('BEGIN');
-      await db.query(sqlText);
-      await db.query(
-        `INSERT INTO dk_migrations (filename) VALUES ('${file.replace(/'/g, "''")}')
-         ON CONFLICT (filename) DO NOTHING`
-      );
-      await db.query('COMMIT');
-      console.log('OK');
+      const count = await applyMigration(sql, file, sqlText);
+      console.log(`OK (${count} ifadə)`);
     } catch (error) {
-      await db.query('ROLLBACK').catch(() => undefined);
       console.log('XƏTA');
-      fail(`${file} tətbiq olunmadı — dəyişikliklər geri alındı.\n    ${error.message}`);
+      fail(
+        `${file} tətbiq olunmadı — bu faylın dəyişiklikləri geri alındı.\n    ${error.message}\n\n` +
+          '    Ondan əvvəlki fayllar tətbiq olunub və qeydə alınıb;\n' +
+          "    problemi həll edib 'npm run db:migrate' yenidən işlədin."
+      );
     }
   }
 
