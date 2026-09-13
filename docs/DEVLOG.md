@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-13 — TASK-0435 (tərcümə paralel + blog şəkil lazy)
+
+**Niyə:** Sahib «tərcümədə ağır işliyor» + «blog resimleri ağır yükleniyor» dedi. Diaqnoz: (1) `autoTranslateBlogPost` 3 dili × sahələri tam ARDICIL `await` edirdi (~12 DeepSeek çağırışı, sinxron sorğuda → 1-3 dəq donma, timeout riski); (2) blog/xəbər şəkilləri xam `<img>`, `next/image` yox, lazy yox → tam ölçüdə və hamısı birdən yüklənir.
+
+**Dəyişiklik:** (1) dil döngüsü `Promise.all(langs.map(...))` — 3 dil eyni anda; sahələr dil içində ardıcıl qalır (rate-limit təhlükəsizliyi üçün). Hər dil öz sütunlarını yazır, concurrent update təhlükəsiz. (2) blog kartı `img`-ə `loading=lazy`+`decoding=async`.
+
+**Qalır:** `next/image` miqrasiyası (avto resize+AVIF) — domen qərarı + test lazım, ayrıca task; xəbər şəkilləri xarici hotlink → cloudinary proxy/cache; `translateText` içində chunk-lar hələ ardıcıl (istəsə sonra paralel). Mobil bottom-nav + global search + ara/düzelt/geri al trilogiyası → 3 audit agenti tarayır, nəticəyə görə plan.
+
+**Yoxlama:** sandbox npm 403 → build/tsc/eslint icra olunmadı (DoD #11 texniki skip); diff + əl-baxış ilə təsdiq; **deploy-dan sonra bir blogda tərcümə sürəti + şəkil yüklənməsi test edilməli.**
+
 ## 2026-09-12 — TASK-0434 (Əlaqə kanalı tracking-i zənginləşdirmə)
 
 **Niyə:** Sahib «WhatsApp verisi gəlib, amma nə yazdığını, haradan gəldiyini görmürəm» dedi. Araşdırma: `/api/leads/track` yalnız `channel, locale, userAgent, ipHash, tarix` yazırdı; `/api/leads/whatsapp` redirect prefill `?text=`-i qəbul edib **log etmədən atırdı**; contact-tracking səhifəsi sidebar-da linksiz idi (kəşf olunmurdu); sayğaclar filtrə görə gah son 100, gah son 1000 qeyddən hesablanırdı (uyğunsuz total).

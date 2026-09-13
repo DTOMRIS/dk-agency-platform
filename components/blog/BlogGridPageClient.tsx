@@ -85,6 +85,7 @@ function BlogCard({ article, t }: { article: BlogArticle; t: ReturnType<typeof u
       <div className="relative aspect-[16/10] overflow-hidden">
         {article.coverImage ? (
           <img src={article.coverImage} alt={article.coverImageAlt}
+            loading="lazy" decoding="async"
             className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
         ) : (
           <div className="h-full w-full bg-gradient-to-br from-[color-mix(in_srgb,var(--dk-gold)_22%,white)] to-[color-mix(in_srgb,var(--dk-red)_24%,white)]" />

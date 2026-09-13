@@ -11,6 +11,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0435` perf(blog): **tərcümə 3 dili paralel edir + blog şəkilləri lazy-load** — (1) `autoTranslateBlogPost` 3 dili (ru/en/tr) ardıcıl əvəzinə `Promise.all` ilə eyni anda tərcümə edir → admin «Tərcümə et» **~3× sürətli**, brauzer donması azalır; hər dil yalnız öz sütunlarını yazdığı üçün concurrent row update təhlükəsizdir. (2) `BlogGridPageClient` blog kartı şəkillərinə `loading="lazy" decoding="async"` — ekran-altı şəkillər əvvəlcədən yüklənmir. Kök səbəb: şəkillər hər yerdə xam `<img>` (next/image yox), tərcümə isə tam ardıcıl idi. Qeyd: sandbox npm 403 → tsc/build icra olunmadı (DoD #11 texniki skip), deploy-dan sonra test lazımdır. Qalır: next/image miqrasiyası + xəbər şəkli cloudinary proxy (ayrıca task).
+
 ### Added
 - `TASK-0434` feat(tracking): **əlaqə kanalı klik izləməsi zənginləşdirildi** — `leads` cədvəlinə `source_url`, `prefill_text`, `destination_phone` (nullable, migration `0020` idempotent). `/api/leads/track` yeni sahələri sanitize edərək saxlayır və admin email-ində göstərir (**client dəyərləri HTML-escape** — injection qoruması). SST `lib/contact-channels.ts` (WhatsApp nömrəsi + Telegram URL) — `ContactFunnel` və wa.me redirect oradan oxuyur. contact-tracking səhifəsi: Səhifə / Hazır mesaj / Hədəf / Cihaz sütunları; **sayğac uyğunsuzluğu düzəldildi** (total indi `GROUP BY count(*)`, display limitindən asılı deyil). Sidebar-a «Əlaqə Kanalları» (4 dil). Qeyd: klik mesajın məzmununu deyil (WhatsApp söhbəti sayta gəlmir), niyyətini göstərir. Yoxlama: sandbox npm 403 səbəbindən tsc/eslint icra olunmadı (DoD #11 texniki skip), diff + review ilə təsdiqləndi.
 

@@ -812,7 +812,10 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
     const langs = ['ru', 'en', 'tr'] as const;
     const failedFields: string[] = [];
 
-    for (const lang of langs) {
+    // Translate the 3 languages concurrently (was sequential — ~3x faster).
+    // Each language writes only its own columns, so concurrent row updates are safe.
+    await Promise.all(
+      langs.map(async (lang) => {
       const langUpdates: Record<string, string> = {};
       const fields: Array<['title' | 'summary' | 'content', string]> = [];
       if (needsTranslation(row[`title_${lang}` as keyof typeof row], row.title_az, lang))
@@ -830,7 +833,7 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
 
       if (fields.length === 0 && !needsDogan) {
         result.langs[lang] = 'skipped';
-        continue;
+        return;
       }
 
       let anyFail = false;
@@ -874,7 +877,8 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
 
       result.langs[lang] = anyFail ? 'failed' : 'done';
       if (anyFail) result.ok = false;
-    }
+      })
+    );
 
     // Guru sitat qutuları: quote_az + guruName → quote_<lang> + guruName_<lang>.
     const boxes = await db.select().from(guruBoxes).where(eq(guruBoxes.blogPostId, id));
