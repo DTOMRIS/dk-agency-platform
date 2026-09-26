@@ -353,3 +353,9 @@ route patterni ile eyni).
 - **Kök səbəb:** (1) Bir-dəfəlik skriptlərdə event loop-u kimin saxladığı təxmin edilə bilməz; iş bitəndə açıq `process.exit(0)` yeganə etibarlı çıxışdır (fayl sinxron yazılırsa). (2) Workflow-da `timeout-minutes` yox idi — default 6 saatdır. (3) Xarici API `fetch`-ində `AbortSignal.timeout` yox idi.
 - **Qayda:** Hər cron/CI skripti: `main().then(() => process.exit(0))`; hər job `timeout-minutes` normal müddətin ~3 misli; hər xarici `fetch` `AbortSignal.timeout`. Sandbox-da görülən «çıxmadı» simptomu «proxy-dir yəqin» deyə buraxılmaz — L-023 (fakt/hipotez): hipotez yazılırsa yoxlama tarixi ilə yazılır.
 - **Nəticə:** TASK-0448.
+
+## L-053: Açıq səhifə e2e testində iki gizli yarış — dil detektoru və hidrasiyadan əvvəlki klik
+- **Səhv:** TASK-0450 smoke testi təsadüfi düşdü: səhifə gah azərbaycanca, gah ingiliscə; «Gediş sayı ilə» klikindən sonra sahə görünmürdü. TASK-0449 checklist testi eyni riski daşıyırdı, sadəcə şansla keçmişdi.
+- **Kök səbəb:** (1) `components/DeviceLanguageDetector.tsx` (`PublicChrome` içində, yalnız açıq səhifələr) `navigator.language`-ə görə hidrasiyadan sonra `router.replace` edir; Playwright Chromium `en-US` → `/toolkit/…` `/en/toolkit/…`-ə, `/ru/…` də `/en/…`-ə keçir. Server düzgün `az` verir (curl ilə `<html lang>` yoxlandı) — problem brauzerdədir. (2) Dev rejimində hidrasiya gec bitir; ondan əvvəlki klik React vəziyyətini dəyişmir, SSR mətn isə artıq göründüyü üçün «səhifə hazırdır» sanılır.
+- **Qayda:** Açıq səhifə spec-lərində `test.beforeEach(() => page.addInitScript(() => localStorage.setItem('dk_user_language_set', 'e2e')))`. Vəziyyət dəyişən idempotent kliklər `expect(async () => { click; expect(effekt) }).toPass()` ilə. Yeni spec ən azı `--repeat-each=3` ilə icra olunur — bir dəfə keçmək sübut deyil.
+- **Nəticə:** TASK-0450 spec 24/24 (8 × 3); TASK-0449 spec-inə eyni düzəliş.

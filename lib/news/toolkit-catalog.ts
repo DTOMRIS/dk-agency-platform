@@ -26,6 +26,7 @@ export const TOOLKIT_CATALOG: ToolkitEntry[] = [
   { slug: 'insaat-checklist', label: 'İnşaat Checklisti', icon: '🏗️', description: 'Restoran tikintisi, icazələr, avadanlıq planlaşdırma' },
   { slug: 'personel-planlayici', label: 'Personal Planlayıcı', icon: '📋', description: 'Növbə planlaması, işçi sayısı, əmək haqqı xərci' },
   { slug: 'metbex-istasyon', label: 'Mətbəx İstasyon', icon: '🍳', description: 'Mətbəx iş stansiyaları, axın planlaması' },
+  { slug: 'addim-xerci', label: 'Addım Xərci Kalkulyatoru', icon: '👣', description: 'Aşpaz və ofisiantın boş yola sərf etdiyi vaxt, spagetti diaqramı, əmək haqqı itkisi' },
   { slug: 'otel-hazirlig-testi', label: 'Otel Hazırlıq Testi', icon: '🏨', description: 'Otel açılış hazırlığı testi' },
   { slug: 'ota-hazirlig-testi', label: 'OTA Hazırlıq Testi', icon: '🌐', description: 'Online turizm agentliyi hazırlığı' },
   { slug: 'qonaq-evi-roi-kalkulyatoru', label: 'Qonaq Evi ROI', icon: '🏠', description: 'Qonaq evi investisiya geri dönüşü' },

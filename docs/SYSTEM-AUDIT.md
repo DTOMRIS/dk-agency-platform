@@ -1,14 +1,14 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-09-26 04:22:14 | Branch: claude/deploy-commit-changelog-upr6me | 5661c31
+> Son güncəlləmə: 2026-09-26 07:01:07 | Branch: claude/deploy-commit-changelog-upr6me-addim-xerci | 0aaaeec
 
 ## Route İnventarı
 | Kateqoriya | Say |
 |-----------|-----|
-| Toplam page.tsx | 225 |
+| Toplam page.tsx | 227 |
 | Dashboard | 60 |
-| Toolkit | 47 |
+| Toolkit | 49 |
 
 ## AI Stack (lib/ai-models.ts SST)
 | Provider | Model | Fayl sayı |
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 4214 | 4141 | 4141 | 4141 | ⚠️ |
+| 4253 | 4180 | 4180 | 4180 | ⚠️ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`
