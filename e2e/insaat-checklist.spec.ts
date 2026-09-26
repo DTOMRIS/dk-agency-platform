@@ -28,6 +28,11 @@ const LOCALES = [
 ];
 
 test.describe('@smoke İnşaat checklist', () => {
+  // DeviceLanguageDetector brauzer dilinə (Chromium: en-US) görə /en-ə yönləndirir — test deterministik olsun.
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => window.localStorage.setItem('dk_user_language_set', 'e2e'));
+  });
+
   for (const { locale, prefix } of LOCALES) {
     test(`${locale}: dizayn mərhələsi birinci, 62 maddə, sıra nömrəsi`, async ({ page }) => {
       test.setTimeout(90_000);

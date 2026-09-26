@@ -10,7 +10,7 @@
 - **«52» harada dəyişdi, harada yox.** Alət səthləri (4 dildə `pageDesc`, metadata, HowTo addımları, mega menyu) → 62. Bloq yazısı «İnşaatdan Açılışa: 52 Maddəlik…» — dəyişmədi: o, öz mətnində 52 tikinti maddəsini izah edir; başlığı 62 etmək məzmunla ziddiyyət yaradardı. `adminContent.ts`-dəki `adminToolkitCards` heç yerdə istifadə olunmur — toxunulmadı.
 - **L-051:** bütün `.tsx` düzəlişləri `perl` ilə (prettier hook kollateralı olmasın). Diff: səhifə +8/−4, metadata 3 fayl, JSON 4 × 27 sətir.
 
-**Sübut:** `e2e/insaat-checklist.spec.ts` 6/6 (10.2s). tsc 35 = baza. eslint 0 error (1 köhnə `<img>` warning). i18n 4 dildə 10/10 maddə, açar sayı 194 × 4.
+**Sübut:** `e2e/insaat-checklist.spec.ts` 6/6 (10.2s). Sonradan (TASK-0450 zamanı): spec-də dil detektoru yarışı tapıldı (L-053, #451) — `dk_user_language_set` qoruyucusu əlavə olundu, `--repeat-each=3` → 18/18. tsc 35 = baza. eslint 0 error (1 köhnə `<img>` warning). i18n 4 dildə 10/10 maddə, açar sayı 194 × 4.
 
 ## 2026-09-26 — TASK-0448 (fetch-news «Done»-dan sonra çıxmır — 6 saatlıq cancel)
 
