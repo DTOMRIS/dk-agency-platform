@@ -1,5 +1,9 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0453 (bloq CTA xam açarları)
+
+Sahibin ekran görüntüsü: yazının sonunda «blogDetail.ctaTitle», «blogDetail.ctaWhatsapp» düymədə. Açarlar kodda var, JSON-da yox — heç vaxt olmayıb (git log: CTA bloku #394/#418 dövründən). Bizim i18n yoxlaması 4 dilin bir-biri ilə paritetinə baxır, koddakı `t()` açarının JSON-da olub-olmadığına yox; ona görə tutulmadı. Növbəti task üçün qeyd: `t('…')` açarlarını JSON ilə tutuşduran skript lazımdır (TECH_DEBT-ə yazılmalı).
+
 ## 2026-09-26 — TASK-0452 (toolkit «5 alət» sayı)
 
 Sahibin canlı ekran görüntüsündə «Buradakı 5 alət» + 6 kart. Mənim TASK-0450-m köhnəltdi: kartı əlavə etdim, bölmə mətnini oxumadım. Sayı 6 etmək eyni tələni saxlayardı — mətn artıq say demir. Dərs yeni L deyil, L-051-in yanında qeyd: yeni kart əlavə edəndə eyni bölmənin başlıq/mətnini də oxu.

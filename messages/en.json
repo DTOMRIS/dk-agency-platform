@@ -1762,7 +1762,12 @@
     "catMarketinq": "Marketing",
     "stageBasla": "Start",
     "stageBoyut": "Grow",
-    "stageDevir": "Transfer"
+    "stageDevir": "Transfer",
+    "ctaTitle": "Have a question about this?",
+    "ctaDesc": "If this situation sounds like your restaurant, write to us. The DK Agency team will reply.",
+    "ctaWhatsapp": "Message on WhatsApp",
+    "ctaContact": "Contact form",
+    "ctaWhatsappMessage": "Hello, I have a question about the article “{title}”."
   },
   "ilanlar": {
     "title": "Job Listings",
