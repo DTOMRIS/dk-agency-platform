@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { compressImage, validateImage } from '@/lib/utils/imageUtils';
 import { slugifyAz } from '@/lib/utils/slugify-az';
+import { parseMarkdownImport } from '@/lib/blog/parseMarkdownImport';
 
 const AUTHOR_OPTIONS = ['Doğan Tomris', 'DK Agency', 'Qonaq Müəllif'] as const;
 const CATEGORY_OPTIONS = ['Maliyyə', 'Əməliyyat', 'Kadr', 'Hüquqi', 'Satış', 'Marketinq'] as const;
@@ -152,6 +153,39 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
   const showToast = (message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(''), 2200);
+  };
+
+  // Markdown faylı idxalı (TASK-0454): format itmədən AZ mətni + meta sahələri doldurur
+  const importInputRef = useRef<HTMLInputElement>(null);
+  const [importMsg, setImportMsg] = useState<{ text: string; warnings: string[] } | null>(null);
+
+  const handleMarkdownImport = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+    const { fields, warnings } = parseMarkdownImport(await file.text(), {
+      categories: CATEGORY_OPTIONS,
+      authors: AUTHOR_OPTIONS,
+      seoTitleMax: 60,
+      seoDescriptionMax: 160,
+    });
+    if (!fields.contentAz) {
+      setImportMsg({ text: `«${file.name}» — mətn tapılmadı`, warnings });
+      return;
+    }
+    if (post.contentAz.trim() && !window.confirm('AZ mətni və başlıq fayldakı ilə əvəzlənəcək. Davam edək?')) return;
+    const { slug: importedSlug, ...rest } = fields;
+    setPost((prev) => ({
+      ...prev,
+      ...rest,
+      // Mövcud yazının slug-ı dəyişmir — köhnə linklər qırılmasın
+      slug: initialPost
+        ? prev.slug
+        : importedSlug || (rest.titleAz ? slugifyAz(rest.titleAz) : prev.slug),
+    }));
+    setActiveLocale('az');
+    setErrors({});
+    setImportMsg({ text: `✅ «${file.name}» yükləndi — yoxla və yadda saxla`, warnings });
   };
 
   const [translating, setTranslating] = useState(false);
@@ -348,6 +382,29 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             ) : null}
             {translateMsg ? (
               <span className="text-xs font-semibold text-slate-700">{translateMsg}</span>
+            ) : null}
+            <input
+              ref={importInputRef}
+              type="file"
+              accept=".md,.markdown,.txt,text/markdown,text/plain"
+              className="hidden"
+              data-testid="blog-md-import-input"
+              onChange={(e) => void handleMarkdownImport(e)}
+            />
+            <button
+              type="button"
+              onClick={() => importInputRef.current?.click()}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 text-sm font-bold text-slate-800 transition hover:border-slate-400"
+            >
+              📄 Markdown faylı yüklə
+            </button>
+            {importMsg ? (
+              <div className="w-full text-xs" data-testid="blog-md-import-msg">
+                <p className="font-semibold text-slate-700">{importMsg.text}</p>
+                {importMsg.warnings.map((w) => (
+                  <p key={w} className="text-amber-800">⚠️ {w}</p>
+                ))}
+              </div>
             ) : null}
           </div>
 
