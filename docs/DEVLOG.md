@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0457 (təhlükəsizlik: saxta admin sessiyası)
+
+**Necə tapıldı:** TASK-0455-in API testində admin JWT ilə 403 aldım — blog API-ları JWT-ni yox, `dk_member_session`-u oxuyurdu. Faylı açanda imzasız base64 JSON gördüm, `POST /api/member/session`-da isə bədənin olduğu kimi cookie-yə yazıldığını. Lokal dev-də curl ilə təsdiq: saxta cookie → 200. Sahibə dərhal bildirdim, icazə ilə düzəltdim.
+
+**Seçim — cookie-ni imzalamaq yox, JWT-dən qurmaq:** HMAC imzası da saxtalaşdırmanı bağlayardı, amma çıxışdan sonra 30 günlük imzalı admin cookie qüvvədə qalardı. JWT onsuz da var (httpOnly, 7 gün, login-də yazılır, dashboard middleware-i onu işlədir) — ikinci mənbəni səlahiyyətdən çıxarmaq TD-004-ün də yarısıdır. PROTECTED `lib/member-access.ts` və `app/api/member/auth/route.ts`-ə toxunmaq lazım gəlmədi.
+
+**İkinci açıq:** smoke zamanı üzv JWT ilə `/dashboard` 200 verdi. Layout-u admin-only etmək istədim — `app/b2b-panel/analizler` üzvü `/dashboard/marketinq-ocagi/…`-yə göndərir, qırılardı. DB-ni birbaşa oxuyan server səhifələrini skan etdim (7 ədəd) — onlara `requireAdminPage()`. Client səhifələri guard-lı API-dən oxuyur, üzv artıq 403 alır. Dashboard-u admin/üzv hissəyə ayırmaq sahib qərarıdır — TD-004.
+
+**Yerləşdirmə səhvi (düzəldildi):** guard sətrini skriptlə əlavə edəndə çoxsətirli imzada iki dəfə səhv yerə düşdü (`({` və `}: {` sətrindən sonra). eslint parsing error ilə tutdu; üçüncü dəfə `}) {` sətrini hədəf aldım. Hər faylda diff yoxlandı: 7 × (import + 1 sətir).
+
 ## 2026-09-26 — TASK-0455 (bloq tərcüməsi)
 
 **Sahib:** «tercüme neden işlemiyor, deep seek var». Canlı mesajı görmədim — kodu izlədim: düymə → `/api/blog/translate` → `autoTranslateBlogPost`. Bir səbəb gözləyirdim, beş tapdım (task kartında). Ən gözlənilməzi: yaradılışdakı avtomatik tərcümə `created.id`-yə baxırdı, funksiya isə id qaytarmır — yəni «dərc edəndə avtomatik tərcümə» heç vaxt işləməyib, yalnız əl ilə düymələr qalırdı.

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import NewsEditorForm, { type NewsDraft } from '@/components/dashboard/NewsEditorForm';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAdminNewsArticleById } from '@/lib/repositories/newsRepository';
+import { requireAdminPage } from '@/lib/auth/guards';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +16,7 @@ const CATEGORIES: NewsDraft['category'][] = [
 ];
 
 export default async function EditNewsPage({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdminPage();
   const session = await getServerMemberSession();
   if (!session.loggedIn || session.plan !== 'admin') notFound();
 

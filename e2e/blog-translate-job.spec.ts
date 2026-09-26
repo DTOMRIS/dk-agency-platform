@@ -14,18 +14,14 @@ import jwt from 'jsonwebtoken';
 const SECRET = process.env.JWT_SECRET;
 const SLUG = 'e2e-translate-job-yoxlama';
 
-/** Admin sessiyası: JWT (dk_auth_token) + member sessiya cookie-si (blog API-ları hazırda onu oxuyur) */
+/** Admin sessiyası: imzalı JWT (TASK-0457-dən sonra səlahiyyət yalnız ondan gəlir) */
 function adminCookie(): string {
   const token = jwt.sign(
     { userId: 1, email: 'smoke@dkagency.com.tr', role: 'admin' },
     SECRET as string,
     { expiresIn: '1h' }
   );
-  const member = Buffer.from(
-    JSON.stringify({ email: 'smoke@dkagency.com.tr', name: 'smoke', loggedIn: true, plan: 'admin' }),
-    'utf8'
-  ).toString('base64url');
-  return `dk_auth_token=${token}; dk_member_session=${member}`;
+  return `dk_auth_token=${token}`;
 }
 
 async function status(request: APIRequestContext, cookie?: string) {

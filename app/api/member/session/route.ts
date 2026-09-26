@@ -1,21 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getGuestSession, type MemberSession } from '@/lib/member-access';
-import { MEMBER_COOKIE_NAME, encodeMemberSession, getServerMemberSession } from '@/lib/members/server-session';
+import { getAuthFromCookie } from '@/lib/auth/jwt';
+import {
+  MEMBER_COOKIE_NAME,
+  encodeMemberSession,
+  getServerMemberSession,
+  sessionFromJwt,
+} from '@/lib/members/server-session';
 
 export async function GET() {
   const session = await getServerMemberSession();
   return NextResponse.json({ session });
 }
 
+// TASK-0457: bədəndən yalnız göstəriləcək ad götürülür. `loggedIn` və `plan`
+// imzalı JWT-dən gəlir — əvvəl bədəndəki `plan: 'admin'` olduğu kimi yazılırdı.
 export async function POST(request: NextRequest) {
-  const body = (await request.json()) as Partial<MemberSession>;
-
-  const session: MemberSession = {
-    email: body.email ?? '',
-    name: body.name ?? '',
-    loggedIn: body.loggedIn === true,
-    plan: body.plan === 'admin' || body.plan === 'member' ? body.plan : 'free',
-  };
+  const body = (await request.json().catch(() => ({}))) as Partial<MemberSession>;
+  const payload = await getAuthFromCookie();
+  const session = sessionFromJwt(payload, typeof body.name === 'string' ? body.name : '');
 
   const response = NextResponse.json({ success: true, session });
   response.cookies.set(MEMBER_COOKIE_NAME, encodeMemberSession(session), {

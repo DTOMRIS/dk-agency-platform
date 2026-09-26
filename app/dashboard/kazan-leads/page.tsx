@@ -4,6 +4,7 @@ import { getKazanLeads, normalizeStatus } from '@/lib/repositories/kazanLeadRepo
 import { buildWhatsappLink } from '@/lib/utils/whatsapp';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { normalizeLocale } from '@/i18n/config';
+import { requireAdminPage } from '@/lib/auth/guards';
 
 const statusOptions = ['all', 'new', 'contacted', 'qualified', 'converted', 'dismissed'] as const;
 const intentOptions = ['all', 'food_cost', 'pnl', 'aqta', 'delivery', 'general'] as const;
@@ -28,6 +29,7 @@ export default async function DashboardKazanLeadsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  await requireAdminPage();
   const rawLocale = await getLocale();
   const locale = normalizeLocale(rawLocale);
   const t = await getTranslations('dashboardKazanLeads');

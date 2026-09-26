@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { db } from '@/lib/db';
 import { franchiseLeads } from '@/lib/db/schema';
 import { desc } from 'drizzle-orm';
+import { requireAdminPage } from '@/lib/auth/guards';
 
 type FranchiseToolSource =
   | 'readiness_test'
@@ -59,6 +60,7 @@ export default async function DashboardFranchiseLeadsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  await requireAdminPage();
   if (!db) {
     return (
       <div className="min-h-screen bg-white p-6 lg:p-8">

@@ -1,6 +1,14 @@
 import { cookies } from 'next/headers';
+import { AUTH_COOKIE_NAME, verifyToken, type JwtPayload } from '@/lib/auth/jwt';
 import { getGuestSession, type MemberSession } from '@/lib/member-access';
 
+/**
+ * TASK-0457 (təhlükəsizlik): bu cookie imzasız base64 JSON-dur və əvvəl
+ * `/api/member/session` POST bədəndəki `plan: 'admin'`-i yoxlamadan yazırdı →
+ * istənilən şəxs özünü admin edə bilirdi. İndi səlahiyyət (`loggedIn`, `plan`)
+ * YALNIZ imzalı JWT-dən (`dk_auth_token`, httpOnly) gəlir; bu cookie-dən yalnız
+ * göstəriləcək ad götürülür (e-poçt JWT ilə üst-üstə düşəndə).
+ */
 export const MEMBER_COOKIE_NAME = 'dk_member_session';
 
 export function encodeMemberSession(session: MemberSession) {
@@ -23,13 +31,26 @@ export function decodeMemberSession(value: string): MemberSession {
   }
 }
 
-export async function getServerMemberSession() {
+/** Yoxlanmış JWT → member sessiyası. `name` yalnız göstərmək üçündür. */
+export function sessionFromJwt(payload: JwtPayload | null, displayName = ''): MemberSession {
+  if (!payload) return getGuestSession();
+  return {
+    email: payload.email,
+    name: displayName.slice(0, 120),
+    loggedIn: true,
+    plan: payload.role === 'admin' ? 'admin' : 'member',
+  };
+}
+
+export async function getServerMemberSession(): Promise<MemberSession> {
   const store = await cookies();
+  const token = store.get(AUTH_COOKIE_NAME)?.value;
+  const payload = token ? verifyToken(token) : null;
+  if (!payload) return getGuestSession();
+
   const raw = store.get(MEMBER_COOKIE_NAME)?.value;
-
-  if (!raw) {
-    return getGuestSession();
-  }
-
-  return decodeMemberSession(raw);
+  const display = raw ? decodeMemberSession(raw) : null;
+  const name =
+    display && display.email.toLowerCase() === payload.email.toLowerCase() ? display.name : '';
+  return sessionFromJwt(payload, name);
 }

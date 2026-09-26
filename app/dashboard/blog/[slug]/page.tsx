@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import BlogEditorForm, { type BlogDraft } from '@/components/dashboard/BlogEditorForm';
 import { getBlogPostRaw } from '@/lib/db/blog-repository';
+import { requireAdminPage } from '@/lib/auth/guards';
 
 type RawPost = NonNullable<Awaited<ReturnType<typeof getBlogPostRaw>>>;
 
@@ -37,6 +38,7 @@ function toDraft(post: RawPost): BlogDraft {
 }
 
 export default async function DashboardBlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  await requireAdminPage();
   const { slug } = await params;
   const post = await getBlogPostRaw(slug);
   if (!post) notFound();

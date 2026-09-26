@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
 import { desc, eq, sql } from 'drizzle-orm';
+import { requireAdminPage } from '@/lib/auth/guards';
 
 type LeadRow = {
   id: number;
@@ -65,6 +66,7 @@ export default async function ContactTrackingPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  await requireAdminPage();
   const params = await searchParams;
   const activeChannel: ChannelOption =
     typeof params.channel === 'string' &&

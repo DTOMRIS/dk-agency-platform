@@ -5,6 +5,7 @@ import {
 } from '@/lib/db/blog-repository';
 import TranslateAllButton from '@/components/dashboard/TranslateAllButton';
 import MigrateStructureButtons from '@/components/dashboard/MigrateStructureButtons';
+import { requireAdminPage } from '@/lib/auth/guards';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,6 +37,7 @@ function Dot({ status }: { status: FieldStatus }) {
 }
 
 export default async function TranslationStatusPage() {
+  await requireAdminPage();
   const matrix = await getBlogTranslationMatrix();
 
   let ok = 0;
