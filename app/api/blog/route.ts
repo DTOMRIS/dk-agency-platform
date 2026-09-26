@@ -1,9 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import {
-  getBlogPostsFromDb,
-  createBlogPostInDb,
-  autoTranslateBlogPost,
-} from '@/lib/db/blog-repository';
+import { NextRequest, NextResponse, after } from 'next/server';
+import { getBlogPostsFromDb, createBlogPostInDb } from '@/lib/db/blog-repository';
+import { startTranslationJob } from '@/lib/blog/translationJobs';
 import { getServerMemberSession } from '@/lib/members/server-session';
 
 export async function GET(request: NextRequest) {
@@ -43,12 +40,16 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const created = await createBlogPostInDb(body);
 
-  // Auto-translate AZ → ru/en/tr on publish. Fire-and-forget: Hostinger is a
-  // long-running Node server (no serverless timeout), so the background fill
-  // completes without blocking the admin's save response. Best-effort, never throws.
-  const createdId = (created as { id?: number }).id;
-  if (createdId && body.status === 'published') {
-    void autoTranslateBlogPost(createdId);
+  // Auto-translate AZ → ru/en/tr on create (any status — the editor saves new
+  // posts as draft by default), in the background (`after`) via the
+  // shared job registry (TASK-0455) — the editor button sees this job and does
+  // not start a second one. Best-effort, never throws.
+  // (Was keyed on `created.id`, but createBlogPostInDb returns only { slug, source }
+  // → the auto-translate on publish never ran.)
+  if (created.source === 'db') {
+    const createdSlug = created.slug;
+    const { started, done } = startTranslationJob(createdSlug);
+    if (started) after(() => done);
   }
 
   return NextResponse.json({ success: true, data: created }, { status: 201 });

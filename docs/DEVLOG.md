@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0455 (bloq tərcüməsi)
+
+**Sahib:** «tercüme neden işlemiyor, deep seek var». Canlı mesajı görmədim — kodu izlədim: düymə → `/api/blog/translate` → `autoTranslateBlogPost`. Bir səbəb gözləyirdim, beş tapdım (task kartında). Ən gözlənilməzi: yaradılışdakı avtomatik tərcümə `created.id`-yə baxırdı, funksiya isə id qaytarmır — yəni «dərc edəndə avtomatik tərcümə» heç vaxt işləməyib, yalnız əl ilə düymələr qalırdı.
+
+**Niyə arxa plan işi:** 1–3 dəqiqəlik HTTP sorğusu proxy-dən asılıdır. Hostinger uzunömürlü Node prosesidir, iş yaddaşda saxlanır (`globalThis` xəritə — dev HMR də eyni xəritəni görür); proses yenidən başlasa GET «idle» qaytarır və redaktor bunu dürüst deyir. `after()` ilə cavabdan sonra işləməyə davam edir.
+
+**Parça ölçüsü 3000:** 6000 simvolluq parça RU-da ~4000 token çıxış deməkdir — DeepSeek-in 120 s abort limitinə yaxın. Kiçik parça + paralel = divar vaxtı ən yavaş parça qədər.
+
+**Test:** unit test əvvəl köhnə kodla işə salındı — 3 FAIL (15 çağırış, eyni anda 1, ``` bloku bölünür) — sonra yeni kodla 9/9. Edit səhifəsi DB tələb edir (`neon-http` — lokal Postgres işləmir), ona görə redaktor UI-si canlıda yoxlanmalıdır; API axını (403/202/vəziyyət) dev serverdə yoxlandı.
+
+**Təhlükəsizlik (ayrıca task):** test yazanda 403 aldım — blog API-ları JWT-ni yox, `dk_member_session`-u oxuyur. O cookie imzasız base64 JSON-dur, `POST /api/member/session` isə bədəndəki `plan`-ı yoxlamadan yazır (login səhifəsi `plan`-ı brauzerdə təyin edib göndərir). Lokal dev-də saxta cookie ilə admin endpoint-i 200 qaytardı. 26 API route bu sessiyaya güvənir. TD-004 iki sistemi qeyd edir, amma saxtalaşdırılma riskini yox. Sahibə dərhal bildirildi.
+
 ## 2026-09-26 — TASK-0456 (bloq siyahıları + mobil cədvəl daşması)
 
 **Sahib:** 6 yazını Markdown faylı ilə yüklədi, «genel iyi oldu» dedi, ekran görüntüsündə siyahılar nöqtəsiz/nömrəsiz idi. Renderer-də `list-disc`/`list-decimal` var idi — deməli nəsə üstələyir. `globals.css`-də ☐ checklist üçün yazılmış `.blog-content li { list-style: none }` (#394 dövrü) bütün `li`-ləri tuturdu. Fayl PROTECTED — icazə istəmək əvəzinə renderer səviyyəsində həll: adi maddəyə inline `listStyleType: inherit`. Test əvvəl düzəlişsiz işə salındı — FAIL (səhvi tutduğunu sübut), sonra PASS.

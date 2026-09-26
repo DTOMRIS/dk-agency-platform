@@ -799,7 +799,22 @@ const EMPTY_RESULT = (): BlogTranslateResult => ({
   langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
 });
 
-export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateResult> {
+export type BlogTranslateOptions = {
+  /**
+   * Re-translate every field that has an AZ source, even if a translation
+   * already exists (TASK-0455). Admin «Avtomatik tərcümə» button: after the AZ
+   * text is replaced, the old RU/EN/TR text has no AZ chars, so the default
+   * self-healing check skips it and the button silently did nothing.
+   */
+  force?: boolean;
+};
+
+export async function autoTranslateBlogPost(
+  id: number,
+  options: BlogTranslateOptions = {}
+): Promise<BlogTranslateResult> {
+  const needs = (target: unknown, azSource: string | null | undefined, lang: string) =>
+    options.force ? Boolean(azSource && azSource.trim()) : needsTranslation(target, azSource, lang);
   const result: BlogTranslateResult = {
     ok: true,
     langs: { ru: 'skipped', en: 'skipped', tr: 'skipped' },
@@ -821,14 +836,14 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
       langs.map(async (lang) => {
       const langUpdates: Record<string, string> = {};
       const fields: Array<['title' | 'summary' | 'content', string]> = [];
-      if (needsTranslation(row[`title_${lang}` as keyof typeof row], row.title_az, lang))
+      if (needs(row[`title_${lang}` as keyof typeof row], row.title_az, lang))
         fields.push(['title', row.title_az]);
-      if (needsTranslation(row[`summary_${lang}` as keyof typeof row], row.summary_az, lang))
+      if (needs(row[`summary_${lang}` as keyof typeof row], row.summary_az, lang))
         fields.push(['summary', row.summary_az as string]);
-      if (needsTranslation(row[`content_${lang}` as keyof typeof row], row.content_az, lang))
+      if (needs(row[`content_${lang}` as keyof typeof row], row.content_az, lang))
         fields.push(['content', row.content_az]);
 
-      const needsDogan = needsTranslation(
+      const needsDogan = needs(
         row[`doganNote_${lang}` as keyof typeof row],
         row.doganNote,
         lang
@@ -889,7 +904,7 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
       for (const lang of langs) {
         const boxUpdates: Record<string, string> = {};
 
-        if (needsTranslation(box[`quote_${lang}` as keyof typeof box], box.quote_az, lang)) {
+        if (needs(box[`quote_${lang}` as keyof typeof box], box.quote_az, lang)) {
           const v = await translateText(box.quote_az as string, lang);
           if (v) {
             boxUpdates[`quote_${lang}`] = v;
@@ -902,7 +917,7 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
         }
 
         const nameKey = `guruName_${lang}` as keyof typeof box;
-        if (needsTranslation(box[nameKey], box.guruName, lang)) {
+        if (needs(box[nameKey], box.guruName, lang)) {
           const v = await translateText(box.guruName as string, lang);
           if (v) {
             boxUpdates[`guruName_${lang}`] = v;
@@ -938,7 +953,10 @@ export async function autoTranslateBlogPost(id: number): Promise<BlogTranslateRe
 }
 
 /** Translate by slug (admin manual trigger). */
-export async function translateBlogPostBySlug(slug: string): Promise<BlogTranslateResult> {
+export async function translateBlogPostBySlug(
+  slug: string,
+  options: BlogTranslateOptions = {}
+): Promise<BlogTranslateResult> {
   if (!dbAvailable || !db) return { ...EMPTY_RESULT(), error: 'db-unavailable' };
   const slugsToTry = getSlugsToTry(slug);
   const [row] = await db
@@ -946,7 +964,7 @@ export async function translateBlogPostBySlug(slug: string): Promise<BlogTransla
     .from(blogPosts)
     .where(or(...slugsToTry.map((s) => eq(blogPosts.slug, s))));
   if (!row) return { ...EMPTY_RESULT(), error: 'not-found' };
-  return autoTranslateBlogPost(row.id);
+  return autoTranslateBlogPost(row.id, options);
 }
 
 // ─── Bulk operations ─────────────────────────────────────────────

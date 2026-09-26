@@ -191,35 +191,106 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
   const [translating, setTranslating] = useState(false);
   const [translateMsg, setTranslateMsg] = useState('');
 
+  // TASK-0455: tərcümə arxa planda gedir — POST işi başladır, GET ilə vəziyyət soruşulur.
+  // Bitəndə yeni RU/EN/TR mətni state-ə yazılır (yoxsa növbəti «Yadda saxla» köhnəni geri yazardı).
+  const pollStopRef = useRef(false);
+  useEffect(() => () => {
+    pollStopRef.current = true;
+  }, []);
+
+  type TranslateStatus = {
+    status?: 'idle' | 'running' | 'done' | 'failed';
+    langs?: Record<string, string>;
+    error?: string;
+    fields?: Partial<Pick<BlogDraft, 'titleRu' | 'titleEn' | 'titleTr' | 'contentRu' | 'contentEn' | 'contentTr'>> | null;
+  };
+
+  const pollTranslation = async (slug: string) => {
+    setTranslating(true);
+    setTranslateMsg('⏳ RU/EN/TR tərcümə olunur — 1–3 dəqiqə, bu səhifədə gözlə…');
+    const deadline = Date.now() + 10 * 60_000;
+    try {
+      while (!pollStopRef.current && Date.now() < deadline) {
+        await new Promise((r) => window.setTimeout(r, 4000));
+        if (pollStopRef.current) return;
+        const res = await fetch(`/api/blog/translate?slug=${encodeURIComponent(slug)}`, {
+          cache: 'no-store',
+        }).catch(() => null);
+        if (!res || !res.ok) continue; // şəbəkə anlıq kəsilə bilər — növbəti sorğu
+        const data = (await res.json().catch(() => ({}))) as TranslateStatus;
+        if (data.status === 'running') continue;
+        if (data.status === 'idle') {
+          setTranslateMsg('Tərcümə prosesi dayandı (server yenidən başladı?) — yenidən cəhd et');
+          return;
+        }
+        if (data.fields) {
+          const fields = data.fields;
+          setPost((prev) => ({ ...prev, ...fields }));
+        }
+        const l = data.langs || {};
+        const mark = (v?: string) => (v === 'done' ? '✓' : v === 'failed' ? '✗' : '—');
+        setTranslateMsg(
+          `RU ${mark(l.ru)} · EN ${mark(l.en)} · TR ${mark(l.tr)}${
+            data.status === 'done' ? ' — tərcümə yazıldı' : ' — bəziləri alınmadı, yenidən cəhd et'
+          }`
+        );
+        return;
+      }
+      if (!pollStopRef.current) {
+        setTranslateMsg('Tərcümə hələ bitməyib — bir neçə dəqiqə sonra səhifəni yenilə');
+      }
+    } finally {
+      setTranslating(false);
+    }
+  };
+
+  // Səhifə açılanda gedən tərcümə varsa (məs. yeni yazı yaradılanda başlayan) — göstər
+  useEffect(() => {
+    const slug = initialPost?.slug;
+    if (!slug) return;
+    void fetch(`/api/blog/translate?slug=${encodeURIComponent(slug)}`, { cache: 'no-store' })
+      .then((res) => (res.ok ? (res.json() as Promise<TranslateStatus>) : null))
+      .then((data) => {
+        if (data?.status === 'running') void pollTranslation(slug);
+      })
+      .catch(() => undefined);
+    // yalnız ilk açılışda
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const translateNow = async () => {
     const slug = initialPost?.slug;
     if (!slug || translating) return;
-    setTranslating(true);
+    if (
+      initialPost &&
+      (post.contentAz !== initialPost.contentAz || post.titleAz !== initialPost.titleAz)
+    ) {
+      setTranslateMsg('AZ mətnində yadda saxlanmamış dəyişiklik var — əvvəl «Yadda saxla» bas');
+      return;
+    }
+    if (
+      !window.confirm(
+        'AZ mətni RU/EN/TR-ə yenidən tərcümə olunacaq — köhnə tərcümələrin üstünə yazılır. Davam edək?'
+      )
+    )
+      return;
     setTranslateMsg('');
+    setTranslating(true);
     try {
       const res = await fetch('/api/blog/translate', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ slug }),
+        body: JSON.stringify({ slug, force: true }),
       });
-      const data = (await res.json()) as {
-        ok?: boolean;
-        langs?: Record<string, string>;
-        error?: string;
-      };
-      if (!res.ok || data.error) {
-        setTranslateMsg(`Tərcümə alınmadı: ${data.error || res.status}`);
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        setTranslateMsg(`Tərcümə başlamadı: ${data.error || res.status}`);
+        setTranslating(false);
         return;
       }
-      const l = data.langs || {};
-      const mark = (s?: string) => (s === 'done' ? '✓' : s === 'failed' ? '✗' : '—');
-      setTranslateMsg(
-        `RU ${mark(l.ru)} · EN ${mark(l.en)} · TR ${mark(l.tr)}${data.ok ? '' : ' — bəziləri alınmadı, yenidən cəhd et'}`
-      );
-      router.refresh();
+      await pollTranslation(slug);
     } catch {
       setTranslateMsg('Tərcümə xidməti əlçatmadı — yenidən cəhd et');
-    } finally {
       setTranslating(false);
     }
   };
