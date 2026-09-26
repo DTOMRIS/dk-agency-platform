@@ -1762,7 +1762,12 @@
     "catMarketinq": "Pazarlama",
     "stageBasla": "Başla",
     "stageBoyut": "Büyüt",
-    "stageDevir": "Devir"
+    "stageDevir": "Devir",
+    "ctaTitle": "Bu konuda sorunuz mu var?",
+    "ctaDesc": "Yazıdaki durum sizin restoranınızda da varsa bize yazın. DK Agency ekibi yanıtlıyor.",
+    "ctaWhatsapp": "WhatsApp’tan yaz",
+    "ctaContact": "İletişim formu",
+    "ctaWhatsappMessage": "Merhaba, «{title}» yazısıyla ilgili bir sorum var."
   },
   "ilanlar": {
     "title": "İş İlanları",

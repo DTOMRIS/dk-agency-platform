@@ -1762,7 +1762,12 @@
     "catMarketinq": "Маркетинг",
     "stageBasla": "Старт",
     "stageBoyut": "Рост",
-    "stageDevir": "Передача"
+    "stageDevir": "Передача",
+    "ctaTitle": "Есть вопрос по этой теме?",
+    "ctaDesc": "Если описанная ситуация есть и в вашем ресторане, напишите нам. Команда DK Agency ответит.",
+    "ctaWhatsapp": "Написать в WhatsApp",
+    "ctaContact": "Форма связи",
+    "ctaWhatsappMessage": "Здравствуйте, у меня вопрос по статье «{title}»."
   },
   "ilanlar": {
     "title": "Вакансии",

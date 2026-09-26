@@ -12,6 +12,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 ## [Unreleased]
 
 ### Fixed
+- `TASK-0453` fix(blog): **yazı səhifəsinin sonundakı əlaqə blokunda xam açarlar görünürdü** («blogDetail.ctaTitle», «blogDetail.ctaWhatsapp», «blogDetail.ctaContact») — sahib canlıda gördü. Kök səbəb: kod `t('ctaTitle')` və s. çağırırdı, amma `messages/*.json`-da `blogDetail.cta*` açarları heç vaxt yaradılmamışdı; next-intl açar adını qaytarır. 4 dildə 5 açar əlavə olundu (`ctaTitle`, `ctaDesc`, `ctaWhatsapp`, `ctaContact`, `ctaWhatsappMessage`). WhatsApp linkinin hazır mesajı kodda yalnız azərbaycanca idi (`Salam, "…" yazısı ilə bağlı sualım var.`) — indi dilə uyğun, yazının adı ilə. Yeni `e2e/blog-cta.spec.ts` (): 4 dildə xam açar 0, WhatsApp düyməsi və mesajı dilə uyğun — **8/8** (`--repeat-each=2`).
+
+### Fixed
 - `TASK-0452` fix(toolkit): **Toolkit səhifəsində «Buradakı 5 alət» yazılırdı, amma 6 alət var** — sahib canlıda gördü. TASK-0450 «Böyüt» bölməsinə «Addım Xərci Kalkulyatoru»nu əlavə etdi, bölmə mətni isə sayı sabit yazırdı. Say düzəldilmədi, **çıxarıldı** (4 dildə «Buradakı alətlər…», «Bu bələdçilər…») — növbəti alət əlavə olunanda mətn yenə köhnəlməsin; «Böyüt» mətninə «addım» sözü əlavə olundu. Yoxlama: lokal `/toolkit`, `/en`, `/tr`, `/ru` → yeni mətn, «5 » sayı 0.
 
 ### Changed
