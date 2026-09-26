@@ -11,6 +11,17 @@
 **Test bir dəfə keçmədi — və yaxşı ki keçmədi.** Gediş rejimi testi düşdü: snapshot səhifəni **ingiliscə** göstərirdi. curl ilə `<html lang>` yoxladım — server hər dəfə düzgün `az` verir. Deməli brauzer: `DeviceLanguageDetector` `navigator.language` (Chromium `en-US`) görə hidrasiyadan sonra `/en`-ə yönləndirir. Söndürəndən sonra 4 düşmə qaldı — hamısı klik testləri, səhifə artıq AZ, düymə var, amma vəziyyət dəyişmir: dev rejimində hidrasiyadan əvvəlki klik. İdempotent kliklər `toPass()` ilə təkrarlanır. `--repeat-each=3` → 24/24. Eyni iki yarış TASK-0449 checklist spec-ində də var idi (orada şansla keçmişdi) — o PR-a da düzəliş göndərildi. L-053.
 
 **Sübut:** spec 24/24 · 4 dildə route 200 · tsc 35 = baza · eslint 0 · i18n 39 × 4, komponentdə sabit mətn 0.
+## 2026-09-26 — TASK-0449 (İnşaat checklist: «Əməliyyat dizaynı» mərhələsi)
+
+**Mənşə:** Sahib Drive-dakı dizayn qeydlərini və başqa AI-nın (Antigravity) yazdığı bloqları göndərdi. Bloqlar redaktə olunub sahibə verildi (admin paneldən özü dərc edir — repoya girmir). Toolkit üçün spesifikasiya yazıldı, sahib təsdiqlədi: «ayrı PR, 10 madde tamam, isim güzel». Bu PR — birinci hissə; «Addım Xərci Kalkulyatoru» TASK-0450, ayrıca PR.
+
+**Dizayn qərarları:**
+- **Mərhələ əvvələ, id sona.** Əməliyyat dizaynı tikintidən qabaq gəlir, ona görə siyahının başındadır. Amma id-lər 53–62: irəliləyiş `localStorage`-da id massivi kimi saxlanır (`insaat-checklist-progress-v1`); mövcud id-ləri sürüşdürsəydim, köhnə istifadəçinin «Ön hazırlıq»dakı işarələri başqa maddələrə keçərdi. Nəticədə ekranda `{item.id}.` «53.» göstərərdi — ona görə `displayNo` xəritəsi: nömrə sıradan gəlir.
+- **Açıq mərhələ** `prep` → `design` (yeni istifadəçi əvvəl dizayn qərarlarını görür).
+- **«52» harada dəyişdi, harada yox.** Alət səthləri (4 dildə `pageDesc`, metadata, HowTo addımları, mega menyu) → 62. Bloq yazısı «İnşaatdan Açılışa: 52 Maddəlik…» — dəyişmədi: o, öz mətnində 52 tikinti maddəsini izah edir; başlığı 62 etmək məzmunla ziddiyyət yaradardı. `adminContent.ts`-dəki `adminToolkitCards` heç yerdə istifadə olunmur — toxunulmadı.
+- **L-051:** bütün `.tsx` düzəlişləri `perl` ilə (prettier hook kollateralı olmasın). Diff: səhifə +8/−4, metadata 3 fayl, JSON 4 × 27 sətir.
+
+**Sübut:** `e2e/insaat-checklist.spec.ts` 6/6 (10.2s). Sonradan (TASK-0450 zamanı): spec-də dil detektoru yarışı tapıldı (L-053, #451) — `dk_user_language_set` qoruyucusu əlavə olundu, `--repeat-each=3` → 18/18. tsc 35 = baza. eslint 0 error (1 köhnə `<img>` warning). i18n 4 dildə 10/10 maddə, açar sayı 194 × 4.
 
 ## 2026-09-26 — TASK-0448 (fetch-news «Done»-dan sonra çıxmır — 6 saatlıq cancel)
 
