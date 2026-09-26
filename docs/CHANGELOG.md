@@ -11,6 +11,9 @@ Butun ehemiyyetli deyisiklikler bu faylda qeyd olunur.
 
 ## [Unreleased]
 
+### Fixed
+- `TASK-0452` fix(toolkit): **Toolkit səhifəsində «Buradakı 5 alət» yazılırdı, amma 6 alət var** — sahib canlıda gördü. TASK-0450 «Böyüt» bölməsinə «Addım Xərci Kalkulyatoru»nu əlavə etdi, bölmə mətni isə sayı sabit yazırdı. Say düzəldilmədi, **çıxarıldı** (4 dildə «Buradakı alətlər…», «Bu bələdçilər…») — növbəti alət əlavə olunanda mətn yenə köhnəlməsin; «Böyüt» mətninə «addım» sözü əlavə olundu. Yoxlama: lokal `/toolkit`, `/en`, `/tr`, `/ru` → yeni mətn, «5 » sayı 0.
+
 ### Changed
 - `TASK-0451` chore(process): **«Hər PR-da STATE.md yenilənməlidir» qaydası ləğv edildi → «STATE.md-yə PR-da toxunma»**. Səbəb: CI (quality-gates, «Generate STATE.md») main-ə hər push-dan sonra `docs/STATE.md`-ni özü yaradıb commit edir; PR da həmin faylı dəyişəndə hər bot commit-i konflikt verir — PR #450 iki dəfə bu səbəbdən «This branch has conflicts» göstərdi (L-054). Sahib qərarı ilə `CLAUDE.md` (PR Disiplini) və `.github/pull_request_template.md` checklist-i yeniləndi. Bu PR-ın özündə STATE.md dəyişməyib.
 

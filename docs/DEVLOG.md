@@ -1,5 +1,9 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0452 (toolkit «5 alət» sayı)
+
+Sahibin canlı ekran görüntüsündə «Buradakı 5 alət» + 6 kart. Mənim TASK-0450-m köhnəltdi: kartı əlavə etdim, bölmə mətnini oxumadım. Sayı 6 etmək eyni tələni saxlayardı — mətn artıq say demir. Dərs yeni L deyil, L-051-in yanında qeyd: yeni kart əlavə edəndə eyni bölmənin başlıq/mətnini də oxu.
+
 ## 2026-09-26 — TASK-0451 (STATE.md qaydası)
 
 **Sahib:** «STATE kuralını değiştir». Qayda yazıldığı vaxt STATE.md əllə yenilənirdi; sonra CI-a avtomatik snapshot addımı əlavə olunub, qayda isə qalıb. İkisi birlikdə hər PR-da zəmanətli konflikt deməkdir: PR STATE-i dəyişir → merge → bot yenidən yazır → açıq qalan digər PR konfliktə düşür. Qayda iki yerdə idi (CLAUDE.md PR Disiplini, PR şablonu checklist-i) — hər ikisi dəyişdi. `AGENTS.md` və CLAUDE-BRAIN-dəki «STATE.md-ni oxu» istinadları qaldı: oxumaq düzgündür, yazmaq yox. Bu PR STATE.md-yə toxunmur — `git diff origin/main --stat`-da yoxdur.
