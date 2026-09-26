@@ -1,5 +1,13 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0454 (bloq: Markdown faylı idxalı)
+
+**Sahib:** «yazılar bak ne durumda çıkıyor? zamanında bunu yapmıştın, yazıyı atardım alırdı». Spagetti yazısı canlıda `##`, cədvəl, sitat olmadan düz mətn kimi çıxırdı. Əvvəl renderer-dən şübhələndim — yoxladım: `MarkdownRenderer` h2/cədvəl/sitatı düzgün göstərir, `app/api/blog/route.ts` AZ mətnə toxunmur. Deməli mətn artıq formatsız gəlib: sahib yazını mənim göndərdiyim sənədin **göstərilən** görünüşündən kopyalayıb — orada `##` işarəsi görünmür, kopyalanmır da. Sahibkara «xam mətni kopyala» demək kövrək həll olardı; fayl seçmək isə səhv edilə bilmir.
+
+**Qərarlar:** meta bloku format-ı mənim redaktə sənədimdəki kimidir (``` içində `Açar: dəyər`) — sahibə gedən 6 fayl eyni formada. Kateqoriya: sənəddə «🏛️ Açılış və Dizayn» vardı, redaktorda belə seçim yoxdur (6 kateqoriya) → fayllarda «⚙️ Əməliyyat»; parser uyğun gəlməyəni səssiz dəyişmir, xəbərdarlıq verir. SEO title limiti 60-dır, başlıqlar 68–82 simvol idi → kəsmək əvəzinə fayllara ayrıca `SEO başlıq:` sətri əlavə olundu (≤60). Toast 2.2 s-də itir — xəbərdarlıqlar üçün düymənin altında qalıcı mesaj.
+
+**Test:** əvvəl SEO sayğacını (`51/60`) yoxladım — səhv hesablamışdım (50). Sayğac əvəzinə dəyərin özü yoxlanır. Hidrasiyadan əvvəl seçilən fayl itə bilər (L-053) — ilk yükləmə `toPass()` ilə. 3/3.
+
 ## 2026-09-26 — TASK-0453 (bloq CTA xam açarları)
 
 Sahibin ekran görüntüsü: yazının sonunda «blogDetail.ctaTitle», «blogDetail.ctaWhatsapp» düymədə. Açarlar kodda var, JSON-da yox — heç vaxt olmayıb (git log: CTA bloku #394/#418 dövründən). Bizim i18n yoxlaması 4 dilin bir-biri ilə paritetinə baxır, koddakı `t()` açarının JSON-da olub-olmadığına yox; ona görə tutulmadı. Növbəti task üçün qeyd: `t('…')` açarlarını JSON ilə tutuşduran skript lazımdır (TECH_DEBT-ə yazılmalı).

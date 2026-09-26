@@ -4,6 +4,25 @@ Texniki borc qeydleri. Her giris prioritet, sprint ve hell plani ile.
 
 ---
 
+## TD-010 — Koddakı `t('…')` açarlarının JSON-da mövcudluğu yoxlanmır
+
+**Tarix:** 2026-09-26
+**Sprint:** TASK-0453 zamanı qeydə alındı
+**Status:** ACIQ
+**Prioritet:** Orta
+
+### Problem
+Bloq yazısının CTA blokunda canlıda «blogDetail.ctaTitle» kimi xam açarlar görünürdü (TASK-0453): kod `t('ctaTitle')` çağırırdı, `messages/*.json`-da açar heç vaxt olmayıb. Mövcud i18n yoxlaması yalnız 4 dilin bir-biri ilə paritetinə baxır — hamısında eyni açar yoxdursa, paritet «PASS» verir.
+
+### Hell
+Skript: `useTranslations('ns')` / `getTranslations('ns')` namespace-i ilə eyni fayldakı sabit `t('key')` çağırışlarını toplayıb `messages/az.json`-da `ns.key` yolunu yoxlasın; dinamik açarlar (template string ilə qurulan) atlanır. `verify:staged` və CI quality-gates-ə qoşulsun.
+
+### Elaqeli
+- app/[locale]/blog/[slug]/page.tsx
+- messages/*.json
+
+---
+
 ## TD-005 — `hero` səhifəsində saxta «Saxla» / «Dərc et»
 
 **Tarix:** 2026-09-13
