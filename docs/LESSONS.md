@@ -347,3 +347,9 @@ route patterni ile eyni).
 - **Kök səbəb:** Repo faylları prettier ilə formatlanmayıb; hook isə hər `Edit`-dən sonra tam faylı formatlayır. Yalnız formatlanmamış fayllarda baş verir (`e2e/*.spec.ts` kimi yeni fayllarda problem yoxdur).
 - **Qayda:** `Edit`-dən sonra `git diff --stat` — dəyişən sətir sayı gözləniləndən böyükdürsə `git checkout -- <fayl>` + `perl -0pi` / `sed` ilə minimal tətbiq. Diff yalnız nəyi düzəltdiyini göstərməlidir. Formatlama ayrıca «chore(format)» PR-ıdır.
 - **Nəticə:** TASK-0447 diff: blog 6, food-cost 4, adminContent −21 sətir.
+
+## L-052: Node skripti «Done» deyib çıxmırsa, CI onu 6 saat saxlayır — açıq `process.exit(0)` + `timeout-minutes`
+- **Səhv:** `fetch-news.mjs` `main()` bitəndən sonra proses sağ qalırdı (rss-parser/fetch açıq soketləri). GitHub Actions job default 360 dəq gözləyib «cancelled» edir: 2 icra (#179, #183) hər biri 6 saat yedi, o günün xəbəri commit olunmadı. Sandbox-da 2026-09-13-də eyni ilişmə görülmüşdü, «CI-da yoxlanacaq» yazılıb buraxılmışdı — 12 gün sonra CI-da 2 dəfə təkrarlandı.
+- **Kök səbəb:** (1) Bir-dəfəlik skriptlərdə event loop-u kimin saxladığı təxmin edilə bilməz; iş bitəndə açıq `process.exit(0)` yeganə etibarlı çıxışdır (fayl sinxron yazılırsa). (2) Workflow-da `timeout-minutes` yox idi — default 6 saatdır. (3) Xarici API `fetch`-ində `AbortSignal.timeout` yox idi.
+- **Qayda:** Hər cron/CI skripti: `main().then(() => process.exit(0))`; hər job `timeout-minutes` normal müddətin ~3 misli; hər xarici `fetch` `AbortSignal.timeout`. Sandbox-da görülən «çıxmadı» simptomu «proxy-dir yəqin» deyə buraxılmaz — L-023 (fakt/hipotez): hipotez yazılırsa yoxlama tarixi ilə yazılır.
+- **Nəticə:** TASK-0448.

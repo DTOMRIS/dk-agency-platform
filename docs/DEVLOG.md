@@ -1,5 +1,19 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0448 (fetch-news «Done»-dan sonra çıxmır — 6 saatlıq cancel)
+
+**Mənbə:** 0446-nın öz check-in-i (sahib sorğusu yox). 14-ündə cron hələ işləməmişdi; 26-sında baxdım: #180–#182 uğurlu, `pendingNews.json` gündəlik commit olunur — **0446 işləyir**. Amma #179 və #183 «cancelled», hər biri düz 6 saat. Uğurlu olanlar 3–9 dəq çəkir.
+
+**Diaqnoz logdan:** `Done. Fetched 12 new items` 13:20:01 → sonrakı sətir 19:16:52 `The operation was canceled.` Arada heç nə. «Commit and push» skipped. Runner «orphan process» kimi `node` prosesini öldürür. Deməli skript işini bitirir, faylı yazır, `main()` resolve olur — və proses çıxmır. Bir-dəfəlik Node skriptində bu, açıq handle deməkdir: rss-parser-in http agenti və ya undici keep-alive soketi. Hansı olduğunu axtarmadım — cavab hər halda eynidir: iş bitəndə `process.exit(0)`.
+
+**Bunu 13 gün əvvəl görmüşdüm.** 0446-nın sandbox sübutunda skript «Done» dedi və 40s-də çıxmadı; DEVLOG-a «böyük ehtimal proxy soketləri; CI-da yoxlanacaq» yazdım. Hipotez idi, fakt kimi buraxıldı, yoxlama tarixi qoyulmadı — L-023-ün özü. Nəticə: 2 × 360 dəq Actions + 2 günün xəbəri gəlmədi. L-052 bunu qayda edir: sandbox-da görülən simptom ya elə oradaca düzəldilir, ya check-in ilə tarixə bağlanır.
+
+**Düzəliş minimal, 3 yerdə:** (1) `main().then(() => process.exit(0))` — fayl `writeFileSync` ilə yazılır, exit itki vermir; (2) DeepSeek `fetch`-ə `AbortSignal.timeout(30_000)` — heç bir timeout yox idi, 12 xəbər × 2 çağırış = 24 sonsuz gözləmə nöqtəsi; (3) workflow `timeout-minutes: 15` — ilişsə də 6 saat yox, 15 dəq, və status «cancelled» yerinə açıq «timed out». Prettier hook-a görə `.mjs`-i `perl` ilə dəyişdim (L-051): diff 13 sətir.
+
+**Sübut:** lokal `--limit=1 --no-translate`: əvvəl exit 124 (90s timeout), indi **exit 0 / 4s**. `node --check` OK, eslint 0. `pendingNews.json` test sonrası geri qaytarıldı.
+
+**Qalır:** növbəti 2–3 cron icrasının müddətinə bax (check-in 48 saat). ≤15 dəq və «success» gözlənilir.
+
 ## 2026-09-13 — TASK-0447 (mobil daşma blog/food-cost, hero silindi)
 
 **Sahib:** «blog + food-cost mobil daşması, hero Saxla — hallet». İki iş: biri ölçülmüş CSS düzəlişi, digəri qərar.

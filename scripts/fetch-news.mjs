@@ -106,6 +106,7 @@ async function translateWithDeepSeek(text, apiKey) {
         ],
         temperature: 0.2,
       }),
+      signal: AbortSignal.timeout(30_000), // cavabsız API bütün cron-u asmasın (TASK-0448)
     });
     const data = await res.json();
     const out = data?.choices?.[0]?.message?.content?.trim();
@@ -223,7 +224,12 @@ async function main() {
   console.log(`[fetch-news] Done. Fetched ${allItems.length} new items → pendingNews.json (admin təsdiqindən sonra curatedNews-ə keçəcək)`);
 }
 
-main().catch((e) => {
-  console.error('[fetch-news] Error:', e);
-  process.exit(1);
-});
+main()
+  .then(() => {
+    // rss-parser/fetch açıq soket saxlaya bilir — «Done»-dan sonra proses çıxmırdı (GitHub Actions 6 saat sonra cancel edirdi). Fayl artıq sinxron yazılıb.
+    process.exit(0);
+  })
+  .catch((e) => {
+    console.error('[fetch-news] Error:', e);
+    process.exit(1);
+  });

@@ -16,7 +16,8 @@ Sahib «yamaq etmə, detala fokuslan, dünya standartına və mobilə bax; CTO k
 - **0443** dashboard: `.dashboard-scope{color:var(--dk-ink)}` (görünməz düymələr), 200 `text-slate-400`→600, `.dk-card`, 8 səhifə 390px daşma.
 - **0444** dashboard: 34 route→19 (15 saxta/boş silindi), 8 real səhifə menyuya, sidebar 6 bölmə, 10 ölü i18n namespace.
 - **0445** sistem: L-013/L-023 bərpa + L-040…049; `scripts/verify-lessons.mjs` (dk-validate 5b); task kartları 0426–0444; DEPLOYMENT miqrasiya proseduru; CLAUDE.md qırmızı `#E94560`; CLAUDE-BRAIN; `e2e/dashboard-smoke.spec.ts` @smoke.
-- **0446** ci: `Daily News Fetch` cron-u `node --env-file=.env.local` üzündən exit 9 (CI-da fayl yoxdur) — 4 script `--env-file-if-exists`, workflow Node 22. Merge-dən sonra `workflow_dispatch` ilə yaşıl icra **təsdiqlənməlidir** (sandbox-da `Done`-dan sonra proses çıxmadı — proxy şübhəsi).
+- **0446** ci: `Daily News Fetch` cron-u `node --env-file=.env.local` üzündən exit 9 (CI-da fayl yoxdur) — 4 script `--env-file-if-exists`, workflow Node 22. **Təsdiqləndi (2026-09-26):** #180–#182 uğurlu, `pendingNews.json` gündəlik commit olunur.
+- **0448** ci (2026-09-26): «Done»-dan sonra proses çıxmırdı → 2 icra 6 saatda «cancelled» (sandbox-dakı «proxy şübhəsi» səhv idi — L-052). `process.exit(0)` + DeepSeek `AbortSignal.timeout(30s)` + `timeout-minutes: 15`. Növbəti icralar ≤15 dəq olmalı — yoxla.
 
 ### Sahib qərarları (ADR-ə bax)
 - Brend qırmızısı **olduğu kimi qalır** (`#E94560`); CLAUDE.md düzəldildi.
