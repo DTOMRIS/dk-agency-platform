@@ -36,7 +36,7 @@ interface MenuItemData {
 
 const baslaItems: MenuItemData[] = [
   { icon: ClipboardList, label: 'Açılış Checklist', desc: 'Addım-addım açılış planı', href: '/toolkit/checklist' },
-  { icon: HardHat, label: 'İnşaatdan Açılışa', desc: '52 maddəlik tikinti sprinti', href: '/toolkit/insaat-checklist' },
+  { icon: HardHat, label: 'İnşaatdan Açılışa', desc: '62 maddəlik açılış planı', href: '/toolkit/insaat-checklist' },
   { icon: FileText, label: 'Rəsmi işlər', desc: 'AQTA və uyğunluq yoxlaması', href: '/toolkit/aqta-checklist' },
   { icon: MapPin, label: 'Məkan seçimi', desc: 'Checklist daxilində lokasiya qərarları', href: '/toolkit/checklist' },
   { icon: Palette, label: 'Konsept hazırlama', desc: 'Brend və mövqe seçimi', href: '/toolkit/branding-guide' },

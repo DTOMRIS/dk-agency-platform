@@ -1,5 +1,17 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0449 (İnşaat checklist: «Əməliyyat dizaynı» mərhələsi)
+
+**Mənşə:** Sahib Drive-dakı dizayn qeydlərini və başqa AI-nın (Antigravity) yazdığı bloqları göndərdi. Bloqlar redaktə olunub sahibə verildi (admin paneldən özü dərc edir — repoya girmir). Toolkit üçün spesifikasiya yazıldı, sahib təsdiqlədi: «ayrı PR, 10 madde tamam, isim güzel». Bu PR — birinci hissə; «Addım Xərci Kalkulyatoru» TASK-0450, ayrıca PR.
+
+**Dizayn qərarları:**
+- **Mərhələ əvvələ, id sona.** Əməliyyat dizaynı tikintidən qabaq gəlir, ona görə siyahının başındadır. Amma id-lər 53–62: irəliləyiş `localStorage`-da id massivi kimi saxlanır (`insaat-checklist-progress-v1`); mövcud id-ləri sürüşdürsəydim, köhnə istifadəçinin «Ön hazırlıq»dakı işarələri başqa maddələrə keçərdi. Nəticədə ekranda `{item.id}.` «53.» göstərərdi — ona görə `displayNo` xəritəsi: nömrə sıradan gəlir.
+- **Açıq mərhələ** `prep` → `design` (yeni istifadəçi əvvəl dizayn qərarlarını görür).
+- **«52» harada dəyişdi, harada yox.** Alət səthləri (4 dildə `pageDesc`, metadata, HowTo addımları, mega menyu) → 62. Bloq yazısı «İnşaatdan Açılışa: 52 Maddəlik…» — dəyişmədi: o, öz mətnində 52 tikinti maddəsini izah edir; başlığı 62 etmək məzmunla ziddiyyət yaradardı. `adminContent.ts`-dəki `adminToolkitCards` heç yerdə istifadə olunmur — toxunulmadı.
+- **L-051:** bütün `.tsx` düzəlişləri `perl` ilə (prettier hook kollateralı olmasın). Diff: səhifə +8/−4, metadata 3 fayl, JSON 4 × 27 sətir.
+
+**Sübut:** `e2e/insaat-checklist.spec.ts` 6/6 (10.2s). tsc 35 = baza. eslint 0 error (1 köhnə `<img>` warning). i18n 4 dildə 10/10 maddə, açar sayı 194 × 4.
+
 ## 2026-09-26 — TASK-0448 (fetch-news «Done»-dan sonra çıxmır — 6 saatlıq cancel)
 
 **Mənbə:** 0446-nın öz check-in-i (sahib sorğusu yox). 14-ündə cron hələ işləməmişdi; 26-sında baxdım: #180–#182 uğurlu, `pendingNews.json` gündəlik commit olunur — **0446 işləyir**. Amma #179 və #183 «cancelled», hər biri düz 6 saat. Uğurlu olanlar 3–9 dəq çəkir.

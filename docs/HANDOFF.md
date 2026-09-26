@@ -2,6 +2,8 @@
 
 ## 2026-09-13 — Sahib sessiyası: TASK-0439 → 0446 (təhlükəsizlik, miqrasiya, dizayn təməli, route təmizliyi, sistem, cron)
 
+- **0449** toolkit (2026-09-26): İnşaat checklist-ə «Əməliyyat dizaynı» (10 maddə, 52 → 62, id 53–62). **0450** Addım Xərci Kalkulyatoru — ayrıca PR. Sahib 6 bloq yazısını (spagetti, gün hissələri, vitrin, memarlıq seriyası 3 yazı) admin paneldən özü dərc edir — repoda yoxdur; slug-lar: metbexde-itirilen-metrler-spagetti-diaqrami, gun-hisseleri-olu-saatlar-gelir, vitrin-isti-noqteler-kassa-onu, memarla-ortaq-dil-restoran-konsepti, qonaq-ve-isci-axini-zal-trafiki, isiq-qoxu-musiqi-ayrilma-ani.
+
 ### Sessiya başlanğıcı checklist-inə əlavə (L-050)
 - GitHub **Actions → scheduled workflow-lar** (`Daily News Fetch` və s.) son nəticəsinə bax. Onlar PR check-i deyil; qırmızı olanda heç kimə bildiriş gəlmir — `fetch-news` 3 ay (100/100 icra) səssiz sınmışdı.
 - Mobil daşma ölçüsü (0445 sonrası): 20 dashboard səhifəsi × 390/360px → 18 təmiz, 2 daşırdı (`blog` başlıq sətri 432px, `food-cost` tab zolağı 437px) — **TASK-0447-də düzəldildi**; smoke spec 390px yoxlaması indi bütün səhifələri əhatə edir.

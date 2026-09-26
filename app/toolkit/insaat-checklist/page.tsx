@@ -3,19 +3,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { AlertTriangle, ArrowRight, BookOpen, Camera, Check, ChevronDown, ChevronUp, HardHat, Lightbulb, Paintbrush, PartyPopper, RotateCcw, Video, Wrench, X } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Compass, BookOpen, Camera, Check, ChevronDown, ChevronUp, HardHat, Lightbulb, Paintbrush, PartyPopper, RotateCcw, Video, Wrench, X } from 'lucide-react';
 import { isVideo, resizeImage, validateFile } from '@/lib/utils/image-resize';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 
-type PhaseKey = 'prep' | 'rough' | 'finish' | 'equipment' | 'opening';
+type PhaseKey = 'design' | 'prep' | 'rough' | 'finish' | 'equipment' | 'opening';
 interface ChecklistItem { id: number; text: string; detail: string; }
 interface Phase { key: PhaseKey; title: string; subtitle: string; duration: string; icon: typeof HardHat; accent: string; bg: string; items: ChecklistItem[]; }
 interface MediaItem { name: string; url: string; type: 'image' | 'video'; }
 
 const STORAGE_KEY = 'insaat-checklist-progress-v1';
 const MEDIA_KEY = 'insaat-checklist-media-v1';
-const initialOpenState: Record<PhaseKey, boolean> = { prep: true, rough: false, finish: false, equipment: false, opening: false };
+const initialOpenState: Record<PhaseKey, boolean> = { design: true, prep: false, rough: false, finish: false, equipment: false, opening: false };
 
 export default function InsaatChecklistPage() {
   const t = useTranslations('toolkit.insaatChecklist');
@@ -23,6 +23,8 @@ export default function InsaatChecklistPage() {
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const phases: Phase[] = [
+    // TASK-0449: tikintidən əvvəlki əməliyyat dizaynı. id 53–62 — mövcud id-lər dəyişmir, saxlanmış irəliləyiş pozulmur.
+    { key: 'design', title: t('phase_design_title'), subtitle: t('phase_design_subtitle'), duration: t('phase_design_duration'), icon: Compass, accent: 'text-violet-600', bg: 'bg-violet-50', items: Array.from({ length: 10 }, (_, i) => ({ id: i + 53, text: t(`phase_design_item${i + 1}_text`), detail: t(`phase_design_item${i + 1}_detail`) })) },
     { key: 'prep', title: t('phase_prep_title'), subtitle: t('phase_prep_subtitle'), duration: t('phase_prep_duration'), icon: AlertTriangle, accent: 'text-amber-600', bg: 'bg-amber-50', items: Array.from({ length: 12 }, (_, i) => ({ id: i + 1, text: t(`phase_prep_item${i + 1}_text`), detail: t(`phase_prep_item${i + 1}_detail`) })) },
     { key: 'rough', title: t('phase_rough_title'), subtitle: t('phase_rough_subtitle'), duration: t('phase_rough_duration'), icon: HardHat, accent: 'text-orange-600', bg: 'bg-orange-50', items: Array.from({ length: 12 }, (_, i) => ({ id: i + 13, text: t(`phase_rough_item${i + 1}_text`), detail: t(`phase_rough_item${i + 1}_detail`) })) },
     { key: 'finish', title: t('phase_finish_title'), subtitle: t('phase_finish_subtitle'), duration: t('phase_finish_duration'), icon: Paintbrush, accent: 'text-rose-600', bg: 'bg-rose-50', items: Array.from({ length: 12 }, (_, i) => ({ id: i + 25, text: t(`phase_finish_item${i + 1}_text`), detail: t(`phase_finish_item${i + 1}_detail`) })) },
@@ -52,6 +54,8 @@ export default function InsaatChecklistPage() {
   useEffect(() => { window.localStorage.setItem(MEDIA_KEY, JSON.stringify(media)); }, [media]);
 
   const totalItems = phases.reduce((sum, p) => sum + p.items.length, 0);
+  // Ekranda sıra nömrəsi göstərilir (id yox): dizayn mərhələsi 1-dən başlayır.
+  const displayNo = new Map(phases.flatMap((p) => p.items).map((it, idx) => [it.id, idx + 1]));
   const progress = Math.round((checked.length / totalItems) * 100);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const phaseProgress = useMemo(() => phases.map((p) => ({ key: p.key, done: p.items.filter((i) => checked.includes(i.id)).length, total: p.items.length })), [checked]);
@@ -103,7 +107,7 @@ export default function InsaatChecklistPage() {
                       <div className="flex items-start gap-3">
                         <button onClick={() => toggleItem(item.id)} className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors ${done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 bg-white text-transparent'}`}><Check size={12} /></button>
                         <div className="min-w-0 flex-1">
-                          <div className="text-sm font-bold text-slate-900">{item.id}. {item.text}</div>
+                          <div className="text-sm font-bold text-slate-900">{displayNo.get(item.id)}. {item.text}</div>
                           <p className="mt-0.5 text-xs leading-relaxed text-slate-500">{item.detail}</p>
                           <textarea value={notes[item.id] || ''} onChange={(e) => setNotes((c) => ({ ...c, [item.id]: e.target.value }))} placeholder={t('notePlaceholder')} className="mt-2 min-h-[60px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 outline-none focus:border-orange-300" />
                           {!!media[item.id]?.length && (
