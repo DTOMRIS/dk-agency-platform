@@ -29,8 +29,11 @@ Rules:
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
-// Chunk threshold: texts above this char count are split by markdown headings
-const CHUNK_CHAR_THRESHOLD = 6000;
+// Chunk size: texts above this are split at markdown headings and packed into
+// chunks of about this size, translated in parallel (smaller chunk = faster
+// DeepSeek reply; each call must finish inside the 120 s abort below).
+const CHUNK_CHAR_THRESHOLD = 3000;
+const CHUNK_CONCURRENCY = 4;
 
 function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
@@ -52,29 +55,65 @@ function looksUntranslated(output: string, targetLang: string): boolean {
 }
 
 /**
- * Split long markdown by ## headings so each chunk fits token limits.
- * Returns array of chunks. Short texts return single-element array.
+ * Split long markdown into chunks of ≤ CHUNK_CHAR_THRESHOLD chars.
+ * Splits only at #/##/### headings OUTSIDE ``` fences, then packs whole
+ * sections together (TASK-0455: was one DeepSeek call per heading, sent
+ * sequentially → 10+ calls, 2–3 min request, proxy timeout risk).
+ * A single section longer than the threshold stays one chunk.
  */
 function chunkByHeadings(text: string): string[] {
   if (text.length <= CHUNK_CHAR_THRESHOLD) return [text];
 
-  const lines = text.split('\n');
-  const chunks: string[] = [];
+  const sections: string[] = [];
   let current: string[] = [];
+  let inFence = false;
+  const flush = () => {
+    const block = current.join('\n').trim();
+    if (block) sections.push(block);
+  };
 
-  for (const line of lines) {
-    if (/^#{1,3}\s/.test(line) && current.length > 0) {
-      const block = current.join('\n').trim();
-      if (block) chunks.push(block);
+  for (const line of text.split('\n')) {
+    if (/^\s*(```|~~~)/.test(line)) inFence = !inFence;
+    if (!inFence && /^#{1,3}\s/.test(line) && current.length > 0) {
+      flush();
       current = [line];
     } else {
       current.push(line);
     }
   }
-  const last = current.join('\n').trim();
-  if (last) chunks.push(last);
+  flush();
+
+  const chunks: string[] = [];
+  let buf = '';
+  for (const section of sections) {
+    if (buf && buf.length + section.length + 2 > CHUNK_CHAR_THRESHOLD) {
+      chunks.push(buf);
+      buf = section;
+    } else {
+      buf = buf ? `${buf}\n\n${section}` : section;
+    }
+  }
+  if (buf) chunks.push(buf);
 
   return chunks.length > 0 ? chunks : [text];
+}
+
+/** Run async tasks with at most `limit` in flight; results keep input order. */
+async function mapWithLimit<T, R>(
+  items: T[],
+  limit: number,
+  fn: (item: T) => Promise<R>
+): Promise<R[]> {
+  const results = new Array<R>(items.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < items.length) {
+      const i = next++;
+      results[i] = await fn(items[i]);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return results;
 }
 
 /**
@@ -196,15 +235,13 @@ export async function translateText(
     return callDeepSeek(text, targetLang, key);
   }
 
-  // Translate chunks independently, rejoin
-  const translated: string[] = [];
-  for (const chunk of chunks) {
-    const result = await callDeepSeek(chunk, targetLang, key);
-    if (!result) {
-      console.error(`[translate] Chunk failed for ${targetLang}, aborting entire text`);
-      return null; // Partial translation = no translation. Don't mix languages.
-    }
-    translated.push(result);
+  // Translate chunks in parallel (order preserved), rejoin
+  const translated = await mapWithLimit(chunks, CHUNK_CONCURRENCY, (chunk) =>
+    callDeepSeek(chunk, targetLang, key)
+  );
+  if (translated.some((t) => !t)) {
+    console.error(`[translate] Chunk failed for ${targetLang}, aborting entire text`);
+    return null; // Partial translation = no translation. Don't mix languages.
   }
   return translated.join('\n\n');
 }
