@@ -67,7 +67,7 @@ Deploy: **Hostinger Web Apps, `main`-dən auto-deploy.**
 - **Mobil (390px məcburi):** `scrollWidth == clientWidth`; grid uşağına `min-w-0`, çip sırasına `flex-wrap`, KPI `grid-cols-2 lg:grid-cols-N` (L-045).
 - **Test dürüstlüyü:** uğur yolu sınanmayıbsa «hazırdır» demə (L-040). Sandbox-da lokal Postgres 16 var (`postgres` useri, `initdb`) — DB skriptini orada işlət. tsc-dən əvvəl `rm -rf .next/dev .next/types`; baza ilə fərqi worktree+`comm` ilə çıxar (L-043). Playwright: Tailwind rəngi `lab()`, error.tsx mətni həmişə HTML-dədir → görünürlük yoxla (L-044).
 - **Proses:** `pgrep -x next-server` (naxışlı `-f` öz shell-ini vurur, exit 144); canlı dev serverin altında `.next`-ə toxunma (L-042). Serveri tool-un arxa plan rejimi ilə qaldır.
-- **Sənəd:** `scripts/verify-lessons.mjs` — kodda istinad edilən hər `L-0XX` LESSONS.md-də olmalıdır (dk-validate 5b). Task kartı `docs/tasks/TASK-XXXX.md` məcburidir. Növbəti task ID: **0451** (0450 = Addım Xərci Kalkulyatoru, ayrıca PR).
+- **Sənəd:** `scripts/verify-lessons.mjs` — kodda istinad edilən hər `L-0XX` LESSONS.md-də olmalıdır (dk-validate 5b). Task kartı `docs/tasks/TASK-XXXX.md` məcburidir. Növbəti task ID: **0453** (0452 = toolkit «5 alət» sayı, ayrıca PR).
 - **Sahib qərarları:** brend qırmızısı `#E94560` qalır · saxta dashboard səhifələri silinib (geri yox) · `/news` placeholder hələlik qalır.
 - **Açıq borc:** TD-004 (iki auth sistemi; layout rol yoxlamır — kor fix ETMƏ), TD-005 hero saxta Saxla, TD-006 ilanlar mock fallback, TD-007 [locale] dashboard layout, TD-008 dk-card/page-header rollout, TD-009 push qadağası gate-siz.
 

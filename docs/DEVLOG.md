@@ -1,5 +1,9 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0451 (STATE.md qaydası)
+
+**Sahib:** «STATE kuralını değiştir». Qayda yazıldığı vaxt STATE.md əllə yenilənirdi; sonra CI-a avtomatik snapshot addımı əlavə olunub, qayda isə qalıb. İkisi birlikdə hər PR-da zəmanətli konflikt deməkdir: PR STATE-i dəyişir → merge → bot yenidən yazır → açıq qalan digər PR konfliktə düşür. Qayda iki yerdə idi (CLAUDE.md PR Disiplini, PR şablonu checklist-i) — hər ikisi dəyişdi. `AGENTS.md` və CLAUDE-BRAIN-dəki «STATE.md-ni oxu» istinadları qaldı: oxumaq düzgündür, yazmaq yox. Bu PR STATE.md-yə toxunmur — `git diff origin/main --stat`-da yoxdur.
+
 ## 2026-09-26 — TASK-0450 (Addım Xərci Kalkulyatoru)
 
 **Mənşə:** TASK-0449 ilə birlikdə spesifikasiya olundu; sahib «ayrı PR», «isim güzel» dedi. Ayrı PR üçün ayrı branch (`…-addim-xerci`) — GitHub bir branch-dan eyni anda iki açıq PR qəbul etmir.

@@ -17,7 +17,7 @@ Verdict: PASS / BLOCK
 ```
 
 ## Checklist
-- [ ] STATE.md yeniləndi
+- [ ] STATE.md-yə toxunulmadı (merge-dən sonra CI avtomatik yeniləyir — L-054)
 - [ ] CHANGELOG.md sətri əlavə edildi
 - [ ] `tsc --noEmit` 0 error
 - [ ] Real test keçdi (mock deyil)
