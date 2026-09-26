@@ -11,6 +11,8 @@ on:
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    # Skript ilişsə 6 saat (GitHub default) yox, 15 dəqiqə itsin — normal icra 3–9 dəq (#180–#182)
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
