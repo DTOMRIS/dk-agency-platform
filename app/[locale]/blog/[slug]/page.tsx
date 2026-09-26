@@ -227,7 +227,7 @@ export default async function BlogDetailPage({
 
         <div className="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:gap-12 lg:grid-cols-12">
-            <article className="text-slate-900 lg:col-span-8">
+            <article className="min-w-0 text-slate-900 lg:col-span-8">
               {/* Metadata Bar */}
               <div className="mb-8 flex flex-wrap items-center gap-3 sm:gap-6 border-b border-slate-200 pb-6 text-xs font-bold uppercase tracking-widest text-slate-400">
                 <div className="flex items-center gap-2">

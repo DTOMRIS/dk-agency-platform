@@ -1,5 +1,13 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0456 (bloq siyahıları + mobil cədvəl daşması)
+
+**Sahib:** 6 yazını Markdown faylı ilə yüklədi, «genel iyi oldu» dedi, ekran görüntüsündə siyahılar nöqtəsiz/nömrəsiz idi. Renderer-də `list-disc`/`list-decimal` var idi — deməli nəsə üstələyir. `globals.css`-də ☐ checklist üçün yazılmış `.blog-content li { list-style: none }` (#394 dövrü) bütün `li`-ləri tuturdu. Fayl PROTECTED — icazə istəmək əvəzinə renderer səviyyəsində həll: adi maddəyə inline `listStyleType: inherit`. Test əvvəl düzəlişsiz işə salındı — FAIL (səhvi tutduğunu sübut), sonra PASS.
+
+Ekran görüntüsü çəkəndə 390px-də 494px daşma çıxdı — düzəlişdən əvvəl də eyni (stash ilə yoxlandı), yəni köhnə səhv. Səbəb cədvəl: grid elementi `min-width: auto`. `min-w-0` + spec-ə daşma testi. 28 statik yazı × 2 dil yoxlandı — 0.
+
+**Qeyd (tərcümə):** sahib «tərcümə işləmir» dedi. Diaqnoz: (1) mövcud RU/EN/TR mətni varsa və AZ hərfi yoxdursa `needsTranslation` onu «tərcümə olunub» sayır → AZ mətni dəyişəndə düymə heç nə etmir; PATCH tərcüməni tetikləmir; (2) >6000 simvol mətn hər `##`-də ayrı parçaya bölünür, parçalar ardıcıl gedir → 2–3 dəq sorğu, proxy timeout riski. Plan (TASK-0455) sahibin təsdiqini gözləyir.
+
 ## 2026-09-26 — TASK-0454 (bloq: Markdown faylı idxalı)
 
 **Sahib:** «yazılar bak ne durumda çıkıyor? zamanında bunu yapmıştın, yazıyı atardım alırdı». Spagetti yazısı canlıda `##`, cədvəl, sitat olmadan düz mətn kimi çıxırdı. Əvvəl renderer-dən şübhələndim — yoxladım: `MarkdownRenderer` h2/cədvəl/sitatı düzgün göstərir, `app/api/blog/route.ts` AZ mətnə toxunmur. Deməli mətn artıq formatsız gəlib: sahib yazını mənim göndərdiyim sənədin **göstərilən** görünüşündən kopyalayıb — orada `##` işarəsi görünmür, kopyalanmır da. Sahibkara «xam mətni kopyala» demək kövrək həll olardı; fayl seçmək isə səhv edilə bilmir.
