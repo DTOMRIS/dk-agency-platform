@@ -364,4 +364,4 @@ route patterni ile eyni).
 - **Səhv:** TASK-0449 PR-ı (#450) iki dəfə «This branch has conflicts» verdi. Birinci dəfə #451 merge olunmuşdu; həll edib push etdim. Bir neçə dəqiqə sonra yenə konflikt — bu dəfə yalnız `docs/STATE.md`.
 - **Kök səbəb:** `.github/workflows` quality-gates main-ə hər push-dan sonra `npm run snapshot:state` işlədib `TASK-0001 chore: auto-update STATE snapshot` commit edir. PR da `STATE.md`-ni dəyişirsə, hər merge-dən sonra gələn bot commit-i həmin sətirlərlə toqquşur. CLAUDE.md «hər PR-da STATE.md yenilənməlidir» deyir, amma bu iş artıq avtomatikdir.
 - **Qayda:** PR-da `docs/STATE.md`-ni main-dəki kimi saxla (`git checkout origin/main -- docs/STATE.md`); merge-dən sonra bot yeniləyir. Konflikt həll edəndə «push etdim = bitdi» sayma — `git merge-tree --write-tree origin/main <branch>` ilə təmizliyi yoxla, bot commit-i gələ bilər.
-- **Nəticə:** #450-də STATE.md main ilə eyni; PR diff-i STATE-siz. CLAUDE.md-dəki «STATE.md yenilənməlidir» qaydasının yenilənməsi — sahib qərarı.
+- **Nəticə:** #450-də STATE.md main ilə eyni; PR diff-i STATE-siz. Sahib qaydanı dəyişdi (2026-09-26, TASK-0451): CLAUDE.md və PR şablonu — «STATE.md-yə toxunma».

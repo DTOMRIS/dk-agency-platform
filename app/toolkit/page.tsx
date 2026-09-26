@@ -61,11 +61,11 @@ const copy: Record<Locale, PageCopy> = {
     startBadge: 'BAŞLA',
     startHeading: 'Restoran Açırsan?',
     startBody:
-      'Açılışdan əvvəl ən çox səhv sənəd, layihə, gigiyena və marka tərəfində olur. Bu 5 bələdçi əvvəlcə sistemi düzgün qurmaq üçündür.',
+      'Açılışdan əvvəl ən çox səhv sənəd, layihə, gigiyena və marka tərəfində olur. Bu bələdçilər əvvəlcə sistemi düzgün qurmaq üçündür.',
     growthBadge: 'BÖYÜT',
     growthHeading: 'Mövcud Restoranı Optimallaşdır',
     growthBody:
-      'Buradakı 5 alət əməliyyat, marja, komanda və delivery performansını ölçmək üçündür. Məqsəd intuisiya ilə yox, rəqəmlə idarə etməkdir.',
+      'Buradakı alətlər əməliyyat, marja, komanda, addım və delivery performansını ölçmək üçündür. Məqsəd intuisiya ilə yox, rəqəmlə idarə etməkdir.',
     cta: 'Başla',
     startTools: [
       {
@@ -144,11 +144,11 @@ const copy: Record<Locale, PageCopy> = {
     startBadge: 'BAŞLA',
     startHeading: 'Restoran Açıyor musun?',
     startBody:
-      'Açılış öncesinde en çok hata belge, proje, hijyen ve marka tarafında yapılıyor. Bu 5 rehber önce sistemi doğru kurmak içindir.',
+      'Açılış öncesinde en çok hata belge, proje, hijyen ve marka tarafında yapılıyor. Bu rehberler önce sistemi doğru kurmak içindir.',
     growthBadge: 'BÜYÜT',
     growthHeading: 'Mevcut Restoranı Optimize Et',
     growthBody:
-      'Bu 5 araç operasyon, marj, ekip ve delivery performansını ölçmek içindir. Amaç sezgiyle değil, rakamlarla yönetmektir.',
+      'Bu araçlar operasyon, marj, ekip, adım ve delivery performansını ölçmek içindir. Amaç sezgiyle değil, rakamlarla yönetmektir.',
     cta: 'Başla',
     startTools: [
       {
@@ -230,11 +230,11 @@ const copy: Record<Locale, PageCopy> = {
     startBadge: 'LAUNCH',
     startHeading: 'Opening a Restaurant?',
     startBody:
-      'Most mistakes before opening happen in documents, construction, hygiene, and branding. These 5 guides exist to build the right system first.',
+      'Most mistakes before opening happen in documents, construction, hygiene, and branding. These guides exist to build the right system first.',
     growthBadge: 'GROW',
     growthHeading: 'Optimise an Existing Restaurant',
     growthBody:
-      'These 5 tools measure operational, margin, team, and delivery performance. The goal is to manage with data, not with intuition.',
+      'These tools measure operational, margin, team, walking and delivery performance. The goal is to manage with data, not with intuition.',
     cta: 'Start',
     startTools: [
       { title: 'Opening Checklist', desc: 'Track legal, venue, menu, team, and marketing steps.' },
@@ -313,11 +313,11 @@ const copy: Record<Locale, PageCopy> = {
     startBadge: 'ЗАПУСК',
     startHeading: 'Открываете ресторан?',
     startBody:
-      'Большинство ошибок до открытия происходит в документации, строительстве, гигиене и брендинге. Эти 5 руководств помогут сначала выстроить правильную систему.',
+      'Большинство ошибок до открытия происходит в документации, строительстве, гигиене и брендинге. Эти руководства помогут сначала выстроить правильную систему.',
     growthBadge: 'РОСТ',
     growthHeading: 'Оптимизируйте действующий ресторан',
     growthBody:
-      'Эти 5 инструментов предназначены для измерения операционных показателей, маржи, командной работы и эффективности доставки. Цель — управлять цифрами, а не интуицией.',
+      'Эти инструменты предназначены для измерения операционных показателей, маржи, командной работы и эффективности доставки. Цель — управлять цифрами, а не интуицией.',
     cta: 'Начать',
     startTools: [
       {
