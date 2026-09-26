@@ -11,6 +11,7 @@ import {
   BedDouble,
   Calculator,
   ClipboardList,
+  Footprints,
   Globe,
   HardHat,
   MessageCircle,
@@ -106,6 +107,10 @@ const copy: Record<Locale, PageCopy> = {
         title: 'Delivery Kalkulyator',
         desc: 'Wolt, Bolt Food, Yango və öz delivery üçün komissiya marjasını hesabla.',
       },
+      {
+        title: 'Addım Xərci Kalkulyatoru',
+        desc: 'Aşpaz və ofisiantın boş yola sərf etdiyi vaxtı aylıq maaş itkisinə çevir.',
+      },
     ],
     otaBadge: 'QONAQLAMA',
     otaHeading: 'Otel, Pansiyon & Qonaq Evi',
@@ -188,6 +193,10 @@ const copy: Record<Locale, PageCopy> = {
         title: 'Delivery Hesaplayıcı',
         desc: 'Wolt, Bolt Food, Yango ve kendi deliveryn için komisyon marjını hesapla.',
       },
+      {
+        title: 'Калькулятор стоимости шагов',
+        desc: 'Переведите пустые переходы поваров и официантов в потерю зарплаты за месяц.',
+      },
     ],
     otaBadge: 'KONAKLAMA',
     otaHeading: 'Otel, Pansiyon & Misafirhane',
@@ -266,6 +275,10 @@ const copy: Record<Locale, PageCopy> = {
       {
         title: 'Delivery Calculator',
         desc: 'Calculate commission margins for Wolt, Bolt Food, Yango, and your own delivery.',
+      },
+      {
+        title: 'Step Cost Calculator',
+        desc: 'Turn the empty walking of cooks and servers into monthly wage loss.',
       },
     ],
     otaBadge: 'HOSPITALITY',
@@ -349,6 +362,10 @@ const copy: Record<Locale, PageCopy> = {
         title: 'Калькулятор доставки',
         desc: 'Рассчитайте комиссионную маржу для Wolt, Bolt Food, Yango и собственной доставки.',
       },
+      {
+        title: 'Adım Maliyeti Hesaplayıcı',
+        desc: 'Aşçı ve garsonun boş yola harcadığı zamanı aylık maaş kaybına çevir.',
+      },
     ],
     otaBadge: 'ГОСТЕПРИИМСТВО',
     otaHeading: 'Отель, пансион и гостевой дом',
@@ -396,6 +413,7 @@ const GROWTH_TOOL_META: Array<{
   { href: '/toolkit/menu-matrix', icon: UtensilsCrossed, color: 'bg-purple-500' },
   { href: '/toolkit/staff-retention', icon: Users, color: 'bg-indigo-500' },
   { href: '/toolkit/delivery-calc', icon: Truck, color: 'bg-orange-500' },
+  { href: '/toolkit/addim-xerci', icon: Footprints, color: 'bg-teal-500' },
 ];
 
 const OTA_TOOL_META: Array<{

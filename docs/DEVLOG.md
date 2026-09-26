@@ -1,5 +1,16 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-26 — TASK-0450 (Addım Xərci Kalkulyatoru)
+
+**Mənşə:** TASK-0449 ilə birlikdə spesifikasiya olundu; sahib «ayrı PR», «isim güzel» dedi. Ayrı PR üçün ayrı branch (`…-addim-xerci`) — GitHub bir branch-dan eyni anda iki açıq PR qəbul etmir.
+
+**Niyə belə sadə:** Antigravity-nin bloq qaralamalarında «ildə 4 200 AZN havaya gedir», «ayda 2 000+ AZN» kimi mənbəsiz rəqəmlər vardı — sahibə verilən redaktədə hamısı çıxarıldı. Alət həmin boşluğu doldurur: rəqəmi biz demirik, istifadəçi öz mətbəxində ölçür. Ona görə alətin yarısı hesab, yarısı «necə ölçərsən» təlimatıdır. AI şərhi qoyulmadı — dörd ədədin hasilinə AI lazım deyil.
+
+**Struktur:** düstur `lib/toolkit/addimXerci.ts`-də təmiz funksiya (komponentdən ayrı — sabah OCAQ və ya KAZAN da çağıra bilər). Komponent `staff-retention` nümunəsi ilə (`ToolkitStudioLayout`). Toolkit səhifəsindəki kartlar dil başına kodda yazılmış massivlərdədir — 4 `growthTools` blokuna `perl` ilə bir sətir (L-051), `GROWTH_TOOL_META`-ya ikon.
+
+**Test bir dəfə keçmədi — və yaxşı ki keçmədi.** Gediş rejimi testi düşdü: snapshot səhifəni **ingiliscə** göstərirdi. curl ilə `<html lang>` yoxladım — server hər dəfə düzgün `az` verir. Deməli brauzer: `DeviceLanguageDetector` `navigator.language` (Chromium `en-US`) görə hidrasiyadan sonra `/en`-ə yönləndirir. Söndürəndən sonra 4 düşmə qaldı — hamısı klik testləri, səhifə artıq AZ, düymə var, amma vəziyyət dəyişmir: dev rejimində hidrasiyadan əvvəlki klik. İdempotent kliklər `toPass()` ilə təkrarlanır. `--repeat-each=3` → 24/24. Eyni iki yarış TASK-0449 checklist spec-ində də var idi (orada şansla keçmişdi) — o PR-a da düzəliş göndərildi. L-053.
+
+**Sübut:** spec 24/24 · 4 dildə route 200 · tsc 35 = baza · eslint 0 · i18n 39 × 4, komponentdə sabit mətn 0.
 ## 2026-09-26 — TASK-0449 (İnşaat checklist: «Əməliyyat dizaynı» mərhələsi)
 
 **Mənşə:** Sahib Drive-dakı dizayn qeydlərini və başqa AI-nın (Antigravity) yazdığı bloqları göndərdi. Bloqlar redaktə olunub sahibə verildi (admin paneldən özü dərc edir — repoya girmir). Toolkit üçün spesifikasiya yazıldı, sahib təsdiqlədi: «ayrı PR, 10 madde tamam, isim güzel». Bu PR — birinci hissə; «Addım Xərci Kalkulyatoru» TASK-0450, ayrıca PR.

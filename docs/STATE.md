@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-09-26T06:52:41.926Z
+- GeneratedAt: 2026-09-26T07:05:49.217Z
 - BuildStatus: UNKNOWN
 
-## Routes (225)
+## Routes (227)
 - /
 - /(dev)/heromotif
 - /[locale]
@@ -96,6 +96,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/terefdashlar
 - /[locale]/terms
 - /[locale]/toolkit
+- /[locale]/toolkit/addim-xerci
 - /[locale]/toolkit/aqta-checklist
 - /[locale]/toolkit/basabas
 - /[locale]/toolkit/branding-guide
@@ -211,6 +212,7 @@ Auto-generated. Do not edit manually.
 - /sektor/[slug]
 - /settings
 - /toolkit
+- /toolkit/addim-xerci
 - /toolkit/aqta-checklist
 - /toolkit/basabas
 - /toolkit/branding-guide
