@@ -8,6 +8,28 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import GuruQuoteBox from './GuruQuoteBox';
 
+/** Siyahı elementinin ilk mətni — ☐/☑ checklist maddəsini adi maddədən ayırmaq üçün */
+function firstText(node: unknown): string {
+  if (!node || typeof node !== 'object') return '';
+  const n = node as { type?: string; value?: unknown; children?: unknown[] };
+  if (n.type === 'text' && typeof n.value === 'string' && n.value.trim()) return n.value;
+  for (const child of n.children ?? []) {
+    const t = firstText(child);
+    if (t) return t;
+  }
+  return '';
+}
+
+const CHECKBOX_ITEM = /^\s*[☐☑✅✔]/;
+
+/** ☐/☑ ilə başlayan və ya GFM `- [ ]` (input checkbox) maddəsi — işarəsiz qalır */
+function isCheckboxItem(node: unknown): boolean {
+  const n = node as { children?: Array<{ type?: string; tagName?: string }> } | undefined;
+  const firstEl = n?.children?.find((c) => c.type === 'element');
+  if (firstEl?.tagName === 'input') return true;
+  return CHECKBOX_ITEM.test(firstText(node));
+}
+
 interface MarkdownRendererProps {
   content: string;
   className?: string;
@@ -374,8 +396,15 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
               {children}
             </ol>
           ),
-          li: ({ children }) => (
-            <li className="leading-[1.85]">{children}</li>
+          // globals.css (PROTECTED) `.blog-content li { list-style: none }` ☐ checklist üçündür, amma
+          // bütün siyahıların işarəsini/nömrəsini silirdi — adi maddə ul/ol-un list-style-unu geri alır.
+          li: ({ children, node }) => (
+            <li
+              className="leading-[1.85]"
+              style={isCheckboxItem(node) ? undefined : { listStyleType: 'inherit' }}
+            >
+              {children}
+            </li>
           ),
           code: ({ className, children, ...props }) => {
             const isInline = !className;
