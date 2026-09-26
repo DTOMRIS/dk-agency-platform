@@ -125,7 +125,7 @@ DEPLOYMENT.md və CLAUDE.md `db:migrate`-i tək yol elan edir (L-049). Texniki m
 
 **Tarix:** 2026-09-13
 **Sprint:** TASK-0439 zamanı aşkarlandı
-**Status:** ACIQ
+**Status:** QISMƏN HƏLL — TASK-0457 (2026-09-26): `session.plan` artıq imzalı JWT-dən qurulur (member cookie saxtalaşdırıla bilirdi — L-055); DB-ni birbaşa oxuyan 7 dashboard səhifəsinə `requireAdminPage()`. Qalan: dashboard layout yalnız JWT varlığını yoxlayır — client səhifələrin shell-i üzvə açılır (data API-dən 403); dashboard-u admin / üzv (`marketinq-ocagi`) hissəyə ayırmaq sahib qərarıdır.
 **Prioritet:** Orta
 
 ### Problem

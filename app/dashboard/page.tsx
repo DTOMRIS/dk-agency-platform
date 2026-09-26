@@ -8,6 +8,7 @@ import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import { getDashboardListingMetrics } from '@/lib/repositories/listingRepository';
 import { getLocale } from 'next-intl/server';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import { requireAdminPage } from '@/lib/auth/guards';
 
 const dashCopy: Record<
   Locale,
@@ -144,6 +145,7 @@ const dashCopy: Record<
 };
 
 export default async function DashboardPage() {
+  await requireAdminPage();
   const rawLocale = await getLocale();
   const locale = normalizeLocale(rawLocale);
   const copy = dashCopy[locale];
