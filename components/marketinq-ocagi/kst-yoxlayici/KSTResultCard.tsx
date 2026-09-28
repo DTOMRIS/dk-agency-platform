@@ -197,7 +197,7 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
           {copy.redo}
         </button>
         <Link
-          href="/dashboard/marketinq-ocagi"
+          href="/b2b-panel/marketinq-ocagi"
           className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90"
         >
           {copy.next}

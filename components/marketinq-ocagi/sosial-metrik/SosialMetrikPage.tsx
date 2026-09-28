@@ -43,7 +43,7 @@ function scoreColor(score: number): string {
 
 // ── COMPONENT ────────────────────────────────────────────
 
-export default function SosialMetrikPage({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function SosialMetrikPage({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.sosialMetrik');
   const locale = useLocale();
   const intlLocale = getIntlLocale(locale);

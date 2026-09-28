@@ -23,10 +23,9 @@ export async function requireAdmin(): Promise<
 
 /**
  * Server səhifəsi üçün admin qoruyucusu (TASK-0457).
- * `app/dashboard/layout.tsx` yalnız JWT-nin varlığını yoxlayır — qeydiyyatdan keçən
- * istənilən üzv dashboard-u aça bilirdi. Layout-u admin-only etmək olmur: üzv
- * panelindən `/dashboard/marketinq-ocagi/*`-yə keçid var. Ona görə DB-ni birbaşa
- * oxuyan dashboard səhifələri bu funksiyanı ilk sətirdə çağırır.
+ * TASK-0458-dən bəri `app/dashboard/layout.tsx` özü admin-only-dir; DB-ni birbaşa
+ * oxuyan dashboard səhifələri bunu əlavə qat kimi ilk sətirdə çağırır (layout
+ * dəyişsə belə lead/müştəri datası açılmasın).
  */
 export async function requireAdminPage(): Promise<JwtPayload> {
   const user = await getAuthFromCookie();

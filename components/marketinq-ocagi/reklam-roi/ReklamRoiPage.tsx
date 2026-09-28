@@ -61,7 +61,7 @@ const DEMO_CHANNELS: ChannelRow[] = [
   { id: 'demo-3', type: 'telegram', budget: '180', commissionPercent: '12', newCustomers: '7', reach: '6500', impressions: '9000' },
 ];
 
-export default function ReklamRoiPage({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.reklamRoi');
   const locale = useLocale();
   const intlLocale = getIntlLocale(locale);

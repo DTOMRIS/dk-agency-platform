@@ -10,21 +10,21 @@ const expectations = {
 for (const [locale, exp] of Object.entries(expectations)) {
   test(`Ad writer renders correctly in ${locale}`, async ({ page }) => {
     test.skip(locale === 'az', 'Pre-existing middleware loop on default-locale /az routes');
-    await page.goto(`/${locale}/dashboard/marketinq-ocagi/reklam-yazicisi`);
+    await page.goto(`/${locale}/b2b-panel/marketinq-ocagi/reklam-yazicisi`);
     await expect(page.getByRole('heading', { level: 1 })).toContainText(exp.title);
     await expect(page.getByRole('button', { name: exp.submit })).toBeVisible();
   });
 
   test(`Ad writer validates empty campaign in ${locale}`, async ({ page }) => {
     test.skip(locale === 'az', 'Pre-existing middleware loop on default-locale /az routes');
-    await page.goto(`/${locale}/dashboard/marketinq-ocagi/reklam-yazicisi`);
+    await page.goto(`/${locale}/b2b-panel/marketinq-ocagi/reklam-yazicisi`);
     const submitBtn = page.getByRole('button', { name: exp.submit });
     await expect(submitBtn).toBeDisabled();
   });
 
   test(`Ad writer shows platform select in ${locale}`, async ({ page }) => {
     test.skip(locale === 'az', 'Pre-existing middleware loop on default-locale /az routes');
-    await page.goto(`/${locale}/dashboard/marketinq-ocagi/reklam-yazicisi`);
+    await page.goto(`/${locale}/b2b-panel/marketinq-ocagi/reklam-yazicisi`);
     await expect(page.locator('select').first()).toBeVisible();
     await expect(page.locator('textarea')).toBeVisible();
   });

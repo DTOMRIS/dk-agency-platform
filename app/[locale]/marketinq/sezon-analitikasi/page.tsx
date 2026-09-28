@@ -44,7 +44,7 @@ export default async function SezonAnalitikasiPage({ params }: Props) {
 
   return (
     <main>
-      <SezonAnalitikasiTool backHref="/dashboard/marketinq-ocagi" />
+      <SezonAnalitikasiTool backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

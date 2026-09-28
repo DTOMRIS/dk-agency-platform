@@ -110,7 +110,7 @@ function AreaBarChart({
   );
 }
 
-export default function RestoranAuditPage({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.restoranAudit');
   const locale = getIntlLocale(useLocale());
   const [answers, setAnswers] = useState<Record<AuditQuestionId, AuditAnswerValue>>(DEFAULT_AUDIT_ANSWERS);

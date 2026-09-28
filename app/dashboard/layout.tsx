@@ -15,6 +15,12 @@ export default async function DashboardLayout({
   if (!auth) {
     redirect('/auth/login');
   }
+  // TASK-0458: dashboard yalnız admin üçündür (əvvəl JWT-nin varlığı kifayət edirdi —
+  // qeydiyyatlı istənilən üzv admin səhifələrini açırdı). Üzv alətləri (Marketinq Ocağı)
+  // /b2b-panel/marketinq-ocagi-yə köçdü. [locale]/dashboard/layout bunu re-export edir.
+  if (auth.role !== 'admin') {
+    redirect('/b2b-panel');
+  }
 
   // Resolve locale from NEXT_LOCALE cookie (set by next-intl middleware/language switcher)
   const cookieStore = await cookies();

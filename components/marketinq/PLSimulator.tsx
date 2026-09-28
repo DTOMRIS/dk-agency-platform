@@ -121,7 +121,7 @@ function Slider({ label, value, min, max, suffix, onChange }: { label: string; v
   );
 }
 
-export default function PLSimulator({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function PLSimulator({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.plSimulator');
   const locale = useLocale();
   const localeForIntl = getLocale(locale);

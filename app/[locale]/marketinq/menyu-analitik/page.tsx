@@ -44,7 +44,7 @@ export default async function MenuAnalyticsPage({ params }: Props) {
 
   return (
     <main>
-      <MenuAnalytics backHref="/dashboard/marketinq-ocagi" />
+      <MenuAnalytics backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

@@ -91,7 +91,7 @@ function LocationChart({
   );
 }
 
-export default function LokasyonAnalizPage({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.lokasyonAnaliz');
   const rawLocale = useLocale();
   const searchParams = useSearchParams();

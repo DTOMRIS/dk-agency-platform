@@ -3,5 +3,5 @@
 import MenuAnalytics from '@/components/marketinq/MenuAnalytics';
 
 export default function MenyuAnalitiyiPage() {
-  return <MenuAnalytics backHref="/dashboard/marketinq-ocagi" />;
+  return <MenuAnalytics backHref="/b2b-panel/marketinq-ocagi" />;
 }

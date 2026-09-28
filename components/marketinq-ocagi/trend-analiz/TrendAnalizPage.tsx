@@ -103,7 +103,7 @@ function TrendChart({
   );
 }
 
-export default function TrendAnalizPage({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function TrendAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.trendAnaliz');
   const rawLocale = useLocale();
   const searchParams = useSearchParams();

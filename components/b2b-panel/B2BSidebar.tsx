@@ -13,6 +13,7 @@ import {
   HelpCircle,
   LayoutDashboard,
   LogOut,
+  Megaphone,
   MessageSquare,
   Plus,
   Settings,
@@ -62,6 +63,7 @@ const NAV_SECTIONS: NavSection[] = [
       { href: '/b2b-panel/faturalar', labelKey: 'invoices', icon: Receipt },
       { href: '/b2b-panel/favoriler', labelKey: 'favorites', icon: Star },
       { href: '/b2b-panel/analizler', labelKey: 'aiAnalysis', icon: Sparkles },
+      { href: '/b2b-panel/marketinq-ocagi', labelKey: 'marketingHub', icon: Megaphone },
     ],
   },
   {

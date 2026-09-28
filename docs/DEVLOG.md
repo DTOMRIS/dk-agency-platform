@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-28 — TASK-0458 (dashboard yalnız admin)
+
+**Sahib:** «başla paşam dashboard'u admin'e özel yap». TASK-0457-də layout-u toxunulmaz saxlamışdım, çünki üzv panelindən `marketinq-ocagi`-yə keçid vardı. Yoxlayanda məsələ bir linkdən böyük çıxdı: `marketinq-ocagi` + `[slug]` — 20 üzv aləti (tier: şagird/kalfa/usta) yalnız dashboard-da yaşayırdı, public `/marketinq/*` alətləri də «geri» ilə ora qayıdırdı.
+
+**Niyə seqment layout-ları yox:** dashboard-un hər səhifəsinin `[locale]/dashboard/*` mirror-u yalnız `page`-i re-export edir — `app/dashboard/users/layout.tsx` kimi fayl `/en/dashboard/users`-ə tətbiq olunmazdı. Route group da eyni problem + onlarla mirror importu. Kök layout isə `[locale]/dashboard/layout` tərəfindən re-export olunur — tək etibarlı nöqtə.
+
+**Köçürmə:** hub və `[slug]` səhifəsi `app/b2b-panel/marketinq-ocagi/`-yə (root intl provider b2b-də də var, əlavə heç nə lazım deyil) + `[locale]` mirror-lar (L-038); köhnə ünvanlarda `redirect()`. 48 faylda yol `sed` ilə — `[locale]/dashboard` mirror-larının import yolu qəsdən saxlanıldı (`@/app/dashboard/marketinq-ocagi/...` də eyni alt-sətri daşıyır). Üzv kimi skrinşot: hub və Marka Kompası b2b qabığında normal, dashboard linki 0.
+
+**Qeyd:** köhnə `reklam-yazicisi` / `sikayet-cavablandirici` spec-ləri auth-suzdur — əvvəl də login-ə düşürdü (CI Playwright işlətmir). Yalnız yol yeniləndi, dürüst qeyd olundu.
+
 ## 2026-09-26 — TASK-0457 (təhlükəsizlik: saxta admin sessiyası)
 
 **Necə tapıldı:** TASK-0455-in API testində admin JWT ilə 403 aldım — blog API-ları JWT-ni yox, `dk_member_session`-u oxuyurdu. Faylı açanda imzasız base64 JSON gördüm, `POST /api/member/session`-da isə bədənin olduğu kimi cookie-yə yazıldığını. Lokal dev-də curl ilə təsdiq: saxta cookie → 200. Sahibə dərhal bildirdim, icazə ilə düzəltdim.
