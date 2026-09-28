@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-09-26T09:19:28.790Z
+- GeneratedAt: 2026-09-28T18:01:08.645Z
 - BuildStatus: PASS
 
-## Routes (227)
+## Routes (231)
 - /
 - /(dev)/heromotif
 - /[locale]
@@ -19,6 +19,8 @@ Auto-generated. Do not edit manually.
 - /[locale]/b2b-panel/ilanlarim
 - /[locale]/b2b-panel/ilanlarim/[id]
 - /[locale]/b2b-panel/ilanlarim/[id]/edit
+- /[locale]/b2b-panel/marketinq-ocagi
+- /[locale]/b2b-panel/marketinq-ocagi/[slug]
 - /[locale]/b2b-panel/mesajlar
 - /[locale]/b2b-panel/toolkit
 - /[locale]/b2b-panel/yeni-ilan
@@ -130,6 +132,8 @@ Auto-generated. Do not edit manually.
 - /b2b-panel/ilanlarim
 - /b2b-panel/ilanlarim/[id]
 - /b2b-panel/ilanlarim/[id]/edit
+- /b2b-panel/marketinq-ocagi
+- /b2b-panel/marketinq-ocagi/[slug]
 - /b2b-panel/mesajlar
 - /b2b-panel/profil
 - /b2b-panel/teklifler
