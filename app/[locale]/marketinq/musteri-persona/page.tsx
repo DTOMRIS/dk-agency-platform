@@ -44,7 +44,7 @@ export default async function CustomerPersonaPage({ params }: Props) {
 
   return (
     <main>
-      <CustomerPersona backHref="/dashboard/marketinq-ocagi" />
+      <CustomerPersona backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

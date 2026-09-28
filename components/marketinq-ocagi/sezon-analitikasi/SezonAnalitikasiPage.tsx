@@ -32,7 +32,7 @@ function getIntlLocale(locale: string): string {
   return 'en-US';
 }
 
-export default function SezonAnalitikasiPage({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.sezonAnalitikasi');
   const locale = useLocale();
   const intlLocale = getIntlLocale(locale);

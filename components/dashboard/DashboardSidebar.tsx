@@ -72,8 +72,8 @@ const navSections: NavSectionDef[] = [
       { titleKey: 'franchiseLeads', href: '/dashboard/franchise-leads', icon: Handshake },
       { titleKey: 'contactTracking', href: '/dashboard/contact-tracking', icon: MessageCircle },
       { titleKey: 'funnel', href: '/dashboard/funnel', icon: BarChart3 },
-      // marketinqOcagi: public /marketinq/* alətlərinin geri döndüyü kanonik hub.
-      { titleKey: 'marketinqOcagi', href: '/dashboard/marketinq-ocagi', icon: Sparkles },
+      // marketinqOcagi: üzv alətlərinin hub-ı — TASK-0458-dən üzv panelindədir (dashboard admin-only).
+      { titleKey: 'marketinqOcagi', href: '/b2b-panel/marketinq-ocagi', icon: Sparkles },
     ],
   },
   {

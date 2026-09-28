@@ -46,7 +46,7 @@ export default function SezonPlanlamaPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-8">
-      <Link href="/dashboard/marketinq-ocagi" className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-[var(--dk-navy)]">
+      <Link href="/b2b-panel/marketinq-ocagi" className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-[var(--dk-navy)]">
         <ArrowLeft size={16} />{c.backToList}
       </Link>
       <div className="mb-6 flex items-start justify-between">

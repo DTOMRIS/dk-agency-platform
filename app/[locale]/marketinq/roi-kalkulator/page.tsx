@@ -44,7 +44,7 @@ export default async function ROICalculatorPage({ params }: Props) {
 
   return (
     <main>
-      <ROICalculatorV2 backHref="/dashboard/marketinq-ocagi" />
+      <ROICalculatorV2 backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

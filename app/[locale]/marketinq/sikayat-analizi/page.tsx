@@ -44,7 +44,7 @@ export default async function ComplaintAnalysisPage({ params }: Props) {
 
   return (
     <main>
-      <ComplaintAnalysis backHref="/dashboard/marketinq-ocagi" />
+      <ComplaintAnalysis backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

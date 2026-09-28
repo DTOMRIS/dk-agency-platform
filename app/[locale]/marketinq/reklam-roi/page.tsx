@@ -44,7 +44,7 @@ export default async function ReklamRoiPage({ params }: Props) {
 
   return (
     <main>
-      <ReklamRoiTool backHref="/dashboard/marketinq-ocagi" />
+      <ReklamRoiTool backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

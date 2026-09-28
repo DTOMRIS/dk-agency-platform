@@ -146,7 +146,7 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-export default function ComplaintAnalysis({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.complaintAnalysis');
   const locale = useLocale();
 

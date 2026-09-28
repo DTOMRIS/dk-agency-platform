@@ -44,7 +44,7 @@ export default async function TrendAnalizRoute({ params }: Props) {
 
   return (
     <main>
-      <TrendAnalizPage backHref="/dashboard/marketinq-ocagi" />
+      <TrendAnalizPage backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

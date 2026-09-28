@@ -44,7 +44,7 @@ export default async function PLSimulatorPage({ params }: Props) {
 
   return (
     <main>
-      <PLSimulator backHref="/dashboard/marketinq-ocagi" />
+      <PLSimulator backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

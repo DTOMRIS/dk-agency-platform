@@ -65,7 +65,7 @@ type HistoryItem = {
 
 // ── COMPONENT ──────────────────────────────────────────────
 
-export default function CustomerPersona({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function CustomerPersona({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.customerPersona');
   const locale = useLocale();
 

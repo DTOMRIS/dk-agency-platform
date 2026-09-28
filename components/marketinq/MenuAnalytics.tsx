@@ -88,7 +88,7 @@ function CategoryBadge({ category, label }: { category: MenuAnalyticsCategory; l
   );
 }
 
-export default function MenuAnalytics({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.menuAnalytics');
   const locale = useLocale();
   const localeForIntl = locale === 'az' ? 'az-AZ' : locale === 'tr' ? 'tr-TR' : locale === 'ru' ? 'ru-RU' : 'en-US';

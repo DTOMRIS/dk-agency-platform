@@ -44,7 +44,7 @@ export default async function SosialMetrikRoute({ params }: Props) {
 
   return (
     <main>
-      <SosialMetrikPage backHref="/dashboard/marketinq-ocagi" />
+      <SosialMetrikPage backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

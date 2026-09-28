@@ -17,7 +17,7 @@ test.describe('Marketing Tools Visual Verification', () => {
 
   for (const tool of TOOLS) {
     test(`${tool} — info box readable`, async ({ page }) => {
-      await page.goto(`/dashboard/marketinq-ocagi/${tool}`);
+      await page.goto(`/b2b-panel/marketinq-ocagi/${tool}`);
 
       // Info box mövcuddur
       const infoBox = page.getByRole('heading', { name: /Niyə bu vacibdir/ });
@@ -39,7 +39,7 @@ test.describe('Marketing Tools Visual Verification', () => {
   }
 
   test('sikayet — date format AZ display', async ({ page }) => {
-    await page.goto('/dashboard/marketinq-ocagi/sikayet-analitigi');
+    await page.goto('/b2b-panel/marketinq-ocagi/sikayet-analitigi');
 
     const dateInput = page.locator('input[type="date"]').first();
     await dateInput.fill('2026-05-14');
@@ -49,7 +49,7 @@ test.describe('Marketing Tools Visual Verification', () => {
   });
 
   test('menyu — form inputs visible', async ({ page }) => {
-    await page.goto('/dashboard/marketinq-ocagi/menyu-analitik');
+    await page.goto('/b2b-panel/marketinq-ocagi/menyu-analitik');
 
     // "Yemək adı" tam görünür (truncate yox)
     await expect(page.getByText('Yemək adı')).toBeVisible();

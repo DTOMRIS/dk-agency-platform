@@ -79,7 +79,7 @@ function roiStatus(roi: number): Status {
   return 'critical';
 }
 
-export default function ROICalculatorV2({ backHref = '/dashboard/marketinq-ocagi' }: { backHref?: string }) {
+export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.roiCalculator');
   const locale = useLocale();
   const localeForIntl = getIntlLocale(locale);

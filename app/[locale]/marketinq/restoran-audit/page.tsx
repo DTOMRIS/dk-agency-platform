@@ -44,7 +44,7 @@ export default async function RestoranAuditRoute({ params }: Props) {
 
   return (
     <main>
-      <RestoranAuditPage backHref="/dashboard/marketinq-ocagi" />
+      <RestoranAuditPage backHref="/b2b-panel/marketinq-ocagi" />
     </main>
   );
 }

@@ -83,24 +83,44 @@ test.describe('@smoke Sessiya təhlükəsizliyi', () => {
     expect(posted.name).toBe('Doğan');
   });
 
-  test('dashboard: üzv lead/yazı səhifələrinə girə bilmir, marketinq-ocagi açıq qalır', async ({
+  test('dashboard yalnız admin üçündür; Marketinq Ocağı üzv panelindədir (TASK-0458)', async ({
     request,
   }) => {
     test.skip(!SECRET, 'JWT_SECRET env yoxdur — atlandı');
-    test.setTimeout(120_000);
+    test.setTimeout(180_000);
     const member = `dk_auth_token=${token('member')}`;
     const admin = `dk_auth_token=${token('admin')}`;
-    const ADMIN_ONLY = ['/dashboard', '/dashboard/kazan-leads', '/dashboard/franchise-leads', '/dashboard/contact-tracking', '/dashboard/blog/translation-status'];
+    const get = (path: string, cookie: string) =>
+      request.get(path, { headers: { cookie }, maxRedirects: 0 });
 
-    for (const path of ADMIN_ONLY) {
-      const asMember = await request.get(path, { headers: { cookie: member }, maxRedirects: 0 });
+    // Server (DB) və client səhifələri, kök və locale mirror — üzv hamısından /b2b-panel-ə
+    const DASHBOARD = [
+      '/dashboard',
+      '/dashboard/kazan-leads',
+      '/dashboard/franchise-leads',
+      '/dashboard/contact-tracking',
+      '/dashboard/blog/translation-status',
+      '/dashboard/users',
+      '/dashboard/faturalar',
+      '/dashboard/ayarlar',
+      '/en/dashboard/users',
+    ];
+    for (const path of DASHBOARD) {
+      const asMember = await get(path, member);
       expect(asMember.status(), `${path} (üzv)`).toBe(307);
-      expect(asMember.headers()['location'] ?? '', `${path} (üzv)`).toContain('/b2b-panel');
-      const asAdmin = await request.get(path, { headers: { cookie: admin }, maxRedirects: 0 });
-      expect(asAdmin.status(), `${path} (admin)`).toBe(200);
+      expect(asMember.headers()['location'] ?? '', `${path} (üzv)`).toMatch(/\/b2b-panel$/);
+      expect((await get(path, admin)).status(), `${path} (admin)`).toBe(200);
     }
 
-    const tool = await request.get('/dashboard/marketinq-ocagi', { headers: { cookie: member }, maxRedirects: 0 });
-    expect(tool.status(), 'marketinq-ocagi (üzv)').toBe(200);
+    // Köhnə hub linkləri yeni ünvana yönləndirir (admin üçün)
+    const oldHub = await get('/dashboard/marketinq-ocagi/marka-kompasi', admin);
+    expect(oldHub.status()).toBe(307);
+    expect(oldHub.headers()['location'] ?? '').toContain('/b2b-panel/marketinq-ocagi/marka-kompasi');
+
+    // Hub və alət üzvə də, adminə də açıqdır
+    for (const cookie of [member, admin]) {
+      expect((await get('/b2b-panel/marketinq-ocagi', cookie)).status()).toBe(200);
+      expect((await get('/b2b-panel/marketinq-ocagi/marka-kompasi', cookie)).status()).toBe(200);
+    }
   });
 });
