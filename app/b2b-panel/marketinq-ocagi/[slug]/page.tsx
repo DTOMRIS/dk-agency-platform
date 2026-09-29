@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { getToolConfig, TIER_COLORS } from '@/lib/marketing-tools-config';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { EXTERNAL_TOOL_HREF } from '@/lib/marketing-tools-links';
+import SosialMetrikPage from '@/components/marketinq-ocagi/sosial-metrik/SosialMetrikPage';
 import MarkaKompasiPage from '@/components/marketinq-ocagi/marka-kompasi/MarkaKompasiPage';
 import KSTYoxlayiciPage from '@/components/marketinq-ocagi/kst-yoxlayici/KSTYoxlayiciPage';
 import PromoROIPage from '@/components/marketinq-ocagi/promosyon-roi/PromoROIPage';
@@ -209,6 +211,14 @@ export default function ToolSlugPage() {
   }
   if (slug === 'reklam-yazicisi' && tool.status === 'live') {
     return <ReklamYazicisiPage />;
+  }
+  // TASK-0459: əvvəl bu üç hal boş səhifəyə düşürdü (başlıq əvəzinə slug, alət yox)
+  if (slug === 'sosial-metrik' && tool.status === 'live') {
+    return <SosialMetrikPage />;
+  }
+  const externalHref = EXTERNAL_TOOL_HREF[slug];
+  if (externalHref) {
+    redirect(externalHref);
   }
 
   const tierColors = TIER_COLORS[tool.tier];

@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-29 — TASK-0459 (Marketinq Ocağı kartları + toolkit dövrəsi)
+
+**Sahib:** «sosial-metrik kartını da düzelt». TASK-0458-in skrinşotunda görünən bir kart idi; skript ilə 24 alətin slug-larını hər iki səhifənin 4 dil sözlüyü ilə tutuşdurdum — hub-da 4 alət, alət səhifəsində 5 alət yox idi. Daha vacibi: alət səhifəsi komponenti yalnız 16 slug üçün seçir, qalan «live» alət boş səhifəyə düşürdü. Yəni ad düzəltmək kifayət deyildi — kart heç yerə aparmırdı.
+
+**Hər alətin əsl yeri:** sosial-metrik komponenti var idi (bağlanmamışdı) → alət səhifəsində render; personel/mətbəx toolkit-dədir, franchbook franchise bölməsindədir → kart ora aparır. Toolkit komponentləri `ToolkitStudioLayout` ilə public səhifə üçün qurulub — b2b qabığına sıxmaq əvəzinə yönləndirmə seçildi.
+
+**Gözlənilməz tapıntı:** yönləndirməni yoxlayanda `/toolkit/personel-planlayici` 500 verdi — main-də də (stash ilə yoxlandı). Kök `page.tsx` `[locale]`-i re-export edir, `[locale]` isə kökü import edib render edir: sonsuz rekursiya, 4 dəqiqə sonra stack overflow. PR #435-dən (13 sentyabr) bəri canlıda belə olmalıdır. Bütün `[locale]`/kök cütlərini skript ilə yoxladım — yalnız bu ikisi.
+
+**Mühit dərsləri (sandbox):** konteyner yenidən qurulmuşdu, `node_modules` yox idi; `npm ci` SheetJS 403-ə görə düşür. Lock-suz quraşdırma başqa `next` versiyası gətirdi (`AGENTS.md`-yə öz blokunu yazdı — geri alındı), ona görə kilidli versiyalar `xlsx`-siz, ayrıca qovluqda quruldu və `node_modules` repoya köçürüldü (Turbopack kənara göstərən symlink-i qəbul etmir); `xlsx` üçün lokal stub. İki dəfə `pkill -f` öz shell-imi öldürdü (nümunə komanda sətrində idi) — dev server indi PID faylı ilə idarə olunur. Bir dəfə köhnə server portu tutduğu üçün hər şey 404 göründü — təmiz restart-dan sonra 200.
+
 ## 2026-09-28 — TASK-0458 (dashboard yalnız admin)
 
 **Sahib:** «başla paşam dashboard'u admin'e özel yap». TASK-0457-də layout-u toxunulmaz saxlamışdım, çünki üzv panelindən `marketinq-ocagi`-yə keçid vardı. Yoxlayanda məsələ bir linkdən böyük çıxdı: `marketinq-ocagi` + `[slug]` — 20 üzv aləti (tier: şagird/kalfa/usta) yalnız dashboard-da yaşayırdı, public `/marketinq/*` alətləri də «geri» ilə ora qayıdırdı.

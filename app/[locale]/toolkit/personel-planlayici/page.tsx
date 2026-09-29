@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import PersonelPlanlayiciPage from '@/app/toolkit/personel-planlayici/page';
+// TASK-0459: əvvəl kök səhifəni import edirdi, kök isə bunu re-export edir → sonsuz dövrə, 500
+import PersonelPlanlayiciPage from '@/components/marketinq-ocagi/personel-planlayici/PersonelPlanlayiciPage';
 
 export const metadata: Metadata = {
   title: 'Personel Planlayıcısı — DK Agency',
