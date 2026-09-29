@@ -17,6 +17,7 @@ import {
   X,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { formatAzDate } from '@/lib/i18n/format';
 
 // ── i18n ────────────────────────────────────────────────────────────
 
@@ -67,7 +68,7 @@ function formatMoney(qepik: number, currency = 'AZN') {
 }
 
 function formatDate(d: string) {
-  return new Intl.DateTimeFormat('az-AZ', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(d));
+  return formatAzDate(d, { day: '2-digit', month: 'short', year: 'numeric' });
 }
 
 function sourceLabel(s: string, t: ReturnType<typeof useTranslations>) {

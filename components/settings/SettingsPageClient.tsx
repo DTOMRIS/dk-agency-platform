@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from 'react';
 import { type MemberSession } from '@/lib/member-access';
+import { formatAzDateTime } from '@/lib/i18n/format';
 
 function getPasswordStrength(password: string) {
   if (password.length < 8) return { label: 'zəif', color: 'bg-red-500' };
@@ -190,7 +191,7 @@ export default function SettingsPageClient({
                 <tbody>
                   {logs.map((log, index) => (
                     <tr key={`${log.ipAddress}-${index}`} className="border-b border-slate-100 text-slate-600">
-                      <td className="py-3">{new Date(log.createdAt).toLocaleString('az-AZ')}</td>
+                      <td className="py-3">{formatAzDateTime(log.createdAt)}</td>
                       <td className="py-3">{log.ipAddress}</td>
                       <td className="py-3">{log.userAgent}</td>
                       <td className="py-3">

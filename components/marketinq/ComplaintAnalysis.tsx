@@ -22,6 +22,7 @@ import {
   type ComplaintSeverity,
   type CustomerType,
 } from '@/app/actions/complaint-analysis-ai';
+import { formatAzDate } from '@/lib/i18n/format';
 
 type ActiveTab = 'response' | 'discovery' | 'internal';
 
@@ -468,7 +469,9 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
                 </span>
               </div>
               <p className="text-sm text-slate-600">{item.preview}</p>
-              <p className="mt-1 text-xs text-slate-400">{new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(item.at))}</p>
+              <p className="mt-1 text-xs text-slate-400">{locale === 'az'
+                  ? formatAzDate(item.at, { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+                  : new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(item.at))}</p>
             </div>
           )) : (
             <p className="text-sm text-slate-400">{t('history_empty')}</p>

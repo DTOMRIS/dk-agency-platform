@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, Info, Lightbulb, Plus, RotateCcw, TrendingUp, UtensilsCrossed, X } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import { numberLocale } from '@/lib/i18n/format';
 
 interface MenuItem { id: string; name: string; salesCount: number; contributionMargin: number; }
 type Category = 'star' | 'plowHorse' | 'puzzle' | 'dog';
@@ -25,7 +26,7 @@ function classify(items: MenuItem[]): { item: MenuItem; category: Category }[] {
 export default function MenuMatrixPage() {
   const t = useTranslations('toolkit.menuMatrix');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
-  const fmt0 = (n: number) => new Intl.NumberFormat(locale).format(Math.round(Number.isFinite(n) ? n : 0));
+  const fmt0 = (n: number) => new Intl.NumberFormat(numberLocale(locale)).format(Math.round(Number.isFinite(n) ? n : 0));
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const CATEGORY_META: Record<Category, { emoji: string; label: string; labelEn: string; color: string; bg: string; ring: string; advice: string }> = {

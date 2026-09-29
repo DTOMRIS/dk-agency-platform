@@ -16,6 +16,7 @@ import {
   Shield,
   ShieldCheck,
 } from 'lucide-react';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type InputKey =
   | 'revenue'
@@ -88,7 +89,7 @@ const sectionBefore: Partial<Record<InputKey, string>> = {
 const relatedArticles = ['pnl', 'foodCost', 'breakEven'] as const;
 
 function intlLocale(locale: string) {
-  if (locale === 'az') return 'az-AZ';
+  if (locale === 'az') return AZ_NUMBER_LOCALE;
   if (locale === 'ru') return 'ru-RU';
   if (locale === 'tr') return 'tr-TR';
   return 'en-US';

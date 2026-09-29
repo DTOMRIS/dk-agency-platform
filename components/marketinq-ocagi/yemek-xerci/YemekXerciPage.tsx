@@ -8,6 +8,7 @@ import { ArrowLeft, Download, FileSpreadsheet, Plus, RotateCcw, Trash2 } from 'l
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type Ingredient = {
   id: string;
@@ -197,7 +198,7 @@ function toNumber(value: string) {
 
 function money(value: number) {
   const safe = Number.isFinite(value) ? value : 0;
-  return `${new Intl.NumberFormat('az-AZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(safe)} AZN`;
+  return `${new Intl.NumberFormat(AZ_NUMBER_LOCALE, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(safe)} AZN`;
 }
 
 function lineCost(ingredient: Ingredient) {

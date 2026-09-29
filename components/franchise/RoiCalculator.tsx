@@ -4,9 +4,10 @@ import { useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import { calcRoi, ROI_DEFAULTS, type RoiVerdict } from '@/lib/data/franchiseRoi';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 function fmt(n: number) {
-  return n.toLocaleString('az-AZ', { maximumFractionDigits: 0 }) + ' AZN';
+  return n.toLocaleString(AZ_NUMBER_LOCALE, { maximumFractionDigits: 0 }) + ' AZN';
 }
 
 const VERDICT_STYLES: Record<RoiVerdict, string> = {

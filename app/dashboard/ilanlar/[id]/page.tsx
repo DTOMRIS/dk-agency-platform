@@ -10,18 +10,19 @@ import { getCategoryById } from '@/lib/data/listingCategories';
 import { getFieldsForType } from '@/lib/data/listingFieldConfig';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import { canTransition, getAvailableTransitions, getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
+import { AZ_NUMBER_LOCALE, formatAzDate } from '@/lib/i18n/format';
 
 function formatPrice(price: number, currency: string, priceLabel?: string) {
   if (priceLabel) return priceLabel;
-  return `${new Intl.NumberFormat('az-AZ').format(price)} ${currency}`;
+  return `${new Intl.NumberFormat(AZ_NUMBER_LOCALE).format(price)} ${currency}`;
 }
 
 function formatDate(value: string) {
-  return new Intl.DateTimeFormat('az-AZ', {
+  return formatAzDate(value, {
     day: '2-digit',
     month: 'long',
     year: 'numeric',
-  }).format(new Date(value));
+  });
 }
 
 function renderFieldValue(value: string | number | boolean | undefined) {

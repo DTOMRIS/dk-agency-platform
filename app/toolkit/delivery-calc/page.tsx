@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, Lightbulb, RotateCcw, Truck } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import { numberLocale } from '@/lib/i18n/format';
 
 type PlatformKey = 'wolt' | 'bolt' | 'yango' | 'own';
 const PLATFORM_DEFAULTS: Record<PlatformKey, number> = { wolt: 30, bolt: 30, yango: 30, own: 10 };
@@ -13,7 +14,7 @@ const PLATFORM_DEFAULTS: Record<PlatformKey, number> = { wolt: 30, bolt: 30, yan
 export default function DeliveryCalcPage() {
   const t = useTranslations('toolkit.deliveryCalc');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
-  const fmt0 = (n: number) => new Intl.NumberFormat(locale).format(Math.round(Number.isFinite(n) ? n : 0));
+  const fmt0 = (n: number) => new Intl.NumberFormat(numberLocale(locale)).format(Math.round(Number.isFinite(n) ? n : 0));
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const PLATFORM_LABELS: Record<PlatformKey, string> = { wolt: 'Wolt', bolt: 'Bolt Food', yango: 'Yango', own: t('platformOwn') };

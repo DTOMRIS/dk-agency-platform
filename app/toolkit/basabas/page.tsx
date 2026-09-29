@@ -22,12 +22,13 @@ import {
   type BranchOpeningInput,
 } from '@/lib/financial/branch-opening-model';
 import { calculateFinancialViability, type BusinessType } from '@/lib/financial/viability';
+import { numberLocale } from '@/lib/i18n/format';
 
 export default function BasabasPage() {
   const t = useTranslations('toolkit.basabas');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
   // Thousand-separated integer manat formatting, locale-aware (az/ru: "239 804", en: "239,804", tr: "239.804")
-  const fmt0 = (n: number) => new Intl.NumberFormat(locale).format(Math.round(Number.isFinite(n) ? n : 0));
+  const fmt0 = (n: number) => new Intl.NumberFormat(numberLocale(locale)).format(Math.round(Number.isFinite(n) ? n : 0));
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const [businessType, setBusinessType] = useState<BusinessType>('cafe');

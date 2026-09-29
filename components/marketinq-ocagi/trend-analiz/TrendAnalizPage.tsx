@@ -18,9 +18,10 @@ import {
   type TrendScore,
   type TrendStrength,
 } from '@/lib/marketing-tools/trend-analiz';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 function getIntlLocale(locale: string): string {
-  if (locale === 'az') return 'az-AZ';
+  if (locale === 'az') return AZ_NUMBER_LOCALE;
   if (locale === 'tr') return 'tr-TR';
   if (locale === 'ru') return 'ru-RU';
   return 'en-US';

@@ -11,6 +11,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import { formatAzDate } from '@/lib/i18n/format';
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -133,12 +134,13 @@ export default function InvoiceDetailPage() {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<Set<number>>(new Set());
 
-  const formatDate = (iso: string) =>
-    new Intl.DateTimeFormat(locale, {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    }).format(new Date(iso));
+  const formatDate = (iso: string) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' } as const;
+    // TASK-0462: Chrome ICU-da `az` yoxdur
+    return locale === 'az'
+      ? formatAzDate(iso, options)
+      : new Intl.DateTimeFormat(locale, options).format(new Date(iso));
+  };
 
   // Load data
   useEffect(() => {

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 interface MenuItem {
   name: string;
@@ -233,7 +234,7 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
                   <span className="text-blue-900">
                     <strong>Marja:</strong> {((1 - item.costPercent / item.price) * 100).toFixed(1)}%
                     {' • '}
-                    <strong>Aylıq mənfəət:</strong> {new Intl.NumberFormat('az-AZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((item.price - item.costPercent) * (item.monthlySales || 0))} AZN
+                    <strong>Aylıq mənfəət:</strong> {new Intl.NumberFormat(AZ_NUMBER_LOCALE, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((item.price - item.costPercent) * (item.monthlySales || 0))} AZN
                   </span>
                 </div>
               )}

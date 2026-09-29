@@ -12,6 +12,7 @@ import {
   type BlogArticle,
 } from '@/lib/data/blogArticles';
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
+import { formatAzDate } from '@/lib/i18n/format';
 
 type BlogListItem = BlogArticle & {
   seoTitle?: string;
@@ -180,7 +181,7 @@ export default function BlogGridPage() {
                       <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">
                         <div className="flex items-center gap-2">
                           <Calendar size={14} className="text-brand-red" />
-                          {new Date(article.publishDate).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}
+                          {formatAzDate(article.publishDate, { day: 'numeric', month: 'long', year: 'numeric' })}
                         </div>
                         <div className="flex items-center gap-2">
                           <Clock size={14} className="text-brand-red" />

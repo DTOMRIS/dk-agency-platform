@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Sun, Sunset, Zap, Wallet, Info } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type Concept = 'restoran_casual' | 'restoran_fine' | 'kafe' | 'bar';
 type GunTipi = 'isgunu' | 'cuma' | 'haftaSonu';
@@ -160,7 +161,7 @@ export default function PersonelPlanlayiciPage() {
     },
   }[calc.status];
 
-  const fmt = (n: number) => new Intl.NumberFormat(locale === 'az' ? 'az-AZ' : locale).format(n);
+  const fmt = (n: number) => new Intl.NumberFormat(locale === 'az' ? AZ_NUMBER_LOCALE : locale).format(n);
 
   // ── Input section ──────────────────────────────────────────────────
   const concepts: Concept[] = ['restoran_casual', 'restoran_fine', 'kafe', 'bar'];
