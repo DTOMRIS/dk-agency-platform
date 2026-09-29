@@ -8,7 +8,7 @@ Texniki borc qeydleri. Her giris prioritet, sprint ve hell plani ile.
 
 **Tarix:** 2026-09-29
 **Sprint:** TASK-0460 zamanı qeydə alındı
-**Status:** ACIQ (bloq/xəbər/elan sıxışdırması TASK-0460-da CSP-siz yola keçdi)
+**Status:** HELL EDILDI — TASK-0461 (2026-09-29): `img-src` və `media-src`-ə `blob:` (sahib icazəsi)
 **Prioritet:** Orta
 
 ### Problem

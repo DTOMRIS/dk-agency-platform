@@ -1,5 +1,9 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-29 — TASK-0461 (CSP blob:)
+
+**Sahib:** «blob iznini ver paşam, next.config'i düzelt» — PROTECTED fayl üçün açıq icazə. Dəyişiklik 2 sətir, `perl` ilə (Prettier bütün faylı tək dırnağa çevirməsin — L-051). `media-src` əvvəl heç yox idi, yəni checklist-ə əlavə olunan video da `default-src 'self'` ilə bloklanırdı — onu da əlavə etdim. Test əvvəl köhnə konfiqlə işə salındı (server restart lazımdır — `next.config` hot-reload olmur): başlıqda `blob:` yox, checklist fotosu görünmür — 2/2 FAIL. Yenisi ilə 4/4. TD-011 bağlandı.
+
 ## 2026-09-29 — TASK-0460 (bloq şəkli: birbaşa Cloudinary yükləmə + CSP)
 
 **Sahib:** «resim yüklemeyi hızlandır». 26 sentyabrdakı analiz: iki şəbəkə keçidi (brauzer → Hostinger → Cloudinary) + Cloudinary-nin yükləmədə sinxron çevirməsi. Plan: imzalı birbaşa yükləmə, çevirmə göstərmə URL-ində, irəliləyiş, köhnə yol ehtiyat. CSP `connect-src https:` birbaşa yükləməyə icazə verir — `next.config.ts`-ə toxunmaq lazım gəlmədi.
