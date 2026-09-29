@@ -4,6 +4,25 @@ Texniki borc qeydleri. Her giris prioritet, sprint ve hell plani ile.
 
 ---
 
+## TD-011 — CSP `img-src` `blob:`-ə icazə vermir — brauzerdə yaradılan şəkil önizləmələri bloklanır
+
+**Tarix:** 2026-09-29
+**Sprint:** TASK-0460 zamanı qeydə alındı
+**Status:** ACIQ (bloq/xəbər/elan sıxışdırması TASK-0460-da CSP-siz yola keçdi)
+**Prioritet:** Orta
+
+### Problem
+`next.config.ts` CSP: `img-src 'self' data: https:`. `URL.createObjectURL(...)` ilə `<img>`/`new Image()`-ə verilən hər `blob:` URL brauzerdə bloklanır. Təsirli yerlər: `app/toolkit/insaat-checklist/page.tsx` (foto), `app/dashboard/auditor/page.tsx`, `components/listings/ListingSubmissionPage.tsx` (önizləmə), `lib/utils/image-resize.ts`.
+
+### Hell
+`next.config.ts` (PROTECTED) CSP-də `img-src 'self' data: blob: https:` (və video üçün `media-src 'self' blob: https:`). `blob:` URL-ləri yalnız eyni origin-də yaradılır — risk aşağıdır. Sahib icazəsi + `ALLOW_PROTECTED=1` lazımdır.
+
+### Elaqeli
+- next.config.ts
+- lib/utils/imageUtils.ts (TASK-0460 — CSP-siz yol)
+
+---
+
 ## TD-010 — Koddakı `t('…')` açarlarının JSON-da mövcudluğu yoxlanmır
 
 **Tarix:** 2026-09-26
