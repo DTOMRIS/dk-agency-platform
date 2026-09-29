@@ -27,6 +27,7 @@ import {
   type MarketingToolConfig,
   type MarketingToolCategory,
 } from '@/lib/marketing-tools-config';
+import { toolHref } from '@/lib/marketing-tools-links';
 
 // ── ICON MAP ────────────────────────────────────────────────────────
 
@@ -81,6 +82,10 @@ const pageCopy: Record<
       'reklam-roi': { title: 'Reklam ROI', subtitle: 'Awareness və conversion kampaniya ROI hesabı' },
       'restoran-audit': { title: 'Restoran Audit', subtitle: 'Kassa, xərc, mətbəx və uyğunluq özünüqiymətləndirməsi' },
       'trend-analiz': { title: 'Trend Analiz', subtitle: '2026 trendlərini restoranınıza uyğun sıralayın' },
+      'sosial-metrik': { title: 'Sosial Media Metrikləri', subtitle: 'Instagram və TikTok engagement rate-ni HoReCa ortalaması ilə müqayisə edin' },
+      'personel-planlayici': { title: 'Personel Planlayıcısı', subtitle: 'Növbə üzrə optimal işçi sayını hesablayın' },
+      'metbex-istasyon': { title: 'Mətbəx İstasyon Kalkulyatoru', subtitle: 'Menyu SKU sayına görə stansiya və işçi sayı' },
+      'franchbook-generator': { title: 'Franchise Əl Kitabı', subtitle: 'AI ilə franchise əl kitabının skeletini yaradın' },
       'lokasyon-analiz': { title: 'Lokasyon Analiz', subtitle: 'Yeni və mövcud nöqtəni franchise meyarları ilə yoxlayın' },
       'sezon-analitikasi': { title: 'Sezon Analitikası', subtitle: 'AZ təqvimi ilə 12 aylıq cash-flow proqnozu' },
       'pl-simulyatoru': { title: 'P&L Simulyatoru', subtitle: 'Gəlir-xərc, what-if və zərərsizlik analizi' },
@@ -116,6 +121,10 @@ const pageCopy: Record<
       'reklam-roi': { title: 'Ad ROI', subtitle: 'Campaign ROI for awareness and conversion' },
       'restoran-audit': { title: 'Restaurant Audit', subtitle: 'Self-assessment for cash, costs, kitchen, and compliance' },
       'trend-analiz': { title: 'Trend Analysis', subtitle: 'Rank 2026 trends for your restaurant' },
+      'sosial-metrik': { title: 'Social Media Metrics', subtitle: 'Compare Instagram and TikTok engagement with HoReCa benchmarks' },
+      'personel-planlayici': { title: 'Staff Planner', subtitle: 'Optimal shift-based headcount for your venue' },
+      'metbex-istasyon': { title: 'Kitchen Station Calculator', subtitle: 'Stations and staff by menu SKU count' },
+      'franchbook-generator': { title: 'Franchise Manual', subtitle: 'Generate a franchise manual skeleton with AI' },
       'lokasyon-analiz': { title: 'Location Analysis', subtitle: 'Score new and existing sites with franchise criteria' },
       'sezon-analitikasi': { title: 'Season Analytics', subtitle: '12-month cash-flow forecast with Azerbaijan calendar' },
       'pl-simulyatoru': { title: 'P&L Simulator', subtitle: 'Revenue, what-if, and breakeven analysis' },
@@ -151,6 +160,10 @@ const pageCopy: Record<
       'reklam-roi': { title: 'Reklam ROI', subtitle: 'Awareness ve conversion kampanya ROI hesabı' },
       'restoran-audit': { title: 'Restoran Audit', subtitle: 'Kasa, maliyet, mutfak ve uygunluk öz değerlendirmesi' },
       'trend-analiz': { title: 'Trend Analiz', subtitle: '2026 trendlerini restoranınıza göre sıralayın' },
+      'sosial-metrik': { title: 'Sosyal Medya Metrikleri', subtitle: 'Instagram ve TikTok etkileşim oranını HoReCa ortalamasıyla karşılaştırın' },
+      'personel-planlayici': { title: 'Personel Planlayıcı', subtitle: 'Vardiya bazında optimal personel sayısı' },
+      'metbex-istasyon': { title: 'Mutfak İstasyon Hesaplayıcı', subtitle: 'Menü SKU sayısına göre istasyon ve personel' },
+      'franchbook-generator': { title: 'Franchise El Kitabı', subtitle: 'AI ile franchise el kitabı iskeleti oluşturun' },
       'lokasyon-analiz': { title: 'Lokasyon Analiz', subtitle: 'Yeni ve mevcut noktayı franchise kriterleriyle puanlayın' },
       'sezon-analitikasi': { title: 'Sezon Analitiği', subtitle: 'Azerbaycan takvimiyle 12 aylık cash-flow tahmini' },
       'pl-simulyatoru': { title: 'P&L Simülatörü', subtitle: 'Gelir, what-if ve başabaş analizi' },
@@ -186,6 +199,10 @@ const pageCopy: Record<
       'reklam-roi': { title: 'ROI рекламы', subtitle: 'ROI кампаний awareness и conversion' },
       'restoran-audit': { title: 'Ресторанный аудит', subtitle: 'Самооценка кассы, расходов, кухни и соответствия' },
       'trend-analiz': { title: 'Анализ трендов', subtitle: 'Ранжируйте тренды 2026 под ваш ресторан' },
+      'sosial-metrik': { title: 'Метрики соцсетей', subtitle: 'Сравните engagement в Instagram и TikTok с бенчмарками HoReCa' },
+      'personel-planlayici': { title: 'Планировщик персонала', subtitle: 'Оптимальное число персонала по сменам' },
+      'metbex-istasyon': { title: 'Калькулятор кухонных станций', subtitle: 'Станции и персонал по числу SKU меню' },
+      'franchbook-generator': { title: 'Франчайзинговое руководство', subtitle: 'Скелет франчайзингового руководства с AI' },
       'lokasyon-analiz': { title: 'Анализ локации', subtitle: 'Оцените новую или текущую точку по franchise-критериям' },
       'sezon-analitikasi': { title: 'Сезонная аналитика', subtitle: '12-месячный прогноз cash-flow с календарем Азербайджана' },
       'pl-simulyatoru': { title: 'P&L Симулятор', subtitle: 'Доходы, what-if и безубыточность' },
@@ -263,7 +280,7 @@ function ToolCard({
   if (isPlanned) return card;
 
   return (
-    <Link href={`/b2b-panel/marketinq-ocagi/${tool.slug}`}>
+    <Link href={toolHref(tool.slug)}>
       {card}
     </Link>
   );
