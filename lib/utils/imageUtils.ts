@@ -12,23 +12,46 @@ const DEFAULT_OPTIONS: Required<CompressOptions> = {
   maxSizeKB: 500,
 };
 
-function loadImage(file: File): Promise<HTMLImageElement> {
+/**
+ * TASK-0460: CSP (`img-src 'self' data: https:`) `blob:` URL-ə icazə vermir — əvvəl
+ * `new Image()` + `URL.createObjectURL` ilə oxuma brauzerdə bloklanırdı və sıxışdırma
+ * «Şəkil oxunmadı» ilə düşürdü. İndi `createImageBitmap` (URL-siz, daha sürətli dekod),
+ * dəstəklənməsə `data:` URL (CSP icazəli) ilə `Image`.
+ */
+interface DecodedImage {
+  source: CanvasImageSource;
+  width: number;
+  height: number;
+  release: () => void;
+}
+
+function readAsDataURL(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
-    const image = new Image();
-    const url = URL.createObjectURL(file);
-
-    image.onload = () => {
-      URL.revokeObjectURL(url);
-      resolve(image);
-    };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error('Şəkil oxunmadı.'));
-    };
-
-    image.src = url;
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error('Şəkil oxunmadı.'));
+    reader.readAsDataURL(blob);
   });
+}
+
+async function decodeImage(file: Blob): Promise<DecodedImage> {
+  if (typeof createImageBitmap === 'function') {
+    try {
+      const bitmap = await createImageBitmap(file);
+      return { source: bitmap, width: bitmap.width, height: bitmap.height, release: () => bitmap.close() };
+    } catch {
+      /* köhnə brauzer / format — aşağıdakı yol */
+    }
+  }
+
+  const dataUrl = await readAsDataURL(file);
+  const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Şəkil oxunmadı.'));
+    img.src = dataUrl;
+  });
+  return { source: image, width: image.naturalWidth, height: image.naturalHeight, release: () => {} };
 }
 
 function blobToFile(blob: Blob, original: File) {
@@ -59,11 +82,12 @@ export async function compressImage(
   sizeReduction: string;
 }> {
   const settings = { ...DEFAULT_OPTIONS, ...options };
-  const image = await loadImage(file);
+  const image = await decodeImage(file);
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
 
   if (!context) {
+    image.release();
     throw new Error('Şəkil işlənməsi üçün canvas əlçatan deyil.');
   }
 
@@ -73,7 +97,8 @@ export async function compressImage(
 
   canvas.width = width;
   canvas.height = height;
-  context.drawImage(image, 0, 0, width, height);
+  context.drawImage(image.source, 0, 0, width, height);
+  image.release();
 
   let quality = settings.quality;
   let blob: Blob | null = null;
@@ -99,7 +124,8 @@ export async function compressImage(
   }
 
   const compressedFile = blobToFile(blob, file);
-  const preview = URL.createObjectURL(compressedFile);
+  // data: URL — CSP `blob:`-ə icazə vermir (yuxarıya bax)
+  const preview = await readAsDataURL(compressedFile);
   const originalSize = file.size;
   const compressedSize = compressedFile.size;
   const reductionPercent =
@@ -129,11 +155,12 @@ export function validateImage(file: File): { valid: boolean; error?: string } {
 }
 
 export async function generateThumbnail(file: File, size: number = 200): Promise<string> {
-  const image = await loadImage(file);
+  const image = await decodeImage(file);
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
 
   if (!context) {
+    image.release();
     throw new Error('Thumbnail yaradıla bilmədi.');
   }
 
@@ -143,7 +170,8 @@ export async function generateThumbnail(file: File, size: number = 200): Promise
 
   canvas.width = width;
   canvas.height = height;
-  context.drawImage(image, 0, 0, width, height);
+  context.drawImage(image.source, 0, 0, width, height);
+  image.release();
 
   return canvas.toDataURL('image/jpeg', 0.75);
 }

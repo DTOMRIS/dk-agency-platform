@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-29 — TASK-0460 (bloq şəkli: birbaşa Cloudinary yükləmə + CSP)
+
+**Sahib:** «resim yüklemeyi hızlandır». 26 sentyabrdakı analiz: iki şəbəkə keçidi (brauzer → Hostinger → Cloudinary) + Cloudinary-nin yükləmədə sinxron çevirməsi. Plan: imzalı birbaşa yükləmə, çevirmə göstərmə URL-ində, irəliləyiş, köhnə yol ehtiyat. CSP `connect-src https:` birbaşa yükləməyə icazə verir — `next.config.ts`-ə toxunmaq lazım gəlmədi.
+
+**Əsl tapıntı:** Playwright testində önizləmə heç görünmədi. Konsol: `Refused to load the image 'blob:…' because it violates … "img-src 'self' data: https:"`. `compressImage` faylı `URL.createObjectURL` + `new Image()` ilə oxuyur — CSP bunu bloklayır, sıxışdırma yükləmədən əvvəl düşür. Yəni problem təkcə sürət deyildi: canlıdakı CSP ilə köhnə kod testdə heç yükləyə bilmədi (köhnə kod 3/3 FAIL). Sahibin «uzun sürüyor» təcrübəsi bəlkə başqa brauzer/yol idi — canlını görmürəm, fakt olaraq yalnız «bu CSP ilə Chromium-da düşür» deyirəm.
+
+**Düzəliş yeri:** CSP-yə `blob:` əlavə etmək kök həlldir və saytın başqa yerlərini də düzəldər (inşaat checklist foto, auditor, elan önizləmə) — amma `next.config.ts` PROTECTED. Bu task-da `imageUtils` CSP-dən asılı olmayan yola keçdi (`createImageBitmap`; ehtiyat `data:`), qalan yerlər TD-011.
+
+**İmza təhlükəsizliyi:** yalnız admin, yalnız iki qovluq; imzalanan parametrlər `folder`+`timestamp` (Cloudinary imza 1 saat keçərlidir). Test SHA-1-i Cloudinary alqoritmi ilə müstəqil hesablayıb müqayisə edir.
+
 ## 2026-09-29 — TASK-0459 (Marketinq Ocağı kartları + toolkit dövrəsi)
 
 **Sahib:** «sosial-metrik kartını da düzelt». TASK-0458-in skrinşotunda görünən bir kart idi; skript ilə 24 alətin slug-larını hər iki səhifənin 4 dil sözlüyü ilə tutuşdurdum — hub-da 4 alət, alət səhifəsində 5 alət yox idi. Daha vacibi: alət səhifəsi komponenti yalnız 16 slug üçün seçir, qalan «live» alət boş səhifəyə düşürdü. Yəni ad düzəltmək kifayət deyildi — kart heç yerə aparmırdı.

@@ -3,6 +3,7 @@
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { compressImage, validateImage } from '@/lib/utils/imageUtils';
+import { deliveryUrl, uploadImageDirect } from '@/lib/uploads/directCloudinaryUpload';
 import { slugifyAz } from '@/lib/utils/slugify-az';
 import { parseMarkdownImport } from '@/lib/blog/parseMarkdownImport';
 
@@ -106,6 +107,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
   const [toast, setToast] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [errors, setErrors] = useState<{ titleAz?: string; slug?: string; contentAz?: string }>({});
 
   const [activeLocale, setActiveLocale] = useState<LocaleTab>('az');
@@ -321,26 +323,38 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
 
       // Persist the file to Cloudinary and store the durable https URL — NOT
       // the in-memory blob: URL, which dies on reload and never reaches the DB.
-      const formData = new FormData();
-      formData.append('file', compressed.file);
-      formData.append('folder', 'dk-agency/blog');
+      // TASK-0460: birbaşa brauzer → Cloudinary (imzalı, faizlə); alınmasa köhnə yol.
+      let url = '';
+      try {
+        const direct = await uploadImageDirect(compressed.file, {
+          folder: 'dk-agency/blog',
+          onProgress: setUploadProgress,
+        });
+        url = deliveryUrl(direct.url);
+      } catch {
+        setUploadProgress(null);
+        const formData = new FormData();
+        formData.append('file', compressed.file);
+        formData.append('folder', 'dk-agency/blog');
 
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const data = (await res.json().catch(() => null)) as {
-        success?: boolean;
-        url?: string;
-        error?: string;
-      } | null;
+        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        const data = (await res.json().catch(() => null)) as {
+          success?: boolean;
+          url?: string;
+          error?: string;
+        } | null;
 
-      if (!res.ok || !data?.success || !data?.url) {
-        setImagePreview('');
-        setField('featuredImage', '');
-        showToast(data?.error || 'Şəkil serverə yüklənmədi. Yenidən cəhd edin.');
-        return;
+        if (!res.ok || !data?.success || !data?.url) {
+          setImagePreview('');
+          setField('featuredImage', '');
+          showToast(data?.error || 'Şəkil serverə yüklənmədi. Yenidən cəhd edin.');
+          return;
+        }
+        url = data.url;
       }
 
-      setImagePreview(data.url);
-      setField('featuredImage', data.url);
+      setImagePreview(url);
+      setField('featuredImage', url);
       showToast(`Şəkil yükləndi: ${compressed.reduction}`);
     } catch {
       setImagePreview('');
@@ -348,6 +362,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
       showToast('Şəkil yüklənərkən xəta baş verdi.');
     } finally {
       setUploadingImage(false);
+      setUploadProgress(null);
     }
   };
 
@@ -578,7 +593,9 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                 uploadingImage ? 'cursor-wait opacity-60' : 'cursor-pointer'
               }`}
             >
-              {uploadingImage ? '⏳ Şəkil yüklənir…' : 'Şəkil yüklə'}
+              {uploadingImage
+                ? `⏳ Şəkil yüklənir…${uploadProgress !== null ? ` ${uploadProgress}%` : ''}`
+                : 'Şəkil yüklə'}
               <input
                 type="file"
                 accept="image/*"
@@ -587,6 +604,20 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                 onChange={(e) => void handleImage(e)}
               />
             </label>
+            {uploadingImage && uploadProgress !== null ? (
+              <div
+                className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200"
+                role="progressbar"
+                aria-valuenow={uploadProgress}
+                aria-valuemin={0}
+                aria-valuemax={100}
+              >
+                <div
+                  className="h-full bg-[var(--dk-red)] transition-[width]"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+            ) : null}
             {imagePreview ? (
               <img
                 src={imagePreview}
