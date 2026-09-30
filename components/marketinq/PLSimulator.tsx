@@ -14,6 +14,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { getPLAIAnalysis, type PLPeriod } from '@/app/actions/pl-ai-analysis';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type PLInputs = {
   foodSales: string;
@@ -83,7 +84,7 @@ function round(value: number): number {
 }
 
 function getLocale(locale: string) {
-  if (locale === 'az') return 'az-AZ';
+  if (locale === 'az') return AZ_NUMBER_LOCALE;
   if (locale === 'tr') return 'tr-TR';
   if (locale === 'ru') return 'ru-RU';
   return 'en-US';

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Clock, TrendingUp, ChevronRight, Flame, Calendar, MapPin, Users, Ticket, Newspaper, BookOpen, PartyPopper, Star } from 'lucide-react';
 import type { BlogArticle } from '@/lib/data/blogArticles';
+import { formatAzDate } from '@/lib/i18n/format';
 
 interface SektorNabziTabsProps {
   articles: BlogArticle[];
@@ -295,7 +296,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
 
                     {/* Tarih */}
                     <p className="text-xs text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)] mt-1">
-                      {new Date(news.date).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long' })}
+                      {formatAzDate(news.date, { day: 'numeric', month: 'long' })}
                     </p>
                   </div>
 
@@ -406,7 +407,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                     <div>
                       <p className="font-semibold text-[var(--dk-text)]">{featuredArticle.author}</p>
                       <p className="text-xs text-[var(--dk-muted)]">
-                        {new Date(featuredArticle.publishDate).toLocaleDateString('az-AZ', { month: 'long', day: 'numeric', year: 'numeric' })}
+                        {formatAzDate(featuredArticle.publishDate, { month: 'long', day: 'numeric', year: 'numeric' })}
                       </p>
                     </div>
                   </div>
@@ -554,7 +555,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   <div className="flex items-center gap-3 text-[var(--dk-body)]">
                     <Calendar className="w-5 h-5 text-[var(--dk-gold)]" />
                     <span className="font-medium">
-                      {new Date(event.date).toLocaleDateString('az-AZ', { 
+                      {formatAzDate(event.date, { 
                         weekday: 'long',
                         day: 'numeric',
                         month: 'long',

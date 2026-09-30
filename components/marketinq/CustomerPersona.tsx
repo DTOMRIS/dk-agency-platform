@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { generatePersona } from '@/app/actions/persona-ai-generator';
 import type { PersonaJSON } from '@/app/actions/persona-ai-generator';
+import { formatAzDate } from '@/lib/i18n/format';
 
 // ── CONSTANTS ──────────────────────────────────────────────
 
@@ -139,7 +140,10 @@ export default function CustomerPersona({ backHref = '/b2b-panel/marketinq-ocagi
         const newItem: HistoryItem = {
           name: result.persona.name,
           tagline: result.persona.tagline,
-          date: new Date().toLocaleDateString(locale === 'az' ? 'az-AZ' : locale === 'tr' ? 'tr-TR' : locale === 'ru' ? 'ru-RU' : 'en-US'),
+          date:
+            locale === 'az'
+              ? formatAzDate(new Date())
+              : new Date().toLocaleDateString(locale === 'tr' ? 'tr-TR' : locale === 'ru' ? 'ru-RU' : 'en-US'),
         };
         const updated = [newItem, ...history].slice(0, MAX_HISTORY);
         setHistory(updated);

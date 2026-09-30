@@ -15,6 +15,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { getMenuAnalyticsTips, type MenuAnalyticsCategory } from '@/app/actions/menu-analytics-ai';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type MenuRow = {
   id: string;
@@ -91,7 +92,7 @@ function CategoryBadge({ category, label }: { category: MenuAnalyticsCategory; l
 export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' }: { backHref?: string }) {
   const t = useTranslations('marketinq.menuAnalytics');
   const locale = useLocale();
-  const localeForIntl = locale === 'az' ? 'az-AZ' : locale === 'tr' ? 'tr-TR' : locale === 'ru' ? 'ru-RU' : 'en-US';
+  const localeForIntl = locale === 'az' ? AZ_NUMBER_LOCALE : locale === 'tr' ? 'tr-TR' : locale === 'ru' ? 'ru-RU' : 'en-US';
 
   const [period, setPeriod] = useState('May 2026');
   const [rows, setRows] = useState<MenuRow[]>([newRow(1), newRow(2)]);

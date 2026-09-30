@@ -3,8 +3,9 @@
 import { useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { calcGuesthouseRoi, GUESTHOUSE_ROI_DEFAULTS, type GuesthouseRoiVerdict } from '@/lib/data/guesthouseRoi';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
-function fmt(n: number) { return n.toLocaleString('az-AZ', { maximumFractionDigits: 0 }) + ' AZN'; }
+function fmt(n: number) { return n.toLocaleString(AZ_NUMBER_LOCALE, { maximumFractionDigits: 0 }) + ' AZN'; }
 
 const VERDICT_STYLES: Record<GuesthouseRoiVerdict, string> = {
   healthy: 'bg-emerald-50 text-emerald-700 border border-emerald-200',

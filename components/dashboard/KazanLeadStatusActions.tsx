@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { formatAzDate, formatAzDateTime } from '@/lib/i18n/format';
 
 type LeadStatus = 'new' | 'contacted' | 'qualified' | 'converted' | 'dismissed';
 type LeadNote = { at: string; text: string };
@@ -77,7 +78,7 @@ export default function KazanLeadStatusActions({
         ) : null}
         {nextContactAt ? (
           <span className="rounded-full bg-indigo-50 px-2 py-0.5 font-bold text-indigo-700">
-            📅 {new Date(nextContactAt).toLocaleDateString('az-AZ')}
+            📅 {formatAzDate(nextContactAt)}
           </span>
         ) : null}
       </div>
@@ -121,7 +122,7 @@ export default function KazanLeadStatusActions({
               {notes.map((n, i) => (
                 <li key={i} className="text-xs text-slate-700">
                   <span className="font-semibold text-slate-600">
-                    {new Date(n.at).toLocaleString('az-AZ')}:
+                    {formatAzDateTime(n.at)}:
                   </span>{' '}
                   {n.text}
                 </li>

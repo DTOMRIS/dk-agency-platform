@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { ArrowRight, BookOpen, Footprints, Lightbulb, RotateCcw } from 'lucide-react';
 import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
 import { calculateAddimXerci, hourlyFromMonthly, tripsToMinutes } from '@/lib/toolkit/addimXerci';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type Mode = 'minutes' | 'trips';
 
@@ -21,11 +22,11 @@ const DEFAULTS = {
 };
 
 function formatCurrency(value: number) {
-  return `${Math.round(value).toLocaleString('az-AZ')} ₼`;
+  return `${Math.round(value).toLocaleString(AZ_NUMBER_LOCALE)} ₼`;
 }
 
 function formatHours(value: number) {
-  return (Math.round(value * 10) / 10).toLocaleString('az-AZ');
+  return (Math.round(value * 10) / 10).toLocaleString(AZ_NUMBER_LOCALE);
 }
 
 const inputClass =

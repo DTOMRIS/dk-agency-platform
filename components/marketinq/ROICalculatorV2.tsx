@@ -15,6 +15,7 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { getROIAIAnalysis } from '@/app/actions/roi-ai-analysis';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type ChannelRow = {
   id: string;
@@ -60,7 +61,7 @@ function round(value: number): number {
 }
 
 function getIntlLocale(locale: string) {
-  if (locale === 'az') return 'az-AZ';
+  if (locale === 'az') return AZ_NUMBER_LOCALE;
   if (locale === 'tr') return 'tr-TR';
   if (locale === 'ru') return 'ru-RU';
   return 'en-US';

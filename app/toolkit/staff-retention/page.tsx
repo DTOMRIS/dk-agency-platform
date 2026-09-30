@@ -6,9 +6,10 @@ import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, Lightbulb, RotateCcw, Users } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 function formatCurrency(value: number) {
-  return `${Math.round(value).toLocaleString('az-AZ')} ₼`;
+  return `${Math.round(value).toLocaleString(AZ_NUMBER_LOCALE)} ₼`;
 }
 
 export default function StaffRetentionPage() {

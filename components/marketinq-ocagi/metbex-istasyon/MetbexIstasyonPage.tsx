@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Flame, Snowflake, Users, Wallet, Crown, Sun, Zap, Sunset } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type Concept = 'fast_food' | 'qsr_burger' | 'qsr_pizza' | 'dark_kitchen' | 'catering';
 interface Kanallar {
@@ -157,7 +158,7 @@ export default function MetbexIstasyonPage() {
     },
   }[calc.status];
 
-  const fmt = (n: number) => new Intl.NumberFormat(locale === 'az' ? 'az-AZ' : locale).format(n);
+  const fmt = (n: number) => new Intl.NumberFormat(locale === 'az' ? AZ_NUMBER_LOCALE : locale).format(n);
 
   const concepts: Concept[] = ['fast_food', 'qsr_burger', 'qsr_pizza', 'dark_kitchen', 'catering'];
   const conceptLabel: Record<Concept, string> = {

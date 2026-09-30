@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Trash2, Pencil } from 'lucide-react';
+import { formatAzDate } from '@/lib/i18n/format';
 
 interface BlogPost {
   id: string;
@@ -176,7 +177,7 @@ export default function DashboardBlogPage() {
                     <td className="px-4 py-4 text-slate-600">{post.category}</td>
                     <td className="px-4 py-4">{statusBadge(post.status)}</td>
                     <td className="px-4 py-4 text-slate-500">
-                      {new Date(post.publishDate).toLocaleDateString('az-AZ')}
+                      {formatAzDate(post.publishDate)}
                     </td>
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-2">

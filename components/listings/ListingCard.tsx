@@ -7,6 +7,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { MockListing } from '@/lib/data/mockListings';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getSectorLabel } from '@/lib/data/listingSectors';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 interface ListingCardProps {
   listing: MockListing;
@@ -15,7 +16,7 @@ interface ListingCardProps {
 
 function formatPrice(listing: MockListing) {
   if (listing.priceLabel) return listing.priceLabel;
-  return `${new Intl.NumberFormat('az-AZ').format(listing.price)} ${listing.currency}`;
+  return `${new Intl.NumberFormat(AZ_NUMBER_LOCALE).format(listing.price)} ${listing.currency}`;
 }
 
 export default function ListingCard({ listing, onOpen }: ListingCardProps) {

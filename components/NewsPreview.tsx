@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Calendar, ArrowRight, Tag, Bookmark } from 'lucide-react';
 import Link from 'next/link';
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
+import { formatAzDate } from '@/lib/i18n/format';
 
 interface NewsItem {
   id: number;
@@ -157,11 +158,11 @@ export default function NewsPreview() {
 
   const formatDate = (iso: string) => {
     try {
-      return new Date(iso).toLocaleDateString(dateLocaleMap[locale], {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      });
+      const options = { day: 'numeric', month: 'long', year: 'numeric' } as const;
+      // TASK-0462: Chrome ICU-da `az` yoxdur — az üçün ICU-suz formatlayıcı
+      return locale === 'az'
+        ? formatAzDate(iso, options)
+        : new Date(iso).toLocaleDateString(dateLocaleMap[locale], options);
     } catch {
       return '';
     }

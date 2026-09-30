@@ -1,5 +1,15 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-29 — TASK-0462 (hydration: Chrome ICU-da az yoxdur)
+
+**Sahib:** «hydration uyarısını düzelt». React-in diff-i dərhal göstərdi: `+ 3,744 ₼ / - 3.744 ₼`. Əvvəl «server/client locale fərqi» sandım — amma hər ikisi `az-AZ` istəyirdi. Brauzerdə `supportedLocalesOf(['az-AZ'])` → `['az-AZ']` (dəstəklənir!), amma format `3,744.5`, tarix `2026 M09 29`. Chrome-un ICU paketində `az` məlumatı yoxdur, fallback kök locale-dir. Yəni problem təkcə xəbərdarlıq deyil: Chrome-da bütün client AZ rəqəm/tarixləri ingiliscə/kök formatda idi.
+
+**Seçim:** ICU-ya güvənməyən tək helper (`lib/i18n/format.ts`), hər iki tərəfdə eyni kod → eyni mətn. Rəqəm: `de-DE` az ilə eyni qaydadır. Tarix: ay/gün adları əllə, hissələr `en-US` + `Asia/Baku` (server UTC-də işləyir, brauzer istənilən qurşaqda — gecə yarısı fərqli gün göstərməsin). Node çıxışı ilə eyni olduğunu 247 yoxlamalı unit test sübut edir — «oxşar» yox, eyni.
+
+**Keçid:** 36 fayl `'az-AZ'` sabiti ilə, 5 fayl `new Intl.NumberFormat(locale)` (`locale` = `'az'`) ilə. Regex-lə keçirdim, sonra hər `AZ_NUMBER_LOCALE` istifadəsini yoxladım — bir yerdə (`CustomerPersona`) tarix idi, düzəldildi. `ComplaintAnalysis`-dəki `toLocaleLowerCase('az-AZ')` format deyil, qaldı.
+
+**Test:** skan əvvəl 3 səhifə göstərirdi (ilk xətanı sayırdım); spec köhnə kodla 9 səhifədə xəta tutdu. `networkidle` analitika sorğularına görə heç gəlmədi — sabit gözləmə.
+
 ## 2026-09-29 — TASK-0461 (CSP blob:)
 
 **Sahib:** «blob iznini ver paşam, next.config'i düzelt» — PROTECTED fayl üçün açıq icazə. Dəyişiklik 2 sətir, `perl` ilə (Prettier bütün faylı tək dırnağa çevirməsin — L-051). `media-src` əvvəl heç yox idi, yəni checklist-ə əlavə olunan video da `default-src 'self'` ilə bloklanırdı — onu da əlavə etdim. Test əvvəl köhnə konfiqlə işə salındı (server restart lazımdır — `next.config` hot-reload olmur): başlıqda `blob:` yox, checklist fotosu görünmür — 2/2 FAIL. Yenisi ilə 4/4. TD-011 bağlandı.

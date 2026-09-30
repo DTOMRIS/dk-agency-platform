@@ -33,6 +33,7 @@ import {
 import { getConceptsForSector, getConceptLabel, type ConceptKey } from '@/lib/data/listingConcepts';
 import { getAllSectors } from '@/lib/data/listingSectors';
 import { compressImage, generateThumbnail, validateImage } from '@/lib/utils/imageUtils';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type FormStep = 1 | 2 | 3 | 4 | 5;
 
@@ -1091,7 +1092,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                 <div>
                   <h3 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{formData.title}</h3>
                   <div className="mt-3 text-xl font-black text-[var(--dk-gold)] sm:text-2xl">
-                    {Number(formData.price || 0).toLocaleString('az-AZ')} {formData.currency}
+                    {Number(formData.price || 0).toLocaleString(AZ_NUMBER_LOCALE)} {formData.currency}
                   </div>
                   <p className="mt-3 text-sm text-slate-500">
                     {formData.city}{formData.district ? `, ${formData.district}` : ''}

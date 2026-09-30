@@ -9,6 +9,7 @@ import { getCategoryById } from '@/lib/data/listingCategories';
 import { getFieldsForType } from '@/lib/data/listingFieldConfig';
 import { type MockListing } from '@/lib/data/mockListings';
 import type { Locale } from '@/i18n/config';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 interface Props {
   listing: MockListing;
@@ -18,7 +19,7 @@ interface Props {
 
 function formatPrice(listing: MockListing) {
   if (listing.priceLabel) return listing.priceLabel;
-  return `${new Intl.NumberFormat('az-AZ').format(listing.price)} ${listing.currency}`;
+  return `${new Intl.NumberFormat(AZ_NUMBER_LOCALE).format(listing.price)} ${listing.currency}`;
 }
 
 function renderFieldValue(value: string | number | boolean | undefined) {

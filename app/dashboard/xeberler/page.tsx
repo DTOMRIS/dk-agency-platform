@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import { formatAzDate } from '@/lib/i18n/format';
 
 type FilterStatus = 'all' | 'fetched' | 'translated' | 'approved' | 'rejected';
 
@@ -491,7 +492,7 @@ export default function DashboardXeberlerPage() {
                     ) : null}
                   </td>
                   <td className="px-5 py-4 text-slate-500">
-                    {new Date(item.publishedAt).toLocaleDateString('az-AZ')}
+                    {formatAzDate(item.publishedAt)}
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex flex-wrap gap-2">

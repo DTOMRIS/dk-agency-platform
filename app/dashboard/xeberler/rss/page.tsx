@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { formatAzDateTime } from '@/lib/i18n/format';
 
 interface NewsSourceRow {
   id: number;
@@ -76,7 +77,7 @@ export default function DashboardXeberlerRssPage() {
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
                 {source.lastFetchedAt
-                  ? new Date(source.lastFetchedAt).toLocaleString('az-AZ')
+                  ? formatAzDateTime(source.lastFetchedAt)
                   : 'Hele fetch edilmeyib'}
               </div>
               <label className="inline-flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">

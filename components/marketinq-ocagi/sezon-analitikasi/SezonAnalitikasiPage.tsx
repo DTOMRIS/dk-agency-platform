@@ -10,6 +10,7 @@ import {
   type MonthProjection,
   type RestaurantSeasonType,
 } from '@/lib/marketing-tools/sezon-analitikasi';
+import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 type ValidationErrors = {
   monthlyRevenue?: string;
@@ -26,7 +27,7 @@ function clamp(value: number, min: number, max: number): number {
 }
 
 function getIntlLocale(locale: string): string {
-  if (locale === 'az') return 'az-AZ';
+  if (locale === 'az') return AZ_NUMBER_LOCALE;
   if (locale === 'tr') return 'tr-TR';
   if (locale === 'ru') return 'ru-RU';
   return 'en-US';
