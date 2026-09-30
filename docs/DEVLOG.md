@@ -1,5 +1,11 @@
 # DK Agency Platform — Dev Log
 
+## 2026-09-30 — TASK-0463 (Hostinger build: Turbopack loader prosesi ölürdü)
+
+**Sahib:** «dünden beri hostinger almıyor» — 29 sentyabrdan bəri bütün deploy-lar «Derleme başarısız», bot commit-ləri də. Əvvəl kodu yoxladım: `main` lokal təmiz build (70 s, 2,7 GB), 28 sentyabrdakı işləyən commit də eyni yaddaş — PR-lar build-i ağırlaşdırmayıb, `package.json`/lockfile dəyişməyib. Hostinger log-u: «child node process exited prematurely … evaluating webpack loaders». Turbopack loader-ləri (Tailwind/PostCSS, Sentry dəyər inyeksiyası) ayrıca Node proseslərində işlədir, sayı CPU sayı ilə böyüyür — 4 nüvədə 6 proses; çox nüvəli paylaşımlı serverdə daha çox.
+
+**Seçim:** `--webpack` ölçüldü — 6 GB, 3,5 dəq: pis. Next 16-da `experimental.turbopackPluginRuntimeStrategy: 'workerThreads'` — loader-lər ana prosesdə thread-də; üstəgəl `cpus: 2` statik generasiya üçün. 3 proses, yaddaş eyni, vaxt eyni. Hostinger AI-nın `middleware.ts` → proxy və Sentry təklifləri bu xəta ilə bağlı deyil (Sentry artıq 10.69; açarlar deploy işləyəndə də var idi). Son sübut Hostinger-in özündədir — merge-dən sonra build log-u.
+
 ## 2026-09-29 — TASK-0462 (hydration: Chrome ICU-da az yoxdur)
 
 **Sahib:** «hydration uyarısını düzelt». React-in diff-i dərhal göstərdi: `+ 3,744 ₼ / - 3.744 ₼`. Əvvəl «server/client locale fərqi» sandım — amma hər ikisi `az-AZ` istəyirdi. Brauzerdə `supportedLocalesOf(['az-AZ'])` → `['az-AZ']` (dəstəklənir!), amma format `3,744.5`, tarix `2026 M09 29`. Chrome-un ICU paketində `az` məlumatı yoxdur, fallback kök locale-dir. Yəni problem təkcə xəbərdarlıq deyil: Chrome-da bütün client AZ rəqəm/tarixləri ingiliscə/kök formatda idi.

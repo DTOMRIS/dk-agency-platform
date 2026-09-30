@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
     trustHostHeader: true,
     webpackMemoryOptimizations: true,
     preloadEntriesOnStart: false,
+    // TASK-0463: Hostinger build — loader-lər ayrıca Node prosesində yox, worker thread-də (proses limiti)
+    turbopackPluginRuntimeStrategy: 'workerThreads',
+    cpus: 2,
   },
   productionBrowserSourceMaps: false,
   serverExternalPackages: ['nodemailer'],
