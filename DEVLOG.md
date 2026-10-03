@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0465: docs — L-059 + auto-merge testi
+
+**Why:** TASK-0464-dən sonra `main` ruleset (PR + `quality-gates`) qoyuldu; məzmun PR-ının özü merge olduğunu sübut etmək.
+
+**What:** LESSONS L-059. Yalnız sənəd.
+
 ## 2026-10-04 — TASK-0464: chore(ci): PR axını və bot deploy-larının azaldılması
 
 **Why:** Doğan hər merge/deploy ilə əl ilə məşğul olur. Ölçülən sürtünmə: STATE botu hər merge-dən sonra `main`-ə commit edir (iyundan 166 dəfə) → Hostinger hər push-da yenidən build → 4 GB limitdə OOM/503 riski; TASK-0463 qeydi: "bot commit-ləri də düşür". CI Node 20, layihə Node 22.
