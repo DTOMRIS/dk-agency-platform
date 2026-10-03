@@ -389,3 +389,8 @@ route patterni ile eyni).
 - **Kök səbəb:** Next 16 Turbopack webpack loader-lərini (Tailwind/PostCSS, Sentry) default `childProcesses` ilə ayrıca Node proseslərində işlədir, statik generasiya da CPU − 1 worker açır. Proses sayı serverin CPU sayı ilə artır; paylaşımlı planın proses/yaddaş limiti prosesi öldürür. Kod dəyişmədən də düşə bilər (server/limit dəyişəndə).
 - **Qayda:** Hostinger build-i düşəndə: (1) `main`-i lokal təmiz build et, vaxt + yaddaş + Node proses sayını ölç, deploy işləyən köhnə commit ilə tutuşdur; (2) bot commit-ləri də düşürsə — mühitdir, koda əl atma; (3) `next.config.ts`-də `turbopackPluginRuntimeStrategy: 'workerThreads'` və `cpus: 2` saxlanır — silmə. `--webpack`-ə keçmə: 2× yaddaş (6 GB).
 - **Nəticə:** TASK-0463 — eyni yaddaş (3,0 GB), Node prosesləri 6 → 3.
+
+## L-059: Bot-un `main`-ə hər commit-i Hostinger-də ayrıca deploy-dur
+- **Səhv:** STATE snapshot botu hər merge-dən sonra `main`-ə commit edirdi (iyundan 166 dəfə), RSS botu hər gün. Hostinger hər push-u build edir → bir merge = iki deploy; 4 GB limitdə build-lər düşürdü (TASK-0463 qeydi: "bot commit-ləri də düşür").
+- **Qayda:** `main`-ə yazan hər avtomatlaşdırma deploy sayılır. Bot nəticəsi ya DB-yə, ya PR-a (məzmun PR-ı → auto-merge), ya da artifact-a getsin; birbaşa `main` push-u yox.
+- **Nəticə:** TASK-0464 — STATE həftəlik; `main` ruleset ilə qorunur (PR + `quality-gates`). RSS botu növbəti task-da PR axınına keçir.
