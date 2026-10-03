@@ -1,8 +1,10 @@
 name: State Snapshot
 
+# TASK-0464: hər main push-unda yox, həftədə bir. Bot commit-i Hostinger-də ikinci deploy
+# tetikləyirdi (TASK-0463 qeydi: bot commit-ləri də düşür). Əl ilə: Actions → Run workflow.
 on:
-  push:
-    branches: [main]
+  schedule:
+    - cron: '0 5 * * 1'  # Bazar ertəsi 05:00 UTC (09:00 Bakı)
   workflow_dispatch:
 
 permissions:
@@ -20,7 +22,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
