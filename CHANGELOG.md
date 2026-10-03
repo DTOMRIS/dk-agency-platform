@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0464` chore(ci): PR axını — məzmun PR-ları (docs/content/decision-log/jurnallar) CI yaşıl olanda avtomatik merge (`auto-merge-content.yml`, Doğan "Allow auto-merge" açır); STATE snapshot hər main push-unda yox, həftədə bir (bot commit-i ikinci Hostinger deploy-u tetikləyirdi); CI və snapshot Node 20 → 22 (`.nvmrc`/`engines` ilə uyğun); CODEOWNERS `@dotom` → `@DTOMRIS`. Saytın koduna toxunulmayıb.
+
 - SESSION 2026-07-16/17: onboarding dead-end + tool-link repair (0419), mobile onboarding polish (0420), member visibility fix + backfill (0421), blog crash fix + slug_redirects table (0422), blog mobile overflow (0423), mobile blog menu + 40% paywall off + carousel counter (0424), homepage real news (0425). All merged, CI-green; deploy build failure diagnosed as platform infra (not code) and resolved on retry.
 - `TASK-0425` fix(home): homepage "Sektordan ən son yeniliklər" section now shows real approved news from GET /api/news and links each card to /haberler/<slug>, replacing hardcoded placeholder NEWS_ITEMS. Design unchanged.
 - `TASK-0424` fix(ui): mobile menu top-level Blog link; 40% paywall disabled (everyone reads full blog+news, PAYWALL_ENABLED flag); MansetVitrin carousel counter no longer wraps on mobile.

@@ -1,0 +1,48 @@
+name: Auto-merge content PRs
+
+# TASK-0464 — Doğan qərarı (2026-10-04, seçim 2): yalnız sənəd/məzmun PR-ları CI yaşıl olanda
+# avtomatik merge olur. Kod, konfiqurasiya, DB, workflow dəyişən PR-ları Doğan əl ilə merge edir.
+# Tələb: repo Settings → General → "Allow auto-merge" açıq; main qoruması "CI / quality-gates" tələb edir.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scope check — content only?
+        id: scope
+        run: |
+          git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" > changed.txt
+          echo "Dəyişən fayllar:"; cat changed.txt
+          # İcazəli: docs/** (STATE.md xaric — onu bot yazır), content/**, decision-log/**, kökdəki jurnal .md-ləri
+          ALLOW='^(docs/|content/|decision-log/)|^(CHANGELOG|DEVLOG|HANDOFF|README)\.md$'
+          DENY='^docs/STATE\.md$'
+          if [ ! -s changed.txt ]; then echo "content=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if grep -Evq "$ALLOW" changed.txt || grep -Eq "$DENY" changed.txt; then
+            echo "Kod/konfiq dəyişikliyi var → əl ilə merge (Doğan)."
+            echo "content=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Yalnız məzmun → auto-merge aktiv edilir."
+            echo "content=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Enable auto-merge (waits for required checks)
+        if: steps.scope.outputs.content == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge "${{ github.event.pull_request.number }}" --auto --merge

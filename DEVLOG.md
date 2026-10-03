@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0464: chore(ci): PR axını və bot deploy-larının azaldılması
+
+**Why:** Doğan hər merge/deploy ilə əl ilə məşğul olur. Ölçülən sürtünmə: STATE botu hər merge-dən sonra `main`-ə commit edir (iyundan 166 dəfə) → Hostinger hər push-da yenidən build → 4 GB limitdə OOM/503 riski; TASK-0463 qeydi: "bot commit-ləri də düşür". CI Node 20, layihə Node 22.
+
+**What:** `auto-merge-content.yml` (yalnız məzmun PR-ları, CI yaşıl olanda; kod PR-ları əl ilə) · `state-snapshot.yml` həftəlik + əl ilə · CI/snapshot Node 22 · CODEOWNERS düzəldi · CLAUDE.md "PR axını" + REPO-GOVERNANCE.
+
+**Qəsdən edilmədi:** `fetch-news.yml` gündəlik `pendingNews.json` push-u qalır — admin təsdiq API-si faylı canlıdan oxuyur (`app/api/admin/news/pending`); DB-yə köçürmə ayrıca məhsul task-ıdır.
+
+**Doğrulama:** workflow YAML-ları PR-da CI ilə işləyəcək; lokal build lazım deyil (tətbiq koduna toxunulmayıb).
+
 
 ## 2026-06-19 — TASK-0413: fix(toolkit): WCAG contrast sweep
 

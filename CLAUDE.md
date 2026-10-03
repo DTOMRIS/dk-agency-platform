@@ -58,6 +58,12 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 - **Atomic commits**: bir task = bir branch = bir PR
 - **Conventional commits**: `[TASK-XXXX] type(scope): message`
 
+## PR axını (TASK-0464, Doğan qərarı 2026-10-04)
+- Claude yan branch-ə push edir və PR-ı **özü açır** (`gh pr create`). `main`-ə push yoxdur (pre-push hook bloklayır).
+- **Merge-i Doğan edir.** İstisna: yalnız məzmun PR-ları (`docs/**` — `docs/STATE.md` xaric, `content/**`, `decision-log/**`, kökdəki `CHANGELOG/DEVLOG/HANDOFF/README.md`) — CI yaşıl olanda `auto-merge-content.yml` ilə avtomatik merge olur. Bunu Doğan GitHub-da "Allow auto-merge" açaraq aktivləşdirir.
+- Bir task = bir worktree = bir branch: `git worktree add ../_wt-dk-<ad> -b <type>/TASK-XXXX-<ad> origin/main`. Hamısını tək `claude/...` branch-dən göndərmə (konflikt mənbəyi).
+- İşə başlamazdan əvvəl oxu: `docs/LESSONS.md` başlıqları, `CHANGELOG.md` [Unreleased], `docs/HANDOFF.md`, `docs/PROTECTED.md`. Ən böyük task nömrəsini `docs/tasks/` + `git log origin/main`-dən tap.
+
 ## PR Disiplini
 - HƏR task = branch + PR + dk-validator. İSTİSNA YOXDUR.
 - `git push --no-verify` QƏTİ QADAĞAN (hook bypass = pozuntu, bax L-008).
