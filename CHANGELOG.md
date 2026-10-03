@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0466` chore(news): RSS botu artıq `main`-ə push etmir, gündəlik PR açır; PR yalnız `lib/data/pendingNews.json`-u dəyişdiyi üçün CI yaşıl olanda avtomatik merge olur. `NEWS_BOT_TOKEN` secret lazımdır.
+
 - `TASK-0465` docs: L-059 (bot-un `main` commit-i = ayrıca Hostinger deploy); auto-merge axınının ilk testi.
 
 - `TASK-0464` chore(ci): PR axını — məzmun PR-ları (docs/content/decision-log/jurnallar) CI yaşıl olanda avtomatik merge (`auto-merge-content.yml`, Doğan "Allow auto-merge" açır); STATE snapshot hər main push-unda yox, həftədə bir (bot commit-i ikinci Hostinger deploy-u tetikləyirdi); CI və snapshot Node 20 → 22 (`.nvmrc`/`engines` ilə uyğun); CODEOWNERS `@dotom` → `@DTOMRIS`. Saytın koduna toxunulmayıb.

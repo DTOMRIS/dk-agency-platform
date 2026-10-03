@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0466: chore(news): xəbər botu PR axınına
+
+**Why:** `main-koruma` ruleset birbaşa push-u bağlayır; RSS botu növbəti cron-da sınardı.
+
+**What:** fetch-news `bot/news-*` branch + PR açır (NEWS_BOT_TOKEN ilə — GITHUB_TOKEN PR-ı CI tetikləmir); auto-merge allowlist-ə `lib/data/pendingNews.json`.
+
+**Sübut (əvvəlki addım):** PR #467 insan klik etmədən merge oldu (automerge=SUCCESS, quality-gates=SUCCESS).
+
 ## 2026-10-04 — TASK-0465: docs — L-059 + auto-merge testi
 
 **Why:** TASK-0464-dən sonra `main` ruleset (PR + `quality-gates`) qoyuldu; məzmun PR-ının özü merge olduğunu sübut etmək.

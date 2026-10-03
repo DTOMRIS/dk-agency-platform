@@ -32,14 +32,26 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: npm run fetch:news -- --limit=12
 
-      - name: Commit and push if changed
+      # TASK-0466: main ruleset (PR + quality-gates) birbaşa push-u bağlayır. Bot artıq PR açır;
+      # auto-merge-content.yml onu CI yaşıl olanda özü merge edir. NEWS_BOT_TOKEN (Doğan-ın
+      # fine-grained PAT-ı) lazımdır: GITHUB_TOKEN ilə açılan PR CI-ni tetikləmir → heç vaxt merge olmaz.
+      - name: Open PR if changed
+        env:
+          GH_TOKEN: ${{ secrets.NEWS_BOT_TOKEN }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           if git diff --quiet lib/data/pendingNews.json; then
-            echo "No changes to commit"
-          else
-            git add lib/data/pendingNews.json
-            git commit -m "chore: fetch RSS → pending news (admin təsdiqi gözləyir) [skip ci]"
-            git push
+            echo "No changes to commit"; exit 0
           fi
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::NEWS_BOT_TOKEN secret yoxdur — PR açıla bilmir (bax docs/tasks/TASK-0466.md)"; exit 1
+          fi
+          BR="bot/news-$(date -u +%Y%m%d-%H%M)"
+          git config user.name "dk-news-bot"
+          git config user.email "dk-news-bot@users.noreply.github.com"
+          git checkout -b "$BR"
+          git add lib/data/pendingNews.json
+          git commit -m "[TASK-0466] chore(news): fetch RSS → pending news (admin təsdiqi gözləyir)"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "$BR"
+          gh pr create --base main --head "$BR" \
+            --title "[TASK-0466] chore(news): pending news $(date -u +%Y-%m-%d)" \
+            --body "Gündəlik RSS → \`lib/data/pendingNews.json\`. Yalnız bu fayl dəyişir; CI yaşıl olanda avtomatik merge olur."
