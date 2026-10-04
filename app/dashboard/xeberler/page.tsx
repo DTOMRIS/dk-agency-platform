@@ -30,6 +30,7 @@ const pageCopy: Record<
   {
     pageTitle: string;
     pageSubtitle: string;
+    newArticle: string;
     filterAll: string;
     filterFetched: string;
     filterTranslated: string;
@@ -88,6 +89,7 @@ const pageCopy: Record<
   az: {
     pageTitle: 'Xəbərlər idarəsi',
     pageSubtitle: 'Xəbərləri idarə edin: təsdiqlə, redaktə et, rədd et.',
+    newArticle: '+ Yeni Xəbər',
     filterAll: 'Hamısı',
     filterFetched: 'Gözləyən',
     filterTranslated: 'Tərcümə olunmuş',
@@ -145,6 +147,7 @@ const pageCopy: Record<
   ru: {
     pageTitle: 'Управление новостями',
     pageSubtitle: 'Панель просмотра питается из таблиц `news_articles` и `news_sources`.',
+    newArticle: '+ Новая новость',
     filterAll: 'Все',
     filterFetched: 'Ожидающие',
     filterTranslated: 'Переведённые',
@@ -202,6 +205,7 @@ const pageCopy: Record<
   en: {
     pageTitle: 'News management',
     pageSubtitle: 'The review panel feeds from `news_articles` and `news_sources` tables.',
+    newArticle: '+ New article',
     filterAll: 'All',
     filterFetched: 'Pending',
     filterTranslated: 'Translated',
@@ -259,6 +263,7 @@ const pageCopy: Record<
   tr: {
     pageTitle: 'Haber yönetimi',
     pageSubtitle: 'İnceleme paneli `news_articles` ve `news_sources` tablolarından beslenmektedir.',
+    newArticle: '+ Yeni Haber',
     filterAll: 'Tümü',
     filterFetched: 'Bekleyen',
     filterTranslated: 'Çevrilen',
@@ -407,141 +412,156 @@ export default function DashboardXeberlerPage() {
     ['rejected', copy.filterRejected],
   ];
 
+  const statusLabel: Record<FilterStatus, string> = {
+    all: copy.filterAll,
+    fetched: copy.filterFetched,
+    translated: copy.filterTranslated,
+    approved: copy.filterApproved,
+    rejected: copy.filterRejected,
+  };
+
+  const statusTone: Record<FilterStatus, string> = {
+    all: 'bg-slate-100 text-slate-700',
+    fetched: 'bg-amber-50 text-amber-800',
+    translated: 'bg-[#EEF4FF] text-[#0A5BD6]',
+    approved: 'bg-emerald-50 text-emerald-700',
+    rejected: 'bg-rose-50 text-rose-700',
+  };
+
+  const actionBtn =
+    'inline-flex h-8 items-center rounded-full px-3 text-[12px] font-semibold transition-colors';
+
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
-      <div className="mx-auto max-w-6xl space-y-6">
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
-              <p className="mt-3 text-sm text-slate-500">{copy.pageSubtitle}</p>
-            </div>
-            <Link
-              href="/dashboard/xeberler/yeni"
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white transition hover:opacity-90"
-            >
-              + Yeni Xəbər
-            </Link>
+    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+      <div className="mx-auto max-w-[1320px] space-y-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">{copy.pageTitle}</h1>
+            <p className="mt-1 text-[15px] text-slate-600">{copy.pageSubtitle}</p>
+          </div>
+          <Link
+            href="/dashboard/xeberler/yeni"
+            className="inline-flex h-11 items-center rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
+          >
+            {copy.newArticle}
+          </Link>
+        </div>
+
+        <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+          <div className="inline-flex gap-1 rounded-full bg-white p-1 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+            {filterButtons.map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setFilter(value)}
+                aria-pressed={filter === value}
+                className={`h-9 whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors ${
+                  filter === value ? 'bg-[#EEF4FF] text-slate-900' : 'text-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          {filterButtons.map(([value, label]) => (
-            <button
-              key={value}
-              type="button"
-              onClick={() => setFilter(value)}
-              className={`rounded-full px-5 py-3 text-sm font-bold ${
-                filter === value ? 'bg-[var(--dk-red)] text-white' : 'border border-slate-200 text-slate-700'
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-
         {error ? (
-          <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-700">
+          <div className="rounded-[16px] border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-700">
             {copy.errorPrefix}: {error}
           </div>
         ) : null}
 
         {toast ? (
-          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700">
+          <div className="rounded-[16px] border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-700">
             {toast}
           </div>
         ) : null}
 
-        <div className="overflow-x-auto rounded-[32px] border border-slate-200 bg-white shadow-sm">
-          <table className="min-w-full text-sm">
-            <thead className="bg-slate-50 text-left text-slate-600">
-              <tr>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colOriginal}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colAzTranslation}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colSource}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colStatus}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colDate}</th>
-                <th className="px-5 py-4 font-black uppercase tracking-[0.18em]">{copy.colActions}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr key={item.id} className="border-t border-slate-100 align-top">
-                  <td className="px-5 py-4 font-semibold text-[var(--dk-navy)]">
-                    <div>{item.title}</div>
-                    <div className="mt-1 text-xs text-slate-600">{item.category}</div>
-                  </td>
-                  <td className="px-5 py-4 text-slate-600">{item.titleAz || copy.pendingTranslation}</td>
-                  <td className="px-5 py-4 text-slate-600">{item.sourceName || copy.noSource}</td>
-                  <td className="px-5 py-4">
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-bold ${
-                        item.status === 'approved'
-                          ? 'bg-emerald-50 text-emerald-700'
-                          : item.status === 'rejected'
-                            ? 'bg-rose-50 text-rose-700'
-                            : item.status === 'translated'
-                              ? 'bg-blue-50 text-blue-700'
-                              : 'bg-amber-50 text-amber-700'
-                      }`}
-                    >
-                      {item.status}
-                    </span>
-                    {item.isEditorPick ? (
-                      <div className="mt-2 text-[11px] font-bold text-[var(--dk-gold)]">{copy.editorPick}</div>
-                    ) : null}
-                  </td>
-                  <td className="px-5 py-4 text-slate-500">
-                    {formatAzDate(item.publishedAt)}
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="flex flex-wrap gap-2">
-                      <Link
-                        href={`/dashboard/xeberler/${item.id}`}
-                        className="rounded-full bg-slate-100 px-3 py-2 text-xs font-bold text-slate-700"
-                      >
-                        {copy.actionEdit}
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => void updateItem(item.id, { status: 'approved' })}
-                        className="rounded-full bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700"
-                      >
-                        {copy.actionApprove}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => void updateItem(item.id, { status: 'rejected', isEditorPick: false })}
-                        className="rounded-full bg-rose-50 px-3 py-2 text-xs font-bold text-rose-700"
-                      >
-                        {copy.actionReject}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => void updateItem(item.id, { isEditorPick: !item.isEditorPick })}
-                        className="rounded-full bg-amber-50 px-3 py-2 text-xs font-bold text-amber-700"
-                      >
-                        {copy.actionEditorPick}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => void deleteItem(item.id)}
-                        className="rounded-full bg-slate-100 px-3 py-2 text-xs font-bold text-slate-500 hover:bg-red-50 hover:text-red-600"
-                      >
-                        {copy.actionDelete}
-                      </button>
-                    </div>
-                  </td>
+        <div className="overflow-hidden rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
+          <div className="overflow-x-auto">
+            <table className="min-w-[960px] w-full text-sm">
+              <thead className="text-left text-[12px] uppercase tracking-wide text-slate-500">
+                <tr>
+                  <th className="px-5 py-4 font-semibold">{copy.colOriginal}</th>
+                  <th className="px-5 py-4 font-semibold">{copy.colAzTranslation}</th>
+                  <th className="px-5 py-4 font-semibold">{copy.colSource}</th>
+                  <th className="px-5 py-4 font-semibold">{copy.colStatus}</th>
+                  <th className="px-5 py-4 font-semibold">{copy.colDate}</th>
+                  <th className="px-5 py-4 font-semibold">{copy.colActions}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {items.map((item) => (
+                  <tr key={item.id} className="border-t border-slate-100 align-top transition-colors hover:bg-[#F9F9FB]">
+                    <td className="max-w-[280px] px-5 py-4">
+                      <div className="font-medium text-slate-900">{item.title}</div>
+                      <div className="mt-1 text-[12px] text-slate-500">{item.category}</div>
+                    </td>
+                    <td className="max-w-[260px] px-5 py-4 text-slate-700">
+                      {item.titleAz || <span className="text-slate-500">{copy.pendingTranslation}</span>}
+                    </td>
+                    <td className="px-5 py-4 text-slate-600">{item.sourceName || copy.noSource}</td>
+                    <td className="px-5 py-4">
+                      <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold ${statusTone[item.status] || statusTone.all}`}>
+                        {statusLabel[item.status] || item.status}
+                      </span>
+                      {item.isEditorPick ? (
+                        <div className="mt-2 inline-flex rounded-full bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold text-amber-800">
+                          {copy.editorPick}
+                        </div>
+                      ) : null}
+                    </td>
+                    <td className="whitespace-nowrap px-5 py-4 text-slate-500 tabular-nums">
+                      {formatAzDate(item.publishedAt)}
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="flex flex-wrap gap-1.5">
+                        <Link
+                          href={`/dashboard/xeberler/${item.id}`}
+                          className={`${actionBtn} bg-[#EEF4FF] text-[#0A5BD6] hover:bg-[#E0EBFF]`}
+                        >
+                          {copy.actionEdit}
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => void updateItem(item.id, { status: 'approved' })}
+                          className={`${actionBtn} bg-emerald-50 text-emerald-700 hover:bg-emerald-100`}
+                        >
+                          {copy.actionApprove}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => void updateItem(item.id, { status: 'rejected', isEditorPick: false })}
+                          className={`${actionBtn} bg-rose-50 text-rose-700 hover:bg-rose-100`}
+                        >
+                          {copy.actionReject}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => void updateItem(item.id, { isEditorPick: !item.isEditorPick })}
+                          className={`${actionBtn} ${item.isEditorPick ? 'bg-amber-100 text-amber-900' : 'bg-slate-100 text-slate-700 hover:bg-amber-50'}`}
+                        >
+                          {copy.actionEditorPick}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => void deleteItem(item.id)}
+                          className={`${actionBtn} border border-slate-200 bg-white text-slate-700 hover:border-red-200 hover:bg-red-50 hover:text-red-700`}
+                        >
+                          {copy.actionDelete}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           {!loading && items.length === 0 ? (
-            <div className="px-6 py-12 text-center text-sm text-slate-500">{copy.emptyState}</div>
+            <div className="px-6 py-16 text-center text-sm text-slate-600">{copy.emptyState}</div>
           ) : null}
         </div>
-
       </div>
     </div>
   );
