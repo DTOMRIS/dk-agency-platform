@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0479` chore(news): xəbər axınının log-unda filtrin qəbul və rədd etdiyi başlıqlar ballarla görünür (filtr tənzimi üçün).
+
 - `TASK-0478` feat(news): xəbər kapsamı — kriket/OPEC/kripto/əmlak kimi mövzu xaricləri süzülür, AI və HoReCa texnologiya xəbərləri axtarılır və "Texnologiya"ya düşür, rus dili əlavə olundu; yeni xəbər ünvanlarında AZ/TR hərfləri itmir; xəbər schema-sında müəllif DK Agency.
 
 - `TASK-0476` fix(news): DeepSeek xəbər sintezi ilişib qalırdı — zəif siqnallar artıq "unpublishable" işarələnir (hər run-da təkrarlanmır), `seo_description` 160 simvolu aşmır, təzə xəbərlər əvvəl emal olunur.
