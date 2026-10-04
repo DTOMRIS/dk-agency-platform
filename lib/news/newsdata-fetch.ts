@@ -51,6 +51,9 @@ interface NewsDataResponse {
 
 export interface FetchResult {
   fetched: number;
+  /** TASK-0479: titles + scores for tuning the filter from real runs (printed by the CLI). */
+  accepted: Array<{ score: number; title: string }>;
+  rejected: Array<{ score: number; title: string; domain: string }>;
   skipped: number;
   belowThreshold: number;
   duplicates: number;
@@ -118,14 +121,14 @@ async function fetchFromNewsData(apiKey: string, query: string, country: string)
 export async function fetchAndScoreNews(): Promise<FetchResult> {
   const apiKey = process.env.NEWSDATA_API_KEY;
   if (!apiKey) {
-    return { fetched: 0, skipped: 0, belowThreshold: 0, duplicates: 0, errors: ['NEWSDATA_API_KEY not set'] };
+    return { fetched: 0, accepted: [], rejected: [], skipped: 0, belowThreshold: 0, duplicates: 0, errors: ['NEWSDATA_API_KEY not set'] };
   }
 
   if (!db) {
-    return { fetched: 0, skipped: 0, belowThreshold: 0, duplicates: 0, errors: ['Database not available'] };
+    return { fetched: 0, accepted: [], rejected: [], skipped: 0, belowThreshold: 0, duplicates: 0, errors: ['Database not available'] };
   }
 
-  const result: FetchResult = { fetched: 0, skipped: 0, belowThreshold: 0, duplicates: 0, errors: [] };
+  const result: FetchResult = { fetched: 0, accepted: [], rejected: [], skipped: 0, belowThreshold: 0, duplicates: 0, errors: [] };
 
   for (const querySet of QUERY_SETS) {
     let articles: NewsDataArticle[];
@@ -147,6 +150,13 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
       const score = scoreNewsItem(article.title, article.description ?? '', article.link);
       if (score < SCORE_THRESHOLD) {
         result.belowThreshold++;
+        let domain = '';
+        try {
+          domain = new URL(article.link).hostname.replace(/^www\./, '');
+        } catch {
+          // ignore
+        }
+        result.rejected.push({ score, title: article.title.slice(0, 110), domain });
         continue;
       }
 
@@ -192,6 +202,7 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
           relevanceScore: score,
         });
         result.fetched++;
+        result.accepted.push({ score, title: article.title.slice(0, 110) });
       } catch (err) {
         const cause = (err as { cause?: Error })?.cause;
         const msg = cause?.message || (err instanceof Error ? err.message : 'Insert error');

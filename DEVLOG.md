@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0479: chore(news): filtr log-u (qəbul/rədd başlıqları)
+
+**Why:** TASK-0478 sonrası run-da 40-dan 38 xəbər eşikdən aşağı idi; real xəbər kəsilirmi — görmək lazım idi.
+
+**What:** `news:fetch` hər run-da `+ [bal] başlıq` və `- [bal] başlıq (domen)` yazır.
+
+**Tapıntı (run 37213347139):** rədd edilənlər video oyunlar, Yəmən/Tigray müharibəsi, sitkomlar, ABŞ yerli təqvimləri idi — filtr düzgündür; NewsData `q` bütün mətndə axtardığı üçün nəticələrin çoxu HoReCa deyil. Həll: Faz 2 — yoxlanmış 21 ticarət RSS mənbəyi.
+
 ## 2026-10-04 — TASK-0478: feat(news): xəbər kapsamı (Faz 1)
 
 **Why:** Off-topic xəbərlər (kriket, OPEC, Səudiyyə token əmlakı) keçirdi, AI/texnologiya heç hədəflənmirdi, slug-larda AZ hərfləri silinirdi (`liyev`, `xankndi`), NewsArticle müəllifi aqreqator ("Bundle") idi.
