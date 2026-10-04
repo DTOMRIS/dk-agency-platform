@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0477` feat(news): DeepSeek-in yazdığı xəbərlər Telegram-a ✅ Yayınla / ❌ Rədd et düymələri ilə gəlir; düymə saytda dərhal yayınlayır (tərcümə + alət uyğunlaşdırma daxil) və ya rədd edir.
+
 - `TASK-0474` fix(seo): JSON-LD/canonical-da `/undefined/` URL-ləri düzəldi; RU/EN/TR bloq başlıqları tərcümədə; login/e-poçt/placeholder səhifələri `noindex`; robots.txt şəxsi bölmələri bağlayır; sitemap təmizləndi (+ addim-xerci, elan detalları); `/listings` `/xeberler` `/about` `/contact` `/news` daimi (308) redirect.
 
 - `TASK-0472` fix(i18n): otel/OTA/qonaq evi alətləri RU/EN/TR-də tərcümə olundu; `/uzvluk`-dan ictimai dev qeydləri çıxarıldı (real üzvlük səhifəsi, 4 dil), `/docs/member-env-checklist` silindi; ana səhifə elan lövhəsi uydurma elanlar əvəzinə real elanları göstərir; Şədd Rozeti, e-poçt təsdiqi/seçimləri, "tezliklə" səhifəsi (forma real API-yə bağlandı) 4 dildə; `/news` → `/haberler`; razılıq mətnləri Azərbaycan «Fərdi məlumatlar haqqında» Qanununa əsaslanır (Türkiyədən müraciət üçün həmçinin KVKK).
