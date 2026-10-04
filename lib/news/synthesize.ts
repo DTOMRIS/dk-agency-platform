@@ -7,7 +7,7 @@
  * Toolkit matching + translation happen at approve time (existing flow, NOT rebuilt here).
  */
 
-import { and, eq, isNull } from 'drizzle-orm';
+import { and, desc, eq, isNull } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
 import { AI_MODELS } from '@/lib/ai-models';
@@ -122,6 +122,8 @@ export async function synthesizeFetchedNews(limit = 10): Promise<SynthesizeResul
         isNull(newsArticles.contentAz),
       ),
     )
+    // TASK-0476: newest first — old stuck rows used to fill every batch and starve fresh news.
+    .orderBy(desc(newsArticles.id))
     .limit(limit);
 
   if (!pending.length) {
@@ -165,6 +167,23 @@ export async function synthesizeFetchedNews(limit = 10): Promise<SynthesizeResul
         continue;
       }
 
+      // TASK-0476: a weak signal ("publishable": false) comes back WITHOUT title/body. Checking
+      // title/body first sent it to [validate] and it was retried on every run forever. Mark it
+      // processed first; also mark it when the model returns neither content nor a verdict.
+      if (parsed.publishable === false || (!parsed.title_az && !parsed.body_az)) {
+        // Mark as processed but don't write content — admin can review manually
+        await db
+          .update(newsArticles)
+          .set({
+            origin: 'synthesized',
+            // seo_description is varchar(160): the old `[unpublishable] ` + 150 chars overflowed it.
+            seoDescription: `[unpublishable] ${parsed.reason || 'Zəif siqnal'}`.slice(0, 160),
+          })
+          .where(eq(newsArticles.id, article.id));
+        result.unpublishable++;
+        continue;
+      }
+
       // Validate
       if (!parsed.title_az || !parsed.body_az) {
         result.errors.push(`[validate] Empty title/body for article #${article.id}`);
@@ -175,19 +194,6 @@ export async function synthesizeFetchedNews(limit = 10): Promise<SynthesizeResul
       const forbidden = containsForbidden(parsed.title_az) || containsForbidden(parsed.body_az);
       if (forbidden) {
         result.errors.push(`[forbidden] Term "${forbidden}" in output for article #${article.id}`);
-        continue;
-      }
-
-      if (!parsed.publishable) {
-        // Mark as processed but don't write content — admin can review manually
-        await db
-          .update(newsArticles)
-          .set({
-            origin: 'synthesized',
-            seoDescription: `[unpublishable] ${parsed.reason?.slice(0, 150) || 'Zəif siqnal'}`,
-          })
-          .where(eq(newsArticles.id, article.id));
-        result.unpublishable++;
         continue;
       }
 

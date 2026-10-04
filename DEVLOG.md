@@ -1,5 +1,12 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0476: fix(news): sintez növbəsi ilişməsi
+
+**Why:** "News Ingest Pipeline" 2026-10-03 axşamdan uğursuz (və 09-30-da); log: `Synthesized: 0`, eyni məqalələr (#400–#426, #870) hər run-da xəta.
+
+**What:** `publishable:false` (və ya nə başlıq, nə mətn) cavabı artıq title/body yoxlamasından ƏVVƏL "unpublishable" işarələnir — sətir növbədən çıxır. `seo_description` 160 simvolla kəsilir (`[unpublishable] ` + 150 = 166 idi → DB xətası → workflow fail). Növbə ən yenidən emal olunur.
+
+**Doğrulama:** tsc/lint təmiz; real sınaq merge-dən sonra workflow_dispatch.
 ## 2026-10-04 — TASK-0475: feat(seo): şirkət + qurucu entity schema, 40 il, llms.txt faktlar
 
 **Why:** SEO/AI auditi: Organization schema-da yalnız ad/url/logo var idi, qurucu üçün Person yox idi, /haqqimizda-da JSON-LD yox idi; səhifədə "40 il" ilə "10+ il" ziddiyyəti AI sitatını bloklayırdı.
