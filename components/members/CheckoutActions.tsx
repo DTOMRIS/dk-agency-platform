@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { LoaderCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 type BillingPlan = 'member' | 'annual';
 
@@ -15,13 +16,14 @@ async function startCheckout(plan: BillingPlan) {
   const data = await response.json();
 
   if (!response.ok || !data?.checkoutUrl) {
-    throw new Error(data?.error || 'Checkout alınmadı.');
+    throw new Error('checkout_failed');
   }
 
   window.location.href = data.checkoutUrl as string;
 }
 
 export default function CheckoutActions() {
+  const t = useTranslations('membershipPage.checkout');
   const [loadingPlan, setLoadingPlan] = useState<BillingPlan | null>(null);
   const [error, setError] = useState('');
 
@@ -31,8 +33,8 @@ export default function CheckoutActions() {
 
     try {
       await startCheckout(plan);
-    } catch (nextError) {
-      setError(nextError instanceof Error ? nextError.message : 'Checkout alınmadı.');
+    } catch {
+      setError(t('error'));
       setLoadingPlan(null);
     }
   };
@@ -47,7 +49,7 @@ export default function CheckoutActions() {
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-dk-red px-5 py-3 text-sm font-bold text-white transition hover:bg-dk-red-strong disabled:cursor-not-allowed disabled:bg-dk-red/60"
         >
           {loadingPlan === 'member' && <LoaderCircle className="h-4 w-4 animate-spin" />}
-          Monthly checkout
+          {t('monthly')}
         </button>
         <button
           type="button"
@@ -56,12 +58,12 @@ export default function CheckoutActions() {
           className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loadingPlan === 'annual' && <LoaderCircle className="h-4 w-4 animate-spin" />}
-          Annual checkout
+          {t('annual')}
         </button>
       </div>
 
       {error && (
-        <div className="mt-3 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+        <div role="alert" className="mt-3 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
           {error}
         </div>
       )}

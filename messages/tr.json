@@ -3733,6 +3733,18 @@
           }
         }
       }
+    },
+    "featuredBlogs": {
+      "p1": {
+        "category": "Food Cost",
+        "title": "1 porsiyonun food cost’u nasıl hesaplanır?",
+        "excerpt": "Porsiyon maliyeti, reçete kartı ve doğru fiyat arasındaki ilişkiyi basit bir örnekle anlatıyoruz."
+      },
+      "p2": {
+        "category": "Menü",
+        "title": "Menü mühendisliğiyle satışlar nasıl artırılır?",
+        "excerpt": "Yıldız, At, Bulmaca ve Köpek matrisiyle menüyü veriyle yönetmenin temelleri."
+      }
     }
   },
   "dashboardAuditor": {
@@ -5171,345 +5183,460 @@
     }
   },
   "hotelReadiness": {
-    "badge": "Otel Hazırlıq Testi",
-    "title": "Mehmanxananız AHA ulduz sertifikatına hazırdırmı?",
-    "subtitle": "12 sual · təxminən 4 dəqiqə · sonunda AHA tələblərinə əsaslanan şəxsi hesabat",
-    "letter": "Hörmətli mehmanxana, otel və pansiyon sahibi — Azərbaycanda Milli Ulduz Təsnifatı sisteminə müraciət edən hər 100 mehmanxanadan yalnız 30-u uğurla ulduz alır. Səbəb istedadsızlıq deyil — qoyulan tələblərin sistemli şəkildə qarşılanmamasıdır. Bu test otelinizin hansı sahələrdə hazır, hansılarda inkişaf etdirilməli olduğunu göstərir. Bizim üçün hər otel sahibi əmanətdir.",
+    "badge": "Otel Hazırlık Testi",
+    "title": "Oteliniz AHA yıldız sertifikasına hazır mı?",
+    "subtitle": "12 soru · yaklaşık 4 dakika · sonunda AHA gerekliliklerine dayanan kişisel rapor",
+    "letter": "Değerli otel ve pansiyon sahibi — Azerbaycan'da Ulusal Yıldız Sınıflandırması (Milli Ulduz Təsnifatı) sistemine başvuran her 100 otelden yalnızca 30'u başarıyla yıldız alıyor. Sebep yeteneksizlik değil — konulan gerekliliklerin sistemli şekilde karşılanmamasıdır. Bu test, otelinizin hangi alanlarda hazır olduğunu, hangilerinde geliştirilmesi gerektiğini gösterir. Bizim için her otel sahibi bir emanettir.",
     "letterSign": "— Doğan Tomris, DK Agency",
-    "startCta": "Testə başla →",
-    "stepLabel": "Sual {current} / {total}",
+    "startCta": "Teste başla →",
+    "stepLabel": "Soru {current} / {total}",
     "back": "Geri",
-    "next": "Növbəti →",
-    "seeResult": "Nəticəni gör →",
-    "resultBadge": "Nəticə",
-    "weakestLabel": "Ən zəif sahəniz",
-    "weakestBody": "Bu sahə ulduz sertifikasiyası üçün kritikdir. DK Agency komandası ilk olaraq burada — infrastruktur, sənədləşmə və ya təlim planı ilə — sizə dəstək verə bilər.",
-    "aiLoading": "AI hesabatınız hazırlanır...",
-    "aiReportTitle": "Şəxsi Hesabat",
-    "shareDownload": "Nəticəni yüklə (PNG)",
-    "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir. Tam dəyərləndirmə və AHA müraciəti peşəkar audit tələb edir. © DK Agency",
+    "next": "İleri →",
+    "seeResult": "Sonucu gör →",
+    "resultBadge": "Sonuç",
+    "weakestLabel": "En zayıf alanınız",
+    "weakestBody": "Bu alan yıldız sertifikasyonu için kritiktir. DK Agency ekibi ilk olarak burada — altyapı, belgelendirme veya eğitim planıyla — size destek olabilir.",
+    "aiLoading": "AI raporunuz hazırlanıyor...",
+    "aiReportTitle": "Kişisel Rapor",
+    "shareDownload": "Sonucu indir (PNG)",
+    "disclaimer": "Bu test bir ön öz değerlendirme aracıdır. Tam değerlendirme ve AHA başvurusu profesyonel denetim gerektirir. © DK Agency",
     "verdict": {
       "pansion": {
-        "title": "Pansiyon səviyyəsi",
-        "sub": "Hələ formal ulduz sertifikasiyası üçün hazır deyilsiniz. Bu, problem deyil — pansiyon olaraq qeydiyyat və turist marşrutlarına qoşulma realdır. Daha sonra 1-2 ulduz hədəfi etmək olar."
+        "title": "Pansiyon seviyesi",
+        "sub": "Henüz resmi yıldız sertifikasyonuna hazır değilsiniz. Bu bir sorun değil — pansiyon olarak kayıt olmak ve turist rotalarına katılmak gerçekçi. Daha sonra 1-2 yıldız hedeflenebilir."
       },
       "tier12": {
-        "title": "1-2 ulduz potensialı",
-        "sub": "Təməl infrastruktur var, kiçik mehmanxana statusu real. Bəzi sahələrin gücləndirilməsi ilə AHA müraciətinə hazır olacaqsınız."
+        "title": "1-2 yıldız potansiyeli",
+        "sub": "Temel altyapı mevcut, küçük otel statüsü gerçekçi. Bazı alanları güçlendirerek AHA başvurusuna hazır olacaksınız."
       },
       "tier3": {
-        "title": "3 ulduz hədəfi əlçatandır",
-        "sub": "Otelinizin əksər sahələri yaxşı vəziyyətdədir. Bir neçə kritik düzəlişlə 3 ulduz sertifikatı almağa hazırsınız."
+        "title": "3 yıldız hedefi ulaşılabilir",
+        "sub": "Otelinizin çoğu alanı iyi durumda. Birkaç kritik düzeltmeyle 3 yıldız sertifikası almaya hazırsınız."
       },
       "tier4": {
-        "title": "4 ulduz hədəfi əlçatandır",
-        "sub": "Markanız güclüdür. 4 ulduz tələblərinə yaxınsınız, kiçik tənzimləmələrlə müraciət edə bilərsiniz."
+        "title": "4 yıldız hedefi ulaşılabilir",
+        "sub": "Markanız güçlü. 4 yıldız gerekliliklerine yakınsınız, küçük düzenlemelerle başvurabilirsiniz."
       },
       "tier5": {
-        "title": "5 ulduz potensialı",
-        "sub": "Otelinizin standartları yüksək səviyyədədir. 5 ulduz Milli Ulduz Təsnifatı üçün güclü namizədsiniz — AHA müraciətinə keçə bilərik."
+        "title": "5 yıldız potansiyeli",
+        "sub": "Otelinizin standartları yüksek seviyede. Ulusal Yıldız Sınıflandırmasında 5 yıldız için güçlü bir adaysınız — AHA başvurusuna geçebiliriz."
       }
     },
     "questions": {
       "0": {
-        "cat": "İnfrastruktur",
-        "q": "Otelinizin fiziki infrastrukturu — otaq sayı, lift və avtomobil park yeri necədir?",
+        "cat": "Altyapı",
+        "q": "Otelinizin fiziki altyapısı — oda sayısı, asansör ve otopark — nasıl?",
         "options": {
-          "0": "10-dan az otaq, lift yoxdur, park yeri yoxdur",
-          "1": "10-20 otaq, lift var, lakin park yeri məhduddur",
-          "2": "20-40 otaq, lift və park yeri var",
-          "3": "40+ otaq, çoxsaylı lift, geniş və örtülü park yeri"
+          "0": "10'dan az oda, asansör yok, otopark yok",
+          "1": "10-20 oda, asansör var, ancak otopark sınırlı",
+          "2": "20-40 oda, asansör ve otopark var",
+          "3": "40+ oda, birden fazla asansör, geniş ve kapalı otopark"
         }
       },
       "1": {
-        "cat": "Otaq Standartı",
-        "q": "Otaqların ölçüsü, mebel keyfiyyəti və iqlim sistemi nə səviyyədədir?",
+        "cat": "Oda Standardı",
+        "q": "Odaların büyüklüğü, mobilya kalitesi ve iklimlendirme sistemi ne seviyede?",
         "options": {
-          "0": "Otaq sahəsi 12 m²-dən az, köhnə mebel, iqlim sistemi yoxdur",
-          "1": "12-16 m², standart mebel, fan və ya elektrik qızdırıcı",
-          "2": "16-22 m², yeni mebel, fərdi kombi və ya split sistem",
-          "3": "22 m²+ premium mebel, mərkəzi iqlim, smart room özəllikləri"
+          "0": "Oda alanı 12 m²'den az, eski mobilya, iklimlendirme sistemi yok",
+          "1": "12-16 m², standart mobilya, vantilatör veya elektrikli ısıtıcı",
+          "2": "16-22 m², yeni mobilya, bireysel kombi veya split klima",
+          "3": "22 m²+ premium mobilya, merkezi iklimlendirme, akıllı oda özellikleri"
         }
       },
       "2": {
-        "cat": "Sanitariya & Təmizlik",
-        "q": "Təmizlik və yataq dəyişdirmə sistematikanız necə qurulub?",
+        "cat": "Sanitasyon & Temizlik",
+        "q": "Temizlik ve çarşaf değişim düzeniniz nasıl kurulu?",
         "options": {
-          "0": "Yataq dəyişdirmə qonağa görə, yazılı qrafik yoxdur",
-          "1": "Hər 3-4 gündə bir, ümumi qrafik var",
-          "2": "Hər gün otaq təmizliyi, 2 gündə bir yataq dəyişdirmə",
-          "3": "Gündəlik tam təmizlik, audit checklist, professional servis komandası"
+          "0": "Çarşaf değişimi misafire göre, yazılı plan yok",
+          "1": "3-4 günde bir, genel bir plan var",
+          "2": "Her gün oda temizliği, 2 günde bir çarşaf değişimi",
+          "3": "Günlük tam temizlik, denetim kontrol listesi, profesyonel housekeeping ekibi"
         }
       },
       "3": {
-        "cat": "Resepsiya & Qonaq Qəbulu",
-        "q": "Resepsiya xidməti necə işləyir — saat rejimi, dil bacarıqları, texnologiya?",
+        "cat": "Resepsiyon & Misafir Karşılama",
+        "q": "Resepsiyon hizmeti nasıl işliyor — çalışma saatleri, dil becerileri, teknoloji?",
         "options": {
-          "0": "Yalnız gündüz, yalnız AZ dili, kağız-üzərində qeydiyyat",
-          "1": "24 saat, AZ + RU dilləri, kompüter qeydiyyat sistemi yoxdur",
-          "2": "24 saat, AZ/RU/EN dilləri, PMS (idarəetmə sistemi) var",
-          "3": "24 saat, multilingual personal, premium PMS, mobil check-in"
+          "0": "Yalnızca gündüz, yalnızca AZ dili, kâğıt üzerinde kayıt",
+          "1": "24 saat, AZ + RU dilleri, bilgisayarlı kayıt sistemi yok",
+          "2": "24 saat, AZ/RU/EN dilleri, PMS (yönetim sistemi) var",
+          "3": "24 saat, çok dilli personel, premium PMS, mobil check-in"
         }
       },
       "4": {
-        "cat": "Yemək Xidməti",
-        "q": "Otel yemək xidməti hansı səviyyədədir?",
+        "cat": "Yiyecek Hizmeti",
+        "q": "Otelin yiyecek hizmeti ne seviyede?",
         "options": {
-          "0": "Otel daxili yemək xidməti yoxdur",
-          "1": "Səhər yeməyi var, ayrıca restoran yoxdur",
-          "2": "Səhər yeməyi + tam fəaliyyət göstərən restoran",
-          "3": "Səhər + restoran + bar + 24 saat otaq xidməti"
+          "0": "Otel içinde yiyecek hizmeti yok",
+          "1": "Kahvaltı var, ayrı restoran yok",
+          "2": "Kahvaltı + tam faaliyet gösteren restoran",
+          "3": "Kahvaltı + restoran + bar + 24 saat oda servisi"
         }
       },
       "5": {
-        "cat": "Personal Təlimi",
-        "q": "Personalın peşəkar təlim səviyyəsi və dil bacarıqları necədir?",
+        "cat": "Personel Eğitimi",
+        "q": "Personelin mesleki eğitim seviyesi ve dil becerileri nasıl?",
         "options": {
-          "0": "Formal təlim sistemi yoxdur, xarici dil bilgisi məhduddur",
-          "1": "Informal təlim, əsasən AZ dili",
-          "2": "Formal təlim proqramı, AZ və RU dilləri",
-          "3": "Sertifikatlı peşəkarlar, multilingual komanda, davamlı təlim sistemi"
+          "0": "Resmi eğitim sistemi yok, yabancı dil bilgisi sınırlı",
+          "1": "Gayriresmi eğitim, çoğunlukla AZ dili",
+          "2": "Resmi eğitim programı, AZ ve RU dilleri",
+          "3": "Sertifikalı profesyoneller, çok dilli ekip, sürekli eğitim sistemi"
         }
       },
       "6": {
-        "cat": "Texnologiya",
-        "q": "Otel texnologiya infrastrukturu (Wi-Fi, idarəetmə sistemi, mobil) hansı səviyyədədir?",
+        "cat": "Teknoloji",
+        "q": "Otelin teknoloji altyapısı (Wi-Fi, yönetim sistemi, mobil) ne seviyede?",
         "options": {
-          "0": "Wi-Fi yoxdur, kağız əsaslı sistem",
-          "1": "Wi-Fi var, kompüter idarəetmə sistemi yoxdur",
-          "2": "Sürətli Wi-Fi və PMS sistemi mövcuddur",
-          "3": "PMS + mobil tətbiq + smart otaq + IoT inteqrasiyası"
+          "0": "Wi-Fi yok, kâğıda dayalı sistem",
+          "1": "Wi-Fi var, bilgisayarlı yönetim sistemi yok",
+          "2": "Hızlı Wi-Fi ve PMS sistemi mevcut",
+          "3": "PMS + mobil uygulama + akıllı oda + IoT entegrasyonu"
         }
       },
       "7": {
-        "cat": "Təhlükəsizlik",
-        "q": "Təhlükəsizlik sistemləri (yanğın, kamera, otaq seyfi) hansı vəziyyətdədir?",
+        "cat": "Güvenlik",
+        "q": "Güvenlik sistemleri (yangın, kamera, oda kasası) ne durumda?",
         "options": {
-          "0": "Yanğın söndürücü yoxdur, kamera sistemi yoxdur",
-          "1": "Yanğın söndürücülər var, kamera sistemi natamam",
-          "2": "Tam yanğın sistemi, kamera + hər otaqda seyf",
-          "3": "Tam yanğın sistem + 24 saat təhlükəsizlik + smart seyf + key card sistemi"
+          "0": "Yangın söndürücü yok, kamera sistemi yok",
+          "1": "Yangın söndürücüler var, kamera sistemi eksik",
+          "2": "Tam yangın sistemi, kamera + her odada kasa",
+          "3": "Tam yangın sistemi + 24 saat güvenlik + akıllı kasa + kartlı giriş sistemi"
         }
       },
       "8": {
-        "cat": "Əlavə Xidmətlər",
-        "q": "Əlavə xidmətlər (SPA, fitness, konfrans zalı) mövcuddurmu?",
+        "cat": "Ek Hizmetler",
+        "q": "Ek hizmetler (SPA, fitness, konferans salonu) mevcut mu?",
         "options": {
-          "0": "Əlavə xidmət yoxdur",
-          "1": "Kiçik fitness küncü mövcuddur",
-          "2": "Fitness + sauna + kiçik konfrans zalı",
-          "3": "Tam SPA + bassein + fitness + konfrans + biznes mərkəzi"
+          "0": "Ek hizmet yok",
+          "1": "Küçük bir fitness köşesi mevcut",
+          "2": "Fitness + sauna + küçük konferans salonu",
+          "3": "Tam SPA + havuz + fitness + konferans + iş merkezi"
         }
       },
       "9": {
-        "cat": "Sənədləşmə",
-        "q": "AHA müraciəti üçün lazımi sənədlər (vergi, gigiyena, yanğın sertifikat) hazırdırmı?",
+        "cat": "Belgelendirme",
+        "q": "AHA başvurusu için gerekli belgeler (vergi, hijyen, yangın sertifikası) hazır mı?",
         "options": {
-          "0": "Heç bir sənəd hazır deyildir",
-          "1": "Vergi sənədi var, qalanları natamam",
-          "2": "Sənədlərin əksəriyyəti hazırdır, kiçik çatışmazlıqlar var",
-          "3": "Bütün sənədlər tam, yeni tarixli və əlçatandır"
+          "0": "Hiçbir belge hazır değil",
+          "1": "Vergi belgesi var, diğerleri eksik",
+          "2": "Belgelerin çoğu hazır, küçük eksikler var",
+          "3": "Tüm belgeler eksiksiz, güncel tarihli ve erişilebilir"
         }
       },
       "10": {
-        "cat": "Onlayn Varlıq",
-        "q": "Booking.com, TripAdvisor və TrustYou platformalarında reytinqiniz nə səviyyədədir?",
+        "cat": "Çevrim İçi Varlık",
+        "q": "Booking.com, TripAdvisor ve TrustYou platformlarında puanınız ne seviyede?",
         "options": {
-          "0": "Onlayn varlıq yoxdur",
-          "1": "Profil var, lakin reyting 7.0-dan aşağı",
-          "2": "7.0-8.5 arası reyting, müntəzəm qonaq rəyləri",
-          "3": "8.5+ reyting, yüksək rəy sayı, TrustYou platformada güclü performans"
+          "0": "Çevrim içi varlık yok",
+          "1": "Profil var, ancak puan 7.0'ın altında",
+          "2": "7.0-8.5 arası puan, düzenli misafir yorumları",
+          "3": "8.5+ puan, yüksek yorum sayısı, TrustYou platformunda güçlü performans"
         }
       },
       "11": {
-        "cat": "AHA Müraciət Hazırlığı",
-        "q": "AHA müraciəti üçün maliyyə və vaxt baxımından hazırlığınız nədir?",
+        "cat": "AHA Başvuru Hazırlığı",
+        "q": "AHA başvurusu için finansal ve zaman açısından hazırlığınız nedir?",
         "options": {
-          "0": "Rüsum və sənəd hazırlığı üçün büdcə ayrılmayıb",
-          "1": "Rüsum hazırdır, sənəd hazırlığı başlamayıb",
-          "2": "Rüsum hazır, sənədlər hazır, hələ müraciət etməmişik",
-          "3": "Müraciət göndərildi, audit ziyarəti gözləyirik"
+          "0": "Harç ve belge hazırlığı için bütçe ayrılmadı",
+          "1": "Harç hazır, belge hazırlığı başlamadı",
+          "2": "Harç hazır, belgeler hazır, henüz başvurmadık",
+          "3": "Başvuru gönderildi, denetim ziyaretini bekliyoruz"
         }
       }
     }
   },
   "otaReadiness": {
-    "badge": "OTA Hazırlıq Testi",
-    "title": "Pansiyonun Booking və Airbnb-yə hazırdırmı?",
-    "subtitle": "8 sual, 3 dəqiqə, sonunda şəxsi AI hesabat",
-    "letter": "Hörmətli pansiyon və qonaq evi sahibi — Azərbaycanda 800+ pansiyon mövcuddur, lakin 80%-i Booking.com-da yoxdur.",
+    "badge": "OTA Hazırlık Testi",
+    "title": "Pansiyonunuz Booking ve Airbnb'ye hazır mı?",
+    "subtitle": "8 soru, 3 dakika, sonunda kişisel AI raporu",
+    "letter": "Değerli pansiyon ve misafirhane sahibi — Azerbaycan'da 800+ pansiyon bulunuyor, ancak %80'i Booking.com'da yok.",
     "letterSign": "— Doğan Tomris, DK Agency",
-    "startCta": "Testə başla →",
-    "stepLabel": "Sual {current} / {total}",
+    "startCta": "Teste başla →",
+    "stepLabel": "Soru {current} / {total}",
     "back": "Geri",
-    "next": "Növbəti →",
-    "seeResult": "Nəticəni gör →",
-    "resultBadge": "Nəticə",
-    "weakestLabel": "Ən zəif sahəniz",
-    "weakestBody": "Bu sahə OTA uğurunuz üçün kritikdir.",
-    "aiLoading": "AI hesabatınız hazırlanır...",
-    "aiReportTitle": "Şəxsi Hesabat",
-    "shareDownload": "Nəticəni yüklə (PNG)",
-    "disclaimer": "Bu test ilkin özünüqiymətləndirmə alətidir. © DK Agency",
+    "next": "İleri →",
+    "seeResult": "Sonucu gör →",
+    "resultBadge": "Sonuç",
+    "weakestLabel": "En zayıf alanınız",
+    "weakestBody": "Bu alan OTA başarınız için kritiktir.",
+    "aiLoading": "AI raporunuz hazırlanıyor...",
+    "aiReportTitle": "Kişisel Rapor",
+    "shareDownload": "Sonucu indir (PNG)",
+    "disclaimer": "Bu test bir ön öz değerlendirme aracıdır. © DK Agency",
     "verdict": {
       "not_ready": {
-        "title": "Hələ hazır deyil",
-        "sub": "Əsas OTA tələbləri qarşılanmayıb."
+        "title": "Henüz hazır değil",
+        "sub": "Temel OTA gereklilikleri karşılanmamış."
       },
       "booking_start": {
-        "title": "Booking.com-a hazır",
-        "sub": "Booking profiliniz açıla bilər."
+        "title": "Booking.com'a hazır",
+        "sub": "Booking profiliniz açılabilir."
       },
       "airbnb_expand": {
-        "title": "Airbnb genişlənməsi real",
-        "sub": "Booking-dən əlavə Airbnb açmağın vaxtıdır."
+        "title": "Airbnb'ye genişleme gerçekçi",
+        "sub": "Booking'e ek olarak Airbnb açmanın zamanı geldi."
       },
       "direct_strategy": {
-        "title": "Direct booking strategiyası",
-        "sub": "WhatsApp ilə komissiya xərcini azaltmağın vaxtıdır."
+        "title": "Doğrudan rezervasyon stratejisi",
+        "sub": "WhatsApp ile komisyon giderini azaltmanın zamanı geldi."
       },
       "multi_pro": {
-        "title": "Multi-platform peşəkar",
-        "sub": "Bütün OTA kanalları güclüdür!"
+        "title": "Çok platformlu profesyonel",
+        "sub": "Tüm OTA kanallarınız güçlü!"
       }
     },
     "questions": {
       "0": {
-        "cat": "Foto keyfiyyəti",
-        "q": "Fotoları nə səviyyədədir?",
+        "cat": "Fotoğraf kalitesi",
+        "q": "Fotoğraflarınız ne seviyede?",
         "options": {
-          "0": "3-5 foto, qaranlıq",
-          "1": "10+ foto, gündüz çəkilmiş",
-          "2": "15+ keyfiyyətli foto",
-          "3": "Peşəkar foto sessiyası, 20+ şəkil"
+          "0": "3-5 fotoğraf, karanlık",
+          "1": "10+ fotoğraf, gündüz çekilmiş",
+          "2": "15+ kaliteli fotoğraf",
+          "3": "Profesyonel fotoğraf çekimi, 20+ kare"
         }
       },
       "1": {
-        "cat": "OTA profil",
-        "q": "Booking/Airbnb profiliniz nə vəziyyətdədir?",
+        "cat": "OTA profili",
+        "q": "Booking/Airbnb profiliniz ne durumda?",
         "options": {
-          "0": "Heç bir OTA-da yoxam",
-          "1": "Booking-də var amma natamam",
+          "0": "Hiçbir OTA'da yokum",
+          "1": "Booking'de var ama eksik",
           "2": "Booking tam, Airbnb yeni",
-          "3": "Booking + Airbnb + Yandex Travel hamısı aktiv"
+          "3": "Booking + Airbnb + Yandex Travel hepsi aktif"
         }
       },
       "2": {
-        "cat": "Qiymət strategiyası",
-        "q": "Gecəlik qiymətinizi necə təyin edirsiniz?",
+        "cat": "Fiyat stratejisi",
+        "q": "Gecelik fiyatınızı nasıl belirliyorsunuz?",
         "options": {
-          "0": "Qonşu nə yazıb, mən də",
-          "1": "2 qiymətim var (yay/qış)",
-          "2": "Həftə sonu, bayram ayrı",
-          "3": "Dinamik qiymətləndirmə, rəqib analizi"
+          "0": "Komşu ne yazdıysa ben de onu",
+          "1": "2 fiyatım var (yaz/kış)",
+          "2": "Hafta sonu ve bayram ayrı",
+          "3": "Dinamik fiyatlandırma, rakip analizi"
         }
       },
       "3": {
-        "cat": "Təqvim idarəsi",
-        "q": "Mövcudluq təqviminizi necə idarə edirsiniz?",
+        "cat": "Takvim yönetimi",
+        "q": "Müsaitlik takviminizi nasıl yönetiyorsunuz?",
         "options": {
-          "0": "Təqvim yoxdur",
-          "1": "Booking təqvimini vaxtaşırı yeniləyirəm",
-          "2": "Manual senkron",
-          "3": "iCal sync və ya channel manager"
+          "0": "Takvim yok",
+          "1": "Booking takvimini ara sıra güncelliyorum",
+          "2": "Manuel senkronizasyon",
+          "3": "iCal sync veya channel manager"
         }
       },
       "4": {
-        "cat": "Rəy idarəsi",
-        "q": "Qonaq rəyləri ilə necə işləyirsiniz?",
+        "cat": "Yorum yönetimi",
+        "q": "Misafir yorumlarıyla nasıl ilgileniyorsunuz?",
         "options": {
-          "0": "Cavab yazmıram",
-          "1": "Bəzən yazıram",
-          "2": "48 saat içində cavab",
-          "3": "24 saat + mənfi rəylərdən dərs"
+          "0": "Yanıt yazmıyorum",
+          "1": "Bazen yazıyorum",
+          "2": "48 saat içinde yanıt",
+          "3": "24 saat + olumsuz yorumlardan ders"
         }
       },
       "5": {
-        "cat": "Ödəmə",
-        "q": "Ödəmə qəbulu necədir?",
+        "cat": "Ödeme",
+        "q": "Ödemeleri nasıl kabul ediyorsunuz?",
         "options": {
-          "0": "Yalnız nağd",
-          "1": "Nağd + bank köçürməsi",
-          "2": "Booking Payments aktiv",
+          "0": "Yalnızca nakit",
+          "1": "Nakit + banka havalesi",
+          "2": "Booking Payments aktif",
           "3": "Booking + Airbnb + POS"
         }
       },
       "6": {
-        "cat": "Dil bacarığı",
-        "q": "Xarici qonaqlarla necə ünsiyyət qurursunuz?",
+        "cat": "Dil becerisi",
+        "q": "Yabancı misafirlerle nasıl iletişim kuruyorsunuz?",
         "options": {
-          "0": "Yalnız AZ dili",
-          "1": "Az-çox RU",
-          "2": "RU + basic EN",
+          "0": "Yalnızca AZ dili",
+          "1": "Biraz RU",
+          "2": "RU + temel EN",
           "3": "EN + RU + TR, rahat"
         }
       },
       "7": {
-        "cat": "Direct booking",
-        "q": "WhatsApp və ya direct kanalınız varmı?",
+        "cat": "Doğrudan rezervasyon",
+        "q": "WhatsApp veya doğrudan bir kanalınız var mı?",
         "options": {
-          "0": "Yalnız OTA-dan gəlir",
-          "1": "WhatsApp nömrəm var",
+          "0": "Misafirler yalnızca OTA'dan geliyor",
+          "1": "WhatsApp numaram var",
           "2": "WhatsApp Business + QR",
-          "3": "WhatsApp + Instagram + Google Maps + qonaq bazası"
+          "3": "WhatsApp + Instagram + Google Maps + misafir veritabanı"
         }
       }
-    }
+    },
+    "meta": {
+      "pageTitle": "OTA Hazırlık Testi — Pansiyonunuz Booking ve Airbnb'de Görünmeye Hazır mı?",
+      "pageDescription": "8 soru, 3 dakika. Pansiyon, misafirhane ve günlük kiralık ev sahipleri için Booking.com ve Airbnb hazırlık değerlendirmesi. Kişisel AI raporu.",
+      "badge": "Misafirhane Rehberi"
+    },
+    "intro": {
+      "heading": "Misafirhaneniz Booking'de ve Airbnb'de para kazanmaya hazır mı?",
+      "subheading": "8 soru · 3 dakika · sonunda gerçek rakamlarla kişiye özel rapor",
+      "letter": "Değerli pansiyon sahibi — Xınalıq'ta, Lahıc'ta, Şeki'de, Gebele'de, Bakü'de ya da herhangi bir köşede misafirhane açtıysanız, bu test sizin için. Booking %15 komisyon alıyor, Airbnb de aşağı yukarı aynı. Doğru kurulmuş bir profil size ayda 3,000-8,000 AZN ek gelir getirebilir. Yanlış kurulmuşsa misafir sizden kaçar. Bu test hangi alanlarınızın hazır olduğunu, hangilerinde gelişim gerektiğini gösterecek.",
+      "letterSign": "— Doğan Tomris, DK Agency",
+      "startButton": "Teste başla →"
+    },
+    "categories": {
+      "photos": "Fotoğraflar",
+      "profile": "Profil Doluluğu",
+      "pricing": "Fiyat Stratejisi",
+      "calendar": "Takvim Yönetimi",
+      "reviews": "Misafir Yorumları",
+      "payment": "Ödeme Kabulü",
+      "language": "Dil Becerisi",
+      "directBooking": "Doğrudan Rezervasyon Stratejisi"
+    },
+    "options": {
+      "photos": {
+        "a": "Telefonla aceleyle çekilmiş 2-3 fotoğraf, karanlık veya bulanık",
+        "b": "5-10 fotoğraf, gündüz çekilmiş, ancak yalnızca genel görünüm",
+        "c": "10+ fotoğraf, 3+ açı (oda, banyo, balkon, mutfak), net ışık",
+        "d": "Profesyonel fotoğrafçının çektiği 15+ fotoğraf, her odadan 3 açı, sanal tur"
+      },
+      "profile": {
+        "a": "Yalnızca ad ve fiyat, açıklama yok",
+        "b": "Kısa açıklama var, ancak özellikler ve kurallar boş",
+        "c": "Tam açıklama, ev kuralları ve check-in saatleri doldurulmuş",
+        "d": "Açıklama 3 dilde (AZ/RU/EN), tüm özellikler seçilmiş, kurallar net"
+      },
+      "pricing": {
+        "a": "Yıl boyunca aynı fiyat",
+        "b": "Yaz/kış sezonuna göre farklı fiyat",
+        "c": "Sezonluk + hafta sonu / hafta içi farkı",
+        "d": "Dinamik fiyat — bayramlar, festivaller, hava koşullarına göre"
+      },
+      "calendar": {
+        "a": "Yalnızca tek bir platformda (Booking VEYA Airbnb)",
+        "b": "Her iki platformda, ancak elle güncelliyorum",
+        "c": "Booking ve Airbnb arasında otomatik senkronizasyon (iCal)",
+        "d": "Channel manager (Lodgify, Hospitable, Smoobu) — tüm platformlar senkron"
+      },
+      "reviews": {
+        "a": "Yorumlara yanıt vermiyorum",
+        "b": "Yalnızca olumsuz yorumlara yanıt veriyorum",
+        "c": "Her yoruma profesyonel yanıt veriyorum",
+        "d": "Her yoruma yanıt + misafirlerden aktif olarak yorum istiyorum (Booking'de 9.0+, Airbnb Superhost)"
+      },
+      "payment": {
+        "a": "Yalnızca nakit",
+        "b": "Nakit veya banka havalesi",
+        "c": "Booking ödeme sistemi + IBAN + kartlı POS",
+        "d": "Çoklu yöntem: Booking, IBAN, kart, kripto, Western Union (yabancı misafirler için)"
+      },
+      "language": {
+        "a": "Yalnızca Azerbaycan Türkçesi",
+        "b": "Azerbaycan Türkçesi ve Rusça",
+        "c": "Azerbaycan Türkçesi, Rusça ve İngilizce",
+        "d": "AZ/RU/EN + Google Translate ile her dil — chatbot asistan kuruluyor"
+      },
+      "directBooking": {
+        "a": "Misafirler yalnızca Booking/Airbnb'den geliyor, aynı misafir 2. kez de platformdan geliyor",
+        "b": "Misafirlere WhatsApp numaramı veriyorum, bazı dönen misafirler oradan yazıyor",
+        "c": "Doğrudan rezervasyonda %10-15 indirim sunuyorum, misafir doğrudan benimle yazışıyor",
+        "d": "Kendi web sitem + WhatsApp Business + sadakat programı (3. konaklamada %20 indirim)"
+      }
+    },
+    "verdicts": {
+      "notReady": {
+        "heading": "Henüz OTA'ya hazır değilsiniz",
+        "subline": "Profiliniz ve fotoğraflarınız üzerinde 2-3 hafta çalışmanız gerekiyor. Booking'de şimdi açarsanız misafir çekemezsiniz, puanınız düşebilir. İlk adım: 10+ profesyonel fotoğraf ve eksiksiz profil."
+      },
+      "bookingStart": {
+        "heading": "Booking.com'da başlamaya hazırsınız",
+        "subline": "Temel hazır. Booking'de profilinizi oluşturun, ilk 3 ay misafir yorumlarını özenle toplayın. 8.0+ puan aldıktan sonra Airbnb'yi de ekleyin."
+      },
+      "airbnbExpand": {
+        "heading": "Airbnb'yi ekleyin ve Superhost hedefi koyun",
+        "subline": "Booking'de zaten deneyiminiz var. Airbnb'yi ekleyin, 6 ayda Superhost statüsüne ulaşın. İki platform birlikte aylık geliri %40-60 artırır."
+      },
+      "directStrategy": {
+        "heading": "Doğrudan rezervasyon stratejisi kurun",
+        "subline": "Çoklu platformda güçlüsünüz. Şimdi hedef komisyonları azaltmak. WhatsApp Business, kendi web siteniz ve sadakat programıyla her 100 misafirden 30-40'ını doğrudan rezervasyona geçirin — komisyonun yarısını koruyun."
+      },
+      "multiPlatformPro": {
+        "heading": "Çoklu platform uzmanı — channel manager düşünün",
+        "subline": "Her şey yüksek seviyede işliyor. Sonraki adım: 3+ oda yönetimi için profesyonel channel manager (Lodgify, Hospitable). Bu seviyede gerçek bir işletme kuruyorsunuz."
+      }
+    },
+    "weakBox": {
+      "heading": "En zayıf alanınız: {category}",
+      "body": "Bu alan, Booking ve Airbnb'deki kazancınızın önündeki ana tıkanıklıktır. DK Agency ekibi bu alanda size somut bir adım planı ve gerekli şablonlarla yardımcı olabilir."
+    },
+    "leadCta": {
+      "heading": "Booking'e birlikte hazırlanalım",
+      "body": "DK Agency Misafirhane Rehberi ve WhatsApp şablon paketiyle Booking ve Airbnb'deki ilk 90 günü başarıyla geçin.",
+      "namePlaceholder": "Ad, Soyad",
+      "brandPlaceholder": "Misafirhane / pansiyon adı",
+      "contactPlaceholder": "WhatsApp numarası veya e-posta",
+      "kvkkConsent": "KVKK aydınlatma metnini kabul ediyor ve DK Agency ile iletişim için bilgilerimin saklanmasına izin veriyorum.",
+      "submitButton": "Ücretsiz rehberi ve WhatsApp şablon paketini al",
+      "submitSuccess": "✓ Teşekkürler! 24 saat içinde WhatsApp'tan iletişime geçeceğiz.",
+      "retryButton": "Testi tekrarla"
+    },
+    "shareCard": {
+      "title": "Misafirhanemin Hazırlık Skoru",
+      "tagline": "Ustalığın Nişanı · Dijitalin Şeddi",
+      "downloadButton": "Sonucu indir (PNG)"
+    },
+    "footer": "Bu test bir ön öz değerlendirme aracıdır. Tam plan için kişiye özel danışmanlık önerilir."
   },
   "guesthouseRoi": {
     "meta": {
-      "badge": "Qonaq Evi ROI"
+      "badge": "Misafirhane ROI"
     },
     "intro": {
-      "heading": "Pansiyonum ayda nə qədər qazandırır?",
-      "subheading": "Rəqəmləri dəyiş, nəticə canlı yenilənir."
+      "heading": "Pansiyonum ayda ne kadar kazandırıyor?",
+      "subheading": "Rakamları değiştirin, sonuç anında güncellenir."
     },
     "inputs": {
       "nightlyPrice": {
-        "label": "Gecəlik qiymət",
-        "hint": "Otaq başına"
+        "label": "Gecelik fiyat",
+        "hint": "Oda başına"
       },
       "roomCount": {
-        "label": "Otaq sayı",
-        "hint": "Ümumi otaq sayı"
+        "label": "Oda sayısı",
+        "hint": "Toplam oda sayısı"
       },
       "occupancyPercent": {
-        "label": "Aylıq doluluq",
-        "hint": "Neçə % dolu?"
+        "label": "Aylık doluluk",
+        "hint": "Yüzde kaç dolu?"
       },
       "avgCommissionPercent": {
-        "label": "OTA komissiyası",
+        "label": "OTA komisyonu",
         "hint": "Booking/Airbnb 15%"
       },
       "otaSharePercent": {
-        "label": "OTA-dan gələn qonaq payı",
-        "hint": "Neçə % OTA-dan?"
+        "label": "OTA'dan gelen misafir payı",
+        "hint": "Yüzde kaçı OTA'dan?"
       },
       "monthlyFixedCost": {
-        "label": "Aylıq sabit xərc",
-        "hint": "Təmizlik, kommunal"
+        "label": "Aylık sabit gider",
+        "hint": "Temizlik, faturalar"
       },
       "initialInvestment": {
-        "label": "İlkin investisiya",
-        "hint": "Mebel, dizayn"
+        "label": "İlk yatırım",
+        "hint": "Mobilya, tasarım"
       }
     },
     "results": {
-      "monthlyGrossLabel": "Aylıq qros",
-      "otaRevenueLabel": "OTA gəlir",
-      "directRevenueLabel": "Direct gəlir",
-      "otaCommissionLabel": "OTA komissiya",
-      "monthlyNetLabel": "Aylıq xalis",
-      "annualNetLabel": "İllik xalis",
-      "paybackLabel": "Geri qaytarma",
+      "monthlyGrossLabel": "Aylık brüt",
+      "otaRevenueLabel": "OTA geliri",
+      "directRevenueLabel": "Doğrudan gelir",
+      "otaCommissionLabel": "OTA komisyonu",
+      "monthlyNetLabel": "Aylık net",
+      "annualNetLabel": "Yıllık net",
+      "paybackLabel": "Geri dönüş süresi",
       "paybackMonthsUnit": "{count} ay",
-      "noProfitText": "mənfəət yoxdur"
+      "noProfitText": "kâr yok"
     },
     "verdicts": {
-      "healthy": "Sağlam pansiyon modeli: ROI sürətli.",
-      "borderline": "Sərhəd zona: xərc optimizasiyası düşün.",
-      "risky": "Riskli: investisiya yavaş qayıdır.",
-      "unprofitable": "Pansiyon zərər verir."
+      "healthy": "Sağlıklı pansiyon modeli: ROI hızlı.",
+      "borderline": "Sınır bölge: gider optimizasyonu düşünün.",
+      "risky": "Riskli: yatırım yavaş geri dönüyor.",
+      "unprofitable": "Pansiyon zarar ediyor."
     }
   },
   "whatsappTemplates": {
@@ -5904,5 +6031,92 @@
       "desc": "Durumunuzu yazın — hangi araçtan başlamanız gerektiğini birlikte belirleyelim.",
       "button": "İletişime geç"
     }
+  },
+  "membershipPage": {
+    "metaTitle": "Üyelik | DK Agency",
+    "metaDescription": "DK Agency'de ücretsiz hesap: ilan verin, başvuruları ve faturaları B2B panelde yönetin.",
+    "eyebrow": "DK ÜYELİK",
+    "title": "Tek hesap — ilanlarınız, başvurularınız ve panel",
+    "lead": "Hesaplayıcılar herkes için ücretsizdir. Hesap açtığınızda ilan verir, gelen başvuruları ve faturaları tek bir B2B panelde yönetirsiniz.",
+    "benefits": {
+      "listings": {
+        "title": "İlan verin",
+        "body": "İşletme satışı, kiralama ve ekipman ilanlarınızı verin, durumunu takip edin."
+      },
+      "leads": {
+        "title": "Başvuruları görün",
+        "body": "İlanlarınıza gelen başvurular ve yorumlar panelinizde toplanır."
+      },
+      "panel": {
+        "title": "B2B panel",
+        "body": "Faturalar, mesajlar ve bildirimler tek hesapta."
+      }
+    },
+    "freeNote": "Food cost, P&L, başabaş ve diğer araçlar hesap olmadan da ücretsizdir.",
+    "toolsCta": "Araçlara bak",
+    "statusTitle": "Hesabınız",
+    "guestText": "Henüz giriş yapmadınız. Ücretsiz hesap açın veya giriş yapın.",
+    "registerCta": "Ücretsiz hesap aç",
+    "loginCta": "Giriş yap",
+    "activeText": "Hesabınız aktif: {name}",
+    "panelCta": "Panele git",
+    "plansTitle": "Ücretli planlar",
+    "plansSoon": "Ücretli planlar hazırlanıyor. Hazır olduğunda burada duyuracağız.",
+    "plansReady": "Bir plan seçin — ödeme güvenli bir sayfada tamamlanır.",
+    "checkout": {
+      "monthly": "Aylık plan",
+      "annual": "Yıllık plan",
+      "error": "Ödeme sayfası açılamadı. Tekrar deneyin."
+    },
+    "logout": "Çıkış yap"
+  },
+  "seddPage": {
+    "metaTitle": "Şədd Rozeti — DK Agency HoReCa Denetim Rozeti",
+    "badge": "Şədd Rozeti",
+    "title": "DK Agency Şədd Rozeti",
+    "body": "Şədd Rozeti, HoReCa işletmelerinin operasyon, hijyen, finans ve marka standartlarını denetleyen DK Agency denetim rozetidir.",
+    "applyCta": "Denetim için başvur",
+    "toolkitCta": "Araçlara bak",
+    "metaDescription": "Şədd Rozeti, HoReCa işletmelerinin operasyon, hijyen, finans ve marka standartlarını denetleyen DK Agency denetim rozetidir."
+  },
+  "comingSoon": {
+    "emailPlaceholder": "E-posta adresiniz",
+    "emailLabel": "Yeniliklerden haberdar olmak için e-posta",
+    "notifyCta": "Haber ver",
+    "success": "Teşekkürler! Hazır olduğunda haber vereceğiz.",
+    "error": "Bir hata oluştu. Tekrar deneyin.",
+    "meanwhile": "Bu arada göz atmaya değer:",
+    "blog": "Blog",
+    "toolkit": "Araçlar",
+    "backHome": "Ana sayfaya dön"
+  },
+  "verifyEmail": {
+    "title": "E-posta doğrulama",
+    "preparing": "Doğrulama sayfası hazırlanıyor...",
+    "verifying": "E-posta doğrulanıyor...",
+    "success": "E-posta adresiniz doğrulandı!",
+    "invalid": "Bağlantı geçersiz veya süresi dolmuş.",
+    "login": "Giriş yap",
+    "backToRegister": "Kayda geri dön"
+  },
+  "emailPrefs": {
+    "loadError": "Tercihler yüklenemedi.",
+    "networkError": "Ağ hatası. Tekrar deneyin.",
+    "tokenTitle": "Bağlantı gerekli",
+    "tokenBody": "Bu sayfayı açmak için geçerli bir abonelik bağlantısı gerekir. Lütfen e-postanızdaki bağlantıyı kullanın.",
+    "updated": "Aboneliğiniz başarıyla güncellendi.",
+    "saved": "Tercihleriniz kaydedildi.",
+    "saveError": "Kaydederken bir hata oluştu. Tekrar deneyin.",
+    "title": "E-posta tercihlerini yönetin",
+    "legend": "E-posta abonelikleri",
+    "newsletter": "Bülten",
+    "newsletterDesc": "Haftalık sektör haberleri ve yenilikler",
+    "blogDigest": "Blog özeti",
+    "blogDigestDesc": "Yeni makaleler hakkında bildirimler",
+    "productUpdates": "Ürün yenilikleri",
+    "productUpdatesDesc": "Platformun yeni özellikleri ve duyurular",
+    "saving": "Kaydediliyor...",
+    "save": "Tercihlerimi kaydet",
+    "unsubscribeAll": "Tümünden çık"
   }
 }

@@ -3733,6 +3733,18 @@
           }
         }
       }
+    },
+    "featuredBlogs": {
+      "p1": {
+        "category": "Food Cost",
+        "title": "1 porsiya food cost necə hesablanır?",
+        "excerpt": "Porsiya maya dəyəri, resept kartı və düzgün qiymət arasında əlaqəni sadə nümunə ilə izah edirik."
+      },
+      "p2": {
+        "category": "Menyu",
+        "title": "Menyu mühəndisliyi ilə satışı necə artırmaq olar?",
+        "excerpt": "Ulduz, At, Puzzle və İt matrisi ilə menyunu data ilə idarə etməyin əsasları."
+      }
     }
   },
   "dashboardAuditor": {
@@ -6019,5 +6031,92 @@
       "desc": "Vəziyyətinizi yazın — hansı alətdən başlamaq lazım olduğunu birlikdə müəyyən edək.",
       "button": "Əlaqə saxla"
     }
+  },
+  "membershipPage": {
+    "metaTitle": "Üzvlük | DK Agency",
+    "metaDescription": "DK Agency-də pulsuz hesab: elan yerləşdirin, müraciətləri və fakturaları B2B paneldə idarə edin.",
+    "eyebrow": "DK ÜZVLÜK",
+    "title": "Bir hesab — elanlarınız, müraciətləriniz və panel",
+    "lead": "Hesablayıcılar hamı üçün pulsuzdur. Hesab açdıqda elan yerləşdirir, gələn müraciətləri və fakturaları B2B paneldə bir yerdə idarə edirsiniz.",
+    "benefits": {
+      "listings": {
+        "title": "Elan yerləşdirin",
+        "body": "Biznes satışı, icarə və avadanlıq elanlarınızı yerləşdirin, statusunu izləyin."
+      },
+      "leads": {
+        "title": "Müraciətləri görün",
+        "body": "Elanlarınıza gələn müraciətlər və rəylər panelinizdə toplanır."
+      },
+      "panel": {
+        "title": "B2B panel",
+        "body": "Fakturalar, mesajlar və bildirişlər bir hesabda."
+      }
+    },
+    "freeNote": "Food cost, P&L, başabaş və digər alətlər hesab olmadan da pulsuzdur.",
+    "toolsCta": "Alətlərə bax",
+    "statusTitle": "Hesabınız",
+    "guestText": "Hələ daxil olmamısınız. Pulsuz hesab açın və ya daxil olun.",
+    "registerCta": "Pulsuz hesab aç",
+    "loginCta": "Daxil ol",
+    "activeText": "Hesabınız aktivdir: {name}",
+    "panelCta": "Panelə keç",
+    "plansTitle": "Ödənişli planlar",
+    "plansSoon": "Ödənişli planlar hazırlanır. Hazır olanda burada elan edəcəyik.",
+    "plansReady": "Plan seçin — ödəniş təhlükəsiz səhifədə tamamlanır.",
+    "checkout": {
+      "monthly": "Aylıq plan",
+      "annual": "İllik plan",
+      "error": "Ödəniş səhifəsi açılmadı. Yenidən cəhd edin."
+    },
+    "logout": "Çıxış et"
+  },
+  "seddPage": {
+    "metaTitle": "Şədd Rozeti — DK Agency HoReCa Audit Nişanı",
+    "badge": "Şədd Rozeti",
+    "title": "DK Agency Şədd Rozeti",
+    "body": "Şədd Rozeti HoReCa bizneslərinin əməliyyat, gigiyena, maliyyə və marka standartlarını yoxlayan DK Agency audit nişanıdır.",
+    "applyCta": "Audit üçün müraciət et",
+    "toolkitCta": "Toolkit-ə bax",
+    "metaDescription": "Şədd Rozeti HoReCa bizneslərinin əməliyyat, gigiyena, maliyyə və marka standartlarını yoxlayan DK Agency audit nişanıdır."
+  },
+  "comingSoon": {
+    "emailPlaceholder": "E-poçt ünvanınız",
+    "emailLabel": "Yeniliklərdən xəbərdar olmaq üçün e-poçt",
+    "notifyCta": "Xəbər ver",
+    "success": "Təşəkkürlər! Hazır olanda xəbər verəcəyik.",
+    "error": "Xəta baş verdi. Yenidən cəhd edin.",
+    "meanwhile": "Bu arada baxmağa dəyər:",
+    "blog": "Bloq",
+    "toolkit": "Alətlər",
+    "backHome": "Ana səhifəyə qayıt"
+  },
+  "verifyEmail": {
+    "title": "E-poçt təsdiqi",
+    "preparing": "Təsdiq səhifəsi hazırlanır...",
+    "verifying": "E-poçt təsdiqlənir...",
+    "success": "E-poçt ünvanınız təsdiqləndi!",
+    "invalid": "Link etibarsızdır və ya vaxtı keçib.",
+    "login": "Daxil ol",
+    "backToRegister": "Qeydiyyata qayıt"
+  },
+  "emailPrefs": {
+    "loadError": "Seçimlər yüklənə bilmədi.",
+    "networkError": "Şəbəkə xətası. Yenidən cəhd edin.",
+    "tokenTitle": "Link lazımdır",
+    "tokenBody": "Bu səhifəni açmaq üçün etibarlı abunəlik linki lazımdır. Zəhmət olmasa, e-poçtunuzdakı linkdən istifadə edin.",
+    "updated": "Abunəliyiniz uğurla yeniləndi.",
+    "saved": "Seçimləriniz yadda saxlanıldı.",
+    "saveError": "Saxlama zamanı xəta baş verdi. Yenidən cəhd edin.",
+    "title": "E-poçt seçimlərini idarə edin",
+    "legend": "E-poçt abunəlikləri",
+    "newsletter": "Bülleten",
+    "newsletterDesc": "Həftəlik sektor xəbərləri və yeniliklər",
+    "blogDigest": "Bloq xülasəsi",
+    "blogDigestDesc": "Yeni məqalələr haqqında bildirişlər",
+    "productUpdates": "Məhsul yenilikləri",
+    "productUpdatesDesc": "Platformanın yeni funksiyaları və elanlar",
+    "saving": "Saxlanılır...",
+    "save": "Seçimlərimi saxla",
+    "unsubscribeAll": "Hamısından çıx"
   }
 }

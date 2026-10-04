@@ -1,6 +1,6 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -20,23 +20,11 @@ const AiReadinessScore = dynamic(() => import('@/components/sections/AiReadiness
 });
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 
+/** Homepage article cards — text lives in messages `home.featuredBlogs.p1/p2` (TASK-0472). */
 const featuredBlogs = [
-  {
-    slug: '1-porsiya-food-cost-hesablama',
-    category: 'Food Cost',
-    title: '1 porsiya food cost necə hesablanır?',
-    excerpt:
-      'Porsiya maya dəyəri, resept kartı və düzgün qiymət arasında əlaqəni sadə nümunə ilə izah edirik.',
-    image: '/images/blog-01.png',
-  },
-  {
-    slug: 'menyu-muhendisliyi-satis',
-    category: 'Menyu',
-    title: 'Menyu mühəndisliyi ilə satışı necə artırmaq olar?',
-    excerpt: 'Ulduz, At, Puzzle və İt matrisi ilə menyunu data ilə idarə etməyin əsasları.',
-    image: '/images/blog-04.png',
-  },
-];
+  { key: 'p1', slug: '1-porsiya-food-cost-hesablama', image: '/images/blog-01.png' },
+  { key: 'p2', slug: 'menyu-muhendisliyi-satis', image: '/images/blog-04.png' },
+] as const;
 
 const pageCopy: Record<
   Locale,
@@ -247,6 +235,7 @@ const pageCopy: Record<
 
 export default function Home() {
   const locale = normalizeLocale(useLocale());
+  const tBlog = useTranslations('home.featuredBlogs');
   const copy = pageCopy[locale];
 
   return (
@@ -315,17 +304,17 @@ export default function Home() {
                 <div className="mb-8 aspect-[16/9] overflow-hidden rounded-[2.5rem] shadow-2xl shadow-slate-200/50">
                   <img
                     src={post.image}
-                    alt={post.title}
+                    alt={tBlog(`${post.key}.title`)}
                     className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
                   />
                 </div>
                 <span className="mb-4 block text-[10px] font-black uppercase tracking-[0.2em] text-brand-red">
-                  {post.category}
+                  {tBlog(`${post.key}.category`)}
                 </span>
                 <h3 className="text-2xl font-display font-black leading-tight text-slate-900 transition-colors group-hover:text-brand-red sm:text-3xl">
-                  {post.title}
+                  {tBlog(`${post.key}.title`)}
                 </h3>
-                <p className="mt-4 line-clamp-2 text-slate-500">{post.excerpt}</p>
+                <p className="mt-4 line-clamp-2 text-slate-600">{tBlog(`${post.key}.excerpt`)}</p>
               </Link>
             ))}
           </div>

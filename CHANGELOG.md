@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0472` fix(i18n): otel/OTA/qonaq evi alətləri RU/EN/TR-də tərcümə olundu; `/uzvluk`-dan ictimai dev qeydləri çıxarıldı (real üzvlük səhifəsi, 4 dil), `/docs/member-env-checklist` silindi; ana səhifə elan lövhəsi uydurma elanlar əvəzinə real elanları göstərir; Şədd Rozeti, e-poçt təsdiqi/seçimləri, "tezliklə" səhifəsi (forma real API-yə bağlandı) 4 dildə; `/news` → `/haberler`.
+
 - `TASK-0469` feat(home): ana səhifənin yeni hero-su — "Siz kimsiniz?" seqment seçimi, çap olunan nümunə çek, canlı food cost hesablayıcısı (itki manatla) və seqmentə görə 3 başlanğıc aləti; 4 dil, mobil, `prefers-reduced-motion`.
 
 - `TASK-0468` fix(i18n): `/haqqimizda` kurucu bölməsinin AZ başlığı "Quranımızdan" → "Qurucumuzdan" düzəldildi.
