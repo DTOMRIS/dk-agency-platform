@@ -261,24 +261,14 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
                       <Link
                         key={def.href}
                         href={withLocale(currentLocale, def.href)}
-                        className={`group flex items-center gap-3 rounded-2xl border-l-4 px-4 py-3 transition ${
-                          active
-                            ? 'border-[var(--dk-gold)] bg-amber-50 text-[var(--dk-navy)]'
-                            : 'border-transparent text-slate-600 hover:bg-slate-50 hover:text-[var(--dk-navy)]'
+                        className={`group flex items-center gap-3 rounded-xl px-3 py-2 transition-colors ${
+                          active ? 'bg-[#EEF4FF] text-[#0A5BD6]' : 'text-slate-700 hover:bg-[#F2F2F7] hover:text-slate-900'
                         }`}
                       >
-                        <span
-                          className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${
-                            active
-                              ? 'bg-white text-[var(--dk-red)] shadow-sm'
-                              : 'bg-slate-100 text-slate-500'
-                          }`}
-                        >
-                          <Icon size={18} />
-                        </span>
-                        <span className="flex-1 text-sm font-semibold">{title}</span>
+                        <Icon size={18} className={active ? 'text-[#0A7AFF]' : 'text-slate-500'} aria-hidden="true" />
+                        <span className="flex-1 text-[14px] font-medium">{title}</span>
                         {badge ? (
-                          <span className="rounded-full bg-[var(--dk-red)] px-2.5 py-1 text-[11px] font-bold text-white">
+                          <span className="min-w-[22px] rounded-full bg-[#E11D48] px-2 py-0.5 text-center text-[11px] font-bold text-white">
                             {badge}
                           </span>
                         ) : null}

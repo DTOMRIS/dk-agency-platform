@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Eye, Search, Trash2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { normalizeLocale, withLocale } from '@/i18n/config';
 
 interface Member {
   id: number;
@@ -63,6 +64,7 @@ function formatDate(d: string | null) {
 
 export default function MembersTable(props: MembersTableProps) {
   const t = useTranslations('dashboard.members');
+  const locale = normalizeLocale(useLocale());
   const {
     members,
     loading,
@@ -137,7 +139,7 @@ export default function MembersTable(props: MembersTableProps) {
   };
 
   const inputCls =
-    'rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+    'h-11 rounded-full border-0 bg-white px-4 text-[14px] text-slate-800 shadow-[0_1px_2px_rgba(0,0,0,0.05)] outline-none transition focus:ring-2 focus:ring-[#0A7AFF]/30';
 
   return (
     <div className="space-y-4">
@@ -149,13 +151,14 @@ export default function MembersTable(props: MembersTableProps) {
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600" />
+          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true" />
           <input
             type="text"
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder={t('filters.searchPlaceholder')}
-            className={`${inputCls} w-full pl-9`}
+            className={`${inputCls} w-full pl-10`}
+            aria-label={t('filters.searchPlaceholder')}
           />
         </div>
         <select value={planFilter} onChange={(e) => onPlanChange(e.target.value)} className={inputCls}>
@@ -188,7 +191,7 @@ export default function MembersTable(props: MembersTableProps) {
         </div>
       )}
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      <div className="overflow-hidden rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
         {loading ? (
           <div className="py-16 text-center text-sm text-slate-600">{t('states.loading')}</div>
         ) : members.length === 0 ? (
@@ -196,12 +199,11 @@ export default function MembersTable(props: MembersTableProps) {
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left text-slate-500">
+              <thead className="text-left text-[12px] uppercase tracking-wide text-slate-500">
                 <tr>
                   <th className="w-10 px-4 py-3">
                     <input type="checkbox" checked={selected.size === members.length && members.length > 0} onChange={toggleAll} className="rounded" />
                   </th>
-                  <th className="px-4 py-3 font-semibold">{t('columns.email')}</th>
                   <th className="px-4 py-3 font-semibold">{t('columns.name')}</th>
                   <th className="px-4 py-3 font-semibold">{t('columns.company')}</th>
                   <th className="px-4 py-3 font-semibold">{t('columns.role')}</th>
@@ -217,12 +219,21 @@ export default function MembersTable(props: MembersTableProps) {
                   const isSelf = m.id === currentUserId;
                   const role = m.role || 'member';
                   return (
-                    <tr key={m.id} className="border-t border-slate-100 hover:bg-slate-50/50">
+                    <tr key={m.id} className="border-t border-slate-100 transition-colors hover:bg-[#F9F9FB]">
                       <td className="w-10 px-4 py-3">
                         <input type="checkbox" checked={selected.has(m.id)} onChange={() => toggleSelect(m.id)} className="rounded" />
                       </td>
-                      <td className="px-4 py-3 text-slate-700">{m.email}</td>
-                      <td className="px-4 py-3 font-medium text-[var(--dk-navy)]">{m.fullName || '-'}</td>
+                      <td className="px-4 py-3.5">
+                        <div className="flex items-center gap-3">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8F1FF] text-[13px] font-semibold text-[#0A5BD6]" aria-hidden="true">
+                            {(m.fullName || m.email).split(/[\s@.]+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase()).join('')}
+                          </span>
+                          <div className="min-w-0">
+                            <div className="truncate font-medium text-slate-900">{m.fullName || '—'}</div>
+                            <div className="truncate text-[12px] text-slate-500">{m.email}</div>
+                          </div>
+                        </div>
+                      </td>
                       <td className="px-4 py-3 text-slate-500">{m.company || '-'}</td>
                       <td className="px-4 py-3">
                         {isSelf ? (
@@ -269,7 +280,7 @@ export default function MembersTable(props: MembersTableProps) {
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <Link
-                            href={`/dashboard/users/${m.id}`}
+                            href={withLocale(locale, `/dashboard/users/${m.id}`)}
                             className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-50 hover:border-[var(--dk-gold)]"
                           >
                             <Eye size={12} />

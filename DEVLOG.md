@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0483: feat(dashboard): OCAQ v2 komanda mərkəzi + istifadəçilər
+
+**Why:** Doğan: "dashboard rezalet, kullanımsız, çok eski dizayn… Apple dashboard'dan yap". Dil menyusu qarışıq dil göstərirdi.
+
+**What:** Açıq boz fon, ağ yuvarlaq kartlar, böyük rəqəmlər; "Qərar gözləyir" ən üstdə (təsdiq gözləyən xəbər, yoxlamada elan, profil, son 3 günün françayz müraciətləri); son 30 günün müştəri müraciətləri çubuq qrafiki (4 mənbə) + mənbə halqası, istifadəçi artımı, yayınlanan xəbərlər, elan/bloq göstəriciləri — hamısı real DB, asılılıqsız SVG. İstifadəçilər səhifəsi eyni üslubda (avatar + ad + e-poçt bir xanada). Dil: layout və səhifələr URL-dən oxuyur, keçid `/ru/dashboard`-a. Top bar slug başlığı (TD-008) çıxarıldı; sidebar Apple üslubu.
+
+**Doğrulama:** production build + test JWT; 4 dil, mobil, page error 0. dk-validator aşağıda.
+
 ## 2026-10-04 — TASK-0482: fix(news): sintez uyğunluq meyarı + format
 
 **Why:** RSS axını işləyəndən sonra DeepSeek 15 xəbərdən heç birini yazmadı: 9-u "uyğun deyil" (dünya xəbərlərini AZ üçün əlaqəsiz saydı — meyar yox idi), 6-sı JSON kəsilməsi.

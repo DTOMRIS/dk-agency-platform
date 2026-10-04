@@ -122,17 +122,17 @@ export default function DashboardUsersPage() {
   );
 
   return (
-    <div className="bg-white p-6 lg:p-8">
-      <div className="mx-auto max-w-7xl space-y-6">
-        <div className="flex items-center justify-between">
+    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+      <div className="mx-auto max-w-[1320px] space-y-6">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{t('pageTitle')}</h1>
-            <p className="mt-1 text-sm text-slate-500">{t('pageSubtitle')}</p>
+            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">{t('pageTitle')}</h1>
+            <p className="mt-1 text-[15px] text-slate-600">{t('pageSubtitle')}</p>
           </div>
           <button
             type="button"
             onClick={() => setAddModalOpen(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-4 py-2.5 text-sm font-bold text-white transition hover:opacity-90"
+            className="inline-flex h-11 items-center gap-2 rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
           >
             <UserPlus size={16} />
             {t('addMember.button')}
@@ -141,14 +141,14 @@ export default function DashboardUsersPage() {
 
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {STAT_CARDS.map(({ key, icon: Icon, color }) => (
-            <div key={key} className="rounded-2xl border border-slate-200 bg-white p-4">
-              <div className="flex items-center gap-3">
-                <Icon size={20} className={color} />
-                <div>
-                  <p className="text-2xl font-bold text-[var(--dk-navy)]">{stats[key]}</p>
-                  <p className="text-xs text-slate-500">{t(`stats.${key}`)}</p>
-                </div>
+            <div key={key} className="rounded-[22px] bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
+              <div className="flex items-center justify-between">
+                <p className="text-[14px] font-medium text-slate-600">{t(`stats.${key}`)}</p>
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F2F2F7]">
+                  <Icon size={18} className={color} aria-hidden="true" />
+                </span>
               </div>
+              <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">{stats[key]}</p>
             </div>
           ))}
         </div>

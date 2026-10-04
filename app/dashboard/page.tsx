@@ -1,337 +1,413 @@
-import Link from 'next/link';
-import { ArrowRight, Newspaper, PenSquare, Store } from 'lucide-react';
-import { sql } from 'drizzle-orm';
-import { db, dbAvailable } from '@/lib/db';
-import { blogPosts, memberProfiles } from '@/lib/db/schema';
-import { adminUsers } from '@/lib/data/adminContent';
-import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
-import { getDashboardListingMetrics } from '@/lib/repositories/listingRepository';
-import { getLocale } from 'next-intl/server';
-import { normalizeLocale, type Locale } from '@/i18n/config';
-import { requireAdminPage } from '@/lib/auth/guards';
+/**
+ * @file app/dashboard/page.tsx
+ * @purpose OCAQ v2 command centre (TASK-0483) — clean light dashboard: decisions first, real charts.
+ * Data: lib/dashboard/overview.ts (each source isolated). Locale from the URL (/ru/dashboard …).
+ */
 
-const dashCopy: Record<
+import Link from 'next/link';
+import { getLocale } from 'next-intl/server';
+import { ArrowRight, Check, Inbox } from 'lucide-react';
+import { requireAdminPage } from '@/lib/auth/guards';
+import { getDashboardOverview, type DecisionItem } from '@/lib/dashboard/overview';
+import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
+import { formatNumber } from '@/lib/i18n/format';
+import {
+  AreaChart,
+  BarChart,
+  BigNumber,
+  DashCard,
+  RingChart,
+} from '@/components/dashboard/ui/Charts';
+
+const COPY: Record<
   Locale,
   {
-    badge: string;
     title: string;
-    subtitle: string;
-    totalMembers: string;
-    totalMembersNote: string;
-    totalMembersFallback: string;
-    activeListings: string;
-    activeListingsNote: string;
-    pendingListings: string;
-    pendingListingsNote: string;
-    weeklyLeads: string;
-    weeklyLeadsNote: string;
-    blogPosts: string;
-    blogPostsNote: string;
-    recentActivity: string;
-    recentActivitySub: string;
-    last5Listings: string;
-    last5Leads: string;
-    quickActions: string;
-    recentBlog: string;
-    actionReviewListing: string;
-    actionWriteBlog: string;
-    actionCheckRss: string;
+    greeting: (n: number) => string;
+    allClear: string;
+    last30: string;
+    decisions: string;
+    decisionsSub: string;
+    kinds: Record<DecisionItem['kind'], string>;
+    leads: string;
+    leadsSub: string;
+    leadsCaption: string;
+    vsPrev: (p: number) => string;
+    sources: string;
+    sourceNames: Record<string, string>;
+    users: string;
+    usersSub: string;
+    usersCaption: (n: number) => string;
+    news: string;
+    newsSub: string;
+    newsCaption: string;
+    newsAwaiting: (n: number) => string;
+    newsQueue: (n: number) => string;
+    listings: string;
+    listingsLive: string;
+    listingsPending: string;
+    blog: string;
+    blogCaption: string;
+    quick: string;
+    quickLinks: Array<{ label: string; href: string }>;
+    noDb: string;
   }
 > = {
   az: {
-    badge: 'OCAQ',
     title: 'İdarəetmə mərkəzi',
-    subtitle:
-      'Dashboard artıq real listing, blog və member veriləri ilə dolur. DB bağlantısı yoxdursa eyni ekran kontrollu fallback ilə açılır.',
-    totalMembers: 'Ümumi üzv sayı',
-    totalMembersNote: 'Member profiles cədvəlindən',
-    totalMembersFallback: 'fallback profil',
-    activeListings: 'Aktiv elan sayı',
-    activeListingsNote: 'Vitrində görünən elanlar',
-    pendingListings: 'Gözləyən elan',
-    pendingListingsNote: 'Review workflow-da olanlar',
-    weeklyLeads: 'Bu həftə lead sayı',
-    weeklyLeadsNote: 'Son 7 gündə gələn leadlər',
-    blogPosts: 'Blog yazı sayı',
-    blogPostsNote: 'Blog posts cədvəlindən',
-    recentActivity: 'Son əməliyyatlar',
-    recentActivitySub: 'Listing və lead axını',
-    last5Listings: 'Son 5 elan',
-    last5Leads: 'Son 5 lead',
-    quickActions: 'Tez keçidlər',
-    recentBlog: 'Son blog yazıları',
-    actionReviewListing: 'Yeni elan incələ',
-    actionWriteBlog: 'Blog yaz',
-    actionCheckRss: 'RSS yoxla',
+    greeting: (n) =>
+      n > 0 ? `Sizdən ${n} qərar gözlənilir.` : 'Hər şey qaydasındadır — gözləyən qərar yoxdur.',
+    allClear: 'Gözləyən qərar yoxdur.',
+    last30: 'Son 30 gün',
+    decisions: 'Qərar gözləyir',
+    decisionsSub: 'Xəbər · elan · profil · françayz müraciəti',
+    kinds: { news: 'Xəbər', listing: 'Elan', profile: 'Profil', lead: 'Müraciət' },
+    leads: 'Müştəri müraciətləri',
+    leadsSub: 'Əlaqə · françayz · KAZAN AI · elan',
+    leadsCaption: 'Cəmi',
+    vsPrev: (p) => `əvvəlki 30 gün: ${p}`,
+    sources: 'Mənbəyə görə',
+    sourceNames: {
+      contact: 'Əlaqə / WhatsApp',
+      franchise: 'Françayz',
+      kazan: 'KAZAN AI',
+      listing: 'Elan',
+    },
+    users: 'İstifadəçilər',
+    usersSub: 'Qeydiyyat',
+    usersCaption: (n) => `son 30 gündə +${n}`,
+    news: 'Sektor Nəbzi',
+    newsSub: 'Yayınlanan xəbərlər',
+    newsCaption: 'son 30 gündə yayınlanıb',
+    newsAwaiting: (n) => `${n} təsdiq gözləyir`,
+    newsQueue: (n) => `${n} DeepSeek növbəsində`,
+    listings: 'Elanlar',
+    listingsLive: 'Vitrində',
+    listingsPending: 'Yoxlamada',
+    blog: 'Bloq',
+    blogCaption: 'dərc olunmuş yazı',
+    quick: 'Tez keçid',
+    quickLinks: [
+      { label: 'Yeni bloq yazısı', href: '/dashboard/blog/yeni' },
+      { label: 'Xəbər əlavə et', href: '/dashboard/xeberler/yeni' },
+      { label: 'Elanlar', href: '/dashboard/ilanlar' },
+      { label: 'İstifadəçilər', href: '/dashboard/users' },
+    ],
+    noDb: 'Verilənlər bazası əlçatan deyil — göstəricilər boşdur.',
   },
   ru: {
-    badge: 'OCAQ',
     title: 'Центр управления',
-    subtitle:
-      'Дашборд показывает реальные данные объявлений, блога и участников. При отсутствии БД работает с fallback.',
-    totalMembers: 'Всего участников',
-    totalMembersNote: 'Из таблицы профилей',
-    totalMembersFallback: 'fallback профиль',
-    activeListings: 'Активные объявления',
-    activeListingsNote: 'Отображаемые на витрине',
-    pendingListings: 'Ожидающие',
-    pendingListingsNote: 'В процессе проверки',
-    weeklyLeads: 'Лиды за неделю',
-    weeklyLeadsNote: 'За последние 7 дней',
-    blogPosts: 'Статей в блоге',
-    blogPostsNote: 'Из таблицы блога',
-    recentActivity: 'Последние действия',
-    recentActivitySub: 'Поток объявлений и лидов',
-    last5Listings: 'Последние 5 объявлений',
-    last5Leads: 'Последние 5 лидов',
-    quickActions: 'Быстрые действия',
-    recentBlog: 'Последние статьи',
-    actionReviewListing: 'Проверить объявление',
-    actionWriteBlog: 'Написать статью',
-    actionCheckRss: 'Проверить RSS',
+    greeting: (n) => (n > 0 ? `Вас ждут ${n} решений.` : 'Всё в порядке — решений не ждёт ничего.'),
+    allClear: 'Нет ожидающих решений.',
+    last30: 'Последние 30 дней',
+    decisions: 'Ждут решения',
+    decisionsSub: 'Новости · объявления · профили · заявки франшизы',
+    kinds: { news: 'Новость', listing: 'Объявление', profile: 'Профиль', lead: 'Заявка' },
+    leads: 'Заявки клиентов',
+    leadsSub: 'Контакты · франшиза · KAZAN AI · объявления',
+    leadsCaption: 'Всего',
+    vsPrev: (p) => `предыдущие 30 дней: ${p}`,
+    sources: 'По источникам',
+    sourceNames: {
+      contact: 'Контакты / WhatsApp',
+      franchise: 'Франшиза',
+      kazan: 'KAZAN AI',
+      listing: 'Объявления',
+    },
+    users: 'Пользователи',
+    usersSub: 'Регистрации',
+    usersCaption: (n) => `+${n} за 30 дней`,
+    news: 'Пульс сектора',
+    newsSub: 'Опубликованные новости',
+    newsCaption: 'опубликовано за 30 дней',
+    newsAwaiting: (n) => `${n} ждут утверждения`,
+    newsQueue: (n) => `${n} в очереди DeepSeek`,
+    listings: 'Объявления',
+    listingsLive: 'На витрине',
+    listingsPending: 'На проверке',
+    blog: 'Блог',
+    blogCaption: 'опубликованных статей',
+    quick: 'Быстрые действия',
+    quickLinks: [
+      { label: 'Новая статья', href: '/dashboard/blog/yeni' },
+      { label: 'Добавить новость', href: '/dashboard/xeberler/yeni' },
+      { label: 'Объявления', href: '/dashboard/ilanlar' },
+      { label: 'Пользователи', href: '/dashboard/users' },
+    ],
+    noDb: 'База данных недоступна — показатели пусты.',
   },
   en: {
-    badge: 'OCAQ',
     title: 'Control centre',
-    subtitle:
-      'Dashboard displays real listing, blog, and member data. Falls back gracefully when DB is unavailable.',
-    totalMembers: 'Total members',
-    totalMembersNote: 'From member profiles table',
-    totalMembersFallback: 'fallback profile',
-    activeListings: 'Active listings',
-    activeListingsNote: 'Visible on showcase',
-    pendingListings: 'Pending listings',
-    pendingListingsNote: 'In review workflow',
-    weeklyLeads: 'Weekly leads',
-    weeklyLeadsNote: 'Last 7 days',
-    blogPosts: 'Blog posts',
-    blogPostsNote: 'From blog posts table',
-    recentActivity: 'Recent activity',
-    recentActivitySub: 'Listing and lead flow',
-    last5Listings: 'Last 5 listings',
-    last5Leads: 'Last 5 leads',
-    quickActions: 'Quick actions',
-    recentBlog: 'Recent blog posts',
-    actionReviewListing: 'Review new listing',
-    actionWriteBlog: 'Write blog post',
-    actionCheckRss: 'Check RSS',
+    greeting: (n) =>
+      n > 0
+        ? `${n} decisions are waiting for you.`
+        : 'All clear — nothing is waiting for a decision.',
+    allClear: 'Nothing is waiting.',
+    last30: 'Last 30 days',
+    decisions: 'Waiting for you',
+    decisionsSub: 'News · listings · profiles · franchise enquiries',
+    kinds: { news: 'News', listing: 'Listing', profile: 'Profile', lead: 'Enquiry' },
+    leads: 'Customer enquiries',
+    leadsSub: 'Contact · franchise · KAZAN AI · listings',
+    leadsCaption: 'Total',
+    vsPrev: (p) => `previous 30 days: ${p}`,
+    sources: 'By source',
+    sourceNames: {
+      contact: 'Contact / WhatsApp',
+      franchise: 'Franchise',
+      kazan: 'KAZAN AI',
+      listing: 'Listings',
+    },
+    users: 'Users',
+    usersSub: 'Sign-ups',
+    usersCaption: (n) => `+${n} in 30 days`,
+    news: 'Sector Pulse',
+    newsSub: 'Published news',
+    newsCaption: 'published in 30 days',
+    newsAwaiting: (n) => `${n} awaiting approval`,
+    newsQueue: (n) => `${n} in the DeepSeek queue`,
+    listings: 'Listings',
+    listingsLive: 'Live',
+    listingsPending: 'In review',
+    blog: 'Blog',
+    blogCaption: 'published articles',
+    quick: 'Quick actions',
+    quickLinks: [
+      { label: 'New article', href: '/dashboard/blog/yeni' },
+      { label: 'Add news', href: '/dashboard/xeberler/yeni' },
+      { label: 'Listings', href: '/dashboard/ilanlar' },
+      { label: 'Users', href: '/dashboard/users' },
+    ],
+    noDb: 'Database unavailable — metrics are empty.',
   },
   tr: {
-    badge: 'OCAQ',
     title: 'Yönetim merkezi',
-    subtitle:
-      'Dashboard artık gerçek ilan, blog ve üye verileri ile doluyor. DB bağlantısı yoksa kontrollü fallback ile açılır.',
-    totalMembers: 'Toplam üye sayısı',
-    totalMembersNote: 'Üye profilleri tablosundan',
-    totalMembersFallback: 'fallback profil',
-    activeListings: 'Aktif ilan sayısı',
-    activeListingsNote: 'Vitrinde görünen ilanlar',
-    pendingListings: 'Bekleyen ilan',
-    pendingListingsNote: 'İnceleme sürecindekiler',
-    weeklyLeads: 'Bu hafta lead sayısı',
-    weeklyLeadsNote: 'Son 7 günde gelen leadler',
-    blogPosts: 'Blog yazı sayısı',
-    blogPostsNote: 'Blog yazıları tablosundan',
-    recentActivity: 'Son işlemler',
-    recentActivitySub: 'İlan ve lead akışı',
-    last5Listings: 'Son 5 ilan',
-    last5Leads: 'Son 5 lead',
-    quickActions: 'Hızlı geçişler',
-    recentBlog: 'Son blog yazıları',
-    actionReviewListing: 'Yeni ilan incele',
-    actionWriteBlog: 'Blog yaz',
-    actionCheckRss: 'RSS kontrol et',
+    greeting: (n) =>
+      n > 0 ? `Sizi bekleyen ${n} karar var.` : 'Her şey yolunda — bekleyen karar yok.',
+    allClear: 'Bekleyen karar yok.',
+    last30: 'Son 30 gün',
+    decisions: 'Karar bekliyor',
+    decisionsSub: 'Haber · ilan · profil · franchise başvurusu',
+    kinds: { news: 'Haber', listing: 'İlan', profile: 'Profil', lead: 'Başvuru' },
+    leads: 'Müşteri başvuruları',
+    leadsSub: 'İletişim · franchise · KAZAN AI · ilan',
+    leadsCaption: 'Toplam',
+    vsPrev: (p) => `önceki 30 gün: ${p}`,
+    sources: 'Kaynağa göre',
+    sourceNames: {
+      contact: 'İletişim / WhatsApp',
+      franchise: 'Franchise',
+      kazan: 'KAZAN AI',
+      listing: 'İlan',
+    },
+    users: 'Kullanıcılar',
+    usersSub: 'Kayıtlar',
+    usersCaption: (n) => `son 30 günde +${n}`,
+    news: 'Sektör Nabzı',
+    newsSub: 'Yayınlanan haberler',
+    newsCaption: 'son 30 günde yayınlandı',
+    newsAwaiting: (n) => `${n} onay bekliyor`,
+    newsQueue: (n) => `${n} DeepSeek kuyruğunda`,
+    listings: 'İlanlar',
+    listingsLive: 'Vitrinde',
+    listingsPending: 'İncelemede',
+    blog: 'Blog',
+    blogCaption: 'yayınlanmış yazı',
+    quick: 'Hızlı işlemler',
+    quickLinks: [
+      { label: 'Yeni blog yazısı', href: '/dashboard/blog/yeni' },
+      { label: 'Haber ekle', href: '/dashboard/xeberler/yeni' },
+      { label: 'İlanlar', href: '/dashboard/ilanlar' },
+      { label: 'Kullanıcılar', href: '/dashboard/users' },
+    ],
+    noDb: 'Veritabanı erişilemiyor — göstergeler boş.',
   },
 };
 
+const KIND_STYLE: Record<DecisionItem['kind'], string> = {
+  news: 'bg-blue-50 text-blue-800',
+  listing: 'bg-amber-50 text-amber-900',
+  profile: 'bg-emerald-50 text-emerald-800',
+  lead: 'bg-rose-50 text-rose-800',
+};
+
+const SOURCE_COLOR: Record<string, string> = {
+  contact: '#0A7AFF',
+  franchise: '#E11D48',
+  kazan: '#7C3AED',
+  listing: '#F59E0B',
+};
+
+function relTime(iso: string | null, locale: Locale): string {
+  if (!iso) return '';
+  const diffH = Math.max(0, Math.round((Date.now() - Date.parse(iso)) / 3_600_000));
+  const unit = { az: ['saat', 'gün'], ru: ['ч', 'дн'], en: ['h', 'd'], tr: ['saat', 'gün'] }[
+    locale
+  ];
+  return diffH < 48 ? `${diffH} ${unit[0]}` : `${Math.round(diffH / 24)} ${unit[1]}`;
+}
+
 export default async function DashboardPage() {
   await requireAdminPage();
-  const rawLocale = await getLocale();
-  const locale = normalizeLocale(rawLocale);
-  const copy = dashCopy[locale];
-
-  const listingMetrics = await getDashboardListingMetrics();
-
-  const [blogResult, memberCount, blogCount] = await Promise.all([
-    getBlogPostsFromDb({ status: 'all', limit: 5 }),
-    dbAvailable && db
-      ? db.select({ count: sql<number>`count(*)::int` }).from(memberProfiles)
-      : Promise.resolve([{ count: adminUsers.length }]),
-    dbAvailable && db
-      ? db.select({ count: sql<number>`count(*)::int` }).from(blogPosts)
-      : Promise.resolve([{ count: 0 }]),
-  ]);
-
-  const quickActions = [
-    { href: '/dashboard/ilanlar?status=submitted', label: copy.actionReviewListing, icon: Store },
-    { href: '/dashboard/blog/new', label: copy.actionWriteBlog, icon: PenSquare },
-    { href: '/dashboard/xeberler/rss', label: copy.actionCheckRss, icon: Newspaper },
-  ];
-
-  const stats = [
-    {
-      label: copy.totalMembers,
-      value: String(memberCount[0]?.count || 0),
-      note: dbAvailable
-        ? copy.totalMembersNote
-        : `${adminUsers.length} ${copy.totalMembersFallback}`,
-      tone: 'bg-slate-50 text-slate-700 border-slate-200',
-    },
-    {
-      label: copy.activeListings,
-      value: String(listingMetrics.active),
-      note: copy.activeListingsNote,
-      tone: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    },
-    {
-      label: copy.pendingListings,
-      value: String(listingMetrics.pending),
-      note: copy.pendingListingsNote,
-      tone: 'bg-amber-50 text-amber-700 border-amber-200',
-    },
-    {
-      label: copy.weeklyLeads,
-      value: String(listingMetrics.weeklyLeads),
-      note: copy.weeklyLeadsNote,
-      tone: 'bg-rose-50 text-rose-700 border-rose-200',
-    },
-    {
-      label: copy.blogPosts,
-      value: String(blogCount[0]?.count || 0),
-      note: copy.blogPostsNote,
-      tone: 'bg-blue-50 text-blue-700 border-blue-200',
-    },
-  ];
+  const locale = normalizeLocale(await getLocale());
+  const t = COPY[locale];
+  const o = await getDashboardOverview(30);
+  const fmt = (n: number) => formatNumber(n, locale);
+  const leadDelta = o.leads.total - o.leads.previous;
 
   return (
-    <div className="min-h-screen bg-[var(--dk-paper)] p-6 lg:p-8">
-      <div className="mx-auto max-w-7xl space-y-6">
-        <div className="relative overflow-hidden rounded-[28px] border border-[var(--dk-warm-border)] bg-white p-7 shadow-sm">
-          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[var(--dk-gold)] via-[var(--dk-red)] to-[var(--dk-gold)]" />
-          <span className="inline-flex items-center rounded-full border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/10 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--dk-gold)]">
-            {copy.badge}
+    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+      <div className="mx-auto flex max-w-[1320px] flex-col gap-6">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">
+              {t.title}
+            </h1>
+            <p className="mt-1 text-[15px] text-slate-600">{t.greeting(o.decisions.length)}</p>
+          </div>
+          <span className="rounded-full bg-white px-3 py-1.5 text-[13px] font-medium text-slate-600 shadow-sm">
+            {t.last30}
           </span>
-          <h1 className="mt-4 font-display text-4xl font-black text-[var(--dk-navy)]">
-            {copy.title}
-          </h1>
-          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">{copy.subtitle}</p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {stats.map((item) => (
-            <div
-              key={item.label}
-              className="rounded-3xl border border-[var(--dk-warm-border)] bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[var(--dk-gold)]/50 hover:shadow-md"
-            >
-              <div
-                className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-bold ${item.tone}`}
-              >
-                {item.label}
-              </div>
-              <div className="mt-4 text-4xl font-black text-[var(--dk-navy)]">{item.value}</div>
-              <p className="mt-2 text-sm text-slate-500">{item.note}</p>
+        {!o.dbAvailable && (
+          <p className="rounded-2xl bg-amber-50 px-4 py-3 text-[14px] text-amber-900">{t.noDb}</p>
+        )}
+
+        {/* Decisions first */}
+        <DashCard title={t.decisions} subtitle={t.decisionsSub} range={String(o.decisions.length)}>
+          {o.decisions.length === 0 ? (
+            <div className="mt-4 flex items-center gap-3 rounded-2xl bg-emerald-50 px-4 py-4 text-[15px] font-medium text-emerald-800">
+              <Check className="h-5 w-5" aria-hidden="true" /> {t.allClear}
             </div>
-          ))}
-        </div>
-
-        <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-          <div className="rounded-[28px] border border-[var(--dk-warm-border)] bg-white p-6 shadow-sm">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">
-                  {copy.recentActivity}
-                </h2>
-                <p className="mt-1 text-sm text-slate-500">{copy.recentActivitySub}</p>
-              </div>
-            </div>
-
-            <div className="mt-5 grid gap-4 lg:grid-cols-2">
-              <div className="rounded-3xl border border-slate-100 bg-slate-50/70 p-5">
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-600">
-                  {copy.last5Listings}
-                </h3>
-                <div className="mt-4 space-y-3">
-                  {listingMetrics.latestListings.map((item) => (
-                    <div
-                      key={item.id}
-                      className="rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:border-[var(--dk-gold)]/40 hover:shadow-sm"
-                    >
-                      <div className="text-sm font-bold text-[var(--dk-navy)]">{item.title}</div>
-                      <div className="mt-1 text-xs text-slate-500">
-                        {item.trackingCode} • {item.city}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-3xl border border-slate-100 bg-slate-50/70 p-5">
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-slate-600">
-                  {copy.last5Leads}
-                </h3>
-                <div className="mt-4 space-y-3">
-                  {listingMetrics.latestLeads.map((item, index) => (
-                    <div
-                      key={`${item.trackingCode}-${index}`}
-                      className="rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:border-[var(--dk-gold)]/40 hover:shadow-sm"
-                    >
-                      <div className="text-sm font-bold text-[var(--dk-navy)]">{item.name}</div>
-                      <div className="mt-1 text-xs text-slate-500">
-                        {item.trackingCode} • {item.phone}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="rounded-[28px] border border-[var(--dk-warm-border)] bg-white p-6 shadow-sm">
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">
-                {copy.quickActions}
-              </h2>
-              <div className="mt-5 space-y-3">
-                {quickActions.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm font-semibold text-slate-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] hover:shadow-sm"
-                    >
-                      <span className="flex items-center gap-3">
-                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--dk-red)]/10 text-[var(--dk-red)]">
-                          <Icon size={18} />
-                        </span>
-                        {item.label}
-                      </span>
-                      <ArrowRight size={16} className="text-slate-600" />
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="rounded-[28px] border border-[var(--dk-warm-border)] bg-white p-6 shadow-sm">
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">
-                {copy.recentBlog}
-              </h2>
-              <div className="mt-4 space-y-3">
-                {blogResult.posts.map((post) => (
+          ) : (
+            <ul className="m-0 mt-3 grid list-none grid-cols-1 gap-2 p-0 md:grid-cols-2">
+              {o.decisions.map((d) => (
+                <li key={d.id}>
                   <Link
-                    key={post.slug}
-                    href={`/dashboard/blog/${post.slug}`}
-                    className="block rounded-2xl border border-slate-200 bg-white p-4 transition-all duration-300 hover:border-[var(--dk-gold)] hover:shadow-sm"
+                    href={withLocale(locale, d.href)}
+                    className="group flex items-center gap-3 rounded-2xl border border-slate-100 px-4 py-3 transition-colors hover:bg-slate-50"
                   >
-                    <div className="text-sm font-bold text-[var(--dk-navy)]">{post.title}</div>
-                    <div className="mt-1 text-xs text-slate-500">{post.category}</div>
+                    <span
+                      className={`shrink-0 rounded-md px-2 py-1 text-[12px] font-semibold ${KIND_STYLE[d.kind]}`}
+                    >
+                      {t.kinds[d.kind]}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[15px] font-medium text-slate-900">
+                        {d.title}
+                      </span>
+                      <span className="block truncate text-[12px] text-slate-500">
+                        {d.kind === 'lead' ? t.sourceNames.franchise : d.note}
+                        {d.at ? ` · ${relTime(d.at, locale)}` : ''}
+                      </span>
+                    </span>
+                    <ArrowRight
+                      className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
                   </Link>
-                ))}
+                </li>
+              ))}
+            </ul>
+          )}
+        </DashCard>
+
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <DashCard
+            title={t.leads}
+            subtitle={t.leadsSub}
+            range={t.last30}
+            className="lg:col-span-2"
+          >
+            <BigNumber
+              value={fmt(o.leads.total)}
+              caption={`${t.leadsCaption} · ${t.vsPrev(o.leads.previous)}`}
+              delta={leadDelta === 0 ? undefined : `${leadDelta > 0 ? '+' : ''}${leadDelta}`}
+              deltaTone={leadDelta > 0 ? 'up' : 'down'}
+            />
+            <BarChart data={o.leads.series} locale={locale} color="#E11D48" label={t.leads} />
+          </DashCard>
+
+          <DashCard title={t.sources} subtitle={t.leads} range={t.last30}>
+            {o.leads.bySource.length === 0 ? (
+              <div className="mt-6 flex flex-col items-center gap-2 py-8 text-slate-500">
+                <Inbox className="h-8 w-8" aria-hidden="true" />
+                <span className="text-[14px]">0</span>
               </div>
-            </div>
-          </div>
+            ) : (
+              <RingChart
+                label={t.sources}
+                parts={o.leads.bySource.map((s) => ({
+                  label: t.sourceNames[s.source] ?? s.source,
+                  value: s.value,
+                  color: SOURCE_COLOR[s.source] ?? '#94A3B8',
+                }))}
+              />
+            )}
+          </DashCard>
         </div>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <DashCard title={t.users} subtitle={t.usersSub}>
+            <BigNumber value={fmt(o.users.total)} caption={t.usersCaption(o.users.newInPeriod)} />
+            <AreaChart data={o.users.series} locale={locale} label={t.users} cumulative />
+          </DashCard>
+
+          <DashCard title={t.news} subtitle={t.newsSub}>
+            <BigNumber value={fmt(o.news.published)} caption={t.newsCaption} />
+            <AreaChart data={o.news.series} locale={locale} color="#0A7AFF" label={t.news} />
+            <div className="mt-3 flex flex-wrap gap-2 text-[12px]">
+              <Link
+                href={withLocale(locale, '/dashboard/xeberler')}
+                className="rounded-full bg-blue-50 px-2.5 py-1 font-medium text-blue-800"
+              >
+                {t.newsAwaiting(o.news.awaiting)}
+              </Link>
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-slate-700">
+                {t.newsQueue(o.news.queue)}
+              </span>
+            </div>
+          </DashCard>
+
+          <DashCard title={t.listings} subtitle={`${t.listingsLive} · ${t.listingsPending}`}>
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <div className="rounded-2xl bg-[#F2F2F7] p-4">
+                <div className="text-[30px] font-semibold tabular-nums text-slate-900">
+                  {fmt(o.listings.live)}
+                </div>
+                <div className="text-[13px] text-slate-600">{t.listingsLive}</div>
+              </div>
+              <Link
+                href={withLocale(locale, '/dashboard/ilanlar')}
+                className="rounded-2xl bg-amber-50 p-4 transition-colors hover:bg-amber-100"
+              >
+                <div className="text-[30px] font-semibold tabular-nums text-amber-900">
+                  {fmt(o.listings.pending)}
+                </div>
+                <div className="text-[13px] text-amber-900">{t.listingsPending}</div>
+              </Link>
+            </div>
+          </DashCard>
+
+          <DashCard title={t.blog}>
+            <BigNumber value={fmt(o.blog.published)} caption={t.blogCaption} />
+          </DashCard>
+        </div>
+
+        <DashCard title={t.quick}>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {t.quickLinks.map((q) => (
+              <Link
+                key={q.href}
+                href={withLocale(locale, q.href)}
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-[#F2F2F7] px-4 text-[14px] font-medium text-slate-900 transition-colors hover:bg-slate-200"
+              >
+                {q.label} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            ))}
+          </div>
+        </DashCard>
       </div>
     </div>
   );
