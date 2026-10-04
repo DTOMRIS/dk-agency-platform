@@ -76,9 +76,9 @@ export default async function ContactTrackingPage({
 
   if (!db) {
     return (
-      <div className="min-h-screen bg-white p-6 lg:p-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-[32px] border border-slate-200 bg-white px-6 py-16 text-center shadow-sm">
+      <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="rounded-[22px] bg-white px-6 py-16 text-center shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
             <p className="text-sm font-bold text-slate-700">
               DB unavailable — DATABASE_URL mühit dəyişəni təyin edilməyib.
             </p>
@@ -127,24 +127,27 @@ export default async function ContactTrackingPage({
     kazan: countFor('kazan'),
   };
 
+  const cardCls =
+    'rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]';
+
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
-      <div className="mx-auto max-w-7xl space-y-6">
-        {/* Header card */}
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">
+    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+      <div className="mx-auto max-w-[1320px] space-y-6">
+        {/* Header */}
+        <div className="min-w-0">
+          <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">
             Əlaqə Kanalı İzləmə
           </h1>
-          <p className="mt-3 max-w-3xl text-sm text-slate-500">
+          <p className="mt-1 max-w-3xl text-[15px] leading-relaxed text-slate-600">
             Əlaqə səhifəsindəki WhatsApp, Telegram və KAZAN düymələrinə edilən kliklər — hansı
             səhifədən, hansı hazır mesajla və hansı hədəfə. Qeyd: klik mesajın{' '}
-            <strong>məzmununu deyil</strong>, niyyətini (bizim hazırladığımız mətn) göstərir —
+            <strong className="font-semibold text-slate-900">məzmununu deyil</strong>, niyyətini (bizim hazırladığımız mətn) göstərir —
             WhatsApp söhbətinin özü sayta gəlmir.
           </p>
         </div>
 
         {/* Summary cards */}
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {(
             [
               { label: '💬 WhatsApp', value: summary.whatsapp, channel: 'whatsapp' },
@@ -155,37 +158,29 @@ export default async function ContactTrackingPage({
             <Link
               key={channel}
               href={buildFilterHref(channel)}
-              className={`rounded-3xl border p-5 transition-colors ${
-                activeChannel === channel
-                  ? 'border-[var(--dk-red)] bg-red-50'
-                  : 'border-slate-200 bg-slate-50 hover:border-slate-300'
+              aria-current={activeChannel === channel ? 'true' : undefined}
+              className={`${cardCls} block p-5 transition-shadow hover:shadow-[0_1px_2px_rgba(0,0,0,0.06),0_12px_32px_rgba(0,0,0,0.08)] ${
+                activeChannel === channel ? 'ring-2 ring-[#0A5BD6]/40' : ''
               }`}
             >
-              <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">
-                {label}
-              </div>
-              <div className="mt-3 text-3xl font-black text-[var(--dk-navy)]">{value}</div>
-              <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
-                Ümumi klik
-              </div>
+              <p className="text-[14px] font-medium text-slate-600">{label}</p>
+              <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">{value}</p>
+              <p className="mt-2 text-[12px] text-slate-500">Ümumi klik</p>
             </Link>
           ))}
         </div>
 
         {/* Filter bar */}
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">
-            Kanal filtri
-          </div>
-          <div className="mt-3 flex flex-wrap gap-2">
+        <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+          <div className="inline-flex items-center gap-1 rounded-full bg-white p-1 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+            <span className="hidden px-3 text-[13px] font-semibold text-slate-900 sm:inline">Kanal filtri</span>
             {CHANNEL_OPTIONS.map((option) => (
               <Link
                 key={option}
                 href={buildFilterHref(option)}
-                className={`rounded-full px-4 py-2 text-sm font-bold ${
-                  activeChannel === option
-                    ? 'bg-[var(--dk-red)] text-white'
-                    : 'border border-slate-200 text-slate-700 hover:border-slate-300'
+                aria-current={activeChannel === option ? 'true' : undefined}
+                className={`inline-flex h-9 items-center whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors ${
+                  activeChannel === option ? 'bg-[#EEF4FF] text-slate-900' : 'text-slate-700 hover:bg-slate-50'
                 }`}
               >
                 {option === 'all'
@@ -201,78 +196,63 @@ export default async function ContactTrackingPage({
         </div>
 
         {/* Table */}
-        <div className="rounded-[32px] border border-slate-200 bg-white shadow-sm">
+        <div className={`${cardCls} overflow-hidden`}>
           {rows.length === 0 ? (
-            <div className="px-6 py-16 text-center text-sm text-slate-500">Nəticə tapılmadı.</div>
+            <div className="px-6 py-16 text-center text-sm text-slate-600">Nəticə tapılmadı.</div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full min-w-[900px] text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200">
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
-                      Kanal
-                    </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
-                      Dil
-                    </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
-                      Səhifə
-                    </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
-                      Hazır mesaj
-                    </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
-                      Hədəf
-                    </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
-                      Cihaz
-                    </th>
-                    <th className="px-5 py-4 text-left text-xs font-black uppercase tracking-[0.14em] text-slate-600">
-                      Tarix
-                    </th>
+                  <tr className="text-left text-[12px] uppercase tracking-wide text-slate-500">
+                    <th className="px-5 py-4 font-semibold">Kanal</th>
+                    <th className="px-5 py-4 font-semibold">Dil</th>
+                    <th className="px-5 py-4 font-semibold">Səhifə</th>
+                    <th className="px-5 py-4 font-semibold">Hazır mesaj</th>
+                    <th className="px-5 py-4 font-semibold">Hədəf</th>
+                    <th className="px-5 py-4 font-semibold">Cihaz</th>
+                    <th className="px-5 py-4 font-semibold">Tarix</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((row, idx) => (
-                    <tr
-                      key={row.id}
-                      className={`border-b border-slate-100 last:border-b-0 ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}
-                    >
+                  {rows.map((row) => (
+                    <tr key={row.id} className="border-t border-slate-100 transition-colors hover:bg-[#F9F9FB]">
                       <td className="px-5 py-3">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700">
+                        <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-slate-100 px-2.5 py-1 text-[12px] font-semibold text-slate-700">
                           {channelEmoji(row.channel)} {channelLabel(row.channel)}
                         </span>
                       </td>
-                      <td className="px-5 py-3 text-xs font-bold uppercase text-slate-700">
-                        {row.locale ?? '—'}
+                      <td className="px-5 py-3">
+                        <span className="inline-flex rounded-full bg-[#EEF4FF] px-2.5 py-1 text-[12px] font-semibold uppercase text-[#0A5BD6]">
+                          {row.locale ?? '—'}
+                        </span>
                       </td>
                       <td
-                        className="max-w-[220px] truncate px-5 py-3 text-xs text-slate-700"
+                        className="max-w-[220px] truncate px-5 py-3 text-[13px] text-slate-700"
                         title={row.sourceUrl ?? undefined}
                       >
                         {shortUrl(row.sourceUrl)}
                       </td>
                       <td
-                        className="max-w-[260px] truncate px-5 py-3 text-xs text-slate-700"
+                        className="max-w-[260px] truncate px-5 py-3 text-[13px] text-slate-800"
                         title={row.prefillText ?? undefined}
                       >
                         {row.prefillText ?? '—'}
                       </td>
                       <td
-                        className="max-w-[160px] truncate px-5 py-3 font-mono text-xs text-slate-600"
+                        className="max-w-[160px] truncate px-5 py-3 font-mono text-[12px] text-slate-600"
                         title={row.destinationPhone ?? undefined}
                       >
                         {row.destinationPhone ?? '—'}
                       </td>
                       <td
-                        className="px-5 py-3 text-xs text-slate-600"
+                        className="px-5 py-3 text-[13px] text-slate-600"
                         title={row.userAgent ?? undefined}
                       >
                         {deviceLabel(row.userAgent)}
                       </td>
-                      <td className="px-5 py-3 text-xs text-slate-700">
+                      <td className="whitespace-nowrap px-5 py-3 text-[13px] text-slate-700 tabular-nums">
                         {row.createdAt.toLocaleDateString('az-AZ')}{' '}
-                        <span className="text-slate-600">
+                        <span className="text-slate-500">
                           {row.createdAt.toLocaleTimeString('az-AZ')}
                         </span>
                       </td>
@@ -284,7 +264,7 @@ export default async function ContactTrackingPage({
           )}
         </div>
 
-        <p className="px-1 text-xs text-slate-600">
+        <p className="px-1 text-[12px] text-slate-600">
           Cədvəldə son {ROW_LIMIT} giriş göstərilir · Yuxarıdakı sayğaclar bütün qeydlər üzrədir ·
           Ən yeni əvvəldə
         </p>
