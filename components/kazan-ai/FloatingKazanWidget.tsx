@@ -316,7 +316,7 @@ export default function FloatingKazanWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 right-3 z-[70] sm:bottom-8 sm:right-8">
+    <div className="fixed bottom-[5.5rem] right-3 z-[70] sm:right-6 lg:bottom-8 lg:right-8">
       <AnimatePresence>
         {open ? (
           <motion.section
@@ -325,7 +325,7 @@ export default function FloatingKazanWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.2 }}
-            className="mb-3 flex h-[min(680px,calc(100dvh-96px))] w-[calc(100vw-20px)] max-w-[460px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:mb-4 sm:h-[min(720px,calc(100dvh-110px))] sm:w-[calc(100vw-32px)]"
+            className="mb-3 flex h-[min(680px,calc(100dvh-180px))] w-[calc(100vw-20px)] max-w-[460px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:mb-4 sm:h-[min(720px,calc(100dvh-190px))] lg:h-[min(720px,calc(100dvh-110px))] sm:w-[calc(100vw-32px)]"
           >
             <div className="flex items-center justify-between bg-[var(--dk-navy)] px-5 py-4 text-white">
               <div className="flex items-center gap-3">

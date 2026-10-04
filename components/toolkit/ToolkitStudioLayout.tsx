@@ -146,12 +146,12 @@ export default function ToolkitStudioLayout({
       </div>
 
       <div className="relative z-10 mx-auto -mt-8 max-w-7xl px-6">
-        <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
-          <div className="rounded-2xl bg-white p-6 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+          <div className="min-w-0 overflow-x-auto rounded-2xl bg-white p-4 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80 sm:p-6">
             {inputSection}
           </div>
-          <aside className="lg:sticky lg:top-6 lg:self-start">
-            <div className="rounded-2xl bg-white p-6 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
+          <aside className="min-w-0 lg:sticky lg:top-6 lg:self-start">
+            <div className="overflow-x-auto rounded-2xl bg-white p-4 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80 sm:p-6">
               {showLiveBadge && <div className="mb-4"><LiveBadge /></div>}
               {resultSection}
               <AIInsightPanel insight={aiInsight} onRequest={onRequestInsight} />

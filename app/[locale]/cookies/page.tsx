@@ -2,15 +2,16 @@ import { normalizeLocale, isLocale } from '@/i18n/config';
 import LegalPageLayout from '@/components/legal/LegalPageLayout';
 import { notFound } from 'next/navigation';
 
-export const dynamic = 'force-static';
+// Not force-static: the root layout (header/footer) resolves the locale per request;
+// a build-time static render had no locale and shipped an AZ footer on /ru, /en, /tr (TASK-0471).
 
 interface PageProps {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale?: string }>;
 }
 
 export default async function CookiesPage({ params }: PageProps) {
   const { locale: rawLocale } = await params;
-  if (!isLocale(rawLocale)) notFound();
+  if (rawLocale !== undefined && !isLocale(rawLocale)) notFound(); // undefined = root mirror (az)
   const locale = normalizeLocale(rawLocale);
 
   return <LegalPageLayout locale={locale} document="cookie-policy" />;
