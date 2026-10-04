@@ -1,5 +1,18 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0472: fix(i18n+content): tərcümə olunmamış səhifələr, ictimai dev qeydləri, uydurma elanlar
+
+**Why:** TASK-0471 çapraz yoxlamasının tapıntıları; Doğan: "düzelt paşam bulduklarını".
+
+**What:**
+- **Otel/OTA/qonaq evi alətləri:** RU/EN/TR mesajları AZ-ın surəti idi (143 açar) və 21 bölmə yox idi → 277 × 3 sətir tərcümə (placeholder/brend yoxlamalı).
+- **`/uzvluk`:** ictimai səhifədə daxili dev qeydləri ("Supabase env", "Provider mode", inteqrasiya planı) → real üzvlük səhifəsi, 4 dil, yalnız həqiqi imkanlar (elan, müraciətlər, B2B panel); qiymət ödəniş hazır olana qədər yox. `/docs/member-env-checklist` ictimai səhifəsi silindi (məzmun `docs/`-dadır).
+- **Ana səhifə elan lövhəsi:** uydurma elanlar real kimi göstərilirdi → `/api/listings`-dən real elanlar; boşdursa dürüst boş vəziyyət + "Elan yerləşdir" (`/ilan-ver`).
+- **`/sedd-rozeti`, `ComingSoon` (`/terefdashlar`), e-poçt təsdiqi, e-poçt seçimləri, ana səhifə bloq kartları, xəbərlər "Reklam sahəsi", çıxış/ödəniş düymələri** → 4 dil. `ComingSoon` forması real bülleten API-sinə bağlandı. "Tərcif" → "seçim" (AZ yazı xətası), "approved" → "dərc olunmuş".
+- **Razılıq mətnləri:** yalnız Türkiyə qanunu KVKK-ya istinad edirdi → əsas Azərbaycan «Fərdi məlumatlar haqqında» Qanunu, Türkiyədən müraciət edənlər üçün həmçinin KVKK (Doğan qərarı); 4 dil, 4 forma.
+- **Marşrutlar:** `/news` (uydurma xəbər səhifəsi) → `/haberler`; `/ru|en|tr/xeberler`, `/…/auth/forgot-password` 404 → işləyir.
+
+**Doğrulama:** production build; RU/EN/TR çapraz skan — qalan AZ mətn yalnız rəsmi adlar (Milli Ulduz Təsnifatı, e-qaimə) və lokal mock-data (DB-siz); canlıda bloq tərcüməlidir. dk-validator aşağıda.
 ## 2026-10-04 — TASK-0471: fix(ui): footer, dil yönləndirməsi, hüquqi 404, mobil overflow
 
 **Why:** Doğan: "azericeyi rusça yapmışsın düzelt; footerlar yanlış durumda hepsine bak mobilde kontrol et çapraz bak herşeye".

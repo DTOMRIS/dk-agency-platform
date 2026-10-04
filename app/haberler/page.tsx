@@ -23,6 +23,7 @@ interface NewsCopy {
   title: string;
   subtitle: string;
   noArticles: string;
+  adSlot: string;
   featured: string;
   editorPick: string;
   noSource: string;
@@ -38,7 +39,8 @@ const newsCopy: Record<Locale, NewsCopy> = {
     badge: 'Sektor Nəbzi',
     title: 'Sektor Nəbzi',
     subtitle: 'HoReCa sektorundan seçilmiş xəbərlər.',
-    noArticles: 'Hələ approved xəbər yoxdur.',
+    noArticles: 'Hələ dərc olunmuş xəbər yoxdur.',
+    adSlot: 'Reklam sahəsi',
     featured: 'Önə çıxan',
     editorPick: 'Editor Pick',
     noSource: 'DK Agency',
@@ -63,6 +65,7 @@ const newsCopy: Record<Locale, NewsCopy> = {
     title: 'Sektör Nabzı',
     subtitle: 'HoReCa sektöründen seçilmiş haberler.',
     noArticles: 'Henüz onaylı haber yok.',
+    adSlot: 'Reklam alanı',
     featured: 'Öne çıkan',
     editorPick: 'Editör Seçimi',
     noSource: 'Kaynak yok',
@@ -87,6 +90,7 @@ const newsCopy: Record<Locale, NewsCopy> = {
     title: 'Sector Pulse',
     subtitle: 'Curated news from the HoReCa industry.',
     noArticles: 'No approved articles yet.',
+    adSlot: 'Advertising space',
     featured: 'Featured',
     editorPick: 'Editor Pick',
     noSource: 'No source',
@@ -111,6 +115,7 @@ const newsCopy: Record<Locale, NewsCopy> = {
     title: 'Пульс сектора',
     subtitle: 'Отобранные новости из индустрии HoReCa.',
     noArticles: 'Одобренных статей пока нет.',
+    adSlot: 'Рекламное место',
     featured: 'Избранное',
     editorPick: 'Выбор редактора',
     noSource: 'Источник не указан',
@@ -269,7 +274,7 @@ export default async function HaberlerPage({
 
         {/* Reklam slotu */}
         <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-6">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Reklam sahəsi</span>
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-600">{c.adSlot}</span>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { CheckCircle, Mail, Rss, Package, AlertCircle } from 'lucide-react';
 
 type Preferences = {
@@ -51,6 +52,7 @@ function Toggle({
 }
 
 export default function EmailPreferencesPage() {
+  const t = useTranslations('emailPrefs');
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const showSuccess = searchParams.get('success') === 'true';
@@ -68,14 +70,7 @@ export default function EmailPreferencesPage() {
       const data: unknown = await res.json();
 
       if (!res.ok) {
-        const message =
-          data !== null &&
-          typeof data === 'object' &&
-          'error' in data &&
-          typeof (data as Record<string, unknown>).error === 'string'
-            ? (data as Record<string, string>).error
-            : 'Tərciflər yüklənə bilmədi.';
-        setFetchState({ status: 'error', message });
+        setFetchState({ status: 'error', message: t('loadError') });
         return;
       }
 
@@ -91,9 +86,9 @@ export default function EmailPreferencesPage() {
         setFetchState({ status: 'ready', preferences: prefs });
       }
     } catch {
-      setFetchState({ status: 'error', message: 'Şəbəkə xətası. Yenidən cəhd edin.' });
+      setFetchState({ status: 'error', message: t('networkError') });
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     if (!token) return;
@@ -131,11 +126,10 @@ export default function EmailPreferencesPage() {
         <div className="max-w-md w-full text-center space-y-4">
           <AlertCircle className="mx-auto h-12 w-12 text-slate-400" aria-hidden="true" />
           <h1 className="text-2xl font-semibold text-[var(--dk-navy)] font-[Playfair_Display]">
-            Token lazımdır
+            {t('tokenTitle')}
           </h1>
           <p className="text-slate-700 text-sm leading-relaxed">
-            Bu səhifəyə daxil olmaq üçün keçərli bir abunəlik token-i tələb olunur. Zəhmət olmasa
-            e-poçtunuzdakı linki istifadə edin.
+            {t('tokenBody')}
           </p>
         </div>
       </main>
@@ -156,7 +150,7 @@ export default function EmailPreferencesPage() {
               aria-hidden="true"
             />
             <p className="text-sm font-medium text-green-800">
-              Abunəliyiniz uğurla yeniləndi.
+              {t('updated')}
             </p>
           </div>
         )}
@@ -171,7 +165,7 @@ export default function EmailPreferencesPage() {
               className="mt-0.5 h-5 w-5 flex-shrink-0 text-green-600"
               aria-hidden="true"
             />
-            <p className="text-sm font-medium text-green-800">Tərciflər yadda saxlanıldı.</p>
+            <p className="text-sm font-medium text-green-800">{t('saved')}</p>
           </div>
         )}
 
@@ -186,7 +180,7 @@ export default function EmailPreferencesPage() {
               aria-hidden="true"
             />
             <p className="text-sm font-medium text-red-800">
-              Saxlama zamanı xəta baş verdi. Yenidən cəhd edin.
+              {t('saveError')}
             </p>
           </div>
         )}
@@ -195,10 +189,10 @@ export default function EmailPreferencesPage() {
         <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8 space-y-6">
           <div>
             <h1 className="text-2xl font-semibold text-[var(--dk-navy)] font-[Playfair_Display] leading-tight">
-              E-poçt Tərciflərini İdarə Et
+              {t('title')}
             </h1>
             {fetchState.status === 'ready' && (
-              <p className="mt-1 text-sm text-slate-600">{fetchState.preferences.email}</p>
+              <p className="mt-1 text-sm text-slate-700">{fetchState.preferences.email}</p>
             )}
           </div>
 
@@ -225,7 +219,7 @@ export default function EmailPreferencesPage() {
           {/* Preference toggles */}
           {(fetchState.status === 'ready' || fetchState.status === 'idle') && (
             <fieldset className="space-y-4 border-0 p-0 m-0">
-              <legend className="sr-only">E-poçt abunəlikləri</legend>
+              <legend className="sr-only">{t('legend')}</legend>
 
               {/* Newsletter */}
               <div className="flex items-center justify-between gap-4 rounded-lg border border-slate-200 px-4 py-3">
@@ -239,10 +233,10 @@ export default function EmailPreferencesPage() {
                       htmlFor="toggle-newsletter"
                       className="block text-sm font-medium text-slate-900 cursor-pointer"
                     >
-                      Bülletin
+                      {t('newsletter')}
                     </label>
                     <p className="text-xs text-slate-700 mt-0.5">
-                      Həftəlik sənaye xəbərləri və yenilikləri
+                      {t('newsletterDesc')}
                     </p>
                   </div>
                 </div>
@@ -265,10 +259,10 @@ export default function EmailPreferencesPage() {
                       htmlFor="toggle-blog-digest"
                       className="block text-sm font-medium text-slate-900 cursor-pointer"
                     >
-                      Bloq Xülasəsi
+                      {t('blogDigest')}
                     </label>
                     <p className="text-xs text-slate-700 mt-0.5">
-                      Yeni məqalələr haqqında bildirişlər
+                      {t('blogDigestDesc')}
                     </p>
                   </div>
                 </div>
@@ -291,10 +285,10 @@ export default function EmailPreferencesPage() {
                       htmlFor="toggle-product-updates"
                       className="block text-sm font-medium text-slate-900 cursor-pointer"
                     >
-                      Məhsul Yenilikləri
+                      {t('productUpdates')}
                     </label>
                     <p className="text-xs text-slate-700 mt-0.5">
-                      Platforma funksiya yenilikləri və elanlar
+                      {t('productUpdatesDesc')}
                     </p>
                   </div>
                 </div>
@@ -315,7 +309,7 @@ export default function EmailPreferencesPage() {
               disabled={saveState === 'saving'}
               className="w-full rounded-lg bg-[var(--dk-red)] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--dk-red-strong)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dk-red)] focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {saveState === 'saving' ? 'Saxlanılır...' : 'Tərciflərimi Saxla'}
+              {saveState === 'saving' ? t('saving') : t('save')}
             </button>
           )}
         </div>
@@ -326,7 +320,7 @@ export default function EmailPreferencesPage() {
             href={`/api/email/unsubscribe?token=${encodeURIComponent(token)}&type=all`}
             className="text-sm text-slate-600 underline underline-offset-2 hover:text-slate-900 transition-colors"
           >
-            Hamısından çıx
+            {t('unsubscribeAll')}
           </a>
         </div>
       </div>

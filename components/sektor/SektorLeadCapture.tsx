@@ -22,6 +22,7 @@ export default function SektorLeadCapture({
   sektorSlug,
 }: SektorLeadCaptureProps) {
   const t = useTranslations(namespace);
+  const tConsent = useTranslations('consent');
   const locale = useLocale();
   const [name, setName] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -123,7 +124,7 @@ export default function SektorLeadCapture({
                 className="mt-0.5 h-4 w-4 rounded border-white/20 bg-white/5"
               />
               <span>
-                Şəxsi məlumatlarımın emal edilməsinə razıyam (KVKK).
+                {tConsent('personalData')}
               </span>
             </label>
 
