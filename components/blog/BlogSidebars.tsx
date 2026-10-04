@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { FounderAvatar } from '@/components/ui/FounderAvatar';
 import { Copy, MessageCircle, Send, Linkedin, Check, ChevronRight, Mail, Star } from 'lucide-react';
 import { CATEGORY_CONFIG, type BlogArticle } from '@/lib/data/blogArticles';
 
@@ -83,11 +84,9 @@ export function ViewpointWidget({ quote }: { quote: string }) {
         {'\u201D'}
       </blockquote>
       <div className="mt-4 flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--dk-gold)] text-xs font-bold text-[var(--dk-night)]">
-          DT
-        </div>
+        <FounderAvatar size={32} className="h-8 w-8" />
         <div>
-          <p className="text-[12px] font-semibold text-[var(--dk-text)]">Dogan Tomris</p>
+          <p className="text-[12px] font-semibold text-[var(--dk-text)]">Doğan Tomris</p>
           <p className="text-[11px] text-[var(--dk-muted)]">DK Agency qurucusu</p>
         </div>
       </div>

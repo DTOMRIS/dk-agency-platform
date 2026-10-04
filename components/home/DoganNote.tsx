@@ -9,26 +9,19 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { BookOpen } from 'lucide-react';
+import { FounderAvatar } from '@/components/ui/FounderAvatar';
 import Link from 'next/link';
 
 export function DoganNote() {
   const t = useTranslations('home.doganNote');
 
   return (
-    <section
-      className="bg-white py-20"
-      aria-labelledby="dogan-note-title"
-    >
+    <section className="bg-white py-20" aria-labelledby="dogan-note-title">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-16 items-start">
-
           {/* Sol: Kurucu kimliyi */}
           <div className="flex flex-col items-center md:items-start gap-4">
-            {/* Avatar / İkon placeholder */}
-            <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-[#C5A022] bg-[#FFF8E7] shadow-md">
-              <BookOpen className="h-10 w-10 text-[#C5A022]" aria-hidden="true" />
-            </div>
+            <FounderAvatar size={128} className="h-32 w-32 border-4 border-[#C5A022] shadow-md" />
             <div className="text-center md:text-left">
               <p className="font-display text-lg font-bold text-[#1A1A2E]">Doğan Tomris</p>
               <p className="text-sm text-gray-500">{t('founderRole')}</p>

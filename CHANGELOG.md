@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [TASK-0419] feat(ui): founder photo replaces avatar placeholders - 2026-10-04
+
+### Added
+- Added `FounderAvatar` shared component and optimized founder photos under `public/images/founder/` (256px avatar, 800px portrait).
+
+### Changed
+- Replaced the book-icon placeholder in the `/haqqimizda` founder note and the "DT" initials in Viewpoint cards (news, blog sidebar), the blog `DoganNote` signature and `GuruBox` (founder notes only) with the founder photo.
+
+### Fixed
+- `BlogSidebars` author name spelled "Dogan" → "Doğan".
+- `.claude/scripts/pre-commit-gate.sh` failed with a bash syntax error because of CRLF line endings; normalized back to LF.
+
 ## [TASK-0418] feat(ui): UX navigation restructuring, homepage streamlining & mobile bottom nav - 2026-06-28
 
 ### Added

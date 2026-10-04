@@ -4,6 +4,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { FounderAvatar } from '@/components/ui/FounderAvatar';
 import { Clock, TrendingUp, ChevronRight, Flame, Calendar, MapPin, Users, Ticket, Newspaper, BookOpen, PartyPopper, Star } from 'lucide-react';
 import type { BlogArticle } from '@/lib/data/blogArticles';
 
@@ -445,9 +446,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                     {"\u201C"}Restoran biznesi rəqəmlərlə idarə olunur, duyğularla yox{"\u201D"}
                   </blockquote>
                   <div className="mt-4 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] text-xs font-bold">
-                      DT
-                    </div>
+                    <FounderAvatar size={32} className="h-8 w-8" />
                     <div>
                       <p className="text-[12px] font-semibold text-[var(--dk-text)]">Doğan Tomris</p>
                       <p className="text-[11px] text-[var(--dk-muted)]">DK Agency qurucusu</p>

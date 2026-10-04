@@ -1,6 +1,16 @@
 # DEVLOG — DK Agency Platform
 
 
+## 2026-10-04 — TASK-0419: feat(ui): founder photo replaces avatar placeholders
+
+**Why:** Doğan bəy real portret fotoşəkli göndərdi. Kurucu bölmələrində hələ də placeholder-lar var idi: `/haqqimizda` DoganNote-da kitab ikonu, Viewpoint kartlarında və blog imzalarında "DT" baş hərfləri.
+
+**What:** Yeni ortaq `components/ui/FounderAvatar.tsx` (next/image, dairəvi). Foto `public/images/founder/` altına optimallaşdırılıb qoyuldu: 256×256 üz kəsimi (19 KB) + 800px portret (101 KB). Dəyişən yerlər: `home/DoganNote` (128px, qızılı çərçivə), `news/SektorNabziTabs` və `blog/BlogSidebars` Viewpoint kartı, `blog/DoganNote` imzası, `ui/GuruBox` (Doğan notları foto; xarici ekspert baş hərfləri saxlanıldı). BlogSidebars-da "Dogan" → "Doğan".
+
+**Yan iş:** Working tree-də 390 fayl yalnız CRLF fərqi ilə "modified" görünürdü və `pre-commit-gate.sh` CRLF səbəbindən bash-da sintaksis xətası verirdi. Hamısı LF-ə qaytarıldı (HEAD ilə birebir eyni, məzmun dəyişməyib). `package-lock.json`-dakı əvvəlki iki kiçik dəyişiklik bu PR-a daxil edildi.
+
+**Doğrulama:** `npm run dk:validate` 8/8 PASS. Playwright: `/haqqimizda` 1280px və 390px-də foto yüklənir (naturalWidth > 0). Route-lar 200.
+
 ## 2026-06-19 — TASK-0413: fix(toolkit): WCAG contrast sweep
 
 **Why:** "diğer toolkitlere de bak" denetiminin 2. kümesi — kontrast. Açık zeminde `text-slate-400/300` (≈2.9/1.6:1) AA-dan keçmir (CLAUDE.md release-blocking).

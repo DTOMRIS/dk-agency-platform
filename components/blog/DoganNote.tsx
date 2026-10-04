@@ -3,6 +3,7 @@
 // Gold + Navy premium dizayn
 
 import React from 'react';
+import { FounderAvatar } from '@/components/ui/FounderAvatar';
 
 interface DoganNoteProps {
   children: React.ReactNode;
@@ -42,9 +43,7 @@ export default function DoganNote({ children, variant = 'default', variantLabel 
 
         {/* İmza */}
         <div className="flex items-center gap-2 mt-4">
-          <div className="w-7 h-7 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] text-[11px] font-bold">
-            DT
-          </div>
+          <FounderAvatar size={28} className="h-7 w-7" />
           <span className="text-[13px] text-[var(--dk-muted)]">— Doğan Tomris</span>
         </div>
       </div>
