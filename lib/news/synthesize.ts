@@ -151,6 +151,9 @@ export async function synthesizeFetchedNews(limit = 15): Promise<SynthesizeResul
           model: AI_MODELS.deepseek.chat,
           temperature: 0.3,
           max_tokens: 2500, // TASK-0482: 1200 truncated AZ analyses mid-JSON → [parse] errors
+          // TASK-0488: v4-flash "thinking" ate the whole budget (5/8 measured: reasoning 1600-2500
+          // tokens, finish_reason=length → empty/cut JSON). Off: 8/8 valid, ~3x fewer tokens.
+          thinking: { type: 'disabled' },
           response_format: { type: 'json_object' },
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },

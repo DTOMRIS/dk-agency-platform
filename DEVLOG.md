@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0488: fix(news): sintez JSON xətaları
+
+**Why:** Hər işləmədə 3 xəbər `[parse] Invalid JSON` ilə düşürdü.
+
+**What:** Ölçüldü (8 gözləyən xəbər, DB-yə yazmadan): 5/8 `finish_reason=length`, reasoning 1600–2500 token → cavab boş və ya yarımçıq JSON. `thinking: { type: 'disabled' }` ilə 8/8 etibarlı, completion ~750–870 token; analiz keyfiyyəti yoxlandı. `reasoning_effort: low` kifayət etmədi (3/8 yenə kəsildi).
+
 ## 2026-10-04 — TASK-0484: fix(dashboard): qərar növbəsi + blog səhifəsi
 
 **Why:** Canlı panel ekranlarında "Qərar gözləyir" 44-190 günlük zibil xəbər/elanlar, admin-in öz profili və `**markdown**` ilə dolu idi; blog səhifəsi köhnə üslubda qalmışdı.

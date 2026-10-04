@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0488` fix(news): DeepSeek xəbər sintezində "[parse] Invalid JSON" xətaları — `deepseek-v4-flash` düşünmə (reasoning) token-ları bütün limiti yeyirdi; düşünmə söndürüldü: 8/8 etibarlı JSON, ~3 dəfə az token.
+
 - `TASK-0484` fix(dashboard): "Qərar gözləyir" yalnız son 14 günü göstərir (köhnə zibil və admin-in öz profili çıxdı, markdown təmizləndi); blog idarə səhifəsi yeni üslubda.
 
 - `TASK-0483` feat(dashboard): OCAQ v2 — təmiz, açıq panel: "Qərar gözləyir" önə, real qrafiklər (müraciətlər, mənbələr, istifadəçilər, xəbərlər); istifadəçilər səhifəsi yeni dizaynda; dil menyusu artıq menyu və məzmunu eyni dildə göstərir.
