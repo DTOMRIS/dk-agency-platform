@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0483` feat(dashboard): OCAQ v2 — təmiz, açıq panel: "Qərar gözləyir" önə, real qrafiklər (müraciətlər, mənbələr, istifadəçilər, xəbərlər); istifadəçilər səhifəsi yeni dizaynda; dil menyusu artıq menyu və məzmunu eyni dildə göstərir.
+
 - `TASK-0482` fix(news): DeepSeek dünya HoReCa/AI xəbərlərini artıq rədd etmir (aydın uyğunluq meyarı); hər analizə "Bu həftə 1 addım" bölməsi; cavab kəsilməsi və JSON xətaları düzəldi.
 
 - `TASK-0481` fix(news): RSS addımı bitəndən sonra asılı qalıb xəbər axınını ləğv etdirirdi — düzəldi (açıq çıxış, job limiti 20 dəq).

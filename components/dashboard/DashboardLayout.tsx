@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const t = useTranslations('dashboardSidebar');
 
   return (
-    <div className="dashboard-scope min-h-screen bg-[var(--dk-paper)]">
+    <div className="dashboard-scope min-h-screen bg-[#F2F2F7]">
       <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="fixed left-0 right-0 top-0 z-30 flex h-16 items-center justify-between border-b border-[var(--dk-warm-border)] bg-white/95 backdrop-blur-md px-4 lg:hidden">
@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="text-xs font-semibold text-slate-500">{t('role')}</div>
       </div>
 
-      <div className="min-h-screen bg-[var(--dk-paper)] pt-16 pb-20 lg:ml-72 lg:pt-0 lg:pb-0">
+      <div className="min-h-screen bg-[#F2F2F7] pt-16 pb-20 lg:ml-72 lg:pt-0 lg:pb-0">
         <DashboardTopBar />
         <main>{children}</main>
       </div>

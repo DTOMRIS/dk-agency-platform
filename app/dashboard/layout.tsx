@@ -1,9 +1,9 @@
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import DashboardShell from '@/components/dashboard/DashboardLayout';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
-import { isLocale, defaultLocale } from '@/i18n/config';
+import { normalizeLocale } from '@/i18n/config';
+import { getLocale } from 'next-intl/server';
 
 export default async function DashboardLayout({
   children,
@@ -22,10 +22,10 @@ export default async function DashboardLayout({
     redirect('/b2b-panel');
   }
 
-  // Resolve locale from NEXT_LOCALE cookie (set by next-intl middleware/language switcher)
-  const cookieStore = await cookies();
-  const cookieLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = isLocale(cookieLocale) ? cookieLocale : defaultLocale;
+  // TASK-0483: locale comes from the URL (/ru/dashboard …), the same source server pages use via
+  // getLocale(). It used to come from the NEXT_LOCALE cookie, so after switching language the
+  // menu/top bar changed but page content stayed AZ (mixed-language panel).
+  const locale = normalizeLocale(await getLocale());
   const messages = (await import(`@/messages/${locale}.json`)).default;
 
   return (

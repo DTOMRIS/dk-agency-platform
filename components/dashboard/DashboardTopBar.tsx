@@ -16,15 +16,6 @@ import {
 } from '@/i18n/config';
 import { clearMemberSession, getGuestSession, readMemberSession, type MemberSession } from '@/lib/member-access';
 
-function getPageTitle(pathname: string) {
-  const path = stripLocalePrefix(pathname);
-  const segment = path.split('/').filter(Boolean).at(-1) ?? 'dashboard';
-  return segment
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
-}
-
 function getInitials(session: MemberSession) {
   const source = session.name.trim() || session.email.trim();
   if (!source) return 'DK';
@@ -43,12 +34,17 @@ function setLocaleCookie(locale: string) {
 
 function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
   const pathname = usePathname();
-  const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/b2b-panel');
+  const bare = stripLocalePrefix(pathname);
+  const isDashboard = bare.startsWith('/dashboard') || bare.startsWith('/b2b-panel');
 
+  const router = useRouter();
   const handleSwitch = (locale: Locale) => {
     if (isDashboard) {
+      // TASK-0483: go to the locale-prefixed URL (/ru/dashboard …) — layout and pages both read the
+      // locale from it. A cookie + reload kept the unprefixed URL, so page content stayed AZ.
       setLocaleCookie(locale);
-      window.location.reload();
+      router.push(switchLocalePath(pathname, locale));
+      router.refresh();
     }
   };
 
@@ -132,11 +128,8 @@ export function DashboardTopBar() {
   };
 
   return (
-    <div className="sticky top-0 z-20 hidden h-16 items-center justify-between border-b border-[var(--dk-warm-border)] bg-white/95 backdrop-blur-md px-6 lg:flex">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-600">OCAQ</p>
-        <h2 className="text-base font-bold text-gray-950">{getPageTitle(pathname)}</h2>
-      </div>
+    <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-black/5 bg-white/80 px-6 backdrop-blur-xl lg:flex">
+      <p className="text-[15px] font-semibold tracking-tight text-slate-900">OCAQ</p>
 
       <div className="flex items-center gap-3">
         <button
