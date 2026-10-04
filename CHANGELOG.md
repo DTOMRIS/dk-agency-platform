@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0470` chore(githooks): `githooks/*` faylları icra icazəli (`100755`) — pre-commit / commit-msg / pre-push artıq hər klon və worktree-də işləyir.
+
 - `TASK-0469` feat(home): ana səhifənin yeni hero-su — "Siz kimsiniz?" seqment seçimi, çap olunan nümunə çek, canlı food cost hesablayıcısı (itki manatla) və seqmentə görə 3 başlanğıc aləti; 4 dil, mobil, `prefers-reduced-motion`.
 
 - `TASK-0468` fix(i18n): `/haqqimizda` kurucu bölməsinin AZ başlığı "Quranımızdan" → "Qurucumuzdan" düzəldildi.
