@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0478` feat(news): xəbər kapsamı — kriket/OPEC/kripto/əmlak kimi mövzu xaricləri süzülür, AI və HoReCa texnologiya xəbərləri axtarılır və "Texnologiya"ya düşür, rus dili əlavə olundu; yeni xəbər ünvanlarında AZ/TR hərfləri itmir; xəbər schema-sında müəllif DK Agency.
+
 - `TASK-0476` fix(news): DeepSeek xəbər sintezi ilişib qalırdı — zəif siqnallar artıq "unpublishable" işarələnir (hər run-da təkrarlanmır), `seo_description` 160 simvolu aşmır, təzə xəbərlər əvvəl emal olunur.
 
 - `TASK-0475` feat(seo): şirkət (Organization + ProfessionalService: hüquqi ad, VÖEN, 2010, ünvan, e-poçt, iş saatları) və qurucu (Person) schema-sı; /haqqimizda AboutPage JSON-LD 4 dildə; "10+ il" → "40 il"; llms.txt-ə "Faktlar" bölməsi.

@@ -12,6 +12,7 @@ import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
 import { AI_MODELS } from '@/lib/ai-models';
 import { sendNewsForApproval } from '@/lib/telegram/news-approval';
+import { slugifyAz } from '@/lib/utils/slugify-az';
 
 /** Words that must never appear in DK output */
 const FORBIDDEN_TERMS = [
@@ -202,6 +203,8 @@ export async function synthesizeFetchedNews(limit = 10): Promise<SynthesizeResul
         .update(newsArticles)
         .set({
           titleAz: parsed.title_az,
+          // TASK-0478: public URL from the AZ headline (not the foreign source title) + id = unique.
+          slug: `${slugifyAz(parsed.title_az).slice(0, 80) || 'xeber'}-${article.id}`,
           contentAz: parsed.body_az,
           summaryAz: extractSummary(parsed.body_az, parsed.title_az),
           origin: 'synthesized',
