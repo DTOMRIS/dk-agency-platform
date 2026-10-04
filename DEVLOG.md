@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0482: fix(news): sintez uyğunluq meyarı + format
+
+**Why:** RSS axını işləyəndən sonra DeepSeek 15 xəbərdən heç birini yazmadı: 9-u "uyğun deyil" (dünya xəbərlərini AZ üçün əlaqəsiz saydı — meyar yox idi), 6-sı JSON kəsilməsi.
+
+**What:** Prompt-a aydın UYĞUNLUQ meyarı (dünya HoReCa/AI xəbərləri uyğundur, əgər AZ sahibkarına dərs çıxırsa; yalnız qeyri-HoReCa mövzular rədd), yeni "### Bu həftə 1 addım" bölməsi, vendor rəqəmləri üçün "şirkətin açıqlamasına görə". `max_tokens` 1200 → 2500; JSON `{…}` hissəsi çıxarılıb ayrışdırılır.
+
 ## 2026-10-04 — TASK-0481: fix(news): RSS addımının asılı qalması
 
 **Why:** İlk real run-da (37214292815) RSS addımı 30 xəbəri daxil edib nəticəni çap etdi, amma proses çıxmadı → job 10 dəq limitində ləğv olundu, sintez atlandı.

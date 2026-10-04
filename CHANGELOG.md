@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0482` fix(news): DeepSeek dünya HoReCa/AI xəbərlərini artıq rədd etmir (aydın uyğunluq meyarı); hər analizə "Bu həftə 1 addım" bölməsi; cavab kəsilməsi və JSON xətaları düzəldi.
+
 - `TASK-0481` fix(news): RSS addımı bitəndən sonra asılı qalıb xəbər axınını ləğv etdirirdi — düzəldi (açıq çıxış, job limiti 20 dəq).
 
 - `TASK-0480` feat(news): 25 yoxlanmış ticarət və regional RSS mənbəyi (Skift AI, Restaurant/Hotel Dive, Hospitality Net, Restaurant/Hotel Technology News, Turizm Güncel, Report.az, Trend…) xəbər axınına qoşuldu — eyni filtr, DeepSeek analizi və Telegram təsdiqi; köhnə JSON botunun gündəlik cədvəli söndürüldü.

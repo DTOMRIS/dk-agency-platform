@@ -51,15 +51,22 @@ Praktik dərs çıxar.
 ### Risk
 Risk və ya diqqət ediləcək məqamları qeyd et (yoxdursa bu bölməni yaz: "Bu məqamda ciddi risk görünmür.").
 
+### Bu həftə 1 addım
+Azərbaycandakı restoran, kafe, otel və ya qonaq evi sahibinin bu həftə edə biləcəyi 1 konkret, ölçülə bilən, pulsuz və ya ucuz addım (1-2 cümlə).
+
 ### DK baxışı
 1 kəskin cümlə ilə bitir.
 
 QAYDA:
 - Azərbaycan dilində yaz (AZ).
-- Cəmi 150-300 söz. Axıcı, jurnalist üslubunda.
+- Cəmi 180-320 söz. Axıcı, jurnalist üslubunda.
 - Bölmə başlıqları YALNIZ ### istifadə et (## və # QADAĞAN).
 - **Bold** yalnız şirkət/brend adları üçün istifadə et.
-- Zəif/irrelevant siqnal olsa publishable:false qaytar.
+- Rəqəm şirkətin öz iddiasıdırsa (press-reliz, vendor), bunu açıq yaz: "şirkətin açıqlamasına görə".
+
+UYĞUNLUQ (publishable):
+- publishable:true — restoran, kafe, otel, qonaq evi, catering, françayz, turizm biznesi və ya onların texnologiyası/AI-ı haqqında xəbər. DÜNYA xəbərləri də uyğundur (məs. McDonald's, Hilton, Skift, AI agentləri, dinamik qiymət), əgər Azərbaycan HoReCa sahibkarı üçün dərs çıxarmaq mümkündürsə.
+- publishable:false — yalnız bu hallarda: mövzu otelçilik/restoran biznesi deyil (idman, siyasət, kriminal, şou-biznes, ümumi iqtisadiyyat), ya da siqnalda yazmaq üçün fakt yoxdur. "reason" sahəsində qısa səbəb yaz.
 
 ÇIXIŞ JSON:
 {"title_az": "string", "body_az": "string (### headings + paragraphs)", "publishable": true/false, "reason": "string"}`;
@@ -143,7 +150,7 @@ export async function synthesizeFetchedNews(limit = 15): Promise<SynthesizeResul
         body: JSON.stringify({
           model: AI_MODELS.deepseek.chat,
           temperature: 0.3,
-          max_tokens: 1200,
+          max_tokens: 2500, // TASK-0482: 1200 truncated AZ analyses mid-JSON → [parse] errors
           response_format: { type: 'json_object' },
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },
@@ -163,7 +170,10 @@ export async function synthesizeFetchedNews(limit = 15): Promise<SynthesizeResul
 
       let parsed: SynthesisResult;
       try {
-        parsed = JSON.parse(raw) as SynthesisResult;
+        // TASK-0482: tolerate ```json fences / text around the object.
+        const start = raw.indexOf('{');
+        const end = raw.lastIndexOf('}');
+        parsed = JSON.parse(start >= 0 && end > start ? raw.slice(start, end + 1) : raw) as SynthesisResult;
       } catch {
         result.errors.push(`[parse] Invalid JSON for article #${article.id}`);
         continue;
