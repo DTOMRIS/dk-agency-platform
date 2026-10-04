@@ -7,6 +7,29 @@
 **What:** `publishable:false` (və ya nə başlıq, nə mətn) cavabı artıq title/body yoxlamasından ƏVVƏL "unpublishable" işarələnir — sətir növbədən çıxır. `seo_description` 160 simvolla kəsilir (`[unpublishable] ` + 150 = 166 idi → DB xətası → workflow fail). Növbə ən yenidən emal olunur.
 
 **Doğrulama:** tsc/lint təmiz; real sınaq merge-dən sonra workflow_dispatch.
+## 2026-10-04 — TASK-0475: feat(seo): şirkət + qurucu entity schema, 40 il, llms.txt faktlar
+
+**Why:** SEO/AI auditi: Organization schema-da yalnız ad/url/logo var idi, qurucu üçün Person yox idi, /haqqimizda-da JSON-LD yox idi; səhifədə "40 il" ilə "10+ il" ziddiyyəti AI sitatını bloklayırdı.
+
+**What:** Organization → `["Organization","ProfessionalService"]` + legalName, taxID, foundingDate 2010, email, address (Bakı), areaServed (AZ, TR), iş saatları, founder. Yeni `personNode` (Doğan Tomris, 40 il, foto, 4 dildə təsvir); bloq author → Person `@id`. `/haqqimizda` (4 dil) AboutPage JSON-LD (server layout). `home.doganNote.body3` "10+ il" → "40 il" (4 dil). llms.txt: "Faktlar" bölməsi; üzvlük təsviri düzəldi.
+
+**Qəsdən edilməyən:** `sameAs` — koddakı sosial linklər təxmin idi, `t.me/dkagency` başqasınındır. Telefon — /elaqe onu gizlədir.
+
+**Doğrulama:** production build; /haqqimizda və /ru/haqqimizda-da AboutPage + Organization + Person; ana səhifədə zəngin Organization; llms.txt faktlar. dk-validator aşağıda.
+## 2026-10-04 — TASK-0473: chore(ci): STATE snapshot PR axınına
+
+**Why:** Geriyə dönük skan: `state-snapshot.yml` hələ `main`-ə birbaşa push edirdi; `main-koruma` ruleset bunu bağlayır (TASK-0466-da RSS botu eyni səbəblə köçürülmüşdü) → bazar ertəsi ilk cron uğursuz olacaqdı.
+
+**What:** Snapshot `bot/state-*` branch-ə gedir və PR açılır (`NEWS_BOT_TOKEN`); `auto-merge-content.yml` yalnız `bot/state-*` branch-i və yalnız `docs/STATE.md` dəyişən PR-ı avtomatik merge edir. İnsan PR-larında `docs/STATE.md` qadağası qalır.
+
+**Doğrulama:** hər iki workflow YAML kimi parse olunur; real sınaq: Actions → State Snapshot → Run workflow.
+## 2026-10-04 — TASK-0477: feat(news): Telegram ilə xəbər təsdiqi
+
+**Why:** Doğan: "telegrama bana onay gelsin, oradan okey vereyim paylaşsın" — paneldə təsdiq darboğazı idi.
+
+**What:** DeepSeek xəbəri yazan kimi Doğan-ın Telegram chat-ına başlıq, AZ analizin önizləməsi, mənbə və ✅ Yayınla / ❌ Rədd et / ✏️ Paneldə aç düymələri gedir. Webhook (`/api/telegram/webhook`) bot token-dən törədilən secret və chat ID-ni yoxlayır, xəbəri yayınlayır (panel ilə eyni yol: RU/EN/TR tərcümə + alət uyğunlaşdırma) və ya rədd edir, düymələri "🔗 Saytda bax" ilə əvəzləyir. Təsdiq məntiqi `lib/news/approve.ts`-də birləşdi (admin API də onu işlədir). Admin `/api/telegram/setup` webhook-u qeydiyyatdan keçirir, `?pending=N` gözləyən xəbərləri göndərir.
+
+**Doğrulama:** production build + fake token ilə təhlükəsizlik testləri (401/401/ignore/ignore/403). Real axın Doğan-ın secret-ləri ilə yoxlanacaq.
 
 ## 2026-10-04 — TASK-0474: fix(seo): kritik SEO xətaları
 
