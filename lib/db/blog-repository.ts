@@ -102,6 +102,11 @@ function mapDbArticle(
   const title = localizedField(r, 'title', locale) || row.title_az;
   const summary = localizedField(r, 'summary', locale) || excerpt(row.content_az, 220);
   const content = localizedField(r, 'content', locale) || row.content_az;
+  // seo_title / seo_description columns are AZ-only: on other locales they would override the
+  // translated title/summary in <title>, meta description and JSON-LD (TASK-0474).
+  const isAz = !locale || locale === 'az';
+  const seoTitle = (isAz && row.seoTitle) || title;
+  const seoDescription = (isAz && row.seoDescription) || summary || '';
 
   return {
     id: String(row.id),
@@ -119,7 +124,7 @@ function mapDbArticle(
     updatedAt:
       row.updatedAt?.toISOString() || row.createdAt?.toISOString() || new Date().toISOString(),
     tags: [],
-    metaDescription: row.seoDescription || summary || excerpt(content, 160),
+    metaDescription: seoDescription || excerpt(content, 160),
     focusKeyword: '',
     summary,
     content,
@@ -127,8 +132,8 @@ function mapDbArticle(
     relatedArticles: [],
     coverImage: resolveLocalCover(row.slug, row.featuredImage),
     coverImageAlt: title,
-    seoTitle: row.seoTitle || title,
-    seoDescription: row.seoDescription || summary || '',
+    seoTitle,
+    seoDescription,
     doganNote:
       (locale !== 'az' ? (r[`doganNote_${locale}`] as string | undefined) : undefined) ||
       row.doganNote ||

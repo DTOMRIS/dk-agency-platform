@@ -4,6 +4,7 @@ import { defaultLocale, locales } from '@/i18n/config';
 import { VALID_SEKTOR_SLUGS } from '@/lib/data/sektorConfigs';
 import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import { getApprovedNewsArticles } from '@/lib/repositories/newsRepository';
+import { getListings } from '@/lib/db/listings-repository';
 
 const BASE_URL = 'https://dkagency.com.tr';
 
@@ -28,7 +29,7 @@ type Entry = MetadataRoute.Sitemap[number];
 /** Bir yolu AZ (prefiksiz) + diger diller ucun sitemap sətirlerine cevirir. */
 function entriesFor(
   path: string,
-  lastModified: Date,
+  lastModified: Date | undefined,
   changeFrequency: Entry['changeFrequency'],
   priority: number
 ): MetadataRoute.Sitemap {
@@ -45,6 +46,7 @@ function entriesFor(
 
 /** Toolkit aletleri — hamisi public ve indekslenmelidir. */
 const TOOLKIT_SLUGS = [
+  'addim-xerci',
   'aqta-checklist',
   'basabas',
   'branding-guide',
@@ -82,7 +84,6 @@ const STATIC_PATHS: Array<{
   { path: '/', changeFrequency: 'daily', priority: 1 },
   { path: '/blog', changeFrequency: 'daily', priority: 0.9 },
   { path: '/haberler', changeFrequency: 'daily', priority: 0.9 },
-  { path: '/xeberler', changeFrequency: 'daily', priority: 0.9 },
   { path: '/toolkit', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/franchise', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/sektor', changeFrequency: 'weekly', priority: 0.8 },
@@ -94,32 +95,39 @@ const STATIC_PATHS: Array<{
   { path: '/sedd-rozeti', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/ilan-ver', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/elaqe', changeFrequency: 'monthly', priority: 0.6 },
-  { path: '/b2b-panel', changeFrequency: 'weekly', priority: 0.6 },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
+  // TASK-0474: static/tool pages have no real modification date — `new Date()` on every request
+  // told crawlers "everything changed" and the signal was ignored. Omit lastmod for them.
   const staticEntries = STATIC_PATHS.flatMap(({ path, changeFrequency, priority }) =>
-    entriesFor(path, now, changeFrequency, priority)
+    entriesFor(path, undefined, changeFrequency, priority)
   );
 
   const toolkitEntries = TOOLKIT_SLUGS.flatMap((slug) =>
-    entriesFor(`/toolkit/${slug}`, now, 'monthly', 0.8)
+    entriesFor(`/toolkit/${slug}`, undefined, 'monthly', 0.8)
   );
 
   const franchiseEntries = FRANCHISE_SLUGS.flatMap((slug) =>
-    entriesFor(`/franchise/${slug}`, now, 'monthly', 0.8)
+    entriesFor(`/franchise/${slug}`, undefined, 'monthly', 0.8)
   );
 
   const sektorEntries = VALID_SEKTOR_SLUGS.flatMap((slug) =>
-    entriesFor(`/sektor/${slug}`, now, 'monthly', 0.75)
+    entriesFor(`/sektor/${slug}`, undefined, 'monthly', 0.75)
   );
 
-  const [blogResult, newsResult] = await Promise.all([
+  const [blogResult, newsResult, listingRows] = await Promise.all([
     getBlogPostsFromDb({ status: 'published', limit: 1000, offset: 0 }),
     getApprovedNewsArticles({ category: 'all', limit: 1000, offset: 0 }),
+    getListings({ status: 'showcase_ready' }).catch(() => []),
   ]);
+
+  // Approved (showcase) listing detail pages — previously missing from the sitemap.
+  const listingEntries = listingRows
+    .filter((item) => Boolean(item.slug))
+    .flatMap((item) => entriesFor(`/ilanlar/${item.slug}`, undefined, 'weekly', 0.6));
 
   const blogEntries = blogResult.posts.flatMap((post) =>
     entriesFor(
@@ -141,5 +149,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...sektorEntries,
     ...blogEntries,
     ...newsEntries,
+    ...listingEntries,
   ];
 }

@@ -142,7 +142,7 @@ export default async function BlogDetailPage({
 
   const cat = CATEGORY_CONFIG[article.category];
   const catLabel = t(CATEGORY_I18N_MAP[article.category] || 'catMaliyye');
-  const related = await getRelatedBlogPosts(slug, article.category, locale);
+  const related = await getRelatedBlogPosts(slug, article.category, normalizedLocale);
   const renderedContent = getProtectedArticleContent(
     article.content || '',
     session,
