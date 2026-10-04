@@ -3605,6 +3605,134 @@
         "name": "Integrity",
         "desc": "The ŞEDD mark we grant requires honesty as a condition — we gave our word, and we keep it."
       }
+    },
+    "receiptHero": {
+      "eyebrow": "HORECA · NUMBERS · SYSTEM",
+      "whoAreYou": "Who are you?",
+      "ctaJoin": "Join for free",
+      "ctaCalc": "Enter my numbers",
+      "receiptTitle": "SAMPLE RECEIPT · MONTH",
+      "receiptBrand": "DK AGENCY",
+      "receiptLeft": "LEFT OVER",
+      "lines": {
+        "sales": "Sales",
+        "cost": "Ingredients",
+        "staff": "Staff (24%)",
+        "rent": "Rent (10%)",
+        "util": "Utilities (4%)",
+        "comm": "Commission (6%)"
+      },
+      "calcEyebrow": "YOUR NUMBERS · 30 SECONDS",
+      "salesLabel": "Monthly sales, ₼",
+      "costLabel": "Monthly ingredient purchases, ₼",
+      "verdictLoss": "Above target: ≈ {amount} ₼ lost per month. Look first at portions and waste.",
+      "verdictOk": "You're within range. Next step: staff and commissions.",
+      "target": "Target: 28–32%.",
+      "saveReport": "Save the report — join for free",
+      "start": "Start →",
+      "receiptAria": "Sample monthly receipt: costs are subtracted from sales and the remainder is shown",
+      "segments": {
+        "restoran": {
+          "label": "Restaurant",
+          "title": "Where did the money go this month?",
+          "sub": "Why so little is left from sales — food cost, staff, commissions. Enter your numbers and see the answer in manat.",
+          "toolsTitle": "Restaurant starter tools",
+          "tools": {
+            "t1": {
+              "name": "Food cost",
+              "desc": "Portion cost and selling price"
+            },
+            "t2": {
+              "name": "P&L simulator",
+              "desc": "Monthly income and expenses, net profit"
+            },
+            "t3": {
+              "name": "Wolt / Bolt commission",
+              "desc": "What delivery actually leaves you"
+            }
+          }
+        },
+        "kafe": {
+          "label": "Café",
+          "title": "What do you earn from one cup?",
+          "sub": "Coffee, milk, cup, staff hours — the true cost of a cup.",
+          "toolsTitle": "Café starter tools",
+          "tools": {
+            "t1": {
+              "name": "Food cost",
+              "desc": "Cost of a cup and a dessert"
+            },
+            "t2": {
+              "name": "Menu matrix",
+              "desc": "Which items carry your sales"
+            },
+            "t3": {
+              "name": "Staff planner",
+              "desc": "Headcount hour by hour"
+            }
+          }
+        },
+        "otel": {
+          "label": "Hotel / guest house",
+          "title": "What does an empty room cost you?",
+          "sub": "Occupancy, OTA commission, season — the numbers behind the nightly rate.",
+          "toolsTitle": "Hotel starter tools",
+          "tools": {
+            "t1": {
+              "name": "OTA readiness test",
+              "desc": "Is your Booking / Airbnb profile ready"
+            },
+            "t2": {
+              "name": "Star rating readiness test",
+              "desc": "Category requirements"
+            },
+            "t3": {
+              "name": "Guest house ROI",
+              "desc": "How many years until it pays back"
+            }
+          }
+        },
+        "franchise": {
+          "label": "Franchise",
+          "title": "Will this franchise pay for itself?",
+          "sub": "Royalties, entry fee, turnover — run the numbers before you sign.",
+          "toolsTitle": "Franchise starter tools",
+          "tools": {
+            "t1": {
+              "name": "Readiness test",
+              "desc": "Are you ready to buy a franchise"
+            },
+            "t2": {
+              "name": "Franchise ROI",
+              "desc": "Payback period"
+            },
+            "t3": {
+              "name": "Franchise book",
+              "desc": "Your own franchise manual"
+            }
+          }
+        },
+        "acilis": {
+          "label": "I'm opening a venue",
+          "title": "How much do you need to open?",
+          "sub": "Fit-out, equipment, working capital for the first 6 months — before you open the doors.",
+          "toolsTitle": "Opening starter tools",
+          "tools": {
+            "t1": {
+              "name": "Break-even point",
+              "desc": "How many guests you need per day"
+            },
+            "t2": {
+              "name": "Construction checklist",
+              "desc": "Premises, fit-out, equipment"
+            },
+            "t3": {
+              "name": "AQTA readiness",
+              "desc": "Hygiene and documents"
+            }
+          }
+        }
+      }
     }
   },
   "dashboardAuditor": {

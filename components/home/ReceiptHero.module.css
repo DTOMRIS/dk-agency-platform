@@ -1,0 +1,100 @@
+/* TASK-0469 — ReceiptHero motion. All motion is disabled under prefers-reduced-motion. */
+
+@keyframes dkPrint {
+  from {
+    transform: translateY(-104%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes dkLine {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dkPop {
+  0% {
+    transform: scale(0.97);
+    opacity: 0.35;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes dkRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.paper {
+  animation: dkPrint 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* torn bottom edge */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 10px),
+    96% 100%,
+    92% calc(100% - 10px),
+    88% 100%,
+    84% calc(100% - 10px),
+    80% 100%,
+    76% calc(100% - 10px),
+    72% 100%,
+    68% calc(100% - 10px),
+    64% 100%,
+    60% calc(100% - 10px),
+    56% 100%,
+    52% calc(100% - 10px),
+    48% 100%,
+    44% calc(100% - 10px),
+    40% 100%,
+    36% calc(100% - 10px),
+    32% 100%,
+    28% calc(100% - 10px),
+    24% 100%,
+    20% calc(100% - 10px),
+    16% 100%,
+    12% calc(100% - 10px),
+    8% 100%,
+    4% calc(100% - 10px),
+    0 100%
+  );
+}
+
+.line {
+  animation: dkLine 0.4s ease both;
+}
+
+.pop {
+  animation: dkPop 0.35s ease both;
+}
+
+.rise {
+  animation: dkRise 0.6s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper,
+  .line,
+  .pop,
+  .rise {
+    animation: none !important;
+  }
+}

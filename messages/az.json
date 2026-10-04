@@ -3605,6 +3605,134 @@
         "name": "Doğruluq",
         "desc": "ŞEDD nişanı verdiklərimizdə dürüstlük şərtdir — söz verdik, sözümüzdə dayanırıq."
       }
+    },
+    "receiptHero": {
+      "eyebrow": "HORECA · RƏQƏM · SİSTEM",
+      "whoAreYou": "Siz kimsiniz?",
+      "ctaJoin": "Pulsuz üzv ol",
+      "ctaCalc": "Öz rəqəmimi yazım",
+      "receiptTitle": "NÜMUNƏ ÇEK · AY",
+      "receiptBrand": "DK AGENCY",
+      "receiptLeft": "QALAN",
+      "lines": {
+        "sales": "Satış",
+        "cost": "Məhsul",
+        "staff": "Kadr (24%)",
+        "rent": "İcarə (10%)",
+        "util": "Kommunal (4%)",
+        "comm": "Komissiya (6%)"
+      },
+      "calcEyebrow": "ÖZ RƏQƏMİNİZ · 30 SANİYƏ",
+      "salesLabel": "Aylıq satış, ₼",
+      "costLabel": "Aylıq məhsul alışı, ₼",
+      "verdictLoss": "Hədəfdən yuxarı: ayda ≈ {amount} ₼ itki. İlk baxılacaq yer: porsiya və fire.",
+      "verdictOk": "Normadasınız. Növbəti addım: kadr və komissiya.",
+      "target": "Hədəf: 28–32%.",
+      "saveReport": "Hesabatı saxla — pulsuz üzv ol",
+      "start": "Başla →",
+      "receiptAria": "Nümunə aylıq çek: satışdan xərclər çıxılır, qalan məbləğ göstərilir",
+      "segments": {
+        "restoran": {
+          "label": "Restoran",
+          "title": "Bu ay pul hara getdi?",
+          "sub": "Satışdan qalan pul niyə azdır — food cost, kadr, komissiya. Rəqəmi yazın, cavabı manatla görün.",
+          "toolsTitle": "Restoran üçün başlanğıc",
+          "tools": {
+            "t1": {
+              "name": "Food cost",
+              "desc": "Porsiya xərci və satış qiyməti"
+            },
+            "t2": {
+              "name": "P&L simulyatoru",
+              "desc": "Aylıq gəlir-xərc, xalis mənfəət"
+            },
+            "t3": {
+              "name": "Wolt / Bolt komissiyası",
+              "desc": "Çatdırılmada nə qalır"
+            }
+          }
+        },
+        "kafe": {
+          "label": "Kafe",
+          "title": "Bir fincandan nə qazanırsınız?",
+          "sub": "Qəhvə, süd, stəkan, işçi saatı — fincanın əsl maya dəyəri.",
+          "toolsTitle": "Kafe üçün başlanğıc",
+          "tools": {
+            "t1": {
+              "name": "Food cost",
+              "desc": "Fincan və desert maya dəyəri"
+            },
+            "t2": {
+              "name": "Menyu matrisi",
+              "desc": "Hansı məhsul satışı daşıyır"
+            },
+            "t3": {
+              "name": "Personel planlayıcı",
+              "desc": "Saat-saat işçi sayı"
+            }
+          }
+        },
+        "otel": {
+          "label": "Otel / qonaq evi",
+          "title": "Boş otaq nəyə başa gəlir?",
+          "sub": "Doluluq, OTA komissiyası, mövsüm — gecəlik qiymətin arxasındakı rəqəmlər.",
+          "toolsTitle": "Otel üçün başlanğıc",
+          "tools": {
+            "t1": {
+              "name": "OTA hazırlıq testi",
+              "desc": "Booking / Airbnb profiliniz hazırdırmı"
+            },
+            "t2": {
+              "name": "Ulduz hazırlıq testi",
+              "desc": "Kateqoriya tələbləri"
+            },
+            "t3": {
+              "name": "Qonaq evi ROI",
+              "desc": "Sərmayə neçə ilə qayıdır"
+            }
+          }
+        },
+        "franchise": {
+          "label": "Françayz",
+          "title": "Bu françayz özünü qaytarar?",
+          "sub": "Royalti, giriş haqqı, dövriyyə — imzadan əvvəl hesab.",
+          "toolsTitle": "Françayz üçün başlanğıc",
+          "tools": {
+            "t1": {
+              "name": "Hazırlıq testi",
+              "desc": "Siz françayzi almağa hazırsınızmı"
+            },
+            "t2": {
+              "name": "Françayz ROI",
+              "desc": "Geri dönüş müddəti"
+            },
+            "t3": {
+              "name": "Françbuk",
+              "desc": "Öz françayz kitabınız"
+            }
+          }
+        },
+        "acilis": {
+          "label": "Açılış edirəm",
+          "title": "Açılışa nə qədər lazımdır?",
+          "sub": "Təmir, avadanlıq, ilk 6 ayın dövriyyə kapitalı — qapını açmazdan əvvəl.",
+          "toolsTitle": "Açılış üçün başlanğıc",
+          "tools": {
+            "t1": {
+              "name": "Başabaş nöqtəsi",
+              "desc": "Gündə neçə qonaq lazımdır"
+            },
+            "t2": {
+              "name": "Tikinti çeklisti",
+              "desc": "Məkan, təmir, avadanlıq"
+            },
+            "t3": {
+              "name": "AQTA hazırlığı",
+              "desc": "Gigiyena və sənədlər"
+            }
+          }
+        }
+      }
     }
   },
   "dashboardAuditor": {

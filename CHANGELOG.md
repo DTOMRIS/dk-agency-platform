@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0469` feat(home): ana səhifənin yeni hero-su — "Siz kimsiniz?" seqment seçimi, çap olunan nümunə çek, canlı food cost hesablayıcısı (itki manatla) və seqmentə görə 3 başlanğıc aləti; 4 dil, mobil, `prefers-reduced-motion`.
+
 - `TASK-0468` fix(i18n): `/haqqimizda` kurucu bölməsinin AZ başlığı "Quranımızdan" → "Qurucumuzdan" düzəldildi.
 
 - `TASK-0467` feat(ui): kurucu fotosu — `/haqqimizda` kurucu bölməsində kitab ikonu və blog/xəbər/GuruBox-dakı "DT" placeholder-ları Doğan Tomris fotosu ilə əvəzləndi (ortaq `FounderAvatar`). Başqa müəllifdə öz baş hərfləri göstərilir.
