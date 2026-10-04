@@ -4,6 +4,8 @@
 
 - `TASK-0472` fix(i18n): otel/OTA/qonaq evi alətləri RU/EN/TR-də tərcümə olundu; `/uzvluk`-dan ictimai dev qeydləri çıxarıldı (real üzvlük səhifəsi, 4 dil), `/docs/member-env-checklist` silindi; ana səhifə elan lövhəsi uydurma elanlar əvəzinə real elanları göstərir; Şədd Rozeti, e-poçt təsdiqi/seçimləri, "tezliklə" səhifəsi (forma real API-yə bağlandı) 4 dildə; `/news` → `/haberler`; razılıq mətnləri Azərbaycan «Fərdi məlumatlar haqqında» Qanununa əsaslanır (Türkiyədən müraciət üçün həmçinin KVKK).
 
+- `TASK-0471` fix(ui): AZ sayt artıq cihaz dilinə görə rus/türk dilinə keçmir (dil yalnız menyudan); AZ-da `/privacy` `/terms` `/cookies` 404-ü və 8 başqa çatışmayan root mirror düzəldi; RU/EN/TR-də footer AZ çıxırdı; footer mobil (alt menü altında qalmır, 2 sütun, 4 dil); `/ru/about` locale-i saxlayır; food-cost/menu-matrix/delivery-calc mobil üfüqi scroll; KAZAN düyməsi alt menünü örtmür.
+
 - `TASK-0470` chore(githooks): `githooks/*` faylları icra icazəli (`100755`) — pre-commit / commit-msg / pre-push artıq hər klon və worktree-də işləyir.
 
 - `TASK-0469` feat(home): ana səhifənin yeni hero-su — "Siz kimsiniz?" seqment seçimi, çap olunan nümunə çek, canlı food cost hesablayıcısı (itki manatla) və seqmentə görə 3 başlanğıc aləti; 4 dil, mobil, `prefers-reduced-motion`.

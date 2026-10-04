@@ -161,7 +161,15 @@
     "rights": "All rights reserved.",
     "poweredBy": "Powered by DK Agency",
     "voen": "TIN 1405471681",
-    "companyName": "DENIS TOMRIS LLC"
+    "companyName": "DENIS TOMRIS LLC",
+    "brandTagline": "THE MARK OF MASTERY",
+    "logoAlt": "DK Agency logo",
+    "newsletterLabel": "Email for newsletter subscription",
+    "newsletterPlaceholder": "Email",
+    "newsletterSubmit": "Subscribe",
+    "newsletterSuccess": "You are subscribed!",
+    "newsletterError": "Something went wrong. Please try again.",
+    "legalNav": "Legal"
   },
   "toolkit": {
     "metbexIstasyon": {

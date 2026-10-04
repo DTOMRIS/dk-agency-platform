@@ -161,7 +161,15 @@
     "rights": "Tüm hakları saklıdır.",
     "poweredBy": "Powered by DK Agency",
     "voen": "VKN 1405471681",
-    "companyName": "DENİS TOMRİS LLC"
+    "companyName": "DENİS TOMRİS LLC",
+    "brandTagline": "USTALIĞIN NİŞANI",
+    "logoAlt": "DK Agency logosu",
+    "newsletterLabel": "Bültene abone olmak için e-posta",
+    "newsletterPlaceholder": "E-posta",
+    "newsletterSubmit": "Abone ol",
+    "newsletterSuccess": "Abone oldunuz!",
+    "newsletterError": "Bir hata oluştu. Tekrar deneyin.",
+    "legalNav": "Yasal"
   },
   "toolkit": {
     "metbexIstasyon": {

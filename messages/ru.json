@@ -161,7 +161,15 @@
     "rights": "Все права защищены.",
     "poweredBy": "Powered by DK Agency",
     "voen": "ИНН 1405471681",
-    "companyName": "ДЕНИС ТОМРИС ООО"
+    "companyName": "ДЕНИС ТОМРИС ООО",
+    "brandTagline": "ЗНАК МАСТЕРСТВА",
+    "logoAlt": "Логотип DK Agency",
+    "newsletterLabel": "E-mail для подписки на рассылку",
+    "newsletterPlaceholder": "E-mail",
+    "newsletterSubmit": "Подписаться",
+    "newsletterSuccess": "Вы подписаны!",
+    "newsletterError": "Произошла ошибка. Попробуйте ещё раз.",
+    "legalNav": "Правовая информация"
   },
   "toolkit": {
     "metbexIstasyon": {
