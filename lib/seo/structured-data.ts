@@ -23,14 +23,64 @@ export function localeUrl(rawLocale: string | null | undefined, path: string): s
   return `${SITE_URL}${prefix}${clean}` || SITE_URL;
 }
 
-/** Organization entity — establishes brand identity in AI knowledge graphs. */
+/** Founder Person @id — blog authors and the About page point here (TASK-0475). */
+export const FOUNDER_ID = `${SITE_URL}/haqqimizda#dogan-tomris`;
+export const FOUNDER_NAME = 'Doğan Tomris';
+
+/**
+ * Organization entity — establishes brand identity in AI knowledge graphs.
+ * Only facts the site itself publishes (footer legal line, /elaqe, /haqqimizda). No phone
+ * (the contact page deliberately hides the number) and no `sameAs` until the owner confirms
+ * the real social accounts — the handles found in code were guesses (TASK-0475).
+ */
 export function organizationNode(): JsonLd {
   return {
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
     '@id': `${SITE_URL}/#organization`,
     name: ORG_NAME,
+    legalName: 'DENİS TOMRİS MMC',
+    taxID: '1405471681',
     url: SITE_URL,
     logo: { '@type': 'ImageObject', url: ORG_LOGO, width: 512, height: 512 },
+    image: ORG_LOGO,
+    foundingDate: '2010',
+    founder: { '@id': FOUNDER_ID },
+    email: 'info@dkagency.com.tr',
+    address: { '@type': 'PostalAddress', addressLocality: 'Bakı', addressCountry: 'AZ' },
+    areaServed: [
+      { '@type': 'Country', name: 'Azerbaijan' },
+      { '@type': 'Country', name: 'Türkiye' },
+    ],
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+    knowsAbout: ['HoReCa', 'restaurant consulting', 'food cost', 'P&L', 'franchising', 'hotel and guest house operations'],
+  };
+}
+
+const FOUNDER_DESCRIPTION: Record<string, string> = {
+  az: 'DK Agency-nin qurucusu. 40 ildir HoReCa sektorunda: Türkiyə, Azərbaycan, Rusiya və Gürcüstanda restoran və otel layihələri.',
+  ru: 'Основатель DK Agency. 40 лет в секторе HoReCa: ресторанные и гостиничные проекты в Турции, Азербайджане, России и Грузии.',
+  en: 'Founder of DK Agency. 40 years in the HoReCa sector: restaurant and hotel projects in Türkiye, Azerbaijan, Russia and Georgia.',
+  tr: 'DK Agency kurucusu. 40 yıldır HoReCa sektöründe: Türkiye, Azerbaycan, Rusya ve Gürcistan’da restoran ve otel projeleri.',
+};
+
+/** Founder Person entity (E-E-A-T: who stands behind the content). */
+export function personNode(rawLocale?: string | null): JsonLd {
+  const locale = normalizeLocale(rawLocale);
+  return {
+    '@type': 'Person',
+    '@id': FOUNDER_ID,
+    name: FOUNDER_NAME,
+    jobTitle: locale === 'az' ? 'Qurucu' : locale === 'ru' ? 'Основатель' : locale === 'tr' ? 'Kurucu' : 'Founder',
+    description: FOUNDER_DESCRIPTION[locale],
+    image: `${SITE_URL}/images/founder/dogan-tomris-portrait.jpg`,
+    url: localeUrl(locale, '/haqqimizda'),
+    worksFor: { '@id': `${SITE_URL}/#organization` },
+    knowsAbout: ['HoReCa', 'restaurant management', 'food cost', 'franchising', 'hospitality'],
   };
 }
 
@@ -83,7 +133,10 @@ export function articleNode(input: ArticleNodeInput): JsonLd {
     image: input.image ? [input.image] : undefined,
     url: input.url,
     mainEntityOfPage: { '@type': 'WebPage', '@id': input.url },
-    author: { '@type': 'Person', name: input.authorName, url: ABOUT_URL },
+    // Founder-authored posts link to the Person entity; other bylines stay a plain Person (TASK-0475).
+    author: /tomris/i.test(input.authorName)
+      ? { '@type': 'Person', '@id': FOUNDER_ID, name: FOUNDER_NAME, url: ABOUT_URL }
+      : { '@type': 'Person', name: input.authorName },
     publisher: organizationNode(),
     datePublished: input.datePublished,
     dateModified: input.dateModified,

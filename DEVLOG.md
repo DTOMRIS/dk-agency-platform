@@ -1,5 +1,14 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0475: feat(seo): şirkət + qurucu entity schema, 40 il, llms.txt faktlar
+
+**Why:** SEO/AI auditi: Organization schema-da yalnız ad/url/logo var idi, qurucu üçün Person yox idi, /haqqimizda-da JSON-LD yox idi; səhifədə "40 il" ilə "10+ il" ziddiyyəti AI sitatını bloklayırdı.
+
+**What:** Organization → `["Organization","ProfessionalService"]` + legalName, taxID, foundingDate 2010, email, address (Bakı), areaServed (AZ, TR), iş saatları, founder. Yeni `personNode` (Doğan Tomris, 40 il, foto, 4 dildə təsvir); bloq author → Person `@id`. `/haqqimizda` (4 dil) AboutPage JSON-LD (server layout). `home.doganNote.body3` "10+ il" → "40 il" (4 dil). llms.txt: "Faktlar" bölməsi; üzvlük təsviri düzəldi.
+
+**Qəsdən edilməyən:** `sameAs` — koddakı sosial linklər təxmin idi, `t.me/dkagency` başqasınındır. Telefon — /elaqe onu gizlədir.
+
+**Doğrulama:** production build; /haqqimizda və /ru/haqqimizda-da AboutPage + Organization + Person; ana səhifədə zəngin Organization; llms.txt faktlar. dk-validator aşağıda.
 ## 2026-10-04 — TASK-0473: chore(ci): STATE snapshot PR axınına
 
 **Why:** Geriyə dönük skan: `state-snapshot.yml` hələ `main`-ə birbaşa push edirdi; `main-koruma` ruleset bunu bağlayır (TASK-0466-da RSS botu eyni səbəblə köçürülmüşdü) → bazar ertəsi ilk cron uğursuz olacaqdı.

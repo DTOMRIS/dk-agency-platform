@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import AboutJsonLd from '@/components/seo/AboutJsonLd';
 
 /**
  * Haqqımızda səhifəsi 'use client'-dir və metadata ixrac edə bilmir. Bu səhifə
@@ -14,5 +15,10 @@ export const metadata: Metadata = {
 };
 
 export default function HaqqimizdaLayout({ children }: { children: ReactNode }) {
-  return children;
+  return (
+    <>
+      <AboutJsonLd />
+      {children}
+    </>
+  );
 }

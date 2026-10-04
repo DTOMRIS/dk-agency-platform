@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0475` feat(seo): şirkət (Organization + ProfessionalService: hüquqi ad, VÖEN, 2010, ünvan, e-poçt, iş saatları) və qurucu (Person) schema-sı; /haqqimizda AboutPage JSON-LD 4 dildə; "10+ il" → "40 il"; llms.txt-ə "Faktlar" bölməsi.
+
 - `TASK-0473` chore(ci): həftəlik STATE snapshot artıq `main`-ə birbaşa push etmir (ruleset bağlayırdı) — `bot/state-*` PR açır, yalnız `docs/STATE.md` dəyişirsə avtomatik merge olur.
 
 - `TASK-0477` feat(news): DeepSeek-in yazdığı xəbərlər Telegram-a ✅ Yayınla / ❌ Rədd et düymələri ilə gəlir; düymə saytda dərhal yayınlayır (tərcümə + alət uyğunlaşdırma daxil) və ya rədd edir.
