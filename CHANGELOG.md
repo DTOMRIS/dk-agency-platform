@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0467` feat(ui): kurucu fotosu — `/haqqimizda` kurucu bölməsində kitab ikonu və blog/xəbər/GuruBox-dakı "DT" placeholder-ları Doğan Tomris fotosu ilə əvəzləndi (ortaq `FounderAvatar`). Başqa müəllifdə öz baş hərfləri göstərilir.
+
 - `TASK-0466` chore(news): RSS botu artıq `main`-ə push etmir, gündəlik PR açır; PR yalnız `lib/data/pendingNews.json`-u dəyişdiyi üçün CI yaşıl olanda avtomatik merge olur. `NEWS_BOT_TOKEN` secret lazımdır.
 
 - `TASK-0465` docs: L-059 (bot-un `main` commit-i = ayrıca Hostinger deploy); auto-merge axınının ilk testi.

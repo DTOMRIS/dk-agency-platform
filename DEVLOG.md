@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0467: feat(ui): kurucu fotosu avatar placeholder-larını əvəzləyir
+
+**Why:** Doğan bəy real portret fotoşəkli göndərdi. Kurucu bölmələrində hələ placeholder-lar var idi: `/haqqimizda` DoganNote-da kitab ikonu, müxtəlif yerlərdə "DT" baş hərfləri.
+
+**What:** Ortaq `components/ui/FounderAvatar.tsx` (next/image) + `isFounderName()` / `authorInitials()` köməkçiləri. Foto: `public/images/founder/` (256×256 üz kəsimi 19 KB, 800px portret 101 KB). Dəyişən yerlər: `home/DoganNote` (128px, qızılı çərçivə), blog `DoganNote` imzası, `MarkdownRenderer` DK Agency notu imzası, `GuruBox` (Doğan notları; xarici ekspertdə baş hərflər), `SektorNabziTabs` Viewpoint + seçilmiş xəbər müəllifi, `BlogSidebars` Viewpoint + AuthorCard. Müəllif Doğan Tomris deyilsə foto yox, müəllifin öz baş hərfləri göstərilir (əvvəl hər müəllifə "DT" yazılırdı).
+
+**Qeyd:** İlk cəhd (TASK-0419 adı ilə) 155 commit geridə qalmış lokal main-dən açılmışdı və conflict verirdi; təmiz worktree-də güncəl main üzərinə yenidən quruldu. `BlogSidebars` hal-hazırda heç bir route-da import olunmur.
+
+**Doğrulama:** `npm run dk:validate` 9/9 PASS. Playwright: `/haqqimizda` 1280px və 390px-də foto yüklənir (naturalWidth > 0). `/`, `/haqqimizda`, `/blog` → 200.
+
 ## 2026-10-04 — TASK-0466: chore(news): xəbər botu PR axınına
 
 **Why:** `main-koruma` ruleset birbaşa push-u bağlayır; RSS botu növbəti cron-da sınardı.
