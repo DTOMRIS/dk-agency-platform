@@ -22,6 +22,8 @@ async function main() {
   }
   for (const e of r.errors) console.error(`  ERROR ${e}`);
   if (r.errors.includes('Database not available')) process.exit(1);
+  // TASK-0481: keep-alive sockets (feeds / DB pool) kept the process alive until the job timed out.
+  process.exit(0);
 }
 
 main().catch((err) => {
