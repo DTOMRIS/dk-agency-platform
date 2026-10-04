@@ -23,7 +23,7 @@
       "subtitle": "Başvuru — marka:",
       "namePlaceholder": "Adınız",
       "contactPlaceholder": "E-posta veya telefon",
-      "consent": "Kişisel verilerimin işlenmesine onay veriyorum (KVKK).",
+      "consent": "Kişisel verilerimin Azerbaycan Cumhuriyeti Kişisel Veriler Hakkında Kanunu’na (Türkiye’den başvuranlar için ayrıca KVKK’ya) uygun olarak işlenmesine onay veriyorum.",
       "submit": "Gönder",
       "required": "Ad, iletişim ve onay gereklidir.",
       "error": "Bir hata oluştu, tekrar deneyin.",
@@ -5057,7 +5057,7 @@
     "name": "Ad, Soyad",
     "brand": "Marka / işletme adı",
     "contact": "E-posta veya telefon",
-    "kvkk": "Kişisel verilerimin DK Agency tarafından işlenmesine onay veriyorum.",
+    "kvkk": "Kişisel verilerimin Azerbaycan Cumhuriyeti Kişisel Veriler Hakkında Kanunu’na (Türkiye’den başvuranlar için ayrıca KVKK’ya) uygun olarak işlenmesine onay veriyorum.",
     "cta": "Ücretsiz değerlendirme iste",
     "success": "Teşekkürler! Ekibimiz en kısa sürede sizinle iletişime geçecek.",
     "error": "Bir hata oluştu. Lütfen tekrar deneyin."
@@ -5571,7 +5571,7 @@
       "namePlaceholder": "Ad, Soyad",
       "brandPlaceholder": "Misafirhane / pansiyon adı",
       "contactPlaceholder": "WhatsApp numarası veya e-posta",
-      "kvkkConsent": "KVKK aydınlatma metnini kabul ediyor ve DK Agency ile iletişim için bilgilerimin saklanmasına izin veriyorum.",
+      "kvkkConsent": "Bilgilerimin DK Agency ile iletişim için saklanmasına ve Azerbaycan Cumhuriyeti Kişisel Veriler Hakkında Kanunu’na (Türkiye’den başvuranlar için ayrıca KVKK’ya) uygun olarak işlenmesine izin veriyorum.",
       "submitButton": "Ücretsiz rehberi ve WhatsApp şablon paketini al",
       "submitSuccess": "✓ Teşekkürler! 24 saat içinde WhatsApp'tan iletişime geçeceğiz.",
       "retryButton": "Testi tekrarla"
@@ -6118,5 +6118,8 @@
     "saving": "Kaydediliyor...",
     "save": "Tercihlerimi kaydet",
     "unsubscribeAll": "Tümünden çık"
+  },
+  "consent": {
+    "personalData": "Kişisel verilerimin Azerbaycan Cumhuriyeti Kişisel Veriler Hakkında Kanunu’na (Türkiye’den başvuranlar için ayrıca KVKK’ya) uygun olarak işlenmesine onay veriyorum."
   }
 }

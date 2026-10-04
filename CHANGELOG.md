@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-- `TASK-0472` fix(i18n): otel/OTA/qonaq evi alətləri RU/EN/TR-də tərcümə olundu; `/uzvluk`-dan ictimai dev qeydləri çıxarıldı (real üzvlük səhifəsi, 4 dil), `/docs/member-env-checklist` silindi; ana səhifə elan lövhəsi uydurma elanlar əvəzinə real elanları göstərir; Şədd Rozeti, e-poçt təsdiqi/seçimləri, "tezliklə" səhifəsi (forma real API-yə bağlandı) 4 dildə; `/news` → `/haberler`.
+- `TASK-0472` fix(i18n): otel/OTA/qonaq evi alətləri RU/EN/TR-də tərcümə olundu; `/uzvluk`-dan ictimai dev qeydləri çıxarıldı (real üzvlük səhifəsi, 4 dil), `/docs/member-env-checklist` silindi; ana səhifə elan lövhəsi uydurma elanlar əvəzinə real elanları göstərir; Şədd Rozeti, e-poçt təsdiqi/seçimləri, "tezliklə" səhifəsi (forma real API-yə bağlandı) 4 dildə; `/news` → `/haberler`; razılıq mətnləri Azərbaycan «Fərdi məlumatlar haqqında» Qanununa əsaslanır (Türkiyədən müraciət üçün həmçinin KVKK).
 
 - `TASK-0470` chore(githooks): `githooks/*` faylları icra icazəli (`100755`) — pre-commit / commit-msg / pre-push artıq hər klon və worktree-də işləyir.
 

@@ -23,7 +23,7 @@
       "subtitle": "Request — brand:",
       "namePlaceholder": "Your name",
       "contactPlaceholder": "Email or phone",
-      "consent": "I consent to the processing of my personal data.",
+      "consent": "I consent to the processing of my personal data under the Law of the Republic of Azerbaijan \"On Personal Data\" (and, for applicants from Türkiye, KVKK).",
       "submit": "Send",
       "required": "Name, contact and consent are required.",
       "error": "Something went wrong, please try again.",
@@ -5057,7 +5057,7 @@
     "name": "Full name",
     "brand": "Brand / business name",
     "contact": "Email or phone",
-    "kvkk": "I consent to the processing of my personal data by DK Agency.",
+    "kvkk": "I consent to the processing of my personal data under the Law of the Republic of Azerbaijan \"On Personal Data\" (and, for applicants from Türkiye, KVKK).",
     "cta": "Request a free evaluation",
     "success": "Thank you! Our team will be in touch shortly.",
     "error": "Something went wrong. Please try again."
@@ -5571,7 +5571,7 @@
       "namePlaceholder": "First name, last name",
       "brandPlaceholder": "Guest house name",
       "contactPlaceholder": "WhatsApp number or email",
-      "kvkkConsent": "I accept the KVKK agreement and allow DK Agency to store my details to contact me.",
+      "kvkkConsent": "I allow DK Agency to store my details to contact me and to process them under the Law of the Republic of Azerbaijan \"On Personal Data\" (and, for applicants from Türkiye, KVKK).",
       "submitButton": "Get the free guide and WhatsApp template pack",
       "submitSuccess": "✓ Thank you! We'll contact you on WhatsApp within 24 hours.",
       "retryButton": "Take the test again"
@@ -6118,5 +6118,8 @@
     "saving": "Saving...",
     "save": "Save my preferences",
     "unsubscribeAll": "Unsubscribe from all"
+  },
+  "consent": {
+    "personalData": "I consent to the processing of my personal data under the Law of the Republic of Azerbaijan \"On Personal Data\" (and, for applicants from Türkiye, KVKK)."
   }
 }

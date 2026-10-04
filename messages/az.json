@@ -23,7 +23,7 @@
       "subtitle": "Müraciət — marka:",
       "namePlaceholder": "Adınız",
       "contactPlaceholder": "Email və ya telefon",
-      "consent": "Şəxsi məlumatlarımın emalına razıyam (KVKK).",
+      "consent": "Şəxsi məlumatlarımın Azərbaycan Respublikasının «Fərdi məlumatlar haqqında» Qanununa uyğun emalına razıyam (Türkiyədən müraciət edənlər üçün həmçinin KVKK).",
       "submit": "Göndər",
       "required": "Ad, əlaqə və razılıq tələb olunur.",
       "error": "Xəta baş verdi, yenidən cəhd edin.",
@@ -5057,7 +5057,7 @@
     "name": "Ad, Soyad",
     "brand": "Marka / müəssisə adı",
     "contact": "E-poçt və ya telefon",
-    "kvkk": "Şəxsi məlumatlarımın DK Agency tərəfindən emal edilməsinə razıyam.",
+    "kvkk": "Şəxsi məlumatlarımın Azərbaycan Respublikasının «Fərdi məlumatlar haqqında» Qanununa uyğun emalına razıyam (Türkiyədən müraciət edənlər üçün həmçinin KVKK).",
     "cta": "Pulsuz dəyərləndirmə istə",
     "success": "Təşəkkürlər! Komandamız sizinlə əlaqə saxlayacaq.",
     "error": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
@@ -5571,7 +5571,7 @@
       "namePlaceholder": "Ad, Soyad",
       "brandPlaceholder": "Qonaq evi / pansiyon adı",
       "contactPlaceholder": "WhatsApp nömrəsi və ya e-poçt",
-      "kvkkConsent": "KVKK razılaşmasını qəbul edirəm və DK Agency ilə əlaqə üçün məlumatımın saxlanmasına icazə verirəm.",
+      "kvkkConsent": "Məlumatlarımın DK Agency ilə əlaqə üçün saxlanmasına və Azərbaycan Respublikasının «Fərdi məlumatlar haqqında» Qanununa uyğun emalına razıyam (Türkiyədən müraciət edənlər üçün həmçinin KVKK).",
       "submitButton": "Pulsuz bələdçi və WhatsApp template paketini al",
       "submitSuccess": "✓ Təşəkkürlər! 24 saat ərzində WhatsApp-da əlaqə saxlayacağıq.",
       "retryButton": "Yenidən test et"
@@ -6118,5 +6118,8 @@
     "saving": "Saxlanılır...",
     "save": "Seçimlərimi saxla",
     "unsubscribeAll": "Hamısından çıx"
+  },
+  "consent": {
+    "personalData": "Şəxsi məlumatlarımın Azərbaycan Respublikasının «Fərdi məlumatlar haqqında» Qanununa uyğun emalına razıyam (Türkiyədən müraciət edənlər üçün həmçinin KVKK)."
   }
 }
