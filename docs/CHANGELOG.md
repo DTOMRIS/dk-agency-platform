@@ -1,5 +1,9 @@
 # CHANGELOG
 
+- `TASK-0484` fix(dashboard): **fresh-only decision queue** — OCAQ qərar növbəsi yalnız son 14 günü göstərir (köhnələr ayrıca "stale" sətrində linklə), markdown təmizlənir, admin profilləri üzv sayından çıxarıldı; `/dashboard/blog` yeni Apple stilinə keçdi; sidebar nav `overflow-x-hidden` + truncate.
+- `TASK-0483` feat(dashboard): **OCAQ v2 command centre** — `lib/dashboard/overview.ts` (lead/üzv/xəbər/elan/blog real DB agregatları), asılılıqsız SVG chart-lar (`components/dashboard/ui/Charts.tsx`), `#F2F2F7` fon + ağ kartlar; panel dili URL-dən (`getLocale`), dil seçici yolu dəyişir; users səhifəsi yenidən dizayn.
+- `TASK-0477`–`TASK-0482` feat(news): **Telegram təsdiq axını + RSS** — DeepSeek sintezindən sonra xəbər Telegram-a `✅ Yayınla / ❌ Rədd et` düymələri ilə gedir (`/api/telegram/webhook`), 25 sektor RSS mənbəyi `news_articles`-a yazılır, scoring word-boundary + 4 dilli blocklist, sintezdə uyğunluq rubrikası və "Bu həftə 1 addım" bölməsi.
+
 - `TASK-0417` fix(news): **preview saves before opening** — manual news editor preview no longer opens an unsaved `/haberler/{draftSlug}?preview=true` URL. It first saves/PATCHes the article as `fetched`, captures the API returned slug, then opens preview with the saved slug so new drafts do not 404.
 
 - `TASK-0415` fix(security): **dependency vulnerability sweep** — direct runtime packages upgraded (`next` 16.2.9, `drizzle-orm` 0.45.2, `@google/genai` 2.10.0, `cloudinary` 2.10.0, `nodemailer` 9.0.1, SheetJS `xlsx` 0.20.3 tarball), `drizzle-kit` moved to devDependencies, and vulnerable transitive packages pinned with npm overrides. Audit reduced to **0 critical / 0 high / 4 moderate**; remaining moderate chain is upstream Next bundled PostCSS. Lint + production build pass.
