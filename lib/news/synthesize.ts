@@ -11,6 +11,7 @@ import { and, eq, isNull } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
 import { AI_MODELS } from '@/lib/ai-models';
+import { sendNewsForApproval } from '@/lib/telegram/news-approval';
 
 /** Words that must never appear in DK output */
 const FORBIDDEN_TERMS = [
@@ -203,6 +204,14 @@ export async function synthesizeFetchedNews(limit = 10): Promise<SynthesizeResul
         .where(eq(newsArticles.id, article.id));
 
       result.synthesized++;
+
+      // TASK-0477: ask the owner on Telegram (✅ Yayınla / ❌ Rədd et). No-op without TELEGRAM_* env.
+      await sendNewsForApproval({
+        id: article.id,
+        titleAz: parsed.title_az,
+        contentAz: parsed.body_az,
+        externalUrl: article.externalUrl,
+      });
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown error';
       result.errors.push(`[synthesis] ${msg.slice(0, 200)} for article #${article.id}`);

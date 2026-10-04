@@ -7,6 +7,14 @@
 **What:** Snapshot `bot/state-*` branch-ə gedir və PR açılır (`NEWS_BOT_TOKEN`); `auto-merge-content.yml` yalnız `bot/state-*` branch-i və yalnız `docs/STATE.md` dəyişən PR-ı avtomatik merge edir. İnsan PR-larında `docs/STATE.md` qadağası qalır.
 
 **Doğrulama:** hər iki workflow YAML kimi parse olunur; real sınaq: Actions → State Snapshot → Run workflow.
+## 2026-10-04 — TASK-0477: feat(news): Telegram ilə xəbər təsdiqi
+
+**Why:** Doğan: "telegrama bana onay gelsin, oradan okey vereyim paylaşsın" — paneldə təsdiq darboğazı idi.
+
+**What:** DeepSeek xəbəri yazan kimi Doğan-ın Telegram chat-ına başlıq, AZ analizin önizləməsi, mənbə və ✅ Yayınla / ❌ Rədd et / ✏️ Paneldə aç düymələri gedir. Webhook (`/api/telegram/webhook`) bot token-dən törədilən secret və chat ID-ni yoxlayır, xəbəri yayınlayır (panel ilə eyni yol: RU/EN/TR tərcümə + alət uyğunlaşdırma) və ya rədd edir, düymələri "🔗 Saytda bax" ilə əvəzləyir. Təsdiq məntiqi `lib/news/approve.ts`-də birləşdi (admin API də onu işlədir). Admin `/api/telegram/setup` webhook-u qeydiyyatdan keçirir, `?pending=N` gözləyən xəbərləri göndərir.
+
+**Doğrulama:** production build + fake token ilə təhlükəsizlik testləri (401/401/ignore/ignore/403). Real axın Doğan-ın secret-ləri ilə yoxlanacaq.
+
 ## 2026-10-04 — TASK-0474: fix(seo): kritik SEO xətaları
 
 **Why:** SEO/AI auditi (2026-10-04): AZ bloq JSON-LD-də `dkagency.com.tr/undefined/blog/...`, `/listings` canonical `/undefined/ilanlar`, RU/EN/TR bloq `<title>` AZ, login/e-poçt/placeholder səhifələri indekslənirdi, sitemap-da redirect olunan və dublikat URL-lər.

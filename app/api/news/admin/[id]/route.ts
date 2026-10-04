@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
-import { getAdminNewsArticleById, updateNewsArticleAdmin, deleteNewsArticle, translateNewsArticleBySlug } from '@/lib/repositories/newsRepository';
+import { getAdminNewsArticleById, updateNewsArticleAdmin, deleteNewsArticle } from '@/lib/repositories/newsRepository';
+import { runApproveSideEffects } from '@/lib/news/approve';
 
 export async function PATCH(
   request: NextRequest,
@@ -73,27 +74,14 @@ export async function PATCH(
     logoOverlay: body.logoOverlay,
   });
 
-  // Auto-translate + auto-match toolkits on approve (fire-and-forget)
+  // Auto-translate + auto-match toolkits on approve (fire-and-forget) — shared with Telegram approval (TASK-0477)
   const savedSlug = typeof body.slug === 'string' && body.slug.trim() ? body.slug.trim() : article.slug;
   if (body.status === 'approved' && savedSlug) {
-    translateNewsArticleBySlug(savedSlug).catch(() => {});
-
-    // Match related toolkits via DeepSeek
-    import('@/lib/news/match-toolkits').then(({ matchToolkitsForArticle }) => {
-      const tAz = body.titleAz || article.titleAz || '';
-      const sAz = body.summaryAz || article.summaryAz || '';
-      const cAz = body.contentAz || (article as Record<string, unknown>).contentAz as string || '';
-      matchToolkitsForArticle(tAz, sAz, cAz).then((match) => {
-        if (match.toolkits.length > 0 || match.blogSlug) {
-          import('@/lib/repositories/newsRepository').then(({ updateNewsArticleAdmin }) => {
-            updateNewsArticleAdmin(articleId, {
-              relatedToolkits: match.toolkits,
-              relatedBlogSlug: match.blogSlug,
-            } as Record<string, unknown>).catch(() => {});
-          }).catch(() => {});
-        }
-      }).catch(() => {});
-    }).catch(() => {});
+    runApproveSideEffects(articleId, savedSlug, {
+      titleAz: body.titleAz || article.titleAz,
+      summaryAz: body.summaryAz || article.summaryAz,
+      contentAz: body.contentAz || article.contentAz,
+    });
   }
 
   return NextResponse.json({
