@@ -1,8 +1,8 @@
-import { redirect } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 import { normalizeLocale, withLocale } from '@/i18n/config';
 
 /** Legacy /news → real news at /haberler, keeping the locale (TASK-0472). */
 export default async function LocalizedLegacyNewsPage() {
-  redirect(withLocale(normalizeLocale(await getLocale()), '/haberler'));
+  permanentRedirect(withLocale(normalizeLocale(await getLocale()), '/haberler'));
 }
