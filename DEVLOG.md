@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0481: fix(news): RSS addımının asılı qalması
+
+**Why:** İlk real run-da (37214292815) RSS addımı 30 xəbəri daxil edib nəticəni çap etdi, amma proses çıxmadı → job 10 dəq limitində ləğv olundu, sintez atlandı.
+
+**What:** `scripts/news-rss-fetch.ts` sonunda `process.exit(0)`; `news-ingest.yml` `timeout-minutes` 10 → 20.
+
 ## 2026-10-04 — TASK-0480: feat(news): ticarət mətbuatı RSS → DB (Faz 2)
 
 **Why:** NewsData axtarışı əsasən zibil qaytarırdı; real HoReCa/AI xəbərləri ticarət mətbuatındadır.

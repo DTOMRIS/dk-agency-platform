@@ -9,7 +9,7 @@ on:
 jobs:
   ingest:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20  # TASK-0481: RSS (25 feeds) + synthesis of up to 15 items
 
     steps:
       - name: Checkout
