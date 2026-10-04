@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0480: feat(news): ticarət mətbuatı RSS → DB (Faz 2)
+
+**Why:** NewsData axtarışı əsasən zibil qaytarırdı; real HoReCa/AI xəbərləri ticarət mətbuatındadır.
+
+**What:** 25 yoxlanmış feed (Skift AI/Skift, Hospitality Net, Restaurant Dive, Hotel Dive, NRN, Restaurant/Hotel Technology News, Hotel Management, EHL, Food On Demand, MRM, 10min Hotel, Turizm Güncel/Ajansı/Günlüğü, Gastro Mondiale; Report.az/Trend AZ-RU-EN, APA, AZERTAC — sonuncular yalnız başlıq HoReCa olanda). Son 4 gün, run başına ≤30, başlıq dedup. `origin='rss'` sintezə daxil, limit 15. Köhnə JSON botunun cədvəli söndü.
+
+**Doğrulama:** lokal quru sınaq 25/25 feed, 79 keçən (22 AI/tech). Real run merge-dən sonra.
+
 ## 2026-10-04 — TASK-0479: chore(news): filtr log-u (qəbul/rədd başlıqları)
 
 **Why:** TASK-0478 sonrası run-da 40-dan 38 xəbər eşikdən aşağı idi; real xəbər kəsilirmi — görmək lazım idi.
