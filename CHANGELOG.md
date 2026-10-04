@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0468` fix(i18n): `/haqqimizda` kurucu bölməsinin AZ başlığı "Quranımızdan" → "Qurucumuzdan" düzəldildi.
+
 - `TASK-0467` feat(ui): kurucu fotosu — `/haqqimizda` kurucu bölməsində kitab ikonu və blog/xəbər/GuruBox-dakı "DT" placeholder-ları Doğan Tomris fotosu ilə əvəzləndi (ortaq `FounderAvatar`). Başqa müəllifdə öz baş hərfləri göstərilir.
 
 - `TASK-0466` chore(news): RSS botu artıq `main`-ə push etmir, gündəlik PR açır; PR yalnız `lib/data/pendingNews.json`-u dəyişdiyi üçün CI yaşıl olanda avtomatik merge olur. `NEWS_BOT_TOKEN` secret lazımdır.

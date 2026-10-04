@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0468: fix(i18n): "Quranımızdan" → "Qurucumuzdan"
+
+**Why:** Doğan bəy `/haqqimizda` kurucu bölməsində başlığın yanlış olduğunu gördü: "Quranımızdan" ("Quranımızdan" = Qurandan) yazılmışdı, düzgünü "Qurucumuzdan".
+
+**What:** `messages/az.json` → `home.doganNote.eyebrow` düzəldildi. TR/EN/RU artıq düzgün idi (Kurucudan / From the Founder / От основателя). Layihədə başqa "Quran" hit-i yoxdur.
+
+**Doğrulama:** `npm run dk:validate` 9/9 PASS; lokal `/haqqimizda`-da "Qurucumuzdan" görünür, "Quran" 0.
+
 ## 2026-10-04 — TASK-0467: feat(ui): kurucu fotosu avatar placeholder-larını əvəzləyir
 
 **Why:** Doğan bəy real portret fotoşəkli göndərdi. Kurucu bölmələrində hələ placeholder-lar var idi: `/haqqimizda` DoganNote-da kitab ikonu, müxtəlif yerlərdə "DT" baş hərfləri.
