@@ -8,6 +8,7 @@ import {
 } from '@/lib/utils/rate-limit';
 import { buildKazanSystemPrompt } from '@/lib/kazan-ai/system-prompt';
 import { buildFoodCostContext } from '@/lib/kazan-ai/food-cost-context';
+import { buildSiteContext } from '@/lib/kazan-ai/site-context';
 import { buildSystemPromptInjection, type KazanContext } from '@/lib/kazan-ai/context-greetings';
 import ahilikQuotes from '@/data/kazan-kb/ahilik-quotes.json';
 
@@ -40,7 +41,18 @@ function shouldAppendQuote(text: string): boolean {
   return true;
 }
 
-function appendQuote(text: string, locale: string): string {
+/** Modelin özü yazdığı (uydurma) ☕ sitat sətirlərini silir — real sitatı sistem əlavə edir. */
+function stripModelQuotes(text: string): string {
+  return text
+    .split('\n')
+    .filter((line) => !line.trim().startsWith('☕'))
+    .join('\n')
+    .replace(/\n-{3,}\s*$/u, '')
+    .trim();
+}
+
+function appendQuote(raw: string, locale: string): string {
+  const text = stripModelQuotes(raw);
   if (!shouldAppendQuote(text)) return text;
   const quote = pickRandomQuote(locale);
   let suffix = 'Əhilik';
@@ -110,7 +122,7 @@ async function callAnthropicWithPrompt(
   const requestBody: Record<string, unknown> = {
     model,
     system: systemPrompt,
-    max_tokens: 700,
+    max_tokens: 1200,
     messages,
   };
 
@@ -198,7 +210,8 @@ async function callDeepSeekWithPrompt(
       body: JSON.stringify({
         model: AI_MODELS.deepseek.chat,
         temperature: 0.2,
-        max_tokens: 700,
+        // v4-flash reasoning token-ları da bu limitdən yeyir (TASK-0487)
+        max_tokens: 2500,
         messages: [
           { role: 'system', content: systemPrompt },
           ...messages.map((message) => ({
@@ -231,10 +244,16 @@ async function callDeepSeekWithPrompt(
   const payload = (await response.json()) as {
     id?: string;
     model?: string;
-    choices?: Array<{ message?: { content?: string } }>;
+    choices?: Array<{ finish_reason?: string; message?: { content?: string } }>;
   };
 
-  const text = payload.choices?.[0]?.message?.content?.trim();
+  const choice = payload.choices?.[0];
+  let text = choice?.message?.content?.trim();
+  if (text && choice?.finish_reason === 'length') {
+    // Limitə çatıbsa yarımçıq sözlə bitməsin — son tam paraqrafda kəs.
+    const cut = text.lastIndexOf('\n\n');
+    if (cut > 200) text = text.slice(0, cut).trim();
+  }
   if (!text) {
     return {
       ok: false as const,
@@ -294,6 +313,15 @@ export async function POST(request: NextRequest) {
       const foodCostCtx = await buildFoodCostContext();
       systemPrompt = systemPrompt + '\n\n' + foodCostCtx;
     }
+
+    // Saytın real məzmunu: bloq, toolkit, xəbərlər (TASK-0487)
+    const recentUserText = messages
+      .filter((m) => m.role === 'user')
+      .slice(-3)
+      .map((m) => m.content)
+      .join(' ');
+    const siteContext = await buildSiteContext(recentUserText, locale);
+    systemPrompt = systemPrompt + '\n\n' + siteContext;
 
     // P&L / AI Readiness context injection
     if (body.pnlContext) {
