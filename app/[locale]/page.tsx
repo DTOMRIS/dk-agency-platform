@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 import dynamic from 'next/dynamic';
 import { JoinCTA } from '@/components/CTASections';
-import Hero from '@/components/Hero';
+import { ReceiptHero } from '@/components/home/ReceiptHero';
 import SiteJsonLd from '@/components/seo/SiteJsonLd';
 import NewsPreview from '@/components/NewsPreview';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
@@ -252,7 +252,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
       <SiteJsonLd />
-      <Hero />
+      <ReceiptHero />
       <AiReadinessScore />
       <PlatformCards />
       <ToolkitShowcase />

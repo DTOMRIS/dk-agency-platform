@@ -3605,6 +3605,134 @@
         "name": "Doğruluk",
         "desc": "ŞEDD rozetini verdiklerimizde dürüstlük şarttır — söz verdik, sözümüzde duruyoruz."
       }
+    },
+    "receiptHero": {
+      "eyebrow": "HORECA · RAKAM · SİSTEM",
+      "whoAreYou": "Siz kimsiniz?",
+      "ctaJoin": "Ücretsiz üye ol",
+      "ctaCalc": "Kendi rakamımı gireyim",
+      "receiptTitle": "ÖRNEK FİŞ · AY",
+      "receiptBrand": "DK AGENCY",
+      "receiptLeft": "KALAN",
+      "lines": {
+        "sales": "Satış",
+        "cost": "Ürün",
+        "staff": "Personel (24%)",
+        "rent": "Kira (10%)",
+        "util": "Faturalar (4%)",
+        "comm": "Komisyon (6%)"
+      },
+      "calcEyebrow": "KENDİ RAKAMINIZ · 30 SANİYE",
+      "salesLabel": "Aylık satış, ₼",
+      "costLabel": "Aylık ürün alımı, ₼",
+      "verdictLoss": "Hedefin üstünde: ayda ≈ {amount} ₼ kayıp. İlk bakılacak yer: porsiyon ve fire.",
+      "verdictOk": "Normal aralıktasınız. Sonraki adım: personel ve komisyon.",
+      "target": "Hedef: %28–32.",
+      "saveReport": "Raporu kaydet — ücretsiz üye ol",
+      "start": "Başla →",
+      "receiptAria": "Örnek aylık fiş: satıştan giderler düşülür, kalan tutar gösterilir",
+      "segments": {
+        "restoran": {
+          "label": "Restoran",
+          "title": "Bu ay para nereye gitti?",
+          "sub": "Satıştan kalan para neden az — food cost, personel, komisyon. Rakamı girin, cevabı manatla görün.",
+          "toolsTitle": "Restoran için başlangıç",
+          "tools": {
+            "t1": {
+              "name": "Food cost",
+              "desc": "Porsiyon maliyeti ve satış fiyatı"
+            },
+            "t2": {
+              "name": "P&L simülatörü",
+              "desc": "Aylık gelir-gider, net kâr"
+            },
+            "t3": {
+              "name": "Wolt / Bolt komisyonu",
+              "desc": "Paket serviste ne kalıyor"
+            }
+          }
+        },
+        "kafe": {
+          "label": "Kafe",
+          "title": "Bir fincandan ne kazanıyorsunuz?",
+          "sub": "Kahve, süt, bardak, personel saati — fincanın gerçek maliyeti.",
+          "toolsTitle": "Kafe için başlangıç",
+          "tools": {
+            "t1": {
+              "name": "Food cost",
+              "desc": "Fincan ve tatlı maliyeti"
+            },
+            "t2": {
+              "name": "Menü matrisi",
+              "desc": "Satışı hangi ürün taşıyor"
+            },
+            "t3": {
+              "name": "Personel planlayıcı",
+              "desc": "Saat saat personel sayısı"
+            }
+          }
+        },
+        "otel": {
+          "label": "Otel / pansiyon",
+          "title": "Boş oda size kaça mal oluyor?",
+          "sub": "Doluluk, OTA komisyonu, sezon — gecelik fiyatın arkasındaki rakamlar.",
+          "toolsTitle": "Otel için başlangıç",
+          "tools": {
+            "t1": {
+              "name": "OTA hazırlık testi",
+              "desc": "Booking / Airbnb profiliniz hazır mı"
+            },
+            "t2": {
+              "name": "Yıldız hazırlık testi",
+              "desc": "Kategori gereklilikleri"
+            },
+            "t3": {
+              "name": "Pansiyon ROI",
+              "desc": "Yatırım kaç yılda geri döner"
+            }
+          }
+        },
+        "franchise": {
+          "label": "Franchise",
+          "title": "Bu franchise kendini çıkarır mı?",
+          "sub": "Royalti, giriş ücreti, ciro — imzadan önce hesap.",
+          "toolsTitle": "Franchise için başlangıç",
+          "tools": {
+            "t1": {
+              "name": "Hazırlık testi",
+              "desc": "Franchise almaya hazır mısınız"
+            },
+            "t2": {
+              "name": "Franchise ROI",
+              "desc": "Geri dönüş süresi"
+            },
+            "t3": {
+              "name": "Franchise kitabı",
+              "desc": "Kendi franchise kitabınız"
+            }
+          }
+        },
+        "acilis": {
+          "label": "Açılış yapıyorum",
+          "title": "Açılış için ne kadar gerekir?",
+          "sub": "Tadilat, ekipman, ilk 6 ayın işletme sermayesi — kapıyı açmadan önce.",
+          "toolsTitle": "Açılış için başlangıç",
+          "tools": {
+            "t1": {
+              "name": "Başabaş noktası",
+              "desc": "Günde kaç misafir gerekir"
+            },
+            "t2": {
+              "name": "İnşaat kontrol listesi",
+              "desc": "Mekan, tadilat, ekipman"
+            },
+            "t3": {
+              "name": "AQTA hazırlığı",
+              "desc": "Hijyen ve belgeler"
+            }
+          }
+        }
+      }
     }
   },
   "dashboardAuditor": {

@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0469: feat(home): v2 hero — seqment seçimi + çap olunan çek + canlı hesab
+
+**Why:** Doğan bəyin "DK Agency v2 Dizayn" kanvası: ana səhifə üzvlük üçün qurulur — əvvəl dəyər (canlı hesab + çek), sonra "Hesabatı saxla — üzv ol".
+
+**What:** Yeni `components/home/ReceiptHero.tsx` (Pattern A, `home.receiptHero`, 4 dil) köhnə `Hero`-nun yerinə. "Siz kimsiniz?" (Restoran/Kafe/Otel/Françayz/Açılış) başlığı, alt mətni və 3 başlanğıc alətini dəyişir (15 link, hamısı real route). Nümunə çek yuxarıdan çap olunur, sətirlər ardıcıl gəlir; satış/alış yazanda food cost %, itki məbləği (sayaraq) və çekin "QALAN"-ı dərhal yenilənir. Rəqəm formatı `lib/i18n/format.ts` (AZ: 50.000). Animasiyalar CSS module-dadır (`globals.css` qorunur), `prefers-reduced-motion`-a hörmət edir. Seqment düymələri `text-slate-700/900` + `aria-pressed`.
+
+**Qərarlar:** foto yalnız `/haqqimizda`; Kalfa/Usta qiymətləri ödəniş hazır olana qədər yox.
+
+**Doğrulama:** Playwright 35/35 (seqment, hesab 38,0%→30,0%→40,0%, itki 4.000/5.000, 15 alət linki 200, 390 px overflow 0, EN/RU/TR başlıq + raw key yox, page error yox). dk-validator aşağıda.
+
 ## 2026-10-04 — TASK-0468: fix(i18n): "Quranımızdan" → "Qurucumuzdan"
 
 **Why:** Doğan bəy `/haqqimizda` kurucu bölməsində başlığın yanlış olduğunu gördü: "Quranımızdan" ("Quranımızdan" = Qurandan) yazılmışdı, düzgünü "Qurucumuzdan".
