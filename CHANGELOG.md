@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0473` chore(ci): həftəlik STATE snapshot artıq `main`-ə birbaşa push etmir (ruleset bağlayırdı) — `bot/state-*` PR açır, yalnız `docs/STATE.md` dəyişirsə avtomatik merge olur.
+
 - `TASK-0477` feat(news): DeepSeek-in yazdığı xəbərlər Telegram-a ✅ Yayınla / ❌ Rədd et düymələri ilə gəlir; düymə saytda dərhal yayınlayır (tərcümə + alət uyğunlaşdırma daxil) və ya rədd edir.
 
 - `TASK-0474` fix(seo): JSON-LD/canonical-da `/undefined/` URL-ləri düzəldi; RU/EN/TR bloq başlıqları tərcümədə; login/e-poçt/placeholder səhifələri `noindex`; robots.txt şəxsi bölmələri bağlayır; sitemap təmizləndi (+ addim-xerci, elan detalları); `/listings` `/xeberler` `/about` `/contact` `/news` daimi (308) redirect.

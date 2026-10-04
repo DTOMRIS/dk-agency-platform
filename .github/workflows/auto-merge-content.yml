@@ -34,6 +34,11 @@ jobs:
           ALLOW='^(docs/|content/|decision-log/)|^(CHANGELOG|DEVLOG|HANDOFF|README)\.md$|^lib/data/pendingNews\.json$'
           DENY='^docs/STATE\.md$'
           if [ ! -s changed.txt ]; then echo "content=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          # TASK-0473: həftəlik snapshot botu — yalnız bot/state-* branch-i VƏ yalnız docs/STATE.md.
+          if [[ "${{ github.event.pull_request.head.ref }}" == bot/state-* ]] && [ "$(cat changed.txt)" = "docs/STATE.md" ]; then
+            echo "STATE snapshot botu → auto-merge aktiv edilir."
+            echo "content=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
           if grep -Evq "$ALLOW" changed.txt || grep -Eq "$DENY" changed.txt; then
             echo "Kod/konfiq dəyişikliyi var → əl ilə merge (Doğan)."
             echo "content=false" >> "$GITHUB_OUTPUT"
