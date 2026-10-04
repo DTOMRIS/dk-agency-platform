@@ -4,6 +4,8 @@
 
 - `TASK-0475` feat(seo): şirkət (Organization + ProfessionalService: hüquqi ad, VÖEN, 2010, ünvan, e-poçt, iş saatları) və qurucu (Person) schema-sı; /haqqimizda AboutPage JSON-LD 4 dildə; "10+ il" → "40 il"; llms.txt-ə "Faktlar" bölməsi.
 
+- `TASK-0474` fix(seo): JSON-LD/canonical-da `/undefined/` URL-ləri düzəldi; RU/EN/TR bloq başlıqları tərcümədə; login/e-poçt/placeholder səhifələri `noindex`; robots.txt şəxsi bölmələri bağlayır; sitemap təmizləndi (+ addim-xerci, elan detalları); `/listings` `/xeberler` `/about` `/contact` `/news` daimi (308) redirect.
+
 - `TASK-0472` fix(i18n): otel/OTA/qonaq evi alətləri RU/EN/TR-də tərcümə olundu; `/uzvluk`-dan ictimai dev qeydləri çıxarıldı (real üzvlük səhifəsi, 4 dil), `/docs/member-env-checklist` silindi; ana səhifə elan lövhəsi uydurma elanlar əvəzinə real elanları göstərir; Şədd Rozeti, e-poçt təsdiqi/seçimləri, "tezliklə" səhifəsi (forma real API-yə bağlandı) 4 dildə; `/news` → `/haberler`; razılıq mətnləri Azərbaycan «Fərdi məlumatlar haqqında» Qanununa əsaslanır (Türkiyədən müraciət üçün həmçinin KVKK).
 
 - `TASK-0471` fix(ui): AZ sayt artıq cihaz dilinə görə rus/türk dilinə keçmir (dil yalnız menyudan); AZ-da `/privacy` `/terms` `/cookies` 404-ü və 8 başqa çatışmayan root mirror düzəldi; RU/EN/TR-də footer AZ çıxırdı; footer mobil (alt menü altında qalmır, 2 sütun, 4 dil); `/ru/about` locale-i saxlayır; food-cost/menu-matrix/delivery-calc mobil üfüqi scroll; KAZAN düyməsi alt menünü örtmür.

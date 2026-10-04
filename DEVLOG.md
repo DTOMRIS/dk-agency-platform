@@ -9,6 +9,13 @@
 **Qəsdən edilməyən:** `sameAs` — koddakı sosial linklər təxmin idi, `t.me/dkagency` başqasınındır. Telefon — /elaqe onu gizlədir.
 
 **Doğrulama:** production build; /haqqimizda və /ru/haqqimizda-da AboutPage + Organization + Person; ana səhifədə zəngin Organization; llms.txt faktlar. dk-validator aşağıda.
+## 2026-10-04 — TASK-0474: fix(seo): kritik SEO xətaları
+
+**Why:** SEO/AI auditi (2026-10-04): AZ bloq JSON-LD-də `dkagency.com.tr/undefined/blog/...`, `/listings` canonical `/undefined/ilanlar`, RU/EN/TR bloq `<title>` AZ, login/e-poçt/placeholder səhifələri indekslənirdi, sitemap-da redirect olunan və dublikat URL-lər.
+
+**What:** `localeUrl`/`getAlternates` locale-i özləri normallaşdırır (root mirror-da `undefined` gəlirdi) — bütün çağırışlar birdən düzəldi. Bloq `seo_title/seo_description` yalnız AZ-da; digər dillərdə tərcümə başlığı/xülasəsi. 8 səhifə növünə `noindex, follow` layout. robots.txt: dashboard/b2b-panel/settings/api 4 dildə Disallow. Sitemap: `/xeberler` və `/b2b-panel` çıxarıldı, `addim-xerci` və təsdiqli elan detalları əlavə, statik səhifələrdə saxta `lastmod` yox. `/listings`, `/xeberler`, `/about`, `/contact`, `/news` → 308.
+
+**Doğrulama (production build):** redirect-lər 308; noindex 8/8; robots Disallow 16 sətir; sitemap 296 URL, xeberler/b2b-panel 0; `/undefined/` 0 (5 səhifə + bloq yazısı AZ/EN). dk-validator aşağıda.
 
 ## 2026-10-04 — TASK-0472: fix(i18n+content): tərcümə olunmamış səhifələr, ictimai dev qeydləri, uydurma elanlar
 

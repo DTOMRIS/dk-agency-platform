@@ -15,7 +15,9 @@ const ORG_LOGO = `${SITE_URL}/icon-512.png`;
 const ABOUT_URL = `${SITE_URL}/haqqimizda`;
 
 /** Absolute URL for a path in the given locale (az = no prefix). */
-export function localeUrl(locale: string, path: string): string {
+export function localeUrl(rawLocale: string | null | undefined, path: string): string {
+  // Root mirrors (L-038) pass no locale param → undefined; never emit `/undefined/...` (TASK-0474).
+  const locale = normalizeLocale(rawLocale);
   const prefix = locale === 'az' ? '' : `/${locale}`;
   const clean = path === '/' ? '' : path;
   return `${SITE_URL}${prefix}${clean}` || SITE_URL;
