@@ -240,7 +240,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-3 py-5">
+        <nav className="min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-3 py-5">
           <div className="space-y-5">
             {navSections.map((section) => (
               <div key={section.titleKey ?? 'home'}>
@@ -266,7 +266,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
                         }`}
                       >
                         <Icon size={18} className={active ? 'text-[#0A7AFF]' : 'text-slate-500'} aria-hidden="true" />
-                        <span className="flex-1 text-[14px] font-medium">{title}</span>
+                        <span className="min-w-0 flex-1 truncate text-[14px] font-medium">{title}</span>
                         {badge ? (
                           <span className="min-w-[22px] rounded-full bg-[#E11D48] px-2 py-0.5 text-center text-[11px] font-bold text-white">
                             {badge}

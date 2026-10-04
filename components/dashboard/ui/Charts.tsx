@@ -158,7 +158,13 @@ export function BarChart({
               <title>{`${shortDay(p.day, locale)}: ${p.value}`}</title>
             </rect>
             {i % labelEvery === 0 && (
-              <text x={x + barW / 2} y={H - 6} textAnchor="middle" fontSize={11} fill="#6B7280">
+              <text
+                x={i === 0 ? x : x + barW / 2}
+                y={H - 6}
+                textAnchor={i === 0 ? 'start' : 'middle'}
+                fontSize={11}
+                fill="#6B7280"
+              >
                 {shortDay(p.day, locale)}
               </text>
             )}

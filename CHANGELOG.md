@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0484` fix(dashboard): "Qərar gözləyir" yalnız son 14 günü göstərir (köhnə zibil və admin-in öz profili çıxdı, markdown təmizləndi); blog idarə səhifəsi yeni üslubda.
+
 - `TASK-0483` feat(dashboard): OCAQ v2 — təmiz, açıq panel: "Qərar gözləyir" önə, real qrafiklər (müraciətlər, mənbələr, istifadəçilər, xəbərlər); istifadəçilər səhifəsi yeni dizaynda; dil menyusu artıq menyu və məzmunu eyni dildə göstərir.
 
 - `TASK-0482` fix(news): DeepSeek dünya HoReCa/AI xəbərlərini artıq rədd etmir (aydın uyğunluq meyarı); hər analizə "Bu həftə 1 addım" bölməsi; cavab kəsilməsi və JSON xətaları düzəldi.
