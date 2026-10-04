@@ -137,9 +137,13 @@ const CORE_ENTRIES: Entry[] = [
   {
     title: 'Üzvlük',
     path: '/uzvluk',
-    description: 'DK Agency member access, premium blog, KAZAN AI və gələcək subscription qatları.',
+    description: 'Pulsuz hesab: elan yerləşdirmək, müraciətləri və fakturaları B2B paneldə idarə etmək. Hesablayıcılar hesabsız da pulsuzdur.',
   },
-  { title: 'Haqqımızda', path: '/haqqimizda' },
+  {
+    title: 'Haqqımızda',
+    path: '/haqqimizda',
+    description: 'DK Agency və qurucusu Doğan Tomris: 2010-da qurulub, 40 illik HoReCa təcrübəsi.',
+  },
   {
     title: 'Bizimlə əlaqə',
     path: '/elaqe',
@@ -161,6 +165,16 @@ export async function GET(): Promise<Response> {
       '# DK Agency',
       '> Azərbaycanın ilk AI-dəstəkli HoReCa platforması: restoran, kafe, otel və qonaq evi sahibləri üçün pulsuz hesablama alətləri, ekspert bloqu, HoReCa elanları və franchise (françayzinq) məsləhəti.',
       'Sayt dörd dildə xidmət göstərir: Azərbaycan (prefikssiz, əsas dil), rus (`/ru`), ingilis (`/en`) və türk (`/tr`). Aşağıdakı ünvanlar Azərbaycan dilindədir.',
+      [
+        '## Faktlar',
+        '',
+        '- Şirkət: DK Agency (hüquqi ad: DENİS TOMRİS MMC, VÖEN 1405471681), Bakı, Azərbaycan. 2010-da qurulub.',
+        '- Qurucu: Doğan Tomris — 40 ildir HoReCa sektorunda; Türkiyə, Azərbaycan, Rusiya və Gürcüstanda restoran və otel layihələri.',
+        '- Xidmətlər: HoReCa məsləhəti (restoran, kafe, otel, qonaq evi), franchise (françayzinq) məsləhəti, pulsuz hesablama alətləri, ekspert bloqu, HoReCa elanları.',
+        '- Brendlər: KAZAN AI (AI köməkçi), OCAQ (sahibkar paneli), Şədd Rozeti (keyfiyyət/audit nişanı).',
+        '- Xidmət ərazisi: Azərbaycan (əsas), Türkiyə.',
+        `- Əlaqə: info@dkagency.com.tr, ${SITE_URL}/elaqe — iş saatları bazar ertəsi–cümə, 09:00–18:00 (UTC+4).`,
+      ].join('\n'),
       toSection('Franchise (françayzinq)', franchiseEntries),
       toSection('Sektor bələdçiləri', sektorEntries),
       toSection('Pulsuz alətlər (toolkit)', TOOLKIT_ENTRIES),
