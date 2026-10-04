@@ -8,6 +8,7 @@ import FloatingKazanWidget from '@/components/kazan-ai/FloatingKazanWidget';
 import { normalizeLocale, withLocale } from '@/i18n/config';
 
 function FooterNewsletter() {
+  const t = useTranslations('footer');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -40,7 +41,9 @@ function FooterNewsletter() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-posta"
+          placeholder={t('newsletterPlaceholder')}
+          aria-label={t('newsletterLabel')}
+          autoComplete="email"
           required
           className="min-w-0 flex-1 rounded-lg border border-[var(--dk-warm-border)] bg-white px-3 py-2 text-xs text-slate-900 outline-none focus:border-[var(--dk-gold)]"
         />
@@ -49,11 +52,11 @@ function FooterNewsletter() {
           disabled={status === 'loading'}
           className="shrink-0 rounded-lg bg-[var(--dk-red)] px-3 py-2 text-xs font-bold text-white disabled:opacity-60"
         >
-          {status === 'loading' ? '...' : 'Abunə ol'}
+          {status === 'loading' ? '...' : t('newsletterSubmit')}
         </button>
       </div>
-      {status === 'success' && <p className="mt-2 text-xs font-semibold text-emerald-600">Abunə oldunuz!</p>}
-      {status === 'error' && <p className="mt-2 text-xs font-semibold text-rose-600">Xəta baş verdi.</p>}
+      {status === 'success' && <p role="status" className="mt-2 text-xs font-semibold text-emerald-700">{t('newsletterSuccess')}</p>}
+      {status === 'error' && <p role="alert" className="mt-2 text-xs font-semibold text-rose-700">{t('newsletterError')}</p>}
     </form>
   );
 }
@@ -98,16 +101,16 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t border-[var(--dk-warm-border)] bg-[var(--dk-paper)] pb-8 pt-16">
+    <footer className="border-t border-[var(--dk-warm-border)] bg-[var(--dk-paper)] pb-28 pt-16 lg:pb-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-5">
           {/* Brand column */}
-          <div className="lg:col-span-1">
+          <div className="col-span-2 lg:col-span-1">
             <div className="mb-4 flex items-center gap-2">
-              <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-9 w-9 shrink-0 object-contain" />
+              <img src="/images/logo-mobil.png" alt={t('logoAlt')} className="h-9 w-9 shrink-0 object-contain" />
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-[var(--dk-ink)]">DK Agency</span>
-                <span className="text-[9px] font-medium tracking-wider text-[var(--dk-gold)]">USTALIĞIN NİŞANI</span>
+                <span className="text-[9px] font-medium tracking-wider text-[var(--dk-gold)]">{t('brandTagline')}</span>
               </div>
             </div>
             <p className="max-w-[240px] text-sm leading-relaxed text-[var(--dk-ink-soft)]">{t('slogan')}</p>
@@ -138,7 +141,7 @@ export function Footer() {
             <p className="text-xs text-[var(--dk-ink-soft)]">
               &copy; 2026 {t('companyName')} &middot; {t('voen')} &middot; {t('rights')}
             </p>
-            <nav aria-label="Legal" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            <nav aria-label={t('legalNav')} className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
               {legalLinks.map((link) => (
                 <Link key={link.href} href={withLocale(locale, link.href)}
                   className="text-xs text-[var(--dk-ink-soft)] transition-colors hover:text-[var(--dk-gold)]">

@@ -1,5 +1,20 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0471: fix(ui): footer, dil yönləndirməsi, hüquqi 404, mobil overflow
+
+**Why:** Doğan: "azericeyi rusça yapmışsın düzelt; footerlar yanlış durumda hepsine bak mobilde kontrol et çapraz bak herşeye".
+
+**Tapıldı + düzəldildi:**
+- **AZ → RU:** `DeviceLanguageDetector` rus dilli cihazda AZ saytı `/ru`-ya atırdı, header-də "AZ" seçmək geri atırdı, paylaşılan `/en/blog` linkini `/ru/blog` edirdi. Komponent silindi (qayda: UI default AZ); dil yalnız menyudan.
+- **Hüquqi səhifələr AZ-da 404:** `/privacy` `/terms` `/cookies` root mirror-u yox idi + səhifə locale-siz `notFound()` edirdi → footer linkləri 404. Mirror + `undefined` = az. 8 başqa çatışmayan mirror da əlavə (L-038): about, contact, listings, pricing, qiymet, randevu, terefdashlar, ilanlar/[slug].
+- **RU/EN/TR-də footer AZ:** hüquqi səhifələr `force-static` idi → kök layout build vaxtı locale bilmirdi. `force-static` çıxarıldı.
+- **Footer mobil:** hüquqi zolaq alt menünün altında qalırdı (`pb-28 lg:pb-8`); linklər 2 sütun; sabit AZ mətnlər ("Abunə ol", "E-posta", "USTALIĞIN NİŞANI", xəta/uğur) → `footer.*` 4 dil; input `aria-label`.
+- **`/ru/about`, `/en/contact`** redirect-i locale-i itirirdi → locale saxlanılır.
+- **Alətlər mobil overflow:** `ToolkitStudioLayout` grid uşaqlarında `min-w-0` yox idi → food-cost/menu-matrix/delivery-calc 95–149 px üfüqi scroll. Düzəldi; geniş cədvəl kartın içində scroll olur.
+- **KAZAN düyməsi** mobil alt menünün sağ ucunu örtürdü → menyunun üstünə qaldırıldı.
+
+**Doğrulama (production build):** 69 AZ səhifə 390 px-də — 200, overflow 0, page error 0, kiril 0; RU/EN footer/header-də AZ sızıntı 0; dil ssenariləri (RU/TR/AZ cihaz, menyudan seçim, `/en/blog` birbaşa) düzgün. dk-validator aşağıda.
+
 ## 2026-10-04 — TASK-0469: feat(home): v2 hero — seqment seçimi + çap olunan çek + canlı hesab
 
 **Why:** Doğan bəyin "DK Agency v2 Dizayn" kanvası: ana səhifə üzvlük üçün qurulur — əvvəl dəyər (canlı hesab + çek), sonra "Hesabatı saxla — üzv ol".

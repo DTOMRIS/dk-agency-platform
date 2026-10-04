@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: `${listing.title} | DK Agency`,
     description: listing.description?.slice(0, 160) || '',
-    alternates: getAlternates(locale, `/ilanlar/${slug}`),
+    alternates: getAlternates(normalized, `/ilanlar/${slug}`),
     openGraph: {
       title: listing.title,
       description: listing.description?.slice(0, 160) || '',

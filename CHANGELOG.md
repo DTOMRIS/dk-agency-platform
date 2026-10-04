@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0471` fix(ui): AZ sayt artıq cihaz dilinə görə rus/türk dilinə keçmir (dil yalnız menyudan); AZ-da `/privacy` `/terms` `/cookies` 404-ü və 8 başqa çatışmayan root mirror düzəldi; RU/EN/TR-də footer AZ çıxırdı; footer mobil (alt menü altında qalmır, 2 sütun, 4 dil); `/ru/about` locale-i saxlayır; food-cost/menu-matrix/delivery-calc mobil üfüqi scroll; KAZAN düyməsi alt menünü örtmür.
+
 - `TASK-0469` feat(home): ana səhifənin yeni hero-su — "Siz kimsiniz?" seqment seçimi, çap olunan nümunə çek, canlı food cost hesablayıcısı (itki manatla) və seqmentə görə 3 başlanğıc aləti; 4 dil, mobil, `prefers-reduced-motion`.
 
 - `TASK-0468` fix(i18n): `/haqqimizda` kurucu bölməsinin AZ başlığı "Quranımızdan" → "Qurucumuzdan" düzəldildi.
