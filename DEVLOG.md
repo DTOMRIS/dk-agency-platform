@@ -12,6 +12,13 @@
 - **Marşrutlar:** `/news` (uydurma xəbər səhifəsi) → `/haberler`; `/ru|en|tr/xeberler`, `/…/auth/forgot-password` 404 → işləyir.
 
 **Doğrulama:** production build; RU/EN/TR çapraz skan — qalan AZ mətn yalnız rəsmi adlar (Milli Ulduz Təsnifatı, e-qaimə) və lokal mock-data (DB-siz); canlıda bloq tərcüməlidir. dk-validator aşağıda.
+## 2026-10-04 — TASK-0470: chore(githooks): hook faylları icra icazəli
+
+**Why:** macOS-da hook-lar heç işləmirdi: (1) əsas klonda `core.hooksPath` Windows yolunu göstərirdi, (2) `githooks/*` git-də `100644` idi — hər yeni worktree-də "hook was ignored because it's not set as executable".
+
+**What:** `githooks/{commit-msg,pre-commit,pre-push}` → `100755`. Lokal `core.hooksPath=githooks` (konfiq). `docs/REPO-GOVERNANCE.md`-yə bir dəfəlik qurulum qeydi.
+
+**Doğrulama:** bu commit-in özü yeni worktree-də hook-larla (pre-commit + commit-msg) keçdi.
 
 ## 2026-10-04 — TASK-0469: feat(home): v2 hero — seqment seçimi + çap olunan çek + canlı hesab
 
