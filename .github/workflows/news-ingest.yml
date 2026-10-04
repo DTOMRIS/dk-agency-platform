@@ -30,6 +30,13 @@ jobs:
           NEWSDATA_API_KEY: ${{ secrets.NEWSDATA_API_KEY }}
         run: npm run news:fetch
 
+      # TASK-0480: verified trade-press RSS (Skift AI, Restaurant/Hotel Dive, Hospitality Net, Turizm Güncel,
+      # Report.az/Trend titles…) → same scoring → same synthesis + Telegram approval.
+      - name: Fetch trade-press RSS
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx tsx scripts/news-rss-fetch.ts
+
       - name: Synthesize with DeepSeek
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

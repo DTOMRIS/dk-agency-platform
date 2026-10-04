@@ -7,7 +7,7 @@
  * Toolkit matching + translation happen at approve time (existing flow, NOT rebuilt here).
  */
 
-import { and, desc, eq, isNull } from 'drizzle-orm';
+import { and, desc, eq, inArray, isNull } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
 import { AI_MODELS } from '@/lib/ai-models';
@@ -94,9 +94,9 @@ export interface SynthesizeResult {
 
 /**
  * Process fetched signals: send to DeepSeek for original DK analysis.
- * Only processes articles with origin='newsdata', status='fetched', no contentAz.
+ * Only processes articles with origin='newsdata' or 'rss', status='fetched', no contentAz.
  */
-export async function synthesizeFetchedNews(limit = 10): Promise<SynthesizeResult> {
+export async function synthesizeFetchedNews(limit = 15): Promise<SynthesizeResult> {
   const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!apiKey) {
     return { synthesized: 0, skipped: 0, unpublishable: 0, errors: ['DEEPSEEK_API_KEY not set'] };
@@ -118,7 +118,8 @@ export async function synthesizeFetchedNews(limit = 10): Promise<SynthesizeResul
     .from(newsArticles)
     .where(
       and(
-        eq(newsArticles.origin, 'newsdata'),
+        // TASK-0480: trade-press RSS drafts go through the same synthesis
+        inArray(newsArticles.origin, ['newsdata', 'rss']),
         eq(newsArticles.status, 'fetched'),
         isNull(newsArticles.contentAz),
       ),

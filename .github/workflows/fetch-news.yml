@@ -4,8 +4,10 @@ permissions:
   contents: write
 
 on:
-  schedule:
-    - cron: '0 8 * * *'  # Hər gün 08:00 UTC
+  # TASK-0480: schedule off — this path wrote lib/data/pendingNews.json, which no public page reads,
+  # and every daily bot PR triggered an extra Hostinger deploy. Trade RSS now goes to the DB via
+  # news-ingest.yml (scripts/news-rss-fetch.ts). Manual run still possible.
+  # (was: schedule: - cron: '0 8 * * *')
   workflow_dispatch:
 
 jobs:
