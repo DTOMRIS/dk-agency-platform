@@ -3,7 +3,15 @@
 import Link from 'next/link';
 import { useEffect, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, ChevronRight, Plus, Search, CheckSquare, Square, Loader2 } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  Search,
+  CheckSquare,
+  Square,
+  Loader2,
+} from 'lucide-react';
 import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import { getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
@@ -47,6 +55,15 @@ const pageCopy: Record<
     prevPage: string;
     nextPage: string;
     statusLabels: Record<string, string>;
+    newListing: string;
+    selectedCount: string;
+    batchToReview: string;
+    batchToShowcase: string;
+    rejectReasonPlaceholder: string;
+    batchReject: string;
+    batchCancel: string;
+    colSector: string;
+    colAge: string;
   }
 > = {
   az: {
@@ -79,10 +96,20 @@ const pageCopy: Record<
       showcase_ready: 'Vitrində',
       rejected: 'Rədd',
     },
+    newListing: 'Yeni elan yarat',
+    selectedCount: 'elan seçildi',
+    batchToReview: 'İncələməyə göndər',
+    batchToShowcase: 'Vitrinə al',
+    rejectReasonPlaceholder: 'Rədd səbəbi...',
+    batchReject: 'Rədd et',
+    batchCancel: 'Ləğv et',
+    colSector: 'Sektor',
+    colAge: 'Yaş',
   },
   ru: {
     pageTitle: 'Управление объявлениями',
-    pageSubtitle: 'Список объявлений работает с DB-запросом, фильтром статуса, поиском и пагинацией.',
+    pageSubtitle:
+      'Список объявлений работает с DB-запросом, фильтром статуса, поиском и пагинацией.',
     searchPlaceholder: 'Поиск по заголовку или tracking code',
     statTotal: 'Всего объявлений',
     statPending: 'Ожидающие',
@@ -99,7 +126,8 @@ const pageCopy: Record<
     reviewAction: 'Просмотр →',
     emptyState: 'Объявления по данному фильтру не найдены.',
     loading: 'Загрузка...',
-    paginationSummary: (total, current, pages) => `${total} результатов, страница ${current}/${pages}`,
+    paginationSummary: (total, current, pages) =>
+      `${total} результатов, страница ${current}/${pages}`,
     prevPage: 'Назад',
     nextPage: 'Вперёд',
     statusLabels: {
@@ -110,10 +138,20 @@ const pageCopy: Record<
       showcase_ready: 'В витрине',
       rejected: 'Отклонено',
     },
+    newListing: 'Создать объявление',
+    selectedCount: 'объявл. выбрано',
+    batchToReview: 'Отправить на рассмотрение',
+    batchToShowcase: 'В витрину',
+    rejectReasonPlaceholder: 'Причина отклонения...',
+    batchReject: 'Отклонить',
+    batchCancel: 'Отмена',
+    colSector: 'Сектор',
+    colAge: 'Возраст',
   },
   en: {
     pageTitle: 'Listing Management',
-    pageSubtitle: 'The listing table is powered by DB queries with status filtering, search, and pagination.',
+    pageSubtitle:
+      'The listing table is powered by DB queries with status filtering, search, and pagination.',
     searchPlaceholder: 'Search by title or tracking code',
     statTotal: 'Total listings',
     statPending: 'Pending',
@@ -141,6 +179,15 @@ const pageCopy: Record<
       showcase_ready: 'In showcase',
       rejected: 'Rejected',
     },
+    newListing: 'Create listing',
+    selectedCount: 'listings selected',
+    batchToReview: 'Send to review',
+    batchToShowcase: 'Move to showcase',
+    rejectReasonPlaceholder: 'Rejection reason...',
+    batchReject: 'Reject',
+    batchCancel: 'Cancel',
+    colSector: 'Sector',
+    colAge: 'Age',
   },
   tr: {
     pageTitle: 'İlan Yönetimi',
@@ -172,6 +219,15 @@ const pageCopy: Record<
       showcase_ready: 'Vitirinde',
       rejected: 'Reddedildi',
     },
+    newListing: 'Yeni ilan oluştur',
+    selectedCount: 'ilan seçildi',
+    batchToReview: 'İncelemeye gönder',
+    batchToShowcase: 'Vitrine al',
+    rejectReasonPlaceholder: 'Ret sebebi...',
+    batchReject: 'Reddet',
+    batchCancel: 'İptal',
+    colSector: 'Sektör',
+    colAge: 'Yaş',
   },
 };
 
@@ -243,7 +299,9 @@ export default function DashboardIlanlarPage() {
           const query = search.trim().toLowerCase();
           const fallback = MOCK_LISTINGS.filter((listing) => {
             const matchesStatus =
-              !selected || selected.apiStatus === 'all' ? true : listing.status === selected.apiStatus;
+              !selected || selected.apiStatus === 'all'
+                ? true
+                : listing.status === selected.apiStatus;
             const matchesQuery =
               !query ||
               listing.title.toLowerCase().includes(query) ||
@@ -254,7 +312,7 @@ export default function DashboardIlanlarPage() {
           const allStats = {
             total: MOCK_LISTINGS.length,
             pending: MOCK_LISTINGS.filter((item) =>
-              ['submitted', 'ai_checked', 'committee_review'].includes(item.status),
+              ['submitted', 'ai_checked', 'committee_review'].includes(item.status)
             ).length,
             showcase: MOCK_LISTINGS.filter((item) => item.status === 'showcase_ready').length,
             rejected: MOCK_LISTINGS.filter((item) => item.status === 'rejected').length,
@@ -296,34 +354,37 @@ export default function DashboardIlanlarPage() {
     }
   }, [listings, selectedIds.size]);
 
-  const handleBatchStatus = useCallback(async (targetStatus: ListingWorkflowStatus) => {
-    if (selectedIds.size === 0) return;
-    if (targetStatus === 'rejected' && !batchReason.trim()) return;
-    setBatchLoading(true);
-    try {
-      const res = await fetch('/api/listings/batch-status', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ids: Array.from(selectedIds),
-          status: targetStatus,
-          rejectedReason: targetStatus === 'rejected' ? batchReason.trim() : undefined,
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        // Refresh listings
-        setSelectedIds(new Set());
-        setBatchReason('');
-        setPage(1);
-        setStatusFilter('all');
+  const handleBatchStatus = useCallback(
+    async (targetStatus: ListingWorkflowStatus) => {
+      if (selectedIds.size === 0) return;
+      if (targetStatus === 'rejected' && !batchReason.trim()) return;
+      setBatchLoading(true);
+      try {
+        const res = await fetch('/api/listings/batch-status', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ids: Array.from(selectedIds),
+            status: targetStatus,
+            rejectedReason: targetStatus === 'rejected' ? batchReason.trim() : undefined,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          // Refresh listings
+          setSelectedIds(new Set());
+          setBatchReason('');
+          setPage(1);
+          setStatusFilter('all');
+        }
+      } catch {
+        // silent
+      } finally {
+        setBatchLoading(false);
       }
-    } catch {
-      // silent
-    } finally {
-      setBatchLoading(false);
-    }
-  }, [selectedIds, batchReason]);
+    },
+    [selectedIds, batchReason]
+  );
 
   function getAgeBadge(createdAt: string) {
     const days = Math.floor((Date.now() - new Date(createdAt).getTime()) / 86400000);
@@ -333,32 +394,69 @@ export default function DashboardIlanlarPage() {
     return { label: `${days} gün`, color: 'bg-rose-50 text-rose-700' };
   }
 
+  const cardCls =
+    'rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]';
+
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <span className="inline-flex rounded-full bg-slate-900 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
-              OCAQ
-            </span>
-            <h1 className="mt-4 font-display text-4xl font-black text-[var(--dk-navy)]">{copy.pageTitle}</h1>
-            <p className="mt-2 text-sm text-slate-500">
-              {copy.pageSubtitle}
-            </p>
+    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+      <div className="mx-auto max-w-[1320px] space-y-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">{copy.pageTitle}</h1>
+            <p className="mt-1 text-[15px] text-slate-600">{copy.pageSubtitle}</p>
+          </div>
+          <Link
+            href="/dashboard/ilanlar/yarat"
+            className="inline-flex h-11 items-center gap-2 rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
+          >
+            <Plus className="h-4 w-4" />
+            {copy.newListing}
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {[
+            { label: copy.statTotal, value: stats.total, dot: 'bg-slate-400' },
+            { label: copy.statPending, value: stats.pending, dot: 'bg-amber-500' },
+            { label: copy.statShowcase, value: stats.showcase, dot: 'bg-emerald-500' },
+            { label: copy.statRejected, value: stats.rejected, dot: 'bg-rose-500' },
+          ].map((card) => (
+            <div key={card.label} className={`${cardCls} p-5`}>
+              <div className="flex items-center gap-2">
+                <span className={`h-2 w-2 shrink-0 rounded-full ${card.dot}`} aria-hidden="true" />
+                <p className="truncate text-[14px] font-medium text-slate-600">{card.label}</p>
+              </div>
+              <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">
+                {card.value}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+            <div className="inline-flex gap-1 rounded-full bg-white p-1 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+              {STATUS_FILTERS.map((tab) => (
+                <button
+                  key={tab.key}
+                  type="button"
+                  aria-pressed={statusFilter === tab.key}
+                  onClick={() => {
+                    setStatusFilter(tab.key);
+                    setPage(1);
+                  }}
+                  className={`h-9 whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors ${
+                    statusFilter === tab.key ? 'bg-[#EEF4FF] text-slate-900' : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  {copy.statusLabels[tab.key] ?? tab.key}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Link
-              href="/dashboard/ilanlar/yarat"
-              className="inline-flex items-center gap-2 rounded-2xl bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:shadow-md"
-            >
-              <Plus className="h-4 w-4" />
-              Yeni elan yarat
-            </Link>
-          </div>
-
-          <div className="relative max-w-md flex-1">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-600" />
+          <div className="relative w-full lg:max-w-sm">
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
             <input
               value={search}
               onChange={(event) => {
@@ -366,118 +464,84 @@ export default function DashboardIlanlarPage() {
                 setPage(1);
               }}
               placeholder={copy.searchPlaceholder}
-              className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+              aria-label={copy.searchPlaceholder}
+              className="h-11 w-full rounded-full border-0 bg-white pl-10 pr-4 text-[14px] text-slate-800 shadow-[0_1px_2px_rgba(0,0,0,0.05)] outline-none transition focus:ring-2 focus:ring-[#0A7AFF]/30"
             />
           </div>
         </div>
 
-        <div className="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {[
-            { label: copy.statTotal, value: stats.total, tone: 'bg-slate-100 text-slate-700' },
-            { label: copy.statPending, value: stats.pending, tone: 'bg-amber-50 text-amber-700' },
-            { label: copy.statShowcase, value: stats.showcase, tone: 'bg-emerald-50 text-emerald-700' },
-            { label: copy.statRejected, value: stats.rejected, tone: 'bg-rose-50 text-rose-700' },
-          ].map((card) => (
-            <div key={card.label} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-              <div className={`inline-flex rounded-2xl px-3 py-2 text-xs font-bold ${card.tone}`}>
-                {card.label}
-              </div>
-              <div className="mt-4 text-4xl font-black text-[var(--dk-navy)]">{card.value}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mb-4 flex flex-wrap gap-2">
-          {STATUS_FILTERS.map((tab) => (
-            <button
-              key={tab.key}
-              type="button"
-              onClick={() => {
-                setStatusFilter(tab.key);
-                setPage(1);
-              }}
-              className={`rounded-full px-4 py-2 text-sm font-bold transition ${
-                statusFilter === tab.key
-                  ? 'bg-[var(--dk-red)] text-white'
-                  : 'border border-slate-200 bg-white text-slate-600 hover:border-[var(--dk-gold)]'
-              }`}
-            >
-              {copy.statusLabels[tab.key] ?? tab.key}
-            </button>
-          ))}
-        </div>
-
         {/* Batch action bar */}
         {selectedIds.size > 0 && (
-          <div className="mb-4 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <span className="text-sm font-bold text-slate-700">
-              {selectedIds.size} elan seçildi
+          <div className={`${cardCls} flex flex-wrap items-center gap-2 p-3 sm:p-4`}>
+            <span className="inline-flex h-8 items-center rounded-full bg-[#EEF4FF] px-3 text-[13px] font-semibold text-[#0A5BD6]">
+              {selectedIds.size} {copy.selectedCount}
             </span>
             <button
               type="button"
               disabled={batchLoading}
               onClick={() => handleBatchStatus('committee_review')}
-              className="rounded-full bg-amber-500 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+              className="inline-flex h-8 items-center rounded-full bg-amber-50 px-3 text-[12px] font-semibold text-amber-800 transition-colors hover:bg-amber-100 disabled:opacity-50"
             >
-              İncələməyə göndər
+              {copy.batchToReview}
             </button>
             <button
               type="button"
               disabled={batchLoading}
               onClick={() => handleBatchStatus('showcase_ready')}
-              className="rounded-full bg-emerald-500 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+              className="inline-flex h-8 items-center rounded-full bg-emerald-50 px-3 text-[12px] font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 disabled:opacity-50"
             >
-              Vitrinə al
+              {copy.batchToShowcase}
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex w-full items-center gap-2 sm:w-auto">
               <input
                 value={batchReason}
                 onChange={(e) => setBatchReason(e.target.value)}
-                placeholder="Rədd səbəbi..."
-                className="rounded-xl border border-rose-200 bg-white px-3 py-2 text-xs outline-none focus:border-rose-400 w-48"
+                placeholder={copy.rejectReasonPlaceholder}
+                aria-label={copy.rejectReasonPlaceholder}
+                className="h-8 min-w-0 flex-1 rounded-full border border-rose-200 bg-white px-3 text-[12px] text-slate-800 outline-none focus:border-rose-400 sm:w-48 sm:flex-none"
               />
               <button
                 type="button"
                 disabled={batchLoading || !batchReason.trim()}
                 onClick={() => handleBatchStatus('rejected')}
-                className="rounded-full bg-rose-500 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+                className="inline-flex h-8 shrink-0 items-center rounded-full bg-rose-50 px-3 text-[12px] font-semibold text-rose-700 transition-colors hover:bg-rose-100 disabled:opacity-50"
               >
-                Rədd et
+                {copy.batchReject}
               </button>
             </div>
             <button
               type="button"
               onClick={() => { setSelectedIds(new Set()); setBatchReason(''); }}
-              className="ml-auto text-xs font-semibold text-slate-500 hover:text-slate-700"
+              className="ml-auto inline-flex h-8 items-center rounded-full px-3 text-[12px] font-semibold text-slate-700 hover:bg-slate-100"
             >
-              Ləğv et
+              {copy.batchCancel}
             </button>
             {batchLoading && <Loader2 className="h-4 w-4 animate-spin text-slate-500" />}
           </div>
         )}
 
-        <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm">
+        <div className={`${cardCls} overflow-hidden`}>
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50">
-                <tr className="text-left text-xs font-black uppercase tracking-[0.16em] text-slate-500">
-                  <th className="px-3 py-4 w-10">
-                    <button type="button" onClick={toggleAll} className="text-slate-600 hover:text-slate-700">
-                      {selectedIds.size === listings.length && listings.length > 0 ? <CheckSquare className="h-4 w-4" /> : <Square className="h-4 w-4" />}
+            <table className="w-full min-w-[1080px] text-sm">
+              <thead>
+                <tr className="text-left text-[12px] uppercase tracking-wide text-slate-500">
+                  <th className="w-10 px-4 py-4">
+                    <button type="button" onClick={toggleAll} className="text-slate-600 hover:text-slate-900">
+                      {selectedIds.size === listings.length && listings.length > 0 ? <CheckSquare className="h-4 w-4 text-[#0A5BD6]" /> : <Square className="h-4 w-4" />}
                     </button>
                   </th>
-                  <th className="px-5 py-4">{copy.colTrackingCode}</th>
-                  <th className="px-5 py-4">{copy.colTitle}</th>
-                  <th className="px-5 py-4">{copy.colCategory}</th>
-                  <th className="px-5 py-4">Sektor</th>
-                  <th className="px-5 py-4">{copy.colCity}</th>
-                  <th className="px-5 py-4">{copy.colPrice}</th>
-                  <th className="px-5 py-4">{copy.colStatus}</th>
-                  <th className="px-5 py-4">Yaş</th>
-                  <th className="px-5 py-4">{copy.colReview}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colTrackingCode}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colTitle}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colCategory}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colSector}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colCity}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colPrice}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colStatus}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colAge}</th>
+                  <th className="px-4 py-4 font-semibold">{copy.colReview}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody>
                 {listings.map((listing) => {
                   const category = LISTING_CATEGORIES.find((item) => item.id === listing.type);
                   const badge = getStatusBadge(listing.status);
@@ -485,48 +549,51 @@ export default function DashboardIlanlarPage() {
                   const isSelected = selectedIds.has(listing.id);
 
                   return (
-                    <tr key={listing.id} className={`text-sm text-slate-600 ${isSelected ? 'bg-blue-50/50' : ''}`}>
-                      <td className="px-3 py-4">
-                        <button type="button" onClick={() => toggleSelect(listing.id)} className="text-slate-600 hover:text-slate-700">
-                          {isSelected ? <CheckSquare className="h-4 w-4 text-[var(--dk-red)]" /> : <Square className="h-4 w-4" />}
+                    <tr
+                      key={listing.id}
+                      className={`border-t border-slate-100 text-slate-600 transition-colors ${isSelected ? 'bg-[#EEF4FF]/60' : 'hover:bg-[#F9F9FB]'}`}
+                    >
+                      <td className="px-4 py-3.5">
+                        <button type="button" onClick={() => toggleSelect(listing.id)} className="text-slate-600 hover:text-slate-900">
+                          {isSelected ? <CheckSquare className="h-4 w-4 text-[#0A5BD6]" /> : <Square className="h-4 w-4" />}
                         </button>
                       </td>
-                      <td className="px-5 py-4 font-bold text-[var(--dk-navy)]">{listing.trackingCode}</td>
-                      <td className="max-w-[260px] px-5 py-4">
-                        <div className="truncate font-semibold text-slate-900">{listing.title}</div>
+                      <td className="whitespace-nowrap px-4 py-3.5 font-mono text-[12px] font-semibold text-slate-700">{listing.trackingCode}</td>
+                      <td className="max-w-[260px] px-4 py-3.5">
+                        <div className="truncate font-medium text-slate-900">{listing.title}</div>
                       </td>
-                      <td className="px-5 py-4">
-                        <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${category?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
+                      <td className="px-4 py-3.5">
+                        <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold ${category?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
                           {category?.label ?? listing.type}
                         </span>
                       </td>
-                      <td className="px-5 py-4">
+                      <td className="px-4 py-3.5">
                         {listing.sector ? (
-                          <span className="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-600">
+                          <span className="inline-flex whitespace-nowrap rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
                             {getSectorLabel(listing.sector, locale)}
                           </span>
                         ) : (
                           <span className="text-slate-500">—</span>
                         )}
                       </td>
-                      <td className="px-5 py-4">{listing.city}</td>
-                      <td className="px-5 py-4 font-semibold text-[var(--dk-gold)]">
+                      <td className="px-4 py-3.5 text-slate-700">{listing.city}</td>
+                      <td className="whitespace-nowrap px-4 py-3.5 font-semibold text-slate-900 tabular-nums">
                         {formatPrice(listing.price, listing.currency, listing.priceLabel)}
                       </td>
-                      <td className="px-5 py-4">
-                        <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold ${badge.color}`}>
+                      <td className="px-4 py-3.5">
+                        <span className={`inline-flex whitespace-nowrap rounded-full border px-2.5 py-1 text-[12px] font-semibold ${badge.color}`}>
                           {badge.label}
                         </span>
                       </td>
-                      <td className="px-5 py-4">
-                        <span className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold ${age.color}`}>
+                      <td className="px-4 py-3.5">
+                        <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${age.color}`}>
                           {age.label}
                         </span>
                       </td>
-                      <td className="px-5 py-4">
+                      <td className="px-4 py-3.5">
                         <Link
                           href={`/dashboard/ilanlar/${listing.id}`}
-                          className="inline-flex rounded-full bg-[var(--dk-red)] px-4 py-2 text-xs font-bold text-white"
+                          className="inline-flex h-8 items-center whitespace-nowrap rounded-full bg-[#EEF4FF] px-3 text-[12px] font-semibold text-[#0A5BD6] transition-colors hover:bg-[#E0EBFF]"
                         >
                           {copy.reviewAction}
                         </Link>
@@ -539,11 +606,11 @@ export default function DashboardIlanlarPage() {
           </div>
 
           {!loading && listings.length === 0 ? (
-            <div className="px-6 py-12 text-center text-sm text-slate-500">{copy.emptyState}</div>
+            <div className="px-6 py-16 text-center text-sm text-slate-600">{copy.emptyState}</div>
           ) : null}
 
-          <div className="flex items-center justify-between border-t border-slate-200 px-5 py-4">
-            <p className="text-sm text-slate-500">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 px-5 py-4">
+            <p className="text-[13px] text-slate-600">
               {loading ? copy.loading : copy.paginationSummary(total, currentPage, totalPages)}
             </p>
             <div className="flex items-center gap-2">
@@ -551,7 +618,7 @@ export default function DashboardIlanlarPage() {
                 type="button"
                 disabled={currentPage === 1}
                 onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 disabled:opacity-40"
+                className="inline-flex h-9 items-center gap-1 rounded-full bg-[#F2F2F7] px-4 text-[13px] font-semibold text-slate-700 transition-colors hover:bg-slate-200 disabled:opacity-40"
               >
                 <ChevronLeft className="h-4 w-4" />
                 {copy.prevPage}
@@ -560,7 +627,7 @@ export default function DashboardIlanlarPage() {
                 type="button"
                 disabled={currentPage === totalPages}
                 onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 disabled:opacity-40"
+                className="inline-flex h-9 items-center gap-1 rounded-full bg-[#F2F2F7] px-4 text-[13px] font-semibold text-slate-700 transition-colors hover:bg-slate-200 disabled:opacity-40"
               >
                 {copy.nextPage}
                 <ChevronRight className="h-4 w-4" />

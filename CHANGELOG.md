@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0486` feat(dashboard): xəbərlər, elanlar, KAZAN/franchise leadləri, əlaqə izləmə, profil onayı və reklamlar səhifələri yeni OCAQ v2 üslubunda (yalnız görünüş; təsdiq/rədd axınları eyni).
+
 - `TASK-0484` fix(dashboard): "Qərar gözləyir" yalnız son 14 günü göstərir (köhnə zibil və admin-in öz profili çıxdı, markdown təmizləndi); blog idarə səhifəsi yeni üslubda.
 
 - `TASK-0483` feat(dashboard): OCAQ v2 — təmiz, açıq panel: "Qərar gözləyir" önə, real qrafiklər (müraciətlər, mənbələr, istifadəçilər, xəbərlər); istifadəçilər səhifəsi yeni dizaynda; dil menyusu artıq menyu və məzmunu eyni dildə göstərir.
