@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- `TASK-0488` fix(news): **sintez JSON xətaları** — `deepseek-v4-flash` reasoning token-ları `max_tokens`-ı tükəndirirdi (5/8 `finish_reason=length`); `thinking: disabled` → 8/8 etibarlı JSON.
 - `TASK-0487` feat(kazan-ai): **saytın real məzmunu** — `lib/kazan-ai/site-context.ts` bloq/toolkit/xəbər kontekstini prompt-a əlavə edir (ən uyğun 2 yazı xülasə+parça ilə), uydurma link qadağası, DeepSeek `max_tokens` 2500 (v4-flash reasoning), model sitatları silinir.
 - `TASK-0486` feat(dashboard): **qalan admin səhifələri OCAQ v2 üslubunda** — `/dashboard/xeberler`, `/ilanlar`, `/kazan-leads`, `/franchise-leads`, `/contact-tracking`, `/profil-onay`, `/reklamlar`: `#F2F2F7` fon, ağ `rounded-[22px]` kartlar, pill status nişanları, `#EEF4FF` aktiv filtr, avatar inisialları; cədvəllər öz kartında scroll olur (375px-də səhifə scroll yox). Yalnız vizual — API/DB/handler-lər dəyişmədi.
 - `TASK-0484` fix(dashboard): **fresh-only decision queue** — OCAQ qərar növbəsi yalnız son 14 günü göstərir (köhnələr ayrıca "stale" sətrində linklə), markdown təmizlənir, admin profilləri üzv sayından çıxarıldı; `/dashboard/blog` yeni Apple stilinə keçdi; sidebar nav `overflow-x-hidden` + truncate.
