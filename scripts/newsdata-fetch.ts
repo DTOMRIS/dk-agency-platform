@@ -19,6 +19,11 @@ async function main() {
   console.log(`  Duplicates:         ${result.duplicates}`);
   console.log(`  Skipped (no data):  ${result.skipped}`);
 
+  // TASK-0479: show what the filter kept and dropped, so thresholds are tuned from real data.
+  for (const item of result.accepted) console.log(`  + [${item.score}] ${item.title}`);
+  const rejected = [...result.rejected].sort((x, y) => y.score - x.score).slice(0, 40);
+  for (const item of rejected) console.log(`  - [${item.score}] ${item.title} (${item.domain})`);
+
   if (result.errors.length) {
     console.error(`  Errors (${result.errors.length}):`);
     for (const err of result.errors) {
