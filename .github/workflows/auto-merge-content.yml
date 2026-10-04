@@ -29,8 +29,9 @@ jobs:
         run: |
           git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" > changed.txt
           echo "Dəyişən fayllar:"; cat changed.txt
-          # İcazəli: docs/** (STATE.md xaric — onu bot yazır), content/**, decision-log/**, kökdəki jurnal .md-ləri
-          ALLOW='^(docs/|content/|decision-log/)|^(CHANGELOG|DEVLOG|HANDOFF|README)\.md$'
+          # İcazəli: docs/** (STATE.md xaric — onu bot yazır), content/**, decision-log/**, kökdəki jurnal .md-ləri,
+          # lib/data/pendingNews.json (TASK-0466: xəbər botu — yalnız admin təsdiq növbəsi)
+          ALLOW='^(docs/|content/|decision-log/)|^(CHANGELOG|DEVLOG|HANDOFF|README)\.md$|^lib/data/pendingNews\.json$'
           DENY='^docs/STATE\.md$'
           if [ ! -s changed.txt ]; then echo "content=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           if grep -Evq "$ALLOW" changed.txt || grep -Eq "$DENY" changed.txt; then
