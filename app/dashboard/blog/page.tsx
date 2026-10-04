@@ -108,26 +108,26 @@ export default function DashboardBlogPage() {
   const n = selected.size;
 
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
-      <div className="mx-auto max-w-7xl space-y-6">
+    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+      <div className="mx-auto max-w-[1320px] space-y-6">
         {/* Header */}
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
-            <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">Bloq idarəetmə</h1>
-            <p className="mt-3 text-sm text-slate-500">
+            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">Bloq idarəetmə</h1>
+            <p className="mt-1 text-[15px] text-slate-600">
               {posts.length} yazı · {posts.filter((p) => p.status === 'published').length} dərc edilib
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/dashboard/blog/translation-status"
-              className="rounded-full border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400"
+              className="inline-flex h-11 items-center rounded-full bg-white px-5 text-[14px] font-semibold text-slate-900 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-colors hover:bg-slate-50"
             >
               Tərcümə statusu
             </Link>
             <Link
               href="/dashboard/blog/new"
-              className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white"
+              className="inline-flex h-11 items-center rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
             >
               Yeni yazı +
             </Link>
@@ -135,12 +135,12 @@ export default function DashboardBlogPage() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto rounded-[32px] border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
           {loading ? (
             <div className="flex items-center justify-center py-20 text-slate-600">Yüklənir...</div>
           ) : (
             <table className="min-w-full text-sm">
-              <thead className="bg-slate-50 text-left text-slate-600">
+              <thead className="text-left text-[12px] uppercase tracking-wide text-slate-500">
                 <tr>
                   <th className="w-12 px-4 py-4">
                     <input
@@ -150,11 +150,11 @@ export default function DashboardBlogPage() {
                       className="h-4 w-4 rounded border-slate-300 accent-[var(--dk-red)]"
                     />
                   </th>
-                  <th className="px-4 py-4 font-black uppercase tracking-[0.18em]">Başlıq</th>
-                  <th className="px-4 py-4 font-black uppercase tracking-[0.18em]">Kateqoriya</th>
-                  <th className="px-4 py-4 font-black uppercase tracking-[0.18em]">Status</th>
-                  <th className="px-4 py-4 font-black uppercase tracking-[0.18em]">Tarix</th>
-                  <th className="w-28 px-4 py-4 font-black uppercase tracking-[0.18em]">Əməliyyat</th>
+                  <th className="px-4 py-3 font-semibold">Başlıq</th>
+                  <th className="px-4 py-3 font-semibold">Kateqoriya</th>
+                  <th className="px-4 py-3 font-semibold">Status</th>
+                  <th className="px-4 py-3 font-semibold">Tarix</th>
+                  <th className="w-28 px-4 py-3 font-semibold">Əməliyyat</th>
                 </tr>
               </thead>
               <tbody>

@@ -25,6 +25,7 @@ const COPY: Record<
     title: string;
     greeting: (n: number) => string;
     allClear: string;
+    stale: (n: number) => string;
     last30: string;
     decisions: string;
     decisionsSub: string;
@@ -58,6 +59,7 @@ const COPY: Record<
     greeting: (n) =>
       n > 0 ? `Sizdən ${n} qərar gözlənilir.` : 'Hər şey qaydasındadır — gözləyən qərar yoxdur.',
     allClear: 'Gözləyən qərar yoxdur.',
+    stale: (n) => `${n} köhnə element (14 gündən çox) növbədən çıxarılıb — xəbər və elan siyahılarında baxın.`,
     last30: 'Son 30 gün',
     decisions: 'Qərar gözləyir',
     decisionsSub: 'Xəbər · elan · profil · françayz müraciəti',
@@ -99,6 +101,7 @@ const COPY: Record<
     title: 'Центр управления',
     greeting: (n) => (n > 0 ? `Вас ждут ${n} решений.` : 'Всё в порядке — решений не ждёт ничего.'),
     allClear: 'Нет ожидающих решений.',
+    stale: (n) => `${n} старых элементов (старше 14 дней) скрыты из очереди — смотрите в списках новостей и объявлений.`,
     last30: 'Последние 30 дней',
     decisions: 'Ждут решения',
     decisionsSub: 'Новости · объявления · профили · заявки франшизы',
@@ -143,6 +146,7 @@ const COPY: Record<
         ? `${n} decisions are waiting for you.`
         : 'All clear — nothing is waiting for a decision.',
     allClear: 'Nothing is waiting.',
+    stale: (n) => `${n} older items (14+ days) are kept out of the queue — see the news and listings lists.`,
     last30: 'Last 30 days',
     decisions: 'Waiting for you',
     decisionsSub: 'News · listings · profiles · franchise enquiries',
@@ -185,6 +189,7 @@ const COPY: Record<
     greeting: (n) =>
       n > 0 ? `Sizi bekleyen ${n} karar var.` : 'Her şey yolunda — bekleyen karar yok.',
     allClear: 'Bekleyen karar yok.',
+    stale: (n) => `${n} eski öğe (14 günden eski) kuyruktan çıkarıldı — haber ve ilan listelerinde bakın.`,
     last30: 'Son 30 gün',
     decisions: 'Karar bekliyor',
     decisionsSub: 'Haber · ilan · profil · franchise başvurusu',
@@ -310,6 +315,18 @@ export default async function DashboardPage() {
                 </li>
               ))}
             </ul>
+          )}
+          {o.staleDecisions > 0 && (
+            <p className="mt-3 text-[13px] text-slate-500">
+              {t.stale(o.staleDecisions)}{' '}
+              <Link href={withLocale(locale, '/dashboard/xeberler')} className="font-medium text-[#0A5BD6] hover:underline">
+                {t.news}
+              </Link>
+              {' · '}
+              <Link href={withLocale(locale, '/dashboard/ilanlar')} className="font-medium text-[#0A5BD6] hover:underline">
+                {t.listings}
+              </Link>
+            </p>
           )}
         </DashCard>
 

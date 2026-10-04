@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0484: fix(dashboard): qərar növbəsi + blog səhifəsi
+
+**Why:** Canlı panel ekranlarında "Qərar gözləyir" 44-190 günlük zibil xəbər/elanlar, admin-in öz profili və `**markdown**` ilə dolu idi; blog səhifəsi köhnə üslubda qalmışdı.
+
+**What:** Növbə yalnız son 14 gün; admin profilləri xaric; başlıqlar markdown-suz; köhnə elementlərin sayı ayrıca sətirdə (siyahılara keçid). Blog idarə səhifəsi yeni üslubda. Sidebar `overflow-x-hidden` + truncate; çubuq qrafikdə ilk tarix etiketi kəsilmir.
+
 ## 2026-10-04 — TASK-0483: feat(dashboard): OCAQ v2 komanda mərkəzi + istifadəçilər
 
 **Why:** Doğan: "dashboard rezalet, kullanımsız, çok eski dizayn… Apple dashboard'dan yap". Dil menyusu qarışıq dil göstərirdi.

@@ -44,6 +44,8 @@ export type DashboardOverview = {
   listings: { live: number; pending: number };
   blog: { published: number };
   decisions: DecisionItem[];
+  /** TASK-0484: items older than FRESH_DAYS are kept out of the queue and only counted. */
+  staleDecisions: number;
   dbAvailable: boolean;
 };
 
@@ -76,6 +78,14 @@ async function safe<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
 
 type DailyRow = { day: string; value: number };
 
+/** Queue shows only what is still worth deciding; older items are counted as stale. */
+const FRESH_DAYS = 14;
+
+/** Plain-text title: DeepSeek/markdown output sometimes carries **bold** or # headings. */
+function plain(value: string | null | undefined): string {
+  return (value ?? '').replace(/\*\*|__|`/g, '').replace(/^#+\s*/, '').trim();
+}
+
 export async function getDashboardOverview(periodDays = 30): Promise<DashboardOverview> {
   const empty: DashboardOverview = {
     periodDays,
@@ -85,6 +95,7 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
     listings: { live: 0, pending: 0 },
     blog: { published: 0 },
     decisions: [],
+    staleDecisions: 0,
     dbAvailable: false,
   };
   if (!dbAvailable || !db) return empty;
@@ -249,6 +260,7 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
 
   // ---- Decision queue
   const decisions: DecisionItem[] = [];
+  const fresh = new Date(Date.now() - FRESH_DAYS * 24 * 60 * 60 * 1000);
   const news = await safe(
     () =>
       d
@@ -259,7 +271,7 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
           at: newsArticles.createdAt,
         })
         .from(newsArticles)
-        .where(eq(newsArticles.status, 'translated'))
+        .where(and(eq(newsArticles.status, 'translated'), gte(newsArticles.createdAt, fresh)))
         .orderBy(desc(newsArticles.id))
         .limit(4),
     [] as Array<{ id: number; title: string | null; src: string | null; at: Date | null }>
@@ -268,7 +280,7 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
     decisions.push({
       id: `n${n.id}`,
       kind: 'news',
-      title: n.title || '—',
+      title: plain(n.title) || '—',
       note: n.src || '',
       at: n.at?.toISOString() ?? null,
       href: `/dashboard/xeberler/${n.id}`,
@@ -286,12 +298,15 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
         })
         .from(listings)
         .where(
-          inArray(
-            listings.status,
-            pendingListingStatuses as unknown as Array<typeof listings.$inferSelect.status>
+          and(
+            inArray(
+              listings.status,
+              pendingListingStatuses as unknown as Array<typeof listings.$inferSelect.status>
+            ),
+            gte(listings.createdAt, fresh)
           )
         )
-        .orderBy(listings.createdAt)
+        .orderBy(desc(listings.createdAt))
         .limit(3),
     [] as Array<{
       id: number;
@@ -305,7 +320,7 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
     decisions.push({
       id: `e${l.id}`,
       kind: 'listing',
-      title: l.title || l.fallback,
+      title: plain(l.title || l.fallback),
       note: l.city,
       at: l.at?.toISOString() ?? null,
       href: `/dashboard/ilanlar/${l.id}`,
@@ -321,8 +336,15 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
           at: memberProfiles.createdAt,
         })
         .from(memberProfiles)
-        .where(eq(memberProfiles.approvalStatus, 'submitted'))
-        .orderBy(memberProfiles.createdAt)
+        .where(
+          and(
+            eq(memberProfiles.approvalStatus, 'submitted'),
+            gte(memberProfiles.createdAt, fresh),
+            // admins' own profiles are not something to approve
+            sql`${memberProfiles.email} not in (select email from users where role = 'admin')`
+          )
+        )
+        .orderBy(desc(memberProfiles.createdAt))
         .limit(3),
     [] as Array<{ id: string | number; name: string | null; city: string | null; at: Date | null }>
   );
@@ -330,7 +352,7 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
     decisions.push({
       id: `p${p.id}`,
       kind: 'profile',
-      title: p.name || '—',
+      title: plain(p.name) || '—',
       note: p.city || '',
       at: p.at?.toISOString() ?? null,
       href: '/dashboard/profil-onay',
@@ -357,6 +379,23 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
     });
   }
 
+  const staleDecisions = await safe(async () => {
+    const [n] = await d
+      .select({ value: count() })
+      .from(newsArticles)
+      .where(and(eq(newsArticles.status, 'translated'), sql`${newsArticles.createdAt} < ${fresh}`));
+    const [l] = await d
+      .select({ value: count() })
+      .from(listings)
+      .where(
+        and(
+          inArray(listings.status, pendingListingStatuses as unknown as Array<typeof listings.$inferSelect.status>),
+          sql`${listings.createdAt} < ${fresh}`
+        )
+      );
+    return Number(n?.value ?? 0) + Number(l?.value ?? 0);
+  }, 0);
+
   const totalLeads = leadSeries.reduce((a, r) => a + r.value, 0);
   return {
     periodDays,
@@ -380,6 +419,7 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
     listings: { live, pending },
     blog: { published: blogPublished },
     decisions,
+    staleDecisions,
     dbAvailable: true,
   };
 }
