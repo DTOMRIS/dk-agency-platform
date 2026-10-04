@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import GuruQuoteBox from './GuruQuoteBox';
+import { FounderAvatar } from '@/components/ui/FounderAvatar';
 
 /** Siyahı elementinin ilk mətni — ☐/☑ checklist maddəsini adi maddədən ayırmaq üçün */
 function firstText(node: unknown): string {
@@ -341,9 +342,7 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
                       {children}
                     </div>
                     <div className="mt-3 flex items-center gap-2">
-                      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
-                        DT
-                      </div>
+                      <FounderAvatar size={28} className="h-7 w-7" />
                       <span className="text-[var(--dk-muted)] text-sm">— Doğan Tomris</span>
                     </div>
                   </div>

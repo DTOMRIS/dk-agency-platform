@@ -3,6 +3,7 @@
 // Gold + Navy premium dizayn — HƏR YERDƏ EYNI
 
 import React from 'react';
+import { FounderAvatar } from '@/components/ui/FounderAvatar';
 
 type GuruBoxProps = {
   type: 'insight' | 'notu' | 'expert';  // Doğan İnsight, DK Agency Notu, Xarici ekspert
@@ -64,9 +65,13 @@ export default function GuruBox({ type, name, title, quote, source, context }: G
         
         {/* İmza */}
         <div className="flex items-center gap-2 mt-4">
-          <div className="w-7 h-7 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] text-[11px] font-bold">
-            {getInitials()}
-          </div>
+          {type === 'expert' ? (
+            <div className="w-7 h-7 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] text-[11px] font-bold">
+              {getInitials()}
+            </div>
+          ) : (
+            <FounderAvatar size={28} className="h-7 w-7" />
+          )}
           <span className="text-[13px] text-[var(--dk-muted)]">
             — {type === 'expert' ? name : 'Doğan Tomris'}
           </span>

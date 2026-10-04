@@ -4,6 +4,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { FounderAvatar, authorInitials, isFounderName } from '@/components/ui/FounderAvatar';
 import { Clock, TrendingUp, ChevronRight, Flame, Calendar, MapPin, Users, Ticket, Newspaper, BookOpen, PartyPopper, Star } from 'lucide-react';
 import type { BlogArticle } from '@/lib/data/blogArticles';
 import { formatAzDate } from '@/lib/i18n/format';
@@ -401,9 +402,13 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
 
                   {/* Author info */}
                   <div className="flex items-center gap-3 mt-5 pt-5 border-t border-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]">
-                    <div className="w-11 h-11 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] font-bold shadow-md">
-                      DT
-                    </div>
+                    {isFounderName(featuredArticle.author) ? (
+                      <FounderAvatar size={44} className="h-11 w-11 shadow-md" />
+                    ) : (
+                      <div className="w-11 h-11 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] font-bold shadow-md">
+                        {authorInitials(featuredArticle.author)}
+                      </div>
+                    )}
                     <div>
                       <p className="font-semibold text-[var(--dk-text)]">{featuredArticle.author}</p>
                       <p className="text-xs text-[var(--dk-muted)]">
@@ -446,9 +451,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                     {"\u201C"}Restoran biznesi rəqəmlərlə idarə olunur, duyğularla yox{"\u201D"}
                   </blockquote>
                   <div className="mt-4 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[var(--dk-gold)] flex items-center justify-center text-[var(--dk-night)] text-xs font-bold">
-                      DT
-                    </div>
+                    <FounderAvatar size={32} className="h-8 w-8" />
                     <div>
                       <p className="text-[12px] font-semibold text-[var(--dk-text)]">Doğan Tomris</p>
                       <p className="text-[11px] text-[var(--dk-muted)]">DK Agency qurucusu</p>
