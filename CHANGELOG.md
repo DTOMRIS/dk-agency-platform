@@ -4,6 +4,8 @@
 
 - `TASK-0487` feat(kazan-ai): KAZAN artıq saytın real məzmununu bilir — 37 bloq yazısı, 18 toolkit aləti və son 30 günün təsdiqlənmiş xəbərləri linkləri ilə; suala ən uyğun 2 yazının xülasəsi + mətn parçası cavaba qoşulur; uydurma başlıq/link qadağası; cavab artıq yarımçıq kəsilmir; ikiqat (uydurma) Əhilik sitatı aradan qaldırıldı.
 
+- `TASK-0486` feat(dashboard): xəbərlər, elanlar, KAZAN/franchise leadləri, əlaqə izləmə, profil onayı və reklamlar səhifələri yeni OCAQ v2 üslubunda (yalnız görünüş; təsdiq/rədd axınları eyni).
+
 - `TASK-0484` fix(dashboard): "Qərar gözləyir" yalnız son 14 günü göstərir (köhnə zibil və admin-in öz profili çıxdı, markdown təmizləndi); blog idarə səhifəsi yeni üslubda.
 
 - `TASK-0483` feat(dashboard): OCAQ v2 — təmiz, açıq panel: "Qərar gözləyir" önə, real qrafiklər (müraciətlər, mənbələr, istifadəçilər, xəbərlər); istifadəçilər səhifəsi yeni dizaynda; dil menyusu artıq menyu və məzmunu eyni dildə göstərir.

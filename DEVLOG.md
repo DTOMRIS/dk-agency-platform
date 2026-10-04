@@ -5,6 +5,11 @@
 **Why:** Doğan: "KAZAN AI suallara cavab verirmi? Bloq yazılarını, toolkitləri bilirmi? Ağıllandır." Canlı test: bloq başlığını uydururdu, link vermirdi, cavab yarıda kəsilirdi, sonda iki sitat çıxırdı.
 
 **What:** `lib/kazan-ai/site-context.ts` — dərc olunmuş bloqlar + `TOOLKIT_CATALOG` + son təsdiqli xəbərlər (10 dəq yaddaş keşi), söz-kökü uyğunluğu ilə ən uyğun 2 yazının xülasə/parçası prompt-a. Prompt: yalnız siyahıdakı linklər, uyğun yazının linki məcburi, model sitat yazmır (sistem real sitat əlavə edir, model sitatları silinir). DeepSeek `deepseek-v4-flash` reasoning token-ları limitdən yeyirdi → `max_tokens` 700→2500, `finish_reason=length` olarsa son tam paraqrafda kəsilir.
+## 2026-10-04 — TASK-0486: feat(dashboard): qalan admin səhifələri OCAQ v2 üslubunda
+
+**Why:** Doğan: köhnə panel "istifadə olunmur, köhnə dizayn". TASK-0483/0484 yalnız icmal, istifadəçilər və blog səhifələrini yeniləmişdi.
+
+**What:** Xəbərlər (təsdiq/rədd/editor pick/sil eyni), elanlar (batch "Rədd et" səbəb sahəsi ilə eyni), KAZAN leadləri (avatar, tərcümə olunmuş status/niyyət nişanları, WhatsApp + status panelləri), franchise leadləri, əlaqə kanalı izləmə, profil onayları (modal daxil), reklamlar — hamısı `#F2F2F7` fon + ağ `rounded-[22px]` kartlar, pill filtr/nişanlar, `#0A5BD6` aksent. Hardcoded AZ düymə/sütun mətnləri xəbər/elan səhifələrinin `pageCopy`-sinə 4 dildə köçürüldü. Data, API və handler-lər dəyişmədi.
 
 ## 2026-10-04 — TASK-0484: fix(dashboard): qərar növbəsi + blog səhifəsi
 
