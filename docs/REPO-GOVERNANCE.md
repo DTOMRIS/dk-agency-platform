@@ -16,6 +16,10 @@
 ## Local enforcement
 - `githooks/pre-push` blocks direct push to `main`.
 - `githooks/pre-commit` and `githooks/commit-msg` enforce verify gates + task card.
+- Bir dəfəlik qurulum (hər klon üçün): `git config core.hooksPath githooks`. Windows yolu
+  (`C:\...\.git\hooks`) macOS-da işləmir — hook-lar səssizcə atlanır (TASK-0470).
+- Hook faylları git-də `100755` (icra icazəli) saxlanılır; yeni worktree-də də işləyir.
+  Yoxlama: `git ls-files -s githooks` → hamısı `100755`.
 
 ## CI enforcement
 - `.github/workflows/ci.yml` runs:
