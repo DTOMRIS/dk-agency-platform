@@ -3,15 +3,16 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-09-30T04:26:39.535Z
+- GeneratedAt: 2026-10-04T15:13:15.198Z
 - BuildStatus: PASS
 
-## Routes (231)
+## Routes (244)
 - /
 - /(dev)/heromotif
 - /[locale]
 - /[locale]/about
 - /[locale]/admin/leads
+- /[locale]/auth/forgot-password
 - /[locale]/auth/login
 - /[locale]/auth/register
 - /[locale]/b2b-panel
@@ -86,6 +87,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/marketinq/sikayat-analizi
 - /[locale]/marketinq/sosial-metrik
 - /[locale]/marketinq/trend-analiz
+- /[locale]/news
 - /[locale]/pricing
 - /[locale]/privacy
 - /[locale]/qiymet
@@ -118,6 +120,8 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/whatsapp-template-paketi
 - /[locale]/uzvluk
 - /[locale]/verify-email
+- /[locale]/xeberler
+- /about
 - /auth/forgot-password
 - /auth/login
 - /auth/register
@@ -150,6 +154,8 @@ Auto-generated. Do not edit manually.
 - /b2b-panel/yeni-ilan
 - /blog
 - /blog/[slug]
+- /contact
+- /cookies
 - /dashboard
 - /dashboard/aqta-checklist
 - /dashboard/audit-logs
@@ -181,7 +187,6 @@ Auto-generated. Do not edit manually.
 - /dashboard/xeberler/[id]
 - /dashboard/xeberler/rss
 - /dashboard/xeberler/yeni
-- /docs/member-env-checklist
 - /elaqe
 - /email-preferences
 - /forgot-password
@@ -196,7 +201,9 @@ Auto-generated. Do not edit manually.
 - /haqqimizda
 - /ilan-ver
 - /ilanlar
+- /ilanlar/[slug]
 - /kazan-ai
+- /listings
 - /marketinq
 - /marketinq/lokasyon-analiz
 - /marketinq/menyu-analitik
@@ -210,11 +217,17 @@ Auto-generated. Do not edit manually.
 - /marketinq/sosial-metrik
 - /marketinq/trend-analiz
 - /news
+- /pricing
+- /privacy
+- /qiymet
+- /randevu
 - /reset-password
 - /sedd-rozeti
 - /sektor
 - /sektor/[slug]
 - /settings
+- /terefdashlar
+- /terms
 - /toolkit
 - /toolkit/addim-xerci
 - /toolkit/aqta-checklist
@@ -239,7 +252,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (98)
+## API Routes (100)
 - /api/admin/ads
 - /api/admin/ads/[id]
 - /api/admin/audit-logs
@@ -331,6 +344,8 @@ Auto-generated. Do not edit manually.
 - /api/rss/xeberler/[locale]
 - /api/settings
 - /api/telegram/post
+- /api/telegram/setup
+- /api/telegram/webhook
 - /api/test-email
 - /api/upload
 - /api/upload/sign
