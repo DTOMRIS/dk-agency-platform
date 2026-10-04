@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-04 — TASK-0478: feat(news): xəbər kapsamı (Faz 1)
+
+**Why:** Off-topic xəbərlər (kriket, OPEC, Səudiyyə token əmlakı) keçirdi, AI/texnologiya heç hədəflənmirdi, slug-larda AZ hərfləri silinirdi (`liyev`, `xankndi`), NewsArticle müəllifi aqreqator ("Bundle") idi.
+
+**What:** Skorlama Unicode söz-başlanğıcı ilə (şəkilçilərə icazə), əsas HoReCa termini şərti, 4 dildə mövzu bloklisti (başlıqda → rədd), AI/texnologiya terminləri + "technology" kateqoriyası məzmuna görə. NewsData: AI/hospitality-tech sorğusu, rus dili. Slug: `slugifyAz` (+ NFC), sintezdə AZ başlıqdan + id. NewsArticle: müəllif DK Agency, naşir loqosu, `isBasedOn` mənbə, düzgün dil URL-i.
+
+**Doğrulama:** skorlama testi 10/10; slug `prezident-ilham-eliyev-xankendi-hotelinin-acilisinda`. dk-validator aşağıda.
+
 ## 2026-10-04 — TASK-0476: fix(news): sintez növbəsi ilişməsi
 
 **Why:** "News Ingest Pipeline" 2026-10-03 axşamdan uğursuz (və 09-30-da); log: `Synthesized: 0`, eyni məqalələr (#400–#426, #870) hər run-da xəta.

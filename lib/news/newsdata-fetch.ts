@@ -10,7 +10,8 @@ import { createHash } from 'crypto';
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
-import { scoreNewsItem, SCORE_THRESHOLD } from './scoring-config';
+import { isTechTopic, scoreNewsItem, SCORE_THRESHOLD } from './scoring-config';
+import { slugifyAz } from '@/lib/utils/slugify-az';
 
 const NEWSDATA_BASE = 'https://newsdata.io/api/1/latest';
 
@@ -20,6 +21,10 @@ const QUERY_SETS = [
   { q: 'food cost OR food safety OR HACCP OR catering', country: 'az,tr' },
   { q: 'Azerbaijan restaurant OR Azerbaijan tourism OR Azerbaijan hotel', country: '' },
   { q: 'franchise restaurant OR franchise hotel OR franchise cafe', country: '' },
+  // TASK-0478: AI / hospitality technology — what operators need to follow now
+  { q: 'restaurant AI OR hotel AI OR hospitality AI OR restaurant technology OR hotel technology', country: '' },
+  // TASK-0478: Russian-language HoReCa coverage in Azerbaijan
+  { q: 'ресторан OR отель OR гостиница OR общепит', country: 'az' },
 ];
 
 interface NewsDataArticle {
@@ -56,7 +61,12 @@ function urlHash(url: string): string {
   return createHash('sha256').update(url.trim().toLowerCase()).digest('hex').slice(0, 40);
 }
 
-function mapCategory(categories: string[]): 'operations' | 'finance' | 'growth' | 'market' | 'technology' {
+function mapCategory(
+  categories: string[],
+  text = '',
+): 'operations' | 'finance' | 'growth' | 'market' | 'technology' {
+  // TASK-0478: content first — AI / hospitality-tech stories go to "technology" whatever NewsData labels them.
+  if (isTechTopic(text)) return 'technology';
   const cats = categories.map((c) => c.toLowerCase());
   if (cats.some((c) => c.includes('food') || c.includes('health'))) return 'operations';
   if (cats.some((c) => c.includes('business') || c.includes('econom'))) return 'finance';
@@ -65,12 +75,12 @@ function mapCategory(categories: string[]): 'operations' | 'finance' | 'growth' 
   return 'market';
 }
 
+/**
+ * TASK-0478: AZ/TR letters are transliterated (ə→e, ş→s…) instead of deleted — the old regex
+ * produced `liyev`, `xankndi`. Temporary: synthesize.ts rebuilds it from the AZ title + id.
+ */
 function buildSlug(title: string): string {
-  const base = title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .slice(0, 80);
+  const base = slugifyAz(title).slice(0, 80) || 'xeber';
   const suffix = Date.now().toString(36).slice(-4);
   return `${base}-${suffix}`;
 }
@@ -79,7 +89,7 @@ async function fetchFromNewsData(apiKey: string, query: string, country: string)
   const params = new URLSearchParams({
     apikey: apiKey,
     q: query,
-    language: 'en,tr,az',
+    language: 'en,tr,az,ru',
     size: '10',
   });
   if (country) params.set('country', country);
@@ -173,7 +183,7 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
           slug: buildSlug(article.title),
           title: article.title,
           summary: (article.description ?? '').slice(0, 2000),
-          category: mapCategory(article.category ?? []),
+          category: mapCategory(article.category ?? [], `${article.title} ${article.description ?? ''}`),
           imageUrl: article.image_url ?? null,
           author: article.source_name?.slice(0, 150) ?? null,
           publishedAt: article.pubDate ? new Date(article.pubDate) : new Date(),

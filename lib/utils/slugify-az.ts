@@ -6,6 +6,8 @@
 
 export function slugifyAz(value: string): string {
   return value
+    // Feeds sometimes deliver decomposed Unicode (e.g. 'a' + U+0300); compose first (TASK-0478).
+    .normalize('NFC')
     .replace(/İ/g, 'i')
     .replace(/ı/g, 'i')
     .replace(/I/g, 'i')

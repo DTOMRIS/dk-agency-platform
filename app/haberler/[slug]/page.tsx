@@ -9,6 +9,8 @@ import RelatedToolkitsBox from '@/components/news/RelatedToolkitsBox';
 import { ShareButtons } from '@/components/news/ShareButtons';
 import { MarkdownRenderer } from '@/components/blog';
 import { formatDateAz } from '@/lib/formatDate';
+import { normalizeLocale } from '@/i18n/config';
+import { localeUrl } from '@/lib/seo/structured-data';
 import {
   getNewsArticleBySlug,
   getRelatedApprovedNewsArticles,
@@ -205,25 +207,28 @@ export default async function HaberDetailPage({
 
   const related = await getRelatedApprovedNewsArticles(article.id, article.category, locale);
   const shareUrl = `https://dkagency.com.tr/haberler/${article.slug}`;
+  // TASK-0478: the analysis is written by DK Agency — the aggregator name (e.g. "Bundle") used to be
+  // marked up as a Person author. The original report is credited via isBasedOn.
+  const sourceUrl =
+    article.externalUrl && /^https?:\/\//.test(article.externalUrl) ? article.externalUrl : undefined;
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: article.title,
     description: article.summary,
     image: article.imageUrl ? [article.imageUrl] : undefined,
-    author: {
-      '@type': 'Person',
-      name: article.author,
-    },
+    author: { '@id': 'https://dkagency.com.tr/#organization', '@type': 'Organization', name: 'DK Agency', url: 'https://dkagency.com.tr' },
     publisher: {
       '@type': 'Organization',
       name: 'DK Agency',
       url: 'https://dkagency.com.tr',
+      logo: { '@type': 'ImageObject', url: 'https://dkagency.com.tr/icon-512.png', width: 512, height: 512 },
     },
+    isBasedOn: sourceUrl,
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
-    mainEntityOfPage: shareUrl,
-    inLanguage: locale || 'az',
+    mainEntityOfPage: localeUrl(locale, `/haberler/${article.slug}`),
+    inLanguage: normalizeLocale(locale),
   };
 
   return (
