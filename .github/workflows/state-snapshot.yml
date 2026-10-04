@@ -34,14 +34,27 @@ jobs:
       - name: Generate STATE.md
         run: BUILD_STATUS=PASS npm run snapshot:state
 
-      - name: Commit state snapshot
+      # TASK-0473: main-koruma ruleset birbaşa bot push-unu bağlayır (TASK-0466 ilə eyni səbəb).
+      # Snapshot ayrıca bot/state-* branch-ə gedir və PR açılır; auto-merge-content.yml yalnız
+      # docs/STATE.md dəyişən bot/state-* PR-ını CI yaşıl olanda özü merge edir.
+      # NEWS_BOT_TOKEN (Doğan-ın fine-grained PAT-ı) lazımdır: GITHUB_TOKEN ilə açılan PR CI-ni tetikləmir.
+      - name: Open PR if changed
+        env:
+          GH_TOKEN: ${{ secrets.NEWS_BOT_TOKEN }}
         run: |
           if git diff --quiet docs/STATE.md; then
-            echo "No state change"
-            exit 0
+            echo "No state change"; exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::NEWS_BOT_TOKEN secret yoxdur — PR açıla bilmir (bax docs/tasks/TASK-0466.md)"; exit 1
+          fi
+          BR="bot/state-$(date -u +%Y%m%d-%H%M)"
+          git config user.name "dk-news-bot"
+          git config user.email "dk-news-bot@users.noreply.github.com"
+          git checkout -b "$BR"
           git add docs/STATE.md
-          git commit -m "TASK-0001 chore: auto-update STATE snapshot"
-          git push
+          git commit -m "[TASK-0473] chore(state): weekly STATE snapshot"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" "$BR"
+          gh pr create --base main --head "$BR" \
+            --title "[TASK-0473] chore(state): STATE snapshot $(date -u +%Y-%m-%d)" \
+            --body "Həftəlik avtomatik snapshot. Yalnız \`docs/STATE.md\` dəyişir; CI yaşıl olanda avtomatik merge olur."
