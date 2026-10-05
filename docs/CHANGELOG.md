@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - `TASK-0491` feat(news): **AZ mənbələr + AZ-uyğun scoring + RSS şəkilləri** — `scoring-config.ts` TR/AZ case-fold (`İ`/`I`), uzun terminlərə ≤10 hərf suffiks, iaşə/yeməkxana/şadlıq sarayı/lokanta/turizm… core, `lig`/`neft` tam söz, AZ domenləri +3, prnasia/menafn/travelandtourworld −3 (fixture 16/29 → 29/29); 11 yeni RSS lenti, lent limiti 50; `lib/news/feed-image.ts` (enclosure → media:content/thumbnail → `<img>`, nisbi yol həlli); NewsData AZ dilli sorğu, ölü RU sorğusu çıxdı; `scripts/news-backfill-images.ts` (default dry-run, `--apply`).
+- `TASK-0492` feat(news): **redaksiya nəzarəti** — `lib/news/editorial.ts` müəllif→redaktor iki mərhələ (şablonsuz jurnalist üslubu, fakt yoxlaması, köhnə/kənar xəbər rəddi), Telegram-da redaktor qeydi, növbə relevance+14 gün.
 - `TASK-0489` feat(news): **sosial kart** — `/api/news/card/{id}` (1080×1350 PNG, yalnız approved, 4 dil) Instagram/Facebook paylaşımı üçün.
 - `TASK-0488` fix(news): **sintez JSON xətaları** — `deepseek-v4-flash` reasoning token-ları `max_tokens`-ı tükəndirirdi (5/8 `finish_reason=length`); `thinking: disabled` → 8/8 etibarlı JSON.
 - `TASK-0487` feat(kazan-ai): **saytın real məzmunu** — `lib/kazan-ai/site-context.ts` bloq/toolkit/xəbər kontekstini prompt-a əlavə edir (ən uyğun 2 yazı xülasə+parça ilə), uydurma link qadağası, DeepSeek `max_tokens` 2500 (v4-flash reasoning), model sitatları silinir.

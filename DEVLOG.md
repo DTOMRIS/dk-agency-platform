@@ -5,6 +5,11 @@
 **Why:** Araşdırma: AZ ümumi lentləri (report.az, apa.az, trend, azertag) heç vaxt bir xəbər də verməmişdi; 103 RSS sətrindən 99-u şəkilsiz idi. Kök səbəblər: suffiks `\p{L}{0,5}` "restoranlarında"/"restoranlardaki" formalarını tutmurdu, "İCTİMAİ İAŞƏ" `İ` hərfinə görə tapılmırdı, iaşə/yeməkxana/lokanta kimi əsas sözlər yox idi, şəkil yalnız enclosure-dan oxunurdu.
 
 **What:** Scoring TR/AZ case-fold + standart fold (ikisindən biri), suffiks ≤3/4/≥5 hərf → 0/7/10, AZ/TR/RU core lüğəti, turizm core 2, `lig`/`neft`/`adex` tam söz, AZ domenləri +3, 3 səs-küy domeni −3, domen uyğunluğu dəqiq. `e2e/news-scoring.test.ts` 29 fixture: yeni 29/29, köhnə 16/29. RSS: 11 yeni lent, lent limiti 50, `feed-image.ts` şəkil seçicisi (rss-pipeline də onu işlədir). Canlı dry-run (DB-yə yazmadan, 37 lent, 970 item): 194 keçən, 674 şəkilli; Trend turizm AZ/RU/EN 6/7/12 keçən, hamısı şəkilli. NewsData: AZ dilli sorğu (7 nəticə), RU sorğusu çıxarıldı (0 nəticə). og:image backfill dry-run: 13 namizəd → 6 şəkil; `--apply` icra olunmadı.
+## 2026-10-05 — TASK-0492: feat(news): redaksiya nəzarəti
+
+**Why:** Doğan: "Haberler okunsun, bizimkiler aynı kalıp zorlama olmasın, editoryal kontrol yap." Hər xəbər eyni 6 başlıqla (Nə baş verdi / Niyə önəmlidir / Dərs / Risk / 1 addım / DK baxışı) yazılırdı; köhnə xəbərlər (2023 sammiti) də keçirdi; növbə RSS-ə görə doldurulduğu üçün AZ xəbərləri heç işlənmirdi.
+
+**What:** `lib/news/editorial.ts` — müəllif (lid + 2-4 abzas, uzunluq siqnala görə, şablon başlıqları qadağan, terminlər: otel/mehmanxana) → redaktor (fakt-siqnal yoxlaması, dil, klişe, başlıq, təravət — mənbənin dərc tarixinə görə, xəbər dəyəri; ok/fixed/reject + sahibə qeyd) → mexaniki lint. `synthesize.ts` bunu çağırır; növbə `relevance_score desc` + son 14 gün. Telegram mesajında "🖊 Redaktor: …". Dry-run (8 real siqnal, DB-yə yazmadan): 2023 sammiti, 2016 Kəşmir hekayəsi, Tacikistan → rədd; Şamaxı otelləri, Jamba Juice, Userguest, Madrid F1, AİİQA → dərc səviyyəsində, uydurma fakt yoxdur.
 
 ## 2026-10-05 — TASK-0489: feat(news): sosial media kartı
 
