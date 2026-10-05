@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0492` feat(news): Sektor Nəbzi xəbərləri artıq sabit 6 bölməli şablonla yox, jurnalist üslubunda yazılır; ikinci "redaktor" mərhələsi hər faktı mənbə ilə yoxlayır, dili düzəldir, köhnə və kənar xəbərləri rədd edir; redaktor qeydi Telegram təsdiq mesajında görünür; növbədə ən uyğun son 14 günlük xəbərlər birinci işlənir.
+
 - `TASK-0489` feat(news): Instagram/Facebook üçün xəbər kartı — `/api/news/card/{id}` təsdiqlənmiş xəbərdən 1080×1350 PNG yaradır (ağ "B" dizaynı, DK loqosu, kateqoriya, başlıq, qısa xülasə; AZ/RU/EN/TR).
 
 - `TASK-0488` fix(news): DeepSeek xəbər sintezində "[parse] Invalid JSON" xətaları — `deepseek-v4-flash` düşünmə (reasoning) token-ları bütün limiti yeyirdi; düşünmə söndürüldü: 8/8 etibarlı JSON, ~3 dəfə az token.
