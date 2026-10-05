@@ -122,6 +122,7 @@ const pageCopy: Record<
     bulkClear: string;
     bulkWorking: string;
     confirmBulkDelete: (n: number) => string;
+    confirmDeletePublished: (n: number) => string;
     bulkResult: (done: number, skipped: number) => string;
     toastDeleted: string;
     loadFailed: string;
@@ -203,6 +204,7 @@ const pageCopy: Record<
     bulkClear: 'Seçimi təmizlə',
     bulkWorking: 'İcra olunur...',
     confirmBulkDelete: (n) => `${n} xəbəri silmək istədiyinizdən əminsiniz? Bu geri qaytarılmır.`,
+    confirmDeletePublished: (n) => `Seçimdə ${n} DƏRC OLUNMUŞ (saytda görünən) xəbər var. Onları da silmək üçün OK, yalnız dərc olunmamışları silmək üçün Cancel basın.`,
     bulkResult: (done, skipped) => `${done} xəbər icra olundu${skipped ? `, ${skipped} ötürüldü` : ''}.`,
     toastDeleted: 'Xəbər silindi.',
     loadFailed: 'Xəbərlər yüklənmədi',
@@ -283,6 +285,7 @@ const pageCopy: Record<
     bulkClear: 'Снять выбор',
     bulkWorking: 'Выполняется...',
     confirmBulkDelete: (n) => `Удалить выбранные новости (${n})? Это действие необратимо.`,
+    confirmDeletePublished: (n) => `В выборе ${n} ОПУБЛИКОВАННЫХ (видимых на сайте) новостей. OK — удалить и их, Cancel — удалить только неопубликованные.`,
     bulkResult: (done, skipped) => `Выполнено: ${done}${skipped ? `, пропущено: ${skipped}` : ''}.`,
     toastDeleted: 'Новость удалена.',
     loadFailed: 'Новости не загружены',
@@ -363,6 +366,7 @@ const pageCopy: Record<
     bulkClear: 'Clear selection',
     bulkWorking: 'Working...',
     confirmBulkDelete: (n) => `Delete ${n} article(s)? This cannot be undone.`,
+    confirmDeletePublished: (n) => `${n} selected article(s) are PUBLISHED on the site. OK = delete them too, Cancel = delete only unpublished ones.`,
     bulkResult: (done, skipped) => `${done} done${skipped ? `, ${skipped} skipped` : ''}.`,
     toastDeleted: 'Article deleted.',
     loadFailed: 'News failed to load',
@@ -443,6 +447,7 @@ const pageCopy: Record<
     bulkClear: 'Seçimi temizle',
     bulkWorking: 'İşleniyor...',
     confirmBulkDelete: (n) => `${n} haberi silmek istediğinizden emin misiniz? Bu geri alınamaz.`,
+    confirmDeletePublished: (n) => `Seçimde ${n} YAYINDA (sitede görünen) haber var. Onları da silmek için OK, sadece yayında olmayanları silmek için Cancel.`,
     bulkResult: (done, skipped) => `${done} haber işlendi${skipped ? `, ${skipped} atlandı` : ''}.`,
     toastDeleted: 'Haber silindi.',
     loadFailed: 'Haberler yüklenemedi',
@@ -469,6 +474,8 @@ export default function DashboardXeberlerPage() {
   const [toast, setToast] = useState<string | null>(null);
 
   async function loadNews(nextFilter: ListFilter, nextPage: number) {
+    // TASK-0493: never carry a selection over to another tab/page while it loads.
+    setSelected(new Set());
     setLoading(true);
     setError(null);
     try {
@@ -575,6 +582,14 @@ export default function DashboardXeberlerPage() {
       !window.confirm(copy.confirmBulkDelete(ids.length))
     )
       return;
+    // TASK-0493: published articles need a separate, explicit confirmation.
+    const publishedCount = items.filter(
+      (item) => selected.has(item.id) && item.status === "approved",
+    ).length;
+    const includeApproved =
+      action === "delete" &&
+      publishedCount > 0 &&
+      window.confirm(copy.confirmDeletePublished(publishedCount));
 
     setBulkBusy(true);
     setError(null);
@@ -583,7 +598,7 @@ export default function DashboardXeberlerPage() {
       const response = await fetch("/api/news/admin/batch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ids, action }),
+        body: JSON.stringify({ ids, action, includeApproved }),
       });
       const payload = (await response.json()) as {
         success?: boolean;
@@ -811,7 +826,7 @@ export default function DashboardXeberlerPage() {
                       type="checkbox"
                       checked={allOnPageSelected}
                       onChange={toggleAllOnPage}
-                      disabled={items.length === 0}
+                      disabled={loading || items.length === 0}
                       aria-label={copy.selectAllOnPage}
                       title={copy.selectAllOnPage}
                       className="h-4 w-4 cursor-pointer accent-[#0A5BD6]"
@@ -846,6 +861,7 @@ export default function DashboardXeberlerPage() {
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => toggleRow(item.id)}
+                          disabled={loading}
                           aria-label={`${copy.selectRow} #${item.id}`}
                           className="mt-0.5 h-4 w-4 cursor-pointer accent-[#0A5BD6]"
                         />

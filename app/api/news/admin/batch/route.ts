@@ -8,7 +8,7 @@
  *   Translation / toolkit side effects run in a small background queue so a
  *   200-row approve does not start 200 translation jobs at once.
  * - reject → status 'rejected' (+ editor pick cleared, like the row button).
- * - delete → same as DELETE /api/news/admin/[id].
+ * - delete → same as DELETE /api/news/admin/[id]; approved rows are skipped unless includeApproved.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -22,6 +22,8 @@ export const maxDuration = 120;
 const BatchSchema = z.object({
   ids: z.array(z.number().int().positive()).max(200),
   action: z.enum(['delete', 'approve', 'reject']),
+  /** TASK-0493: deleting published articles needs an explicit second confirmation. */
+  includeApproved: z.boolean().optional(),
 });
 
 const SIDE_EFFECT_CONCURRENCY = 2;
@@ -80,10 +82,12 @@ export async function POST(request: NextRequest) {
 
   try {
     if (action === 'delete') {
-      const processed = await deleteNewsArticles(ids);
+      const { deleted: processed, protectedIds } = await deleteNewsArticles(ids, {
+        includeApproved: parsed.data.includeApproved === true,
+      });
       const skipped = ids
         .filter((id) => !processed.includes(id))
-        .map((id) => ({ id, reason: 'not_found' }));
+        .map((id) => ({ id, reason: protectedIds.includes(id) ? 'approved_protected' : 'not_found' }));
       return NextResponse.json({ success: true, action, processed, skipped });
     }
 
