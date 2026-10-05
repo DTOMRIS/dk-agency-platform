@@ -63,6 +63,8 @@ export type ApprovalCandidate = {
   contentAz?: string | null;
   externalUrl?: string | null;
   category?: string | null;
+  /** TASK-0492: editor pass note for the owner. */
+  editorNote?: string | null;
 };
 
 /** Plain-text preview of the AZ analysis (markdown headings/bold stripped), max ~700 chars. */
@@ -91,6 +93,7 @@ export async function sendNewsForApproval(candidate: ApprovalCandidate): Promise
     host && candidate.externalUrl
       ? `Mənbə: <a href="${escapeHtml(candidate.externalUrl)}">${escapeHtml(host)}</a>`
       : '',
+    candidate.editorNote ? `🖊 <i>Redaktor: ${escapeHtml(candidate.editorNote)}</i>` : '',
     `#${candidate.id}`,
   ].filter((line, i, all) => line !== '' || (all[i - 1] ?? '') !== '');
 

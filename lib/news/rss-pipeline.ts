@@ -1,5 +1,6 @@
 import Parser from 'rss-parser';
 import { AI_MODELS } from '@/lib/ai-models';
+import { pickFeedImage } from './feed-image';
 
 import {
   createFetchedNewsArticle,
@@ -65,24 +66,9 @@ function getSummary(item: FeedItem) {
   return stripHtml(raw).slice(0, 500) || null;
 }
 
+// TASK-0491: shared picker — also reads the first <img> in the body and resolves relative paths.
 function getImageUrl(item: FeedItem) {
-  if (item.enclosure?.url) return item.enclosure.url;
-
-  if (Array.isArray(item.mediaContent) && item.mediaContent[0]?.$?.url) {
-    return item.mediaContent[0].$.url;
-  }
-  if (!Array.isArray(item.mediaContent) && item.mediaContent?.$?.url) {
-    return item.mediaContent.$.url;
-  }
-
-  if (Array.isArray(item.mediaThumbnail) && item.mediaThumbnail[0]?.$?.url) {
-    return item.mediaThumbnail[0].$.url;
-  }
-  if (!Array.isArray(item.mediaThumbnail) && item.mediaThumbnail?.$?.url) {
-    return item.mediaThumbnail.$.url;
-  }
-
-  return null;
+  return pickFeedImage(item, item.link);
 }
 
 function getPublishedAt(item: FeedItem) {

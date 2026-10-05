@@ -15,16 +15,26 @@ import { slugifyAz } from '@/lib/utils/slugify-az';
 
 const NEWSDATA_BASE = 'https://newsdata.io/api/1/latest';
 
-/** Categories + keywords for HoReCa/franchise/tourism discovery */
-const QUERY_SETS = [
+/**
+ * Categories + keywords for HoReCa/franchise/tourism discovery.
+ * `language` overrides the default 'en,tr,az,ru' (TASK-0491: the AZ query is pinned to language=az).
+ */
+const DEFAULT_LANGUAGES = 'en,tr,az,ru';
+type QuerySet = { q: string; country: string; language?: string };
+
+export const QUERY_SETS: QuerySet[] = [
   { q: 'restaurant OR hotel OR franchise OR hospitality', country: 'az,tr' },
   { q: 'food cost OR food safety OR HACCP OR catering', country: 'az,tr' },
   { q: 'Azerbaijan restaurant OR Azerbaijan tourism OR Azerbaijan hotel', country: '' },
   { q: 'franchise restaurant OR franchise hotel OR franchise cafe', country: '' },
   // TASK-0478: AI / hospitality technology — what operators need to follow now
   { q: 'restaurant AI OR hotel AI OR hospitality AI OR restaurant technology OR hotel technology', country: '' },
-  // TASK-0478: Russian-language HoReCa coverage in Azerbaijan
-  { q: 'ресторан OR отель OR гостиница OR общепит', country: 'az' },
+  // TASK-0491: Azerbaijani-language coverage — no AZ-language query existed before.
+  { q: 'restoran OR mehmanxana OR turizm OR iaşə OR kafe', country: 'az', language: 'az' },
+  // TASK-0491: the TASK-0478 Russian query ('ресторан OR отель OR гостиница OR общепит', country az) returned
+  // 0 results every run. Tested 2026-10-05: language=ru + country=az → 0; ru without country → Russian
+  // regional noise (1/6 relevant). Dropped — RU coverage now comes from RSS (Trend Туризм, Report.az RU,
+  // AZERTAC Экономика), which saves one credit per run.
 ];
 
 interface NewsDataArticle {
@@ -88,11 +98,16 @@ function buildSlug(title: string): string {
   return `${base}-${suffix}`;
 }
 
-async function fetchFromNewsData(apiKey: string, query: string, country: string): Promise<NewsDataArticle[]> {
+export async function fetchFromNewsData(
+  apiKey: string,
+  query: string,
+  country: string,
+  language: string = DEFAULT_LANGUAGES,
+): Promise<NewsDataArticle[]> {
   const params = new URLSearchParams({
     apikey: apiKey,
     q: query,
-    language: 'en,tr,az,ru',
+    language,
     size: '10',
   });
   if (country) params.set('country', country);
@@ -133,7 +148,7 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
   for (const querySet of QUERY_SETS) {
     let articles: NewsDataArticle[];
     try {
-      articles = await fetchFromNewsData(apiKey, querySet.q, querySet.country);
+      articles = await fetchFromNewsData(apiKey, querySet.q, querySet.country, querySet.language);
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown fetch error';
       result.errors.push(`[${querySet.q.slice(0, 30)}...] ${msg}`);

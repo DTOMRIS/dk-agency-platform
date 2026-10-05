@@ -9,6 +9,11 @@
  * - `trade` feeds are HoReCa/hospitality specific → normal scoring on title + description.
  * - `general` feeds (Azerbaijani news agencies) carry mostly politics/sport → scored on the TITLE only, so an
  *   item is kept only when its headline itself is about restaurants/hotels/tourism business.
+ *
+ * TASK-0491: Azerbaijani tourism/category feeds (Trend tourism AZ/RU/EN, Turizm Gazetesi) added as `trade`;
+ * economy/business and general AZ/TR outlets (AZERTAC economy, Trend business, Musavat, Modern.az, Hürriyet
+ * ekonomi, Dünya) as `general`. Per-feed cap 30 → 50. Cover images now also come from media:content,
+ * media:thumbnail and the first <img> in the item body (99/103 RSS rows had none).
  */
 
 import { createHash } from 'crypto';
@@ -17,10 +22,12 @@ import Parser from 'rss-parser';
 import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
 import { slugifyAz } from '@/lib/utils/slugify-az';
+import { FEED_IMAGE_CUSTOM_FIELDS, pickFeedImage, type FeedImageFields } from './feed-image';
 import { isTechTopic, scoreNewsItem, SCORE_THRESHOLD } from './scoring-config';
 
 type FeedKind = 'trade' | 'general';
-type Feed = { url: string; name: string; kind: FeedKind };
+export type Feed = { url: string; name: string; kind: FeedKind };
+export type FeedItem = Parser.Item & FeedImageFields;
 
 export const RSS_FEEDS: Feed[] = [
   // Global hospitality / restaurant trade press (EN)
@@ -50,6 +57,11 @@ export const RSS_FEEDS: Feed[] = [
   { url: 'https://www.turizmajansi.com/rss', name: 'Turizm Ajansı', kind: 'trade' },
   { url: 'https://www.turizmgunlugu.com/feed/', name: 'Turizm Günlüğü', kind: 'trade' },
   { url: 'https://www.gastromondiale.com/feed/', name: 'Gastro Mondiale', kind: 'trade' },
+  { url: 'https://www.turizmgazetesi.com/rss', name: 'Turizm Gazetesi', kind: 'trade' },
+  // Azerbaijan tourism sections (TASK-0491) — sector-specific, title + description scored
+  { url: 'https://az.trend.az/feeds/tourism.rss', name: 'Trend Turizm', kind: 'trade' },
+  { url: 'https://ru.trend.az/feeds/tourism.rss', name: 'Trend Туризм', kind: 'trade' },
+  { url: 'https://en.trend.az/feeds/tourism.rss', name: 'Trend Tourism', kind: 'trade' },
   // Azerbaijan general news agencies (title must be HoReCa)
   { url: 'https://report.az/rss/', name: 'Report.az', kind: 'general' },
   { url: 'https://report.az/ru/rss/', name: 'Report.az RU', kind: 'general' },
@@ -59,10 +71,21 @@ export const RSS_FEEDS: Feed[] = [
   { url: 'https://en.trend.az/feeds/index.rss', name: 'Trend EN', kind: 'general' },
   { url: 'https://apa.az/rss', name: 'APA', kind: 'general' },
   { url: 'https://azertag.az/rss', name: 'AZERTAC', kind: 'general' },
+  // Economy / business sections and general AZ + TR outlets (TASK-0491) — title only
+  { url: 'https://az.trend.az/feeds/business.rss', name: 'Trend Biznes', kind: 'general' },
+  { url: 'https://azertag.az/rss-economy.xml', name: 'AZERTAC İqtisadiyyat', kind: 'general' },
+  { url: 'https://azertag.az/ru/rss-economy.xml', name: 'AZERTAC Экономика', kind: 'general' },
+  { url: 'https://azertag.az/en/rss-economy.xml', name: 'AZERTAC Economy', kind: 'general' },
+  { url: 'https://musavat.com/rss.xml', name: 'Musavat', kind: 'general' },
+  { url: 'https://modern.az/rss', name: 'Modern.az', kind: 'general' },
+  { url: 'https://www.hurriyet.com.tr/rss/ekonomi', name: 'Hürriyet Ekonomi', kind: 'general' },
+  { url: 'https://www.dunya.com/rss', name: 'Dünya', kind: 'general' },
 ];
 
 const MAX_AGE_DAYS = 4;
 const MAX_INSERT_PER_RUN = 30;
+/** Items read per feed (newest first). General AZ agencies publish 100+ items a day. */
+export const MAX_ITEMS_PER_FEED = 50;
 
 export interface RssIngestResult {
   feedsOk: number;
@@ -112,7 +135,7 @@ function categoryFor(text: string): 'operations' | 'finance' | 'growth' | 'marke
   return 'market';
 }
 
-type Candidate = {
+export type Candidate = {
   feed: Feed;
   title: string;
   link: string;
@@ -121,6 +144,36 @@ type Candidate = {
   publishedAt: Date | null;
   score: number;
 };
+
+export function createFeedParser(): Parser<Record<string, unknown>, FeedImageFields> {
+  return new Parser<Record<string, unknown>, FeedImageFields>({
+    timeout: 15_000,
+    headers: { 'User-Agent': 'DKAgencyNewsBot/1.0 (+https://dkagency.com.tr)' },
+    customFields: { item: FEED_IMAGE_CUSTOM_FIELDS },
+  });
+}
+
+/**
+ * Normalise and score one feed item (no DB access). `general` feeds are scored on the title only.
+ * Returns null when the item has no title/link.
+ */
+export function evaluateFeedItem(feed: Feed, item: FeedItem): Candidate | null {
+  const title = stripHtml(item.title || '');
+  let link = (item.link || '').trim();
+  if (!title || !link) return null;
+  if (link.startsWith('http://')) link = `https://${link.slice(7)}`;
+
+  const rawDate = item.isoDate ? new Date(item.isoDate) : item.pubDate ? new Date(item.pubDate) : null;
+  const publishedAt = rawDate && !Number.isNaN(rawDate.getTime()) ? rawDate : null;
+
+  const summary = stripHtml(
+    item.contentSnippet || item.summary || item.content || item.description || ''
+  ).slice(0, 2000);
+  const score =
+    feed.kind === 'general' ? scoreNewsItem(title, '', link) : scoreNewsItem(title, summary, link);
+
+  return { feed, title, link, summary, imageUrl: pickFeedImage(item, link), publishedAt, score };
+}
 
 export async function ingestTradeRss(): Promise<RssIngestResult> {
   const result: RssIngestResult = {
@@ -138,15 +191,12 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
     return result;
   }
 
-  const parser = new Parser({
-    timeout: 15_000,
-    headers: { 'User-Agent': 'DKAgencyNewsBot/1.0 (+https://dkagency.com.tr)' },
-  });
+  const parser = createFeedParser();
   const cutoff = Date.now() - MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
   const candidates: Candidate[] = [];
 
   for (const feed of RSS_FEEDS) {
-    let items: Parser.Item[];
+    let items: FeedItem[];
     try {
       items = (await parser.parseURL(feed.url)).items ?? [];
       result.feedsOk++;
@@ -157,45 +207,18 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
       continue;
     }
 
-    for (const item of items.slice(0, 30)) {
-      const title = stripHtml(item.title || '');
-      let link = (item.link || '').trim();
-      if (!title || !link) continue;
-      if (link.startsWith('http://')) link = `https://${link.slice(7)}`;
-
-      const publishedAt = item.isoDate
-        ? new Date(item.isoDate)
-        : item.pubDate
-          ? new Date(item.pubDate)
-          : null;
-      if (publishedAt && !Number.isNaN(publishedAt.getTime()) && publishedAt.getTime() < cutoff) {
+    for (const item of items.slice(0, MAX_ITEMS_PER_FEED)) {
+      const c = evaluateFeedItem(feed, item);
+      if (!c) continue;
+      if (c.publishedAt && c.publishedAt.getTime() < cutoff) {
         result.tooOld++;
         continue;
       }
-
-      const summary = stripHtml(item.contentSnippet || item.summary || item.content || '').slice(
-        0,
-        2000
-      );
-      const score =
-        feed.kind === 'general'
-          ? scoreNewsItem(title, '', link)
-          : scoreNewsItem(title, summary, link);
-      if (score < SCORE_THRESHOLD) {
-        result.rejected.push({ score, title: title.slice(0, 110), source: feed.name });
+      if (c.score < SCORE_THRESHOLD) {
+        result.rejected.push({ score: c.score, title: c.title.slice(0, 110), source: feed.name });
         continue;
       }
-
-      const enclosure = (item as { enclosure?: { url?: string } }).enclosure?.url;
-      candidates.push({
-        feed,
-        title,
-        link,
-        summary,
-        imageUrl: enclosure && /^https?:\/\//.test(enclosure) ? enclosure : null,
-        publishedAt: publishedAt && !Number.isNaN(publishedAt.getTime()) ? publishedAt : null,
-        score,
-      });
+      candidates.push(c);
     }
   }
 

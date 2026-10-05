@@ -8,6 +8,11 @@
  * (cricket, OPEC, real-estate tokenisation) passed. An item now needs at least one real HoReCa
  * term, an off-topic word in the TITLE rejects it outright, and AI / hospitality-tech terms are
  * rewarded and route the item to the "technology" category.
+ *
+ * TASK-0491 (Azerbaijani coverage): text is case-folded with Turkish/Azerbaijani rules before
+ * matching ("İCTİMAİ İAŞƏ" → "ictimai iaşə", "BAKI" → "bakı"); long terms allow up to 10 suffix
+ * letters ("restoranlarımızda", "restoranlardaki"); AZ/TR/RU core vocabulary added (iaşə,
+ * yeməkxana, şadlıq sarayı, lokanta, turizm…); `lig` / `neft` block only as whole words.
  */
 
 /** Minimum score to be inserted into DB as draft. Below this = discarded. */
@@ -28,17 +33,18 @@ export const CORE_TERMS: Record<string, number> = {
   хорека: 3,
   foodservice: 3,
   'food service': 3,
-  'qonaq evi': 3,
+  'qonaq ev': 3,
   pansiyon: 3,
   'guest house': 3,
   hostel: 2,
   cafe: 2,
   café: 2,
-  kafe: 2,
+  kafe: 3,
   кафе: 2,
   catering: 2,
   'ictimai iaşə': 3,
   общепит: 3,
+  'общественное питание': 3,
   franchise: 3,
   franchising: 3,
   françayz: 3,
@@ -62,7 +68,42 @@ export const CORE_TERMS: Record<string, number> = {
   'front desk': 2,
   konaklama: 3,
   'yiyecek içecek': 3,
+  'yeme içme': 3,
   aqta: 3,
+
+  // TASK-0491: Azerbaijani / Turkish / Russian sector vocabulary
+  iaşə: 3,
+  aiiqa: 3,
+  yeməkxana: 3,
+  aşxana: 3,
+  'şadlıq saray': 3,
+  'restoran şəbəkə': 3,
+  'restoran zinciri': 3,
+  qonaqpərvərlik: 3,
+  lokanta: 3,
+  otelçilik: 3,
+  otelcilik: 3,
+  'turizm sektoru': 3,
+  'dövlət turizm agentliyi': 3,
+  dta: 2,
+  turoperator: 2,
+  'tur operatoru': 2,
+  turist: 2,
+  çayxana: 2,
+  bufet: 2,
+  büfe: 2,
+  pastaxana: 2,
+  pastane: 2,
+  şirniyyat: 2,
+  qastronomiya: 2,
+  gastronomi: 2,
+  gastronomy: 2,
+  гостеприимств: 3,
+  турист: 2,
+  // Tourism is the sector's demand side — core (TASK-0491), was +1 supporting.
+  turizm: 2,
+  туризм: 2,
+  tourism: 2,
 };
 
 /** Supporting signals — only count when a core term is present. */
@@ -88,9 +129,6 @@ export const KEYWORD_WEIGHTS: Record<string, number> = {
   concierge: 2,
 
   // Business signals
-  tourism: 1,
-  turizm: 1,
-  туризм: 1,
   sahibkar: 2,
   entrepreneur: 1,
   investisiya: 1,
@@ -157,21 +195,30 @@ export const BLOCKED_TERMS = [
   'premier league',
   'tennis',
   'olympic',
+  'basketball',
+  'volleyball',
   'futbol',
+  'basketbol',
+  'voleybol',
   'maç',
   'lig',
   'matç',
   'çempionat',
   'футбол',
+  'баскетбол',
+  'волейбол',
   'матч',
   'чемпионат',
   'крикет',
-  // politics / war
+  // politics / war / defence
   'election',
   'missile',
   'sanctions',
   'ceasefire',
   'military',
+  'defense minister',
+  'defence minister',
+  'adex',
   'seçim',
   'füze',
   'seçki',
@@ -209,7 +256,22 @@ export const BLOCKED_TERMS = [
   'arrested',
   'gözaltı',
   'tutuklandı',
+  'həbs',
+  'qətl',
+  'задержан',
 ];
+
+/**
+ * Terms that match only as a whole word (no suffixes). `neft` with suffixes rejected
+ * "Neftçilər prospektində yeni restoran" and "Neftçala"; `lig` must not grow into other words.
+ */
+const EXACT_TERMS = new Set(['lig', 'neft', 'adex']);
+
+/** Word continuations that turn a term into an unrelated word ("kafedra" = university chair). */
+const TERM_EXCLUSIONS: Record<string, string> = {
+  kafe: 'dr',
+  кафе: 'др',
+};
 
 /** Source domain quality. Unknown domains default to 0. */
 export const SOURCE_WEIGHTS: Record<string, number> = {
@@ -233,51 +295,93 @@ export const SOURCE_WEIGHTS: Record<string, number> = {
   'hospitalityinsights.ehl.edu': 2,
   'eater.com': 2,
 
-  // Tier 3 — regional
-  'report.az': 2,
-  'apa.az': 1,
-  'trend.az': 1,
-  'azertag.az': 1,
+  // Tier 3 — regional. TASK-0491: Azerbaijani sources are the platform's home market → raised.
+  'report.az': 3,
+  'apa.az': 3,
+  'trend.az': 3,
+  'azertag.az': 3,
+  'musavat.com': 3,
+  'modern.az': 3,
+  'turizmgazetesi.com': 3,
   'turizmguncel.com': 2,
   'turizmajansi.com': 2,
   'hurriyet.com.tr': 1,
   'sozcu.com.tr': 1,
+  'dunya.com': 1,
 
   // Spam / low quality
   'pr.com': -3,
   'prnewswire.com': -2,
   'businesswire.com': -2,
+  // TASK-0491: 79 rows of syndicated noise, 0 approvals
+  'prnasia.com': -3,
+  'menafn.com': -3,
+  'travelandtourworld.com': -3,
 };
 
 function escapeRegex(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/**
+ * Case-fold variants used for matching. Turkish/Azerbaijani fold ("BAKI" → "bakı", "İAŞƏ" → "iaşə")
+ * plus the standard fold ("AI" → "ai", "HILTON" → "hilton"); a term matches if either variant has it.
+ */
+export function foldVariants(text: string): string[] {
+  const nfc = (text || '').normalize('NFC');
+  const tr = nfc.replace(/I/g, 'ı').replace(/İ/g, 'i').toLocaleLowerCase('tr').replace(/̇/g, '');
+  const std = nfc.replace(/İ/g, 'i').toLowerCase().replace(/̇/g, '');
+  return tr === std ? [tr] : [tr, std];
+}
+
 const matcherCache = new Map<string, RegExp>();
 
+function letterCount(term: string): number {
+  return term.replace(/[^\p{L}]/gu, '').length;
+}
+
 /**
- * Word-start match, Unicode-aware. Up to 5 trailing letters allow plurals/suffixes
- * ("hotels", "restoranlar", "otelləri", "ресторанов"), but a term never matches inside another
+ * Word-start match, Unicode-aware, on already case-folded text. Suffix allowance grows with the
+ * term: ≤3 letters exact ("ai", "pos", "ota"), 4 letters up to 7 ("kafelərində"), ≥5 letters up to
+ * 10 ("restoranlarımızda", "restoranlardaki", "ресторанов"). A term never matches inside another
  * word ("otel" does not match "hotel"; "ai" does not match "said").
  */
-function hasTerm(text: string, term: string): boolean {
+function termRegex(term: string): RegExp {
   let re = matcherCache.get(term);
   if (!re) {
-    const suffix = term.length <= 3 ? '' : '\\p{L}{0,5}';
-    re = new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(term)}${suffix}(?![\\p{L}\\p{N}])`, 'iu');
+    const letters = letterCount(term);
+    const suffix = EXACT_TERMS.has(term)
+      ? ''
+      : letters <= 3
+        ? ''
+        : letters === 4
+          ? '\\p{L}{0,7}'
+          : '\\p{L}{0,10}';
+    const exclusion = TERM_EXCLUSIONS[term] ? `(?!${escapeRegex(TERM_EXCLUSIONS[term])})` : '';
+    re = new RegExp(
+      `(?<![\\p{L}\\p{N}])${escapeRegex(term)}${exclusion}${suffix}(?![\\p{L}\\p{N}])`,
+      'u'
+    );
     matcherCache.set(term, re);
   }
-  return re.test(text);
+  return re;
+}
+
+function hasTerm(variants: string[], term: string): boolean {
+  const re = termRegex(term);
+  return variants.some((v) => re.test(v));
 }
 
 /** True when the text (title) contains an off-topic term. */
 export function isBlockedTopic(text: string): boolean {
-  return BLOCKED_TERMS.some((term) => hasTerm(text, term));
+  const variants = foldVariants(text);
+  return BLOCKED_TERMS.some((term) => hasTerm(variants, term));
 }
 
 /** True when the text is about AI / hospitality technology. */
 export function isTechTopic(text: string): boolean {
-  return TECH_TERMS.some((term) => hasTerm(text, term));
+  const variants = foldVariants(text);
+  return TECH_TERMS.some((term) => hasTerm(variants, term));
 }
 
 /**
@@ -285,30 +389,29 @@ export function isTechTopic(text: string): boolean {
  * @returns numeric score; >= SCORE_THRESHOLD means relevant enough to keep
  */
 export function scoreNewsItem(title: string, description: string, sourceUrl: string): number {
-  const cleanTitle = (title || '').normalize('NFC');
-  const text = `${cleanTitle} ${description || ''}`.normalize('NFC');
-
   // Off-topic in the headline: never relevant, whatever else it mentions.
-  if (isBlockedTopic(cleanTitle)) return 0;
+  if (isBlockedTopic(title || '')) return 0;
+
+  const variants = foldVariants(`${title || ''} ${description || ''}`);
 
   // Must actually be about HoReCa.
   let core = 0;
   for (const [term, weight] of Object.entries(CORE_TERMS)) {
-    if (hasTerm(text, term)) core += weight;
+    if (hasTerm(variants, term)) core += weight;
   }
   if (core === 0) return 0;
 
   let score = core;
   for (const [term, weight] of Object.entries(KEYWORD_WEIGHTS)) {
-    if (hasTerm(text, term)) score += weight;
+    if (hasTerm(variants, term)) score += weight;
   }
-  if (isBlockedTopic(description || '')) score -= 4;
+  if (description && isBlockedTopic(description)) score -= 4;
 
   // Source domain weight
   try {
     const domain = new URL(sourceUrl).hostname.replace(/^www\./, '');
     for (const [pattern, weight] of Object.entries(SOURCE_WEIGHTS)) {
-      if (domain.endsWith(pattern)) {
+      if (domain === pattern || domain.endsWith(`.${pattern}`)) {
         score += weight;
         break;
       }

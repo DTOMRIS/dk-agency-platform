@@ -4,6 +4,10 @@
 
 - `TASK-0490` feat(news-admin): xəbər idarə paneli sürətləndi (səhifədə 50 xəbər, 1.86 MB → 33 KB); çoxlu xəbəri bir dəfəyə seçib silmək/təsdiqləmək/rədd etmək; Manşet/Top/Gündəm/Foto/Video nişanları və "Vitrində" filtri; köhnə manşetlər artıq vitrində ilişib qalmır (7 gün qaydası); "Mənbə yoxdur" əvəzinə real mənbə; əməliyyat düymələri kəsilmir; tərcümə düyməsi 504 vermir (paralel tərcümə, 16.7 s → 2.5 s).
 
+- `TASK-0491` feat(news): Azərbaycan xəbərləri artıq filtrdən keçir — "restoranlarında", "İCTİMAİ İAŞƏ", "şadlıq sarayları" kimi AZ/TR formaları tanınır; Trend turizm (AZ/RU/EN), AZERTAC iqtisadiyyat, Musavat, Modern.az, Turizm Gazetesi və başqa 11 lent qoşuldu; RSS xəbərləri şəkli ilə gəlir; şəkilsiz təsdiqli xəbərlər üçün og:image doldurma skripti.
+
+- `TASK-0492` feat(news): Sektor Nəbzi xəbərləri artıq sabit 6 bölməli şablonla yox, jurnalist üslubunda yazılır; ikinci "redaktor" mərhələsi hər faktı mənbə ilə yoxlayır, dili düzəldir, köhnə və kənar xəbərləri rədd edir; redaktor qeydi Telegram təsdiq mesajında görünür; növbədə ən uyğun son 14 günlük xəbərlər birinci işlənir.
+
 - `TASK-0489` feat(news): Instagram/Facebook üçün xəbər kartı — `/api/news/card/{id}` təsdiqlənmiş xəbərdən 1080×1350 PNG yaradır (ağ "B" dizaynı, DK loqosu, kateqoriya, başlıq, qısa xülasə; AZ/RU/EN/TR).
 
 - `TASK-0488` fix(news): DeepSeek xəbər sintezində "[parse] Invalid JSON" xətaları — `deepseek-v4-flash` düşünmə (reasoning) token-ları bütün limiti yeyirdi; düşünmə söndürüldü: 8/8 etibarlı JSON, ~3 dəfə az token.
