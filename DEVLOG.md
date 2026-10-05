@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-05 — TASK-0489: feat(news): sosial media kartı
+
+**Why:** Doğan: "Haberleri yaptık, insta filan neden yapamıyoruz?" Meta Graph API şəkli public URL-dən çəkir; xəbərlərdə şəkil yoxdur → brend kartı lazımdır. Dizayn: iki variant ekranda göstərildi, Doğan "beyaz olsun" (B) seçdi.
+
+**What:** `app/api/news/card/[id]/route.tsx` — `next/og` ImageResponse, nodejs runtime; yalnız `approved` xəbərlər (qalanları 404). Şriftlər Google Fonts-dan yalnız lazım olan qliflərlə TTF (Playfair Display 800, Inter 400/700). `?locale=` ilə 4 dil. Cache 1 saat / CDN 1 gün. Növbəti addım: Meta paylaşımı + Telegram düyməsi (Meta tokeni gələndə).
+
 ## 2026-10-04 — TASK-0488: fix(news): sintez JSON xətaları
 
 **Why:** Hər işləmədə 3 xəbər `[parse] Invalid JSON` ilə düşürdü.

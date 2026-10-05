@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0489` feat(news): Instagram/Facebook üçün xəbər kartı — `/api/news/card/{id}` təsdiqlənmiş xəbərdən 1080×1350 PNG yaradır (ağ "B" dizaynı, DK loqosu, kateqoriya, başlıq, qısa xülasə; AZ/RU/EN/TR).
+
 - `TASK-0488` fix(news): DeepSeek xəbər sintezində "[parse] Invalid JSON" xətaları — `deepseek-v4-flash` düşünmə (reasoning) token-ları bütün limiti yeyirdi; düşünmə söndürüldü: 8/8 etibarlı JSON, ~3 dəfə az token.
 
 - `TASK-0487` feat(kazan-ai): KAZAN artıq saytın real məzmununu bilir — 37 bloq yazısı, 18 toolkit aləti və son 30 günün təsdiqlənmiş xəbərləri linkləri ilə; suala ən uyğun 2 yazının xülasəsi + mətn parçası cavaba qoşulur; uydurma başlıq/link qadağası; cavab artıq yarımçıq kəsilmir; ikiqat (uydurma) Əhilik sitatı aradan qaldırıldı.
