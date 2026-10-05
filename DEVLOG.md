@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-05 — TASK-0493: fix(news-admin): dərc olunmuş xəbərlərin toplu silinməsinə qoruma
+
+**Why:** Doğan gözləyən/rədd edilmiş xəbərləri toplu sildi; "Hamısı" tabının ilk səhifəsində ən yeni dərc olunmuş xəbərlər də (AİİQA #1064, #1063, #1058, #1057) seçimə düşüb silindi. Panel yayımdakı xəbəri bu qədər asan silməyə imkan verməməli idi.
+
+**What:** `deleteNewsArticles(ids, { includeApproved })` — approved sətirlər default qorunur (`skipped: approved_protected`); batch API `includeApproved` qəbul edir; UI seçimdə dərc olunmuş xəbər varsa ayrıca confirm (OK = onları da sil, Cancel = yalnız dərc olunmamışlar). `loadNews` əvvəlində seçim sıfırlanır, yüklənmə zamanı checkbox disabled.
+
 ## 2026-10-05 — TASK-0490: feat(news-admin): sürətli siyahı, toplu əməliyyatlar, vitrin, tərcümə 504
 
 **Why:** Admin xəbər paneli ~1037 xəbəri content/summary ilə birlikdə tək sorğuda yükləyirdi (yavaş); toplu seçim yox idi; hansı xəbərin vitrində olduğu görünmürdü və iyun manşetləri vitrində həmişəlik ilişib qalmışdı; ingester mənbəni `author`-a yazdığı üçün "Mənbə yoxdur" görünürdü; əməliyyat sütunu kəsilirdi; "Tərcümə et" Hostinger proxy-dən 504 alırdı.

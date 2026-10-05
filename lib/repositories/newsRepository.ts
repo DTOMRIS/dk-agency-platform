@@ -209,14 +209,31 @@ export async function setNewsArticlesStatus(
   return rows.map((r) => r.id);
 }
 
-/** Bulk delete (TASK-0490). Same semantics as deleteNewsArticle, for many ids. */
-export async function deleteNewsArticles(ids: number[]) {
-  if (!dbAvailable || !db || ids.length === 0) return [] as number[];
+/**
+ * Bulk delete (TASK-0490). Same semantics as deleteNewsArticle, for many ids.
+ * TASK-0493: published (approved) articles are protected unless `includeApproved` is set —
+ * a "select all" on the newest page deleted live articles (incl. the AİİQA story) on 2026-10-05.
+ */
+export async function deleteNewsArticles(ids: number[], options: { includeApproved?: boolean } = {}) {
+  if (!dbAvailable || !db || ids.length === 0) {
+    return { deleted: [] as number[], protectedIds: [] as number[] };
+  }
+  let targets = ids;
+  let protectedIds: number[] = [];
+  if (!options.includeApproved) {
+    const approved = await db
+      .select({ id: newsArticles.id })
+      .from(newsArticles)
+      .where(and(inArray(newsArticles.id, ids), eq(newsArticles.status, 'approved')));
+    protectedIds = approved.map((r) => r.id);
+    targets = ids.filter((id) => !protectedIds.includes(id));
+  }
+  if (targets.length === 0) return { deleted: [] as number[], protectedIds };
   const rows = await db
     .delete(newsArticles)
-    .where(inArray(newsArticles.id, ids))
+    .where(inArray(newsArticles.id, targets))
     .returning({ id: newsArticles.id });
-  return rows.map((r) => r.id);
+  return { deleted: rows.map((r) => r.id), protectedIds };
 }
 
 export async function updateNewsArticleReviewState(

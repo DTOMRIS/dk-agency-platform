@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0493` fix(news-admin): toplu silmə dərc olunmuş (approved) xəbərləri artıq default olaraq ötürür — onları silmək üçün ayrıca təsdiq lazımdır (həm UI, həm server); seçim tab/səhifə dəyişəndə dərhal sıfırlanır, yüklənərkən checkbox-lar kilidlidir.
+
 - `TASK-0490` feat(news-admin): xəbər idarə paneli sürətləndi (səhifədə 50 xəbər, 1.86 MB → 33 KB); çoxlu xəbəri bir dəfəyə seçib silmək/təsdiqləmək/rədd etmək; Manşet/Top/Gündəm/Foto/Video nişanları və "Vitrində" filtri; köhnə manşetlər artıq vitrində ilişib qalmır (7 gün qaydası); "Mənbə yoxdur" əvəzinə real mənbə; əməliyyat düymələri kəsilmir; tərcümə düyməsi 504 vermir (paralel tərcümə, 16.7 s → 2.5 s).
 
 - `TASK-0491` feat(news): Azərbaycan xəbərləri artıq filtrdən keçir — "restoranlarında", "İCTİMAİ İAŞƏ", "şadlıq sarayları" kimi AZ/TR formaları tanınır; Trend turizm (AZ/RU/EN), AZERTAC iqtisadiyyat, Musavat, Modern.az, Turizm Gazetesi və başqa 11 lent qoşuldu; RSS xəbərləri şəkli ilə gəlir; şəkilsiz təsdiqli xəbərlər üçün og:image doldurma skripti.
