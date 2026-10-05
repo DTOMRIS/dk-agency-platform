@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray, isNotNull, ne, sql } from 'drizzle-orm';
+import { and, desc, eq, inArray, isNotNull, ne, or, sql } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { newsArticles, newsSources } from '@/lib/db/schema';
 import { getAllNews } from '@/lib/data/mockNewsDB';
@@ -8,8 +8,15 @@ import { translateText } from '@/lib/ai/translate';
 
 export interface NewsAdminFilters {
   status?: string | null;
+  /** Only rows flagged for the showcase (manşet / top / gündəm / editor pick). */
+  showcase?: boolean;
+  /** 1-based page number (default 1). */
+  page?: number;
+  /** Rows per page (default 50, max 200). */
+  pageSize?: number;
 }
 
+/** Lightweight list row — no content/summary columns (TASK-0490: list was ~1037 full rows). */
 export interface AdminNewsArticle {
   id: number;
   sourceId: number | null;
@@ -18,15 +25,20 @@ export interface AdminNewsArticle {
   slug: string | null;
   title: string;
   titleAz: string | null;
-  summary: string | null;
-  summaryAz: string | null;
   category: string;
   imageUrl: string | null;
   author: string | null;
+  origin: string | null;
+  newsType: string | null;
   publishedAt: string;
   status: 'fetched' | 'translated' | 'approved' | 'rejected';
   isEditorPick: boolean;
+  isManset: boolean;
+  isTop: boolean;
+  isGundem: boolean;
 }
+
+export const ADMIN_NEWS_PAGE_SIZE = 50;
 
 export type NewsCategoryKey = 'all' | 'finance' | 'operations' | 'growth' | 'market' | 'technology';
 
@@ -79,8 +91,12 @@ function getPublicNewsConditions(category?: NewsCategoryKey) {
 }
 
 export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
+  const pageSize = Math.min(Math.max(Math.trunc(filters.pageSize ?? ADMIN_NEWS_PAGE_SIZE), 1), 200);
+  const page = Math.max(Math.trunc(filters.page ?? 1), 1);
+  const offset = (page - 1) * pageSize;
+
   if (!dbAvailable || !db) {
-    const mockRows = getAllNews()
+    const mockRows: AdminNewsArticle[] = getAllNews()
       .map((item, index) => ({
         id: index + 1,
         sourceId: null,
@@ -89,53 +105,83 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
         slug: item.slug,
         title: item.title,
         titleAz: item.title,
-        summary: item.summary,
-        summaryAz: item.summary,
         category: item.category,
         imageUrl: null,
         author: item.author,
+        origin: 'manual',
+        newsType: 'none',
         publishedAt: item.publishDate,
-        status: item.isPremium ? 'translated' : 'approved',
+        status: (item.isPremium ? 'translated' : 'approved') as AdminNewsArticle['status'],
         isEditorPick: index === 0,
+        isManset: false,
+        isTop: false,
+        isGundem: false,
       }))
-      .filter((item) => (!filters.status || filters.status === 'all' ? true : item.status === filters.status));
+      .filter((item) =>
+        !filters.status || filters.status === 'all' ? true : item.status === filters.status
+      )
+      .filter((item) => (filters.showcase ? item.isEditorPick : true));
 
-    return { items: mockRows as AdminNewsArticle[], total: mockRows.length, source: 'mock' as const };
+    return {
+      items: mockRows.slice(offset, offset + pageSize),
+      total: mockRows.length,
+      page,
+      pageSize,
+      source: 'mock' as const,
+    };
   }
 
   const conditions = [];
   if (filters.status && filters.status !== 'all') {
-    conditions.push(eq(newsArticles.status, filters.status as typeof newsArticles.$inferSelect.status));
+    conditions.push(
+      eq(newsArticles.status, filters.status as typeof newsArticles.$inferSelect.status)
+    );
   }
+  if (filters.showcase) {
+    conditions.push(
+      or(
+        eq(newsArticles.isManset, true),
+        eq(newsArticles.isTop, true),
+        eq(newsArticles.isGundem, true),
+        eq(newsArticles.isEditorPick, true)
+      )
+    );
+  }
+  const where = conditions.length ? and(...conditions) : undefined;
 
-  const rows = await db
-    .select({
-      id: newsArticles.id,
-      sourceId: newsArticles.sourceId,
-      sourceName: newsSources.name,
-      externalUrl: newsArticles.externalUrl,
-      slug: newsArticles.slug,
-      title: newsArticles.title,
-      titleAz: newsArticles.titleAz,
-      summary: newsArticles.summary,
-      summaryAz: newsArticles.summaryAz,
-      contentAz: newsArticles.contentAz,
-      category: newsArticles.category,
-      imageUrl: newsArticles.imageUrl,
-      author: newsArticles.author,
-      publishedAt: newsArticles.publishedAt,
-      status: newsArticles.status,
-      isEditorPick: newsArticles.isEditorPick,
-    })
-    .from(newsArticles)
-    .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
-    .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt));
-
-  const totalRows = await db
-    .select({ count: sql<number>`count(*)::int` })
-    .from(newsArticles)
-    .where(conditions.length ? and(...conditions) : undefined);
+  const [rows, totalRows] = await Promise.all([
+    db
+      .select({
+        id: newsArticles.id,
+        sourceId: newsArticles.sourceId,
+        sourceName: newsSources.name,
+        externalUrl: newsArticles.externalUrl,
+        slug: newsArticles.slug,
+        title: newsArticles.title,
+        titleAz: newsArticles.titleAz,
+        category: newsArticles.category,
+        imageUrl: newsArticles.imageUrl,
+        author: newsArticles.author,
+        origin: newsArticles.origin,
+        newsType: newsArticles.newsType,
+        publishedAt: newsArticles.publishedAt,
+        status: newsArticles.status,
+        isEditorPick: newsArticles.isEditorPick,
+        isManset: newsArticles.isManset,
+        isTop: newsArticles.isTop,
+        isGundem: newsArticles.isGundem,
+      })
+      .from(newsArticles)
+      .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
+      .where(where)
+      .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
+      .limit(pageSize)
+      .offset(offset),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(newsArticles)
+      .where(where),
+  ]);
 
   return {
     items: rows.map((item) => ({
@@ -143,13 +189,39 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
       publishedAt: item.publishedAt?.toISOString() || new Date().toISOString(),
     })) as AdminNewsArticle[],
     total: totalRows[0]?.count || 0,
+    page,
+    pageSize,
     source: 'db' as const,
   };
 }
 
+/** Bulk status change (TASK-0490). Returns the ids that were actually updated. */
+export async function setNewsArticlesStatus(
+  ids: number[],
+  status: 'fetched' | 'translated' | 'approved' | 'rejected'
+) {
+  if (!dbAvailable || !db || ids.length === 0) return [] as number[];
+  const rows = await db
+    .update(newsArticles)
+    .set({ status, ...(status === 'rejected' ? { isEditorPick: false } : {}) })
+    .where(inArray(newsArticles.id, ids))
+    .returning({ id: newsArticles.id });
+  return rows.map((r) => r.id);
+}
+
+/** Bulk delete (TASK-0490). Same semantics as deleteNewsArticle, for many ids. */
+export async function deleteNewsArticles(ids: number[]) {
+  if (!dbAvailable || !db || ids.length === 0) return [] as number[];
+  const rows = await db
+    .delete(newsArticles)
+    .where(inArray(newsArticles.id, ids))
+    .returning({ id: newsArticles.id });
+  return rows.map((r) => r.id);
+}
+
 export async function updateNewsArticleReviewState(
   id: number,
-  input: { status?: 'fetched' | 'translated' | 'approved' | 'rejected'; isEditorPick?: boolean },
+  input: { status?: 'fetched' | 'translated' | 'approved' | 'rejected'; isEditorPick?: boolean }
 ) {
   if (!dbAvailable || !db) {
     return { success: true, source: 'mock' as const };
@@ -200,7 +272,7 @@ export async function updateNewsArticleAdmin(
     logoOverlay?: boolean;
     relatedToolkits?: string[];
     relatedBlogSlug?: string | null;
-  },
+  }
 ) {
   if (!dbAvailable || !db) {
     return { success: true, source: 'mock' as const };
@@ -217,10 +289,7 @@ export async function updateNewsArticleAdmin(
     return { success: true, source: 'db' as const };
   }
 
-  await db
-    .update(newsArticles)
-    .set(setData)
-    .where(eq(newsArticles.id, id));
+  await db.update(newsArticles).set(setData).where(eq(newsArticles.id, id));
 
   return { success: true, source: 'db' as const };
 }
@@ -394,7 +463,7 @@ export async function getFetchedNewsArticles(limit: number = 10) {
 
 export async function updateTranslatedNewsArticle(
   id: number,
-  input: { titleAz: string; summaryAz: string },
+  input: { titleAz: string; summaryAz: string }
 ) {
   if (!dbAvailable || !db) return { success: true, source: 'mock' as const };
 
@@ -410,39 +479,51 @@ export async function updateTranslatedNewsArticle(
   return { success: true, source: 'db' as const };
 }
 
-function mapPublicArticle(row: {
-  id: number;
-  slug: string | null;
-  title: string;
-  titleAz: string | null;
-  summary: string | null;
-  summaryAz: string | null;
-  category: typeof newsArticles.$inferSelect.category;
-  imageUrl: string | null;
-  author: string | null;
-  sourceName: string | null;
-  externalUrl: string;
-  publishedAt: Date | null;
-  isEditorPick: boolean;
-  titleRu?: string | null;
-  titleEn?: string | null;
-  titleTr?: string | null;
-  summaryRu?: string | null;
-  summaryEn?: string | null;
-  summaryTr?: string | null;
-  contentAz?: string | null;
-  contentRu?: string | null;
-  contentEn?: string | null;
-  contentTr?: string | null;
-}, locale: ContentLocale = 'az'): PublicNewsArticle {
+function mapPublicArticle(
+  row: {
+    id: number;
+    slug: string | null;
+    title: string;
+    titleAz: string | null;
+    summary: string | null;
+    summaryAz: string | null;
+    category: typeof newsArticles.$inferSelect.category;
+    imageUrl: string | null;
+    author: string | null;
+    sourceName: string | null;
+    externalUrl: string;
+    publishedAt: Date | null;
+    isEditorPick: boolean;
+    titleRu?: string | null;
+    titleEn?: string | null;
+    titleTr?: string | null;
+    summaryRu?: string | null;
+    summaryEn?: string | null;
+    summaryTr?: string | null;
+    contentAz?: string | null;
+    contentRu?: string | null;
+    contentEn?: string | null;
+    contentTr?: string | null;
+  },
+  locale: ContentLocale = 'az'
+): PublicNewsArticle {
   const titleByLocale: Record<ContentLocale, string | null | undefined> = {
-    az: row.titleAz, ru: row.titleRu, en: row.titleEn, tr: row.titleTr,
+    az: row.titleAz,
+    ru: row.titleRu,
+    en: row.titleEn,
+    tr: row.titleTr,
   };
   const summaryByLocale: Record<ContentLocale, string | null | undefined> = {
-    az: row.summaryAz, ru: row.summaryRu, en: row.summaryEn, tr: row.summaryTr,
+    az: row.summaryAz,
+    ru: row.summaryRu,
+    en: row.summaryEn,
+    tr: row.summaryTr,
   };
   const contentByLocale: Record<ContentLocale, string | null | undefined> = {
-    az: row.contentAz, ru: row.contentRu, en: row.contentEn, tr: row.contentTr,
+    az: row.contentAz,
+    ru: row.contentRu,
+    en: row.contentEn,
+    tr: row.contentTr,
   };
 
   const title = titleByLocale[locale]?.trim() || row.titleAz || row.title;
@@ -524,7 +605,9 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, l
         publishedAt: item.publishDate,
         isEditorPick: index === 0,
       }))
-      .filter((item) => (filters.category && filters.category !== 'all' ? item.category === filters.category : true));
+      .filter((item) =>
+        filters.category && filters.category !== 'all' ? item.category === filters.category : true
+      );
 
     return {
       items: mockItems.slice(filters.offset ?? 0, (filters.offset ?? 0) + (filters.limit ?? 12)),
@@ -546,7 +629,10 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, l
       .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
       .limit(limit)
       .offset(offset),
-    db.select({ count: sql<number>`count(*)::int` }).from(newsArticles).where(where),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(newsArticles)
+      .where(where),
   ]);
 
   return {
@@ -574,8 +660,8 @@ export async function getApprovedEditorPick(category?: NewsCategoryKey, locale?:
         sql`trim(coalesce(${newsArticles.titleAz}, '')) <> ''`,
         isNotNull(newsArticles.summaryAz),
         sql`trim(coalesce(${newsArticles.summaryAz}, '')) <> ''`,
-        ...(category && category !== 'all' ? [eq(newsArticles.category, category)] : []),
-      ),
+        ...(category && category !== 'all' ? [eq(newsArticles.category, category)] : [])
+      )
     )
     .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
     .limit(1)
@@ -595,7 +681,18 @@ export async function getVitrinNewsArticles(limit = 8, locale?: string) {
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
     .where(and(...getPublicNewsConditions()))
-    .orderBy(desc(newsArticles.isManset), desc(newsArticles.isTop), desc(newsArticles.publishedAt))
+    // TASK-0490: manşet/top flags only win while the article is fresh (≤7 days).
+    // Older flagged items fall back to plain date order instead of being stuck forever.
+    .orderBy(
+      desc(
+        sql`(${newsArticles.isManset} and coalesce(${newsArticles.publishedAt}, ${newsArticles.createdAt}) >= now() - interval '7 days')`
+      ),
+      desc(
+        sql`(${newsArticles.isTop} and coalesce(${newsArticles.publishedAt}, ${newsArticles.createdAt}) >= now() - interval '7 days')`
+      ),
+      desc(newsArticles.publishedAt),
+      desc(newsArticles.createdAt)
+    )
     .limit(limit);
 
   return rows.map((row) => mapPublicArticle(row, loc));
@@ -638,7 +735,9 @@ export async function getNewsArticleBySlug(slug: string, locale?: string, previe
       status: newsArticles.status,
       // to_jsonb keeps the query compatible while the idempotent 0017 migration
       // is pending, then starts returning the real columns without another deploy.
-      relatedToolkits: sql<string[]>`coalesce(to_jsonb(news_articles)->'related_toolkits', '[]'::jsonb)`,
+      relatedToolkits: sql<
+        string[]
+      >`coalesce(to_jsonb(news_articles)->'related_toolkits', '[]'::jsonb)`,
       relatedBlogSlug: sql<string | null>`to_jsonb(news_articles)->>'related_blog_slug'`,
     })
     .from(newsArticles)
@@ -673,7 +772,11 @@ function getRelatedNewsConditions(category?: NewsCategoryKey) {
   return conditions;
 }
 
-export async function getRelatedApprovedNewsArticles(articleId: number, category: Exclude<NewsCategoryKey, 'all'>, locale?: string) {
+export async function getRelatedApprovedNewsArticles(
+  articleId: number,
+  category: Exclude<NewsCategoryKey, 'all'>,
+  locale?: string
+) {
   const loc = sanitizeLocale(locale);
 
   if (!dbAvailable || !db) return [];
@@ -683,12 +786,7 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
     .select(buildPublicArticleSelect())
     .from(newsArticles)
     .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
-    .where(
-      and(
-        ...getRelatedNewsConditions(category),
-        ne(newsArticles.id, articleId),
-      ),
-    )
+    .where(and(...getRelatedNewsConditions(category), ne(newsArticles.id, articleId)))
     .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
     .limit(8);
 
@@ -700,10 +798,7 @@ export async function getRelatedApprovedNewsArticles(articleId: number, category
       .from(newsArticles)
       .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
       .where(
-        and(
-          ...getRelatedNewsConditions(),
-          ...existingIds.map((eid) => ne(newsArticles.id, eid)),
-        ),
+        and(...getRelatedNewsConditions(), ...existingIds.map((eid) => ne(newsArticles.id, eid)))
       )
       .orderBy(desc(newsArticles.publishedAt))
       .limit(8 - sameCategory.length);
@@ -869,56 +964,59 @@ export async function autoTranslateNewsArticle(id: number): Promise<NewsTranslat
 
     const langs = ['ru', 'en', 'tr'] as const;
     const failedFields: string[] = [];
+    const database = db;
 
-    for (const lang of langs) {
-      const langUpdates: Record<string, string> = {};
-      const fields: Array<['title' | 'summary' | 'content', string]> = [];
+    // TASK-0490: languages and fields run in parallel (was 3 langs × 3 fields
+    // sequential → the admin request outlived Hostinger's proxy timeout → 504).
+    const langOutcomes = await Promise.all(
+      langs.map(async (lang) => {
+        const capLang = lang.charAt(0).toUpperCase() + lang.slice(1);
+        const fields: Array<['title' | 'summary' | 'content', string]> = [];
 
-      const titleTarget = row[`title${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
-      const summaryTarget = row[`summary${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
-      const contentTarget = row[`content${lang.charAt(0).toUpperCase()}${lang.slice(1)}` as keyof typeof row];
-
-      if (needsTranslation(titleTarget, row.titleAz)) {
-        fields.push(['title', row.titleAz as string]);
-      }
-      if (needsTranslation(summaryTarget, row.summaryAz)) {
-        fields.push(['summary', row.summaryAz as string]);
-      }
-      if (needsTranslation(contentTarget, row.contentAz)) {
-        fields.push(['content', row.contentAz as string]);
-      }
-
-      if (fields.length === 0) {
-        result.langs[lang] = 'skipped';
-        continue;
-      }
-
-      let anyFail = false;
-      for (const [name, src] of fields) {
-        const v = await translateText(src, lang);
-        if (v) {
-          const capName = name.charAt(0).toUpperCase() + name.slice(1);
-          const capLang = lang.charAt(0).toUpperCase() + lang.slice(1);
-          langUpdates[`${name}${capLang}`] = v;
-          // also support snake case if drizzle picks that — set both to be safe
-          void capName;
-          console.log(`[translate-news] ✅ ${row.slug} ${name}_${lang} (${src.length}→${v.length} chars)`);
-        } else {
-          anyFail = true;
-          failedFields.push(`${name}_${lang}`);
-          console.error(`[translate-news] ❌ FAIL ${row.slug} ${name}_${lang} (${src.length} chars)`);
+        if (needsTranslation(row[`title${capLang}` as keyof typeof row], row.titleAz)) {
+          fields.push(['title', row.titleAz as string]);
         }
-      }
+        if (needsTranslation(row[`summary${capLang}` as keyof typeof row], row.summaryAz)) {
+          fields.push(['summary', row.summaryAz as string]);
+        }
+        if (needsTranslation(row[`content${capLang}` as keyof typeof row], row.contentAz)) {
+          fields.push(['content', row.contentAz as string]);
+        }
 
-      if (Object.keys(langUpdates).length > 0) {
-        await db
-          .update(newsArticles)
-          .set(langUpdates as unknown as Partial<typeof newsArticles.$inferInsert>)
-          .where(eq(newsArticles.id, id));
-      }
+        if (fields.length === 0) return { lang, state: 'skipped' as const };
 
-      result.langs[lang] = anyFail ? 'failed' : 'done';
-      if (anyFail) result.ok = false;
+        const translated = await Promise.all(
+          fields.map(async ([name, src]) => ({ name, src, value: await translateText(src, lang) }))
+        );
+
+        const langUpdates: Record<string, string> = {};
+        let anyFail = false;
+        for (const { name, src, value } of translated) {
+          if (value) {
+            langUpdates[`${name}${capLang}`] = value;
+          } else {
+            anyFail = true;
+            failedFields.push(`${name}_${lang}`);
+            console.error(
+              `[translate-news] FAIL ${row.slug} ${name}_${lang} (${src.length} chars)`
+            );
+          }
+        }
+
+        if (Object.keys(langUpdates).length > 0) {
+          await database
+            .update(newsArticles)
+            .set(langUpdates as unknown as Partial<typeof newsArticles.$inferInsert>)
+            .where(eq(newsArticles.id, id));
+        }
+
+        return { lang, state: anyFail ? ('failed' as const) : ('done' as const) };
+      })
+    );
+
+    for (const outcome of langOutcomes) {
+      result.langs[outcome.lang] = outcome.state;
+      if (outcome.state === 'failed') result.ok = false;
     }
 
     if (failedFields.length > 0) {

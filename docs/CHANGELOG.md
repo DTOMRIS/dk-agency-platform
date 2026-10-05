@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- `TASK-0490` feat(news-admin): **sürətli admin xəbər siyahısı** — `/api/news/admin` 50 sətir/səhifə (`page`, `pageSize`, `showcase=1`), content/summary sütunları çıxdı, sətir+say `Promise.all` (1.86 MB → 33 KB); `POST /api/news/admin/batch` (`delete|approve|reject`, ≤200 id, zod, auth-suz 401); Manşet/Top/Gündəm/Foto/Video/Editor Pick nişanları + "Vitrində" tabı; vitrin bayraqları yalnız son 7 gündə üstünlük verir; mənbə `sourceName ?? author ?? hostname` + origin; tərcümə `thinking: disabled`, 45 s timeout, dillər/sahələr paralel, `maxDuration = 120` (504 fix).
 - `TASK-0489` feat(news): **sosial kart** — `/api/news/card/{id}` (1080×1350 PNG, yalnız approved, 4 dil) Instagram/Facebook paylaşımı üçün.
 - `TASK-0488` fix(news): **sintez JSON xətaları** — `deepseek-v4-flash` reasoning token-ları `max_tokens`-ı tükəndirirdi (5/8 `finish_reason=length`); `thinking: disabled` → 8/8 etibarlı JSON.
 - `TASK-0487` feat(kazan-ai): **saytın real məzmunu** — `lib/kazan-ai/site-context.ts` bloq/toolkit/xəbər kontekstini prompt-a əlavə edir (ən uyğun 2 yazı xülasə+parça ilə), uydurma link qadağası, DeepSeek `max_tokens` 2500 (v4-flash reasoning), model sitatları silinir.

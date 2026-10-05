@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0490` feat(news-admin): xəbər idarə paneli sürətləndi (səhifədə 50 xəbər, 1.86 MB → 33 KB); çoxlu xəbəri bir dəfəyə seçib silmək/təsdiqləmək/rədd etmək; Manşet/Top/Gündəm/Foto/Video nişanları və "Vitrində" filtri; köhnə manşetlər artıq vitrində ilişib qalmır (7 gün qaydası); "Mənbə yoxdur" əvəzinə real mənbə; əməliyyat düymələri kəsilmir; tərcümə düyməsi 504 vermir (paralel tərcümə, 16.7 s → 2.5 s).
+
 - `TASK-0489` feat(news): Instagram/Facebook üçün xəbər kartı — `/api/news/card/{id}` təsdiqlənmiş xəbərdən 1080×1350 PNG yaradır (ağ "B" dizaynı, DK loqosu, kateqoriya, başlıq, qısa xülasə; AZ/RU/EN/TR).
 
 - `TASK-0488` fix(news): DeepSeek xəbər sintezində "[parse] Invalid JSON" xətaları — `deepseek-v4-flash` düşünmə (reasoning) token-ları bütün limiti yeyirdi; düşünmə söndürüldü: 8/8 etibarlı JSON, ~3 dəfə az token.

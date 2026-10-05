@@ -22,8 +22,22 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ success: true, data: sources });
   }
 
-  const result = await getAdminNewsArticles({ status });
-  return NextResponse.json({ success: true, data: result.items, total: result.total, source: result.source });
+  const pageParam = Number(searchParams.get('page') ?? '1');
+  const pageSizeParam = Number(searchParams.get('pageSize') ?? '');
+  const result = await getAdminNewsArticles({
+    status,
+    showcase: searchParams.get('showcase') === '1',
+    page: Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1,
+    pageSize: Number.isFinite(pageSizeParam) && pageSizeParam > 0 ? pageSizeParam : undefined,
+  });
+  return NextResponse.json({
+    success: true,
+    data: result.items,
+    total: result.total,
+    page: result.page,
+    pageSize: result.pageSize,
+    source: result.source,
+  });
 }
 
 const NewsCategoryEnum = z.enum(['finance', 'operations', 'growth', 'market', 'technology']);

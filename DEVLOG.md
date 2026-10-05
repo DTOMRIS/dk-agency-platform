@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-05 — TASK-0490: feat(news-admin): sürətli siyahı, toplu əməliyyatlar, vitrin, tərcümə 504
+
+**Why:** Admin xəbər paneli ~1037 xəbəri content/summary ilə birlikdə tək sorğuda yükləyirdi (yavaş); toplu seçim yox idi; hansı xəbərin vitrində olduğu görünmürdü və iyun manşetləri vitrində həmişəlik ilişib qalmışdı; ingester mənbəni `author`-a yazdığı üçün "Mənbə yoxdur" görünürdü; əməliyyat sütunu kəsilirdi; "Tərcümə et" Hostinger proxy-dən 504 alırdı.
+
+**What:** Siyahı select-i yüngül (content/summary yox, + `isManset/isTop/isGundem/newsType/origin`), `limit/offset` 50, sətir+say `Promise.all`. `POST /api/news/admin/batch` — `canAccessNewsAdmin`, zod (≤200 id), approve `approveNewsArticle(id, { sideEffects: false })` + 2 paralel arxa fon növbəsi (`performApproveSideEffects`), reject `inArray` update, delete `inArray` delete. UI: checkbox + səhifədə hamısını seç + sticky toplu panel, səhifələmə, nişanlar, "Vitrində" tabı, `table-fixed` + `line-clamp-2`. `getVitrinNewsArticles`: manşet/top yalnız `coalesce(published_at, created_at) >= now() - 7 gün` olduqda üstün. `translate.ts`: `thinking: disabled`, `max_tokens` = clamp(2×, 2000, 8000), 45 s timeout; `autoTranslateNewsArticle` dilləri və sahələri paralel işlədir.
+
+**Ölçmə:** siyahı 1038 sətir/1.86 MB/~700 ms → 50 sətir/33 KB/~120 ms. Tərcümə 1480 simvol ×3 dil: 16.7 s (ardıcıl, köhnə) → 2.5 s (paralel, thinking off).
+
 ## 2026-10-05 — TASK-0489: feat(news): sosial media kartı
 
 **Why:** Doğan: "Haberleri yaptık, insta filan neden yapamıyoruz?" Meta Graph API şəkli public URL-dən çəkir; xəbərlərdə şəkil yoxdur → brend kartı lazımdır. Dizayn: iki variant ekranda göstərildi, Doğan "beyaz olsun" (B) seçdi.
