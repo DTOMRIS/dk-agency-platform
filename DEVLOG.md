@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-05 — TASK-0491: feat(news): Azərbaycan mənbələri, AZ-uyğun scoring, RSS şəkilləri
+
+**Why:** Araşdırma: AZ ümumi lentləri (report.az, apa.az, trend, azertag) heç vaxt bir xəbər də verməmişdi; 103 RSS sətrindən 99-u şəkilsiz idi. Kök səbəblər: suffiks `\p{L}{0,5}` "restoranlarında"/"restoranlardaki" formalarını tutmurdu, "İCTİMAİ İAŞƏ" `İ` hərfinə görə tapılmırdı, iaşə/yeməkxana/lokanta kimi əsas sözlər yox idi, şəkil yalnız enclosure-dan oxunurdu.
+
+**What:** Scoring TR/AZ case-fold + standart fold (ikisindən biri), suffiks ≤3/4/≥5 hərf → 0/7/10, AZ/TR/RU core lüğəti, turizm core 2, `lig`/`neft`/`adex` tam söz, AZ domenləri +3, 3 səs-küy domeni −3, domen uyğunluğu dəqiq. `e2e/news-scoring.test.ts` 29 fixture: yeni 29/29, köhnə 16/29. RSS: 11 yeni lent, lent limiti 50, `feed-image.ts` şəkil seçicisi (rss-pipeline də onu işlədir). Canlı dry-run (DB-yə yazmadan, 37 lent, 970 item): 194 keçən, 674 şəkilli; Trend turizm AZ/RU/EN 6/7/12 keçən, hamısı şəkilli. NewsData: AZ dilli sorğu (7 nəticə), RU sorğusu çıxarıldı (0 nəticə). og:image backfill dry-run: 13 namizəd → 6 şəkil; `--apply` icra olunmadı.
+
 ## 2026-10-05 — TASK-0489: feat(news): sosial media kartı
 
 **Why:** Doğan: "Haberleri yaptık, insta filan neden yapamıyoruz?" Meta Graph API şəkli public URL-dən çəkir; xəbərlərdə şəkil yoxdur → brend kartı lazımdır. Dizayn: iki variant ekranda göstərildi, Doğan "beyaz olsun" (B) seçdi.
