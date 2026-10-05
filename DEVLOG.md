@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-05 — TASK-0492: feat(news): redaksiya nəzarəti
+
+**Why:** Doğan: "Haberler okunsun, bizimkiler aynı kalıp zorlama olmasın, editoryal kontrol yap." Hər xəbər eyni 6 başlıqla (Nə baş verdi / Niyə önəmlidir / Dərs / Risk / 1 addım / DK baxışı) yazılırdı; köhnə xəbərlər (2023 sammiti) də keçirdi; növbə RSS-ə görə doldurulduğu üçün AZ xəbərləri heç işlənmirdi.
+
+**What:** `lib/news/editorial.ts` — müəllif (lid + 2-4 abzas, uzunluq siqnala görə, şablon başlıqları qadağan, terminlər: otel/mehmanxana) → redaktor (fakt-siqnal yoxlaması, dil, klişe, başlıq, təravət — mənbənin dərc tarixinə görə, xəbər dəyəri; ok/fixed/reject + sahibə qeyd) → mexaniki lint. `synthesize.ts` bunu çağırır; növbə `relevance_score desc` + son 14 gün. Telegram mesajında "🖊 Redaktor: …". Dry-run (8 real siqnal, DB-yə yazmadan): 2023 sammiti, 2016 Kəşmir hekayəsi, Tacikistan → rədd; Şamaxı otelləri, Jamba Juice, Userguest, Madrid F1, AİİQA → dərc səviyyəsində, uydurma fakt yoxdur.
+
 ## 2026-10-05 — TASK-0489: feat(news): sosial media kartı
 
 **Why:** Doğan: "Haberleri yaptık, insta filan neden yapamıyoruz?" Meta Graph API şəkli public URL-dən çəkir; xəbərlərdə şəkil yoxdur → brend kartı lazımdır. Dizayn: iki variant ekranda göstərildi, Doğan "beyaz olsun" (B) seçdi.

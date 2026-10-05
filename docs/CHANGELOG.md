@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- `TASK-0492` feat(news): **redaksiya nəzarəti** — `lib/news/editorial.ts` müəllif→redaktor iki mərhələ (şablonsuz jurnalist üslubu, fakt yoxlaması, köhnə/kənar xəbər rəddi), Telegram-da redaktor qeydi, növbə relevance+14 gün.
 - `TASK-0489` feat(news): **sosial kart** — `/api/news/card/{id}` (1080×1350 PNG, yalnız approved, 4 dil) Instagram/Facebook paylaşımı üçün.
 - `TASK-0488` fix(news): **sintez JSON xətaları** — `deepseek-v4-flash` reasoning token-ları `max_tokens`-ı tükəndirirdi (5/8 `finish_reason=length`); `thinking: disabled` → 8/8 etibarlı JSON.
 - `TASK-0487` feat(kazan-ai): **saytın real məzmunu** — `lib/kazan-ai/site-context.ts` bloq/toolkit/xəbər kontekstini prompt-a əlavə edir (ən uyğun 2 yazı xülasə+parça ilə), uydurma link qadağası, DeepSeek `max_tokens` 2500 (v4-flash reasoning), model sitatları silinir.
