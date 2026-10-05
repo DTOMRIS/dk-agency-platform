@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
 import { translateNewsArticleBySlug } from '@/lib/repositories/newsRepository';
 
+// TASK-0490: ru/en/tr run in parallel; allow up to 120 s on platforms that honour it.
+export const maxDuration = 120;
+
 // Admin-triggered AI translation of a saved news article (AZ → ru/en/tr).
 // Mirrors app/api/blog/translate (slug-based, per-language done/failed result).
 export async function POST(request: NextRequest) {

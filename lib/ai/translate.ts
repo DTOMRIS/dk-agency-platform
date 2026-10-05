@@ -29,9 +29,14 @@ Rules:
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
+// TASK-0490: per-call abort. Was 120 s × 3 retries → one stuck call could hold
+// the admin request for minutes and Hostinger's proxy answered 504.
+const CALL_TIMEOUT_MS = 45_000;
+const MIN_OUTPUT_TOKENS = 2000;
+const MAX_OUTPUT_TOKENS = 8000;
 // Chunk size: texts above this are split at markdown headings and packed into
 // chunks of about this size, translated in parallel (smaller chunk = faster
-// DeepSeek reply; each call must finish inside the 120 s abort below).
+// DeepSeek reply; each call must finish inside CALL_TIMEOUT_MS).
 const CHUNK_CHAR_THRESHOLD = 3000;
 const CHUNK_CONCURRENCY = 4;
 
@@ -125,12 +130,13 @@ async function callDeepSeek(
   targetLang: string,
   apiKey: string
 ): Promise<string | null> {
+  // ~2 chars per token for AZ/RU; output ≈ input size, so 2× input is generous.
   const estimatedTokens = Math.ceil(text.length / 2);
-  const maxTokens = Math.max(8000, Math.min(estimatedTokens * 2, 32000));
+  const maxTokens = Math.min(Math.max(estimatedTokens * 2, MIN_OUTPUT_TOKENS), MAX_OUTPUT_TOKENS);
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 120_000);
+    const timer = setTimeout(() => controller.abort(), CALL_TIMEOUT_MS);
     try {
       const res = await fetch('https://api.deepseek.com/chat/completions', {
         method: 'POST',
@@ -138,6 +144,9 @@ async function callDeepSeek(
         signal: controller.signal,
         body: JSON.stringify({
           model: AI_MODELS.deepseek.chat,
+          // Translation needs no reasoning; v4-flash thinks by default, which
+          // adds latency and burns output tokens (TASK-0490).
+          thinking: { type: 'disabled' },
           temperature: 0.3,
           max_tokens: maxTokens,
           messages: [
