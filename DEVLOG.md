@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-06 — TASK-0494: fix(news): Azərbaycan xəbərlərinin keçməməsi
+
+**Why:** Doğan: "Yeni xəbərlərdə şəkillər var, amma Azərbaycan xəbəri yoxdur." 2026-10-05 21:19 run: 0 `.az` sətir. Səbəblər: (1) 30 yerlik limit bal üzrə doldurulurdu — uzun təsvirli xarici trade xəbərləri (10+ bal) yerləri tuturdu; (2) 4 günlük yaş limiti az həcmli Trend turizm lentini kəsirdi (300 "too old"); (3) RU "гастроном" yox idi; (4) Report.az GitHub-dan 403 (bot UA); (5) redaktor lint "Agentlik"i alt-sətir kimi axtarırdı → "Turizm Agentliyi" olan 2 xəbər düşdü.
+
+**What:** `Feed.region='az'` → 14 gün, 10 ayrılmış yer, relevance +10 (sintez AZ-ı birinci yazır); Google News yoxlamasında yerli HoReCa xəbərlərinin çıxdığı 8 AZ saytının RSS-i əlavə edildi (yoxlanılıb: 200 + item); RU/AZ terminlər (гастроном, qastronom, кулинар, kulinar); AZ/RU zorakılıq başlıqları blok; brauzer UA; lint tam söz; cron 6 saatdan bir. Canlı dry-run: AZ lentlərindən 0 → 14 keçən xəbər; fixture 29/29.
+
 ## 2026-10-05 — TASK-0493: fix(news-admin): dərc olunmuş xəbərlərin toplu silinməsinə qoruma
 
 **Why:** Doğan gözləyən/rədd edilmiş xəbərləri toplu sildi; "Hamısı" tabının ilk səhifəsində ən yeni dərc olunmuş xəbərlər də (AİİQA #1064, #1063, #1058, #1057) seçimə düşüb silindi. Panel yayımdakı xəbəri bu qədər asan silməyə imkan verməməli idi.

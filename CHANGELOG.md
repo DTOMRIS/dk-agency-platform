@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0494` fix(news): Azərbaycan xəbərləri artıq keçir — 8 yeni AZ mənbə (Baku.ws, Media.az, Vesti.az, Day.Az, Qafqazinfo, Zerkalo, Haqqin, Minval), AZ xəbərləri üçün 14 günlük pəncərə, 30 yerdən 10-u AZ üçün ayrılıb, sintezdə AZ prioriteti, RU/AZ qastronomiya terminləri, kriminal başlıq filtri; "Agentliyi/agentlikləri" artıq səhvən bloklanmır; xəbər axını gündə 4 dəfə.
+
 - `TASK-0493` fix(news-admin): toplu silmə dərc olunmuş (approved) xəbərləri artıq default olaraq ötürür — onları silmək üçün ayrıca təsdiq lazımdır (həm UI, həm server); seçim tab/səhifə dəyişəndə dərhal sıfırlanır, yüklənərkən checkbox-lar kilidlidir.
 
 - `TASK-0490` feat(news-admin): xəbər idarə paneli sürətləndi (səhifədə 50 xəbər, 1.86 MB → 33 KB); çoxlu xəbəri bir dəfəyə seçib silmək/təsdiqləmək/rədd etmək; Manşet/Top/Gündəm/Foto/Video nişanları və "Vitrində" filtri; köhnə manşetlər artıq vitrində ilişib qalmır (7 gün qaydası); "Mənbə yoxdur" əvəzinə real mənbə; əməliyyat düymələri kəsilmir; tərcümə düyməsi 504 vermir (paralel tərcümə, 16.7 s → 2.5 s).

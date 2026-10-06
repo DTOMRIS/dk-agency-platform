@@ -98,6 +98,11 @@ export const CORE_TERMS: Record<string, number> = {
   qastronomiya: 2,
   gastronomi: 2,
   gastronomy: 2,
+  // TASK-0494: "Габала … гастрономическое направление" scored 0 — RU/AZ stems were missing.
+  гастроном: 2,
+  qastronom: 2,
+  кулинар: 2,
+  kulinar: 2,
   гостеприимств: 3,
   турист: 2,
   // Tourism is the sector's demand side — core (TASK-0491), was +1 supporting.
@@ -259,6 +264,15 @@ export const BLOCKED_TERMS = [
   'həbs',
   'qətl',
   'задержан',
+  // TASK-0494: violent-crime headlines from AZ firehose feeds ("restoranda döyülən kişi ölüb")
+  'döyül',
+  'döyüb',
+  'bıçaqla',
+  'öldürül',
+  'избит',
+  'убит',
+  'зарезан',
+  'ножев',
 ];
 
 /**
@@ -302,6 +316,15 @@ export const SOURCE_WEIGHTS: Record<string, number> = {
   'azertag.az': 3,
   'musavat.com': 3,
   'modern.az': 3,
+  // TASK-0494: Azerbaijani outlets where local HoReCa stories actually appear (Google News check 2026-10-06)
+  'baku.ws': 3,
+  'media.az': 3,
+  'vesti.az': 3,
+  'day.az': 3,
+  'qafqazinfo.az': 3,
+  'zerkalo.az': 3,
+  'haqqin.az': 3,
+  'minval.az': 3,
   'turizmgazetesi.com': 3,
   'turizmguncel.com': 2,
   'turizmajansi.com': 2,

@@ -26,7 +26,12 @@ import { FEED_IMAGE_CUSTOM_FIELDS, pickFeedImage, type FeedImageFields } from '.
 import { isTechTopic, scoreNewsItem, SCORE_THRESHOLD } from './scoring-config';
 
 type FeedKind = 'trade' | 'general';
-export type Feed = { url: string; name: string; kind: FeedKind };
+/**
+ * TASK-0494: `region: 'az'` feeds are the home market. Their items get a longer age window,
+ * reserved insert slots and a relevance bonus (synthesis picks by relevance) — otherwise long,
+ * keyword-rich foreign trade-press items took every slot and no Azerbaijani story got through.
+ */
+export type Feed = { url: string; name: string; kind: FeedKind; region?: 'az'; maxItems?: number };
 export type FeedItem = Parser.Item & FeedImageFields;
 
 export const RSS_FEEDS: Feed[] = [
@@ -59,31 +64,46 @@ export const RSS_FEEDS: Feed[] = [
   { url: 'https://www.gastromondiale.com/feed/', name: 'Gastro Mondiale', kind: 'trade' },
   { url: 'https://www.turizmgazetesi.com/rss', name: 'Turizm Gazetesi', kind: 'trade' },
   // Azerbaijan tourism sections (TASK-0491) — sector-specific, title + description scored
-  { url: 'https://az.trend.az/feeds/tourism.rss', name: 'Trend Turizm', kind: 'trade' },
-  { url: 'https://ru.trend.az/feeds/tourism.rss', name: 'Trend Туризм', kind: 'trade' },
-  { url: 'https://en.trend.az/feeds/tourism.rss', name: 'Trend Tourism', kind: 'trade' },
+  { url: 'https://az.trend.az/feeds/tourism.rss', name: 'Trend Turizm', kind: 'trade', region: 'az' },
+  { url: 'https://ru.trend.az/feeds/tourism.rss', name: 'Trend Туризм', kind: 'trade', region: 'az' },
+  { url: 'https://en.trend.az/feeds/tourism.rss', name: 'Trend Tourism', kind: 'trade', region: 'az' },
   // Azerbaijan general news agencies (title must be HoReCa)
-  { url: 'https://report.az/rss/', name: 'Report.az', kind: 'general' },
-  { url: 'https://report.az/ru/rss/', name: 'Report.az RU', kind: 'general' },
-  { url: 'https://report.az/en/rss/', name: 'Report.az EN', kind: 'general' },
-  { url: 'https://az.trend.az/feeds/index.rss', name: 'Trend', kind: 'general' },
-  { url: 'https://ru.trend.az/feeds/index.rss', name: 'Trend RU', kind: 'general' },
-  { url: 'https://en.trend.az/feeds/index.rss', name: 'Trend EN', kind: 'general' },
-  { url: 'https://apa.az/rss', name: 'APA', kind: 'general' },
-  { url: 'https://azertag.az/rss', name: 'AZERTAC', kind: 'general' },
+  { url: 'https://report.az/rss/', name: 'Report.az', kind: 'general', region: 'az' },
+  { url: 'https://report.az/ru/rss/', name: 'Report.az RU', kind: 'general', region: 'az' },
+  { url: 'https://report.az/en/rss/', name: 'Report.az EN', kind: 'general', region: 'az' },
+  { url: 'https://az.trend.az/feeds/index.rss', name: 'Trend', kind: 'general', region: 'az' },
+  { url: 'https://ru.trend.az/feeds/index.rss', name: 'Trend RU', kind: 'general', region: 'az' },
+  { url: 'https://en.trend.az/feeds/index.rss', name: 'Trend EN', kind: 'general', region: 'az' },
+  { url: 'https://apa.az/rss', name: 'APA', kind: 'general', region: 'az' },
+  { url: 'https://azertag.az/rss', name: 'AZERTAC', kind: 'general', region: 'az' },
   // Economy / business sections and general AZ + TR outlets (TASK-0491) — title only
-  { url: 'https://az.trend.az/feeds/business.rss', name: 'Trend Biznes', kind: 'general' },
-  { url: 'https://azertag.az/rss-economy.xml', name: 'AZERTAC İqtisadiyyat', kind: 'general' },
-  { url: 'https://azertag.az/ru/rss-economy.xml', name: 'AZERTAC Экономика', kind: 'general' },
-  { url: 'https://azertag.az/en/rss-economy.xml', name: 'AZERTAC Economy', kind: 'general' },
-  { url: 'https://musavat.com/rss.xml', name: 'Musavat', kind: 'general' },
-  { url: 'https://modern.az/rss', name: 'Modern.az', kind: 'general' },
+  { url: 'https://az.trend.az/feeds/business.rss', name: 'Trend Biznes', kind: 'general', region: 'az' },
+  { url: 'https://azertag.az/rss-economy.xml', name: 'AZERTAC İqtisadiyyat', kind: 'general', region: 'az' },
+  { url: 'https://azertag.az/ru/rss-economy.xml', name: 'AZERTAC Экономика', kind: 'general', region: 'az' },
+  { url: 'https://azertag.az/en/rss-economy.xml', name: 'AZERTAC Economy', kind: 'general', region: 'az' },
+  { url: 'https://musavat.com/rss.xml', name: 'Musavat', kind: 'general', region: 'az' },
+  { url: 'https://modern.az/rss', name: 'Modern.az', kind: 'general', region: 'az' },
+  // TASK-0494: outlets where local restaurant/hotel stories show up (verified feeds 2026-10-06).
+  { url: 'https://baku.ws/rss', name: 'Baku.ws', kind: 'general', region: 'az' },
+  { url: 'https://media.az/rss', name: 'Media.az', kind: 'general', region: 'az' },
+  { url: 'https://vesti.az/rss', name: 'Vesti.az', kind: 'general', region: 'az', maxItems: 300 },
+  { url: 'https://news.day.az/rss/all.rss', name: 'Day.Az', kind: 'general', region: 'az' },
+  { url: 'https://qafqazinfo.az/rss', name: 'Qafqazinfo', kind: 'general', region: 'az', maxItems: 100 },
+  { url: 'https://zerkalo.az/rss', name: 'Zerkalo', kind: 'general', region: 'az' },
+  { url: 'https://haqqin.az/rss', name: 'Haqqin.az', kind: 'general', region: 'az' },
+  { url: 'https://minval.az/rss', name: 'Minval', kind: 'general', region: 'az' },
   { url: 'https://www.hurriyet.com.tr/rss/ekonomi', name: 'Hürriyet Ekonomi', kind: 'general' },
   { url: 'https://www.dunya.com/rss', name: 'Dünya', kind: 'general' },
 ];
 
 const MAX_AGE_DAYS = 4;
 const MAX_INSERT_PER_RUN = 30;
+/** TASK-0494: Azerbaijani outlets publish few HoReCa stories — keep them for two weeks. */
+const AZ_MAX_AGE_DAYS = 14;
+/** Slots of MAX_INSERT_PER_RUN reserved for region 'az' items before foreign items compete. */
+const AZ_RESERVED_SLOTS = 10;
+/** Stored relevance bonus so synthesis (ordered by relevance) writes Azerbaijani stories first. */
+const AZ_RELEVANCE_BONUS = 10;
 /** Items read per feed (newest first). General AZ agencies publish 100+ items a day. */
 export const MAX_ITEMS_PER_FEED = 50;
 
@@ -148,7 +168,11 @@ export type Candidate = {
 export function createFeedParser(): Parser<Record<string, unknown>, FeedImageFields> {
   return new Parser<Record<string, unknown>, FeedImageFields>({
     timeout: 15_000,
-    headers: { 'User-Agent': 'DKAgencyNewsBot/1.0 (+https://dkagency.com.tr)' },
+    // TASK-0494: Report.az answers 403 to bot user agents.
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (compatible; DKAgencyNewsBot/1.0; +https://dkagency.com.tr) AppleWebKit/537.36 Chrome/128 Safari/537.36',
+    },
     customFields: { item: FEED_IMAGE_CUSTOM_FIELDS },
   });
 }
@@ -193,6 +217,7 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
 
   const parser = createFeedParser();
   const cutoff = Date.now() - MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
+  const azCutoff = Date.now() - AZ_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
   const candidates: Candidate[] = [];
 
   for (const feed of RSS_FEEDS) {
@@ -207,10 +232,10 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
       continue;
     }
 
-    for (const item of items.slice(0, MAX_ITEMS_PER_FEED)) {
+    for (const item of items.slice(0, feed.maxItems ?? MAX_ITEMS_PER_FEED)) {
       const c = evaluateFeedItem(feed, item);
       if (!c) continue;
-      if (c.publishedAt && c.publishedAt.getTime() < cutoff) {
+      if (c.publishedAt && c.publishedAt.getTime() < (feed.region === 'az' ? azCutoff : cutoff)) {
         result.tooOld++;
         continue;
       }
@@ -223,7 +248,11 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
   }
 
   // Best first; the same story can appear in several feeds — keep the first (highest score) link per title.
+  // TASK-0494: Azerbaijani items first (up to AZ_RESERVED_SLOTS), then everything by score.
   candidates.sort((a, b) => b.score - a.score);
+  const azFirst = candidates.filter((c) => c.feed.region === 'az').slice(0, AZ_RESERVED_SLOTS);
+  const azFirstSet = new Set(azFirst);
+  candidates.splice(0, candidates.length, ...azFirst, ...candidates.filter((c) => !azFirstSet.has(c)));
   const seenTitles = new Set<string>();
   for (const c of candidates) {
     const titleKey = c.title.toLowerCase().replace(/\W+/g, ' ').trim();
@@ -262,7 +291,7 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
         publishedAt: c.publishedAt ?? new Date(),
         status: 'fetched',
         origin: 'rss',
-        relevanceScore: c.score,
+        relevanceScore: c.feed.region === 'az' ? c.score + AZ_RELEVANCE_BONUS : c.score,
       });
       result.inserted.push({ score: c.score, title: c.title.slice(0, 110), source: c.feed.name });
     } catch (err) {

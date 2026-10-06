@@ -167,8 +167,11 @@ export function lintArticle(title: string, body: string): string[] {
   const issues: string[] = [];
   const text = `${title}\n${body}`;
   const lower = text.toLocaleLowerCase('az');
+  // TASK-0494: whole words only — "Dövlət Turizm Agentliyi" / "turizm agentlikləri" are legitimate
+  // in news text; the ban is about DK's own product wording.
   for (const term of FORBIDDEN_TERMS) {
-    if (lower.includes(term.toLocaleLowerCase('az'))) issues.push(`qadağan söz: ${term}`);
+    const re = new RegExp(`(^|[^\\p{L}])${term.toLocaleLowerCase('az')}($|[^\\p{L}])`, 'u');
+    if (re.test(lower)) issues.push(`qadağan söz: ${term}`);
   }
   for (const phrase of CLICHES) {
     if (lower.includes(phrase)) issues.push(`klişe: ${phrase}`);
