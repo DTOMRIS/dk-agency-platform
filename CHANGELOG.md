@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0498` feat(supply): admin panelində yeni **Təchizatçılar** bölməsi — WhatsApp HoReCa qruplarının ixracından təchizatçı bazası və alıcı tələbləri ("kimdə var?"); son 1/3/6/12 ayı təhlil edib idxal etmək, kateqoriya/status/aktivlik filtrləri, telefonla zəng/kopyala, status və açıq kataloq razılığı, qeyd, CSV; hər tələbin yanında «Uyğun təchizatçılar». Məlumat şəxsidir — yalnız admin görür, xarici AI-ya göndərilmir. Canlıda işləməsi üçün `npm run db:migrate` lazımdır.
+
 - `TASK-0500` fix(telegram): "WhatsApp-dan elan" səhifəsində "Botu qoş / yoxla" düyməsi; `/api/telegram/setup` artıq təkrar çağırışda "Too Many Requests" vermir (əvvəl yoxlayır, lazım olsa 1 dəfə yenidən cəhd edir) və botun mesajları dinlədiyini göstərir.
 
 - `TASK-0499` fix(security): `GET /api/listings/[id]` artıq maraqlanan alıcıların ad/telefon/e-poçtunu (leads), rəy qeydlərini və qaralama elanları hamıya qaytarmır — tam məlumat yalnız admin və elan sahibinə; digərlərinə yalnız vitrindəki elan, şəxsi məlumatsız.

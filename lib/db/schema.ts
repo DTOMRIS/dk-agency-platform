@@ -962,3 +962,63 @@ export const ads = pgTable(
     placementActiveIdx: index('idx_ads_placement_active').on(table.placement, table.isActive),
   })
 );
+
+// ── SUPPLY BASE + DEMAND BOARD (TASK-0498) ──────────────────────────
+// WhatsApp HoReCa qruplarından idxal olunan təchizatçılar və alıcı tələbləri.
+// ŞƏXSİ MƏLUMAT: yalnız admin panelində (requireApiAdmin); açıq səhifə yoxdur.
+// `publicConsent` — gələcəkdə təchizatçı razılıq verəndə açıq kataloq üçün.
+// Miqrasiya: drizzle/0021_supply_base.sql (idempotent, `npm run db:migrate`).
+export const supplyContacts = pgTable(
+  'supply_contacts',
+  {
+    id: serial('id').primaryKey(),
+    /** `p:<son 9 rəqəm>` (göndərən nömrədirsə) və ya `n:<normallaşdırılmış ad>` */
+    dedupeKey: varchar('dedupe_key', { length: 200 }).notNull().unique(),
+    displayName: varchar('display_name', { length: 200 }).notNull(),
+    company: varchar('company', { length: 200 }),
+    phones: jsonb('phones').$type<string[]>().notNull().default([]),
+    categories: jsonb('categories').$type<string[]>().notNull().default([]),
+    sourceGroups: jsonb('source_groups').$type<string[]>().notNull().default([]),
+    firstSeen: timestamp('first_seen', { withTimezone: true }).notNull(),
+    lastSeen: timestamp('last_seen', { withTimezone: true }).notNull(),
+    postCount: integer('post_count').notNull().default(0),
+    /** İdxal olunmuş mesajların qısa hash-ləri — təkrar idxal postCount-u şişirtmir. */
+    messageHashes: jsonb('message_hashes').$type<string[]>().notNull().default([]),
+    sampleOffers: jsonb('sample_offers')
+      .$type<Array<{ text: string; date: string; group: string; k: string }>>()
+      .notNull()
+      .default([]),
+    status: varchar('status', { length: 20 }).notNull().default('yeni'),
+    publicConsent: boolean('public_consent').notNull().default(false),
+    notes: text('notes'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    lastSeenIdx: index('idx_supply_contacts_last_seen').on(table.lastSeen),
+    statusIdx: index('idx_supply_contacts_status').on(table.status),
+  })
+);
+
+export const supplyRequests = pgTable(
+  'supply_requests',
+  {
+    id: serial('id').primaryKey(),
+    requesterName: varchar('requester_name', { length: 200 }).notNull(),
+    phones: jsonb('phones').$type<string[]>().notNull().default([]),
+    text: text('text').notNull(),
+    categories: jsonb('categories').$type<string[]>().notNull().default([]),
+    requestType: varchar('request_type', { length: 20 }).notNull(),
+    sourceGroup: varchar('source_group', { length: 200 }).notNull(),
+    postedAt: timestamp('posted_at', { withTimezone: true }).notNull(),
+    status: varchar('status', { length: 20 }).notNull().default('aciq'),
+    notes: text('notes'),
+    /** sha256(normallaşdırılmış mətn) — eyni tələb ikinci dəfə yazılmır. */
+    textHash: varchar('text_hash', { length: 64 }).notNull().unique(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    postedIdx: index('idx_supply_requests_posted').on(table.postedAt),
+    statusIdx: index('idx_supply_requests_status').on(table.status),
+  })
+);
