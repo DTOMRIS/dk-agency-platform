@@ -11,6 +11,7 @@ import {
   CheckSquare,
   Square,
   Loader2,
+  MessageCircle,
 } from 'lucide-react';
 import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
@@ -56,6 +57,7 @@ const pageCopy: Record<
     nextPage: string;
     statusLabels: Record<string, string>;
     newListing: string;
+    whatsappImport: string;
     selectedCount: string;
     batchToReview: string;
     batchToShowcase: string;
@@ -97,6 +99,7 @@ const pageCopy: Record<
       rejected: 'Rədd',
     },
     newListing: 'Yeni elan yarat',
+    whatsappImport: 'WhatsApp-dan əlavə et',
     selectedCount: 'elan seçildi',
     batchToReview: 'İncələməyə göndər',
     batchToShowcase: 'Vitrinə al',
@@ -139,6 +142,7 @@ const pageCopy: Record<
       rejected: 'Отклонено',
     },
     newListing: 'Создать объявление',
+    whatsappImport: 'Добавить из WhatsApp',
     selectedCount: 'объявл. выбрано',
     batchToReview: 'Отправить на рассмотрение',
     batchToShowcase: 'В витрину',
@@ -180,6 +184,7 @@ const pageCopy: Record<
       rejected: 'Rejected',
     },
     newListing: 'Create listing',
+    whatsappImport: 'Add from WhatsApp',
     selectedCount: 'listings selected',
     batchToReview: 'Send to review',
     batchToShowcase: 'Move to showcase',
@@ -220,6 +225,7 @@ const pageCopy: Record<
       rejected: 'Reddedildi',
     },
     newListing: 'Yeni ilan oluştur',
+    whatsappImport: 'WhatsApp’tan ekle',
     selectedCount: 'ilan seçildi',
     batchToReview: 'İncelemeye gönder',
     batchToShowcase: 'Vitrine al',
@@ -405,13 +411,22 @@ export default function DashboardIlanlarPage() {
             <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">{copy.pageTitle}</h1>
             <p className="mt-1 text-[15px] text-slate-600">{copy.pageSubtitle}</p>
           </div>
-          <Link
-            href="/dashboard/ilanlar/yarat"
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
-          >
-            <Plus className="h-4 w-4" />
-            {copy.newListing}
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href={locale === 'az' ? '/dashboard/ilanlar/whatsapp' : `/${locale}/dashboard/ilanlar/whatsapp`}
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-emerald-200 bg-white px-5 text-[14px] font-semibold text-emerald-800 transition-colors hover:bg-emerald-50"
+            >
+              <MessageCircle className="h-4 w-4" />
+              {copy.whatsappImport}
+            </Link>
+            <Link
+              href="/dashboard/ilanlar/yarat"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
+            >
+              <Plus className="h-4 w-4" />
+              {copy.newListing}
+            </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">

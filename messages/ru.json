@@ -3561,7 +3561,10 @@
     "no": "Нет",
     "labelName": "Имя:",
     "labelPhone": "Телефон:",
-    "labelEmail": "Эл. почта:"
+    "labelEmail": "Эл. почта:",
+    "privateContactTitle": "Скрытый контакт (источник WhatsApp)",
+    "privateContactHint": "Эти данные не показываются на сайте — видит только админ.",
+    "sourceNote": "Источник:"
   },
   "home": {
     "platformCards": {

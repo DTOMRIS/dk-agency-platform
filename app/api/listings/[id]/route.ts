@@ -19,6 +19,22 @@ export async function GET(
     return NextResponse.json({ success: false, error: 'Elan tapılmadı.' }, { status: 404 });
   }
 
+  // TASK-0497: private contact (e.g. WhatsApp import poster) + origin note — admin only.
+  // This GET is public, so these columns are never part of the mapped listing itself.
+  const session = await getServerMemberSession();
+  if (session.loggedIn && session.plan === 'admin' && dbAvailable && db) {
+    const [privateContact] = await db
+      .select({
+        contactName: listings.contactName,
+        contactPhone: listings.contactPhone,
+        contactEmail: listings.contactEmail,
+        committeeNotes: listings.committeeNotes,
+      })
+      .from(listings)
+      .where(eq(listings.id, Number(id)));
+    return NextResponse.json({ success: true, data: { ...listing, privateContact: privateContact ?? null } });
+  }
+
   return NextResponse.json({ success: true, data: listing });
 }
 

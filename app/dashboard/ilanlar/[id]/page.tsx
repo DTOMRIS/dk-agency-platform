@@ -31,6 +31,13 @@ function renderFieldValue(value: string | number | boolean | undefined) {
   return String(value);
 }
 
+interface PrivateContact {
+  contactName: string | null;
+  contactPhone: string | null;
+  contactEmail: string | null;
+  committeeNotes: string | null;
+}
+
 export default function DashboardIlanDetailPage() {
   const params = useParams<{ id: string }>();
   const t = useTranslations('listingDetail');
@@ -46,6 +53,8 @@ export default function DashboardIlanDetailPage() {
   const [rejectedReason, setRejectedReason] = useState('');
   const [notes, setNotes] = useState<MockListing['reviewNotes']>([]);
   const [leads, setLeads] = useState<MockListing['leads']>([]);
+  // TASK-0497: hidden poster contact (WhatsApp import) — the API returns it to admins only.
+  const [privateContact, setPrivateContact] = useState<PrivateContact | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -55,7 +64,7 @@ export default function DashboardIlanDetailPage() {
       try {
         const response = await fetch(`/api/listings/${params.id}`);
         if (!response.ok) throw new Error('load failed');
-        const payload = (await response.json()) as { data?: MockListing };
+        const payload = (await response.json()) as { data?: MockListing & { privateContact?: PrivateContact | null } };
         const nextListing = payload.data ?? null;
         if (!cancelled && nextListing) {
           setListing(nextListing);
@@ -65,6 +74,7 @@ export default function DashboardIlanDetailPage() {
           setIsShowcase(Boolean(nextListing.isShowcase));
           setNotes(nextListing.reviewNotes ?? []);
           setLeads(nextListing.leads ?? []);
+          setPrivateContact(nextListing.privateContact ?? null);
         }
       } catch {
         const fallback = MOCK_LISTINGS.find((item) => item.id === Number(params.id)) ?? null;
@@ -313,6 +323,26 @@ export default function DashboardIlanDetailPage() {
                 </a>
               </div>
             </div>
+
+            {privateContact && (privateContact.contactName || privateContact.contactPhone || privateContact.contactEmail || privateContact.committeeNotes) && (
+              <div className="rounded-[28px] border border-amber-200 bg-amber-50 p-6 shadow-sm">
+                <h2 className="font-display text-xl font-black text-[var(--dk-navy)]">{t('privateContactTitle')}</h2>
+                <p className="mt-1 text-xs font-medium text-amber-900">{t('privateContactHint')}</p>
+                <div className="mt-4 space-y-2 text-sm text-slate-800">
+                  {privateContact.contactName && <div><strong>{t('labelName')}</strong> {privateContact.contactName}</div>}
+                  {privateContact.contactPhone && (
+                    <div>
+                      <strong>{t('labelPhone')}</strong>{' '}
+                      <a href={`https://wa.me/${privateContact.contactPhone.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="font-semibold text-emerald-800 underline">
+                        {privateContact.contactPhone}
+                      </a>
+                    </div>
+                  )}
+                  {privateContact.contactEmail && <div><strong>{t('labelEmail')}</strong> {privateContact.contactEmail}</div>}
+                  {privateContact.committeeNotes && <div className="text-slate-700"><strong>{t('sourceNote')}</strong> {privateContact.committeeNotes}</div>}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="space-y-6">

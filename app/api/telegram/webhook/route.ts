@@ -1,5 +1,5 @@
 /**
- * Telegram webhook — news approval buttons (TASK-0477).
+ * Telegram webhook — news approval buttons (TASK-0477) + WhatsApp listing forwards (TASK-0497).
  *
  * Security: (1) Telegram must send the secret derived from the bot token in
  * `X-Telegram-Bot-Api-Secret-Token`; (2) the button press must come from TELEGRAM_CHAT_ID;
@@ -8,8 +8,16 @@
  */
 
 import { timingSafeEqual } from 'node:crypto';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
+import { deepSeekCaller, parseWhatsAppListings } from '@/lib/listings/whatsapp-import';
+import { createImportedDrafts } from '@/lib/listings/whatsapp-import-db';
 import { approveNewsArticle, rejectNewsArticle } from '@/lib/news/approve';
+import {
+  classifyTelegramUpdate,
+  handleListingForward,
+  type ListingForwardDeps,
+  type TelegramMessage,
+} from '@/lib/telegram/listing-import';
 import {
   NEWS_CALLBACK,
   telegramApi,
@@ -24,6 +32,23 @@ type CallbackQuery = {
 };
 
 const SITE_URL = 'https://dkagency.com.tr';
+
+export const maxDuration = 120;
+
+function listingForwardDeps(token: string, message: TelegramMessage): ListingForwardDeps {
+  const apiKey = process.env.DEEPSEEK_API_KEY || '';
+  return {
+    parse: (text) => parseWhatsAppListings(text, deepSeekCaller(apiKey)),
+    create: (items) => createImportedDrafts(items, 'telegram'),
+    reply: (text) =>
+      telegramApi(token, 'sendMessage', {
+        chat_id: message.chat.id,
+        text,
+        link_preview_options: { is_disabled: true },
+        reply_parameters: { message_id: message.message_id },
+      }).catch(() => undefined),
+  };
+}
 
 function sameSecret(a: string, b: string): boolean {
   const left = Buffer.from(a);
@@ -43,7 +68,19 @@ export async function POST(request: NextRequest) {
 
   const update = (await request.json().catch(() => null)) as {
     callback_query?: CallbackQuery;
+    message?: TelegramMessage;
   } | null;
+
+  // TASK-0497: owner forwards/pastes a WhatsApp listing → drafts. Processed after the 200
+  // response so Telegram does not retry (and duplicate drafts) while DeepSeek runs.
+  if (classifyTelegramUpdate(update, config.chatId) === 'listing' && update?.message) {
+    const message = update.message;
+    after(() =>
+      handleListingForward(message.text ?? message.caption ?? '', listingForwardDeps(config.token, message))
+    );
+    return NextResponse.json({ ok: true });
+  }
+
   const query = update?.callback_query;
   if (!query?.data || !query.message) return NextResponse.json({ ok: true });
 

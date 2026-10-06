@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0497` feat(listings): «WhatsApp-dan əlavə et» — qruplardakı devir/franchise/icarə/ekipman elanlarını yapışdırın, AI qaralama hazırlayır, siz yoxlayıb təsdiqləyirsiniz (heç nə avtomatik yayımlanmır, elan sahibinin telefonu saytda görünmür); eyni mətni Telegram botuna forward etmək də qaralama yaradır; elan səhifəsində «WhatsApp-da paylaş» düyməsi 4 dildə.
+
 - `TASK-0496` feat(header): menyuya "İş elanları" (RU Вакансии, EN Jobs, TR İş ilanları) əlavə edildi; masaüstü menyu artıq 1280px-dən başlayır (1024px-də RU/EN etiketləri iki sətrə düşürdü, indi hamburger menyu).
 
 - `TASK-0495` feat(jobs): yeni «İş elanları» səhifəsi (`/is-elanlari`, AZ/RU/EN/TR) — HoReCa vakansiyaları tərəfdaş akademiya TQTA-dan avtomatik gəlir; sahə və şəhər filtri; «Müraciət et» TQTA-da elanın səhifəsini açır; işəgötürənlər üçün «İşçi lazımdır?» bloku (TQTA-da pulsuz elan); elanlar səhifəsindən link; KAZAN AI kadr sualında bu səhifəni və işəgötürən linkini göstərir.
