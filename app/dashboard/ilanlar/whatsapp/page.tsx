@@ -94,10 +94,22 @@ interface Copy {
   errorGeneric: string;
   aiErrors: string;
   types: Record<ListingCategory, string>;
+  tgTitle: string;
+  tgHint: string;
+  tgButton: string;
+  tgChecking: string;
+  tgOk: string;
+  tgFail: (reason: string) => string;
 }
 
 const COPY: Record<Locale, Copy> = {
   az: {
+    tgTitle: 'Telegram-dan yönləndirmə',
+    tgHint: 'Elanı bota yönləndirin — qaralama avtomatik yaranır. Bot işləmirsə, buradan qoşun.',
+    tgButton: 'Botu qoş / yoxla',
+    tgChecking: 'Yoxlanılır…',
+    tgOk: 'Bot hazırdır: yönləndirilən mesajlar qəbul edilir.',
+    tgFail: (reason) => `Alınmadı: ${reason}`,
     back: 'Elanlara qayıt',
     title: 'WhatsApp-dan elan əlavə et',
     subtitle:
@@ -153,6 +165,12 @@ const COPY: Record<Locale, Copy> = {
     },
   },
   ru: {
+    tgTitle: 'Пересылка через Telegram',
+    tgHint: 'Перешлите объявление боту — черновик создастся автоматически. Если бот не отвечает, подключите его здесь.',
+    tgButton: 'Подключить / проверить бота',
+    tgChecking: 'Проверка…',
+    tgOk: 'Бот готов: пересланные сообщения принимаются.',
+    tgFail: (reason) => `Не удалось: ${reason}`,
     back: 'К объявлениям',
     title: 'Добавить из WhatsApp',
     subtitle:
@@ -209,6 +227,12 @@ const COPY: Record<Locale, Copy> = {
     },
   },
   en: {
+    tgTitle: 'Forward via Telegram',
+    tgHint: 'Forward a listing to the bot and a draft is created automatically. If the bot does not respond, connect it here.',
+    tgButton: 'Connect / check bot',
+    tgChecking: 'Checking…',
+    tgOk: 'Bot is ready: forwarded messages are accepted.',
+    tgFail: (reason) => `Failed: ${reason}`,
     back: 'Back to listings',
     title: 'Add from WhatsApp',
     subtitle:
@@ -265,6 +289,12 @@ const COPY: Record<Locale, Copy> = {
     },
   },
   tr: {
+    tgTitle: 'Telegram ile yönlendirme',
+    tgHint: 'İlanı bota yönlendirin — taslak otomatik oluşur. Bot çalışmıyorsa buradan bağlayın.',
+    tgButton: 'Botu bağla / kontrol et',
+    tgChecking: 'Kontrol ediliyor…',
+    tgOk: 'Bot hazır: yönlendirilen mesajlar kabul ediliyor.',
+    tgFail: (reason) => `Olmadı: ${reason}`,
     back: 'İlanlara dön',
     title: 'WhatsApp’tan ilan ekle',
     subtitle:
@@ -387,6 +417,32 @@ export default function WhatsAppImportPage() {
     });
   }
 
+  const [tgState, setTgState] = useState<{ status: 'idle' | 'busy' | 'ok' | 'fail'; reason?: string }>({
+    status: 'idle',
+  });
+
+  async function connectTelegram() {
+    setTgState({ status: 'busy' });
+    try {
+      const response = await fetch('/api/telegram/setup', { method: 'POST' });
+      const data = (await response.json()) as {
+        ok?: boolean;
+        error?: string;
+        setWebhook?: string;
+        webhook?: { allowedUpdates?: string[]; lastError?: string };
+      };
+      const listens = (data.webhook?.allowedUpdates ?? []).includes('message');
+      if (response.ok && data.ok && listens) setTgState({ status: 'ok' });
+      else
+        setTgState({
+          status: 'fail',
+          reason: data.error || data.setWebhook || data.webhook?.lastError || `HTTP ${response.status}`,
+        });
+    } catch (err) {
+      setTgState({ status: 'fail', reason: err instanceof Error ? err.message : 'network' });
+    }
+  }
+
   async function analyze() {
     if (rawText.trim().length < 10) return;
     setAnalyzing(true);
@@ -485,6 +541,27 @@ export default function WhatsAppImportPage() {
             {copy.title}
           </h1>
           <p className="mt-2 max-w-3xl text-[15px] text-slate-600">{copy.subtitle}</p>
+        </div>
+
+        <div className={`${card} flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between`}>
+          <div className="min-w-0">
+            <div className="text-[15px] font-semibold text-slate-900">{copy.tgTitle}</div>
+            <p className="mt-0.5 text-[13px] text-slate-600">{copy.tgHint}</p>
+            {tgState.status === 'ok' && (
+              <p className="mt-1.5 text-[13px] font-semibold text-emerald-700">✓ {copy.tgOk}</p>
+            )}
+            {tgState.status === 'fail' && (
+              <p className="mt-1.5 text-[13px] font-semibold text-rose-700">{copy.tgFail(tgState.reason ?? '')}</p>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={() => void connectTelegram()}
+            disabled={tgState.status === 'busy'}
+            className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#EEF4FF] px-5 text-[14px] font-semibold text-[#0A5BD6] transition-colors hover:bg-[#E0EBFF] disabled:opacity-60"
+          >
+            {tgState.status === 'busy' ? copy.tgChecking : copy.tgButton}
+          </button>
         </div>
 
         {error && (
