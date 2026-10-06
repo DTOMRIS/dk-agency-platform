@@ -242,6 +242,47 @@ export default function Home() {
     <div className="min-h-screen bg-white overflow-x-hidden">
       <SiteJsonLd />
       <ReceiptHero />
+      {/* TASK-0501: Sektor Nəbzi + elanlar hero-dan dərhal sonra (sahib istəyi) */}
+      <NewsPreview />
+
+      <section className="bg-slate-50 py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <span className="rounded-full bg-[var(--dk-navy)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
+              {copy.b2bBadge}
+            </span>
+            <h2 className="mt-4 text-3xl font-display font-black text-slate-900 sm:text-4xl">
+              {copy.b2bTitle}
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-base text-slate-500">{copy.b2bBody}</p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {copy.b2bCards.map((item) => (
+              <Link
+                key={item.title}
+                href={withLocale(locale, '/ilanlar')}
+                className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-[var(--dk-gold)] hover:shadow-lg"
+              >
+                <span className="text-2xl">{item.emoji}</span>
+                <h3 className="mt-3 text-lg font-bold text-slate-900 group-hover:text-[var(--dk-red)]">
+                  {item.title}
+                </h3>
+                <p className="mt-1 text-sm text-slate-500">{item.desc}</p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link
+              href={withLocale(locale, '/ilanlar')}
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-navy)] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800"
+            >
+              {copy.listingsCta}
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <AiReadinessScore />
       <PlatformCards />
       <ToolkitShowcase />
@@ -317,46 +358,6 @@ export default function Home() {
                 <p className="mt-4 line-clamp-2 text-slate-600">{tBlog(`${post.key}.excerpt`)}</p>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <NewsPreview />
-
-      <section className="bg-slate-50 py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <span className="rounded-full bg-[var(--dk-navy)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
-              {copy.b2bBadge}
-            </span>
-            <h2 className="mt-4 text-3xl font-display font-black text-slate-900 sm:text-4xl">
-              {copy.b2bTitle}
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base text-slate-500">{copy.b2bBody}</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {copy.b2bCards.map((item) => (
-              <Link
-                key={item.title}
-                href={withLocale(locale, '/ilanlar')}
-                className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-[var(--dk-gold)] hover:shadow-lg"
-              >
-                <span className="text-2xl">{item.emoji}</span>
-                <h3 className="mt-3 text-lg font-bold text-slate-900 group-hover:text-[var(--dk-red)]">
-                  {item.title}
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">{item.desc}</p>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link
-              href={withLocale(locale, '/ilanlar')}
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-navy)] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800"
-            >
-              {copy.listingsCta}
-              <ArrowRight size={16} />
-            </Link>
           </div>
         </div>
       </section>

@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-06 — TASK-0501: feat(home): xəbərlər və elanlar yuxarı
+
+**Why:** Doğan: "haberler ile ilanları biraz yukarı alsak". Xəbərlər 8-ci, elanlar 9-cu bölmə idi — ziyarətçi demək olar görmürdü.
+
+**What:** `app/[locale]/page.tsx`-də `<NewsPreview />` + B2B elanlar bölməsi `<ReceiptHero />`-dan dərhal sonraya köçürüldü; digər bölmələr dəyişmədi. Öncə/sonra (canlı vs lokal build) 1440 və 390 px ekran görüntüləri sahibə göstərildi, təsdiq: "haberleri al yukarı".
+
 ## 2026-10-06 — TASK-0498: feat(supply): Təchizatçı bazası və Tələb lövhəsi
 
 **Why:** Sahibin iki WhatsApp HoReCa qrupunda təchizatçı təklifləri və alıcı sorğuları («kimdə var?», «hardan tapım?») itib gedirdi. Qərar: son 6 ay sistemə idxal olunsun, məlumat admin panelində gizli qalsın (fərdi məlumat qanunu), açıq kataloq yalnız razılıqdan sonra (`public_consent` indi saxlanılır, açıq səhifə yoxdur).
