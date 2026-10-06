@@ -1,13 +1,13 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-10-06 16:28:31 | Branch: fix/TASK-0500-telegram-setup-button | 6680213
+> Son güncəlləmə: 2026-10-06 16:44:53 | Branch: feat/TASK-0498-supply-base | 2eba679
 
 ## Route İnventarı
 | Kateqoriya | Say |
 |-----------|-----|
-| Toplam page.tsx | 248 |
-| Dashboard | 62 |
+| Toplam page.tsx | 250 |
+| Dashboard | 64 |
 | Toolkit | 49 |
 
 ## AI Stack (lib/ai-models.ts SST)
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 4492 | 4492 | 4492 | 4492 | ✅ |
+| 4493 | 4493 | 4493 | 4493 | ✅ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`

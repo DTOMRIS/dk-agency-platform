@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-06 — TASK-0498: feat(supply): Təchizatçı bazası və Tələb lövhəsi
+
+**Why:** Sahibin iki WhatsApp HoReCa qrupunda təchizatçı təklifləri və alıcı sorğuları («kimdə var?», «hardan tapım?») itib gedirdi. Qərar: son 6 ay sistemə idxal olunsun, məlumat admin panelində gizli qalsın (fərdi məlumat qanunu), açıq kataloq yalnız razılıqdan sonra (`public_consent` indi saxlanılır, açıq səhifə yoxdur).
+
+**What:** Python prototipi (parse/classify2/report) TS-ə köçürüldü, mesaj-mesaj müqayisə ilə 3 uyğunsuzluq tapılıb düzəldildi: (1) JS `\b` ASCII-dir — `\bət\b` heç vaxt tutmurdu; (2) Python `re.I` `i`↔`ı`↔`İ`-ni bərabər sayır — «lazimdi» sorğu sayılmırdı (39 sorğu təklif kimi düşürdü); (3) emoji Python-da 1, JS-də 2 simvol. Nəticə 23 206/23 206. İdxal SQL-də birləşdirir (jsonb DISTINCT), təkrar idxal sayları şişirtmir; PGlite-da real Postgres üzərində sınandı. Böyük ZIP brauzerdə açılır (500 MB yükləmə yox). Tələb ↔ təchizatçı uyğunlaşdırması kateqoriya kəsişməsi ilə (`imtina` xaric). `.vcf` kartları idxal edilmir — üçüncü şəxsin nömrəsidir.
+
+**Yoxlama:** build 0 xəta; lokal `next start`: səhifə admin 200 / auth-suz 307 / üzv 307; API auth-suz 401, üzv 403; canlı bazada cədvəl yoxdur → 503 `tables_missing` və UI-da «miqrasiyanı işə salın» halı; real ixracla preview 200 (bazaya yazmır). Canlıya: merge → deploy → `npm run db:migrate` → restart.
+
 ## 2026-10-06 — TASK-0500: fix(telegram): setup düyməsi və 429
 
 **Why:** Doğan `/api/telegram/setup` açdıqda `"setWebhook":"Too Many Requests: retry after 1"` aldı. Brauzer ünvan sətrində yazılan URL-i əvvəlcədən yükləyir → route 1 saniyə içində 2 dəfə çağırılır, Telegram ikinci `setWebhook`-u 429 ilə rədd edir; birinci uğurlu olsa da sahib xəta görürdü.

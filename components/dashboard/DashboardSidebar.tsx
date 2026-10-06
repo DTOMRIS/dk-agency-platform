@@ -25,6 +25,7 @@ import {
   Sparkles,
   Store,
   Tags,
+  Truck,
   UserCheck,
   Users,
 } from 'lucide-react';
@@ -71,6 +72,8 @@ const navSections: NavSectionDef[] = [
       { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
       { titleKey: 'franchiseLeads', href: '/dashboard/franchise-leads', icon: Handshake },
       { titleKey: 'contactTracking', href: '/dashboard/contact-tracking', icon: MessageCircle },
+      // TASK-0498: WhatsApp qruplarından təchizatçı bazası + alıcı tələbləri (admin-only, şəxsi məlumat).
+      { titleKey: 'supplyBase', href: '/dashboard/techizatcilar', icon: Truck },
       { titleKey: 'funnel', href: '/dashboard/funnel', icon: BarChart3 },
       // marketinqOcagi: üzv alətlərinin hub-ı — TASK-0458-dən üzv panelindədir (dashboard admin-only).
       { titleKey: 'marketinqOcagi', href: '/b2b-panel/marketinq-ocagi', icon: Sparkles },
