@@ -191,7 +191,7 @@ export default async function JobsPage({
                   className="flex flex-col-reverse justify-end rounded-2xl border border-white/10 bg-white/5 px-3 py-4 text-center backdrop-blur-sm"
                 >
                   <dt className="mt-1 text-xs font-semibold text-slate-300">{stat.label}</dt>
-                  <dd className="font-display text-3xl font-black text-white">{stat.value}</dd>
+                  <dd className="font-display text-3xl font-black tabular-nums text-white [font-variant-numeric:lining-nums_tabular-nums]">{stat.value}</dd>
                 </div>
               ))}
             </dl>
