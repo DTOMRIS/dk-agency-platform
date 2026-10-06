@@ -40,7 +40,8 @@ export async function GET(request: NextRequest) {
   const setWebhook = await telegramApi(config.token, 'setWebhook', {
     url: WEBHOOK_URL,
     secret_token: webhookSecret(config.token),
-    allowed_updates: ['callback_query'],
+    // TASK-0497: 'message' = owner forwards WhatsApp listings to the bot (lib/telegram/listing-import.ts).
+    allowed_updates: ['callback_query', 'message'],
     drop_pending_updates: true,
   });
   const info = await telegramApi<{

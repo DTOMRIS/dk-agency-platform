@@ -3561,7 +3561,10 @@
     "no": "No",
     "labelName": "Name:",
     "labelPhone": "Phone:",
-    "labelEmail": "Email:"
+    "labelEmail": "Email:",
+    "privateContactTitle": "Private contact (WhatsApp source)",
+    "privateContactHint": "Not shown on the public site — admins only.",
+    "sourceNote": "Source note:"
   },
   "home": {
     "platformCards": {

@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { getListings } from '@/lib/db/listings-repository';
 import { getAdminListings, getOwnerListings } from '@/lib/repositories/listingRepository';
-import { listingMedia, listings } from '@/lib/db/schema';
+import { listings } from '@/lib/db/schema';
+import { createListing } from '@/lib/listings/create-listing';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { generateTrackingCode } from '@/lib/utils/tracking';
@@ -110,9 +111,8 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  const inserted = await db
-    .insert(listings)
-    .values({
+  const listing = await createListing(
+    {
       trackingCode,
       type: body.type,
       sector: body.sector || null,
@@ -137,26 +137,9 @@ export async function POST(request: NextRequest) {
       typeSpecificData: body.typeSpecificData || {},
       equipment: Array.isArray(body.equipment) ? body.equipment : [],
       aiAnalysis: null,
-    })
-    .returning({ id: listings.id, trackingCode: listings.trackingCode });
-
-  const listing = inserted[0];
-  const images = Array.isArray(body.images) ? body.images : [];
-
-  for (const [index, image] of images.entries()) {
-    await db.insert(listingMedia).values({
-      listingId: listing.id,
-      url: image.url || image.preview || image,
-      type: 'image',
-      isShowcase: index === 0,
-      sortOrder: index,
-    });
-  }
-
-  // Fire-and-forget: AI analysis via DeepSeek
-  import('@/lib/listings/ai-analyze').then(({ analyzeListingAsync }) => {
-    analyzeListingAsync(listing.id).catch((err) => console.error('[ai] Listing analysis failed:', err));
-  }).catch((err) => console.error('[ai] Listing analysis import failed:', err));
+    },
+    { images: Array.isArray(body.images) ? body.images : [] },
+  );
 
   // Send confirmation email to submitter (fire-and-forget)
   const submitterEmail = body.email || session.email;

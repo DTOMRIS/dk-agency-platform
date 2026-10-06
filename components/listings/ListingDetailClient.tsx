@@ -13,8 +13,20 @@ import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 interface Props {
   listing: MockListing;
-  copy: { back: string; details: string; contact: string; whatsapp: string; leadTitle: string };
+  copy: {
+    back: string;
+    details: string;
+    contact: string;
+    whatsapp: string;
+    leadTitle: string;
+    share: string;
+    shareLead: string;
+    copyLink: string;
+    linkCopied: string;
+  };
   locale: Locale;
+  /** Canonical public URL (https://dkagency.com.tr[/locale]/ilanlar/<slug>), built on the server. */
+  canonicalUrl: string;
 }
 
 function formatPrice(listing: MockListing) {
@@ -28,20 +40,30 @@ function renderFieldValue(value: string | number | boolean | undefined) {
   return String(value);
 }
 
-export default function ListingDetailClient({ listing, copy, locale }: Props) {
+/** TASK-0497: localized WhatsApp share text — title, city, price (if any) and the tracked canonical URL. */
+export function buildWhatsappShareText(listing: MockListing, lead: string, canonicalUrl: string): string {
+  const place = [listing.city, listing.district].filter(Boolean).join(', ');
+  const price = listing.priceLabel || listing.price > 0 ? formatPrice(listing) : '';
+  const url = `${canonicalUrl}?utm_source=whatsapp&utm_medium=share`;
+  return [`${lead}: ${listing.title}`, [place && `📍 ${place}`, price && `💰 ${price}`].filter(Boolean).join(' · '), url]
+    .filter(Boolean)
+    .join('\n');
+}
+
+export default function ListingDetailClient({ listing, copy, locale, canonicalUrl }: Props) {
   const [activeImage, setActiveImage] = useState(0);
   const [toast, setToast] = useState('');
   const category = getCategoryById(listing.type);
   const typeFields = useMemo(() => getFieldsForType(listing.type), [listing.type]);
 
   const prefix = locale === 'az' ? '' : `/${locale}`;
-  const shareLink = typeof window === 'undefined' ? '' : `${window.location.origin}${prefix}/ilanlar/${listing.slug}`;
+  const shareLink = canonicalUrl;
   const whatsappMessage = `Salam! DK Agency-dən ${listing.trackingCode} nömrəli "${listing.title}" elanı haqqında məlumat almaq istəyirəm.`;
 
   const handleCopy = async () => {
     if (!shareLink || !navigator.clipboard) return;
     await navigator.clipboard.writeText(shareLink);
-    setToast('Link kopyalandı!');
+    setToast(copy.linkCopied);
     setTimeout(() => setToast(''), 2400);
   };
 
@@ -155,16 +177,18 @@ export default function ListingDetailClient({ listing, copy, locale }: Props) {
                 onClick={handleCopy}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
               >
-                {toast ? <><Check className="h-4 w-4 text-emerald-500" /> {toast}</> : <><Copy className="h-4 w-4" /> Link kopyala</>}
+                {toast ? <><Check className="h-4 w-4 text-emerald-500" /> {toast}</> : <><Copy className="h-4 w-4" /> {copy.copyLink}</>}
               </button>
 
-              <button
-                type="button"
-                onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`${listing.title} — ${shareLink}`)}`, '_blank', 'noopener,noreferrer')}
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(buildWhatsappShareText(listing, copy.shareLead, canonicalUrl))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="listing-whatsapp-share"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
               >
-                <Share2 className="h-4 w-4" /> WhatsApp paylaş
-              </button>
+                <Share2 className="h-4 w-4" /> {copy.share}
+              </a>
             </div>
           </div>
         </div>

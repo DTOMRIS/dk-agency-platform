@@ -3561,7 +3561,10 @@
     "no": "Xeyr",
     "labelName": "Ad:",
     "labelPhone": "Telefon:",
-    "labelEmail": "Email:"
+    "labelEmail": "Email:",
+    "privateContactTitle": "Gizli əlaqə (WhatsApp mənbəyi)",
+    "privateContactHint": "Bu məlumat saytda göstərilmir — yalnız admin görür.",
+    "sourceNote": "Mənbə qeydi:"
   },
   "home": {
     "platformCards": {

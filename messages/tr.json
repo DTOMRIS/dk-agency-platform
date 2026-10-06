@@ -3561,7 +3561,10 @@
     "no": "Hayır",
     "labelName": "Ad:",
     "labelPhone": "Telefon:",
-    "labelEmail": "E-posta:"
+    "labelEmail": "E-posta:",
+    "privateContactTitle": "Gizli iletişim (WhatsApp kaynağı)",
+    "privateContactHint": "Bu bilgi sitede gösterilmez — yalnızca admin görür.",
+    "sourceNote": "Kaynak notu:"
   },
   "home": {
     "platformCards": {

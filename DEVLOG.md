@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-06 — TASK-0497: feat(listings): WhatsApp-dan elan
+
+**Why:** Devir/franchise/icarə/ekipman elanları WhatsApp qruplarında dövr edir. Rəsmi WhatsApp API üçüncü tərəf qruplarını oxumur, qeyri-rəsmi scraping ban + fərdi məlumat riski daşıyır → sahib mətni yapışdırır və ya Telegram botuna forward edir, hər qaralamaya özü baxır.
+
+**What:** Parser (`lib/listings/whatsapp-import.ts`) — iOS/Android ixrac sətirləri, media placeholder-lər atılır; DeepSeek batch; zod + `TYPE_SPECIFIC_FIELDS` (SST) ilə təmizləmə. Prompt qaydaları canlı sınaqdan sonra sərtləşdi: aralıq («38-42 min») rəqəm sahəsinə yazılmır, «yer axtarıram» tipli tələb mesajları keçilir, `propertyType` yalnız kirayə/satış açıq yazılıbsa. Ortaq insert `createListing()`; qaralama sətri `buildDraftValues()` (test SQL-ə kompilyasiya edir, icra etmir). Poster əlaqəsi `contact_*` sütunlarında — `mapDbListing` bunları açıq səhifəyə vermir; `GET /api/listings/[id]` açıq olduğu üçün `privateContact` yalnız admin sessiyasında əlavə olunur. Telegram: `classifyTelegramUpdate()` — callback həmişə birinci (xəbər axını), sonra yalnız `TELEGRAM_CHAT_ID`-dən komanda olmayan mətn; emal `after()` ilə cavabdan sonra (Telegram retry → dublikat qaralama olmasın).
+
+**Yoxlama:** real DeepSeek ilə 11 nümunə (AZ/RU/TR/EN, 3 mesajlı ixrac, söhbət, qeyri-müəyyən) — 11/11 düzgün növ/skip, təsvirlərdə telefon qalmadı. `e2e/whatsapp-import.test.ts` 55/55 (oflayn stub). Lokal `next start`: səhifə admin 200 / qonaq və üzv 307; API qonaq 401, üzv 403, yanlış bədən 400, 31 element 400; admin önizləmə 200 (3,5 s, DB yazısı yox). Webhook simulyasiyası (Bot API preload stub ilə tutulur): yanlış secret 401, xəbər callback → «Naməlum əmr» (xəbər handler-i), başqa çat callback → «İcazə yoxdur», başqa çatdan mətn/`/start` → heç bir çağırış, sahibin söhbət mesajı → «Mesajda elan tanınmadı». Confirm canlı bazaya qarşı icra olunmadı (qadağa; lokal Postgres yoxdur). Screenshot-lar 1440/390, üfüqi overflow 0. dk-validator 9/9 PASS.
+
+**Qeyd (köhnə, bu task-da düzəldilməyib):** `GET /api/listings/[id]` auth-suzdur və `leads` (müraciət edənlərin telefon/e-poçtu) qaytarır; açıq `getListingBySlug` status yoxlamır. Ayrıca task tələb edir.
+
 ## 2026-10-06 — TASK-0496: feat(header): İş elanları linki
 
 **Why:** Doğan (sahib) Header.tsx dəyişikliyinə icazə verdi: "ekle". TASK-0495 ilə gələn `/is-elanlari` səhifəsi menyuda yox idi.
