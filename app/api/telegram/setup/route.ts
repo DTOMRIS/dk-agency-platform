@@ -23,6 +23,11 @@ import {
 
 const WEBHOOK_URL = 'https://dkagency.com.tr/api/telegram/webhook';
 
+/** TASK-0500: the dashboard button calls this with POST; the URL still works with GET. */
+export async function POST(request: NextRequest) {
+  return GET(request);
+}
+
 export async function GET(request: NextRequest) {
   const auth = await canAccessNewsAdmin(request);
   if (!auth.allowed) {
@@ -37,18 +42,39 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const setWebhook = await telegramApi(config.token, 'setWebhook', {
-    url: WEBHOOK_URL,
-    secret_token: webhookSecret(config.token),
-    // TASK-0497: 'message' = owner forwards WhatsApp listings to the bot (lib/telegram/listing-import.ts).
-    allowed_updates: ['callback_query', 'message'],
-    drop_pending_updates: true,
-  });
-  const info = await telegramApi<{
+  // TASK-0500: idempotent + 429-safe. Browsers pre-load a URL typed in the address bar, so this
+  // route was often hit twice within a second and Telegram answered the second setWebhook with
+  // "Too Many Requests: retry after 1" — the owner saw a failure even when the first call worked.
+  type WebhookInfo = {
     url?: string;
     pending_update_count?: number;
     last_error_message?: string;
-  }>(config.token, 'getWebhookInfo', {});
+    allowed_updates?: string[];
+  };
+  const wanted = ['callback_query', 'message'];
+  const before = await telegramApi<WebhookInfo>(config.token, 'getWebhookInfo', {});
+  const alreadySet =
+    before.ok &&
+    before.result?.url === WEBHOOK_URL &&
+    wanted.every((u) => (before.result?.allowed_updates ?? []).includes(u));
+
+  let setWebhook: { ok: boolean; description?: string } = { ok: true, description: 'already set' };
+  if (!alreadySet) {
+    const payload = {
+      url: WEBHOOK_URL,
+      secret_token: webhookSecret(config.token),
+      // TASK-0497: 'message' = owner forwards WhatsApp listings to the bot (lib/telegram/listing-import.ts).
+      allowed_updates: wanted,
+      drop_pending_updates: true,
+    };
+    setWebhook = await telegramApi(config.token, 'setWebhook', payload);
+    const retryAfter = Number(/retry after (\d+)/i.exec(setWebhook.description ?? '')?.[1] ?? 0);
+    if (!setWebhook.ok && retryAfter > 0 && retryAfter <= 5) {
+      await new Promise((resolve) => setTimeout(resolve, (retryAfter + 0.5) * 1000));
+      setWebhook = await telegramApi(config.token, 'setWebhook', payload);
+    }
+  }
+  const info = await telegramApi<WebhookInfo>(config.token, 'getWebhookInfo', {});
 
   const pendingLimit = Math.min(Number(request.nextUrl.searchParams.get('pending') || 0) || 0, 20);
   let sent = 0;
@@ -76,6 +102,7 @@ export async function GET(request: NextRequest) {
     setWebhook: setWebhook.description ?? 'ok',
     webhook: {
       url: info.result?.url,
+      allowedUpdates: info.result?.allowed_updates ?? [],
       pending: info.result?.pending_update_count,
       lastError: info.result?.last_error_message,
     },

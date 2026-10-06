@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-06 — TASK-0500: fix(telegram): setup düyməsi və 429
+
+**Why:** Doğan `/api/telegram/setup` açdıqda `"setWebhook":"Too Many Requests: retry after 1"` aldı. Brauzer ünvan sətrində yazılan URL-i əvvəlcədən yükləyir → route 1 saniyə içində 2 dəfə çağırılır, Telegram ikinci `setWebhook`-u 429 ilə rədd edir; birinci uğurlu olsa da sahib xəta görürdü.
+
+**What:** route əvvəl `getWebhookInfo` — URL və `allowed_updates` (callback_query+message) artıq düzdürsə `setWebhook` çağırılmır; 429-da `retry after N` (≤5 s) gözləyib 1 dəfə təkrar; cavaba `allowedUpdates`; POST dəstəyi. Panel: WhatsApp import səhifəsində kart + düymə (4 dil), nəticə "Bot hazırdır" / səbəb.
+
 ## 2026-10-06 — TASK-0499: fix(security): elan API-də şəxsi məlumat sızması
 
 **Why:** TASK-0497 zamanı aşkarlandı: `GET /api/listings/[id]` autentifikasiyasız işləyirdi, istənilən id üçün (qaralamalar da daxil) `leads` (maraqlanan şəxslərin ad, telefon, e-poçtu), `reviewNotes` və sahibin e-poçtunu qaytarırdı; id ardıcıl olduğu üçün hamısı sadalana bilərdi.
