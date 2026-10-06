@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-10-06 16:07:53 | Branch: feat/TASK-0497-whatsapp-listing-import | be07d23
+> Son güncəlləmə: 2026-10-06 16:13:04 | Branch: fix/TASK-0499-listing-api-pii | fccc051
 
 ## Route İnventarı
 | Kateqoriya | Say |

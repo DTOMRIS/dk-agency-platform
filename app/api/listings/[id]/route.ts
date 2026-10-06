@@ -8,6 +8,9 @@ import { getServerMemberSession } from '@/lib/members/server-session';
 import { isValidSector } from '@/lib/data/listingSectors';
 import type { ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 
+/** TASK-0499: statuses a visitor may read through this public GET (matches the public showcase). */
+const PUBLIC_READ_STATUSES: ListingWorkflowStatus[] = ['showcase_ready', 'sold'];
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
@@ -20,7 +23,6 @@ export async function GET(
   }
 
   // TASK-0497: private contact (e.g. WhatsApp import poster) + origin note — admin only.
-  // This GET is public, so these columns are never part of the mapped listing itself.
   const session = await getServerMemberSession();
   if (session.loggedIn && session.plan === 'admin' && dbAvailable && db) {
     const [privateContact] = await db
@@ -35,7 +37,29 @@ export async function GET(
     return NextResponse.json({ success: true, data: { ...listing, privateContact: privateContact ?? null } });
   }
 
-  return NextResponse.json({ success: true, data: listing });
+  // TASK-0499: this GET used to return any listing (drafts included) with its inquiry leads
+  // (names, phones, emails of interested buyers) and review notes to anyone. The owner keeps full
+  // access to their own listing (b2b-panel); everyone else gets a showcase listing without PII.
+  const auth = await getAuthFromCookie();
+  if (auth && dbAvailable && db) {
+    const [row] = await db
+      .select({ ownerId: listings.ownerId })
+      .from(listings)
+      .where(eq(listings.id, Number(id)));
+    if (row && row.ownerId === auth.userId) {
+      return NextResponse.json({ success: true, data: listing });
+    }
+  }
+
+  if (!PUBLIC_READ_STATUSES.includes(listing.status as ListingWorkflowStatus)) {
+    return NextResponse.json({ success: false, error: 'Elan tapılmadı.' }, { status: 404 });
+  }
+
+  const { leads: _leads, reviewNotes: _reviewNotes, email: _email, ...publicListing } = listing;
+  void _leads;
+  void _reviewNotes;
+  void _email;
+  return NextResponse.json({ success: true, data: { ...publicListing, leads: [], reviewNotes: [] } });
 }
 
 /** Statuses where the owner is allowed to edit their listing */

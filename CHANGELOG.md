@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0499` fix(security): `GET /api/listings/[id]` artıq maraqlanan alıcıların ad/telefon/e-poçtunu (leads), rəy qeydlərini və qaralama elanları hamıya qaytarmır — tam məlumat yalnız admin və elan sahibinə; digərlərinə yalnız vitrindəki elan, şəxsi məlumatsız.
+
 - `TASK-0497` feat(listings): «WhatsApp-dan əlavə et» — qruplardakı devir/franchise/icarə/ekipman elanlarını yapışdırın, AI qaralama hazırlayır, siz yoxlayıb təsdiqləyirsiniz (heç nə avtomatik yayımlanmır, elan sahibinin telefonu saytda görünmür); eyni mətni Telegram botuna forward etmək də qaralama yaradır; elan səhifəsində «WhatsApp-da paylaş» düyməsi 4 dildə.
 
 - `TASK-0496` feat(header): menyuya "İş elanları" (RU Вакансии, EN Jobs, TR İş ilanları) əlavə edildi; masaüstü menyu artıq 1280px-dən başlayır (1024px-də RU/EN etiketləri iki sətrə düşürdü, indi hamburger menyu).
