@@ -88,6 +88,7 @@ const STATIC_PATHS: Array<{
   { path: '/franchise', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/sektor', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/ilanlar', changeFrequency: 'daily', priority: 0.8 },
+  { path: '/is-elanlari', changeFrequency: 'daily', priority: 0.7 },
   { path: '/haqqimizda', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/uzvluk', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/kazan-ai', changeFrequency: 'weekly', priority: 0.7 },

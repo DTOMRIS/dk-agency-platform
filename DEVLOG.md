@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-06 — TASK-0495: feat(jobs): TQTA ilə işləyən «İş elanları» səhifəsi
+
+**Why:** Sahib qərarı: DK vitrindir, TQTA mühərrikdir — CV, uyğunlaşdırma və müraciət TQTA-da qalır, DK bazasında vakansiya dublikatı olmur. DK-da kadr axtaran restoran sahibi üçün vakansiya səhifəsi və işəgötürən CTA-sı yox idi; KAZAN AI kadr sualına yalnız Personel Planlayıcı verirdi.
+
+**What:** `lib/tqta/jobs.ts` — TQTA public API (`aktif=true&limit=100`; default 50 idi, 63 elan var), zod ilə hər sətir ayrıca yoxlanır, saf `processTqtaPayload` (süzgəc + normallaşdırma: şəhər variantları «Baki/BaKI/Nerimanov…» → Bakı, kateqoriya/iş tipi TQTA enum-ları + `kafe`/`idareetme`/`uzaqdan`), xətada `{ ok: false }`. `components/jobs/JobsPage.tsx` server komponenti (Pattern A, `jobs` namespace), filtr link çipləri (flex-wrap, L-045), kartlar, işəgötürən bloku. Route `[locale]` + kök re-export (L-038/L-056). KAZAN: `site-context.ts` top 10 vakansiya + işəgötürən linki (10 dəq keş), `system-prompt.ts` 13-cü qayda.
+
+**Yoxlama:** build 0 xəta; 4 dil 200, `/az/is-elanlari` 307; TQTA host-u `.invalid`-ə yönləndiriləndə səhifə 200 + «hazırda yüklənmir»; 1440/390 px screenshot, üfüqi overflow 0; KAZAN (DeepSeek) AZ və EN cavabında `/is-elanlari` linki. TQTA-da vitrinə çıxmayan 2 elan: #67 «Açık kapı günü» (məzmun yoxdur, logo veb səhifə URL-i), #65 E2E test elanı.
+
 ## 2026-10-06 — TASK-0494: fix(news): Azərbaycan xəbərlərinin keçməməsi
 
 **Why:** Doğan: "Yeni xəbərlərdə şəkillər var, amma Azərbaycan xəbəri yoxdur." 2026-10-05 21:19 run: 0 `.az` sətir. Səbəblər: (1) 30 yerlik limit bal üzrə doldurulurdu — uzun təsvirli xarici trade xəbərləri (10+ bal) yerləri tuturdu; (2) 4 günlük yaş limiti az həcmli Trend turizm lentini kəsirdi (300 "too old"); (3) RU "гастроном" yox idi; (4) Report.az GitHub-dan 403 (bot UA); (5) redaktor lint "Agentlik"i alt-sətir kimi axtarırdı → "Turizm Agentliyi" olan 2 xəbər düşdü.

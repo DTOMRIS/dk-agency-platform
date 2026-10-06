@@ -6129,5 +6129,66 @@
   },
   "consent": {
     "personalData": "I consent to the processing of my personal data under the Law of the Republic of Azerbaijan \"On Personal Data\" (and, for applicants from Türkiye, KVKK)."
+  },
+  "jobs": {
+    "meta": {
+      "title": "Jobs — HoReCa vacancies | DK Agency",
+      "description": "Current restaurant, hotel, café and tourism vacancies in Azerbaijan. Listings come from our partner academy TQTA; applications are completed on TQTA."
+    },
+    "badge": "Together with TQTA Karyera",
+    "title": "Jobs",
+    "subtitle": "Current vacancies across the HoReCa sector. Listings come from the platform of our partner academy TQTA — Turan Qastro Turizm Təhsil Mərkəzi.",
+    "ctaBrowse": "Browse vacancies",
+    "ctaEmployer": "Hiring staff?",
+    "statJobs": "active vacancies",
+    "statCompanies": "employers",
+    "statCities": "cities",
+    "filterCategory": "Field",
+    "filterCity": "City",
+    "filterAll": "All",
+    "filterReset": "Reset filters",
+    "resultCount": "{count} vacancies",
+    "listTitle": "Active vacancies",
+    "sourceNote": "Listings update automatically from TQTA. Applications are completed on TQTA.",
+    "featured": "Featured",
+    "posted": "Posted: {date}",
+    "salary": "Salary",
+    "experience": "Experience",
+    "apply": "Apply",
+    "applyAria": "{title} — {company}: apply on TQTA (opens in a new window)",
+    "emptyFilteredTitle": "No vacancies match this filter",
+    "emptyFilteredBody": "Choose another field or city, or browse all vacancies.",
+    "unavailableTitle": "Vacancies are not loading right now",
+    "unavailableBody": "We could not reach the TQTA career platform. Please try again shortly or browse the vacancies directly on TQTA.",
+    "unavailableCta": "Go to TQTA Karyera",
+    "employerTitle": "Hiring staff?",
+    "employerBody": "Post your vacancy on TQTA for free — it appears both on TQTA and in the DK Agency showcase. Certified graduates and experienced candidates apply to you directly.",
+    "employerPoint1": "Cooks, baristas, waiters, hotel and tourism staff",
+    "employerPoint2": "Certified graduates and internship programmes",
+    "employerPoint3": "Applications and CVs in the TQTA employer panel",
+    "employerCta": "Post a vacancy",
+    "certTitle": "Certified staff — TQTA / CTH",
+    "certBody": "TQTA graduates complete hands-on training under international CTH programmes. Ask for the certificate when you hire.",
+    "certCta": "About TQTA",
+    "listingsLinkTitle": "Jobs",
+    "listingsLinkBody": "HoReCa vacancies — together with TQTA",
+    "categories": {
+      "aspazliq": "Kitchen",
+      "konditer": "Pastry",
+      "barista": "Barista",
+      "kafe": "Café",
+      "restoran": "Restaurant service",
+      "idareetme": "Management",
+      "otel": "Hotel",
+      "turizm": "Tourism",
+      "diger": "Other"
+    },
+    "types": {
+      "tam_gun": "Full-time",
+      "yarim_gun": "Part-time",
+      "staj": "Internship",
+      "freelance": "Freelance",
+      "uzaqdan": "Remote"
+    }
   }
 }

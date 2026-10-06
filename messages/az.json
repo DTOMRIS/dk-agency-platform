@@ -6129,5 +6129,66 @@
   },
   "consent": {
     "personalData": "Şəxsi məlumatlarımın Azərbaycan Respublikasının «Fərdi məlumatlar haqqında» Qanununa uyğun emalına razıyam (Türkiyədən müraciət edənlər üçün həmçinin KVKK)."
+  },
+  "jobs": {
+    "meta": {
+      "title": "İş elanları — HoReCa vakansiyaları | DK Agency",
+      "description": "Azərbaycanda restoran, otel, kafe və turizm sahəsində aktual vakansiyalar. Elanlar tərəfdaş akademiya TQTA-dan gəlir, müraciət TQTA-da tamamlanır."
+    },
+    "badge": "TQTA Karyera ilə birlikdə",
+    "title": "İş elanları",
+    "subtitle": "HoReCa sektorunda aktual vakansiyalar. Elanlar tərəfdaş akademiyamız TQTA — Turan Qastro Turizm Təhsil Mərkəzi — platformasından gəlir.",
+    "ctaBrowse": "Vakansiyalara bax",
+    "ctaEmployer": "İşçi lazımdır?",
+    "statJobs": "aktiv vakansiya",
+    "statCompanies": "işəgötürən",
+    "statCities": "şəhər",
+    "filterCategory": "Sahə",
+    "filterCity": "Şəhər",
+    "filterAll": "Hamısı",
+    "filterReset": "Filtrləri sıfırla",
+    "resultCount": "{count} vakansiya",
+    "listTitle": "Aktiv vakansiyalar",
+    "sourceNote": "Elanlar TQTA-dan avtomatik yenilənir. Müraciət TQTA-da tamamlanır.",
+    "featured": "Önə çıxan",
+    "posted": "Dərc: {date}",
+    "salary": "Maaş",
+    "experience": "Təcrübə",
+    "apply": "Müraciət et",
+    "applyAria": "{title} — {company}: TQTA-da müraciət et (yeni pəncərədə açılır)",
+    "emptyFilteredTitle": "Bu filtrə uyğun vakansiya yoxdur",
+    "emptyFilteredBody": "Başqa sahə və ya şəhər seçin, ya da bütün vakansiyalara baxın.",
+    "unavailableTitle": "Vakansiyalar hazırda yüklənmir",
+    "unavailableBody": "TQTA karyera platforması ilə əlaqə müvəqqəti qurulmadı. Bir az sonra yenidən yoxlayın və ya vakansiyalara birbaşa TQTA-da baxın.",
+    "unavailableCta": "TQTA Karyeraya keç",
+    "employerTitle": "İşçi lazımdır?",
+    "employerBody": "Vakansiyanızı TQTA-da pulsuz yerləşdirin — elan həm TQTA-da, həm də DK Agency vitrinində görünür. Sertifikatlı məzunlar və təcrübəli namizədlər sizə birbaşa müraciət edir.",
+    "employerPoint1": "Aşpaz, barista, ofisiant, otel və turizm heyəti",
+    "employerPoint2": "Sertifikatlı məzunlar və staj proqramları",
+    "employerPoint3": "Müraciətlər və CV-lər TQTA işəgötürən panelində",
+    "employerCta": "Vakansiya yerləşdir",
+    "certTitle": "Sertifikatlı kadr — TQTA / CTH",
+    "certBody": "TQTA məzunları beynəlxalq CTH proqramları üzrə praktiki hazırlıq keçir. Kadr seçəndə sertifikatı soruşun.",
+    "certCta": "TQTA haqqında",
+    "listingsLinkTitle": "İş elanları",
+    "listingsLinkBody": "HoReCa vakansiyaları — TQTA ilə birlikdə",
+    "categories": {
+      "aspazliq": "Aşpazlıq",
+      "konditer": "Qənnadı",
+      "barista": "Barista",
+      "kafe": "Kafe",
+      "restoran": "Restoran xidməti",
+      "idareetme": "İdarəetmə",
+      "otel": "Otel",
+      "turizm": "Turizm",
+      "diger": "Digər"
+    },
+    "types": {
+      "tam_gun": "Tam ştat",
+      "yarim_gun": "Yarım ştat",
+      "staj": "Staj",
+      "freelance": "Frilans",
+      "uzaqdan": "Uzaqdan"
+    }
   }
 }

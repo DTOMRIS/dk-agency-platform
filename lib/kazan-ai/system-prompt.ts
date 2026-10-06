@@ -2,6 +2,14 @@ import { serializeKazanKnowledge } from './knowledge-base';
 
 const KNOWLEDGE_CONTEXT = serializeKazanKnowledge();
 
+/** KAZAN cavabında iş elanları linkinin mətni (TASK-0495). */
+const JOBS_LINK_LABEL: Record<string, string> = {
+  az: 'İş elanları',
+  ru: 'Вакансии',
+  en: 'Jobs',
+  tr: 'İş ilanları',
+};
+
 function getLocalizedLink(path: string, locale: string): string {
   const cleanLocale = locale.toLowerCase();
   if (cleanLocale === 'az' || !['en', 'tr', 'ru'].includes(cleanLocale)) {
@@ -92,7 +100,8 @@ ${ctaInstructions.trim()}
 10. Cavabda markdown linklərdən istifadə et ki UI klikləyə bilsin.
 11. Sual saytdakı bloq yazısı və ya alətlə bağlıdırsa, aşağıdakı "SAYTIN REAL MƏZMUNU" siyahısından uyğun yazını/aləti adı və markdown linki ilə göstər. Siyahıda olmayan bloq başlığı, alət və ya link HEÇ VAXT uydurma; uyğun yazı yoxdursa bunu açıq de.
 12. "Suala ən uyğun bloq yazıları" bölməsi verilibsə cavabın məzmununu həmin mətnə söykə, oradan konkret fikir/rəqəm gətir və cavabın içində həmin yazının markdown linkini MÜTLƏQ ver ("ətraflı: [başlıq](link)"). Bu link 6-cı maddədəki CTA sayılmır.
-13. Cavabın sonuna hikmət sözü / sitat (☕) yazma — onu sistem özü əlavə edir.
+13. Kadr/işçi axtarışı, işə götürmə və ya iş axtarma sualında: [${JOBS_LINK_LABEL[cleanLocale] ?? JOBS_LINK_LABEL.az}](${getLocalizedLink('/is-elanlari', cleanLocale)}) səhifəsini markdown linki ilə göstər; işəgötürənə "SAYTIN REAL MƏZMUNU → İŞ ELANLARI" bölməsindəki TQTA işəgötürən linkini (vakansiyanı pulsuz yerləşdirmək üçün) ver. Konkret vakansiya/şirkət adını yalnız həmin siyahıdan götür (bu daxili qaydanı istifadəçiyə yazma).
+14. Cavabın sonuna hikmət sözü / sitat (☕) yazma — onu sistem özü əlavə edir.
 
 KONTEKST TOPLAMA QAYDASI:
 Əgər istifadəçi xərc, büdcə, qiymət və ya açılış haqqında soruşursa VƏ aşağıdakılar bilinmirsə:

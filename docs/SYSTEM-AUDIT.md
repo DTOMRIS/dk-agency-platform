@@ -1,12 +1,12 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-10-06 04:49:42 | Branch: fix/TASK-0494-az-news-coverage | 248c80e
+> Son güncəlləmə: 2026-10-06 15:08:41 | Branch: feat/TASK-0495-jobs-page-tqta | 6f9fcb5
 
 ## Route İnventarı
 | Kateqoriya | Say |
 |-----------|-----|
-| Toplam page.tsx | 244 |
+| Toplam page.tsx | 246 |
 | Dashboard | 60 |
 | Toolkit | 49 |
 
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 4436 | 4436 | 4436 | 4436 | ✅ |
+| 4489 | 4489 | 4489 | 4489 | ✅ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`
