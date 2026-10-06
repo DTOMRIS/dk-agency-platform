@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-06 — TASK-0499: fix(security): elan API-də şəxsi məlumat sızması
+
+**Why:** TASK-0497 zamanı aşkarlandı: `GET /api/listings/[id]` autentifikasiyasız işləyirdi, istənilən id üçün (qaralamalar da daxil) `leads` (maraqlanan şəxslərin ad, telefon, e-poçtu), `reviewNotes` və sahibin e-poçtunu qaytarırdı; id ardıcıl olduğu üçün hamısı sadalana bilərdi.
+
+**What:** admin → tam (+privateContact); JWT sahibi (`ownerId === userId`) → tam; digərləri → yalnız `showcase_ready`/`sold`, `leads`/`reviewNotes` boş, `email` çıxarılıb; qalanı 404. İstehlakçılar: admin panel (admin), b2b-panel/ilanlarim (sahib) — dəyişmədən işləyir; ictimai detal səhifəsi server tərəfdə `getListingBySlug` istifadə edir.
+
 ## 2026-10-06 — TASK-0497: feat(listings): WhatsApp-dan elan
 
 **Why:** Devir/franchise/icarə/ekipman elanları WhatsApp qruplarında dövr edir. Rəsmi WhatsApp API üçüncü tərəf qruplarını oxumur, qeyri-rəsmi scraping ban + fərdi məlumat riski daşıyır → sahib mətni yapışdırır və ya Telegram botuna forward edir, hər qaralamaya özü baxır.
