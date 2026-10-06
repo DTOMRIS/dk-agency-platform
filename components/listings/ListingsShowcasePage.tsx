@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import { ArrowRight, ChevronDown, ChevronUp, PackageSearch, Search, SlidersHorizontal } from 'lucide-react';
+import { ArrowRight, Briefcase, ChevronDown, ChevronUp, PackageSearch, Search, SlidersHorizontal } from 'lucide-react';
 import ListingCard from '@/components/listings/ListingCard';
 import ListingModal from '@/components/listings/ListingModal';
 import {
@@ -33,6 +33,7 @@ function normalizeCityForQuery(city: string) {
 
 export default function ListingsShowcasePage() {
   const t = useTranslations('devir');
+  const tJobs = useTranslations('jobs');
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
@@ -111,6 +112,7 @@ export default function ListingsShowcasePage() {
 
   const ilanVerHref = locale === 'az' ? '/ilan-ver' : `/${locale}/ilan-ver`;
   const ilanlarimHref = locale === 'az' ? '/b2b-panel/ilanlarim' : `/${locale}/b2b-panel/ilanlarim`;
+  const jobsHref = locale === 'az' ? '/is-elanlari' : `/${locale}/is-elanlari`;
 
   return (
     <>
@@ -137,6 +139,16 @@ export default function ListingsShowcasePage() {
                   {t('ctaMyListings')}
                 </Link>
               </div>
+              <Link
+                href={jobsHref}
+                className="mt-6 inline-flex max-w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:border-[var(--dk-gold)]"
+              >
+                <Briefcase className="h-5 w-5 shrink-0 text-[var(--dk-gold)]" aria-hidden="true" />
+                <span className="min-w-0">
+                  <span className="block text-sm font-bold text-white">{tJobs('listingsLinkTitle')} →</span>
+                  <span className="block text-xs text-slate-300">{tJobs('listingsLinkBody')}</span>
+                </span>
+              </Link>
             </div>
             <Image
               src="/images/yatirimci-sunumu.png"

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0495` feat(jobs): yeni «İş elanları» səhifəsi (`/is-elanlari`, AZ/RU/EN/TR) — HoReCa vakansiyaları tərəfdaş akademiya TQTA-dan avtomatik gəlir; sahə və şəhər filtri; «Müraciət et» TQTA-da elanın səhifəsini açır; işəgötürənlər üçün «İşçi lazımdır?» bloku (TQTA-da pulsuz elan); elanlar səhifəsindən link; KAZAN AI kadr sualında bu səhifəni və işəgötürən linkini göstərir.
+
 - `TASK-0494` fix(news): Azərbaycan xəbərləri artıq keçir — 8 yeni AZ mənbə (Baku.ws, Media.az, Vesti.az, Day.Az, Qafqazinfo, Zerkalo, Haqqin, Minval), AZ xəbərləri üçün 14 günlük pəncərə, 30 yerdən 10-u AZ üçün ayrılıb, sintezdə AZ prioriteti, RU/AZ qastronomiya terminləri, kriminal başlıq filtri; "Agentliyi/agentlikləri" artıq səhvən bloklanmır; xəbər axını gündə 4 dəfə.
 
 - `TASK-0493` fix(news-admin): toplu silmə dərc olunmuş (approved) xəbərləri artıq default olaraq ötürür — onları silmək üçün ayrıca təsdiq lazımdır (həm UI, həm server); seçim tab/səhifə dəyişəndə dərhal sıfırlanır, yüklənərkən checkbox-lar kilidlidir.

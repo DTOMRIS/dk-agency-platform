@@ -10,6 +10,7 @@ import { and, desc, eq, gte } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { blogPosts, newsArticles } from '@/lib/db/schema';
 import { TOOLKIT_CATALOG } from '@/lib/news/toolkit-catalog';
+import { TQTA_EMPLOYER_URL, getTqtaJobs, type TqtaJob } from '@/lib/tqta/jobs';
 
 type Locale = 'az' | 'ru' | 'en' | 'tr';
 
@@ -37,6 +38,17 @@ const CACHE_MS = 10 * 60 * 1000;
 const NEWS_DAYS = 30;
 const EXCERPT_CHARS = 1400;
 let cache: SiteDocs | null = null;
+const JOBS_IN_PROMPT = 10;
+let jobsCache: { jobs: TqtaJob[]; loadedAt: number } | null = null;
+
+/** TQTA vakansiyaları (TASK-0495) — bloq konteksti kimi 10 dəq yaddaşda saxlanır. */
+async function loadJobs(): Promise<TqtaJob[]> {
+  if (jobsCache && Date.now() - jobsCache.loadedAt < CACHE_MS) return jobsCache.jobs;
+  const { ok, jobs } = await getTqtaJobs();
+  // Uğursuz cavab keşlənmir — növbəti sualda yenidən cəhd olunur.
+  if (ok) jobsCache = { jobs, loadedAt: Date.now() };
+  return jobs;
+}
 
 function normalizeLocale(locale: string): Locale {
   const l = locale.toLowerCase();
@@ -155,7 +167,7 @@ function scoreBlog(query: Set<string>, doc: BlogDoc, locale: Locale): number {
 
 export async function buildSiteContext(userText: string, localeInput: string): Promise<string> {
   const locale = normalizeLocale(localeInput);
-  const docs = await loadDocs();
+  const [docs, jobs] = await Promise.all([loadDocs(), loadJobs()]);
   const query = stems(userText);
 
   const toolLines = TOOLKIT_CATALOG.map(
@@ -202,5 +214,16 @@ export async function buildSiteContext(userText: string, localeInput: string): P
     );
   }
   if (newsLines.length) sections.push('', `SON XƏBƏRLƏR (${NEWS_DAYS} gün):`, ...newsLines);
+  const jobsPath = localePath('/is-elanlari', locale);
+  sections.push(
+    '',
+    `İŞ ELANLARI (TQTA tərəfdaş akademiyası ilə; vitrin: ${jobsPath}, işəgötürən elan yerləşdirir: ${TQTA_EMPLOYER_URL}):`
+  );
+  if (jobs.length) {
+    sections.push(
+      `Aktiv vakansiya sayı: ${jobs.length}. Son elanlar:`,
+      ...jobs.slice(0, JOBS_IN_PROMPT).map((j) => `- ${j.title} — ${j.company}${j.city ? `, ${j.city}` : ''}`)
+    );
+  }
   return sections.join('\n');
 }
