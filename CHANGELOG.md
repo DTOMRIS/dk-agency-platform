@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0496` feat(header): menyuya "İş elanları" (RU Вакансии, EN Jobs, TR İş ilanları) əlavə edildi; masaüstü menyu artıq 1280px-dən başlayır (1024px-də RU/EN etiketləri iki sətrə düşürdü, indi hamburger menyu).
+
 - `TASK-0495` feat(jobs): yeni «İş elanları» səhifəsi (`/is-elanlari`, AZ/RU/EN/TR) — HoReCa vakansiyaları tərəfdaş akademiya TQTA-dan avtomatik gəlir; sahə və şəhər filtri; «Müraciət et» TQTA-da elanın səhifəsini açır; işəgötürənlər üçün «İşçi lazımdır?» bloku (TQTA-da pulsuz elan); elanlar səhifəsindən link; KAZAN AI kadr sualında bu səhifəni və işəgötürən linkini göstərir.
 
 - `TASK-0494` fix(news): Azərbaycan xəbərləri artıq keçir — 8 yeni AZ mənbə (Baku.ws, Media.az, Vesti.az, Day.Az, Qafqazinfo, Zerkalo, Haqqin, Minval), AZ xəbərləri üçün 14 günlük pəncərə, 30 yerdən 10-u AZ üçün ayrılıb, sintezdə AZ prioriteti, RU/AZ qastronomiya terminləri, kriminal başlıq filtri; "Agentliyi/agentlikləri" artıq səhvən bloklanmır; xəbər axını gündə 4 dəfə.
