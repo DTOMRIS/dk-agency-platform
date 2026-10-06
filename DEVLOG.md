@@ -1,5 +1,11 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-06 — TASK-0496: feat(header): İş elanları linki
+
+**Why:** Doğan (sahib) Header.tsx dəyişikliyinə icazə verdi: "ekle". TASK-0495 ilə gələn `/is-elanlari` səhifəsi menyuda yox idi.
+
+**What:** NAV_COPY-a `jobs` (4 dil), `navItems`-ə `/is-elanlari` (masaüstü + mobil eyni siyahı). 6 menyu bəndi ilə RU 1024px-də loqo və "Разместить объявление" iki sətrə düşürdü → masaüstü nav/Elan ver `lg`→`xl`, hamburger `lg:hidden`→`xl:hidden`. Yoxlama: ru 1024/1279/1280, az 1280, en 1440 — overflow yox, header 64-68px.
+
 ## 2026-10-06 — TASK-0495: feat(jobs): TQTA ilə işləyən «İş elanları» səhifəsi
 
 **Why:** Sahib qərarı: DK vitrindir, TQTA mühərrikdir — CV, uyğunlaşdırma və müraciət TQTA-da qalır, DK bazasında vakansiya dublikatı olmur. DK-da kadr axtaran restoran sahibi üçün vakansiya səhifəsi və işəgötürən CTA-sı yox idi; KAZAN AI kadr sualına yalnız Personel Planlayıcı verirdi.

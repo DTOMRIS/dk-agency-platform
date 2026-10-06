@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- `TASK-0496` feat(header): **İş elanları menyu linki** (4 dil); masaüstü nav breakpoint `lg`→`xl` (1024px-də RU sıxılması).
 - `TASK-0495` feat(jobs): **«İş elanları» — TQTA vitrini** — `/is-elanlari` (4 dil, kök mirror L-038) TQTA `GET /api/jobs?aktif=true&limit=100`-dan oxuyur (zod, 8 s timeout, `revalidate: 3600`, xətada «hazırda yüklənmir» halı, 500 yox); aktiv/son tarix/boş məzmun/E2E test süzgəci, şəkil olmayan logo → inisiallar, telefon/e-poçt qısa mətndən çıxarılır; sahə + şəhər filtri (`?kategori=&city=`, JS-siz link çipləri); «Müraciət et» → `tqta.az/karyera/{slug}` utm ilə; «İşçi lazımdır?» → `tqta.az/isverenler`; «Sertifikatlı kadr — TQTA/CTH» zolağı; sitemap + hreflang; `/ilanlar` hero-da link; KAZAN AI kontekstinə top 10 vakansiya + işəgötürən linki, prompt-a kadr sualı qaydası. DK bazasına heç nə yazılmır.
 - `TASK-0494` fix(news): **AZ xəbər axını** — 8 yeni AZ RSS, region=az (14 gün, 10 ayrılmış yer, relevance bonus), RU/AZ qastronomiya terminləri, kriminal blok, lint tam söz, cron 6 saat.
 - `TASK-0493` fix(news-admin): **dərc olunmuş xəbər qoruması** — toplu silmə approved xəbərləri ayrıca təsdiqsiz silmir (UI + server), seçim tab/səhifə dəyişəndə sıfırlanır.

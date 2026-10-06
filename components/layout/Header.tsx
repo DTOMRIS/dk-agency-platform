@@ -11,10 +11,10 @@ import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale, t
 
 // Inline nav copy — NOT dependent on NextIntlClientProvider (fixes stale locale on client nav)
 const NAV_COPY: Record<Locale, Record<string, string>> = {
-  az: { home:'Ana səhifə', tools:'Alətlər', franchise:'Franchise', listings:'İlanlar', news:'Sektor Nəbzi', blog:'Bloq', resources:'Resurslar', aboutUs:'Haqqımızda', panel:'İdarə Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu', frOverview:'Azərbaycanda Franchise', frReadiness:'Hazırlıq Testi', frRoi:'ROI Kalkulyatoru', frBuyer:'Alıcı Çek-listi', frBook:'AI Françbuk', frRadar:'Franchise Radar' },
-  en: { home:'Home', tools:'Tools', franchise:'Franchise', listings:'Listings', news:'Sector Pulse', blog:'Blog', resources:'Resources', aboutUs:'About Us', panel:'Control Panel', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu', frOverview:'Franchise in Azerbaijan', frReadiness:'Readiness Test', frRoi:'ROI Calculator', frBuyer:'Buyer Checklist', frBook:'AI Franchbook', frRadar:'Franchise Radar' },
-  ru: { home:'Главная', tools:'Инструменты', franchise:'Франшиза', listings:'Объявления', news:'Пульс сектора', blog:'Блог', resources:'Ресурсы', aboutUs:'О нас', panel:'Панель управления', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню', frOverview:'Франшиза в Азербайджане', frReadiness:'Тест готовности', frRoi:'ROI Калькулятор', frBuyer:'Чек-лист покупателя', frBook:'AI Франчбук', frRadar:'Franchise Radar' },
-  tr: { home:'Ana sayfa', tools:'Araçlar', franchise:'Franchise', listings:'İlanlar', news:'Sektör Nabzı', blog:'Blog', resources:'Kaynaklar', aboutUs:'Hakkımızda', panel:'Yönetim Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü', frOverview:"Azerbaycan'da Franchise", frReadiness:'Hazırlık Testi', frRoi:'ROI Hesaplayıcı', frBuyer:'Alıcı Kontrol Listesi', frBook:'AI Franchise Kitabı', frRadar:'Franchise Radar' },
+  az: { home:'Ana səhifə', tools:'Alətlər', franchise:'Franchise', listings:'İlanlar', jobs:'İş elanları', news:'Sektor Nəbzi', blog:'Bloq', resources:'Resurslar', aboutUs:'Haqqımızda', panel:'İdarə Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektorun AI məsləhətçisi kimi beta mərhələsindədir.', login:'Daxil ol', register:'Üzv ol', postListing:'Elan ver', account:'Hesabım', myListings:'Elanlarım', logout:'Çıxış', menu:'Menyu', frOverview:'Azərbaycanda Franchise', frReadiness:'Hazırlıq Testi', frRoi:'ROI Kalkulyatoru', frBuyer:'Alıcı Çek-listi', frBook:'AI Françbuk', frRadar:'Franchise Radar' },
+  en: { home:'Home', tools:'Tools', franchise:'Franchise', listings:'Listings', jobs:'Jobs', news:'Sector Pulse', blog:'Blog', resources:'Resources', aboutUs:'About Us', panel:'Control Panel', topBadge:'NEW:', topText:'KAZAN AI is in beta as the sector AI advisor.', login:'Sign in', register:'Join', postListing:'Post listing', account:'My account', myListings:'My listings', logout:'Log out', menu:'Menu', frOverview:'Franchise in Azerbaijan', frReadiness:'Readiness Test', frRoi:'ROI Calculator', frBuyer:'Buyer Checklist', frBook:'AI Franchbook', frRadar:'Franchise Radar' },
+  ru: { home:'Главная', tools:'Инструменты', franchise:'Франшиза', listings:'Объявления', jobs:'Вакансии', news:'Пульс сектора', blog:'Блог', resources:'Ресурсы', aboutUs:'О нас', panel:'Панель управления', topBadge:'НОВОЕ:', topText:'KAZAN AI находится в бета-режиме как отраслевой AI-консультант.', login:'Войти', register:'Стать участником', postListing:'Разместить объявление', account:'Мой аккаунт', myListings:'Мои объявления', logout:'Выйти', menu:'Меню', frOverview:'Франшиза в Азербайджане', frReadiness:'Тест готовности', frRoi:'ROI Калькулятор', frBuyer:'Чек-лист покупателя', frBook:'AI Франчбук', frRadar:'Franchise Radar' },
+  tr: { home:'Ana sayfa', tools:'Araçlar', franchise:'Franchise', listings:'İlanlar', jobs:'İş ilanları', news:'Sektör Nabzı', blog:'Blog', resources:'Kaynaklar', aboutUs:'Hakkımızda', panel:'Yönetim Paneli', topBadge:'YENİ:', topText:'KAZAN AI sektörün AI danışmanı olarak beta aşamasındadır.', login:'Giriş yap', register:'Üye ol', postListing:'İlan ver', account:'Hesabım', myListings:'İlanlarım', logout:'Çıkış', menu:'Menü', frOverview:"Azerbaycan'da Franchise", frReadiness:'Hazırlık Testi', frRoi:'ROI Hesaplayıcı', frBuyer:'Alıcı Kontrol Listesi', frBook:'AI Franchise Kitabı', frRadar:'Franchise Radar' },
 };
 
 function getMemberInitials(session: MemberSession) {
@@ -64,6 +64,9 @@ export default function Header() {
     { name: t('tools'), href: '#', type: 'mega' },
     { name: t('franchise'), href: '#', type: 'franchise' },
     { name: t('listings'), href: withLocale(currentLocale, '/ilanlar'), type: 'link' },
+    // TASK-0496: TQTA-powered jobs page (owner approved Header change 2026-10-06).
+    // Desktop nav now starts at xl (1280px): with 6 items RU/EN labels wrapped at 1024px.
+    { name: t('jobs'), href: withLocale(currentLocale, '/is-elanlari'), type: 'link' },
     { name: t('resources'), href: '#', type: 'resources' },
     { name: t('aboutUs'), href: withLocale(currentLocale, '/haqqimizda'), type: 'link' },
     ...(memberSession.loggedIn ? [{ name: t('panel'), href: withLocale(currentLocale, '/b2b-panel'), type: 'link' }] : []),
@@ -128,7 +131,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-0.5 lg:flex xl:gap-1">
+          <nav className="hidden items-center gap-0.5 xl:flex xl:gap-1">
             {navItems.map((item) => {
               if (item.type === 'mega') {
                 return (
@@ -201,7 +204,7 @@ export default function Header() {
           {/* Right actions */}
           <div className="flex items-center gap-3">
             <Link href={withLocale(currentLocale, '/ilan-ver')}
-              className="hidden items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-4 py-2.5 text-sm font-bold text-[var(--dk-navy)] transition-all hover:opacity-90 active:scale-95 lg:inline-flex xl:px-5">
+              className="hidden items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-4 py-2.5 text-sm font-bold text-[var(--dk-navy)] transition-all hover:opacity-90 active:scale-95 xl:inline-flex xl:px-5">
               {t('postListing')} <ArrowRight size={16} />
             </Link>
 
@@ -234,7 +237,7 @@ export default function Header() {
               </>
             )}
 
-            <button className="rounded-xl p-2.5 text-slate-600 transition-colors hover:bg-slate-100 lg:hidden" onClick={() => setIsMobileOpen((p) => !p)} aria-label={t('menu')}>
+            <button className="rounded-xl p-2.5 text-slate-600 transition-colors hover:bg-slate-100 xl:hidden" onClick={() => setIsMobileOpen((p) => !p)} aria-label={t('menu')}>
               {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -244,7 +247,7 @@ export default function Header() {
         <AnimatePresence>
           {isMobileOpen && (
             <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-              className="absolute left-3 right-3 top-full z-50 mt-2 max-h-[calc(100vh-88px)] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl sm:left-4 sm:right-4 sm:p-6 lg:hidden">
+              className="absolute left-3 right-3 top-full z-50 mt-2 max-h-[calc(100vh-88px)] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl sm:left-4 sm:right-4 sm:p-6 xl:hidden">
               <div className="flex flex-col gap-1">
                 {navItems.map((item) => {
                   if (item.type === 'franchise') {
