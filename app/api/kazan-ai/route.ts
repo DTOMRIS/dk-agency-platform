@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AI_MODELS, claudeAcceptsTemperature, resolveClaudeModel } from '@/lib/ai-models';
+import {
+  AI_MODELS,
+  claudeAcceptsTemperature,
+  claudeThinkingOff,
+  resolveClaudeModel,
+} from '@/lib/ai-models';
 import {
   checkRateLimit,
   getClientIp,
@@ -63,7 +68,7 @@ function appendQuote(raw: string, locale: string): string {
 }
 
 function normalizeMessages(messages: ChatMessage[]): ChatMessage[] {
-  return messages
+  const recent = messages
     .filter(
       (message) =>
         (message.role === 'user' || message.role === 'assistant') && message.content.trim()
@@ -73,6 +78,14 @@ function normalizeMessages(messages: ChatMessage[]): ChatMessage[] {
       role: message.role,
       content: message.content.trim().slice(0, 4000),
     }));
+
+  // Claude: tarixce `user` ile baslamali; sonda `assistant` qalsa 5.x modelleri onu
+  // prefill sayib 400 qaytarir (TASK-0503). slice(-10) kesimi de `assistant`-den baslaya biler.
+  let start = 0;
+  while (start < recent.length && recent[start].role === 'assistant') start++;
+  let end = recent.length;
+  while (end > start && recent[end - 1].role === 'assistant') end--;
+  return recent.slice(start, end);
 }
 
 function buildStaticFallback(messages: ChatMessage[]) {
@@ -130,6 +143,11 @@ async function callAnthropicWithPrompt(
   if (claudeAcceptsTemperature(model)) {
     requestBody.temperature = 0.2;
   }
+  // Sonnet 5.5: thinking default aciqdir, 1200 limiti dusuncede bitmesin (TASK-0503).
+  const thinking = claudeThinkingOff(model);
+  if (thinking) {
+    requestBody.thinking = thinking;
+  }
 
   let response: Response;
   try {
@@ -165,8 +183,22 @@ async function callAnthropicWithPrompt(
   const payload = (await response.json()) as {
     id?: string;
     model?: string;
+    stop_reason?: string;
+    stop_details?: { category?: string | null } | null;
     content?: Array<{ type?: string; text?: string }>;
   };
+
+  // 5.x modellerin tehlukesizlik klassifikatoru HTTP 200 + stop_reason "refusal" qaytarir.
+  if (payload.stop_reason === 'refusal') {
+    return {
+      ok: false as const,
+      status: 422,
+      body: {
+        error: 'Anthropic bu sorğunu cavablandırmadı.',
+        details: `refusal: ${payload.stop_details?.category ?? 'unknown'}`,
+      },
+    };
+  }
 
   const text = payload.content
     ?.filter((item) => item.type === 'text')
