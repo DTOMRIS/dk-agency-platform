@@ -3580,15 +3580,16 @@
       },
       "toolkit": {
         "title": "Toolkit",
-        "subtitle": "11 hesablama aləti",
+        "subtitle": "18 hesablama aləti",
         "body": "P&L Simulator, Food Cost, Menu Matrix, AQTA Checklist və daha çox — açılış kampaniyasında pulsuz.",
         "cta": "Alətlərə bax"
       },
       "ocaq": {
         "title": "OCAQ",
-        "subtitle": "Sahibkar paneli",
-        "body": "Lead idarəsi, faktura OCR, food cost dashboard, çoxdilli admin — restoranın komandası bir yerdə.",
-        "cta": "OCAQ-a gir"
+        "subtitle": "Əməliyyat paneli",
+        "body": "Çoxfilialı şəbəkə üçün gündəlik idarəetmə: növbə checklist-i, HACCP, canlı satış, kassa ↔ bank üzləşdirməsi, itki nəzarəti. 10+ filiallı şəbəkədə hər gün işləyir.",
+        "cta": "OCAQ haqqında yazın",
+        "whatsappText": "Salam, OCAQ əməliyyat paneli haqqında məlumat almaq istəyirəm."
       }
     },
     "doganNote": {
@@ -3623,6 +3624,8 @@
       "whoAreYou": "Siz kimsiniz?",
       "ctaJoin": "Pulsuz üzv ol",
       "ctaCalc": "Öz rəqəmimi yazım",
+      "whatsappLink": "Sualınız var? WhatsApp-a yazın",
+      "whatsappText": "Salam, DK Agency saytından yazıram. Restoranımın rəqəmləri haqqında sualım var.",
       "receiptTitle": "NÜMUNƏ ÇEK · AY",
       "receiptBrand": "DK AGENCY",
       "receiptLeft": "QALAN",

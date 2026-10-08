@@ -3,26 +3,31 @@
  * @purpose Homepage platform 3-card section — KAZAN AI / Toolkit / OCAQ
  * @pattern A (useTranslations) — L-004 uyğun
  * @task TASK-0105
- * @lastModified 2026-05-20
+ * @lastModified 2026-10-07 (TASK-0502: OCAQ CTA → WhatsApp, locale-aware links)
  */
 
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Flame, Calculator, LayoutDashboard, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { normalizeLocale, withLocale } from '@/i18n/config';
 
 const cards = [
   { key: 'kazan', Icon: Flame, href: '/kazan-ai' },
   { key: 'toolkit', Icon: Calculator, href: '/toolkit' },
-  { key: 'ocaq', Icon: LayoutDashboard, href: '/dashboard/ilanlar' },
+  // OCAQ is sold, not self-served: /dashboard is admin-only, so a visitor
+  // clicking it used to land on the login page. Send them to WhatsApp instead.
+  { key: 'ocaq', Icon: LayoutDashboard, href: null },
 ] as const;
 
 type CardKey = (typeof cards)[number]['key'];
 
 export function PlatformCards() {
   const t = useTranslations('home.platformCards');
+  const locale = normalizeLocale(useLocale());
+  const ocaqHref = `/api/leads/whatsapp?text=${encodeURIComponent(t('ocaq.whatsappText'))}`;
 
   return (
     <section className="bg-white py-20">
@@ -73,14 +78,27 @@ export function PlatformCards() {
               </p>
 
               {/* CTA Link */}
-              <Link
-                href={href}
-                aria-label={t(`${key}.cta` as `${CardKey}.cta`)}
-                className="inline-flex items-center gap-1 font-semibold text-[#E94560] group/cta"
-              >
-                {t(`${key}.cta` as `${CardKey}.cta`)}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-1" />
-              </Link>
+              {href ? (
+                <Link
+                  href={withLocale(locale, href)}
+                  aria-label={t(`${key}.cta` as `${CardKey}.cta`)}
+                  className="inline-flex items-center gap-1 font-semibold text-[#E94560] group/cta"
+                >
+                  {t(`${key}.cta` as `${CardKey}.cta`)}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-1" />
+                </Link>
+              ) : (
+                <a
+                  href={ocaqHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t(`${key}.cta` as `${CardKey}.cta`)}
+                  className="inline-flex items-center gap-1 font-semibold text-[#E94560] group/cta"
+                >
+                  {t(`${key}.cta` as `${CardKey}.cta`)}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-1" />
+                </a>
+              )}
             </motion.article>
           ))}
         </div>

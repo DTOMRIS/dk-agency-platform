@@ -10,6 +10,14 @@
 
 **Yoxlama:** model-check (tsx): default → `claude-sonnet-5-5`, temperature yox, thinking `between_tools`; `claude-sonnet-4-6` / `claude-haiku-4-5` → temperature var, thinking yox; `claude-sonnet-4-5` / naməlum → heç biri. eslint 0; tsc 35 = main 35 (toxunulan fayllarda 0); `npm run build` exit 0 (210/210). Canlı Claude çağırışı edilmədi (ödənişli açar) — deploydan sonra DeepSeek-i söndürmədən fallback yolu yalnız DeepSeek çökəndə işləyir.
 
+## 2026-10-07 — TASK-0502: feat(home): əlaqə yolu, OCAQ kartı və düzgün rəqəmlər
+
+**Why:** Ana səhifə auditi (Bulgu Kasası, 07.10): (1) `JoinCTA` formunun `onSubmit`/`action`-u yox idi — «Göndər» basan lead itirdi; (2) ana səhifədə WhatsApp yox idi, Bakıda HoReCa sahibi forma doldurmur, yazır; (3) OCAQ kartı «lead idarəsi, faktura OCR» deyirdi, real OCAQ isə çoxfilialı əməliyyat portalıdır, «OCAQ-a gir» admin-only `/dashboard/ilanlar`-a aparırdı (ziyarətçi login-ə düşürdü); (4) «10/11 alət» yazılırdı, `app/[locale]/toolkit/*/` — 18. Doğan: «kod yazabilirsin», «10 üstü filial deyək».
+
+**What:** `JoinCTA`-da forma çıxarıldı → WhatsApp + Telegram düymələri, klik `ContactFunnel` ilə eyni `/api/leads/track` axını (`source: 'home_join'`, admin e-poçtu «Ana səhifə — WhatsApp»); hero-da CTA-ların altına ikinci dərəcəli «Sualınız var? WhatsApp-a yazın» (bir qırmızı düymə qaydası qorunur); OCAQ kartı yeni mətn (4 dil) + `/api/leads/whatsapp` hazır mesajla; kart linkləri `withLocale` (RU/EN/TR-də prefiks itirdi); ana səhifə və `/qiymet`-də alət sayı 18, bloq üçün dəqiq olmayan «10» çıxarıldı. Miqrasiya yoxdur (`leads.source` varchar).
+
+**Yoxlama:** `next build` 0 xəta; eslint dəyişən fayllarda 0 xəta (2 köhnə warning); lokal `next start`: `/`, `/ru`, `/toolkit`, `/qiymet`, `/elaqe` → 200; `/api/leads/whatsapp?text=test` → 307 `wa.me/994502566279`; Playwright 1280/390 + `/ru`: `#join form` = 0, `/dashboard` linki = 0, OCAQ CTA `leads/whatsapp`, RU kart linkləri `/ru/toolkit/...`, yatay sürüşmə yox, pageerror yox. **Yoxlanmadı:** `POST /api/leads/track` `home_join` ilə — dev=prod Neon, müsbət test canlı bazaya sətir yazır; deploy sonrası klik ilə yoxlanmalıdır.
+
 ## 2026-10-06 — TASK-0501: feat(home): xəbərlər və elanlar yuxarı
 
 **Why:** Doğan: "haberler ile ilanları biraz yukarı alsak". Xəbərlər 8-ci, elanlar 9-cu bölmə idi — ziyarətçi demək olar görmürdü.

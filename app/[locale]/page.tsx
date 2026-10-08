@@ -47,13 +47,13 @@ const pageCopy: Record<
     steps: [
       {
         title: 'Pulsuz alətləri sına',
-        body: 'Food cost, P&L, menyu matrisi — 10 pulsuz alət ilə restoranını analiz et.',
+        body: 'Food cost, P&L, menyu matrisi — 18 pulsuz alət ilə restoranını analiz et.',
         tone: 'bg-red-50',
         marker: '1️⃣',
       },
       {
         title: 'Bilikləri öyrən',
-        body: '10 ekspert yazısı və KAZAN AI danışmanı ilə HoReCa biliyini artır.',
+        body: 'Ekspert yazıları və KAZAN AI danışmanı ilə HoReCa biliyini artır.',
         tone: 'bg-amber-50',
         marker: '2️⃣',
       },
@@ -94,13 +94,13 @@ const pageCopy: Record<
     steps: [
       {
         title: 'Протестируй бесплатные инструменты',
-        body: 'Food cost, P&L, матрица меню — проанализируй ресторан через 10 бесплатных инструментов.',
+        body: 'Food cost, P&L, матрица меню — проанализируй ресторан через 18 бесплатных инструментов.',
         tone: 'bg-red-50',
         marker: '1️⃣',
       },
       {
         title: 'Прокачай знания',
-        body: 'Углуби экспертизу HoReCa через 10 материалов экспертов и консультанта KAZAN AI.',
+        body: 'Углуби экспертизу HoReCa через материалы экспертов и консультанта KAZAN AI.',
         tone: 'bg-amber-50',
         marker: '2️⃣',
       },
@@ -145,13 +145,13 @@ const pageCopy: Record<
     steps: [
       {
         title: 'Try the free tools',
-        body: 'Analyze your restaurant with 10 free tools across food cost, P&L, and menu matrix.',
+        body: 'Analyze your restaurant with 18 free tools across food cost, P&L, and menu matrix.',
         tone: 'bg-red-50',
         marker: '1️⃣',
       },
       {
         title: 'Learn the knowledge',
-        body: 'Level up your HoReCa knowledge with 10 expert articles and the KAZAN AI advisor.',
+        body: 'Level up your HoReCa knowledge with expert articles and the KAZAN AI advisor.',
         tone: 'bg-amber-50',
         marker: '2️⃣',
       },
@@ -193,13 +193,13 @@ const pageCopy: Record<
     steps: [
       {
         title: 'Ücretsiz araçları dene',
-        body: 'Food cost, P&L ve menü matrisi ile restoranını 10 ücretsiz araçla analiz et.',
+        body: 'Food cost, P&L ve menü matrisi ile restoranını 18 ücretsiz araçla analiz et.',
         tone: 'bg-red-50',
         marker: '1️⃣',
       },
       {
         title: 'Bilgiyi öğren',
-        body: '10 uzman yazısı ve KAZAN AI danışmanı ile HoReCa bilgisini büyüt.',
+        body: 'Uzman yazıları ve KAZAN AI danışmanı ile HoReCa bilgisini büyüt.',
         tone: 'bg-amber-50',
         marker: '2️⃣',
       },
