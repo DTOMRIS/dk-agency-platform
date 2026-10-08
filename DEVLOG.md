@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0509: feat(tanitim): /tanitim
+
+**Why:** 07.10-da satış üçün tanıtım prototipi hazırlanmışdı (`~/Desktop/DK-Agency-Tanitim-Prototip.html`, DK reposunda da commit olunmamış nüsxə) — sayta qoşulmamışdı.
+
+**What:** Prototip müstəqil səhifədir (öz nav/footer/CSS/JS), React-ə köçürmək dizaynı pozardı — təmizlənmiş nüsxə `public/tanitim/index.html`, `app/tanitim/route.ts` onu `/tanitim`-də verir (middleware yalnız dil prefiksli yolları tutur). Təmizləmə skripti repoda (`scripts/tanitim/clean_tanitim.py`). Çıxarılanlar: «240+» (kodda qarşılığı yox), VÖEN sətri (Doğan: VÖEN yoxdur), daxili TASK nişanları, og diaqnostika kartı. Əlavə: og/canonical meta, B2B grid-in mobil 1 sütunu. «Təsisçi» qaldı (Doğan təsdiqi). Ana səhifə toxunulmadı.
+
+**Yoxlama:** lokal `next dev` + Playwright: `/tanitim` 200 `text/html`, 50.6 KB; mətndə VÖEN/TASK-0/240/og:title yoxdur; kalkulyator 60 000 ₼ + 45% → «108,000 ₼ / il» (60 000 × 15% × 12); JS xətası 0; 390px scrollWidth 390 (əvvəl 556), 1280px 1280. Tam səhifə ekran görüntüləri baxıldı.
+
 ## 2026-10-08 — TASK-0508: fix(ci): dk:validate həqiqətən yoxlasın
 
 **Why:** TASK-0507 zamanı `/tmp/dk-playwright.log`-da Playwright çıxışı yox, tək sətir «ALL PASS (247 yoxlama)» görüldü. Səbəb: `e2e/az-format.test.ts` (29.09, TASK-0462) adi tsx skriptidir və import zamanı `process.exit(0)` çağırır; Playwright testDir-dəki bütün faylları toplayanda proses heç bir spec başlamadan 0 ilə çıxırdı. Üstəlik 6–8 addımları `localhost:3000`-ə curl edirdi — validator DK serverini özü qaldırmırdı. 29.09-dan bəri hər «dk-validator PASS» (bu sessiyada TASK-0503–0507 daxil) 6–8 üçün sübut deyildi.

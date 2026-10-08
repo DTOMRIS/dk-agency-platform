@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DK Agency | HoReCa İdarəetmə, KAZAN AI & Biznes Ekosistemi</title>
+<meta name="description" content="Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması: 40 illik idarəetmə təcrübəsi, KAZAN AI asistanı, 18+ interaktiv maliyyə aləti, ekspert bloq və canlı sektor analitikası.">
+<link rel="canonical" href="https://dkagency.com.tr/tanitim">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DK Agency">
+<meta property="og:locale" content="az_AZ">
+<meta property="og:url" content="https://dkagency.com.tr/tanitim">
+<meta property="og:title" content="DK Agency | HoReCa İdarəetmə, KAZAN AI & Biznes Ekosistemi">
+<meta property="og:description" content="40 illik təcrübə, KAZAN AI asistanı, 18+ interaktiv maliyyə aləti, ekspert bloq və sektor xəbərləri — Azərbaycan HoReCa sektoru üçün.">
+<meta property="og:image" content="https://dkagency.com.tr/opengraph-image">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dk-red:#E94560; --dk-red-d:#C82E48; --dk-red-l:#FDF2F4; --dk-red-glow:rgba(233,69,96,.18);
+  --navy:#0D111A; --navy-card:#161E2E; --navy-border:#263248;
+  --gold:#D4AF37; --gold-l:#FFF9E6; --gold-d:#997300;
+  --teal:#0EA5E9; --teal-l:#E0F2FE;
+  --green:#10B981; --green-l:#ECFDF5;
+  --amber:#F59E0B; --amber-l:#FEF3C7;
+  --ink:#0F172A; --muted:#64748B; --muted-2:#94A3B8; --line:#E2E8F0;
+  --bg:#FFFFFF; --soft:#F8FAFC;
+  --shadow-sm:0 2px 8px rgba(15,23,42,.05);
+  --shadow-md:0 12px 30px -10px rgba(15,23,42,.08), 0 4px 12px rgba(15,23,42,.04);
+  --shadow-lg:0 24px 50px -12px rgba(15,23,42,.15);
+  --shadow-red:0 12px 30px -6px rgba(233,69,96,.35);
+  --r-xl:28px; --r-lg:20px; --r-md:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1220px;margin:0 auto;padding:0 24px}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.serif{font-family:'Playfair Display',Georgia,serif}
+
+/* UI UTILS */
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--dk-red)}
+.eyebrow::before{content:"";width:16px;height:2.5px;background:var(--dk-red);border-radius:2px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px}
+.badge-red{background:var(--dk-red-l);color:var(--dk-red-d);border:1px solid rgba(233,69,96,.2)}
+.badge-gold{background:var(--gold-l);color:var(--gold-d);border:1px solid rgba(212,175,55,.3)}
+.badge-green{background:var(--green-l);color:#065F46;border:1px solid rgba(16,185,129,.2)}
+.badge-teal{background:var(--teal-l);color:#0369A1;border:1px solid rgba(14,165,233,.2)}
+
+h1,h2,h3,h4{letter-spacing:-.03em;line-height:1.15;margin:0}
+h2{font-size:clamp(30px,3.8vw,44px);font-weight:900}
+.lead{color:var(--muted);font-size:clamp(16px,1.6vw,18.5px);max-width:680px;line-height:1.6}
+.sec{padding:100px 0;position:relative}
+.sec.soft{background:var(--soft)}
+.sec.dark{background:var(--navy);color:#fff}
+.sec.dark .lead{color:var(--muted-2)}
+.center{text-align:center}.center .lead{margin-left:auto;margin-right:auto}.center .eyebrow{justify-content:center}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:52px;padding:0 26px;border-radius:999px;font-weight:700;font-size:15px;border:0;cursor:pointer;transition:all .2s ease;font-family:inherit}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+.btn-red{background:var(--dk-red);color:#fff;box-shadow:var(--shadow-red)}
+.btn-red:hover{background:var(--dk-red-d);box-shadow:0 14px 34px -4px rgba(233,69,96,.45)}
+.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-outline:hover{border-color:var(--dk-red);color:var(--dk-red)}
+.btn-white{background:#fff;color:var(--navy);box-shadow:var(--shadow-md)}
+.btn-white:hover{background:#F8FAFC;color:var(--dk-red)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);transition:all .2s}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:18px;letter-spacing:-.02em}
+.brand-mark{width:42px;height:42px;border-radius:12px;background:var(--dk-red);color:#fff;display:grid;place-items:center;font-weight:900;font-size:19px;letter-spacing:-.03em;box-shadow:0 6px 18px -4px rgba(233,69,96,.4)}
+.brand-title small{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.nav-menu{display:flex;gap:28px;font-size:14.5px;font-weight:600;color:var(--muted)}
+.nav-menu a{transition:color .15s}.nav-menu a:hover{color:var(--dk-red)}
+.nav-actions{display:flex;align-items:center;gap:12px}
+
+/* HERO */
+.hero{position:relative;background:linear-gradient(180deg,#FFFFFF 0%,#F8FAFC 100%);padding:70px 0 60px;overflow:hidden}
+.hero-glow-1{position:absolute;top:-120px;right:-80px;width:680px;height:680px;background:radial-gradient(circle,rgba(233,69,96,.08) 0%,transparent 70%);border-radius:50%;z-index:0;pointer-events:none}
+.hero-glow-2{position:absolute;bottom:-100px;left:-60px;width:550px;height:550px;background:radial-gradient(circle,rgba(212,175,55,.07) 0%,transparent 70%);border-radius:50%;z-index:0;pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;position:relative;z-index:1}
+.hero h1{font-size:clamp(36px,4.8vw,58px);font-weight:900;margin:18px 0 16px;line-height:1.12}
+.hero h1 em{font-style:normal;color:var(--dk-red)}
+.hero-pillars{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 32px}
+.hero-pillar{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;box-shadow:var(--shadow-sm)}
+.hero-pillar .i{width:16px;height:16px;color:var(--dk-red)}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+
+/* PROOF BAR */
+.proof-bar{background:var(--navy);color:#fff;padding:28px 0;border-top:1px solid var(--navy-border);border-bottom:1px solid var(--navy-border)}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:center}
+.proof-item{text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,.08)}
+.proof-item:last-child{border-right:none}
+.proof-num{font-size:36px;font-weight:900;line-height:1;color:#fff;display:flex;align-items:center;justify-content:center;gap:4px}
+.proof-num span{color:var(--dk-red)}
+.proof-lbl{font-size:13px;font-weight:600;color:var(--muted-2);margin-top:6px}
+
+/* STAGE & PHONE SIMULATOR */
+.stage{position:relative;display:flex;justify-content:center;perspective:1000px}
+.phone-case{position:relative;width:340px;height:650px;background:#090D15;border-radius:48px;padding:12px;box-shadow:0 35px 80px -20px rgba(13,17,26,.4),0 0 0 1px rgba(255,255,255,.1);border:3px solid #202A3C}
+.phone-notch{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:96px;height:24px;background:#090D15;border-radius:14px;z-index:20;display:flex;align-items:center;justify-content:center;gap:8px}
+.phone-notch-dot{width:6px;height:6px;border-radius:50%;background:#1E293B}
+.phone-notch-lens{width:10px;height:10px;border-radius:50%;background:#1E293B;border:1.5px solid #334155}
+.screen{width:100%;height:100%;background:#F8FAFC;border-radius:38px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+
+/* PHONE HEADER & TABS */
+.p-header{padding:34px 18px 12px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.p-brand{display:flex;align-items:center;gap:8px}
+.p-logo{width:26px;height:26px;border-radius:7px;background:var(--dk-red);color:#fff;display:grid;place-items:center;font-weight:900;font-size:12px}
+.p-title{font-size:13px;font-weight:800;color:var(--ink)}
+.p-status{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--green)}
+.p-status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+
+.p-tabs{display:grid;grid-template-columns:repeat(4,1fr);background:#EDF2F7;padding:3px;gap:2px}
+.p-tab-btn{border:0;background:transparent;padding:7px 2px;font-size:10px;font-weight:800;color:var(--muted);border-radius:6px;cursor:pointer;transition:all .15s;text-align:center}
+.p-tab-btn.active{background:#fff;color:var(--dk-red);box-shadow:0 2px 5px rgba(0,0,0,.08)}
+
+.p-content{flex:1;overflow-y:auto;padding:14px;display:none;flex-direction:column;gap:12px}
+.p-content.active{display:flex}
+
+/* TAB 1: KAZAN AI */
+.ai-bubble{padding:12px 14px;border-radius:16px;font-size:12px;line-height:1.5;max-width:92%}
+.ai-bubble.user{background:#0F172A;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.ai-bubble.bot{background:#fff;color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.ai-source-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;color:var(--dk-red);background:var(--dk-red-l);padding:2px 8px;border-radius:6px;margin-top:6px}
+.ai-quick-q{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.ai-quick-btn{background:#fff;border:1px dashed var(--muted-2);border-radius:10px;padding:7px 10px;font-size:11px;font-weight:600;color:var(--ink);text-align:left;cursor:pointer;transition:all .15s}
+.ai-quick-btn:hover{border-color:var(--dk-red);color:var(--dk-red);background:var(--dk-red-l)}
+
+/* TAB 2: TOOLKIT / FOOD COST */
+.p-tool-card{background:#fff;border-radius:16px;padding:14px;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.p-tool-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.p-tool-title{font-size:13px;font-weight:800;color:var(--ink)}
+.p-calc-row{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;margin-bottom:8px}
+.p-calc-val{font-weight:800;color:var(--ink)}
+.p-calc-slider{width:100%;accent-color:var(--dk-red);height:5px;margin:6px 0 10px}
+.p-result-box{background:var(--dk-red-l);border:1px solid rgba(233,69,96,.2);border-radius:12px;padding:10px;text-align:center;margin-top:8px}
+.p-result-num{font-size:19px;font-weight:900;color:var(--dk-red)}
+.p-result-sub{font-size:10.5px;color:var(--muted);font-weight:600}
+
+/* TAB 3: SEKTOR NƏBZİ */
+.p-news-card{background:#fff;border-radius:16px;border:1px solid var(--line);overflow:hidden;box-shadow:var(--shadow-sm)}
+.p-news-tag{background:#FEF3C7;color:#92400E;padding:4px 10px;font-size:10px;font-weight:800;display:flex;justify-content:space-between;align-items:center}
+.p-news-body{padding:12px}
+.p-news-h{font-size:12.5px;font-weight:800;margin-bottom:6px;line-height:1.35}
+.p-news-meta{font-size:10px;color:var(--muted);margin-bottom:8px}
+.p-news-action{background:#F1F5F9;border-left:3px solid var(--dk-red);padding:6px 8px;border-radius:4px;font-size:10.5px;font-weight:600}
+
+/* TAB 4: WHATSAPP B2B */
+.p-wa-card{background:#DCF8C6;border-radius:14px;padding:10px 12px;font-size:11px;color:#075E54;line-height:1.4;border-bottom-right-radius:2px}
+.p-wa-arrow{text-align:center;color:var(--muted);font-size:11px;font-weight:700}
+.p-wa-verified{background:#fff;border:1.5px solid var(--green);border-radius:14px;padding:12px;box-shadow:var(--shadow-sm)}
+.p-wa-badge{display:inline-flex;align-items:center;gap:4px;background:var(--green-l);color:#065F46;font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;margin-bottom:6px}
+
+/* FLOATING BADGES AROUND PHONE */
+.float-card{position:absolute;background:#fff;border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-lg);border:1px solid var(--line);z-index:25;display:flex;align-items:center;gap:12px;animation:float 4s ease-in-out infinite}
+.float-1{top:45px;left:-65px;animation-delay:0s}
+.float-2{bottom:80px;right:-75px;animation-delay:1.5s}
+.float-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff}
+.float-icon.red{background:var(--dk-red)}
+.float-icon.gold{background:var(--gold)}
+.float-text h5{margin:0;font-size:13.5px;font-weight:800}
+.float-text p{margin:2px 0 0;font-size:11.5px;color:var(--muted);font-weight:600}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.4}
+}
+
+/* 4 SÜTUN BÖLMƏSİ (KAZAN, TOOLKIT, BLOG, SEKTOR) */
+.core-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:48px}
+.core-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:36px;box-shadow:var(--shadow-md);transition:all .25s ease;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.core-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:rgba(233,69,96,.3)}
+.core-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:transparent;transition:background .2s}
+.core-card:hover::before{background:var(--dk-red)}
+.core-icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin-bottom:24px}
+.core-card h3{font-size:22px;font-weight:800;margin-bottom:12px}
+.core-card p{color:var(--muted);font-size:15px;line-height:1.6;margin:0 0 20px;flex:1}
+.core-list{list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px}
+.core-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.core-list li .i{width:16px;height:16px;color:var(--green);margin-top:3px}
+
+/* LIVE TOOLKIT CALCULATOR INTERACTIVE SECTION */
+.calc-sec{background:linear-gradient(135deg,#0D111A 0%,#161E2E 100%);color:#fff;border-radius:var(--r-xl);padding:60px 48px;margin-top:60px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+.calc-sec-glow{position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(233,69,96,.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.calc-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;position:relative;z-index:2}
+.calc-inputs{display:flex;flex-direction:column;gap:20px}
+.calc-field label{display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;margin-bottom:8px;color:#E2E8F0}
+.calc-field label span{color:var(--dk-red);font-weight:800}
+.calc-range{width:100%;height:8px;border-radius:4px;accent-color:var(--dk-red);background:#334155;cursor:pointer}
+.calc-preview-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:var(--r-lg);padding:32px;display:flex;flex-direction:column;gap:20px}
+.calc-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.calc-stat-box{background:rgba(0,0,0,.25);border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,.06)}
+.calc-stat-lbl{font-size:12px;font-weight:700;color:var(--muted-2);text-transform:uppercase;letter-spacing:.05em}
+.calc-stat-val{font-size:26px;font-weight:900;color:#fff;margin-top:4px}
+.calc-highlight{background:var(--dk-red-glow);border:1px solid rgba(233,69,96,.3);border-radius:14px;padding:18px;text-align:center}
+.calc-highlight-val{font-size:32px;font-weight:900;color:var(--dk-red)}
+
+/* BLOG & DOĞAN TOMRİS NOTE */
+.founder-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:44px;display:grid;grid-template-columns:220px 1fr;gap:40px;align-items:center;box-shadow:var(--shadow-md);margin-top:40px}
+.founder-avatar-box{text-align:center}
+.founder-img{width:160px;height:160px;border-radius:50%;object-fit:cover;margin:0 auto 14px;box-shadow:0 8px 24px rgba(0,0,0,.12);border:4px solid #fff}
+.founder-name{font-size:18px;font-weight:900;color:var(--ink)}
+.founder-role{font-size:13px;font-weight:700;color:var(--dk-red)}
+.founder-quote{font-size:18px;line-height:1.6;color:var(--ink);font-style:italic;margin-bottom:18px}
+.founder-credo{display:flex;gap:12px;flex-wrap:wrap}
+
+/* METADATA DIAGNOSTIC BOX */
+.diag-box{background:#F8FAFC;border:1.5px dashed #CBD5E1;border-radius:var(--r-lg);padding:24px;margin-top:40px}
+.diag-title{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:800;color:var(--ink);margin-bottom:14px}
+.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.diag-item{background:#fff;border-radius:10px;padding:14px;border:1px solid var(--line);font-size:12.5px}
+.diag-item code{display:block;background:#F1F5F9;padding:6px 10px;border-radius:6px;font-size:11.5px;color:var(--ink);margin-top:6px;word-break:break-all}
+
+/* CTA */
+.cta-sec{background:linear-gradient(180deg,#FFFFFF 0%,#FFF5F6 100%);padding:90px 0;border-top:1px solid var(--line)}
+.cta-box{max-width:800px;margin:0 auto;text-align:center}
+.cta-box h2{font-size:clamp(32px,4vw,48px);font-weight:900;margin-bottom:16px}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+
+/* FOOTER */
+.footer{background:var(--navy);color:#fff;padding:60px 0 30px;border-top:1px solid var(--navy-border);font-size:14px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer p{color:var(--muted-2);font-size:13.5px;line-height:1.6}
+.footer h5{font-size:14px;font-weight:800;margin-bottom:16px;color:#fff;letter-spacing:.04em;text-transform:uppercase}
+.footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.footer ul a{color:var(--muted-2);transition:color .15s}.footer ul a:hover{color:#fff}
+.footer-bot{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;color:var(--muted-2);font-size:12.5px;flex-wrap:wrap;gap:12px}
+
+.b2b-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+@media (max-width:1024px){.b2b-grid{grid-template-columns:1fr}
+  .hero-grid,.calc-grid{grid-template-columns:1fr;gap:40px}
+  .core-grid{grid-template-columns:1fr}
+  .founder-card{grid-template-columns:1fr;text-align:center}
+  .proof-grid{grid-template-columns:repeat(3,1fr);gap:20px}
+  .proof-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:16px}
+  .proof-item:nth-child(3),.proof-item:nth-child(4){border-bottom:none}
+  .stage{margin-top:20px}
+  .float-1,.float-2{display:none}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .nav-menu{display:none}
+  .proof-grid{grid-template-columns:1fr}
+  .calc-stat-row{grid-template-columns:1fr}
+  .calc-sec{padding:36px 20px}
+  .diag-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark">DK</div>
+      <div class="brand-title">
+        DK Agency
+        <small>HoReCa Operating System</small>
+      </div>
+    </div>
+    <div class="nav-menu">
+      <a href="#kazan">KAZAN AI</a>
+      <a href="#toolkit">18+ Toolkit</a>
+      <a href="#blog">Ekspert Bloq</a>
+      <a href="#news">Sektor Nəbzi</a>
+      <a href="#b2b">B2B Ekosistem</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://wa.me/994502566279?text=Salam%20Do%C4%9Fan%20b%C9%99y,%20DK%20Agency%20haqq%C4%B1nda%20m%C9%99lumat%20almaq%20ist%C9%99yir%C9%99m." target="_blank" class="btn btn-red" style="height:44px;padding:0 20px;font-size:14px">
+        <svg class="i" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        30 Dəqiqəlik Diaqnostika
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması</div>
+        <h1>Restoran və Qonaqpərvərlik Biznesini <em>Rəqəmlərlə</em> İdarə Edin</h1>
+        <p class="lead">
+          40 illik idarəetmə təcrübəsi və Ahilik dəyərləri müasir texnologiya ilə birləşdi: 
+          <strong>KAZAN AI</strong> asistanı, <strong>18+ interaktiv maliyyə aləti</strong>, ekspert bloq və canlı sektor analitikası bir ekranda.
+        </p>
+
+        <div class="hero-pillars">
+          <div class="hero-pillar">
+            <svg class="i" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            KAZAN AI Asistanı
+          </div>
+          <div class="hero-pillar">
+            <svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            18+ İdarəetmə Aləti
+          </div>
+          <div class="hero-pillar">
+            <svg class="i" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            40 İllik Ekspert Bloq
+          </div>
+          <div class="hero-pillar">
+            <svg class="i" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            Canlı Sektor Nəbzi
+          </div>
+        </div>
+
+        <div class="hero-cta">
+          <a href="#toolkit" class="btn btn-red">
+            <svg class="i" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            İnteraktiv Alətləri Sına
+          </a>
+          <a href="#kazan" class="btn btn-outline">
+            KAZAN AI-a Sual Ver
+          </a>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE PHONE SIMULATOR -->
+      <div class="stage">
+        <!-- FLOATING BADGE 1 -->
+        <div class="float-card float-1">
+          <div class="float-icon red">
+            <svg class="i" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <div class="float-text">
+            <h5>KAZAN AI Cavab Verdi</h5>
+            <p>"Food cost 38% kritikdir: 3 addım..."</p>
+          </div>
+        </div>
+
+        <!-- FLOATING BADGE 2 -->
+        <div class="float-card float-2">
+          <div class="float-icon gold">
+            <svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <div class="float-text">
+            <h5>Sektor Nəbzi Aktiv</h5>
+            <p>25+ yerli & qlobal lent analiz olundu</p>
+          </div>
+        </div>
+
+        <div class="phone-case">
+          <div class="phone-notch">
+            <div class="phone-notch-dot"></div>
+            <div class="phone-notch-lens"></div>
+          </div>
+          <div class="screen">
+            <div class="p-header">
+              <div class="p-brand">
+                <div class="p-logo">DK</div>
+                <div class="p-title">DK Agency OS</div>
+              </div>
+              <div class="p-status">
+                <div class="p-status-dot"></div>
+                OCAQ v2 Canlı
+              </div>
+            </div>
+
+            <div class="p-tabs">
+              <button class="p-tab-btn active" onclick="switchPhoneTab('kazan', this)">KAZAN AI</button>
+              <button class="p-tab-btn" onclick="switchPhoneTab('toolkit', this)">Toolkit</button>
+              <button class="p-tab-btn" onclick="switchPhoneTab('news', this)">Xəbərlər</button>
+              <button class="p-tab-btn" onclick="switchPhoneTab('b2b', this)">WhatsApp</button>
+            </div>
+
+            <!-- TAB 1: KAZAN AI CONTENT -->
+            <div id="tab-kazan" class="p-content active">
+              <div class="ai-bubble user">
+                Food cost 38% çıxıb, nə etməliyəm?
+              </div>
+              <div class="ai-bubble bot">
+                <strong>KAZAN AI:</strong> Restoran sektorunda 38% yüksək riskdir. Hədəf 28-32% aralığıdır.
+                <div style="margin-top:6px;font-size:11px;color:#475569">
+                  1. <strong>Menyu Matrisi:</strong> İtkinin 80%-i 4 əsas məhsuldadır.<br>
+                  2. <strong>Tullantı jurnalı:</strong> Hazırlıq itkisini tərəzi ilə ölçün.<br>
+                  3. <strong>Porsiya nəzarəti:</strong> Reseptura kartını yeniləyin.
+                </div>
+                <span class="ai-source-tag">Mənbə: DK Toolkit #01 + Bloq #14</span>
+              </div>
+              <div class="ai-quick-q">
+                <div style="font-size:10px;font-weight:700;color:var(--muted)">Sürətli sual nümunələri:</div>
+                <button class="ai-quick-btn" onclick="simulateKazan('Açılışda ən böyük xəta nədir?')">"Açılışda ən böyük xəta nədir?"</button>
+                <button class="ai-quick-btn" onclick="simulateKazan('Ofisiantın addım xərci necə hesablanır?')">"Ofisiantın addım xərci necə hesablanır?"</button>
+              </div>
+            </div>
+
+            <!-- TAB 2: TOOLKIT CONTENT -->
+            <div id="tab-toolkit" class="p-content">
+              <div class="p-tool-card">
+                <div class="p-tool-head">
+                  <span class="p-tool-title">Food Cost Kalkulyatoru</span>
+                  <span class="badge badge-red">Canlı Alət</span>
+                </div>
+                <div class="p-calc-row">
+                  <span>Aylıq Dövriyyə:</span>
+                  <span class="p-calc-val" id="p-rev-label">45,000 ₼</span>
+                </div>
+                <input type="range" min="10000" max="150000" step="5000" value="45000" class="p-calc-slider" id="p-rev-input" oninput="updatePhoneCalc()">
+                <div class="p-calc-row">
+                  <span>Xammal Xərci (%):</span>
+                  <span class="p-calc-val" id="p-fc-label">36%</span>
+                </div>
+                <input type="range" min="20" max="50" step="1" value="36" class="p-calc-slider" id="p-fc-input" oninput="updatePhoneCalc()">
+                
+                <div class="p-result-box">
+                  <div class="p-result-num" id="p-waste-val">2,700 ₼ / ay</div>
+                  <div class="p-result-sub">Standartdan artıq itki (hədəf 30%)</div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:var(--muted);text-align:center;font-weight:600">
+                18+ alətdən 1-i. P&L, AQTA, Menyu Matrisi daxildir.
+              </div>
+            </div>
+
+            <!-- TAB 3: SEKTOR NƏBZİ CONTENT -->
+            <div id="tab-news" class="p-content">
+              <div class="p-news-card">
+                <div class="p-news-tag">
+                  <span>Sektor Nəbzi #1064</span>
+                  <span>✅ Telegram Təsdiqli</span>
+                </div>
+                <div class="p-news-body">
+                  <div class="p-news-h">Azərbaycanda İaşə Obyektlərində Gigiyena Qiymətləndirməsi Dəyişir</div>
+                  <div class="p-news-meta">Mənbə: AİİQA & Trend · Redaksiya: DK Agency</div>
+                  <div class="p-news-action">
+                    <strong>Bu həftə 1 addım:</strong> Soyuducu temperatur jurnallarını və xammal etiketlərini yoxlayın.
+                  </div>
+                </div>
+              </div>
+              <div style="background:#fff;border-radius:14px;padding:10px 12px;border:1px solid var(--line);font-size:11px">
+                <strong>Instagram Kartı Hazırdır:</strong> 1080×1350 avtomatik sintez olundu.
+              </div>
+            </div>
+
+            <!-- TAB 4: WHATSAPP B2B CONTENT -->
+            <div id="tab-b2b" class="p-content">
+              <div class="p-wa-card">
+                "Salam, Nərimanovda 120 kv kafe devr olunur. Tam hazır mətbəx, 40 oturacaq, icarə 2200 azn..."
+              </div>
+              <div class="p-wa-arrow">⬇️ 3 saniyəyə DeepSeek AI analizi</div>
+              <div class="p-wa-verified">
+                <span class="p-wa-badge">✅ Vitrinə Hazır Elan</span>
+                <div style="font-size:12px;font-weight:800;color:var(--ink)">Kafe Devri — Nərimanov r.</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px">120 m² · 40 yer · İcarə: 2,200 ₼</div>
+                <div style="font-size:10px;color:var(--green);font-weight:700;margin-top:6px">Şəxsi telefon gizlədilib · Lead bazada</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROOF BAR -->
+<section class="proof-bar">
+  <div class="wrap">
+    <div class="proof-grid">
+      <div class="proof-item">
+        <div class="proof-num">40<span>+</span></div>
+        <div class="proof-lbl">İllik İdarəetmə & Mətbəx Təcrübəsi</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num">18<span>+</span></div>
+        <div class="proof-lbl">İnteraktiv Maliyyə & Əməliyyat Aləti</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num">25<span>+</span></div>
+        <div class="proof-lbl">Yerli & Qlobal Xəbər Mənbəyi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: 4 SÜTUN (KAZAN, TOOLKIT, BLOG, SEKTOR) -->
+<section class="sec soft" id="kazan">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">Platformanın 4 Əsas Dayağı</div>
+      <h2>HoReCa-nı Nəzəriyyə İlə Deyil, <br>Sınaqdan Keçmiş Sistemlə İdarə Edin</h2>
+      <p class="lead">
+        Hər modul təcrid olunmuş bir alət deyil; bir-birini tamamlayan vahid biznes zənciridir.
+      </p>
+    </div>
+
+    <div class="core-grid">
+      
+      <!-- CARD 1: KAZAN AI -->
+      <div class="core-card">
+        <div class="core-icon" style="background:#FFF1F2;color:var(--dk-red)">
+          <svg class="i" style="width:28px;height:28px" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <span class="badge badge-red" style="align-self:flex-start;margin-bottom:12px">Süni İntellekt Mühərriki</span>
+        <h3>KAZAN AI: HoReCa-ya Xas Məsləhətçi</h3>
+        <p>
+          Ümumi süni intellekt deyil: saytdakı 37 ekspert məqaləsi, 18 idarəetmə aləti və son 30 günün təsdiqlənmiş xəbərləri ilə qidalanır. Uydurma link və ya havadan rəqəm vermir.
+        </p>
+        <ul class="core-list">
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Food cost, menyu mühəndisliyi və itki analizində dəqiq formulalar
+          </li>
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            AQTA gigiyena qaydaları və standartlaşdırma suallarına cavab
+          </li>
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Cavabın sonunda birbaşa işləyən DK Toolkit alətinə keçid linki
+          </li>
+        </ul>
+        <a href="https://dkagency.com.tr/kazan-ai" target="_blank" class="btn btn-outline" style="align-self:flex-start">
+          KAZAN AI-a Keçid →
+        </a>
+      </div>
+
+      <!-- CARD 2: 18+ TOOLKIT -->
+      <div class="core-card" id="toolkit">
+        <div class="core-icon" style="background:#F0FDF4;color:var(--green)">
+          <svg class="i" style="width:28px;height:28px" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <span class="badge badge-green" style="align-self:flex-start;margin-bottom:12px">Maliyyə & Əməliyyat</span>
+        <h3>18+ İnteraktiv Toolkit: İtkiləri Ölçün</h3>
+        <p>
+          Restoranın hər qəpiyini nəzarətə alın. Təxminlərə son verin; xammal itkisindən ofisiantın salonda atdığı əlavə addımın maliyyətinə qədər hər şeyi rəqəmlə görün.
+        </p>
+        <ul class="core-list">
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <strong>Food Cost & P&L Simulyatoru:</strong> Net qazancı və maya dəyərini simulyasiya edin
+          </li>
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <strong>AQTA & İnşaat Checklisti:</strong> Qanuni yoxlamalara cəriməsiz hazırlaşın
+          </li>
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <strong>Menyu Matrisi & Başa-baş:</strong> Hansı yemək qazandırır, hansı yükdür?
+          </li>
+        </ul>
+        <a href="https://dkagency.com.tr/toolkit" target="_blank" class="btn btn-outline" style="align-self:flex-start">
+          Bütün 18 Alətə Bax →
+        </a>
+      </div>
+
+      <!-- CARD 3: EKSPERT BLOQ -->
+      <div class="core-card" id="blog">
+        <div class="core-icon" style="background:#FEF3C7;color:var(--gold-d)">
+          <svg class="i" style="width:28px;height:28px" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <span class="badge badge-gold" style="align-self:flex-start;margin-bottom:12px">Bilik & Təcrübə Bazası</span>
+        <h3>Ekspert Bloq: Doğan Tomris Təcrübəsi</h3>
+        <p>
+          Kitab sözləri deyil, Bakı və beynəlxalq arenada 40 ildə sınanmış sərt həqiqətlər. Floor plan, erqonomika, məhsulun təbii axını və Ahilik idarəçilik məktəbi.
+        </p>
+        <ul class="core-list">
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Mətbəx, bar və bulaşıqxana erqonomikası (Parkinson effekti olmadan)
+          </li>
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Menecerin 4 addımlı qərar sistemi: Dərhal dayandır, servisdə həll et
+          </li>
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            4 dildə (AZ, RU, EN, TR) peşəkar qastronomiya terminologiyası
+          </li>
+        </ul>
+        <a href="https://dkagency.com.tr/blog" target="_blank" class="btn btn-outline" style="align-self:flex-start">
+          Bloq Məqalələrini Oxu →
+        </a>
+      </div>
+
+      <!-- CARD 4: SEKTOR NƏBZİ -->
+      <div class="core-card" id="news">
+        <div class="core-icon" style="background:#E0F2FE;color:var(--teal)">
+          <svg class="i" style="width:28px;height:28px" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <span class="badge badge-teal" style="align-self:flex-start;margin-bottom:12px">Avtomatlaşdırılmış Analitika</span>
+        <h3>Sektor Nəbzi: 25+ Lent, Redaksiya Süzgəci</h3>
+        <p>
+          Yerli Azərbaycan mətbuatı və Skift, Hospitality Net, Restaurant Dive kimi qlobal mənbələr hər 6 saatdan bir taranır, DeepSeek ilə biznes dərsinə çevrilir.
+        </p>
+        <ul class="core-list">
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Hər xəbərdə standart 3 sütun: Nə baş verdi? Niyə vacibdir? Bu həftə 1 addım
+          </li>
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Telegram Bot üzərindən tək kliklə redaksiya təsdiqi və dərhal yayım
+          </li>
+          <li>
+            <svg class="i" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Sosial media üçün 1080×1350 formatında avtomatik qrafik kart generatoru
+          </li>
+        </ul>
+        <a href="https://dkagency.com.tr/haberler" target="_blank" class="btn btn-outline" style="align-self:flex-start">
+          Sektor Nəbzinə Bax →
+        </a>
+      </div>
+
+    </div>
+
+    <!-- LIVE CALCULATOR EMBED -->
+    <div class="calc-sec">
+      <div class="calc-sec-glow"></div>
+      <div class="calc-grid">
+        <div class="calc-inputs">
+          <div class="eyebrow" style="color:var(--dk-red)">Canlı Toolkit Nümunəsi</div>
+          <h3 style="font-size:32px;font-weight:900">Restoranınız Hər Ay Nə Qədər İtirir?</h3>
+          <p style="color:var(--muted-2);font-size:15px;margin:0">
+            Aşağıdakı sürgüləri restoranınızın real göstəricilərinə uyğun hərəkət etdirin. Standart 30% food cost-u keçdiyiniz hər faizin manatla cəzasını görün.
+          </p>
+
+          <div class="calc-field">
+            <label>
+              <span>Aylıq Restoran Dövriyyəsi</span>
+              <span id="c-rev-text">60,000 ₼</span>
+            </label>
+            <input type="range" min="15000" max="250000" step="5000" value="60000" class="calc-range" id="c-rev" oninput="runLiveCalc()">
+          </div>
+
+          <div class="calc-field">
+            <label>
+              <span>Faktiki Food Cost (Xammal Xərci)</span>
+              <span id="c-fc-text">38%</span>
+            </label>
+            <input type="range" min="25" max="50" step="1" value="38" class="calc-range" id="c-fc" oninput="runLiveCalc()">
+          </div>
+        </div>
+
+        <div class="calc-preview-card">
+          <div class="calc-stat-row">
+            <div class="calc-stat-box">
+              <div class="calc-stat-lbl">Xammala Gedən Pul</div>
+              <div class="calc-stat-val" id="c-cost">22,800 ₼</div>
+            </div>
+            <div class="calc-stat-box">
+              <div class="calc-stat-lbl">Hədəf Xərc (30%)</div>
+              <div class="calc-stat-val" id="c-target">18,000 ₼</div>
+            </div>
+          </div>
+
+          <div class="calc-highlight">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#FCA5A5">
+              İdarəetmə Boşluğuna Görə İllik İtkiniz
+            </div>
+            <div class="calc-highlight-val" id="c-year-loss">57,600 ₼ / il</div>
+            <div style="font-size:13px;color:#E2E8F0;margin-top:6px">
+              Bu məbləğ yeni bir filialın açılış və ya avadanlıq büdcəsidir!
+            </div>
+          </div>
+
+          <a href="https://wa.me/994502566279?text=Salam%20Do%C4%9Fan%20b%C9%99y,%20restoran%C4%B1mda%20food%20cost-u%20azaltmaq%20v%C9%99%20audit%20etm%C9%99k%20ist%C9%99yir%C9%99m." target="_blank" class="btn btn-red" style="width:100%">
+            İtkinin Qarşısını Almaq Üçün Diaqnostika İstə
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 2: B2B EKOSİSTEM & TQTA TƏRƏFDAŞLIĞI -->
+<section class="sec" id="b2b">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">Bütöv B2B Zənciri</div>
+      <h2>Yalnız Məsləhət Deyil, Əməliyyatın Bütün Halqaları</h2>
+      <p class="lead">
+        Elan yerləşdirməkdən təchizatçı tapmağa və peşəkar kadr seçiminə qədər vahid ekosistem.
+      </p>
+    </div>
+
+    <div class="b2b-grid">
+      
+      <!-- B2B 1 -->
+      <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow-sm)">
+        <div style="width:44px;height:44px;border-radius:12px;background:#DCF8C6;color:#075E54;display:grid;place-items:center;margin-bottom:16px">
+          <svg class="i" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <h4 style="font-size:18px;font-weight:800;margin-bottom:8px">WhatsApp-dan Elan İdxalı</h4>
+        <p style="color:var(--muted);font-size:13.5px;line-height:1.5;margin:0 0 14px">
+          Qruplardakı dağınıq devir, icarə və avadanlıq mesajlarını yapışdırın; DeepSeek AI saniyələr içində standart B2B vitrin elanı hazırlasın.
+        </p>
+      </div>
+
+      <!-- B2B 2 -->
+      <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow-sm)">
+        <div style="width:44px;height:44px;border-radius:12px;background:#EFF6FF;color:#1D4ED8;display:grid;place-items:center;margin-bottom:16px">
+          <svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+        </div>
+        <h4 style="font-size:18px;font-weight:800;margin-bottom:8px">Təchizatçılar & Tələb Bazası</h4>
+        <p style="color:var(--muted);font-size:13.5px;line-height:1.5;margin:0 0 14px">
+          "Kimdə var? Haradan tapım?" suallarını toplayan, qapalı admin panelində kateqoriya üzrə təchizatçı ilə alıcını birləşdirən B2B sistemi.
+        </p>
+      </div>
+
+      <!-- B2B 3 -->
+      <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow-sm)">
+        <div style="width:44px;height:44px;border-radius:12px;background:#FDF2F4;color:var(--dk-red);display:grid;place-items:center;margin-bottom:16px">
+          <svg class="i" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <h4 style="font-size:18px;font-weight:800;margin-bottom:8px">TQTA Karyera İnteqrasiyası</h4>
+        <p style="color:var(--muted);font-size:13.5px;line-height:1.5;margin:0 0 14px">
+          DK Agency vitrindir, TQTA mühərrikdir. Restoranınız üçün sertifikatlı aşpaz, barista və menecerlər birbaşa TQTA bazasından cəlb olunur.
+        </p>
+        <span class="badge badge-red">Canlı API İnteqrasiyası</span>
+      </div>
+
+    </div>
+
+    <!-- FOUNDER NOTE -->
+    <div class="founder-card">
+      <div class="founder-avatar-box">
+        <div style="width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--dk-red),#1E293B);color:#fff;display:grid;place-items:center;font-size:44px;font-weight:900;margin:0 auto 12px;box-shadow:0 8px 24px rgba(233,69,96,.3)">
+          DT
+        </div>
+        <div class="founder-name">Doğan Tomris</div>
+        <div class="founder-role">Təsisçi & Baş Məsləhətçi</div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:8px">Qurucumuzun Fəlsəfəsi</div>
+        <div class="founder-quote serif">
+          "Restoran dekorasiya deyil, hər saniyə dəyər və ya itki istehsal edən dəqiq bir maşındır. Masaların düzülüşündən soyuducunun qapısına, ofisiantın salondakı trayektoriyasından reseptura kartına qədər ölçülməyən heç bir iş idarə oluna bilməz."
+        </div>
+        <div class="founder-credo">
+          <span class="badge badge-gold">40 İllik İdarəetmə Məktəbi</span>
+          <span class="badge badge-red">Ahilik & Usta-Şagird Nizamı</span>
+          <span class="badge badge-teal">OCAQ v2 Data İntellekti</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="eyebrow">Bizimlə Başlayın</div>
+      <h2>Restoranınızın Gizli İtkilərini Aşkar Edək</h2>
+      <p class="lead">
+        30 dəqiqəlik diaqnostika görüşündə menyunuzu, food cost-unuzu və operativ axınınızı təhlil edib dərhal tətbiq edə biləcəyiniz yol xəritəsini veririk.
+      </p>
+      <div class="cta-btns">
+        <a href="https://wa.me/994502566279?text=Salam%20Do%C4%9Fan%20b%C9%99y,%20DK%20Agency%20diaqnostika%20g%C3%B6r%C3%BC%C5%9F%C3%BC%20t%C9%99yin%20etm%C9%99k%20ist%C9%99yir%C9%99m." target="_blank" class="btn btn-red" style="font-size:16px;height:56px;padding:0 32px">
+          <svg class="i" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          WhatsApp İlə Əlaqə Saxlayın (+994 50 256 62 79)
+        </a>
+        <a href="https://dkagency.com.tr" target="_blank" class="btn btn-outline" style="font-size:16px;height:56px;padding:0 28px">
+          Platformaya Daxil Olun
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div class="brand-mark" style="width:34px;height:34px;font-size:15px">DK</div>
+          <span style="font-size:18px;font-weight:900">DK Agency</span>
+        </div>
+        <p>
+          Azərbaycanın ilk süni intellekt dəstəkli qonaqpərvərlik və restoran idarəetmə ekosistemi.
+        </p>
+      </div>
+
+      <div>
+        <h5>Əsas Bölmələr</h5>
+        <ul>
+          <li><a href="https://dkagency.com.tr/kazan-ai">KAZAN AI</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit">18+ Toolkit</a></li>
+          <li><a href="https://dkagency.com.tr/blog">Ekspert Bloq</a></li>
+          <li><a href="https://dkagency.com.tr/haberler">Sektor Nəbzi</a></li>
+          <li><a href="https://dkagency.com.tr/is-elanlari">Vakansiyalar (TQTA)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Alətlər</h5>
+        <ul>
+          <li><a href="https://dkagency.com.tr/toolkit/food-cost">Food Cost Kalkulyatoru</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit/pnl">P&L Simulyatoru</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit/aqta-checklist">AQTA Checklist</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit/menu-matrix">Menyu Matrisi</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit/addim-xerci">Addım Xərci</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Əlaqə & Dəstək</h5>
+        <ul>
+          <li><a href="tel:+994502566279">+994 50 256 62 79</a></li>
+          <li><a href="mailto:info@dkagency.com.tr">info@dkagency.com.tr</a></li>
+          <li><a href="https://dkagency.com.tr/haqqimizda">Haqqımızda</a></li>
+          <li><a href="https://dkagency.com.tr/sedd-rozeti">Şədd Rozeti</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bot">
+      <div>© 2026 DK Agency. Bütün hüquqlar qorunur.</div>
+      <div>Tərəfdaşlıq: TQTA — Turan Qastro Turizm Təhsil Mərkəzi</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// PHONE TAB SWITCHER
+function switchPhoneTab(tabName, btn){
+  document.querySelectorAll('.p-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.p-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  const target = document.getElementById('tab-' + tabName);
+  if(target) target.classList.add('active');
+}
+
+// PHONE QUICK AI SIMULATION
+function simulateKazan(qText){
+  const c = document.getElementById('tab-kazan');
+  if(!c) return;
+  const userB = document.createElement('div');
+  userB.className = 'ai-bubble user';
+  userB.innerText = qText;
+  c.insertBefore(userB, c.querySelector('.ai-quick-q'));
+
+  setTimeout(() => {
+    const botB = document.createElement('div');
+    botB.className = 'ai-bubble bot';
+    if(qText.includes('Açılış')){
+      botB.innerHTML = "<strong>KAZAN AI:</strong> Ən böyük xəta satış həcmini bilmədən həddindən artıq bahalı avadanlıq və kvadratmetr seçməkdir. İnvestisiyanın geri qayıtma müddəti (ROI) 14 ayı keçməməlidir.<br><span class='ai-source-tag'>Mənbə: Bloq #04 (Açılış Xətaları)</span>";
+    } else {
+      botB.innerHTML = "<strong>KAZAN AI:</strong> Ofisiantın mətbəxlə pass arasında atdığı hər lüzumsuz 100 addım gündə 1.5 saatlıq xidmət ləngiməsi və yorğunluq yaradır.<br><span class='ai-source-tag'>Mənbə: Toolkit #08 (Addım Xərci)</span>";
+    }
+    c.insertBefore(botB, c.querySelector('.ai-quick-q'));
+  }, 400);
+}
+
+// PHONE MINI CALCULATOR
+function updatePhoneCalc(){
+  const rev = parseInt(document.getElementById('p-rev-input').value, 10);
+  const fc = parseInt(document.getElementById('p-fc-input').value, 10);
+  document.getElementById('p-rev-label').innerText = rev.toLocaleString() + ' ₼';
+  document.getElementById('p-fc-label').innerText = fc + '%';
+
+  const targetFc = 30;
+  const diff = Math.max(0, fc - targetFc);
+  const waste = (rev * diff) / 100;
+  document.getElementById('p-waste-val').innerText = Math.round(waste).toLocaleString() + ' ₼ / ay';
+}
+
+// LIVE MAIN CALCULATOR
+function runLiveCalc(){
+  const rev = parseInt(document.getElementById('c-rev').value, 10);
+  const fc = parseInt(document.getElementById('c-fc').value, 10);
+  document.getElementById('c-rev-text').innerText = rev.toLocaleString() + ' ₼';
+  document.getElementById('c-fc-text').innerText = fc + '%';
+
+  const cost = (rev * fc) / 100;
+  const targetCost = (rev * 30) / 100;
+  const monthlyLoss = Math.max(0, cost - targetCost);
+  const yearlyLoss = monthlyLoss * 12;
+
+  document.getElementById('c-cost').innerText = Math.round(cost).toLocaleString() + ' ₼';
+  document.getElementById('c-target').innerText = Math.round(targetCost).toLocaleString() + ' ₼';
+  document.getElementById('c-year-loss').innerText = Math.round(yearlyLoss).toLocaleString() + ' ₼ / il';
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+  updatePhoneCalc();
+  runLiveCalc();
+});
+</script>
+
+</body>
+</html>
