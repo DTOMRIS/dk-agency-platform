@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0507` feat(b2b-panel): üzv portalında «Bu bölmə hazırlanır» yazan 3 səhifə işləyir — **Gələn təkliflər** (elanlarınıza maraq göstərənlər, zəng/WhatsApp/e-poçt düymələri), **Bildirişlər** (elan yayımlandı / rədd edildi və səbəbi / yoxlanılır, yeni təklif), **Dəstək** (WhatsApp, Telegram, KAZAN AI və tez-tez verilən suallar); 4 dildə.
+
 - `TASK-0504` chore(ci): GitHub Actions dəqiqələrinə qənaət — eyni budağa yeni push gələndə köhnə yoxlama dayanır; yalnız sənəd/məzmun dəyişən PR-da build edilmir (yoxlama yenə yaşıl olur, avtomatik merge işləyir); hər işin vaxt limiti var (ilişib qalan iş 6 saat yemir).
 
 - `TASK-0503` fix(ai): KAZAN AI-nin ehtiyat Claude modeli `claude-sonnet-5-5`-ə keçdi (əvvəl `claude-sonnet-4-6`); düşünmə rejimi söndürülür ki, qısa cavablar boş qayıtmasın; Claude sorğunu təhlükəsizlik səbəbi ilə rədd edəndə bu artıq boş cavab kimi yox, aydın xəta kimi qaytarılır; söhbət tarixçəsi `assistant` ilə başlaya/bitə bilmir (5.x-də 400 xətası). `claude-sonnet-4-5` (2026-11-30 bağlanır) siyahıdan çıxdı.

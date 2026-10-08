@@ -6197,5 +6197,54 @@
       "freelance": "Frilans",
       "uzaqdan": "Uzaqdan"
     }
+  },
+  "b2bPages": {
+    "offers": {
+      "title": "Gələn təkliflər",
+      "subtitle": "Elanlarınıza maraq göstərənlər — ən yenisi yuxarıda.",
+      "loading": "Yüklənir…",
+      "error": "Təkliflər yüklənmədi. Səhifəni yeniləyin.",
+      "emptyTitle": "Hələ təklif yoxdur",
+      "emptyNoListings": "Təklif almaq üçün əvvəlcə elan yerləşdirin.",
+      "emptyHasListings": "Elanınız yayımlananda maraq göstərənlər burada görünəcək.",
+      "ctaNewListing": "Yeni elan",
+      "ctaMyListings": "Elanlarım",
+      "forListing": "Elan",
+      "statusNew": "Yeni"
+    },
+    "notifications": {
+      "title": "Bildirişlər",
+      "subtitle": "Elanlarınızın statusu və gələn təkliflər.",
+      "loading": "Yüklənir…",
+      "error": "Bildirişlər yüklənmədi. Səhifəni yeniləyin.",
+      "emptyTitle": "Bildiriş yoxdur",
+      "emptyText": "Elan yerləşdirəndə və təklif gələndə burada görəcəksiniz.",
+      "published": "«{title}» elanınız yayımlandı",
+      "rejected": "«{title}» elanınız rədd edildi",
+      "inReview": "«{title}» elanınız yoxlanılır",
+      "newOffer": "{name} «{title}» elanınızla maraqlanır",
+      "unread": "Oxunmayıb"
+    },
+    "support": {
+      "title": "Dəstək",
+      "subtitle": "Sualınız varsa, bizə yazın.",
+      "waTitle": "WhatsApp",
+      "waText": "Komandamıza birbaşa yazın",
+      "waPrefill": "Salam, B2B portalla bağlı sualım var.",
+      "tgTitle": "Telegram",
+      "tgText": "@dkagency",
+      "aiTitle": "KAZAN AI",
+      "aiText": "Food cost, P&L və əməliyyat sualları üçün AI köməkçi",
+      "waNumber": "WhatsApp nömrəsi: {number}",
+      "faqTitle": "Tez-tez verilən suallar",
+      "q1": "Elanı necə yerləşdirim?",
+      "q1a": "Sol menyuda «Yeni elan» bölməsinə keçin, formu doldurub göndərin.",
+      "q2": "Elanım nə vaxt görünəcək?",
+      "q2a": "Göndərilən elan yoxlamadan keçir. Yayımlananda «Bildirişlər» bölməsində görəcəksiniz.",
+      "q3": "Təklif gələndə necə xəbər tutum?",
+      "q3a": "Maraq göstərənlər «Gələn təkliflər» bölməsində telefon, WhatsApp və e-poçtla görünür; «Bildirişlər» də yeni təklifi göstərir.",
+      "q4": "Elanım rədd edilibsə nə edim?",
+      "q4a": "Səbəb «Bildirişlər» bölməsində yazılır. Sualınız varsa, WhatsApp-a yazın."
+    }
   }
 }

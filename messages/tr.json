@@ -6197,5 +6197,54 @@
       "freelance": "Serbest",
       "uzaqdan": "Uzaktan"
     }
+  },
+  "b2bPages": {
+    "offers": {
+      "title": "Gelen teklifler",
+      "subtitle": "İlanlarınızla ilgilenenler — en yenisi üstte.",
+      "loading": "Yükleniyor…",
+      "error": "Teklifler yüklenemedi. Sayfayı yenileyin.",
+      "emptyTitle": "Henüz teklif yok",
+      "emptyNoListings": "Teklif almak için önce ilan verin.",
+      "emptyHasListings": "İlanınız yayımlandığında ilgilenenler burada görünecek.",
+      "ctaNewListing": "Yeni ilan",
+      "ctaMyListings": "İlanlarım",
+      "forListing": "İlan",
+      "statusNew": "Yeni"
+    },
+    "notifications": {
+      "title": "Bildirimler",
+      "subtitle": "İlanlarınızın durumu ve gelen teklifler.",
+      "loading": "Yükleniyor…",
+      "error": "Bildirimler yüklenemedi. Sayfayı yenileyin.",
+      "emptyTitle": "Bildirim yok",
+      "emptyText": "İlan verdiğinizde ve teklif geldiğinde burada göreceksiniz.",
+      "published": "«{title}» ilanınız yayımlandı",
+      "rejected": "«{title}» ilanınız reddedildi",
+      "inReview": "«{title}» ilanınız inceleniyor",
+      "newOffer": "{name} «{title}» ilanınızla ilgileniyor",
+      "unread": "Okunmadı"
+    },
+    "support": {
+      "title": "Destek",
+      "subtitle": "Sorunuz varsa bize yazın.",
+      "waTitle": "WhatsApp",
+      "waText": "Ekibimize doğrudan yazın",
+      "waPrefill": "Merhaba, B2B portal hakkında bir sorum var.",
+      "tgTitle": "Telegram",
+      "tgText": "@dkagency",
+      "aiTitle": "KAZAN AI",
+      "aiText": "Food cost, P&L ve operasyon soruları için AI asistan",
+      "waNumber": "WhatsApp numarası: {number}",
+      "faqTitle": "Sık sorulan sorular",
+      "q1": "İlanı nasıl veririm?",
+      "q1a": "Sol menüde «Yeni ilan» bölümüne gidin, formu doldurup gönderin.",
+      "q2": "İlanım ne zaman görünür?",
+      "q2a": "Gönderilen ilan önce incelenir. Yayımlandığında «Bildirimler» bölümünde görürsünüz.",
+      "q3": "Teklif geldiğini nasıl anlarım?",
+      "q3a": "İlgilenenler «Gelen teklifler» bölümünde telefon, WhatsApp ve e-posta ile görünür; «Bildirimler» de yeni teklifi gösterir.",
+      "q4": "İlanım reddedildiyse ne yapmalıyım?",
+      "q4a": "Sebep «Bildirimler» bölümünde yazılır. Sorunuz varsa WhatsApp'tan yazın."
+    }
   }
 }
