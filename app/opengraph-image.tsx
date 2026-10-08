@@ -10,6 +10,9 @@ export const size = {
   height: 630,
 };
 export const contentType = 'image/png';
+// TASK-0508/0510: build zamanı prerender Google Fonts-a şəbəkə tələb edirdi və bir dəfə uğursuz olanda
+// build yıxıldı. İlk sorğuda yaradılır (xəbər kartı kimi); CDN/brauzer keşi Cache-Control ilə.
+export const dynamic = 'force-dynamic';
 
 const TITLE_1 = 'HoReCa İdarəetmə,';
 const TITLE_2 = 'KAZAN AI & Biznes Ekosistemi';
@@ -107,6 +110,11 @@ export default async function OpenGraphImage() {
         <div style={{ fontSize: 24, color: '#B8B8C8' }}>{FOOT}</div>
       </div>
     </div>,
-    { ...size, fonts }
+    {
+      ...size,
+      // Boş `fonts: []` satori-ni «No fonts are loaded» ilə dayandırır — boşdursa heç ötürülmür.
+      ...(fonts.length ? { fonts } : {}),
+      headers: { 'Cache-Control': 'public, max-age=3600, s-maxage=86400' },
+    }
   );
 }

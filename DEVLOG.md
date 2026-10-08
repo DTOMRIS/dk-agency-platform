@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0508: fix(ci): dk:validate həqiqətən yoxlasın
+
+**Why:** TASK-0507 zamanı `/tmp/dk-playwright.log`-da Playwright çıxışı yox, tək sətir «ALL PASS (247 yoxlama)» görüldü. Səbəb: `e2e/az-format.test.ts` (29.09, TASK-0462) adi tsx skriptidir və import zamanı `process.exit(0)` çağırır; Playwright testDir-dəki bütün faylları toplayanda proses heç bir spec başlamadan 0 ilə çıxırdı. Üstəlik 6–8 addımları `localhost:3000`-ə curl edirdi — validator DK serverini özü qaldırmırdı. 29.09-dan bəri hər «dk-validator PASS» (bu sessiyada TASK-0503–0507 daxil) 6–8 üçün sübut deyildi.
+
+**What:** `testMatch: '**/*.spec.ts'`; validator build-dən sonra öz `next start`-ını boş portda qaldırır və cavabda «DK Agency» axtarır; Playwright xülasəsi olmayan exit 0 = FAIL; Node skriptləri 8a-da; commit-dən sonra dəyişən fayllar `origin/main...HEAD`-dən; `npm install --no-save`. Yan tapıntı: TASK-0510 OG şəkli build prerender-ində Google Fonts alınmayanda boş `fonts: []` ilə satori «No fonts are loaded» verdi və build yıxıldı → OG şəkli `force-dynamic`, boş fonts ötürülmür.
+
+**Yoxlama (ilk real qaçış):** `[6] http://localhost:3901` core routes 200/307; Playwright `34 passed, 18 skipped` (0 failed); Node skriptləri 7/7; build 210/210. 18 skip — `JWT_SECRET` env yoxdur; açıq qərar: validator test açarı versin? (bəzi testlər DB-yə yazır, lokal DB-nin canlı olub-olmadığı bilinmir).
+
 ## 2026-10-08 — TASK-0510: fix(seo): link önizləməsi
 
 **Why:** Doğan: «dkagency.com.tr-ni WhatsApp-a kopyalayanda çıxan yazı və şəkil şık deyil». Canlı yoxlama (bir sorğu): og:image «DK» yazılı qırmızı kvadrat + `fontFamily: 'sans-serif'` — satori-yə şrift verilmirdi, 800 qalınlıq tətbiq olunmurdu; mətn tanıtım prototipindəki tövsiyəyə uyğun deyildi.
