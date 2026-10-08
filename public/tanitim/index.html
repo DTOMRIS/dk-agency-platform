@@ -179,6 +179,11 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
 .founder h3{font-size:30px;font-weight:900;letter-spacing:-.03em;margin:8px 0 4px}
 .founder .role{font-weight:700;color:var(--red);margin-bottom:14px}
 .founder p{margin:0;color:var(--ink-2);font-size:16.5px;max-width:640px}
+.tl{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:10px;border-left:2px solid var(--line);padding-left:18px}
+.tl li{display:grid;grid-template-columns:110px 1fr;gap:12px;font-size:14.5px;position:relative}
+.tl li::before{content:"";position:absolute;left:-24px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px #fff}
+.tl b{font-weight:800;font-variant-numeric:tabular-nums}
+.tl span{color:var(--ink-2)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .chip{font-size:13px;font-weight:700;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
 
@@ -235,6 +240,7 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
   .calc-row{grid-template-columns:1fr}
   .founder{grid-template-columns:1fr;padding:28px 22px;text-align:left}
   .avatar{width:84px;height:84px;font-size:28px}
+  .tl li{grid-template-columns:1fr;gap:2px}
   .cta{padding:44px 20px;border-radius:24px}
   .f-grid{grid-template-columns:1fr}
 }
@@ -613,8 +619,16 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
         <span class="eyebrow"><span class="dot"></span>Qurucu</span>
         <h3>Doğan Tomris</h3>
         <div class="role">Qurucu · DK Agency</div>
-        <p>HoReCa-da 40 illik idarəetmə təcrübəsi. DK Agency-nin alətləri və OCAQ bu təcrübədən çıxıb: ölçülməyən iş idarə olunmur.</p>
-        <div class="chips"><span class="chip">40 il HoReCa</span><span class="chip">Ahilik dəyərləri</span><span class="chip">OCAQ</span></div>
+        <p>Karyerasına 1988-də McDonald's-da işçi kimi başlayıb restoran menecerinə qədər yüksəldi. Sonra Rusiya, Türkiyə və Azərbaycanda restoran şəbəkələri, franşiza sistemləri və ticarət mərkəzləri qurdu və idarə etdi. DK Agency-nin alətləri və OCAQ bu təcrübədən çıxıb: ölçülməyən iş idarə olunmur.</p>
+        <ul class="tl">
+          <li><b>1988–1998</b><span>McDonald's Türkiyə: işçidən restoran menecerinə</span></li>
+          <li><b>1998–2002</b><span>Floraburger: 8 restoran, patisseri və mangal konseptləri (Rusiya)</span></li>
+          <li><b>2007–2010</b><span>Gloria Jean's Coffees Rusiya: baş menecer, master franşiza</span></li>
+          <li><b>2017–2021</b><span>Ajdaha Döner: 12 filial və istehsal sexi, CEO</span></li>
+          <li><b>2021–bu gün</b><span>DK Agency: konsept, brend və franşiza sistemi məsləhəti</span></li>
+          <li><b>2024–bu gün</b><span>TQTA: Azərbaycanda CTH (UK) akkreditasiyalı qastronomiya akademiyası</span></li>
+        </ul>
+        <div class="chips"><span class="chip">40 il HoReCa</span><span class="chip">Azərbaycan Franşiza Assosiasiyası — məsləhətçi</span><span class="chip">Araz FM «Biznes Mərkəzi» — həftəlik ekspert</span></div>
       </div>
     </div>
   </div>
