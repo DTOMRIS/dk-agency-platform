@@ -244,6 +244,157 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
   .cta{padding:44px 20px;border-radius:24px}
   .f-grid{grid-template-columns:1fr}
 }
+
+/* ===== v2: Kutlerri-style header, phone hero, timeline ===== */
+.nav .wrap{height:76px}
+.nav-links{align-items:center}
+.nav-links > a,.mm-btn{font-size:16px;font-weight:600;color:var(--ink);text-decoration:none;background:none;border:0;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:999px}
+.mm-btn[aria-expanded="true"]{background:var(--red-soft);color:var(--red-d)}
+.mm-btn .i{width:15px;height:15px;transition:transform .2s}
+.mm-btn[aria-expanded="true"] .i{transform:rotate(180deg)}
+.mm-wrap{position:relative}
+.mega{position:absolute;top:58px;left:50%;transform:translateX(-38%);width:min(940px,92vw);background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:0 30px 70px -24px rgba(15,23,42,.3);padding:30px 30px 18px;display:none}
+.mega.open{display:block;animation:fade .25s ease}
+.mega-cols{display:grid;grid-template-columns:1fr 1px 1fr;gap:28px}
+.mega-sep{background:var(--line)}
+.mega h6{display:flex;align-items:center;gap:10px;margin:0 0 18px;font-size:12.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.mega h6.cost{color:#7C5A2A}
+.mega h6 .ic{width:28px;height:28px;border-radius:8px;background:var(--red-soft);display:grid;place-items:center}
+.mega h6.cost .ic{background:#F3ECE1}
+.mi{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:12px 10px;border-radius:16px;text-decoration:none}
+.mi:hover{background:var(--cream)}
+.mi .ic{width:52px;height:52px;border-radius:14px;background:var(--red-soft);color:var(--red);display:grid;place-items:center}
+.mi.cost .ic{background:#F3ECE1;color:#7C5A2A}
+.mi b{display:block;font-size:17px;font-weight:800;letter-spacing:-.01em}
+.mi span{display:block;font-size:14.5px;color:var(--muted);margin:3px 0 6px}
+.mi em{font-style:normal;font-weight:700;font-size:14px;border-bottom:2px solid #F4B8C3}
+.mega-band{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;background:var(--cream);border-radius:16px;padding:14px 18px}
+.mega-band .pill{font-size:13.5px;font-weight:700;color:var(--red-d);background:var(--red-soft);border-radius:999px;padding:6px 12px}
+.mega-band p{margin:0;flex:1;font-size:15.5px;color:var(--ink-2);min-width:200px}
+.mega-band a{font-weight:800;text-decoration:none;font-size:15px}
+.btn-pill{height:54px;padding:0 28px;font-size:17px;border-radius:999px}
+
+.hero2{padding:56px 0 40px}
+.hero2-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:32px;align-items:center}
+.h-big{font-size:clamp(44px,6.2vw,80px);line-height:.98;letter-spacing:-.05em;font-weight:900;margin:0 0 28px}
+.h-big .ac{color:var(--red)}
+.hero2 .lead{font-size:clamp(18px,1.9vw,23px);max-width:600px;color:var(--ink-2)}
+.hero2 .btn{height:60px;padding:0 30px;font-size:18px;border-radius:14px}
+.hero2 .btn-ghost{border:1.5px solid var(--ink)}
+.play{width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
+.play .i{width:12px;height:12px;fill:#fff;stroke:none}
+
+.phone-stage{position:relative;display:flex;justify-content:center;padding:10px 0}
+.phone{width:340px;max-width:100%;background:#0B0B0F;border-radius:52px;padding:12px;box-shadow:0 40px 80px -30px rgba(15,23,42,.55)}
+.phone-in{background:#FBF8F3;border-radius:42px;overflow:hidden;height:640px;position:relative}
+.ph-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 26px 0;font-size:13px;font-weight:700}
+.ph-island{width:110px;height:30px;background:#0B0B0F;border-radius:20px;margin:-22px auto 0}
+.ph-body{padding:16px 16px 0}
+.ph-hi{font-size:20px;font-weight:800;letter-spacing:-.02em;margin:6px 0 2px}
+.ph-date{font-size:12px;color:var(--muted)}
+.ph-kpis{display:grid;grid-template-columns:1fr 1fr;background:#F3EEE6;border-radius:16px;margin:14px 0;padding:14px 12px}
+.ph-kpis div{display:flex;align-items:center;gap:8px}
+.ph-kpis div + div{border-left:1px solid var(--line);padding-left:12px}
+.ph-kpis b{font-size:30px;font-weight:900;letter-spacing:-.03em}
+.ph-kpis div + div b{color:var(--red)}
+.ph-kpis span{font-size:11.5px;font-weight:600;line-height:1.25}
+.ph-lbl{display:flex;justify-content:space-between;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:4px 2px 8px}
+.ph-card{background:#fff;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:14px;padding:12px;margin-bottom:10px;transition:opacity .4s,transform .4s}
+.ph-card.gone{opacity:0;transform:translateX(40px)}
+.ph-top{display:flex;justify-content:space-between;align-items:center}
+.ph-tag{font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:var(--red-soft);border-radius:6px;padding:3px 7px}
+.ph-amt{font-size:13px;font-weight:800}
+.ph-t{font-size:13px;font-weight:800;margin:8px 0 6px}
+.ph-why{display:flex;gap:8px;background:#F8F4EE;border-radius:10px;padding:8px;font-size:11.5px;color:var(--ink-2);line-height:1.4}
+.ph-why .sp{flex:none;width:18px;height:18px;border-radius:5px;background:var(--red);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:900}
+.ph-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.ph-btns span{height:34px;border-radius:9px;display:grid;place-items:center;font-size:12.5px;font-weight:700;border:1px solid var(--line)}
+.ph-btns span + span{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ph-btns span.ok{background:var(--green);border-color:var(--green)}
+.ph-nav{position:absolute;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid var(--line);padding:10px 6px 18px}
+.ph-nav span{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:600;color:var(--muted)}
+.ph-nav span.on{color:var(--red)}
+.ph-nav .i{width:18px;height:18px}
+.chipf{position:absolute;z-index:3;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 16px 12px 12px;box-shadow:0 18px 40px -20px rgba(15,23,42,.35);white-space:nowrap;animation:bob 6s ease-in-out infinite}
+.chipf .ic{width:42px;height:42px;border-radius:12px;background:var(--red-soft);color:var(--red);display:grid;place-items:center}
+.chipf b{display:block;font-size:15.5px;font-weight:800}
+.chipf div span{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.chipf div span::before{content:"";width:7px;height:7px;border-radius:50%;background:#CBD5E1}
+.chipf.live div span::before{background:var(--green)}
+.c1{left:-40px;top:60px}.c2{right:-40px;top:190px;animation-delay:-1.5s}.c3{left:-56px;top:360px;animation-delay:-3s}.c4{right:-36px;top:500px;animation-delay:-4.5s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+.tabbar{position:sticky;top:76px;z-index:20;background:rgba(246,241,233,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+
+.tline{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:32px;padding:56px;box-shadow:var(--shadow)}
+.tl-list{list-style:none;margin:0;padding:0 0 0 34px;border-left:2px solid var(--line);display:grid;gap:30px}
+.tl-list li{position:relative;cursor:pointer;opacity:.38;transition:opacity .35s}
+.tl-list li.on{opacity:1}
+.tl-list li::before{content:"";position:absolute;left:-43px;top:16px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--line);transition:all .35s}
+.tl-list li.on::before{background:var(--red);border-color:var(--red);box-shadow:0 0 0 5px var(--red-soft)}
+.tl-list h4{margin:0;font-size:clamp(30px,3.6vw,46px);font-weight:900;letter-spacing:-.04em;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tl-list h4 em{font-style:normal;font-size:.62em;font-weight:700;letter-spacing:-.02em;background:#F1ECE4;color:var(--muted);border-radius:12px;padding:2px 12px}
+.tl-list li.on h4 em{background:var(--red-soft);color:var(--red-d)}
+.tl-list p{margin:8px 0 0;font-size:17px;color:var(--ink-2);max-width:480px}
+.steps-phone .phone-in{height:600px}
+.sc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;transition:opacity .4s,transform .4s}
+.sc.wait{opacity:.35;transform:translateY(6px)}
+.sc-top{display:flex;justify-content:space-between;align-items:center}
+.sc-step{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--muted)}
+.sc-done{font-size:11px;font-weight:700;color:var(--green);background:var(--green-soft);border-radius:999px;padding:2px 9px}
+.sc.wait .sc-done{color:var(--muted);background:#F1ECE4}
+.sc b{display:block;font-size:15px;font-weight:800;margin:4px 0 6px}
+.sc .big{display:flex;align-items:center;gap:10px}
+.sc .big strong{font-size:26px;white-space:nowrap;font-weight:900;color:var(--red);letter-spacing:-.03em}
+.sc .big span{font-size:12px;color:var(--ink-2);line-height:1.3}
+
+@media (max-width:980px){
+  .hero2-grid,.tline{grid-template-columns:1fr}
+  .tline{padding:32px 22px;gap:32px}
+  .mega{display:none!important}
+}
+@media (max-width:640px){
+  .hero2{padding:36px 0 24px}
+  .hero2 .btn{height:54px;font-size:16px;width:100%}
+  .chipf{display:none}
+  .phone{width:300px}
+  .phone-in{height:580px}
+  .tabbar{top:76px}
+  .tl-list{padding-left:26px}
+  .tl-list li::before{left:-35px}
+}
+@media (prefers-reduced-motion:reduce){ .chipf{animation:none} }
+@media (max-width:1200px){ .c1,.c3{left:0} .c2,.c4{right:0} }
+@media (max-width:980px){ .agent{left:0} }
+
+/* ===== Orbit (Restaurant365-style ecosystem) ===== */
+.eco{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.orbit{position:relative;width:100%;max-width:560px;aspect-ratio:1;margin:0 auto}
+.orbit svg.ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ring-label{font:700 13px Inter,sans-serif;letter-spacing:.22em;fill:#A8A29E;text-transform:uppercase}
+.spin{transform-origin:50% 50%;animation:spin 18s linear infinite}
+.spin.rev{animation-duration:26s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.core{position:absolute;left:50%;top:50%;width:40%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 40%,#fff,#F7F3EC);box-shadow:0 30px 60px -30px rgba(15,23,42,.25),inset 0 0 0 1px #EFE8DC;display:grid;place-items:center;text-align:center}
+.core small{display:block;font-size:11px;font-weight:800;letter-spacing:.18em;color:var(--muted)}
+.core b{display:block;font-size:clamp(22px,3vw,34px);font-weight:900;letter-spacing:-.03em;background:linear-gradient(90deg,var(--red),#8B5CF6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.core b::after{content:"✦";font-size:.6em;margin-left:4px;color:#8B5CF6;-webkit-text-fill-color:#8B5CF6;vertical-align:top}
+.node{position:absolute;width:27%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;box-shadow:0 24px 50px -26px rgba(15,23,42,.35);font-weight:800;font-size:clamp(12px,1.4vw,16px);transition:transform .3s}
+.node:hover{transform:translate(-50%,-50%) scale(1.05)}
+.node .i{width:clamp(26px,3.4vw,38px);height:clamp(26px,3.4vw,38px);stroke-width:1.6}
+.n1{left:50%;top:13%;background:linear-gradient(180deg,#fff 30%,#E3ECF8);color:#1E3A8A}
+.n2{left:87%;top:50%;background:linear-gradient(180deg,#fff 30%,#F5EFD8);color:#7C5A12}
+.n3{left:50%;top:87%;background:linear-gradient(180deg,#fff 30%,#DDF1EC);color:#0F5E54}
+.n4{left:13%;top:50%;background:linear-gradient(180deg,#fff 30%,#EADFEA);color:#5B2A57}
+.node span{color:var(--ink)}
+.eco h2{font-size:clamp(34px,4.6vw,60px)}
+.eco p.d{font-size:18px;color:var(--ink-2);margin:0 0 22px}
+.eco ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.eco li{display:block;font-size:15.5px;color:var(--ink-2);padding-left:16px;position:relative}
+.eco li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:var(--red)}
+.eco li b{color:var(--ink)}
+@media (max-width:980px){ .eco{grid-template-columns:1fr;gap:28px} }
+@media (prefers-reduced-motion:reduce){ .spin{animation:none} }
 </style>
 </head>
 <body>
@@ -252,68 +403,80 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
   <div class="wrap">
     <a class="brand" href="https://dkagency.com.tr"><span class="mark">DK</span><b>DK Agency</b></a>
     <div class="nav-links">
-      <a href="#modullar">Modullar</a>
+      <div class="mm-wrap">
+        <button class="mm-btn" type="button" aria-expanded="false" aria-controls="mega">Modullar <svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="mega" id="mega">
+          <div class="mega-cols">
+            <div>
+              <h6><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>Gəlir artımı</h6>
+              <a class="mi " href="https://dkagency.com.tr/toolkit/menu-matrix" target="_blank" rel="noopener"><span class="ic"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span><b>Menyu Matrisi</b><span>Hansı yemək qazandırır, hansı yer tutur.</span><em>Ətraflı →</em></span></a>
+              <a class="mi " href="https://dkagency.com.tr/kazan-ai" target="_blank" rel="noopener"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg></span><span><b>KAZAN AI</b><span>Sualınıza cavab və bir addım. Beta.</span><em>Ətraflı →</em></span></a>
+              <a class="mi " href="https://dkagency.com.tr/ilanlar" target="_blank" rel="noopener"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></span><span><b>B2B elanlar</b><span>Devir, icarə, avadanlıq və təchizatçı.</span><em>Ətraflı →</em></span></a>
+            </div>
+            <div class="mega-sep"></div>
+            <div>
+              <h6 class="cost"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M17 7 7 17M16 17H7V8"/></svg></span>Xərc nəzarəti</h6>
+              <a class="mi cost" href="https://dkagency.com.tr/toolkit/food-cost" target="_blank" rel="noopener"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg></span><span><b>Food Cost</b><span>Hər yeməyi real maya dəyərinə görə qiymətləndirin.</span><em>Ətraflı →</em></span></a>
+              <a class="mi cost" href="https://dkagency.com.tr/toolkit/delivery-calc" target="_blank" rel="noopener"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h7l3-8h3M14 5h3"/></svg></span><span><b>Delivery komissiyası</b><span>Wolt, Bolt, Yango: əlinizdə qalan real pul.</span><em>Ətraflı →</em></span></a>
+              <a class="mi cost" href="#p-ocaq"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 22c4 0 7-3 7-7 0-5-5-7-5-12-3 2-4 5-4 7-1-1-2-2-2-4-2 2-3 5-3 9 0 4 3 7 7 7z"/></svg></span><span><b>OCAQ</b><span>Çoxfilialı şəbəkədə gündəlik nəzarət.</span><em>Ətraflı →</em></span></a>
+            </div>
+          </div>
+          <div class="mega-band"><span class="pill">Xüsusi xidmət</span><p>Alətlər pulsuzdur. Sistemi sizinlə birlikdə qururuq.</p><a href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">Danışaq →</a></div>
+        </div>
+      </div>
       <a href="#nece">Necə işləyir</a>
-      <a href="#hesabla">Hesabla</a>
       <a href="#xidmet">Xidmət</a>
       <a href="#qurucu">Qurucu</a>
     </div>
-    <a class="btn btn-red btn-sm" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">
-      <svg class="i" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.6L3 21l1.9-5.7A8.4 8.4 0 1 1 21 11.5z"/></svg>
-      <span>Pulsuz diaqnostika</span>
-    </a>
+    <a class="btn btn-red btn-sm" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.6L3 21l1.9-5.7A8.4 8.4 0 1 1 21 11.5z"/></svg><span>Pulsuz diaqnostika</span></a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="wrap hero-grid">
+<section class="hero2">
+  <div class="wrap hero2-grid">
     <div class="rv">
-      <span class="eyebrow"><span class="dot"></span>HoReCa · Restoran · Kafe · Otel</span>
-      <h1>Bu ay pul<br><em>hara getdi?</em></h1>
-      <p class="lead">Food cost, kadr, delivery komissiyası, itki. Rəqəmlərinizi bir yerdə görürük, harada sızdığını göstəririk və düzəldən addımı sizinlə birlikdə atırıq.</p>
+      <h1 class="h-big">Biz itkini<br><span class="ac">tapırıq.</span><br>Siz restoranı<br>idarə edirsiniz.</h1>
+      <p class="lead">Food cost, delivery komissiyası, kadr və gündəlik itki. DK Agency rəqəmlərinizi bir yerə yığır, pulun harada sızdığını göstərir və hər siqnala bir addım təklif edir. Qərar həmişə sizdədir.</p>
       <div class="hero-cta">
-        <a class="btn btn-red" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">Pulsuz diaqnostika istə</a>
-        <a class="btn btn-ghost" href="#nece">Necə işləyir
-          <svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-        </a>
+        <a class="btn btn-red" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">Pulsuz diaqnostika</a>
+        <a class="btn btn-ghost" href="#nece">Necə işləyir <span class="play"><svg class="i" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></a>
       </div>
     </div>
 
-    <div class="stage rv" data-agent="hero">
-      <div class="mock">
-        <div class="mock-head">
-          <div>
-            <div class="mock-title">Aylıq xərc nəzarəti</div>
-            <div class="mock-sub">Kafe · aylıq dövriyyə 60 000 ₼</div>
+    <div class="phone-stage rv" aria-label="Nümunə ekran">
+      <div class="chipf c1 live"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg></span><div><b>Food cost</b><span>Hesablanır</span></div></div>
+      <div class="chipf c2"><span class="ic"><svg class="i" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h7l3-8h3M14 5h3"/></svg></span><div><b>Delivery</b><span>Komissiya netto</span></div></div>
+      <div class="chipf c3 live"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 22c4 0 7-3 7-7 0-5-5-7-5-12-3 2-4 5-4 7-1-1-2-2-2-4-2 2-3 5-3 9 0 4 3 7 7 7z"/></svg></span><div><b>OCAQ</b><span>Növbə checklist-i</span></div></div>
+      <div class="chipf c4"><span class="ic"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg></span><div><b>KAZAN AI</b><span>Sual-cavab</span></div></div>
+      <div class="phone">
+        <div class="phone-in">
+          <div class="ph-bar"><span>9:41</span><span>●●● ▮</span></div>
+          <div class="ph-island"></div>
+          <div class="ph-body">
+            <div class="ph-hi">Sabahınız xeyir</div>
+            <div class="ph-date">Bazar ertəsi · nümunə məlumat</div>
+            <div class="ph-kpis"><div><b data-done>12</b><span>addım<br>atıldı</span></div><div><b data-wait>2</b><span>təsdiqinizi<br>gözləyir</span></div></div>
+            <div class="ph-lbl"><span>Təsdiq gözləyir</span><span>sürüşdürün</span></div>
+            <div class="ph-card" data-ph="0">
+              <div class="ph-top"><span class="ph-tag">Qiymət qərarı</span><span class="ph-amt">+1,40 ₼</span></div>
+              <div class="ph-t">Ət dürüm · food cost 45%</div>
+              <div class="ph-why"><span class="sp">✦</span><span>Mal əti alışı bahalaşıb. Qiyməti 7,50 ₼-dan 8,90 ₼-a qaldırsaq food cost 38%-ə enir.</span></div>
+              <div class="ph-btns"><span>Bax</span><span data-approve>Təsdiqlə</span></div>
+            </div>
+            <div class="ph-card" data-ph="1">
+              <div class="ph-top"><span class="ph-tag">Kassa</span><span class="ph-amt">fərq var</span></div>
+              <div class="ph-t">Filial 3 · kassa ↔ bank</div>
+              <div class="ph-why"><span class="sp">✦</span><span>Dünənki kart satışı bank çıxarışı ilə üst-üstə düşmür. Menecerdən izah istəyim?</span></div>
+              <div class="ph-btns"><span>Bax</span><span data-approve>Göndər</span></div>
+            </div>
           </div>
-          <div class="mock-kpi" data-kpi>
-            <small>Food cost</small>
-            <b data-kpi-val>38%</b>
-          </div>
+          <div class="ph-nav"><span class="on"><svg class="i" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3z"/></svg>Bu gün</span><span><svg class="i" viewBox="0 0 24 24"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg>Xərc</span><span><svg class="i" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/></svg>Tapşırıq</span><span><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Bazar</span></div>
         </div>
-        <table class="mt">
-          <thead><tr><th>Göstərici</th><th>Faktiki</th><th>Hədəf</th><th>Fərq / ay</th></tr></thead>
-          <tbody>
-            <tr class="hl"><td>Food cost</td><td class="num">38%</td><td class="num">30%</td><td class="num new">4 800 ₼</td></tr>
-            <tr><td>Delivery komissiyası</td><td class="num">Wolt + Bolt</td><td class="num">—</td><td class="num">hesablanır</td></tr>
-            <tr><td>Kadr xərci</td><td class="num">dövriyyəyə görə</td><td class="num">—</td><td class="num">hesablanır</td></tr>
-            <tr><td>İtki / tullantı</td><td class="num">jurnal</td><td class="num">—</td><td class="num">gündəlik</td></tr>
-          </tbody>
-        </table>
-        <div class="mock-foot"><span>Food cost · P&amp;L · OCAQ</span><span>DK Agency</span></div>
-      </div>
-      <div class="sample">Nümunə məlumat — yalnız təsvir üçün.</div>
-      <div class="agent" role="status" aria-live="polite">
-        <div class="agent-top">
-          <span class="agent-tag"><span class="sq"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span data-tag>Siqnal</span></span>
-          <button class="pause" type="button" aria-label="Animasiyanı dayandır" data-pause><svg class="i" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button>
-        </div>
-        <p class="agent-msg" data-msg>Food cost 38%, hədəf 30%. Ayda 4 800 ₼ artıq xammal xərci.</p>
-        <span class="agent-btn" data-btn>Plan hazırla</span>
       </div>
     </div>
   </div>
+  <div class="wrap"><div class="sample" style="text-align:right">Nümunə məlumat — yalnız təsvir üçün.</div></div>
 </section>
 
 <!-- FACTS (yalnız yoxlanmış faktlar) -->
@@ -323,6 +486,43 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
     <div class="fact"><b>18</b><span>pulsuz hesablama aləti</span></div>
     <div class="fact"><b>10+</b><span>filiallı şəbəkədə hər gün işləyən OCAQ</span></div>
     <div class="fact"><b>4 dil</b><span>AZ · RU · EN · TR</span></div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM ORBIT -->
+<section class="sec" id="ekosistem">
+  <div class="wrap eco">
+    <div class="orbit rv" aria-label="DK Agency ekosistemi">
+      <svg class="ring" viewBox="0 0 560 560" aria-hidden="true">
+        <defs><path id="rp" d="M280,280 m-246,0 a246,246 0 1,1 492,0 a246,246 0 1,1 -492,0"/></defs>
+        <circle cx="280" cy="280" r="246" fill="none" stroke="#E7E1D6" stroke-width="2" stroke-dasharray="2 12" stroke-linecap="round"/>
+        <circle cx="280" cy="280" r="190" fill="none" stroke="#EFEAE1" stroke-width="22"/>
+        <text class="ring-label"><textPath href="#rp" startOffset="12.5%" text-anchor="middle">POS-unuz · Clopos</textPath></text>
+        <text class="ring-label"><textPath href="#rp" startOffset="37.5%" text-anchor="middle">Təchizatçılarınız</textPath></text>
+        <text class="ring-label"><textPath href="#rp" startOffset="62.5%" text-anchor="middle">Bankınız</textPath></text>
+        <text class="ring-label"><textPath href="#rp" startOffset="87.5%" text-anchor="middle">Komandanız</textPath></text>
+        <g class="spin"><circle cx="280" cy="280" r="190" fill="none" stroke="#E94560" stroke-width="8" stroke-linecap="round" stroke-dasharray="70 1124" /></g>
+        <g class="spin rev"><circle cx="280" cy="280" r="190" fill="none" stroke="#8B5CF6" stroke-width="8" stroke-linecap="round" stroke-dasharray="18 300 10 866" /></g>
+        <g class="spin" style="animation-duration:11s"><circle cx="280" cy="280" r="190" fill="none" stroke="#38BDF8" stroke-width="7" stroke-linecap="round" stroke-dasharray="8 22 30 1134" /></g>
+      </svg>
+      <div class="core"><div><small>DK AGENCY</small><b>KAZAN AI</b></div></div>
+      <div class="node n1"><svg class="i" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h2M13 11h2M9 15h2M13 15h2"/></svg><span>Food Cost &amp; P&amp;L</span></div>
+      <div class="node n2"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 20c0-2.5 1.5-4.5 4-4.5s3 1.5 3 4.5"/></svg><span>Kadr &amp; növbə</span></div>
+      <div class="node n3"><svg class="i" viewBox="0 0 24 24"><path d="M12 22c4 0 7-3 7-7 0-5-5-7-5-12-3 2-4 5-4 7-1-1-2-2-2-4-2 2-3 5-3 9 0 4 3 7 7 7z"/></svg><span>OCAQ nəzarət</span></div>
+      <div class="node n4"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Menyu &amp; delivery</span></div>
+    </div>
+    <div class="rv">
+      <span class="eyebrow"><span class="dot"></span>Ekosistem</span>
+      <h2>Restoranınızın bütün rəqəmi bir yerdə.</h2>
+      <p class="d">Xərc, kadr, menyu və gündəlik nəzarət ayrı-ayrı Excel-lərdə deyil, bir sistemdə. Ortada KAZAN AI (beta) sualınıza DK bilik bazası ilə cavab verir və uyğun alətə yönləndirir.</p>
+      <ul>
+        <li><b>Food Cost &amp; P&amp;L</b> — maya dəyəri, mənfəət, başabaş</li>
+        <li><b>Kadr &amp; növbə</b> — personel planı, növbə checklist-i</li>
+        <li><b>OCAQ</b> — kassa ↔ bank, HACCP, itki jurnalı</li>
+        <li><b>Menyu &amp; delivery</b> — menyu matrisi, Wolt/Bolt komissiyası</li>
+      </ul>
+      <p class="d" style="font-size:14.5px;margin-top:18px;color:var(--muted)">POS (Clopos), bank və təchizatçı sistemləri şirkət istəsə bağlanır.</p>
+    </div>
   </div>
 </section>
 
@@ -531,14 +731,33 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
   <div class="wrap">
     <div class="sec-head rv">
       <span class="eyebrow"><span class="dot"></span>Necə işləyir</span>
-      <h2>Üç addım. Proqram yox, nəticə.</h2>
-      <p>Bizə proqram satmaq lazım deyil. Restoranınızın rəqəmi düzəlməlidir.</p>
+      <h2>Restoranınızın rəqəminə heç kim baxmır. Biz baxırıq.</h2>
     </div>
-    <div class="how">
-      <div class="how-card rv"><span class="n">01</span><h4>Pulsuz diaqnostika</h4><p>Menyunuza, food cost-a, kadra və delivery xəttinə birlikdə baxırıq.</p></div>
-      <div class="how-card rv"><span class="n">02</span><h4>Boşluğu göstəririk</h4><p>Pulun harada sızdığını rəqəmlə, manatla göstəririk.</p></div>
-      <div class="how-card rv"><span class="n">03</span><h4>Sistemi qururuq</h4><p>Alətləri, OCAQ-ı və komandanın gündəlik vərdişini birlikdə qururuq.</p></div>
+    <div class="tline rv">
+      <ol class="tl-list" data-tl>
+        <li class="on"><h4>Tapırıq <em>itkini</em></h4><p>Pulsuz diaqnostikada menyu, food cost, kadr və delivery xəttinə birlikdə baxırıq.</p></li>
+        <li><h4>Göstəririk <em>manatla</em></h4><p>Pulun harada sızdığını faizlə yox, ayda neçə manat olduğu ilə göstəririk.</p></li>
+        <li><h4>Qururuq <em>sistemi</em></h4><p>Alətləri və OCAQ-ı filiallarınıza qururuq, komandanı öyrədirik.</p></li>
+        <li><h4>İzləyirik <em>hər gün</em></h4><p>Normadan çıxan rəqəm sizin qarşınıza siqnal və bir addımla gəlir.</p></li>
+      </ol>
+      <div class="phone-stage steps-phone">
+        <div class="phone">
+          <div class="phone-in">
+            <div class="ph-bar"><span>9:41</span><span>●●● ▮</span></div>
+            <div class="ph-island"></div>
+            <div class="ph-body">
+              <div class="ph-hi" style="text-align:center;margin:14px 0 14px">Restoranınızın xəritəsi</div>
+              <div class="sc" data-sc="0"><div class="sc-top"><span class="sc-step">ADDIM 1</span><span class="sc-done">✓ Hazır</span></div><b>Diaqnostika</b><div class="big"><strong>5</strong><span>sahəyə baxıldı: menyu, food cost, kadr, delivery, kassa</span></div></div>
+              <div class="sc wait" data-sc="1"><div class="sc-top"><span class="sc-step">ADDIM 2</span><span class="sc-done">✓ Hazır</span></div><b>İtki xəritəsi</b><div class="big"><strong>4 800 ₼</strong><span>ayda hədəfdən artıq xammal xərci</span></div></div>
+              <div class="sc wait" data-sc="2"><div class="sc-top"><span class="sc-step">ADDIM 3</span><span class="sc-done">✓ Hazır</span></div><b>Sistem quruldu</b><div class="big"><strong>OCAQ</strong><span>checklist, kassa, itki jurnalı</span></div></div>
+              <div class="sc wait" data-sc="3"><div class="sc-top"><span class="sc-step">ADDIM 4</span><span class="sc-done">✓ Aktiv</span></div><b>Gündəlik siqnal</b><div class="big"><strong>08:00</strong><span>səhər xülasəsi telefonunuzda</span></div></div>
+            </div>
+            <div class="ph-nav"><span><svg class="i" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9H3z"/></svg>Bu gün</span><span class="on"><svg class="i" viewBox="0 0 24 24"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg>Xərc</span><span><svg class="i" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/></svg>Tapşırıq</span><span><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Bazar</span></div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="sample">Nümunə məlumat — yalnız təsvir üçün.</div>
   </div>
 </section>
 
@@ -619,16 +838,8 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
         <span class="eyebrow"><span class="dot"></span>Qurucu</span>
         <h3>Doğan Tomris</h3>
         <div class="role">Qurucu · DK Agency</div>
-        <p>Karyerasına 1988-də McDonald's-da işçi kimi başlayıb restoran menecerinə qədər yüksəldi. Sonra Rusiya, Türkiyə və Azərbaycanda restoran şəbəkələri, franşiza sistemləri və ticarət mərkəzləri qurdu və idarə etdi. DK Agency-nin alətləri və OCAQ bu təcrübədən çıxıb: ölçülməyən iş idarə olunmur.</p>
-        <ul class="tl">
-          <li><b>1988–1998</b><span>McDonald's Türkiyə: işçidən restoran menecerinə</span></li>
-          <li><b>1998–2002</b><span>Floraburger: 8 restoran, patisseri və mangal konseptləri (Rusiya)</span></li>
-          <li><b>2007–2010</b><span>Gloria Jean's Coffees Rusiya: baş menecer, master franşiza</span></li>
-          <li><b>2017–2021</b><span>Ajdaha Döner: 12 filial və istehsal sexi, CEO</span></li>
-          <li><b>2021–bu gün</b><span>DK Agency: konsept, brend və franşiza sistemi məsləhəti</span></li>
-          <li><b>2024–bu gün</b><span>TQTA: Azərbaycanda CTH (UK) akkreditasiyalı qastronomiya akademiyası</span></li>
-        </ul>
-        <div class="chips"><span class="chip">40 il HoReCa</span><span class="chip">Azərbaycan Franşiza Assosiasiyası — məsləhətçi</span><span class="chip">Araz FM «Biznes Mərkəzi» — həftəlik ekspert</span></div>
+        <p>40 ildir HoReCa-dadır: McDonald's-da başlayan yol Türkiyə, Rusiya və Azərbaycanda restoran şəbəkələri, franşiza sistemləri və yeni brendlərlə davam etdi. DK Agency-nin alətləri və OCAQ bu təcrübədən çıxıb: ölçülməyən iş idarə olunmur.</p>
+        <div class="chips"><span class="chip">40 il HoReCa</span><span class="chip">Restoran şəbəkələri</span><span class="chip">Franşiza sistemləri</span><span class="chip">TQTA qurucusu</span></div>
       </div>
     </div>
   </div>
@@ -739,6 +950,44 @@ input[type=range]{width:100%;accent-color:var(--red);height:28px}
     render(); schedule();
   }
   document.querySelectorAll('[data-agent]').forEach(Card);
+
+
+  // Mega menu
+  var mb = document.querySelector('.mm-btn'), mg = document.getElementById('mega');
+  if (mb && mg){
+    mb.addEventListener('click', function(e){ e.stopPropagation(); var o = mg.classList.toggle('open'); mb.setAttribute('aria-expanded', o ? 'true':'false'); });
+    document.addEventListener('click', function(e){ if (!mg.contains(e.target)){ mg.classList.remove('open'); mb.setAttribute('aria-expanded','false'); } });
+    document.addEventListener('keydown', function(e){ if (e.key==='Escape'){ mg.classList.remove('open'); mb.setAttribute('aria-expanded','false'); } });
+    mg.querySelectorAll('a[href^="#p-"]').forEach(function(a){ a.addEventListener('click', function(){ var t=document.getElementById('t-'+a.getAttribute('href').slice(3)); if(t) t.click(); mg.classList.remove('open'); }); });
+  }
+
+  // Hero phone: approve -> swipe away -> counters
+  var cards = document.querySelectorAll('.ph-card'), done = document.querySelector('[data-done]'), wait = document.querySelector('[data-wait]');
+  function phoneCycle(){
+    var k = 0;
+    function next(){
+      if (k < cards.length){
+        var c = cards[k], ap = c.querySelector('[data-approve]');
+        ap.classList.add('ok'); ap.textContent = '✓ Edildi';
+        setTimeout(function(){ c.classList.add('gone'); done.textContent = 12 + k + 1; wait.textContent = cards.length - k - 1; k++; setTimeout(next, 1400); }, 900);
+      } else {
+        setTimeout(function(){
+          cards.forEach(function(c){ c.classList.remove('gone'); var ap=c.querySelector('[data-approve]'); ap.classList.remove('ok'); ap.textContent = ap.getAttribute('data-label'); });
+          done.textContent = 12; wait.textContent = cards.length; k = 0; setTimeout(next, 2600);
+        }, 1600);
+      }
+    }
+    setTimeout(next, 2600);
+  }
+  cards.forEach(function(c){ var ap=c.querySelector('[data-approve]'); ap.setAttribute('data-label', ap.textContent); });
+  if (!reduce && cards.length) phoneCycle();
+
+  // Timeline: step through, click to select
+  var tl = document.querySelectorAll('[data-tl] li'), scs = document.querySelectorAll('[data-sc]'), ti = 0, tt = null;
+  function tlSet(i){ ti = i; tl.forEach(function(li,j){ li.classList.toggle('on', j===i); }); scs.forEach(function(sc,j){ sc.classList.toggle('wait', j>i); }); }
+  function tlRun(){ clearInterval(tt); if (!reduce) tt = setInterval(function(){ tlSet((ti+1) % tl.length); }, 2600); }
+  tl.forEach(function(li,j){ li.addEventListener('click', function(){ tlSet(j); tlRun(); }); });
+  if (reduce) tlSet(tl.length-1); else tlRun();
 
   // Tabs
   var tabs = document.querySelectorAll('.tab');
