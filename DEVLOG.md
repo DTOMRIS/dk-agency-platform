@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0512: feat(home): ana səhifə /tanitim v2 dizaynında
+
+**Why:** Doğan /tanitim satış səhifəsini təsdiqlədi və ana səhifənin də eyni hissi verməsini istədi (08.10).
+
+**What:** `components/home/v2/` — `HeroPhone`, `FactsStrip`, `EcoOrbit`, `ModuleTabs`, `StepsTimeline` (+ `shared.tsx` ikonlar/reveal/reduced-motion, `homeV2.module.css`, `font.ts` Inter 400–900). `app/[locale]/page.tsx`: `ReceiptHero` → `HeroPhone` + `FactsStrip`, `PlatformCards` → `EcoOrbit`; sonra `ModuleTabs`, `StepsTimeline`, qalan bölmələr eyni ardıcıllıqla (heç nə silinmədi; ReceiptHero/PlatformCards faylları qalır). Kök div `overflow-x-hidden` → `overflow-x-clip` (hidden scroll konteyneri yaradıb sticky tab bar-ı sındırırdı). Mətnlər `homeV2` namespace-də 4 dildə (263 açar); nümunə cədvəl dəyərləri komponentdə sabitdir, hər dildə eynidir. WhatsApp CTA-ları `/api/leads/whatsapp`. `Header.tsx`: «Modullar» mega menyu (yalnız xl+), mobil menyuda açılan sadə siyahı; mətn Header-in öz `NAV_COPY` modelindədir (Header provider-dən asılı deyil). OCAQ bəndi `/#p-ocaq` → ana səhifədə OCAQ tabı açılır (`hashchange`). 7-ci menyu bəndi RU-da 1280px-də sətri sındırırdı — xl-də padding azaldıldı, 2xl-də əvvəlki ölçü.
+
+**Yoxlama:** tsc 35 → 35 (baseline), eslint dəyişən fayllar 0 xəta (2 köhnə `<img>` xəbərdarlığı). Lokal `next dev` + Playwright: `/az` (307 → `/`), `/ru`, `/en`, `/tr` 200; 390 və 1280-də console/page xətası 0, viewport-dan kənar element 0 (bounding rect yoxlaması, tab bar uşaqları xaric), scrollWidth = en; tab keçidi, siqnal → addım dövrü, `/#p-ocaq`, sticky tab bar (header altı 64/68px), reduced motion (son vəziyyət) yoxlandı. `npm run build` və dk-validator bu sessiyada işlədilmədi.
+
 ## 2026-10-08 — TASK-0511: feat(telegram): owner business notifications
 
 **Why:** Doğan «telegramı aktif olsun, yap hepsini» (08.10) — lead, üzv, elan və həftəlik xülasə Telegram-a.

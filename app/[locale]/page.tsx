@@ -7,11 +7,14 @@ import Image from 'next/image';
 
 import dynamic from 'next/dynamic';
 import { JoinCTA } from '@/components/CTASections';
-import { ReceiptHero } from '@/components/home/ReceiptHero';
 import SiteJsonLd from '@/components/seo/SiteJsonLd';
 import NewsPreview from '@/components/NewsPreview';
 import ToolkitShowcase from '@/components/ToolkitShowcase';
-import { PlatformCards } from '@/components/home/PlatformCards';
+import HeroPhone from '@/components/home/v2/HeroPhone';
+import FactsStrip from '@/components/home/v2/FactsStrip';
+import EcoOrbit from '@/components/home/v2/EcoOrbit';
+import ModuleTabs from '@/components/home/v2/ModuleTabs';
+import StepsTimeline from '@/components/home/v2/StepsTimeline';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
@@ -239,9 +242,16 @@ export default function Home() {
   const copy = pageCopy[locale];
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    // overflow-x-clip (not hidden): `hidden` makes this div a scroll container and breaks the
+    // sticky module tab bar (TASK-0512).
+    <div className="min-h-screen bg-white overflow-x-clip">
       <SiteJsonLd />
-      <ReceiptHero />
+      {/* TASK-0512: /tanitim v2 design — ReceiptHero and PlatformCards replaced (files kept). */}
+      <HeroPhone />
+      <FactsStrip />
+      <EcoOrbit />
+      <ModuleTabs />
+      <StepsTimeline />
       {/* TASK-0501: Sektor Nəbzi + elanlar hero-dan dərhal sonra (sahib istəyi) */}
       <NewsPreview />
 
@@ -284,7 +294,6 @@ export default function Home() {
       </section>
 
       <AiReadinessScore />
-      <PlatformCards />
       <ToolkitShowcase />
 
       <section className="bg-slate-50 py-20 border-y border-slate-200/60">
