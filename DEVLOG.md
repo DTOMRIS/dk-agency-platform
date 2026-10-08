@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0505: feat(marketinq-ocagi): «Xəbər ver»
+
+**Why:** HANDOFF roadmap C — 5 alət `status:'planned'` idi, kart yalnız «Yaxında» yazırdı, maraq heç yerdə toplanmırdı. Hansı aləti əvvəl qurmaq lazım olduğunu bilmək üçün real tələb siqnalı lazımdır.
+
+**What:** Yeni cədvəl açılmadı — mövcud `user_events` (`user_id`, `event_type`, `payload jsonb`) üzərində `tool_notify_request`. Ümumi `/api/user/events` istifadə edilmədi: o, slug-u yoxlamır və təkrarı saymır. Ayrıca `/api/marketing-tools/notify`: yalnız planned alət, bir üzv × bir alət bir sətir, GET admin-ə alət başına `count(distinct user_id)` verir. Kart: düymə → yaşıl «xəbər veriləcək»; admin üçün «N üzv gözləyir».
+
+**Yoxlama:** eslint 0; tsc 35 = main 35 (yeni fayllarda 0); drizzle-in generasiya etdiyi 3 SQL (`payload->>'toolSlug'` filtr/group by) çap olunub yoxlanıldı — lokal Postgres yoxdur, canlı DB-yə yazılmadı. Lokal `next dev` (JWT_SECRET=x, imzalı test cookie): auth-suz GET/POST → 401; naməlum slug və hazır alət (`marka-kompasi`) → 400 `Invalid tool`; üzv GET → 200 `{"requested":[]}`, admin GET → 200 `{"requested":[],"counts":{}}`. Playwright (POST brauzerdə tutuldu, DB-yə getmədi): 4 «Yaxında» kartında düymə, klikdən sonra «Hazır olanda xəbər veriləcək», admin kartında «0 üzv gözləyir». dk:validate 9/9. **Ayrıca tapıldı (bu task-a aid deyil):** `/b2b-panel/*` 390px-də sidebar (288px) həmişə açıqdır, məzmuna ~100px qalır — bütün üzv portalı telefonda istifadə olunmur. Canlı sübut deploydan sonra: bir üzv basır → `SELECT event_type, payload FROM user_events WHERE event_type='tool_notify_request'`.
+
 ## 2026-10-08 — TASK-0503: fix(ai): Claude fallback → Sonnet 5.5
 
 **Why:** DeepSeek çökəndə KAZAN AI `claude-sonnet-4-6`-ya düşürdü. Sonnet 5.5-də düşünmə default açıqdır və düşünmə tokenləri `max_tokens`-dan yeyilir — 1000–1200 limitli qısa çağırışlarda cavab boş qala bilərdi. 5.x həmçinin sonda qalan `assistant` mesajını prefill sayıb 400 qaytarır və təhlükəsizlik rəddini HTTP 200 + `stop_reason: "refusal"` kimi verir (əvvəl boş mətn kimi görünərdi).

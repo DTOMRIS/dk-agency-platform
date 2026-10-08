@@ -13,6 +13,8 @@ export const EVENT_TYPES = [
   'nudge_dismissed',
   'onboarding_completed',
   'gap_interest',
+  // TASK-0505: üzv «Yaxında» alət üçün «Xəbər ver» basdı — payload { toolSlug }
+  'tool_notify_request',
 ] as const;
 
 export type UserEventType = (typeof EVENT_TYPES)[number];
