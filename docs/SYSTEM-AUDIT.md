@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-10-06 17:24:13 | Branch: feat/TASK-0501-home-news-listings-up | 44d1f7b
+> Son güncəlləmə: 2026-10-08 06:13:51 | Branch: feat/TASK-0503-ai-models-refresh | 1a7e8d1
 
 ## Route İnventarı
 | Kateqoriya | Say |
@@ -15,7 +15,7 @@
 |----------|-------|-----------|
 | DeepSeek | v4-flash | 24 |
 | Gemini | 2.5-flash | 8 |
-| Anthropic | claude-sonnet-4-6 | fallback |
+| Anthropic | claude-sonnet-5-5 | fallback |
 
 AI Insight bağlı səhifə: **9**
 

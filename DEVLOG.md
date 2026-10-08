@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0503: fix(ai): Claude fallback → Sonnet 5.5
+
+**Why:** DeepSeek çökəndə KAZAN AI `claude-sonnet-4-6`-ya düşürdü. Sonnet 5.5-də düşünmə default açıqdır və düşünmə tokenləri `max_tokens`-dan yeyilir — 1000–1200 limitli qısa çağırışlarda cavab boş qala bilərdi. 5.x həmçinin sonda qalan `assistant` mesajını prefill sayıb 400 qaytarır və təhlükəsizlik rəddini HTTP 200 + `stop_reason: "refusal"` kimi verir (əvvəl boş mətn kimi görünərdi).
+
+**What:** `lib/ai-models.ts` fallback `claude-sonnet-5-5`; `claudeThinkingOff()` — Sonnet 5.5 üçün `{type:'between_tools'}` (`disabled` bu modeldə 400; effort göndərmirik, default `high` — limit daxilində). `temperature` yalnız allowlist modellərinə gedir (Sonnet 5.5 default olmayan dəyəri 400 ilə rədd edir); `claude-sonnet-4-5` allowlist-dən çıxdı. `ai-router.ts` + `kazan-ai/route.ts`: refusal tutulur, stream-də yalnız `text_delta` yığılır; KAZAN `normalizeMessages` tarixçənin baş/sonundakı `assistant`-i kəsir.
+
+**Düzəliş (yarımçıq versiyada):** ilk qaralamada "ucuz rejim" üçün `claude-haiku-5-5` yazılmışdı — belə model YOXDUR (cari Haiku `claude-haiku-4-5`). Env-ə yazılsaydı fallback 404 verərdi. Silindi; Haiku 4.5 üçün thinking parametri lazım deyil (default söndürülüdür).
+
+**Yoxlama:** model-check (tsx): default → `claude-sonnet-5-5`, temperature yox, thinking `between_tools`; `claude-sonnet-4-6` / `claude-haiku-4-5` → temperature var, thinking yox; `claude-sonnet-4-5` / naməlum → heç biri. eslint 0; tsc 35 = main 35 (toxunulan fayllarda 0); `npm run build` exit 0 (210/210). Canlı Claude çağırışı edilmədi (ödənişli açar) — deploydan sonra DeepSeek-i söndürmədən fallback yolu yalnız DeepSeek çökəndə işləyir.
+
 ## 2026-10-06 — TASK-0501: feat(home): xəbərlər və elanlar yuxarı
 
 **Why:** Doğan: "haberler ile ilanları biraz yukarı alsak". Xəbərlər 8-ci, elanlar 9-cu bölmə idi — ziyarətçi demək olar görmürdü.

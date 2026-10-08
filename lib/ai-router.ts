@@ -6,7 +6,12 @@
  * @lastModified 2026-05-13 (TASK-0120)
  */
 
-import { AI_MODELS, claudeAcceptsTemperature, resolveClaudeModel } from '@/lib/ai-models';
+import {
+  AI_MODELS,
+  claudeAcceptsTemperature,
+  claudeThinkingOff,
+  resolveClaudeModel,
+} from '@/lib/ai-models';
 
 export type AIProviderName = 'deepseek' | 'claude';
 export type AIResponseFormat = 'json_object' | 'text';
@@ -192,6 +197,11 @@ async function callClaude(req: AIRequest, opts: AIRouterOptions): Promise<AIResp
   if (claudeAcceptsTemperature(model)) {
     payload.temperature = req.temperature ?? 0.7;
   }
+  // Sonnet 5.5: thinking default aciqdir, max_tokens dusuncede bitmesin (TASK-0503).
+  const thinking = claudeThinkingOff(model);
+  if (thinking) {
+    payload.thinking = thinking;
+  }
 
   return withTimeout(req.timeout ?? DEFAULT_TIMEOUT_MS, async (signal) => {
     const response = await fetch(`${baseUrl}/v1/messages`, {
@@ -295,9 +305,15 @@ async function readDeepSeekStream(response: Response) {
 
 async function readClaudeJson(response: Response) {
   const data = (await response.json()) as {
+    stop_reason?: string;
+    stop_details?: { category?: string | null } | null;
     content?: Array<{ type?: string; text?: string }>;
     usage?: { input_tokens?: number; output_tokens?: number };
   };
+
+  if (data.stop_reason === 'refusal') {
+    throw new Error(`Claude refused: ${data.stop_details?.category ?? 'unknown'}`);
+  }
 
   const text = data.content
     ?.filter((item) => item.type === 'text')
@@ -318,27 +334,31 @@ async function readClaudeStream(response: Response) {
   let text = '';
   let inputTokens = 0;
   let outputTokens = 0;
+  let refused = false;
 
   await readSse(response, (data) => {
     const event = JSON.parse(data) as {
       type?: string;
       message?: { usage?: { input_tokens?: number; output_tokens?: number } };
       usage?: { input_tokens?: number; output_tokens?: number };
-      delta?: { text?: string };
+      delta?: { type?: string; text?: string; stop_reason?: string };
     };
 
     if (event.type === 'message_start') {
       inputTokens = event.message?.usage?.input_tokens ?? inputTokens;
       outputTokens = event.message?.usage?.output_tokens ?? outputTokens;
     }
-    if (event.type === 'content_block_delta') {
-      text += event.delta?.text ?? '';
+    // Yalniz text_delta — thinking_delta cavaba qarismasin.
+    if (event.type === 'content_block_delta' && event.delta?.type === 'text_delta') {
+      text += event.delta.text ?? '';
     }
     if (event.type === 'message_delta') {
       outputTokens = event.usage?.output_tokens ?? outputTokens;
+      if (event.delta?.stop_reason === 'refusal') refused = true;
     }
   });
 
+  if (refused) throw new Error('Claude refused (streamed)');
   const trimmed = text.trim();
   if (!trimmed) throw new Error('Claude returned empty streamed response');
 
