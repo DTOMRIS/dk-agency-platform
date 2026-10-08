@@ -8,6 +8,7 @@ import {
   translateNewsArticleBySlug,
   updateNewsArticleAdmin,
 } from '@/lib/repositories/newsRepository';
+import { postNewsToChannel } from '@/lib/telegram/channel';
 
 type ApproveSideEffectText = {
   titleAz?: string | null;
@@ -76,7 +77,18 @@ export async function approveNewsArticle(
 
   await updateNewsArticleAdmin(articleId, { status: 'approved' });
   // sideEffects: false → caller runs performApproveSideEffects itself (bulk queue).
-  if (options.sideEffects !== false) runApproveSideEffects(articleId, article.slug, article);
+  if (options.sideEffects !== false) {
+    runApproveSideEffects(articleId, article.slug, article);
+    // Single approvals only: the bulk queue (sideEffects: false) must not flood the channel.
+    if (article.slug) {
+      void postNewsToChannel({
+        slug: article.slug,
+        title: article.titleAz,
+        summary: article.summaryAz,
+        imageUrl: article.imageUrl,
+      });
+    }
+  }
   return {
     ok: true,
     slug: article.slug,

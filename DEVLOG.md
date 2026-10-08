@@ -1,5 +1,14 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0511 (2): Telegram kanalı + düzgün vədlər
+
+**Why:** Doğan açıq kanal açdı (t.me/dkagenc, `og:title` «DkAgency Sektör Nabzı» — curl ilə yoxlandı). Yoxlamada `TELEGRAM_HANDLE = 'dkagency'` → t.me/dkagency başqasının kanalı çıxdı («D k logo agency 💸🏷️», 10 abunəçi): sayt müştəriləri yad kanala göndərirdi. Alt CTA-da investisiya/24-7/ödənişsiz konsultasiya vədləri real deyildi (Doğan: «KAZAN var, DeepSeek bağlı; yatırımda yok»).
+
+**What:** `lib/telegram/channel.ts` `postNewsToChannel()` (sendPhoto → olmasa sendMessage, HTML escape, heç vaxt throw etmir; env `TELEGRAM_CHANNEL_ID`, default `@dkagenc`). `approveNewsArticle` yalnız tək təsdiqdə çağırır (bulk `sideEffects:false` kanalı doldurmur). `TELEGRAM_HANDLE` → `dkagenc`, SocialIcons və `tgText` 4 dildə. CTASections vədləri 4 dildə yenidən yazıldı; «Telegram-a yazın» → «Telegram kanalımız».
+
+**Yoxlama:** tsc 35 → 35; eslint dəyişən fayllarda təmiz. Canlı kanal göndərişi test edilməyib — bot kanalda admin olmalıdır.
+
+
 ## 2026-10-08 — TASK-0512 (3): sahib rəyi — sığma, köhnə bölmələrin v2-yə keçməsi
 
 **Why:** Doğan 08.10 (ekran görüntüləri ilə): «səhifə ekrana sığmır, köhnə bölmələr çox bəlli — yaradıcı edin, bəzilərini çıxarın».

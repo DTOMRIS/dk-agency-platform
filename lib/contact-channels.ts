@@ -3,5 +3,7 @@
 // funnel (components/contact/ContactFunnel) so the number/handle live in one
 // place and click tracking can record the real destination.
 export const WHATSAPP_NUMBER = '994502566279';
-export const TELEGRAM_HANDLE = 'dkagency';
+// Owner's public channel «DkAgency Sektör Nabzı» (2026-10-08). The old handle 'dkagency'
+// belongs to an unrelated channel — never link it.
+export const TELEGRAM_HANDLE = 'dkagenc';
 export const TELEGRAM_URL = `https://t.me/${TELEGRAM_HANDLE}`;
