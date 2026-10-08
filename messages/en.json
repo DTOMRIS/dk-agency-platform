@@ -6199,5 +6199,54 @@
       "freelance": "Freelance",
       "uzaqdan": "Remote"
     }
+  },
+  "b2bPages": {
+    "offers": {
+      "title": "Incoming offers",
+      "subtitle": "People interested in your listings — newest first.",
+      "loading": "Loading…",
+      "error": "Could not load offers. Refresh the page.",
+      "emptyTitle": "No offers yet",
+      "emptyNoListings": "Post a listing first to receive offers.",
+      "emptyHasListings": "Once your listing is published, interested people will appear here.",
+      "ctaNewListing": "New listing",
+      "ctaMyListings": "My listings",
+      "forListing": "Listing",
+      "statusNew": "New"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Your listing status and incoming offers.",
+      "loading": "Loading…",
+      "error": "Could not load notifications. Refresh the page.",
+      "emptyTitle": "No notifications",
+      "emptyText": "You will see updates here when you post a listing or receive an offer.",
+      "published": "Your listing “{title}” is published",
+      "rejected": "Your listing “{title}” was rejected",
+      "inReview": "Your listing “{title}” is under review",
+      "newOffer": "{name} is interested in “{title}”",
+      "unread": "Unread"
+    },
+    "support": {
+      "title": "Support",
+      "subtitle": "Have a question? Message us.",
+      "waTitle": "WhatsApp",
+      "waText": "Write to our team directly",
+      "waPrefill": "Hello, I have a question about the B2B portal.",
+      "tgTitle": "Telegram",
+      "tgText": "@dkagency",
+      "aiTitle": "KAZAN AI",
+      "aiText": "AI assistant for food cost, P&L and operations questions",
+      "waNumber": "WhatsApp number: {number}",
+      "faqTitle": "Frequently asked questions",
+      "q1": "How do I post a listing?",
+      "q1a": "Open “New listing” in the left menu, fill in the form and submit it.",
+      "q2": "When will my listing be visible?",
+      "q2a": "Submitted listings are reviewed first. You will see it in “Notifications” once it is published.",
+      "q3": "How do I know when an offer arrives?",
+      "q3a": "Interested people appear in “Incoming offers” with phone, WhatsApp and email; “Notifications” also shows new offers.",
+      "q4": "What if my listing is rejected?",
+      "q4a": "The reason is shown in “Notifications”. If you have questions, message us on WhatsApp."
+    }
   }
 }

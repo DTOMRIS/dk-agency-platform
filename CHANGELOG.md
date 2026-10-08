@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0507` feat(b2b-panel): üzv portalında «Bu bölmə hazırlanır» yazan 3 səhifə işləyir — **Gələn təkliflər** (elanlarınıza maraq göstərənlər, zəng/WhatsApp/e-poçt düymələri), **Bildirişlər** (elan yayımlandı / rədd edildi və səbəbi / yoxlanılır, yeni təklif), **Dəstək** (WhatsApp, Telegram, KAZAN AI və tez-tez verilən suallar); 4 dildə.
+
 - `TASK-0505` feat(marketinq-ocagi): «Yaxında» alət kartlarında «Hazır olanda xəbər ver» düyməsi — üzvün marağı qeydə alınır (bir üzv bir alət üçün bir dəfə sayılır), admin həmin kartda neçə üzvün gözlədiyini görür; 4 dildə.
 
 - `TASK-0506` fix(b2b-panel): üzv portalı telefonda açılır — əvvəl sol menyu 390px ekranın 288px-ni həmişə tuturdu, məzmun ~100px zolağa sıxışırdı; indi telefonda menyu gizlidir, üst bardakı ☰ düyməsi ilə açılır, səhifə keçəndə və Esc ilə bağlanır. Masaüstü dəyişmədi.
