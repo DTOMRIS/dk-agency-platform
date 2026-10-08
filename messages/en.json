@@ -6600,6 +6600,11 @@
         "b": "Daily signal",
         "d": "morning summary on your phone"
       }
+    },
+    "receipt": {
+      "eyebrow": "Your numbers",
+      "title": "So what are your numbers?",
+      "sub": "Pick who you are, enter your monthly sales and food purchases — and see in manat what is left of your revenue."
     }
   }
 }

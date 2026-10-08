@@ -8,6 +8,14 @@
 
 **Yoxlama:** tsc 35 → 35 (baseline), eslint dəyişən fayllar 0 xəta (2 köhnə `<img>` xəbərdarlığı). Lokal `next dev` + Playwright: `/az` (307 → `/`), `/ru`, `/en`, `/tr` 200; 390 və 1280-də console/page xətası 0, viewport-dan kənar element 0 (bounding rect yoxlaması, tab bar uşaqları xaric), scrollWidth = en; tab keçidi, siqnal → addım dövrü, `/#p-ocaq`, sticky tab bar (header altı 64/68px), reduced motion (son vəziyyət) yoxlandı. `npm run build` və dk-validator bu sessiyada işlədilmədi.
 
+## 2026-10-08 — TASK-0512 (2): bölmə ardıcıllığı, ReceiptHero v2, QuickAccess
+
+**Why:** Doğan 08.10: ReceiptHero geri qayıtsın (ikinci bölmə, «biraz daha kaliteli»), 1000–1200px-də səhifə böyük görünür, PlatformCards əvəzinə kiçik sürətli keçid.
+
+**What:** `ReceiptHero.tsx/.module.css` yerində yenidən stilləndi (funksiya və `home.receiptHero` mətnləri eyni; yeni `homeV2.receipt` başlığı 4 dildə; çek görünəndə «çap olunur» — IntersectionObserver, reduced motion-da statik; `Qalan` və itki rəqəmi count-up). Segment başlığı h1 → h3 (səhifədə tək h1 HeroPhone-dadır). Yeni `v2/QuickAccess.tsx` (`home.platformCards` + `homeV2.modules.beta` açarları). `StepsTimeline` opsional `image` prop-u alır — köhnə inline «how it works» bölməsinin konsaltinq şəkli (alt: `copy.consultingAlt`). `page.tsx`-də bloq bölməsi (sahibin siyahısında yox idi) StageSelector ilə AdsPreview arasında qalır. `.heroCta .btn` 52px / 0 26px / 16px / 12px.
+
+**Yoxlama:** tsc 35 (baseline), eslint dəyişən fayllar 0 xəta (1 köhnə `<img>` xəbərdarlığı). Playwright (dev :3917): `/` (az), `/ru`, `/en`, `/tr` 200 × 390/1024/1280/1440 — console/page xətası 0, viewport-dan kənar element 0; kalkulyator: məhsul 19 000 → 30 000 ⇒ Qalan 9 000 → −2 000 ₼, food cost 38,0% → 60,0% (4 dildə). `npm run build` və dk-validator işlədilmədi.
+
 ## 2026-10-08 — TASK-0511: feat(telegram): owner business notifications
 
 **Why:** Doğan «telegramı aktif olsun, yap hepsini» (08.10) — lead, üzv, elan və həftəlik xülasə Telegram-a.

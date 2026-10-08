@@ -6600,6 +6600,11 @@
         "b": "Gündəlik siqnal",
         "d": "səhər xülasəsi telefonunuzda"
       }
+    },
+    "receipt": {
+      "eyebrow": "Öz rəqəminiz",
+      "title": "Bəs sizin rəqəminiz?",
+      "sub": "Kim olduğunuzu seçin, aylıq satışınızı və məhsul alışınızı yazın — satışdan nə qaldığını manatla görün."
     }
   }
 }

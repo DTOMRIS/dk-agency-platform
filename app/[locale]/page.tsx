@@ -3,7 +3,6 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import dynamic from 'next/dynamic';
 import { JoinCTA } from '@/components/CTASections';
@@ -15,6 +14,8 @@ import FactsStrip from '@/components/home/v2/FactsStrip';
 import EcoOrbit from '@/components/home/v2/EcoOrbit';
 import ModuleTabs from '@/components/home/v2/ModuleTabs';
 import StepsTimeline from '@/components/home/v2/StepsTimeline';
+import QuickAccess from '@/components/home/v2/QuickAccess';
+import { ReceiptHero } from '@/components/home/ReceiptHero';
 
 const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
 const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
@@ -246,13 +247,13 @@ export default function Home() {
     // sticky module tab bar (TASK-0512).
     <div className="min-h-screen bg-white overflow-x-clip">
       <SiteJsonLd />
-      {/* TASK-0512: /tanitim v2 design — ReceiptHero and PlatformCards replaced (files kept). */}
+      {/* TASK-0512 (owner order 2026-10-08): phone hero → own-numbers receipt → facts → news +
+          B2B listings → orbit → modules → steps → toolkit → AI score → stage → ads → quick
+          access → join. PlatformCards is replaced by the compact QuickAccess strip (file kept). */}
       <HeroPhone />
+      <ReceiptHero />
       <FactsStrip />
-      <EcoOrbit />
-      <ModuleTabs />
-      <StepsTimeline />
-      {/* TASK-0501: Sektor Nəbzi + elanlar hero-dan dərhal sonra (sahib istəyi) */}
+      {/* TASK-0501: Sektor Nəbzi + elanlar (sahib istəyi) */}
       <NewsPreview />
 
       <section className="bg-slate-50 py-16 sm:py-20">
@@ -293,37 +294,20 @@ export default function Home() {
         </div>
       </section>
 
-      <AiReadinessScore />
+      <EcoOrbit />
+      <ModuleTabs />
+      {/* The old inline «how it works» block is replaced by StepsTimeline; its consulting
+          illustration now sits beside the steps heading. */}
+      <StepsTimeline
+        image={{
+          src: '/images/consulting-meeting.png',
+          alt: copy.consultingAlt,
+          width: 1536,
+          height: 1024,
+        }}
+      />
       <ToolkitShowcase />
-
-      <section className="bg-slate-50 py-20 border-y border-slate-200/60">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <h2 className="mb-12 text-3xl font-display font-black text-slate-900">
-            {copy.howItWorks}
-          </h2>
-          <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-1">
-            {copy.steps.map((step) => (
-              <div key={step.title}>
-                <div
-                  className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl ${step.tone}`}
-                >
-                  <span className="text-2xl">{step.marker}</span>
-                </div>
-                <h3 className="mb-2 text-lg font-bold text-slate-900">{step.title}</h3>
-                <p className="text-sm text-slate-500">{step.body}</p>
-              </div>
-            ))}
-          </div>
-          <Image
-            src="/images/consulting-meeting.png"
-            alt={copy.consultingAlt}
-            width={640}
-            height={480}
-            className="hidden max-h-[400px] w-full object-contain lg:block"
-          />
-        </div>
-      </section>
-
+      <AiReadinessScore />
       <StageSelector />
 
       <section className="bg-slate-50 py-16 sm:py-20 lg:py-24">
@@ -372,6 +356,7 @@ export default function Home() {
       </section>
 
       <AdsPreview />
+      <QuickAccess />
       <JoinCTA />
     </div>
   );

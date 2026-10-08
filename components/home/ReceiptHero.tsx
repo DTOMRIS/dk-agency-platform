@@ -1,9 +1,10 @@
 /**
  * @file ReceiptHero.tsx
- * @purpose Homepage v2 hero — "Siz kimsiniz?" segment picker, printed sample receipt,
- *          live food-cost calculator and segment starter tools. Value first, sign-up second.
- * @pattern A (useTranslations) — home.receiptHero
- * @task TASK-0469
+ * @purpose Homepage «Bəs sizin rəqəminiz?» — segment picker («Siz kimsiniz?»), printed sample
+ *          monthly receipt (sales − costs = remainder), live food-cost calculator and segment
+ *          starter tools. Value first, sign-up second.
+ * @pattern A (useTranslations) — home.receiptHero (+ homeV2.receipt for the v2 section header)
+ * @task TASK-0469 · TASK-0512 (2026-10-08: restyled to the v2 cream/ink design, now the 2nd section)
  */
 
 'use client';
@@ -14,6 +15,9 @@ import { useLocale, useTranslations } from 'next-intl';
 import { MessageCircle } from 'lucide-react';
 import { normalizeLocale, withLocale } from '@/i18n/config';
 import { formatNumber } from '@/lib/i18n/format';
+import v2 from './v2/homeV2.module.css';
+import { inter } from './v2/font';
+import { Reveal, useReducedMotion } from './v2/shared';
 import styles from './ReceiptHero.module.css';
 
 const SEGMENTS = ['restoran', 'kafe', 'otel', 'franchise', 'acilis'] as const;
@@ -38,6 +42,7 @@ const SEGMENT_TOOLS: Record<Segment, readonly [string, string, string]> = {
 
 /** Sample-receipt cost shares (of sales) — illustrative, labelled as a sample on the receipt. */
 const SHARES = { staff: 0.24, rent: 0.1, util: 0.04, comm: 0.06 } as const;
+const COST_SHARE = SHARES.staff + SHARES.rent + SHARES.util + SHARES.comm;
 const TARGET_FOOD_COST = 30;
 const DEFAULT_SALES = 50000;
 const DEFAULT_COST = 19000;
@@ -48,51 +53,89 @@ function monthlyLoss(sales: number, cost: number): number {
   return Math.max(0, ((fc - TARGET_FOOD_COST) / 100) * sales);
 }
 
+function remainder(sales: number, cost: number): number {
+  return sales - cost - sales * COST_SHARE;
+}
+
 function parseDigits(value: string): number {
   const n = parseInt(value.replace(/[^0-9]/g, ''), 10);
   return Number.isFinite(n) ? Math.min(n, 999_999_999) : 0;
 }
 
-function prefersReducedMotion(): boolean {
-  return (
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
-}
-
-export function ReceiptHero() {
-  const t = useTranslations('home.receiptHero');
-  const locale = normalizeLocale(useLocale());
-  const fmt = useCallback((n: number) => formatNumber(Math.round(n), locale), [locale]);
-
-  const [segment, setSegment] = useState<Segment>('restoran');
-  const [sales, setSales] = useState(DEFAULT_SALES);
-  const [cost, setCost] = useState(DEFAULT_COST);
-  const [shownLoss, setShownLoss] = useState(() => monthlyLoss(DEFAULT_SALES, DEFAULT_COST));
-  const [popKey, setPopKey] = useState(0);
+/** Eases a shown number to its target (600ms cubic-out); instant under reduced motion. */
+function useCountUp(target: number, reduce: boolean): number {
+  const [shown, setShown] = useState(target);
+  const shownRef = useRef(target);
   const rafRef = useRef<number | null>(null);
-  const shownRef = useRef(shownLoss);
 
-  const loss = monthlyLoss(sales, cost);
-
-  // Count the loss figure up/down to its new value; instant under reduced motion.
   useEffect(() => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     const from = shownRef.current;
     const start = performance.now();
-    const duration = prefersReducedMotion() ? 0 : 600;
+    const duration = reduce ? 0 : 600;
     const step = (now: number) => {
       const k = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - k, 3);
-      const value = from + (loss - from) * eased;
+      const value = from + (target - from) * eased;
       shownRef.current = value;
-      setShownLoss(value);
+      setShown(value);
       if (k < 1) rafRef.current = requestAnimationFrame(step);
     };
     rafRef.current = requestAnimationFrame(step);
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [loss]);
+  }, [target, reduce]);
+
+  return shown;
+}
+
+/**
+ * The receipt "prints" when it first scrolls into view (the section is no longer above the fold).
+ * Before hydration and under reduced motion the receipt is simply shown.
+ */
+function usePrintOnView(reduce: boolean) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [phase, setPhase] = useState<'idle' | 'armed' | 'play'>('idle');
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reduce || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setPhase('play');
+          io.disconnect();
+        } else {
+          setPhase((p) => (p === 'idle' ? 'armed' : p));
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduce]);
+
+  return { ref, phase: reduce ? 'idle' : phase };
+}
+
+export function ReceiptHero() {
+  const t = useTranslations('home.receiptHero');
+  const tv = useTranslations('homeV2.receipt');
+  const locale = normalizeLocale(useLocale());
+  const fmt = useCallback((n: number) => formatNumber(Math.round(n), locale), [locale]);
+  const reduce = useReducedMotion();
+
+  const [segment, setSegment] = useState<Segment>('restoran');
+  const [sales, setSales] = useState(DEFAULT_SALES);
+  const [cost, setCost] = useState(DEFAULT_COST);
+  const [popKey, setPopKey] = useState(0);
+
+  const loss = monthlyLoss(sales, cost);
+  const left = remainder(sales, cost);
+  const shownLoss = useCountUp(loss, reduce);
+  const shownLeft = useCountUp(left, reduce);
+  const { ref: printRef, phase } = usePrintOnView(reduce);
 
   const onNumber = (setter: (n: number) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setter(parseDigits(e.target.value));
@@ -101,25 +144,15 @@ export function ReceiptHero() {
 
   const foodCost = sales > 0 ? (cost / sales) * 100 : 0;
   const tone = foodCost > 36 ? 'bad' : foodCost > 32 ? 'warn' : 'ok';
-  const toneClass = {
-    bad: { box: 'bg-rose-50', value: 'text-rose-700' },
-    warn: { box: 'bg-amber-50', value: 'text-amber-800' },
-    ok: { box: 'bg-emerald-50', value: 'text-emerald-800' },
-  }[tone];
-
-  const staff = sales * SHARES.staff;
-  const rent = sales * SHARES.rent;
-  const util = sales * SHARES.util;
-  const comm = sales * SHARES.comm;
-  const left = sales - cost - staff - rent - util - comm;
+  const toneClass = { bad: styles.vBad, warn: styles.vWarn, ok: styles.vOk }[tone];
 
   const receiptLines: Array<{ key: string; value: string; highlight?: boolean }> = [
     { key: 'sales', value: `+${fmt(sales)}` },
     { key: 'cost', value: `−${fmt(cost)}`, highlight: true },
-    { key: 'staff', value: `−${fmt(staff)}` },
-    { key: 'rent', value: `−${fmt(rent)}` },
-    { key: 'util', value: `−${fmt(util)}` },
-    { key: 'comm', value: `−${fmt(comm)}` },
+    { key: 'staff', value: `−${fmt(sales * SHARES.staff)}` },
+    { key: 'rent', value: `−${fmt(sales * SHARES.rent)}` },
+    { key: 'util', value: `−${fmt(sales * SHARES.util)}` },
+    { key: 'comm', value: `−${fmt(sales * SHARES.comm)}` },
   ];
 
   const foodCostText = formatNumber(foodCost, locale, {
@@ -127,220 +160,187 @@ export function ReceiptHero() {
     maximumFractionDigits: 1,
   });
   const registerHref = withLocale(locale, REGISTER_PATH);
+  const phaseClass = phase === 'armed' ? styles.armed : phase === 'play' ? styles.play : '';
 
   return (
-    <>
-      <section className="bg-[#0B0F1A] text-white" aria-labelledby="receipt-hero-title">
-        <div className="mx-auto grid max-w-[1200px] items-start gap-10 px-4 pb-16 pt-10 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:pb-20 lg:pt-14">
-          {/* Left: message + segment picker */}
-          <div className="flex min-w-0 flex-col gap-5 lg:pt-6">
-            <span className="text-[13px] font-semibold tracking-[0.1em] text-rose-300">
-              {t('eyebrow')}
+    <section
+      className={`${v2.v2} ${inter.className} ${styles.section}`}
+      id="reqem"
+      aria-labelledby="receipt-hero-title"
+    >
+      <div className={v2.sec}>
+        <div className={v2.wrap}>
+          <Reveal className={v2.secHead}>
+            <span className={v2.eyebrow}>
+              <span className={v2.dot} />
+              {tv('eyebrow')}
             </span>
-            <h1
-              id="receipt-hero-title"
-              key={segment}
-              className={`${styles.rise} m-0 font-display text-[40px] font-bold leading-[1.05] text-white sm:text-[56px] lg:text-[68px] lg:leading-[1.02]`}
-            >
-              {t(`segments.${segment}.title`)}
-            </h1>
-            <p className="m-0 max-w-[520px] text-[17px] leading-relaxed text-slate-300 lg:text-[19px]">
-              {t(`segments.${segment}.sub`)}
-            </p>
+            <h2 id="receipt-hero-title" className={v2.h2}>
+              {tv('title')}
+            </h2>
+            <p>{tv('sub')}</p>
+          </Reveal>
 
-            <fieldset className="m-0 flex flex-col gap-2.5 border-0 p-0">
-              <legend className="mb-2.5 p-0 text-sm font-semibold text-slate-300">
-                {t('whoAreYou')}
-              </legend>
-              <div className="flex flex-wrap gap-2">
-                {SEGMENTS.map((key) => {
-                  const active = key === segment;
-                  return (
-                    <button
-                      key={key}
-                      type="button"
-                      aria-pressed={active}
-                      onClick={() => setSegment(key)}
-                      className={`h-11 rounded-full px-[18px] text-[15px] font-semibold transition-colors focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300 ${
-                        active
-                          ? 'bg-white text-slate-900 ring-2 ring-rose-300'
-                          : 'bg-slate-100 text-slate-700 hover:bg-white'
-                      }`}
-                    >
-                      {t(`segments.${key}.label`)}
-                    </button>
-                  );
-                })}
+          <div className={styles.grid}>
+            {/* Left: segment picker + message + CTAs */}
+            <div className={`${styles.card} ${styles.intro}`}>
+              <fieldset className={styles.seg}>
+                <legend className={styles.segLegend}>{t('whoAreYou')}</legend>
+                <div className={styles.pills}>
+                  {SEGMENTS.map((key) => {
+                    const active = key === segment;
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        aria-pressed={active}
+                        onClick={() => setSegment(key)}
+                        className={`${styles.pill} ${active ? styles.pillOn : ''}`}
+                      >
+                        {t(`segments.${key}.label`)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
+
+              <span className={styles.kicker}>{t('eyebrow')}</span>
+              <h3 key={segment} className={`${styles.segTitle} ${styles.rise}`}>
+                {t(`segments.${segment}.title`)}
+              </h3>
+              <p className={styles.segSub}>{t(`segments.${segment}.sub`)}</p>
+
+              <div className={styles.ctas}>
+                <Link href={registerHref} className={`${v2.btn} ${v2.btnRed} ${styles.ctaBtn}`}>
+                  {t('ctaJoin')}
+                </Link>
+                <a href="#receipt-calc" className={`${v2.btn} ${v2.btnGhost} ${styles.ctaBtn}`}>
+                  {t('ctaCalc')}
+                </a>
               </div>
-            </fieldset>
-
-            <div className="flex flex-wrap gap-3 pt-1">
-              <Link
-                href={registerHref}
-                className="flex h-[54px] items-center rounded-xl bg-[#E11D48] px-[26px] text-[17px] font-semibold text-white transition-colors hover:bg-[#BE123C] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300"
-              >
-                {t('ctaJoin')}
-              </Link>
+              {/* TASK-0502: Baku HoReCa owners write rather than fill forms — a quiet
+                  secondary path, so the block keeps one red button. */}
               <a
-                href="#receipt-calc"
-                className="flex h-[54px] items-center rounded-xl border border-slate-500 px-[26px] text-[17px] font-semibold text-white transition-colors hover:border-slate-300 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300"
+                href={`/api/leads/whatsapp?text=${encodeURIComponent(t('whatsappText'))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.wa}
               >
-                {t('ctaCalc')}
+                <MessageCircle size={18} aria-hidden="true" />
+                {t('whatsappLink')}
               </a>
             </div>
-            {/* TASK-0502: Baku HoReCa owners write rather than fill forms — a quiet
-                secondary path, so the screen keeps one red button. */}
-            <a
-              href={`/api/leads/whatsapp?text=${encodeURIComponent(t('whatsappText'))}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-2 self-start text-[15px] font-semibold text-emerald-300 underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300"
-            >
-              <MessageCircle size={18} aria-hidden="true" />
-              {t('whatsappLink')}
-            </a>
-          </div>
 
-          {/* Right: printed receipt + live calculator */}
-          <div className="flex min-w-0 flex-col gap-4">
-            <div className="relative h-[360px]" role="img" aria-label={t('receiptAria')}>
+            {/* Right: printed receipt + live calculator */}
+            <div className={styles.right}>
               <div
-                className="absolute inset-x-0 top-0 h-3 rounded-md bg-slate-800"
-                aria-hidden="true"
-              />
-              <div
-                className="absolute inset-x-5 bottom-0 top-1.5 overflow-hidden sm:inset-x-8"
-                aria-hidden="true"
+                ref={printRef}
+                className={`${styles.printer} ${phaseClass}`}
+                role="img"
+                aria-label={t('receiptAria')}
               >
-                <div
-                  className={`${styles.paper} flex flex-col gap-[9px] bg-[#FFFDF8] px-6 pb-[30px] pt-[22px] text-slate-900`}
-                >
-                  <div className="flex justify-between text-xs text-slate-600">
-                    <span>{t('receiptTitle')}</span>
-                    <span>{t('receiptBrand')}</span>
-                  </div>
-                  <div className="border-t border-dashed border-slate-400" />
-                  {receiptLines.map((line, i) => (
-                    <div
-                      key={line.key}
-                      className={`${styles.line} flex justify-between gap-3 text-[14px] sm:text-[15px] ${
-                        line.highlight ? 'font-semibold text-rose-700' : 'text-slate-900'
-                      }`}
-                      style={{ animationDelay: `${(0.9 + i * 0.15).toFixed(2)}s` }}
-                    >
-                      <span>{t(`lines.${line.key}`)}</span>
-                      <span className="tabular-nums">{line.value}</span>
+                <div className={styles.slot} aria-hidden="true" />
+                <div className={styles.paperClip} aria-hidden="true">
+                  <div className={styles.paper}>
+                    <div className={styles.rHead}>
+                      <span>{t('receiptTitle')}</span>
+                      <span>{t('receiptBrand')}</span>
                     </div>
-                  ))}
-                  <div className="border-t border-dashed border-slate-400" />
-                  <div
-                    className={`${styles.line} flex justify-between text-[17px] font-semibold text-slate-900 sm:text-[19px]`}
-                    style={{ animationDelay: '1.9s' }}
-                  >
-                    <span>{t('receiptLeft')}</span>
-                    <span
-                      className={`tabular-nums ${left < 0 ? 'text-rose-700' : 'text-emerald-800'}`}
+                    <div className={styles.rule} />
+                    {receiptLines.map((line, i) => (
+                      <div
+                        key={line.key}
+                        className={`${styles.line} ${styles.rLine} ${line.highlight ? styles.rHot : ''}`}
+                        style={{ animationDelay: `${(0.9 + i * 0.15).toFixed(2)}s` }}
+                      >
+                        <span>{t(`lines.${line.key}`)}</span>
+                        <span className={styles.num}>{line.value}</span>
+                      </div>
+                    ))}
+                    <div className={styles.rule} />
+                    <div
+                      className={`${styles.line} ${styles.rTotal}`}
+                      style={{ animationDelay: '1.9s' }}
                     >
-                      {left < 0 ? '−' : ''}
-                      {fmt(Math.abs(left))} ₼
-                    </span>
+                      <span>{t('receiptLeft')}</span>
+                      <span
+                        className={`${styles.num} ${styles.left} ${left < 0 ? styles.neg : styles.pos}`}
+                      >
+                        {shownLeft < 0 ? '−' : ''}
+                        {fmt(Math.abs(shownLeft))} ₼
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div
-              id="receipt-calc"
-              className="flex scroll-mt-28 flex-col gap-3.5 rounded-[18px] bg-white p-5 text-slate-900 sm:p-[22px]"
-            >
-              <span className="text-[13px] font-semibold tracking-[0.08em] text-emerald-800">
-                {t('calcEyebrow')}
-              </span>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <label
-                  htmlFor="receipt-sales"
-                  className="flex flex-col gap-1.5 text-[13px] font-semibold text-slate-700"
+              <div id="receipt-calc" className={`${styles.card} ${styles.calc}`}>
+                <span className={styles.calcEyebrow}>{t('calcEyebrow')}</span>
+                <div className={styles.fields}>
+                  <label htmlFor="receipt-sales" className={styles.field}>
+                    {t('salesLabel')}
+                    <input
+                      id="receipt-sales"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      value={fmt(sales)}
+                      onChange={onNumber(setSales)}
+                      className={styles.input}
+                    />
+                  </label>
+                  <label htmlFor="receipt-cost" className={styles.field}>
+                    {t('costLabel')}
+                    <input
+                      id="receipt-cost"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      value={fmt(cost)}
+                      onChange={onNumber(setCost)}
+                      className={styles.input}
+                    />
+                  </label>
+                </div>
+                <div
+                  key={popKey}
+                  className={`${popKey > 0 ? styles.pop : ''} ${styles.verdict} ${toneClass}`}
+                  aria-live="polite"
                 >
-                  {t('salesLabel')}
-                  <input
-                    id="receipt-sales"
-                    inputMode="numeric"
-                    autoComplete="off"
-                    value={fmt(sales)}
-                    onChange={onNumber(setSales)}
-                    className="h-[50px] min-w-0 rounded-[10px] border border-slate-300 px-3 text-lg tabular-nums text-slate-900 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300"
-                  />
-                </label>
-                <label
-                  htmlFor="receipt-cost"
-                  className="flex flex-col gap-1.5 text-[13px] font-semibold text-slate-700"
-                >
-                  {t('costLabel')}
-                  <input
-                    id="receipt-cost"
-                    inputMode="numeric"
-                    autoComplete="off"
-                    value={fmt(cost)}
-                    onChange={onNumber(setCost)}
-                    className="h-[50px] min-w-0 rounded-[10px] border border-slate-300 px-3 text-lg tabular-nums text-slate-900 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300"
-                  />
-                </label>
+                  <span className={styles.fc}>{foodCostText}%</span>
+                  <span className={styles.verdictText}>
+                    {loss > 0 ? t('verdictLoss', { amount: fmt(shownLoss) }) : t('verdictOk')}
+                    <span className={styles.target}>{t('target')}</span>
+                  </span>
+                </div>
+                <Link href={registerHref} className={`${v2.btn} ${v2.btnRed} ${styles.saveBtn}`}>
+                  {t('saveReport')}
+                </Link>
               </div>
-              <div
-                key={popKey}
-                className={`${popKey > 0 ? styles.pop : ''} flex flex-wrap items-center gap-x-[18px] gap-y-2 rounded-[14px] px-[18px] py-4 ${toneClass.box}`}
-                aria-live="polite"
-              >
-                <span
-                  className={`text-[40px] font-bold tabular-nums sm:text-[44px] ${toneClass.value}`}
+            </div>
+          </div>
+
+          {/* Segment starter tools */}
+          <div className={styles.tools}>
+            <h3 className={styles.toolsTitle}>{t(`segments.${segment}.toolsTitle`)}</h3>
+            <div className={styles.toolGrid}>
+              {SEGMENT_TOOLS[segment].map((href, i) => (
+                <Link
+                  key={`${segment}-${href}`}
+                  href={withLocale(locale, href)}
+                  className={`${styles.tool} ${styles.rise}`}
                 >
-                  {foodCostText}%
-                </span>
-                <span className="min-w-[200px] flex-1 text-[15px] leading-snug text-slate-900">
-                  {loss > 0 ? t('verdictLoss', { amount: fmt(shownLoss) }) : t('verdictOk')}
-                  <br />
-                  <span className="text-slate-600">{t('target')}</span>
-                </span>
-              </div>
-              <Link
-                href={registerHref}
-                className="flex h-[52px] items-center justify-center rounded-xl bg-[#E11D48] px-4 text-center text-base font-semibold text-white transition-colors hover:bg-[#BE123C] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300"
-              >
-                {t('saveReport')}
-              </Link>
+                  <span className={styles.toolName}>
+                    {t(`segments.${segment}.tools.t${i + 1}.name`)}
+                  </span>
+                  <span className={styles.toolDesc}>
+                    {t(`segments.${segment}.tools.t${i + 1}.desc`)}
+                  </span>
+                  <span className={styles.toolGo}>{t('start')}</span>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Segment starter tools */}
-      <section className="bg-[#FAFAF9]" aria-labelledby="receipt-tools-title">
-        <div className="mx-auto flex max-w-[1200px] flex-col gap-6 px-4 py-14 sm:px-6 lg:py-16">
-          <h2
-            id="receipt-tools-title"
-            className="m-0 font-display text-[30px] font-bold text-slate-900 lg:text-[40px]"
-          >
-            {t(`segments.${segment}.toolsTitle`)}
-          </h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            {SEGMENT_TOOLS[segment].map((href, i) => (
-              <Link
-                key={`${segment}-${href}`}
-                href={withLocale(locale, href)}
-                className={`${styles.rise} flex flex-col gap-2 rounded-2xl border border-stone-200 bg-white p-6 text-slate-900 transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300`}
-              >
-                <span className="text-[19px] font-semibold text-slate-900">
-                  {t(`segments.${segment}.tools.t${i + 1}.name`)}
-                </span>
-                <span className="text-[15px] text-slate-600">
-                  {t(`segments.${segment}.tools.t${i + 1}.desc`)}
-                </span>
-                <span className="pt-1.5 text-[15px] font-semibold text-rose-700">{t('start')}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

@@ -3,12 +3,13 @@
  * @purpose Homepage v2 «Necə işləyir» — Tapırıq · Göstəririk · Qururuq · İzləyirik with a phone
  *          whose step cards light up in sync. Auto-advances every 2.6s; click a step to jump.
  * @pattern A (useTranslations) — homeV2.steps
- * @task TASK-0512
+ * @task TASK-0512 (2026-10-08: optional `image` beside the heading)
  */
 
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import styles from './homeV2.module.css';
 import { inter } from './font';
@@ -25,7 +26,10 @@ const CARDS = [
 ] as const;
 const ADVANCE_MS = 2600;
 
-export default function StepsTimeline() {
+/** Optional illustration shown beside the heading (the consulting image from the old `/` block). */
+type StepsImage = { src: string; alt: string; width: number; height: number };
+
+export default function StepsTimeline({ image }: { image?: StepsImage } = {}) {
   const t = useTranslations('homeV2');
   const reduce = useReducedMotion();
   const [picked, setPicked] = useState<number | null>(null);
@@ -55,13 +59,28 @@ export default function StepsTimeline() {
     <section className={`${styles.v2} ${inter.className}`} id="nece">
       <div className={styles.sec}>
         <div className={styles.wrap}>
-          <Reveal className={styles.secHead}>
-            <span className={styles.eyebrow}>
-              <span className={styles.dot} />
-              {t('steps.eyebrow')}
-            </span>
-            <h2 className={styles.h2}>{t('steps.title')}</h2>
-          </Reveal>
+          <div className={styles.stepsTop}>
+            <Reveal className={styles.secHead}>
+              <span className={styles.eyebrow}>
+                <span className={styles.dot} />
+                {t('steps.eyebrow')}
+              </span>
+              <h2 className={styles.h2}>{t('steps.title')}</h2>
+            </Reveal>
+            {image ? (
+              <Reveal className={styles.stepsFig}>
+                <figure className={styles.stepsFrame}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    sizes="(max-width: 980px) 460px, 340px"
+                  />
+                </figure>
+              </Reveal>
+            ) : null}
+          </div>
           <Reveal className={styles.tline}>
             <ol className={styles.tlList}>
               {STEPS.map((key, i) => (
