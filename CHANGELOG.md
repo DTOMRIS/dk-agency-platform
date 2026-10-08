@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+- `TASK-0509` feat(tanitim): satış üçün tanıtım səhifəsi — `dkagency.com.tr/tanitim`, Kutlerri.ai üslubunda yenidən quruldu: «Bu ay pul hara getdi?» başlığı, Xərc / Gəlir tabları (Food cost, Delivery komissiyası, OCAQ, Menyu matrisi — Canlı; KAZAN AI — Beta), hər modulda «siqnal → addım» canlı kartı, 3 addımlı iş axını, canlı food cost kalkulyatoru, pulsuz alətlər / xüsusi xidmət bölməsi, Qurucu bölməsi və WhatsApp ilə pulsuz diaqnostika. Bütün nümunə ekranlarda «Nümunə məlumat» yazılır; mənbəsiz rəqəm yoxdur. Ana səhifə dəyişmədi.
+
+- `TASK-0508` fix(ci): avtomatik yoxlama (`dk:validate`) 29 sentyabrdan bəri brauzer testlərini əslində işlətmirdi və server yoxlamalarını başqa layihənin serverinə qarşı edə bilirdi — indi öz DK serverini qaldırır, 52 smoke testi həqiqətən işləyir (34 keçdi, 18 açar olmadığı üçün atlandı, 0 xəta); Node test skriptləri ayrıca yoxlanır; yoxlama artıq `package-lock.json`-u dəyişmir.
+
+- `TASK-0510` fix(seo): sayt linki WhatsApp/Telegram-da paylaşılanda yeni önizləmə — real DK loqosu, düzgün yüklənən şriftlər (Playfair başlıq), «HoReCa İdarəetmə, KAZAN AI & Biznes Ekosistemi» başlığı və KAZAN AI · 18+ Alət · Ekspert Bloq · Sektor Nəbzi nişanları; başlıq və açıqlama 4 dildə yeniləndi.
+
 - `TASK-0507` feat(b2b-panel): üzv portalında «Bu bölmə hazırlanır» yazan 3 səhifə işləyir — **Gələn təkliflər** (elanlarınıza maraq göstərənlər, zəng/WhatsApp/e-poçt düymələri), **Bildirişlər** (elan yayımlandı / rədd edildi və səbəbi / yoxlanılır, yeni təklif), **Dəstək** (WhatsApp, Telegram, KAZAN AI və tez-tez verilən suallar); 4 dildə.
 
 - `TASK-0505` feat(marketinq-ocagi): «Yaxında» alət kartlarında «Hazır olanda xəbər ver» düyməsi — üzvün marağı qeydə alınır (bir üzv bir alət üçün bir dəfə sayılır), admin həmin kartda neçə üzvün gözlədiyini görür; 4 dildə.

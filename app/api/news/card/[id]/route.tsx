@@ -7,6 +7,7 @@
 import { ImageResponse } from 'next/og';
 import { NextResponse, type NextRequest } from 'next/server';
 import { readFile } from 'node:fs/promises';
+import { loadGoogleFont as loadFont } from '@/lib/og/load-google-font';
 import path from 'node:path';
 import { and, eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
@@ -84,15 +85,6 @@ function plainSummary(text: string, max = 190): string {
   const cut = clean.slice(0, max);
   const sentence = cut.lastIndexOf('. ');
   return sentence > 80 ? cut.slice(0, sentence + 1) : `${cut.slice(0, cut.lastIndexOf(' '))}…`;
-}
-
-/** Google Fonts-dan yalnız lazım olan glifləri TTF kimi yükləyir (satori woff2 oxumur). */
-async function loadFont(family: string, weight: number, text: string): Promise<ArrayBuffer> {
-  const url = `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&text=${encodeURIComponent(text)}`;
-  const css = await (await fetch(url)).text();
-  const src = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/);
-  if (!src) throw new Error(`font not found: ${family}`);
-  return (await fetch(src[1])).arrayBuffer();
 }
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

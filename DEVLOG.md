@@ -1,5 +1,37 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0509: feat(tanitim): /tanitim
+
+**Why:** 07.10-da satış üçün tanıtım prototipi hazırlanmışdı (`~/Desktop/DK-Agency-Tanitim-Prototip.html`, DK reposunda da commit olunmamış nüsxə) — sayta qoşulmamışdı.
+
+**What:** Prototip müstəqil səhifədir (öz nav/footer/CSS/JS), React-ə köçürmək dizaynı pozardı — təmizlənmiş nüsxə `public/tanitim/index.html`, `app/tanitim/route.ts` onu `/tanitim`-də verir (middleware yalnız dil prefiksli yolları tutur). Təmizləmə skripti repoda (`scripts/tanitim/clean_tanitim.py`). Çıxarılanlar: «240+» (kodda qarşılığı yox), VÖEN sətri (Doğan: VÖEN yoxdur), daxili TASK nişanları, og diaqnostika kartı. Əlavə: og/canonical meta, B2B grid-in mobil 1 sütunu. «Təsisçi» qaldı (Doğan təsdiqi). Ana səhifə toxunulmadı.
+
+**Yoxlama:** lokal `next dev` + Playwright: `/tanitim` 200 `text/html`, 50.6 KB; mətndə VÖEN/TASK-0/240/og:title yoxdur; kalkulyator 60 000 ₼ + 45% → «108,000 ₼ / il» (60 000 × 15% × 12); JS xətası 0; 390px scrollWidth 390 (əvvəl 556), 1280px 1280. Tam səhifə ekran görüntüləri baxıldı.
+
+## 2026-10-08 — TASK-0509 (2): /tanitim Kutlerri üslubunda yenidən
+
+**Why:** Doğan kutlerri.ai-ni nümunə verdi («dizaynı süper»). Haiku agentinin sətir-sətir yoxlaması prototipdə mənbəsiz iddialar tapdı və onlar əl ilə təsdiqləndi: «Skift/Restaurant Dive hər 6 saatdan bir taranır» (fetch-news cron TASK-0480-də söndürülüb, mənbələr siyahıda yoxdur), «25+ lent» (kodda 6–8), «İtkinin 80%-i 4 məhsulda», KAZAN cavablarında «ROI 14 ay», «100 addım = 1.5 saat», «3 saniyə», «Canlı API … TQTA bazasından cəlb», təsdiqsiz sitat.
+
+**What:** `public/tanitim/index.html` sıfırdan yazıldı (müstəqil HTML, `app/tanitim/route.ts` dəyişmədi). Doğan qərarları (08.10): «40 il» doğrudur, «Qurucu», «Pulsuz diaqnostika» (müddət yazılmır), model = razılaşan şirkətə xüsusi xidmət, üzvlük «tezliklə». Statuslar koda uyğundur: 18 alət `app/toolkit/*`, delivery-calc, menu-matrix, food-cost; KAZAN AI beta (`messages/az.json`); OCAQ mətni ana səhifədəki «10+ filiallı şəbəkədə hər gün işləyir» ilə eyni. WhatsApp CTA-ları `/api/leads/whatsapp` üzərindən (nömrə `lib/contact-channels.ts`-dən). Nümunə cədvəllərdəki rəqəmlər daxili ardıcıldır (məs. 3,40/7,50 = 45%, 20 ₼ × 25% = 5 ₼). `prefers-reduced-motion` dəstəklənir, hər canlı kartda dayandırma düyməsi var. `scripts/tanitim/clean_tanitim.py` artıq istifadə olunmur (prototipi yenidən yazsa yeni səhifəni silər) — silinməsi Doğan-a verildi.
+
+**Yoxlama:** Playwright (file://) 390 və 1280: scrollWidth = clientWidth (390/390, 1280/1280), JS xətası 0, kalkulyator 60 000 ₼ + 45% → «9 000 ₼ / ay»; ekran görüntülərinə baxıldı (hero, delivery tabı, mobil tam səhifə). Mətndə VÖEN/TASK-0/240/Skift/25+/14 ay/100 addım/80%/30 dəq/Təsisçi yoxdur.
+
+## 2026-10-08 — TASK-0508: fix(ci): dk:validate həqiqətən yoxlasın
+
+**Why:** TASK-0507 zamanı `/tmp/dk-playwright.log`-da Playwright çıxışı yox, tək sətir «ALL PASS (247 yoxlama)» görüldü. Səbəb: `e2e/az-format.test.ts` (29.09, TASK-0462) adi tsx skriptidir və import zamanı `process.exit(0)` çağırır; Playwright testDir-dəki bütün faylları toplayanda proses heç bir spec başlamadan 0 ilə çıxırdı. Üstəlik 6–8 addımları `localhost:3000`-ə curl edirdi — validator DK serverini özü qaldırmırdı. 29.09-dan bəri hər «dk-validator PASS» (bu sessiyada TASK-0503–0507 daxil) 6–8 üçün sübut deyildi.
+
+**What:** `testMatch: '**/*.spec.ts'`; validator build-dən sonra öz `next start`-ını boş portda qaldırır və cavabda «DK Agency» axtarır; Playwright xülasəsi olmayan exit 0 = FAIL; Node skriptləri 8a-da; commit-dən sonra dəyişən fayllar `origin/main...HEAD`-dən; `npm install --no-save`. Yan tapıntı: TASK-0510 OG şəkli build prerender-ində Google Fonts alınmayanda boş `fonts: []` ilə satori «No fonts are loaded» verdi və build yıxıldı → OG şəkli `force-dynamic`, boş fonts ötürülmür.
+
+**Yoxlama (ilk real qaçış):** `[6] http://localhost:3901` core routes 200/307; Playwright `34 passed, 18 skipped` (0 failed); Node skriptləri 7/7; build 210/210. 18 skip — `JWT_SECRET` env yoxdur; açıq qərar: validator test açarı versin? (bəzi testlər DB-yə yazır, lokal DB-nin canlı olub-olmadığı bilinmir).
+
+## 2026-10-08 — TASK-0510: fix(seo): link önizləməsi
+
+**Why:** Doğan: «dkagency.com.tr-ni WhatsApp-a kopyalayanda çıxan yazı və şəkil şık deyil». Canlı yoxlama (bir sorğu): og:image «DK» yazılı qırmızı kvadrat + `fontFamily: 'sans-serif'` — satori-yə şrift verilmirdi, 800 qalınlıq tətbiq olunmurdu; mətn tanıtım prototipindəki tövsiyəyə uyğun deyildi.
+
+**What:** OG şəkli real loqo + Playfair/DM Sans (Google Fonts, yalnız lazımi gliflər); şrift endirilməsə standart şriftə düşür ki, build şəbəkəsiz yerdə yıxılmasın. Başlıq/açıqlama 4 dildə: kök `/` üçün `app/page.tsx` metadata, dillər üçün `[locale]/layout` openGraph — `app/layout.tsx` qorunan fayldır (pre-commit bloku), toxunulmadı. `[locale]` səviyyəsində openGraph verildikdə kök `opengraph-image` həmin seqmentdə düşürdü (`/ru`-da og:image yox idi) — şəkil açıq yazıldı. Şrift yükləyici `lib/og/load-google-font.ts`-ə çıxarıldı, xəbər kartı da onu işlədir.
+
+**Yoxlama:** lokal `next dev`: `/opengraph-image` → 200, 134 KB PNG (gözlə yoxlandı: loqo, Playfair başlıq, 4 nişan); `/`, `/ru`, `/en`, `/tr`, `/ru/toolkit` HTML-də yeni og:title + og:image; `/toolkit` (prefikssiz) hələ köhnə mətn — root layout icazəsi gözləyir. eslint 0 xəta. Canlı sübut deploy sonra.
+
 ## 2026-10-08 — TASK-0507: feat(b2b-panel): 3 boş səhifə
 
 **Why:** `teklifler`, `bildirimler`, `destek` 13.09 HANDOFF-dan bəri «Bu bölmə hazırlanır» idi (mətn də hardcoded AZ). Üzv menyudan basıb boş səhifə görürdü; panelin «Gələn Təkliflər» sayğacı da təklif siyahısına aparmırdı.

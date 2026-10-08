@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DK Agency — Bu ay pul hara getdi?</title>
+<meta name="description" content="DK Agency: restoran və HoReCa biznesi üçün food cost, P&L, delivery komissiyası və gündəlik nəzarət. Rəqəmləri görürük, addımı birlikdə atırıq. Pulsuz diaqnostika.">
+<link rel="canonical" href="https://dkagency.com.tr/tanitim">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dkagency.com.tr/tanitim">
+<meta property="og:title" content="DK Agency — Bu ay pul hara getdi?">
+<meta property="og:description" content="Food cost, P&L, delivery komissiyası və gündəlik nəzarət. Rəqəmləri görürük, addımı birlikdə atırıq.">
+<meta property="og:image" content="https://dkagency.com.tr/opengraph-image">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#E94560; --red-d:#D63B54; --red-soft:#FDECEF;
+  --ink:#0F172A; --ink-2:#334155; --muted:#5B6474;
+  --cream:#F6F1E9; --cream-2:#EEE6D8; --card:#FFFFFF; --line:#E4DCCD;
+  --green:#047857; --green-soft:#E7F6EF; --amber:#B45309; --amber-soft:#FEF3E2;
+  --r:20px; --shadow:0 1px 2px rgba(15,23,42,.04),0 12px 32px -12px rgba(15,23,42,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(246,241,233,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.mark{width:36px;height:36px;border-radius:10px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:900;font-size:14px;letter-spacing:-.02em;flex:none}
+.brand b{font-size:17px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.nav-links{display:flex;gap:26px}
+.nav-links a{font-size:14.5px;font-weight:600;color:var(--ink-2);text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s,background .15s,box-shadow .15s;white-space:nowrap;font-family:inherit}
+.btn:hover{transform:translateY(-1px)}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 8px 20px -8px rgba(233,69,96,.6)}
+.btn-red:hover{background:var(--red-d)}
+.btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-sm{height:40px;padding:0 16px;font-size:14px}
+
+/* HERO */
+.hero{padding:72px 0 56px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--red)}
+h1{font-size:clamp(40px,6.2vw,76px);line-height:1.02;letter-spacing:-.045em;font-weight:900;margin:18px 0 20px}
+h1 em{font-style:normal;color:var(--red)}
+.lead{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);max-width:560px;margin:0 0 30px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
+
+/* MOCK CARD (signal → action) */
+.stage{position:relative;padding-bottom:70px}
+.mock{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:24px}
+.mock-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:14px}
+.mock-title{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.mock-sub{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.mock-kpi{text-align:right}
+.mock-kpi small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mock-kpi b{font-size:30px;font-weight:900;color:var(--red);letter-spacing:-.03em;transition:color .4s}
+.mock-kpi.ok b{color:var(--green)}
+table.mt{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}
+.mt th{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:12px 6px 8px}
+.mt td{padding:10px 6px;border-top:1px solid #EFE9DE;font-weight:600}
+.mt td.num{font-variant-numeric:tabular-nums}
+.mt .was{color:#94A3B8;text-decoration:line-through;font-weight:500;margin-left:6px;font-size:12.5px}
+.mt .new{color:var(--red);font-weight:800}
+.mt tr.hl td{background:#FBF6EE}
+.mock-foot{display:flex;justify-content:space-between;gap:10px;margin-top:12px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-top:2px solid var(--ink);padding-top:10px}
+.sample{font-size:12px;color:var(--muted);text-align:right;margin-top:10px}
+
+.agent{position:absolute;left:-28px;bottom:0;width:min(340px,92%);background:#fff;border:1.5px solid #F4B8C3;border-radius:18px;padding:16px 18px;box-shadow:0 24px 48px -18px rgba(233,69,96,.45)}
+.agent-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.agent-tag{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.agent-tag .sq{width:18px;height:18px;border-radius:5px;background:var(--red-soft);display:grid;place-items:center}
+.agent-tag .sq .i{width:12px;height:12px;stroke-width:3}
+.pause{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+.pause .i{width:12px;height:12px}
+.agent-msg{font-size:15px;font-weight:700;line-height:1.4;margin:0 0 12px;min-height:42px}
+.agent-btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:10px;background:var(--red);color:#fff;font-weight:700;font-size:14px;border:0;font-family:inherit;transition:background .3s}
+.agent-btn.done{background:var(--green)}
+.agent-btn .i{width:15px;height:15px}
+
+/* FACT STRIP */
+.facts{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--cream-2)}
+.facts .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.fact{padding:26px 18px;border-left:1px solid var(--line)}
+.fact:first-child{border-left:0}
+.fact b{display:block;font-size:30px;font-weight:900;letter-spacing:-.03em}
+.fact span{font-size:13.5px;color:var(--ink-2);font-weight:600}
+
+/* SECTIONS */
+.sec{padding:96px 0}
+.sec-head{max-width:760px;margin-bottom:44px}
+h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.04em;font-weight:900;margin:14px 0 14px}
+.sec-head p{font-size:18px;color:var(--ink-2);margin:0}
+
+/* TABS (Gəlir / Xərc) */
+.tabbar{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding:8px 0 20px;border-bottom:1px solid var(--line);margin-bottom:44px}
+.tabbar::-webkit-scrollbar{display:none}
+.tab-group{font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:0 10px 0 4px;white-space:nowrap}
+.tab-sep{width:1px;height:22px;background:var(--line);margin:0 10px;flex:none}
+.tab{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;border:0;background:transparent;font:600 15px Inter,sans-serif;color:var(--ink);cursor:pointer;white-space:nowrap}
+.tab .st{width:8px;height:8px;border-radius:50%;background:var(--red)}
+.tab .st.beta{background:transparent;border:2px solid var(--amber)}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.panel{display:none;grid-template-columns:1fr 1.05fr;gap:56px;align-items:start}
+.panel.active{display:grid;animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.p-eyebrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;border-radius:999px}
+.status.live{background:var(--green-soft);color:var(--green)}
+.status.beta{background:var(--amber-soft);color:var(--amber)}
+.status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.panel h3{font-size:clamp(28px,3.4vw,42px);line-height:1.08;letter-spacing:-.035em;font-weight:900;margin:16px 0 22px}
+.stat{display:flex;gap:22px;align-items:center;background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:18px;padding:22px 26px;margin-bottom:30px}
+.stat b{font-size:clamp(34px,4vw,52px);font-weight:900;letter-spacing:-.04em;color:var(--red);line-height:1;white-space:nowrap}
+.stat p{margin:0;font-size:15.5px;color:var(--ink-2)}
+.stat small{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.steps{list-style:none;margin:0 0 26px;padding:0;display:grid;gap:20px}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:16px}
+.steps .n{width:34px;height:34px;border-radius:10px;background:var(--red-soft);color:var(--red);display:grid;place-items:center;font-weight:800;font-size:14px}
+.steps h4{margin:3px 0 4px;font-size:18px;font-weight:800;letter-spacing:-.01em}
+.steps p{margin:0;color:var(--muted);font-size:15px}
+.panel .stage{padding-bottom:80px}
+
+/* HOW */
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.how-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)}
+.how-card .n{font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--red)}
+.how-card h4{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:10px 0 8px}
+.how-card p{margin:0;color:var(--muted);font-size:15px}
+
+/* CALC */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:28px;background:var(--ink);color:#fff;border-radius:28px;padding:44px}
+.calc h3{font-size:clamp(26px,3vw,36px);font-weight:900;letter-spacing:-.03em;margin:12px 0 10px}
+.calc p.d{color:#CBD5E1;margin:0 0 26px;font-size:15.5px}
+.calc .eyebrow{color:#FDA4B4}
+.field{margin-bottom:22px}
+.field label{display:flex;justify-content:space-between;font-weight:700;font-size:14.5px;margin-bottom:10px;color:#E2E8F0}
+.field label span:last-child{color:#fff;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--red);height:28px}
+.calc-out{background:#fff;color:var(--ink);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:14px}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.calc-box{background:var(--cream);border-radius:14px;padding:14px 16px}
+.calc-box small{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.calc-box b{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums}
+.calc-big{border:1.5px solid #F4B8C3;background:var(--red-soft);border-radius:16px;padding:18px}
+.calc-big small{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red-d)}
+.calc-big b{display:block;font-size:clamp(30px,4vw,40px);font-weight:900;letter-spacing:-.03em;color:var(--red);font-variant-numeric:tabular-nums}
+.calc-big p{margin:4px 0 0;font-size:13px;color:var(--ink-2)}
+
+/* SERVICE */
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.svc-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:32px;box-shadow:var(--shadow)}
+.svc-card.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.svc-card .tag{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.svc-card.dark .tag{color:#FDA4B4}
+.svc-card h4{font-size:26px;font-weight:900;letter-spacing:-.03em;margin:10px 0 14px}
+.svc-card ul{margin:0 0 22px;padding:0;list-style:none;display:grid;gap:10px}
+.svc-card li{display:flex;gap:10px;font-size:15.5px;color:var(--ink-2)}
+.svc-card.dark li{color:#CBD5E1}
+.svc-card li .i{color:var(--green);margin-top:3px}
+.svc-card.dark li .i{color:#6EE7B7}
+.soon{display:inline-block;font-size:12.5px;font-weight:700;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:6px 12px}
+.svc-card.dark .soon{color:#94A3B8;border-color:#334155}
+
+/* FOUNDER */
+.founder{display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:28px;padding:40px;box-shadow:var(--shadow)}
+.avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--ink));color:#fff;display:grid;place-items:center;font-size:40px;font-weight:900}
+.founder h3{font-size:30px;font-weight:900;letter-spacing:-.03em;margin:8px 0 4px}
+.founder .role{font-weight:700;color:var(--red);margin-bottom:14px}
+.founder p{margin:0;color:var(--ink-2);font-size:16.5px;max-width:640px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-size:13px;font-weight:700;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+
+/* CTA + FOOTER */
+.cta{background:var(--ink);color:#fff;border-radius:32px;padding:64px 40px;text-align:center}
+.cta h2{color:#fff;margin:12px auto 14px;max-width:760px}
+.cta p{color:#CBD5E1;font-size:18px;max-width:620px;margin:0 auto 30px}
+.cta .eyebrow{color:#FDA4B4}
+.cta-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.footer{padding:56px 0 36px;font-size:14.5px;color:var(--ink-2)}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+.footer h5{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:0 0 14px}
+.footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.footer a{text-decoration:none}
+.footer a:hover{color:var(--red)}
+.f-bot{border-top:1px solid var(--line);margin-top:36px;padding-top:20px;font-size:13px;color:var(--muted)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .panel.active{animation:none}
+  .btn:hover{transform:none}
+}
+
+/* RESPONSIVE */
+@media (max-width:980px){
+  .hero-grid,.panel.active,.calc,.svc{grid-template-columns:1fr}
+  .hero-grid{gap:40px}
+  .panel.active{gap:36px}
+  .how{grid-template-columns:1fr}
+  .facts .wrap{grid-template-columns:repeat(2,1fr)}
+  .fact:nth-child(3){border-left:0}
+  .fact:nth-child(n+3){border-top:1px solid var(--line)}
+  .f-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .hero{padding:44px 0 36px}
+  .sec{padding:64px 0}
+  .nav .btn-sm{height:38px;padding:0 13px;font-size:13px}
+  .brand b{font-size:15.5px}
+  .agent,.panel .agent{position:relative;left:auto;right:auto;bottom:auto;width:100%;margin-top:-28px}
+  .stage,.panel .stage{padding-bottom:0}
+  .mock{padding:18px}
+  .mt{font-size:12.5px}
+  .mt th{font-size:9.5px;letter-spacing:.08em;padding:10px 4px 6px}
+  .mt td{padding:9px 4px}
+  .stat{flex-direction:column;align-items:flex-start;gap:10px;padding:20px}
+  .calc{padding:26px 18px;border-radius:22px}
+  .calc-row{grid-template-columns:1fr}
+  .founder{grid-template-columns:1fr;padding:28px 22px;text-align:left}
+  .avatar{width:84px;height:84px;font-size:28px}
+  .cta{padding:44px 20px;border-radius:24px}
+  .f-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Əsas menyu">
+  <div class="wrap">
+    <a class="brand" href="https://dkagency.com.tr"><span class="mark">DK</span><b>DK Agency</b></a>
+    <div class="nav-links">
+      <a href="#modullar">Modullar</a>
+      <a href="#nece">Necə işləyir</a>
+      <a href="#hesabla">Hesabla</a>
+      <a href="#xidmet">Xidmət</a>
+      <a href="#qurucu">Qurucu</a>
+    </div>
+    <a class="btn btn-red btn-sm" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">
+      <svg class="i" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.6L3 21l1.9-5.7A8.4 8.4 0 1 1 21 11.5z"/></svg>
+      <span>Pulsuz diaqnostika</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="rv">
+      <span class="eyebrow"><span class="dot"></span>HoReCa · Restoran · Kafe · Otel</span>
+      <h1>Bu ay pul<br><em>hara getdi?</em></h1>
+      <p class="lead">Food cost, kadr, delivery komissiyası, itki. Rəqəmlərinizi bir yerdə görürük, harada sızdığını göstəririk və düzəldən addımı sizinlə birlikdə atırıq.</p>
+      <div class="hero-cta">
+        <a class="btn btn-red" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">Pulsuz diaqnostika istə</a>
+        <a class="btn btn-ghost" href="#nece">Necə işləyir
+          <svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="stage rv" data-agent="hero">
+      <div class="mock">
+        <div class="mock-head">
+          <div>
+            <div class="mock-title">Aylıq xərc nəzarəti</div>
+            <div class="mock-sub">Kafe · aylıq dövriyyə 60 000 ₼</div>
+          </div>
+          <div class="mock-kpi" data-kpi>
+            <small>Food cost</small>
+            <b data-kpi-val>38%</b>
+          </div>
+        </div>
+        <table class="mt">
+          <thead><tr><th>Göstərici</th><th>Faktiki</th><th>Hədəf</th><th>Fərq / ay</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>Food cost</td><td class="num">38%</td><td class="num">30%</td><td class="num new">4 800 ₼</td></tr>
+            <tr><td>Delivery komissiyası</td><td class="num">Wolt + Bolt</td><td class="num">—</td><td class="num">hesablanır</td></tr>
+            <tr><td>Kadr xərci</td><td class="num">dövriyyəyə görə</td><td class="num">—</td><td class="num">hesablanır</td></tr>
+            <tr><td>İtki / tullantı</td><td class="num">jurnal</td><td class="num">—</td><td class="num">gündəlik</td></tr>
+          </tbody>
+        </table>
+        <div class="mock-foot"><span>Food cost · P&amp;L · OCAQ</span><span>DK Agency</span></div>
+      </div>
+      <div class="sample">Nümunə məlumat — yalnız təsvir üçün.</div>
+      <div class="agent" role="status" aria-live="polite">
+        <div class="agent-top">
+          <span class="agent-tag"><span class="sq"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span data-tag>Siqnal</span></span>
+          <button class="pause" type="button" aria-label="Animasiyanı dayandır" data-pause><svg class="i" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button>
+        </div>
+        <p class="agent-msg" data-msg>Food cost 38%, hədəf 30%. Ayda 4 800 ₼ artıq xammal xərci.</p>
+        <span class="agent-btn" data-btn>Plan hazırla</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FACTS (yalnız yoxlanmış faktlar) -->
+<section class="facts" aria-label="Faktlar">
+  <div class="wrap">
+    <div class="fact"><b>40 il</b><span>HoReCa idarəetmə təcrübəsi</span></div>
+    <div class="fact"><b>18</b><span>pulsuz hesablama aləti</span></div>
+    <div class="fact"><b>10+</b><span>filiallı şəbəkədə hər gün işləyən OCAQ</span></div>
+    <div class="fact"><b>4 dil</b><span>AZ · RU · EN · TR</span></div>
+  </div>
+</section>
+
+<!-- MODULES: Gəlir / Xərc -->
+<section class="sec" id="modullar">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow"><span class="dot"></span>Modullar</span>
+      <h2>Bəziləri pul gətirir. Bəziləri pulu qoruyur.</h2>
+      <p>Hər modul bir sualı cavablandırır və sonunda bir addım verir. Status nişanı realdır: <b>Canlı</b> işləyir, <b>Beta</b> sınaq mərhələsindədir.</p>
+    </div>
+
+    <div class="tabbar" role="tablist" aria-label="Modullar">
+      <span class="tab-group">Xərc</span>
+      <button class="tab" role="tab" aria-selected="true" aria-controls="p-foodcost" id="t-foodcost"><span class="st"></span>Food cost</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-delivery" id="t-delivery"><span class="st"></span>Delivery komissiyası</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-ocaq" id="t-ocaq"><span class="st"></span>OCAQ gündəlik nəzarət</button>
+      <span class="tab-sep"></span>
+      <span class="tab-group">Gəlir</span>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-menu" id="t-menu"><span class="st"></span>Menyu matrisi</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="p-kazan" id="t-kazan"><span class="st beta"></span>KAZAN AI</button>
+    </div>
+
+    <!-- FOOD COST -->
+    <div class="panel active" role="tabpanel" id="p-foodcost" aria-labelledby="t-foodcost">
+      <div>
+        <div class="p-eyebrow"><span class="eyebrow">↓ Xərc nəzarəti</span><span class="status live">Canlı</span></div>
+        <h3>Food Cost &amp; Resept Kalkulyatoru</h3>
+        <div class="stat"><b>600 ₼</b><p>60 000 ₼ aylıq dövriyyədə food cost-un hər 1 faizi ayda 600 ₼ deməkdir.<small>Hesablama: 60 000 × 1% = 600 ₼</small></p></div>
+        <ul class="steps">
+          <li><span class="n">1</span><div><h4>Resepti yazın</h4><p>Hər yeməyin tərkibi, qramı və alış qiyməti.</p></div></li>
+          <li><span class="n">2</span><div><h4>Maya dəyərini görün</h4><p>Porsiya maya dəyəri və satış qiymətinə görə food cost faizi.</p></div></li>
+          <li><span class="n">3</span><div><h4>Qiyməti və porsiyanı düzəldin</h4><p>Hədəfdən çıxan yeməklər üçün qiymət və ya porsiya qərarı.</p></div></li>
+        </ul>
+        <a class="btn btn-dark btn-sm" href="https://dkagency.com.tr/toolkit/food-cost" target="_blank" rel="noopener">Aləti aç →</a>
+      </div>
+      <div class="stage" data-agent="foodcost">
+        <div class="mock">
+          <div class="mock-head"><div><div class="mock-title">Resept maya dəyəri</div><div class="mock-sub">Menyu · 5 yemək</div></div><div class="mock-kpi" data-kpi><small>Orta food cost</small><b data-kpi-val>33%</b></div></div>
+          <table class="mt">
+            <thead><tr><th>Yemək</th><th>Maya</th><th>Satış</th><th>Food cost</th></tr></thead>
+            <tbody>
+              <tr><td>Toyuq dürüm</td><td class="num">2,10 ₼</td><td class="num">6,50 ₼</td><td class="num">32%</td></tr>
+              <tr class="hl"><td>Ət dürüm</td><td class="num">3,40 ₼</td><td class="num">7,50 ₼</td><td class="num new">45%</td></tr>
+              <tr><td>Lavaş boşqab</td><td class="num">3,00 ₼</td><td class="num">9,00 ₼</td><td class="num">33%</td></tr>
+              <tr><td>Kartof fri</td><td class="num">0,70 ₼</td><td class="num">3,00 ₼</td><td class="num">23%</td></tr>
+              <tr><td>Ayran</td><td class="num">0,45 ₼</td><td class="num">1,50 ₼</td><td class="num">30%</td></tr>
+            </tbody>
+          </table>
+          <div class="mock-foot"><span>Resept · alış qiyməti · satış</span><span>Hədəf 28–32%</span></div>
+        </div>
+        <div class="sample">Nümunə məlumat — yalnız təsvir üçün.</div>
+        <div class="agent" role="status" aria-live="polite">
+          <div class="agent-top"><span class="agent-tag"><span class="sq"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span data-tag>Siqnal</span></span><button class="pause" type="button" aria-label="Animasiyanı dayandır" data-pause><svg class="i" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button></div>
+          <p class="agent-msg" data-msg>Ət dürüm 45%: hədəfdən 13 faiz yuxarı.</p>
+          <span class="agent-btn" data-btn>Qiyməti yoxla</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELIVERY -->
+    <div class="panel" role="tabpanel" id="p-delivery" aria-labelledby="t-delivery">
+      <div>
+        <div class="p-eyebrow"><span class="eyebrow">↓ Xərc nəzarəti</span><span class="status live">Canlı</span></div>
+        <h3>Delivery Komissiya Kalkulyatoru</h3>
+        <div class="stat"><b>Netto</b><p>Wolt, Bolt Food, Yango və öz çatdırılmanız üçün komissiya və food cost çıxandan sonra əlinizdə qalan real pul.</p></div>
+        <ul class="steps">
+          <li><span class="n">1</span><div><h4>Platformanı və komissiyanı yazın</h4><p>Hər platformanın faizi və aylıq sifariş həcmi.</p></div></li>
+          <li><span class="n">2</span><div><h4>Sifariş başına netto görün</h4><p>Komissiya + food cost çıxandan sonra qalan məbləğ.</p></div></li>
+          <li><span class="n">3</span><div><h4>Menyu və qiyməti ayırın</h4><p>Delivery menyusu, qiymət fərqi və ya combo qərarı.</p></div></li>
+        </ul>
+        <a class="btn btn-dark btn-sm" href="https://dkagency.com.tr/toolkit/delivery-calc" target="_blank" rel="noopener">Aləti aç →</a>
+      </div>
+      <div class="stage" data-agent="delivery">
+        <div class="mock">
+          <div class="mock-head"><div><div class="mock-title">Sifariş başına netto</div><div class="mock-sub">Səbət 20 ₼ · food cost 32%</div></div><div class="mock-kpi" data-kpi><small>Netto</small><b data-kpi-val>8,60 ₼</b></div></div>
+          <table class="mt">
+            <thead><tr><th>Kanal</th><th>Komissiya</th><th>Food cost</th><th>Netto</th></tr></thead>
+            <tbody>
+              <tr><td>Zalda satış</td><td class="num">0%</td><td class="num">6,40 ₼</td><td class="num">13,60 ₼</td></tr>
+              <tr class="hl"><td>Platforma A</td><td class="num">25%</td><td class="num">6,40 ₼</td><td class="num new">8,60 ₼</td></tr>
+              <tr><td>Öz çatdırılma</td><td class="num">kuryer 3 ₼</td><td class="num">6,40 ₼</td><td class="num">10,60 ₼</td></tr>
+            </tbody>
+          </table>
+          <div class="mock-foot"><span>Komissiya · food cost · kuryer</span><span>Netto / sifariş</span></div>
+        </div>
+        <div class="sample">Nümunə məlumat — yalnız təsvir üçün.</div>
+        <div class="agent" role="status" aria-live="polite">
+          <div class="agent-top"><span class="agent-tag"><span class="sq"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span data-tag>Siqnal</span></span><button class="pause" type="button" aria-label="Animasiyanı dayandır" data-pause><svg class="i" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button></div>
+          <p class="agent-msg" data-msg>Platformada hər 20 ₼-lıq sifarişdən 5 ₼ komissiyaya gedir.</p>
+          <span class="agent-btn" data-btn>Delivery menyusunu hazırla</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- OCAQ -->
+    <div class="panel" role="tabpanel" id="p-ocaq" aria-labelledby="t-ocaq">
+      <div>
+        <div class="p-eyebrow"><span class="eyebrow">↓ Xərc nəzarəti</span><span class="status live">Canlı</span></div>
+        <h3>OCAQ: çoxfilialı şəbəkə üçün gündəlik nəzarət</h3>
+        <div class="stat"><b>10+</b><p>filiallı şəbəkədə hər gün işləyir: növbə checklist-i, HACCP, canlı satış, kassa ↔ bank üzləşdirməsi, itki nəzarəti.</p></div>
+        <ul class="steps">
+          <li><span class="n">1</span><div><h4>Növbə başlayır</h4><p>Açılış checklist-i və HACCP jurnalı telefondan doldurulur.</p></div></li>
+          <li><span class="n">2</span><div><h4>Gün ərzində izləyir</h4><p>Canlı satış, kassa və bank üzləşdirməsi, itki qeydləri.</p></div></li>
+          <li><span class="n">3</span><div><h4>Rəhbərə siqnal gedir</h4><p>Normadan çıxan rəqəm sahibkarın və menecerin qarşısına çıxır.</p></div></li>
+        </ul>
+        <a class="btn btn-dark btn-sm" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20OCAQ%20haqq%C4%B1nda%20m%C9%99lumat%20almaq%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">OCAQ-ı göstərin →</a>
+      </div>
+      <div class="stage" data-agent="ocaq">
+        <div class="mock">
+          <div class="mock-head"><div><div class="mock-title">Bu günün nəzarəti</div><div class="mock-sub">Filial · səhər növbəsi</div></div><div class="mock-kpi" data-kpi><small>Checklist</small><b data-kpi-val>7 / 9</b></div></div>
+          <table class="mt">
+            <thead><tr><th>Bənd</th><th>Vəziyyət</th><th>Məsul</th><th>Saat</th></tr></thead>
+            <tbody>
+              <tr><td>Soyuducu temperaturu</td><td class="num">✓ 3°C</td><td>Aşpaz</td><td class="num">08:10</td></tr>
+              <tr><td>Açılış kassası</td><td class="num">✓</td><td>Kassir</td><td class="num">08:30</td></tr>
+              <tr class="hl"><td>Kassa ↔ bank</td><td class="num new">fərq var</td><td>Menecer</td><td class="num">09:00</td></tr>
+              <tr><td>İtki jurnalı</td><td class="num">gözləyir</td><td>Aşpaz</td><td class="num">—</td></tr>
+            </tbody>
+          </table>
+          <div class="mock-foot"><span>Checklist · HACCP · kassa · itki</span><span>OCAQ</span></div>
+        </div>
+        <div class="sample">Nümunə məlumat — yalnız təsvir üçün.</div>
+        <div class="agent" role="status" aria-live="polite">
+          <div class="agent-top"><span class="agent-tag"><span class="sq"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span data-tag>Siqnal</span></span><button class="pause" type="button" aria-label="Animasiyanı dayandır" data-pause><svg class="i" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button></div>
+          <p class="agent-msg" data-msg>Kassa ilə bank arasında fərq var.</p>
+          <span class="agent-btn" data-btn>Menecerə göndər</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MENU MATRIX -->
+    <div class="panel" role="tabpanel" id="p-menu" aria-labelledby="t-menu">
+      <div>
+        <div class="p-eyebrow"><span class="eyebrow">↑ Gəlir artımı</span><span class="status live">Canlı</span></div>
+        <h3>Menyu Matrisi</h3>
+        <div class="stat"><b>4 qrup</b><p>Hər yemək satış sayına və marjasına görə ulduz, at, tapmaca və ya yük qrupuna düşür.</p></div>
+        <ul class="steps">
+          <li><span class="n">1</span><div><h4>Satışı və marjanı yazın</h4><p>Hər yeməyin aylıq satış sayı və porsiya marjası.</p></div></li>
+          <li><span class="n">2</span><div><h4>Qrupu görün</h4><p>Hansı yemək qazandırır, hansı yer tutur.</p></div></li>
+          <li><span class="n">3</span><div><h4>Menyunu yenidən qurun</h4><p>Ulduzu öndə göstərin, yükü çıxarın və ya yenidən qiymətləndirin.</p></div></li>
+        </ul>
+        <a class="btn btn-dark btn-sm" href="https://dkagency.com.tr/toolkit/menu-matrix" target="_blank" rel="noopener">Aləti aç →</a>
+      </div>
+      <div class="stage" data-agent="menu">
+        <div class="mock">
+          <div class="mock-head"><div><div class="mock-title">Menyu analizi</div><div class="mock-sub">Son 30 gün · 4 yemək</div></div><div class="mock-kpi ok" data-kpi><small>Ulduz</small><b data-kpi-val>1</b></div></div>
+          <table class="mt">
+            <thead><tr><th>Yemək</th><th>Satış</th><th>Marja</th><th>Qrup</th></tr></thead>
+            <tbody>
+              <tr><td>Toyuq dürüm</td><td class="num">yüksək</td><td class="num">yüksək</td><td>Ulduz</td></tr>
+              <tr><td>Lavaş boşqab</td><td class="num">aşağı</td><td class="num">yüksək</td><td>Tapmaca</td></tr>
+              <tr class="hl"><td>Ət dürüm</td><td class="num">yüksək</td><td class="num new">aşağı</td><td>At</td></tr>
+              <tr><td>Salat</td><td class="num">aşağı</td><td class="num">aşağı</td><td>Yük</td></tr>
+            </tbody>
+          </table>
+          <div class="mock-foot"><span>Satış · marja · qrup</span><span>Menyu Matrisi</span></div>
+        </div>
+        <div class="sample">Nümunə məlumat — yalnız təsvir üçün.</div>
+        <div class="agent" role="status" aria-live="polite">
+          <div class="agent-top"><span class="agent-tag"><span class="sq"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span data-tag>Siqnal</span></span><button class="pause" type="button" aria-label="Animasiyanı dayandır" data-pause><svg class="i" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button></div>
+          <p class="agent-msg" data-msg>Ət dürüm çox satılır, amma marjası aşağıdır.</p>
+          <span class="agent-btn" data-btn>Combo təklif et</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- KAZAN AI -->
+    <div class="panel" role="tabpanel" id="p-kazan" aria-labelledby="t-kazan">
+      <div>
+        <div class="p-eyebrow"><span class="eyebrow">↑ Gəlir artımı</span><span class="status beta">Beta</span></div>
+        <h3>KAZAN AI: HoReCa məsləhətçisi</h3>
+        <div class="stat"><b>1 addım</b><p>Hər cavabın sonunda tətbiq ediləcək bir addım və uyğun DK alətinə keçid.</p></div>
+        <ul class="steps">
+          <li><span class="n">1</span><div><h4>Sualınızı yazın</h4><p>Food cost, menyu, açılış, AQTA, kadr.</p></div></li>
+          <li><span class="n">2</span><div><h4>DK bilik bazasından cavab</h4><p>Bloq məqalələri və alətlər əsasında.</p></div></li>
+          <li><span class="n">3</span><div><h4>Alətə keçin</h4><p>Cavabı öz rəqəmlərinizlə yoxlayın.</p></div></li>
+        </ul>
+        <a class="btn btn-dark btn-sm" href="https://dkagency.com.tr/kazan-ai" target="_blank" rel="noopener">KAZAN AI-ı aç →</a>
+      </div>
+      <div class="stage" data-agent="kazan">
+        <div class="mock">
+          <div class="mock-head"><div><div class="mock-title">KAZAN AI</div><div class="mock-sub">Sual · cavab · addım</div></div><div class="mock-kpi" data-kpi><small>Status</small><b data-kpi-val style="font-size:20px;color:var(--amber)">Beta</b></div></div>
+          <table class="mt">
+            <tbody>
+              <tr><td><b>Sual:</b> Food cost 38% çıxıb, nə edim?</td></tr>
+              <tr><td><b>Cavab:</b> Hədəf aralığı 28–32%-dir. Əvvəlcə ən çox satılan yeməklərin resept maya dəyərini yoxlayın, sonra porsiya və alış qiymətini.</td></tr>
+              <tr class="hl"><td><b>Addım:</b> Food Cost Kalkulyatorunda 5 əsas yeməyi yoxlayın.</td></tr>
+            </tbody>
+          </table>
+          <div class="mock-foot"><span>Bloq · Toolkit</span><span>KAZAN AI</span></div>
+        </div>
+        <div class="sample">Nümunə dialoq — yalnız təsvir üçün.</div>
+        <div class="agent" role="status" aria-live="polite">
+          <div class="agent-top"><span class="agent-tag"><span class="sq"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span data-tag>Siqnal</span></span><button class="pause" type="button" aria-label="Animasiyanı dayandır" data-pause><svg class="i" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button></div>
+          <p class="agent-msg" data-msg>Sual gəldi: food cost 38%.</p>
+          <span class="agent-btn" data-btn>Alətə yönləndir</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="sec" id="nece" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow"><span class="dot"></span>Necə işləyir</span>
+      <h2>Üç addım. Proqram yox, nəticə.</h2>
+      <p>Bizə proqram satmaq lazım deyil. Restoranınızın rəqəmi düzəlməlidir.</p>
+    </div>
+    <div class="how">
+      <div class="how-card rv"><span class="n">01</span><h4>Pulsuz diaqnostika</h4><p>Menyunuza, food cost-a, kadra və delivery xəttinə birlikdə baxırıq.</p></div>
+      <div class="how-card rv"><span class="n">02</span><h4>Boşluğu göstəririk</h4><p>Pulun harada sızdığını rəqəmlə, manatla göstəririk.</p></div>
+      <div class="how-card rv"><span class="n">03</span><h4>Sistemi qururuq</h4><p>Alətləri, OCAQ-ı və komandanın gündəlik vərdişini birlikdə qururuq.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CALC -->
+<section class="sec" id="hesabla" style="padding-top:0">
+  <div class="wrap">
+    <div class="calc rv">
+      <div>
+        <span class="eyebrow">Özünüz hesablayın</span>
+        <h3>Food cost hədəfdən nə qədər yuxarıdır?</h3>
+        <p class="d">Sürgüləri öz rəqəmlərinizə çəkin. Hədəf kimi 30% götürülür; hədəfdən yuxarı hər faiz manatla görünür.</p>
+        <div class="field">
+          <label for="c-rev"><span>Aylıq dövriyyə</span><span id="c-rev-text">60 000 ₼</span></label>
+          <input type="range" min="15000" max="250000" step="5000" value="60000" id="c-rev" aria-label="Aylıq dövriyyə">
+        </div>
+        <div class="field">
+          <label for="c-fc"><span>Faktiki food cost</span><span id="c-fc-text">38%</span></label>
+          <input type="range" min="25" max="50" step="1" value="38" id="c-fc" aria-label="Faktiki food cost faizi">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="calc-row">
+          <div class="calc-box"><small>Xammala gedən</small><b id="c-cost">22 800 ₼</b></div>
+          <div class="calc-box"><small>Hədəf (30%)</small><b id="c-target">18 000 ₼</b></div>
+        </div>
+        <div class="calc-big">
+          <small>Hədəfdən artıq xammal xərci</small>
+          <b id="c-month">4 800 ₼ / ay</b>
+          <p id="c-year">İl üzrə: 57 600 ₼</p>
+        </div>
+        <a class="btn btn-red" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20food%20cost-u%20azaltmaq%20%C3%BC%C3%A7%C3%BCn%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">Bu fərqi birlikdə azaldaq</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE MODEL -->
+<section class="sec" id="xidmet" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow"><span class="dot"></span>Xidmət</span>
+      <h2>Sizə sadəcə giriş verib getmirik.</h2>
+      <p>Alətlər hər kəsə açıqdır. Bizimlə razılaşan şirkətə isə xüsusi xidmət göstəririk.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-card rv">
+        <span class="tag">Hər kəs üçün</span>
+        <h4>Pulsuz alətlər</h4>
+        <ul>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>18 hesablama aləti: food cost, P&amp;L, başabaş, menyu matrisi, delivery</li>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>AQTA və açılış checklist-ləri</li>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Ekspert bloq və sektor xəbərləri</li>
+        </ul>
+        <a class="btn btn-ghost btn-sm" href="https://dkagency.com.tr/toolkit" target="_blank" rel="noopener">Alətlərə bax →</a>
+      </div>
+      <div class="svc-card dark rv">
+        <span class="tag">Bizimlə razılaşan şirkət üçün</span>
+        <h4>Xüsusi xidmət</h4>
+        <ul>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Diaqnostika, hesabat və yol xəritəsi</li>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>OCAQ-ın filiallarınıza qurulması</li>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Menyu, food cost və kadr üzrə müşayiət</li>
+          <li><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>POS (Clopos) və digər sistemlər: şirkət istəsə bağlanır</li>
+        </ul>
+        <a class="btn btn-red btn-sm" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20x%C3%BCsusi%20xidm%C9%99ti%20haqq%C4%B1nda%20dan%C4%B1%C5%9Fmaq%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">Danışaq →</a>
+        <div style="margin-top:16px"><span class="soon">Üzvlük paketləri — tezliklə</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="sec" id="qurucu" style="padding-top:0">
+  <div class="wrap">
+    <div class="founder rv">
+      <div class="avatar" aria-hidden="true">DT</div>
+      <div>
+        <span class="eyebrow"><span class="dot"></span>Qurucu</span>
+        <h3>Doğan Tomris</h3>
+        <div class="role">Qurucu · DK Agency</div>
+        <p>HoReCa-da 40 illik idarəetmə təcrübəsi. DK Agency-nin alətləri və OCAQ bu təcrübədən çıxıb: ölçülməyən iş idarə olunmur.</p>
+        <div class="chips"><span class="chip">40 il HoReCa</span><span class="chip">Ahilik dəyərləri</span><span class="chip">OCAQ</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta rv">
+      <span class="eyebrow">Başlayaq</span>
+      <h2>Restoranınızın gizli itkisini birlikdə tapaq.</h2>
+      <p>Pulsuz diaqnostikada menyunuza, food cost-unuza və gündəlik axınınıza baxırıq və tətbiq edə biləcəyiniz ilk addımları veririk.</p>
+      <div class="cta-btns">
+        <a class="btn btn-red" href="/api/leads/whatsapp?text=Salam%20Do%C4%9Fan%20b%C9%99y%2C%20DK%20Agency%20pulsuz%20diaqnostika%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener">WhatsApp: +994 50 256 62 79</a>
+        <a class="btn btn-ghost" href="https://dkagency.com.tr/auth/login">Platformaya daxil ol</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <a class="brand" href="https://dkagency.com.tr" style="margin-bottom:12px"><span class="mark">DK</span><b>DK Agency</b></a>
+        <p style="margin:12px 0 0;max-width:320px">Restoran və HoReCa biznesi üçün rəqəm, alət və gündəlik nəzarət.</p>
+      </div>
+      <div>
+        <h5>Platforma</h5>
+        <ul>
+          <li><a href="https://dkagency.com.tr/kazan-ai">KAZAN AI</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit">Alətlər</a></li>
+          <li><a href="https://dkagency.com.tr/blog">Bloq</a></li>
+          <li><a href="https://dkagency.com.tr/haberler">Sektor xəbərləri</a></li>
+          <li><a href="https://dkagency.com.tr/is-elanlari">Vakansiyalar (TQTA)</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Alətlər</h5>
+        <ul>
+          <li><a href="https://dkagency.com.tr/toolkit/food-cost">Food Cost</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit/pnl">P&amp;L</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit/delivery-calc">Delivery komissiyası</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit/menu-matrix">Menyu Matrisi</a></li>
+          <li><a href="https://dkagency.com.tr/toolkit/aqta-checklist">AQTA Checklist</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Əlaqə</h5>
+        <ul>
+          <li><a href="tel:+994502566279">+994 50 256 62 79</a></li>
+          <li><a href="mailto:info@dkagency.com.tr">info@dkagency.com.tr</a></li>
+          <li><a href="https://dkagency.com.tr/haqqimizda">Haqqımızda</a></li>
+          <li><a href="https://dkagency.com.tr/sedd-rozeti">Şədd Rozeti</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bot">© 2026 DK Agency. Bütün hüquqlar qorunur.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fmt = function(n){ return Math.round(n).toLocaleString('az-AZ').replace(/[ .,]/g,' '); };
+
+  // Reveal on scroll
+  var rv = document.querySelectorAll('.rv');
+  if (reduce || !('IntersectionObserver' in window)) {
+    rv.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12});
+    rv.forEach(function(el){ io.observe(el); });
+  }
+
+  // Signal -> action loops (state per card; final states are worded from the sample table above)
+  var SCRIPTS = {
+    hero:     {signal:'Food cost 38%, hədəf 30%. Ayda 4 800 ₼ artıq xammal xərci.', btn:'Plan hazırla', busy:'Hazırlanır…', action:'Plan hazırdır: əvvəl 5 əsas yeməyin resepti yoxlanacaq.', done:'Plan hazırdır', kpi:'38% → plan'},
+    foodcost: {signal:'Ət dürüm 45%: hədəfdən 13 faiz yuxarı.', btn:'Qiyməti yoxla', busy:'Hesablanır…', action:'30% üçün satış qiyməti təxminən 11,30 ₼ olmalıdır, ya da porsiya azalmalıdır.', done:'Qərar sizdədir', kpi:'33%'},
+    delivery: {signal:'Platformada hər 20 ₼-lıq sifarişdən 5 ₼ komissiyaya gedir.', btn:'Delivery menyusunu hazırla', busy:'Hazırlanır…', action:'Delivery üçün ayrıca qiymət və combo variantları hazırlandı.', done:'Variantlar hazırdır', kpi:'8,60 ₼'},
+    ocaq:     {signal:'Kassa ilə bank arasında fərq var.', btn:'Menecerə göndər', busy:'Göndərilir…', action:'Menecerə tapşırıq getdi: fərqi növbə bağlanmadan izah etsin.', done:'Göndərildi 09:02', kpi:'7 / 9'},
+    menu:     {signal:'Ət dürüm çox satılır, amma marjası aşağıdır.', btn:'Combo təklif et', busy:'Hazırlanır…', action:'Ət dürüm + ayran combo-su təklif edildi, marja ayrıca hesablanacaq.', done:'Təklif hazırdır', kpi:'1'},
+    kazan:    {signal:'Sual gəldi: food cost 38%.', btn:'Alətə yönləndir', busy:'Yönləndirilir…', action:'Cavab verildi və Food Cost Kalkulyatoruna keçid göndərildi.', done:'Cavab verildi', kpi:'Beta'}
+  };
+  var CHECK = '<svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+
+  function Card(root){
+    var s = SCRIPTS[root.getAttribute('data-agent')]; if (!s) return;
+    var msg = root.querySelector('[data-msg]'), btn = root.querySelector('[data-btn]'),
+        tag = root.querySelector('[data-tag]'), pause = root.querySelector('[data-pause]');
+    var step = 0, timer = null, paused = reduce;
+    function render(){
+      if (step === 0){ tag.textContent='Siqnal'; msg.textContent=s.signal; btn.className='agent-btn'; btn.textContent=s.btn; }
+      if (step === 1){ btn.textContent=s.busy; }
+      if (step === 2){ tag.textContent='Addım atıldı'; msg.textContent=s.action; btn.className='agent-btn done'; btn.innerHTML=CHECK+s.done; }
+    }
+    function tick(){ step = (step + 1) % 3; render(); schedule(); }
+    function schedule(){ clearTimeout(timer); if (!paused) timer = setTimeout(tick, step === 1 ? 1100 : 3200); }
+    pause.addEventListener('click', function(){
+      paused = !paused;
+      pause.setAttribute('aria-label', paused ? 'Animasiyanı davam etdir' : 'Animasiyanı dayandır');
+      pause.innerHTML = paused ? '<svg class="i" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>' : '<svg class="i" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg>';
+      schedule();
+    });
+    if (reduce){ step = 2; render(); pause.innerHTML='<svg class="i" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>'; }
+    render(); schedule();
+  }
+  document.querySelectorAll('[data-agent]').forEach(Card);
+
+  // Tabs
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      t.setAttribute('aria-selected','true');
+      var p = document.getElementById(t.getAttribute('aria-controls')); if (p) p.classList.add('active');
+    });
+  });
+
+  // Calculator (target 30%)
+  var rev = document.getElementById('c-rev'), fc = document.getElementById('c-fc');
+  function calc(){
+    var r = +rev.value, f = +fc.value, cost = r*f/100, target = r*30/100, m = Math.max(0, cost-target);
+    document.getElementById('c-rev-text').textContent = fmt(r)+' ₼';
+    document.getElementById('c-fc-text').textContent = f+'%';
+    document.getElementById('c-cost').textContent = fmt(cost)+' ₼';
+    document.getElementById('c-target').textContent = fmt(target)+' ₼';
+    document.getElementById('c-month').textContent = m > 0 ? fmt(m)+' ₼ / ay' : 'Hədəfdəsiniz';
+    document.getElementById('c-year').textContent = m > 0 ? 'İl üzrə: '+fmt(m*12)+' ₼' : 'Food cost 30%-dən yuxarı deyil.';
+  }
+  rev.addEventListener('input', calc); fc.addEventListener('input', calc); calc();
+})();
+</script>
+</body>
+</html>

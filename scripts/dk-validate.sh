@@ -1,8 +1,10 @@
 #!/bin/bash
 # DK Agency Full Validator — 8-check suite
 # Usage: npm run dk:validate
-# Runs all dk-validator checks including those that need dev server.
-# Static checks (1-5) always run. Server checks (6-8) skip if no dev server.
+# Runs all dk-validator checks. Static checks (1-5) always run.
+# TASK-0508: server checks (6-8) start their OWN `next start` on a free port after the build and
+# verify it is DK Agency — before, they curled whatever answered on localhost:3000 (another
+# project's dev server, or nothing). Node test scripts (e2e/*.test.ts) run separately in [8a].
 
 set -e
 
@@ -44,12 +46,17 @@ CHANGED_FILES=$(git diff --name-only HEAD 2>/dev/null)
 if [ -z "$CHANGED_FILES" ]; then
   CHANGED_FILES=$(git diff --cached --name-only 2>/dev/null)
 fi
+# TASK-0508: after commit both are empty and lint/i18n/API checks silently passed with "no changes".
+if [ -z "$CHANGED_FILES" ]; then
+  CHANGED_FILES=$(git diff --name-only origin/main...HEAD 2>/dev/null || true)
+fi
 NEW_COMPONENTS=$(echo "$CHANGED_FILES" | grep -E "components/.*\.tsx?$" || true)
 NEW_API=$(echo "$CHANGED_FILES" | grep -E "app/api/.*route\.ts$" || true)
 
 # --- 1. Build (with explicit 8GB heap to prevent OOM — #233) ---
 echo "  [1/8] Building..."
-if npm install --include=dev > /dev/null 2>&1 && node --max-old-space-size=8192 node_modules/next/dist/bin/next build > /tmp/dk-build.log 2>&1; then
+# --no-save: the install must not rewrite package-lock.json (TASK-0508)
+if npm install --include=dev --no-save > /dev/null 2>&1 && node --max-old-space-size=8192 node_modules/next/dist/bin/next build > /tmp/dk-build.log 2>&1; then
   result 1 "Build" "PASS" "0 errors"
 else
   result 1 "Build" "FAIL" "$(tail -3 /tmp/dk-build.log | tr '\n' ' ')"
@@ -116,16 +123,31 @@ else
   result 5 "Lessons integrity" "FAIL" "$(tail -3 /tmp/dk-lessons.log | tr '\n' ' ')"
 fi
 
+# --- Own server for 6-8 (TASK-0508) ---
+BASE=""
+SERVER_PID=""
+if [ -f .next/BUILD_ID ]; then
+  PORT=3901
+  while lsof -ti tcp:$PORT > /dev/null 2>&1; do PORT=$((PORT + 1)); done
+  node node_modules/next/dist/bin/next start -p $PORT > /tmp/dk-server.log 2>&1 &
+  SERVER_PID=$!
+  trap '[ -n "$SERVER_PID" ] && kill $SERVER_PID 2>/dev/null' EXIT
+  for _ in $(seq 1 60); do
+    if curl -s "http://localhost:$PORT/" 2>/dev/null | grep -q "DK Agency"; then BASE="http://localhost:$PORT"; break; fi
+    sleep 1
+  done
+fi
+DEV_RUNNING=$([ -n "$BASE" ] && echo "200" || echo "000")
+
 # --- 6. Route smoke ---
-echo "  [6/8] Route smoke test..."
-DEV_RUNNING=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ 2>/dev/null || echo "000")
+echo "  [6/8] Route smoke test... ${BASE:-(DK server did not start)}"
 if [ "$DEV_RUNNING" = "000" ]; then
-  result 6 "Route smoke" "SKIP" "dev server not running (start with npm run dev)"
+  result 6 "Route smoke" "SKIP" "DK server did not start (see /tmp/dk-server.log)"
 else
   # Test a few core routes
   ROUTE_FAIL=0
   for route in "/" "/auth/login" "/ilanlar" "/b2b-panel"; do
-    CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:3000${route}" 2>/dev/null || echo "000")
+    CODE=$(curl -s -o /dev/null -w "%{http_code}" "${BASE}${route}" 2>/dev/null || echo "000")
     if [ "$CODE" = "404" ] || [ "$CODE" = "500" ]; then
       echo "    $route → HTTP $CODE"
       ROUTE_FAIL=1
@@ -141,14 +163,14 @@ fi
 # --- 7. API gating ---
 echo "  [7/8] API gating smoke..."
 if [ "$DEV_RUNNING" = "000" ]; then
-  result 7 "API gating" "SKIP" "dev server not running"
+  result 7 "API gating" "SKIP" "DK server did not start"
 else
   if [ -n "$NEW_API" ]; then
     GATING_FAIL=0
     for f in $NEW_API; do
       API_PATH=$(echo "$f" | sed -E 's|app(/api/.*)/route\.ts|\1|')
       if [ -n "$API_PATH" ]; then
-        CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "http://localhost:3000${API_PATH}" \
+        CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${BASE}${API_PATH}" \
           -H "Content-Type: application/json" -d '{}' 2>/dev/null || echo "000")
         if [ "$CODE" = "200" ]; then
           echo "    POST $API_PATH → HTTP 200 (no auth gating!)"
@@ -166,23 +188,43 @@ else
   fi
 fi
 
-# --- 8. Playwright @smoke ---
+# --- 8. Playwright @smoke (against our own server) ---
 echo "  [8/8] Playwright @smoke tests..."
-if [ -f playwright.config.ts ] || [ -f playwright.config.js ]; then
-  if npx playwright test --grep @smoke --reporter=list > /tmp/dk-playwright.log 2>&1; then
-    SMOKE_PASS=$(grep -c "passed" /tmp/dk-playwright.log 2>/dev/null || echo "0")
-    result 8 "Playwright @smoke" "PASS" "$(tail -3 /tmp/dk-playwright.log | tr '\n' ' ')"
+if [ "$DEV_RUNNING" = "000" ]; then
+  result 8 "Playwright @smoke" "SKIP" "DK server did not start"
+elif [ -f playwright.config.ts ] || [ -f playwright.config.js ]; then
+  if BASE_URL="$BASE" npx playwright test --grep @smoke --reporter=list > /tmp/dk-playwright.log 2>&1; then
+    SUMMARY=$(grep -E "^ *[0-9]+ (passed|skipped|flaky)" /tmp/dk-playwright.log | tr -s ' ' | tr '\n' ' ')
+    if [ -z "$SUMMARY" ]; then
+      # TASK-0508: exit 0 with no Playwright summary = nothing ran (e.g. a script called process.exit)
+      result 8 "Playwright @smoke" "FAIL" "no Playwright summary in output: $(tail -2 /tmp/dk-playwright.log | tr '\n' ' ')"
+    else
+      result 8 "Playwright @smoke" "PASS" "$SUMMARY"
+    fi
   else
-    EXIT_CODE=$?
-    # Exit code 1 = test failures; other codes = setup/config issue
-    if grep -q "no tests matched" /tmp/dk-playwright.log 2>/dev/null; then
+    if grep -q "No tests found" /tmp/dk-playwright.log 2>/dev/null; then
       result 8 "Playwright @smoke" "SKIP" "no @smoke tests found — add @smoke tag to e2e specs"
     else
-      result 8 "Playwright @smoke" "FAIL" "$(tail -5 /tmp/dk-playwright.log | tr '\n' ' ')"
+      result 8 "Playwright @smoke" "FAIL" "$(grep -E "^ *[0-9]+ (failed|passed)" /tmp/dk-playwright.log | tr -s ' ' | tr '\n' ' ') — /tmp/dk-playwright.log"
     fi
   fi
 else
   result 8 "Playwright @smoke" "SKIP" "no playwright config"
+fi
+
+# --- 8a. Node test scripts (e2e/*.test.ts — plain tsx scripts, not Playwright) ---
+echo "  [8a] Node test scripts..."
+NODE_FAIL=""
+NODE_COUNT=0
+for f in e2e/*.test.ts; do
+  [ -f "$f" ] || continue
+  NODE_COUNT=$((NODE_COUNT + 1))
+  if ! npx tsx "$f" > "/tmp/dk-node-$(basename "$f").log" 2>&1; then NODE_FAIL="$NODE_FAIL $(basename "$f")"; fi
+done
+if [ -n "$NODE_FAIL" ]; then
+  result 8 "Node test scripts" "FAIL" "failed:$NODE_FAIL (logs in /tmp/dk-node-*.log)"
+else
+  result 8 "Node test scripts" "PASS" "$NODE_COUNT scripts"
 fi
 
 # --- Summary ---
