@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
+import { MessageCircle } from 'lucide-react';
 import { normalizeLocale, withLocale } from '@/i18n/config';
 import { formatNumber } from '@/lib/i18n/format';
 import styles from './ReceiptHero.module.css';
@@ -187,6 +188,17 @@ export function ReceiptHero() {
                 {t('ctaCalc')}
               </a>
             </div>
+            {/* TASK-0502: Baku HoReCa owners write rather than fill forms — a quiet
+                secondary path, so the screen keeps one red button. */}
+            <a
+              href={`/api/leads/whatsapp?text=${encodeURIComponent(t('whatsappText'))}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 self-start text-[15px] font-semibold text-emerald-300 underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-rose-300"
+            >
+              <MessageCircle size={18} aria-hidden="true" />
+              {t('whatsappLink')}
+            </a>
           </div>
 
           {/* Right: printed receipt + live calculator */}

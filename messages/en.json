@@ -3580,15 +3580,16 @@
       },
       "toolkit": {
         "title": "Toolkit",
-        "subtitle": "11 calculation tools",
+        "subtitle": "18 calculation tools",
         "body": "P&L Simulator, Food Cost, Menu Matrix, AQTA Checklist and more — free during launch campaign.",
         "cta": "View tools"
       },
       "ocaq": {
         "title": "OCAQ",
-        "subtitle": "Owner dashboard",
-        "body": "Lead management, invoice OCR, food cost dashboard, multilingual admin — your restaurant team in one place.",
-        "cta": "Enter OCAQ"
+        "subtitle": "Operations panel",
+        "body": "Daily control for multi-branch chains: shift checklists, HACCP, live sales, till-to-bank reconciliation, loss control. Runs every day across a 10+ branch chain.",
+        "cta": "Ask about OCAQ",
+        "whatsappText": "Hello, I would like to learn about the OCAQ operations panel."
       }
     },
     "doganNote": {
@@ -3623,6 +3624,8 @@
       "whoAreYou": "Who are you?",
       "ctaJoin": "Join for free",
       "ctaCalc": "Enter my numbers",
+      "whatsappLink": "Have a question? Message us on WhatsApp",
+      "whatsappText": "Hello, I am writing from the DK Agency website. I have a question about my restaurant's numbers.",
       "receiptTitle": "SAMPLE RECEIPT · MONTH",
       "receiptBrand": "DK AGENCY",
       "receiptLeft": "LEFT OVER",

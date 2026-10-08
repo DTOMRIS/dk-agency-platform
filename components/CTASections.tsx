@@ -2,8 +2,15 @@
 
 import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
-import { Check, Send, Sparkles } from 'lucide-react';
+import { Check, MessageCircle, Send, Sparkles } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import { TELEGRAM_URL, WHATSAPP_NUMBER } from '@/lib/contact-channels';
+
+type ContactChannel = 'whatsapp' | 'telegram';
+
+function openExternal(url: string) {
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
 
 const copyByLocale: Record<
   Locale,
@@ -12,10 +19,14 @@ const copyByLocale: Record<
     joinTitle: [string, string];
     joinBody: string;
     bullets: string[];
-    formTitle: string;
-    fields: { firstName: string; lastName: string; email: string; company: string };
-    placeholders: { firstName: string; lastName: string; email: string; company: string };
-    submit: string;
+    contactTitle: string;
+    contactBody: string;
+    whatsapp: string;
+    whatsappHint: string;
+    whatsappPrefill: string;
+    telegram: string;
+    telegramHint: string;
+    hours: string;
   }
 > = {
   az: {
@@ -29,20 +40,14 @@ const copyByLocale: Record<
       'Eksklüziv investisiya imkanları',
       'Ödənişsiz ilk strateji konsultasiya',
     ],
-    formTitle: 'Müraciət et',
-    fields: {
-      firstName: 'Adınız',
-      lastName: 'Soyadınız',
-      email: 'E-poçt',
-      company: 'Şirkət / Layihə adı',
-    },
-    placeholders: {
-      firstName: 'Məs: Elvin',
-      lastName: 'Məs: Məmmədov',
-      email: 'elvin@agency.az',
-      company: 'Məs: Grand Holding',
-    },
-    submit: 'Göndər',
+    contactTitle: 'Bizə yazın',
+    contactBody: 'Form doldurmağa ehtiyac yoxdur. Sualınızı yazın, iş vaxtı ərzində cavab veririk.',
+    whatsapp: 'WhatsApp-a yazın',
+    whatsappHint: 'Ən sürətli yol',
+    whatsappPrefill: 'Salam, DK Agency saytından yazıram. Biznesim üçün məsləhət istəyirəm.',
+    telegram: 'Telegram-a yazın',
+    telegramHint: 't.me/dkagency',
+    hours: 'B.e.–Cümə · 09:00–18:00 (Bakı)',
   },
   ru: {
     joinBadge: 'Присоединиться сейчас',
@@ -55,20 +60,14 @@ const copyByLocale: Record<
       'Эксклюзивные инвестиционные возможности',
       'Первая стратегическая консультация без оплаты',
     ],
-    formTitle: 'Оставить заявку',
-    fields: {
-      firstName: 'Имя',
-      lastName: 'Фамилия',
-      email: 'E-mail',
-      company: 'Компания / проект',
-    },
-    placeholders: {
-      firstName: 'Напр.: Эльвин',
-      lastName: 'Напр.: Мамедов',
-      email: 'elvin@agency.az',
-      company: 'Напр.: Grand Holding',
-    },
-    submit: 'Отправить',
+    contactTitle: 'Напишите нам',
+    contactBody: 'Заполнять форму не нужно. Напишите вопрос — ответим в рабочее время.',
+    whatsapp: 'Написать в WhatsApp',
+    whatsappHint: 'Самый быстрый способ',
+    whatsappPrefill: 'Здравствуйте, пишу с сайта DK Agency. Нужна консультация для моего бизнеса.',
+    telegram: 'Написать в Telegram',
+    telegramHint: 't.me/dkagency',
+    hours: 'Пн–Пт · 09:00–18:00 (Баку)',
   },
   en: {
     joinBadge: 'Join now',
@@ -81,20 +80,14 @@ const copyByLocale: Record<
       'Exclusive investment opportunities',
       'First strategic consultation at no cost',
     ],
-    formTitle: 'Apply now',
-    fields: {
-      firstName: 'First name',
-      lastName: 'Last name',
-      email: 'Email',
-      company: 'Company / project',
-    },
-    placeholders: {
-      firstName: 'Ex: Elvin',
-      lastName: 'Ex: Mammadov',
-      email: 'elvin@agency.az',
-      company: 'Ex: Grand Holding',
-    },
-    submit: 'Send',
+    contactTitle: 'Message us',
+    contactBody: 'No form to fill in. Send your question and we reply during working hours.',
+    whatsapp: 'Message on WhatsApp',
+    whatsappHint: 'Fastest way',
+    whatsappPrefill: 'Hello, I am writing from the DK Agency website. I would like advice for my business.',
+    telegram: 'Message on Telegram',
+    telegramHint: 't.me/dkagency',
+    hours: 'Mon–Fri · 09:00–18:00 (Baku)',
   },
   tr: {
     joinBadge: 'Şimdi katılın',
@@ -106,26 +99,41 @@ const copyByLocale: Record<
       'Özel yatırım fırsatları',
       'İlk strateji danışmanlığı ücretsiz',
     ],
-    formTitle: 'Başvur',
-    fields: {
-      firstName: 'Adınız',
-      lastName: 'Soyadınız',
-      email: 'E-posta',
-      company: 'Şirket / proje adı',
-    },
-    placeholders: {
-      firstName: 'Örn: Elvin',
-      lastName: 'Örn: Memmedov',
-      email: 'elvin@agency.az',
-      company: 'Örn: Grand Holding',
-    },
-    submit: 'Gönder',
+    contactTitle: 'Bize yazın',
+    contactBody: 'Form doldurmanıza gerek yok. Sorunuzu yazın, mesai saatlerinde yanıtlıyoruz.',
+    whatsapp: "WhatsApp'tan yazın",
+    whatsappHint: 'En hızlı yol',
+    whatsappPrefill: 'Merhaba, DK Agency sitesinden yazıyorum. İşletmem için danışmanlık istiyorum.',
+    telegram: "Telegram'dan yazın",
+    telegramHint: 't.me/dkagency',
+    hours: 'Pzt–Cuma · 09:00–18:00 (Bakü)',
   },
 };
 
 export function JoinCTA() {
   const locale = normalizeLocale(useLocale());
   const copy = copyByLocale[locale];
+
+  // Same click tracking as the contact page (ContactFunnel): one row per
+  // click in `leads`, plus the admin e-mail. Tracking never blocks the action.
+  const track = (
+    channel: ContactChannel,
+    extra?: { prefillText?: string; destinationPhone?: string }
+  ) => {
+    fetch('/api/leads/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        source: 'home_join',
+        channel,
+        locale,
+        sourceUrl: typeof window !== 'undefined' ? window.location.href : undefined,
+        prefillText: extra?.prefillText,
+        destinationPhone: extra?.destinationPhone,
+      }),
+      keepalive: true,
+    }).catch(() => undefined);
+  };
 
   return (
     <section id="join" className="relative overflow-hidden bg-slate-50 py-32">
@@ -178,56 +186,54 @@ export function JoinCTA() {
                 viewport={{ once: true }}
                 className="rounded-[2.5rem] bg-white p-10 shadow-2xl"
               >
-                <h4 className="mb-8 text-center text-2xl font-display font-black uppercase tracking-tight text-slate-900">
-                  {copy.formTitle}
+                <h4 className="mb-3 text-center text-2xl font-display font-black uppercase tracking-tight text-slate-900">
+                  {copy.contactTitle}
                 </h4>
-                <form className="space-y-6">
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="ml-1 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                        {copy.fields.firstName}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full rounded-xl border border-slate-100 bg-slate-50 px-5 py-4 text-xs font-bold transition-colors focus:border-brand-red focus:outline-none"
-                        placeholder={copy.placeholders.firstName}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="ml-1 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                        {copy.fields.lastName}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full rounded-xl border border-slate-100 bg-slate-50 px-5 py-4 text-xs font-bold transition-colors focus:border-brand-red focus:outline-none"
-                        placeholder={copy.placeholders.lastName}
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="ml-1 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                      {copy.fields.email}
-                    </label>
-                    <input
-                      type="email"
-                      className="w-full rounded-xl border border-slate-100 bg-slate-50 px-5 py-4 text-xs font-bold transition-colors focus:border-brand-red focus:outline-none"
-                      placeholder={copy.placeholders.email}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="ml-1 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                      {copy.fields.company}
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full rounded-xl border border-slate-100 bg-slate-50 px-5 py-4 text-xs font-bold transition-colors focus:border-brand-red focus:outline-none"
-                      placeholder={copy.placeholders.company}
-                    />
-                  </div>
-                  <button className="flex w-full items-center justify-center gap-3 rounded-xl bg-brand-red py-5 text-xs font-black uppercase tracking-widest text-white shadow-xl shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95">
-                    {copy.submit} <Send size={16} />
+                <p className="mb-8 text-center text-sm leading-6 text-slate-600">
+                  {copy.contactBody}
+                </p>
+                <div className="space-y-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      track('whatsapp', {
+                        prefillText: copy.whatsappPrefill,
+                        destinationPhone: WHATSAPP_NUMBER,
+                      });
+                      openExternal(
+                        `/api/leads/whatsapp?text=${encodeURIComponent(copy.whatsappPrefill)}`
+                      );
+                    }}
+                    className="flex w-full items-center gap-4 rounded-xl bg-brand-red px-5 py-4 text-left text-white shadow-xl shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95"
+                  >
+                    <MessageCircle size={22} aria-hidden="true" />
+                    <span className="flex flex-col">
+                      <span className="text-sm font-black uppercase tracking-widest">
+                        {copy.whatsapp}
+                      </span>
+                      <span className="text-xs font-semibold text-white/90">
+                        {copy.whatsappHint}
+                      </span>
+                    </span>
                   </button>
-                </form>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      track('telegram', { destinationPhone: TELEGRAM_URL });
+                      openExternal(TELEGRAM_URL);
+                    }}
+                    className="flex w-full items-center gap-4 rounded-xl border border-slate-200 bg-white px-5 py-4 text-left text-slate-900 transition-all hover:border-sky-300 hover:bg-sky-50 active:scale-95"
+                  >
+                    <Send size={22} className="text-sky-600" aria-hidden="true" />
+                    <span className="flex flex-col">
+                      <span className="text-sm font-black uppercase tracking-widest">
+                        {copy.telegram}
+                      </span>
+                      <span className="text-xs font-semibold text-slate-600">{copy.telegramHint}</span>
+                    </span>
+                  </button>
+                  <p className="pt-2 text-center text-xs font-semibold text-slate-600">{copy.hours}</p>
+                </div>
               </motion.div>
             </div>
           </div>
