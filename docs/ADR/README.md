@@ -25,6 +25,8 @@ Status: Proposed / Accepted / Deprecated / Superseded
 | [013](0013-dk-validator.md) | dk-validator 8-check subagent | Accepted |
 | [014](0014-task-card-system.md) | TASK-XXXX card pre-commit | Accepted |
 | [015](0015-auto-approve-mode.md) | Claude Code auto-approve | Accepted |
+| [016](0016-dashboard-route-pruning.md) | Dashboard route təmizliyi | Accepted |
+| [017](0017-landing-v2-identity-and-channels.md) | Landing v2 kimliyi, dizayn dili, sahib kanalları | Accepted |
 
 ## Process
 Yeni ADR yazmaq ucun:

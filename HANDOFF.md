@@ -1,5 +1,23 @@
 # HANDOFF
 
+## Session 8 Oktyabr 2026 — Landing v2, Telegram, kanal (release/2026-10-08-dk)
+
+**Branch:** `release/2026-10-08-dk` — TASK-0505/0507/0508/0509/0510 + bu sessiya: 0509 (tanitim v2), 0511 (Telegram), 0512 (ana səhifə v2), 0513 (OG + AI SEO + əlaqə, işdə). Qərarlar: [ADR-0017](docs/ADR/0017-landing-v2-identity-and-channels.md).
+
+### Tamamlanan
+- `/tanitim` Kutlerri/R365 üslubunda yenidən (telefon hero, mega menyu, ekosistem halqası, Gəlir/Xərc tabları, addım xətti, kalkulyator, Qurucu); mənbəsiz iddialar çıxdı, Sektor Nəbzi iddiası (41 RSS, 6 saat) doğru olduğu üçün qaytarıldı.
+- Ana səhifə v2: HeroPhone → Qəbz (ReceiptHero v2) → Faktlar → Sektor Nəbzi → B2B Bazar → Halqa → Modul tabları → Addımlar → AI testi → Bloq → Sürətli keçid → CTA. Köhnə ToolkitShowcase/StageSelector/AdsPreview ana səhifədən çıxdı (fayllar qalır).
+- Telegram: lead/WhatsApp klik/üzv/B2B elan (✅/❌) bildirişləri, həftəlik xülasə workflow (B.e. 08:00 Bakı), təsdiqlənən xəbər → t.me/dkagenc kanalı. Yad `t.me/dkagency` linkləri düzəldildi.
+- `CLAUDE.md` kimliyi yeniləndi; `dk-validate.sh` heap 8192 → 4096.
+- Hər mərhələdə dk-validator PASS (10/0).
+
+### Açıq
+- `components/layout/Header.tsx` (Modullar mega menyu) commit edilməyib — qorunan fayl, Doğan `ALLOW_PROTECTED=1` ilə commit edir.
+- Prod-da: GitHub Secret `CRON_SECRET`; bot t.me/dkagenc kanalında admin («Post messages»). Canlı Telegram testi merge-dən sonra.
+- Növbəti: iç səhifələr v2 (Toolkit → Xəbərlər → Bloq) ayrıca PR, əvvəl HTML ilə sahib təsdiqi.
+
+---
+
 ## Session 6 İyun 2026 — F2.8 Sektor Dynamic [slug] Route
 
 **Branch:** `feat/f28-sektor-dynamic-route` (origin/main üstündə)
