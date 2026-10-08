@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0504` chore(ci): GitHub Actions dəqiqələrinə qənaət — eyni budağa yeni push gələndə köhnə yoxlama dayanır; yalnız sənəd/məzmun dəyişən PR-da build edilmir (yoxlama yenə yaşıl olur, avtomatik merge işləyir); hər işin vaxt limiti var (ilişib qalan iş 6 saat yemir).
+
 - `TASK-0503` fix(ai): KAZAN AI-nin ehtiyat Claude modeli `claude-sonnet-5-5`-ə keçdi (əvvəl `claude-sonnet-4-6`); düşünmə rejimi söndürülür ki, qısa cavablar boş qayıtmasın; Claude sorğunu təhlükəsizlik səbəbi ilə rədd edəndə bu artıq boş cavab kimi yox, aydın xəta kimi qaytarılır; söhbət tarixçəsi `assistant` ilə başlaya/bitə bilmir (5.x-də 400 xətası). `claude-sonnet-4-5` (2026-11-30 bağlanır) siyahıdan çıxdı.
 
 - `TASK-0502` feat(home): ana səhifədə işləməyən «Müraciət et» formu WhatsApp və Telegram düymələri ilə əvəz olundu (hər klik qeydə alınır, admin-ə e-poçt gedir); hero-da «Sualınız var? WhatsApp-a yazın» linki; OCAQ kartı real məhsulu təsvir edir (çoxfilialı əməliyyat paneli, 10+ filial) və admin girişinə deyil, WhatsApp-a aparır; alət sayı hər yerdə 18 (əvvəl 10/11); kart linkləri seçilmiş dildə qalır.
