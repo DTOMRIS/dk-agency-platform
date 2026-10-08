@@ -14,34 +14,50 @@ type Props = {
 
 const localeMetadata: Record<'az' | 'ru' | 'en' | 'tr', { title: string; description: string }> = {
   az: {
-    title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
+    // TASK-0510: tanıtım prototipindəki tövsiyə — KAZAN AI və Toolkit link önizləməsində önə çıxsın.
+    title: 'DK Agency | HoReCa İdarəetmə, KAZAN AI & Biznes Ekosistemi',
     description:
-      'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+      '40 illik təcrübə, KAZAN AI asistanı, 18+ interaktiv maliyyə aləti, ekspert bloq və sektor xəbərləri — Azərbaycan HoReCa sektoru üçün.',
   },
   ru: {
-    title: 'DK Agency | Первая AI-платформа для HoReCa в Азербайджане',
+    title: 'DK Agency | Управление HoReCa, KAZAN AI и бизнес-экосистема',
     description:
-      'Бесплатные инструменты, экспертный блог, продажа ресторанов и франшизы для HoReCa-сектора Азербайджана.',
+      '40 лет опыта, AI-ассистент KAZAN, 18+ интерактивных финансовых инструментов, экспертный блог и новости отрасли — для HoReCa Азербайджана.',
   },
   en: {
-    title: "DK Agency | Azerbaijan's First AI-Powered HoReCa Platform",
+    title: 'DK Agency | HoReCa Management, KAZAN AI & Business Ecosystem',
     description:
-      'Free tools, expert blog, restaurant transfers and franchise support for Azerbaijan HoReCa operators.',
+      '40 years of experience, the KAZAN AI assistant, 18+ interactive finance tools, an expert blog and industry news — for Azerbaijan HoReCa.',
   },
   tr: {
-    title: "DK Agency | Azerbaycan'ın İlk AI Destekli HoReCa Platformu",
+    title: 'DK Agency | HoReCa Yönetimi, KAZAN AI ve İş Ekosistemi',
     description:
-      'Azerbaycan HoReCa sektörü için ücretsiz araçlar, uzman blog, restoran devri ve franchise desteği.',
+      '40 yıllık deneyim, KAZAN AI asistanı, 18+ interaktif finans aracı, uzman blog ve sektör haberleri — Azerbaycan HoReCa sektörü için.',
   },
 };
+
+const OG_LOCALE = { az: 'az_AZ', ru: 'ru_RU', en: 'en_US', tr: 'tr_TR' } as const;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: rawLocale } = await params;
   const locale = normalizeLocale(rawLocale);
 
+  const { title, description } = localeMetadata[locale];
   return {
-    title: localeMetadata[locale].title,
-    description: localeMetadata[locale].description,
+    title,
+    description,
+    // TASK-0510: link önizləməsi (WhatsApp/Telegram) dilə uyğun mətn göstərsin. Root layout
+    // (qorunan fayl) dəyişdirilmədi; şəkil app/opengraph-image.tsx-dən gəlir.
+    openGraph: {
+      type: 'website',
+      siteName: 'DK Agency',
+      locale: OG_LOCALE[locale],
+      title,
+      description,
+      // openGraph burada verildikdə kök app/opengraph-image.tsx bu seqmentdə düşür — açıq yazılır.
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: title }],
+    },
+    twitter: { card: 'summary_large_image', title, description, images: ['/opengraph-image'] },
     // `getAlternates(locale, '/')` burada HARDCODE '/' idi — yəni /ru/toolkit
     // kimi ALT səhifələr də canonical olaraq /ru göstərirdi, yəni özlərini
     // ana səhifənin dublikatı elan edirdilər və indeksdən düşürdülər.

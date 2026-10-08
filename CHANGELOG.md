@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0510` fix(seo): sayt linki WhatsApp/Telegram-da paylaşılanda yeni önizləmə — real DK loqosu, düzgün yüklənən şriftlər (Playfair başlıq), «HoReCa İdarəetmə, KAZAN AI & Biznes Ekosistemi» başlığı və KAZAN AI · 18+ Alət · Ekspert Bloq · Sektor Nəbzi nişanları; başlıq və açıqlama 4 dildə yeniləndi.
+
 - `TASK-0507` feat(b2b-panel): üzv portalında «Bu bölmə hazırlanır» yazan 3 səhifə işləyir — **Gələn təkliflər** (elanlarınıza maraq göstərənlər, zəng/WhatsApp/e-poçt düymələri), **Bildirişlər** (elan yayımlandı / rədd edildi və səbəbi / yoxlanılır, yeni təklif), **Dəstək** (WhatsApp, Telegram, KAZAN AI və tez-tez verilən suallar); 4 dildə.
 
 - `TASK-0505` feat(marketinq-ocagi): «Yaxında» alət kartlarında «Hazır olanda xəbər ver» düyməsi — üzvün marağı qeydə alınır (bir üzv bir alət üçün bir dəfə sayılır), admin həmin kartda neçə üzvün gözlədiyini görür; 4 dildə.

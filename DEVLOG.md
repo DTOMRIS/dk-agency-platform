@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0510: fix(seo): link önizləməsi
+
+**Why:** Doğan: «dkagency.com.tr-ni WhatsApp-a kopyalayanda çıxan yazı və şəkil şık deyil». Canlı yoxlama (bir sorğu): og:image «DK» yazılı qırmızı kvadrat + `fontFamily: 'sans-serif'` — satori-yə şrift verilmirdi, 800 qalınlıq tətbiq olunmurdu; mətn tanıtım prototipindəki tövsiyəyə uyğun deyildi.
+
+**What:** OG şəkli real loqo + Playfair/DM Sans (Google Fonts, yalnız lazımi gliflər); şrift endirilməsə standart şriftə düşür ki, build şəbəkəsiz yerdə yıxılmasın. Başlıq/açıqlama 4 dildə: kök `/` üçün `app/page.tsx` metadata, dillər üçün `[locale]/layout` openGraph — `app/layout.tsx` qorunan fayldır (pre-commit bloku), toxunulmadı. `[locale]` səviyyəsində openGraph verildikdə kök `opengraph-image` həmin seqmentdə düşürdü (`/ru`-da og:image yox idi) — şəkil açıq yazıldı. Şrift yükləyici `lib/og/load-google-font.ts`-ə çıxarıldı, xəbər kartı da onu işlədir.
+
+**Yoxlama:** lokal `next dev`: `/opengraph-image` → 200, 134 KB PNG (gözlə yoxlandı: loqo, Playfair başlıq, 4 nişan); `/`, `/ru`, `/en`, `/tr`, `/ru/toolkit` HTML-də yeni og:title + og:image; `/toolkit` (prefikssiz) hələ köhnə mətn — root layout icazəsi gözləyir. eslint 0 xəta. Canlı sübut deploy sonra.
+
 ## 2026-10-08 — TASK-0507: feat(b2b-panel): 3 boş səhifə
 
 **Why:** `teklifler`, `bildirimler`, `destek` 13.09 HANDOFF-dan bəri «Bu bölmə hazırlanır» idi (mətn də hardcoded AZ). Üzv menyudan basıb boş səhifə görürdü; panelin «Gələn Təkliflər» sayğacı da təklif siyahısına aparmırdı.
