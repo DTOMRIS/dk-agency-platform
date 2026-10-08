@@ -1,5 +1,21 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0507: feat(b2b-panel): 3 boş səhifə
+
+**Why:** `teklifler`, `bildirimler`, `destek` 13.09 HANDOFF-dan bəri «Bu bölmə hazırlanır» idi (mətn də hardcoded AZ). Üzv menyudan basıb boş səhifə görürdü; panelin «Gələn Təkliflər» sayğacı da təklif siyahısına aparmırdı.
+
+**What:** Yeni backend yoxdur. `GET /api/listings?scope=owner` (TASK-0499-dan sonra sahibə `leads` + status + `rejectedReason` qaytarır) ortaq `useOwnerListings` hook-u ilə oxunur; təkliflər və bildiriş lenti ondan qurulur. `source:'mock'` boş sayılır — `getOwnerListings` DB olmayanda bütün `MOCK_LISTINGS`-i istənilən üzvə verir, saxta təklif göstərilməsin. Dəstək kanalları `lib/contact-channels.ts`-dən. Tarix əl ilə `dd.mm.yyyy`: Chromium-da `toLocaleDateString('az-AZ')` «2026 M10 7» verir. FAQ cavabları yalnız sistemdə olan axını təsvir edir (müddət/vəd yoxdur).
+
+**Yoxlama:** lokal `next dev` (port 3487 — 3123-ü OCAQ sessiyası tuturdu), imzalı test cookie, Playwright: fixture (1 yayımlanmış elan + 2 təklif, 1 rədd edilmiş elan) → təkliflər 2, bildirişlər 4 (2 təklif, rədd + səbəb, yayımlandı), dəstək 3 kanal; boş DB cavabı → «Hələ təklif yoxdur» + «Yeni elan». 390 və 1280-də `scrollWidth` = viewport. `/api/leads/whatsapp?text=Salam` → 307 `wa.me/994502566279?text=Salam`. eslint 0. Telefonda sidebar düzəlişi TASK-0506-dadır (bu branch main-dən açılıb). **Diqqət:** `dk:validate` 8-ci addımı (Playwright @smoke) 29.09-dan bəri əslində test işlətmir — `e2e/az-format.test.ts` toplama zamanı `process.exit(0)` çağırır və «ALL PASS (247 yoxlama)» onun öz çıxışıdır. Bu task-ın UI sübutu yuxarıdakı Playwright skriptidir, validator-un 8-ci addımı deyil.
+
+## 2026-10-08 — TASK-0505: feat(marketinq-ocagi): «Xəbər ver»
+
+**Why:** HANDOFF roadmap C — 5 alət `status:'planned'` idi, kart yalnız «Yaxında» yazırdı, maraq heç yerdə toplanmırdı. Hansı aləti əvvəl qurmaq lazım olduğunu bilmək üçün real tələb siqnalı lazımdır.
+
+**What:** Yeni cədvəl açılmadı — mövcud `user_events` (`user_id`, `event_type`, `payload jsonb`) üzərində `tool_notify_request`. Ümumi `/api/user/events` istifadə edilmədi: o, slug-u yoxlamır və təkrarı saymır. Ayrıca `/api/marketing-tools/notify`: yalnız planned alət, bir üzv × bir alət bir sətir, GET admin-ə alət başına `count(distinct user_id)` verir. Kart: düymə → yaşıl «xəbər veriləcək»; admin üçün «N üzv gözləyir».
+
+**Yoxlama:** eslint 0; tsc 35 = main 35 (yeni fayllarda 0); drizzle-in generasiya etdiyi 3 SQL (`payload->>'toolSlug'` filtr/group by) çap olunub yoxlanıldı — lokal Postgres yoxdur, canlı DB-yə yazılmadı. Lokal `next dev` (JWT_SECRET=x, imzalı test cookie): auth-suz GET/POST → 401; naməlum slug və hazır alət (`marka-kompasi`) → 400 `Invalid tool`; üzv GET → 200 `{"requested":[]}`, admin GET → 200 `{"requested":[],"counts":{}}`. Playwright (POST brauzerdə tutuldu, DB-yə getmədi): 4 «Yaxında» kartında düymə, klikdən sonra «Hazır olanda xəbər veriləcək», admin kartında «0 üzv gözləyir». dk:validate 9/9. **Ayrıca tapıldı (bu task-a aid deyil):** `/b2b-panel/*` 390px-də sidebar (288px) həmişə açıqdır, məzmuna ~100px qalır — bütün üzv portalı telefonda istifadə olunmur. Canlı sübut deploydan sonra: bir üzv basır → `SELECT event_type, payload FROM user_events WHERE event_type='tool_notify_request'`.
+
 ## 2026-10-08 — TASK-0506: fix(b2b-panel): mobil sidebar
 
 **Why:** TASK-0505 yoxlamasında 390px ekran görüntüsü: `/b2b-panel/*`-da `<aside class="w-72 min-h-screen">` flex-də sabit qalırdı, heç bir mobil qayda yox idi → `main` x=288, en=102. Bütün üzv portalı telefonda istifadəyə yararsız idi (trafikin 60%+ mobildir).

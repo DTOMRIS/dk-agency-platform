@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -17,6 +18,8 @@ import {
   ScanSearch,
   LineChart,
   MapPin,
+  Bell,
+  BellRing,
   type LucideIcon,
 } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
@@ -56,6 +59,10 @@ const pageCopy: Record<
     title: string;
     subtitle: string;
     comingSoon: string;
+    notifyMe: string;
+    notifyDone: string;
+    notifyError: string;
+    waiting: (n: number) => string;
     categories: Record<MarketingToolCategory, string>;
     tiers: Record<string, string>;
     tools: Record<string, { title: string; subtitle: string }>;
@@ -65,6 +72,10 @@ const pageCopy: Record<
     title: 'Marketinq Ocağı',
     subtitle: 'Restoran sahibi üçün AI-powered marketinq alətləri',
     comingSoon: 'Yaxında',
+    notifyMe: 'Hazır olanda xəbər ver',
+    notifyDone: 'Hazır olanda xəbər veriləcək',
+    notifyError: 'Alınmadı, yenidən cəhd edin',
+    waiting: (n) => `${n} üzv gözləyir`,
     categories: {
       analitika: 'Analitika',
       maliyye: 'Maliyyə',
@@ -104,6 +115,10 @@ const pageCopy: Record<
     title: 'Marketing Hub',
     subtitle: 'AI-powered marketing tools for restaurant owners',
     comingSoon: 'Coming Soon',
+    notifyMe: 'Notify me when ready',
+    notifyDone: 'We will let you know',
+    notifyError: 'Something went wrong, try again',
+    waiting: (n) => `${n} member${n === 1 ? '' : 's'} waiting`,
     categories: {
       analitika: 'Analytics',
       maliyye: 'Finance',
@@ -143,6 +158,10 @@ const pageCopy: Record<
     title: 'Pazarlama Ocağı',
     subtitle: 'Restoran sahipleri için AI destekli pazarlama araçları',
     comingSoon: 'Yakında',
+    notifyMe: 'Hazır olunca haber ver',
+    notifyDone: 'Hazır olunca haber verilecek',
+    notifyError: 'Olmadı, tekrar deneyin',
+    waiting: (n) => `${n} üye bekliyor`,
     categories: {
       analitika: 'Analitik',
       maliyye: 'Finans',
@@ -182,6 +201,10 @@ const pageCopy: Record<
     title: 'Маркетинг-Хаб',
     subtitle: 'AI-инструменты маркетинга для рестораторов',
     comingSoon: 'Скоро',
+    notifyMe: 'Сообщить о запуске',
+    notifyDone: 'Мы сообщим о запуске',
+    notifyError: 'Не получилось, попробуйте ещё раз',
+    waiting: (n) => `Ждут: ${n}`,
     categories: {
       analitika: 'Аналитика',
       maliyye: 'Финансы',
@@ -224,10 +247,17 @@ const pageCopy: Record<
 function ToolCard({
   tool,
   copy,
+  requested,
+  waitingCount,
+  onNotify,
 }: {
   tool: MarketingToolConfig;
   copy: (typeof pageCopy)['az'];
+  requested: boolean;
+  waitingCount: number | null;
+  onNotify: (slug: string) => Promise<boolean>;
 }) {
+  const [notifyState, setNotifyState] = useState<'idle' | 'sending' | 'error'>('idle');
   const Icon = ICON_MAP[tool.iconName] ?? Compass;
   const tierColors = TIER_COLORS[tool.tier];
   const toolCopy = copy.tools[tool.slug];
@@ -274,6 +304,41 @@ function ToolCard({
       <p className="mt-1 text-xs leading-relaxed text-slate-500">
         {toolCopy?.subtitle ?? ''}
       </p>
+
+      {isPlanned && (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
+          {requested ? (
+            <span
+              data-testid="notify-done"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700"
+            >
+              <BellRing size={14} />
+              {copy.notifyDone}
+            </span>
+          ) : (
+            <button
+              type="button"
+              data-testid="notify-me"
+              disabled={notifyState === 'sending'}
+              onClick={async () => {
+                setNotifyState('sending');
+                const ok = await onNotify(tool.slug);
+                setNotifyState(ok ? 'idle' : 'error');
+              }}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-slate-900 disabled:opacity-60"
+            >
+              <Bell size={14} />
+              {copy.notifyMe}
+            </button>
+          )}
+          {waitingCount !== null && (
+            <span className="text-[11px] font-medium text-slate-700">{copy.waiting(waitingCount)}</span>
+          )}
+          {notifyState === 'error' && (
+            <span className="w-full text-[11px] font-medium text-red-700">{copy.notifyError}</span>
+          )}
+        </div>
+      )}
     </div>
   );
 
@@ -290,6 +355,44 @@ export default function MarketinqOcagiPage() {
   const pathname = usePathname();
   const locale = normalizeLocale(pathname.split('/')[1]);
   const copy = pageCopy[locale];
+
+  // TASK-0505: «Xəbər ver» — üzvün gözlədiyi alətlər; admin üçün əlavə olaraq neçə üzvün gözlədiyi.
+  const [requested, setRequested] = useState<Set<string>>(new Set());
+  const [counts, setCounts] = useState<Record<string, number> | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/marketing-tools/notify')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { requested?: string[]; counts?: Record<string, number> } | null) => {
+        if (cancelled || !data) return;
+        setRequested(new Set(data.requested ?? []));
+        if (data.counts) setCounts(data.counts);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  async function handleNotify(slug: string): Promise<boolean> {
+    try {
+      const res = await fetch('/api/marketing-tools/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ toolSlug: slug }),
+      });
+      if (!res.ok) return false;
+      const data = (await res.json()) as { alreadyRequested?: boolean };
+      setRequested((prev) => new Set(prev).add(slug));
+      if (!data.alreadyRequested) {
+        setCounts((prev) => (prev ? { ...prev, [slug]: (prev[slug] ?? 0) + 1 } : prev));
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-8">
@@ -311,7 +414,14 @@ export default function MarketinqOcagiPage() {
             </h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {tools.map((tool) => (
-                <ToolCard key={tool.slug} tool={tool} copy={copy} />
+                <ToolCard
+                  key={tool.slug}
+                  tool={tool}
+                  copy={copy}
+                  requested={requested.has(tool.slug)}
+                  waitingCount={counts ? (counts[tool.slug] ?? 0) : null}
+                  onNotify={handleNotify}
+                />
               ))}
             </div>
           </section>
