@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-10-06 17:24:13 | Branch: feat/TASK-0501-home-news-listings-up | 44d1f7b
+> Son güncəlləmə: 2026-10-08 04:17:31 | Branch: feat/TASK-0502-home-whatsapp-ocaq | 1a7e8d1
 
 ## Route İnventarı
 | Kateqoriya | Say |
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 4493 | 4493 | 4493 | 4493 | ✅ |
+| 4496 | 4496 | 4496 | 4496 | ✅ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`
@@ -43,10 +43,10 @@ AI Insight bağlı səhifə: **9**
 ## ENV (.env.local)
 | Key | Status |
 |-----|--------|
-| DEEPSEEK_API_KEY | ✅ |
+| DEEPSEEK_API_KEY | ❌ |
 | GEMINI_API_KEY | ❌ Yoxdur / İstifadə edilmir (DeepSeek/Claude aktiv) |
 | ANTHROPIC_API_KEY | ⚠️ fallback yox |
-| SMTP_USER | ✅ |
+| SMTP_USER | ❌ |
 
 ## Email Backend
 | Komponent | Status |
@@ -54,7 +54,7 @@ AI Insight bağlı səhifə: **9**
 | Provider | ✅ Hostinger SMTP (nodemailer) |
 | Templates | ✅ lib/email/templates.ts |
 | Routes | ✅ 10 API route sendEmail() |
-| SMTP_USER | ✅ .env.local-da dolu |
+| SMTP_USER | ⚠️ boş → console.log mock |
 
 ## Fatura OCR
 | Komponent | Status |

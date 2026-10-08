@@ -6,7 +6,13 @@ import { sendSmtpEmail } from '@/lib/email/smtp';
 import { wrapEmail } from '@/lib/email/templates';
 
 const ALLOWED_CHANNELS = ['kazan', 'whatsapp', 'telegram'] as const;
-const ALLOWED_SOURCES = ['contact_page'] as const;
+const ALLOWED_SOURCES = ['contact_page', 'home_join'] as const;
+
+// Admin e-mail label per source (TASK-0502: home page contact block).
+const SOURCE_LABELS: Record<(typeof ALLOWED_SOURCES)[number], string> = {
+  contact_page: 'Əlaqə səhifəsi',
+  home_join: 'Ana səhifə',
+};
 const ALLOWED_LOCALES = ['az', 'ru', 'en', 'tr'] as const;
 
 type Channel = (typeof ALLOWED_CHANNELS)[number];
@@ -106,9 +112,10 @@ export async function POST(req: NextRequest) {
     if (channel === 'whatsapp' || channel === 'telegram') {
       const adminEmail = process.env.ADMIN_EMAIL ?? 'info@dkagency.com.tr';
       const channelLabel = channel === 'whatsapp' ? 'WhatsApp' : 'Telegram';
-      const subject = `[DK Lead] Əlaqə səhifəsi — ${channelLabel}`;
+      const sourceLabel = SOURCE_LABELS[source];
+      const subject = `[DK Lead] ${sourceLabel} — ${channelLabel}`;
       const html = wrapEmail(`
-        <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">Əlaqə Səhifəsi — ${channelLabel}</h2>
+        <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">${sourceLabel} — ${channelLabel}</h2>
         <table style="width:100%;border-collapse:collapse;font-size:14px;">
           <tr><td style="padding:8px 0;color:#64748b;width:100px">Kanal:</td><td style="padding:8px 0;font-weight:700">${channelLabel}</td></tr>
           <tr><td style="padding:8px 0;color:#64748b">Dil:</td><td style="padding:8px 0">${locale.toUpperCase()}</td></tr>

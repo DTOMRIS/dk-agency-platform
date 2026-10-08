@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0502` feat(home): ana səhifədə işləməyən «Müraciət et» formu WhatsApp və Telegram düymələri ilə əvəz olundu (hər klik qeydə alınır, admin-ə e-poçt gedir); hero-da «Sualınız var? WhatsApp-a yazın» linki; OCAQ kartı real məhsulu təsvir edir (çoxfilialı əməliyyat paneli, 10+ filial) və admin girişinə deyil, WhatsApp-a aparır; alət sayı hər yerdə 18 (əvvəl 10/11); kart linkləri seçilmiş dildə qalır.
+
 - `TASK-0501` feat(home): ana səhifədə "Sektordan ən son yeniliklər" (xəbərlər) və B2B elanlar bölməsi hero-dan dərhal sonra; qalan bölmələr eyni ardıcıllıqla aşağı.
 
 - `TASK-0498` feat(supply): admin panelində yeni **Təchizatçılar** bölməsi — WhatsApp HoReCa qruplarının ixracından təchizatçı bazası və alıcı tələbləri ("kimdə var?"); son 1/3/6/12 ayı təhlil edib idxal etmək, kateqoriya/status/aktivlik filtrləri, telefonla zəng/kopyala, status və açıq kataloq razılığı, qeyd, CSV; hər tələbin yanında «Uyğun təchizatçılar». Məlumat şəxsidir — yalnız admin görür, xarici AI-ya göndərilmir. Canlıda işləməsi üçün `npm run db:migrate` lazımdır.
