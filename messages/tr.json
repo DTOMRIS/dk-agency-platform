@@ -3761,6 +3761,11 @@
         "category": "Menü",
         "title": "Menü mühendisliğiyle satışlar nasıl artırılır?",
         "excerpt": "Yıldız, At, Bulmaca ve Köpek matrisiyle menüyü veriyle yönetmenin temelleri."
+      },
+      "p3": {
+        "category": "Delivery",
+        "title": "Wolt, Bolt, Yango: komisyondan sonra size ne kalıyor?",
+        "excerpt": "Teslimat platformu komisyonu, food cost ve ambalaj düştükten sonra siparişin gerçek netini hesaplıyoruz."
       }
     }
   },
@@ -6308,7 +6313,9 @@
           "cost": "Maliyet",
           "tasks": "Görevler",
           "market": "Pazar"
-        }
+        },
+        "allDone": "Hepsi onaylandı",
+        "allDoneSub": "Yeni sinyal geldiğinde burada görünecek."
       }
     },
     "facts": {
@@ -6604,7 +6611,72 @@
     "receipt": {
       "eyebrow": "Kendi rakamınız",
       "title": "Peki sizin rakamınız ne?",
-      "sub": "Kim olduğunuzu seçin, aylık satışınızı ve ürün alımınızı yazın — satıştan geriye ne kaldığını manat olarak görün."
+      "sub": "Kim olduğunuzu seçin, aylık satışınızı ve ürün alımınızı yazın — satıştan geriye ne kaldığını manat olarak görün.",
+      "trust1": "Kayıtsız hesaplama",
+      "trust2": "Rakamlar tarayıcınızda kalır",
+      "resultLabel": "Sonuç",
+      "hints": {
+        "restoran": {
+          "t1": "Porsiyon maliyeti ve food cost %",
+          "t2": "Aylık net kâr",
+          "t3": "Sipariş başına net"
+        },
+        "kafe": {
+          "t1": "Fincan başına maliyet",
+          "t2": "Yıldız · at · bulmaca · köpek listesi",
+          "t3": "Saat saat vardiya planı"
+        },
+        "otel": {
+          "t1": "Profil hazırlık puanı",
+          "t2": "Eksik gereklilikler listesi",
+          "t3": "Geri dönüş süresi"
+        },
+        "franchise": {
+          "t1": "Hazırlık puanı",
+          "t2": "Geri dönüş süresi",
+          "t3": "Franchise kitabı taslağı"
+        },
+        "acilis": {
+          "t1": "Günlük minimum misafir sayısı",
+          "t2": "Adım adım açılış listesi",
+          "t3": "Denetime hazırlık listesi"
+        }
+      }
+    },
+    "news": {
+      "eyebrow": "Sektör Nabzı",
+      "title": "Sektörden en son haberler",
+      "sub": "HoReCa, turizm ve restoran teknolojisinden seçilmiş haberler — kaynağıyla.",
+      "cta": "Tüm haberler",
+      "readMore": "Devamını oku",
+      "cats": {
+        "market": "Pazar",
+        "technology": "Teknoloji",
+        "finance": "Finans",
+        "other": "Sektör"
+      },
+      "newsletterTitle": "Haftalık bülten",
+      "newsletterBody": "Sektördeki son haberleri ve analizleri doğrudan e-posta kutuna al.",
+      "emailPlaceholder": "E-posta adresin",
+      "subscribe": "Abone ol",
+      "success": "Aboneliğiniz onaylandı.",
+      "error": "Abonelik tamamlanamadı.",
+      "loading": "Gönderiliyor..."
+    },
+    "market": {
+      "eyebrow": "Pazar",
+      "postListing": "İlan ver",
+      "label": "İlan kategorileri"
+    },
+    "blog": {
+      "eyebrow": "Bilgi",
+      "readMin": "{n} dk okuma"
+    },
+    "ai": {
+      "eyebrow": "AI hazırlık testi",
+      "meta": "{n} soru · en fazla {max} puan",
+      "preview": "Sorulardan bazıları",
+      "resultHint": "Sonunda: puanın ve sana uygun araçlar"
     }
   }
 }

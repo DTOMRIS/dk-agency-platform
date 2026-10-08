@@ -49,7 +49,7 @@ export default function HeroPhone() {
       timers.push(
         window.setTimeout(() => {
           if (!cancelled) fn();
-        }, ms),
+        }, ms)
       );
     };
     const run = (k: number) => {
@@ -60,10 +60,11 @@ export default function HeroPhone() {
           later(() => run(k + 1), 1400);
         }, 900);
       } else {
+        // Every card is gone: the calm «all approved» card holds the screen, then the loop restarts.
         later(() => {
           setCards(FRESH);
           later(() => run(0), 2600);
-        }, 1600);
+        }, 2800);
       }
     };
     later(() => run(0), 2600);
@@ -74,6 +75,7 @@ export default function HeroPhone() {
   }, [reduce]);
 
   const goneCount = cards.filter((c) => c.gone).length;
+  const allGone = goneCount === CARD_KEYS.length;
   const diagHref = whatsappHref(t('waDiag'));
 
   return (
@@ -149,35 +151,50 @@ export default function HeroPhone() {
                     <span>{t('hero.phone.pending')}</span>
                     <span>{t('hero.phone.swipe')}</span>
                   </div>
-                  {CARD_KEYS.map((key, i) => {
-                    const state = cards[i];
-                    return (
-                      <div
-                        key={key}
-                        className={`${styles.phCard} ${state.gone ? styles.phCardGone : ''}`}
-                      >
-                        <div className={styles.phTop}>
-                          <span className={styles.phTag}>{t(`hero.phone.${key}.tag`)}</span>
-                          <span className={styles.phAmt}>
-                            {key === 'c1' ? CARD_AMOUNT_C1 : t('hero.phone.c2.amt')}
-                          </span>
+                  <div className={styles.phStack}>
+                    {CARD_KEYS.map((key, i) => {
+                      const state = cards[i];
+                      return (
+                        <div
+                          key={key}
+                          className={`${styles.phCard} ${state.gone ? styles.phCardGone : ''}`}
+                        >
+                          <div className={styles.phTop}>
+                            <span className={styles.phTag}>{t(`hero.phone.${key}.tag`)}</span>
+                            <span className={styles.phAmt}>
+                              {key === 'c1' ? CARD_AMOUNT_C1 : t('hero.phone.c2.amt')}
+                            </span>
+                          </div>
+                          <div className={styles.phT}>{t(`hero.phone.${key}.title`)}</div>
+                          <div className={styles.phWhy}>
+                            <span className={styles.sp} aria-hidden="true">
+                              ✦
+                            </span>
+                            <span>{t(`hero.phone.${key}.why`)}</span>
+                          </div>
+                          <div className={styles.phBtns}>
+                            <span>{t('hero.phone.view')}</span>
+                            <span className={state.approved ? styles.phOk : undefined}>
+                              {state.approved
+                                ? t('hero.phone.approved')
+                                : t(`hero.phone.${key}.action`)}
+                            </span>
+                          </div>
                         </div>
-                        <div className={styles.phT}>{t(`hero.phone.${key}.title`)}</div>
-                        <div className={styles.phWhy}>
-                          <span className={styles.sp} aria-hidden="true">
-                            ✦
-                          </span>
-                          <span>{t(`hero.phone.${key}.why`)}</span>
-                        </div>
-                        <div className={styles.phBtns}>
-                          <span>{t('hero.phone.view')}</span>
-                          <span className={state.approved ? styles.phOk : undefined}>
-                            {state.approved ? t('hero.phone.approved') : t(`hero.phone.${key}.action`)}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                    {/* Calm end state while every card is swiped away (owner 2026-10-08). */}
+                    <div
+                      className={`${styles.phDone} ${allGone ? styles.phDoneOn : ''}`}
+                      aria-hidden={!allGone}
+                    >
+                      <span className={styles.phDoneIc}>
+                        <Icon name="check" />
+                      </span>
+                      <b>{t('hero.phone.allDone')}</b>
+                      <span>{t('hero.phone.allDoneSub')}</span>
+                    </div>
+                  </div>
                 </div>
                 <PhoneNav active="today" />
               </div>

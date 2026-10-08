@@ -3761,6 +3761,11 @@
         "category": "Menyu",
         "title": "Menyu mühəndisliyi ilə satışı necə artırmaq olar?",
         "excerpt": "Ulduz, At, Puzzle və İt matrisi ilə menyunu data ilə idarə etməyin əsasları."
+      },
+      "p3": {
+        "category": "Delivery",
+        "title": "Wolt, Bolt, Yango: komissiyadan sonra sizə nə qalır?",
+        "excerpt": "Çatdırılma platformasının komissiyası, food cost və qablaşdırma çıxandan sonra sifarişin real nettosunu hesablayırıq."
       }
     }
   },
@@ -6308,7 +6313,9 @@
           "cost": "Xərc",
           "tasks": "Tapşırıq",
           "market": "Bazar"
-        }
+        },
+        "allDone": "Hamısı təsdiqləndi",
+        "allDoneSub": "Yeni siqnal gələndə burada görünəcək."
       }
     },
     "facts": {
@@ -6604,7 +6611,72 @@
     "receipt": {
       "eyebrow": "Öz rəqəminiz",
       "title": "Bəs sizin rəqəminiz?",
-      "sub": "Kim olduğunuzu seçin, aylıq satışınızı və məhsul alışınızı yazın — satışdan nə qaldığını manatla görün."
+      "sub": "Kim olduğunuzu seçin, aylıq satışınızı və məhsul alışınızı yazın — satışdan nə qaldığını manatla görün.",
+      "trust1": "Qeydiyyatsız hesablama",
+      "trust2": "Rəqəmlər brauzerinizdə qalır",
+      "resultLabel": "Nəticə",
+      "hints": {
+        "restoran": {
+          "t1": "Porsiya maya dəyəri və food cost %",
+          "t2": "Aylıq xalis mənfəət",
+          "t3": "Sifariş başına netto"
+        },
+        "kafe": {
+          "t1": "Fincan başına maya dəyəri",
+          "t2": "Ulduz · at · puzzle · it siyahısı",
+          "t3": "Saat-saat növbə cədvəli"
+        },
+        "otel": {
+          "t1": "Profil hazırlıq balı",
+          "t2": "Çatışmayan tələblər siyahısı",
+          "t3": "Geri dönüş müddəti"
+        },
+        "franchise": {
+          "t1": "Hazırlıq balı",
+          "t2": "Geri dönüş müddəti",
+          "t3": "Françayz kitabının qaralaması"
+        },
+        "acilis": {
+          "t1": "Gündəlik minimum qonaq sayı",
+          "t2": "Addım-addım açılış siyahısı",
+          "t3": "Yoxlamaya hazırlıq siyahısı"
+        }
+      }
+    },
+    "news": {
+      "eyebrow": "Sektor Nəbzi",
+      "title": "Sektordan ən son yeniliklər",
+      "sub": "HoReCa, turizm və restoran texnologiyası üzrə seçilmiş xəbərlər — mənbə ilə.",
+      "cta": "Bütün xəbərlər",
+      "readMore": "Davamını oxu",
+      "cats": {
+        "market": "Bazar",
+        "technology": "Texnologiya",
+        "finance": "Maliyyə",
+        "other": "Sektor"
+      },
+      "newsletterTitle": "Həftəlik bülleten",
+      "newsletterBody": "Sektordakı ən son xəbərləri və analizləri birbaşa e-poçtunuza alın.",
+      "emailPlaceholder": "E-poçt ünvanınız",
+      "subscribe": "Abunə ol",
+      "success": "Abunəliyiniz təsdiqləndi.",
+      "error": "Abunəlik tamamlanmadı.",
+      "loading": "Göndərilir..."
+    },
+    "market": {
+      "eyebrow": "Bazar",
+      "postListing": "Elan ver",
+      "label": "Elan kateqoriyaları"
+    },
+    "blog": {
+      "eyebrow": "Bilik",
+      "readMin": "{n} dəq oxu"
+    },
+    "ai": {
+      "eyebrow": "AI hazırlıq testi",
+      "meta": "{n} sual · maksimum {max} bal",
+      "preview": "Suallardan bəziləri",
+      "resultHint": "Sonda: skor və sizə uyğun alətlər"
     }
   }
 }

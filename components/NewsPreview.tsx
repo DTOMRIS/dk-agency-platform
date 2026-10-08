@@ -1,12 +1,23 @@
+/**
+ * @file NewsPreview.tsx
+ * @purpose Homepage «Sektor Nəbzi» — the 4 latest news from GET /api/news: one lead story and
+ *          three side items, plus the weekly newsletter form (POST /api/newsletter/subscribe).
+ *          A story without a usable image gets a branded generated cover (category gradient +
+ *          category icon + source name) instead of an empty dark box.
+ * @pattern A (useTranslations) — homeV2.news
+ * @task TASK-0501 · TASK-0512 (2026-10-08: restyled in place to the v2 cream/ink design)
+ */
+
 'use client';
 
-import { motion } from 'framer-motion';
-import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { Calendar, ArrowRight, Tag, Bookmark } from 'lucide-react';
 import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
 import { formatAzDate } from '@/lib/i18n/format';
+import styles from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Icon, Reveal, type IconName } from '@/components/home/v2/shared';
 
 interface NewsItem {
   id: number;
@@ -16,6 +27,9 @@ interface NewsItem {
   category: string;
   imageUrl: string | null;
   publishedAt: string;
+  sourceName?: string | null;
+  author?: string | null;
+  externalUrl?: string | null;
 }
 
 const dateLocaleMap: Record<Locale, string> = {
@@ -25,115 +39,71 @@ const dateLocaleMap: Record<Locale, string> = {
   tr: 'tr-TR',
 };
 
-const copyByLocale: Record<
-  Locale,
-  {
-    badge: string;
-    title: [string, string];
-    cta: string;
-    tagLabel: string;
-    readMore: string;
-    newsletterTitle: string;
-    newsletterBody: string;
-    emailPlaceholder: string;
-    subscribe: string;
+type CatKey = 'market' | 'technology' | 'finance' | 'other';
+
+/** Category → icon + cover tone. Categories come from the news pipeline (market/technology/finance). */
+const CATEGORY_STYLE: Record<CatKey, { icon: IconName; tone: string }> = {
+  market: { icon: 'trend', tone: styles.nwToneMarket },
+  technology: { icon: 'spark', tone: styles.nwToneTech },
+  finance: { icon: 'coin', tone: styles.nwToneFinance },
+  other: { icon: 'globe', tone: styles.nwToneOther },
+};
+
+function catKey(category: string): CatKey {
+  const c = category.toLowerCase();
+  return c === 'market' || c === 'technology' || c === 'finance' ? c : 'other';
+}
+
+/** Source shown on the card: explicit source name, else the feed author, else the link's host. */
+function sourceOf(item: NewsItem): string {
+  if (item.sourceName) return item.sourceName;
+  if (item.author) return item.author;
+  if (item.externalUrl) {
+    try {
+      return new URL(item.externalUrl).hostname.replace(/^www\./, '');
+    } catch {
+      return '';
+    }
   }
-> = {
-  az: {
-    badge: 'Xəbərlər & Blog',
-    title: ['Sektordan ən son', 'yeniliklər'],
-    cta: 'Bütün xəbərlər',
-    tagLabel: 'Sektor Nəbzi',
-    readMore: 'Davamını oxu',
-    newsletterTitle: 'Həftəlik bülleten',
-    newsletterBody: 'Sektordakı ən son xəbərləri və analizləri birbaşa e-poçtunuza alın.',
-    emailPlaceholder: 'E-poçt ünvanınız',
-    subscribe: 'Abunə ol',
-  },
-  ru: {
-    badge: 'Новости и блог',
-    title: ['Последние', 'обновления сектора'],
-    cta: 'Все новости',
-    tagLabel: 'Пульс сектора',
-    readMore: 'Читать дальше',
-    newsletterTitle: 'Еженедельный дайджест',
-    newsletterBody: 'Получайте последние новости и аналитику сектора прямо на почту.',
-    emailPlaceholder: 'Ваш e-mail',
-    subscribe: 'Подписаться',
-  },
-  en: {
-    badge: 'News & Blog',
-    title: ['Latest', 'sector updates'],
-    cta: 'All news',
-    tagLabel: 'Sector Pulse',
-    readMore: 'Read more',
-    newsletterTitle: 'Weekly digest',
-    newsletterBody: 'Receive the latest sector news and analysis directly in your inbox.',
-    emailPlaceholder: 'Your email',
-    subscribe: 'Subscribe',
-  },
-  tr: {
-    badge: 'Haberler & Blog',
-    title: ['Sektörden en son', 'güncellemeler'],
-    cta: 'Tüm haberler',
-    tagLabel: 'Sektör Nabzı',
-    readMore: 'Devamını oku',
-    newsletterTitle: 'Haftalık bülten',
-    newsletterBody: 'Sektördeki son haberleri ve analizleri doğrudan e-posta kutuna al.',
-    emailPlaceholder: 'E-posta adresin',
-    subscribe: 'Abone ol',
-  },
-};
+  return '';
+}
 
-const newsletterStatusByLocale: Record<
-  Locale,
-  { success: string; error: string; loading: string }
-> = {
-  az: {
-    success: 'Abunəliyiniz təsdiqləndi.',
-    error: 'Abunəlik tamamlanmadı.',
-    loading: 'Göndərilir...',
-  },
-  ru: {
-    success: 'Подписка подтверждена.',
-    error: 'Не удалось оформить подписку.',
-    loading: 'Отправка...',
-  },
-  en: {
-    success: 'Your subscription is confirmed.',
-    error: 'Subscription could not be completed.',
-    loading: 'Submitting...',
-  },
-  tr: {
-    success: 'Aboneliğiniz onaylandı.',
-    error: 'Abonelik tamamlanamadı.',
-    loading: 'Gönderiliyor...',
-  },
-};
+function NewsCover({ item, label, big }: { item: NewsItem; label: string; big?: boolean }) {
+  const [failed, setFailed] = useState(false);
+  const cat = CATEGORY_STYLE[catKey(item.category)];
 
-function NewsImage({ item, className }: { item: NewsItem; className?: string }) {
-  if (item.imageUrl) {
+  if (item.imageUrl && !failed) {
     return (
+      // eslint-disable-next-line @next/next/no-img-element -- feed images come from many news hosts
       <img
         src={item.imageUrl}
-        alt={item.title}
-        className={className || 'h-full w-full object-cover'}
+        alt=""
+        className={styles.nwImg}
         referrerPolicy="no-referrer"
+        loading="lazy"
+        onError={() => setFailed(true)}
       />
     );
   }
+
+  const source = sourceOf(item);
   return (
     <div
-      className={`flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 ${className || 'h-full w-full'}`}
+      className={`${styles.nwCover} ${cat.tone} ${big ? styles.nwCoverBig : ''}`}
+      aria-hidden="true"
     >
-      <span className="text-5xl font-black uppercase tracking-[0.2em] text-white/10">DK</span>
+      <span className={styles.nwCoverIc}>
+        <Icon name={cat.icon} />
+      </span>
+      {/* The category already sits on the pill above the cover — the cover names the source. */}
+      {big ? <span className={styles.nwCoverCat}>{source || label}</span> : null}
     </div>
   );
 }
 
 export default function NewsPreview() {
+  const t = useTranslations('homeV2.news');
   const locale = normalizeLocale(useLocale());
-  const copy = copyByLocale[locale];
   const [items, setItems] = useState<NewsItem[]>([]);
   const [email, setEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState<
@@ -169,7 +139,8 @@ export default function NewsPreview() {
   };
 
   const featuredNews = items[0];
-  const sideNews = items.slice(1);
+  const sideNews = items.slice(1, 4);
+  const catLabel = (item: NewsItem) => t(`cats.${catKey(item.category)}`);
 
   const subscribe = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -189,157 +160,121 @@ export default function NewsPreview() {
   };
 
   return (
-    <section id="news" className="bg-white py-16 sm:py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 flex flex-col gap-5 sm:mb-12 md:mb-16 md:flex-row md:items-end md:justify-between">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-100 bg-slate-50 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.24em] text-brand-red sm:mb-6 sm:px-4"
-            >
-              {copy.badge}
-            </motion.div>
-            <h3 className="text-4xl font-display font-extrabold leading-[0.95] text-slate-900 sm:text-5xl lg:text-6xl">
-              {copy.title[0]} <br />
-              <span className="text-slate-400">{copy.title[1]}</span>
-            </h3>
-          </div>
-
-          <Link
-            href={withLocale(locale, '/haberler')}
-            className="group inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl bg-slate-900 px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-95 sm:w-auto sm:px-8 sm:py-4"
-          >
-            {copy.cta}
-            <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
-          </Link>
-        </div>
-
-        <div className="grid gap-10 lg:grid-cols-3 lg:gap-16">
-          {featuredNews && (
+    <section
+      id="news"
+      className={`${styles.v2} ${inter.className} ${styles.nw}`}
+      aria-labelledby="news-title"
+    >
+      <div className={styles.sec}>
+        <div className={styles.wrap}>
+          <Reveal className={styles.headRow}>
+            <div className={styles.secHead}>
+              <span className={styles.eyebrow}>
+                <span className={styles.dot} />
+                {t('eyebrow')}
+              </span>
+              <h2 id="news-title" className={styles.h2}>
+                {t('title')}
+              </h2>
+              <p>{t('sub')}</p>
+            </div>
             <Link
-              href={withLocale(locale, `/haberler/${featuredNews.slug}`)}
-              className="group block cursor-pointer lg:col-span-2"
+              href={withLocale(locale, '/haberler')}
+              className={`${styles.btn} ${styles.btnDark} ${styles.headBtn}`}
             >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+              {t('cta')}
+              <Icon name="arrow" />
+            </Link>
+          </Reveal>
+
+          {featuredNews ? (
+            <div className={styles.nwGrid}>
+              <Link
+                href={withLocale(locale, `/haberler/${featuredNews.slug}`)}
+                className={styles.nwLead}
               >
-                <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-[1.75rem] shadow-2xl shadow-slate-200/50 sm:mb-8 sm:rounded-[2.5rem]">
-                  <NewsImage
-                    item={featuredNews}
-                    className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
-                  <div className="absolute left-4 top-4 sm:left-8 sm:top-8">
-                    <span className="rounded-full bg-brand-red px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white shadow-lg shadow-brand-red/20 sm:px-5 sm:py-2 sm:tracking-widest">
-                      {featuredNews.category}
-                    </span>
+                <div className={styles.nwLeadMedia}>
+                  <NewsCover item={featuredNews} label={catLabel(featuredNews)} big />
+                  <span className={styles.nwPill}>{catLabel(featuredNews)}</span>
+                </div>
+                <div className={styles.nwLeadBody}>
+                  <div className={styles.nwMeta}>
+                    <span>{formatDate(featuredNews.publishedAt)}</span>
+                    {sourceOf(featuredNews) ? <span>{sourceOf(featuredNews)}</span> : null}
                   </div>
-                  <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition-all group-hover:bg-white group-hover:text-slate-900 sm:right-8 sm:top-8 sm:h-12 sm:w-12">
-                    <Bookmark size={18} />
+                  <h3 className={styles.nwLeadTitle}>{featuredNews.title}</h3>
+                  <p className={styles.nwLeadSum}>{featuredNews.summary}</p>
+                  <span className={styles.nwMore}>
+                    {t('readMore')}
+                    <Icon name="arrow" />
                   </span>
                 </div>
-
-                <div className="mb-4 flex flex-col gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400 sm:mb-6 sm:flex-row sm:items-center sm:gap-6 sm:text-xs sm:tracking-widest">
-                  <div className="flex items-center gap-2">
-                    <Calendar size={16} className="text-brand-red" />
-                    {formatDate(featuredNews.publishedAt)}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Tag size={16} className="text-brand-red" />
-                    {copy.tagLabel}
-                  </div>
-                </div>
-
-                <h4 className="mb-4 text-3xl font-display font-extrabold leading-tight text-slate-900 transition-colors group-hover:text-brand-red sm:mb-6 sm:text-4xl">
-                  {featuredNews.title}
-                </h4>
-                <p className="mb-6 text-base font-medium leading-relaxed text-slate-500 sm:mb-8 sm:text-xl">
-                  {featuredNews.summary}
-                </p>
-                <div className="flex items-center gap-3 font-bold text-slate-900 transition-all group-hover:gap-5">
-                  {copy.readMore}
-                  <ArrowRight size={20} className="text-brand-red" />
-                </div>
-              </motion.div>
-            </Link>
-          )}
-
-          <div className="space-y-8 sm:space-y-10 lg:space-y-12">
-            {sideNews.map((news, index) => (
-              <Link
-                key={news.id}
-                href={withLocale(locale, `/haberler/${news.slug}`)}
-                className="group block cursor-pointer"
-              >
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <div className="flex gap-4 sm:gap-6 lg:gap-8">
-                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-2xl shadow-lg shadow-slate-200/50 sm:h-28 sm:w-28 sm:rounded-3xl">
-                      <NewsImage
-                        item={news}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                    </div>
-                    <div className="min-w-0 flex-1 py-1">
-                      <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-brand-red sm:mb-3 sm:tracking-widest">
-                        {news.category}
-                      </span>
-                      <h5 className="mb-2 line-clamp-2 text-base font-display font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-red sm:mb-3 sm:text-lg">
-                        {news.title}
-                      </h5>
-                      <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 sm:tracking-wider">
-                        <Calendar size={12} />
-                        {formatDate(news.publishedAt)}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
               </Link>
-            ))}
 
-            <div className="relative overflow-hidden rounded-[1.75rem] bg-slate-950 p-6 text-white shadow-2xl shadow-slate-900/20 sm:rounded-[2.5rem] sm:p-10">
-              <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-brand-red/10 blur-3xl" />
-              <h5 className="relative z-10 mb-4 text-xl font-display font-bold sm:text-2xl">
-                {copy.newsletterTitle}
-              </h5>
-              <p className="relative z-10 mb-6 text-sm leading-relaxed text-slate-400 sm:mb-8">
-                {copy.newsletterBody}
-              </p>
-              <form className="relative z-10 space-y-4" onSubmit={subscribe}>
-                <input
-                  type="email"
-                  placeholder={copy.emailPlaceholder}
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  required
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm backdrop-blur-sm transition-colors focus:border-brand-red focus:outline-none sm:px-5 sm:py-4"
-                />
-                <button
-                  disabled={newsletterStatus === 'loading'}
-                  className="w-full rounded-2xl bg-brand-red py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95 disabled:cursor-wait disabled:opacity-60 sm:py-4"
-                >
-                  {newsletterStatus === 'loading'
-                    ? newsletterStatusByLocale[locale].loading
-                    : copy.subscribe}
-                </button>
-                {newsletterStatus === 'success' && (
-                  <p className="text-sm text-emerald-400">
-                    {newsletterStatusByLocale[locale].success}
-                  </p>
-                )}
-                {newsletterStatus === 'error' && (
-                  <p className="text-sm text-rose-400">{newsletterStatusByLocale[locale].error}</p>
-                )}
-              </form>
+              <ul className={styles.nwSide}>
+                {sideNews.map((news) => (
+                  <li key={news.id}>
+                    <Link
+                      href={withLocale(locale, `/haberler/${news.slug}`)}
+                      className={styles.nwItem}
+                    >
+                      <span className={styles.nwThumb}>
+                        <NewsCover item={news} label={catLabel(news)} />
+                      </span>
+                      <span className={styles.nwItemText}>
+                        <span className={styles.nwCat}>{catLabel(news)}</span>
+                        <span className={styles.nwItemTitle}>{news.title}</span>
+                        <span className={styles.nwItemMeta}>
+                          {formatDate(news.publishedAt)}
+                          {sourceOf(news) ? ` · ${sourceOf(news)}` : ''}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
+          ) : null}
+
+          <div className={styles.nwLetter}>
+            <span className={styles.nwLetterIc}>
+              <Icon name="mail" />
+            </span>
+            <div className={styles.nwLetterText}>
+              <b>{t('newsletterTitle')}</b>
+              <span>{t('newsletterBody')}</span>
+            </div>
+            <form className={styles.nwForm} onSubmit={subscribe}>
+              <label htmlFor="news-letter-email" className={styles.srOnly}>
+                {t('emailPlaceholder')}
+              </label>
+              <input
+                id="news-letter-email"
+                type="email"
+                placeholder={t('emailPlaceholder')}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+                className={styles.nwInput}
+              />
+              <button
+                type="submit"
+                disabled={newsletterStatus === 'loading'}
+                className={`${styles.btn} ${styles.btnRed} ${styles.nwSubmit}`}
+              >
+                {newsletterStatus === 'loading' ? t('loading') : t('subscribe')}
+              </button>
+              {newsletterStatus === 'success' && (
+                <p className={styles.nwOk} role="status">
+                  {t('success')}
+                </p>
+              )}
+              {newsletterStatus === 'error' && (
+                <p className={styles.nwErr} role="alert">
+                  {t('error')}
+                </p>
+              )}
+            </form>
           </div>
         </div>
       </div>

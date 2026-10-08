@@ -3761,6 +3761,11 @@
         "category": "Menu",
         "title": "How can menu engineering grow your sales?",
         "excerpt": "The basics of running your menu on data with the Star, Plowhorse, Puzzle and Dog matrix."
+      },
+      "p3": {
+        "category": "Delivery",
+        "title": "Wolt, Bolt, Yango: what is left for you after commission?",
+        "excerpt": "We work out the real net of an order after the delivery platform commission, food cost and packaging."
       }
     }
   },
@@ -6308,7 +6313,9 @@
           "cost": "Costs",
           "tasks": "Tasks",
           "market": "Market"
-        }
+        },
+        "allDone": "All approved",
+        "allDoneSub": "The next signal will show up here."
       }
     },
     "facts": {
@@ -6604,7 +6611,72 @@
     "receipt": {
       "eyebrow": "Your numbers",
       "title": "So what are your numbers?",
-      "sub": "Pick who you are, enter your monthly sales and food purchases — and see in manat what is left of your revenue."
+      "sub": "Pick who you are, enter your monthly sales and food purchases — and see in manat what is left of your revenue.",
+      "trust1": "No sign-up needed to calculate",
+      "trust2": "Your numbers stay in your browser",
+      "resultLabel": "Result",
+      "hints": {
+        "restoran": {
+          "t1": "Portion cost and food cost %",
+          "t2": "Monthly net profit",
+          "t3": "Net per order"
+        },
+        "kafe": {
+          "t1": "Cost per cup",
+          "t2": "Star · plowhorse · puzzle · dog list",
+          "t3": "Hour-by-hour shift plan"
+        },
+        "otel": {
+          "t1": "Profile readiness score",
+          "t2": "List of missing requirements",
+          "t3": "Payback period"
+        },
+        "franchise": {
+          "t1": "Readiness score",
+          "t2": "Payback period",
+          "t3": "Draft franchise manual"
+        },
+        "acilis": {
+          "t1": "Minimum guests per day",
+          "t2": "Step-by-step opening list",
+          "t3": "Inspection readiness list"
+        }
+      }
+    },
+    "news": {
+      "eyebrow": "Sector Pulse",
+      "title": "Latest from the sector",
+      "sub": "Selected HoReCa, tourism and restaurant-tech news — with the source.",
+      "cta": "All news",
+      "readMore": "Read more",
+      "cats": {
+        "market": "Market",
+        "technology": "Technology",
+        "finance": "Finance",
+        "other": "Sector"
+      },
+      "newsletterTitle": "Weekly digest",
+      "newsletterBody": "Receive the latest sector news and analysis directly in your inbox.",
+      "emailPlaceholder": "Your email",
+      "subscribe": "Subscribe",
+      "success": "Your subscription is confirmed.",
+      "error": "Subscription could not be completed.",
+      "loading": "Submitting..."
+    },
+    "market": {
+      "eyebrow": "Marketplace",
+      "postListing": "Post a listing",
+      "label": "Listing categories"
+    },
+    "blog": {
+      "eyebrow": "Knowledge",
+      "readMin": "{n} min read"
+    },
+    "ai": {
+      "eyebrow": "AI readiness test",
+      "meta": "{n} questions · up to {max} points",
+      "preview": "A few of the questions",
+      "resultHint": "At the end: your score and the tools that fit you"
     }
   }
 }

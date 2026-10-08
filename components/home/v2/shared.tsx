@@ -72,6 +72,90 @@ const ICONS = {
   playSolid: <path d="M8 5v14l11-7z" />,
   up: <path d="M7 17 17 7M8 7h9v9" />,
   down: <path d="M17 7 7 17M16 17H7V8" />,
+  /* TASK-0512 (owner 2026-10-08): extra icons for the restyled news, market, blog and receipt
+     blocks — same 24px grid, 2px stroke, round caps. */
+  key: (
+    <>
+      <circle cx="8" cy="15" r="4" />
+      <path d="m10.8 12.2 9.2-9.2M17 6l3 3M14 9l2 2" />
+    </>
+  ),
+  store: (
+    <>
+      <path d="M4 4h16l1.5 5H2.5z" />
+      <path d="M4 9v11h16V9" />
+      <path d="M10 20v-6h4v6" />
+    </>
+  ),
+  trend: (
+    <>
+      <path d="M3 17l6-6 4 4 8-8" />
+      <path d="M14 7h7v7" />
+    </>
+  ),
+  building: (
+    <>
+      <rect x="4" y="3" width="16" height="18" rx="1" />
+      <path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1M10 21v-3h4v3" />
+    </>
+  ),
+  wrench: (
+    <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z" />
+  ),
+  bars: <path d="M4 20V10M10 20V4M16 20v-7M2 20h20" />,
+  book: (
+    <>
+      <path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z" />
+      <path d="M4 19V5M8 7h7" />
+    </>
+  ),
+  shield: (
+    <>
+      <path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z" />
+      <path d="m9 12 2 2 4-4" />
+    </>
+  ),
+  star: <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3l-5.5 2.9 1-6.2L3 9.6l6.2-.9z" />,
+  target: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </>
+  ),
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+    </>
+  ),
+  coin: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6v2M12 16v2" />
+    </>
+  ),
+  chat: <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" />,
+  arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
+  plus: <path d="M12 5v14M5 12h14" />,
+  lock: (
+    <>
+      <rect x="5" y="11" width="14" height="10" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3 7 9 6 9-6" />
+    </>
+  ),
 } as const;
 
 export type IconName = keyof typeof ICONS;
@@ -102,7 +186,7 @@ export function useReducedMotion(): boolean {
   return useSyncExternalStore(
     subscribeReduce,
     () => window.matchMedia(REDUCE_QUERY).matches,
-    () => false,
+    () => false
   );
 }
 
@@ -133,7 +217,7 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.12 },
+      { threshold: 0.12 }
     );
     io.observe(el);
     return () => io.disconnect();

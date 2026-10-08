@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0512 (3): sahib rəyi — sığma, köhnə bölmələrin v2-yə keçməsi
+
+**Why:** Doğan 08.10 (ekran görüntüləri ilə): «səhifə ekrana sığmır, köhnə bölmələr çox bəlli — yaradıcı edin, bəzilərini çıxarın».
+
+**What:** `homeV2.module.css` — `.hero` scoped ölçülər (h1 clamp(36px,4.2vw,58px), telefon 280×540), `phDone` son vəziyyət kartı; yeni bölmə stilləri (nw*, mk*, bl*, ai*, jn*). `NewsPreview.tsx` yerində v2 (data `/api/news?limit=4`, linklər eyni; mətnlər `homeV2.news`-a köçdü; şəkil yoxdursa/yüklənmirsə generasiya olunmuş örtük; mənbə = sourceName → author → host). Yeni `v2/B2BMarket.tsx` (page copy `b2b*` açarları qalır, emoji silindi, ikonlar `shared.tsx`-də), `v2/BlogPicks.tsx` (p3 = wolt-bolt-komissiyon, readMin 12 — `/api/blog` readingTime). `AiReadinessScore.tsx` və `CTASections.tsx` JoinCTA v2 (məntiq, tracking, mətn açarları eyni). `ReceiptHero`: pill bar nowrap + daxili üfüqi scroll, başlanğıc alətləri sol karta keçdi (ikon + `homeV2.receipt.hints`), footer trust + WhatsApp. `page.tsx`-dən ToolkitShowcase, StageSelector, AdsPreview çıxarıldı (`/api/listings` 4 dildə `data: []`).
+
+**Yoxlama:** tsc 35 (baseline 35); eslint dəyişən 9 fayl 0 xəta/0 xəbərdarlıq. Playwright `localhost:3917` `/ /ru /en /tr` × 390/1024/1280×800/1440×900: 16/16 status 200, console 0, pageerror 0, viewport-dan kənar element 0, scrollWidth = en; hero bottom 729px (800 və 900 viewport). `npm run build` və dk-validator işlədilmədi.
+
 ## 2026-10-08 — TASK-0512: feat(home): ana səhifə /tanitim v2 dizaynında
 
 **Why:** Doğan /tanitim satış səhifəsini təsdiqlədi və ana səhifənin də eyni hissi verməsini istədi (08.10).

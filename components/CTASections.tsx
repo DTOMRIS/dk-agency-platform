@@ -1,10 +1,11 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
-import { Check, MessageCircle, Send, Sparkles } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TELEGRAM_URL, WHATSAPP_NUMBER } from '@/lib/contact-channels';
+import styles from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Icon, Reveal } from '@/components/home/v2/shared';
 
 type ContactChannel = 'whatsapp' | 'telegram';
 
@@ -84,7 +85,8 @@ const copyByLocale: Record<
     contactBody: 'No form to fill in. Send your question and we reply during working hours.',
     whatsapp: 'Message on WhatsApp',
     whatsappHint: 'Fastest way',
-    whatsappPrefill: 'Hello, I am writing from the DK Agency website. I would like advice for my business.',
+    whatsappPrefill:
+      'Hello, I am writing from the DK Agency website. I would like advice for my business.',
     telegram: 'Message on Telegram',
     telegramHint: 't.me/dkagency',
     hours: 'Mon–Fri · 09:00–18:00 (Baku)',
@@ -103,7 +105,8 @@ const copyByLocale: Record<
     contactBody: 'Form doldurmanıza gerek yok. Sorunuzu yazın, mesai saatlerinde yanıtlıyoruz.',
     whatsapp: "WhatsApp'tan yazın",
     whatsappHint: 'En hızlı yol',
-    whatsappPrefill: 'Merhaba, DK Agency sitesinden yazıyorum. İşletmem için danışmanlık istiyorum.',
+    whatsappPrefill:
+      'Merhaba, DK Agency sitesinden yazıyorum. İşletmem için danışmanlık istiyorum.',
     telegram: "Telegram'dan yazın",
     telegramHint: 't.me/dkagency',
     hours: 'Pzt–Cuma · 09:00–18:00 (Bakü)',
@@ -135,108 +138,73 @@ export function JoinCTA() {
     }).catch(() => undefined);
   };
 
+  // TASK-0512 (owner 2026-10-08): v2 dark ink card like the /tanitim CTA — Inter headline,
+  // one red primary action (WhatsApp), Telegram as the quiet second path.
   return (
-    <section id="join" className="relative overflow-hidden bg-slate-50 py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[3rem] bg-slate-900 p-12 shadow-2xl lg:p-24">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute left-0 top-0 h-full w-full bg-[radial-gradient(circle_at_50%_50%,var(--dk-red)_0%,transparent_50%)] blur-3xl" />
-          </div>
-
-          <div className="relative z-10 flex flex-col items-center gap-20 lg:flex-row">
-            <div className="lg:w-1/2">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-              >
-                <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-brand-red">
-                  <Sparkles size={12} fill="currentColor" />
-                  {copy.joinBadge}
-                </div>
-                <h3 className="mb-8 text-5xl font-display font-black leading-tight tracking-tighter text-white lg:text-6xl">
-                  {copy.joinTitle[0]}
-                  <br />
-                  <span className="px-2 italic text-brand-red">{copy.joinTitle[1]}</span>
-                </h3>
-                <p className="mb-12 text-lg font-medium leading-relaxed text-slate-400">
-                  {copy.joinBody}
-                </p>
-
-                <div className="space-y-6">
-                  {copy.bullets.map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-center gap-4 text-sm font-bold text-white"
-                    >
-                      <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-red">
-                        <Check size={12} />
-                      </div>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+    <section id="join" className={`${styles.v2} ${inter.className}`}>
+      <div className={`${styles.sec} ${styles.jn}`}>
+        <div className={styles.wrap}>
+          <Reveal className={styles.jnCard}>
+            <div className={styles.jnText}>
+              <span className={`${styles.eyebrow} ${styles.jnEyebrow}`}>
+                <span className={styles.dot} />
+                {copy.joinBadge}
+              </span>
+              <h2 className={`${styles.h2} ${styles.jnH2}`}>
+                {copy.joinTitle[0]} <span className={styles.jnAc}>{copy.joinTitle[1]}</span>
+              </h2>
+              <p className={styles.jnBody}>{copy.joinBody}</p>
+              <ul className={styles.jnList}>
+                {copy.bullets.map((item) => (
+                  <li key={item}>
+                    <span className={styles.jnCheck}>
+                      <Icon name="check" />
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="w-full lg:w-1/2">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="rounded-[2.5rem] bg-white p-10 shadow-2xl"
+            <div className={styles.jnBox}>
+              <h3 className={styles.jnBoxTitle}>{copy.contactTitle}</h3>
+              <p className={styles.jnBoxBody}>{copy.contactBody}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  track('whatsapp', {
+                    prefillText: copy.whatsappPrefill,
+                    destinationPhone: WHATSAPP_NUMBER,
+                  });
+                  openExternal(
+                    `/api/leads/whatsapp?text=${encodeURIComponent(copy.whatsappPrefill)}`
+                  );
+                }}
+                className={`${styles.jnBtn} ${styles.jnBtnRed}`}
               >
-                <h4 className="mb-3 text-center text-2xl font-display font-black uppercase tracking-tight text-slate-900">
-                  {copy.contactTitle}
-                </h4>
-                <p className="mb-8 text-center text-sm leading-6 text-slate-600">
-                  {copy.contactBody}
-                </p>
-                <div className="space-y-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      track('whatsapp', {
-                        prefillText: copy.whatsappPrefill,
-                        destinationPhone: WHATSAPP_NUMBER,
-                      });
-                      openExternal(
-                        `/api/leads/whatsapp?text=${encodeURIComponent(copy.whatsappPrefill)}`
-                      );
-                    }}
-                    className="flex w-full items-center gap-4 rounded-xl bg-brand-red px-5 py-4 text-left text-white shadow-xl shadow-brand-red/20 transition-all hover:bg-rose-600 active:scale-95"
-                  >
-                    <MessageCircle size={22} aria-hidden="true" />
-                    <span className="flex flex-col">
-                      <span className="text-sm font-black uppercase tracking-widest">
-                        {copy.whatsapp}
-                      </span>
-                      <span className="text-xs font-semibold text-white/90">
-                        {copy.whatsappHint}
-                      </span>
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      track('telegram', { destinationPhone: TELEGRAM_URL });
-                      openExternal(TELEGRAM_URL);
-                    }}
-                    className="flex w-full items-center gap-4 rounded-xl border border-slate-200 bg-white px-5 py-4 text-left text-slate-900 transition-all hover:border-sky-300 hover:bg-sky-50 active:scale-95"
-                  >
-                    <Send size={22} className="text-sky-600" aria-hidden="true" />
-                    <span className="flex flex-col">
-                      <span className="text-sm font-black uppercase tracking-widest">
-                        {copy.telegram}
-                      </span>
-                      <span className="text-xs font-semibold text-slate-600">{copy.telegramHint}</span>
-                    </span>
-                  </button>
-                  <p className="pt-2 text-center text-xs font-semibold text-slate-600">{copy.hours}</p>
-                </div>
-              </motion.div>
+                <Icon name="chat" />
+                <span className={styles.jnBtnText}>
+                  <b>{copy.whatsapp}</b>
+                  <span>{copy.whatsappHint}</span>
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  track('telegram', { destinationPhone: TELEGRAM_URL });
+                  openExternal(TELEGRAM_URL);
+                }}
+                className={`${styles.jnBtn} ${styles.jnBtnGhost}`}
+              >
+                <Icon name="send" />
+                <span className={styles.jnBtnText}>
+                  <b>{copy.telegram}</b>
+                  <span>{copy.telegramHint}</span>
+                </span>
+              </button>
+              <p className={styles.jnHours}>{copy.hours}</p>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

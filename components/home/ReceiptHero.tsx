@@ -12,12 +12,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { MessageCircle } from 'lucide-react';
 import { normalizeLocale, withLocale } from '@/i18n/config';
 import { formatNumber } from '@/lib/i18n/format';
 import v2 from './v2/homeV2.module.css';
 import { inter } from './v2/font';
-import { Reveal, useReducedMotion } from './v2/shared';
+import { Icon, Reveal, useReducedMotion, type IconName } from './v2/shared';
 import styles from './ReceiptHero.module.css';
 
 const SEGMENTS = ['restoran', 'kafe', 'otel', 'franchise', 'acilis'] as const;
@@ -38,6 +37,15 @@ const SEGMENT_TOOLS: Record<Segment, readonly [string, string, string]> = {
     '/franchise/francbuk-generatoru',
   ],
   acilis: ['/toolkit/basabas', '/toolkit/insaat-checklist', '/toolkit/aqta-checklist'],
+};
+
+/** Starter tool icons, same order as SEGMENT_TOOLS (TASK-0512, owner 2026-10-08). */
+const SEGMENT_ICONS: Record<Segment, readonly [IconName, IconName, IconName]> = {
+  restoran: ['pie', 'bars', 'scooter'],
+  kafe: ['pie', 'grid', 'team'],
+  otel: ['search', 'star', 'trend'],
+  franchise: ['check', 'trend', 'book'],
+  acilis: ['target', 'building', 'shield'],
 };
 
 /** Sample-receipt cost shares (of sales) — illustrative, labelled as a sample on the receipt. */
@@ -218,17 +226,62 @@ export function ReceiptHero() {
                   {t('ctaCalc')}
                 </a>
               </div>
-              {/* TASK-0502: Baku HoReCa owners write rather than fill forms — a quiet
-                  secondary path, so the block keeps one red button. */}
-              <a
-                href={`/api/leads/whatsapp?text=${encodeURIComponent(t('whatsappText'))}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.wa}
-              >
-                <MessageCircle size={18} aria-hidden="true" />
-                {t('whatsappLink')}
-              </a>
+              {/* Segment starter tools — inside the left card since TASK-0512 (owner 2026-10-08):
+                  fills the space under the CTAs and keeps the section one screen shorter. */}
+              <div className={styles.tools}>
+                <h4 className={styles.toolsTitle}>{t(`segments.${segment}.toolsTitle`)}</h4>
+                <div className={styles.toolGrid}>
+                  {SEGMENT_TOOLS[segment].map((href, i) => (
+                    <Link
+                      key={`${segment}-${href}`}
+                      href={withLocale(locale, href)}
+                      className={`${styles.tool} ${styles.rise}`}
+                    >
+                      <span className={styles.toolIc}>
+                        <Icon name={SEGMENT_ICONS[segment][i]} />
+                      </span>
+                      <span className={styles.toolText}>
+                        <span className={styles.toolName}>
+                          {t(`segments.${segment}.tools.t${i + 1}.name`)}
+                        </span>
+                        <span className={styles.toolDesc}>
+                          {t(`segments.${segment}.tools.t${i + 1}.desc`)}
+                        </span>
+                        <span className={styles.toolHint}>
+                          <span className={styles.toolHintLbl}>{tv('resultLabel')}</span>
+                          {tv(`hints.${segment}.t${i + 1}`)}
+                        </span>
+                      </span>
+                      <span className={styles.toolGo}>{t('start')}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              {/* TASK-0512: the left card stretches to the receipt column's height; this footer
+                  sits at its bottom so the card no longer ends in an empty block. */}
+              <div className={styles.introFoot}>
+                <ul className={styles.trust}>
+                  <li>
+                    <Icon name="calc" />
+                    {tv('trust1')}
+                  </li>
+                  <li>
+                    <Icon name="lock" />
+                    {tv('trust2')}
+                  </li>
+                </ul>
+                {/* TASK-0502: Baku HoReCa owners write rather than fill forms — a quiet
+                    secondary path, so the block keeps one red button. */}
+                <a
+                  href={`/api/leads/whatsapp?text=${encodeURIComponent(t('whatsappText'))}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.wa}
+                >
+                  <Icon name="chat" />
+                  {t('whatsappLink')}
+                </a>
+              </div>
             </div>
 
             {/* Right: printed receipt + live calculator */}
@@ -315,28 +368,6 @@ export function ReceiptHero() {
                   {t('saveReport')}
                 </Link>
               </div>
-            </div>
-          </div>
-
-          {/* Segment starter tools */}
-          <div className={styles.tools}>
-            <h3 className={styles.toolsTitle}>{t(`segments.${segment}.toolsTitle`)}</h3>
-            <div className={styles.toolGrid}>
-              {SEGMENT_TOOLS[segment].map((href, i) => (
-                <Link
-                  key={`${segment}-${href}`}
-                  href={withLocale(locale, href)}
-                  className={`${styles.tool} ${styles.rise}`}
-                >
-                  <span className={styles.toolName}>
-                    {t(`segments.${segment}.tools.t${i + 1}.name`)}
-                  </span>
-                  <span className={styles.toolDesc}>
-                    {t(`segments.${segment}.tools.t${i + 1}.desc`)}
-                  </span>
-                  <span className={styles.toolGo}>{t('start')}</span>
-                </Link>
-              ))}
             </div>
           </div>
         </div>

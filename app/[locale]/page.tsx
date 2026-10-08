@@ -1,34 +1,25 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
-import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
 import dynamic from 'next/dynamic';
 import { JoinCTA } from '@/components/CTASections';
 import SiteJsonLd from '@/components/seo/SiteJsonLd';
 import NewsPreview from '@/components/NewsPreview';
-import ToolkitShowcase from '@/components/ToolkitShowcase';
 import HeroPhone from '@/components/home/v2/HeroPhone';
 import FactsStrip from '@/components/home/v2/FactsStrip';
 import EcoOrbit from '@/components/home/v2/EcoOrbit';
 import ModuleTabs from '@/components/home/v2/ModuleTabs';
 import StepsTimeline from '@/components/home/v2/StepsTimeline';
 import QuickAccess from '@/components/home/v2/QuickAccess';
+import B2BMarket from '@/components/home/v2/B2BMarket';
+import BlogPicks from '@/components/home/v2/BlogPicks';
 import { ReceiptHero } from '@/components/home/ReceiptHero';
 
-const AdsPreview = dynamic(() => import('@/components/AdsPreview'), { ssr: false });
-const StageSelector = dynamic(() => import('@/components/StageSelector'), { ssr: false });
 const AiReadinessScore = dynamic(() => import('@/components/sections/AiReadinessScore'), {
   ssr: false,
 });
-import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
-
-/** Homepage article cards — text lives in messages `home.featuredBlogs.p1/p2` (TASK-0472). */
-const featuredBlogs = [
-  { key: 'p1', slug: '1-porsiya-food-cost-hesablama', image: '/images/blog-01.png' },
-  { key: 'p2', slug: 'menyu-muhendisliyi-satis', image: '/images/blog-04.png' },
-] as const;
+import { normalizeLocale, type Locale } from '@/i18n/config';
 
 const pageCopy: Record<
   Locale,
@@ -43,7 +34,7 @@ const pageCopy: Record<
     b2bTitle: string;
     b2bBody: string;
     listingsCta: string;
-    b2bCards: Array<{ title: string; desc: string; emoji: string }>;
+    b2bCards: Array<{ title: string; desc: string }>;
   }
 > = {
   az: {
@@ -80,17 +71,15 @@ const pageCopy: Record<
       {
         title: 'Restoran Devri',
         desc: 'İşlətmənizi devir edin və ya hazır restoran alın',
-        emoji: '🍽️',
       },
-      { title: 'Franchise', desc: 'Franchise verin və ya hazır brend ilə başlayın', emoji: '🤝' },
+      { title: 'Franchise', desc: 'Franchise verin və ya hazır brend ilə başlayın' },
       {
         title: 'Ortaq Tapmaq',
         desc: 'Layihəniz üçün sərmayə və ya əməliyyat ortağı tapın',
-        emoji: '👥',
       },
-      { title: 'Yeni İnvestisiya', desc: 'Yatırımçı axtaran yeni layihələr', emoji: '📈' },
-      { title: 'Obyekt İcarəsi', desc: 'HoReCa uyğun məkan kiralayın', emoji: '🏢' },
-      { title: 'HORECA Ekipman', desc: 'Peşəkar avadanlıq alın və ya satın', emoji: '⚙️' },
+      { title: 'Yeni İnvestisiya', desc: 'Yatırımçı axtaran yeni layihələr' },
+      { title: 'Obyekt İcarəsi', desc: 'HoReCa uyğun məkan kiralayın' },
+      { title: 'HORECA Ekipman', desc: 'Peşəkar avadanlıq alın və ya satın' },
     ],
   },
   ru: {
@@ -127,20 +116,17 @@ const pageCopy: Record<
       {
         title: 'Передача ресторана',
         desc: 'Передайте действующий объект или купите готовый ресторан',
-        emoji: '🍽️',
       },
-      { title: 'Франшиза', desc: 'Запустите франшизу или войдите в готовый бренд', emoji: '🤝' },
+      { title: 'Франшиза', desc: 'Запустите франшизу или войдите в готовый бренд' },
       {
         title: 'Поиск партнёра',
         desc: 'Найдите капитал или операционного партнёра для проекта',
-        emoji: '👥',
       },
-      { title: 'Новая инвестиция', desc: 'Новые проекты в поиске инвестора', emoji: '📈' },
-      { title: 'Аренда помещения', desc: 'Арендуйте локацию, подходящую для HoReCa', emoji: '🏢' },
+      { title: 'Новая инвестиция', desc: 'Новые проекты в поиске инвестора' },
+      { title: 'Аренда помещения', desc: 'Арендуйте локацию, подходящую для HoReCa' },
       {
         title: 'Оборудование HORECA',
         desc: 'Покупайте или продавайте профессиональное оборудование',
-        emoji: '⚙️',
       },
     ],
   },
@@ -179,17 +165,15 @@ const pageCopy: Record<
       {
         title: 'Restaurant Transfer',
         desc: 'Transfer your operation or acquire a ready restaurant',
-        emoji: '🍽️',
       },
-      { title: 'Franchise', desc: 'Offer a franchise or launch with a ready brand', emoji: '🤝' },
+      { title: 'Franchise', desc: 'Offer a franchise or launch with a ready brand' },
       {
         title: 'Find a Partner',
         desc: 'Find capital or an operating partner for your project',
-        emoji: '👥',
       },
-      { title: 'New Investment', desc: 'New projects looking for investors', emoji: '📈' },
-      { title: 'Venue Lease', desc: 'Lease a HoReCa-ready space', emoji: '🏢' },
-      { title: 'HORECA Equipment', desc: 'Buy or sell professional equipment', emoji: '⚙️' },
+      { title: 'New Investment', desc: 'New projects looking for investors' },
+      { title: 'Venue Lease', desc: 'Lease a HoReCa-ready space' },
+      { title: 'HORECA Equipment', desc: 'Buy or sell professional equipment' },
     ],
   },
   tr: {
@@ -226,20 +210,18 @@ const pageCopy: Record<
       {
         title: 'Restoran Devri',
         desc: 'İşletmeni devret ya da hazır restoran satın al',
-        emoji: '🍽️',
       },
-      { title: 'Franchise', desc: 'Franchise ver ya da hazır markayla başla', emoji: '🤝' },
-      { title: 'Ortak Bul', desc: 'Projen için sermaye veya operasyon ortağı bul', emoji: '👥' },
-      { title: 'Yeni Yatırım', desc: 'Yatırımcı arayan yeni projeler', emoji: '📈' },
-      { title: 'Mekan Kiralama', desc: 'HoReCa uyumlu mekan kirala', emoji: '🏢' },
-      { title: 'HORECA Ekipman', desc: 'Profesyonel ekipman al veya sat', emoji: '⚙️' },
+      { title: 'Franchise', desc: 'Franchise ver ya da hazır markayla başla' },
+      { title: 'Ortak Bul', desc: 'Projen için sermaye veya operasyon ortağı bul' },
+      { title: 'Yeni Yatırım', desc: 'Yatırımcı arayan yeni projeler' },
+      { title: 'Mekan Kiralama', desc: 'HoReCa uyumlu mekan kirala' },
+      { title: 'HORECA Ekipman', desc: 'Profesyonel ekipman al veya sat' },
     ],
   },
 };
 
 export default function Home() {
   const locale = normalizeLocale(useLocale());
-  const tBlog = useTranslations('home.featuredBlogs');
   const copy = pageCopy[locale];
 
   return (
@@ -247,53 +229,26 @@ export default function Home() {
     // sticky module tab bar (TASK-0512).
     <div className="min-h-screen bg-white overflow-x-clip">
       <SiteJsonLd />
-      {/* TASK-0512 (owner order 2026-10-08): phone hero → own-numbers receipt → facts → news +
-          B2B listings → orbit → modules → steps → toolkit → AI score → stage → ads → quick
-          access → join. PlatformCards is replaced by the compact QuickAccess strip (file kept). */}
+      {/* TASK-0512 (owner feedback 2026-10-08): phone hero → own-numbers receipt → facts →
+          sector news → B2B market → orbit → modules → steps → AI score → blog → quick access →
+          join. Removed from `/` (files kept): ToolkitShowcase (duplicated ModuleTabs and the
+          receipt's starter tools), StageSelector (duplicated the receipt segments + ModuleTabs),
+          AdsPreview (GET /api/listings returns 0 approved listings → it only showed an empty
+          state; the B2B market block carries «Elan ver»). */}
       <HeroPhone />
       <ReceiptHero />
       <FactsStrip />
       {/* TASK-0501: Sektor Nəbzi + elanlar (sahib istəyi) */}
       <NewsPreview />
-
-      <section className="bg-slate-50 py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <span className="rounded-full bg-[var(--dk-navy)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
-              {copy.b2bBadge}
-            </span>
-            <h2 className="mt-4 text-3xl font-display font-black text-slate-900 sm:text-4xl">
-              {copy.b2bTitle}
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-base text-slate-500">{copy.b2bBody}</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {copy.b2bCards.map((item) => (
-              <Link
-                key={item.title}
-                href={withLocale(locale, '/ilanlar')}
-                className="group rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:border-[var(--dk-gold)] hover:shadow-lg"
-              >
-                <span className="text-2xl">{item.emoji}</span>
-                <h3 className="mt-3 text-lg font-bold text-slate-900 group-hover:text-[var(--dk-red)]">
-                  {item.title}
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">{item.desc}</p>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link
-              href={withLocale(locale, '/ilanlar')}
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-navy)] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-slate-800"
-            >
-              {copy.listingsCta}
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
+      <B2BMarket
+        copy={{
+          badge: copy.b2bBadge,
+          title: copy.b2bTitle,
+          body: copy.b2bBody,
+          listingsCta: copy.listingsCta,
+          cards: copy.b2bCards,
+        }}
+      />
       <EcoOrbit />
       <ModuleTabs />
       {/* The old inline «how it works» block is replaced by StepsTimeline; its consulting
@@ -306,56 +261,10 @@ export default function Home() {
           height: 1024,
         }}
       />
-      <ToolkitShowcase />
       <AiReadinessScore />
-      <StageSelector />
-
-      <section className="bg-slate-50 py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 flex flex-col gap-4 border-b border-slate-200 pb-6 sm:mb-12 sm:flex-row sm:items-center sm:justify-between sm:pb-8">
-            <div>
-              <h2 className="text-3xl font-display font-black uppercase tracking-tighter text-slate-900 sm:text-4xl">
-                {copy.blogTitle}
-              </h2>
-              <p className="mt-2 text-slate-500">{copy.blogSubtitle}</p>
-            </div>
-            <Link
-              href={withLocale(locale, '/blog')}
-              className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-xs font-black uppercase tracking-widest transition-all hover:border-brand-red hover:bg-brand-red hover:text-white sm:w-auto sm:px-6"
-            >
-              {copy.viewAll}{' '}
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-
-          <div className="grid gap-12 md:grid-cols-2">
-            {featuredBlogs.map((post) => (
-              <Link
-                key={post.slug}
-                href={withLocale(locale, `/blog/${post.slug}`)}
-                className="group block"
-              >
-                <div className="mb-8 aspect-[16/9] overflow-hidden rounded-[2.5rem] shadow-2xl shadow-slate-200/50">
-                  <img
-                    src={post.image}
-                    alt={tBlog(`${post.key}.title`)}
-                    className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                  />
-                </div>
-                <span className="mb-4 block text-[10px] font-black uppercase tracking-[0.2em] text-brand-red">
-                  {tBlog(`${post.key}.category`)}
-                </span>
-                <h3 className="text-2xl font-display font-black leading-tight text-slate-900 transition-colors group-hover:text-brand-red sm:text-3xl">
-                  {tBlog(`${post.key}.title`)}
-                </h3>
-                <p className="mt-4 line-clamp-2 text-slate-600">{tBlog(`${post.key}.excerpt`)}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <AdsPreview />
+      <BlogPicks
+        copy={{ title: copy.blogTitle, subtitle: copy.blogSubtitle, viewAll: copy.viewAll }}
+      />
       <QuickAccess />
       <JoinCTA />
     </div>
