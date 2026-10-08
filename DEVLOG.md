@@ -8,6 +8,14 @@
 
 **Yoxlama:** lokal `next dev` + Playwright: `/tanitim` 200 `text/html`, 50.6 KB; mətndə VÖEN/TASK-0/240/og:title yoxdur; kalkulyator 60 000 ₼ + 45% → «108,000 ₼ / il» (60 000 × 15% × 12); JS xətası 0; 390px scrollWidth 390 (əvvəl 556), 1280px 1280. Tam səhifə ekran görüntüləri baxıldı.
 
+## 2026-10-08 — TASK-0509 (2): /tanitim Kutlerri üslubunda yenidən
+
+**Why:** Doğan kutlerri.ai-ni nümunə verdi («dizaynı süper»). Haiku agentinin sətir-sətir yoxlaması prototipdə mənbəsiz iddialar tapdı və onlar əl ilə təsdiqləndi: «Skift/Restaurant Dive hər 6 saatdan bir taranır» (fetch-news cron TASK-0480-də söndürülüb, mənbələr siyahıda yoxdur), «25+ lent» (kodda 6–8), «İtkinin 80%-i 4 məhsulda», KAZAN cavablarında «ROI 14 ay», «100 addım = 1.5 saat», «3 saniyə», «Canlı API … TQTA bazasından cəlb», təsdiqsiz sitat.
+
+**What:** `public/tanitim/index.html` sıfırdan yazıldı (müstəqil HTML, `app/tanitim/route.ts` dəyişmədi). Doğan qərarları (08.10): «40 il» doğrudur, «Qurucu», «Pulsuz diaqnostika» (müddət yazılmır), model = razılaşan şirkətə xüsusi xidmət, üzvlük «tezliklə». Statuslar koda uyğundur: 18 alət `app/toolkit/*`, delivery-calc, menu-matrix, food-cost; KAZAN AI beta (`messages/az.json`); OCAQ mətni ana səhifədəki «10+ filiallı şəbəkədə hər gün işləyir» ilə eyni. WhatsApp CTA-ları `/api/leads/whatsapp` üzərindən (nömrə `lib/contact-channels.ts`-dən). Nümunə cədvəllərdəki rəqəmlər daxili ardıcıldır (məs. 3,40/7,50 = 45%, 20 ₼ × 25% = 5 ₼). `prefers-reduced-motion` dəstəklənir, hər canlı kartda dayandırma düyməsi var. `scripts/tanitim/clean_tanitim.py` artıq istifadə olunmur (prototipi yenidən yazsa yeni səhifəni silər) — silinməsi Doğan-a verildi.
+
+**Yoxlama:** Playwright (file://) 390 və 1280: scrollWidth = clientWidth (390/390, 1280/1280), JS xətası 0, kalkulyator 60 000 ₼ + 45% → «9 000 ₼ / ay»; ekran görüntülərinə baxıldı (hero, delivery tabı, mobil tam səhifə). Mətndə VÖEN/TASK-0/240/Skift/25+/14 ay/100 addım/80%/30 dəq/Təsisçi yoxdur.
+
 ## 2026-10-08 — TASK-0508: fix(ci): dk:validate həqiqətən yoxlasın
 
 **Why:** TASK-0507 zamanı `/tmp/dk-playwright.log`-da Playwright çıxışı yox, tək sətir «ALL PASS (247 yoxlama)» görüldü. Səbəb: `e2e/az-format.test.ts` (29.09, TASK-0462) adi tsx skriptidir və import zamanı `process.exit(0)` çağırır; Playwright testDir-dəki bütün faylları toplayanda proses heç bir spec başlamadan 0 ilə çıxırdı. Üstəlik 6–8 addımları `localhost:3000`-ə curl edirdi — validator DK serverini özü qaldırmırdı. 29.09-dan bəri hər «dk-validator PASS» (bu sessiyada TASK-0503–0507 daxil) 6–8 üçün sübut deyildi.
