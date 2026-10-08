@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0506: fix(b2b-panel): mobil sidebar
+
+**Why:** TASK-0505 yoxlamasında 390px ekran görüntüsü: `/b2b-panel/*`-da `<aside class="w-72 min-h-screen">` flex-də sabit qalırdı, heç bir mobil qayda yox idi → `main` x=288, en=102. Bütün üzv portalı telefonda istifadəyə yararsız idi (trafikin 60%+ mobildir).
+
+**What:** Dashboard-dakı mövcud desen (`DashboardLayout` + `DashboardSidebar`) üzv sidebar-ına köçürüldü: `lg`-dən aşağı fixed + `-translate-x-full`, üst bar ☰, overlay, bağla düyməsi, Esc. Səhifə keçəndə bağlanma effektsiz edildi (açıldığı `pathname` saxlanır, `react-hooks/set-state-in-effect` qaydası). `main` `pt-14 lg:pt-0 min-w-0`. 4 dildə aria-label.
+
+**Yoxlama:** lokal `next dev` + imzalı test cookie, Playwright ölçüləri: 390 bağlı `{mainX:0, mainW:390, sidebarX:-288, scrollW:390}`; ☰ → `sidebarX:0`; «Elanlarım» linki → `/b2b-panel/ilanlarim`, `sidebarX:-288`; Esc → `-288`; 1280 `{mainX:288, mainW:992, sidebarX:0}` (əvvəlki kimi). eslint 0 xəta (3 köhnə + 1 yeni `<img>` warning — faylın mövcud deseni). tsc-də yeni xəta yoxdur (2 əlavə sətir köhnə `.next/types`-dandır).
+
 ## 2026-10-08 — TASK-0504: chore(ci): Actions dəqiqə qənaəti
 
 **Why:** Hesab GitHub Free-dir, ödəniş üsulu yoxdur; aylıq pulsuz dəqiqə hovuzu bütün özəl repolar arasında ortaqdır. Oktyabrın ilk 8 günündə $14.08 brüt (hamısı pulsuz paketdən): -ocaq-app $9.22, tqta-files $2.90, dk-agency-platform $1.96. Hovuz bitəndə GitHub heç bir işi başlatmır — DK, TQTA, OCAQ deploy-ları ay sonuna qədər dayanır. Doğan bütün sessiyalar üçün qayda istədi (`~/.claude/CLAUDE.md` §1).

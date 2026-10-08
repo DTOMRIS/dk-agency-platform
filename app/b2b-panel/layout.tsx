@@ -26,7 +26,8 @@ export default async function B2BPanelLayout({
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <B2BSidebar />
-      <main className="flex-1 overflow-auto">
+      {/* TASK-0506: telefonda üst bar (h-14) üçün yer; min-w-0 — geniş məzmun flex-i sıxışdırmasın */}
+      <main className="min-w-0 flex-1 overflow-auto pt-14 lg:pt-0">
         {children}
       </main>
       <OnboardingModal />

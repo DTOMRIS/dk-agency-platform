@@ -1807,6 +1807,8 @@
       "kazanAiDesc": "Analyze food cost, P&L and operational decisions faster.",
       "kazanAiCta": "Open",
       "invoices": "Invoices",
+      "mobileOpenMenu": "Open menu",
+      "mobileCloseMenu": "Close menu",
       "freePlan": "Free"
     },
     "topBar": {
