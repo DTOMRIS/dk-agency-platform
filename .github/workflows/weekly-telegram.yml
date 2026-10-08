@@ -1,0 +1,27 @@
+name: Weekly Telegram Summary
+
+# TASK-0511: Monday 08:00 Baku (04:00 UTC) — owner gets last 7 days (leads, WhatsApp clicks,
+# members, news, listings) in Telegram. Owner approved 2026-10-08. One curl, ~1 min/week.
+on:
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: weekly-telegram
+  cancel-in-progress: true
+
+jobs:
+  summary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Call weekly summary endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          code=$(curl -sS -o /tmp/out.json -w '%{http_code}' --max-time 60 \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            https://dkagency.com.tr/api/cron/weekly-telegram)
+          cat /tmp/out.json; echo
+          test "$code" = "200"
