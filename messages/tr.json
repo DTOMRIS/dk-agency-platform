@@ -1807,6 +1807,8 @@
       "kazanAiDesc": "Food cost, P&L ve operasyon kararlarını daha hızlı yorumla.",
       "kazanAiCta": "Şimdi Bak",
       "invoices": "Faturalar",
+      "mobileOpenMenu": "Menüyü aç",
+      "mobileCloseMenu": "Menüyü kapat",
       "freePlan": "Ücretsiz"
     },
     "topBar": {

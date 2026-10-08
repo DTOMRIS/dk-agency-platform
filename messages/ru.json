@@ -1807,6 +1807,8 @@
       "kazanAiDesc": "Быстрее анализируйте food cost, P&L и операционные решения.",
       "kazanAiCta": "Открыть",
       "invoices": "Счета",
+      "mobileOpenMenu": "Открыть меню",
+      "mobileCloseMenu": "Закрыть меню",
       "freePlan": "Бесплатный"
     },
     "topBar": {

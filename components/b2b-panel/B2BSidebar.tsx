@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   LogOut,
   Megaphone,
+  Menu,
   MessageSquare,
   Plus,
   Settings,
@@ -22,6 +23,7 @@ import {
   Receipt,
   Star,
   Wrench,
+  X,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -122,6 +124,21 @@ export default function B2BSidebar() {
   const [loggingOut, setLoggingOut] = useState(false);
   const [plan, setPlan] = useState<'admin' | 'member' | 'free' | null>(null);
   const [completion, setCompletion] = useState<number | null>(null);
+  // TASK-0506: telefonda sidebar gizlidir, üst bardakı düymə ilə açılır (dashboard ilə eyni desen).
+  // Əvvəl 288px sidebar 390px ekranda həmişə açıq idi, məzmuna ~100px qalırdı.
+  // Açıldığı səhifə yadda saxlanır: başqa səhifəyə keçəndə menyu özü bağlanır (effektsiz).
+  const [openedOn, setOpenedOn] = useState<string | null>(null);
+  const mobileOpen = openedOn === pathname;
+  const setMobileOpen = (open: boolean) => setOpenedOn(open ? pathname : null);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [mobileOpen]);
 
   useEffect(() => {
     let cancelled = false;
@@ -174,8 +191,38 @@ export default function B2BSidebar() {
       <Suspense fallback={null}>
         <PortalEngagementTracker />
       </Suspense>
-      <aside className="flex min-h-screen w-72 flex-col border-r border-slate-200 bg-white/80 backdrop-blur-md">
-        <div className="border-b border-slate-200 p-5">
+      <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-slate-200 bg-white/95 px-4 backdrop-blur-md lg:hidden">
+        <button
+          type="button"
+          onClick={() => setMobileOpen(true)}
+          aria-label={t('mobileOpenMenu')}
+          aria-expanded={mobileOpen}
+          data-testid="b2b-mobile-menu"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-700"
+        >
+          <Menu size={20} />
+        </button>
+        <Link href="/b2b-panel" className="flex items-center gap-2">
+          <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-8 w-8 object-contain" />
+          <span className="text-sm font-bold text-slate-900">DK Agency</span>
+        </Link>
+      </div>
+
+      {mobileOpen && (
+        <div
+          aria-hidden="true"
+          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-sm lg:hidden"
+        />
+      )}
+
+      <aside
+        data-testid="b2b-sidebar"
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-72 shrink-0 flex-col border-r border-slate-200 bg-white transition-transform duration-300 lg:static lg:h-auto lg:min-h-screen lg:translate-x-0 lg:bg-white/80 lg:backdrop-blur-md ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="flex items-start justify-between border-b border-slate-200 p-5">
           <Link href="/b2b-panel" className="group flex items-center gap-3">
             <img
               src="/images/logo-mobil.png"
@@ -187,6 +234,14 @@ export default function B2BSidebar() {
               <p className="text-[10px] uppercase tracking-wider text-slate-500">B2B Portal</p>
             </div>
           </Link>
+          <button
+            type="button"
+            onClick={() => setMobileOpen(false)}
+            aria-label={t('mobileCloseMenu')}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 lg:hidden"
+          >
+            <X size={18} />
+          </button>
         </div>
 
         <div className="border-b border-slate-200 p-4">
