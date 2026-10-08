@@ -5,14 +5,14 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 
 ## Project Identity
 - **Project Name**: `dk-agency-platform`
-- **Core Business**: Investment, Holding, and Agency Management.
-- **Target Audience**: Business partners, investors, and elite clients.
-- **CRITICAL RULE**: This is not a Restaurant Management System. Avoid hardcoded hospitality, restaurant, food cost, or AQTA content on core landing pages unless the task is explicitly for a sub-module.
+- **Core Business**: HoReCa consulting + platform for restaurants, cafés and hotels: food cost / P&L / delivery tools (Toolkit), KAZAN AI, OCAQ daily control, B2B listings, member portal, sector news. (Owner decision 2026-10-08: the old "investment/holding, not a restaurant system" identity is retired.)
+- **Target Audience**: Restaurant/café/hotel owners and multi-branch chains in Azerbaijan; partners and suppliers.
+- **Landing pages**: Food cost, P&L, delivery commission and restaurant operations ARE the core message of `/` and `/tanitim` (design reference: kutlerri.ai, restaurant365.com). Every number on a landing page is either the product's own calculation or has a verifiable source; mock screens carry «Nümunə məlumat».
 - **AQTA SOURCE OF TRUTH**: `AQTA qeydiyyatı üçün müraciət ASAN/KOBIA vasitəsilə verilir. Dövlət rüsumu yoxdur, müraciət pulsuzdur.`
 
 ## Design System
 - **Tone**: Premium, sophisticated, high-tech.
-- **Theme**: Premium light for dashboard, dark glassmorphism for landing.
+- **Theme**: Premium light for dashboard; landing (`/`, `/tanitim`) = warm cream (#F6F1E9) + ink + single accent brand-red, phone mockups and signal → action cards (owner 2026-10-08).
 - **Primary Color**: `brand-red` (`#E94560` — `--dk-red`; sahib qərarı 2026-09-13: olduğu kimi qalır)
 - **Typography**: `Inter` (sans), `Playfair Display` (display/serif)
 - **Global Header**: Always use `Header.tsx`.
