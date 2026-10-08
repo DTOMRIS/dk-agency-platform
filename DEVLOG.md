@@ -1,5 +1,15 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0504: chore(ci): Actions dəqiqə qənaəti
+
+**Why:** Hesab GitHub Free-dir, ödəniş üsulu yoxdur; aylıq pulsuz dəqiqə hovuzu bütün özəl repolar arasında ortaqdır. Oktyabrın ilk 8 günündə $14.08 brüt (hamısı pulsuz paketdən): -ocaq-app $9.22, tqta-files $2.90, dk-agency-platform $1.96. Hovuz bitəndə GitHub heç bir işi başlatmır — DK, TQTA, OCAQ deploy-ları ay sonuna qədər dayanır. Doğan bütün sessiyalar üçün qayda istədi (`~/.claude/CLAUDE.md` §1).
+
+**What:** `ci.yml` — `concurrency` + `cancel-in-progress`, `timeout-minutes: 15`, məzmun-only PR-da ağır addımlar ötürülür. `paths-ignore` seçilmədi: main qoruması "CI / quality-gates"-i tələb edir, iş heç başlamasa auto-merge-content PR-ı gözləmədə qalardı. drift-audit / state-snapshot / news-ingest notify-failure job-larına timeout (əvvəl 360 dəq. default idi).
+
+**Toxunulmadı:** `news-ingest` gündə 4 dəfə (TASK-0494 qərarı) — ən çox dəqiqə yeyən DK işi budur (hər dəfə npm ci + 3 skript), azaltmaq Doğan-ın qərarıdır.
+
+**Yoxlama:** 6 workflow js-yaml ilə yükləndi; job timeout cədvəli — hamısında var; scope skripti lokal: `da122c0` (yalnız sənəd) → `content=true`, `b3a07dc` (TASK-0503 kod) → `content=false`. Real Actions run-u PR açılanda görünəcək.
+
 ## 2026-10-08 — TASK-0503: fix(ai): Claude fallback → Sonnet 5.5
 
 **Why:** DeepSeek çökəndə KAZAN AI `claude-sonnet-4-6`-ya düşürdü. Sonnet 5.5-də düşünmə default açıqdır və düşünmə tokenləri `max_tokens`-dan yeyilir — 1000–1200 limitli qısa çağırışlarda cavab boş qala bilərdi. 5.x həmçinin sonda qalan `assistant` mesajını prefill sayıb 400 qaytarır və təhlükəsizlik rəddini HTTP 200 + `stop_reason: "refusal"` kimi verir (əvvəl boş mətn kimi görünərdi).

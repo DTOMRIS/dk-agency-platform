@@ -51,6 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: ingest
     if: failure()
+    timeout-minutes: 5  # TASK-0504
     steps:
       - name: Send failure alert
         uses: dawidd6/action-send-mail@v3

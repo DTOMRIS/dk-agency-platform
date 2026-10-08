@@ -1,5 +1,29 @@
 # HANDOFF
 
+## 2026-10-08 — Vəziyyət (Claude, TASK-0503/0504 sessiyası)
+
+> Bu fayl 13.09-dan bəri yenilənməmişdi; aradakı TASK-0447 → 0503 işləri `CHANGELOG.md` [Unreleased] + `DEVLOG.md`-dədir
+> (hər task bir sətir). Aşağıdakı "açıq" siyahı **kodda yoxlanıb** (08.10, `origin/main` bf37b66 + TASK-0504).
+
+### Bu gün
+- **TASK-0503** (PR #509, main-də): KAZAN fallback `claude-sonnet-5-5`, thinking `between_tools`, refusal tutulur. İlk qaralamadakı `claude-haiku-5-5` — belə model YOXDUR, silindi.
+- **TASK-0504**: CI dəqiqə qənaəti (concurrency, timeout, məzmun-only PR-da build yox). GitHub hesabı 08.10-da ödənişliyə keçdi — artıq hovuz bitəndə iş dayanmır, amma aşan dəqiqə pulludur. Ortaq qaydalar: `~/.claude/CLAUDE.md` §1 (bütün repolar).
+
+### Köhnə HANDOFF-da "açıq" görünən, amma BAĞLANMIŞ
+- 🔴→✅ **Dashboard auth P0** (12.09 "HƏLƏ AÇIQ"): `app/dashboard/layout.tsx` `auth.role !== 'admin'` → `/b2b-panel` (TASK-0458).
+- **D (admin/üzv ayrılığı)**: Marketinq Ocağı üzv portalındadır (`/b2b-panel/marketinq-ocagi`); admin sidebar yalnız ora link verir. Toolkit admin sidebar-da yoxdur.
+
+### Hələ AÇIQ (kodda təsdiqləndi)
+- **A — dashboard 2026 redizaynı** (mobil, 5-7 KPI): başlanmayıb, Doğan qərarı/brief lazımdır.
+- **B — "1 pulsuz sınaq"**: kodda YOXDUR. Mövcud mexanizm aylıq limitdir (`lib/marketing-tools-config.ts` `monthlyRunLimit`, `lib/marketing-gating.ts` `checkToolAccess`): şagird 3/ay (4 alət), qalanlarında 0. "Alət başına ömürlük 1 sınaq" istənirsə ayrıca sayğac + qərar lazımdır.
+- **C — "Xəbər ver" lead forması**: yoxdur. `status:'planned'` alət sayı 5.
+- **b2b-panel boş səhifələr**: `teklifler`, `bildirimler`, `destek` hələ "Bu bölmə hazırlanır" (və mətn hardcoded AZ — i18n qaydası).
+
+### Doğan-dan gözlənən
+- TASK-0504 PR-ını aç → merge.
+- TASK-0498: canlıda `npm run db:migrate` edilibmi? (Təchizatçılar cədvəli yoxdursa ekran 503 `tables_missing` göstərir.)
+- `news-ingest` gündə 4 dəfə — ən çox dəqiqə yeyən DK işi; ödənişli rejimdə hesab yüksək gəlsə ilk azaldılacaq yer.
+
 ## 2026-09-13 — Sahib sessiyası: TASK-0439 → 0446 (təhlükəsizlik, miqrasiya, dizayn təməli, route təmizliyi, sistem, cron)
 
 - **0449** toolkit (2026-09-26): İnşaat checklist-ə «Əməliyyat dizaynı» (10 maddə, 52 → 62, id 53–62). **0450** Addım Xərci Kalkulyatoru — ayrıca PR. Sahib 6 bloq yazısını (spagetti, gün hissələri, vitrin, memarlıq seriyası 3 yazı) admin paneldən özü dərc edir — repoda yoxdur; slug-lar: metbexde-itirilen-metrler-spagetti-diaqrami, gun-hisseleri-olu-saatlar-gelir, vitrin-isti-noqteler-kassa-onu, memarla-ortaq-dil-restoran-konsepti, qonaq-ve-isci-axini-zal-trafiki, isiq-qoxu-musiqi-ayrilma-ani.

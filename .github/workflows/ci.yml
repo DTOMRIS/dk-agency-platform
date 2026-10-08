@@ -6,24 +6,57 @@ on:
   push:
     branches: [main]
 
+# TASK-0504: GitHub Free dəqiqə hovuzu bütün repolar arasında ortaqdır; bitəndə heç bir iş
+# başlamır. Eyni budağa yeni push gələndə köhnə run dayanır.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   quality-gates:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # TASK-0504: yalnız məzmun dəyişən PR-da build lazım deyil. `paths-ignore` İSTİFADƏ EDİLMİR:
+      # main qoruması "CI / quality-gates"-i tələb edir, iş heç başlamasa məzmun PR-ı (auto-merge-content)
+      # sonsuza qədər gözləyər. Ona görə iş başlayır, amma ağır addımları ötürüb yaşıl bitir.
+      # Siyahı auto-merge-content.yml-dəki ALLOW ilə eynidir. main push-unda həmişə tam yoxlama.
+      - name: Content-only PR?
+        id: scope
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_SHA" "$HEAD_SHA"
+          git diff --name-only "$BASE_SHA" "$HEAD_SHA" > changed.txt
+          echo "Dəyişən fayllar:"; cat changed.txt
+          ALLOW='^(docs/|content/|decision-log/)|^(CHANGELOG|DEVLOG|HANDOFF|README)\.md$|^lib/data/pendingNews\.json$'
+          if [ -s changed.txt ] && ! grep -Evq "$ALLOW" changed.txt; then
+            echo "Yalnız məzmun → lint/build ötürülür."
+            echo "content=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "content=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Setup Node
+        if: steps.scope.outputs.content != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
       - name: Install dependencies
+        if: steps.scope.outputs.content != 'true'
         run: npm ci
 
       - name: Lint
+        if: steps.scope.outputs.content != 'true'
         run: npm run lint
 
       - name: Build
+        if: steps.scope.outputs.content != 'true'
         run: npm run build
