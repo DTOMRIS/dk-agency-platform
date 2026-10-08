@@ -11,6 +11,7 @@ import { timingSafeEqual } from 'node:crypto';
 import { NextRequest, NextResponse, after } from 'next/server';
 import { deepSeekCaller, parseWhatsAppListings } from '@/lib/listings/whatsapp-import';
 import { createImportedDrafts } from '@/lib/listings/whatsapp-import-db';
+import { approveListingFromTelegram, rejectListingFromTelegram } from '@/lib/listings/set-status';
 import { approveNewsArticle, rejectNewsArticle } from '@/lib/news/approve';
 import {
   classifyTelegramUpdate,
@@ -93,6 +94,38 @@ export async function POST(request: NextRequest) {
 
   if (String(query.message.chat.id) !== String(config.chatId)) {
     await answer('İcazə yoxdur');
+    return NextResponse.json({ ok: true });
+  }
+
+  // TASK-0511: B2B listing approval buttons.
+  const listingMatch = /^listing:(approve|reject):(\d+)$/.exec(query.data);
+  if (listingMatch) {
+    const listingId = Number(listingMatch[2]);
+    const approving = listingMatch[1] === 'approve';
+    const result = approving
+      ? await approveListingFromTelegram(listingId)
+      : await rejectListingFromTelegram(listingId);
+    let listingStatus: string;
+    let listingButtons: Array<Array<{ text: string; url: string }>> = [];
+    if (result.ok) {
+      listingStatus = approving ? '✅ Elan təsdiqləndi (vitrində)' : '❌ Elan rədd edildi';
+    } else if (result.reason === 'already_decided') {
+      listingStatus = 'ℹ️ Elanın statusu artıq bu əməliyyata icazə vermir';
+      listingButtons = [[{ text: '✏️ Paneldə aç', url: `${SITE_URL}/dashboard/ilanlar/${listingId}` }]];
+    } else {
+      listingStatus = '⚠️ Elan tapılmadı';
+    }
+    await answer(listingStatus);
+    await telegramApi(config.token, 'editMessageReplyMarkup', {
+      chat_id: query.message.chat.id,
+      message_id: query.message.message_id,
+      reply_markup: { inline_keyboard: listingButtons },
+    }).catch(() => undefined);
+    await telegramApi(config.token, 'sendMessage', {
+      chat_id: query.message.chat.id,
+      text: `${listingStatus} (#${listingId})`,
+      reply_parameters: { message_id: query.message.message_id },
+    }).catch(() => undefined);
     return NextResponse.json({ ok: true });
   }
 

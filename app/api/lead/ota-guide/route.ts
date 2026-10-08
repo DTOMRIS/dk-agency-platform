@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { franchiseLeads } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
 import { generateOtaGuidePdf } from '@/lib/pdf/otaGuidePdf';
+import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 import { sql } from 'drizzle-orm';
 import { createHash } from 'crypto';
 
@@ -148,6 +149,14 @@ export async function POST(req: NextRequest) {
   } catch {
     // PDF generation failure should not block lead capture
   }
+
+  after(() =>
+    notifyOwner({
+      title: '🔔 Yeni lead · OTA bələdçisi',
+      lines: [`Ad: ${data.name}`, `Əlaqə: ${data.contact}`, data.whatsapp ? `WhatsApp: ${data.whatsapp}` : null, `Dil: ${data.locale.toUpperCase()}`],
+      buttons: leadButtons(data.whatsapp ?? (data.contact.includes('@') ? null : data.contact), '/dashboard/franchise-leads'),
+    })
+  );
 
   const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
   sendSmtpEmail(adminEmail, 'Yeni OTA Lead — Bələdçi Sorğusu', adminHtml(data, leadId)).catch((err) => console.error('[email] OTA lead admin mail failed:', err));

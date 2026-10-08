@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import type { ListingWorkflowStatus } from '@/lib/utils/listingStatus';
-import { canTransition } from '@/lib/utils/listingStatus';
 import { db, dbAvailable } from '@/lib/db';
-import { listings } from '@/lib/db/schema';
-import { inArray } from 'drizzle-orm';
+import { setListingsStatus } from '@/lib/listings/set-status';
 
 export async function PATCH(request: NextRequest) {
   const session = await getServerMemberSession();
@@ -29,47 +27,7 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ success: true, source: 'mock', updated: ids.length });
   }
 
-  // Fetch current statuses to validate transitions
-  const rows = await db
-    .select({ id: listings.id, status: listings.status })
-    .from(listings)
-    .where(inArray(listings.id, ids));
-
-  const validIds: number[] = [];
-  const results = { updated: 0, skipped: 0, errors: [] as string[] };
-
-  for (const row of rows) {
-    const currentStatus = row.status as ListingWorkflowStatus;
-    if (!canTransition(currentStatus, targetStatus)) {
-      results.skipped++;
-      results.errors.push(`#${row.id}: ${currentStatus} → ${targetStatus} keçid mümkün deyil`);
-      continue;
-    }
-    validIds.push(row.id);
-  }
-
-  if (validIds.length > 0) {
-    const set: Record<string, unknown> = {
-      status: targetStatus,
-      updatedAt: new Date(),
-      publishedAt: targetStatus === 'showcase_ready' ? new Date() : null,
-    };
-
-    if (targetStatus === 'rejected' && rejectedReason) {
-      set.rejectedReason = rejectedReason;
-    }
-
-    if (targetStatus === 'showcase_ready') {
-      set.approvedAt = new Date();
-    }
-
-    await db
-      .update(listings)
-      .set(set)
-      .where(inArray(listings.id, validIds));
-
-    results.updated = validIds.length;
-  }
+  const results = await setListingsStatus(ids, targetStatus, rejectedReason);
 
   return NextResponse.json({ success: true, source: 'db', ...results });
 }

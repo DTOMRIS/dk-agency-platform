@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
 import {
   createKazanLead,
@@ -10,6 +10,7 @@ import {
   updateKazanLead,
   type KazanLeadConversation,
 } from '@/lib/repositories/kazanLeadRepository';
+import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 import { buildWhatsappLink } from '@/lib/utils/whatsapp';
 
 type LeadPostBody = {
@@ -86,6 +87,21 @@ export async function POST(request: NextRequest) {
       conversationContext,
       intent,
     });
+
+    // TASK-0511: owner Telegram ping (fire-and-forget)
+    after(() =>
+      notifyOwner({
+        title: '🔔 Yeni lead · KAZAN AI',
+        lines: [
+          `Ad: ${name}`,
+          `Telefon: ${phone}`,
+          email ? `E-poçt: ${email}` : null,
+          `Biznes: ${businessType}`,
+          `Niyyət: ${intent}`,
+        ],
+        buttons: leadButtons(phone, '/dashboard/kazan-leads'),
+      })
+    );
 
     // Admin notification (fire-and-forget)
     import('@/lib/email/templates')
