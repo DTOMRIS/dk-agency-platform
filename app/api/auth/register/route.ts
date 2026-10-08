@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { hash } from 'bcryptjs';
+import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { db, dbAvailable } from '@/lib/db';
@@ -125,6 +126,19 @@ export async function POST(request: NextRequest) {
       blogDigestSubscribed: body.marketingConsent,
       productUpdatesSubscribed: body.marketingConsent,
     });
+
+    after(() =>
+      notifyOwner({
+        title: '👤 Yeni üzv qeydiyyatı',
+        lines: [
+          `Ad: ${body.name}`,
+          `E-poçt: ${body.email}`,
+          body.phone ? `Telefon: ${body.phone}` : null,
+          body.company ? `Şirkət: ${body.company}` : null,
+        ],
+        buttons: leadButtons(body.phone, '/dashboard/users'),
+      })
+    );
 
     // Create email verification token
     const token = crypto.randomUUID();

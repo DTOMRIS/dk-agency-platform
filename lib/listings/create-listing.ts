@@ -9,6 +9,7 @@
 
 import { db } from '@/lib/db';
 import { listingMedia, listings } from '@/lib/db/schema';
+import { notifyOwner, SITE_URL } from '@/lib/telegram/notify-owner';
 
 type ListingInsert = typeof listings.$inferInsert;
 
@@ -53,6 +54,28 @@ export async function createListing(
         );
       })
       .catch((err) => console.error('[ai] Listing analysis import failed:', err));
+  }
+
+  // TASK-0511: owner approval request (only fresh submissions; never throws).
+  if (values.status === undefined || values.status === 'submitted') {
+    void notifyOwner({
+      title: '🏢 Yeni B2B elan',
+      lines: [
+        values.title,
+        `Kod: ${listing.trackingCode}`,
+        [values.city, values.priceLabel ?? (values.price ? `${values.price} ${values.currency ?? 'AZN'}` : null)]
+          .filter(Boolean)
+          .join(' · '),
+        values.ownerName ? `Sahib: ${values.ownerName}` : null,
+      ],
+      buttons: [
+        [
+          { text: '✅ Təsdiqlə', callbackData: `listing:approve:${listing.id}` },
+          { text: '❌ Rədd et', callbackData: `listing:reject:${listing.id}` },
+        ],
+        [{ text: '✏️ Paneldə aç', url: `${SITE_URL}/dashboard/ilanlar/${listing.id}` }],
+      ],
+    });
   }
 
   return listing;

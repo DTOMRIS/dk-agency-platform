@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0511: feat(telegram): owner business notifications
+
+**Why:** Doğan «telegramı aktif olsun, yap hepsini» (08.10) — lead, üzv, elan və həftəlik xülasə Telegram-a.
+
+**What:** `lib/telegram/notify-owner.ts` (heç vaxt atmır, konfiq yoxdursa `false`). Route-larda `after()` ilə çağırılır — lead yadda saxlanması və cavab bloklanmır. WhatsApp yönləndirməsi `leads`-ə `wa_redirect` yazır (varchar, migration yoxdur). Elan təsdiqi üçün `lib/listings/set-status.ts` çıxarıldı, `batch-status` da ona keçdi (eyni `canTransition`). Təsdiq düyməsi submitted → committee_review → showcase_ready addımlarını ardıcıl icra edir. Route-policy registry yoxdur.
+
+**Yoxlama:** tsc xəta sayı 35 → 35 (dəyişməyib, mövcud xətalar), eslint dəyişən 13 fayl 0 xəta. Canlı Telegram testi EDİLMƏYİB (real mesaj göndərilmədi) — deploydan sonra yoxlanmalıdır; webhook callback-i də canlıda sınanmalıdır.
+
 ## 2026-10-08 — TASK-0509: feat(tanitim): /tanitim
 
 **Why:** 07.10-da satış üçün tanıtım prototipi hazırlanmışdı (`~/Desktop/DK-Agency-Tanitim-Prototip.html`, DK reposunda da commit olunmamış nüsxə) — sayta qoşulmamışdı.

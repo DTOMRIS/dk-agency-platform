@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0511` feat(telegram): sahibə Telegram bildirişləri — yeni lead (əlaqə/WhatsApp-Telegram klik, OTA bələdçisi, Franchise Radar, KAZAN AI), bülleten abunəsi və yeni üzv dərhal gəlir; «WhatsApp-da yaz» və «Paneldə aç» düymələri. `/api/leads/whatsapp` hər kliki sayır (yönləndirmə yenə dərhal). Yeni B2B elan ✅ Təsdiqlə / ❌ Rədd et düymələri ilə gəlir (admin paneldəki eyni status qaydası). Həftəlik xülasə endpoint-i `/api/cron/weekly-telegram` (CRON_SECRET) əlavə olundu; zamanlama xarici cron-dadır.
+
 - `TASK-0509` feat(tanitim): satış üçün tanıtım səhifəsi — `dkagency.com.tr/tanitim`, Kutlerri.ai üslubunda yenidən quruldu: «Bu ay pul hara getdi?» başlığı, Xərc / Gəlir tabları (Food cost, Delivery komissiyası, OCAQ, Menyu matrisi — Canlı; KAZAN AI — Beta), hər modulda «siqnal → addım» canlı kartı, 3 addımlı iş axını, canlı food cost kalkulyatoru, pulsuz alətlər / xüsusi xidmət bölməsi, Qurucu bölməsi və WhatsApp ilə pulsuz diaqnostika. Bütün nümunə ekranlarda «Nümunə məlumat» yazılır; mənbəsiz rəqəm yoxdur. Ana səhifə dəyişmədi.
 
 - `TASK-0508` fix(ci): avtomatik yoxlama (`dk:validate`) 29 sentyabrdan bəri brauzer testlərini əslində işlətmirdi və server yoxlamalarını başqa layihənin serverinə qarşı edə bilirdi — indi öz DK serverini qaldırır, 52 smoke testi həqiqətən işləyir (34 keçdi, 18 açar olmadığı üçün atlandı, 0 xəta); Node test skriptləri ayrıca yoxlanır; yoxlama artıq `package-lock.json`-u dəyişmir.

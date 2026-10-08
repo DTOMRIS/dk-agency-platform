@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
 import { wrapEmail } from '@/lib/email/templates';
+import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 
 const ALLOWED_CHANNELS = ['kazan', 'whatsapp', 'telegram'] as const;
 const ALLOWED_SOURCES = ['contact_page', 'home_join'] as const;
@@ -129,6 +130,20 @@ export async function POST(req: NextRequest) {
         </p>
       `);
       sendSmtpEmail(adminEmail, subject, html).catch(() => undefined);
+
+      // TASK-0511: owner Telegram ping (never blocks or breaks the lead save).
+      after(() =>
+        notifyOwner({
+          title: `🔔 Yeni lead · ${sourceLabel} (${channelLabel})`,
+          lines: [
+            destinationPhone ? `Hədəf: ${destinationPhone}` : null,
+            sourceUrl ? `Səhifə: ${sourceUrl}` : null,
+            prefillText ? `Hazır mesaj: ${prefillText}` : null,
+            `Dil: ${locale.toUpperCase()}`,
+          ],
+          buttons: leadButtons(null, '/dashboard/contact-tracking'),
+        })
+      );
     }
 
     return NextResponse.json({ ok: true });

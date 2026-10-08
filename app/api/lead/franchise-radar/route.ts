@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { franchiseLeads } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
 import { wrapEmail } from '@/lib/email/templates';
 import { getFranchiseBrand } from '@/lib/data/franchiseDirectory';
+import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 import { sql } from 'drizzle-orm';
 import { createHash } from 'crypto';
 
@@ -130,6 +131,14 @@ export async function POST(req: NextRequest) {
     .returning({ id: franchiseLeads.id });
 
   const leadId = inserted[0]?.id || 'unknown';
+
+  after(() =>
+    notifyOwner({
+      title: '🔔 Yeni lead · Franchise Radar',
+      lines: [`Brend: ${data.brandName}`, `Ad: ${data.name}`, `Əlaqə: ${data.contact}`, `Dil: ${data.locale.toUpperCase()}`],
+      buttons: leadButtons(data.contact.includes('@') ? null : data.contact, '/dashboard/franchise-leads'),
+    })
+  );
 
   const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
   sendSmtpEmail(

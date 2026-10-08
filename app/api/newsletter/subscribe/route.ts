@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { z } from 'zod';
 
 import { saveEmailPreferences } from '@/lib/email/preferences';
+import { notifyOwner } from '@/lib/telegram/notify-owner';
 import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 const subscribeSchema = z.object({
@@ -27,6 +28,13 @@ export async function POST(request: NextRequest) {
       blogDigestSubscribed: true,
       productUpdatesSubscribed: false,
     });
+
+    after(() =>
+      notifyOwner({
+        title: '📨 Yeni abunə · bülletən',
+        lines: [`E-poçt: ${parsed.data.email}`, `Mənbə: ${parsed.data.source}`],
+      })
+    );
 
     return NextResponse.json({ ok: true });
   } catch (error) {
