@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - `TASK-0522` fix(deps): Hostinger-in təhlükəsizlik xəbərdarlığı üzrə asılılıqlar yeniləndi — Next.js 16.4.0 (kritik açıq bağlandı), nodemailer 10, sharp 0.35.5 və keçid paketləri; canlı asılılıqlarda kritik və yüksək açıq qalmadı (qalan 1 aşağı, 3 orta — ayrıca).
+- `TASK-0522` fix(header): menyu 1024 px-dən görünür (əvvəl yalnız 1280+; dar noutbukda yalnız hamburger qalırdı) — 1024–1279 arasında «Pulsuz diaqnostika» yalnız ikon; WhatsApp düyməsi ilk ekran sürüşdürüləndən sonra çıxır (hero-dakı «Pulsuz diaqnostika» üstünə minmirdi). 4 dil × 7 en ölçüldü, daşma yoxdur.
 
 - `TASK-0521` feat(dashboard,header): admin paneldə yeni **«Bütün müraciətlər»** səhifəsi — sayta gələn hər müraciət bir siyahıda: elan sorğuları (əvvəl yalnız e-poçtla gəlirdi, paneldə siyahısı yox idi), WhatsApp / Telegram klikləri, KAZAN leadləri, franchise, OTA bələdçisi və Franchise Radar müraciətləri, bülletən abunələri. Yuxarıda hər mənbənin sayı (karta basanda yalnız o mənbə qalır), dövr seçimi (son 7 / 30 / 90 gün), ad, telefon, e-poçt və ya mətnlə axtarış; hər sətirdən mövcud səhifəyə keçid (elan, KAZAN leadləri, franchise leadləri, əlaqə kanalları). Telefonda kart görünüşü. Menyuda «Satış və Leadlər» bölməsinin birincisidir, yanında son 7 günün sayı. Yalnız admin görür; heç nə dəyişdirmir, yalnız oxuyur. **Header**: kompüterdə «Daxil ol» artıq kiçik hesab düyməsidir (ikon + «Daxil ol» ▾) — açılanda «Daxil ol» və «Üzv ol»; giriş etmiş üzv üçün avatar menyusu eynidir. Telefon menyusunun altındakı «Pulsuz diaqnostika» düyməsi çıxdı, «Elan ver» qalır.
 

@@ -7,16 +7,29 @@
  *          (--dk-cookie-bar-h, published by CookiesBanner).
  * @pattern A (useTranslations) — whatsappFloat
  *          TASK-0519: hidden below md — on phones the bottom nav + KAZAN already cover contact.
- * @task TASK-0516 · TASK-0519
+ *          TASK-0522 (owner screenshot 2026-10-09): appears only after the first screen is scrolled —
+ *          at the top it sat on the hero's «Pulsuz diaqnostika» button on short laptop windows.
+ * @task TASK-0516 · TASK-0519 · TASK-0522
  */
 
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { whatsappHref } from '@/lib/contact-channels';
 
 export default function WhatsAppButton() {
   const t = useTranslations('whatsappFloat');
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.6);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  if (!scrolled) return null;
 
   // TASK-0518: above the tool result sheet (--dk-tool-sheet-h), hidden while it is open.
   return (
