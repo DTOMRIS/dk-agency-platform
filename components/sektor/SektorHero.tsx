@@ -52,7 +52,7 @@ export default function SektorHero({
             <Link
               href={primaryCta.href}
               onClick={() => sektorSlug && trackSektorEvent({ sektor: sektorSlug, action: 'cta_test', label: t(primaryCta.key) })}
-              className="inline-flex items-center gap-2 rounded-2xl bg-[var(--dk-red)] px-8 py-4 text-sm font-bold text-white shadow-xl shadow-[var(--dk-red)]/20 transition hover:brightness-110"
+              className="inline-flex items-center gap-2 rounded-2xl bg-dk-red-strong px-8 py-4 text-sm font-bold text-white shadow-xl shadow-[var(--dk-red)]/20 transition hover:brightness-110"
             >
               {t(primaryCta.key)} →
             </Link>

@@ -1,7 +1,7 @@
 /**
  * @file QuickAccess.tsx
  * @purpose Homepage v2 quick-access strip — three compact cards: KAZAN AI (beta) → /kazan-ai,
- *          Toolkit (18 alət) → /toolkit, OCAQ → WhatsApp lead (OCAQ is sold, not self-served).
+ *          Toolkit (17 pulsuz alət) → /toolkit, OCAQ → WhatsApp lead (OCAQ is sold, not self-served).
  *          Replaces the old 3-card PlatformCards block; reuses its `home.platformCards` texts.
  * @pattern A (useTranslations) — home.platformCards + homeV2.modules.beta
  * @task TASK-0512

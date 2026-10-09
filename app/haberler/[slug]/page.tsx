@@ -1,55 +1,54 @@
+/**
+ * /haberler/[slug] — news detail, v2 inner design (TASK-0514, owner-approved mockup 09.10.2026).
+ * Serif headline + dek, byline with WhatsApp/Telegram share, image or generated category cover,
+ * old-template section blocks (### headings) as coloured blocks, source line, sticky sidebar with
+ * related toolkit / related blog (only when the article has them), other news and t.me/dkagenc.
+ * No «Bu həftə 1 addım» card — owner decision 2026-10-09 (lib/news/editorial.ts stays as is).
+ *
+ * TASK-0515 (owner 2026-10-09): «Son İlanlar» is back in the sidebar with REAL listings
+ * (getLatestShowcaseListings — status showcase_ready, i.e. approved in dashboard/ilanlar); the box
+ * is hidden when there are none. Ads from dashboard/reklamlar: «news-sidebar» (sidebar) and
+ * «news-inline» (after the article); AdSlot renders nothing without an active ad. The fake
+ * read-only newsletter form stays removed.
+ */
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getLocale } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import AdSlot from '@/components/ads/AdSlot';
-import RelatedToolkitsBox from '@/components/news/RelatedToolkitsBox';
-import { ShareButtons } from '@/components/news/ShareButtons';
 import { MarkdownRenderer } from '@/components/blog';
-import { formatDateAz } from '@/lib/formatDate';
-import { normalizeLocale } from '@/i18n/config';
+import { normalizeLocale, withLocale } from '@/i18n/config';
 import { localeUrl } from '@/lib/seo/structured-data';
+import { TELEGRAM_HANDLE, TELEGRAM_URL } from '@/lib/contact-channels';
+import { getBlogPostDetail } from '@/lib/db/blog-repository';
+import { getLatestShowcaseListings } from '@/lib/db/listings-repository';
+import { getToolkitEntries } from '@/lib/news/toolkit-catalog';
+import { getToolMeta } from '@/lib/toolkit/tool-directory';
+import home from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Icon } from '@/components/home/v2/shared';
+import {
+  Crumbs,
+  NewsCover,
+  ShareLinks,
+  TOOL_GROUP_CLASS,
+  ToolMini,
+  formatInnerDate,
+  readMinutes,
+  stripMarkdown,
+} from '@/components/inner/InnerParts';
+import s from '@/components/inner/inner.module.css';
 import {
   getNewsArticleBySlug,
   getRelatedApprovedNewsArticles,
 } from '@/lib/repositories/newsRepository';
 
-function estimateReadTime(text: string): number {
-  const words = text.split(/\s+/).length;
-  return Math.max(1, Math.round(words / 200));
-}
+const NEWS_CATEGORIES = ['finance', 'operations', 'growth', 'market', 'technology'];
 
-/** Strip markdown syntax from summary for plain-text display */
-function stripMarkdown(text: string): string {
-  return text
-    .replace(/^#{1,6}\s+/gm, '')       // headings
-    .replace(/\*\*([^*]+)\*\*/g, '$1')  // bold
-    .replace(/\*([^*]+)\*/g, '$1')      // italic
-    .replace(/`([^`]+)`/g, '$1')        // inline code
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links
-    .trim();
-}
+/* ── News section parsing (old template with ### headings) ── */
 
-function getCategoryLabel(category: string) {
-  switch (category) {
-    case 'finance':
-      return 'Maliyyə';
-    case 'operations':
-      return 'Əməliyyat';
-    case 'growth':
-      return 'Böyümə';
-    case 'market':
-      return 'Bazar';
-    case 'technology':
-      return 'Texnologiya';
-    default:
-      return category;
-  }
-}
-
-/* ── News section parsing ── */
 
 interface NewsSection {
   type: 'event' | 'important' | 'lesson' | 'risk' | 'opinion' | 'content';
@@ -97,42 +96,13 @@ function parseNewsContent(content: string): NewsSection[] {
   return sections;
 }
 
-const SECTION_STYLES: Record<string, { icon: string; hdr: string; hdrText: string; border: string; body: string }> = {
-  event: {
-    icon: '📰',
-    hdr: 'bg-slate-100',
-    hdrText: 'text-slate-700',
-    border: 'border-slate-200',
-    body: 'bg-slate-50/50',
-  },
-  important: {
-    icon: '💡',
-    hdr: 'bg-blue-50',
-    hdrText: 'text-blue-800',
-    border: 'border-blue-200',
-    body: 'bg-blue-50/30',
-  },
-  lesson: {
-    icon: '🎯',
-    hdr: 'bg-amber-50',
-    hdrText: 'text-amber-900',
-    border: 'border-amber-200',
-    body: 'bg-amber-50/30',
-  },
-  risk: {
-    icon: '⚠️',
-    hdr: 'bg-red-50',
-    hdrText: 'text-red-800',
-    border: 'border-red-200',
-    body: 'bg-red-50/30',
-  },
-  opinion: {
-    icon: '🔍',
-    hdr: 'bg-[#1A1A2E]',
-    hdrText: 'text-white',
-    border: 'border-[#1A1A2E]',
-    body: 'bg-slate-50',
-  },
+
+const BLOCK_CLASS: Record<Exclude<NewsSection['type'], 'content'>, string> = {
+  event: s.b_event,
+  important: s.b_important,
+  lesson: s.b_lesson,
+  risk: s.b_risk,
+  opinion: s.b_opinion,
 };
 
 export async function generateMetadata({
@@ -145,7 +115,8 @@ export async function generateMetadata({
   const article = await getNewsArticleBySlug(slug, locale);
 
   if (!article) {
-    return { title: 'Xəbər tapılmadı | DK Agency' };
+    const t = await getTranslations({ locale: normalizeLocale(locale), namespace: 'innerV2.news' });
+    return { title: `${t('notFound')} | DK Agency` };
   }
 
   const localePrefix = locale === 'az' ? '' : `/${locale}`;
@@ -188,6 +159,7 @@ export async function generateMetadata({
   };
 }
 
+
 export default async function HaberDetailPage({
   params,
   searchParams,
@@ -198,19 +170,48 @@ export default async function HaberDetailPage({
   const { slug } = await params;
   const sp = await searchParams;
   const isPreview = sp.preview === 'true';
-  const locale = await getLocale();
+  const locale = normalizeLocale(await getLocale());
   const article = await getNewsArticleBySlug(slug, locale, isPreview);
 
   if (!article) {
     notFound();
   }
 
-  const related = await getRelatedApprovedNewsArticles(article.id, article.category, locale);
-  const shareUrl = `https://dkagency.com.tr/haberler/${article.slug}`;
+  const t = await getTranslations({ locale, namespace: 'innerV2.news' });
+  const tc = await getTranslations({ locale, namespace: 'innerV2.common' });
+  const tt = await getTranslations({ locale, namespace: 'innerV2.toolkit.tools' });
+
+  const related = (await getRelatedApprovedNewsArticles(article.id, article.category, locale)).slice(0, 4);
+  const toolSlugs = (article as { relatedToolkits?: string[] }).relatedToolkits ?? [];
+  const tools = getToolkitEntries(toolSlugs)
+    .map((entry) => getToolMeta(entry.slug))
+    .filter((meta, i, arr): meta is NonNullable<typeof meta> => !!meta && arr.findIndex((m) => m?.slug === meta.slug) === i);
+  const blogSlug = (article as { relatedBlogSlug?: string | null }).relatedBlogSlug ?? null;
+  const blog = blogSlug ? await getBlogPostDetail(blogSlug, locale).catch(() => null) : null;
+  const latestListings = await getLatestShowcaseListings(3, locale).catch(() => []);
+  const tl = await getTranslations({ locale, namespace: 'b2bPanel.categoryLabels' });
+  const listingType = (type: string) => (tl.has(type) ? tl(type) : '');
+  const listingPrice = (item: (typeof latestListings)[number]) =>
+    item.priceLabel ||
+    (item.price && item.price > 0
+      ? `${new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'de-DE').format(item.price)} ${item.currency === 'AZN' ? '₼' : item.currency}`
+      : '');
+
+  const catLabel = (cat: string) => (NEWS_CATEGORIES.includes(cat) ? t(`cats.${cat}`) : cat);
+  const sourceName = article.sourceName || t('noSource');
+  const shareUrl = localeUrl(locale, `/haberler/${article.slug}`);
   // TASK-0478: the analysis is written by DK Agency — the aggregator name (e.g. "Bundle") used to be
   // marked up as a Person author. The original report is credited via isBasedOn.
   const sourceUrl =
     article.externalUrl && /^https?:\/\//.test(article.externalUrl) ? article.externalUrl : undefined;
+  let sourceHost = '';
+  if (!article.isManual && sourceUrl) {
+    try {
+      sourceHost = new URL(sourceUrl).hostname.replace('www.', '');
+    } catch {
+      sourceHost = '';
+    }
+  }
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
@@ -228,241 +229,174 @@ export default async function HaberDetailPage({
     datePublished: article.publishedAt,
     dateModified: article.publishedAt,
     mainEntityOfPage: localeUrl(locale, `/haberler/${article.slug}`),
-    inLanguage: normalizeLocale(locale),
+    inLanguage: locale,
   };
+
+  const sections = article.content ? parseNewsContent(article.content) : [];
+  let blockNo = 0;
 
   return (
     <BlogContentWrapper articleTitle={article.title} isPremium>
-      <main className="min-h-screen bg-[#FAFAF8] px-4 py-10 text-[#1A1A2E]">
+      <div className={`${s.page} ${inter.className}`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
-          <article className="rounded-[32px] border border-slate-200 bg-white px-6 py-8 text-[#1A1A2E] shadow-sm md:px-10 md:py-10">
-            <nav aria-label="Breadcrumb" className="text-sm">
-              <ol className="flex flex-wrap items-center gap-1.5 text-slate-500">
-                <li>
-                  <Link href="/haberler" className="transition hover:text-[#C5A022]">
-                    Xəbərlər
-                  </Link>
-                </li>
-                <li className="text-slate-300">/</li>
-                <li>
-                  <Link
-                    href={`/haberler?category=${article.category}`}
-                    className="transition hover:text-[#C5A022]"
-                  >
-                    {getCategoryLabel(article.category)}
-                  </Link>
-                </li>
-                <li className="text-slate-300">/</li>
-                <li className="max-w-[300px] truncate text-slate-400">
-                  {article.title}
-                </li>
-              </ol>
-            </nav>
-
-            <header className="mt-6 border-b border-slate-200 pb-8">
-              <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
-                <span className="inline-flex rounded-full bg-[#FFF8E7] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#C5A022]">
-                  {getCategoryLabel(article.category)}
-                </span>
-                <span>
-                  {(article.sourceName || 'DK Agency') +
-                    ' · ' +
-                    formatDateAz(article.publishedAt)}
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-600">
-                  ⏱ {estimateReadTime(article.content || article.summary || '')} dəq oxu
-                </span>
+        <div className={home.wrap}>
+          <Crumbs
+            backHref={withLocale(locale, '/haberler')}
+            backLabel={t('back')}
+            trail={`${t('crumb')} / ${catLabel(article.category)}`}
+          />
+          <div className={s.artGrid}>
+            <article className={s.art}>
+              <div className={s.metaRow}>
+                <span className={s.cat}>{catLabel(article.category)}</span>
+                <span>{sourceName}</span>
+                <span>·</span>
+                <span>{formatInnerDate(article.publishedAt, locale)}</span>
+                <span>·</span>
+                <span>{tc('minRead', { n: readMinutes(`${article.summary} ${article.content}`) })}</span>
               </div>
-              <h1 className="mt-5 max-w-[720px] font-display text-[30px] font-bold leading-tight text-[#1A1A2E] sm:text-[36px] md:text-[42px]">
-                {article.title}
-              </h1>
-              <div className="mt-5">
-                <ShareButtons title={article.title} url={shareUrl} locale={locale} />
+              <h1>{article.title}</h1>
+              {article.summary ? <p className={s.dek}>{stripMarkdown(article.summary)}</p> : null}
+              <div className={s.byline}>
+                <span className={s.who}>
+                  <span className={s.markSm} aria-hidden="true">DK</span>
+                  <span>{t.rich('byline', { b: (chunks) => <b>{chunks}</b> })}</span>
+                </span>
+                <ShareLinks url={shareUrl} title={article.title} waLabel={tc('whatsapp')} tgLabel={tc('telegram')} />
               </div>
-            </header>
+              <NewsCover
+                category={article.category}
+                categoryLabel={catLabel(article.category)}
+                source={sourceName}
+                brand={t('brand')}
+                imageUrl={article.imageUrl}
+                alt={article.title}
+                priority
+              />
 
-            {article.imageUrl ? (
-              <div className="mt-8 overflow-hidden rounded-[28px] border border-slate-200 bg-slate-100">
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  className="h-full w-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            ) : null}
-
-            <div className="mt-8 max-w-[720px] text-[17px] leading-[1.8] text-slate-700 md:text-[18px]">
-              {article.summary ? (
-                <p className="mb-6 font-semibold text-slate-800">{stripMarkdown(article.summary)}</p>
-              ) : null}
-              {article.content
-                ? parseNewsContent(article.content).map((section, i) =>
-                    section.type === 'content' ? (
-                      <MarkdownRenderer
-                        key={i}
-                        content={section.body}
-                        className="text-slate-700 md:text-[18px]"
-                      />
-                    ) : (
-                      <div
-                        key={i}
-                        className={`my-8 overflow-hidden rounded-2xl border ${SECTION_STYLES[section.type].border}`}
-                      >
-                        <div
-                          className={`flex items-center gap-2.5 px-5 py-3.5 ${SECTION_STYLES[section.type].hdr}`}
-                        >
-                          <span className="text-lg">{SECTION_STYLES[section.type].icon}</span>
-                          <h2
-                            className={`text-sm font-bold uppercase tracking-wider ${SECTION_STYLES[section.type].hdrText}`}
-                          >
-                            {section.title}
-                          </h2>
-                        </div>
-                        <div className={`px-5 py-4 ${SECTION_STYLES[section.type].body}`}>
-                          <MarkdownRenderer
-                            content={section.body}
-                            className="text-slate-700 md:text-[18px]"
-                          />
-                        </div>
+              <div className={s.artBody}>
+                {sections.map((section, i) =>
+                  section.type === 'content' ? (
+                    <MarkdownRenderer key={i} content={section.body} className="text-slate-700 md:text-[18px]" />
+                  ) : (
+                    <section key={i} className={`${s.blk} ${BLOCK_CLASS[section.type]}`}>
+                      <div className={s.blkH}>
+                        <span className={s.blkN}>{++blockNo}</span>
+                        <h2>{section.title}</h2>
                       </div>
-                    ),
+                      <MarkdownRenderer content={section.body} className="text-slate-700 md:text-[18px]" />
+                    </section>
                   )
-                : null}
-            </div>
-
-            <div className="mt-10 max-w-[720px] overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 to-[#FFF8E7]">
-              <div className="px-6 py-6 sm:px-8">
-                <h3 className="font-display text-lg font-bold text-[#1A1A2E]">
-                  Həftəlik HoReCa xülasəsi
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">
-                  Hər həftə sektor xəbərləri, trend analizləri və praktik tövsiyələr.
-                </p>
-                <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                  <input
-                    type="email"
-                    placeholder="E-poçt adresiniz"
-                    readOnly
-                    className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 outline-none"
-                  />
-                  <Link
-                    href="/auth/register?source=newsletter"
-                    className="rounded-xl bg-[#1A1A2E] px-6 py-2.5 text-center text-sm font-bold text-white transition hover:bg-[#16213E]"
-                  >
-                    Abunə ol
-                  </Link>
-                </div>
+                )}
               </div>
-            </div>
 
-            <footer className="mt-10 flex max-w-[720px] flex-col gap-5 border-t border-slate-200 pt-8">
-              {!article.isManual && article.externalUrl
-                ? (() => {
-                    let hostname = '';
-                    try {
-                      hostname = new URL(article.externalUrl).hostname.replace('www.', '');
-                    } catch {
-                      hostname = '';
-                    }
-                    return article.content && hostname ? (
-                      <p className="text-xs text-slate-400">
-                        Mənbə:{' '}
-                        <a
-                          href={article.externalUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="underline hover:text-slate-600"
-                        >
-                          {hostname}
-                        </a>
-                      </p>
-                    ) : !article.content && hostname ? (
-                      <a
-                        href={article.externalUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex w-fit items-center rounded-full bg-[#E94560] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#d73753]"
-                      >
-                        Mənbədə tam xəbəri oxu →
-                      </a>
-                    ) : null;
-                  })()
-                : null}
-              <div className="max-w-[280px]">
-                <ShareButtons title={article.title} url={shareUrl} locale={locale} />
+              <div className={s.src}>
+                {sourceHost ? (
+                  article.content ? (
+                    <span>
+                      {t('source')}{' '}
+                      <a href={sourceUrl} target="_blank" rel="noopener noreferrer">{sourceHost}</a> — {t('sourceOriginal')}
+                    </span>
+                  ) : (
+                    <a className={`${home.btn} ${home.btnRed} ${home.btnSm}`} href={sourceUrl} target="_blank" rel="noopener noreferrer">
+                      {t('readFull')} <Icon name="arrow" />
+                    </a>
+                  )
+                ) : (
+                  <span />
+                )}
+                <ShareLinks url={shareUrl} title={article.title} waLabel={tc('share')} tgLabel={tc('share')} />
               </div>
-              {/* Share buttons also appear in header above */}
-            </footer>
+              <AdSlot placement="news-inline" className={s.adInline} />
+            </article>
 
-            {(article as { relatedToolkits?: string[] }).relatedToolkits?.length ? (
-              <div className="mt-10">
-                <RelatedToolkitsBox
-                  toolkitSlugs={(article as { relatedToolkits?: string[] }).relatedToolkits || []}
-                  blogSlug={(article as { relatedBlogSlug?: string }).relatedBlogSlug || null}
-                  locale={locale}
-                />
-              </div>
-            ) : null}
-          </article>
-
-          <div className="space-y-6">
-            <AdSlot placement="news-sidebar" />
-
-            <aside className="rounded-[32px] border border-slate-200 bg-gradient-to-br from-[#1A1A2E] to-[#16213E] p-6 text-white shadow-sm">
-              <h3 className="font-display text-lg font-bold">Son İlanlar</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-300">
-                Franchise, devir və B2B imkanlarını kəşf edin.
-              </p>
-              <Link
-                href="/ilanlar"
-                className="mt-4 inline-flex items-center gap-2 rounded-xl bg-[#E94560] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#d73753]"
-              >
-                İlanlara bax →
-              </Link>
-            </aside>
-
-            {related.length > 0 ? (
-              <aside className="rounded-[32px] border border-slate-200 bg-white p-6 text-[#1A1A2E] shadow-sm">
-                <h3 className="font-display text-xl font-bold text-[#1A1A2E]">Əlaqəli xəbərlər</h3>
-                <div className="mt-4 space-y-3">
-                  {related.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={`/haberler/${item.slug}`}
-                      className="group block overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 transition hover:border-[#C5A022] hover:bg-white hover:shadow-sm"
-                    >
-                      {item.imageUrl ? (
-                        <img
-                          src={item.imageUrl}
-                          alt={item.title}
-                          className="aspect-[16/9] w-full object-cover"
-                          referrerPolicy="no-referrer"
-                        />
-                      ) : null}
-                      <div className="p-3">
-                        <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#C5A022]">
-                          {getCategoryLabel(item.category)}
-                        </div>
-                        <div className="mt-1 text-sm font-bold leading-5 text-[#1A1A2E] group-hover:text-[#E94560]">
-                          {item.title}
-                        </div>
-                        <div className="mt-1.5 text-[11px] text-slate-500">
-                          {formatDateAz(item.publishedAt)}
-                        </div>
-                      </div>
-                    </Link>
+            <aside className={s.side}>
+              {tools.length > 0 ? (
+                <div>
+                  <h4>{t('relatedTool')}</h4>
+                  {tools.map((tool) => (
+                    <ToolMini
+                      key={tool.slug}
+                      href={withLocale(locale, `/toolkit/${tool.slug}`)}
+                      icon={tool.icon}
+                      iconClass={TOOL_GROUP_CLASS[tool.group]}
+                      title={tt(`${tool.slug}.t`)}
+                      sub={t('toolSub')}
+                    />
                   ))}
                 </div>
-              </aside>
-            ) : null}
+              ) : null}
+              {blog ? (
+                <div>
+                  <h4>{t('relatedBlog')}</h4>
+                  <Link className={s.linkCard} href={withLocale(locale, `/blog/${blog.slug}`)} style={{ padding: 16 }}>
+                    <h3 style={{ fontSize: 16 }}>{blog.title}</h3>
+                    <span className={s.linkMeta}>
+                      <Icon name="clock" />
+                      {tc('minRead', { n: readMinutes(blog.content || '') })}
+                    </span>
+                  </Link>
+                </div>
+              ) : null}
+              {related.length > 0 ? (
+                <div>
+                  <h4>{t('otherNews')}</h4>
+                  <div className={s.relList}>
+                    {related.map((item) => (
+                      <Link key={item.id} href={withLocale(locale, `/haberler/${item.slug}`)} className={s.rel}>
+                        <NewsCover
+                          compact
+                          category={item.category}
+                          categoryLabel={catLabel(item.category)}
+                          source={item.sourceName || t('noSource')}
+                          brand={t('brand')}
+                          imageUrl={item.imageUrl}
+                          alt={item.title}
+                        />
+                        <span>
+                          <b>{item.title}</b>
+                          <small>
+                            {catLabel(item.category)} · {formatInnerDate(item.publishedAt, locale, false)}
+                          </small>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+              {latestListings.length > 0 ? (
+                <div data-testid="news-latest-listings">
+                  <h4>{t('latestListings')}</h4>
+                  <ul className={s.lstList}>
+                    {latestListings.map((item) => (
+                      <li key={item.id}>
+                        <Link href={withLocale(locale, `/ilanlar/${item.slug}`)} className={s.lstItem}>
+                          <small>
+                            {[listingType(item.type), item.city].filter(Boolean).join(' · ')}
+                          </small>
+                          <b>{item.title}</b>
+                          {listingPrice(item) ? <span>{listingPrice(item)}</span> : null}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={withLocale(locale, '/ilanlar')} className={s.linkMeta}>
+                    {t('allListings')} <Icon name="arrow" />
+                  </Link>
+                </div>
+              ) : null}
+              <a className={`${home.btn} ${home.btnGhost} ${s.btnBlock}`} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">
+                <Icon name="tg" />
+                t.me/{TELEGRAM_HANDLE}
+              </a>
+              <AdSlot placement="news-sidebar" />
+            </aside>
           </div>
         </div>
-      </main>
+      </div>
     </BlogContentWrapper>
   );
 }

@@ -78,6 +78,11 @@ export interface BranchOpeningResult {
   socialContribution: number;
 }
 
+/** TASK-0515: preset only when the value is missing/NaN — an explicit 0 stays 0 (was `|| preset`). */
+function orPreset(value: number | undefined, presetValue: number): number {
+  return typeof value === 'number' && Number.isFinite(value) ? Math.max(0, value) : presetValue;
+}
+
 function finite(value: number): number {
   return Number.isFinite(value) ? Math.max(0, value) : 0;
 }
@@ -121,23 +126,23 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
   const seats = Math.max(0, Math.round(finite(input.seats)));
   const monthlyRent = finite(input.monthlyRent);
   const dailyChecks = finite(input.dailyChecks);
-  const averageCheck = finite(input.averageCheck) || preset.avgCheck;
-  const operatingDays = Math.max(1, Math.round(finite(input.operatingDays) || preset.operatingDays));
-  const variableCostPct = clamp(input.variableCostPct || preset.variableCostPct, 0, 99);
+  const averageCheck = orPreset(input.averageCheck, preset.avgCheck);
+  const operatingDays = Math.max(1, Math.round(orPreset(input.operatingDays, preset.operatingDays)));
+  const variableCostPct = clamp(orPreset(input.variableCostPct, preset.variableCostPct), 0, 99);
   const rentTaxType = input.rentTaxType === 'legalEntity' ? 'legalEntity' : 'individual';
 
-  const fitoutCostPerSqm = finite(input.fitoutCostPerSqm) || preset.fitoutPerSqm;
-  const ventilationCostPerSqm = finite(input.ventilationCostPerSqm) || preset.ventilationPerSqm;
-  const furnitureCostPerSeat = finite(input.furnitureCostPerSeat) || preset.furniturePerSeat;
+  const fitoutCostPerSqm = orPreset(input.fitoutCostPerSqm, preset.fitoutPerSqm);
+  const ventilationCostPerSqm = orPreset(input.ventilationCostPerSqm, preset.ventilationPerSqm);
+  const furnitureCostPerSeat = orPreset(input.furnitureCostPerSeat, preset.furniturePerSeat);
   const kitchenEquipmentCost = finite(input.kitchenEquipmentCost);
   const barEquipmentCost = finite(input.barEquipmentCost);
   const openingMarketingPct = clamp(input.openingMarketingPct, 0, 40);
   const documentsCost = finite(input.documentsCost);
   const unexpectedPct = clamp(input.unexpectedPct, 0, 30);
   const startWorkingCapitalPct = clamp(input.startWorkingCapitalPct, 0, 50);
-  const rampUpMonths = Math.max(0, Math.round(finite(input.rampUpMonths) || preset.rampUpMonths));
-  const openingSalesPct = clamp(input.openingSalesPct || preset.openingSalesPct, 0, 100);
-  const reserveMonths = Math.max(0, Math.round(finite(input.reserveMonths) || preset.reserveMonths));
+  const rampUpMonths = Math.max(0, Math.round(orPreset(input.rampUpMonths, preset.rampUpMonths)));
+  const openingSalesPct = clamp(orPreset(input.openingSalesPct, preset.openingSalesPct), 0, 100);
+  const reserveMonths = Math.max(0, Math.round(orPreset(input.reserveMonths, preset.reserveMonths)));
 
   const fitoutCost = areaSqm * fitoutCostPerSqm;
   const ventilationCost = areaSqm * ventilationCostPerSqm;
@@ -173,7 +178,7 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
   }, 0));
 
   const workingCapital = round(
-    (monthlyVariableCosts / 30) * clamp(input.inventoryDays || preset.inventoryDays, 0, 180)
+    (monthlyVariableCosts / 30) * clamp(orPreset(input.inventoryDays, preset.inventoryDays), 0, 180)
     + monthlyFixedCosts * reserveMonths
     + rampUpLoss
     + totalCapex * (startWorkingCapitalPct / 100),

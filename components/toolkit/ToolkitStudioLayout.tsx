@@ -1,9 +1,23 @@
 'use client';
 
-import { type ReactNode } from 'react';
+/**
+ * Shared tool page shell — v2 inner design (TASK-0514, owner-approved mockup 09.10.2026):
+ * back button + breadcrumb, group eyebrow + live status, inputs panel on the left and a sticky
+ * result column on desktop that becomes a bottom sheet on mobile/tablet (< 1024px).
+ * The props contract is unchanged, so every tool's own logic stays as it was.
+ */
+
+import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { ChevronLeft, Sparkles } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { Sparkles } from 'lucide-react';
+import { normalizeLocale, withLocale } from '@/i18n/config';
+import home from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Icon } from '@/components/home/v2/shared';
+import { Crumbs, LiveStatus } from '@/components/inner/InnerParts';
+import s from '@/components/inner/inner.module.css';
+import { getToolMeta } from '@/lib/toolkit/tool-directory';
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -22,11 +36,16 @@ interface ToolkitStudioLayoutProps {
   inputSection: ReactNode;
   resultSection: ReactNode;
   bottomSection?: ReactNode;
+  /** Kept for compatibility — the live status now sits in the page header for every tool. */
   showLiveBadge?: boolean;
   /** AI insight state — connected pages pass this, others get placeholder */
   aiInsight?: AIInsightState;
   /** Callback to request AI insight */
   onRequestInsight?: () => void;
+  /** Short headline value shown on the collapsed mobile result sheet (e.g. «45,0%»). */
+  resultSummary?: ReactNode;
+  /** Optional card next to the title (e.g. the formula). */
+  headerAside?: ReactNode;
 }
 
 // ── Sub-components ──────────────────────────────────────────────────
@@ -34,14 +53,20 @@ interface ToolkitStudioLayoutProps {
 function TierBadge({ tier }: { tier: ToolTier }) {
   const t = useTranslations('toolkit');
   const styles: Record<ToolTier, { bg: string; text: string; ring: string }> = {
-    sagird: { bg: 'bg-blue-500/10', text: 'text-blue-400', ring: 'ring-blue-500/20' },
-    kalfa: { bg: 'bg-[var(--dk-gold)]/10', text: 'text-[var(--dk-gold)]', ring: 'ring-[var(--dk-gold)]/20' },
-    usta: { bg: 'bg-[var(--dk-purple)]/10', text: 'text-[var(--dk-purple)]', ring: 'ring-[var(--dk-purple)]/20' },
+    sagird: { bg: 'bg-blue-50', text: 'text-blue-700', ring: 'ring-blue-200' },
+    kalfa: { bg: 'bg-amber-50', text: 'text-amber-800', ring: 'ring-amber-200' },
+    usta: { bg: 'bg-violet-50', text: 'text-violet-700', ring: 'ring-violet-200' },
   };
-  const labels: Record<ToolTier, string> = { sagird: t('tierBadge.sagird'), kalfa: t('tierBadge.kalfa'), usta: t('tierBadge.usta') };
-  const s = styles[tier];
+  const labels: Record<ToolTier, string> = {
+    sagird: t('tierBadge.sagird'),
+    kalfa: t('tierBadge.kalfa'),
+    usta: t('tierBadge.usta'),
+  };
+  const st = styles[tier];
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider ring-1 ${s.bg} ${s.text} ${s.ring}`}>
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider ring-1 ${st.bg} ${st.text} ${st.ring}`}
+    >
       {labels[tier]}
     </span>
   );
@@ -49,37 +74,29 @@ function TierBadge({ tier }: { tier: ToolTier }) {
 
 function LiveBadge() {
   const t = useTranslations('toolkit');
-  return (
-    <div className="flex items-center gap-2 text-xs font-semibold text-[var(--dk-success)]">
-      <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--dk-success)] opacity-75" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--dk-success)]" />
-      </span>
-      {t('live')}
-    </div>
-  );
+  return <LiveStatus label={t('live')} />;
 }
 
 function AIInsightPanel({ insight, onRequest }: { insight?: AIInsightState; onRequest?: () => void }) {
   const t = useTranslations('toolkit');
 
   return (
-    <div className="border-t border-slate-200 pt-4 mt-4">
-      <div className="flex items-center gap-2 mb-2">
-        <Sparkles size={12} className="text-[var(--dk-gold)]" />
-        <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--dk-gold)]">
+    <div className="mt-4 border-t border-slate-200 pt-4">
+      <div className="mb-2 flex items-center gap-2">
+        <Sparkles size={12} className="text-amber-700" />
+        <div className="text-[11px] font-bold uppercase tracking-wider text-amber-800">
           {t('aiInsight')}
         </div>
       </div>
 
       {!insight || insight.status === 'idle' ? (
         <div>
-          <p className="text-xs leading-relaxed text-slate-400 mb-3">{t('aiInsightPending')}</p>
+          <p className="mb-3 text-xs leading-relaxed text-slate-600">{t('aiInsightPending')}</p>
           {onRequest && (
             <button
               type="button"
               onClick={onRequest}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-[var(--dk-gold)]/10 px-3 py-2 text-xs font-bold text-[var(--dk-gold)] transition-colors hover:bg-[var(--dk-gold)]/20"
+              className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-2 text-xs font-bold text-amber-800 ring-1 ring-amber-200 transition-colors hover:bg-amber-100"
             >
               <Sparkles size={12} />
               {t('aiInsightRequest')}
@@ -88,21 +105,24 @@ function AIInsightPanel({ insight, onRequest }: { insight?: AIInsightState; onRe
         </div>
       ) : insight.status === 'loading' ? (
         <div className="flex items-center gap-2">
-          <div className="h-3 w-3 animate-spin rounded-full border-2 border-[var(--dk-gold)] border-t-transparent" />
-          <p className="text-xs text-slate-400">{t('aiInsightLoading')}</p>
+          <div className="h-3 w-3 animate-spin rounded-full border-2 border-amber-600 border-t-transparent" />
+          <p className="text-xs text-slate-600">{t('aiInsightLoading')}</p>
         </div>
       ) : insight.status === 'error' ? (
         <div>
-          <p className="text-xs leading-relaxed text-slate-400">{t('aiInsightError')}</p>
+          <p className="text-xs leading-relaxed text-slate-600">{t('aiInsightError')}</p>
           {onRequest && (
-            <button type="button" onClick={onRequest}
-              className="mt-2 text-xs font-bold text-[var(--dk-gold)] hover:underline">
+            <button
+              type="button"
+              onClick={onRequest}
+              className="mt-2 text-xs font-bold text-amber-800 hover:underline"
+            >
               {t('aiInsightRetry')}
             </button>
           )}
         </div>
       ) : (
-        <p className="text-xs leading-relaxed text-slate-600">{insight.text}</p>
+        <p className="text-xs leading-relaxed text-slate-700">{insight.text}</p>
       )}
     </div>
   );
@@ -111,58 +131,102 @@ function AIInsightPanel({ insight, onRequest }: { insight?: AIInsightState; onRe
 // ── Main Layout ─────────────────────────────────────────────────────
 
 export default function ToolkitStudioLayout({
+  toolId,
   toolName,
   toolDescription,
-  tier,
   inputSection,
   resultSection,
   bottomSection,
-  showLiveBadge = true,
   aiInsight,
   onRequestInsight,
+  resultSummary,
+  headerAside,
 }: ToolkitStudioLayoutProps) {
-  const t = useTranslations('toolkit');
+  const tc = useTranslations('innerV2.common');
+  const locale = normalizeLocale(useLocale());
+  const meta = getToolMeta(toolId);
+  const groupLabel = meta ? tc(`groups.${meta.group}`) : null;
+  const [sheetOpen, setSheetOpen] = useState(false);
+
+  useEffect(() => {
+    if (!sheetOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSheetOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [sheetOpen]);
+
+  const trail = [tc('toolsCrumb'), groupLabel, toolName].filter(Boolean).join(' / ');
+  const sheetId = `rs-${toolId}`;
 
   return (
-    <div className="bg-[var(--dk-paper)] min-h-screen pb-16">
-      <div className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-[var(--dk-navy)] to-slate-950">
-        <div className="absolute inset-0">
-          <div className="absolute top-[-20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-[var(--dk-gold)]/8 blur-[100px]" />
-        </div>
-        <div className="relative mx-auto max-w-7xl px-6 pt-6 pb-16">
-          <Link href="/toolkit"
-            className="group mb-6 inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-300">
-            <ChevronLeft size={14} className="transition-transform group-hover:-translate-x-0.5" />
-            <span>{t('backToToolkit')}</span>
-          </Link>
-          <div className="flex items-start gap-4">
-            <div className="flex-1">
-              <div className="mb-3 flex items-center gap-3"><TierBadge tier={tier} /></div>
-              <h1 className="text-3xl font-display font-black leading-tight tracking-tight text-white sm:text-4xl">{toolName}</h1>
-              {toolDescription && <p className="mt-3 max-w-lg text-base leading-relaxed text-slate-400">{toolDescription}</p>}
+    <div className={`${s.page} ${s.withSheet} ${inter.className}`}>
+      <div className={home.wrap}>
+        <Crumbs
+          backHref={withLocale(locale, '/toolkit')}
+          backLabel={tc('allTools')}
+          trail={trail}
+        />
+        <div className={s.tpHead}>
+          <div style={{ minWidth: 0 }}>
+            <div className={s.tpHeadMeta}>
+              {meta ? (
+                <span className={home.eyebrow}>
+                  <span className={home.dot} />
+                  {tc(`groupEyebrow.${meta.group}`)}
+                </span>
+              ) : null}
+              <LiveStatus label={tc('live')} />
             </div>
+            <h1>{toolName}</h1>
+            {toolDescription ? <p className={s.lead}>{toolDescription}</p> : null}
           </div>
+          {headerAside ? <div className={s.tpAside}>{headerAside}</div> : null}
         </div>
-      </div>
 
-      <div className="relative z-10 mx-auto -mt-8 max-w-7xl px-6">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
-          <div className="min-w-0 overflow-x-auto rounded-2xl bg-white p-4 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80 sm:p-6">
-            {inputSection}
-          </div>
-          <aside className="min-w-0 lg:sticky lg:top-6 lg:self-start">
-            <div className="overflow-x-auto rounded-2xl bg-white p-4 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80 sm:p-6">
-              {showLiveBadge && <div className="mb-4"><LiveBadge /></div>}
-              {resultSection}
-              <AIInsightPanel insight={aiInsight} onRequest={onRequestInsight} />
+        <div className={s.tpGrid}>
+          <div className={s.panelC}>{inputSection}</div>
+          <aside
+            className={`${s.result} ${sheetOpen ? s.resultOpen : ''}`}
+            aria-label={tc('result')}
+          >
+            <div className={s.rs}>
+              <button
+                type="button"
+                className={s.sheetH}
+                aria-expanded={sheetOpen}
+                aria-controls={sheetId}
+                onClick={() => setSheetOpen((open) => !open)}
+              >
+                <span className={s.shL}>
+                  <small>{toolName}</small>
+                  <b>{resultSummary ?? tc('result')}</b>
+                </span>
+                <span className={s.shR}>
+                  <span>{sheetOpen ? tc('hideResult') : tc('showResult')}</span>
+                  <Icon name="chevUp" />
+                </span>
+              </button>
+              <div className={s.rsBody} id={sheetId}>
+                {resultSection}
+                <AIInsightPanel insight={aiInsight} onRequest={onRequestInsight} />
+              </div>
             </div>
           </aside>
         </div>
       </div>
 
-      {bottomSection && (
-        <div className="mx-auto mt-12 max-w-7xl px-6">{bottomSection}</div>
-      )}
+      {bottomSection ? (
+        <div className={`${home.wrap} ${s.bottom}`}>{bottomSection}</div>
+      ) : null}
+
+      <div className={home.wrap}>
+        <Link href={withLocale(locale, '/toolkit')} className={s.back}>
+          <Icon name="left" />
+          {tc('allTools')}
+        </Link>
+      </div>
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default function HeroMotifPreview() {
               <p className="mt-4 max-w-md text-lg text-slate-600">
                 Pulsuz toolkit, ekspert blog, restoran devri və franchise.
               </p>
-              <button className="mt-6 w-fit rounded-xl bg-[#E94560] px-6 py-3 font-bold text-white transition hover:bg-[#d73753]">
+              <button className="mt-6 w-fit rounded-xl bg-dk-red-strong px-6 py-3 font-bold text-white transition hover:bg-dk-red-deep">
                 KAZAN AI-nı dene →
               </button>
             </div>

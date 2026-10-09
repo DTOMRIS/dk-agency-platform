@@ -49,11 +49,11 @@ test.describe('@smoke İnşaat checklist', () => {
   }
 
   test('köhnə irəliləyiş (id 1–52) qalır', async ({ page }) => {
-    await page.goto('/toolkit/insaat-checklist');
-    await page.evaluate(() =>
+    // Seed storage before any page script runs (evaluate + reload raced hydration: flaky 1/3 on 09.10).
+    await page.addInitScript(() =>
       window.localStorage.setItem('insaat-checklist-progress-v1', JSON.stringify([1, 2, 3]))
     );
-    await page.reload();
+    await page.goto('/toolkit/insaat-checklist');
     await expect(page.getByText('3/62').first()).toBeVisible();
     // «Ön hazırlıq» mərhələsində 3 maddə işarəli qalır
     await expect(page.getByText(`3/12 ${msg('az').sectionCompleted}`)).toBeVisible();

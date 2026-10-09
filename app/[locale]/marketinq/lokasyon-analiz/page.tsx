@@ -30,7 +30,7 @@ export default async function LokasyonAnalizRoute({ params }: Props) {
           </div>
           <h1 className="font-['Playfair_Display'] text-3xl font-bold text-[var(--dk-navy)]">{t('lockedTitle')}</h1>
           <p className="mt-3 text-sm leading-6 text-slate-600">{t('lockedBody')}</p>
-          <a href={withLocalePrefix(locale, '/uzvluk')} className="mt-5 inline-flex rounded-xl bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white">
+          <a href={withLocalePrefix(locale, '/uzvluk')} className="mt-5 inline-flex rounded-xl bg-dk-red-strong px-5 py-3 text-sm font-bold text-white">
             {t('upgradeCta')}
           </a>
         </section>

@@ -363,7 +363,7 @@ export default function FloatingKazanWidget() {
                   <div
                     className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-6 ${
                       message.role === 'user'
-                        ? 'bg-[var(--dk-red)] text-white'
+                        ? 'bg-dk-red-strong text-white'
                         : 'border border-slate-200 bg-white text-slate-800'
                     }`}
                   >
@@ -462,7 +462,7 @@ export default function FloatingKazanWidget() {
                   <button
                     type="submit"
                     disabled={leadSaving}
-                    className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-[var(--dk-red)] px-4 text-sm font-black text-white transition hover:bg-rose-600 disabled:bg-slate-300"
+                    className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-dk-red-strong px-4 text-sm font-black text-white transition hover:bg-dk-red-deep disabled:bg-slate-300"
                   >
                     {leadSaving ? <Loader2 size={16} className="mr-2 animate-spin" /> : null}
                     {t('continueBtn')}
@@ -509,7 +509,7 @@ export default function FloatingKazanWidget() {
                   type="submit"
                   disabled={loading || leadSaving || !input.trim()}
                   aria-label={t('sendMessage')}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--dk-red)] text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:bg-slate-300"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-dk-red-strong text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:bg-slate-300"
                 >
                   <Send size={17} />
                 </button>

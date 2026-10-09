@@ -16,7 +16,7 @@ export default async function SeddRozetiPage() {
   return (
     <div className="min-h-screen bg-white py-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <span className="inline-flex rounded-full bg-[var(--dk-red)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
+        <span className="inline-flex rounded-full bg-dk-red-strong px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
           {t('badge')}
         </span>
         <h1 className="mt-5 font-display text-4xl font-black text-[var(--dk-navy)] lg:text-6xl">{t('title')}</h1>
@@ -24,7 +24,7 @@ export default async function SeddRozetiPage() {
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
             href={withLocale(locale, '/elaqe')}
-            className="inline-flex rounded-lg bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white"
+            className="inline-flex rounded-lg bg-dk-red-strong px-6 py-3 text-sm font-bold text-white"
           >
             {t('applyCta')}
           </Link>

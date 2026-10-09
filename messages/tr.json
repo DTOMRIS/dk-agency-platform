@@ -87,6 +87,7 @@
       "devir": "İşletme Devri",
       "franchise-vermek": "Franchise Vermek",
       "franchise-almak": "Franchise Almak",
+      "franchise-almaq": "Franchise Almak",
       "ortak-tapmaq": "Ortak Bulmak",
       "yeni-investisiya": "Yeni Yatırım",
       "obyekt-icaresi": "Mekan Kiralama",
@@ -233,7 +234,8 @@
           "hotKitchenB": "Sıcak Mutfak B",
           "assembly": "Montaj",
           "expeditor": "Expeditor / Kalite"
-        }
+        },
+        "noChecks": "Günlük fiş sayısını girin"
       },
       "seo": {
         "title": "Mutfak İstasyon Hesaplayıcı — DK Agency",
@@ -360,7 +362,7 @@
       "trimLossBody1": "1 kg tavuk temizlendikten sonra yalnızca",
       "trimLossBodyBold": "850g",
       "trimLossBody2": "kullanılabilir — %15 trim loss. Bu gerçek maliyeti artırır.",
-      "trimLossExamplesTitle": "Örnek trim loss yüzdeleri",
+      "trimLossExamplesTitle": "Örnek trim yüzdeleri (yaklaşık — kendi tartımınızla doğrulayın)",
       "trimEx1Label": "Tavuk fileto",
       "trimEx1Value": "5–8%",
       "trimEx2Label": "Bütün tavuk",
@@ -374,9 +376,9 @@
       "trimEx6Label": "Soğan/sarımsak",
       "trimEx6Value": "10–15%",
       "dkAdviceLabel": "DK Agency Tavsiyesi",
-      "dkAdviceBody1": "Azerbaycan'da restoranların",
-      "dkAdviceBodyBold": "%90'ı",
-      "dkAdviceBody2": "food cost'u bilmeden çalışıyor. FIFO prensibini POS sistemiyle uygulayın, her şeyi kontrol altında tutun.",
+      "dkAdviceBody1": "Food cost’u bilmeden çalışmak",
+      "dkAdviceBodyBold": "en pahalı hatadır.",
+      "dkAdviceBody2": "FIFO prensibini POS sistemiyle uygulayın, her şeyi kontrol altında tutun.",
       "readArticle": "Yazının tamamını oku",
       "ocaqTitle": "OCAQ Panel",
       "ocaqBody": "Tüm reçeteleri kaydet, food cost'u otomatik hesapla, FIFO ile envanteri izle. Gerçek zamanlı mali kontrol.",
@@ -520,7 +522,9 @@
         "required": "Bu alan zorunludur",
         "positive": "Pozitif bir sayı girin",
         "tooLow": "Değer çok düşük",
-        "tooHigh": "Değer çok yüksek"
+        "tooHigh": "Değer çok yüksek",
+        "negative": "Tutar negatif olamaz — önceki değer korundu.",
+        "revenueRequired": "Yüzdeleri hesaplamak için 0’dan büyük satış girin."
       },
       "insights": {
         "healthyMargin": "Sağlıklı kâr marjı",
@@ -564,7 +568,8 @@
             "label": "Tamir",
             "value": "1-2%"
           }
-        }
+        },
+        "ruleOfThumb": "Yaygın sektör kuralları (rule of thumb) — Azerbaycan için kaynaklı norm değildir."
       },
       "education": {
         "whatTitle": "P&L nedir?",
@@ -590,7 +595,7 @@
         "uncontrollableTitle": "Kontrol edilemeyen giderler",
         "uncontrollableBody": "Kira, sigorta ve amortisman daha katıdır. Etkileri şube açılmadan önce hesaplanmalıdır.",
         "primeCostTitle": "Prime cost",
-        "primeCostBody": "Food cost + personel gideri, restoranın satışı ne kadar verimli ürettiğini gösterir.",
+        "primeCostBody": "Restoranın en büyük iki gideri gıda ve personeldir. Prime Cost, P&L’in en kritik göstergesidir. Yaygın kural: satışın %{value}’inin altında tutmak.",
         "formula": "Formül",
         "primeCostFormula": {
           "costs": "Food Cost + Labor Cost",
@@ -599,9 +604,9 @@
         },
         "warningTitle": "Risk sinyalleri",
         "warnings": {
-          "primeCost": "Prime cost %70 üzerindeyse restoran zarar eşiğine yaklaşır.",
-          "lowNet": "Net kâr %5 altındaysa bir kötü ay zarara dönüşebilir.",
-          "highRent": "Kira %12 üzerindeyse lokasyon fazla pahalı olabilir.",
+          "primeCost": "Prime cost %{prime} üzerindeyse (yaygın kural), kâr hızla daralır.",
+          "lowNet": "Net kâr %{low} altındaysa bir kötü ay zarara dönüşebilir.",
+          "highRent": "Kira satışın %{rent}’inden yüksekse (yaygın kural), lokasyon fazla pahalı olabilir.",
           "strongNet": "Net kâr %15 üzerindeyse performans güçlüdür ve yatırım düşünülebilir."
         }
       },
@@ -660,7 +665,7 @@
       "labelYearlyLeavers": "Yılda ayrılan çalışan sayısı",
       "financialImpactTitle": "Mali etki",
       "turnoverRateLabel": "Devir oranı",
-      "turnoverRateBenchmark": "Dünya restoran ortalaması %60-80'dir. Bakü pazarında bazı yerlerde bu rakam %100-150'ye çıkar.",
+      "turnoverRateBenchmark": "Bu oranı kendi geçen yılınızla karşılaştırın. Azerbaycan için doğrulanmış bir pazar ortalaması yayımlanmamıştır.",
       "replacementCostLabel": "1 çalışan değişim maliyeti",
       "replacementCostNote": "Sektör kuralına göre 1 çalışanı değiştirmek yaklaşık 2-3 aylık maaşa eşdeğerdir.",
       "annualLossLabel": "Yıllık kayıp",
@@ -672,7 +677,7 @@
       "knowledgePanelBadge": "Bilgi paneli",
       "top5Title": "Ayrılmanın ilk 5 nedeni",
       "dkAdviceLabel": "DK tavsiyesi",
-      "dkAdviceBody": "Devir oranı %80'i aşıyorsa, sorun maaştan çok sistemdedir. İşe alım, oryantasyon, vardiya öncesi toplantı ve çıkış görüşmesi süreçleri yazılı hale getirilmeden istikrarlı bir ekip kurmak çok zordur.",
+      "dkAdviceBody": "Devir oranı yıldan yıla artıyorsa sorun çoğu zaman maaştan çok sistemdedir. İşe alım, oryantasyon, vardiya öncesi toplantı ve çıkış görüşmesi süreçleri yazılı hale getirilmeden istikrarlı bir ekip kurmak çok zordur.",
       "usefulLinksTitle": "Faydalı bağlantılar",
       "reason1": "Kötü yönetim ve sert liderlik",
       "reason2": "Gelişim ve terfi imkânının olmaması",
@@ -691,7 +696,8 @@
       "blogLink2Title": "P&L Simülatörü",
       "blogLink2Tag": "Araç",
       "blogLink3Title": "KAZAN AI",
-      "blogLink3Tag": "AI"
+      "blogLink3Tag": "AI",
+      "errNoEmployees": "0 çalışanla devir oranı hesaplanmaz — çalışan sayısını girin."
     },
     "branding": {
       "navigation": {
@@ -1062,7 +1068,8 @@
       "blogLink2Tag": "Araç",
       "blogLink3Title": "Food Cost Hesaplayıcı",
       "blogLink3Tag": "Araç",
-      "readLabel": "İncele"
+      "readLabel": "İncele",
+      "labelCommissionFor": "{platform} komisyonu (%)"
     },
     "menuMatrix": {
       "navigation": {
@@ -1086,8 +1093,8 @@
       "defaultItem5": "Çorba",
       "defaultItem6": "Tiramisu",
       "itemListTitle": "Yemek Listesi",
-      "avgSalesLabel": "Ort. satış",
-      "avgMarginLabel": "Ort. marj",
+      "avgSalesLabel": "Popülerlik eşiği (ort. satışın %70’i)",
+      "avgMarginLabel": "Ağırlıklı ort. marj",
       "reset": "Sıfırla",
       "colFoodName": "Yemek adı",
       "colSalesCount": "Satış sayısı",
@@ -1108,7 +1115,7 @@
       "processLabel": "Süreç",
       "processStep1": "1. Satış verisini topla",
       "processStep2": "2. Her yemeğin CM'ini hesapla",
-      "processStep3": "3. Ortalamalarla karşılaştır",
+      "processStep3": "3. %70 popülerlik eşiği ve ağırlıklı ortalama marjla karşılaştır",
       "processStep4": "4. 4 kategoriye ayır",
       "bcgTitle": "BCG Matrisi",
       "bcgSubtitle": "Boston Consulting Group matrisi restorana uyarlandı:",
@@ -1140,7 +1147,12 @@
       "blogLink2Tag": "Finans",
       "blogLink3Title": "P&L Okuyamıyor musun?",
       "blogLink3Tag": "Finans",
-      "readLabel": "Oku"
+      "readLabel": "Oku",
+      "catStarSub": "Popüler · yüksek marj",
+      "catPlowHorseSub": "Popüler · düşük marj",
+      "catPuzzleSub": "Az satılır · yüksek marj",
+      "catDogSub": "Az satılır · düşük marj",
+      "removeItem": "Yemeği sil"
     },
     "pnlDesc": "Aylık gelir-gider raporu oluştur, başabaş noktasını bul.",
     "checklist": {
@@ -1330,7 +1342,7 @@
       "progressLabel": "Genel ilerleme",
       "progressItems": "madde tamamlandı",
       "riskZoneLabel": "Risk bölgesi",
-      "riskZoneSubtitle": "En yaygın ceza nedenleri",
+      "riskZoneSubtitle": "{total} maddeden henüz işaretlenmemiş (ceza riski)",
       "regimeLabel": "Program",
       "regimeSubtitle": "Günlük, haftalık, aylık plan",
       "checklistTitle": "Etkileşimli kontrol listesi",
@@ -3590,7 +3602,7 @@
       },
       "toolkit": {
         "title": "Toolkit",
-        "subtitle": "18 hesaplama aracı",
+        "subtitle": "17 ücretsiz hesaplama aracı",
         "body": "P&L Simülatör, Food Cost, Menü Matrisi, AQTA Checklist ve dahası — açılış kampanyasında ücretsiz.",
         "cta": "Araçlara bak"
       },
@@ -5667,6 +5679,10 @@
       "borderline": "Sınır bölge: gider optimizasyonu düşünün.",
       "risky": "Riskli: yatırım yavaş geri dönüyor.",
       "unprofitable": "Pansiyon zarar ediyor."
+    },
+    "validation": {
+      "percentRange": "Yüzde 0–100 arasında olmalı — değer düzeltildi.",
+      "nonNegative": "Negatif değer olmaz — 0 kabul edildi."
     }
   },
   "whatsappTemplates": {
@@ -6333,8 +6349,8 @@
         "l": "HoReCa yönetim deneyimi"
       },
       "f2": {
-        "v": "18",
-        "l": "ücretsiz hesaplama aracı"
+        "v": "35+",
+        "l": "araç · 17’si ücretsiz"
       },
       "f3": {
         "v": "10+",
@@ -6699,5 +6715,350 @@
     "cardFrom": "%45",
     "cardTo": "%38",
     "plan": "Plan hazır"
+  },
+  "innerV2": {
+    "common": {
+      "home": "Ana sayfa",
+      "allTools": "Tüm araçlar",
+      "toolsCrumb": "Araçlar",
+      "live": "Canlı",
+      "sample": "Örnek veri — yalnızca gösterim amaçlı.",
+      "minRead": "{n} dk okuma",
+      "result": "Sonuç",
+      "showResult": "Sonucu aç",
+      "hideResult": "Kapat",
+      "read": "Oku",
+      "openTool": "Aracı aç",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "share": "Paylaş",
+      "groups": {
+        "all": "Tümü",
+        "xerc": "Gider",
+        "gelir": "Gelir",
+        "acilis": "Açılış",
+        "kadr": "Kadro"
+      },
+      "groupEyebrow": {
+        "xerc": "Gider kontrolü",
+        "gelir": "Gelir artışı",
+        "acilis": "Açılışa hazırlık",
+        "kadr": "Kadro ve vardiya"
+      }
+    },
+    "toolkit": {
+      "eyebrow": "Ücretsiz araçlar · {count} araç",
+      "title1": "Rakamı hesapla.",
+      "title2": "<em>Adımı</em> gör.",
+      "lead": "Her araç tek bir soruya cevap verir: para nereye gidiyor, ne kadar kalıyor, neyi değiştirmek gerekiyor. Açılıştan büyümeye kadar.",
+      "searchLabel": "Araç ara",
+      "searchPlaceholder": "Araç ara: food cost, paket servis, AQTA…",
+      "chipsLabel": "Hızlı arama",
+      "chips": {
+        "food": {
+          "l": "food cost",
+          "q": "food cost"
+        },
+        "wolt": {
+          "l": "Wolt komisyonu",
+          "q": "wolt"
+        },
+        "aqta": {
+          "l": "AQTA",
+          "q": "aqta"
+        },
+        "shift": {
+          "l": "Vardiya planı",
+          "q": "vardiya"
+        }
+      },
+      "preview": {
+        "label": "Örnek sonuç",
+        "dish": "Etli dürüm",
+        "sub": "Food cost · örnek reçete",
+        "target": "Restoran / Kafe %28–32",
+        "tag": "Sinyal → adım",
+        "msg": "Fiyatı 7,50 ₼’den 8,90 ₼’ye çıkarırsak food cost %38’e iner."
+      },
+      "tabsLabel": "Araç grupları",
+      "tabCount": "{count} Canlı",
+      "featured": {
+        "eyebrow": "Başlamak için",
+        "title": "En çok gereken 3 araç",
+        "desc": "Editör seçimi: her restoranın önce bakması gereken üç rakam — porsiyon maliyeti, paket servis komisyonu ve aylık giderler.",
+        "sample": "Kartlardaki rakamlar örnektir — yalnızca gösterim amaçlı.",
+        "food-cost": {
+          "t": "Food Cost",
+          "d": "Porsiyon maliyeti, food cost yüzdesi ve ideal satış fiyatı.",
+          "viz": "fiyat 7,50 → 8,90 ₼ olursa"
+        },
+        "delivery-calc": {
+          "t": "Paket servis komisyonu",
+          "d": "Wolt, Bolt Food, Yango ve kendi servisin: elinde kalan net tutar.",
+          "viz": "Satışın dağılımı",
+          "food": "gıda",
+          "commission": "komisyon",
+          "left": "sana kalan"
+        },
+        "pnl": {
+          "t": "P&L simülatörü",
+          "d": "Aylık gelir-gider, prime cost ve net kâr tek tabloda.",
+          "viz": "Aylık trend"
+        }
+      },
+      "all": {
+        "eyebrow": "Tüm araçlar",
+        "searchResults": "Arama: {count} sonuç",
+        "statusNote": "Durum etiketi gerçektir: <b>Canlı</b> — çalışıyor.",
+        "empty": "“{q}” için araç bulunamadı. Başka bir kelime dene ya da <link>bize yaz</link>.",
+        "emptyWa": "Merhaba Doğan Bey, ihtiyacım olan araç: {q}"
+      },
+      "groupDesc": {
+        "all": "Tüm araçlar tek yerde.",
+        "xerc": "Porsiyon maliyeti, P&L, başabaş, paket servis ve boş yürüyüşün maliyeti.",
+        "gelir": "Menü, pansiyon geliri, OTA profili ve misafir mesajları.",
+        "acilis": "Belgeler, inşaat, hijyen, marka ve otel hazırlığı.",
+        "kadr": "Ekip sayısı, vardiya, istasyon ve çalışan elde tutma."
+      },
+      "tagHospitality": "Konaklama",
+      "open": "Aç",
+      "cta": {
+        "eyebrow": "Rakam var, karar zor mu?",
+        "title": "Sonucu Doğan Bey’le konuş.",
+        "body": "Aracı doldur, sonucu WhatsApp’tan gönder. 40 yıllık HoReCa deneyimiyle birlikte bakar, bir adım seçeriz.",
+        "wa": "WhatsApp’tan yaz",
+        "waText": "Merhaba Doğan Bey, aracın sonucunu konuşmak istiyorum.",
+        "diag": "Ücretsiz teşhis nedir?"
+      },
+      "tools": {
+        "food-cost": {
+          "t": "Food cost hesaplayıcı",
+          "d": "Porsiyon maliyetini hesapla, hedef food cost yüzdesine göre fiyat belirle.",
+          "r": "Food cost %, porsiyon maliyeti ve ideal satış fiyatı",
+          "kw": "food cost maliyet reçete porsiyon"
+        },
+        "pnl": {
+          "t": "P&L simülatörü",
+          "d": "Gelir-gider tablosu oluştur, prime cost ve net kârı kontrol altında tut.",
+          "r": "Aylık net kâr ve prime cost yüzdesi",
+          "kw": "pnl kâr gelir gider tablo"
+        },
+        "basabas": {
+          "t": "Başabaş noktası",
+          "d": "Aylık minimum satış, günlük müşteri sayısı ve güvenlik marjı.",
+          "r": "Günde kaç müşteri gerekir",
+          "kw": "break even başabaş müşteri"
+        },
+        "delivery-calc": {
+          "t": "Paket servis hesaplayıcı",
+          "d": "Wolt, Bolt Food, Yango ve kendi paket servisin için komisyon sonrası marj.",
+          "r": "Her platformda elinde kalan net tutar",
+          "kw": "wolt bolt yango komisyon paket servis"
+        },
+        "addim-xerci": {
+          "t": "Adım maliyeti hesaplayıcı",
+          "d": "Aşçı ve garsonun boş yürüyüşe harcadığı süreyi aylık maaş kaybına çevir.",
+          "r": "Boş yürüyüşün aylık maaş kaybı (₼)",
+          "kw": "spagetti diyagram adım"
+        },
+        "menu-matrix": {
+          "t": "Menü matrisi",
+          "d": "Yemekleri Yıldız, At, Bulmaca ve Köpek gruplarına ayır.",
+          "r": "Her yemek için: tut, fiyatı artır ya da çıkar",
+          "kw": "menü mühendisliği matris"
+        },
+        "qonaq-evi-roi-kalkulyatoru": {
+          "t": "Pansiyon ROI",
+          "d": "OTA komisyonu, oda geliri ve geri dönüş süresi.",
+          "r": "Yatırımın kaç ayda geri döndüğü",
+          "kw": "otel ota airbnb pansiyon roi"
+        },
+        "ota-hazirlig-testi": {
+          "t": "OTA hazırlık testi",
+          "d": "Booking, Airbnb ve Yandex Travel profilinin hazırlığını kontrol et.",
+          "r": "Profil hazırlık puanı ve eksik maddeler",
+          "kw": "booking airbnb ota"
+        },
+        "whatsapp-template-paketi": {
+          "t": "WhatsApp şablon paketi",
+          "d": "Karşılamadan VIP misafire kadar hazır mesaj metinleri.",
+          "r": "Kopyalanmaya hazır mesajlar",
+          "kw": "whatsapp misafir mesaj şablon"
+        },
+        "checklist": {
+          "t": "Açılış kontrol listesi",
+          "d": "Hukuki işler, mekân, menü, ekip ve pazarlama adımlarını kontrol et.",
+          "r": "Açılışa kadar kalan adımların listesi",
+          "kw": "açılış kontrol listesi"
+        },
+        "insaat-checklist": {
+          "t": "İnşaat kontrol listesi",
+          "d": "İnşaattan açılışa aşamalı iş planı ve saha notları.",
+          "r": "Aşama aşama iş planı ve saha notları",
+          "kw": "inşaat tadilat"
+        },
+        "aqta-checklist": {
+          "t": "AQTA hazırlık",
+          "d": "Hijyen, belgeler ve ceza risklerini bölüm bölüm kontrol et.",
+          "r": "Bölüm bölüm ceza riski haritası",
+          "kw": "aqta hijyen haccp ceza"
+        },
+        "branding-guide": {
+          "t": "Markalaşma rehberi",
+          "d": "Marka sözü, görsel kimlik ve sosyal medya çizgisini çalışma kitabıyla kur.",
+          "r": "Doldurulmuş marka çalışma kitabı",
+          "kw": "marka logo"
+        },
+        "otel-hazirlig-testi": {
+          "t": "Otel hazırlık testi",
+          "d": "AHA yıldız standardına uygunluğu birkaç dakikada değerlendir.",
+          "r": "Yıldız standardına uygunluk puanı",
+          "kw": "aha yıldız otel"
+        },
+        "personel-planlayici": {
+          "t": "Personel planlayıcı",
+          "d": "Restoran ve kafe için vardiya bazında ideal personel sayısı.",
+          "r": "Vardiyalara göre personel sayısı ve işçilik maliyeti yüzdesi",
+          "kw": "vardiya personel çalışan"
+        },
+        "metbex-istasyon": {
+          "t": "Mutfak istasyonu",
+          "d": "Fast food ve QSR mutfaklar için menü SKU sayısına göre istasyon ve kadro.",
+          "r": "İstasyon sayısı, kadro ve işçilik yüzdesi",
+          "kw": "qsr fast food mutfak istasyon"
+        },
+        "staff-retention": {
+          "t": "Çalışan elde tutma",
+          "d": "Devir oranı, yenisini bulma maliyeti ve yıllık personel kaybı.",
+          "r": "Yıllık personel kaybının ₼ değeri",
+          "kw": "turnover personel devir"
+        }
+      }
+    },
+    "foodCost": {
+      "formulaLabel": "Formül",
+      "formula": "Food cost % = (Gıda maliyeti ÷ Satış fiyatı) × 100",
+      "formulaNote": "Trim dahil: kullanılan miktarın maliyeti = miktar ÷ (1 − trim%) × birim fiyat.",
+      "removeRow": "Satırı sil",
+      "signalTag": "Sinyal → adım",
+      "signalPending": "Reçeteyi ve menü fiyatını gir — sonuç burada görünecek.",
+      "signalHigh": "Food cost %{pct} — %{target} hedefinin üzerinde.",
+      "signalHighSub": "Hedefe ulaşmak için: fiyat {ideal} ya da porsiyon maliyetini {cut} düşürmek.",
+      "signalOk": "Food cost %{pct} — hedef (%{target}) içinde. Sonraki adım: alış fiyatlarını ayda bir güncelle.",
+      "sendWa": "Sonucu WhatsApp’tan gönder",
+      "pdf": "PDF al",
+      "talk": "Doğan Bey’le konuş",
+      "privacy": "Hesaplama tarayıcında yapılır. Sen göndermedikçe hiçbir şey kaydedilmez.",
+      "dishFallback": "Yemek",
+      "waIntro": "Food cost sonucum (DK Agency aracı):",
+      "waLine": "{dish} — porsiyon maliyeti {cost}, menü fiyatı {price}, food cost {pct}.",
+      "waIdeal": "İdeal fiyat (%{target}): {ideal}.",
+      "talkText": "Merhaba Doğan Bey, food cost sonucumu konuşmak istiyorum: {dish} — {pct} (fiyat {price}).",
+      "printTitle": "Food cost raporu",
+      "printDate": "Tarih: {date}",
+      "printFooter": "DK Agency · dkagency.com.tr · Hesaplama tarayıcıda yapıldı.",
+      "afterBlog": "Bu araçla ilgili blog yazısı",
+      "afterBlogDesc": "Reçete kartı, trim kaybı ve menü fiyatı nasıl belirlenir.",
+      "afterNext": "Sonraki araç",
+      "afterDeliveryDesc": "Bu yemek Wolt’ta satılırsa komisyondan sonra sana ne kalır?",
+      "afterThen": "Sonra",
+      "afterMenuDesc": "Food cost’u bilinen yemekleri Yıldız, At, Bulmaca ve Köpek gruplarına ayır.",
+      "errTrim": "Trim %0–99 arasında olmalı (%100 = kullanılabilir bir şey kalmaz).",
+      "errPortions": "Porsiyon sayısı 0’dan büyük olmalı.",
+      "errTarget": "Hedef food cost %0 ile %100 arasında olmalı."
+    },
+    "news": {
+      "eyebrow": "Sektör Nabzı",
+      "title1": "Sektörde ne değişti.",
+      "title2": "<em>Sana</em> ne anlatıyor.",
+      "lead": "HoReCa sektöründen seçilmiş haberler — Azerbaycan’daki restoran, kafe ve otel sahipleri için kısa açıklamayla.",
+      "countersLabel": "Sayaçlar",
+      "last7": "son 7 günde haber",
+      "total": "yayınlanmış haber",
+      "sources": "aktif kaynak",
+      "catsLabel": "Kategori",
+      "cats": {
+        "all": "Tümü",
+        "finance": "Finans",
+        "operations": "Operasyon",
+        "growth": "Büyüme",
+        "market": "Pazar",
+        "technology": "Teknoloji"
+      },
+      "featured": "Öne çıkan",
+      "empty": "Henüz yayınlanmış haber yok.",
+      "emptyCat": "Bu kategoride haber yok.",
+      "brand": "DK Sektör Nabzı",
+      "noSource": "DK Agency",
+      "tgTitle": "Sektör Nabzı Telegram’da",
+      "tgBody": "Yeni haber yayınlanınca kanala düşer. Spam yok, yalnızca seçilmiş haber.",
+      "tgCta": "Telegram kanalına katıl",
+      "pagerLabel": "Sayfalar",
+      "back": "Sektör Nabzı",
+      "crumb": "Haberler",
+      "byline": "<b>DK Agency</b> editörlüğü · kaynağa dayalı",
+      "source": "Kaynak:",
+      "sourceOriginal": "orijinal haber",
+      "readFull": "Haberin tamamını kaynakta oku",
+      "relatedTool": "Bu konuyla ilgili araç",
+      "relatedBlog": "İlgili blog yazısı",
+      "otherNews": "Diğer haberler",
+      "toolSub": "Kendi rakamlarınla hesapla",
+      "notFound": "Haber bulunamadı",
+      "mansetLabel": "Manşet haberler",
+      "mansetPrev": "Önceki manşet",
+      "mansetNext": "Sonraki manşet",
+      "mansetSlide": "Manşet {n} / {total}",
+      "latestListings": "Son ilanlar",
+      "allListings": "Tüm ilanlar"
+    },
+    "blog": {
+      "eyebrow": "Blog · Doğan Tomris",
+      "title1": "Restoranın rakamları,",
+      "title2": "<em>sade bir dille.</em>",
+      "lead": "Food cost, P&L, kadro ve açılış üzerine adım adım rehberler.",
+      "featuredTag": "Öne çıkan yazı",
+      "tabsLabel": "Blog kategorileri",
+      "more": "Daha fazla yazı",
+      "empty": "Bu grupta yazı yok.",
+      "back": "Blog",
+      "toc": "İçindekiler",
+      "tocMobile": "İçindekiler · {count} bölüm",
+      "toolEyebrow": "Bu yazıyla ilgili araç",
+      "toolCta": "Aracı aç",
+      "founderEyebrow": "Yazar",
+      "founderName": "Doğan Tomris",
+      "founderRole": "Kurucu · 40 yıl HoReCa",
+      "founderBody": "Restoran ve otel operasyonlarında 40 yıllık deneyim. Yazılarda teori değil, sahada işleyen hesap ve adımlar var.",
+      "founderCta": "Doğan Bey’le konuş",
+      "founderText": "Merhaba Doğan Bey, “{title}” yazısı hakkında konuşmak istiyorum.",
+      "asideNote": "Sahada işleyen hesap ve adımlar.",
+      "kazanEyebrow": "KAZAN AI · Beta",
+      "kazanTitle": "Bu konuda KAZAN AI’a sor",
+      "kazanBody": "Kendi yemeğin, kendi rakamın. KAZAN AI, DK bilgi bankasıyla cevap verir ve uygun araca yönlendirir.",
+      "kazanCta": "KAZAN AI’ı aç",
+      "kazanFoot": "Cevaplar tavsiye niteliğindedir; karar senindir.",
+      "relEyebrow": "Devamı",
+      "relTitle": "İlgili yazılar"
+    },
+    "cookie": {
+      "region": "Çerez bildirimi",
+      "text": "Site, deneyimi iyileştirmek ve performansı ölçmek için çerez kullanır.",
+      "privacy": "Gizlilik politikası",
+      "reject": "Reddet",
+      "choose": "Seçim yap",
+      "accept": "Kabul ediyorum",
+      "all": "Tüm çerezler",
+      "facebook": "Facebook Ads",
+      "facebookDesc": "Reklam kampanyalarının etkinliğini ölçer",
+      "google": "Google Ads",
+      "googleDesc": "Arama reklamlarının etkinliğini ölçer",
+      "yandex": "Yandex Metrica",
+      "yandexDesc": "Site kullanımını anlamak için anonim istatistik toplar",
+      "back": "Geri",
+      "acceptAll": "Tümünü kabul et",
+      "save": "Seçimi kaydet",
+      "note": "Seçimin bu cihazda saklanır."
+    }
   }
 }

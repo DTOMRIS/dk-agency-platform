@@ -482,7 +482,7 @@ ${t('breakeven')}: ${formatMoney(calc.breakevenSales)}`;
                 type="button"
                 onClick={loadAI}
                 disabled={isPending || !hasSales}
-                className="no-print inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[var(--dk-red)] px-4 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50"
+                className="no-print inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-dk-red-strong px-4 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isPending ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
                 {t('ai_analysis_btn')}

@@ -63,7 +63,8 @@ test.describe('@smoke Addım Xərci', () => {
     await page.goto('/toolkit/addim-xerci');
     await expect(async () => {
       await page.getByRole('button', { name: msg('az').wageHelperApply }).click();
-      await expect(page.locator('#hourlyWage')).toHaveValue('6.01', { timeout: 1_000 });
+      // TASK-0515: decimal text input shows the locale mark (az: «6,01»)
+      await expect(page.locator('#hourlyWage')).toHaveValue(/^6[.,]01$/, { timeout: 1_000 });
     }).toPass({ timeout: 30_000 });
     // 2 saat/gün × 26 gün × 6.01 = 312.52 → 313
     expect(digits(await page.getByTestId('addim-monthly').textContent())).toBe('313');

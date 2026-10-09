@@ -119,13 +119,13 @@ export function ContactFunnel() {
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#25D366] text-white">
             <WhatsAppIcon className="h-8 w-8" />
           </span>
-          <span className="rounded-full bg-[#E94560] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-white">
+          <span className="rounded-full bg-dk-red-strong px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-white">
             {t('whatsapp.primary')}
           </span>
         </span>
         <span className="mt-6 block text-2xl font-black tracking-tight text-white">{t('whatsapp.title')}</span>
         <span className="mt-2 block text-[15px] leading-6 text-slate-300">{t('whatsapp.description')}</span>
-        <span className="mt-auto inline-flex items-center gap-2 self-start rounded-full bg-[#E94560] px-5 py-3 text-sm font-bold text-white shadow-[0_8px_20px_-8px_rgba(233,69,96,0.6)] transition group-hover:bg-[#D63B54]">
+        <span className="mt-auto inline-flex items-center gap-2 self-start rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white shadow-[0_8px_20px_-8px_rgba(233,69,96,0.6)] transition group-hover:bg-[#D63B54]">
           {t('whatsapp.cta')}
           <ArrowIcon className="h-4 w-4" />
         </span>

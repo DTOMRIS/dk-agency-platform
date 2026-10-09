@@ -93,8 +93,8 @@ export default function InsaatChecklistPage() {
                 <div className="flex items-start gap-3">
                   <div className={`mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl ${phase.bg}`}><phase.icon size={18} className={phase.accent} /></div>
                   <div>
-                    <div className="flex flex-wrap items-center gap-2"><h3 className="text-sm font-bold text-slate-900">{phase.title}</h3><span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">{phase.duration}</span></div>
-                    <p className="mt-0.5 text-xs text-slate-500">{phase.subtitle}</p>
+                    <div className="flex flex-wrap items-center gap-2"><h3 className="text-sm font-bold text-slate-900">{phase.title}</h3><span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600">{phase.duration}</span></div>
+                    <p className="mt-0.5 text-xs text-slate-600">{phase.subtitle}</p>
                     <p className="mt-1 text-xs font-semibold text-slate-600">{stat.done}/{stat.total} {t('sectionCompleted')}</p>
                   </div>
                 </div>
@@ -108,7 +108,7 @@ export default function InsaatChecklistPage() {
                         <button onClick={() => toggleItem(item.id)} className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors ${done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 bg-white text-transparent'}`}><Check size={12} /></button>
                         <div className="min-w-0 flex-1">
                           <div className="text-sm font-bold text-slate-900">{displayNo.get(item.id)}. {item.text}</div>
-                          <p className="mt-0.5 text-xs leading-relaxed text-slate-500">{item.detail}</p>
+                          <p className="mt-0.5 text-xs leading-relaxed text-slate-600">{item.detail}</p>
                           <textarea value={notes[item.id] || ''} onChange={(e) => setNotes((c) => ({ ...c, [item.id]: e.target.value }))} placeholder={t('notePlaceholder')} className="mt-2 min-h-[60px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 outline-none focus:border-orange-300" />
                           {!!media[item.id]?.length && (
                             <div className="mt-2 flex flex-wrap gap-2">{media[item.id].map((entry) => (
@@ -117,7 +117,7 @@ export default function InsaatChecklistPage() {
                               </div>
                             ))}</div>
                           )}
-                          <button onClick={() => { setUploadTarget(item.id); fileRef.current?.click(); }} className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-orange-600"><Camera size={12} /> {t('addMedia')}</button>
+                          <button onClick={() => { setUploadTarget(item.id); fileRef.current?.click(); }} className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-orange-600"><Camera size={12} /> {t('addMedia')}</button>
                         </div>
                       </div>
                     </div>
@@ -134,9 +134,9 @@ export default function InsaatChecklistPage() {
       {/* Budget */}
       <div className="border-t border-slate-100 pt-6">
         <h3 className="mb-2 text-lg font-black text-slate-900">{t('budgetTitle')}</h3>
-        <p className="mb-4 text-sm text-slate-500">{t('budgetSubtitle')}</p>
+        <p className="mb-4 text-sm text-slate-600">{t('budgetSubtitle')}</p>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {budgetCards.map((card) => (<div key={card.labelKey} className={`${card.bg} rounded-xl p-4 ring-1 ${card.ring}`}><div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{t(card.labelKey)}</div><div className={`mt-1 text-xl font-black ${card.text}`}>{t(card.rangeKey)}</div><div className="mt-0.5 text-xs text-slate-600">{t('budgetPct', { pct: t(card.pctKey) })}</div></div>))}
+          {budgetCards.map((card) => (<div key={card.labelKey} className={`${card.bg} rounded-xl p-4 ring-1 ${card.ring}`}><div className="text-[10px] font-bold uppercase tracking-widest text-slate-600">{t(card.labelKey)}</div><div className={`mt-1 text-xl font-black ${card.text}`}>{t(card.rangeKey)}</div><div className="mt-0.5 text-xs text-slate-600">{t('budgetPct', { pct: t(card.pctKey) })}</div></div>))}
         </div>
         <div className="mt-3 rounded-xl bg-slate-950 px-5 py-4 text-center text-white">
           <div className="text-[10px] font-bold uppercase tracking-widest text-amber-400">{t('budgetTotal')}</div>
@@ -152,7 +152,7 @@ export default function InsaatChecklistPage() {
   const resultSection = (
     <div className="space-y-4">
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="flex items-center justify-between text-sm font-semibold"><span className="text-slate-500">{t('progressLabel')}</span><span className="text-slate-900">{checked.length}/{totalItems}</span></div>
+        <div className="flex items-center justify-between text-sm font-semibold"><span className="text-slate-600">{t('progressLabel')}</span><span className="text-slate-900">{checked.length}/{totalItems}</span></div>
         <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-gradient-to-r from-orange-400 to-amber-300 transition-all" style={{ width: `${progress}%` }} /></div>
         <div className="mt-1 text-xs text-slate-600">{progress}% {t('progressCompleted')}</div>
       </div>
@@ -191,10 +191,10 @@ export default function InsaatChecklistPage() {
   // ── Bottom Section ────────────────────────────────────────────────
 
   const bottomSection = (
-    <div className="rounded-2xl bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-6 text-white shadow-xl shadow-red-500/15">
+    <div className="rounded-2xl bg-gradient-to-br from-dk-red-strong to-dk-red-deep p-6 text-white shadow-xl shadow-red-500/15">
       <h3 className="text-xl font-black">{t('ocaqTitle')}</h3>
       <p className="mt-3 text-sm leading-6 text-white/80">{t('ocaqDesc')}</p>
-      <Link href="/auth/register" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-black text-[var(--dk-red)]">{t('ocaqCta')} <ArrowRight size={15} /></Link>
+      <Link href="/auth/register" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-black text-dk-red-deep">{t('ocaqCta')} <ArrowRight size={15} /></Link>
     </div>
   );
 

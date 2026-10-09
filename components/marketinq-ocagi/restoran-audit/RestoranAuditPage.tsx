@@ -249,7 +249,7 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
         })}
 
         <div className="flex justify-center pt-2">
-          <button type="submit" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 text-base font-bold text-white shadow-lg transition hover:bg-[var(--dk-red)]/90">
+          <button type="submit" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 text-base font-bold text-white shadow-lg transition hover:bg-[var(--dk-red)]/90">
             <ClipboardCheck size={18} />
             {t('cta')}
           </button>

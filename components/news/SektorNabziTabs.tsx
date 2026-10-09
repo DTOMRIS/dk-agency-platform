@@ -269,7 +269,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                   {/* Numara */}
                   <div className={`
                     w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg flex-shrink-0
-                    ${news.hot ? 'bg-[var(--dk-red)] text-white' : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] text-[var(--dk-muted)]'}
+                    ${news.hot ? 'bg-dk-red-strong text-white' : 'bg-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] text-[var(--dk-muted)]'}
                   `}>
                     {String(idx + 1).padStart(2, '0')}
                   </div>
@@ -284,7 +284,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                         {news.category}
                       </span>
                       {news.hot && (
-                        <span className="text-xs bg-[var(--dk-red)] text-white px-2 py-0.5 rounded-full font-bold animate-pulse">
+                        <span className="text-xs bg-dk-red-strong text-white px-2 py-0.5 rounded-full font-bold animate-pulse">
                           🔥 HOT
                         </span>
                       )}
@@ -436,7 +436,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                     placeholder="E-poçt ünvanınız"
                     className="w-full px-4 py-2.5 rounded-xl bg-[var(--dk-night)] border border-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] text-[var(--dk-text)] placeholder:text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)] text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]"
                   />
-                  <button className="w-full bg-[var(--dk-red)] hover:bg-[var(--dk-gold)] text-white py-2.5 rounded-xl font-bold text-sm transition-colors shadow-md">
+                  <button className="w-full bg-dk-red-strong hover:bg-[var(--dk-gold)] text-white py-2.5 rounded-xl font-bold text-sm transition-colors shadow-md">
                     Abunə ol
                   </button>
                 </div>
@@ -521,7 +521,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
             {/* Load more button */}
             {filteredArticles.length > 6 && (
               <div className="mt-10 text-center">
-                <button className="px-8 py-3 bg-[var(--dk-red)] hover:bg-[var(--dk-gold)] text-white rounded-xl font-bold transition-colors">
+                <button className="px-8 py-3 bg-dk-red-strong hover:bg-[var(--dk-gold)] text-white rounded-xl font-bold transition-colors">
                   Daha çox yüklə →
                 </button>
               </div>
@@ -585,7 +585,7 @@ export default function SektorNabziTabs({ articles, categoryConfig, catColors }:
                         {event.price}
                       </span>
                     </div>
-                    <button className="bg-[var(--dk-red)] hover:bg-[var(--dk-gold)] text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors">
+                    <button className="bg-dk-red-strong hover:bg-[var(--dk-gold)] text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors">
                       Qeydiyyat
                     </button>
                   </div>

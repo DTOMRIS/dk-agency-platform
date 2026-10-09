@@ -659,6 +659,41 @@ export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, l
   };
 }
 
+/**
+ * Real counters for the /haberler hero (TASK-0514): approved public articles in the last 7 days,
+ * all approved public articles, and active RSS sources. `null` when the DB is not available —
+ * the page then hides the counters instead of showing invented numbers.
+ */
+export async function getPublicNewsStats(): Promise<{
+  last7Days: number;
+  total: number;
+  activeSources: number;
+} | null> {
+  if (!dbAvailable || !db) return null;
+  const where = and(...getPublicNewsConditions());
+  const [recent, total, sources] = await Promise.all([
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(newsArticles)
+      .where(
+        and(
+          where,
+          sql`coalesce(${newsArticles.publishedAt}, ${newsArticles.createdAt}) >= now() - interval '7 days'`
+        )
+      ),
+    db.select({ count: sql<number>`count(*)::int` }).from(newsArticles).where(where),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(newsSources)
+      .where(eq(newsSources.isActive, true)),
+  ]);
+  return {
+    last7Days: recent[0]?.count ?? 0,
+    total: total[0]?.count ?? 0,
+    activeSources: sources[0]?.count ?? 0,
+  };
+}
+
 export async function getApprovedEditorPick(category?: NewsCategoryKey, locale?: string) {
   const loc = sanitizeLocale(locale);
 
@@ -710,6 +745,33 @@ export async function getVitrinNewsArticles(limit = 8, locale?: string) {
       desc(newsArticles.publishedAt),
       desc(newsArticles.createdAt)
     )
+    .limit(limit);
+
+  return rows.map((row) => mapPublicArticle(row, loc));
+}
+
+/**
+ * TASK-0515: ONLY the stories the admin flagged «Xəbər manşet olsun?» (dashboard/xeberler →
+ * NewsEditorForm `isManset`), still fresh (≤ 7 days, same rule as TASK-0490). Feeds the /haberler
+ * lead slider; an empty result means "no manşet chosen" and the page falls back to one lead story.
+ */
+export async function getMansetNewsArticles(limit = 6, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
+  if (!dbAvailable || !db) return [];
+
+  const rows = await db
+    .select(buildPublicArticleSelect())
+    .from(newsArticles)
+    .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
+    .where(
+      and(
+        ...getPublicNewsConditions(),
+        eq(newsArticles.isManset, true),
+        sql`coalesce(${newsArticles.publishedAt}, ${newsArticles.createdAt}) >= now() - interval '7 days'`
+      )
+    )
+    .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
     .limit(limit);
 
   return rows.map((row) => mapPublicArticle(row, loc));

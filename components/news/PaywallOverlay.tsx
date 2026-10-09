@@ -20,7 +20,7 @@ export default function PaywallOverlay() {
         <div className="mt-4 space-y-2">
           <Link 
             href="/auth/register" 
-            className="block w-full rounded-xl bg-[var(--dk-red)] hover:bg-[var(--dk-gold)] px-4 py-3 font-bold text-white transition-colors"
+            className="block w-full rounded-xl bg-dk-red-strong hover:bg-[var(--dk-gold)] px-4 py-3 font-bold text-white transition-colors"
           >
             Pulsuz Qeydiyyat
           </Link>

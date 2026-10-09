@@ -168,7 +168,7 @@ export default function B2BMessagesPage() {
             <h1 className="text-2xl font-bold text-gray-900">{copy.heading}</h1>
             <p className="text-sm text-gray-500 mt-1">{copy.subheading}</p>
           </div>
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-dk-red to-dk-red-strong hover:from-dk-red-strong hover:to-dk-red-strong text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
+          <button className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-dk-red-strong to-dk-red-deep hover:from-dk-red-deep hover:to-dk-red-deep text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
             <Plus size={18} />
             {copy.newMessage}
           </button>
@@ -240,7 +240,7 @@ export default function B2BMessagesPage() {
                   onClick={() => setFilter('all')}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                     filter === 'all'
-                      ? 'bg-dk-red text-white'
+                      ? 'bg-dk-red-strong text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -250,7 +250,7 @@ export default function B2BMessagesPage() {
                   onClick={() => setFilter('unread')}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2 ${
                     filter === 'unread'
-                      ? 'bg-dk-red text-white'
+                      ? 'bg-dk-red-strong text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -269,7 +269,7 @@ export default function B2BMessagesPage() {
                   onClick={() => setFilter('starred')}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                     filter === 'starred'
-                      ? 'bg-dk-red text-white'
+                      ? 'bg-dk-red-strong text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -302,7 +302,7 @@ export default function B2BMessagesPage() {
                           message.avatar === 'AI'
                             ? 'bg-gradient-to-br from-purple-500 to-indigo-600'
                             : message.avatar === 'DK'
-                              ? 'bg-gradient-to-br from-dk-red to-dk-red-strong'
+                              ? 'bg-gradient-to-br from-dk-red-strong to-dk-red-deep'
                               : message.avatar === 'DS'
                                 ? 'bg-gradient-to-br from-blue-500 to-cyan-600'
                                 : message.avatar === 'SY'
@@ -366,7 +366,7 @@ export default function B2BMessagesPage() {
                       selectedMessage.avatar === 'AI'
                         ? 'bg-gradient-to-br from-purple-500 to-indigo-600'
                         : selectedMessage.avatar === 'DK'
-                          ? 'bg-gradient-to-br from-dk-red to-dk-red-strong'
+                          ? 'bg-gradient-to-br from-dk-red-strong to-dk-red-deep'
                           : selectedMessage.avatar === 'DS'
                             ? 'bg-gradient-to-br from-blue-500 to-cyan-600'
                             : selectedMessage.avatar === 'SY'
@@ -434,7 +434,7 @@ export default function B2BMessagesPage() {
                             <p className="text-xs text-gray-500">PDF • 1.2 MB</p>
                           </div>
                         </div>
-                        <button className="px-3 py-1.5 bg-dk-red hover:bg-dk-red-strong text-white text-xs font-semibold rounded-lg transition-colors">
+                        <button className="px-3 py-1.5 bg-dk-red-strong hover:bg-dk-red-deep text-white text-xs font-semibold rounded-lg transition-colors">
                           {copy.download}
                         </button>
                       </div>
@@ -446,7 +446,7 @@ export default function B2BMessagesPage() {
               {/* Reply */}
               <div className="p-6 border-t border-gray-200 bg-gray-50">
                 <div className="flex gap-3">
-                  <button className="flex items-center gap-2 px-5 py-2.5 bg-dk-red hover:bg-dk-red-strong text-white rounded-xl font-semibold transition-colors">
+                  <button className="flex items-center gap-2 px-5 py-2.5 bg-dk-red-strong hover:bg-dk-red-deep text-white rounded-xl font-semibold transition-colors">
                     <Reply size={16} />
                     {copy.reply}
                   </button>

@@ -45,12 +45,12 @@ function FooterNewsletter() {
           aria-label={t('newsletterLabel')}
           autoComplete="email"
           required
-          className="min-w-0 flex-1 rounded-lg border border-[var(--dk-warm-border)] bg-white px-3 py-2 text-xs text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+          className="min-h-[44px] min-w-0 flex-1 rounded-lg border border-[var(--dk-warm-border)] bg-white px-3 py-2 text-base text-slate-900 outline-none focus:border-[var(--dk-gold)] sm:min-h-[36px] sm:text-xs"
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="shrink-0 rounded-lg bg-[var(--dk-red)] px-3 py-2 text-xs font-bold text-white disabled:opacity-60"
+          className="min-h-[44px] shrink-0 rounded-lg bg-dk-red-strong px-3 py-2 text-xs font-bold text-white sm:min-h-[36px] disabled:opacity-60"
         >
           {status === 'loading' ? '...' : t('newsletterSubmit')}
         </button>
@@ -110,7 +110,7 @@ export function Footer() {
               <img src="/images/logo-mobil.png" alt={t('logoAlt')} className="h-9 w-9 shrink-0 object-contain" />
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-[var(--dk-ink)]">DK Agency</span>
-                <span className="text-[9px] font-medium tracking-wider text-[var(--dk-gold)]">{t('brandTagline')}</span>
+                <span className="text-[10px] font-medium tracking-wider text-dk-gold-text">{t('brandTagline')}</span>
               </div>
             </div>
             <p className="max-w-[240px] text-sm leading-relaxed text-[var(--dk-ink-soft)]">{t('slogan')}</p>
@@ -144,13 +144,13 @@ export function Footer() {
             <nav aria-label={t('legalNav')} className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
               {legalLinks.map((link) => (
                 <Link key={link.href} href={withLocale(locale, link.href)}
-                  className="text-xs text-[var(--dk-ink-soft)] transition-colors hover:text-[var(--dk-gold)]">
+                  className="inline-flex min-h-[24px] items-center text-xs text-[var(--dk-ink-soft)] transition-colors hover:text-dk-gold-text">
                   {link.label}
                 </Link>
               ))}
             </nav>
             <Link href="https://dkagency.com.tr" target="_blank"
-              className="text-xs font-semibold text-[var(--dk-gold)] transition-colors hover:text-[var(--dk-gold-hover)]">
+              className="inline-flex min-h-[24px] items-center text-xs font-semibold text-dk-gold-text transition-colors hover:text-[var(--dk-ink)]">
               {t('poweredBy')}
             </Link>
           </div>

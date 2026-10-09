@@ -14,10 +14,14 @@
 
   --dk-gold: #c5a022;
   --dk-gold-hover: #d4af37;
+  /* TASK-0515: gold for TEXT (4.9:1 on white); --dk-gold stays for decoration. */
+  --dk-gold-text: #8a6d10;
   --gold-bg: rgba(197, 160, 34, 0.1);
   --dk-red: #e94560;
   --dk-red-strong: #d63b54;
   --dk-red-hover: #ff5a75;
+  /* TASK-0515 (owner 2026-10-09): hover for white-on-red controls; --dk-red-strong is their resting bg. */
+  --dk-red-deep: #be2f47;
   --dk-purple: #8b5cf6;
   --dk-success: #2ecc71;
   --dk-warning: #f39c12;
@@ -68,9 +72,11 @@
   --color-dk-muted: var(--dk-muted);
   --color-dk-gold: var(--dk-gold);
   --color-dk-gold-hover: var(--dk-gold-hover);
+  --color-dk-gold-text: var(--dk-gold-text);
   --color-dk-red: var(--dk-red);
   --color-dk-red-strong: var(--dk-red-strong);
   --color-dk-red-hover: var(--dk-red-hover);
+  --color-dk-red-deep: var(--dk-red-deep);
   --color-brand-red: var(--dk-red);
   --color-brand-red-hover: #D63852;
   --color-dk-purple: var(--dk-purple);

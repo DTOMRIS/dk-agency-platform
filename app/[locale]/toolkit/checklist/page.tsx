@@ -126,8 +126,8 @@ export default function ChecklistPage() {
         <div className="mt-1 text-3xl font-black text-slate-900">{checkedCount}/{totalItems}</div>
       </div>
       <div className="rounded-xl bg-[var(--dk-red)]/5 p-4 ring-1 ring-[var(--dk-red)]/20">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">%</div>
-        <div className="mt-1 text-3xl font-black text-[var(--dk-red)]">{progress}%</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">%</div>
+        <div className="mt-1 text-3xl font-black text-dk-red-deep">{progress}%</div>
         <div className="mt-3 h-2.5 bg-slate-100 rounded-full overflow-hidden">
           <div className="h-full bg-[var(--dk-red)] rounded-full transition-all duration-500" style={{ width: `${progress}%` }} />
         </div>

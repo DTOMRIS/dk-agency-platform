@@ -1,9 +1,13 @@
 /* TASK-0512 — homepage v2, ported from the approved /tanitim design (public/tanitim/index.html).
    Warm cream + ink + single accent (--dk-red). Every motion is off under prefers-reduced-motion. */
 
-.v2 {
+/* Design tokens — shared with the inner pages (components/inner/inner.module.css, TASK-0514). */
+.tokens {
   --red: var(--dk-red, #e94560);
   --red-d: #d63b54;
+  /* TASK-0515 (owner 2026-10-09): white text sits on --red-ui (4.55:1), --red stays for accents. */
+  --red-ui: var(--dk-red-strong, #d63b54);
+  --red-ui-h: var(--dk-red-deep, #be2f47);
   --red-soft: #fdecef;
   --ink: var(--dk-ink, #0f172a);
   --ink-2: #334155;
@@ -16,6 +20,10 @@
   --amber: #b45309;
   --amber-soft: #fef3e2;
   --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px -12px rgba(15, 23, 42, 0.14);
+}
+
+.v2 {
+  composes: tokens;
   background: var(--cream);
   color: var(--ink);
   line-height: 1.55;
@@ -63,12 +71,12 @@
   transform: translateY(-1px);
 }
 .btnRed {
-  background: var(--red);
+  background: var(--red-ui);
   color: #fff !important;
   box-shadow: 0 8px 20px -8px rgba(233, 69, 96, 0.6);
 }
 .btnRed:hover {
-  background: var(--red-d);
+  background: var(--red-ui-h);
 }
 .btnGhost {
   background: #fff;
@@ -347,7 +355,7 @@
   width: 18px;
   height: 18px;
   border-radius: 5px;
-  background: var(--red);
+  background: var(--red-ui);
   color: #fff;
   display: grid;
   place-items: center;
@@ -2190,7 +2198,7 @@
   height: 15px;
 }
 .blCard:hover .blGo {
-  background: var(--red);
+  background: var(--red-ui);
   color: #fff;
 }
 
@@ -2613,7 +2621,7 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--red);
+  background: var(--red-ui);
   color: #fff;
 }
 .jnCheck .i {
@@ -2668,12 +2676,12 @@
   outline-offset: 2px;
 }
 .jnBtnRed {
-  background: var(--red);
+  background: var(--red-ui);
   color: #fff;
   box-shadow: 0 8px 20px -8px rgba(233, 69, 96, 0.6);
 }
 .jnBtnRed:hover {
-  background: var(--red-d);
+  background: var(--red-ui-h);
 }
 .jnBtnGhost {
   background: #fff;

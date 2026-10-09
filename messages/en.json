@@ -87,6 +87,7 @@
       "devir": "Business Transfer",
       "franchise-vermek": "Sell Franchise",
       "franchise-almak": "Buy Franchise",
+      "franchise-almaq": "Buy Franchise",
       "ortak-tapmaq": "Find Partner",
       "yeni-investisiya": "New Investment",
       "obyekt-icaresi": "Venue Rental",
@@ -233,7 +234,8 @@
           "hotKitchenB": "Hot Kitchen B",
           "assembly": "Assembly",
           "expeditor": "Expeditor / Quality"
-        }
+        },
+        "noChecks": "Enter daily checks"
       },
       "seo": {
         "title": "Kitchen Station Calculator — DK Agency",
@@ -360,7 +362,7 @@
       "trimLossBody1": "After cleaning 1 kg of chicken, only",
       "trimLossBodyBold": "850g",
       "trimLossBody2": "is usable — 15% trim loss. This raises the real ingredient cost.",
-      "trimLossExamplesTitle": "Sample trim loss percentages",
+      "trimLossExamplesTitle": "Sample trim loss (indicative — check with your own weighing)",
       "trimEx1Label": "Chicken breast",
       "trimEx1Value": "5–8%",
       "trimEx2Label": "Whole chicken",
@@ -374,9 +376,9 @@
       "trimEx6Label": "Onion/garlic",
       "trimEx6Value": "10–15%",
       "dkAdviceLabel": "DK Agency Tip",
-      "dkAdviceBody1": "In Azerbaijan,",
-      "dkAdviceBodyBold": "90% of restaurants",
-      "dkAdviceBody2": "operate without knowing their food cost. Apply FIFO with a POS system and keep everything under control.",
+      "dkAdviceBody1": "Running a kitchen without knowing your food cost",
+      "dkAdviceBodyBold": "is the most expensive mistake.",
+      "dkAdviceBody2": "Apply FIFO with a POS system and keep everything under control.",
       "readArticle": "Read full article",
       "ocaqTitle": "OCAQ Panel",
       "ocaqBody": "Store all recipes, calculate food cost automatically, track inventory with FIFO. Real-time financial control.",
@@ -520,7 +522,9 @@
         "required": "This field is required",
         "positive": "Enter a positive number",
         "tooLow": "Value too low",
-        "tooHigh": "Value too high"
+        "tooHigh": "Value too high",
+        "negative": "Amount cannot be negative — previous value kept.",
+        "revenueRequired": "Enter revenue above 0 to calculate the percentages."
       },
       "insights": {
         "healthyMargin": "Healthy profit margin",
@@ -564,7 +568,8 @@
             "label": "Repair",
             "value": "1-2%"
           }
-        }
+        },
+        "ruleOfThumb": "Widely used industry rules of thumb — not sourced norms for Azerbaijan."
       },
       "education": {
         "whatTitle": "What is P&L?",
@@ -590,7 +595,7 @@
         "uncontrollableTitle": "Less controllable",
         "uncontrollableBody": "Rent, tax, insurance, and depreciation are more fixed. Focus first on expenses you can influence.",
         "primeCostTitle": "What is Prime Cost?",
-        "primeCostBody": "The two largest restaurant costs are food and labor. Prime Cost is the most critical P&L metric. Keep it below 65% of sales.",
+        "primeCostBody": "The two largest restaurant costs are food and labor. Prime Cost is the most critical P&L metric. Widely used rule of thumb: keep it below {value}% of sales.",
         "formula": "Formula",
         "primeCostFormula": {
           "costs": "Food Cost + Labor Cost",
@@ -599,9 +604,9 @@
         },
         "warningTitle": "Warning signs",
         "warnings": {
-          "primeCost": "Prime cost above 70% means the restaurant is near the loss zone.",
-          "lowNet": "Net profit below 5% is risky; one mistake can turn the month negative.",
-          "highRent": "Rent above 12% may mean the location is too expensive.",
+          "primeCost": "Prime cost above {prime}% (widely used rule of thumb) squeezes profit fast.",
+          "lowNet": "Net profit below {low}% is risky; one mistake can turn the month negative.",
+          "highRent": "Rent above {rent}% of sales (widely used rule of thumb) may mean the location is too expensive.",
           "strongNet": "Net profit above 15% signals strong performance and room to invest."
         }
       },
@@ -660,7 +665,7 @@
       "labelYearlyLeavers": "Employees leaving per year",
       "financialImpactTitle": "Financial impact",
       "turnoverRateLabel": "Turnover rate",
-      "turnoverRateBenchmark": "The global restaurant average is 60-80%. In the Baku market, some venues reach 100-150%.",
+      "turnoverRateBenchmark": "Compare this rate with your own previous year. No verified market average for Azerbaijan has been published.",
       "replacementCostLabel": "Replacement cost per employee",
       "replacementCostNote": "Industry guidelines suggest replacing one employee costs approximately 2-3 months of salary.",
       "annualLossLabel": "Annual loss",
@@ -672,7 +677,7 @@
       "knowledgePanelBadge": "Knowledge panel",
       "top5Title": "Top 5 reasons for leaving",
       "dkAdviceLabel": "DK tip",
-      "dkAdviceBody": "If turnover exceeds 80%, the problem is systemic, not just pay. Without documented hiring, onboarding, pre-shift and exit interview processes, building a stable team is very difficult.",
+      "dkAdviceBody": "If turnover grows year after year, the problem is usually the system rather than pay. Without documented hiring, onboarding, pre-shift and exit interview processes, building a stable team is very difficult.",
       "usefulLinksTitle": "Useful links",
       "reason1": "Poor management and rude leadership",
       "reason2": "No growth or promotion opportunities",
@@ -691,7 +696,8 @@
       "blogLink2Title": "P&L Simulator",
       "blogLink2Tag": "Tool",
       "blogLink3Title": "KAZAN AI",
-      "blogLink3Tag": "AI"
+      "blogLink3Tag": "AI",
+      "errNoEmployees": "With 0 employees there is no turnover rate — enter your headcount."
     },
     "branding": {
       "navigation": {
@@ -1062,7 +1068,8 @@
       "blogLink2Tag": "Tool",
       "blogLink3Title": "Food Cost Calculator",
       "blogLink3Tag": "Tool",
-      "readLabel": "View"
+      "readLabel": "View",
+      "labelCommissionFor": "{platform} commission (%)"
     },
     "menuMatrix": {
       "navigation": {
@@ -1086,8 +1093,8 @@
       "defaultItem5": "Soup",
       "defaultItem6": "Tiramisu",
       "itemListTitle": "Food List",
-      "avgSalesLabel": "Avg sales",
-      "avgMarginLabel": "Avg margin",
+      "avgSalesLabel": "Popularity threshold (70% of avg sales)",
+      "avgMarginLabel": "Sales-weighted avg margin",
       "reset": "Reset",
       "colFoodName": "Food name",
       "colSalesCount": "Sales count",
@@ -1108,7 +1115,7 @@
       "processLabel": "Process",
       "processStep1": "1. Collect sales data",
       "processStep2": "2. Calculate CM for each dish",
-      "processStep3": "3. Compare against averages",
+      "processStep3": "3. Compare with the 70% popularity threshold and the sales-weighted margin",
       "processStep4": "4. Assign to 4 categories",
       "bcgTitle": "BCG Matrix",
       "bcgSubtitle": "The Boston Consulting Group matrix adapted for restaurants:",
@@ -1140,7 +1147,12 @@
       "blogLink2Tag": "Finance",
       "blogLink3Title": "Can't Read a P&L?",
       "blogLink3Tag": "Finance",
-      "readLabel": "Read"
+      "readLabel": "Read",
+      "catStarSub": "Popular · high margin",
+      "catPlowHorseSub": "Popular · low margin",
+      "catPuzzleSub": "Low sales · high margin",
+      "catDogSub": "Low sales · low margin",
+      "removeItem": "Remove item"
     },
     "pnlDesc": "Create monthly income-expense reports, find the break-even point.",
     "checklist": {
@@ -1330,7 +1342,7 @@
       "progressLabel": "Overall progress",
       "progressItems": "items completed",
       "riskZoneLabel": "Risk zone",
-      "riskZoneSubtitle": "Most common penalty reasons",
+      "riskZoneSubtitle": "of {total} items not yet checked (fine risk)",
       "regimeLabel": "Schedule",
       "regimeSubtitle": "Daily, weekly, monthly plan",
       "checklistTitle": "Interactive checklist",
@@ -3590,7 +3602,7 @@
       },
       "toolkit": {
         "title": "Toolkit",
-        "subtitle": "18 calculation tools",
+        "subtitle": "17 free calculation tools",
         "body": "P&L Simulator, Food Cost, Menu Matrix, AQTA Checklist and more — free during launch campaign.",
         "cta": "View tools"
       },
@@ -5667,6 +5679,10 @@
       "borderline": "Borderline: consider optimising costs.",
       "risky": "Risky: the investment pays back slowly.",
       "unprofitable": "The guest house is losing money."
+    },
+    "validation": {
+      "percentRange": "Percent must be 0–100 — value adjusted.",
+      "nonNegative": "Negative values are not allowed — set to 0."
     }
   },
   "whatsappTemplates": {
@@ -6333,8 +6349,8 @@
         "l": "of HoReCa management experience"
       },
       "f2": {
-        "v": "18",
-        "l": "free calculation tools"
+        "v": "35+",
+        "l": "tools · 17 free"
       },
       "f3": {
         "v": "10+",
@@ -6699,5 +6715,350 @@
     "cardFrom": "45%",
     "cardTo": "38%",
     "plan": "Plan ready"
+  },
+  "innerV2": {
+    "common": {
+      "home": "Home",
+      "allTools": "All tools",
+      "toolsCrumb": "Tools",
+      "live": "Live",
+      "sample": "Sample data — for illustration only.",
+      "minRead": "{n} min read",
+      "result": "Result",
+      "showResult": "Show result",
+      "hideResult": "Close",
+      "read": "Read",
+      "openTool": "Open tool",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "share": "Share",
+      "groups": {
+        "all": "All",
+        "xerc": "Costs",
+        "gelir": "Revenue",
+        "acilis": "Opening",
+        "kadr": "Staff"
+      },
+      "groupEyebrow": {
+        "xerc": "Cost control",
+        "gelir": "Revenue growth",
+        "acilis": "Opening readiness",
+        "kadr": "Staff and shifts"
+      }
+    },
+    "toolkit": {
+      "eyebrow": "Free tools · {count} tools",
+      "title1": "Run the numbers.",
+      "title2": "<em>See</em> the next step.",
+      "lead": "Each tool answers one question: where the money goes, how much is left and what to change. From opening to growth.",
+      "searchLabel": "Search tools",
+      "searchPlaceholder": "Search: food cost, delivery, AQTA…",
+      "chipsLabel": "Quick search",
+      "chips": {
+        "food": {
+          "l": "food cost",
+          "q": "food cost"
+        },
+        "wolt": {
+          "l": "Wolt commission",
+          "q": "wolt"
+        },
+        "aqta": {
+          "l": "AQTA",
+          "q": "aqta"
+        },
+        "shift": {
+          "l": "Shift planning",
+          "q": "shift"
+        }
+      },
+      "preview": {
+        "label": "Sample result",
+        "dish": "Beef dürüm",
+        "sub": "Food cost · sample recipe",
+        "target": "Restaurant / café 28–32%",
+        "tag": "Signal → step",
+        "msg": "Raise the price from 7.50 ₼ to 8.90 ₼ and food cost drops to 38%."
+      },
+      "tabsLabel": "Tool groups",
+      "tabCount": "{count} live",
+      "featured": {
+        "eyebrow": "Start here",
+        "title": "The 3 tools you need most",
+        "desc": "Editor’s pick: the three numbers every restaurant should look at first — plate cost, delivery commission and monthly costs.",
+        "sample": "Figures on the cards are samples — for illustration only.",
+        "food-cost": {
+          "t": "Food Cost",
+          "d": "Plate cost, food cost % and the ideal menu price.",
+          "viz": "if the price goes 7.50 → 8.90 ₼"
+        },
+        "delivery-calc": {
+          "t": "Delivery commission",
+          "d": "Wolt, Bolt Food, Yango and your own delivery: what you actually keep.",
+          "viz": "How a sale splits",
+          "food": "food",
+          "commission": "commission",
+          "left": "you keep"
+        },
+        "pnl": {
+          "t": "P&L simulator",
+          "d": "Monthly revenue and costs, prime cost and net profit in one sheet.",
+          "viz": "Monthly trend"
+        }
+      },
+      "all": {
+        "eyebrow": "All tools",
+        "searchResults": "Search: {count} results",
+        "statusNote": "The status is real: <b>Live</b> means it works.",
+        "empty": "No tool found for “{q}”. Try another word or <link>message us</link>.",
+        "emptyWa": "Hello Doğan bey, the tool I need: {q}"
+      },
+      "groupDesc": {
+        "all": "Every tool in one place.",
+        "xerc": "Plate cost, P&L, break-even, delivery and the cost of wasted steps.",
+        "gelir": "Menu, guesthouse revenue, OTA profile and guest messages.",
+        "acilis": "Paperwork, construction, hygiene, brand and hotel readiness.",
+        "kadr": "Team size, shifts, stations and staff retention."
+      },
+      "tagHospitality": "Hospitality",
+      "open": "Open",
+      "cta": {
+        "eyebrow": "Got the numbers, but the decision is hard?",
+        "title": "Talk the result through with Doğan bey.",
+        "body": "Fill in the tool and send the result on WhatsApp. We look at it together with 40 years of HoReCa experience and pick one step.",
+        "wa": "Message on WhatsApp",
+        "waText": "Hello Doğan bey, I would like to discuss a tool result.",
+        "diag": "What is the free diagnostic?"
+      },
+      "tools": {
+        "food-cost": {
+          "t": "Food cost calculator",
+          "d": "Work out the plate cost and set the price from your target food cost %.",
+          "r": "Food cost %, plate cost and ideal menu price",
+          "kw": "food cost recipe plate cost portion"
+        },
+        "pnl": {
+          "t": "P&L simulator",
+          "d": "Build an income statement and keep prime cost and net profit in check.",
+          "r": "Monthly net profit and prime cost %",
+          "kw": "pnl profit revenue costs statement"
+        },
+        "basabas": {
+          "t": "Break-even point",
+          "d": "Minimum monthly sales, guests per day and your safety margin.",
+          "r": "How many guests you need per day",
+          "kw": "break even guests"
+        },
+        "delivery-calc": {
+          "t": "Delivery calculator",
+          "d": "Margin after commission on Wolt, Bolt Food, Yango and your own delivery.",
+          "r": "What you keep on each platform",
+          "kw": "wolt bolt yango commission delivery"
+        },
+        "addim-xerci": {
+          "t": "Wasted-steps calculator",
+          "d": "Turn the time cooks and waiters spend on empty walks into monthly wage loss.",
+          "r": "Monthly wage lost to empty walking (₼)",
+          "kw": "spaghetti diagram steps walking"
+        },
+        "menu-matrix": {
+          "t": "Menu matrix",
+          "d": "Sort dishes into Stars, Plowhorses, Puzzles and Dogs.",
+          "r": "For each dish: keep, raise the price or drop it",
+          "kw": "menu engineering matrix"
+        },
+        "qonaq-evi-roi-kalkulyatoru": {
+          "t": "Guesthouse ROI",
+          "d": "OTA commission, room revenue and payback period.",
+          "r": "How many months until the investment pays back",
+          "kw": "hotel ota airbnb guesthouse roi"
+        },
+        "ota-hazirlig-testi": {
+          "t": "OTA readiness test",
+          "d": "Check how ready your Booking, Airbnb and Yandex Travel profile is.",
+          "r": "Profile readiness score and missing items",
+          "kw": "booking airbnb ota"
+        },
+        "whatsapp-template-paketi": {
+          "t": "WhatsApp template pack",
+          "d": "Ready-to-send messages, from welcome to VIP guest.",
+          "r": "Messages ready to copy",
+          "kw": "whatsapp guest message template"
+        },
+        "checklist": {
+          "t": "Opening checklist",
+          "d": "Legal work, venue, menu, team and marketing — step by step.",
+          "r": "The steps left before opening day",
+          "kw": "opening checklist"
+        },
+        "insaat-checklist": {
+          "t": "Construction checklist",
+          "d": "A phased plan from construction to opening, with site notes.",
+          "r": "Phase-by-phase plan and site notes",
+          "kw": "construction fit-out renovation"
+        },
+        "aqta-checklist": {
+          "t": "AQTA readiness",
+          "d": "Hygiene, paperwork and fine risks — section by section.",
+          "r": "Fine-risk map by section",
+          "kw": "aqta hygiene haccp fine"
+        },
+        "branding-guide": {
+          "t": "Branding guide",
+          "d": "Brand word, visual identity and social media line in one workbook.",
+          "r": "A completed brand workbook",
+          "kw": "brand logo"
+        },
+        "otel-hazirlig-testi": {
+          "t": "Hotel readiness test",
+          "d": "Rate your fit with the AHA star standard in a few minutes.",
+          "r": "Star-standard compliance score",
+          "kw": "aha star hotel"
+        },
+        "personel-planlayici": {
+          "t": "Staff planner",
+          "d": "The right headcount per shift for restaurants and cafés.",
+          "r": "Staff per shift and labour cost %",
+          "kw": "shift rota staff"
+        },
+        "metbex-istasyon": {
+          "t": "Kitchen stations",
+          "d": "Stations and staff for fast-food and QSR kitchens, based on menu SKU count.",
+          "r": "Station count, staff and labour %",
+          "kw": "qsr fast food kitchen station"
+        },
+        "staff-retention": {
+          "t": "Staff retention",
+          "d": "Turnover rate, replacement cost and the yearly cost of staff loss.",
+          "r": "Yearly cost of turnover in ₼",
+          "kw": "turnover staff retention"
+        }
+      }
+    },
+    "foodCost": {
+      "formulaLabel": "Formula",
+      "formula": "Food cost % = (Ingredient cost ÷ Selling price) × 100",
+      "formulaNote": "Trim is included: cost of the usable quantity = quantity ÷ (1 − trim%) × unit price.",
+      "removeRow": "Remove row",
+      "signalTag": "Signal → step",
+      "signalPending": "Enter the recipe and menu price — the result will show here.",
+      "signalHigh": "Food cost {pct}% — above your {target}% target.",
+      "signalHighSub": "To hit the target: price {ideal}, or cut the plate cost by {cut}.",
+      "signalOk": "Food cost {pct}% — within your {target}% target. Next step: update purchase prices once a month.",
+      "sendWa": "Send result on WhatsApp",
+      "pdf": "Save as PDF",
+      "talk": "Discuss with Doğan bey",
+      "privacy": "The calculation runs in your browser. Nothing is stored until you send it.",
+      "dishFallback": "Dish",
+      "waIntro": "My food cost result (DK Agency tool):",
+      "waLine": "{dish} — plate cost {cost}, menu price {price}, food cost {pct}.",
+      "waIdeal": "Ideal price ({target}%): {ideal}.",
+      "talkText": "Hello Doğan bey, I would like to discuss my food cost: {dish} — {pct} (price {price}).",
+      "printTitle": "Food cost report",
+      "printDate": "Date: {date}",
+      "printFooter": "DK Agency · dkagency.com.tr · Calculated in the browser.",
+      "afterBlog": "Article for this tool",
+      "afterBlogDesc": "Recipe cards, trim loss and how to set the menu price.",
+      "afterNext": "Next tool",
+      "afterDeliveryDesc": "If this dish sells on Wolt, what is left after commission?",
+      "afterThen": "Then",
+      "afterMenuDesc": "Sort dishes with a known food cost into Stars, Plowhorses, Puzzles and Dogs.",
+      "errTrim": "Trim must be between 0 and 99% (100% leaves nothing usable).",
+      "errPortions": "Portions must be greater than 0.",
+      "errTarget": "Target food cost must be between 0 and 100%."
+    },
+    "news": {
+      "eyebrow": "Sector Pulse",
+      "title1": "What changed in the sector.",
+      "title2": "What it means <em>for you</em>.",
+      "lead": "Curated HoReCa news — with a short explanation for restaurant, café and hotel owners in Azerbaijan.",
+      "countersLabel": "Counters",
+      "last7": "articles in the last 7 days",
+      "total": "published articles",
+      "sources": "active sources",
+      "catsLabel": "Category",
+      "cats": {
+        "all": "All",
+        "finance": "Finance",
+        "operations": "Operations",
+        "growth": "Growth",
+        "market": "Market",
+        "technology": "Technology"
+      },
+      "featured": "Featured",
+      "empty": "No published articles yet.",
+      "emptyCat": "No articles in this category.",
+      "brand": "DK Sector Pulse",
+      "noSource": "DK Agency",
+      "tgTitle": "Sector Pulse on Telegram",
+      "tgBody": "New articles land in the channel as soon as they are published. No spam — curated news only.",
+      "tgCta": "Join the Telegram channel",
+      "pagerLabel": "Pages",
+      "back": "Sector Pulse",
+      "crumb": "News",
+      "byline": "<b>DK Agency</b> editorial · based on the source",
+      "source": "Source:",
+      "sourceOriginal": "original article",
+      "readFull": "Read the full story at the source",
+      "relatedTool": "Tool for this topic",
+      "relatedBlog": "Related blog post",
+      "otherNews": "More news",
+      "toolSub": "Run it with your own numbers",
+      "notFound": "Article not found",
+      "mansetLabel": "Headline stories",
+      "mansetPrev": "Previous headline",
+      "mansetNext": "Next headline",
+      "mansetSlide": "Headline {n} of {total}",
+      "latestListings": "Latest listings",
+      "allListings": "All listings"
+    },
+    "blog": {
+      "eyebrow": "Blog · Doğan Tomris",
+      "title1": "Restaurant numbers,",
+      "title2": "<em>in plain words.</em>",
+      "lead": "Step-by-step guides on food cost, P&L, staff and opening.",
+      "featuredTag": "Featured",
+      "tabsLabel": "Blog categories",
+      "more": "More posts",
+      "empty": "No posts in this group.",
+      "back": "Blog",
+      "toc": "Contents",
+      "tocMobile": "Contents · {count} sections",
+      "toolEyebrow": "Tool for this article",
+      "toolCta": "Open tool",
+      "founderEyebrow": "Author",
+      "founderName": "Doğan Tomris",
+      "founderRole": "Founder · 40 years in HoReCa",
+      "founderBody": "40 years in restaurant and hotel operations. No theory in these posts — just the maths and steps that work on the floor.",
+      "founderCta": "Talk to Doğan bey",
+      "founderText": "Hello Doğan bey, I would like to talk about the post “{title}”.",
+      "asideNote": "Maths and steps that work on the floor.",
+      "kazanEyebrow": "KAZAN AI · Beta",
+      "kazanTitle": "Ask KAZAN AI about this topic",
+      "kazanBody": "Your dish, your numbers. KAZAN AI answers from the DK knowledge base and points you to the right tool.",
+      "kazanCta": "Open KAZAN AI",
+      "kazanFoot": "Answers are advice; the decision is yours.",
+      "relEyebrow": "Keep reading",
+      "relTitle": "Related posts"
+    },
+    "cookie": {
+      "region": "Cookie notice",
+      "text": "This site uses cookies to improve your experience and measure performance.",
+      "privacy": "Privacy policy",
+      "reject": "Decline",
+      "choose": "Customise",
+      "accept": "Accept",
+      "all": "All cookies",
+      "facebook": "Facebook Ads",
+      "facebookDesc": "Measures how well ad campaigns perform",
+      "google": "Google Ads",
+      "googleDesc": "Measures how well search ads perform",
+      "yandex": "Yandex Metrica",
+      "yandexDesc": "Collects anonymous statistics to understand site usage",
+      "back": "Back",
+      "acceptAll": "Accept all",
+      "save": "Save choice",
+      "note": "Your choice is stored on this device."
+    }
   }
 }

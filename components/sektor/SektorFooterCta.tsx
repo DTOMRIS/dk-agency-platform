@@ -25,7 +25,7 @@ export default function SektorFooterCta({ namespace, headlineKey, ctaKey, href, 
           <Link
             href={href}
             onClick={() => sektorSlug && trackSektorEvent({ sektor: sektorSlug, action: 'footer_cta_click', label: t(ctaKey) })}
-            className="inline-flex items-center gap-2 rounded-2xl bg-[var(--dk-red)] px-10 py-4 text-sm font-bold text-white shadow-xl shadow-[var(--dk-red)]/20 transition hover:brightness-110"
+            className="inline-flex items-center gap-2 rounded-2xl bg-dk-red-strong px-10 py-4 text-sm font-bold text-white shadow-xl shadow-[var(--dk-red)]/20 transition hover:brightness-110"
           >
             {t(ctaKey)}
           </Link>

@@ -282,7 +282,7 @@ export default function IlanlarimPage() {
         </div>
         <Link
           href="/b2b-panel/yeni-ilan"
-          className="inline-flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-3 rounded-xl font-semibold transition-colors"
+          className="inline-flex items-center gap-2 bg-dk-red-strong hover:bg-dk-red-deep text-white px-5 py-3 rounded-xl font-semibold transition-colors"
         >
           <Plus size={18} />
           {copy.newListing}

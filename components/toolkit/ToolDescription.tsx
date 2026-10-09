@@ -39,7 +39,7 @@ export default function ToolDescription({ toolKey }: ToolDescriptionProps) {
         onClick={() => setExpanded(!expanded)}
         className="flex w-full items-center justify-between px-6 py-4 text-left transition hover:bg-slate-50"
       >
-        <span className="text-sm font-bold uppercase tracking-wider text-slate-500">
+        <span className="text-sm font-bold uppercase tracking-wider text-slate-600">
           {t(`${toolKey}.description.section_label`)}
         </span>
         {expanded ? (

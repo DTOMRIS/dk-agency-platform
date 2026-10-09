@@ -171,7 +171,7 @@ export default function AyarlarPage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 rounded-xl bg-dk-red px-6 py-3 text-sm font-bold text-white hover:bg-dk-red/90 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-xl bg-dk-red-strong px-6 py-3 text-sm font-bold text-white hover:bg-dk-red/90 disabled:opacity-50"
           >
             {saved ? <Check size={16} /> : <Save size={16} />}
             {saving ? 'Saxlanılır...' : saved ? 'Saxlanıldı!' : 'Dəyişiklikləri saxla'}

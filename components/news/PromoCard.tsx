@@ -26,7 +26,7 @@ export default function PromoCard({ title, description, ctaText, ctaLink }: Prom
 
         <Link
           href={ctaLink}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--dk-red)] text-white rounded-xl text-sm font-bold hover:bg-[var(--dk-gold)] transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-dk-red-strong text-white rounded-xl text-sm font-bold hover:bg-[var(--dk-gold)] transition-colors"
         >
           <Sparkles size={16} />
           {ctaText}

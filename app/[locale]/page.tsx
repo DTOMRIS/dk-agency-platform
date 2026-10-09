@@ -42,7 +42,7 @@ const pageCopy: Record<
     steps: [
       {
         title: 'Pulsuz alətləri sına',
-        body: 'Food cost, P&L, menyu matrisi — 18 pulsuz alət ilə restoranını analiz et.',
+        body: 'Food cost, P&L, menyu matrisi — 17 pulsuz alət ilə restoranını analiz et.',
         tone: 'bg-red-50',
         marker: '1️⃣',
       },
@@ -87,7 +87,7 @@ const pageCopy: Record<
     steps: [
       {
         title: 'Протестируй бесплатные инструменты',
-        body: 'Food cost, P&L, матрица меню — проанализируй ресторан через 18 бесплатных инструментов.',
+        body: 'Food cost, P&L, матрица меню — проанализируй ресторан через 17 бесплатных инструментов.',
         tone: 'bg-red-50',
         marker: '1️⃣',
       },
@@ -135,7 +135,7 @@ const pageCopy: Record<
     steps: [
       {
         title: 'Try the free tools',
-        body: 'Analyze your restaurant with 18 free tools across food cost, P&L, and menu matrix.',
+        body: 'Analyze your restaurant with 17 free tools across food cost, P&L, and menu matrix.',
         tone: 'bg-red-50',
         marker: '1️⃣',
       },
@@ -181,7 +181,7 @@ const pageCopy: Record<
     steps: [
       {
         title: 'Ücretsiz araçları dene',
-        body: 'Food cost, P&L ve menü matrisi ile restoranını 18 ücretsiz araçla analiz et.',
+        body: 'Food cost, P&L ve menü matrisi ile restoranını 17 ücretsiz araçla analiz et.',
         tone: 'bg-red-50',
         marker: '1️⃣',
       },

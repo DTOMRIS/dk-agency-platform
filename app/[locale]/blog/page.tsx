@@ -1,214 +1,46 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+/**
+ * /blog — v2 inner design (TASK-0514, owner-approved mockup 09.10.2026). Server-rendered list
+ * (was a client fetch of /api/blog): featured post, group tabs over the 8 real categories, real
+ * cover images and read time computed from the word count. Metadata: app/blog/layout.tsx.
+ */
+import { getLocale, getTranslations } from 'next-intl/server';
+import { normalizeLocale } from '@/i18n/config';
+import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import {
-  CATEGORY_CONFIG,
-  getAllBlogArticles,
-  type BlogArticle,
-} from '@/lib/data/blogArticles';
-import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
-import { formatAzDate } from '@/lib/i18n/format';
+  BLOG_CATEGORY_MESSAGE,
+  BLOG_CATEGORY_TAB,
+  normalizeBlogCategory,
+} from '@/lib/blog/category-groups';
+import { formatInnerDate, readMinutes } from '@/components/inner/InnerParts';
+import BlogDirectory, { type BlogCardItem } from '@/components/blog/BlogDirectory';
 
-type BlogListItem = BlogArticle & {
-  seoTitle?: string;
-  seoDescription?: string;
-  doganNote?: string;
-  status?: string;
-};
+export default async function BlogGridPage({
+  params,
+}: {
+  params?: Promise<{ locale?: string }>;
+}) {
+  const fromParams = params ? (await params).locale : undefined;
+  const locale = normalizeLocale(fromParams ?? (await getLocale()));
+  const tb = await getTranslations({ locale, namespace: 'blogDetail' });
 
-const FALLBACK_ARTICLES = getAllBlogArticles();
-const FALLBACK_CATEGORY = { emoji: '📝', label: 'Bloq', color: 'slate' };
+  const { posts } = await getBlogPostsFromDb({ status: 'published' }, locale);
 
-interface BlogCopy {
-  badge: string;
-  title: string;
-  subtitle: string;
-  loadError: string;
-  readLabel: string;
-  minLabel: string;
-}
-
-const copy: Record<Locale, BlogCopy> = {
-  az: {
-    badge: 'Ekspert Analiz',
-    title: 'DK Agency Blog',
-    subtitle: 'HoReCa sektorunda ekspert analizlər, addım-addım bələdçilər və sektor trendləri.',
-    loadError: 'Blog yazıları yüklənə bilmədi. Statik məzmun göstərilir.',
-    readLabel: 'Oxu',
-    minLabel: 'dəq',
-  },
-  tr: {
-    badge: 'Uzman Analiz',
-    title: 'DK Agency Blog',
-    subtitle: 'HoReCa sektöründe uzman analizler, adım adım rehberler ve sektör trendleri.',
-    loadError: 'Blog yazıları yüklenemedi. Statik içerik gösteriliyor.',
-    readLabel: 'Oku',
-    minLabel: 'dk',
-  },
-  en: {
-    badge: 'Expert Analysis',
-    title: 'DK Agency Blog',
-    subtitle: 'Expert analyses, step-by-step guides, and sector trends in the HoReCa industry.',
-    loadError: 'Blog posts could not be loaded. Showing static content.',
-    readLabel: 'Read',
-    minLabel: 'min',
-  },
-  ru: {
-    badge: 'Экспертный анализ',
-    title: 'DK Agency Blog',
-    subtitle: 'Экспертная аналитика, пошаговые руководства и тренды отрасли HoReCa.',
-    loadError: 'Не удалось загрузить записи блога. Отображается статичный контент.',
-    readLabel: 'Читать',
-    minLabel: 'мин',
-  },
-};
-
-function useLocaleFromPath(): Locale {
-  const pathname = usePathname();
-  const match = pathname?.match(/^\/(ru|en|tr)\//);
-  return normalizeLocale(match?.[1]);
-}
-
-export default function BlogGridPage() {
-  const locale = useLocaleFromPath();
-  const c = copy[locale];
-  const [articles, setArticles] = useState<BlogListItem[]>(FALLBACK_ARTICLES);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadPosts() {
-      try {
-        const response = await fetch(`/api/blog?locale=${locale}`);
-        if (!response.ok) throw new Error('Blog posts failed');
-        const payload = (await response.json()) as { posts?: BlogListItem[] };
-        if (!cancelled && Array.isArray(payload.posts) && payload.posts.length > 0) {
-          setArticles(payload.posts);
-          setError('');
-        }
-      } catch {
-        if (!cancelled) {
-          setArticles(FALLBACK_ARTICLES);
-          setError(c.loadError);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    void loadPosts();
-    return () => {
-      cancelled = true;
+  const items: BlogCardItem[] = posts.map((post) => {
+    const cat = normalizeBlogCategory(post.category);
+    return {
+      slug: post.slug,
+      title: post.title,
+      summary: post.summary,
+      category: cat,
+      categoryLabel: cat ? tb(BLOG_CATEGORY_MESSAGE[cat]) : post.category,
+      tab: cat ? BLOG_CATEGORY_TAB[cat] : null,
+      minutes: readMinutes(post.content || post.summary || ''),
+      date: formatInnerDate(post.publishDate, locale),
+      author: post.author,
+      image: post.coverImage || null,
+      imageAlt: post.coverImageAlt || post.title,
     };
-  }, [locale, c.loadError]);
+  });
 
-  return (
-    <div className="min-h-screen bg-white pb-20 text-slate-900">
-      <div className="relative overflow-hidden bg-white py-20">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="bg-brand-red text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 inline-block">
-              {c.badge}
-            </span>
-            <h1 className="mb-8 text-4xl font-display font-black uppercase leading-none tracking-tighter text-slate-900 sm:text-5xl lg:text-7xl">
-              DK Agency <br />
-              <span className="text-[var(--dk-red)]">Blog</span>
-            </h1>
-            <p className="max-w-2xl text-xl text-slate-600 leading-relaxed font-medium">
-              {c.subtitle}
-            </p>
-            {error ? <p className="mt-4 text-sm font-semibold text-amber-600">{error}</p> : null}
-          </motion.div>
-          <Image
-            src="/images/training-seminar.png"
-            alt={c.badge}
-            width={640}
-            height={480}
-            priority
-            className="hidden max-h-[400px] w-full object-contain lg:block"
-          />
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="rounded-[2.5rem] overflow-hidden border border-slate-100 bg-white shadow-xl shadow-slate-200/50">
-                <div className="aspect-[16/10] animate-pulse bg-slate-200" />
-                <div className="space-y-4 p-10">
-                  <div className="h-4 w-1/2 rounded-full bg-slate-200" />
-                  <div className="h-8 w-4/5 rounded-full bg-slate-200" />
-                  <div className="h-4 w-full rounded-full bg-slate-200" />
-                  <div className="h-4 w-2/3 rounded-full bg-slate-200" />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {articles.map((article, index) => {
-              const cat = CATEGORY_CONFIG[article.category] ?? FALLBACK_CATEGORY;
-              return (
-                <motion.div
-                  key={article.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.06 }}
-                >
-                  <Link href={withLocale(locale, `/blog/${article.slug}`)} className="group block bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-brand-red/10 transition-all">
-                    <div className="aspect-[16/10] overflow-hidden relative">
-                      <Image
-                        src={article.coverImage}
-                        alt={article.coverImageAlt}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-1000"
-                      />
-                      <div className="absolute top-6 left-6">
-                        <span className="bg-white/90 backdrop-blur-md text-slate-900 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
-                          {cat.emoji} {cat.label}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-10">
-                      <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">
-                        <div className="flex items-center gap-2">
-                          <Calendar size={14} className="text-brand-red" />
-                          {formatAzDate(article.publishDate, { day: 'numeric', month: 'long', year: 'numeric' })}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock size={14} className="text-brand-red" />
-                          {article.readingTime} {c.minLabel}
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-display font-black text-slate-900 leading-tight mb-4 group-hover:text-brand-red transition-colors">
-                        {article.title}
-                      </h3>
-                      <p className="text-sm text-slate-500 mb-6 line-clamp-2">{article.summary}</p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <User size={14} className="text-brand-red" />
-                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{article.author}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-900 font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">
-                          {c.readLabel} <ArrowRight size={16} className="text-brand-red" />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  return <BlogDirectory items={items} />;
 }

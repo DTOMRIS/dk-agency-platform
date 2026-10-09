@@ -7,3 +7,8 @@ export const WHATSAPP_NUMBER = '994502566279';
 // belongs to an unrelated channel — never link it.
 export const TELEGRAM_HANDLE = 'dkagenc';
 export const TELEGRAM_URL = `https://t.me/${TELEGRAM_HANDLE}`;
+
+/** WhatsApp lead link — always through the counting redirect (/api/leads/whatsapp), never wa.me directly. */
+export function whatsappHref(text: string): string {
+  return `/api/leads/whatsapp?text=${encodeURIComponent(text)}`;
+}

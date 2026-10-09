@@ -514,7 +514,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href={isAdmin ? '/dashboard/ilanlar' : '/b2b-panel/ilanlarim'}
-              className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white"
+              className="rounded-full bg-dk-red-strong px-6 py-3 text-sm font-bold text-white"
             >
               {isAdmin ? 'Elan idarəetmə' : t('viewListings')}
             </Link>
@@ -1230,7 +1230,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                 </div>
               )}
 
-              <button type="button" onClick={handleSubmit} disabled={submitting} className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--dk-red)] px-6 py-4 text-sm font-bold text-white disabled:opacity-60">
+              <button type="button" onClick={handleSubmit} disabled={submitting} className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-dk-red-strong px-6 py-4 text-sm font-bold text-white disabled:opacity-60">
                 {submitting ? t('submitting') : (isAdmin ? 'Elan yarat (Admin)' : t('submitButton'))}
                 <ArrowRight className="h-4 w-4" />
               </button>
@@ -1245,7 +1245,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
             {t('back')}
           </button>
           {step < 5 ? (
-            <button type="button" onClick={handleContinue} className="min-w-0 rounded-full bg-[var(--dk-red)] px-4 py-3 text-sm font-bold text-white sm:px-5">
+            <button type="button" onClick={handleContinue} className="min-w-0 rounded-full bg-dk-red-strong px-4 py-3 text-sm font-bold text-white sm:px-5">
               {t('continue')}
             </button>
           ) : null}

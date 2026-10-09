@@ -1,11 +1,10 @@
 import GuesthouseRoiCalculator from '@/components/toolkit/GuesthouseRoiCalculator';
+import ToolPageShell from '@/components/toolkit/ToolPageShell';
 
 export default function GuesthouseRoiPage() {
   return (
-    <div className="min-h-screen bg-[var(--dk-paper)]">
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-        <GuesthouseRoiCalculator />
-      </div>
-    </div>
+    <ToolPageShell slug="qonaq-evi-roi-kalkulyatoru" showHeader maxWidth={1200}>
+      <GuesthouseRoiCalculator />
+    </ToolPageShell>
   );
 }

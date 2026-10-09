@@ -56,7 +56,7 @@ export default function VerifyEmailPageClient() {
           {message}
         </div>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Link href={withLocale(locale, '/auth/login')} className="rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white">
+          <Link href={withLocale(locale, '/auth/login')} className="rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white">
             {t('login')}
           </Link>
           <Link href={withLocale(locale, '/auth/register')} className="rounded-full border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700">

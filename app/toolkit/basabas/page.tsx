@@ -21,6 +21,7 @@ import {
   type BranchOpeningResult,
   type BranchOpeningInput,
 } from '@/lib/financial/branch-opening-model';
+import DecimalInput from '@/components/toolkit/DecimalInput';
 import { calculateFinancialViability, type BusinessType } from '@/lib/financial/viability';
 import { numberLocale } from '@/lib/i18n/format';
 
@@ -146,9 +147,9 @@ export default function BasabasPage() {
   const branchIsValid = openingBudget > 0 && areaSqm > 0 && seats > 0 && dailyChecks > 0 && branchAverageCheck > 0;
 
   const statusStyles = {
-    safe: { ring: 'ring-emerald-500/20', text: 'text-emerald-600', bg: 'bg-emerald-50', label: t('statusSafe') },
-    warning: { ring: 'ring-amber-500/20', text: 'text-amber-600', bg: 'bg-amber-50', label: t('statusWarning') },
-    danger: { ring: 'ring-red-500/20', text: 'text-red-600', bg: 'bg-red-50', label: t('statusDanger') },
+    safe: { ring: 'ring-emerald-500/20', text: 'text-emerald-700', bg: 'bg-emerald-50', label: t('statusSafe') },
+    warning: { ring: 'ring-amber-500/20', text: 'text-amber-800', bg: 'bg-amber-50', label: t('statusWarning') },
+    danger: { ring: 'ring-red-500/20', text: 'text-red-700', bg: 'bg-red-50', label: t('statusDanger') },
   }[status];
 
   const resetAll = () => {
@@ -207,8 +208,8 @@ export default function BasabasPage() {
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="mb-4 flex items-center justify-between gap-4">
           <div>
-            <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('branchTitle')}</h3>
-            <p className="mt-1 text-sm text-slate-500">{t('branchSubtitle')}</p>
+            <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('branchTitle')}</h3>
+            <p className="mt-1 text-sm text-slate-600">{t('branchSubtitle')}</p>
           </div>
           <button
             type="button"
@@ -295,11 +296,11 @@ export default function BasabasPage() {
       </div>
 
       <div className="flex items-center justify-between">
-        <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('planningTitle')}</h3>
+        <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('planningTitle')}</h3>
         <button
           type="button"
           onClick={resetAll}
-          className="flex items-center gap-1.5 text-xs font-medium text-slate-700 transition-colors hover:text-red-600"
+          className="flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-red-700"
         >
           <RotateCcw size={13} /> {t('reset')}
         </button>
@@ -324,7 +325,7 @@ export default function BasabasPage() {
       </div>
 
       <div className="border-t border-slate-100 pt-5">
-        <h3 className="mb-4 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('fixedCostsTitle')}</h3>
+        <h3 className="mb-4 text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('fixedCostsTitle')}</h3>
         <div className="grid grid-cols-2 gap-4">
         {[
           { id: 'financial-rent', label: t('labelRent'), value: rent, set: setRent, step: 100 },
@@ -334,12 +335,11 @@ export default function BasabasPage() {
         ].map((field) => (
           <div key={field.label}>
             <label htmlFor={field.id} className="mb-1.5 block text-xs font-medium text-slate-700">{field.label}</label>
-            <input
+            <DecimalInput
               id={field.id}
-              type="number"
-              step={field.step}
-              value={field.value || ''}
-              onChange={(e) => field.set(parseFloat(e.target.value) || 0)}
+              blankZero
+              value={field.value}
+              onValueChange={(v) => field.set(Math.max(0, v))}
               className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
             />
           </div>
@@ -348,7 +348,7 @@ export default function BasabasPage() {
       </div>
 
       <div className="border-t border-slate-100 pt-5">
-        <h3 className="mb-4 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('variableParamsTitle')}</h3>
+        <h3 className="mb-4 text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('variableParamsTitle')}</h3>
         <div className="grid gap-4 sm:grid-cols-4">
           {[
             { id: 'financial-variable-pct', label: t('labelVariablePct'), value: variablePct, set: setVariablePct, min: 0, max: 99 },
@@ -358,14 +358,11 @@ export default function BasabasPage() {
           ].map((field) => (
             <div key={field.label}>
               <label htmlFor={field.id} className="mb-1.5 block text-xs font-medium text-slate-700">{field.label}</label>
-              <input
+              <DecimalInput
                 id={field.id}
-                type="number"
-                min={('min' in field) ? field.min : undefined}
-                max={('max' in field) ? field.max : undefined}
-                step={('step' in field) ? field.step : undefined}
-                value={field.value || ''}
-                onChange={(e) => field.set(parseFloat(e.target.value) || 0)}
+                blankZero
+                value={field.value}
+                onValueChange={(v) => field.set(Math.min(('max' in field && typeof field.max === 'number') ? field.max : Infinity, Math.max(0, v)))}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
               />
             </div>
@@ -374,8 +371,8 @@ export default function BasabasPage() {
       </div>
 
       <div className="border-t border-slate-100 pt-5">
-        <h3 className="mb-1 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('workingCapitalTitle')}</h3>
-        <p className="mb-4 text-xs leading-5 text-slate-500">{t('workingCapitalHelp')}</p>
+        <h3 className="mb-1 text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('workingCapitalTitle')}</h3>
+        <p className="mb-4 text-xs leading-5 text-slate-600">{t('workingCapitalHelp')}</p>
         <div className="grid gap-4 sm:grid-cols-4">
           <NumberField label={t('labelInventoryDays')} value={inventoryDays} setValue={setInventoryDays} />
           <NumberField label={t('labelReceivableDays')} value={receivableDays} setValue={setReceivableDays} />
@@ -427,7 +424,7 @@ export default function BasabasPage() {
           }[flag.band];
           return (
             <div key={flag.key} className={`rounded-xl p-3 ring-1 ${colorClasses}`}>
-              <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{t(`benchmark.${flag.key}`)}</div>
+              <div className="text-[10px] font-bold uppercase tracking-widest text-slate-600">{t(`benchmark.${flag.key}`)}</div>
               <div className="mt-1 text-sm font-semibold">{t(`benchmarkState.${flag.key}.${flag.band}`)}</div>
               <div className="mt-1 text-lg font-black tabular-nums">{flag.value.toFixed(1)}{flag.key === 'payback' ? ` ${t('months')}` : '%'}</div>
             </div>
@@ -441,10 +438,10 @@ export default function BasabasPage() {
           {branchResult.scenarios.map((scenario) => (
             <div key={scenario.label} className="rounded-lg bg-white p-3 ring-1 ring-slate-200">
               <div className="flex items-center justify-between gap-3">
-                <span className="font-bold uppercase tracking-wider text-slate-500">{t(`scenario.${scenario.label}`)}</span>
+                <span className="font-bold uppercase tracking-wider text-slate-600">{t(`scenario.${scenario.label}`)}</span>
                 <span className="font-black tabular-nums text-slate-900">{fmt0(scenario.monthlyRevenue)} ₼</span>
               </div>
-              <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] text-slate-500 sm:grid-cols-4">
+              <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] text-slate-600 sm:grid-cols-4">
                 <span>{t('branchStatPrimeCost')}: {scenario.primeCostPct.toFixed(1)}%</span>
                 <span>{t('branchStatEbitda')}: {fmt0(scenario.ebitda)} ₼</span>
                 <span>{t('branchStatPayback')}: {scenario.paybackMonths === null ? t('notAvailable') : `${scenario.paybackMonths.toFixed(1)} ${t('months')}`}</span>
@@ -456,23 +453,23 @@ export default function BasabasPage() {
       </div>
 
       <div className="rounded-xl bg-amber-50 p-4 ring-1 ring-amber-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statBreakEven')}</div>
-        <div className="mt-1 text-3xl font-black tabular-nums text-amber-600">
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('statBreakEven')}</div>
+        <div className="mt-1 text-3xl font-black tabular-nums text-amber-800">
           {fmt0(calc.breakEvenRevenue)}<span className="ml-1 text-lg">₼</span>
         </div>
-        <div className="mt-1 text-[10px] text-slate-400">{t('statMonthlyMin')}</div>
+        <div className="mt-1 text-[10px] text-slate-600">{t('statMonthlyMin')}</div>
       </div>
 
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statDailyCustomers')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statDailyCustomers')}</div>
         <div className="mt-1 text-3xl font-black tabular-nums text-slate-900">
           {calc.dailyTransactions}<span className="ml-1 text-lg">{t(`businessUnits.${businessType}`)}</span>
         </div>
-        <div className="mt-1 text-[10px] text-slate-400">{t('statAvgCheck')} {avgCheck} ₼</div>
+        <div className="mt-1 text-[10px] text-slate-600">{t('statAvgCheck')} {avgCheck} ₼</div>
       </div>
 
       <div className={`${statusStyles.bg} rounded-xl p-4 ring-1 ${statusStyles.ring}`}>
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statSafetyMargin')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('statSafetyMargin')}</div>
         <div className={`mt-1 text-3xl font-black tabular-nums ${statusStyles.text}`}>{calc.safetyMarginPct.toFixed(1)}%</div>
         <div className={`mt-1 flex items-center gap-1 text-xs font-semibold ${statusStyles.text}`}>
           <span className="h-1.5 w-1.5 rounded-full bg-current" />
@@ -481,7 +478,7 @@ export default function BasabasPage() {
       </div>
 
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statFixedCosts')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statFixedCosts')}</div>
         <div className="mt-1 text-3xl font-black tabular-nums text-slate-900">
           {fmt0(calc.totalFixedCosts)}<span className="ml-1 text-lg">₼</span>
         </div>
@@ -489,16 +486,16 @@ export default function BasabasPage() {
 
       <div className="grid grid-cols-3 gap-2 pt-2">
         <div className="rounded-lg bg-amber-50 p-2.5 text-center ring-1 ring-amber-200/60">
-          <div className="text-lg font-black text-amber-600">{fmt0(calc.contributionPct)}%</div>
-          <div className="text-[9px] font-medium text-slate-500">{t('contributionLabel')}</div>
+          <div className="text-lg font-black text-amber-800">{fmt0(calc.contributionPct)}%</div>
+          <div className="text-[10px] font-medium text-slate-700">{t('contributionLabel')}</div>
         </div>
         <div className="rounded-lg bg-blue-50 p-2.5 text-center ring-1 ring-blue-200/60">
-          <div className="text-lg font-black text-blue-600">≥20%</div>
-          <div className="text-[9px] font-medium text-slate-500">{t('idealMarginLabel')}</div>
+          <div className="text-lg font-black text-blue-700">≥20%</div>
+          <div className="text-[10px] font-medium text-slate-700">{t('idealMarginLabel')}</div>
         </div>
         <div className="rounded-lg bg-emerald-50 p-2.5 text-center ring-1 ring-emerald-200/60">
-          <div className="text-lg font-black text-emerald-600">{t('calcPeriodValue')}</div>
-          <div className="text-[9px] font-medium text-slate-500">{t('calcPeriodLabel')}</div>
+          <div className="text-lg font-black text-emerald-700">{t('calcPeriodValue')}</div>
+          <div className="text-[10px] font-medium text-slate-700">{t('calcPeriodLabel')}</div>
         </div>
       </div>
 
@@ -532,7 +529,7 @@ export default function BasabasPage() {
       </div>
 
       <div>
-        <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('sensitivityTitle')}</div>
+        <div className="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('sensitivityTitle')}</div>
         <div className="space-y-2">
           {sensitivityTexts.map((text) => (
             <div key={text} className="rounded-lg bg-blue-50 p-3 text-xs leading-5 text-blue-900">{text}</div>
@@ -564,7 +561,7 @@ export default function BasabasPage() {
               {t('educationTitleAccent')}
             </span>
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">{t('educationSubtitle')}</p>
+          <p className="mx-auto mt-2 max-w-md text-sm text-slate-600">{t('educationSubtitle')}</p>
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
@@ -596,19 +593,19 @@ export default function BasabasPage() {
               </div>
               <h3 className="text-sm font-bold text-slate-900">{t('fixedVsVariableTitle')}</h3>
             </div>
-            <p className="mb-4 text-[12px] text-slate-500">{t('fixedVsVariableSubtitle')}</p>
+            <p className="mb-4 text-[12px] text-slate-600">{t('fixedVsVariableSubtitle')}</p>
             <div className="mt-auto space-y-2.5">
               <div className="rounded-xl bg-amber-50 p-3.5 ring-1 ring-amber-200/60">
                 <p className="text-xs font-bold text-amber-700">{t('fixedCostsLabel')}</p>
-                <p className="mt-1 text-[11px] leading-relaxed text-amber-600/80">{t('fixedCostsDesc')}</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-amber-800">{t('fixedCostsDesc')}</p>
               </div>
               <div className="rounded-xl bg-blue-50 p-3.5 ring-1 ring-blue-200/60">
                 <p className="text-xs font-bold text-blue-700">{t('variableCostsLabel')}</p>
-                <p className="mt-1 text-[11px] leading-relaxed text-blue-600/80">{t('variableCostsDesc')}</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-blue-800">{t('variableCostsDesc')}</p>
               </div>
               <div className="rounded-xl bg-emerald-50 p-3.5 ring-1 ring-emerald-200/60">
                 <p className="text-xs font-bold text-emerald-700">{t('contributionMarginLabel')}</p>
-                <p className="mt-1 text-[11px] leading-relaxed text-emerald-600/80">{t('contributionMarginDesc')}</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-emerald-800">{t('contributionMarginDesc')}</p>
               </div>
             </div>
           </div>
@@ -647,7 +644,7 @@ export default function BasabasPage() {
             <p className="mb-5 text-[13px] leading-relaxed text-slate-400">{t('dkAdviceBody')}</p>
             <Link
               href="/blog/basabas-noqtesi-hesablama"
-              className="group inline-flex items-center gap-2 text-sm font-bold text-amber-400 transition-colors hover:text-amber-300"
+              className="group inline-flex min-h-[24px] items-center gap-2 text-sm font-bold text-amber-400 transition-colors hover:text-amber-300"
             >
               {t('readArticle')}
               <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
@@ -662,7 +659,7 @@ export default function BasabasPage() {
           </div>
           <Link
             href="/auth/register"
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-black text-orange-600 transition-colors hover:bg-orange-50"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-black text-orange-700 transition-colors hover:bg-orange-50"
           >
             {t('ocaqCta')} <ArrowRight size={15} />
           </Link>
@@ -672,7 +669,7 @@ export default function BasabasPage() {
       {/* Blog links */}
       <div className="mt-10 rounded-2xl bg-slate-50 p-8 sm:p-10">
         <div className="mb-8 flex items-center gap-2.5">
-          <BookOpen size={18} className="text-orange-600" />
+          <BookOpen size={18} className="text-orange-700" />
           <h3 className="text-lg font-bold text-slate-900">{t('learnMoreTitle')}</h3>
         </div>
         <div className="grid gap-4 sm:grid-cols-3">
@@ -682,11 +679,11 @@ export default function BasabasPage() {
               href={`/blog/${article.slug}`}
               className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 transition-all duration-300 hover:shadow-md hover:ring-slate-300/60"
             >
-              <span className="text-[10px] font-bold uppercase tracking-widest text-orange-600">{article.tag}</span>
-              <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-orange-600">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-orange-700">{article.tag}</span>
+              <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-orange-700">
                 {article.title}
               </h4>
-              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 transition-all group-hover:gap-2 group-hover:text-orange-600">
+              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-600 transition-all group-hover:gap-2 group-hover:text-orange-700">
                 {t('readLabel')} <ArrowRight size={12} />
               </div>
             </Link>
@@ -730,24 +727,22 @@ function NumberField({
   label,
   value,
   setValue,
-  step = 1,
 }: {
   label: string;
   value: number;
   setValue: (value: number) => void;
+  /** Kept for call-site compatibility; the decimal text input has no spinner. */
   step?: number;
 }) {
   const id = useId();
   return (
     <div>
       <label htmlFor={id} className="mb-1.5 block text-xs font-medium text-slate-700">{label}</label>
-      <input
+      <DecimalInput
         id={id}
-        type="number"
-        min={0}
-        step={step}
-        value={value || ''}
-        onChange={(event) => setValue(Number(event.target.value) || 0)}
+        blankZero
+        value={value}
+        onValueChange={(v) => setValue(Math.max(0, v))}
         className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
       />
     </div>

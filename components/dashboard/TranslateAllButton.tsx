@@ -52,7 +52,7 @@ export default function TranslateAllButton() {
         type="button"
         onClick={run}
         disabled={state === 'running'}
-        className="rounded-lg bg-brand-red px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-red/90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-lg bg-dk-red-strong px-4 py-2 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-60"
       >
         {state === 'running' ? 'Tərcümə olunur…' : 'Hamısını tərcümə et'}
       </button>

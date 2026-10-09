@@ -96,7 +96,7 @@ export default function Hero() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/auth/register"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-red)] px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-red-500/25 transition-shadow hover:shadow-xl"
+                className="inline-flex items-center gap-2 rounded-xl bg-dk-red-strong px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-red-500/25 transition-shadow hover:shadow-xl"
               >
                 {copy.primaryCta}
                 <ArrowRight size={18} />

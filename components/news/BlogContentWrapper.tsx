@@ -103,7 +103,7 @@ export default function BlogContentWrapper({
             {/* Modal Container */}
             <div className="relative flex min-h-screen items-center justify-center p-4 py-8">
               <div className="relative z-10 w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
-                <div className="bg-gradient-to-r from-[var(--dk-red)] to-[var(--dk-red-strong)] px-6 py-5 text-center text-white">
+                <div className="bg-gradient-to-r from-dk-red-strong to-dk-red-deep px-6 py-5 text-center text-white">
                   <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-full bg-white/15">
                     <Lock className="h-7 w-7" />
                   </div>
@@ -168,7 +168,7 @@ export default function BlogContentWrapper({
                   </div>
 
                   <div className="space-y-3">
-                    <Link href={registerHref} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] py-3.5 font-bold text-white transition hover:bg-[var(--dk-red-strong)]">
+                    <Link href={registerHref} className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong py-3.5 font-bold text-white transition hover:bg-dk-red-deep">
                       <Sparkles className="h-5 w-5" />
                       {t('registerCta')}
                     </Link>

@@ -169,7 +169,7 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
               {errors.foodCostPercent && <span className="mt-1 block text-xs font-semibold text-[var(--dk-red)]">{errors.foodCostPercent}</span>}
             </label>
 
-            <button type="submit" className="inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-[var(--dk-red)] px-4 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90">
+            <button type="submit" className="inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-dk-red-strong px-4 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90">
               {t('cta')}
             </button>
           </div>

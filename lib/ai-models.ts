@@ -8,9 +8,11 @@
  * Deadlines:
  *   - gemini-2.0-flash shutdown: 2026-06-01 — migrated (2.5-flash)
  *   - deepseek-chat deprecated:  2026-07-24 — migrated (v4-flash)
+ *   - deepseek-v4-flash retired: 2026-09-10 — only a temporary alias to V4.1 Flash now;
+ *     canonical id is deepseek-flash (api-docs.deepseek.com/updates, checked 2026-10-09)
  *   - claude-sonnet-4-5 retires: 2026-11-30 — dropped from allowlist (TASK-0503)
  *
- * @lastModified 2026-10-08 (TASK-0503)
+ * @lastModified 2026-10-09 (TASK-0514)
  */
 
 export const AI_MODELS = {
@@ -21,8 +23,8 @@ export const AI_MODELS = {
     text: 'gemini-2.5-flash',
   },
   deepseek: {
-    /** Primary chat/reasoning model — replaces deprecated deepseek-chat */
-    chat: 'deepseek-v4-flash',
+    /** Primary chat/reasoning model — DeepSeek V4.1 Flash (TASK-0514) */
+    chat: 'deepseek-flash',
   },
   claude: {
     /** Fallback provider — DeepSeek cokende ise dusur. Env override: KAZAN_ANTHROPIC_MODEL */

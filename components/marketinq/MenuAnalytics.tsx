@@ -368,7 +368,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
           <button
             type="button"
             onClick={analyze}
-            className="no-print inline-flex min-h-12 items-center justify-center rounded-lg bg-[var(--dk-red)] px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[var(--dk-red)]/90"
+            className="no-print inline-flex min-h-12 items-center justify-center rounded-lg bg-dk-red-strong px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[var(--dk-red)]/90"
           >
             {t('analyze')}
           </button>

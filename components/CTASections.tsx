@@ -36,7 +36,7 @@ const copyByLocale: Record<
     joinBody:
       'Strateji alətlər, KAZAN AI dəstəyi və sistemli idarəetmə ilə daha güclü nəticə alın.',
     bullets: [
-      '18 pulsuz hesablama aləti: food cost, P&L, delivery, menyu',
+      '35+ alət, 17-si pulsuz: food cost, P&L, delivery, menyu',
       'KAZAN AI: sualınıza istənilən vaxt cavab (beta)',
       'Pulsuz diaqnostika — WhatsApp-da birbaşa Doğan bəy',
       'Sektor Nəbzi: hər gün seçilmiş xəbərlər Telegram kanalında',
@@ -56,7 +56,7 @@ const copyByLocale: Record<
     joinBody:
       'Получайте более сильный результат с помощью стратегических инструментов, поддержки KAZAN AI и системного управления.',
     bullets: [
-      '18 бесплатных калькуляторов: food cost, P&L, доставка, меню',
+      '35+ инструментов, 17 бесплатно: food cost, P&L, доставка, меню',
       'KAZAN AI: ответ на ваш вопрос в любое время (бета)',
       'Бесплатная диагностика — напрямую с Доганом в WhatsApp',
       'Пульс отрасли: отобранные новости каждый день в Telegram-канале',
@@ -76,7 +76,7 @@ const copyByLocale: Record<
     joinBody:
       'Get stronger outcomes with strategic tools, KAZAN AI support, and disciplined operations.',
     bullets: [
-      '18 free calculators: food cost, P&L, delivery, menu',
+      '35+ tools, 17 of them free: food cost, P&L, delivery, menu',
       'KAZAN AI: answers your question any time (beta)',
       'Free diagnostic — directly with Doğan on WhatsApp',
       'Sector Pulse: curated news every day on our Telegram channel',
@@ -96,7 +96,7 @@ const copyByLocale: Record<
     joinTitle: ['İşinizi', 'bir üst seviyeye taşıyın'],
     joinBody: 'Stratejik araçlar, KAZAN AI desteği ve sistemli yönetim ile daha güçlü sonuç alın.',
     bullets: [
-      '18 ücretsiz hesaplama aracı: food cost, P&L, teslimat, menü',
+      '35+ araç, 17’si ücretsiz: food cost, P&L, teslimat, menü',
       'KAZAN AI: sorunuza her an yanıt (beta)',
       'Ücretsiz teşhis — WhatsApp\'tan doğrudan Doğan Bey',
       'Sektör Nabzı: her gün seçilmiş haberler Telegram kanalında',

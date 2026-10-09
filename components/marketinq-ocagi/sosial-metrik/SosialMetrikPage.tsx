@@ -297,7 +297,7 @@ export default function SosialMetrikPage({ backHref = '/b2b-panel/marketinq-ocag
 
         {/* Submit */}
         <div className="mt-5 flex justify-center">
-          <button type="submit" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 text-base font-bold text-white shadow-lg transition hover:bg-[var(--dk-red)]/90">
+          <button type="submit" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 text-base font-bold text-white shadow-lg transition hover:bg-[var(--dk-red)]/90">
             <BarChart3 size={18} />
             {t('cta')}
           </button>

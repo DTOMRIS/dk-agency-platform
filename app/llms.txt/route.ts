@@ -5,6 +5,7 @@ import { SEKTOR_CONFIG_LIST } from '@/lib/data/sektorConfigs';
 import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import { RSS_FEEDS } from '@/lib/news/rss-ingest';
 import { TOOLKIT_CATALOG } from '@/lib/news/toolkit-catalog';
+import { FREE_TOOLKIT_COUNT } from '@/lib/toolkit/tool-directory';
 import { TELEGRAM_URL, WHATSAPP_NUMBER } from '@/lib/contact-channels';
 import { SITE_URL } from '@/lib/seo/structured-data';
 
@@ -129,7 +130,8 @@ async function getModuleEntries(): Promise<Entry[]> {
   }));
 }
 
-const TOOLKIT_ENTRIES: Entry[] = TOOLKIT_CATALOG.map((tool) => ({
+// TASK-0514: /toolkit/pnl-simulator opens the same tool as /toolkit/pnl — listed once.
+const TOOLKIT_ENTRIES: Entry[] = TOOLKIT_CATALOG.filter((tool) => tool.slug !== 'pnl-simulator').map((tool) => ({
   title: tool.label,
   path: `/toolkit/${tool.slug}`,
   description: tool.description,
@@ -220,7 +222,7 @@ export async function GET(): Promise<Response> {
         '- Şirkət: DK Agency (hüquqi ad: DENİS TOMRİS MMC, VÖEN 1405471681), Bakı, Azərbaycan. 2010-da qurulub.',
         '- Qurucu: Doğan Tomris (Qurucu) — 40 ildir HoReCa sektorunda; Türkiyə, Azərbaycan, Rusiya və Gürcüstanda restoran və otel layihələri.',
         '- Nə edir: restoranın rəqəmlərini (food cost, delivery komissiyası, kadr, kassa, gündəlik itki) bir yerə yığır, pulun harada sızdığını göstərir və hər siqnala bir addım təklif edir; qərar sahibdədir. Başlanğıc — WhatsApp ilə pulsuz diaqnostika.',
-        `- Pulsuz alətlər: ${TOOLKIT_CATALOG.length} hesablama aləti (/toolkit), qeydiyyatsız işləyir.`,
+        `- Alətlər: 35+ alət, ${FREE_TOOLKIT_COUNT}-si pulsuz — Toolkit-də ${FREE_TOOLKIT_COUNT} pulsuz hesablama aləti (/toolkit, qeydiyyatsız işləyir), üstəgəl Marketinq Ocağı AI alətləri, franchise alətləri və KAZAN AI.`,
         '- OCAQ: çoxfilialı şəbəkə üçün gündəlik nəzarət — növbə checklist-i, HACCP, canlı satış, kassa ↔ bank üzləşdirməsi, itki nəzarəti; 10+ filiallı şəbəkədə hər gün işləyir.',
         '- KAZAN AI: HoReCa üzrə AI məsləhətçi, beta mərhələsində (/kazan-ai).',
         `- Sektor Nəbzi: ${feedCount} RSS lenti (HoReCa/turizm ticarət mətbuatı və Azərbaycan xəbər agentlikləri) hər 6 saatdan bir yoxlanılır; xəbərlər redaktorun Telegram-da təsdiqindən sonra /haberler səhifəsində və Telegram kanalında (${TELEGRAM_URL}) dərc olunur.`,
@@ -229,7 +231,7 @@ export async function GET(): Promise<Response> {
         `- Əlaqə: info@dkagency.com.tr · WhatsApp ${whatsappDisplay} · Telegram kanalı ${TELEGRAM_URL} · ${SITE_URL}/elaqe — iş saatları bazar ertəsi–cümə, 09:00–18:00 (UTC+4).`,
       ].join('\n'),
       toSection('Modullar', moduleEntries),
-      toSection(`Pulsuz alətlər (toolkit, ${TOOLKIT_CATALOG.length})`, TOOLKIT_ENTRIES),
+      toSection(`Pulsuz alətlər (toolkit, ${FREE_TOOLKIT_COUNT})`, TOOLKIT_ENTRIES),
       toSection('Platforma', CORE_ENTRIES),
       toSection('Franchise (françayzinq)', franchiseEntries),
       toSection('Sektor bələdçiləri', sektorEntries),

@@ -264,7 +264,7 @@ export default function OnboardingModal() {
                 type="button"
                 onClick={handleSave}
                 disabled={selected.length < 1 || saving}
-                className="inline-flex min-h-11 items-center rounded-full bg-[var(--dk-red)] px-6 text-sm font-bold text-white disabled:opacity-50"
+                className="inline-flex min-h-11 items-center rounded-full bg-dk-red-strong px-6 text-sm font-bold text-white disabled:opacity-50"
               >
                 {saving ? t('saving') : t('save')}
               </button>
@@ -312,7 +312,7 @@ export default function OnboardingModal() {
                       className="group flex items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-white p-4 text-left transition hover:border-amber-300 hover:shadow-md"
                     >
                       <span className="text-sm font-bold text-slate-900">{toolName(slug)}</span>
-                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--dk-red)] px-3 py-1.5 text-xs font-bold text-white">
+                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-dk-red-strong px-3 py-1.5 text-xs font-bold text-white">
                         {t('result.tryTool')}
                         <ArrowRight className="h-3 w-3" />
                       </span>

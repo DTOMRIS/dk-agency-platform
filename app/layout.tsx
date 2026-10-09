@@ -45,7 +45,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={locale} className={`${dmSans.variable} ${playfair.variable}`}>
-      <body className="min-h-screen overflow-x-hidden bg-white font-sans selection:bg-brand-red selection:text-white antialiased">
+      <body className="min-h-screen overflow-x-hidden bg-white font-sans selection:bg-dk-red-strong selection:text-white antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <PublicChrome>{children}</PublicChrome>
         </NextIntlClientProvider>

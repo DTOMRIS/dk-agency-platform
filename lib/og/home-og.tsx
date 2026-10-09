@@ -44,7 +44,35 @@ const STRIP = ['Food cost', 'P&L', 'OCAQ', 'KAZAN AI'];
 
 type OgFont = { name: string; data: ArrayBuffer; weight: 600 | 800 | 900; style: 'normal' };
 
+/**
+ * TASK-0514: Inter is bundled in lib/og/fonts (SIL OFL 1.1, rsms/inter v4.1 — full Latin-ext incl. ə and
+ * Cyrillic), so the preview never depends on Google Fonts at request time. Google stays as a fallback
+ * only if the files are missing from the deployment.
+ */
+async function loadLocalFonts(): Promise<OgFont[]> {
+  const dir = path.join(process.cwd(), 'lib/og/fonts');
+  const read = async (file: string) => {
+    const buf = await readFile(path.join(dir, file));
+    return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
+  };
+  const [semi, extra, black] = await Promise.all([
+    read('Inter-SemiBold.ttf'),
+    read('Inter-ExtraBold.ttf'),
+    read('Inter-Black.ttf'),
+  ]);
+  return [
+    { name: 'Inter', data: semi, weight: 600, style: 'normal' },
+    { name: 'Inter', data: extra, weight: 800, style: 'normal' },
+    { name: 'Inter', data: black, weight: 900, style: 'normal' },
+  ];
+}
+
 async function loadFonts(text: string): Promise<OgFont[]> {
+  try {
+    return await loadLocalFonts();
+  } catch {
+    // fall through to Google
+  }
   try {
     const [semi, extra, black] = await Promise.all([
       loadGoogleFont('Inter', 600, text),

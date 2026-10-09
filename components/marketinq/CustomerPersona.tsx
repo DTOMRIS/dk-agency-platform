@@ -348,7 +348,7 @@ ${t('donts')}: ${p.donts.join(', ')}`;
             type="button"
             onClick={handleGenerate}
             disabled={isPending || !serviceModels.length || !ageRanges.length}
-            className="no-print inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 text-base font-bold text-white shadow-lg transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50"
+            className="no-print inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 text-base font-bold text-white shadow-lg transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
             {t('generate_btn')}

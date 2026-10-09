@@ -8,6 +8,15 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import GuruQuoteBox from './GuruQuoteBox';
 import { FounderAvatar } from '@/components/ui/FounderAvatar';
+import { headingSlug } from '@/lib/blog/toc';
+
+/** All text of a hast node (heading ids for the blog TOC, TASK-0514). */
+function nodeText(node: unknown): string {
+  if (!node || typeof node !== 'object') return '';
+  const n = node as { type?: string; value?: unknown; children?: unknown[] };
+  if (n.type === 'text' && typeof n.value === 'string') return n.value;
+  return (n.children ?? []).map(nodeText).join('');
+}
 
 /** Siyahı elementinin ilk mətni — ☐/☑ checklist maddəsini adi maddədən ayırmaq üçün */
 function firstText(node: unknown): string {
@@ -34,6 +43,8 @@ function isCheckboxItem(node: unknown): boolean {
 interface MarkdownRendererProps {
   content: string;
   className?: string;
+  /** Give every h2 an id (lib/blog/toc headingSlug) so a table of contents can link to it. */
+  headingIds?: boolean;
 }
 
 // Parse guru box from ASCII art format
@@ -140,7 +151,7 @@ function getBlockquoteContent(children: React.ReactNode): string {
   return text;
 }
 
-export default function MarkdownRenderer({ content, className = '' }: MarkdownRendererProps) {
+export default function MarkdownRenderer({ content, className = '', headingIds = false }: MarkdownRendererProps) {
   // Pre-process content to handle guru boxes
   const processedContent = useMemo(() => {
     // Find guru boxes in blockquote format and replace with markers
@@ -214,8 +225,11 @@ export default function MarkdownRenderer({ content, className = '' }: MarkdownRe
               {children}
             </h1>
           ),
-          h2: ({ children }) => (
-            <h2 className="mt-12 mb-4 font-display text-2xl font-bold leading-tight text-slate-950 md:text-[26px]">
+          h2: ({ node, children }) => (
+            <h2
+              id={headingIds ? headingSlug(nodeText(node).trim()) : undefined}
+              className="mt-12 mb-4 scroll-mt-28 font-display text-2xl font-bold leading-tight text-slate-950 md:text-[26px]"
+            >
               {children}
             </h2>
           ),

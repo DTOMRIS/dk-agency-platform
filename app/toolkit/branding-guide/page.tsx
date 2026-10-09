@@ -64,7 +64,7 @@ export default function BrandingGuidePage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-base font-bold text-slate-900">{t('workbookTitle')}</h2>
-          <p className="text-sm text-slate-500">{t('workbookSubtitle')}</p>
+          <p className="text-sm text-slate-600">{t('workbookSubtitle')}</p>
         </div>
         <span className="rounded-full bg-pink-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-pink-600">
           {t('checklistBadge')}
@@ -83,7 +83,7 @@ export default function BrandingGuidePage() {
                 className="flex w-full items-center justify-between bg-slate-50 px-4 py-4 text-left">
                 <div>
                   <div className="text-sm font-bold text-slate-900">{group.title}</div>
-                  <div className="text-xs text-slate-500">{group.items.length}</div>
+                  <div className="text-xs text-slate-600">{group.items.length}</div>
                 </div>
                 <ChevronDown size={18} className={`text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -136,7 +136,7 @@ export default function BrandingGuidePage() {
         <div className="mt-1 text-3xl font-black text-slate-900">{completedItems}/{totalItems}</div>
       </div>
       <div className="rounded-xl bg-pink-50 p-4 ring-1 ring-pink-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statProgressPct')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statProgressPct')}</div>
         <div className="mt-1 text-3xl font-black text-pink-600">{progressPct.toFixed(0)}%</div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">

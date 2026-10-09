@@ -259,7 +259,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] py-3.5 font-bold text-white transition-all dk-hover-glow hover:bg-[var(--dk-red-strong)] disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong py-3.5 font-bold text-white transition-all dk-hover-glow hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <LogIn className="h-5 w-5" />
                 {submitting ? copy.submitting : copy.submitBtn}

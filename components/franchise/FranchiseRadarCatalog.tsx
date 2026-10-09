@@ -137,7 +137,7 @@ export default function FranchiseRadarCatalog() {
               <button
                 type="button"
                 onClick={() => setActive(b)}
-                className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-4 text-sm font-black text-white transition hover:bg-rose-600"
+                className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-4 text-sm font-black text-white transition hover:bg-dk-red-deep"
               >
                 {t('card.interested')} <ArrowRight size={16} />
               </button>
