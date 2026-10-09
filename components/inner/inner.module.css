@@ -2040,6 +2040,10 @@
   font-weight: 700;
   text-decoration: underline;
 }
+/* TASK-0519: short copy is phone-only (see the ≤640px block). */
+.ckShort {
+  display: none;
+}
 .ckBtns {
   display: flex;
   gap: 6px;
@@ -2398,19 +2402,37 @@
     flex-direction: column;
     align-items: flex-start;
   }
+  /* TASK-0519: compact phone bar — one short line + one row of small buttons (≈66px). */
   .ckWrap {
-    padding: 8px 16px;
-    gap: 8px;
+    padding: 6px 12px 7px;
+    gap: 5px;
+    min-height: 0;
   }
   .ck p {
     flex-basis: 100%;
     font-size: 12.5px;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ckLong {
+    display: none;
+  }
+  .ckShort {
+    display: inline;
   }
   .ckBtns {
     width: 100%;
   }
   .ckBtns button {
     flex: 1;
+    height: 32px;
+    padding: 0 8px;
+    font-size: 12.5px;
+  }
+  .ckSettings .ckBtns button {
+    height: 36px;
   }
 }
 

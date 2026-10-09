@@ -7148,7 +7148,9 @@
     "cookie": {
       "region": "Çərəz bildirişi",
       "text": "Sayt təcrübəni yaxşılaşdırmaq və performansı ölçmək üçün çərəzlərdən istifadə edir.",
+      "textShort": "Sayt çərəzlərdən istifadə edir.",
       "privacy": "Məxfilik siyasəti",
+      "privacyShort": "Ətraflı",
       "reject": "İmtina",
       "choose": "Seçim et",
       "accept": "Qəbul edirəm",

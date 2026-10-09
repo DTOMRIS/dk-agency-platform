@@ -82,7 +82,8 @@ export default function HeroPhone() {
     <section className={`${styles.v2} ${inter.className}`}>
       <div className={styles.hero}>
         <div className={`${styles.wrap} ${styles.heroGrid}`}>
-          <Reveal>
+          {/* TASK-0519: hero copy is not wrapped in Reveal — it must paint before hydration (LCP on slow phones). */}
+          <div>
             <h1 className={styles.hBig}>
               {t('hero.l1')}
               <br />
@@ -109,7 +110,7 @@ export default function HeroPhone() {
                 </span>
               </a>
             </div>
-          </Reveal>
+          </div>
 
           <Reveal className={styles.phoneStage} ariaLabel={t('hero.phoneLabel')}>
             {CHIPS.map((chip) => (
