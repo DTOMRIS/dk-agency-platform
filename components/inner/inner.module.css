@@ -13,7 +13,7 @@
   --cost: #7c5a2a;
   --cost-soft: #f3ece1;
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
-  /* Header.tsx: 68px below xl, 64px at xl+ (sticky). */
+  /* Header.tsx: 68px below xl, 76px at xl+ (sticky; TASK-0520 v2 header). */
   --hdr: 68px;
   min-height: 60vh;
   padding-bottom: 56px;
@@ -21,7 +21,7 @@
 }
 @media (min-width: 1280px) {
   .page {
-    --hdr: 64px;
+    --hdr: 76px;
   }
 }
 .page :focus-visible {

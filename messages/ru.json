@@ -3465,6 +3465,7 @@
       "listings": "Объявления",
       "news": "Новости",
       "blog": "Блог",
+      "inbox": "Все обращения",
       "kazanLeads": "KAZAN Лиды",
       "contactTracking": "Каналы связи",
       "supplyBase": "Поставщики",
@@ -7418,6 +7419,80 @@
         "portionUnit": "порция",
         "sheetName": "Себестоимость"
       }
+    }
+  },
+  "dashboardInbox": {
+    "title": "Все обращения",
+    "subtitle": "Запросы по объявлениям, клики WhatsApp/контакт, KAZAN, франшиза и подписки на рассылку в одном списке. Только просмотр; статус меняется на странице источника.",
+    "all": "Все",
+    "sources": {
+      "listing": "Запросы по объявлениям",
+      "contact": "Клики WhatsApp / контакт",
+      "kazan": "Лиды KAZAN",
+      "franchise": "Франшиза / OTA / Радар",
+      "newsletter": "Подписки на рассылку"
+    },
+    "sourcesShort": {
+      "listing": "Объявление",
+      "contact": "Клик",
+      "kazan": "KAZAN",
+      "franchise": "Франшиза",
+      "newsletter": "Рассылка"
+    },
+    "period": "Период",
+    "periodDays": "Последние {days} дн.",
+    "source": "Источник",
+    "searchLabel": "Поиск",
+    "searchPlaceholder": "Имя, телефон, e-mail, объявление или текст",
+    "searchSubmit": "Найти",
+    "clear": "Сбросить",
+    "results": "Обращений: {count}",
+    "limitNote": "Из каждого источника показываются не более {limit} последних записей.",
+    "empty": "По этим фильтрам обращений нет.",
+    "dbUnavailable": "База данных недоступна.",
+    "cols": {
+      "date": "Дата",
+      "source": "Источник",
+      "contact": "Контакт",
+      "context": "Откуда",
+      "message": "Сообщение",
+      "status": "Статус"
+    },
+    "anonymous": "Анонимный клик",
+    "open": "Открыть",
+    "noDetail": "Нет отдельной страницы",
+    "channels": {
+      "form": "Форма",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "kazan": "KAZAN",
+      "food_cost": "Food cost",
+      "pnl": "P&L",
+      "aqta": "AQTA",
+      "delivery": "Доставка",
+      "general": "Общее",
+      "readiness_test": "Тест готовности",
+      "roi_calc": "ROI калькулятор",
+      "buyer_checklist": "Чек-лист покупателя",
+      "franchbook_gate": "FranchBook",
+      "academy": "Академия",
+      "consulting": "Консалтинг",
+      "ota_guide_pdf": "Гид по OTA",
+      "franchise_radar": "Franchise Radar",
+      "homepage_newsletter": "Главная",
+      "blog_newsletter": "Блог",
+      "wa_redirect": "Переход в WhatsApp",
+      "contact_page": "Страница контактов",
+      "home_join": "Блок на главной"
+    },
+    "statuses": {
+      "new": "Новый",
+      "contacted": "Связались",
+      "qualified": "Квалифицирован",
+      "converted": "Стал клиентом",
+      "dismissed": "Закрыт",
+      "subscribed": "Подписан",
+      "unsubscribed": "Отписался"
     }
   }
 }

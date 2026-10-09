@@ -111,7 +111,7 @@ function MegaMenuPanel({ onClose }: { onClose: () => void }) {
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2 }}
       style={{ left }}
-      className="absolute top-full z-50 max-h-[calc(100vh-8rem)] w-[90vw] max-w-[880px] overflow-y-auto overscroll-contain rounded-2xl border border-[var(--dk-border-soft)] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+      className="absolute top-full z-50 max-h-[calc(100vh-8rem)] w-[90vw] max-w-[880px] overflow-y-auto overscroll-contain rounded-[26px] border border-[#E4DCCD] bg-white p-8 shadow-[0_30px_70px_-24px_rgba(15,23,42,0.3)]"
       onMouseLeave={onClose}
     >
       <div className="flex items-start justify-between">

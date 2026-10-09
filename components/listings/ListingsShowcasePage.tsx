@@ -162,7 +162,7 @@ export default function ListingsShowcasePage() {
         </section>
 
         {/* ── Filter Bar (sticky) ──────────────────────────── */}
-        <section className="sticky top-[64px] z-20 border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-md lg:top-0">
+        <section className="sticky top-[68px] z-20 border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-md xl:top-[76px]">
           {/* Mobile toggle button */}
           <button
             type="button"

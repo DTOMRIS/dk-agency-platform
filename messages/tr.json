@@ -3465,6 +3465,7 @@
       "listings": "İlanlar",
       "news": "Haberler",
       "blog": "Blog",
+      "inbox": "Tüm başvurular",
       "kazanLeads": "KAZAN Leads",
       "contactTracking": "İletişim Kanalları",
       "supplyBase": "Tedarikçiler",
@@ -7418,6 +7419,80 @@
         "portionUnit": "porsiyon",
         "sheetName": "Yemek Maliyeti"
       }
+    }
+  },
+  "dashboardInbox": {
+    "title": "Tüm başvurular",
+    "subtitle": "İlan talepleri, WhatsApp/iletişim tıklamaları, KAZAN, franchise ve bülten abonelikleri tek listede. Yalnızca okuma; durumu kaynak sayfada değiştirin.",
+    "all": "Tümü",
+    "sources": {
+      "listing": "İlan talepleri",
+      "contact": "WhatsApp / iletişim tıklamaları",
+      "kazan": "KAZAN leadleri",
+      "franchise": "Franchise / OTA / Radar",
+      "newsletter": "Bülten abonelikleri"
+    },
+    "sourcesShort": {
+      "listing": "İlan",
+      "contact": "Tıklama",
+      "kazan": "KAZAN",
+      "franchise": "Franchise",
+      "newsletter": "Bülten"
+    },
+    "period": "Dönem",
+    "periodDays": "Son {days} gün",
+    "source": "Kaynak",
+    "searchLabel": "Arama",
+    "searchPlaceholder": "Ad, telefon, e-posta, ilan veya metin",
+    "searchSubmit": "Ara",
+    "clear": "Temizle",
+    "results": "{count} başvuru",
+    "limitNote": "Her kaynaktan en fazla son {limit} kayıt gösterilir.",
+    "empty": "Bu filtrelerle başvuru bulunamadı.",
+    "dbUnavailable": "Veritabanına erişilemiyor.",
+    "cols": {
+      "date": "Tarih",
+      "source": "Kaynak",
+      "contact": "İletişim",
+      "context": "Nereden",
+      "message": "Mesaj",
+      "status": "Durum"
+    },
+    "anonymous": "Anonim tıklama",
+    "open": "Aç",
+    "noDetail": "Ayrı sayfa yok",
+    "channels": {
+      "form": "Form",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "kazan": "KAZAN",
+      "food_cost": "Food cost",
+      "pnl": "P&L",
+      "aqta": "AQTA",
+      "delivery": "Paket servis",
+      "general": "Genel",
+      "readiness_test": "Hazırlık testi",
+      "roi_calc": "ROI hesaplayıcı",
+      "buyer_checklist": "Alıcı kontrol listesi",
+      "franchbook_gate": "FranchBook",
+      "academy": "Akademi",
+      "consulting": "Danışmanlık",
+      "ota_guide_pdf": "OTA rehberi",
+      "franchise_radar": "Franchise Radar",
+      "homepage_newsletter": "Ana sayfa",
+      "blog_newsletter": "Blog",
+      "wa_redirect": "WhatsApp yönlendirme",
+      "contact_page": "İletişim sayfası",
+      "home_join": "Ana sayfa bloğu"
+    },
+    "statuses": {
+      "new": "Yeni",
+      "contacted": "İletişime geçildi",
+      "qualified": "Nitelikli",
+      "converted": "Müşteri oldu",
+      "dismissed": "Kapatıldı",
+      "subscribed": "Abone",
+      "unsubscribed": "Abonelikten çıktı"
     }
   }
 }

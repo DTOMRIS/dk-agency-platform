@@ -524,13 +524,17 @@ export default function FloatingKazanWidget() {
         ) : null}
       </AnimatePresence>
 
+      {/* TASK-0520: no floating launcher below lg — the bottom nav (also lg:hidden) has KAZAN AI in its
+          centre (→ /kazan-ai) and the launcher covered «Pulsuz üzv ol» and form inputs on phones.
+          The panel itself still opens on phones via `kazan:open` (e.g. /elaqe) and closes with its own X. */}
       <motion.button
         type="button"
+        data-testid="kazan-launcher"
         onClick={() => setOpen((value) => !value)}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
         aria-label={open ? t('closePanel') : t('openPanel')}
-        className="ml-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--dk-navy)] text-[var(--dk-gold)] shadow-2xl shadow-[var(--dk-navy)]/30 sm:h-16 sm:w-16"
+        className="ml-auto hidden h-14 w-14 items-center justify-center rounded-2xl lg:flex bg-[var(--dk-navy)] text-[var(--dk-gold)] shadow-2xl shadow-[var(--dk-navy)]/30 sm:h-16 sm:w-16"
       >
         {open ? <X size={26} /> : <MessageCircle size={26} />}
       </motion.button>
