@@ -4,6 +4,8 @@
 
 **PR-lar:** #515 (8 Okt landing v2), #516 (iç səhifələr + audit düzəlişləri), #517 (TASK-0516 ana səhifə sübutu + TASK-0517 sadə dil) — hamısı main-də. TASK-0518 budaq `feat/TASK-0518-tools-polish` (bu commit), push Doğan-da.
 
+**TASK-0519** (eyni budaq, commit edilməyib): mobil çərçivə v2 — header < xl krem, sağdan açılan menyu paneli (Modullar qrupları + nav + dil + hesab + «Pulsuz diaqnostika»), alt menyu v2 (64px), çərəz zolağı telefonda 67px, WhatsApp md-dən aşağı gizli, çek boş qalmır, reveal tez işə düşür. `Header.tsx` dəyişikliyi sahibin ayrıca commit-idir (`ALLOW_PROTECTED=1`). Kart: `docs/tasks/TASK-0519.md`.
+
 ### Sahib qərarları (09.10) — hamısı ADR-0017-də
 - Tünd qırmızı: ağ mətnli qırmızı düymələr `#D63B54` (`dk-red-strong`), sayt + admin + b2b panel; `#E94560` yalnız dekor.
 - Admin-də yeri olan səhifə hissəsi silinmir (manşet → `isManset`, «Son elanlar» → `showcase_ready`, reklam yuvaları `news-sidebar/news-inline/home-mid/blog-inline`).

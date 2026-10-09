@@ -309,7 +309,9 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.12 }
+      // TASK-0519: fire as soon as any part is ~15% of a screen away (was 12% of the element's own
+      // height — tall blocks on phones stayed blank for hundreds of px). Only opacity/translate animate.
+      { threshold: 0, rootMargin: '0px 0px 15% 0px' }
     );
     io.observe(el);
     return () => io.disconnect();

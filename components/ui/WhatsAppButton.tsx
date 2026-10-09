@@ -6,7 +6,8 @@
  *          MobileBottomNav (64px) like KAZAN, and both lift above the cookie bar while it is shown
  *          (--dk-cookie-bar-h, published by CookiesBanner).
  * @pattern A (useTranslations) — whatsappFloat
- * @task TASK-0516
+ *          TASK-0519: hidden below md — on phones the bottom nav + KAZAN already cover contact.
+ * @task TASK-0516 · TASK-0519
  */
 
 'use client';
@@ -19,7 +20,7 @@ export default function WhatsAppButton() {
 
   // TASK-0518: above the tool result sheet (--dk-tool-sheet-h), hidden while it is open.
   return (
-    <div className="group fixed bottom-[calc(5.5rem+var(--dk-cookie-bar-h,0px)+var(--dk-tool-sheet-h,0px))] [[data-dk-sheet-open]_&]:hidden left-3 z-[65] sm:left-6 lg:bottom-[calc(2rem+var(--dk-cookie-bar-h,0px))] lg:left-8">
+    <div className="group hidden md:block fixed bottom-[calc(5.5rem+var(--dk-cookie-bar-h,0px)+var(--dk-tool-sheet-h,0px))] [[data-dk-sheet-open]_&]:hidden left-3 z-[65] sm:left-6 lg:bottom-[calc(2rem+var(--dk-cookie-bar-h,0px))] lg:left-8">
       <span className="pointer-events-none absolute left-16 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded-lg bg-[var(--dk-ink)] px-3 py-1.5 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 lg:block">
         {t('label')}
       </span>

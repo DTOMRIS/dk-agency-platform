@@ -126,9 +126,14 @@ export default function CookiesBanner() {
   return (
     <div ref={barRef} className={s.ck} role="region" aria-label={t('region')}>
       <div className={s.ckWrap}>
+        {/* TASK-0519: phones get one short line (≤640px) so the bar stays ≤72px tall. */}
         <p>
-          {t('text')}{' '}
-          <Link href={withLocale(locale, '/privacy')}>{t('privacy')}</Link>
+          <span className={s.ckLong}>{t('text')}</span>
+          <span className={s.ckShort}>{t('textShort')}</span>{' '}
+          <Link href={withLocale(locale, '/privacy')} aria-label={t('privacy')}>
+            <span className={s.ckLong}>{t('privacy')}</span>
+            <span className={s.ckShort}>{t('privacyShort')}</span>
+          </Link>
         </p>
         {settingsOpen ? (
           <div className={s.ckSettings}>

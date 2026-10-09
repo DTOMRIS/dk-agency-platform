@@ -7148,7 +7148,9 @@
     "cookie": {
       "region": "Çerez bildirimi",
       "text": "Site, deneyimi iyileştirmek ve performansı ölçmek için çerez kullanır.",
+      "textShort": "Site çerez kullanır.",
       "privacy": "Gizlilik politikası",
+      "privacyShort": "Ayrıntılar",
       "reject": "Reddet",
       "choose": "Seçim yap",
       "accept": "Kabul ediyorum",

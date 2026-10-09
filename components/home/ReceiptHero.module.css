@@ -2,9 +2,11 @@
    Shared tokens (--ink, --red, --line …) come from homeV2.module.css `.v2` on the section.
    All motion is disabled under prefers-reduced-motion. */
 
+/* TASK-0519: the paper is always laid out with its lines (never an empty box); "printing" is only a
+   short nudge of the paper + a fade-up of the lines from a visible 55%. */
 @keyframes dkPrint {
   from {
-    transform: translateY(-104%);
+    transform: translateY(-14px);
   }
   to {
     transform: translateY(0);
@@ -13,8 +15,8 @@
 
 @keyframes dkLine {
   from {
-    opacity: 0;
-    transform: translateY(-6px);
+    opacity: 0.55;
+    transform: translateY(-3px);
   }
   to {
     opacity: 1;
@@ -271,18 +273,16 @@
   color: #be123c;
 }
 
-/* Print-on-view: armed = waiting off-screen, play = running. idle (SSR / reduced motion) = shown. */
-.armed .paper {
-  transform: translateY(-104%);
-}
+/* Print-on-view: armed = waiting off-screen (lines faint, never hidden), play = running.
+   idle (SSR / reduced motion) = fully shown. */
 .armed .line {
-  opacity: 0;
+  opacity: 0.55;
 }
 .play .paper {
-  animation: dkPrint 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: dkPrint 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .play .line {
-  animation: dkLine 0.4s ease both;
+  animation: dkLine 0.35s ease both;
 }
 
 /* ---- Calculator ---- */
@@ -640,9 +640,6 @@
   .pop,
   .rise {
     animation: none !important;
-  }
-  .armed .paper {
-    transform: none;
   }
   .armed .line {
     opacity: 1;

@@ -100,7 +100,8 @@ function useCountUp(target: number, reduce: boolean): number {
 
 /**
  * The receipt "prints" when it first scrolls into view (the section is no longer above the fold).
- * Before hydration and under reduced motion the receipt is simply shown.
+ * Before hydration and under reduced motion the receipt is simply shown. TASK-0519: the lines are
+ * always rendered (faint while armed); the animation is a ≤0.85s reveal, so no blank paper box.
  */
 function usePrintOnView(reduce: boolean) {
   const ref = useRef<HTMLDivElement>(null);
@@ -118,7 +119,7 @@ function usePrintOnView(reduce: boolean) {
           setPhase((p) => (p === 'idle' ? 'armed' : p));
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0.1 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -304,7 +305,7 @@ export function ReceiptHero() {
                       <div
                         key={line.key}
                         className={`${styles.line} ${styles.rLine} ${line.highlight ? styles.rHot : ''}`}
-                        style={{ animationDelay: `${(0.9 + i * 0.15).toFixed(2)}s` }}
+                        style={{ animationDelay: `${(0.1 + i * 0.06).toFixed(2)}s` }}
                       >
                         <span>{t(`lines.${line.key}`)}</span>
                         <span className={styles.num}>{line.value}</span>
@@ -313,7 +314,7 @@ export function ReceiptHero() {
                     <div className={styles.rule} />
                     <div
                       className={`${styles.line} ${styles.rTotal}`}
-                      style={{ animationDelay: '1.9s' }}
+                      style={{ animationDelay: '0.5s' }}
                     >
                       <span>{t('receiptLeft')}</span>
                       <span

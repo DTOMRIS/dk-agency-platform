@@ -7148,7 +7148,9 @@
     "cookie": {
       "region": "Cookie notice",
       "text": "This site uses cookies to improve your experience and measure performance.",
+      "textShort": "This site uses cookies.",
       "privacy": "Privacy policy",
+      "privacyShort": "Learn more",
       "reject": "Decline",
       "choose": "Customise",
       "accept": "Accept",
