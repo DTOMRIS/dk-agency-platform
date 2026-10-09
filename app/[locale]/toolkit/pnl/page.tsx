@@ -17,6 +17,14 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import DecimalInput from '@/components/toolkit/DecimalInput';
+import {
+  FOOD_COST_MAX_PCT,
+  LABOR_MAX_PCT,
+  NET_MARGIN_LOW_PCT,
+  PRIME_COST_MAX_PCT,
+  RENT_MAX_PCT,
+} from '@/lib/toolkit/benchmarks';
 
 type InputKey =
   | 'revenue'
@@ -95,15 +103,6 @@ function intlLocale(locale: string) {
   return 'en-US';
 }
 
-function parseNumber(value: string, locale: string): number {
-  const cleanValue = value.trim();
-  if (!cleanValue) return 0;
-  if (locale === 'az' || locale === 'ru' || locale === 'tr') {
-    return Number.parseFloat(cleanValue.replace(/\s/g, '').replace(/\./g, '').replace(',', '.')) || 0;
-  }
-  return Number.parseFloat(cleanValue.replace(/\s/g, '').replace(/,/g, '')) || 0;
-}
-
 export default function PnlSimulator() {
   const t = useTranslations('toolkit.pnl');
   const locale = useLocale();
@@ -128,6 +127,8 @@ export default function PnlSimulator() {
   const [tax, setTax] = useState(inputDefaults.tax);
   const [depreciation, setDepreciation] = useState(inputDefaults.depreciation);
   const [detailed, setDetailed] = useState(false);
+  // TASK-0515: a negative amount is rejected (value kept) and explained next to the field.
+  const [negativeKey, setNegativeKey] = useState<InputKey | null>(null);
 
   const formatCurrency = (value: number) => {
     const formatted = new Intl.NumberFormat(localeForIntl, {
@@ -140,7 +141,9 @@ export default function PnlSimulator() {
   };
 
   const formatPercent = (value: number) =>
-    new Intl.NumberFormat(localeForIntl, {
+    !Number.isFinite(value)
+      ? '—'
+      : new Intl.NumberFormat(localeForIntl, {
       style: 'percent',
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
@@ -154,7 +157,7 @@ export default function PnlSimulator() {
     const controllableProfit = operatingProfit - controllable;
     const uncontrollable = rent + accounting + insurance + tax + depreciation;
     const netProfit = controllableProfit - uncontrollable;
-    const pct = (value: number) => (revenue > 0 ? (value / revenue) * 100 : 0);
+    const pct = (value: number) => (revenue > 0 ? (value / revenue) * 100 : Number.NaN);
     const primeCost = foodCost + staffCost + management;
     return { cogs, operatingProfit, controllable, controllableProfit, uncontrollable, netProfit, pct, primeCost };
   }, [
@@ -178,9 +181,15 @@ export default function PnlSimulator() {
     utilities,
   ]);
 
-  const setInputValue = (setter: (value: number) => void) => (value: string) => {
-    setter(parseNumber(value, locale));
+  const setInputValue = (key: InputKey, setter: (value: number) => void) => (value: number) => {
+    if (value < 0) {
+      setNegativeKey(key);
+      return;
+    }
+    setNegativeKey((prev) => (prev === key ? null : prev));
+    setter(value);
   };
+  const hasRevenue = revenue > 0;
 
   const resetAll = () => {
     setRevenue(inputDefaults.revenue);
@@ -201,6 +210,7 @@ export default function PnlSimulator() {
     setInsurance(inputDefaults.insurance);
     setTax(inputDefaults.tax);
     setDepreciation(inputDefaults.depreciation);
+    setNegativeKey(null);
   };
 
   const rows: Row[] = [
@@ -247,14 +257,14 @@ export default function PnlSimulator() {
             <div className="flex flex-wrap items-center gap-3">
               <button
                 type="button"
-                className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-black text-white transition-colors hover:bg-blue-700"
+                className="min-h-[32px] rounded-lg bg-blue-700 px-3 py-2 text-xs font-black text-white transition-colors hover:bg-blue-800"
               >
                 {t('actions.calculate')}
               </button>
               <button
                 type="button"
                 onClick={() => setDetailed(!detailed)}
-                className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 transition-colors hover:text-blue-700"
+                className="flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-blue-700 transition-colors hover:text-blue-800"
               >
                 {detailed ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 {detailed ? t('actions.simpleView') : t('actions.detailView')}
@@ -262,14 +272,14 @@ export default function PnlSimulator() {
               <button
                 type="button"
                 onClick={resetAll}
-                className="flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-red-500"
+                className="flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-red-700"
               >
                 <RotateCcw size={13} /> {t('actions.reset')}
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-12 border-b border-slate-100 bg-slate-50/60 px-6 py-3 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+          <div className="grid grid-cols-12 border-b border-slate-100 bg-slate-50/60 px-6 py-3 text-[10px] font-bold tracking-widest text-slate-600 uppercase">
             <div className="col-span-5">{t('table.category')}</div>
             <div className="col-span-4">{t('table.amount')}</div>
             <div className="col-span-3 text-right">{t('table.percent')}</div>
@@ -282,7 +292,7 @@ export default function PnlSimulator() {
                 <div key={row.key}>
                   {section ? (
                     <div className="border-b border-slate-100 bg-slate-50 px-6 py-2.5">
-                      <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">
+                      <span className="text-[10px] font-bold tracking-widest text-slate-600 uppercase">
                         {t(`sections.${section}`)}
                       </span>
                     </div>
@@ -303,20 +313,31 @@ export default function PnlSimulator() {
                         {t(`inputs.${row.key}.label`)}
                       </label>
                       <div className="col-span-4">
-                        <input
+                        <DecimalInput
                           id={`pnl-${row.key}`}
-                          type="text"
-                          inputMode="decimal"
-                          value={row.value || ''}
-                          onChange={(event) => setInputValue(row.setter)(event.target.value)}
+                          blankZero
+                          value={row.value}
+                          onValueChange={setInputValue(row.key, row.setter)}
+                          aria-invalid={negativeKey === row.key ? true : undefined}
+                          aria-describedby={negativeKey === row.key ? `pnl-${row.key}-err` : undefined}
                           aria-label={t(`inputs.${row.key}.label`)}
                           placeholder={t('inputs.revenue.placeholder')}
-                          className="w-full rounded-lg bg-slate-100/80 px-3 py-2 text-sm font-medium text-slate-900 transition-shadow outline-none focus:ring-2 focus:ring-blue-500/30"
+                          className="w-full rounded-lg bg-slate-100/80 px-3 py-2 text-sm font-medium text-slate-900 transition-shadow outline-none focus:ring-2 focus:ring-blue-500/30 aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-red-600"
                         />
                       </div>
-                      <div className="col-span-3 text-right text-sm font-semibold text-slate-500 tabular-nums">
-                        {row.key === 'revenue' ? formatPercent(100) : formatPercent(calc.pct(row.value))}
+                      <div className="col-span-3 text-right text-sm font-semibold text-slate-600 tabular-nums" data-testid={`pnl-pct-${row.key}`}>
+                        {row.key === 'revenue' ? (hasRevenue ? formatPercent(100) : '—') : formatPercent(calc.pct(row.value))}
                       </div>
+                      {negativeKey === row.key ? (
+                        <p id={`pnl-${row.key}-err`} role="alert" className="col-span-12 mt-1 text-xs font-semibold text-red-700">
+                          {t('validation.negative')}
+                        </p>
+                      ) : null}
+                      {row.key === 'revenue' && !hasRevenue ? (
+                        <p role="status" data-testid="pnl-revenue-hint" className="col-span-12 mt-1 text-xs font-semibold text-amber-800">
+                          {t('validation.revenueRequired')}
+                        </p>
+                      ) : null}
                     </div>
                   ) : (
                     <div
@@ -334,8 +355,8 @@ export default function PnlSimulator() {
                         className={`col-span-4 text-lg font-black tabular-nums ${
                           row.type === 'final'
                             ? row.getValue() >= 0
-                              ? 'text-emerald-600'
-                              : 'text-red-600'
+                              ? 'text-emerald-700'
+                              : 'text-red-700'
                             : 'text-slate-900'
                         }`}
                       >
@@ -345,8 +366,8 @@ export default function PnlSimulator() {
                         className={`col-span-3 text-right text-sm font-bold tabular-nums ${
                           row.type === 'final'
                             ? row.getValue() >= 0
-                              ? 'text-emerald-600'
-                              : 'text-red-600'
+                              ? 'text-emerald-700'
+                              : 'text-red-700'
                             : 'text-slate-600'
                         }`}
                       >
@@ -360,16 +381,21 @@ export default function PnlSimulator() {
           </div>
         </div>
 
-        <InsightPanel netMargin={netMargin} foodCostPct={foodCostPct} staffCostPct={staffCostPct} t={t} formatPercent={formatPercent} />
+        {hasRevenue ? <InsightPanel netMargin={netMargin} foodCostPct={foodCostPct} staffCostPct={staffCostPct} t={t} formatPercent={formatPercent} /> : null}
     </div>
   );
 
   const resultSection = (
     <div className="space-y-4">
+      {!hasRevenue ? (
+        <p className="rounded-xl bg-amber-50 p-4 text-sm font-semibold text-amber-800 ring-1 ring-amber-200" data-testid="pnl-kpi-hint">
+          {t('validation.revenueRequired')}
+        </p>
+      ) : null}
       <KpiCard label={t('kpis.netProfit')} value={formatCurrency(calc.netProfit)} helper={formatPercent(netMargin)} positive={calc.netProfit >= 0} />
-      <KpiCard label={t('kpis.primeCost')} value={formatPercent(calc.pct(calc.primeCost))} helper={t('kpis.targetMax', { value: 65 })} positive={calc.pct(calc.primeCost) <= 65} tone="blue" />
-      <KpiCard label={t('kpis.foodCost')} value={formatPercent(foodCostPct)} helper={t('kpis.targetMax', { value: 32 })} positive={foodCostPct <= 32} tone="amber" />
-      <KpiCard label={t('kpis.rent')} value={formatPercent(calc.pct(rent))} helper={t('kpis.targetMax', { value: 10 })} positive={calc.pct(rent) <= 10} tone="blue" />
+      <KpiCard label={t('kpis.primeCost')} value={formatPercent(calc.pct(calc.primeCost))} helper={t('kpis.targetMax', { value: PRIME_COST_MAX_PCT })} positive={hasRevenue && calc.pct(calc.primeCost) <= PRIME_COST_MAX_PCT} tone="blue" neutral={!hasRevenue} />
+      <KpiCard label={t('kpis.foodCost')} value={formatPercent(foodCostPct)} helper={t('kpis.targetMax', { value: FOOD_COST_MAX_PCT })} positive={hasRevenue && foodCostPct <= FOOD_COST_MAX_PCT} tone="amber" neutral={!hasRevenue} />
+      <KpiCard label={t('kpis.rent')} value={formatPercent(calc.pct(rent))} helper={t('kpis.targetMax', { value: RENT_MAX_PCT })} positive={hasRevenue && calc.pct(rent) <= RENT_MAX_PCT} tone="blue" neutral={!hasRevenue} />
 
       {/* WeeklyActions — TASK-0174 inteqrasiyası, TOXUNMA */}
       {revenue > 0 && (
@@ -400,7 +426,7 @@ export default function PnlSimulator() {
           <h2 className="font-display text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
             {t('knowledge.title')} <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">{t('knowledge.titleAccent')}</span>
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">{t('knowledge.subtitle')}</p>
+          <p className="mx-auto mt-2 max-w-md text-sm text-slate-600">{t('knowledge.subtitle')}</p>
         </div>
         <div className="grid gap-5 md:grid-cols-3">
           <ControlKnowledgeCard t={t} />
@@ -415,23 +441,23 @@ export default function PnlSimulator() {
           <div className="relative">
             <div className="mb-4 flex items-center gap-2.5"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/20"><Lightbulb size={16} className="text-amber-400" /></div><h3 className="text-base font-bold text-amber-400">{t('advice.title')}</h3></div>
             <p className="mb-5 text-[13px] leading-relaxed text-slate-400">{t('advice.body')}</p>
-            <Link href="/blog/pnl-oxuya-bilmirsen" className="group inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300">{t('advice.readArticle')} <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" /></Link>
+            <Link href="/blog/pnl-oxuya-bilmirsen" className="group inline-flex min-h-[24px] items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300">{t('advice.readArticle')} <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" /></Link>
           </div>
         </div>
-        <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-8 text-white shadow-xl shadow-red-500/15">
+        <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-dk-red-strong to-dk-red-deep p-8 text-white shadow-xl shadow-red-500/15">
           <div><h3 className="mb-3 font-display text-xl font-black">{t('ocaq.title')}</h3><p className="mb-6 text-sm leading-relaxed text-white/80">{t('ocaq.body')}</p></div>
-          <Link href="/auth/register" className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-[var(--dk-red)] hover:shadow-lg active:scale-[0.98]">{t('ocaq.cta')} <ArrowRight size={15} /></Link>
+          <Link href="/auth/register" className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-dk-red-deep hover:shadow-lg active:scale-[0.98]">{t('ocaq.cta')} <ArrowRight size={15} /></Link>
         </div>
       </div>
 
       <div className="rounded-2xl bg-slate-50 p-8 sm:p-10">
-        <div className="mb-8 flex items-center gap-2.5"><BookOpen size={18} className="text-[var(--dk-red)]" /><h3 className="text-lg font-bold text-slate-900">{t('related.title')}</h3></div>
+        <div className="mb-8 flex items-center gap-2.5"><BookOpen size={18} className="text-dk-red-deep" /><h3 className="text-lg font-bold text-slate-900">{t('related.title')}</h3></div>
         <div className="grid gap-4 sm:grid-cols-3">
           {relatedArticles.map((key) => (
             <Link key={key} href={`/blog/${t(`related.articles.${key}.slug`)}`} className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 hover:shadow-md transition-all">
-              <span className="text-[10px] font-bold tracking-widest text-[var(--dk-red)] uppercase">{t(`related.articles.${key}.tag`)}</span>
-              <h4 className="mt-2.5 text-sm leading-snug font-bold text-slate-900 group-hover:text-[var(--dk-red)]">{t(`related.articles.${key}.title`)}</h4>
-              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-400 group-hover:text-[var(--dk-red)]">{t('related.read')} <ArrowRight size={12} /></div>
+              <span className="text-[10px] font-bold tracking-widest text-dk-red-deep uppercase">{t(`related.articles.${key}.tag`)}</span>
+              <h4 className="mt-2.5 text-sm leading-snug font-bold text-slate-900 group-hover:text-dk-red-deep">{t(`related.articles.${key}.title`)}</h4>
+              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-600 group-hover:text-dk-red-deep">{t('related.read')} <ArrowRight size={12} /></div>
             </Link>
           ))}
         </div>
@@ -451,24 +477,29 @@ function KpiCard({
   helper,
   positive,
   tone = 'emerald',
+  neutral = false,
 }: {
   label: string;
   value: string;
   helper: string;
   positive: boolean;
   tone?: 'emerald' | 'blue' | 'amber';
+  neutral?: boolean;
 }) {
-  const toneClass = positive
-    ? tone === 'blue'
-      ? 'bg-blue-50 ring-blue-500/20 text-blue-600'
-      : tone === 'amber'
-        ? 'bg-amber-50 ring-amber-500/20 text-amber-600'
-        : 'bg-emerald-50 ring-emerald-500/20 text-emerald-600'
-    : 'bg-red-50 ring-red-500/20 text-red-600';
+  // TASK-0515: text tones ≥ 4.5:1 on the tinted card (the -600 shades were below AA).
+  const toneClass = neutral
+    ? 'bg-slate-50 ring-slate-200 text-slate-700'
+    : positive
+      ? tone === 'blue'
+        ? 'bg-blue-50 ring-blue-500/20 text-blue-700'
+        : tone === 'amber'
+          ? 'bg-amber-50 ring-amber-500/20 text-amber-800'
+          : 'bg-emerald-50 ring-emerald-500/20 text-emerald-700'
+      : 'bg-red-50 ring-red-500/20 text-red-700';
 
   return (
     <div className={`rounded-2xl p-5 ring-1 ${toneClass}`}>
-      <div className="mb-2 text-[11px] font-bold tracking-widest text-slate-500 uppercase">{label}</div>
+      <div className="mb-2 text-[11px] font-bold tracking-widest text-slate-700 uppercase">{label}</div>
       <div className="text-3xl font-black tabular-nums">{value}</div>
       <div className="mt-1 text-xs font-semibold">{helper}</div>
     </div>
@@ -490,10 +521,10 @@ function InsightPanel({
 }) {
   const insights = [];
   if (netMargin < 0) insights.push({ tone: 'red', text: t('insights.negativeMargin') });
-  else if (netMargin < 5) insights.push({ tone: 'amber', text: t('insights.lowMargin') });
+  else if (netMargin < NET_MARGIN_LOW_PCT) insights.push({ tone: 'amber', text: t('insights.lowMargin') });
   else insights.push({ tone: 'emerald', text: t('insights.healthyMargin') });
-  if (foodCostPct > 32) insights.push({ tone: 'amber', text: t('insights.foodCostHigh', { value: formatPercent(32) }) });
-  if (staffCostPct > 35) insights.push({ tone: 'amber', text: t('insights.laborCostHigh', { value: formatPercent(35) }) });
+  if (foodCostPct > FOOD_COST_MAX_PCT) insights.push({ tone: 'amber', text: t('insights.foodCostHigh', { value: formatPercent(FOOD_COST_MAX_PCT) }) });
+  if (staffCostPct > LABOR_MAX_PCT) insights.push({ tone: 'amber', text: t('insights.laborCostHigh', { value: formatPercent(LABOR_MAX_PCT) }) });
 
   return (
     <div className="grid gap-3 md:grid-cols-3">
@@ -521,12 +552,15 @@ function BenchmarkPanel({ t }: { t: PnlTranslator }) {
 
   return (
     <div className="rounded-2xl bg-white p-6 shadow-lg shadow-slate-200/40 ring-1 ring-slate-200/80">
-      <h3 className="mb-5 text-[11px] font-bold tracking-widest text-slate-400 uppercase">{t('benchmark.title')}</h3>
+      <h3 className="mb-1 text-[11px] font-bold tracking-widest text-slate-700 uppercase">{t('benchmark.title')}</h3>
+      <p className="mb-5 text-xs text-slate-600">{t('benchmark.ruleOfThumb')}</p>
       <div className="mb-5 grid grid-cols-2 gap-4">
         {benchmarks.map((key) => (
           <div key={key} className="rounded-xl bg-slate-50 p-4 text-center ring-1 ring-slate-200/60">
-            <div className="text-2xl font-black text-blue-600">{t(`benchmark.${key}.value`)}</div>
-            <div className="mt-1.5 text-xs font-medium text-slate-500">{t(`benchmark.${key}.label`)}</div>
+            <div className="text-2xl font-black text-blue-700">
+              {key === 'primeCost' ? `≤${PRIME_COST_MAX_PCT}%` : key === 'rent' ? `≤${RENT_MAX_PCT}%` : t(`benchmark.${key}.value`)}
+            </div>
+            <div className="mt-1.5 text-xs font-medium text-slate-600">{t(`benchmark.${key}.label`)}</div>
           </div>
         ))}
       </div>
@@ -579,11 +613,11 @@ function ControlKnowledgeCard({ t }: { t: PnlTranslator }) {
       <div className="mt-auto space-y-3">
         <div className="rounded-xl bg-emerald-50 p-4 ring-1 ring-emerald-200/60">
           <p className="text-sm font-bold text-emerald-700">{t('knowledge.controllableTitle')}</p>
-          <p className="mt-1.5 text-[13px] leading-relaxed text-emerald-600/80">{t('knowledge.controllableBody')}</p>
+          <p className="mt-1.5 text-[13px] leading-relaxed text-emerald-800">{t('knowledge.controllableBody')}</p>
         </div>
         <div className="rounded-xl bg-red-50 p-4 ring-1 ring-red-200/60">
           <p className="text-sm font-bold text-red-700">{t('knowledge.uncontrollableTitle')}</p>
-          <p className="mt-1.5 text-[13px] leading-relaxed text-red-600/80">{t('knowledge.uncontrollableBody')}</p>
+          <p className="mt-1.5 text-[13px] leading-relaxed text-red-800">{t('knowledge.uncontrollableBody')}</p>
         </div>
       </div>
     </div>
@@ -599,7 +633,7 @@ function PrimeCostKnowledgeCard({ t }: { t: PnlTranslator }) {
         </div>
         <h3 className="text-base font-bold text-slate-900">{t('knowledge.primeCostTitle')}</h3>
       </div>
-      <p className="mb-5 text-sm leading-relaxed text-slate-600">{t('knowledge.primeCostBody')}</p>
+      <p className="mb-5 text-sm leading-relaxed text-slate-600">{t('knowledge.primeCostBody', { value: PRIME_COST_MAX_PCT })}</p>
       <div className="mt-auto space-y-2.5 rounded-xl bg-amber-900 p-5">
         <p className="text-xs font-bold tracking-widest text-amber-400 uppercase">{t('knowledge.formula')}</p>
         <div className="space-y-0.5 font-mono text-sm text-amber-100">
@@ -627,7 +661,13 @@ function WarningKnowledgeCard({ t }: { t: PnlTranslator }) {
       <div className="mt-auto space-y-3">
         {warnings.map((key) => (
           <div key={key} className="rounded-xl bg-white p-4 ring-1 ring-amber-200/60">
-            <p className="text-[13px] leading-relaxed text-slate-700">{t(`knowledge.warnings.${key}`)}</p>
+            <p className="text-[13px] leading-relaxed text-slate-700">
+              {t(`knowledge.warnings.${key}`, {
+                prime: PRIME_COST_MAX_PCT,
+                rent: RENT_MAX_PCT,
+                low: NET_MARGIN_LOW_PCT,
+              })}
+            </p>
           </div>
         ))}
       </div>

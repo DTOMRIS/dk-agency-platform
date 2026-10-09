@@ -116,7 +116,7 @@ export default function FranchiseLeadModal({ brandSlug, brandName, onClose }: Pr
             <button
               type="submit"
               disabled={loading}
-              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-4 text-sm font-black text-white transition hover:bg-rose-600 disabled:bg-slate-300"
+              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-4 text-sm font-black text-white transition hover:bg-dk-red-deep disabled:bg-slate-300"
             >
               {loading ? <Loader2 size={16} className="animate-spin" /> : null}
               {t('lead.submit')}

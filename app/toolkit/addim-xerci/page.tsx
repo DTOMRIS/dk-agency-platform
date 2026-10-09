@@ -7,6 +7,7 @@ import { ArrowRight, BookOpen, Footprints, Lightbulb, RotateCcw } from 'lucide-r
 import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
 import { calculateAddimXerci, hourlyFromMonthly, tripsToMinutes } from '@/lib/toolkit/addimXerci';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import DecimalInput from '@/components/toolkit/DecimalInput';
 
 type Mode = 'minutes' | 'trips';
 
@@ -39,13 +40,13 @@ function NumberField({
   hint,
   value,
   onChange,
-  step,
 }: {
   id: string;
   label: string;
   hint?: string;
   value: number;
   onChange: (v: number) => void;
+  /** Kept for call-site compatibility; the decimal text input has no spinner. */
   step?: number;
 }) {
   return (
@@ -53,14 +54,10 @@ function NumberField({
       <label htmlFor={id} className={labelClass}>
         {label}
       </label>
-      <input
+      <DecimalInput
         id={id}
-        type="number"
-        inputMode="decimal"
-        min={0}
-        step={step ?? 1}
         value={value}
-        onChange={(e) => onChange(Math.max(0, parseFloat(e.target.value) || 0))}
+        onValueChange={(v) => onChange(Math.max(0, v))}
         className={inputClass}
       />
       {hint && <p className="mt-1 text-xs text-slate-600">{hint}</p>}
@@ -141,7 +138,7 @@ export default function AddimXerciPage() {
         <button
           type="button"
           onClick={resetAll}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 transition-colors hover:text-teal-700"
+          className="inline-flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-slate-700 transition-colors hover:text-teal-700"
         >
           <RotateCcw size={13} /> {t('reset')}
         </button>
@@ -313,7 +310,7 @@ export default function AddimXerciPage() {
               </div>
               <ArrowRight
                 size={16}
-                className="shrink-0 text-slate-500 transition-transform group-hover:translate-x-0.5"
+                className="shrink-0 text-slate-600 transition-transform group-hover:translate-x-0.5"
               />
             </Link>
           ))}

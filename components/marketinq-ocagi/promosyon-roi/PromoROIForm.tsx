@@ -244,7 +244,7 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
       )}
 
       <button type="button" onClick={handleSubmit} disabled={!isValid || loading}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50">
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50">
         {loading ? <><Loader2 size={16} className="animate-spin" />{t.submitting}</> : t.submit}
       </button>
     </div>

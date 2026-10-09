@@ -750,6 +750,33 @@ export async function getVitrinNewsArticles(limit = 8, locale?: string) {
   return rows.map((row) => mapPublicArticle(row, loc));
 }
 
+/**
+ * TASK-0515: ONLY the stories the admin flagged «Xəbər manşet olsun?» (dashboard/xeberler →
+ * NewsEditorForm `isManset`), still fresh (≤ 7 days, same rule as TASK-0490). Feeds the /haberler
+ * lead slider; an empty result means "no manşet chosen" and the page falls back to one lead story.
+ */
+export async function getMansetNewsArticles(limit = 6, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
+  if (!dbAvailable || !db) return [];
+
+  const rows = await db
+    .select(buildPublicArticleSelect())
+    .from(newsArticles)
+    .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
+    .where(
+      and(
+        ...getPublicNewsConditions(),
+        eq(newsArticles.isManset, true),
+        sql`coalesce(${newsArticles.publishedAt}, ${newsArticles.createdAt}) >= now() - interval '7 days'`
+      )
+    )
+    .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
+    .limit(limit);
+
+  return rows.map((row) => mapPublicArticle(row, loc));
+}
+
 export async function getNewsArticleBySlug(slug: string, locale?: string, preview = false) {
   const loc = sanitizeLocale(locale);
 

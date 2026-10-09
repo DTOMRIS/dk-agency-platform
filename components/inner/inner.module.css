@@ -137,7 +137,7 @@
   max-width: 560px;
 }
 .btnWa {
-  background: #128c4b;
+  background: #0f7a41; /* TASK-0515: 5.4:1 with white (was #128c4b, 4.3:1) */
   color: #fff !important;
 }
 .btnBlock {
@@ -176,7 +176,7 @@
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--red-ui-h);
   margin-bottom: 8px;
 }
 .agentOk .agentTag {
@@ -486,7 +486,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--red);
+  background: var(--red-ui);
   display: grid;
   place-items: center;
   transition: transform 0.2s;
@@ -928,7 +928,7 @@
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--red-ui-h);
 }
 .linkCard h3 {
   margin: 0;
@@ -1206,7 +1206,7 @@
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--red-ui-h);
   background: var(--red-soft);
   border-radius: 999px;
   padding: 3px 9px;
@@ -1497,7 +1497,7 @@
   border-color: var(--red-line);
 }
 .b_risk .blkN {
-  background: var(--red);
+  background: var(--red-ui);
 }
 .b_opinion {
   background: #f1f5f9;
@@ -1883,7 +1883,7 @@
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--red-ui-h);
 }
 .toolInline b {
   display: block;
@@ -1930,7 +1930,7 @@
 .role {
   font-size: 13px;
   font-weight: 700;
-  color: var(--red);
+  color: var(--red-ui-h);
 }
 .founder {
   display: grid;
@@ -2512,7 +2512,9 @@
   border-color: var(--ink);
   background: #fff;
 }
-.fcRow input[type='number'] {
+.fcRow input[type='number'],
+.fcRow input[inputmode='decimal'],
+.fcRow input[inputmode='numeric'] {
   text-align: center;
 }
 .nm {
@@ -2721,4 +2723,129 @@
 }
 .ctaGhost {
   color: var(--ink) !important;
+}
+
+/* TASK-0515 — validation messages + mobile input readability (iOS zooms on inputs < 16px). */
+.fcErr {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--red-soft);
+  color: #9f1239;
+  font-size: 14px;
+  font-weight: 700;
+}
+.fcErr p {
+  margin: 0;
+}
+.fcErr p + p {
+  margin-top: 4px;
+}
+.fcRow input[aria-invalid='true'],
+.fld input[aria-invalid='true'] {
+  border-color: #be123c;
+  background: #fff1f2;
+}
+@media (max-width: 767px) {
+  .page input:not([type='checkbox']):not([type='radio']):not([type='range']),
+  .page select,
+  .page textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* TASK-0515 — manşet slider (admin «Xəbər manşet olsun?»), Son İlanlar box, admin ad slots. */
+.mvWrap {
+  margin: 26px 0 22px;
+}
+.mvWrap .leadStory {
+  margin: 0;
+}
+.mvCtrl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+.mvBtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.mvBtn:hover {
+  border-color: var(--ink);
+}
+.mvDots {
+  display: flex;
+  gap: 2px;
+}
+.mvDots button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.mvDots button span {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #b9b0a0;
+  transition: width 0.2s;
+}
+.mvDots button[aria-current='true'] span {
+  width: 22px;
+  background: var(--ink);
+}
+.lstList {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.lstItem {
+  display: grid;
+  gap: 3px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink) !important;
+}
+.lstItem:hover {
+  border-color: var(--ink);
+}
+.lstItem small {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.lstItem b {
+  font-size: 15px;
+  line-height: 1.35;
+}
+.lstItem span {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--green);
+}
+.adInline {
+  display: block;
+  margin: 22px 0;
+  max-height: 260px;
 }

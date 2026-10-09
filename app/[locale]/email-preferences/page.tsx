@@ -307,7 +307,7 @@ export default function EmailPreferencesPage() {
               type="button"
               onClick={() => void handleSave()}
               disabled={saveState === 'saving'}
-              className="w-full rounded-lg bg-[var(--dk-red)] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--dk-red-strong)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dk-red)] focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full rounded-lg bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-dk-red-deep focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dk-red)] focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {saveState === 'saving' ? t('saving') : t('save')}
             </button>

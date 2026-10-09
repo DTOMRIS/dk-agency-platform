@@ -87,6 +87,7 @@
       "devir": "İşletme Devri",
       "franchise-vermek": "Franchise Vermek",
       "franchise-almak": "Franchise Almak",
+      "franchise-almaq": "Franchise Almak",
       "ortak-tapmaq": "Ortak Bulmak",
       "yeni-investisiya": "Yeni Yatırım",
       "obyekt-icaresi": "Mekan Kiralama",
@@ -233,7 +234,8 @@
           "hotKitchenB": "Sıcak Mutfak B",
           "assembly": "Montaj",
           "expeditor": "Expeditor / Kalite"
-        }
+        },
+        "noChecks": "Günlük fiş sayısını girin"
       },
       "seo": {
         "title": "Mutfak İstasyon Hesaplayıcı — DK Agency",
@@ -360,7 +362,7 @@
       "trimLossBody1": "1 kg tavuk temizlendikten sonra yalnızca",
       "trimLossBodyBold": "850g",
       "trimLossBody2": "kullanılabilir — %15 trim loss. Bu gerçek maliyeti artırır.",
-      "trimLossExamplesTitle": "Örnek trim loss yüzdeleri",
+      "trimLossExamplesTitle": "Örnek trim yüzdeleri (yaklaşık — kendi tartımınızla doğrulayın)",
       "trimEx1Label": "Tavuk fileto",
       "trimEx1Value": "5–8%",
       "trimEx2Label": "Bütün tavuk",
@@ -520,7 +522,9 @@
         "required": "Bu alan zorunludur",
         "positive": "Pozitif bir sayı girin",
         "tooLow": "Değer çok düşük",
-        "tooHigh": "Değer çok yüksek"
+        "tooHigh": "Değer çok yüksek",
+        "negative": "Tutar negatif olamaz — önceki değer korundu.",
+        "revenueRequired": "Yüzdeleri hesaplamak için 0’dan büyük satış girin."
       },
       "insights": {
         "healthyMargin": "Sağlıklı kâr marjı",
@@ -564,7 +568,8 @@
             "label": "Tamir",
             "value": "1-2%"
           }
-        }
+        },
+        "ruleOfThumb": "Yaygın sektör kuralları (rule of thumb) — Azerbaycan için kaynaklı norm değildir."
       },
       "education": {
         "whatTitle": "P&L nedir?",
@@ -590,7 +595,7 @@
         "uncontrollableTitle": "Kontrol edilemeyen giderler",
         "uncontrollableBody": "Kira, sigorta ve amortisman daha katıdır. Etkileri şube açılmadan önce hesaplanmalıdır.",
         "primeCostTitle": "Prime cost",
-        "primeCostBody": "Food cost + personel gideri, restoranın satışı ne kadar verimli ürettiğini gösterir.",
+        "primeCostBody": "Restoranın en büyük iki gideri gıda ve personeldir. Prime Cost, P&L’in en kritik göstergesidir. Yaygın kural: satışın %{value}’inin altında tutmak.",
         "formula": "Formül",
         "primeCostFormula": {
           "costs": "Food Cost + Labor Cost",
@@ -599,9 +604,9 @@
         },
         "warningTitle": "Risk sinyalleri",
         "warnings": {
-          "primeCost": "Prime cost %70 üzerindeyse restoran zarar eşiğine yaklaşır.",
-          "lowNet": "Net kâr %5 altındaysa bir kötü ay zarara dönüşebilir.",
-          "highRent": "Kira %12 üzerindeyse lokasyon fazla pahalı olabilir.",
+          "primeCost": "Prime cost %{prime} üzerindeyse (yaygın kural), kâr hızla daralır.",
+          "lowNet": "Net kâr %{low} altındaysa bir kötü ay zarara dönüşebilir.",
+          "highRent": "Kira satışın %{rent}’inden yüksekse (yaygın kural), lokasyon fazla pahalı olabilir.",
           "strongNet": "Net kâr %15 üzerindeyse performans güçlüdür ve yatırım düşünülebilir."
         }
       },
@@ -660,7 +665,7 @@
       "labelYearlyLeavers": "Yılda ayrılan çalışan sayısı",
       "financialImpactTitle": "Mali etki",
       "turnoverRateLabel": "Devir oranı",
-      "turnoverRateBenchmark": "Dünya restoran ortalaması %60-80'dir. Bakü pazarında bazı yerlerde bu rakam %100-150'ye çıkar.",
+      "turnoverRateBenchmark": "Bu oranı kendi geçen yılınızla karşılaştırın. Azerbaycan için doğrulanmış bir pazar ortalaması yayımlanmamıştır.",
       "replacementCostLabel": "1 çalışan değişim maliyeti",
       "replacementCostNote": "Sektör kuralına göre 1 çalışanı değiştirmek yaklaşık 2-3 aylık maaşa eşdeğerdir.",
       "annualLossLabel": "Yıllık kayıp",
@@ -672,7 +677,7 @@
       "knowledgePanelBadge": "Bilgi paneli",
       "top5Title": "Ayrılmanın ilk 5 nedeni",
       "dkAdviceLabel": "DK tavsiyesi",
-      "dkAdviceBody": "Devir oranı %80'i aşıyorsa, sorun maaştan çok sistemdedir. İşe alım, oryantasyon, vardiya öncesi toplantı ve çıkış görüşmesi süreçleri yazılı hale getirilmeden istikrarlı bir ekip kurmak çok zordur.",
+      "dkAdviceBody": "Devir oranı yıldan yıla artıyorsa sorun çoğu zaman maaştan çok sistemdedir. İşe alım, oryantasyon, vardiya öncesi toplantı ve çıkış görüşmesi süreçleri yazılı hale getirilmeden istikrarlı bir ekip kurmak çok zordur.",
       "usefulLinksTitle": "Faydalı bağlantılar",
       "reason1": "Kötü yönetim ve sert liderlik",
       "reason2": "Gelişim ve terfi imkânının olmaması",
@@ -691,7 +696,8 @@
       "blogLink2Title": "P&L Simülatörü",
       "blogLink2Tag": "Araç",
       "blogLink3Title": "KAZAN AI",
-      "blogLink3Tag": "AI"
+      "blogLink3Tag": "AI",
+      "errNoEmployees": "0 çalışanla devir oranı hesaplanmaz — çalışan sayısını girin."
     },
     "branding": {
       "navigation": {
@@ -1062,7 +1068,8 @@
       "blogLink2Tag": "Araç",
       "blogLink3Title": "Food Cost Hesaplayıcı",
       "blogLink3Tag": "Araç",
-      "readLabel": "İncele"
+      "readLabel": "İncele",
+      "labelCommissionFor": "{platform} komisyonu (%)"
     },
     "menuMatrix": {
       "navigation": {
@@ -1086,8 +1093,8 @@
       "defaultItem5": "Çorba",
       "defaultItem6": "Tiramisu",
       "itemListTitle": "Yemek Listesi",
-      "avgSalesLabel": "Ort. satış",
-      "avgMarginLabel": "Ort. marj",
+      "avgSalesLabel": "Popülerlik eşiği (ort. satışın %70’i)",
+      "avgMarginLabel": "Ağırlıklı ort. marj",
       "reset": "Sıfırla",
       "colFoodName": "Yemek adı",
       "colSalesCount": "Satış sayısı",
@@ -1108,7 +1115,7 @@
       "processLabel": "Süreç",
       "processStep1": "1. Satış verisini topla",
       "processStep2": "2. Her yemeğin CM'ini hesapla",
-      "processStep3": "3. Ortalamalarla karşılaştır",
+      "processStep3": "3. %70 popülerlik eşiği ve ağırlıklı ortalama marjla karşılaştır",
       "processStep4": "4. 4 kategoriye ayır",
       "bcgTitle": "BCG Matrisi",
       "bcgSubtitle": "Boston Consulting Group matrisi restorana uyarlandı:",
@@ -1140,7 +1147,12 @@
       "blogLink2Tag": "Finans",
       "blogLink3Title": "P&L Okuyamıyor musun?",
       "blogLink3Tag": "Finans",
-      "readLabel": "Oku"
+      "readLabel": "Oku",
+      "catStarSub": "Popüler · yüksek marj",
+      "catPlowHorseSub": "Popüler · düşük marj",
+      "catPuzzleSub": "Az satılır · yüksek marj",
+      "catDogSub": "Az satılır · düşük marj",
+      "removeItem": "Yemeği sil"
     },
     "pnlDesc": "Aylık gelir-gider raporu oluştur, başabaş noktasını bul.",
     "checklist": {
@@ -1330,7 +1342,7 @@
       "progressLabel": "Genel ilerleme",
       "progressItems": "madde tamamlandı",
       "riskZoneLabel": "Risk bölgesi",
-      "riskZoneSubtitle": "En yaygın ceza nedenleri",
+      "riskZoneSubtitle": "{total} maddeden henüz işaretlenmemiş (ceza riski)",
       "regimeLabel": "Program",
       "regimeSubtitle": "Günlük, haftalık, aylık plan",
       "checklistTitle": "Etkileşimli kontrol listesi",
@@ -5667,6 +5679,10 @@
       "borderline": "Sınır bölge: gider optimizasyonu düşünün.",
       "risky": "Riskli: yatırım yavaş geri dönüyor.",
       "unprofitable": "Pansiyon zarar ediyor."
+    },
+    "validation": {
+      "percentRange": "Yüzde 0–100 arasında olmalı — değer düzeltildi.",
+      "nonNegative": "Negatif değer olmaz — 0 kabul edildi."
     }
   },
   "whatsappTemplates": {
@@ -6922,7 +6938,7 @@
     "foodCost": {
       "formulaLabel": "Formül",
       "formula": "Food cost % = (Gıda maliyeti ÷ Satış fiyatı) × 100",
-      "formulaNote": "Temizleme kaybı (trim) her malzemenin maliyetine eklenir.",
+      "formulaNote": "Trim dahil: kullanılan miktarın maliyeti = miktar ÷ (1 − trim%) × birim fiyat.",
       "removeRow": "Satırı sil",
       "signalTag": "Sinyal → adım",
       "signalPending": "Reçeteyi ve menü fiyatını gir — sonuç burada görünecek.",
@@ -6946,7 +6962,10 @@
       "afterNext": "Sonraki araç",
       "afterDeliveryDesc": "Bu yemek Wolt’ta satılırsa komisyondan sonra sana ne kalır?",
       "afterThen": "Sonra",
-      "afterMenuDesc": "Food cost’u bilinen yemekleri Yıldız, At, Bulmaca ve Köpek gruplarına ayır."
+      "afterMenuDesc": "Food cost’u bilinen yemekleri Yıldız, At, Bulmaca ve Köpek gruplarına ayır.",
+      "errTrim": "Trim %0–99 arasında olmalı (%100 = kullanılabilir bir şey kalmaz).",
+      "errPortions": "Porsiyon sayısı 0’dan büyük olmalı.",
+      "errTarget": "Hedef food cost %0 ile %100 arasında olmalı."
     },
     "news": {
       "eyebrow": "Sektör Nabzı",
@@ -6985,7 +7004,13 @@
       "relatedBlog": "İlgili blog yazısı",
       "otherNews": "Diğer haberler",
       "toolSub": "Kendi rakamlarınla hesapla",
-      "notFound": "Haber bulunamadı"
+      "notFound": "Haber bulunamadı",
+      "mansetLabel": "Manşet haberler",
+      "mansetPrev": "Önceki manşet",
+      "mansetNext": "Sonraki manşet",
+      "mansetSlide": "Manşet {n} / {total}",
+      "latestListings": "Son ilanlar",
+      "allListings": "Tüm ilanlar"
     },
     "blog": {
       "eyebrow": "Blog · Doğan Tomris",

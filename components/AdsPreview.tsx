@@ -126,7 +126,7 @@ export default function AdsPreview() {
             </Link>
             <Link
               href={withLocale(locale, '/ilan-ver')}
-              className="flex h-12 items-center gap-2 rounded-2xl bg-brand-red px-6 font-bold text-white shadow-xl shadow-brand-red/20 transition-all hover:bg-rose-600"
+              className="flex h-12 items-center gap-2 rounded-2xl bg-dk-red-strong px-6 font-bold text-white shadow-xl shadow-brand-red/20 transition-all hover:bg-dk-red-deep"
             >
               <Plus size={20} aria-hidden="true" /> {copy.postListing}
             </Link>
@@ -167,7 +167,7 @@ export default function AdsPreview() {
                       </div>
                     )}
                     {price && (
-                      <div className="absolute bottom-6 right-6 rounded-2xl bg-brand-red px-5 py-2 text-lg font-extrabold text-white shadow-xl shadow-brand-red/20">
+                      <div className="absolute bottom-6 right-6 rounded-2xl bg-dk-red-strong px-5 py-2 text-lg font-extrabold text-white shadow-xl shadow-brand-red/20">
                         {price}
                       </div>
                     )}
@@ -186,7 +186,7 @@ export default function AdsPreview() {
                       <span className="text-xs font-bold uppercase tracking-widest text-slate-600">
                         {copy.details}
                       </span>
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-900 transition-all group-hover:bg-brand-red group-hover:text-white">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-900 transition-all group-hover:bg-dk-red-deep group-hover:text-white">
                         <ArrowUpRight size={20} aria-hidden="true" />
                       </span>
                     </div>
@@ -203,7 +203,7 @@ export default function AdsPreview() {
             <p className="mx-auto max-w-md px-4 text-lg font-medium text-slate-700">{copy.empty}</p>
             <Link
               href={withLocale(locale, '/ilan-ver')}
-              className="mt-6 inline-flex h-12 items-center gap-2 rounded-2xl bg-brand-red px-6 font-bold text-white hover:bg-rose-600"
+              className="mt-6 inline-flex h-12 items-center gap-2 rounded-2xl bg-dk-red-strong px-6 font-bold text-white hover:bg-dk-red-deep"
             >
               <Plus size={18} aria-hidden="true" /> {copy.emptyCta}
             </Link>

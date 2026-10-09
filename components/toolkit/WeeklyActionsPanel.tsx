@@ -66,7 +66,7 @@ function ActionCard({
             {action.durationMinutes} {t('weekly_actions.duration_unit')}
           </span>
         </div>
-        <p className="mt-1.5 text-xs leading-relaxed text-slate-500">
+        <p className="mt-1.5 text-xs leading-relaxed text-slate-600">
           {t(`weekly_actions.${actionKey}.description`)}
         </p>
 
@@ -129,7 +129,7 @@ export default function WeeklyActionsPanel({ metrics, context }: WeeklyActionsPa
             <h3 className="text-lg font-black text-[var(--dk-navy,#1A1A2E)]">
               {t('panel_title')}
             </h3>
-            <p className="text-xs text-slate-500">{t('panel_subtitle')}</p>
+            <p className="text-xs text-slate-600">{t('panel_subtitle')}</p>
           </div>
         </div>
 

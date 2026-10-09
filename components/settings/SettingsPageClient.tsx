@@ -119,7 +119,7 @@ export default function SettingsPageClient({
             <button
               type="submit"
               disabled={savingProfile}
-              className="mt-6 rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white disabled:opacity-60"
+              className="mt-6 rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white disabled:opacity-60"
             >
               {savingProfile ? 'Yadda saxlanır...' : 'Yadda saxla'}
             </button>
@@ -167,7 +167,7 @@ export default function SettingsPageClient({
             <button
               type="submit"
               disabled={changingPassword}
-              className="mt-6 rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white disabled:opacity-60"
+              className="mt-6 rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white disabled:opacity-60"
             >
               {changingPassword ? 'Şifrə yenilənir...' : 'Şifrəni dəyiş'}
             </button>

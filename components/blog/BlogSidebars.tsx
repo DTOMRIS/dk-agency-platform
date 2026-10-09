@@ -48,13 +48,13 @@ export function NewsletterWidget() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mb-3 w-full rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] bg-[var(--dk-night)] px-4 py-3 text-sm text-[var(--dk-text)] placeholder:text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)] transition-all focus:border-[var(--dk-gold)] focus:outline-none"
+          className="mb-3 w-full rounded-xl border border-[color:color-mix(in_srgb,var(--dk-muted)_13%,transparent)] bg-[var(--dk-night)] px-4 py-3 text-base sm:text-sm text-[var(--dk-text)] placeholder:text-[color:color-mix(in_srgb,var(--dk-muted)_38%,transparent)] transition-all focus:border-[var(--dk-gold)] focus:outline-none"
         />
         <button
           type="submit"
           disabled={loading}
           className={`w-full rounded-xl py-3 text-sm font-bold transition-all ${
-            subscribed ? 'bg-[var(--dk-success)] text-white' : 'bg-[var(--dk-red)] text-white hover:bg-[var(--dk-red-hover)]'
+            subscribed ? 'bg-[var(--dk-success)] text-white' : 'bg-dk-red-strong text-white hover:bg-dk-red-deep'
           }`}
         >
           {subscribed ? (

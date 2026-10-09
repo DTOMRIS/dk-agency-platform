@@ -448,7 +448,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={submitting || !consentAccepted}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red py-3.5 font-bold text-white transition hover:bg-dk-red-strong disabled:cursor-not-allowed disabled:bg-dk-red/60"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong py-3.5 font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:bg-dk-red/60"
               >
                 <Sparkles className="h-5 w-5" />
                 {submitting ? copy.submitting : copy.submitBtn}
@@ -473,7 +473,7 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          <div className="bg-dk-red p-8 text-white md:p-10">
+          <div className="bg-dk-red-strong p-8 text-white md:p-10">
             <h2 className="text-2xl font-black">{copy.panel.title}</h2>
             <div className="mt-6 space-y-4 text-sm">
               <div className="rounded-2xl bg-white/10 p-4">

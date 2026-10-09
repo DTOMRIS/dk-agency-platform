@@ -33,7 +33,7 @@ export default async function PLSimulatorPage({ params }: Props) {
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-slate-600">{t('tier_required_body')}</p>
           <Link
             href={withLocalePrefix(locale, '/qiymet')}
-            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-[var(--dk-red)] px-5 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90"
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-dk-red-strong px-5 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90"
           >
             {t('upgrade_cta')}
           </Link>

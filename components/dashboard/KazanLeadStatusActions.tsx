@@ -90,7 +90,7 @@ export default function KazanLeadStatusActions({
             type="button"
             disabled={loading}
             onClick={() => void patch({ status: nextStatus })}
-            className="rounded-full bg-[var(--dk-red)] px-3 py-2 text-xs font-bold text-white disabled:opacity-60"
+            className="rounded-full bg-dk-red-strong px-3 py-2 text-xs font-bold text-white disabled:opacity-60"
           >
             {loading ? t('updating') : t('nextStatus', { status: nextStatus })}
           </button>

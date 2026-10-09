@@ -4,6 +4,12 @@
  * old-template section blocks (### headings) as coloured blocks, source line, sticky sidebar with
  * related toolkit / related blog (only when the article has them), other news and t.me/dkagenc.
  * No «Bu həftə 1 addım» card — owner decision 2026-10-09 (lib/news/editorial.ts stays as is).
+ *
+ * TASK-0515 (owner 2026-10-09): «Son İlanlar» is back in the sidebar with REAL listings
+ * (getLatestShowcaseListings — status showcase_ready, i.e. approved in dashboard/ilanlar); the box
+ * is hidden when there are none. Ads from dashboard/reklamlar: «news-sidebar» (sidebar) and
+ * «news-inline» (after the article); AdSlot renders nothing without an active ad. The fake
+ * read-only newsletter form stays removed.
  */
 import Link from 'next/link';
 import type { Metadata } from 'next';
@@ -17,6 +23,7 @@ import { normalizeLocale, withLocale } from '@/i18n/config';
 import { localeUrl } from '@/lib/seo/structured-data';
 import { TELEGRAM_HANDLE, TELEGRAM_URL } from '@/lib/contact-channels';
 import { getBlogPostDetail } from '@/lib/db/blog-repository';
+import { getLatestShowcaseListings } from '@/lib/db/listings-repository';
 import { getToolkitEntries } from '@/lib/news/toolkit-catalog';
 import { getToolMeta } from '@/lib/toolkit/tool-directory';
 import home from '@/components/home/v2/homeV2.module.css';
@@ -181,6 +188,14 @@ export default async function HaberDetailPage({
     .filter((meta, i, arr): meta is NonNullable<typeof meta> => !!meta && arr.findIndex((m) => m?.slug === meta.slug) === i);
   const blogSlug = (article as { relatedBlogSlug?: string | null }).relatedBlogSlug ?? null;
   const blog = blogSlug ? await getBlogPostDetail(blogSlug, locale).catch(() => null) : null;
+  const latestListings = await getLatestShowcaseListings(3, locale).catch(() => []);
+  const tl = await getTranslations({ locale, namespace: 'b2bPanel.categoryLabels' });
+  const listingType = (type: string) => (tl.has(type) ? tl(type) : '');
+  const listingPrice = (item: (typeof latestListings)[number]) =>
+    item.priceLabel ||
+    (item.price && item.price > 0
+      ? `${new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'de-DE').format(item.price)} ${item.currency === 'AZN' ? '₼' : item.currency}`
+      : '');
 
   const catLabel = (cat: string) => (NEWS_CATEGORIES.includes(cat) ? t(`cats.${cat}`) : cat);
   const sourceName = article.sourceName || t('noSource');
@@ -259,6 +274,7 @@ export default async function HaberDetailPage({
                 brand={t('brand')}
                 imageUrl={article.imageUrl}
                 alt={article.title}
+                priority
               />
 
               <div className={s.artBody}>
@@ -294,6 +310,7 @@ export default async function HaberDetailPage({
                 )}
                 <ShareLinks url={shareUrl} title={article.title} waLabel={tc('share')} tgLabel={tc('share')} />
               </div>
+              <AdSlot placement="news-inline" className={s.adInline} />
             </article>
 
             <aside className={s.side}>
@@ -348,6 +365,27 @@ export default async function HaberDetailPage({
                       </Link>
                     ))}
                   </div>
+                </div>
+              ) : null}
+              {latestListings.length > 0 ? (
+                <div data-testid="news-latest-listings">
+                  <h4>{t('latestListings')}</h4>
+                  <ul className={s.lstList}>
+                    {latestListings.map((item) => (
+                      <li key={item.id}>
+                        <Link href={withLocale(locale, `/ilanlar/${item.slug}`)} className={s.lstItem}>
+                          <small>
+                            {[listingType(item.type), item.city].filter(Boolean).join(' · ')}
+                          </small>
+                          <b>{item.title}</b>
+                          {listingPrice(item) ? <span>{listingPrice(item)}</span> : null}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={withLocale(locale, '/ilanlar')} className={s.linkMeta}>
+                    {t('allListings')} <Icon name="arrow" />
+                  </Link>
                 </div>
               ) : null}
               <a className={`${home.btn} ${home.btnGhost} ${s.btnBlock}`} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">

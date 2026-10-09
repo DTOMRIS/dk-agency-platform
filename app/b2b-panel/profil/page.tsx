@@ -227,7 +227,7 @@ export default function ProfilPage() {
                 </div>
               )}
               {!isReadonly && (
-                <label className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-[var(--dk-red)] text-white flex items-center justify-center cursor-pointer hover:bg-[var(--dk-red)]/90 shadow-lg">
+                <label className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-dk-red-strong text-white flex items-center justify-center cursor-pointer hover:bg-[var(--dk-red)]/90 shadow-lg">
                   <Camera size={14} />
                   <input type="file" accept="image/*" className="hidden" onChange={handleLogoChange} />
                 </label>
@@ -342,7 +342,7 @@ export default function ProfilPage() {
                 {saving ? 'Saxlanılır...' : 'Qaralama saxla'}
               </button>
               <button onClick={() => handleSave(true)} disabled={saving || submitting}
-                className="flex items-center gap-2 rounded-xl bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white hover:bg-[var(--dk-red)]/90 disabled:opacity-50">
+                className="flex items-center gap-2 rounded-xl bg-dk-red-strong px-5 py-3 text-sm font-bold text-white hover:bg-[var(--dk-red)]/90 disabled:opacity-50">
                 {submitting ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                 {submitting ? 'Göndərilir...' : 'Onaya göndər'}
               </button>

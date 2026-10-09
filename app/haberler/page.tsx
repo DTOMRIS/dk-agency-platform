@@ -3,13 +3,23 @@
  * Lead story (manşet/top order from getVitrinNewsArticles), category pills, card grid with the
  * article image or a generated category cover, Telegram band (t.me/dkagenc), pagination.
  * Hero counters are real DB counts (getPublicNewsStats) and hidden when the DB is unavailable.
+ *
+ * TASK-0515 — admin controls that feed this page (dashboard/xeberler → NewsEditorForm):
+ * - «Xəbər manşet olsun?» (isManset, fresh ≤ 7 days) → MansetVitrin slider in the lead area;
+ *   no manşet → single lead story (getVitrinNewsArticles: manşet/top first, then newest).
+ * - «Xəbər top olsun?» (isTop) → those cards come first in the grid.
+ * - dashboard/reklamlar placement «news-inline» → AdSlot between the lead and the grid
+ *   (renders nothing when no active ad).
  */
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getLocale, getTranslations } from 'next-intl/server';
 
+import AdSlot from '@/components/ads/AdSlot';
+import MansetVitrin from '@/components/news/MansetVitrin';
 import {
   getApprovedNewsArticles,
+  getMansetNewsArticles,
   getPublicNewsStats,
   getVitrinNewsArticles,
   type NewsCategoryKey,
@@ -66,14 +76,19 @@ export default async function HaberlerPage({
   const offset = (page - 1) * PAGE_SIZE;
   const firstAllPage = category === 'all' && page === 1;
 
-  const [result, vitrin, stats] = await Promise.all([
+  const [result, vitrin, manset, stats] = await Promise.all([
     getApprovedNewsArticles({ category, limit: PAGE_SIZE, offset }, locale),
     firstAllPage ? getVitrinNewsArticles(1, locale) : Promise.resolve([] as PublicNewsArticle[]),
+    firstAllPage ? getMansetNewsArticles(6, locale).catch(() => [] as PublicNewsArticle[]) : Promise.resolve([] as PublicNewsArticle[]),
     getPublicNewsStats().catch(() => null),
   ]);
 
-  const lead: PublicNewsArticle | undefined = vitrin[0] ?? result.items[0];
-  const grid = result.items.filter((item) => item.id !== lead?.id);
+  const lead: PublicNewsArticle | undefined = manset.length > 0 ? undefined : (vitrin[0] ?? result.items[0]);
+  const shownInLead = new Set<number>([...manset.map((m) => m.id), ...(lead ? [lead.id] : [])]);
+  // «Xəbər top olsun?» cards first; stable otherwise (Array.prototype.sort is stable).
+  const grid = result.items
+    .filter((item) => !shownInLead.has(item.id))
+    .sort((a, b) => Number('isTop' in b && b.isTop) - Number('isTop' in a && a.isTop));
   const totalPages = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
 
   const listHref = (cat: NewsCategoryKey, p = 1) => {
@@ -145,7 +160,33 @@ export default async function HaberlerPage({
       </div>
 
       <div className={home.wrap}>
-        {!lead ? (
+        {manset.length > 0 ? (
+          <MansetVitrin
+            label={t('mansetLabel')}
+            featuredLabel={t('featured')}
+            prevLabel={t('mansetPrev')}
+            nextLabel={t('mansetNext')}
+            slideLabels={manset.map((_, i) => t('mansetSlide', { n: i + 1, total: manset.length }))}
+            slides={manset.map((item) => ({
+              id: item.id,
+              href: articleHref(item.slug),
+              title: item.title,
+              summary: stripMarkdown(item.summary),
+              meta: `${source(item)} · ${date(item.publishedAt)}`,
+              cover: (
+                <NewsCover
+                  category={item.category}
+                  categoryLabel={catLabel(item.category)}
+                  source={source(item)}
+                  brand={t('brand')}
+                  imageUrl={item.imageUrl}
+                  alt={item.title}
+                  priority
+                />
+              ),
+            }))}
+          />
+        ) : !lead ? (
           <div className={s.empty} style={{ marginTop: 26 }}>
             {category === 'all' ? t('empty') : t('emptyCat')}
           </div>
@@ -158,6 +199,7 @@ export default async function HaberlerPage({
               brand={t('brand')}
               imageUrl={lead.imageUrl}
               alt={lead.title}
+              priority
             />
             <div className={s.lsBody}>
               <div className={s.metaRow}>
@@ -171,6 +213,8 @@ export default async function HaberlerPage({
             </div>
           </Link>
         )}
+
+        <AdSlot placement="news-inline" className={s.adInline} />
 
         {grid.length > 0 ? (
           <div className={s.newsGrid}>

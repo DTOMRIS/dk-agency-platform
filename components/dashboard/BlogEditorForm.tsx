@@ -976,7 +976,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           type="button"
           onClick={() => void submitPost('published')}
           disabled={submitting || uploadingImage}
-          className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
+          className="rounded-full bg-dk-red-strong px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
         >
           Dərc et
         </button>

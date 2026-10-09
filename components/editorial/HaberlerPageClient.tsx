@@ -352,7 +352,7 @@ function NewsContent() {
                 placeholder="E-poçt"
                 className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-red placeholder:text-slate-400 mb-3"
               />
-              <button className="w-full bg-brand-red hover:bg-rose-600 text-white py-3 rounded-xl font-bold text-sm transition-colors">
+              <button className="w-full bg-dk-red-strong hover:bg-dk-red-deep text-white py-3 rounded-xl font-bold text-sm transition-colors">
                 Abunə ol
               </button>
             </div>

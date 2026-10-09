@@ -196,7 +196,7 @@ export function PricingPage() {
                 href={ctaHref}
                 className={`mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-5 text-sm font-bold transition ${
                   tier.highlighted
-                    ? 'bg-[#E94560] text-white hover:bg-[#d73d56]'
+                    ? 'bg-dk-red-strong text-white hover:bg-[#d73d56]'
                     : 'border border-[#1A1A2E]/15 bg-white text-[#1A1A2E] hover:border-[#C5A022] hover:text-[#7A6213]'
                 }`}
                 data-testid={tier.key === 'sagird' ? 'pricing-sagird-cta' : `pricing-whatsapp-${tier.key}`}
@@ -238,7 +238,7 @@ export function PricingPage() {
           </div>
           <Link
             href={getWhatsappHref(t('tiers.kalfa.name'))}
-            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-[#E94560] px-6 text-sm font-bold text-white transition hover:bg-[#d73d56]"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-dk-red-strong px-6 text-sm font-bold text-white transition hover:bg-[#d73d56]"
             data-testid="pricing-bottom-whatsapp"
           >
             <MessageCircle className="h-4 w-4" aria-hidden="true" />

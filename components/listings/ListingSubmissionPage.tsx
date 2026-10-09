@@ -175,7 +175,7 @@ export default function ListingSubmissionPage() {
         <div className="mb-8">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <span className="inline-flex rounded-full bg-[var(--dk-red)] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
+              <span className="inline-flex rounded-full bg-dk-red-strong px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
                 Elan ver
               </span>
               <h1 className="mt-4 font-display text-4xl font-black text-[var(--dk-navy)]">
@@ -480,7 +480,7 @@ export default function ListingSubmissionPage() {
               </button>
               <Link
                 href="/b2b-panel/ilanlarim"
-                className="rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white"
+                className="rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white"
               >
                 Elanlarıma bax
               </Link>
@@ -504,7 +504,7 @@ export default function ListingSubmissionPage() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white"
+                className="inline-flex items-center gap-2 rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white"
               >
                 Növbəti
                 <ArrowRight className="h-4 w-4" />
@@ -513,7 +513,7 @@ export default function ListingSubmissionPage() {
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white"
+                className="inline-flex items-center gap-2 rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white"
               >
                 Elanı göndər
                 <ImagePlus className="h-4 w-4" />

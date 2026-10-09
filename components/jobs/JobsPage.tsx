@@ -431,7 +431,7 @@ export default async function JobsPage({
                           target="_blank"
                           rel="noopener"
                           aria-label={t('applyAria', { title: job.title, company: job.company })}
-                          className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[var(--dk-red)] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[var(--dk-red-strong)]"
+                          className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-dk-red-strong px-4 py-2.5 text-sm font-bold text-white transition hover:bg-dk-red-deep"
                         >
                           {t('apply')} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                         </a>

@@ -54,7 +54,7 @@ export function DoganNote() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/kazan-ai"
-                className="inline-flex items-center justify-center rounded-xl bg-[#E94560] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E94560] focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center rounded-xl bg-dk-red-strong px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-dk-red-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E94560] focus-visible:ring-offset-2"
               >
                 {t('ctaPrimary')}
               </Link>

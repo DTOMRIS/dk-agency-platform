@@ -46,7 +46,7 @@ export default function CheckoutActions() {
           type="button"
           onClick={() => handleCheckout('member')}
           disabled={loadingPlan !== null}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-dk-red px-5 py-3 text-sm font-bold text-white transition hover:bg-dk-red-strong disabled:cursor-not-allowed disabled:bg-dk-red/60"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-5 py-3 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:bg-dk-red/60"
         >
           {loadingPlan === 'member' && <LoaderCircle className="h-4 w-4 animate-spin" />}
           {t('monthly')}

@@ -119,7 +119,7 @@ export function MainCTA({ title, description, buttonText, href, secondaryButton 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href={href}
-            className="px-8 py-3 bg-[var(--dk-red)] hover:bg-[var(--dk-red-hover)] text-white font-bold rounded-xl transition-colors"
+            className="px-8 py-3 bg-dk-red-strong hover:bg-dk-red-deep text-white font-bold rounded-xl transition-colors"
           >
             {buttonText}
           </Link>

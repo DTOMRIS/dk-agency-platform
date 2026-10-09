@@ -148,7 +148,7 @@ export default function ForgotPasswordPageClient() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-xl bg-dk-red py-3.5 font-bold text-white transition hover:bg-dk-red-strong disabled:opacity-60"
+            className="w-full rounded-xl bg-dk-red-strong py-3.5 font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60"
           >
             {submitting ? copy.submitting : copy.submitBtn}
           </button>

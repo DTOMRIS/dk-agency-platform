@@ -85,7 +85,7 @@ export default function PnlForm({ onResult, onError }: Props) {
       <ToggleSection sectionLabel={t('pnlForm_uncontrollableSection')} open={showFixed} toggle={() => setShowFixed(!showFixed)} fields={FIELDS.uncontrollable} />
 
       <button type="button" onClick={handleSubmit} disabled={!isValid || loading}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50">
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50">
         {loading ? <><Loader2 size={16} className="animate-spin" />{t('pnlForm_submitting')}</> : t('pnlForm_submit')}
       </button>
     </div>

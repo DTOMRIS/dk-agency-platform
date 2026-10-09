@@ -331,7 +331,7 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
             type="button"
             onClick={handleAnalyze}
             disabled={!canAnalyze || isPending}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[var(--dk-red)] px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-dk-red-strong px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
             {t('analyze_btn')}

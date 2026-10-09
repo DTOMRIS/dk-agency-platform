@@ -202,7 +202,7 @@ export default function OwnerListingDetailPage({
           {canEdit ? (
             <Link
               href={`/b2b-panel/ilanlarim/${listing.id}/edit`}
-              className="inline-flex items-center gap-2 bg-dk-red hover:bg-dk-red-strong text-white px-5 py-2.5 rounded-xl font-semibold transition-colors text-sm"
+              className="inline-flex items-center gap-2 bg-dk-red-strong hover:bg-dk-red-deep text-white px-5 py-2.5 rounded-xl font-semibold transition-colors text-sm"
             >
               <Pencil size={16} />
               {copy.edit}

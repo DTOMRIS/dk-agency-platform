@@ -30,7 +30,7 @@ export default function WhatsappTemplatesPanel() {
           {t('meta.badge')}
         </span>
         <h1 className="mb-3 font-display text-3xl font-extrabold text-slate-900">{t('intro.heading')}</h1>
-        <p className="mb-2 text-base text-slate-500">{t('intro.subheading')}</p>
+        <p className="mb-2 text-base text-slate-600">{t('intro.subheading')}</p>
         <p className="text-sm text-slate-400">{t('intro.instruction')}</p>
       </div>
 
@@ -42,7 +42,7 @@ export default function WhatsappTemplatesPanel() {
               <h3 className="text-sm font-bold text-slate-900">{t(tmpl.titleKey.replace('whatsappTemplates.', ''))}</h3>
               <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold uppercase text-emerald-600">PULSUZ</span>
             </div>
-            <p className="mb-3 text-xs text-slate-500">{t(tmpl.descriptionKey.replace('whatsappTemplates.', ''))}</p>
+            <p className="mb-3 text-xs text-slate-600">{t(tmpl.descriptionKey.replace('whatsappTemplates.', ''))}</p>
             <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700 whitespace-pre-wrap">
               {t(tmpl.copyKey.replace('whatsappTemplates.', ''))}
             </div>
@@ -80,7 +80,7 @@ export default function WhatsappTemplatesPanel() {
           {gatedTemplates.map((tmpl) => (
             <div key={tmpl.id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <h3 className="mb-2 text-sm font-bold text-slate-900">{t(tmpl.titleKey.replace('whatsappTemplates.', ''))}</h3>
-              <p className="mb-3 text-xs text-slate-500">{t(tmpl.descriptionKey.replace('whatsappTemplates.', ''))}</p>
+              <p className="mb-3 text-xs text-slate-600">{t(tmpl.descriptionKey.replace('whatsappTemplates.', ''))}</p>
               <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700 whitespace-pre-wrap">
                 {t(tmpl.copyKey.replace('whatsappTemplates.', ''))}
               </div>

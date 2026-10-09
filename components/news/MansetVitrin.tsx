@@ -1,137 +1,99 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { formatDateAz } from '@/lib/formatDate';
+/**
+ * TASK-0515 — manşet slider for the /haberler lead area, restyled to the v2 inner design.
+ * Slides are ONLY the stories the admin flagged «Xəbər manşet olsun?» in dashboard/xeberler
+ * (getMansetNewsArticles). The page renders a single lead story when there is no manşet.
+ * Auto-advance (7 s) pauses on hover/focus and is off for prefers-reduced-motion.
+ */
 
-interface MansetItem {
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
+import Link from 'next/link';
+import s from '@/components/inner/inner.module.css';
+
+export interface MansetSlide {
   id: number;
-  slug: string;
+  href: string;
   title: string;
   summary: string;
-  imageUrl: string | null;
-  category: string;
-  sourceName: string | null;
-  publishedAt: string;
-  isManset: boolean;
-  isGundem: boolean;
+  meta: string;
+  cover: ReactNode;
 }
 
 interface MansetVitrinProps {
-  items: MansetItem[];
-  noSource: string;
+  slides: MansetSlide[];
+  label: string;
+  featuredLabel: string;
+  prevLabel: string;
+  nextLabel: string;
+  /** e.g. «1 / 3» already resolved by the caller for each index. */
+  slideLabels: string[];
 }
 
-export default function MansetVitrin({ items, noSource }: MansetVitrinProps) {
+export default function MansetVitrin({ slides, label, featuredLabel, prevLabel, nextLabel, slideLabels }: MansetVitrinProps) {
   const [current, setCurrent] = useState(0);
-  const total = items.length;
+  const [paused, setPaused] = useState(false);
+  const total = slides.length;
 
   const next = useCallback(() => setCurrent((i) => (i + 1) % total), [total]);
   const prev = useCallback(() => setCurrent((i) => (i - 1 + total) % total), [total]);
 
-  // Auto-advance every 6 seconds
   useEffect(() => {
-    if (total <= 1) return;
-    const timer = setInterval(next, 6000);
+    if (total <= 1 || paused) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const timer = setInterval(next, 7000);
     return () => clearInterval(timer);
-  }, [next, total]);
+  }, [next, total, paused]);
 
-  if (!items.length) return null;
-
-  const item = items[current];
+  if (total === 0) return null;
+  const index = Math.min(current, total - 1);
+  const item = slides[index];
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-      <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
-        {/* Image — no text overlay */}
-        <Link href={`/haberler/${item.slug}`} className="relative block min-h-[320px] bg-slate-100">
-          {item.imageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={item.imageUrl}
-              alt={item.title}
-              className="h-full w-full object-cover"
-              referrerPolicy="no-referrer"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
-              <span className="text-6xl font-black text-white/10">DK</span>
-            </div>
-          )}
-        </Link>
-
-        {/* Content — beside image, not on top */}
-        <div className="flex flex-col justify-between p-8">
-          <div>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-flex rounded-full bg-[#E94560] px-3 py-1 text-xs font-bold text-white">
-                MANŞET XƏBƏR
-              </span>
-              {item.isGundem && (
-                <span className="inline-flex rounded-full bg-rose-50 px-3 py-1 text-xs font-bold text-rose-600">
-                  Gündəm
-                </span>
-              )}
-              <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">
-                {item.category}
-              </span>
-            </div>
-            <Link href={`/haberler/${item.slug}`}>
-              <h2 className="mt-4 font-display text-2xl font-black leading-tight text-[#1A1A2E] transition hover:text-[#E94560] sm:text-3xl lg:text-4xl">
-                {item.title}
-              </h2>
-            </Link>
-            <p className="mt-4 line-clamp-3 text-sm leading-7 text-slate-600">{item.summary}</p>
-            <div className="mt-4 flex flex-wrap gap-3 text-xs font-semibold text-slate-500">
-              <span>{item.sourceName || noSource}</span>
-              <span>&bull;</span>
-              <span>{formatDateAz(item.publishedAt)}</span>
-            </div>
+    <section
+      className={s.mvWrap}
+      aria-roledescription="carousel"
+      aria-label={label}
+      data-testid="manset-vitrin"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <Link href={item.href} className={s.leadStory} aria-roledescription="slide" aria-label={`${slideLabels[index]}: ${item.title}`}>
+        {item.cover}
+        <div className={s.lsBody}>
+          <div className={s.metaRow}>
+            <span className={s.cat}>{featuredLabel}</span>
+            <span>{item.meta}</span>
           </div>
-
-          {/* Navigation */}
-          {total > 1 && (
-            <div className="mt-6 flex items-center gap-2 sm:gap-4">
-              <button
-                type="button"
-                onClick={prev}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition hover:border-[#C5A022] hover:text-[#1A1A2E]"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-
-              {/* Dots */}
-              <div className="hidden gap-2 sm:flex">
-                {items.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setCurrent(i)}
-                    className={`h-2.5 rounded-full transition-all ${
-                      i === current
-                        ? 'w-8 bg-[#E94560]'
-                        : 'w-2.5 bg-slate-200 hover:bg-slate-300'
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <button
-                type="button"
-                onClick={next}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition hover:border-[#C5A022] hover:text-[#1A1A2E]"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-
-              <span className="ml-auto shrink-0 whitespace-nowrap text-xs font-bold text-slate-400">
-                {current + 1} / {total}
-              </span>
-            </div>
-          )}
+          <h2>{item.title}</h2>
+          <p>{item.summary}</p>
         </div>
-      </div>
-    </div>
+      </Link>
+      {total > 1 ? (
+        <div className={s.mvCtrl}>
+          <button type="button" className={s.mvBtn} onClick={prev} aria-label={prevLabel}>
+            <span aria-hidden="true">‹</span>
+          </button>
+          <div className={s.mvDots}>
+            {slides.map((slide, i) => (
+              <button
+                key={slide.id}
+                type="button"
+                aria-label={slideLabels[i]}
+                aria-current={i === index ? 'true' : undefined}
+                onClick={() => setCurrent(i)}
+              >
+                <span />
+              </button>
+            ))}
+          </div>
+          <button type="button" className={s.mvBtn} onClick={next} aria-label={nextLabel}>
+            <span aria-hidden="true">›</span>
+          </button>
+        </div>
+      ) : null}
+    </section>
   );
 }

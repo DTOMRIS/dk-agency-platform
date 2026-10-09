@@ -7,6 +7,7 @@ import { ArrowRight, BookOpen, Lightbulb, RotateCcw, Users } from 'lucide-react'
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import DecimalInput from '@/components/toolkit/DecimalInput';
 
 function formatCurrency(value: number) {
   return `${Math.round(value).toLocaleString(AZ_NUMBER_LOCALE)} ₼`;
@@ -32,14 +33,19 @@ export default function StaffRetentionPage() {
   ];
 
   const stats = useMemo(() => {
-    const safeEmployeeCount = Math.max(employeeCount, 1);
-    const turnoverRate = (yearlyLeavers / safeEmployeeCount) * 100;
+    // TASK-0515: 0 employees → no rate ("—"), never a fake 1200%.
+    const turnoverRate = employeeCount > 0 ? (yearlyLeavers / employeeCount) * 100 : null;
     const replacementCostLow = averageSalary * 2;
     const replacementCostHigh = averageSalary * 3;
     const replacementCostMid = averageSalary * 2.5;
     const annualLoss = yearlyLeavers * replacementCostMid;
     return { turnoverRate, replacementCostLow, replacementCostHigh, replacementCostMid, annualLoss };
   }, [averageSalary, employeeCount, yearlyLeavers]);
+
+  const turnoverText =
+    stats.turnoverRate === null
+      ? '—'
+      : `${stats.turnoverRate.toLocaleString(AZ_NUMBER_LOCALE, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
 
   const resetAll = () => { setEmployeeCount(18); setAverageSalary(850); setYearlyLeavers(12); };
 
@@ -50,48 +56,48 @@ export default function StaffRetentionPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
-          <p className="text-sm text-slate-500">{t('calculatorSubtitle')}</p>
+          <p className="text-sm text-slate-600">{t('calculatorSubtitle')}</p>
         </div>
-        <button onClick={resetAll} className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-indigo-600">
+        <button type="button" onClick={resetAll} className="inline-flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-indigo-700">
           <RotateCcw size={13} /> {t('reset')}
         </button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelEmployeeCount')}</label>
-          <input type="number" value={employeeCount} onChange={(e) => setEmployeeCount(parseFloat(e.target.value) || 0)}
+          <label htmlFor="sr-employeeCount" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('labelEmployeeCount')}</label>
+          <DecimalInput id="sr-employeeCount" inputMode="numeric" value={employeeCount} onValueChange={(v) => setEmployeeCount(Math.max(0, Math.round(v)))}
             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/20" />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelAverageSalary')}</label>
-          <input type="number" value={averageSalary} onChange={(e) => setAverageSalary(parseFloat(e.target.value) || 0)}
+          <label htmlFor="sr-averageSalary" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('labelAverageSalary')}</label>
+          <DecimalInput id="sr-averageSalary" value={averageSalary} onValueChange={(v) => setAverageSalary(Math.max(0, v))}
             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/20" />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('labelYearlyLeavers')}</label>
-          <input type="number" value={yearlyLeavers} onChange={(e) => setYearlyLeavers(parseFloat(e.target.value) || 0)}
+          <label htmlFor="sr-yearlyLeavers" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('labelYearlyLeavers')}</label>
+          <DecimalInput id="sr-yearlyLeavers" inputMode="numeric" value={yearlyLeavers} onValueChange={(v) => setYearlyLeavers(Math.max(0, Math.round(v)))}
             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/20" />
         </div>
       </div>
 
       {/* Financial Impact */}
       <div className="border-t border-slate-100 pt-5 space-y-4">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">{t('financialImpactTitle')}</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-600">{t('financialImpactTitle')}</h3>
         <div className="rounded-xl bg-slate-50 p-4">
-          <div className="text-xs text-slate-500">{t('turnoverRateLabel')}</div>
-          <div className="mt-1 text-2xl font-black text-slate-900">{stats.turnoverRate.toFixed(1)}%</div>
-          <p className="mt-2 text-sm text-slate-500">{t('turnoverRateBenchmark')}</p>
+          <div className="text-xs text-slate-600">{t('turnoverRateLabel')}</div>
+          <div className="mt-1 text-2xl font-black text-slate-900">{turnoverText}</div>
+          <p className="mt-2 text-sm text-slate-600">{employeeCount > 0 ? t('turnoverRateBenchmark') : t('errNoEmployees')}</p>
         </div>
         <div className="rounded-xl bg-indigo-50 p-4 ring-1 ring-indigo-100">
-          <div className="text-xs text-slate-500">{t('replacementCostLabel')}</div>
+          <div className="text-xs text-slate-600">{t('replacementCostLabel')}</div>
           <div className="mt-1 text-2xl font-black text-indigo-700">
             {formatCurrency(stats.replacementCostLow)} - {formatCurrency(stats.replacementCostHigh)}
           </div>
-          <p className="mt-2 text-sm text-slate-500">{t('replacementCostNote')}</p>
+          <p className="mt-2 text-sm text-slate-600">{t('replacementCostNote')}</p>
         </div>
         <div className="rounded-xl bg-slate-900 p-4 text-white">
-          <div className="text-xs uppercase tracking-widest text-slate-400">{t('annualLossLabel')}</div>
+          <div className="text-xs uppercase tracking-widest text-slate-300">{t('annualLossLabel')}</div>
           <div className="mt-1 text-3xl font-black">{formatCurrency(stats.annualLoss)}</div>
           <p className="mt-2 text-sm text-slate-300">{t('annualLossNote')}</p>
         </div>
@@ -99,10 +105,10 @@ export default function StaffRetentionPage() {
 
       {/* Action Plan */}
       <div className="border-t border-slate-100 pt-5 space-y-3">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">{t('actionPlanTitle')}</h3>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-600">{t('actionPlanTitle')}</h3>
         {strategies.map((item, index) => (
           <div key={index} className="rounded-xl border border-slate-100 p-4">
-            <div className="mb-1 text-xs font-bold uppercase tracking-widest text-indigo-500">{t('stepPrefix')} {index + 1}</div>
+            <div className="mb-1 text-xs font-bold uppercase tracking-widest text-indigo-700">{t('stepPrefix')} {index + 1}</div>
             <p className="text-sm leading-6 text-slate-600">{item}</p>
           </div>
         ))}
@@ -124,25 +130,25 @@ export default function StaffRetentionPage() {
   const resultSection = (
     <div className="space-y-4">
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statEmployeeCount')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statEmployeeCount')}</div>
         <div className="mt-1 text-3xl font-black text-slate-900">{employeeCount}</div>
       </div>
       <div className="rounded-xl bg-indigo-50 p-4 ring-1 ring-indigo-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('statTurnoverRate')}</div>
-        <div className="mt-1 text-3xl font-black text-indigo-600">{stats.turnoverRate.toFixed(1)}%</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statTurnoverRate')}</div>
+        <div className="mt-1 text-3xl font-black text-indigo-700" data-testid="sr-turnover">{turnoverText}</div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statReplacementCost')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statReplacementCost')}</div>
         <div className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(stats.replacementCostMid)}</div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-400">{t('statAnnualLoss')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statAnnualLoss')}</div>
         <div className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(stats.annualLoss)}</div>
       </div>
 
       {/* Top 5 Reasons */}
       <div className="border-t border-slate-100 pt-4">
-        <div className="mb-3 inline-flex rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-indigo-600">
+        <div className="mb-3 inline-flex rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-indigo-700">
           {t('knowledgePanelBadge')}
         </div>
         <h3 className="text-base font-black text-slate-900">{t('top5Title')}</h3>
@@ -177,10 +183,10 @@ export default function StaffRetentionPage() {
             <Link key={item.href} href={item.href}
               className="group flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 transition-colors hover:border-indigo-200 hover:bg-indigo-50">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">{item.tag}</div>
+                <div className="text-xs uppercase tracking-widest text-slate-600">{item.tag}</div>
                 <div className="text-sm font-semibold text-slate-900">{item.title}</div>
               </div>
-              <ArrowRight size={16} className="text-slate-400 transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight size={16} className="text-slate-600 transition-transform group-hover:translate-x-0.5" />
             </Link>
           ))}
         </div>
@@ -200,7 +206,7 @@ export default function StaffRetentionPage() {
       aiInsight={aiInsight}
       onRequestInsight={async () => {
         setAiInsight({ status: 'loading' });
-        const res = await getToolkitInsight({ toolId: 'staff-retention', locale, result: { turnoverRate: stats.turnoverRate, replacementCost: stats.replacementCostMid, annualLoss: stats.annualLoss, employeeCount } });
+        const res = await getToolkitInsight({ toolId: 'staff-retention', locale, result: { turnoverRate: stats.turnoverRate ?? 0, replacementCost: stats.replacementCostMid, annualLoss: stats.annualLoss, employeeCount } });
         if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
         else setAiInsight({ status: 'error' });
       }}

@@ -36,7 +36,7 @@ export default function OffersPage() {
           </p>
           <Link
             href={listings.length === 0 ? '/b2b-panel/yeni-ilan' : '/b2b-panel/ilanlarim'}
-            className="mt-5 inline-flex rounded-xl bg-dk-red px-4 py-2 text-sm font-semibold text-white"
+            className="mt-5 inline-flex rounded-xl bg-dk-red-strong px-4 py-2 text-sm font-semibold text-white"
           >
             {listings.length === 0 ? t('ctaNewListing') : t('ctaMyListings')}
           </Link>

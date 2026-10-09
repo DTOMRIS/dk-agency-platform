@@ -7,33 +7,21 @@ import { ArrowRight, BookOpen, Info, Lightbulb, Plus, RotateCcw, TrendingUp, Ute
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import { numberLocale } from '@/lib/i18n/format';
-
-interface MenuItem { id: string; name: string; salesCount: number; contributionMargin: number; }
-type Category = 'star' | 'plowHorse' | 'puzzle' | 'dog';
-
-function classify(items: MenuItem[]): { item: MenuItem; category: Category }[] {
-  if (items.length === 0) return [];
-  const avgSales = items.reduce((s, i) => s + i.salesCount, 0) / items.length;
-  const avgMargin = items.reduce((s, i) => s + i.contributionMargin, 0) / items.length;
-  return items.map((item) => {
-    const highSales = item.salesCount >= avgSales;
-    const highMargin = item.contributionMargin >= avgMargin;
-    const category: Category = highSales && highMargin ? 'star' : highSales ? 'plowHorse' : highMargin ? 'puzzle' : 'dog';
-    return { item, category };
-  });
-}
+import DecimalInput from '@/components/toolkit/DecimalInput';
+import { classifyMenu, menuThresholds, type MenuCategory as Category, type MenuMatrixItem as MenuItem } from '@/lib/toolkit/menu-matrix';
 
 export default function MenuMatrixPage() {
   const t = useTranslations('toolkit.menuMatrix');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
-  const fmt0 = (n: number) => new Intl.NumberFormat(numberLocale(locale)).format(Math.round(Number.isFinite(n) ? n : 0));
+  const fmt1 = (n: number) => new Intl.NumberFormat(numberLocale(locale), { maximumFractionDigits: 1 }).format(Number.isFinite(n) ? n : 0);
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
-  const CATEGORY_META: Record<Category, { emoji: string; label: string; labelEn: string; color: string; bg: string; ring: string; advice: string }> = {
-    star: { emoji: '⭐', label: t('catStarLabel'), labelEn: 'Star', color: 'text-yellow-600', bg: 'bg-yellow-50', ring: 'ring-yellow-200/60', advice: t('catStarAdvice') },
-    plowHorse: { emoji: '🐴', label: t('catPlowHorseLabel'), labelEn: 'Plow Horse', color: 'text-blue-600', bg: 'bg-blue-50', ring: 'ring-blue-200/60', advice: t('catPlowHorseAdvice') },
-    puzzle: { emoji: '🧩', label: t('catPuzzleLabel'), labelEn: 'Puzzle', color: 'text-purple-600', bg: 'bg-purple-50', ring: 'ring-purple-200/60', advice: t('catPuzzleAdvice') },
-    dog: { emoji: '🐕', label: t('catDogLabel'), labelEn: 'Dog', color: 'text-red-600', bg: 'bg-red-50', ring: 'ring-red-200/60', advice: t('catDogAdvice') },
+  // TASK-0515: category text colours ≥ 4.5:1 on their tinted backgrounds (yellow-600 was 2.84:1).
+  const CATEGORY_META: Record<Category, { emoji: string; label: string; sub: string; color: string; bg: string; ring: string; advice: string }> = {
+    star: { emoji: '⭐', label: t('catStarLabel'), sub: t('catStarSub'), color: 'text-amber-800', bg: 'bg-yellow-50', ring: 'ring-yellow-200/60', advice: t('catStarAdvice') },
+    plowHorse: { emoji: '🐴', label: t('catPlowHorseLabel'), sub: t('catPlowHorseSub'), color: 'text-blue-700', bg: 'bg-blue-50', ring: 'ring-blue-200/60', advice: t('catPlowHorseAdvice') },
+    puzzle: { emoji: '🧩', label: t('catPuzzleLabel'), sub: t('catPuzzleSub'), color: 'text-purple-700', bg: 'bg-purple-50', ring: 'ring-purple-200/60', advice: t('catPuzzleAdvice') },
+    dog: { emoji: '🐕', label: t('catDogLabel'), sub: t('catDogSub'), color: 'text-red-700', bg: 'bg-red-50', ring: 'ring-red-200/60', advice: t('catDogAdvice') },
   };
 
   const DEFAULT_ITEMS: MenuItem[] = [
@@ -52,9 +40,9 @@ export default function MenuMatrixPage() {
   ];
 
   const [items, setItems] = useState<MenuItem[]>(DEFAULT_ITEMS);
-  const classified = useMemo(() => classify(items), [items]);
-  const avgSales = useMemo(() => items.length === 0 ? 0 : items.reduce((s, i) => s + i.salesCount, 0) / items.length, [items]);
-  const avgMargin = useMemo(() => items.length === 0 ? 0 : items.reduce((s, i) => s + i.contributionMargin, 0) / items.length, [items]);
+  const classified = useMemo(() => classifyMenu(items), [items]);
+  const thresholds = useMemo(() => menuThresholds(items), [items]);
+  const avgMargin = thresholds.margin;
   const counts = useMemo(() => { const n = { star: 0, plowHorse: 0, puzzle: 0, dog: 0 }; classified.forEach(({ category }) => { n[category] += 1; }); return n; }, [classified]);
 
   const addItem = () => setItems((p) => [...p, { id: Date.now().toString(), name: '', salesCount: 0, contributionMargin: 0 }]);
@@ -66,13 +54,13 @@ export default function MenuMatrixPage() {
 
   const inputSection = (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-base font-bold text-slate-900">{t('itemListTitle')}</h2>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="text-xs text-slate-600">
-            {t('avgSalesLabel')}: <strong className="text-slate-600">{fmt0(avgSales)}</strong> | {t('avgMarginLabel')}: <strong className="text-slate-600">{avgMargin.toFixed(1)} ₼</strong>
+            {t('avgSalesLabel')}: <strong className="text-slate-800" data-testid="mm-pop-threshold">{fmt1(thresholds.popularity)}</strong> | {t('avgMarginLabel')}: <strong className="text-slate-800" data-testid="mm-cm-threshold">{fmt1(avgMargin)} ₼</strong>
           </div>
-          <button onClick={resetAll} className="flex items-center gap-1.5 text-xs font-medium text-slate-600 transition-colors hover:text-red-500">
+          <button type="button" onClick={resetAll} className="flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-red-700">
             <RotateCcw size={13} /> {t('reset')}
           </button>
         </div>
@@ -94,27 +82,27 @@ export default function MenuMatrixPage() {
             {classified.map(({ item, category }) => {
               const meta = CATEGORY_META[category];
               return (
-                <tr key={item.id} className="group transition-colors hover:bg-slate-50/50">
+                <tr key={item.id} className="group transition-colors hover:bg-slate-50/50" data-testid="mm-row">
                   <td className="px-4 py-3">
                     <input type="text" value={item.name} onChange={(e) => updateItem(item.id, 'name', e.target.value)}
-                      className="w-full bg-transparent font-medium text-slate-900 outline-none placeholder:text-slate-300" placeholder={t('foodNamePlaceholder')} />
+                      aria-label={t('colFoodName')} className="w-full min-w-[120px] bg-transparent py-1.5 font-medium text-slate-900 outline-none placeholder:text-slate-500" placeholder={t('foodNamePlaceholder')} />
                   </td>
                   <td className="px-3 py-3">
-                    <input type="number" min="0" value={item.salesCount || ''} onChange={(e) => updateItem(item.id, 'salesCount', parseInt(e.target.value, 10) || 0)}
+                    <DecimalInput blankZero inputMode="numeric" aria-label={t('colSalesCount')} value={item.salesCount} onValueChange={(v) => updateItem(item.id, 'salesCount', Math.max(0, Math.round(v)))}
                       className="w-full rounded-lg bg-slate-100/80 px-2 py-1.5 text-center text-sm outline-none transition-shadow focus:ring-2 focus:ring-purple-500/30" />
                   </td>
                   <td className="px-3 py-3">
-                    <input type="number" min="0" step="0.1" value={item.contributionMargin || ''} onChange={(e) => updateItem(item.id, 'contributionMargin', parseFloat(e.target.value) || 0)}
+                    <DecimalInput blankZero aria-label={t('colContributionMargin')} value={item.contributionMargin} onValueChange={(v) => updateItem(item.id, 'contributionMargin', v)}
                       className="w-full rounded-lg bg-slate-100/80 px-2 py-1.5 text-center text-sm outline-none transition-shadow focus:ring-2 focus:ring-purple-500/30" />
                   </td>
                   <td className="px-3 py-3 text-center">
-                    <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${meta.bg} ${meta.color} ring-1 ${meta.ring}`}>
+                    <span data-testid="mm-cat" data-cat={category} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${meta.bg} ${meta.color} ring-1 ${meta.ring}`}>
                       {meta.emoji} {meta.label}
                     </span>
                   </td>
-                  <td className="px-3 py-3 text-xs text-slate-500">{meta.advice}</td>
+                  <td className="min-w-[160px] px-3 py-3 text-xs text-slate-600">{meta.advice}</td>
                   <td className="pr-3 py-3">
-                    <button onClick={() => removeItem(item.id)} className="text-slate-300 opacity-0 transition-all hover:text-red-500 group-hover:opacity-100"><X size={15} /></button>
+                    <button type="button" onClick={() => removeItem(item.id)} aria-label={t('removeItem')} className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-600 transition-colors hover:bg-red-50 hover:text-red-700"><X size={15} /></button>
                   </td>
                 </tr>
               );
@@ -122,7 +110,7 @@ export default function MenuMatrixPage() {
           </tbody>
         </table>
       </div>
-      <button onClick={addItem} className="inline-flex items-center gap-1.5 text-sm font-semibold text-purple-600 transition-colors hover:text-purple-700">
+      <button type="button" onClick={addItem} className="inline-flex min-h-[40px] items-center gap-1.5 rounded-lg text-sm font-semibold text-purple-700 transition-colors hover:text-purple-800">
         <Plus size={15} /> {t('addItem')}
       </button>
     </div>
@@ -136,9 +124,9 @@ export default function MenuMatrixPage() {
         const meta = CATEGORY_META[cat];
         return (
           <div key={cat} className={`${meta.bg} rounded-xl p-4 ring-1 ${meta.ring}`}>
-            <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{meta.emoji} {meta.label}</div>
-            <div className={`mt-1 text-3xl font-black tabular-nums ${meta.color}`}>{counts[cat]}</div>
-            <div className="mt-1 text-[10px] text-slate-600">{meta.labelEn}</div>
+            <div className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{meta.emoji} {meta.label}</div>
+            <div className={`mt-1 text-3xl font-black tabular-nums ${meta.color}`} data-testid={`mm-count-${cat}`}>{counts[cat]}</div>
+            <div className="mt-1 text-xs text-slate-700">{meta.sub}</div>
           </div>
         );
       })}
@@ -154,7 +142,7 @@ export default function MenuMatrixPage() {
           <h2 className="text-2xl font-display font-black tracking-tight text-slate-900 sm:text-3xl">
             {t('educationTitle')} <span className="bg-gradient-to-r from-purple-600 to-fuchsia-500 bg-clip-text text-transparent">{t('educationTitleAccent')}</span>
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">{t('educationSubtitle')}</p>
+          <p className="mx-auto mt-2 max-w-md text-sm text-slate-600">{t('educationSubtitle')}</p>
         </div>
         <div className="grid gap-5 md:grid-cols-3">
           <div className="flex flex-col rounded-2xl bg-gradient-to-br from-purple-50/60 to-white p-6 ring-1 ring-purple-200/40">
@@ -167,10 +155,10 @@ export default function MenuMatrixPage() {
           </div>
           <div className="flex flex-col rounded-2xl bg-gradient-to-br from-slate-50 to-white p-6 ring-1 ring-slate-200/60">
             <div className="mb-4 flex items-center gap-2.5"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100"><UtensilsCrossed size={15} className="text-slate-600" /></div><h3 className="text-sm font-bold text-slate-900">{t('bcgTitle')}</h3></div>
-            <p className="mb-4 text-[12px] text-slate-500">{t('bcgSubtitle')}</p>
+            <p className="mb-4 text-[12px] text-slate-600">{t('bcgSubtitle')}</p>
             <div className="mt-auto grid grid-cols-2 gap-2.5">
               {(['star', 'plowHorse', 'puzzle', 'dog'] as Category[]).map((cat) => { const m = CATEGORY_META[cat]; return (
-                <div key={cat} className={`rounded-xl ${m.bg} p-3 ring-1 ${m.ring}`}><p className={`text-xs font-bold ${m.color}`}>{m.emoji} {m.label}</p><p className="mt-1 text-[11px] text-slate-500">{t(`bcg${cat.charAt(0).toUpperCase() + cat.slice(1)}Desc` as 'bcgStarDesc')}</p></div>
+                <div key={cat} className={`rounded-xl ${m.bg} p-3 ring-1 ${m.ring}`}><p className={`text-xs font-bold ${m.color}`}>{m.emoji} {m.label}</p><p className="mt-1 text-[11px] text-slate-600">{t(`bcg${cat.charAt(0).toUpperCase() + cat.slice(1)}Desc` as 'bcgStarDesc')}</p></div>
               ); })}
             </div>
           </div>
@@ -178,7 +166,7 @@ export default function MenuMatrixPage() {
             <div className="mb-4 flex items-center gap-2.5"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-fuchsia-100"><TrendingUp size={15} className="text-fuchsia-600" /></div><h3 className="text-sm font-bold text-slate-900">{t('strategiesTitle')}</h3></div>
             <div className="mt-auto space-y-2.5">
               {(['star', 'plowHorse', 'puzzle', 'dog'] as Category[]).map((cat) => { const m = CATEGORY_META[cat]; return (
-                <div key={cat} className={`rounded-xl ${m.bg} p-3.5 ring-1 ${m.ring}`}><p className={`text-xs font-bold ${m.color}`}>{m.emoji} {m.label} → {t(`strategy${cat.charAt(0).toUpperCase() + cat.slice(1)}Verb` as 'strategyStarVerb')}</p><p className="mt-1 text-[11px] text-slate-500">{t(`strategy${cat.charAt(0).toUpperCase() + cat.slice(1)}Body` as 'strategyStarBody')}</p></div>
+                <div key={cat} className={`rounded-xl ${m.bg} p-3.5 ring-1 ${m.ring}`}><p className={`text-xs font-bold ${m.color}`}>{m.emoji} {m.label} → {t(`strategy${cat.charAt(0).toUpperCase() + cat.slice(1)}Verb` as 'strategyStarVerb')}</p><p className="mt-1 text-[11px] text-slate-600">{t(`strategy${cat.charAt(0).toUpperCase() + cat.slice(1)}Body` as 'strategyStarBody')}</p></div>
               ); })}
             </div>
           </div>
@@ -189,21 +177,21 @@ export default function MenuMatrixPage() {
           <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-purple-500/10 blur-[50px]" />
           <div className="relative"><div className="mb-4 flex items-center gap-2.5"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/20"><Lightbulb size={16} className="text-amber-400" /></div><h3 className="text-base font-bold text-amber-400">{t('dkAdviceLabel')}</h3></div>
             <p className="mb-5 text-[13px] leading-relaxed text-slate-400">{t('dkAdviceBody1')} <strong className="text-white">{t('dkAdviceBodyBold')}</strong> {t('dkAdviceBody2')}</p>
-            <Link href="/blog/menyu-muhendisliyi-satis" className="group inline-flex items-center gap-2 text-sm font-bold text-amber-400 transition-colors hover:text-amber-300">{t('readArticle')} <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" /></Link></div>
+            <Link href="/blog/menyu-muhendisliyi-satis" className="group inline-flex min-h-[24px] items-center gap-2 text-sm font-bold text-amber-400 transition-colors hover:text-amber-300">{t('readArticle')} <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" /></Link></div>
         </div>
-        <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-8 text-white shadow-xl shadow-red-500/15">
+        <div className="flex flex-col justify-between rounded-2xl bg-gradient-to-br from-dk-red-strong to-dk-red-deep p-8 text-white shadow-xl shadow-red-500/15">
           <div><h3 className="mb-3 text-xl font-display font-black">{t('ocaqTitle')}</h3><p className="mb-6 text-sm leading-relaxed text-white/80">{t('ocaqBody')}</p></div>
-          <Link href="/auth/register" className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-[var(--dk-red)] transition-all hover:shadow-lg active:scale-[0.98]">{t('ocaqCta')} <ArrowRight size={15} /></Link>
+          <Link href="/auth/register" className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3.5 text-sm font-black text-dk-red-deep transition-all hover:shadow-lg active:scale-[0.98]">{t('ocaqCta')} <ArrowRight size={15} /></Link>
         </div>
       </div>
       <div className="mt-10 rounded-2xl bg-slate-50 p-8 sm:p-10">
-        <div className="mb-8 flex items-center gap-2.5"><BookOpen size={18} className="text-[var(--dk-red)]" /><h3 className="text-lg font-bold text-slate-900">{t('learnMoreTitle')}</h3></div>
+        <div className="mb-8 flex items-center gap-2.5"><BookOpen size={18} className="text-dk-red-deep" /><h3 className="text-lg font-bold text-slate-900">{t('learnMoreTitle')}</h3></div>
         <div className="grid gap-4 sm:grid-cols-3">
           {blogLinks.map((a) => (
             <Link key={a.slug} href={`/blog/${a.slug}`} className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/60 transition-all duration-300 hover:shadow-md">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--dk-red)]">{a.tag}</span>
-              <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 group-hover:text-[var(--dk-red)]">{a.title}</h4>
-              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-600 group-hover:text-[var(--dk-red)]">{t('readLabel')} <ArrowRight size={12} /></div>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-dk-red-deep">{a.tag}</span>
+              <h4 className="mt-2.5 text-sm font-bold leading-snug text-slate-900 group-hover:text-dk-red-deep">{a.title}</h4>
+              <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-slate-600 group-hover:text-dk-red-deep">{t('readLabel')} <ArrowRight size={12} /></div>
             </Link>
           ))}
         </div>

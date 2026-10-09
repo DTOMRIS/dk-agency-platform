@@ -258,7 +258,7 @@ export default function AyarlarPage() {
             type="button"
             disabled={loading || saving}
             onClick={() => void saveSettings()}
-            className="rounded-full bg-[var(--dk-red)] px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
+            className="rounded-full bg-dk-red-strong px-6 py-3 text-sm font-bold text-white disabled:opacity-60"
           >
             {saving ? copy.btnSaving : copy.btnSave}
           </button>

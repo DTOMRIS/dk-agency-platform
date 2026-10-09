@@ -207,7 +207,7 @@ export default function TrendAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi
         </div>
 
         <div className="mt-5 flex justify-center">
-          <button type="submit" disabled={isPending} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 text-base font-bold text-white shadow-lg transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-70">
+          <button type="submit" disabled={isPending} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 text-base font-bold text-white shadow-lg transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-70">
             {isPending ? <Loader2 size={18} className="animate-spin" /> : <TrendingUp size={18} />}
             {isPending ? t('loading') : t('cta')}
           </button>

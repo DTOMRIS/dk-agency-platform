@@ -1,4 +1,4 @@
-import { and, asc, eq, gte, inArray, lte } from 'drizzle-orm';
+import { and, asc, desc, eq, gte, inArray, isNull, lte } from 'drizzle-orm';
 import { db } from './index';
 import { listingLeads, listingMedia, listingReviews, listings } from './schema';
 import { type MockListing } from '@/lib/data/mockListings';
@@ -137,4 +137,64 @@ export async function getListingById(id: number, locale?: string) {
   ]);
 
   return mapDbListing(row, mediaRows, leadRows, reviewRows, loc);
+}
+
+export interface LatestListingCard {
+  id: number;
+  slug: string;
+  type: string;
+  title: string;
+  city: string;
+  price: number | null;
+  priceLabel: string | null;
+  currency: string;
+}
+
+/**
+ * TASK-0515 — «Son İlanlar» box on /haberler/[slug]: the newest PUBLIC listings only
+ * (status `showcase_ready`, same default as GET /api/listings, not deleted/expired). Selects just
+ * the card fields — no contact data, leads or reviews. Empty array when the DB is unavailable.
+ */
+export async function getLatestShowcaseListings(limit = 3, locale?: string): Promise<LatestListingCard[]> {
+  const loc = sanitizeLocale(locale);
+  if (!db) return [];
+
+  const rows = await db
+    .select({
+      id: listings.id,
+      slug: listings.slug,
+      trackingCode: listings.trackingCode,
+      type: listings.type,
+      title: listings.title,
+      titleAz: listings.titleAz,
+      titleRu: listings.titleRu,
+      titleEn: listings.titleEn,
+      titleTr: listings.titleTr,
+      city: listings.city,
+      price: listings.price,
+      priceLabel: listings.priceLabel,
+      currency: listings.currency,
+    })
+    .from(listings)
+    .where(and(eq(listings.status, 'showcase_ready'), isNull(listings.deletedAt)))
+    .orderBy(desc(listings.publishedAt), desc(listings.createdAt))
+    .limit(limit);
+
+  const pick: Record<ContentLocale, (r: (typeof rows)[number]) => string | null> = {
+    az: (r) => r.titleAz,
+    ru: (r) => r.titleRu,
+    en: (r) => r.titleEn,
+    tr: (r) => r.titleTr,
+  };
+
+  return rows.map((r) => ({
+    id: r.id,
+    slug: r.slug || r.trackingCode.toLowerCase(),
+    type: r.type,
+    title: (pick[loc](r) || r.titleAz || r.title).trim(),
+    city: r.city,
+    price: r.price,
+    priceLabel: r.priceLabel,
+    currency: r.currency,
+  }));
 }

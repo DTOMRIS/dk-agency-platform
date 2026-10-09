@@ -139,7 +139,7 @@ export function DashboardTopBar() {
         >
           <Bell size={18} />
           {unreadCount > 0 ? (
-            <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--dk-red)] px-1 text-[10px] font-bold text-white">
+            <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-dk-red-strong px-1 text-[10px] font-bold text-white">
               {unreadCount}
             </span>
           ) : null}

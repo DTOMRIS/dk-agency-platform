@@ -308,7 +308,7 @@ export default function PricingPage() {
               }`}
             >
               {tier.highlight ? (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-[var(--dk-red)] px-4 py-1 text-xs font-bold text-white">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-dk-red-strong px-4 py-1 text-xs font-bold text-white">
                   {tier.badge}
                 </div>
               ) : null}
@@ -340,7 +340,7 @@ export default function PricingPage() {
                 rel={tier.key === 'sagird' ? undefined : 'noreferrer'}
                 className={`mt-8 block rounded-2xl px-5 py-3.5 text-center text-sm font-bold transition ${
                   tier.highlight
-                    ? 'bg-[var(--dk-red)] text-white hover:opacity-90'
+                    ? 'bg-dk-red-strong text-white hover:opacity-90'
                     : tier.key === 'usta'
                       ? 'bg-[var(--dk-navy)] text-white hover:opacity-90'
                       : 'border border-slate-200 text-slate-700 hover:bg-slate-50'

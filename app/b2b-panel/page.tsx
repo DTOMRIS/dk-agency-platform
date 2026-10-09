@@ -133,7 +133,7 @@ export default function B2BPanelPage() {
         </div>
         <Link
           href="/b2b-panel/yeni-ilan"
-          className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--dk-red)] to-[var(--dk-red-strong)] hover:from-[var(--dk-red-strong)] hover:to-[var(--dk-red)] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-lg active:scale-[0.98] duration-200"
+          className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-dk-red-strong to-dk-red-deep hover:from-dk-red-deep hover:to-dk-red-deep text-white px-6 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-lg active:scale-[0.98] duration-200"
         >
           <Plus size={18} />
           {copy.newListing}
@@ -196,7 +196,7 @@ export default function B2BPanelPage() {
                   <p className="text-sm font-semibold text-slate-500">{t('noListings')}</p>
                   <Link
                     href="/b2b-panel/yeni-ilan"
-                    className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-red)] px-4 py-2 text-xs font-bold text-white transition hover:bg-[var(--dk-red-strong)]"
+                    className="inline-flex items-center gap-2 rounded-xl bg-dk-red-strong px-4 py-2 text-xs font-bold text-white transition hover:bg-dk-red-deep"
                   >
                     <Plus size={14} />
                     {copy.newListing}

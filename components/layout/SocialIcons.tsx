@@ -85,8 +85,8 @@ export default function SocialIcons({
   };
 
   const variantClasses = {
-    default: 'bg-[var(--dk-red)] text-white hover:bg-[var(--dk-gold)]',
-    outline: 'bg-transparent border border-[var(--dk-red)] text-[var(--dk-red)] hover:bg-[var(--dk-red)] hover:text-white',
+    default: 'bg-dk-red-strong text-white hover:bg-[var(--dk-gold)]',
+    outline: 'bg-transparent border border-[var(--dk-red)] text-[var(--dk-red)] hover:bg-dk-red-deep hover:text-white',
     ghost: 'bg-[var(--dk-surface-dark)] text-[var(--dk-muted)] hover:text-[var(--dk-text)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]',
   };
 
@@ -128,8 +128,8 @@ export function SocialIcon({
   };
 
   const variantClasses = {
-    default: 'bg-[var(--dk-red)] text-white hover:bg-[var(--dk-gold)]',
-    outline: 'bg-transparent border border-[var(--dk-red)] text-[var(--dk-red)] hover:bg-[var(--dk-red)] hover:text-white',
+    default: 'bg-dk-red-strong text-white hover:bg-[var(--dk-gold)]',
+    outline: 'bg-transparent border border-[var(--dk-red)] text-[var(--dk-red)] hover:bg-dk-red-deep hover:text-white',
     ghost: 'bg-[var(--dk-surface-dark)] text-[var(--dk-muted)] hover:text-[var(--dk-text)] hover:bg-[color:color-mix(in_srgb,var(--dk-muted)_8%,transparent)]',
   };
 

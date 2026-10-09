@@ -17,36 +17,36 @@ export default function AqtaChecklistPage() {
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const sections: Section[] = [
-    { id: 'storage', title: t('storage_title'), subtitle: t('storage_subtitle'), icon: Soup, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
+    { id: 'storage', title: t('storage_title'), subtitle: t('storage_subtitle'), icon: Soup, accent: 'text-red-700', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
       { id: 'storage-1', text: t('storage_item1_text'), detail: t('storage_item1_detail') }, { id: 'storage-2', text: t('storage_item2_text'), detail: t('storage_item2_detail') },
       { id: 'storage-3', text: t('storage_item3_text'), detail: t('storage_item3_detail') }, { id: 'storage-4', text: t('storage_item4_text'), detail: t('storage_item4_detail') },
       { id: 'storage-5', text: t('storage_item5_text'), detail: t('storage_item5_detail') },
     ]},
-    { id: 'hygiene', title: t('hygiene_title'), subtitle: t('hygiene_subtitle'), icon: Users, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
+    { id: 'hygiene', title: t('hygiene_title'), subtitle: t('hygiene_subtitle'), icon: Users, accent: 'text-red-700', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
       { id: 'hygiene-1', text: t('hygiene_item1_text'), detail: t('hygiene_item1_detail') }, { id: 'hygiene-2', text: t('hygiene_item2_text'), detail: t('hygiene_item2_detail') },
       { id: 'hygiene-3', text: t('hygiene_item3_text'), detail: t('hygiene_item3_detail') }, { id: 'hygiene-4', text: t('hygiene_item4_text'), detail: t('hygiene_item4_detail') },
     ]},
-    { id: 'kitchen', title: t('kitchen_title'), subtitle: t('kitchen_subtitle'), icon: Utensils, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
+    { id: 'kitchen', title: t('kitchen_title'), subtitle: t('kitchen_subtitle'), icon: Utensils, accent: 'text-red-700', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
       { id: 'kitchen-1', text: t('kitchen_item1_text'), detail: t('kitchen_item1_detail') }, { id: 'kitchen-2', text: t('kitchen_item2_text'), detail: t('kitchen_item2_detail') },
       { id: 'kitchen-3', text: t('kitchen_item3_text'), detail: t('kitchen_item3_detail') }, { id: 'kitchen-4', text: t('kitchen_item4_text'), detail: t('kitchen_item4_detail') },
     ]},
-    { id: 'water', title: t('water_title'), subtitle: t('water_subtitle'), icon: Droplets, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
+    { id: 'water', title: t('water_title'), subtitle: t('water_subtitle'), icon: Droplets, accent: 'text-red-700', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
       { id: 'water-1', text: t('water_item1_text'), detail: t('water_item1_detail') }, { id: 'water-2', text: t('water_item2_text'), detail: t('water_item2_detail') },
       { id: 'water-3', text: t('water_item3_text'), detail: t('water_item3_detail') },
     ]},
-    { id: 'prep', title: t('prep_title'), subtitle: t('prep_subtitle'), icon: Flame, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
+    { id: 'prep', title: t('prep_title'), subtitle: t('prep_subtitle'), icon: Flame, accent: 'text-red-700', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
       { id: 'prep-1', text: t('prep_item1_text'), detail: t('prep_item1_detail') }, { id: 'prep-2', text: t('prep_item2_text'), detail: t('prep_item2_detail') },
       { id: 'prep-3', text: t('prep_item3_text'), detail: t('prep_item3_detail') }, { id: 'prep-4', text: t('prep_item4_text'), detail: t('prep_item4_detail') },
     ]},
-    { id: 'docs', title: t('docs_title'), subtitle: t('docs_subtitle'), icon: WalletCards, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
+    { id: 'docs', title: t('docs_title'), subtitle: t('docs_subtitle'), icon: WalletCards, accent: 'text-red-700', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
       { id: 'docs-1', text: t('docs_item1_text'), detail: t('docs_item1_detail') }, { id: 'docs-2', text: t('docs_item2_text'), detail: t('docs_item2_detail') },
       { id: 'docs-3', text: t('docs_item3_text'), detail: t('docs_item3_detail') }, { id: 'docs-4', text: t('docs_item4_text'), detail: t('docs_item4_detail') },
     ]},
-    { id: 'hall', title: t('hall_title'), subtitle: t('hall_subtitle'), icon: Waves, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
+    { id: 'hall', title: t('hall_title'), subtitle: t('hall_subtitle'), icon: Waves, accent: 'text-red-700', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
       { id: 'hall-1', text: t('hall_item1_text'), detail: t('hall_item1_detail') }, { id: 'hall-2', text: t('hall_item2_text'), detail: t('hall_item2_detail') },
       { id: 'hall-3', text: t('hall_item3_text'), detail: t('hall_item3_detail') },
     ]},
-    { id: 'allergen', title: t('allergen_title'), subtitle: t('allergen_subtitle'), icon: ShieldAlert, accent: 'text-red-600', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
+    { id: 'allergen', title: t('allergen_title'), subtitle: t('allergen_subtitle'), icon: ShieldAlert, accent: 'text-red-700', accentBg: 'bg-red-50', accentRing: 'ring-red-200/60', items: [
       { id: 'allergen-1', text: t('allergen_item1_text'), detail: t('allergen_item1_detail') }, { id: 'allergen-2', text: t('allergen_item2_text'), detail: t('allergen_item2_detail') },
       { id: 'allergen-3', text: t('allergen_item3_text'), detail: t('allergen_item3_detail') },
     ]},
@@ -82,6 +82,7 @@ export default function AqtaChecklistPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const totalItems = useMemo(() => sections.reduce((sum, s) => sum + s.items.length, 0), []);
   const progress = Math.round((checked.size / totalItems) * 100);
+  const openRiskItems = Math.max(0, totalItems - checked.size);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const sectionProgress = useMemo(() => sections.map((s) => { const done = s.items.filter((i) => checked.has(i.id)).length; return { id: s.id, done, total: s.items.length, pct: Math.round((done / s.items.length) * 100) }; }), [checked]);
 
@@ -93,8 +94,8 @@ export default function AqtaChecklistPage() {
   const inputSection = (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div><h2 className="text-base font-bold text-slate-900">{t('checklistTitle')}</h2><p className="text-sm text-slate-500">{t('checklistSubtitle')}</p></div>
-        <button onClick={resetAll} className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 transition-colors hover:text-red-500"><RefreshCcw size={13} /> {t('resetBtn')}</button>
+        <div><h2 className="text-base font-bold text-slate-900">{t('checklistTitle')}</h2><p className="text-sm text-slate-600">{t('checklistSubtitle')}</p></div>
+        <button type="button" onClick={resetAll} className="inline-flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-red-700"><RefreshCcw size={13} /> {t('resetBtn')}</button>
       </div>
 
       <div className="space-y-3">
@@ -108,11 +109,11 @@ export default function AqtaChecklistPage() {
                 <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${section.accentBg}`}><Icon size={18} className={section.accent} /></div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2"><h3 className="text-sm font-bold text-slate-900">{section.title}</h3><span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${section.accentBg} ${section.accent}`}>{stats.done}/{stats.total}</span></div>
-                  <p className="mt-0.5 text-xs text-slate-500">{section.subtitle}</p>
+                  <p className="mt-0.5 text-xs text-slate-600">{section.subtitle}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="hidden h-1.5 w-16 overflow-hidden rounded-full bg-slate-100 sm:block"><div className="h-full rounded-full bg-gradient-to-r from-red-600 to-rose-500 transition-all duration-500" style={{ width: `${stats.pct}%` }} /></div>
-                  {isOpen ? <ChevronUp size={18} className="text-slate-400" /> : <ChevronDown size={18} className="text-slate-400" />}
+                  {isOpen ? <ChevronUp size={18} className="text-slate-600" /> : <ChevronDown size={18} className="text-slate-600" />}
                 </div>
               </button>
               {isOpen && (
@@ -120,7 +121,7 @@ export default function AqtaChecklistPage() {
                   {section.items.map((item) => { const done = checked.has(item.id); return (
                     <button key={item.id} onClick={() => toggleCheck(item.id)} className="flex w-full items-start gap-3 border-b border-slate-100 px-4 py-3 text-left last:border-b-0 hover:bg-white/70">
                       <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border transition-colors ${done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 bg-white text-transparent'}`}><ClipboardCheck size={12} /></div>
-                      <div className="min-w-0"><div className={`text-sm font-semibold ${done ? 'text-emerald-700' : 'text-slate-900'}`}>{item.text}</div><p className="mt-0.5 text-xs leading-relaxed text-slate-500">{item.detail}</p></div>
+                      <div className="min-w-0"><div className={`text-sm font-semibold ${done ? 'text-emerald-700' : 'text-slate-900'}`}>{item.text}</div><p className="mt-0.5 text-xs leading-relaxed text-slate-600">{item.detail}</p></div>
                     </button>
                   ); })}
                 </div>
@@ -133,10 +134,10 @@ export default function AqtaChecklistPage() {
       {/* Hygiene Plan */}
       <div className="border-t border-slate-100 pt-5">
         <h3 className="mb-2 text-base font-bold text-slate-900">{t('hygienePlanTitle')}</h3>
-        <p className="mb-4 text-sm text-slate-500">{t('hygienePlanSubtitle')}</p>
+        <p className="mb-4 text-sm text-slate-600">{t('hygienePlanSubtitle')}</p>
         <div className="mb-4 inline-flex rounded-xl bg-slate-100 p-1">
           {(['daily', 'weekly', 'monthly'] as FrequencyTab[]).map((tab) => (
-            <button key={tab} onClick={() => setFrequencyTab(tab)} className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${frequencyTab === tab ? 'bg-white text-red-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}>
+            <button key={tab} onClick={() => setFrequencyTab(tab)} className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${frequencyTab === tab ? 'bg-white text-red-700 shadow-sm' : 'text-slate-700 hover:text-slate-900'}`}>
               {tab === 'daily' ? t('tabDaily') : tab === 'weekly' ? t('tabWeekly') : t('tabMonthly')}
             </button>
           ))}
@@ -145,7 +146,7 @@ export default function AqtaChecklistPage() {
           <table className="w-full text-sm">
             <thead className="bg-slate-50"><tr><th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('tableColRegime')}</th><th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('tableColTask')}</th></tr></thead>
             <tbody className="divide-y divide-slate-100 bg-white">
-              {frequencyPlan[frequencyTab].map((item, index) => (<tr key={item}><td className="px-4 py-3 text-xs font-bold text-red-600">{String(index + 1).padStart(2, '0')}</td><td className="px-4 py-3 text-sm text-slate-700">{item}</td></tr>))}
+              {frequencyPlan[frequencyTab].map((item, index) => (<tr key={item}><td className="px-4 py-3 text-xs font-bold text-red-700">{String(index + 1).padStart(2, '0')}</td><td className="px-4 py-3 text-sm text-slate-700">{item}</td></tr>))}
             </tbody>
           </table>
         </div>
@@ -159,13 +160,14 @@ export default function AqtaChecklistPage() {
     <div className="space-y-4">
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('progressLabel')}</div>
-        <div className="flex items-end gap-2 mt-1"><div className="text-3xl font-black tabular-nums text-red-600">{progress}%</div><div className="pb-1 text-sm text-slate-500">{checked.size}/{totalItems}</div></div>
+        <div className="flex items-end gap-2 mt-1"><div className="text-3xl font-black tabular-nums text-red-700">{progress}%</div><div className="pb-1 text-sm text-slate-600">{checked.size}/{totalItems}</div></div>
         <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-gradient-to-r from-red-600 to-rose-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
       </div>
       <div className="rounded-xl bg-red-50 p-4 ring-1 ring-red-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500">{t('riskZoneLabel')}</div>
-        <div className="mt-1 text-3xl font-black text-red-600">{fineReasons.length}</div>
-        <div className="mt-1 text-xs text-slate-500">{t('riskZoneSubtitle')}</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('riskZoneLabel')}</div>
+        {/* TASK-0515: computed from the unchecked items, not the fixed length of the fine list */}
+        <div className="mt-1 text-3xl font-black text-red-700" data-testid="aqta-risk">{openRiskItems}</div>
+        <div className="mt-1 text-xs text-slate-700">{t('riskZoneSubtitle', { total: totalItems })}</div>
       </div>
 
       {/* AQTA info */}

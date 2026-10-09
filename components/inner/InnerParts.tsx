@@ -138,6 +138,7 @@ export function NewsCover({
   imageUrl,
   alt,
   compact = false,
+  priority = false,
 }: {
   category: string;
   categoryLabel: string;
@@ -146,13 +147,26 @@ export function NewsCover({
   imageUrl?: string | null;
   alt: string;
   compact?: boolean;
+  /** Lead/above-the-fold image: eager + high fetch priority instead of lazy. */
+  priority?: boolean;
 }) {
   if (imageUrl) {
     return (
       <div className={s.coverImg}>
-        {/* External news images (RSS) — next/image would need every source host whitelisted. */}
+        {/* External news images (RSS, any host) — next/image needs every host in next.config
+            remotePatterns (protected file), so this stays <img> with intrinsic size hints,
+            lazy loading and async decoding (TASK-0515). The box is sized by CSS (object-fit). */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imageUrl} alt={alt} loading="lazy" referrerPolicy="no-referrer" />
+        <img
+          src={imageUrl}
+          alt={alt}
+          width={640}
+          height={400}
+          loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : 'auto'}
+          decoding="async"
+          referrerPolicy="no-referrer"
+        />
       </div>
     );
   }

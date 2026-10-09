@@ -11,15 +11,18 @@ import { numberLocale } from '@/lib/i18n/format';
 import home from '@/components/home/v2/homeV2.module.css';
 import { Icon, whatsappHref } from '@/components/home/v2/shared';
 import s from '@/components/inner/inner.module.css';
+import DecimalInput from '@/components/toolkit/DecimalInput';
+import {
+  FOOD_COST_DANGER_MARGIN_PP,
+  FOOD_COST_DEFAULT_TARGET_PCT,
+  FOOD_COST_SECTOR_BANDS,
+} from '@/lib/toolkit/benchmarks';
+import { usableLineCost } from '@/lib/toolkit/food-cost';
 
 const UNITS = ['kq', 'qr', 'litr', 'ml', 'ədəd'];
 
-/** Sector bands of this tool (source of truth for food cost targets, owner 2026-10-09). */
-const SECTOR_BANDS = [
-  { key: 'sectorRestaurant', lo: 28, hi: 32 },
-  { key: 'sectorFastFood', lo: 22, hi: 28 },
-  { key: 'sectorFineDining', lo: 35, hi: 40 },
-] as const;
+/** Sector bands of this tool — single source in lib/toolkit/benchmarks.ts (TASK-0515). */
+const SECTOR_BANDS = FOOD_COST_SECTOR_BANDS;
 /** Band scale of the result bar: 0 … 60%. */
 const BAND_MAX = 60;
 
@@ -55,7 +58,7 @@ export default function FoodCostCalculator() {
   ]);
   const [menuPrice, setMenuPrice] = useState(18);
   const [portions, setPortions] = useState(1);
-  const [targetFoodCost, setTargetFoodCost] = useState(32);
+  const [targetFoodCost, setTargetFoodCost] = useState<number>(FOOD_COST_DEFAULT_TARGET_PCT);
   const { suggestions, activeIngId, hasInvoiceData, search, clear } = useProductLookup();
   const locale = normalizeLocale(useLocale());
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
@@ -78,25 +81,41 @@ export default function FoodCostCalculator() {
 
   const applySuggestion = (ingId: string, sug: PriceSuggestion) => { setIngredients((prev) => prev.map((i) => i.id === ingId ? { ...i, name: sug.name, unit: sug.unit, pricePerUnit: sug.avgUnitPrice / 100 } : i)); clear(); };
   const calc = useMemo(() => {
-    const totalRaw = ingredients.reduce((sum, ing) => sum + ing.quantity * (1 + ing.trimLoss / 100) * ing.pricePerUnit, 0);
-    const perPortion = totalRaw / (portions || 1);
+    const lineCosts = ingredients.map((ing) => usableLineCost(ing));
+    const trimInvalid = lineCosts.some((c) => c === null);
+    const totalRaw = lineCosts.reduce<number>((sum, c) => sum + (c ?? 0), 0);
+    const portionsValid = Number.isFinite(portions) && portions > 0;
+    const targetValid = Number.isFinite(targetFoodCost) && targetFoodCost > 0 && targetFoodCost < 100;
+    const perPortion = portionsValid ? totalRaw / portions : 0;
     const pct = menuPrice > 0 ? (perPortion / menuPrice) * 100 : 0;
     const gross = menuPrice - perPortion;
-    const ideal = targetFoodCost > 0 ? perPortion / (targetFoodCost / 100) : 0;
-    const status: 'good' | 'warning' | 'danger' = pct > 35 ? 'danger' : pct > 30 ? 'warning' : 'good';
-    return { totalRaw, perPortion, pct, gross, ideal, status };
+    const ideal = targetValid ? perPortion / (targetFoodCost / 100) : 0;
+    // Status derives from the user's own target (no second, conflicting 30/35 scale).
+    const status: 'good' | 'warning' | 'danger' = !targetValid
+      ? 'warning'
+      : pct > targetFoodCost + FOOD_COST_DANGER_MARGIN_PP
+        ? 'danger'
+        : pct > targetFoodCost
+          ? 'warning'
+          : 'good';
+    return { lineCosts, trimInvalid, totalRaw, perPortion, pct, gross, ideal, status, portionsValid, targetValid };
   }, [ingredients, menuPrice, portions, targetFoodCost]);
   const addIngredient = () => setIngredients([...ingredients, { id: Date.now().toString(), name: '', quantity: 0, unit: 'kq', pricePerUnit: 0, trimLoss: 0 }]);
   const removeIngredient = (id: string) => { if (ingredients.length > 1) setIngredients(ingredients.filter((i) => i.id !== id)); };
   const updateIngredient = (id: string, field: keyof Ingredient, value: string | number) => setIngredients(ingredients.map((i) => (i.id === id ? { ...i, [field]: value } : i)));
-  const resetAll = () => { setIngredients([{ id: '1', name: '', quantity: 0, unit: 'kq', pricePerUnit: 0, trimLoss: 0 }]); setMenuPrice(0); setPortions(1); setTargetFoodCost(32); };
+  const resetAll = () => { setIngredients([{ id: '1', name: '', quantity: 0, unit: 'kq', pricePerUnit: 0, trimLoss: 0 }]); setMenuPrice(0); setPortions(1); setTargetFoodCost(FOOD_COST_DEFAULT_TARGET_PCT); };
 
-  const ready = menuPrice > 0 && calc.perPortion > 0;
+  const ready = menuPrice > 0 && calc.perPortion > 0 && calc.portionsValid && calc.targetValid && !calc.trimInvalid;
   const statusClass = { good: s.sOk, warning: s.sWarn, danger: s.sDanger }[calc.status];
   const statusLabel = { good: t('statusGood'), warning: t('statusWarning'), danger: t('statusDanger') }[calc.status];
   const pctText = ready ? `${nf1.format(calc.pct)}%` : '—';
   const dish = ingredients.find((i) => i.name.trim())?.name.trim() || tv('dishFallback');
   const overTarget = ready && calc.pct > targetFoodCost;
+  const validationMsgs = [
+    calc.trimInvalid ? tv('errTrim') : null,
+    !calc.portionsValid ? tv('errPortions') : null,
+    !calc.targetValid ? tv('errTarget') : null,
+  ].filter((m): m is string => m !== null);
   const signal = !ready
     ? tv('signalPending')
     : overTarget
@@ -129,13 +148,14 @@ export default function FoodCostCalculator() {
       <div className={s.rowsH} aria-hidden="true">
         <span>{t('colProduct')}</span><span>{t('colQuantity')}</span><span>{t('colUnit')}</span><span>{t('colPricePerUnit')}</span><span>{t('colTrimPct')}</span><span>{t('colTotal')}</span><span />
       </div>
-      {ingredients.map((ing) => {
-        const total = ing.quantity * (1 + ing.trimLoss / 100) * ing.pricePerUnit;
+      {ingredients.map((ing, idx) => {
+        const total = calc.lineCosts[idx];
+        const rowNo = idx + 1;
         return (
           <div key={ing.id} className={s.fcRow}>
             <div className={s.cNm}>
               <span className={s.lbl}>{t('colProduct')}</span>
-              <input type="text" className={s.nm} value={ing.name} aria-label={t('colProduct')} placeholder={t('productNamePlaceholder')}
+              <input type="text" className={s.nm} value={ing.name} aria-label={`${t('colProduct')} ${rowNo}`} placeholder={t('productNamePlaceholder')}
                 onChange={(e) => { updateIngredient(ing.id, 'name', e.target.value); if (hasInvoiceData) search(e.target.value, ing.id); }}
                 onBlur={() => setTimeout(clear, 200)} />
               {activeIngId === ing.id && suggestions.length > 0 && (
@@ -152,21 +172,21 @@ export default function FoodCostCalculator() {
             </div>
             <div className={s.cQ}>
               <span className={s.lbl}>{t('colQuantity')}</span>
-              <input type="number" step="0.01" min="0" inputMode="decimal" aria-label={t('colQuantity')} value={ing.quantity || ''} onChange={(e) => updateIngredient(ing.id, 'quantity', parseFloat(e.target.value) || 0)} />
+              <DecimalInput blankZero aria-label={`${t('colQuantity')} ${rowNo}`} value={ing.quantity} onValueChange={(v) => updateIngredient(ing.id, 'quantity', Math.max(0, v))} />
             </div>
             <div className={s.cU}>
               <span className={s.lbl}>{t('colUnit')}</span>
-              <select aria-label={t('colUnit')} value={ing.unit} onChange={(e) => updateIngredient(ing.id, 'unit', e.target.value)}>{UNITS.map((u) => (<option key={u} value={u}>{u}</option>))}</select>
+              <select aria-label={`${t('colUnit')} ${rowNo}`} value={ing.unit} onChange={(e) => updateIngredient(ing.id, 'unit', e.target.value)}>{UNITS.map((u) => (<option key={u} value={u}>{u}</option>))}</select>
             </div>
             <div className={s.cP}>
               <span className={s.lbl}>{t('colPricePerUnit')}</span>
-              <input type="number" step="0.01" min="0" inputMode="decimal" aria-label={t('colPricePerUnit')} value={ing.pricePerUnit || ''} onChange={(e) => updateIngredient(ing.id, 'pricePerUnit', parseFloat(e.target.value) || 0)} />
+              <DecimalInput blankZero aria-label={`${t('colPricePerUnit')} ${rowNo}`} value={ing.pricePerUnit} onValueChange={(v) => updateIngredient(ing.id, 'pricePerUnit', Math.max(0, v))} />
             </div>
             <div className={s.cT}>
               <span className={s.lbl}>{t('colTrimPct')}</span>
-              <input type="number" step="1" min="0" max="100" inputMode="numeric" aria-label={t('colTrimPct')} value={ing.trimLoss || ''} onChange={(e) => updateIngredient(ing.id, 'trimLoss', parseFloat(e.target.value) || 0)} />
+              <DecimalInput blankZero aria-label={`${t('colTrimPct')} ${rowNo}`} aria-invalid={total === null ? true : undefined} value={ing.trimLoss} onValueChange={(v) => updateIngredient(ing.id, 'trimLoss', v)} />
             </div>
-            <div className={s.tot}>{azn(total)}</div>
+            <div className={s.tot}>{total === null ? '—' : azn(total)}</div>
             <button type="button" className={s.rm} onClick={() => removeIngredient(ing.id)} aria-label={tv('removeRow')} disabled={ingredients.length < 2}><Icon name="x" /></button>
           </div>
         );
@@ -175,10 +195,15 @@ export default function FoodCostCalculator() {
       <div className={s.sumRow}><span>{t('totalFoodCost')}</span><b data-testid="fc-total">{azn(calc.totalRaw)}</b></div>
 
       <div className={s.params}>
-        <div className={s.fld}><label htmlFor="fc-price">{t('labelMenuPrice')}</label><input id="fc-price" type="number" step="0.1" min="0" inputMode="decimal" value={menuPrice || ''} onChange={(e) => setMenuPrice(parseFloat(e.target.value) || 0)} /></div>
-        <div className={s.fld}><label htmlFor="fc-portions">{t('labelPortions')}</label><input id="fc-portions" type="number" min="1" inputMode="numeric" value={portions || ''} onChange={(e) => setPortions(parseInt(e.target.value) || 1)} /></div>
-        <div className={s.fld}><label htmlFor="fc-target">{t('labelTargetFoodCost')}</label><input id="fc-target" type="number" min="1" max="100" inputMode="numeric" value={targetFoodCost || ''} onChange={(e) => setTargetFoodCost(parseFloat(e.target.value) || 32)} /></div>
+        <div className={s.fld}><label htmlFor="fc-price">{t('labelMenuPrice')}</label><DecimalInput id="fc-price" blankZero value={menuPrice} onValueChange={(v) => setMenuPrice(Math.max(0, v))} /></div>
+        <div className={s.fld}><label htmlFor="fc-portions">{t('labelPortions')}</label><DecimalInput id="fc-portions" inputMode="numeric" value={portions} aria-invalid={!calc.portionsValid ? true : undefined} onValueChange={setPortions} /></div>
+        <div className={s.fld}><label htmlFor="fc-target">{t('labelTargetFoodCost')}</label><DecimalInput id="fc-target" value={targetFoodCost} aria-invalid={!calc.targetValid ? true : undefined} onValueChange={setTargetFoodCost} /></div>
       </div>
+      {validationMsgs.length > 0 ? (
+        <div className={s.fcErr} role="alert" data-testid="fc-errors">
+          {validationMsgs.map((m) => <p key={m}>{m}</p>)}
+        </div>
+      ) : null}
       <div className={s.std} aria-label={t('sectorStandardsTitle')} role="group">
         {SECTOR_BANDS.map((band, i) => (
           <div key={band.key} className={i === 0 ? s.stdOn : undefined}><b>{band.lo}–{band.hi}%</b><span>{t(band.key)}</span></div>
@@ -236,8 +261,8 @@ export default function FoodCostCalculator() {
       <table>
         <thead><tr><th>{t('colProduct')}</th><th className="num">{t('colQuantity')}</th><th>{t('colUnit')}</th><th className="num">{t('colPricePerUnit')}</th><th className="num">{t('colTrimPct')}</th><th className="num">{t('colTotal')}</th></tr></thead>
         <tbody>
-          {ingredients.map((ing) => (
-            <tr key={ing.id}><td>{ing.name || '—'}</td><td className="num">{ing.quantity}</td><td>{ing.unit}</td><td className="num">{azn(ing.pricePerUnit)}</td><td className="num">{ing.trimLoss}%</td><td className="num">{azn(ing.quantity * (1 + ing.trimLoss / 100) * ing.pricePerUnit)}</td></tr>
+          {ingredients.map((ing, i) => (
+            <tr key={ing.id}><td>{ing.name || '—'}</td><td className="num">{new Intl.NumberFormat(numberLocale(locale), { maximumFractionDigits: 3 }).format(ing.quantity)}</td><td>{ing.unit}</td><td className="num">{azn(ing.pricePerUnit)}</td><td className="num">{ing.trimLoss}%</td><td className="num">{calc.lineCosts[i] == null ? '—' : azn(calc.lineCosts[i] ?? 0)}</td></tr>
           ))}
           <tr><td colSpan={5}><b>{t('totalFoodCost')}</b></td><td className="num"><b>{azn(calc.totalRaw)}</b></td></tr>
         </tbody>
@@ -281,20 +306,20 @@ export default function FoodCostCalculator() {
       </div>
       {/* Education */}
       <div className="mb-10">
-        <div className="text-center mb-8"><h2 className="text-2xl sm:text-3xl font-display font-black text-slate-900 tracking-tight">{t('educationTitle')} <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">{t('educationTitleAccent')}</span></h2><p className="text-slate-500 mt-2 max-w-md mx-auto text-sm">{t('educationSubtitle')}</p></div>
+        <div className="text-center mb-8"><h2 className="text-2xl sm:text-3xl font-display font-black text-slate-900 tracking-tight">{t('educationTitle')} <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">{t('educationTitleAccent')}</span></h2><p className="text-slate-600 mt-2 max-w-md mx-auto text-sm">{t('educationSubtitle')}</p></div>
         <div className="grid md:grid-cols-3 gap-5">
           <div className="rounded-2xl bg-gradient-to-br from-slate-50 to-white ring-1 ring-slate-200/60 p-6 flex flex-col">
             <div className="flex items-center gap-2.5 mb-4"><div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0"><Info size={15} className="text-emerald-600" /></div><h3 className="text-sm font-bold text-slate-900">{t('whatIsFoodCostTitle')}</h3></div>
             <p className="text-[13px] text-slate-600 leading-relaxed mb-5">{t('whatIsFoodCostBody1')} <strong className="text-slate-800">{t('whatIsFoodCostBodyBold')}</strong>{t('whatIsFoodCostBody2')}</p>
-            <div className="bg-slate-900 rounded-xl p-4 space-y-3 mt-auto"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">{t('cogsFormulaTitle')}</p><div className="text-[12px] font-mono text-slate-300 space-y-0.5"><p className="text-white">{t('cogsLine1')}</p><p>{t('cogsLine2')}</p><p>{t('cogsLine3')}</p><p className="text-slate-500">{t('cogsLine4')}</p><p className="border-t border-slate-700 pt-1">{t('cogsLine5')}</p><p className="text-emerald-400 font-bold">{t('cogsLine6')}</p></div><div className="border-t border-slate-700 pt-2"><p className="text-[11px] font-mono text-white font-bold">{t('cogsPctFormula')}</p></div></div>
+            <div className="bg-slate-900 rounded-xl p-4 space-y-3 mt-auto"><p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">{t('cogsFormulaTitle')}</p><div className="text-[12px] font-mono text-slate-300 space-y-0.5"><p className="text-white">{t('cogsLine1')}</p><p>{t('cogsLine2')}</p><p>{t('cogsLine3')}</p><p className="text-slate-400">{t('cogsLine4')}</p><p className="border-t border-slate-700 pt-1">{t('cogsLine5')}</p><p className="text-emerald-400 font-bold">{t('cogsLine6')}</p></div><div className="border-t border-slate-700 pt-2"><p className="text-[11px] font-mono text-white font-bold">{t('cogsPctFormula')}</p></div></div>
           </div>
           <div className="rounded-2xl bg-gradient-to-br from-blue-50/60 to-white ring-1 ring-blue-200/40 p-6 flex flex-col">
             <div className="flex items-center gap-2.5 mb-4"><div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center shrink-0"><Calculator size={15} className="text-blue-600" /></div><h3 className="text-sm font-bold text-slate-900">{t('inventoryValuationTitle')}</h3></div>
-            <p className="text-[12px] text-slate-500 mb-4">{t('inventoryValuationSubtitle')}</p>
+            <p className="text-[12px] text-slate-600 mb-4">{t('inventoryValuationSubtitle')}</p>
             <div className="space-y-2.5 mt-auto">
-              <div className="bg-blue-50 ring-1 ring-blue-200/60 rounded-xl p-3.5"><p className="text-xs font-bold text-blue-700">{t('fifoTitle')}</p><p className="text-[11px] text-blue-600/80 mt-1 leading-relaxed">{t('fifoBody')}</p></div>
-              <div className="bg-white ring-1 ring-slate-200/60 rounded-xl p-3.5"><p className="text-xs font-bold text-slate-700">{t('wacTitle')}</p><p className="text-[11px] text-slate-500 mt-1 leading-relaxed">{t('wacBody')}</p></div>
-              <div className="bg-red-50 ring-1 ring-red-200/60 rounded-xl p-3.5"><p className="text-xs font-bold text-red-700">{t('lastPurchaseTitle')}</p><p className="text-[11px] text-red-600/80 mt-1 leading-relaxed">{t('lastPurchaseBody')}</p></div>
+              <div className="bg-blue-50 ring-1 ring-blue-200/60 rounded-xl p-3.5"><p className="text-xs font-bold text-blue-700">{t('fifoTitle')}</p><p className="text-[11px] text-blue-800 mt-1 leading-relaxed">{t('fifoBody')}</p></div>
+              <div className="bg-white ring-1 ring-slate-200/60 rounded-xl p-3.5"><p className="text-xs font-bold text-slate-700">{t('wacTitle')}</p><p className="text-[11px] text-slate-600 mt-1 leading-relaxed">{t('wacBody')}</p></div>
+              <div className="bg-red-50 ring-1 ring-red-200/60 rounded-xl p-3.5"><p className="text-xs font-bold text-red-700">{t('lastPurchaseTitle')}</p><p className="text-[11px] text-red-800 mt-1 leading-relaxed">{t('lastPurchaseBody')}</p></div>
             </div>
           </div>
           <div className="rounded-2xl bg-gradient-to-br from-amber-50/80 to-white ring-1 ring-amber-200/40 p-6 flex flex-col">
@@ -306,18 +331,18 @@ export default function FoodCostCalculator() {
       </div>
 
       {/* 4 Factors */}
-      <div className="mb-10"><div className="text-center mb-8"><h2 className="text-2xl font-display font-black text-slate-900 tracking-tight">{t('factorsTitle')} <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">{t('factorsTitleAccent')}</span></h2><p className="text-slate-500 mt-2 max-w-lg mx-auto text-sm">{t('factorsSubtitle')}</p></div>
+      <div className="mb-10"><div className="text-center mb-8"><h2 className="text-2xl font-display font-black text-slate-900 tracking-tight">{t('factorsTitle')} <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">{t('factorsTitleAccent')}</span></h2><p className="text-slate-600 mt-2 max-w-lg mx-auto text-sm">{t('factorsSubtitle')}</p></div>
         <div className="grid sm:grid-cols-2 gap-5">{fourFactors.map((f, i) => { const Icon = f.icon; return (<div key={i} className="bg-white rounded-2xl ring-1 ring-slate-200/60 p-6 hover:shadow-lg transition-all"><div className="flex items-center gap-3 mb-4"><div className={`w-10 h-10 rounded-xl ${f.iconBg} flex items-center justify-center`}><Icon size={18} className={f.color} /></div><h3 className="text-base font-bold text-slate-900">{f.title}</h3></div><p className="text-sm text-slate-600 leading-relaxed">{f.content}</p></div>); })}</div>
       </div>
 
       {/* CTA + Blog */}
       <div className="grid md:grid-cols-2 gap-5 mb-10">
-        <div className="rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-8 relative overflow-hidden"><div className="absolute top-0 right-0 w-40 h-40 bg-emerald-500/10 rounded-full blur-[50px]" /><div className="relative"><div className="flex items-center gap-2.5 mb-4"><div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center"><Lightbulb size={16} className="text-amber-400" /></div><h3 className="text-base font-bold text-amber-400">{t('dkAdviceLabel')}</h3></div><p className="text-[13px] text-slate-400 leading-relaxed mb-5">{t('dkAdviceBody1')} <strong className="text-white">{t('dkAdviceBodyBold')}</strong> {t('dkAdviceBody2')}</p><Link href={withLocale(locale, '/blog/1-porsiya-food-cost-hesablama')} className="inline-flex items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300 group">{t('readArticle')} <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" /></Link></div></div>
-        <div className="rounded-2xl bg-gradient-to-br from-[var(--dk-red)] to-[var(--dk-red-strong)] p-8 text-white shadow-xl shadow-red-500/15 flex flex-col justify-between"><div><h3 className="text-xl font-display font-black mb-3">{t('ocaqTitle')}</h3><p className="text-sm text-white/80 leading-relaxed mb-6">{t('ocaqBody')}</p></div><Link href={withLocale(locale, '/auth/register')} className="flex items-center justify-center gap-2 w-full bg-white text-[var(--dk-red)] py-3.5 rounded-xl font-black text-sm hover:shadow-lg active:scale-[0.98]">{t('ocaqCta')} <ArrowRight size={15} /></Link></div>
+        <div className="rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-8 relative overflow-hidden"><div className="absolute top-0 right-0 w-40 h-40 bg-emerald-500/10 rounded-full blur-[50px]" /><div className="relative"><div className="flex items-center gap-2.5 mb-4"><div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center"><Lightbulb size={16} className="text-amber-400" /></div><h3 className="text-base font-bold text-amber-400">{t('dkAdviceLabel')}</h3></div><p className="text-[13px] text-slate-400 leading-relaxed mb-5">{t('dkAdviceBody1')} <strong className="text-white">{t('dkAdviceBodyBold')}</strong> {t('dkAdviceBody2')}</p><Link href={withLocale(locale, '/blog/1-porsiya-food-cost-hesablama')} className="inline-flex min-h-[24px] items-center gap-2 text-sm font-bold text-amber-400 hover:text-amber-300 group">{t('readArticle')} <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" /></Link></div></div>
+        <div className="rounded-2xl bg-gradient-to-br from-dk-red-strong to-dk-red-deep p-8 text-white shadow-xl shadow-red-500/15 flex flex-col justify-between"><div><h3 className="text-xl font-display font-black mb-3">{t('ocaqTitle')}</h3><p className="text-sm text-white/80 leading-relaxed mb-6">{t('ocaqBody')}</p></div><Link href={withLocale(locale, '/auth/register')} className="flex items-center justify-center gap-2 w-full bg-white text-dk-red-deep py-3.5 rounded-xl font-black text-sm hover:shadow-lg active:scale-[0.98]">{t('ocaqCta')} <ArrowRight size={15} /></Link></div>
       </div>
 
-      <div className="rounded-2xl bg-slate-50 p-8 sm:p-10"><div className="flex items-center gap-2.5 mb-8"><BookOpen size={18} className="text-[var(--dk-red)]" /><h3 className="text-lg font-bold text-slate-900">{t('learnMoreTitle')}</h3></div>
-        <div className="grid sm:grid-cols-3 gap-4">{blogLinks.map((a) => (<Link key={a.slug} href={withLocale(locale, `/blog/${a.slug}`)} className="group block bg-white rounded-xl p-5 ring-1 ring-slate-200/60 hover:shadow-md transition-all"><span className="text-[10px] font-bold text-[var(--dk-red)] uppercase tracking-widest">{a.tag}</span><h4 className="text-sm font-bold text-slate-900 mt-2.5 leading-snug group-hover:text-[var(--dk-red)]">{a.title}</h4><div className="flex items-center gap-1 text-xs text-slate-600 font-semibold mt-4 group-hover:text-[var(--dk-red)]">{t('readLabel')} <ArrowRight size={12} /></div></Link>))}</div>
+      <div className="rounded-2xl bg-slate-50 p-8 sm:p-10"><div className="flex items-center gap-2.5 mb-8"><BookOpen size={18} className="text-dk-red-deep" /><h3 className="text-lg font-bold text-slate-900">{t('learnMoreTitle')}</h3></div>
+        <div className="grid sm:grid-cols-3 gap-4">{blogLinks.map((a) => (<Link key={a.slug} href={withLocale(locale, `/blog/${a.slug}`)} className="group block bg-white rounded-xl p-5 ring-1 ring-slate-200/60 hover:shadow-md transition-all"><span className="text-[10px] font-bold text-dk-red-deep uppercase tracking-widest">{a.tag}</span><h4 className="text-sm font-bold text-slate-900 mt-2.5 leading-snug group-hover:text-dk-red-deep">{a.title}</h4><div className="flex items-center gap-1 text-xs text-slate-600 font-semibold mt-4 group-hover:text-dk-red-deep">{t('readLabel')} <ArrowRight size={12} /></div></Link>))}</div>
       </div>
     </>
   );

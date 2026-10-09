@@ -135,7 +135,7 @@ export default function SektorLeadCapture({
             <button
               type="submit"
               disabled={!kvkk || status === 'loading'}
-              className="w-full rounded-xl bg-[var(--dk-red)] py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--dk-red)]/20 transition hover:brightness-110 disabled:opacity-50"
+              className="w-full rounded-xl bg-dk-red-strong py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--dk-red)]/20 transition hover:brightness-110 disabled:opacity-50"
             >
               {status === 'loading' ? '...' : t(buttonKey)}
             </button>

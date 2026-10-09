@@ -10,7 +10,7 @@ export default function B2BDashboardMock() {
         {/* 1. Sidebar (Dark) */}
         <div className="w-[180px] bg-[var(--dk-navy)] flex flex-col h-full overflow-hidden">
           <div className="p-5 border-b border-white/5 flex items-center gap-2">
-            <div className="w-8 h-8 bg-[var(--dk-red)] rounded-lg flex items-center justify-center text-white font-bold text-xs">
+            <div className="w-8 h-8 bg-dk-red-strong rounded-lg flex items-center justify-center text-white font-bold text-xs">
               DK
             </div>
             <span className="text-white text-[10px] font-bold tracking-widest uppercase">
@@ -40,7 +40,7 @@ export default function B2BDashboardMock() {
               <div className="text-[8px] font-bold text-white/30 uppercase tracking-[0.2em] mb-2 px-2">
                 GENEL
               </div>
-              <div className="flex items-center gap-2.5 px-3 py-2 bg-[var(--dk-red)] rounded-lg text-white">
+              <div className="flex items-center gap-2.5 px-3 py-2 bg-dk-red-strong rounded-lg text-white">
                 <Star size={12} fill="currentColor" />
                 <span className="text-[9px] font-bold">Dashboard</span>
               </div>
@@ -95,7 +95,7 @@ export default function B2BDashboardMock() {
                 Biznesinizi buradan idarə edin
               </div>
             </div>
-            <button className="bg-[var(--dk-red)] text-white text-[9px] font-bold px-4 py-2 rounded-lg shadow-lg shadow-[var(--dk-red)]/20">
+            <button className="bg-dk-red-strong text-white text-[9px] font-bold px-4 py-2 rounded-lg shadow-lg shadow-[var(--dk-red)]/20">
               + Yeni elan
             </button>
           </div>

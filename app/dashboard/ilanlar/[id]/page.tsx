@@ -123,7 +123,7 @@ export default function DashboardIlanDetailPage() {
           <p className="mt-3 text-sm text-slate-500">{t('notFoundDesc')}</p>
           <Link
             href="/dashboard/ilanlar"
-            className="mt-6 inline-flex rounded-full bg-[var(--dk-red)] px-5 py-3 text-sm font-bold text-white"
+            className="mt-6 inline-flex rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white"
           >
             {t('backToList')}
           </Link>
@@ -309,7 +309,7 @@ export default function DashboardIlanDetailPage() {
                 <div><strong>{t('labelEmail')}</strong> {listing.email}</div>
               </div>
               <div className="mt-5 flex flex-wrap gap-3">
-                <a href={`tel:+${listing.phone}`} className="rounded-full bg-[var(--dk-red)] px-5 py-2.5 text-sm font-bold text-white">
+                <a href={`tel:+${listing.phone}`} className="rounded-full bg-dk-red-strong px-5 py-2.5 text-sm font-bold text-white">
                   <Phone className="mr-2 inline h-4 w-4" />
                   Zəng et
                 </a>
@@ -457,7 +457,7 @@ export default function DashboardIlanDetailPage() {
                 <button
                   type="button"
                   onClick={handleStatusUpdate}
-                  className="w-full rounded-2xl bg-[var(--dk-red)] px-5 py-3.5 text-sm font-bold text-white"
+                  className="w-full rounded-2xl bg-dk-red-strong px-5 py-3.5 text-sm font-bold text-white"
                 >
                   Dəyiş
                 </button>
