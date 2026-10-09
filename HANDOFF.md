@@ -1,5 +1,44 @@
 # HANDOFF
 
+## Session 9 Oktyabr 2026 (axşam) — TASK-0517 / 0518: sadə dil, vahid sıfırlama, sahib qərarları
+
+**PR-lar:** #515 (8 Okt landing v2), #516 (iç səhifələr + audit düzəlişləri), #517 (TASK-0516 ana səhifə sübutu + TASK-0517 sadə dil) — hamısı main-də. TASK-0518 budaq `feat/TASK-0518-tools-polish` (bu commit), push Doğan-da.
+
+### Sahib qərarları (09.10) — hamısı ADR-0017-də
+- Tünd qırmızı: ağ mətnli qırmızı düymələr `#D63B54` (`dk-red-strong`), sayt + admin + b2b panel; `#E94560` yalnız dekor.
+- Admin-də yeri olan səhifə hissəsi silinmir (manşet → `isManset`, «Son elanlar» → `showcase_ready`, reklam yuvaları `news-sidebar/news-inline/home-mid/blog-inline`).
+- Alət dili: jarqon yoxdur (BCG, trim loss, CAPEX, ramp-up, Prime Cost, RevPASH, runway, payback); menyu matrisi kateqoriyaları hərəkət adıdır: **Qoru / Qiymətini düzəlt / Tanıt / Çıxar**.
+- Bütün 17 alətdə eyni sıfırlama: «Təmizlə» → «Geri al» (8 san) → «Nümunəni yüklə» (`ToolResetControls`).
+- Açılış checklist: «Dövlət Vergi Xidməti» düzgündür; «SES rəyi» tam çıxarıldı (AQTA qeydiyyatı onsuz da h2-də). İnşaat büdcəsi və maaş/əmək sabitləri redaktə olunan nümunədir («material/məkana görə arta-azala bilər»), defaultlar `lib/toolkit/benchmarks.ts`-də.
+- Alət sayı: «35+ alət · 17-si pulsuz» (pnl = pnl-simulator, bir alət).
+- Footer «DENİS TOMRİS MMC · VÖEN 1405471681» düzgündür; «Azərbaycanın ilk…» sahibin iddiasıdır, qalır.
+- Kanallar: WhatsApp +994 50 256 62 79; Telegram açıq kanal t.me/dkagenc (köhnə t.me/dkagency yad kanaldır — heç vaxt linklənmir); təsdiqlənən xəbər kanala avtomatik gedir.
+
+### TASK-0518-də edilənlər
+- SES maddəsi çıxdı (43 maddə), açılış checklist irəliləyişi artıq yadda qalır; köhnə saxlanmış id-lər sayı pozmur.
+- İnşaat büdcəsi, personel/mətbəx maaş-əmək fərziyyələri redaktə olunur (`AssumptionsPanel`); mətbəx «m²» sahəsi çıxdı (hesaba girmirdi).
+- Telefonda KAZAN düyməsi nəticə panelinin üstünə çıxmır (ölçülüb).
+- Rəqəm formatı dilə görə (az/tr «1.234,5», ru «1 234,5», en «1,234.5»); vahidlər tərcümə (кг/л/шт, kg/l/pcs, kg/lt/adet).
+- Üzv alətlərində jarqon, bloq və KAZAN bilik bazasında BCG/«ulduz»/Trim loss təmizləndi; Yemək xərci səhifəsi `mqForms.yemekXerci`-yə köçdü (ru indi rusca), Excel-də food cost % öz sütununda.
+- dk-validator PASS (10/0); tsc 30 (baza).
+
+### Açıq işlər (növbəti sessiya buradan başlasın)
+1. Telefonda cookie zolağı alət nəticə panelini örtür (KAZAN artıq üstdədir).
+2. Üzv alətlərində qalan ingilis jarqonu: `app/b2b-panel/marketinq-ocagi/page.tsx` və `[slug]` («Channel ROI, CAC, LTV, payback»), `marketinq.roiCalculator` / `plSimulator` («LTV:CAC», «Benchmark»), `components/ToolkitShowcase.tsx` (food cost/labor cost mətnləri).
+3. Admin-də 20 elan `submitted` gözləyir — təsdiqlənəndə «Son elanlar» görünür; son 7 gündə manşet işarəli xəbər yoxdur.
+4. Canlı yoxlama (merge sonrası, tək sorğu): `/`, `/toolkit/menu-matrix`, `/haberler` şəkil ölçüləri (`/_next/image` Hostinger-də sharp ilə işləyirmi).
+5. Telegram canlı test: bir WhatsApp klik, bir lead, bir xəbər təsdiqi → kanal t.me/dkagenc (bot kanalda admin olmalıdır).
+6. Daxili səhifələr üçün növbəti fikirlər (bazar araşdırması 09.10): OCAQ Telegram səhər xülasəsi, faktura şəkli → təchizatçı qiymət tarixçəsi, delivery kalkulyatoruna kampaniya xərci — OCAQ işləri ayrı OCAQ sessiyasında.
+
+### Qaydalar (bu sessiyada öyrənilən)
+- Sessiya başında Bulgu Kasası + HANDOFF + ADR oxunur, açıq maddələr repo ilə müqayisə edilir (CLAUDE.md «Sessiya başında»).
+- Hər audit düymələri real klikləyir (Təmizlə, əlavə et, sil) və «restoran sahibi bunu başa düşərmi?» meyarını yoxlayır.
+- «Uydurma» hökmündən əvvəl iddianın bütün kod yolu yoxlanır (Sektor Nəbzi 41 RSS / 6 saat doğru idi).
+- Qorunan fayllar: Header.tsx, app/globals.css, app/layout.tsx, components/layout/Footer.tsx, next.config.* — dəyişiklik Doğan-ın `ALLOW_PROTECTED=1` commit + push-u ilə.
+- 8 GB RAM: eyni anda bir dev server; build/validator dev server dayanandan sonra.
+
+---
+
 ## Session 9 Oktyabr 2026 — İç səhifələr v2, audit düzəlişləri (PR #516) + ana səhifə sübutu (TASK-0516)
 
 **PR #516** (`feat/TASK-0514-inner-pages`, merged) — TASK-0514 + TASK-0515:

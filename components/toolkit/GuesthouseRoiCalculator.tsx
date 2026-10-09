@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { calcGuesthouseRoi, GUESTHOUSE_ROI_DEFAULTS, type GuesthouseRoiVerdict } from '@/lib/data/guesthouseRoi';
-import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { formatNumber } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
@@ -28,7 +28,8 @@ function clampField(field: RoiField, value: number): number {
   return Math.max(0, value);
 }
 
-function fmt(n: number) { return n.toLocaleString(AZ_NUMBER_LOCALE, { maximumFractionDigits: 0 }) + ' AZN'; }
+// TASK-0518: numbers follow the page language.
+function fmtAzn(n: number, locale: string) { return formatNumber(n, locale, { maximumFractionDigits: 0 }) + ' AZN'; }
 
 const VERDICT_STYLES: Record<GuesthouseRoiVerdict, string> = {
   healthy: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
@@ -39,6 +40,8 @@ const VERDICT_STYLES: Record<GuesthouseRoiVerdict, string> = {
 
 export default function GuesthouseRoiCalculator() {
   const t = useTranslations('guesthouseRoi');
+  const locale = useLocale();
+  const fmt = (n: number) => fmtAzn(n, locale);
   const [inputs, setInputs] = useState<RoiInputs>({ ...GUESTHOUSE_ROI_DEFAULTS });
   const [clamped, setClamped] = useState<RoiField | null>(null);
   const update = useCallback((field: RoiField, value: number) => {

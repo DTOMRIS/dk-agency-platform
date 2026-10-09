@@ -15,17 +15,18 @@ W-12: Ticaret bolge anketi. 500m radius reqib audit, qiymet/menyu/atmosfer/servi
 W-10: Brand audit + influencer pipeline. 30 long-list, 10 short-list, content gap ve vizual standartlar.
 W-8: Xerite platformalari setup + pre-launch teaser. 5 platformada listing live, TikTok/Instagram aktiv, 3-5 reels.
 W-6: Komanda satis scriptleri, KST-D telimi, soft opening guest list.
-W-4: Menu engineering, STAR/PUZZLE/PLOWHORSE/DOG qerarlari, qiymet ankorlari.
+W-4: Menyu muhendisliyi, Qoru / Qiymetini duzelt / Tanit / Cixar qerarlari, qiymet ankorlari.
 W-2: Acilis kampaniyasi, media plan, rezervasiya axini.
 W+2: Review mining, complaint loop, ilk ROI olcumu.
 `,
 
   menuEngineering: `
-Menu engineering Cornell/BCG tetbiqi:
-STAR: yuksek satis, yuksek marja. Ofisiant proaktiv teklif edir, menyuda gorunen saheye qoyulur.
-PUZZLE: asagi satis, yuksek marja. Problem mehsul deyil, gorunurluk ve teqdimatdir; foto, story, ofisiant script lazimdir.
-PLOWHORSE: yuksek satis, asagi marja. Food cost azalt, porsiya/yan mehsul optimallasdir.
-DOG: asagi satis, asagi marja. Refresh et ve ya cixart.
-Hereket: STAR-lar satis motoru, PUZZLE-lar marketing isi, PLOWHORSE-lar emeliyyat isi, DOG-lar menyu temizliyi.
+Menyu muhendisliyi (satis sayi + porsiyadan qalan qazanc):
+QORU: cox satilir, qazanci yuksek. Ofisiant proaktiv teklif edir, menyuda gorunen saheye qoyulur.
+TANIT: az satilir, qazanci yuksek. Problem mehsul deyil, gorunurluk ve teqdimatdir; foto, story, ofisiant script lazimdir.
+QIYMETINI DUZELT: cox satilir, qazanci az. Maya deyerini azalt, porsiya/yan mehsul optimallasdir ve ya qiymeti bir az qaldir.
+CIXAR: az satilir, qazanci az. Resepti tam deyis ve ya menyudan cixar.
+Hereket: Qoru qrupu satis motoru, Tanit qrupu marketing isi, Qiymetini duzelt qrupu emeliyyat isi, Cixar qrupu menyu temizliyi.
+Cavabda heyvan adlari (ulduz, at, it), STAR/PUZZLE/PLOWHORSE/DOG ve BCG islenmir.
 `,
 };

@@ -29,7 +29,7 @@ Bu yazıda sənə bu sistemi sıfırdan öyrədirəm. Heç bir MBA lazım deyil.
 
 ## Menyu Matrisi — 4 kateqoriya
 
-Bu sistemi Boston Consulting Group-un (BCG) məşhur matrisi əsasında restoran sektoru üçün uyğunlaşdırıblar. Hər yeməyin 2 göstəricisi var:
+Hər yeməyin 2 göstəricisi var:
 
 - **Populyarlıq:** Çox satılır, ya az?
 - **Mənfəətlilik (contribution margin):** Hər porsiyadan nə qədər qazanc qalır?
@@ -38,24 +38,24 @@ Bu iki göstəriciyə görə 4 kateqoriya:
 
 | | Yüksək Mənfəət | Aşağı Mənfəət |
 |---|---|---|
-| **Çox satılır** | ⭐ ULDUZ (Star) | 🐴 AT (Plowhorse) |
-| **Az satılır** | 🧩 PUZZLE (Puzzle) | 🐕 İT (Dog) |
+| **Çox satılır** | QORU | QİYMƏTİNİ DÜZƏLT |
+| **Az satılır** | TANIT | ÇIXAR |
 
-### ⭐ ULDUZ — Çox satılır + Çox qazandırır
+### QORU — Çox satılır + Çox qazandırır
 Bu, menyunun qəhrəmanıdır. Qorumaq lazımdır. Qiymətini artırma (hələlik), keyfiyyətini düşürmə, menyuda görünən yerdə saxla.
 
-### 🐴 AT — Çox satılır + Az qazandırır
+### QİYMƏTİNİ DÜZƏLT — Çox satılır + Az qazandırır
 Populyardır, amma sənə az pul qoyur. Strategiya: **ya food cost-unu azalt** (daha ucuz ingrediyent, porsiyon optimallaşdır), **ya qiymətini bir az artır**, ya da **yüksək marjlı yan yeməklə birləşdir** (combo et).
 
-### 🧩 PUZZLE — Az satılır + Çox qazandırır
+### TANIT — Az satılır + Çox qazandırır
 Pul qazandırır, amma heç kim sifariş etmir. Strategiya: **görünürlüyünü artır** — menyuda daha yaxşı yerə qoy, ofisiant tövsiyə etsin, "şefin seçimi" etiketi yapışdır, sosial mediada tanıt.
 
-### 🐕 İT — Az satılır + Az qazandırır
-Nə satılır, nə qazandırır. Strategiya: **öldür.** Menyudan çıxar. Yer tutur, ərzaq ehtiyatı saxlatdırır, mətbəxi yavaşladır. Sentimentallıq etmə — "amma bu bizim klassikimizdir" demə. Əgər satılmırsa və qazandırmırsa — menyuda yeri yoxdur.
+### ÇIXAR — Az satılır + Az qazandırır
+Nə satılır, nə qazandırır. Strategiya: **menyudan çıxar** və ya resepti tam dəyiş. Yer tutur, ərzaq ehtiyatı saxlatdırır, mətbəxi yavaşladır. Sentimentallıq etmə — "amma bu bizim klassikimizdir" demə. Əgər satılmırsa və qazandırmırsa — menyuda yeri yoxdur.
 
 ---
 
-> 📝 **DOĞAN NOTU:** "Bir restoranda menyu analizi etdik. 42 yemək var idi. 8-i 'it' çıxdı — nə satılırdı, nə qazandırırdı. Sahibkar dedi 'amma babamın reseptidir, çıxara bilmərəm.' Dedim: 'Babana hörmət et, amma kassana da hörmət et.' 8-ni çıxardıq, mətbəx sürəti 20% artdı, waste 30% azaldı."
+> 📝 **DOĞAN NOTU:** "Bir restoranda menyu analizi etdik. 42 yemək var idi. 8-i «Çıxar» qrupuna düşdü — nə satılırdı, nə qazandırırdı. Sahibkar dedi 'amma babamın reseptidir, çıxara bilmərəm.' Dedim: 'Babana hörmət et, amma kassana da hörmət et.' 8-ni çıxardıq, mətbəx sürəti 20% artdı, waste 30% azaldı."
 
 ---
 
@@ -82,10 +82,10 @@ Nümunə:
 
 | Yemək | Satış (ay) | CM (₼) | Populyarlıq | Mənfəətlilik | Kateqoriya |
 |---|---|---|---|---|---|
-| Toyuq Sac | 320 | 12.61 | Yuxarı | Yuxarı | ⭐ Ulduz |
-| Qiymə kabab | 280 | 7.20 | Yuxarı | Aşağı | 🐴 At |
-| Dana medallion | 45 | 18.50 | Aşağı | Yuxarı | 🧩 Puzzle |
-| Tərəvəz qratin | 22 | 4.30 | Aşağı | Aşağı | 🐕 İt |
+| Toyuq Sac | 320 | 12.61 | Yuxarı | Yuxarı | Qoru |
+| Qiymə kabab | 280 | 7.20 | Yuxarı | Aşağı | Qiymətini düzəlt |
+| Dana medallion | 45 | 18.50 | Aşağı | Yuxarı | Tanıt |
+| Tərəvəz qratin | 22 | 4.30 | Aşağı | Aşağı | Çıxar |
 
 İndi **hər yeməyin strateji planı** var.
 
@@ -120,7 +120,7 @@ Menyu mühəndisliyinin ikinci hissəsi **vizual yerləşdirmədir.** Araşdırm
 
 1. **Ən qazanclı yeməkləri gözün ilk toxunduğu nöqtəyə qoy** — sağ yuxarı və ya ortanın yuxarısı.
 2. **Kutu (box) ilə vurğula.** Ən yüksək marjlı yeməyin ətrafına incə çərçivə çək — göz avtomatik oraya gedir.
-3. **"Şefin tövsiyəsi" etiketi qoy.** Bu, puzzle kateqoriyasındakı yeməklər üçün idealdır — qazanclıdır amma az satılır, etiket satışı artırır.
+3. **"Şefin tövsiyəsi" etiketi qoy.** Bu, «Tanıt» qrupundakı yeməklər üçün idealdır — qazanclıdır amma az satılır, etiket satışı artırır.
 4. **Qiymətləri düzün (sütun halında) yazmayın.** Qiymət sağda düz sütunda yazılırsa, insan ən ucuzunu axtarır. Qiyməti yeməyin təsvirinin sonunda, nöqtəsiz yazın — **diqqəti yeməyə yönəldir, qiymətə yox.**
 5. **Valyuta işarəsi (₼) qoyma.** Araşdırmalar göstərir ki, valyuta simvolu insanlara "pul xərcləyirəm" hissini xatırladır. Sadəcə rəqəm yaz: "18" — "18₼" deyil.
 
@@ -132,7 +132,7 @@ Menyu mühəndisliyinin üçüncü ayağı **ofisiant satışıdır.** Menyu dü
 
 **Ofisiant nə etməlidir?**
 
-- **Puzzle yeməkləri aktiv tövsiyə etsin.** "Şefimizin bu günkü xüsusi seçimi dana medallion-dur, çox tövsiyə edirəm" — bu cümlə **satış cümləsidir.**
+- **«Tanıt» qrupundakı yeməkləri aktiv tövsiyə etsin.** "Şefimizin bu günkü xüsusi seçimi dana medallion-dur, çox tövsiyə edirəm" — bu cümlə **satış cümləsidir.**
 - **Desert və içki təklif etsin — HƏR MASAYA.** "Desert istəyirsiniz?" deyil — **"Bu gün cheesecake-imiz əladır, bir paylaşımlıq gətirimmı?"** — konkret, təsvirli, hərəkətə çağıran.
 - **Combo (birləşmə) təklif etsin.** "Kabab sifariş etdiniz — yanına içki istəyirsiniz? Ayranımız ev yapımıdır" — cross-selling (çarpaz satış) budur.
 
@@ -147,9 +147,9 @@ Menyu mühəndisliyinin üçüncü ayağı **ofisiant satışıdır.** Menyu dü
 > ║  bilmir. Bu, silahı doldurub gözübağlı atəş açmaq kimidir."*║
 > ║                                                           ║
 > ║ 📖 Your Restaurant Sucks!                                 ║
-> ║ 🔗 Menyu analizi et. Ulduzlarını qoru, itləri öldür,        ║
-> ║    puzzle-ları tanıt, atları optimallaşdır. Bu, pulsuz       ║
-> ║    satış artımıdır.                                         ║
+> ║ 🔗 Menyu analizi et: qazandıranı qoru, az qazandıranın     ║
+> ║    qiymətini düzəlt, gizli qalanı tanıt, yer tutanı çıxar. ║
+> ║    Bu, pulsuz satış artımıdır.                              ║
 > ╚══════════════════════════════════════════════════════════╝
 
 ---
@@ -185,7 +185,7 @@ Menyunu bir dəfə hazırlayıb unudursan? **Böyük səhv.**
 |---|---|
 | **Hər həftə** | Satış datası yoxla — hansı artıb, hansı düşüb? |
 | **Hər ay** | Food cost yenilə — qiymətlər dəyişibsə, menyu matrix-i yenidən hesabla |
-| **Hər 3 ayda** | Menyu analizi et — itləri çıxar, puzzle-ları tanıt, yeni yemək sına |
+| **Hər 3 ayda** | Menyu analizi et — «Çıxar» qrupunu menyudan çıxar, «Tanıt» qrupunu önə çək, yeni yemək sına |
 | **Hər 6 ayda** | Mövsümi menyu yeniləməsi — yaz/qış menyusu |
 | **İldə 1** | Tam menyu auditi — dizayn, qiymətləndirmə, kateqoriya balansı |
 
@@ -198,10 +198,10 @@ Menyunu bir dəfə hazırlayıb unudursan? **Böyük səhv.**
 | 1 | Hər yeməyin food cost-unu hesabla (resept kartından) | ☐ |
 | 2 | Hər yeməyin contribution margin-ini hesabla | ☐ |
 | 3 | Son 3 ayın satış datasını topla (POS-dan) | ☐ |
-| 4 | Menyu matrisini qur: Ulduz, At, Puzzle, İt | ☐ |
+| 4 | Menyu matrisini qur: Qoru, Qiymətini düzəlt, Tanıt, Çıxar | ☐ |
 | 5 | İtləri menyudan çıxar | ☐ |
-| 6 | Puzzle-ları menyuda daha görünən yerə qoy | ☐ |
-| 7 | Atların food cost-unu optimallaşdır və ya qiymətini artır | ☐ |
+| 6 | «Tanıt» qrupundakı yeməkləri menyuda daha görünən yerə qoy | ☐ |
+| 7 | «Qiymətini düzəlt» qrupunun food cost-unu azalt və ya qiymətini artır | ☐ |
 | 8 | Ofisiantlara "satılacaq yeməklər" siyahısı ver | ☐ |
 | 9 | Menyu dizaynında qızıl üçbucağa ən qazanclı yeməyi qoy | ☐ |
 | 10 | Qiymətləri valyuta işarəsiz, sütun halında olmadan yaz | ☐ |

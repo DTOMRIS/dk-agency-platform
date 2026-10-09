@@ -8,6 +8,10 @@ import { isVideo, resizeImage, validateFile } from '@/lib/utils/image-resize';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
+import AssumptionsPanel from '@/components/toolkit/AssumptionsPanel';
+import DecimalInput from '@/components/toolkit/DecimalInput';
+import { CONSTRUCTION_BUDGET_DEFAULTS } from '@/lib/toolkit/benchmarks';
+import { formatNumber } from '@/lib/i18n/format';
 
 type PhaseKey = 'design' | 'prep' | 'rough' | 'finish' | 'equipment' | 'opening';
 interface ChecklistItem { id: number; text: string; detail: string; }
@@ -16,6 +20,35 @@ interface MediaItem { name: string; url: string; type: 'image' | 'video'; }
 
 const STORAGE_KEY = 'insaat-checklist-progress-v1';
 const MEDIA_KEY = 'insaat-checklist-media-v1';
+// TASK-0518: the example budget is editable; the user's own numbers are kept in this browser.
+const BUDGET_KEY = 'insaat-checklist-budget-v1';
+type BudgetKey = (typeof CONSTRUCTION_BUDGET_DEFAULTS)[number]['key'];
+interface BudgetRow { key: BudgetKey; min: number; max: number; }
+const exampleBudget = (): BudgetRow[] => CONSTRUCTION_BUDGET_DEFAULTS.map((r) => ({ key: r.key, min: r.min, max: r.max }));
+const BUDGET_STYLE: Record<BudgetKey, { bg: string; ring: string; text: string }> = {
+  prep: { bg: 'bg-amber-50', ring: 'ring-amber-200/60', text: 'text-amber-700' },
+  rough: { bg: 'bg-orange-50', ring: 'ring-orange-200/60', text: 'text-orange-700' },
+  finish: { bg: 'bg-rose-50', ring: 'ring-rose-200/60', text: 'text-rose-700' },
+  equipment: { bg: 'bg-sky-50', ring: 'ring-sky-200/60', text: 'text-sky-700' },
+  opening: { bg: 'bg-emerald-50', ring: 'ring-emerald-200/60', text: 'text-emerald-700' },
+  reserve: { bg: 'bg-slate-100', ring: 'ring-slate-200/60', text: 'text-slate-800' },
+};
+/** Reads a saved budget; anything malformed falls back to the example. */
+function parseBudget(raw: string | null): BudgetRow[] | null {
+  if (!raw) return null;
+  try {
+    const data: unknown = JSON.parse(raw);
+    if (!Array.isArray(data)) return null;
+    const byKey = new Map<string, { min: number; max: number }>();
+    for (const row of data) {
+      if (row && typeof row === 'object' && 'key' in row && 'min' in row && 'max' in row) {
+        const { key, min, max } = row as { key: unknown; min: unknown; max: unknown };
+        if (typeof key === 'string' && typeof min === 'number' && typeof max === 'number' && Number.isFinite(min) && Number.isFinite(max)) byKey.set(key, { min, max });
+      }
+    }
+    return exampleBudget().map((r) => byKey.get(r.key) ? { key: r.key, ...byKey.get(r.key)! } : r);
+  } catch { return null; }
+}
 const initialOpenState: Record<PhaseKey, boolean> = { design: true, prep: false, rough: false, finish: false, equipment: false, opening: false };
 
 export default function InsaatChecklistPage() {
@@ -33,15 +66,6 @@ export default function InsaatChecklistPage() {
     { key: 'opening', title: t('phase_opening_title'), subtitle: t('phase_opening_subtitle'), duration: t('phase_opening_duration'), icon: PartyPopper, accent: 'text-emerald-600', bg: 'bg-emerald-50', items: Array.from({ length: 7 }, (_, i) => ({ id: i + 46, text: t(`phase_opening_item${i + 1}_text`), detail: t(`phase_opening_item${i + 1}_detail`) })) },
   ];
 
-  const budgetCards = [
-    { labelKey: 'budget_prep_label', rangeKey: 'budget_prep_range', pctKey: 'budget_prep_pct', bg: 'bg-amber-50', ring: 'ring-amber-200/60', text: 'text-amber-700' },
-    { labelKey: 'budget_rough_label', rangeKey: 'budget_rough_range', pctKey: 'budget_rough_pct', bg: 'bg-orange-50', ring: 'ring-orange-200/60', text: 'text-orange-700' },
-    { labelKey: 'budget_finish_label', rangeKey: 'budget_finish_range', pctKey: 'budget_finish_pct', bg: 'bg-rose-50', ring: 'ring-rose-200/60', text: 'text-rose-700' },
-    { labelKey: 'budget_equipment_label', rangeKey: 'budget_equipment_range', pctKey: 'budget_equipment_pct', bg: 'bg-sky-50', ring: 'ring-sky-200/60', text: 'text-sky-700' },
-    { labelKey: 'budget_opening_label', rangeKey: 'budget_opening_range', pctKey: 'budget_opening_pct', bg: 'bg-emerald-50', ring: 'ring-emerald-200/60', text: 'text-emerald-700' },
-    { labelKey: 'budget_reserve_label', rangeKey: 'budget_reserve_range', pctKey: 'budget_reserve_pct', bg: 'bg-slate-100', ring: 'ring-slate-200/60', text: 'text-slate-800' },
-  ] as const;
-
   const [checked, setChecked] = useState<number[]>([]);
   const [openPhases, setOpenPhases] = useState<Record<PhaseKey, boolean>>(initialOpenState);
   const [notes, setNotes] = useState<Record<number, string>>({});
@@ -50,14 +74,33 @@ export default function InsaatChecklistPage() {
   const [error, setError] = useState('');
   const fileRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => { const sc = window.localStorage.getItem(STORAGE_KEY); const sm = window.localStorage.getItem(MEDIA_KEY); if (sc) setChecked(JSON.parse(sc)); if (sm) setMedia(JSON.parse(sm)); }, []);
-  useEffect(() => { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(checked)); }, [checked]);
-  useEffect(() => { window.localStorage.setItem(MEDIA_KEY, JSON.stringify(media)); }, [media]);
+  const [budget, setBudget] = useState<BudgetRow[]>(exampleBudget);
+  // TASK-0518: only ids that exist in today's list are kept, so an old saved array can never show «63/62».
+  const knownIds = new Set(phases.flatMap((p) => p.items.map((it) => it.id)));
+  useEffect(() => {
+    try {
+      const sc = window.localStorage.getItem(STORAGE_KEY);
+      const sm = window.localStorage.getItem(MEDIA_KEY);
+      if (sc) { const ids: unknown = JSON.parse(sc); if (Array.isArray(ids)) setChecked([...new Set(ids.filter((id): id is number => typeof id === 'number' && knownIds.has(id)))]); }
+      if (sm) setMedia(JSON.parse(sm));
+      const sb = parseBudget(window.localStorage.getItem(BUDGET_KEY));
+      if (sb) setBudget(sb);
+    } catch { /* storage unavailable or malformed — start empty */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => { try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(checked)); } catch { /* ignore */ } }, [checked]);
+  useEffect(() => { try { window.localStorage.setItem(MEDIA_KEY, JSON.stringify(media)); } catch { /* ignore */ } }, [media]);
+  useEffect(() => { try { window.localStorage.setItem(BUDGET_KEY, JSON.stringify(budget)); } catch { /* ignore */ } }, [budget]);
+  const budgetMin = budget.reduce((sum, r) => sum + r.min, 0);
+  const budgetMax = budget.reduce((sum, r) => sum + r.max, 0);
+  const budgetMid = (budgetMin + budgetMax) / 2;
+  const money = (n: number) => `${formatNumber(Math.round(n), locale)} ₼`;
+  const setBudgetValue = (key: BudgetKey, field: 'min' | 'max', value: number) => setBudget((rows) => rows.map((r) => (r.key === key ? { ...r, [field]: Math.max(0, value) } : r)));
 
   const totalItems = phases.reduce((sum, p) => sum + p.items.length, 0);
   // Ekranda sıra nömrəsi göstərilir (id yox): dizayn mərhələsi 1-dən başlayır.
   const displayNo = new Map(phases.flatMap((p) => p.items).map((it, idx) => [it.id, idx + 1]));
-  const progress = Math.round((checked.length / totalItems) * 100);
+  const progress = totalItems > 0 ? Math.round((checked.length / totalItems) * 100) : 0;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const phaseProgress = useMemo(() => phases.map((p) => ({ key: p.key, done: p.items.filter((i) => checked.includes(i.id)).length, total: p.items.length })), [checked]);
 
@@ -137,18 +180,53 @@ export default function InsaatChecklistPage() {
 
       {error && <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
 
-      {/* Budget */}
+      {/* Budget — TASK-0518: editable example numbers, live total */}
       <div className="border-t border-slate-100 pt-6">
         <h3 className="mb-2 text-lg font-black text-slate-900">{t('budgetTitle')}</h3>
         <p className="mb-4 text-sm text-slate-600">{t('budgetSubtitle')}</p>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {budgetCards.map((card) => (<div key={card.labelKey} className={`${card.bg} rounded-xl p-4 ring-1 ${card.ring}`}><div className="text-[10px] font-bold uppercase tracking-widest text-slate-600">{t(card.labelKey)}</div><div className={`mt-1 text-xl font-black ${card.text}`}>{t(card.rangeKey)}</div><div className="mt-0.5 text-xs text-slate-600">{t('budgetPct', { pct: t(card.pctKey) })}</div></div>))}
-        </div>
+        <AssumptionsPanel
+          title={t('budgetEditTitle')}
+          note={t('budgetExampleNote')}
+          testId="budget-panel"
+          controls={
+            <ToolResetControls
+              snapshot={() => budget}
+              restore={(saved: BudgetRow[]) => setBudget(saved)}
+              onClear={() => setBudget(exampleBudget().map((r) => ({ ...r, min: 0, max: 0 })))}
+              onLoadExample={() => setBudget(exampleBudget())}
+            />
+          }
+        >
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {budget.map((row) => {
+              const st = BUDGET_STYLE[row.key];
+              const share = budgetMid > 0 ? Math.round((((row.min + row.max) / 2) / budgetMid) * 100) : null;
+              const label = t(`budget_${row.key}_label`);
+              return (
+                <div key={row.key} className={`${st.bg} rounded-xl p-4 ring-1 ${st.ring}`} data-testid={`budget-row-${row.key}`}>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-slate-700">{label}</div>
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    <label className="block text-[11px] font-semibold text-slate-700">
+                      {t('budgetFrom')}
+                      <DecimalInput blankZero inputMode="numeric" value={row.min} onValueChange={(v) => setBudgetValue(row.key, 'min', v)} aria-label={`${label}: ${t('budgetFrom')} (₼)`} data-testid={`budget-${row.key}-min`} className={`mt-1 w-full rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-sm font-bold ${st.text} outline-none focus:border-orange-300`} />
+                    </label>
+                    <label className="block text-[11px] font-semibold text-slate-700">
+                      {t('budgetTo')}
+                      <DecimalInput blankZero inputMode="numeric" value={row.max} onValueChange={(v) => setBudgetValue(row.key, 'max', v)} aria-label={`${label}: ${t('budgetTo')} (₼)`} data-testid={`budget-${row.key}-max`} className={`mt-1 w-full rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-sm font-bold ${st.text} outline-none focus:border-orange-300`} />
+                    </label>
+                  </div>
+                  <div className="mt-1.5 text-xs text-slate-700">{share === null ? '—' : t('budgetShare', { pct: share })}</div>
+                </div>
+              );
+            })}
+          </div>
+        </AssumptionsPanel>
         <div className="mt-3 rounded-xl bg-slate-950 px-5 py-4 text-center text-white">
           <div className="text-[10px] font-bold uppercase tracking-widest text-amber-400">{t('budgetTotal')}</div>
-          <div className="mt-1 text-3xl font-black">{t('budgetTotalValue')}</div>
-          <p className="mt-1 text-xs text-slate-400">{t('budgetTotalNote')}</p>
+          <div className="mt-1 text-3xl font-black" data-testid="budget-total">{budgetMax > 0 ? (budgetMin === budgetMax ? money(budgetMin) : `${money(budgetMin)} – ${money(budgetMax)}`) : '—'}</div>
+          <p className="mt-1 text-xs text-slate-300">{t('budgetTotalNote')}</p>
         </div>
+        {budget.some((r) => r.min > r.max) ? <p className="mt-2 text-xs font-semibold text-amber-800" role="alert">{t('budgetMinOverMax')}</p> : null}
       </div>
     </div>
   );

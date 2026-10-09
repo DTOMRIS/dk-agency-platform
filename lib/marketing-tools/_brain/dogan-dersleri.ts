@@ -1,6 +1,6 @@
 export const DOGAN_DERSLERI = {
   coreRules: `
-Menu muhendisliyi: Altin ucbucaq qaydasi ile menyuda ilk baxilan saheni STAR ve PUZZLE mehsullara ayir. Popcorn qaydasi: uc qiymet seviyesi qur, orta secimi en cazibeli et. Ofisiant aciq uclu sual verir: "Ne icersiniz?" yox, "limonad, ayran, yoxsa kokteyl?".
+Menu muhendisliyi: Altin ucbucaq qaydasi ile menyuda ilk baxilan saheni Qoru ve Tanit qrupundaki mehsullara ayir. Popcorn qaydasi: uc qiymet seviyesi qur, orta secimi en cazibeli et. Ofisiant aciq uclu sual verir: "Ne icersiniz?" yox, "limonad, ayran, yoxsa kokteyl?".
 
 Musteri strategiyasi: Huni her zaman gorunurlukden baslayir. Bedava qaydasi surekli endirim deyil; bir defe dadim, sonra deyer hissi. Segmentlesdirme: aile, is nahari, ciftlik, turist, loyal, at-risk.
 

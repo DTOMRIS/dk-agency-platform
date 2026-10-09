@@ -2,11 +2,11 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight, BookOpen, Footprints, Lightbulb } from 'lucide-react';
 import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
 import { calculateAddimXerci, hourlyFromMonthly, tripsToMinutes } from '@/lib/toolkit/addimXerci';
-import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { formatNumber } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
@@ -37,12 +37,13 @@ const EMPTY_STATE: AddimState = {
   monthlyHours: 0,
 };
 
-function formatCurrency(value: number) {
-  return `${Math.round(value).toLocaleString(AZ_NUMBER_LOCALE)} ₼`;
+// TASK-0518: numbers follow the page language (az/ru/tr «1.234,5», en «1,234.5»).
+function formatCurrency(value: number, locale: string) {
+  return `${formatNumber(Math.round(value), locale)} ₼`;
 }
 
-function formatHours(value: number) {
-  return (Math.round(value * 10) / 10).toLocaleString(AZ_NUMBER_LOCALE);
+function formatHours(value: number, locale: string) {
+  return formatNumber(Math.round(value * 10) / 10, locale);
 }
 
 const inputClass =
@@ -82,6 +83,7 @@ function NumberField({
 
 export default function AddimXerciPage() {
   const t = useTranslations('toolkit.addimXerci');
+  const locale = useLocale();
 
   const [mode, setMode] = useState<Mode>('minutes');
   const [workers, setWorkers] = useState(DEFAULTS.workers);
@@ -189,7 +191,7 @@ export default function AddimXerciPage() {
             <NumberField
               id="secondsPerTrip"
               label={t('labelSecondsPerTrip')}
-              hint={t('hintTripsMinutes', { minutes: formatHours(minutesPerDay) })}
+              hint={t('hintTripsMinutes', { minutes: formatHours(minutesPerDay, locale) })}
               value={secondsPerTrip}
               onChange={setSecondsPerTrip}
             />
@@ -267,14 +269,14 @@ export default function AddimXerciPage() {
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-300">
           {t('statMonthly')}
         </div>
-        <div className="mt-1 text-3xl font-black">{formatCurrency(result.monthlyCost)}</div>
+        <div className="mt-1 text-3xl font-black">{formatCurrency(result.monthlyCost, locale)}</div>
       </div>
       <div className="rounded-xl bg-teal-50 p-4 ring-1 ring-teal-200/60" data-testid="addim-yearly">
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-700">
           {t('statYearly')}
         </div>
         <div className="mt-1 text-2xl font-black text-teal-800">
-          {formatCurrency(result.yearlyCost)}
+          {formatCurrency(result.yearlyCost, locale)}
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
@@ -286,7 +288,7 @@ export default function AddimXerciPage() {
             {t('statHoursPerDay')}
           </div>
           <div className="mt-1 text-2xl font-black text-slate-900">
-            {formatHours(result.lostHoursPerDay)}
+            {formatHours(result.lostHoursPerDay, locale)}
           </div>
         </div>
         <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
@@ -294,7 +296,7 @@ export default function AddimXerciPage() {
             {t('statHoursPerMonth')}
           </div>
           <div className="mt-1 text-2xl font-black text-slate-900">
-            {formatHours(result.lostHoursPerMonth)}
+            {formatHours(result.lostHoursPerMonth, locale)}
           </div>
         </div>
       </div>

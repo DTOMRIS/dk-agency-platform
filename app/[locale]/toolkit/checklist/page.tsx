@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { CheckCircle, Circle, ChevronDown, ChevronUp } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
@@ -8,7 +8,9 @@ import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 interface ChecklistItem { id: string; text: string; detail?: string; }
-interface ChecklistSection { title: string; emoji: string; items: ChecklistItem[]; }
+interface ChecklistSection { title: string; emoji: string; items: ChecklistItem[]; note?: string; }
+
+const CHECKLIST_STORAGE_KEY = 'acilis-checklist-progress-v1';
 
 export default function ChecklistPage() {
   const t = useTranslations('toolkit.checklist');
@@ -16,11 +18,11 @@ export default function ChecklistPage() {
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   const CHECKLIST_DATA: ChecklistSection[] = [
-    { title: t('sec_legal_title'), emoji: '\uD83D\uDCCB', items: [
+    { title: t('sec_legal_title'), emoji: '\uD83D\uDCCB', note: t('sec_legal_note'), items: [
       { id: 'h1', text: t('sec_legal_item_h1_text'), detail: t('sec_legal_item_h1_detail') },
       { id: 'h2', text: t('sec_legal_item_h2_text'), detail: t('sec_legal_item_h2_detail') },
       { id: 'h3', text: t('sec_legal_item_h3_text'), detail: t('sec_legal_item_h3_detail') },
-      { id: 'h4', text: t('sec_legal_item_h4_text') },
+      // TASK-0518: «SES rəyi» (h4) removed by the owner (2026-10-09); AQTA registration is h2. The id h4 is retired — do not reuse it.
       { id: 'h5', text: t('sec_legal_item_h5_text'), detail: t('sec_legal_item_h5_detail') },
       { id: 'h6', text: t('sec_legal_item_h6_text') },
       { id: 'h7', text: t('sec_legal_item_h7_text') },
@@ -65,10 +67,24 @@ export default function ChecklistPage() {
   ];
 
   const [checked, setChecked] = useState<Set<string>>(new Set());
+  // TASK-0518: progress survives reload (same pattern as the AQTA checklist; only ids in today's list).
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(CHECKLIST_STORAGE_KEY);
+      if (!saved) return;
+      const ids: unknown = JSON.parse(saved);
+      if (!Array.isArray(ids)) return;
+      const known = new Set(CHECKLIST_DATA.flatMap((sec) => sec.items.map((it) => it.id)));
+      setChecked(new Set(ids.filter((id): id is string => typeof id === 'string' && known.has(id))));
+    } catch { /* storage unavailable or malformed — start empty */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => { try { localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify([...checked])); } catch { /* ignore */ } }, [checked]);
   const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set([0, 1]));
 
   const totalItems = CHECKLIST_DATA.reduce((sum, s) => sum + s.items.length, 0);
-  const checkedCount = checked.size;
+  // TASK-0518: count only ids that exist in today's list (a retired id such as h4 never inflates the total).
+  const checkedCount = CHECKLIST_DATA.reduce((sum, s) => sum + s.items.filter((i) => checked.has(i.id)).length, 0);
   const progress = totalItems > 0 ? Math.round((checkedCount / totalItems) * 100) : 0;
 
   const toggle = (id: string) => setChecked(prev => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; });
@@ -106,6 +122,7 @@ export default function ChecklistPage() {
             </button>
             {isExpanded && (
               <div className="px-4 pb-4 space-y-1">
+                {section.note ? <p className="mb-2 rounded-lg bg-amber-50 px-3 py-2 text-xs font-medium text-slate-800 ring-1 ring-amber-200/70" data-testid="legal-note">{section.note}</p> : null}
                 {section.items.map((item) => {
                   const isDone = checked.has(item.id);
                   return (

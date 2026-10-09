@@ -317,7 +317,8 @@ export default function FloatingKazanWidget() {
 
   return (
     // TASK-0516: lifts above the cookie bar while it is shown (--dk-cookie-bar-h, set by CookiesBanner).
-    <div className="fixed bottom-[calc(5.5rem+var(--dk-cookie-bar-h,0px))] right-3 z-[70] sm:right-6 lg:bottom-[calc(2rem+var(--dk-cookie-bar-h,0px))] lg:right-8">
+    // TASK-0518: also above the tool result sheet (--dk-tool-sheet-h) and hidden while that sheet is open.
+    <div className="fixed bottom-[calc(5.5rem+var(--dk-cookie-bar-h,0px)+var(--dk-tool-sheet-h,0px))] [[data-dk-sheet-open]_&]:hidden right-3 z-[70] sm:right-6 lg:bottom-[calc(2rem+var(--dk-cookie-bar-h,0px))] lg:right-8">
       <AnimatePresence>
         {open ? (
           <motion.section

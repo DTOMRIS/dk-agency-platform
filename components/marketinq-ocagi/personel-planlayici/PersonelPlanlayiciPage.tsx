@@ -7,34 +7,36 @@ import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/T
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
 import DecimalInput from '@/components/toolkit/DecimalInput';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
-import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { formatNumber } from '@/lib/i18n/format';
+import AssumptionsPanel, { AssumptionField } from '@/components/toolkit/AssumptionsPanel';
+import {
+  STAFF_PLANNER_AVG_CHECK_DEFAULTS,
+  STAFF_PLANNER_EXTRA_PCT_DEFAULT,
+  STAFF_PLANNER_LABOR_TARGET_DEFAULTS,
+  STAFF_PLANNER_SALARY_DEFAULTS,
+  STAFF_PLANNER_WORK_DAYS,
+} from '@/lib/toolkit/benchmarks';
 
 type Concept = 'restoran_casual' | 'restoran_fine' | 'kafe' | 'bar';
 type GunTipi = 'isgunu' | 'cuma' | 'haftaSonu';
 
-// ── Industry constants (Cornell Hospitality / Shifty benchmarks) ──────
-const SALARY = {
-  garson: 450,
-  barista: 500,
-  asci: 600,
-  host: 400,
-  kasa: 420,
-  sommelier: 600,
-} as const;
-const ORTALAMA_CEK: Record<Concept, number> = {
-  restoran_casual: 15,
-  restoran_fine: 30,
-  kafe: 6,
-  bar: 12,
-};
-const TARGET_HI: Record<Concept, number> = {
-  restoran_casual: 35,
-  restoran_fine: 35,
-  kafe: 32,
-  bar: 32,
-};
+// TASK-0518: salaries, employer extras, average check and the staff-cost target are EXAMPLE
+// assumptions — single source in lib/toolkit/benchmarks.ts, editable on the page.
+type Role = keyof typeof STAFF_PLANNER_SALARY_DEFAULTS;
 const GUN_CARPANI: Record<GunTipi, number> = { isgunu: 1.0, cuma: 1.2, haftaSonu: 1.4 };
-const WORK_DAYS = 30;
+
+export interface PlannerAssumptions {
+  salary: Record<Role, number>;
+  extraPct: number;
+  avgCheck: Record<Concept, number>;
+  laborTarget: Record<Concept, number>;
+}
+const exampleAssumptions = (): PlannerAssumptions => ({
+  salary: { ...STAFF_PLANNER_SALARY_DEFAULTS },
+  extraPct: STAFF_PLANNER_EXTRA_PCT_DEFAULT,
+  avgCheck: { ...STAFF_PLANNER_AVG_CHECK_DEFAULTS },
+  laborTarget: { ...STAFF_PLANNER_LABOR_TARGET_DEFAULTS },
+});
 
 interface RoleCounts {
   garson?: number;
@@ -68,7 +70,7 @@ const EXAMPLE: PlannerInput = {
   kapanisSaati: 23,
 };
 
-function compute(input: PlannerInput) {
+function compute(input: PlannerInput, a: PlannerAssumptions) {
   const mult = GUN_CARPANI[input.gunTipi];
   const hours = Math.max(1, input.kapanisSaati - input.achilisVaxti);
   const isCafe = input.concept === 'kafe' || input.concept === 'bar';
@@ -109,18 +111,19 @@ function compute(input: PlannerInput) {
 
   // Labor cost
   const toplamMaas =
-    (opening.garson ?? 0) * SALARY.garson +
-    (opening.barista ?? 0) * SALARY.barista +
-    opening.asci * SALARY.asci +
-    (opening.host ?? 0) * SALARY.host +
-    (opening.sommelier ?? 0) * SALARY.sommelier +
-    opening.kasa * SALARY.kasa;
-  const ayligLabor = Math.round(toplamMaas * 1.22);
-  const aylikGelir = input.gunlukFis * ORTALAMA_CEK[input.concept] * WORK_DAYS;
-  const laborFaizi = aylikGelir > 0 ? (ayligLabor / aylikGelir) * 100 : 0;
-  const hi = TARGET_HI[input.concept];
-  const status: 'ideal' | 'dikkat' | 'kritik' =
-    laborFaizi <= hi ? 'ideal' : laborFaizi <= hi + 10 ? 'dikkat' : 'kritik';
+    (opening.garson ?? 0) * a.salary.garson +
+    (opening.barista ?? 0) * a.salary.barista +
+    opening.asci * a.salary.asci +
+    (opening.host ?? 0) * a.salary.host +
+    (opening.sommelier ?? 0) * a.salary.sommelier +
+    opening.kasa * a.salary.kasa;
+  const ayligLabor = Math.round(toplamMaas * (1 + a.extraPct / 100));
+  const aylikGelir = input.gunlukFis * a.avgCheck[input.concept] * STAFF_PLANNER_WORK_DAYS;
+  // No sales (average check 0) → no share and no status instead of a fake «ideal».
+  const laborFaizi = aylikGelir > 0 ? (ayligLabor / aylikGelir) * 100 : null;
+  const hi = a.laborTarget[input.concept];
+  const status: 'ideal' | 'dikkat' | 'kritik' | 'none' =
+    laborFaizi === null ? 'none' : laborFaizi <= hi ? 'ideal' : laborFaizi <= hi + 10 ? 'dikkat' : 'kritik';
 
   return {
     opening,
@@ -148,6 +151,7 @@ export default function PersonelPlanlayiciPage() {
   const [achilisVaxti, setAchilisVaxti] = useState(EXAMPLE.achilisVaxti);
   const [kapanisSaati, setKapanisSaati] = useState(EXAMPLE.kapanisSaati);
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
+  const [assumptions, setAssumptions] = useState<PlannerAssumptions>(exampleAssumptions);
 
   const snapshot = (): PlannerInput => ({ concept, koltukSayisi, gunlukFis, gunTipi, achilisVaxti, kapanisSaati });
   const apply = (v: PlannerInput) => {
@@ -160,8 +164,8 @@ export default function PersonelPlanlayiciPage() {
   };
 
   const calc = useMemo(
-    () => compute({ concept, koltukSayisi, gunlukFis, gunTipi, achilisVaxti, kapanisSaati }),
-    [concept, koltukSayisi, gunlukFis, gunTipi, achilisVaxti, kapanisSaati]
+    () => compute({ concept, koltukSayisi, gunlukFis, gunTipi, achilisVaxti, kapanisSaati }, assumptions),
+    [concept, koltukSayisi, gunlukFis, gunTipi, achilisVaxti, kapanisSaati, assumptions]
   );
   // TASK-0517: with empty inputs there is nothing to plan — no fake «ideal» on zeros.
   const isCafeConcept = concept === 'kafe' || concept === 'bar';
@@ -186,9 +190,15 @@ export default function PersonelPlanlayiciPage() {
       ring: 'ring-red-200/60',
       label: t('result.kritik'),
     },
+    none: {
+      text: 'text-slate-700',
+      bg: 'bg-slate-50',
+      ring: 'ring-slate-200/60',
+      label: t('result.noSales'),
+    },
   }[calc.status];
 
-  const fmt = (n: number) => new Intl.NumberFormat(locale === 'az' ? AZ_NUMBER_LOCALE : locale).format(n);
+  const fmt = (n: number) => formatNumber(n, locale);
 
   // ── Input section ──────────────────────────────────────────────────
   const concepts: Concept[] = ['restoran_casual', 'restoran_fine', 'kafe', 'bar'];
@@ -204,6 +214,21 @@ export default function PersonelPlanlayiciPage() {
     cuma: t('gunTipi.cuma'),
     haftaSonu: t('gunTipi.haftaSonu'),
   };
+  const roleLabel: Record<Role, string> = {
+    garson: t('result.garson'),
+    barista: t('result.barista'),
+    asci: t('result.asci'),
+    host: t('result.host'),
+    sommelier: t('result.sommelier'),
+    kasa: t('result.kasa'),
+  };
+  // Only the roles this venue type uses (same split as compute()).
+  const visibleRoles: Role[] =
+    concept === 'restoran_fine'
+      ? ['garson', 'asci', 'host', 'sommelier', 'kasa']
+      : isCafeConcept
+        ? ['barista', 'asci', 'kasa']
+        : ['garson', 'asci', 'host', 'kasa'];
 
   const inputSection = (
     <div className="space-y-6">
@@ -308,6 +333,60 @@ export default function PersonelPlanlayiciPage() {
           />
         </div>
       </div>
+
+      <AssumptionsPanel
+        title={t('assumptions.title')}
+        note={t('assumptions.note')}
+        testId="pp-assumptions"
+        controls={
+          <ToolResetControls
+            snapshot={() => assumptions}
+            restore={setAssumptions}
+            onClear={() =>
+              setAssumptions({
+                salary: { garson: 0, barista: 0, asci: 0, host: 0, kasa: 0, sommelier: 0 },
+                extraPct: 0,
+                avgCheck: { ...assumptions.avgCheck, [concept]: 0 },
+                laborTarget: assumptions.laborTarget,
+              })
+            }
+            onLoadExample={() => setAssumptions(exampleAssumptions())}
+          />
+        }
+      >
+        <div className="grid grid-cols-2 gap-3">
+          {visibleRoles.map((role) => (
+            <AssumptionField
+              key={role}
+              id={`pp-salary-${role}`}
+              label={t('assumptions.salary', { role: roleLabel[role] })}
+              value={assumptions.salary[role]}
+              onChange={(v) => setAssumptions((a) => ({ ...a, salary: { ...a.salary, [role]: v } }))}
+            />
+          ))}
+          <AssumptionField
+            id="pp-extra"
+            label={t('assumptions.extraPct')}
+            help={t('assumptions.extraPctHelp')}
+            value={assumptions.extraPct}
+            max={100}
+            onChange={(v) => setAssumptions((a) => ({ ...a, extraPct: v }))}
+          />
+          <AssumptionField
+            id="pp-avg-check"
+            label={t('assumptions.avgCheck')}
+            value={assumptions.avgCheck[concept]}
+            onChange={(v) => setAssumptions((a) => ({ ...a, avgCheck: { ...a.avgCheck, [concept]: v } }))}
+          />
+          <AssumptionField
+            id="pp-target"
+            label={t('assumptions.laborTarget')}
+            value={assumptions.laborTarget[concept]}
+            max={100}
+            onChange={(v) => setAssumptions((a) => ({ ...a, laborTarget: { ...a.laborTarget, [concept]: v } }))}
+          />
+        </div>
+      </AssumptionsPanel>
 
       <div className="flex items-start gap-2 rounded-xl bg-slate-50 p-3 text-[11px] text-slate-700 ring-1 ring-slate-200/60">
         <Info size={14} className="mt-0.5 shrink-0 text-slate-600" aria-hidden="true" />
@@ -430,7 +509,7 @@ export default function PersonelPlanlayiciPage() {
               {t('result.laborFaizi')}
             </div>
             <div className={`text-2xl font-black tabular-nums ${statusStyle.text}`}>
-              {calc.laborFaizi.toFixed(0)}%
+              <span data-testid="pp-labor-pct">{calc.laborFaizi === null ? '—' : `${formatNumber(Math.round(calc.laborFaizi), locale)}%`}</span>
             </div>
             <div className={`text-[11px] font-semibold ${statusStyle.text}`}>
               {statusStyle.label}
@@ -461,7 +540,7 @@ export default function PersonelPlanlayiciPage() {
             gunlukFis,
             acilisKadro: calc.acilisToplam,
             peakKadro: calc.peakToplam,
-            laborFaizi: Math.round(calc.laborFaizi),
+            laborFaizi: Math.round(calc.laborFaizi ?? 0),
           },
         });
         if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
@@ -470,3 +549,4 @@ export default function PersonelPlanlayiciPage() {
     />
   );
 }
+

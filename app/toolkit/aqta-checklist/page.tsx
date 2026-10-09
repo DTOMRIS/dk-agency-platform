@@ -77,8 +77,19 @@ export default function AqtaChecklistPage() {
   const [openSection, setOpenSection] = useState<string>(sections[0].id);
   const [frequencyTab, setFrequencyTab] = useState<FrequencyTab>('daily');
 
-  useEffect(() => { try { const saved = localStorage.getItem(STORAGE_KEY); if (saved) { setChecked(new Set(JSON.parse(saved) as string[])); } } catch {} }, []);
-  useEffect(() => { localStorage.setItem(STORAGE_KEY, JSON.stringify([...checked])); }, [checked]);
+  // TASK-0518: only ids that exist in today's list are restored (an old saved array can never show «41/40»).
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      const ids: unknown = JSON.parse(saved);
+      if (!Array.isArray(ids)) return;
+      const known = new Set(sections.flatMap((s) => s.items.map((i) => i.id)));
+      setChecked(new Set(ids.filter((id): id is string => typeof id === 'string' && known.has(id))));
+    } catch { /* storage unavailable or malformed — start empty */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...checked])); } catch { /* ignore */ } }, [checked]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const totalItems = useMemo(() => sections.reduce((sum, s) => sum + s.items.length, 0), []);

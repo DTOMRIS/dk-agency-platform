@@ -172,6 +172,8 @@ export default function BasabasPage() {
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
   // Thousand-separated integer manat formatting, locale-aware (az/ru: "239 804", en: "239,804", tr: "239.804")
   const fmt0 = (n: number) => new Intl.NumberFormat(numberLocale(locale)).format(Math.round(Number.isFinite(n) ? n : 0));
+  // TASK-0518: one-decimal values (%, months) with the page language's decimal mark (az/ru/tr «12,5», en «12.5»).
+  const fmt1 = (n: number) => new Intl.NumberFormat(numberLocale(locale), { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(Number.isFinite(n) ? n : 0);
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
   // TASK-0517: the whole form is one state object so «Təmizlə» / «Nümunəni yüklə» / «Geri al» cover every field.
@@ -313,7 +315,7 @@ export default function BasabasPage() {
       amber: 'background:#fef3c7;color:#92400e',
       red: 'background:#fee2e2;color:#991b1b',
     }[band]);
-    const html = `<!doctype html><html lang="${locale}"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>${t('branchReportTitle')}</title><style>body{margin:0;background:#fafaf8;color:#172033;font-family:Arial,sans-serif;line-height:1.5}main{max-width:900px;margin:auto;padding:24px}.hero,.card{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:22px;margin-bottom:16px}.hero{background:#1a1a2e;color:#fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.row{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid #edf2f7}.row:last-child{border:0}.pill{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}.muted{color:#64748b;font-size:12px}</style></head><body><main><section class="hero"><div class="muted">DK Agency · ${t(`formats.${branchFormat}`)}</div><h1>${t('branchReportTitle')}</h1><p>${t('branchReportGeneratedAt', { date: new Date().toLocaleDateString(locale) })}</p><span class="pill" style="background:#fff;color:#1a1a2e">${branchResult.paybackMonths === null ? t('notAvailable') : `${branchResult.paybackMonths.toFixed(1)} ${t('months')}`}</span></section><div class="grid"><section class="card"><h2>${t('capexTitle')}</h2><div class="row"><span>${t('branchStatTotalCapex')}</span><strong>${fmt0(branchResult.totalCapex)} ₼</strong></div><div class="row"><span>${t('branchStatOpeningInvestment')}</span><strong>${fmt0(branchResult.openingInvestment)} ₼</strong></div><div class="row"><span>${t('branchStatWorkingCapital')}</span><strong>${fmt0(branchResult.workingCapital)} ₼</strong></div><div class="row"><span>${t('branchStatRampLoss')}</span><strong>${fmt0(branchResult.rampUpLoss)} ₼</strong></div><div class="row"><span>${t('statFundingGap')}</span><strong>${fmt0(branchResult.fundingGap)} ₼</strong></div></section><section class="card"><h2>${t('benchmarkTitle')}</h2>${branchResult.benchmarkFlags.map((flag) => `<div class="row"><span>${t(`benchmark.${flag.key}`)}: ${t(`benchmarkState.${flag.key}.${flag.band}`)}</span><strong><span class="pill" style="${benchmarkClass(flag.band)}">${flag.value.toFixed(1)}${flag.key === 'payback' ? ` ${t('months')}` : '%'} </span></strong></div>`).join('')}</section></div><section class="card"><h2>${t('scenarioTitle')}</h2>${branchResult.scenarios.map((scenario) => `<div class="row"><span>${t(`scenario.${scenario.label}`)}</span><strong>${fmt0(scenario.monthlyRevenue)} ₼</strong></div>`).join('')}</section><section class="card muted">${t('branchReportMethodology')}</section></main></body></html>`;
+    const html = `<!doctype html><html lang="${locale}"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>${t('branchReportTitle')}</title><style>body{margin:0;background:#fafaf8;color:#172033;font-family:Arial,sans-serif;line-height:1.5}main{max-width:900px;margin:auto;padding:24px}.hero,.card{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:22px;margin-bottom:16px}.hero{background:#1a1a2e;color:#fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.row{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid #edf2f7}.row:last-child{border:0}.pill{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}.muted{color:#64748b;font-size:12px}</style></head><body><main><section class="hero"><div class="muted">DK Agency · ${t(`formats.${branchFormat}`)}</div><h1>${t('branchReportTitle')}</h1><p>${t('branchReportGeneratedAt', { date: new Date().toLocaleDateString(locale) })}</p><span class="pill" style="background:#fff;color:#1a1a2e">${branchResult.paybackMonths === null ? t('notAvailable') : `${fmt1(branchResult.paybackMonths)} ${t('months')}`}</span></section><div class="grid"><section class="card"><h2>${t('capexTitle')}</h2><div class="row"><span>${t('branchStatTotalCapex')}</span><strong>${fmt0(branchResult.totalCapex)} ₼</strong></div><div class="row"><span>${t('branchStatOpeningInvestment')}</span><strong>${fmt0(branchResult.openingInvestment)} ₼</strong></div><div class="row"><span>${t('branchStatWorkingCapital')}</span><strong>${fmt0(branchResult.workingCapital)} ₼</strong></div><div class="row"><span>${t('branchStatRampLoss')}</span><strong>${fmt0(branchResult.rampUpLoss)} ₼</strong></div><div class="row"><span>${t('statFundingGap')}</span><strong>${fmt0(branchResult.fundingGap)} ₼</strong></div></section><section class="card"><h2>${t('benchmarkTitle')}</h2>${branchResult.benchmarkFlags.map((flag) => `<div class="row"><span>${t(`benchmark.${flag.key}`)}: ${t(`benchmarkState.${flag.key}.${flag.band}`)}</span><strong><span class="pill" style="${benchmarkClass(flag.band)}">${fmt1(flag.value)}${flag.key === 'payback' ? ` ${t('months')}` : '%'} </span></strong></div>`).join('')}</section></div><section class="card"><h2>${t('scenarioTitle')}</h2>${branchResult.scenarios.map((scenario) => `<div class="row"><span>${t(`scenario.${scenario.label}`)}</span><strong>${fmt0(scenario.monthlyRevenue)} ₼</strong></div>`).join('')}</section><section class="card muted">${t('branchReportMethodology')}</section></main></body></html>`;
     const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -522,12 +524,12 @@ export default function BasabasPage() {
           <span>{t('branchStatTaxBurden')}: {fmt0(branchResult.taxBurden)} ₼</span>
         </div>
         <div className="mt-3 space-y-1 border-t border-white/10 pt-3 text-[11px] text-slate-400">
-          <div className="flex justify-between"><span>{t('branchStatPrimeCost')}</span><span>{branchResult.primeCostPct.toFixed(1)}%</span></div>
+          <div className="flex justify-between"><span>{t('branchStatPrimeCost')}</span><span>{fmt1(branchResult.primeCostPct)}%</span></div>
           <div className="flex justify-between"><span>{t('branchStatEbitda')}</span><span>{fmt0(branchResult.ebitda)} ₼</span></div>
           <div className="flex justify-between"><span>{t('branchStatNetProfit')}</span><span>{fmt0(branchResult.netProfit)} ₼</span></div>
-          <div className="flex justify-between"><span>{t('branchStatPayback')}</span><span>{branchResult.paybackMonths === null ? t('notAvailable') : `${branchResult.paybackMonths.toFixed(1)} ${t('months')}`}</span></div>
-          <div className="flex justify-between"><span>{t('branchStatRunway')}</span><span>{branchResult.runwayMonths.toFixed(1)} {t('months')}</span></div>
-          <div className="flex justify-between"><span>{t('branchStatCashRunway')}</span><span>{branchResult.cashRunwayMonths.toFixed(1)} {t('months')}</span></div>
+          <div className="flex justify-between"><span>{t('branchStatPayback')}</span><span>{branchResult.paybackMonths === null ? t('notAvailable') : `${fmt1(branchResult.paybackMonths)} ${t('months')}`}</span></div>
+          <div className="flex justify-between"><span>{t('branchStatRunway')}</span><span>{fmt1(branchResult.runwayMonths)} {t('months')}</span></div>
+          <div className="flex justify-between"><span>{t('branchStatCashRunway')}</span><span>{fmt1(branchResult.cashRunwayMonths)} {t('months')}</span></div>
           <div className="flex justify-between"><span>{t('branchStatRampLoss')}</span><span>{fmt0(branchResult.rampUpLoss)} ₼</span></div>
           <div className="flex justify-between"><span>{t('statFundingGap')}</span><span>{fmt0(branchResult.fundingGap)} ₼</span></div>
         </div>
@@ -544,7 +546,7 @@ export default function BasabasPage() {
             <div key={flag.key} className={`rounded-xl p-3 ring-1 ${colorClasses}`}>
               <div className="text-[10px] font-bold uppercase tracking-widest text-slate-600">{t(`benchmark.${flag.key}`)}</div>
               <div className="mt-1 text-sm font-semibold">{t(`benchmarkState.${flag.key}.${flag.band}`)}</div>
-              <div className="mt-1 text-lg font-black tabular-nums">{flag.value.toFixed(1)}{flag.key === 'payback' ? ` ${t('months')}` : '%'}</div>
+              <div className="mt-1 text-lg font-black tabular-nums">{fmt1(flag.value)}{flag.key === 'payback' ? ` ${t('months')}` : '%'}</div>
             </div>
           );
         })}
@@ -560,10 +562,10 @@ export default function BasabasPage() {
                 <span className="font-black tabular-nums text-slate-900">{fmt0(scenario.monthlyRevenue)} ₼</span>
               </div>
               <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] text-slate-600 sm:grid-cols-4">
-                <span>{t('branchStatPrimeCost')}: {scenario.primeCostPct.toFixed(1)}%</span>
+                <span>{t('branchStatPrimeCost')}: {fmt1(scenario.primeCostPct)}%</span>
                 <span>{t('branchStatEbitda')}: {fmt0(scenario.ebitda)} ₼</span>
-                <span>{t('branchStatPayback')}: {scenario.paybackMonths === null ? t('notAvailable') : `${scenario.paybackMonths.toFixed(1)} ${t('months')}`}</span>
-                <span>{t('branchStatRentShare')}: {scenario.rentSharePct.toFixed(1)}%</span>
+                <span>{t('branchStatPayback')}: {scenario.paybackMonths === null ? t('notAvailable') : `${fmt1(scenario.paybackMonths)} ${t('months')}`}</span>
+                <span>{t('branchStatRentShare')}: {fmt1(scenario.rentSharePct)}%</span>
               </div>
             </div>
           ))}
@@ -588,7 +590,7 @@ export default function BasabasPage() {
 
       <div className={`${statusStyles.bg} rounded-xl p-4 ring-1 ${statusStyles.ring}`}>
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('statSafetyMargin')}</div>
-        <div className={`mt-1 text-3xl font-black tabular-nums ${statusStyles.text}`}>{calc.safetyMarginPct.toFixed(1)}%</div>
+        <div className={`mt-1 text-3xl font-black tabular-nums ${statusStyles.text}`}>{fmt1(calc.safetyMarginPct)}%</div>
         <div className={`mt-1 flex items-center gap-1 text-xs font-semibold ${statusStyles.text}`}>
           <span className="h-1.5 w-1.5 rounded-full bg-current" />
           {statusStyles.label}
@@ -623,8 +625,8 @@ export default function BasabasPage() {
         <div className="mt-2 grid grid-cols-2 gap-2 text-xs text-slate-300">
           <span>{t('statTotalFunding')}: {fmt0(calc.totalFundingNeed)} ₼</span>
           <span>{t('statFundingGap')}: {fmt0(calc.fundingGap)} ₼</span>
-          <span>{t('statRunway')}: {calc.runwayMonths.toFixed(1)} {t('months')}</span>
-          <span>{t('statPayback')}: {calc.paybackMonths === null ? t('notAvailable') : `${calc.paybackMonths.toFixed(1)} ${t('months')}`}</span>
+          <span>{t('statRunway')}: {fmt1(calc.runwayMonths)} {t('months')}</span>
+          <span>{t('statPayback')}: {calc.paybackMonths === null ? t('notAvailable') : `${fmt1(calc.paybackMonths)} ${t('months')}`}</span>
         </div>
         <div className="mt-3 space-y-1 border-t border-white/10 pt-3 text-[11px] text-slate-400">
           <div className="flex justify-between"><span>{t('breakdown.inventory')}</span><span>{fmt0(calc.inventoryInvestment)} ₼</span></div>

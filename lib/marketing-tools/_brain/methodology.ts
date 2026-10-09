@@ -8,11 +8,12 @@ export const METHODOLOGY = {
     { level: 6, name: 'Cemiyyet', description: 'Yerli icma, sponsorluq, cross-promo' },
     { level: 7, name: 'Regional Satis', description: 'Geo-targeting, qonsu magaza partnership, turist axini' },
   ],
-  bcgMatrix: {
-    star: { popularity: 'yuksek', profit: 'yuksek', target: '30-40%', action: 'Ofisiant proaktiv teklif' },
-    plowhorse: { popularity: 'yuksek', profit: 'asagi', target: '20-30%', action: 'Food cost azalt' },
-    puzzle: { popularity: 'asagi', profit: 'yuksek', target: '15-25%', action: 'Marketing destekleyir' },
-    dog: { popularity: 'asagi', profit: 'asagi', target: '<=15%', action: 'Refresh ve ya remove' },
+  // TASK-0518: menu decisions by action name (owner 2026-10-09) — no BCG / animal names in prompts.
+  menuActions: {
+    qoru: { satis: 'cox', qazanc: 'yuksek', action: 'Keyfiyyeti qoru, ofisiant proaktiv teklif etsin' },
+    qiymetiniDuzelt: { satis: 'cox', qazanc: 'az', action: 'Maya deyerini azalt ve ya qiymeti bir az qaldir' },
+    tanit: { satis: 'az', qazanc: 'yuksek', action: 'Menyuda one cek, foto ve ofisiant tovsiyesi' },
+    cixar: { satis: 'az', qazanc: 'az', action: 'Menyudan cixar ve ya resepti tam deyis' },
   },
   tierPricing: {
     entry: 'Musteri secimi baslangici, en asagi qiymet',

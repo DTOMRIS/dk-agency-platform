@@ -187,7 +187,6 @@
       "menuSku": "Menyudakı yemək sayı",
       "menuSkuHelp": "Menyunuzda neçə fərqli yemək və içki var (məs. 25).",
       "gunlukFis": "Gündə orta neçə sifariş",
-      "mutfaqMetrekare": "Mətbəx sahəsi (m²)",
       "kanallar": {
         "label": "Sifariş necə verilir",
         "dineIn": "Zalda yemək",
@@ -229,8 +228,17 @@
           "assembly": "Yığma",
           "expeditor": "Sifarişi yoxlayıb verən"
         },
-        "noChecks": "Gündə neçə sifariş olduğunu yazın",
+        "noChecks": "Gündəlik sifariş sayını və orta çeki yazın",
         "empty": "Menyudakı yemək sayını və gündəlik sifariş sayını yazın — stansiyalar və işçi sayı burada görünəcək."
+      },
+      "assumptions": {
+        "title": "Hesablamadakı nümunə rəqəmlər",
+        "note": "Bu rəqəmlər nümunədir; şəhərə, məkana və işçinin təcrübəsinə görə arta və ya azala bilər. Öz rəqəmlərinizi yazın.",
+        "extraPct": "Maaşın üstünə əlavə xərc (%)",
+        "extraPctHelp": "İşəgötürənin maaşdan əlavə ödədiyi vergi, sosial sığorta haqqı və s.",
+        "avgCheck": "Orta çek (₼)",
+        "laborTarget": "İşçi xərci üçün hədəf (satışın %-i)",
+        "salary": "Bir mətbəx işçisinin aylıq maaşı (₼)"
       }
     },
     "personelPlanlayici": {
@@ -274,7 +282,17 @@
         "skeletonMinimum": "Açılış üçün ən az işçi",
         "benchmark": "Geniş yayılmış qayda: işçi xərci satışın {value}%-indən çox olmamalıdır",
         "peakNote": "Ən sıx saatlardan sonra işçi sayını azaltmaq olar.",
-        "empty": "Oturacaq sayını, gündəlik çek sayını, açılış və bağlanış saatını yazın — nəticə burada görünəcək."
+        "empty": "Oturacaq sayını, gündəlik çek sayını, açılış və bağlanış saatını yazın — nəticə burada görünəcək.",
+        "noSales": "Orta çeki yazın — satış olmadan işçi xərcinin payı hesablanmır"
+      },
+      "assumptions": {
+        "title": "Hesablamadakı nümunə rəqəmlər",
+        "note": "Bu rəqəmlər nümunədir; şəhərə, məkana və işçinin təcrübəsinə görə arta və ya azala bilər. Öz rəqəmlərinizi yazın.",
+        "extraPct": "Maaşın üstünə əlavə xərc (%)",
+        "extraPctHelp": "İşəgötürənin maaşdan əlavə ödədiyi vergi, sosial sığorta haqqı və s.",
+        "avgCheck": "Orta çek (₼)",
+        "laborTarget": "İşçi xərci üçün hədəf (satışın %-i)",
+        "salary": "{role}: aylıq maaş (₼)"
       }
     },
     "badge": "Pulsuz Alətlər",
@@ -387,7 +405,14 @@
       "blogLink2Tag": "Maliyyə",
       "blogLink3Title": "Menyu matrisi: hansı yemək qalsın, hansı getsin",
       "blogLink3Tag": "Əməliyyat",
-      "readLabel": "Oxu"
+      "readLabel": "Oxu",
+      "units": {
+        "kg": "kq",
+        "g": "qr",
+        "l": "litr",
+        "ml": "ml",
+        "pcs": "ədəd"
+      }
     },
     "foodCostDesc": "Porsiyanın maya dəyərini hesablayın və düzgün food cost faizini tapın.",
     "pnl": {
@@ -1122,17 +1147,17 @@
       "backLink": "Toolkit",
       "badge": "Pulsuz bələdçi",
       "title": "Restoran açılışı: yoxlama siyahısı",
-      "description": "Restoran açmaq üçün görülməli 44 iş bir siyahıda: sənədlər, məkan, mətbəx, menyu, işçilər, reklam və pul. Gördüyün işi işarələ, nəyin qaldığını gör.",
+      "description": "Restoran açmaq üçün görülməli 43 iş bir siyahıda: sənədlər, məkan, mətbəx, menyu, işçilər, reklam və pul. Gördüyün işi işarələ, nəyin qaldığını gör.",
       "progressLabel": "Görülən işlər",
       "section_completed": "hazırdır",
       "sec_legal_title": "Sənədlər və rəsmi işlər",
+      "sec_legal_note": "Hüquqi tələbləri hüquqşünasla dəqiqləşdirin.",
       "sec_legal_item_h1_text": "VÖEN almaq (Dövlət Vergi Xidməti)",
       "sec_legal_item_h1_detail": "Fərdi sahibkar və ya MMC kimi qeydiyyatdan keçmək",
       "sec_legal_item_h2_text": "AQTA qeydiyyatı (qida təhlükəsizliyi)",
       "sec_legal_item_h2_detail": "Müraciət ASAN/KOBİA vasitəsilə verilir. Dövlət rüsumu yoxdur, müraciət pulsuzdur.",
       "sec_legal_item_h3_text": "Yanğın təhlükəsizliyi tələbləri (FHN)",
       "sec_legal_item_h3_detail": "Yanğınsöndürmə avadanlığı quraşdırılmalıdır",
-      "sec_legal_item_h4_text": "Sanitariya-epidemioloji rəy (SES)",
       "sec_legal_item_h5_text": "Küçə reklam lövhəsi üçün icazə (ADRA)",
       "sec_legal_item_h5_detail": "Azərbaycan Respublikasının Dövlət Reklam Agentliyinə müraciət edilir",
       "sec_legal_item_h6_text": "İşçilərlə əmək müqaviləsi bağlamaq",
@@ -1193,7 +1218,7 @@
       "listTitle": "Açılış işləri",
       "progressPctLabel": "Hazırlıq faizi"
     },
-    "checklistDesc": "44 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.",
+    "checklistDesc": "43 maddəlik tam checklist — hüquqi, məkan, menyu, kadr, marketinq.",
     "start": "Başla",
     "ad-writer": {
       "pageTitle": "Reklam Yazıcısı",
@@ -1465,9 +1490,7 @@
       "budgetTitle": "Nümunə büdcə bölgüsü",
       "budgetSubtitle": "Nümunə: 50–80 m², 30–40 yerlik restoran üçün təxmini bölgü. Rəqəmlər yalnız istiqamət üçündür — öz ustalarınızın təklifləri ilə yoxlayın.",
       "budgetTotal": "Təxmini ümumi büdcə (nümunə)",
-      "budgetTotalValue": "75.000 - 150.000 ₼",
-      "budgetTotalNote": "Yer, binanın vəziyyəti və konsept bu aralığı dəyişir.",
-      "budgetPct": "Büdcənin {pct}-i",
+      "budgetTotalNote": "Yuxarıdakı sətirlərin cəmi: ən az – ən çox.",
       "dkAdviceTitle": "DK Agency məsləhəti",
       "dkAdviceSubtitle": "Ən baha başa gələn səhvlər tikintidə olur",
       "dkAdviceDesc": "Tikintidə ucuz usta, plansız iş və yazılı olmayan razılaşma birbaşa vaxt və pul itkisidir. Ən vacib üçü: 3 fazalı elektrik, qaz və baca. Bunlar həll olunmadan divar sökməyə başlama.",
@@ -1487,23 +1510,11 @@
       "related3Title": "Zərərsiz nöqtə (başa-baş) hesablaması",
       "related3Tag": "Alət",
       "budget_prep_label": "Ön hazırlıq",
-      "budget_prep_range": "2.000-5.000 ₼",
-      "budget_prep_pct": "3-5%",
       "budget_rough_label": "Kaba işlər",
-      "budget_rough_range": "20.000-40.000 ₼",
-      "budget_rough_pct": "30-35%",
       "budget_finish_label": "İncə işlər",
-      "budget_finish_range": "15.000-30.000 ₼",
-      "budget_finish_pct": "20-25%",
       "budget_equipment_label": "Avadanlıq",
-      "budget_equipment_range": "25.000-50.000 ₼",
-      "budget_equipment_pct": "30-35%",
       "budget_opening_label": "Açılış hazırlığı",
-      "budget_opening_range": "3.000-5.000 ₼",
-      "budget_opening_pct": "3-5%",
       "budget_reserve_label": "Ehtiyat pul",
-      "budget_reserve_range": "10.000-20.000 ₼",
-      "budget_reserve_pct": "15%",
       "phase_prep_title": "Ön hazırlıq",
       "phase_prep_subtitle": "Tikintiyə başlamazdan əvvəl texniki və hüquqi hazırlıq",
       "phase_prep_duration": "2-4 həftə",
@@ -1649,7 +1660,13 @@
       "listTitle": "Mərhələ-mərhələ iş siyahısı",
       "noteLabel": "Qeyd",
       "removeMedia": "Faylı sil",
-      "uploadError": "Fayl yüklənmədi."
+      "uploadError": "Fayl yüklənmədi.",
+      "budgetEditTitle": "Öz rəqəmlərinizi yazın",
+      "budgetExampleNote": "Bu rəqəmlər nümunədir; material, məkan və ölçüyə görə arta və ya azala bilər.",
+      "budgetFrom": "Ən azı (₼)",
+      "budgetTo": "Ən çoxu (₼)",
+      "budgetShare": "Büdcənin təxminən {pct}%-i",
+      "budgetMinOverMax": "Bəzi sətirlərdə «ən azı» rəqəmi «ən çoxu» rəqəmindən böyükdür — yoxlayın."
     },
     "live": "CANLI",
     "aiInsight": "AI ŞƏRH",
@@ -2053,7 +2070,7 @@
       "best_channel": "Ən yaxşı kanal",
       "worst_channel": "Ən pis kanal",
       "ltv_cac_ratio": "LTV:CAC nisbəti",
-      "payback_days": "Payback müddəti",
+      "payback_days": "Qoyduğun pulun qayıtma müddəti",
       "ai_btn": "AI Analizi Al",
       "general_params": "Ümumi parametrlər",
       "channels_title": "Kanal girişləri",
@@ -2118,7 +2135,7 @@
       "marketing": "Marketing",
       "other": "Digər",
       "calculate_btn": "Hesabla",
-      "prime_cost": "Prime Cost (əsas xərc)",
+      "prime_cost": "Əsas xərc (ərzaq + işçi)",
       "breakeven": "Zərərsizlik nöqtəsi",
       "net_profit": "Xalis mənfəət",
       "whatif_title": "Nə olarsa nə olar ssenariləri",
@@ -2193,7 +2210,7 @@
       "pnlResult_laborCost": "Labor Cost",
       "pnlResult_rentLabel": "İcarə",
       "pnlResult_netProfit": "Xalis Mənfəət",
-      "pnlResult_primeCost": "Prime Cost",
+      "pnlResult_primeCost": "Əsas xərc (ərzaq + işçi)",
       "pnlResult_revenue": "Gəlir",
       "pnlResult_cogs": "COGS",
       "pnlResult_opProfit": "Əməliyyat mənfəəti",
@@ -2613,7 +2630,7 @@
       "tier": "KALFA",
       "cta": "Audit nəticəsini hesabla",
       "tier_required_title": "KALFA girişi tələb olunur",
-      "tier_required_body": "Restoran Audit KALFA planındadır. Tool kassa, prime cost, mətbəx və uyğunluq boşluqlarını aksiyon planına çevirir.",
+      "tier_required_body": "Restoran Audit KALFA planındadır. Alət kassa, əsas xərc (ərzaq + işçi), mətbəx və uyğunluq boşluqlarını addım-addım iş planına çevirir.",
       "upgrade_cta": "Planı yüksəlt",
       "progress": {
         "title": "Audit irəliləyişi",
@@ -2664,7 +2681,7 @@
           "tooltip": "Ayrı-ayrı qeydlər qərar verməyə çatmır; restoran sahibi bir səhifədə mənzərəni görməlidir."
         },
         "finance_cash_q4": {
-          "text": "Prime cost, yəni food və labor faizi, aylıq izlənir və faktiki food cost resept dəyəri ilə müqayisə olunur?",
+          "text": "Əsas xərc, yəni ərzaq və işçi xərcinin satışdan payı, hər ay izlənir və faktiki ərzaq xərci resept dəyəri ilə müqayisə olunur?",
           "tooltip": "Food və əmək xərci restoran marjasının əsas siqnalıdır. Kiçik sürüşmə il sonunda böyük itki yaradır."
         },
         "finance_cash_q5": {
@@ -2795,7 +2812,7 @@
         "actions": {
           "finance_cash": {
             "critical": "Əvvəlcə 7 günlük kassa bağlanışı və aylıq xərc hesabatını tək cədvəldə qurun.",
-            "warning": "Prime cost və top məhsul marjasını həftəlik izləmə ritminə salın.",
+            "warning": "Əsas xərci (ərzaq + işçi) və ən çox satılan məhsulların qazancını hər həftə yoxlayın.",
             "stable": "Maliyyə ritmi sabitdir; indi marja optimizasiyasını dərinləşdirin."
           },
           "operations_kitchen": {
@@ -2826,8 +2843,8 @@
         }
       },
       "primeCostWarning": {
-        "title": "Prime cost izlənmir",
-        "body": "Food və labor faizi görünmürsə, kiçik sürüşmə il sonunda böyük itkiyə çevrilə bilər."
+        "title": "Əsas xərc (ərzaq + işçi) izlənmir",
+        "body": "Ərzaq və işçi xərcinin satışdan payı görünmürsə, kiçik sürüşmə il sonunda böyük itkiyə çevrilə bilər."
       },
       "unknown": {
         "title": "Nəyi bilmirsən?",
@@ -4205,7 +4222,7 @@
           "Neçə porsiya çıxır (1 reseptdən)",
           "Hədəf food cost faizi (məsələn, 30%)",
           "Hər ingredientin adı, miqdarı, vahid qiyməti",
-          "Trim loss faizi (məsələn, toyuq filesində 5% itki)"
+          "Təmizləmə itkisi faizi (məsələn, toyuq filesində 5% itki)"
         ],
         "block_3_title": "Kimə uyğundur?",
         "block_3_content": "Menyu qiyməti \"göz ölçüsü\" ilə qoyan hər restoran sahibi. Food cost-u 33%-dən aşağı saxlamaq istəyən, reçete kartı qurmağa başlayan sahibkarlar üçün. CSV və Excel export ilə mühasibə paylaşa bilərsən."
@@ -6926,7 +6943,7 @@
         },
         "checklist": {
           "t": "Açılış: yoxlama siyahısı",
-          "d": "Sənədlər, məkan, mətbəx, menyu, işçilər, reklam və pul — açılışa qədər görülməli 44 iş.",
+          "d": "Sənədlər, məkan, mətbəx, menyu, işçilər, reklam və pul — açılışa qədər görülməli 43 iş.",
           "r": "Açılışa qədər qalan işlərin siyahısı",
           "kw": "açılış checklist yoxlama siyahısı vöen icarə",
           "what": "Restoranı açmazdan əvvəl heç bir vacib işi unutmamağa kömək edir: nə hazırdır, nə qalıb — bir baxışda görünür.",
@@ -7350,6 +7367,55 @@
     "dateInput": {
       "selected": "Seçilən tarix:",
       "formatHint": "Format: gün.ay.il (məsələn, 14.05.2026)"
+    },
+    "yemekXerci": {
+      "title": "Yemək Xərci Kalkulyatoru",
+      "subtitle": "Resept kartı qur, təmizləmə itkisini əlavə et, porsiya maya dəyərini dərhal gör.",
+      "backToList": "Bütün alətlər",
+      "tier": "ŞAGİRD",
+      "whyTitle": "Niyə bu vacibdir?",
+      "why": "Menyu qiyməti göz ölçüsü ilə qoyulanda marja itir. Bu alət hər məhsulu, təmizləmə itkisini və porsiya sayını hesablayıb real food cost faizini göstərir.",
+      "recipeName": "Yemək adı",
+      "menuPrice": "Satış qiyməti (AZN)",
+      "portions": "Porsiya sayı",
+      "targetFoodCost": "Hədəf food cost %",
+      "ingredients": "Resept kartı",
+      "ingredient": "Məhsul",
+      "quantity": "Miqdar",
+      "unit": "Vahid",
+      "unitPrice": "Vahid qiyməti",
+      "trimLoss": "Təmizləmə itkisi %",
+      "lineCost": "Cəm",
+      "addIngredient": "Məhsul əlavə et",
+      "reset": "Sıfırla",
+      "remove": "Sil",
+      "ingredientPlaceholder": "Toyuq filesi",
+      "exportCsv": "CSV",
+      "exportExcel": "Excel",
+      "totalCost": "Cəm ərzaq xərci",
+      "costPerPortion": "Porsiya maya",
+      "foodCostPercent": "Food Cost %",
+      "grossProfit": "Porsiya brüt mənfəət",
+      "idealPrice": "Hədəfə görə ideal qiymət",
+      "status": {
+        "good": "Sağlam",
+        "warning": "Diqqət",
+        "danger": "Yüksək risk"
+      },
+      "notesTitle": "Oxuma qaydası",
+      "notes": {
+        "good": "food cost sağlam aralıqdır.",
+        "warning": "diqqət tələb edir; porsiya və alış qiymətini yoxla.",
+        "danger": "menyu qiyməti və resept kartı yenidən qurulmalıdır."
+      },
+      "export": {
+        "dish": "Yemək",
+        "menuPrice": "Satış qiyməti",
+        "foodCostColumn": "Food cost %",
+        "totalRow": "CƏM",
+        "portionUnit": "porsiya",
+        "sheetName": "Yemek Xerci"
+      }
     }
   }
 }

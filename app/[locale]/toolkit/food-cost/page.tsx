@@ -21,6 +21,8 @@ import {
 import { usableLineCost } from '@/lib/toolkit/food-cost';
 
 const UNITS = ['kq', 'qr', 'litr', 'ml', 'ədəd'];
+/** TASK-0518: stored unit values stay stable (az codes); only the label is translated (`toolkit.foodCost.units.*`). */
+const UNIT_LABEL_KEY: Record<string, string> = { kq: 'kg', qr: 'g', litr: 'l', ml: 'ml', 'ədəd': 'pcs' };
 
 /** Sector bands of this tool — single source in lib/toolkit/benchmarks.ts (TASK-0515). */
 const SECTOR_BANDS = FOOD_COST_SECTOR_BANDS;
@@ -58,6 +60,7 @@ export default function FoodCostCalculator() {
   const tv = useTranslations('innerV2.foodCost');
   const tc = useTranslations('innerV2.common');
   const tt = useTranslations('innerV2.toolkit.tools');
+  const unitLabel = (u: string) => (UNIT_LABEL_KEY[u] ? t(`units.${UNIT_LABEL_KEY[u]}`) : u);
   const exampleIngredients = (): Ingredient[] => [
     { id: '1', name: t('defaultIng1Name'), quantity: 0.25, unit: 'kq', pricePerUnit: 9.5, trimLoss: 5 },
     { id: '2', name: t('defaultIng2Name'), quantity: 0.03, unit: 'litr', pricePerUnit: 12, trimLoss: 0 },
@@ -180,7 +183,7 @@ export default function FoodCostCalculator() {
                 <div className={s.sugg}>
                   {suggestions.map((sug) => (
                     <button key={`${sug.name}-${sug.unit}`} type="button" onMouseDown={() => applySuggestion(ing.id, sug)}>
-                      <span><b>{sug.name}</b> ({sug.unit})</span>
+                      <span><b>{sug.name}</b> ({unitLabel(sug.unit)})</span>
                       <span>{azn(sug.avgUnitPrice / 100)} · x{sug.occurrences}</span>
                     </button>
                   ))}
@@ -194,7 +197,7 @@ export default function FoodCostCalculator() {
             </div>
             <div className={s.cU}>
               <span className={s.lbl}>{t('colUnit')}</span>
-              <select aria-label={`${t('colUnit')} ${rowNo}`} value={ing.unit} onChange={(e) => updateIngredient(ing.id, 'unit', e.target.value)}>{UNITS.map((u) => (<option key={u} value={u}>{u}</option>))}</select>
+              <select aria-label={`${t('colUnit')} ${rowNo}`} value={ing.unit} onChange={(e) => updateIngredient(ing.id, 'unit', e.target.value)}>{(UNITS.includes(ing.unit) ? UNITS : [...UNITS, ing.unit]).map((u) => (<option key={u} value={u}>{unitLabel(u)}</option>))}</select>
             </div>
             <div className={s.cP}>
               <span className={s.lbl}>{t('colPricePerUnit')}</span>
@@ -280,7 +283,7 @@ export default function FoodCostCalculator() {
         <thead><tr><th>{t('colProduct')}</th><th className="num">{t('colQuantity')}</th><th>{t('colUnit')}</th><th className="num">{t('colPricePerUnit')}</th><th className="num">{t('colTrimPct')}</th><th className="num">{t('colTotal')}</th></tr></thead>
         <tbody>
           {ingredients.map((ing, i) => (
-            <tr key={ing.id}><td>{ing.name || '—'}</td><td className="num">{new Intl.NumberFormat(numberLocale(locale), { maximumFractionDigits: 3 }).format(ing.quantity)}</td><td>{ing.unit}</td><td className="num">{azn(ing.pricePerUnit)}</td><td className="num">{ing.trimLoss}%</td><td className="num">{calc.lineCosts[i] == null ? '—' : azn(calc.lineCosts[i] ?? 0)}</td></tr>
+            <tr key={ing.id}><td>{ing.name || '—'}</td><td className="num">{new Intl.NumberFormat(numberLocale(locale), { maximumFractionDigits: 3 }).format(ing.quantity)}</td><td>{unitLabel(ing.unit)}</td><td className="num">{azn(ing.pricePerUnit)}</td><td className="num">{new Intl.NumberFormat(numberLocale(locale), { maximumFractionDigits: 1 }).format(ing.trimLoss)}%</td><td className="num">{calc.lineCosts[i] == null ? '—' : azn(calc.lineCosts[i] ?? 0)}</td></tr>
           ))}
           <tr><td colSpan={5}><b>{t('totalFoodCost')}</b></td><td className="num"><b>{azn(calc.totalRaw)}</b></td></tr>
         </tbody>

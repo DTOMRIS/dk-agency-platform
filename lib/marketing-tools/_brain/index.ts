@@ -30,7 +30,7 @@ export function buildBrainContext(toolSlug: ToolSlug): string {
       break;
     case 'menyu-analitik':
       sections.push(`=== KAHI NUMUNE: MENU ENGINEERING ===\n${KAHI_EXAMPLES.menuEngineering}`);
-      sections.push(`=== BCG MATRISI ===\n${JSON.stringify(METHODOLOGY.bcgMatrix, null, 2)}`);
+      sections.push(`=== MENYU QERARLARI (Qoru / Qiymetini duzelt / Tanit / Cixar; heyvan adlari ve BCG islenmir) ===\n${JSON.stringify(METHODOLOGY.menuActions, null, 2)}`);
       sections.push(`=== TIER PRICING ===\n${JSON.stringify(METHODOLOGY.tierPricing, null, 2)}`);
       break;
     case 'roi-kalkulator':
