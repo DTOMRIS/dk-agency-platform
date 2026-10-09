@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   serverExternalPackages: ['nodemailer'],
   images: {
+    // Cache resized external images for a day so the optimizer is not re-hit per request.
+    minimumCacheTTL: 86400,
     remotePatterns: [
       {
         protocol: 'https',
@@ -38,6 +40,12 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'picsum.photos',
+      },
+      // TASK-0516 (owner approved 2026-10-09): news images come from 40+ RSS hosts that change daily,
+      // so an allowlist cannot keep up. Any https host; Next blocks private/local IPs by default.
+      {
+        protocol: 'https',
+        hostname: '**',
       },
     ],
     formats: ['image/avif', 'image/webp'],

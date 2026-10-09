@@ -131,21 +131,21 @@ export default function Header() {
             <div className="flex items-center gap-1">
               {locales.map((locale, i) => (
                 <span key={locale} className="flex items-center gap-1">
-                  {i > 0 && <span className="text-slate-500">|</span>}
-                  <Link href={switchLocalePath(pathname, locale)} className={currentLocale === locale ? 'font-bold text-white' : 'hover:text-white'}>
+                  {i > 0 && <span className="text-slate-400" aria-hidden="true">|</span>}
+                  <Link href={switchLocalePath(pathname, locale)} className={`inline-flex min-h-6 items-center px-1 ${currentLocale === locale ? 'font-bold text-white' : 'hover:text-white'}`}>
                     {localeLabels[locale]}
                   </Link>
                 </span>
               ))}
             </div>
-            <span className="text-slate-500">|</span>
+            <span className="text-slate-400" aria-hidden="true">|</span>
             {memberSession.loggedIn ? (
               <span className="text-white">{memberSession.name || memberSession.email}</span>
             ) : (
               <>
-                <Link href="/auth/login" className="hover:text-white">{t('login')}</Link>
-                <span className="text-slate-500">|</span>
-                <Link href="/auth/register" className="hover:text-white">{t('register')}</Link>
+                <Link href="/auth/login" className="inline-flex min-h-6 items-center px-1 hover:text-white">{t('login')}</Link>
+                <span className="text-slate-400" aria-hidden="true">|</span>
+                <Link href="/auth/register" className="inline-flex min-h-6 items-center px-1 hover:text-white">{t('register')}</Link>
               </>
             )}
           </div>
@@ -160,7 +160,7 @@ export default function Header() {
             <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-9 w-9 shrink-0 object-contain" />
             <div className="flex flex-col">
               <span className="text-base font-bold text-[var(--dk-navy)]">DK Agency</span>
-              <span className="hidden text-[9px] font-medium tracking-wider text-[var(--dk-gold)] sm:block">USTALIĞIN NİŞANI</span>
+              <span className="hidden text-[10px] font-semibold tracking-wider text-dk-gold-text sm:block">USTALIĞIN NİŞANI</span>
             </div>
           </Link>
 
@@ -252,7 +252,7 @@ export default function Header() {
                                 className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors hover:bg-slate-50 ${isActive ? 'bg-slate-50 font-bold text-[var(--dk-navy)]' : 'text-slate-600'}`}>
                                 <Icon className="h-4 w-4 text-[var(--dk-gold)]" />
                                 <span className="flex-1">{fl.label}</span>
-                                {'beta' in fl && fl.beta && <span className="rounded-full bg-[var(--dk-gold)]/15 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[var(--dk-gold)]">BETA</span>}
+                                {'beta' in fl && fl.beta && <span className="rounded-full bg-[var(--dk-gold)]/15 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-dk-gold-text">BETA</span>}
                               </Link>
                             );
                           })}
@@ -389,7 +389,7 @@ export default function Header() {
                                       onClick={() => setIsMobileOpen(false)}>
                                       <Icon className="h-4 w-4 text-[var(--dk-gold)]" />
                                       <span className="flex-1">{fl.label}</span>
-                                      {'beta' in fl && fl.beta && <span className="rounded-full bg-[var(--dk-gold)]/15 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[var(--dk-gold)]">BETA</span>}
+                                      {'beta' in fl && fl.beta && <span className="rounded-full bg-[var(--dk-gold)]/15 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-dk-gold-text">BETA</span>}
                                     </Link>
                                   );
                                 })}
