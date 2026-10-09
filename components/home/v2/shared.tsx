@@ -156,6 +156,98 @@ const ICONS = {
       <path d="m3 7 9 6 9-6" />
     </>
   ),
+  /* TASK-0514 (owner 2026-10-09): inner pages (Toolkit, News, Blog) — icons from the approved
+     mockup DK-ic-sayfalar-v2.html, same grid and stroke. */
+  left: <path d="M19 12H5M11 6l-6 6 6 6" />,
+  chevUp: <path d="m6 15 6-6 6 6" />,
+  x: <path d="M18 6 6 18M6 6l12 12" />,
+  foot: (
+    <>
+      <path d="M7 16c-1.6 0-2.6-1.6-2.6-4.2S5.5 6 7.4 6 10 8 10 10.6 8.6 16 7 16z" />
+      <path d="M5.6 19.5h3" />
+      <path d="M17 11c-1.6 0-2.6-1.6-2.6-4.2S15.5 1.5 17.4 1.5 20 3.5 20 6.1 18.6 11 17 11z" />
+      <path d="M15.6 14.5h3" />
+    </>
+  ),
+  house: (
+    <>
+      <path d="M3 11 12 4l9 7v9H3z" />
+      <path d="M10 20v-6h4v6" />
+    </>
+  ),
+  bed: (
+    <>
+      <path d="M3 19V6M3 15h18v4M21 15v-3a3 3 0 0 0-3-3h-7v6" />
+      <circle cx="7" cy="11.5" r="2" />
+    </>
+  ),
+  clip: (
+    <>
+      <rect x="5" y="4" width="14" height="17" rx="2" />
+      <path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6" />
+    </>
+  ),
+  hat: (
+    <>
+      <path d="M3 18h18M5 18v-3a7 7 0 0 1 14 0v3" />
+      <path d="M10 8V5h4v3" />
+    </>
+  ),
+  palette: (
+    <>
+      <path d="M12 21a9 9 0 1 1 9-9c0 2-1.5 3-3 3h-2.5a2 2 0 0 0-1.5 3.3c.5.6.3 2.7-2 2.7z" />
+      <circle cx="7.5" cy="11" r="1.2" />
+      <circle cx="11" cy="7" r="1.2" />
+      <circle cx="16" cy="8.5" r="1.2" />
+    </>
+  ),
+  retain: (
+    <>
+      <circle cx="12" cy="8" r="3" />
+      <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+      <path d="M3 9a9 9 0 0 1 3-5.5M21 9a9 9 0 0 0-3-5.5" />
+    </>
+  ),
+  shift: (
+    <>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M8 3v4M16 3v4M3 10h18" />
+      <circle cx="12" cy="15.5" r="2" />
+    </>
+  ),
+  chef: (
+    <>
+      <path d="M6 14a4 4 0 0 1-1-7.9A5 5 0 0 1 14.5 4a4 4 0 1 1 3.5 10z" />
+      <path d="M6 14v6h12v-6M9.5 17h5" />
+    </>
+  ),
+  tg: (
+    <>
+      <path d="M21.5 3.5 2.5 11l6.5 2.2 2.3 6.8 3.6-4.6 5 3.6z" />
+      <path d="m9 13.2 12.5-9.7" />
+    </>
+  ),
+  file: (
+    <>
+      <path d="M14 3H6v18h12V7z" />
+      <path d="M14 3v4h4M9 13h6M9 17h4" />
+    </>
+  ),
+  brief: (
+    <>
+      <rect x="3" y="7" width="18" height="13" rx="2" />
+      <path d="M9 7V5h6v2M3 12.5h18" />
+    </>
+  ),
+  cpu: (
+    <>
+      <rect x="6" y="6" width="12" height="12" rx="2" />
+      <path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5" />
+    </>
+  ),
+  scale: (
+    <path d="M12 3v18M5 21h14M6 7h12M6 7l-3 7a3 3 0 0 0 6 0zM18 7l-3 7a3 3 0 0 0 6 0z" />
+  ),
 } as const;
 
 export type IconName = keyof typeof ICONS;
@@ -231,7 +323,5 @@ export function Reveal({
   );
 }
 
-/** WhatsApp lead link — always through the counting redirect, never wa.me directly. */
-export function whatsappHref(text: string): string {
-  return `/api/leads/whatsapp?text=${encodeURIComponent(text)}`;
-}
+/** WhatsApp lead link — lives in lib/contact-channels (server-safe); re-exported for v2 sections. */
+export { whatsappHref } from '@/lib/contact-channels';

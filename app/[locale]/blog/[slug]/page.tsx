@@ -1,18 +1,18 @@
+/**
+ * /blog/[slug] — blog post, v2 inner design (TASK-0514, owner-approved mockup 09.10.2026):
+ * serif hero, real cover, sticky TOC from `##` headings, reading progress (BlogContentWrapper),
+ * a mid-article tool card only when the post maps to a tool (BLOG_TOOL_MAP), founder card,
+ * KAZAN AI box (link only — /kazan-ai has no ?q= prefill), related posts, back button.
+ * Read time is computed from the word count (not the stored read_time).
+ */
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-import { ArrowRight, Calendar, ChevronLeft, Clock, User } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import AdSlot from '@/components/ads/AdSlot';
 
-import {
-  MarkdownRenderer,
-  LegalDisclaimer,
-  BlogActionBar,
-  GuruQuoteBox,
-  DoganNote,
-} from '@/components/blog';
+import { MarkdownRenderer, LegalDisclaimer, GuruQuoteBox, DoganNote } from '@/components/blog';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
-import { CATEGORY_CONFIG } from '@/lib/data/blogArticles';
+import BlogToc from '@/components/blog/BlogToc';
 import { getBlogPostDetail, getRelatedBlogPosts, getSlugRedirect } from '@/lib/db/blog-repository';
 import { getProtectedArticleContent } from '@/lib/members/article-access';
 import { getServerMemberSession } from '@/lib/members/server-session';
@@ -27,26 +27,41 @@ import {
   jsonLdGraph,
 } from '@/lib/seo/structured-data';
 import { normalizeLocale, withLocale } from '@/i18n/config';
+import { BLOG_CATEGORY_MESSAGE, normalizeBlogCategory } from '@/lib/blog/category-groups';
+import { extractToc } from '@/lib/blog/toc';
+import { BLOG_TOOL_MAP, getToolMeta } from '@/lib/toolkit/tool-directory';
+import { TELEGRAM_HANDLE, TELEGRAM_URL, whatsappHref } from '@/lib/contact-channels';
+import home from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Icon } from '@/components/home/v2/shared';
+import {
+  Crumbs,
+  FounderCard,
+  KazanBox,
+  ShareLinks,
+  TOOL_GROUP_CLASS,
+  ToolMini,
+  formatInnerDate,
+  readMinutes,
+} from '@/components/inner/InnerParts';
+import s from '@/components/inner/inner.module.css';
 
 // BLOG_OVERRIDES removed — all content served from DB (L-037)
 
-const DATE_LOCALE_MAP: Record<string, string> = {
-  az: 'az-AZ',
-  ru: 'ru-RU',
-  en: 'en-US',
-  tr: 'tr-TR',
-};
-
-const CATEGORY_I18N_MAP: Record<string, string> = {
-  maliyye: 'catMaliyye',
-  kadr: 'catKadr',
-  emeliyyat: 'catEmeliyyat',
-  konsept: 'catKonsept',
-  acilis: 'catAcilis',
-  satis: 'catSatis',
-  huquqi: 'catHuquqi',
-  marketinq: 'catMarketinq',
-};
+/** Split markdown at the `## ` heading closest to the middle (for the inline tool card). */
+function splitAtMiddleHeading(md: string): [string, string] {
+  const lines = md.split('\n');
+  const heads: number[] = [];
+  let inFence = false;
+  lines.forEach((line, i) => {
+    if (/^\s*```/.test(line)) inFence = !inFence;
+    if (!inFence && /^##\s+/.test(line)) heads.push(i);
+  });
+  if (heads.length < 2) return [md, ''];
+  const mid = lines.length / 2;
+  const at = heads.slice(1).reduce((best, i) => (Math.abs(i - mid) < Math.abs(best - mid) ? i : best), heads[1]);
+  return [lines.slice(0, at).join('\n'), lines.slice(at).join('\n')];
+}
 
 const STAGE_I18N_MAP: Record<string, string> = {
   Başla: 'stageBasla',
@@ -140,8 +155,8 @@ export default async function BlogDetailPage({
     notFound();
   }
 
-  const cat = CATEGORY_CONFIG[article.category];
-  const catLabel = t(CATEGORY_I18N_MAP[article.category] || 'catMaliyye');
+  const catKey = normalizeBlogCategory(article.category);
+  const catLabel = catKey ? t(BLOG_CATEGORY_MESSAGE[catKey]) : article.category;
   const related = await getRelatedBlogPosts(slug, article.category, normalizedLocale);
   const renderedContent = getProtectedArticleContent(
     article.content || '',
@@ -178,111 +193,87 @@ export default async function BlogDetailPage({
     faqNode(extractFaqFromMarkdown(cleanMarkdownContent)),
   ]);
 
+
+  const minutes = readMinutes(cleanMarkdownContent || article.summary || '');
+  const toc = extractToc(cleanMarkdownContent);
+  const toolSlug = BLOG_TOOL_MAP[article.slug];
+  const tool = toolSlug ? getToolMeta(toolSlug) : undefined;
+  const [partA, partB] = tool ? splitAtMiddleHeading(cleanMarkdownContent) : [cleanMarkdownContent, ''];
+  const ti = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.blog' });
+  const tc = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.common' });
+  const tt = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.toolkit.tools' });
+  const toolHref = tool ? withLocale(normalizedLocale, `/toolkit/${tool.slug}`) : '';
+
+  const toolCard = tool ? (
+    <Link href={toolHref} className={s.toolInline}>
+      <span className={`${s.tkMiniIc} ${TOOL_GROUP_CLASS[tool.group]}`}>
+        <Icon name={tool.icon} />
+      </span>
+      <span>
+        <small>{ti('toolEyebrow')}</small>
+        <b>{tt(`${tool.slug}.t`)}</b>
+        <span>{tt(`${tool.slug}.r`)}</span>
+      </span>
+      <span className={`${home.btn} ${home.btnRed} ${home.btnSm}`}>
+        {ti('toolCta')}
+        <Icon name="arrow" />
+      </span>
+    </Link>
+  ) : null;
+
   return (
     <BlogContentWrapper articleTitle={article.title} isPremium={article.isPremium}>
-      <div className="min-h-screen bg-[var(--dk-paper)] pb-20 text-slate-900">
+      <div className={`${s.page} ${inter.className}`}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
-
-        {/* Clean Header Area with Title & Subtitle */}
-        <div className="bg-white border-b border-slate-100 py-10 sm:py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Link
-              href={withLocale(normalizedLocale, '/blog')}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-brand-red mb-6"
-            >
-              <ChevronLeft size={18} /> {t('backToBlog')}
-            </Link>
-
-            <div className="space-y-4 max-w-4xl">
-              <div className="flex items-center gap-2">
-                <span className="rounded-full bg-brand-red px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl shadow-brand-red/20">
-                  {cat?.emoji} {catLabel}
-                </span>
-                {article.stage && (
-                  <span
-                    className={`rounded-full px-3.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-xl ${
-                      article.stage === 'Başla'
-                        ? 'bg-red-500'
-                        : article.stage === 'Böyüt'
-                          ? 'bg-amber-500'
-                          : 'bg-purple-500'
-                    }`}
-                  >
-                    {article.stage === 'Başla' ? '🏗️' : article.stage === 'Böyüt' ? '📊' : '🔄'}{' '}
-                    {stageLabel}
-                  </span>
-                )}
-              </div>
-              <h1 className="font-display text-3xl font-black leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-                {article.title}
-              </h1>
-              {article.subtitle && (
-                <p className="max-w-3xl text-base text-slate-500 sm:text-lg leading-relaxed">
-                  {article.subtitle}
-                </p>
-              )}
+        <div className={home.wrap}>
+          <Crumbs
+            backHref={withLocale(normalizedLocale, '/blog')}
+            backLabel={ti('back')}
+            trail={`${ti('back')} / ${catLabel}`}
+          />
+          <header className={s.postHero}>
+            <div className={s.metaRow}>
+              <span className={s.cat}>{catLabel}</span>
+              {article.stage ? <span className={s.stageT}>{stageLabel}</span> : null}
+              <span>{article.author}</span>
+              <span>·</span>
+              <span>{formatInnerDate(article.publishDate, normalizedLocale)}</span>
+              <span>·</span>
+              <span>{tc('minRead', { n: minutes })}</span>
             </div>
-          </div>
-        </div>
+            <h1>{article.title}</h1>
+            {article.subtitle ? <p className={s.postSub}>{article.subtitle}</p> : null}
+            <ShareLinks url={pageUrl} title={article.title} waLabel={tc('whatsapp')} tgLabel={tc('telegram')} />
+          </header>
 
-        <div className="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8 sm:gap-12 lg:grid-cols-12">
-            <article className="min-w-0 text-slate-900 lg:col-span-8">
-              {/* Metadata Bar */}
-              <div className="mb-8 flex flex-wrap items-center gap-3 sm:gap-6 border-b border-slate-200 pb-6 text-xs font-bold uppercase tracking-widest text-slate-400">
-                <div className="flex items-center gap-2">
-                  <User size={16} className="text-brand-red" />
-                  {article.author}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar size={16} className="text-brand-red" />
-                  {new Date(article.publishDate).toLocaleDateString(
-                    DATE_LOCALE_MAP[normalizedLocale] || 'az-AZ',
-                    { day: 'numeric', month: 'long', year: 'numeric' }
-                  )}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock size={16} className="text-brand-red" />
-                  {t('minRead', { time: article.readingTime })}
-                </div>
-                <BlogActionBar
-                  title={article.title}
-                  slug={article.slug}
-                  labels={{
-                    linkCopied: t('linkCopied'),
-                    share: t('share'),
-                    save: t('save'),
-                    unsave: t('unsave'),
-                  }}
-                />
-              </div>
+          {article.coverImage ? (
+            <div className={s.postCover}>
+              {/* Cover: local /images/* or an editor-uploaded URL on any host. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={article.coverImage} alt={article.coverImageAlt || article.title} referrerPolicy="no-referrer" />
+            </div>
+          ) : null}
 
-              {/* Cover Image inside rounded Aspect-Ratio Box */}
-              {article.coverImage && (
-                <div className="mb-10 overflow-hidden rounded-3xl sm:rounded-[2.5rem] border border-slate-200 bg-slate-50 shadow-lg shadow-slate-100/50 aspect-[16/10] relative">
-                  <img
-                    src={article.coverImage}
-                    alt={article.coverImageAlt || article.title}
-                    className="h-full w-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-              )}
+          <div className={s.postGrid}>
+            <BlogToc items={toc} title={ti('toc')} />
 
-              {article.tags && article.tags.length > 0 && (
-                <div className="mb-8 flex flex-wrap gap-2">
-                  {article.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+            <article className={s.prose}>
+              {toc.length > 0 ? (
+                <details className={s.tocM}>
+                  <summary>{ti('tocMobile', { count: toc.length })}</summary>
+                  <ol>
+                    {toc.map((item) => (
+                      <li key={item.id}>
+                        <a href={`#${item.id}`}>{item.text}</a>
+                      </li>
+                    ))}
+                  </ol>
+                </details>
+              ) : null}
 
-              <MarkdownRenderer content={cleanMarkdownContent} />
+              <MarkdownRenderer content={partA} headingIds />
+              {toolCard}
+              {partB ? <MarkdownRenderer content={partB} headingIds /> : null}
 
               {/* Strukturlu sahələr (editor field-by-field saxlayır) — L-037/Özbahçeci:
                   guruBoxes + doganNote artıq route-a bağlıdır, markdown marker-dən asılı deyil */}
@@ -309,28 +300,41 @@ export default async function BlogDetailPage({
                 </div>
               )}
 
-              {(article.category === 'Hüquqi' || article.category === 'huquqi') && (
-                <LegalDisclaimer title={t('legalTitle')} text={t('legalText')} />
-              )}
+              {catKey === 'huquqi' && <LegalDisclaimer title={t('legalTitle')} text={t('legalText')} />}
 
-              <div className="mt-12 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-8">
-                <h3 className="mb-3 text-xl font-display font-black text-[var(--dk-navy)]">
-                  {t('ctaTitle')}
-                </h3>
-                <p className="mb-6 text-sm leading-relaxed text-slate-600">{t('ctaDesc')}</p>
+              <FounderCard
+                eyebrow={ti('founderEyebrow')}
+                name={ti('founderName')}
+                role={ti('founderRole')}
+                body={ti('founderBody')}
+                cta={ti('founderCta')}
+                ctaHref={whatsappHref(ti('founderText', { title: article.title }))}
+              />
+              <KazanBox
+                eyebrow={ti('kazanEyebrow')}
+                title={ti('kazanTitle')}
+                body={ti('kazanBody')}
+                cta={ti('kazanCta')}
+                href={withLocale(normalizedLocale, '/kazan-ai')}
+                foot={ti('kazanFoot')}
+              />
+
+              {/* TASK-0453 CTA kept (e2e/blog-cta.spec.ts): direct WhatsApp with the post title + contact page. */}
+              <div className="mt-10 rounded-3xl border border-[#E4DCCD] bg-white p-7 shadow-sm">
+                <h3 className="mb-2 text-xl font-black tracking-tight text-slate-900">{t('ctaTitle')}</h3>
+                <p className="mb-5 text-sm leading-relaxed text-slate-700">{t('ctaDesc')}</p>
                 <div className="flex flex-wrap items-center gap-3">
                   <a
                     href={`https://wa.me/994502566279?text=${encodeURIComponent(t('ctaWhatsappMessage', { title: article.title }))}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#1da851]"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#128C4A] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#0f7a40]"
                   >
-                    <span>💬</span>
                     {t('ctaWhatsapp')}
                   </a>
                   <Link
                     href={withLocale(normalizedLocale, '/elaqe')}
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 text-sm font-bold text-slate-800 transition hover:bg-slate-50"
                   >
                     {t('ctaContact')}
                   </Link>
@@ -338,63 +342,76 @@ export default async function BlogDetailPage({
               </div>
             </article>
 
-            <aside className="space-y-8 lg:col-span-4">
-              <div className="sticky top-32 space-y-8">
-                <AdSlot placement="blog-sidebar" />
-
-                <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
-                  <h3 className="mb-3 text-sm font-bold uppercase tracking-widest text-slate-400">
-                    {t('summary')}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-slate-700">{article.summary}</p>
-                </div>
-
-                {related.length > 0 && (
-                  <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
-                    <h3 className="mb-4 text-sm font-bold uppercase tracking-widest text-slate-400">
-                      {t('relatedPosts')}
-                    </h3>
-                    <div className="space-y-4">
-                      {related.map((rel) => (
-                        <Link
-                          key={rel.slug}
-                          href={withLocale(normalizedLocale, `/blog/${rel.slug}`)}
-                          className="group block"
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className="flex-shrink-0 text-lg">
-                              {CATEGORY_CONFIG[rel.category]?.emoji}
-                            </div>
-                            <div>
-                              <h4 className="text-sm font-semibold leading-snug text-slate-900 transition-colors group-hover:text-brand-red">
-                                {rel.title}
-                              </h4>
-                              <p className="mt-1 text-xs text-slate-400">
-                                {t('minRead', { time: rel.readingTime })}
-                              </p>
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="rounded-2xl bg-brand-red p-8 text-white shadow-2xl shadow-brand-red/20">
-                  <h3 className="mb-3 text-xl font-display font-black leading-tight">
-                    {t('freeToolkit')}
-                  </h3>
-                  <p className="mb-6 text-sm leading-relaxed text-white/80">{t('toolkitDesc')}</p>
-                  <Link
-                    href={withLocale(normalizedLocale, '/toolkit')}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3 text-sm font-black uppercase tracking-widest text-brand-red transition-all hover:bg-slate-50"
-                  >
-                    {t('viewTools')} <ArrowRight size={16} />
-                  </Link>
-                </div>
+            <aside className={s.aside} aria-label={ti('founderEyebrow')}>
+              <div className={s.author}>
+                <span className={s.av} aria-hidden="true">DT</span>
+                <b>{ti('founderName')}</b>
+                <span className={s.role}>{ti('founderRole')}</span>
+                <p style={{ fontSize: 13.5, color: 'var(--ink-2)', margin: '8px 0 0' }}>{ti('asideNote')}</p>
               </div>
+              {tool ? (
+                <ToolMini
+                  href={toolHref}
+                  icon={tool.icon}
+                  iconClass={TOOL_GROUP_CLASS[tool.group]}
+                  title={tt(`${tool.slug}.t`)}
+                  sub={tt(`${tool.slug}.r`)}
+                />
+              ) : null}
+              <a className={`${s.sh} ${s.shTg}`} href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" style={{ justifyContent: 'center', height: 42 }}>
+                <Icon name="tg" />
+                t.me/{TELEGRAM_HANDLE}
+              </a>
+              <AdSlot placement="blog-sidebar" />
             </aside>
           </div>
+
+          {related.length > 0 ? (
+            <section aria-labelledby="rel-posts-title">
+              <div className={s.secHead} style={{ marginBottom: 16 }}>
+                <div>
+                  <span className={home.eyebrow}>
+                    <span className={home.dot} />
+                    {ti('relEyebrow')}
+                  </span>
+                  <h2 id="rel-posts-title" className={s.h2}>{ti('relTitle')}</h2>
+                </div>
+              </div>
+              <div className={s.relPosts}>
+                {related.map((rel) => {
+                  const relCat = normalizeBlogCategory(rel.category);
+                  return (
+                    <Link key={rel.slug} className={s.bcard} href={withLocale(normalizedLocale, `/blog/${rel.slug}`)}>
+                      <div className={s.ph}>
+                        {rel.coverImage ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={rel.coverImage} alt={rel.coverImageAlt || rel.title} loading="lazy" />
+                        ) : (
+                          <span className={s.phFallback} aria-hidden="true"><Icon name="book" /></span>
+                        )}
+                      </div>
+                      <div className={s.bb}>
+                        <span className={s.ctag}>{relCat ? t(BLOG_CATEGORY_MESSAGE[relCat]) : rel.category}</span>
+                        <h3>{rel.title}</h3>
+                        <div className={s.bmeta}>
+                          <span>
+                            <Icon name="clock" />
+                            {tc('minRead', { n: readMinutes(rel.content || rel.summary || '') })}
+                          </span>
+                          <span>{formatInnerDate(rel.publishDate, normalizedLocale)}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          ) : null}
+
+          <Link href={withLocale(normalizedLocale, '/blog')} className={s.back}>
+            <Icon name="left" />
+            {ti('back')}
+          </Link>
         </div>
       </div>
     </BlogContentWrapper>

@@ -113,9 +113,9 @@ export default function WeeklyActionsPanel({ metrics, context }: WeeklyActionsPa
     );
   }
 
-  const metricsBase64 = typeof window !== 'undefined'
-    ? btoa(JSON.stringify(metrics))
-    : '';
+  // TASK-0514: btoa exists in Node 18+ too — encoding on both sides avoids the hydration mismatch
+  // the old `typeof window` branch caused (empty href on the server, full href on the client).
+  const metricsBase64 = btoa(JSON.stringify(metrics));
 
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-[var(--dk-red-light,#FFF0F3)]/30 shadow-lg">

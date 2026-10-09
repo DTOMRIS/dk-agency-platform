@@ -45,7 +45,7 @@ const copy: Record<Locale, PageCopy> = {
         price: 'Pulsuz',
         badge: 'Baslangic',
         features: [
-          '18 pulsuz toolkit aləti',
+          '17 pulsuz toolkit aləti',
           'KAZAN AI danismani (limit: 20 sual/gun)',
           'Blog ve analiz meqaleleri',
           'Ictimai elan paneli',
@@ -102,7 +102,7 @@ const copy: Record<Locale, PageCopy> = {
         price: 'Ucretsiz',
         badge: 'Baslangic',
         features: [
-          '18 ücretsiz toolkit aracı',
+          '17 ücretsiz toolkit aracı',
           'KAZAN AI danismani (limit: 20 soru/gun)',
           'Blog ve analiz makaleleri',
           'Herkese acik ilan paneli',
@@ -159,7 +159,7 @@ const copy: Record<Locale, PageCopy> = {
         price: 'Free',
         badge: 'Starter',
         features: [
-          '18 free toolkit tools',
+          '17 free toolkit tools',
           'KAZAN AI consultant (limit: 20 questions/day)',
           'Blog & analysis articles',
           'Public listing board',
@@ -216,7 +216,7 @@ const copy: Record<Locale, PageCopy> = {
         price: 'Besplatno',
         badge: 'Start',
         features: [
-          '18 besplatnikh instrumentov',
+          '17 бесплатных инструментов Toolkit',
           'KAZAN AI konsultant (limit: 20 voprosov/den)',
           'Blog i analiticheskie stati',
           'Publichnaya doska obyavleniy',

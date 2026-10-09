@@ -1,7 +1,8 @@
 /* TASK-0512 — homepage v2, ported from the approved /tanitim design (public/tanitim/index.html).
    Warm cream + ink + single accent (--dk-red). Every motion is off under prefers-reduced-motion. */
 
-.v2 {
+/* Design tokens — shared with the inner pages (components/inner/inner.module.css, TASK-0514). */
+.tokens {
   --red: var(--dk-red, #e94560);
   --red-d: #d63b54;
   --red-soft: #fdecef;
@@ -16,6 +17,10 @@
   --amber: #b45309;
   --amber-soft: #fef3e2;
   --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px -12px rgba(15, 23, 42, 0.14);
+}
+
+.v2 {
+  composes: tokens;
   background: var(--cream);
   color: var(--ink);
   line-height: 1.55;
