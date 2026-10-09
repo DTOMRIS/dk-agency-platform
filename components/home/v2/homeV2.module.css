@@ -1821,6 +1821,7 @@
     border-color 0.15s;
 }
 .nwThumb {
+  position: relative;
   flex: none;
   width: 104px;
   aspect-ratio: 1;
@@ -2767,5 +2768,153 @@
   }
   .jnBtn:hover {
     transform: none;
+  }
+}
+
+/* ===== FOUNDER (DoganNote, TASK-0516) — photo + since 1986 · 40 il; no customer numbers ===== */
+.dn {
+  container-type: inline-size;
+}
+.dnEmbedded {
+  background: transparent;
+}
+.dnCard {
+  display: grid;
+  grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+.dnPhoto {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 800 / 902;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--cream-2);
+}
+.dnPhoto img {
+  object-fit: cover;
+}
+.dnCaption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.86);
+  color: #fff;
+  font-size: 14px;
+}
+.dnCaption b {
+  font-weight: 800;
+}
+.dnCaption span::before {
+  content: '·';
+  margin-right: 8px;
+  color: #cbd5e1;
+}
+.dnCaption span {
+  color: #e2e8f0;
+}
+.dnBody {
+  min-width: 0;
+}
+.dnBody .h2 {
+  margin-bottom: 18px;
+}
+.dnFacts {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.dnFacts li {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 124px;
+  max-width: 200px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+}
+.dnFacts b {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.dnFacts span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.dnText {
+  display: grid;
+  gap: 12px;
+  font-size: 16px;
+  color: var(--ink-2);
+}
+.dnText p {
+  margin: 0;
+}
+.dnQuote {
+  margin: 4px 0 0;
+  padding: 2px 0 2px 16px;
+  border-left: 3px solid var(--red);
+  color: var(--ink);
+  font-weight: 600;
+  font-style: italic;
+}
+.dnCta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+@container (max-width: 760px) {
+  .dnCard {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 18px;
+  }
+  .dnPhoto {
+    width: 100%;
+    max-width: 320px;
+    justify-self: center;
+  }
+}
+@media (max-width: 640px) {
+  .dnCta .btn {
+    width: 100%;
+  }
+}
+
+/* ===== HOME AD (dashboard/reklamlar «home-mid», TASK-0516) — rendered only with an active ad ===== */
+.homeAd {
+  background: var(--cream);
+  padding: 8px 24px 48px;
+}
+.homeAd > a {
+  max-width: 1200px;
+  margin: 0 auto;
+  max-height: 320px;
+}
+@media (max-width: 640px) {
+  .homeAd {
+    padding: 4px 16px 32px;
   }
 }

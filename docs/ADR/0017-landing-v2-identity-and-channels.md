@@ -21,3 +21,10 @@ Accepted (Doğan, 08.10.2026)
 - Ana səhifə köhnə bölmələrdən ToolkitShowcase, StageSelector, AdsPreview-u göstərmir (fayllar qalır); boş elan vitrinində AdsPreview geri qayıda bilər.
 - İç səhifələr (Toolkit → Xəbərlər → Bloq) eyni dilə ayrıca PR-da keçəcək (əvvəl HTML ilə sahib təsdiqi).
 - Telegram kanalına göndəriş üçün bot kanalda admin olmalıdır.
+
+## 2026-10-09 additions (Doğan, PR #516 + TASK-0516)
+1. **Tünd qırmızı qaydası:** ağ mətn qırmızı fon üstündə yalnız `#D63B54` (`--dk-red-strong`, `bg-dk-red-strong`; hover `#BE2F47` `--dk-red-deep`, ~4.55:1). `#E94560` (`--dk-red`) yalnız bəzək üçündür: nöqtə, xətt, iri başlıq vurğusu, ikon. Yeni düymə/nişan bu qaydadan kənara çıxmır.
+2. **Admin idarə etdiyi səhifə hissələri silinmir:** admin paneldən idarə olunan hissə (manşet, «top» xəbər, `showcase_ready` elanlar, reklam yuvaları `home-mid` / `news-inline` / `news-sidebar` / `blog-sidebar` / `blog-inline`) dizayn yenilənəndə səhifədən çıxarılmır; məlumat yoxdursa heç nə göstərmir (boş «Reklam sahəsi» placeholder-i yox).
+3. **Alət sayı ifadəsi:** hər yerdə «35+ alət · 17-si pulsuz» (P&L iki dəfə sayılmır; mənbə `lib/toolkit/tool-directory.ts` `FREE_TOOLKIT_COUNT`).
+4. **Benchmark-lar tək mənbədən:** sektor hədləri (prime cost, icarə, food, əmək, xalis mənfəət aşağı həddi) yalnız `lib/toolkit/benchmarks.ts`-dən gəlir; mətnlər ICU placeholder ilə, mənbəsiz rəqəm «geniş yayılmış qayda» kimi yazılır.
+5. **Ana səhifə sübutu (sahib qərarı 2026-10-04):** müştəri rəqəmi yayımlanmır; sübut = Doğan-ın real fotosu + 1986-dan sahədə (40 il HoReCa) + «necə işləyir» (StepsTimeline → DoganNote).

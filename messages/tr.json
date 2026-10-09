@@ -3622,7 +3622,11 @@
       "body2": "DK Agency bu mutfakların ortak dilidir. KAZAN sorulara cevap verir, Toolkit hesaplar, OCAQ yönetir. Üçü de bir ustanın eli gibi çalışır — acele etmeden, tam, senin yanında.",
       "body3": "Bu işi 40 yıldır restoranların içinde öğreniyorum — başarısızlıklar da, zaferler de. Sana söz veriyorum: burada satılan bir araç değil, mutfağının uzantısıdır. — Doğan Tomris, kurucu",
       "ctaPrimary": "KAZAN ile konuş",
-      "ctaSecondary": "Toolkit aç"
+      "ctaSecondary": "Toolkit aç",
+      "factsLabel": "Kurucu hakkında",
+      "sinceLabel": "yılından beri HoReCa sahasında",
+      "yearsValue": "40 yıl",
+      "yearsLabel": "HoReCa deneyimi"
     },
     "ahilikValues": {
       "eyebrow": "Ahilik / Əxilik",
@@ -7059,6 +7063,204 @@
       "acceptAll": "Tümünü kabul et",
       "save": "Seçimi kaydet",
       "note": "Seçimin bu cihazda saklanır."
+    }
+  },
+  "whatsappFloat": {
+    "label": "Bize yazın",
+    "aria": "WhatsApp'tan bize yazın",
+    "text": "Merhaba, DK Agency sitesinden yazıyorum."
+  },
+  "mqForms": {
+    "kst": {
+      "categories": {
+        "quality": "Kalite",
+        "service": "Servis",
+        "cleanliness": "Temizlik"
+      },
+      "submit": "KST Denetimimi Oluştur",
+      "submitting": "AI düşünüyor...",
+      "notes": "Ek not (opsiyonel)",
+      "notesPlaceholder": "Hangi alanda daha çok sıkıntı yaşadığını yaz...",
+      "progress": "yanıtlandı",
+      "questions": {
+        "K1": "Yemeklerin tadı ve kalitesi yüksek",
+        "K2": "Porsiyon büyüklüğü fiyata uygun",
+        "K3": "Taze malzemeler kullanılıyor",
+        "K4": "Yemeğin sunumu güzel",
+        "K5": "Menü çeşitliliği yeterli",
+        "K6": "Yemek sıcaklığı doğru",
+        "K7": "Özel diyetler mevcut (vegan/helal)",
+        "K8": "Hazırlama süresi kabul edilebilir",
+        "K9": "Yemek tutarlı geliyor (aynı tat)",
+        "K10": "Paket servis kalitesi",
+        "S1": "Personelin güler yüzlülüğü",
+        "S2": "Sipariş alma hızı",
+        "S3": "Personelin menü bilgisi",
+        "S4": "Hesap getirme hızı",
+        "S5": "Şikayetlere yanıt verilmesi",
+        "S6": "Personel üniforma giyiyor",
+        "S7": "Masa bekleme süresi kabul edilebilir",
+        "S8": "Telefon/online sipariş kolaylığı",
+        "S9": "Sipariş doğru geliyor",
+        "S10": "Müşteri tekrar geliyor",
+        "T1": "Yemek alanı temiz (masa, zemin)",
+        "T2": "Tuvalet her zaman temiz",
+        "T3": "Mutfak temizliği (görünür kısım)",
+        "T4": "Personel kişisel hijyeni",
+        "T5": "Ekipman ve tabak temizliği",
+        "T6": "Çöp yönetimi düzgün",
+        "T7": "Klima/havalandırma çalışıyor",
+        "T8": "Gizli toz/kir yok",
+        "T9": "Düzenli bakteri kontrolü",
+        "T10": "Sanitasyon standartlarına uygun"
+      }
+    },
+    "marka": {
+      "customerTime": {
+        "label": "Müşteriniz günün hangi saatinde gelir?",
+        "help": "Ana zaman aralığını seçin",
+        "options": {
+          "morning": "Sabah",
+          "lunch": "Öğle",
+          "evening": "Akşam",
+          "late-night": "Gece geç",
+          "all": "Tüm gün"
+        }
+      },
+      "customerActivity": {
+        "label": "Burada ne yapıyorlar?",
+        "options": {
+          "fill-belly": "Karnını doyuruyor",
+          "work": "İş görüyor",
+          "celebration": "Kutlama",
+          "relax": "Dinleniyor",
+          "third-place": "Üçüncü mekan"
+        }
+      },
+      "foodStory": {
+        "label": "Yemeğinizin ana hikayesi ne?",
+        "options": {
+          "tradition": "Gelenek",
+          "speed": "Hız",
+          "health": "Sağlık",
+          "exotic": "Egzotik",
+          "handcrafted": "El yapımı"
+        }
+      },
+      "competitorGap": {
+        "label": "Rakibinizin yapamadığı ne? (en az 3 cevap)",
+        "placeholder": "Her satırda bir cevap yazın...",
+        "help": "Rakibinizin yakalayamadığı, sizin güçlü olduğunuz 3 şey"
+      },
+      "recommendReason": {
+        "label": "Müşteri sizi neden arkadaşına tavsiye eder?",
+        "placeholder": "1 cümleyle yazın"
+      },
+      "submit": "Pusulamı Oluştur",
+      "submitting": "AI düşünüyor...",
+      "validation": "Tüm alanları doldurun",
+      "errors": {
+        "tierTooLow": "KALFA seviyesi gerekli",
+        "monthlyLimit": "Aylık limit doldu.",
+        "aiFailed": "Teknik sorun, tekrar deneyin",
+        "network": "Bağlantı hatası, tekrar deneyin"
+      }
+    },
+    "menyu": {
+      "restName": "Restoran adı",
+      "addItem": "+ Yemek ekle",
+      "item": "Yemek #{n}",
+      "remove": "Sil",
+      "itemName": "Yemek adı",
+      "itemPlaceholder": "örn: Adana kebap, Sezar salata",
+      "category": "Kategori",
+      "choose": "Seçin...",
+      "price": "Satış fiyatı (AZN)",
+      "priceHelp": "Müşteriye sunulan fiyat",
+      "cost": "Food Cost (AZN)",
+      "costHelp": "Çiğ ürün + ambalaj",
+      "sales": "Aylık satış adedi",
+      "salesPlaceholder": "örn: 250",
+      "salesHelp": "Ortalama ayda kaç porsiyon",
+      "margin": "Marj:",
+      "monthlyProfit": "Aylık kâr:",
+      "submit": "Menümü Analiz Et",
+      "submitting": "AI düşünüyor...",
+      "minItems": "En az 5 yemek ekleyin",
+      "categories": {
+        "salat": "Salata",
+        "shorba": "Çorba",
+        "et": "Ana yemek",
+        "toyuq": "Tavuk",
+        "baliq": "Balık",
+        "sandvic": "Sandviç",
+        "shirniyyat": "Tatlı",
+        "icki": "İçecek"
+      }
+    },
+    "persona": {
+      "restName": "Restoran adı",
+      "concept": "Konsept",
+      "city": "Şehir",
+      "segment": "Hedef segment",
+      "avgTicket": "Ort. hesap (AZN)",
+      "peakHours": "Yoğun saatler",
+      "observations": "Ek gözlem",
+      "obsPlaceholder": "Müşterileriniz hakkında bildiğiniz detaylar...",
+      "submit": "Personamı Oluştur",
+      "submitting": "AI düşünüyor...",
+      "concepts": {
+        "fast-food": "Fast food",
+        "fine-dining": "Fine dining",
+        "cafe": "Kafe",
+        "fast-casual": "Fast casual",
+        "fine-casual": "Fine casual",
+        "pub": "Pub/Bar",
+        "traditional": "Geleneksel",
+        "other": "Diğer"
+      },
+      "segments": {
+        "families": "Aileler",
+        "young-professionals": "Genç profesyoneller",
+        "students": "Öğrenciler",
+        "tourists": "Turistler",
+        "business": "İş insanları",
+        "seniors": "Yaşlılar",
+        "mixed": "Karışık"
+      },
+      "peaks": {
+        "morning": "Sabah",
+        "lunch": "Öğle",
+        "evening": "Akşam",
+        "late-night": "Gece geç",
+        "all": "Tüm gün"
+      }
+    },
+    "sikayet": {
+      "restName": "Restoran adı",
+      "period": "Dönem",
+      "periods": {
+        "last-week": "Son hafta",
+        "last-month": "Son ay",
+        "last-quarter": "Son 3 ay",
+        "custom": "Özel"
+      },
+      "sources": {
+        "google": "Google Reviews",
+        "2gis": "2GIS / Wolt / TripAdvisor",
+        "instagram": "Instagram",
+        "whatsapp": "WhatsApp",
+        "verbal": "Direkt müşteri",
+        "other": "Diğer"
+      },
+      "addComplaint": "+ Şikayet ekle",
+      "complaintText": "Şikayet metni",
+      "source": "Kaynak seç",
+      "date": "Tarih",
+      "submit": "Şikayetleri Analiz Et",
+      "submitting": "AI düşünüyor...",
+      "minItems": "En az 3 şikayet ekleyin",
+      "remove": "Sil"
     }
   }
 }

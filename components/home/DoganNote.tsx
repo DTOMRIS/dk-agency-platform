@@ -1,71 +1,85 @@
 /**
  * @file DoganNote.tsx
- * @purpose Homepage founder note — trust layer, Pattern A (useTranslations)
- * @pattern A (useTranslations) — L-004 uyğun
- * @task TASK-0106
- * @lastModified 2026-05-20
+ * @purpose Founder proof block — real photo, «Doğan Tomris · Qurucu», in the field since 1986
+ *          (40 il HoReCa), the founder's note and two CTAs. Homepage v2 style.
+ *          Owner decision 2026-10-04: customer numbers are not published; proof = the founder's
+ *          photo + field since 1986 + «necə işləyir» (StepsTimeline, rendered right before this on `/`).
+ * @pattern A (useTranslations) — home.doganNote
+ * @task TASK-0106 · TASK-0516 (v2 restyle, homepage)
+ * @usage `/` (after StepsTimeline) and `/haqqimizda` (`embedded`: no own section padding/background,
+ *        it sits between the about text and AhilikValues). The card collapses to one column by a
+ *        container query, so it also fits narrow parents.
  */
 
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { FounderAvatar } from '@/components/ui/FounderAvatar';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
+import { normalizeLocale, withLocale } from '@/i18n/config';
+import { FOUNDER_NAME, FOUNDER_PORTRAIT_SRC } from '@/components/ui/FounderAvatar';
+import styles from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Icon, Reveal } from '@/components/home/v2/shared';
 
-export function DoganNote() {
+export function DoganNote({ embedded = false }: { embedded?: boolean }) {
   const t = useTranslations('home.doganNote');
+  const locale = normalizeLocale(useLocale());
 
   return (
-    <section className="bg-white py-20" aria-labelledby="dogan-note-title">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2fr] md:gap-16 items-start">
-          {/* Sol: Kurucu kimliyi */}
-          <div className="flex flex-col items-center md:items-start gap-4">
-            <FounderAvatar size={128} className="h-32 w-32 border-4 border-[#C5A022] shadow-md" />
-            <div className="text-center md:text-left">
-              <p className="font-display text-lg font-bold text-[#1A1A2E]">Doğan Tomris</p>
-              <p className="text-sm text-gray-500">{t('founderRole')}</p>
+    <section
+      className={`${styles.v2} ${inter.className} ${styles.dn} ${embedded ? styles.dnEmbedded : ''}`}
+      aria-labelledby="dogan-note-title"
+      id="qurucu"
+    >
+      <div className={embedded ? undefined : styles.sec}>
+        <div className={styles.wrap}>
+          <Reveal className={styles.dnCard}>
+            <figure className={styles.dnPhoto}>
+              <Image src={FOUNDER_PORTRAIT_SRC} alt={FOUNDER_NAME} fill sizes="(max-width: 980px) 320px, 360px" />
+              <figcaption className={styles.dnCaption}>
+                <b>{FOUNDER_NAME}</b>
+                <span>{t('founderRole')}</span>
+              </figcaption>
+            </figure>
+
+            <div className={styles.dnBody}>
+              <span className={styles.eyebrow}>
+                <span className={styles.dot} />
+                {t('eyebrow')}
+              </span>
+              <h2 id="dogan-note-title" className={styles.h2}>
+                {t('title')}
+              </h2>
+
+              <ul className={styles.dnFacts} aria-label={t('factsLabel')}>
+                <li>
+                  <b>1986</b>
+                  <span>{t('sinceLabel')}</span>
+                </li>
+                <li>
+                  <b>{t('yearsValue')}</b>
+                  <span>{t('yearsLabel')}</span>
+                </li>
+              </ul>
+
+              <div className={styles.dnText}>
+                <p>{t('body1')}</p>
+                <p>{t('body2')}</p>
+                <blockquote className={styles.dnQuote}>{t('body3')}</blockquote>
+              </div>
+
+              <div className={styles.dnCta}>
+                <Link href={withLocale(locale, '/kazan-ai')} className={`${styles.btn} ${styles.btnRed}`}>
+                  {t('ctaPrimary')}
+                  <Icon name="arrow" />
+                </Link>
+                <Link href={withLocale(locale, '/toolkit')} className={`${styles.btn} ${styles.btnGhost}`}>
+                  {t('ctaSecondary')}
+                </Link>
+              </div>
             </div>
-          </div>
-
-          {/* Sağ: Mətn + CTA */}
-          <div>
-            {/* Eyebrow */}
-            <span className="mb-3 block text-sm font-semibold uppercase tracking-widest text-[#C5A022]">
-              {t('eyebrow')}
-            </span>
-
-            {/* Başlıq */}
-            <h2
-              id="dogan-note-title"
-              className="mb-6 font-display text-3xl font-bold text-[#1A1A2E] sm:text-4xl"
-            >
-              {t('title')}
-            </h2>
-
-            {/* 3 abzas */}
-            <div className="space-y-4 text-gray-700 leading-relaxed">
-              <p>{t('body1')}</p>
-              <p>{t('body2')}</p>
-              <p className="italic font-display text-[#1A1A2E]">{t('body3')}</p>
-            </div>
-
-            {/* CTA düymələri */}
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/kazan-ai"
-                className="inline-flex items-center justify-center rounded-xl bg-dk-red-strong px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-dk-red-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E94560] focus-visible:ring-offset-2"
-              >
-                {t('ctaPrimary')}
-              </Link>
-              <Link
-                href="/toolkit"
-                className="inline-flex items-center justify-center rounded-xl border-2 border-[#1A1A2E] px-5 py-3 text-sm font-semibold text-[#1A1A2E] transition-colors hover:bg-[#1A1A2E] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A2E] focus-visible:ring-offset-2"
-              >
-                {t('ctaSecondary')}
-              </Link>
-            </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

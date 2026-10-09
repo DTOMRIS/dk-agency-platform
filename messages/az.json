@@ -3622,7 +3622,11 @@
       "body2": "DK Agency bu mətbəxlərin ortaq dilidir. KAZAN suallara cavab verir, Toolkit hesablayır, OCAQ idarə edir. Üçü də bir ustadın əli kimi işləyir — tələsmədən, dəqiq, sənin tərəfində.",
       "body3": "Mən bu işi 40 ildir restoranların içində öyrənirəm — uğursuzluqlar da, qələbələr də. Sənə vəd edirəm: burada satılan alət deyil, sənin mətbəxinin uzantısıdır. — Doğan Tomris, qurucu",
       "ctaPrimary": "KAZAN ilə danış",
-      "ctaSecondary": "Toolkit aç"
+      "ctaSecondary": "Toolkit aç",
+      "factsLabel": "Qurucu haqqında",
+      "sinceLabel": "ildən HoReCa sahəsində",
+      "yearsValue": "40 il",
+      "yearsLabel": "HoReCa təcrübəsi"
     },
     "ahilikValues": {
       "eyebrow": "Ahilik / Əxilik",
@@ -7059,6 +7063,204 @@
       "acceptAll": "Hamısını qəbul et",
       "save": "Seçimi saxla",
       "note": "Seçiminiz bu cihazda yadda saxlanılır."
+    }
+  },
+  "whatsappFloat": {
+    "label": "Bizə yazın",
+    "aria": "WhatsApp-da bizə yazın",
+    "text": "Salam, DK Agency saytından yazıram."
+  },
+  "mqForms": {
+    "kst": {
+      "categories": {
+        "quality": "Keyfiyyət",
+        "service": "Servis",
+        "cleanliness": "Təmizlik"
+      },
+      "submit": "KST Auditimi Yarat",
+      "submitting": "AI fikirləşir...",
+      "notes": "Əlavə qeyd (opsional)",
+      "notesPlaceholder": "Hansı sahədə daha çox sıxıntı yaşadığını yaz...",
+      "progress": "cavablandı",
+      "questions": {
+        "K1": "Yeməklərin dadı və keyfiyyəti yüksəkdir",
+        "K2": "Porsiyaların ölçüsü qiymətə uyğundur",
+        "K3": "Təzə malzəmələr istifadə olunur",
+        "K4": "Yeməyin görünüşü gözəldir",
+        "K5": "Menyu çeşidi yetərlidir",
+        "K6": "Yemək temperaturu düzgündür",
+        "K7": "Spesial yeməklər (vegan/halal) var",
+        "K8": "Hazırlanma vaxtı qəbul edilir",
+        "K9": "Yemək konsistent gəlir (eyni dad)",
+        "K10": "Yemək paketinin keyfiyyəti (delivery)",
+        "S1": "Personalın dostlucu və xoş münasibəti",
+        "S2": "Sifariş qəbul sürəti",
+        "S3": "Personalın menyu bilgisi",
+        "S4": "Hesab gətirilmə sürəti",
+        "S5": "Şikayətlərə cavab verilməsi",
+        "S6": "Personal vahid forma geyinmiş",
+        "S7": "Stol gözləmə vaxtı qəbul edilir",
+        "S8": "Telefon/online sifariş asanlığı",
+        "S9": "Sifariş düzgün gəlir (səhv yox)",
+        "S10": "Müştəri yenidən gəlir (sadiqlik)",
+        "T1": "Yemək sahəsi təmizdir (stol, döşəmə)",
+        "T2": "Tualet daim təmiz",
+        "T3": "Mətbəx təmizliyi (görünən hissə)",
+        "T4": "Personalın şəxsi gigieni",
+        "T5": "Cihaz və qab təmizliyi",
+        "T6": "Zibil idarəsi düzgündür",
+        "T7": "Kondisioner/havalandırma işləyir",
+        "T8": "Gizli toz/kir yoxdur",
+        "T9": "Bakteriya yoxlaması müntəzəm",
+        "T10": "AQTA/sanitar standartlara uyğun"
+      }
+    },
+    "marka": {
+      "customerTime": {
+        "label": "Sənin müştərin gündə hansı saatda gəlir?",
+        "help": "Əsas zaman aralığını seç",
+        "options": {
+          "morning": "Səhər",
+          "lunch": "Nahar",
+          "evening": "Axşam",
+          "late-night": "Gec gecə",
+          "all": "Hamısı"
+        }
+      },
+      "customerActivity": {
+        "label": "Onlar burda nə edir?",
+        "options": {
+          "fill-belly": "Qarın doyurur",
+          "work": "İş görür",
+          "celebration": "Mərasim / Bayram",
+          "relax": "Dincəlir",
+          "third-place": "Ev/iş arası üçüncü məkan"
+        }
+      },
+      "foodStory": {
+        "label": "Sənin yeməyinin əsas hekayəsi nədir?",
+        "options": {
+          "tradition": "Gələnək",
+          "speed": "Sürət",
+          "health": "Sağlamlıq",
+          "exotic": "Ekzotika",
+          "handcrafted": "Əl-emeyi"
+        }
+      },
+      "competitorGap": {
+        "label": "Rəqibinin edə bilmədiyi nə? (ən az 3 cavab)",
+        "placeholder": "Hər sətirdə bir cavab yaz...",
+        "help": "Rəqibinin tutamadığı, sənin gücün olan 3 şey"
+      },
+      "recommendReason": {
+        "label": "Müştəri sənin yerini niyə dostuna tövsiyə edər?",
+        "placeholder": "1 cümlə ilə yaz"
+      },
+      "submit": "Mənim Kompasımı Yarat",
+      "submitting": "AI fikirləşir...",
+      "validation": "Bütün sahələri doldur",
+      "errors": {
+        "tierTooLow": "Bu alət üçün KALFA pilləsi lazımdır",
+        "monthlyLimit": "Bu ay limitiniz dolub. KALFA-ya yüksəlin.",
+        "aiFailed": "Texniki problem, yenidən cəhd edin",
+        "network": "Bağlantı xətası, yenidən cəhd edin"
+      }
+    },
+    "menyu": {
+      "restName": "Restoran adı",
+      "addItem": "+ Yemək əlavə et",
+      "item": "Yemək #{n}",
+      "remove": "Sil",
+      "itemName": "Yemək adı",
+      "itemPlaceholder": "məs: Adana Kababı, Caesar Salat",
+      "category": "Kateqoriya",
+      "choose": "Seçin...",
+      "price": "Satış qiyməti (AZN)",
+      "priceHelp": "Müştəriyə təqdim olunan qiymət",
+      "cost": "Food Cost (AZN)",
+      "costHelp": "Çiy məhsul + qablaşdırma",
+      "sales": "Aylıq satış sayı",
+      "salesPlaceholder": "məs: 250",
+      "salesHelp": "Orta hesabla ayda neçə porsiya",
+      "margin": "Marja:",
+      "monthlyProfit": "Aylıq mənfəət:",
+      "submit": "Menyumu Analiz Et",
+      "submitting": "AI fikirləşir...",
+      "minItems": "Ən az 5 yemək əlavə edin",
+      "categories": {
+        "salat": "Salat",
+        "shorba": "Şorba",
+        "et": "Əsas yemək",
+        "toyuq": "Toyuq",
+        "baliq": "Balıq",
+        "sandvic": "Sendviç",
+        "shirniyyat": "Desert",
+        "icki": "İçki"
+      }
+    },
+    "persona": {
+      "restName": "Restoran adı",
+      "concept": "Konsept",
+      "city": "Şəhər",
+      "segment": "Hədəf segment",
+      "avgTicket": "Ort. hesab (AZN)",
+      "peakHours": "Pik saatlar",
+      "observations": "Əlavə müşahidə",
+      "obsPlaceholder": "Müştəriləriniz haqqında bildiyiniz detallar...",
+      "submit": "Personamı Yarat",
+      "submitting": "AI fikirləşir...",
+      "concepts": {
+        "fast-food": "Fast food",
+        "fine-dining": "Fine dining",
+        "cafe": "Kafe",
+        "fast-casual": "Fast casual",
+        "fine-casual": "Fine casual",
+        "pub": "Pub/Bar",
+        "traditional": "Ənənəvi",
+        "other": "Digər"
+      },
+      "segments": {
+        "families": "Ailələr",
+        "young-professionals": "Gənc peşəkarlar",
+        "students": "Tələbələr",
+        "tourists": "Turistlər",
+        "business": "İş adamları",
+        "seniors": "Yaşlılar",
+        "mixed": "Qarışıq"
+      },
+      "peaks": {
+        "morning": "Səhər",
+        "lunch": "Nahar",
+        "evening": "Axşam",
+        "late-night": "Gec gecə",
+        "all": "Hamısı"
+      }
+    },
+    "sikayet": {
+      "restName": "Restoran adı",
+      "period": "Dövr",
+      "periods": {
+        "last-week": "Son həftə",
+        "last-month": "Son ay",
+        "last-quarter": "Son 3 ay",
+        "custom": "Xüsusi"
+      },
+      "sources": {
+        "google": "Google Reviews",
+        "2gis": "2GIS / Wolt / TripAdvisor",
+        "instagram": "Instagram",
+        "whatsapp": "WhatsApp",
+        "verbal": "Birbaşa müştəri",
+        "other": "Digər"
+      },
+      "addComplaint": "+ Şikayət əlavə et",
+      "complaintText": "Şikayət mətni",
+      "source": "Mənbə seç",
+      "date": "Tarix",
+      "submit": "Şikayətləri Analiz Et",
+      "submitting": "AI fikirləşir...",
+      "minItems": "Ən az 3 şikayət əlavə edin",
+      "remove": "Sil"
     }
   }
 }

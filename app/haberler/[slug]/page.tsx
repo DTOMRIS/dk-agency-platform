@@ -275,6 +275,7 @@ export default async function HaberDetailPage({
                 imageUrl={article.imageUrl}
                 alt={article.title}
                 priority
+                sizes="(max-width: 980px) 100vw, 860px"
               />
 
               <div className={s.artBody}>

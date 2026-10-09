@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Loader2, Plus, Trash2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/config';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
@@ -15,59 +16,13 @@ interface MenuItem {
 
 const CATEGORIES = ['salat', 'shorba', 'et', 'toyuq', 'baliq', 'sandvic', 'shirniyyat', 'icki'] as const;
 
-const catLabels: Record<Locale, Record<string, string>> = {
-  az: {
-    salat: 'Salat', shorba: 'Sorba', et: 'Esas yemek', toyuq: 'Toyuq', baliq: 'Baliq', sandvic: 'Sandvic', shirniyyat: 'Dessert', icki: 'Icki',
-  },
-  en: {
-    salat: 'Salad', shorba: 'Soup', et: 'Main dish', toyuq: 'Poultry', baliq: 'Fish', sandvic: 'Sandwich', shirniyyat: 'Dessert', icki: 'Drink',
-  },
-  tr: {
-    salat: 'Salata', shorba: 'Corba', et: 'Ana yemek', toyuq: 'Tavuk', baliq: 'Balik', sandvic: 'Sandvic', shirniyyat: 'Dessert', icki: 'Icecek',
-  },
-  ru: {
-    salat: 'Salad', shorba: 'Soup', et: 'Main dish', toyuq: 'Poultry', baliq: 'Fish', sandvic: 'Sandwich', shirniyyat: 'Dessert', icki: 'Drink',
-  },
-};
-
-const formCopy: Record<Locale, {
-  restName: string; addItem: string; itemName: string; category: string; price: string;
-  cost: string; costHelp: string; monthlySales: string; salesHelp: string;
-  submit: string; submitting: string; minItems: string; remove: string;
-}> = {
-  az: {
-    restName: 'Restoran adi', addItem: '+ Yemek elave et', itemName: 'Yemek adi', category: 'Kateqoriya sec',
-    price: 'Qiymet (AZN)', cost: 'Food Cost %', costHelp: 'Bilmirsense bos burax',
-    monthlySales: 'Aylik satis (eded)', salesHelp: 'Opsional',
-    submit: 'Menyumu Analiz Et', submitting: 'AI fikirlesir...', minItems: 'En az 5 yemek elave edin', remove: 'Sil',
-  },
-  en: {
-    restName: 'Restaurant name', addItem: '+ Add item', itemName: 'Item name', category: 'Select category',
-    price: 'Price (AZN)', cost: 'Food Cost %', costHelp: 'Leave empty if unsure',
-    monthlySales: 'Monthly sales (pcs)', salesHelp: 'Optional',
-    submit: 'Analyze My Menu', submitting: 'AI is thinking...', minItems: 'Add at least 5 items', remove: 'Remove',
-  },
-  tr: {
-    restName: 'Restoran adi', addItem: '+ Yemek ekle', itemName: 'Yemek adi', category: 'Kategori sec',
-    price: 'Fiyat (AZN)', cost: 'Food Cost %', costHelp: 'Bilmiyorsaniz bos birakin',
-    monthlySales: 'Aylik satis (adet)', salesHelp: 'Opsiyonel',
-    submit: 'Menumu Analiz Et', submitting: 'AI dusunuyor...', minItems: 'En az 5 yemek ekleyin', remove: 'Sil',
-  },
-  ru: {
-    restName: 'Restaurant name', addItem: '+ Add item', itemName: 'Item name', category: 'Select category',
-    price: 'Price (AZN)', cost: 'Food Cost %', costHelp: 'Leave empty if unsure',
-    monthlySales: 'Monthly sales (pcs)', salesHelp: 'Optional',
-    submit: 'Analyze My Menu', submitting: 'AI is thinking...', minItems: 'Add at least 5 items', remove: 'Remove',
-  },
-};
-
 const EMPTY_ITEM: MenuItem = { name: '', category: '', price: 0, costPercent: undefined, monthlySales: undefined };
 
 interface Props { locale: Locale; onResult: (data: unknown) => void; onError: (msg: string) => void }
 
 export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props) {
-  const t = formCopy[locale];
-  const cats = catLabels[locale];
+  // TASK-0516: copy lives in messages/*.json → mqForms.menyu (labels were AZ-only in the JSX).
+  const t = useTranslations('mqForms.menyu');
   const [restaurantName, setRestaurantName] = useState('');
   const [items, setItems] = useState<MenuItem[]>([{ ...EMPTY_ITEM }, { ...EMPTY_ITEM }, { ...EMPTY_ITEM }, { ...EMPTY_ITEM }, { ...EMPTY_ITEM }]);
   const [loading, setLoading] = useState(false);
@@ -117,7 +72,7 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
   return (
     <div className="space-y-5">
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t.restName}</label>
+        <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('restName')}</label>
         <input type="text" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} disabled={loading}
           className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20" />
       </div>
@@ -130,7 +85,7 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
           >
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm font-semibold text-gray-700">
-                Yemək #{idx + 1}
+                {t('item', { n: idx + 1 })}
               </span>
               {items.length > 5 && (
                 <button
@@ -138,9 +93,9 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
                   onClick={() => removeItem(idx)}
                   disabled={loading}
                   className="text-red-500 hover:text-red-700 text-sm"
-                  aria-label="Sil"
+                  aria-label={t('remove')}
                 >
-                  ✕ Sil
+                  ✕ {t('remove')}
                 </button>
               )}
             </div>
@@ -149,14 +104,14 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
               {/* Yemek adı - tam genişlik mobile, 2/2 desktop */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Yemək adı
+                  {t('itemName')}
                   <span className="text-red-500 ml-1">*</span>
                 </label>
                 <input
                   type="text"
                   value={item.name}
                   onChange={(e) => updateItem(idx, 'name', e.target.value)}
-                  placeholder="məs: Adana Kababı, Caesar Salat"
+                  placeholder={t('itemPlaceholder')}
                   disabled={loading}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
@@ -165,7 +120,7 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
               {/* Kateqoriya */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Kateqoriya
+                  {t('category')}
                 </label>
                 <select
                   value={item.category}
@@ -173,15 +128,15 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
                   disabled={loading}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
                 >
-                  <option value="">Seçin...</option>
-                  {CATEGORIES.map((c) => <option key={c} value={c}>{cats[c]}</option>)}
+                  <option value="">{t('choose')}</option>
+                  {CATEGORIES.map((c) => <option key={c} value={c}>{t(`categories.${c}`)}</option>)}
                 </select>
               </div>
 
               {/* Qiymət */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Satış qiyməti (AZN)
+                  {t('price')}
                 </label>
                 <input
                   type="number"
@@ -192,13 +147,13 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
                   disabled={loading}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
-                <p className="text-xs text-gray-500 mt-1">Müştəriyə təqdim olunan qiymət</p>
+                <p className="text-xs text-gray-500 mt-1">{t('priceHelp')}</p>
               </div>
 
               {/* Maliyyət */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Food Cost (AZN)
+                  {t('cost')}
                 </label>
                 <input
                   type="number"
@@ -209,32 +164,32 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
                   disabled={loading}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
-                <p className="text-xs text-gray-500 mt-1">Çiy məhsul + qablaşdırma</p>
+                <p className="text-xs text-gray-500 mt-1">{t('costHelp')}</p>
               </div>
 
               {/* Aylıq satış */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Aylıq satış sayı
+                  {t('sales')}
                 </label>
                 <input
                   type="number"
                   value={item.monthlySales || ''}
                   onChange={(e) => updateItem(idx, 'monthlySales', e.target.value ? parseInt(e.target.value) : undefined)}
-                  placeholder="məs: 250"
+                  placeholder={t('salesPlaceholder')}
                   disabled={loading}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
-                <p className="text-xs text-gray-500 mt-1">Orta hesabla ayda neçə porsiya</p>
+                <p className="text-xs text-gray-500 mt-1">{t('salesHelp')}</p>
               </div>
 
               {/* Marja kalkulyatoru — read-only göstər */}
               {item.price && item.costPercent && (
                 <div className="md:col-span-2 bg-blue-50 px-3 py-2 rounded text-sm">
                   <span className="text-blue-900">
-                    <strong>Marja:</strong> {((1 - item.costPercent / item.price) * 100).toFixed(1)}%
+                    <strong>{t('margin')}</strong> {((1 - item.costPercent / item.price) * 100).toFixed(1)}%
                     {' • '}
-                    <strong>Aylıq mənfəət:</strong> {new Intl.NumberFormat(AZ_NUMBER_LOCALE, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((item.price - item.costPercent) * (item.monthlySales || 0))} AZN
+                    <strong>{t('monthlyProfit')}</strong> {new Intl.NumberFormat(AZ_NUMBER_LOCALE, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((item.price - item.costPercent) * (item.monthlySales || 0))} AZN
                   </span>
                 </div>
               )}
@@ -246,18 +201,18 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
       <div className="flex items-center justify-between">
         <button type="button" onClick={addItem} disabled={loading || items.length >= 50}
           className="inline-flex items-center gap-1 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-xs font-semibold text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]">
-          <Plus size={14} />{t.addItem}
+          <Plus size={14} />{t('addItem')}
         </button>
         <span className="text-xs text-slate-400">{filledItems.length} / {items.length}</span>
       </div>
 
       {filledItems.length < 5 && (
-        <p className="text-xs text-amber-600">{t.minItems}</p>
+        <p className="text-xs text-amber-600">{t('minItems')}</p>
       )}
 
       <button type="button" onClick={handleSubmit} disabled={!isValid || loading}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-red)] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90 disabled:cursor-not-allowed disabled:opacity-50">
-        {loading ? <><Loader2 size={16} className="animate-spin" />{t.submitting}</> : t.submit}
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 py-3.5 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-50">
+        {loading ? <><Loader2 size={16} className="animate-spin" />{t('submitting')}</> : t('submit')}
       </button>
     </div>
   );

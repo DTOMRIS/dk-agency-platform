@@ -198,7 +198,11 @@ export default async function BlogDetailPage({
   const toc = extractToc(cleanMarkdownContent);
   const toolSlug = BLOG_TOOL_MAP[article.slug];
   const tool = toolSlug ? getToolMeta(toolSlug) : undefined;
-  const [partA, partB] = tool ? splitAtMiddleHeading(cleanMarkdownContent) : [cleanMarkdownContent, ''];
+  // TASK-0516: the body is split at the middle `##` for the tool card (when the post maps to a tool)
+  // and for the admin «blog-inline» ad. With a tool card, the ad goes to the middle of the second half
+  // so the two never sit together; without enough headings the ad follows the body.
+  const [partA, rest] = splitAtMiddleHeading(cleanMarkdownContent);
+  const [partB, partC] = tool && rest ? splitAtMiddleHeading(rest) : [rest, ''];
   const ti = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.blog' });
   const tc = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.common' });
   const tt = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.toolkit.tools' });
@@ -272,8 +276,15 @@ export default async function BlogDetailPage({
               ) : null}
 
               <MarkdownRenderer content={partA} headingIds />
-              {toolCard}
+              {tool ? toolCard : null}
+              {!tool && partB ? <AdSlot placement="blog-inline" className={s.adInline} /> : null}
               {partB ? <MarkdownRenderer content={partB} headingIds /> : null}
+              {tool && partC ? <AdSlot placement="blog-inline" className={s.adInline} /> : null}
+              {partC ? <MarkdownRenderer content={partC} headingIds /> : null}
+              {/* No mid-article split point → the inline ad follows the body. */}
+              {(!tool && !partB) || (tool && !partC) ? (
+                <AdSlot placement="blog-inline" className={s.adInline} />
+              ) : null}
 
               {/* Strukturlu sahələr (editor field-by-field saxlayır) — L-037/Özbahçeci:
                   guruBoxes + doganNote artıq route-a bağlıdır, markdown marker-dən asılı deyil */}

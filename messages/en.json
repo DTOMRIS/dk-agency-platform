@@ -3622,7 +3622,11 @@
       "body2": "DK Agency is the shared language of these kitchens. KAZAN answers questions, Toolkit calculates, OCAQ manages. All three work like the hand of one master — unhurried, precise, always on your side.",
       "body3": "I have been learning this trade for 40 years inside real restaurants — failures and victories alike. My promise: what you find here is not a tool being sold, it is an extension of your kitchen. — Doğan Tomris, founder",
       "ctaPrimary": "Talk to KAZAN",
-      "ctaSecondary": "Open Toolkit"
+      "ctaSecondary": "Open Toolkit",
+      "factsLabel": "About the founder",
+      "sinceLabel": "first year in HoReCa",
+      "yearsValue": "40 years",
+      "yearsLabel": "of HoReCa experience"
     },
     "ahilikValues": {
       "eyebrow": "Ahilik / Əxilik",
@@ -7059,6 +7063,204 @@
       "acceptAll": "Accept all",
       "save": "Save choice",
       "note": "Your choice is stored on this device."
+    }
+  },
+  "whatsappFloat": {
+    "label": "Message us",
+    "aria": "Message us on WhatsApp",
+    "text": "Hello, I'm writing from the DK Agency website."
+  },
+  "mqForms": {
+    "kst": {
+      "categories": {
+        "quality": "Quality",
+        "service": "Service",
+        "cleanliness": "Cleanliness"
+      },
+      "submit": "Create My KST Audit",
+      "submitting": "AI is thinking...",
+      "notes": "Additional notes (optional)",
+      "notesPlaceholder": "Write which area causes the most concern...",
+      "progress": "answered",
+      "questions": {
+        "K1": "Food taste and quality is high",
+        "K2": "Portion size matches the price",
+        "K3": "Fresh ingredients are used",
+        "K4": "Food presentation is appealing",
+        "K5": "Menu variety is sufficient",
+        "K6": "Food temperature is correct",
+        "K7": "Special diets available (vegan/halal)",
+        "K8": "Preparation time is acceptable",
+        "K9": "Food is consistent (same taste)",
+        "K10": "Delivery packaging quality",
+        "S1": "Staff friendliness and attitude",
+        "S2": "Order taking speed",
+        "S3": "Staff menu knowledge",
+        "S4": "Bill delivery speed",
+        "S5": "Complaint handling",
+        "S6": "Staff wears uniform",
+        "S7": "Table waiting time is acceptable",
+        "S8": "Phone/online ordering ease",
+        "S9": "Order accuracy (no mistakes)",
+        "S10": "Customer returns (loyalty)",
+        "T1": "Dining area is clean (tables, floor)",
+        "T2": "Restroom is always clean",
+        "T3": "Kitchen cleanliness (visible area)",
+        "T4": "Staff personal hygiene",
+        "T5": "Equipment and dish cleanliness",
+        "T6": "Waste management is proper",
+        "T7": "AC/ventilation works",
+        "T8": "No hidden dust or dirt",
+        "T9": "Regular bacteria checks",
+        "T10": "Meets sanitary standards"
+      }
+    },
+    "marka": {
+      "customerTime": {
+        "label": "What time of day do your customers come?",
+        "help": "Pick the main time window",
+        "options": {
+          "morning": "Morning",
+          "lunch": "Lunch",
+          "evening": "Evening",
+          "late-night": "Late night",
+          "all": "All day"
+        }
+      },
+      "customerActivity": {
+        "label": "What do they do here?",
+        "options": {
+          "fill-belly": "Eat",
+          "work": "Work",
+          "celebration": "Celebrate",
+          "relax": "Relax",
+          "third-place": "Third place"
+        }
+      },
+      "foodStory": {
+        "label": "What is the core story of your food?",
+        "options": {
+          "tradition": "Tradition",
+          "speed": "Speed",
+          "health": "Health",
+          "exotic": "Exotic",
+          "handcrafted": "Handcrafted"
+        }
+      },
+      "competitorGap": {
+        "label": "What can your competitors NOT do? (at least 3 answers)",
+        "placeholder": "One answer per line...",
+        "help": "3 strengths of yours that your competitor cannot match"
+      },
+      "recommendReason": {
+        "label": "Why would a customer recommend you to a friend?",
+        "placeholder": "Write in 1 sentence"
+      },
+      "submit": "Create My Compass",
+      "submitting": "AI is thinking...",
+      "validation": "Fill in all fields",
+      "errors": {
+        "tierTooLow": "KALFA tier required",
+        "monthlyLimit": "Monthly limit reached.",
+        "aiFailed": "Technical error, try again",
+        "network": "Connection error, please try again"
+      }
+    },
+    "menyu": {
+      "restName": "Restaurant name",
+      "addItem": "+ Add item",
+      "item": "Item #{n}",
+      "remove": "Remove",
+      "itemName": "Item name",
+      "itemPlaceholder": "e.g. Adana kebab, Caesar salad",
+      "category": "Category",
+      "choose": "Select...",
+      "price": "Selling price (AZN)",
+      "priceHelp": "The price the guest pays",
+      "cost": "Food Cost (AZN)",
+      "costHelp": "Raw ingredients + packaging",
+      "sales": "Monthly sales (portions)",
+      "salesPlaceholder": "e.g. 250",
+      "salesHelp": "Average portions sold per month",
+      "margin": "Margin:",
+      "monthlyProfit": "Monthly profit:",
+      "submit": "Analyze My Menu",
+      "submitting": "AI is thinking...",
+      "minItems": "Add at least 5 items",
+      "categories": {
+        "salat": "Salad",
+        "shorba": "Soup",
+        "et": "Main dish",
+        "toyuq": "Poultry",
+        "baliq": "Fish",
+        "sandvic": "Sandwich",
+        "shirniyyat": "Dessert",
+        "icki": "Drink"
+      }
+    },
+    "persona": {
+      "restName": "Restaurant name",
+      "concept": "Concept",
+      "city": "City",
+      "segment": "Target segment",
+      "avgTicket": "Avg ticket (AZN)",
+      "peakHours": "Peak hours",
+      "observations": "Additional observations",
+      "obsPlaceholder": "Details about your customers...",
+      "submit": "Create My Persona",
+      "submitting": "AI is thinking...",
+      "concepts": {
+        "fast-food": "Fast food",
+        "fine-dining": "Fine dining",
+        "cafe": "Cafe",
+        "fast-casual": "Fast casual",
+        "fine-casual": "Fine casual",
+        "pub": "Pub/Bar",
+        "traditional": "Traditional",
+        "other": "Other"
+      },
+      "segments": {
+        "families": "Families",
+        "young-professionals": "Young professionals",
+        "students": "Students",
+        "tourists": "Tourists",
+        "business": "Business",
+        "seniors": "Seniors",
+        "mixed": "Mixed"
+      },
+      "peaks": {
+        "morning": "Morning",
+        "lunch": "Lunch",
+        "evening": "Evening",
+        "late-night": "Late night",
+        "all": "All day"
+      }
+    },
+    "sikayet": {
+      "restName": "Restaurant name",
+      "period": "Period",
+      "periods": {
+        "last-week": "Last week",
+        "last-month": "Last month",
+        "last-quarter": "Last quarter",
+        "custom": "Custom"
+      },
+      "sources": {
+        "google": "Google Reviews",
+        "2gis": "2GIS / Wolt / TripAdvisor",
+        "instagram": "Instagram",
+        "whatsapp": "WhatsApp",
+        "verbal": "Direct customer",
+        "other": "Other"
+      },
+      "addComplaint": "+ Add complaint",
+      "complaintText": "Complaint text",
+      "source": "Select source",
+      "date": "Date",
+      "submit": "Analyze Complaints",
+      "submitting": "AI is thinking...",
+      "minItems": "Add at least 3 complaints",
+      "remove": "Remove"
     }
   }
 }

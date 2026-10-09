@@ -13,6 +13,7 @@ import { APP_TIME_ZONE, formatAzDate } from '@/lib/i18n/format';
 import home from '@/components/home/v2/homeV2.module.css';
 import { Icon, type IconName } from '@/components/home/v2/shared';
 import s from './inner.module.css';
+import NewsCoverImage from './NewsCoverImage';
 
 export function BackLink({ href, label }: { href: string; label: string }) {
   return (
@@ -126,6 +127,9 @@ export function isNewsCategory(value: string): value is NewsCategory {
   return value in NEWS_GRADIENT;
 }
 
+/** Default `sizes` for a news image box (grid card); lead/detail callers pass their own. */
+const NEWS_CARD_SIZES = '(max-width: 640px) 100vw, (max-width: 980px) 50vw, 400px';
+
 /**
  * News visual: the article image when there is one, otherwise a generated cover
  * (category colour + icon + source name). `compact` = icon only (related list thumbnails).
@@ -139,6 +143,7 @@ export function NewsCover({
   alt,
   compact = false,
   priority = false,
+  sizes,
 }: {
   category: string;
   categoryLabel: string;
@@ -147,39 +152,18 @@ export function NewsCover({
   imageUrl?: string | null;
   alt: string;
   compact?: boolean;
-  /** Lead/above-the-fold image: eager + high fetch priority instead of lazy. */
+  /** Lead/above-the-fold image: preloaded with high priority instead of lazy. */
   priority?: boolean;
+  /** next/image `sizes` — the rendered box width per breakpoint. */
+  sizes?: string;
 }) {
-  if (imageUrl) {
-    return (
-      <div className={s.coverImg}>
-        {/* External news images (RSS, any host) — next/image needs every host in next.config
-            remotePatterns (protected file), so this stays <img> with intrinsic size hints,
-            lazy loading and async decoding (TASK-0515). The box is sized by CSS (object-fit). */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imageUrl}
-          alt={alt}
-          width={640}
-          height={400}
-          loading={priority ? 'eager' : 'lazy'}
-          fetchPriority={priority ? 'high' : 'auto'}
-          decoding="async"
-          referrerPolicy="no-referrer"
-        />
-      </div>
-    );
-  }
   const cat: NewsCategory = isNewsCategory(category) ? category : 'market';
   const icon = NEWS_CATEGORY_ICON[cat];
-  if (compact) {
-    return (
-      <div className={`${s.cover} ${NEWS_GRADIENT[cat]}`} aria-hidden="true">
-        <Icon name={icon} />
-      </div>
-    );
-  }
-  return (
+  const generated = compact ? (
+    <div className={`${s.cover} ${NEWS_GRADIENT[cat]}`} aria-hidden="true">
+      <Icon name={icon} />
+    </div>
+  ) : (
     <div className={`${s.cover} ${NEWS_GRADIENT[cat]}`} aria-hidden="true">
       <Icon name={icon} className={s.coverBig} />
       <div className={s.cTop}>
@@ -193,6 +177,20 @@ export function NewsCover({
         <div className={s.cBrand}>{brand}</div>
       </div>
     </div>
+  );
+  if (!imageUrl) return generated;
+  // External news images (RSS, any host): next/image resizes them through the optimizer
+  // (next.config remotePatterns allows any https host — TASK-0516, owner-approved 2026-10-09).
+  // The box is sized by CSS (`fill` + object-fit); a failed image falls back to the generated cover.
+  return (
+    <NewsCoverImage
+      src={imageUrl}
+      alt={alt}
+      sizes={sizes ?? (compact ? '56px' : NEWS_CARD_SIZES)}
+      priority={priority}
+      className={s.coverImg}
+      fallback={generated}
+    />
   );
 }
 

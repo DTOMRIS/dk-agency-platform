@@ -1,5 +1,31 @@
 # HANDOFF
 
+## Session 9 Oktyabr 2026 — İç səhifələr v2, audit düzəlişləri (PR #516) + ana səhifə sübutu (TASK-0516)
+
+**PR #516** (`feat/TASK-0514-inner-pages`, merged) — TASK-0514 + TASK-0515:
+- İç səhifələr v2: `/toolkit` kataloqu (tablar, 17 pulsuz alət, ikonlar), bütün alət səhifələri yeni shell-də (geri düyməsi, yapışqan nəticə, mobil bottom sheet), Food Cost WhatsApp/PDF/lead; Sektor Nəbzi real DB sayğacları, kateqoriya örtüyü, t.me/dkagenc zolağı; Bloq seçilmiş yazı, kateqoriya tabları, TOC, alət kartı, müəllif kartı; nazik cookie zolağı.
+- Alət formulları: menyu matrisi Kasavana & Smith (70% populyarlıq, çəkili CM), Food Cost trim (11,76 ₼), P&L/işçi/qonaq evi/mətbəx 0 və mənfi halları, delivery hər platformanın öz komissiyası, AQTA risk zonası. Mənbəsiz rəqəmlər çıxdı; hədlər `lib/toolkit/benchmarks.ts`-dən.
+- Onluq parser `lib/toolkit/parse-decimal.ts` + `DecimalInput` («12,5» = «12.5») bütün alətlərdə.
+- Mobil/a11y: inputlar 16px, delivery kart görünüşü, tap target-lər, solğun mətnlər, kontrast.
+- Tünd qırmızı: ağ yazı #D63B54 (`bg-dk-red-strong`, hover `bg-dk-red-deep`), #E94560 bəzək (sayt + admin + b2b-panel).
+- Xəbər admin bağlantısı: manşet → MansetVitrin, top → grid önü, `showcase_ready` elanlar → «Son ilanlar», `news-inline`/`news-sidebar` reklamları.
+- `/tanitim` Inter öz serverindən (InterVariable.woff2); AI modeli `deepseek-v4-flash` → `deepseek-flash`; OG üçün Inter 4.1 paketləndi.
+
+**TASK-0516** (`feat/TASK-0516-home-proof`, bu sessiya):
+- Ana səhifədə sübut bloku (sahib qərarı 04.10: müştəri rəqəmi yox → Doğan-ın fotosu + 1986-dan sahə + «necə işləyir»): `DoganNote` v2 görünüşündə StepsTimeline-dan dərhal sonra; `/haqqimizda` eyni komponenti `embedded` rejimdə işlədir.
+- Üzən WhatsApp düyməsi (ana səhifə, sol-aşağı; KAZAN sağ-aşağıdadır) `/api/leads/whatsapp` üzərindən (lead + Telegram). Cookie zolağı görünəndə WhatsApp və KAZAN onun üstünə qalxır (`--dk-cookie-bar-h`).
+- Admin reklam yuvaları: `home-mid` ana səhifədə (xəbər + Bazar blokundan sonra), `blog-inline` məqalənin ortasında. Aktiv reklam yoxdursa heç nə görünmür. Ana səhifə server `page.tsx` + client `components/home/v2/HomeV2.tsx`-ə bölündü.
+- Marketinq Ocağı-nın 5 formu: mətnlər `messages/*.json` → `mqForms`, düymələr tünd qırmızı.
+- Xəbər şəkilləri `next/image` ilə (`next.config.ts` istənilən https host — sahib təsdiqi; config dəyişikliyi koordinatorundur): ölçüyə görə kiçildilir, alınmasa kateqoriya örtüyü.
+
+### Açıq
+- `components/layout/Header.tsx` (qorunan) kontrast: «USTALIĞIN NİŞANI» ~2.5:1, kiçik dil/«Daxil ol» linkləri — koordinator dəyişib, commit edilməyib; DEC/sahib commit-i lazımdır.
+- Xarici xəbər şəkillərinin kiçildilməsi `next.config.ts` (qorunan) dəyişikliyinə bağlıdır — koordinatorun commit-i ilə birlikdə getməlidir; Hostinger-də `/_next/image` optimizatoru (sharp) canlıda yoxlanmalıdır.
+- 20 elan `submitted` statusunda gözləyir (admin baxışı lazımdır; «Son ilanlar» yalnız `showcase_ready` göstərir).
+- Marketinq Ocağı `menyu-analitik`: «Food Cost (AZN)» sahəsi API-yə `costPercent` adı ilə gedir (məbləğ/faiz qarışıqlığı) — ayrıca kart.
+
+---
+
 ## Session 8 Oktyabr 2026 — Landing v2, Telegram, kanal (release/2026-10-08-dk)
 
 **Branch:** `release/2026-10-08-dk` — TASK-0505/0507/0508/0509/0510 + bu sessiya: 0509 (tanitim v2), 0511 (Telegram), 0512 (ana səhifə v2), 0513 (OG + AI SEO + əlaqə, işdə). Qərarlar: [ADR-0017](docs/ADR/0017-landing-v2-identity-and-channels.md).
