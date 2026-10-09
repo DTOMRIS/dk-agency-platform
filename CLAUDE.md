@@ -52,6 +52,7 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 11. **Completion report-da dk-validator 8/8 PASS məcburi** — skip yalnız texniki səbəblə (məs. dev server yox, Playwright browser yüklənməyib) + skip səbəbi raportda izah olunmalıdır
 
 ## Workflow standard
+- **Sessiya başında**: Doğan-ın «Bulgu Kasası» (claude.ai/artifact/5bHheiWagYQkHWgnrYU3j4) + `HANDOFF.md` + son ADR oxunur; DK üçün açıq maddələr repo ilə müqayisə olunur (✅/❌) və iş siyahısına düşür. Hər PR sonunda Doğan-ın göndərmədiyi 2–3 öz tapıntı (mənbə/kod sətri ilə) yazılır.
 - **Plan əvvəl, kod sonra**: hər task üçün specification yazılır, ekran qarşılığında təsdiq alınır, sonra kod
 - **Diff oxu mövcuddur**: hər PR-də mən diff-i oxumadan kod yazma
 - **Validator çağır**: builder TASK bitirəndə `Use the dk-validator subagent` deyilir
