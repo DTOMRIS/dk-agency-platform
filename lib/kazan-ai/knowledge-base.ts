@@ -119,13 +119,14 @@ export const KAZAN_KNOWLEDGE = {
   },
   menuEngineering: {
     definition:
-      'Menyu mühəndisliyi hər yeməyi populyarlıq və contribution margin üzrə ölçüb Ulduz, At, Puzzle və İt kimi kateqoriyalara ayıran qərar sistemidir.',
+      'Menyu mühəndisliyi hər yeməyi satış sayı və hər porsiyadan qalan qazanc üzrə ölçüb 4 qərara ayıran sistemdir: Qoru, Qiymətini düzəlt, Tanıt, Çıxar. Heyvan adları (ulduz, at, it), «puzzle» və BCG işlətmə.',
     formula: 'Contribution Margin = Satış qiyməti - Food cost',
     categories: {
-      star: { name: 'Ulduz', desc: 'Yüksək satış + yüksək mənfəət, qoru və görünən yerdə saxla', emoji: '⭐' },
-      plowHorse: { name: 'At', desc: 'Yüksək satış + aşağı mənfəət, food cost azalt və ya qiyməti tənzimlə', emoji: '🐴' },
-      puzzle: { name: 'Puzzle', desc: 'Aşağı satış + yüksək mənfəət, tanıtımı və ofisiant tövsiyəsini artır', emoji: '🧩' },
-      dog: { name: 'İt', desc: 'Aşağı satış + aşağı mənfəət, menyudan çıxar', emoji: '🐶' },
+      // TASK-0518: action names only (owner 2026-10-09) — no animal names, no BCG.
+      keep: { name: 'Qoru', desc: 'Çox satılır + qazancı yüksəkdir: keyfiyyəti qoru, menyuda görünən yerdə saxla' },
+      fixPrice: { name: 'Qiymətini düzəlt', desc: 'Çox satılır + qazancı azdır: maya dəyərini azalt və ya qiyməti bir az qaldır' },
+      promote: { name: 'Tanıt', desc: 'Az satılır + qazancı yüksəkdir: ofisiant tövsiyə etsin, menyuda öndə və şəkillə göstər' },
+      remove: { name: 'Çıxar', desc: 'Az satılır + qazancı azdır: menyudan çıxar və ya resepti tam dəyiş' },
     },
     idealMenuSize: {
       fastCasual: '15-20',
@@ -140,14 +141,14 @@ export const KAZAN_KNOWLEDGE = {
       'Son 3 ayın satış datasını çıxar',
       'Hər yeməyin contribution margin-ni hesabla',
       'Orta satış və orta CM həddini tap',
-      'İtləri çıxar, puzzle-ları ön plana daşı',
+      '«Çıxar» qrupunu menyudan çıxar, «Tanıt» qrupunu ön plana daşı',
       'Ofisiantlara satılacaq yeməklər siyahısı ver',
     ],
     commonMistakes: [
       'Menyuya yemək siyahısı kimi baxmaq',
       'Həddindən artıq şişkin menyu saxlamaq',
       'Qiymətləri sütun şəklində yazmaq',
-      'Puzzle yeməkləri tanıtmamaq',
+      '«Tanıt» qrupundakı yeməkləri tanıtmamaq',
     ],
     guruQuotes: [
       {

@@ -646,7 +646,6 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
         { name: 'concept', type: 'text', required: true },
         { name: 'menuSkuSayisi', type: 'number', required: true },
         { name: 'gunlukFisSayisi', type: 'number', required: true },
-        { name: 'mutfaqMetrekare', type: 'number', required: true },
         { name: 'servisKanallar', type: 'textarea', required: false },
       ],
     },

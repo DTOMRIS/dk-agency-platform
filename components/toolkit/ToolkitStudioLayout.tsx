@@ -7,7 +7,7 @@
  * The props contract is unchanged, so every tool's own logic stays as it was.
  */
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { Sparkles } from 'lucide-react';
@@ -158,6 +158,33 @@ export default function ToolkitStudioLayout({
     return () => document.removeEventListener('keydown', onKey);
   }, [sheetOpen]);
 
+  // TASK-0518: below 1024 px the result is a fixed bottom sheet. Publish its height as --dk-tool-sheet-h so the
+  // floating buttons (KAZAN AI, WhatsApp) sit above it, and mark <html data-dk-sheet-open> while it is open so
+  // they hide instead of covering the sheet. Both are removed when the sheet is not fixed or the page unmounts.
+  const sheetRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = sheetRef.current;
+    const root = document.documentElement;
+    if (!el) return;
+    const publish = () => {
+      const fixed = window.getComputedStyle(el).position === 'fixed';
+      if (fixed && !sheetOpen) root.style.setProperty('--dk-tool-sheet-h', `${el.offsetHeight}px`);
+      else root.style.removeProperty('--dk-tool-sheet-h');
+      if (fixed && sheetOpen) root.setAttribute('data-dk-sheet-open', '');
+      else root.removeAttribute('data-dk-sheet-open');
+    };
+    publish();
+    window.addEventListener('resize', publish);
+    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(publish);
+    ro?.observe(el);
+    return () => {
+      window.removeEventListener('resize', publish);
+      ro?.disconnect();
+      root.style.removeProperty('--dk-tool-sheet-h');
+      root.removeAttribute('data-dk-sheet-open');
+    };
+  }, [sheetOpen]);
+
   const trail = [tc('toolsCrumb'), groupLabel, toolName].filter(Boolean).join(' / ');
   const sheetId = `rs-${toolId}`;
 
@@ -191,6 +218,8 @@ export default function ToolkitStudioLayout({
         <div className={s.tpGrid}>
           <div className={s.panelC} data-testid="tool-inputs">{inputSection}</div>
           <aside
+            ref={sheetRef}
+            data-testid="tool-result-sheet"
             className={`${s.result} ${sheetOpen ? s.resultOpen : ''}`}
             aria-label={tc('result')}
           >

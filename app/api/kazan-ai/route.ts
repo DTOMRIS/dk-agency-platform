@@ -96,7 +96,7 @@ function buildStaticFallback(messages: ChatMessage[]) {
       ?.content.toLowerCase() ?? '';
 
   if (lastUserMessage.includes('food cost')) {
-    return `Food cost-un yüksəkdirsə əvvəl 3 rəqəmə bax: ideal aralıq çox restoran üçün 28-32%-dir, sən 38%-dəsənsə ən azı 6 bənd aşağı enməlisən. 1) Resept kartını sabitlə. 2) Trim loss-u ölç. 3) Satış mix-ini ulduz yeməklərə çək. 4) Alış qiymətini yenidən danış. 5) Həftəlik inventar say.\n\n[Food Cost hesabla](/toolkit/food-cost)`;
+    return `Food cost-un yüksəkdirsə əvvəl 3 rəqəmə bax: ideal aralıq çox restoran üçün 28-32%-dir, sən 38%-dəsənsə ən azı 6 bənd aşağı enməlisən. 1) Resept kartını sabitlə. 2) Təmizləmə itkisini ölç. 3) Satışı çox qazandıran yeməklərə yönəlt. 4) Alış qiymətini yenidən danış. 5) Həftəlik inventar say.\n\n[Food Cost hesabla](/toolkit/food-cost)`;
   }
 
   if (lastUserMessage.includes('aqta')) {

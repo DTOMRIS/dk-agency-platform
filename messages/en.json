@@ -187,7 +187,6 @@
       "menuSku": "Number of menu items",
       "menuSkuHelp": "How many different dishes and drinks are on your menu (e.g. 25).",
       "gunlukFis": "Average orders per day",
-      "mutfaqMetrekare": "Kitchen area (m²)",
       "kanallar": {
         "label": "How guests order",
         "dineIn": "Eat in",
@@ -229,8 +228,17 @@
           "assembly": "Assembly",
           "expeditor": "Order check and hand-out"
         },
-        "noChecks": "Enter how many orders per day",
+        "noChecks": "Enter orders per day and the average check",
         "empty": "Enter the number of menu items and orders per day — stations and staff will appear here."
+      },
+      "assumptions": {
+        "title": "Example numbers in this calculation",
+        "note": "These numbers are an example; depending on the city, the venue and staff experience they can be higher or lower. Enter your own.",
+        "extraPct": "Extra cost on top of salary (%)",
+        "extraPctHelp": "Taxes, social insurance etc. the employer pays on top of the salary",
+        "avgCheck": "Average check (₼)",
+        "laborTarget": "Staff cost target (% of sales)",
+        "salary": "Monthly salary of one kitchen worker (₼)"
       }
     },
     "personelPlanlayici": {
@@ -274,7 +282,17 @@
         "skeletonMinimum": "Minimum staff at opening",
         "benchmark": "Common rule of thumb: staff cost should stay at or below {value}% of sales",
         "peakNote": "After the busiest hours you can reduce the number of staff.",
-        "empty": "Enter seats, receipts per day, opening and closing hour — the result will appear here."
+        "empty": "Enter seats, receipts per day, opening and closing hour — the result will appear here.",
+        "noSales": "Enter the average check — without sales the staff cost share cannot be calculated"
+      },
+      "assumptions": {
+        "title": "Example numbers in this calculation",
+        "note": "These numbers are an example; depending on the city, the venue and staff experience they can be higher or lower. Enter your own.",
+        "extraPct": "Extra cost on top of salary (%)",
+        "extraPctHelp": "Taxes, social insurance etc. the employer pays on top of the salary",
+        "avgCheck": "Average check (₼)",
+        "laborTarget": "Staff cost target (% of sales)",
+        "salary": "{role}: monthly salary (₼)"
       }
     },
     "badge": "Free Tools",
@@ -387,7 +405,14 @@
       "blogLink2Tag": "Finance",
       "blogLink3Title": "Menu matrix: which dish stays, which goes",
       "blogLink3Tag": "Operations",
-      "readLabel": "Read"
+      "readLabel": "Read",
+      "units": {
+        "kg": "kg",
+        "g": "g",
+        "l": "l",
+        "ml": "ml",
+        "pcs": "pcs"
+      }
     },
     "foodCostDesc": "Calculate the cost of a portion and find the right food cost percentage.",
     "pnl": {
@@ -1122,17 +1147,17 @@
       "backLink": "Toolkit",
       "badge": "Free Guide",
       "title": "Restaurant opening: to-do list",
-      "description": "44 things to do before you open: papers, premises, kitchen, menu, staff, promotion and money. Tick what is done and see what is left.",
+      "description": "43 things to do before you open: papers, premises, kitchen, menu, staff, promotion and money. Tick what is done and see what is left.",
       "progressLabel": "Done",
       "section_completed": "done",
       "sec_legal_title": "Legal and Official Matters",
+      "sec_legal_note": "Check the legal requirements with a lawyer.",
       "sec_legal_item_h1_text": "Get a tax ID / VÖEN (State Tax Service)",
       "sec_legal_item_h1_detail": "Individual entrepreneur or LLC registration",
       "sec_legal_item_h2_text": "AQTA registration (food safety)",
       "sec_legal_item_h2_detail": "Apply through ASAN/KOBİA. There is no state fee; the application is free.",
       "sec_legal_item_h3_text": "Fire safety requirements (FHN)",
       "sec_legal_item_h3_detail": "Fire suppression system must be installed",
-      "sec_legal_item_h4_text": "SES (Sanitary-Epidemiological) opinion",
       "sec_legal_item_h5_text": "Permit for a street sign (ADRA)",
       "sec_legal_item_h5_detail": "Apply to the State Advertising Agency of the Republic of Azerbaijan",
       "sec_legal_item_h6_text": "Employment contracts (with staff)",
@@ -1193,7 +1218,7 @@
       "listTitle": "Opening tasks",
       "progressPctLabel": "Readiness"
     },
-    "checklistDesc": "44-item complete checklist — legal, venue, menu, staffing, marketing.",
+    "checklistDesc": "43-item complete checklist — legal, venue, menu, staffing, marketing.",
     "start": "Start",
     "ad-writer": {
       "pageTitle": "Ad Writer",
@@ -1465,9 +1490,7 @@
       "budgetTitle": "Budget planning",
       "budgetSubtitle": "Example: rough split for a 50–80 m², 30–40 seat restaurant. The figures are only a guide — check them against your builders’ quotes.",
       "budgetTotal": "Estimated total budget (example)",
-      "budgetTotalValue": "75,000 - 150,000 ₼",
-      "budgetTotalNote": "Location, property condition and concept change this range.",
-      "budgetPct": "{pct} of budget",
+      "budgetTotalNote": "Sum of the rows above: from – to.",
       "dkAdviceTitle": "DK Agency advice",
       "dkAdviceSubtitle": "Construction is where the most expensive mistakes happen",
       "dkAdviceDesc": "In construction, a cheap contractor, an unplanned phase and an unwritten agreement directly translate into time and money loss. The most critical trio: 3-phase electrical, gas and chimney. Don't tear down walls before these are resolved.",
@@ -1487,23 +1510,11 @@
       "related3Title": "Break-even point (the sales level with no loss)",
       "related3Tag": "Tool",
       "budget_prep_label": "Pre-preparation",
-      "budget_prep_range": "2,000-5,000 ₼",
-      "budget_prep_pct": "3-5%",
       "budget_rough_label": "Structural work",
-      "budget_rough_range": "20,000-40,000 ₼",
-      "budget_rough_pct": "30-35%",
       "budget_finish_label": "Finishing work",
-      "budget_finish_range": "15,000-30,000 ₼",
-      "budget_finish_pct": "20-25%",
       "budget_equipment_label": "Equipment",
-      "budget_equipment_range": "25,000-50,000 ₼",
-      "budget_equipment_pct": "30-35%",
       "budget_opening_label": "Opening preparation",
-      "budget_opening_range": "3,000-5,000 ₼",
-      "budget_opening_pct": "3-5%",
       "budget_reserve_label": "Contingency fund",
-      "budget_reserve_range": "10,000-20,000 ₼",
-      "budget_reserve_pct": "15%",
       "phase_prep_title": "Pre-preparation",
       "phase_prep_subtitle": "Technical and legal foundation before construction begins",
       "phase_prep_duration": "2-4 weeks",
@@ -1649,7 +1660,13 @@
       "listTitle": "Work list by stage",
       "noteLabel": "Note",
       "removeMedia": "Remove file",
-      "uploadError": "The file was not uploaded."
+      "uploadError": "The file was not uploaded.",
+      "budgetEditTitle": "Enter your own numbers",
+      "budgetExampleNote": "These numbers are an example; depending on materials, premises and size they can be higher or lower.",
+      "budgetFrom": "From (₼)",
+      "budgetTo": "To (₼)",
+      "budgetShare": "About {pct}% of the budget",
+      "budgetMinOverMax": "In some rows «from» is larger than «to» — please check."
     },
     "live": "LIVE",
     "aiInsight": "AI INSIGHT",
@@ -2053,7 +2070,7 @@
       "best_channel": "Best channel",
       "worst_channel": "Worst channel",
       "ltv_cac_ratio": "LTV:CAC Ratio",
-      "payback_days": "Payback period",
+      "payback_days": "Time to earn back the spend",
       "ai_btn": "Get AI Analysis",
       "general_params": "General parameters",
       "channels_title": "Channel inputs",
@@ -2118,7 +2135,7 @@
       "marketing": "Marketing",
       "other": "Other",
       "calculate_btn": "Calculate",
-      "prime_cost": "Prime Cost",
+      "prime_cost": "Core cost (food + staff)",
       "breakeven": "Breakeven point",
       "net_profit": "Net profit",
       "whatif_title": "What-if scenarios",
@@ -2193,7 +2210,7 @@
       "pnlResult_laborCost": "Labor Cost",
       "pnlResult_rentLabel": "Rent",
       "pnlResult_netProfit": "Net Profit",
-      "pnlResult_primeCost": "Prime Cost",
+      "pnlResult_primeCost": "Core cost (food + staff)",
       "pnlResult_revenue": "Revenue",
       "pnlResult_cogs": "COGS",
       "pnlResult_opProfit": "Operating Profit",
@@ -2613,7 +2630,7 @@
       "tier": "PRO",
       "cta": "Calculate audit result",
       "tier_required_title": "PRO access required",
-      "tier_required_body": "Restaurant Audit is included in the PRO plan. It turns cash, prime cost, kitchen, and compliance gaps into an action plan.",
+      "tier_required_body": "Restaurant Audit is included in the PRO plan. It turns gaps in cash, core cost (food + staff), kitchen and compliance into a step-by-step action plan.",
       "upgrade_cta": "Upgrade plan",
       "progress": {
         "title": "Audit progress",
@@ -2664,7 +2681,7 @@
           "tooltip": "Separate notes are not enough for decisions; the owner needs one-page visibility."
         },
         "finance_cash_q4": {
-          "text": "Is prime cost, food plus labor percentage, tracked monthly and is actual food cost compared with recipe cost?",
+          "text": "Is core cost (food plus staff as a share of sales) tracked every month, and is actual food cost compared with recipe cost?",
           "tooltip": "Food and labor are the main margin signal. A small drift can create a large annual loss."
         },
         "finance_cash_q5": {
@@ -2795,7 +2812,7 @@
         "actions": {
           "finance_cash": {
             "critical": "Build a 7-day cash closing and monthly cost report in one table first.",
-            "warning": "Move prime cost and top product margin into a weekly review rhythm.",
+            "warning": "Review core cost (food + staff) and the profit of your best sellers every week.",
             "stable": "Finance rhythm is stable; now deepen margin optimization."
           },
           "operations_kitchen": {
@@ -2826,8 +2843,8 @@
         }
       },
       "primeCostWarning": {
-        "title": "Prime cost is not tracked",
-        "body": "If food and labor percentages are invisible, a small drift can become a large annual loss."
+        "title": "Core cost (food + staff) is not tracked",
+        "body": "If the share of food and staff costs in sales is invisible, a small drift can become a large annual loss."
       },
       "unknown": {
         "title": "What do you not know?",
@@ -4205,7 +4222,7 @@
           "Number of portions per recipe batch",
           "Target food cost percentage (e.g., 30%)",
           "Each ingredient's name, quantity, and unit price",
-          "Trim loss percentage (e.g., 5% for chicken breast)"
+          "Trimming loss percentage (e.g. 5% for chicken breast)"
         ],
         "block_3_title": "Who it's for",
         "block_3_content": "Any restaurant owner pricing dishes by guesswork. Operators aiming to keep food cost below 33% and starting to build recipe cards. Export to CSV or Excel to share with your accountant."
@@ -6926,7 +6943,7 @@
         },
         "checklist": {
           "t": "Opening: to-do list",
-          "d": "Papers, premises, kitchen, menu, staff, promotion and money — 44 things to do before you open.",
+          "d": "Papers, premises, kitchen, menu, staff, promotion and money — 43 things to do before you open.",
           "r": "The tasks left before opening day",
           "kw": "opening checklist to-do list",
           "what": "Helps you not forget anything important before opening a restaurant: what is ready and what is left, at a glance.",
@@ -7350,6 +7367,55 @@
     "dateInput": {
       "selected": "Selected date:",
       "formatHint": "Format: day.month.year (e.g. 14.05.2026)"
+    },
+    "yemekXerci": {
+      "title": "Food Cost Calculator",
+      "subtitle": "Build a recipe card, include trimming loss, and see portion cost instantly.",
+      "backToList": "All tools",
+      "tier": "STARTER",
+      "whyTitle": "Why is this important?",
+      "why": "Menu prices set by guesswork leak margin. This tool calculates ingredient cost, trimming loss and portions to show the real food cost percentage.",
+      "recipeName": "Dish name",
+      "menuPrice": "Menu price (AZN)",
+      "portions": "Portions",
+      "targetFoodCost": "Target food cost %",
+      "ingredients": "Recipe card",
+      "ingredient": "Ingredient",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "unitPrice": "Unit price",
+      "trimLoss": "Trimming loss %",
+      "lineCost": "Total",
+      "addIngredient": "Add ingredient",
+      "reset": "Reset",
+      "remove": "Delete",
+      "ingredientPlaceholder": "Chicken fillet",
+      "exportCsv": "CSV",
+      "exportExcel": "Excel",
+      "totalCost": "Total ingredient cost",
+      "costPerPortion": "Cost per portion",
+      "foodCostPercent": "Food Cost %",
+      "grossProfit": "Gross profit per portion",
+      "idealPrice": "Ideal price by target",
+      "status": {
+        "good": "Healthy",
+        "warning": "Watch",
+        "danger": "High risk"
+      },
+      "notesTitle": "How to read it",
+      "notes": {
+        "good": "food cost is a healthy range.",
+        "warning": "needs attention; check portion size and purchase prices.",
+        "danger": "the menu price and recipe card need to be rebuilt."
+      },
+      "export": {
+        "dish": "Dish",
+        "menuPrice": "Menu price",
+        "foodCostColumn": "Food cost %",
+        "totalRow": "TOTAL",
+        "portionUnit": "portion",
+        "sheetName": "Food Cost"
+      }
     }
   }
 }

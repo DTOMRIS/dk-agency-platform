@@ -6,7 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, Lightbulb, Users } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
-import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { formatNumber } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
@@ -14,8 +14,9 @@ import ToolResetControls from '@/components/toolkit/ToolResetControls';
 const EXAMPLE = { employeeCount: 18, averageSalary: 850, yearlyLeavers: 12 };
 type RetentionState = typeof EXAMPLE;
 
-function formatCurrency(value: number) {
-  return `${Math.round(value).toLocaleString(AZ_NUMBER_LOCALE)} ₼`;
+// TASK-0518: numbers follow the page language (az/ru/tr «1.234,5», en «1,234.5»).
+function formatCurrency(value: number, locale: string) {
+  return `${formatNumber(Math.round(value), locale)} ₼`;
 }
 
 export default function StaffRetentionPage() {
@@ -50,7 +51,7 @@ export default function StaffRetentionPage() {
   const turnoverText =
     stats.turnoverRate === null
       ? '—'
-      : `${stats.turnoverRate.toLocaleString(AZ_NUMBER_LOCALE, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
+      : `${formatNumber(stats.turnoverRate, locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
 
   // TASK-0517: shared reset UX — «Təmizlə» (with «Geri al») and «Nümunəni yüklə».
   const snapshot = (): RetentionState => ({ employeeCount, averageSalary, yearlyLeavers });
@@ -97,13 +98,13 @@ export default function StaffRetentionPage() {
         <div className="rounded-xl bg-indigo-50 p-4 ring-1 ring-indigo-100">
           <div className="text-xs text-slate-600">{t('replacementCostLabel')}</div>
           <div className="mt-1 text-2xl font-black text-indigo-700">
-            {formatCurrency(stats.replacementCostLow)} - {formatCurrency(stats.replacementCostHigh)}
+            {formatCurrency(stats.replacementCostLow, locale)} - {formatCurrency(stats.replacementCostHigh, locale)}
           </div>
           <p className="mt-2 text-sm text-slate-600">{t('replacementCostNote')}</p>
         </div>
         <div className="rounded-xl bg-slate-900 p-4 text-white">
           <div className="text-xs uppercase tracking-widest text-slate-300">{t('annualLossLabel')}</div>
-          <div className="mt-1 text-3xl font-black">{formatCurrency(stats.annualLoss)}</div>
+          <div className="mt-1 text-3xl font-black">{formatCurrency(stats.annualLoss, locale)}</div>
           <p className="mt-2 text-sm text-slate-300">{t('annualLossNote')}</p>
         </div>
       </div>
@@ -144,11 +145,11 @@ export default function StaffRetentionPage() {
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statReplacementCost')}</div>
-        <div className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(stats.replacementCostMid)}</div>
+        <div className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(stats.replacementCostMid, locale)}</div>
       </div>
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statAnnualLoss')}</div>
-        <div className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(stats.annualLoss)}</div>
+        <div className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(stats.annualLoss, locale)}</div>
       </div>
 
       {/* Top 5 Reasons */}

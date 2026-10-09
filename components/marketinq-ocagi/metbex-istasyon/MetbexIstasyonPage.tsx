@@ -7,7 +7,15 @@ import DecimalInput from '@/components/toolkit/DecimalInput';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
-import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { formatNumber } from '@/lib/i18n/format';
+import AssumptionsPanel, { AssumptionField } from '@/components/toolkit/AssumptionsPanel';
+import {
+  KITCHEN_AVG_CHECK_DEFAULTS,
+  KITCHEN_EXTRA_PCT_DEFAULT,
+  KITCHEN_LABOR_TARGET_DEFAULT,
+  KITCHEN_SALARY_DEFAULT,
+  KITCHEN_WORK_DAYS,
+} from '@/lib/toolkit/benchmarks';
 
 type Concept = 'fast_food' | 'qsr_burger' | 'qsr_pizza' | 'dark_kitchen' | 'catering';
 interface Kanallar {
@@ -17,23 +25,25 @@ interface Kanallar {
   driveThru: boolean;
 }
 
-const ORTALAMA_CEK: Record<Concept, number> = {
-  fast_food: 10,
-  qsr_burger: 12,
-  qsr_pizza: 18,
-  dark_kitchen: 14,
-  catering: 25,
-};
-const WORK_DAYS = 26;
-const SALARY = 380;
-const OVERHEAD = 1.15;
-const TARGET_LABOR = 32;
+// TASK-0518: salary, employer extras, average check and the staff-cost target are EXAMPLE
+// assumptions — single source in lib/toolkit/benchmarks.ts, editable on the page.
+interface KitchenAssumptions {
+  salary: number;
+  extraPct: number;
+  avgCheck: Record<Concept, number>;
+  laborTarget: number;
+}
+const exampleAssumptions = (): KitchenAssumptions => ({
+  salary: KITCHEN_SALARY_DEFAULT,
+  extraPct: KITCHEN_EXTRA_PCT_DEFAULT,
+  avgCheck: { ...KITCHEN_AVG_CHECK_DEFAULTS },
+  laborTarget: KITCHEN_LABOR_TARGET_DEFAULT,
+});
 
 interface PlannerState {
   concept: Concept;
   menuSkuSayisi: number;
   gunlukFisSayisi: number;
-  mutfaqMetrekare: number;
   kanallar: Kanallar;
 }
 
@@ -42,7 +52,6 @@ const EXAMPLE: PlannerState = {
   concept: 'fast_food',
   menuSkuSayisi: 25,
   gunlukFisSayisi: 180,
-  mutfaqMetrekare: 45,
   kanallar: { dineIn: true, takeaway: true, delivery: true, driveThru: false },
 };
 
@@ -80,12 +89,15 @@ function istasyonlar(sku: number): StationDef[] {
   ];
 }
 
-function compute(input: {
-  concept: Concept;
-  menuSkuSayisi: number;
-  gunlukFisSayisi: number;
-  kanallar: Kanallar;
-}) {
+function compute(
+  input: {
+    concept: Concept;
+    menuSkuSayisi: number;
+    gunlukFisSayisi: number;
+    kanallar: Kanallar;
+  },
+  a: KitchenAssumptions
+) {
   const stations = istasyonlar(input.menuSkuSayisi);
   const istasyonSayisi = stations.length;
 
@@ -115,16 +127,16 @@ function compute(input: {
     oi++;
   }
 
-  const ayligLabor = Math.round(bazaKadro * SALARY * OVERHEAD);
-  const aylikGelir = fis * ORTALAMA_CEK[input.concept] * WORK_DAYS;
+  const ayligLabor = Math.round(bazaKadro * a.salary * (1 + a.extraPct / 100));
+  const aylikGelir = fis * a.avgCheck[input.concept] * KITCHEN_WORK_DAYS;
   // TASK-0515: 0 checks → no revenue → no labour % and no status (was 0% → «ideal»).
   const laborFaizi = aylikGelir > 0 ? (ayligLabor / aylikGelir) * 100 : null;
   const status: 'ideal' | 'dikkat' | 'kritik' | 'none' =
     laborFaizi === null
       ? 'none'
-      : laborFaizi <= TARGET_LABOR
+      : laborFaizi <= a.laborTarget
         ? 'ideal'
-        : laborFaizi <= TARGET_LABOR + 8
+        : laborFaizi <= a.laborTarget + 8
           ? 'dikkat'
           : 'kritik';
 
@@ -149,24 +161,23 @@ export default function MetbexIstasyonPage() {
   const [concept, setConcept] = useState<Concept>(EXAMPLE.concept);
   const [menuSkuSayisi, setMenuSkuSayisi] = useState(EXAMPLE.menuSkuSayisi);
   const [gunlukFisSayisi, setGunlukFisSayisi] = useState(EXAMPLE.gunlukFisSayisi);
-  const [mutfaqMetrekare, setMutfaqMetrekare] = useState(EXAMPLE.mutfaqMetrekare);
   const [kanallar, setKanallar] = useState<Kanallar>(EXAMPLE.kanallar);
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
+  const [assumptions, setAssumptions] = useState<KitchenAssumptions>(exampleAssumptions);
 
-  const snapshot = (): PlannerState => ({ concept, menuSkuSayisi, gunlukFisSayisi, mutfaqMetrekare, kanallar });
+  const snapshot = (): PlannerState => ({ concept, menuSkuSayisi, gunlukFisSayisi, kanallar });
   const apply = (v: PlannerState) => {
     setConcept(v.concept);
     setMenuSkuSayisi(v.menuSkuSayisi);
     setGunlukFisSayisi(v.gunlukFisSayisi);
-    setMutfaqMetrekare(v.mutfaqMetrekare);
     setKanallar(v.kanallar);
   };
   // TASK-0517: no menu items or no orders → nothing to plan (no stations from zeros).
   const ready = menuSkuSayisi > 0 && gunlukFisSayisi > 0;
 
   const calc = useMemo(
-    () => compute({ concept, menuSkuSayisi, gunlukFisSayisi, kanallar }),
-    [concept, menuSkuSayisi, gunlukFisSayisi, kanallar]
+    () => compute({ concept, menuSkuSayisi, gunlukFisSayisi, kanallar }, assumptions),
+    [concept, menuSkuSayisi, gunlukFisSayisi, kanallar, assumptions]
   );
 
   const statusStyle = {
@@ -196,7 +207,7 @@ export default function MetbexIstasyonPage() {
     },
   }[calc.status];
 
-  const fmt = (n: number) => new Intl.NumberFormat(locale === 'az' ? AZ_NUMBER_LOCALE : locale).format(n);
+  const fmt = (n: number) => formatNumber(n, locale);
 
   const concepts: Concept[] = ['fast_food', 'qsr_burger', 'qsr_pizza', 'dark_kitchen', 'catering'];
   const conceptLabel: Record<Concept, string> = {
@@ -224,7 +235,6 @@ export default function MetbexIstasyonPage() {
             ...snapshot(),
             menuSkuSayisi: 0,
             gunlukFisSayisi: 0,
-            mutfaqMetrekare: 0,
             kanallar: { dineIn: false, takeaway: false, delivery: false, driveThru: false },
           })
         }
@@ -257,23 +267,14 @@ export default function MetbexIstasyonPage() {
         <p className="mt-1 text-[11px] text-slate-600">{t('menuSkuHelp')}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="mi-gunlukFisSayisi" className="mb-1.5 block text-xs font-semibold text-slate-700">
-            {t('gunlukFis')}
-          </label>
-          <DecimalInput id="mi-gunlukFisSayisi" blankZero inputMode="numeric" value={gunlukFisSayisi} onValueChange={(v) => setGunlukFisSayisi(Math.max(0, Math.round(v)))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
-          />
-        </div>
-        <div>
-          <label htmlFor="mi-mutfaqMetrekare" className="mb-1.5 block text-xs font-semibold text-slate-700">
-            {t('mutfaqMetrekare')}
-          </label>
-          <DecimalInput id="mi-mutfaqMetrekare" blankZero inputMode="numeric" value={mutfaqMetrekare} onValueChange={(v) => setMutfaqMetrekare(Math.max(0, Math.round(v)))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
-          />
-        </div>
+      {/* TASK-0518: «Mətbəx sahəsi (m²)» removed — it never entered the calculation and there is no sourced m² → staff rule. */}
+      <div>
+        <label htmlFor="mi-gunlukFisSayisi" className="mb-1.5 block text-xs font-semibold text-slate-700">
+          {t('gunlukFis')}
+        </label>
+        <DecimalInput id="mi-gunlukFisSayisi" blankZero inputMode="numeric" value={gunlukFisSayisi} onValueChange={(v) => setGunlukFisSayisi(Math.max(0, Math.round(v)))}
+          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
+        />
       </div>
 
       <div>
@@ -294,6 +295,52 @@ export default function MetbexIstasyonPage() {
           ))}
         </div>
       </div>
+
+      <AssumptionsPanel
+        title={t('assumptions.title')}
+        note={t('assumptions.note')}
+        testId="mi-assumptions"
+        controls={
+          <ToolResetControls
+            snapshot={() => assumptions}
+            restore={setAssumptions}
+            onClear={() =>
+              setAssumptions({ ...assumptions, salary: 0, extraPct: 0, avgCheck: { ...assumptions.avgCheck, [concept]: 0 } })
+            }
+            onLoadExample={() => setAssumptions(exampleAssumptions())}
+          />
+        }
+      >
+        <div className="grid grid-cols-2 gap-3">
+          <AssumptionField
+            id="mi-salary"
+            label={t('assumptions.salary')}
+            value={assumptions.salary}
+            onChange={(v) => setAssumptions((a) => ({ ...a, salary: v }))}
+          />
+          <AssumptionField
+            id="mi-extra"
+            label={t('assumptions.extraPct')}
+            help={t('assumptions.extraPctHelp')}
+            value={assumptions.extraPct}
+            max={100}
+            onChange={(v) => setAssumptions((a) => ({ ...a, extraPct: v }))}
+          />
+          <AssumptionField
+            id="mi-avg-check"
+            label={t('assumptions.avgCheck')}
+            value={assumptions.avgCheck[concept]}
+            onChange={(v) => setAssumptions((a) => ({ ...a, avgCheck: { ...a.avgCheck, [concept]: v } }))}
+          />
+          <AssumptionField
+            id="mi-target"
+            label={t('assumptions.laborTarget')}
+            value={assumptions.laborTarget}
+            max={100}
+            onChange={(v) => setAssumptions((a) => ({ ...a, laborTarget: v }))}
+          />
+        </div>
+      </AssumptionsPanel>
     </div>
   );
 
@@ -414,14 +461,14 @@ export default function MetbexIstasyonPage() {
               {t('result.laborFaizi')}
             </div>
             <div className={`text-2xl font-black tabular-nums ${statusStyle.text}`}>
-              <span data-testid="mi-labor-pct">{calc.laborFaizi === null ? '—' : `${calc.laborFaizi.toFixed(0)}%`}</span>
+              <span data-testid="mi-labor-pct">{calc.laborFaizi === null ? '—' : `${formatNumber(Math.round(calc.laborFaizi), locale)}%`}</span>
             </div>
             <div className={`text-[11px] font-semibold ${statusStyle.text}`} data-testid="mi-status">
               {statusStyle.label}
             </div>
           </div>
         </div>
-        <div className="mt-2 text-[11px] text-slate-700">{t('result.qsrHedep', { value: TARGET_LABOR })}</div>
+        <div className="mt-2 text-[11px] text-slate-700">{t('result.qsrHedep', { value: assumptions.laborTarget })}</div>
       </div>
     </div>
   );
@@ -458,3 +505,4 @@ export default function MetbexIstasyonPage() {
     />
   );
 }
+

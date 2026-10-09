@@ -28,3 +28,9 @@ Accepted (Doğan, 08.10.2026)
 3. **Alət sayı ifadəsi:** hər yerdə «35+ alət · 17-si pulsuz» (P&L iki dəfə sayılmır; mənbə `lib/toolkit/tool-directory.ts` `FREE_TOOLKIT_COUNT`).
 4. **Benchmark-lar tək mənbədən:** sektor hədləri (prime cost, icarə, food, əmək, xalis mənfəət aşağı həddi) yalnız `lib/toolkit/benchmarks.ts`-dən gəlir; mətnlər ICU placeholder ilə, mənbəsiz rəqəm «geniş yayılmış qayda» kimi yazılır.
 5. **Ana səhifə sübutu (sahib qərarı 2026-10-04):** müştəri rəqəmi yayımlanmır; sübut = Doğan-ın real fotosu + 1986-dan sahədə (40 il HoReCa) + «necə işləyir» (StepsTimeline → DoganNote).
+
+## 2026-10-09 additions (2) — TASK-0517/0518
+- Alət dili restoran sahibinin dilidir: jarqon yoxdur və ya yanında sadə izah + nümunə; menyu matrisi kateqoriyaları hərəkət adları (Qoru / Qiymətini düzəlt / Tanıt / Çıxar), BCG və heyvan adları yoxdur (KAZAN bilik bazası daxil).
+- Vahid sıfırlama nümunəsi (Təmizlə / Geri al / Nümunəni yüklə) bütün alətlərdə məcburidir; yeni alət də bunu istifadə edir.
+- Mənbəsiz sabitlər (tikinti büdcəsi, maaşlar, əmək əmsalları) fakt kimi göstərilmir: redaktə olunan nümunə + «arta-azala bilər» qeydi; defaultlar `lib/toolkit/benchmarks.ts`.
+- «SES rəyi» açılış checklistindən çıxarıldı (sahib qərarı); hüquqi tələblər üçün «hüquqşünasla dəqiqləşdirin» qeydi.
