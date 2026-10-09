@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import DeliveryCalcPage from '@/app/toolkit/delivery-calc/page';
 
 export const metadata: Metadata = {
-  title: 'Delivery Komissiya Kalkulyatoru',
+  title: 'Çatdırılma komissiyası kalkulyatoru',
   description:
-    'Wolt, Bolt Food, Yango və öz delivery modeli üçün komissiya, food cost və aylıq netto nəticəni hesabla.',
+    'Wolt, Bolt Food, Yango və öz kuryeriniz üçün komissiya, ərzaq xərci və bir sifarişdən sizə qalan pulu hesablayın.',
 };
 
 export default function LocalizedDeliveryCalcPage() {

@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import PersonelPlanlayiciPage from '@/components/marketinq-ocagi/personel-planlayici/PersonelPlanlayiciPage';
 
 export const metadata: Metadata = {
-  title: 'Personel Planlayıcısı — DK Agency',
+  title: 'İşçi planlayıcısı — DK Agency',
   description:
-    'Restoran və kafe üçün vardiya bazında optimal personel sayı hesablayıcısı. Açılış / peak / axşam briqadası, əmək faizi ilə.',
+    'Restoran və kafe üçün: açılışda, ən sıx saatlarda və axşam növbəsində neçə işçi lazımdır və işçi xərci satışın neçə faizini tutur.',
 };
 
 export default function LocalizedPersonelPlanlayiciPage() {

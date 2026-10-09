@@ -1,4 +1,8 @@
+'use client';
+
 import { ChangeEvent } from 'react';
+import { useTranslations } from 'next-intl';
+import { CalendarDays } from 'lucide-react';
 
 interface DateInputAZProps {
   value: string;
@@ -9,6 +13,8 @@ interface DateInputAZProps {
 }
 
 export function DateInputAZ({ value, onChange, label, required, className }: DateInputAZProps) {
+  // TASK-0517: the hint and the «selected date» line were hardcoded Azerbaijani.
+  const t = useTranslations('mqForms.dateInput');
   const display = formatDateAZ(value);
 
   return (
@@ -28,12 +34,13 @@ export function DateInputAZ({ value, onChange, label, required, className }: Dat
         />
       </div>
       {value ? (
-        <p className="text-sm text-blue-700 font-medium mt-1.5">
-          📅 Seçilən tarix: <strong>{display}</strong>
+        <p className="mt-1.5 inline-flex items-center gap-1.5 text-sm font-medium text-blue-700">
+          <CalendarDays size={14} aria-hidden="true" />
+          {t('selected')} <strong>{display}</strong>
         </p>
       ) : (
         <p className="text-xs text-gray-500 mt-1.5">
-          Format: gün.ay.il (məs: 14.05.2026)
+          {t('formatHint')}
         </p>
       )}
     </div>

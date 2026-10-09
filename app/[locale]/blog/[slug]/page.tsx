@@ -6,6 +6,8 @@
  * Read time is computed from the word count (not the stored read_time).
  */
 import Link from 'next/link';
+import Image from 'next/image';
+import { FOUNDER_PORTRAIT_SRC } from '@/components/ui/FounderAvatar';
 import { notFound, redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import AdSlot from '@/components/ads/AdSlot';
@@ -330,15 +332,14 @@ export default async function BlogDetailPage({
                 foot={ti('kazanFoot')}
               />
 
-              {/* TASK-0453 CTA kept (e2e/blog-cta.spec.ts): direct WhatsApp with the post title + contact page. */}
+              {/* TASK-0453 CTA kept (e2e/blog-cta.spec.ts): WhatsApp with the post title + contact page. TASK-0517: through the lead route (whatsappHref), plain <a> so the counting redirect is not prefetched. */}
               <div className="mt-10 rounded-3xl border border-[#E4DCCD] bg-white p-7 shadow-sm">
                 <h3 className="mb-2 text-xl font-black tracking-tight text-slate-900">{t('ctaTitle')}</h3>
                 <p className="mb-5 text-sm leading-relaxed text-slate-700">{t('ctaDesc')}</p>
                 <div className="flex flex-wrap items-center gap-3">
                   <a
-                    href={`https://wa.me/994502566279?text=${encodeURIComponent(t('ctaWhatsappMessage', { title: article.title }))}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={whatsappHref(t('ctaWhatsappMessage', { title: article.title }))}
+                    data-testid="blog-cta-whatsapp"
                     className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#128C4A] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#0f7a40]"
                   >
                     {t('ctaWhatsapp')}
@@ -355,7 +356,15 @@ export default async function BlogDetailPage({
 
             <aside className={s.aside} aria-label={ti('founderEyebrow')}>
               <div className={s.author}>
-                <span className={s.av} aria-hidden="true">DT</span>
+                <Image
+                  src={FOUNDER_PORTRAIT_SRC}
+                  alt=""
+                  width={56}
+                  height={56}
+                  sizes="56px"
+                  className={s.av}
+                  style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
+                />
                 <b>{ti('founderName')}</b>
                 <span className={s.role}>{ti('founderRole')}</span>
                 <p style={{ fontSize: 13.5, color: 'var(--ink-2)', margin: '8px 0 0' }}>{ti('asideNote')}</p>

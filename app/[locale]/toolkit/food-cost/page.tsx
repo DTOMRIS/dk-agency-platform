@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { Calculator, AlertTriangle, Database, Info, ShoppingCart, Tag, PieChart, Shield, ArrowRight, RotateCcw, Lightbulb, BookOpen } from 'lucide-react';
+import { Calculator, AlertTriangle, Database, Info, ShoppingCart, Tag, PieChart, Shield, ArrowRight, Lightbulb, BookOpen } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import { normalizeLocale, withLocale } from '@/i18n/config';
@@ -12,6 +12,7 @@ import home from '@/components/home/v2/homeV2.module.css';
 import { Icon, whatsappHref } from '@/components/home/v2/shared';
 import s from '@/components/inner/inner.module.css';
 import DecimalInput from '@/components/toolkit/DecimalInput';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 import {
   FOOD_COST_DANGER_MARGIN_PP,
   FOOD_COST_DEFAULT_TARGET_PCT,
@@ -46,17 +47,24 @@ function useProductLookup() {
 
 interface Ingredient { id: string; name: string; quantity: number; unit: string; pricePerUnit: number; trimLoss: number; }
 
+/** Everything the user can type — saved by «Təmizlə» / «Nümunəni yüklə» for «Geri al» (TASK-0517). */
+interface FoodCostState { ingredients: Ingredient[]; menuPrice: number; portions: number; targetFoodCost: number; }
+
+/** Example recipe (nümunə): 250 g chicken fillet, 30 ml olive oil, 150 g basmati rice, sold at 18 ₼. */
+const EXAMPLE_PRICE = 18;
+
 export default function FoodCostCalculator() {
   const t = useTranslations('toolkit.foodCost');
   const tv = useTranslations('innerV2.foodCost');
   const tc = useTranslations('innerV2.common');
   const tt = useTranslations('innerV2.toolkit.tools');
-  const [ingredients, setIngredients] = useState<Ingredient[]>([
+  const exampleIngredients = (): Ingredient[] => [
     { id: '1', name: t('defaultIng1Name'), quantity: 0.25, unit: 'kq', pricePerUnit: 9.5, trimLoss: 5 },
     { id: '2', name: t('defaultIng2Name'), quantity: 0.03, unit: 'litr', pricePerUnit: 12, trimLoss: 0 },
     { id: '3', name: t('defaultIng3Name'), quantity: 0.15, unit: 'kq', pricePerUnit: 4.5, trimLoss: 0 },
-  ]);
-  const [menuPrice, setMenuPrice] = useState(18);
+  ];
+  const [ingredients, setIngredients] = useState<Ingredient[]>(exampleIngredients);
+  const [menuPrice, setMenuPrice] = useState(EXAMPLE_PRICE);
   const [portions, setPortions] = useState(1);
   const [targetFoodCost, setTargetFoodCost] = useState<number>(FOOD_COST_DEFAULT_TARGET_PCT);
   const { suggestions, activeIngId, hasInvoiceData, search, clear } = useProductLookup();
@@ -103,7 +111,17 @@ export default function FoodCostCalculator() {
   const addIngredient = () => setIngredients([...ingredients, { id: Date.now().toString(), name: '', quantity: 0, unit: 'kq', pricePerUnit: 0, trimLoss: 0 }]);
   const removeIngredient = (id: string) => { if (ingredients.length > 1) setIngredients(ingredients.filter((i) => i.id !== id)); };
   const updateIngredient = (id: string, field: keyof Ingredient, value: string | number) => setIngredients(ingredients.map((i) => (i.id === id ? { ...i, [field]: value } : i)));
-  const resetAll = () => { setIngredients([{ id: '1', name: '', quantity: 0, unit: 'kq', pricePerUnit: 0, trimLoss: 0 }]); setMenuPrice(0); setPortions(1); setTargetFoodCost(FOOD_COST_DEFAULT_TARGET_PCT); };
+  const snapshot = (): FoodCostState => ({ ingredients, menuPrice, portions, targetFoodCost });
+  const restore = (st: FoodCostState) => { setIngredients(st.ingredients); setMenuPrice(st.menuPrice); setPortions(st.portions); setTargetFoodCost(st.targetFoodCost); };
+  // «Təmizlə»: same number of rows, every field empty / 0 (the rows stay so the table does not jump).
+  const clearAll = () => {
+    const stamp = Date.now();
+    setIngredients(ingredients.map((ing, i) => ({ id: `${stamp}-${i}`, name: '', quantity: 0, unit: ing.unit, pricePerUnit: 0, trimLoss: 0 })));
+    setMenuPrice(0); setPortions(0); setTargetFoodCost(0);
+  };
+  const loadExample = () => { setIngredients(exampleIngredients()); setMenuPrice(EXAMPLE_PRICE); setPortions(1); setTargetFoodCost(FOOD_COST_DEFAULT_TARGET_PCT); };
+  // A fully empty form shows no red validation lines — only after the user starts typing.
+  const pristineEmpty = menuPrice === 0 && portions === 0 && targetFoodCost === 0 && ingredients.every((i) => !i.name && i.quantity === 0 && i.pricePerUnit === 0 && i.trimLoss === 0);
 
   const ready = menuPrice > 0 && calc.perPortion > 0 && calc.portionsValid && calc.targetValid && !calc.trimInvalid;
   const statusClass = { good: s.sOk, warning: s.sWarn, danger: s.sDanger }[calc.status];
@@ -111,7 +129,7 @@ export default function FoodCostCalculator() {
   const pctText = ready ? `${nf1.format(calc.pct)}%` : '—';
   const dish = ingredients.find((i) => i.name.trim())?.name.trim() || tv('dishFallback');
   const overTarget = ready && calc.pct > targetFoodCost;
-  const validationMsgs = [
+  const validationMsgs = pristineEmpty ? [] : [
     calc.trimInvalid ? tv('errTrim') : null,
     !calc.portionsValid ? tv('errPortions') : null,
     !calc.targetValid ? tv('errTarget') : null,
@@ -141,9 +159,9 @@ export default function FoodCostCalculator() {
         <h2>{t('recipeCardTitle')}</h2>
         <div className={s.pcTools}>
           {hasInvoiceData && <span className={s.invoiceOn}><Database size={10} className="mr-1 inline" />{t('invoiceDataActive')}</span>}
-          <button type="button" onClick={resetAll} className={s.preset}><RotateCcw size={13} /> {t('reset')}</button>
         </div>
       </div>
+      <ToolResetControls snapshot={snapshot} restore={restore} onClear={clearAll} onLoadExample={loadExample} className="mb-3" />
 
       <div className={s.rowsH} aria-hidden="true">
         <span>{t('colProduct')}</span><span>{t('colQuantity')}</span><span>{t('colUnit')}</span><span>{t('colPricePerUnit')}</span><span>{t('colTrimPct')}</span><span>{t('colTotal')}</span><span />
@@ -152,7 +170,7 @@ export default function FoodCostCalculator() {
         const total = calc.lineCosts[idx];
         const rowNo = idx + 1;
         return (
-          <div key={ing.id} className={s.fcRow}>
+          <div key={ing.id} className={s.fcRow} data-testid="tool-row">
             <div className={s.cNm}>
               <span className={s.lbl}>{t('colProduct')}</span>
               <input type="text" className={s.nm} value={ing.name} aria-label={`${t('colProduct')} ${rowNo}`} placeholder={t('productNamePlaceholder')}
@@ -187,11 +205,11 @@ export default function FoodCostCalculator() {
               <DecimalInput blankZero aria-label={`${t('colTrimPct')} ${rowNo}`} aria-invalid={total === null ? true : undefined} value={ing.trimLoss} onValueChange={(v) => updateIngredient(ing.id, 'trimLoss', v)} />
             </div>
             <div className={s.tot}>{total === null ? '—' : azn(total)}</div>
-            <button type="button" className={s.rm} onClick={() => removeIngredient(ing.id)} aria-label={tv('removeRow')} disabled={ingredients.length < 2}><Icon name="x" /></button>
+            <button type="button" className={s.rm} data-testid="tool-remove-row" onClick={() => removeIngredient(ing.id)} aria-label={tv('removeRow')} disabled={ingredients.length < 2}><Icon name="x" /></button>
           </div>
         );
       })}
-      <button type="button" onClick={addIngredient} className={s.add}><Icon name="plus" /> {t('addIngredient')}</button>
+      <button type="button" onClick={addIngredient} className={s.add} data-testid="tool-add-row"><Icon name="plus" /> {t('addIngredient')}</button>
       <div className={s.sumRow}><span>{t('totalFoodCost')}</span><b data-testid="fc-total">{azn(calc.totalRaw)}</b></div>
 
       <div className={s.params}>

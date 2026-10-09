@@ -9,21 +9,163 @@ import {
   Download,
   Info,
   Lightbulb,
-  RotateCcw,
   ShieldCheck,
   TrendingDown,
 } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
-import { BRANCH_OPENING_PRESETS } from '@/lib/financial/branch-opening-presets';
 import {
   calculateBranchOpeningModel,
   type BranchOpeningResult,
   type BranchOpeningInput,
 } from '@/lib/financial/branch-opening-model';
 import DecimalInput from '@/components/toolkit/DecimalInput';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 import { calculateFinancialViability, type BusinessType } from '@/lib/financial/viability';
 import { numberLocale } from '@/lib/i18n/format';
+
+/** Every input of the tool (both the branch model and the business plan). */
+interface BasabasState {
+  businessType: BusinessType;
+  availableBudget: number;
+  openingInvestment: number;
+  rent: number;
+  salaries: number;
+  utilities: number;
+  otherFixed: number;
+  variablePct: number;
+  avgCheck: number;
+  currentSales: number;
+  operatingDays: number;
+  inventoryDays: number;
+  receivableDays: number;
+  payableDays: number;
+  depositsAndPrepaids: number;
+  rampUpMonths: number;
+  openingSalesPct: number;
+  reserveMonths: number;
+  branchFormat: BranchOpeningInput['format'];
+  areaSqm: number;
+  seats: number;
+  branchRent: number;
+  dailyChecks: number;
+  branchAverageCheck: number;
+  openingBudget: number;
+  fitoutCostPerSqm: number;
+  ventilationCostPerSqm: number;
+  kitchenEquipmentCost: number;
+  barEquipmentCost: number;
+  furnitureCostPerSeat: number;
+  branchInventoryDays: number;
+  branchStaffCosts: number;
+  branchUtilities: number;
+  branchOtherFixedCosts: number;
+  branchVariableCostPct: number;
+  rentTaxType: BranchOpeningInput['rentTaxType'];
+  branchRampUpMonths: number;
+  branchOpeningSalesPct: number;
+  branchReserveMonths: number;
+  openingMarketingPct: number;
+  documentsCost: number;
+  unexpectedPct: number;
+  startWorkingCapitalPct: number;
+}
+
+/** Example values (nümunə — a 100 m², 25-seat café) loaded by «Nümunəni yüklə». Not a sector norm. */
+const EXAMPLE_STATE: BasabasState = {
+  businessType: 'cafe',
+  availableBudget: 50000,
+  openingInvestment: 30000,
+  rent: 3000,
+  salaries: 5000,
+  utilities: 800,
+  otherFixed: 700,
+  variablePct: 35,
+  avgCheck: 25,
+  currentSales: 18000,
+  operatingDays: 30,
+  inventoryDays: 14,
+  receivableDays: 0,
+  payableDays: 15,
+  depositsAndPrepaids: 6000,
+  rampUpMonths: 3,
+  openingSalesPct: 40,
+  reserveMonths: 3,
+  branchFormat: 'cafe',
+  areaSqm: 100,
+  seats: 25,
+  branchRent: 3000,
+  dailyChecks: 100,
+  branchAverageCheck: 25,
+  openingBudget: 50000,
+  fitoutCostPerSqm: 900,
+  ventilationCostPerSqm: 250,
+  kitchenEquipmentCost: 12000,
+  barEquipmentCost: 4000,
+  furnitureCostPerSeat: 520,
+  branchInventoryDays: 12,
+  branchStaffCosts: 5000,
+  branchUtilities: 800,
+  branchOtherFixedCosts: 700,
+  branchVariableCostPct: 36,
+  rentTaxType: 'individual',
+  branchRampUpMonths: 4,
+  branchOpeningSalesPct: 40,
+  branchReserveMonths: 3,
+  openingMarketingPct: 12,
+  documentsCost: 1200,
+  unexpectedPct: 10,
+  startWorkingCapitalPct: 20,
+};
+
+/** «Təmizlə»: every number → 0; the three dropdowns keep their current choice. */
+function emptyState(state: BasabasState): BasabasState {
+  return {
+    businessType: state.businessType,
+    availableBudget: 0,
+    openingInvestment: 0,
+    rent: 0,
+    salaries: 0,
+    utilities: 0,
+    otherFixed: 0,
+    variablePct: 0,
+    avgCheck: 0,
+    currentSales: 0,
+    operatingDays: 0,
+    inventoryDays: 0,
+    receivableDays: 0,
+    payableDays: 0,
+    depositsAndPrepaids: 0,
+    rampUpMonths: 0,
+    openingSalesPct: 0,
+    reserveMonths: 0,
+    branchFormat: state.branchFormat,
+    areaSqm: 0,
+    seats: 0,
+    branchRent: 0,
+    dailyChecks: 0,
+    branchAverageCheck: 0,
+    openingBudget: 0,
+    fitoutCostPerSqm: 0,
+    ventilationCostPerSqm: 0,
+    kitchenEquipmentCost: 0,
+    barEquipmentCost: 0,
+    furnitureCostPerSeat: 0,
+    branchInventoryDays: 0,
+    branchStaffCosts: 0,
+    branchUtilities: 0,
+    branchOtherFixedCosts: 0,
+    branchVariableCostPct: 0,
+    rentTaxType: state.rentTaxType,
+    branchRampUpMonths: 0,
+    branchOpeningSalesPct: 0,
+    branchReserveMonths: 0,
+    openingMarketingPct: 0,
+    documentsCost: 0,
+    unexpectedPct: 0,
+    startWorkingCapitalPct: 0,
+  };
+}
 
 export default function BasabasPage() {
   const t = useTranslations('toolkit.basabas');
@@ -32,50 +174,52 @@ export default function BasabasPage() {
   const fmt0 = (n: number) => new Intl.NumberFormat(numberLocale(locale)).format(Math.round(Number.isFinite(n) ? n : 0));
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
-  const [businessType, setBusinessType] = useState<BusinessType>('cafe');
-  const [availableBudget, setAvailableBudget] = useState(50000);
-  const [openingInvestment, setOpeningInvestment] = useState(30000);
-  const [rent, setRent] = useState(3000);
-  const [salaries, setSalaries] = useState(5000);
-  const [utilities, setUtilities] = useState(800);
-  const [otherFixed, setOtherFixed] = useState(700);
-  const [variablePct, setVariablePct] = useState(35);
-  const [avgCheck, setAvgCheck] = useState(25);
-  const [currentSales, setCurrentSales] = useState(18000);
-  const [operatingDays, setOperatingDays] = useState(30);
-  const [inventoryDays, setInventoryDays] = useState(14);
-  const [receivableDays, setReceivableDays] = useState(0);
-  const [payableDays, setPayableDays] = useState(15);
-  const [depositsAndPrepaids, setDepositsAndPrepaids] = useState(6000);
-  const [rampUpMonths, setRampUpMonths] = useState(3);
-  const [openingSalesPct, setOpeningSalesPct] = useState(40);
-  const [reserveMonths, setReserveMonths] = useState(3);
-
-  const [branchFormat, setBranchFormat] = useState<BranchOpeningInput['format']>('cafe');
-  const [areaSqm, setAreaSqm] = useState(100);
-  const [seats, setSeats] = useState(25);
-  const [branchRent, setBranchRent] = useState(3000);
-  const [dailyChecks, setDailyChecks] = useState(100);
-  const [branchAverageCheck, setBranchAverageCheck] = useState(25);
-  const [openingBudget, setOpeningBudget] = useState(50000);
-  const [fitoutCostPerSqm, setFitoutCostPerSqm] = useState(900);
-  const [ventilationCostPerSqm, setVentilationCostPerSqm] = useState(250);
-  const [kitchenEquipmentCost, setKitchenEquipmentCost] = useState(12000);
-  const [barEquipmentCost, setBarEquipmentCost] = useState(4000);
-  const [furnitureCostPerSeat, setFurnitureCostPerSeat] = useState(520);
-  const [branchInventoryDays, setBranchInventoryDays] = useState(12);
-  const [branchStaffCosts, setBranchStaffCosts] = useState(5000);
-  const [branchUtilities, setBranchUtilities] = useState(800);
-  const [branchOtherFixedCosts, setBranchOtherFixedCosts] = useState(700);
-  const [branchVariableCostPct, setBranchVariableCostPct] = useState(36);
-  const [rentTaxType, setRentTaxType] = useState<BranchOpeningInput['rentTaxType']>('individual');
-  const [branchRampUpMonths, setBranchRampUpMonths] = useState(4);
-  const [branchOpeningSalesPct, setBranchOpeningSalesPct] = useState(40);
-  const [branchReserveMonths, setBranchReserveMonths] = useState(3);
-  const [openingMarketingPct, setOpeningMarketingPct] = useState(12);
-  const [documentsCost, setDocumentsCost] = useState(1200);
-  const [unexpectedPct, setUnexpectedPct] = useState(10);
-  const [startWorkingCapitalPct, setStartWorkingCapitalPct] = useState(20);
+  // TASK-0517: the whole form is one state object so «Təmizlə» / «Nümunəni yüklə» / «Geri al» cover every field.
+  const [form, setForm] = useState<BasabasState>(EXAMPLE_STATE);
+  const { businessType, availableBudget, openingInvestment, rent, salaries, utilities, otherFixed, variablePct, avgCheck, currentSales, operatingDays, inventoryDays, receivableDays, payableDays, depositsAndPrepaids, rampUpMonths, openingSalesPct, reserveMonths, branchFormat, areaSqm, seats, branchRent, dailyChecks, branchAverageCheck, openingBudget, fitoutCostPerSqm, ventilationCostPerSqm, kitchenEquipmentCost, barEquipmentCost, furnitureCostPerSeat, branchInventoryDays, branchStaffCosts, branchUtilities, branchOtherFixedCosts, branchVariableCostPct, rentTaxType, branchRampUpMonths, branchOpeningSalesPct, branchReserveMonths, openingMarketingPct, documentsCost, unexpectedPct, startWorkingCapitalPct } = form;
+  const setBusinessType = (value: BasabasState['businessType']) => setForm((prev) => ({ ...prev, businessType: value }));
+  const setAvailableBudget = (value: BasabasState['availableBudget']) => setForm((prev) => ({ ...prev, availableBudget: value }));
+  const setOpeningInvestment = (value: BasabasState['openingInvestment']) => setForm((prev) => ({ ...prev, openingInvestment: value }));
+  const setRent = (value: BasabasState['rent']) => setForm((prev) => ({ ...prev, rent: value }));
+  const setSalaries = (value: BasabasState['salaries']) => setForm((prev) => ({ ...prev, salaries: value }));
+  const setUtilities = (value: BasabasState['utilities']) => setForm((prev) => ({ ...prev, utilities: value }));
+  const setOtherFixed = (value: BasabasState['otherFixed']) => setForm((prev) => ({ ...prev, otherFixed: value }));
+  const setVariablePct = (value: BasabasState['variablePct']) => setForm((prev) => ({ ...prev, variablePct: value }));
+  const setAvgCheck = (value: BasabasState['avgCheck']) => setForm((prev) => ({ ...prev, avgCheck: value }));
+  const setCurrentSales = (value: BasabasState['currentSales']) => setForm((prev) => ({ ...prev, currentSales: value }));
+  const setOperatingDays = (value: BasabasState['operatingDays']) => setForm((prev) => ({ ...prev, operatingDays: value }));
+  const setInventoryDays = (value: BasabasState['inventoryDays']) => setForm((prev) => ({ ...prev, inventoryDays: value }));
+  const setReceivableDays = (value: BasabasState['receivableDays']) => setForm((prev) => ({ ...prev, receivableDays: value }));
+  const setPayableDays = (value: BasabasState['payableDays']) => setForm((prev) => ({ ...prev, payableDays: value }));
+  const setDepositsAndPrepaids = (value: BasabasState['depositsAndPrepaids']) => setForm((prev) => ({ ...prev, depositsAndPrepaids: value }));
+  const setRampUpMonths = (value: BasabasState['rampUpMonths']) => setForm((prev) => ({ ...prev, rampUpMonths: value }));
+  const setOpeningSalesPct = (value: BasabasState['openingSalesPct']) => setForm((prev) => ({ ...prev, openingSalesPct: value }));
+  const setReserveMonths = (value: BasabasState['reserveMonths']) => setForm((prev) => ({ ...prev, reserveMonths: value }));
+  const setBranchFormat = (value: BasabasState['branchFormat']) => setForm((prev) => ({ ...prev, branchFormat: value }));
+  const setAreaSqm = (value: BasabasState['areaSqm']) => setForm((prev) => ({ ...prev, areaSqm: value }));
+  const setSeats = (value: BasabasState['seats']) => setForm((prev) => ({ ...prev, seats: value }));
+  const setBranchRent = (value: BasabasState['branchRent']) => setForm((prev) => ({ ...prev, branchRent: value }));
+  const setDailyChecks = (value: BasabasState['dailyChecks']) => setForm((prev) => ({ ...prev, dailyChecks: value }));
+  const setBranchAverageCheck = (value: BasabasState['branchAverageCheck']) => setForm((prev) => ({ ...prev, branchAverageCheck: value }));
+  const setOpeningBudget = (value: BasabasState['openingBudget']) => setForm((prev) => ({ ...prev, openingBudget: value }));
+  const setFitoutCostPerSqm = (value: BasabasState['fitoutCostPerSqm']) => setForm((prev) => ({ ...prev, fitoutCostPerSqm: value }));
+  const setVentilationCostPerSqm = (value: BasabasState['ventilationCostPerSqm']) => setForm((prev) => ({ ...prev, ventilationCostPerSqm: value }));
+  const setKitchenEquipmentCost = (value: BasabasState['kitchenEquipmentCost']) => setForm((prev) => ({ ...prev, kitchenEquipmentCost: value }));
+  const setBarEquipmentCost = (value: BasabasState['barEquipmentCost']) => setForm((prev) => ({ ...prev, barEquipmentCost: value }));
+  const setFurnitureCostPerSeat = (value: BasabasState['furnitureCostPerSeat']) => setForm((prev) => ({ ...prev, furnitureCostPerSeat: value }));
+  const setBranchInventoryDays = (value: BasabasState['branchInventoryDays']) => setForm((prev) => ({ ...prev, branchInventoryDays: value }));
+  const setBranchStaffCosts = (value: BasabasState['branchStaffCosts']) => setForm((prev) => ({ ...prev, branchStaffCosts: value }));
+  const setBranchUtilities = (value: BasabasState['branchUtilities']) => setForm((prev) => ({ ...prev, branchUtilities: value }));
+  const setBranchOtherFixedCosts = (value: BasabasState['branchOtherFixedCosts']) => setForm((prev) => ({ ...prev, branchOtherFixedCosts: value }));
+  const setBranchVariableCostPct = (value: BasabasState['branchVariableCostPct']) => setForm((prev) => ({ ...prev, branchVariableCostPct: value }));
+  const setRentTaxType = (value: BasabasState['rentTaxType']) => setForm((prev) => ({ ...prev, rentTaxType: value }));
+  const setBranchRampUpMonths = (value: BasabasState['branchRampUpMonths']) => setForm((prev) => ({ ...prev, branchRampUpMonths: value }));
+  const setBranchOpeningSalesPct = (value: BasabasState['branchOpeningSalesPct']) => setForm((prev) => ({ ...prev, branchOpeningSalesPct: value }));
+  const setBranchReserveMonths = (value: BasabasState['branchReserveMonths']) => setForm((prev) => ({ ...prev, branchReserveMonths: value }));
+  const setOpeningMarketingPct = (value: BasabasState['openingMarketingPct']) => setForm((prev) => ({ ...prev, openingMarketingPct: value }));
+  const setDocumentsCost = (value: BasabasState['documentsCost']) => setForm((prev) => ({ ...prev, documentsCost: value }));
+  const setUnexpectedPct = (value: BasabasState['unexpectedPct']) => setForm((prev) => ({ ...prev, unexpectedPct: value }));
+  const setStartWorkingCapitalPct = (value: BasabasState['startWorkingCapitalPct']) => setForm((prev) => ({ ...prev, startWorkingCapitalPct: value }));
 
   const branchInput: BranchOpeningInput = useMemo(() => ({
     format: branchFormat,
@@ -144,6 +288,8 @@ export default function BasabasPage() {
   const isValid = availableBudget > 0 && currentSales > 0 && avgCheck > 0 &&
     operatingDays > 0 && variablePct >= 0 && variablePct < 100;
 
+  // Right after «Təmizlə» every number is 0 — no red validation lines until the user types again.
+  const formEmpty = Object.values(form).every((v) => typeof v !== 'number' || v === 0);
   const branchIsValid = openingBudget > 0 && areaSqm > 0 && seats > 0 && dailyChecks > 0 && branchAverageCheck > 0;
 
   const statusStyles = {
@@ -151,24 +297,6 @@ export default function BasabasPage() {
     warning: { ring: 'ring-amber-500/20', text: 'text-amber-800', bg: 'bg-amber-50', label: t('statusWarning') },
     danger: { ring: 'ring-red-500/20', text: 'text-red-700', bg: 'bg-red-50', label: t('statusDanger') },
   }[status];
-
-  const resetAll = () => {
-    setBusinessType('cafe'); setAvailableBudget(50000); setOpeningInvestment(30000);
-    setRent(3000); setSalaries(5000); setUtilities(800); setOtherFixed(700);
-    setVariablePct(35); setAvgCheck(25); setCurrentSales(18000);
-    setOperatingDays(30); setInventoryDays(14); setReceivableDays(0); setPayableDays(15);
-    setDepositsAndPrepaids(6000); setRampUpMonths(3); setOpeningSalesPct(40); setReserveMonths(3);
-    setBranchFormat('cafe'); setAreaSqm(100); setSeats(25); setBranchRent(3000);
-    setDailyChecks(100); setBranchAverageCheck(25); setOpeningBudget(50000);
-    setFitoutCostPerSqm(BRANCH_OPENING_PRESETS.cafe.fitoutPerSqm);
-    setVentilationCostPerSqm(BRANCH_OPENING_PRESETS.cafe.ventilationPerSqm);
-    setKitchenEquipmentCost(12000); setBarEquipmentCost(4000); setFurnitureCostPerSeat(BRANCH_OPENING_PRESETS.cafe.furniturePerSeat);
-    setBranchInventoryDays(BRANCH_OPENING_PRESETS.cafe.inventoryDays); setBranchStaffCosts(5000);
-    setBranchUtilities(800); setBranchOtherFixedCosts(700); setBranchVariableCostPct(BRANCH_OPENING_PRESETS.cafe.variableCostPct);
-    setRentTaxType('individual'); setBranchRampUpMonths(BRANCH_OPENING_PRESETS.cafe.rampUpMonths);
-    setBranchOpeningSalesPct(BRANCH_OPENING_PRESETS.cafe.openingSalesPct); setBranchReserveMonths(BRANCH_OPENING_PRESETS.cafe.reserveMonths);
-    setOpeningMarketingPct(12); setDocumentsCost(1200); setUnexpectedPct(10); setStartWorkingCapitalPct(20);
-  };
 
   const conditionTexts = calc.conditionKeys.map((key) => t(`conditions.${key}`));
   const sensitivityTexts = calc.sensitivities.map((item) => t(`sensitivities.${item.key}`, {
@@ -185,7 +313,7 @@ export default function BasabasPage() {
       amber: 'background:#fef3c7;color:#92400e',
       red: 'background:#fee2e2;color:#991b1b',
     }[band]);
-    const html = `<!doctype html><html lang="${locale}"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>${t('branchReportTitle')}</title><style>body{margin:0;background:#fafaf8;color:#172033;font-family:Arial,sans-serif;line-height:1.5}main{max-width:900px;margin:auto;padding:24px}.hero,.card{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:22px;margin-bottom:16px}.hero{background:#1a1a2e;color:#fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.row{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid #edf2f7}.row:last-child{border:0}.pill{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}.muted{color:#64748b;font-size:12px}</style></head><body><main><section class="hero"><div class="muted">DK Agency · ${branchResult.preset.label}</div><h1>${t('branchReportTitle')}</h1><p>${t('branchReportGeneratedAt', { date: new Date().toLocaleDateString(locale) })}</p><span class="pill" style="background:#fff;color:#1a1a2e">${branchResult.paybackMonths === null ? t('notAvailable') : `${branchResult.paybackMonths.toFixed(1)} ${t('months')}`}</span></section><div class="grid"><section class="card"><h2>${t('capexTitle')}</h2><div class="row"><span>${t('branchStatTotalCapex')}</span><strong>${fmt0(branchResult.totalCapex)} ₼</strong></div><div class="row"><span>${t('branchStatOpeningInvestment')}</span><strong>${fmt0(branchResult.openingInvestment)} ₼</strong></div><div class="row"><span>${t('branchStatWorkingCapital')}</span><strong>${fmt0(branchResult.workingCapital)} ₼</strong></div><div class="row"><span>${t('branchStatRampLoss')}</span><strong>${fmt0(branchResult.rampUpLoss)} ₼</strong></div><div class="row"><span>${t('statFundingGap')}</span><strong>${fmt0(branchResult.fundingGap)} ₼</strong></div></section><section class="card"><h2>${t('benchmarkTitle')}</h2>${branchResult.benchmarkFlags.map((flag) => `<div class="row"><span>${t(`benchmark.${flag.key}`)}: ${t(`benchmarkState.${flag.key}.${flag.band}`)}</span><strong><span class="pill" style="${benchmarkClass(flag.band)}">${flag.value.toFixed(1)}${flag.key === 'payback' ? ` ${t('months')}` : '%'} </span></strong></div>`).join('')}</section></div><section class="card"><h2>${t('scenarioTitle')}</h2>${branchResult.scenarios.map((scenario) => `<div class="row"><span>${t(`scenario.${scenario.label}`)}</span><strong>${fmt0(scenario.monthlyRevenue)} ₼</strong></div>`).join('')}</section><section class="card muted">${t('branchReportMethodology')}</section></main></body></html>`;
+    const html = `<!doctype html><html lang="${locale}"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>${t('branchReportTitle')}</title><style>body{margin:0;background:#fafaf8;color:#172033;font-family:Arial,sans-serif;line-height:1.5}main{max-width:900px;margin:auto;padding:24px}.hero,.card{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:22px;margin-bottom:16px}.hero{background:#1a1a2e;color:#fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.row{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px solid #edf2f7}.row:last-child{border:0}.pill{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}.muted{color:#64748b;font-size:12px}</style></head><body><main><section class="hero"><div class="muted">DK Agency · ${t(`formats.${branchFormat}`)}</div><h1>${t('branchReportTitle')}</h1><p>${t('branchReportGeneratedAt', { date: new Date().toLocaleDateString(locale) })}</p><span class="pill" style="background:#fff;color:#1a1a2e">${branchResult.paybackMonths === null ? t('notAvailable') : `${branchResult.paybackMonths.toFixed(1)} ${t('months')}`}</span></section><div class="grid"><section class="card"><h2>${t('capexTitle')}</h2><div class="row"><span>${t('branchStatTotalCapex')}</span><strong>${fmt0(branchResult.totalCapex)} ₼</strong></div><div class="row"><span>${t('branchStatOpeningInvestment')}</span><strong>${fmt0(branchResult.openingInvestment)} ₼</strong></div><div class="row"><span>${t('branchStatWorkingCapital')}</span><strong>${fmt0(branchResult.workingCapital)} ₼</strong></div><div class="row"><span>${t('branchStatRampLoss')}</span><strong>${fmt0(branchResult.rampUpLoss)} ₼</strong></div><div class="row"><span>${t('statFundingGap')}</span><strong>${fmt0(branchResult.fundingGap)} ₼</strong></div></section><section class="card"><h2>${t('benchmarkTitle')}</h2>${branchResult.benchmarkFlags.map((flag) => `<div class="row"><span>${t(`benchmark.${flag.key}`)}: ${t(`benchmarkState.${flag.key}.${flag.band}`)}</span><strong><span class="pill" style="${benchmarkClass(flag.band)}">${flag.value.toFixed(1)}${flag.key === 'payback' ? ` ${t('months')}` : '%'} </span></strong></div>`).join('')}</section></div><section class="card"><h2>${t('scenarioTitle')}</h2>${branchResult.scenarios.map((scenario) => `<div class="row"><span>${t(`scenario.${scenario.label}`)}</span><strong>${fmt0(scenario.monthlyRevenue)} ₼</strong></div>`).join('')}</section><section class="card muted">${t('branchReportMethodology')}</section></main></body></html>`;
     const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -205,19 +333,16 @@ export default function BasabasPage() {
 
   const inputSection = (
     <div className="space-y-6">
+      <ToolResetControls
+        snapshot={() => form}
+        restore={setForm}
+        onClear={() => setForm((prev) => emptyState(prev))}
+        onLoadExample={() => setForm(EXAMPLE_STATE)}
+      />
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <div>
-            <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('branchTitle')}</h3>
-            <p className="mt-1 text-sm text-slate-600">{t('branchSubtitle')}</p>
-          </div>
-          <button
-            type="button"
-            onClick={resetAll}
-            className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-slate-300 hover:text-slate-900"
-          >
-            {t('reset')}
-          </button>
+        <div className="mb-4">
+          <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('branchTitle')}</h3>
+          <p className="mt-1 text-sm text-slate-600">{t('branchSubtitle')}</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3">
@@ -290,20 +415,13 @@ export default function BasabasPage() {
           <NumberField label={t('labelStartWorkingCapitalPct')} value={startWorkingCapitalPct} setValue={setStartWorkingCapitalPct} step={1} />
         </div>
 
-        {!branchIsValid && (
+        {!branchIsValid && !formEmpty && (
           <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{t('branchValidationError')}</p>
         )}
       </div>
 
-      <div className="flex items-center justify-between">
+      <div>
         <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-700">{t('planningTitle')}</h3>
-        <button
-          type="button"
-          onClick={resetAll}
-          className="flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-red-700"
-        >
-          <RotateCcw size={13} /> {t('reset')}
-        </button>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -384,7 +502,7 @@ export default function BasabasPage() {
         </div>
       </div>
 
-      {!isValid && (
+      {!isValid && !formEmpty && (
         <p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{t('validationError')}</p>
       )}
     </div>

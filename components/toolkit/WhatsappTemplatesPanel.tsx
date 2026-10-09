@@ -31,7 +31,7 @@ export default function WhatsappTemplatesPanel() {
         </span>
         <h1 className="mb-3 font-display text-3xl font-extrabold text-slate-900">{t('intro.heading')}</h1>
         <p className="mb-2 text-base text-slate-600">{t('intro.subheading')}</p>
-        <p className="text-sm text-slate-400">{t('intro.instruction')}</p>
+        <p className="text-sm text-slate-700">{t('intro.instruction')}</p>
       </div>
 
       {/* Free templates */}
@@ -40,13 +40,13 @@ export default function WhatsappTemplatesPanel() {
           <div key={tmpl.id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <div className="mb-2 flex items-center justify-between">
               <h3 className="text-sm font-bold text-slate-900">{t(tmpl.titleKey.replace('whatsappTemplates.', ''))}</h3>
-              <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold uppercase text-emerald-600">PULSUZ</span>
+              <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold uppercase text-emerald-800">{t('freeTag')}</span>
             </div>
             <p className="mb-3 text-xs text-slate-600">{t(tmpl.descriptionKey.replace('whatsappTemplates.', ''))}</p>
             <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700 whitespace-pre-wrap">
               {t(tmpl.copyKey.replace('whatsappTemplates.', ''))}
             </div>
-            <button onClick={() => copyTemplate(tmpl.id, tmpl.copyKey)}
+            <button type="button" onClick={() => copyTemplate(tmpl.id, tmpl.copyKey)}
               className="mt-3 inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200">
               {copiedId === tmpl.id ? <><Check className="h-3.5 w-3.5 text-emerald-600" />{t('actions.copiedConfirmation')}</> : <><Copy className="h-3.5 w-3.5" />{t('actions.copyButton')}</>}
             </button>
@@ -64,14 +64,14 @@ export default function WhatsappTemplatesPanel() {
           <p className="mb-4 text-sm text-slate-600">{t('leadCta.body')}</p>
           <div className="space-y-2 mb-4">
             {gatedTemplates.map((tmpl) => (
-              <div key={tmpl.id} className="flex items-center gap-2 text-sm text-slate-400">
+              <div key={tmpl.id} className="flex items-center gap-2 text-sm text-slate-600">
                 <Lock className="h-3.5 w-3.5" />
                 {t(tmpl.titleKey.replace('whatsappTemplates.', ''))}
               </div>
             ))}
           </div>
           <LeadForm toolSource="whatsapp_templates_kit" score={{ tool: 'whatsapp-templates' }} />
-          <button onClick={() => setUnlocked(true)} className="mt-3 w-full rounded-xl bg-[var(--dk-gold)] py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-400">
+          <button type="button" onClick={() => setUnlocked(true)} className="mt-3 w-full rounded-xl bg-[var(--dk-gold)] py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-400">
             {t('leadCta.buttonText')}
           </button>
         </div>
@@ -84,7 +84,7 @@ export default function WhatsappTemplatesPanel() {
               <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700 whitespace-pre-wrap">
                 {t(tmpl.copyKey.replace('whatsappTemplates.', ''))}
               </div>
-              <button onClick={() => copyTemplate(tmpl.id, tmpl.copyKey)}
+              <button type="button" onClick={() => copyTemplate(tmpl.id, tmpl.copyKey)}
                 className="mt-3 inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200">
                 {copiedId === tmpl.id ? <><Check className="h-3.5 w-3.5 text-emerald-600" />{t('actions.copiedConfirmation')}</> : <><Copy className="h-3.5 w-3.5" />{t('actions.copyButton')}</>}
               </button>

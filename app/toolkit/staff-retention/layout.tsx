@@ -6,9 +6,9 @@ import type { ReactNode } from 'react';
  * Başlıq/təsvir prefiksiz AZ ünvanı üçün buradan verilir.
  */
 export const metadata: Metadata = {
-  title: "İşçi Saxlama Kalkulyatoru — Restoran Kadr İtkisi",
+  title: "İşçi saxlama kalkulyatoru — işdən çıxan işçinin restorana xərci",
   description:
-    "İşçi turnover faizini, bir işçi dəyişmə xərcini və illik kadr itkisini Azərbaycan restoran reallığına uyğun hesabla.",
+    "İşçi dəyişmə faizini, bir işçinin yerini doldurmağın xərcini və işdən çıxan işçilərə görə ildə itən pulu hesablayın.",
 };
 
 export default function ToolkitStaffRetentionLayout({ children }: { children: ReactNode }) {

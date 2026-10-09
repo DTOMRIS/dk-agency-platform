@@ -3,14 +3,29 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { ArrowRight, BookOpen, Lightbulb, RotateCcw, Truck } from 'lucide-react';
+import { ArrowRight, BookOpen, Lightbulb, Truck } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import { numberLocale } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 type PlatformKey = 'wolt' | 'bolt' | 'yango' | 'own';
 const PLATFORM_DEFAULTS: Record<PlatformKey, number> = { wolt: 30, bolt: 30, yango: 30, own: 10 };
+const ZERO_COMMISSIONS: Record<PlatformKey, number> = { wolt: 0, bolt: 0, yango: 0, own: 0 };
+
+/** Example values loaded by «Nümunəni yüklə» (TASK-0517) — the tool's previous defaults. */
+const EXAMPLE = {
+  selectedPlatforms: ['wolt'] as PlatformKey[],
+  orderValue: 30,
+  commissions: PLATFORM_DEFAULTS,
+  foodCostPct: 33,
+  packagingCost: 1.5,
+  laborCost: 3,
+  dailyOrders: 20,
+  monthlyDays: 30,
+};
+type DeliveryState = typeof EXAMPLE;
 
 export default function DeliveryCalcPage() {
   const t = useTranslations('toolkit.deliveryCalc');
@@ -61,23 +76,23 @@ export default function DeliveryCalcPage() {
     return { dineInFoodCost, dineInNet, rows };
   }, [commissions, dailyOrders, foodCostPct, laborCost, monthlyDays, orderValue, packagingCost, selectedPlatforms]);
 
-  const resetAll = () => {
-    setSelectedPlatforms(['wolt']); setOrderValue(30); setCommissions({ ...PLATFORM_DEFAULTS });
-    setFoodCostPct(33); setPackagingCost(1.5); setLaborCost(3); setDailyOrders(20); setMonthlyDays(30);
+  // TASK-0517: shared reset UX — «Təmizlə» (with «Geri al») and «Nümunəni yüklə».
+  const snapshot = (): DeliveryState => ({ selectedPlatforms, orderValue, commissions, foodCostPct, packagingCost, laborCost, dailyOrders, monthlyDays });
+  const restore = (st: DeliveryState) => {
+    setSelectedPlatforms([...st.selectedPlatforms]); setOrderValue(st.orderValue); setCommissions({ ...st.commissions });
+    setFoodCostPct(st.foodCostPct); setPackagingCost(st.packagingCost); setLaborCost(st.laborCost); setDailyOrders(st.dailyOrders); setMonthlyDays(st.monthlyDays);
   };
+  // Platform choice stays as it is (at least one channel is always selected); every number goes to zero.
+  const clearAll = () => restore({ selectedPlatforms, orderValue: 0, commissions: ZERO_COMMISSIONS, foodCostPct: 0, packagingCost: 0, laborCost: 0, dailyOrders: 0, monthlyDays: EXAMPLE.monthlyDays });
 
   // ── Input Section ─────────────────────────────────────────────────
 
   const inputSection = (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
-          <p className="text-sm text-slate-600">{t('calculatorSubtitle')}</p>
-        </div>
-        <button type="button" onClick={resetAll} className="inline-flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-orange-700">
-          <RotateCcw size={13} /> {t('reset')}
-        </button>
+      <ToolResetControls snapshot={snapshot} restore={restore} onClear={clearAll} onLoadExample={() => restore(EXAMPLE)} />
+      <div className="min-w-0">
+        <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
+        <p className="text-sm text-slate-600">{t('calculatorSubtitle')}</p>
       </div>
 
       {/* Platform selection */}

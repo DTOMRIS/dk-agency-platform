@@ -3,10 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { AlertTriangle, ArrowRight, Compass, BookOpen, Camera, Check, ChevronDown, ChevronUp, HardHat, Lightbulb, Paintbrush, PartyPopper, RotateCcw, Video, Wrench, X } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Compass, BookOpen, Camera, Check, ChevronDown, ChevronUp, HardHat, Lightbulb, Paintbrush, PartyPopper, Video, Wrench, X } from 'lucide-react';
 import { isVideo, resizeImage, validateFile } from '@/lib/utils/image-resize';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 type PhaseKey = 'design' | 'prep' | 'rough' | 'finish' | 'equipment' | 'opening';
 interface ChecklistItem { id: number; text: string; detail: string; }
@@ -63,14 +64,19 @@ export default function InsaatChecklistPage() {
   async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]; if (!file || !uploadTarget) return;
     const validation = validateFile(file, { maxSizeMB: 20, allowVideo: true });
-    if (!validation.valid) { setError(validation.error || 'Fayl yüklənmədi.'); return; }
+    if (!validation.valid) { setError(validation.error || t('uploadError')); return; }
     const resolved = isVideo(file) ? { name: file.name, url: URL.createObjectURL(file), type: 'video' as const } : await resizeImage(file, { maxWidth: 1600, maxHeight: 1600, quality: 0.82 }).then((img) => ({ name: file.name, url: img.url, type: 'image' as const }));
     setMedia((c) => ({ ...c, [uploadTarget]: [...(c[uploadTarget] || []), resolved] })); setUploadTarget(null); setError(''); event.target.value = '';
   }
   function toggleItem(id: number) { setChecked((c) => (c.includes(id) ? c.filter((i) => i !== id) : [...c, id])); }
   function togglePhase(key: PhaseKey) { setOpenPhases((c) => ({ ...c, [key]: !c[key] })); }
   function removeMedia(itemId: number, url: string) { setMedia((c) => ({ ...c, [itemId]: (c[itemId] || []).filter((e) => e.url !== url) })); URL.revokeObjectURL(url); }
-  function resetChecklist() { setChecked([]); setNotes({}); Object.values(media).flat().forEach((e) => URL.revokeObjectURL(e.url)); setMedia({}); window.localStorage.removeItem(STORAGE_KEY); window.localStorage.removeItem(MEDIA_KEY); }
+  // TASK-0517: «Təmizlə» unticks every item and clears this browser's notes and photos (nothing is stored on a server).
+  // Object URLs are not revoked here so «Geri al» can bring the photos back; storage is synced by the effects above.
+  type Snapshot = { checked: number[]; notes: Record<number, string>; media: Record<number, MediaItem[]> };
+  const snapshot = (): Snapshot => ({ checked, notes, media });
+  const restore = (saved: Snapshot) => { setChecked(saved.checked); setNotes(saved.notes); setMedia(saved.media); };
+  function clearChecklist() { setChecked([]); setNotes({}); setMedia({}); }
 
   // ── Input Section ─────────────────────────────────────────────────
 
@@ -78,9 +84,9 @@ export default function InsaatChecklistPage() {
     <div className="space-y-6">
       <input ref={fileRef} type="file" accept="image/*,video/mp4,video/webm,video/quicktime" className="hidden" onChange={handleFileChange} />
 
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-bold text-slate-900">{t('pageTitle')}</h2>
-        <button onClick={resetChecklist} className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-orange-600"><RotateCcw size={13} /> {t('resetBtn')}</button>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-base font-bold text-slate-900">{t('listTitle')}</h2>
+        <ToolResetControls variant="checklist" snapshot={snapshot} restore={restore} onClear={clearChecklist} />
       </div>
 
       <div className="space-y-4">
@@ -89,7 +95,7 @@ export default function InsaatChecklistPage() {
           const isOpen = openPhases[phase.key];
           return (
             <div key={phase.key} className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-              <button onClick={() => togglePhase(phase.key)} className="flex w-full items-center justify-between px-4 py-4 text-left">
+              <button type="button" aria-expanded={isOpen} onClick={() => togglePhase(phase.key)} className="flex w-full items-center justify-between px-4 py-4 text-left">
                 <div className="flex items-start gap-3">
                   <div className={`mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl ${phase.bg}`}><phase.icon size={18} className={phase.accent} /></div>
                   <div>
@@ -105,19 +111,19 @@ export default function InsaatChecklistPage() {
                   {phase.items.map((item) => { const done = checked.includes(item.id); return (
                     <div key={item.id} className={`rounded-xl border p-3 transition-all ${done ? 'border-emerald-200 bg-emerald-50/70' : 'border-slate-200 bg-slate-50/70'}`}>
                       <div className="flex items-start gap-3">
-                        <button onClick={() => toggleItem(item.id)} className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors ${done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 bg-white text-transparent'}`}><Check size={12} /></button>
+                        <button type="button" role="checkbox" aria-checked={done} aria-label={item.text} onClick={() => toggleItem(item.id)} className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors ${done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 bg-white text-transparent'}`}><Check size={12} /></button>
                         <div className="min-w-0 flex-1">
                           <div className="text-sm font-bold text-slate-900">{displayNo.get(item.id)}. {item.text}</div>
                           <p className="mt-0.5 text-xs leading-relaxed text-slate-600">{item.detail}</p>
-                          <textarea value={notes[item.id] || ''} onChange={(e) => setNotes((c) => ({ ...c, [item.id]: e.target.value }))} placeholder={t('notePlaceholder')} className="mt-2 min-h-[60px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 outline-none focus:border-orange-300" />
+                          <textarea aria-label={t('noteLabel')} value={notes[item.id] || ''} onChange={(e) => setNotes((c) => ({ ...c, [item.id]: e.target.value }))} placeholder={t('notePlaceholder')} className="mt-2 min-h-[60px] w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 outline-none focus:border-orange-300" />
                           {!!media[item.id]?.length && (
                             <div className="mt-2 flex flex-wrap gap-2">{media[item.id].map((entry) => (
                               <div key={entry.url} className="group relative">{entry.type === 'image' ? <img src={entry.url} alt={entry.name} className="h-16 w-16 rounded-lg object-cover ring-1 ring-slate-200" /> : <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-slate-100 ring-1 ring-slate-200"><Video size={16} className="text-slate-400" /></div>}
-                                <button onClick={() => removeMedia(item.id, entry.url)} className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100"><X size={10} /></button>
+                                <button type="button" aria-label={t('removeMedia')} onClick={() => removeMedia(item.id, entry.url)} className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-white"><X size={10} /></button>
                               </div>
                             ))}</div>
                           )}
-                          <button onClick={() => { setUploadTarget(item.id); fileRef.current?.click(); }} className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-orange-600"><Camera size={12} /> {t('addMedia')}</button>
+                          <button type="button" onClick={() => { setUploadTarget(item.id); fileRef.current?.click(); }} className="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-orange-600"><Camera size={12} /> {t('addMedia')}</button>
                         </div>
                       </div>
                     </div>

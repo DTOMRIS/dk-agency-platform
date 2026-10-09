@@ -6,9 +6,9 @@ import type { ReactNode } from 'react';
  * Başlıq/təsvir prefiksiz AZ ünvanı üçün buradan verilir.
  */
 export const metadata: Metadata = {
-  title: "Başabaş Nöqtəsi Kalkulyatoru — Restoran",
+  title: "Zərərsiz nöqtə (başa-baş) kalkulyatoru — Restoran",
   description:
-    "Restoran başabaş nöqtəsini hesabla: sabit xərclər, dəyişən xərclər və gündəlik müştəri hədəfi. Pulsuz onlayn kalkulyator.",
+    "Restoran zərərə düşməmək üçün ayda ən azı nə qədər satmalıdır: sabit və dəyişən xərclər, gündəlik müştəri hədəfi. Pulsuz onlayn alət.",
 };
 
 export default function ToolkitBasabasLayout({ children }: { children: ReactNode }) {

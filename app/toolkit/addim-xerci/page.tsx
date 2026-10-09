@@ -3,14 +3,16 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { ArrowRight, BookOpen, Footprints, Lightbulb, RotateCcw } from 'lucide-react';
+import { ArrowRight, BookOpen, Footprints, Lightbulb } from 'lucide-react';
 import ToolkitStudioLayout from '@/components/toolkit/ToolkitStudioLayout';
 import { calculateAddimXerci, hourlyFromMonthly, tripsToMinutes } from '@/lib/toolkit/addimXerci';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 type Mode = 'minutes' | 'trips';
 
+/** Example values — «Nümunəni yüklə» (TASK-0517). */
 const DEFAULTS = {
   workers: 3,
   extraMinutes: 40,
@@ -20,6 +22,19 @@ const DEFAULTS = {
   workDays: 26,
   monthlySalary: 1250,
   monthlyHours: 208,
+};
+type AddimState = typeof DEFAULTS & { mode: Mode };
+const EXAMPLE_STATE: AddimState = { ...DEFAULTS, mode: 'minutes' };
+const EMPTY_STATE: AddimState = {
+  mode: 'minutes',
+  workers: 0,
+  extraMinutes: 0,
+  trips: 0,
+  secondsPerTrip: 0,
+  hourlyWage: 0,
+  workDays: 0,
+  monthlySalary: 0,
+  monthlyHours: 0,
 };
 
 function formatCurrency(value: number) {
@@ -91,16 +106,28 @@ export default function AddimXerciPage() {
     [workers, minutesPerDay, hourlyWage, workDays]
   );
 
-  const resetAll = () => {
-    setMode('minutes');
-    setWorkers(DEFAULTS.workers);
-    setExtraMinutes(DEFAULTS.extraMinutes);
-    setTrips(DEFAULTS.trips);
-    setSecondsPerTrip(DEFAULTS.secondsPerTrip);
-    setHourlyWage(DEFAULTS.hourlyWage);
-    setWorkDays(DEFAULTS.workDays);
-    setMonthlySalary(DEFAULTS.monthlySalary);
-    setMonthlyHours(DEFAULTS.monthlyHours);
+  // TASK-0517: shared reset UX — «Təmizlə» (with «Geri al») and «Nümunəni yüklə».
+  const snapshot = (): AddimState => ({
+    mode,
+    workers,
+    extraMinutes,
+    trips,
+    secondsPerTrip,
+    hourlyWage,
+    workDays,
+    monthlySalary,
+    monthlyHours,
+  });
+  const restore = (st: AddimState) => {
+    setMode(st.mode);
+    setWorkers(st.workers);
+    setExtraMinutes(st.extraMinutes);
+    setTrips(st.trips);
+    setSecondsPerTrip(st.secondsPerTrip);
+    setHourlyWage(st.hourlyWage);
+    setWorkDays(st.workDays);
+    setMonthlySalary(st.monthlySalary);
+    setMonthlyHours(st.monthlyHours);
   };
 
   const howToSteps = [t('howTo1'), t('howTo2'), t('howTo3'), t('howTo4'), t('howTo5')];
@@ -130,18 +157,15 @@ export default function AddimXerciPage() {
 
   const inputSection = (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
-          <p className="text-sm text-slate-600">{t('calculatorSubtitle')}</p>
-        </div>
-        <button
-          type="button"
-          onClick={resetAll}
-          className="inline-flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-slate-700 transition-colors hover:text-teal-700"
-        >
-          <RotateCcw size={13} /> {t('reset')}
-        </button>
+      <ToolResetControls
+        snapshot={snapshot}
+        restore={restore}
+        onClear={() => restore({ ...EMPTY_STATE, mode })}
+        onLoadExample={() => restore(EXAMPLE_STATE)}
+      />
+      <div className="min-w-0">
+        <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
+        <p className="text-sm text-slate-600">{t('calculatorSubtitle')}</p>
       </div>
 
       <div className="flex gap-1 rounded-xl bg-slate-100 p-1">

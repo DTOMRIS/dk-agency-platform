@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-09 — TASK-0517: toolkit sıfırlama UX + menyu matrisi əmrləri + 17 alətdə sadə dil
+
+**Why:** Sahib rəyi 09.10 (restoran sahibi gözü, telefon): heyvan/BCG adları, izahsız ingiliscə terminlər, «Sıfırla işləmir» (menu-matrix eyni nümunəyə qaytarırdı — heç bir rəy yox; food-cost hər şeyi silirdi; 5 alətdə sıfırlama yox idi).
+
+**What:** `ToolResetControls<T>` (snapshot/restore/onClear/onLoadExample, `role=status`, UNDO_MS 8000, testid `tool-clear/tool-example/tool-undo/tool-reset-status`); `ToolIntro` (`innerV2.toolkit.tools.<slug>.what/how[3]`, `t.has` ilə — açar yoxdursa render olunmur) ToolkitStudioLayout + ToolPageShell-də; panel `data-testid="tool-inputs"`. Basabas-ın 43 `useState`-i bir `form` obyektinə yığıldı (snapshot üçün). FranchiseQuiz: optional `resetControls`, `franchbookCtaIndex` (default köhnə davranış). Menyu matrisi kateqoriya id-ləri (star/plowHorse/puzzle/dog) daxildə qalır, UI etiketləri əmrdir; AI prompt `keepCount/fixPriceCount/promoteCount/removeCount`. Mesajlar 5 paralel alt-agentin patch fayllarından bir skriptlə birləşdi (2 848 yazı; yeganə toqquşma `innerV2.foodCost.afterMenuDesc` — menyu versiyası saxlanıldı). Menyu Analitiyi: `lib/marketing/cost-percent.ts` + `e2e/menu-cost-percent.test.ts` (6/6).
+
+**Yoxlama:** tsc 30 (baseline 30; WhatsappTemplatesPanel:73 köhnə xətadır); eslint 59 dəyişən fayl 0 xəta (2 köhnə xəbərdarlıq); `e2e/*.test.ts` 10/10. Playwright `next dev :3917`, 17 alət × 390/1280 = 34: hamısı 200, console xətası 0, viewport-dan kənar 0; Təmizlə → boş + status → Geri al → əvvəlki → Nümunəni yüklə 11 formlu alətdə PASS, 3 yoxlama siyahısında tick → Təmizlə → Geri al PASS, 2 testdə cavab → Təmizlə → 1-ci sual → Geri al PASS, WhatsApp şablonları yalnız kopyalamadır (sıfırlama yox); food-cost «Məhsul əlavə et» 3→4 / sil 4→3, menu-matrix «Yemək əlavə et» 6→7 / sil 7→6. 390-da görünən az mətndə qadağan sözlər 0. ru/en/tr 51 alət səhifəsi + 4 `/toolkit` + bloq + haqqımızda: 200, console 0, daşma 0. Spec-lər: blog-cta (4), addim-xerci (8), insaat-checklist (6) — 18/18. `npm run build` və dk-validator işlədilmədi (8 GB RAM, swap).
+
 ## 2026-10-09 — TASK-0516: ana səhifə sübutu, üzən WhatsApp, admin reklam yuvaları, Marketinq Ocağı formları i18n, xəbər şəkilləri next/image
 
 **Why:** Sahib qərarı 04.10 (canvas «DK Agency v2 Dizayn»): «Müştəri rəqəmi yayımlanmır. Sübut: Doğan-ın fotosu + 1986-dan sahə + 'necə işləyir'». TASK-0515 kartının qalanları: `WhatsAppButton` yazılıb heç yerdə işlənmirdi; `home-mid` / `blog-inline` admin-də seçilir, heç bir səhifə göstərmirdi; 5 formda hardcoded mətn (dk-validator [3]). 09.10 sahib təsdiqi: `next.config.ts` istənilən https host (koordinator dəyişdi) → xəbər şəkilləri next/image.

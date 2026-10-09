@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Personel Planlayıcısı — Restoran Vardiya Hesablaması",
+  title: "İşçi planlayıcısı — növbədə neçə işçi lazımdır",
   description:
-    "Restoran və kafe üçün vardiya bazında optimal personel sayı: açılış, peak və axşam briqadası, əmək faizi ilə.",
+    "Restoran və kafe üçün: açılışda, ən sıx saatlarda və axşam növbəsində neçə işçi lazımdır və işçi xərci satışın neçə faizini tutur.",
 };
 
 export { default } from '@/app/[locale]/toolkit/personel-planlayici/page';

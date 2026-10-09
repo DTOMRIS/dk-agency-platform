@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import LeadForm from './LeadForm';
 import RadarChart from './RadarChart';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 /** Minimal markdown→HTML for AI report output (trusted source, no user input). */
 function renderMarkdown(md: string): string {
@@ -37,6 +38,16 @@ type ScoreQuizConfig = {
   reportType?: 'FranchiseReadinessReport' | 'FranchiseBuyerReport';
   getVerdict: (avgScore: number) => string;
   getWeakestIndex: (scores: number[]) => number;
+  /**
+   * TASK-0517 (Toolkit quizzes): show the shared «Təmizlə / Geri al» controls while answering and
+   * on the result. Default off — franchise quizzes are unchanged.
+   */
+  resetControls?: boolean;
+  /**
+   * Question index whose «weakest» result shows the Franchbook CTA. Default 5 (franchise readiness);
+   * null = never (the Toolkit quizzes have no `franchbookCta` copy and no Franchbook link).
+   */
+  franchbookCtaIndex?: number | null;
 };
 
 export type WizardField = {
@@ -353,6 +364,26 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
 
   const verdict = config.getVerdict(avgScore);
   const weakIdx = config.getWeakestIndex(validAnswers);
+  const franchbookIdx = config.franchbookCtaIndex === undefined ? 5 : config.franchbookCtaIndex;
+
+  // TASK-0517: «Təmizlə» clears every answer and goes back to question 1; «Geri al» restores them.
+  // Rendered at the same position in the question and result views so its status survives the switch.
+  const resetControls = config.resetControls ? (
+    <ToolResetControls<{ step: number; answers: (number | null)[]; aiReport: string | null }>
+      className="mb-4"
+      snapshot={() => ({ step, answers, aiReport })}
+      restore={(saved) => {
+        setAnswers(saved.answers);
+        setAiReport(saved.aiReport);
+        setStep(saved.step);
+      }}
+      onClear={() => {
+        setAnswers(new Array<number | null>(questionCount).fill(null));
+        setAiReport(null);
+        setStep(0);
+      }}
+    />
+  ) : null;
 
   if (step === -1) {
     return (
@@ -380,8 +411,10 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
     const progress = (step / questionCount) * 100;
 
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-        <div className="mb-1 flex justify-between text-xs font-semibold text-slate-400">
+      <>
+      {resetControls}
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm" data-testid="tool-inputs">
+        <div className="mb-1 flex justify-between text-xs font-semibold text-slate-600">
           <span>{t('stepLabel', { current: step + 1, total: questionCount })}</span>
           <span>{Math.round(progress)}%</span>
         </div>
@@ -401,6 +434,8 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
           {scoreOptions.map((score, optIdx) => (
             <button
               key={optIdx}
+              type="button"
+              aria-pressed={answers[step] === score}
               onClick={() => pick(optIdx)}
               className={`block w-full rounded-xl border p-4 text-left text-sm transition ${
                 answers[step] === score
@@ -432,6 +467,7 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
           </button>
         </div>
       </div>
+      </>
     );
   }
 
@@ -441,6 +477,8 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
   }
 
   return (
+    <>
+    {resetControls}
     <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
       <span className="mb-4 inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-700">
         {t('resultBadge')}
@@ -497,7 +535,7 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
         <p className="text-sm text-slate-600">{t('weakestBody')}</p>
       </div>
 
-      {weakIdx === 5 && (
+      {franchbookIdx !== null && weakIdx === franchbookIdx && (
         <Link
           href="/franchise/francbuk-generatoru"
           className="mb-6 block rounded-xl border border-[var(--dk-gold)] bg-amber-50 p-4 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-100"
@@ -522,8 +560,9 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
       )}
 
       <LeadForm toolSource={toolSource} score={scoreData} />
-      <p className="mt-6 text-center text-xs text-slate-400">{t('disclaimer')}</p>
+      <p className="mt-6 text-center text-xs text-slate-600">{t('disclaimer')}</p>
     </div>
+    </>
   );
 }
 

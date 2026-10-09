@@ -5,18 +5,20 @@ import { Loader2, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/config';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { toCostPercent } from '@/lib/marketing/cost-percent';
 
 interface MenuItem {
   name: string;
   category: string;
   price: number;
-  costPercent: number | undefined;
+  /** Food cost of one portion in manat. The API expects a percentage → converted in toCostPercent(). */
+  costAmount: number | undefined;
   monthlySales: number | undefined;
 }
 
 const CATEGORIES = ['salat', 'shorba', 'et', 'toyuq', 'baliq', 'sandvic', 'shirniyyat', 'icki'] as const;
 
-const EMPTY_ITEM: MenuItem = { name: '', category: '', price: 0, costPercent: undefined, monthlySales: undefined };
+const EMPTY_ITEM: MenuItem = { name: '', category: '', price: 0, costAmount: undefined, monthlySales: undefined };
 
 interface Props { locale: Locale; onResult: (data: unknown) => void; onError: (msg: string) => void }
 
@@ -57,7 +59,9 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
             name: it.name.trim(),
             category: it.category,
             price: it.price,
-            ...(it.costPercent !== undefined ? { costPercent: it.costPercent } : {}),
+            ...(toCostPercent(it.costAmount, it.price) !== undefined
+              ? { costPercent: toCostPercent(it.costAmount, it.price) }
+              : {}),
             ...(it.monthlySales !== undefined ? { monthlySales: it.monthlySales } : {}),
           })),
           locale,
@@ -158,13 +162,16 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
                 <input
                   type="number"
                   step="0.01"
-                  value={item.costPercent || ''}
-                  onChange={(e) => updateItem(idx, 'costPercent', e.target.value ? parseFloat(e.target.value) : undefined)}
+                  value={item.costAmount || ''}
+                  onChange={(e) => updateItem(idx, 'costAmount', e.target.value ? parseFloat(e.target.value) : undefined)}
                   placeholder="0.00"
                   disabled={loading}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-gray-900"
                 />
                 <p className="text-xs text-gray-500 mt-1">{t('costHelp')}</p>
+                {item.price > 0 && item.costAmount !== undefined && item.costAmount > item.price ? (
+                  <p className="text-xs text-red-700 mt-1">{t('costOverPrice')}</p>
+                ) : null}
               </div>
 
               {/* Aylıq satış */}
@@ -184,15 +191,17 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
               </div>
 
               {/* Marja kalkulyatoru — read-only göstər */}
-              {item.price && item.costPercent && (
+              {item.price > 0 && item.costAmount ? (
                 <div className="md:col-span-2 bg-blue-50 px-3 py-2 rounded text-sm">
                   <span className="text-blue-900">
-                    <strong>{t('margin')}</strong> {((1 - item.costPercent / item.price) * 100).toFixed(1)}%
+                    <strong>{t('foodCostPct')}</strong> {(toCostPercent(item.costAmount, item.price) ?? 0).toFixed(1)}%
                     {' • '}
-                    <strong>{t('monthlyProfit')}</strong> {new Intl.NumberFormat(AZ_NUMBER_LOCALE, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((item.price - item.costPercent) * (item.monthlySales || 0))} AZN
+                    <strong>{t('margin')}</strong> {((1 - item.costAmount / item.price) * 100).toFixed(1)}%
+                    {' • '}
+                    <strong>{t('monthlyProfit')}</strong> {new Intl.NumberFormat(AZ_NUMBER_LOCALE, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format((item.price - item.costAmount) * (item.monthlySales || 0))} AZN
                   </span>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         ))}

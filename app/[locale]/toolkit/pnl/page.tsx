@@ -12,12 +12,12 @@ import {
   ChevronUp,
   Info,
   Lightbulb,
-  RotateCcw,
   Shield,
   ShieldCheck,
 } from 'lucide-react';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 import {
   FOOD_COST_MAX_PCT,
   LABOR_MAX_PCT,
@@ -67,6 +67,7 @@ interface SubtotalRow {
 type Row = PnlRow | SubtotalRow;
 type PnlTranslator = ReturnType<typeof useTranslations>;
 
+/** Example month (nümunə) loaded by «Nümunəni yüklə» — not a sector norm. */
 const inputDefaults: Record<InputKey, number> = {
   revenue: 50000,
   foodCost: 15000,
@@ -191,27 +192,24 @@ export default function PnlSimulator() {
   };
   const hasRevenue = revenue > 0;
 
-  const resetAll = () => {
-    setRevenue(inputDefaults.revenue);
-    setFoodCost(inputDefaults.foodCost);
-    setPackaging(inputDefaults.packaging);
-    setStaffCost(inputDefaults.staffCost);
-    setManagement(inputDefaults.management);
-    setAdvertising(inputDefaults.advertising);
-    setPromo(inputDefaults.promo);
-    setOutsource(inputDefaults.outsource);
-    setUniform(inputDefaults.uniform);
-    setSupplies(inputDefaults.supplies);
-    setRepair(inputDefaults.repair);
-    setUtilities(inputDefaults.utilities);
-    setOtherControllable(inputDefaults.otherControllable);
-    setRent(inputDefaults.rent);
-    setAccounting(inputDefaults.accounting);
-    setInsurance(inputDefaults.insurance);
-    setTax(inputDefaults.tax);
-    setDepreciation(inputDefaults.depreciation);
+  // TASK-0517: one value map + one setter map so «Təmizlə» / «Nümunəni yüklə» / «Geri al» cover every field.
+  const values: Record<InputKey, number> = {
+    revenue, foodCost, packaging, staffCost, management, advertising, promo, outsource, uniform,
+    supplies, repair, utilities, otherControllable, rent, accounting, insurance, tax, depreciation,
+  };
+  const setters: Record<InputKey, (value: number) => void> = {
+    revenue: setRevenue, foodCost: setFoodCost, packaging: setPackaging, staffCost: setStaffCost,
+    management: setManagement, advertising: setAdvertising, promo: setPromo, outsource: setOutsource,
+    uniform: setUniform, supplies: setSupplies, repair: setRepair, utilities: setUtilities,
+    otherControllable: setOtherControllable, rent: setRent, accounting: setAccounting,
+    insurance: setInsurance, tax: setTax, depreciation: setDepreciation,
+  };
+  const applyValues = (next: Record<InputKey, number>) => {
+    (Object.keys(setters) as InputKey[]).forEach((key) => setters[key](next[key]));
     setNegativeKey(null);
   };
+  const clearAll = () =>
+    applyValues(Object.fromEntries((Object.keys(setters) as InputKey[]).map((key) => [key, 0])) as Record<InputKey, number>);
 
   const rows: Row[] = [
     { kind: 'input', key: 'revenue', value: revenue, setter: setRevenue },
@@ -257,26 +255,21 @@ export default function PnlSimulator() {
             <div className="flex flex-wrap items-center gap-3">
               <button
                 type="button"
-                className="min-h-[32px] rounded-lg bg-blue-700 px-3 py-2 text-xs font-black text-white transition-colors hover:bg-blue-800"
-              >
-                {t('actions.calculate')}
-              </button>
-              <button
-                type="button"
                 onClick={() => setDetailed(!detailed)}
                 className="flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-blue-700 transition-colors hover:text-blue-800"
               >
                 {detailed ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 {detailed ? t('actions.simpleView') : t('actions.detailView')}
               </button>
-              <button
-                type="button"
-                onClick={resetAll}
-                className="flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-red-700"
-              >
-                <RotateCcw size={13} /> {t('actions.reset')}
-              </button>
             </div>
+          </div>
+          <div className="border-b border-slate-100 px-6 py-3">
+            <ToolResetControls
+              snapshot={() => ({ ...values })}
+              restore={applyValues}
+              onClear={clearAll}
+              onLoadExample={() => applyValues(inputDefaults)}
+            />
           </div>
 
           <div className="grid grid-cols-12 border-b border-slate-100 bg-slate-50/60 px-6 py-3 text-[10px] font-bold tracking-widest text-slate-600 uppercase">

@@ -34,8 +34,6 @@ import { normalizeLocale, type Locale } from '@/i18n/config';
 const pageCopy: Record<
   Locale,
   {
-    howItWorks: string;
-    steps: Array<{ title: string; body: string; tone: string; marker: string }>;
     consultingAlt: string;
     blogTitle: string;
     blogSubtitle: string;
@@ -48,27 +46,6 @@ const pageCopy: Record<
   }
 > = {
   az: {
-    howItWorks: 'Necə işləyir?',
-    steps: [
-      {
-        title: 'Pulsuz alətləri sına',
-        body: 'Food cost, P&L, menyu matrisi — 17 pulsuz alət ilə restoranını analiz et.',
-        tone: 'bg-red-50',
-        marker: '1️⃣',
-      },
-      {
-        title: 'Bilikləri öyrən',
-        body: 'Ekspert yazıları və KAZAN AI danışmanı ilə HoReCa biliyini artır.',
-        tone: 'bg-amber-50',
-        marker: '2️⃣',
-      },
-      {
-        title: 'OCAQ Panelə keç',
-        body: 'Bütün alətlər bir yerdə, avtomatik hesabat və real-time nəzarət.',
-        tone: 'bg-emerald-50',
-        marker: '3️⃣',
-      },
-    ],
     consultingAlt: 'Restoran sahibi ilə biznes konsultasiyası',
     blogTitle: 'Bloq & Analizlər',
     blogSubtitle: 'Sektor peşəkarları üçün dərin analizlər və praktik bələdçilər.',
@@ -93,27 +70,6 @@ const pageCopy: Record<
     ],
   },
   ru: {
-    howItWorks: 'Как это работает?',
-    steps: [
-      {
-        title: 'Протестируй бесплатные инструменты',
-        body: 'Food cost, P&L, матрица меню — проанализируй ресторан через 17 бесплатных инструментов.',
-        tone: 'bg-red-50',
-        marker: '1️⃣',
-      },
-      {
-        title: 'Прокачай знания',
-        body: 'Углуби экспертизу HoReCa через материалы экспертов и консультанта KAZAN AI.',
-        tone: 'bg-amber-50',
-        marker: '2️⃣',
-      },
-      {
-        title: 'Перейди в OCAQ Panel',
-        body: 'Все инструменты в одном месте: автоматические отчёты и контроль в реальном времени.',
-        tone: 'bg-emerald-50',
-        marker: '3️⃣',
-      },
-    ],
     consultingAlt: 'Бизнес-консультация с владельцем ресторана',
     blogTitle: 'Блог и аналитика',
     blogSubtitle: 'Глубокая аналитика и практические гайды для профессионалов сектора.',
@@ -141,27 +97,6 @@ const pageCopy: Record<
     ],
   },
   en: {
-    howItWorks: 'How it works',
-    steps: [
-      {
-        title: 'Try the free tools',
-        body: 'Analyze your restaurant with 17 free tools across food cost, P&L, and menu matrix.',
-        tone: 'bg-red-50',
-        marker: '1️⃣',
-      },
-      {
-        title: 'Learn the knowledge',
-        body: 'Level up your HoReCa knowledge with expert articles and the KAZAN AI advisor.',
-        tone: 'bg-amber-50',
-        marker: '2️⃣',
-      },
-      {
-        title: 'Move into OCAQ Panel',
-        body: 'Keep every tool in one place with automated reporting and real-time control.',
-        tone: 'bg-emerald-50',
-        marker: '3️⃣',
-      },
-    ],
     consultingAlt: 'Business consulting with a restaurant owner',
     blogTitle: 'Blog & Analysis',
     blogSubtitle: 'Deep analysis and practical guides for industry operators.',
@@ -187,27 +122,6 @@ const pageCopy: Record<
     ],
   },
   tr: {
-    howItWorks: 'Nasıl çalışır?',
-    steps: [
-      {
-        title: 'Ücretsiz araçları dene',
-        body: 'Food cost, P&L ve menü matrisi ile restoranını 17 ücretsiz araçla analiz et.',
-        tone: 'bg-red-50',
-        marker: '1️⃣',
-      },
-      {
-        title: 'Bilgiyi öğren',
-        body: 'Uzman yazıları ve KAZAN AI danışmanı ile HoReCa bilgisini büyüt.',
-        tone: 'bg-amber-50',
-        marker: '2️⃣',
-      },
-      {
-        title: 'OCAQ Panel’e geç',
-        body: 'Tüm araçlar tek yerde, otomatik rapor ve gerçek zamanlı kontrol.',
-        tone: 'bg-emerald-50',
-        marker: '3️⃣',
-      },
-    ],
     consultingAlt: 'Restoran sahibi ile iş danışmanlığı',
     blogTitle: 'Blog & Analizler',
     blogSubtitle: 'Sektör profesyonelleri için derin analizler ve pratik rehberler.',

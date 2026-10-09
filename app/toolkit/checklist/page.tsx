@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import ChecklistPage from '@/app/[locale]/toolkit/checklist/page';
 
 export const metadata: Metadata = {
-  title: 'Restoran Açılış Checklist',
+  title: 'Restoran açılışı: yoxlama siyahısı (checklist)',
   description:
-    'Restoran açılışı üçün hüquqi, məkan, menyu, komanda və marketinq addımlarını yoxlayan checklist.',
+    'Restoran açmazdan əvvəl görülməli 44 iş: sənədlər, məkan, mətbəx, menyu, işçilər, reklam və maliyyə. Pulsuz yoxlama siyahısı.',
 };
 
 export default function PublicChecklistPage() {

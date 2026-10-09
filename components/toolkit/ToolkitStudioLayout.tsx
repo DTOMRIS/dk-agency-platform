@@ -18,6 +18,7 @@ import { Icon } from '@/components/home/v2/shared';
 import { Crumbs, LiveStatus } from '@/components/inner/InnerParts';
 import s from '@/components/inner/inner.module.css';
 import { getToolMeta } from '@/lib/toolkit/tool-directory';
+import ToolIntro from '@/components/toolkit/ToolIntro';
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -185,8 +186,10 @@ export default function ToolkitStudioLayout({
           {headerAside ? <div className={s.tpAside}>{headerAside}</div> : null}
         </div>
 
+        <ToolIntro slug={toolId} />
+
         <div className={s.tpGrid}>
-          <div className={s.panelC}>{inputSection}</div>
+          <div className={s.panelC} data-testid="tool-inputs">{inputSection}</div>
           <aside
             className={`${s.result} ${sheetOpen ? s.resultOpen : ''}`}
             aria-label={tc('result')}

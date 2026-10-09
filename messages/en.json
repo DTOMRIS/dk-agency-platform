@@ -174,121 +174,107 @@
   },
   "toolkit": {
     "metbexIstasyon": {
-      "title": "Kitchen Station Calculator",
-      "description": "Station count and staffing for fast food / QSR kitchens based on menu SKU count",
-      "badge": "QSR / Fast Food",
+      "title": "Kitchen stations",
+      "description": "For a fast food kitchen: how many stations and staff you need for the number of menu items and daily orders, and what share of sales goes to wages.",
       "concept": {
-        "label": "Concept",
-        "fastFood": "Fast Food",
-        "qsrBurger": "QSR — Burger / Sandwich",
-        "qsrPizza": "QSR — Pizza / Pasta",
-        "darkKitchen": "Dark Kitchen",
-        "catering": "Catering / Banquet"
+        "label": "Type of venue",
+        "fastFood": "Fast food",
+        "qsrBurger": "Burgers / sandwiches",
+        "qsrPizza": "Pizza / pasta",
+        "darkKitchen": "Delivery-only kitchen",
+        "catering": "Catering / banquets"
       },
-      "menuSku": "Menu SKU count (items)",
-      "menuSkuHelp": "Total number of distinct menu items",
-      "gunlukFis": "Average daily checks / orders",
+      "menuSku": "Number of menu items",
+      "menuSkuHelp": "How many different dishes and drinks are on your menu (e.g. 25).",
+      "gunlukFis": "Average orders per day",
       "mutfaqMetrekare": "Kitchen area (m²)",
       "kanallar": {
-        "label": "Service channels",
-        "dineIn": "Dine-in",
+        "label": "How guests order",
+        "dineIn": "Eat in",
         "takeaway": "Takeaway",
         "delivery": "Delivery",
         "driveThru": "Drive-thru"
       },
-      "hesabla": "Calculate Stations",
       "result": {
-        "istasyonlar": "Kitchen Stations",
-        "istasyonXeritesi": "Station Map",
-        "istiIstasyon": "Hot Station",
-        "soyuqIstasyon": "Cold Station",
-        "neferPerIstasyon": "ppl",
-        "kadrolar": "Staffing",
+        "istasyonXeritesi": "Stations",
+        "neferPerIstasyon": "staff",
+        "kadrolar": "Staff per shift",
         "sabahVardiyasi": "Morning shift",
-        "ogleRush": "Lunch rush",
+        "ogleRush": "Lunch, busiest time",
         "axsamVardiyasi": "Evening shift",
-        "shiftLeader": "Shift Leader",
-        "shiftLeaderLazim": "Required (200+ checks norm)",
-        "shiftLeaderLazimDeyil": "Not yet required",
-        "laborMaliyyeti": "Labor cost",
-        "aylig": "Monthly (est.)",
-        "laborFaizi": "Labor %",
-        "qsrHedep": "QSR target: < 32%",
-        "aiInsight": "KAZAN AI Advice",
-        "ideal": "On target",
-        "dikkat": "Caution",
-        "kritik": "Critical",
-        "baza": "Base",
-        "peak": "Peak",
+        "shiftLeader": "Shift leader",
+        "shiftLeaderLazim": "Needed (200+ orders a day)",
+        "shiftLeaderLazimDeyil": "Not needed yet",
+        "laborMaliyyeti": "Staff cost",
+        "aylig": "Monthly (estimate)",
+        "laborFaizi": "Share of sales",
+        "qsrHedep": "Common rule of thumb for fast food: staff cost should stay at or below {value}% of sales.",
+        "ideal": "Within the norm",
+        "dikkat": "Watch out: a bit high",
+        "kritik": "Too high",
+        "baza": "base",
+        "peak": "busiest",
         "stations": {
-          "grillFryer": "Grill / Fryer",
-          "assemblyCashier": "Assembly / Cashier",
-          "grillHot": "Grill / Hot",
-          "fryerCold": "Fryer / Cold",
-          "assemblySauce": "Assembly / Sauces",
-          "hotKitchen": "Hot Kitchen (grill)",
-          "fryer": "Fryer Station",
-          "coldSalad": "Cold / Salad",
-          "assemblyPack": "Assembly / Packing",
-          "hotKitchenA": "Hot Kitchen A",
-          "hotKitchenB": "Hot Kitchen B",
+          "grillFryer": "Grill / fryer",
+          "assemblyCashier": "Assembly / till",
+          "grillHot": "Grill / hot dishes",
+          "fryerCold": "Fryer / cold dishes",
+          "assemblySauce": "Assembly / sauces",
+          "hotKitchen": "Hot kitchen (grill)",
+          "fryer": "Fryer",
+          "coldSalad": "Cold dishes / salads",
+          "assemblyPack": "Assembly / packing",
+          "hotKitchenA": "Hot kitchen 1",
+          "hotKitchenB": "Hot kitchen 2",
           "assembly": "Assembly",
-          "expeditor": "Expeditor / Quality"
+          "expeditor": "Order check and hand-out"
         },
-        "noChecks": "Enter daily checks"
-      },
-      "seo": {
-        "title": "Kitchen Station Calculator — DK Agency",
-        "description": "Station planning for fast food / QSR kitchens by SKU count. Staffing, labor percentage."
+        "noChecks": "Enter how many orders per day",
+        "empty": "Enter the number of menu items and orders per day — stations and staff will appear here."
       }
     },
     "personelPlanlayici": {
-      "title": "Staff Planner",
-      "description": "Calculate the optimal shift-based headcount for restaurants and cafés",
-      "badge": "Staff",
+      "title": "Staff planner",
+      "description": "For restaurants and cafés: how many staff you need at opening, in the busiest hours and in the evening, and what share of sales goes to wages.",
       "concept": {
-        "label": "Concept",
-        "restoranCasual": "Restaurant (Casual Dining)",
-        "restoranFine": "Restaurant (Fine Dining)",
+        "label": "Type of venue",
+        "restoranCasual": "Restaurant (everyday, mid-price)",
+        "restoranFine": "Restaurant (upscale)",
         "kafe": "Café",
-        "bar": "Bar / Lounge"
+        "bar": "Bar / lounge"
       },
       "koltukSayisi": "Number of seats",
-      "gunlukFis": "Estimated daily checks",
+      "gunlukFis": "Approx. receipts per day",
       "gunTipi": {
-        "label": "Day type",
-        "isgunu": "Weekday (Mon–Fri)",
+        "label": "Which day",
+        "isgunu": "Weekday (Mon – Thu)",
         "cuma": "Friday",
-        "haftaSonu": "Weekend (Sat/Sun)"
+        "haftaSonu": "Weekend (Sat, Sun)"
       },
-      "achilis": "Opening hour",
-      "kapanis": "Closing hour",
-      "hesabla": "Calculate Staff",
+      "achilis": "Opening hour (e.g. 10)",
+      "kapanis": "Closing hour (e.g. 23)",
       "result": {
-        "acilisBrigadasi": "Opening Crew",
-        "peakBrigada": "Peak Hours",
-        "axsamBrigadasi": "Evening Crew",
-        "garson": "Server",
+        "acilisBrigadasi": "At opening",
+        "peakBrigada": "In the busiest hours",
+        "axsamBrigadasi": "Evening shift",
+        "garson": "Waiter",
         "barista": "Barista",
-        "asci": "Cook / Kitchen",
+        "asci": "Cook / kitchen",
         "host": "Host",
+        "sommelier": "Sommelier",
         "kasa": "Cashier",
-        "ekstra": "Extra (peak)",
+        "ekstra": "extra staff",
         "toplam": "Total",
-        "laborMaliyyeti": "Labor cost",
-        "aylig": "Monthly",
-        "laborFaizi": "Labor %",
-        "ideal": "Ideal",
-        "dikkat": "Caution",
-        "kritik": "Critical",
-        "skeletonMinimum": "Minimum opening crew",
-        "benchmark": "Sector benchmark",
-        "aiInsight": "KAZAN AI Advice",
-        "peakNote": "Can be reduced from peak"
-      },
-      "seo": {
-        "title": "Staff Planner — DK Agency",
-        "description": "Optimal staff headcount calculator for restaurants and cafés. Shift-based, with labor percentage."
+        "laborMaliyyeti": "Staff cost",
+        "aylig": "Monthly (estimate)",
+        "laborFaizi": "Share of sales",
+        "ideal": "Within the norm",
+        "dikkat": "Watch out: a bit high",
+        "kritik": "Too high",
+        "skeletonMinimum": "Minimum staff at opening",
+        "benchmark": "Common rule of thumb: staff cost should stay at or below {value}% of sales",
+        "peakNote": "After the busiest hours you can reduce the number of staff.",
+        "empty": "Enter seats, receipts per day, opening and closing hour — the result will appear here."
       }
     },
     "badge": "Free Tools",
@@ -298,71 +284,71 @@
       "navigation": {
         "toolkit": "Toolkit"
       },
-      "title": "Food Cost",
+      "title": "Food cost (share of ingredients in the price)",
       "titleAccent": "Calculator",
-      "subtitle": "Build a recipe card, add trim loss, calculate portion cost. Real food cost — not guesswork.",
+      "subtitle": "Enter the recipe and instantly see the cost of one portion, the food cost percentage and the right menu price.",
       "defaultIng1Name": "Chicken breast",
       "defaultIng2Name": "Olive oil",
       "defaultIng3Name": "Basmati rice",
-      "statFoodCost": "Food Cost",
-      "statPortionCost": "Portion Cost",
-      "statGrossProfit": "Gross Profit",
-      "statIdealPrice": "Ideal Price",
+      "statFoodCost": "Food cost",
+      "statPortionCost": "Cost per portion",
+      "statGrossProfit": "Left over per portion",
+      "statIdealPrice": "Recommended price",
       "statIdealPriceHint": "target {pct}%",
-      "statusGood": "Optimal",
-      "statusWarning": "Caution",
-      "statusDanger": "High",
-      "recipeCardTitle": "Recipe Card",
-      "invoiceDataActive": "Invoice prices active",
+      "statusGood": "On target",
+      "statusWarning": "Watch",
+      "statusDanger": "Too high",
+      "recipeCardTitle": "Recipe card",
+      "invoiceDataActive": "Invoice prices connected",
       "reset": "Reset",
-      "colProduct": "Product",
-      "colQuantity": "Quantity",
+      "colProduct": "Ingredient",
+      "colQuantity": "Qty",
       "colUnit": "Unit",
-      "colPricePerUnit": "₼/unit",
-      "colTrimPct": "Trim %",
+      "colPricePerUnit": "Price per unit (₼)",
+      "colTrimPct": "Cleaning loss %",
       "colTotal": "Total",
-      "productNamePlaceholder": "Product name",
-      "invoiceDataHint": "Prices from last 90 days of invoices",
-      "totalFoodCost": "Total food cost",
+      "productNamePlaceholder": "Ingredient name",
+      "invoiceDataHint": "Invoice prices from the last 90 days",
+      "totalFoodCost": "Ingredients, total",
       "addIngredient": "Add ingredient",
-      "parametersTitle": "Parameters",
+      "parametersTitle": "Price and portions",
       "labelMenuPrice": "Menu price (₼)",
-      "labelPortions": "Portions",
-      "labelTargetFoodCost": "Target food cost %",
-      "sectorStandardsTitle": "Industry Standards",
-      "sectorRestaurant": "Restaurant / Cafe",
-      "sectorFastFood": "Fast Food",
-      "sectorFineDining": "Fine Dining",
+      "labelPortions": "Portions in the recipe",
+      "labelTargetFoodCost": "Target food cost (%)",
+      "sectorStandardsTitle": "Usual in the sector",
+      "sectorRestaurant": "Restaurant / café",
+      "sectorFastFood": "Fast food",
+      "sectorFineDining": "Upscale restaurant",
       "netProfitLabel": "Net profit",
       "rentLabel": "Rent",
-      "educationTitle": "Understanding",
-      "educationTitleAccent": "Food Cost",
-      "educationSubtitle": "Know the logic before you run the numbers.",
-      "whatIsFoodCostTitle": "What Is Food Cost?",
-      "whatIsFoodCostBody1": "The food cost of a restaurant is the",
-      "whatIsFoodCostBodyBold": "ingredient cost of every dish sold.",
-      "whatIsFoodCostBody2": " Labor, rent and utilities are excluded — only the material that lands on the plate.",
-      "cogsFormulaTitle": "Full COGS Formula",
-      "cogsLine1": "Opening Inventory",
-      "cogsLine2": "+ Purchases during period",
-      "cogsLine3": "− Returns",
-      "cogsLine4": "= Available goods",
-      "cogsLine5": "− Closing Inventory",
-      "cogsLine6": "= Usage (COGS)",
-      "cogsPctFormula": "Food Cost % = COGS ÷ Sales × 100",
-      "inventoryValuationTitle": "Inventory Valuation",
-      "inventoryValuationSubtitle": "You bought the same item at different prices — which price do you use?",
-      "fifoTitle": "FIFO — Recommended",
-      "fifoBody": "First in, first out. Calculated at old purchase prices. The most accurate method for restaurants.",
-      "wacTitle": "WAC (Weighted Average Cost)",
-      "wacBody": "Total value ÷ item count = average cost. Simple, but misses the impact of price changes.",
-      "lastPurchaseTitle": "Last purchase price — Misleading",
-      "lastPurchaseBody": "Overstates cost when bought in bulk. Applying a new price to old stock distorts food cost.",
-      "trimLossTitle": "What Is Trim Loss?",
-      "trimLossBody1": "After cleaning 1 kg of chicken, only",
-      "trimLossBodyBold": "850g",
-      "trimLossBody2": "is usable — 15% trim loss. This raises the real ingredient cost.",
-      "trimLossExamplesTitle": "Sample trim loss (indicative — check with your own weighing)",
+      "educationTitle": "Food cost",
+      "educationTitleAccent": "in plain words",
+      "educationSubtitle": "Know the logic before you calculate.",
+      "whatIsFoodCostTitle": "What is food cost?",
+      "whatIsFoodCostBody1": "It is",
+      "whatIsFoodCostBodyBold": "the cost of the ingredients used in the dishes you sold.",
+      "whatIsFoodCostBody2": " Wages, rent and utilities are not included — only what ends up on the plate.",
+      "cogsFormulaTitle": "How to count the ingredients used in a month",
+      "cogsLine1": "Stock at the start of the month",
+      "cogsLine2": "+ Bought during the month",
+      "cogsLine3": "− Returned to suppliers",
+      "cogsLine4": "= Available to use",
+      "cogsLine5": "− Stock at the end of the month",
+      "cogsLine6": "= Ingredients used this month",
+      "cogsPctFormula": "Food cost % = ingredients used ÷ sales × 100",
+      "inventoryValuationTitle": "Which price should you count stock at?",
+      "inventoryValuationSubtitle": "You bought the same item at different prices — which one counts?",
+      "fifoTitle": "“First in, first out” — recommended",
+      "fifoBody": "What was bought first is used first and counted at its own purchase price. The most accurate method for a restaurant.",
+      "wacTitle": "Average price",
+      "wacBody": "Total value of all purchases ÷ total quantity = average price. Simple, but slow to show reality when prices move fast.",
+      "lastPurchaseTitle": "Last purchase price — misleading",
+      "lastPurchaseBody": "If prices went up, counting old stock at the new price makes food cost look higher than it is.",
+      "trimLossTitle": "What is cleaning loss?",
+      "trimLossBody1": "From 1 kg of chicken, after cleaning (bones, skin and fat are thrown away) about",
+      "trimLossBodyBold": "850 g",
+      "trimLossBody2": "is left — a 15% loss (example). You paid for the part you throw away too, so the portion cost goes up.",
+      "trimLossExamplesTitle": "Example loss rates (rough — check with your own scale)",
       "trimEx1Label": "Chicken breast",
       "trimEx1Value": "5–8%",
       "trimEx2Label": "Whole chicken",
@@ -375,90 +361,90 @@
       "trimEx5Value": "10–20%",
       "trimEx6Label": "Onion/garlic",
       "trimEx6Value": "10–15%",
-      "dkAdviceLabel": "DK Agency Tip",
-      "dkAdviceBody1": "Running a kitchen without knowing your food cost",
-      "dkAdviceBodyBold": "is the most expensive mistake.",
-      "dkAdviceBody2": "Apply FIFO with a POS system and keep everything under control.",
+      "dkAdviceLabel": "DK Agency tip",
+      "dkAdviceBody1": "Running a kitchen without knowing food cost is",
+      "dkAdviceBodyBold": "the most expensive mistake.",
+      "dkAdviceBody2": "Count your stock every month and use what was bought first, first.",
       "readArticle": "Read full article",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqBody": "Store all recipes, calculate food cost automatically, track inventory with FIFO. Real-time financial control.",
+      "ocaqBody": "Keep all recipes, get food cost calculated automatically and track your stock.",
       "ocaqCta": "Start free",
-      "factorsTitle": "4 Factors That Affect",
-      "factorsTitleAccent": "Food Cost",
-      "factorsSubtitle": "Because these factors change, food cost differs from one restaurant to another.",
-      "factor1Title": "Purchase Price",
-      "factor1Content": "The cost you pay for raw ingredients. Purchasing is within your control: visit the market, research supplier alternatives, find a cheaper source at the same quality. Apply FIFO — old stock should be used first. Run weekly price comparisons.",
-      "factor2Title": "Menu Price",
-      "factor2Content": "You cannot set a menu price without a recipe and a cost calculation. Calculate food cost first, then set the price based on your target margin. Pricing by \"what the competitor charges\" is the biggest mistake. Correct formula: cost price × target multiplier = menu price.",
-      "factor3Title": "Product Mix",
-      "factor3Content": "You sell the same item at the same price, yet the financials differ — why? One server sells Stars, another sells Dogs. It depends on the guest, the team and the location. Fix it: use menu engineering to push Stars into recommended sales, and either rework or drop Dogs.",
-      "factor4Title": "Restaurant Controls",
-      "factor4Content": "Recipes, staff meals, spoilage, comps, register shortages — all must be tracked. Apply FIFO — old stock first. Meat is the costliest source of loss — start there. Run weekly spoilage counts and compare against variance reports.",
-      "learnMoreTitle": "Learn More",
-      "blogLink1Title": "The Bloody Truth About Food Cost",
+      "factorsTitle": "What drives food cost:",
+      "factorsTitleAccent": "4 factors",
+      "factorsSubtitle": "These factors differ in every restaurant, so food cost differs too.",
+      "factor1Title": "Purchase price",
+      "factor1Content": "What you pay for ingredients. This is in your hands: check the market, ask several suppliers for prices, find the same quality for less. Use what was bought first, first. Compare prices every week.",
+      "factor2Title": "Selling price",
+      "factor2Content": "Never set a price without a recipe and a cost calculation. First work out food cost, then set the price from your target percentage. Pricing “like the place next door” is the biggest mistake. The right way: portion cost ÷ target food cost % = selling price.",
+      "factor3Title": "Which dishes sell most",
+      "factor3Content": "The same menu can give a different food cost in two months — it depends on what sells more. Push the dishes that earn most; fix the price of low earners or take them off the menu. The “Menu matrix” tool helps with this.",
+      "factor4Title": "Control in the kitchen",
+      "factor4Content": "Following recipes, staff meals, spoiled stock, free treats, cash shortages — all must be controlled. Use what was bought first, first. Meat is the most expensive loss — start there. Count stock weekly and compare with what you expected.",
+      "learnMoreTitle": "Read more",
+      "blogLink1Title": "How to calculate the food cost of one portion",
       "blogLink1Tag": "Finance",
-      "blogLink2Title": "Can't Read a P&L?",
+      "blogLink2Title": "Can’t read a P&L?",
       "blogLink2Tag": "Finance",
-      "blogLink3Title": "Menu Engineering: Stars and Dogs",
+      "blogLink3Title": "Menu matrix: which dish stays, which goes",
       "blogLink3Tag": "Operations",
       "readLabel": "Read"
     },
-    "foodCostDesc": "Calculate portion cost, find the ideal food cost percentage.",
+    "foodCostDesc": "Calculate the cost of a portion and find the right food cost percentage.",
     "pnl": {
       "navigation": {
         "toolkit": "Toolkit"
       },
-      "title": "P&L",
+      "title": "Profit and loss report (P&L)",
       "titleAccent": "Simulator",
-      "subtitle": "Monthly profit & expense analysis",
-      "description": "Model your monthly income and expense report. Separate controllable and fixed costs, then track net profit.",
+      "subtitle": "Monthly income and costs",
+      "description": "Enter the month’s sales and costs — see what you earned by month-end and where the money went.",
       "inputs": {
         "revenue": {
-          "label": "Monthly revenue",
+          "label": "Monthly sales",
           "placeholder": "0",
-          "hint": "Total sales (excluding VAT)"
+          "hint": "All sales for the month (excl. VAT)"
         },
         "foodCost": {
-          "label": "Food cost",
-          "hint": "Typically {min}-{max}% of revenue"
+          "label": "Ingredients",
+          "hint": "Usually {min}–{max}% of sales"
         },
         "packaging": {
           "label": "Packaging"
         },
         "staffCost": {
-          "label": "Labor cost",
-          "hint": "Salaries + social insurance"
+          "label": "Staff wages",
+          "hint": "Wages + social insurance"
         },
         "management": {
-          "label": "Management salaries"
+          "label": "Managers’ pay"
         },
         "advertising": {
-          "label": "Advertising / Marketing"
+          "label": "Advertising"
         },
         "promo": {
-          "label": "Promo / Complimentary"
+          "label": "Discounts and free treats"
         },
         "outsource": {
-          "label": "Outsourced services"
+          "label": "Outside services (cleaning, security)"
         },
         "uniform": {
-          "label": "Uniforms / Supplies"
+          "label": "Work clothes"
         },
         "supplies": {
-          "label": "Consumables"
+          "label": "Consumables (napkins, detergent)"
         },
         "repair": {
-          "label": "Repair / Maintenance"
+          "label": "Repairs and servicing"
         },
         "utilities": {
           "label": "Utilities"
         },
         "otherControllable": {
-          "label": "Other controllable"
+          "label": "Other costs you control"
         },
         "rent": {
           "label": "Rent",
-          "hint": "Excluding utilities"
+          "hint": "Utilities not included"
         },
         "accounting": {
           "label": "Accounting"
@@ -470,53 +456,53 @@
           "label": "Taxes"
         },
         "depreciation": {
-          "label": "Depreciation"
+          "label": "Depreciation (equipment wearing out)"
         }
       },
       "outputs": {
         "grossProfit": {
-          "label": "Gross profit",
-          "tooltip": "Revenue minus food cost"
+          "label": "Left after ingredients (gross profit)",
+          "tooltip": "Sales − ingredients"
         },
         "operatingProfit": {
-          "label": "Operating profit",
-          "tooltip": "Revenue minus COGS"
+          "label": "Left after ingredients and packaging",
+          "tooltip": "Sales − ingredients and packaging"
         },
         "controllableProfit": {
-          "label": "Controllable profit"
+          "label": "Left after the costs you control"
         },
         "netProfit": {
           "label": "Net profit"
         },
         "margin": {
-          "label": "Profit margin"
+          "label": "Profit %"
         }
       },
       "sections": {
-        "cogs": "COGS (Cost of goods sold)",
-        "controllable": "Controllable expenses",
-        "uncontrollable": "Fixed / less controllable expenses"
+        "cogs": "Ingredients and packaging",
+        "controllable": "Costs you control",
+        "uncontrollable": "Costs that rarely change (rent, tax, insurance)"
       },
       "kpis": {
         "netProfit": "Net profit",
-        "primeCost": "Prime Cost",
-        "foodCost": "Food Cost",
+        "primeCost": "Main costs (ingredients + staff)",
+        "foodCost": "Food cost (share of ingredients)",
         "rent": "Rent",
-        "targetMax": "target ≤{value}%"
+        "targetMax": "limit ≤{value}%"
       },
       "table": {
-        "title": "P&L Statement",
-        "category": "Category",
+        "title": "Monthly report",
+        "category": "Line",
         "amount": "Amount",
-        "percent": "Percent"
+        "percent": "% of sales"
       },
       "actions": {
         "calculate": "Calculate",
-        "reset": "Reset",
+        "reset": "Clear",
         "export": "Download PDF",
         "save": "Save",
-        "detailView": "Show details",
-        "simpleView": "Simple view"
+        "detailView": "Show all lines",
+        "simpleView": "Short view"
       },
       "validation": {
         "required": "This field is required",
@@ -524,27 +510,27 @@
         "tooLow": "Value too low",
         "tooHigh": "Value too high",
         "negative": "Amount cannot be negative — previous value kept.",
-        "revenueRequired": "Enter revenue above 0 to calculate the percentages."
+        "revenueRequired": "Enter monthly sales (above 0) to see the percentages."
       },
       "insights": {
-        "healthyMargin": "Healthy profit margin",
-        "lowMargin": "Margin too low — review expenses",
-        "negativeMargin": "Loss: immediate structural changes required",
-        "foodCostHigh": "Food cost is above the industry benchmark ({value} target exceeded)",
-        "laborCostHigh": "Labor cost is excessive ({value} target exceeded)"
+        "healthyMargin": "Profit percentage is healthy",
+        "lowMargin": "Profit is very low — review your costs",
+        "negativeMargin": "The month ends in a loss — rework costs and prices now",
+        "foodCostHigh": "Ingredient cost is above the common limit ({value})",
+        "laborCostHigh": "Staff cost is above the common limit ({value})"
       },
       "benchmark": {
-        "title": "P&L Benchmark",
+        "title": "Common sector limits",
         "netProfit": {
           "label": "Net profit",
           "value": "10-15%"
         },
         "primeCost": {
-          "label": "Prime Cost",
+          "label": "Main costs (ingredients + staff)",
           "value": "≤65%"
         },
         "foodCost": {
-          "label": "Food Cost",
+          "label": "Food cost",
           "value": "28-32%"
         },
         "rent": {
@@ -553,11 +539,11 @@
         },
         "chips": {
           "labor": {
-            "label": "Labor",
+            "label": "Staff",
             "value": "25-35%"
           },
           "marketing": {
-            "label": "Marketing",
+            "label": "Advertising",
             "value": "3-6%"
           },
           "utilities": {
@@ -565,59 +551,59 @@
             "value": "3-5%"
           },
           "repair": {
-            "label": "Repair",
+            "label": "Repairs",
             "value": "1-2%"
           }
         },
-        "ruleOfThumb": "Widely used industry rules of thumb — not sourced norms for Azerbaijan."
+        "ruleOfThumb": "These are common rough limits in the sector — not an official norm for Azerbaijan."
       },
       "education": {
-        "whatTitle": "What is P&L?",
-        "whatBody": "Profit & Loss is the financial statement that shows how much a restaurant earns and spends during a period. It should be prepared every month.",
-        "structureTitle": "P&L Structure",
+        "whatTitle": "What is a P&L?",
+        "whatBody": "A P&L (profit and loss report) shows how much you sold in a month, what you spent it on and what was left at the end. Prepare it every month.",
+        "structureTitle": "How the report is built",
         "structure": {
-          "revenue": "Total revenue",
-          "cogs": "− COGS (food + packaging)",
-          "operatingProfit": "= Operating profit",
-          "controllable": "− Controllable expenses",
-          "controllableProfit": "= Controllable profit",
-          "uncontrollable": "− Fixed expenses",
+          "revenue": "Total sales",
+          "cogs": "− Ingredients and packaging",
+          "operatingProfit": "= Left after ingredients",
+          "controllable": "− Costs you control",
+          "controllableProfit": "= Left after those",
+          "uncontrollable": "− Costs that rarely change",
           "netProfit": "= Net profit"
         }
       },
       "knowledge": {
-        "title": "Understand",
-        "titleAccent": "P&L Deeply",
-        "subtitle": "Know the logic behind the numbers and take control.",
-        "controlTitle": "Controllable vs fixed",
-        "controllableTitle": "Controllable",
-        "controllableBody": "Food, labor, ads, promos, utilities, and repairs can be changed. A large share of P&L control is in your hands.",
-        "uncontrollableTitle": "Less controllable",
-        "uncontrollableBody": "Rent, tax, insurance, and depreciation are more fixed. Focus first on expenses you can influence.",
-        "primeCostTitle": "What is Prime Cost?",
-        "primeCostBody": "The two largest restaurant costs are food and labor. Prime Cost is the most critical P&L metric. Widely used rule of thumb: keep it below {value}% of sales.",
+        "title": "The P&L",
+        "titleAccent": "in plain words",
+        "subtitle": "Know what is behind each number — and control your costs.",
+        "controlTitle": "Costs you control and costs you don’t",
+        "controllableTitle": "You control",
+        "controllableBody": "Ingredients, staff, advertising, free treats, utilities and repairs change with your decisions. Most of your costs sit here.",
+        "uncontrollableTitle": "Rarely change",
+        "uncontrollableBody": "Rent, taxes, insurance and depreciation stay about the same every month. Focus on the costs you control.",
+        "primeCostTitle": "What are main costs (ingredients + staff)?",
+        "primeCostBody": "A restaurant’s two biggest costs are ingredients and staff; together they are the main costs. Common rule: keep them at or below {value}% of sales.",
         "formula": "Formula",
         "primeCostFormula": {
-          "costs": "Food Cost + Labor Cost",
-          "result": "= Prime Cost",
-          "percent": "Prime Cost % = (FC + LC) ÷ Sales × 100"
+          "costs": "Ingredients + staff",
+          "result": "= Main costs",
+          "percent": "Main costs % = (ingredients + staff) ÷ sales × 100"
         },
         "warningTitle": "Warning signs",
         "warnings": {
-          "primeCost": "Prime cost above {prime}% (widely used rule of thumb) squeezes profit fast.",
-          "lowNet": "Net profit below {low}% is risky; one mistake can turn the month negative.",
-          "highRent": "Rent above {rent}% of sales (widely used rule of thumb) may mean the location is too expensive.",
-          "strongNet": "Net profit above 15% signals strong performance and room to invest."
+          "primeCost": "If main costs (ingredients + staff) are above {prime}% (common rule), profit shrinks fast.",
+          "lowNet": "If net profit is below {low}%, one bad month can push you into a loss.",
+          "highRent": "If rent is above {rent}% of sales (common rule), the location may be too expensive.",
+          "strongNet": "If net profit grows for several months in a row, you can start thinking about a new branch or product."
         }
       },
       "advice": {
-        "title": "DK Agency advice",
-        "body": "A restaurant that prepares P&L once a month is already ahead of most competitors. Real power comes from weekly tracking because trends appear earlier.",
+        "title": "DK Agency tip",
+        "body": "Preparing a P&L every month is already a big step. Look at it weekly and you will spot problems before the month ends.",
         "readArticle": "Read full article"
       },
       "ocaq": {
         "title": "OCAQ Panel",
-        "body": "Automatic P&L reports, food cost tracking, and labor cost analysis. Everything in one panel.",
+        "body": "P&L, food cost and staff cost — automatic, in one panel.",
         "cta": "Start free"
       },
       "ahilik": {
@@ -625,94 +611,89 @@
         "quote2": "\"The master must know his craft, the apprentice his notebook.\""
       },
       "related": {
-        "title": "Learn More",
+        "title": "Read more",
         "read": "Read",
         "articles": {
           "pnl": {
-            "title": "Can't Read P&L?",
+            "title": "Can’t read a P&L?",
             "slug": "pnl-oxuya-bilmirsen",
             "tag": "Finance"
           },
           "foodCost": {
-            "title": "The Hard Truth About Food Cost",
+            "title": "How to calculate the food cost of one portion",
             "slug": "1-porsiya-food-cost-hesablama",
             "tag": "Finance"
           },
           "breakEven": {
-            "title": "What Is Break-even Point?",
-            "slug": "basabas-noqtesi",
+            "title": "How to calculate the break-even point",
+            "slug": "basabas-noqtesi-hesablama",
             "tag": "Operations"
           }
         }
       }
     },
     "staffRetention": {
-      "navigation": {
-        "toolkit": "Toolkit"
-      },
-      "title": "Staff Retention",
-      "titleAccent": "Calculator",
-      "subtitle": "See your team turnover in numbers. Calculate the turnover rate, replacement cost per employee, and annual impact on your bottom line.",
-      "statEmployeeCount": "Employee count",
-      "statTurnoverRate": "Turnover rate",
-      "statReplacementCost": "Cost per replacement",
-      "statAnnualLoss": "Annual loss",
-      "calculatorTitle": "Turnover calculator",
-      "calculatorSubtitle": "Calculate staff turnover based on salary and team size.",
-      "reset": "Reset",
-      "labelEmployeeCount": "Employee count",
-      "labelAverageSalary": "Average salary (₼)",
-      "labelYearlyLeavers": "Employees leaving per year",
-      "financialImpactTitle": "Financial impact",
-      "turnoverRateLabel": "Turnover rate",
+      "title": "Staff retention calculator",
+      "subtitle": "Every employee who leaves costs you money. Work out the share of staff who left, the cost of replacing one person and the money lost per year.",
+      "statEmployeeCount": "Staff count",
+      "statTurnoverRate": "Share of staff who left",
+      "statReplacementCost": "Replacing one employee",
+      "statAnnualLoss": "Money lost per year",
+      "calculatorTitle": "What does staff leaving cost you?",
+      "calculatorSubtitle": "Enter three numbers: current staff count, average salary and how many people left last year.",
+      "labelEmployeeCount": "Current staff count",
+      "labelAverageSalary": "Average monthly salary (₼)",
+      "labelYearlyLeavers": "Staff who left in a year",
+      "financialImpactTitle": "Effect on money",
+      "turnoverRateLabel": "Share of staff who left (leavers per year ÷ staff count)",
       "turnoverRateBenchmark": "Compare this rate with your own previous year. No verified market average for Azerbaijan has been published.",
-      "replacementCostLabel": "Replacement cost per employee",
-      "replacementCostNote": "Industry guidelines suggest replacing one employee costs approximately 2-3 months of salary.",
-      "annualLossLabel": "Annual loss",
-      "annualLossNote": "This figure excludes training losses, order errors, and service quality decline. Real losses are higher.",
-      "actionPlanTitle": "Action plan",
+      "replacementCostLabel": "Cost of replacing one employee",
+      "replacementCostNote": "A widely used rule of thumb: finding and training a replacement for one leaver costs about 2–3 months of salary.",
+      "annualLossLabel": "Money lost per year",
+      "annualLossNote": "This excludes the new hire’s learning period, order mistakes and weaker service — the real loss is larger.",
+      "actionPlanTitle": "What to do",
       "stepPrefix": "Step",
-      "preShiftTitle": "Why does the pre-shift meeting work?",
-      "preShiftBody": "A 10-minute team huddle before each shift reduces surprises and stress, aligning everyone on VIP reservations, daily specials, and yesterday's issues. It is one of the cheapest yet highest-ROI staffing tools in Baku restaurants.",
-      "knowledgePanelBadge": "Knowledge panel",
-      "top5Title": "Top 5 reasons for leaving",
-      "dkAdviceLabel": "DK tip",
-      "dkAdviceBody": "If turnover grows year after year, the problem is usually the system rather than pay. Without documented hiring, onboarding, pre-shift and exit interview processes, building a stable team is very difficult.",
+      "preShiftTitle": "Why does a 10-minute meeting before the shift work?",
+      "preShiftBody": "Ten minutes with the team before every shift cuts surprises and stress: special bookings, the dish of the day and yesterday’s problem reach everyone the same way. It is one of the cheapest staff tools there is.",
+      "knowledgePanelBadge": "Good to know",
+      "top5Title": "5 main reasons staff leave",
+      "dkAdviceLabel": "DK Agency advice",
+      "dkAdviceBody": "If the share of staff leaving grows year after year, the cause is usually the way things are run, not pay. Until hiring, a new hire’s first weeks, the pre-shift meeting and a last talk with leavers are written down as rules, a stable team is hard to build.",
       "usefulLinksTitle": "Useful links",
-      "reason1": "Poor management and rude leadership",
-      "reason2": "No growth or promotion opportunities",
-      "reason3": "Feeling unrecognized and invisible",
-      "reason4": "Dissatisfaction with salary and tip system",
-      "reason5": "Poor work-life balance",
-      "strategy1": "Hire for attitude, teach skills later.",
-      "strategy2": "Create an onboarding, mentoring and cross-training plan for the first 2 weeks.",
-      "strategy3": "Offer staff meals, flexible scheduling and a recognition program in addition to salary.",
-      "strategy4": "Hold a 10-minute pre-shift meeting before every shift.",
-      "strategy5": "Share tip policies in writing and transparently.",
-      "strategy6": "Show career paths and salary tiers upfront.",
-      "strategy7": "Conduct exit interviews with every departing employee and look for patterns.",
-      "blogLink1Title": "7 Staff Retention Strategies",
+      "reason1": "Poor management and rude treatment",
+      "reason2": "No chance to grow or learn",
+      "reason3": "Work goes unnoticed and unthanked",
+      "reason4": "Unhappy with pay and how tips are split",
+      "reason5": "No balance between work and private life",
+      "strategy1": "Hire for character and attitude — skills can be taught later.",
+      "strategy2": "Plan a new hire’s first 2 weeks: an experienced colleague as a guide and training in several roles.",
+      "strategy3": "Beyond pay: staff meals, a flexible shift schedule and a way to thank people for good work.",
+      "strategy4": "Hold a 10-minute team meeting before every shift.",
+      "strategy5": "Announce how tips are split, in writing and open to everyone.",
+      "strategy6": "Show the steps for promotion and pay in advance.",
+      "strategy7": "Have a short talk with every leaver about why, and note the reasons that repeat.",
+      "blogLink1Title": "7 ways to keep your staff",
       "blogLink1Tag": "Blog",
-      "blogLink2Title": "P&L Simulator",
+      "blogLink2Title": "Monthly profit and loss (P&L)",
       "blogLink2Tag": "Tool",
       "blogLink3Title": "KAZAN AI",
       "blogLink3Tag": "AI",
-      "errNoEmployees": "With 0 employees there is no turnover rate — enter your headcount."
+      "errNoEmployees": "With 0 staff the rate cannot be calculated — enter the staff count."
     },
     "branding": {
       "navigation": {
         "toolkit": "Toolkit"
       },
-      "title": "Branding",
+      "title": "Branding guide",
       "titleAccent": "Guide",
-      "subtitle": "Go beyond your logo. Build your brand statement, visual identity and social media strategy step by step like a workbook.",
-      "statCompleted": "Completed",
-      "statProgressPct": "Progress",
-      "statVisualElements": "Visual elements",
-      "workbookTitle": "Branding workbook",
-      "workbookSubtitle": "Define your brand statement with a 12-item checklist.",
-      "checklistBadge": "Checklist",
-      "groupItemCount": "{count} items",
+      "subtitle": "First write down who your restaurant is: its name, its promise, who it serves, how it talks and which colours people know it by. Then use the 12-step list to carry that into the logo, the menu and social media.",
+      "statCompleted": "List items done",
+      "statProgressPct": "List progress",
+      "statVisualElements": "Look elements",
+      "workbookTitle": "12-step brand list",
+      "workbookSubtitle": "To carry the brand card into the logo, menu, staff and social media.",
+      "checklistBadge": "List",
+      "groupItemCount": "{count} steps",
       "visualElementsTitle": "7 elements of visual identity",
       "brandWhatBadge": "What is a brand?",
       "brandPromisesLabel": "Brand statement examples",
@@ -734,11 +715,11 @@
       "checklistExperienceItem3": "Train staff on brand language and service tone.",
       "checklistGrowthTitle": "Online and word-of-mouth",
       "checklistGrowthItem1": "Prepare social media post templates.",
-      "checklistGrowthItem2": "Update your Google Business profile.",
-      "checklistGrowthItem3": "Build a word-of-mouth plan with referrals, VIP perks and surprise moments.",
+      "checklistGrowthItem2": "Update your Google business profile.",
+      "checklistGrowthItem3": "Plan word of mouth: a bonus for bringing a friend, special care for regulars and small surprises.",
       "visualElement1": "Logo",
       "visualElement2": "Color palette",
-      "visualElement3": "Typography",
+      "visualElement3": "Fonts",
       "visualElement4": "Photography style",
       "visualElement5": "Menu design",
       "visualElement6": "Social media templates",
@@ -753,74 +734,97 @@
       "brandPromise2": "Fast, affordable, filling lunch — perfect for a workday.",
       "brandPromise3": "A modern take on Azerbaijani cuisine — for special evenings.",
       "social1": "Instagram: build brand recognition through visual and atmosphere content.",
-      "social2": "TikTok: grow reach with short kitchen and service videos.",
-      "social3": "Google Business: don't neglect search, maps and review management.",
+      "social2": "TikTok: short kitchen and service videos to reach more people.",
+      "social3": "Google business profile: show up in search and maps, reply to reviews.",
       "social4": "80/20 rule: 80% value-driven content, 20% sales-oriented content.",
       "blogLink1Title": "Restaurant Branding Concept",
       "blogLink1Tag": "Blog",
       "blogLink2Title": "Menu Matrix",
       "blogLink2Tag": "Tool",
       "blogLink3Title": "KAZAN AI",
-      "blogLink3Tag": "AI"
+      "blogLink3Tag": "AI",
+      "cardTitle": "Brand card",
+      "cardSubtitle": "Fill in five fields — before you pay for a logo.",
+      "cardField_name": "Brand name",
+      "cardHelp_name": "The name guests will remember.",
+      "cardPlaceholder_name": "e.g. Grandma’s Kitchen",
+      "cardField_promise": "In one sentence: what do you sell and why buy it from you?",
+      "cardHelp_promise": "This is your brand promise — the same on the menu, the sign and social media.",
+      "cardPlaceholder_promise": "e.g. home cooking in Narimanov, lunch on the table in 15 minutes",
+      "cardField_guest": "Who is your main guest?",
+      "cardHelp_guest": "Age, when and why they come.",
+      "cardPlaceholder_guest": "e.g. people from nearby offices on their lunch break",
+      "cardField_tone": "How do you talk? (3 words)",
+      "cardHelp_tone": "One tone on the menu, on the phone and on social media.",
+      "cardPlaceholder_tone": "e.g. warm, simple, sincere",
+      "cardField_colors": "Main colours (2–3)",
+      "cardHelp_colors": "The same colours on the logo, menu, uniforms and packaging.",
+      "cardPlaceholder_colors": "e.g. dark red, cream",
+      "cardExampleName": "Grandma’s Kitchen (example)",
+      "cardExamplePromise": "Home cooking in Narimanov: dushbara, dolma, qutab — lunch on the table in 15 minutes.",
+      "cardExampleGuest": "People aged 25–45 from nearby offices, on their lunch break.",
+      "cardExampleTone": "warm, simple, sincere",
+      "cardExampleColors": "dark red, cream, walnut",
+      "statCardFilled": "Brand card filled in"
     },
     "basabas": {
       "navigation": {
         "toolkit": "Toolkit"
       },
-      "branchTitle": "Branch opening model",
-      "branchSubtitle": "Check the opening decision with CAPEX, tax, ramp-up, break-even, Prime Cost, RevPASH and cash runway.",
-      "formatLabel": "Format",
+      "branchTitle": "New branch: how much money you need",
+      "branchSubtitle": "Check the opening cost (fit-out, equipment), tax, the slow sales growth of the first months, the break-even point and how many months your money lasts.",
+      "formatLabel": "Type of venue",
       "formats": {
         "coffee": "Coffee shop",
-        "cafe": "Cafe",
-        "fastFood": "Fast Food / QSR",
+        "cafe": "Café",
+        "fastFood": "Fast food",
         "bar": "Bar",
-        "lounge": "Lounge",
-        "fineDining": "Fine Dining"
+        "lounge": "Lounge café",
+        "fineDining": "Upscale restaurant"
       },
       "areaLabel": "Area (m²)",
-      "seatsLabel": "Seat count",
-      "openingBudgetLabel": "Opening budget (₼)",
+      "seatsLabel": "Seats",
+      "openingBudgetLabel": "Money for the opening (₼)",
       "branchRentLabel": "Monthly rent (₼)",
-      "dailyChecksLabel": "Daily check count",
-      "rentTaxTypeLabel": "Lease tax type",
-      "rentTaxIndividual": "Individual (14%)",
-      "rentTaxLegal": "Legal entity (0%)",
-      "branchInventoryDaysLabel": "Opening inventory days",
-      "labelFitoutPerSqm": "Fit-out / m² (₼)",
-      "labelVentilationPerSqm": "Ventilation / m² (₼)",
-      "labelFurniturePerSeat": "Furniture / seat (₼)",
+      "dailyChecksLabel": "Checks per day",
+      "rentTaxTypeLabel": "Landlord (for tax)",
+      "rentTaxIndividual": "Individual (14% tax)",
+      "rentTaxLegal": "Company (0%)",
+      "branchInventoryDaysLabel": "Days of ingredient stock at opening",
+      "labelFitoutPerSqm": "Fit-out per m² (₼)",
+      "labelVentilationPerSqm": "Ventilation per m² (₼)",
+      "labelFurniturePerSeat": "Furniture per seat (₼)",
       "labelKitchenEquipment": "Kitchen equipment (₼)",
       "labelBarEquipment": "Bar equipment (₼)",
       "labelDocumentsCost": "Documents and notary (₼)",
-      "labelOpeningMarketingPct": "Opening marketing %",
-      "labelUnexpectedPct": "Unexpected cost %",
-      "labelBranchStaffCosts": "Staff cost (₼)",
-      "labelStartWorkingCapitalPct": "Starting working capital %",
-      "branchValidationError": "For the branch model, budget, area, seats and daily checks must be above zero.",
-      "branchStatTotalCapex": "Total CAPEX",
-      "branchStatOpeningInvestment": "Opening investment",
-      "branchStatWorkingCapital": "Working capital",
-      "branchStatTaxBurden": "Tax burden",
-      "branchStatPrimeCost": "Prime Cost",
-      "branchStatEbitda": "EBITDA",
+      "labelOpeningMarketingPct": "Opening advertising (% of fit-out and equipment)",
+      "labelUnexpectedPct": "Unexpected costs (% of fit-out and equipment)",
+      "labelBranchStaffCosts": "Staff cost per month (₼)",
+      "labelStartWorkingCapitalPct": "Starting running cash (% of opening cost)",
+      "branchValidationError": "To calculate, budget, area, seats and checks per day must be above 0.",
+      "branchStatTotalCapex": "Opening cost (fit-out, equipment)",
+      "branchStatOpeningInvestment": "Money put into the opening",
+      "branchStatWorkingCapital": "Running cash (stock, deposit, reserve)",
+      "branchStatTaxBurden": "Tax",
+      "branchStatPrimeCost": "Main costs (ingredients + staff)",
+      "branchStatEbitda": "Monthly profit (before tax and depreciation)",
       "branchStatNetProfit": "Net profit",
-      "branchStatPayback": "Payback",
-      "branchStatRunway": "Runway",
-      "branchStatCashRunway": "Cash runway",
-      "branchStatRampLoss": "Ramp-up loss",
-      "branchStatRentShare": "Rent share",
-      "capexTitle": "Capital expenditure (CAPEX)",
+      "branchStatPayback": "Time to get your money back",
+      "branchStatRunway": "Months the money lasts (incl. running cash)",
+      "branchStatCashRunway": "Months the money lasts (cash left only)",
+      "branchStatRampLoss": "Loss of the first months (sales grow slowly)",
+      "branchStatRentShare": "Rent as share of sales",
+      "capexTitle": "Opening cost (fit-out, equipment)",
       "benchmarkTitle": "Health indicators",
       "benchmark": {
-        "primeCost": "Prime Cost",
+        "primeCost": "Main costs (ingredients + staff)",
         "rentShare": "Rent share",
-        "ebitda": "EBITDA",
-        "payback": "Payback"
+        "ebitda": "Monthly profit",
+        "payback": "Time to get money back"
       },
       "benchmarkState": {
         "primeCost": {
-          "green": "Green zone",
+          "green": "Normal",
           "amber": "Watch",
           "red": "Risk"
         },
@@ -831,7 +835,7 @@
         },
         "ebitda": {
           "green": "Strong",
-          "amber": "Monitor",
+          "amber": "Keep an eye on it",
           "red": "Weak"
         },
         "payback": {
@@ -842,39 +846,39 @@
       },
       "scenarioTitle": "3 scenarios",
       "scenario": {
-        "base": "Base",
-        "conservative": "Conservative",
-        "optimistic": "Optimistic"
+        "base": "Middle",
+        "conservative": "Cautious",
+        "optimistic": "Good"
       },
-      "branchReportTitle": "Branch opening financial report",
+      "branchReportTitle": "New branch: financial report",
       "branchReportGeneratedAt": "Generated: {date}",
-      "branchReportMethodology": "All figures are calculated from inputs and deterministic formulas. Sales are not treated as profit or free cash.",
-      "title": "Break-even",
+      "branchReportMethodology": "All figures are calculated from your inputs with fixed formulas. Sales are neither profit nor money you can spend.",
+      "title": "Break-even point",
       "titleAccent": "Point",
-      "subtitle": "3 key numbers: monthly minimum revenue, daily customer target and safety margin.",
+      "subtitle": "How much do you need to sell each month to avoid a loss? How many customers a day, and is there enough money to open?",
       "statBreakEven": "Break-even point",
-      "statMonthlyMin": "monthly minimum",
-      "statDailyCustomers": "Daily customers",
+      "statMonthlyMin": "minimum sales per month",
+      "statDailyCustomers": "Customers needed per day",
       "statPersonSuffix": "people",
-      "statAvgCheck": "avg check",
-      "statSafetyMargin": "Safety margin",
+      "statAvgCheck": "average check",
+      "statSafetyMargin": "Cushion (distance to a loss)",
       "statFixedCosts": "Fixed costs",
       "statMonthlyCost": "monthly total",
-      "statusSafe": "In the safe zone",
-      "statusWarning": "Caution",
+      "statusSafe": "Safe",
+      "statusWarning": "Watch",
       "statusDanger": "Loss zone",
       "fixedCostsTitle": "Fixed costs (monthly)",
-      "reset": "Reset",
+      "reset": "Clear",
       "labelRent": "Rent (₼)",
       "labelSalaries": "Salaries (₼)",
       "labelUtilities": "Utilities (₼)",
-      "labelOtherFixed": "Other fixed (₼)",
-      "variableParamsTitle": "Variable costs and parameters",
-      "labelVariablePct": "Variable cost %",
+      "labelOtherFixed": "Other fixed costs (₼)",
+      "variableParamsTitle": "Variable costs and sales",
+      "labelVariablePct": "Variable costs (% of sales)",
       "labelAvgCheck": "Average check (₼)",
-      "labelCurrentSales": "Current sales (₼)",
-      "planningTitle": "Business financial plan",
-      "labelBusinessType": "Business type",
+      "labelCurrentSales": "Current monthly sales (₼)",
+      "planningTitle": "Existing or planned business",
+      "labelBusinessType": "Type of business",
       "businessTypes": {
         "cafe": "Cafe",
         "restaurant": "Restaurant",
@@ -889,288 +893,247 @@
         "retail": "transactions",
         "service": "orders"
       },
-      "labelAvailableBudget": "Available budget (₼)",
-      "labelOpeningInvestment": "Opening investment (₼)",
-      "labelOperatingDays": "Operating days / month",
-      "workingCapitalTitle": "Net working capital",
-      "workingCapitalHelp": "Sales are cash received, not profit or free cash. Inventory, receivables, supplier terms, deposits, ramp-up losses, and cash reserve are calculated separately.",
-      "labelInventoryDays": "Inventory days",
-      "labelReceivableDays": "Receivable days",
-      "labelPayableDays": "Supplier payment days",
+      "labelAvailableBudget": "Money you have (₼)",
+      "labelOpeningInvestment": "Money to spend on the opening (₼)",
+      "labelOperatingDays": "Working days per month",
+      "workingCapitalTitle": "Running cash",
+      "workingCapitalHelp": "Sales are money coming into the till — not profit and not money you can spend. The tool counts stock, late customer payments, supplier credit, deposits, the loss of the first months and the reserve separately.",
+      "labelInventoryDays": "Ingredient stock (days)",
+      "labelReceivableDays": "Days until the customer pays",
+      "labelPayableDays": "Days until you pay the supplier",
       "labelDeposits": "Deposits and prepayments (₼)",
-      "labelRampMonths": "Ramp-up period (months)",
-      "labelOpeningSalesPct": "First-month sales capacity %",
-      "labelReserveMonths": "Cash reserve (months)",
-      "validationError": "Budget, sales, average transaction, and operating days must be above zero for a valid report.",
-      "statWorkingCapital": "Required working capital",
-      "statTotalFunding": "Total funding need",
-      "statFundingGap": "Funding gap",
-      "statRunway": "Post-opening cash runway",
-      "statPayback": "Payback period",
-      "statMonthlyProfit": "Monthly operating result",
+      "labelRampMonths": "Months until sales are normal",
+      "labelOpeningSalesPct": "First-month sales (% of normal)",
+      "labelReserveMonths": "Reserve (months of costs)",
+      "validationError": "To calculate, budget, sales, average check and working days must be above 0.",
+      "statWorkingCapital": "Running cash needed",
+      "statTotalFunding": "Total money needed",
+      "statFundingGap": "Money missing",
+      "statRunway": "Months the money lasts after opening",
+      "statPayback": "Time to get your money back",
+      "statMonthlyProfit": "Monthly result",
       "months": "months",
       "notAvailable": "not available",
       "breakdown": {
-        "inventory": "Inventory funding",
-        "receivables": "Receivables funding",
-        "supplierFinancing": "Supplier financing",
+        "inventory": "Ingredient stock",
+        "receivables": "Late customer payments",
+        "supplierFinancing": "Supplier credit (saving)",
         "deposits": "Deposits and prepayments",
-        "rampLoss": "Ramp-up loss",
-        "reserve": "Operating reserve"
+        "rampLoss": "Loss of the first months",
+        "reserve": "Reserve"
       },
       "verdicts": {
         "go": {
-          "title": "Financially viable",
-          "body": "Based on the entered figures, capital and operating margin support opening."
+          "title": "Money-wise you can open",
+          "body": "Based on your figures, both the money and the monthly profit are enough for the opening."
         },
         "conditional": {
-          "title": "Conditionally viable",
-          "body": "The model can work, but opening is risky until the conditions below are resolved."
+          "title": "You can open — with conditions",
+          "body": "The plan can work, but opening is risky until the points below are solved."
         },
         "no-go": {
           "title": "Do not open yet",
-          "body": "Available capital or unit economics cannot currently absorb the opening losses."
+          "body": "Your money, or what is left from each sale, is not enough to cover the loss of the first months."
         }
       },
-      "conditionsTitle": "Opening conditions",
+      "conditionsTitle": "Conditions for opening",
       "conditions": {
-        "closeFundingGap": "Close the funding gap; do not treat forecast sales as capital available today.",
-        "raiseSafetyMargin": "Raise sales or reduce costs until the safety margin reaches at least 20%.",
-        "buildReserve": "Build a protected cash reserve equal to at least 2 months of fixed costs.",
-        "fixUnitEconomics": "Do not open until the monthly operating result is positive.",
-        "shortenCashCycle": "Shorten customer receivable terms or negotiate longer supplier terms.",
-        "ready": "Core financial conditions pass based on the entered figures. Refresh assumptions monthly."
+        "closeFundingGap": "Find the missing money; do not treat future sales as money you can spend now.",
+        "raiseSafetyMargin": "Raise sales or cut costs so the cushion is at least 20%.",
+        "buildReserve": "Keep an untouchable reserve of at least 2 months of fixed costs.",
+        "fixUnitEconomics": "Do not open until the monthly result is positive.",
+        "shortenCashCycle": "Collect money from customers faster or agree longer payment terms with suppliers.",
+        "ready": "Based on your figures, the main financial conditions are met. Update the figures every month."
       },
       "sensitivityTitle": "What would improve the result?",
       "sensitivities": {
-        "rent": "Reduce rent by {change}%: break-even {breakEven} AZN, {daily} daily transactions, {profit} AZN monthly result.",
-        "ticket": "Raise average transaction by {change}%: break-even {breakEven} AZN, {daily} daily transactions, {profit} AZN monthly result.",
-        "variable-cost": "Reduce variable cost by {change} points: break-even {breakEven} AZN, {daily} daily transactions, {profit} AZN monthly result."
+        "rent": "Cut rent by {change}%: break-even {breakEven} ₼, {daily} checks a day, monthly result {profit} ₼.",
+        "ticket": "Raise the average check by {change}%: break-even {breakEven} ₼, {daily} checks a day, monthly result {profit} ₼.",
+        "variable-cost": "Cut variable costs by {change} percentage points: break-even {breakEven} ₼, {daily} checks a day, monthly result {profit} ₼."
       },
-      "downloadReport": "Download HTML report",
+      "downloadReport": "Download report (HTML)",
       "report": {
-        "title": "DK financial viability report",
+        "title": "DK financial report",
         "generatedAt": "Generated: {date}",
-        "fundingTitle": "Capital and cash requirement",
-        "operatingTitle": "Operating economics",
-        "methodology": "All figures are calculated from user inputs and deterministic formulas. This document is not a financing or investment guarantee; forecast sales are not treated as cash on hand."
+        "fundingTitle": "Money needed",
+        "operatingTitle": "Monthly operation",
+        "methodology": "All figures are calculated from your inputs with fixed formulas. This document is not a financial or investment guarantee; a sales forecast is not counted as cash."
       },
-      "contributionLabel": "Contribution ratio",
-      "idealMarginLabel": "Ideal margin",
+      "contributionLabel": "Left from each sale",
+      "idealMarginLabel": "Recommended cushion",
       "calcPeriodLabel": "Calculation period",
       "calcPeriodValue": "30 days",
-      "educationTitle": "Understanding",
-      "educationTitleAccent": "Break-even",
-      "educationSubtitle": "Running a restaurant without knowing your revenue floor is a risky game.",
-      "whatTitle": "What is break-even?",
-      "whatBody": "The break-even point is the minimum revenue at which a restaurant makes neither profit nor loss. Every month below this figure is a loss.",
+      "educationTitle": "Break-even",
+      "educationTitleAccent": "in plain words",
+      "educationSubtitle": "Running a restaurant without knowing your minimum sales is risky.",
+      "whatTitle": "What is the break-even point?",
+      "whatBody": "It is the monthly sales amount at which the restaurant neither earns nor loses. Every month below it ends in a loss.",
       "formulaLabel": "Formula",
       "formulaLine1": "Fixed costs",
-      "formulaLine2": "÷ Contribution Margin %",
-      "formulaResult": "= Break-even revenue (₼)",
-      "formulaCm": "CM% = 100% - Variable cost%",
-      "fixedVsVariableTitle": "Fixed vs variable costs",
+      "formulaLine2": "÷ Share left from each sale %",
+      "formulaResult": "= Break-even sales (₼)",
+      "formulaCm": "Share left % = 100% − variable costs %",
+      "fixedVsVariableTitle": "Fixed and variable costs",
       "fixedVsVariableSubtitle": "Fixed costs don't change even when sales do.",
       "fixedCostsLabel": "Fixed costs",
-      "fixedCostsDesc": "Rent, salaries, insurance, loan payments, licenses. These are paid even when sales are zero.",
+      "fixedCostsDesc": "Rent, wages, insurance, loan payments, licences. Paid even with zero sales.",
       "variableCostsLabel": "Variable costs",
-      "variableCostsDesc": "Food, beverages, packaging, delivery. These grow as sales grow.",
-      "contributionMarginLabel": "Contribution Margin",
-      "contributionMarginDesc": "What remains after subtracting variable costs from sales goes toward covering fixed costs.",
-      "safetyMarginTitle": "Safety margin",
-      "safetyMarginBody": "Shows how far current sales are above break-even. If below 20%, you are in the risk zone.",
-      "marginLevelsLabel": "Margin levels",
-      "marginSafe": "≥20% - Safe zone",
-      "marginWarning": "0-20% - Caution zone",
-      "marginDanger": "<0% - You are losing money",
-      "dkAdviceTitle": "DK Agency Tip",
-      "dkAdviceBody": "Track break-even weekly, not just monthly. Problems usually start mid-month, not at month's end.",
+      "variableCostsDesc": "Ingredients, drinks, packaging, delivery. They grow as sales grow.",
+      "contributionMarginLabel": "Left from each sale",
+      "contributionMarginDesc": "What remains after variable costs (ingredients, packaging) pays the fixed costs.",
+      "safetyMarginTitle": "Cushion",
+      "safetyMarginBody": "Shows how far current sales are above break-even. Below 20% means you are in the risk zone.",
+      "marginLevelsLabel": "Cushion levels",
+      "marginSafe": "≥20% — safe",
+      "marginWarning": "0–20% — watch",
+      "marginDanger": "<0% — you are losing money",
+      "dkAdviceTitle": "DK Agency tip",
+      "dkAdviceBody": "Check break-even weekly, not monthly: problems usually start in the middle of the month, not at the end.",
       "readArticle": "Read full article",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqBody": "Automatically track break-even revenue, daily customer targets and sales gaps in one dashboard.",
+      "ocaqBody": "Break-even sales, the daily customer target and the sales gap — tracked automatically in the panel.",
       "ocaqCta": "Go to OCAQ Panel",
-      "learnMoreTitle": "Learn More",
-      "article1Title": "Break-even Point Calculation",
+      "learnMoreTitle": "Read more",
+      "article1Title": "How to calculate the break-even point",
       "article1Tag": "Finance",
       "article1Slug": "basabas-noqtesi-hesablama",
-      "article2Title": "Can't Read a P&L?",
+      "article2Title": "Can’t read a P&L?",
       "article2Tag": "Finance",
       "article2Slug": "pnl-oxuya-bilmirsen",
-      "article3Title": "The Bloody Truth About Food Cost",
+      "article3Title": "How to calculate the food cost of one portion",
       "article3Tag": "Finance",
       "article3Slug": "1-porsiya-food-cost-hesablama",
       "readLabel": "Read"
     },
     "deliveryCalc": {
-      "navigation": {
-        "toolkit": "Toolkit"
-      },
-      "title": "Delivery",
-      "titleAccent": "Commission Calculator",
-      "subtitle": "Compare Wolt, Bolt Food and Yango scenarios active in Baku against your own delivery channel. See instantly how real margin changes when commission hits 30% or more.",
-      "platformOwn": "Own delivery",
+      "title": "Delivery commission calculator",
+      "subtitle": "Wolt, Bolt Food, Yango and your own courier: what you keep from one order after commission, food and packaging.",
+      "platformOwn": "Own courier",
       "statOrderValue": "Order value",
       "statCommission": "Commission",
-      "statFoodCost": "Food cost",
-      "statMonthlyOrders": "Monthly orders",
-      "calculatorTitle": "Delivery calculator",
-      "calculatorSubtitle": "Change the platform and cost structure, see the result instantly.",
-      "reset": "Reset",
-      "platformSelectionLabel": "Platform selection",
-      "defaultCommission": "Default commission",
-      "labelOrderValue": "Order value (₼)",
-      "labelCommissionPct": "Commission rate (%)",
-      "labelFoodCostPct": "Food cost rate (%)",
-      "labelPackagingCost": "Packaging cost (₼)",
-      "labelLaborCost": "Labor cost (₼)",
-      "labelDailyOrders": "Daily order count",
-      "comparisonTitle": "Dine-in vs delivery",
-      "comparisonSubtitle": "What remains from the same order per platform.",
+      "statFoodCost": "Food cost (share spent on ingredients)",
+      "statMonthlyOrders": "Orders per month",
+      "calculatorTitle": "What is left from an order?",
+      "calculatorSubtitle": "Pick the platform, enter your own numbers — the result updates at once.",
+      "platformSelectionLabel": "Which channels do you sell through?",
+      "defaultCommission": "Example commission",
+      "labelOrderValue": "Average order value (₼)",
+      "labelFoodCostPct": "Food cost — share spent on ingredients (%)",
+      "labelPackagingCost": "Packaging per order (₼)",
+      "labelLaborCost": "Staff cost per order (₼)",
+      "labelDailyOrders": "Orders per day",
+      "labelCommissionFor": "{platform} commission (%)",
+      "comparisonTitle": "Dine-in and delivery side by side",
+      "comparisonSubtitle": "What you keep from the same order in each channel.",
       "colChannel": "Channel",
-      "colSales": "Sales",
+      "colSales": "Sale",
       "colCommission": "Commission",
-      "colFoodCost": "Food cost",
-      "colOther": "Other",
-      "colNet": "Net",
-      "dineInLabel": "Dine-in sales",
-      "monthlyPnlTitle": "Monthly delivery P&L",
-      "monthlyPnlSubtitle": "How monthly net result changes as order volume grows.",
+      "colFoodCost": "Ingredients",
+      "colOther": "Packaging + staff",
+      "colNet": "You keep",
+      "dineInLabel": "Dine-in sale",
+      "monthlyPnlTitle": "What delivery leaves you per month",
       "ordersPerDay": "orders/day",
       "days": "days",
-      "monthlyNetLabel": "Monthly net result",
-      "deliveryMathTitle": "Delivery math",
-      "deliveryMathBody": "Baku has 3 active lines: Wolt, Bolt Food and Yango. Merchant commission is not published as a fixed price list — it varies by contract, promo package and category. That is why this calculator works with manual rates.",
-      "tipsTitle": "7 ways to make it profitable",
-      "tip1": "Build a separate delivery menu and remove items that lose quality in transit.",
-      "tip2": "Keep delivery prices 10-20% higher than dine-in.",
-      "tip3": "Increase average order value with combos and set menus.",
-      "tip4": "Standardise packaging sizes and buy in bulk.",
-      "tip5": "In promo campaigns, calculate separately who absorbs the discount.",
-      "tip6": "Start tracking platform P&L separately from your main till.",
-      "tip7": "Over time, migrate loyal customers to your own channel: website, WhatsApp, call-center.",
-      "contractQuestionsTitle": "7 questions before signing a contract",
-      "contractQ1": "Is the commission fixed, or does it vary by promo and category?",
-      "contractQ2": "What share of discount campaigns does the restaurant absorb?",
-      "contractQ3": "What is the payment cycle and cut-off date?",
-      "contractQ4": "Is there a penalty or notice period for exiting the contract?",
-      "contractQ5": "Can you set separate prices on the delivery menu?",
-      "contractQ6": "Are boost, advertising and visibility tools paid extras?",
-      "contractQ7": "How is liability divided for refunds and complaints?",
-      "dkAdviceLabel": "DK Agency tip",
-      "dkAdviceBody": "Manage delivery as a separate unit economics line, not as \"extra volume\". If price, promo and packaging are not visible in the same table, high sales can still mean low profit.",
+      "monthlyNetLabel": "You keep per month",
+      "deliveryMathTitle": "Where does the commission rate come from?",
+      "deliveryMathBody": "Three large platforms operate in Baku: Wolt, Bolt Food and Yango. The rate they charge restaurants is not published as an open price list — it depends on the contract, promotions and dish type. So you take the rate from your own contract and enter it; the 30% and 10% on the cards are only examples.",
+      "tipsTitle": "7 ways to make delivery profitable",
+      "tip1": "Build a separate delivery menu: drop dishes that go cold or get crushed on the way.",
+      "tip2": "Price delivery a little above the dine-in menu (for example 10% — work it out from your commission).",
+      "tip3": "Sets (dish + drink + dessert) raise the average order value.",
+      "tip4": "Cut packaging down to a few standard sizes and buy in bulk.",
+      "tip5": "In a promotion, work out separately who pays for the discount — you or the platform.",
+      "tip6": "Track each platform’s income and costs apart from the main till.",
+      "tip7": "Over time, move regular customers to your own channel: website, WhatsApp, phone.",
+      "contractQuestionsTitle": "7 questions before you sign",
+      "contractQ1": "Is the commission fixed, or does it change with promotions and dish type?",
+      "contractQ2": "Which part of a promotion discount does the restaurant pay?",
+      "contractQ3": "On which dates is money paid out, and when is the commission deducted?",
+      "contractQ4": "Is there a penalty for leaving the contract, and how many days’ notice is needed?",
+      "contractQ5": "Can delivery menu prices differ from dine-in prices?",
+      "contractQ6": "Are advertising, promotion and visibility services charged separately?",
+      "contractQ7": "Who is responsible for refunds and complaints?",
+      "dkAdviceLabel": "DK Agency advice",
+      "dkAdviceBody": "Do not treat delivery as “extra sales” — run the numbers on it as a separate business. If price, discounts and packaging are not in one table, even high sales can leave little profit.",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqBody": "Connect your delivery line to the OCAQ workflow to track per-platform P&L, campaign impact, order margin and combo performance field by field.",
-      "ocaqCta": "Go to Panel",
-      "learnMoreTitle": "Related content",
-      "blogLink1Title": "Wolt / Bolt Commission Math",
+      "ocaqBody": "Track each platform’s income and costs, the effect of promotions and what is left from every order in the OCAQ panel.",
+      "ocaqCta": "Go to the panel",
+      "learnMoreTitle": "On this topic",
+      "blogLink1Title": "How Wolt and Bolt commission adds up",
       "blogLink1Tag": "Blog",
-      "blogLink2Title": "P&L Simulator",
+      "blogLink2Title": "Monthly profit and loss (P&L)",
       "blogLink2Tag": "Tool",
-      "blogLink3Title": "Food Cost Calculator",
+      "blogLink3Title": "Food cost calculator",
       "blogLink3Tag": "Tool",
-      "readLabel": "View",
-      "labelCommissionFor": "{platform} commission (%)"
+      "readLabel": "Open"
     },
     "menuMatrix": {
-      "navigation": {
-        "toolkit": "Toolkit"
-      },
-      "title": "Menu",
-      "titleAccent": "Matrix",
-      "subtitle": "Sort your dishes into 4 categories — what to keep, what to cut, what to promote. Menu engineering with the BCG matrix.",
-      "catStarLabel": "Star",
-      "catStarAdvice": "Keep it, raise the price and move it to a more prominent position on the menu.",
-      "catPlowHorseLabel": "Plow Horse",
-      "catPlowHorseAdvice": "Reduce cost, optimise portion size and garnish.",
-      "catPuzzleLabel": "Puzzle",
-      "catPuzzleAdvice": "Increase promotion, add waiter recommendations and visibility.",
-      "catDogLabel": "Dog",
-      "catDogAdvice": "Remove from the menu or completely rethink the recipe.",
-      "defaultItem1": "Chicken Sac",
+      "title": "Menu matrix",
+      "subtitle": "Enter each dish's sales count and what you earn on one portion — the tool shows which dish to keep, where to fix the price, what to promote and what to remove.",
+      "catKeepLabel": "Keep",
+      "catKeepSub": "Sells a lot · high earnings",
+      "catKeepAdvice": "Keep the recipe and price, place it where guests see it in the menu.",
+      "catFixLabel": "Fix the price",
+      "catFixSub": "Sells a lot · low earnings",
+      "catFixAdvice": "Raise the price a little or cut the ingredient cost: portion, side dish, supplier.",
+      "catPromoteLabel": "Promote",
+      "catPromoteSub": "Sells little · high earnings",
+      "catPromoteAdvice": "Have waiters recommend it, show it early in the menu and with a photo.",
+      "catRemoveLabel": "Remove",
+      "catRemoveSub": "Sells little · low earnings",
+      "catRemoveAdvice": "Take it off the menu or rework the recipe completely.",
+      "catEmptyLabel": "Enter sales and earnings",
+      "defaultItem1": "Chicken saj",
       "defaultItem2": "Doner",
-      "defaultItem3": "Caesar Salad",
+      "defaultItem3": "Caesar salad",
       "defaultItem4": "Steak",
-      "defaultItem5": "Soup",
+      "defaultItem5": "Lentil soup",
       "defaultItem6": "Tiramisu",
-      "itemListTitle": "Food List",
-      "avgSalesLabel": "Popularity threshold (70% of avg sales)",
-      "avgMarginLabel": "Sales-weighted avg margin",
-      "reset": "Reset",
-      "colFoodName": "Food name",
+      "itemListTitle": "Dishes",
+      "avgSalesLabel": "«Sells a lot» threshold (70% of average sales)",
+      "avgMarginLabel": "Average earnings (weighted by sales)",
+      "colFoodName": "Dish",
       "colSalesCount": "Sales count",
-      "colContributionMargin": "Contribution Margin (₼)",
-      "colCategory": "Category",
-      "colAdvice": "Recommendation",
-      "foodNamePlaceholder": "Food name",
-      "addItem": "Add item",
-      "educationTitle": "Understanding Menu",
-      "educationTitleAccent": "Engineering",
-      "educationSubtitle": "Manage your menu with data, not intuition.",
-      "whatIsTitle": "What Is Menu Engineering?",
-      "whatIsBody1": "Menu engineering means analysing dishes by",
-      "whatIsBodyBold1": "sales volume",
-      "whatIsBody2": "and",
-      "whatIsBodyBold2": "profit margin",
-      "whatIsBody3": "to optimise the menu.",
-      "processLabel": "Process",
-      "processStep1": "1. Collect sales data",
-      "processStep2": "2. Calculate CM for each dish",
-      "processStep3": "3. Compare with the 70% popularity threshold and the sales-weighted margin",
-      "processStep4": "4. Assign to 4 categories",
-      "bcgTitle": "BCG Matrix",
-      "bcgSubtitle": "The Boston Consulting Group matrix adapted for restaurants:",
-      "bcgStarDesc": "High sales + high margin",
-      "bcgPlowHorseDesc": "High sales + low margin",
-      "bcgPuzzleDesc": "Low sales + high margin",
-      "bcgDogDesc": "Low sales + low margin",
-      "strategiesTitle": "Strategies",
-      "strategyStarVerb": "Protect",
-      "strategyStarBody": "Raise the price, move it to front of menu, have waiters recommend it.",
-      "strategyPlowHorseVerb": "Optimise",
-      "strategyPlowHorseBody": "Reduce cost, shrink portion size, change the garnish.",
-      "strategyPuzzleVerb": "Promote",
-      "strategyPuzzleBody": "Increase menu visibility, add set and recommendation mechanics.",
-      "strategyDogVerb": "Remove",
-      "strategyDogBody": "Delete from menu or completely rethink the recipe.",
-      "dkAdviceLabel": "DK Agency Tip",
-      "dkAdviceBody1": "In a menu,",
-      "dkAdviceBodyBold": "20% of dishes generate 80% of sales.",
-      "dkAdviceBody2": "If you don't measure this rule every month, you'll be subsidising weak dishes with strong ones.",
-      "readArticle": "Read full article",
-      "ocaqTitle": "OCAQ Panel",
-      "ocaqBody": "Calculate the menu matrix automatically, pull sales data from your POS and track trends in real time.",
+      "colContributionMargin": "Earnings per portion (₼)",
+      "colContributionMarginShort": "Earnings per portion (₼)",
+      "marginHelp": "selling price − ingredient cost",
+      "colCategory": "What to do",
+      "foodNamePlaceholder": "e.g. Chicken saj",
+      "addItem": "Add a dish",
+      "removeItem": "Remove dish",
+      "ruleLabel": "Rule of thumb",
+      "ruleBody": "In many restaurants a handful of dishes bring most of the sales. Whether that is true for you, only your own sales figures can tell. Update the table once a month: keep what earns, remove what only takes up space.",
+      "readArticle": "Read the article",
+      "ocaqTitle": "OCAQ panel",
+      "ocaqBody": "If you don't want to fill in this table by hand every month, track your menu and sales in one place in the OCAQ panel.",
       "ocaqCta": "Start free",
-      "learnMoreTitle": "Learn More",
-      "blogLink1Title": "Menu Engineering: Stars and Dogs",
+      "learnMoreTitle": "Read more",
+      "blogLink1Title": "Menu engineering: which dish to keep, which to remove",
       "blogLink1Tag": "Operations",
-      "blogLink2Title": "The Bloody Truth About Food Cost",
+      "blogLink2Title": "How to calculate the cost of one portion",
       "blogLink2Tag": "Finance",
-      "blogLink3Title": "Can't Read a P&L?",
+      "blogLink3Title": "How to read a profit and loss (P&L) report",
       "blogLink3Tag": "Finance",
-      "readLabel": "Read",
-      "catStarSub": "Popular · high margin",
-      "catPlowHorseSub": "Popular · low margin",
-      "catPuzzleSub": "Low sales · high margin",
-      "catDogSub": "Low sales · low margin",
-      "removeItem": "Remove item"
+      "readLabel": "Read"
     },
-    "pnlDesc": "Create monthly income-expense reports, find the break-even point.",
+    "pnlDesc": "Build a monthly income and cost report and see what is left.",
     "checklist": {
       "backLink": "Toolkit",
       "badge": "Free Guide",
-      "title": "Restaurant Opening Checklist",
-      "description": "All the steps needed to open a restaurant — from legal and financial to menu and marketing.",
-      "progressLabel": "completed",
-      "section_completed": "completed",
+      "title": "Restaurant opening: to-do list",
+      "description": "44 things to do before you open: papers, premises, kitchen, menu, staff, promotion and money. Tick what is done and see what is left.",
+      "progressLabel": "Done",
+      "section_completed": "done",
       "sec_legal_title": "Legal and Official Matters",
-      "sec_legal_item_h1_text": "Tax ID registration (Ministry of Taxes)",
+      "sec_legal_item_h1_text": "Get a tax ID / VÖEN (State Tax Service)",
       "sec_legal_item_h1_detail": "Individual entrepreneur or LLC registration",
-      "sec_legal_item_h2_text": "AQTA permit (food safety)",
-      "sec_legal_item_h2_detail": "Application + plan + hygiene certificate",
-      "sec_legal_item_h3_text": "Fire safety act (FHN)",
+      "sec_legal_item_h2_text": "AQTA registration (food safety)",
+      "sec_legal_item_h2_detail": "Apply through ASAN/KOBİA. There is no state fee; the application is free.",
+      "sec_legal_item_h3_text": "Fire safety requirements (FHN)",
       "sec_legal_item_h3_detail": "Fire suppression system must be installed",
       "sec_legal_item_h4_text": "SES (Sanitary-Epidemiological) opinion",
-      "sec_legal_item_h5_text": "ADRA permit (outdoor advertising board)",
+      "sec_legal_item_h5_text": "Permit for a street sign (ADRA)",
       "sec_legal_item_h5_detail": "Apply to the State Advertising Agency of the Republic of Azerbaijan",
       "sec_legal_item_h6_text": "Employment contracts (with staff)",
       "sec_legal_item_h7_text": "Cash register device registration",
@@ -1178,10 +1141,10 @@
       "sec_legal_item_h8_detail": "Obtain the certificate showing the 15-digit premises code for the operating address",
       "sec_venue_title": "Venue and Construction",
       "sec_venue_item_m1_text": "Venue selection (location analysis)",
-      "sec_venue_item_m1_detail": "Pedestrian traffic, competitor map, lease terms",
+      "sec_venue_item_m1_detail": "How many people walk past, competitors nearby, lease terms",
       "sec_venue_item_m2_text": "Lease agreement signing",
       "sec_venue_item_m3_text": "Architectural plan (layout)",
-      "sec_venue_item_m3_detail": "Kitchen, dining room, storage, toilet — flow diagram",
+      "sec_venue_item_m3_detail": "Kitchen, dining room, storage, toilet: who walks where, shown on the plan",
       "sec_venue_item_m4_text": "Construction / renovation work",
       "sec_venue_item_m5_text": "Ventilation system",
       "sec_venue_item_m5_detail": "Kitchen hood + dining room air circulation",
@@ -1192,41 +1155,43 @@
       "sec_kitchen_item_a1_detail": "Oven, refrigerator, freezer, grill, fryer...",
       "sec_kitchen_item_a2_text": "Small equipment (blender, scale, knife set)",
       "sec_kitchen_item_a3_text": "Tableware (plates, glasses, cutlery)",
-      "sec_kitchen_item_a4_text": "POS system / cash register software",
+      "sec_kitchen_item_a4_text": "Till software (POS)",
       "sec_kitchen_item_a5_text": "Storage shelves + containers",
       "sec_menu_title": "Menu and Supply",
-      "sec_menu_item_mn1_text": "Menu concept (aligned with target audience)",
-      "sec_menu_item_mn1_detail": "Price range, portion size, food cost target",
+      "sec_menu_item_mn1_text": "Menu idea: what you sell and to whom",
+      "sec_menu_item_mn1_detail": "Price range, portion size, food cost target (share of the price spent on ingredients)",
       "sec_menu_item_mn2_text": "Recipe cards preparation",
       "sec_menu_item_mn2_detail": "Ingredient list + quantity + cost price for each dish",
       "sec_menu_item_mn3_text": "Food cost calculation (per portion)",
       "sec_menu_item_mn4_text": "Supplier contracts (meat, vegetables, beverages)",
       "sec_menu_item_mn5_text": "Menu design and printing",
-      "sec_menu_item_mn6_text": "Pricing policy (markup strategy)",
+      "sec_menu_item_mn6_text": "Pricing rule: how much you add on top of the cost",
       "sec_staff_title": "Staff and Training",
       "sec_staff_item_k1_text": "Head chef recruitment",
       "sec_staff_item_k2_text": "Waitstaff (including floor manager)",
       "sec_staff_item_k3_text": "Kitchen assistants",
       "sec_staff_item_k4_text": "Cleaning staff",
-      "sec_staff_item_k5_text": "Training program (service standards)",
-      "sec_staff_item_k5_detail": "Greeting, taking orders, complaint handling",
+      "sec_staff_item_k5_text": "Service training",
+      "sec_staff_item_k5_detail": "Greeting guests, taking orders, answering complaints",
       "sec_staff_item_k6_text": "Hygiene training (AQTA requirement)",
       "sec_marketing_title": "Marketing and Opening",
       "sec_marketing_item_mr1_text": "Brand identity (logo, colors, font)",
       "sec_marketing_item_mr2_text": "Social media accounts (Instagram, TikTok)",
       "sec_marketing_item_mr3_text": "Google Maps / Yandex registration",
       "sec_marketing_item_mr4_text": "Opening date setting",
-      "sec_marketing_item_mr5_text": "Soft opening (invited test)",
-      "sec_marketing_item_mr5_detail": "2-3 day trial with friends + family",
-      "sec_marketing_item_mr6_text": "Grand opening campaign",
+      "sec_marketing_item_mr5_text": "Trial opening (invited guests)",
+      "sec_marketing_item_mr5_detail": "2–3 trial days with friends and family",
+      "sec_marketing_item_mr6_text": "Official opening campaign",
       "sec_marketing_item_mr7_text": "Wolt / Bolt Food registration",
       "sec_finance_title": "Finance",
       "sec_finance_item_f1_text": "Initial budget plan",
-      "sec_finance_item_f1_detail": "Construction + equipment + first 3 months operating cost",
-      "sec_finance_item_f2_text": "Break-even point calculation",
-      "sec_finance_item_f3_text": "Monthly P&L template preparation",
+      "sec_finance_item_f1_detail": "Construction, equipment and the costs of the first 3 months",
+      "sec_finance_item_f2_text": "Break-even point (the sales level with no loss)",
+      "sec_finance_item_f3_text": "Monthly income and cost sheet (P&L)",
       "sec_finance_item_f4_text": "Bank account opening",
-      "sec_finance_item_f5_text": "Accounting service / software"
+      "sec_finance_item_f5_text": "Accounting service / software",
+      "listTitle": "Opening tasks",
+      "progressPctLabel": "Readiness"
     },
     "checklistDesc": "44-item complete checklist — legal, venue, menu, staffing, marketing.",
     "start": "Start",
@@ -1336,16 +1301,16 @@
     "aqtaChecklist": {
       "backLink": "Toolkit",
       "badge": "Hygiene Control",
-      "title": "AQTA",
+      "title": "Getting ready for an AQTA inspection",
       "titleAccent": "Readiness Checklist",
-      "description": "Hygiene, documentation, cross-contamination and daily monitoring. Identify penalty risks section by section and set standards for your team.",
+      "description": "Hygiene, paperwork, keeping raw and ready food apart, and daily checks. See which section still carries a fine risk.",
       "progressLabel": "Overall progress",
       "progressItems": "items completed",
-      "riskZoneLabel": "Risk zone",
+      "riskZoneLabel": "Items still at risk",
       "riskZoneSubtitle": "of {total} items not yet checked (fine risk)",
       "regimeLabel": "Schedule",
       "regimeSubtitle": "Daily, weekly, monthly plan",
-      "checklistTitle": "Interactive checklist",
+      "checklistTitle": "Inspection list",
       "checklistSubtitle": "8 key blocks to be ready for AQTA inspection.",
       "resetBtn": "Reset",
       "hygienePlanTitle": "Hygiene schedule",
@@ -1353,30 +1318,30 @@
       "tabDaily": "Daily",
       "tabWeekly": "Weekly",
       "tabMonthly": "Monthly",
-      "tableColRegime": "Schedule",
+      "tableColRegime": "No.",
       "tableColTask": "Task",
       "aqtaCardTitle": "What is AQTA?",
-      "aqtaCardDesc": "AQTA inspects food safety, hygiene, traceability and consumer risk. The issue is not just cleanliness. Systematic monitoring and documentation of rules is fundamental. AQTA registration applications are submitted via ASAN/KOBİA. There is no state fee — registration is free of charge.",
-      "fineReasonsTitle": "Top 10 most common penalty reasons",
-      "crossContamTitle": "Cross-contamination",
-      "crossContamDesc": "The transfer of bacteria from raw products to ready food is the main cause of food poisoning. The same cutting board, same gloves and incorrect refrigerator arrangement are the riskiest trio.",
+      "aqtaCardDesc": "AQTA is the Azerbaijan Food Safety Agency. It checks food safety, hygiene and whether you can show with documents where your food came from. Cleanliness alone is not enough: the rules must be followed and written down every day. AQTA registration applications are submitted via ASAN/KOBİA. There is no state fee; the application is free.",
+      "fineReasonsTitle": "10 situations that create a fine risk during an inspection",
+      "crossContamTitle": "Keeping raw and ready food apart",
+      "crossContamDesc": "When germs from raw meat reach ready food, it can cause food poisoning. The riskiest trio: one cutting board, one pair of gloves and the wrong order in the fridge. Coloured boards help prevent this:",
       "dkAdviceTitle": "DK Agency advice",
       "dkAdviceDesc": "An AQTA problem is usually not a \"cleanliness problem\" but a \"management rhythm problem\". If there is no log, no responsible person and no daily monitoring hour, the penalty risk increases.",
       "dkAdviceLink": "Read the full article",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqDesc": "Share temperature logs, medical certificate dates, hygiene tasks and audit records with your team field by field.",
+      "ocaqDesc": "Share temperature logs, medical certificate dates, hygiene tasks and inspection notes with your team.",
       "ocaqCta": "Go to OCAQ Panel",
       "relatedTitle": "Related content",
       "relatedViewBtn": "View",
-      "related1Title": "AQTA Penalty Checklist",
+      "related1Title": "Avoiding AQTA fines: inspection list",
       "related1Tag": "Blog",
-      "related2Title": "Restaurant Opening Checklist",
+      "related2Title": "Restaurant opening: to-do list",
       "related2Tag": "Tool",
       "related3Title": "From Construction to Opening",
       "related3Tag": "Tool",
       "sectionCompleted": "completed",
       "storage_title": "Food storage",
-      "storage_subtitle": "Refrigerator, FIFO, date labels and separated shelves",
+      "storage_subtitle": "Fridge, «first in, first out», date labels and separate shelves",
       "storage_item1_text": "Refrigerator is between +2°C and +6°C",
       "storage_item1_detail": "Thermometer is checked daily and recorded.",
       "storage_item2_text": "Freezer is at -18°C or below",
@@ -1385,8 +1350,8 @@
       "storage_item3_detail": "Separate shelf and container rules with no drip risk are applied.",
       "storage_item4_text": "Food is stored off the floor",
       "storage_item4_detail": "Shelves, pallets and appropriate containers are used.",
-      "storage_item5_text": "FIFO and expiry date labels are visible",
-      "storage_item5_detail": "Older products are at the front, no expired products present.",
+      "storage_item5_text": "Older stock is at the front, use-by dates are labelled",
+      "storage_item5_detail": "«First in, first out» (FIFO): older products at the front, nothing past its date.",
       "hygiene_title": "Personal hygiene",
       "hygiene_subtitle": "Team behavior, hairnet, medical certificate and handwashing",
       "hygiene_item1_text": "All staff have current medical certificates",
@@ -1426,13 +1391,13 @@
       "prep_item4_text": "Same gloves are not used across different product groups",
       "prep_item4_detail": "Cross-contamination rules are known by the team.",
       "docs_title": "Documentation",
-      "docs_subtitle": "AQTA registration, logs and traceability",
+      "docs_subtitle": "AQTA registration, logs and documents showing where products come from",
       "docs_item1_text": "AQTA registration is complete",
       "docs_item1_detail": "AQTA registration applications are submitted via ASAN/KOBİA. There is no state fee — registration is free of charge.",
       "docs_item2_text": "Temperature and hygiene log is filled in",
       "docs_item2_detail": "Daily entries are never left blank.",
       "docs_item3_text": "Invoices and product source documents are archived",
-      "docs_item3_detail": "Documents can be produced for traceability requirements.",
+      "docs_item3_detail": "During an inspection you can show with documents where each product came from.",
       "docs_item4_text": "Medical certificate dates are tracked in a separate table",
       "docs_item4_detail": "Renewal reminders are given before expiry.",
       "hall_title": "Hall and common areas",
@@ -1453,7 +1418,7 @@
       "allergen_item3_detail": "Board, knife and surface separation is known.",
       "daily_item1": "Record refrigerator and freezer temperatures in the log.",
       "daily_item2": "Clean and disinfect work surfaces.",
-      "daily_item3": "Check FIFO and use-by dates.",
+      "daily_item3": "Check that older stock is at the front and check the use-by dates.",
       "daily_item4": "Check that handwashing stations have soap and dryer.",
       "daily_item5": "Monitor work attire, hairnet and glove compliance.",
       "weekly_item1": "Fully clean the inside of refrigerators.",
@@ -1461,9 +1426,9 @@
       "weekly_item3": "Inspect cutting boards for cracks and wear.",
       "weekly_item4": "Deep clean ventilation filters and toilet hygiene.",
       "monthly_item1": "Review medical certificate dates.",
-      "monthly_item2": "Archive invoices and traceability documents.",
+      "monthly_item2": "Archive invoices and product source documents.",
       "monthly_item3": "Complete the equipment technical inspection list.",
-      "monthly_item4": "Give the team a 15-minute hygiene refresher training.",
+      "monthly_item4": "Give the team a 15-minute hygiene refresher.",
       "monthly_item5": "Schedule professional pest control or inspection service.",
       "fine1": "Absence of medical certificates",
       "fine2": "Discovery of expired food products",
@@ -1490,16 +1455,16 @@
       "backLink": "Back to Toolkit",
       "resetBtn": "Reset",
       "badgeLabel": "Construction Sprint",
-      "pageTitle": "From Construction to Opening Checklist",
-      "pageDesc": "62-item practical plan: from electrical to fire safety, from soft opening to grand opening — put every step in order.",
+      "pageTitle": "From construction to opening: work list",
+      "pageDesc": "A 62-item work plan: from wiring to fire safety (FHN), from the trial opening to the official opening — every step in order.",
       "progressLabel": "Overall progress",
       "progressCompleted": "completed",
       "sectionCompleted": "completed",
       "notePlaceholder": "Add a short note...",
       "addMedia": "Add photo or video",
       "budgetTitle": "Budget planning",
-      "budgetSubtitle": "Estimated breakdown for a 50-80 m², 30-40 seat restaurant.",
-      "budgetTotal": "Total estimated budget",
+      "budgetSubtitle": "Example: rough split for a 50–80 m², 30–40 seat restaurant. The figures are only a guide — check them against your builders’ quotes.",
+      "budgetTotal": "Estimated total budget (example)",
       "budgetTotalValue": "75,000 - 150,000 ₼",
       "budgetTotalNote": "Location, property condition and concept change this range.",
       "budgetPct": "{pct} of budget",
@@ -1507,19 +1472,19 @@
       "dkAdviceSubtitle": "Construction is where the most expensive mistakes happen",
       "dkAdviceDesc": "In construction, a cheap contractor, an unplanned phase and an unwritten agreement directly translate into time and money loss. The most critical trio: 3-phase electrical, gas and chimney. Don't tear down walls before these are resolved.",
       "commonMistakesTitle": "Most common mistakes",
-      "mistake1": "Starting without checking 3-phase power and then facing an additional 15-20k ₼ expense.",
+      "mistake1": "Starting without checking the 3-phase power supply and then paying thousands of manats extra.",
       "mistake2": "Choosing a cheap contractor and having to redo water and electrical lines.",
       "mistake3": "Drawing the kitchen plan without a chef and not being able to fit the equipment later.",
       "mistake4": "Not setting aside a contingency fund and running into cash flow problems at the final stage.",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqDesc": "If you want to track phase progress, contractor status and budget drift in one panel, automate this through OCAQ Panel.",
+      "ocaqDesc": "If you want to see in one panel which stage you are at, how the contractors are doing and how far the budget has moved, use OCAQ Panel.",
       "ocaqCta": "Start free",
       "relatedTitle": "Related articles",
-      "related1Title": "Opening Checklist",
+      "related1Title": "Restaurant opening: to-do list",
       "related1Tag": "Tool",
       "related2Title": "Food Cost Calculation",
       "related2Tag": "Blog",
-      "related3Title": "Break-even point calculation",
+      "related3Title": "Break-even point (the sales level with no loss)",
       "related3Tag": "Tool",
       "budget_prep_label": "Pre-preparation",
       "budget_prep_range": "2,000-5,000 ₼",
@@ -1575,7 +1540,7 @@
       "phase_rough_item2_detail": "Kitchen, hall, storage and toilet properly separated.",
       "phase_rough_item3_text": "Water lines installed",
       "phase_rough_item3_detail": "Sink, dishwasher and cleaning points are ready.",
-      "phase_rough_item4_text": "Sewage and grease trap",
+      "phase_rough_item4_text": "Sewage and grease trap (fat separator)",
       "phase_rough_item4_detail": "Grease trap system resolved separately.",
       "phase_rough_item5_text": "Electrical lines installed",
       "phase_rough_item5_detail": "Separate lines allocated for kitchen, hall and lighting.",
@@ -1633,7 +1598,7 @@
       "phase_equipment_item4_detail": "Water and drainage flow is problem-free.",
       "phase_equipment_item5_text": "Stainless steel work tables",
       "phase_equipment_item5_detail": "Correct height selected for hygiene and workflow.",
-      "phase_equipment_item6_text": "POS system set up",
+      "phase_equipment_item6_text": "Till system (POS) set up",
       "phase_equipment_item6_detail": "Printer, tablet and cashier tested.",
       "phase_equipment_item7_text": "Fixed internet and Wi-Fi",
       "phase_equipment_item7_detail": "A separate reliable line for POS.",
@@ -1652,11 +1617,11 @@
       "phase_opening_item3_detail": "Team is fully legally compliant.",
       "phase_opening_item4_text": "1-2 week training period",
       "phase_opening_item4_detail": "Menu, POS, service and hygiene practiced together.",
-      "phase_opening_item5_text": "Soft opening",
+      "phase_opening_item5_text": "Trial opening",
       "phase_opening_item5_detail": "Run a real test service with friends and acquaintances.",
       "phase_opening_item6_text": "Menu and price final check",
       "phase_opening_item6_detail": "Food cost and sales language are finalized.",
-      "phase_opening_item7_text": "Grand opening plan",
+      "phase_opening_item7_text": "Official opening plan",
       "phase_opening_item7_detail": "Marketing, guest list and social media plan is ready.",
       "phase_design_title": "Operational design",
       "phase_design_subtitle": "When the architect's sketch arrives — before construction",
@@ -1671,7 +1636,7 @@
       "phase_design_item4_detail": "Receiving → inspection → storage → prep → cooking → pass → service. The flow must not double back or cross the guest entrance.",
       "phase_design_item5_text": "Separate dirty and clean flows",
       "phase_design_item5_detail": "Dirty dishes enter on one side, clean ones leave on the other. The dishwashing area runs in one direction.",
-      "phase_design_item6_text": "Spaghetti diagram on the sketch",
+      "phase_design_item6_text": "Movement lines on the sketch («spaghetti diagram»)",
       "phase_design_item6_detail": "Trace the route of one cook, one server and one guest on the architect's sketch. If the lines cross, don't move on to construction drawings.",
       "phase_design_item7_text": "Hourly capacity check",
       "phase_design_item7_detail": "How many orders per hour can the kitchen, bar, pass and dishwashing handle at peak? The weakest point sets the speed of the whole restaurant.",
@@ -1680,7 +1645,11 @@
       "phase_design_item9_text": "Accessibility and evacuation route",
       "phase_design_item9_detail": "A step-free wheelchair route from the entrance to the table and restroom, and a clear, marked evacuation route — in the plan from day one.",
       "phase_design_item10_text": "Timings to measure at the trial opening",
-      "phase_design_item10_detail": "Record 10 timings: order to table, bill to payment, table reset. Without numbers, a trial opening is just a rehearsal."
+      "phase_design_item10_detail": "Record 10 timings: order to table, bill to payment, table reset. Without numbers, a trial opening is just a rehearsal.",
+      "listTitle": "Work list by stage",
+      "noteLabel": "Note",
+      "removeMedia": "Remove file",
+      "uploadError": "The file was not uploaded."
     },
     "live": "LIVE",
     "aiInsight": "AI INSIGHT",
@@ -1696,11 +1665,10 @@
     "aiInsightError": "AI insight unavailable. Try again later.",
     "aiInsightRetry": "Try again",
     "addimXerci": {
-      "title": "Step Cost Calculator",
-      "subtitle": "Turn the time cooks and servers spend walking for nothing into money.",
+      "title": "Wasted-steps calculator",
+      "subtitle": "Turn the time cooks and waiters spend walking for nothing into money: how much salary a month goes on walking.",
       "calculatorTitle": "How much do you pay for empty steps?",
       "calculatorSubtitle": "Observe for 30 minutes during a shift and enter your own numbers.",
-      "reset": "Reset",
       "modeMinutes": "By minutes",
       "modeTrips": "By number of trips",
       "labelWorkers": "Number of staff (in this role)",
@@ -1711,10 +1679,10 @@
       "hintTripsMinutes": "That is about {minutes} minutes a day.",
       "labelHourlyWage": "Hourly wage (₼)",
       "labelWorkDays": "Working days per month",
-      "wageHelperTitle": "Don't know the hourly wage? Calculate it from the monthly salary",
+      "wageHelperTitle": "Don’t know the hourly wage? Work it out from the monthly salary",
       "labelMonthlySalary": "Monthly salary (₼)",
       "labelMonthlyHours": "Working hours per month",
-      "wageHelperApply": "Apply",
+      "wageHelperApply": "Use as hourly wage",
       "howToTitle": "How do you measure extra walking?",
       "howTo1": "Draw a simple plan of the kitchen or dining room on paper.",
       "howTo2": "At peak time, pick one person — a cook or a server.",
@@ -1725,15 +1693,15 @@
       "statYearly": "Per year",
       "statHoursPerDay": "Hours lost per day",
       "statHoursPerMonth": "Hours lost per month",
-      "onlyWageNote": "This is wages only. Late orders, cold food, fatigue and staff turnover are not included.",
-      "dkAdviceLabel": "DK advice",
-      "dkAdviceBody": "Before hiring one more person, map one person's 30-minute route. Often you are not short of people — the fridge is too far, the bin is in the wrong place, there is no service station. Moving one piece of equipment costs less than one salary.",
+      "onlyWageNote": "This is wages only. Late orders, cold food, fatigue and people quitting are not included.",
+      "dkAdviceLabel": "DK Agency advice",
+      "dkAdviceBody": "Before hiring one more person, draw one person’s 30-minute route on paper. Often you are not short of people: the fridge is too far, the bin is in the wrong place, there is no service station. Moving one piece of equipment costs less than one salary.",
       "usefulLinksTitle": "Useful tools",
-      "link1Title": "Kitchen Station Calculator",
+      "link1Title": "Kitchen station calculator",
       "link1Tag": "Kitchen",
-      "link2Title": "Staff Planner",
+      "link2Title": "Shift and staff planner",
       "link2Tag": "Shift",
-      "link3Title": "Construction to Opening Checklist",
+      "link3Title": "Construction-to-opening checklist",
       "link3Tag": "Opening"
     }
   },
@@ -2026,22 +1994,22 @@
   "marketinq": {
     "menuAnalytics": {
       "title": "Menu Analytics",
-      "subtitle": "Menu engineering based on BCG Matrix",
+      "subtitle": "Which dish to keep, reprice, promote or remove",
       "period_label": "Analysis period",
       "item_name": "Item name",
       "sell_price": "Selling price (AZN)",
       "food_cost": "Food cost (AZN)",
       "sales_count": "Sales count",
-      "add_item": "+ Add item",
+      "add_item": "+ Add dish",
       "analyze": "Analyze",
       "matrix_view": "Matrix view",
       "table_view": "Table view",
       "ai_tips": "AI Recommendations",
       "export_pdf": "Download PDF",
-      "star": "Star",
-      "plowhorse": "Plowhorse",
-      "puzzle": "Puzzle",
-      "dog": "Dog",
+      "star": "Keep",
+      "plowhorse": "Fix the price",
+      "puzzle": "Promote",
+      "dog": "Remove",
       "min_items_error": "Minimum 2 items required",
       "upgrade_cta": "Upgrade to KALFA",
       "back_to_tools": "All tools",
@@ -2054,10 +2022,10 @@
       "cost": "Cost",
       "category": "Category",
       "empty_quadrant": "No items in this category",
-      "star_hint": "High CM, high sales",
-      "plowhorse_hint": "Low CM, high sales",
-      "puzzle_hint": "High CM, low sales",
-      "dog_hint": "Low CM, low sales",
+      "star_hint": "Sells a lot, high profit per portion",
+      "plowhorse_hint": "Sells a lot, low profit per portion",
+      "puzzle_hint": "Sells little, high profit per portion",
+      "dog_hint": "Sells little, low profit per portion",
       "ai_tips_subtitle": "DeepSeek turns the matrix into practical next steps.",
       "ai_loading": "AI recommendation is loading...",
       "ai_error": "AI recommendation failed to load — try again",
@@ -3784,7 +3752,7 @@
       "p2": {
         "category": "Menu",
         "title": "How can menu engineering grow your sales?",
-        "excerpt": "The basics of running your menu on data with the Star, Plowhorse, Puzzle and Dog matrix."
+        "excerpt": "Which dish to keep, which to reprice, which to promote and which to remove — from sales and profit per portion."
       },
       "p3": {
         "category": "Delivery",
@@ -4125,10 +4093,10 @@
   },
   "weekly_actions": {
     "panel_title": "What should I do this week?",
-    "panel_subtitle": "Personalized actions based on your P&L results",
+    "panel_subtitle": "Tasks for this week based on your P&L",
     "kazan_cta": "Discuss this plan with KAZAN AI",
-    "all_good_title": "You're in great shape!",
-    "all_good_description": "Your metrics are within sector benchmarks. Keep it up!",
+    "all_good_title": "Looking good!",
+    "all_good_description": "Your numbers are within the common limits. Keep going!",
     "duration_unit": "min",
     "severity": {
       "ok": "Normal",
@@ -4139,9 +4107,9 @@
       "food_cost_ok": "Food cost is within range (≤32%)",
       "food_cost_warning": "Food cost is elevated (33-38%)",
       "food_cost_critical": "Food cost is critical (>38%)",
-      "labor_cost_ok": "Labor cost is within range (≤25%)",
-      "labor_cost_warning": "Labor cost is elevated (26-30%)",
-      "labor_cost_critical": "Labor cost is critical (>30%)",
+      "labor_cost_ok": "Staff cost is within range (≤25%)",
+      "labor_cost_warning": "Staff cost is high (26–30%)",
+      "labor_cost_critical": "Staff cost is critical (>30%)",
       "net_profit_ok": "Net profit is healthy (≥12%)",
       "net_profit_warning": "Net profit is low (8-11%)",
       "net_profit_critical": "Net profit is critical (<8%)",
@@ -4151,44 +4119,44 @@
     },
     "actions": {
       "recipe_audit": {
-        "title": "Audit your recipe cards",
-        "description": "Update the recipe cards of your top 5 sellers with actual prices. The fastest way to spot food cost deviations.",
+        "title": "Check your recipe cards",
+        "description": "Update the recipe cards of your 5 best-selling dishes with today’s purchase prices. It is the fastest way to see why food cost went up.",
         "cta": "Open Food Cost tool →"
       },
       "portion_check": {
-        "title": "Check portion standards",
-        "description": "Weigh each portion with a scale. 10g extra per portion = hundreds of AZN lost per month.",
+        "title": "Weigh your portions",
+        "description": "Check portions on a scale. A little extra in every portion adds up to a large amount by month-end.",
         "cta": "Open Food Cost tool →"
       },
       "supplier_compare": {
         "title": "Compare supplier prices",
-        "description": "Request quotes for your top 10 ingredients from at least 2 suppliers. 5-15% savings are possible.",
+        "description": "Ask at least 2 suppliers for prices on the 10 items you buy most.",
         "cta": "Open Break-even tool →"
       },
       "waste_log": {
         "title": "Start a waste log",
-        "description": "Daily waste tracking: what, how much, why. After a week, you'll see patterns.",
+        "description": "Write down every day: what was thrown away, how much and why. After a week you will see the repeating causes.",
         "cta": "Open Food Cost tool →"
       },
       "menu_engineering": {
-        "title": "Analyze menu performance",
-        "description": "Measure each dish's profitability and sales volume. Find weak items, promote strong ones.",
-        "cta": "Open Menu Matrix tool →"
+        "title": "Review your menu",
+        "description": "Measure how much each dish sells and how much it earns. Find the weak ones, push the strong ones.",
+        "cta": "Open the Menu matrix tool →"
       },
       "price_review": {
-        "title": "Review pricing strategy",
-        "description": "Reprice items with food cost >35%. Compare with the market.",
+        "title": "Review your prices",
+        "description": "Update prices of dishes with food cost above 35% and compare with the market.",
         "cta": "Open Break-even tool →"
       },
       "shift_optimization": {
-        "title": "Optimize shift planning",
-        "description": "Align staff count with peak hours. Reduce during idle hours, increase during peaks.",
-        "cta": "Open Staff Retention tool →"
+        "title": "Fix the shift plan",
+        "description": "Match staff numbers to the busy hours: fewer in quiet hours, more at peak.",
+        "cta": "Open the Staff retention tool →"
       },
       "revenue_mix": {
-        "title": "Analyze revenue mix",
-        "description": "Identify the most profitable categories. Build an upsell strategy.",
-        "cta": "Open Menu Matrix tool →"
+        "title": "See which dishes earn most",
+        "description": "Find the dishes that earn the most. Teach waiters to offer extras (drinks, dessert).",
+        "cta": "Open the Menu matrix tool →"
       }
     }
   },
@@ -4247,7 +4215,7 @@
       "description": {
         "section_label": "About this tool",
         "block_1_title": "What we do",
-        "block_1_content": "Enter each dish's sales count, food cost, and selling price. The tool plots them on a 2x2 matrix: Star, Plowhorse, Puzzle, Dog. AI suggests concrete steps to boost profit.",
+        "block_1_content": "Enter each dish's sales count, cost and selling price. The tool sorts dishes into 4 groups: Keep, Fix the price, Promote, Remove. AI suggests concrete steps to boost profit.",
         "block_2_title": "What you'll need",
         "block_2_items": [
           "Each menu item's name",
@@ -5230,9 +5198,9 @@
   },
   "hotelReadiness": {
     "badge": "Hotel readiness test",
-    "title": "Is your hotel ready for AHA star certification?",
-    "subtitle": "12 questions · about 4 minutes · a personal report based on AHA requirements at the end",
-    "letter": "Dear hotel, inn and guest house owner — in Azerbaijan, only 30 out of every 100 hotels that apply to the National Star Classification system successfully receive a star. The reason is not a lack of talent — it is that the requirements are not met systematically. This test shows which areas of your hotel are ready and which need improvement. To us, every hotel owner is a trust placed in our hands.",
+    "title": "Is your hotel ready for a star rating?",
+    "subtitle": "12 questions · about 4 minutes · a report based on the Azerbaijan Hotel Association (AHA) star requirements at the end",
+    "letter": "Dear hotel, inn and guesthouse owner — to earn stars, every requirement has to be met in a systematic way. This test shows where your hotel is ready and where it needs work.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Start the test →",
     "stepLabel": "Question {current} / {total}",
@@ -5241,161 +5209,161 @@
     "seeResult": "See the result →",
     "resultBadge": "Result",
     "weakestLabel": "Your weakest area",
-    "weakestBody": "This area is critical for star certification. The DK Agency team can support you here first — with infrastructure, documentation or a training plan.",
-    "aiLoading": "Preparing your AI report...",
-    "aiReportTitle": "Personal report",
-    "shareDownload": "Download result (PNG)",
-    "disclaimer": "This test is a preliminary self-assessment tool. A full evaluation and AHA application require a professional audit. © DK Agency",
+    "weakestBody": "This is the biggest gap on your way to stars. DK Agency can help with a plan for the building, documents or staff training.",
+    "aiLoading": "The AI is preparing your report...",
+    "aiReportTitle": "Your report",
+    "shareDownload": "Download the result as an image (PNG)",
+    "disclaimer": "This test is a first self-check. A full assessment and an AHA application need a professional inspection. © DK Agency",
     "verdict": {
       "pansion": {
-        "title": "Guest house level",
-        "sub": "You are not yet ready for formal star certification. That is not a problem — registering as a guest house and joining tourist routes is realistic. Later you can aim for 1-2 stars."
+        "title": "Guesthouse level",
+        "sub": "You are not ready for stars yet. That is fine: you can register as a guesthouse and join tourist routes. Then aim for 1–2 stars."
       },
       "tier12": {
-        "title": "1-2 star potential",
-        "sub": "The basic infrastructure is in place, and small hotel status is realistic. By strengthening a few areas, you will be ready for an AHA application."
+        "title": "A chance at 1–2 stars",
+        "sub": "The basic building and equipment are there. Strengthen a few areas and you can apply to AHA."
       },
       "tier3": {
-        "title": "A 3-star target is within reach",
-        "sub": "Most areas of your hotel are in good shape. With a few critical fixes, you are ready to obtain a 3-star certificate."
+        "title": "3 stars are within reach",
+        "sub": "Most areas are in good shape. After a few important fixes you can apply for 3 stars."
       },
       "tier4": {
-        "title": "A 4-star target is within reach",
-        "sub": "Your brand is strong. You are close to the 4-star requirements and can apply after minor adjustments."
+        "title": "4 stars are within reach",
+        "sub": "You are close to the 4-star requirements. After small adjustments you can apply."
       },
       "tier5": {
-        "title": "5-star potential",
-        "sub": "Your hotel's standards are high. You are a strong candidate for 5 stars in the National Star Classification — we can move on to the AHA application."
+        "title": "A chance at 5 stars",
+        "sub": "Your standards are high. You are a strong candidate for 5 stars — you can move on to the AHA application."
       }
     },
     "questions": {
       "0": {
-        "cat": "Infrastructure",
-        "q": "What is your hotel's physical infrastructure like — number of rooms, lift and car parking?",
+        "cat": "Building",
+        "q": "How many rooms, is there a lift and parking?",
         "options": {
           "0": "Fewer than 10 rooms, no lift, no parking",
-          "1": "10-20 rooms, a lift, but limited parking",
-          "2": "20-40 rooms, a lift and parking",
-          "3": "40+ rooms, several lifts, large covered parking"
+          "1": "10–20 rooms, a lift, little parking",
+          "2": "20–40 rooms, lift and parking",
+          "3": "More than 40 rooms, several lifts, large covered parking"
         }
       },
       "1": {
-        "cat": "Room standard",
-        "q": "What level are your room size, furniture quality and climate control?",
+        "cat": "Rooms",
+        "q": "Room size, furniture, heating and cooling?",
         "options": {
-          "0": "Room area under 12 m², old furniture, no climate control",
-          "1": "12-16 m², standard furniture, fan or electric heater",
-          "2": "16-22 m², new furniture, individual boiler or split system",
-          "3": "22 m²+, premium furniture, central climate control, smart room features"
+          "0": "Under 12 m², old furniture, no air conditioning",
+          "1": "12–16 m², standard furniture, fan or electric heater",
+          "2": "16–22 m², new furniture, boiler or air conditioning in the room",
+          "3": "Over 22 m², high-quality furniture, central climate control, smart room controls"
         }
       },
       "2": {
-        "cat": "Sanitation & cleaning",
-        "q": "How is your cleaning and linen-change routine organised?",
+        "cat": "Cleaning",
+        "q": "How are room cleaning and bed linen changes organised?",
         "options": {
-          "0": "Linen changed per guest, no written schedule",
-          "1": "Every 3-4 days, a general schedule exists",
-          "2": "Daily room cleaning, linen changed every 2 days",
-          "3": "Full daily cleaning, audit checklist, professional housekeeping team"
+          "0": "We change it when the guest asks, no written schedule",
+          "1": "Every 3–4 days, a general schedule",
+          "2": "Rooms cleaned daily, linen changed every 2 days",
+          "3": "Full cleaning daily, inspection checklist, professional cleaning team"
         }
       },
       "3": {
-        "cat": "Reception & guest arrival",
-        "q": "How does your reception work — opening hours, language skills, technology?",
+        "cat": "Reception",
+        "q": "How does reception work: hours, languages, check-in?",
         "options": {
-          "0": "Daytime only, AZ only, paper-based registration",
-          "1": "24 hours, AZ + RU, no computer registration system",
-          "2": "24 hours, AZ/RU/EN, PMS (management system) in place",
-          "3": "24 hours, multilingual staff, premium PMS, mobile check-in"
+          "0": "Daytime only, Azerbaijani only, paper registration",
+          "1": "24 hours, Azerbaijani and Russian, no computer system",
+          "2": "24 hours, Azerbaijani, Russian and English, hotel management software (PMS)",
+          "3": "24 hours, multilingual staff, strong management software, check-in by phone"
         }
       },
       "4": {
-        "cat": "Food service",
-        "q": "What level is your hotel's food service?",
+        "cat": "Food",
+        "q": "What food service does the hotel offer?",
         "options": {
-          "0": "No in-house food service",
-          "1": "Breakfast available, no separate restaurant",
-          "2": "Breakfast + a fully operating restaurant",
-          "3": "Breakfast + restaurant + bar + 24-hour room service"
+          "0": "No food service",
+          "1": "Breakfast, no restaurant",
+          "2": "Breakfast and a full restaurant",
+          "3": "Breakfast, restaurant, bar and 24-hour room service"
         }
       },
       "5": {
         "cat": "Staff training",
-        "q": "What is your staff's level of professional training and language skills?",
+        "q": "How are staff trained and which languages do they speak?",
         "options": {
-          "0": "No formal training system, limited foreign language skills",
-          "1": "Informal training, mostly AZ",
-          "2": "Formal training programme, AZ and RU",
-          "3": "Certified professionals, multilingual team, ongoing training system"
+          "0": "No training system, weak foreign languages",
+          "1": "On-the-job training, mostly in Azerbaijani",
+          "2": "Written training programme, Azerbaijani and Russian",
+          "3": "Certified staff, several languages, regular training"
         }
       },
       "6": {
         "cat": "Technology",
-        "q": "What level is your hotel's technology infrastructure (Wi-Fi, management system, mobile)?",
+        "q": "Internet, management software and mobile services?",
         "options": {
-          "0": "No Wi-Fi, paper-based system",
-          "1": "Wi-Fi available, no computer management system",
-          "2": "Fast Wi-Fi and a PMS in place",
-          "3": "PMS + mobile app + smart room + IoT integration"
+          "0": "No Wi-Fi, everything on paper",
+          "1": "Wi-Fi, no management software",
+          "2": "Fast Wi-Fi and hotel management software (PMS)",
+          "3": "Management software, mobile app and smart room systems all connected"
         }
       },
       "7": {
         "cat": "Safety",
-        "q": "What condition are your safety systems in (fire, cameras, in-room safes)?",
+        "q": "Fire safety, cameras and in-room safes?",
         "options": {
-          "0": "No fire extinguishers, no camera system",
-          "1": "Fire extinguishers in place, camera system incomplete",
-          "2": "Full fire system, cameras + a safe in every room",
-          "3": "Full fire system + 24-hour security + smart safes + key card system"
+          "0": "No extinguishers, no cameras",
+          "1": "Extinguishers, cameras incomplete",
+          "2": "Full fire system, cameras and a safe in every room",
+          "3": "Full fire system, 24-hour security, electronic safes and key-card doors"
         }
       },
       "8": {
-        "cat": "Additional services",
-        "q": "Do you offer additional services (SPA, fitness, conference hall)?",
+        "cat": "Extra services",
+        "q": "Is there a spa, gym or conference room?",
         "options": {
-          "0": "No additional services",
+          "0": "No extra services",
           "1": "A small fitness corner",
-          "2": "Fitness + sauna + small conference hall",
-          "3": "Full SPA + pool + fitness + conference + business centre"
+          "2": "Gym, sauna and a small conference room",
+          "3": "Spa, pool, gym, conference room and business centre"
         }
       },
       "9": {
-        "cat": "Documentation",
-        "q": "Are the documents required for the AHA application (tax, hygiene, fire certificate) ready?",
+        "cat": "Documents",
+        "q": "Are the documents for the AHA application (tax, hygiene, fire safety) ready?",
         "options": {
-          "0": "No documents are ready",
+          "0": "No documents ready",
           "1": "Tax document ready, the rest incomplete",
-          "2": "Most documents are ready, with minor gaps",
-          "3": "All documents complete, up to date and accessible"
+          "2": "Most documents ready, a few missing",
+          "3": "All documents complete, up to date and at hand"
         }
       },
       "10": {
-        "cat": "Online presence",
-        "q": "What is your rating on Booking.com, TripAdvisor and TrustYou?",
+        "cat": "Online rating",
+        "q": "What is your rating on Booking.com, TripAdvisor and similar sites?",
         "options": {
-          "0": "No online presence",
-          "1": "Profile exists, but rating below 7.0",
-          "2": "Rating between 7.0 and 8.5, regular guest reviews",
-          "3": "8.5+ rating, high review count, strong performance on TrustYou"
+          "0": "We are not on these sites",
+          "1": "A listing, rating below 7.0",
+          "2": "Rating 7.0–8.5, regular guest reviews",
+          "3": "Rating above 8.5, many reviews"
         }
       },
       "11": {
-        "cat": "AHA application readiness",
-        "q": "How ready are you for the AHA application in terms of budget and time?",
+        "cat": "Application readiness",
+        "q": "Are you ready for the AHA application in money and time?",
         "options": {
-          "0": "No budget set aside for fees and document preparation",
-          "1": "Fee is ready, document preparation has not started",
-          "2": "Fee ready, documents ready, not yet applied",
-          "3": "Application submitted, awaiting the audit visit"
+          "0": "No budget set aside for the fee and documents",
+          "1": "Money for the fee, document work not started",
+          "2": "Fee and documents ready, not applied yet",
+          "3": "Application sent, waiting for the inspection visit"
         }
       }
     }
   },
   "otaReadiness": {
-    "badge": "OTA readiness test",
-    "title": "Is your guest house ready for Booking and Airbnb?",
-    "subtitle": "8 questions, 3 minutes, a personal AI report at the end",
-    "letter": "Dear guest house owner — there are 800+ guest houses in Azerbaijan, but 80% of them are not on Booking.com.",
+    "badge": "Booking/Airbnb readiness test",
+    "title": "Is your guesthouse ready for Booking and Airbnb?",
+    "subtitle": "8 questions · 3 minutes · a short AI-written report at the end",
+    "letter": "Dear guesthouse owner — online booking sites (OTAs) such as Booking and Airbnb bring guests, but take a commission on every booking. This test shows which parts of your listing are ready and which need work.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Start the test →",
     "stepLabel": "Question {current} / {total}",
@@ -5404,112 +5372,112 @@
     "seeResult": "See the result →",
     "resultBadge": "Result",
     "weakestLabel": "Your weakest area",
-    "weakestBody": "This area is critical for your OTA success.",
-    "aiLoading": "Preparing your AI report...",
-    "aiReportTitle": "Personal report",
-    "shareDownload": "Download result (PNG)",
-    "disclaimer": "This test is a preliminary self-assessment tool. © DK Agency",
+    "weakestBody": "This is what holds back your bookings on Booking and Airbnb the most. Start here.",
+    "aiLoading": "The AI is preparing your report...",
+    "aiReportTitle": "Your report",
+    "shareDownload": "Download the result as an image (PNG)",
+    "disclaimer": "This test is a first self-check. © DK Agency",
     "verdict": {
       "not_ready": {
         "title": "Not ready yet",
-        "sub": "The core OTA requirements are not met."
+        "sub": "Work on your photos and listing first, then open on the booking sites."
       },
       "booking_start": {
-        "title": "Ready for Booking.com",
-        "sub": "You can open your Booking profile."
+        "title": "You can start on Booking.com",
+        "sub": "You can open your Booking listing. Collect guest reviews in the first months."
       },
       "airbnb_expand": {
-        "title": "Expanding to Airbnb is realistic",
-        "sub": "It's time to open Airbnb alongside Booking."
+        "title": "Time to add Airbnb",
+        "sub": "Open a listing on Airbnb as well as Booking."
       },
       "direct_strategy": {
-        "title": "Direct booking strategy",
-        "sub": "It's time to cut commission costs with WhatsApp."
+        "title": "Grow direct bookings",
+        "sub": "Take guests directly via WhatsApp and phone — less money goes to commission."
       },
       "multi_pro": {
-        "title": "Multi-platform pro",
-        "sub": "All your OTA channels are strong!"
+        "title": "Strong on every channel",
+        "sub": "Booking, Airbnb and direct bookings all work well."
       }
     },
     "questions": {
       "0": {
-        "cat": "Photo quality",
-        "q": "What level are your photos?",
+        "cat": "Photos",
+        "q": "How good are your photos?",
         "options": {
-          "0": "3-5 photos, dark",
-          "1": "10+ photos, taken in daylight",
-          "2": "15+ quality photos",
-          "3": "Professional photo shoot, 20+ images"
+          "0": "3–5 photos, dark",
+          "1": "More than 10 photos, taken in daylight",
+          "2": "More than 15 clear, good-quality photos",
+          "3": "Taken by a professional photographer, more than 20 photos"
         }
       },
       "1": {
-        "cat": "OTA profile",
-        "q": "What state is your Booking/Airbnb profile in?",
+        "cat": "Listing on the sites",
+        "q": "What state is your Booking and Airbnb listing in?",
         "options": {
-          "0": "I'm not on any OTA",
+          "0": "Not on any site",
           "1": "On Booking, but incomplete",
           "2": "Booking complete, Airbnb new",
-          "3": "Booking + Airbnb + Yandex Travel, all active"
+          "3": "Booking, Airbnb and Yandex Travel — all active"
         }
       },
       "2": {
-        "cat": "Pricing strategy",
-        "q": "How do you set your nightly rate?",
+        "cat": "Price",
+        "q": "How do you set the nightly price?",
         "options": {
-          "0": "Whatever the neighbour charges",
-          "1": "I have 2 prices (summer/winter)",
-          "2": "Separate weekend and holiday rates",
-          "3": "Dynamic pricing, competitor analysis"
+          "0": "Same as the neighbour",
+          "1": "Two prices: summer and winter",
+          "2": "Separate price for weekends and holidays",
+          "3": "I change it often based on demand and competitors"
         }
       },
       "3": {
-        "cat": "Calendar management",
-        "q": "How do you manage your availability calendar?",
+        "cat": "Free-room calendar",
+        "q": "How do you keep track of which days a room is free?",
         "options": {
-          "0": "No calendar",
-          "1": "I update the Booking calendar from time to time",
-          "2": "Manual sync",
-          "3": "iCal sync or a channel manager"
+          "0": "I do not keep a calendar",
+          "1": "I update the Booking calendar now and then",
+          "2": "I update the calendars on every site by hand",
+          "3": "Calendars sync automatically (iCal or a channel manager app)"
         }
       },
       "4": {
-        "cat": "Review management",
-        "q": "How do you handle guest reviews?",
+        "cat": "Guest reviews",
+        "q": "How do you reply to guest reviews?",
         "options": {
-          "0": "I don't reply",
-          "1": "I reply sometimes",
-          "2": "Reply within 48 hours",
-          "3": "24 hours + learning from negative reviews"
+          "0": "I do not reply",
+          "1": "Sometimes",
+          "2": "Within 48 hours",
+          "3": "Within 24 hours, and I learn from negative ones"
         }
       },
       "5": {
         "cat": "Payment",
-        "q": "How do you accept payment?",
+        "q": "How do you take payment?",
         "options": {
           "0": "Cash only",
-          "1": "Cash + bank transfer",
-          "2": "Booking Payments active",
-          "3": "Booking + Airbnb + POS"
+          "1": "Cash and bank transfer",
+          "2": "Online payment through Booking works",
+          "3": "Booking, Airbnb and a card terminal (POS)"
         }
       },
       "6": {
-        "cat": "Language skills",
-        "q": "How do you communicate with foreign guests?",
+        "cat": "Language",
+        "q": "How do you talk to foreign guests?",
         "options": {
-          "0": "AZ only",
-          "1": "Some RU",
-          "2": "RU + basic EN",
-          "3": "EN + RU + TR, comfortably"
+          "0": "Azerbaijani only",
+          "1": "A little Russian",
+          "2": "Russian and simple English",
+          "3": "Comfortable in English, Russian and Turkish"
         }
       },
       "7": {
         "cat": "Direct booking",
-        "q": "Do you have WhatsApp or a direct channel?",
+        "q": "Can a guest write to you directly, without a site?",
         "options": {
-          "0": "Guests come only from OTAs",
+          "0": "Guests come only from the sites",
           "1": "I have a WhatsApp number",
-          "2": "WhatsApp Business + QR",
-          "3": "WhatsApp + Instagram + Google Maps + guest database"
+          "2": "WhatsApp Business and a QR code",
+          "3": "WhatsApp, Instagram, Google Maps and a guest list"
         }
       }
     },
@@ -5639,64 +5607,64 @@
     },
     "inputs": {
       "nightlyPrice": {
-        "label": "Nightly rate",
-        "hint": "Per room"
+        "label": "Room price per night",
+        "hint": "Per room, in manat"
       },
       "roomCount": {
         "label": "Number of rooms",
-        "hint": "Total number of rooms"
+        "hint": "Rooms you rent out"
       },
       "occupancyPercent": {
-        "label": "Monthly occupancy",
-        "hint": "What % occupied?"
+        "label": "Share of booked days",
+        "hint": "What % of the month rooms are booked (12 of 30 days = 40%)"
       },
       "avgCommissionPercent": {
-        "label": "OTA commission",
-        "hint": "Booking/Airbnb 15%"
+        "label": "Booking site commission",
+        "hint": "The % that Booking, Airbnb and similar sites take (example: 15%)"
       },
       "otaSharePercent": {
-        "label": "Share of guests from OTAs",
-        "hint": "What % from OTAs?"
+        "label": "Share of guests from booking sites",
+        "hint": "What % of guests come via Booking/Airbnb"
       },
       "monthlyFixedCost": {
-        "label": "Monthly fixed costs",
-        "hint": "Cleaning, utilities"
+        "label": "Monthly costs",
+        "hint": "Cleaning, utilities, wages"
       },
       "initialInvestment": {
-        "label": "Initial investment",
-        "hint": "Furniture, design"
+        "label": "Opening cost (renovation, equipment)",
+        "hint": "Renovation, furniture, design"
       }
     },
     "results": {
-      "monthlyGrossLabel": "Monthly gross",
-      "otaRevenueLabel": "OTA revenue",
-      "directRevenueLabel": "Direct revenue",
-      "otaCommissionLabel": "OTA commission",
-      "monthlyNetLabel": "Monthly net",
-      "annualNetLabel": "Annual net",
-      "paybackLabel": "Payback",
-      "paybackMonthsUnit": "{count} months",
-      "noProfitText": "no profit"
+      "monthlyGrossLabel": "Total monthly income",
+      "otaRevenueLabel": "Income from booking sites",
+      "directRevenueLabel": "Direct income (WhatsApp, phone)",
+      "otaCommissionLabel": "Commission paid to sites",
+      "monthlyNetLabel": "Monthly profit",
+      "annualNetLabel": "Yearly profit",
+      "paybackLabel": "Time to get your money back",
+      "paybackMonthsUnit": "{count, plural, one {# month} other {# months}}",
+      "noProfitText": "no profit — the money does not come back"
     },
     "verdicts": {
-      "healthy": "Healthy guest house model: fast ROI.",
-      "borderline": "Borderline: consider optimising costs.",
-      "risky": "Risky: the investment pays back slowly.",
-      "unprofitable": "The guest house is losing money."
+      "healthy": "Healthy model: profit above 1,000 ₼ a month, your money comes back within 2 years.",
+      "borderline": "Borderline: your money comes back within 4 years. Look at cutting costs and site commission.",
+      "risky": "Risky: profit is small, your money comes back very slowly.",
+      "unprofitable": "Loss: costs and commission are higher than income."
     },
     "validation": {
-      "percentRange": "Percent must be 0–100 — value adjusted.",
-      "nonNegative": "Negative values are not allowed — set to 0."
+      "percentRange": "A percentage must be between 0 and 100 — the value was corrected.",
+      "nonNegative": "Negative values are not allowed — 0 was used."
     }
   },
   "whatsappTemplates": {
     "meta": {
-      "badge": "WhatsApp Template Package"
+      "badge": "WhatsApp message templates"
     },
     "intro": {
-      "heading": "10 Ready-to-Use WhatsApp Templates",
-      "subheading": "Essential texts that every guesthouse/B&B host needs daily.",
-      "instruction": "Click to copy."
+      "heading": "10 ready WhatsApp messages",
+      "subheading": "Messages a guesthouse or hotel owner writes every day.",
+      "instruction": "Press «Copy», paste the message into WhatsApp and replace the parts in brackets with your own details."
     },
     "categories": {
       "arrival": "Welcome",
@@ -5708,66 +5676,66 @@
     },
     "scenarios": {
       "firstArrival": {
-        "title": "First Welcome",
-        "description": "Send to new guests upon booking.",
-        "copy": "Hello {{guestName}}! I am {{hostName}}, welcome. Check-in: {{checkInDate}}. Wi-Fi: {{wifiPassword}}."
+        "title": "First hello",
+        "description": "Send to a guest who has just booked.",
+        "copy": "Hello, [guest name]! I am [your name], we look forward to seeing you. Check-in date: [date]. Wi-Fi password: [password]."
       },
       "directBookingOffer": {
-        "title": "Direct Booking Discount",
-        "description": "Offer a discount to shift bookings from OTA to direct.",
-        "copy": "Dear {{guestName}}, book directly next time and get {{discountPercent}}% off. Booking.com price: {{bookingPrice}}, direct rate: {{directPrice}} AZN."
+        "title": "Discount for booking direct",
+        "description": "Invite a Booking guest to write to you directly next time.",
+        "copy": "[Guest name], if you book directly with us next time, you get [discount]% off. On Booking: [Booking price] AZN, with us: [direct price] AZN."
       },
       "checkInInstructions": {
-        "title": "Check-in Instructions",
-        "description": "Send on the arrival day.",
-        "copy": "Welcome! Check-in: {{checkInTime}}. Key collection: {{keyLocation}}. Wi-Fi: {{wifiPassword}}. Breakfast: {{breakfastTime}}."
+        "title": "Arrival day instructions",
+        "description": "Send on the day the guest arrives.",
+        "copy": "Welcome! Check-in time: [time]. Key: [key location]. Wi-Fi password: [password]. Breakfast: [time]."
       },
       "checkOutReminder": {
-        "title": "Check-out Reminder",
-        "description": "Send the evening before check-out.",
-        "copy": "{{guestName}}, tomorrow check-out is at {{checkOutTime}}. Please leave the key at the reception. Thank you!"
+        "title": "Check-out reminder",
+        "description": "Send the day before check-out.",
+        "copy": "[Guest name], check-out tomorrow is at [time]. Please leave the key at reception. Thank you for staying with us!"
       },
       "negativeReviewResponse": {
-        "title": "Negative Review Response",
-        "description": "Show empathy, avoid defensive tone.",
-        "copy": "{{guestName}}, thank you for your feedback. We have addressed the issue regarding {{specificIssue}}."
+        "title": "Reply to a negative review",
+        "description": "Show understanding, do not get defensive.",
+        "copy": "[Guest name], thank you for your review. We have already acted on [issue]. Next time will be better."
       },
       "positiveReviewThanks": {
-        "title": "Positive Review Thanks",
-        "description": "Thank the guest and reference a highlight.",
-        "copy": "{{guestName}}, thank you for the wonderful review! Glad to hear {{specificMoment}} was special. Discount awaits you on your next visit!"
+        "title": "Thanks for a good review",
+        "description": "Mention the moment the guest remembered.",
+        "copy": "[Guest name], thank you for the lovely review! [Special moment] was special for us too. A discount is waiting for your next stay!"
       },
       "seasonalPromo": {
-        "title": "Seasonal Promotion",
-        "description": "Off-peak period discount.",
-        "copy": "Enjoy our {{seasonName}} promo: {{discountPercent}}% discount! Valid until {{validUntilDate}}."
+        "title": "Seasonal offer",
+        "description": "Announce a discount in quiet months.",
+        "copy": "This [season]: [discount]% off! Valid until [date]."
       },
       "priceInquiry": {
-        "title": "Price Response",
-        "description": "Clear response to pricing inquiries.",
-        "copy": "Hello! Nightly rate: {{nightlyPrice}} AZN. Includes: {{includesBreakfast}}, Wi-Fi, parking."
+        "title": "Answer to a price question",
+        "description": "State the price and what is included clearly.",
+        "copy": "Hello! One night is [price] AZN. Included: [breakfast etc.], Wi-Fi, parking."
       },
       "availabilityInquiry": {
-        "title": "Availability Request",
-        "description": "Ask for dates and headcount.",
-        "copy": "Hello! What dates are you looking for, and how many guests?"
+        "title": "Free room question",
+        "description": "Ask for the dates and number of guests.",
+        "copy": "Hello! Which dates do you need a room for, and how many of you are there?"
       },
       "loyaltyVipOffer": {
-        "title": "VIP Loyalty Offer",
-        "description": "Exclusive offer for returning/loyal guests.",
-        "copy": "{{guestName}}, as a valued {{loyaltyTier}} guest, we have a {{specialDiscount}}% discount + early check-in for you!"
+        "title": "Offer for a regular guest",
+        "description": "A special discount for someone who comes often.",
+        "copy": "[Guest name], you are one of our regular guests! We are giving you [discount]% off and early check-in."
       }
     },
     "actions": {
       "copyButton": "Copy",
-      "copiedConfirmation": "Copied",
-      "downloadAllPdf": "Download PDF"
+      "copiedConfirmation": "Copied"
     },
     "leadCta": {
-      "heading": "Unlock Remaining Templates",
-      "body": "Get the remaining 7 professional templates out of 10.",
-      "buttonText": "Get the Full Package"
-    }
+      "heading": "Unlock the other 7 messages",
+      "body": "Leave your contact details to see 7 more templates: discount, review reply, price question and more.",
+      "buttonText": "Show all templates"
+    },
+    "freeTag": "Free"
   },
   "sektorQonaqEvi": {
     "pageTitle": "Guesthouse & B&B — Complete Guide for Booking, Airbnb, Yandex Travel | DK Agency",
@@ -5910,8 +5878,8 @@
       "tool1Title": "Food Cost Calculator",
       "tool1Desc": "Cost of every portion and its ideal price — instantly",
       "tool1Cta": "Calculate →",
-      "tool2Title": "Menu Engineering Matrix",
-      "tool2Desc": "Star, plough-horse, puzzle, dog — classify your menu by profit",
+      "tool2Title": "Menu matrix",
+      "tool2Desc": "One step for every dish: keep, fix the price, promote or remove",
       "tool2Cta": "Analyse menu →",
       "tool3Title": "AQTA Checklist",
       "tool3Desc": "Zero out fine risk before inspection — a step-by-step list",
@@ -6528,16 +6496,16 @@
         "tab": "Menu matrix",
         "title": "Menu Matrix",
         "statValue": "4 groups",
-        "stat": "By sales count and margin, every dish falls into one of four groups: star, plowhorse, puzzle or dog.",
+        "stat": "By sales and earnings per portion, every dish gets one step: keep, fix the price, promote or remove.",
         "s1t": "Enter sales and margin",
         "s1p": "Each dish's monthly sales count and portion margin.",
         "s2t": "See the group",
         "s2p": "Which dish earns and which just takes up space.",
         "s3t": "Rebuild the menu",
-        "s3p": "Put the stars up front; drop or reprice the dogs.",
+        "s3p": "Put the earners up front; remove or reprice what only takes up space.",
         "mockTitle": "Menu analysis",
         "mockSub": "Last 30 days · 4 dishes",
-        "kpiLabel": "Stars",
+        "kpiLabel": "Keep",
         "c1": "Dish",
         "c2": "Sales",
         "c3": "Margin",
@@ -6546,10 +6514,10 @@
         "salesLow": "low",
         "marginHigh": "high",
         "marginLow": "low",
-        "star": "Star",
-        "puzzle": "Puzzle",
-        "horse": "Plowhorse",
-        "dog": "Dog",
+        "star": "Keep",
+        "puzzle": "Promote",
+        "horse": "Fix price",
+        "dog": "Remove",
         "foot1": "Sales · margin · group",
         "foot2": "Menu Matrix",
         "agent": {
@@ -6651,7 +6619,7 @@
         },
         "kafe": {
           "t1": "Cost per cup",
-          "t2": "Star · plowhorse · puzzle · dog list",
+          "t2": "Keep · fix the price · promote · remove list",
           "t3": "Hour-by-hour shift plan"
         },
         "otel": {
@@ -6748,6 +6716,19 @@
         "gelir": "Revenue growth",
         "acilis": "Opening readiness",
         "kadr": "Staff and shifts"
+      },
+      "reset": {
+        "clear": "Clear",
+        "cleared": "Cleared",
+        "clearedChecklist": "All ticks removed",
+        "example": "Load example",
+        "exampleLoaded": "Example loaded",
+        "undo": "Undo",
+        "undone": "Previous values restored"
+      },
+      "intro": {
+        "what": "What does this tool do?",
+        "how": "How it works"
       }
     },
     "toolkit": {
@@ -6793,12 +6774,12 @@
         "sample": "Figures on the cards are samples — for illustration only.",
         "food-cost": {
           "t": "Food Cost",
-          "d": "Plate cost, food cost % and the ideal menu price.",
+          "d": "Cost of one portion, food cost (share of the price spent on ingredients) and the right menu price.",
           "viz": "if the price goes 7.50 → 8.90 ₼"
         },
         "delivery-calc": {
           "t": "Delivery commission",
-          "d": "Wolt, Bolt Food, Yango and your own delivery: what you actually keep.",
+          "d": "Wolt, Bolt Food, Yango and your own delivery: the money you keep after commission.",
           "viz": "How a sale splits",
           "food": "food",
           "commission": "commission",
@@ -6806,7 +6787,7 @@
         },
         "pnl": {
           "t": "P&L simulator",
-          "d": "Monthly revenue and costs, prime cost and net profit in one sheet.",
+          "d": "Monthly revenue and costs, main costs (food + staff) and net profit in one sheet.",
           "viz": "Monthly trend"
         }
       },
@@ -6819,8 +6800,8 @@
       },
       "groupDesc": {
         "all": "Every tool in one place.",
-        "xerc": "Plate cost, P&L, break-even, delivery and the cost of wasted steps.",
-        "gelir": "Menu, guesthouse revenue, OTA profile and guest messages.",
+        "xerc": "Portion cost, monthly revenue and costs, break-even point, delivery and the cost of wasted steps.",
+        "gelir": "Menu, guesthouse revenue, your profile on booking sites and guest messages.",
         "acilis": "Paperwork, construction, hygiene, brand and hotel readiness.",
         "kadr": "Team size, shifts, stations and staff retention."
       },
@@ -6836,118 +6817,220 @@
       },
       "tools": {
         "food-cost": {
-          "t": "Food cost calculator",
-          "d": "Work out the plate cost and set the price from your target food cost %.",
-          "r": "Food cost %, plate cost and ideal menu price",
-          "kw": "food cost recipe plate cost portion"
+          "t": "Food cost (share of ingredients in the price)",
+          "d": "Work out the cost of a portion and set the price from your target food cost percentage.",
+          "r": "Food cost %, cost per portion and recommended price",
+          "kw": "food cost recipe portion ingredient cost price cleaning loss",
+          "what": "Works out what one portion costs you and shows whether its menu price is right.",
+          "how": [
+            "Enter the recipe: e.g. for chicken with rice — 250 g chicken fillet (9.50 ₼/kg), 30 ml olive oil and 150 g basmati rice (example prices).",
+            "Add each ingredient’s cleaning loss (bones, peel, fat — the part thrown away) in %: the tool works out the real portion cost — 3.54 ₼ in the example.",
+            "Enter the menu price (18 ₼ in the example): food cost is 19.6%. If it is above your target, the tool shows what price to move to."
+          ]
         },
         "pnl": {
-          "t": "P&L simulator",
-          "d": "Build an income statement and keep prime cost and net profit in check.",
-          "r": "Monthly net profit and prime cost %",
-          "kw": "pnl profit revenue costs statement"
+          "t": "Profit and loss report (P&L)",
+          "d": "Enter the month’s sales and costs: see net profit and main costs (ingredients + staff).",
+          "r": "Monthly net profit and main costs (ingredients + staff) %",
+          "kw": "pnl p&l profit loss income costs report",
+          "what": "Takes all costs away from the month’s sales and shows what you keep at the end and which cost is above the limit.",
+          "how": [
+            "Enter the month’s sales — example café: 50,000 ₼.",
+            "Enter costs: ingredients 15,000 ₼, staff 12,500 ₼, rent 5,000 ₼ and so on (example figures).",
+            "Read the result: in the example net profit is 7,700 ₼ (15.4%), main costs (ingredients + staff) 55% — the common limit is 65%, so it is fine."
+          ]
         },
         "basabas": {
           "t": "Break-even point",
-          "d": "Minimum monthly sales, guests per day and your safety margin.",
-          "r": "How many guests you need per day",
-          "kw": "break even guests"
+          "d": "Work out the minimum monthly sales, customers needed per day and whether there is enough money to open.",
+          "r": "Minimum monthly sales and customers needed per day",
+          "kw": "break even break-even minimum sales customers branch opening cost",
+          "what": "Shows how much you must sell each month to avoid a loss, how many customers you need a day and whether the money is enough for a new branch.",
+          "how": [
+            "Enter monthly fixed costs — example café: rent 3,000 ₼, wages 5,000 ₼, utilities 800 ₼, other 700 ₼.",
+            "Enter variable costs (ingredients, packaging — 35% of sales in the example) and the average check (25 ₼).",
+            "Result: you need at least 14,615 ₼ of sales a month, about 20 checks a day. With current sales of 18,000 ₼ the cushion before a loss is 18.8%."
+          ]
         },
         "delivery-calc": {
-          "t": "Delivery calculator",
-          "d": "Margin after commission on Wolt, Bolt Food, Yango and your own delivery.",
-          "r": "What you keep on each platform",
-          "kw": "wolt bolt yango commission delivery"
+          "t": "Delivery commission calculator",
+          "d": "Wolt, Bolt Food, Yango and your own courier: what is left from an order after commission.",
+          "r": "What you keep from an order on each platform",
+          "kw": "wolt bolt yango commission delivery courier",
+          "what": "Shows what you keep from one order after platform commission, ingredients and packaging — it helps you decide which channel is worth selling through.",
+          "how": [
+            "Pick the platforms you sell on and enter the commission rate from your contract (example: Wolt 30%).",
+            "Enter the average order, ingredient share, packaging and staff cost (example: 30 ₼ order, 33% ingredients, 1.50 ₼ packaging, 3 ₼ staff).",
+            "Read the result: in the example you keep 17.10 ₼ in the dining room but 6.60 ₼ on Wolt — close the gap with price or a separate delivery menu."
+          ]
         },
         "addim-xerci": {
           "t": "Wasted-steps calculator",
           "d": "Turn the time cooks and waiters spend on empty walks into monthly wage loss.",
-          "r": "Monthly wage lost to empty walking (₼)",
-          "kw": "spaghetti diagram steps walking"
+          "r": "Monthly wages spent on empty walking (₼)",
+          "kw": "steps walking kitchen layout spaghetti diagram",
+          "what": "Shows how many manats of wages a month your cooks’ and waiters’ empty walking costs — it helps you decide whether moving equipment is worth it.",
+          "how": [
+            "At peak time, watch one person for 30 minutes and draw their empty trips as lines on a paper floor plan.",
+            "Enter the staff count, empty walking per day and hourly wage (example: 3 cooks, 40 minutes a day each, 6 ₼ an hour, 26 working days).",
+            "Result: in the example 312 ₼ a month and 3,744 ₼ a year go on empty walking — move the fridge or service table closer and measure again."
+          ]
         },
         "menu-matrix": {
           "t": "Menu matrix",
-          "d": "Sort dishes into Stars, Plowhorses, Puzzles and Dogs.",
-          "r": "For each dish: keep, raise the price or drop it",
-          "kw": "menu engineering matrix"
+          "d": "One step for every dish: keep, fix the price, promote or remove.",
+          "r": "For every dish: keep, fix the price, promote or remove",
+          "kw": "menu dish sales earnings price menu engineering",
+          "what": "Shows which dish to keep, where to fix the price, what to promote and what to take off the menu.",
+          "how": [
+            "Enter each dish's monthly sales and what you earn on one portion (selling price − ingredient cost). Example: chicken saj — 120 portions a month, 8.50 ₼ per portion.",
+            "The tool compares every dish with the menu average: does it sell a lot (over 70% of average sales) and does it earn more than average.",
+            "You get one step per dish. Chicken saj sells a lot and earns well → «Keep»: keep the recipe and price, place it where guests see it."
+          ]
         },
         "qonaq-evi-roi-kalkulyatoru": {
-          "t": "Guesthouse ROI",
-          "d": "OTA commission, room revenue and payback period.",
-          "r": "How many months until the investment pays back",
-          "kw": "hotel ota airbnb guesthouse roi"
+          "t": "Guesthouse income",
+          "d": "Work out monthly profit and how long it takes to get your money back from room price, booked days and Booking/Airbnb commission.",
+          "r": "Monthly profit and how many months until your money is back",
+          "kw": "guesthouse income profit booking airbnb commission payback roi",
+          "what": "Shows how much profit your guesthouse makes a month and how many months it takes to earn back the opening cost — helps you decide whether to change your price or the commission you pay to sites.",
+          "how": [
+            "Enter the room price, number of rooms, share of booked days and the Booking/Airbnb commission. Example: a 4-room guesthouse in Shaki, 100 ₼ a night, booked 40% of the month, 15% commission.",
+            "Add monthly costs and the opening cost (renovation, furniture). Example: 1,500 ₼ a month, 20,000 ₼ to open.",
+            "The tool shows monthly profit and the payback time. In the example 70% of guests come from the sites: profit 2,796 ₼ a month, money back in about 7 months."
+          ]
         },
         "ota-hazirlig-testi": {
-          "t": "OTA readiness test",
-          "d": "Check how ready your Booking, Airbnb and Yandex Travel profile is.",
-          "r": "Profile readiness score and missing items",
-          "kw": "booking airbnb ota"
+          "t": "Booking/Airbnb readiness test",
+          "d": "Check in 8 questions how ready your guesthouse is for booking sites like Booking and Airbnb.",
+          "r": "Readiness score and weakest area",
+          "kw": "booking airbnb ota yandex travel guesthouse listing reservation",
+          "what": "Shows whether you are ready to list on online booking sites (OTAs) such as Booking and Airbnb, and what to fix first.",
+          "how": [
+            "Answer 8 questions: photos, listing, price, calendar, reviews, payment, language and direct booking.",
+            "Each answer gives 25–100 points; the tool works out the average and your weakest area.",
+            "Example: a 3-room house in Gabala — dark photos (25 points), the other 7 areas average (50 points). Average 47: «You can start on Booking.com», weakest area — photos."
+          ]
         },
         "whatsapp-template-paketi": {
-          "t": "WhatsApp template pack",
-          "d": "Ready-to-send messages, from welcome to VIP guest.",
-          "r": "Messages ready to copy",
-          "kw": "whatsapp guest message template"
+          "t": "WhatsApp message templates",
+          "d": "Ready messages for guesthouses and hotels: from the first hello to an offer for a regular guest.",
+          "r": "10 messages ready to copy",
+          "kw": "whatsapp guest message template guesthouse hotel",
+          "what": "Gives you ready messages so you can write to guests quickly and neatly — no need to write the text from scratch every time.",
+          "how": [
+            "Pick the message you need: first hello, arrival day instructions, thanks for a review and more.",
+            "Press «Copy» and paste the message into WhatsApp.",
+            "Replace the parts in brackets with your details. Example: [guest name] → Elvin, [time] → 14:00."
+          ]
         },
         "checklist": {
-          "t": "Opening checklist",
-          "d": "Legal work, venue, menu, team and marketing — step by step.",
-          "r": "The steps left before opening day",
-          "kw": "opening checklist"
+          "t": "Opening: to-do list",
+          "d": "Papers, premises, kitchen, menu, staff, promotion and money — 44 things to do before you open.",
+          "r": "The tasks left before opening day",
+          "kw": "opening checklist to-do list",
+          "what": "Helps you not forget anything important before opening a restaurant: what is ready and what is left, at a glance.",
+          "how": [
+            "Open a section and tick what is already done. For example, you are opening a 40-seat café in Yasamal: tax ID obtained, lease signed.",
+            "On the right you see how much is done and what is left in each section: «Papers and official matters 2/8».",
+            "Split the rest by date and person. «Clear» removes every tick, «Undo» brings them back."
+          ]
         },
         "insaat-checklist": {
-          "t": "Construction checklist",
-          "d": "A phased plan from construction to opening, with site notes.",
-          "r": "Phase-by-phase plan and site notes",
-          "kw": "construction fit-out renovation"
+          "t": "From construction to opening",
+          "d": "A 6-stage work plan from construction to opening, with notes and photos for each item.",
+          "r": "Stage-by-stage plan and site notes",
+          "kw": "construction fit-out renovation checklist contractor",
+          "what": "Helps you do construction and fit-out work in the right order and catch expensive mistakes early.",
+          "how": [
+            "Open a stage: «Preparation», «Rough work», «Finishing»… For example, you are turning a 70 m² unit in Nasimi into a restaurant.",
+            "Tick finished work and add a short note or photo: «3-phase power — checked by Azerishig, 12 October».",
+            "On the right you see what is left in each stage. Ticks are kept in this browser; «Clear» removes them and «Undo» works for 8 seconds."
+          ]
         },
         "aqta-checklist": {
-          "t": "AQTA readiness",
-          "d": "Hygiene, paperwork and fine risks — section by section.",
-          "r": "Fine-risk map by section",
-          "kw": "aqta hygiene haccp fine"
+          "t": "Getting ready for an AQTA inspection",
+          "d": "Hygiene, paperwork and food storage — check section by section before the inspector comes.",
+          "r": "Which sections still carry a fine risk",
+          "kw": "aqta hygiene haccp fine inspection",
+          "what": "Helps you find what could lead to a fine during an inspection by AQTA, the Azerbaijan Food Safety Agency.",
+          "how": [
+            "Open a section and check your kitchen. For example, at a doner shop in Khatai, see whether the fridge stays between +2 °C and +6 °C.",
+            "Tick the items that are in order. «Items still at risk» shows how many are not ticked yet.",
+            "Put the rest into a daily, weekly and monthly schedule and name one person in charge. AQTA registration is free and goes through ASAN/KOBİA."
+          ]
         },
         "branding-guide": {
           "t": "Branding guide",
-          "d": "Brand word, visual identity and social media line in one workbook.",
-          "r": "A completed brand workbook",
-          "kw": "brand logo"
+          "d": "Name, one-sentence brand promise, guest, tone and colours — then a 12-step list.",
+          "r": "A completed brand card and 12-step list",
+          "kw": "brand logo branding concept",
+          "what": "Helps you decide who your restaurant is and what it promises before you spend money on a logo and design.",
+          "how": [
+            "Fill in the 5 fields of the brand card, or press «Load example»: «Grandma’s Kitchen — home cooking in Narimanov, lunch in 15 minutes».",
+            "Tick the steps on the 12-item list: two logo versions, 3–4 colours, menu design, staff training.",
+            "Show the finished card to your designer and staff so everyone builds the same brand. The card is kept in this browser."
+          ]
         },
         "otel-hazirlig-testi": {
-          "t": "Hotel readiness test",
-          "d": "Rate your fit with the AHA star standard in a few minutes.",
-          "r": "Star-standard compliance score",
-          "kw": "aha star hotel"
+          "t": "Hotel star readiness test",
+          "d": "Check in 12 questions how ready your hotel is for a star rating (AHA requirements).",
+          "r": "Readiness score and a realistic star target",
+          "kw": "hotel star rating aha certificate classification",
+          "what": "Shows which star level your hotel is ready for and what to strengthen before applying to AHA.",
+          "how": [
+            "Answer 12 questions: building, rooms, cleaning, reception, food, staff, documents and more.",
+            "Each answer gives 25–100 points; the average becomes a star target (e.g. 65–74 points — a 3-star target).",
+            "Example: a 25-room hotel in Baku with every answer at the 75-point level. Average 75: «4 stars are within reach»."
+          ]
         },
         "personel-planlayici": {
           "t": "Staff planner",
-          "d": "The right headcount per shift for restaurants and cafés.",
-          "r": "Staff per shift and labour cost %",
-          "kw": "shift rota staff"
+          "d": "How many staff a restaurant or café needs in each shift.",
+          "r": "Staff per shift and wages as a share of sales",
+          "kw": "staff shift waiter cook rota schedule",
+          "what": "Shows how many staff to keep at opening, in the busiest hours and in the evening, and what share of sales that costs.",
+          "how": [
+            "Enter the venue type, seats, receipts per day and opening hours. Example: a 60-seat restaurant in Narimanov, 150 receipts a day, 10:00–23:00.",
+            "The tool counts waiters, cooks and cashiers per shift from seats and receipts; Friday and weekends get more.",
+            "You see the staff count per shift and wages as a share of sales. If the share is above the norm, start with the evening shift."
+          ]
         },
         "metbex-istasyon": {
           "t": "Kitchen stations",
-          "d": "Stations and staff for fast-food and QSR kitchens, based on menu SKU count.",
-          "r": "Station count, staff and labour %",
-          "kw": "qsr fast food kitchen station"
+          "d": "How many stations and staff a fast food kitchen needs.",
+          "r": "Stations, staff per shift and wages as a share of sales",
+          "kw": "fast food kitchen station burger pizza delivery staff",
+          "what": "Shows how many stations to split a fast food kitchen into and how many staff to keep in each shift.",
+          "how": [
+            "Enter the venue type, number of menu items and orders per day. Example: a burger place by 28 May metro — 25 menu items, 180 orders a day.",
+            "Tick how guests order: eat in, takeaway, delivery. Every extra channel adds work for the kitchen.",
+            "The tool shows the stations (grill, fryer, assembly), staff per shift and wages as a share of sales."
+          ]
         },
         "staff-retention": {
           "t": "Staff retention",
-          "d": "Turnover rate, replacement cost and the yearly cost of staff loss.",
-          "r": "Yearly cost of turnover in ₼",
-          "kw": "turnover staff retention"
+          "d": "Share of staff who left, the cost of replacing one person and money lost per year.",
+          "r": "Money lost per year to staff leaving (₼)",
+          "kw": "staff turnover retention leavers",
+          "what": "Shows what the staff who left during the year cost you — it helps you decide how much money and time to put into keeping your team.",
+          "how": [
+            "Enter your current staff count, average monthly salary and how many people left last year (example: 18 staff, 850 ₼, 12 people).",
+            "The tool works out the share of staff who left: in the example 12 ÷ 18 = 66.7%.",
+            "Replacing one person costs about 2–3 months of salary (a widely used rule of thumb): in the example about 25,500 ₼ is lost per year."
+          ]
         }
       }
     },
     "foodCost": {
       "formulaLabel": "Formula",
       "formula": "Food cost % = (Ingredient cost ÷ Selling price) × 100",
-      "formulaNote": "Trim is included: cost of the usable quantity = quantity ÷ (1 − trim%) × unit price.",
+      "formulaNote": "Cleaning loss is included: quantity ÷ (1 − loss %) × unit price.",
       "removeRow": "Remove row",
       "signalTag": "Signal → step",
       "signalPending": "Enter the recipe and menu price — the result will show here.",
       "signalHigh": "Food cost {pct}% — above your {target}% target.",
-      "signalHighSub": "To hit the target: price {ideal}, or cut the plate cost by {cut}.",
+      "signalHighSub": "To reach the target: set the price to {ideal} or cut the portion cost by {cut}.",
       "signalOk": "Food cost {pct}% — within your {target}% target. Next step: update purchase prices once a month.",
       "sendWa": "Send result on WhatsApp",
       "pdf": "Save as PDF",
@@ -6956,18 +7039,18 @@
       "dishFallback": "Dish",
       "waIntro": "My food cost result (DK Agency tool):",
       "waLine": "{dish} — plate cost {cost}, menu price {price}, food cost {pct}.",
-      "waIdeal": "Ideal price ({target}%): {ideal}.",
+      "waIdeal": "Recommended price ({target}%): {ideal}.",
       "talkText": "Hello Doğan bey, I would like to discuss my food cost: {dish} — {pct} (price {price}).",
       "printTitle": "Food cost report",
       "printDate": "Date: {date}",
       "printFooter": "DK Agency · dkagency.com.tr · Calculated in the browser.",
       "afterBlog": "Article for this tool",
-      "afterBlogDesc": "Recipe cards, trim loss and how to set the menu price.",
+      "afterBlogDesc": "Recipe card, cleaning loss and how to set the menu price.",
       "afterNext": "Next tool",
       "afterDeliveryDesc": "If this dish sells on Wolt, what is left after commission?",
       "afterThen": "Then",
-      "afterMenuDesc": "Sort dishes with a known food cost into Stars, Plowhorses, Puzzles and Dogs.",
-      "errTrim": "Trim must be between 0 and 99% (100% leaves nothing usable).",
+      "afterMenuDesc": "For dishes with a known cost, see what to keep, where to fix the price, what to promote and what to remove.",
+      "errTrim": "Cleaning loss must be between 0 and 99% (100% means nothing is left).",
       "errPortions": "Portions must be greater than 0.",
       "errTarget": "Target food cost must be between 0 and 100%."
     },
@@ -7177,12 +7260,12 @@
       "choose": "Select...",
       "price": "Selling price (AZN)",
       "priceHelp": "The price the guest pays",
-      "cost": "Food Cost (AZN)",
-      "costHelp": "Raw ingredients + packaging",
+      "cost": "Food cost (₼, 1 portion)",
+      "costHelp": "Raw ingredients + packaging. Sent to the report as a percentage: cost ÷ selling price.",
       "sales": "Monthly sales (portions)",
       "salesPlaceholder": "e.g. 250",
       "salesHelp": "Average portions sold per month",
-      "margin": "Margin:",
+      "margin": "Left from the price:",
       "monthlyProfit": "Monthly profit:",
       "submit": "Analyze My Menu",
       "submitting": "AI is thinking...",
@@ -7196,7 +7279,9 @@
         "sandvic": "Sandwich",
         "shirniyyat": "Dessert",
         "icki": "Drink"
-      }
+      },
+      "costOverPrice": "The cost is higher than the selling price — please check the numbers.",
+      "foodCostPct": "Food cost (share of the price spent on ingredients):"
     },
     "persona": {
       "restName": "Restaurant name",
@@ -7261,6 +7346,10 @@
       "submitting": "AI is thinking...",
       "minItems": "Add at least 3 complaints",
       "remove": "Remove"
+    },
+    "dateInput": {
+      "selected": "Selected date:",
+      "formatHint": "Format: day.month.year (e.g. 14.05.2026)"
     }
   }
 }

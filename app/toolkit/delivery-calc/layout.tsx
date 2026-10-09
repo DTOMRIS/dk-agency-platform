@@ -6,9 +6,9 @@ import type { ReactNode } from 'react';
  * Başlıq/təsvir prefiksiz AZ ünvanı üçün buradan verilir.
  */
 export const metadata: Metadata = {
-  title: "Delivery Komissiya Kalkulyatoru — Wolt, Bolt Food, Yango",
+  title: "Çatdırılma komissiyası kalkulyatoru — Wolt, Bolt Food, Yango",
   description:
-    "Wolt, Bolt Food, Yango və öz delivery modeli üçün komissiya, food cost və aylıq netto nəticəni hesabla.",
+    "Wolt, Bolt Food, Yango və öz kuryeriniz üçün komissiya, ərzaq xərci və bir sifarişdən sizə qalan pulu hesablayın.",
 };
 
 export default function ToolkitDeliveryCalcLayout({ children }: { children: ReactNode }) {

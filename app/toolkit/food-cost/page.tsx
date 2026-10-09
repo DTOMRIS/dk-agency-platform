@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import FoodCostPage from '@/app/[locale]/toolkit/food-cost/page';
 
 export const metadata: Metadata = {
-  title: 'Food Cost Kalkulyator',
+  title: 'Food cost (ərzaq xərci faizi) kalkulyatoru',
   description:
-    'Porsiya maya dəyərini, trim loss-u və ideal satış qiymətini hesablayan food cost kalkulyatoru.',
+    'Porsiyanın maya dəyərini, təmizləmə itkisini (sümük, qabıq, yağ) və düzgün satış qiymətini hesablayan pulsuz alət.',
 };
 
 export default function PublicFoodCostPage() {
