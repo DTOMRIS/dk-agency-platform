@@ -42,6 +42,7 @@ const KEPT = [
   'xeberler',
   'blog',
   'reklamlar',
+  'muracietler', // TASK-0521
   'kazan-leads',
   'franchise-leads',
   'contact-tracking',

@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ClipboardCheck,
   Handshake,
+  Inbox,
   LayoutDashboard,
   LogOut,
   Megaphone,
@@ -69,6 +70,8 @@ const navSections: NavSectionDef[] = [
   {
     titleKey: 'leads',
     items: [
+      // TASK-0521: every inbound lead in one list (listing inquiries, clicks, KAZAN, franchise, newsletter).
+      { titleKey: 'inbox', href: '/dashboard/muracietler', icon: Inbox },
       { titleKey: 'kazanLeads', href: '/dashboard/kazan-leads', icon: Bot },
       { titleKey: 'franchiseLeads', href: '/dashboard/franchise-leads', icon: Handshake },
       { titleKey: 'contactTracking', href: '/dashboard/contact-tracking', icon: MessageCircle },
@@ -123,6 +126,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
   const t = useTranslations('dashboardSidebar');
   const [kazanLeadCount, setKazanLeadCount] = useState<number | null>(null);
   const [pendingListings, setPendingListings] = useState<number>(0);
+  const [inboxCount, setInboxCount] = useState<number>(0);
   const [loggingOut, setLoggingOut] = useState(false);
   const currentLocale = (() => {
     if (typeof document === 'undefined') return normalizeLocale(pathname.split('/')[1]);
@@ -171,8 +175,21 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       }
     }
 
+    // TASK-0521: all inbound items of the last 7 days (admin-only COUNT endpoint).
+    async function loadInboxCount() {
+      try {
+        const res = await fetch('/api/dashboard/muracietler/count');
+        if (!res.ok) return;
+        const data = (await res.json()) as { count?: number };
+        if (!cancelled) setInboxCount(data.count ?? 0);
+      } catch {
+        /* ignore */
+      }
+    }
+
     void loadKazanLeadCount();
     void loadPendingListings();
+    void loadInboxCount();
     return () => {
       cancelled = true;
     };
@@ -188,9 +205,11 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
             ? (kazanLeadCount ?? undefined)
             : item.href === '/dashboard/ilanlar'
               ? pendingListings || undefined
-              : item.badge,
+              : item.href === '/dashboard/muracietler'
+                ? inboxCount || undefined
+                : item.badge,
       })),
-    [kazanLeadCount, pendingListings, t]
+    [kazanLeadCount, pendingListings, inboxCount, t]
   );
   const itemMeta = useMemo(
     () =>

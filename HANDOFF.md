@@ -1,5 +1,15 @@
 # HANDOFF
 
+## Session 9 Oktyabr 2026 (gec, 2) — TASK-0521: «Bütün müraciətlər» + header hesab menyusu
+
+**Budaq:** `feat/TASK-0520-header-v2` (TASK-0520 ilə eyni budaq, commit edilməyib). `components/layout/Header.tsx` sahibin ayrıca commit-idir (`ALLOW_PROTECTED=1`). Kart: `docs/tasks/TASK-0521.md` (mənbə → cədvəl xəritəsi orada).
+
+- `/dashboard/muracietler`: 5 cədvəldən yalnız oxuyan inbox (elan sorğuları, kliklər, KAZAN, franchise/OTA/Radar, bülletən). Status dəyişmək mənbə səhifəsindədir; inbox heç nə yazmır.
+- Sidebar nişanı = son 7 gündə bütün mənbələr (kliklər daxil) — `GET /api/dashboard/muracietler/count`.
+- Header: qonaq üçün «Daxil ol ▾» menyusu (Daxil ol / Üzv ol) — TASK-0520-nin açıq sualı bağlandı. RU 1280–1439-da ikon gizlidir (sığmırdı).
+- Telefon panelində «Pulsuz diaqnostika» yoxdur. Diqqət: telefon zolağında da qırmızı pill `sm+`-dır, yəni < 640px-də diaqnostika CTA-sı header-də heç yerdə qalmadı.
+- Açıq: bülletən abunələrinin ayrıca admin səhifəsi yoxdur (inbox-da link «—»); `leads` klikləri anonimdir (ad/telefon saxlanmır).
+
 ## Session 9 Oktyabr 2026 (gec) — TASK-0520: qlobal header v2
 
 **Budaq:** `feat/TASK-0520-header-v2` (origin/main 70142a7-dən), commit edilməyib. `components/layout/Header.tsx` sahibin ayrıca commit-idir (`ALLOW_PROTECTED=1`). Kart: `docs/tasks/TASK-0520.md` (köhnə elementlərin hara getdiyi cədvəli orada).
