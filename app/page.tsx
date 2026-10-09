@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 
-// TASK-0510: kök ünvan (/) [locale] layout-dan keçmir — link önizləməsinin yeni mətni burada.
+// TASK-0510: kök ünvan (/) [locale] layout-dan keçmir — link önizləməsinin mətni burada.
 // Root layout qorunan fayldır, ona görə metadata səhifə səviyyəsində verilir.
-const title = 'DK Agency | HoReCa İdarəetmə, KAZAN AI & Biznes Ekosistemi';
+// TASK-0513: ana səhifə v2 mesajı; [locale]/layout-dakı AZ mətni ilə eynidir.
+const title = 'DK Agency — Biz itkini tapırıq, siz restoranı idarə edirsiniz';
 const description =
-  '40 illik təcrübə, KAZAN AI asistanı, 18+ interaktiv maliyyə aləti, ekspert bloq və sektor xəbərləri — Azərbaycan HoReCa sektoru üçün.';
+  'Food cost, P&L, delivery komissiyası, OCAQ gündəlik nəzarət və KAZAN AI — restoran, kafe və otellər üçün. Pulsuz diaqnostika.';
 
 export const metadata: Metadata = {
   title,

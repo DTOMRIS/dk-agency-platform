@@ -1965,17 +1965,25 @@
       "kazan": {
         "title": "Chat with KAZAN AI",
         "description": "Our industry-trained AI assistant replies instantly. 24/7, free.",
-        "badge": "Recommended"
+        "badge": "Recommended",
+        "beta": "Beta",
+        "cta": "Open chat"
       },
       "whatsapp": {
         "title": "WhatsApp",
         "description": "Send a message, we reply within a business day.",
-        "preFill": "Hi, writing from the dkagency.com.tr contact page."
+        "preFill": "Hi, writing from the dkagency.com.tr contact page.",
+        "primary": "Main channel",
+        "cta": "Message on WhatsApp"
       },
       "telegram": {
         "title": "Telegram",
-        "description": "Join our channel, send us a message."
-      }
+        "description": "Join our channel, send us a message.",
+        "channelTitle": "Telegram channel",
+        "channelDescription": "Sector Pulse: approved HoReCa news is posted to the channel.",
+        "cta": "Subscribe to the channel"
+      },
+      "hoursNote": "We reply on WhatsApp during working hours"
     },
     "kazanTitle": "Start with KAZAN AI",
     "kazanDescription": "Ask your question, pass the context to KAZAN AI, and let the team see it as a real lead.",
@@ -3761,6 +3769,11 @@
         "category": "Menu",
         "title": "How can menu engineering grow your sales?",
         "excerpt": "The basics of running your menu on data with the Star, Plowhorse, Puzzle and Dog matrix."
+      },
+      "p3": {
+        "category": "Delivery",
+        "title": "Wolt, Bolt, Yango: what is left for you after commission?",
+        "excerpt": "We work out the real net of an order after the delivery platform commission, food cost and packaging."
       }
     }
   },
@@ -6234,7 +6247,7 @@
       "waText": "Write to our team directly",
       "waPrefill": "Hello, I have a question about the B2B portal.",
       "tgTitle": "Telegram",
-      "tgText": "@dkagency",
+      "tgText": "@dkagenc",
       "aiTitle": "KAZAN AI",
       "aiText": "AI assistant for food cost, P&L and operations questions",
       "waNumber": "WhatsApp number: {number}",
@@ -6248,5 +6261,443 @@
       "q4": "What if my listing is rejected?",
       "q4a": "The reason is shown in “Notifications”. If you have questions, message us on WhatsApp."
     }
+  },
+  "homeV2": {
+    "waDiag": "Hello Doğan, I'd like a free DK Agency diagnostic.",
+    "waOcaq": "Hello Doğan, I'd like to learn about OCAQ.",
+    "ctaDiag": "Free diagnostic",
+    "ctaHow": "How it works",
+    "sample": "Sample data — for illustration only.",
+    "sampleDialog": "Sample dialogue — for illustration only.",
+    "hero": {
+      "l1": "We find",
+      "l2": "the leaks.",
+      "l3": "You run",
+      "l4": "the restaurant.",
+      "lead": "Food cost, delivery commission, staffing and daily waste. DK Agency brings your numbers into one place, shows where the money leaks and suggests a step for every signal. The decision is always yours.",
+      "phoneLabel": "Sample screen",
+      "chips": {
+        "foodcost": {
+          "t": "Food cost",
+          "s": "Calculating"
+        },
+        "delivery": {
+          "t": "Delivery",
+          "s": "Net of commission"
+        },
+        "ocaq": {
+          "t": "OCAQ",
+          "s": "Shift checklist"
+        },
+        "kazan": {
+          "t": "KAZAN AI",
+          "s": "Q&A"
+        }
+      },
+      "phone": {
+        "hi": "Good morning",
+        "date": "Monday · sample data",
+        "doneLbl": "steps\ntaken",
+        "waitLbl": "awaiting\nyour approval",
+        "pending": "Awaiting approval",
+        "swipe": "swipe",
+        "view": "View",
+        "approved": "✓ Done",
+        "c1": {
+          "tag": "Price decision",
+          "title": "Beef dürüm · food cost 45%",
+          "why": "Beef purchase prices have gone up. Raising the price from 7,50 ₼ to 8,90 ₼ brings food cost down to 38%.",
+          "action": "Approve"
+        },
+        "c2": {
+          "tag": "Cash desk",
+          "amt": "mismatch",
+          "title": "Branch 3 · till ↔ bank",
+          "why": "Yesterday's card sales don't match the bank statement. Shall I ask the manager to explain?",
+          "action": "Send"
+        },
+        "nav": {
+          "today": "Today",
+          "cost": "Costs",
+          "tasks": "Tasks",
+          "market": "Market"
+        },
+        "allDone": "All approved",
+        "allDoneSub": "The next signal will show up here."
+      }
+    },
+    "facts": {
+      "label": "Facts",
+      "f1": {
+        "v": "40 years",
+        "l": "of HoReCa management experience"
+      },
+      "f2": {
+        "v": "18",
+        "l": "free calculation tools"
+      },
+      "f3": {
+        "v": "10+",
+        "l": "branches in the chain where OCAQ runs every day"
+      },
+      "f4": {
+        "v": "4 languages",
+        "l": "AZ · RU · EN · TR"
+      }
+    },
+    "eco": {
+      "label": "DK Agency ecosystem",
+      "eyebrow": "Ecosystem",
+      "title": "All your restaurant's numbers in one place.",
+      "desc": "Costs, staff, menu and daily control in one system, not scattered across Excel files. At the centre, KAZAN AI (beta) answers your question from the DK knowledge base and points you to the right tool.",
+      "note": "POS (Clopos), bank and supplier systems are connected if the company wants.",
+      "ring": {
+        "pos": "Your POS · Clopos",
+        "suppliers": "Your suppliers",
+        "bank": "Your bank",
+        "team": "Your team"
+      },
+      "nodes": {
+        "n1": "Food Cost & P&L",
+        "n2": "Staff & shifts",
+        "n3": "OCAQ control",
+        "n4": "Menu & delivery"
+      },
+      "list": {
+        "l1": {
+          "b": "Food Cost & P&L",
+          "t": "recipe cost, profit, break-even"
+        },
+        "l2": {
+          "b": "Staff & shifts",
+          "t": "staffing plan, shift checklist"
+        },
+        "l3": {
+          "b": "OCAQ",
+          "t": "till ↔ bank, HACCP, waste log"
+        },
+        "l4": {
+          "b": "Menu & delivery",
+          "t": "menu matrix, Wolt/Bolt commission"
+        }
+      }
+    },
+    "modules": {
+      "eyebrow": "Modules",
+      "title": "Some bring money in. Others protect it.",
+      "desc": "Each module answers one question and ends with one step. The status badge is real: <b>Live</b> is working, <b>Beta</b> is in testing.",
+      "groupCost": "Costs",
+      "groupRevenue": "Revenue",
+      "costEyebrow": "↓ Cost control",
+      "revEyebrow": "↑ Revenue growth",
+      "live": "Live",
+      "beta": "Beta",
+      "signal": "Signal",
+      "stepDone": "Step taken",
+      "pause": "Pause animation",
+      "resume": "Resume animation",
+      "openTool": "Open the tool →",
+      "dish": {
+        "chicken": "Chicken dürüm",
+        "meat": "Beef dürüm",
+        "lavash": "Lavash plate",
+        "fries": "French fries",
+        "ayran": "Ayran",
+        "salad": "Salad"
+      },
+      "foodcost": {
+        "tab": "Food cost",
+        "title": "Food Cost & Recipe Calculator",
+        "statValue": "600 ₼",
+        "stat": "On 60 000 ₼ monthly revenue, every 1% of food cost is 600 ₼ a month.",
+        "statNote": "Calculation: 60 000 × 1% = 600 ₼",
+        "s1t": "Enter the recipe",
+        "s1p": "Each dish's ingredients, grams and purchase price.",
+        "s2t": "See the cost",
+        "s2p": "Portion cost and food cost percentage against the selling price.",
+        "s3t": "Fix price and portion",
+        "s3p": "A price or portion decision for dishes outside the target.",
+        "mockTitle": "Recipe cost",
+        "mockSub": "Menu · 5 dishes",
+        "kpiLabel": "Average food cost",
+        "c1": "Dish",
+        "c2": "Cost",
+        "c3": "Price",
+        "c4": "Food cost",
+        "foot1": "Recipe · purchase price · sales",
+        "foot2": "Target 28–32%",
+        "agent": {
+          "signal": "Beef dürüm at 45%: 13 points above target.",
+          "btn": "Check the price",
+          "busy": "Calculating…",
+          "action": "For 30%, the selling price should be about 11,30 ₼, or the portion should shrink.",
+          "done": "Your call"
+        }
+      },
+      "delivery": {
+        "tab": "Delivery commission",
+        "title": "Delivery Commission Calculator",
+        "statValue": "Net",
+        "stat": "The real money left in your hands after commission and food cost — for Wolt, Bolt Food, Yango and your own delivery.",
+        "s1t": "Enter platform and commission",
+        "s1p": "Each platform's rate and monthly order volume.",
+        "s2t": "See net per order",
+        "s2p": "What's left after commission + food cost.",
+        "s3t": "Separate menu and pricing",
+        "s3p": "A delivery menu, a price difference or a combo decision.",
+        "mockTitle": "Net per order",
+        "mockSub": "Basket 20 ₼ · food cost 32%",
+        "kpiLabel": "Net",
+        "c1": "Channel",
+        "c2": "Commission",
+        "c3": "Food cost",
+        "c4": "Net",
+        "dineIn": "Dine-in",
+        "platformA": "Platform A",
+        "own": "Own delivery",
+        "courier": "courier 3 ₼",
+        "foot1": "Commission · food cost · courier",
+        "foot2": "Net / order",
+        "agent": {
+          "signal": "On the platform, 5 ₼ of every 20 ₼ order goes to commission.",
+          "btn": "Prepare a delivery menu",
+          "busy": "Preparing…",
+          "action": "Separate delivery prices and combo options are ready.",
+          "done": "Options ready"
+        }
+      },
+      "ocaq": {
+        "tab": "OCAQ daily control",
+        "title": "OCAQ: daily control for multi-branch chains",
+        "statValue": "10+",
+        "stat": "branches in a chain where it runs every day: shift checklist, HACCP, live sales, till ↔ bank reconciliation, waste control.",
+        "s1t": "The shift starts",
+        "s1p": "The opening checklist and HACCP log are filled in from a phone.",
+        "s2t": "Tracks through the day",
+        "s2p": "Live sales, till and bank reconciliation, waste records.",
+        "s3t": "A signal goes to management",
+        "s3p": "Any number outside the norm lands in front of the owner and the manager.",
+        "cta": "Show me OCAQ →",
+        "mockTitle": "Today's control",
+        "mockSub": "Branch · morning shift",
+        "kpiLabel": "Checklist",
+        "c1": "Item",
+        "c2": "Status",
+        "c3": "Owner",
+        "c4": "Time",
+        "fridge": "Fridge temperature",
+        "openingCash": "Opening till",
+        "cashBank": "Till ↔ bank",
+        "wasteLog": "Waste log",
+        "diff": "mismatch",
+        "pending": "pending",
+        "cook": "Cook",
+        "cashier": "Cashier",
+        "manager": "Manager",
+        "foot1": "Checklist · HACCP · till · waste",
+        "foot2": "OCAQ",
+        "agent": {
+          "signal": "The till and the bank don't match.",
+          "btn": "Send to manager",
+          "busy": "Sending…",
+          "action": "Task sent to the manager: explain the gap before the shift closes.",
+          "done": "Sent 09:02"
+        }
+      },
+      "menu": {
+        "tab": "Menu matrix",
+        "title": "Menu Matrix",
+        "statValue": "4 groups",
+        "stat": "By sales count and margin, every dish falls into one of four groups: star, plowhorse, puzzle or dog.",
+        "s1t": "Enter sales and margin",
+        "s1p": "Each dish's monthly sales count and portion margin.",
+        "s2t": "See the group",
+        "s2p": "Which dish earns and which just takes up space.",
+        "s3t": "Rebuild the menu",
+        "s3p": "Put the stars up front; drop or reprice the dogs.",
+        "mockTitle": "Menu analysis",
+        "mockSub": "Last 30 days · 4 dishes",
+        "kpiLabel": "Stars",
+        "c1": "Dish",
+        "c2": "Sales",
+        "c3": "Margin",
+        "c4": "Group",
+        "salesHigh": "high",
+        "salesLow": "low",
+        "marginHigh": "high",
+        "marginLow": "low",
+        "star": "Star",
+        "puzzle": "Puzzle",
+        "horse": "Plowhorse",
+        "dog": "Dog",
+        "foot1": "Sales · margin · group",
+        "foot2": "Menu Matrix",
+        "agent": {
+          "signal": "Beef dürüm sells a lot, but its margin is low.",
+          "btn": "Suggest a combo",
+          "busy": "Preparing…",
+          "action": "A beef dürüm + ayran combo was suggested; its margin will be calculated separately.",
+          "done": "Offer ready"
+        }
+      },
+      "kazan": {
+        "tab": "KAZAN AI",
+        "title": "KAZAN AI: HoReCa advisor",
+        "statValue": "1 step",
+        "stat": "Every answer ends with one actionable step and a link to the matching DK tool.",
+        "s1t": "Ask your question",
+        "s1p": "Food cost, menu, opening, AQTA, staff.",
+        "s2t": "An answer from the DK knowledge base",
+        "s2p": "Based on blog articles and the tools.",
+        "s3t": "Go to the tool",
+        "s3p": "Check the answer with your own numbers.",
+        "cta": "Open KAZAN AI →",
+        "mockTitle": "KAZAN AI",
+        "mockSub": "Question · answer · step",
+        "kpiLabel": "Status",
+        "qLbl": "Question:",
+        "q": "Food cost came out at 38% — what should I do?",
+        "aLbl": "Answer:",
+        "a": "The target range is 28–32%. First check the recipe cost of your best-selling dishes, then portions and purchase prices.",
+        "stepLbl": "Step:",
+        "step": "Check your 5 key dishes in the Food Cost Calculator.",
+        "foot1": "Blog · Toolkit",
+        "foot2": "KAZAN AI",
+        "agent": {
+          "signal": "Question in: food cost 38%.",
+          "btn": "Route to the tool",
+          "busy": "Routing…",
+          "action": "Answered, and a link to the Food Cost Calculator was sent.",
+          "done": "Answered"
+        }
+      }
+    },
+    "steps": {
+      "eyebrow": "How it works",
+      "title": "Nobody is looking at your restaurant's numbers. We are.",
+      "s1": {
+        "h": "We find",
+        "em": "the leaks",
+        "p": "In a free diagnostic we go through your menu, food cost, staffing and delivery together."
+      },
+      "s2": {
+        "h": "We show",
+        "em": "in manats",
+        "p": "We show where the money leaks — not in percentages but in manats per month."
+      },
+      "s3": {
+        "h": "We build",
+        "em": "the system",
+        "p": "We set up the tools and OCAQ in your branches and train the team."
+      },
+      "s4": {
+        "h": "We track",
+        "em": "every day",
+        "p": "Any number outside the norm reaches you as a signal with one step."
+      },
+      "phoneTitle": "Your restaurant map",
+      "stepLabel": "STEP {n}",
+      "ready": "✓ Done",
+      "active": "✓ Active",
+      "sc1": {
+        "b": "Diagnostic",
+        "d": "areas reviewed: menu, food cost, staff, delivery, till"
+      },
+      "sc2": {
+        "b": "Leak map",
+        "d": "a month in raw-material spend above target"
+      },
+      "sc3": {
+        "b": "System in place",
+        "d": "checklist, till, waste log"
+      },
+      "sc4": {
+        "b": "Daily signal",
+        "d": "morning summary on your phone"
+      }
+    },
+    "receipt": {
+      "eyebrow": "Your numbers",
+      "title": "So what are your numbers?",
+      "sub": "Pick who you are, enter your monthly sales and food purchases — and see in manat what is left of your revenue.",
+      "trust1": "No sign-up needed to calculate",
+      "trust2": "Your numbers stay in your browser",
+      "resultLabel": "Result",
+      "hints": {
+        "restoran": {
+          "t1": "Portion cost and food cost %",
+          "t2": "Monthly net profit",
+          "t3": "Net per order"
+        },
+        "kafe": {
+          "t1": "Cost per cup",
+          "t2": "Star · plowhorse · puzzle · dog list",
+          "t3": "Hour-by-hour shift plan"
+        },
+        "otel": {
+          "t1": "Profile readiness score",
+          "t2": "List of missing requirements",
+          "t3": "Payback period"
+        },
+        "franchise": {
+          "t1": "Readiness score",
+          "t2": "Payback period",
+          "t3": "Draft franchise manual"
+        },
+        "acilis": {
+          "t1": "Minimum guests per day",
+          "t2": "Step-by-step opening list",
+          "t3": "Inspection readiness list"
+        }
+      }
+    },
+    "news": {
+      "eyebrow": "Sector Pulse",
+      "title": "Latest from the sector",
+      "sub": "Selected HoReCa, tourism and restaurant-tech news — with the source.",
+      "cta": "All news",
+      "readMore": "Read more",
+      "cats": {
+        "market": "Market",
+        "technology": "Technology",
+        "finance": "Finance",
+        "other": "Sector"
+      },
+      "newsletterTitle": "Weekly digest",
+      "newsletterBody": "Receive the latest sector news and analysis directly in your inbox.",
+      "emailPlaceholder": "Your email",
+      "subscribe": "Subscribe",
+      "success": "Your subscription is confirmed.",
+      "error": "Subscription could not be completed.",
+      "loading": "Submitting..."
+    },
+    "market": {
+      "eyebrow": "Marketplace",
+      "postListing": "Post a listing",
+      "label": "Listing categories"
+    },
+    "blog": {
+      "eyebrow": "Knowledge",
+      "readMin": "{n} min read"
+    },
+    "ai": {
+      "eyebrow": "AI readiness test",
+      "meta": "{n} questions · up to {max} points",
+      "preview": "A few of the questions",
+      "resultHint": "At the end: your score and the tools that fit you"
+    }
+  },
+  "ogHome": {
+    "alt": "DK Agency — We find the leaks, you run the restaurant",
+    "eyebrow": "For restaurants, cafés and hotels",
+    "line1": "We find the leaks.",
+    "line2": "You run the restaurant.",
+    "sub": "Food cost, delivery commission, staffing and daily waste — in one place.",
+    "sample": "Sample",
+    "signal": "Signal",
+    "cardTitle": "Beef dürüm · food cost",
+    "cardFrom": "45%",
+    "cardTo": "38%",
+    "plan": "Plan ready"
   }
 }

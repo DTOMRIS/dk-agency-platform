@@ -1965,17 +1965,25 @@
       "kazan": {
         "title": "KAZAN AI ile konuş",
         "description": "Sektör eğitimli AI asistanımız anında yanıt verir. 7/24, ücretsiz.",
-        "badge": "Önerilen"
+        "badge": "Önerilen",
+        "beta": "Beta",
+        "cta": "Sohbeti aç"
       },
       "whatsapp": {
         "title": "WhatsApp",
         "description": "Mesaj atın, iş günü içinde yanıtlayalım.",
-        "preFill": "Merhaba, dkagency.com.tr iletişim sayfasından yazıyorum."
+        "preFill": "Merhaba, dkagency.com.tr iletişim sayfasından yazıyorum.",
+        "primary": "Ana kanal",
+        "cta": "WhatsApp'tan yaz"
       },
       "telegram": {
         "title": "Telegram",
-        "description": "Telegram kanalımıza katılın, mesaj atın."
-      }
+        "description": "Telegram kanalımıza katılın, mesaj atın.",
+        "channelTitle": "Telegram kanalı",
+        "channelDescription": "Sektör Nabzı: onaylanan HoReCa haberleri kanala düşer.",
+        "cta": "Kanala abone ol"
+      },
+      "hoursNote": "WhatsApp'ta çalışma saatlerinde yanıt veriyoruz"
     },
     "kazanTitle": "KAZAN AI ile başla",
     "kazanDescription": "Sorunu yaz, bağlam KAZAN AI'a aktarılsın ve ekip bunu gerçek lead olarak görsün.",
@@ -3761,6 +3769,11 @@
         "category": "Menü",
         "title": "Menü mühendisliğiyle satışlar nasıl artırılır?",
         "excerpt": "Yıldız, At, Bulmaca ve Köpek matrisiyle menüyü veriyle yönetmenin temelleri."
+      },
+      "p3": {
+        "category": "Delivery",
+        "title": "Wolt, Bolt, Yango: komisyondan sonra size ne kalıyor?",
+        "excerpt": "Teslimat platformu komisyonu, food cost ve ambalaj düştükten sonra siparişin gerçek netini hesaplıyoruz."
       }
     }
   },
@@ -6234,7 +6247,7 @@
       "waText": "Ekibimize doğrudan yazın",
       "waPrefill": "Merhaba, B2B portal hakkında bir sorum var.",
       "tgTitle": "Telegram",
-      "tgText": "@dkagency",
+      "tgText": "@dkagenc",
       "aiTitle": "KAZAN AI",
       "aiText": "Food cost, P&L ve operasyon soruları için AI asistan",
       "waNumber": "WhatsApp numarası: {number}",
@@ -6248,5 +6261,443 @@
       "q4": "İlanım reddedildiyse ne yapmalıyım?",
       "q4a": "Sebep «Bildirimler» bölümünde yazılır. Sorunuz varsa WhatsApp'tan yazın."
     }
+  },
+  "homeV2": {
+    "waDiag": "Merhaba Doğan Bey, DK Agency ücretsiz teşhis istiyorum.",
+    "waOcaq": "Merhaba Doğan Bey, OCAQ hakkında bilgi almak istiyorum.",
+    "ctaDiag": "Ücretsiz teşhis",
+    "ctaHow": "Nasıl çalışır",
+    "sample": "Örnek veri — yalnızca görsel amaçlı.",
+    "sampleDialog": "Örnek diyalog — yalnızca görsel amaçlı.",
+    "hero": {
+      "l1": "Biz kaybı",
+      "l2": "buluruz.",
+      "l3": "Siz restoranı",
+      "l4": "yönetirsiniz.",
+      "lead": "Food cost, paket servis komisyonu, personel ve günlük kayıp. DK Agency rakamlarınızı tek yerde toplar, paranın nereden sızdığını gösterir ve her sinyale bir adım önerir. Karar her zaman sizde.",
+      "phoneLabel": "Örnek ekran",
+      "chips": {
+        "foodcost": {
+          "t": "Food cost",
+          "s": "Hesaplanıyor"
+        },
+        "delivery": {
+          "t": "Paket servis",
+          "s": "Komisyon sonrası net"
+        },
+        "ocaq": {
+          "t": "OCAQ",
+          "s": "Vardiya kontrol listesi"
+        },
+        "kazan": {
+          "t": "KAZAN AI",
+          "s": "Soru-cevap"
+        }
+      },
+      "phone": {
+        "hi": "Günaydın",
+        "date": "Pazartesi · örnek veri",
+        "doneLbl": "adım\natıldı",
+        "waitLbl": "onayınızı\nbekliyor",
+        "pending": "Onay bekliyor",
+        "swipe": "kaydırın",
+        "view": "Bak",
+        "approved": "✓ Yapıldı",
+        "c1": {
+          "tag": "Fiyat kararı",
+          "title": "Et dürüm · food cost %45",
+          "why": "Dana eti alış fiyatı arttı. Fiyatı 7,50 ₼'dan 8,90 ₼'a çıkarırsak food cost %38'e düşer.",
+          "action": "Onayla"
+        },
+        "c2": {
+          "tag": "Kasa",
+          "amt": "fark var",
+          "title": "Şube 3 · kasa ↔ banka",
+          "why": "Dünkü kartlı satışlar banka ekstresiyle tutmuyor. Müdürden açıklama isteyeyim mi?",
+          "action": "Gönder"
+        },
+        "nav": {
+          "today": "Bugün",
+          "cost": "Maliyet",
+          "tasks": "Görevler",
+          "market": "Pazar"
+        },
+        "allDone": "Hepsi onaylandı",
+        "allDoneSub": "Yeni sinyal geldiğinde burada görünecek."
+      }
+    },
+    "facts": {
+      "label": "Gerçekler",
+      "f1": {
+        "v": "40 yıl",
+        "l": "HoReCa yönetim deneyimi"
+      },
+      "f2": {
+        "v": "18",
+        "l": "ücretsiz hesaplama aracı"
+      },
+      "f3": {
+        "v": "10+",
+        "l": "şubeli ağda her gün çalışan OCAQ"
+      },
+      "f4": {
+        "v": "4 dil",
+        "l": "AZ · RU · EN · TR"
+      }
+    },
+    "eco": {
+      "label": "DK Agency ekosistemi",
+      "eyebrow": "Ekosistem",
+      "title": "Restoranınızın tüm rakamları tek yerde.",
+      "desc": "Maliyet, personel, menü ve günlük kontrol ayrı ayrı Excel dosyalarında değil, tek bir sistemde. Ortada KAZAN AI (beta) sorunuzu DK bilgi tabanıyla yanıtlar ve doğru araca yönlendirir.",
+      "note": "POS (Clopos), banka ve tedarikçi sistemleri şirket isterse bağlanır.",
+      "ring": {
+        "pos": "POS'unuz · Clopos",
+        "suppliers": "Tedarikçileriniz",
+        "bank": "Bankanız",
+        "team": "Ekibiniz"
+      },
+      "nodes": {
+        "n1": "Food Cost & P&L",
+        "n2": "Personel & vardiya",
+        "n3": "OCAQ kontrol",
+        "n4": "Menü & paket servis"
+      },
+      "list": {
+        "l1": {
+          "b": "Food Cost & P&L",
+          "t": "maliyet, kâr, başabaş"
+        },
+        "l2": {
+          "b": "Personel & vardiya",
+          "t": "personel planı, vardiya kontrol listesi"
+        },
+        "l3": {
+          "b": "OCAQ",
+          "t": "kasa ↔ banka, HACCP, fire defteri"
+        },
+        "l4": {
+          "b": "Menü & paket servis",
+          "t": "menü matrisi, Wolt/Bolt komisyonu"
+        }
+      }
+    },
+    "modules": {
+      "eyebrow": "Modüller",
+      "title": "Bazıları para kazandırır. Bazıları parayı korur.",
+      "desc": "Her modül bir soruyu yanıtlar ve sonunda bir adım verir. Durum rozeti gerçektir: <b>Canlı</b> çalışıyor, <b>Beta</b> test aşamasında.",
+      "groupCost": "Maliyet",
+      "groupRevenue": "Gelir",
+      "costEyebrow": "↓ Maliyet kontrolü",
+      "revEyebrow": "↑ Gelir artışı",
+      "live": "Canlı",
+      "beta": "Beta",
+      "signal": "Sinyal",
+      "stepDone": "Adım atıldı",
+      "pause": "Animasyonu durdur",
+      "resume": "Animasyonu sürdür",
+      "openTool": "Aracı aç →",
+      "dish": {
+        "chicken": "Tavuk dürüm",
+        "meat": "Et dürüm",
+        "lavash": "Lavaş tabağı",
+        "fries": "Patates kızartması",
+        "ayran": "Ayran",
+        "salad": "Salata"
+      },
+      "foodcost": {
+        "tab": "Food cost",
+        "title": "Food Cost & Reçete Hesaplayıcı",
+        "statValue": "600 ₼",
+        "stat": "60 000 ₼ aylık ciroda food cost'un her %1'i ayda 600 ₼ demektir.",
+        "statNote": "Hesap: 60 000 × %1 = 600 ₼",
+        "s1t": "Reçeteyi girin",
+        "s1p": "Her yemeğin içeriği, gramajı ve alış fiyatı.",
+        "s2t": "Maliyeti görün",
+        "s2p": "Porsiyon maliyeti ve satış fiyatına göre food cost yüzdesi.",
+        "s3t": "Fiyatı ve porsiyonu düzeltin",
+        "s3p": "Hedefin dışına çıkan yemekler için fiyat ya da porsiyon kararı.",
+        "mockTitle": "Reçete maliyeti",
+        "mockSub": "Menü · 5 yemek",
+        "kpiLabel": "Ortalama food cost",
+        "c1": "Yemek",
+        "c2": "Maliyet",
+        "c3": "Satış",
+        "c4": "Food cost",
+        "foot1": "Reçete · alış fiyatı · satış",
+        "foot2": "Hedef %28–32",
+        "agent": {
+          "signal": "Et dürüm %45: hedefin 13 puan üstünde.",
+          "btn": "Fiyatı kontrol et",
+          "busy": "Hesaplanıyor…",
+          "action": "%30 için satış fiyatı yaklaşık 11,30 ₼ olmalı ya da porsiyon küçülmeli.",
+          "done": "Karar sizde"
+        }
+      },
+      "delivery": {
+        "tab": "Paket servis komisyonu",
+        "title": "Paket Servis Komisyon Hesaplayıcı",
+        "statValue": "Net",
+        "stat": "Wolt, Bolt Food, Yango ve kendi teslimatınız için komisyon ve food cost düşüldükten sonra elinizde kalan gerçek para.",
+        "s1t": "Platformu ve komisyonu girin",
+        "s1p": "Her platformun oranı ve aylık sipariş hacmi.",
+        "s2t": "Sipariş başına neti görün",
+        "s2p": "Komisyon + food cost düşüldükten sonra kalan tutar.",
+        "s3t": "Menüyü ve fiyatı ayırın",
+        "s3p": "Paket servis menüsü, fiyat farkı ya da combo kararı.",
+        "mockTitle": "Sipariş başına net",
+        "mockSub": "Sepet 20 ₼ · food cost %32",
+        "kpiLabel": "Net",
+        "c1": "Kanal",
+        "c2": "Komisyon",
+        "c3": "Food cost",
+        "c4": "Net",
+        "dineIn": "Salonda satış",
+        "platformA": "Platform A",
+        "own": "Kendi teslimatınız",
+        "courier": "kurye 3 ₼",
+        "foot1": "Komisyon · food cost · kurye",
+        "foot2": "Net / sipariş",
+        "agent": {
+          "signal": "Platformda her 20 ₼'lik siparişin 5 ₼'si komisyona gidiyor.",
+          "btn": "Paket servis menüsü hazırla",
+          "busy": "Hazırlanıyor…",
+          "action": "Paket servis için ayrı fiyat ve combo seçenekleri hazırlandı.",
+          "done": "Seçenekler hazır"
+        }
+      },
+      "ocaq": {
+        "tab": "OCAQ günlük kontrol",
+        "title": "OCAQ: çok şubeli zincirler için günlük kontrol",
+        "statValue": "10+",
+        "stat": "şubeli bir zincirde her gün çalışıyor: vardiya kontrol listesi, HACCP, canlı satış, kasa ↔ banka mutabakatı, fire kontrolü.",
+        "s1t": "Vardiya başlar",
+        "s1p": "Açılış kontrol listesi ve HACCP defteri telefondan doldurulur.",
+        "s2t": "Gün boyu izler",
+        "s2p": "Canlı satış, kasa ve banka mutabakatı, fire kayıtları.",
+        "s3t": "Yöneticiye sinyal gider",
+        "s3p": "Normun dışına çıkan rakam işletme sahibinin ve müdürün önüne gelir.",
+        "cta": "OCAQ'ı gösterin →",
+        "mockTitle": "Bugünün kontrolü",
+        "mockSub": "Şube · sabah vardiyası",
+        "kpiLabel": "Kontrol listesi",
+        "c1": "Madde",
+        "c2": "Durum",
+        "c3": "Sorumlu",
+        "c4": "Saat",
+        "fridge": "Buzdolabı sıcaklığı",
+        "openingCash": "Açılış kasası",
+        "cashBank": "Kasa ↔ banka",
+        "wasteLog": "Fire defteri",
+        "diff": "fark var",
+        "pending": "bekliyor",
+        "cook": "Aşçı",
+        "cashier": "Kasiyer",
+        "manager": "Müdür",
+        "foot1": "Kontrol listesi · HACCP · kasa · fire",
+        "foot2": "OCAQ",
+        "agent": {
+          "signal": "Kasa ile banka arasında fark var.",
+          "btn": "Müdüre gönder",
+          "busy": "Gönderiliyor…",
+          "action": "Müdüre görev gitti: farkı vardiya kapanmadan açıklasın.",
+          "done": "Gönderildi 09:02"
+        }
+      },
+      "menu": {
+        "tab": "Menü matrisi",
+        "title": "Menü Matrisi",
+        "statValue": "4 grup",
+        "stat": "Her yemek satış adedine ve marjına göre yıldız, beygir, bilmece ya da yük grubuna düşer.",
+        "s1t": "Satışı ve marjı girin",
+        "s1p": "Her yemeğin aylık satış adedi ve porsiyon marjı.",
+        "s2t": "Grubu görün",
+        "s2p": "Hangi yemek kazandırıyor, hangisi yer kaplıyor.",
+        "s3t": "Menüyü yeniden kurun",
+        "s3p": "Yıldızı öne çıkarın, yükü çıkarın ya da yeniden fiyatlayın.",
+        "mockTitle": "Menü analizi",
+        "mockSub": "Son 30 gün · 4 yemek",
+        "kpiLabel": "Yıldız",
+        "c1": "Yemek",
+        "c2": "Satış",
+        "c3": "Marj",
+        "c4": "Grup",
+        "salesHigh": "yüksek",
+        "salesLow": "düşük",
+        "marginHigh": "yüksek",
+        "marginLow": "düşük",
+        "star": "Yıldız",
+        "puzzle": "Bilmece",
+        "horse": "Beygir",
+        "dog": "Yük",
+        "foot1": "Satış · marj · grup",
+        "foot2": "Menü Matrisi",
+        "agent": {
+          "signal": "Et dürüm çok satıyor ama marjı düşük.",
+          "btn": "Combo öner",
+          "busy": "Hazırlanıyor…",
+          "action": "Et dürüm + ayran combo'su önerildi, marj ayrıca hesaplanacak.",
+          "done": "Teklif hazır"
+        }
+      },
+      "kazan": {
+        "tab": "KAZAN AI",
+        "title": "KAZAN AI: HoReCa danışmanı",
+        "statValue": "1 adım",
+        "stat": "Her cevabın sonunda uygulanacak bir adım ve ilgili DK aracına bağlantı.",
+        "s1t": "Sorunuzu yazın",
+        "s1p": "Food cost, menü, açılış, AQTA, personel.",
+        "s2t": "DK bilgi tabanından cevap",
+        "s2p": "Blog yazıları ve araçlar temelinde.",
+        "s3t": "Araca geçin",
+        "s3p": "Cevabı kendi rakamlarınızla kontrol edin.",
+        "cta": "KAZAN AI'ı aç →",
+        "mockTitle": "KAZAN AI",
+        "mockSub": "Soru · cevap · adım",
+        "kpiLabel": "Durum",
+        "qLbl": "Soru:",
+        "q": "Food cost %38 çıktı, ne yapayım?",
+        "aLbl": "Cevap:",
+        "a": "Hedef aralık %28–32. Önce en çok satan yemeklerin reçete maliyetini, sonra porsiyon ve alış fiyatını kontrol edin.",
+        "stepLbl": "Adım:",
+        "step": "Food Cost Hesaplayıcı'da 5 ana yemeği kontrol edin.",
+        "foot1": "Blog · Toolkit",
+        "foot2": "KAZAN AI",
+        "agent": {
+          "signal": "Soru geldi: food cost %38.",
+          "btn": "Araca yönlendir",
+          "busy": "Yönlendiriliyor…",
+          "action": "Cevap verildi ve Food Cost Hesaplayıcı bağlantısı gönderildi.",
+          "done": "Cevap verildi"
+        }
+      }
+    },
+    "steps": {
+      "eyebrow": "Nasıl çalışır",
+      "title": "Restoranınızın rakamlarına kimse bakmıyor. Biz bakıyoruz.",
+      "s1": {
+        "h": "Buluruz",
+        "em": "kaybı",
+        "p": "Ücretsiz teşhiste menüye, food cost'a, personele ve paket servis hattına birlikte bakıyoruz."
+      },
+      "s2": {
+        "h": "Gösteririz",
+        "em": "manatla",
+        "p": "Paranın nereden sızdığını yüzdeyle değil, ayda kaç manat olduğuyla gösteriyoruz."
+      },
+      "s3": {
+        "h": "Kurarız",
+        "em": "sistemi",
+        "p": "Araçları ve OCAQ'ı şubelerinize kuruyor, ekibi eğitiyoruz."
+      },
+      "s4": {
+        "h": "İzleriz",
+        "em": "her gün",
+        "p": "Normun dışına çıkan rakam karşınıza bir sinyal ve bir adımla gelir."
+      },
+      "phoneTitle": "Restoranınızın haritası",
+      "stepLabel": "ADIM {n}",
+      "ready": "✓ Hazır",
+      "active": "✓ Aktif",
+      "sc1": {
+        "b": "Teşhis",
+        "d": "alana bakıldı: menü, food cost, personel, paket servis, kasa"
+      },
+      "sc2": {
+        "b": "Kayıp haritası",
+        "d": "ayda hedefin üstünde hammadde gideri"
+      },
+      "sc3": {
+        "b": "Sistem kuruldu",
+        "d": "kontrol listesi, kasa, fire defteri"
+      },
+      "sc4": {
+        "b": "Günlük sinyal",
+        "d": "sabah özeti telefonunuzda"
+      }
+    },
+    "receipt": {
+      "eyebrow": "Kendi rakamınız",
+      "title": "Peki sizin rakamınız ne?",
+      "sub": "Kim olduğunuzu seçin, aylık satışınızı ve ürün alımınızı yazın — satıştan geriye ne kaldığını manat olarak görün.",
+      "trust1": "Kayıtsız hesaplama",
+      "trust2": "Rakamlar tarayıcınızda kalır",
+      "resultLabel": "Sonuç",
+      "hints": {
+        "restoran": {
+          "t1": "Porsiyon maliyeti ve food cost %",
+          "t2": "Aylık net kâr",
+          "t3": "Sipariş başına net"
+        },
+        "kafe": {
+          "t1": "Fincan başına maliyet",
+          "t2": "Yıldız · at · bulmaca · köpek listesi",
+          "t3": "Saat saat vardiya planı"
+        },
+        "otel": {
+          "t1": "Profil hazırlık puanı",
+          "t2": "Eksik gereklilikler listesi",
+          "t3": "Geri dönüş süresi"
+        },
+        "franchise": {
+          "t1": "Hazırlık puanı",
+          "t2": "Geri dönüş süresi",
+          "t3": "Franchise kitabı taslağı"
+        },
+        "acilis": {
+          "t1": "Günlük minimum misafir sayısı",
+          "t2": "Adım adım açılış listesi",
+          "t3": "Denetime hazırlık listesi"
+        }
+      }
+    },
+    "news": {
+      "eyebrow": "Sektör Nabzı",
+      "title": "Sektörden en son haberler",
+      "sub": "HoReCa, turizm ve restoran teknolojisinden seçilmiş haberler — kaynağıyla.",
+      "cta": "Tüm haberler",
+      "readMore": "Devamını oku",
+      "cats": {
+        "market": "Pazar",
+        "technology": "Teknoloji",
+        "finance": "Finans",
+        "other": "Sektör"
+      },
+      "newsletterTitle": "Haftalık bülten",
+      "newsletterBody": "Sektördeki son haberleri ve analizleri doğrudan e-posta kutuna al.",
+      "emailPlaceholder": "E-posta adresin",
+      "subscribe": "Abone ol",
+      "success": "Aboneliğiniz onaylandı.",
+      "error": "Abonelik tamamlanamadı.",
+      "loading": "Gönderiliyor..."
+    },
+    "market": {
+      "eyebrow": "Pazar",
+      "postListing": "İlan ver",
+      "label": "İlan kategorileri"
+    },
+    "blog": {
+      "eyebrow": "Bilgi",
+      "readMin": "{n} dk okuma"
+    },
+    "ai": {
+      "eyebrow": "AI hazırlık testi",
+      "meta": "{n} soru · en fazla {max} puan",
+      "preview": "Sorulardan bazıları",
+      "resultHint": "Sonunda: puanın ve sana uygun araçlar"
+    }
+  },
+  "ogHome": {
+    "alt": "DK Agency — Biz kaybı buluruz, siz restoranı yönetirsiniz",
+    "eyebrow": "Restoran, kafe ve oteller için",
+    "line1": "Biz kaybı buluruz.",
+    "line2": "Siz restoranı yönetirsiniz.",
+    "sub": "Food cost, paket servis komisyonu, personel ve günlük kayıp — tek yerde.",
+    "sample": "Örnek",
+    "signal": "Sinyal",
+    "cardTitle": "Et dürüm · food cost",
+    "cardFrom": "%45",
+    "cardTo": "%38",
+    "plan": "Plan hazır"
   }
 }

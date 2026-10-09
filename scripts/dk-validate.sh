@@ -10,7 +10,7 @@ set -e
 
 # OOM prevention — ensures all child node processes (build, lint, tsc) get enough heap
 # Fix for #233 where validator OOM'd during build on large codebase
-export NODE_OPTIONS='--max-old-space-size=8192'
+export NODE_OPTIONS='--max-old-space-size=4096'
 
 BRANCH=$(git branch --show-current)
 COMMIT=$(git log -1 --format='%h %s')
@@ -56,7 +56,7 @@ NEW_API=$(echo "$CHANGED_FILES" | grep -E "app/api/.*route\.ts$" || true)
 # --- 1. Build (with explicit 8GB heap to prevent OOM — #233) ---
 echo "  [1/8] Building..."
 # --no-save: the install must not rewrite package-lock.json (TASK-0508)
-if npm install --include=dev --no-save > /dev/null 2>&1 && node --max-old-space-size=8192 node_modules/next/dist/bin/next build > /tmp/dk-build.log 2>&1; then
+if npm install --include=dev --no-save > /dev/null 2>&1 && node --max-old-space-size=4096 node_modules/next/dist/bin/next build > /tmp/dk-build.log 2>&1; then
   result 1 "Build" "PASS" "0 errors"
 else
   result 1 "Build" "FAIL" "$(tail -3 /tmp/dk-build.log | tr '\n' ' ')"
