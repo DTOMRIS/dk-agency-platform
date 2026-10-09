@@ -1965,17 +1965,25 @@
       "kazan": {
         "title": "KAZAN AI ile konuş",
         "description": "Sektör eğitimli AI asistanımız anında yanıt verir. 7/24, ücretsiz.",
-        "badge": "Önerilen"
+        "badge": "Önerilen",
+        "beta": "Beta",
+        "cta": "Sohbeti aç"
       },
       "whatsapp": {
         "title": "WhatsApp",
         "description": "Mesaj atın, iş günü içinde yanıtlayalım.",
-        "preFill": "Merhaba, dkagency.com.tr iletişim sayfasından yazıyorum."
+        "preFill": "Merhaba, dkagency.com.tr iletişim sayfasından yazıyorum.",
+        "primary": "Ana kanal",
+        "cta": "WhatsApp'tan yaz"
       },
       "telegram": {
         "title": "Telegram",
-        "description": "Telegram kanalımıza katılın, mesaj atın."
-      }
+        "description": "Telegram kanalımıza katılın, mesaj atın.",
+        "channelTitle": "Telegram kanalı",
+        "channelDescription": "Sektör Nabzı: onaylanan HoReCa haberleri kanala düşer.",
+        "cta": "Kanala abone ol"
+      },
+      "hoursNote": "WhatsApp'ta çalışma saatlerinde yanıt veriyoruz"
     },
     "kazanTitle": "KAZAN AI ile başla",
     "kazanDescription": "Sorunu yaz, bağlam KAZAN AI'a aktarılsın ve ekip bunu gerçek lead olarak görsün.",
@@ -6678,5 +6686,18 @@
       "preview": "Sorulardan bazıları",
       "resultHint": "Sonunda: puanın ve sana uygun araçlar"
     }
+  },
+  "ogHome": {
+    "alt": "DK Agency — Biz kaybı buluruz, siz restoranı yönetirsiniz",
+    "eyebrow": "Restoran, kafe ve oteller için",
+    "line1": "Biz kaybı buluruz.",
+    "line2": "Siz restoranı yönetirsiniz.",
+    "sub": "Food cost, paket servis komisyonu, personel ve günlük kayıp — tek yerde.",
+    "sample": "Örnek",
+    "signal": "Sinyal",
+    "cardTitle": "Et dürüm · food cost",
+    "cardFrom": "%45",
+    "cardTo": "%38",
+    "plan": "Plan hazır"
   }
 }

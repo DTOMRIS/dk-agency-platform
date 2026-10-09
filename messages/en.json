@@ -1965,17 +1965,25 @@
       "kazan": {
         "title": "Chat with KAZAN AI",
         "description": "Our industry-trained AI assistant replies instantly. 24/7, free.",
-        "badge": "Recommended"
+        "badge": "Recommended",
+        "beta": "Beta",
+        "cta": "Open chat"
       },
       "whatsapp": {
         "title": "WhatsApp",
         "description": "Send a message, we reply within a business day.",
-        "preFill": "Hi, writing from the dkagency.com.tr contact page."
+        "preFill": "Hi, writing from the dkagency.com.tr contact page.",
+        "primary": "Main channel",
+        "cta": "Message on WhatsApp"
       },
       "telegram": {
         "title": "Telegram",
-        "description": "Join our channel, send us a message."
-      }
+        "description": "Join our channel, send us a message.",
+        "channelTitle": "Telegram channel",
+        "channelDescription": "Sector Pulse: approved HoReCa news is posted to the channel.",
+        "cta": "Subscribe to the channel"
+      },
+      "hoursNote": "We reply on WhatsApp during working hours"
     },
     "kazanTitle": "Start with KAZAN AI",
     "kazanDescription": "Ask your question, pass the context to KAZAN AI, and let the team see it as a real lead.",
@@ -6678,5 +6686,18 @@
       "preview": "A few of the questions",
       "resultHint": "At the end: your score and the tools that fit you"
     }
+  },
+  "ogHome": {
+    "alt": "DK Agency — We find the leaks, you run the restaurant",
+    "eyebrow": "For restaurants, cafés and hotels",
+    "line1": "We find the leaks.",
+    "line2": "You run the restaurant.",
+    "sub": "Food cost, delivery commission, staffing and daily waste — in one place.",
+    "sample": "Sample",
+    "signal": "Signal",
+    "cardTitle": "Beef dürüm · food cost",
+    "cardFrom": "45%",
+    "cardTo": "38%",
+    "plan": "Plan ready"
   }
 }

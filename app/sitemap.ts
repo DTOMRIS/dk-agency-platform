@@ -143,8 +143,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entriesFor(`/haberler/${item.slug}`, new Date(item.publishedAt || now), 'weekly', 0.75)
   );
 
+  // TASK-0513: /tanitim yalnız AZ-dır (müstəqil HTML, app/tanitim/route.ts) — dil variantı yoxdur.
+  const tanitimEntry: MetadataRoute.Sitemap = [
+    { url: absolute('/tanitim'), changeFrequency: 'monthly', priority: 0.9 },
+  ];
+
   return [
     ...staticEntries,
+    ...tanitimEntry,
     ...toolkitEntries,
     ...franchiseEntries,
     ...sektorEntries,

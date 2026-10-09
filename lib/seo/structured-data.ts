@@ -6,6 +6,7 @@
  */
 
 import { normalizeLocale } from '@/i18n/config';
+import { TELEGRAM_URL, WHATSAPP_NUMBER } from '@/lib/contact-channels';
 
 type JsonLd = Record<string, unknown>;
 
@@ -23,15 +24,25 @@ export function localeUrl(rawLocale: string | null | undefined, path: string): s
   return `${SITE_URL}${prefix}${clean}` || SITE_URL;
 }
 
+/** Owner-confirmed public profiles (same list as components/layout/SocialIcons.tsx, TASK-0513). */
+export const ORG_SAME_AS = [
+  'https://instagram.com/dkagency',
+  'https://linkedin.com/company/dkagency',
+  'https://facebook.com/dkagency',
+  'https://twitter.com/dkagency',
+  'https://youtube.com/@dkagency',
+  TELEGRAM_URL,
+];
+
 /** Founder Person @id — blog authors and the About page point here (TASK-0475). */
 export const FOUNDER_ID = `${SITE_URL}/haqqimizda#dogan-tomris`;
 export const FOUNDER_NAME = 'Doğan Tomris';
 
 /**
  * Organization entity — establishes brand identity in AI knowledge graphs.
- * Only facts the site itself publishes (footer legal line, /elaqe, /haqqimizda). No phone
- * (the contact page deliberately hides the number) and no `sameAs` until the owner confirms
- * the real social accounts — the handles found in code were guesses (TASK-0475).
+ * Only facts the site itself publishes (footer legal line, /elaqe, /haqqimizda, /tanitim).
+ * TASK-0513: owner confirmed (2026-10-08) the social handles in components/layout/SocialIcons.tsx and
+ * the WhatsApp number (already public on /tanitim) — `sameAs` + WhatsApp `contactPoint` added.
  */
 export function organizationNode(): JsonLd {
   return {
@@ -57,7 +68,27 @@ export function organizationNode(): JsonLd {
       opens: '09:00',
       closes: '18:00',
     },
-    knowsAbout: ['HoReCa', 'restaurant consulting', 'food cost', 'P&L', 'franchising', 'hotel and guest house operations'],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      telephone: `+${WHATSAPP_NUMBER}`,
+      url: `https://wa.me/${WHATSAPP_NUMBER}`,
+      email: 'info@dkagency.com.tr',
+      availableLanguage: ['az', 'ru', 'en', 'tr'],
+      areaServed: 'AZ',
+    },
+    sameAs: ORG_SAME_AS,
+    knowsAbout: [
+      'HoReCa',
+      'restaurant consulting',
+      'food cost',
+      'P&L',
+      'delivery commission',
+      'menu engineering',
+      'restaurant operations control',
+      'franchising',
+      'hotel and guest house operations',
+    ],
   };
 }
 
@@ -84,6 +115,32 @@ export function personNode(rawLocale?: string | null): JsonLd {
   };
 }
 
+export type ServiceItem = { name: string; description: string; url: string; free?: boolean };
+
+/**
+ * TASK-0513: homepage service catalog — built only from on-page copy (homeV2 ecosystem list and the
+ * «Pulsuz diaqnostika» step). `free` items carry a 0 AZN offer because the page says they are free.
+ */
+export function serviceCatalogNode(name: string, items: ServiceItem[]): JsonLd {
+  return {
+    '@type': 'OfferCatalog',
+    '@id': `${SITE_URL}/#services`,
+    name,
+    itemListElement: items.map((item) => ({
+      '@type': 'Offer',
+      ...(item.free ? { price: '0', priceCurrency: 'AZN' } : {}),
+      itemOffered: {
+        '@type': 'Service',
+        name: item.name,
+        description: item.description,
+        url: item.url,
+        provider: { '@id': `${SITE_URL}/#organization` },
+        areaServed: { '@type': 'Country', name: 'Azerbaijan' },
+      },
+    })),
+  };
+}
+
 /** WebSite entity — reinforces the brand site in AI knowledge graphs. */
 export function websiteNode(): JsonLd {
   return {
@@ -91,7 +148,8 @@ export function websiteNode(): JsonLd {
     '@id': `${SITE_URL}/#website`,
     name: ORG_NAME,
     url: SITE_URL,
-    inLanguage: 'az',
+    // TASK-0513: sayt 4 dildədir (az prefikssiz, /ru, /en, /tr).
+    inLanguage: ['az', 'ru', 'en', 'tr'],
     publisher: { '@id': `${SITE_URL}/#organization` },
   };
 }

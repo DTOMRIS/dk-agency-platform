@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-08 — TASK-0513: OG önizləmə v2 + AI SEO + /elaqe
+
+**Why:** Doğan WhatsApp önizləməsini paylaşdı (tünd göy kart, serif «HoReCa İdarəetmə, KAZAN AI & Biznes Ekosistemi») — «bizim kimi şirkətə yaraşmır»; `/elaqe` ikonları «berbat»; AI axtarış mühərrikləri üçün məhsul təsviri köhnə idi (llms.txt «toolkit + bloq + elanlar», sosial hesablar JSON-LD-də yox).
+
+**What:** `lib/og/home-og.tsx` ümumi renderer (krem #F6F1E9, Inter 900 başlıq, `public/icon-512.png` data-URL ilə halqalar içində — logo-mobil.png 144 px idi, bulanırdı; nümunə kartı `homeV2.hero.phone.c1`-in 45% → 38% ssenarisindən). `app/opengraph-image.tsx` (AZ) + yeni `app/[locale]/opengraph-image.tsx` (ru/en/tr); `[locale]/layout` og/twitter image dilin öz ünvanına. Mətnlər `ogHome` namespace-də. Şrift: repoda TTF/OTF yoxdur → Inter Google Fonts-dan, `loadGoogleFont`-a 5 s timeout; alınmasa `fonts` ötürülmür (TASK-0508 qaydası), `force-dynamic` qalır. Animasiyalı loqo link önizləməsində mümkün deyil (statik PNG). SEO: `organizationNode` sameAs (SocialIcons-dakı 6 hesab, sahib təsdiqi) + WhatsApp contactPoint; `websiteNode.inLanguage` 4 dil; `serviceCatalogNode` (homeV2.eco.list + «Pulsuz diaqnostika» + KAZAN AI). FAQPage yoxdur (ana səhifədə FAQ yoxdur), SearchAction yoxdur (sayt-geniş axtarış route-u yoxdur). robots: AI crawler qrupu eyni disallow ilə. sitemap: `/tanitim` (yalnız AZ). `/elaqe`: ContactFunnel inline SVG (WhatsApp, Telegram, spark), tracking/`kazan:open`/`/api/leads/whatsapp` eyni.
+
+**Yoxlama:** tsc 35 (baseline 35); eslint dəyişən 13 fayl 0 xəta. `/opengraph-image`, `/ru|en|tr/opengraph-image` → 200 image/png (~123 KB), gözlə baxıldı. `/`, `/ru`, `/en`, `/tr` HTML: yeni title/description, og:image dilin öz şəkli. `/robots.txt`, `/llms.txt`, `/sitemap.xml` → 200. Playwright `localhost:3917` `/`, `/elaqe`, `/ru|en|tr/elaqe` × 390/1280: 10/10 status 200, console 0, viewport-dan kənar 0, scrollWidth = en. `npm run build` və dk-validator işlədilmədi.
+
 ## 2026-10-08 — TASK-0511 (2): Telegram kanalı + düzgün vədlər
 
 **Why:** Doğan açıq kanal açdı (t.me/dkagenc, `og:title` «DkAgency Sektör Nabzı» — curl ilə yoxlandı). Yoxlamada `TELEGRAM_HANDLE = 'dkagency'` → t.me/dkagency başqasının kanalı çıxdı («D k logo agency 💸🏷️», 10 abunəçi): sayt müştəriləri yad kanala göndərirdi. Alt CTA-da investisiya/24-7/ödənişsiz konsultasiya vədləri real deyildi (Doğan: «KAZAN var, DeepSeek bağlı; yatırımda yok»).

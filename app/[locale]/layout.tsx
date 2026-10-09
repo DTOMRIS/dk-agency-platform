@@ -13,26 +13,26 @@ type Props = {
 };
 
 const localeMetadata: Record<'az' | 'ru' | 'en' | 'tr', { title: string; description: string }> = {
+  // TASK-0513: ana səhifə v2 mesajı (hero «Biz itkini tapırıq…»); başlıq ≤ ~60, açıqlama ≤ 155 simvol.
   az: {
-    // TASK-0510: tanıtım prototipindəki tövsiyə — KAZAN AI və Toolkit link önizləməsində önə çıxsın.
-    title: 'DK Agency | HoReCa İdarəetmə, KAZAN AI & Biznes Ekosistemi',
+    title: 'DK Agency — Biz itkini tapırıq, siz restoranı idarə edirsiniz',
     description:
-      '40 illik təcrübə, KAZAN AI asistanı, 18+ interaktiv maliyyə aləti, ekspert bloq və sektor xəbərləri — Azərbaycan HoReCa sektoru üçün.',
+      'Food cost, P&L, delivery komissiyası, OCAQ gündəlik nəzarət və KAZAN AI — restoran, kafe və otellər üçün. Pulsuz diaqnostika.',
   },
   ru: {
-    title: 'DK Agency | Управление HoReCa, KAZAN AI и бизнес-экосистема',
+    title: 'DK Agency — Мы находим потери, вы управляете рестораном',
     description:
-      '40 лет опыта, AI-ассистент KAZAN, 18+ интерактивных финансовых инструментов, экспертный блог и новости отрасли — для HoReCa Азербайджана.',
+      'Food cost, P&L, комиссия доставки, ежедневный контроль OCAQ и KAZAN AI — для ресторанов, кафе и отелей. Бесплатная диагностика.',
   },
   en: {
-    title: 'DK Agency | HoReCa Management, KAZAN AI & Business Ecosystem',
+    title: 'DK Agency — We find the leaks, you run the restaurant',
     description:
-      '40 years of experience, the KAZAN AI assistant, 18+ interactive finance tools, an expert blog and industry news — for Azerbaijan HoReCa.',
+      'Food cost, P&L, delivery commission, OCAQ daily control and KAZAN AI — for restaurants, cafés and hotels. Free diagnostic.',
   },
   tr: {
-    title: 'DK Agency | HoReCa Yönetimi, KAZAN AI ve İş Ekosistemi',
+    title: 'DK Agency — Biz kaybı buluruz, siz restoranı yönetirsiniz',
     description:
-      '40 yıllık deneyim, KAZAN AI asistanı, 18+ interaktif finans aracı, uzman blog ve sektör haberleri — Azerbaycan HoReCa sektörü için.',
+      'Food cost, P&L, paket servis komisyonu, OCAQ günlük kontrol ve KAZAN AI — restoran, kafe ve oteller için. Ücretsiz teşhis.',
   },
 };
 
@@ -43,6 +43,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = normalizeLocale(rawLocale);
 
   const { title, description } = localeMetadata[locale];
+  // TASK-0513: hər dil öz önizləmə şəklini alır (app/[locale]/opengraph-image.tsx). AZ prefikssizdir
+  // və kök app/opengraph-image.tsx-dən gəlir.
+  const ogImage = locale === 'az' ? '/opengraph-image' : `/${locale}/opengraph-image`;
   return {
     title,
     description,
@@ -55,9 +58,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       // openGraph burada verildikdə kök app/opengraph-image.tsx bu seqmentdə düşür — açıq yazılır.
-      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: title }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
-    twitter: { card: 'summary_large_image', title, description, images: ['/opengraph-image'] },
+    twitter: { card: 'summary_large_image', title, description, images: [ogImage] },
     // `getAlternates(locale, '/')` burada HARDCODE '/' idi — yəni /ru/toolkit
     // kimi ALT səhifələr də canonical olaraq /ru göstərirdi, yəni özlərini
     // ana səhifənin dublikatı elan edirdilər və indeksdən düşürdülər.

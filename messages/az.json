@@ -1965,17 +1965,25 @@
       "kazan": {
         "title": "KAZAN AI ilə danış",
         "description": "Sahə üzrə süni intellekt köməkçimiz dərhal cavablandırır. 7/24, pulsuz.",
-        "badge": "Tövsiyə olunur"
+        "badge": "Tövsiyə olunur",
+        "beta": "Beta",
+        "cta": "Söhbəti aç"
       },
       "whatsapp": {
         "title": "WhatsApp",
         "description": "Mesaj atın, iş günü ərzində cavablandıraq.",
-        "preFill": "Salam, dkagency.com.tr əlaqə səhifəsindən yazıram."
+        "preFill": "Salam, dkagency.com.tr əlaqə səhifəsindən yazıram.",
+        "primary": "Əsas kanal",
+        "cta": "WhatsApp-da yaz"
       },
       "telegram": {
         "title": "Telegram",
-        "description": "Telegram kanalımıza qoşulun, mesaj atın."
-      }
+        "description": "Telegram kanalımıza qoşulun, mesaj atın.",
+        "channelTitle": "Telegram kanalı",
+        "channelDescription": "Sektor Nəbzi: təsdiqlənmiş HoReCa xəbərləri kanala düşür.",
+        "cta": "Kanala abunə ol"
+      },
+      "hoursNote": "WhatsApp-a iş saatlarında cavab veririk"
     },
     "kazanTitle": "KAZAN AI ilə başla",
     "kazanDescription": "Sualını yaz, kontekst KAZAN AI-a ötürülsün və komanda real lead kimi görsün.",
@@ -6678,5 +6686,18 @@
       "preview": "Suallardan bəziləri",
       "resultHint": "Sonda: skor və sizə uyğun alətlər"
     }
+  },
+  "ogHome": {
+    "alt": "DK Agency — Biz itkini tapırıq, siz restoranı idarə edirsiniz",
+    "eyebrow": "Restoran, kafe və otellər üçün",
+    "line1": "Biz itkini tapırıq.",
+    "line2": "Siz restoranı idarə edirsiniz.",
+    "sub": "Food cost, delivery komissiyası, kadr və gündəlik itki — bir yerdə.",
+    "sample": "Nümunə",
+    "signal": "Siqnal",
+    "cardTitle": "Ət dürüm · food cost",
+    "cardFrom": "45%",
+    "cardTo": "38%",
+    "plan": "Plan hazırdır"
   }
 }
