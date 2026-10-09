@@ -206,8 +206,8 @@ export default function Header() {
             <BrandMark />
           </Link>
 
-          {/* Desktop nav (xl+) */}
-          <nav aria-label={t('menu')} className="hidden items-center gap-0.5 xl:flex">
+          {/* Desktop nav (lg+; below xl the right side compacts) */}
+          <nav aria-label={t('menu')} className="hidden items-center gap-0.5 lg:flex">
             {navItems.map((item) => {
               if (item.type === 'modules') {
                 // Not `relative`: the panel is positioned against the header bar and centred on the page.
@@ -321,13 +321,13 @@ export default function Header() {
           </nav>
 
           {/* Right actions */}
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 xl:gap-1.5 min-[1440px]:gap-2">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:gap-1 xl:gap-1.5 min-[1440px]:gap-2">
             {/* Language (md+; the drawer has its own switcher) */}
             <div className="relative hidden md:block" ref={langRef}>
               <button type="button" onClick={() => setIsLangOpen((p) => !p)} aria-haspopup="menu" aria-expanded={isLangOpen} aria-controls="dk-lang-menu"
                 aria-label={`${t('language')}: ${LOCALE_NAMES[currentLocale]}`} data-testid="lang-switcher"
                 className={`inline-flex h-10 items-center gap-1 rounded-full px-2.5 text-[14px] font-bold transition-colors ${isLangOpen ? 'bg-white text-[#0F172A]' : 'text-[#0F172A] hover:bg-white/70'}`}>
-                <Globe className="h-4 w-4 text-[#334155] xl:hidden" aria-hidden="true" />
+                <Globe className="h-4 w-4 text-[#334155] lg:hidden" aria-hidden="true" />
                 {localeLabels[currentLocale]}
                 <ChevronDown className={`h-3.5 w-3.5 text-[#334155] transition-transform ${isLangOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
               </button>
@@ -405,16 +405,16 @@ export default function Header() {
             </Link>
 
             {/* «Pulsuz diaqnostika» — the one red action (white on red = dk-red-strong) */}
-            <a href={modulesTalkHref} target="_blank" rel="noopener noreferrer" data-testid="header-diag" title={t('diag')}
-              className="hidden h-10 items-center gap-2 whitespace-nowrap rounded-full bg-dk-red-strong px-4 text-[14px] font-bold text-white shadow-[0_8px_20px_-8px_rgba(233,69,96,0.6)] transition-colors hover:bg-dk-red-deep sm:inline-flex">
+            <a href={modulesTalkHref} target="_blank" rel="noopener noreferrer" data-testid="header-diag" title={t('diag')} aria-label={t('diag')}
+              className="hidden h-10 items-center gap-2 whitespace-nowrap rounded-full bg-dk-red-strong px-4 text-[14px] font-bold text-white shadow-[0_8px_20px_-8px_rgba(233,69,96,0.6)] transition-colors hover:bg-dk-red-deep sm:inline-flex lg:max-xl:w-10 lg:max-xl:justify-center lg:max-xl:px-0">
               <MessageCircle className="h-[18px] w-[18px]" aria-hidden="true" />
-              {/* xl+: the compact label (only RU differs — «Бесплатная диагностика» does not fit next to 6 links) */}
-              <span className="xl:hidden">{t('diag')}</span>
+              {/* < lg: full label · lg–xl: icon only (the 6 nav links take the room) · xl+: compact label (RU «Бесплатная диагностика» does not fit) */}
+              <span className="lg:hidden">{t('diag')}</span>
               <span className="hidden xl:inline">{t('diagShort')}</span>
             </a>
 
             {/* TASK-0519: v2 menu button (44px), opens the drawer below. */}
-            <button type="button" className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#E4DCCD] bg-white text-[#0F172A] transition-colors hover:bg-[#EEE6D8] xl:hidden"
+            <button type="button" className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#E4DCCD] bg-white text-[#0F172A] transition-colors hover:bg-[#EEE6D8] lg:hidden"
               onClick={() => setIsMobileOpen((p) => !p)} aria-label={t('menu')} aria-expanded={isMobileOpen} aria-controls="dk-mobile-menu" ref={menuBtnRef}>
               {isMobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -427,7 +427,7 @@ export default function Header() {
           v2 language: cream sheet, ink type, one red action. Closes on route change, Esc, backdrop. */}
       <AnimatePresence>
         {isMobileOpen && (
-          <div className="fixed inset-0 z-[90] xl:hidden">
+          <div className="fixed inset-0 z-[90] lg:hidden">
             <motion.div
               aria-hidden="true"
               className="absolute inset-0 bg-[#0F172A]/45"
