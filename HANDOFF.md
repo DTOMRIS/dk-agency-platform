@@ -1,5 +1,15 @@
 # HANDOFF
 
+## Session 9 Oktyabr 2026 (gec) — TASK-0520: qlobal header v2
+
+**Budaq:** `feat/TASK-0520-header-v2` (origin/main 70142a7-dən), commit edilməyib. `components/layout/Header.tsx` sahibin ayrıca commit-idir (`ALLOW_PROTECTED=1`). Kart: `docs/tasks/TASK-0520.md` (köhnə elementlərin hara getdiyi cədvəli orada).
+
+- Header bütün enlərdə /tanitim nav-ıdır; navy üst zolaq yoxdur. Qeyri-şəffaf krem: app `body` fonu tünd olduğu üçün /tanitim-in 86% şəffaflığı boz görünürdü.
+- Header hündürlüyü xl+ 76px (+1 xətt). Sticky offsetlər `--hdr` (inner) və `.tabbar` (home) yeniləndi; header hündürlüyünü dəyişən hər iş bu ikisini də dəyişməlidir.
+- Üzən KAZAN düyməsi < lg gizli (alt menyu ilə eyni hədd; brief md deyirdi — 768–1023-də alt menyu da var).
+- **Açıq sual sahibə:** «Üzv ol» kompüter header-ində yoxdur (RU 1280-də sığmır; paneldə və /auth/login-də var). İstəsə: «Daxil ol»-u kiçik hesab menyusuna çevirmək (Daxil ol / Üzv ol).
+- RU-da kompüter header-i qısa mətn göstərir: «Диагностика», «Подать объявление».
+
 ## Session 9 Oktyabr 2026 (axşam) — TASK-0517 / 0518: sadə dil, vahid sıfırlama, sahib qərarları
 
 **PR-lar:** #515 (8 Okt landing v2), #516 (iç səhifələr + audit düzəlişləri), #517 (TASK-0516 ana səhifə sübutu + TASK-0517 sadə dil) — hamısı main-də. TASK-0518 budaq `feat/TASK-0518-tools-polish` (bu commit), push Doğan-da.
