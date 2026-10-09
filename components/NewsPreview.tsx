@@ -11,6 +11,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { normalizeLocale, withLocale, type Locale } from '@/i18n/config';
@@ -73,14 +74,17 @@ function NewsCover({ item, label, big }: { item: NewsItem; label: string; big?: 
   const cat = CATEGORY_STYLE[catKey(item.category)];
 
   if (item.imageUrl && !failed) {
+    // TASK-0516: feed images go through next/image (resized; next.config allows any https host).
+    // Plain http URLs are not in remotePatterns, so they are passed through unoptimized.
     return (
-      // eslint-disable-next-line @next/next/no-img-element -- feed images come from many news hosts
-      <img
+      <Image
         src={item.imageUrl}
         alt=""
+        fill
+        sizes={big ? '(max-width: 980px) 100vw, 700px' : '104px'}
+        unoptimized={!item.imageUrl.startsWith('https://')}
         className={styles.nwImg}
         referrerPolicy="no-referrer"
-        loading="lazy"
         onError={() => setFailed(true)}
       />
     );

@@ -6,9 +6,9 @@ import type { ReactNode } from 'react';
  * Başlıq/təsvir prefiksiz AZ ünvanı üçün buradan verilir.
  */
 export const metadata: Metadata = {
-  title: 'Addım Xərci Kalkulyatoru — Boş Yola Ödənən Maaş',
+  title: 'Addım xərci kalkulyatoru — boş yola ödənən maaş',
   description:
-    'Aşpaz və ofisiantın gündə boş yola sərf etdiyi vaxtı aylıq və illik əmək haqqı itkisinə çevir. Spagetti diaqramı ilə ölç, öz rəqəmlərinlə hesabla.',
+    'Aşpaz və ofisiantın gündə boş yola sərf etdiyi vaxtı aylıq və illik maaş itkisinə çevirin. İşçinin yolunu kağızdakı planda xəttlə çəkib ölçün, öz rəqəmlərinizlə hesablayın.',
 };
 
 export default function ToolkitAddimXerciLayout({ children }: { children: ReactNode }) {

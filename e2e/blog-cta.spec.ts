@@ -4,6 +4,8 @@ import { test, expect } from '@playwright/test';
  * @smoke Bloq yazısı CTA bloku — TASK-0453.
  * Canlıda «blogDetail.ctaTitle» kimi xam açarlar görünürdü (açarlar messages/*.json-da heç vaxt olmayıb).
  * Yoxlanır: 4 dildə xam açar yoxdur, WhatsApp linki yazının adı ilə dilə uyğun mesaj daşıyır.
+ * TASK-0517: link birbaşa wa.me-yə yox, lead yolundan (/api/leads/whatsapp, whatsappHref) keçir.
+ * Redirect-ə klik edilmir (dev server prod DB-yə lead yaza bilər) — yalnız href yoxlanır.
  */
 
 const SLUG = '1-porsiya-food-cost-hesablama';
@@ -30,9 +32,15 @@ test.describe('@smoke Bloq CTA', () => {
       await expect(page.getByText(/blogDetail\./)).toHaveCount(0);
       const wa = page.getByRole('link', { name: c.button });
       await expect(wa).toBeVisible();
-      const href = decodeURIComponent((await wa.getAttribute('href')) ?? '');
-      expect(href).toContain('wa.me/994502566279');
-      expect(href).toContain(c.msg);
+      const raw = (await wa.getAttribute('href')) ?? '';
+      expect(raw.startsWith('/api/leads/whatsapp?text=')).toBe(true);
+      expect(raw).not.toContain('wa.me');
+      const text = new URL(raw, 'http://localhost').searchParams.get('text') ?? '';
+      expect(text).toContain(c.msg);
+      // The message carries the post title (rendered as the page h1).
+      const title = ((await page.locator('h1').first().textContent()) ?? '').trim();
+      expect(title.length).toBeGreaterThan(0);
+      expect(text).toContain(title);
     });
   }
 });

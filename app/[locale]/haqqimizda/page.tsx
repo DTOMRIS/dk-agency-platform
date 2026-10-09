@@ -158,7 +158,7 @@ export default function HaqqimizaPage() {
         <p className="mt-10 text-xl font-bold text-[var(--dk-navy)]">{copy.closing}</p>
       </div>
       <div className="mt-16 border-t border-slate-200 pt-12">
-        <DoganNote />
+        <DoganNote embedded />
         <AhilikValues />
       </div>
     </div>

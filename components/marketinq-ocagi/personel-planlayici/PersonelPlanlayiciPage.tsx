@@ -4,6 +4,8 @@ import { useMemo, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Sun, Sunset, Zap, Wallet, Info } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
+import DecimalInput from '@/components/toolkit/DecimalInput';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
@@ -47,14 +49,26 @@ function sumRoles(r: RoleCounts): number {
   return (r.garson ?? 0) + (r.barista ?? 0) + r.asci + (r.host ?? 0) + (r.sommelier ?? 0) + r.kasa;
 }
 
-function compute(input: {
+interface PlannerInput {
   concept: Concept;
   koltukSayisi: number;
   gunlukFis: number;
   gunTipi: GunTipi;
   achilisVaxti: number;
   kapanisSaati: number;
-}) {
+}
+
+/** «Nümunəni yüklə» values (TASK-0517): a 60-seat casual restaurant, 150 checks, 10:00–23:00. */
+const EXAMPLE: PlannerInput = {
+  concept: 'restoran_casual',
+  koltukSayisi: 60,
+  gunlukFis: 150,
+  gunTipi: 'isgunu',
+  achilisVaxti: 10,
+  kapanisSaati: 23,
+};
+
+function compute(input: PlannerInput) {
   const mult = GUN_CARPANI[input.gunTipi];
   const hours = Math.max(1, input.kapanisSaati - input.achilisVaxti);
   const isCafe = input.concept === 'kafe' || input.concept === 'bar';
@@ -127,34 +141,47 @@ export default function PersonelPlanlayiciPage() {
   const t = useTranslations('toolkit.personelPlanlayici');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
 
-  const [concept, setConcept] = useState<Concept>('restoran_casual');
-  const [koltukSayisi, setKoltukSayisi] = useState(60);
-  const [gunlukFis, setGunlukFis] = useState(150);
-  const [gunTipi, setGunTipi] = useState<GunTipi>('isgunu');
-  const [achilisVaxti, setAchilisVaxti] = useState(10);
-  const [kapanisSaati, setKapanisSaati] = useState(23);
+  const [concept, setConcept] = useState<Concept>(EXAMPLE.concept);
+  const [koltukSayisi, setKoltukSayisi] = useState(EXAMPLE.koltukSayisi);
+  const [gunlukFis, setGunlukFis] = useState(EXAMPLE.gunlukFis);
+  const [gunTipi, setGunTipi] = useState<GunTipi>(EXAMPLE.gunTipi);
+  const [achilisVaxti, setAchilisVaxti] = useState(EXAMPLE.achilisVaxti);
+  const [kapanisSaati, setKapanisSaati] = useState(EXAMPLE.kapanisSaati);
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
+
+  const snapshot = (): PlannerInput => ({ concept, koltukSayisi, gunlukFis, gunTipi, achilisVaxti, kapanisSaati });
+  const apply = (v: PlannerInput) => {
+    setConcept(v.concept);
+    setKoltukSayisi(v.koltukSayisi);
+    setGunlukFis(v.gunlukFis);
+    setGunTipi(v.gunTipi);
+    setAchilisVaxti(v.achilisVaxti);
+    setKapanisSaati(v.kapanisSaati);
+  };
 
   const calc = useMemo(
     () => compute({ concept, koltukSayisi, gunlukFis, gunTipi, achilisVaxti, kapanisSaati }),
     [concept, koltukSayisi, gunlukFis, gunTipi, achilisVaxti, kapanisSaati]
   );
+  // TASK-0517: with empty inputs there is nothing to plan — no fake «ideal» on zeros.
+  const isCafeConcept = concept === 'kafe' || concept === 'bar';
+  const ready = gunlukFis > 0 && (isCafeConcept || koltukSayisi > 0) && kapanisSaati > achilisVaxti;
 
   const statusStyle = {
     ideal: {
-      text: 'text-emerald-600',
+      text: 'text-emerald-700',
       bg: 'bg-emerald-50',
       ring: 'ring-emerald-200/60',
       label: t('result.ideal'),
     },
     dikkat: {
-      text: 'text-amber-600',
+      text: 'text-amber-800',
       bg: 'bg-amber-50',
       ring: 'ring-amber-200/60',
       label: t('result.dikkat'),
     },
     kritik: {
-      text: 'text-red-600',
+      text: 'text-red-700',
       bg: 'bg-red-50',
       ring: 'ring-red-200/60',
       label: t('result.kritik'),
@@ -180,11 +207,19 @@ export default function PersonelPlanlayiciPage() {
 
   const inputSection = (
     <div className="space-y-6">
+      <ToolResetControls
+        snapshot={snapshot}
+        restore={apply}
+        onClear={() => apply({ ...snapshot(), koltukSayisi: 0, gunlukFis: 0, achilisVaxti: 0, kapanisSaati: 0 })}
+        onLoadExample={() => apply(EXAMPLE)}
+      />
+
       <div>
-        <label className="mb-1.5 block text-xs font-medium text-slate-500">
+        <label htmlFor="pp-concept" className="mb-1.5 block text-xs font-semibold text-slate-700">
           {t('concept.label')}
         </label>
         <select
+          id="pp-concept"
           value={concept}
           onChange={(e) => setConcept(e.target.value as Concept)}
           className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
@@ -199,47 +234,48 @@ export default function PersonelPlanlayiciPage() {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-500">
+          <label htmlFor="pp-koltuk" className="mb-1.5 block text-xs font-semibold text-slate-700">
             {t('koltukSayisi')}
           </label>
-          <input
-            type="number"
-            min={10}
-            max={500}
-            value={koltukSayisi || ''}
-            onChange={(e) => setKoltukSayisi(parseInt(e.target.value) || 0)}
+          <DecimalInput
+            id="pp-koltuk"
+            blankZero
+            inputMode="numeric"
+            value={koltukSayisi}
+            onValueChange={(v) => setKoltukSayisi(Math.max(0, Math.round(v)))}
             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-500">
+          <label htmlFor="pp-fis" className="mb-1.5 block text-xs font-semibold text-slate-700">
             {t('gunlukFis')}
           </label>
-          <input
-            type="number"
-            min={20}
-            max={2000}
-            value={gunlukFis || ''}
-            onChange={(e) => setGunlukFis(parseInt(e.target.value) || 0)}
+          <DecimalInput
+            id="pp-fis"
+            blankZero
+            inputMode="numeric"
+            value={gunlukFis}
+            onValueChange={(v) => setGunlukFis(Math.max(0, Math.round(v)))}
             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
       </div>
 
       <div>
-        <label className="mb-2 block text-xs font-medium text-slate-500">
+        <p className="mb-2 block text-xs font-semibold text-slate-700">
           {t('gunTipi.label')}
-        </label>
+        </p>
         <div className="grid grid-cols-3 gap-2">
           {gunTipleri.map((g) => (
             <button
               key={g}
               type="button"
+              aria-pressed={gunTipi === g}
               onClick={() => setGunTipi(g)}
-              className={`rounded-xl px-3 py-2.5 text-xs font-semibold ring-1 transition ${
+              className={`min-h-[40px] rounded-xl px-3 py-2.5 text-xs font-semibold ring-1 transition ${
                 gunTipi === g
-                  ? 'bg-emerald-50 text-emerald-700 ring-emerald-300'
-                  : 'bg-white text-slate-600 ring-slate-200 hover:bg-slate-50'
+                  ? 'bg-emerald-50 text-emerald-800 ring-emerald-300'
+                  : 'bg-white text-slate-700 ring-slate-200 hover:bg-slate-50'
               }`}
             >
               {gunLabel[g]}
@@ -250,34 +286,39 @@ export default function PersonelPlanlayiciPage() {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('achilis')}</label>
-          <input
-            type="number"
-            min={7}
-            max={12}
-            value={achilisVaxti || ''}
-            onChange={(e) => setAchilisVaxti(parseInt(e.target.value) || 0)}
+          <label htmlFor="pp-open" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('achilis')}</label>
+          <DecimalInput
+            id="pp-open"
+            blankZero
+            inputMode="numeric"
+            value={achilisVaxti}
+            onValueChange={(v) => setAchilisVaxti(Math.max(0, Math.min(23, Math.round(v))))}
             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-slate-500">{t('kapanis')}</label>
-          <input
-            type="number"
-            min={14}
-            max={26}
-            value={kapanisSaati || ''}
-            onChange={(e) => setKapanisSaati(parseInt(e.target.value) || 0)}
+          <label htmlFor="pp-close" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('kapanis')}</label>
+          <DecimalInput
+            id="pp-close"
+            blankZero
+            inputMode="numeric"
+            value={kapanisSaati}
+            onValueChange={(v) => setKapanisSaati(Math.max(0, Math.min(26, Math.round(v))))}
             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
       </div>
 
-      <div className="flex items-start gap-2 rounded-xl bg-slate-50 p-3 text-[11px] text-slate-500 ring-1 ring-slate-200/60">
-        <Info size={14} className="mt-0.5 shrink-0 text-slate-400" />
+      <div className="flex items-start gap-2 rounded-xl bg-slate-50 p-3 text-[11px] text-slate-700 ring-1 ring-slate-200/60">
+        <Info size={14} className="mt-0.5 shrink-0 text-slate-600" aria-hidden="true" />
         <span>
-          {t('result.benchmark')}: {calc.isCafe ? '28-32%' : '30-35%'} ·{' '}
-          {t('result.skeletonMinimum')}: {calc.skeleton}
+          {t('result.benchmark', { value: calc.hi })}
+          {ready ? (
+            <>
+              {' · '}
+              {t('result.skeletonMinimum')}: {calc.skeleton}
+            </>
+          ) : null}
         </span>
       </div>
     </div>
@@ -287,13 +328,17 @@ export default function PersonelPlanlayiciPage() {
   const mainRoleLabel = calc.isCafe ? t('result.barista') : t('result.garson');
   const mainRoleCount = calc.isCafe ? (calc.opening.barista ?? 0) : (calc.opening.garson ?? 0);
 
-  const resultSection = (
+  const resultSection = !ready ? (
+    <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700 ring-1 ring-slate-200/60" data-testid="pp-empty">
+      {t('result.empty')}
+    </div>
+  ) : (
     <div className="space-y-4">
       {/* Opening crew */}
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="mb-3 flex items-center gap-2">
           <Sun size={15} className="text-amber-500" />
-          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-500">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-700">
             {t('result.acilisBrigadasi')}
           </span>
         </div>
@@ -314,7 +359,7 @@ export default function PersonelPlanlayiciPage() {
           )}
           {calc.opening.sommelier != null && (
             <div className="flex justify-between">
-              <span className="text-slate-600">Sommelier</span>
+              <span className="text-slate-600">{t('result.sommelier')}</span>
               <span className="font-semibold tabular-nums text-slate-900">
                 {calc.opening.sommelier}
               </span>
@@ -335,16 +380,16 @@ export default function PersonelPlanlayiciPage() {
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="mb-2 flex items-center gap-2">
           <Zap size={15} className="text-purple-500" />
-          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-500">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-700">
             {t('result.peakBrigada')}
           </span>
-          <span className="ml-auto text-[11px] font-semibold text-purple-600">
+          <span className="ml-auto text-[11px] font-semibold text-purple-700">
             +{calc.peakEkstra} {t('result.ekstra')}
           </span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="font-bold text-slate-900">{t('result.toplam')}</span>
-          <span className="font-black tabular-nums text-purple-600">{calc.peakToplam}</span>
+          <span className="font-black tabular-nums text-purple-700">{calc.peakToplam}</span>
         </div>
       </div>
 
@@ -352,13 +397,13 @@ export default function PersonelPlanlayiciPage() {
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="mb-2 flex items-center gap-2">
           <Sunset size={15} className="text-blue-500" />
-          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-500">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-700">
             {t('result.axsamBrigadasi')}
           </span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="font-bold text-slate-900">{t('result.toplam')}</span>
-          <span className="font-black tabular-nums text-blue-600">{calc.axsamToplam}</span>
+          <span className="font-black tabular-nums text-blue-700">{calc.axsamToplam}</span>
         </div>
         <div className="mt-1 text-[10px] text-slate-600">{t('result.peakNote')}</div>
       </div>
@@ -367,7 +412,7 @@ export default function PersonelPlanlayiciPage() {
       <div className={`rounded-xl p-4 ring-1 ${statusStyle.bg} ${statusStyle.ring}`}>
         <div className="mb-2 flex items-center gap-2">
           <Wallet size={15} className={statusStyle.text} />
-          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-500">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-slate-700">
             {t('result.laborMaliyyeti')}
           </span>
         </div>

@@ -7,7 +7,7 @@
  * Below lg the bar sits above MobileBottomNav (64px).
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { normalizeLocale, withLocale } from '@/i18n/config';
@@ -68,6 +68,27 @@ export default function CookiesBanner() {
     return () => clearTimeout(timer);
   }, []);
 
+  // TASK-0516: publish the bar's height as --dk-cookie-bar-h so floating buttons (WhatsApp, KAZAN)
+  // can sit above it instead of covering it; 0 / unset when the bar is gone.
+  const barRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = barRef.current;
+    const root = document.documentElement;
+    if (!visible || !el) {
+      root.style.removeProperty('--dk-cookie-bar-h');
+      return;
+    }
+    const publish = () => root.style.setProperty('--dk-cookie-bar-h', `${el.offsetHeight}px`);
+    publish();
+    if (typeof ResizeObserver === 'undefined') return () => root.style.removeProperty('--dk-cookie-bar-h');
+    const ro = new ResizeObserver(publish);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      root.style.removeProperty('--dk-cookie-bar-h');
+    };
+  }, [visible]);
+
   const saveAndHide = (consent: CookieConsent) => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
@@ -103,7 +124,7 @@ export default function CookiesBanner() {
   const allOn = facebook && google && yandex_metrica;
 
   return (
-    <div className={s.ck} role="region" aria-label={t('region')}>
+    <div ref={barRef} className={s.ck} role="region" aria-label={t('region')}>
       <div className={s.ckWrap}>
         <p>
           {t('text')}{' '}

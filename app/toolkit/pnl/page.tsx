@@ -4,9 +4,9 @@ import PnlPage from '@/app/[locale]/toolkit/pnl/page';
 import azMessages from '@/messages/az.json';
 
 export const metadata: Metadata = {
-  title: 'P&L Simulator',
+  title: 'Mənfəət və zərər hesabatı (P&L)',
   description:
-    'Restaurant P&L simulator for food cost, prime cost, rent, and net profit analysis.',
+    'Restoranın aylıq satışını və xərclərini yazın: xalis mənfəəti, ərzaq və işçi xərcini, icarənin payını görün.',
 };
 
 export default function PublicPnlPage() {

@@ -3,9 +3,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { AlertTriangle, ArrowRight, BookOpen, ChevronDown, ChevronUp, ClipboardCheck, Droplets, Flame, Lightbulb, RefreshCcw, Shield, ShieldAlert, Soup, Users, Utensils, WalletCards, Waves } from 'lucide-react';
+import { AlertTriangle, ArrowRight, BookOpen, ChevronDown, ChevronUp, ClipboardCheck, Droplets, Flame, Lightbulb, Shield, ShieldAlert, Soup, Users, Utensils, WalletCards, Waves } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 type FrequencyTab = 'daily' | 'weekly' | 'monthly';
 type Section = { id: string; title: string; subtitle: string; icon: typeof Shield; accent: string; accentBg: string; accentRing: string; items: { id: string; text: string; detail: string }[] };
@@ -87,15 +88,20 @@ export default function AqtaChecklistPage() {
   const sectionProgress = useMemo(() => sections.map((s) => { const done = s.items.filter((i) => checked.has(i.id)).length; return { id: s.id, done, total: s.items.length, pct: Math.round((done / s.items.length) * 100) }; }), [checked]);
 
   const toggleCheck = (id: string) => setChecked((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; });
-  const resetAll = () => { setChecked(new Set()); localStorage.removeItem(STORAGE_KEY); };
+  // TASK-0517: «Təmizlə» unticks everything (the storage effect above keeps localStorage in sync, so «Geri al» persists too).
 
   // ── Input Section ─────────────────────────────────────────────────
 
   const inputSection = (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-start justify-between gap-2">
         <div><h2 className="text-base font-bold text-slate-900">{t('checklistTitle')}</h2><p className="text-sm text-slate-600">{t('checklistSubtitle')}</p></div>
-        <button type="button" onClick={resetAll} className="inline-flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-red-700"><RefreshCcw size={13} /> {t('resetBtn')}</button>
+        <ToolResetControls
+          variant="checklist"
+          snapshot={() => [...checked]}
+          restore={(saved: string[]) => setChecked(new Set(saved))}
+          onClear={() => setChecked(new Set())}
+        />
       </div>
 
       <div className="space-y-3">
@@ -105,7 +111,7 @@ export default function AqtaChecklistPage() {
           const isOpen = openSection === section.id;
           return (
             <div key={section.id} className="overflow-hidden rounded-xl border border-slate-200/80">
-              <button onClick={() => setOpenSection(isOpen ? '' : section.id)} className="flex w-full items-center gap-4 px-4 py-3 text-left transition-colors hover:bg-slate-50">
+              <button type="button" aria-expanded={isOpen} onClick={() => setOpenSection(isOpen ? '' : section.id)} className="flex w-full items-center gap-4 px-4 py-3 text-left transition-colors hover:bg-slate-50">
                 <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${section.accentBg}`}><Icon size={18} className={section.accent} /></div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2"><h3 className="text-sm font-bold text-slate-900">{section.title}</h3><span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${section.accentBg} ${section.accent}`}>{stats.done}/{stats.total}</span></div>
@@ -119,7 +125,7 @@ export default function AqtaChecklistPage() {
               {isOpen && (
                 <div className="border-t border-slate-100 bg-slate-50/40">
                   {section.items.map((item) => { const done = checked.has(item.id); return (
-                    <button key={item.id} onClick={() => toggleCheck(item.id)} className="flex w-full items-start gap-3 border-b border-slate-100 px-4 py-3 text-left last:border-b-0 hover:bg-white/70">
+                    <button key={item.id} type="button" role="checkbox" aria-checked={done} onClick={() => toggleCheck(item.id)} className="flex w-full items-start gap-3 border-b border-slate-100 px-4 py-3 text-left last:border-b-0 hover:bg-white/70">
                       <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border transition-colors ${done ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 bg-white text-transparent'}`}><ClipboardCheck size={12} /></div>
                       <div className="min-w-0"><div className={`text-sm font-semibold ${done ? 'text-emerald-700' : 'text-slate-900'}`}>{item.text}</div><p className="mt-0.5 text-xs leading-relaxed text-slate-600">{item.detail}</p></div>
                     </button>
@@ -137,7 +143,7 @@ export default function AqtaChecklistPage() {
         <p className="mb-4 text-sm text-slate-600">{t('hygienePlanSubtitle')}</p>
         <div className="mb-4 inline-flex rounded-xl bg-slate-100 p-1">
           {(['daily', 'weekly', 'monthly'] as FrequencyTab[]).map((tab) => (
-            <button key={tab} onClick={() => setFrequencyTab(tab)} className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${frequencyTab === tab ? 'bg-white text-red-700 shadow-sm' : 'text-slate-700 hover:text-slate-900'}`}>
+            <button key={tab} type="button" aria-pressed={frequencyTab === tab} onClick={() => setFrequencyTab(tab)} className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${frequencyTab === tab ? 'bg-white text-red-700 shadow-sm' : 'text-slate-700 hover:text-slate-900'}`}>
               {tab === 'daily' ? t('tabDaily') : tab === 'weekly' ? t('tabWeekly') : t('tabMonthly')}
             </button>
           ))}

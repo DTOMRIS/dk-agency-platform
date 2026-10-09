@@ -13,6 +13,8 @@ const config: QuizConfig = {
   reportType: HOTEL_READINESS_TASK_TYPE as 'FranchiseReadinessReport',
   getVerdict: (avg) => getHotelVerdict(avg),
   getWeakestIndex: (scores) => getHotelWeakestIndex(scores),
+  resetControls: true,
+  franchbookCtaIndex: null,
 };
 
 export default function HotelReadinessQuiz() {

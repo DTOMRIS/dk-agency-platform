@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Flame, Snowflake, Users, Wallet, Crown, Sun, Zap, Sunset } from 'lucide-react';
 import DecimalInput from '@/components/toolkit/DecimalInput';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
@@ -27,6 +28,23 @@ const WORK_DAYS = 26;
 const SALARY = 380;
 const OVERHEAD = 1.15;
 const TARGET_LABOR = 32;
+
+interface PlannerState {
+  concept: Concept;
+  menuSkuSayisi: number;
+  gunlukFisSayisi: number;
+  mutfaqMetrekare: number;
+  kanallar: Kanallar;
+}
+
+/** «Nümunəni yüklə» values (TASK-0517): a fast food spot with 25 menu items and 180 orders a day. */
+const EXAMPLE: PlannerState = {
+  concept: 'fast_food',
+  menuSkuSayisi: 25,
+  gunlukFisSayisi: 180,
+  mutfaqMetrekare: 45,
+  kanallar: { dineIn: true, takeaway: true, delivery: true, driveThru: false },
+};
 
 interface StationDef {
   key: string;
@@ -128,17 +146,23 @@ export default function MetbexIstasyonPage() {
   const t = useTranslations('toolkit.metbexIstasyon');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
 
-  const [concept, setConcept] = useState<Concept>('fast_food');
-  const [menuSkuSayisi, setMenuSkuSayisi] = useState(25);
-  const [gunlukFisSayisi, setGunlukFisSayisi] = useState(180);
-  const [mutfaqMetrekare, setMutfaqMetrekare] = useState(45);
-  const [kanallar, setKanallar] = useState<Kanallar>({
-    dineIn: true,
-    takeaway: true,
-    delivery: true,
-    driveThru: false,
-  });
+  const [concept, setConcept] = useState<Concept>(EXAMPLE.concept);
+  const [menuSkuSayisi, setMenuSkuSayisi] = useState(EXAMPLE.menuSkuSayisi);
+  const [gunlukFisSayisi, setGunlukFisSayisi] = useState(EXAMPLE.gunlukFisSayisi);
+  const [mutfaqMetrekare, setMutfaqMetrekare] = useState(EXAMPLE.mutfaqMetrekare);
+  const [kanallar, setKanallar] = useState<Kanallar>(EXAMPLE.kanallar);
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
+
+  const snapshot = (): PlannerState => ({ concept, menuSkuSayisi, gunlukFisSayisi, mutfaqMetrekare, kanallar });
+  const apply = (v: PlannerState) => {
+    setConcept(v.concept);
+    setMenuSkuSayisi(v.menuSkuSayisi);
+    setGunlukFisSayisi(v.gunlukFisSayisi);
+    setMutfaqMetrekare(v.mutfaqMetrekare);
+    setKanallar(v.kanallar);
+  };
+  // TASK-0517: no menu items or no orders → nothing to plan (no stations from zeros).
+  const ready = menuSkuSayisi > 0 && gunlukFisSayisi > 0;
 
   const calc = useMemo(
     () => compute({ concept, menuSkuSayisi, gunlukFisSayisi, kanallar }),
@@ -192,6 +216,21 @@ export default function MetbexIstasyonPage() {
 
   const inputSection = (
     <div className="space-y-6">
+      <ToolResetControls
+        snapshot={snapshot}
+        restore={apply}
+        onClear={() =>
+          apply({
+            ...snapshot(),
+            menuSkuSayisi: 0,
+            gunlukFisSayisi: 0,
+            mutfaqMetrekare: 0,
+            kanallar: { dineIn: false, takeaway: false, delivery: false, driveThru: false },
+          })
+        }
+        onLoadExample={() => apply(EXAMPLE)}
+      />
+
       <div>
         <label htmlFor="mi-concept" className="mb-1.5 block text-xs font-semibold text-slate-700">
           {t('concept.label')}
@@ -258,7 +297,11 @@ export default function MetbexIstasyonPage() {
     </div>
   );
 
-  const resultSection = (
+  const resultSection = !ready ? (
+    <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700 ring-1 ring-slate-200/60" data-testid="mi-empty">
+      {t('result.empty')}
+    </div>
+  ) : (
     <div className="space-y-4">
       {/* Station map */}
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
@@ -378,7 +421,7 @@ export default function MetbexIstasyonPage() {
             </div>
           </div>
         </div>
-        <div className="mt-2 text-[10px] text-slate-600">{t('result.qsrHedep')}</div>
+        <div className="mt-2 text-[11px] text-slate-700">{t('result.qsrHedep', { value: TARGET_LABOR })}</div>
       </div>
     </div>
   );

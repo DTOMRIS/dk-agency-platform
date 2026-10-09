@@ -6,6 +6,8 @@
  * Read time is computed from the word count (not the stored read_time).
  */
 import Link from 'next/link';
+import Image from 'next/image';
+import { FOUNDER_PORTRAIT_SRC } from '@/components/ui/FounderAvatar';
 import { notFound, redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import AdSlot from '@/components/ads/AdSlot';
@@ -198,7 +200,11 @@ export default async function BlogDetailPage({
   const toc = extractToc(cleanMarkdownContent);
   const toolSlug = BLOG_TOOL_MAP[article.slug];
   const tool = toolSlug ? getToolMeta(toolSlug) : undefined;
-  const [partA, partB] = tool ? splitAtMiddleHeading(cleanMarkdownContent) : [cleanMarkdownContent, ''];
+  // TASK-0516: the body is split at the middle `##` for the tool card (when the post maps to a tool)
+  // and for the admin «blog-inline» ad. With a tool card, the ad goes to the middle of the second half
+  // so the two never sit together; without enough headings the ad follows the body.
+  const [partA, rest] = splitAtMiddleHeading(cleanMarkdownContent);
+  const [partB, partC] = tool && rest ? splitAtMiddleHeading(rest) : [rest, ''];
   const ti = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.blog' });
   const tc = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.common' });
   const tt = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.toolkit.tools' });
@@ -272,8 +278,15 @@ export default async function BlogDetailPage({
               ) : null}
 
               <MarkdownRenderer content={partA} headingIds />
-              {toolCard}
+              {tool ? toolCard : null}
+              {!tool && partB ? <AdSlot placement="blog-inline" className={s.adInline} /> : null}
               {partB ? <MarkdownRenderer content={partB} headingIds /> : null}
+              {tool && partC ? <AdSlot placement="blog-inline" className={s.adInline} /> : null}
+              {partC ? <MarkdownRenderer content={partC} headingIds /> : null}
+              {/* No mid-article split point → the inline ad follows the body. */}
+              {(!tool && !partB) || (tool && !partC) ? (
+                <AdSlot placement="blog-inline" className={s.adInline} />
+              ) : null}
 
               {/* Strukturlu sahələr (editor field-by-field saxlayır) — L-037/Özbahçeci:
                   guruBoxes + doganNote artıq route-a bağlıdır, markdown marker-dən asılı deyil */}
@@ -319,15 +332,14 @@ export default async function BlogDetailPage({
                 foot={ti('kazanFoot')}
               />
 
-              {/* TASK-0453 CTA kept (e2e/blog-cta.spec.ts): direct WhatsApp with the post title + contact page. */}
+              {/* TASK-0453 CTA kept (e2e/blog-cta.spec.ts): WhatsApp with the post title + contact page. TASK-0517: through the lead route (whatsappHref), plain <a> so the counting redirect is not prefetched. */}
               <div className="mt-10 rounded-3xl border border-[#E4DCCD] bg-white p-7 shadow-sm">
                 <h3 className="mb-2 text-xl font-black tracking-tight text-slate-900">{t('ctaTitle')}</h3>
                 <p className="mb-5 text-sm leading-relaxed text-slate-700">{t('ctaDesc')}</p>
                 <div className="flex flex-wrap items-center gap-3">
                   <a
-                    href={`https://wa.me/994502566279?text=${encodeURIComponent(t('ctaWhatsappMessage', { title: article.title }))}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={whatsappHref(t('ctaWhatsappMessage', { title: article.title }))}
+                    data-testid="blog-cta-whatsapp"
                     className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#128C4A] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#0f7a40]"
                   >
                     {t('ctaWhatsapp')}
@@ -344,7 +356,15 @@ export default async function BlogDetailPage({
 
             <aside className={s.aside} aria-label={ti('founderEyebrow')}>
               <div className={s.author}>
-                <span className={s.av} aria-hidden="true">DT</span>
+                <Image
+                  src={FOUNDER_PORTRAIT_SRC}
+                  alt=""
+                  width={56}
+                  height={56}
+                  sizes="56px"
+                  className={s.av}
+                  style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
+                />
                 <b>{ti('founderName')}</b>
                 <span className={s.role}>{ti('founderRole')}</span>
                 <p style={{ fontSize: 13.5, color: 'var(--ink-2)', margin: '8px 0 0' }}>{ti('asideNote')}</p>

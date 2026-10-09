@@ -8,7 +8,7 @@ import type { ReactNode } from 'react';
 export const metadata: Metadata = {
   title: "Restoran Markalaşma Bələdçisi",
   description:
-    "Restoran üçün 12 maddəlik branding checklist, vizual kimliyin 7 elementi və sosial media strategiyası.",
+    "Restoranın marka kartı (ad, marka sözü, qonaq, danışıq tərzi, rənglər), 12 addımlıq marka siyahısı və sosial şəbəkə planı.",
 };
 
 export default function ToolkitBrandingGuideLayout({ children }: { children: ReactNode }) {

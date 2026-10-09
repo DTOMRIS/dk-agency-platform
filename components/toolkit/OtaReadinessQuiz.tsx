@@ -29,6 +29,8 @@ const config: QuizConfig = {
   reportType: 'OtaReadinessReport' as 'FranchiseReadinessReport',
   getVerdict,
   getWeakestIndex: getWeakest,
+  resetControls: true,
+  franchbookCtaIndex: null,
 };
 
 export default function OtaReadinessQuiz() {

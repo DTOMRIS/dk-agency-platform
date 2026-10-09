@@ -6,9 +6,9 @@ import type { ReactNode } from 'react';
  * Başlıq/təsvir prefiksiz AZ ünvanı üçün buradan verilir.
  */
 export const metadata: Metadata = {
-  title: "İnşaatdan Açılışa Checklist — 62 Maddə",
+  title: "İnşaatdan açılışa: 62 maddəlik yoxlama siyahısı",
   description:
-    "62 maddəlik restoran açılış checklist-i: əməliyyat dizaynı, ön hazırlıq, kaba işlər, incə işlər, avadanlıq və açılış sprinti.",
+    "Restoranın tikintisindən açılışına qədər 62 iş: planlaşdırma, ön hazırlıq, kaba işlər, incə işlər, avadanlıq və açılış hazırlığı.",
 };
 
 export default function ToolkitInsaatChecklistLayout({ children }: { children: ReactNode }) {

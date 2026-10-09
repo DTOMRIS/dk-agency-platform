@@ -3,11 +3,16 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { ArrowRight, BookOpen, Lightbulb, RotateCcw, Users } from 'lucide-react';
+import { ArrowRight, BookOpen, Lightbulb, Users } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
+
+/** Example values — «Nümunəni yüklə» (TASK-0517). */
+const EXAMPLE = { employeeCount: 18, averageSalary: 850, yearlyLeavers: 12 };
+type RetentionState = typeof EXAMPLE;
 
 function formatCurrency(value: number) {
   return `${Math.round(value).toLocaleString(AZ_NUMBER_LOCALE)} ₼`;
@@ -18,9 +23,9 @@ export default function StaffRetentionPage() {
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
 
-  const [employeeCount, setEmployeeCount] = useState(18);
-  const [averageSalary, setAverageSalary] = useState(850);
-  const [yearlyLeavers, setYearlyLeavers] = useState(12);
+  const [employeeCount, setEmployeeCount] = useState(EXAMPLE.employeeCount);
+  const [averageSalary, setAverageSalary] = useState(EXAMPLE.averageSalary);
+  const [yearlyLeavers, setYearlyLeavers] = useState(EXAMPLE.yearlyLeavers);
 
   const topReasons = [t('reason1'), t('reason2'), t('reason3'), t('reason4'), t('reason5')];
 
@@ -47,20 +52,20 @@ export default function StaffRetentionPage() {
       ? '—'
       : `${stats.turnoverRate.toLocaleString(AZ_NUMBER_LOCALE, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
 
-  const resetAll = () => { setEmployeeCount(18); setAverageSalary(850); setYearlyLeavers(12); };
+  // TASK-0517: shared reset UX — «Təmizlə» (with «Geri al») and «Nümunəni yüklə».
+  const snapshot = (): RetentionState => ({ employeeCount, averageSalary, yearlyLeavers });
+  const restore = (st: RetentionState) => { setEmployeeCount(st.employeeCount); setAverageSalary(st.averageSalary); setYearlyLeavers(st.yearlyLeavers); };
 
   // ── Input Section ─────────────────────────────────────────────────
 
   const inputSection = (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
-          <p className="text-sm text-slate-600">{t('calculatorSubtitle')}</p>
-        </div>
-        <button type="button" onClick={resetAll} className="inline-flex min-h-[32px] items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-slate-700 transition-colors hover:text-indigo-700">
-          <RotateCcw size={13} /> {t('reset')}
-        </button>
+      <ToolResetControls snapshot={snapshot} restore={restore}
+        onClear={() => restore({ employeeCount: 0, averageSalary: 0, yearlyLeavers: 0 })}
+        onLoadExample={() => restore(EXAMPLE)} />
+      <div className="min-w-0">
+        <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
+        <p className="text-sm text-slate-600">{t('calculatorSubtitle')}</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">

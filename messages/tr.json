@@ -174,121 +174,107 @@
   },
   "toolkit": {
     "metbexIstasyon": {
-      "title": "Mutfak İstasyon Hesaplayıcı",
-      "description": "Fast food ve QSR mutfaklar için menü SKU sayısına göre istasyon sayısı ve kadrolar",
-      "badge": "QSR / Fast Food",
+      "title": "Mutfak istasyonları",
+      "description": "Fast food mutfağı için: menüdeki yemek sayısına ve günlük siparişe göre kaç istasyon, kaç çalışan gerekir ve personel gideri cironun yüzde kaçını tutar.",
       "concept": {
-        "label": "Konsept",
-        "fastFood": "Fast Food",
-        "qsrBurger": "QSR — Burger / Sandviç",
-        "qsrPizza": "QSR — Pizza / Makarna",
-        "darkKitchen": "Dark Kitchen",
-        "catering": "Catering / Banket"
+        "label": "Mekân türü",
+        "fastFood": "Fast food",
+        "qsrBurger": "Burger / sandviç",
+        "qsrPizza": "Pizza / makarna",
+        "darkKitchen": "Sadece paket servis mutfağı",
+        "catering": "Catering / ziyafet"
       },
-      "menuSku": "Menü SKU sayısı (ürün sayısı)",
-      "menuSkuHelp": "Menünüzdeki farklı ürünlerin toplam sayısı",
-      "gunlukFis": "Günlük ortalama fiş / sipariş",
+      "menuSku": "Menüdeki yemek sayısı",
+      "menuSkuHelp": "Menünüzde kaç farklı yemek ve içecek var (örn. 25).",
+      "gunlukFis": "Günde ortalama kaç sipariş",
       "mutfaqMetrekare": "Mutfak alanı (m²)",
       "kanallar": {
-        "label": "Servis kanalları",
-        "dineIn": "Salon servisi",
-        "takeaway": "Paket",
-        "delivery": "Teslimat (Delivery)",
-        "driveThru": "Drive-thru"
+        "label": "Sipariş nasıl veriliyor",
+        "dineIn": "Salonda yemek",
+        "takeaway": "Gel-al",
+        "delivery": "Paket servis",
+        "driveThru": "Arabaya servis"
       },
-      "hesabla": "İstasyonları Hesapla",
       "result": {
-        "istasyonlar": "Mutfak İstasyonları",
-        "istasyonXeritesi": "İstasyon Haritası",
-        "istiIstasyon": "Sıcak İstasyon",
-        "soyuqIstasyon": "Soğuk İstasyon",
+        "istasyonXeritesi": "İstasyonlar",
         "neferPerIstasyon": "kişi",
-        "kadrolar": "Kadrolar",
+        "kadrolar": "Vardiyaya göre çalışan sayısı",
         "sabahVardiyasi": "Sabah vardiyası",
-        "ogleRush": "Öğle rush",
+        "ogleRush": "Öğle, en yoğun saat",
         "axsamVardiyasi": "Akşam vardiyası",
-        "shiftLeader": "Shift Leader",
-        "shiftLeaderLazim": "Gerekli (200+ fiş normu)",
+        "shiftLeader": "Vardiya sorumlusu",
+        "shiftLeaderLazim": "Gerekli (günde 200+ sipariş)",
         "shiftLeaderLazimDeyil": "Henüz gerekli değil",
-        "laborMaliyyeti": "Personel maliyeti",
+        "laborMaliyyeti": "Personel gideri",
         "aylig": "Aylık (tahmini)",
-        "laborFaizi": "Personel yüzdesi",
-        "qsrHedep": "QSR hedef: < 32%",
-        "aiInsight": "KAZAN AI Tavsiyesi",
-        "ideal": "Hedefte",
-        "dikkat": "Dikkat",
-        "kritik": "Kritik",
-        "baza": "Baz",
-        "peak": "Peak",
+        "laborFaizi": "Cirodaki payı",
+        "qsrHedep": "Fast food için yaygın kural: personel gideri cironun %{value}'ini geçmemeli.",
+        "ideal": "Normal",
+        "dikkat": "Dikkat: biraz yüksek",
+        "kritik": "Çok yüksek",
+        "baza": "temel",
+        "peak": "en yoğun",
         "stations": {
-          "grillFryer": "Izgara / Fritöz",
-          "assemblyCashier": "Montaj / Kasa",
-          "grillHot": "Izgara / Sıcak",
-          "fryerCold": "Fritöz / Soğuk",
-          "assemblySauce": "Montaj / Soslar",
-          "hotKitchen": "Sıcak Mutfak (ızgara)",
-          "fryer": "Fritöz İstasyonu",
-          "coldSalad": "Soğuk / Salata",
-          "assemblyPack": "Montaj / Paketleme",
-          "hotKitchenA": "Sıcak Mutfak A",
-          "hotKitchenB": "Sıcak Mutfak B",
-          "assembly": "Montaj",
-          "expeditor": "Expeditor / Kalite"
+          "grillFryer": "Izgara / fritöz",
+          "assemblyCashier": "Hazırlama / kasa",
+          "grillHot": "Izgara / sıcak yemekler",
+          "fryerCold": "Fritöz / soğuk yemekler",
+          "assemblySauce": "Hazırlama / soslar",
+          "hotKitchen": "Sıcak mutfak (ızgara)",
+          "fryer": "Fritöz",
+          "coldSalad": "Soğuk yemekler / salata",
+          "assemblyPack": "Hazırlama / paketleme",
+          "hotKitchenA": "Sıcak mutfak 1",
+          "hotKitchenB": "Sıcak mutfak 2",
+          "assembly": "Hazırlama",
+          "expeditor": "Siparişi kontrol edip veren"
         },
-        "noChecks": "Günlük fiş sayısını girin"
-      },
-      "seo": {
-        "title": "Mutfak İstasyon Hesaplayıcı — DK Agency",
-        "description": "Fast food ve QSR mutfaklar için SKU sayısına göre istasyon planlaması. Kadrolar, personel yüzdesi."
+        "noChecks": "Günde kaç sipariş olduğunu yazın",
+        "empty": "Menüdeki yemek sayısını ve günlük sipariş sayısını yazın — istasyonlar ve çalışan sayısı burada görünecek."
       }
     },
     "personelPlanlayici": {
-      "title": "Personel Planlayıcı",
-      "description": "Restoran ve kafe için vardiya bazında optimal personel sayısını hesapla",
-      "badge": "Personel",
+      "title": "Personel planlayıcı",
+      "description": "Restoran ve kafe için: açılışta, en yoğun saatlerde ve akşam kaç çalışan gerekir ve personel gideri cironun yüzde kaçını tutar.",
       "concept": {
-        "label": "Konsept",
-        "restoranCasual": "Restoran (Casual Dining)",
-        "restoranFine": "Restoran (Fine Dining)",
+        "label": "Mekân türü",
+        "restoranCasual": "Restoran (günlük, orta fiyat)",
+        "restoranFine": "Restoran (üst segment)",
         "kafe": "Kafe",
-        "bar": "Bar / Lounge"
+        "bar": "Bar / lounge"
       },
-      "koltukSayisi": "Koltuk sayısı",
-      "gunlukFis": "Günlük tahmini fiş sayısı",
+      "koltukSayisi": "Oturma yeri sayısı",
+      "gunlukFis": "Günde yaklaşık kaç fiş",
       "gunTipi": {
-        "label": "Gün tipi",
-        "isgunu": "Hafta içi (Pzt–Cum)",
+        "label": "Hangi gün için",
+        "isgunu": "Hafta içi (Pzt – Prş)",
         "cuma": "Cuma",
-        "haftaSonu": "Hafta sonu (Cmt/Paz)"
+        "haftaSonu": "Hafta sonu (Cmt, Paz)"
       },
-      "achilis": "Açılış saati",
-      "kapanis": "Kapanış saati",
-      "hesabla": "Personel Hesapla",
+      "achilis": "Açılış saati (örn. 10)",
+      "kapanis": "Kapanış saati (örn. 23)",
       "result": {
-        "acilisBrigadasi": "Açılış Ekibi",
-        "peakBrigada": "Peak Saatler",
-        "axsamBrigadasi": "Akşam Ekibi",
+        "acilisBrigadasi": "Açılışta çalışanlar",
+        "peakBrigada": "En yoğun saatlerde",
+        "axsamBrigadasi": "Akşam vardiyası",
         "garson": "Garson",
         "barista": "Barista",
-        "asci": "Aşçı / Mutfak",
-        "host": "Host / Karşılama",
-        "kasa": "Kasa",
-        "ekstra": "Ek (peak)",
+        "asci": "Aşçı / mutfak",
+        "host": "Karşılama görevlisi",
+        "sommelier": "Sommelier",
+        "kasa": "Kasiyer",
+        "ekstra": "ek çalışan",
         "toplam": "Toplam",
-        "laborMaliyyeti": "Personel maliyeti",
-        "aylig": "Aylık",
-        "laborFaizi": "Personel yüzdesi",
-        "ideal": "İdeal",
-        "dikkat": "Dikkat",
-        "kritik": "Kritik",
-        "skeletonMinimum": "Minimum açılış kadrosu",
-        "benchmark": "Sektör benchmarkı",
-        "aiInsight": "KAZAN AI Tavsiyesi",
-        "peakNote": "Peak'ten azaltılabilir"
-      },
-      "seo": {
-        "title": "Personel Planlayıcı — DK Agency",
-        "description": "Restoran ve kafe için optimal personel sayısı hesaplayıcısı. Vardiya bazında, personel yüzdesi ile."
+        "laborMaliyyeti": "Personel gideri",
+        "aylig": "Aylık (tahmini)",
+        "laborFaizi": "Cirodaki payı",
+        "ideal": "Normal",
+        "dikkat": "Dikkat: biraz yüksek",
+        "kritik": "Çok yüksek",
+        "skeletonMinimum": "Açılış için en az çalışan",
+        "benchmark": "Yaygın kural: personel gideri cironun %{value}'ini geçmemeli",
+        "peakNote": "En yoğun saatlerden sonra çalışan sayısı azaltılabilir.",
+        "empty": "Oturma yeri, günlük fiş sayısı, açılış ve kapanış saatini yazın — sonuç burada görünecek."
       }
     },
     "badge": "Ücretsiz Araçlar",
@@ -298,71 +284,71 @@
       "navigation": {
         "toolkit": "Toolkit"
       },
-      "title": "Food Cost",
+      "title": "Food cost (gıda maliyeti yüzdesi)",
       "titleAccent": "Hesaplayıcı",
-      "subtitle": "Reçete kartı oluştur, trim loss ekle, porsiyon maliyetini hesapla. Gerçek food cost — göz kararı değil.",
+      "subtitle": "Tarifi yazın: porsiyon maliyetini, food cost yüzdesini ve doğru satış fiyatını hemen görün.",
       "defaultIng1Name": "Tavuk fileto",
       "defaultIng2Name": "Zeytinyağı",
       "defaultIng3Name": "Basmati pirinç",
-      "statFoodCost": "Food Cost",
-      "statPortionCost": "Porsiyon Maliyeti",
-      "statGrossProfit": "Brüt Kar",
-      "statIdealPrice": "İdeal Fiyat",
+      "statFoodCost": "Food cost",
+      "statPortionCost": "Porsiyon maliyeti",
+      "statGrossProfit": "Porsiyondan kalan kazanç",
+      "statIdealPrice": "Önerilen fiyat",
       "statIdealPriceHint": "hedef {pct}%",
-      "statusGood": "Optimal",
+      "statusGood": "Normal",
       "statusWarning": "Dikkat",
       "statusDanger": "Yüksek",
-      "recipeCardTitle": "Reçete Kartı",
-      "invoiceDataActive": "Fatura fiyatları aktif",
+      "recipeCardTitle": "Tarif kartı",
+      "invoiceDataActive": "Fatura fiyatları bağlı",
       "reset": "Sıfırla",
       "colProduct": "Ürün",
       "colQuantity": "Miktar",
       "colUnit": "Birim",
-      "colPricePerUnit": "₼/birim",
-      "colTrimPct": "Trim %",
+      "colPricePerUnit": "Birim fiyatı (₼)",
+      "colTrimPct": "Temizleme kaybı %",
       "colTotal": "Toplam",
       "productNamePlaceholder": "Ürün adı",
       "invoiceDataHint": "Son 90 günün fatura fiyatları",
-      "totalFoodCost": "Toplam gıda maliyeti",
-      "addIngredient": "Ekle",
-      "parametersTitle": "Parametreler",
-      "labelMenuPrice": "Menü fiyatı (₼)",
-      "labelPortions": "Porsiyon sayısı",
-      "labelTargetFoodCost": "Hedef food cost %",
-      "sectorStandardsTitle": "Sektör Standartları",
-      "sectorRestaurant": "Restoran / Kafe",
-      "sectorFastFood": "Fast Food",
-      "sectorFineDining": "Fine Dining",
+      "totalFoodCost": "Gıda maliyeti, toplam",
+      "addIngredient": "Ürün ekle",
+      "parametersTitle": "Fiyat ve porsiyon",
+      "labelMenuPrice": "Menüdeki satış fiyatı (₼)",
+      "labelPortions": "Tarif kaç porsiyon",
+      "labelTargetFoodCost": "Hedef food cost (%)",
+      "sectorStandardsTitle": "Sektörde genelde",
+      "sectorRestaurant": "Restoran / kafe",
+      "sectorFastFood": "Fast food",
+      "sectorFineDining": "Üst segment restoran",
       "netProfitLabel": "Net kâr",
       "rentLabel": "Kira",
-      "educationTitle": "Food Cost'u",
-      "educationTitleAccent": "Anlamak",
-      "educationSubtitle": "Hesaplamadan önce arkasındaki mantığı öğren.",
-      "whatIsFoodCostTitle": "Food Cost Nedir?",
-      "whatIsFoodCostBody1": "Restoranın sattığı yemeklerin",
-      "whatIsFoodCostBodyBold": "hammadde maliyetidir.",
-      "whatIsFoodCostBody2": " İşçilik, kira ve faturalar dahil değildir — yalnızca tabağa giren malzemenin bedeli.",
-      "cogsFormulaTitle": "Tam COGS Formülü",
-      "cogsLine1": "Açılış Envanteri",
-      "cogsLine2": "+ Dönem içi alımlar",
-      "cogsLine3": "− İadeler",
+      "educationTitle": "Food cost",
+      "educationTitleAccent": "sade dille",
+      "educationSubtitle": "Hesaplamadan önce arkasındaki mantığı bilin.",
+      "whatIsFoodCostTitle": "Food cost nedir?",
+      "whatIsFoodCostBody1": "Satılan yemeklere harcanan",
+      "whatIsFoodCostBodyBold": "gıdanın maliyetidir.",
+      "whatIsFoodCostBody2": " Maaş, kira ve faturalar dahil değildir — yalnızca tabağa giren gıda.",
+      "cogsFormulaTitle": "Ay içinde kullanılan gıda nasıl hesaplanır",
+      "cogsLine1": "Ay başında depodaki mal",
+      "cogsLine2": "+ Ay içinde alınan mal",
+      "cogsLine3": "− Tedarikçiye iade edilen mal",
       "cogsLine4": "= Kullanılabilir mal",
-      "cogsLine5": "− Kapanış Envanteri",
-      "cogsLine6": "= Kullanım (COGS)",
-      "cogsPctFormula": "Food Cost % = COGS ÷ Satış × 100",
-      "inventoryValuationTitle": "Envanter Değerleme",
-      "inventoryValuationSubtitle": "Aynı malı farklı fiyata aldın — hangi fiyatla hesaplayacaksın?",
-      "fifoTitle": "FIFO — Önerilen",
-      "fifoBody": "İlk giren ilk çıkar. Eski fiyattan hesaplanır. Restoranlar için en doğru yöntem.",
-      "wacTitle": "WAC (Ağırlıklı Ortalama Maliyet)",
-      "wacBody": "Toplam değer ÷ mal adedi = ortalama maliyet. Basittir, ancak fiyat değişimini tam yansıtmaz.",
-      "lastPurchaseTitle": "Son alım fiyatı — Yanıltıcı",
-      "lastPurchaseBody": "Toplu alımda yüksek gösterir. Eski malı yeni fiyatla hesaplamak food cost'u çarpıtır.",
-      "trimLossTitle": "Trim Loss Nedir?",
-      "trimLossBody1": "1 kg tavuk temizlendikten sonra yalnızca",
-      "trimLossBodyBold": "850g",
-      "trimLossBody2": "kullanılabilir — %15 trim loss. Bu gerçek maliyeti artırır.",
-      "trimLossExamplesTitle": "Örnek trim yüzdeleri (yaklaşık — kendi tartımınızla doğrulayın)",
+      "cogsLine5": "− Ay sonunda depoda kalan mal",
+      "cogsLine6": "= Ay içinde kullanılan gıda",
+      "cogsPctFormula": "Food cost % = kullanılan gıda ÷ satış × 100",
+      "inventoryValuationTitle": "Depodaki malı hangi fiyatla saymalı?",
+      "inventoryValuationSubtitle": "Aynı malı farklı fiyatlara aldınız — hangisini almalı?",
+      "fifoTitle": "«İlk giren ilk çıkar» — önerilir",
+      "fifoBody": "Önce alınan mal önce kullanılır ve kendi alış fiyatıyla sayılır. Restoran için en doğru yöntem budur.",
+      "wacTitle": "Ortalama fiyat yöntemi",
+      "wacBody": "Tüm alışların toplam değeri ÷ toplam miktar = ortalama fiyat. Basittir ama fiyatlar hızlı değişince gerçeği geç gösterir.",
+      "lastPurchaseTitle": "Son alış fiyatı — yanıltır",
+      "lastPurchaseBody": "Mal pahalandıysa eski stoku yeni fiyatla saymak food cost’u olduğundan yüksek gösterir.",
+      "trimLossTitle": "Temizleme kaybı nedir?",
+      "trimLossBody1": "1 kg tavuk temizlendikten sonra (kemik, deri, yağ atılır) yaklaşık",
+      "trimLossBodyBold": "850 g",
+      "trimLossBody2": "kalır — kayıp %15’tir (örnek). Atılan kısım da parayla alındığı için porsiyon maliyeti artar.",
+      "trimLossExamplesTitle": "Örnek kayıp oranları (yaklaşık — kendi tartınızla kontrol edin)",
       "trimEx1Label": "Tavuk fileto",
       "trimEx1Value": "5–8%",
       "trimEx2Label": "Bütün tavuk",
@@ -375,90 +361,90 @@
       "trimEx5Value": "10–20%",
       "trimEx6Label": "Soğan/sarımsak",
       "trimEx6Value": "10–15%",
-      "dkAdviceLabel": "DK Agency Tavsiyesi",
+      "dkAdviceLabel": "DK Agency tavsiyesi",
       "dkAdviceBody1": "Food cost’u bilmeden çalışmak",
-      "dkAdviceBodyBold": "en pahalı hatadır.",
-      "dkAdviceBody2": "FIFO prensibini POS sistemiyle uygulayın, her şeyi kontrol altında tutun.",
+      "dkAdviceBodyBold": "en pahalıya patlayan hatadır.",
+      "dkAdviceBody2": "Her ay depoyu sayın ve önce alınan malı önce kullanın.",
       "readArticle": "Yazının tamamını oku",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqBody": "Tüm reçeteleri kaydet, food cost'u otomatik hesapla, FIFO ile envanteri izle. Gerçek zamanlı mali kontrol.",
+      "ocaqBody": "Tüm tarifleri saklayın, food cost’u otomatik hesaplayın, depoyu takip edin.",
       "ocaqCta": "Ücretsiz başla",
-      "factorsTitle": "Food Cost'u Etkileyen",
-      "factorsTitleAccent": "4 Faktör",
-      "factorsSubtitle": "Bu faktörler değiştiği için food cost restorandan restorana farklılaşır.",
-      "factor1Title": "Alım Fiyatı",
-      "factor1Content": "Hammadde için ödediğiniz maliyet. Satın alma sizin kontrolünüzdedir: pazara gidin, tedarikçi alternatiflerini araştırın, aynı kalitede daha ucuz kaynak bulun. FIFO ilkesini uygulayın — eski mal önce kullanılmalıdır. Haftalık fiyat karşılaştırması yapın.",
-      "factor2Title": "Satış Fiyatı",
-      "factor2Content": "Reçete ve maliyet hesabı olmadan satış fiyatı konulamaz. Önce food cost'u hesapla, sonra hedef yüzdeye göre fiyatı belirle. \"Rakip ne yazıyor\" prensibiyle fiyat koymak en büyük hatadır. Doğru yol: maliyet × hedef çarpan = satış fiyatı.",
-      "factor3Title": "Ürün Dağılımı (Product Mix)",
-      "factor3Content": "Aynı fiyata aynı ürünü satıyorsun ama mali sonuç farklı — neden? Biri karlı ürün (Yıldız) satıyor, diğeri zararlı (Köpek). Müşteriye, ekibe ve konuma göre değişir. Çözüm: menü mühendisliğiyle Yıldız ürünleri önerilen satışa çıkar, Köpek ürünleri ya değiştir ya sil.",
-      "factor4Title": "Restoran Kontrolleri",
-      "factor4Content": "Reçeteler, personel yemeği, fire, ikramlar, kasa farkları — hepsi kontrol altında olmalıdır. FIFO ilkesini uygulayın — eski mal önce kullanılsın. Et en değerli kayıp kaynağıdır — oradan başlayın. Haftalık fire sayımları yapın ve fark raporuyla karşılaştırın.",
-      "learnMoreTitle": "Daha Derine Dal",
-      "blogLink1Title": "Food Cost'un Kanlı Gerçeği",
+      "factorsTitle": "Food cost’u etkileyen",
+      "factorsTitleAccent": "4 etken",
+      "factorsSubtitle": "Bu etkenler her restoranda farklı olduğu için food cost da farklıdır.",
+      "factor1Title": "Alış fiyatı",
+      "factor1Content": "Gıdaya ödediğiniz para. Bu sizin elinizde: piyasaya bakın, birkaç tedarikçiden fiyat alın, aynı kaliteyi daha ucuza bulun. Önce alınan malı önce kullanın. Fiyatları her hafta karşılaştırın.",
+      "factor2Title": "Satış fiyatı",
+      "factor2Content": "Tarif yazılmadan ve maliyet hesaplanmadan fiyat konmaz. Önce food cost’u hesaplayın, sonra hedef yüzdeye göre fiyatı koyun. «Yan restoran kaça satıyor» diye fiyat koymak en büyük hatadır. Doğru yol: porsiyon maliyeti ÷ hedef food cost yüzdesi = satış fiyatı.",
+      "factor3Title": "Hangi yemekler çok satılıyor",
+      "factor3Content": "Aynı menüyle iki ay farklı food cost verebilir — hangi yemeğin çok satıldığına bağlıdır. Kazancı yüksek yemekleri öne çıkarın, az kazandıranların fiyatını düzeltin ya da menüden çıkarın. Bunun için «Menü matrisi» aracını kullanın.",
+      "factor4Title": "Mutfakta kontrol",
+      "factor4Content": "Tarife uyum, personel yemeği, bozulan mal, ikramlar, kasa açıkları — hepsi kontrol altında olmalı. Önce alınan malı önce kullanın. En pahalı kayıp ettedir — oradan başlayın. Depoyu her hafta sayın ve beklenen rakamla karşılaştırın.",
+      "learnMoreTitle": "Daha fazlasını okuyun",
+      "blogLink1Title": "1 porsiyonun food cost’u nasıl hesaplanır",
       "blogLink1Tag": "Finans",
-      "blogLink2Title": "P&L Okuyamıyor musun?",
+      "blogLink2Title": "P&L okuyamıyor musunuz?",
       "blogLink2Tag": "Finans",
-      "blogLink3Title": "Menü Mühendisliği: Yıldız ve Köpek",
+      "blogLink3Title": "Menü matrisi: hangi yemek kalsın, hangisi gitsin",
       "blogLink3Tag": "Operasyon",
       "readLabel": "Oku"
     },
-    "foodCostDesc": "Porsiyon maliyet hesabı yap, ideal food cost oranını bul.",
+    "foodCostDesc": "Porsiyon maliyetini hesaplayın ve doğru food cost yüzdesini bulun.",
     "pnl": {
       "navigation": {
         "toolkit": "Toolkit"
       },
-      "title": "P&L",
+      "title": "Kâr-zarar tablosu (P&L)",
       "titleAccent": "Simülatörü",
-      "subtitle": "Restoran kârlılığı için interaktif model",
-      "description": "Aylık kâr-zarar tablosunu hesaplayın, her giderin marja etkisini görün ve sektör benchmarklarıyla karşılaştırın.",
+      "subtitle": "Aylık gelir ve gider",
+      "description": "Ayın satışını ve giderlerini yazın — ay sonunda ne kadar kazandığınızı ve paranın nereye gittiğini görün.",
       "inputs": {
         "revenue": {
-          "label": "Aylık ciro",
+          "label": "Aylık satış (ciro)",
           "placeholder": "Örn: 240.000",
-          "hint": "Tüm satışların toplamı, KDV hariç"
+          "hint": "Tüm satışların toplamı (KDV hariç)"
         },
         "foodCost": {
-          "label": "Yiyecek maliyeti",
-          "hint": "Genellikle cironun %28-32'si"
+          "label": "Gıda gideri",
+          "hint": "Genelde satışın %{min}–{max}’i"
         },
         "packaging": {
-          "label": "Paketleme"
+          "label": "Ambalaj"
         },
         "staffCost": {
-          "label": "Personel gideri",
+          "label": "Personel maaşları",
           "hint": "Maaş + sosyal sigorta"
         },
         "management": {
-          "label": "Yönetim"
+          "label": "Yönetici maaşı"
         },
         "advertising": {
           "label": "Reklam"
         },
         "promo": {
-          "label": "Promosyon ve kampanya"
+          "label": "İndirim ve ikramlar"
         },
         "outsource": {
-          "label": "Dış kaynak"
+          "label": "Dış hizmetler (temizlik, güvenlik)"
         },
         "uniform": {
-          "label": "Üniforma"
+          "label": "İş kıyafeti"
         },
         "supplies": {
-          "label": "Sarf malzemeleri"
+          "label": "Sarf malzemesi (peçete, deterjan)"
         },
         "repair": {
-          "label": "Tamir"
+          "label": "Bakım ve onarım"
         },
         "utilities": {
-          "label": "Faturalar"
+          "label": "Faturalar (elektrik, su, gaz)"
         },
         "otherControllable": {
-          "label": "Diğer kontrol edilebilir"
+          "label": "Diğer yönetilebilir giderler"
         },
         "rent": {
           "label": "Kira",
-          "hint": "Faturalar hariç"
+          "hint": "Faturalar dahil değil"
         },
         "accounting": {
           "label": "Muhasebe"
@@ -467,56 +453,56 @@
           "label": "Sigorta"
         },
         "tax": {
-          "label": "Vergi"
+          "label": "Vergiler"
         },
         "depreciation": {
-          "label": "Amortisman"
+          "label": "Amortisman (ekipmanın yıpranması)"
         }
       },
       "outputs": {
         "grossProfit": {
-          "label": "Brüt kâr",
-          "tooltip": "Ciro eksi yiyecek maliyeti"
+          "label": "Gıdadan sonra kalan (brüt kâr)",
+          "tooltip": "Satış − gıda gideri"
         },
         "operatingProfit": {
-          "label": "Faaliyet kârı",
-          "tooltip": "Brüt kâr eksi faaliyet giderleri"
+          "label": "Gıda ve ambalajdan sonra kalan",
+          "tooltip": "Satış − gıda ve ambalaj"
         },
         "controllableProfit": {
-          "label": "Kontrol edilebilir kâr"
+          "label": "Yönetilebilir giderlerden sonra kalan"
         },
         "netProfit": {
           "label": "Net kâr"
         },
         "margin": {
-          "label": "Kâr marjı"
+          "label": "Kâr yüzdesi"
         }
       },
       "sections": {
-        "cogs": "COGS (Satılan malın maliyeti)",
-        "controllable": "Kontrol edilebilir giderler",
-        "uncontrollable": "Kontrol edilemeyen giderler"
+        "cogs": "Gıda ve ambalaj",
+        "controllable": "Yönetebildiğiniz giderler",
+        "uncontrollable": "Kolay değişmeyen giderler (kira, vergi, sigorta)"
       },
       "kpis": {
         "netProfit": "Net kâr",
-        "primeCost": "Prime cost",
-        "foodCost": "Food cost",
+        "primeCost": "Ana gider (gıda + personel)",
+        "foodCost": "Food cost (gıda maliyeti yüzdesi)",
         "rent": "Kira",
-        "targetMax": "Hedef: maksimum {value}"
+        "targetMax": "sınır ≤%{value}"
       },
       "table": {
-        "title": "Detaylı P&L tablosu",
-        "category": "Kategori",
+        "title": "Aylık tablo",
+        "category": "Kalem",
         "amount": "Tutar",
-        "percent": "Ciro %"
+        "percent": "Satışın %’si"
       },
       "actions": {
         "calculate": "Hesapla",
-        "reset": "Sıfırla",
+        "reset": "Temizle",
         "export": "PDF indir",
         "save": "Kaydet",
-        "detailView": "Detaylı görünüm",
-        "simpleView": "Basit görünüm"
+        "detailView": "Tüm kalemleri göster",
+        "simpleView": "Kısa görünüm"
       },
       "validation": {
         "required": "Bu alan zorunludur",
@@ -524,27 +510,27 @@
         "tooLow": "Değer çok düşük",
         "tooHigh": "Değer çok yüksek",
         "negative": "Tutar negatif olamaz — önceki değer korundu.",
-        "revenueRequired": "Yüzdeleri hesaplamak için 0’dan büyük satış girin."
+        "revenueRequired": "Yüzdeleri görmek için aylık satışı (0’dan büyük) yazın."
       },
       "insights": {
-        "healthyMargin": "Sağlıklı kâr marjı",
-        "lowMargin": "Marj çok düşük — giderleri gözden geçirin",
-        "negativeMargin": "Zarar: acil yapısal değişiklik gerekli",
-        "foodCostHigh": "Yiyecek maliyeti sektör standardının üstünde",
-        "laborCostHigh": "Personel gideri fazla"
+        "healthyMargin": "Kâr yüzdesi normal",
+        "lowMargin": "Kâr çok düşük — giderleri gözden geçirin",
+        "negativeMargin": "Ay zararla kapanıyor — giderleri ve fiyatları hemen yeniden kurun",
+        "foodCostHigh": "Gıda gideri yaygın sınırın ({value}) üstünde",
+        "laborCostHigh": "Personel gideri yaygın sınırın ({value}) üstünde"
       },
       "benchmark": {
-        "title": "P&L Benchmark",
+        "title": "Sektörde yaygın sınırlar",
         "netProfit": {
           "label": "Net kâr",
           "value": "10-15%"
         },
         "primeCost": {
-          "label": "Prime Cost",
+          "label": "Ana gider (gıda + personel)",
           "value": "≤65%"
         },
         "foodCost": {
-          "label": "Food Cost",
+          "label": "Food cost",
           "value": "28-32%"
         },
         "rent": {
@@ -553,11 +539,11 @@
         },
         "chips": {
           "labor": {
-            "label": "Labor",
+            "label": "Personel",
             "value": "25-35%"
           },
           "marketing": {
-            "label": "Pazarlama",
+            "label": "Reklam",
             "value": "3-6%"
           },
           "utilities": {
@@ -565,59 +551,59 @@
             "value": "3-5%"
           },
           "repair": {
-            "label": "Tamir",
+            "label": "Onarım",
             "value": "1-2%"
           }
         },
-        "ruleOfThumb": "Yaygın sektör kuralları (rule of thumb) — Azerbaycan için kaynaklı norm değildir."
+        "ruleOfThumb": "Bunlar sektörde yaygın yaklaşık sınırlardır — Azerbaycan için resmî norm değildir."
       },
       "education": {
         "whatTitle": "P&L nedir?",
-        "whatBody": "Profit & Loss, restoranın aylık kârını hangi gelir ve giderlerin oluşturduğunu gösterir.",
-        "structureTitle": "Yapı",
+        "whatBody": "P&L (kâr-zarar tablosu) bir ayda ne kadar sattığınızı, neye harcadığınızı ve sonunda ne kaldığını gösterir. Her ay hazırlanmalıdır.",
+        "structureTitle": "Tablonun yapısı",
         "structure": {
-          "revenue": "Satışlar",
-          "cogs": "− Satış maliyeti",
-          "operatingProfit": "= Faaliyet kârı",
-          "controllable": "− Kontrol edilebilir giderler",
-          "controllableProfit": "= Kontrol edilebilir kâr",
-          "uncontrollable": "− Kontrol edilemeyen giderler",
+          "revenue": "Toplam satış",
+          "cogs": "− Gıda ve ambalaj",
+          "operatingProfit": "= Gıdadan sonra kalan",
+          "controllable": "− Yönetebildiğiniz giderler",
+          "controllableProfit": "= Ondan sonra kalan",
+          "uncontrollable": "− Kolay değişmeyen giderler",
           "netProfit": "= Net kâr"
         }
       },
       "knowledge": {
-        "title": "Restoran finansı için",
-        "titleAccent": "kısa ders",
-        "subtitle": "Her gün okunması gereken göstergeler",
-        "controlTitle": "Kontrol etmek yönetmenin başlangıcıdır",
-        "controllableTitle": "Kontrol edilebilir giderler",
-        "controllableBody": "Personel, pazarlama, tamir ve sarf giderleri günlük operasyon kararlarıyla optimize edilebilir.",
-        "uncontrollableTitle": "Kontrol edilemeyen giderler",
-        "uncontrollableBody": "Kira, sigorta ve amortisman daha katıdır. Etkileri şube açılmadan önce hesaplanmalıdır.",
-        "primeCostTitle": "Prime cost",
-        "primeCostBody": "Restoranın en büyük iki gideri gıda ve personeldir. Prime Cost, P&L’in en kritik göstergesidir. Yaygın kural: satışın %{value}’inin altında tutmak.",
+        "title": "P&L’i",
+        "titleAccent": "sade dille",
+        "subtitle": "Rakamın arkasında ne olduğunu bilin — giderleri kontrol edin.",
+        "controlTitle": "Yönetebildiğiniz ve yönetemediğiniz giderler",
+        "controllableTitle": "Yönetebildiğiniz",
+        "controllableBody": "Gıda, personel, reklam, ikram, faturalar ve onarım kendi kararlarınızla değişir. Giderlerin büyük kısmı buradadır.",
+        "uncontrollableTitle": "Kolay değişmeyen",
+        "uncontrollableBody": "Kira, vergi, sigorta ve amortisman her ay aşağı yukarı aynıdır. Dikkatinizi yönetebildiğiniz giderlere verin.",
+        "primeCostTitle": "Ana gider (gıda + personel) nedir?",
+        "primeCostBody": "Restoranın en büyük iki gideri gıda ve personeldir; ikisinin toplamı ana giderdir. Yaygın kural: satışın %{value}’ini geçmesin.",
         "formula": "Formül",
         "primeCostFormula": {
-          "costs": "Food Cost + Labor Cost",
-          "result": "= Prime Cost",
-          "percent": "Prime Cost % = (FC + LC) ÷ Satış × 100"
+          "costs": "Gıda gideri + personel gideri",
+          "result": "= Ana gider",
+          "percent": "Ana gider % = (gıda + personel) ÷ satış × 100"
         },
-        "warningTitle": "Risk sinyalleri",
+        "warningTitle": "Tehlike işaretleri",
         "warnings": {
-          "primeCost": "Prime cost %{prime} üzerindeyse (yaygın kural), kâr hızla daralır.",
-          "lowNet": "Net kâr %{low} altındaysa bir kötü ay zarara dönüşebilir.",
-          "highRent": "Kira satışın %{rent}’inden yüksekse (yaygın kural), lokasyon fazla pahalı olabilir.",
-          "strongNet": "Net kâr %15 üzerindeyse performans güçlüdür ve yatırım düşünülebilir."
+          "primeCost": "Ana gider (gıda + personel) %{prime}’in üstündeyse (yaygın kural), kâr hızla erir.",
+          "lowNet": "Net kâr %{low}’in altındaysa, tek kötü ay restoranı zarara sokabilir.",
+          "highRent": "Kira satışın %{rent}’inin üstündeyse (yaygın kural), yer çok pahalı olabilir.",
+          "strongNet": "Net kâr birkaç ay üst üste artıyorsa, yeni şube ya da yeni ürün düşünülebilir."
         }
       },
       "advice": {
-        "title": "Öneri",
-        "body": "P&L'i ayda bir hazırlayan restoran rakiplerinin çoğundan öndedir. Asıl güç haftalık takiptedir: trendleri daha erken görürsünüz.",
+        "title": "DK Agency tavsiyesi",
+        "body": "Her ay P&L hazırlamak zaten büyük bir adımdır. Haftalık bakarsanız sorunu ay bitmeden görürsünüz.",
         "readArticle": "Tam yazıyı oku"
       },
       "ocaq": {
         "title": "OCAQ Panel",
-        "body": "Otomatik P&L raporu, food cost takibi ve personel gideri analizi. Her şey tek panelde.",
+        "body": "P&L, food cost ve personel gideri otomatik — hepsi tek panelde.",
         "cta": "Ücretsiz başla"
       },
       "ahilik": {
@@ -625,94 +611,89 @@
         "quote2": "\"Usta sanatını, çırak defterini bilmeli.\""
       },
       "related": {
-        "title": "Daha derin öğren",
+        "title": "Daha fazlasını okuyun",
         "read": "Oku",
         "articles": {
           "pnl": {
-            "title": "P&L okuyamıyor musun?",
+            "title": "P&L okuyamıyor musunuz?",
             "slug": "pnl-oxuya-bilmirsen",
             "tag": "Finans"
           },
           "foodCost": {
-            "title": "Food cost'un sert gerçeği",
+            "title": "1 porsiyonun food cost’u nasıl hesaplanır",
             "slug": "1-porsiya-food-cost-hesablama",
             "tag": "Finans"
           },
           "breakEven": {
-            "title": "Başabaş noktası nedir?",
-            "slug": "basabas-noqtesi",
+            "title": "Başabaş noktası nasıl hesaplanır",
+            "slug": "basabas-noqtesi-hesablama",
             "tag": "Operasyon"
           }
         }
       }
     },
     "staffRetention": {
-      "navigation": {
-        "toolkit": "Toolkit"
-      },
-      "title": "Personel Tutma",
-      "titleAccent": "Hesaplayıcısı",
-      "subtitle": "Ekibinizdeki dönüşümü rakamlarla görün. Devir oranını, 1 çalışan değiştirme maliyetini ve yıllık personel kaybının kasaya etkisini hemen hesaplayın.",
+      "title": "Çalışan tutma hesaplayıcı",
+      "subtitle": "İşten ayrılan her çalışan size paraya mal olur. Çalışan değişim oranını, bir çalışanın yerini doldurmanın maliyetini ve yılda kaybolan parayı hesaplayın.",
       "statEmployeeCount": "Çalışan sayısı",
-      "statTurnoverRate": "Devir oranı",
-      "statReplacementCost": "1 çalışan değişim",
-      "statAnnualLoss": "Yıllık kayıp",
-      "calculatorTitle": "Devir hesaplayıcısı",
-      "calculatorSubtitle": "Personel devir oranını maaş ve ekip büyüklüğüne göre hesaplayın.",
-      "reset": "Sıfırla",
-      "labelEmployeeCount": "Çalışan sayısı",
-      "labelAverageSalary": "Ortalama maaş (₼)",
+      "statTurnoverRate": "Çalışan değişim oranı",
+      "statReplacementCost": "Bir çalışanın yerini doldurmak",
+      "statAnnualLoss": "Yılda kaybolan para",
+      "calculatorTitle": "Çalışan değişimi size kaça mal oluyor?",
+      "calculatorSubtitle": "Üç rakam girin: şu anki çalışan sayısı, ortalama maaş ve geçen yıl kaç kişinin ayrıldığı.",
+      "labelEmployeeCount": "Şu anki çalışan sayısı",
+      "labelAverageSalary": "Ortalama aylık maaş (₼)",
       "labelYearlyLeavers": "Yılda ayrılan çalışan sayısı",
-      "financialImpactTitle": "Mali etki",
-      "turnoverRateLabel": "Devir oranı",
-      "turnoverRateBenchmark": "Bu oranı kendi geçen yılınızla karşılaştırın. Azerbaycan için doğrulanmış bir pazar ortalaması yayımlanmamıştır.",
-      "replacementCostLabel": "1 çalışan değişim maliyeti",
-      "replacementCostNote": "Sektör kuralına göre 1 çalışanı değiştirmek yaklaşık 2-3 aylık maaşa eşdeğerdir.",
-      "annualLossLabel": "Yıllık kayıp",
-      "annualLossNote": "Bu rakama eğitim kayıpları, yanlış siparişler ve hizmet kalitesi düşüşü dahil değildir. Gerçek zarar daha büyük olur.",
-      "actionPlanTitle": "Uygulama planı",
+      "financialImpactTitle": "Paraya etkisi",
+      "turnoverRateLabel": "Çalışan değişim oranı (yılda ayrılanlar ÷ çalışan sayısı)",
+      "turnoverRateBenchmark": "Bu oranı kendi geçen yılınızla karşılaştırın. Azerbaycan için doğrulanmış bir piyasa ortalaması yayımlanmadı.",
+      "replacementCostLabel": "Bir çalışanın yerini doldurmanın maliyeti",
+      "replacementCostNote": "Yaygın bir kurala göre ayrılan bir çalışanın yerine yenisini bulup yetiştirmek yaklaşık 2–3 aylık maaşa mal olur.",
+      "annualLossLabel": "Yılda kaybolan para",
+      "annualLossNote": "Yeni çalışanın öğrenme dönemi, hatalı siparişler ve hizmetin zayıflaması buna dahil değildir — gerçek zarar daha büyüktür.",
+      "actionPlanTitle": "Ne yapmalı",
       "stepPrefix": "Adım",
-      "preShiftTitle": "Vardiya öncesi toplantı neden işe yarar?",
-      "preShiftBody": "Her vardiyadan önce 10 dakikalık ekip toplantısı sürpriz ve stresi azaltır, VIP rezervasyonları, günün özel ürünleri ve dünkü sorunları ortak bir dilde aktarır. Bakü restoranlarında en ucuz ama en yüksek ROI sağlayan personel araçlarından biridir.",
-      "knowledgePanelBadge": "Bilgi paneli",
-      "top5Title": "Ayrılmanın ilk 5 nedeni",
-      "dkAdviceLabel": "DK tavsiyesi",
-      "dkAdviceBody": "Devir oranı yıldan yıla artıyorsa sorun çoğu zaman maaştan çok sistemdedir. İşe alım, oryantasyon, vardiya öncesi toplantı ve çıkış görüşmesi süreçleri yazılı hale getirilmeden istikrarlı bir ekip kurmak çok zordur.",
+      "preShiftTitle": "Vardiya öncesi 10 dakikalık toplantı neden işe yarar?",
+      "preShiftBody": "Her vardiyadan önce ekiple 10 dakika konuşmak sürprizleri ve gerginliği azaltır: özel rezervasyonlar, günün yemeği ve dünkü sorun herkese aynı şekilde ulaşır. Personel için en ucuz araçlardan biridir.",
+      "knowledgePanelBadge": "Bilmekte fayda var",
+      "top5Title": "Çalışanların ayrılmasının 5 ana nedeni",
+      "dkAdviceLabel": "DK Agency tavsiyesi",
+      "dkAdviceBody": "Çalışan değişim oranı yıldan yıla artıyorsa neden çoğu zaman maaşta değil, düzendedir. İşe alım, yeni çalışanın ilk haftaları, vardiya öncesi toplantı ve ayrılanla son görüşme yazılı kurala dönüşmeden istikrarlı ekip kurmak zordur.",
       "usefulLinksTitle": "Faydalı bağlantılar",
-      "reason1": "Kötü yönetim ve sert liderlik",
-      "reason2": "Gelişim ve terfi imkânının olmaması",
-      "reason3": "Takdir görmemek ve görünmez hissetmek",
-      "reason4": "Maaş ve bahşiş sisteminden memnuniyetsizlik",
-      "reason5": "İş-yaşam dengesinin bozulması",
-      "strategy1": "Tutuma göre işe al, beceriyi sonra öğret.",
-      "strategy2": "İlk 2 hafta için oryantasyon, mentor ve çapraz eğitim planı oluştur.",
-      "strategy3": "Maaşa ek olarak personel yemeği, esnek vardiya ve takdir programı sun.",
-      "strategy4": "Her vardiyadan önce 10 dakikalık ön vardiya toplantısı yap.",
-      "strategy5": "Bahşiş politikasını yazılı ve şeffaf biçimde paylaş.",
-      "strategy6": "Kariyer yolunu ve maaş basamaklarını önceden göster.",
-      "strategy7": "Ayrılan her çalışanla çıkış görüşmesi yap ve örüntü ara.",
-      "blogLink1Title": "Personel Tutmak için 7 Strateji",
+      "reason1": "Kötü yönetim ve kaba davranış",
+      "reason2": "İlerleme ve öğrenme imkânının olmaması",
+      "reason3": "Emeğin görülmemesi, teşekkür edilmemesi",
+      "reason4": "Maaştan ve bahşiş paylaşımından memnuniyetsizlik",
+      "reason5": "İş ile özel hayat arasındaki dengenin bozulması",
+      "strategy1": "İşe alırken kişinin karakterine ve tutumuna bakın — beceri sonra öğretilir.",
+      "strategy2": "Yeni çalışan için ilk 2 haftanın planını yapın: deneyimli bir meslektaş rehber olsun, birkaç görevi öğrensin.",
+      "strategy3": "Maaşın yanında personel yemeği, esnek vardiya planı ve iyi işe teşekkür sistemi kurun.",
+      "strategy4": "Her vardiyadan önce 10 dakikalık ekip toplantısı yapın.",
+      "strategy5": "Bahşişin nasıl paylaşıldığını yazılı ve herkese açık şekilde duyurun.",
+      "strategy6": "Görev yükselmesi ve maaş basamaklarını önceden gösterin.",
+      "strategy7": "Ayrılan her çalışanla nedenini soran kısa bir görüşme yapın ve tekrar eden nedenleri not edin.",
+      "blogLink1Title": "Çalışanı tutmanın 7 yolu",
       "blogLink1Tag": "Blog",
-      "blogLink2Title": "P&L Simülatörü",
+      "blogLink2Title": "Aylık kâr-zarar tablosu (P&L)",
       "blogLink2Tag": "Araç",
       "blogLink3Title": "KAZAN AI",
-      "blogLink3Tag": "AI",
-      "errNoEmployees": "0 çalışanla devir oranı hesaplanmaz — çalışan sayısını girin."
+      "blogLink3Tag": "Yapay zekâ",
+      "errNoEmployees": "Çalışan sayısı 0 olunca oran hesaplanmaz — çalışan sayısını girin."
     },
     "branding": {
       "navigation": {
         "toolkit": "Toolkit"
       },
-      "title": "Markalaşma",
+      "title": "Markalaşma rehberi",
       "titleAccent": "Rehberi",
-      "subtitle": "Logonun ötesine geç. Marka söylemini, görsel kimliğini ve sosyal medya stratejini bir iş kitabı gibi adım adım oluştur.",
-      "statCompleted": "Tamamlanan",
-      "statProgressPct": "İlerleme yüzdesi",
-      "statVisualElements": "Görsel öge",
-      "workbookTitle": "Markalama çalışma kitabı",
-      "workbookSubtitle": "12 maddelik kontrol listesiyle marka söylemini somutlaştır.",
-      "checklistBadge": "Kontrol Listesi",
-      "groupItemCount": "{count} madde",
+      "subtitle": "Önce restoranın kim olduğunu yaz: adı, ne vaat ettiği, kime hizmet ettiği, nasıl konuştuğu ve hangi renklerle tanındığı. Sonra 12 adımlık listeyle bunu logoya, menüye ve sosyal medyaya taşı.",
+      "statCompleted": "Listede yapılan",
+      "statProgressPct": "Liste ilerlemesi",
+      "statVisualElements": "Görünüm ögesi",
+      "workbookTitle": "12 adımlık marka listesi",
+      "workbookSubtitle": "Marka kartını logoya, menüye, çalışanlara ve sosyal medyaya taşımak için.",
+      "checklistBadge": "Liste",
+      "groupItemCount": "{count} adım",
       "visualElementsTitle": "Görsel kimliğin 7 ögesi",
       "brandWhatBadge": "Marka nedir?",
       "brandPromisesLabel": "Marka söylemi örnekleri",
@@ -734,11 +715,11 @@
       "checklistExperienceItem3": "Çalışanlarla marka dili ve servis tonu üzerine eğitim yap.",
       "checklistGrowthTitle": "Çevrimiçi ve ağızdan ağıza",
       "checklistGrowthItem1": "Sosyal medya gönderi şablonları hazırla.",
-      "checklistGrowthItem2": "Google Business profilini güncelle.",
-      "checklistGrowthItem3": "Referans, VIP ve sürpriz hizmet ile ağızdan ağıza plan kur.",
+      "checklistGrowthItem2": "Google işletme profilini güncelle.",
+      "checklistGrowthItem3": "Arkadaşını getirene bonus, düzenli misafire özel ilgi ve küçük sürprizlerle ağızdan ağıza plan kur.",
       "visualElement1": "Logo",
       "visualElement2": "Renk paleti",
-      "visualElement3": "Tipografi",
+      "visualElement3": "Yazı tipi",
       "visualElement4": "Fotoğrafçılık stili",
       "visualElement5": "Menü tasarımı",
       "visualElement6": "Sosyal medya şablonları",
@@ -753,74 +734,97 @@
       "brandPromise2": "Hızlı, uygun fiyatlı, doyurucu öğle yemeği — iş günü için ideal.",
       "brandPromise3": "Azerbaycan mutfağının modern yorumu — özel akşamlar için.",
       "social1": "Instagram: görsel ve atmosfer içerikleriyle marka bilinirliği oluştur.",
-      "social2": "TikTok: kısa mutfak ve servis videoları ile erişim kazan.",
-      "social3": "Google Business: arama, harita ve yorum yönetimini boş bırakma.",
+      "social2": "TikTok: mutfaktan ve servisten kısa videolarla daha çok kişiye ulaş.",
+      "social3": "Google işletme profili: aramada ve haritada görün, yorumlara cevap ver.",
       "social4": "80/20 kuralı: %80 değer içeriği, %20 satış odaklı içerik.",
       "blogLink1Title": "Restoran Markalama Konsepti",
       "blogLink1Tag": "Blog",
       "blogLink2Title": "Menü Matrisi",
       "blogLink2Tag": "Araç",
       "blogLink3Title": "KAZAN AI",
-      "blogLink3Tag": "AI"
+      "blogLink3Tag": "AI",
+      "cardTitle": "Marka kartı",
+      "cardSubtitle": "Beş alanı doldur — logoya para harcamadan önce.",
+      "cardField_name": "Marka adı",
+      "cardHelp_name": "Misafirin aklında kalacak ad.",
+      "cardPlaceholder_name": "örn. Ninemin Mutfağı",
+      "cardField_promise": "Tek cümlede: ne satıyorsun ve neden senden almalılar?",
+      "cardHelp_promise": "Bu, marka sözüdür — menüde, tabelada ve sosyal medyada aynı kalır.",
+      "cardPlaceholder_promise": "örn. Nerimanov’da ev yemeği, öğle yemeği 15 dakikada masada",
+      "cardField_guest": "Ana misafirin kim?",
+      "cardHelp_guest": "Yaşı, ne zaman ve neden geldiği.",
+      "cardPlaceholder_guest": "örn. yakındaki ofis çalışanları, öğle arasında",
+      "cardField_tone": "Nasıl konuşuyorsun? (3 kelime)",
+      "cardHelp_tone": "Menüde, telefonda ve sosyal medyada aynı ton.",
+      "cardPlaceholder_tone": "örn. sıcak, sade, samimi",
+      "cardField_colors": "Ana renkler (2–3)",
+      "cardHelp_colors": "Logoda, menüde, kıyafette ve ambalajda aynı renkler.",
+      "cardPlaceholder_colors": "örn. koyu kırmızı, krem",
+      "cardExampleName": "Ninemin Mutfağı (örnek)",
+      "cardExamplePromise": "Nerimanov’da ev yemeği: düşbere, dolma, kutab — öğle yemeği 15 dakikada masada.",
+      "cardExampleGuest": "Yakındaki ofislerde çalışan 25–45 yaş arası kişiler, öğle arasında.",
+      "cardExampleTone": "sıcak, sade, samimi",
+      "cardExampleColors": "koyu kırmızı, krem, ceviz rengi",
+      "statCardFilled": "Marka kartı dolduruldu"
     },
     "basabas": {
       "navigation": {
         "toolkit": "Toolkit"
       },
-      "branchTitle": "Şube açılış modeli",
-      "branchSubtitle": "CAPEX, vergi, ramp-up, break-even, Prime Cost, RevPASH ve cash runway ile açılış kararını kontrol et.",
-      "formatLabel": "Format",
+      "branchTitle": "Yeni şube: ne kadar para gerekir",
+      "branchSubtitle": "Açılış giderini (tadilat, ekipman), vergiyi, ilk aylarda satışın yavaş yavaş artmasını, başabaş noktasını ve paranın kaç ay yettiğini kontrol edin.",
+      "formatLabel": "Mekân türü",
       "formats": {
-        "coffee": "Kahve dükkanı",
+        "coffee": "Kahve dükkânı",
         "cafe": "Kafe",
-        "fastFood": "Fast Food / QSR",
+        "fastFood": "Fast food",
         "bar": "Bar",
-        "lounge": "Lounge",
-        "fineDining": "Fine Dining"
+        "lounge": "Lounge kafe",
+        "fineDining": "Üst segment restoran"
       },
       "areaLabel": "Alan (m²)",
-      "seatsLabel": "Koltuk sayısı",
-      "openingBudgetLabel": "Açılış bütçesi (₼)",
+      "seatsLabel": "Oturma yeri",
+      "openingBudgetLabel": "Açılış için para (₼)",
       "branchRentLabel": "Aylık kira (₼)",
-      "dailyChecksLabel": "Günlük fiş sayısı",
-      "rentTaxTypeLabel": "Kira vergi tipi",
-      "rentTaxIndividual": "Gerçek kişi (14%)",
-      "rentTaxLegal": "Tüzel kişi (0%)",
-      "branchInventoryDaysLabel": "Açılış stok günü",
-      "labelFitoutPerSqm": "Tadilat / m² (₼)",
-      "labelVentilationPerSqm": "Havalandırma / m² (₼)",
-      "labelFurniturePerSeat": "Mobilya / koltuk (₼)",
+      "dailyChecksLabel": "Günlük adisyon sayısı",
+      "rentTaxTypeLabel": "Kiraya veren (vergi için)",
+      "rentTaxIndividual": "Şahıs (%14 vergi)",
+      "rentTaxLegal": "Şirket (%0)",
+      "branchInventoryDaysLabel": "Açılışta kaç günlük gıda stoku",
+      "labelFitoutPerSqm": "Tadilat, 1 m² için (₼)",
+      "labelVentilationPerSqm": "Havalandırma, 1 m² için (₼)",
+      "labelFurniturePerSeat": "Mobilya, 1 oturma yeri için (₼)",
       "labelKitchenEquipment": "Mutfak ekipmanı (₼)",
       "labelBarEquipment": "Bar ekipmanı (₼)",
-      "labelDocumentsCost": "Belge ve noter (₼)",
-      "labelOpeningMarketingPct": "Açılış pazarlaması %",
-      "labelUnexpectedPct": "Beklenmeyen gider %",
-      "labelBranchStaffCosts": "Personel maliyeti (₼)",
-      "labelStartWorkingCapitalPct": "Başlangıç çalışma sermayesi %",
-      "branchValidationError": "Şube modeli için bütçe, alan, koltuk ve günlük fiş sıfırdan büyük olmalıdır.",
-      "branchStatTotalCapex": "Toplam CAPEX",
-      "branchStatOpeningInvestment": "Açılış yatırımı",
-      "branchStatWorkingCapital": "Çalışma sermayesi",
-      "branchStatTaxBurden": "Vergi yükü",
-      "branchStatPrimeCost": "Prime Cost",
-      "branchStatEbitda": "EBITDA",
+      "labelDocumentsCost": "Belgeler ve noter (₼)",
+      "labelOpeningMarketingPct": "Açılış reklamı (tadilat ve ekipmanın %’si)",
+      "labelUnexpectedPct": "Beklenmedik giderler (tadilat ve ekipmanın %’si)",
+      "labelBranchStaffCosts": "Aylık personel gideri (₼)",
+      "labelStartWorkingCapitalPct": "Başlangıç işletme parası (açılış giderinin %’si)",
+      "branchValidationError": "Hesaplamak için bütçe, alan, oturma yeri ve günlük adisyon 0’dan büyük olmalıdır.",
+      "branchStatTotalCapex": "Açılış gideri (tadilat, ekipman)",
+      "branchStatOpeningInvestment": "Açılışa konan para",
+      "branchStatWorkingCapital": "İşletme parası (stok, depozito, yedek)",
+      "branchStatTaxBurden": "Vergi",
+      "branchStatPrimeCost": "Ana gider (gıda + personel)",
+      "branchStatEbitda": "Aylık kâr (vergi ve amortisman öncesi)",
       "branchStatNetProfit": "Net kâr",
-      "branchStatPayback": "Payback",
-      "branchStatRunway": "Runway",
-      "branchStatCashRunway": "Cash runway",
-      "branchStatRampLoss": "Ramp-up zararı",
-      "branchStatRentShare": "Kira payı",
-      "capexTitle": "Sermaye harcaması (CAPEX)",
+      "branchStatPayback": "Koyduğunuz paranın geri dönüş süresi",
+      "branchStatRunway": "Para kaç ay yeter (işletme parasıyla)",
+      "branchStatCashRunway": "Para kaç ay yeter (yalnız kalan nakit)",
+      "branchStatRampLoss": "İlk ayların zararı (satış yavaş artar)",
+      "branchStatRentShare": "Kiranın satıştaki payı",
+      "capexTitle": "Açılış gideri (tadilat, ekipman)",
       "benchmarkTitle": "Sağlık göstergeleri",
       "benchmark": {
-        "primeCost": "Prime Cost",
+        "primeCost": "Ana gider (gıda + personel)",
         "rentShare": "Kira payı",
-        "ebitda": "EBITDA",
-        "payback": "Payback"
+        "ebitda": "Aylık kâr",
+        "payback": "Paranın geri dönüş süresi"
       },
       "benchmarkState": {
         "primeCost": {
-          "green": "Yeşil",
+          "green": "Normal",
           "amber": "Dikkat",
           "red": "Risk"
         },
@@ -831,7 +835,7 @@
         },
         "ebitda": {
           "green": "Güçlü",
-          "amber": "İzle",
+          "amber": "Yakından izleyin",
           "red": "Zayıf"
         },
         "payback": {
@@ -842,38 +846,38 @@
       },
       "scenarioTitle": "3 senaryo",
       "scenario": {
-        "base": "Baz",
-        "conservative": "İhtiyatlı",
-        "optimistic": "İyimser"
+        "base": "Orta",
+        "conservative": "Temkinli",
+        "optimistic": "İyi"
       },
-      "branchReportTitle": "Şube açılış finansal raporu",
+      "branchReportTitle": "Yeni şube: mali rapor",
       "branchReportGeneratedAt": "Hazırlanma tarihi: {date}",
-      "branchReportMethodology": "Tüm rakamlar girişlerden ve deterministik formüllerden hesaplanır. Satış kâr veya serbest nakit olarak kabul edilmez.",
-      "title": "Başabaş",
+      "branchReportMethodology": "Tüm rakamlar girdiğiniz bilgilerden sabit formüllerle hesaplandı. Satış ne kârdır ne de harcanabilir para.",
+      "title": "Başabaş noktası",
       "titleAccent": "Noktası",
-      "subtitle": "3 temel rakam: aylık minimum ciro, günlük müşteri hedefi ve güvenlik marjı.",
+      "subtitle": "Zarara düşmemek için ayda en az ne kadar satmalısınız? Günde kaç müşteri gerekir ve açılış için para yeter mi?",
       "statBreakEven": "Başabaş noktası",
-      "statMonthlyMin": "aylık minimum",
-      "statDailyCustomers": "Günlük müşteri",
+      "statMonthlyMin": "ayda en az bu kadar satış",
+      "statDailyCustomers": "Günde gereken müşteri",
       "statPersonSuffix": "kişi",
-      "statAvgCheck": "ort. adisyon",
-      "statSafetyMargin": "Güvenlik marjı",
+      "statAvgCheck": "ortalama adisyon",
+      "statSafetyMargin": "Tampon (zarara olan mesafe)",
       "statFixedCosts": "Sabit giderler",
       "statMonthlyCost": "aylık toplam",
-      "statusSafe": "Güvende",
+      "statusSafe": "Güvenli",
       "statusWarning": "Dikkat",
       "statusDanger": "Zarar bölgesi",
       "fixedCostsTitle": "Sabit giderler (aylık)",
-      "reset": "Sıfırla",
+      "reset": "Temizle",
       "labelRent": "Kira (₼)",
       "labelSalaries": "Maaşlar (₼)",
       "labelUtilities": "Faturalar (₼)",
-      "labelOtherFixed": "Diğer sabit (₼)",
-      "variableParamsTitle": "Değişken gider ve parametreler",
-      "labelVariablePct": "Değişken gider %",
+      "labelOtherFixed": "Diğer sabit giderler (₼)",
+      "variableParamsTitle": "Değişken gider ve satış",
+      "labelVariablePct": "Değişken gider (satışın %’si)",
       "labelAvgCheck": "Ortalama adisyon (₼)",
-      "labelCurrentSales": "Mevcut ciro (₼)",
-      "planningTitle": "İşletme finans planı",
+      "labelCurrentSales": "Mevcut aylık satış (₼)",
+      "planningTitle": "Mevcut veya planlanan işletme",
       "labelBusinessType": "İşletme türü",
       "businessTypes": {
         "cafe": "Kafe",
@@ -889,288 +893,247 @@
         "retail": "işlem",
         "service": "sipariş"
       },
-      "labelAvailableBudget": "Mevcut bütçe (₼)",
-      "labelOpeningInvestment": "Açılış yatırımı (₼)",
-      "labelOperatingDays": "Çalışma günü / ay",
-      "workingCapitalTitle": "Net çalışma sermayesi",
-      "workingCapitalHelp": "Satış kasaya giren paradır; kâr veya serbest nakit değildir. Stok, alacak, tedarikçi vadesi, depozito, açılış zararı ve nakit rezervi ayrıca hesaplanır.",
-      "labelInventoryDays": "Stok günü",
-      "labelReceivableDays": "Alacak günü",
-      "labelPayableDays": "Tedarikçi vadesi",
-      "labelDeposits": "Depozito ve ön ödeme (₼)",
-      "labelRampMonths": "Açılış rampası (ay)",
-      "labelOpeningSalesPct": "İlk ay satış gücü %",
-      "labelReserveMonths": "Nakit rezervi (ay)",
-      "validationError": "Geçerli rapor için bütçe, satış, ortalama adisyon ve çalışma günleri sıfırdan büyük olmalıdır.",
-      "statWorkingCapital": "Gerekli çalışma sermayesi",
-      "statTotalFunding": "Toplam finansman ihtiyacı",
-      "statFundingGap": "Finansman açığı",
-      "statRunway": "Açılış sonrası nakit ömrü",
-      "statPayback": "Geri ödeme süresi",
-      "statMonthlyProfit": "Aylık faaliyet sonucu",
+      "labelAvailableBudget": "Elinizdeki para (₼)",
+      "labelOpeningInvestment": "Açılışa harcanacak para (₼)",
+      "labelOperatingDays": "Aylık çalışma günü",
+      "workingCapitalTitle": "İşletme parası",
+      "workingCapitalHelp": "Satış kasaya giren paradır — kâr ya da harcanabilir para değildir. Araç gıda stokunu, müşterinin geç ödemesini, tedarikçi vadesini, depozitoyu, ilk ayların zararını ve yedek parayı ayrı hesaplar.",
+      "labelInventoryDays": "Gıda stoku (gün)",
+      "labelReceivableDays": "Müşteri kaç gün sonra ödüyor",
+      "labelPayableDays": "Tedarikçiye kaç gün sonra ödüyorsunuz",
+      "labelDeposits": "Depozito ve ön ödemeler (₼)",
+      "labelRampMonths": "Satış kaç ayda normale ulaşır",
+      "labelOpeningSalesPct": "İlk ay satış (normalin %’si)",
+      "labelReserveMonths": "Yedek para (kaç aylık gider)",
+      "validationError": "Hesaplamak için bütçe, satış, ortalama adisyon ve çalışma günleri 0’dan büyük olmalıdır.",
+      "statWorkingCapital": "Gereken işletme parası",
+      "statTotalFunding": "Toplam gereken para",
+      "statFundingGap": "Eksik para",
+      "statRunway": "Açılıştan sonra para kaç ay yeter",
+      "statPayback": "Koyduğunuz paranın geri dönüş süresi",
+      "statMonthlyProfit": "Aylık sonuç",
       "months": "ay",
       "notAvailable": "hesaplanamıyor",
       "breakdown": {
-        "inventory": "Stok finansmanı",
-        "receivables": "Alacak finansmanı",
-        "supplierFinancing": "Tedarikçi finansmanı",
-        "deposits": "Depozito ve ön ödeme",
-        "rampLoss": "Açılış rampası zararı",
-        "reserve": "Faaliyet rezervi"
+        "inventory": "Gıda stoku",
+        "receivables": "Müşterinin geç ödemesi",
+        "supplierFinancing": "Tedarikçi vadesi (tasarruf)",
+        "deposits": "Depozito ve ön ödemeler",
+        "rampLoss": "İlk ayların zararı",
+        "reserve": "Yedek para"
       },
       "verdicts": {
         "go": {
-          "title": "Finansal olarak geçerli",
-          "body": "Girilen rakamlara göre sermaye ve faaliyet marjı açılışı destekliyor."
+          "title": "Para açısından açılabilir",
+          "body": "Girdiğiniz rakamlara göre hem para hem de aylık kazanç açılışa yetiyor."
         },
         "conditional": {
-          "title": "Şartlı geçerli",
-          "body": "Model çalışabilir, ancak aşağıdaki şartlar çözülmeden açılış risklidir."
+          "title": "Şartlı açılabilir",
+          "body": "Plan işleyebilir, ama aşağıdaki konular çözülmeden açılış risklidir."
         },
         "no-go": {
-          "title": "Şimdilik açma",
-          "body": "Mevcut sermaye veya birim ekonomi başlangıç zararını taşımaya yeterli değil."
+          "title": "Henüz açmayın",
+          "body": "Elinizdeki para ya da her satıştan kalan kazanç ilk ayların zararını karşılamaya yetmiyor."
         }
       },
       "conditionsTitle": "Açılış şartları",
       "conditions": {
-        "closeFundingGap": "Finansman açığını kapat; satış gelirini önceden harcanabilir sermaye sayma.",
-        "raiseSafetyMargin": "Satışı artır veya maliyeti azalt; güvenlik marjını en az %20 yap.",
-        "buildReserve": "En az 2 aylık sabit gider kadar dokunulmaz nakit rezervi oluştur.",
-        "fixUnitEconomics": "Aylık faaliyet sonucunu pozitife çevirmeden açılışa geçme.",
-        "shortenCashCycle": "Müşteri alacak süresini kısalt veya tedarikçi vadesini uzat.",
-        "ready": "Temel finansal şartlar girilen rakamlara göre sağlanıyor. Varsayımları aylık güncelle."
+        "closeFundingGap": "Eksik parayı bulun; gelecekteki satışı şimdiden harcanabilir para saymayın.",
+        "raiseSafetyMargin": "Satışı artırın ya da gideri azaltın ki tampon en az %20 olsun.",
+        "buildReserve": "En az 2 aylık sabit gider kadar dokunulmaz yedek para tutun.",
+        "fixUnitEconomics": "Aylık sonuç artıya geçmeden açmayın.",
+        "shortenCashCycle": "Müşteriden parayı daha hızlı alın ya da tedarikçiyle vadeyi uzatın.",
+        "ready": "Girdiğiniz rakamlara göre temel mali şartlar sağlanıyor. Rakamları her ay güncelleyin."
       },
-      "sensitivityTitle": "Ne değişirse sonuç iyileşir?",
+      "sensitivityTitle": "Neyi değiştirirseniz sonuç iyileşir?",
       "sensitivities": {
-        "rent": "Kirayı {change}% azalt: başabaş {breakEven} AZN, günlük işlem {daily}, aylık sonuç {profit} AZN.",
-        "ticket": "Ortalama adisyonu {change}% artır: başabaş {breakEven} AZN, günlük işlem {daily}, aylık sonuç {profit} AZN.",
-        "variable-cost": "Değişken maliyeti {change} puan azalt: başabaş {breakEven} AZN, günlük işlem {daily}, aylık sonuç {profit} AZN."
+        "rent": "Kirayı %{change} düşürün: başabaş {breakEven} ₼, günde {daily} adisyon, aylık sonuç {profit} ₼.",
+        "ticket": "Ortalama adisyonu %{change} artırın: başabaş {breakEven} ₼, günde {daily} adisyon, aylık sonuç {profit} ₼.",
+        "variable-cost": "Değişken gideri {change} puan düşürün: başabaş {breakEven} ₼, günde {daily} adisyon, aylık sonuç {profit} ₼."
       },
-      "downloadReport": "HTML raporu indir",
+      "downloadReport": "Raporu indir (HTML)",
       "report": {
-        "title": "DK finansal uygunluk raporu",
+        "title": "DK mali rapor",
         "generatedAt": "Hazırlanma tarihi: {date}",
-        "fundingTitle": "Sermaye ve nakit ihtiyacı",
-        "operatingTitle": "Faaliyet ekonomisi",
-        "methodology": "Tüm rakamlar kullanıcı girdileri ve deterministik formüllerle hesaplanmıştır. Bu belge finansman veya yatırım garantisi değildir; satış tahmini nakit para kabul edilmez."
+        "fundingTitle": "Gereken para",
+        "operatingTitle": "Aylık işleyiş",
+        "methodology": "Tüm rakamlar girdiğiniz bilgilerden sabit formüllerle hesaplandı. Bu belge mali veya yatırım garantisi değildir; satış tahmini nakit sayılmaz."
       },
-      "contributionLabel": "Katkı payı katsayısı",
-      "idealMarginLabel": "İdeal marj",
+      "contributionLabel": "Her satıştan kalan pay",
+      "idealMarginLabel": "Önerilen tampon",
       "calcPeriodLabel": "Hesap dönemi",
       "calcPeriodValue": "30 gün",
       "educationTitle": "Başabaşı",
-      "educationTitleAccent": "Anlamak",
-      "educationSubtitle": "Ciro tabanını bilmeden restoran yönetmek riskli bir oyundur.",
+      "educationTitleAccent": "sade dille",
+      "educationSubtitle": "Minimum satışı bilmeden restoran yönetmek risklidir.",
       "whatTitle": "Başabaş noktası nedir?",
-      "whatBody": "Başabaş noktası, bir restoranın ne kâr ne de zarar ettiği minimum ciro düzeyidir. Bu rakamın altındaki her ay zarardır.",
+      "whatBody": "Restoranın ne kazandığı ne de kaybettiği aylık satış tutarıdır. Bunun altında kalan her ay zararla kapanır.",
       "formulaLabel": "Formül",
       "formulaLine1": "Sabit giderler",
-      "formulaLine2": "÷ Katkı Payı Marjı %",
-      "formulaResult": "= Başabaş cirosu (₼)",
-      "formulaCm": "KPM% = 100% - Değişken gider%",
+      "formulaLine2": "÷ Her satıştan kalan pay %",
+      "formulaResult": "= Başabaş satış (₼)",
+      "formulaCm": "Kalan pay % = %100 − değişken gider %",
       "fixedVsVariableTitle": "Sabit ve değişken gider",
       "fixedVsVariableSubtitle": "Ciro değişse de sabit gider değişmez.",
       "fixedCostsLabel": "Sabit giderler",
-      "fixedCostsDesc": "Kira, maaş, sigorta, kredi ödemesi, lisans. Ciro sıfır olsa da ödenir.",
+      "fixedCostsDesc": "Kira, maaş, sigorta, kredi ödemesi, lisans. Satış olmasa da ödenir.",
       "variableCostsLabel": "Değişken giderler",
-      "variableCostsDesc": "Gıda, içecek, ambalaj, teslimat. Ciro arttıkça artan giderlerdir.",
-      "contributionMarginLabel": "Katkı Payı Marjı",
-      "contributionMarginDesc": "Ciroden değişken gider düşüldükten sonra kalan kısım sabit giderleri karşılar.",
-      "safetyMarginTitle": "Güvenlik marjı",
-      "safetyMarginBody": "Mevcut cironun başabaş noktasından ne kadar uzakta olduğunu gösterir. %20'nin altındaysa risk bölgesindesindir.",
-      "marginLevelsLabel": "Marj seviyeleri",
-      "marginSafe": "≥%20 - Güvende",
-      "marginWarning": "%0-20 - Dikkat bölgesi",
-      "marginDanger": "<%0 - Zarar ediyorsun",
-      "dkAdviceTitle": "DK Agency Tavsiyesi",
-      "dkAdviceBody": "Başabaş noktasını aylık değil haftalık da izle. Çünkü sorun genellikle ay sonunda değil, ay ortasında başlar.",
+      "variableCostsDesc": "Gıda, içecek, ambalaj, teslimat. Satış arttıkça bu giderler de artar.",
+      "contributionMarginLabel": "Her satıştan kalan pay",
+      "contributionMarginDesc": "Satıştan değişken gider (gıda, ambalaj) düşüldükten sonra kalan para sabit giderleri öder.",
+      "safetyMarginTitle": "Tampon",
+      "safetyMarginBody": "Mevcut satışın başabaşın ne kadar üstünde olduğunu gösterir. %20’nin altındaysa risk bölgesindesiniz.",
+      "marginLevelsLabel": "Tampon seviyeleri",
+      "marginSafe": "≥%20 — güvenli",
+      "marginWarning": "%0–20 — dikkat",
+      "marginDanger": "<%0 — zarar ediyorsunuz",
+      "dkAdviceTitle": "DK Agency tavsiyesi",
+      "dkAdviceBody": "Başabaşı ayda bir değil, haftada bir kontrol edin: sorun genelde ay sonunda değil, ayın ortasında başlar.",
       "readArticle": "Yazının tamamını oku",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqBody": "Başabaş cirosunu, günlük müşteri hedefini ve satış açığını panelde otomatik izle.",
+      "ocaqBody": "Başabaş satışı, günlük müşteri hedefini ve eksik satışı panelde otomatik izleyin.",
       "ocaqCta": "OCAQ Panel'e Geç",
-      "learnMoreTitle": "Daha Derine Dal",
-      "article1Title": "Başabaş Noktası Hesaplama",
+      "learnMoreTitle": "Daha fazlasını okuyun",
+      "article1Title": "Başabaş noktası nasıl hesaplanır",
       "article1Tag": "Finans",
       "article1Slug": "basabas-noqtesi-hesablama",
-      "article2Title": "P&L Okuyamıyor musun?",
+      "article2Title": "P&L okuyamıyor musunuz?",
       "article2Tag": "Finans",
       "article2Slug": "pnl-oxuya-bilmirsen",
-      "article3Title": "Food Cost'un Kanlı Gerçeği",
+      "article3Title": "1 porsiyonun food cost’u nasıl hesaplanır",
       "article3Tag": "Finans",
       "article3Slug": "1-porsiya-food-cost-hesablama",
       "readLabel": "Oku"
     },
     "deliveryCalc": {
-      "navigation": {
-        "toolkit": "Toolkit"
-      },
-      "title": "Delivery",
-      "titleAccent": "Komisyon Hesaplayıcı",
-      "subtitle": "Bakü'de aktif olan Wolt, Bolt Food ve Yango senaryolarını kendi delivery hattınla karşılaştır. Komisyon %30 ve üzerinde olduğunda gerçek marjın nasıl değiştiğini hemen gör.",
-      "platformOwn": "Kendi delivery",
-      "statOrderValue": "Sipariş değeri",
+      "title": "Paket servis komisyonu hesaplayıcı",
+      "subtitle": "Wolt, Bolt Food, Yango ve kendi kuryeriniz: komisyon, malzeme ve ambalaj düştükten sonra bir siparişten elinizde ne kalır.",
+      "platformOwn": "Kendi kuryemiz",
+      "statOrderValue": "Sipariş tutarı",
       "statCommission": "Komisyon",
-      "statFoodCost": "Food cost",
+      "statFoodCost": "Food cost (malzeme maliyeti oranı)",
       "statMonthlyOrders": "Aylık sipariş",
-      "calculatorTitle": "Delivery hesaplayıcı",
-      "calculatorSubtitle": "Platform ve maliyet yapısını değiştir, sonucu anında gör.",
-      "reset": "Sıfırla",
-      "platformSelectionLabel": "Platform seçimi",
-      "defaultCommission": "Varsayılan komisyon",
-      "labelOrderValue": "Sipariş değeri (₼)",
-      "labelCommissionPct": "Komisyon oranı (%)",
-      "labelFoodCostPct": "Food cost oranı (%)",
-      "labelPackagingCost": "Ambalaj maliyeti (₼)",
-      "labelLaborCost": "İşçilik maliyeti (₼)",
+      "calculatorTitle": "Siparişten ne kalıyor?",
+      "calculatorSubtitle": "Platformu seçin, kendi rakamlarınızı girin — sonuç hemen değişir.",
+      "platformSelectionLabel": "Hangi kanallardan satıyorsunuz?",
+      "defaultCommission": "Örnek komisyon",
+      "labelOrderValue": "Ortalama sipariş tutarı (₼)",
+      "labelFoodCostPct": "Food cost — malzeme maliyeti oranı (%)",
+      "labelPackagingCost": "Bir siparişin ambalajı (₼)",
+      "labelLaborCost": "Bir siparişe düşen personel maliyeti (₼)",
       "labelDailyOrders": "Günlük sipariş sayısı",
-      "comparisonTitle": "Restoran satışı vs delivery",
-      "comparisonSubtitle": "Aynı siparişten platforma göre ne kalıyor.",
+      "labelCommissionFor": "{platform} komisyonu (%)",
+      "comparisonTitle": "Salonda satış ve paket servis yan yana",
+      "comparisonSubtitle": "Aynı siparişten her kanalda size ne kalıyor.",
       "colChannel": "Kanal",
       "colSales": "Satış",
       "colCommission": "Komisyon",
-      "colFoodCost": "Food cost",
-      "colOther": "Diğer",
-      "colNet": "Net",
-      "dineInLabel": "Restoran satışı",
-      "monthlyPnlTitle": "Aylık delivery P&L",
-      "monthlyPnlSubtitle": "Sipariş sayısı arttıkça aylık net sonuç nasıl değişir.",
+      "colFoodCost": "Malzeme",
+      "colOther": "Ambalaj + personel",
+      "colNet": "Size kalan",
+      "dineInLabel": "Salonda satış",
+      "monthlyPnlTitle": "Paket servisten ayda kalan para",
       "ordersPerDay": "sipariş/gün",
       "days": "gün",
-      "monthlyNetLabel": "Aylık net sonuç",
-      "deliveryMathTitle": "Delivery matematiği",
-      "deliveryMathBody": "Bakü'de 3 aktif hat: Wolt, Bolt Food ve Yango. Merchant komisyonu sabit fiyat listesi olarak yayınlanmaz; sözleşmeye, promo paketine ve kategoriye göre değişir. Bu nedenle hesaplayıcı manuel oran ile çalışır.",
-      "tipsTitle": "Kârlı yapmanın 7 yolu",
-      "tip1": "Delivery için ayrı menü oluştur ve taşımada kalite kaybeden ürünleri çıkar.",
-      "tip2": "Delivery fiyatlarını restoran menüsünden %10-20 daha yüksek tut.",
-      "tip3": "Combo ve set menü ile ortalama sipariş değerini artır.",
-      "tip4": "Ambalaj boyutlarını standartlaştır ve toplu alım yap.",
-      "tip5": "Promo kampanyalarında indirimi kimin karşıladığını ayrıca hesapla.",
-      "tip6": "Platform P&L'ini ana kasadan ayrı izlemeye başla.",
-      "tip7": "Zamanla sadık müşteriyi kendi kanalına yönlendir: web, WhatsApp, call-center.",
-      "contractQuestionsTitle": "Sözleşme imzalarken 7 soru",
-      "contractQ1": "Komisyon sabit mi, yoksa promo ve kategoriye göre değişiyor mu?",
-      "contractQ2": "İndirim kampanyasının hangi kısmını restoran karşılıyor?",
-      "contractQ3": "Ödeme döngüsü ve kesim tarihi nedir?",
-      "contractQ4": "Sözleşmeden çıkış için ceza veya bildirim süresi var mı?",
-      "contractQ5": "Delivery menüsünde ayrı fiyat koymak mümkün mü?",
-      "contractQ6": "Boost, reklam ve görünürlük araçları ek ücretli mi?",
-      "contractQ7": "İade ve şikayet durumlarında sorumluluk nasıl paylaşılıyor?",
+      "monthlyNetLabel": "Ayda size kalan",
+      "deliveryMathTitle": "Komisyon oranı nereden geliyor?",
+      "deliveryMathBody": "Bakü’de üç büyük platform çalışıyor: Wolt, Bolt Food ve Yango. Restorandan aldıkları oran açık fiyat listesi olarak yayımlanmaz — sözleşmeye, kampanyaya ve yemek türüne göre değişir. Bu yüzden oranı kendi sözleşmenizden alıp siz girersiniz; kartlardaki %30 ve %10 yalnızca örnektir.",
+      "tipsTitle": "Paket servisi kârlı yapmanın 7 yolu",
+      "tip1": "Paket servis için ayrı menü kurun: yolda soğuyan, ezilen yemekleri çıkarın.",
+      "tip2": "Paket servis fiyatını salon menüsünden biraz yukarıda tutun (örneğin %10 — kendi komisyonunuza göre hesaplayın).",
+      "tip3": "Set menüler (yemek + içecek + tatlı) ortalama sipariş tutarını artırır.",
+      "tip4": "Ambalajları birkaç standart ölçüye indirin ve toptan alın.",
+      "tip5": "Kampanyada indirimi kimin ödediğini — siz mi, platform mu — ayrıca hesaplayın.",
+      "tip6": "Her platformun gelir ve giderini genel kasadan ayrı tutun.",
+      "tip7": "Sürekli müşterileri zamanla kendi kanalınıza yönlendirin: site, WhatsApp, telefon.",
+      "contractQuestionsTitle": "Sözleşme öncesi 7 soru",
+      "contractQ1": "Komisyon sabit mi, yoksa kampanyaya ve yemek türüne göre değişiyor mu?",
+      "contractQ2": "Kampanya indiriminin hangi kısmını restoran ödüyor?",
+      "contractQ3": "Para hangi tarihlerde aktarılıyor, komisyon ne zaman kesiliyor?",
+      "contractQ4": "Sözleşmeden çıkışta ceza var mı, kaç gün önceden haber vermek gerekiyor?",
+      "contractQ5": "Paket servis menüsünde salondan farklı fiyat koymak mümkün mü?",
+      "contractQ6": "Reklam, öne çıkarma ve görünürlük hizmetleri ayrıca ücretli mi?",
+      "contractQ7": "Para iadesi ve şikâyetlerde sorumluluk kimde?",
       "dkAdviceLabel": "DK Agency tavsiyesi",
-      "dkAdviceBody": "Delivery'yi \"ekstra hacim\" olarak değil, ayrı bir birim ekonomisi hattı olarak yönet. Fiyat, promo ve ambalaj aynı tabloda görünmezse, yüksek satış bile düşük kâr getirebilir.",
+      "dkAdviceBody": "Paket servise «ek satış» olarak bakmayın — onu ayrı bir iş gibi hesaplayın. Fiyat, indirim ve ambalaj tek tabloda görünmezse satış yüksek olsa bile kâr düşük kalabilir.",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqBody": "Platform bazında ayrı P&L, kampanya etkisi, sipariş marjı ve combo performansını alan alan izlemek için delivery hattını OCAQ workflow'a bağla.",
+      "ocaqBody": "Her platformun gelir-giderini, kampanyaların etkisini ve her siparişten kalan parayı OCAQ panelinde izleyin.",
       "ocaqCta": "Panele geç",
-      "learnMoreTitle": "İlgili içerikler",
-      "blogLink1Title": "Wolt / Bolt Komisyon Matematiği",
+      "learnMoreTitle": "Bu konuda",
+      "blogLink1Title": "Wolt ve Bolt komisyonunun hesabı",
       "blogLink1Tag": "Blog",
-      "blogLink2Title": "P&L Simülatörü",
+      "blogLink2Title": "Aylık kâr-zarar tablosu (P&L)",
       "blogLink2Tag": "Araç",
-      "blogLink3Title": "Food Cost Hesaplayıcı",
+      "blogLink3Title": "Food cost hesaplayıcı",
       "blogLink3Tag": "Araç",
-      "readLabel": "İncele",
-      "labelCommissionFor": "{platform} komisyonu (%)"
+      "readLabel": "Bak"
     },
     "menuMatrix": {
-      "navigation": {
-        "toolkit": "Toolkit"
-      },
-      "title": "Menü",
-      "titleAccent": "Matrisi",
-      "subtitle": "Yemeklerini 4 kategoriye ayır — neyi tut, neyi çıkar, neyi tanıt. BCG matrisiyle menü mühendisliği.",
-      "catStarLabel": "Yıldız",
-      "catStarAdvice": "Sakla, fiyatı artır ve menüde daha görünür bir yere koy.",
-      "catPlowHorseLabel": "At",
-      "catPlowHorseAdvice": "Maliyeti azalt, porsiyon ve garnitürü optimize et.",
-      "catPuzzleLabel": "Puzzle",
-      "catPuzzleAdvice": "Tanıtımı artır, garson önerisi ve görünürlük ver.",
-      "catDogLabel": "Köpek",
-      "catDogAdvice": "Menüden çıkar veya reçeteyi tamamen yeniden düşün.",
-      "defaultItem1": "Tavuk Sac",
+      "title": "Menü matrisi",
+      "subtitle": "Her yemeğin satış adedini ve bir porsiyondan kalan kazancı yazın — araç hangisini korumanız, hangisinin fiyatını düzeltmeniz, hangisini tanıtmanız ve hangisini çıkarmanız gerektiğini gösterir.",
+      "catKeepLabel": "Koru",
+      "catKeepSub": "Çok satılıyor · kazancı yüksek",
+      "catKeepAdvice": "Tarifi ve fiyatı koru, menüde görünen bir yere koy.",
+      "catFixLabel": "Fiyatını düzelt",
+      "catFixSub": "Çok satılıyor · kazancı düşük",
+      "catFixAdvice": "Fiyatı biraz artır veya maliyeti düşür: porsiyon, garnitür, tedarikçi.",
+      "catPromoteLabel": "Tanıt",
+      "catPromoteSub": "Az satılıyor · kazancı yüksek",
+      "catPromoteAdvice": "Garson önersin, menüde öne ve fotoğrafla koy.",
+      "catRemoveLabel": "Çıkar",
+      "catRemoveSub": "Az satılıyor · kazancı düşük",
+      "catRemoveAdvice": "Menüden çıkar veya tarifi baştan değiştir.",
+      "catEmptyLabel": "Satış adedini ve kazancı yazın",
+      "defaultItem1": "Tavuk saç",
       "defaultItem2": "Döner",
-      "defaultItem3": "Caesar Salata",
-      "defaultItem4": "Steak",
-      "defaultItem5": "Çorba",
+      "defaultItem3": "Sezar salata",
+      "defaultItem4": "Biftek",
+      "defaultItem5": "Mercimek çorbası",
       "defaultItem6": "Tiramisu",
-      "itemListTitle": "Yemek Listesi",
-      "avgSalesLabel": "Popülerlik eşiği (ort. satışın %70’i)",
-      "avgMarginLabel": "Ağırlıklı ort. marj",
-      "reset": "Sıfırla",
-      "colFoodName": "Yemek adı",
-      "colSalesCount": "Satış sayısı",
-      "colContributionMargin": "Contribution Margin (₼)",
-      "colCategory": "Kategori",
-      "colAdvice": "Öneri",
-      "foodNamePlaceholder": "Yemek adı",
-      "addItem": "Ekle",
-      "educationTitle": "Menü Mühendisliğini",
-      "educationTitleAccent": "Anlamak",
-      "educationSubtitle": "Menüyü veriyle yönet, sezgiyle değil.",
-      "whatIsTitle": "Menü Mühendisliği Nedir?",
-      "whatIsBody1": "Menü mühendisliği yemekleri",
-      "whatIsBodyBold1": "satış hacmi",
-      "whatIsBody2": "ve",
-      "whatIsBodyBold2": "kâr marjı",
-      "whatIsBody3": "üzerinden analiz ederek menüyü optimize etmektir.",
-      "processLabel": "Süreç",
-      "processStep1": "1. Satış verisini topla",
-      "processStep2": "2. Her yemeğin CM'ini hesapla",
-      "processStep3": "3. %70 popülerlik eşiği ve ağırlıklı ortalama marjla karşılaştır",
-      "processStep4": "4. 4 kategoriye ayır",
-      "bcgTitle": "BCG Matrisi",
-      "bcgSubtitle": "Boston Consulting Group matrisi restorana uyarlandı:",
-      "bcgStarDesc": "Yüksek satış + yüksek marj",
-      "bcgPlowHorseDesc": "Yüksek satış + düşük marj",
-      "bcgPuzzleDesc": "Düşük satış + yüksek marj",
-      "bcgDogDesc": "Düşük satış + düşük marj",
-      "strategiesTitle": "Stratejiler",
-      "strategyStarVerb": "Koru",
-      "strategyStarBody": "Fiyatı artır, menüde ön sıraya koy, garson tavsiye etsin.",
-      "strategyPlowHorseVerb": "Optimize et",
-      "strategyPlowHorseBody": "Maliyeti düşür, porsiyon boyutunu küçült, garnitürü değiştir.",
-      "strategyPuzzleVerb": "Tanıt",
-      "strategyPuzzleBody": "Menüdeki görünürlüğü artır, set ve öneri mekanizması ekle.",
-      "strategyDogVerb": "Çıkar",
-      "strategyDogBody": "Menüden sil veya reçeteyi tamamen yeniden düşün.",
-      "dkAdviceLabel": "DK Agency Tavsiyesi",
-      "dkAdviceBody1": "Bir menüde",
-      "dkAdviceBodyBold": "yemeklerin %20'si satışın %80'ini",
-      "dkAdviceBody2": "getiriyor. Bu kuralı her ay ölçmezsen, iyi yemeği zayıf yemekle sübvanse etmiş olursun.",
+      "itemListTitle": "Yemekler",
+      "avgSalesLabel": "«Çok satılıyor» eşiği (ortalama satışın %70'i)",
+      "avgMarginLabel": "Ortalama kazanç (satışa göre)",
+      "colFoodName": "Yemek",
+      "colSalesCount": "Satış adedi",
+      "colContributionMargin": "Porsiyon başına kalan kazanç (₼)",
+      "colContributionMarginShort": "Porsiyon kazancı (₼)",
+      "marginHelp": "satış fiyatı − maliyet",
+      "colCategory": "Ne yapmalı",
+      "foodNamePlaceholder": "Örn. Tavuk saç",
+      "addItem": "Yemek ekle",
+      "removeItem": "Yemeği sil",
+      "ruleLabel": "Tecrübeden kural",
+      "ruleBody": "Çoğu restoranda satışın büyük kısmını menüdeki birkaç yemek getirir. Sizde durum ne — bunu yalnızca kendi satış rakamlarınız gösterir. Tabloyu ayda bir güncelleyin: kazandıranı koruyun, yer kaplayanı çıkarın.",
       "readArticle": "Yazının tamamını oku",
-      "ocaqTitle": "OCAQ Panel",
-      "ocaqBody": "Menü matrisini otomatik hesapla, satış verisini POS'tan çek ve trendi gerçek zamanlı izle.",
+      "ocaqTitle": "OCAQ panel",
+      "ocaqBody": "Bu tabloyu her ay elle doldurmak istemiyorsanız, menü ve satış rakamlarını OCAQ panelde tek yerde izleyin.",
       "ocaqCta": "Ücretsiz başla",
-      "learnMoreTitle": "Daha Derine Dal",
-      "blogLink1Title": "Menü Mühendisliği: Yıldız ve Köpek",
+      "learnMoreTitle": "Daha fazlasını oku",
+      "blogLink1Title": "Menü mühendisliği: hangi yemek kalmalı, hangisi çıkmalı",
       "blogLink1Tag": "Operasyon",
-      "blogLink2Title": "Food Cost'un Kanlı Gerçeği",
+      "blogLink2Title": "Bir porsiyonun maliyeti nasıl hesaplanır",
       "blogLink2Tag": "Finans",
-      "blogLink3Title": "P&L Okuyamıyor musun?",
+      "blogLink3Title": "Gelir-gider (P&L) raporu nasıl okunur",
       "blogLink3Tag": "Finans",
-      "readLabel": "Oku",
-      "catStarSub": "Popüler · yüksek marj",
-      "catPlowHorseSub": "Popüler · düşük marj",
-      "catPuzzleSub": "Az satılır · yüksek marj",
-      "catDogSub": "Az satılır · düşük marj",
-      "removeItem": "Yemeği sil"
+      "readLabel": "Oku"
     },
-    "pnlDesc": "Aylık gelir-gider raporu oluştur, başabaş noktasını bul.",
+    "pnlDesc": "Aylık gelir-gider tablosu kurun ve ay sonunda ne kaldığını görün.",
     "checklist": {
       "backLink": "Toolkit",
       "badge": "Ücretsiz Rehber",
-      "title": "Restoran Açılış Kontrol Listesi",
-      "description": "Restoran açmak için gereken tüm adımlar — hukuki, mali, menüden pazarlamaya kadar.",
-      "progressLabel": "tamamlandı",
-      "section_completed": "tamamlandı",
+      "title": "Restoran açılışı: yapılacaklar listesi",
+      "description": "Açılıştan önce yapılması gereken 44 iş tek listede: belgeler, mekân, mutfak, menü, personel, tanıtım ve para. Yaptığını işaretle, neyin kaldığını gör.",
+      "progressLabel": "Yapılan işler",
+      "section_completed": "hazır",
       "sec_legal_title": "Hukuki ve Resmi İşler",
-      "sec_legal_item_h1_text": "Vergi numarası alınması (Vergi Bakanlığı)",
-      "sec_legal_item_h1_detail": "Şahıs şirketi veya LLC kaydı",
-      "sec_legal_item_h2_text": "AQTA izni (gıda güvenliği)",
-      "sec_legal_item_h2_detail": "Başvuru + plan + hijyen sertifikası",
-      "sec_legal_item_h3_text": "Yangın güvenliği belgesi (FHN)",
+      "sec_legal_item_h1_text": "Vergi numarası / VÖEN almak (Devlet Vergi Hizmeti)",
+      "sec_legal_item_h1_detail": "Şahıs işletmesi veya limited şirket (MMC) kaydı",
+      "sec_legal_item_h2_text": "AQTA kaydı (gıda güvenliği)",
+      "sec_legal_item_h2_detail": "Başvuru ASAN/KOBİA aracılığıyla yapılır. Devlet harcı yoktur, başvuru ücretsizdir.",
+      "sec_legal_item_h3_text": "Yangın güvenliği şartları (FHN)",
       "sec_legal_item_h3_detail": "Yangın söndürme sistemi kurulmalı",
       "sec_legal_item_h4_text": "SES (Sağlık-Epidemiyoloji) görüşü",
-      "sec_legal_item_h5_text": "ADRA izni (açık alandaki reklam panosu)",
+      "sec_legal_item_h5_text": "Sokak tabelası izni (ADRA)",
       "sec_legal_item_h5_detail": "Azerbaycan Cumhuriyeti Devlet Reklam Ajansına başvurulmalıdır",
       "sec_legal_item_h6_text": "İş sözleşmeleri (çalışanlarla)",
       "sec_legal_item_h7_text": "Yazar kasa kaydı",
@@ -1178,10 +1141,10 @@
       "sec_legal_item_h8_detail": "Faaliyet adresi için 15 haneli işletme kodunu gösteren belge alınmalıdır",
       "sec_venue_title": "Mekan ve İnşaat",
       "sec_venue_item_m1_text": "Mekan seçimi (konum analizi)",
-      "sec_venue_item_m1_detail": "Yaya trafiği, rakip haritası, kira koşulları",
+      "sec_venue_item_m1_detail": "Önünden geçen insan sayısı, yakındaki rakipler, kira koşulları",
       "sec_venue_item_m2_text": "Kira sözleşmesi imzalanması",
       "sec_venue_item_m3_text": "Mimari plan (yerleşim)",
-      "sec_venue_item_m3_detail": "Mutfak, salon, depo, tuvalet — akış şeması",
+      "sec_venue_item_m3_detail": "Mutfak, salon, depo, tuvalet: kim nereden geçiyor, planda görünür",
       "sec_venue_item_m4_text": "İnşaat / tadilat işleri",
       "sec_venue_item_m5_text": "Havalandırma sistemi",
       "sec_venue_item_m5_detail": "Mutfak davlumbazı + salon hava sirkülasyonu",
@@ -1192,41 +1155,43 @@
       "sec_kitchen_item_a1_detail": "Fırın, buzdolabı, dondurucu, ızgara, fritöz...",
       "sec_kitchen_item_a2_text": "Küçük ekipmanlar (blender, terazi, bıçak seti)",
       "sec_kitchen_item_a3_text": "Mutfak gereçleri (tabak, bardak, çatal-bıçak)",
-      "sec_kitchen_item_a4_text": "POS sistemi / yazarkasa yazılımı",
+      "sec_kitchen_item_a4_text": "Kasa programı (POS)",
       "sec_kitchen_item_a5_text": "Depo rafları + saklama kapları",
       "sec_menu_title": "Menü ve Tedarik",
-      "sec_menu_item_mn1_text": "Menü konsepti (hedef kitleye uygun)",
-      "sec_menu_item_mn1_detail": "Fiyat aralığı, porsiyon boyutu, yiyecek maliyeti hedefi",
+      "sec_menu_item_mn1_text": "Menü fikri: kime ve ne satıyorsun",
+      "sec_menu_item_mn1_detail": "Fiyat aralığı, porsiyon boyutu, food cost (malzeme maliyeti oranı) hedefi",
       "sec_menu_item_mn2_text": "Reçete kartları hazırlanması",
       "sec_menu_item_mn2_detail": "Her yemeğin malzeme listesi + miktar + maliyet",
       "sec_menu_item_mn3_text": "Yiyecek maliyeti hesabı (porsiyona göre)",
       "sec_menu_item_mn4_text": "Tedarikçi sözleşmeleri (et, sebze, içecek)",
       "sec_menu_item_mn5_text": "Menü tasarımı ve baskısı",
-      "sec_menu_item_mn6_text": "Fiyatlandırma politikası (kâr marjı stratejisi)",
+      "sec_menu_item_mn6_text": "Fiyat kuralı: maliyetin üstüne ne kadar koyuyorsun",
       "sec_staff_title": "Kadro ve Eğitim",
       "sec_staff_item_k1_text": "Baş aşçı işe alımı",
       "sec_staff_item_k2_text": "Garson kadrosu (salon müdürü dahil)",
       "sec_staff_item_k3_text": "Mutfak yardımcıları",
       "sec_staff_item_k4_text": "Temizlik ekibi",
-      "sec_staff_item_k5_text": "Eğitim programı (hizmet standartları)",
-      "sec_staff_item_k5_detail": "Karşılama, sipariş alma, şikayet yönetimi",
+      "sec_staff_item_k5_text": "Servis eğitimi",
+      "sec_staff_item_k5_detail": "Misafiri karşılamak, sipariş almak, şikâyete cevap vermek",
       "sec_staff_item_k6_text": "Hijyen eğitimi (AQTA gereksinimi)",
       "sec_marketing_title": "Pazarlama ve Açılış",
       "sec_marketing_item_mr1_text": "Marka kimliği (logo, renkler, font)",
       "sec_marketing_item_mr2_text": "Sosyal medya hesapları (Instagram, TikTok)",
       "sec_marketing_item_mr3_text": "Google Maps / Yandex kaydı",
       "sec_marketing_item_mr4_text": "Açılış tarihi belirleme",
-      "sec_marketing_item_mr5_text": "Yumuşak açılış (davetli test)",
-      "sec_marketing_item_mr5_detail": "Arkadaşlar + aile ile 2-3 günlük deneme",
-      "sec_marketing_item_mr6_text": "Büyük açılış kampanyası",
+      "sec_marketing_item_mr5_text": "Deneme açılışı (davetli misafirlerle)",
+      "sec_marketing_item_mr5_detail": "Arkadaşlar ve aileyle 2–3 günlük deneme",
+      "sec_marketing_item_mr6_text": "Resmî açılış kampanyası",
       "sec_marketing_item_mr7_text": "Wolt / Bolt Food kaydı",
       "sec_finance_title": "Finans",
       "sec_finance_item_f1_text": "Başlangıç bütçe planı",
-      "sec_finance_item_f1_detail": "İnşaat + ekipman + ilk 3 ay işletme gideri",
-      "sec_finance_item_f2_text": "Başabaş noktası hesabı (break-even)",
-      "sec_finance_item_f3_text": "Aylık P&L şablonu hazırlanması",
+      "sec_finance_item_f1_detail": "İnşaat, ekipman ve ilk 3 ayın giderleri",
+      "sec_finance_item_f2_text": "Zararsız nokta (başabaş) hesabı",
+      "sec_finance_item_f3_text": "Aylık gelir-gider tablosu (P&L)",
       "sec_finance_item_f4_text": "Banka hesabı açılması",
-      "sec_finance_item_f5_text": "Muhasebe hizmeti / yazılımı"
+      "sec_finance_item_f5_text": "Muhasebe hizmeti / yazılımı",
+      "listTitle": "Açılış işleri",
+      "progressPctLabel": "Hazırlık oranı"
     },
     "checklistDesc": "44 maddelik tam kontrol listesi — hukuki, mekan, menü, kadro, pazarlama.",
     "start": "Başla",
@@ -1336,16 +1301,16 @@
     "aqtaChecklist": {
       "backLink": "Toolkit",
       "badge": "Hijyen Denetimi",
-      "title": "AQTA",
+      "title": "AQTA denetimine hazırlık",
       "titleAccent": "Hazırlık Kontrol Listesi",
-      "description": "Hijyen, belgelendirme, çapraz bulaşma ve günlük denetim. Ceza riskini bölüm bölüm görün ve ekibiniz için standart oluşturun.",
+      "description": "Hijyen, belgeler, çiğ ve hazır gıdanın ayrı tutulması ve günlük kontrol. Hangi bölümde ceza riski kaldığını gör.",
       "progressLabel": "Genel ilerleme",
       "progressItems": "madde tamamlandı",
-      "riskZoneLabel": "Risk bölgesi",
+      "riskZoneLabel": "Risk kalan maddeler",
       "riskZoneSubtitle": "{total} maddeden henüz işaretlenmemiş (ceza riski)",
       "regimeLabel": "Program",
       "regimeSubtitle": "Günlük, haftalık, aylık plan",
-      "checklistTitle": "Etkileşimli kontrol listesi",
+      "checklistTitle": "Kontrol listesi",
       "checklistSubtitle": "AQTA denetimine hazır olmak için 8 temel blok.",
       "resetBtn": "Sıfırla",
       "hygienePlanTitle": "Hijyen programı",
@@ -1353,30 +1318,30 @@
       "tabDaily": "Günlük",
       "tabWeekly": "Haftalık",
       "tabMonthly": "Aylık",
-      "tableColRegime": "Program",
+      "tableColRegime": "No",
       "tableColTask": "Görev",
       "aqtaCardTitle": "AQTA nedir?",
-      "aqtaCardDesc": "AQTA gıda güvenliği, hijyen, izlenebilirlik ve tüketici riskini denetler. Sorun yalnızca temizlik değildir. Kuralların sistematik takibi ve belgelendirilmesi esastır. AQTA kaydı için başvuru ASAN/KOBİA aracılığıyla yapılır. Devlet harcı yoktur, başvuru ücretsizdir.",
-      "fineReasonsTitle": "En yaygın 10 ceza nedeni",
-      "crossContamTitle": "Çapraz bulaşma",
-      "crossContamDesc": "Çiğ üründeki bakterinin hazır yemeğe geçmesi gıda zehirlenmesinin temel nedenidir. Aynı kesme tahtası, aynı eldiven ve yanlış buzdolabı düzeni en riskli üçlüdür.",
+      "aqtaCardDesc": "AQTA — Azerbaycan Gıda Güvenliği Ajansı. Gıdanın güvenliğini, hijyeni ve ürünün nereden geldiğini belgeyle gösterip gösteremediğini denetler. Yalnızca temizlik yetmez: kurallar her gün izlenmeli ve yazılmalıdır. AQTA kaydı için başvuru ASAN/KOBİA aracılığıyla yapılır. Devlet harcı yoktur, başvuru ücretsizdir.",
+      "fineReasonsTitle": "Denetimde ceza riski yaratan 10 durum",
+      "crossContamTitle": "Çiğ ve hazır gıdanın karışması",
+      "crossContamDesc": "Çiğ etteki mikrop hazır yemeğe geçtiğinde gıda zehirlenmesi olabilir. En riskli üçlü: aynı kesme tahtası, aynı eldiven ve buzdolabında yanlış diziliş. Renkli tahtalar bunu önler:",
       "dkAdviceTitle": "DK Agency tavsiyesi",
       "dkAdviceDesc": "AQTA sorunu genellikle \"temizlik sorunu\" değil, \"yönetim ritmi sorunudur\". Kayıt, sorumlu kişi ve günlük denetim saati yoksa ceza riski artar.",
       "dkAdviceLink": "Tam yazıyı oku",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqDesc": "Sıcaklık kayıtları, sağlık belgesi tarihleri, hijyen görevleri ve denetim notlarını ekibinizle alan alan paylaşın.",
+      "ocaqDesc": "Sıcaklık kayıtlarını, sağlık belgesi tarihlerini, hijyen görevlerini ve denetim notlarını ekiple paylaş.",
       "ocaqCta": "OCAQ Panel'e geç",
       "relatedTitle": "İlgili içerik",
       "relatedViewBtn": "Görüntüle",
-      "related1Title": "AQTA Ceza Kontrol Listesi",
+      "related1Title": "AQTA cezasından korunmak için kontrol listesi",
       "related1Tag": "Blog",
-      "related2Title": "Restoran Açılış Kontrol Listesi",
+      "related2Title": "Restoran açılışı: yapılacaklar listesi",
       "related2Tag": "Araç",
       "related3Title": "İnşaattan Açılışa",
       "related3Tag": "Araç",
       "sectionCompleted": "tamamlandı",
       "storage_title": "Gıda depolama",
-      "storage_subtitle": "Buzdolabı, FIFO, tarih etiketi ve ayrı raflar",
+      "storage_subtitle": "Buzdolabı, «ilk giren ilk çıkar», tarih etiketi ve ayrı raflar",
       "storage_item1_text": "Buzdolabı +2°C ile +6°C arasındadır",
       "storage_item1_detail": "Termometre günlük kontrol edilir ve kayıt altına alınır.",
       "storage_item2_text": "Dondurucu -18°C ve altındadır",
@@ -1385,8 +1350,8 @@
       "storage_item3_detail": "Damla riski olmayan ayrı raf ve kap kuralı uygulanır.",
       "storage_item4_text": "Gıdalar yerden yüksekte saklanır",
       "storage_item4_detail": "Raf, palet ve uygun konteyner kullanılır.",
-      "storage_item5_text": "FIFO ve son kullanma tarihi etiketi görünürdür",
-      "storage_item5_detail": "Eski ürün öne alınır, süresi geçmiş ürün bulunmaz.",
+      "storage_item5_text": "Eski ürün önde, son kullanma tarihi yazılı",
+      "storage_item5_detail": "«İlk giren ilk çıkar» (FIFO): eski ürün önde, tarihi geçmiş ürün yok.",
       "hygiene_title": "Kişisel hijyen",
       "hygiene_subtitle": "Ekip davranışı, bone, sağlık belgesi ve el yıkama",
       "hygiene_item1_text": "Tüm çalışanların sağlık belgesi günceldir",
@@ -1426,13 +1391,13 @@
       "prep_item4_text": "Aynı eldiven farklı ürün gruplarında kullanılmaz",
       "prep_item4_detail": "Çapraz bulaşma kuralı ekip tarafından bilinir.",
       "docs_title": "Belgelendirme",
-      "docs_subtitle": "AQTA kaydı, kayıt defteri ve izlenebilirlik",
+      "docs_subtitle": "AQTA kaydı, kayıt defterleri ve ürünün kaynak belgeleri",
       "docs_item1_text": "AQTA kaydı tamamlandı",
       "docs_item1_detail": "AQTA kaydı için başvuru ASAN/KOBİA aracılığıyla yapılır. Devlet harcı yoktur, başvuru ücretsizdir.",
       "docs_item2_text": "Sıcaklık ve hijyen kayıt defteri doldurulmuştur",
       "docs_item2_detail": "Günlük kayıtlar boş bırakılmaz.",
       "docs_item3_text": "Fatura ve ürün kaynak belgeleri arşivlenir",
-      "docs_item3_detail": "İzlenebilirlik gereksinimi için belge çıkarılabilir.",
+      "docs_item3_detail": "Denetimde hangi ürünün nereden geldiğini belgeyle göstermek mümkündür.",
       "docs_item4_text": "Sağlık belgesi tarihleri ayrı tabloda takip edilir",
       "docs_item4_detail": "Süresi dolmadan yenileme uyarısı verilir.",
       "hall_title": "Salon ve ortak alanlar",
@@ -1453,7 +1418,7 @@
       "allergen_item3_detail": "Tahta, bıçak ve yüzey ayrımı bilinmektedir.",
       "daily_item1": "Buzdolabı ve dondurucu sıcaklıklarını deftere kaydet.",
       "daily_item2": "Çalışma yüzeylerini temizle ve dezenfekte et.",
-      "daily_item3": "FIFO ve son kullanma tarihlerini kontrol et.",
+      "daily_item3": "Eski ürünün önde olduğunu ve son kullanma tarihlerini kontrol et.",
       "daily_item4": "El yıkama istasyonlarında sabun ve kurutucu olup olmadığını kontrol et.",
       "daily_item5": "İş kıyafeti, bone ve eldiven kurallarını denetle.",
       "weekly_item1": "Buzdolaplarının içini tamamen temizle.",
@@ -1461,9 +1426,9 @@
       "weekly_item3": "Kesme tahtalarının çatlak ve aşınma durumunu kontrol et.",
       "weekly_item4": "Havalandırma filtrelerini ve tuvalet hijyenini derin temizle.",
       "monthly_item1": "Sağlık belgesi tarihlerini yeniden gözden geçir.",
-      "monthly_item2": "Fatura ve izlenebilirlik belgelerini arşivle.",
+      "monthly_item2": "Faturaları ve ürünün kaynak belgelerini arşivle.",
       "monthly_item3": "Ekipman teknik bakım listesini tamamla.",
-      "monthly_item4": "Ekibe 15 dakikalık hijyen tazeleme eğitimi ver.",
+      "monthly_item4": "Ekibe 15 dakikalık tekrar hijyen eğitimi ver.",
       "monthly_item5": "Profesyonel ilaçlama veya denetim hizmetini planla.",
       "fine1": "Sağlık belgelerinin olmaması",
       "fine2": "Süresi geçmiş gıdanın bulunması",
@@ -1490,16 +1455,16 @@
       "backLink": "Toolkit'e Dön",
       "resetBtn": "Sıfırla",
       "badgeLabel": "İnşaat Sprinti",
-      "pageTitle": "İnşaattan Açılışa Kontrol Listesi",
-      "pageDesc": "62 maddelik pratik plan: elektrikten yangın güvenliğine, yumuşak açılıştan büyük açılışa kadar her adımı sıraya koy.",
+      "pageTitle": "İnşaattan açılışa: iş listesi",
+      "pageDesc": "62 maddelik iş planı: elektrikten yangın güvenliğine (FHN), deneme açılışından resmî açılışa kadar her adımı sıraya koy.",
       "progressLabel": "Genel ilerleme",
       "progressCompleted": "tamamlandı",
       "sectionCompleted": "tamamlandı",
       "notePlaceholder": "Kısa not ekle...",
       "addMedia": "Fotoğraf veya video ekle",
       "budgetTitle": "Bütçe planlaması",
-      "budgetSubtitle": "50-80 m², 30-40 kişilik restoran için tahmini dağılım.",
-      "budgetTotal": "Toplam tahmini bütçe",
+      "budgetSubtitle": "Örnek: 50–80 m², 30–40 kişilik restoran için tahmini dağılım. Rakamlar yalnızca yön göstermek içindir — kendi ustalarının teklifleriyle karşılaştır.",
+      "budgetTotal": "Tahmini toplam bütçe (örnek)",
       "budgetTotalValue": "75.000 - 150.000 ₼",
       "budgetTotalNote": "Konum, mülkün durumu ve konsept bu aralığı değiştirir.",
       "budgetPct": "Bütçenin {pct}'i",
@@ -1507,15 +1472,15 @@
       "dkAdviceSubtitle": "İnşaat en pahalı hataların yapıldığı yerdir",
       "dkAdviceDesc": "İnşaatta ucuz usta, plansız faz ve yazısız anlaşma doğrudan zaman ve para kaybına dönüşür. En kritik üçlü: 3 faz elektrik, gaz ve baca. Bunlar çözülmeden duvar yıkma.",
       "commonMistakesTitle": "En yaygın hatalar",
-      "mistake1": "3 fazı kontrol etmeden başlamak ve sonradan 15-20 bin ₼ ek masrafa girmek.",
+      "mistake1": "3 fazlı elektriği kontrol etmeden başlamak ve sonra binlerce manat ek masrafa girmek.",
       "mistake2": "Ucuz ustayı seçip su ve elektrik hattını ikinci kez yaptırmak.",
       "mistake3": "Mutfak planını aşçısız çizmek ve ekipmanı sonradan sığdıramamak.",
       "mistake4": "Yedek fon ayırmamak ve son aşamada nakit akışı sorununa düşmek.",
       "ocaqTitle": "OCAQ Panel",
-      "ocaqDesc": "Faz ilerlemesini, müteahhit durumunu ve bütçe kaymasını tek panelde takip etmek istiyorsan bunu OCAQ Panel üzerinden otomatikleştir.",
+      "ocaqDesc": "Hangi aşamada olduğunu, müteahhitlerin işini ve bütçenin ne kadar aştığını tek panelde görmek istiyorsan OCAQ Panel’i kullan.",
       "ocaqCta": "Ücretsiz başla",
       "relatedTitle": "İlgili yazılar",
-      "related1Title": "Açılış Kontrol Listesi",
+      "related1Title": "Restoran açılışı: yapılacaklar listesi",
       "related1Tag": "Araç",
       "related2Title": "Yiyecek Maliyeti Hesaplama",
       "related2Tag": "Blog",
@@ -1633,7 +1598,7 @@
       "phase_equipment_item4_detail": "Su ve drenaj akışı sorunsuz.",
       "phase_equipment_item5_text": "Paslanmaz çalışma masaları",
       "phase_equipment_item5_detail": "Hijyen ve akış için doğru yükseklik seçildi.",
-      "phase_equipment_item6_text": "POS sistemi kuruldu",
+      "phase_equipment_item6_text": "Kasa sistemi (POS) kuruldu",
       "phase_equipment_item6_detail": "Yazıcı, tablet ve kasa test edildi.",
       "phase_equipment_item7_text": "Sabit internet ve Wi-Fi",
       "phase_equipment_item7_detail": "POS için ayrı güvenilir hat olsun.",
@@ -1652,11 +1617,11 @@
       "phase_opening_item3_detail": "Ekip yasal açıdan tamamen hazır.",
       "phase_opening_item4_text": "1-2 haftalık eğitim süreci",
       "phase_opening_item4_detail": "Menü, POS, hizmet ve hijyen birlikte çalışıldı.",
-      "phase_opening_item5_text": "Yumuşak açılış",
+      "phase_opening_item5_text": "Deneme açılışı",
       "phase_opening_item5_detail": "Arkadaşlar ve tanıdıklarla gerçek test hizmeti yap.",
       "phase_opening_item6_text": "Menü ve fiyat son kontrolü",
       "phase_opening_item6_detail": "Yiyecek maliyeti ve satış dili finaldir.",
-      "phase_opening_item7_text": "Büyük açılış planı",
+      "phase_opening_item7_text": "Resmî açılış planı",
       "phase_opening_item7_detail": "Pazarlama, davetliler ve sosyal medya planı hazır.",
       "phase_design_title": "Operasyonel tasarım",
       "phase_design_subtitle": "Mimarın eskizi geldiğinde, inşaattan önce",
@@ -1671,7 +1636,7 @@
       "phase_design_item4_detail": "Mal kabul → kontrol → depo → hazırlık → pişirme → pass → servis. Akış geri dönmemeli, misafir girişinden geçmemeli.",
       "phase_design_item5_text": "Kirli ve temiz akışın ayrılması",
       "phase_design_item5_detail": "Kirli tabak bir taraftan girer, temiz tabak diğer taraftan çıkar. Bulaşıkhane tek yönlü kurulur.",
-      "phase_design_item6_text": "Eskiz üzerinde spagetti diyagramı",
+      "phase_design_item6_text": "Eskiz üzerinde hareket çizgileri («spagetti diyagramı»)",
       "phase_design_item6_detail": "Mimarın eskizinde bir aşçının, bir garsonun ve bir misafirin yolunu çiz. Çizgiler kesişiyorsa uygulama projesine geçme.",
       "phase_design_item7_text": "Saatlik kapasite hesabı",
       "phase_design_item7_detail": "Yoğun saatte mutfak, bar, pass ve bulaşıkhane saatte kaç sipariş çıkarabiliyor? En zayıf nokta tüm restoranın hızıdır.",
@@ -1680,7 +1645,11 @@
       "phase_design_item9_text": "Erişilebilirlik ve tahliye yolu",
       "phase_design_item9_detail": "Tekerlekli sandalyeyle girişten masaya ve tuvalete engelsiz yol, açık ve işaretli tahliye yolu — baştan planda olsun.",
       "phase_design_item10_text": "Deneme açılışında ölçülecek süreler",
-      "phase_design_item10_detail": "Siparişten masaya, hesaptan ödemeye, masanın toplanmasına kadar 10 süreyi kaydet. Rakamsız deneme açılışı sadece provadır."
+      "phase_design_item10_detail": "Siparişten masaya, hesaptan ödemeye, masanın toplanmasına kadar 10 süreyi kaydet. Rakamsız deneme açılışı sadece provadır.",
+      "listTitle": "Aşama aşama iş listesi",
+      "noteLabel": "Not",
+      "removeMedia": "Dosyayı sil",
+      "uploadError": "Dosya yüklenemedi."
     },
     "live": "CANLI",
     "aiInsight": "AI YORUM",
@@ -1696,11 +1665,10 @@
     "aiInsightError": "AI yorum mevcut değil. Daha sonra tekrar deneyin.",
     "aiInsightRetry": "Tekrar dene",
     "addimXerci": {
-      "title": "Adım Maliyeti Hesaplayıcı",
-      "subtitle": "Aşçı ve garsonun boş yola harcadığı zamanı paraya çevir.",
+      "title": "Adım maliyeti hesaplayıcı",
+      "subtitle": "Aşçı ve garsonun boş yola harcadığı zamanı paraya çevir: ayda kaç manat maaş gidip gelmeye gidiyor.",
       "calculatorTitle": "Boş yola ne kadar ödüyorsun?",
       "calculatorSubtitle": "Bir vardiyada 30 dakika gözlemle, kendi rakamlarını gir.",
-      "reset": "Sıfırla",
       "modeMinutes": "Dakika ile",
       "modeTrips": "Gidiş sayısı ile",
       "labelWorkers": "Çalışan sayısı (bu görevde)",
@@ -1714,7 +1682,7 @@
       "wageHelperTitle": "Saatlik ücreti bilmiyor musun? Aylık maaştan hesapla",
       "labelMonthlySalary": "Aylık maaş (₼)",
       "labelMonthlyHours": "Aylık çalışma saati",
-      "wageHelperApply": "Uygula",
+      "wageHelperApply": "Saatlik ücrete yaz",
       "howToTitle": "Fazla yolu nasıl ölçersin?",
       "howTo1": "Mutfağın veya salonun basit planını kâğıda çiz.",
       "howTo2": "Yoğun saatte bir çalışan seç — aşçı veya garson.",
@@ -1726,14 +1694,14 @@
       "statHoursPerDay": "Günde kaybolan saat",
       "statHoursPerMonth": "Ayda kaybolan saat",
       "onlyWageNote": "Bu yalnızca ücrettir. Geciken sipariş, soğuyan yemek, yorgunluk ve işten ayrılma dahil değildir.",
-      "dkAdviceLabel": "DK tavsiyesi",
+      "dkAdviceLabel": "DK Agency tavsiyesi",
       "dkAdviceBody": "Bir çalışan daha almadan önce bir çalışanın 30 dakikalık yolunu çiz. Çoğu zaman eleman az değildir — buzdolabı uzaktır, çöp kutusu yanlış yerdedir, servis istasyonu yoktur. Bir ekipmanın yerini değiştirmek bir maaştan ucuzdur.",
       "usefulLinksTitle": "Faydalı araçlar",
-      "link1Title": "Mutfak İstasyon Hesaplayıcı",
+      "link1Title": "Mutfak istasyonu hesaplayıcı",
       "link1Tag": "Mutfak",
-      "link2Title": "Personel Planlayıcı",
+      "link2Title": "Vardiya ve personel planı",
       "link2Tag": "Vardiya",
-      "link3Title": "İnşaattan Açılışa Checklist",
+      "link3Title": "İnşaattan açılışa kontrol listesi",
       "link3Tag": "Açılış"
     }
   },
@@ -2026,22 +1994,22 @@
   "marketinq": {
     "menuAnalytics": {
       "title": "Menü Analizi",
-      "subtitle": "BCG Matrisine dayalı menü mühendisliği",
+      "subtitle": "Hangi yemek korunmalı, fiyatı düzeltilmeli, tanıtılmalı veya çıkarılmalı",
       "period_label": "Analiz dönemi",
       "item_name": "Yemek adı",
       "sell_price": "Satış fiyatı (AZN)",
       "food_cost": "Yemek maliyeti (AZN)",
       "sales_count": "Satış adedi",
-      "add_item": "+ Öğe ekle",
+      "add_item": "+ Yemek ekle",
       "analyze": "Analiz et",
       "matrix_view": "Matris görünümü",
       "table_view": "Tablo görünümü",
       "ai_tips": "YZ Önerileri",
       "export_pdf": "PDF olarak indir",
-      "star": "Yıldız",
-      "plowhorse": "Çalışkan",
-      "puzzle": "Bulmaca",
-      "dog": "Düşük",
+      "star": "Koru",
+      "plowhorse": "Fiyatını düzelt",
+      "puzzle": "Tanıt",
+      "dog": "Çıkar",
       "min_items_error": "En az 2 öğe gerekli",
       "upgrade_cta": "KALFA'ya geç",
       "back_to_tools": "Tüm araçlar",
@@ -2054,10 +2022,10 @@
       "cost": "Maliyet",
       "category": "Kategori",
       "empty_quadrant": "Bu kategoride öğe yok",
-      "star_hint": "Yüksek CM, yüksek satış",
-      "plowhorse_hint": "Düşük CM, yüksek satış",
-      "puzzle_hint": "Yüksek CM, düşük satış",
-      "dog_hint": "Düşük CM, düşük satış",
+      "star_hint": "Çok satılıyor, porsiyon kazancı yüksek",
+      "plowhorse_hint": "Çok satılıyor, porsiyon kazancı düşük",
+      "puzzle_hint": "Az satılıyor, porsiyon kazancı yüksek",
+      "dog_hint": "Az satılıyor, porsiyon kazancı düşük",
       "ai_tips_subtitle": "DeepSeek matrisi pratik adımlara çevirir.",
       "ai_loading": "YZ önerisi yükleniyor...",
       "ai_error": "YZ önerisi yüklenmedi — tekrar deneyin",
@@ -3622,7 +3590,11 @@
       "body2": "DK Agency bu mutfakların ortak dilidir. KAZAN sorulara cevap verir, Toolkit hesaplar, OCAQ yönetir. Üçü de bir ustanın eli gibi çalışır — acele etmeden, tam, senin yanında.",
       "body3": "Bu işi 40 yıldır restoranların içinde öğreniyorum — başarısızlıklar da, zaferler de. Sana söz veriyorum: burada satılan bir araç değil, mutfağının uzantısıdır. — Doğan Tomris, kurucu",
       "ctaPrimary": "KAZAN ile konuş",
-      "ctaSecondary": "Toolkit aç"
+      "ctaSecondary": "Toolkit aç",
+      "factsLabel": "Kurucu hakkında",
+      "sinceLabel": "yılından beri HoReCa sahasında",
+      "yearsValue": "40 yıl",
+      "yearsLabel": "HoReCa deneyimi"
     },
     "ahilikValues": {
       "eyebrow": "Ahilik / Əxilik",
@@ -3780,7 +3752,7 @@
       "p2": {
         "category": "Menü",
         "title": "Menü mühendisliğiyle satışlar nasıl artırılır?",
-        "excerpt": "Yıldız, At, Bulmaca ve Köpek matrisiyle menüyü veriyle yönetmenin temelleri."
+        "excerpt": "Hangi yemek korunmalı, hangisinin fiyatı düzeltilmeli, hangisi tanıtılmalı, hangisi çıkarılmalı — satış adedi ve porsiyondan kalan kazançla."
       },
       "p3": {
         "category": "Delivery",
@@ -4121,10 +4093,10 @@
   },
   "weekly_actions": {
     "panel_title": "Bu hafta ne yapmalıyım?",
-    "panel_subtitle": "P&L sonuçlarınıza göre kişiselleştirilmiş aksiyonlar",
+    "panel_subtitle": "P&L sonucunuza göre bu hafta yapılacaklar",
     "kazan_cta": "Bu planı KAZAN AI ile tartışın",
-    "all_good_title": "Harika durumdasınız!",
-    "all_good_description": "Göstergeleriniz sektör benchmarkları dahilinde. Devam edin!",
+    "all_good_title": "Durum iyi!",
+    "all_good_description": "Göstergeleriniz yaygın sınırların içinde. Böyle devam!",
     "duration_unit": "dk",
     "severity": {
       "ok": "Normal",
@@ -4147,44 +4119,44 @@
     },
     "actions": {
       "recipe_audit": {
-        "title": "Reçete kartlarını denetleyin",
-        "description": "En çok satan 5 ürünün reçete kartını güncel fiyatlarla yenileyin. Food cost sapmasını tespit etmenin en hızlı yolu.",
+        "title": "Tarif kartlarını kontrol edin",
+        "description": "En çok satan 5 yemeğin tarif kartını bugünkü alış fiyatlarıyla güncelleyin. Food cost’un neden arttığını en hızlı böyle görürsünüz.",
         "cta": "Food Cost aracını aç →"
       },
       "portion_check": {
-        "title": "Porsiyon standartlarını kontrol edin",
-        "description": "Her porsiyon için tartı ile ölçüm yapın. 10g fazla porsiyon = ayda yüzlerce AZN kayıp.",
+        "title": "Porsiyonları tartın",
+        "description": "Porsiyonları terazide kontrol edin. Her porsiyona biraz fazla konan gıda ay sonunda büyük bir tutar eder.",
         "cta": "Food Cost aracını aç →"
       },
       "supplier_compare": {
         "title": "Tedarikçi fiyatlarını karşılaştırın",
-        "description": "En çok kullandığınız 10 hammadde için en az 2 tedarikçiden fiyat isteyin. %5-15 tasarruf mümkün.",
+        "description": "En çok aldığınız 10 ürünün fiyatını en az 2 tedarikçiye sorun.",
         "cta": "Başabaş aracını aç →"
       },
       "waste_log": {
-        "title": "İsraf günlüğü başlatın",
-        "description": "Günlük israf kaydı: ne, ne kadar, neden. Bir hafta sonra pattern göreceksiniz.",
+        "title": "Atık defteri tutun",
+        "description": "Her gün yazın: ne atıldı, ne kadar, neden. Bir hafta sonra tekrar eden sebepleri göreceksiniz.",
         "cta": "Food Cost aracını aç →"
       },
       "menu_engineering": {
-        "title": "Menü performansını analiz edin",
-        "description": "Her yemeğin karlılığını ve satış hacmini ölçün. Zayıf ürünleri bulun, güçlüleri öne çıkarın.",
-        "cta": "Menü Matrisi aracını aç →"
+        "title": "Menüyü analiz edin",
+        "description": "Her yemeğin ne kadar satıldığını ve ne kadar kazandırdığını ölçün. Zayıfları bulun, güçlüleri öne çıkarın.",
+        "cta": "Menü matrisi aracını aç →"
       },
       "price_review": {
-        "title": "Fiyat stratejisini gözden geçirin",
-        "description": "Food cost >%35 olan ürünlerin fiyatını yenileyin. Pazarla karşılaştırın.",
+        "title": "Fiyatları gözden geçirin",
+        "description": "Food cost’u %35’in üstünde olan yemeklerin fiyatını güncelleyin ve piyasayla karşılaştırın.",
         "cta": "Başabaş aracını aç →"
       },
       "shift_optimization": {
-        "title": "Vardiya planını optimize edin",
-        "description": "Personel sayısını yoğun saatlerle uyumlu hale getirin. Boş saatlerde azaltın, yoğunlukta artırın.",
-        "cta": "Staff Retention aracını aç →"
+        "title": "Vardiya planını düzeltin",
+        "description": "Personel sayısını yoğun saatlere göre ayarlayın: sakin saatlerde azaltın, yoğun saatlerde artırın.",
+        "cta": "Personel tutma aracını aç →"
       },
       "revenue_mix": {
-        "title": "Satış miksini analiz edin",
-        "description": "En çok kâr getiren kategorileri belirleyin. Upsell stratejisi oluşturun.",
-        "cta": "Menü Matrisi aracını aç →"
+        "title": "Satış dağılımını analiz edin",
+        "description": "En çok kazandıran yemekleri bulun. Garsonlara ek öneride bulunmayı (içecek, tatlı) öğretin.",
+        "cta": "Menü matrisi aracını aç →"
       }
     }
   },
@@ -4243,7 +4215,7 @@
       "description": {
         "section_label": "Bu araç hakkında",
         "block_1_title": "Ne yapıyoruz?",
-        "block_1_content": "Her yemeğin satış adedi, food cost'u ve satış fiyatını gir. Araç 2x2 matriste grupluyor: Yıldız, At, Bulmaca, Köpek. AI kâr artırmak için somut adımlar öneriyor.",
+        "block_1_content": "Her yemeğin satış adedini, maliyetini ve satış fiyatını gir. Araç yemekleri 4 gruba ayırır: Koru, Fiyatını düzelt, Tanıt, Çıkar. YZ kârı artırmak için somut adımlar önerir.",
         "block_2_title": "Sana ne lazım olacak?",
         "block_2_items": [
           "Her menü kaleminin adı",
@@ -5225,10 +5197,10 @@
     }
   },
   "hotelReadiness": {
-    "badge": "Otel Hazırlık Testi",
-    "title": "Oteliniz AHA yıldız sertifikasına hazır mı?",
-    "subtitle": "12 soru · yaklaşık 4 dakika · sonunda AHA gerekliliklerine dayanan kişisel rapor",
-    "letter": "Değerli otel ve pansiyon sahibi — Azerbaycan'da Ulusal Yıldız Sınıflandırması (Milli Ulduz Təsnifatı) sistemine başvuran her 100 otelden yalnızca 30'u başarıyla yıldız alıyor. Sebep yeteneksizlik değil — konulan gerekliliklerin sistemli şekilde karşılanmamasıdır. Bu test, otelinizin hangi alanlarda hazır olduğunu, hangilerinde geliştirilmesi gerektiğini gösterir. Bizim için her otel sahibi bir emanettir.",
+    "badge": "Otel hazırlık testi",
+    "title": "Oteliniz yıldız belgesine hazır mı?",
+    "subtitle": "12 soru · yaklaşık 4 dakika · sonunda Azerbaycan Otel Birliği’nin (AHA) yıldız şartlarına dayalı rapor",
+    "letter": "Değerli otel, misafirhane ve pansiyon sahibi — yıldız almak için tüm şartların sistemli şekilde karşılanması gerekir. Bu test otelinizin hangi alanlarda hazır olduğunu, hangilerinde çalışmanız gerektiğini gösterir.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Teste başla →",
     "stepLabel": "Soru {current} / {total}",
@@ -5237,161 +5209,161 @@
     "seeResult": "Sonucu gör →",
     "resultBadge": "Sonuç",
     "weakestLabel": "En zayıf alanınız",
-    "weakestBody": "Bu alan yıldız sertifikasyonu için kritiktir. DK Agency ekibi ilk olarak burada — altyapı, belgelendirme veya eğitim planıyla — size destek olabilir.",
-    "aiLoading": "AI raporunuz hazırlanıyor...",
-    "aiReportTitle": "Kişisel Rapor",
-    "shareDownload": "Sonucu indir (PNG)",
-    "disclaimer": "Bu test bir ön öz değerlendirme aracıdır. Tam değerlendirme ve AHA başvurusu profesyonel denetim gerektirir. © DK Agency",
+    "weakestBody": "Yıldız yolundaki en önemli eksik bu alanda. DK Agency bina, belgeler veya personel eğitimi planıyla destek olabilir.",
+    "aiLoading": "Yapay zekâ raporunuzu hazırlıyor...",
+    "aiReportTitle": "Size özel rapor",
+    "shareDownload": "Sonucu resim olarak indir (PNG)",
+    "disclaimer": "Bu test ilk öz değerlendirme içindir. Tam değerlendirme ve AHA başvurusu için profesyonel denetim gerekir. © DK Agency",
     "verdict": {
       "pansion": {
         "title": "Pansiyon seviyesi",
-        "sub": "Henüz resmi yıldız sertifikasyonuna hazır değilsiniz. Bu bir sorun değil — pansiyon olarak kayıt olmak ve turist rotalarına katılmak gerçekçi. Daha sonra 1-2 yıldız hedeflenebilir."
+        "sub": "Henüz yıldıza hazır değilsiniz. Sorun değil: pansiyon olarak kayıt olup turist rotalarına katılabilirsiniz. Sonra 1–2 yıldızı hedefleyin."
       },
       "tier12": {
-        "title": "1-2 yıldız potansiyeli",
-        "sub": "Temel altyapı mevcut, küçük otel statüsü gerçekçi. Bazı alanları güçlendirerek AHA başvurusuna hazır olacaksınız."
+        "title": "1–2 yıldız şansı",
+        "sub": "Temel bina ve donanım var. Birkaç alanı güçlendirirseniz AHA’ya başvurabilirsiniz."
       },
       "tier3": {
-        "title": "3 yıldız hedefi ulaşılabilir",
-        "sub": "Otelinizin çoğu alanı iyi durumda. Birkaç kritik düzeltmeyle 3 yıldız sertifikası almaya hazırsınız."
+        "title": "3 yıldız ulaşılabilir",
+        "sub": "Alanların çoğu iyi durumda. Birkaç önemli düzeltmeden sonra 3 yıldıza başvurabilirsiniz."
       },
       "tier4": {
-        "title": "4 yıldız hedefi ulaşılabilir",
-        "sub": "Markanız güçlü. 4 yıldız gerekliliklerine yakınsınız, küçük düzenlemelerle başvurabilirsiniz."
+        "title": "4 yıldız ulaşılabilir",
+        "sub": "4 yıldız şartlarına yakınsınız. Küçük düzeltmelerden sonra başvurabilirsiniz."
       },
       "tier5": {
-        "title": "5 yıldız potansiyeli",
-        "sub": "Otelinizin standartları yüksek seviyede. Ulusal Yıldız Sınıflandırmasında 5 yıldız için güçlü bir adaysınız — AHA başvurusuna geçebiliriz."
+        "title": "5 yıldız şansı",
+        "sub": "Standartlarınız yüksek. 5 yıldız için güçlü bir adaysınız — AHA başvurusuna geçebilirsiniz."
       }
     },
     "questions": {
       "0": {
-        "cat": "Altyapı",
-        "q": "Otelinizin fiziki altyapısı — oda sayısı, asansör ve otopark — nasıl?",
+        "cat": "Bina",
+        "q": "Oda sayısı, asansör ve otopark nasıl?",
         "options": {
-          "0": "10'dan az oda, asansör yok, otopark yok",
-          "1": "10-20 oda, asansör var, ancak otopark sınırlı",
-          "2": "20-40 oda, asansör ve otopark var",
-          "3": "40+ oda, birden fazla asansör, geniş ve kapalı otopark"
+          "0": "10’dan az oda, asansör ve otopark yok",
+          "1": "10–20 oda, asansör var, otopark az",
+          "2": "20–40 oda, asansör ve otopark var",
+          "3": "40’tan fazla oda, birkaç asansör, büyük kapalı otopark"
         }
       },
       "1": {
-        "cat": "Oda Standardı",
-        "q": "Odaların büyüklüğü, mobilya kalitesi ve iklimlendirme sistemi ne seviyede?",
+        "cat": "Odalar",
+        "q": "Oda büyüklüğü, mobilya, ısıtma ve soğutma nasıl?",
         "options": {
-          "0": "Oda alanı 12 m²'den az, eski mobilya, iklimlendirme sistemi yok",
-          "1": "12-16 m², standart mobilya, vantilatör veya elektrikli ısıtıcı",
-          "2": "16-22 m², yeni mobilya, bireysel kombi veya split klima",
-          "3": "22 m²+ premium mobilya, merkezi iklimlendirme, akıllı oda özellikleri"
+          "0": "12 m²’den küçük, eski mobilya, klima yok",
+          "1": "12–16 m², standart mobilya, vantilatör veya elektrikli ısıtıcı",
+          "2": "16–22 m², yeni mobilya, odada kombi veya klima",
+          "3": "22 m²’den büyük, kaliteli mobilya, merkezi iklimlendirme, akıllı oda kontrolü"
         }
       },
       "2": {
-        "cat": "Sanitasyon & Temizlik",
-        "q": "Temizlik ve çarşaf değişim düzeniniz nasıl kurulu?",
+        "cat": "Temizlik",
+        "q": "Oda temizliği ve çarşaf değişimi nasıl düzenleniyor?",
         "options": {
-          "0": "Çarşaf değişimi misafire göre, yazılı plan yok",
-          "1": "3-4 günde bir, genel bir plan var",
-          "2": "Her gün oda temizliği, 2 günde bir çarşaf değişimi",
-          "3": "Günlük tam temizlik, denetim kontrol listesi, profesyonel housekeeping ekibi"
+          "0": "Misafir isteyince değiştiriyoruz, yazılı plan yok",
+          "1": "3–4 günde bir, genel plan var",
+          "2": "Oda her gün temizleniyor, çarşaf 2 günde bir değişiyor",
+          "3": "Her gün tam temizlik, kontrol listesi, profesyonel temizlik ekibi"
         }
       },
       "3": {
-        "cat": "Resepsiyon & Misafir Karşılama",
-        "q": "Resepsiyon hizmeti nasıl işliyor — çalışma saatleri, dil becerileri, teknoloji?",
+        "cat": "Resepsiyon",
+        "q": "Resepsiyon nasıl çalışıyor: saatler, diller, kayıt?",
         "options": {
-          "0": "Yalnızca gündüz, yalnızca AZ dili, kâğıt üzerinde kayıt",
-          "1": "24 saat, AZ + RU dilleri, bilgisayarlı kayıt sistemi yok",
-          "2": "24 saat, AZ/RU/EN dilleri, PMS (yönetim sistemi) var",
-          "3": "24 saat, çok dilli personel, premium PMS, mobil check-in"
+          "0": "Sadece gündüz, sadece Azerbaycan Türkçesi, kayıt kâğıtta",
+          "1": "24 saat, Azerbaycan Türkçesi ve Rusça, bilgisayar programı yok",
+          "2": "24 saat, Azerbaycan Türkçesi, Rusça, İngilizce, otel yönetim programı (PMS) var",
+          "3": "24 saat, birkaç dil bilen personel, güçlü yönetim programı, telefondan giriş"
         }
       },
       "4": {
-        "cat": "Yiyecek Hizmeti",
-        "q": "Otelin yiyecek hizmeti ne seviyede?",
+        "cat": "Yemek",
+        "q": "Otelde yemek hizmeti nasıl?",
         "options": {
-          "0": "Otel içinde yiyecek hizmeti yok",
-          "1": "Kahvaltı var, ayrı restoran yok",
-          "2": "Kahvaltı + tam faaliyet gösteren restoran",
-          "3": "Kahvaltı + restoran + bar + 24 saat oda servisi"
+          "0": "Otelde yemek yok",
+          "1": "Kahvaltı var, restoran yok",
+          "2": "Kahvaltı ve tam çalışan restoran",
+          "3": "Kahvaltı, restoran, bar ve 24 saat oda servisi"
         }
       },
       "5": {
-        "cat": "Personel Eğitimi",
-        "q": "Personelin mesleki eğitim seviyesi ve dil becerileri nasıl?",
+        "cat": "Personel eğitimi",
+        "q": "Personel nasıl eğitiliyor, hangi dilleri biliyor?",
         "options": {
-          "0": "Resmi eğitim sistemi yok, yabancı dil bilgisi sınırlı",
-          "1": "Gayriresmi eğitim, çoğunlukla AZ dili",
-          "2": "Resmi eğitim programı, AZ ve RU dilleri",
-          "3": "Sertifikalı profesyoneller, çok dilli ekip, sürekli eğitim sistemi"
+          "0": "Eğitim sistemi yok, yabancı dil zayıf",
+          "1": "İş başında eğitim, çoğunlukla Azerbaycan Türkçesi",
+          "2": "Yazılı eğitim programı var, Azerbaycan Türkçesi ve Rusça",
+          "3": "Sertifikalı personel, birkaç dil, düzenli eğitim"
         }
       },
       "6": {
         "cat": "Teknoloji",
-        "q": "Otelin teknoloji altyapısı (Wi-Fi, yönetim sistemi, mobil) ne seviyede?",
+        "q": "İnternet, yönetim programı ve mobil hizmetler nasıl?",
         "options": {
-          "0": "Wi-Fi yok, kâğıda dayalı sistem",
-          "1": "Wi-Fi var, bilgisayarlı yönetim sistemi yok",
-          "2": "Hızlı Wi-Fi ve PMS sistemi mevcut",
-          "3": "PMS + mobil uygulama + akıllı oda + IoT entegrasyonu"
+          "0": "Wi-Fi yok, her şey kâğıtta",
+          "1": "Wi-Fi var, yönetim programı yok",
+          "2": "Hızlı Wi-Fi ve otel yönetim programı (PMS) var",
+          "3": "Yönetim programı, mobil uygulama ve akıllı oda sistemleri birbirine bağlı"
         }
       },
       "7": {
         "cat": "Güvenlik",
-        "q": "Güvenlik sistemleri (yangın, kamera, oda kasası) ne durumda?",
+        "q": "Yangın güvenliği, kameralar ve oda kasası nasıl?",
         "options": {
-          "0": "Yangın söndürücü yok, kamera sistemi yok",
-          "1": "Yangın söndürücüler var, kamera sistemi eksik",
-          "2": "Tam yangın sistemi, kamera + her odada kasa",
-          "3": "Tam yangın sistemi + 24 saat güvenlik + akıllı kasa + kartlı giriş sistemi"
+          "0": "Ne yangın söndürücü ne kamera var",
+          "1": "Yangın söndürücüler var, kameralar eksik",
+          "2": "Tam yangın sistemi, kameralar ve her odada kasa",
+          "3": "Tam yangın sistemi, 24 saat güvenlik, elektronik kasa ve kartlı kapılar"
         }
       },
       "8": {
-        "cat": "Ek Hizmetler",
-        "q": "Ek hizmetler (SPA, fitness, konferans salonu) mevcut mu?",
+        "cat": "Ek hizmetler",
+        "q": "SPA, spor salonu, toplantı salonu var mı?",
         "options": {
           "0": "Ek hizmet yok",
-          "1": "Küçük bir fitness köşesi mevcut",
-          "2": "Fitness + sauna + küçük konferans salonu",
-          "3": "Tam SPA + havuz + fitness + konferans + iş merkezi"
+          "1": "Küçük bir spor köşesi var",
+          "2": "Spor salonu, sauna ve küçük toplantı salonu",
+          "3": "SPA, havuz, spor salonu, toplantı salonu ve iş merkezi"
         }
       },
       "9": {
-        "cat": "Belgelendirme",
-        "q": "AHA başvurusu için gerekli belgeler (vergi, hijyen, yangın sertifikası) hazır mı?",
+        "cat": "Belgeler",
+        "q": "AHA başvurusu için belgeler (vergi, hijyen, yangın güvenliği) hazır mı?",
         "options": {
           "0": "Hiçbir belge hazır değil",
           "1": "Vergi belgesi var, diğerleri eksik",
-          "2": "Belgelerin çoğu hazır, küçük eksikler var",
-          "3": "Tüm belgeler eksiksiz, güncel tarihli ve erişilebilir"
+          "2": "Belgelerin çoğu hazır, birkaçı eksik",
+          "3": "Tüm belgeler tam, güncel ve elinizde"
         }
       },
       "10": {
-        "cat": "Çevrim İçi Varlık",
-        "q": "Booking.com, TripAdvisor ve TrustYou platformlarında puanınız ne seviyede?",
+        "cat": "Online puan",
+        "q": "Booking.com, TripAdvisor gibi sitelerde puanınız nasıl?",
         "options": {
-          "0": "Çevrim içi varlık yok",
-          "1": "Profil var, ancak puan 7.0'ın altında",
-          "2": "7.0-8.5 arası puan, düzenli misafir yorumları",
-          "3": "8.5+ puan, yüksek yorum sayısı, TrustYou platformunda güçlü performans"
+          "0": "Sitelerde yokuz",
+          "1": "Profil var, puan 7,0’ın altında",
+          "2": "Puan 7,0–8,5, yorumlar düzenli geliyor",
+          "3": "Puan 8,5’in üzerinde, yorum sayısı yüksek"
         }
       },
       "11": {
-        "cat": "AHA Başvuru Hazırlığı",
-        "q": "AHA başvurusu için finansal ve zaman açısından hazırlığınız nedir?",
+        "cat": "Başvuruya hazırlık",
+        "q": "AHA başvurusu için para ve zaman açısından hazır mısınız?",
         "options": {
-          "0": "Harç ve belge hazırlığı için bütçe ayrılmadı",
-          "1": "Harç hazır, belge hazırlığı başlamadı",
-          "2": "Harç hazır, belgeler hazır, henüz başvurmadık",
+          "0": "Ücret ve belge hazırlığı için bütçe ayrılmadı",
+          "1": "Ücret için para var, belge hazırlığı başlamadı",
+          "2": "Ücret ve belgeler hazır, henüz başvurmadık",
           "3": "Başvuru gönderildi, denetim ziyaretini bekliyoruz"
         }
       }
     }
   },
   "otaReadiness": {
-    "badge": "OTA Hazırlık Testi",
-    "title": "Pansiyonunuz Booking ve Airbnb'ye hazır mı?",
-    "subtitle": "8 soru, 3 dakika, sonunda kişisel AI raporu",
-    "letter": "Değerli pansiyon ve misafirhane sahibi — Azerbaycan'da 800+ pansiyon bulunuyor, ancak %80'i Booking.com'da yok.",
+    "badge": "Booking/Airbnb hazırlık testi",
+    "title": "Pansiyonunuz Booking ve Airbnb’ye hazır mı?",
+    "subtitle": "8 soru · 3 dakika · sonunda yapay zekânın (AI) hazırladığı kısa rapor",
+    "letter": "Değerli pansiyon sahibi — Booking, Airbnb gibi online rezervasyon siteleri (OTA) misafir getirir ama her rezervasyondan komisyon alır. Bu test profilinizin hangi kısmının hazır olduğunu, hangisini güçlendirmeniz gerektiğini gösterir.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Teste başla →",
     "stepLabel": "Soru {current} / {total}",
@@ -5400,112 +5372,112 @@
     "seeResult": "Sonucu gör →",
     "resultBadge": "Sonuç",
     "weakestLabel": "En zayıf alanınız",
-    "weakestBody": "Bu alan OTA başarınız için kritiktir.",
-    "aiLoading": "AI raporunuz hazırlanıyor...",
-    "aiReportTitle": "Kişisel Rapor",
-    "shareDownload": "Sonucu indir (PNG)",
-    "disclaimer": "Bu test bir ön öz değerlendirme aracıdır. © DK Agency",
+    "weakestBody": "Booking ve Airbnb’de misafir bulmanızı en çok bu alan engelliyor. İşe buradan başlayın.",
+    "aiLoading": "Yapay zekâ raporunuzu hazırlıyor...",
+    "aiReportTitle": "Size özel rapor",
+    "shareDownload": "Sonucu resim olarak indir (PNG)",
+    "disclaimer": "Bu test ilk öz değerlendirme içindir. © DK Agency",
     "verdict": {
       "not_ready": {
         "title": "Henüz hazır değil",
-        "sub": "Temel OTA gereklilikleri karşılanmamış."
+        "sub": "Önce fotoğraflar ve profil üzerinde çalışın, sonra sitelerde açılın."
       },
       "booking_start": {
-        "title": "Booking.com'a hazır",
-        "sub": "Booking profiliniz açılabilir."
+        "title": "Booking.com’da başlayabilirsiniz",
+        "sub": "Booking profilinizi açabilirsiniz. İlk aylarda misafir yorumlarını toplayın."
       },
       "airbnb_expand": {
-        "title": "Airbnb'ye genişleme gerçekçi",
-        "sub": "Booking'e ek olarak Airbnb açmanın zamanı geldi."
+        "title": "Airbnb’yi eklemenin zamanı",
+        "sub": "Booking’e ek olarak Airbnb’de de profil açın."
       },
       "direct_strategy": {
-        "title": "Doğrudan rezervasyon stratejisi",
-        "sub": "WhatsApp ile komisyon giderini azaltmanın zamanı geldi."
+        "title": "Doğrudan rezervasyonu artırın",
+        "sub": "Misafirleri WhatsApp ve telefonla doğrudan alın — komisyona daha az para gider."
       },
       "multi_pro": {
-        "title": "Çok platformlu profesyonel",
-        "sub": "Tüm OTA kanallarınız güçlü!"
+        "title": "Tüm kanallarda güçlüsünüz",
+        "sub": "Booking, Airbnb ve doğrudan rezervasyon iyi çalışıyor."
       }
     },
     "questions": {
       "0": {
-        "cat": "Fotoğraf kalitesi",
+        "cat": "Fotoğraflar",
         "q": "Fotoğraflarınız ne seviyede?",
         "options": {
-          "0": "3-5 fotoğraf, karanlık",
-          "1": "10+ fotoğraf, gündüz çekilmiş",
-          "2": "15+ kaliteli fotoğraf",
-          "3": "Profesyonel fotoğraf çekimi, 20+ kare"
+          "0": "3–5 fotoğraf, karanlık",
+          "1": "10’dan fazla fotoğraf, gündüz çekilmiş",
+          "2": "15’ten fazla net, kaliteli fotoğraf",
+          "3": "Profesyonel fotoğrafçı çekmiş, 20’den fazla fotoğraf"
         }
       },
       "1": {
-        "cat": "OTA profili",
-        "q": "Booking/Airbnb profiliniz ne durumda?",
+        "cat": "Sitelerde profil",
+        "q": "Booking ve Airbnb profiliniz ne durumda?",
         "options": {
-          "0": "Hiçbir OTA'da yokum",
-          "1": "Booking'de var ama eksik",
+          "0": "Hiçbir sitede yokum",
+          "1": "Booking’de var ama eksik",
           "2": "Booking tam, Airbnb yeni",
-          "3": "Booking + Airbnb + Yandex Travel hepsi aktif"
+          "3": "Booking, Airbnb ve Yandex Travel — hepsi aktif"
         }
       },
       "2": {
-        "cat": "Fiyat stratejisi",
-        "q": "Gecelik fiyatınızı nasıl belirliyorsunuz?",
+        "cat": "Fiyat",
+        "q": "Gecelik fiyatı nasıl belirliyorsunuz?",
         "options": {
-          "0": "Komşu ne yazdıysa ben de onu",
-          "1": "2 fiyatım var (yaz/kış)",
-          "2": "Hafta sonu ve bayram ayrı",
-          "3": "Dinamik fiyatlandırma, rakip analizi"
+          "0": "Komşu ne yazdıysa",
+          "1": "2 fiyatım var: yaz ve kış",
+          "2": "Hafta sonu ve bayram fiyatı ayrı",
+          "3": "Talebe ve rakiplere bakıp sık sık değiştiriyorum"
         }
       },
       "3": {
-        "cat": "Takvim yönetimi",
-        "q": "Müsaitlik takviminizi nasıl yönetiyorsunuz?",
+        "cat": "Boş oda takvimi",
+        "q": "Odanın hangi günler boş olduğunu nasıl takip ediyorsunuz?",
         "options": {
-          "0": "Takvim yok",
+          "0": "Takvim tutmuyorum",
           "1": "Booking takvimini ara sıra güncelliyorum",
-          "2": "Manuel senkronizasyon",
-          "3": "iCal sync veya channel manager"
+          "2": "Tüm sitelerde takvimi elle güncelliyorum",
+          "3": "Takvimler otomatik eşleniyor (iCal veya kanal yöneticisi programı)"
         }
       },
       "4": {
-        "cat": "Yorum yönetimi",
-        "q": "Misafir yorumlarıyla nasıl ilgileniyorsunuz?",
+        "cat": "Misafir yorumları",
+        "q": "Misafir yorumlarına nasıl cevap veriyorsunuz?",
         "options": {
-          "0": "Yanıt yazmıyorum",
+          "0": "Cevap yazmıyorum",
           "1": "Bazen yazıyorum",
-          "2": "48 saat içinde yanıt",
-          "3": "24 saat + olumsuz yorumlardan ders"
+          "2": "48 saat içinde cevaplıyorum",
+          "3": "24 saat içinde cevaplıyorum, olumsuz yorumlardan ders çıkarıyorum"
         }
       },
       "5": {
         "cat": "Ödeme",
-        "q": "Ödemeleri nasıl kabul ediyorsunuz?",
+        "q": "Misafirden ödemeyi nasıl alıyorsunuz?",
         "options": {
-          "0": "Yalnızca nakit",
-          "1": "Nakit + banka havalesi",
-          "2": "Booking Payments aktif",
-          "3": "Booking + Airbnb + POS"
+          "0": "Sadece nakit",
+          "1": "Nakit ve banka havalesi",
+          "2": "Booking üzerinden online ödeme çalışıyor",
+          "3": "Booking, Airbnb ve kart terminali (POS)"
         }
       },
       "6": {
-        "cat": "Dil becerisi",
-        "q": "Yabancı misafirlerle nasıl iletişim kuruyorsunuz?",
+        "cat": "Dil",
+        "q": "Yabancı misafirlerle nasıl konuşuyorsunuz?",
         "options": {
-          "0": "Yalnızca AZ dili",
-          "1": "Biraz RU",
-          "2": "RU + temel EN",
-          "3": "EN + RU + TR, rahat"
+          "0": "Sadece Azerbaycan Türkçesi",
+          "1": "Biraz Rusça",
+          "2": "Rusça ve basit İngilizce",
+          "3": "İngilizce, Rusça ve Türkçe rahat"
         }
       },
       "7": {
         "cat": "Doğrudan rezervasyon",
-        "q": "WhatsApp veya doğrudan bir kanalınız var mı?",
+        "q": "Misafir size sitesiz, doğrudan yazabiliyor mu?",
         "options": {
-          "0": "Misafirler yalnızca OTA'dan geliyor",
+          "0": "Misafirler sadece sitelerden geliyor",
           "1": "WhatsApp numaram var",
-          "2": "WhatsApp Business + QR",
-          "3": "WhatsApp + Instagram + Google Maps + misafir veritabanı"
+          "2": "WhatsApp Business ve QR kod var",
+          "3": "WhatsApp, Instagram, Google Maps ve misafir listesi var"
         }
       }
     },
@@ -5635,64 +5607,64 @@
     },
     "inputs": {
       "nightlyPrice": {
-        "label": "Gecelik fiyat",
-        "hint": "Oda başına"
+        "label": "Bir gecelik oda fiyatı",
+        "hint": "Oda başına, manat olarak"
       },
       "roomCount": {
         "label": "Oda sayısı",
-        "hint": "Toplam oda sayısı"
+        "hint": "Kiraya verilen odalar"
       },
       "occupancyPercent": {
-        "label": "Aylık doluluk",
-        "hint": "Yüzde kaç dolu?"
+        "label": "Dolu günlerin payı",
+        "hint": "Ayın yüzde kaçında odalar dolu (30 günün 12’si = %40)"
       },
       "avgCommissionPercent": {
-        "label": "OTA komisyonu",
-        "hint": "Booking/Airbnb 15%"
+        "label": "Rezervasyon sitesi komisyonu",
+        "hint": "Booking, Airbnb gibi sitelerin aldığı yüzde (örnek: %15)"
       },
       "otaSharePercent": {
-        "label": "OTA'dan gelen misafir payı",
-        "hint": "Yüzde kaçı OTA'dan?"
+        "label": "Sitelerden gelen misafir payı",
+        "hint": "Misafirlerin yüzde kaçı Booking/Airbnb üzerinden geliyor"
       },
       "monthlyFixedCost": {
-        "label": "Aylık sabit gider",
-        "hint": "Temizlik, faturalar"
+        "label": "Aylık giderler",
+        "hint": "Temizlik, faturalar, maaşlar"
       },
       "initialInvestment": {
-        "label": "İlk yatırım",
-        "hint": "Mobilya, tasarım"
+        "label": "Açılış masrafı (tadilat, ekipman)",
+        "hint": "Tadilat, mobilya, tasarım"
       }
     },
     "results": {
-      "monthlyGrossLabel": "Aylık brüt",
-      "otaRevenueLabel": "OTA geliri",
-      "directRevenueLabel": "Doğrudan gelir",
-      "otaCommissionLabel": "OTA komisyonu",
-      "monthlyNetLabel": "Aylık net",
-      "annualNetLabel": "Yıllık net",
-      "paybackLabel": "Geri dönüş süresi",
+      "monthlyGrossLabel": "Aylık toplam gelir",
+      "otaRevenueLabel": "Sitelerden gelen gelir",
+      "directRevenueLabel": "Doğrudan gelir (WhatsApp, telefon)",
+      "otaCommissionLabel": "Sitelere ödenen komisyon",
+      "monthlyNetLabel": "Aylık kâr",
+      "annualNetLabel": "Yıllık kâr",
+      "paybackLabel": "Yatırdığın paranın geri dönüş süresi",
       "paybackMonthsUnit": "{count} ay",
-      "noProfitText": "kâr yok"
+      "noProfitText": "kâr yok — para geri dönmüyor"
     },
     "verdicts": {
-      "healthy": "Sağlıklı pansiyon modeli: ROI hızlı.",
-      "borderline": "Sınır bölge: gider optimizasyonu düşünün.",
-      "risky": "Riskli: yatırım yavaş geri dönüyor.",
-      "unprofitable": "Pansiyon zarar ediyor."
+      "healthy": "Sağlıklı model: aylık kâr 1.000 ₼’nin üzerinde, yatırılan para 2 yıl içinde geri dönüyor.",
+      "borderline": "Sınırdasınız: para 4 yıla kadar geri dönüyor. Giderleri ve sitelere giden komisyonu azaltmaya bakın.",
+      "risky": "Riskli: kâr düşük, yatırılan para çok geç geri dönüyor.",
+      "unprofitable": "Zarar: giderler ve komisyon gelirden fazla."
     },
     "validation": {
-      "percentRange": "Yüzde 0–100 arasında olmalı — değer düzeltildi.",
-      "nonNegative": "Negatif değer olmaz — 0 kabul edildi."
+      "percentRange": "Yüzde 0 ile 100 arasında olmalı — değer düzeltildi.",
+      "nonNegative": "Negatif değer girilemez — 0 kabul edildi."
     }
   },
   "whatsappTemplates": {
     "meta": {
-      "badge": "WhatsApp Şablon Paketi"
+      "badge": "WhatsApp mesaj şablonları"
     },
     "intro": {
-      "heading": "10 Hazır WhatsApp Metni",
-      "subheading": "Pansiyon sahibinin her gün ihtiyaç duyduğu metinler.",
-      "instruction": "Tıklayıp kopyalayın."
+      "heading": "10 hazır WhatsApp mesajı",
+      "subheading": "Pansiyon ve otel sahibinin her gün yazdığı mesajlar.",
+      "instruction": "«Kopyala» düğmesine basın, mesajı WhatsApp’a yapıştırın ve köşeli parantez içindeki yerleri kendi bilgilerinizle değiştirin."
     },
     "categories": {
       "arrival": "Karşılama",
@@ -5704,66 +5676,66 @@
     },
     "scenarios": {
       "firstArrival": {
-        "title": "İlk Karşılama",
-        "description": "Yeni konuğa gönderin.",
-        "copy": "Merhaba {{guestName}}! Ben {{hostName}}, hoş geldiniz. Check-in: {{checkInDate}}. Wi-Fi: {{wifiPassword}}."
+        "title": "İlk selam",
+        "description": "Rezervasyon yapan misafire gönderin.",
+        "copy": "Merhaba [misafirin adı]! Ben [adınız], sizi bekliyoruz. Giriş tarihi: [tarih]. Wi-Fi şifresi: [şifre]."
       },
       "directBookingOffer": {
-        "title": "Doğrudan Rezervasyon İndirimi",
-        "description": "Booking-den gelen konuğa doğrudan rezervasyon teklif edin.",
-        "copy": "{{guestName}}, bir sonraki rezervasyonunuzu doğrudan yaparsanız %{{discountPercent}} indirim uygulayacağız. Booking fiyatı: {{bookingPrice}}, doğrudan fiyatımız: {{directPrice}} AZN."
+        "title": "Doğrudan rezervasyona indirim",
+        "description": "Booking’den gelen misafire bir dahaki sefere doğrudan yazmasını önerin.",
+        "copy": "[Misafirin adı], bir dahaki sefere bize doğrudan yazarsanız %[indirim] indirim yapıyoruz. Booking’de fiyat: [Booking fiyatı] AZN, bizde: [doğrudan fiyat] AZN."
       },
       "checkInInstructions": {
-        "title": "Check-in Talimatı",
-        "description": "Giriş günü gönderin.",
-        "copy": "Hoş geldiniz! Check-in saati: {{checkInTime}}. Anahtar teslimi: {{keyLocation}}. Wi-Fi: {{wifiPassword}}. Kahvaltı saati: {{breakfastTime}}."
+        "title": "Geliş günü talimatı",
+        "description": "Misafirin geldiği gün gönderin.",
+        "copy": "Hoş geldiniz! Giriş saati: [saat]. Anahtar: [anahtarın yeri]. Wi-Fi şifresi: [şifre]. Kahvaltı: [saat]."
       },
       "checkOutReminder": {
-        "title": "Check-out Hatırlatma",
-        "description": "Çıkış öncesi gönderin.",
-        "copy": "{{guestName}}, yarın check-out saati {{checkOutTime}}. Lütfen anahtarı resepsiyona bırakın. Teşekkürler!"
+        "title": "Çıkış hatırlatması",
+        "description": "Çıkıştan bir gün önce gönderin.",
+        "copy": "[Misafirin adı], yarın odadan çıkış saati: [saat]. Anahtarı resepsiyona bırakın. Bizi seçtiğiniz için teşekkürler!"
       },
       "negativeReviewResponse": {
-        "title": "Olumsuz Yorum Yanıtı",
-        "description": "Anlayış gösterin, savunmaya geçmeyin.",
-        "copy": "{{guestName}}, geri bildiriminiz için teşekkür ederiz. {{specificIssue}} konusuyla ilgili gerekli adımları attık."
+        "title": "Olumsuz yoruma cevap",
+        "description": "Anlayış gösterin, kendinizi savunmayın.",
+        "copy": "[Misafirin adı], yorumunuz için teşekkür ederiz. [Sorun] konusunda önlem aldık. Bir dahaki sefere daha iyi olacak."
       },
       "positiveReviewThanks": {
-        "title": "Olumlu Yorum Teşekkür",
-        "description": "Konuğun deneyimine atıfta bulunun.",
-        "copy": "{{guestName}}, güzel yorumunuz için çok teşekkürler! {{specificMoment}} bizim için de harikaydı. Bir sonraki konaklamanızda indirim sizi bekliyor!"
+        "title": "Olumlu yoruma teşekkür",
+        "description": "Misafirin hatırladığı anı belirtin.",
+        "copy": "[Misafirin adı], güzel yorumunuz için teşekkürler! [Özel an] bizim için de unutulmazdı. Bir sonraki gelişinizde sizi indirim bekliyor!"
       },
       "seasonalPromo": {
-        "title": "Mevsimlik Teklif",
-        "description": "Sezon dışı indirim.",
-        "copy": "Bu {{seasonName}} sezonunda %{{discountPercent}} indirim! Teklifimiz {{validUntilDate}} tarihine kadar geçerlidir."
+        "title": "Sezon teklifi",
+        "description": "Misafirin az olduğu aylarda indirim duyurun.",
+        "copy": "Bu [sezon] %[indirim] indirim! Teklif [tarih] tarihine kadar geçerli."
       },
       "priceInquiry": {
-        "title": "Fiyat Yanıtı",
-        "description": "Net fiyat verin.",
-        "copy": "Merhaba! Gecelik oda fiyatımız {{nightlyPrice}} AZN'dir. Fiyata dahil olanlar: {{includesBreakfast}}, Wi-Fi ve otopark."
+        "title": "Fiyat sorusuna cevap",
+        "description": "Fiyatı ve neyin dahil olduğunu net yazın.",
+        "copy": "Merhaba! Bir gece [fiyat] AZN. Fiyata dahil: [kahvaltı vb.], Wi-Fi, otopark."
       },
       "availabilityInquiry": {
-        "title": "Oda Durumu Sorgusu",
-        "description": "Tarih ve kişi sayısı sorun.",
-        "copy": "Merhaba! Hangi tarihler için rezervasyon düşünüyorsunuz ve kaç kişi konaklayacaksınız?"
+        "title": "Boş oda sorusu",
+        "description": "Tarihleri ve kişi sayısını sorun.",
+        "copy": "Merhaba! Hangi tarihler için oda lazım ve kaç kişisiniz?"
       },
       "loyaltyVipOffer": {
-        "title": "VIP Teklifi",
-        "description": "Sadık misafirlerinize özel teklif.",
-        "copy": "{{guestName}}, siz bizim en değerli {{loyaltyTier}} misafirlerimizdensiniz! %{{specialDiscount}} indirim ve erken check-in ayrıcalığı sizi bekliyor!"
+        "title": "Sürekli misafire teklif",
+        "description": "Sık gelen misafire özel indirim.",
+        "copy": "[Misafirin adı], siz bizim sürekli misafirimizsiniz! Size %[indirim] indirim ve erken giriş imkânı veriyoruz."
       }
     },
     "actions": {
       "copyButton": "Kopyala",
-      "copiedConfirmation": "Kopyalandı",
-      "downloadAllPdf": "PDF İndir"
+      "copiedConfirmation": "Kopyalandı"
     },
     "leadCta": {
-      "heading": "Kalan Şablonları Aç",
-      "body": "10 profesyonel şablondan geri kalan 7 adedi.",
-      "buttonText": "Tüm Paketi Al"
-    }
+      "heading": "Kalan 7 mesajı açın",
+      "body": "İletişim bilgilerinizi bırakın — indirim, yoruma cevap, fiyat sorusu gibi 7 ek şablonu göreceksiniz.",
+      "buttonText": "Tüm şablonları göster"
+    },
+    "freeTag": "Ücretsiz"
   },
   "sektorQonaqEvi": {
     "pageTitle": "Konuk Evi — Booking, Airbnb, Yandex Travel Rehberi | DK Agency",
@@ -5906,8 +5878,8 @@
       "tool1Title": "Food Cost Hesaplayıcı",
       "tool1Desc": "Her porsiyonun maliyeti ve ideal fiyatı — anında hesap",
       "tool1Cta": "Hesapla →",
-      "tool2Title": "Menü Mühendisliği Matrisi",
-      "tool2Desc": "Yıldız, at, sorun, köpek — menüyü kâra göre sınıflandır",
+      "tool2Title": "Menü matrisi",
+      "tool2Desc": "Her yemek için tek adım: koru, fiyatını düzelt, tanıt veya çıkar",
       "tool2Cta": "Menüyü analiz et →",
       "tool3Title": "AQTA Kontrol Listesi",
       "tool3Desc": "Denetimden önce ceza riskini sıfırla — adım adım liste",
@@ -6524,16 +6496,16 @@
         "tab": "Menü matrisi",
         "title": "Menü Matrisi",
         "statValue": "4 grup",
-        "stat": "Her yemek satış adedine ve marjına göre yıldız, beygir, bilmece ya da yük grubuna düşer.",
+        "stat": "Satış adedine ve porsiyon kazancına göre her yemek için tek adım: koru, fiyatını düzelt, tanıt veya çıkar.",
         "s1t": "Satışı ve marjı girin",
         "s1p": "Her yemeğin aylık satış adedi ve porsiyon marjı.",
         "s2t": "Grubu görün",
         "s2p": "Hangi yemek kazandırıyor, hangisi yer kaplıyor.",
         "s3t": "Menüyü yeniden kurun",
-        "s3p": "Yıldızı öne çıkarın, yükü çıkarın ya da yeniden fiyatlayın.",
+        "s3p": "Kazandıranı öne çıkarın, yer kaplayanı çıkarın ya da yeniden fiyatlayın.",
         "mockTitle": "Menü analizi",
         "mockSub": "Son 30 gün · 4 yemek",
-        "kpiLabel": "Yıldız",
+        "kpiLabel": "Koru",
         "c1": "Yemek",
         "c2": "Satış",
         "c3": "Marj",
@@ -6542,10 +6514,10 @@
         "salesLow": "düşük",
         "marginHigh": "yüksek",
         "marginLow": "düşük",
-        "star": "Yıldız",
-        "puzzle": "Bilmece",
-        "horse": "Beygir",
-        "dog": "Yük",
+        "star": "Koru",
+        "puzzle": "Tanıt",
+        "horse": "Fiyatını düzelt",
+        "dog": "Çıkar",
         "foot1": "Satış · marj · grup",
         "foot2": "Menü Matrisi",
         "agent": {
@@ -6647,7 +6619,7 @@
         },
         "kafe": {
           "t1": "Fincan başına maliyet",
-          "t2": "Yıldız · at · bulmaca · köpek listesi",
+          "t2": "Koru · fiyatını düzelt · tanıt · çıkar listesi",
           "t3": "Saat saat vardiya planı"
         },
         "otel": {
@@ -6744,6 +6716,19 @@
         "gelir": "Gelir artışı",
         "acilis": "Açılışa hazırlık",
         "kadr": "Kadro ve vardiya"
+      },
+      "reset": {
+        "clear": "Temizle",
+        "cleared": "Temizlendi",
+        "clearedChecklist": "Tüm işaretler kaldırıldı",
+        "example": "Örneği yükle",
+        "exampleLoaded": "Örnek yüklendi",
+        "undo": "Geri al",
+        "undone": "Önceki değerler geri getirildi"
+      },
+      "intro": {
+        "what": "Bu araç ne yapar?",
+        "how": "Nasıl çalışır"
       }
     },
     "toolkit": {
@@ -6789,12 +6774,12 @@
         "sample": "Kartlardaki rakamlar örnektir — yalnızca gösterim amaçlı.",
         "food-cost": {
           "t": "Food Cost",
-          "d": "Porsiyon maliyeti, food cost yüzdesi ve ideal satış fiyatı.",
+          "d": "Porsiyon maliyeti, food cost (gıda maliyeti yüzdesi) ve doğru satış fiyatı.",
           "viz": "fiyat 7,50 → 8,90 ₼ olursa"
         },
         "delivery-calc": {
           "t": "Paket servis komisyonu",
-          "d": "Wolt, Bolt Food, Yango ve kendi servisin: elinde kalan net tutar.",
+          "d": "Wolt, Bolt Food, Yango ve kendi servisin: komisyondan sonra elinde kalan para.",
           "viz": "Satışın dağılımı",
           "food": "gıda",
           "commission": "komisyon",
@@ -6802,7 +6787,7 @@
         },
         "pnl": {
           "t": "P&L simülatörü",
-          "d": "Aylık gelir-gider, prime cost ve net kâr tek tabloda.",
+          "d": "Aylık gelir ve giderler, ana gider (gıda + personel) ve net kâr tek tabloda.",
           "viz": "Aylık trend"
         }
       },
@@ -6815,8 +6800,8 @@
       },
       "groupDesc": {
         "all": "Tüm araçlar tek yerde.",
-        "xerc": "Porsiyon maliyeti, P&L, başabaş, paket servis ve boş yürüyüşün maliyeti.",
-        "gelir": "Menü, pansiyon geliri, OTA profili ve misafir mesajları.",
+        "xerc": "Porsiyon maliyeti, aylık gelir-gider, başabaş noktası, paket servis ve boş yürüyüşün maliyeti.",
+        "gelir": "Menü, pansiyon geliri, rezervasiya sitelerindeki profil ve misafir mesajları.",
         "acilis": "Belgeler, inşaat, hijyen, marka ve otel hazırlığı.",
         "kadr": "Ekip sayısı, vardiya, istasyon ve çalışan elde tutma."
       },
@@ -6832,118 +6817,220 @@
       },
       "tools": {
         "food-cost": {
-          "t": "Food cost hesaplayıcı",
-          "d": "Porsiyon maliyetini hesapla, hedef food cost yüzdesine göre fiyat belirle.",
-          "r": "Food cost %, porsiyon maliyeti ve ideal satış fiyatı",
-          "kw": "food cost maliyet reçete porsiyon"
+          "t": "Food cost (gıda maliyeti yüzdesi)",
+          "d": "Porsiyon maliyetini hesaplayın ve hedef food cost yüzdesine göre satış fiyatını koyun.",
+          "r": "Food cost %, porsiyon maliyeti ve önerilen fiyat",
+          "kw": "food cost maliyet tarif porsiyon gıda fiyat temizleme kaybı",
+          "what": "Bir porsiyonun kaça mal olduğunu hesaplar ve satış fiyatının doğru olup olmadığını gösterir.",
+          "how": [
+            "Tarifi yazın: örneğin tavuklu pilav için 250 g tavuk fileto (9,50 ₼/kg), 30 ml zeytinyağı ve 150 g basmati pirinç (örnek fiyatlar).",
+            "Her ürünün temizleme kaybını (kemik, kabuk, yağ — atılan kısım) yüzde olarak yazın: araç porsiyonun gerçek maliyetini hesaplar — örnekte 3,54 ₼.",
+            "Menü fiyatını yazın (örnekte 18 ₼): food cost %19,6 çıkar. Hedefin üstündeyse araç fiyatı kaça çıkarmanız gerektiğini gösterir."
+          ]
         },
         "pnl": {
-          "t": "P&L simülatörü",
-          "d": "Gelir-gider tablosu oluştur, prime cost ve net kârı kontrol altında tut.",
-          "r": "Aylık net kâr ve prime cost yüzdesi",
-          "kw": "pnl kâr gelir gider tablo"
+          "t": "Kâr-zarar tablosu (P&L)",
+          "d": "Ayın satışını ve giderlerini yazın: net kârı ve ana gideri (gıda + personel) görün.",
+          "r": "Aylık net kâr ve ana gider (gıda + personel) yüzdesi",
+          "kw": "pnl p&l kâr zarar gelir gider tablo",
+          "what": "Ayın satışından tüm giderleri düşer; ay sonunda elinizde ne kaldığını ve hangi giderin sınırı aştığını gösterir.",
+          "how": [
+            "Ayın satışını yazın — örnek kafe: 50.000 ₼.",
+            "Giderleri yazın: gıda 15.000 ₼, personel 12.500 ₼, kira 5.000 ₼ vb. (örnek rakamlar).",
+            "Sonucu okuyun: örnekte net kâr 7.700 ₼ (%15,4), ana gider (gıda + personel) %55 — yaygın sınır %65, yani normal."
+          ]
         },
         "basabas": {
           "t": "Başabaş noktası",
-          "d": "Aylık minimum satış, günlük müşteri sayısı ve güvenlik marjı.",
-          "r": "Günde kaç müşteri gerekir",
-          "kw": "break even başabaş müşteri"
+          "d": "Ayda en az ne kadar satmalı, günde kaç müşteri gerekir ve açılışa para yeter mi — hesaplayın.",
+          "r": "Aylık minimum satış ve günde gereken müşteri",
+          "kw": "başabaş break even minimum satış müşteri şube açılış gideri",
+          "what": "Zarara düşmemek için ayda en az ne kadar satmanız gerektiğini, günde kaç müşteri gerektiğini ve yeni şube için paranın yetip yetmediğini gösterir.",
+          "how": [
+            "Aylık sabit giderleri yazın — örnek kafe: kira 3.000 ₼, maaşlar 5.000 ₼, faturalar 800 ₼, diğer 700 ₼.",
+            "Değişken gideri (gıda, ambalaj — örnekte satışın %35’i) ve ortalama adisyonu (25 ₼) yazın.",
+            "Sonuç: ayda en az 14.615 ₼ satmalısınız, yani günde yaklaşık 20 adisyon. Mevcut satış 18.000 ₼ ise zarara kadar %18,8 tampon kalır."
+          ]
         },
         "delivery-calc": {
-          "t": "Paket servis hesaplayıcı",
-          "d": "Wolt, Bolt Food, Yango ve kendi paket servisin için komisyon sonrası marj.",
-          "r": "Her platformda elinde kalan net tutar",
-          "kw": "wolt bolt yango komisyon paket servis"
+          "t": "Paket servis komisyonu hesaplayıcı",
+          "d": "Wolt, Bolt Food, Yango ve kendi kuryeriniz: komisyondan sonra bir siparişten ne kalır.",
+          "r": "Her platformda bir siparişten size kalan para",
+          "kw": "wolt bolt yango komisyon paket servis delivery kurye",
+          "what": "Bir siparişten platform komisyonu, malzeme ve ambalaj düştükten sonra size ne kaldığını gösterir — hangi kanaldan satmaya değer, onu seçmenize yardım eder.",
+          "how": [
+            "Sattığınız platformları seçin ve sözleşmedeki komisyon oranını girin (örnek: Wolt %30).",
+            "Ortalama sipariş tutarını, malzeme oranını, ambalaj ve personel maliyetini girin (örnek: 30 ₼ sipariş, %33 malzeme, 1,5 ₼ ambalaj, 3 ₼ personel).",
+            "Sonuca bakın: örnekte salonda 17,10 ₼, Wolt’ta ise 6,60 ₼ kalıyor — farkı fiyatla veya ayrı bir paket servis menüsüyle kapatın."
+          ]
         },
         "addim-xerci": {
           "t": "Adım maliyeti hesaplayıcı",
-          "d": "Aşçı ve garsonun boş yürüyüşe harcadığı süreyi aylık maaş kaybına çevir.",
-          "r": "Boş yürüyüşün aylık maaş kaybı (₼)",
-          "kw": "spagetti diyagram adım"
+          "d": "Aşçı ve garsonun boş yürüyüşe harcadığı zamanı aylık maaş kaybına çevirin.",
+          "r": "Boş yürüyüşe giden aylık maaş (₼)",
+          "kw": "adım yürüyüş mutfak planı spagetti diyagramı",
+          "what": "Aşçı ve garsonların gün içindeki boş gidip gelmelerinin size ayda kaç manat maaşa mal olduğunu gösterir — ekipmanın yerini değiştirmeye değer mi, karar vermenize yardım eder.",
+          "how": [
+            "Yoğun saatte bir çalışanı 30 dakika izleyin ve boş gidiş-gelişlerini kâğıttaki planda çizgiyle işaretleyin.",
+            "Çalışan sayısını, günlük boş yolu ve saatlik ücreti girin (örnek: 3 aşçı, her biri günde 40 dakika, saati 6 ₼, ayda 26 iş günü).",
+            "Sonuç: örnekte ayda 312 ₼, yılda 3.744 ₼ boş yola gidiyor — buzdolabını veya servis masasını yaklaştırıp yeniden ölçün."
+          ]
         },
         "menu-matrix": {
           "t": "Menü matrisi",
-          "d": "Yemekleri Yıldız, At, Bulmaca ve Köpek gruplarına ayır.",
-          "r": "Her yemek için: tut, fiyatı artır ya da çıkar",
-          "kw": "menü mühendisliği matris"
+          "d": "Her yemek için tek adım: koru, fiyatını düzelt, tanıt veya çıkar.",
+          "r": "Her yemek için: koru, fiyatını düzelt, tanıt veya çıkar",
+          "kw": "menü yemek satış kazanç fiyat menü mühendisliği",
+          "what": "Hangi yemeği korumanız, hangisinin fiyatını düzeltmeniz, hangisini tanıtmanız ve hangisini menüden çıkarmanız gerektiğini gösterir.",
+          "how": [
+            "Her yemek için aylık satış adedini ve bir porsiyondan kalan kazancı (satış fiyatı − maliyet) yazın. Örnek: Tavuk saç — ayda 120 porsiyon, porsiyon başına 8,5 ₼ kazanç.",
+            "Araç her yemeği menü ortalamasıyla karşılaştırır: çok satılıyor mu (ortalama satışın %70'inden fazla) ve kazancı ortalamanın üstünde mi.",
+            "Her yemek için tek bir adım görürsünüz. Tavuk saç hem çok satılıyor hem kazancı yüksek → «Koru»: tarifi ve fiyatı koruyun, menüde görünen yere koyun."
+          ]
         },
         "qonaq-evi-roi-kalkulyatoru": {
-          "t": "Pansiyon ROI",
-          "d": "OTA komisyonu, oda geliri ve geri dönüş süresi.",
-          "r": "Yatırımın kaç ayda geri döndüğü",
-          "kw": "otel ota airbnb pansiyon roi"
+          "t": "Pansiyon geliri",
+          "d": "Oda fiyatı, dolu günler ve Booking/Airbnb komisyonuna göre aylık kârı ve yatırdığın paranın geri dönüş süresini hesapla.",
+          "r": "Aylık kâr ve paranın kaç ayda geri döndüğü",
+          "kw": "pansiyon misafirhane gelir kâr booking airbnb komisyon geri dönüş roi",
+          "what": "Pansiyonunuzun ayda ne kadar kâr getireceğini ve açılışa koyduğunuz paranın kaç ayda geri döneceğini gösterir — fiyatı veya sitelere giden komisyonu değiştirmeye değer mi, karar vermenize yardım eder.",
+          "how": [
+            "Oda fiyatını, oda sayısını, dolu günlerin payını ve Booking/Airbnb komisyonunu yazın. Örnek: Şeki’de 4 odalı pansiyon, gecesi 100 ₼, ayın %40’ı dolu, komisyon %15.",
+            "Aylık giderleri ve açılış masrafını (tadilat, mobilya) ekleyin. Örnek: ayda 1.500 ₼ gider, açılışa 20.000 ₼.",
+            "Araç aylık kârı ve paranın geri dönüş süresini gösterir. Örnekte misafirlerin %70’i sitelerden geliyor: aylık kâr 2.796 ₼, para yaklaşık 7 ayda geri döner."
+          ]
         },
         "ota-hazirlig-testi": {
-          "t": "OTA hazırlık testi",
-          "d": "Booking, Airbnb ve Yandex Travel profilinin hazırlığını kontrol et.",
-          "r": "Profil hazırlık puanı ve eksik maddeler",
-          "kw": "booking airbnb ota"
+          "t": "Booking/Airbnb hazırlık testi",
+          "d": "8 soruyla pansiyonunuzun Booking, Airbnb gibi rezervasyon sitelerine ne kadar hazır olduğunu kontrol edin.",
+          "r": "Hazırlık puanı ve en zayıf alan",
+          "kw": "booking airbnb ota yandex travel pansiyon profil rezervasyon",
+          "what": "Booking, Airbnb gibi online rezervasyon sitelerinde (OTA) profil açmaya hazır olup olmadığınızı ve önce neyi düzeltmeniz gerektiğini gösterir.",
+          "how": [
+            "8 soruyu cevaplayın: fotoğraflar, profil, fiyat, takvim, yorumlar, ödeme, dil ve doğrudan rezervasyon.",
+            "Her cevap 25–100 puan verir; araç ortalama puanı ve en zayıf alanı hesaplar.",
+            "Örnek: Gebele’de 3 odalı ev — fotoğraflar karanlık (25 puan), diğer 7 alan orta seviyede (50 puan). Ortalama 47: «Booking.com’da başlayabilirsiniz», en zayıf alan — fotoğraflar."
+          ]
         },
         "whatsapp-template-paketi": {
-          "t": "WhatsApp şablon paketi",
-          "d": "Karşılamadan VIP misafire kadar hazır mesaj metinleri.",
-          "r": "Kopyalanmaya hazır mesajlar",
-          "kw": "whatsapp misafir mesaj şablon"
+          "t": "WhatsApp mesaj şablonları",
+          "d": "Pansiyon ve otel için hazır mesajlar: ilk selamdan sürekli misafire teklife kadar.",
+          "r": "Kopyalanmaya hazır 10 mesaj",
+          "kw": "whatsapp misafir mesaj şablon pansiyon otel",
+          "what": "Misafirlere hızlı ve düzgün yazmak için hazır mesajlar verir — her seferinde metni sıfırdan yazmakla vakit kaybetmezsiniz.",
+          "how": [
+            "İhtiyacınız olan mesajı seçin: ilk selam, geliş günü talimatı, yoruma teşekkür vb.",
+            "«Kopyala» düğmesine basın ve mesajı WhatsApp’a yapıştırın.",
+            "Köşeli parantez içindeki yerleri kendi bilgilerinizle değiştirin. Örnek: [misafirin adı] → Elvin, [saat] → 14:00."
+          ]
         },
         "checklist": {
-          "t": "Açılış kontrol listesi",
-          "d": "Hukuki işler, mekân, menü, ekip ve pazarlama adımlarını kontrol et.",
-          "r": "Açılışa kadar kalan adımların listesi",
-          "kw": "açılış kontrol listesi"
+          "t": "Açılış: yapılacaklar listesi",
+          "d": "Belgeler, mekân, mutfak, menü, personel, tanıtım ve para — açılıştan önce yapılacak 44 iş.",
+          "r": "Açılışa kadar kalan işlerin listesi",
+          "kw": "açılış kontrol listesi yapılacaklar",
+          "what": "Restoranı açmadan önce önemli hiçbir işi unutmamana yardım eder: neyin hazır, neyin kaldığı tek bakışta görünür.",
+          "how": [
+            "Bölümü aç ve yaptığın işleri işaretle. Örneğin Yasamal’da 40 kişilik kafe açıyorsun: VÖEN alındı, kira sözleşmesi imzalandı.",
+            "Sağda kaç işin yapıldığını ve her bölümde neyin kaldığını görürsün: «Belgeler ve resmî işler 2/8».",
+            "Kalan işleri tarihe ve kişiye böl. «Temizle» tüm işaretleri kaldırır, «Geri al» geri getirir."
+          ]
         },
         "insaat-checklist": {
-          "t": "İnşaat kontrol listesi",
-          "d": "İnşaattan açılışa aşamalı iş planı ve saha notları.",
-          "r": "Aşama aşama iş planı ve saha notları",
-          "kw": "inşaat tadilat"
+          "t": "İnşaattan açılışa",
+          "d": "İnşaattan açılışa 6 aşamalı iş planı, her maddeye not ve fotoğraf.",
+          "r": "Aşama aşama iş planı ve şantiye notları",
+          "kw": "inşaat tadilat kontrol listesi müteahhit",
+          "what": "İnşaat ve tadilat işlerini doğru sırayla yapmana ve pahalı hataları önceden yakalamana yardım eder.",
+          "how": [
+            "Aşamayı aç: «Ön hazırlık», «Kaba işler», «İnce işler»… Örneğin Nesimi’de 70 m²’lik bir yeri restorana çeviriyorsun.",
+            "Biten işi işaretle, kısa not yaz ya da fotoğraf ekle: «3 fazlı elektrik — Azerişık kontrol etti, 12 Ekim».",
+            "Sağda her aşamada neyin kaldığını görürsün. İşaretler bu tarayıcıda saklanır; «Temizle» hepsini kaldırır, 8 saniye içinde «Geri al» ile geri gelir."
+          ]
         },
         "aqta-checklist": {
-          "t": "AQTA hazırlık",
-          "d": "Hijyen, belgeler ve ceza risklerini bölüm bölüm kontrol et.",
-          "r": "Bölüm bölüm ceza riski haritası",
-          "kw": "aqta hijyen haccp ceza"
+          "t": "AQTA denetimine hazırlık",
+          "d": "Hijyen, belgeler ve gıda saklama — denetimden önce bölüm bölüm kontrol et.",
+          "r": "Hangi bölümde ceza riski kaldığı",
+          "kw": "aqta hijyen haccp ceza denetim",
+          "what": "AQTA (Azerbaycan Gıda Güvenliği Ajansı) denetiminde ceza riski yaratan noktaları önceden bulmana yardım eder.",
+          "how": [
+            "Her bölümü aç ve mutfakta kontrol et. Örneğin Hatai’deki döner noktasında buzdolabının +2 °C ile +6 °C arasında olup olmadığına bak.",
+            "Kurala uygun maddeyi işaretle. «Risk kalan maddeler» sayısı işaretlenmeyenleri gösterir.",
+            "Kalanları günlük, haftalık ve aylık plana koy ve bir sorumlu belirle. AQTA kaydı ASAN/KOBİA aracılığıyla ve ücretsiz yapılır."
+          ]
         },
         "branding-guide": {
           "t": "Markalaşma rehberi",
-          "d": "Marka sözü, görsel kimlik ve sosyal medya çizgisini çalışma kitabıyla kur.",
-          "r": "Doldurulmuş marka çalışma kitabı",
-          "kw": "marka logo"
+          "d": "Marka adı, tek cümlelik marka sözü, misafir, konuşma tarzı ve renkler — sonra 12 adımlık liste.",
+          "r": "Doldurulmuş marka kartı ve 12 adımlık liste",
+          "kw": "marka logo markalaşma konsept",
+          "what": "Logoya ve tasarıma para harcamadan önce restoranın kim olduğunu ve ne vaat ettiğini netleştirmene yardım eder.",
+          "how": [
+            "Marka kartının 5 alanını doldur ya da «Örneği yükle» ile hazır örneğe bak: «Ninemin Mutfağı — Nerimanov’da ev yemeği, öğle yemeği 15 dakikada».",
+            "12 adımlık listede yaptığın işleri işaretle: logonun iki versiyonu, 3–4 renk, menü tasarımı, personel eğitimi.",
+            "Hazır kartı tasarımcıya ve çalışanlara göster — herkes aynı markayı kursun. Kart bu tarayıcıda saklanır."
+          ]
         },
         "otel-hazirlig-testi": {
-          "t": "Otel hazırlık testi",
-          "d": "AHA yıldız standardına uygunluğu birkaç dakikada değerlendir.",
-          "r": "Yıldız standardına uygunluk puanı",
-          "kw": "aha yıldız otel"
+          "t": "Otel yıldız hazırlık testi",
+          "d": "12 soruyla otelinizin yıldız belgesine (AHA şartları) ne kadar hazır olduğunu kontrol edin.",
+          "r": "Hazırlık puanı ve gerçekçi yıldız hedefi",
+          "kw": "otel yıldız aha belge sınıflandırma",
+          "what": "Otelinizin hangi yıldız seviyesine hazır olduğunu ve AHA başvurusundan önce hangi alanı güçlendirmeniz gerektiğini gösterir.",
+          "how": [
+            "12 soruyu cevaplayın: bina, odalar, temizlik, resepsiyon, yemek, personel, belgeler vb.",
+            "Her cevap 25–100 puan verir; ortalama puan yıldız hedefine dönüşür (örneğin 65–74 puan — 3 yıldız hedefi).",
+            "Örnek: Bakü’de 25 odalı otel, tüm cevaplar 75 puan seviyesinde. Ortalama 75: «4 yıldız ulaşılabilir»."
+          ]
         },
         "personel-planlayici": {
           "t": "Personel planlayıcı",
-          "d": "Restoran ve kafe için vardiya bazında ideal personel sayısı.",
-          "r": "Vardiyalara göre personel sayısı ve işçilik maliyeti yüzdesi",
-          "kw": "vardiya personel çalışan"
+          "d": "Restoran ve kafede her vardiyada kaç çalışan gerektiğini hesapla.",
+          "r": "Vardiyaya göre çalışan sayısı ve personel giderinin cirodaki payı",
+          "kw": "personel çalışan vardiya garson aşçı çizelge",
+          "what": "Açılışta, en yoğun saatlerde ve akşam kaç çalışan tutmanız gerektiğini ve bunun cironun yüzde kaçına mal olduğunu gösterir.",
+          "how": [
+            "Mekân türünü, oturma yeri sayısını, günlük fiş sayısını ve çalışma saatlerini yazın. Örnek: Nerimanov'da 60 kişilik restoran, günde 150 fiş, 10:00–23:00.",
+            "Araç oturma yeri ve fiş sayısına göre her vardiya için garson, aşçı ve kasiyer sayısını hesaplar; cuma ve hafta sonu sayıyı artırır.",
+            "Her vardiyanın çalışan sayısını ve personel giderinin cirodaki payını görürsünüz. Pay normalin üstündeyse akşam vardiyasından başlayın."
+          ]
         },
         "metbex-istasyon": {
-          "t": "Mutfak istasyonu",
-          "d": "Fast food ve QSR mutfaklar için menü SKU sayısına göre istasyon ve kadro.",
-          "r": "İstasyon sayısı, kadro ve işçilik yüzdesi",
-          "kw": "qsr fast food mutfak istasyon"
+          "t": "Mutfak istasyonları",
+          "d": "Fast food mutfağında kaç istasyon ve kaç çalışan gerektiğini hesapla.",
+          "r": "İstasyon sayısı, vardiyaya göre çalışan ve personel giderinin cirodaki payı",
+          "kw": "fast food mutfak istasyon burger pizza paket servis personel",
+          "what": "Fast food mutfağını kaç istasyona bölmeniz ve her vardiyada kaç çalışan tutmanız gerektiğini gösterir.",
+          "how": [
+            "Mekân türünü, menüdeki yemek sayısını ve günlük siparişi yazın. Örnek: 28 May metrosu yanında bir burgerci — menüde 25 yemek, günde 180 sipariş.",
+            "Siparişin nasıl verildiğini seçin: salonda, gel-al, paket servis. Her ek kanal mutfağa iş yükü getirir.",
+            "Araç istasyonları (ızgara, fritöz, hazırlama), her vardiyanın çalışan sayısını ve personel giderinin cirodaki payını gösterir."
+          ]
         },
         "staff-retention": {
-          "t": "Çalışan elde tutma",
-          "d": "Devir oranı, yenisini bulma maliyeti ve yıllık personel kaybı.",
-          "r": "Yıllık personel kaybının ₼ değeri",
-          "kw": "turnover personel devir"
+          "t": "Çalışan tutma",
+          "d": "Çalışan değişim oranı, bir kişinin yerini doldurmanın maliyeti ve yılda kaybolan para.",
+          "r": "Ayrılan çalışanlar yüzünden yılda kaybolan para (₼)",
+          "kw": "çalışan devri işten ayrılma personel turnover",
+          "what": "Yıl içinde ayrılan çalışanların size kaça mal olduğunu gösterir — ekibi tutmaya ne kadar para ve zaman ayırmaya değer, karar vermenize yardım eder.",
+          "how": [
+            "Şu anki çalışan sayısını, ortalama aylık maaşı ve geçen yıl ayrılanların sayısını girin (örnek: 18 çalışan, 850 ₼, 12 kişi).",
+            "Araç çalışan değişim oranını hesaplar: örnekte 12 ÷ 18 = %66,7.",
+            "Bir kişinin yerini doldurmak yaklaşık 2–3 aylık maaştır (yaygın kural): örnekte yılda yaklaşık 25.500 ₼ kaybolur."
+          ]
         }
       }
     },
     "foodCost": {
       "formulaLabel": "Formül",
       "formula": "Food cost % = (Gıda maliyeti ÷ Satış fiyatı) × 100",
-      "formulaNote": "Trim dahil: kullanılan miktarın maliyeti = miktar ÷ (1 − trim%) × birim fiyat.",
+      "formulaNote": "Temizleme kaybı hesaba katılır: miktar ÷ (1 − kayıp %) × birim fiyatı.",
       "removeRow": "Satırı sil",
       "signalTag": "Sinyal → adım",
       "signalPending": "Reçeteyi ve menü fiyatını gir — sonuç burada görünecek.",
       "signalHigh": "Food cost %{pct} — %{target} hedefinin üzerinde.",
-      "signalHighSub": "Hedefe ulaşmak için: fiyat {ideal} ya da porsiyon maliyetini {cut} düşürmek.",
+      "signalHighSub": "Hedefe ulaşmak için: fiyatı {ideal} yapın veya porsiyon maliyetini {cut} düşürün.",
       "signalOk": "Food cost %{pct} — hedef (%{target}) içinde. Sonraki adım: alış fiyatlarını ayda bir güncelle.",
       "sendWa": "Sonucu WhatsApp’tan gönder",
       "pdf": "PDF al",
@@ -6952,18 +7039,18 @@
       "dishFallback": "Yemek",
       "waIntro": "Food cost sonucum (DK Agency aracı):",
       "waLine": "{dish} — porsiyon maliyeti {cost}, menü fiyatı {price}, food cost {pct}.",
-      "waIdeal": "İdeal fiyat (%{target}): {ideal}.",
+      "waIdeal": "Önerilen fiyat (%{target}): {ideal}.",
       "talkText": "Merhaba Doğan Bey, food cost sonucumu konuşmak istiyorum: {dish} — {pct} (fiyat {price}).",
       "printTitle": "Food cost raporu",
       "printDate": "Tarih: {date}",
       "printFooter": "DK Agency · dkagency.com.tr · Hesaplama tarayıcıda yapıldı.",
       "afterBlog": "Bu araçla ilgili blog yazısı",
-      "afterBlogDesc": "Reçete kartı, trim kaybı ve menü fiyatı nasıl belirlenir.",
+      "afterBlogDesc": "Tarif kartı, temizleme kaybı ve menü fiyatı nasıl konur.",
       "afterNext": "Sonraki araç",
       "afterDeliveryDesc": "Bu yemek Wolt’ta satılırsa komisyondan sonra sana ne kalır?",
       "afterThen": "Sonra",
-      "afterMenuDesc": "Food cost’u bilinen yemekleri Yıldız, At, Bulmaca ve Köpek gruplarına ayır.",
-      "errTrim": "Trim %0–99 arasında olmalı (%100 = kullanılabilir bir şey kalmaz).",
+      "afterMenuDesc": "Maliyeti bilinen yemekler için bakın: hangisi korunmalı, hangisinin fiyatı düzeltilmeli, hangisi tanıtılmalı, hangisi çıkarılmalı.",
+      "errTrim": "Temizleme kaybı %0–99 arasında olmalıdır (%100 — hiçbir şey kalmıyor demektir).",
       "errPortions": "Porsiyon sayısı 0’dan büyük olmalı.",
       "errTarget": "Hedef food cost %0 ile %100 arasında olmalı."
     },
@@ -7059,6 +7146,210 @@
       "acceptAll": "Tümünü kabul et",
       "save": "Seçimi kaydet",
       "note": "Seçimin bu cihazda saklanır."
+    }
+  },
+  "whatsappFloat": {
+    "label": "Bize yazın",
+    "aria": "WhatsApp'tan bize yazın",
+    "text": "Merhaba, DK Agency sitesinden yazıyorum."
+  },
+  "mqForms": {
+    "kst": {
+      "categories": {
+        "quality": "Kalite",
+        "service": "Servis",
+        "cleanliness": "Temizlik"
+      },
+      "submit": "KST Denetimimi Oluştur",
+      "submitting": "AI düşünüyor...",
+      "notes": "Ek not (opsiyonel)",
+      "notesPlaceholder": "Hangi alanda daha çok sıkıntı yaşadığını yaz...",
+      "progress": "yanıtlandı",
+      "questions": {
+        "K1": "Yemeklerin tadı ve kalitesi yüksek",
+        "K2": "Porsiyon büyüklüğü fiyata uygun",
+        "K3": "Taze malzemeler kullanılıyor",
+        "K4": "Yemeğin sunumu güzel",
+        "K5": "Menü çeşitliliği yeterli",
+        "K6": "Yemek sıcaklığı doğru",
+        "K7": "Özel diyetler mevcut (vegan/helal)",
+        "K8": "Hazırlama süresi kabul edilebilir",
+        "K9": "Yemek tutarlı geliyor (aynı tat)",
+        "K10": "Paket servis kalitesi",
+        "S1": "Personelin güler yüzlülüğü",
+        "S2": "Sipariş alma hızı",
+        "S3": "Personelin menü bilgisi",
+        "S4": "Hesap getirme hızı",
+        "S5": "Şikayetlere yanıt verilmesi",
+        "S6": "Personel üniforma giyiyor",
+        "S7": "Masa bekleme süresi kabul edilebilir",
+        "S8": "Telefon/online sipariş kolaylığı",
+        "S9": "Sipariş doğru geliyor",
+        "S10": "Müşteri tekrar geliyor",
+        "T1": "Yemek alanı temiz (masa, zemin)",
+        "T2": "Tuvalet her zaman temiz",
+        "T3": "Mutfak temizliği (görünür kısım)",
+        "T4": "Personel kişisel hijyeni",
+        "T5": "Ekipman ve tabak temizliği",
+        "T6": "Çöp yönetimi düzgün",
+        "T7": "Klima/havalandırma çalışıyor",
+        "T8": "Gizli toz/kir yok",
+        "T9": "Düzenli bakteri kontrolü",
+        "T10": "Sanitasyon standartlarına uygun"
+      }
+    },
+    "marka": {
+      "customerTime": {
+        "label": "Müşteriniz günün hangi saatinde gelir?",
+        "help": "Ana zaman aralığını seçin",
+        "options": {
+          "morning": "Sabah",
+          "lunch": "Öğle",
+          "evening": "Akşam",
+          "late-night": "Gece geç",
+          "all": "Tüm gün"
+        }
+      },
+      "customerActivity": {
+        "label": "Burada ne yapıyorlar?",
+        "options": {
+          "fill-belly": "Karnını doyuruyor",
+          "work": "İş görüyor",
+          "celebration": "Kutlama",
+          "relax": "Dinleniyor",
+          "third-place": "Üçüncü mekan"
+        }
+      },
+      "foodStory": {
+        "label": "Yemeğinizin ana hikayesi ne?",
+        "options": {
+          "tradition": "Gelenek",
+          "speed": "Hız",
+          "health": "Sağlık",
+          "exotic": "Egzotik",
+          "handcrafted": "El yapımı"
+        }
+      },
+      "competitorGap": {
+        "label": "Rakibinizin yapamadığı ne? (en az 3 cevap)",
+        "placeholder": "Her satırda bir cevap yazın...",
+        "help": "Rakibinizin yakalayamadığı, sizin güçlü olduğunuz 3 şey"
+      },
+      "recommendReason": {
+        "label": "Müşteri sizi neden arkadaşına tavsiye eder?",
+        "placeholder": "1 cümleyle yazın"
+      },
+      "submit": "Pusulamı Oluştur",
+      "submitting": "AI düşünüyor...",
+      "validation": "Tüm alanları doldurun",
+      "errors": {
+        "tierTooLow": "KALFA seviyesi gerekli",
+        "monthlyLimit": "Aylık limit doldu.",
+        "aiFailed": "Teknik sorun, tekrar deneyin",
+        "network": "Bağlantı hatası, tekrar deneyin"
+      }
+    },
+    "menyu": {
+      "restName": "Restoran adı",
+      "addItem": "+ Yemek ekle",
+      "item": "Yemek #{n}",
+      "remove": "Sil",
+      "itemName": "Yemek adı",
+      "itemPlaceholder": "örn: Adana kebap, Sezar salata",
+      "category": "Kategori",
+      "choose": "Seçin...",
+      "price": "Satış fiyatı (AZN)",
+      "priceHelp": "Müşteriye sunulan fiyat",
+      "cost": "Maliyet (₼, 1 porsiyon)",
+      "costHelp": "Çiğ ürün + ambalaj. Rapora yüzde olarak gider: maliyet ÷ satış fiyatı.",
+      "sales": "Aylık satış adedi",
+      "salesPlaceholder": "örn: 250",
+      "salesHelp": "Ortalama ayda kaç porsiyon",
+      "margin": "Fiyattan kalan pay:",
+      "monthlyProfit": "Aylık kâr:",
+      "submit": "Menümü Analiz Et",
+      "submitting": "AI düşünüyor...",
+      "minItems": "En az 5 yemek ekleyin",
+      "categories": {
+        "salat": "Salata",
+        "shorba": "Çorba",
+        "et": "Ana yemek",
+        "toyuq": "Tavuk",
+        "baliq": "Balık",
+        "sandvic": "Sandviç",
+        "shirniyyat": "Tatlı",
+        "icki": "İçecek"
+      },
+      "costOverPrice": "Maliyet satış fiyatından yüksek — rakamları kontrol edin.",
+      "foodCostPct": "Food cost (gıda maliyeti yüzdesi):"
+    },
+    "persona": {
+      "restName": "Restoran adı",
+      "concept": "Konsept",
+      "city": "Şehir",
+      "segment": "Hedef segment",
+      "avgTicket": "Ort. hesap (AZN)",
+      "peakHours": "Yoğun saatler",
+      "observations": "Ek gözlem",
+      "obsPlaceholder": "Müşterileriniz hakkında bildiğiniz detaylar...",
+      "submit": "Personamı Oluştur",
+      "submitting": "AI düşünüyor...",
+      "concepts": {
+        "fast-food": "Fast food",
+        "fine-dining": "Fine dining",
+        "cafe": "Kafe",
+        "fast-casual": "Fast casual",
+        "fine-casual": "Fine casual",
+        "pub": "Pub/Bar",
+        "traditional": "Geleneksel",
+        "other": "Diğer"
+      },
+      "segments": {
+        "families": "Aileler",
+        "young-professionals": "Genç profesyoneller",
+        "students": "Öğrenciler",
+        "tourists": "Turistler",
+        "business": "İş insanları",
+        "seniors": "Yaşlılar",
+        "mixed": "Karışık"
+      },
+      "peaks": {
+        "morning": "Sabah",
+        "lunch": "Öğle",
+        "evening": "Akşam",
+        "late-night": "Gece geç",
+        "all": "Tüm gün"
+      }
+    },
+    "sikayet": {
+      "restName": "Restoran adı",
+      "period": "Dönem",
+      "periods": {
+        "last-week": "Son hafta",
+        "last-month": "Son ay",
+        "last-quarter": "Son 3 ay",
+        "custom": "Özel"
+      },
+      "sources": {
+        "google": "Google Reviews",
+        "2gis": "2GIS / Wolt / TripAdvisor",
+        "instagram": "Instagram",
+        "whatsapp": "WhatsApp",
+        "verbal": "Direkt müşteri",
+        "other": "Diğer"
+      },
+      "addComplaint": "+ Şikayet ekle",
+      "complaintText": "Şikayet metni",
+      "source": "Kaynak seç",
+      "date": "Tarih",
+      "submit": "Şikayetleri Analiz Et",
+      "submitting": "AI düşünüyor...",
+      "minItems": "En az 3 şikayet ekleyin",
+      "remove": "Sil"
+    },
+    "dateInput": {
+      "selected": "Seçilen tarih:",
+      "formatHint": "Biçim: gün.ay.yıl (örneğin 14.05.2026)"
     }
   }
 }

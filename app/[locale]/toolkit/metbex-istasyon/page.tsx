@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import MetbexIstasyonPage from '@/components/marketinq-ocagi/metbex-istasyon/MetbexIstasyonPage';
 
 export const metadata: Metadata = {
-  title: 'Mətbəx İstasyon Kalkulyatoru — DK Agency',
+  title: 'Mətbəx stansiyaları — DK Agency',
   description:
-    'Fast food və QSR mətbəxlər üçün menyu SKU sayına görə istasyon planlaması, kadrolar və əmək faizi.',
+    'Fast food mətbəxi üçün: menyudakı yemək sayına və gündəlik sifarişə görə neçə stansiya, neçə işçi lazımdır və işçi xərci satışın neçə faizini tutur.',
 };
 
 export default function LocalizedMetbexIstasyonPage() {

@@ -6,10 +6,17 @@ import { useTranslations, useLocale } from 'next-intl';
 import { ArrowRight, BookOpen, ChevronDown, Palette, Sparkles } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 type ChecklistGroup = { id: string; title: string; items: string[] };
 
 const STORAGE_KEY = 'branding-guide-checklist';
+/** TASK-0517: the «Marka kartı» fields (what the workbook is for) — kept in this browser only. */
+const CARD_KEY = 'branding-guide-card-v1';
+const CARD_FIELDS = ['name', 'promise', 'guest', 'tone', 'colors'] as const;
+type CardField = (typeof CARD_FIELDS)[number];
+type BrandCard = Record<CardField, string>;
+const EMPTY_CARD: BrandCard = { name: '', promise: '', guest: '', tone: '', colors: '' };
 
 export default function BrandingGuidePage() {
   const t = useTranslations('toolkit.branding');
@@ -39,6 +46,7 @@ export default function BrandingGuidePage() {
 
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [openGroup, setOpenGroup] = useState<string>('strategy');
+  const [card, setCard] = useState<BrandCard>(EMPTY_CARD);
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -52,16 +60,69 @@ export default function BrandingGuidePage() {
 
   useEffect(() => { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(checked)); }, [checked]);
 
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(CARD_KEY);
+      if (!saved) return;
+      const parsed = JSON.parse(saved) as Partial<BrandCard>;
+      startTransition(() => setCard({ ...EMPTY_CARD, ...parsed }));
+    } catch { /* unreadable storage — start with an empty card */ }
+  }, []);
+
+  useEffect(() => {
+    try { window.localStorage.setItem(CARD_KEY, JSON.stringify(card)); } catch { /* storage blocked */ }
+  }, [card]);
+
+  const exampleCard: BrandCard = {
+    name: t('cardExampleName'),
+    promise: t('cardExamplePromise'),
+    guest: t('cardExampleGuest'),
+    tone: t('cardExampleTone'),
+    colors: t('cardExampleColors'),
+  };
+  const filledFields = CARD_FIELDS.filter((f) => card[f].trim() !== '').length;
+  type Snapshot = { checked: Record<string, boolean>; card: BrandCard };
+
   const totalItems = checklistGroups.reduce((sum, g) => sum + g.items.length, 0);
   const completedItems = useMemo(() => Object.values(checked).filter(Boolean).length, [checked]);
   const progressPct = totalItems === 0 ? 0 : (completedItems / totalItems) * 100;
   const toggleItem = (key: string) => setChecked((c) => ({ ...c, [key]: !c[key] }));
 
-  // ── Input Section (Checklist Workbook + Visual Elements) ──────────
+  // ── Input Section (Brand card + Checklist Workbook + Visual Elements) ──
 
   const inputSection = (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <div>
+            <h2 className="text-base font-bold text-slate-900">{t('cardTitle')}</h2>
+            <p className="text-sm text-slate-600">{t('cardSubtitle')}</p>
+          </div>
+          <ToolResetControls<Snapshot>
+            snapshot={() => ({ checked, card })}
+            restore={(saved) => { setChecked(saved.checked); setCard(saved.card); }}
+            onClear={() => { setChecked({}); setCard(EMPTY_CARD); }}
+            onLoadExample={() => setCard(exampleCard)}
+          />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {CARD_FIELDS.map((field) => (
+            <label key={field} className={`block ${field === 'promise' || field === 'guest' ? 'sm:col-span-2' : ''}`}>
+              <span className="text-sm font-semibold text-slate-800">{t(`cardField_${field}`)}</span>
+              <span className="mt-0.5 block text-xs text-slate-600">{t(`cardHelp_${field}`)}</span>
+              <input
+                type="text"
+                value={card[field]}
+                onChange={(e) => setCard((c) => ({ ...c, [field]: e.target.value }))}
+                placeholder={t(`cardPlaceholder_${field}`)}
+                className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-pink-400 focus:ring-2 focus:ring-pink-200"
+              />
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-5">
         <div>
           <h2 className="text-base font-bold text-slate-900">{t('workbookTitle')}</h2>
           <p className="text-sm text-slate-600">{t('workbookSubtitle')}</p>
@@ -79,11 +140,11 @@ export default function BrandingGuidePage() {
           const isOpen = openGroup === group.id;
           return (
             <div key={group.id} className="overflow-hidden rounded-xl border border-slate-200">
-              <button onClick={() => setOpenGroup(isOpen ? '' : group.id)}
+              <button type="button" aria-expanded={isOpen} onClick={() => setOpenGroup(isOpen ? '' : group.id)}
                 className="flex w-full items-center justify-between bg-slate-50 px-4 py-4 text-left">
                 <div>
                   <div className="text-sm font-bold text-slate-900">{group.title}</div>
-                  <div className="text-xs text-slate-600">{group.items.length}</div>
+                  <div className="text-xs text-slate-600">{t('groupItemCount', { count: group.items.length })}</div>
                 </div>
                 <ChevronDown size={18} className={`text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -93,7 +154,7 @@ export default function BrandingGuidePage() {
                     const key = `${group.id}-${index}`;
                     const active = Boolean(checked[key]);
                     return (
-                      <button key={key} onClick={() => toggleItem(key)}
+                      <button key={key} type="button" role="checkbox" aria-checked={active} onClick={() => toggleItem(key)}
                         className={`flex w-full items-start gap-3 rounded-xl border px-4 py-3 text-left transition-all ${
                           active ? 'border-emerald-200 bg-emerald-50' : 'border-slate-200 bg-white hover:border-pink-200 hover:bg-pink-50'
                         }`}>
@@ -130,6 +191,19 @@ export default function BrandingGuidePage() {
 
   const resultSection = (
     <div className="space-y-4">
+      {/* Brand card */}
+      <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statCardFilled')}</div>
+        <div className="mt-1 text-3xl font-black text-slate-900" data-testid="brand-card-filled">{filledFields}/{CARD_FIELDS.length}</div>
+        {card.name.trim() || card.promise.trim() ? (
+          <p className="mt-2 text-sm leading-relaxed text-slate-800">
+            {card.name.trim() ? <strong className="text-slate-900">{card.name.trim()}</strong> : null}
+            {card.name.trim() && card.promise.trim() ? ' — ' : null}
+            {card.promise.trim()}
+          </p>
+        ) : null}
+      </div>
+
       {/* Progress stats */}
       <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
         <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statCompleted')}</div>

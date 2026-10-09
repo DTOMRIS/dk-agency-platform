@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import StaffRetentionPage from '@/app/toolkit/staff-retention/page';
 
 export const metadata: Metadata = {
-  title: 'İşçi Saxlama Kalkulyatoru',
+  title: 'İşçi saxlama kalkulyatoru',
   description:
-    'İşçi turnover faizini, 1 işçi dəyişmə xərcini və illik kadr itkisini Azərbaycan restoran reallığına uyğun hesabla.',
+    'İşçi dəyişmə faizini, bir işçinin yerini doldurmağın xərcini və işdən çıxan işçilərə görə ildə itən pulu hesablayın.',
 };
 
 export default function LocalizedStaffRetentionPage() {

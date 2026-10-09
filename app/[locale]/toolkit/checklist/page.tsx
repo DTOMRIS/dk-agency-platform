@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { CheckCircle, Circle, ChevronDown, ChevronUp } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 interface ChecklistItem { id: string; text: string; detail?: string; }
 interface ChecklistSection { title: string; emoji: string; items: ChecklistItem[]; }
@@ -77,6 +78,15 @@ export default function ChecklistPage() {
 
   const inputSection = (
     <div className="space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-base font-bold text-slate-900">{t('listTitle')}</h2>
+        <ToolResetControls
+          variant="checklist"
+          snapshot={() => [...checked]}
+          restore={(saved: string[]) => setChecked(new Set(saved))}
+          onClear={() => setChecked(new Set())}
+        />
+      </div>
       {CHECKLIST_DATA.map((section, sIdx) => {
         const sectionChecked = section.items.filter(i => checked.has(i.id)).length;
         const isExpanded = expandedSections.has(sIdx);
@@ -84,11 +94,11 @@ export default function ChecklistPage() {
 
         return (
           <div key={sIdx} className={`rounded-xl border transition-colors ${isComplete ? 'border-emerald-200 bg-emerald-50/30' : 'border-slate-200'}`}>
-            <button type="button" onClick={() => toggleSection(sIdx)} className="w-full flex items-center justify-between p-4 text-left">
+            <button type="button" onClick={() => toggleSection(sIdx)} aria-expanded={isExpanded} className="w-full flex items-center justify-between p-4 text-left">
               <div className="flex items-center gap-3">
-                <span className="text-xl">{section.emoji}</span>
+                <span className="text-xl" aria-hidden="true">{section.emoji}</span>
                 <div>
-                  <h2 className="font-bold text-slate-900 text-sm">{section.title}</h2>
+                  <h3 className="font-bold text-slate-900 text-sm">{section.title}</h3>
                   <p className="text-xs text-slate-600">{sectionChecked}/{section.items.length} {t('section_completed')}</p>
                 </div>
               </div>
@@ -100,6 +110,7 @@ export default function ChecklistPage() {
                   const isDone = checked.has(item.id);
                   return (
                     <button key={item.id} type="button" onClick={() => toggle(item.id)}
+                      role="checkbox" aria-checked={isDone}
                       className={`w-full flex items-start gap-3 p-3 rounded-lg text-left transition-colors ${isDone ? 'bg-emerald-50' : 'hover:bg-slate-50'}`}>
                       {isDone ? <CheckCircle size={18} className="text-emerald-500 flex-shrink-0 mt-0.5" /> : <Circle size={18} className="text-slate-300 flex-shrink-0 mt-0.5" />}
                       <div>
@@ -126,7 +137,7 @@ export default function ChecklistPage() {
         <div className="mt-1 text-3xl font-black text-slate-900">{checkedCount}/{totalItems}</div>
       </div>
       <div className="rounded-xl bg-[var(--dk-red)]/5 p-4 ring-1 ring-[var(--dk-red)]/20">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">%</div>
+        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('progressPctLabel')}</div>
         <div className="mt-1 text-3xl font-black text-dk-red-deep">{progress}%</div>
         <div className="mt-3 h-2.5 bg-slate-100 rounded-full overflow-hidden">
           <div className="h-full bg-[var(--dk-red)] rounded-full transition-all duration-500" style={{ width: `${progress}%` }} />

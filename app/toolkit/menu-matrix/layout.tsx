@@ -6,9 +6,9 @@ import type { ReactNode } from 'react';
  * Başlıq/təsvir prefiksiz AZ ünvanı üçün buradan verilir.
  */
 export const metadata: Metadata = {
-  title: "Menyu Matris Analizi (BCG) — Menyu Mühəndisliyi",
+  title: "Menyu matrisi — hansı yeməyi qorumalı, hansını çıxarmalı",
   description:
-    "BCG matris analizi ilə menyu optimallaşdırması: Ulduz, At, Puzzle və İt kateqoriyaları üzrə qiymətləndirmə.",
+    "Hər yeməyin satış sayını və porsiyadan qalan qazancını yazın: alət hansını qorumaq, hansının qiymətini düzəltmək, hansını tanıtmaq və hansını çıxarmaq lazım olduğunu göstərir.",
 };
 
 export default function ToolkitMenuMatrixLayout({ children }: { children: ReactNode }) {

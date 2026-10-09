@@ -16,6 +16,7 @@ import { inter } from '@/components/home/v2/font';
 import { Crumbs, LiveStatus } from '@/components/inner/InnerParts';
 import s from '@/components/inner/inner.module.css';
 import { getToolMeta } from '@/lib/toolkit/tool-directory';
+import ToolIntro from '@/components/toolkit/ToolIntro';
 
 export default function ToolPageShell({
   slug,
@@ -57,7 +58,10 @@ export default function ToolPageShell({
             </div>
           </div>
         ) : null}
-        <div style={{ maxWidth, margin: '0 auto', paddingTop: showHeader ? 0 : 24 }}>{children}</div>
+        <div style={{ maxWidth, margin: '0 auto', paddingTop: showHeader ? 0 : 24 }}>
+          <ToolIntro slug={slug} />
+          {children}
+        </div>
       </div>
     </div>
   );

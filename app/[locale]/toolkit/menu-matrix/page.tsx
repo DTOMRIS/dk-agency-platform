@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import MenuMatrixPage from '@/app/toolkit/menu-matrix/page';
 
 export const metadata: Metadata = {
-  title: 'Menyu Matris Analizi (BCG)',
+  title: 'Menyu matrisi — hansı yeməyi qorumalı, hansını çıxarmalı',
   description:
-    'BCG matris analizi ilə menyu optimallaşdırması: Ulduz, At, Puzzle, İt kateqoriyaları.',
+    'Hər yeməyin satış sayını və porsiyadan qalan qazancını yazın: alət hansını qorumaq, hansının qiymətini düzəltmək, hansını tanıtmaq və hansını çıxarmaq lazım olduğunu göstərir.',
 };
 
 export default function LocalizedMenuMatrixPage() {

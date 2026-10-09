@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import BasabasPage from '@/app/toolkit/basabas/page';
 
 export const metadata: Metadata = {
-  title: 'Başabaş Nöqtəsi Kalkulyatoru',
+  title: 'Zərərsiz nöqtə (başa-baş) kalkulyatoru',
   description:
-    'Restoran başabaş nöqtəsini hesabla: sabit xərclər, dəyişən xərclər, gündəlik müştəri hədəfi.',
+    'Restoran zərərə düşməmək üçün ayda ən azı nə qədər satmalıdır: sabit və dəyişən xərclər, gündəlik müştəri hədəfi.',
 };
 
 export default function LocalizedBasabasPage() {

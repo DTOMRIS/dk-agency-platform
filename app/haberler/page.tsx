@@ -167,7 +167,7 @@ export default async function HaberlerPage({
             prevLabel={t('mansetPrev')}
             nextLabel={t('mansetNext')}
             slideLabels={manset.map((_, i) => t('mansetSlide', { n: i + 1, total: manset.length }))}
-            slides={manset.map((item) => ({
+            slides={manset.map((item, i) => ({
               id: item.id,
               href: articleHref(item.slug),
               title: item.title,
@@ -181,7 +181,8 @@ export default async function HaberlerPage({
                   brand={t('brand')}
                   imageUrl={item.imageUrl}
                   alt={item.title}
-                  priority
+                  priority={i === 0}
+                  sizes="(max-width: 980px) 100vw, 640px"
                 />
               ),
             }))}
@@ -200,6 +201,7 @@ export default async function HaberlerPage({
               imageUrl={lead.imageUrl}
               alt={lead.title}
               priority
+              sizes="(max-width: 980px) 100vw, 640px"
             />
             <div className={s.lsBody}>
               <div className={s.metaRow}>

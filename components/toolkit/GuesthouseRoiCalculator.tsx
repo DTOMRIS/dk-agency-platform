@@ -5,8 +5,20 @@ import { useTranslations } from 'next-intl';
 import { calcGuesthouseRoi, GUESTHOUSE_ROI_DEFAULTS, type GuesthouseRoiVerdict } from '@/lib/data/guesthouseRoi';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
+import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 type RoiField = keyof typeof GUESTHOUSE_ROI_DEFAULTS;
+type RoiInputs = Record<RoiField, number>;
+/** TASK-0517: «Təmizlə» → every field 0. */
+const EMPTY_INPUTS: RoiInputs = {
+  nightlyPrice: 0,
+  roomCount: 0,
+  occupancyPercent: 0,
+  avgCommissionPercent: 0,
+  otaSharePercent: 0,
+  monthlyFixedCost: 0,
+  initialInvestment: 0,
+};
 /** TASK-0515: percentages are clamped to 0–100, money and counts to ≥ 0. */
 const PERCENT_FIELDS: ReadonlySet<RoiField> = new Set(['occupancyPercent', 'avgCommissionPercent', 'otaSharePercent']);
 function clampField(field: RoiField, value: number): number {
@@ -27,7 +39,7 @@ const VERDICT_STYLES: Record<GuesthouseRoiVerdict, string> = {
 
 export default function GuesthouseRoiCalculator() {
   const t = useTranslations('guesthouseRoi');
-  const [inputs, setInputs] = useState<Record<RoiField, number>>({ ...GUESTHOUSE_ROI_DEFAULTS });
+  const [inputs, setInputs] = useState<RoiInputs>({ ...GUESTHOUSE_ROI_DEFAULTS });
   const [clamped, setClamped] = useState<RoiField | null>(null);
   const update = useCallback((field: RoiField, value: number) => {
     const next = clampField(field, value);
@@ -49,7 +61,14 @@ export default function GuesthouseRoiCalculator() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm" data-testid="tool-inputs">
+        <ToolResetControls<RoiInputs>
+          className="mb-5"
+          snapshot={() => inputs}
+          restore={(saved) => { setClamped(null); setInputs(saved); }}
+          onClear={() => { setClamped(null); setInputs({ ...EMPTY_INPUTS }); }}
+          onLoadExample={() => { setClamped(null); setInputs({ ...GUESTHOUSE_ROI_DEFAULTS }); }}
+        />
         {fields.map(({ key, unit }) => (
           <div key={key} className="mb-4">
             <label htmlFor={`roi-${key}`} className="mb-1 block text-sm font-bold text-slate-900">
@@ -79,7 +98,7 @@ export default function GuesthouseRoiCalculator() {
             ['otaCommissionLabel', `-${fmt(result.otaCommission)}`],
             ['monthlyNetLabel', fmt(result.monthlyNet)],
             ['annualNetLabel', fmt(result.annualNet)],
-            ['paybackLabel', result.paybackMonths < Infinity ? `${Math.round(result.paybackMonths)} ${t('results.paybackMonthsUnit', { count: Math.round(result.paybackMonths) })}` : t('results.noProfitText')],
+            ['paybackLabel', result.paybackMonths < Infinity ? t('results.paybackMonthsUnit', { count: Math.round(result.paybackMonths) }) : t('results.noProfitText')],
           ] as [string, string][]).map(([label, val]) => (
             <div key={label} className="flex justify-between border-b border-dashed border-slate-100 pb-2">
               <span className="text-slate-600">{t(`results.${label}`)}</span>
