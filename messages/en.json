@@ -3465,6 +3465,7 @@
       "listings": "Listings",
       "news": "News",
       "blog": "Blog",
+      "inbox": "All inquiries",
       "kazanLeads": "KAZAN Leads",
       "contactTracking": "Contact Channels",
       "supplyBase": "Suppliers",
@@ -7418,6 +7419,80 @@
         "portionUnit": "portion",
         "sheetName": "Food Cost"
       }
+    }
+  },
+  "dashboardInbox": {
+    "title": "All inquiries",
+    "subtitle": "Listing inquiries, WhatsApp/contact clicks, KAZAN, franchise and newsletter sign-ups in one list. Read-only; change status on the source page.",
+    "all": "All",
+    "sources": {
+      "listing": "Listing inquiries",
+      "contact": "WhatsApp / contact clicks",
+      "kazan": "KAZAN leads",
+      "franchise": "Franchise / OTA / Radar",
+      "newsletter": "Newsletter sign-ups"
+    },
+    "sourcesShort": {
+      "listing": "Listing",
+      "contact": "Click",
+      "kazan": "KAZAN",
+      "franchise": "Franchise",
+      "newsletter": "Newsletter"
+    },
+    "period": "Period",
+    "periodDays": "Last {days} days",
+    "source": "Source",
+    "searchLabel": "Search",
+    "searchPlaceholder": "Name, phone, e-mail, listing or text",
+    "searchSubmit": "Search",
+    "clear": "Clear",
+    "results": "{count} inquiries",
+    "limitNote": "At most the last {limit} records per source are shown.",
+    "empty": "No inquiries match these filters.",
+    "dbUnavailable": "Database is unavailable.",
+    "cols": {
+      "date": "Date",
+      "source": "Source",
+      "contact": "Contact",
+      "context": "From",
+      "message": "Message",
+      "status": "Status"
+    },
+    "anonymous": "Anonymous click",
+    "open": "Open",
+    "noDetail": "No separate page",
+    "channels": {
+      "form": "Form",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "kazan": "KAZAN",
+      "food_cost": "Food cost",
+      "pnl": "P&L",
+      "aqta": "AQTA",
+      "delivery": "Delivery",
+      "general": "General",
+      "readiness_test": "Readiness test",
+      "roi_calc": "ROI calculator",
+      "buyer_checklist": "Buyer checklist",
+      "franchbook_gate": "FranchBook",
+      "academy": "Academy",
+      "consulting": "Consulting",
+      "ota_guide_pdf": "OTA guide",
+      "franchise_radar": "Franchise Radar",
+      "homepage_newsletter": "Home page",
+      "blog_newsletter": "Blog",
+      "wa_redirect": "WhatsApp redirect",
+      "contact_page": "Contact page",
+      "home_join": "Home page block"
+    },
+    "statuses": {
+      "new": "New",
+      "contacted": "Contacted",
+      "qualified": "Qualified",
+      "converted": "Converted",
+      "dismissed": "Dismissed",
+      "subscribed": "Subscribed",
+      "unsubscribed": "Unsubscribed"
     }
   }
 }

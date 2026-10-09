@@ -698,7 +698,7 @@
 /* ===== MODULE TABS ===== */
 .tabbar {
   position: sticky;
-  /* Header.tsx main bar: 69px below xl (menu button), 65px at xl+ (1px tucks under its border). */
+  /* Header.tsx bar: 69px below xl, 77px at xl+ (TASK-0520); the 1px hairline tucks under the tabs. */
   top: 68px;
   z-index: 20;
   display: flex;
@@ -1353,12 +1353,17 @@
 }
 @media (min-width: 1280px) {
   .tabbar {
-    top: 64px;
+    top: 76px;
   }
 }
 /* In-page anchors (#nece, #modullar, #ekosistem) land below the sticky header. */
 .v2[id] {
-  scroll-margin-top: 64px;
+  scroll-margin-top: 68px;
+}
+@media (min-width: 1280px) {
+  .v2[id] {
+    scroll-margin-top: 76px;
+  }
 }
 .panel[hidden] {
   display: none;

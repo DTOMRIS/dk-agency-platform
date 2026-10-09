@@ -453,10 +453,10 @@
   align-items: stretch;
 }
 .pills {
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-  border-radius: 999px;
+  /* TASK-0520: wraps instead of scrolling sideways — RU/EN labels do not fit one row and the last
+     pill was hidden behind the scroller; AZ/TR still sit in one row. */
+  flex-wrap: wrap;
+  border-radius: 24px;
   gap: 4px;
   padding: 5px;
 }
@@ -601,11 +601,32 @@
   .intro {
     padding: 22px 18px;
   }
+  /* TASK-0520: phones — the 5 segments sit in a 2-column grid (no sideways scroller that clipped
+     «Françayz» to «Fı»); labels may wrap, the odd last pill spans both columns. */
+  .pills {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    overflow: visible;
+    border-radius: 18px;
+  }
   .pill {
-    padding: 0 13px;
+    height: auto;
+    min-height: 40px;
+    padding: 6px 10px;
+    white-space: normal;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .pill:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
   .ctaBtn {
     width: 100%;
+  }
+  /* TASK-0520: the printer slot is exactly as wide as the paper on phones. */
+  .slot {
+    margin: 0 12px;
   }
   .paperClip {
     margin: -7px 12px 0;

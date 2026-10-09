@@ -3465,6 +3465,7 @@
       "listings": "Elanlar",
       "news": "Xəbərlər",
       "blog": "Bloq",
+      "inbox": "Bütün müraciətlər",
       "kazanLeads": "KAZAN Leads",
       "contactTracking": "Əlaqə Kanalları",
       "supplyBase": "Təchizatçılar",
@@ -7418,6 +7419,80 @@
         "portionUnit": "porsiya",
         "sheetName": "Yemek Xerci"
       }
+    }
+  },
+  "dashboardInbox": {
+    "title": "Bütün müraciətlər",
+    "subtitle": "Elan sorğuları, WhatsApp/əlaqə klikləri, KAZAN, franchise və bülletən abunələri bir siyahıda. Yalnız oxumaq üçündür; status dəyişmək üçün mənbə səhifəsini açın.",
+    "all": "Hamısı",
+    "sources": {
+      "listing": "Elan sorğuları",
+      "contact": "WhatsApp / əlaqə klikləri",
+      "kazan": "KAZAN leadləri",
+      "franchise": "Franchise / OTA / Radar",
+      "newsletter": "Bülletən abunələri"
+    },
+    "sourcesShort": {
+      "listing": "Elan",
+      "contact": "Klik",
+      "kazan": "KAZAN",
+      "franchise": "Franchise",
+      "newsletter": "Bülletən"
+    },
+    "period": "Dövr",
+    "periodDays": "Son {days} gün",
+    "source": "Mənbə",
+    "searchLabel": "Axtarış",
+    "searchPlaceholder": "Ad, telefon, e-poçt, elan və ya mətn",
+    "searchSubmit": "Axtar",
+    "clear": "Təmizlə",
+    "results": "{count} müraciət",
+    "limitNote": "Hər mənbədən ən çox son {limit} qeyd göstərilir.",
+    "empty": "Bu filtrlərlə müraciət tapılmadı.",
+    "dbUnavailable": "Verilənlər bazası əlçatan deyil.",
+    "cols": {
+      "date": "Tarix",
+      "source": "Mənbə",
+      "contact": "Əlaqə",
+      "context": "Haradan",
+      "message": "Mesaj",
+      "status": "Status"
+    },
+    "anonymous": "Anonim klik",
+    "open": "Aç",
+    "noDetail": "Ayrı səhifə yoxdur",
+    "channels": {
+      "form": "Forma",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "kazan": "KAZAN",
+      "food_cost": "Food cost",
+      "pnl": "P&L",
+      "aqta": "AQTA",
+      "delivery": "Delivery",
+      "general": "Ümumi",
+      "readiness_test": "Hazırlıq testi",
+      "roi_calc": "ROI kalkulyator",
+      "buyer_checklist": "Alıcı çek-listi",
+      "franchbook_gate": "FranchBook",
+      "academy": "Akademiya",
+      "consulting": "Konsaltinq",
+      "ota_guide_pdf": "OTA bələdçisi",
+      "franchise_radar": "Franchise Radar",
+      "homepage_newsletter": "Ana səhifə",
+      "blog_newsletter": "Bloq",
+      "wa_redirect": "WhatsApp yönləndirmə",
+      "contact_page": "Əlaqə səhifəsi",
+      "home_join": "Ana səhifə bloku"
+    },
+    "statuses": {
+      "new": "Yeni",
+      "contacted": "Əlaqə saxlanıldı",
+      "qualified": "Uyğun",
+      "converted": "Müştəri oldu",
+      "dismissed": "Bağlandı",
+      "subscribed": "Abunədir",
+      "unsubscribed": "Abunəlikdən çıxıb"
     }
   }
 }
