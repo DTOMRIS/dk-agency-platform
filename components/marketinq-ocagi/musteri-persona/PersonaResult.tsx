@@ -13,7 +13,7 @@ interface PersonaResultData {
   antiPersona: { description: string; whyNot: string };
   marketingTips: MarketingTip[];
   menuSuggestions: string[];
-  ahilikQuote: string;
+  ahilikQuote?: string;
 }
 
 const copy: Record<Locale, {
@@ -136,7 +136,9 @@ export default function PersonaResult({ result, locale, onRedo }: Props) {
         </ul>
       </div>
 
-      <p className="text-center text-xs italic text-slate-400">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      {/* TASK-0523: AI no longer writes «Ahilik» quotes; old saved runs still show theirs. */}
+
+      {result.ahilikQuote && <p className="text-center text-xs italic text-slate-400">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>}
 
       <div className="flex gap-3">
         <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>

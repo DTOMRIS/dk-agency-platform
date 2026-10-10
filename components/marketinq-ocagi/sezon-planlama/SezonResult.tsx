@@ -34,7 +34,7 @@ interface SezonResultData {
   topRecommendations: string[];
   aeoRecommendations?: AeoRecommendation[];
   risksWatchout?: RiskWatchout[];
-  ahilikQuote: string;
+  ahilikQuote?: string;
 }
 
 const typeColors: Record<string, string> = {
@@ -182,7 +182,9 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
         </ol>
       </div>
 
-      <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      {/* TASK-0523: AI no longer writes «Ahilik» quotes; old saved runs still show theirs. */}
+
+      {result.ahilikQuote && <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>}
 
       <div className="flex gap-3">
         <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>
