@@ -18,6 +18,7 @@ import MegaMenu from '@/components/layout/MegaMenu';
 import { inter } from '@/components/home/v2/font';
 import { clearMemberSession, getGuestSession, readMemberSession, type MemberSession } from '@/lib/member-access';
 import { localeLabels, locales, normalizeLocale, switchLocalePath, withLocale, type Locale } from '@/i18n/config';
+import DkMark from '@/components/brand/DkMark';
 
 // Inline nav copy — NOT dependent on NextIntlClientProvider (fixes stale locale on client nav)
 const NAV_COPY: Record<Locale, Record<string, string>> = {
@@ -37,15 +38,10 @@ function getMemberInitials(session: MemberSession) {
   return source.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase();
 }
 
-/** v2 brand (approved /tanitim nav): dark 36px square «DK» mark + «DK Agency» wordmark. The real logo
- *  image (/images/logo-mobil.png) stays for favicon, footer, panels and OG cards. */
+/** TASK-0529 (owner 10.10: «logomuz yine yok?»): the real DK logo (public/images/logo-mobil.png) instead of
+ *  the dark text square — same mark as footer, panels and login (components/brand/DkMark). Flips on hover. */
 function BrandMark({ compact = false }: { compact?: boolean }) {
-  return (
-    <>
-      <span aria-hidden="true" className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-[#0F172A] text-[14px] font-black tracking-[-0.02em] text-white">DK</span>
-      <span className={`whitespace-nowrap font-extrabold tracking-[-0.02em] text-[#0F172A] ${compact ? 'text-[15.5px]' : 'text-[15.5px] sm:text-[17px]'}`}>DK Agency</span>
-    </>
-  );
+  return <DkMark size={compact ? 'sm' : 'md'} spin="hover" withName />;
 }
 
 export default function Header() {
