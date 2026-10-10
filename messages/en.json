@@ -1874,7 +1874,8 @@
       "invoices": "Invoices",
       "mobileOpenMenu": "Open menu",
       "mobileCloseMenu": "Close menu",
-      "freePlan": "Free"
+      "freePlan": "Free",
+      "excelTemplates": "Excel templates"
     },
     "topBar": {
       "notifications": "Notifications",
@@ -7885,5 +7886,70 @@
     "franchise": "Franchise",
     "sektor": "Sectors",
     "listings": "Listings"
+  },
+  "excelTemplates": {
+    "back": "All tools",
+    "trail": "Tools / Excel templates",
+    "eyebrow": "Excel templates",
+    "title": "Ready-made Excel templates for restaurants",
+    "lead": "Profit and loss, inventory, payroll, budget and balance sheet — formulas built in, in Azerbaijani. Enter your numbers, the template does the rest.",
+    "featuresLabel": "Template features",
+    "features": {
+      "f1": "Formulas ready",
+      "f2": "Opens in Excel, Google Sheets and Numbers",
+      "f3": "A «how to use» page in every file",
+      "f4": "Free for members"
+    },
+    "gate": {
+      "title": "Join for free to download",
+      "body": "Sign-up takes a minute. Previews are open to everyone; downloads are for members.",
+      "register": "Join for free",
+      "login": "Sign in"
+    },
+    "format": "Excel · .xlsx",
+    "download": "Download",
+    "locked": "Join to download",
+    "previewAlt": "Preview of the «{name}» template (sample numbers)",
+    "note": "The numbers in the templates are examples — replace them with your own. Confirm tax and insurance contribution rates with your accountant. You may use the templates freely in your business; selling them or sharing them under another name is not allowed.",
+    "bandTitle": "5 ready-made Excel templates for restaurants",
+    "bandBody": "Profit and loss (12 months), inventory and cost of sales, payroll, budget vs actual, balance sheet. Free for members.",
+    "bandCta": "See the templates",
+    "items": {
+      "menfeet-zerer-12-ay": {
+        "title": "12-month profit and loss",
+        "body": "Revenue, costs and profit for every month in one sheet, with the year total and each line as a share of sales.",
+        "b1": "Gross, operating, pre-tax and net profit",
+        "b2": "Prime cost (cost of sales + payroll) month by month",
+        "b3": "Loss-making months turn red"
+      },
+      "anbar-ve-maya-deyeri": {
+        "title": "Inventory and cost of sales",
+        "body": "Opening stock, purchases and the closing count give the cost of food used and your food cost %.",
+        "b1": "40 item rows with category and unit",
+        "b2": "«Reorder» alert at the reorder level",
+        "b3": "Food cost % calculated automatically"
+      },
+      "isci-xerci": {
+        "title": "Payroll costs",
+        "body": "Wages by position, overtime and employer insurance contributions; payroll as a share of sales.",
+        "b1": "Front and kitchen separately",
+        "b2": "Payroll per guest and guests per labour hour",
+        "b3": "Prime cost % together with food cost"
+      },
+      "budce-ve-faktiki": {
+        "title": "Budget vs actual",
+        "body": "Put the monthly plan next to actual spend: variance in ₼ and %, overspend in red.",
+        "b1": "21 lines from rent to delivery commission",
+        "b2": "Group subtotals and grand total",
+        "b3": "A note column for every line"
+      },
+      "balans": {
+        "title": "Balance sheet",
+        "body": "Assets, liabilities and equity for two years, with a check row and ratios showing the ability to pay debts.",
+        "b1": "Current and non-current assets and liabilities",
+        "b2": "Current ratio and debt ratio",
+        "b3": "The «check» row flags mistakes at once"
+      }
+    }
   }
 }

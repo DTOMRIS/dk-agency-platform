@@ -1,14 +1,14 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 4181d8f
+> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 9fcc5b5
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
-- Ünvan: **136** (həqiqi səhifə 122, yönləndirmə 10, güzgü 4) · page faylı 251
-- Dizayn (həqiqi səhifələr): v2 **23** · köhnə **57** · qarışıq **20** · işarəsiz 22
+- Ünvan: **137** (həqiqi səhifə 123, yönləndirmə 10, güzgü 4) · page faylı 253
+- Dizayn (həqiqi səhifələr): v2 **24** · köhnə **57** · qarışıq **20** · işarəsiz 22
 - Geri düyməsi yoxdur: **0** səhifə
-- API: **113** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 59 (+ 365 tapşırıq kartı)
+- API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
+- Sənəd: 59 (+ 366 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -34,7 +34,7 @@ Cəmi **0** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazıl�
 
 Əsaslandırılmış istisnalar (`fake-scan-ok`): **11**
 - `components/analytics/PortalEngagementTracker.tsx:40` — analytics beacon, nothing is shown to the user
-- `components/b2b-panel/B2BSidebar.tsx:178` — logout: the client session is cleared and the user redirected either way
+- `components/b2b-panel/B2BSidebar.tsx:181` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/DashboardSidebar.tsx:144` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/DashboardTopBar.tsx:140` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/KazanLeadStatusActions.tsx:50` — router.refresh() right after re-renders the lead from the server
@@ -216,7 +216,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/marketinq/sosial-metrik` | səhifə | qarışıq | səhifədə | ✓ |  | marketinq-ocagi/sosial-metrik/SosialMetrikPage.tsx |
 | `/marketinq/trend-analiz` | səhifə | qarışıq | səhifədə | ✓ |  | marketinq-ocagi/trend-analiz/TrendAnalizPage.tsx |
 
-### Toolkit — 19 ünvan (v2 13 · köhnə 0 · qarışıq 6)
+### Toolkit — 20 ünvan (v2 14 · köhnə 0 · qarışıq 6)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/toolkit` | səhifə | v2 | — | ✓ |  | toolkit/ToolkitDirectory.tsx |
@@ -226,6 +226,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/toolkit/branding-guide` | səhifə | v2 | — | ✓ |  | toolkit/ToolkitStudioLayout.tsx, toolkit/ToolResetControls.tsx |
 | `/toolkit/checklist` | səhifə | v2 | — | ✓ | 2 |  |
 | `/toolkit/delivery-calc` | səhifə | v2 | — | ✓ |  | toolkit/ToolkitStudioLayout.tsx, toolkit/DecimalInput.tsx, toolkit/ToolResetControls.tsx |
+| `/toolkit/excel-sablonlar` | səhifə | v2 | səhifədə | ✓ | 2 | home/v2/homeV2.module.css, home/v2/font.ts, inner/InnerParts.tsx |
 | `/toolkit/food-cost` | səhifə | v2 | — | ✓ | 2 |  |
 | `/toolkit/insaat-checklist` | səhifə | v2 | — | ✓ |  | toolkit/ToolkitStudioLayout.tsx, toolkit/ToolResetControls.tsx, toolkit/AssumptionsPanel.tsx |
 | `/toolkit/menu-matrix` | səhifə | v2 | — | ✓ |  | toolkit/ToolkitStudioLayout.tsx, toolkit/ToolResetControls.tsx, toolkit/DecimalInput.tsx |
@@ -325,7 +326,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 73 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 74 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |

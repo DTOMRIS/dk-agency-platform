@@ -694,9 +694,9 @@
       "statReplacementCost": "Bir işçinin yerini doldurmaq",
       "statAnnualLoss": "İldə itən pul",
       "calculatorTitle": "İşçi dəyişməsi sizə neçəyə başa gəlir?",
-      "calculatorSubtitle": "Əvvəl üç rəqəm: işçi sayı, orta aylıq maaş və keçən il neçə nəfərin getdiyi. Sonra bir işçinin getməsinin xərcini addım-addım yazın.",
+      "calculatorSubtitle": "Əvvəl üç rəqəm: işçi sayı, orta aylıq əmək haqqı və keçən il neçə nəfərin getdiyi. Sonra bir işçinin getməsinin xərcini addım-addım yazın.",
       "labelEmployeeCount": "İndiki işçi sayı",
-      "labelAverageSalary": "Orta aylıq maaş (₼)",
+      "labelAverageSalary": "Orta aylıq əmək haqqı (₼)",
       "labelYearlyLeavers": "İldə işdən çıxan işçi sayı",
       "financialImpactTitle": "Pula təsiri",
       "turnoverRateLabel": "İşçi dəyişmə faizi (ildə gedənlər ÷ işçi sayı)",
@@ -735,7 +735,7 @@
       "errNoEmployees": "İşçi sayı 0 olanda faiz hesablanmır — işçi sayını yazın.",
       "fields": {
         "employeeCount": "İndiki işçi sayı",
-        "averageSalary": "Orta aylıq maaş",
+        "averageSalary": "Orta aylıq əmək haqqı",
         "yearlyLeavers": "İldə işdən çıxan işçi sayı",
         "vacantDays": "Yer neçə gün boş qalır",
         "coverPerDay": "Başqalarına gündə əlavə ödəniş",
@@ -758,14 +758,14 @@
         "mistakes": "Səhv və itkilər"
       },
       "formulas": {
-        "vacancy": "boş günlər × başqalarına gündə əlavə ödəniş (əlavə iş saatı)",
+        "vacancy": "boş günlər × başqalarına gündə əlavə ödəniş (iş vaxtından artıq iş)",
         "hiring": "saat × rəhbərin bir saatı + elan",
         "training": "günlər × öyrədənin gündə itən vaxtı",
         "ramp": "günlər × gündə itən brüt mənfəət (dövriyyə yox — dövriyyə zərəri şişirdir)",
         "mistakes": "bir dəfəlik məbləğ"
       },
       "annualFormula": "{leavers} nəfər × bir işçi {per}",
-      "ruleCompare": "Müqayisə üçün: geniş yayılmış qaydaya görə bir işçinin yerini doldurmaq 2–3 aylıq maaşdır ({low} – {high}).",
+      "ruleCompare": "Müqayisə üçün: geniş yayılmış qaydaya görə bir işçinin yerini doldurmaq 2–3 aylıq əmək haqqıdır ({low} – {high}).",
       "cta": {
         "title": "Bu itkini birlikdə azaldaq",
         "body": "Rəqəmi göndərin — işə qəbul, ilk həftələr və növbə qaydalarına birlikdə baxırıq.",
@@ -1874,7 +1874,8 @@
       "invoices": "Faturalar",
       "mobileOpenMenu": "Menyunu aç",
       "mobileCloseMenu": "Menyunu bağla",
-      "freePlan": "Pulsuz"
+      "freePlan": "Pulsuz",
+      "excelTemplates": "Excel şablonları"
     },
     "topBar": {
       "notifications": "Bildirişlər",
@@ -7199,7 +7200,7 @@
           "kw": "işçi dəyişməsi kadr axını işdən çıxma turnover",
           "what": "İl ərzində işdən çıxan işçilərin sizə neçəyə başa gəldiyini göstərir — işçini saxlamağa nə qədər pul və vaxt ayırmağa dəyər, onu qərar verməyə kömək edir.",
           "how": [
-            "İndiki işçi sayını, orta aylıq maaşı və keçən il işdən çıxanların sayını yazın (nümunə: 18 işçi, 850 ₼, 12 nəfər).",
+            "İndiki işçi sayını, orta aylıq əmək haqqını və keçən il işdən çıxanların sayını yazın (nümunə: 18 işçi, 850 ₼, 12 nəfər).",
             "Alət işçi dəyişmə faizini hesablayır: nümunədə 12 ÷ 18 = 66,7%.",
             "Bir işçinin getməsinin xərcini 5 hissədə yazın: boş qalan günlər, axtarış, öyrətmə, tam sürətə çatana qədər itən mənfəət və səhvlər (nümunədə bir işçi ≈ 1 015 ₼, 12 nəfər üçün ildə ≈ 12 180 ₼)."
           ]
@@ -7885,5 +7886,70 @@
     "franchise": "Franchise",
     "sektor": "Sektorlar",
     "listings": "Elanlar"
+  },
+  "excelTemplates": {
+    "back": "Bütün alətlər",
+    "trail": "Alətlər / Excel şablonları",
+    "eyebrow": "Excel şablonları",
+    "title": "Restoran üçün hazır Excel şablonları",
+    "lead": "Mənfəət və zərər, anbar, əmək haqqı, büdcə və balans — formulları qurulmuş, Azərbaycan dilində. Rəqəmlərinizi yazın, qalanını şablon hesablayır.",
+    "featuresLabel": "Şablonların xüsusiyyətləri",
+    "features": {
+      "f1": "Formullar hazırdır",
+      "f2": "Excel, Google Sheets və Numbers-də açılır",
+      "f3": "Hər faylda «Necə istifadə etməli» səhifəsi",
+      "f4": "Üzvlər üçün pulsuz"
+    },
+    "gate": {
+      "title": "Yükləmək üçün pulsuz üzv olun",
+      "body": "Qeydiyyat bir dəqiqə çəkir. Şablonlara baxmaq hamı üçün açıqdır, yükləmək üzvlər üçündür.",
+      "register": "Pulsuz üzv ol",
+      "login": "Daxil ol"
+    },
+    "format": "Excel · .xlsx",
+    "download": "Yüklə",
+    "locked": "Üzv olub yüklə",
+    "previewAlt": "«{name}» şablonunun görünüşü (nümunə rəqəmlərlə)",
+    "note": "Şablonlardakı rəqəmlər nümunədir — silib öz rəqəmlərinizi yazın. Vergi və sığorta haqlarının dərəcələrini mühasibinizdən dəqiqləşdirin. Şablonları öz işinizdə sərbəst istifadə edə bilərsiniz; satmaq və ya başqa ad altında yaymaq olmaz.",
+    "bandTitle": "Restoran üçün 5 hazır Excel şablonu",
+    "bandBody": "Mənfəət və zərər (12 ay), anbar və maya dəyəri, əmək haqqı xərcləri, büdcə və faktiki, balans. Üzvlər üçün pulsuz.",
+    "bandCta": "Şablonlara bax",
+    "items": {
+      "menfeet-zerer-12-ay": {
+        "title": "12 aylıq mənfəət və zərər hesabatı",
+        "body": "Hər ayın gəliri, xərcləri və mənfəəti bir cədvəldə; sağda ilin cəmi və hər maddənin satışa nisbəti.",
+        "b1": "Ümumi mənfəət, əməliyyat, vergiyə qədər və xalis mənfəət",
+        "b2": "Əsas xərc (maya dəyəri + əmək haqqı) aydan-aya",
+        "b3": "Zərərli ay qırmızı görünür"
+      },
+      "anbar-ve-maya-deyeri": {
+        "title": "Anbar və maya dəyəri",
+        "body": "Ayın əvvəlindəki qalıq, alış və ayın sonundakı sayımdan istifadə olunan ərzağın maya dəyəri və food cost faizi.",
+        "b1": "40 məhsul sətri, kateqoriya və ölçü vahidi",
+        "b2": "Sifariş həddinə çatanda «Sifariş et» xəbərdarlığı",
+        "b3": "Food cost faizi avtomatik"
+      },
+      "isci-xerci": {
+        "title": "Əmək haqqı xərcləri",
+        "body": "Vəzifələr üzrə əmək haqqı, iş vaxtından artıq iş və sığorta haqları; əmək haqqı xərclərinin satışa nisbəti.",
+        "b1": "Zal və mətbəx ayrıca",
+        "b2": "Bir müştəriyə düşən xərc və bir iş saatına düşən müştəri",
+        "b3": "Ərzaq faizi ilə birlikdə əsas xərc faizi"
+      },
+      "budce-ve-faktiki": {
+        "title": "Büdcə və faktiki xərclər",
+        "body": "Ayın planı ilə faktiki xərci yan-yana qoyun: fərq ₼ və faizlə, büdcədən artıq xərc qırmızı.",
+        "b1": "İcarədən delivery komissiyasına qədər 21 maddə",
+        "b2": "Qrup cəmləri və ümumi cəm",
+        "b3": "Hər maddə üçün qeyd sütunu"
+      },
+      "balans": {
+        "title": "Balans hesabatı",
+        "body": "Aktivlər, öhdəliklər və kapital iki il üzrə; yoxlama sətri və borcu ödəmə qabiliyyətini göstərən əmsallar.",
+        "b1": "Qısamüddətli və uzunmüddətli aktivlər, öhdəliklər",
+        "b2": "Cari likvidlik və borc əmsalı",
+        "b3": "«Yoxlama» sətri səhvi dərhal göstərir"
+      }
+    }
   }
 }

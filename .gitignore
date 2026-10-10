@@ -58,3 +58,4 @@ playwright-report/
 
 # Auto-journal: local-only rolling log (untracked to avoid parallel-branch merge conflicts)
 docs/SESSION-JOURNAL.md
+content/excel-templates/

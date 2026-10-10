@@ -1874,7 +1874,8 @@
       "invoices": "Faturalar",
       "mobileOpenMenu": "Menüyü aç",
       "mobileCloseMenu": "Menüyü kapat",
-      "freePlan": "Ücretsiz"
+      "freePlan": "Ücretsiz",
+      "excelTemplates": "Excel şablonları"
     },
     "topBar": {
       "notifications": "Bildirimler",
@@ -7885,5 +7886,70 @@
     "franchise": "Franchise",
     "sektor": "Sektörler",
     "listings": "İlanlar"
+  },
+  "excelTemplates": {
+    "back": "Tüm araçlar",
+    "trail": "Araçlar / Excel şablonları",
+    "eyebrow": "Excel şablonları",
+    "title": "Restoran için hazır Excel şablonları",
+    "lead": "Kâr-zarar, stok, personel maliyeti, bütçe ve bilanço — formülleri kurulu, Azerbaycan dilinde. Rakamlarınızı yazın, gerisini şablon hesaplar.",
+    "featuresLabel": "Şablon özellikleri",
+    "features": {
+      "f1": "Formüller hazır",
+      "f2": "Excel, Google Sheets ve Numbers’ta açılır",
+      "f3": "Her dosyada «nasıl kullanılır» sayfası",
+      "f4": "Üyelere ücretsiz"
+    },
+    "gate": {
+      "title": "İndirmek için ücretsiz üye olun",
+      "body": "Kayıt bir dakika sürer. Önizleme herkese açık, indirme üyeler içindir.",
+      "register": "Ücretsiz üye ol",
+      "login": "Giriş yap"
+    },
+    "format": "Excel · .xlsx",
+    "download": "İndir",
+    "locked": "Üye ol ve indir",
+    "previewAlt": "«{name}» şablonunun görünümü (örnek rakamlarla)",
+    "note": "Şablonlardaki rakamlar örnektir — silip kendi rakamlarınızı yazın. Vergi ve sigorta primi oranlarını muhasebecinizle teyit edin. Şablonları kendi işinizde serbestçe kullanabilirsiniz; satmak veya başka isimle dağıtmak yasaktır.",
+    "bandTitle": "Restoran için 5 hazır Excel şablonu",
+    "bandBody": "Kâr-zarar (12 ay), stok ve satılan malın maliyeti, personel maliyeti, bütçe ve gerçekleşen, bilanço. Üyelere ücretsiz.",
+    "bandCta": "Şablonlara bak",
+    "items": {
+      "menfeet-zerer-12-ay": {
+        "title": "12 aylık kâr-zarar tablosu",
+        "body": "Her ayın geliri, gideri ve kârı tek tabloda; sağda yıl toplamı ve her kalemin satışa oranı.",
+        "b1": "Brüt, faaliyet, vergi öncesi ve net kâr",
+        "b2": "Ana maliyet (satılan malın maliyeti + personel) ay ay",
+        "b3": "Zararlı ay kırmızı görünür"
+      },
+      "anbar-ve-maya-deyeri": {
+        "title": "Stok ve maliyet",
+        "body": "Ay başı stok, alımlar ve ay sonu sayımından kullanılan gıdanın maliyeti ve food cost oranı.",
+        "b1": "40 ürün satırı, kategori ve birim",
+        "b2": "Sipariş seviyesinde «Sipariş et» uyarısı",
+        "b3": "Food cost oranı otomatik"
+      },
+      "isci-xerci": {
+        "title": "Personel maliyeti",
+        "body": "Pozisyonlara göre maaş, fazla mesai ve işveren sigorta primleri; personel maliyetinin satışa oranı.",
+        "b1": "Salon ve mutfak ayrı",
+        "b2": "Müşteri başına maliyet ve iş saati başına müşteri",
+        "b3": "Gıda oranıyla birlikte ana maliyet oranı"
+      },
+      "budce-ve-faktiki": {
+        "title": "Bütçe ve gerçekleşen",
+        "body": "Ayın planıyla gerçek gideri yan yana koyun: fark ₼ ve yüzde olarak, bütçe aşımı kırmızı.",
+        "b1": "Kiradan paket servis komisyonuna 21 kalem",
+        "b2": "Grup ara toplamları ve genel toplam",
+        "b3": "Her kalem için not sütunu"
+      },
+      "balans": {
+        "title": "Bilanço",
+        "body": "Varlıklar, borçlar ve özkaynak iki yıl için; kontrol satırı ve borç ödeme gücünü gösteren oranlar.",
+        "b1": "Dönen ve duran varlıklar, kısa ve uzun vadeli borçlar",
+        "b2": "Cari oran ve borç oranı",
+        "b3": "«Kontrol» satırı hatayı hemen gösterir"
+      }
+    }
   }
 }

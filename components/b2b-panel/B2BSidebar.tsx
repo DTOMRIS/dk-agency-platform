@@ -7,6 +7,7 @@ import DkMark from '@/components/brand/DkMark';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import {
+  FileSpreadsheet,
   Bell,
   Briefcase,
   Building2,
@@ -63,6 +64,8 @@ const NAV_SECTIONS: NavSection[] = [
     titleKey: 'sectionTools',
     items: [
       { href: '/b2b-panel/toolkit', labelKey: 'toolkit', icon: Wrench, pro: true },
+      // TASK-0532: DK Excel templates (members download free).
+      { href: '/toolkit/excel-sablonlar', labelKey: 'excelTemplates', icon: FileSpreadsheet },
       { href: '/b2b-panel/faturalar', labelKey: 'invoices', icon: Receipt },
       { href: '/b2b-panel/favoriler', labelKey: 'favorites', icon: Star },
       { href: '/b2b-panel/analizler', labelKey: 'aiAnalysis', icon: Sparkles },

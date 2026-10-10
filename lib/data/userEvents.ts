@@ -15,6 +15,8 @@ export const EVENT_TYPES = [
   'gap_interest',
   // TASK-0505: üzv «Yaxında» alət üçün «Xəbər ver» basdı — payload { toolSlug }
   'tool_notify_request',
+  // TASK-0532: üzv Excel şablonunu yüklədi — payload { slug }
+  'template_download',
 ] as const;
 
 export type UserEventType = (typeof EVENT_TYPES)[number];
