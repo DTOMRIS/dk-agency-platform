@@ -128,6 +128,33 @@ export default function FloatingKazanWidget() {
     lastUserQuestions(messages, pendingQuestion)
   );
 
+  // TASK-0536: the proactive question bubble (KazanNudge) asks one question; the visitor's answer arrives here
+  // via `kazan:ask` — the panel opens with that question as KAZAN's line and sends the answer.
+  const [pendingAsk, setPendingAsk] = useState<{ intro: string; question: string } | null>(null);
+  useEffect(() => {
+    function onAsk(event: Event) {
+      const detail = (event as CustomEvent<{ intro?: string; question?: string }>).detail;
+      if (!detail?.question) return;
+      setOpen(true);
+      // The question goes into the list right away; the answer is sent on the next render, when `messages`
+      // already holds it (sending in the same tick used a stale list and dropped the question).
+      if (detail.intro) setMessages((current) => [...current, { role: 'assistant', content: detail.intro as string }]);
+      setPendingAsk({ intro: '', question: detail.question });
+    }
+    window.addEventListener('kazan:ask', onAsk);
+    return () => window.removeEventListener('kazan:ask', onAsk);
+  }, []);
+  useEffect(() => {
+    if (!pendingAsk || loading) return;
+    const ask = pendingAsk;
+    const id = window.requestAnimationFrame(() => {
+      setPendingAsk(null);
+      void sendMessage(ask.question);
+    });
+    return () => window.cancelAnimationFrame(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendingAsk, loading]);
+
   useEffect(() => {
     function openFromContactPage(event: Event) {
       const customEvent = event as CustomEvent<{ context?: string }>;

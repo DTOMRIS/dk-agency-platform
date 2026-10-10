@@ -7984,5 +7984,21 @@
       "cta": "WhatsApp’tan yazın",
       "wa": "Merhaba Doğan Bey, aracı kullandım, ücretsiz teşhis istiyorum."
     }
+  },
+  "kazanNudge": {
+    "aria": "KAZAN AI sorusu",
+    "meta": "KAZAN AI · yapay zekâ asistanı",
+    "placeholder": "Cevabınızı yazın",
+    "send": "Gönder",
+    "close": "Kapat",
+    "questions": {
+      "home": "Restoranınızda sizi en çok ne düşündürüyor: maliyetler, müşteri akışı mı, menü mü?",
+      "foodCost": "Hangi yemeğin maliyetini hesaplıyorsunuz? Yazın, birlikte bakalım.",
+      "toolkit": "Bu araçla hangi kararı vermek istiyorsunuz?",
+      "franchise": "Franchise vermeyi mi düşünüyorsunuz, almayı mı?",
+      "pricing": "Restoranınız ayda yaklaşık ne kadar satış yapıyor? Uygun planı söyleyelim.",
+      "blog": "Bu yazının konusu restoranınız için güncel mi?",
+      "news": "Bu haberlerden hangisi işinizi etkiliyor?"
+    }
   }
 }

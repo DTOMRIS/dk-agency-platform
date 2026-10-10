@@ -7984,5 +7984,21 @@
       "cta": "Write on WhatsApp",
       "wa": "Hello Doğan, I used a tool and would like a free diagnostic."
     }
+  },
+  "kazanNudge": {
+    "aria": "KAZAN AI question",
+    "meta": "KAZAN AI · AI assistant",
+    "placeholder": "Write your answer",
+    "send": "Send",
+    "close": "Close",
+    "questions": {
+      "home": "What worries you most in your restaurant: costs, guest flow or the menu?",
+      "foodCost": "Which dish are you costing? Tell us and we’ll look at it together.",
+      "toolkit": "What decision do you want to make with this tool?",
+      "franchise": "Are you thinking of franchising out or buying a franchise?",
+      "pricing": "Roughly how much does your restaurant sell per month? We’ll suggest the right plan.",
+      "blog": "Is the topic of this article relevant to your restaurant?",
+      "news": "Which of these news items affects your business?"
+    }
   }
 }

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0536` feat: KAZAN AI proaktiv sual balonu (səhifəyə görə bir sual, cavab paneli açır); Françayz və Resurslar menyularında ikon + izah; Owner.com, Nory, MarginEdge araşdırması.
 - `TASK-0535` fix: /marketinq alətlərindən geri artıq /marketinq-ə aparır, bir səhifədə bir geri düyməsi; üst bar həqiqi sessiyanı göstərir, paneldə saxta «PREMIUM» yoxdur; footer «Məsləhət» və «Xüsusi xidmət» tanıtım səhifəsinə; AZ mətnlərdə «françayz»; otel ulduzu «AHA sertifikatı» yox, dövlətin ulduz təsnifatı; «Müştəri portreti».
 - `TASK-0534` fix: /qiymet səhifəsində səhv şəxs adı və səhv WhatsApp nömrəsi düzəldi (4 dil yenidən yazıldı); /pricing kampaniya tarixi koddan; reklam ROI, başabaş (dövriyyə pulu iki dəfə sayılırdı, gizli vurucu), qonaq evi və P&L hesab xətaları; mənbəsiz rəqəmlər çıxdı; əmək haqqı, ümumi mənfəət, elan kimi düzgün AZ terminləri.
 - `TASK-0533` feat/perf: hər pulsuz alətin nəticəsində uyğun məhsul (OCAQ, Marketinq Ocağı və ya xüsusi xidmət); menyuda «Modullar» → «Həllər» (yalnız DK həlləri, pulsuz alətlər «Alətlər»-də); bütün saytda bir şrift — Inter (səhifədə şrift faylı 6 → 3).

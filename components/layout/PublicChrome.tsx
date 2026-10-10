@@ -6,6 +6,7 @@ import { Footer, KazanAIBot } from '@/components/layout/Footer';
 import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import LazyCookiesBanner from '@/components/ui/LazyCookiesBanner';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
+import KazanNudge from '@/components/kazan-ai/KazanNudge';
 import { stripLocalePrefix } from '@/i18n/config';
 
 function isDashboardRoute(pathname: string) {
@@ -29,6 +30,8 @@ export default function PublicChrome({ children }: { children: React.ReactNode }
           WhatsApp lived only on the home page. */}
       <WhatsAppButton />
       <KazanAIBot />
+      {/* TASK-0536: proactive one-question bubble above the KAZAN launcher (desktop). */}
+      <KazanNudge />
       <MobileBottomNav />
       <LazyCookiesBanner />
     </>

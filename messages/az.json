@@ -7984,5 +7984,21 @@
       "cta": "WhatsApp-da yazın",
       "wa": "Salam Doğan bəy, alətdən istifadə etdim, pulsuz diaqnostika istəyirəm."
     }
+  },
+  "kazanNudge": {
+    "aria": "KAZAN AI sualı",
+    "meta": "KAZAN AI · süni intellekt köməkçisi",
+    "placeholder": "Cavabınızı yazın",
+    "send": "Göndər",
+    "close": "Bağla",
+    "questions": {
+      "home": "Restoranınızda ən çox nə narahat edir: xərclər, müştəri axını, yoxsa menyu?",
+      "foodCost": "Hansı yeməyin maya dəyərini hesablayırsınız? Yazın, birlikdə baxaq.",
+      "toolkit": "Bu alətlə hansı qərarı vermək istəyirsiniz?",
+      "franchise": "Françayz verməyi düşünürsünüz, yoxsa almağı?",
+      "pricing": "Restoranınızın ayda təxminən nə qədər satışı var? Uyğun planı deyək.",
+      "blog": "Bu yazıdakı mövzu sizin restoranda aktualdırmı?",
+      "news": "Bu xəbərlərdən hansı sizin işinizə təsir edir?"
+    }
   }
 }
