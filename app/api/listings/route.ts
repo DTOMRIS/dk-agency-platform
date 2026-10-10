@@ -9,6 +9,7 @@ import { getServerMemberSession } from '@/lib/members/server-session';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { generateTrackingCode } from '@/lib/utils/tracking';
 import { isValidSector } from '@/lib/data/listingSectors';
+import { requireApiAdmin } from '@/lib/api/guards';
 
 const MAX_FREE_LISTINGS = 2;
 
@@ -27,6 +28,11 @@ export async function GET(request: NextRequest) {
   const offset = Number(searchParams.get('offset') || '0');
 
   if (scope === 'admin') {
+    // TASK-0524 (security): this branch returns every listing with owner name, phone, e-mail and review
+    // notes — it had no auth check and answered anonymous requests on production. Admin only.
+    const guard = await requireApiAdmin();
+    if (!guard.ok) return guard.response;
+
     const result = await getAdminListings({
       status,
       query,
