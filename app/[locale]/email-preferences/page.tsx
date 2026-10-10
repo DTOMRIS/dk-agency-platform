@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { CheckCircle, Mail, Rss, Package, AlertCircle } from 'lucide-react';
+import PageBack from '@/components/inner/PageBack';
 
 type Preferences = {
   email: string;
@@ -123,6 +124,7 @@ export default function EmailPreferencesPage() {
   if (!token) {
     return (
       <main className="min-h-screen bg-white flex items-center justify-center px-4">
+        <PageBack />
         <div className="max-w-md w-full text-center space-y-4">
           <AlertCircle className="mx-auto h-12 w-12 text-slate-400" aria-hidden="true" />
           <h1 className="text-2xl font-semibold text-[var(--dk-navy)] font-[Playfair_Display]">

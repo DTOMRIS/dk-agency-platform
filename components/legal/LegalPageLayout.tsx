@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { type Locale } from '@/i18n/config';
 import { getLegalContent, type LegalDocument } from '@/lib/legal/getLegalContent';
 import LegalRenderer from './LegalRenderer';
+import PageBack from '@/components/inner/PageBack';
 
 interface LegalPageLayoutProps {
   locale: Locale;
@@ -19,6 +20,7 @@ export default async function LegalPageLayout({
 
   return (
     <div className="min-h-[70vh] px-4 py-16 bg-slate-50">
+      <PageBack />
       <div className="max-w-3xl mx-auto rounded-2xl border border-slate-200 bg-white p-8">
         {isFallback && (
           <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">

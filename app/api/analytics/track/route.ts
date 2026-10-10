@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { webConversionEvents } from '@/lib/db/schema';
+import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
+
+// public-ok: anonymous page-event beacon (sendBeacon), writes one row, returns nothing.
+// TASK-0530: per-IP limit, field lengths capped, DB errors no longer echoed to the caller.
+const cap = (v: unknown, n: number) => (typeof v === 'string' && v ? v.slice(0, n) : null);
 
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(`analytics:${getClientIp(req)}`, RATE_LIMITS.analyticsEvent);
+  if (!rl.success) return rateLimitExceeded(rl);
+
   try {
     let body;
     // Handle standard JSON and keep it compatible with navigator.sendBeacon (which sends text/plain or Blob with JSON text)
@@ -22,12 +30,12 @@ export async function POST(req: NextRequest) {
 
     if (dbAvailable && db) {
       await db.insert(webConversionEvents).values({
-        sessionId,
-        pagePath,
-        eventName,
-        source: source || null,
-        campaign: campaign || null,
-        metadata: metadata || null,
+        sessionId: String(sessionId).slice(0, 100),
+        pagePath: String(pagePath).slice(0, 500),
+        eventName: String(eventName).slice(0, 100),
+        source: cap(source, 100),
+        campaign: cap(campaign, 100),
+        metadata: metadata && typeof metadata === 'object' && JSON.stringify(metadata).length <= 4000 ? metadata : null,
       });
       return NextResponse.json({ ok: true });
     }
@@ -36,7 +44,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, warning: 'Database not available, tracked event in memory only' });
   } catch (error) {
     console.error('[Track Route Error]', error);
-    const message = error instanceof Error ? error.message : 'Tracking failed';
-    return NextResponse.json({ ok: false, error: message }, { status: 500 });
+    return NextResponse.json({ ok: false, error: 'Tracking failed' }, { status: 500 });
   }
 }

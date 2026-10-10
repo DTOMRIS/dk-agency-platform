@@ -8,6 +8,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import JobsPage, { type JobsSearchParams } from '@/components/jobs/JobsPage';
 import { normalizeLocale } from '@/i18n/config';
 import { getAlternates } from '@/lib/seo/alternates';
+import PageBack from '@/components/inner/PageBack';
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = normalizeLocale(await getLocale());
@@ -25,5 +26,10 @@ export default async function IsElanlariPage({
   searchParams: Promise<JobsSearchParams>;
 }) {
   const locale = normalizeLocale(await getLocale());
-  return <JobsPage locale={locale} searchParams={await searchParams} />;
+  return (
+    <>
+      <PageBack band />
+      <JobsPage locale={locale} searchParams={await searchParams} />
+    </>
+  );
 }

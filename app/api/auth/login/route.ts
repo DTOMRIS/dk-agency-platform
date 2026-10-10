@@ -1,3 +1,4 @@
+// public-ok: login, rate-limited 5 / 15 min
 import { NextRequest, NextResponse } from 'next/server';
 import { compare } from 'bcryptjs';
 import { eq } from 'drizzle-orm';

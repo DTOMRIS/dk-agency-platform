@@ -1,3 +1,4 @@
+// public-ok: returns only the caller's own identity from their signed cookie
 import { NextRequest, NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';

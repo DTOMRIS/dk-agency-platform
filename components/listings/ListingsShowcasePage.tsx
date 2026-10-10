@@ -16,6 +16,7 @@ import {
 } from '@/lib/data/listingCategories';
 import { type MockListing } from '@/lib/data/mockListings';
 import { getAllSectors } from '@/lib/data/listingSectors';
+import PageBack from '@/components/inner/PageBack';
 
 type FilterType = 'all' | ListingCategory;
 
@@ -116,6 +117,7 @@ export default function ListingsShowcasePage() {
 
   return (
     <>
+      <PageBack band />
       <div className="min-h-screen bg-[var(--dk-paper)] pb-24">
         {/* ── Hero ──────────────────────────────────────────── */}
         <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-[var(--dk-navy)] to-slate-950 py-16 sm:py-20">

@@ -1,3 +1,4 @@
+// public-ok: one-click unsubscribe by the token from the e-mail link
 import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 

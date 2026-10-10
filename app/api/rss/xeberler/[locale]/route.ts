@@ -1,3 +1,4 @@
+// public-ok: per-language address of the approved-news RSS (see ../route.ts).
 import { NextRequest } from 'next/server';
 import { GET as getFeed } from '../route';
 

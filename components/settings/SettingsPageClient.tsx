@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from 'react';
 import { type MemberSession } from '@/lib/member-access';
 import { formatAzDateTime } from '@/lib/i18n/format';
+import PageBack from '@/components/inner/PageBack';
 
 function getPasswordStrength(password: string) {
   if (password.length < 8) return { label: 'zəif', color: 'bg-red-500' };
@@ -80,6 +81,7 @@ export default function SettingsPageClient({
   return (
     <div className="min-h-screen bg-white px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl space-y-6">
+        <PageBack inline />
         {toast ? <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700">{toast}</div> : null}
 
         <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">

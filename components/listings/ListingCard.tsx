@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { MapPin, ShieldCheck, Star } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
-import { MockListing } from '@/lib/data/mockListings';
+import type { MockListing } from '@/lib/data/mockListings';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getSectorLabel } from '@/lib/data/listingSectors';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';

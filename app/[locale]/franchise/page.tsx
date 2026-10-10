@@ -23,6 +23,7 @@ import {
   localeUrl,
   organizationNode,
 } from '@/lib/seo/structured-data';
+import PageBack from '@/components/inner/PageBack';
 
 export async function generateMetadata({
   params,
@@ -114,6 +115,7 @@ export default async function FranchisePillarPage({
 
   return (
     <div className="min-h-screen bg-[var(--dk-paper)]">
+      <PageBack />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
 
       {/* ── Hero ─────────────────────────────────────────────── */}

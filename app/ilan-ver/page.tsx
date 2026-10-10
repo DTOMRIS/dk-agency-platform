@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import CreateListingForm from '@/components/listings/CreateListingForm';
 import { getServerMemberSession } from '@/lib/members/server-session';
+import PageBack from '@/components/inner/PageBack';
 
 export const metadata: Metadata = {
   title: 'Elan ver',
@@ -16,6 +17,7 @@ export default async function IlanVerPage() {
   if (!session.loggedIn) {
     return (
       <div className="min-h-screen bg-white px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
+        <PageBack to="listings" inline className="mb-6" />
         <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm sm:rounded-[32px] sm:p-8">
           <span className="inline-flex rounded-full bg-dk-red-strong px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
             {t('loginRequired')}
@@ -47,6 +49,7 @@ export default async function IlanVerPage() {
 
   return (
       <div className="min-h-screen bg-white px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
+        <PageBack to="listings" inline className="mb-4" />
       <div className="mx-auto max-w-6xl">
         <CreateListingForm session={{ name: session.name, email: session.email }} />
       </div>

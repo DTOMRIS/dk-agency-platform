@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 
 import SektorLanding from '@/components/sektor/SektorLanding';
 import { getSektorConfig, VALID_SEKTOR_SLUGS } from '@/lib/data/sektorConfigs';
+import PageBack from '@/components/inner/PageBack';
 
 // Only `slug` is read from params — the locale comes from `getLocale()` so this
 // page works both at `/[locale]/sektor/[slug]` and via the locale-less root
@@ -45,5 +46,10 @@ export default async function SektorSlugPage({ params }: SektorPageParams) {
     notFound();
   }
 
-  return <SektorLanding config={config} />;
+  return (
+    <>
+      <PageBack to="sektor" band />
+      <SektorLanding config={config} />
+    </>
+  );
 }

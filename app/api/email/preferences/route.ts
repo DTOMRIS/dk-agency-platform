@@ -1,3 +1,4 @@
+// public-ok: e-mail preferences by the unsubscribe token from the e-mail link
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { emailPreferences } from '@/lib/db/schema';

@@ -6,7 +6,7 @@ import { Check, Copy, MapPin, MessageCircle, Share2, X } from 'lucide-react';
 import LeadForm from '@/components/listings/LeadForm';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getFieldsForType } from '@/lib/data/listingFieldConfig';
-import { MockListing } from '@/lib/data/mockListings';
+import type { MockListing } from '@/lib/data/mockListings';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 
 interface ListingModalProps {

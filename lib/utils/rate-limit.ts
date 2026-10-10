@@ -130,6 +130,9 @@ export const RATE_LIMITS = {
   authResetPassword: { maxRequests: 5, windowMs: 60 * 60 * 1000 }, // 5 / 1 hour
   authVerifyEmail: { maxRequests: 10, windowMs: 60 * 60 * 1000 }, // 10 / 1 hour
   kazanAi: { maxRequests: 30, windowMs: 60 * 1000 }, // 30 / 1 min
+  analyticsEvent: { maxRequests: 120, windowMs: 60 * 1000 }, // 120 / 1 min — page events (TASK-0530)
+  leadClick: { maxRequests: 20, windowMs: 60 * 60 * 1000 }, // 20 / 1 hour — counted contact clicks (TASK-0530)
+  aiReport: { maxRequests: 10, windowMs: 60 * 60 * 1000 }, // 10 / 1 hour — public quiz AI reports (TASK-0530)
   invoiceOcr: { maxRequests: 20, windowMs: 60 * 60 * 1000 }, // 20 / 1 hour
   // TASK-0439: /api/orchestrator sərbəst mətni AI-a göndərir — hər çağırış
   // xərcdir. Elan yaratmaq nadir əməliyyatdır, ona görə saatda 10 bol-bol

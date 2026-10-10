@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getNewsletterDigestStub } from '@/lib/data/newsletterDigest';
+import { getApprovedNewsArticles } from '@/lib/repositories/newsRepository';
+
+// public-ok: the 3 newest approved stories (public data). TASK-0530: before, a «stub» that returned
+// invented stories with made-up view counts from lib/data/newsroomFeed.
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   const localeParam = request.nextUrl.searchParams.get('locale');
   const locale = localeParam === 'en' || localeParam === 'ru' || localeParam === 'tr' ? localeParam : 'az';
+  const { items } = await getApprovedNewsArticles({ limit: 3 }, locale);
 
   return NextResponse.json({
     ok: true,
-    source: 'newsletter-digest-stub',
     generatedAt: new Date().toISOString(),
-    items: getNewsletterDigestStub(locale),
-    note: 'Placeholder route. Selection logic can be replaced with DB-backed most-read query.',
+    items: items.map((item) => ({ id: item.id, title: item.title, summary: item.summary, slug: item.slug })),
   });
 }

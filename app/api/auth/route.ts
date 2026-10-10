@@ -1,3 +1,4 @@
+// public-ok: legacy combined auth actions; login, register and reset request rate-limited, tokens checked in DB / signature
 import { NextRequest, NextResponse } from 'next/server';
 import { compare, hash } from 'bcryptjs';
 import { eq, and, isNull } from 'drizzle-orm';

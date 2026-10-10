@@ -1,3 +1,4 @@
+// public-ok: ad click → 302 to the ad target (http/https only), counts the click
 import { NextResponse } from 'next/server';
 import { getAdById, incrementAdClick } from '@/lib/repositories/adsRepository';
 

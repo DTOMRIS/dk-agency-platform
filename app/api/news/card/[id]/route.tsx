@@ -1,3 +1,4 @@
+// public-ok: social image of an approved story (Meta fetches it by public URL)
 /**
  * @file app/api/news/card/[id]/route.tsx
  * @purpose Təsdiqlənmiş xəbər üçün Instagram/Facebook kartı (1080×1350 PNG, "B — ağ kağız" dizaynı).

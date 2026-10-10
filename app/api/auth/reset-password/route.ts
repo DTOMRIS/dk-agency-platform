@@ -1,3 +1,4 @@
+// public-ok: password reset with a DB token, rate-limited
 import { NextRequest, NextResponse } from 'next/server';
 import { hash } from 'bcryptjs';
 import { eq, and, isNull } from 'drizzle-orm';

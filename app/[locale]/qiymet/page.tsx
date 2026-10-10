@@ -4,6 +4,7 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Check, Crown, Flame, GraduationCap, MessageCircle } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import PageBack from '@/components/inner/PageBack';
 
 /* ------------------------------------------------------------------ */
 /*  Copy                                                               */
@@ -287,6 +288,7 @@ export default function PricingPage() {
 
   return (
     <div className="bg-white pb-24 pt-12">
+      <PageBack />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">

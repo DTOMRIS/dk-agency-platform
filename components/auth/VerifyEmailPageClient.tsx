@@ -15,26 +15,16 @@ export default function VerifyEmailPageClient() {
   const token = useMemo(() => searchParams.get('token') || '', [searchParams]);
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>(token ? 'idle' : 'error');
 
+  // TASK-0530: the real check is /api/auth/confirm (users + email_verification_tokens in the DB — the
+  // link in the e-mail goes there too). This page used to POST to /api/auth/verify-email, which checked an
+  // in-memory mock store, so a real token always showed «invalid». A token here now goes to the real route.
   useEffect(() => {
-    if (!token) {
-      return;
-    }
-
-    const run = async () => {
+    if (!token) return;
+    const id = window.requestAnimationFrame(() => {
       setState('loading');
-      try {
-        const response = await fetch('/api/auth/verify-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token }),
-        });
-        setState(response.ok ? 'success' : 'error');
-      } catch {
-        setState('error');
-      }
-    };
-
-    void run();
+      window.location.replace(`/api/auth/confirm?token=${encodeURIComponent(token)}`);
+    });
+    return () => window.cancelAnimationFrame(id);
   }, [token]);
 
   const message =

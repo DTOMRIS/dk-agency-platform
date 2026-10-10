@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import { SEKTOR_CONFIG_LIST } from '@/lib/data/sektorConfigs';
+import PageBack from '@/components/inner/PageBack';
 
 // Locale comes from `getLocale()` (not params) so this page works both at
 // `/[locale]/sektor` and via the locale-less root mirror `app/sektor`.
@@ -35,6 +36,7 @@ export default async function SektorIndexPage() {
 
   return (
     <section className="bg-slate-50 py-20 sm:py-28">
+      <PageBack />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="font-display text-4xl font-black tracking-tighter text-slate-900 sm:text-5xl">

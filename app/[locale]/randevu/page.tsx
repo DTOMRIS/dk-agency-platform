@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import PageBack from '@/components/inner/PageBack';
 
 const pageCopy: Record<Locale, { title: string; body: string }> = {
   az: {
@@ -29,6 +30,7 @@ export default function RandevuPage() {
 
   return (
     <div className="min-h-[70vh] px-4 py-16 bg-slate-50">
+      <PageBack />
       <div className="max-w-3xl mx-auto rounded-2xl border border-slate-200 bg-white p-8">
         <h1 className="text-3xl font-bold text-slate-900">{copy.title}</h1>
         <p className="mt-4 text-slate-600">{copy.body}</p>

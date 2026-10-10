@@ -1,3 +1,4 @@
+// public-ok: registration, rate-limited 3 / hour
 import { NextRequest, NextResponse, after } from 'next/server';
 import { hash } from 'bcryptjs';
 import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';

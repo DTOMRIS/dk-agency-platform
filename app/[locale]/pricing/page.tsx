@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { PricingPage } from '@/components/pricing/PricingPage';
 import { normalizeLocale } from '@/i18n/config';
+import PageBack from '@/components/inner/PageBack';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -20,6 +21,11 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function PricingRoute({ params }: Props) {
   await params;
-  return <PricingPage />;
+  return (
+    <>
+      <PageBack band />
+      <PricingPage />
+    </>
+  );
 }
 

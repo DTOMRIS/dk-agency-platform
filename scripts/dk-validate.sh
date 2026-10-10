@@ -169,6 +169,12 @@ else
     GATING_FAIL=0
     for f in $NEW_API; do
       API_PATH=$(echo "$f" | sed -E 's|app(/api/.*)/route\.ts|\1|')
+      # TASK-0530: a route marked «public-ok: <reason>» is public on purpose (same rule as SYSTEM-MAP.md);
+      # the reason is printed so a reviewer sees every skip.
+      if [ -n "$API_PATH" ] && grep -q "public-ok:" "$f"; then
+        echo "    $API_PATH → public-ok: $(grep -o 'public-ok:.*' "$f" | head -1 | cut -c12-110)"
+        continue
+      fi
       if [ -n "$API_PATH" ]; then
         CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${BASE}${API_PATH}" \
           -H "Content-Type: application/json" -d '{}' 2>/dev/null || echo "000")
