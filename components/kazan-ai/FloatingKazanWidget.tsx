@@ -159,6 +159,7 @@ export default function FloatingKazanWidget() {
   ) {
     if (!lead?.id) return;
     try {
+      // fake-scan-ok: CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
       await fetch('/api/kazan-ai/leads', {
         method: 'PATCH',
         headers: { 'content-type': 'application/json' },
@@ -236,6 +237,7 @@ export default function FloatingKazanWidget() {
       '';
 
     try {
+      // fake-scan-ok: CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
       const response = await fetch('/api/kazan-ai/leads', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },

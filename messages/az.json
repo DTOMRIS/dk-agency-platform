@@ -3540,9 +3540,9 @@
     "contactPageFallback": "Əlaqə səhifəsindən gəldi"
   },
   "dashboardSidebar": {
-    "title": "OCAQ İdarə Paneli",
+    "title": "DK Agency İdarə Paneli",
     "role": "Admin",
-    "panelTitle": "OCAQ İdarə Paneli",
+    "panelTitle": "DK Agency İdarə Paneli",
     "adminSubtitle": "Admin mərkəzi",
     "userAccess": "Tam idarəetmə girişi aktivdir",
     "closeSidebar": "Sidebar bağla",
@@ -3899,7 +3899,9 @@
     "copied": "Kopyalandı!",
     "whatsappTemplate": "WhatsApp şablonu",
     "pdfExport": "PDF ixrac",
-    "sectionHistory": "Tarixçə"
+    "sectionHistory": "Tarixçə",
+    "loadError": "Auditlər yüklənmədi — server cavab vermədi. Səhifəni yeniləyin.",
+    "saveError": "Saxlanmadı — server cavab vermədi. Yenidən yoxlayın."
   },
   "dashboardFoodCost": {
     "pageTitle": "Food Cost Analiz",
@@ -3958,7 +3960,8 @@
       "Okt",
       "Noy",
       "Dek"
-    ]
+    ],
+    "loadError": "Food cost hesabatı yüklənmədi — server cavab vermədi. Aşağıdakı sıfırlar həqiqi deyil; səhifəni yeniləyin."
   },
   "dashboardFaturalar": {
     "pageTitle": "Faturalar",
@@ -4077,7 +4080,8 @@
     "importErrors": "xəta",
     "detailSaveError": "Saxlanmadı — server cavab vermədi. Bir az sonra yenidən yoxlayın.",
     "manualSaveError": "Faktura saxlanmadı — server cavab vermədi. Məlumatlar formada qalır, yenidən yoxlayın.",
-    "bulkDeleteError": "Silinmədi — server cavab vermədi. Yenidən yoxlayın."
+    "bulkDeleteError": "Silinmədi — server cavab vermədi. Yenidən yoxlayın.",
+    "loadError": "Fakturalar yüklənmədi — server cavab vermədi. Rəqəmlər göstərilmir; səhifəni yeniləyin."
   },
   "legal": {
     "fallbackNotice": "Bu sənəd hələ bu dilə tərcümə edilməyib, Azərbaycan dilindəki versiyası göstərilir."
@@ -7787,5 +7791,8 @@
     },
     "asideNote": "Qeydiyyat pulsuzdur. Sualınız varsa WhatsApp-dan yazın.",
     "backPrev": "Geri qayıt"
+  },
+  "b2bNewListing": {
+    "back": "Elanlarım"
   }
 }

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0528` fix: «saxta davranış» süpürgəsi — B2B «Yeni elan» indi həqiqətən saxlayır (əvvəl heç nə göndərmirdi), bildiriş ayarları yadda qalır, admin panelində xətalar «0» kimi gizlənmir, zəng düyməsi müraciətləri göstərir; 72 ölü fayl silindi. Sistem xəritəsi artıq saxta davranışı, ölü düymələri və istifadəsiz komponentləri özü tapır.
 - `TASK-0527` fix(deps): Hostinger-in 8 təhlükəsizlik xəbərdarlığı bağlandı — js-yaml 5.4.1, dompurify 3.4.16, protobufjs 7.6.5; canlı asılılıqlarda açıq qalmadı.
 - `TASK-0526` fix(panels): admin və müştəri panelində saxta davranışlar düzəldi — xətada uydurma faktura / elan göstərilmir, «saxlanıldı» və «şifrə dəyişdirildi» yalnız həqiqətən olanda deyilir (şifrə dəyişmə indi işləyir), admin çıxışı düzgün işləyir, funnel addımları məntiqli, «gözləyən elan» hər yerdə eyni rəqəm, müştəri panelində təkliflər öz kartında, bilinməyən panel ünvanı 404.
 - `TASK-0524` fix(security) + design: girişsiz açıq olan 3 yer bağlandı — `/api/listings?scope=admin` (bütün elanları sahibin telefonu, e-poçtu və daxili qeydlərlə verirdi), `/api/telegram/post` (hər kəs botla Telegram-a mesaj yaza bilirdi), faktura OCR/PDF (pullu AI). Dizayn: B2B panel və bütün Marketinq alətləri toolkit-in v2 dilində (eyni üst bar, krem fon, Inter, geri + yol, kateqoriya); giriş / qeydiyyat / şifrə səhifələri bir v2 çərçivədə, sol üstdə dönən DK logosu.

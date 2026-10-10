@@ -95,7 +95,21 @@ export function DashboardTopBar() {
   const [memberSession, setMemberSession] = useState<MemberSession>(getGuestSession());
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const unreadCount = 0;
+  // TASK-0528: the bell was a dead button with a hard-coded 0. It now shows the same 7-day inbox count as the
+  // sidebar badge (admin-only COUNT endpoint) and opens «Bütün müraciətlər».
+  const [unreadCount, setUnreadCount] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/dashboard/muracietler/count')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { count?: number } | null) => {
+        if (!cancelled && typeof data?.count === 'number') setUnreadCount(data.count);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const syncSession = () => setMemberSession(readMemberSession());
@@ -122,6 +136,7 @@ export function DashboardTopBar() {
   const handleLogout = async () => {
     clearMemberSession();
     // TASK-0526: was '/api/member/auth/logout' (no such route → the server cookie stayed); same as the sidebar.
+    // fake-scan-ok: logout: the client session is cleared and the user redirected either way
     await fetch('/api/auth/logout', { method: 'POST' }).catch(() => null);
     setUserMenuOpen(false);
     router.refresh();
@@ -133,18 +148,19 @@ export function DashboardTopBar() {
       <p className="text-[15px] font-semibold tracking-tight text-slate-900">DK Agency</p>
 
       <div className="flex items-center gap-3">
-        <button
-          type="button"
+        <Link
+          href="/dashboard/muracietler"
           aria-label={t('notifications')}
+          data-testid="topbar-inbox"
           className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900"
         >
           <Bell size={18} />
           {unreadCount > 0 ? (
             <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-dk-red-strong px-1 text-[10px] font-bold text-white">
-              {unreadCount}
+              {unreadCount > 99 ? '99+' : unreadCount}
             </span>
           ) : null}
-        </button>
+        </Link>
 
         <LanguageSwitcher currentLocale={currentLocale} />
 

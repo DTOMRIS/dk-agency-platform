@@ -36,6 +36,7 @@ export default function PortalEngagementTracker() {
     // Helper to send tracking events
     const trackEvent = async (eventName: string, metadata: Record<string, unknown> = {}) => {
       try {
+        // fake-scan-ok: analytics beacon, nothing is shown to the user
         await fetch('/api/analytics/track', {
           method: 'POST',
           headers: {

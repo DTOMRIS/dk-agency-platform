@@ -186,8 +186,8 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
           aiAnalysis: aiResult,
         });
       } else {
-        // Simülasyon
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // TASK-0528: no simulation — without a real submit handler nothing can be saved, so never show success.
+        throw new Error('ListingForm: onSubmit is required');
       }
       setSubmitted(true);
     } catch (err) {

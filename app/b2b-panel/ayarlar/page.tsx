@@ -1,27 +1,47 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  Bell, Check, Globe, Key, Lock, Mail, Save, Shield, User,
+  Bell, Check, Globe, Key, Lock, Save, Shield,
 } from 'lucide-react';
 
-const LANGUAGES = [
-  { value: 'az', label: 'Azərbaycanca' },
-  { value: 'ru', label: 'Русский' },
-  { value: 'en', label: 'English' },
-  { value: 'tr', label: 'Türkçe' },
-];
+// TASK-0528: the toggles are the three real subscriptions in email_preferences (before: four switches that
+// were saved nowhere). Account-security and listing-lead e-mails are transactional — always sent.
+const NOTIFICATION_ITEMS = [
+  { key: 'newsletter', label: 'Həftəlik bülleten', desc: 'Sektor nəbzi və həftənin əsas xəbərləri' },
+  { key: 'blogDigest', label: 'Yeni məqalələr', desc: 'Bloqda yeni yazı çıxanda qısa xülasə' },
+  { key: 'productUpdates', label: 'Platforma yenilikləri', desc: 'Yeni alətlər, kampaniyalar və tövsiyələr' },
+] as const;
+type NotificationKey = (typeof NOTIFICATION_ITEMS)[number]['key'];
 
 export default function AyarlarPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [language, setLanguage] = useState('az');
-  const [notifications, setNotifications] = useState({
-    email: true,
-    listings: true,
-    marketing: false,
-    weekly: true,
+  const [saveError, setSaveError] = useState('');
+  const [prefsLoaded, setPrefsLoaded] = useState(false);
+  const [notifications, setNotifications] = useState<Record<NotificationKey, boolean>>({
+    newsletter: false,
+    blogDigest: false,
+    productUpdates: false,
   });
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/member/email-preferences')
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
+      .then((data: { preferences?: Record<NotificationKey, boolean> }) => {
+        if (!cancelled && data.preferences) setNotifications(data.preferences);
+      })
+      .catch(() => {
+        if (!cancelled) setSaveError('Bildiriş ayarları yüklənmədi — səhifəni yeniləyin.');
+      })
+      .finally(() => {
+        if (!cancelled) setPrefsLoaded(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const [passwordForm, setPasswordForm] = useState({
     current: '',
     newPass: '',
@@ -30,16 +50,28 @@ export default function AyarlarPage() {
   const [passwordMsg, setPasswordMsg] = useState('');
   const [passwordOk, setPasswordOk] = useState(false);
 
-  const handleNotifChange = (key: string) => {
-    setNotifications((prev) => ({ ...prev, [key]: !prev[key as keyof typeof prev] }));
+  const handleNotifChange = (key: NotificationKey) => {
+    setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
     setSaved(false);
   };
 
   const handleSave = async () => {
     setSaving(true);
-    await new Promise((r) => setTimeout(r, 600));
-    setSaving(false);
-    setSaved(true);
+    setSaveError('');
+    try {
+      const res = await fetch('/api/member/email-preferences', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(notifications),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setSaved(true);
+    } catch {
+      setSaved(false);
+      setSaveError('Saxlanmadı — server cavab vermədi. Yenidən yoxlayın.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handlePasswordChange = async () => {
@@ -89,13 +121,10 @@ export default function AyarlarPage() {
           <h2 className="text-sm font-bold text-slate-900 mb-4">
             <Globe size={14} className="inline mr-1" /> İnterfeys dili
           </h2>
-          <select
-            value={language}
-            onChange={(e) => { setLanguage(e.target.value); setSaved(false); }}
-            className="w-full sm:w-64 px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
-          >
-            {LANGUAGES.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
-          </select>
+          {/* TASK-0528: the portal has no language-prefixed URLs, so a switch here could not change anything. */}
+          <p className="text-sm text-slate-600">
+            Panel Azərbaycan dilindədir. Saytın rus, ingilis və türk versiyalarını yuxarıdakı dil menyusundan açın.
+          </p>
         </div>
 
         {/* Bildirişlər */}
@@ -104,12 +133,7 @@ export default function AyarlarPage() {
             <Bell size={14} className="inline mr-1" /> Bildirim tənzimləmələri
           </h2>
           <div className="space-y-4">
-            {[
-              { key: 'email', label: 'Email bildirişləri', desc: 'Hesab yenilikləri və təhlükəsizlik xəbərləri' },
-              { key: 'listings', label: 'Elan bildirişləri', desc: 'Elanınıza maraq göstərildiyi zaman' },
-              { key: 'marketing', label: 'Marketinq emailləri', desc: 'Yeniliklər, kampaniyalar və tövsiyələr' },
-              { key: 'weekly', label: 'Həftəlik xülasə', desc: 'Sektor nəbzi və platform yenilikləri' },
-            ].map((item) => (
+            {NOTIFICATION_ITEMS.map((item) => (
               <div key={item.key} className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-semibold text-slate-700">{item.label}</p>
@@ -118,17 +142,24 @@ export default function AyarlarPage() {
                 <button
                   type="button"
                   onClick={() => handleNotifChange(item.key)}
-                  className={`relative w-12 h-7 rounded-full transition-colors ${
-                    notifications[item.key as keyof typeof notifications] ? 'bg-emerald-500' : 'bg-slate-300'
+                  disabled={!prefsLoaded}
+                  role="switch"
+                  aria-checked={notifications[item.key]}
+                  aria-label={item.label}
+                  className={`relative w-12 h-7 rounded-full transition-colors disabled:opacity-50 ${
+                    notifications[item.key] ? 'bg-emerald-500' : 'bg-slate-300'
                   }`}
                 >
                   <span className={`absolute top-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform ${
-                    notifications[item.key as keyof typeof notifications] ? 'translate-x-5' : 'translate-x-0.5'
+                    notifications[item.key] ? 'translate-x-5' : 'translate-x-0.5'
                   }`} />
                 </button>
               </div>
             ))}
           </div>
+          <p className="mt-4 border-t border-slate-100 pt-3 text-xs text-slate-500">
+            Hesab təhlükəsizliyi və elanınıza gələn müraciət e-poçtları həmişə göndərilir — onları söndürmək olmur.
+          </p>
         </div>
 
         {/* Şifrə dəyişmə */}
@@ -193,6 +224,7 @@ export default function AyarlarPage() {
             {saved ? <Check size={16} /> : <Save size={16} />}
             {saving ? 'Saxlanılır...' : saved ? 'Saxlanıldı!' : 'Dəyişiklikləri saxla'}
           </button>
+          {saveError && <p role="alert" className="mt-2 text-sm font-semibold text-red-700">{saveError}</p>}
         </div>
       </div>
     </div>

@@ -57,9 +57,9 @@ type ModalType = null | 'ocr' | 'manual' | 'import';
 
 // ── Mock Data (Empty Fallbacks) ───────────────────────────────────────
 
-const MOCK_INVOICES: InvoiceRow[] = [];
+const EMPTY_INVOICES: InvoiceRow[] = [];
 
-const MOCK_STATS: InvoiceStats = { totalCount: 0, totalAmount: 0, avgAmount: 0, draftCount: 0, confirmedCount: 0 };
+const EMPTY_STATS: InvoiceStats = { totalCount: 0, totalAmount: 0, avgAmount: 0, draftCount: 0, confirmedCount: 0 };
 
 // ── Helpers ─────────────────────────────────────────────────────────
 
@@ -780,6 +780,8 @@ export default function DashboardFaturalarPage() {
   const [stats, setStats] = useState<InvoiceStats | null>(null);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  // TASK-0528: a failed load is shown as an error, not as «0 invoices / 0 ₼».
+  const [loadError, setLoadError] = useState(false);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sourceFilter, setSourceFilter] = useState('all');
@@ -808,29 +810,32 @@ export default function DashboardFaturalarPage() {
           fetch('/api/invoices?stats=1'),
         ]);
 
+        if (!invRes.ok || !statsRes.ok) throw new Error('invoices load failed');
         const invData = await invRes.json();
         const statsData = await statsRes.json();
 
         if (cancelled) return;
+        setLoadError(false);
 
         if (invData.data && invData.data.length > 0) {
           setInvoices(invData.data);
           setTotal(invData.total ?? invData.data.length);
         } else {
-          setInvoices(MOCK_INVOICES);
-          setTotal(MOCK_INVOICES.length);
+          setInvoices(EMPTY_INVOICES);
+          setTotal(EMPTY_INVOICES.length);
         }
 
         if (statsData.data && statsData.data.totalCount > 0) {
           setStats(statsData.data);
         } else {
-          setStats(MOCK_STATS);
+          setStats(EMPTY_STATS);
         }
       } catch {
         if (!cancelled) {
-          setInvoices(MOCK_INVOICES);
-          setTotal(MOCK_INVOICES.length);
-          setStats(MOCK_STATS);
+          setInvoices(EMPTY_INVOICES);
+          setTotal(0);
+          setStats(EMPTY_STATS);
+          setLoadError(true);
         }
       }
       if (!cancelled) {
@@ -904,6 +909,9 @@ export default function DashboardFaturalarPage() {
 
   return (
     <div className="p-4 lg:p-8">
+      {loadError && (
+        <p role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{t('loadError')}</p>
+      )}
       {/* Modals */}
       <OcrUploadModal open={modal === 'ocr'} onClose={() => setModal(null)} onSuccess={handleNewInvoice} />
       <ManualEntryModal open={modal === 'manual'} onClose={() => setModal(null)} onSuccess={handleNewInvoice} />

@@ -69,9 +69,9 @@ interface AllData {
   products: TopProductItem[];
 }
 
-// ── Mock Data (Empty Fallbacks) ───────────────────────────────────────
+// ── Empty values (no data yet) ───────────────────────────────────────
 
-const MOCK_REPORT: FoodCostReport = {
+const EMPTY_REPORT: FoodCostReport = {
   categories: [],
   grandTotal: 0,
   invoiceCount: 0,
@@ -79,11 +79,11 @@ const MOCK_REPORT: FoodCostReport = {
   dateTo: '',
 };
 
-const MOCK_TREND: MonthlyTrendItem[] = [];
+const EMPTY_TREND: MonthlyTrendItem[] = [];
 
-const MOCK_SUPPLIERS: SupplierCostItem[] = [];
+const EMPTY_SUPPLIERS: SupplierCostItem[] = [];
 
-const MOCK_PRODUCTS: TopProductItem[] = [];
+const EMPTY_PRODUCTS: TopProductItem[] = [];
 
 // ── Helpers ─────────────────────────────────────────────────────────
 
@@ -125,6 +125,8 @@ export default function FoodCostDashboard() {
 
   const [monthOffset, setMonthOffset] = useState(0);
   const [loading, setLoading] = useState(true);
+  // TASK-0528: a failed load is shown as an error, not as an empty «0 ₼» report.
+  const [loadError, setLoadError] = useState(false);
   const [report, setReport] = useState<FoodCostReport | null>(null);
   const [trend, setTrend] = useState<MonthlyTrendItem[]>([]);
   const [suppliers, setSuppliers] = useState<SupplierCostItem[]>([]);
@@ -137,7 +139,9 @@ export default function FoodCostDashboard() {
     setLoading(true);
     try {
       const res = await fetch(`/api/food-cost?type=all&dateFrom=${dateFrom}&dateTo=${dateTo}&months=6`);
+      if (!res.ok) throw new Error(`food-cost ${res.status}`);
       const json = (await res.json()) as { data: AllData };
+      setLoadError(false);
       const d = json.data;
 
       if (d.report && d.report.categories.length > 0) {
@@ -146,17 +150,18 @@ export default function FoodCostDashboard() {
         setSuppliers(d.suppliers);
         setProducts(d.products);
       } else {
-        // Mock fallback
-        setReport(MOCK_REPORT);
-        setTrend(MOCK_TREND);
-        setSuppliers(MOCK_SUPPLIERS);
-        setProducts(MOCK_PRODUCTS);
+        // No invoices in the period yet — empty is the truth here.
+        setReport(EMPTY_REPORT);
+        setTrend(EMPTY_TREND);
+        setSuppliers(EMPTY_SUPPLIERS);
+        setProducts(EMPTY_PRODUCTS);
       }
     } catch {
-      setReport(MOCK_REPORT);
-      setTrend(MOCK_TREND);
-      setSuppliers(MOCK_SUPPLIERS);
-      setProducts(MOCK_PRODUCTS);
+      setReport(EMPTY_REPORT);
+      setTrend(EMPTY_TREND);
+      setSuppliers(EMPTY_SUPPLIERS);
+      setProducts(EMPTY_PRODUCTS);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -218,6 +223,9 @@ export default function FoodCostDashboard() {
 
   return (
     <div className="space-y-6">
+      {loadError && (
+        <p role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{t('loadError')}</p>
+      )}
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

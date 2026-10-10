@@ -3540,9 +3540,9 @@
     "contactPageFallback": "Came from contact page"
   },
   "dashboardSidebar": {
-    "title": "OCAQ Admin Panel",
+    "title": "DK Agency Admin Panel",
     "role": "Admin",
-    "panelTitle": "OCAQ Admin Panel",
+    "panelTitle": "DK Agency Admin Panel",
     "adminSubtitle": "Admin center",
     "userAccess": "Full management access is active",
     "closeSidebar": "Close sidebar",
@@ -3899,7 +3899,9 @@
     "copied": "Copied!",
     "whatsappTemplate": "WhatsApp template",
     "pdfExport": "Export PDF",
-    "sectionHistory": "History"
+    "sectionHistory": "History",
+    "loadError": "Audits did not load — the server did not respond. Refresh the page.",
+    "saveError": "Not saved — the server did not respond. Try again."
   },
   "dashboardFoodCost": {
     "pageTitle": "Food Cost Analysis",
@@ -3958,7 +3960,8 @@
       "Oct",
       "Nov",
       "Dec"
-    ]
+    ],
+    "loadError": "The food cost report did not load — the server did not respond. The zeros below are not real; refresh the page."
   },
   "dashboardFaturalar": {
     "pageTitle": "Invoices",
@@ -4077,7 +4080,8 @@
     "importErrors": "errors",
     "detailSaveError": "Not saved — the server did not respond. Try again shortly.",
     "manualSaveError": "Invoice not saved — the server did not respond. Your data is still in the form, try again.",
-    "bulkDeleteError": "Not deleted — the server did not respond. Try again."
+    "bulkDeleteError": "Not deleted — the server did not respond. Try again.",
+    "loadError": "Invoices did not load — the server did not respond. Numbers are hidden; refresh the page."
   },
   "legal": {
     "fallbackNotice": "This document has not yet been translated to your language. The Azerbaijani version is shown."
@@ -7787,5 +7791,8 @@
     },
     "asideNote": "Signing up is free. Questions? Message us on WhatsApp.",
     "backPrev": "Go back"
+  },
+  "b2bNewListing": {
+    "back": "My listings"
   }
 }
