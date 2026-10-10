@@ -1,5 +1,23 @@
 # DK Agency Platform — Dev Log
 
+## 2026-10-11 — TASK-0524 → 0536 (Claude sessiyası: təhlükəsizlik, saxta davranış, v2, öz denetim)
+
+**Sahib:** «hepsini toparla, ben hata bulmayacağım artık» → sonra «bu kadar işi neden ben buluyorum sen değil?». Dərs: Doğan-ın siyahısını bitirmək kifayət deyil — sistem xəritəsi (`docs/ARCHITECTURE/SYSTEM-MAP.md`) ROI kalkulyatorunu «köhnə» göstərirdi, mən baxmamışdım. 0534-dən etibarən hər turda 3 denetim agenti (hesab məntiqi, AZ mətn/termin, köhnə dizayn sırası) işə salındı.
+
+- **0524** (təhlükəsizlik + dizayn): `/api/listings?scope=admin` sahib məlumatlarını girişsiz verirdi, `/api/telegram/post` və faktura OCR açıq idi → bağlandı. B2B panel, Marketinq alətləri, giriş səhifələri v2.
+- **0525** sistem xəritəsi generatoru (səhifələr, dizayn, giriş, geri düyməsi, qorumasız API, dublikatlar) + «əvvəl xəritəni oxu» qaydası.
+- **0526–0528** saxta davranış süpürgəsi: uydurma faktura/elan, mock şifrə dəyişmə (həqiqi bcrypt), funnel CTE, bildiriş ayarları DB-yə; xəritəyə saxta davranış / ölü düymə / istifadəsiz komponent skanı; 72 ölü fayl.
+- **0529** WhatsApp klikinə `Kod: DK-XXXX` (söhbəti səhifə ilə eşləmək üçün), SpotlightTour, Təmizlə, logo, üzən düymələr bir, Sektor Nəbzi xəbər axını.
+- **0530** limitlər (pullu AI hesabatı, klik sayğacları, analitika), mock xəbər API-ları həqiqi DB-yə, verify-email həqiqi route-a, geri düyməsi 58 → 0, xəritədə yanlış həyəcanlar.
+- **0531** KAZAN markdown tənbəl yüklənir (−45 KB JS), ROI v2 + məntiq xətası (ROI 20% və 36 ay birlikdə mümkün deyil), işçi itkisi 5 hissəli.
+- **0532** üzvlər üçün 5 DK Excel şablonu (OOXML generator, Excel-də yoxlanıb; base64 — pre-commit kodlama yoxlaması ikili faylı qəbul etmir).
+- **0533** nəticə panelində məhsul (OCAQ / Marketinq Ocağı / xüsusi xidmət), «Həllər» menyusu, hər yerdə Inter (şrift faylı 6 → 3).
+- **0534** öz denetim: `/qiymet`-də səhv şəxs adı və **səhv WhatsApp nömrəsi** (müraciət başqasına gedirdi), mənbəsiz rəqəmlər, hesab xətaları (ROI hədləri, başabaşda dövriyyə pulu iki dəfə, gizli vurucu, qonaq evi hökmü, P&L), AZ terminləri.
+- **0535** /marketinq geri → /marketinq, bir səhifədə bir geri, üst bar həqiqi sessiya, «PREMIUM» → «Üzv», françayz, AHA → dövlətin ulduz təsnifatı (Hotelstars Union, AZS 906-2022), «Müştəri portreti», `/tanitim` keçidi.
+- **0536** KAZAN proaktiv sual balonu (owner.com nümunəsi), menyuda ikon + izah, Owner/Nory/MarginEdge araşdırması (`docs/reports/2026-10-11-owner-nory-marginedge.md`).
+
+**Test üsulu:** hər task `npm run dk:validate` (build daxil) + production build-də Playwright (dev server soyuq başlanğıcda reload dövrünə girir). AI çağıran və DB-yə yazan route-lar sınaqda çağırılmadı (route tutulub saxta cavab). Excel şablonları Microsoft Excel-də açılıb hesablanmış dəyərlər oxundu.
+
 ## 2026-09-30 — TASK-0463 (Hostinger build: Turbopack loader prosesi ölürdü)
 
 **Sahib:** «dünden beri hostinger almıyor» — 29 sentyabrdan bəri bütün deploy-lar «Derleme başarısız», bot commit-ləri də. Əvvəl kodu yoxladım: `main` lokal təmiz build (70 s, 2,7 GB), 28 sentyabrdakı işləyən commit də eyni yaddaş — PR-lar build-i ağırlaşdırmayıb, `package.json`/lockfile dəyişməyib. Hostinger log-u: «child node process exited prematurely … evaluating webpack loaders». Turbopack loader-ləri (Tailwind/PostCSS, Sentry dəyər inyeksiyası) ayrıca Node proseslərində işlədir, sayı CPU sayı ilə böyüyür — 4 nüvədə 6 proses; çox nüvəli paylaşımlı serverdə daha çox.

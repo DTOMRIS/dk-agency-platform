@@ -394,3 +394,28 @@ route patterni ile eyni).
 - **Səhv:** STATE snapshot botu hər merge-dən sonra `main`-ə commit edirdi (iyundan 166 dəfə), RSS botu hər gün. Hostinger hər push-u build edir → bir merge = iki deploy; 4 GB limitdə build-lər düşürdü (TASK-0463 qeydi: "bot commit-ləri də düşür").
 - **Qayda:** `main`-ə yazan hər avtomatlaşdırma deploy sayılır. Bot nəticəsi ya DB-yə, ya PR-a (məzmun PR-ı → auto-merge), ya da artifact-a getsin; birbaşa `main` push-u yox.
 - **Nəticə:** TASK-0464 — STATE həftəlik; `main` ruleset ilə qorunur (PR + `quality-gates`). RSS botu növbəti task-da PR axınına keçir.
+
+## L-060: Sahibin siyahısı bitdi ≠ iş bitdi — sistem xəritəsi və denetim agentləri hər turda
+- **Səhv:** Doğan «bu kadar işi neden ben buluyorum?» — ROI kalkulyatoru xəritədə «köhnə» idi, `/qiymet` səhv şəxs adı və səhv WhatsApp nömrəsi ilə canlıda idi, `/tanitim` heç yerdən keçidsiz idi; hamısını o tapdı və ya o göstərəndən sonra tapıldı.
+- **Qayda:** hər tur başında `SYSTEM-MAP.md` («köhnə» dizayn, AZ sabit mətn) + 3 denetim agenti (hesab məntiqi, AZ mətn/termin/vəd, köhnə səhifə sırası) — tapıntılar Doğan-ın siyahısından əvvəl düzəlir. Mesajda Doğan-ın hər sualı ayrıca cavablanır («X-ə baxdınmı?» cavabsız qalmır).
+- **Nəticə:** TASK-0534–0536.
+
+## L-061: Toplu regex dəyişikliyi açar adlarına da toxunur
+- **Səhv:** «franchise» → «françayz» əvəzlənməsi `Header.tsx` AZ sətrində `franchise:'Franchise'` açarını da `françayz:` etdi — menyuda xam açar «franchise» göründü. Əvvəl də Python heredoc-da `\"` faylda ters slash qaldı.
+- **Qayda:** mətn əvəzlənməsində yalnız dəyərə toxun (JSON: dəyərlər üzrə gəz; TS obyekt sətri: `key:'…'` regex-i ilə dəyəri seç). Sonra: AZ/EN/RU/TR açar dəstlərini tutuşdur, dəyişən faylda lint, brauzerdə menyuya bax.
+
+## L-062: Route segment config (`dynamic`) re-export olunmur
+- **Səhv:** `export { GET, dynamic } from '…'` → build «route-segment-config» xətası ilə düşdü.
+- **Qayda:** `export const dynamic = '…'` hər route/page faylında literal yazılır; yalnız `GET`/`default`/`metadata` re-export olunur.
+
+## L-063: Ümumi naviqasiya elementi səhifənin öz elementini görməlidir
+- **Səhv:** TASK-0530-da panel layout-una qoyulan «Geri» alət səhifələrinin öz «Bütün alətlər» düyməsi ilə ikiqat oldu (Doğan ekran şəkli ilə tapdı).
+- **Qayda:** layout səviyyəsində əlavə olunan ümumi idarə (geri, CTA) səhifədə eyni rolda element varsa gizlənir (`data-back-button` işarəsi). Yeni ümumi element əlavə edəndə ən azı 3 fərqli səhifə tipində ekran şəkli.
+
+## L-064: L-057 oxunmamışdı — tarix formatı yenə `toLocaleDateString`
+- **Səhv:** `/pricing` kampaniya tarixi client komponentində `toLocaleDateString('az-AZ')` ilə — server «2026 M12 31» yazdı, hydration #418.
+- **Qayda:** tarix/rəqəm formatından əvvəl `lib/i18n/format.ts`-ə bax (L-057). Yeni format helper-i yazmazdan əvvəl mövcudu yoxla.
+
+## L-065: İkili fayl repoya girmir — pre-commit kodlama yoxlaması
+- **Səhv:** `.xlsx` şablonları `verify-encoding` tərəfindən «mojibake» kimi rədd edildi (zip baytları mətn kimi oxunur).
+- **Qayda:** hook-a toxunma (DEC-012). İkili məzmun base64 TS moduluna (generator yazır) və ya public/ şəkil kimi; yerli nüsxə `.gitignore`-da.
