@@ -542,7 +542,8 @@
         "lowMargin": "Kâr çok düşük — giderleri gözden geçirin",
         "negativeMargin": "Ay zararla kapanıyor — giderleri ve fiyatları hemen yeniden kurun",
         "foodCostHigh": "Gıda gideri yaygın sınırın ({value}) üstünde",
-        "laborCostHigh": "Personel gideri yaygın sınırın ({value}) üstünde"
+        "laborCostHigh": "Personel gideri yaygın sınırın ({value}) üstünde",
+        "belowTargetMargin": "Kâr var, ama yaygın hedefin (%10–15) altında"
       },
       "benchmark": {
         "title": "Sektörde yaygın sınırlar",
@@ -881,7 +882,7 @@
       "branchRentLabel": "Aylık kira (₼)",
       "dailyChecksLabel": "Günlük adisyon sayısı",
       "rentTaxTypeLabel": "Kiraya veren (vergi için)",
-      "rentTaxIndividual": "Şahıs (%14 vergi)",
+      "rentTaxIndividual": "Gerçek kişi (kiranın üstüne %14 vergi)",
       "rentTaxLegal": "Şirket (%0)",
       "branchInventoryDaysLabel": "Açılışta kaç günlük gıda stoku",
       "labelFitoutPerSqm": "Tadilat, 1 m² için (₼)",
@@ -899,11 +900,11 @@
       "branchStatOpeningInvestment": "Açılışa konan para",
       "branchStatWorkingCapital": "İşletme parası (stok, depozito, yedek)",
       "branchStatTaxBurden": "Vergi",
-      "branchStatPrimeCost": "Ana gider (gıda + personel)",
+      "branchStatPrimeCost": "Ana maliyet (değişken giderler + personel)",
       "branchStatEbitda": "Aylık kâr (vergi ve amortisman öncesi)",
       "branchStatNetProfit": "Net kâr",
       "branchStatPayback": "Koyduğunuz paranın geri dönüş süresi",
-      "branchStatRunway": "Para kaç ay yeter (işletme parasıyla)",
+      "branchStatRunway": "Planlanan işletme sermayesi kaç ay sabit gideri karşılar",
       "branchStatCashRunway": "Para kaç ay yeter (yalnız kalan nakit)",
       "branchStatRampLoss": "İlk ayların zararı (satış yavaş artar)",
       "branchStatRentShare": "Kiranın satıştaki payı",
@@ -1128,7 +1129,7 @@
       "monthlyPnlTitle": "Paket servisten ayda kalan para",
       "ordersPerDay": "sipariş/gün",
       "days": "gün",
-      "monthlyNetLabel": "Ayda size kalan",
+      "monthlyNetLabel": "Ayda size kalan (kira ve sabit giderlerden önce)",
       "deliveryMathTitle": "Komisyon oranı nereden geliyor?",
       "deliveryMathBody": "Bakü’de üç büyük platform çalışıyor: Wolt, Bolt Food ve Yango. Restorandan aldıkları oran açık fiyat listesi olarak yayımlanmaz — sözleşmeye, kampanyaya ve yemek türüne göre değişir. Bu yüzden oranı kendi sözleşmenizden alıp siz girersiniz; kartlardaki %30 ve %10 yalnızca örnektir.",
       "tipsTitle": "Paket servisi kârlı yapmanın 7 yolu",
@@ -2152,11 +2153,11 @@
       "total_cac": "Toplam CAC",
       "evaluation": "Değerlendirme",
       "days": "gün",
-      "benchmark_roi": "%0'ın üstü = reklam kendini ödüyor",
+      "benchmark_roi": "%0'ın üstü = reklam kendini öder, %30'un üstü = sağlıklı",
       "benchmark_roas": ">3x sağlıklı",
       "benchmark_ltv": "≥3:1 sağlıklı",
       "benchmark_payback": "<180 gün ideal",
-      "benchmark_line": "Kesik çizgi 100% ROI benchmarkıdır.",
+      "benchmark_line": "Kesikli çizgi %{good} ROI'dir (sağlıklı eşik).",
       "status_good": "İyi",
       "status_warning": "Dikkat",
       "status_critical": "Kritik",
@@ -2605,7 +2606,7 @@
       },
       "benchmarkNote": {
         "title": "Benchmark notu",
-        "body": "Influencer pazarlamada global ortalama getiri yaklaşık $5.78 / $1 olarak anılır; bunu sert hedef değil, kıyas sinyali olarak okuyun. Sağlıklı LTV:CAC hedefi ≥ 3:1’dir."
+        "body": "Reklamları kendi geçmiş kampanyalarınızla karşılaştırın. LTV:CAC için yaygın sağlıklı hedef ≥ 3:1’dir."
       },
       "awarenessInfo": "Bu kampanya satış kampanyası olarak ölçülmez. Awareness modunda ROAS yerine erişim, CPM ve tahmini EMV önemlidir.",
       "ahilikQuote": "Ahilik sözü: usta gürültüye değil, kazanca ve güvene bakar.",
@@ -3325,6 +3326,15 @@
         "musteri": "Misafir",
         "kontent": "İçerik"
       }
+    },
+    "complaintPage": {
+      "title": "Şikâyet analitiği",
+      "subtitle": "Şikâyetleri tek yerde toplayın: tekrar eden nedeni ve ilk adımı görün.",
+      "backToList": "Tüm araçlar",
+      "whyTitle": "Neden önemli?",
+      "why": "Şikâyetlerin çoğu birkaç ortak nedenden gelir. Araç şikâyetleri gruplar, en sık tekrar eden nedeni gösterir ve çözüm adımı önerir.",
+      "tier": "KALFA",
+      "loading": "Yükleniyor..."
     }
   },
   "pricing": {
@@ -3376,7 +3386,7 @@
     "toolListToggle": "{count} aracı gör",
     "plannedToolsLabel": "Yakında eklenecek ({count})",
     "launchBadge": "Şu An Ücretsiz",
-    "launchNote": "Açılış kampanyası: 1 Eylül 2026'ya kadar tüm paketler ücretsizdir. Sonra standart fiyatlandırma uygulanacaktır.",
+    "launchNote": "Açılış kampanyası: {date} tarihine kadar tüm paketler ücretsizdir. Sonra standart fiyatlar uygulanacaktır.",
     "status": {
       "live": "aktif",
       "beta": "beta",
@@ -4479,7 +4489,7 @@
       "description": {
         "section_label": "Bu araç hakkında",
         "block_1_title": "Ne yapıyoruz?",
-        "block_1_content": "Müşteri şikayetlerini yapıştır, AI kök nedeni buluyor ve kategorilere ayırıyor. 1 yazılı şikayet = 26 sessiz memnuniyetsiz müşteri. Pattern analizi ile tekrarlayan sorunları tespit ediyor.",
+        "block_1_content": "Müşteri şikayetlerini yapıştır, AI kök nedeni buluyor ve kategorilere ayırıyor. Pattern analizi ile tekrarlayan sorunları tespit ediyor.",
         "block_2_title": "Sana ne lazım olacak?",
         "block_2_items": [
           "Şikayet metni (Google, TripAdvisor, Yandex'ten kopyala)",
@@ -5026,7 +5036,7 @@
       "grossProfit": "Brüt kâr",
       "royaltyAdFund": "Royalti + reklam fonu",
       "opex": "Sabit işletme giderleri",
-      "netProfit": "Yıllık net kâr (vergi öncesi)",
+      "netProfit": "Yıllık vergi öncesi kâr",
       "payback": "Geri ödeme süresi"
     },
     "verdict": {
@@ -5723,11 +5733,11 @@
       },
       "airbnbExpand": {
         "heading": "Airbnb'yi ekleyin ve Superhost hedefi koyun",
-        "subline": "Booking'de zaten deneyiminiz var. Airbnb'yi ekleyin, 6 ayda Superhost statüsüne ulaşın. İki platform birlikte aylık geliri %40-60 artırır."
+        "subline": "Booking’de zaten deneyiminiz var. Airbnb’yi ekleyin ve 6 ay içinde Superhost statüsünü hedefleyin — iki platform birlikte daha fazla misafir getirebilir."
       },
       "directStrategy": {
         "heading": "Doğrudan rezervasyon stratejisi kurun",
-        "subline": "Çoklu platformda güçlüsünüz. Şimdi hedef komisyonları azaltmak. WhatsApp Business, kendi web siteniz ve sadakat programıyla her 100 misafirden 30-40'ını doğrudan rezervasyona geçirin — komisyonun yarısını koruyun."
+        "subline": "Birkaç platformda güçlüsünüz. Şimdi hedef komisyonu azaltmak: WhatsApp Business, kendi web siteniz ve sadakat programıyla misafirlerin bir kısmını doğrudan rezervasyona geçirin."
       },
       "multiPlatformPro": {
         "heading": "Çoklu platform uzmanı — channel manager düşünün",
@@ -5806,9 +5816,9 @@
       "noProfitText": "kâr yok — para geri dönmüyor"
     },
     "verdicts": {
-      "healthy": "Sağlıklı model: aylık kâr 1.000 ₼’nin üzerinde, yatırılan para 2 yıl içinde geri dönüyor.",
-      "borderline": "Sınırdasınız: para 4 yıla kadar geri dönüyor. Giderleri ve sitelere giden komisyonu azaltmaya bakın.",
-      "risky": "Riskli: kâr düşük, yatırılan para çok geç geri dönüyor.",
+      "healthy": "İyi model: yatırım 2 yıl içinde geri dönüyor.",
+      "borderline": "Sınırdasınız: para 2–4 yılda geri dönüyor. Giderleri ve sitelere giden komisyonu azaltmaya bakın.",
+      "risky": "Riskli: yatırım 4 yıldan geç geri dönüyor.",
       "unprofitable": "Zarar: giderler ve komisyon gelirden fazla."
     },
     "validation": {

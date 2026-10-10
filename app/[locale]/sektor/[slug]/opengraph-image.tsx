@@ -7,7 +7,7 @@ export const contentType = 'image/png';
 
 const FALLBACK = {
   title: 'Sektor Beledcileri | DK Agency',
-  subtitle: 'HoReCa sektorlari ucun pulsuz aletler',
+  subtitle: 'HoReCa sektorları üçün pulsuz alətlər',
   badges: ['OTA', 'Food Cost', 'ROI'],
 };
 

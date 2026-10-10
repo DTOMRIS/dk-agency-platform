@@ -76,8 +76,11 @@ function statusColor(status: Status) {
 
 // TASK-0523: ROI counts the money left after food/packaging (revenue × margin), not revenue —
 // 1 000 AZN of sales on 500 AZN of ads is not +100% when 65% of each sale is left.
+// TASK-0534 (calc audit): ONE rule for the card, the ROAS card, the chart bars and the dashed line — before, the
+// card was green at 30%, the bars only above 100% and the hint said «above 0% pays back».
+const ROI_GOOD = 30;
 function roiStatus(roi: number): Status {
-  if (roi >= 30) return 'good';
+  if (roi >= ROI_GOOD) return 'good';
   if (roi >= 0) return 'warning';
   return 'critical';
 }
@@ -200,7 +203,7 @@ export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi
 
   const kpis = [
     { label: t('total_roi'), value: `${formatNumber(analysis.totalROI)}%`, status: roiStatus(analysis.totalROI), hint: t('benchmark_roi') },
-    { label: t('total_roas'), value: `${formatNumber(analysis.totalROAS)}x`, status: analysis.breakevenROAS > 0 && analysis.totalROAS >= analysis.breakevenROAS ? 'good' as Status : 'critical' as Status, hint: t('breakeven_roas', { value: formatNumber(analysis.breakevenROAS, 2) }) },
+    { label: t('total_roas'), value: `${formatNumber(analysis.totalROAS)}x`, status: analysis.breakevenROAS > 0 ? (analysis.totalROAS >= analysis.breakevenROAS * (1 + ROI_GOOD / 100) ? 'good' as Status : analysis.totalROAS >= analysis.breakevenROAS ? 'warning' as Status : 'critical' as Status) : 'neutral' as Status, hint: t('breakeven_roas', { value: formatNumber(analysis.breakevenROAS, 2) }) },
     { label: t('total_cac'), value: formatMoney(analysis.totalCAC), status: 'neutral' as Status, hint: '' },
     { label: 'LTV', value: formatMoney(analysis.ltv), status: 'neutral' as Status, hint: '' },
     { label: t('ltv_cac_ratio'), value: `${formatNumber(analysis.ltvCacRatio)}:1`, status: analysis.ltvCacRatio >= 3 ? 'good' as Status : 'critical' as Status, hint: t('benchmark_ltv') },
@@ -476,9 +479,9 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
             <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('chart_title')}</h2>
             <div className="space-y-3">
               {analysis.sortedChannels.map((channel) => {
-                const maxPositive = Math.max(100, ...analysis.sortedChannels.map((item) => item.roiPercent));
+                const maxPositive = Math.max(ROI_GOOD * 2, ...analysis.sortedChannels.map((item) => item.roiPercent));
                 const width = Math.max(2, Math.min(100, (Math.max(0, channel.roiPercent) / maxPositive) * 100));
-                const benchmarkLeft = Math.min(100, (100 / maxPositive) * 100);
+                const benchmarkLeft = Math.min(100, (ROI_GOOD / maxPositive) * 100);
                 return (
                   <div key={channel.id}>
                     <div className="mb-1 flex items-center justify-between text-xs font-bold text-slate-600">
@@ -487,12 +490,12 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
                     </div>
                     <div className="relative h-7 rounded-full bg-slate-100">
                       <span className="absolute inset-y-0 border-l-2 border-dashed border-slate-400" style={{ left: `${benchmarkLeft}%` }} />
-                      <div className={`h-7 rounded-full ${channel.roiPercent > 100 ? 'bg-emerald-500' : channel.roiPercent >= 0 ? 'bg-amber-500' : 'bg-red-500'}`} style={{ width: `${width}%` }} />
+                      <div className={`h-7 rounded-full ${channel.roiPercent >= ROI_GOOD ? 'bg-emerald-500' : channel.roiPercent >= 0 ? 'bg-amber-500' : 'bg-red-500'}`} style={{ width: `${width}%` }} />
                     </div>
                   </div>
                 );
               })}
-              <p className="text-xs font-semibold text-slate-500">{t('benchmark_line')}</p>
+              <p className="text-xs font-semibold text-slate-500">{t('benchmark_line', { good: ROI_GOOD })}</p>
             </div>
           </section>
 

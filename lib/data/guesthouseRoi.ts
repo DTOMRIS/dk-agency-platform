@@ -33,8 +33,10 @@ export function calcGuesthouseRoi(input: GuesthouseRoiInput) {
 
   let verdict: GuesthouseRoiVerdict;
   if (monthlyNet <= 0) verdict = 'unprofitable';
-  else if (paybackMonths <= 24 && monthlyNet >= 1000) verdict = 'healthy';
-  else if (paybackMonths <= 48 && monthlyNet >= 500) verdict = 'borderline';
+  // TASK-0534 (calc audit): payback only — the extra «≥ 1 000 ₼ / ≥ 500 ₼ a month» condition made a small place that
+  // pays back in 20 months «risky», with a text saying the money comes back too late.
+  else if (paybackMonths <= 24) verdict = 'healthy';
+  else if (paybackMonths <= 48) verdict = 'borderline';
   else verdict = 'risky';
 
   return {

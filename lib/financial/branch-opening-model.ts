@@ -153,7 +153,8 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
   const marketingCost = baseCapex * (openingMarketingPct / 100);
   const unexpectedCost = baseCapex * (unexpectedPct / 100);
   const totalCapex = round(baseCapex + marketingCost + unexpectedCost);
-  const openingInvestment = round(totalCapex * preset.capexMultiplier);
+  // TASK-0534 (calc audit): no hidden preset multiplier (coffee 0.9 … fine dining 1.35) on the user's own itemised costs.
+  const openingInvestment = totalCapex;
 
   const monthlyRevenue = round(dailyChecks * averageCheck * operatingDays);
   const monthlyVariableCosts = round(monthlyRevenue * (variableCostPct / 100));
@@ -161,7 +162,8 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
   const leaseTax = round(monthlyRent * (rentTaxType === 'legalEntity' ? AZERBAIJAN_TAX_CONFIG.leaseTaxRates.legalEntity : AZERBAIJAN_TAX_CONFIG.leaseTaxRates.individual) / 100);
   const monthlyFixedCosts = round(monthlyRent + leaseTax + finite(input.staffCosts) + socialContribution + finite(input.utilities) + finite(input.otherFixedCosts));
   const grossProfit = round(monthlyRevenue - monthlyVariableCosts);
-  const primeCostPct = monthlyRevenue > 0 ? round(((monthlyVariableCosts + finite(input.staffCosts)) / monthlyRevenue) * 100) : 0;
+  // TASK-0534: staff cost includes the employer contributions (was left out).
+  const primeCostPct = monthlyRevenue > 0 ? round(((monthlyVariableCosts + finite(input.staffCosts) + socialContribution) / monthlyRevenue) * 100) : 0;
   const ebitda = round(monthlyRevenue - monthlyVariableCosts - monthlyFixedCosts);
   const profitTax = round(Math.max(0, ebitda) * (AZERBAIJAN_TAX_CONFIG.generalTaxRates.profit / 100));
   const netProfit = round(ebitda - profitTax);
@@ -186,7 +188,10 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
   const totalFundingNeed = round(openingInvestment + workingCapital);
   const fundingGap = round(Math.max(0, totalFundingNeed - finite(input.openingBudget)));
   const cashRunwayMonths = monthlyFixedCosts > 0 ? round(Math.max(0, finite(input.openingBudget) - openingInvestment) / monthlyFixedCosts) : 0;
-  const runwayMonths = monthlyFixedCosts > 0 ? round(Math.max(0, finite(input.openingBudget) - openingInvestment + workingCapital) / monthlyFixedCosts) : 0;
+  // TASK-0534 (calc audit): was (budget − investment + working capital) ÷ fixed — working capital must come OUT of the
+  // budget, it is not extra money (cafe sample: 14.3 months vs 7.1 real). Now: how many months of fixed costs the
+  // planned working capital itself covers.
+  const runwayMonths = monthlyFixedCosts > 0 ? round(workingCapital / monthlyFixedCosts) : 0;
   const paybackMonths = netProfit > 0 ? round(totalFundingNeed / netProfit) : null;
 
   const scenarios: BranchScenarioResult[] = [

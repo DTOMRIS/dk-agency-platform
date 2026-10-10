@@ -6,7 +6,7 @@ import { Check, ChevronDown, MessageCircle, Sparkles } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { normalizeLocale, withLocalePrefix, type Locale } from '@/i18n/config';
-import { MARKETING_TOOLS, isLaunchActive, type MarketingToolConfig, type MarketingToolTier } from '@/lib/marketing-tools-config';
+import { LAUNCH_CAMPAIGN, MARKETING_TOOLS, isLaunchActive, type MarketingToolConfig, type MarketingToolTier } from '@/lib/marketing-tools-config';
 
 type TierKey = MarketingToolTier;
 
@@ -51,6 +51,20 @@ function groupToolsByTier(): Record<TierKey, TierTools> {
   );
 }
 
+// TASK-0534: month names written out — server ICU has no Azerbaijani month names («2026 M12 31») and the
+// server/browser difference caused a hydration error (React #418).
+const MONTHS: Record<string, string[]> = {
+  az: ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun', 'iyul', 'avqust', 'sentyabr', 'oktyabr', 'noyabr', 'dekabr'],
+  ru: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
+  tr: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+};
+function formatCampaignDate(iso: string, locale: string): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  const month = (MONTHS[locale] ?? MONTHS.en)[m - 1];
+  return locale === 'en' ? `${month} ${d}, ${y}` : `${d} ${month} ${y}`;
+}
+
 export function PricingPage() {
   const t = useTranslations('pricing');
   const locale = normalizeLocale(useLocale()) as Locale;
@@ -90,7 +104,8 @@ export function PricingPage() {
           </div>
           {launchActive && (
             <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm leading-6 text-emerald-800" data-testid="pricing-launch-banner">
-              {t('launchNote')}
+              {/* TASK-0534: the date comes from LAUNCH_CAMPAIGN (code ends 2026-12-31; the text said «1 Sentyabr»). */}
+              {t('launchNote', { date: formatCampaignDate(LAUNCH_CAMPAIGN.endDateISO, locale) })}
             </div>
           )}
         </div>

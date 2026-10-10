@@ -52,10 +52,10 @@
       "coming_soon": "Yaxında"
     },
     "brandDesc": {
-      "fiveGuys": "Premium burger seqmenti Bakıda boşdur. Five Guys-ın \"fresh, never frozen\" modeli orta-yuxarı gəlirli müştəri üçün güclü fürsətdir.",
+      "fiveGuys": "«Fresh, never frozen» (təzə, dondurulmamış) modeli ilə premium burger seqmentində işləyir; Azərbaycanda hələ təmsil olunmur.",
       "wendys": "QSR-də kvadrat burger fərqləndirməsi və güclü drive-thru modeli; Bakının böyüyən fast-food bazarında tanınmış brend boşluğu.",
       "tacoBell": "Meksika mətbəxi Azərbaycanda az təmsil olunur. Taco Bell qlobal QSR brendi kimi yeni kateqoriya aça bilər.",
-      "shakeShack": "Yalnız ölkə-lisenziya ilə genişlənir — Türkiyə artıq var, Azərbaycan yox. Bu, ölkə-səviyyə eksklüziv fürsətdir.",
+      "shakeShack": "Yalnız ölkə lisenziyası ilə genişlənir — Türkiyədə var, Azərbaycanda hələ yoxdur. Ölkə lisenziyası hələ verilməyib.",
       "dunkin": "Qəhvə və donut kateqoriyası Bakıda zəif rəqabətlidir. Dunkin-in geniş qiymət aralığı sürətli şəbəkə qurmağa imkan verir.",
       "baskinRobbins": "31 dadlı dondurma brendi ailə və gənc seqment üçün tanınır; aşağı giriş investisiyası ilə mərkəz lokasyonlarda güclüdür.",
       "kumon": "Yapon riyaziyyat və oxu metodologiyası; təhsilə yüksək tələbatlı Bakıda aşağı investisiya ilə davamlı abunə gəliri.",
@@ -114,7 +114,7 @@
   "nav": {
     "home": "Ana səhifə",
     "tools": "Alətlər",
-    "listings": "İlanlar",
+    "listings": "Elanlar",
     "news": "Sektor Nəbzi",
     "blog": "Bloq",
     "panel": "İdarə Paneli",
@@ -143,14 +143,14 @@
     "toolMenuMatrix": "Menyu Matrisi",
     "toolBasabas": "Başabaş",
     "toolKazanAi": "KAZAN AI",
-    "startChecklist": "Açılış Checklist",
+    "startChecklist": "Açılış yoxlama siyahısı",
     "startInsaat": "İnşaatdan Açılışa",
     "startAqta": "Rəsmi İşlər",
     "startLocation": "Məkan Seçimi",
     "startMenu": "Menyu Mühəndisliyi",
     "resBlog": "Bloq",
     "resNews": "Sektor Nəbzi",
-    "resListings": "İlanlar",
+    "resListings": "Elanlar",
     "resToolkit": "Toolkit",
     "compAbout": "Haqqımızda",
     "compConsulting": "Məsləhət",
@@ -234,8 +234,8 @@
       "assumptions": {
         "title": "Hesablamadakı nümunə rəqəmlər",
         "note": "Bu rəqəmlər nümunədir; şəhərə, məkana və işçinin təcrübəsinə görə arta və ya azala bilər. Öz rəqəmlərinizi yazın.",
-        "extraPct": "Maaşın üstünə əlavə xərc (%)",
-        "extraPctHelp": "İşəgötürənin maaşdan əlavə ödədiyi vergi, sosial sığorta haqqı və s.",
+        "extraPct": "Əmək haqqına əlavə işəgötürən haqları (%)",
+        "extraPctHelp": "İşəgötürənin əmək haqqına əlavə ödədiyi məcburi dövlət sosial sığorta, işsizlikdən sığorta və icbari tibbi sığorta haqları. Dərəcəni mühasibinizdən dəqiqləşdirin.",
         "avgCheck": "Orta çek (₼)",
         "laborTarget": "İşçi xərci üçün hədəf (satışın %-i)",
         "salary": "Bir mətbəx işçisinin aylıq maaşı (₼)"
@@ -288,8 +288,8 @@
       "assumptions": {
         "title": "Hesablamadakı nümunə rəqəmlər",
         "note": "Bu rəqəmlər nümunədir; şəhərə, məkana və işçinin təcrübəsinə görə arta və ya azala bilər. Öz rəqəmlərinizi yazın.",
-        "extraPct": "Maaşın üstünə əlavə xərc (%)",
-        "extraPctHelp": "İşəgötürənin maaşdan əlavə ödədiyi vergi, sosial sığorta haqqı və s.",
+        "extraPct": "Əmək haqqına əlavə işəgötürən haqları (%)",
+        "extraPctHelp": "İşəgötürənin əmək haqqına əlavə ödədiyi məcburi dövlət sosial sığorta, işsizlikdən sığorta və icbari tibbi sığorta haqları. Dərəcəni mühasibinizdən dəqiqləşdirin.",
         "avgCheck": "Orta çek (₼)",
         "laborTarget": "İşçi xərci üçün hədəf (satışın %-i)",
         "salary": "{role}: aylıq maaş (₼)"
@@ -437,11 +437,11 @@
           "label": "Qablaşdırma"
         },
         "staffCost": {
-          "label": "İşçi maaşları",
-          "hint": "Maaş + sosial sığorta"
+          "label": "Əmək haqqı xərcləri",
+          "hint": "Əmək haqqı + işəgötürənin sığorta haqları"
         },
         "management": {
-          "label": "Rəhbərlərin maaşı"
+          "label": "Rəhbər heyətin əmək haqqı"
         },
         "advertising": {
           "label": "Reklam"
@@ -542,7 +542,8 @@
         "lowMargin": "Mənfəət çox azdır — xərclərə yenidən baxın",
         "negativeMargin": "Ay zərərlə bağlanır — xərcləri və qiymətləri dərhal yenidən qurmaq lazımdır",
         "foodCostHigh": "Ərzaq xərci geniş yayılmış həddən ({value}) yüksəkdir",
-        "laborCostHigh": "İşçi xərci geniş yayılmış həddən ({value}) yüksəkdir"
+        "laborCostHigh": "İşçi xərci geniş yayılmış həddən ({value}) yüksəkdir",
+        "belowTargetMargin": "Mənfəət var, amma geniş yayılmış hədəfdən (10–15%) aşağıdır"
       },
       "benchmark": {
         "title": "Sektorda geniş yayılmış hədlər",
@@ -881,7 +882,7 @@
       "branchRentLabel": "Aylıq icarə (₼)",
       "dailyChecksLabel": "Gündə neçə çek",
       "rentTaxTypeLabel": "İcarəyə verən (vergi üçün)",
-      "rentTaxIndividual": "Fiziki şəxs (14% vergi)",
+      "rentTaxIndividual": "Fiziki şəxs (14% vergi icarənin üstünə)",
       "rentTaxLegal": "Hüquqi şəxs (0%)",
       "branchInventoryDaysLabel": "Açılışda neçə günlük ərzaq ehtiyatı",
       "labelFitoutPerSqm": "Təmir, 1 m² üçün (₼)",
@@ -899,11 +900,11 @@
       "branchStatOpeningInvestment": "Açılışa qoyulan pul",
       "branchStatWorkingCapital": "Dövriyyə pulu (ərzaq, depozit, ehtiyat)",
       "branchStatTaxBurden": "Vergi",
-      "branchStatPrimeCost": "Əsas xərc (ərzaq + işçi)",
-      "branchStatEbitda": "Aylıq mənfəət (vergi və amortizasiyadan əvvəl)",
+      "branchStatPrimeCost": "Əsas xərc (dəyişən xərclər + əmək haqqı)",
+      "branchStatEbitda": "Faiz, vergi və amortizasiyadan əvvəl aylıq mənfəət (EBITDA)",
       "branchStatNetProfit": "Xalis mənfəət",
       "branchStatPayback": "Qoyduğunuz pulun qayıtma müddəti",
-      "branchStatRunway": "Pul neçə aya çatır (dövriyyə pulu ilə)",
+      "branchStatRunway": "Planlanan dövriyyə pulu neçə ay sabit xərci ödəyir",
       "branchStatCashRunway": "Pul neçə aya çatır (yalnız qalan nağd)",
       "branchStatRampLoss": "İlk aylardakı zərər (satış yavaş-yavaş artır)",
       "branchStatRentShare": "İcarənin satışda payı",
@@ -963,7 +964,7 @@
       "fixedCostsTitle": "Sabit xərclər (aylıq)",
       "reset": "Təmizlə",
       "labelRent": "İcarə (₼)",
-      "labelSalaries": "Maaşlar (₼)",
+      "labelSalaries": "Əmək haqqı (₼)",
       "labelUtilities": "Kommunal (₼)",
       "labelOtherFixed": "Digər sabit xərclər (₼)",
       "variableParamsTitle": "Dəyişən xərc və satış",
@@ -1128,7 +1129,7 @@
       "monthlyPnlTitle": "Ayda çatdırılmadan qalan pul",
       "ordersPerDay": "sifariş/gün",
       "days": "gün",
-      "monthlyNetLabel": "Ayda sizə qalan",
+      "monthlyNetLabel": "Ayda sizə qalan (icarə və sabit xərclərdən əvvəl)",
       "deliveryMathTitle": "Komissiya faizi haradan gəlir?",
       "deliveryMathBody": "Bakıda üç böyük platforma işləyir: Wolt, Bolt Food və Yango. Onların restorandan aldığı faiz açıq qiymət siyahısı kimi dərc olunmur — müqaviləyə, kampaniyaya və yemək növünə görə dəyişir. Ona görə faizi öz müqavilənizdən baxıb özünüz yazırsınız; kartlardakı 30% və 10% yalnız nümunədir.",
       "tipsTitle": "Çatdırılmanı qazanclı etməyin 7 yolu",
@@ -1762,10 +1763,10 @@
       "labelTrips": "Bir işçinin gündə artıq gedişi (dəfə)",
       "labelSecondsPerTrip": "Bir gediş-qayıdış (saniyə)",
       "hintTripsMinutes": "Bu, gündə təxminən {minutes} dəqiqə edir.",
-      "labelHourlyWage": "Saatlıq maaş (₼)",
+      "labelHourlyWage": "Saatlıq əmək haqqı (₼)",
       "labelWorkDays": "Ayda iş günü",
       "wageHelperTitle": "Saatlıq maaşı bilmirsən? Aylıq maaşdan hesabla",
-      "labelMonthlySalary": "Aylıq maaş (₼)",
+      "labelMonthlySalary": "Aylıq əmək haqqı (₼)",
       "labelMonthlyHours": "Ayda iş saatı",
       "wageHelperApply": "Saatlıq maaşa yaz",
       "howToTitle": "Artıq yolu necə ölçərsən?",
@@ -1823,7 +1824,7 @@
     "context": "Kontekst:",
     "doganNoteDefault": "DK AGENCY NOTU",
     "doganNoteWarning": "XƏBƏRDARLIQ",
-    "doganNoteInsight": "DOĞAN İNSİGHT",
+    "doganNoteInsight": "DOĞANIN QEYDİ",
     "doganNoteStory": "DOĞAN HEKAYƏSİ",
     "catMaliyye": "Maliyyə",
     "catKadr": "Kadr",
@@ -2052,14 +2053,14 @@
       "hoursNote": "WhatsApp-a iş saatlarında cavab veririk"
     },
     "kazanTitle": "KAZAN AI ilə başla",
-    "kazanDescription": "Sualını yaz, kontekst KAZAN AI-a ötürülsün və komanda real lead kimi görsün.",
+    "kazanDescription": "Sualınızı yazın — KAZAN AI cavab verir, lazım olsa komanda söhbəti görüb sizinlə əlaqə saxlayır.",
     "kazanCta": "KAZAN AI-ı aç",
     "whatsappTitle": "WhatsApp",
-    "whatsappDescription": "Hazır mesajla yazın. Nömrə görünməz, klik lead kimi qeyd olunur.",
+    "whatsappDescription": "Hazır mesajla WhatsApp-da yazın — cavab elə oradan gələcək.",
     "whatsappCta": "WhatsApp-da yaz",
     "whatsappMessage": "Salam, DK Agency əlaqə səhifəsindən yazıram. Biznesim üçün məsləhət almaq istəyirəm.",
     "telegramTitle": "Telegram",
-    "telegramDescription": "Telegram kanalından yazın. Klik lead attribution kimi saxlanılır.",
+    "telegramDescription": "Telegram kanalımıza qoşulun və ya oradan yazın.",
     "telegramCta": "Telegram-da yaz",
     "emailLabel": "E-poçt",
     "addressLabel": "Ünvan",
@@ -2067,7 +2068,7 @@
     "hoursLabel": "İş saatları",
     "hours": "Bazar ertəsi - Cümə, 09:00 - 18:00 (UTC+4)",
     "b2bTitle": "B2B əməkdaşlıq",
-    "b2bText": "Restoran zəncirləri, franchise markaları və təchizatçılar üçün ayrı funnel qurulur. Kanal seçin, biz lead-i izləyək.",
+    "b2bText": "Restoran şəbəkələri, franchise markaları və təchizatçılar üçün ayrıca əməkdaşlıq. Kanalı seçin, sizinlə əlaqə saxlayaq.",
     "trackingError": "Klik qeyd olunmadı, amma kanal açılır."
   },
   "common": {
@@ -2152,11 +2153,11 @@
       "total_cac": "Ümumi CAC",
       "evaluation": "Qiymətləndirmə",
       "days": "gün",
-      "benchmark_roi": "0%-dən yuxarı = reklam özünü ödəyir",
+      "benchmark_roi": "0%-dən yuxarı = reklam özünü ödəyir, 30%-dən yuxarı = sağlam",
       "benchmark_roas": ">3x sağlam",
       "benchmark_ltv": "≥3:1 sağlam",
       "benchmark_payback": "<180 gün ideal",
-      "benchmark_line": "Kəsik xətt 100% ROI benchmarkıdır.",
+      "benchmark_line": "Kəsik xətt {good}% ROI-dir (sağlam hədd).",
       "status_good": "Yaxşı",
       "status_warning": "Diqqət",
       "status_critical": "Kritik",
@@ -2198,7 +2199,7 @@
       "purchases": "Alışlar",
       "end_inventory": "Son stok",
       "labor_section": "İşçi xərcləri",
-      "wages": "Maaşlar",
+      "wages": "Əmək haqqı",
       "taxes_insurance": "Vergilər + Sığorta",
       "overhead_section": "Overhead xərclər",
       "rent": "İcarə",
@@ -2229,10 +2230,10 @@
       "net_profit_pct": "Xalis mənfəət %",
       "kpi_title": "Nəticə paneli",
       "chart_title": "Satışın xərc bölgüsü",
-      "benchmark_food": "Benchmark: ≤30% yaxşı, 30-35% diqqət",
-      "benchmark_labor": "Benchmark: ≤30% yaxşı, 30-35% diqqət",
-      "benchmark_prime": "Benchmark: ≤60% yaxşı, 60-70% diqqət",
-      "benchmark_net": "Benchmark: ≥5% sağlam, 3-5% diqqət",
+      "benchmark_food": "Orta göstərici: ≤30% yaxşı, 30–35% diqqət",
+      "benchmark_labor": "Orta göstərici: ≤30% yaxşı, 30–35% diqqət",
+      "benchmark_prime": "Orta göstərici: ≤60% yaxşı, 60–70% diqqət",
+      "benchmark_net": "Orta göstərici: ≥5% sağlam, 3–5% diqqət",
       "benchmark_breakeven": "Cari satış zərərsizlik nöqtəsindən yuxarı olmalıdır",
       "sales_growth": "Satış artımı",
       "food_reduction": "Yemək məsrəfi azaldılması",
@@ -2259,7 +2260,7 @@
       "pnlForm_staffCost": "İşçi xərcləri",
       "pnlForm_rent": "İcarə",
       "pnlForm_packaging": "Qablaşdırma",
-      "pnlForm_management": "Rəhbərlik maaşı",
+      "pnlForm_management": "Rəhbər heyətin əmək haqqı",
       "pnlForm_advertising": "Reklam",
       "pnlForm_promo": "Promo",
       "pnlForm_outsource": "Kənar xidmətlər",
@@ -2280,7 +2281,7 @@
       "pnlResult_pnlTitle": "P&L Hesabat",
       "pnlResult_kpi": "KPI-lər",
       "pnlResult_foodCost": "Food Cost",
-      "pnlResult_laborCost": "Labor Cost",
+      "pnlResult_laborCost": "Əmək haqqı xərci",
       "pnlResult_rentLabel": "İcarə",
       "pnlResult_netProfit": "Xalis Mənfəət",
       "pnlResult_primeCost": "Əsas xərc (ərzaq + işçi)",
@@ -2605,7 +2606,7 @@
       },
       "benchmarkNote": {
         "title": "Benchmark qeydi",
-        "body": "Influencer marketinq üçün qlobal orta gəlir təxminən $5.78 / $1 kimi verilir; bunu sərt hədəf yox, müqayisə siqnalı kimi oxuyun. LTV:CAC üçün sağlam hədəf ≥ 3:1-dir."
+        "body": "Reklamı müqayisə etmək üçün öz keçmiş kampaniyalarınızı əsas götürün. LTV:CAC üçün geniş yayılmış sağlam hədəf ≥ 3:1-dir."
       },
       "awarenessInfo": "Bu kampaniya satış üçün deyil. Awareness rejimində ROAS əvəzinə reach, CPM və EMV təxmini əsasdır.",
       "ahilikQuote": "Ahilik sözü: usta səs-küyə yox, qazanca və etibara baxar.",
@@ -2784,7 +2785,7 @@
         },
         "operations_kitchen_q5": {
           "text": "Faktiki food cost ilə resept üzrə nəzəri food cost fərqi izlənir?",
-          "tooltip": "Reseptdən kənar porsiya, fire və qiymət dəyişimi burada görünür."
+          "tooltip": "Reseptdən kənar porsiya, itki və qiymət dəyişimi burada görünür."
         },
         "staff_service_q1": {
           "text": "Yeni işçi üçün yazılı təlim materialı və yoxlama siyahısı var?",
@@ -2896,7 +2897,7 @@
           "operations_kitchen": {
             "critical": "FIFO, tarix etiketi və israf logunu bu həftə məcburi gündəlik prosesə çevirin.",
             "warning": "İnventar sayımı ilə faktiki-resept fərqini aylıq hesabatda birləşdirin.",
-            "stable": "Mətbəx nəzarəti işləyir; indi fire səbəblərini daha detallı ayırın."
+            "stable": "Mətbəx nəzarəti işləyir; indi itkilərin səbəblərini daha ətraflı ayırın."
           },
           "staff_service": {
             "critical": "Təlim checklist-i və servis protokolunu yazılı hala gətirib növbə liderinə verin.",
@@ -3013,7 +3014,7 @@
           "title": "Davamlılıq və yerli mənbə",
           "description": "Qonaq israfı azaldan, yerli mənbəni göstərən və daha məsuliyyətli menyu hekayəsinə reaksiya verir.",
           "azContext": "Kiçik restoran üçün böyük ESG iddiası yox, yerli məhsul adı, israf logu və sezon məhsulu mesajı kifayətdir.",
-          "fallbackFirstStep": "Bir yerli təchizatçı və ya sezon məhsulunu menyuda adlandırın, israfı azaltmaq üçün gündəlik fire qeydini başladın."
+          "fallbackFirstStep": "Bir yerli təchizatçı və ya sezon məhsulunu menyuda adlandırın, israfı azaltmaq üçün gündəlik itki qeydini başladın."
         },
         "experience_human_touch": {
           "title": "Təcrübə və insani toxunuş",
@@ -3325,6 +3326,15 @@
         "musteri": "Qonaq",
         "kontent": "Kontent"
       }
+    },
+    "complaintPage": {
+      "title": "Şikayət analitikası",
+      "subtitle": "Şikayətləri bir yerə toplayın: təkrarlanan səbəbi və ilk addımı görün.",
+      "backToList": "Bütün alətlər",
+      "whyTitle": "Niyə vacibdir?",
+      "why": "Şikayətlərin çoxu bir neçə eyni səbəbdən gəlir. Alət şikayətləri qruplaşdırır, ən çox təkrarlanan səbəbi göstərir və həll addımı təklif edir.",
+      "tier": "KALFA",
+      "loading": "Yüklənir..."
     }
   },
   "pricing": {
@@ -3376,7 +3386,7 @@
     "toolListToggle": "{count} alətə bax",
     "plannedToolsLabel": "Yaxında əlavə olunacaq ({count})",
     "launchBadge": "Hazırda Pulsuz",
-    "launchNote": "Açılış kampaniyası: 1 Sentyabr 2026-a qədər bütün paketlər pulsuzdur. Sonra standart qiymətləndirmə tətbiq olunacaq.",
+    "launchNote": "Açılış kampaniyası: {date} tarixinə qədər bütün paketlər pulsuzdur. Sonra standart qiymətlər tətbiq olunacaq.",
     "status": {
       "live": "aktiv",
       "beta": "beta",
@@ -3475,7 +3485,7 @@
       "0": "Food cost-um %38, nə etməliyəm?",
       "1": "P&L necə oxunur?",
       "2": "AQTA yoxlamasına necə hazırlaşım?",
-      "3": "Wolt komissiyon riyaziyyatı",
+      "3": "Wolt komissiyasının hesabı",
       "4": "Menyu neçə yemək olmalıdır?"
     },
     "errors": {
@@ -3706,17 +3716,17 @@
     "platformCards": {
       "eyebrow": "Platforma",
       "heading": "Üç alət, bir ekosistem",
-      "subheading": "KAZAN soruşur, Toolkit hesablayır, OCAQ idarə edir — Ahilik dijital qiyafətdə.",
+      "subheading": "KAZAN soruşur, Toolkit hesablayır, OCAQ idarə edir — Ahilik rəqəmsal qiyafətdə.",
       "kazan": {
         "title": "KAZAN AI",
         "subtitle": "Restoran mütəxəssisi chatbot",
-        "body": "24/7 ustad rəyi — food cost, menyu, işçi idarəsi suallarına dərhal cavab. WhatsApp handoff hazır.",
+        "body": "KAZAN AI istənilən vaxt cavab verir — food cost, menyu və işçi sualları. Lazım olsa, söhbət WhatsApp-da komandaya ötürülür.",
         "cta": "KAZAN ilə danış"
       },
       "toolkit": {
         "title": "Toolkit",
         "subtitle": "17 pulsuz hesablama aləti",
-        "body": "P&L Simulator, Food Cost, Menu Matrix, AQTA Checklist və daha çox — açılış kampaniyasında pulsuz.",
+        "body": "P&L, food cost, menyu matrisi, AQTA yoxlama siyahısı və daha çox — hamısı pulsuz.",
         "cta": "Alətlərə bax"
       },
       "ocaq": {
@@ -3743,7 +3753,7 @@
     },
     "ahilikValues": {
       "eyebrow": "Ahilik / Əxilik",
-      "title": "700 illik dəyər, dijital qiyafətdə",
+      "title": "700 illik dəyər, rəqəmsal qiyafətdə",
       "subtitle": "Anadolu və Azərbaycanın əsnaf-sahibkar ənənəsi bizim əsas prinsipimizdir.",
       "mastery": {
         "name": "Ustalıq",
@@ -3779,7 +3789,7 @@
       "calcEyebrow": "ÖZ RƏQƏMİNİZ · 30 SANİYƏ",
       "salesLabel": "Aylıq satış, ₼",
       "costLabel": "Aylıq məhsul alışı, ₼",
-      "verdictLoss": "Hədəfdən yuxarı: ayda ≈ {amount} ₼ itki. İlk baxılacaq yer: porsiya və fire.",
+      "verdictLoss": "Hədəfdən yuxarı: ayda ≈ {amount} ₼ itki. İlk baxılacaq yer: porsiya və itkilər.",
       "verdictOk": "Normadasınız. Növbəti addım: kadr və komissiya.",
       "target": "Hədəf: 28–32%.",
       "saveReport": "Hesabatı saxla — pulsuz üzv ol",
@@ -4128,7 +4138,7 @@
   },
   "ai_readiness": {
     "section_title": "Restoranınızın AI Hazırlığını 60 Saniyəyə Öyrənin",
-    "section_description": "10 sual cavablayın, restoranınızın dijital hazırlıq skorunu alın və fərdiləşdirilmiş tövsiyələr əldə edin.",
+    "section_description": "10 sual cavablayın, restoranınızın rəqəmsal hazırlıq skorunu alın və fərdiləşdirilmiş tövsiyələr əldə edin.",
     "start_button": "Testi Başlat",
     "questions": {
       "q1_pos": {
@@ -4204,7 +4214,7 @@
         }
       },
       "q10_team": {
-        "label": "Komandanız dijital alətlərə hazırdırmı?",
+        "label": "Komandanız rəqəmsal alətlərə hazırdırmı?",
         "options": {
           "yes": "Bəli, açıq və istəkli",
           "partial": "Qismən — bəziləri hazır",
@@ -4234,7 +4244,7 @@
       "out_of": "/ 30",
       "recommended_tools_title": "Sizə tövsiyə olunan alətlər",
       "kazan_cta": "Bu nəticəyə əsasən KAZAN AI ilə danışın",
-      "detail_cta": "Detaylı analiz üçün üzv olun",
+      "detail_cta": "Ətraflı analiz üçün üzv olun",
       "restart": "Yenidən başla"
     },
     "navigation": {
@@ -4509,7 +4519,7 @@
       "description": {
         "section_label": "Bu alət haqqında",
         "block_1_title": "Nə edirik?",
-        "block_1_content": "6 sahədə restoranını audit edirsən: maliyyə, mətbəx, personel, müştəri təcrübəsi, dijital varlıq, uyğunluq. Hər sahə 100 bal üzərindən ölçülür. Ən zəif 3 sahə üçün prioritet plan verilir.",
+        "block_1_content": "6 sahədə restoranını audit edirsən: maliyyə, mətbəx, personel, müştəri təcrübəsi, rəqəmsal varlıq, uyğunluq. Hər sahə 100 bal üzərindən ölçülür. Ən zəif 3 sahə üçün prioritet plan verilir.",
         "block_2_title": "Sənə nə lazım olacaq?",
         "block_2_items": [
           "Hər sahədə 3-5 suala Bəli/Qismən/Xeyr cavab",
@@ -4556,7 +4566,7 @@
   "devir": {
     "badge": "HoReCa Marketplace",
     "title": "HoReCa Elanları",
-    "subtitle": "Azərbaycanın ən böyük HoReCa elan platforması. Restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq bir vitrində.",
+    "subtitle": "HoReCa elanları bir yerdə: restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq.",
     "imageAlt": "HoReCa investor təqdimatı",
     "ctaPost": "Elan ver",
     "ctaMyListings": "Elanlarıma bax",
@@ -4994,8 +5004,8 @@
         "hint": "satışdan gələn ümumi gəlir"
       },
       "marginPercent": {
-        "label": "Brüt kar marjı",
-        "hint": "dövriyyənin neçə %-i mal/xidmət sonrası qalır"
+        "label": "Ümumi mənfəət marjası",
+        "hint": "dövriyyənin neçə faizi mal və xidmətin maya dəyərindən sonra qalır"
       },
       "opex": {
         "label": "İllik sabit əməliyyat xərcləri",
@@ -5023,10 +5033,10 @@
       }
     },
     "results": {
-      "grossProfit": "Brüt kar",
+      "grossProfit": "Ümumi mənfəət",
       "royaltyAdFund": "Royalti + reklam fondu",
       "opex": "Sabit əməliyyat xərcləri",
-      "netProfit": "İllik xalis mənfəət (vergidən əvvəl)",
+      "netProfit": "İllik vergiyə qədər mənfəət",
       "payback": "Geri-qaytarma müddəti"
     },
     "verdict": {
@@ -5723,11 +5733,11 @@
       },
       "airbnbExpand": {
         "heading": "Airbnb əlavə edib Superhost hədəfi qoyar",
-        "subline": "Booking-də artıq təcrübən var. Airbnb əlavə et, 6 ayda Superhost statusuna çat. Hər iki platforma birlikdə aylıq gəliri 40-60% artırır."
+        "subline": "Booking-də artıq təcrübən var. Airbnb-ni əlavə et və 6 ay ərzində Superhost statusunu hədəflə — iki platforma birlikdə daha çox qonaq gətirə bilər."
       },
       "directStrategy": {
         "heading": "Direct booking strategiyası qur",
-        "subline": "Multi-platform-da güclüsən. İndi məqsəd komissiyaları azaltmaqdır. WhatsApp Business, öz veb-sayt və loyalty proqram ilə hər 100 qonaqdan 30-40-ını direct booking-ə keçir — komissiyanın yarısını qoru."
+        "subline": "Bir neçə platformada güclüsən. İndi məqsəd komissiyanı azaltmaqdır: WhatsApp Business, öz veb-saytın və daimi qonaq proqramı ilə qonaqların bir hissəsini birbaşa rezervasiyaya keçir."
       },
       "multiPlatformPro": {
         "heading": "Multi-platform expert — kanal manageri düşün",
@@ -5787,7 +5797,7 @@
       },
       "monthlyFixedCost": {
         "label": "Aylıq xərclər",
-        "hint": "Təmizlik, kommunal, maaş"
+        "hint": "Təmizlik, kommunal, əmək haqqı"
       },
       "initialInvestment": {
         "label": "Açılış xərci (təmir, avadanlıq)",
@@ -5806,9 +5816,9 @@
       "noProfitText": "mənfəət yoxdur — pul qayıtmır"
     },
     "verdicts": {
-      "healthy": "Yaxşı model: aylıq mənfəət 1 000 ₼-dan çoxdur, qoyulan pul 2 ilə qədər qayıdır.",
-      "borderline": "Sərhəddəsiniz: pul 4 ilə qədər qayıdır. Xərcləri və saytlara gedən komissiyanı azaltmağa baxın.",
-      "risky": "Riskli: mənfəət azdır, qoyulan pul çox gec qayıdır.",
+      "healthy": "Yaxşı model: qoyulan pul 2 ilə qədər qayıdır.",
+      "borderline": "Sərhəddəsiniz: pul 2–4 ilə qayıdır. Xərcləri və saytlara gedən komissiyanı azaltmağa baxın.",
+      "risky": "Riskli: qoyulan pul 4 ildən gec qayıdır.",
       "unprofitable": "Zərər: aylıq xərclər və komissiya gəlirdən çoxdur."
     },
     "validation": {
@@ -5901,18 +5911,18 @@
     "hero": {
       "headline": "Qonaq Evinizi OTA Platformalarına Hazırlayın",
       "subline": "Pansiyon, qonaq evi və Airbnb host-ları üçün pulsuz alətlər — Xınalıqdan Bakıya, DK Agency dəstəyi ilə.",
-      "statBadge": "1,134 Airbnb ilanı + 800+ pansiyon AZ-də",
+      "statBadge": "1 134 Airbnb elanı + 800+ pansiyon AZ-də",
       "primaryCtaText": "OTA Hazırlıq Testinə başla",
       "secondaryCtaText": "Pulsuz bələdçi al"
     },
     "stats": {
-      "stat1Label": "Bakıda Airbnb ilanı",
+      "stat1Label": "Bakıda Airbnb elanı",
       "stat1Value": "1,134",
       "stat1Source": "AirDNA 2026",
       "stat2Label": "AZ-də Booking pansiyon",
       "stat2Value": "800+",
       "stat2Source": "Booking partner data",
-      "stat3Label": "Sertifikasız tesis",
+      "stat3Label": "Sertifikatsız obyekt",
       "stat3Value": "600+",
       "stat3Source": "Dövlət Turizm Agentliyi"
     },
@@ -5938,14 +5948,14 @@
     },
     "faq": {
       "sectionTitle": "Tez-tez verilən suallar",
-      "q1": "Booking 15% komissiya niyə alır?",
-      "a1": "Booking.com hər uğurlu rezervasiya üçün 15% komissiya tutur. Birbaşa rezervasiya ilə bu xərci sıfıra endirmək mümkündür.",
+      "q1": "Booking niyə komissiya alır?",
+      "a1": "Booking.com hər uğurlu rezervasiya üçün komissiya tutur; dərəcə müqaviləyə görə dəyişir (adətən 15% ətrafında). Birbaşa rezervasiya ilə bu xərci azaltmaq olar.",
       "q2": "Airbnb-ə də əlavə etməliyəm?",
       "a2": "Bəli — Airbnb fərqli müştəri seqmentinə çatmağınıza kömək edir. Booking + Airbnb + birbaşa kanal ən yaxşı strategiyadır.",
-      "q3": "Pansiyon vergisi nə qədərdir?",
-      "a3": "Azərbaycanda qonaq evləri sadələşdirilmiş vergi ilə tənzimlənir.",
+      "q3": "Qonaq evi hansı vergini ödəyir?",
+      "a3": "Dövriyyə qanunla müəyyən edilmiş həddi aşmırsa, sadələşdirilmiş vergi seçilə bilər; həddi aşanda ƏDV və mənfəət (və ya gəlir) vergisi tətbiq olunur. Dəqiq rejimi mühasibinizlə müəyyənləşdirin.",
       "q4": "Reyting necə qaldırılır?",
-      "a4": "Təmizlik, ünsiyyət, check-in rahatlığı. Hər qonaqdan review istəyin.",
+      "a4": "Təmizlik, ünsiyyət və rahat qeydiyyat. Hər qonaqdan rəy istəyin.",
       "q5": "DK Agency dəstəyi nə qədərdir?",
       "a5": "OTA Hazırlıq Testi və ROI Kalkulyatoru pulsuzdur. Tam dəstək üçün əlaqə formundan müraciət edin."
     },
@@ -6321,7 +6331,7 @@
     "sourceNote": "Elanlar TQTA-dan avtomatik yenilənir. Müraciət TQTA-da tamamlanır.",
     "featured": "Önə çıxan",
     "posted": "Dərc: {date}",
-    "salary": "Maaş",
+    "salary": "Əmək haqqı",
     "experience": "Təcrübə",
     "apply": "Müraciət et",
     "applyAria": "{title} — {company}: TQTA-da müraciət et (yeni pəncərədə açılır)",
@@ -7281,8 +7291,8 @@
       "mansetPrev": "Əvvəlki manşet",
       "mansetNext": "Növbəti manşet",
       "mansetSlide": "Manşet {n} / {total}",
-      "latestListings": "Son ilanlar",
-      "allListings": "Bütün ilanlar",
+      "latestListings": "Son elanlar",
+      "allListings": "Bütün elanlar",
       "feedEyebrow": "Son xəbərlər",
       "feedTitle": "Xəbər axını",
       "feedUp": "Yuxarı",
@@ -7866,7 +7876,7 @@
     "asideEyebrow": "Üzvlük",
     "asideTitle": "Restoranınızın rəqəmləri bir yerdə",
     "benefits": {
-      "b1": "35+ restoran aləti — food cost, P&L, menyu, sezon, şikayət",
+      "b1": "Restoran alətləri — food cost, P&L, menyu, sezon, şikayət",
       "b2": "KAZAN AI — maliyyə və əməliyyat suallarına Azərbaycan dilində cavab",
       "b3": "Elanlarınız və gələn müraciətlər bir paneldə",
       "b4": "Premium məqalələr və sektor xəbərləri"

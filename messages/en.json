@@ -542,7 +542,8 @@
         "lowMargin": "Profit is very low — review your costs",
         "negativeMargin": "The month ends in a loss — rework costs and prices now",
         "foodCostHigh": "Ingredient cost is above the common limit ({value})",
-        "laborCostHigh": "Staff cost is above the common limit ({value})"
+        "laborCostHigh": "Staff cost is above the common limit ({value})",
+        "belowTargetMargin": "Profitable, but below the common target (10–15%)"
       },
       "benchmark": {
         "title": "Common sector limits",
@@ -881,7 +882,7 @@
       "branchRentLabel": "Monthly rent (₼)",
       "dailyChecksLabel": "Checks per day",
       "rentTaxTypeLabel": "Landlord (for tax)",
-      "rentTaxIndividual": "Individual (14% tax)",
+      "rentTaxIndividual": "Individual (14% tax on top of rent)",
       "rentTaxLegal": "Company (0%)",
       "branchInventoryDaysLabel": "Days of ingredient stock at opening",
       "labelFitoutPerSqm": "Fit-out per m² (₼)",
@@ -899,11 +900,11 @@
       "branchStatOpeningInvestment": "Money put into the opening",
       "branchStatWorkingCapital": "Running cash (stock, deposit, reserve)",
       "branchStatTaxBurden": "Tax",
-      "branchStatPrimeCost": "Main costs (ingredients + staff)",
+      "branchStatPrimeCost": "Prime cost (variable costs + payroll)",
       "branchStatEbitda": "Monthly profit (before tax and depreciation)",
       "branchStatNetProfit": "Net profit",
       "branchStatPayback": "Time to get your money back",
-      "branchStatRunway": "Months the money lasts (incl. running cash)",
+      "branchStatRunway": "Months of fixed costs the planned working capital covers",
       "branchStatCashRunway": "Months the money lasts (cash left only)",
       "branchStatRampLoss": "Loss of the first months (sales grow slowly)",
       "branchStatRentShare": "Rent as share of sales",
@@ -1128,7 +1129,7 @@
       "monthlyPnlTitle": "What delivery leaves you per month",
       "ordersPerDay": "orders/day",
       "days": "days",
-      "monthlyNetLabel": "You keep per month",
+      "monthlyNetLabel": "You keep per month (before rent and fixed costs)",
       "deliveryMathTitle": "Where does the commission rate come from?",
       "deliveryMathBody": "Three large platforms operate in Baku: Wolt, Bolt Food and Yango. The rate they charge restaurants is not published as an open price list — it depends on the contract, promotions and dish type. So you take the rate from your own contract and enter it; the 30% and 10% on the cards are only examples.",
       "tipsTitle": "7 ways to make delivery profitable",
@@ -2152,11 +2153,11 @@
       "total_cac": "Total CAC",
       "evaluation": "Evaluation",
       "days": "days",
-      "benchmark_roi": "above 0% = ads pay for themselves",
+      "benchmark_roi": "Above 0% = the ad pays for itself, above 30% = healthy",
       "benchmark_roas": ">3x healthy",
       "benchmark_ltv": "≥3:1 healthy",
       "benchmark_payback": "<180 days ideal",
-      "benchmark_line": "Dashed line marks the 100% ROI benchmark.",
+      "benchmark_line": "The dashed line is {good}% ROI (healthy threshold).",
       "status_good": "Good",
       "status_warning": "Warning",
       "status_critical": "Critical",
@@ -2605,7 +2606,7 @@
       },
       "benchmarkNote": {
         "title": "Benchmark note",
-        "body": "Global influencer marketing return is often cited around $5.78 per $1; treat it as a comparison signal, not a hard target. A healthy LTV:CAC target is ≥ 3:1."
+        "body": "Compare ads against your own past campaigns. A common healthy target for LTV:CAC is ≥ 3:1."
       },
       "awarenessInfo": "This campaign is not measured as a sales campaign. In awareness mode, reach, CPM, and estimated EMV matter more than ROAS.",
       "ahilikQuote": "Ahilik wisdom: a master follows profit and trust, not noise.",
@@ -3325,6 +3326,15 @@
         "musteri": "Guests",
         "kontent": "Content"
       }
+    },
+    "complaintPage": {
+      "title": "Complaint analytics",
+      "subtitle": "Collect complaints in one place: see the repeating cause and the first step.",
+      "backToList": "All tools",
+      "whyTitle": "Why it matters",
+      "why": "Most complaints come from a few repeating causes. The tool groups complaints, shows the most frequent cause and suggests a fix.",
+      "tier": "KALFA",
+      "loading": "Loading..."
     }
   },
   "pricing": {
@@ -3376,7 +3386,7 @@
     "toolListToggle": "View {count} tools",
     "plannedToolsLabel": "Coming soon ({count})",
     "launchBadge": "Currently Free",
-    "launchNote": "Launch offer: all packages are free until September 1, 2026. Standard pricing applies after.",
+    "launchNote": "Launch offer: all packages are free until {date}. Standard pricing applies after.",
     "status": {
       "live": "live",
       "beta": "beta",
@@ -4479,7 +4489,7 @@
       "description": {
         "section_label": "About this tool",
         "block_1_title": "What we do",
-        "block_1_content": "Paste customer complaints and AI finds the root cause, categorizes them, and detects patterns. 1 written complaint = 26 silent dissatisfied customers. Generates an action plan.",
+        "block_1_content": "Paste customer complaints and AI finds the root cause, categorizes them, and detects patterns. Generates an action plan.",
         "block_2_title": "What you'll need",
         "block_2_items": [
           "Complaint text (copy from Google, TripAdvisor, Yandex)",
@@ -5026,7 +5036,7 @@
       "grossProfit": "Gross profit",
       "royaltyAdFund": "Royalty + advertising fund",
       "opex": "Fixed operating expenses",
-      "netProfit": "Annual net profit (before tax)",
+      "netProfit": "Annual profit before tax",
       "payback": "Payback period"
     },
     "verdict": {
@@ -5723,11 +5733,11 @@
       },
       "airbnbExpand": {
         "heading": "Add Airbnb and aim for Superhost",
-        "subline": "You already have experience on Booking. Add Airbnb and reach Superhost status within 6 months. Together, both platforms increase monthly income by 40-60%."
+        "subline": "You already have Booking experience. Add Airbnb and aim for Superhost status within 6 months — two platforms together can bring more guests."
       },
       "directStrategy": {
         "heading": "Build a direct booking strategy",
-        "subline": "You're strong across multiple platforms. Now the goal is to reduce commissions. With WhatsApp Business, your own website and a loyalty programme, move 30-40 of every 100 guests to direct booking — and keep half of the commission."
+        "subline": "You are strong on several platforms. Now the goal is lower commission: with WhatsApp Business, your own website and a loyalty programme, move part of your guests to direct booking."
       },
       "multiPlatformPro": {
         "heading": "Multi-platform expert — consider a channel manager",
@@ -5806,9 +5816,9 @@
       "noProfitText": "no profit — the money does not come back"
     },
     "verdicts": {
-      "healthy": "Healthy model: profit above 1,000 ₼ a month, your money comes back within 2 years.",
-      "borderline": "Borderline: your money comes back within 4 years. Look at cutting costs and site commission.",
-      "risky": "Risky: profit is small, your money comes back very slowly.",
+      "healthy": "Good model: the investment comes back within 2 years.",
+      "borderline": "Borderline: the money comes back in 2–4 years. Look at cutting costs and booking-site commission.",
+      "risky": "Risky: the investment takes more than 4 years to come back.",
       "unprofitable": "Loss: costs and commission are higher than income."
     },
     "validation": {

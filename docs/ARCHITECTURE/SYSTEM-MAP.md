@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 2c34526
+> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · c9aebb8
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -8,7 +8,7 @@
 - Dizayn (həqiqi səhifələr): v2 **8** · köhnə **57** · qarışıq **36** · işarəsiz 22
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 59 (+ 367 tapşırıq kartı)
+- Sənəd: 59 (+ 368 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -85,7 +85,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/news` | → /haberler | — | — | ✗ |  |  |
 | `/pricing` | səhifə | köhnə | — | ✓ |  | pricing/PricingPage.tsx, inner/PageBack.tsx |
 | `/privacy` | səhifə | — | — | ✓ | 2 | legal/LegalPageLayout.tsx |
-| `/qiymet` | səhifə | köhnə | — | ✓ | 3 | inner/PageBack.tsx |
+| `/qiymet` | səhifə | köhnə | — | ✓ | 66 | inner/PageBack.tsx |
 | `/randevu` | səhifə | — | — | ✓ | 2 | inner/PageBack.tsx |
 | `/reset-password` | səhifə | v2 | — | ✓ |  | auth/ResetPasswordPageClient.tsx |
 | `/sedd-rozeti` | səhifə | köhnə | — | ✓ |  | inner/PageBack.tsx |
@@ -326,7 +326,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 76 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 77 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |
