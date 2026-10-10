@@ -7829,5 +7829,15 @@
   },
   "b2bNewListing": {
     "back": "Elanlarım"
+  },
+  "panelBack": {
+    "back": "Geri",
+    "toPanel": "Panelə qayıt"
+  },
+  "pageBack": {
+    "home": "Ana səhifə",
+    "franchise": "Franchise",
+    "sektor": "Sektorlar",
+    "listings": "Elanlar"
   }
 }

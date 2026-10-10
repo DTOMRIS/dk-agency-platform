@@ -7,6 +7,7 @@ import B2BSidebar from '@/components/b2b-panel/B2BSidebar';
 import Header from '@/components/layout/Header';
 import { inter } from '@/components/home/v2/font';
 import OnboardingModal from '@/components/onboarding/OnboardingModal';
+import PanelBackBar from '@/components/panel/PanelBackBar';
 import { getServerMemberSession } from '@/lib/members/server-session';
 
 export const metadata = {
@@ -37,6 +38,7 @@ export default async function B2BPanelLayout({
         <B2BSidebar />
         {/* TASK-0506: telefonda üst bar (h-14) üçün yer; min-w-0 — geniş məzmun flex-i sıxışdırmasın */}
         <main className="min-w-0 flex-1 pt-14 lg:pt-0">
+          <PanelBackBar root="/b2b-panel" className="px-4 pt-4 sm:px-6 lg:px-8" />
           {children}
         </main>
       </div>

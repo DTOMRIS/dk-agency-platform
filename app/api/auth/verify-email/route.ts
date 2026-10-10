@@ -1,22 +1,13 @@
 import { NextResponse } from 'next/server';
-import { consumeEmailVerificationToken } from '@/lib/auth/mock-state';
 
-export async function POST(request: Request) {
-  const body = await request.json();
-  const token = String(body?.token || '');
-
-  if (!token) {
-    return NextResponse.json({ success: false, error: 'Token tələb olunur.' }, { status: 400 });
-  }
-
-  const result = consumeEmailVerificationToken(token);
-  if (!result.ok) {
-    return NextResponse.json({ success: false, error: result.error }, { status: 400 });
-  }
-
-  return NextResponse.json({
-    success: true,
-    message: 'Email ünvanınız təsdiqləndi!',
-    email: result.user?.email,
-  });
+/**
+ * public-ok: retired. TASK-0530: this checked an in-memory mock token store (lib/auth/mock-state), so a real
+ * user's token was always «invalid» while the response looked like a real verification API. E-mail
+ * verification is /api/auth/confirm?token=… (DB); /verify-email?token=… now forwards there.
+ */
+export function POST() {
+  return NextResponse.json(
+    { success: false, error: 'Bu ünvan bağlanıb. Təsdiq linki: /api/auth/confirm?token=…', confirmPath: '/api/auth/confirm' },
+    { status: 410 },
+  );
 }

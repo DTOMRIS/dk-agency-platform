@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { getLocale } from 'next-intl/server';
 import { normalizeLocale, withLocale } from '@/i18n/config';
+import PageBack from '@/components/inner/PageBack';
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Compass, BarChart3, Brain, FileText, MapPin, TrendingUp,
@@ -53,6 +54,7 @@ export default async function MarketinqIndexPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <PageBack />
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-10 text-center">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-50">

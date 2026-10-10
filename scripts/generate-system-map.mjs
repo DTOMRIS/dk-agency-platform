@@ -71,7 +71,8 @@ function designOf(texts) {
 }
 
 // ── pages ────────────────────────────────────────────────────────────
-const pageFiles = walk('app', (n) => n === 'page.tsx' || n === 'page.ts');
+// TASK-0530: (dev) route group = local design sandboxes, not part of the product.
+const pageFiles = walk('app', (n) => n === 'page.tsx' || n === 'page.ts').filter((f) => !f.includes('/(dev)/'));
 function urlOf(file) {
   let u = file.replace(/^app/, '').replace(/\/page\.tsx?$/, '') || '/';
   u = u.replace(/\/\([^)]+\)/g, '');
@@ -93,6 +94,20 @@ function areaOf(url) {
   return 'İctimai səhifələr';
 }
 
+const BACK_RE = /BackLink|Crumbs|ToolHeader|ArrowLeft|ChevronLeft|Geri qayıt|back_to_tools|backToList|data-back-button/;
+/** Layout files between the page and the app root, excluding the global root / [locale] layouts. */
+function areaLayouts(pageFile) {
+  const out = [];
+  let dir = pageFile.replace(/\/page\.tsx?$/, '');
+  while (dir.includes('/')) {
+    dir = dir.slice(0, dir.lastIndexOf('/'));
+    if (dir === 'app' || dir === 'app/[locale]') break;
+    const l = `${dir}/layout.tsx`;
+    if (fs.existsSync(l)) out.push(l);
+  }
+  return out;
+}
+
 const pages = new Map();
 for (const file of pageFiles) {
   const { url, locale } = urlOf(file);
@@ -103,18 +118,33 @@ for (const file of pageFiles) {
   else entry.root = true;
   pages.set(url, entry);
 
-  const reexport = src.match(/export\s+\{\s*default\s*\}\s+from\s+['"]([^'"]+)['"]/);
-  const redirect = src.match(/redirect\(\s*(?:withLocalePrefix\([^,]+,\s*)?['"`]([^'"`]+)['"`]/);
+  // TASK-0530: also `export { default, metadata } from …` (the root mirrors of [locale] pages were read as pages).
+  const reexport = src.match(/export\s+\{\s*default\b[^}]*\}\s+from\s+['"]([^'"]+)['"]/);
+  // TASK-0530: any redirect/permanentRedirect whose first path literal is the target (withLocale(normalizeLocale(…), '/x') too).
+  const redirect = src.match(/(?:permanentRedirect|redirect)\([^;]*?['"`](\/[^'"`]*)['"`]/);
   const comps = importsOf(file, src).filter((p) => p.startsWith('components/') || p.startsWith('app/'));
   const second = comps.flatMap((c) => importsOf(c, read(c)).filter((p) => p.startsWith('components/')));
   const texts = [src, ...comps.map(read), ...second.map(read)];
+  // TASK-0530: the shared back pill (v2 CSS) must not make an old page count as v2 / mixed.
+  const NAV_ONLY = /components\/inner\/PageBack|components\/panel\/PanelBackBar/;
+  const designComps = comps.filter((c) => !NAV_ONLY.test(c));
+  const designSecond = designComps.flatMap((c) => importsOf(c, read(c)).filter((p) => p.startsWith('components/') && !NAV_ONLY.test(p)));
+  const designTexts = [src, ...designComps.map(read), ...designSecond.map(read)];
   const isMirror = !!reexport;
   if (!isMirror || !entry.kind) {
     entry.kind = redirect && src.length < 1500 ? `→ ${redirect[1]}` : isMirror ? 'güzgü' : 'səhifə';
     entry.main = comps.filter((c) => c.startsWith('components/')).slice(0, 3);
-    entry.design = designOf(texts);
+    entry.design = designOf(designTexts);
     entry.auth = /getAuthFromCookie|withAuth|requireAdminPage|requireAdmin\(|getServerMemberSession|checkToolAccess|\bauth\(\)/.test(src) ? 'səhifədə' : '';
-    entry.back = /BackLink|Crumbs|ToolHeader|ArrowLeft|ChevronLeft|Geri qayıt|back_to_tools|backToList/.test(texts.join('\n')) ? '✓' : '✗';
+    // TASK-0530: a back control in an area layout (or a component it imports) counts for every page under it.
+    const layoutTexts = areaLayouts(file).flatMap((l) => {
+      const lc = importsOf(l, read(l)).filter((x) => x.startsWith('components/'));
+      const lc2 = lc.flatMap((c) => importsOf(c, read(c)).filter((x) => x.startsWith('components/')));
+      return [read(l), ...lc.map(read), ...lc2.map(read)];
+    });
+    entry.back = url === '/dashboard' || url === '/b2b-panel'
+      ? '— (panel ana səhifəsi)'
+      : BACK_RE.test([...texts, ...layoutTexts].join('\n')) ? '✓' : '✗';
     entry.azHard = (src.match(/['">][^'"<>{}\n]*[əıöüğşçƏİÖÜĞŞÇ][^'"<>{}\n]*['"<]/g) || []).length;
   }
 }
@@ -129,12 +159,14 @@ for (const p of pages.values()) {
 
 // ── API routes ───────────────────────────────────────────────────────
 const apiFiles = walk('app/api', (n) => /^route\.tsx?$/.test(n));
-const GUARD = /requireApiAdmin|requireApiMember|getAuthFromCookie|withAuth|getServerMemberSession|requireAdmin|\bauth\(\)|CRON_SECRET|x-telegram-bot-api-secret-token|verifySignature|canAccessNewsAdmin|isAdmin\(/;
+const GUARD = /requireApiAdmin|requireApiMember|getAuthFromCookie|withAuth|getServerMemberSession|requireAdmin|\bauth\(\)|CRON_SECRET|x-telegram-bot-api-secret-token|verifySignature|canAccessNewsAdmin|isAdmin\(|NEWS_API_SECRET|validateWebhookSecret/;
 const apis = apiFiles.map((file) => {
   const src = read(file);
   const methods = [...src.matchAll(/export\s+(?:async\s+)?function\s+(GET|POST|PUT|PATCH|DELETE)/g)].map((m) => m[1]);
   const url = file.replace(/^app/, '').replace(/\/route\.tsx?$/, '');
-  return { url, file, methods: [...new Set(methods)], guard: GUARD.test(src) };
+  // TASK-0530: `public-ok: <reason>` in the route file = public on purpose (reason shown in the map).
+  const publicOk = src.match(/public-ok:\s*([^\n*]+)/)?.[1]?.trim() ?? null;
+  return { url, file, methods: [...new Set(methods)], guard: GUARD.test(src), publicOk };
 });
 
 // ── clusters: same job in several places ─────────────────────────────
@@ -178,6 +210,9 @@ const FAKE_RULES = [
   { key: 'buildMock / mockData funksiyası', re: /\bbuildMock\w*\(|\bmockData\b|\bgenerateMock\w*\(/ },
   { key: 'Cavabı oxunmayan sorğu (await fetch nəticəsi atılır)', re: /^\s*await fetch\(/m },
   { key: 'TODO / gələcək API', re: /TODO[^\n]*(?:API|api|POST|backend|endpoint|real)/ },
+  // TASK-0530: /api/news/[slug] served lib/data/mockNewsDB as «DK Agency News API» and /settings read the
+  // in-memory mock-state store — a value import from a mock module is fake data reaching the user.
+  { key: 'Saxta data mənbəyindən dəyər importu', re: /^import\s+(?!type\b)(?![^;]*\{\s*type\s)[^;]*from\s+'@\/lib\/(?:data\/mock\w*|auth\/mock-state)'/ },
 ];
 const fakeHits = [];
 const fakeOk = [];
@@ -185,7 +220,8 @@ const fakeOk = [];
 const PROTECTED_OK = [
   { file: 'components/layout/Header.tsx', re: /api\/member\/session', \{ method: 'DELETE' \}/, why: 'logout: client session cleared and redirected either way (protected file)' },
 ];
-for (const f of codeFiles.filter((f) => !/\/api\//.test(f) && !/mock|seed|fixtures|\.test\./i.test(f))) {
+// TASK-0530: API routes are scanned too (the fake news API was invisible before).
+for (const f of codeFiles.filter((f) => !/mock|seed|fixtures|\.test\./i.test(f))) {
   const src = read(f);
   const lines = src.split('\n');
   for (const rule of FAKE_RULES) {
@@ -306,7 +342,7 @@ const dc = designCount(allPages);
 L.push(`- Ünvan: **${allPages.length}** (həqiqi səhifə ${real.length}, yönləndirmə ${allPages.filter((p) => p.kind.startsWith('→')).length}, güzgü ${allPages.filter((p) => p.kind === 'güzgü').length}) · page faylı ${pageFiles.length}`);
 L.push(`- Dizayn (həqiqi səhifələr): v2 **${dc.v2}** · köhnə **${dc['köhnə']}** · qarışıq **${dc['qarışıq']}** · işarəsiz ${dc['—']}`);
 L.push(`- Geri düyməsi yoxdur: **${real.filter((p) => p.back === '✗').length}** səhifə`);
-L.push(`- API: **${apis.length}** route · qoruma işarəsi yoxdur: **${apis.filter((a) => !a.guard).length}** (siyahı aşağıda — ictimai olanlar normaldır, qalanı yoxlanmalıdır)`);
+L.push(`- API: **${apis.length}** route · yoxlanmamış qorumasız: **${apis.filter((a) => !a.guard && !a.publicOk).length}** · qəsdən ictimai (səbəbli): ${apis.filter((a) => !a.guard && a.publicOk).length}`);
 L.push(`- Sənəd: ${docRows.length} (+ ${taskCount} tapşırıq kartı)`);
 L.push('');
 L.push('## Eyni işi görən yerlər (dublikat riski)');
@@ -353,9 +389,9 @@ for (const [area, list] of byArea) {
 L.push('');
 L.push('## API — qoruma işarəsi olmayan route-lar');
 L.push('İctimai (lead forması, ictimai elan siyahısı, tracking, cron-un özü və s.) normaldır. Admin/üzv datası qaytaran varsa — dərhal düzəlt.');
-L.push('| Route | Metod | Fayl |');
-L.push('|---|---|---|');
-for (const a of apis.filter((x) => !x.guard)) L.push(`| \`${esc(a.url)}\` | ${a.methods.join(', ')} | ${a.file} |`);
+L.push('| Route | Metod | Fayl | Qəsdən ictimai — səbəb (`public-ok:`) |');
+L.push('|---|---|---|---|');
+for (const a of apis.filter((x) => !x.guard).sort((x, y) => Number(!!x.publicOk) - Number(!!y.publicOk))) L.push(`| \`${esc(a.url)}\` | ${a.methods.join(', ')} | ${a.file} | ${a.publicOk ? esc(a.publicOk) : '**yoxlanmayıb**'} |`);
 L.push('');
 L.push('## Sənədlər, araşdırmalar, qərarlar — işə başlamazdan əvvəl oxu');
 L.push('| Fayl | Başlıq | Son dəyişiklik | Sətir |');
@@ -366,4 +402,4 @@ L.push('');
 const outDir = path.join(root, 'docs/ARCHITECTURE');
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, 'SYSTEM-MAP.md'), L.join('\n'));
-console.log(`SYSTEM-MAP.md: ${allPages.length} ünvan, ${apis.length} API (${apis.filter((a) => !a.guard).length} qorumasız işarə), saxta davranış ${fakeHits.length}, ölü düymə/link ${deadHits.length}, istifadəsiz komponent ${unusedComponents.length}, ${docRows.length} sənəd`);
+console.log(`SYSTEM-MAP.md: ${allPages.length} ünvan, ${apis.length} API (${apis.filter((a) => !a.guard && !a.publicOk).length} yoxlanmamış qorumasız), saxta davranış ${fakeHits.length}, ölü düymə/link ${deadHits.length}, istifadəsiz komponent ${unusedComponents.length}, ${docRows.length} sənəd`);

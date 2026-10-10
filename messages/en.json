@@ -7829,5 +7829,15 @@
   },
   "b2bNewListing": {
     "back": "My listings"
+  },
+  "panelBack": {
+    "back": "Back",
+    "toPanel": "Back to panel"
+  },
+  "pageBack": {
+    "home": "Home",
+    "franchise": "Franchise",
+    "sektor": "Sectors",
+    "listings": "Listings"
   }
 }

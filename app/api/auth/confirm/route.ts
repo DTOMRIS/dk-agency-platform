@@ -1,3 +1,4 @@
+// public-ok: e-mail verification link target (DB token), rate-limited
 import { NextRequest, NextResponse } from 'next/server';
 import { eq, and, isNull } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';

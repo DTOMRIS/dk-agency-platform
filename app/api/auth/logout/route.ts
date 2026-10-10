@@ -1,3 +1,4 @@
+// public-ok: clears the caller's own cookie
 import { NextResponse } from 'next/server';
 import { AUTH_COOKIE_NAME } from '@/lib/auth/jwt';
 

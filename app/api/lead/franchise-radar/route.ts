@@ -1,3 +1,4 @@
+// public-ok: public lead form, rate-limited
 import { NextRequest, NextResponse, after } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { franchiseLeads } from '@/lib/db/schema';

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import KazanAiChatClient from '@/components/kazan-ai/KazanAiChatClient';
+import PageBack from '@/components/inner/PageBack';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations({ locale: 'az', namespace: 'kazanAi.metadata' });
@@ -12,5 +13,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function KazanAiPage() {
-  return <KazanAiChatClient />;
+  return (
+    <>
+      <PageBack band />
+      <KazanAiChatClient />
+    </>
+  );
 }

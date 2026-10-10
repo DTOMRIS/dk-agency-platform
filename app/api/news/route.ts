@@ -1,3 +1,4 @@
+// public-ok: approved news list (same data as /haberler)
 import { NextRequest, NextResponse } from 'next/server';
 import { getApprovedNewsArticles } from '@/lib/repositories/newsRepository';
 

@@ -1,7 +1,6 @@
 import { and, desc, eq, inArray, isNotNull, ne, or, sql } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
 import { newsArticles, newsSources } from '@/lib/db/schema';
-import { getAllNews } from '@/lib/data/mockNewsDB';
 import { defaultNewsSources } from '@/lib/data/newsSources';
 import { type ContentLocale, localizedField, sanitizeLocale } from '@/lib/utils/locale-fields';
 import { translateText } from '@/lib/ai/translate';
@@ -95,40 +94,9 @@ export async function getAdminNewsArticles(filters: NewsAdminFilters = {}) {
   const page = Math.max(Math.trunc(filters.page ?? 1), 1);
   const offset = (page - 1) * pageSize;
 
+  // TASK-0530: no DB → empty list (before: invented rows from lib/data/mockNewsDB looked like real news).
   if (!dbAvailable || !db) {
-    const mockRows: AdminNewsArticle[] = getAllNews()
-      .map((item, index) => ({
-        id: index + 1,
-        sourceId: null,
-        sourceName: item.author,
-        externalUrl: null,
-        slug: item.slug,
-        title: item.title,
-        titleAz: item.title,
-        category: item.category,
-        imageUrl: null,
-        author: item.author,
-        origin: 'manual',
-        newsType: 'none',
-        publishedAt: item.publishDate,
-        status: (item.isPremium ? 'translated' : 'approved') as AdminNewsArticle['status'],
-        isEditorPick: index === 0,
-        isManset: false,
-        isTop: false,
-        isGundem: false,
-      }))
-      .filter((item) =>
-        !filters.status || filters.status === 'all' ? true : item.status === filters.status
-      )
-      .filter((item) => (filters.showcase ? item.isEditorPick : true));
-
-    return {
-      items: mockRows.slice(offset, offset + pageSize),
-      total: mockRows.length,
-      page,
-      pageSize,
-      source: 'mock' as const,
-    };
+    return { items: [] as AdminNewsArticle[], total: 0, page, pageSize, source: 'unavailable' as const };
   }
 
   const conditions = [];
@@ -605,32 +573,9 @@ function buildPublicArticleSelect() {
 export async function getApprovedNewsArticles(filters: PublicNewsFilters = {}, locale?: string) {
   const loc = sanitizeLocale(locale);
 
+  // TASK-0530: no DB → empty list (before: invented stories from lib/data/mockNewsDB on the public page).
   if (!dbAvailable || !db) {
-    const mockItems = getAllNews()
-      .map((item, index) => ({
-        id: index + 1,
-        slug: item.slug,
-        title: item.title,
-        summary: item.summary,
-        content: '',
-        category: 'market' as const,
-        imageUrl: null,
-        author: item.author,
-        sourceName: item.author,
-        externalUrl: `https://dkagency.com.tr/haberler/${item.slug}`,
-        isManual: false,
-        publishedAt: item.publishDate,
-        isEditorPick: index === 0,
-      }))
-      .filter((item) =>
-        filters.category && filters.category !== 'all' ? item.category === filters.category : true
-      );
-
-    return {
-      items: mockItems.slice(filters.offset ?? 0, (filters.offset ?? 0) + (filters.limit ?? 12)),
-      total: mockItems.length,
-      source: 'mock' as const,
-    };
+    return { items: [] as PublicNewsArticle[], total: 0, source: 'unavailable' as const };
   }
 
   const limit = filters.limit ?? 12;

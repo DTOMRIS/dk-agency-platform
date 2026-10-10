@@ -14,6 +14,7 @@ import MemberLogoutButton from '@/components/members/MemberLogoutButton';
 import { getMembershipCapability } from '@/lib/members/provider';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { normalizeLocale, withLocale } from '@/i18n/config';
+import PageBack from '@/components/inner/PageBack';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('membershipPage');
@@ -34,6 +35,7 @@ export default async function MembershipPage() {
 
   return (
     <div className="min-h-screen bg-[#FAFAF9]">
+      <PageBack />
       <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:py-20">
         <div className="max-w-3xl">
           <span className="text-[13px] font-semibold tracking-[0.1em] text-rose-700">{t('eyebrow')}</span>

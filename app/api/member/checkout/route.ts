@@ -1,3 +1,4 @@
+// public-ok: returns the checkout link for a plan, no data read
 import { NextRequest, NextResponse } from 'next/server';
 import { resolveCheckoutUrl, type BillingPlan } from '@/lib/members/billing';
 

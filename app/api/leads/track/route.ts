@@ -5,6 +5,8 @@ import { leads } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
 import { wrapEmail } from '@/lib/email/templates';
 import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
+import { isBotUserAgent } from '@/lib/leads/ref-code';
+import { checkRateLimit, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 const ALLOWED_CHANNELS = ['kazan', 'whatsapp', 'telegram'] as const;
 const ALLOWED_SOURCES = ['contact_page', 'home_join'] as const;
@@ -62,6 +64,12 @@ function getClientIp(request: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  // public-ok: contact-button click counter (no data returned). TASK-0530: it writes a row and e-mails /
+  // pings the owner, so bots are ignored and one IP is limited to 20 an hour.
+  if (isBotUserAgent(req.headers.get('user-agent'))) return new NextResponse(null, { status: 204 });
+  const rl = checkRateLimit(`lead-click:${getClientIp(req)}`, RATE_LIMITS.leadClick);
+  if (!rl.success) return rateLimitExceeded(rl);
+
   try {
     if (!db) {
       return NextResponse.json({ error: 'Database unavailable' }, { status: 503 });

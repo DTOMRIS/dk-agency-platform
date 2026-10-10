@@ -1,3 +1,4 @@
+// public-ok: password reset request, rate-limited, same answer for unknown e-mails
 import { NextRequest, NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';

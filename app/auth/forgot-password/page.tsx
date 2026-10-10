@@ -1,5 +1,1 @@
-import ForgotPasswordPage from '@/app/forgot-password/page';
-
-export default function LegacyForgotPasswordPage() {
-  return <ForgotPasswordPage />;
-}
+export { default } from '@/app/forgot-password/page';

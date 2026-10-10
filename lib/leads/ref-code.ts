@@ -6,3 +6,14 @@ export function extractRefCode(prefillText: string | null | undefined): string |
   const match = prefillText?.match(/Kod:\s*(DK-[A-Z0-9]{4})/);
   return match ? match[1] : null;
 }
+
+/**
+ * TASK-0530: crawlers and link-preview fetchers follow the WhatsApp/Telegram links (the float is on every
+ * page now) — they must not become «clicks» or ping the owner.
+ */
+export function isBotUserAgent(ua: string | null | undefined): boolean {
+  if (!ua) return true;
+  // Preview fetchers: «TelegramBot», «Discordbot» (→ bot), «WhatsApp/2.x» (starts with it). Real people in the
+  // Telegram / WhatsApp in-app browsers send a normal browser UA and are still counted.
+  return /^whatsapp\/|bot|crawl|spider|slurp|facebookexternalhit|embedly|curl|wget|python-requests|lighthouse/i.test(ua);
+}

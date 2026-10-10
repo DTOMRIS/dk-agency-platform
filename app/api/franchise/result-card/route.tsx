@@ -1,3 +1,4 @@
+// public-ok: share image drawn from query params, no data read
 import { ImageResponse } from 'next/og';
 import { type NextRequest } from 'next/server';
 

@@ -1,3 +1,4 @@
+// public-ok: newsletter sign-up, rate-limited
 import { NextRequest, NextResponse, after } from 'next/server';
 import { z } from 'zod';
 

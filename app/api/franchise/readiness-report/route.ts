@@ -1,5 +1,7 @@
+// public-ok: free quiz AI report, rate-limited 10 / hour, inputs capped (TASK-0530)
 import { NextRequest, NextResponse } from 'next/server';
 import { AI_MODELS } from '@/lib/ai-models';
+import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 import {
   buildFranchiseReportPrompt,
   isFranchiseReportTaskType,
@@ -18,7 +20,26 @@ type ReportRequestBody = {
   taskType?: FranchiseReportTaskType;
 };
 
+/**
+ * TASK-0530 (system map: public route without a guard). Public on purpose — the free readiness quizzes
+ * call it without login — but every call is a paid AI request, so: per-IP limit, at most 20 numeric scores
+ * (0–100, same scale as buildFranchiseReportPrompt) and a known locale.
+ */
+function cleanScores(raw: unknown): Record<string, number> | null {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+  const out: Record<string, number> = {};
+  for (const [key, value] of Object.entries(raw as Record<string, unknown>).slice(0, 20)) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) continue;
+    out[key.slice(0, 60)] = Math.min(100, Math.max(0, n));
+  }
+  return Object.keys(out).length ? out : null;
+}
+
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(`ai-report:${getClientIp(req)}`, RATE_LIMITS.aiReport);
+  if (!rl.success) return rateLimitExceeded(rl);
+
   let body: ReportRequestBody;
   try {
     body = await req.json();
@@ -26,9 +47,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  const { scores, locale = 'az', avgScore = 0, referrer = '' } = body;
+  const scores = cleanScores(body.scores);
+  const locale = ['az', 'en', 'ru', 'tr'].includes(String(body.locale)) ? String(body.locale) : 'az';
+  const avgScore = Math.min(100, Math.max(0, Number(body.avgScore) || 0));
+  const referrer = typeof body.referrer === 'string' ? body.referrer.slice(0, 120) : '';
 
-  if (!scores || typeof scores !== 'object') {
+  if (!scores) {
     return NextResponse.json({ error: 'scores required' }, { status: 400 });
   }
 

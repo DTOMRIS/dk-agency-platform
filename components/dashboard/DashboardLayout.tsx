@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import DashboardBottomNav from '@/components/dashboard/DashboardBottomNav';
 import { DashboardTopBar } from '@/components/dashboard/DashboardTopBar';
+import PanelBackBar from '@/components/panel/PanelBackBar';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <div className="min-h-screen bg-[#F2F2F7] pt-16 pb-20 lg:ml-72 lg:pt-0 lg:pb-0">
         <DashboardTopBar />
+        <PanelBackBar root="/dashboard" className="px-4 pt-4 sm:px-8 sm:pt-5" />
         <main>{children}</main>
       </div>
 

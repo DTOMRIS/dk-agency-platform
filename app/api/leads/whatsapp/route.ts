@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse, after } from 'next/server';
 import { createHash, randomInt } from 'node:crypto';
 import { WHATSAPP_NUMBER } from '@/lib/contact-channels';
+import { isBotUserAgent } from '@/lib/leads/ref-code';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '@/lib/utils/rate-limit';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
 import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
@@ -67,6 +69,9 @@ export function GET(req: NextRequest) {
   const url = new URL(`https://wa.me/${WHATSAPP_NUMBER}`);
   url.searchParams.set('text', message);
 
-  after(() => logClick(req, message));
+  // public-ok: a plain link on every page; the redirect always works. TASK-0530: bots and more than
+  // 20 clicks/hour from one IP are not counted and do not ping the owner.
+  const counted = !isBotUserAgent(req.headers.get('user-agent')) && checkRateLimit(`lead-click:${getClientIp(req)}`, RATE_LIMITS.leadClick).success;
+  if (counted) after(() => logClick(req, message));
   return NextResponse.redirect(url);
 }

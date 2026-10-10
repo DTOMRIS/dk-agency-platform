@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0530` fix(security/ux): pullu AI hesabatı, köhnə üzv girişi, klik sayğacları və analitika limitsiz idi — limit + bot filtri; uydurma xəbər verən API/RSS/bülletən və DB yoxdursa uydurma xəbər göstərən səhifələr həqiqi dataya bağlandı; e-poçt təsdiq səhifəsi və «Sessiya tarixi» indi həqiqi; hər səhifədə geri düyməsi (58 → 0, panellərdə bir ortaq düymə); sistem xəritəsi yanlış həyəcanlardan təmizləndi, API-lar da saxta davranış üçün yoxlanır.
 - `TASK-0529` feat/fix: WhatsApp klikinə «Kod: DK-XXXX» — telefondakı söhbəti hansı səhifədən gəldiyi ilə eşləmək olur, panel «klik edənlə necə əlaqə saxlayım» deyir; alətlərdə İnteraktiv Bələdçi (ətraf blur, xanaları göstərir, «Keç») və daha görünən «Təmizlə»; həqiqi DK logosu; WhatsApp və «KAZAN AI» düymələri hər səhifədə eyni; Sektor Nəbzi-də xəbər axını (sağda) və trend xəbərlər zolağı.
 - `TASK-0528` fix: «saxta davranış» süpürgəsi — B2B «Yeni elan» indi həqiqətən saxlayır (əvvəl heç nə göndərmirdi), bildiriş ayarları yadda qalır, admin panelində xətalar «0» kimi gizlənmir, zəng düyməsi müraciətləri göstərir; 72 ölü fayl silindi. Sistem xəritəsi artıq saxta davranışı, ölü düymələri və istifadəsiz komponentləri özü tapır.
 - `TASK-0527` fix(deps): Hostinger-in 8 təhlükəsizlik xəbərdarlığı bağlandı — js-yaml 5.4.1, dompurify 3.4.16, protobufjs 7.6.5; canlı asılılıqlarda açıq qalmadı.

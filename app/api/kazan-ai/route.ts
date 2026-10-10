@@ -1,3 +1,4 @@
+// public-ok: public KAZAN assistant, rate-limited 30 / min per IP
 import { NextRequest, NextResponse } from 'next/server';
 import {
   AI_MODELS,

@@ -1,3 +1,4 @@
+// public-ok: best-effort ad impression counter, returns nothing
 import { NextResponse } from 'next/server';
 import { incrementAdImpression } from '@/lib/repositories/adsRepository';
 
