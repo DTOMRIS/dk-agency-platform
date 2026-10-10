@@ -1,7 +1,9 @@
+// public-ok: legacy member login, rate-limited (TASK-0530)
 import { NextRequest, NextResponse } from 'next/server';
 import { type MemberSession } from '@/lib/member-access';
 import { loginMember } from '@/lib/members/auth-adapter';
 import { MEMBER_COOKIE_NAME, encodeMemberSession } from '@/lib/members/server-session';
+import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
 
 function withSession(response: NextResponse, session: MemberSession) {
   response.cookies.set(MEMBER_COOKIE_NAME, encodeMemberSession(session), {
@@ -16,7 +18,11 @@ function withSession(response: NextResponse, session: MemberSession) {
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  // TASK-0530: same brute-force limit as /api/auth login (this route had none).
+  const rl = checkRateLimit(`member-auth:${getClientIp(request)}`, RATE_LIMITS.authLogin);
+  if (!rl.success) return rateLimitExceeded(rl);
+
+  const body = await request.json().catch(() => null);
   const action = body?.action as string;
 
   if (action === 'register') {
