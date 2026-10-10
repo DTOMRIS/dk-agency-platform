@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: './' },
   title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
   description:
-    'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+    'Pulsuz toolkit, ekspert blog, restoran devri və françayz — Azərbaycan HoReCa sektoru üçün.',
   openGraph: {
     type: 'website',
     siteName: 'DK Agency',
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     url: 'https://dkagency.com.tr',
     title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
     description:
-      'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+      'Pulsuz toolkit, ekspert blog, restoran devri və françayz — Azərbaycan HoReCa sektoru üçün.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'DK Agency | Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması',
     description:
-      'Pulsuz toolkit, ekspert blog, restoran devri və franchise — Azərbaycan HoReCa sektoru üçün.',
+      'Pulsuz toolkit, ekspert blog, restoran devri və françayz — Azərbaycan HoReCa sektoru üçün.',
   },
 };
 

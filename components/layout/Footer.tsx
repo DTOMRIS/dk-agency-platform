@@ -88,7 +88,8 @@ export function Footer() {
     ]},
     { title: t('colCompany'), links: [
       { label: t('compAbout'), href: '/haqqimizda' },
-      { label: t('compConsulting'), href: '/elaqe' },
+      // TASK-0535 (owner 10.10: «footer-da Məsləhət işləmir», «tanıtım səhifəsi yox?»): the sales page /tanitim.
+      { label: t('compConsulting'), href: '/tanitim' },
       { label: t('compContact'), href: '/elaqe' },
       { label: t('compSedd'), href: '/sedd-rozeti' },
     ]},
@@ -124,7 +125,8 @@ export function Footer() {
               <ul className="space-y-0">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <Link href={withLocale(locale, link.href)}
+                    {/* /tanitim is a static HTML route (AZ only): no locale prefix, no prefetch. */}
+                    <Link href={link.href === '/tanitim' ? '/tanitim' : withLocale(locale, link.href)} prefetch={link.href === '/tanitim' ? false : undefined}
                       className="block py-1 text-sm text-[var(--dk-ink-soft)] transition-colors hover:text-[var(--dk-gold)]">
                       {link.label}
                     </Link>
