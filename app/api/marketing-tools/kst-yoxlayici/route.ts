@@ -15,9 +15,9 @@ export const maxDuration = 60;
 
 const ScoreVal = z.number().int().min(1).max(5);
 
-function categorySchema(prefix: string) {
+function categorySchema(prefix: string, count = 10) {
   const shape: Record<string, z.ZodNumber> = {};
-  for (let i = 1; i <= 10; i++) shape[`${prefix}${i}`] = ScoreVal;
+  for (let i = 1; i <= count; i++) shape[`${prefix}${i}`] = ScoreVal;
   return z.object(shape);
 }
 
@@ -25,6 +25,8 @@ const InputSchema = z.object({
   quality: categorySchema('K'),
   service: categorySchema('S'),
   cleanliness: categorySchema('T'),
+  // TASK-0523: 4th group «İnsan» (team), 5 questions — optional so older clients still work.
+  people: categorySchema('I', 5).optional(),
   notes: z.string().max(1000).optional().default(''),
   locale: z.enum(['az', 'en', 'tr', 'ru']).default('az'),
 });
@@ -56,7 +58,7 @@ const OUTPUT_LANGUAGE: Record<string, string> = {
 
 function buildSystemPrompt(locale: string): string {
   return `Sən Bakıda restoranlara keyfiyyət, xidmət və təmizlik üzrə məsləhət verən təcrübəli əməliyyat məsləhətçisisən.
-Restoran sahibi 30 sual üzrə özünü 1-5 balla qiymətləndirib. Ballar və ən zəif cavablar artıq hesablanıb — rəqəmləri dəyişmə, yenidən hesablama.
+Restoran sahibi keyfiyyət, servis, təmizlik və komanda (insan) üzrə özünü 1-5 balla qiymətləndirib. Ballar və ən zəif cavablar artıq hesablanıb — rəqəmləri dəyişmə, yenidən hesablama.
 
 Sənin işin:
 1. issues — sənə verilən hər zəif sual üçün (questionId eyni qalsın):
@@ -85,14 +87,14 @@ Cavabı YALNIZ keçərli JSON kimi qaytar:
 
 // ── PROMPT BUILDER ──────────────────────────────────────────────────
 
-const GROUP_LABEL: Record<string, string> = { quality: 'Keyfiyyət', service: 'Servis', cleanliness: 'Təmizlik' };
+const GROUP_LABEL: Record<string, string> = { quality: 'Keyfiyyət', service: 'Servis', cleanliness: 'Təmizlik', people: 'İnsan (komanda)' };
 
 function buildUserPrompt(
   input: z.infer<typeof InputSchema>,
-  scores: Record<string, number>,
+  scores: Record<string, number | null>,
   weakest: Array<KstWeakItem & { text: string }>,
 ): string {
-  const groups = KST_CATEGORIES.map((c) => `${GROUP_LABEL[c]}: ${scores[c]}%`).join(', ');
+  const groups = KST_CATEGORIES.filter((c) => scores[c] !== null).map((c) => `${GROUP_LABEL[c]}: ${scores[c]}%`).join(', ');
   const weak = weakest.length
     ? weakest.map((w) => `- ${w.questionId} (${GROUP_LABEL[w.category]}): «${w.text}» — ${w.score}/5`).join('\n')
     : '- Zəif cavab yoxdur (bütün cavablar 4-5). Plan mövcud səviyyəni qorumağa yönəlsin.';
@@ -187,7 +189,7 @@ export async function POST(req: Request) {
     const aiIssues = new Map(parseResult.data.issues.map((issue) => [issue.questionId, issue]));
     const result = {
       scores,
-      industryBenchmark: { quality: KST_TARGET_PCT, service: KST_TARGET_PCT, cleanliness: KST_TARGET_PCT, overall: KST_TARGET_PCT },
+      industryBenchmark: { quality: KST_TARGET_PCT, service: KST_TARGET_PCT, cleanliness: KST_TARGET_PCT, people: KST_TARGET_PCT, overall: KST_TARGET_PCT },
       topIssues: weakWithText.map((w) => ({
         category: w.category,
         questionId: w.questionId,

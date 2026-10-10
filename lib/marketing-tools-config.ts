@@ -164,6 +164,25 @@ export const MARKETING_TOOLS: MarketingToolConfig[] = [
     estimatedCostAznPerRun: 0,
   },
 
+  // TASK-0523: guest survey builder + answer checker (OCAQ logic, our own questions; no AI, no DB).
+  {
+    slug: 'qonaq-anketi',
+    category: 'musteri',
+    tier: 'sagird',
+    iconName: 'ClipboardCheck',
+    status: 'live',
+    aiProvider: 'none',
+    externalApis: [],
+    inputSchema: {
+      fields: [
+        { name: 'restaurantName', type: 'text', required: false },
+        { name: 'answers', type: 'textarea', required: false },
+      ],
+    },
+    monthlyRunLimit: { sagird: null, kalfa: null, usta: null },
+    estimatedCostAznPerRun: 0,
+  },
+
   // ── KALFA PILLESI (12 alət, 89 AZN/ay) ───────────────────────────
 
   {

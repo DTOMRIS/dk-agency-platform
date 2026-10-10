@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import ComplaintAnalysis from '@/components/marketinq/ComplaintAnalysis';
+import SikayetHub from '@/components/marketinq-ocagi/hubs/SikayetHub';
+import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
 import { normalizeLocale, withLocalePrefix } from '@/i18n/config';
@@ -44,7 +45,7 @@ export default async function ComplaintAnalysisPage({ params }: Props) {
 
   return (
     <main>
-      <ComplaintAnalysis backHref="/b2b-panel/marketinq-ocagi" />
+      <SikayetHub initialTab="triage" replyTool={<SikayetCavablandiriciPage />} />
     </main>
   );
 }

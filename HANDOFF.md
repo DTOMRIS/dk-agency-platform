@@ -1,5 +1,16 @@
 # HANDOFF
 
+## Session 10 Oktyabr 2026 — TASK-0523: Marketinq Ocağı düzəlişləri + birləşdirmə + OCAQ məntiqi
+
+**Budaq:** `feat/TASK-0523-marketinq-fixes` (origin/main dc80c8d-dən). Kart: `docs/tasks/TASK-0523.md` (hər düzəlişin faylı və sübutu orada). Korumalı fayla toxunulmayıb.
+
+- Rəqəmlər kodda: KST (`lib/marketing-tools/kst-score.ts`), şikayət sayları (`complaint-stats.ts`), menyu matrisi (`lib/toolkit/menu-matrix.ts` — b2b menyu analitikası da), anket (`qonaq-anketi.ts`). AI yalnız söz yazır. Yeni AI aləti yazanda bu qaydanı saxla.
+- Aylıq limit indi işləyir (`logToolRun`): server action-a yeni AI aləti əlavə edəndə uğurlu run-u yaz. AI-ı avtomatik çağıran yer qoyma (menyu analitikasında var idi — limiti yeyirdi).
+- Birləşmiş səhifələr `components/marketinq-ocagi/hubs/*` + `ToolTabs` — köhnə slug-lar/route-lar öz sekməsini açır; hub kartları qalıb.
+- P&L simulyatoru və Marketinq yemək xərci səhifəsi silindi → `/toolkit/pnl`, `/toolkit/food-cost` (`EXTERNAL_TOOL_HREF`).
+- Açıq (sahibə): promosyon-roi API yetimdir (UI yoxdur) — silinsin? Sezon planlama, persona promptları hələ «Əhilik hikməti» istəyir (KST/şikayət/menyuda dayandırıldı). OCAQ checklist 44/67 sualı cavabsız (bu PR-a təsiri yoxdur).
+- Test zamanı (mərhələ 1) menyu səhifəsi AI-ı avtomatik çağırdı — canlı DB-də `marketing_tool_runs` user 1 üçün 1 sətir ola bilər; sahibə yoxlama SQL-i verildi.
+
 ## Session 9 Oktyabr 2026 (gec, 2) — TASK-0521: «Bütün müraciətlər» + header hesab menyusu
 
 **Budaq:** `feat/TASK-0520-header-v2` (TASK-0520 ilə eyni budaq, commit edilməyib). `components/layout/Header.tsx` sahibin ayrıca commit-idir (`ALLOW_PROTECTED=1`). Kart: `docs/tasks/TASK-0521.md` (mənbə → cədvəl xəritəsi orada).

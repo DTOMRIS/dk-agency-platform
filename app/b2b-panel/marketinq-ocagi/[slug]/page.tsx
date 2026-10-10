@@ -9,18 +9,17 @@ import { notFound, redirect } from 'next/navigation';
 import { EXTERNAL_TOOL_HREF } from '@/lib/marketing-tools-links';
 import SosialMetrikPage from '@/components/marketinq-ocagi/sosial-metrik/SosialMetrikPage';
 import MarkaKompasiPage from '@/components/marketinq-ocagi/marka-kompasi/MarkaKompasiPage';
-import KSTYoxlayiciPage from '@/components/marketinq-ocagi/kst-yoxlayici/KSTYoxlayiciPage';
-import PromoROIPage from '@/components/marketinq-ocagi/promosyon-roi/PromoROIPage';
+// TASK-0523: merged pages — each old slug opens its own tab.
+import RoiHub from '@/components/marketinq-ocagi/hubs/RoiHub';
+import SezonHub from '@/components/marketinq-ocagi/hubs/SezonHub';
+import SikayetHub from '@/components/marketinq-ocagi/hubs/SikayetHub';
+import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
+import AuditHub from '@/components/marketinq-ocagi/hubs/AuditHub';
+import QonaqAnketiPage from '@/components/marketinq-ocagi/qonaq-anketi/QonaqAnketiPage';
 import MenyuAnalitiyiPage from '@/components/marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiPage';
-import SikayetAnalitiyiPage from '@/components/marketinq-ocagi/sikayet-analitigi/SikayetAnalitiyiPage';
 import MusteriPersonaPage from '@/components/marketinq-ocagi/musteri-persona/MusteriPersonaPage';
-import SezonPlanlamaPage from '@/components/marketinq-ocagi/sezon-planlama/SezonPlanlamaPage';
-import SezonAnalitikasiPage from '@/components/marketinq-ocagi/sezon-analitikasi/SezonAnalitikasiPage';
-import ReklamRoiPage from '@/components/marketinq-ocagi/reklam-roi/ReklamRoiPage';
-import RestoranAuditPage from '@/components/marketinq-ocagi/restoran-audit/RestoranAuditPage';
 import TrendAnalizPage from '@/components/marketinq-ocagi/trend-analiz/TrendAnalizPage';
 import LokasyonAnalizPage from '@/components/marketinq-ocagi/lokasyon-analiz/LokasyonAnalizPage';
-import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
 import ReklamYazicisiPage from '@/components/marketinq-ocagi/reklam-yazicisi/ReklamYazicisiPage';
 
 const pageCopy: Record<
@@ -43,6 +42,7 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Marka Kompası', subtitle: '5 sualda restoranınızın bazardakı yerini tapın', why: 'Konum ucuz/lüks etiketlərdən ibarət deyil — kim üçün, hansı problem, niyə fərqli?' },
       'kst-yoxlayici': { title: 'KST Yoxlayıcı', subtitle: 'Keyfiyyət, Servis, Təmizlik öz-özünə audit', why: 'KST mükəmməlliyi bütün marketinq səylərinin təməlidir.' },
+      'qonaq-anketi': { title: 'Qonaq anketi', subtitle: 'Qısa anket hazırla, cavabları yoxla', why: 'Qonaq nə düşündüyünü özü yazanda harada itirdiyinizi görürsünüz.' },
       'menyu-analitik': { title: 'Menyu Analitiği', subtitle: 'Menyu pozisiyalarının rentabelliyini analiz edin', why: 'Menyunun 20%-i satışın 80%-ni yaradır. Hansı yemək ulduz, hansı yük olduğunu bilmək gəliri artırır.' },
       'yemek-xerci': { title: 'Yemək Xərci', subtitle: 'Resept kartı ilə porsiya maya dəyərini hesabla', why: 'Qiyməti göz ölçüsü ilə qoymaq marjanı yeyir. Bu alət ərzaq xərcini, trim loss-u və porsiya sayını bir yerdə hesablayır.' },
       'roi-kalkulator': { title: 'ROI Kalkulatoru', subtitle: 'Kanal ROI, CAC, LTV və payback müqayisəsi', why: 'Restoran sahibi büdcəni çox kanala böləndə əsas sual hansı kanalın real müştəri gətirməsidir. Bu alət kanal ROI, CAC, LTV və payback-i birlikdə göstərir.' },
@@ -71,6 +71,7 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Brand Compass', subtitle: 'Find your market position in 5 questions', why: 'Positioning is about who, what problem, why different.' },
       'kst-yoxlayici': { title: 'QSC Checker', subtitle: 'Quality, Service, Cleanliness self-audit', why: 'QSC excellence is the foundation of all marketing.' },
+      'qonaq-anketi': { title: 'Guest survey', subtitle: 'Build a short survey, check the answers', why: 'When guests write what they think, you see where you lose them.' },
       'menyu-analitik': { title: 'Menu Analytics', subtitle: 'Analyze menu item profitability', why: '20% of your menu generates 80% of sales.' },
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
       'roi-kalkulator': { title: 'ROI Calculator', subtitle: 'Channel ROI, CAC, LTV, and payback comparison', why: 'When budget is split across channels, the core question is which channel actually brings profitable customers.' },
@@ -99,6 +100,7 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Marka Pusulası', subtitle: '5 soruda konumunuzu bulun', why: 'Konumlandırma ucuz/lüks etiketlerinden ibaret değil.' },
       'kst-yoxlayici': { title: 'KST Denetçisi', subtitle: 'Kalite, Servis, Temizlik denetimi', why: 'KST mükemmelliği tüm pazarlama çabalarının temelidir.' },
+      'qonaq-anketi': { title: 'Misafir anketi', subtitle: 'Kısa anket hazırla, cevapları kontrol et', why: 'Misafir ne düşündüğünü kendisi yazınca nerede kaybettiğinizi görürsünüz.' },
       'menyu-analitik': { title: 'Menü Analitiği', subtitle: 'Menü kalemlerinin karlılığı', why: 'Menünüzün %20\'si satışın %80\'ini yaratır.' },
       'yemek-xerci': { title: 'Yemek Maliyeti', subtitle: 'Reçete kartı ile porsiyon maliyetini hesapla', why: 'Fiyatı göz kararı koymak marjı kaçırır. Bu araç ürün maliyeti, fire ve porsiyon sayısını birlikte hesaplar.' },
       'roi-kalkulator': { title: 'ROI Hesaplayıcı', subtitle: 'Kanal ROI, CAC, LTV ve payback karşılaştırması', why: 'Bütçe kanallara bölündüğünde asıl soru hangi kanalın kârlı müşteri getirdiğidir.' },
@@ -127,6 +129,7 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Компас Бренда', subtitle: 'Найдите свою позицию за 5 вопросов', why: 'Позиционирование — это не про дёшево/дорого.' },
       'kst-yoxlayici': { title: 'KST Аудитор', subtitle: 'Самопроверка Качества, Сервиса, Чистоты', why: 'Совершенство KST — основа всех маркетинговых усилий.' },
+      'qonaq-anketi': { title: 'Анкета гостя', subtitle: 'Создайте анкету, проверьте ответы', why: 'Когда гость сам пишет, что думает, видно, где вы его теряете.' },
       'menyu-analitik': { title: 'Анализ Меню', subtitle: 'Рентабельность позиций меню', why: '20% меню создаёт 80% продаж.' },
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost', why: 'Guessing menu prices leaks margin. This tool calculates ingredient cost, trim loss and portions together.' },
       'roi-kalkulator': { title: 'ROI Калькулятор', subtitle: 'Сравнение ROI, CAC, LTV и окупаемости каналов', why: 'Когда бюджет делится между каналами, главный вопрос — какой канал приводит прибыльных клиентов.' },
@@ -165,35 +168,38 @@ export default function ToolSlugPage() {
   if (slug === 'marka-kompasi' && tool.status === 'live') {
     return <MarkaKompasiPage />;
   }
+  if (slug === 'qonaq-anketi' && tool.status === 'live') {
+    return <QonaqAnketiPage />;
+  }
   if (slug === 'kst-yoxlayici' && tool.status === 'live') {
-    return <KSTYoxlayiciPage />;
+    return <AuditHub initialTab="guest" />;
   }
   if (slug === 'roi-kalkulator' && tool.status === 'live') {
-    return <PromoROIPage />;
+    return <RoiHub initialTab="channels" />;
   }
   if (slug === 'menyu-analitik' && tool.status === 'live') {
     return <MenyuAnalitiyiPage />;
   }
   if (slug === 'sikayet-analitigi' && tool.status === 'live') {
-    return <SikayetAnalitiyiPage />;
+    return <SikayetHub initialTab="batch" replyTool={<SikayetCavablandiriciPage />} />;
   }
   if (slug === 'sikayet-cavablandirici' && tool.status === 'live') {
-    return <SikayetCavablandiriciPage />;
+    return <SikayetHub initialTab="reply" replyTool={<SikayetCavablandiriciPage />} />;
   }
   if (slug === 'musteri-persona' && tool.status === 'live') {
     return <MusteriPersonaPage />;
   }
   if (slug === 'sezon-planlama' && tool.status === 'live') {
-    return <SezonPlanlamaPage />;
+    return <SezonHub initialTab="calendar" />;
   }
   if (slug === 'sezon-analitikasi' && tool.status === 'live') {
-    return <SezonAnalitikasiPage />;
+    return <SezonHub initialTab="forecast" />;
   }
   if (slug === 'reklam-roi' && tool.status === 'live') {
-    return <ReklamRoiPage />;
+    return <RoiHub initialTab="campaign" />;
   }
   if (slug === 'restoran-audit' && tool.status === 'live') {
-    return <RestoranAuditPage />;
+    return <AuditHub initialTab="business" />;
   }
   if (slug === 'trend-analiz' && tool.status === 'live') {
     return <TrendAnalizPage />;

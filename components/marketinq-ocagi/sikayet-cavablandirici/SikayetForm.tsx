@@ -1,5 +1,6 @@
 'use client';
 
+import { useMessages } from 'next-intl';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
@@ -8,7 +9,8 @@ import { COMPENSATION_OPTIONS, type CompensationOption } from '@/lib/ai/complain
 const COMPLAINT_TYPES = ['food', 'service', 'price', 'cleanliness', 'other'] as const;
 const LANGS = ['az', 'en', 'tr', 'ru'] as const;
 
-const copy: Record<Locale, {
+// TASK-0523: copy moved to messages/*.json → mqForms.sikayetForm (was an in-file locale map).
+type SikayetFormCopy = {
   complaintText: string;
   complaintTextPlaceholder: string;
   complaintLanguage: string;
@@ -26,83 +28,6 @@ const copy: Record<Locale, {
   compensationDetail: string;
   compensationDetailPlaceholder: string;
   compensations: Record<CompensationOption, string>;
-}> = {
-  az: {
-    complaintText: 'Şikayət mətni',
-    complaintTextPlaceholder: 'Müştərinin şikayətini buraya yapışdırın...',
-    complaintLanguage: 'Şikayət dili',
-    responseLanguage: 'Cavab dili',
-    restaurantName: 'Restoran adı (opsional)',
-    complaintType: 'Şikayət növü',
-    submitButton: 'Cavab Yarat',
-    submitting: 'AI cavab yaradır...',
-    minLength: 'Şikayət ən az 10 simvol olmalıdır',
-    maxLength: 'Şikayət maksimum 2000 simvol ola bilər',
-    types: { food: 'Yemək', service: 'Xidmət', price: 'Qiymət', cleanliness: 'Təmizlik', other: 'Digər' },
-    langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
-    compensation: 'Nə təklif edirsiniz?',
-    compensationHint: 'Seçməsəniz, cavab yalnız üzr və həll yazır — heç bir endirim və ya hədiyyə vəd etmir.',
-    compensationDetail: 'Təklifin dəqiq mətni (opsional)',
-    compensationDetailPlaceholder: 'məs. növbəti sifarişə 10% endirim',
-    compensations: { none: 'Heç nə — yalnız üzr və həll', discount: 'Növbəti gəlişə endirim', treat: 'İkram (desert, içki)', redo: 'Yeməyi yenidən hazırlamaq', refund: 'Pulu geri qaytarmaq' },
-  },
-  en: {
-    complaintText: 'Complaint text',
-    complaintTextPlaceholder: 'Paste the customer complaint here...',
-    complaintLanguage: 'Complaint language',
-    responseLanguage: 'Response language',
-    restaurantName: 'Restaurant name (optional)',
-    complaintType: 'Complaint type',
-    submitButton: 'Generate Response',
-    submitting: 'AI is generating responses...',
-    minLength: 'Complaint must be at least 10 characters',
-    maxLength: 'Complaint cannot exceed 2000 characters',
-    types: { food: 'Food', service: 'Service', price: 'Price', cleanliness: 'Cleanliness', other: 'Other' },
-    langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
-    compensation: 'What do you offer?',
-    compensationHint: 'If you pick nothing, the reply only apologises and explains the fix — no discount or gift is promised.',
-    compensationDetail: 'Exact wording of the offer (optional)',
-    compensationDetailPlaceholder: 'e.g. 10% off the next order',
-    compensations: { none: 'Nothing — apology and fix only', discount: 'Discount on next visit', treat: 'A treat (dessert, drink)', redo: 'Remake the dish', refund: 'Refund' },
-  },
-  tr: {
-    complaintText: 'Şikayet metni',
-    complaintTextPlaceholder: 'Müşteri şikayetini buraya yapıştırın...',
-    complaintLanguage: 'Şikayet dili',
-    responseLanguage: 'Yanıt dili',
-    restaurantName: 'Restoran adı (isteğe bağlı)',
-    complaintType: 'Şikayet türü',
-    submitButton: 'Yanıt Oluştur',
-    submitting: 'AI yanıt oluşturuyor...',
-    minLength: 'Şikayet en az 10 karakter olmalıdır',
-    maxLength: 'Şikayet en fazla 2000 karakter olabilir',
-    types: { food: 'Yemek', service: 'Hizmet', price: 'Fiyat', cleanliness: 'Temizlik', other: 'Diğer' },
-    langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
-    compensation: 'Ne teklif ediyorsunuz?',
-    compensationHint: 'Seçmezseniz yanıt yalnız özür ve çözüm yazar — indirim ya da hediye vaat etmez.',
-    compensationDetail: 'Teklifin tam metni (isteğe bağlı)',
-    compensationDetailPlaceholder: 'örn. sonraki siparişe %10 indirim',
-    compensations: { none: 'Hiçbir şey — yalnız özür ve çözüm', discount: 'Sonraki ziyarete indirim', treat: 'İkram (tatlı, içecek)', redo: 'Yemeği yeniden hazırlamak', refund: 'Parayı iade etmek' },
-  },
-  ru: {
-    complaintText: 'Текст жалобы',
-    complaintTextPlaceholder: 'Вставьте жалобу клиента сюда...',
-    complaintLanguage: 'Язык жалобы',
-    responseLanguage: 'Язык ответа',
-    restaurantName: 'Название ресторана (необязательно)',
-    complaintType: 'Тип жалобы',
-    submitButton: 'Создать ответ',
-    submitting: 'AI создаёт ответы...',
-    minLength: 'Жалоба должна содержать минимум 10 символов',
-    maxLength: 'Жалоба не может превышать 2000 символов',
-    types: { food: 'Еда', service: 'Обслуживание', price: 'Цена', cleanliness: 'Чистота', other: 'Другое' },
-    langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
-    compensation: 'Что вы предлагаете?',
-    compensationHint: 'Если ничего не выбрать, ответ только извиняется и объясняет решение — без скидок и подарков.',
-    compensationDetail: 'Точная формулировка предложения (необязательно)',
-    compensationDetailPlaceholder: 'напр. скидка 10% на следующий заказ',
-    compensations: { none: 'Ничего — только извинение и решение', discount: 'Скидка на следующий визит', treat: 'Угощение (десерт, напиток)', redo: 'Приготовить блюдо заново', refund: 'Вернуть деньги' },
-  },
 };
 
 interface SikayetFormProps {
@@ -112,7 +37,7 @@ interface SikayetFormProps {
 }
 
 export default function SikayetForm({ locale, onResult, onError }: SikayetFormProps) {
-  const c = copy[locale];
+  const c = (useMessages() as unknown as { mqForms: { sikayetForm: SikayetFormCopy } }).mqForms.sikayetForm;
   const [complaintText, setComplaintText] = useState('');
   const [complaintType, setComplaintType] = useState<string>('food');
   const [complaintLang, setComplaintLang] = useState<string>(locale);
@@ -150,7 +75,7 @@ export default function SikayetForm({ locale, onResult, onError }: SikayetFormPr
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        if (res.status === 429) onError(copy[locale].maxLength.includes('2000') ? 'rate-limit' : data.error || 'rate-limit');
+        if (res.status === 429) onError(c.maxLength.includes('2000') ? 'rate-limit' : data.error || 'rate-limit');
         else onError(data.error || 'unknown');
         return;
       }

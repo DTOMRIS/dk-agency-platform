@@ -7,11 +7,13 @@ interface KSTScores {
   quality: number;
   service: number;
   cleanliness: number;
+  /** TASK-0523: «İnsan» group; absent / null on runs saved before it existed. */
+  people?: number | null;
   overall: number;
 }
 
 interface TopIssue {
-  category: 'quality' | 'service' | 'cleanliness';
+  category: 'quality' | 'service' | 'cleanliness' | 'people';
   questionId: string;
   /** TASK-0523: the question itself (older saved runs only have the id). */
   questionText?: string;
@@ -49,7 +51,7 @@ const resultCopy: Record<Locale, {
   az: {
     title: 'Sənin KST Skorun',
     benchmark: 'Hədəf: {v}% (DK tövsiyəsi)',
-    cats: { quality: 'Keyfiyyət', service: 'Servis', cleanliness: 'Təmizlik' },
+    cats: { quality: 'Keyfiyyət', service: 'Servis', cleanliness: 'Təmizlik', people: 'İnsan' },
     vs: 'hədəfə görə',
     issuesTitle: 'Ən zəif cavablar',
     fixStep: '1 həftəlik həll',
@@ -61,7 +63,7 @@ const resultCopy: Record<Locale, {
   en: {
     title: 'Your KST Score',
     benchmark: 'Target: {v}% (DK suggestion)',
-    cats: { quality: 'Quality', service: 'Service', cleanliness: 'Cleanliness' },
+    cats: { quality: 'Quality', service: 'Service', cleanliness: 'Cleanliness', people: 'Team' },
     vs: 'vs target',
     issuesTitle: 'Weakest answers',
     fixStep: '1-week fix',
@@ -73,7 +75,7 @@ const resultCopy: Record<Locale, {
   tr: {
     title: 'KST Puanınız',
     benchmark: 'Hedef: {v}% (DK önerisi)',
-    cats: { quality: 'Kalite', service: 'Servis', cleanliness: 'Temizlik' },
+    cats: { quality: 'Kalite', service: 'Servis', cleanliness: 'Temizlik', people: 'Ekip' },
     vs: 'hedefe göre',
     issuesTitle: 'En zayıf cevaplar',
     fixStep: '1 haftalık çözüm',
@@ -85,7 +87,7 @@ const resultCopy: Record<Locale, {
   ru: {
     title: 'Ваш KST Балл',
     benchmark: 'Цель: {v}% (рекомендация DK)',
-    cats: { quality: 'Качество', service: 'Сервис', cleanliness: 'Чистота' },
+    cats: { quality: 'Качество', service: 'Сервис', cleanliness: 'Чистота', people: 'Команда' },
     vs: 'от цели',
     issuesTitle: 'Самые слабые ответы',
     fixStep: 'Решение за 1 неделю',
@@ -129,17 +131,21 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
         </p>
       </div>
 
-      {/* 3 category scores */}
-      <div className="grid grid-cols-3 gap-3">
-        {(['quality', 'service', 'cleanliness'] as const).map((cat) => (
-          <ScoreRing
-            key={cat}
-            value={result.scores[cat]}
-            label={copy.cats[cat]}
-            diff={result.scores[cat] - result.industryBenchmark[cat]}
-            locale={locale}
-          />
-        ))}
+      {/* Group scores (K · S · T + İnsan when answered) */}
+      <div className={`grid gap-3 ${typeof result.scores.people === 'number' ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3'}`}>
+        {(['quality', 'service', 'cleanliness', 'people'] as const).map((cat) => {
+          const value = result.scores[cat];
+          if (typeof value !== 'number') return null;
+          return (
+            <ScoreRing
+              key={cat}
+              value={value}
+              label={copy.cats[cat]}
+              diff={value - (result.industryBenchmark[cat] ?? result.industryBenchmark.overall)}
+              locale={locale}
+            />
+          );
+        })}
       </div>
 
       {/* Weakest answers (code-picked, ≤3/5 only — TASK-0523) */}

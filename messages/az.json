@@ -3237,6 +3237,38 @@
         "ai-output-invalid": "AI cavabı düzgün formatda gəlmədi"
       },
       "sla": "Cavab müddəti: {hours} saat ərzində qonağa cavab verin (ciddiliyə görə: kritik 1 · yüksək 4 · orta 24 · aşağı 48 saat)."
+    },
+    "hubs": {
+      "roi": {
+        "label": "ROI alətləri",
+        "channels": "Kanalları müqayisə et",
+        "channelsHint": "Hər kanala xərclədiyiniz və gətirdiyi satış — hansı kanal pul qazandırır.",
+        "campaign": "Reklam kampaniyası",
+        "campaignHint": "Bir kampaniyanın nəticəsi: yeni müştəri, influencer haqqı, çatım və 1000 baxışın qiyməti."
+      },
+      "sezon": {
+        "label": "Sezon alətləri",
+        "forecast": "Satış proqnozu",
+        "forecastHint": "12 ay üçün satış, işçi və ərzaq büdcəsi — sezonun formasına görə.",
+        "calendar": "Kampaniya təqvimi",
+        "calendarHint": "Seçdiyiniz aylar üçün bayram və mövsüm kampaniyaları (AI)."
+      },
+      "sikayet": {
+        "label": "Şikayət alətləri",
+        "triage": "Tək şikayət",
+        "triageHint": "Növü, ciddiliyi, kim həll edir və neçə saata cavab vermək lazımdır.",
+        "reply": "Cavab yaz",
+        "replyHint": "Google, Instagram və ya WhatsApp üçün 3 tonda hazır cavab.",
+        "batch": "Toplu təhlil",
+        "batchHint": "3–30 şikayəti birlikdə: hansı mövzu təkrarlanır, nədən başlamalı."
+      },
+      "audit": {
+        "label": "Restoran yoxlaması",
+        "guest": "Qonaq gözü ilə",
+        "guestHint": "Keyfiyyət, servis, təmizlik və komanda — 35 sual, 1-5 bal.",
+        "business": "Biznesin 6 sahəsi",
+        "businessHint": "Maliyyə, mətbəx, komanda, qonaq təcrübəsi, onlayn görünüş və risklər."
+      }
     }
   },
   "pricing": {
@@ -7217,7 +7249,8 @@
       "categories": {
         "quality": "Keyfiyyət",
         "service": "Servis",
-        "cleanliness": "Təmizlik"
+        "cleanliness": "Təmizlik",
+        "people": "İnsan (komanda)"
       },
       "submit": "KST Auditimi Yarat",
       "submitting": "AI fikirləşir...",
@@ -7254,7 +7287,12 @@
         "T7": "Kondisioner/havalandırma işləyir",
         "T8": "Gizli toz/kir yoxdur",
         "T9": "Bakteriya yoxlaması müntəzəm",
-        "T10": "AQTA/sanitar standartlara uyğun"
+        "T10": "AQTA/sanitar standartlara uyğun",
+        "I1": "İşçilər işə vaxtında gəlir, növbə planı əvvəlcədən bəllidir",
+        "I2": "Yeni işçi ilk günlərdə təcrübəli işçinin yanında öyrədilir",
+        "I3": "İşçilər qonağa menyunu və yeməyin tərkibini izah edə bilir",
+        "I4": "Komanda içində mübahisə qonağın gözü önündə olmur",
+        "I5": "Yaxşı işləyən işçi təşəkkür və ya mükafat görür"
       }
     },
     "marka": {
@@ -7458,6 +7496,136 @@
         "portionUnit": "porsiya",
         "sheetName": "Yemek Xerci"
       }
+    },
+    "qonaqAnketi": {
+      "back": "Bütün alətlər",
+      "title": "Qonaq anketi",
+      "subtitle": "Qısa anket hazırlayın, cavabları buraya yapışdırın — bal, NPS və şübhəli cavablar kodla hesablanır.",
+      "tabsLabel": "Qonaq anketi",
+      "tabBuild": "Anket hazırla",
+      "tabBuildHint": "Keyfiyyət, servis, təmizlik və komanda üzrə 8 sual + tövsiyə sualı. Çap edin və ya mətni WhatsApp / Google Forms-a köçürün.",
+      "tabCheck": "Cavabları yoxla",
+      "tabCheckHint": "Hər cavabı bir sətirdə yapışdırın: 8 bal (1-5), tövsiyə balı (0-10), istəsəniz doldurma saniyəsi.",
+      "restaurantName": "Restoranın adı",
+      "restaurantPlaceholder": "məs. Bizim Kafe",
+      "surveyIntro": "{name} — fikriniz bizim üçün vacibdir. Anket 1 dəqiqə çəkir.",
+      "surveyIntroNoName": "Fikriniz bizim üçün vacibdir. Anket 1 dəqiqə çəkir.",
+      "scaleNote": "1 = çox pis, 5 = əla",
+      "lowReason": "3 və ya aşağı bal verdinizsə, səbəbini qısaca yazın:",
+      "npsQuestion": "Bizi dostunuza və ya ailənizə tövsiyə etmə ehtimalınız nə qədərdir? (0 = heç, 10 = mütləq)",
+      "openBest": "Ən çox nə xoşunuza gəldi?",
+      "openFix": "Nəyi düzəltməyimizi istərdiniz?",
+      "thanks": "Təşəkkür edirik!",
+      "print": "Çap et",
+      "copyText": "Mətni kopyala",
+      "copied": "Kopyalandı",
+      "groups": {
+        "quality": "Keyfiyyət",
+        "service": "Servis",
+        "cleanliness": "Təmizlik",
+        "people": "Komanda"
+      },
+      "questions": {
+        "q1": "Yeməyin dadı necə idi?",
+        "q2": "Porsiya və təqdimat qiymətinə dəyərdimi?",
+        "q3": "Sifariş və yemək nə qədər tez gəldi?",
+        "q4": "İşçilər nə qədər nəzakətli və diqqətli idi?",
+        "q5": "Masa, qab-qacaq və zal nə qədər təmiz idi?",
+        "q6": "Tualet nə qədər təmiz idi?",
+        "q7": "İşçilər suallarınıza aydın cavab verə bildimi?",
+        "q8": "Komandanın ümumi əhval-ruhiyyəsi necə idi?"
+      },
+      "pasteLabel": "Cavablar (hər sətir bir anket)",
+      "pastePlaceholder": "5,4,5,4,5,5,4,4,9,120\n3,4,4,3,5,4,4,3,7,95",
+      "loadSample": "Nümunəni yüklə",
+      "clear": "Təmizlə",
+      "perfectLabel": "«Hamısı 5 + tövsiyə 10» xəbərdarlıq həddi (%)",
+      "perfectHint": "DK təcrübə həddi — öz həddinizi yazın. Bu paydan çox «əla» anket çox vaxt işçinin qonaq adından doldurduğunu göstərir.",
+      "analyse": "Yoxla",
+      "skipped": "Oxunmayan sətirlər: {lines}",
+      "responses": "Cavab sayı",
+      "notReliable": "Hələ {min}-dan az cavab var — nəticəyə ehtiyatla baxın.",
+      "overall": "Ümumi bal",
+      "nps": "Tövsiyə balı (NPS)",
+      "npsHint": "Tövsiyə edənlər {promoters}% − etməyənlər {detractors}%",
+      "perfect": "«Hamısı 5 + tövsiyə 10»",
+      "perfectWarn": "Diqqət: anketlərin {pct}%-i tam «əla» — həddiniz {limit}%. Anketləri kim və necə doldurduğunu yoxlayın.",
+      "perfectOk": "Normal görünür (həddiniz {limit}%).",
+      "rushed": "90 saniyədən tez doldurulan",
+      "rushedWarn": "Bu anketlərə diqqətlə baxın — tələsik doldurulub.",
+      "noTime": "Saniyə sütunu yoxdur",
+      "weakTitle": "Ən çox 3 və aşağı bal alan suallar",
+      "weakItem": "cavabların {pct}%-i 3 və aşağı · orta {avg}",
+      "noWeak": "3 və aşağı bal yoxdur.",
+      "empty": "Heç bir düzgün sətir tapılmadı. Formatı yoxlayın: 8 bal, tövsiyə balı, istəsəniz saniyə.",
+      "tier": "ŞAGİRD"
+    },
+    "sikayetForm": {
+      "complaintText": "Şikayət mətni",
+      "complaintTextPlaceholder": "Müştərinin şikayətini buraya yapışdırın...",
+      "complaintLanguage": "Şikayət dili",
+      "responseLanguage": "Cavab dili",
+      "restaurantName": "Restoran adı (opsional)",
+      "complaintType": "Şikayət növü",
+      "submitButton": "Cavab Yarat",
+      "submitting": "AI cavab yaradır...",
+      "minLength": "Şikayət ən az 10 simvol olmalıdır",
+      "maxLength": "Şikayət maksimum 2000 simvol ola bilər",
+      "types": {
+        "food": "Yemək",
+        "service": "Xidmət",
+        "price": "Qiymət",
+        "cleanliness": "Təmizlik",
+        "other": "Digər"
+      },
+      "langs": {
+        "az": "Azərbaycan",
+        "en": "English",
+        "tr": "Türkçe",
+        "ru": "Русский"
+      },
+      "compensation": "Nə təklif edirsiniz?",
+      "compensationHint": "Seçməsəniz, cavab yalnız üzr və həll yazır — heç bir endirim və ya hədiyyə vəd etmir.",
+      "compensationDetail": "Təklifin dəqiq mətni (opsional)",
+      "compensationDetailPlaceholder": "məs. növbəti sifarişə 10% endirim",
+      "compensations": {
+        "none": "Heç nə — yalnız üzr və həll",
+        "discount": "Növbəti gəlişə endirim",
+        "treat": "İkram (desert, içki)",
+        "redo": "Yeməyi yenidən hazırlamaq",
+        "refund": "Pulu geri qaytarmaq"
+      }
+    },
+    "sikayetResult": {
+      "summaryTitle": "Xülasə",
+      "total": "Cəmi şikayət",
+      "topCat": "Əsas kateqoriya",
+      "sentiment": "Yüngüllük balı (100 = hamısı yüngül)",
+      "urgency": "Təcililik",
+      "urgencyLevels": {
+        "low": "Aşağı",
+        "medium": "Orta",
+        "high": "Yüksək",
+        "critical": "Kritik"
+      },
+      "catsTitle": "Kateqoriya Analizi",
+      "rootCause": "Kök səbəb",
+      "fix": "Həll",
+      "patternsTitle": "Təkrarlanan mövzular",
+      "freq": "Tezlik",
+      "impact": "Təsir",
+      "planTitle": "Həll Planı",
+      "priorities": {
+        "immediate": "Dərhal",
+        "this-week": "Bu həftə",
+        "this-month": "Bu ay"
+      },
+      "expected": "Gözlənilən nəticə",
+      "templatesTitle": "Cavab Şablonları",
+      "copyBtn": "Kopyala",
+      "copied": "Kopyalandı!",
+      "redo": "Yenidən Analiz",
+      "next": "Növbəti Alət"
     }
   },
   "dashboardInbox": {

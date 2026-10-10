@@ -3237,6 +3237,38 @@
         "ai-output-invalid": "AI response returned in an invalid format"
       },
       "sla": "Reply within {hours} h (by severity: critical 1 · high 4 · medium 24 · low 48 h)."
+    },
+    "hubs": {
+      "roi": {
+        "label": "ROI tools",
+        "channels": "Compare channels",
+        "channelsHint": "What you spent on each channel and what it brought in — which one makes money.",
+        "campaign": "Ad campaign",
+        "campaignHint": "One campaign's result: new customers, influencer fee, reach and cost per 1,000 views."
+      },
+      "sezon": {
+        "label": "Season tools",
+        "forecast": "Sales forecast",
+        "forecastHint": "Sales, staff and food budget for 12 months, following the season's shape.",
+        "calendar": "Campaign calendar",
+        "calendarHint": "Holiday and seasonal campaigns for the months you pick (AI)."
+      },
+      "sikayet": {
+        "label": "Complaint tools",
+        "triage": "One complaint",
+        "triageHint": "Type, severity, who fixes it and within how many hours to reply.",
+        "reply": "Write a reply",
+        "replyHint": "A ready reply in 3 tones for Google, Instagram or WhatsApp.",
+        "batch": "Batch analysis",
+        "batchHint": "3–30 complaints together: what repeats and where to start."
+      },
+      "audit": {
+        "label": "Restaurant check",
+        "guest": "Through the guest's eyes",
+        "guestHint": "Quality, service, cleanliness and team — 35 questions, scored 1–5.",
+        "business": "6 business areas",
+        "businessHint": "Money, kitchen, team, guest experience, online presence and risks."
+      }
     }
   },
   "pricing": {
@@ -7217,7 +7249,8 @@
       "categories": {
         "quality": "Quality",
         "service": "Service",
-        "cleanliness": "Cleanliness"
+        "cleanliness": "Cleanliness",
+        "people": "People (team)"
       },
       "submit": "Create My KST Audit",
       "submitting": "AI is thinking...",
@@ -7254,7 +7287,12 @@
         "T7": "AC/ventilation works",
         "T8": "No hidden dust or dirt",
         "T9": "Regular bacteria checks",
-        "T10": "Meets sanitary standards"
+        "T10": "Meets sanitary standards",
+        "I1": "Staff arrive on time and the shift plan is known in advance",
+        "I2": "A new hire is trained next to an experienced colleague in the first days",
+        "I3": "Staff can explain the menu and what is in a dish to a guest",
+        "I4": "Arguments within the team never happen in front of guests",
+        "I5": "Good work is noticed with thanks or a reward"
       }
     },
     "marka": {
@@ -7458,6 +7496,136 @@
         "portionUnit": "portion",
         "sheetName": "Food Cost"
       }
+    },
+    "qonaqAnketi": {
+      "back": "All tools",
+      "title": "Guest survey",
+      "subtitle": "Build a short survey and paste the answers — scores, NPS and suspicious answers are calculated for you.",
+      "tabsLabel": "Guest survey",
+      "tabBuild": "Build a survey",
+      "tabBuildHint": "8 questions on quality, service, cleanliness and team + a recommendation question. Print it or copy the text into WhatsApp / Google Forms.",
+      "tabCheck": "Check answers",
+      "tabCheckHint": "One answer per line: 8 ratings (1–5), recommendation score (0–10), optionally seconds taken.",
+      "restaurantName": "Venue name",
+      "restaurantPlaceholder": "e.g. Our Café",
+      "surveyIntro": "{name} — your opinion matters to us. The survey takes 1 minute.",
+      "surveyIntroNoName": "Your opinion matters to us. The survey takes 1 minute.",
+      "scaleNote": "1 = very poor, 5 = excellent",
+      "lowReason": "If you gave 3 or lower, tell us briefly why:",
+      "npsQuestion": "How likely are you to recommend us to a friend or family? (0 = not at all, 10 = definitely)",
+      "openBest": "What did you like most?",
+      "openFix": "What should we fix?",
+      "thanks": "Thank you!",
+      "print": "Print",
+      "copyText": "Copy text",
+      "copied": "Copied",
+      "groups": {
+        "quality": "Quality",
+        "service": "Service",
+        "cleanliness": "Cleanliness",
+        "people": "Team"
+      },
+      "questions": {
+        "q1": "How did the food taste?",
+        "q2": "Were the portion and presentation worth the price?",
+        "q3": "How quickly were you served?",
+        "q4": "How polite and attentive was the staff?",
+        "q5": "How clean were the table, dishes and hall?",
+        "q6": "How clean was the restroom?",
+        "q7": "Could the staff answer your questions clearly?",
+        "q8": "What was the team's overall mood like?"
+      },
+      "pasteLabel": "Answers (one survey per line)",
+      "pastePlaceholder": "5,4,5,4,5,5,4,4,9,120\n3,4,4,3,5,4,4,3,7,95",
+      "loadSample": "Load example",
+      "clear": "Clear",
+      "perfectLabel": "«All 5 + recommend 10» warning threshold (%)",
+      "perfectHint": "DK rule of thumb — set your own. Too many «perfect» surveys often means staff filled them in for guests.",
+      "analyse": "Check",
+      "skipped": "Lines not read: {lines}",
+      "responses": "Answers",
+      "notReliable": "Fewer than {min} answers so far — read the result with care.",
+      "overall": "Overall score",
+      "nps": "Recommendation score (NPS)",
+      "npsHint": "Promoters {promoters}% − detractors {detractors}%",
+      "perfect": "«All 5 + recommend 10»",
+      "perfectWarn": "Careful: {pct}% of surveys are fully «perfect» — your threshold is {limit}%. Check who filled them in and how.",
+      "perfectOk": "Looks normal (your threshold {limit}%).",
+      "rushed": "Filled in under 90 seconds",
+      "rushedWarn": "Look at these surveys closely — they were rushed.",
+      "noTime": "No seconds column",
+      "weakTitle": "Questions most often rated 3 or lower",
+      "weakItem": "{pct}% of answers 3 or lower · average {avg}",
+      "noWeak": "No ratings of 3 or lower.",
+      "empty": "No valid line found. Format: 8 ratings, recommendation score, optionally seconds.",
+      "tier": "APPRENTICE"
+    },
+    "sikayetForm": {
+      "complaintText": "Complaint text",
+      "complaintTextPlaceholder": "Paste the customer complaint here...",
+      "complaintLanguage": "Complaint language",
+      "responseLanguage": "Response language",
+      "restaurantName": "Restaurant name (optional)",
+      "complaintType": "Complaint type",
+      "submitButton": "Generate Response",
+      "submitting": "AI is generating responses...",
+      "minLength": "Complaint must be at least 10 characters",
+      "maxLength": "Complaint cannot exceed 2000 characters",
+      "types": {
+        "food": "Food",
+        "service": "Service",
+        "price": "Price",
+        "cleanliness": "Cleanliness",
+        "other": "Other"
+      },
+      "langs": {
+        "az": "Azərbaycan",
+        "en": "English",
+        "tr": "Türkçe",
+        "ru": "Русский"
+      },
+      "compensation": "What do you offer?",
+      "compensationHint": "If you pick nothing, the reply only apologises and explains the fix — no discount or gift is promised.",
+      "compensationDetail": "Exact wording of the offer (optional)",
+      "compensationDetailPlaceholder": "e.g. 10% off the next order",
+      "compensations": {
+        "none": "Nothing — apology and fix only",
+        "discount": "Discount on next visit",
+        "treat": "A treat (dessert, drink)",
+        "redo": "Remake the dish",
+        "refund": "Refund"
+      }
+    },
+    "sikayetResult": {
+      "summaryTitle": "Summary",
+      "total": "Total complaints",
+      "topCat": "Top category",
+      "sentiment": "Lightness score (100 = all minor)",
+      "urgency": "Urgency",
+      "urgencyLevels": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      },
+      "catsTitle": "Category Analysis",
+      "rootCause": "Root cause",
+      "fix": "Fix",
+      "patternsTitle": "Recurring themes",
+      "freq": "Frequency",
+      "impact": "Impact",
+      "planTitle": "Action Plan",
+      "priorities": {
+        "immediate": "Immediate",
+        "this-week": "This week",
+        "this-month": "This month"
+      },
+      "expected": "Expected result",
+      "templatesTitle": "Response Templates",
+      "copyBtn": "Copy",
+      "copied": "Copied!",
+      "redo": "Re-analyze",
+      "next": "Next Tool"
     }
   },
   "dashboardInbox": {

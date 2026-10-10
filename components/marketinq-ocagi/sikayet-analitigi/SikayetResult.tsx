@@ -1,5 +1,6 @@
 'use client';
 
+import { useMessages } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
 import { AlertTriangle, Copy, Check, Clock, Zap, Calendar } from 'lucide-react';
@@ -19,50 +20,14 @@ interface SikayetResultData {
   ahilikQuote: string;
 }
 
-const copy: Record<Locale, {
+// TASK-0523: copy moved to messages/*.json → mqForms.sikayetResult (was an in-file locale map).
+type SikayetResultCopy = {
   summaryTitle: string; total: string; topCat: string; sentiment: string; urgency: string;
   urgencyLevels: Record<string, string>; catsTitle: string; rootCause: string; fix: string;
   patternsTitle: string; freq: string; impact: string;
   planTitle: string; priorities: Record<string, string>; expected: string;
   templatesTitle: string; copyBtn: string; copied: string;
   redo: string; next: string;
-}> = {
-  az: {
-    summaryTitle: 'Xülasə', total: 'Cəmi şikayət', topCat: 'Əsas kateqoriya', sentiment: 'Yüngüllük balı (100 = hamısı yüngül)', urgency: 'Təcililik',
-    urgencyLevels: { low: 'Aşağı', medium: 'Orta', high: 'Yüksək', critical: 'Kritik' },
-    catsTitle: 'Kateqoriya Analizi', rootCause: 'Kök səbəb', fix: 'Həll',
-    patternsTitle: 'Təkrarlanan mövzular', freq: 'Tezlik', impact: 'Təsir',
-    planTitle: 'Həll Planı', priorities: { immediate: 'Dərhal', 'this-week': 'Bu həftə', 'this-month': 'Bu ay' }, expected: 'Gözlənilən nəticə',
-    templatesTitle: 'Cavab Şablonları', copyBtn: 'Kopyala', copied: 'Kopyalandı!',
-    redo: 'Yenidən Analiz', next: 'Növbəti Alət',
-  },
-  en: {
-    summaryTitle: 'Summary', total: 'Total complaints', topCat: 'Top category', sentiment: 'Lightness score (100 = all minor)', urgency: 'Urgency',
-    urgencyLevels: { low: 'Low', medium: 'Medium', high: 'High', critical: 'Critical' },
-    catsTitle: 'Category Analysis', rootCause: 'Root cause', fix: 'Fix',
-    patternsTitle: 'Recurring themes', freq: 'Frequency', impact: 'Impact',
-    planTitle: 'Action Plan', priorities: { immediate: 'Immediate', 'this-week': 'This week', 'this-month': 'This month' }, expected: 'Expected result',
-    templatesTitle: 'Response Templates', copyBtn: 'Copy', copied: 'Copied!',
-    redo: 'Re-analyze', next: 'Next Tool',
-  },
-  tr: {
-    summaryTitle: 'Özet', total: 'Toplam şikayet', topCat: 'Ana kategori', sentiment: 'Hafiflik puanı (100 = hepsi hafif)', urgency: 'Aciliyet',
-    urgencyLevels: { low: 'Düşük', medium: 'Orta', high: 'Yüksek', critical: 'Kritik' },
-    catsTitle: 'Kategori Analizi', rootCause: 'Kök neden', fix: 'Çözüm',
-    patternsTitle: 'Tekrarlanan konular', freq: 'Sıklık', impact: 'Etki',
-    planTitle: 'Eylem Planı', priorities: { immediate: 'Hemen', 'this-week': 'Bu hafta', 'this-month': 'Bu ay' }, expected: 'Beklenen sonuç',
-    templatesTitle: 'Yanıt Şablonları', copyBtn: 'Kopyala', copied: 'Kopyalandı!',
-    redo: 'Tekrar Analiz', next: 'Sonraki Araç',
-  },
-  ru: {
-    summaryTitle: 'Итоги', total: 'Всего жалоб', topCat: 'Основная категория', sentiment: 'Балл лёгкости (100 = все мелкие)', urgency: 'Срочность',
-    urgencyLevels: { low: 'Низкая', medium: 'Средняя', high: 'Высокая', critical: 'Критическая' },
-    catsTitle: 'Анализ категорий', rootCause: 'Причина', fix: 'Решение',
-    patternsTitle: 'Повторяющиеся темы', freq: 'Частота', impact: 'Влияние',
-    planTitle: 'План действий', priorities: { immediate: 'Немедленно', 'this-week': 'На этой неделе', 'this-month': 'В этом месяце' }, expected: 'Ожидаемый результат',
-    templatesTitle: 'Шаблоны ответов', copyBtn: 'Копировать', copied: 'Скопировано!',
-    redo: 'Пересмотреть', next: 'Следующий',
-  },
 };
 
 const urgencyColors: Record<string, string> = {
@@ -85,7 +50,7 @@ function CopyBtn({ text, label, copiedLabel }: { text: string; label: string; co
 interface Props { result: SikayetResultData; locale: Locale; onRedo: () => void }
 
 export default function SikayetResult({ result, locale, onRedo }: Props) {
-  const t = copy[locale];
+  const t = (useMessages() as unknown as { mqForms: { sikayetResult: SikayetResultCopy } }).mqForms.sikayetResult;
   const { summary, categories, patterns, actionPlan, responseTemplates } = result;
 
   return (

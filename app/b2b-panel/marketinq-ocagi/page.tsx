@@ -87,6 +87,7 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Marka Kompası', subtitle: '5 sualda restoranınızın bazardakı yerini tapın' },
       'kst-yoxlayici': { title: 'KST Yoxlayıcı', subtitle: 'Keyfiyyət, Servis, Təmizlik öz-özünə audit' },
+      'qonaq-anketi': { title: 'Qonaq anketi', subtitle: 'Qısa anket hazırla, cavabları yoxla: bal, NPS, şübhəli cavablar' },
       'menyu-analitik': { title: 'Menyu Analitiği', subtitle: 'Menyu pozisiyalarının rentabelliyini analiz edin' },
       'yemek-xerci': { title: 'Yemək Xərci', subtitle: 'Resept kartı ilə porsiya maya dəyərini hesabla' },
       'roi-kalkulator': { title: 'ROI Kalkulatoru', subtitle: 'Kanal ROI, CAC, LTV və payback müqayisəsi' },
@@ -130,6 +131,7 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Brand Compass', subtitle: 'Find your market position in 5 questions' },
       'kst-yoxlayici': { title: 'QSC Checker', subtitle: 'Quality, Service, Cleanliness self-audit' },
+      'qonaq-anketi': { title: 'Guest survey', subtitle: 'Build a short survey, check the answers: scores, NPS, suspicious answers' },
       'menyu-analitik': { title: 'Menu Analytics', subtitle: 'Analyze menu item profitability' },
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost' },
       'roi-kalkulator': { title: 'ROI Calculator', subtitle: 'Channel ROI, CAC, LTV, and payback comparison' },
@@ -173,6 +175,7 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Marka Pusulası', subtitle: '5 soruda pazardaki konumunuzu bulun' },
       'kst-yoxlayici': { title: 'KST Denetçisi', subtitle: 'Kalite, Servis, Temizlik öz denetimi' },
+      'qonaq-anketi': { title: 'Misafir anketi', subtitle: 'Kısa anket hazırla, cevapları kontrol et: puan, NPS, şüpheli cevaplar' },
       'menyu-analitik': { title: 'Menü Analitiği', subtitle: 'Menü kalemlerinin karlılığını analiz edin' },
       'yemek-xerci': { title: 'Yemek Maliyeti', subtitle: 'Reçete kartı ile porsiyon maliyetini hesapla' },
       'roi-kalkulator': { title: 'ROI Hesaplayıcı', subtitle: 'Kanal ROI, CAC, LTV ve payback karşılaştırması' },
@@ -216,6 +219,7 @@ const pageCopy: Record<
     tools: {
       'marka-kompasi': { title: 'Компас Бренда', subtitle: 'Найдите свою позицию за 5 вопросов' },
       'kst-yoxlayici': { title: 'KST Аудитор', subtitle: 'Самопроверка Качества, Сервиса, Чистоты' },
+      'qonaq-anketi': { title: 'Анкета гостя', subtitle: 'Создайте короткую анкету, проверьте ответы: баллы, NPS, подозрительные ответы' },
       'menyu-analitik': { title: 'Анализ Меню', subtitle: 'Анализ рентабельности позиций меню' },
       'yemek-xerci': { title: 'Food Cost Calculator', subtitle: 'Calculate recipe and portion cost' },
       'roi-kalkulator': { title: 'ROI Калькулятор', subtitle: 'Сравнение ROI, CAC, LTV и окупаемости каналов' },

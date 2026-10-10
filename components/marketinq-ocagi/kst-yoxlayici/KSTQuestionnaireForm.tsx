@@ -8,12 +8,13 @@ import type { Locale } from '@/i18n/config';
 
 // ── TYPES ───────────────────────────────────────────────────────────
 
-type Category = 'quality' | 'service' | 'cleanliness';
+type Category = 'quality' | 'service' | 'cleanliness' | 'people';
 
 interface FormState {
   quality: Record<string, number>;
   service: Record<string, number>;
   cleanliness: Record<string, number>;
+  people: Record<string, number>;
   notes: string;
 }
 
@@ -31,10 +32,13 @@ function reducer(state: FormState, action: FormAction): FormState {
   return state;
 }
 
-const INITIAL: FormState = { quality: {}, service: {}, cleanliness: {}, notes: '' };
+const INITIAL: FormState = { quality: {}, service: {}, cleanliness: {}, people: {}, notes: '' };
 
-const PREFIXES: Record<Category, string> = { quality: 'K', service: 'S', cleanliness: 'T' };
-const CATEGORIES: Category[] = ['quality', 'service', 'cleanliness'];
+// TASK-0523: K·S·T + «İnsan» (team, 5 questions) — OCAQ's K·X·T·İ grouping, our own questions.
+const PREFIXES: Record<Category, string> = { quality: 'K', service: 'S', cleanliness: 'T', people: 'I' };
+const COUNTS: Record<Category, number> = { quality: 10, service: 10, cleanliness: 10, people: 5 };
+const CATEGORIES: Category[] = ['quality', 'service', 'cleanliness', 'people'];
+const TOTAL_QUESTIONS = CATEGORIES.reduce((sum, cat) => sum + COUNTS[cat], 0);
 
 // ── COMPONENT ───────────────────────────────────────────────────────
 
@@ -48,7 +52,7 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
   const [state, dispatch] = useReducer(reducer, INITIAL);
   const [loading, setLoading] = useState(false);
   const [openSections, setOpenSections] = useState<Record<Category, boolean>>({
-    quality: true, service: false, cleanliness: false,
+    quality: true, service: false, cleanliness: false, people: false,
   });
 
   // TASK-0516: copy lives in messages/*.json → mqForms.kst (was an in-file locale map).
@@ -57,9 +61,10 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
   const totalAnswered =
     Object.keys(state.quality).length +
     Object.keys(state.service).length +
-    Object.keys(state.cleanliness).length;
-  const progress = Math.round((totalAnswered / 30) * 100);
-  const isComplete = totalAnswered === 30;
+    Object.keys(state.cleanliness).length +
+    Object.keys(state.people).length;
+  const progress = Math.round((totalAnswered / TOTAL_QUESTIONS) * 100);
+  const isComplete = totalAnswered === TOTAL_QUESTIONS;
 
   function toggleSection(cat: Category) {
     setOpenSections((prev) => ({ ...prev, [cat]: !prev[cat] }));
@@ -92,7 +97,7 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
       {/* Progress bar */}
       <div className="sticky top-0 z-10 rounded-xl border border-slate-200 bg-white px-4 py-3">
         <div className="mb-1 flex justify-between text-xs font-semibold text-slate-500">
-          <span>{totalAnswered} / 30 {t('progress')}</span>
+          <span>{totalAnswered} / {TOTAL_QUESTIONS} {t('progress')}</span>
           <span>{progress}%</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-slate-100">
@@ -119,7 +124,7 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
               <div className="flex items-center gap-3">
                 <span className="text-sm font-bold text-[var(--dk-navy)]">{t(`categories.${cat}`)}</span>
                 <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-600">
-                  {answered}/10
+                  {answered}/{COUNTS[cat]}
                 </span>
               </div>
               <ChevronDown
@@ -130,7 +135,7 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
 
             {isOpen && (
               <div className="space-y-2 px-4 pb-4">
-                {Array.from({ length: 10 }, (_, i) => {
+                {Array.from({ length: COUNTS[cat] }, (_, i) => {
                   const qId = `${prefix}${i + 1}`;
                   return (
                     <LikertScale

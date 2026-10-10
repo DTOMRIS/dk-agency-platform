@@ -9,6 +9,7 @@ import { computeComplaintStats } from '../lib/marketing-tools/complaint-stats';
 import { calculateSeasonAnalysis, normalizedCoefficients, ramadanMonths, RESTAURANT_SEASON_TYPES, MONTH_KEYS } from '../lib/marketing-tools/sezon-analitikasi';
 import { calculateReklamRoi } from '../lib/marketing-tools/reklam-roi';
 import { pnlBreakeven } from '../components/toolkit/pnl/PnlScenarioPanel';
+import { parseSurveyText, analyseSurvey } from '../lib/marketing-tools/qonaq-anketi';
 
 let failures = 0;
 let checks = 0;
@@ -38,6 +39,11 @@ const ten = (v: number, prefix: string) => Object.fromEntries(Array.from({ lengt
   eq(r.scores.overall, 77, 'KST overall = mean(100, 76, 56) → 77');
   eq(r.weakest.map((w) => w.questionId), ['T7', 'S3', 'T1'], 'KST weakest: 1/5 first, then 2/5, then first 3/5');
   eq(computeKstScores({ quality: ten(4, 'K'), service: ten(5, 'S'), cleanliness: ten(4, 'T') }).weakest, [], 'KST no answer ≤ 3 → no weak items');
+  // 4th group «İnsan» (5 questions): 4+4+4+4+2 = 18/25 → 72; overall = mean(100, 76, 56, 72) = 76
+  const withPeople = computeKstScores({ ...answers, people: { I1: 4, I2: 4, I3: 4, I4: 4, I5: 2 } });
+  eq(withPeople.scores.people, 72, 'KST İnsan 18/25 → 72');
+  eq(withPeople.scores.overall, 76, 'KST overall over 4 groups');
+  eq(r.scores.people, null, 'KST old runs without İnsan → null, overall over 3 groups');
 }
 
 // ── Complaints: counts, shares, urgency, lightness ─────────────────────────
@@ -91,6 +97,32 @@ eq([...ramadanMonths(2031)], [], 'Ramadan unknown year → none (not a guess)');
 // revenue 50 000, food 15 500 (31%), fixed 31 000 → 31 000 / 0.69 = 44 927.54
 near(pnlBreakeven(50000, 15500, 31000) ?? -1, 44927.54, 'P&L break-even = fixed / (1 − food %)');
 eq(pnlBreakeven(1000, 1000, 500), null, 'P&L break-even impossible when food ≥ sales');
+
+// ── Qonaq anketi: parse + group %, NPS, «too perfect», rushed ───────────────
+{
+  const text = [
+    'q1,q2,q3,q4,q5,q6,q7,q8,nps,san',
+    '5,5,5,5,5,5,5,5,10,40',   // perfect + rushed
+    '4,4,3,3,5,5,4,4,8,200',
+    '2,3,4,4,4,4,5,5,5,150',
+    '5;5;5;5;5;5;5;5;10',      // perfect, no time
+    'bad,row',
+  ].join('\n');
+  const parsed = parseSurveyText(text);
+  eq(parsed.rows.length, 4, 'survey: 4 valid rows');
+  eq(parsed.skipped, [6], 'survey: bad line reported by number');
+  const a = analyseSurvey(parsed.rows, { perfectWarnPct: 50 });
+  // quality: (5+5)+(4+4)+(2+3)+(5+5) = 33 / 40 → 83
+  eq(a.groups.quality, 83, 'survey quality % = Σ / (n×5)');
+  // NPS: 10, 8, 5, 10 → promoters 2/4 = 50, detractors 1/4 = 25 → 25
+  eq(a.nps, 25, 'survey NPS = promoters − detractors');
+  eq(a.perfectPct, 50, 'survey all-5 + NPS 10 share');
+  eq(a.perfectWarning, true, 'survey perfect warning at owner threshold 50');
+  eq(a.rushedPct, 33, 'survey rushed share among timed rows (1/3)');
+  eq(a.reliable, false, 'survey < 10 answers → not reliable yet');
+  // q1 (5,4,2,5) and q2 (5,4,3,5) both 25% low; q1 has the lower average → first
+  eq(a.weakQuestions[0].id, 'q1', 'survey weakest question first');
+}
 
 if (failures) {
   console.error(`\n${failures}/${checks} yoxlama uğursuz`);

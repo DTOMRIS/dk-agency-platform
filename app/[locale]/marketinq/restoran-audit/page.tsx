@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import RestoranAuditPage from '@/components/marketinq-ocagi/restoran-audit/RestoranAuditPage';
+import AuditHub from '@/components/marketinq-ocagi/hubs/AuditHub';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
 import { normalizeLocale, withLocalePrefix } from '@/i18n/config';
@@ -44,7 +44,7 @@ export default async function RestoranAuditRoute({ params }: Props) {
 
   return (
     <main>
-      <RestoranAuditPage backHref="/b2b-panel/marketinq-ocagi" />
+      <AuditHub initialTab="business" />
     </main>
   );
 }
