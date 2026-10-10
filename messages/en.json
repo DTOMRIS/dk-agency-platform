@@ -4074,7 +4074,10 @@
     "importCancel": "Cancel",
     "importScannedPdf": "is a scanned PDF — no text found. Upload as image via OCR.",
     "importRowsFound": "rows found,",
-    "importErrors": "errors"
+    "importErrors": "errors",
+    "detailSaveError": "Not saved — the server did not respond. Try again shortly.",
+    "manualSaveError": "Invoice not saved — the server did not respond. Your data is still in the form, try again.",
+    "bulkDeleteError": "Not deleted — the server did not respond. Try again."
   },
   "legal": {
     "fallbackNotice": "This document has not yet been translated to your language. The Azerbaijani version is shown."

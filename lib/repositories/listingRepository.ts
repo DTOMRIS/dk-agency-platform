@@ -3,6 +3,7 @@ import { db, dbAvailable } from '@/lib/db';
 import { listingLeads, listingMedia, listingReviews, listings } from '@/lib/db/schema';
 import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
 import type { ListingWorkflowStatus } from '@/lib/utils/listingStatus';
+import { pendingCountSql } from '@/lib/listings/pending-statuses';
 
 export interface AdminListingFilters {
   status?: string | null;
@@ -157,7 +158,7 @@ export async function getAdminListings(filters: AdminListingFilters = {}) {
       .where(where),
     db
       .select({
-        pending: sql<number>`count(*) filter (where status in ('submitted', 'ai_checked', 'committee_review'))::int`,
+        pending: pendingCountSql(),
         showcase: sql<number>`count(*) filter (where status = 'showcase_ready')::int`,
         rejected: sql<number>`count(*) filter (where status = 'rejected')::int`,
         total: sql<number>`count(*)::int`,
@@ -331,7 +332,7 @@ export async function getDashboardListingMetrics() {
       .select({
         total: sql<number>`count(*)::int`,
         active: sql<number>`count(*) filter (where ${listings.status} = 'showcase_ready')::int`,
-        pending: sql<number>`count(*) filter (where ${listings.status} in ('submitted','ai_checked','committee_review'))::int`,
+        pending: pendingCountSql(),
         rejected: sql<number>`count(*) filter (where ${listings.status} = 'rejected')::int`,
       })
       .from(listings),

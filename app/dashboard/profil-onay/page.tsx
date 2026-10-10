@@ -137,7 +137,7 @@ export default function ProfilOnayPage() {
             <thead>
               <tr className="text-[12px] uppercase tracking-wide text-slate-500">
                 <th className="px-4 py-3 text-left font-semibold">Şirkət</th>
-                <th className="px-4 py-3 text-left font-semibold">Email</th>
+                <th className="px-4 py-3 text-left font-semibold">E-poçt</th>
                 <th className="px-4 py-3 text-left font-semibold">Sektor</th>
                 <th className="px-4 py-3 text-left font-semibold">Şəhər</th>
                 <th className="px-4 py-3 text-left font-semibold">Status</th>

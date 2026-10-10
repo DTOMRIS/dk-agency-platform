@@ -403,42 +403,31 @@ function ManualEntryModal({ open, onClose, onSuccess }: { open: boolean; onClose
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(body),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
-      // UI-ya əlavə et (DB əlçatan olmasa da)
-      onSuccess({
-        id: data.data?.id ?? Date.now(),
-        supplierName: supplier.trim(),
-        supplierVoen: voen.trim() || null,
-        invoiceNumber: invoiceNo.trim() || null,
-        invoiceDate,
-        grandTotal: Math.round(grandTotal * 100),
-        currency: 'AZN',
-        status: 'draft',
-        source: 'manual',
-        ocrConfidence: null,
-        createdAt: new Date().toISOString(),
-      });
-
-      setFeedback(t('manualSavedOk'));
-      setTimeout(() => { reset(); onClose(); }, 800);
+      // TASK-0526: only a saved invoice goes into the list (before: added with a fake id even when the
+      // request failed, so the admin believed it was stored).
+      if (!res.ok || !data.data?.id) {
+        setFeedback(t('manualSaveError'));
+      } else {
+        onSuccess({
+          id: data.data.id,
+          supplierName: supplier.trim(),
+          supplierVoen: voen.trim() || null,
+          invoiceNumber: invoiceNo.trim() || null,
+          invoiceDate,
+          grandTotal: Math.round(grandTotal * 100),
+          currency: 'AZN',
+          status: 'draft',
+          source: 'manual',
+          ocrConfidence: null,
+          createdAt: new Date().toISOString(),
+        });
+        setFeedback(t('manualSavedOk'));
+        setTimeout(() => { reset(); onClose(); }, 800);
+      }
     } catch {
-      // Offline/mock mode — yenə listeye əlavə et
-      onSuccess({
-        id: Date.now(),
-        supplierName: supplier.trim(),
-        supplierVoen: voen.trim() || null,
-        invoiceNumber: invoiceNo.trim() || null,
-        invoiceDate,
-        grandTotal: Math.round(grandTotal * 100),
-        currency: 'AZN',
-        status: 'draft',
-        source: 'manual',
-        ocrConfidence: null,
-        createdAt: new Date().toISOString(),
-      });
-      setFeedback(t('manualSavedLocal'));
-      setTimeout(() => { reset(); onClose(); }, 800);
+      setFeedback(t('manualSaveError'));
     }
     setSaving(false);
   };
@@ -883,13 +872,16 @@ export default function DashboardFaturalarPage() {
     if (selected.size === 0) return;
     if (!confirm(`${selected.size} ${t('confirmDelete')}`)) return;
 
-    try {
-      await fetch('/api/invoices', {
-        method: 'DELETE',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ ids: [...selected] }),
-      });
-    } catch { /* mock mode */ }
+    // TASK-0526: rows leave the list only when the server deleted them.
+    const res = await fetch('/api/invoices', {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ ids: [...selected] }),
+    }).catch(() => null);
+    if (!res?.ok) {
+      window.alert(t('bulkDeleteError'));
+      return;
+    }
 
     setInvoices((prev) => prev.filter((i) => !selected.has(i.id)));
     setTotal((t) => t - selected.size);

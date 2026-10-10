@@ -167,9 +167,10 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
 
     async function loadPendingListings() {
       try {
-        const res = await fetch('/api/listings?scope=admin&status=submitted');
-        const data = (await res.json()) as { data?: Array<unknown>; total?: number };
-        if (!cancelled) setPendingListings(data.total ?? data.data?.length ?? 0);
+        // TASK-0526: the same «pending» as the listings page (stats.pending = shared status list), not just `submitted`.
+        const res = await fetch('/api/listings?scope=admin&limit=1');
+        const data = (await res.json()) as { stats?: { pending?: number } };
+        if (!cancelled) setPendingListings(data.stats?.pending ?? 0);
       } catch {
         /* ignore */
       }

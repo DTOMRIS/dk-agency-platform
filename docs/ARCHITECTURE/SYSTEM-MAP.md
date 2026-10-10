@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 90ce13b
+> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · fe76324
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -8,7 +8,7 @@
 - Dizayn (həqiqi səhifələr): v2 **24** · köhnə **57** · qarışıq **19** · işarəsiz 29
 - Geri düyməsi yoxdur: **58** səhifə
 - API: **112** route · qoruma işarəsi yoxdur: **36** (siyahı aşağıda — ictimai olanlar normaldır, qalanı yoxlanmalıdır)
-- Sənəd: 59 (+ 360 tapşırıq kartı)
+- Sənəd: 59 (+ 362 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -80,7 +80,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/b2b-panel` | səhifə | — | layout (/b2b-panel) | ✗ | 1 | dashboard/RecommendationWidget.tsx, dashboard/NudgeBanner.tsx |
 | `/b2b-panel/[slug]` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ |  |  |
 | `/b2b-panel/analizler` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ | 5 |  |
-| `/b2b-panel/ayarlar` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ | 27 |  |
+| `/b2b-panel/ayarlar` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ | 28 |  |
 | `/b2b-panel/bildirimler` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ | 2 | b2b-panel/useOwnerListings.ts |
 | `/b2b-panel/destek` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✗ | 1 |  |
 | `/b2b-panel/faturalar` | səhifə | — | layout (/b2b-panel) | ✓ |  | LaunchCampaignBanner.tsx |
@@ -119,7 +119,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/dashboard` | səhifə | köhnə | səhifədə | ✗ | 51 | dashboard/ui/Charts.tsx |
-| `/dashboard/aqta-checklist` | səhifə | köhnə | layout (/dashboard) | ✗ | 137 |  |
+| `/dashboard/aqta-checklist` | səhifə | köhnə | layout (/dashboard) | ✗ | 139 |  |
 | `/dashboard/audit-logs` | səhifə | köhnə | layout (/dashboard) | ✓ |  |  |
 | `/dashboard/auditor` | səhifə | köhnə | layout (/dashboard) | ✓ | 3 |  |
 | `/dashboard/ayarlar` | səhifə | köhnə | layout (/dashboard) | ✗ | 5 |  |
@@ -131,11 +131,11 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/dashboard/contact-tracking` | səhifə | köhnə | səhifədə | ✗ | 8 |  |
 | `/dashboard/fatura-kateqoriyalar` | səhifə | — | layout (/dashboard) | ✓ | 13 |  |
 | `/dashboard/faturalar` | səhifə | — | layout (/dashboard) | ✓ | 4 |  |
-| `/dashboard/faturalar/[id]` | səhifə | — | layout (/dashboard) | ✓ | 20 |  |
+| `/dashboard/faturalar/[id]` | səhifə | — | layout (/dashboard) | ✓ | 16 |  |
 | `/dashboard/food-cost` | səhifə | köhnə | layout (/dashboard) | ✓ |  |  |
 | `/dashboard/franchise-leads` | səhifə | köhnə | səhifədə | ✗ | 7 |  |
 | `/dashboard/funnel` | → /auth/login | köhnə | səhifədə | ✗ |  | dashboard/ActivationFunnelWidget.tsx |
-| `/dashboard/ilanlar` | səhifə | köhnə | layout (/dashboard) | ✓ | 47 |  |
+| `/dashboard/ilanlar` | səhifə | köhnə | layout (/dashboard) | ✓ | 49 |  |
 | `/dashboard/ilanlar/[id]` | səhifə | köhnə | layout (/dashboard) | ✓ | 16 |  |
 | `/dashboard/ilanlar/whatsapp` | səhifə | köhnə | layout (/dashboard) | ✓ | 72 |  |
 | `/dashboard/ilanlar/yarat` (yalnız kök) | səhifə | köhnə | layout (/dashboard) | ✓ |  | listings/CreateListingForm.tsx |
@@ -143,7 +143,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/dashboard/marketinq-ocagi` | → /b2b-panel/marketinq-ocagi | — | layout (/dashboard) | ✗ |  |  |
 | `/dashboard/marketinq-ocagi/[slug]` | → /b2b-panel/marketinq-ocagi/${encodeURIComponent(slug)} | — | layout (/dashboard) | ✗ |  |  |
 | `/dashboard/muracietler` | səhifə | köhnə | səhifədə | ✗ |  |  |
-| `/dashboard/profil-onay` (yalnız kök) | səhifə | köhnə | layout (/dashboard) | ✗ | 19 |  |
+| `/dashboard/profil-onay` (yalnız kök) | səhifə | köhnə | layout (/dashboard) | ✗ | 20 |  |
 | `/dashboard/reklamlar` | səhifə | — | layout (/dashboard) | ✗ | 12 |  |
 | `/dashboard/techizatcilar` | səhifə | köhnə | səhifədə | ✗ |  | dashboard/supply/SupplyBoard.tsx |
 | `/dashboard/users` | səhifə | köhnə | layout (/dashboard) | ✓ |  | dashboard/MembersTable.tsx, dashboard/AddMemberModal.tsx |
@@ -298,7 +298,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 64 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 65 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |

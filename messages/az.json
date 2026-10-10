@@ -4074,7 +4074,10 @@
     "importCancel": "Ləğv et",
     "importScannedPdf": "skan edilmiş PDF-dir — text tapılmadı. Şəkil kimi OCR yükləyin.",
     "importRowsFound": "sətir tapıldı,",
-    "importErrors": "xəta"
+    "importErrors": "xəta",
+    "detailSaveError": "Saxlanmadı — server cavab vermədi. Bir az sonra yenidən yoxlayın.",
+    "manualSaveError": "Faktura saxlanmadı — server cavab vermədi. Məlumatlar formada qalır, yenidən yoxlayın.",
+    "bulkDeleteError": "Silinmədi — server cavab vermədi. Yenidən yoxlayın."
   },
   "legal": {
     "fallbackNotice": "Bu sənəd hələ bu dilə tərcümə edilməyib, Azərbaycan dilindəki versiyası göstərilir."

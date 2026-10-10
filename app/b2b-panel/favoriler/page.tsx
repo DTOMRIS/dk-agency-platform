@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Star } from 'lucide-react';
 import ListingCard from '@/components/listings/ListingCard';
 import ListingModal from '@/components/listings/ListingModal';
-import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
+import { type MockListing } from '@/lib/data/mockListings';
 
 export default function FavoritesPage() {
   const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
@@ -39,9 +39,8 @@ export default function FavoritesPage() {
           setListings(payload.data);
         }
       } catch {
-        if (!cancelled) {
-          setListings(MOCK_LISTINGS);
-        }
+        // TASK-0526: no MOCK_LISTINGS — favourites are matched against real listings only.
+        if (!cancelled) setListings([]);
       } finally {
         if (!cancelled) {
           setLoading(false);
