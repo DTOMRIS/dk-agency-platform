@@ -694,7 +694,7 @@
       "statReplacementCost": "Bir çalışanın yerini doldurmak",
       "statAnnualLoss": "Yılda kaybolan para",
       "calculatorTitle": "Çalışan değişimi size kaça mal oluyor?",
-      "calculatorSubtitle": "Üç rakam girin: şu anki çalışan sayısı, ortalama maaş ve geçen yıl kaç kişinin ayrıldığı.",
+      "calculatorSubtitle": "Önce üç rakam: çalışan sayısı, ortalama aylık maaş ve geçen yıl kaç kişinin ayrıldığı. Sonra bir çalışanın ayrılmasının maliyetini adım adım yazın.",
       "labelEmployeeCount": "Şu anki çalışan sayısı",
       "labelAverageSalary": "Ortalama aylık maaş (₼)",
       "labelYearlyLeavers": "Yılda ayrılan çalışan sayısı",
@@ -732,7 +732,46 @@
       "blogLink2Tag": "Araç",
       "blogLink3Title": "KAZAN AI",
       "blogLink3Tag": "Yapay zekâ",
-      "errNoEmployees": "Çalışan sayısı 0 olunca oran hesaplanmaz — çalışan sayısını girin."
+      "errNoEmployees": "Çalışan sayısı 0 olunca oran hesaplanmaz — çalışan sayısını girin.",
+      "fields": {
+        "employeeCount": "Şu anki çalışan sayısı",
+        "averageSalary": "Ortalama aylık maaş",
+        "yearlyLeavers": "Yılda ayrılan çalışan sayısı",
+        "vacantDays": "Kadro kaç gün boş kalıyor",
+        "coverPerDay": "Diğerlerine günlük ek ödeme",
+        "hiringHours": "Arama ve mülakata giden saat",
+        "managerHourly": "Yöneticinin bir saatinin değeri",
+        "adCost": "İlan maliyeti",
+        "trainingDays": "Eğitim günleri",
+        "trainerDaily": "Eğitmenin günlük kaybolan zamanının değeri",
+        "rampDays": "Tam hıza çıkana kadar gün",
+        "marginPerDay": "Günlük kaybolan brüt kâr",
+        "mistakes": "Öğrenirken hata, fire, şikâyet"
+      },
+      "breakdownTitle": "Bir çalışanın ayrılması kaça mal oluyor?",
+      "breakdownSubtitle": "Rakamlar örnektir — kendinizinkini yazın. Her kalemin nasıl hesaplandığı başlığın altında yazıyor.",
+      "parts": {
+        "vacancy": "Kadro boşken",
+        "hiring": "Yeni çalışanı bulmak",
+        "training": "Eğitim",
+        "ramp": "Tam hıza çıkana kadar",
+        "mistakes": "Hata ve fire"
+      },
+      "formulas": {
+        "vacancy": "boş gün × diğerlerine günlük ek ödeme (fazla mesai)",
+        "hiring": "saat × yöneticinin bir saati + ilan",
+        "training": "gün × eğitmenin günlük kaybolan zamanı",
+        "ramp": "gün × günlük kaybolan brüt kâr (ciro değil — ciro kaybı şişirir)",
+        "mistakes": "tek seferlik tutar"
+      },
+      "annualFormula": "{leavers} kişi × kişi başı {per}",
+      "ruleCompare": "Karşılaştırma için: yaygın kurala göre bir çalışanın yerini doldurmak 2–3 aylık maaştır ({low} – {high}).",
+      "cta": {
+        "title": "Bu kaybı birlikte azaltalım",
+        "body": "Rakamı gönderin — işe alım, ilk haftalar ve vardiya kurallarına birlikte bakalım.",
+        "button": "WhatsApp’tan gönder",
+        "wa": "Merhaba Doğan Bey, çalışan devrini hesapladım: {staff} çalışandan yılda {leavers} kişi ayrılıyor, yılda yaklaşık {annual} kayıp. Birlikte bakabilir miyiz?"
+      }
     },
     "branding": {
       "navigation": {
@@ -4940,7 +4979,7 @@
   "franchiseRoi": {
     "badge": "Franchise ROI Hesaplayıcısı",
     "title": "Bu franchise yatırımı değer mi?",
-    "subtitle": "Rakamları değiştirdikçe sonuçlar canlı güncellenir. Sağlıklı franchise hedefi: yıllık ROI ≥ %20, geri ödeme ≤ 36 ay.",
+    "subtitle": "Rakamları değiştirdikçe sonuç canlı güncellenir. Sağlıklı bir franchise için hedef: geri dönüş ≤ 36 ay (bu, yıllık ROI ≈ %33 demektir).",
     "roiLabel": "yıllık yatırım getirisi (ROI)",
     "months": "ay",
     "noProfit": "kâr yok",
@@ -4986,13 +5025,13 @@
       "grossProfit": "Brüt kâr",
       "royaltyAdFund": "Royalti + reklam fonu",
       "opex": "Sabit işletme giderleri",
-      "netProfit": "Yıllık net kâr",
+      "netProfit": "Yıllık net kâr (vergi öncesi)",
       "payback": "Geri ödeme süresi"
     },
     "verdict": {
-      "good": "Sağlıklı göstergeler: ROI %20+ ve geri ödeme ≤ 36 ay. Cazip franchise modeli.",
-      "mid": "Sınır bölge: ROI %15–20 ve geri ödeme ≤ 48 ay. İşe yarayabilir; ancak maliyet/royalti optimizasyonu faydalı olur.",
-      "bad": "Riskli: ROI %15'in altında veya geri ödeme 48 ayı aşıyor. Ciro, marj veya maliyet yapısının yeniden değerlendirilmesi gerekiyor.",
+      "good": "Sağlıklı: yatırım 36 ay içinde geri dönüyor (yıllık ROI ≈ %33 ve üzeri).",
+      "mid": "Orta bölge: geri dönüş 36–48 ay (yıllık ROI ≈ %25–33). İşleyebilir, ama maliyet ve royalti iyileştirilmeli.",
+      "bad": "Riskli: geri dönüş 48 aydan uzun (yıllık ROI ≈ %25'in altında). Ciro, marj veya maliyet yapısı yeniden değerlendirilmeli.",
       "negative": "Bu senaryoda net kâr yok — model yeniden kurulmalıdır."
     },
     "explain": {
@@ -5015,6 +5054,13 @@
       "subDesc": "Master veya bölge sahiplinin verdiği hak — doğrudan markadan değil.",
       "warning": "Dikkat: \"Franchise aldım, demek ki ülke benim\" DOĞRU DEĞİL. Standart tek nokta franchise yalnızca bir mekan verir. Ülke hakkı = master franchise = ayrı ve kat kat yüksek bedel + yükümlülük.",
       "tip": "Giriş bedeli türe göre değişir: tek nokta < bölge < master."
+    },
+    "live": "Canlı hesap",
+    "cta": {
+      "title": "Bu rakamlara birlikte bakalım",
+      "body": "Franchise teklifini ve hesabınızı gönderin — sözleşmeden önce riskleri birlikte inceleyelim.",
+      "button": "WhatsApp’tan gönder",
+      "wa": "Merhaba Doğan Bey, franchise ROI hesapladım: ROI %{roi}, geri dönüş {payback}, yatırım {investment}. Birlikte bakabilir miyiz?"
     }
   },
   "franchiseReadiness": {
@@ -7155,7 +7201,7 @@
           "how": [
             "Şu anki çalışan sayısını, ortalama aylık maaşı ve geçen yıl ayrılanların sayısını girin (örnek: 18 çalışan, 850 ₼, 12 kişi).",
             "Araç çalışan değişim oranını hesaplar: örnekte 12 ÷ 18 = %66,7.",
-            "Bir kişinin yerini doldurmak yaklaşık 2–3 aylık maaştır (yaygın kural): örnekte yılda yaklaşık 25.500 ₼ kaybolur."
+            "Bir çalışanın ayrılma maliyetini 5 kalemde yazın: boş günler, arama, eğitim, tam hıza çıkana kadar kaybolan kâr ve hatalar (örnek: bir çalışan ≈ 1.015 ₼, × 12 kişi ≈ 12.180 ₼ yılda)."
           ]
         }
       }
@@ -7194,9 +7240,9 @@
     },
     "news": {
       "eyebrow": "Sektör Nabzı",
-      "title1": "Sektörde ne değişti.",
-      "title2": "<em>Sana</em> ne anlatıyor.",
-      "lead": "HoReCa sektöründen seçilmiş haberler — Azerbaycan’daki restoran, kafe ve otel sahipleri için kısa açıklamayla.",
+      "title1": "Restoran, kafe ve otel",
+      "title2": "dünyasında <em>bugün</em>.",
+      "lead": "Azerbaycan’dan ve dünyadan seçilmiş HoReCa haberleri — kısa özet ve kaynakla, her gün güncellenir.",
       "countersLabel": "Sayaçlar",
       "last7": "son 7 günde haber",
       "total": "yayınlanmış haber",

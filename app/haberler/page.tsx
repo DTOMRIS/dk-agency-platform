@@ -63,7 +63,7 @@ const SWATCH: Record<Exclude<NewsCategoryKey, 'all'>, string> = {
 
 export const metadata: Metadata = {
   title: 'Sektor Nəbzi — HoReCa xəbərləri | DK Agency',
-  description: 'HoReCa sektorundan seçilmiş xəbərlər — restoran, kafe və otel sahibi üçün qısa izah.',
+  description: 'Azərbaycandan və dünyadan seçilmiş HoReCa xəbərləri — qısa xülasə və mənbə ilə, hər gün yenilənir.',
 };
 
 export default async function HaberlerPage({

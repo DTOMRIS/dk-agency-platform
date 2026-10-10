@@ -1,14 +1,14 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 834ae63
+> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 4181d8f
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
 - Ünvan: **136** (həqiqi səhifə 122, yönləndirmə 10, güzgü 4) · page faylı 251
-- Dizayn (həqiqi səhifələr): v2 **22** · köhnə **58** · qarışıq **20** · işarəsiz 22
+- Dizayn (həqiqi səhifələr): v2 **23** · köhnə **57** · qarışıq **20** · işarəsiz 22
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **113** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 59 (+ 364 tapşırıq kartı)
+- Sənəd: 59 (+ 365 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -38,7 +38,7 @@ Cəmi **0** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazıl�
 - `components/dashboard/DashboardSidebar.tsx:144` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/DashboardTopBar.tsx:140` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/KazanLeadStatusActions.tsx:50` — router.refresh() right after re-renders the lead from the server
-- `components/kazan-ai/FloatingKazanWidget.tsx:162` — CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
+- `components/kazan-ai/FloatingKazanWidget.tsx:166` — CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
 - `components/layout/Header.tsx:179` — logout: client session cleared and redirected either way (protected file)
 - `components/members/MemberLogoutButton.tsx:17` — logout: the client session is cleared and the user redirected either way
 - `app/auth/login/page.tsx:168` — display-name sync only — role/login come from the signed JWT (TASK-0457)
@@ -183,7 +183,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/dashboard/xeberler/rss` | səhifə | köhnə | layout (/dashboard) | ✓ |  |  |
 | `/dashboard/xeberler/yeni` | səhifə | köhnə | layout (/dashboard) | ✓ | 1 | dashboard/NewsEditorForm.tsx |
 
-### Franchise — 6 ünvan (v2 0 · köhnə 6 · qarışıq 0)
+### Franchise — 6 ünvan (v2 1 · köhnə 5 · qarışıq 0)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/franchise` | səhifə | köhnə | — | ✓ |  | inner/PageBack.tsx |
@@ -191,7 +191,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/franchise/francbuk-generatoru` | səhifə | köhnə | — | ✓ |  | franchise/FranchbookGenerator.tsx, inner/PageBack.tsx |
 | `/franchise/hazirliq-testi` | səhifə | köhnə | — | ✓ |  | franchise/ReadinessQuiz.tsx, inner/PageBack.tsx |
 | `/franchise/radar` | səhifə | köhnə | — | ✓ |  | franchise/FranchiseRadarCatalog.tsx, inner/PageBack.tsx |
-| `/franchise/roi-kalkulyatoru` | səhifə | köhnə | — | ✓ |  | franchise/RoiCalculator.tsx, franchise/LeadForm.tsx, inner/PageBack.tsx |
+| `/franchise/roi-kalkulyatoru` | səhifə | v2 | — | ✓ |  | franchise/RoiCalculator.tsx, franchise/LeadForm.tsx, home/v2/homeV2.module.css |
 
 ### Elanlar — 3 ünvan (v2 0 · köhnə 3 · qarışıq 0)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
@@ -325,7 +325,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 71 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 73 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |

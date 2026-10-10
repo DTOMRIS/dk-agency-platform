@@ -694,7 +694,7 @@
       "statReplacementCost": "Replacing one employee",
       "statAnnualLoss": "Money lost per year",
       "calculatorTitle": "What does staff leaving cost you?",
-      "calculatorSubtitle": "Enter three numbers: current staff count, average salary and how many people left last year.",
+      "calculatorSubtitle": "First three numbers: staff count, average monthly salary and how many left last year. Then enter what one leaver costs, step by step.",
       "labelEmployeeCount": "Current staff count",
       "labelAverageSalary": "Average monthly salary (₼)",
       "labelYearlyLeavers": "Staff who left in a year",
@@ -732,7 +732,46 @@
       "blogLink2Tag": "Tool",
       "blogLink3Title": "KAZAN AI",
       "blogLink3Tag": "AI",
-      "errNoEmployees": "With 0 staff the rate cannot be calculated — enter the staff count."
+      "errNoEmployees": "With 0 staff the rate cannot be calculated — enter the staff count.",
+      "fields": {
+        "employeeCount": "Current staff count",
+        "averageSalary": "Average monthly salary",
+        "yearlyLeavers": "Staff who leave per year",
+        "vacantDays": "Days the post stays empty",
+        "coverPerDay": "Extra paid to others per day",
+        "hiringHours": "Hours spent searching and interviewing",
+        "managerHourly": "Value of one manager hour",
+        "adCost": "Job ad cost",
+        "trainingDays": "Training days",
+        "trainerDaily": "Value of the trainer’s lost time per day",
+        "rampDays": "Days until full speed",
+        "marginPerDay": "Gross profit lost per day",
+        "mistakes": "Mistakes, waste and complaints while learning"
+      },
+      "breakdownTitle": "What does one leaver cost?",
+      "breakdownSubtitle": "The numbers are an example — enter your own. How each part is calculated is written under its title.",
+      "parts": {
+        "vacancy": "While the post is empty",
+        "hiring": "Finding a new person",
+        "training": "Training",
+        "ramp": "Until full speed",
+        "mistakes": "Mistakes and waste"
+      },
+      "formulas": {
+        "vacancy": "empty days × extra paid to others per day (overtime)",
+        "hiring": "hours × one manager hour + ad",
+        "training": "days × trainer’s lost time per day",
+        "ramp": "days × gross profit lost per day (not revenue — revenue overstates the loss)",
+        "mistakes": "one-off amount"
+      },
+      "annualFormula": "{leavers} people × {per} each",
+      "ruleCompare": "For comparison: the common rule says replacing one employee costs 2–3 monthly salaries ({low} – {high}).",
+      "cta": {
+        "title": "Let’s cut this loss together",
+        "body": "Send the number — we look at hiring, the first weeks and shift rules with you.",
+        "button": "Send on WhatsApp",
+        "wa": "Hello Doğan, I calculated staff turnover: {leavers} of {staff} staff leave each year, about {annual} lost per year. Can we look at it together?"
+      }
     },
     "branding": {
       "navigation": {
@@ -4940,7 +4979,7 @@
   "franchiseRoi": {
     "badge": "Franchise ROI Calculator",
     "title": "Is this franchise investment worth it?",
-    "subtitle": "Results update live as you change the numbers. Healthy franchise target: annual ROI ≥ 20%, payback ≤ 36 months.",
+    "subtitle": "The result updates as you change the numbers. Target for a healthy franchise: payback ≤ 36 months (that equals an annual ROI of about 33%).",
     "roiLabel": "annual return on investment (ROI)",
     "months": "months",
     "noProfit": "no profit",
@@ -4986,13 +5025,13 @@
       "grossProfit": "Gross profit",
       "royaltyAdFund": "Royalty + advertising fund",
       "opex": "Fixed operating expenses",
-      "netProfit": "Annual net profit",
+      "netProfit": "Annual net profit (before tax)",
       "payback": "Payback period"
     },
     "verdict": {
-      "good": "Healthy metrics: ROI 20%+ and payback ≤ 36 months. Attractive franchise model.",
-      "mid": "Borderline: ROI 15–20% and payback ≤ 48 months. Could work, but cost/royalty optimisation would help.",
-      "bad": "Risky: ROI below 15% or payback over 48 months. Turnover, margin or cost structure needs re-evaluation.",
+      "good": "Healthy: the investment pays back within 36 months (annual ROI about 33% or more).",
+      "mid": "Middle zone: payback 36–48 months (annual ROI about 25–33%). It can work, but costs and royalty should be optimised.",
+      "bad": "Risky: payback over 48 months (annual ROI below about 25%). Revisit revenue, margin or the cost structure.",
       "negative": "No net profit in this scenario — the model needs to be restructured."
     },
     "explain": {
@@ -5015,6 +5054,13 @@
       "subDesc": "Rights granted by the master or area franchisee — not directly from the brand.",
       "warning": "Warning: \"I bought a franchise, so the country is mine\" is NOT TRUE. A standard single-unit franchise gives you just one location. Country rights = master franchise = separate and much higher fee + obligations.",
       "tip": "Entry fee varies by type: single-unit < area < master."
+    },
+    "live": "Live calculation",
+    "cta": {
+      "title": "Let's review these numbers together",
+      "body": "Send the franchise offer and your figures — we look at the risks with you before you sign.",
+      "button": "Send on WhatsApp",
+      "wa": "Hello Doğan, I calculated a franchise ROI: ROI {roi}%, payback {payback}, investment {investment}. Can we review it together?"
     }
   },
   "franchiseReadiness": {
@@ -7155,7 +7201,7 @@
           "how": [
             "Enter your current staff count, average monthly salary and how many people left last year (example: 18 staff, 850 ₼, 12 people).",
             "The tool works out the share of staff who left: in the example 12 ÷ 18 = 66.7%.",
-            "Replacing one person costs about 2–3 months of salary (a widely used rule of thumb): in the example about 25,500 ₼ is lost per year."
+            "Enter what one leaver costs in 5 parts: empty days, search, training, profit lost until full speed and mistakes (example: one leaver ≈ 1,015 ₼, × 12 people ≈ 12,180 ₼ a year)."
           ]
         }
       }
@@ -7194,9 +7240,9 @@
     },
     "news": {
       "eyebrow": "Sector Pulse",
-      "title1": "What changed in the sector.",
-      "title2": "What it means <em>for you</em>.",
-      "lead": "Curated HoReCa news — with a short explanation for restaurant, café and hotel owners in Azerbaijan.",
+      "title1": "Today in the world of",
+      "title2": "restaurants, cafés and <em>hotels</em>.",
+      "lead": "Selected HoReCa news from Azerbaijan and the world — a short summary and the source, updated daily.",
       "countersLabel": "Counters",
       "last7": "articles in the last 7 days",
       "total": "published articles",

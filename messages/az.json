@@ -694,7 +694,7 @@
       "statReplacementCost": "Bir işçinin yerini doldurmaq",
       "statAnnualLoss": "İldə itən pul",
       "calculatorTitle": "İşçi dəyişməsi sizə neçəyə başa gəlir?",
-      "calculatorSubtitle": "Üç rəqəm yazın: indiki işçi sayı, orta maaş və keçən il neçə nəfərin getdiyi.",
+      "calculatorSubtitle": "Əvvəl üç rəqəm: işçi sayı, orta aylıq maaş və keçən il neçə nəfərin getdiyi. Sonra bir işçinin getməsinin xərcini addım-addım yazın.",
       "labelEmployeeCount": "İndiki işçi sayı",
       "labelAverageSalary": "Orta aylıq maaş (₼)",
       "labelYearlyLeavers": "İldə işdən çıxan işçi sayı",
@@ -732,7 +732,46 @@
       "blogLink2Tag": "Alət",
       "blogLink3Title": "KAZAN AI",
       "blogLink3Tag": "Süni intellekt",
-      "errNoEmployees": "İşçi sayı 0 olanda faiz hesablanmır — işçi sayını yazın."
+      "errNoEmployees": "İşçi sayı 0 olanda faiz hesablanmır — işçi sayını yazın.",
+      "fields": {
+        "employeeCount": "İndiki işçi sayı",
+        "averageSalary": "Orta aylıq maaş",
+        "yearlyLeavers": "İldə işdən çıxan işçi sayı",
+        "vacantDays": "Yer neçə gün boş qalır",
+        "coverPerDay": "Başqalarına gündə əlavə ödəniş",
+        "hiringHours": "Müsahibə və axtarışa gedən saat",
+        "managerHourly": "Rəhbərin bir saatının dəyəri",
+        "adCost": "Elan xərci",
+        "trainingDays": "Öyrətmə günləri",
+        "trainerDaily": "Öyrədənin gündə itən vaxtının dəyəri",
+        "rampDays": "Tam sürətə çatana qədər gün",
+        "marginPerDay": "Gündə itən brüt mənfəət",
+        "mistakes": "Öyrənərkən səhv, itki, şikayət"
+      },
+      "breakdownTitle": "Bir işçinin getməsi neçəyə başa gəlir?",
+      "breakdownSubtitle": "Rəqəmlər nümunədir — öz restoranınızınkını yazın. Hər hissənin necə hesablandığı başlığın altında yazılıb.",
+      "parts": {
+        "vacancy": "Yer boş qalanda",
+        "hiring": "Yeni işçini tapmaq",
+        "training": "Öyrətmək",
+        "ramp": "Tam sürətə çatana qədər",
+        "mistakes": "Səhv və itkilər"
+      },
+      "formulas": {
+        "vacancy": "boş günlər × başqalarına gündə əlavə ödəniş (əlavə iş saatı)",
+        "hiring": "saat × rəhbərin bir saatı + elan",
+        "training": "günlər × öyrədənin gündə itən vaxtı",
+        "ramp": "günlər × gündə itən brüt mənfəət (dövriyyə yox — dövriyyə zərəri şişirdir)",
+        "mistakes": "bir dəfəlik məbləğ"
+      },
+      "annualFormula": "{leavers} nəfər × bir işçi {per}",
+      "ruleCompare": "Müqayisə üçün: geniş yayılmış qaydaya görə bir işçinin yerini doldurmaq 2–3 aylıq maaşdır ({low} – {high}).",
+      "cta": {
+        "title": "Bu itkini birlikdə azaldaq",
+        "body": "Rəqəmi göndərin — işə qəbul, ilk həftələr və növbə qaydalarına birlikdə baxırıq.",
+        "button": "WhatsApp-da göndər",
+        "wa": "Salam Doğan bəy, işçi dəyişməsi hesabladım: {staff} işçidən ildə {leavers} nəfər gedir, ildə təxminən {annual} itir. Birlikdə baxa bilərikmi?"
+      }
     },
     "branding": {
       "navigation": {
@@ -4940,7 +4979,7 @@
   "franchiseRoi": {
     "badge": "Franchise ROI Kalkulyatoru",
     "title": "Bu franchise investisiyaya dəyərmi?",
-    "subtitle": "Rəqəmləri dəyişdikcə nəticə canlı yenilənir. Sağlam franchise üçün hədəf: illik ROI ≥ %20, geri-qaytarma ≤ 36 ay.",
+    "subtitle": "Rəqəmləri dəyişdikcə nəticə canlı yenilənir. Sağlam franchise üçün hədəf: geri-qaytarma ≤ 36 ay (bu, illik ROI ≈ %33 deməkdir).",
     "roiLabel": "illik investisiya gəlirliliyi (ROI)",
     "months": "ay",
     "noProfit": "mənfəət yoxdur",
@@ -4986,13 +5025,13 @@
       "grossProfit": "Brüt kar",
       "royaltyAdFund": "Royalti + reklam fondu",
       "opex": "Sabit əməliyyat xərcləri",
-      "netProfit": "İllik xalis mənfəət",
+      "netProfit": "İllik xalis mənfəət (vergidən əvvəl)",
       "payback": "Geri-qaytarma müddəti"
     },
     "verdict": {
-      "good": "Sağlam göstərici: ROI %20+ və geri-qaytarma 36 ay. Cəlbedici franchise modeli.",
-      "mid": "Orta zona: ROI %15-20 və geri-qaytarma 48 ay. İşləyə bilər, amma xərc/royalti optimizasiyası faydalı olar.",
-      "bad": "Riskli: ROI %15-dən aşağı və ya geri-qaytarma 48 aydan çox. Dövriyyə, marja və ya xərc strukturu yenidən qiymətləndirilməlidir.",
+      "good": "Sağlam göstərici: investisiya 36 aya qədər geri qayıdır (illik ROI ≈ %33 və yuxarı).",
+      "mid": "Orta zona: geri-qaytarma 36–48 ay (illik ROI ≈ %25–33). İşləyə bilər, amma xərc və royalti optimallaşdırılmalıdır.",
+      "bad": "Riskli: geri-qaytarma 48 aydan çox (illik ROI ≈ %25-dən aşağı). Dövriyyə, marja və ya xərc strukturu yenidən qiymətləndirilməlidir.",
       "negative": "Bu ssenaridə xalis mənfəət yoxdur — model yenidən qurulmalıdır."
     },
     "explain": {
@@ -5015,6 +5054,13 @@
       "subDesc": "Master və ya bölgə alanın verdiyi hüquq — ana brenddən deyil.",
       "warning": "Diqqət: \"Franchise aldım, deməli ölkə mənimdir\" DOĞRU DEYİL. Standart tək nöqtə franchise yalnız bir məkan verir. Ölkə hüququ = master franchise = ayrı və qat-qat yüksək haqq + öhdəlik.",
       "tip": "Giriş haqqı növə görə dəyişir: tək nöqtə < bölgə < master."
+    },
+    "live": "Canlı hesab",
+    "cta": {
+      "title": "Bu rəqəmlərə birlikdə baxaq",
+      "body": "Franchise təklifini və hesabı göndərin — müqavilədən əvvəl risklərə birlikdə baxırıq.",
+      "button": "WhatsApp-da göndər",
+      "wa": "Salam Doğan bəy, franchise ROI hesabladım: ROI {roi}%, geri-qaytarma {payback}, investisiya {investment}. Birlikdə baxa bilərikmi?"
     }
   },
   "franchiseReadiness": {
@@ -7155,7 +7201,7 @@
           "how": [
             "İndiki işçi sayını, orta aylıq maaşı və keçən il işdən çıxanların sayını yazın (nümunə: 18 işçi, 850 ₼, 12 nəfər).",
             "Alət işçi dəyişmə faizini hesablayır: nümunədə 12 ÷ 18 = 66,7%.",
-            "Bir işçinin yerini doldurmaq təxminən 2–3 aylıq maaşdır (geniş yayılmış qayda): nümunədə ildə təxminən 25 500 ₼ itir."
+            "Bir işçinin getməsinin xərcini 5 hissədə yazın: boş qalan günlər, axtarış, öyrətmə, tam sürətə çatana qədər itən mənfəət və səhvlər (nümunədə bir işçi ≈ 1 015 ₼, 12 nəfər üçün ildə ≈ 12 180 ₼)."
           ]
         }
       }
@@ -7194,9 +7240,9 @@
     },
     "news": {
       "eyebrow": "Sektor Nəbzi",
-      "title1": "Sektorda nə dəyişdi.",
-      "title2": "<em>Sizə</em> nə deməkdir.",
-      "lead": "HoReCa sektorundan seçilmiş xəbərlər — Azərbaycanda restoran, kafe və otel sahibi üçün qısa izah.",
+      "title1": "Restoran, kafe və otel",
+      "title2": "dünyasında <em>bu gün</em>.",
+      "lead": "Azərbaycandan və dünyadan seçilmiş HoReCa xəbərləri — qısa xülasə və mənbə ilə, hər gün yenilənir.",
       "countersLabel": "Sayğaclar",
       "last7": "son 7 gündə xəbər",
       "total": "dərc olunmuş xəbər",

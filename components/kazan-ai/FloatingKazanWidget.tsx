@@ -14,10 +14,14 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { buildWhatsappLink } from '@/lib/utils/whatsapp';
+
+// TASK-0531: the markdown renderer loads only when a reply is drawn (not on every page view).
+const KazanMarkdown = dynamic(() => import('@/components/kazan-ai/KazanMarkdown'), {
+  loading: () => null,
+});
 
 type Message = {
   role: 'user' | 'assistant';
@@ -373,9 +377,7 @@ export default function FloatingKazanWidget() {
                     {message.role === 'assistant' ? (
                       <>
                         <div className="prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-1 prose-a:text-[var(--dk-red)]">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                            {message.content}
-                          </ReactMarkdown>
+                          <KazanMarkdown>{message.content}</KazanMarkdown>
                         </div>
                         {index > 0 ? renderAssistantActions() : null}
                       </>
