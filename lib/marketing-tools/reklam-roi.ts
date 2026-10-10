@@ -23,6 +23,8 @@ export type ReklamRoiInput = {
   averageOrderValue: number;
   repeatPurchasePercent: number;
   organicValuePerReach: number;
+  /** TASK-0523: share of a sale left after food + packaging (%). ROI and LTV count this, not revenue. Default 65. */
+  marginPercent?: number;
 };
 
 export type ReklamHealthStatus = 'healthy' | 'weak' | 'harmful' | 'neutral';
@@ -62,6 +64,9 @@ export type ReklamRoiAnalysis = {
   totalEmv: number;
   totalRoiPercent: number;
   totalRoas: number;
+  /** ROAS at which ads exactly pay for themselves = 1 / margin. */
+  breakevenRoas: number;
+  marginPercent: number;
   totalCac: number;
   ltv: number;
   ltvCacRatio: number;
@@ -100,6 +105,8 @@ export function calculateReklamRoi(input: ReklamRoiInput): ReklamRoiAnalysis {
   const averageOrderValue = positive(input.averageOrderValue);
   const repeatRate = Math.min(95, Math.max(0, positive(input.repeatPurchasePercent))) / 100;
   const organicValuePerReach = positive(input.organicValuePerReach);
+  const marginPercent = Math.min(100, positive(input.marginPercent ?? 65));
+  const margin = marginPercent / 100;
 
   const conversionChannels = input.channels
     .map((channel) => {
@@ -122,7 +129,7 @@ export function calculateReklamRoi(input: ReklamRoiInput): ReklamRoiAnalysis {
         revenue: round(revenue),
         cac: newCustomers > 0 ? round(effectiveBudget / newCustomers) : 0,
         roas: effectiveBudget > 0 ? round(revenue / effectiveBudget) : 0,
-        roiPercent: effectiveBudget > 0 ? round(((revenue - effectiveBudget) / effectiveBudget) * 100) : 0,
+        roiPercent: effectiveBudget > 0 ? round(((revenue * margin - effectiveBudget) / effectiveBudget) * 100) : 0,
       };
     })
     .filter((channel) => channel.effectiveBudget > 0);
@@ -154,8 +161,9 @@ export function calculateReklamRoi(input: ReklamRoiInput): ReklamRoiAnalysis {
   const totalEmv = round(awarenessChannels.reduce((sum, channel) => sum + channel.emv, 0));
   const totalCac = totalCustomers > 0 ? round(totalBudget / totalCustomers) : 0;
   const totalRoas = totalBudget > 0 ? round(totalRevenue / totalBudget) : 0;
-  const totalRoiPercent = totalBudget > 0 ? round(((totalRevenue - totalBudget) / totalBudget) * 100) : 0;
-  const ltv = repeatRate >= 1 ? 0 : round(averageOrderValue * (1 / (1 - repeatRate)));
+  const totalRoiPercent = totalBudget > 0 ? round(((totalRevenue * margin - totalBudget) / totalBudget) * 100) : 0;
+  const breakevenRoas = margin > 0 ? round(1 / margin) : 0;
+  const ltv = repeatRate >= 1 ? 0 : round(averageOrderValue * margin * (1 / (1 - repeatRate)));
   const ltvCacRatio = totalCac > 0 ? round(ltv / totalCac) : 0;
   const averageCpm = totalImpressions > 0 ? round((totalBudget / totalImpressions) * 1000) : 0;
 
@@ -174,6 +182,8 @@ export function calculateReklamRoi(input: ReklamRoiInput): ReklamRoiAnalysis {
     totalEmv,
     totalRoiPercent,
     totalRoas,
+    breakevenRoas,
+    marginPercent,
     totalCac,
     ltv,
     ltvCacRatio,

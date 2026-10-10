@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import SezonAnalitikasiTool from '@/components/marketinq-ocagi/sezon-analitikasi/SezonAnalitikasiPage';
+import SezonHub from '@/components/marketinq-ocagi/hubs/SezonHub';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
 import { normalizeLocale, withLocalePrefix } from '@/i18n/config';
@@ -44,7 +44,7 @@ export default async function SezonAnalitikasiPage({ params }: Props) {
 
   return (
     <main>
-      <SezonAnalitikasiTool backHref="/b2b-panel/marketinq-ocagi" />
+      <SezonHub initialTab="forecast" />
     </main>
   );
 }

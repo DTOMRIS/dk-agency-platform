@@ -70,6 +70,7 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
   const [campaignType, setCampaignType] = useState<ReklamCampaignType>('conversion');
   const [averageOrderValue, setAverageOrderValue] = useState('32');
   const [repeatPurchasePercent, setRepeatPurchasePercent] = useState('35');
+  const [marginPercent, setMarginPercent] = useState('65');
   const [organicValuePerReach, setOrganicValuePerReach] = useState('0.03');
   const [channels, setChannels] = useState<ChannelRow[]>(DEMO_CHANNELS);
   const [submitted, setSubmitted] = useState(true);
@@ -80,6 +81,7 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
     averageOrderValue: Math.max(0, parseNumber(averageOrderValue) || 0),
     repeatPurchasePercent: Math.min(95, Math.max(0, parseNumber(repeatPurchasePercent) || 0)),
     organicValuePerReach: Math.max(0, parseNumber(organicValuePerReach) || 0),
+    marginPercent: Math.min(100, Math.max(0, parseNumber(marginPercent) || 0)),
     channels: channels.map((channel): ReklamChannelInput => ({
       id: channel.id,
       type: channel.type,
@@ -89,7 +91,7 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
       reach: Math.max(0, Math.floor(parseNumber(channel.reach) || 0)),
       impressions: Math.max(0, Math.floor(parseNumber(channel.impressions) || 0)),
     })),
-  }), [averageOrderValue, campaignType, channels, organicValuePerReach, repeatPurchasePercent]);
+  }), [averageOrderValue, campaignType, channels, marginPercent, organicValuePerReach, repeatPurchasePercent]);
 
   const analysis = useMemo(() => calculateReklamRoi(input), [input]);
 
@@ -284,6 +286,11 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
                   <input value={repeatPurchasePercent} onChange={(event) => setRepeatPurchasePercent(event.target.value)} inputMode="decimal" className={inputClass} placeholder={t('inputs.repeatPurchasePercent.placeholder')} />
                   {errors.repeatPurchasePercent && <span className="mt-1 block text-xs font-semibold text-[var(--dk-red)]">{errors.repeatPurchasePercent}</span>}
                 </label>
+                <label>
+                  <span className={labelClass}>{t('inputs.marginPercent.label')}</span>
+                  <input value={marginPercent} onChange={(event) => setMarginPercent(event.target.value)} inputMode="decimal" className={inputClass} placeholder="65" data-testid="reklam-roi-margin" />
+                  <span className="mt-1 block text-xs leading-5 text-slate-500">{t('inputs.marginPercent.hint')}</span>
+                </label>
               </div>
             ) : (
               <label>
@@ -302,7 +309,7 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
           {submitted && campaignType === 'conversion' && (
             <>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <MetricCard label={t('results.totalRoas')} value={`${formatNumber(analysis.totalRoas)}x`} />
+                <MetricCard label={t('results.totalRoas')} value={`${formatNumber(analysis.totalRoas)}x`} hint={t('results.breakevenRoas', { value: formatNumber(analysis.breakevenRoas) })} />
                 <MetricCard label={t('results.totalCac')} value={formatMoney(analysis.totalCac)} />
                 <MetricCard label={t('results.roiPercent')} value={`${formatNumber(analysis.totalRoiPercent)}%`} />
                 <MetricCard label={t('results.totalRevenue')} value={formatMoney(analysis.totalRevenue)} />
@@ -417,11 +424,12 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
   );
 }
 
-function MetricCard({ label, value }: { label: string; value: string }) {
+function MetricCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <p className="text-xs font-bold uppercase text-slate-500">{label}</p>
       <p className="mt-2 text-xl font-extrabold text-[var(--dk-navy)]">{value}</p>
+      {hint && <p className="mt-1 text-xs font-semibold text-slate-500">{hint}</p>}
     </div>
   );
 }

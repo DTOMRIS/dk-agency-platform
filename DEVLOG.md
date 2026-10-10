@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-10-10 — TASK-0523: Marketinq Ocağı — limit, ROI/P&L düsturları, kodla hesablanan rəqəmlər, birləşdirmə, Qonaq anketi
+
+**Why:** 09.10 audit (docs/reports/2026-10-09-marketinq-ocagi-audit.md) + sahib qərarları: 7 AI aləti aylıq limiti yazmırdı; ROI ciro üzrə, P&L başabaşı işçini dəyişən sayırdı; KST/şikayət/menyu rəqəmlərini LLM hesablayırdı (menyuda satışı «təxmin et» deyirdi); şikayət cavabı hər dəfə kupon vəd edirdi; marka kompası «B2B SaaS» promptu; sezon əmsalları orta ≠ 1; mənbəsiz norma/qayda/sitatlar; dublikat alətlər.
+
+**What:** Mərhələ 1 (commit 67ecf51) — `logToolRun` (marketing-gating), 7 action + fetch timeout; ROI `margin` (ROICalculatorV2 + reklam-roi lib, başabaş ROAS = 1/pay); `PnlScenarioPanel` (+ `pnlBreakeven`), `/marketinq/pl-simulyatoru` → redirect, `EXTERNAL_TOOL_HREF` (pl-simulyatoru, yemek-xerci); KST/şikayət/menyu route-ları kod + AI söz; `complaint-prompt-builder` kompensasiya seçimi; triaj SLA; sezon `normalizedCoefficients` + `ramadanMonths`; ai-router ümumi deadline; /marketinq layout açıq fon. Mərhələ 2 — `ToolTabs` + 4 hub; KST «İnsan» qrupu (I1–I5, optional schema); `qonaq-anketi` lib + səhifə + config/hub/slug qeydi.
+
+**Yoxlama:** `e2e/marketinq-formulas.test.ts` 42/42; brauzer (next dev :3917, test `JWT_SECRET`, `.env` oxunmadı) 15/15 + 19/19 + menyu sınaq datası (Qoru/Qiymətini düzəlt/Tanıt/Çıxar); tsc 28 (baseline 30); dəyişən fayllarda eslint 0 error. AI düymələrinə basılmadı (canlı DB + pullu sorğu) — istisna: mərhələ 1-də menyu səhifəsinin avtomatik AI çağırışı (sonra silindi).
+
 ## 2026-10-09 — TASK-0521: «Bütün müraciətlər» admin inbox + header hesab menyusu, paneldən «Pulsuz diaqnostika» çıxdı
 
 **Why:** Sahib qərarları 09.10: ADMIN_EMAIL-ə gələn müraciətlərin paneldə vahid siyahısı yox idi (`listing_leads` heç bir admin səhifəsində siyahılanmırdı; kliklər yalnız contact-tracking-də, KAZAN və franchise ayrı səhifələrdə, bülletən abunəsinin səhifəsi yox). Header-də «Üzv ol» kompüterdə yox idi (TASK-0520 açıq sualı) → hesab menyusu; telefon panelində «Pulsuz diaqnostika» artıqdır.

@@ -24,6 +24,8 @@ export type SeasonInput = {
   restaurantType: RestaurantSeasonType;
   laborPercent: number;
   foodCostPercent: number;
+  /** Year whose Ramadan months are marked; defaults to the current year. */
+  year?: number;
 };
 
 export type MonthProjection = {
@@ -142,7 +144,37 @@ export const SEASON_COEFFICIENTS: Record<RestaurantSeasonType, Record<MonthKey, 
   },
 };
 
-const RAMADAN_2026_MONTHS = new Set<MonthKey>(['feb', 'mar']);
+// TASK-0523: Ramadan moves ~11 days earlier every year; it was hard-coded to 2026 (Feb–Mar).
+// Approximate start/end (the exact day depends on the moon sighting) — only the months are used.
+const RAMADAN_WINDOWS: Record<number, [string, string]> = {
+  2025: ['2025-03-01', '2025-03-30'],
+  2026: ['2026-02-18', '2026-03-19'],
+  2027: ['2027-02-08', '2027-03-09'],
+  2028: ['2028-01-28', '2028-02-26'],
+  2029: ['2029-01-16', '2029-02-14'],
+  2030: ['2030-01-05', '2030-02-04'],
+};
+
+export function ramadanMonths(year: number): Set<MonthKey> {
+  const window = RAMADAN_WINDOWS[year];
+  if (!window) return new Set();
+  const startMonth = Number(window[0].slice(5, 7)) - 1;
+  const endMonth = Number(window[1].slice(5, 7)) - 1;
+  const months = new Set<MonthKey>();
+  for (let m = startMonth; m <= endMonth; m++) months.add(MONTH_KEYS[m]);
+  return months;
+}
+
+/**
+ * TASK-0523: the tables above are a seasonal SHAPE; their mean was 0.92–1.13, so «average month ×
+ * coefficient» summed to 11–13.5 months a year. Scaling to mean = 1 keeps the shape and makes the
+ * year equal 12 × the average month the owner typed.
+ */
+export function normalizedCoefficients(type: RestaurantSeasonType): Record<MonthKey, number> {
+  const raw = SEASON_COEFFICIENTS[type];
+  const mean = MONTH_KEYS.reduce((sum, month) => sum + raw[month], 0) / MONTH_KEYS.length;
+  return Object.fromEntries(MONTH_KEYS.map((month) => [month, Math.round((raw[month] / mean) * 1000) / 1000])) as Record<MonthKey, number>;
+}
 
 function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
@@ -160,7 +192,8 @@ function topMonths(
 }
 
 export function calculateSeasonAnalysis(input: SeasonInput): SeasonAnalysis {
-  const coefficients = SEASON_COEFFICIENTS[input.restaurantType];
+  const coefficients = normalizedCoefficients(input.restaurantType);
+  const ramadan = ramadanMonths(input.year ?? new Date().getFullYear());
   const months = MONTH_KEYS.map((month) => {
     const coefficient = coefficients[month];
     const projectedRevenue = input.monthlyRevenue * coefficient;
@@ -171,7 +204,7 @@ export function calculateSeasonAnalysis(input: SeasonInput): SeasonAnalysis {
       projectedRevenue: roundMoney(projectedRevenue),
       laborBudget: roundMoney(projectedRevenue * (input.laborPercent / 100)),
       inventoryBudget: roundMoney(projectedRevenue * (input.foodCostPercent / 100)),
-      isRamadanWindow: RAMADAN_2026_MONTHS.has(month),
+      isRamadanWindow: ramadan.has(month),
       isDeadMonth: coefficient < 0.8,
     };
   });

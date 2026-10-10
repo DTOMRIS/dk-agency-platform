@@ -18,6 +18,7 @@ import {
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
+import PnlScenarioPanel from '@/components/toolkit/pnl/PnlScenarioPanel';
 import {
   FOOD_COST_MAX_PCT,
   LABOR_MAX_PCT,
@@ -389,6 +390,16 @@ export default function PnlSimulator() {
       <KpiCard label={t('kpis.primeCost')} value={formatPercent(calc.pct(calc.primeCost))} helper={t('kpis.targetMax', { value: PRIME_COST_MAX_PCT })} positive={hasRevenue && calc.pct(calc.primeCost) <= PRIME_COST_MAX_PCT} tone="blue" neutral={!hasRevenue} />
       <KpiCard label={t('kpis.foodCost')} value={formatPercent(foodCostPct)} helper={t('kpis.targetMax', { value: FOOD_COST_MAX_PCT })} positive={hasRevenue && foodCostPct <= FOOD_COST_MAX_PCT} tone="amber" neutral={!hasRevenue} />
       <KpiCard label={t('kpis.rent')} value={formatPercent(calc.pct(rent))} helper={t('kpis.targetMax', { value: RENT_MAX_PCT })} positive={hasRevenue && calc.pct(rent) <= RENT_MAX_PCT} tone="blue" neutral={!hasRevenue} />
+
+      {/* TASK-0523: break-even + «what if» + USTA AI comment (the old PLSimulator merged in here). */}
+      <PnlScenarioPanel
+        revenue={revenue}
+        variableCost={calc.cogs}
+        labor={staffCost + management}
+        otherFixed={calc.controllable - staffCost - management + calc.uncontrollable}
+        formatCurrency={formatCurrency}
+        formatPercent={formatPercent}
+      />
 
       {/* WeeklyActions — TASK-0174 inteqrasiyası, TOXUNMA */}
       {revenue > 0 && (

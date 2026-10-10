@@ -102,3 +102,36 @@ async function countRunsThisMonth(
 
   return result[0]?.count ?? 0;
 }
+
+// ── RUN LOG (TASK-0523) ─────────────────────────────────────────────
+// Server actions (menyu, persona, şikayət, ROI, P&L, trend, lokasyon) used to check the monthly
+// limit but never wrote a row, so countRunsThisMonth stayed 0 and the limit never bit.
+// Best-effort: a failed log write must not fail the user's result.
+
+export async function logToolRun(params: {
+  userId: number;
+  toolSlug: string;
+  input: Record<string, unknown>;
+  status: 'success' | 'error';
+  output?: Record<string, unknown>;
+  errorMessage?: string;
+  provider?: string;
+  locale?: string;
+}): Promise<void> {
+  if (!db) return;
+  try {
+    await db.insert(marketingToolRuns).values({
+      userId: params.userId,
+      toolSlug: params.toolSlug,
+      inputData: params.input,
+      outputData: params.output ?? null,
+      aiProvider: params.provider ?? null,
+      status: params.status,
+      errorMessage: params.errorMessage?.slice(0, 500) ?? null,
+      locale: (params.locale ?? 'az').slice(0, 2),
+      completedAt: new Date(),
+    });
+  } catch (err) {
+    console.error('[marketing-gating] logToolRun failed', params.toolSlug, err);
+  }
+}

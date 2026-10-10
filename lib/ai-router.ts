@@ -43,6 +43,7 @@ export interface AIRouterOptions {
 }
 
 const DEFAULT_TIMEOUT_MS = 55_000;
+const MIN_FALLBACK_MS = 8_000;
 
 const COST_PER_TOKEN: Record<AIProviderName, number> = {
   deepseek: 0.0000003,
@@ -63,14 +64,22 @@ export async function callAI(req: AIRequest, opts: AIRouterOptions): Promise<AIR
   const primary = opts.preferProvider ?? 'deepseek';
   const fallback: AIProviderName = primary === 'deepseek' ? 'claude' : 'deepseek';
 
+  // TASK-0523: one deadline for both providers — before, a primary failing after ~54 s gave the
+  // fallback another full timeout, past the route's 60 s maxDuration.
+  const startedAt = Date.now();
   try {
     return await callProvider(primary, normalizedReq, opts);
   } catch (err) {
     logProviderError(primary, normalizedReq, opts, err);
     if (isAIAbortError(err)) throw err;
 
+    const remaining = (normalizedReq.timeout ?? DEFAULT_TIMEOUT_MS) - (Date.now() - startedAt);
+    if (remaining < MIN_FALLBACK_MS) {
+      throw new Error(`Primary AI provider failed for ${opts.toolSlug}; no time left for fallback`);
+    }
+
     try {
-      return await callProvider(fallback, normalizedReq, opts);
+      return await callProvider(fallback, { ...normalizedReq, timeout: remaining }, opts);
     } catch (fallbackErr) {
       logProviderError(fallback, normalizedReq, opts, fallbackErr);
       if (isAIAbortError(fallbackErr)) throw fallbackErr;

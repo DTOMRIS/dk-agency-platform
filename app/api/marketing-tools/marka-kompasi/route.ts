@@ -36,22 +36,31 @@ type MarkaKompasiOutput = z.infer<typeof OutputSchema>;
 
 // ── SYSTEM PROMPT ───────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `Sen B2B SaaS positioning expertisen, April Dunford terzinde.
+// TASK-0523: was «B2B SaaS positioning expert, April Dunford style» in diacritic-less Azerbaijani —
+// the wrong trade for a Baku restaurant owner. JSON keys stay the same (the page reads them).
+const OUTPUT_LANGUAGE: Record<string, string> = {
+  az: 'Azərbaycan dilində (düzgün hərflərlə: ə, ı, ö, ü, ç, ş, ğ)',
+  ru: 'на русском языке',
+  en: 'in English',
+  tr: 'Türkçe',
+};
 
-Restoran sahibinin 5 cavabindan bunlari cixar:
-1. ICP (Ideal Customer Profile): kim, hansi kontekstde, hansi problem
-2. Value Proposition: 1 cumle, niye senin restoranin
-3. 3 Differentiator: reqibin ede bilmediyi konkret ustunlukler
-4. Tagline: bir-cumle, brendi tam ifade eden
-5. UseThisIn: bu positioning hansi 3-5 yerde islene biler (Google Business tesviri, IG bio, menyu girisi ve s.)
+function buildSystemPrompt(locale: string): string {
+  return `Sən Bakıda və Azərbaycanın digər şəhərlərində restoran, kafe və fast-food markalarını yerləşdirən təcrübəli marka məsləhətçisisən.
+Restoran sahibinin 5 cavabından bunları çıxar:
+1. icp — əsas qonaq: kimdir (who), hansı vəziyyətdə gəlir (context), hansı ehtiyacı/problemi var (painPoint)
+2. valueProp — bir cümlə: qonaq niyə məhz bu restoranı seçməlidir
+3. differentiators — rəqibin edə bilmədiyi 3 konkret üstünlük (sahibin cavablarına əsaslan, uydurma)
+4. tagline — bir qısa şüar, menyuya, vitrinə və Instagram bio-ya yazıla bilən
+5. useThisIn — bu mövqeni harada işlətmək: 3-5 konkret yer (Google Biznes təsviri, Instagram bio, menyunun üz qabığı, Wolt/Bolt Food təsviri, vitrin, kassa yanı və s.)
 
-Stil:
-- Konkret ve ezeleli, umumi soz yox ("lezzetli yemek" deme)
-- Ahilik enenelerine hormetli, lakin muasir
-- Azerbaycan/Turkiye bazari ucun uygun
+Qaydalar:
+- Konkret yaz, ümumi söz yox («ləzzətli yemək», «keyfiyyətli xidmət» kimi boş ifadələr yazma).
+- Sahibin dediyindən kənara çıxma; rəqəm, mükafat, tarix uydurma.
+- Halal: donuz əti və spirtli içki təklif etmə.
+- Bütün mətn ${OUTPUT_LANGUAGE[locale] ?? OUTPUT_LANGUAGE.az} olsun; ingiliscə marketinq termini (ICP, value proposition, positioning) işlətmə.
 
-Cavabini YALNIZ kecerli JSON formatinda ver.
-JSON strukturu:
+Cavabı YALNIZ keçərli JSON kimi qaytar:
 {
   "icp": { "who": "...", "context": "...", "painPoint": "..." },
   "valueProp": "...",
@@ -59,44 +68,45 @@ JSON strukturu:
   "tagline": "...",
   "useThisIn": ["...", "...", "..."]
 }`;
+}
 
 // ── PROMPT BUILDER ──────────────────────────────────────────────────
 
 const TIME_MAP: Record<string, string> = {
-  morning: 'seher',
-  lunch: 'nahar',
-  evening: 'axsam',
-  'late-night': 'gec gece',
-  all: 'butun gun',
+  morning: 'səhər',
+  lunch: 'nahar vaxtı',
+  evening: 'axşam',
+  'late-night': 'gecə gec saatlarda',
+  all: 'bütün gün',
 };
 
 const ACTIVITY_MAP: Record<string, string> = {
-  'fill-belly': 'qarin doyurmaq',
-  work: 'is gormek',
-  celebration: 'merasim / bayram',
-  relax: 'dincelmek',
-  'third-place': 'ev/is arasi ucuncu mekan',
+  'fill-belly': 'tez və doyumlu yemək yeməyə',
+  work: 'iş görüşü / işləməyə',
+  celebration: 'məclis, ad günü, bayram üçün',
+  relax: 'dincəlməyə',
+  'third-place': 'ev ilə iş arasında oturub vaxt keçirməyə',
 };
 
 const FOOD_MAP: Record<string, string> = {
-  tradition: 'gelenek / ata-baba reseptleri',
-  speed: 'suret / fast casual',
-  health: 'saglamliq / organik',
-  exotic: 'ekzotik / dunya mutfagi',
-  handcrafted: 'el-emeyi / hand-crafted',
+  tradition: 'ənənə, ata-baba reseptləri',
+  speed: 'sürət, tez hazırlanan yemək',
+  health: 'sağlam, təbii məhsul',
+  exotic: 'dünya mətbəxi, fərqli dadlar',
+  handcrafted: 'əl işi, yerində hazırlanan',
 };
 
 function buildUserPrompt(input: z.infer<typeof InputSchema>): string {
-  return `Restoran sahibinin cavablari:
+  return `Restoran sahibinin cavabları:
 
-1. Musteriler gunde ${TIME_MAP[input.customerTime]} gelir.
-2. Onlar burda: ${ACTIVITY_MAP[input.customerActivity]}.
-3. Yemeyin esas hekayesi: ${FOOD_MAP[input.foodStory]}.
-4. Reqibin ede bilmediyi:
+1. Qonaqlar əsasən ${TIME_MAP[input.customerTime]} gəlir.
+2. Gəlmə səbəbi: ${ACTIVITY_MAP[input.customerActivity]}.
+3. Yeməyin əsas hekayəsi: ${FOOD_MAP[input.foodStory]}.
+4. Rəqibin edə bilmədiyi (sahibin sözləri):
 ${input.competitorGap}
-5. Musteri tovsiye sebebi: ${input.recommendReason}
+5. Qonaqların bizi tövsiyə etmə səbəbi (sahibin sözləri): ${input.recommendReason}
 
-Bu melumatlardan ICP, Value Prop, 3 Differentiator, Tagline ve UseThisIn cixar.`;
+Bu cavablardan icp, valueProp, differentiators, tagline və useThisIn çıxar.`;
 }
 
 // ── POST — yeni run ────────────────────────────────────────────────
@@ -142,14 +152,16 @@ export async function POST(req: NextRequest) {
     try {
       aiResult = await callAIJson<unknown>(
         {
-          system: SYSTEM_PROMPT,
+          system: buildSystemPrompt(input.locale),
           prompt: userPrompt,
           maxTokens: 1500,
           temperature: 0.7,
-          timeout: 55000,
+          timeout: 40000,
+          responseFormat: 'json_object',
         },
         {
-          preferProvider: 'claude',
+          // TASK-0523: in sync with marketing-tools-config (deepseek → claude fallback).
+          preferProvider: 'deepseek',
           toolSlug: 'marka-kompasi',
           userId: auth.userId,
           locale: input.locale,

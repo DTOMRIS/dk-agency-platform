@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import ReklamRoiTool from '@/components/marketinq-ocagi/reklam-roi/ReklamRoiPage';
+import RoiHub from '@/components/marketinq-ocagi/hubs/RoiHub';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
 import { normalizeLocale, withLocalePrefix } from '@/i18n/config';
@@ -44,7 +44,7 @@ export default async function ReklamRoiPage({ params }: Props) {
 
   return (
     <main>
-      <ReklamRoiTool backHref="/b2b-panel/marketinq-ocagi" />
+      <RoiHub initialTab="campaign" />
     </main>
   );
 }

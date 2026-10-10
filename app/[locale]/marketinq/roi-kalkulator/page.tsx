@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import ROICalculatorV2 from '@/components/marketinq/ROICalculatorV2';
+import RoiHub from '@/components/marketinq-ocagi/hubs/RoiHub';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
 import { normalizeLocale, withLocalePrefix } from '@/i18n/config';
@@ -44,7 +44,7 @@ export default async function ROICalculatorPage({ params }: Props) {
 
   return (
     <main>
-      <ROICalculatorV2 backHref="/b2b-panel/marketinq-ocagi" />
+      <RoiHub initialTab="channels" />
     </main>
   );
 }

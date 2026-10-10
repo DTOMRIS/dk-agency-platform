@@ -206,6 +206,7 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
         customerType,
         date: date || undefined,
         clientCategory: detectedCategories[0],
+        locale,
       });
 
       if (!response.ok) {
@@ -361,6 +362,11 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
             </span>
             <span className="text-xs text-slate-500">{result.severityReason}</span>
           </div>
+          {result.responseWithinHours ? (
+            <p className="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800" data-testid="complaint-sla">
+              {t('sla', { hours: result.responseWithinHours })}
+            </p>
+          ) : null}
 
           <div className="mb-4 grid grid-cols-3 rounded-lg bg-slate-100 p-1">
             {(['response', 'discovery', 'internal'] as ActiveTab[]).map((tab) => (

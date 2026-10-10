@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
-import { checkToolAccess } from '@/lib/marketing-gating';
+import { checkToolAccess, logToolRun } from '@/lib/marketing-gating';
 import { AI_MODELS } from '@/lib/ai-models';
 
 export type MenuAnalyticsCategory = 'star' | 'plowhorse' | 'puzzle' | 'dog';
@@ -79,22 +79,23 @@ async function checkRateLimit(userId: number): Promise<boolean> {
 
 function formatGroup(items: MenuAnalyticsAIItem[], category: MenuAnalyticsCategory) {
   const group = items.filter((item) => item.category === category);
-  if (!group.length) return 'Yoxdur';
+  if (!group.length) return 'yoxdur';
   return group
     .map((item) => `${item.name} (${item.contributionMargin.toFixed(2)} AZN)`)
     .join(', ');
 }
 
 function buildPrompt(input: { averageContributionMargin: number; items: MenuAnalyticsAIItem[] }) {
-  return `Sen bir restoran menyu muhendisisen. Ashagidaki analiz neticelerine esasen her kateqoriya ucun konkret, praktik tovsiye ver (AZ dilinde, qisa, bullet):
+  // TASK-0523: proper Azerbaijani and the action names the page shows (Qoru / Qiymətini düzəlt / Tanıt / Çıxar).
+  return `Yeməklər satış sayı və porsiyadan qalan qazanca görə 4 qrupa ayrılıb (kodla hesablanıb, dəyişmə):
 
-ULDUZLAR: ${formatGroup(input.items, 'star')}
-ISH ATILARI: ${formatGroup(input.items, 'plowhorse')}
-BULMACALAR: ${formatGroup(input.items, 'puzzle')}
-ITLER: ${formatGroup(input.items, 'dog')}
-Orta CM: ${input.averageContributionMargin.toFixed(2)} AZN
+QORU (çox satılır, qazanc yüksək): ${formatGroup(input.items, 'star')}
+QİYMƏTİNİ DÜZƏLT (çox satılır, qazanc az): ${formatGroup(input.items, 'plowhorse')}
+TANIT (az satılır, qazanc yüksək): ${formatGroup(input.items, 'puzzle')}
+ÇIXAR (az satılır, qazanc az): ${formatGroup(input.items, 'dog')}
+Orta qazanc (satışa görə çəkili): ${input.averageContributionMargin.toFixed(2)} AZN
 
-Her kateqoriya ucun 2-3 konkret addim ver. Cavabi yalniz qisa markdown bullet formatinda qaytar.`;
+Hər qrup üçün 2-3 konkret addım ver. Cavabı yalnız qısa markdown siyahısı kimi, Azərbaycan dilində (ə, ı, ö, ü, ç, ş, ğ hərfləri ilə) yaz; ingiliscə termin (menu engineering, plowhorse, CM) işlətmə.`;
 }
 
 export async function getMenuAnalyticsTips(input: MenuAnalyticsAIInput): Promise<MenuAnalyticsAIResult> {
@@ -134,12 +135,13 @@ export async function getMenuAnalyticsTips(input: MenuAnalyticsAIInput): Promise
         messages: [
           {
             role: 'system',
-            content: 'Sen Azerbaycan HoReCa bazarini bilen praktik restoran menyu muhendisisen. Uzun izah yox, sahibkarin sabah ede bileceyi addimlari yaz.',
+            content: 'Sən Azərbaycan restoran bazarını bilən praktik menyu məsləhətçisisən. Uzun izah yox — sahibin sabah edə biləcəyi addımları yaz. Rəqəm uydurma, donuz əti və spirtli içki təklif etmə.',
           },
           { role: 'user', content: buildPrompt({ averageContributionMargin, items: sanitizedItems }) },
         ],
       }),
       cache: 'no-store',
+      signal: AbortSignal.timeout(30_000),
     });
 
     if (!response.ok) return { ok: false, error: 'ai-failed' };
@@ -150,6 +152,7 @@ export async function getMenuAnalyticsTips(input: MenuAnalyticsAIInput): Promise
     const tips = data.choices?.[0]?.message?.content?.trim();
 
     if (!tips) return { ok: false, error: 'ai-failed' };
+    await logToolRun({ userId: auth.userId, toolSlug: 'menyu-analitik', input: { averageContributionMargin, items: sanitizedItems }, status: 'success' });
     return { ok: true, tips: tips.slice(0, 4000) };
   } catch {
     return { ok: false, error: 'ai-failed' };

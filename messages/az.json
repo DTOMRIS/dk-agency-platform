@@ -655,6 +655,35 @@
             "tag": "Əməliyyat"
           }
         }
+      },
+      "scenario": {
+        "breakevenLabel": "Başabaş satış",
+        "breakevenAbove": "Cari satış başabaşdan {value} yuxarıdır",
+        "breakevenBelow": "Başabaşa çatmaq üçün ayda {value} çox satış lazımdır",
+        "breakevenImpossible": "Yemək xərci satışa bərabər və ya çoxdur — bu qiymətlərlə başabaş yoxdur",
+        "breakevenNote": "Yalnız yemək və qablaşdırma satışla artır; işçi, icarə və digər xərclər hər halda ödənir.",
+        "title": "Əgər belə olsa?",
+        "subtitle": "Sürgünü çəkin — xalis mənfəətin necə dəyişdiyini görün.",
+        "sliders": {
+          "salesGrowth": "Satış dəyişsə",
+          "foodCut": "Yemək xərci azalsa",
+          "fixedCut": "Digər xərclər azalsa"
+        },
+        "scenarioNet": "Yeni xalis mənfəət",
+        "scenarioDelta": "Fərq",
+        "perMonth": "ayda",
+        "aiTitle": "AI şərhi",
+        "aiBody": "Rəqəmlərinizə baxıb bu ay nə etməli olduğunuzu sadə dildə yazır.",
+        "aiCta": "AI şərhini al",
+        "aiLoading": "Hazırlanır…",
+        "aiUsta": "AI şərhi USTA üzvlər üçündür.",
+        "aiUstaLink": "Paketlərə bax",
+        "errors": {
+          "rate-limited": "10 dəqiqədə 3 sorğu limiti doldu. Bir az sonra yenidən yoxlayın.",
+          "validation": "Satış və xərcləri yoxlayın.",
+          "missing-key": "AI xidməti hazırda əlçatan deyil.",
+          "ai-failed": "AI cavab verə bilmədi. Yenidən yoxlayın."
+        }
       }
     },
     "staffRetention": {
@@ -2032,8 +2061,8 @@
       "back_to_tools": "Bütün alətlər",
       "remove_item": "Yeməyi sil",
       "load_demo": "Test dataseti",
-      "avg_cm": "Orta CM",
-      "avg_mix": "Orta Mix %",
+      "avg_cm": "Orta qazanc (satışa görə çəkili)",
+      "avg_mix": "Populyarlıq həddi (satış payı)",
       "item": "Yemək",
       "price": "Qiymət",
       "cost": "Məsrəf",
@@ -2043,12 +2072,13 @@
       "plowhorse_hint": "Çox satılır, porsiyadan qazanc azdır",
       "puzzle_hint": "Az satılır, porsiyadan qazanc yüksəkdir",
       "dog_hint": "Az satılır, porsiyadan qazanc azdır",
-      "ai_tips_subtitle": "DeepSeek nəticəyə əsasən praktik addımlar verir.",
+      "ai_tips_subtitle": "Nəticəyə baxıb hər qrup üçün praktik addımlar yazır. Hər basış aylıq limitdən 1 istifadə sayılır.",
       "ai_loading": "AI tövsiyəsi hazırlanır...",
       "ai_error": "AI tövsiyəsi yüklənmədi — yenidən cəhd edin",
       "retry": "Yenidən cəhd et",
       "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
-      "tier_required_body": "Menyu Analitiği real menyu mühəndisliyi və AI tövsiyələri verdiyi üçün KALFA pilləsinə daxildir."
+      "tier_required_body": "Menyu Analitiği real menyu mühəndisliyi və AI tövsiyələri verdiyi üçün KALFA pilləsinə daxildir.",
+      "ai_cta": "AI tövsiyəsi al"
     },
     "roiCalculator": {
       "title": "ROI Kalkulatoru",
@@ -2082,7 +2112,7 @@
       "total_cac": "Ümumi CAC",
       "evaluation": "Qiymətləndirmə",
       "days": "gün",
-      "benchmark_roi": ">100% sağlam",
+      "benchmark_roi": "0%-dən yuxarı = reklam özünü ödəyir",
       "benchmark_roas": ">3x sağlam",
       "benchmark_ltv": "≥3:1 sağlam",
       "benchmark_payback": "<180 gün ideal",
@@ -2107,7 +2137,10 @@
         "validation": "Kanal rəqəmlərini yoxlayın və yenidən cəhd edin.",
         "missing-key": "AI açarı serverdə qurulmayıb.",
         "ai-failed": "AI analizi yüklənmədi — yenidən cəhd edin."
-      }
+      },
+      "margin_pct": "Satışdan qalan pay (%)",
+      "margin_hint": "Yemək və qablaşdırma xərci çıxılandan sonra hər satışdan qalan hissə. Nümunə: yemək xərci 35% → 65. Öz rəqəminizi yazın.",
+      "breakeven_roas": "başabaş: {value}x"
     },
     "plSimulator": {
       "tierBadge": "USTA",
@@ -2343,7 +2376,7 @@
     },
     "sezonAnalitikasi": {
       "title": "Sezon Analitikası",
-      "subtitle": "AZ təqvimi, kurort sezonu və Ramazan davranışını nəzərə alaraq 12 aylıq cash-flow, işçi xərci və inventar büdcəsi proqnozu.",
+      "subtitle": "AZ təqvimi, kurort sezonu və Ramazanı nəzərə alaraq 12 aylıq satış, işçi xərci və ərzaq büdcəsi proqnozu.",
       "tier": "KALFA",
       "back_to_tools": "Bütün alətlər",
       "inputs": {
@@ -2408,12 +2441,12 @@
         "weak": "Ən riskli 3 ay",
         "strong": "Ən güclü 3 ay"
       },
-      "ramadanNote": "Ramazan pəncərəsi üçün gündüz trafiki təxminən 20% azalır, iftar axşamları isə təxminən 35% artır. Aylıq nəticə neytral qala bilər, amma staff və inventar saatlara görə planlanmalıdır.",
+      "ramadanNote": "Ramazan ayında gündüz qonaq azalır, iftar saatlarında isə artır. Aylıq satış çox dəyişməyə bilər, amma işçi növbələrini və ərzaq alışını saatlara görə planlayın. Ramazan tarixləri təxminidir (ay görünüşünə görə 1 gün dəyişə bilər).",
       "deadMonthWarning": "Ölü ay: avans alışları azaldın, növbələri qısaldın və lokal kampaniya hazırlayın.",
       "ahilikQuote": "Ahilik sözü: usta bolluq ayında ehtiyat yığar, dar ayda nizamı qoruyar.",
       "cta": "Proqnozu yenilə",
       "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
-      "tier_required_body": "Sezon Analitikası cash-flow proqnozu, staff və inventar planlamasını birləşdirdiyi üçün KALFA pilləsinə daxildir.",
+      "tier_required_body": "Sezon Analitikası satış proqnozunu, işçi və ərzaq planlamasını birləşdirdiyi üçün KALFA pilləsinə daxildir.",
       "upgrade_cta": "KALFA üzvlüyünə keç"
     },
     "reklamRoi": {
@@ -2489,6 +2522,10 @@
         },
         "validation": {
           "channelBudget": "Ən azı bir kanal üçün büdcə daxil edin."
+        },
+        "marginPercent": {
+          "label": "Satışdan qalan pay (%)",
+          "hint": "Yemək və qablaşdırma xərci çıxılandan sonra hər satışdan qalan hissə. Nümunə: yemək xərci 35% → 65."
         }
       },
       "results": {
@@ -2504,7 +2541,8 @@
         "tableTitle": "Kanal ROI cədvəli",
         "bestChannel": "Ən yaxşı kanal",
         "worstChannel": "Ən zəif kanal",
-        "ltvFormulaNote": "LTV sadə təxmindir: AOV × (1 / (1 − təkrar alış faizi))."
+        "ltvFormulaNote": "LTV sadə təxmindir: orta çek × qalan pay × (1 / (1 − təkrar alış faizi)).",
+        "breakevenRoas": "başabaş: {value}x — bundan aşağı reklam pul itirir"
       },
       "table": {
         "channel": "Kanal",
@@ -3197,6 +3235,39 @@
         "missing-key": "AI açarı aktiv deyil",
         "ai-failed": "AI analizi alınmadı — yenidən cəhd edin",
         "ai-output-invalid": "AI cavabı düzgün formatda gəlmədi"
+      },
+      "sla": "Cavab müddəti: {hours} saat ərzində qonağa cavab verin (ciddiliyə görə: kritik 1 · yüksək 4 · orta 24 · aşağı 48 saat)."
+    },
+    "hubs": {
+      "roi": {
+        "label": "ROI alətləri",
+        "channels": "Kanalları müqayisə et",
+        "channelsHint": "Hər kanala xərclədiyiniz və gətirdiyi satış — hansı kanal pul qazandırır.",
+        "campaign": "Reklam kampaniyası",
+        "campaignHint": "Bir kampaniyanın nəticəsi: yeni müştəri, influencer haqqı, çatım və 1000 baxışın qiyməti."
+      },
+      "sezon": {
+        "label": "Sezon alətləri",
+        "forecast": "Satış proqnozu",
+        "forecastHint": "12 ay üçün satış, işçi və ərzaq büdcəsi — sezonun formasına görə.",
+        "calendar": "Kampaniya təqvimi",
+        "calendarHint": "Seçdiyiniz aylar üçün bayram və mövsüm kampaniyaları (AI)."
+      },
+      "sikayet": {
+        "label": "Şikayət alətləri",
+        "triage": "Tək şikayət",
+        "triageHint": "Növü, ciddiliyi, kim həll edir və neçə saata cavab vermək lazımdır.",
+        "reply": "Cavab yaz",
+        "replyHint": "Google, Instagram və ya WhatsApp üçün 3 tonda hazır cavab.",
+        "batch": "Toplu təhlil",
+        "batchHint": "3–30 şikayəti birlikdə: hansı mövzu təkrarlanır, nədən başlamalı."
+      },
+      "audit": {
+        "label": "Restoran yoxlaması",
+        "guest": "Qonaq gözü ilə",
+        "guestHint": "Keyfiyyət, servis, təmizlik və komanda — 35 sual, 1-5 bal.",
+        "business": "Biznesin 6 sahəsi",
+        "businessHint": "Maliyyə, mətbəx, komanda, qonaq təcrübəsi, onlayn görünüş və risklər."
       }
     }
   },
@@ -7178,7 +7249,8 @@
       "categories": {
         "quality": "Keyfiyyət",
         "service": "Servis",
-        "cleanliness": "Təmizlik"
+        "cleanliness": "Təmizlik",
+        "people": "İnsan (komanda)"
       },
       "submit": "KST Auditimi Yarat",
       "submitting": "AI fikirləşir...",
@@ -7215,7 +7287,12 @@
         "T7": "Kondisioner/havalandırma işləyir",
         "T8": "Gizli toz/kir yoxdur",
         "T9": "Bakteriya yoxlaması müntəzəm",
-        "T10": "AQTA/sanitar standartlara uyğun"
+        "T10": "AQTA/sanitar standartlara uyğun",
+        "I1": "İşçilər işə vaxtında gəlir, növbə planı əvvəlcədən bəllidir",
+        "I2": "Yeni işçi ilk günlərdə təcrübəli işçinin yanında öyrədilir",
+        "I3": "İşçilər qonağa menyunu və yeməyin tərkibini izah edə bilir",
+        "I4": "Komanda içində mübahisə qonağın gözü önündə olmur",
+        "I5": "Yaxşı işləyən işçi təşəkkür və ya mükafat görür"
       }
     },
     "marka": {
@@ -7419,6 +7496,136 @@
         "portionUnit": "porsiya",
         "sheetName": "Yemek Xerci"
       }
+    },
+    "qonaqAnketi": {
+      "back": "Bütün alətlər",
+      "title": "Qonaq anketi",
+      "subtitle": "Qısa anket hazırlayın, cavabları buraya yapışdırın — bal, NPS və şübhəli cavablar kodla hesablanır.",
+      "tabsLabel": "Qonaq anketi",
+      "tabBuild": "Anket hazırla",
+      "tabBuildHint": "Keyfiyyət, servis, təmizlik və komanda üzrə 8 sual + tövsiyə sualı. Çap edin və ya mətni WhatsApp / Google Forms-a köçürün.",
+      "tabCheck": "Cavabları yoxla",
+      "tabCheckHint": "Hər cavabı bir sətirdə yapışdırın: 8 bal (1-5), tövsiyə balı (0-10), istəsəniz doldurma saniyəsi.",
+      "restaurantName": "Restoranın adı",
+      "restaurantPlaceholder": "məs. Bizim Kafe",
+      "surveyIntro": "{name} — fikriniz bizim üçün vacibdir. Anket 1 dəqiqə çəkir.",
+      "surveyIntroNoName": "Fikriniz bizim üçün vacibdir. Anket 1 dəqiqə çəkir.",
+      "scaleNote": "1 = çox pis, 5 = əla",
+      "lowReason": "3 və ya aşağı bal verdinizsə, səbəbini qısaca yazın:",
+      "npsQuestion": "Bizi dostunuza və ya ailənizə tövsiyə etmə ehtimalınız nə qədərdir? (0 = heç, 10 = mütləq)",
+      "openBest": "Ən çox nə xoşunuza gəldi?",
+      "openFix": "Nəyi düzəltməyimizi istərdiniz?",
+      "thanks": "Təşəkkür edirik!",
+      "print": "Çap et",
+      "copyText": "Mətni kopyala",
+      "copied": "Kopyalandı",
+      "groups": {
+        "quality": "Keyfiyyət",
+        "service": "Servis",
+        "cleanliness": "Təmizlik",
+        "people": "Komanda"
+      },
+      "questions": {
+        "q1": "Yeməyin dadı necə idi?",
+        "q2": "Porsiya və təqdimat qiymətinə dəyərdimi?",
+        "q3": "Sifariş və yemək nə qədər tez gəldi?",
+        "q4": "İşçilər nə qədər nəzakətli və diqqətli idi?",
+        "q5": "Masa, qab-qacaq və zal nə qədər təmiz idi?",
+        "q6": "Tualet nə qədər təmiz idi?",
+        "q7": "İşçilər suallarınıza aydın cavab verə bildimi?",
+        "q8": "Komandanın ümumi əhval-ruhiyyəsi necə idi?"
+      },
+      "pasteLabel": "Cavablar (hər sətir bir anket)",
+      "pastePlaceholder": "5,4,5,4,5,5,4,4,9,120\n3,4,4,3,5,4,4,3,7,95",
+      "loadSample": "Nümunəni yüklə",
+      "clear": "Təmizlə",
+      "perfectLabel": "«Hamısı 5 + tövsiyə 10» xəbərdarlıq həddi (%)",
+      "perfectHint": "DK təcrübə həddi — öz həddinizi yazın. Bu paydan çox «əla» anket çox vaxt işçinin qonaq adından doldurduğunu göstərir.",
+      "analyse": "Yoxla",
+      "skipped": "Oxunmayan sətirlər: {lines}",
+      "responses": "Cavab sayı",
+      "notReliable": "Hələ {min}-dan az cavab var — nəticəyə ehtiyatla baxın.",
+      "overall": "Ümumi bal",
+      "nps": "Tövsiyə balı (NPS)",
+      "npsHint": "Tövsiyə edənlər {promoters}% − etməyənlər {detractors}%",
+      "perfect": "«Hamısı 5 + tövsiyə 10»",
+      "perfectWarn": "Diqqət: anketlərin {pct}%-i tam «əla» — həddiniz {limit}%. Anketləri kim və necə doldurduğunu yoxlayın.",
+      "perfectOk": "Normal görünür (həddiniz {limit}%).",
+      "rushed": "90 saniyədən tez doldurulan",
+      "rushedWarn": "Bu anketlərə diqqətlə baxın — tələsik doldurulub.",
+      "noTime": "Saniyə sütunu yoxdur",
+      "weakTitle": "Ən çox 3 və aşağı bal alan suallar",
+      "weakItem": "cavabların {pct}%-i 3 və aşağı · orta {avg}",
+      "noWeak": "3 və aşağı bal yoxdur.",
+      "empty": "Heç bir düzgün sətir tapılmadı. Formatı yoxlayın: 8 bal, tövsiyə balı, istəsəniz saniyə.",
+      "tier": "ŞAGİRD"
+    },
+    "sikayetForm": {
+      "complaintText": "Şikayət mətni",
+      "complaintTextPlaceholder": "Müştərinin şikayətini buraya yapışdırın...",
+      "complaintLanguage": "Şikayət dili",
+      "responseLanguage": "Cavab dili",
+      "restaurantName": "Restoran adı (opsional)",
+      "complaintType": "Şikayət növü",
+      "submitButton": "Cavab Yarat",
+      "submitting": "AI cavab yaradır...",
+      "minLength": "Şikayət ən az 10 simvol olmalıdır",
+      "maxLength": "Şikayət maksimum 2000 simvol ola bilər",
+      "types": {
+        "food": "Yemək",
+        "service": "Xidmət",
+        "price": "Qiymət",
+        "cleanliness": "Təmizlik",
+        "other": "Digər"
+      },
+      "langs": {
+        "az": "Azərbaycan",
+        "en": "English",
+        "tr": "Türkçe",
+        "ru": "Русский"
+      },
+      "compensation": "Nə təklif edirsiniz?",
+      "compensationHint": "Seçməsəniz, cavab yalnız üzr və həll yazır — heç bir endirim və ya hədiyyə vəd etmir.",
+      "compensationDetail": "Təklifin dəqiq mətni (opsional)",
+      "compensationDetailPlaceholder": "məs. növbəti sifarişə 10% endirim",
+      "compensations": {
+        "none": "Heç nə — yalnız üzr və həll",
+        "discount": "Növbəti gəlişə endirim",
+        "treat": "İkram (desert, içki)",
+        "redo": "Yeməyi yenidən hazırlamaq",
+        "refund": "Pulu geri qaytarmaq"
+      }
+    },
+    "sikayetResult": {
+      "summaryTitle": "Xülasə",
+      "total": "Cəmi şikayət",
+      "topCat": "Əsas kateqoriya",
+      "sentiment": "Yüngüllük balı (100 = hamısı yüngül)",
+      "urgency": "Təcililik",
+      "urgencyLevels": {
+        "low": "Aşağı",
+        "medium": "Orta",
+        "high": "Yüksək",
+        "critical": "Kritik"
+      },
+      "catsTitle": "Kateqoriya Analizi",
+      "rootCause": "Kök səbəb",
+      "fix": "Həll",
+      "patternsTitle": "Təkrarlanan mövzular",
+      "freq": "Tezlik",
+      "impact": "Təsir",
+      "planTitle": "Həll Planı",
+      "priorities": {
+        "immediate": "Dərhal",
+        "this-week": "Bu həftə",
+        "this-month": "Bu ay"
+      },
+      "expected": "Gözlənilən nəticə",
+      "templatesTitle": "Cavab Şablonları",
+      "copyBtn": "Kopyala",
+      "copied": "Kopyalandı!",
+      "redo": "Yenidən Analiz",
+      "next": "Növbəti Alət"
     }
   },
   "dashboardInbox": {

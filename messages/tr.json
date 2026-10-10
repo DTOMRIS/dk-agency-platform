@@ -655,6 +655,35 @@
             "tag": "Operasyon"
           }
         }
+      },
+      "scenario": {
+        "breakevenLabel": "Başabaş satış",
+        "breakevenAbove": "Mevcut satış başabaşın {value} üstünde",
+        "breakevenBelow": "Başabaşa ulaşmak için ayda {value} daha fazla satış gerekiyor",
+        "breakevenImpossible": "Yemek maliyeti satışa eşit ya da fazla — bu fiyatlarla başabaş yok",
+        "breakevenNote": "Satışla yalnız yemek ve ambalaj artar; maaş, kira ve diğerleri her durumda ödenir.",
+        "title": "Ya böyle olursa?",
+        "subtitle": "Kaydırıcıları oynatın — net kârın nasıl değiştiğini görün.",
+        "sliders": {
+          "salesGrowth": "Satış değişirse",
+          "foodCut": "Yemek maliyeti düşerse",
+          "fixedCut": "Diğer giderler düşerse"
+        },
+        "scenarioNet": "Yeni net kâr",
+        "scenarioDelta": "Fark",
+        "perMonth": "aylık",
+        "aiTitle": "AI yorumu",
+        "aiBody": "Rakamlarınıza bakıp bu ay ne yapmanız gerektiğini sade dille yazar.",
+        "aiCta": "AI yorumunu al",
+        "aiLoading": "Hazırlanıyor…",
+        "aiUsta": "AI yorumu USTA üyeler içindir.",
+        "aiUstaLink": "Paketlere bak",
+        "errors": {
+          "rate-limited": "10 dakikada 3 istek sınırı doldu. Biraz sonra tekrar deneyin.",
+          "validation": "Satış ve giderleri kontrol edin.",
+          "missing-key": "AI hizmeti şu an kullanılamıyor.",
+          "ai-failed": "AI yanıt veremedi. Tekrar deneyin."
+        }
       }
     },
     "staffRetention": {
@@ -2032,8 +2061,8 @@
       "back_to_tools": "Tüm araçlar",
       "remove_item": "Öğeyi sil",
       "load_demo": "Test verisi",
-      "avg_cm": "Ortalama CM",
-      "avg_mix": "Ortalama Mix %",
+      "avg_cm": "Ortalama kazanç (satışa göre ağırlıklı)",
+      "avg_mix": "Popülerlik eşiği (satış payı)",
       "item": "Öğe",
       "price": "Fiyat",
       "cost": "Maliyet",
@@ -2043,12 +2072,13 @@
       "plowhorse_hint": "Çok satılıyor, porsiyon kazancı düşük",
       "puzzle_hint": "Az satılıyor, porsiyon kazancı yüksek",
       "dog_hint": "Az satılıyor, porsiyon kazancı düşük",
-      "ai_tips_subtitle": "DeepSeek matrisi pratik adımlara çevirir.",
+      "ai_tips_subtitle": "Sonuca bakıp her grup için pratik adımlar yazar. Her basış aylık limitten 1 kullanım sayılır.",
       "ai_loading": "YZ önerisi yükleniyor...",
       "ai_error": "YZ önerisi yüklenmedi — tekrar deneyin",
       "retry": "Tekrar dene",
       "tier_required_title": "Bu araç KALFA üyeliği gerektirir",
-      "tier_required_body": "Menü Analizi gerçek menü mühendisliği ve YZ önerilerini birleştirdiği için KALFA katmanındadır."
+      "tier_required_body": "Menü Analizi gerçek menü mühendisliği ve YZ önerilerini birleştirdiği için KALFA katmanındadır.",
+      "ai_cta": "AI önerisi al"
     },
     "roiCalculator": {
       "title": "ROI Hesaplayıcı",
@@ -2082,7 +2112,7 @@
       "total_cac": "Toplam CAC",
       "evaluation": "Değerlendirme",
       "days": "gün",
-      "benchmark_roi": ">100% sağlıklı",
+      "benchmark_roi": "%0'ın üstü = reklam kendini ödüyor",
       "benchmark_roas": ">3x sağlıklı",
       "benchmark_ltv": "≥3:1 sağlıklı",
       "benchmark_payback": "<180 gün ideal",
@@ -2107,7 +2137,10 @@
         "validation": "Kanal rakamlarını kontrol edip tekrar deneyin.",
         "missing-key": "AI anahtarı sunucuda kurulu değil.",
         "ai-failed": "AI analizi yüklenmedi — tekrar deneyin."
-      }
+      },
+      "margin_pct": "Satıştan kalan pay (%)",
+      "margin_hint": "Yemek ve ambalaj maliyeti düşüldükten sonra her satıştan kalan kısım. Örnek: yemek maliyeti %35 → 65. Kendi rakamınızı yazın.",
+      "breakeven_roas": "başabaş: {value}x"
     },
     "plSimulator": {
       "tierBadge": "USTA",
@@ -2343,7 +2376,7 @@
     },
     "sezonAnalitikasi": {
       "title": "Sezon Analitiği",
-      "subtitle": "Azerbaycan bayramları, kurort sezonları ve Ramazan davranışına göre 12 aylık cash-flow, işçilik ve stok bütçesi tahmini.",
+      "subtitle": "AZ takvimi, tatil sezonu ve Ramazan'ı dikkate alarak 12 aylık satış, personel gideri ve gıda bütçesi tahmini.",
       "tier": "KALFA",
       "back_to_tools": "Tüm araçlar",
       "inputs": {
@@ -2408,12 +2441,12 @@
         "weak": "En riskli 3 ay",
         "strong": "En güçlü 3 ay"
       },
-      "ramadanNote": "Ramazan penceresinde gündüz trafiği yaklaşık %20 düşer, iftar akşamları yaklaşık %35 artar. Aylık toplam nötr kalabilir, ama personel ve stok saatlere göre planlanmalıdır.",
+      "ramadanNote": "Ramazan'da gündüz misafir azalır, iftar saatlerinde artar. Aylık satış pek değişmeyebilir ama vardiyaları ve alımları saatlere göre planlayın. Ramazan tarihleri yaklaşıktır (1 gün kayabilir).",
       "deadMonthWarning": "Ölü ay: peşin alımları azaltın, vardiyaları kısaltın ve yerel kampanya hazırlayın.",
       "ahilikQuote": "Ahilik sözü: usta bolluk ayında yedek ayırır, dar ayda düzeni korur.",
       "cta": "Tahmini güncelle",
       "tier_required_title": "Bu araç KALFA üyeliği gerektirir",
-      "tier_required_body": "Sezon Analitiği cash-flow tahmini, personel ve stok planlamasını birleştirdiği için KALFA katmanındadır.",
+      "tier_required_body": "Sezon Analitiği satış tahminini, personel ve gıda planlamasını birleştirdiği için KALFA seviyesindedir.",
       "upgrade_cta": "KALFA'ya geç"
     },
     "reklamRoi": {
@@ -2489,6 +2522,10 @@
         },
         "validation": {
           "channelBudget": "En az bir kanal için bütçe girin."
+        },
+        "marginPercent": {
+          "label": "Satıştan kalan pay (%)",
+          "hint": "Yemek ve ambalaj maliyeti düşüldükten sonra her satıştan kalan kısım. Örnek: yemek maliyeti %35 → 65."
         }
       },
       "results": {
@@ -2504,7 +2541,8 @@
         "tableTitle": "Kanal ROI tablosu",
         "bestChannel": "En iyi kanal",
         "worstChannel": "En zayıf kanal",
-        "ltvFormulaNote": "LTV basit tahmindir: AOV × (1 / (1 − tekrar alış yüzdesi))."
+        "ltvFormulaNote": "LTV basit tahmindir: ortalama hesap × kalan pay × (1 / (1 − tekrar alım oranı)).",
+        "breakevenRoas": "başabaş: {value}x — altında reklam para kaybettirir"
       },
       "table": {
         "channel": "Kanal",
@@ -3197,6 +3235,39 @@
         "missing-key": "YZ anahtarı aktif değil",
         "ai-failed": "YZ analizi alınmadı — tekrar deneyin",
         "ai-output-invalid": "YZ yanıtı geçersiz formatta geldi"
+      },
+      "sla": "Yanıt süresi: misafire {hours} saat içinde dönün (ciddiyete göre: kritik 1 · yüksek 4 · orta 24 · düşük 48 saat)."
+    },
+    "hubs": {
+      "roi": {
+        "label": "ROI araçları",
+        "channels": "Kanalları karşılaştır",
+        "channelsHint": "Her kanala harcadığınız ve getirdiği satış — hangi kanal para kazandırıyor.",
+        "campaign": "Reklam kampanyası",
+        "campaignHint": "Bir kampanyanın sonucu: yeni müşteri, influencer ücreti, erişim ve 1000 gösterim maliyeti."
+      },
+      "sezon": {
+        "label": "Sezon araçları",
+        "forecast": "Satış tahmini",
+        "forecastHint": "Sezonun şekline göre 12 aylık satış, personel ve gıda bütçesi.",
+        "calendar": "Kampanya takvimi",
+        "calendarHint": "Seçtiğiniz aylar için bayram ve sezon kampanyaları (AI)."
+      },
+      "sikayet": {
+        "label": "Şikayet araçları",
+        "triage": "Tek şikayet",
+        "triageHint": "Türü, ciddiyeti, kimin çözeceği ve kaç saatte yanıt verileceği.",
+        "reply": "Yanıt yaz",
+        "replyHint": "Google, Instagram veya WhatsApp için 3 tonda hazır yanıt.",
+        "batch": "Toplu analiz",
+        "batchHint": "3–30 şikayet birlikte: ne tekrarlanıyor, nereden başlamalı."
+      },
+      "audit": {
+        "label": "Restoran kontrolü",
+        "guest": "Misafir gözüyle",
+        "guestHint": "Kalite, servis, temizlik ve ekip — 35 soru, 1–5 puan.",
+        "business": "İşletmenin 6 alanı",
+        "businessHint": "Finans, mutfak, ekip, misafir deneyimi, çevrimiçi görünürlük ve riskler."
       }
     }
   },
@@ -7178,7 +7249,8 @@
       "categories": {
         "quality": "Kalite",
         "service": "Servis",
-        "cleanliness": "Temizlik"
+        "cleanliness": "Temizlik",
+        "people": "İnsan (ekip)"
       },
       "submit": "KST Denetimimi Oluştur",
       "submitting": "AI düşünüyor...",
@@ -7215,7 +7287,12 @@
         "T7": "Klima/havalandırma çalışıyor",
         "T8": "Gizli toz/kir yok",
         "T9": "Düzenli bakteri kontrolü",
-        "T10": "Sanitasyon standartlarına uygun"
+        "T10": "Sanitasyon standartlarına uygun",
+        "I1": "Çalışanlar işe zamanında gelir, vardiya planı önceden bellidir",
+        "I2": "Yeni çalışan ilk günlerde deneyimli birinin yanında öğrenir",
+        "I3": "Çalışanlar misafire menüyü ve yemeğin içeriğini anlatabilir",
+        "I4": "Ekip içi tartışmalar misafirin gözü önünde olmaz",
+        "I5": "İyi çalışan teşekkür ya da ödül görür"
       }
     },
     "marka": {
@@ -7419,6 +7496,136 @@
         "portionUnit": "porsiyon",
         "sheetName": "Yemek Maliyeti"
       }
+    },
+    "qonaqAnketi": {
+      "back": "Tüm araçlar",
+      "title": "Misafir anketi",
+      "subtitle": "Kısa bir anket hazırlayın, cevapları buraya yapıştırın — puan, NPS ve şüpheli cevaplar otomatik hesaplanır.",
+      "tabsLabel": "Misafir anketi",
+      "tabBuild": "Anket hazırla",
+      "tabBuildHint": "Kalite, servis, temizlik ve ekip üzerine 8 soru + tavsiye sorusu. Yazdırın ya da metni WhatsApp / Google Forms'a kopyalayın.",
+      "tabCheck": "Cevapları kontrol et",
+      "tabCheckHint": "Her cevap bir satır: 8 puan (1–5), tavsiye puanı (0–10), isterseniz doldurma süresi (saniye).",
+      "restaurantName": "Mekânın adı",
+      "restaurantPlaceholder": "örn. Bizim Kafe",
+      "surveyIntro": "{name} — görüşünüz bizim için önemli. Anket 1 dakika sürer.",
+      "surveyIntroNoName": "Görüşünüz bizim için önemli. Anket 1 dakika sürer.",
+      "scaleNote": "1 = çok kötü, 5 = mükemmel",
+      "lowReason": "3 ya da altı verdiyseniz kısaca nedenini yazın:",
+      "npsQuestion": "Bizi bir arkadaşınıza ya da ailenize tavsiye etme olasılığınız nedir? (0 = hiç, 10 = kesinlikle)",
+      "openBest": "En çok neyi beğendiniz?",
+      "openFix": "Neyi düzeltmemizi istersiniz?",
+      "thanks": "Teşekkür ederiz!",
+      "print": "Yazdır",
+      "copyText": "Metni kopyala",
+      "copied": "Kopyalandı",
+      "groups": {
+        "quality": "Kalite",
+        "service": "Servis",
+        "cleanliness": "Temizlik",
+        "people": "Ekip"
+      },
+      "questions": {
+        "q1": "Yemeğin tadı nasıldı?",
+        "q2": "Porsiyon ve sunum fiyatına değdi mi?",
+        "q3": "Sipariş ve yemek ne kadar hızlı geldi?",
+        "q4": "Çalışanlar ne kadar nazik ve ilgiliydi?",
+        "q5": "Masa, tabaklar ve salon ne kadar temizdi?",
+        "q6": "Tuvalet ne kadar temizdi?",
+        "q7": "Çalışanlar sorularınıza net cevap verebildi mi?",
+        "q8": "Ekibin genel havası nasıldı?"
+      },
+      "pasteLabel": "Cevaplar (her satır bir anket)",
+      "pastePlaceholder": "5,4,5,4,5,5,4,4,9,120\n3,4,4,3,5,4,4,3,7,95",
+      "loadSample": "Örneği yükle",
+      "clear": "Temizle",
+      "perfectLabel": "«Hepsi 5 + tavsiye 10» uyarı eşiği (%)",
+      "perfectHint": "DK tecrübe eşiği — kendi eşiğinizi yazın. Çok fazla «mükemmel» anket çoğu zaman çalışanın misafir yerine doldurduğunu gösterir.",
+      "analyse": "Kontrol et",
+      "skipped": "Okunamayan satırlar: {lines}",
+      "responses": "Cevap sayısı",
+      "notReliable": "Henüz {min}'dan az cevap var — sonuca dikkatle bakın.",
+      "overall": "Genel puan",
+      "nps": "Tavsiye puanı (NPS)",
+      "npsHint": "Tavsiye edenler %{promoters} − etmeyenler %{detractors}",
+      "perfect": "«Hepsi 5 + tavsiye 10»",
+      "perfectWarn": "Dikkat: anketlerin %{pct}'i tamamen «mükemmel» — eşiğiniz %{limit}. Anketleri kimin ve nasıl doldurduğunu kontrol edin.",
+      "perfectOk": "Normal görünüyor (eşiğiniz %{limit}).",
+      "rushed": "90 saniyeden hızlı doldurulan",
+      "rushedWarn": "Bu anketlere dikkatle bakın — aceleyle doldurulmuş.",
+      "noTime": "Saniye sütunu yok",
+      "weakTitle": "En sık 3 ve altı alan sorular",
+      "weakItem": "cevapların %{pct}'i 3 ve altı · ortalama {avg}",
+      "noWeak": "3 ve altı puan yok.",
+      "empty": "Geçerli satır bulunamadı. Biçim: 8 puan, tavsiye puanı, isterseniz saniye.",
+      "tier": "ÇIRAK"
+    },
+    "sikayetForm": {
+      "complaintText": "Şikayet metni",
+      "complaintTextPlaceholder": "Müşteri şikayetini buraya yapıştırın...",
+      "complaintLanguage": "Şikayet dili",
+      "responseLanguage": "Yanıt dili",
+      "restaurantName": "Restoran adı (isteğe bağlı)",
+      "complaintType": "Şikayet türü",
+      "submitButton": "Yanıt Oluştur",
+      "submitting": "AI yanıt oluşturuyor...",
+      "minLength": "Şikayet en az 10 karakter olmalıdır",
+      "maxLength": "Şikayet en fazla 2000 karakter olabilir",
+      "types": {
+        "food": "Yemek",
+        "service": "Hizmet",
+        "price": "Fiyat",
+        "cleanliness": "Temizlik",
+        "other": "Diğer"
+      },
+      "langs": {
+        "az": "Azərbaycan",
+        "en": "English",
+        "tr": "Türkçe",
+        "ru": "Русский"
+      },
+      "compensation": "Ne teklif ediyorsunuz?",
+      "compensationHint": "Seçmezseniz yanıt yalnız özür ve çözüm yazar — indirim ya da hediye vaat etmez.",
+      "compensationDetail": "Teklifin tam metni (isteğe bağlı)",
+      "compensationDetailPlaceholder": "örn. sonraki siparişe %10 indirim",
+      "compensations": {
+        "none": "Hiçbir şey — yalnız özür ve çözüm",
+        "discount": "Sonraki ziyarete indirim",
+        "treat": "İkram (tatlı, içecek)",
+        "redo": "Yemeği yeniden hazırlamak",
+        "refund": "Parayı iade etmek"
+      }
+    },
+    "sikayetResult": {
+      "summaryTitle": "Özet",
+      "total": "Toplam şikayet",
+      "topCat": "Ana kategori",
+      "sentiment": "Hafiflik puanı (100 = hepsi hafif)",
+      "urgency": "Aciliyet",
+      "urgencyLevels": {
+        "low": "Düşük",
+        "medium": "Orta",
+        "high": "Yüksek",
+        "critical": "Kritik"
+      },
+      "catsTitle": "Kategori Analizi",
+      "rootCause": "Kök neden",
+      "fix": "Çözüm",
+      "patternsTitle": "Tekrarlanan konular",
+      "freq": "Sıklık",
+      "impact": "Etki",
+      "planTitle": "Eylem Planı",
+      "priorities": {
+        "immediate": "Hemen",
+        "this-week": "Bu hafta",
+        "this-month": "Bu ay"
+      },
+      "expected": "Beklenen sonuç",
+      "templatesTitle": "Yanıt Şablonları",
+      "copyBtn": "Kopyala",
+      "copied": "Kopyalandı!",
+      "redo": "Tekrar Analiz",
+      "next": "Sonraki Araç"
     }
   },
   "dashboardInbox": {

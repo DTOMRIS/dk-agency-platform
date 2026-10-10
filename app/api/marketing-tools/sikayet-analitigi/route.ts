@@ -6,6 +6,12 @@ import { callAIJson, isAIAbortError } from '@/lib/ai-router';
 import { db } from '@/lib/db';
 import { marketingToolRuns } from '@/lib/db/schema';
 import { eq, and, desc } from 'drizzle-orm';
+import {
+  computeComplaintStats,
+  COMPLAINT_CATEGORIES,
+  COMPLAINT_SEVERITIES,
+  type ComplaintCategoryKey,
+} from '@/lib/marketing-tools/complaint-stats';
 
 export const maxDuration = 60;
 
@@ -24,18 +30,17 @@ const InputSchema = z.object({
   locale: z.enum(['az', 'en', 'tr', 'ru']).default('az'),
 });
 
-const OutputSchema = z.object({
-  summary: z.object({
-    totalComplaints: z.number(),
-    topCategory: z.string(),
-    sentimentScore: z.number().min(0).max(100),
-    urgencyLevel: z.enum(['low', 'medium', 'high', 'critical']),
-  }),
-  categories: z.array(z.object({
-    name: z.string(),
-    count: z.number(),
-    percentage: z.number(),
-    examples: z.array(z.string()),
+// TASK-0523: the AI labels each complaint and writes advice; counts, shares, top category,
+// urgency and the score are code (lib/marketing-tools/complaint-stats.ts). The unsourced
+// «each complaint = 26 silent unhappy customers» rule and the invented Ahilik quote are gone.
+const AiOutputSchema = z.object({
+  labels: z.array(z.object({
+    n: z.number().int(),
+    category: z.enum(COMPLAINT_CATEGORIES),
+    severity: z.enum(COMPLAINT_SEVERITIES),
+  })),
+  categoryNotes: z.array(z.object({
+    category: z.enum(COMPLAINT_CATEGORIES),
     rootCause: z.string(),
     fixAction: z.string(),
   })),
@@ -50,51 +55,70 @@ const OutputSchema = z.object({
     expectedResult: z.string(),
   })),
   responseTemplates: z.array(z.object({
-    forCategory: z.string(),
+    category: z.enum(COMPLAINT_CATEGORIES),
     template: z.string(),
   })),
-  ahilikQuote: z.string(),
 });
+
+const CATEGORY_LABEL: Record<string, Record<ComplaintCategoryKey, string>> = {
+  az: { food_quality: 'Yemək keyfiyyəti', wait_speed: 'Gözləmə / sürət', service_staff: 'Xidmət / personal', cleanliness: 'Təmizlik', price_bill: 'Qiymət / hesab', delivery: 'Çatdırılma', atmosphere: 'Mühit (səs, isti, yer)', other: 'Digər' },
+  ru: { food_quality: 'Качество еды', wait_speed: 'Ожидание / скорость', service_staff: 'Обслуживание / персонал', cleanliness: 'Чистота', price_bill: 'Цена / счёт', delivery: 'Доставка', atmosphere: 'Атмосфера (шум, жара, место)', other: 'Другое' },
+  en: { food_quality: 'Food quality', wait_speed: 'Waiting / speed', service_staff: 'Service / staff', cleanliness: 'Cleanliness', price_bill: 'Price / bill', delivery: 'Delivery', atmosphere: 'Atmosphere (noise, heat, space)', other: 'Other' },
+  tr: { food_quality: 'Yemek kalitesi', wait_speed: 'Bekleme / hız', service_staff: 'Hizmet / personel', cleanliness: 'Temizlik', price_bill: 'Fiyat / hesap', delivery: 'Teslimat', atmosphere: 'Ortam (ses, sıcak, yer)', other: 'Diğer' },
+};
+
+const OUTPUT_LANGUAGE: Record<string, string> = {
+  az: 'Azərbaycan dilində (düzgün hərflərlə: ə, ı, ö, ü, ç, ş, ğ)',
+  ru: 'на русском языке',
+  en: 'in English',
+  tr: 'Türkçe',
+};
 
 // ── AI PROMPT ───────────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `Sen bir HoReCa musteri deneyimi analitiksisen. Restoran sahibi sene musteri sikayetlerini verir, senin isin bunlari tehlil etmekdir.
+function buildSystemPrompt(locale: string): string {
+  return `Sən Bakıda restoranlara qonaq şikayətlərini təhlil etməkdə kömək edən təcrübəli məsləhətçisən.
 
-VEZIVEN:
-1. Sikayetleri kateqoriyalara bol (yemek keyfiyyeti, servis surati, temizlik, qiymet, atmosfer, diger)
-2. Her kateqoriya ucun: say, faiz, numune sikayetler, kok sebeb, hell addimi
-3. Pattern-ler tap: tekrarlanan temalar, vaxt pattern-i, menbe pattern-i
-4. Prioritetli hell plani yaz (immediate / this-week / this-month)
-5. Her kateqoriya ucun cavab sablonu ver (restoran sahibi kopyalayib istifade ede biler)
-6. Ahilik enenelerinden hikmet sozu
+Vəzifə:
+1. labels — HƏR şikayət üçün (n = şikayətin nömrəsi): category və severity.
+   category yalnız bunlardan biri: ${COMPLAINT_CATEGORIES.join(', ')}
+   severity: low (narahatlıq), medium (pis təcrübə), high (qonaq itirilir / ictimai şikayət), critical (sağlamlıq, təhlükəsizlik, yad cisim, zəhərlənmə).
+2. categoryNotes — rast gəlinən hər kateqoriya üçün kök səbəb (rootCause) və konkret həll addımı (fixAction).
+3. patterns — təkrarlanan mövzular (vaxt, mənbə, yemək adı). frequency sözlə yazılır (məs. «5 şikayətdən 3-ü»); rəqəmləri şikayətlərdən say, uydurma.
+4. actionPlan — prioritetli plan (immediate / this-week / this-month).
+5. responseTemplates — rast gəlinən kateqoriyalar üçün qonağa cavab şablonu. Kompensasiya (endirim, kupon, pulsuz yemək, geri ödəmə) VƏD ETMƏ — yalnız üzr + həll + əlaqəyə dəvət.
 
-MUHUM:
-- "26 sessiz narazı musteri" qaydasini xatırlat — her sikayet 26 sessiz narazini temsil edir
-- Suclama yox, hell yonumlu ton
-- Konkret, olculebilen addimlar tovsiye et
-- Cavab sablonlari hormetli, empatik ve hell-yonumlu olsun
+Qaydalar: günahlandırmadan, həll yönümlü, sadə dil; statistika, «qayda» və ya sitat uydurma.
+Bütün mətn ${OUTPUT_LANGUAGE[locale] ?? OUTPUT_LANGUAGE.az} olsun.
 
-Cavabi JSON formatinda ver:
+Cavabı YALNIZ JSON kimi ver:
 {
-  "summary": { "totalComplaints": 0, "topCategory": "", "sentimentScore": 0, "urgencyLevel": "" },
-  "categories": [{ "name": "", "count": 0, "percentage": 0, "examples": [], "rootCause": "", "fixAction": "" }],
+  "labels": [{ "n": 1, "category": "", "severity": "" }],
+  "categoryNotes": [{ "category": "", "rootCause": "", "fixAction": "" }],
   "patterns": [{ "pattern": "", "frequency": "", "impact": "" }],
   "actionPlan": [{ "priority": "", "action": "", "expectedResult": "" }],
-  "responseTemplates": [{ "forCategory": "", "template": "" }],
-  "ahilikQuote": ""
+  "responseTemplates": [{ "category": "", "template": "" }]
 }`;
+}
+
+const PERIOD_LABEL: Record<string, string> = {
+  'last-week': 'son həftə',
+  'last-month': 'son ay',
+  'last-quarter': 'son 3 ay',
+  custom: 'seçilmiş dövr',
+};
 
 function buildUserPrompt(input: z.infer<typeof InputSchema>): string {
   const list = input.complaints.map((c, i) =>
     `${i + 1}. [${c.source}${c.date ? `, ${c.date}` : ''}] ${c.text}`
   ).join('\n');
 
-  return `RESTORAN: ${input.restaurantName}
-DOVRESI: ${input.period}
-SIKAYETLER (${input.complaints.length} eded):
+  return `Restoran: ${input.restaurantName}
+Dövr: ${PERIOD_LABEL[input.period] ?? input.period}
+Şikayətlər (${input.complaints.length} ədəd):
 ${list}
 
-JSON formatinda tam tehlil ver.`;
+JSON-u ver.`;
 }
 
 // ── POST ────────────────────────────────────────────────────────────
@@ -126,7 +150,7 @@ export async function POST(req: Request) {
 
     try {
       aiResult = await callAIJson<unknown>(
-        { system: SYSTEM_PROMPT, prompt: buildUserPrompt(input), maxTokens: 2500, temperature: 0.5, timeout: 55000 },
+        { system: buildSystemPrompt(input.locale), prompt: buildUserPrompt(input), maxTokens: 2500, temperature: 0.4, timeout: 50000, responseFormat: 'json_object' },
         { preferProvider: 'deepseek', toolSlug: 'sikayet-analitigi', userId: auth.userId, locale: input.locale },
       );
     } catch (aiErr) {
@@ -139,7 +163,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'ai-failed' }, { status: 502 });
     }
 
-    const parseResult = OutputSchema.safeParse(aiResult.data);
+    const parseResult = AiOutputSchema.safeParse(aiResult.data);
     if (!parseResult.success) {
       await db.update(marketingToolRuns)
         .set({ status: 'error', errorMessage: `Output validation: ${parseResult.error.message.slice(0, 400)}`, completedAt: new Date() })
@@ -147,15 +171,43 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'ai-output-invalid' }, { status: 502 });
     }
 
+    const ai = parseResult.data;
+    const stats = computeComplaintStats(
+      input.complaints.length,
+      ai.labels.map((l) => ({ index: l.n, category: l.category, severity: l.severity })),
+    );
+    const labels = CATEGORY_LABEL[input.locale] ?? CATEGORY_LABEL.az;
+    const notes = new Map(ai.categoryNotes.map((note) => [note.category, note]));
+    const result = {
+      summary: {
+        totalComplaints: stats.total,
+        topCategory: stats.topCategory ? labels[stats.topCategory] : '-',
+        sentimentScore: stats.lightnessScore,
+        urgencyLevel: stats.urgencyLevel,
+      },
+      categories: stats.categories.map((cat) => ({
+        name: labels[cat.key],
+        count: cat.count,
+        percentage: cat.percentage,
+        examples: cat.indexes.slice(0, 2).map((n) => input.complaints[n - 1].text.slice(0, 140)),
+        rootCause: notes.get(cat.key)?.rootCause ?? '',
+        fixAction: notes.get(cat.key)?.fixAction ?? '',
+      })),
+      patterns: ai.patterns,
+      actionPlan: ai.actionPlan,
+      responseTemplates: ai.responseTemplates.map((tmpl) => ({ forCategory: labels[tmpl.category], template: tmpl.template })),
+      ahilikQuote: '',
+    };
+
     await db.update(marketingToolRuns)
       .set({
-        outputData: parseResult.data as Record<string, unknown>,
+        outputData: result as Record<string, unknown>,
         status: 'success', aiProvider: aiResult.meta.provider,
         tokensUsed: aiResult.meta.tokensUsed, costAzn: aiResult.meta.costAzn, completedAt: new Date(),
       })
       .where(eq(marketingToolRuns.id, run.id));
 
-    return NextResponse.json({ success: true, data: parseResult.data, remainingRuns: access.remainingRuns });
+    return NextResponse.json({ success: true, data: result, remainingRuns: access.remainingRuns });
   } catch (err) {
     if (err instanceof z.ZodError) return NextResponse.json({ error: 'validation', issues: err.issues }, { status: 400 });
     console.error('[sikayet-analitigi] POST error:', err);

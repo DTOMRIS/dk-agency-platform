@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     'HoReCa biznesiniz üçün AI dəstəkli analiz və planlaşdırma alətləri: kampaniya, müştəri seqmenti və məzmun planlaması.',
 };
 
+// TASK-0523: the app body is dark (app/globals.css); the tool pages draw navy titles straight on it,
+// so «ROI Kalkulatoru», «Menyu Analitiği» … were near-invisible. A light surface for every tool page.
 export default function MarketinqLayout({ children }: { children: ReactNode }) {
-  return children;
+  return <div className="min-h-screen bg-slate-50">{children}</div>;
 }

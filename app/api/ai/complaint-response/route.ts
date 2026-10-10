@@ -8,6 +8,7 @@ import { marketingToolRuns } from '@/lib/db/schema';
 import {
   buildComplaintSystemPrompt,
   buildComplaintUserPrompt,
+  COMPENSATION_OPTIONS,
 } from '@/lib/ai/complaint-prompt-builder';
 
 export const maxDuration = 60;
@@ -36,6 +37,9 @@ const InputSchema = z.object({
   responseLang: z.enum(['az', 'en', 'tr', 'ru']).default('az'),
   restaurantName: z.string().max(100).optional(),
   complaintType: z.enum(['food', 'service', 'price', 'cleanliness', 'other']).default('other'),
+  // TASK-0523: compensation only when the owner picks it; default = apology + fix.
+  compensation: z.enum(COMPENSATION_OPTIONS).default('none'),
+  compensationDetail: z.string().trim().max(120).optional(),
 });
 
 const OutputSchema = z.object({

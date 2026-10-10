@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
-import { checkToolAccess } from '@/lib/marketing-gating';
+import { checkToolAccess, logToolRun } from '@/lib/marketing-gating';
 import { AI_MODELS } from '@/lib/ai-models';
 
 export type PLPeriod = 'weekly' | 'monthly' | 'yearly';
@@ -102,23 +102,25 @@ async function checkRateLimit(userId: number): Promise<boolean> {
 }
 
 function buildPrompt(input: PLAnalysisInput) {
-  return `Restoran P&L məlumatları (${input.period}):
-- Ümumi Satış: ${input.totalSales} AZN
-- COGS: ${input.cogs} AZN (${input.foodCostPercent}%)
+  // TASK-0523: plain Azerbaijani labels (no COGS / Prime Cost / Overhead / BEP jargon in the answer).
+  return `Restoranın gəlir-xərc rəqəmləri (${input.period === 'monthly' ? 'aylıq' : input.period === 'weekly' ? 'həftəlik' : 'illik'}):
+- Satış: ${input.totalSales} AZN
+- Yemək və qablaşdırma xərci: ${input.cogs} AZN (${input.foodCostPercent}%)
 - İşçi xərci: ${input.labor} AZN (${input.laborPercent}%)
-- Prime Cost: ${input.primeCost} AZN (${input.primeCostPercent}%)
-- Overhead: ${input.overhead} AZN
+- Yemək + işçi birlikdə: ${input.primeCost} AZN (${input.primeCostPercent}%)
+- Digər sabit xərclər (icarə, kommunal, reklam və s.): ${input.overhead} AZN
 - Xalis mənfəət: ${input.netProfit} AZN (${input.netProfitPercent}%)
-- Zərərsizlik nöqtəsi: ${input.breakevenSales} AZN
+- Başabaş satış (nə qazanc, nə zərər): ${input.breakevenSales} AZN
 
-Sənaye benchmarkları: Food Cost <=30%, Labor <=30%, Prime Cost <=60%, Net Profit >=5%.
+Başabaş belə hesablanıb: yalnız yemək və qablaşdırma satışla artır; işçi, icarə və digərləri hər halda ödənir.
+Təxmini ölçülər: yemək xərci ≤30%, işçi ≤30%, yemək + işçi ≤60%, xalis mənfəət ≥5%.
 
-Aşağıdakıları ver:
-1. ÜMUMİ QİYMƏTLƏNDİRMƏ: Bu rəqəmlər sağlamdırmı? 3-4 cümlə
-2. KRİTİK NÖQTƏLƏR: Ən böyük 2-3 problem, konkret faiz fərqi ilə
-3. DƏRHAL ADDIMLAR: Bu həftə/bu ay ediləcək 3-5 praktik addım
-4. ZƏRƏRSİZLİK ANALİZİ: Cari satış BEP-dən nə qədər uzaqdır, nə etmək lazımdır
-5. 3 AYLIQ HƏDƏF: Tövsiyələr tətbiq olunarsa xalis mənfəətin nə qədər arta biləcəyini ehtiyatlı hesabla`;
+Cavabı sadə Azərbaycan dilində yaz, ingiliscə termin işlətmə. Aşağıdakıları ver:
+1. ÜMUMİ VƏZİYYƏT: rəqəmlər sağlamdırmı? 3-4 cümlə
+2. ƏSAS PROBLEMLƏR: ən böyük 2-3 problem, konkret faiz fərqi ilə
+3. BU AY EDİLƏCƏKLƏR: 3-5 praktik addım
+4. BAŞABAŞ: cari satış başabaşdan nə qədər uzaqdır, nə etmək lazımdır
+5. 3 AYLIQ HƏDƏF: addımlar tətbiq olunarsa xalis mənfəət nə qədər arta bilər — ehtiyatlı hesabla`;
 }
 
 export async function getPLAIAnalysis(input: PLAnalysisInput): Promise<PLAnalysisResult> {
@@ -157,6 +159,7 @@ export async function getPLAIAnalysis(input: PLAnalysisInput): Promise<PLAnalysi
         ],
       }),
       cache: 'no-store',
+      signal: AbortSignal.timeout(30_000),
     });
 
     if (!response.ok) return { ok: false, error: 'ai-failed' };
@@ -166,6 +169,7 @@ export async function getPLAIAnalysis(input: PLAnalysisInput): Promise<PLAnalysi
     };
     const analysis = data.choices?.[0]?.message?.content?.trim();
     if (!analysis) return { ok: false, error: 'ai-failed' };
+    await logToolRun({ userId: auth.userId, toolSlug: 'pl-simulyatoru', input: { ...sanitized }, status: 'success' });
     return { ok: true, analysis: analysis.slice(0, 5000) };
   } catch {
     return { ok: false, error: 'ai-failed' };

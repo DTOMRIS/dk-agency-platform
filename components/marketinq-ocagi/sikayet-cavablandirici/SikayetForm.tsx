@@ -1,13 +1,16 @@
 'use client';
 
+import { useMessages } from 'next-intl';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { COMPENSATION_OPTIONS, type CompensationOption } from '@/lib/ai/complaint-prompt-builder';
 
 const COMPLAINT_TYPES = ['food', 'service', 'price', 'cleanliness', 'other'] as const;
 const LANGS = ['az', 'en', 'tr', 'ru'] as const;
 
-const copy: Record<Locale, {
+// TASK-0523: copy moved to messages/*.json → mqForms.sikayetForm (was an in-file locale map).
+type SikayetFormCopy = {
   complaintText: string;
   complaintTextPlaceholder: string;
   complaintLanguage: string;
@@ -20,63 +23,11 @@ const copy: Record<Locale, {
   maxLength: string;
   types: Record<string, string>;
   langs: Record<string, string>;
-}> = {
-  az: {
-    complaintText: 'Şikayət mətni',
-    complaintTextPlaceholder: 'Müştərinin şikayətini buraya yapışdırın...',
-    complaintLanguage: 'Şikayət dili',
-    responseLanguage: 'Cavab dili',
-    restaurantName: 'Restoran adı (opsional)',
-    complaintType: 'Şikayət növü',
-    submitButton: 'Cavab Yarat',
-    submitting: 'AI cavab yaradır...',
-    minLength: 'Şikayət ən az 10 simvol olmalıdır',
-    maxLength: 'Şikayət maksimum 2000 simvol ola bilər',
-    types: { food: 'Yemək', service: 'Xidmət', price: 'Qiymət', cleanliness: 'Təmizlik', other: 'Digər' },
-    langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
-  },
-  en: {
-    complaintText: 'Complaint text',
-    complaintTextPlaceholder: 'Paste the customer complaint here...',
-    complaintLanguage: 'Complaint language',
-    responseLanguage: 'Response language',
-    restaurantName: 'Restaurant name (optional)',
-    complaintType: 'Complaint type',
-    submitButton: 'Generate Response',
-    submitting: 'AI is generating responses...',
-    minLength: 'Complaint must be at least 10 characters',
-    maxLength: 'Complaint cannot exceed 2000 characters',
-    types: { food: 'Food', service: 'Service', price: 'Price', cleanliness: 'Cleanliness', other: 'Other' },
-    langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
-  },
-  tr: {
-    complaintText: 'Şikayet metni',
-    complaintTextPlaceholder: 'Müşteri şikayetini buraya yapıştırın...',
-    complaintLanguage: 'Şikayet dili',
-    responseLanguage: 'Yanıt dili',
-    restaurantName: 'Restoran adı (isteğe bağlı)',
-    complaintType: 'Şikayet türü',
-    submitButton: 'Yanıt Oluştur',
-    submitting: 'AI yanıt oluşturuyor...',
-    minLength: 'Şikayet en az 10 karakter olmalıdır',
-    maxLength: 'Şikayet en fazla 2000 karakter olabilir',
-    types: { food: 'Yemek', service: 'Hizmet', price: 'Fiyat', cleanliness: 'Temizlik', other: 'Diğer' },
-    langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
-  },
-  ru: {
-    complaintText: 'Текст жалобы',
-    complaintTextPlaceholder: 'Вставьте жалобу клиента сюда...',
-    complaintLanguage: 'Язык жалобы',
-    responseLanguage: 'Язык ответа',
-    restaurantName: 'Название ресторана (необязательно)',
-    complaintType: 'Тип жалобы',
-    submitButton: 'Создать ответ',
-    submitting: 'AI создаёт ответы...',
-    minLength: 'Жалоба должна содержать минимум 10 символов',
-    maxLength: 'Жалоба не может превышать 2000 символов',
-    types: { food: 'Еда', service: 'Обслуживание', price: 'Цена', cleanliness: 'Чистота', other: 'Другое' },
-    langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
-  },
+  compensation: string;
+  compensationHint: string;
+  compensationDetail: string;
+  compensationDetailPlaceholder: string;
+  compensations: Record<CompensationOption, string>;
 };
 
 interface SikayetFormProps {
@@ -86,12 +37,14 @@ interface SikayetFormProps {
 }
 
 export default function SikayetForm({ locale, onResult, onError }: SikayetFormProps) {
-  const c = copy[locale];
+  const c = (useMessages() as unknown as { mqForms: { sikayetForm: SikayetFormCopy } }).mqForms.sikayetForm;
   const [complaintText, setComplaintText] = useState('');
   const [complaintType, setComplaintType] = useState<string>('food');
   const [complaintLang, setComplaintLang] = useState<string>(locale);
   const [responseLang, setResponseLang] = useState<string>(locale);
   const [restaurantName, setRestaurantName] = useState('');
+  const [compensation, setCompensation] = useState<CompensationOption>('none');
+  const [compensationDetail, setCompensationDetail] = useState('');
   const [loading, setLoading] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -115,12 +68,14 @@ export default function SikayetForm({ locale, onResult, onError }: SikayetFormPr
           complaintLang,
           responseLang,
           ...(restaurantName ? { restaurantName } : {}),
+          compensation,
+          ...(compensation !== 'none' && compensationDetail.trim() ? { compensationDetail: compensationDetail.trim() } : {}),
         }),
       });
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        if (res.status === 429) onError(copy[locale].maxLength.includes('2000') ? 'rate-limit' : data.error || 'rate-limit');
+        if (res.status === 429) onError(c.maxLength.includes('2000') ? 'rate-limit' : data.error || 'rate-limit');
         else onError(data.error || 'unknown');
         return;
       }
@@ -199,11 +154,33 @@ export default function SikayetForm({ locale, onResult, onError }: SikayetFormPr
         />
       </div>
 
+      {/* Compensation — opt-in (TASK-0523) */}
+      <div>
+        <label className={labelCls}>{c.compensation}</label>
+        <select value={compensation} onChange={(e) => setCompensation(e.target.value as CompensationOption)} className={inputCls} data-testid="complaint-compensation">
+          {COMPENSATION_OPTIONS.map((option) => (
+            <option key={option} value={option}>{c.compensations[option]}</option>
+          ))}
+        </select>
+        <p className="mt-1 text-xs text-slate-500">{c.compensationHint}</p>
+        {compensation !== 'none' && (
+          <input
+            type="text"
+            value={compensationDetail}
+            onChange={(e) => setCompensationDetail(e.target.value)}
+            placeholder={c.compensationDetailPlaceholder}
+            aria-label={c.compensationDetail}
+            className={`${inputCls} mt-2`}
+            maxLength={120}
+          />
+        )}
+      </div>
+
       {/* Submit */}
       <button
         type="submit"
         disabled={loading || charCount < 10}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-navy)] px-6 py-3 text-sm font-bold text-white transition hover:bg-[var(--dk-navy)]/90 disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 py-3 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-50"
       >
         {loading ? (
           <>{c.submitting}</>
