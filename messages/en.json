@@ -3540,9 +3540,9 @@
     "contactPageFallback": "Came from contact page"
   },
   "dashboardSidebar": {
-    "title": "OCAQ Admin Panel",
+    "title": "DK Agency Admin Panel",
     "role": "Admin",
-    "panelTitle": "OCAQ Admin Panel",
+    "panelTitle": "DK Agency Admin Panel",
     "adminSubtitle": "Admin center",
     "userAccess": "Full management access is active",
     "closeSidebar": "Close sidebar",
@@ -3899,7 +3899,9 @@
     "copied": "Copied!",
     "whatsappTemplate": "WhatsApp template",
     "pdfExport": "Export PDF",
-    "sectionHistory": "History"
+    "sectionHistory": "History",
+    "loadError": "Audits did not load — the server did not respond. Refresh the page.",
+    "saveError": "Not saved — the server did not respond. Try again."
   },
   "dashboardFoodCost": {
     "pageTitle": "Food Cost Analysis",
@@ -3958,7 +3960,8 @@
       "Oct",
       "Nov",
       "Dec"
-    ]
+    ],
+    "loadError": "The food cost report did not load — the server did not respond. The zeros below are not real; refresh the page."
   },
   "dashboardFaturalar": {
     "pageTitle": "Invoices",
@@ -4077,7 +4080,8 @@
     "importErrors": "errors",
     "detailSaveError": "Not saved — the server did not respond. Try again shortly.",
     "manualSaveError": "Invoice not saved — the server did not respond. Your data is still in the form, try again.",
-    "bulkDeleteError": "Not deleted — the server did not respond. Try again."
+    "bulkDeleteError": "Not deleted — the server did not respond. Try again.",
+    "loadError": "Invoices did not load — the server did not respond. Numbers are hidden; refresh the page."
   },
   "legal": {
     "fallbackNotice": "This document has not yet been translated to your language. The Azerbaijani version is shown."
@@ -6837,6 +6841,32 @@
       "intro": {
         "what": "What does this tool do?",
         "how": "How it works"
+      },
+      "tour": {
+        "start": "Guide",
+        "skip": "Skip",
+        "next": "Next",
+        "back": "Back",
+        "done": "Start",
+        "step": "{n} / {total}",
+        "steps": {
+          "intro": {
+            "title": "What this tool does",
+            "body": "Read which decision the tool helps with and how it works in 3 steps."
+          },
+          "inputs": {
+            "title": "Type your numbers here",
+            "body": "Enter your own figures — the result updates as you type. Nothing is saved or sent."
+          },
+          "reset": {
+            "title": "Example and Clear",
+            "body": "«Load example» shows the tool with ready figures. «Clear» empties every field; pressed by mistake? Use «Undo»."
+          },
+          "result": {
+            "title": "Your result",
+            "body": "The calculation and a short explanation appear here. On a phone, open the panel at the bottom."
+          }
+        }
       }
     },
     "toolkit": {
@@ -7205,7 +7235,14 @@
       "mansetNext": "Next headline",
       "mansetSlide": "Headline {n} of {total}",
       "latestListings": "Latest listings",
-      "allListings": "All listings"
+      "allListings": "All listings",
+      "feedEyebrow": "Latest",
+      "feedTitle": "News feed",
+      "feedUp": "Up",
+      "feedDown": "Down",
+      "trendEyebrow": "Trending",
+      "trendTitle": "Trending news",
+      "moreNews": "All news"
     },
     "blog": {
       "eyebrow": "Blog · Doğan Tomris",
@@ -7737,7 +7774,7 @@
       "message": "Message",
       "status": "Status"
     },
-    "anonymous": "Anonymous click",
+    "anonymous": "Identity unknown",
     "open": "Open",
     "noDetail": "No separate page",
     "channels": {
@@ -7772,7 +7809,9 @@
       "dismissed": "Dismissed",
       "subscribed": "Subscribed",
       "unsubscribed": "Unsubscribed"
-    }
+    },
+    "refCode": "Code: {code} — find the WhatsApp message with this code",
+    "anonymousHint": "If they write, it shows up in the WhatsApp/Telegram app"
   },
   "authShell": {
     "back": "Home",
@@ -7787,5 +7826,8 @@
     },
     "asideNote": "Signing up is free. Questions? Message us on WhatsApp.",
     "backPrev": "Go back"
+  },
+  "b2bNewListing": {
+    "back": "My listings"
   }
 }

@@ -79,7 +79,9 @@ export default function DashboardBlogPage() {
   const deleteOne = async (post: BlogPost) => {
     if (!window.confirm(`"${post.title}" silinsin?`)) return;
     try {
-      await fetch(`/api/blog/${post.slug}`, { method: 'DELETE' });
+      // TASK-0528: «silindi» only when the server deleted it.
+      const res = await fetch(`/api/blog/${post.slug}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error(`delete ${res.status}`);
       showToast(`"${post.title}" silindi`);
       setPosts((prev) => prev.filter((p) => p.id !== post.id));
     } catch {

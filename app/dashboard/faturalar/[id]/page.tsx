@@ -52,7 +52,7 @@ interface CategoryOption {
 
 // ── Mock ────────────────────────────────────────────────────────────
 
-const MOCK_CATEGORIES: CategoryOption[] = [
+const DEFAULT_CATEGORIES: CategoryOption[] = [
   { id: 1, name: 'Ət və balıq', color: '#DC2626' },
   { id: 2, name: 'Süd məhsulları', color: '#3B82F6' },
   { id: 3, name: 'Meyvə / tərəvəz', color: '#22C55E' },
@@ -102,7 +102,7 @@ export default function InvoiceDetailPage() {
   const id = params.id as string;
 
   const [invoice, setInvoice] = useState<InvoiceDetail | null>(null);
-  const [categories, setCategories] = useState<CategoryOption[]>(MOCK_CATEGORIES);
+  const [categories, setCategories] = useState<CategoryOption[]>(DEFAULT_CATEGORIES);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);

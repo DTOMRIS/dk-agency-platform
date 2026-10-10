@@ -1,35 +1,66 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · fe76324
+> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · e8263a8
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
 - Ünvan: **137** (həqiqi səhifə 129, yönləndirmə 6, güzgü 2) · page faylı 252
 - Dizayn (həqiqi səhifələr): v2 **24** · köhnə **57** · qarışıq **19** · işarəsiz 29
 - Geri düyməsi yoxdur: **58** səhifə
-- API: **112** route · qoruma işarəsi yoxdur: **36** (siyahı aşağıda — ictimai olanlar normaldır, qalanı yoxlanmalıdır)
-- Sənəd: 59 (+ 362 tapşırıq kartı)
+- API: **113** route · qoruma işarəsi yoxdur: **36** (siyahı aşağıda — ictimai olanlar normaldır, qalanı yoxlanmalıdır)
+- Sənəd: 59 (+ 363 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
 |---|---|---|---|
-| P&L / gəlir-xərc | /marketinq/pl-simulyatoru, /toolkit/pnl-simulator, /toolkit/pnl, /b2b-panel/toolkit/pnl-simulator | 3: marketinq-ocagi/pnl-simulator/PnlForm.tsx, marketinq-ocagi/pnl-simulator/PnlResult.tsx, toolkit/pnl/PnlScenarioPanel.tsx | /api/marketing-tools/pnl-simulator |
-| ROI / reklam gəliri | /franchise/roi-kalkulyatoru, /marketinq/reklam-roi, /marketinq/roi-kalkulator, /toolkit/qonaq-evi-roi-kalkulyatoru, /b2b-panel/toolkit/roi-calculator | 7: franchise/RoiCalculator.tsx, marketinq-ocagi/hubs/RoiHub.tsx, marketinq-ocagi/promosyon-roi/PromoROIForm.tsx, marketinq-ocagi/promosyon-roi/PromoROIResult.tsx, marketinq-ocagi/reklam-roi/ReklamRoiPage.tsx, marketinq/ROICalculatorV2.tsx, toolkit/GuesthouseRoiCalculator.tsx | /api/marketing-tools/promosyon-roi |
+| P&L / gəlir-xərc | /marketinq/pl-simulyatoru, /toolkit/pnl-simulator, /toolkit/pnl, /b2b-panel/toolkit/pnl-simulator | 1: toolkit/pnl/PnlScenarioPanel.tsx | /api/marketing-tools/pnl-simulator |
+| ROI / reklam gəliri | /franchise/roi-kalkulyatoru, /marketinq/reklam-roi, /marketinq/roi-kalkulator, /toolkit/qonaq-evi-roi-kalkulyatoru, /b2b-panel/toolkit/roi-calculator | 5: franchise/RoiCalculator.tsx, marketinq-ocagi/hubs/RoiHub.tsx, marketinq-ocagi/reklam-roi/ReklamRoiPage.tsx, marketinq/ROICalculatorV2.tsx, toolkit/GuesthouseRoiCalculator.tsx | /api/marketing-tools/promosyon-roi |
 | Food cost / yemək xərci | /dashboard/food-cost, /toolkit/food-cost | 0:  | /api/food-cost |
 | Şikayət | /marketinq/sikayat-analizi | 8: marketinq-ocagi/hubs/SikayetHub.tsx, marketinq-ocagi/sikayet-analitigi/SikayetAnalitiyiPage.tsx, marketinq-ocagi/sikayet-analitigi/SikayetForm.tsx, marketinq-ocagi/sikayet-analitigi/SikayetResult.tsx, marketinq-ocagi/sikayet-cavablandirici/ComplaintReplyPage.tsx, marketinq-ocagi/sikayet-cavablandirici/ComplaintReplyResults.tsx, marketinq-ocagi/sikayet-cavablandirici/SikayetForm.tsx, marketinq/ComplaintAnalysis.tsx | /api/ai/complaint-response, /api/marketing-tools/sikayet-analitigi |
-| Menyu analitikası | /marketinq/menyu-analitik, /toolkit/menu-matrix | 4: marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiForm.tsx, marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiPage.tsx, marketinq-ocagi/menyu-analitigi/MenyuResultPanel.tsx, marketinq/MenuAnalytics.tsx | /api/marketing-tools/menyu-analitigi |
+| Menyu analitikası | /marketinq/menyu-analitik, /toolkit/menu-matrix | 2: marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiPage.tsx, marketinq/MenuAnalytics.tsx | /api/marketing-tools/menyu-analitigi |
 | Sezon | /marketinq/sezon-analitikasi | 5: marketinq-ocagi/hubs/SezonHub.tsx, marketinq-ocagi/sezon-analitikasi/SezonAnalitikasiPage.tsx, marketinq-ocagi/sezon-planlama/SezonForm.tsx, marketinq-ocagi/sezon-planlama/SezonPlanlamaPage.tsx, marketinq-ocagi/sezon-planlama/SezonResult.tsx | /api/marketing-tools/sezon-planlama |
 | Lokasiya | /marketinq/lokasyon-analiz | 1: marketinq-ocagi/lokasyon-analiz/LokasyonAnalizPage.tsx | — |
 | Audit / KST / yoxlama | /dashboard/aqta-checklist, /dashboard/auditor, /marketinq/restoran-audit, /toolkit/aqta-checklist | 4: marketinq-ocagi/kst-yoxlayici/KSTQuestionnaireForm.tsx, marketinq-ocagi/kst-yoxlayici/KSTResultCard.tsx, marketinq-ocagi/kst-yoxlayici/KSTYoxlayiciPage.tsx, marketinq-ocagi/restoran-audit/RestoranAuditPage.tsx | /api/marketing-tools/kst-yoxlayici |
-| Elan / listing | /b2b-panel/ilanlarim/[id]/edit, /b2b-panel/ilanlarim/[id], /b2b-panel/ilanlarim, /b2b-panel/yeni-ilan, /dashboard/ilanlar/[id], /dashboard/ilanlar, /dashboard/ilanlar/whatsapp, /ilan-ver, /ilanlar/[slug], /ilanlar, /is-elanlari, /listings, /dashboard/ilanlar/yarat | 10: home/ListingsPreview.tsx, home/ListingsPreviewSection.tsx, listings/CreateListingForm.tsx, listings/LeadForm.tsx, listings/ListingCard.tsx, listings/ListingDetailClient.tsx, listings/ListingForm.tsx, listings/ListingModal.tsx … | /api/listings/[id]/leads, /api/listings/[id]/reviews, /api/listings/[id], /api/listings/[id]/status, /api/listings/admin/whatsapp-import, /api/listings/batch-status, /api/listings |
+| Elan / listing | /b2b-panel/ilanlarim/[id]/edit, /b2b-panel/ilanlarim/[id], /b2b-panel/ilanlarim, /b2b-panel/yeni-ilan, /dashboard/ilanlar/[id], /dashboard/ilanlar, /dashboard/ilanlar/whatsapp, /ilan-ver, /ilanlar/[slug], /ilanlar, /is-elanlari, /listings, /dashboard/ilanlar/yarat | 7: listings/CreateListingForm.tsx, listings/LeadForm.tsx, listings/ListingCard.tsx, listings/ListingDetailClient.tsx, listings/ListingForm.tsx, listings/ListingModal.tsx, listings/ListingsShowcasePage.tsx | /api/listings/[id]/leads, /api/listings/[id]/reviews, /api/listings/[id], /api/listings/[id]/status, /api/listings/admin/whatsapp-import, /api/listings/batch-status, /api/listings |
 | Faktura / qaimə | /b2b-panel/faturalar, /dashboard/fatura-kateqoriyalar, /dashboard/faturalar/[id], /dashboard/faturalar | 0:  | /api/invoice-categories, /api/invoice-ocr, /api/invoice-pdf, /api/invoices |
 | Giriş / qeydiyyat | /auth/forgot-password, /auth/login, /auth/register, /forgot-password, /reset-password, /verify-email | 4: auth/AuthShell.tsx, auth/ForgotPasswordPageClient.tsx, auth/ResetPasswordPageClient.tsx, auth/VerifyEmailPageClient.tsx | /api/admin/members/[id]/reset-password, /api/auth/change-password, /api/auth/confirm, /api/auth/forgot-password, /api/auth/login, /api/auth/logout, /api/auth/me, /api/auth/register, /api/auth/reset-password, /api/auth/verify-email |
 | Başabaş | /toolkit/basabas | 0:  | — |
 | Persona | /marketinq/musteri-persona | 4: marketinq-ocagi/musteri-persona/MusteriPersonaPage.tsx, marketinq-ocagi/musteri-persona/PersonaForm.tsx, marketinq-ocagi/musteri-persona/PersonaResult.tsx, marketinq/CustomerPersona.tsx | /api/marketing-tools/musteri-persona |
 
+## Saxta davranış taraması (UI olmayan şeyi «oldu» deyir)
+Cəmi **0** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazılır.
+| Qayda | Fayl:sətir | Kod |
+|---|---|---|
+
+Əsaslandırılmış istisnalar (`fake-scan-ok`): **11**
+- `components/analytics/PortalEngagementTracker.tsx:40` — analytics beacon, nothing is shown to the user
+- `components/b2b-panel/B2BSidebar.tsx:178` — logout: the client session is cleared and the user redirected either way
+- `components/dashboard/DashboardSidebar.tsx:144` — logout: the client session is cleared and the user redirected either way
+- `components/dashboard/DashboardTopBar.tsx:140` — logout: the client session is cleared and the user redirected either way
+- `components/dashboard/KazanLeadStatusActions.tsx:50` — router.refresh() right after re-renders the lead from the server
+- `components/kazan-ai/FloatingKazanWidget.tsx:162` — CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
+- `components/layout/Header.tsx:179` — logout: client session cleared and redirected either way (protected file)
+- `components/members/MemberLogoutButton.tsx:17` — logout: the client session is cleared and the user redirected either way
+- `app/auth/login/page.tsx:168` — display-name sync only — role/login come from the signed JWT (TASK-0457)
+- `app/dashboard/reklamlar/page.tsx:84` — the list is reloaded from the server right after, so the screen always shows the truth
+- `app/dashboard/reklamlar/page.tsx:95` — reloaded from the server right after (a failed delete stays visible)
+
+## Ölü düymə / link (basanda heç nə olmur)
+Cəmi **0**.
+
+## İstifadə olunmayan komponentlər (heç bir fayl import etmir)
+Cəmi **7**. Silməzdən əvvəl dinamik import / string ilə çağırış yoxlanır.
+- `components/AdsPreview.tsx`
+- `components/StageSelector.tsx`
+- `components/ToolkitShowcase.tsx`
+- `components/home/PlatformCards.tsx`
+- `components/home/design.tokens.ts`
+- `components/types.ts`
+- `components/ui/CookiesBanner.tsx`
+
 ## Ortaq UI variantları (bir olmalıdır)
 - **Logo (DK işarəsi)** (8): `components/auth/AuthShell.tsx`, `components/b2b-panel/B2BSidebar.tsx`, `components/brand/DkMark.tsx`, `components/dashboard/DashboardSidebar.tsx`, `components/layout/Footer.tsx`, `components/layout/Header.tsx`, `app/api/news/card/[id]/route.tsx`, `app/haberler/[slug]/page.tsx`
-- **Üst bar / header** (7): `components/HospitalityHeader.tsx`, `components/dashboard/supply/SuppliersTab.tsx`, `components/dashboard/ui/Charts.tsx`, `components/editorial/HospitalityHeader.tsx`, `components/home/HospitalityHeader.tsx`, `components/layout/Header.tsx`, `components/shared/HospitalityHeader.tsx`
+- **Üst bar / header** (3): `components/dashboard/supply/SuppliersTab.tsx`, `components/dashboard/ui/Charts.tsx`, `components/layout/Header.tsx`
 - **Geri düyməsi komponenti** (1): `components/inner/InnerParts.tsx`
 - **Yan menyu (sidebar)** (2): `components/b2b-panel/B2BSidebar.tsx`, `components/dashboard/DashboardSidebar.tsx`
 
@@ -80,7 +111,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/b2b-panel` | səhifə | — | layout (/b2b-panel) | ✗ | 1 | dashboard/RecommendationWidget.tsx, dashboard/NudgeBanner.tsx |
 | `/b2b-panel/[slug]` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ |  |  |
 | `/b2b-panel/analizler` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ | 5 |  |
-| `/b2b-panel/ayarlar` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ | 28 |  |
+| `/b2b-panel/ayarlar` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ | 26 |  |
 | `/b2b-panel/bildirimler` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✗ | 2 | b2b-panel/useOwnerListings.ts |
 | `/b2b-panel/destek` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✗ | 1 |  |
 | `/b2b-panel/faturalar` | səhifə | — | layout (/b2b-panel) | ✓ |  | LaunchCampaignBanner.tsx |
@@ -103,14 +134,14 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/b2b-panel/toolkit/roi-calculator` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✓ | 15 |  |
 | `/b2b-panel/toolkit/talent-up` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 2 | shared/ComingSoon.tsx |
 | `/b2b-panel/toolkit/workforce` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
-| `/b2b-panel/yeni-ilan` | səhifə | köhnə | layout (/b2b-panel) | ✓ | 21 | listings/ListingForm.tsx |
+| `/b2b-panel/yeni-ilan` | səhifə | köhnə | səhifədə | ✓ |  | listings/CreateListingForm.tsx |
 
 ### Bloq / xəbərlər — 6 ünvan (v2 4 · köhnə 0 · qarışıq 1)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/blog` | səhifə | v2 | — | ✓ |  | inner/InnerParts.tsx, blog/BlogDirectory.tsx |
 | `/blog/[slug]` | səhifə | v2 | — | ✓ |  |  |
-| `/haberler` | səhifə | v2 | — | ✓ | 2 | ads/AdSlot.tsx, news/MansetVitrin.tsx, home/v2/homeV2.module.css |
+| `/haberler` | səhifə | v2 | — | ✓ | 2 | ads/AdSlot.tsx, news/MansetVitrin.tsx, news/NewsFeedRail.tsx |
 | `/haberler/[slug]` | səhifə | qarışıq | — | ✓ |  | news/BlogContentWrapper.tsx, ads/AdSlot.tsx, blog/index.ts |
 | `/xeberler` | səhifə | — | — | ✗ |  |  |
 | `/xeberler/[slug]` (yalnız kök) | səhifə | v2 | — | ✓ |  |  |
@@ -128,7 +159,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/dashboard/blog/new` | səhifə | köhnə | layout (/dashboard) | ✗ | 1 | dashboard/BlogEditorForm.tsx |
 | `/dashboard/blog/translation-status` | səhifə | — | səhifədə | ✗ | 12 | dashboard/TranslateAllButton.tsx, dashboard/MigrateStructureButtons.tsx |
 | `/dashboard/blog/yeni` | güzgü | — | layout (/dashboard) | ✗ |  |  |
-| `/dashboard/contact-tracking` | səhifə | köhnə | səhifədə | ✗ | 8 |  |
+| `/dashboard/contact-tracking` | səhifə | köhnə | səhifədə | ✗ | 12 |  |
 | `/dashboard/fatura-kateqoriyalar` | səhifə | — | layout (/dashboard) | ✓ | 13 |  |
 | `/dashboard/faturalar` | səhifə | — | layout (/dashboard) | ✓ | 4 |  |
 | `/dashboard/faturalar/[id]` | səhifə | — | layout (/dashboard) | ✓ | 16 |  |
@@ -273,7 +304,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/ADR/README.md` | Architecture Decision Records (ADR) | 2026-10-08 | 37 |
 | `docs/ADR/_TEMPLATE.md` | ADR-NNNN: {Başlıq} | 2026-05-27 | 25 |
 | `docs/API-MAP.md` | API Map — DK Agency Platform | 2026-05-27 | 167 |
-| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-10-10 | 315 |
+| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-10-10 | 346 |
 | `docs/BLOG-CITATION-AUDIT.md` | Blog Atıf (Citation) Auditi — Tiered | 2026-06-06 | 73 |
 | `docs/BRAND-GUIDE.md` | DK Agency -- Marka Qaydalari | 2026-03-24 | 47 |
 | `docs/CHANGELOG.md` | CHANGELOG | 2026-10-06 | 658 |
@@ -298,7 +329,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 65 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 68 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |

@@ -13,6 +13,7 @@ export default function MemberLogoutButton() {
 
   const handleLogout = async () => {
     clearMemberSession();
+    // fake-scan-ok: logout: the client session is cleared and the user redirected either way
     await fetch('/api/member/session', { method: 'DELETE' });
     router.refresh();
     router.push(withLocale(locale, '/uzvluk'));

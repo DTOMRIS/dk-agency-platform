@@ -170,6 +170,104 @@ const variants = {
   'Yan menyu (sidebar)': codeFiles.filter((f) => /Sidebar\.tsx$/.test(f)),
 };
 
+// ── fake behaviour scan (TASK-0528, owner 10.10: «hata bulmayacağım artık») ───────
+// Patterns that make the UI claim something that did not happen. Each hit must be fixed or justified.
+const FAKE_RULES = [
+  { key: 'Saxta gözləmə (setTimeout ilə «uğurlu»)', re: /new Promise\(\s*\(?\s*r(?:esolve)?\s*\)?\s*=>\s*setTimeout\(\s*r(?:esolve)?\s*,\s*\d+/ },
+  { key: 'Mock data dəyər kimi (tip yox)', re: /(?<!type\s)\bMOCK_[A-Z][A-Z_]+\b(?!\s*[:,]?\s*(?:type|interface))/ },
+  { key: 'buildMock / mockData funksiyası', re: /\bbuildMock\w*\(|\bmockData\b|\bgenerateMock\w*\(/ },
+  { key: 'Cavabı oxunmayan sorğu (await fetch nəticəsi atılır)', re: /^\s*await fetch\(/m },
+  { key: 'TODO / gələcək API', re: /TODO[^\n]*(?:API|api|POST|backend|endpoint|real)/ },
+];
+const fakeHits = [];
+const fakeOk = [];
+// Justifications for protected files (no comment can be added there without owner approval).
+const PROTECTED_OK = [
+  { file: 'components/layout/Header.tsx', re: /api\/member\/session', \{ method: 'DELETE' \}/, why: 'logout: client session cleared and redirected either way (protected file)' },
+];
+for (const f of codeFiles.filter((f) => !/\/api\//.test(f) && !/mock|seed|fixtures|\.test\./i.test(f))) {
+  const src = read(f);
+  const lines = src.split('\n');
+  for (const rule of FAKE_RULES) {
+    lines.forEach((line, i) => {
+      if (/^\s*(\/\/|\*|\/\*)/.test(line)) return; // comments are not code
+      const prot = PROTECTED_OK.find((x) => x.file === f && x.re.test(line));
+      if (prot) {
+        if (rule.re.test(line)) fakeOk.push({ rule: rule.key, file: f, line: i + 1, why: prot.why });
+        return;
+      }
+      // a justified exception carries «fake-scan-ok: <reason>» on the same or the previous line
+      if (/fake-scan-ok/.test(line) || /fake-scan-ok/.test(lines[i - 1] ?? '')) {
+        if (rule.re.test(line)) fakeOk.push({ rule: rule.key, file: f, line: i + 1, why: ((line + ' ' + (lines[i - 1] ?? '')).match(/fake-scan-ok:\s*([^*\n]+)/) || [, ''])[1].trim().slice(0, 90) });
+        return;
+      }
+      if (rule.key.startsWith('Mock data') && /^\s*import\b/.test(line)) return; // imports are not uses
+      if (rule.key.startsWith('Mock data') && /\btype\s+Mock|Mock\w*\[\]|<Mock/.test(line) && !/MOCK_/.test(line)) return;
+      if (rule.re.test(line)) fakeHits.push({ rule: rule.key, file: f, line: i + 1, text: line.trim().slice(0, 110) });
+    });
+  }
+}
+
+// ── dead controls (TASK-0528): <button> that does nothing, «#» / empty links — parsed with the TS compiler ──
+let deadHits = [];
+try {
+  const ts = (await import('typescript')).default;
+  for (const f of codeFiles.filter((x) => x.endsWith('.tsx') && !/\.test\.|e2e\//.test(x))) {
+    const src = read(f);
+    if (!/<button|href=/.test(src)) continue;
+    const sf = ts.createSourceFile(f, src, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+    const visit = (node) => {
+      if (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) {
+        const tag = node.tagName.getText(sf);
+        const attrs = node.attributes.properties;
+        const names = attrs.filter(ts.isJsxAttribute).map((a) => a.name.getText(sf));
+        const spread = attrs.some((a) => ts.isJsxSpreadAttribute(a));
+        const attrText = (n) => {
+          const at = attrs.find((a) => ts.isJsxAttribute(a) && a.name.getText(sf) === n);
+          return at && at.initializer ? at.initializer.getText(sf) : null;
+        };
+        const lineOf = () => sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1;
+        if (tag === 'button' && !spread) {
+          const type = (attrText('type') || '').replace(/["'{}]/g, '');
+          const handled = names.some((n) => /^on[A-Z]/.test(n)) || type === 'submit' || type === 'reset' || names.includes('form') || names.includes('formAction');
+          // a button with no handler inside a <form> and no type defaults to submit — only flag explicit type="button"
+          if (!handled && type === 'button') deadHits.push({ file: f, line: lineOf(), what: '<button type="button"> — onClick yoxdur' });
+        }
+        if ((tag === 'a' || tag === 'Link') && !spread) {
+          const href = attrText('href');
+          if (href !== null && /^["'{]*\s*(#|)\s*["'}]*$/.test(href) && !names.some((n) => /^on[A-Z]/.test(n))) {
+            deadHits.push({ file: f, line: lineOf(), what: `<${tag} href=${href}> — heç yerə getmir` });
+          }
+        }
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(sf);
+  }
+} catch (err) {
+  deadHits = [{ file: '—', line: 0, what: `skan alınmadı: ${String(err).slice(0, 80)}` }];
+}
+
+// ── unused components (TASK-0528): files under components/ that no other file imports ──
+const allSrc = [...walk('app', (n) => /\.(tsx?|mjs)$/.test(n)), ...walk('components', (n) => /\.(tsx?|css)$/.test(n)), ...walk('lib', (n) => /\.tsx?$/.test(n)), ...walk('e2e', (n) => /\.tsx?$/.test(n))];
+const importIndex = allSrc.map((f) => ({ f, src: read(f) }));
+const unusedComponents = walk('components', (n) => /\.tsx?$/.test(n)).filter((file) => {
+  const noExt = file.replace(/\.(tsx|ts)$/, '');
+  const alias = `@/${noExt}`;
+  const aliasDir = noExt.endsWith('/index') ? `@/${noExt.replace(/\/index$/, '')}` : null;
+  const base = path.posix.basename(noExt);
+  return !importIndex.some(({ f, src }) => {
+    if (f === file) return false;
+    if (src.includes(`'${alias}'`) || src.includes(`"${alias}"`) || (aliasDir && (src.includes(`'${aliasDir}'`) || src.includes(`"${aliasDir}"`)))) return true;
+    // relative import from a neighbour: './X' or '../dir/X'
+    if (new RegExp(`from ['"]\\.{1,2}/(?:[\\w.-]+/)*${base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]`).test(src)) {
+      const target = resolveImport(f, (src.match(new RegExp(`from ['"](\\.{1,2}/(?:[\\w.-]+/)*${base})['"]`)) || [])[1] || '');
+      return target === file || target === null;
+    }
+    return false;
+  });
+});
+
 // ── docs index ───────────────────────────────────────────────────────
 const docFiles = walk('docs', (n) => n.endsWith('.md')).filter((f) => !f.startsWith('docs/tasks/') && !f.includes('/archive/'));
 const docRows = docFiles.map((f) => {
@@ -218,6 +316,23 @@ for (const c of clusterRows) {
   L.push(`| ${c.name} | ${esc(c.routes.join(', ') || '—')} | ${c.comps.length}: ${esc(c.comps.slice(0, 8).map((f) => f.replace(/^components\//, '')).join(', '))}${c.comps.length > 8 ? ' …' : ''} | ${esc(c.api.join(', ') || '—')} |`);
 }
 L.push('');
+L.push('## Saxta davranış taraması (UI olmayan şeyi «oldu» deyir)');
+L.push(`Cəmi **${fakeHits.length}** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazılır.`);
+L.push('| Qayda | Fayl:sətir | Kod |');
+L.push('|---|---|---|');
+for (const h of fakeHits) L.push(`| ${h.rule} | \`${h.file}:${h.line}\` | \`${esc(h.text).replace(/`/g, "'")}\` |`);
+L.push('');
+L.push(`Əsaslandırılmış istisnalar (\`fake-scan-ok\`): **${fakeOk.length}**`);
+for (const h of fakeOk) L.push(`- \`${h.file}:${h.line}\` — ${esc(h.why || h.rule)}`);
+L.push('');
+L.push('## Ölü düymə / link (basanda heç nə olmur)');
+L.push(`Cəmi **${deadHits.length}**.`);
+for (const h of deadHits) L.push(`- \`${h.file}:${h.line}\` — ${esc(h.what)}`);
+L.push('');
+L.push('## İstifadə olunmayan komponentlər (heç bir fayl import etmir)');
+L.push(`Cəmi **${unusedComponents.length}**. Silməzdən əvvəl dinamik import / string ilə çağırış yoxlanır.`);
+for (const f of unusedComponents) L.push(`- \`${f}\``);
+L.push('');
 L.push('## Ortaq UI variantları (bir olmalıdır)');
 for (const [k, files] of Object.entries(variants)) {
   L.push(`- **${k}** (${files.length}): ${files.map((f) => `\`${f}\``).join(', ') || '—'}`);
@@ -251,4 +366,4 @@ L.push('');
 const outDir = path.join(root, 'docs/ARCHITECTURE');
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, 'SYSTEM-MAP.md'), L.join('\n'));
-console.log(`SYSTEM-MAP.md: ${allPages.length} ünvan, ${apis.length} API (${apis.filter((a) => !a.guard).length} qorumasız işarə), ${docRows.length} sənəd`);
+console.log(`SYSTEM-MAP.md: ${allPages.length} ünvan, ${apis.length} API (${apis.filter((a) => !a.guard).length} qorumasız işarə), saxta davranış ${fakeHits.length}, ölü düymə/link ${deadHits.length}, istifadəsiz komponent ${unusedComponents.length}, ${docRows.length} sənəd`);

@@ -158,11 +158,13 @@ export default function FaturaKateqoriyalarPage() {
   const saveEdit = async () => {
     if (!editingId || !editName.trim()) return;
     try {
-      await fetch('/api/invoice-categories', {
+      // TASK-0528: update the list only after the server saved it.
+      const res = await fetch('/api/invoice-categories', {
         method: 'PATCH',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ id: editingId, name: editName.trim(), color: editColor }),
       });
+      if (!res.ok) throw new Error(`update ${res.status}`);
       setCategories((prev) => prev.map((c) => c.id === editingId ? { ...c, name: editName.trim(), color: editColor } : c));
       showFeedback(copy.feedbackUpdated);
     } catch { showFeedback(copy.feedbackError); }
@@ -179,9 +181,11 @@ export default function FaturaKateqoriyalarPage() {
         body: JSON.stringify({ name: newName.trim(), slug, color: newColor, sortOrder: categories.length + 1 }),
       });
       const data = await res.json();
-      if (data.data) {
+      if (res.ok && data.data) {
         setCategories((prev) => [...prev, data.data]);
         showFeedback(copy.feedbackAdded);
+      } else {
+        showFeedback(copy.feedbackError);
       }
     } catch { showFeedback(copy.feedbackError); }
     setNewName('');
@@ -192,11 +196,12 @@ export default function FaturaKateqoriyalarPage() {
   const handleDelete = async (ids: number[]) => {
     if (!confirm(copy.deleteConfirm(ids.length))) return;
     try {
-      await fetch('/api/invoice-categories', {
+      const res = await fetch('/api/invoice-categories', {
         method: 'DELETE',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ ids }),
       });
+      if (!res.ok) throw new Error(`delete ${res.status}`);
       setCategories((prev) => prev.filter((c) => !ids.includes(c.id)));
       setSelected(new Set());
       showFeedback(copy.feedbackDeleted(ids.length));

@@ -140,6 +140,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
     if (loggingOut) return;
     setLoggingOut(true);
     try {
+      // fake-scan-ok: logout: the client session is cleared and the user redirected either way
       await fetch('/api/auth/logout', { method: 'POST' });
     } catch {
       /* ignore — clear client state regardless */

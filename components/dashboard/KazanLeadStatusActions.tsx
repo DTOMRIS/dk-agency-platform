@@ -46,6 +46,7 @@ export default function KazanLeadStatusActions({
   async function patch(payload: Record<string, unknown>) {
     setLoading(true);
     try {
+      // fake-scan-ok: router.refresh() right after re-renders the lead from the server
       await fetch('/api/kazan-ai/leads', {
         method: 'PATCH',
         headers: { 'content-type': 'application/json' },

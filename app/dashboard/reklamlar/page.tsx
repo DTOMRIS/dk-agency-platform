@@ -80,6 +80,7 @@ export default function ReklamlarPage() {
   };
 
   const toggleActive = async (ad: AdRow) => {
+    // fake-scan-ok: the list is reloaded from the server right after, so the screen always shows the truth
     await fetch(`/api/admin/ads/${ad.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -90,6 +91,7 @@ export default function ReklamlarPage() {
 
   const remove = async (ad: AdRow) => {
     if (!window.confirm(`"${ad.title}" reklamını silmək istəyirsiniz?`)) return;
+    // fake-scan-ok: reloaded from the server right after (a failed delete stays visible)
     await fetch(`/api/admin/ads/${ad.id}`, { method: 'DELETE' });
     await load();
   };

@@ -164,6 +164,7 @@ export default function LoginPage() {
         plan: isAdmin ? 'admin' : 'member',
       };
       writeMemberSession(session);
+      // fake-scan-ok: display-name sync only — role/login come from the signed JWT (TASK-0457)
       await fetch('/api/member/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

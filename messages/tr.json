@@ -3540,9 +3540,9 @@
     "contactPageFallback": "İletişim sayfasından geldi"
   },
   "dashboardSidebar": {
-    "title": "OCAQ Yönetim Paneli",
+    "title": "DK Agency Yönetim Paneli",
     "role": "Admin",
-    "panelTitle": "OCAQ Yönetim Paneli",
+    "panelTitle": "DK Agency Yönetim Paneli",
     "adminSubtitle": "Yönetim merkezi",
     "userAccess": "Tam yönetim erişimi aktif",
     "closeSidebar": "Kenar çubuğunu kapat",
@@ -3899,7 +3899,9 @@
     "copied": "Kopyalandı!",
     "whatsappTemplate": "WhatsApp şablonu",
     "pdfExport": "PDF dışa aktar",
-    "sectionHistory": "Geçmiş"
+    "sectionHistory": "Geçmiş",
+    "loadError": "Denetimler yüklenmedi — sunucu yanıt vermedi. Sayfayı yenileyin.",
+    "saveError": "Kaydedilmedi — sunucu yanıt vermedi. Tekrar deneyin."
   },
   "dashboardFoodCost": {
     "pageTitle": "Food Cost Analizi",
@@ -3958,7 +3960,8 @@
       "Eki",
       "Kas",
       "Ara"
-    ]
+    ],
+    "loadError": "Yemek maliyeti raporu yüklenmedi — sunucu yanıt vermedi. Aşağıdaki sıfırlar gerçek değil; sayfayı yenileyin."
   },
   "dashboardFaturalar": {
     "pageTitle": "Faturalar",
@@ -4077,7 +4080,8 @@
     "importErrors": "hata",
     "detailSaveError": "Kaydedilmedi — sunucu yanıt vermedi. Biraz sonra tekrar deneyin.",
     "manualSaveError": "Fatura kaydedilmedi — sunucu yanıt vermedi. Bilgiler formda duruyor, tekrar deneyin.",
-    "bulkDeleteError": "Silinmedi — sunucu yanıt vermedi. Tekrar deneyin."
+    "bulkDeleteError": "Silinmedi — sunucu yanıt vermedi. Tekrar deneyin.",
+    "loadError": "Faturalar yüklenmedi — sunucu yanıt vermedi. Rakamlar gösterilmiyor; sayfayı yenileyin."
   },
   "legal": {
     "fallbackNotice": "Bu belge henüz dilinize çevrilmedi, Azerbaycanca versiyon gösteriliyor."
@@ -6837,6 +6841,32 @@
       "intro": {
         "what": "Bu araç ne yapar?",
         "how": "Nasıl çalışır"
+      },
+      "tour": {
+        "start": "Rehber",
+        "skip": "Geç",
+        "next": "İleri",
+        "back": "Geri",
+        "done": "Başla",
+        "step": "{n} / {total}",
+        "steps": {
+          "intro": {
+            "title": "Bu araç ne yapar",
+            "body": "Aracın hangi karara yardım ettiğini ve 3 adımda nasıl çalıştığını burada okuyun."
+          },
+          "inputs": {
+            "title": "Rakamlarınızı buraya yazın",
+            "body": "Kendi verinizi girin — sonuç yazdıkça hemen güncellenir. Hiçbir şey kaydedilmez veya gönderilmez."
+          },
+          "reset": {
+            "title": "Örnek ve Temizle",
+            "body": "«Örneği yükle» aracı hazır rakamlarla gösterir. «Temizle» tüm alanları boşaltır; yanlışlıkla bastıysanız «Geri al» var."
+          },
+          "result": {
+            "title": "Sonuç burada",
+            "body": "Hesap ve kısa açıklama bu bölümde görünür. Telefonda alttaki paneli açın."
+          }
+        }
       }
     },
     "toolkit": {
@@ -7205,7 +7235,14 @@
       "mansetNext": "Sonraki manşet",
       "mansetSlide": "Manşet {n} / {total}",
       "latestListings": "Son ilanlar",
-      "allListings": "Tüm ilanlar"
+      "allListings": "Tüm ilanlar",
+      "feedEyebrow": "Son haberler",
+      "feedTitle": "Haber akışı",
+      "feedUp": "Yukarı",
+      "feedDown": "Aşağı",
+      "trendEyebrow": "Trend",
+      "trendTitle": "Trend haberler",
+      "moreNews": "Tüm haberler"
     },
     "blog": {
       "eyebrow": "Blog · Doğan Tomris",
@@ -7737,7 +7774,7 @@
       "message": "Mesaj",
       "status": "Durum"
     },
-    "anonymous": "Anonim tıklama",
+    "anonymous": "Kim olduğu bilinmiyor",
     "open": "Aç",
     "noDetail": "Ayrı sayfa yok",
     "channels": {
@@ -7772,7 +7809,9 @@
       "dismissed": "Kapatıldı",
       "subscribed": "Abone",
       "unsubscribed": "Abonelikten çıktı"
-    }
+    },
+    "refCode": "Kod: {code} — WhatsApp'ta aynı kodlu mesajı arayın",
+    "anonymousHint": "Yazarsa WhatsApp/Telegram uygulamasında görünür"
   },
   "authShell": {
     "back": "Ana sayfa",
@@ -7787,5 +7826,8 @@
     },
     "asideNote": "Kayıt ücretsizdir. Sorunuz varsa WhatsApp'tan yazın.",
     "backPrev": "Geri dön"
+  },
+  "b2bNewListing": {
+    "back": "İlanlarım"
   }
 }

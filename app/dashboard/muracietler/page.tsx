@@ -110,7 +110,10 @@ export default async function DashboardInboxPage({
 
   const contactLines = (item: InboxItem) => {
     const lines = [item.name, item.phone, item.email].filter((value): value is string => Boolean(value));
-    return lines.length ? lines : [t('anonymous')];
+    if (lines.length) return lines;
+    // TASK-0529: a click carries no identity — say where the person is and show the click's code.
+    const code = item.refCode;
+    return [t('anonymous'), code ? t('refCode', { code }) : t('anonymousHint')];
   };
 
   return (

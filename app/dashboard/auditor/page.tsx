@@ -76,7 +76,6 @@ const STATUSES = ['draft', 'sent', 'meeting', 'converted', 'rejected'] as const;
 
 // ── Mock Data (Empty Fallbacks) ───────────────────────────────────────
 
-const MOCK_AUDITS: AuditRow[] = [];
 
 // ── Helpers ─────────────────────────────────────────────────────────
 
@@ -99,6 +98,7 @@ export default function AuditorDashboard() {
 
   const [view, setView] = useState<View>('list');
   const [audits, setAudits] = useState<AuditRow[]>([]);
+  const [loadError, setLoadError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -111,15 +111,15 @@ export default function AuditorDashboard() {
       if (statusFilter !== 'all') params.set('status', statusFilter);
       if (searchQuery) params.set('q', searchQuery);
 
+      // TASK-0528: an error is shown as an error (before: an empty «mock» list looked like «no audits»).
       const res = await fetch(`/api/audit?${params}`);
-      const json = (await res.json()) as { data: AuditRow[] };
-      if (json.data?.length > 0) {
-        setAudits(json.data);
-      } else {
-        setAudits(MOCK_AUDITS);
-      }
+      if (!res.ok) throw new Error(`audit list ${res.status}`);
+      const json = (await res.json()) as { data?: AuditRow[] };
+      setAudits(json.data ?? []);
+      setLoadError(false);
     } catch {
-      setAudits(MOCK_AUDITS);
+      setAudits([]);
+      setLoadError(true);
     }
     setLoading(false);
   }, [statusFilter, searchQuery]);
@@ -208,7 +208,10 @@ export default function AuditorDashboard() {
             .map((audit) => (
               <AuditCard key={audit.id} audit={audit} onClick={() => openDetail(audit.id)} aiPending={t('aiPending')} statusConfig={STATUS_CONFIG} />
             ))}
-          {audits.length === 0 && (
+          {loadError && (
+            <p role="alert" className="px-4 py-6 text-center text-sm font-semibold text-red-700">{t('loadError')}</p>
+          )}
+          {!loadError && audits.length === 0 && (
             <div className="col-span-full py-16 text-center text-sm text-slate-600">
               {t('emptyState')}
             </div>
@@ -461,21 +464,12 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
     async function load() {
       try {
         const res = await fetch(`/api/audit/${auditId}`);
+        if (!res.ok) throw new Error(`audit ${res.status}`);
         const json = (await res.json()) as { data: AuditDetail };
         setAudit(json.data);
       } catch {
-        // Mock fallback
-        const mock = MOCK_AUDITS.find((a) => a.id === auditId);
-        if (mock) {
-          setAudit({
-            ...mock,
-            actions: [],
-            socialLinks: {},
-            deliveryLinks: {},
-            menuPhotoUrl: null,
-            notes: null,
-          });
-        }
+        // TASK-0528: no mock fallback — the detail stays empty («not found») on error.
+        setAudit(null);
       }
       setLoading(false);
     }
@@ -484,15 +478,18 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
 
   const handleStatusChange = async (newStatus: string) => {
     if (!audit) return;
-    try {
-      await fetch(`/api/audit/${audit.id}`, {
-        method: 'PATCH',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
-      });
-      setAudit((prev) => prev ? { ...prev, status: newStatus } : prev);
-      onRefresh();
-    } catch { /* ignore */ }
+    // TASK-0528: the status changes on screen only after the server saved it.
+    const res = await fetch(`/api/audit/${audit.id}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ status: newStatus }),
+    }).catch(() => null);
+    if (!res?.ok) {
+      window.alert(t('saveError'));
+      return;
+    }
+    setAudit((prev) => prev ? { ...prev, status: newStatus } : prev);
+    onRefresh();
   };
 
   const copyWhatsApp = () => {
