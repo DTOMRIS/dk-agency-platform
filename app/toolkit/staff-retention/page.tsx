@@ -1,20 +1,50 @@
 'use client';
 
+/**
+ * İşçi saxlama kalkulyatoru — TASK-0531 (owner 10.10: «ben elimdeki ile yetinmem», Over Easy Office turnover
+ * cost calculator as reference). Before: one rule of thumb (replacement = 2–3 monthly salaries). Now the cost
+ * of ONE leaver is itemised like the best turnover calculators, with their weak spots fixed:
+ *   vacancy   = days the post stays empty × extra paid to others per day (overtime / cover), not «salary saved»
+ *   hiring    = manager hours × hourly cost + job ad
+ *   training  = training days × value of the trainer's lost time per day (not a fixed 8-hour day)
+ *   ramp-up   = days to full speed × GROSS PROFIT lost per day (not revenue — revenue overstates the loss)
+ *   mistakes  = one-off waste / wrong orders / complaints while learning
+ * Annual loss = leavers per year × cost of one leaver. The 2–3 salary rule stays as a comparison line.
+ * Every default is an example (owner rule: no number is shown as a market fact).
+ */
+
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { ArrowRight, BookOpen, Lightbulb, Users } from 'lucide-react';
+import { ArrowRight, BookOpen, Lightbulb, MessageCircle, Users } from 'lucide-react';
 import ToolkitStudioLayout, { type AIInsightState } from '@/components/toolkit/ToolkitStudioLayout';
 import { getToolkitInsight } from '@/app/actions/toolkit-insight';
 import { formatNumber } from '@/lib/i18n/format';
 import DecimalInput from '@/components/toolkit/DecimalInput';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
+import { whatsappHref } from '@/lib/contact-channels';
 
-/** Example values — «Nümunəni yüklə» (TASK-0517). */
-const EXAMPLE = { employeeCount: 18, averageSalary: 850, yearlyLeavers: 12 };
-type RetentionState = typeof EXAMPLE;
+/** Example values — «Nümunəni yüklə». */
+const EXAMPLE = {
+  employeeCount: 18,
+  averageSalary: 850,
+  yearlyLeavers: 12,
+  vacantDays: 14,
+  coverPerDay: 20,
+  hiringHours: 8,
+  managerHourly: 10,
+  adCost: 30,
+  trainingDays: 5,
+  trainerDaily: 25,
+  rampDays: 30,
+  marginPerDay: 15,
+  mistakes: 50,
+};
+type State = typeof EXAMPLE;
+const EMPTY: State = Object.fromEntries(Object.keys(EXAMPLE).map((k) => [k, 0])) as State;
 
-// TASK-0518: numbers follow the page language (az/ru/tr «1.234,5», en «1,234.5»).
+const INT_FIELDS = new Set<keyof State>(['employeeCount', 'yearlyLeavers', 'vacantDays', 'trainingDays', 'rampDays']);
+
 function formatCurrency(value: number, locale: string) {
   return `${formatNumber(Math.round(value), locale)} ₼`;
 }
@@ -23,15 +53,12 @@ export default function StaffRetentionPage() {
   const t = useTranslations('toolkit.staffRetention');
   const locale = useLocale() as 'az' | 'ru' | 'en' | 'tr';
   const [aiInsight, setAiInsight] = useState<AIInsightState>({ status: 'idle' });
-
-  const [employeeCount, setEmployeeCount] = useState(EXAMPLE.employeeCount);
-  const [averageSalary, setAverageSalary] = useState(EXAMPLE.averageSalary);
-  const [yearlyLeavers, setYearlyLeavers] = useState(EXAMPLE.yearlyLeavers);
+  const [v, setV] = useState<State>(EXAMPLE);
+  const set = (key: keyof State) => (value: number) =>
+    setV((prev) => ({ ...prev, [key]: Math.max(0, INT_FIELDS.has(key) ? Math.round(value) : value) }));
 
   const topReasons = [t('reason1'), t('reason2'), t('reason3'), t('reason4'), t('reason5')];
-
   const strategies = [t('strategy1'), t('strategy2'), t('strategy3'), t('strategy4'), t('strategy5'), t('strategy6'), t('strategy7')];
-
   const blogLinks = [
     { title: t('blogLink1Title'), href: '/blog/isci-saxlama-7-strategiya', tag: t('blogLink1Tag') },
     { title: t('blogLink2Title'), href: '/toolkit/pnl', tag: t('blogLink2Tag') },
@@ -39,160 +66,187 @@ export default function StaffRetentionPage() {
   ];
 
   const stats = useMemo(() => {
-    // TASK-0515: 0 employees → no rate ("—"), never a fake 1200%.
-    const turnoverRate = employeeCount > 0 ? (yearlyLeavers / employeeCount) * 100 : null;
-    const replacementCostLow = averageSalary * 2;
-    const replacementCostHigh = averageSalary * 3;
-    const replacementCostMid = averageSalary * 2.5;
-    const annualLoss = yearlyLeavers * replacementCostMid;
-    return { turnoverRate, replacementCostLow, replacementCostHigh, replacementCostMid, annualLoss };
-  }, [averageSalary, employeeCount, yearlyLeavers]);
+    const turnoverRate = v.employeeCount > 0 ? (v.yearlyLeavers / v.employeeCount) * 100 : null;
+    const parts = [
+      { key: 'vacancy', value: v.vacantDays * v.coverPerDay },
+      { key: 'hiring', value: v.hiringHours * v.managerHourly + v.adCost },
+      { key: 'training', value: v.trainingDays * v.trainerDaily },
+      { key: 'ramp', value: v.rampDays * v.marginPerDay },
+      { key: 'mistakes', value: v.mistakes },
+    ] as const;
+    const perLeaver = parts.reduce((sum, p) => sum + p.value, 0);
+    return {
+      turnoverRate,
+      parts,
+      perLeaver,
+      annualLoss: perLeaver * v.yearlyLeavers,
+      ruleLow: v.averageSalary * 2,
+      ruleHigh: v.averageSalary * 3,
+    };
+  }, [v]);
 
   const turnoverText =
     stats.turnoverRate === null
       ? '—'
       : `${formatNumber(stats.turnoverRate, locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
 
-  // TASK-0517: shared reset UX — «Təmizlə» (with «Geri al») and «Nümunəni yüklə».
-  const snapshot = (): RetentionState => ({ employeeCount, averageSalary, yearlyLeavers });
-  const restore = (st: RetentionState) => { setEmployeeCount(st.employeeCount); setAverageSalary(st.averageSalary); setYearlyLeavers(st.yearlyLeavers); };
-
-  // ── Input Section ─────────────────────────────────────────────────
+  const inputCls =
+    'w-full rounded-xl border border-[#E4DCCD] bg-white px-3.5 py-3 text-[15px] font-semibold text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
+  const field = (key: keyof State, unit?: string) => (
+    <label key={key} className="block" htmlFor={`sr-${key}`}>
+      <span className="block text-[13.5px] font-bold text-[#0F172A]">
+        {t(`fields.${key}`)}
+        {unit ? <span className="ml-1 font-semibold text-slate-500">({unit})</span> : null}
+      </span>
+      <DecimalInput
+        id={`sr-${key}`}
+        inputMode={INT_FIELDS.has(key) ? 'numeric' : 'decimal'}
+        value={v[key]}
+        onValueChange={set(key)}
+        className={`mt-1.5 ${inputCls}`}
+      />
+    </label>
+  );
+  const group = (title: string, formula: string, children: React.ReactNode) => (
+    <div className="rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] p-4">
+      <p className="text-[14px] font-black text-[#0F172A]">{title}</p>
+      <p className="mt-0.5 text-[12.5px] text-slate-500">{formula}</p>
+      <div className="mt-3 grid gap-3 sm:grid-cols-2">{children}</div>
+    </div>
+  );
 
   const inputSection = (
     <div className="space-y-6">
-      <ToolResetControls snapshot={snapshot} restore={restore}
-        onClear={() => restore({ employeeCount: 0, averageSalary: 0, yearlyLeavers: 0 })}
-        onLoadExample={() => restore(EXAMPLE)} />
-      <div className="min-w-0">
-        <h2 className="text-base font-bold text-slate-900">{t('calculatorTitle')}</h2>
-        <p className="text-sm text-slate-600">{t('calculatorSubtitle')}</p>
+      <ToolResetControls snapshot={() => v} restore={setV} onClear={() => setV({ ...EMPTY })} onLoadExample={() => setV({ ...EXAMPLE })} />
+      <div>
+        <h2 className="text-[17px] font-black text-[#0F172A]">{t('calculatorTitle')}</h2>
+        <p className="mt-1 text-[14px] text-slate-600">{t('calculatorSubtitle')}</p>
       </div>
-
       <div className="grid gap-4 sm:grid-cols-3">
-        <div>
-          <label htmlFor="sr-employeeCount" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('labelEmployeeCount')}</label>
-          <DecimalInput id="sr-employeeCount" inputMode="numeric" value={employeeCount} onValueChange={(v) => setEmployeeCount(Math.max(0, Math.round(v)))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/20" />
-        </div>
-        <div>
-          <label htmlFor="sr-averageSalary" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('labelAverageSalary')}</label>
-          <DecimalInput id="sr-averageSalary" value={averageSalary} onValueChange={(v) => setAverageSalary(Math.max(0, v))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/20" />
-        </div>
-        <div>
-          <label htmlFor="sr-yearlyLeavers" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('labelYearlyLeavers')}</label>
-          <DecimalInput id="sr-yearlyLeavers" inputMode="numeric" value={yearlyLeavers} onValueChange={(v) => setYearlyLeavers(Math.max(0, Math.round(v)))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/20" />
-        </div>
+        {field('employeeCount')}
+        {field('averageSalary', '₼')}
+        {field('yearlyLeavers')}
       </div>
 
-      {/* Financial Impact */}
-      <div className="border-t border-slate-100 pt-5 space-y-4">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-600">{t('financialImpactTitle')}</h3>
-        <div className="rounded-xl bg-slate-50 p-4">
-          <div className="text-xs text-slate-600">{t('turnoverRateLabel')}</div>
-          <div className="mt-1 text-2xl font-black text-slate-900">{turnoverText}</div>
-          <p className="mt-2 text-sm text-slate-600">{employeeCount > 0 ? t('turnoverRateBenchmark') : t('errNoEmployees')}</p>
+      <div className="space-y-3 border-t border-[#EFE9DE] pt-5">
+        <div>
+          <h3 className="text-[15px] font-black text-[#0F172A]">{t('breakdownTitle')}</h3>
+          <p className="mt-1 text-[13.5px] leading-6 text-slate-600">{t('breakdownSubtitle')}</p>
         </div>
-        <div className="rounded-xl bg-indigo-50 p-4 ring-1 ring-indigo-100">
-          <div className="text-xs text-slate-600">{t('replacementCostLabel')}</div>
-          <div className="mt-1 text-2xl font-black text-indigo-700">
-            {formatCurrency(stats.replacementCostLow, locale)} - {formatCurrency(stats.replacementCostHigh, locale)}
-          </div>
-          <p className="mt-2 text-sm text-slate-600">{t('replacementCostNote')}</p>
-        </div>
-        <div className="rounded-xl bg-slate-900 p-4 text-white">
-          <div className="text-xs uppercase tracking-widest text-slate-300">{t('annualLossLabel')}</div>
-          <div className="mt-1 text-3xl font-black">{formatCurrency(stats.annualLoss, locale)}</div>
-          <p className="mt-2 text-sm text-slate-300">{t('annualLossNote')}</p>
-        </div>
+        {group(t('parts.vacancy'), t('formulas.vacancy'), <>{field('vacantDays')}{field('coverPerDay', '₼')}</>)}
+        {group(t('parts.hiring'), t('formulas.hiring'), <>{field('hiringHours')}{field('managerHourly', '₼')}{field('adCost', '₼')}</>)}
+        {group(t('parts.training'), t('formulas.training'), <>{field('trainingDays')}{field('trainerDaily', '₼')}</>)}
+        {group(t('parts.ramp'), t('formulas.ramp'), <>{field('rampDays')}{field('marginPerDay', '₼')}</>)}
+        {group(t('parts.mistakes'), t('formulas.mistakes'), <>{field('mistakes', '₼')}</>)}
       </div>
 
-      {/* Action Plan */}
-      <div className="border-t border-slate-100 pt-5 space-y-3">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-600">{t('actionPlanTitle')}</h3>
+      <div className="space-y-3 border-t border-[#EFE9DE] pt-5">
+        <h3 className="text-[15px] font-black text-[#0F172A]">{t('actionPlanTitle')}</h3>
         {strategies.map((item, index) => (
-          <div key={index} className="rounded-xl border border-slate-100 p-4">
-            <div className="mb-1 text-xs font-bold uppercase tracking-widest text-indigo-700">{t('stepPrefix')} {index + 1}</div>
-            <p className="text-sm leading-6 text-slate-600">{item}</p>
+          <div key={index} className="rounded-2xl border border-[#EFE9DE] bg-white p-4">
+            <div className="mb-1 text-[11.5px] font-black uppercase tracking-[0.14em] text-[#BE2F47]">{t('stepPrefix')} {index + 1}</div>
+            <p className="text-[14px] leading-6 text-slate-600">{item}</p>
           </div>
         ))}
       </div>
 
-      {/* Pre-shift */}
-      <div className="border-t border-slate-100 pt-5">
-        <div className="mb-3 flex items-center gap-2 text-indigo-600">
-          <Users size={18} />
-          <h3 className="text-base font-bold text-slate-900">{t('preShiftTitle')}</h3>
+      <div className="border-t border-[#EFE9DE] pt-5">
+        <div className="mb-2 flex items-center gap-2">
+          <Users size={18} className="text-[#BE2F47]" aria-hidden="true" />
+          <h3 className="text-[15px] font-black text-[#0F172A]">{t('preShiftTitle')}</h3>
         </div>
-        <p className="text-sm leading-7 text-slate-600">{t('preShiftBody')}</p>
+        <p className="text-[14px] leading-7 text-slate-600">{t('preShiftBody')}</p>
       </div>
     </div>
   );
 
-  // ── Result Section ────────────────────────────────────────────────
-
+  const max = Math.max(1, ...stats.parts.map((p) => p.value));
   const resultSection = (
     <div className="space-y-4">
-      <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statEmployeeCount')}</div>
-        <div className="mt-1 text-3xl font-black text-slate-900">{employeeCount}</div>
-      </div>
-      <div className="rounded-xl bg-indigo-50 p-4 ring-1 ring-indigo-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statTurnoverRate')}</div>
-        <div className="mt-1 text-3xl font-black text-indigo-700" data-testid="sr-turnover">{turnoverText}</div>
-      </div>
-      <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statReplacementCost')}</div>
-        <div className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(stats.replacementCostMid, locale)}</div>
-      </div>
-      <div className="rounded-xl bg-white p-4 ring-1 ring-slate-200/60">
-        <div className="text-[11px] font-bold uppercase tracking-widest text-slate-600">{t('statAnnualLoss')}</div>
-        <div className="mt-1 text-2xl font-black text-slate-900">{formatCurrency(stats.annualLoss, locale)}</div>
-      </div>
-
-      {/* Top 5 Reasons */}
-      <div className="border-t border-slate-100 pt-4">
-        <div className="mb-3 inline-flex rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-indigo-700">
-          {t('knowledgePanelBadge')}
+      <div className="rounded-2xl bg-[#0F172A] p-5 text-white">
+        <p className="text-[11.5px] font-black uppercase tracking-[0.16em] text-slate-400">{t('statAnnualLoss')}</p>
+        <p className="mt-1 text-[38px] font-black leading-none tracking-[-0.03em] tabular-nums" data-testid="sr-annual">{formatCurrency(stats.annualLoss, locale)}</p>
+        <p className="mt-2 text-[13px] text-slate-300">
+          {t('annualFormula', { leavers: v.yearlyLeavers, per: formatCurrency(stats.perLeaver, locale) })}
+        </p>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="rounded-xl bg-white/[0.06] p-3">
+            <p className="text-[12px] text-slate-400">{t('statReplacementCost')}</p>
+            <p className="mt-0.5 text-[19px] font-black tabular-nums" data-testid="sr-per-leaver">{formatCurrency(stats.perLeaver, locale)}</p>
+          </div>
+          <div className="rounded-xl bg-white/[0.06] p-3">
+            <p className="text-[12px] text-slate-400">{t('statTurnoverRate')}</p>
+            <p className="mt-0.5 text-[19px] font-black tabular-nums" data-testid="sr-turnover">{turnoverText}</p>
+          </div>
         </div>
-        <h3 className="text-base font-black text-slate-900">{t('top5Title')}</h3>
+        <ul className="mt-4 space-y-2.5">
+          {stats.parts.map((p) => (
+            <li key={p.key}>
+              <div className="flex justify-between gap-3 text-[13px]">
+                <span className="text-slate-300">{t(`parts.${p.key}`)}</span>
+                <span className="font-bold tabular-nums">{formatCurrency(p.value, locale)}</span>
+              </div>
+              <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/10">
+                <div className="h-full rounded-full bg-[#F28A9B]" style={{ width: `${(p.value / max) * 100}%` }} />
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4 border-t border-white/10 pt-3 text-[12.5px] leading-5 text-slate-400">
+          {t('ruleCompare', { low: formatCurrency(stats.ruleLow, locale), high: formatCurrency(stats.ruleHigh, locale) })}
+        </p>
+        {/* The next step sits where the number lands (turnover-calculator pattern). */}
+        <div className="mt-4 border-t border-white/10 pt-4">
+          <p className="text-[14.5px] font-black">{t('cta.title')}</p>
+          <p className="mt-1 text-[13px] leading-5 text-slate-300">{t('cta.body')}</p>
+          <a
+            href={whatsappHref(t('cta.wa', { annual: formatCurrency(stats.annualLoss, locale), leavers: v.yearlyLeavers, staff: v.employeeCount }))}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-full bg-dk-red-strong px-4 text-[13.5px] font-bold text-white transition-colors hover:bg-dk-red-deep"
+          >
+            <MessageCircle size={15} aria-hidden="true" />
+            {t('cta.button')}
+          </a>
+        </div>
+      </div>
+      <p className="text-[13px] leading-6 text-slate-600">{v.employeeCount > 0 ? t('turnoverRateBenchmark') : t('errNoEmployees')}</p>
+
+      <div className="border-t border-[#EFE9DE] pt-4">
+        <p className="text-[11.5px] font-black uppercase tracking-[0.14em] text-[#BE2F47]">{t('knowledgePanelBadge')}</p>
+        <h3 className="mt-1 text-[15px] font-black text-[#0F172A]">{t('top5Title')}</h3>
         <div className="mt-3 space-y-2">
           {topReasons.map((reason, index) => (
-            <div key={index} className="rounded-xl bg-slate-50 px-3 py-2.5 text-sm text-slate-600">{reason}</div>
+            <div key={index} className="rounded-xl bg-[#F6F1E9] px-3 py-2.5 text-[13.5px] text-slate-700">{reason}</div>
           ))}
         </div>
       </div>
     </div>
   );
 
-  // ── Bottom Section ────────────────────────────────────────────────
-
   const bottomSection = (
     <div className="grid gap-5 md:grid-cols-2">
-      <div className="rounded-2xl bg-slate-950 p-6 text-white shadow-sm">
-        <div className="mb-3 flex items-center gap-2 text-indigo-300">
-          <Lightbulb size={16} />
-          <span className="text-xs font-bold uppercase tracking-widest">{t('dkAdviceLabel')}</span>
+      <div className="rounded-[22px] bg-[#0F172A] p-6 text-white">
+        <div className="mb-3 flex items-center gap-2 text-[#F28A9B]">
+          <Lightbulb size={16} aria-hidden="true" />
+          <span className="text-[12px] font-black uppercase tracking-[0.14em]">{t('dkAdviceLabel')}</span>
         </div>
-        <p className="text-sm leading-7 text-slate-300">{t('dkAdviceBody')}</p>
+        <p className="text-[14px] leading-7 text-slate-300">{t('dkAdviceBody')}</p>
       </div>
-
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="mb-3 flex items-center gap-2 text-slate-900">
-          <BookOpen size={16} />
-          <h3 className="text-base font-bold">{t('usefulLinksTitle')}</h3>
+      <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+        <div className="mb-3 flex items-center gap-2 text-[#0F172A]">
+          <BookOpen size={16} aria-hidden="true" />
+          <h3 className="text-[15px] font-black">{t('usefulLinksTitle')}</h3>
         </div>
         <div className="space-y-3">
           {blogLinks.map((item) => (
             <Link key={item.href} href={item.href}
-              className="group flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 transition-colors hover:border-indigo-200 hover:bg-indigo-50">
+              className="group flex items-center justify-between rounded-xl border border-[#E4DCCD] px-4 py-3 transition-colors hover:border-[#0F172A]">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-600">{item.tag}</div>
-                <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                <div className="text-[11.5px] font-bold uppercase tracking-[0.12em] text-slate-500">{item.tag}</div>
+                <div className="text-[14px] font-semibold text-[#0F172A]">{item.title}</div>
               </div>
-              <ArrowRight size={16} className="text-slate-600 transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight size={16} className="text-slate-500 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </Link>
           ))}
         </div>
@@ -209,10 +263,15 @@ export default function StaffRetentionPage() {
       inputSection={inputSection}
       resultSection={resultSection}
       bottomSection={bottomSection}
+      resultSummary={formatCurrency(stats.annualLoss, locale)}
       aiInsight={aiInsight}
       onRequestInsight={async () => {
         setAiInsight({ status: 'loading' });
-        const res = await getToolkitInsight({ toolId: 'staff-retention', locale, result: { turnoverRate: stats.turnoverRate ?? 0, replacementCost: stats.replacementCostMid, annualLoss: stats.annualLoss, employeeCount } });
+        const res = await getToolkitInsight({
+          toolId: 'staff-retention',
+          locale,
+          result: { turnoverRate: stats.turnoverRate ?? 0, replacementCost: stats.perLeaver, annualLoss: stats.annualLoss, employeeCount: v.employeeCount },
+        });
         if (res.ok && res.insight) setAiInsight({ status: 'success', text: res.insight });
         else setAiInsight({ status: 'error' });
       }}

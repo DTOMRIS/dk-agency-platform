@@ -1,26 +1,39 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import RoiCalculator from '@/components/franchise/RoiCalculator';
 import LeadForm from '@/components/franchise/LeadForm';
-import PageBack from '@/components/inner/PageBack';
+import home from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Crumbs, LiveStatus } from '@/components/inner/InnerParts';
+import s from '@/components/inner/inner.module.css';
+import { normalizeLocale, withLocale } from '@/i18n/config';
 
+/** TASK-0531: v2 frame (owner 10.10: «bu da eski model»). Back → /franchise, same header as the toolkit tools. */
 export default function RoiPage() {
   const t = useTranslations('franchiseRoi');
+  const tb = useTranslations('pageBack');
+  const locale = normalizeLocale(useLocale());
   return (
-    <div className="min-h-screen bg-[var(--dk-paper)]">
-      <PageBack to="franchise" />
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-        <div className="mb-8 text-center">
-          <span className="mb-3 inline-block rounded-full bg-amber-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-700 border border-amber-200">
-            {t('badge')}
-          </span>
-          <h1 className="mb-3 font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">{t('title')}</h1>
-          <p className="mx-auto max-w-2xl text-base text-slate-500">{t('subtitle')}</p>
+    <div className={`${s.page} ${inter.className}`}>
+      <div className={home.wrap}>
+        <Crumbs backHref={withLocale(locale, '/franchise')} backLabel={tb('franchise')} trail={`${tb('franchise')} / ${t('badge')}`} />
+        <div className={s.tpHead}>
+          <div style={{ minWidth: 0 }}>
+            <div className={s.tpHeadMeta}>
+              <span className={home.eyebrow}>
+                <span className={home.dot} />
+                {t('badge')}
+              </span>
+              <LiveStatus label={t('live')} />
+            </div>
+            <h1>{t('title')}</h1>
+            <p className={s.lead}>{t('subtitle')}</p>
+          </div>
         </div>
         <RoiCalculator />
         <div className="mt-8">
           <LeadForm toolSource="roi_calc" />
         </div>
-        <p className="mt-6 text-center text-xs text-slate-400">{t('disclaimer')}</p>
+        <p className="mt-6 text-center text-[12.5px] text-slate-500">{t('disclaimer')}</p>
       </div>
     </div>
   );

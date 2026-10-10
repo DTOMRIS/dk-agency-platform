@@ -32,10 +32,12 @@ export function calcRoi(input: RoiInput) {
   const roi = investment > 0 ? (netProfit / investment) * 100 : 0;
   const paybackMonths = netProfit > 0 ? investment / (netProfit / 12) : Infinity;
 
+  // TASK-0531: payback follows from ROI (months = 1200 / ROI%), so «ROI ≥ 20% AND payback ≤ 36 mo» could only
+  // pass at ROI ≥ 33% while the copy promised 20%. One measure now: payback 36 / 48 months (= ROI ≈ 33% / 25%).
   let verdict: RoiVerdict;
   if (netProfit <= 0) verdict = 'negative';
-  else if (roi >= 20 && paybackMonths <= 36) verdict = 'good';
-  else if (roi >= 15 && paybackMonths <= 48) verdict = 'mid';
+  else if (paybackMonths <= 36) verdict = 'good';
+  else if (paybackMonths <= 48) verdict = 'mid';
   else verdict = 'bad';
 
   return { investment, grossProfit, royaltyAdFund, netProfit, roi, paybackMonths, verdict };

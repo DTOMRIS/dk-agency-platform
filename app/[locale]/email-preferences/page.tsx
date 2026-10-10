@@ -127,7 +127,7 @@ export default function EmailPreferencesPage() {
         <PageBack />
         <div className="max-w-md w-full text-center space-y-4">
           <AlertCircle className="mx-auto h-12 w-12 text-slate-400" aria-hidden="true" />
-          <h1 className="text-2xl font-semibold text-[var(--dk-navy)] font-[Playfair_Display]">
+          <h1 className="text-2xl font-semibold text-[var(--dk-navy)]">
             {t('tokenTitle')}
           </h1>
           <p className="text-slate-700 text-sm leading-relaxed">
@@ -190,7 +190,7 @@ export default function EmailPreferencesPage() {
         {/* Card */}
         <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8 space-y-6">
           <div>
-            <h1 className="text-2xl font-semibold text-[var(--dk-navy)] font-[Playfair_Display] leading-tight">
+            <h1 className="text-2xl font-semibold text-[var(--dk-navy)] leading-tight">
               {t('title')}
             </h1>
             {fetchState.status === 'ready' && (

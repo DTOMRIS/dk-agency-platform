@@ -542,7 +542,8 @@
         "lowMargin": "Profit is very low — review your costs",
         "negativeMargin": "The month ends in a loss — rework costs and prices now",
         "foodCostHigh": "Ingredient cost is above the common limit ({value})",
-        "laborCostHigh": "Staff cost is above the common limit ({value})"
+        "laborCostHigh": "Staff cost is above the common limit ({value})",
+        "belowTargetMargin": "Profitable, but below the common target (10–15%)"
       },
       "benchmark": {
         "title": "Common sector limits",
@@ -694,7 +695,7 @@
       "statReplacementCost": "Replacing one employee",
       "statAnnualLoss": "Money lost per year",
       "calculatorTitle": "What does staff leaving cost you?",
-      "calculatorSubtitle": "Enter three numbers: current staff count, average salary and how many people left last year.",
+      "calculatorSubtitle": "First three numbers: staff count, average monthly salary and how many left last year. Then enter what one leaver costs, step by step.",
       "labelEmployeeCount": "Current staff count",
       "labelAverageSalary": "Average monthly salary (₼)",
       "labelYearlyLeavers": "Staff who left in a year",
@@ -732,7 +733,46 @@
       "blogLink2Tag": "Tool",
       "blogLink3Title": "KAZAN AI",
       "blogLink3Tag": "AI",
-      "errNoEmployees": "With 0 staff the rate cannot be calculated — enter the staff count."
+      "errNoEmployees": "With 0 staff the rate cannot be calculated — enter the staff count.",
+      "fields": {
+        "employeeCount": "Current staff count",
+        "averageSalary": "Average monthly salary",
+        "yearlyLeavers": "Staff who leave per year",
+        "vacantDays": "Days the post stays empty",
+        "coverPerDay": "Extra paid to others per day",
+        "hiringHours": "Hours spent searching and interviewing",
+        "managerHourly": "Value of one manager hour",
+        "adCost": "Job ad cost",
+        "trainingDays": "Training days",
+        "trainerDaily": "Value of the trainer’s lost time per day",
+        "rampDays": "Days until full speed",
+        "marginPerDay": "Gross profit lost per day",
+        "mistakes": "Mistakes, waste and complaints while learning"
+      },
+      "breakdownTitle": "What does one leaver cost?",
+      "breakdownSubtitle": "The numbers are an example — enter your own. How each part is calculated is written under its title.",
+      "parts": {
+        "vacancy": "While the post is empty",
+        "hiring": "Finding a new person",
+        "training": "Training",
+        "ramp": "Until full speed",
+        "mistakes": "Mistakes and waste"
+      },
+      "formulas": {
+        "vacancy": "empty days × extra paid to others per day (overtime)",
+        "hiring": "hours × one manager hour + ad",
+        "training": "days × trainer’s lost time per day",
+        "ramp": "days × gross profit lost per day (not revenue — revenue overstates the loss)",
+        "mistakes": "one-off amount"
+      },
+      "annualFormula": "{leavers} people × {per} each",
+      "ruleCompare": "For comparison: the common rule says replacing one employee costs 2–3 monthly salaries ({low} – {high}).",
+      "cta": {
+        "title": "Let’s cut this loss together",
+        "body": "Send the number — we look at hiring, the first weeks and shift rules with you.",
+        "button": "Send on WhatsApp",
+        "wa": "Hello Doğan, I calculated staff turnover: {leavers} of {staff} staff leave each year, about {annual} lost per year. Can we look at it together?"
+      }
     },
     "branding": {
       "navigation": {
@@ -842,7 +882,7 @@
       "branchRentLabel": "Monthly rent (₼)",
       "dailyChecksLabel": "Checks per day",
       "rentTaxTypeLabel": "Landlord (for tax)",
-      "rentTaxIndividual": "Individual (14% tax)",
+      "rentTaxIndividual": "Individual (14% tax on top of rent)",
       "rentTaxLegal": "Company (0%)",
       "branchInventoryDaysLabel": "Days of ingredient stock at opening",
       "labelFitoutPerSqm": "Fit-out per m² (₼)",
@@ -860,11 +900,11 @@
       "branchStatOpeningInvestment": "Money put into the opening",
       "branchStatWorkingCapital": "Running cash (stock, deposit, reserve)",
       "branchStatTaxBurden": "Tax",
-      "branchStatPrimeCost": "Main costs (ingredients + staff)",
+      "branchStatPrimeCost": "Prime cost (variable costs + payroll)",
       "branchStatEbitda": "Monthly profit (before tax and depreciation)",
       "branchStatNetProfit": "Net profit",
       "branchStatPayback": "Time to get your money back",
-      "branchStatRunway": "Months the money lasts (incl. running cash)",
+      "branchStatRunway": "Months of fixed costs the planned working capital covers",
       "branchStatCashRunway": "Months the money lasts (cash left only)",
       "branchStatRampLoss": "Loss of the first months (sales grow slowly)",
       "branchStatRentShare": "Rent as share of sales",
@@ -1089,7 +1129,7 @@
       "monthlyPnlTitle": "What delivery leaves you per month",
       "ordersPerDay": "orders/day",
       "days": "days",
-      "monthlyNetLabel": "You keep per month",
+      "monthlyNetLabel": "You keep per month (before rent and fixed costs)",
       "deliveryMathTitle": "Where does the commission rate come from?",
       "deliveryMathBody": "Three large platforms operate in Baku: Wolt, Bolt Food and Yango. The rate they charge restaurants is not published as an open price list — it depends on the contract, promotions and dish type. So you take the rate from your own contract and enter it; the 30% and 10% on the cards are only examples.",
       "tipsTitle": "7 ways to make delivery profitable",
@@ -1835,7 +1875,8 @@
       "invoices": "Invoices",
       "mobileOpenMenu": "Open menu",
       "mobileCloseMenu": "Close menu",
-      "freePlan": "Free"
+      "freePlan": "Free",
+      "excelTemplates": "Excel templates"
     },
     "topBar": {
       "notifications": "Notifications",
@@ -2112,11 +2153,11 @@
       "total_cac": "Total CAC",
       "evaluation": "Evaluation",
       "days": "days",
-      "benchmark_roi": "above 0% = ads pay for themselves",
+      "benchmark_roi": "Above 0% = the ad pays for itself, above 30% = healthy",
       "benchmark_roas": ">3x healthy",
       "benchmark_ltv": "≥3:1 healthy",
       "benchmark_payback": "<180 days ideal",
-      "benchmark_line": "Dashed line marks the 100% ROI benchmark.",
+      "benchmark_line": "The dashed line is {good}% ROI (healthy threshold).",
       "status_good": "Good",
       "status_warning": "Warning",
       "status_critical": "Critical",
@@ -2565,7 +2606,7 @@
       },
       "benchmarkNote": {
         "title": "Benchmark note",
-        "body": "Global influencer marketing return is often cited around $5.78 per $1; treat it as a comparison signal, not a hard target. A healthy LTV:CAC target is ≥ 3:1."
+        "body": "Compare ads against your own past campaigns. A common healthy target for LTV:CAC is ≥ 3:1."
       },
       "awarenessInfo": "This campaign is not measured as a sales campaign. In awareness mode, reach, CPM, and estimated EMV matter more than ROAS.",
       "ahilikQuote": "Ahilik wisdom: a master follows profit and trust, not noise.",
@@ -3285,6 +3326,15 @@
         "musteri": "Guests",
         "kontent": "Content"
       }
+    },
+    "complaintPage": {
+      "title": "Complaint analytics",
+      "subtitle": "Collect complaints in one place: see the repeating cause and the first step.",
+      "backToList": "All tools",
+      "whyTitle": "Why it matters",
+      "why": "Most complaints come from a few repeating causes. The tool groups complaints, shows the most frequent cause and suggests a fix.",
+      "tier": "KALFA",
+      "loading": "Loading..."
     }
   },
   "pricing": {
@@ -3336,7 +3386,7 @@
     "toolListToggle": "View {count} tools",
     "plannedToolsLabel": "Coming soon ({count})",
     "launchBadge": "Currently Free",
-    "launchNote": "Launch offer: all packages are free until September 1, 2026. Standard pricing applies after.",
+    "launchNote": "Launch offer: all packages are free until {date}. Standard pricing applies after.",
     "status": {
       "live": "live",
       "beta": "beta",
@@ -4439,7 +4489,7 @@
       "description": {
         "section_label": "About this tool",
         "block_1_title": "What we do",
-        "block_1_content": "Paste customer complaints and AI finds the root cause, categorizes them, and detects patterns. 1 written complaint = 26 silent dissatisfied customers. Generates an action plan.",
+        "block_1_content": "Paste customer complaints and AI finds the root cause, categorizes them, and detects patterns. Generates an action plan.",
         "block_2_title": "What you'll need",
         "block_2_items": [
           "Complaint text (copy from Google, TripAdvisor, Yandex)",
@@ -4940,7 +4990,7 @@
   "franchiseRoi": {
     "badge": "Franchise ROI Calculator",
     "title": "Is this franchise investment worth it?",
-    "subtitle": "Results update live as you change the numbers. Healthy franchise target: annual ROI ≥ 20%, payback ≤ 36 months.",
+    "subtitle": "The result updates as you change the numbers. Target for a healthy franchise: payback ≤ 36 months (that equals an annual ROI of about 33%).",
     "roiLabel": "annual return on investment (ROI)",
     "months": "months",
     "noProfit": "no profit",
@@ -4986,13 +5036,13 @@
       "grossProfit": "Gross profit",
       "royaltyAdFund": "Royalty + advertising fund",
       "opex": "Fixed operating expenses",
-      "netProfit": "Annual net profit",
+      "netProfit": "Annual profit before tax",
       "payback": "Payback period"
     },
     "verdict": {
-      "good": "Healthy metrics: ROI 20%+ and payback ≤ 36 months. Attractive franchise model.",
-      "mid": "Borderline: ROI 15–20% and payback ≤ 48 months. Could work, but cost/royalty optimisation would help.",
-      "bad": "Risky: ROI below 15% or payback over 48 months. Turnover, margin or cost structure needs re-evaluation.",
+      "good": "Healthy: the investment pays back within 36 months (annual ROI about 33% or more).",
+      "mid": "Middle zone: payback 36–48 months (annual ROI about 25–33%). It can work, but costs and royalty should be optimised.",
+      "bad": "Risky: payback over 48 months (annual ROI below about 25%). Revisit revenue, margin or the cost structure.",
       "negative": "No net profit in this scenario — the model needs to be restructured."
     },
     "explain": {
@@ -5015,6 +5065,13 @@
       "subDesc": "Rights granted by the master or area franchisee — not directly from the brand.",
       "warning": "Warning: \"I bought a franchise, so the country is mine\" is NOT TRUE. A standard single-unit franchise gives you just one location. Country rights = master franchise = separate and much higher fee + obligations.",
       "tip": "Entry fee varies by type: single-unit < area < master."
+    },
+    "live": "Live calculation",
+    "cta": {
+      "title": "Let's review these numbers together",
+      "body": "Send the franchise offer and your figures — we look at the risks with you before you sign.",
+      "button": "Send on WhatsApp",
+      "wa": "Hello Doğan, I calculated a franchise ROI: ROI {roi}%, payback {payback}, investment {investment}. Can we review it together?"
     }
   },
   "franchiseReadiness": {
@@ -5676,11 +5733,11 @@
       },
       "airbnbExpand": {
         "heading": "Add Airbnb and aim for Superhost",
-        "subline": "You already have experience on Booking. Add Airbnb and reach Superhost status within 6 months. Together, both platforms increase monthly income by 40-60%."
+        "subline": "You already have Booking experience. Add Airbnb and aim for Superhost status within 6 months — two platforms together can bring more guests."
       },
       "directStrategy": {
         "heading": "Build a direct booking strategy",
-        "subline": "You're strong across multiple platforms. Now the goal is to reduce commissions. With WhatsApp Business, your own website and a loyalty programme, move 30-40 of every 100 guests to direct booking — and keep half of the commission."
+        "subline": "You are strong on several platforms. Now the goal is lower commission: with WhatsApp Business, your own website and a loyalty programme, move part of your guests to direct booking."
       },
       "multiPlatformPro": {
         "heading": "Multi-platform expert — consider a channel manager",
@@ -5759,9 +5816,9 @@
       "noProfitText": "no profit — the money does not come back"
     },
     "verdicts": {
-      "healthy": "Healthy model: profit above 1,000 ₼ a month, your money comes back within 2 years.",
-      "borderline": "Borderline: your money comes back within 4 years. Look at cutting costs and site commission.",
-      "risky": "Risky: profit is small, your money comes back very slowly.",
+      "healthy": "Good model: the investment comes back within 2 years.",
+      "borderline": "Borderline: the money comes back in 2–4 years. Look at cutting costs and booking-site commission.",
+      "risky": "Risky: the investment takes more than 4 years to come back.",
       "unprofitable": "Loss: costs and commission are higher than income."
     },
     "validation": {
@@ -6483,7 +6540,7 @@
       }
     },
     "modules": {
-      "eyebrow": "Modules",
+      "eyebrow": "Tools and solutions",
       "title": "Some bring money in. Others protect it.",
       "desc": "Each module answers one question and ends with one step. The status badge is real: <b>Live</b> is working, <b>Beta</b> is in testing.",
       "groupCost": "Costs",
@@ -7155,7 +7212,7 @@
           "how": [
             "Enter your current staff count, average monthly salary and how many people left last year (example: 18 staff, 850 ₼, 12 people).",
             "The tool works out the share of staff who left: in the example 12 ÷ 18 = 66.7%.",
-            "Replacing one person costs about 2–3 months of salary (a widely used rule of thumb): in the example about 25,500 ₼ is lost per year."
+            "Enter what one leaver costs in 5 parts: empty days, search, training, profit lost until full speed and mistakes (example: one leaver ≈ 1,015 ₼, × 12 people ≈ 12,180 ₼ a year)."
           ]
         }
       }
@@ -7194,9 +7251,9 @@
     },
     "news": {
       "eyebrow": "Sector Pulse",
-      "title1": "What changed in the sector.",
-      "title2": "What it means <em>for you</em>.",
-      "lead": "Curated HoReCa news — with a short explanation for restaurant, café and hotel owners in Azerbaijan.",
+      "title1": "Today in the world of",
+      "title2": "restaurants, cafés and <em>hotels</em>.",
+      "lead": "Selected HoReCa news from Azerbaijan and the world — a short summary and the source, updated daily.",
       "countersLabel": "Counters",
       "last7": "articles in the last 7 days",
       "total": "published articles",
@@ -7839,5 +7896,91 @@
     "franchise": "Franchise",
     "sektor": "Sectors",
     "listings": "Listings"
+  },
+  "excelTemplates": {
+    "back": "All tools",
+    "trail": "Tools / Excel templates",
+    "eyebrow": "Excel templates",
+    "title": "Ready-made Excel templates for restaurants",
+    "lead": "Profit and loss, inventory, payroll, budget and balance sheet — formulas built in, in Azerbaijani. Enter your numbers, the template does the rest.",
+    "featuresLabel": "Template features",
+    "features": {
+      "f1": "Formulas ready",
+      "f2": "Opens in Excel, Google Sheets and Numbers",
+      "f3": "A «how to use» page in every file",
+      "f4": "Free for members"
+    },
+    "gate": {
+      "title": "Join for free to download",
+      "body": "Sign-up takes a minute. Previews are open to everyone; downloads are for members.",
+      "register": "Join for free",
+      "login": "Sign in"
+    },
+    "format": "Excel · .xlsx",
+    "download": "Download",
+    "locked": "Join to download",
+    "previewAlt": "Preview of the «{name}» template (sample numbers)",
+    "note": "The numbers in the templates are examples — replace them with your own. Confirm tax and insurance contribution rates with your accountant. You may use the templates freely in your business; selling them or sharing them under another name is not allowed.",
+    "bandTitle": "5 ready-made Excel templates for restaurants",
+    "bandBody": "Profit and loss (12 months), inventory and cost of sales, payroll, budget vs actual, balance sheet. Free for members.",
+    "bandCta": "See the templates",
+    "items": {
+      "menfeet-zerer-12-ay": {
+        "title": "12-month profit and loss",
+        "body": "Revenue, costs and profit for every month in one sheet, with the year total and each line as a share of sales.",
+        "b1": "Gross, operating, pre-tax and net profit",
+        "b2": "Prime cost (cost of sales + payroll) month by month",
+        "b3": "Loss-making months turn red"
+      },
+      "anbar-ve-maya-deyeri": {
+        "title": "Inventory and cost of sales",
+        "body": "Opening stock, purchases and the closing count give the cost of food used and your food cost %.",
+        "b1": "40 item rows with category and unit",
+        "b2": "«Reorder» alert at the reorder level",
+        "b3": "Food cost % calculated automatically"
+      },
+      "isci-xerci": {
+        "title": "Payroll costs",
+        "body": "Wages by position, overtime and employer insurance contributions; payroll as a share of sales.",
+        "b1": "Front and kitchen separately",
+        "b2": "Payroll per guest and guests per labour hour",
+        "b3": "Prime cost % together with food cost"
+      },
+      "budce-ve-faktiki": {
+        "title": "Budget vs actual",
+        "body": "Put the monthly plan next to actual spend: variance in ₼ and %, overspend in red.",
+        "b1": "21 lines from rent to delivery commission",
+        "b2": "Group subtotals and grand total",
+        "b3": "A note column for every line"
+      },
+      "balans": {
+        "title": "Balance sheet",
+        "body": "Assets, liabilities and equity for two years, with a check row and ratios showing the ability to pay debts.",
+        "b1": "Current and non-current assets and liabilities",
+        "b2": "Current ratio and debt ratio",
+        "b3": "The «check» row flags mistakes at once"
+      }
+    }
+  },
+  "toolPitch": {
+    "ocaq": {
+      "eyebrow": "OCAQ",
+      "title": "Want to see this number every day?",
+      "body": "OCAQ runs shift checklists, HACCP, cash ↔ bank reconciliation and waste control every day across a multi-branch chain; numbers out of range reach the manager.",
+      "cta": "Show me OCAQ"
+    },
+    "marketing": {
+      "eyebrow": "Marketinq Ocağı",
+      "title": "The next step to grow sales",
+      "body": "Ad return, season plan, complaint analysis and guest profile — KALFA and USTA tools in one place.",
+      "cta": "See Marketinq Ocağı"
+    },
+    "service": {
+      "eyebrow": "Dedicated service",
+      "title": "Let’s build this together",
+      "body": "The first step is a free diagnostic: we look at the menu, costs, staff and opening plan with you, then build the system together.",
+      "cta": "Write on WhatsApp",
+      "wa": "Hello Doğan, I used a tool and would like a free diagnostic."
+    }
   }
 }

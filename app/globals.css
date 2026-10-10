@@ -98,13 +98,16 @@
   --color-dk-warning: var(--dk-warning);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  /* TASK-0533: Inter everywhere (was Playfair Display). */
+  --font-display: var(--font-sans), system-ui, sans-serif;
+  /* TASK-0533: old pages use `font-serif` headings — same typeface (Inter), no serif fallback. */
+  --font-serif: var(--font-sans), system-ui, sans-serif;
 }
 
 body {
   background: var(--bg-deepest);
   color: var(--text-primary);
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -169,7 +172,7 @@ textarea::placeholder {
 
 /* Blog content typography — DARK THEME */
 .blog-content {
-  font-family: 'DM Sans', Georgia, serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   line-height: 1.85;
   color: var(--dk-ink-soft);
   overflow-wrap: anywhere;
@@ -215,7 +218,7 @@ textarea::placeholder {
   background: color-mix(in srgb, var(--dk-red) 8%, white);
   font-weight: 600;
   color: color-mix(in srgb, var(--dk-red) 82%, black);
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .blog-content tr:hover {
@@ -299,7 +302,7 @@ hr, .blog-content hr, .news-content hr {
 .blog-content h1, .blog-content h2, .blog-content h3, 
 .blog-content h4, .blog-content h5, .blog-content h6 {
   color: var(--dk-ink);
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 700;
 }
 

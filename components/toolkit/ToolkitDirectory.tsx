@@ -30,6 +30,7 @@ const CHIPS = ['food', 'wolt', 'aqta', 'shift'] as const;
 export default function ToolkitDirectory() {
   const t = useTranslations('innerV2.toolkit');
   const tc = useTranslations('innerV2.common');
+  const tx = useTranslations('excelTemplates');
   const locale = normalizeLocale(useLocale());
   const [group, setGroup] = useState<GroupKey>('all');
   const [query, setQuery] = useState('');
@@ -265,6 +266,25 @@ export default function ToolkitDirectory() {
               ))
             )}
           </div>
+        </section>
+
+        {/* TASK-0532: DK Excel templates (download for free members). */}
+        <section aria-labelledby="tk-xls-title" style={{ paddingTop: 8 }}>
+          <Link
+            href={withLocale(locale, '/toolkit/excel-sablonlar')}
+            data-testid="toolkit-excel-band"
+            className="flex flex-col gap-4 rounded-[22px] border border-[#E4DCCD] bg-white p-5 transition-colors hover:border-[#0F172A] sm:flex-row sm:items-center sm:justify-between sm:p-6"
+          >
+            <div>
+              <span className={home.eyebrow}>
+                <span className={home.dot} />
+                {tx('eyebrow')}
+              </span>
+              <h2 id="tk-xls-title" className="mt-2 text-[20px] font-black tracking-[-0.02em] text-[#0F172A]">{tx('bandTitle')}</h2>
+              <p className="mt-1 text-[14.5px] leading-6 text-slate-600">{tx('bandBody')}</p>
+            </div>
+            <span className="inline-flex min-h-11 shrink-0 items-center rounded-full bg-[#0F172A] px-5 text-[14px] font-bold text-white">{tx('bandCta')} →</span>
+          </Link>
         </section>
 
         <section className={s.sec}>

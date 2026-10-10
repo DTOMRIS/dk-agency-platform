@@ -2,60 +2,33 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { AlertCircle } from 'lucide-react';
-import { normalizeLocale, type Locale } from '@/i18n/config';
+import { normalizeLocale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import SikayetForm from './SikayetForm';
 import SikayetResult from './SikayetResult';
 import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
 import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
-const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
-  az: {
-    title: 'Sikayet Analitigi',
-    subtitle: 'Her sikayet arxasinda 26 sessiz musteri var. Kok sebebi tap.',
-    backToList: 'Butun aletler',
-    whyTitle: 'Niye bu vacibdir?',
-    why: 'Her sikayet arxasinda 26 sessiz narazi musteri var. AI pattern-leri tapir, kok sebebi gosterir ve hell plani teklif edir.',
-    tier: 'KALFA',
-    loading: 'Yuklenir...',
-  },
-  en: {
-    title: 'Complaint Analytics',
-    subtitle: 'Behind every complaint are 26 silent customers. Find the root cause.',
-    backToList: 'All tools',
-    whyTitle: 'Why is this important?',
-    why: 'For every complaint, 26 unhappy customers stay silent. AI finds patterns, root causes, and action plans.',
-    tier: 'PRO',
-    loading: 'Loading...',
-  },
-  tr: {
-    title: 'Sikayet Analitigi',
-    subtitle: 'Her sikayetin arkasinda 26 sessiz musteri var. Kok nedeni bul.',
-    backToList: 'Tum araclar',
-    whyTitle: 'Bu neden onemli?',
-    why: 'Her sikayetin arkasinda 26 sessiz mutsuz musteri var. AI kaliplari bulur, kok nedeni gosterir.',
-    tier: 'KALFA',
-    loading: 'Yukleniyor...',
-  },
-  ru: {
-    title: 'Complaint Analytics',
-    subtitle: 'Behind every complaint are 26 silent customers. Find the root cause.',
-    backToList: 'All tools',
-    whyTitle: 'Why is this important?',
-    why: 'For every complaint, 26 unhappy customers stay silent. AI finds patterns, root causes, and action plans.',
-    tier: 'PRO',
-    loading: 'Loading...',
-  },
-};
-
+// TASK-0534 (copy audit 10.10): texts live in messages → marketinq.complaintPage (the «26 silent customers»
+// figure had no source; AZ/TR had no diacritics; RU was English).
 type ViewMode = 'loading' | 'form' | 'result';
 
 export default function SikayetAnalitiyiPage() {
   const pathname = usePathname();
   const locale = normalizeLocale(pathname.split('/')[1]);
-  const c = pageCopy[locale];
+  const tc = useTranslations('marketinq.complaintPage');
+  const c = {
+    title: tc('title'),
+    subtitle: tc('subtitle'),
+    backToList: tc('backToList'),
+    whyTitle: tc('whyTitle'),
+    why: tc('why'),
+    tier: tc('tier'),
+    loading: tc('loading'),
+  };
   const tierColors = TIER_COLORS.kalfa;
 
   const [view, setView] = useState<ViewMode>('loading');

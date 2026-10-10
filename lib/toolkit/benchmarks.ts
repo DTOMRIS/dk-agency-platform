@@ -17,6 +17,8 @@ export const FOOD_COST_MAX_PCT = 32;
 export const LABOR_MAX_PCT = 35;
 /** Net margin below this % → "low margin" insight. */
 export const NET_MARGIN_LOW_PCT = 5;
+/** TASK-0534: lower end of the «10–15%» net profit range shown in the P&L benchmark panel. */
+export const NET_MARGIN_TARGET_PCT = 10;
 
 /** Food cost sector bands of the Food Cost tool (owner 2026-10-09). */
 export const FOOD_COST_SECTOR_BANDS = [

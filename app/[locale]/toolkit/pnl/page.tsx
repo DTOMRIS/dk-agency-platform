@@ -23,6 +23,7 @@ import {
   FOOD_COST_MAX_PCT,
   LABOR_MAX_PCT,
   NET_MARGIN_LOW_PCT,
+  NET_MARGIN_TARGET_PCT,
   PRIME_COST_MAX_PCT,
   RENT_MAX_PCT,
 } from '@/lib/toolkit/benchmarks';
@@ -526,6 +527,8 @@ function InsightPanel({
   const insights = [];
   if (netMargin < 0) insights.push({ tone: 'red', text: t('insights.negativeMargin') });
   else if (netMargin < NET_MARGIN_LOW_PCT) insights.push({ tone: 'amber', text: t('insights.lowMargin') });
+  // TASK-0534 (calc audit): 5–10% is below the 10–15% shown in the benchmark panel — not «normal».
+  else if (netMargin < NET_MARGIN_TARGET_PCT) insights.push({ tone: 'amber', text: t('insights.belowTargetMargin') });
   else insights.push({ tone: 'emerald', text: t('insights.healthyMargin') });
   if (foodCostPct > FOOD_COST_MAX_PCT) insights.push({ tone: 'amber', text: t('insights.foodCostHigh', { value: formatPercent(FOOD_COST_MAX_PCT) }) });
   if (staffCostPct > LABOR_MAX_PCT) insights.push({ tone: 'amber', text: t('insights.laborCostHigh', { value: formatPercent(LABOR_MAX_PCT) }) });
