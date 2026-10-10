@@ -1,36 +1,26 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useMessages } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import PersonaForm from './PersonaForm';
 import PersonaResult from './PersonaResult';
 import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
-const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
-  az: { title: 'Müştəri Persona', subtitle: 'Hədəf müştəri profilini yaradın', backToList: 'Bütün alətlər',
-    whyTitle: 'Niyə bu vacibdir?', why: 'Hər kəsə satmaq heç kimə satmaq deməkdir. AI sizin restoran üçün 2 ideal persona + 1 anti-persona yaradır, marketinq mesajını kəskinləşdirir.',
-    tier: 'KALFA', loading: 'Yüklənir...' },
-  en: { title: 'Customer Persona', subtitle: 'Build target customer profiles', backToList: 'All tools',
-    whyTitle: 'Why is this important?', why: 'Selling to everyone means selling to no one. AI creates 2 ideal personas + 1 anti-persona for your restaurant.',
-    tier: 'PRO', loading: 'Loading...' },
-  tr: { title: 'Müşteri Persona', subtitle: 'Hedef müşteri profili oluşturun', backToList: 'Tüm araçlar',
-    whyTitle: 'Bu neden önemli?', why: 'Herkese satmak kimseye satmamak demektir. AI restoranınız için 2 ideal persona + 1 anti-persona oluşturur.',
-    tier: 'KALFA', loading: 'Yükleniyor...' },
-  ru: { title: 'Персона Клиента', subtitle: 'Создайте профиль целевого клиента', backToList: 'Все инструменты',
-    whyTitle: 'Почему это важно?', why: 'Продавать всем — значит не продавать никому. AI создаёт 2 идеальных персоны + 1 анти-персону.',
-    tier: 'ПОДМАСТЕРЬЕ', loading: 'Загрузка...' },
-};
+// TASK-0523: copy moved to messages/*.json → mqForms.musteriPersonaPage (was an in-file locale map).
+type MusteriPersonaCopy = { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string };
 
 type ViewMode = 'loading' | 'form' | 'result';
 
 export default function MusteriPersonaPage() {
   const pathname = usePathname();
   const locale = normalizeLocale(pathname.split('/')[1]);
-  const c = pageCopy[locale];
+  const c = (useMessages() as unknown as { mqForms: { musteriPersonaPage: MusteriPersonaCopy } }).mqForms.musteriPersonaPage;
   const tierColors = TIER_COLORS.kalfa;
 
   const [view, setView] = useState<ViewMode>('loading');
@@ -45,22 +35,12 @@ export default function MusteriPersonaPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-8">
-      <Link href="/b2b-panel/marketinq-ocagi" className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />{c.backToList}
-      </Link>
-
-      <div className="mb-6 flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{c.title}</h1>
-          <p className="mt-1 text-sm text-slate-500">{c.subtitle}</p>
-        </div>
-        <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${tierColors.bg} ${tierColors.text} ${tierColors.border}`}>{c.tier}</span>
-      </div>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="musteri-persona" title={c.title} subtitle={c.subtitle} />
 
       {view !== 'result' && (
-        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
-          <p>Hər kəsə satmaq heç kimə satmaq deməkdir. AI sizin restoran üçün 2 ideal persona + 1 anti-persona yaradır, marketinq mesajını kəskinləşdirir.</p>
+        <ToolInfoBox title={c.whyTitle} variant="info">
+          <p>{c.why}</p>
         </ToolInfoBox>
       )}
 

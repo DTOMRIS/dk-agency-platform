@@ -114,7 +114,7 @@ export default function ReklamForm({ locale, onResult, onError }: ReklamFormProp
     }
   }
 
-  const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+  const inputCls = 'w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
   const labelCls = 'mb-1.5 block text-sm font-medium text-slate-700';
 
   return (
@@ -165,7 +165,7 @@ export default function ReklamForm({ locale, onResult, onError }: ReklamFormProp
       </div>
 
       <button type="submit" disabled={loading || charCount < 20}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-navy)] px-6 py-3 text-sm font-bold text-white transition hover:bg-[var(--dk-navy)]/90 disabled:cursor-not-allowed disabled:opacity-50">
+        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 py-3 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-50">
         {loading ? <>{c.submitting}</> : <><Send size={16} />{c.submit}</>}
       </button>
     </form>

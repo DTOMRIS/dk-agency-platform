@@ -149,7 +149,7 @@ const CLUSTERS = {
   'Audit / KST / yoxlama': /restoran-audit|kst|auditor|yoxlama|aqta/i,
   'Elan / listing': /ilan|listing|elan/i,
   'Faktura / qaimə': /fatura|invoice/i,
-  'Giriş / qeydiyyat': /login|register|auth\/|signin|giris/i,
+  'Giriş / qeydiyyat': /login|register|auth\/|signin|giris|forgot-password|reset-password|verify-email|AuthShell/i,
   'Başabaş': /basabas|break-?even/i,
   'Persona': /persona/i,
 };

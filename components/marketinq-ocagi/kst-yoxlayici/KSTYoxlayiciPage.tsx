@@ -3,12 +3,13 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import KSTQuestionnaireForm from './KSTQuestionnaireForm';
 import KSTResultCard from './KSTResultCard';
 import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 const pageCopy: Record<Locale, {
   title: string;
@@ -24,7 +25,7 @@ const pageCopy: Record<Locale, {
     subtitle: 'Keyfiyyət, Servis, Təmizlik öz-özünə audit',
     backToList: 'Bütün alətlər',
     whyTitle: 'Niyə bu vacibdir?',
-    why: 'KST mükəmməlliyi bütün marketinq səylərinin təməlidir. Servis yavaş, məkan kirli, yemək keyfiyyətsizdirsə — heç bir reklam dönüşüm yaratmır. Bu alət 30 sualla 3 sahəni ölçür.',
+    why: 'KST mükəmməlliyi bütün marketinq səylərinin təməlidir. Servis yavaş, məkan kirli, yemək keyfiyyətsizdirsə — heç bir reklam dönüşüm yaratmır. Bu alət 35 sualla 4 sahəni ölçür: keyfiyyət, servis, təmizlik və komanda.',
     tier: 'ŞAGIRD',
     loading: 'Yüklənir...',
   },
@@ -103,28 +104,12 @@ export default function KSTYoxlayiciPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-8">
-      <Link
-        href="/b2b-panel/marketinq-ocagi"
-        className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-[var(--dk-navy)]"
-      >
-        <ArrowLeft size={16} />
-        {copy.backToList}
-      </Link>
-
-      <div className="mb-6 flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{copy.title}</h1>
-          <p className="mt-1 text-sm text-slate-500">{copy.subtitle}</p>
-        </div>
-        <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${tierColors.bg} ${tierColors.text} ${tierColors.border}`}>
-          {copy.tier}
-        </span>
-      </div>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="kst-yoxlayici" title={copy.title} subtitle={copy.subtitle} />
 
       {view !== 'result' && (
-        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
-          <p>KST mükəmməlliyi bütün marketinq səylərinin təməlidir. Servis yavaş, məkan kirli, yemək keyfiyyətsizdirsə — heç bir reklam dönüşüm yaratmır. Bu alət 30 sualla 3 sahəni ölçür.</p>
+        <ToolInfoBox title={copy.whyTitle} variant="info">
+          <p>{copy.why}</p>
         </ToolInfoBox>
       )}
 

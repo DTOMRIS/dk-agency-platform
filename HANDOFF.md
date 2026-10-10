@@ -1,5 +1,13 @@
 # HANDOFF
 
+## Session 10 Oktyabr 2026 (gün) — TASK-0524 təhlükəsizlik + v2 dizayn, TASK-0525 sistem xəritəsi
+
+**Əvvəl oxu:** `docs/ARCHITECTURE/SYSTEM-MAP.md` (yenidən yarat: `node scripts/generate-system-map.mjs`). Doğan: «yamaq yox, tam xəritə».
+- Təhlükəsizlik: `listings?scope=admin`, `telegram/post`, `invoice-ocr/pdf` qoruyucu aldı. Xəritədə qalan «qorumasız» siyahı ictimai route-lardır (yoxlandı).
+- v2 mənbələri: `components/inner/*`, `components/marketinq-ocagi/MarketinqV2.tsx` (ToolHeader/MarketinqFrame), `components/brand/DkMark.tsx`, `components/auth/AuthShell.tsx`. Yeni alət/səhifə bunlarla qurulur.
+- Haiku auditinin tapıntıları (admin + b2b panel): sahte faktura detalı, saxta şifrə dəyişmə, mock fallback-lar, funnel addımlarının məntiqi, «gözləyən elan» 3 tərif — hələ açıqdır (növbəti tapşırıq).
+- Lokasyon Analiz: Doğan-ın «Mytcha» açılış formu (Excel) metodologiyası ilə yenilənəcək (yalnız metod; Shaurma rəqəmləri köçürülmür).
+
 ## Session 10 Oktyabr 2026 — TASK-0523: Marketinq Ocağı düzəlişləri + birləşdirmə + OCAQ məntiqi
 
 **Budaq:** `feat/TASK-0523-marketinq-fixes` (origin/main dc80c8d-dən). Kart: `docs/tasks/TASK-0523.md` (hər düzəlişin faylı və sübutu orada). Korumalı fayla toxunulmayıb.

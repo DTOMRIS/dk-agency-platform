@@ -91,7 +91,7 @@ export default function QuestionnaireForm({ locale, onResult, onError }: Questio
       {SELECT_FIELDS.map((fieldName) => {
         return (
           <div key={fieldName}>
-            <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">
+            <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">
               {t(`${fieldName}.label`)}
             </label>
             {HAS_HELP.has(fieldName) && (
@@ -101,7 +101,7 @@ export default function QuestionnaireForm({ locale, onResult, onError }: Questio
               name={fieldName}
               value={form[fieldName]}
               onChange={(e) => updateField(fieldName, e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+              className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15"
               required
             >
               <option value="" disabled>—</option>
@@ -115,7 +115,7 @@ export default function QuestionnaireForm({ locale, onResult, onError }: Questio
 
       {/* competitorGap — textarea */}
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">
+        <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">
           {t('competitorGap.label')}
         </label>
         <p className="mb-2 text-xs text-slate-600">{t('competitorGap.help')}</p>
@@ -125,7 +125,7 @@ export default function QuestionnaireForm({ locale, onResult, onError }: Questio
           onChange={(e) => updateField('competitorGap', e.target.value)}
           placeholder={t('competitorGap.placeholder')}
           rows={4}
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+          className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15"
           required
           minLength={20}
           maxLength={500}
@@ -134,7 +134,7 @@ export default function QuestionnaireForm({ locale, onResult, onError }: Questio
 
       {/* recommendReason — text input */}
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">
+        <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">
           {t('recommendReason.label')}
         </label>
         <input
@@ -143,7 +143,7 @@ export default function QuestionnaireForm({ locale, onResult, onError }: Questio
           value={form.recommendReason}
           onChange={(e) => updateField('recommendReason', e.target.value)}
           placeholder={t('recommendReason.placeholder')}
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+          className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15"
           required
           minLength={10}
           maxLength={200}

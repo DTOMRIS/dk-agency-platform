@@ -76,9 +76,9 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
   return (
     <div className="space-y-5">
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('restName')}</label>
+        <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('restName')}</label>
         <input type="text" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} disabled={loading}
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20" />
+          className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15" />
       </div>
 
       <div className="space-y-3">
@@ -209,7 +209,7 @@ export default function MenyuAnalitiyiForm({ locale, onResult, onError }: Props)
 
       <div className="flex items-center justify-between">
         <button type="button" onClick={addItem} disabled={loading || items.length >= 50}
-          className="inline-flex items-center gap-1 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-xs font-semibold text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]">
+          className="inline-flex items-center gap-1 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-xs font-semibold text-slate-500 transition hover:border-[#0F172A] hover:text-[#0F172A]">
           <Plus size={14} />{t('addItem')}
         </button>
         <span className="text-xs text-slate-400">{filledItems.length} / {items.length}</span>

@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import AuthShell, { AUTH_BUTTON, AUTH_INPUT, AUTH_LABEL } from '@/components/auth/AuthShell';
 
 const resetCopy: Record<Locale, {
   title: string;
@@ -140,10 +141,9 @@ export default function ResetPasswordPageClient() {
     }
   };
 
+  // TASK-0524: v2 auth frame (same as login / register).
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50 px-4 py-16">
-      <div className="mx-auto max-w-xl rounded-3xl border border-slate-200 bg-white p-8 shadow-2xl">
-        <h1 className="text-3xl font-black text-slate-900">{copy.title}</h1>
+    <AuthShell narrow title={copy.title} backHref="/auth/login">
         {!token ? (
           <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
             {copy.invalidToken}
@@ -156,23 +156,23 @@ export default function ResetPasswordPageClient() {
         ) : (
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">{copy.newPasswordLabel}</label>
+              <label className={AUTH_LABEL}>{copy.newPasswordLabel}</label>
               <input
                 type="password"
                 autoComplete="new-password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
+                className={`${AUTH_INPUT} !pl-4`}
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">{copy.confirmPasswordLabel}</label>
+              <label className={AUTH_LABEL}>{copy.confirmPasswordLabel}</label>
               <input
                 type="password"
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
+                className={`${AUTH_INPUT} !pl-4`}
               />
             </div>
             {error ? (
@@ -181,7 +181,7 @@ export default function ResetPasswordPageClient() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-xl bg-dk-red-strong py-3.5 font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60"
+              className={AUTH_BUTTON}
             >
               {submitting ? copy.submitting : copy.submitBtn}
             </button>
@@ -196,7 +196,6 @@ export default function ResetPasswordPageClient() {
             {copy.requestNewLink}
           </Link>
         </div>
-      </div>
-    </div>
+    </AuthShell>
   );
 }

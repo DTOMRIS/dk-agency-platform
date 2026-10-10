@@ -1,14 +1,14 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 3575dc8
+> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 90ce13b
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
 - Ünvan: **137** (həqiqi səhifə 129, yönləndirmə 6, güzgü 2) · page faylı 252
-- Dizayn (həqiqi səhifələr): v2 **19** · köhnə **58** · qarışıq **19** · işarəsiz 33
-- Geri düyməsi yoxdur: **61** səhifə
+- Dizayn (həqiqi səhifələr): v2 **24** · köhnə **57** · qarışıq **19** · işarəsiz 29
+- Geri düyməsi yoxdur: **58** səhifə
 - API: **112** route · qoruma işarəsi yoxdur: **36** (siyahı aşağıda — ictimai olanlar normaldır, qalanı yoxlanmalıdır)
-- Sənəd: 59 (+ 359 tapşırıq kartı)
+- Sənəd: 59 (+ 360 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -23,12 +23,12 @@
 | Audit / KST / yoxlama | /dashboard/aqta-checklist, /dashboard/auditor, /marketinq/restoran-audit, /toolkit/aqta-checklist | 4: marketinq-ocagi/kst-yoxlayici/KSTQuestionnaireForm.tsx, marketinq-ocagi/kst-yoxlayici/KSTResultCard.tsx, marketinq-ocagi/kst-yoxlayici/KSTYoxlayiciPage.tsx, marketinq-ocagi/restoran-audit/RestoranAuditPage.tsx | /api/marketing-tools/kst-yoxlayici |
 | Elan / listing | /b2b-panel/ilanlarim/[id]/edit, /b2b-panel/ilanlarim/[id], /b2b-panel/ilanlarim, /b2b-panel/yeni-ilan, /dashboard/ilanlar/[id], /dashboard/ilanlar, /dashboard/ilanlar/whatsapp, /ilan-ver, /ilanlar/[slug], /ilanlar, /is-elanlari, /listings, /dashboard/ilanlar/yarat | 10: home/ListingsPreview.tsx, home/ListingsPreviewSection.tsx, listings/CreateListingForm.tsx, listings/LeadForm.tsx, listings/ListingCard.tsx, listings/ListingDetailClient.tsx, listings/ListingForm.tsx, listings/ListingModal.tsx … | /api/listings/[id]/leads, /api/listings/[id]/reviews, /api/listings/[id], /api/listings/[id]/status, /api/listings/admin/whatsapp-import, /api/listings/batch-status, /api/listings |
 | Faktura / qaimə | /b2b-panel/faturalar, /dashboard/fatura-kateqoriyalar, /dashboard/faturalar/[id], /dashboard/faturalar | 0:  | /api/invoice-categories, /api/invoice-ocr, /api/invoice-pdf, /api/invoices |
-| Giriş / qeydiyyat | /auth/forgot-password, /auth/login, /auth/register | 3: auth/ForgotPasswordPageClient.tsx, auth/ResetPasswordPageClient.tsx, auth/VerifyEmailPageClient.tsx | /api/auth/change-password, /api/auth/confirm, /api/auth/forgot-password, /api/auth/login, /api/auth/logout, /api/auth/me, /api/auth/register, /api/auth/reset-password, /api/auth/verify-email |
+| Giriş / qeydiyyat | /auth/forgot-password, /auth/login, /auth/register, /forgot-password, /reset-password, /verify-email | 4: auth/AuthShell.tsx, auth/ForgotPasswordPageClient.tsx, auth/ResetPasswordPageClient.tsx, auth/VerifyEmailPageClient.tsx | /api/admin/members/[id]/reset-password, /api/auth/change-password, /api/auth/confirm, /api/auth/forgot-password, /api/auth/login, /api/auth/logout, /api/auth/me, /api/auth/register, /api/auth/reset-password, /api/auth/verify-email |
 | Başabaş | /toolkit/basabas | 0:  | — |
 | Persona | /marketinq/musteri-persona | 4: marketinq-ocagi/musteri-persona/MusteriPersonaPage.tsx, marketinq-ocagi/musteri-persona/PersonaForm.tsx, marketinq-ocagi/musteri-persona/PersonaResult.tsx, marketinq/CustomerPersona.tsx | /api/marketing-tools/musteri-persona |
 
 ## Ortaq UI variantları (bir olmalıdır)
-- **Logo (DK işarəsi)** (7): `components/b2b-panel/B2BSidebar.tsx`, `components/brand/DkMark.tsx`, `components/dashboard/DashboardSidebar.tsx`, `components/layout/Footer.tsx`, `components/layout/Header.tsx`, `app/api/news/card/[id]/route.tsx`, `app/haberler/[slug]/page.tsx`
+- **Logo (DK işarəsi)** (8): `components/auth/AuthShell.tsx`, `components/b2b-panel/B2BSidebar.tsx`, `components/brand/DkMark.tsx`, `components/dashboard/DashboardSidebar.tsx`, `components/layout/Footer.tsx`, `components/layout/Header.tsx`, `app/api/news/card/[id]/route.tsx`, `app/haberler/[slug]/page.tsx`
 - **Üst bar / header** (7): `components/HospitalityHeader.tsx`, `components/dashboard/supply/SuppliersTab.tsx`, `components/dashboard/ui/Charts.tsx`, `components/editorial/HospitalityHeader.tsx`, `components/home/HospitalityHeader.tsx`, `components/layout/Header.tsx`, `components/shared/HospitalityHeader.tsx`
 - **Geri düyməsi komponenti** (1): `components/inner/InnerParts.tsx`
 - **Yan menyu (sidebar)** (2): `components/b2b-panel/B2BSidebar.tsx`, `components/dashboard/DashboardSidebar.tsx`
@@ -36,7 +36,7 @@
 ## Səhifələr — bölmə üzrə
 Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 = krem + Inter + inner/v2 tokenləri; köhnə = navy/gold/serif/boz fon) · **Giriş** · **Geri** · **AZ** = faylda sabit Azərbaycan mətni (i18n olmalıdır).
 
-### İctimai səhifələr — 27 ünvan (v2 2 · köhnə 7 · qarışıq 1)
+### İctimai səhifələr — 27 ünvan (v2 5 · köhnə 7 · qarışıq 1)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/` | səhifə | v2 | — | ✓ |  | ads/AdSlot.tsx, home/v2/HomeV2.tsx, home/v2/homeV2.module.css |
@@ -46,7 +46,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/cookies` | səhifə | — | — | ✗ |  |  |
 | `/elaqe` | səhifə | v2 | — | ✓ |  | contact/ContactFunnel.tsx, home/v2/font.ts |
 | `/email-preferences` | səhifə | köhnə | — | ✗ |  |  |
-| `/forgot-password` | səhifə | — | — | ✗ |  | auth/ForgotPasswordPageClient.tsx |
+| `/forgot-password` | səhifə | v2 | — | ✓ |  | auth/ForgotPasswordPageClient.tsx |
 | `/haqqimizda` | səhifə | qarışıq | — | ✓ | 36 | home/DoganNote.tsx, home/AhilikValues.tsx |
 | `/heromotif` (yalnız kök) | səhifə | — | — | ✗ | 2 | HeroMotif/index.ts |
 | `/is-elanlari` | səhifə | köhnə | — | ✗ |  |  |
@@ -57,7 +57,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/privacy` | səhifə | — | — | ✗ |  |  |
 | `/qiymet` | səhifə | köhnə | — | ✗ | 3 |  |
 | `/randevu` | səhifə | — | — | ✗ | 2 |  |
-| `/reset-password` | səhifə | — | — | ✗ |  | auth/ResetPasswordPageClient.tsx |
+| `/reset-password` | səhifə | v2 | — | ✓ |  | auth/ResetPasswordPageClient.tsx |
 | `/sedd-rozeti` | səhifə | köhnə | — | ✗ |  |  |
 | `/sektor` | səhifə | — | — | ✗ |  |  |
 | `/sektor/[slug]` | səhifə | — | — | ✗ |  |  |
@@ -65,14 +65,14 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/terefdashlar` | səhifə | köhnə | — | ✓ | 3 | shared/ComingSoon.tsx |
 | `/terms` | səhifə | — | — | ✗ |  |  |
 | `/uzvluk` | səhifə | — | — | ✗ |  |  |
-| `/verify-email` | səhifə | — | — | ✗ |  | auth/VerifyEmailPageClient.tsx |
+| `/verify-email` | səhifə | v2 | — | ✓ |  | auth/VerifyEmailPageClient.tsx |
 
-### Giriş / qeydiyyat — 3 ünvan (v2 0 · köhnə 1 · qarışıq 0)
+### Giriş / qeydiyyat — 3 ünvan (v2 2 · köhnə 0 · qarışıq 0)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/auth/forgot-password` | səhifə | — | — | ✗ |  |  |
-| `/auth/login` | səhifə | köhnə | — | ✓ | 25 |  |
-| `/auth/register` | səhifə | — | — | ✓ | 54 |  |
+| `/auth/login` | səhifə | v2 | — | ✓ | 25 | auth/AuthShell.tsx |
+| `/auth/register` | səhifə | v2 | — | ✓ | 54 | auth/AuthShell.tsx |
 
 ### Müştəri paneli (b2b-panel) — 27 ünvan (v2 0 · köhnə 16 · qarışıq 1)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
@@ -273,7 +273,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/ADR/README.md` | Architecture Decision Records (ADR) | 2026-10-08 | 37 |
 | `docs/ADR/_TEMPLATE.md` | ADR-NNNN: {Başlıq} | 2026-05-27 | 25 |
 | `docs/API-MAP.md` | API Map — DK Agency Platform | 2026-05-27 | 167 |
-| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) |  | 317 |
+| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-10-10 | 315 |
 | `docs/BLOG-CITATION-AUDIT.md` | Blog Atıf (Citation) Auditi — Tiered | 2026-06-06 | 73 |
 | `docs/BRAND-GUIDE.md` | DK Agency -- Marka Qaydalari | 2026-03-24 | 47 |
 | `docs/CHANGELOG.md` | CHANGELOG | 2026-10-06 | 658 |
@@ -298,7 +298,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 61 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 64 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |

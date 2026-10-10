@@ -50,9 +50,9 @@ export default function PnlResult({ result, onRedo }: Props) {
   return (
     <div className="space-y-6">
       {/* Verdict */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center">
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-6 text-center">
         <VerdictBadge verdict={ai.verdict} />
-        <p className="mt-3 text-3xl font-bold text-[var(--dk-navy)]">{t('pnlResult_netProfit')}: {fmt(p.netProfit)}</p>
+        <p className="mt-3 text-3xl font-bold text-[#0F172A]">{t('pnlResult_netProfit')}: {fmt(p.netProfit)}</p>
         <p className="mt-1 text-sm text-slate-500">{p.netProfitPercent}%</p>
       </div>
 
@@ -65,8 +65,8 @@ export default function PnlResult({ result, onRedo }: Props) {
       </div>
 
       {/* P&L Table */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t('pnlResult_pnlTitle')}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t('pnlResult_pnlTitle')}</h3>
         <div className="space-y-1 text-sm">
           {[
             [t('pnlResult_revenue'), p.revenue, 100],
@@ -79,10 +79,10 @@ export default function PnlResult({ result, onRedo }: Props) {
           ].map(([label, amount, pct], i) => {
             const isResult = String(label).startsWith('=');
             return (
-              <div key={i} className={`flex justify-between py-1.5 ${isResult ? 'font-bold border-t border-slate-200 pt-2' : ''}`}>
-                <span className={isResult ? 'text-[var(--dk-navy)]' : 'text-slate-600'}>{label}</span>
+              <div key={i} className={`flex justify-between py-1.5 ${isResult ? 'font-bold border-t border-[#E4DCCD] pt-2' : ''}`}>
+                <span className={isResult ? 'text-[#0F172A]' : 'text-slate-600'}>{label}</span>
                 <div className="flex gap-4">
-                  <span className={`w-24 text-right ${Number(amount) < 0 ? 'text-red-600' : 'text-[var(--dk-navy)]'}`}>{fmt(Number(amount))}</span>
+                  <span className={`w-24 text-right ${Number(amount) < 0 ? 'text-red-600' : 'text-[#0F172A]'}`}>{fmt(Number(amount))}</span>
                   <span className="w-12 text-right text-slate-400">{Number(pct).toFixed(1)}%</span>
                 </div>
               </div>
@@ -92,11 +92,11 @@ export default function PnlResult({ result, onRedo }: Props) {
       </div>
 
       {/* AI Insight */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t('pnlResult_aiTitle')}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t('pnlResult_aiTitle')}</h3>
 
         {/* Benchmark */}
-        <div className="mb-4 grid grid-cols-2 gap-2 rounded-lg bg-slate-50 p-3 text-xs">
+        <div className="mb-4 grid grid-cols-2 gap-2 rounded-lg bg-[#FBF8F3] p-3 text-xs">
           <div><span className="text-slate-400">{t('pnlResult_foodCost')}:</span> <span className="font-semibold">{ai.benchmarkComparison.foodCostStatus}</span></div>
           <div><span className="text-slate-400">{t('pnlResult_laborCost')}:</span> <span className="font-semibold">{ai.benchmarkComparison.laborCostStatus}</span></div>
           <div><span className="text-slate-400">{t('pnlResult_rentLabel')}:</span> <span className="font-semibold">{ai.benchmarkComparison.rentStatus}</span></div>
@@ -126,8 +126,8 @@ export default function PnlResult({ result, onRedo }: Props) {
       </div>
 
       <div className="flex gap-3">
-        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t('pnlResult_redo')}</button>
-        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90">{t('pnlResult_next')}</Link>
+        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-[#E4DCCD] px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A]">{t('pnlResult_redo')}</button>
+        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition hover:bg-dk-red-deep">{t('pnlResult_next')}</Link>
       </div>
     </div>
   );

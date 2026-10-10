@@ -2640,9 +2640,9 @@
       "actions": {
         "title": "Aksiyon önerileri",
         "switch_to_video": "Video/Reels'e geçin",
-        "switch_to_video_detail": "Reels ortalamada 2-5x daha yüksek ER alıyor — statik gönderilerden videoya geçiş öncelikli olmalı.",
+        "switch_to_video_detail": "Video genelde statik fotoğraftan daha fazla etkileşim alır — haftada en az bir kısa video deneyin ve sonucu karşılaştırın.",
         "reply_fast": "Yorumlara 1 saat içinde yanıt verin",
-        "reply_fast_detail": "İlk saat içinde yanıtlanan yorumlar gelecek gönderilerin ER'sini ~%23 artırır (algoritma sinyali).",
+        "reply_fast_detail": "Yorumlara hızlı yanıt verin: sohbet sürdükçe gönderi daha çok kişiye gösterilir.",
         "save_content": "Kaydetme odaklı içerik artırın",
         "save_content_detail": "Tarif, checklist, infografik — içeriğinizi kaydeden takipçiler algoritmada daha fazla görünür.",
         "keep_going": "Devam edin — harika sonuç!",
@@ -3268,6 +3268,22 @@
         "guestHint": "Kalite, servis, temizlik ve ekip — 35 soru, 1–5 puan.",
         "business": "İşletmenin 6 alanı",
         "businessHint": "Finans, mutfak, ekip, misafir deneyimi, çevrimiçi görünürlük ve riskler."
+      }
+    },
+    "v2": {
+      "allTools": "Tüm araçlar",
+      "crumb": "Pazarlama Ocağı",
+      "tiers": {
+        "sagird": "Çırak",
+        "kalfa": "Kalfa",
+        "usta": "Usta"
+      },
+      "categories": {
+        "analitika": "Analitik",
+        "emeliyyat": "Operasyon",
+        "maliyye": "Finans",
+        "musteri": "Misafir",
+        "kontent": "İçerik"
       }
     }
   },
@@ -7626,6 +7642,59 @@
       "copied": "Kopyalandı!",
       "redo": "Tekrar Analiz",
       "next": "Sonraki Araç"
+    },
+    "musteriPersonaPage": {
+      "title": "Müşteri Persona",
+      "subtitle": "Hedef müşteri profili oluşturun",
+      "backToList": "Tüm araçlar",
+      "whyTitle": "Bu neden önemli?",
+      "why": "Herkese satmak kimseye satmamak demektir. AI restoranınız için 2 ideal persona + 1 anti-persona oluşturur.",
+      "tier": "KALFA",
+      "loading": "Yükleniyor..."
+    },
+    "complaintReplyResults": {
+      "tones": {
+        "formal": "Resmi",
+        "friendly": "Samimi",
+        "short": "Kısa"
+      },
+      "copyBtn": "Kopyala",
+      "copied": "Kopyalandı!",
+      "regenerate": "Yeniden oluştur"
+    },
+    "complaintReplyPage": {
+      "title": "Şikayet Yanıtlayıcı",
+      "subtitle": "Google ve TripAdvisor şikayetlerine AI ile 3 farklı tonda yanıt",
+      "backToList": "Tüm araçlar",
+      "whyTitle": "Bu neden önemli?",
+      "why": "Her cevaplanmayan şikayet potansiyel müşteri kaybıdır. Bu araç 3 tonda profesyonel yanıt üretir — en uygununu kopyalayıp yapıştırın.",
+      "tier": "KALFA",
+      "errors": {
+        "not-authenticated": "Giriş yapmanız gerekiyor",
+        "tier-too-low": "Bu araç KALFA seviyesi gerektirir. Şimdi yükseltin.",
+        "rate-limit": "Günlük limit doldu (20 yanıt/gün). Yarın tekrar deneyin.",
+        "ai-unavailable": "AI hizmeti geçici olarak kullanılamıyor. Kısa süre sonra tekrar deneyin.",
+        "network-error": "Ağ hatası. İnternet bağlantınızı kontrol edin.",
+        "unknown": "Beklenmeyen bir hata oluştu."
+      }
+    },
+    "markaKompasiResult": {
+      "title": "Marka Pusulanız",
+      "sections": {
+        "tagline": "Tagline",
+        "icp": "İdeal Müşteri",
+        "valueProp": "Neden Sen?",
+        "differentiators": "Üç Avantajın",
+        "useThisIn": "Bunu nereye koy?"
+      },
+      "icp": {
+        "who": "Kim:",
+        "context": "Bağlam:",
+        "painPoint": "Sorun:"
+      },
+      "copied": "Kopyalandı!",
+      "redo": "Tekrar Doldur",
+      "next": "Sonraki Araç"
     }
   },
   "dashboardInbox": {
@@ -7701,5 +7770,19 @@
       "subscribed": "Abone",
       "unsubscribed": "Abonelikten çıktı"
     }
+  },
+  "authShell": {
+    "back": "Ana sayfa",
+    "brandLine": "Restoran platformu",
+    "asideEyebrow": "Üyelik",
+    "asideTitle": "Restoranınızın rakamları tek yerde",
+    "benefits": {
+      "b1": "35+ restoran aracı — yemek maliyeti, P&L, menü, sezon, şikayet",
+      "b2": "KAZAN AI — finans ve operasyon sorularına yanıt",
+      "b3": "İlanlarınız ve gelen başvurular tek panelde",
+      "b4": "Premium makaleler ve sektör haberleri"
+    },
+    "asideNote": "Kayıt ücretsizdir. Sorunuz varsa WhatsApp'tan yazın.",
+    "backPrev": "Geri dön"
   }
 }

@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import {
-  ArrowLeft,
   Clipboard,
   Download,
   Loader2,
@@ -14,6 +13,7 @@ import {
 import { generatePersona } from '@/app/actions/persona-ai-generator';
 import type { PersonaJSON } from '@/app/actions/persona-ai-generator';
 import { formatAzDate } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 // ── CONSTANTS ──────────────────────────────────────────────
 
@@ -184,10 +184,10 @@ ${t('donts')}: ${p.donts.join(', ')}`;
     window.setTimeout(() => setCopied(false), 1600);
   }
 
-  const inputClass = 'min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+  const inputClass = 'min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
   const checkboxClass = 'inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm font-bold transition';
-  const activeCheckbox = 'border-[var(--dk-gold)] bg-[var(--dk-gold)]/10 text-[var(--dk-navy)]';
-  const inactiveCheckbox = 'border-slate-200 bg-white text-slate-500 hover:border-slate-300';
+  const activeCheckbox = 'border-[#0F172A] bg-[#F6F1E9] text-[#0F172A]';
+  const inactiveCheckbox = 'border-[#E4DCCD] bg-white text-slate-500 hover:border-slate-300';
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 print:max-w-none print:px-0">
@@ -199,48 +199,31 @@ ${t('donts')}: ${p.donts.join(', ')}`;
         }
       `}</style>
 
-      <Link href={backHref} className="no-print mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
-
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <div className="mb-2 inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold uppercase text-amber-700">
-            USTA
-          </div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)] sm:text-3xl">{t('title')}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-        </div>
-        {persona && (
-          <div className="no-print flex flex-col gap-2 sm:flex-row">
-            <button type="button" onClick={copyResult} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-[var(--dk-navy)] shadow-sm transition hover:border-[var(--dk-gold)]">
+      <ToolHeader slug="musteri-persona" title={t('title')} subtitle={t('subtitle')} backHref={backHref} actions={<>
+            <button type="button" onClick={copyResult} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#E4DCCD] bg-white px-4 py-2 text-sm font-bold text-[#0F172A] shadow-sm transition hover:border-[#0F172A]">
               <Clipboard size={16} />
               {copied ? t('copied') : t('copy_result')}
             </button>
-            <button type="button" onClick={() => window.print()} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-[var(--dk-navy)] shadow-sm transition hover:border-[var(--dk-gold)]">
+            <button type="button" onClick={() => window.print()} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#E4DCCD] bg-white px-4 py-2 text-sm font-bold text-[#0F172A] shadow-sm transition hover:border-[#0F172A]">
               <Download size={16} />
               {t('export_pdf')}
-            </button>
-          </div>
-        )}
-      </div>
+            </button></>} />
 
       {/* ── FORM (hide when persona rendered) ── */}
       {!persona && (
         <div className="grid gap-6 lg:grid-cols-2">
           {/* STEP 1: Restaurant Profile */}
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('step1_title')}</h2>
+          <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('step1_title')}</h2>
             <div className="space-y-4">
               <label>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('restaurant_type')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('restaurant_type')}</span>
                 <select value={restaurantType} onChange={(e) => setRestaurantType(e.target.value)} className={inputClass}>
                   {RESTAURANT_TYPES.map((rt) => <option key={rt} value={rt}>{t(`restaurant_types.${rt}`)}</option>)}
                 </select>
               </label>
               <div>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('city')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('city')}</span>
                 <select value={city} onChange={(e) => setCity(e.target.value)} className={inputClass}>
                   {CITIES.map((c) => <option key={c} value={c}>{t(`cities.${c}`)}</option>)}
                 </select>
@@ -249,13 +232,13 @@ ${t('donts')}: ${p.donts.join(', ')}`;
                 )}
               </div>
               <label>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('avg_check')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('avg_check')}</span>
                 <select value={avgCheckRange} onChange={(e) => setAvgCheckRange(e.target.value)} className={inputClass}>
                   {AVG_CHECK_RANGES.map((r) => <option key={r} value={r}>{r} AZN</option>)}
                 </select>
               </label>
               <div>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('service_model')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('service_model')}</span>
                 <div className="flex flex-wrap gap-2">
                   {SERVICE_MODELS.map((sm) => (
                     <button key={sm} type="button" onClick={() => toggleMulti(serviceModels, sm, setServiceModels)} className={`${checkboxClass} ${serviceModels.includes(sm) ? activeCheckbox : inactiveCheckbox}`}>
@@ -268,11 +251,11 @@ ${t('donts')}: ${p.donts.join(', ')}`;
           </section>
 
           {/* STEP 2: Customer Observations */}
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('step2_title')}</h2>
+          <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('step2_title')}</h2>
             <div className="space-y-4">
               <div>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('age_range')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('age_range')}</span>
                 <div className="flex flex-wrap gap-2">
                   {AGE_RANGES.map((ar) => (
                     <button key={ar} type="button" onClick={() => toggleMulti(ageRanges, ar, setAgeRanges)} className={`${checkboxClass} ${ageRanges.includes(ar) ? activeCheckbox : inactiveCheckbox}`}>
@@ -282,15 +265,15 @@ ${t('donts')}: ${p.donts.join(', ')}`;
                 </div>
               </div>
               <div>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('gender_ratio')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('gender_ratio')}</span>
                 <div className="flex items-center gap-3">
                   <span className="text-sm font-bold text-blue-600">{t('male')} {100 - genderFemalePercent}%</span>
-                  <input type="range" min={0} max={100} value={genderFemalePercent} onChange={(e) => setGenderFemalePercent(Number(e.target.value))} className="h-2 flex-1 cursor-pointer appearance-none rounded-full bg-slate-200 accent-[var(--dk-gold)]" />
+                  <input type="range" min={0} max={100} value={genderFemalePercent} onChange={(e) => setGenderFemalePercent(Number(e.target.value))} className="h-2 flex-1 cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#D63B54]" />
                   <span className="text-sm font-bold text-pink-600">{t('female')} {genderFemalePercent}%</span>
                 </div>
               </div>
               <div>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('visit_time')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('visit_time')}</span>
                 <div className="flex flex-wrap gap-2">
                   {VISIT_TIMES.map((vt) => (
                     <button key={vt} type="button" onClick={() => toggleMulti(visitTimes, vt, setVisitTimes)} className={`${checkboxClass} ${visitTimes.includes(vt) ? activeCheckbox : inactiveCheckbox}`}>
@@ -300,19 +283,19 @@ ${t('donts')}: ${p.donts.join(', ')}`;
                 </div>
               </div>
               <label>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('visit_frequency')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('visit_frequency')}</span>
                 <select value={visitFrequency} onChange={(e) => setVisitFrequency(e.target.value)} className={inputClass}>
                   {VISIT_FREQUENCIES.map((vf) => <option key={vf} value={vf}>{t(`frequencies.${vf}`)}</option>)}
                 </select>
               </label>
               <label>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('table_size')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('table_size')}</span>
                 <select value={tableSize} onChange={(e) => setTableSize(e.target.value)} className={inputClass}>
                   {TABLE_SIZES.map((ts) => <option key={ts} value={ts}>{t(`table_sizes.${ts}`)} {t('person')}</option>)}
                 </select>
               </label>
               <div>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('payment_method')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('payment_method')}</span>
                 <div className="flex flex-wrap gap-2">
                   {PAYMENT_METHODS.map((pm) => (
                     <button key={pm} type="button" onClick={() => toggleMulti(paymentMethods, pm, setPaymentMethods)} className={`${checkboxClass} ${paymentMethods.includes(pm) ? activeCheckbox : inactiveCheckbox}`}>
@@ -322,7 +305,7 @@ ${t('donts')}: ${p.donts.join(', ')}`;
                 </div>
               </div>
               <div>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('arrival_method')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('arrival_method')}</span>
                 <div className="flex flex-wrap gap-2">
                   {ARRIVAL_METHODS.map((am) => (
                     <button key={am} type="button" onClick={() => toggleMulti(arrivalMethods, am, setArrivalMethods)} className={`${checkboxClass} ${arrivalMethods.includes(am) ? activeCheckbox : inactiveCheckbox}`}>
@@ -332,7 +315,7 @@ ${t('donts')}: ${p.donts.join(', ')}`;
                 </div>
               </div>
               <label>
-                <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('notes')}</span>
+                <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('notes')}</span>
                 <textarea value={notes} onChange={(e) => setNotes(e.target.value)} maxLength={300} rows={3} className={`${inputClass} py-2`} placeholder={t('notes_placeholder')} />
                 <span className="mt-1 block text-xs text-slate-400">{notes.length}/300</span>
               </label>
@@ -377,17 +360,17 @@ ${t('donts')}: ${p.donts.join(', ')}`;
           {/* Profile + Insights row */}
           <div className="grid gap-6 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)]">
             {/* LEFT: Profile */}
-            <section className="print-surface rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <section className="print-surface rounded-2xl border border-[#E4DCCD] bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--dk-gold)]/10">
-                  <UserCircle size={32} className="text-[var(--dk-gold)]" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F6F1E9]">
+                  <UserCircle size={32} className="text-[#BE2F47]" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-extrabold text-[var(--dk-navy)]">{persona.name}, {persona.age}</h2>
+                  <h2 className="text-xl font-extrabold text-[#0F172A]">{persona.name}, {persona.age}</h2>
                   <p className="text-sm font-semibold text-slate-500">{persona.occupation} — {persona.location}</p>
                 </div>
               </div>
-              <p className="mb-5 rounded-lg bg-[var(--dk-gold)]/10 px-3 py-2 text-sm font-bold italic text-[var(--dk-navy)]">
+              <p className="mb-5 rounded-lg bg-[#F6F1E9] px-3 py-2 text-sm font-bold italic text-[#0F172A]">
                 &ldquo;{persona.tagline}&rdquo;
               </p>
 
@@ -400,7 +383,7 @@ ${t('donts')}: ${p.donts.join(', ')}`;
             </section>
 
             {/* RIGHT: Insights */}
-            <section className="print-surface rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <section className="print-surface rounded-2xl border border-[#E4DCCD] bg-white p-5 shadow-sm">
               <div className="grid gap-5 sm:grid-cols-2">
                 {/* Psychographics */}
                 <div>
@@ -456,12 +439,12 @@ ${t('donts')}: ${p.donts.join(', ')}`;
           </div>
 
           {/* BOTTOM: Marketing recommendations */}
-          <section className="print-surface rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <section className="print-surface rounded-2xl border border-[#E4DCCD] bg-white p-5 shadow-sm">
             <div className="grid gap-5 lg:grid-cols-2">
               {/* Marketing message */}
-              <div className="rounded-lg bg-[var(--dk-gold)]/10 p-4">
-                <h3 className="mb-2 text-xs font-extrabold uppercase tracking-wider text-[var(--dk-navy)]">{t('marketing_msg')}</h3>
-                <p className="text-sm font-bold leading-6 text-[var(--dk-navy)]">{persona.marketing_message}</p>
+              <div className="rounded-lg bg-[#F6F1E9] p-4">
+                <h3 className="mb-2 text-xs font-extrabold uppercase tracking-wider text-[#0F172A]">{t('marketing_msg')}</h3>
+                <p className="text-sm font-bold leading-6 text-[#0F172A]">{persona.marketing_message}</p>
               </div>
 
               {/* Best channels */}
@@ -469,7 +452,7 @@ ${t('donts')}: ${p.donts.join(', ')}`;
                 <h3 className="mb-2 text-xs font-extrabold uppercase tracking-wider text-slate-400">{t('best_channels')}</h3>
                 <div className="flex flex-wrap gap-2">
                   {persona.best_channels.map((c) => (
-                    <span key={c} className="rounded-full border border-[var(--dk-gold)] bg-[var(--dk-gold)]/10 px-3 py-1.5 text-sm font-bold text-[var(--dk-navy)]">{c}</span>
+                    <span key={c} className="rounded-full border border-[#0F172A] bg-[#F6F1E9] px-3 py-1.5 text-sm font-bold text-[#0F172A]">{c}</span>
                   ))}
                 </div>
                 <h3 className="mb-2 mt-4 text-xs font-extrabold uppercase tracking-wider text-slate-400">{t('menu_rec')}</h3>
@@ -504,7 +487,7 @@ ${t('donts')}: ${p.donts.join(', ')}`;
 
           {/* New Persona button */}
           <div className="no-print flex justify-center">
-            <button type="button" onClick={handleNewPersona} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[var(--dk-gold)] bg-white px-5 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-[var(--dk-gold)]/10">
+            <button type="button" onClick={handleNewPersona} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#0F172A] bg-white px-5 text-sm font-bold text-[#0F172A] transition hover:bg-[#F6F1E9]">
               <Sparkles size={16} />
               {t('new_persona_btn')}
             </button>
@@ -514,13 +497,13 @@ ${t('donts')}: ${p.donts.join(', ')}`;
 
       {/* ── HISTORY ── */}
       {history.length > 0 && (
-        <section className="no-print mt-8 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-          <h2 className="mb-3 text-lg font-extrabold text-[var(--dk-navy)]">{t('history_title')}</h2>
+        <section className="no-print mt-8 rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+          <h2 className="mb-3 text-lg font-extrabold text-[#0F172A]">{t('history_title')}</h2>
           <div className="space-y-2">
             {history.map((item, idx) => (
-              <div key={`${item.name}-${idx}`} className="flex items-center justify-between gap-3 rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
+              <div key={`${item.name}-${idx}`} className="flex items-center justify-between gap-3 rounded-lg border border-[#EFE9DE] bg-[#FBF8F3] px-3 py-2">
                 <div>
-                  <p className="text-sm font-bold text-[var(--dk-navy)]">{item.name}</p>
+                  <p className="text-sm font-bold text-[#0F172A]">{item.name}</p>
                   <p className="text-xs text-slate-500">{item.tagline}</p>
                 </div>
                 <span className="shrink-0 text-xs text-slate-400">{item.date}</span>

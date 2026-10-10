@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowLeft, Lightbulb, Loader2, Sparkles, TrendingUp } from 'lucide-react';
+import { Lightbulb, Loader2, Sparkles, TrendingUp } from 'lucide-react';
 import { generateTrendRecommendations, type TrendRecommendation } from '@/app/actions/trend-ai-recommendations';
 import {
   AUDIENCES,
@@ -19,6 +19,7 @@ import {
   type TrendStrength,
 } from '@/lib/marketing-tools/trend-analiz';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 function getIntlLocale(locale: string): string {
   if (locale === 'az') return AZ_NUMBER_LOCALE;
@@ -161,27 +162,16 @@ export default function TrendAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi
     });
   }
 
-  const selectClass = 'min-h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+  const selectClass = 'min-h-11 w-full rounded-lg border border-[#E4DCCD] bg-white px-3 text-sm font-semibold text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-      <Link href={backHref} className="mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="trend-analiz" title={t('title')} subtitle={t('subtitle')} backHref={backHref} />
 
-      <div className="mb-6">
-        <div className="mb-2 inline-flex rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-bold uppercase text-purple-700">
-          {t('tier')}
-        </div>
-        <h1 className="font-['Playfair_Display'] text-2xl font-bold text-[var(--dk-navy)] sm:text-3xl">{t('title')}</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <form onSubmit={handleSubmit} className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
         <div className="grid gap-4 lg:grid-cols-3">
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('inputs.restaurantType')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('inputs.restaurantType')}</span>
             <select value={restaurantType} onChange={(event) => { setRestaurantType(event.target.value as TrendRestaurantType); setSubmitted(false); }} className={selectClass}>
               {RESTAURANT_TYPES.map((type) => (
                 <option key={type} value={type}>{t(`restaurantTypes.${type}`)}</option>
@@ -189,7 +179,7 @@ export default function TrendAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi
             </select>
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('inputs.audience')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('inputs.audience')}</span>
             <select value={audience} onChange={(event) => { setAudience(event.target.value as TrendAudience); setSubmitted(false); }} className={selectClass}>
               {AUDIENCES.map((item) => (
                 <option key={item} value={item}>{t(`audience.${item}`)}</option>
@@ -197,7 +187,7 @@ export default function TrendAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi
             </select>
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('inputs.strength')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('inputs.strength')}</span>
             <select value={strength} onChange={(event) => { setStrength(event.target.value as TrendStrength); setSubmitted(false); }} className={selectClass}>
               {STRENGTHS.map((item) => (
                 <option key={item} value={item}>{t(`strength.${item}`)}</option>
@@ -220,16 +210,16 @@ export default function TrendAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi
             <div className="flex gap-3">
               <Lightbulb size={20} className="mt-0.5 shrink-0 text-blue-600" />
               <div>
-                <h2 className="text-sm font-extrabold text-[var(--dk-navy)]">{t('sectorContext.title')}</h2>
+                <h2 className="text-sm font-extrabold text-[#0F172A]">{t('sectorContext.title')}</h2>
                 <p className="mt-1 text-sm leading-6 text-blue-800">{t('sectorContext.body')}</p>
               </div>
             </div>
           </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-4 flex items-center justify-between gap-3">
-              <h2 className="text-lg font-extrabold text-[var(--dk-navy)]">{t('results.chartTitle')}</h2>
-              <span className="rounded-full border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/10 px-3 py-1 text-xs font-bold text-[var(--dk-navy)]">
+              <h2 className="text-lg font-extrabold text-[#0F172A]">{t('results.chartTitle')}</h2>
+              <span className="rounded-full border border-[#F4B8C3] bg-[#F6F1E9] px-3 py-1 text-xs font-bold text-[#0F172A]">
                 {t('results.topThree')}
               </span>
             </div>
@@ -250,26 +240,26 @@ export default function TrendAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi
 
           <section className="grid gap-4 lg:grid-cols-3" data-testid="trend-top-cards">
             {analysis.topTrends.map((trend) => (
-              <article key={trend.trendId} className="rounded-xl border border-[var(--dk-gold)]/30 bg-white p-4 shadow-sm">
+              <article key={trend.trendId} className="rounded-xl border border-[#F4B8C3] bg-white p-4 shadow-sm">
                 <div className="mb-3 flex items-start justify-between gap-3">
                   <div>
-                    <span className="text-xs font-extrabold uppercase text-[var(--dk-gold)]">
+                    <span className="text-xs font-extrabold uppercase text-[#BE2F47]">
                       {t('topTrends.rank', { rank: trend.rank })}
                     </span>
-                    <h3 className="mt-1 text-base font-extrabold text-[var(--dk-navy)]">{t(`trends.${trend.trendId}.title`)}</h3>
+                    <h3 className="mt-1 text-base font-extrabold text-[#0F172A]">{t(`trends.${trend.trendId}.title`)}</h3>
                   </div>
-                  <span className="rounded-full bg-[var(--dk-gold)]/10 px-2.5 py-1 text-xs font-extrabold text-[var(--dk-navy)]">
+                  <span className="rounded-full bg-[#F6F1E9] px-2.5 py-1 text-xs font-extrabold text-[#0F172A]">
                     {formatScore(trend.score, locale)}
                   </span>
                 </div>
                 <p className="text-sm leading-6 text-slate-600">{t(`trends.${trend.trendId}.description`)}</p>
-                <p className="mt-3 rounded-lg border border-slate-100 bg-slate-50 p-3 text-xs leading-5 text-slate-600">{t(`trends.${trend.trendId}.azContext`)}</p>
-                <div className="mt-4 rounded-lg border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/5 p-3">
-                  <div className="mb-1 flex items-center gap-2 text-xs font-extrabold uppercase text-[var(--dk-navy)]">
+                <p className="mt-3 rounded-lg border border-[#EFE9DE] bg-[#FBF8F3] p-3 text-xs leading-5 text-slate-600">{t(`trends.${trend.trendId}.azContext`)}</p>
+                <div className="mt-4 rounded-lg border border-[#F4B8C3] bg-[#F6F1E9] p-3">
+                  <div className="mb-1 flex items-center gap-2 text-xs font-extrabold uppercase text-[#0F172A]">
                     <Sparkles size={14} />
                     {aiSource === 'ai' ? t('topTrends.aiStep') : t('topTrends.fallbackStep')}
                   </div>
-                  <p className="text-sm font-semibold leading-6 text-[var(--dk-navy)]">
+                  <p className="text-sm font-semibold leading-6 text-[#0F172A]">
                     {recommendations[trend.trendId] ?? fallbackStep(trend.trendId)}
                   </p>
                 </div>
@@ -277,8 +267,8 @@ export default function TrendAnalizPage({ backHref = '/b2b-panel/marketinq-ocagi
             ))}
           </section>
 
-          <div className="rounded-lg border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/5 p-4">
-            <p className="font-['Playfair_Display'] text-sm font-bold italic leading-6 text-[var(--dk-navy)]">{t('ahilikQuote')}</p>
+          <div className="rounded-lg border border-[#F4B8C3] bg-[#F6F1E9] p-4">
+            <p className="text-sm font-bold italic leading-6 text-[#0F172A]">{t('ahilikQuote')}</p>
           </div>
         </div>
       )}

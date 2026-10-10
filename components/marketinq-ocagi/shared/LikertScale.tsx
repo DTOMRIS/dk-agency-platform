@@ -19,10 +19,10 @@ export const LikertScale = memo(function LikertScale({
   disabled,
 }: LikertScaleProps) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white px-4 py-3">
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3">
       <label
         id={questionId}
-        className="flex-1 text-sm font-medium text-[var(--dk-navy)]"
+        className="flex-1 text-sm font-medium text-[#0F172A]"
       >
         <span className="mr-2 text-xs font-bold text-slate-500">{questionId}</span>
         {label}
@@ -37,7 +37,7 @@ export const LikertScale = memo(function LikertScale({
             aria-label={`${star} ulduz`}
             disabled={disabled}
             onClick={() => onChange(star)}
-            className="rounded-md p-1.5 transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/40 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-md p-1.5 transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Star
               size={20}

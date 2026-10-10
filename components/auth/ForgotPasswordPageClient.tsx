@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { normalizeLocale, type Locale } from '@/i18n/config';
+import AuthShell, { AUTH_BUTTON, AUTH_INPUT, AUTH_LABEL } from '@/components/auth/AuthShell';
 
 const forgotCopy: Record<Locale, {
   badge: string;
@@ -121,26 +122,18 @@ export default function ForgotPasswordPageClient() {
     }
   };
 
+  // TASK-0524: v2 auth frame (same as login / register).
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50 px-4 py-16">
-      <div className="mx-auto max-w-xl rounded-3xl border border-slate-200 bg-white p-8 shadow-2xl">
-        <div className="mb-6 text-center">
-          <div className="inline-flex rounded-full bg-dk-red/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-dk-red">
-            {copy.badge}
-          </div>
-          <h1 className="mt-4 text-3xl font-black text-slate-900">{copy.title}</h1>
-          <p className="mt-2 text-sm text-slate-600">{copy.subtitle}</p>
-        </div>
-
+    <AuthShell narrow title={copy.title} subtitle={copy.subtitle} backHref="/auth/login">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">{copy.emailLabel}</label>
+            <label className={AUTH_LABEL}>{copy.emailLabel}</label>
             <input
               type="email"
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
+              className={`${AUTH_INPUT} !pl-4`}
               placeholder={copy.emailPlaceholder}
             />
           </div>
@@ -148,7 +141,7 @@ export default function ForgotPasswordPageClient() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-xl bg-dk-red-strong py-3.5 font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60"
+            className={AUTH_BUTTON}
           >
             {submitting ? copy.submitting : copy.submitBtn}
           </button>
@@ -176,7 +169,6 @@ export default function ForgotPasswordPageClient() {
             {copy.backToLogin}
           </Link>
         </div>
-      </div>
-    </div>
+    </AuthShell>
   );
 }

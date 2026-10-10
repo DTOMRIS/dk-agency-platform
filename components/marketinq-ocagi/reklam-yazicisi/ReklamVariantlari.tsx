@@ -53,7 +53,7 @@ export default function ReklamVariantlari({ variants, locale, onRegenerate }: Re
                 {c.tones[v.tone] || v.tone}
               </span>
               <button onClick={() => handleCopy(i, v)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:shadow-sm">
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[#E4DCCD] bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:shadow-sm">
                 {isCopied ? <><Check size={14} className="text-emerald-500" />{c.copied}</> : <><Copy size={14} />{c.copyBtn}</>}
               </button>
             </div>
@@ -62,12 +62,12 @@ export default function ReklamVariantlari({ variants, locale, onRegenerate }: Re
             <p className="mb-1 text-xs font-semibold text-slate-500">{c.bodyLabel}</p>
             <p className="mb-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-700">{v.body}</p>
             <p className="mb-1 text-xs font-semibold text-slate-500">{c.hashtagsLabel}</p>
-            <p className="text-sm text-[var(--dk-gold)]">{v.hashtags.join('  ')}</p>
+            <p className="text-sm text-[#BE2F47]">{v.hashtags.join('  ')}</p>
           </div>
         );
       })}
       <button onClick={onRegenerate}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-600 transition hover:border-[var(--dk-gold)] hover:shadow-sm">
+        className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[#E4DCCD] bg-white px-6 py-3 text-sm font-medium text-slate-600 transition hover:border-[#0F172A] hover:shadow-sm">
         <RefreshCw size={16} />{c.regenerate}
       </button>
     </div>

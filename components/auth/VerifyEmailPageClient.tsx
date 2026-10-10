@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { normalizeLocale, withLocale } from '@/i18n/config';
+import AuthShell from '@/components/auth/AuthShell';
 
 /** Email verification result page. Pattern A (verifyEmail) — TASK-0472. */
 export default function VerifyEmailPageClient() {
@@ -39,10 +40,9 @@ export default function VerifyEmailPageClient() {
   const message =
     state === 'loading' || state === 'idle' ? t('verifying') : state === 'success' ? t('success') : t('invalid');
 
+  // TASK-0524: v2 auth frame (same as login / register).
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50 px-4 py-16">
-      <div className="mx-auto max-w-xl rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-2xl">
-        <h1 className="text-3xl font-black text-slate-900">{t('title')}</h1>
+    <AuthShell narrow title={t('title')}>
         <div
           role={state === 'error' ? 'alert' : 'status'}
           className={`mt-6 rounded-xl p-4 text-sm ${
@@ -63,7 +63,6 @@ export default function VerifyEmailPageClient() {
             {t('backToRegister')}
           </Link>
         </div>
-      </div>
-    </div>
+    </AuthShell>
   );
 }

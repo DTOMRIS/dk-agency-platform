@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { MarketinqFrame } from '@/components/marketinq-ocagi/MarketinqV2';
 
 /**
  * Bu route-un kök mirror-u yalnız `default`-u re-export edir, ona görə səhifə
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 // TASK-0523: the app body is dark (app/globals.css); the tool pages draw navy titles straight on it,
 // so «ROI Kalkulatoru», «Menyu Analitiği» … were near-invisible. A light surface for every tool page.
 export default function MarketinqLayout({ children }: { children: ReactNode }) {
-  return <div className="min-h-screen bg-slate-50">{children}</div>;
+  return <MarketinqFrame>{children}</MarketinqFrame>;
 }

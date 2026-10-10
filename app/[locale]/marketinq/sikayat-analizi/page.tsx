@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import SikayetHub from '@/components/marketinq-ocagi/hubs/SikayetHub';
-import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
+import ComplaintReplyPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/ComplaintReplyPage';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { checkToolAccess } from '@/lib/marketing-gating';
 import { normalizeLocale, withLocalePrefix } from '@/i18n/config';
@@ -45,7 +45,7 @@ export default async function ComplaintAnalysisPage({ params }: Props) {
 
   return (
     <main>
-      <SikayetHub initialTab="triage" replyTool={<SikayetCavablandiriciPage />} />
+      <SikayetHub initialTab="triage" replyTool={<ComplaintReplyPage />} />
     </main>
   );
 }

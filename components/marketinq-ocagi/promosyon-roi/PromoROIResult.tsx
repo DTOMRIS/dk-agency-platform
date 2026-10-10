@@ -47,9 +47,9 @@ const resultCopy: Record<Locale, {
 };
 
 function Metric({ label, value, suffix, positive }: { label: string; value: string | number; suffix?: string; positive?: boolean | null }) {
-  const color = positive === true ? 'text-green-600' : positive === false ? 'text-amber-600' : 'text-[var(--dk-navy)]';
+  const color = positive === true ? 'text-green-600' : positive === false ? 'text-amber-600' : 'text-[#0F172A]';
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-3 text-center">
+    <div className="rounded-2xl border border-[#E4DCCD] bg-white p-3 text-center">
       <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-slate-600">{label}</p>
       <p className={`text-lg font-bold ${color}`}>{value}{suffix}</p>
     </div>
@@ -77,14 +77,14 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
   return (
     <div className="space-y-6">
       {/* Verdict */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center">
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-6 text-center">
         <VerdictBadge verdict={ai.verdict} />
-        <p className="mt-3 text-2xl font-bold text-[var(--dk-navy)]">{t.roi}: {inc.ROI}%</p>
+        <p className="mt-3 text-2xl font-bold text-[#0F172A]">{t.roi}: {inc.ROI}%</p>
       </div>
 
       {/* Weekly comparison */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.weekly}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.weekly}</h3>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Metric label={t.salesUp} value={`${w.salesUpliftPercent > 0 ? '+' : ''}${w.salesUpliftPercent}%`} positive={w.salesUpliftPercent > 0} />
           <Metric label={t.tcUp} value={`${w.tcUpliftPercent > 0 ? '+' : ''}${w.tcUpliftPercent}%`} positive={w.tcUpliftPercent > 0} />
@@ -94,12 +94,12 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
       </div>
 
       {/* P&L comparison */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.pnl}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.pnl}</h3>
         <div className="grid grid-cols-3 gap-2 text-xs">
           <div className="font-semibold text-slate-500" />
           <div className="text-center font-bold text-slate-600">{t.baseline}</div>
-          <div className="text-center font-bold text-[var(--dk-gold)]">{t.promo}</div>
+          <div className="text-center font-bold text-[#BE2F47]">{t.promo}</div>
           {[
             ['Satış', pnl.baseline.totalSales, pnl.promo.totalSales],
             ['Gross Profit', pnl.baseline.grossProfit, pnl.promo.grossProfit],
@@ -119,16 +119,16 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
 
       {/* Incremental + Monthly */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <h3 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{t.incremental}</h3>
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+          <h3 className="mb-3 text-sm font-bold text-[#0F172A]">{t.incremental}</h3>
           <div className="space-y-2 text-sm">
             <p>{t.salesUp}: <span className="font-bold">{inc.incrementalSales.toLocaleString()} ₼</span></p>
             <p>{t.soi} artım: <span className={`font-bold ${inc.incrementalSOI >= 0 ? 'text-green-600' : 'text-red-600'}`}>{inc.incrementalSOI.toLocaleString()} ₼</span></p>
             <p>{t.breakEven}: <span className="font-bold">{inc.breakEvenIncrementalSales.toLocaleString()} ₼</span></p>
           </div>
         </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <h3 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{t.monthly}</h3>
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+          <h3 className="mb-3 text-sm font-bold text-[#0F172A]">{t.monthly}</h3>
           <div className="space-y-2 text-sm">
             <p>{t.salesUp}: <span className="font-bold">{mp.estimatedMonthlySalesUplift.toLocaleString()} ₼</span></p>
             <p>{t.soi}: <span className="font-bold">{mp.estimatedMonthlySOIUplift.toLocaleString()} ₼</span></p>
@@ -141,7 +141,7 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
       {workingCapital && (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
           <h3 className="mb-2 text-sm font-bold text-amber-900">Isletme Kapital Telebi</h3>
-          <p className="text-2xl font-bold text-[var(--dk-navy)]">{workingCapital.workingCapitalNeeded.toLocaleString()} AZN</p>
+          <p className="text-2xl font-bold text-[#0F172A]">{workingCapital.workingCapitalNeeded.toLocaleString()} AZN</p>
           <p className="mt-1 text-sm text-slate-600">{workingCapital.workingCapitalDays} gun erzinde geri qaytarilir</p>
           <p className="mt-3 text-xs leading-relaxed text-slate-500">
             Kampaniya baslamadan evvel cibinizden cixan pul. ROI musbet olsa bele, bu mebleg geri donene qeder nagd axina tesir edir.
@@ -150,8 +150,8 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
       )}
 
       {/* AI Insight */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.ai}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.ai}</h3>
         {ai.keyFindings.length > 0 && (
           <div className="mb-4">
             <p className="mb-2 flex items-center gap-1.5 text-xs font-bold text-slate-500"><Lightbulb size={12} />{t.findings}</p>
@@ -175,8 +175,8 @@ export default function PromoROIResult({ result, locale, onRedo }: Props) {
 
       {/* Actions */}
       <div className="flex gap-3">
-        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>
-        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90">{t.next}</Link>
+        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-[#E4DCCD] px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A]">{t.redo}</button>
+        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition hover:bg-dk-red-deep">{t.next}</Link>
       </div>
     </div>
   );

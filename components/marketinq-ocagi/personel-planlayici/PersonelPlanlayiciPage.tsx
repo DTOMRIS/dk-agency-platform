@@ -192,7 +192,7 @@ export default function PersonelPlanlayiciPage() {
     },
     none: {
       text: 'text-slate-700',
-      bg: 'bg-slate-50',
+      bg: 'bg-[#FBF8F3]',
       ring: 'ring-slate-200/60',
       label: t('result.noSales'),
     },
@@ -247,7 +247,7 @@ export default function PersonelPlanlayiciPage() {
           id="pp-concept"
           value={concept}
           onChange={(e) => setConcept(e.target.value as Concept)}
-          className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
+          className="w-full cursor-pointer rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
         >
           {concepts.map((c) => (
             <option key={c} value={c}>
@@ -268,7 +268,7 @@ export default function PersonelPlanlayiciPage() {
             inputMode="numeric"
             value={koltukSayisi}
             onValueChange={(v) => setKoltukSayisi(Math.max(0, Math.round(v)))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
+            className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
         <div>
@@ -281,7 +281,7 @@ export default function PersonelPlanlayiciPage() {
             inputMode="numeric"
             value={gunlukFis}
             onValueChange={(v) => setGunlukFis(Math.max(0, Math.round(v)))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
+            className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
       </div>
@@ -300,7 +300,7 @@ export default function PersonelPlanlayiciPage() {
               className={`min-h-[40px] rounded-xl px-3 py-2.5 text-xs font-semibold ring-1 transition ${
                 gunTipi === g
                   ? 'bg-emerald-50 text-emerald-800 ring-emerald-300'
-                  : 'bg-white text-slate-700 ring-slate-200 hover:bg-slate-50'
+                  : 'bg-white text-slate-700 ring-slate-200 hover:bg-[#FBF8F3]'
               }`}
             >
               {gunLabel[g]}
@@ -318,7 +318,7 @@ export default function PersonelPlanlayiciPage() {
             inputMode="numeric"
             value={achilisVaxti}
             onValueChange={(v) => setAchilisVaxti(Math.max(0, Math.min(23, Math.round(v))))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
+            className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
         <div>
@@ -329,7 +329,7 @@ export default function PersonelPlanlayiciPage() {
             inputMode="numeric"
             value={kapanisSaati}
             onValueChange={(v) => setKapanisSaati(Math.max(0, Math.min(26, Math.round(v))))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
+            className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-semibold text-slate-900 outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-500/20"
           />
         </div>
       </div>
@@ -388,7 +388,7 @@ export default function PersonelPlanlayiciPage() {
         </div>
       </AssumptionsPanel>
 
-      <div className="flex items-start gap-2 rounded-xl bg-slate-50 p-3 text-[11px] text-slate-700 ring-1 ring-slate-200/60">
+      <div className="flex items-start gap-2 rounded-xl bg-[#FBF8F3] p-3 text-[11px] text-slate-700 ring-1 ring-slate-200/60">
         <Info size={14} className="mt-0.5 shrink-0 text-slate-600" aria-hidden="true" />
         <span>
           {t('result.benchmark', { value: calc.hi })}
@@ -408,7 +408,7 @@ export default function PersonelPlanlayiciPage() {
   const mainRoleCount = calc.isCafe ? (calc.opening.barista ?? 0) : (calc.opening.garson ?? 0);
 
   const resultSection = !ready ? (
-    <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700 ring-1 ring-slate-200/60" data-testid="pp-empty">
+    <div className="rounded-xl bg-[#FBF8F3] p-4 text-sm text-slate-700 ring-1 ring-slate-200/60" data-testid="pp-empty">
       {t('result.empty')}
     </div>
   ) : (
@@ -448,7 +448,7 @@ export default function PersonelPlanlayiciPage() {
             <span className="text-slate-600">{t('result.kasa')}</span>
             <span className="font-semibold tabular-nums text-slate-900">{calc.opening.kasa}</span>
           </div>
-          <div className="mt-2 flex justify-between border-t border-slate-100 pt-2">
+          <div className="mt-2 flex justify-between border-t border-[#EFE9DE] pt-2">
             <span className="font-bold text-slate-900">{t('result.toplam')}</span>
             <span className="font-black tabular-nums text-slate-900">{calc.acilisToplam}</span>
           </div>

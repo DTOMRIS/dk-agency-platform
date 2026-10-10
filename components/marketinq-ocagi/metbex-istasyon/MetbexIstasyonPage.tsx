@@ -201,7 +201,7 @@ export default function MetbexIstasyonPage() {
     },
     none: {
       text: 'text-slate-700',
-      bg: 'bg-slate-50',
+      bg: 'bg-[#FBF8F3]',
       ring: 'ring-slate-200/60',
       label: t('result.noChecks'),
     },
@@ -249,7 +249,7 @@ export default function MetbexIstasyonPage() {
           id="mi-concept"
           value={concept}
           onChange={(e) => setConcept(e.target.value as Concept)}
-          className="w-full cursor-pointer rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
+          className="w-full cursor-pointer rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
         >
           {concepts.map((c) => (
             <option key={c} value={c}>
@@ -262,7 +262,7 @@ export default function MetbexIstasyonPage() {
       <div>
         <label htmlFor="mi-menuSkuSayisi" className="mb-1.5 block text-xs font-semibold text-slate-700">{t('menuSku')}</label>
         <DecimalInput id="mi-menuSkuSayisi" blankZero inputMode="numeric" value={menuSkuSayisi} onValueChange={(v) => setMenuSkuSayisi(Math.max(0, Math.round(v)))}
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
+            className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
         />
         <p className="mt-1 text-[11px] text-slate-600">{t('menuSkuHelp')}</p>
       </div>
@@ -273,7 +273,7 @@ export default function MetbexIstasyonPage() {
           {t('gunlukFis')}
         </label>
         <DecimalInput id="mi-gunlukFisSayisi" blankZero inputMode="numeric" value={gunlukFisSayisi} onValueChange={(v) => setGunlukFisSayisi(Math.max(0, Math.round(v)))}
-          className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
+          className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-500/20"
         />
       </div>
 
@@ -288,7 +288,7 @@ export default function MetbexIstasyonPage() {
               type="button"
               aria-pressed={kanallar[k]}
               onClick={() => setKanallar((prev) => ({ ...prev, [k]: !prev[k] }))}
-              className={`min-h-[40px] rounded-xl px-3 py-2.5 text-xs font-semibold ring-1 transition ${kanallar[k] ? 'bg-amber-50 text-amber-800 ring-amber-300' : 'bg-white text-slate-700 ring-slate-200 hover:bg-slate-50'}`}
+              className={`min-h-[40px] rounded-xl px-3 py-2.5 text-xs font-semibold ring-1 transition ${kanallar[k] ? 'bg-amber-50 text-amber-800 ring-amber-300' : 'bg-white text-slate-700 ring-slate-200 hover:bg-[#FBF8F3]'}`}
             >
               {kanalLabel[k]}
             </button>
@@ -345,7 +345,7 @@ export default function MetbexIstasyonPage() {
   );
 
   const resultSection = !ready ? (
-    <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700 ring-1 ring-slate-200/60" data-testid="mi-empty">
+    <div className="rounded-xl bg-[#FBF8F3] p-4 text-sm text-slate-700 ring-1 ring-slate-200/60" data-testid="mi-empty">
       {t('result.empty')}
     </div>
   ) : (
@@ -423,7 +423,7 @@ export default function MetbexIstasyonPage() {
 
       {/* Shift leader */}
       <div
-        className={`flex items-center justify-between rounded-xl p-4 ring-1 ${calc.shiftLeaderLazim ? 'bg-amber-50 ring-amber-200/60' : 'bg-slate-50 ring-slate-200/60'}`}
+        className={`flex items-center justify-between rounded-xl p-4 ring-1 ${calc.shiftLeaderLazim ? 'bg-amber-50 ring-amber-200/60' : 'bg-[#FBF8F3] ring-slate-200/60'}`}
       >
         <span className="flex items-center gap-2 text-sm font-semibold text-slate-700">
           <Crown

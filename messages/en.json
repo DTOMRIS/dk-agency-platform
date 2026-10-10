@@ -2640,9 +2640,9 @@
       "actions": {
         "title": "Action recommendations",
         "switch_to_video": "Switch to video/Reels",
-        "switch_to_video_detail": "Reels achieve 2-5x higher ER on average — prioritize the shift from static posts to video format.",
+        "switch_to_video_detail": "Video usually gets more interaction than static photos — try at least one short video a week and compare the result.",
         "reply_fast": "Reply to comments within 1 hour",
-        "reply_fast_detail": "Comments answered within the first hour boost future post ER by ~23% (algorithm signal).",
+        "reply_fast_detail": "Answer comments quickly: while the conversation is going, the post is shown to more people.",
         "save_content": "Increase save-focused content",
         "save_content_detail": "Recipes, checklists, infographics — followers who save your content get shown more of it.",
         "keep_going": "Keep it up — great results!",
@@ -3268,6 +3268,22 @@
         "guestHint": "Quality, service, cleanliness and team — 35 questions, scored 1–5.",
         "business": "6 business areas",
         "businessHint": "Money, kitchen, team, guest experience, online presence and risks."
+      }
+    },
+    "v2": {
+      "allTools": "All tools",
+      "crumb": "Marketing",
+      "tiers": {
+        "sagird": "Apprentice",
+        "kalfa": "Journeyman",
+        "usta": "Master"
+      },
+      "categories": {
+        "analitika": "Analytics",
+        "emeliyyat": "Operations",
+        "maliyye": "Finance",
+        "musteri": "Guests",
+        "kontent": "Content"
       }
     }
   },
@@ -7626,6 +7642,59 @@
       "copied": "Copied!",
       "redo": "Re-analyze",
       "next": "Next Tool"
+    },
+    "musteriPersonaPage": {
+      "title": "Customer Persona",
+      "subtitle": "Build target customer profiles",
+      "backToList": "All tools",
+      "whyTitle": "Why is this important?",
+      "why": "Selling to everyone means selling to no one. AI creates 2 ideal personas + 1 anti-persona for your restaurant.",
+      "tier": "PRO",
+      "loading": "Loading..."
+    },
+    "complaintReplyResults": {
+      "tones": {
+        "formal": "Formal",
+        "friendly": "Friendly",
+        "short": "Short"
+      },
+      "copyBtn": "Copy",
+      "copied": "Copied!",
+      "regenerate": "Regenerate"
+    },
+    "complaintReplyPage": {
+      "title": "Complaint Responder",
+      "subtitle": "AI-generated responses to Google, TripAdvisor and Yandex reviews in 3 tones",
+      "backToList": "All tools",
+      "whyTitle": "Why is this important?",
+      "why": "Every unanswered complaint is a potential lost customer. This tool generates professional responses in 3 tones — just copy and paste the one that fits.",
+      "tier": "PRO",
+      "errors": {
+        "not-authenticated": "Please sign in first",
+        "tier-too-low": "This tool requires the PRO tier. Upgrade now.",
+        "rate-limit": "Daily limit reached (20 responses/day). Try again tomorrow.",
+        "ai-unavailable": "AI service is temporarily unavailable. Please try again shortly.",
+        "network-error": "Network error. Please check your connection.",
+        "unknown": "An unexpected error occurred."
+      }
+    },
+    "markaKompasiResult": {
+      "title": "Your Brand Compass",
+      "sections": {
+        "tagline": "Tagline",
+        "icp": "Ideal Customer",
+        "valueProp": "Why You?",
+        "differentiators": "Your Three Advantages",
+        "useThisIn": "Where to use this?"
+      },
+      "icp": {
+        "who": "Who:",
+        "context": "Context:",
+        "painPoint": "Problem:"
+      },
+      "copied": "Copied!",
+      "redo": "Redo",
+      "next": "Next Tool"
     }
   },
   "dashboardInbox": {
@@ -7701,5 +7770,19 @@
       "subscribed": "Subscribed",
       "unsubscribed": "Unsubscribed"
     }
+  },
+  "authShell": {
+    "back": "Home",
+    "brandLine": "Restaurant platform",
+    "asideEyebrow": "Membership",
+    "asideTitle": "Your restaurant's numbers in one place",
+    "benefits": {
+      "b1": "35+ restaurant tools — food cost, P&L, menu, season, complaints",
+      "b2": "KAZAN AI — answers to finance and operations questions",
+      "b3": "Your listings and incoming requests in one panel",
+      "b4": "Premium articles and industry news"
+    },
+    "asideNote": "Signing up is free. Questions? Message us on WhatsApp.",
+    "backPrev": "Go back"
   }
 }

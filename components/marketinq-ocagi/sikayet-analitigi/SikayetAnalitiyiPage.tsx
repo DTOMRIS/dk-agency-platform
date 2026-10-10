@@ -3,12 +3,13 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { AlertCircle, ArrowLeft } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TIER_COLORS } from '@/lib/marketing-tools-config';
 import SikayetForm from './SikayetForm';
 import SikayetResult from './SikayetResult';
 import { ToolInfoBox } from '@/components/marketing-tools/ToolInfoBox';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 const pageCopy: Record<Locale, { title: string; subtitle: string; backToList: string; whyTitle: string; why: string; tier: string; loading: string }> = {
   az: {
@@ -69,22 +70,12 @@ export default function SikayetAnalitiyiPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-8">
-      <Link href="/b2b-panel/marketinq-ocagi" className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />{c.backToList}
-      </Link>
-
-      <div className="mb-6 flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{c.title}</h1>
-          <p className="mt-1 text-sm text-slate-500">{c.subtitle}</p>
-        </div>
-        <span className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${tierColors.bg} ${tierColors.text} ${tierColors.border}`}>{c.tier}</span>
-      </div>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="sikayet-analitigi" title={c.title} subtitle={c.subtitle} />
 
       {view !== 'result' && (
-        <ToolInfoBox title="Niyə bu vacibdir?" variant="info">
-          <p>Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır, kök səbəbi göstərir və həll planı təklif edir.</p>
+        <ToolInfoBox title={c.whyTitle} variant="info">
+          <p>{c.why}</p>
         </ToolInfoBox>
       )}
 

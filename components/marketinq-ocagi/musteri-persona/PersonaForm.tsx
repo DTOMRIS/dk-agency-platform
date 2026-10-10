@@ -10,7 +10,7 @@ const CONCEPTS = ['fast-food', 'fine-dining', 'cafe', 'fast-casual', 'fine-casua
 const SEGMENTS = ['families', 'young-professionals', 'students', 'tourists', 'business', 'seniors', 'mixed'] as const;
 const PEAKS = ['morning', 'lunch', 'evening', 'late-night', 'all'] as const;
 
-const inputClass = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+const inputClass = 'w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15';
 
 interface Props { locale: Locale; onResult: (data: unknown) => void; onError: (msg: string) => void }
 
@@ -42,33 +42,33 @@ export default function PersonaForm({ locale, onResult, onError }: Props) {
     <div className="space-y-5">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('restName')}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('restName')}</label>
           <input type="text" value={form.restaurantName} onChange={(e) => set('restaurantName', e.target.value)} disabled={loading} className={inputClass} />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('concept')}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('concept')}</label>
           <select value={form.concept} onChange={(e) => set('concept', e.target.value)} disabled={loading} className={inputClass}>
             <option value="" disabled>—</option>
             {CONCEPTS.map((v) => <option key={v} value={v}>{t(`concepts.${v}`)}</option>)}
           </select>
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('city')}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('city')}</label>
           <input type="text" value={form.city} onChange={(e) => set('city', e.target.value)} disabled={loading} className={inputClass} />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('segment')}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('segment')}</label>
           <select value={form.targetSegment} onChange={(e) => set('targetSegment', e.target.value)} disabled={loading} className={inputClass}>
             <option value="" disabled>—</option>
             {SEGMENTS.map((v) => <option key={v} value={v}>{t(`segments.${v}`)}</option>)}
           </select>
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('avgTicket')}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('avgTicket')}</label>
           <input type="number" value={form.avgTicket} onChange={(e) => set('avgTicket', e.target.value)} disabled={loading} className={inputClass} />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('peakHours')}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('peakHours')}</label>
           <select value={form.peakHours} onChange={(e) => set('peakHours', e.target.value)} disabled={loading} className={inputClass}>
             <option value="" disabled>—</option>
             {PEAKS.map((v) => <option key={v} value={v}>{t(`peaks.${v}`)}</option>)}
@@ -77,7 +77,7 @@ export default function PersonaForm({ locale, onResult, onError }: Props) {
       </div>
 
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('observations')}</label>
+        <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('observations')}</label>
         <textarea value={form.observations} onChange={(e) => set('observations', e.target.value)} disabled={loading}
           placeholder={t('obsPlaceholder')} rows={3} maxLength={500} className={inputClass} />
       </div>

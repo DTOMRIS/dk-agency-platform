@@ -115,7 +115,7 @@ function NumberInput({
           value={value || ''}
           onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
           disabled={disabled}
-          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+          className="w-full rounded-lg border border-[#E4DCCD] bg-white px-3 py-2 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15"
           placeholder="0"
         />
         {suffix && <span className="text-xs text-slate-600">{suffix}</span>}
@@ -168,8 +168,8 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.step1}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.step1}</h3>
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-2 sm:col-span-1">
             <label className="mb-1 block text-xs font-semibold text-slate-600">{t.promoName}</label>
@@ -178,7 +178,7 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
               value={form.promoName}
               onChange={(e) => setForm((p) => ({ ...p, promoName: e.target.value }))}
               disabled={loading}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+              className="w-full rounded-lg border border-[#E4DCCD] bg-white px-3 py-2 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15"
             />
           </div>
           <div>
@@ -189,7 +189,7 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
                 value={form.promoDurationDays}
                 onChange={(e) => setForm((p) => ({ ...p, promoDurationDays: parseInt(e.target.value) || 7 }))}
                 disabled={loading}
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+                className="w-full rounded-lg border border-[#E4DCCD] bg-white px-3 py-2 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15"
               />
               <span className="text-xs text-slate-600">{t.days}</span>
             </div>
@@ -198,8 +198,8 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.step2base}</h3>
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+          <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.step2base}</h3>
           <div className="space-y-3">
             <NumberInput label={t.sales} value={form.baseline.totalSales} onChange={(v) => setBaseline('totalSales', v)} disabled={loading} />
             <NumberInput label={t.tc} value={form.baseline.transactionCount} onChange={(v) => setBaseline('transactionCount', v)} disabled={loading} />
@@ -208,8 +208,8 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/5 p-5">
-          <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.step2promo}</h3>
+        <div className="rounded-2xl border border-[#F4B8C3] bg-[#F6F1E9] p-5">
+          <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.step2promo}</h3>
           <div className="space-y-3">
             <NumberInput label={t.sales} value={form.promo.totalSales} onChange={(v) => setPromo('totalSales', v)} disabled={loading} />
             <NumberInput label={t.tc} value={form.promo.transactionCount} onChange={(v) => setPromo('transactionCount', v)} disabled={loading} />
@@ -218,8 +218,8 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
             <NumberInput label={t.marketingSpend} value={form.promo.marketingSpend} onChange={(v) => setPromo('marketingSpend', v)} disabled={loading} tooltip={TOOLTIPS.marketingCost} />
             {promoAvg && <p className="text-xs text-slate-600">{t.avgTicket}: {promoAvg} AZN</p>}
 
-            <div className="mt-4 border-t border-[var(--dk-gold)]/20 pt-4">
-              <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-[var(--dk-navy)]">
+            <div className="mt-4 border-t border-[#F4B8C3] pt-4">
+              <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#0F172A]">
                 {t.workingCapital}
                 <Tooltip text={TOOLTIPS.workingCapital} />
               </h4>
@@ -230,12 +230,12 @@ export default function PromoROIForm({ locale, onResult, onError }: Props) {
         </div>
       </div>
 
-      <button type="button" onClick={() => setShowFixed(!showFixed)} className="flex w-full items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-500 transition hover:border-[var(--dk-navy)]">
+      <button type="button" onClick={() => setShowFixed(!showFixed)} className="flex w-full items-center justify-between rounded-xl border border-[#E4DCCD] px-4 py-3 text-sm text-slate-500 transition hover:border-[#0F172A]">
         <span>{t.fixedToggle}</span>
         <ChevronDown size={14} className={`transition-transform ${showFixed ? 'rotate-180' : ''}`} />
       </button>
       {showFixed && (
-        <div className="grid grid-cols-2 gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] p-4 sm:grid-cols-4">
           <NumberInput label={t.rent} value={form.fixedCosts.rentPercent} onChange={(v) => setFixed('rentPercent', v)} suffix="%" disabled={loading} />
           <NumberInput label={t.royalty} value={form.fixedCosts.royaltyPercent} onChange={(v) => setFixed('royaltyPercent', v)} suffix="%" disabled={loading} />
           <NumberInput label={t.adPool} value={form.fixedCosts.adPoolPercent} onChange={(v) => setFixed('adPoolPercent', v)} suffix="%" disabled={loading} />

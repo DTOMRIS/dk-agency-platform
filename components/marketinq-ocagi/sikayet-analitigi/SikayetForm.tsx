@@ -51,14 +51,14 @@ export default function SikayetForm({ locale, onResult, onError }: Props) {
     <div className="space-y-5">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('restName')}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('restName')}</label>
           <input type="text" value={restaurantName} onChange={(e) => setRestaurantName(e.target.value)} disabled={loading}
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20" />
+            className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15" />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('period')}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('period')}</label>
           <select value={period} onChange={(e) => setPeriod(e.target.value)} disabled={loading}
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none">
+            className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none">
             {PERIODS.map((p) => <option key={p} value={p}>{t(`periods.${p}`)}</option>)}
           </select>
         </div>
@@ -66,12 +66,12 @@ export default function SikayetForm({ locale, onResult, onError }: Props) {
 
       <div className="space-y-3">
         {complaints.map((c, idx) => (
-          <div key={idx} className="rounded-xl border border-slate-200 bg-white p-3">
+          <div key={idx} className="rounded-2xl border border-[#E4DCCD] bg-white p-3">
             <div className="grid grid-cols-1 gap-3 md:grid-cols-12">
               <textarea placeholder={t('complaintText')} value={c.text} onChange={(e) => update(idx, 'text', e.target.value)} disabled={loading} rows={2}
-                className="min-h-[80px] w-full resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[var(--dk-gold)] focus:outline-none md:col-span-6" />
+                className="min-h-[80px] w-full resize-none rounded-lg border border-[#E4DCCD] px-3 py-2 text-sm focus:border-[#D63B54] focus:outline-none md:col-span-6" />
               <select value={c.source} onChange={(e) => update(idx, 'source', e.target.value)} disabled={loading}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[var(--dk-gold)] focus:outline-none md:col-span-3">
+                className="w-full rounded-lg border border-[#E4DCCD] px-3 py-2 text-sm focus:border-[#D63B54] focus:outline-none md:col-span-3">
                 <option value="" disabled>{t('source')}</option>
                 {SOURCES.map((s) => <option key={s} value={s}>{t(`sources.${s}`)}</option>)}
               </select>
@@ -95,7 +95,7 @@ export default function SikayetForm({ locale, onResult, onError }: Props) {
 
       <div className="flex items-center justify-between">
         <button type="button" onClick={add} disabled={loading || complaints.length >= 30}
-          className="inline-flex items-center gap-1 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-xs font-semibold text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]">
+          className="inline-flex items-center gap-1 rounded-lg border border-dashed border-slate-300 px-3 py-2 text-xs font-semibold text-slate-500 transition hover:border-[#0F172A] hover:text-[#0F172A]">
           <Plus size={14} />{t('addComplaint')}
         </button>
         <span className="text-xs text-slate-600">{filled.length} / {complaints.length}</span>

@@ -3,7 +3,7 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowLeft, BarChart3, Plus, Target, Trash2, TrendingUp } from 'lucide-react';
+import { BarChart3, Plus, Target, Trash2, TrendingUp } from 'lucide-react';
 import {
   calculateReklamRoi,
   REKLAM_CHANNEL_TYPES,
@@ -13,6 +13,7 @@ import {
   type ReklamHealthStatus,
 } from '@/lib/marketing-tools/reklam-roi';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 type TranslationFn = ReturnType<typeof useTranslations>;
 
@@ -111,7 +112,7 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
     if (status === 'healthy') return 'border-emerald-200 bg-emerald-50 text-emerald-700';
     if (status === 'weak') return 'border-amber-200 bg-amber-50 text-amber-700';
     if (status === 'harmful') return 'border-red-200 bg-red-50 text-red-700';
-    return 'border-slate-200 bg-slate-50 text-slate-600';
+    return 'border-[#E4DCCD] bg-[#FBF8F3] text-slate-600';
   }
 
   function validate(): ValidationErrors {
@@ -151,8 +152,8 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
     setChannels((prev) => prev.length <= 1 ? prev : prev.filter((channel) => channel.id !== id));
   }
 
-  const inputClass = 'min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
-  const labelClass = 'mb-1.5 block text-sm font-bold text-[var(--dk-navy)]';
+  const inputClass = 'min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
+  const labelClass = 'mb-1.5 block text-sm font-bold text-[#0F172A]';
 
   const conversionRows = analysis.conversionChannels;
   const awarenessRows = analysis.awarenessChannels;
@@ -160,26 +161,13 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
   const maxCpm = Math.max(1, ...awarenessRows.map((channel) => channel.cpm));
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-      <Link href={backHref} className="mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="reklam-roi" title={t('title')} subtitle={t('subtitle')} backHref={backHref} />
 
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <div className="mb-2 inline-flex rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-bold uppercase text-purple-700">
-            {t('tier')}
-          </div>
-          <h1 className="font-serif text-3xl font-bold text-[var(--dk-navy)] sm:text-4xl">{t('title')}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-        </div>
-      </div>
-
-      <form onSubmit={submitForm} className="grid gap-6 lg:grid-cols-[380px_1fr]">
+      <form onSubmit={submitForm} className="grid gap-6 xl:grid-cols-[360px_minmax(0,1fr)]">
         <section className="space-y-5">
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('campaignType.title')}</h2>
+          <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('campaignType.title')}</h2>
             <div className="grid gap-3">
               {(['conversion', 'awareness'] as ReklamCampaignType[]).map((type) => (
                 <button
@@ -188,25 +176,25 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
                   onClick={() => setCampaignType(type)}
                   className={`rounded-xl border p-3 text-left transition ${
                     campaignType === type
-                      ? 'border-[var(--dk-gold)] bg-[#FFF8E7]'
-                      : 'border-slate-200 bg-white hover:border-[var(--dk-gold)]'
+                      ? 'border-[#0F172A] bg-[#FFF8E7]'
+                      : 'border-[#E4DCCD] bg-white hover:border-[#0F172A]'
                   }`}
                 >
-                  <span className="block text-sm font-extrabold text-[var(--dk-navy)]">{t(`campaignType.${type}`)}</span>
+                  <span className="block text-sm font-extrabold text-[#0F172A]">{t(`campaignType.${type}`)}</span>
                   <span className="mt-1 block text-xs leading-5 text-slate-600">{t(`campaignType.${type}Description`)}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-4 flex items-center justify-between gap-3">
-              <h2 className="text-lg font-extrabold text-[var(--dk-navy)]">{t('inputs.channelsTitle')}</h2>
+              <h2 className="text-lg font-extrabold text-[#0F172A]">{t('inputs.channelsTitle')}</h2>
               <button
                 type="button"
                 onClick={addChannel}
                 disabled={channels.length >= 8}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 px-3 text-sm font-bold text-slate-600 transition hover:border-[var(--dk-gold)] disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 px-3 text-sm font-bold text-slate-600 transition hover:border-[#0F172A] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <Plus size={16} />
                 {t('inputs.addChannel')}
@@ -216,14 +204,14 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
 
             <div className="space-y-4">
               {channels.map((channel, index) => (
-                <div key={channel.id} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <div key={channel.id} className="rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] p-3">
                   <div className="mb-3 flex items-center justify-between gap-3">
-                    <p className="text-sm font-extrabold text-[var(--dk-navy)]">{t('inputs.channelNumber', { number: index + 1 })}</p>
+                    <p className="text-sm font-extrabold text-[#0F172A]">{t('inputs.channelNumber', { number: index + 1 })}</p>
                     <button
                       type="button"
                       onClick={() => removeChannel(channel.id)}
                       disabled={channels.length <= 1}
-                      className="inline-flex min-h-9 items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-2 text-xs font-bold text-slate-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="inline-flex min-h-9 items-center justify-center gap-1 rounded-lg border border-[#E4DCCD] bg-white px-2 text-xs font-bold text-slate-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <Trash2 size={14} />
                       {t('inputs.removeChannel')}
@@ -272,8 +260,8 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('inputs.resultsTitle')}</h2>
+          <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('inputs.resultsTitle')}</h2>
             {campaignType === 'conversion' ? (
               <div className="space-y-4">
                 <label>
@@ -319,7 +307,7 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-xs font-bold uppercase">{t('ltvCacCard.title')}</p>
-                    <h2 className="mt-2 text-2xl font-extrabold text-[var(--dk-navy)]">{formatNumber(analysis.ltvCacRatio)}:1</h2>
+                    <h2 className="mt-2 text-2xl font-extrabold text-[#0F172A]">{formatNumber(analysis.ltvCacRatio)}:1</h2>
                     <p className="mt-1 text-sm font-semibold">{t(`ltvCacCard.${analysis.ltvCacStatus}`)}</p>
                   </div>
                   <Target size={24} />
@@ -334,10 +322,10 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
                 worstLabel={t('results.worstChannel')}
               />
 
-              <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+              <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
                 <div className="mb-4 flex items-center gap-2">
-                  <BarChart3 size={18} className="text-[var(--dk-gold)]" />
-                  <h2 className="text-lg font-extrabold text-[var(--dk-navy)]">{t('results.chartTitle')}</h2>
+                  <BarChart3 size={18} className="text-[#BE2F47]" />
+                  <h2 className="text-lg font-extrabold text-[#0F172A]">{t('results.chartTitle')}</h2>
                 </div>
                 <div data-testid="reklam-roi-chart" className="overflow-x-auto">
                   <svg viewBox="0 0 640 220" role="img" aria-label={t('results.chartTitle')} className="min-w-[620px]">
@@ -383,10 +371,10 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
                 worstLabel={t('results.worstChannel')}
               />
 
-              <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+              <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
                 <div className="mb-4 flex items-center gap-2">
-                  <TrendingUp size={18} className="text-[var(--dk-gold)]" />
-                  <h2 className="text-lg font-extrabold text-[var(--dk-navy)]">{t('results.cpmChartTitle')}</h2>
+                  <TrendingUp size={18} className="text-[#BE2F47]" />
+                  <h2 className="text-lg font-extrabold text-[#0F172A]">{t('results.cpmChartTitle')}</h2>
                 </div>
                 <div data-testid="reklam-roi-chart" className="space-y-3">
                   {awarenessRows.map((channel) => {
@@ -398,7 +386,7 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
                           <span>{formatMoney(channel.cpm)}</span>
                         </div>
                         <div className="h-7 rounded-full bg-slate-100">
-                          <div className="h-7 rounded-full bg-[var(--dk-gold)]" style={{ width: `${width}%` }} />
+                          <div className="h-7 rounded-full bg-[#D63B54]" style={{ width: `${width}%` }} />
                         </div>
                       </div>
                     );
@@ -410,12 +398,12 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
             </>
           )}
 
-          <div className="rounded-xl border border-amber-200 bg-[#FFF8E7] p-4 text-sm leading-6 text-[var(--dk-navy)] shadow-sm">
+          <div className="rounded-xl border border-amber-200 bg-[#FFF8E7] p-4 text-sm leading-6 text-[#0F172A] shadow-sm">
             <p className="font-extrabold">{t('benchmarkNote.title')}</p>
             <p className="mt-1">{t('benchmarkNote.body')}</p>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-4 text-sm font-semibold leading-6 text-slate-700 shadow-sm">
+          <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-sm font-semibold leading-6 text-slate-700 shadow-sm">
             {t('ahilikQuote')}
           </div>
         </section>
@@ -426,9 +414,9 @@ export default function ReklamRoiPage({ backHref = '/b2b-panel/marketinq-ocagi' 
 
 function MetricCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm">
       <p className="text-xs font-bold uppercase text-slate-500">{label}</p>
-      <p className="mt-2 text-xl font-extrabold text-[var(--dk-navy)]">{value}</p>
+      <p className="mt-2 text-xl font-extrabold text-[#0F172A]">{value}</p>
       {hint && <p className="mt-1 text-xs font-semibold text-slate-500">{hint}</p>}
     </div>
   );
@@ -449,11 +437,11 @@ function ResultHighlights({
     <div className="grid gap-3 sm:grid-cols-2">
       <div className="rounded-xl border border-amber-200 bg-[#FFF8E7] p-4 shadow-sm">
         <p className="text-xs font-bold uppercase text-amber-700">{bestLabel}</p>
-        <p className="mt-2 text-lg font-extrabold text-[var(--dk-navy)]">{best}</p>
+        <p className="mt-2 text-lg font-extrabold text-[#0F172A]">{best}</p>
       </div>
       <div className="rounded-xl border border-red-200 bg-red-50 p-4 shadow-sm">
         <p className="text-xs font-bold uppercase text-[var(--dk-red)]">{worstLabel}</p>
-        <p className="mt-2 text-lg font-extrabold text-[var(--dk-navy)]">{worst}</p>
+        <p className="mt-2 text-lg font-extrabold text-[#0F172A]">{worst}</p>
       </div>
     </div>
   );
@@ -473,12 +461,12 @@ function ConversionTable({
   t: TranslationFn;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-      <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('results.tableTitle')}</h2>
+    <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+      <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('results.tableTitle')}</h2>
       <div className="overflow-x-auto">
         <table className="min-w-[720px] w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-slate-200 text-xs uppercase text-slate-500">
+            <tr className="border-b border-[#E4DCCD] text-xs uppercase text-slate-500">
               <th className="py-3 pr-3">{t('table.channel')}</th>
               <th className="py-3 pr-3">{t('table.budget')}</th>
               <th className="py-3 pr-3">{t('table.customers')}</th>
@@ -489,8 +477,8 @@ function ConversionTable({
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.id} className="border-b border-slate-100">
-                <td className="py-3 pr-3 font-bold text-[var(--dk-navy)]">{channelName(row.type)}</td>
+              <tr key={row.id} className="border-b border-[#EFE9DE]">
+                <td className="py-3 pr-3 font-bold text-[#0F172A]">{channelName(row.type)}</td>
                 <td className="py-3 pr-3">{formatMoney(row.effectiveBudget)}</td>
                 <td className="py-3 pr-3">{formatNumber(row.newCustomers, 0)}</td>
                 <td className="py-3 pr-3">{formatMoney(row.cac)}</td>
@@ -519,12 +507,12 @@ function AwarenessTable({
   t: TranslationFn;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-      <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('results.tableTitle')}</h2>
+    <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+      <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('results.tableTitle')}</h2>
       <div className="overflow-x-auto">
         <table className="min-w-[680px] w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-slate-200 text-xs uppercase text-slate-500">
+            <tr className="border-b border-[#E4DCCD] text-xs uppercase text-slate-500">
               <th className="py-3 pr-3">{t('table.channel')}</th>
               <th className="py-3 pr-3">{t('table.budget')}</th>
               <th className="py-3 pr-3">{t('table.reach')}</th>
@@ -535,8 +523,8 @@ function AwarenessTable({
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.id} className="border-b border-slate-100">
-                <td className="py-3 pr-3 font-bold text-[var(--dk-navy)]">{channelName(row.type)}</td>
+              <tr key={row.id} className="border-b border-[#EFE9DE]">
+                <td className="py-3 pr-3 font-bold text-[#0F172A]">{channelName(row.type)}</td>
                 <td className="py-3 pr-3">{formatMoney(row.budget)}</td>
                 <td className="py-3 pr-3">{formatNumber(row.reach, 0)}</td>
                 <td className="py-3 pr-3">{formatNumber(row.impressions, 0)}</td>

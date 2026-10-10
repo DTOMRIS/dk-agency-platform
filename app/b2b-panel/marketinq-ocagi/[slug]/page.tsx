@@ -13,7 +13,7 @@ import MarkaKompasiPage from '@/components/marketinq-ocagi/marka-kompasi/MarkaKo
 import RoiHub from '@/components/marketinq-ocagi/hubs/RoiHub';
 import SezonHub from '@/components/marketinq-ocagi/hubs/SezonHub';
 import SikayetHub from '@/components/marketinq-ocagi/hubs/SikayetHub';
-import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
+import ComplaintReplyPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/ComplaintReplyPage';
 import AuditHub from '@/components/marketinq-ocagi/hubs/AuditHub';
 import QonaqAnketiPage from '@/components/marketinq-ocagi/qonaq-anketi/QonaqAnketiPage';
 import MenyuAnalitiyiPage from '@/components/marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiPage';
@@ -181,10 +181,10 @@ export default function ToolSlugPage() {
     return <MenyuAnalitiyiPage />;
   }
   if (slug === 'sikayet-analitigi' && tool.status === 'live') {
-    return <SikayetHub initialTab="batch" replyTool={<SikayetCavablandiriciPage />} />;
+    return <SikayetHub initialTab="batch" replyTool={<ComplaintReplyPage />} />;
   }
   if (slug === 'sikayet-cavablandirici' && tool.status === 'live') {
-    return <SikayetHub initialTab="reply" replyTool={<SikayetCavablandiriciPage />} />;
+    return <SikayetHub initialTab="reply" replyTool={<ComplaintReplyPage />} />;
   }
   if (slug === 'musteri-persona' && tool.status === 'live') {
     return <MusteriPersonaPage />;
