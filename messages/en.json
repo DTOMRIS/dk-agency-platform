@@ -655,6 +655,35 @@
             "tag": "Operations"
           }
         }
+      },
+      "scenario": {
+        "breakevenLabel": "Break-even sales",
+        "breakevenAbove": "Current sales are {value} above break-even",
+        "breakevenBelow": "You need {value} more sales a month to break even",
+        "breakevenImpossible": "Food cost is equal to or above sales — no break-even at these prices",
+        "breakevenNote": "Only food and packaging grow with sales; wages, rent and the rest are paid either way.",
+        "title": "What if?",
+        "subtitle": "Move the sliders and watch net profit change.",
+        "sliders": {
+          "salesGrowth": "Sales change",
+          "foodCut": "Food cost down",
+          "fixedCut": "Other costs down"
+        },
+        "scenarioNet": "New net profit",
+        "scenarioDelta": "Difference",
+        "perMonth": "per month",
+        "aiTitle": "AI comment",
+        "aiBody": "Reads your numbers and writes, in plain words, what to do this month.",
+        "aiCta": "Get AI comment",
+        "aiLoading": "Preparing…",
+        "aiUsta": "The AI comment is for USTA members.",
+        "aiUstaLink": "See plans",
+        "errors": {
+          "rate-limited": "3 requests per 10 minutes reached. Try again a bit later.",
+          "validation": "Check sales and costs.",
+          "missing-key": "The AI service is not available right now.",
+          "ai-failed": "The AI did not answer. Try again."
+        }
       }
     },
     "staffRetention": {
@@ -2032,8 +2061,8 @@
       "back_to_tools": "All tools",
       "remove_item": "Remove item",
       "load_demo": "Test dataset",
-      "avg_cm": "Average CM",
-      "avg_mix": "Average Mix %",
+      "avg_cm": "Average margin (sales-weighted)",
+      "avg_mix": "Popularity bar (share of sales)",
       "item": "Item",
       "price": "Price",
       "cost": "Cost",
@@ -2043,12 +2072,13 @@
       "plowhorse_hint": "Sells a lot, low profit per portion",
       "puzzle_hint": "Sells little, high profit per portion",
       "dog_hint": "Sells little, low profit per portion",
-      "ai_tips_subtitle": "DeepSeek turns the matrix into practical next steps.",
+      "ai_tips_subtitle": "Reads the result and writes practical steps for each group. Each press uses 1 run of your monthly limit.",
       "ai_loading": "AI recommendation is loading...",
       "ai_error": "AI recommendation failed to load — try again",
       "retry": "Retry",
       "tier_required_title": "This tool requires KALFA membership",
-      "tier_required_body": "Menu Analytics belongs to KALFA because it combines real menu engineering with AI recommendations."
+      "tier_required_body": "Menu Analytics belongs to KALFA because it combines real menu engineering with AI recommendations.",
+      "ai_cta": "Get AI tips"
     },
     "roiCalculator": {
       "title": "ROI Calculator",
@@ -2082,7 +2112,7 @@
       "total_cac": "Total CAC",
       "evaluation": "Evaluation",
       "days": "days",
-      "benchmark_roi": ">100% healthy",
+      "benchmark_roi": "above 0% = ads pay for themselves",
       "benchmark_roas": ">3x healthy",
       "benchmark_ltv": "≥3:1 healthy",
       "benchmark_payback": "<180 days ideal",
@@ -2107,7 +2137,10 @@
         "validation": "Check the channel numbers and try again.",
         "missing-key": "The AI key is not configured on the server.",
         "ai-failed": "AI analysis failed to load — try again."
-      }
+      },
+      "margin_pct": "Share left per sale (%)",
+      "margin_hint": "What stays from each sale after food and packaging cost. Example: food cost 35% → 65. Enter your own figure.",
+      "breakeven_roas": "break-even: {value}x"
     },
     "plSimulator": {
       "tierBadge": "MASTER",
@@ -2343,7 +2376,7 @@
     },
     "sezonAnalitikasi": {
       "title": "Season Analytics",
-      "subtitle": "A 12-month cash-flow, labor budget, and inventory forecast calibrated for Azerbaijan holidays, resort seasons, and Ramadan behavior.",
+      "subtitle": "12-month forecast of sales, staff cost and food budget, using the Azerbaijan calendar, resort season and Ramadan.",
       "tier": "KALFA",
       "back_to_tools": "All tools",
       "inputs": {
@@ -2408,12 +2441,12 @@
         "weak": "3 riskiest months",
         "strong": "3 strongest months"
       },
-      "ramadanNote": "During the Ramadan window, daytime traffic may drop about 20%, while iftar evenings may rise about 35%. Monthly totals can stay near neutral, but staff and inventory should be planned by hour.",
+      "ramadanNote": "During Ramadan there are fewer guests in the daytime and more at iftar. Monthly sales may barely change, but plan shifts and purchasing by the hour. Ramadan dates are approximate (may move by a day).",
       "deadMonthWarning": "Dead month: reduce advance purchasing, shorten shifts, and prepare a local campaign.",
       "ahilikQuote": "Ahilik wisdom: a master builds reserves in abundant months and keeps order in narrow months.",
       "cta": "Update forecast",
       "tier_required_title": "This tool requires KALFA membership",
-      "tier_required_body": "Season Analytics belongs to KALFA because it combines cash-flow forecasting with labor and inventory planning.",
+      "tier_required_body": "Season Analytics combines the sales forecast with staff and food planning, so it is part of the KALFA tier.",
       "upgrade_cta": "Upgrade to KALFA"
     },
     "reklamRoi": {
@@ -2489,6 +2522,10 @@
         },
         "validation": {
           "channelBudget": "Enter budget for at least one channel."
+        },
+        "marginPercent": {
+          "label": "Share left per sale (%)",
+          "hint": "What stays from each sale after food and packaging cost. Example: food cost 35% → 65."
         }
       },
       "results": {
@@ -2504,7 +2541,8 @@
         "tableTitle": "Channel ROI table",
         "bestChannel": "Best channel",
         "worstChannel": "Weakest channel",
-        "ltvFormulaNote": "LTV is a simple estimate: AOV × (1 / (1 − repeat purchase percent))."
+        "ltvFormulaNote": "LTV is a simple estimate: average order × share left × (1 / (1 − repeat rate)).",
+        "breakevenRoas": "break-even: {value}x — below this ads lose money"
       },
       "table": {
         "channel": "Channel",
@@ -3197,7 +3235,8 @@
         "missing-key": "AI key is not configured",
         "ai-failed": "AI analysis failed — try again",
         "ai-output-invalid": "AI response returned in an invalid format"
-      }
+      },
+      "sla": "Reply within {hours} h (by severity: critical 1 · high 4 · medium 24 · low 48 h)."
     }
   },
   "pricing": {

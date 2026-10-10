@@ -13,6 +13,8 @@ interface KSTScores {
 interface TopIssue {
   category: 'quality' | 'service' | 'cleanliness';
   questionId: string;
+  /** TASK-0523: the question itself (older saved runs only have the id). */
+  questionText?: string;
   score: number;
   rootCause: string;
   weekFixStep: string;
@@ -46,10 +48,10 @@ const resultCopy: Record<Locale, {
 }> = {
   az: {
     title: 'Sənin KST Skorun',
-    benchmark: 'Sənaye norması: {v}%',
+    benchmark: 'Hədəf: {v}% (DK tövsiyəsi)',
     cats: { quality: 'Keyfiyyət', service: 'Servis', cleanliness: 'Təmizlik' },
-    vs: 'norma vs',
-    issuesTitle: '3 Kritik Problem',
+    vs: 'hədəfə görə',
+    issuesTitle: 'Ən zəif cavablar',
     fixStep: '1 həftəlik həll',
     planTitle: '30 Günlük Yol Xəritəsi',
     weeks: { week1: '1-ci həftə', week2: '2-ci həftə', week3to4: '3-4-cü həftə' },
@@ -58,10 +60,10 @@ const resultCopy: Record<Locale, {
   },
   en: {
     title: 'Your KST Score',
-    benchmark: 'Industry norm: {v}%',
+    benchmark: 'Target: {v}% (DK suggestion)',
     cats: { quality: 'Quality', service: 'Service', cleanliness: 'Cleanliness' },
-    vs: 'vs norm',
-    issuesTitle: '3 Critical Issues',
+    vs: 'vs target',
+    issuesTitle: 'Weakest answers',
     fixStep: '1-week fix',
     planTitle: '30-Day Roadmap',
     weeks: { week1: 'Week 1', week2: 'Week 2', week3to4: 'Weeks 3-4' },
@@ -70,10 +72,10 @@ const resultCopy: Record<Locale, {
   },
   tr: {
     title: 'KST Puanınız',
-    benchmark: 'Sektör normu: {v}%',
+    benchmark: 'Hedef: {v}% (DK önerisi)',
     cats: { quality: 'Kalite', service: 'Servis', cleanliness: 'Temizlik' },
-    vs: 'norma vs',
-    issuesTitle: '3 Kritik Sorun',
+    vs: 'hedefe göre',
+    issuesTitle: 'En zayıf cevaplar',
     fixStep: '1 haftalık çözüm',
     planTitle: '30 Günlük Yol Haritası',
     weeks: { week1: '1. hafta', week2: '2. hafta', week3to4: '3-4. hafta' },
@@ -82,10 +84,10 @@ const resultCopy: Record<Locale, {
   },
   ru: {
     title: 'Ваш KST Балл',
-    benchmark: 'Норма отрасли: {v}%',
+    benchmark: 'Цель: {v}% (рекомендация DK)',
     cats: { quality: 'Качество', service: 'Сервис', cleanliness: 'Чистота' },
-    vs: 'от нормы',
-    issuesTitle: '3 Критические проблемы',
+    vs: 'от цели',
+    issuesTitle: 'Самые слабые ответы',
     fixStep: 'Решение за 1 неделю',
     planTitle: '30-дневная дорожная карта',
     weeks: { week1: '1-я неделя', week2: '2-я неделя', week3to4: '3-4-я недели' },
@@ -140,23 +142,27 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
         ))}
       </div>
 
-      {/* Top 3 issues */}
+      {/* Weakest answers (code-picked, ≤3/5 only — TASK-0523) */}
+      {result.topIssues.length > 0 && (
       <div className="rounded-2xl border border-slate-200 bg-white p-5">
         <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{copy.issuesTitle}</h3>
         <div className="space-y-4">
           {result.topIssues.map((issue, i) => (
             <div key={i} className="border-l-4 border-amber-400 py-2 pl-4">
               <p className="text-xs text-slate-500">
-                {copy.cats[issue.category]} · {issue.questionId} · {issue.score}/5
+                {copy.cats[issue.category]} · {issue.questionText ?? issue.questionId} · {issue.score}/5
               </p>
-              <p className="mt-1 text-sm font-semibold text-[var(--dk-navy)]">{issue.rootCause}</p>
-              <p className="mt-1 text-sm text-slate-600">
-                <span className="font-semibold">{copy.fixStep}:</span> {issue.weekFixStep}
-              </p>
+              {issue.rootCause && <p className="mt-1 text-sm font-semibold text-[var(--dk-navy)]">{issue.rootCause}</p>}
+              {issue.weekFixStep && (
+                <p className="mt-1 text-sm text-slate-600">
+                  <span className="font-semibold">{copy.fixStep}:</span> {issue.weekFixStep}
+                </p>
+              )}
             </div>
           ))}
         </div>
       </div>
+      )}
 
       {/* 30-day action plan */}
       <div className="rounded-2xl border border-slate-200 bg-white p-5">
@@ -182,9 +188,15 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
 
       {/* Ahilik + encouragement */}
       <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center">
-        <p className="text-sm italic text-slate-500">&ldquo;{result.ahilikQuote}&rdquo;</p>
-        <p className="mt-1 text-xs text-slate-600">— Əhilik ənənəsi</p>
-        <p className="mt-4 text-sm font-medium text-[var(--dk-navy)]">{result.encouragement}</p>
+        {/* TASK-0523: the AI no longer writes a quote «from the Ahilik tradition» (it was invented);
+            older saved runs still show theirs. */}
+        {result.ahilikQuote && (
+          <>
+            <p className="text-sm italic text-slate-500">&ldquo;{result.ahilikQuote}&rdquo;</p>
+            <p className="mt-1 mb-4 text-xs text-slate-600">— Əhilik ənənəsi</p>
+          </>
+        )}
+        <p className="text-sm font-medium text-[var(--dk-navy)]">{result.encouragement}</p>
       </div>
 
       {/* Actions */}

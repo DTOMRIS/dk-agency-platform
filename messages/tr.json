@@ -655,6 +655,35 @@
             "tag": "Operasyon"
           }
         }
+      },
+      "scenario": {
+        "breakevenLabel": "Başabaş satış",
+        "breakevenAbove": "Mevcut satış başabaşın {value} üstünde",
+        "breakevenBelow": "Başabaşa ulaşmak için ayda {value} daha fazla satış gerekiyor",
+        "breakevenImpossible": "Yemek maliyeti satışa eşit ya da fazla — bu fiyatlarla başabaş yok",
+        "breakevenNote": "Satışla yalnız yemek ve ambalaj artar; maaş, kira ve diğerleri her durumda ödenir.",
+        "title": "Ya böyle olursa?",
+        "subtitle": "Kaydırıcıları oynatın — net kârın nasıl değiştiğini görün.",
+        "sliders": {
+          "salesGrowth": "Satış değişirse",
+          "foodCut": "Yemek maliyeti düşerse",
+          "fixedCut": "Diğer giderler düşerse"
+        },
+        "scenarioNet": "Yeni net kâr",
+        "scenarioDelta": "Fark",
+        "perMonth": "aylık",
+        "aiTitle": "AI yorumu",
+        "aiBody": "Rakamlarınıza bakıp bu ay ne yapmanız gerektiğini sade dille yazar.",
+        "aiCta": "AI yorumunu al",
+        "aiLoading": "Hazırlanıyor…",
+        "aiUsta": "AI yorumu USTA üyeler içindir.",
+        "aiUstaLink": "Paketlere bak",
+        "errors": {
+          "rate-limited": "10 dakikada 3 istek sınırı doldu. Biraz sonra tekrar deneyin.",
+          "validation": "Satış ve giderleri kontrol edin.",
+          "missing-key": "AI hizmeti şu an kullanılamıyor.",
+          "ai-failed": "AI yanıt veremedi. Tekrar deneyin."
+        }
       }
     },
     "staffRetention": {
@@ -2032,8 +2061,8 @@
       "back_to_tools": "Tüm araçlar",
       "remove_item": "Öğeyi sil",
       "load_demo": "Test verisi",
-      "avg_cm": "Ortalama CM",
-      "avg_mix": "Ortalama Mix %",
+      "avg_cm": "Ortalama kazanç (satışa göre ağırlıklı)",
+      "avg_mix": "Popülerlik eşiği (satış payı)",
       "item": "Öğe",
       "price": "Fiyat",
       "cost": "Maliyet",
@@ -2043,12 +2072,13 @@
       "plowhorse_hint": "Çok satılıyor, porsiyon kazancı düşük",
       "puzzle_hint": "Az satılıyor, porsiyon kazancı yüksek",
       "dog_hint": "Az satılıyor, porsiyon kazancı düşük",
-      "ai_tips_subtitle": "DeepSeek matrisi pratik adımlara çevirir.",
+      "ai_tips_subtitle": "Sonuca bakıp her grup için pratik adımlar yazar. Her basış aylık limitten 1 kullanım sayılır.",
       "ai_loading": "YZ önerisi yükleniyor...",
       "ai_error": "YZ önerisi yüklenmedi — tekrar deneyin",
       "retry": "Tekrar dene",
       "tier_required_title": "Bu araç KALFA üyeliği gerektirir",
-      "tier_required_body": "Menü Analizi gerçek menü mühendisliği ve YZ önerilerini birleştirdiği için KALFA katmanındadır."
+      "tier_required_body": "Menü Analizi gerçek menü mühendisliği ve YZ önerilerini birleştirdiği için KALFA katmanındadır.",
+      "ai_cta": "AI önerisi al"
     },
     "roiCalculator": {
       "title": "ROI Hesaplayıcı",
@@ -2082,7 +2112,7 @@
       "total_cac": "Toplam CAC",
       "evaluation": "Değerlendirme",
       "days": "gün",
-      "benchmark_roi": ">100% sağlıklı",
+      "benchmark_roi": "%0'ın üstü = reklam kendini ödüyor",
       "benchmark_roas": ">3x sağlıklı",
       "benchmark_ltv": "≥3:1 sağlıklı",
       "benchmark_payback": "<180 gün ideal",
@@ -2107,7 +2137,10 @@
         "validation": "Kanal rakamlarını kontrol edip tekrar deneyin.",
         "missing-key": "AI anahtarı sunucuda kurulu değil.",
         "ai-failed": "AI analizi yüklenmedi — tekrar deneyin."
-      }
+      },
+      "margin_pct": "Satıştan kalan pay (%)",
+      "margin_hint": "Yemek ve ambalaj maliyeti düşüldükten sonra her satıştan kalan kısım. Örnek: yemek maliyeti %35 → 65. Kendi rakamınızı yazın.",
+      "breakeven_roas": "başabaş: {value}x"
     },
     "plSimulator": {
       "tierBadge": "USTA",
@@ -2343,7 +2376,7 @@
     },
     "sezonAnalitikasi": {
       "title": "Sezon Analitiği",
-      "subtitle": "Azerbaycan bayramları, kurort sezonları ve Ramazan davranışına göre 12 aylık cash-flow, işçilik ve stok bütçesi tahmini.",
+      "subtitle": "AZ takvimi, tatil sezonu ve Ramazan'ı dikkate alarak 12 aylık satış, personel gideri ve gıda bütçesi tahmini.",
       "tier": "KALFA",
       "back_to_tools": "Tüm araçlar",
       "inputs": {
@@ -2408,12 +2441,12 @@
         "weak": "En riskli 3 ay",
         "strong": "En güçlü 3 ay"
       },
-      "ramadanNote": "Ramazan penceresinde gündüz trafiği yaklaşık %20 düşer, iftar akşamları yaklaşık %35 artar. Aylık toplam nötr kalabilir, ama personel ve stok saatlere göre planlanmalıdır.",
+      "ramadanNote": "Ramazan'da gündüz misafir azalır, iftar saatlerinde artar. Aylık satış pek değişmeyebilir ama vardiyaları ve alımları saatlere göre planlayın. Ramazan tarihleri yaklaşıktır (1 gün kayabilir).",
       "deadMonthWarning": "Ölü ay: peşin alımları azaltın, vardiyaları kısaltın ve yerel kampanya hazırlayın.",
       "ahilikQuote": "Ahilik sözü: usta bolluk ayında yedek ayırır, dar ayda düzeni korur.",
       "cta": "Tahmini güncelle",
       "tier_required_title": "Bu araç KALFA üyeliği gerektirir",
-      "tier_required_body": "Sezon Analitiği cash-flow tahmini, personel ve stok planlamasını birleştirdiği için KALFA katmanındadır.",
+      "tier_required_body": "Sezon Analitiği satış tahminini, personel ve gıda planlamasını birleştirdiği için KALFA seviyesindedir.",
       "upgrade_cta": "KALFA'ya geç"
     },
     "reklamRoi": {
@@ -2489,6 +2522,10 @@
         },
         "validation": {
           "channelBudget": "En az bir kanal için bütçe girin."
+        },
+        "marginPercent": {
+          "label": "Satıştan kalan pay (%)",
+          "hint": "Yemek ve ambalaj maliyeti düşüldükten sonra her satıştan kalan kısım. Örnek: yemek maliyeti %35 → 65."
         }
       },
       "results": {
@@ -2504,7 +2541,8 @@
         "tableTitle": "Kanal ROI tablosu",
         "bestChannel": "En iyi kanal",
         "worstChannel": "En zayıf kanal",
-        "ltvFormulaNote": "LTV basit tahmindir: AOV × (1 / (1 − tekrar alış yüzdesi))."
+        "ltvFormulaNote": "LTV basit tahmindir: ortalama hesap × kalan pay × (1 / (1 − tekrar alım oranı)).",
+        "breakevenRoas": "başabaş: {value}x — altında reklam para kaybettirir"
       },
       "table": {
         "channel": "Kanal",
@@ -3197,7 +3235,8 @@
         "missing-key": "YZ anahtarı aktif değil",
         "ai-failed": "YZ analizi alınmadı — tekrar deneyin",
         "ai-output-invalid": "YZ yanıtı geçersiz formatta geldi"
-      }
+      },
+      "sla": "Yanıt süresi: misafire {hours} saat içinde dönün (ciddiyete göre: kritik 1 · yüksek 4 · orta 24 · düşük 48 saat)."
     }
   },
   "pricing": {

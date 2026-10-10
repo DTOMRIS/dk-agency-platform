@@ -1,7 +1,7 @@
 'use server';
 
 import { getAuthFromCookie } from '@/lib/auth/jwt';
-import { checkToolAccess } from '@/lib/marketing-gating';
+import { checkToolAccess, logToolRun } from '@/lib/marketing-gating';
 import { callAIJson } from '@/lib/ai-router';
 import {
   calculateTrendAnalysis,
@@ -84,8 +84,17 @@ function validateAiResponse(data: unknown, trendIds: TrendId[]): TrendRecommenda
   return trendIds.map((trendId) => recommendations.find((item) => item.trendId === trendId)!);
 }
 
+// TASK-0523: «Locale: az» alone let the model answer in English or in Azerbaijani without ə/ı/ş.
+const OUTPUT_LANGUAGE: Record<string, string> = {
+  az: 'Azerbaijani, with correct letters (ə, ı, ö, ü, ç, ş, ğ) and no English marketing jargon',
+  ru: 'Russian',
+  en: 'plain English',
+  tr: 'Turkish',
+};
+
 function buildPrompt(profile: TrendProfile, topTrendIds: TrendId[], locale: string): string {
   return `Locale: ${locale}
+Write every "firstStep" in ${OUTPUT_LANGUAGE[locale] ?? OUTPUT_LANGUAGE.az}.
 Restaurant profile:
 - Type: ${profile.restaurantType}
 - Audience: ${profile.audience}
@@ -151,6 +160,7 @@ export async function generateTrendRecommendations(
     const recommendations = validateAiResponse(response.data, topTrendIds);
     if (!recommendations) return { ok: false, source: 'fallback', reason: 'ai-unavailable' };
 
+    await logToolRun({ userId: auth.userId, toolSlug: 'trend-analiz', input: { ...profile }, status: 'success', locale: locale });
     return { ok: true, source: 'ai', recommendations };
   } catch {
     return { ok: false, source: 'fallback', reason: 'ai-unavailable' };

@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
-import { checkToolAccess } from '@/lib/marketing-gating';
+import { checkToolAccess, logToolRun } from '@/lib/marketing-gating';
 import { AI_MODELS } from '@/lib/ai-models';
 
 export interface PersonaInput {
@@ -298,6 +298,7 @@ export async function generatePersona(input: PersonaInput): Promise<PersonaResul
         ],
       }),
       cache: 'no-store',
+      signal: AbortSignal.timeout(30_000),
     });
 
     if (!response.ok) return { ok: false, error: 'ai-failed' };
@@ -318,6 +319,7 @@ export async function generatePersona(input: PersonaInput): Promise<PersonaResul
     const persona = validatePersonaJSON(parsed);
     if (!persona) return { ok: false, error: 'json-parse' };
 
+    await logToolRun({ userId: auth.userId, toolSlug: 'musteri-persona', input: { ...sanitized }, status: 'success' });
     return { ok: true, persona };
   } catch {
     return { ok: false, error: 'ai-failed' };

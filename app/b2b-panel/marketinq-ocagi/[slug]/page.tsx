@@ -14,14 +14,12 @@ import PromoROIPage from '@/components/marketinq-ocagi/promosyon-roi/PromoROIPag
 import MenyuAnalitiyiPage from '@/components/marketinq-ocagi/menyu-analitigi/MenyuAnalitiyiPage';
 import SikayetAnalitiyiPage from '@/components/marketinq-ocagi/sikayet-analitigi/SikayetAnalitiyiPage';
 import MusteriPersonaPage from '@/components/marketinq-ocagi/musteri-persona/MusteriPersonaPage';
-import PnlSimulatorPage from '@/components/marketinq-ocagi/pnl-simulator/PnlSimulatorPage';
 import SezonPlanlamaPage from '@/components/marketinq-ocagi/sezon-planlama/SezonPlanlamaPage';
 import SezonAnalitikasiPage from '@/components/marketinq-ocagi/sezon-analitikasi/SezonAnalitikasiPage';
 import ReklamRoiPage from '@/components/marketinq-ocagi/reklam-roi/ReklamRoiPage';
 import RestoranAuditPage from '@/components/marketinq-ocagi/restoran-audit/RestoranAuditPage';
 import TrendAnalizPage from '@/components/marketinq-ocagi/trend-analiz/TrendAnalizPage';
 import LokasyonAnalizPage from '@/components/marketinq-ocagi/lokasyon-analiz/LokasyonAnalizPage';
-import YemekXerciPage from '@/components/marketinq-ocagi/yemek-xerci/YemekXerciPage';
 import SikayetCavablandiriciPage from '@/components/marketinq-ocagi/sikayet-cavablandirici/SikayetCavablandiriciPage';
 import ReklamYazicisiPage from '@/components/marketinq-ocagi/reklam-yazicisi/ReklamYazicisiPage';
 
@@ -51,17 +49,17 @@ const pageCopy: Record<
       'reklam-roi': { title: 'Reklam ROI', subtitle: 'Awareness və conversion kampaniyaları üçün kanal ROAS, CAC, LTV:CAC', why: 'Like və baxış qərar vermək üçün yetərli deyil. Bu alət Instagram, influencer, Telegram və WhatsApp kampaniyalarını real büdcə, müştəri və dəyər metriklərinə çevirir.' },
       'restoran-audit': { title: 'Restoran Audit', subtitle: 'Kassa, mətbəx, xidmət və uyğunluq üzrə özünüqiymətləndirmə', why: 'Kiçik restoran üçün ən böyük risk bilmədiyi rəqəmlərdir: kassa tutuşdurması, aylıq xərc, prime cost, top məhsul marjası və sənəd intizamı. Bu audit zəif nöqtələri aksiyon planına çevirir.' },
       'trend-analiz': { title: 'Trend Analiz', subtitle: '2026 HoReCa trendlərini restoranınıza uyğun prioritetləşdirin', why: 'Trend siyahısı çoxdur, amma kiçik restoranın resursu məhduddur. Bu alət 8 trendi profilinizə görə sıralayır və ilk ucuz tətbiq addımını verir.' },
-      'sezon-analitikasi': { title: 'Sezon Analitikası', subtitle: 'AZ təqvimi ilə 12 aylıq cash-flow proqnozu', why: 'Cash-flow proqnozu olmayan restoran pik ayda fürsəti, ölü ayda isə nağd pulu itirir. Bu alət Novruz, Ramazan, turist piki və kurort sezonunu rəqəmə çevirir.' },
+      'sezon-analitikasi': { title: 'Sezon Analitikası', subtitle: 'AZ təqvimi ilə 12 aylıq satış proqnozu', why: 'Aylıq satış proqnozu olmayan restoran pik ayda fürsəti, ölü ayda isə nağd pulu itirir. Bu alət Novruz, Ramazan, turist piki və kurort sezonunu rəqəmə çevirir.' },
       'pl-simulyatoru': { title: 'P&L Simulyatoru', subtitle: 'Gəlir-xərc, what-if və zərərsizlik analizi', why: 'P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir.' },
       'sikayet-analitigi': { title: 'Şikayət Analitiği', subtitle: 'Müştəri şikayətlərini AI ilə analiz et', why: 'Hər şikayət arxasında 26 səssiz narazı müştəri var. AI pattern-ləri tapır.' },
       'sikayet-cavablandirici': { title: 'Şikayət Cavablandırıcı', subtitle: 'AI ilə Google və TripAdvisor şikayətlərinə 3 fərqli tonda cavab', why: 'Hər cavabsız şikayət potensial müştəri itkisidir. AI 3 tonda peşəkar cavab yaradır.' },
       'musteri-persona': { title: 'Müştəri Persona', subtitle: 'Hədəf müştəri profilini yaradın', why: 'Hər kəsə satmaq heç kimə satmaq deməkdir. Persona ilə marketinq mesajı kəskinləşir.' },
       'sezon-planlama': { title: 'Sezon Planlaması', subtitle: '12 aylıq kampaniya və event takvimi', why: 'Novruz nə edək? sualını 1 həftə qala düşünmək — gec olur.' },
       'reklam-yazicisi': { title: 'Reklam Yazıcısı', subtitle: 'AI ilə reklam və post mətni yazın', why: 'Düzgün reklam mətni konversiyanı 3x artıra bilər.' },
-      'sosial-medya-plan': { title: 'Sosial Medya Plan', subtitle: '7-günlük Instagram + TikTok planı', why: 'Restoran sahibinin 7 gün boyu post fikri tapması mümkün deyil. AI bir həftəlik tam plan verir.' },
-      'audit-robotu': { title: 'Audit Robotu', subtitle: 'Foto-əsaslı AI restoran auditi', why: 'Telefon kamerasından 5 foto — AI 30 saniyədə audit raporu verir.' },
-      'trend-analitigi': { title: 'Trend Analitiği', subtitle: 'Bazardakı yemək trendlərini izlə', why: 'Hansı yeməklər populyarlaşır? Hansı konseptlər azalır? AI bazar siqnallarını oxuyur.' },
-      'lokasyon-secme': { title: 'Lokasyon Seçmə', subtitle: '4 aşamada restoran yeri seçimi', why: 'Restoran sahibinin ən bahalı səhvi: səhv lokasyona açmaq. Bu alət açılışdan əvvəl qərarı dəstəkləyir.' },
+      'sosial-medya-plan': { title: 'Sosial Medya Plan', subtitle: '7-günlük Instagram + TikTok planı', why: 'Tezliklə. Bir həftəlik Instagram və TikTok post planı hazırlayacaq — hazır olanda xəbər verəcəyik.' },
+      'audit-robotu': { title: 'Audit Robotu', subtitle: 'Foto-əsaslı AI restoran auditi', why: 'Tezliklə. Telefonla çəkilmiş şəkillərə baxıb restoranın görünüşü üzrə qeydlər yazacaq — hazır olanda xəbər verəcəyik.' },
+      'trend-analitigi': { title: 'Trend Analitiği', subtitle: 'Bazardakı yemək trendlərini izlə', why: 'Tezliklə. Hansı yeməklərin populyarlaşdığını izləməyə kömək edəcək — hazır olanda xəbər verəcəyik.' },
+      'lokasyon-secme': { title: 'Lokasyon Seçmə', subtitle: '4 aşamada restoran yeri seçimi', why: 'Tezliklə. Açılışdan əvvəl yer seçimini addım-addım yoxlamağa kömək edəcək — hazır olanda xəbər verəcəyik.' },
     },
   },
   en: {
@@ -79,17 +77,17 @@ const pageCopy: Record<
       'reklam-roi': { title: 'Ad ROI', subtitle: 'Channel ROAS, CAC, and LTV:CAC for awareness and conversion campaigns', why: 'Likes and views are not enough to make budget decisions. This tool turns Instagram, influencer, Telegram, and WhatsApp campaigns into budget, customer, and value metrics.' },
       'restoran-audit': { title: 'Restaurant Audit', subtitle: 'Self-assessment for cash, kitchen, service, and compliance discipline', why: 'Small restaurants lose control when core numbers are invisible: cash reconciliation, monthly expenses, prime cost, top product margin, and document discipline. This audit turns weak points into an action plan.' },
       'trend-analiz': { title: 'Trend Analysis', subtitle: 'Prioritize 2026 HoReCa trends for your restaurant', why: 'Trend lists are long, but small restaurants have limited resources. This tool ranks 8 trends for your profile and gives the first low-cost action.' },
-      'sezon-analitikasi': { title: 'Season Analytics', subtitle: '12-month cash-flow forecast with Azerbaijan calendar', why: 'A restaurant without cash-flow forecasting loses opportunity in peak months and cash in dead months. This tool turns Novruz, Ramadan, tourist peaks, and resort seasons into numbers.' },
+      'sezon-analitikasi': { title: 'Season Analytics', subtitle: '12-month sales forecast with the Azerbaijan calendar', why: 'A restaurant without a monthly sales forecast loses opportunity in peak months and cash in dead months. This tool turns Novruz, Ramadan, tourist peaks, and resort seasons into numbers.' },
       'pl-simulyatoru': { title: 'P&L Simulator', subtitle: 'Revenue, what-if, and breakeven analysis', why: 'Restaurants tracking P&L monthly outperform competitors.' },
       'sikayet-analitigi': { title: 'Complaint Analytics', subtitle: 'AI-powered complaint analysis', why: 'For every complaint, 26 unhappy customers stay silent.' },
       'sikayet-cavablandirici': { title: 'Complaint Responder', subtitle: 'AI-generated responses to reviews in 3 tones', why: 'Every unanswered complaint is a potential lost customer. AI generates professional responses in 3 tones.' },
       'musteri-persona': { title: 'Customer Persona', subtitle: 'Build target customer profiles', why: 'Selling to everyone means selling to no one.' },
       'sezon-planlama': { title: 'Season Planning', subtitle: '12-month campaign calendar', why: 'Planning holidays 1 week ahead is too late.' },
       'reklam-yazicisi': { title: 'Ad Writer', subtitle: 'AI-generated ad copy', why: 'Good ad copy can triple conversion rates.' },
-      'sosial-medya-plan': { title: 'Social Media Plan', subtitle: '7-day IG + TikTok plan', why: 'AI creates a full weekly content plan in seconds.' },
-      'audit-robotu': { title: 'Audit Robot', subtitle: 'Photo-based AI audit', why: '5 photos from your phone — AI audit in 30 seconds.' },
-      'trend-analitigi': { title: 'Trend Analytics', subtitle: 'Track food trends', why: 'What food is trending? What concepts are declining?' },
-      'lokasyon-secme': { title: 'Location Picker', subtitle: '4-stage site selection', why: 'Wrong location is the most expensive mistake in restaurant business.' },
+      'sosial-medya-plan': { title: 'Social Media Plan', subtitle: '7-day IG + TikTok plan', why: 'Coming soon. It will draft a one-week Instagram and TikTok post plan — we will let you know when it is ready.' },
+      'audit-robotu': { title: 'Audit Robot', subtitle: 'Photo-based AI audit', why: 'Coming soon. It will review phone photos of your venue and note what to fix — we will let you know when it is ready.' },
+      'trend-analitigi': { title: 'Trend Analytics', subtitle: 'Track food trends', why: 'Coming soon. It will help you follow which dishes are getting popular — we will let you know when it is ready.' },
+      'lokasyon-secme': { title: 'Location Picker', subtitle: '4-stage site selection', why: 'Coming soon. It will walk you through checking a site before you open — we will let you know when it is ready.' },
     },
   },
   tr: {
@@ -107,17 +105,17 @@ const pageCopy: Record<
       'reklam-roi': { title: 'Reklam ROI', subtitle: 'Awareness ve conversion kampanyaları için kanal ROAS, CAC, LTV:CAC', why: 'Beğeni ve görüntüleme bütçe kararı için yeterli değildir. Bu araç Instagram, influencer, Telegram ve WhatsApp kampanyalarını bütçe, müşteri ve değer metriklerine çevirir.' },
       'restoran-audit': { title: 'Restoran Audit', subtitle: 'Kasa, mutfak, servis ve uygunluk disiplini için öz değerlendirme', why: 'Küçük restoran temel rakamları görmediğinde kontrolü kaybeder: kasa mutabakatı, aylık gider, prime cost, en çok satan ürün marjı ve belge disiplini. Bu audit zayıf noktaları aksiyon planına çevirir.' },
       'trend-analiz': { title: 'Trend Analiz', subtitle: '2026 HoReCa trendlerini restoranınıza göre önceliklendirin', why: 'Trend listeleri uzundur, küçük restoranın kaynağı sınırlıdır. Bu araç 8 trendi profilinize göre sıralar ve ilk düşük maliyetli adımı verir.' },
-      'sezon-analitikasi': { title: 'Sezon Analitiği', subtitle: 'Azerbaycan takvimiyle 12 aylık cash-flow tahmini', why: 'Cash-flow tahmini olmayan restoran yoğun ayda fırsatı, ölü ayda nakdi kaybeder. Bu araç Novruz, Ramazan, turist piki ve kurort sezonunu rakama çevirir.' },
+      'sezon-analitikasi': { title: 'Sezon Analitiği', subtitle: 'Azerbaycan takvimiyle 12 aylık satış tahmini', why: 'Aylık satış tahmini olmayan restoran yoğun ayda fırsatı, ölü ayda nakdi kaybeder. Bu araç Novruz, Ramazan, turist piki ve kurort sezonunu rakama çevirir.' },
       'pl-simulyatoru': { title: 'P&L Simülatörü', subtitle: 'Gelir, what-if ve başabaş analizi', why: 'Aylık P&L hazırlayan restoran rakiplerinin önündedir.' },
       'sikayet-analitigi': { title: 'Şikayet Analitiği', subtitle: 'AI şikayet analizi', why: 'Her şikayetin arkasında 26 sessiz mutsuz müşteri var.' },
       'sikayet-cavablandirici': { title: 'Şikayet Yanıtlayıcı', subtitle: 'Google ve TripAdvisor şikayetlerine AI ile 3 tonda yanıt', why: 'Her cevaplanmayan şikayet potansiyel müşteri kaybıdır. AI 3 tonda profesyonel yanıt üretir.' },
       'musteri-persona': { title: 'Müşteri Persona', subtitle: 'Hedef müşteri profili', why: 'Herkese satmak kimseye satmamak demektir.' },
       'sezon-planlama': { title: 'Sezon Planlaması', subtitle: '12 aylık kampanya takvimi', why: 'Bayramları 1 hafta önceden planlamak geç kalır.' },
       'reklam-yazicisi': { title: 'Reklam Yazıcısı', subtitle: 'AI reklam metni', why: 'Doğru reklam metni dönüşümü 3x artırabilir.' },
-      'sosial-medya-plan': { title: 'Sosyal Medya Planı', subtitle: '7 günlük IG + TikTok planı', why: 'AI saniyeler içinde haftalık plan oluşturur.' },
-      'audit-robotu': { title: 'Denetim Robotu', subtitle: 'Fotoğraf tabanlı AI denetim', why: '5 fotoğraf — 30 saniyede AI denetim raporu.' },
-      'trend-analitigi': { title: 'Trend Analitiği', subtitle: 'Yemek trendlerini takip edin', why: 'Hangi yemekler popülerleşiyor? Hangi konseptler düşüyor?' },
-      'lokasyon-secme': { title: 'Lokasyon Seçimi', subtitle: '4 aşamada yer seçimi', why: 'Yanlış lokasyon restoran işinin en pahalı hatasıdır.' },
+      'sosial-medya-plan': { title: 'Sosyal Medya Planı', subtitle: '7 günlük IG + TikTok planı', why: 'Yakında. Bir haftalık Instagram ve TikTok paylaşım planı hazırlayacak — hazır olunca haber vereceğiz.' },
+      'audit-robotu': { title: 'Denetim Robotu', subtitle: 'Fotoğraf tabanlı AI denetim', why: 'Yakında. Telefonla çekilen fotoğraflara bakıp mekân için notlar yazacak — hazır olunca haber vereceğiz.' },
+      'trend-analitigi': { title: 'Trend Analitiği', subtitle: 'Yemek trendlerini takip edin', why: 'Yakında. Hangi yemeklerin popülerleştiğini takip etmenize yardım edecek — hazır olunca haber vereceğiz.' },
+      'lokasyon-secme': { title: 'Lokasyon Seçimi', subtitle: '4 aşamada yer seçimi', why: 'Yakında. Açılıştan önce yer seçimini adım adım kontrol etmenize yardım edecek — hazır olunca haber vereceğiz.' },
     },
   },
   ru: {
@@ -135,17 +133,17 @@ const pageCopy: Record<
       'reklam-roi': { title: 'ROI рекламы', subtitle: 'ROAS, CAC и LTV:CAC по каналам для awareness и conversion кампаний', why: 'Лайки и просмотры недостаточны для решения о бюджете. Инструмент переводит Instagram, influencer, Telegram и WhatsApp в бюджет, клиентов и ценность.' },
       'restoran-audit': { title: 'Ресторанный аудит', subtitle: 'Самооценка кассы, кухни, сервиса и соответствия требованиям', why: 'Малый ресторан теряет контроль, когда не видит ключевые цифры: сверку кассы, месячные расходы, prime cost, маржу топ-продуктов и порядок документов. Этот аудит превращает слабые места в план действий.' },
       'trend-analiz': { title: 'Анализ трендов', subtitle: 'Приоритизация HoReCa трендов 2026 под ваш ресторан', why: 'Списки трендов длинные, а ресурсы малого ресторана ограничены. Инструмент ранжирует 8 трендов под ваш профиль и дает первый недорогой шаг.' },
-      'sezon-analitikasi': { title: 'Сезонная аналитика', subtitle: '12-месячный прогноз cash-flow с календарем Азербайджана', why: 'Без прогноза cash-flow ресторан теряет возможности в пиковые месяцы и деньги в слабые месяцы. Инструмент переводит Новруз, Рамадан, туристические пики и курортные сезоны в цифры.' },
+      'sezon-analitikasi': { title: 'Сезонная аналитика', subtitle: '12-месячный прогноз продаж с календарём Азербайджана', why: 'Без помесячного прогноза продаж ресторан теряет возможности в пиковые месяцы и деньги в слабые месяцы. Инструмент переводит Новруз, Рамадан, туристические пики и курортные сезоны в цифры.' },
       'pl-simulyatoru': { title: 'P&L Симулятор', subtitle: 'Доходы, what-if и безубыточность', why: 'Рестораны с ежемесячным P&L опережают конкурентов.' },
       'sikayet-analitigi': { title: 'Анализ Жалоб', subtitle: 'AI-анализ жалоб', why: 'За каждой жалобой стоят 26 молчаливых недовольных клиентов.' },
       'sikayet-cavablandirici': { title: 'Ответчик на жалобы', subtitle: 'AI-ответы на отзывы в 3 тонах', why: 'Каждая неотвеченная жалоба — потенциальная потеря клиента. AI генерирует профессиональные ответы в 3 тонах.' },
       'musteri-persona': { title: 'Персона Клиента', subtitle: 'Профиль целевого клиента', why: 'Продавать всем — значит не продавать никому.' },
       'sezon-planlama': { title: 'Сезонное Планирование', subtitle: '12-месячный календарь', why: 'Планировать праздники за неделю — слишком поздно.' },
       'reklam-yazicisi': { title: 'Генератор Рекламы', subtitle: 'AI-тексты для рекламы', why: 'Хороший рекламный текст может утроить конверсию.' },
-      'sosial-medya-plan': { title: 'План Соцсетей', subtitle: '7-дневный план IG + TikTok', why: 'AI создаёт недельный план за секунды.' },
-      'audit-robotu': { title: 'Робот Аудитор', subtitle: 'Фото-аудит с AI', why: '5 фото — AI-аудит за 30 секунд.' },
-      'trend-analitigi': { title: 'Аналитика Трендов', subtitle: 'Отслеживайте тренды', why: 'Что растёт? Какие концепции падают?' },
-      'lokasyon-secme': { title: 'Выбор Локации', subtitle: '4-этапный выбор места', why: 'Неправильная локация — самая дорогая ошибка в ресторанном бизнесе.' },
+      'sosial-medya-plan': { title: 'План Соцсетей', subtitle: '7-дневный план IG + TikTok', why: 'Скоро. Подготовит план публикаций в Instagram и TikTok на неделю — сообщим, когда будет готово.' },
+      'audit-robotu': { title: 'Робот Аудитор', subtitle: 'Фото-аудит с AI', why: 'Скоро. Посмотрит фото заведения с телефона и отметит, что исправить — сообщим, когда будет готово.' },
+      'trend-analitigi': { title: 'Аналитика Трендов', subtitle: 'Отслеживайте тренды', why: 'Скоро. Поможет следить, какие блюда набирают популярность — сообщим, когда будет готово.' },
+      'lokasyon-secme': { title: 'Выбор Локации', subtitle: '4-этапный выбор места', why: 'Скоро. Поможет пошагово проверить место перед открытием — сообщим, когда будет готово.' },
     },
   },
 };
@@ -176,9 +174,6 @@ export default function ToolSlugPage() {
   if (slug === 'menyu-analitik' && tool.status === 'live') {
     return <MenyuAnalitiyiPage />;
   }
-  if (slug === 'yemek-xerci' && tool.status === 'live') {
-    return <YemekXerciPage />;
-  }
   if (slug === 'sikayet-analitigi' && tool.status === 'live') {
     return <SikayetAnalitiyiPage />;
   }
@@ -187,9 +182,6 @@ export default function ToolSlugPage() {
   }
   if (slug === 'musteri-persona' && tool.status === 'live') {
     return <MusteriPersonaPage />;
-  }
-  if (slug === 'pl-simulyatoru' && tool.status === 'live') {
-    return <PnlSimulatorPage />;
   }
   if (slug === 'sezon-planlama' && tool.status === 'live') {
     return <SezonPlanlamaPage />;

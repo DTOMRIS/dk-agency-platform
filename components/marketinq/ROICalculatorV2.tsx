@@ -74,8 +74,10 @@ function statusColor(status: Status) {
   return 'border-slate-200 bg-slate-50 text-slate-600';
 }
 
+// TASK-0523: ROI counts the money left after food/packaging (revenue × margin), not revenue —
+// 1 000 AZN of sales on 500 AZN of ads is not +100% when 65% of each sale is left.
 function roiStatus(roi: number): Status {
-  if (roi > 100) return 'good';
+  if (roi >= 30) return 'good';
   if (roi >= 0) return 'warning';
   return 'critical';
 }
@@ -91,6 +93,8 @@ export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi
   const [avgCheck, setAvgCheck] = useState('25');
   const [monthlyVisits, setMonthlyVisits] = useState('2');
   const [loyaltyMonths, setLoyaltyMonths] = useState('12');
+  // Editable example: share of a sale left after food + packaging cost (food cost 35% → 65).
+  const [marginPct, setMarginPct] = useState('65');
   const [channels, setChannels] = useState<ChannelRow[]>(DEMO_CHANNELS);
   const [aiText, setAiText] = useState<string | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
@@ -101,6 +105,8 @@ export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi
     const averageCheck = parseAmount(avgCheck);
     const monthlyVisitCount = parseAmount(monthlyVisits);
     const loyalty = parseAmount(loyaltyMonths);
+    const margin = Math.min(100, parseAmount(marginPct)) / 100;
+    const breakevenROAS = margin > 0 ? 1 / margin : 0;
     const dailyVisitFrequency = monthlyVisitCount > 0 ? monthlyVisitCount / 30 : 0;
 
     const channelMetrics: ChannelMetric[] = channels
@@ -115,10 +121,10 @@ export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi
           spend,
           revenue,
           newCustomers,
-          roiPercent: spend > 0 ? ((revenue - spend) / spend) * 100 : 0,
+          roiPercent: spend > 0 ? ((revenue * margin - spend) / spend) * 100 : 0,
           roas: spend > 0 ? revenue / spend : 0,
           cac,
-          paybackDays: averageCheck > 0 && dailyVisitFrequency > 0 ? cac / (averageCheck * dailyVisitFrequency) : 0,
+          paybackDays: averageCheck > 0 && dailyVisitFrequency > 0 && margin > 0 ? cac / (averageCheck * margin * dailyVisitFrequency) : 0,
         };
       })
       .filter((channel) => channel.spend > 0)
@@ -134,17 +140,19 @@ export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi
     const totalSpend = channelMetrics.reduce((sum, channel) => sum + channel.spend, 0);
     const totalRevenue = channelMetrics.reduce((sum, channel) => sum + channel.revenue, 0);
     const totalNewCustomers = channelMetrics.reduce((sum, channel) => sum + channel.newCustomers, 0);
-    const totalROI = totalSpend > 0 ? ((totalRevenue - totalSpend) / totalSpend) * 100 : 0;
+    const totalROI = totalSpend > 0 ? ((totalRevenue * margin - totalSpend) / totalSpend) * 100 : 0;
     const totalROAS = totalSpend > 0 ? totalRevenue / totalSpend : 0;
     const totalCAC = totalNewCustomers > 0 ? totalSpend / totalNewCustomers : 0;
-    const ltv = averageCheck * monthlyVisitCount * loyalty;
+    const ltv = averageCheck * margin * monthlyVisitCount * loyalty;
     const ltvCacRatio = totalCAC > 0 ? ltv / totalCAC : 0;
-    const paybackDays = averageCheck > 0 && dailyVisitFrequency > 0 ? totalCAC / (averageCheck * dailyVisitFrequency) : 0;
+    const paybackDays = averageCheck > 0 && dailyVisitFrequency > 0 && margin > 0 ? totalCAC / (averageCheck * margin * dailyVisitFrequency) : 0;
 
     return {
       averageCheck,
       monthlyVisitCount,
       loyalty,
+      marginPct: round(margin * 100),
+      breakevenROAS: round(breakevenROAS),
       channels: channelMetrics,
       sortedChannels,
       totalSpend,
@@ -159,7 +167,7 @@ export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi
       bestChannel: sortedChannels[0] ?? null,
       worstChannel: sortedChannels[sortedChannels.length - 1] ?? null,
     };
-  }, [avgCheck, channels, loyaltyMonths, monthlyVisits]);
+  }, [avgCheck, channels, loyaltyMonths, marginPct, monthlyVisits]);
 
   function formatMoney(value: number) {
     return `${new Intl.NumberFormat(localeForIntl, { maximumFractionDigits: 1 }).format(round(value))} AZN`;
@@ -192,7 +200,7 @@ export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi
 
   const kpis = [
     { label: t('total_roi'), value: `${formatNumber(analysis.totalROI)}%`, status: roiStatus(analysis.totalROI), hint: t('benchmark_roi') },
-    { label: t('total_roas'), value: `${formatNumber(analysis.totalROAS)}x`, status: analysis.totalROAS > 3 ? 'good' as Status : 'warning' as Status, hint: t('benchmark_roas') },
+    { label: t('total_roas'), value: `${formatNumber(analysis.totalROAS)}x`, status: analysis.breakevenROAS > 0 && analysis.totalROAS >= analysis.breakevenROAS ? 'good' as Status : 'critical' as Status, hint: t('breakeven_roas', { value: formatNumber(analysis.breakevenROAS, 2) }) },
     { label: t('total_cac'), value: formatMoney(analysis.totalCAC), status: 'neutral' as Status, hint: '' },
     { label: 'LTV', value: formatMoney(analysis.ltv), status: 'neutral' as Status, hint: '' },
     { label: t('ltv_cac_ratio'), value: `${formatNumber(analysis.ltvCacRatio)}:1`, status: analysis.ltvCacRatio >= 3 ? 'good' as Status : 'critical' as Status, hint: t('benchmark_ltv') },
@@ -204,7 +212,8 @@ export default function ROICalculatorV2({ backHref = '/b2b-panel/marketinq-ocagi
   const copyText = `${t('title')}
 ${t('campaign_name')}: ${campaignName}
 ${t('total_roi')}: ${formatNumber(analysis.totalROI)}%
-${t('total_roas')}: ${formatNumber(analysis.totalROAS)}x
+${t('total_roas')}: ${formatNumber(analysis.totalROAS)}x (${t('breakeven_roas', { value: formatNumber(analysis.breakevenROAS, 2) })})
+${t('margin_pct')}: ${formatNumber(analysis.marginPct, 0)}%
 ${t('total_cac')}: ${formatMoney(analysis.totalCAC)}
 LTV: ${formatMoney(analysis.ltv)}
 ${t('ltv_cac_ratio')}: ${formatNumber(analysis.ltvCacRatio)}:1
@@ -228,6 +237,8 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
         campaignName,
         period: `${startDate || '-'} - ${endDate || '-'}`,
         ltv: analysis.ltv,
+        marginPct: analysis.marginPct,
+        breakevenROAS: analysis.breakevenROAS,
         totalCAC: analysis.totalCAC,
         ltvCacRatio: analysis.ltvCacRatio,
         bestChannel: analysis.bestChannel?.name ?? '-',
@@ -326,6 +337,11 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
           <label>
             <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('loyalty_months')}</span>
             <input value={loyaltyMonths} onChange={(event) => setLoyaltyMonths(event.target.value)} inputMode="decimal" className={inputClass} />
+          </label>
+          <label>
+            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('margin_pct')}</span>
+            <input value={marginPct} onChange={(event) => setMarginPct(event.target.value)} inputMode="decimal" className={inputClass} data-testid="roi-margin" />
+            <span className="mt-1 block text-xs leading-5 text-slate-500">{t('margin_hint')}</span>
           </label>
         </div>
       </section>

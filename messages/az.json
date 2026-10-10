@@ -655,6 +655,35 @@
             "tag": "Əməliyyat"
           }
         }
+      },
+      "scenario": {
+        "breakevenLabel": "Başabaş satış",
+        "breakevenAbove": "Cari satış başabaşdan {value} yuxarıdır",
+        "breakevenBelow": "Başabaşa çatmaq üçün ayda {value} çox satış lazımdır",
+        "breakevenImpossible": "Yemək xərci satışa bərabər və ya çoxdur — bu qiymətlərlə başabaş yoxdur",
+        "breakevenNote": "Yalnız yemək və qablaşdırma satışla artır; işçi, icarə və digər xərclər hər halda ödənir.",
+        "title": "Əgər belə olsa?",
+        "subtitle": "Sürgünü çəkin — xalis mənfəətin necə dəyişdiyini görün.",
+        "sliders": {
+          "salesGrowth": "Satış dəyişsə",
+          "foodCut": "Yemək xərci azalsa",
+          "fixedCut": "Digər xərclər azalsa"
+        },
+        "scenarioNet": "Yeni xalis mənfəət",
+        "scenarioDelta": "Fərq",
+        "perMonth": "ayda",
+        "aiTitle": "AI şərhi",
+        "aiBody": "Rəqəmlərinizə baxıb bu ay nə etməli olduğunuzu sadə dildə yazır.",
+        "aiCta": "AI şərhini al",
+        "aiLoading": "Hazırlanır…",
+        "aiUsta": "AI şərhi USTA üzvlər üçündür.",
+        "aiUstaLink": "Paketlərə bax",
+        "errors": {
+          "rate-limited": "10 dəqiqədə 3 sorğu limiti doldu. Bir az sonra yenidən yoxlayın.",
+          "validation": "Satış və xərcləri yoxlayın.",
+          "missing-key": "AI xidməti hazırda əlçatan deyil.",
+          "ai-failed": "AI cavab verə bilmədi. Yenidən yoxlayın."
+        }
       }
     },
     "staffRetention": {
@@ -2032,8 +2061,8 @@
       "back_to_tools": "Bütün alətlər",
       "remove_item": "Yeməyi sil",
       "load_demo": "Test dataseti",
-      "avg_cm": "Orta CM",
-      "avg_mix": "Orta Mix %",
+      "avg_cm": "Orta qazanc (satışa görə çəkili)",
+      "avg_mix": "Populyarlıq həddi (satış payı)",
       "item": "Yemək",
       "price": "Qiymət",
       "cost": "Məsrəf",
@@ -2043,12 +2072,13 @@
       "plowhorse_hint": "Çox satılır, porsiyadan qazanc azdır",
       "puzzle_hint": "Az satılır, porsiyadan qazanc yüksəkdir",
       "dog_hint": "Az satılır, porsiyadan qazanc azdır",
-      "ai_tips_subtitle": "DeepSeek nəticəyə əsasən praktik addımlar verir.",
+      "ai_tips_subtitle": "Nəticəyə baxıb hər qrup üçün praktik addımlar yazır. Hər basış aylıq limitdən 1 istifadə sayılır.",
       "ai_loading": "AI tövsiyəsi hazırlanır...",
       "ai_error": "AI tövsiyəsi yüklənmədi — yenidən cəhd edin",
       "retry": "Yenidən cəhd et",
       "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
-      "tier_required_body": "Menyu Analitiği real menyu mühəndisliyi və AI tövsiyələri verdiyi üçün KALFA pilləsinə daxildir."
+      "tier_required_body": "Menyu Analitiği real menyu mühəndisliyi və AI tövsiyələri verdiyi üçün KALFA pilləsinə daxildir.",
+      "ai_cta": "AI tövsiyəsi al"
     },
     "roiCalculator": {
       "title": "ROI Kalkulatoru",
@@ -2082,7 +2112,7 @@
       "total_cac": "Ümumi CAC",
       "evaluation": "Qiymətləndirmə",
       "days": "gün",
-      "benchmark_roi": ">100% sağlam",
+      "benchmark_roi": "0%-dən yuxarı = reklam özünü ödəyir",
       "benchmark_roas": ">3x sağlam",
       "benchmark_ltv": "≥3:1 sağlam",
       "benchmark_payback": "<180 gün ideal",
@@ -2107,7 +2137,10 @@
         "validation": "Kanal rəqəmlərini yoxlayın və yenidən cəhd edin.",
         "missing-key": "AI açarı serverdə qurulmayıb.",
         "ai-failed": "AI analizi yüklənmədi — yenidən cəhd edin."
-      }
+      },
+      "margin_pct": "Satışdan qalan pay (%)",
+      "margin_hint": "Yemək və qablaşdırma xərci çıxılandan sonra hər satışdan qalan hissə. Nümunə: yemək xərci 35% → 65. Öz rəqəminizi yazın.",
+      "breakeven_roas": "başabaş: {value}x"
     },
     "plSimulator": {
       "tierBadge": "USTA",
@@ -2343,7 +2376,7 @@
     },
     "sezonAnalitikasi": {
       "title": "Sezon Analitikası",
-      "subtitle": "AZ təqvimi, kurort sezonu və Ramazan davranışını nəzərə alaraq 12 aylıq cash-flow, işçi xərci və inventar büdcəsi proqnozu.",
+      "subtitle": "AZ təqvimi, kurort sezonu və Ramazanı nəzərə alaraq 12 aylıq satış, işçi xərci və ərzaq büdcəsi proqnozu.",
       "tier": "KALFA",
       "back_to_tools": "Bütün alətlər",
       "inputs": {
@@ -2408,12 +2441,12 @@
         "weak": "Ən riskli 3 ay",
         "strong": "Ən güclü 3 ay"
       },
-      "ramadanNote": "Ramazan pəncərəsi üçün gündüz trafiki təxminən 20% azalır, iftar axşamları isə təxminən 35% artır. Aylıq nəticə neytral qala bilər, amma staff və inventar saatlara görə planlanmalıdır.",
+      "ramadanNote": "Ramazan ayında gündüz qonaq azalır, iftar saatlarında isə artır. Aylıq satış çox dəyişməyə bilər, amma işçi növbələrini və ərzaq alışını saatlara görə planlayın. Ramazan tarixləri təxminidir (ay görünüşünə görə 1 gün dəyişə bilər).",
       "deadMonthWarning": "Ölü ay: avans alışları azaldın, növbələri qısaldın və lokal kampaniya hazırlayın.",
       "ahilikQuote": "Ahilik sözü: usta bolluq ayında ehtiyat yığar, dar ayda nizamı qoruyar.",
       "cta": "Proqnozu yenilə",
       "tier_required_title": "Bu tool KALFA üzvlüyü tələb edir",
-      "tier_required_body": "Sezon Analitikası cash-flow proqnozu, staff və inventar planlamasını birləşdirdiyi üçün KALFA pilləsinə daxildir.",
+      "tier_required_body": "Sezon Analitikası satış proqnozunu, işçi və ərzaq planlamasını birləşdirdiyi üçün KALFA pilləsinə daxildir.",
       "upgrade_cta": "KALFA üzvlüyünə keç"
     },
     "reklamRoi": {
@@ -2489,6 +2522,10 @@
         },
         "validation": {
           "channelBudget": "Ən azı bir kanal üçün büdcə daxil edin."
+        },
+        "marginPercent": {
+          "label": "Satışdan qalan pay (%)",
+          "hint": "Yemək və qablaşdırma xərci çıxılandan sonra hər satışdan qalan hissə. Nümunə: yemək xərci 35% → 65."
         }
       },
       "results": {
@@ -2504,7 +2541,8 @@
         "tableTitle": "Kanal ROI cədvəli",
         "bestChannel": "Ən yaxşı kanal",
         "worstChannel": "Ən zəif kanal",
-        "ltvFormulaNote": "LTV sadə təxmindir: AOV × (1 / (1 − təkrar alış faizi))."
+        "ltvFormulaNote": "LTV sadə təxmindir: orta çek × qalan pay × (1 / (1 − təkrar alış faizi)).",
+        "breakevenRoas": "başabaş: {value}x — bundan aşağı reklam pul itirir"
       },
       "table": {
         "channel": "Kanal",
@@ -3197,7 +3235,8 @@
         "missing-key": "AI açarı aktiv deyil",
         "ai-failed": "AI analizi alınmadı — yenidən cəhd edin",
         "ai-output-invalid": "AI cavabı düzgün formatda gəlmədi"
-      }
+      },
+      "sla": "Cavab müddəti: {hours} saat ərzində qonağa cavab verin (ciddiliyə görə: kritik 1 · yüksək 4 · orta 24 · aşağı 48 saat)."
     }
   },
   "pricing": {

@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
+import { classifyMenu, menuThresholds, POPULARITY_FACTOR, type MenuCategory } from '@/lib/toolkit/menu-matrix';
 import {
   AlertCircle,
   ArrowLeft,
   Download,
-  Loader2,
   Plus,
   RefreshCw,
   Sparkles,
@@ -65,12 +65,14 @@ function round(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-function classify(cm: number, mix: number, averageCm: number, averageMix: number): MenuAnalyticsCategory {
-  if (cm >= averageCm && mix >= averageMix) return 'star';
-  if (cm < averageCm && mix >= averageMix) return 'plowhorse';
-  if (cm >= averageCm && mix < averageMix) return 'puzzle';
-  return 'dog';
-}
+// TASK-0523: one menu engine — Kasavana & Smith from lib/toolkit/menu-matrix (popular = ≥ 70% of the
+// equal share, profitable = ≥ the SALES-WEIGHTED average margin). Before: plain averages (100% rule).
+const CATEGORY_FROM_MATRIX: Record<MenuCategory, MenuAnalyticsCategory> = {
+  star: 'star',
+  plowHorse: 'plowhorse',
+  puzzle: 'puzzle',
+  dog: 'dog',
+};
 
 function formatNumber(value: number, locale: string, maximumFractionDigits = 2): string {
   return new Intl.NumberFormat(locale, {
@@ -134,21 +136,23 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
       };
     });
 
-    const averageContributionMargin = preliminary.reduce((sum, item) => sum + item.contributionMargin, 0) / preliminary.length;
-    const averageMenuMixPercent = 100 / preliminary.length;
+    const matrix = classifyMenu(preliminary.map((item) => ({ id: item.id, name: item.name, salesCount: item.sales, contributionMargin: item.contributionMargin })));
+    const categoryById = new Map(matrix.map((entry) => [entry.item.id, CATEGORY_FROM_MATRIX[entry.category]]));
+    const averageContributionMargin = menuThresholds(matrix.map((entry) => entry.item)).margin;
     const items: AnalyzedItem[] = preliminary.map((item) => ({
       ...item,
       contributionMargin: round(item.contributionMargin),
       foodCostPercent: round(item.foodCostPercent),
       menuMixPercent: round(item.menuMixPercent),
-      category: classify(item.contributionMargin, item.menuMixPercent, averageContributionMargin, averageMenuMixPercent),
+      category: categoryById.get(item.id) ?? 'dog',
     }));
 
     return {
       items,
       totalSales,
       averageContributionMargin: round(averageContributionMargin),
-      averageMenuMixPercent: round(averageMenuMixPercent),
+      // K&S popularity bar: 70% of the equal share (100 / n)
+      averageMenuMixPercent: round((100 / preliminary.length) * POPULARITY_FACTOR),
     };
   }, [validRows]);
 
@@ -217,10 +221,8 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
     });
   }
 
-  useEffect(() => {
-    if (hasAnalyzed && analysis) loadTips();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasAnalyzed]);
+  // TASK-0523: no automatic AI call on «Analiz et» — runs now count against the monthly limit,
+  // so a run is spent only when the owner presses the AI button.
 
   const categoryLabels: Record<MenuAnalyticsCategory, string> = {
     star: t('star'),
@@ -516,10 +518,14 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
             )}
 
             {!isPending && !tips && !tipsError && (
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <Loader2 size={16} className="animate-spin" />
-                {t('ai_loading')}
-              </div>
+              <button
+                type="button"
+                onClick={loadTips}
+                data-testid="menu-ai-tips"
+                className="no-print inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-dk-red-strong px-4 text-sm font-bold text-white transition hover:bg-dk-red-deep"
+              >
+                {t('ai_cta')}
+              </button>
             )}
           </section>
         </div>

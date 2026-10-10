@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
-import { checkToolAccess } from '@/lib/marketing-gating';
+import { checkToolAccess, logToolRun } from '@/lib/marketing-gating';
 import { AI_MODELS } from '@/lib/ai-models';
 
 export type ComplaintChannel = 'face_to_face' | 'phone' | 'whatsapp' | 'google_maps' | 'instagram' | 'other';
@@ -23,6 +23,7 @@ export interface ComplaintAnalysisInput {
   customerType: CustomerType;
   date?: string;
   clientCategory?: ComplaintCategory;
+  locale?: string;
 }
 
 export interface ComplaintAnalysisResult {
@@ -45,7 +46,11 @@ export interface ComplaintAnalysisResult {
     recurrenceCheck: string;
   };
   followUpRecommendation: string;
+  /** TASK-0523: reply-by time from severity, set in code (critical 1 h · high 4 h · medium 24 h · low 48 h). */
+  responseWithinHours?: number;
 }
+
+const RESPONSE_SLA_HOURS: Record<ComplaintSeverity, number> = { critical: 1, high: 4, medium: 24, low: 48 };
 
 export type ComplaintAnalysisActionResult =
   | { ok: true; data: ComplaintAnalysisResult }
@@ -71,6 +76,7 @@ function sanitizeInput(input: ComplaintAnalysisInput): ComplaintAnalysisInput | 
     customerType: input.customerType,
     date: input.date?.trim().slice(0, 20),
     clientCategory: input.clientCategory,
+    locale: ['az', 'ru', 'en', 'tr'].includes(input.locale ?? '') ? input.locale : 'az',
   };
 }
 
@@ -110,55 +116,72 @@ async function checkRateLimit(userId: number): Promise<boolean> {
   return true;
 }
 
-const SYSTEM_PROMPT = `Sen Azerbaycan restoranlari ucun sikayet idareetme mutexessisisen.
-2026 musteri xidmeti standartlarinda suret vacibdir, amma hell keyfiyyeti ve insani ton daha vacibdir.
-Esas prinsip: musteri sikayetin sebebinden deyil, ele alinma biciminden narazi qalir.
+const OUTPUT_LANGUAGE: Record<string, string> = {
+  az: 'Azərbaycan dilində (düzgün hərflərlə: ə, ı, ö, ü, ç, ş, ğ)',
+  ru: 'на русском языке',
+  en: 'in English',
+  tr: 'Türkçe',
+};
 
-Kontekst:
-- Sikayet etmeyen narazi musterilerin boyuk qismi geri donmur; sikayet eden musteri problemi duzeltmek sansi verir.
-- Duzgun hell olunan problem marka haqqinda musbet sohbet yarada biler.
-- AI tonu robot kimi yox, insan kimi olmalidir; musteri ozunu emal edilmis hiss etmemelidir.
-- Cavab spesifik olmalidir: sikayeti adlandir, konkret addim ver, ohdelik gotur.
-- Generic "bagislayin" cumlesi ile baslama. Meseleni adlandir, mesuliyyet gotur, novbeti addimi de.
+// TASK-0523: proper Azerbaijani, output in the page language, and no compensation promise
+// (owner 2026-10-09: default = apology + fix; the owner adds an offer himself if he wants).
+function buildSystemPrompt(locale: string) {
+  return `Sən Azərbaycan restoranları üçün qonaq şikayətləri ilə işləyən mütəxəssissən.
+Əsas prinsip: qonaq çox vaxt problemin özündən yox, ona necə yanaşıldığından narazı qalır.
 
-Cavabi yalniz bu JSON strukturunda qaytar:
+Qaydalar:
+- Ton insan kimi olsun, robot kimi yox; qonaq özünü «emal olunmuş» hiss etməsin.
+- Cavab konkret olsun: şikayəti adlandır, məsuliyyət götür, növbəti addımı de. «Bağışlayın» ilə quru başlama.
+- Qonağa cavabda kompensasiya (endirim, kupon, pulsuz yemək, ikram, geri ödəmə) VƏD ETMƏ — yalnız üzr + həll + əlaqəyə dəvət.
+- Baş verməmiş şeyi (işçi cəzalandırıldı, kamera baxıldı) fakt kimi yazma.
+- Statistika və ya «tədqiqat göstərir» kimi iddia uydurma.
+- severity: low (narahatlıq), medium (pis təcrübə), high (qonaq itirilir / ictimai şikayət), critical (sağlamlıq, təhlükəsizlik, yad cisim, zəhərlənmə).
+- Bütün mətn ${OUTPUT_LANGUAGE[locale] ?? OUTPUT_LANGUAGE.az} olsun. JSON açarları və kateqoriya/severity dəyərləri ingiliscə qalsın.
+
+Cavabı yalnız bu JSON strukturunda qaytar:
 {
   "category": "food_quality | wait_speed | cleanliness | service_staff | price_bill | delivery | other",
   "secondaryCategories": ["food_quality"],
   "severity": "low | medium | high | critical",
-  "severityReason": "qisa esaslandirma",
-  "discoveryQuestions": ["3-5 kontekste uygun sual"],
-  "customerResponse": "kanala ve musteri novune uygun cavab sablonu",
+  "severityReason": "qısa əsaslandırma",
+  "discoveryQuestions": ["vəziyyətə uyğun 3-5 sual"],
+  "customerResponse": "kanala və qonaq növünə uyğun cavab",
   "internalNote": {
-    "owner": "metbex | menecer | xidmet | kuryer | kassir",
-    "processCheck": "yoxlanilacaq proses",
-    "note": "musteriye gosterilmeyen daxili qeyd"
+    "owner": "mətbəx | menecer | xidmət | kuryer | kassir",
+    "processCheck": "yoxlanılacaq iş qaydası",
+    "note": "qonağa göstərilməyən daxili qeyd"
   },
   "capa": {
-    "investigation": "sikayetin arasdirilmasi ucun yoxlanacaq faktlar",
-    "closureCriteria": "sikayet ne zaman baglanmis sayilir",
-    "correctiveAction": "bu hadise ucun duzeldici fealiyyet",
-    "preventiveAction": "tekrar olmamasi ucun onleyici fealiyyet",
-    "recurrenceCheck": "7-14 gun sonra yoxlanacaq indikator"
+    "investigation": "yoxlanılacaq faktlar",
+    "closureCriteria": "şikayət nə vaxt bağlanmış sayılır",
+    "correctiveAction": "bu hadisə üçün düzəldici addım",
+    "preventiveAction": "təkrar olmasın deyə qabaqlayıcı addım",
+    "recurrenceCheck": "7-14 gün sonra baxılacaq göstərici"
   },
-  "followUpRecommendation": "24-48 saat sonra gonderilecek follow-up tovsiye/metn"
+  "followUpRecommendation": "24-48 saat sonra göndəriləcək mesaj tövsiyəsi"
 }`;
+}
+
+const CHANNEL_LABEL: Record<string, string> = {
+  face_to_face: 'üzbəüz', phone: 'telefon', whatsapp: 'WhatsApp', google_maps: 'Google Maps rəyi', instagram: 'Instagram', other: 'digər',
+};
+const CUSTOMER_LABEL: Record<string, string> = { first_time: 'ilk dəfə gələn', regular: 'daimi qonaq', unknown: 'bilinmir' };
 
 function buildPrompt(input: ComplaintAnalysisInput) {
-  return `Sikayet: ${input.complaintText}
-Kanal: ${input.channel}
-Musteri novu: ${input.customerType}
+  return `Şikayət: ${input.complaintText}
+Kanal: ${CHANNEL_LABEL[input.channel] ?? input.channel}
+Qonaq: ${CUSTOMER_LABEL[input.customerType] ?? input.customerType}
 Tarix: ${input.date || 'bilinmir'}
-Client-side ilkin kategoriya: ${input.clientCategory || 'bilinmir'}
+İlkin kateqoriya (açar sözlərdən): ${input.clientCategory || 'bilinmir'}
 
-Ashagidakilari ver:
-1. Bir esas kateqoriya ve varsa ikincil kateqoriyalar
-2. Ciddilik: low/medium/high/critical ve esaslandirma
-3. Kesf suallari: hansi gun/saat, stol/zona, hansi isci, evvel gelibmi, basqa marka ile muqayise edibmi, kanal konteksti kimi 3-5 konkret sual
-4. Musteriye cavab: kanal ve musteri novune uygun. Daimi musteride isti ton ve [Ad] placeholder-i, ilk defede guven yaradan ton, Google/Instagram-da hamini nezere alan ton
-5. Daxili qeydiyyat: kimin diqqetine catdirilmali ve hansi proses yoxlanmalidir
-6. CAPA: arasdirma, baglama kriteriyasi, duzeldici fealiyyet, tekrar olmamasi ucun onleyici fealiyyet, 7-14 gun sonra yoxlama indikatoru
-7. 24-48 saat sonra follow-up tovsiye`;
+Ver:
+1. Bir əsas kateqoriya və varsa ikinci dərəcəli kateqoriyalar
+2. Ciddilik və əsaslandırma
+3. Aydınlaşdırma sualları: hansı gün/saat, masa/zona, hansı işçi, əvvəl gəlibmi və s. — 3-5 konkret sual
+4. Qonağa cavab: daimi qonağa isti ton və [Ad] yeri; ilk dəfə gələnə etimad yaradan ton; Google/Instagram-da hamının oxuduğunu nəzərə alan ton
+5. Daxili qeyd: kimə çatdırılmalı, hansı iş qaydası yoxlanmalı
+6. Düzəliş planı: araşdırma, bağlama meyarı, düzəldici və qabaqlayıcı addım, 7-14 gün sonra yoxlama göstəricisi
+7. 24-48 saat sonra təkrar əlaqə tövsiyəsi`;
 }
 
 function isValidResult(value: unknown): value is ComplaintAnalysisResult {
@@ -214,11 +237,12 @@ export async function analyzeComplaint(input: ComplaintAnalysisInput): Promise<C
         max_tokens: 1400,
         response_format: { type: 'json_object' },
         messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'system', content: buildSystemPrompt(sanitized.locale ?? 'az') },
           { role: 'user', content: buildPrompt(sanitized) },
         ],
       }),
       cache: 'no-store',
+      signal: AbortSignal.timeout(30_000),
     });
 
     if (!response.ok) return { ok: false, error: 'ai-failed' };
@@ -232,6 +256,7 @@ export async function analyzeComplaint(input: ComplaintAnalysisInput): Promise<C
     const parsed = JSON.parse(content) as unknown;
     if (!isValidResult(parsed)) return { ok: false, error: 'ai-output-invalid' };
 
+    await logToolRun({ userId: auth.userId, toolSlug: 'sikayet-analitigi', input: { ...sanitized }, status: 'success' });
     return {
       ok: true,
       data: {
@@ -239,6 +264,7 @@ export async function analyzeComplaint(input: ComplaintAnalysisInput): Promise<C
         discoveryQuestions: parsed.discoveryQuestions.slice(0, 5),
         customerResponse: parsed.customerResponse.slice(0, 2000),
         followUpRecommendation: parsed.followUpRecommendation.slice(0, 1000),
+        responseWithinHours: RESPONSE_SLA_HOURS[parsed.severity] ?? 24,
       },
     };
   } catch {

@@ -94,7 +94,9 @@ const OutputSchema = z.object({
 
 // ── AI PROMPT ───────────────────────────────────────────────────────
 
-const AZ_HOLIDAYS = `AZ bayramlari: Novruz (20-24 Mart), Respublika Gunu (28 May), Qurban bayrami (devisir), Ramazan bayrami (devisir), Yeni Il (31 Dek - 1 Yan), 8 Mart, 9 May (Zfer), 15 Iyun (Milli Xilas), 18 Oktyabr (Mustaqillik), Dunya gunleri: Valentin (14 Fev), Analar Gunu (may), Black Friday (noy), HoReCa: World Pizza Day (9 Fev), Coffee Day (1 Okt)`;
+// TASK-0523: proper Azerbaijani letters (the prompt used to TELL the model to write e/o/u/s/c/g/i);
+// moving holidays are not given fixed dates — the model must not invent them.
+const AZ_HOLIDAYS = `AZ bayramları və günləri: Novruz (20-24 mart), 8 Mart, 9 May, Müstəqillik Günü (28 may), Milli Qurtuluş Günü (15 iyun), Yeni il (31 dekabr - 1 yanvar); Ramazan və Qurban bayramı hər il dəyişir — dəqiq tarix bilinmirsə «təxmini tarix, rəsmi təqvimdən yoxlayın» yaz; Məhərrəm və Səfər ayları da hər il dəyişir. Dünya günləri: Sevgililər günü (14 fevral), Analar günü (may), Qəhvə günü (1 oktyabr)`;
 
 const SYSTEM_PROMPT = `Sen bir HoReCa marketinq planlama ekspertisen. Restoran sahibi senden 12 aylik kampaniya takvimi isteyir.
 
@@ -109,7 +111,7 @@ Her kampaniya ucun:
 - Qisa tesvir (1-2 cumle)
 - Budce texmini (eger illik budce verilibse — bolushtur)
 - Kanal (Instagram/TikTok/Google/Wolt/yerinde)
-- KPI (hedef reqem: TC artimi %, satis artimi %, follower artimi)
+- KPI: ölçüləcək göstərici və hədəf (məs. çek sayı, satış). Bu HƏDƏFDİR, vəd deyil — «artacaq» yox, «hədəf» yaz
 
 Sonra:
 - Umumi budce xulasesi
@@ -120,11 +122,13 @@ MUHUM:
 - AZ bayramlari ve kulturel kontekst
 - Konsept ile uygunluq (fine-dining ucun "1+1 burger" teklif etme)
 - Budce verilmeyibse, "budce texmini yoxdur" yaz, reqem uydurma
-- AZ qrammatikasi: e, o, u, s, c, g, i
+- Bütün mətni Azərbaycan dilində, düzgün hərflərlə yaz: ə, ı, ö, ü, ç, ş, ğ
+- Halal: donuz əti və spirtli içki kampaniyası təklif etmə
+- Statistika, ROI faizi və «tədqiqat göstərir» kimi iddia uydurma
 
 Cavabi JSON formatinda ver.`;
 
-const STRICT_JSON_SCHEMA_INSTRUCTION = `
+const strictJsonSchemaInstruction = (year: number) => `
 ===================================================
 JSON STRUCTURE - CRITICAL, NO EXCEPTIONS
 ===================================================
@@ -144,15 +148,15 @@ You MUST return a JSON object with EXACTLY these top-level keys in English:
     {
       "month": 6,
       "monthName": "Iyun",
-      "keyEvents": ["01 Iyun Usaq Gunu", "26 Iyun - 22 Avqust Meherrem + Sefer"],
+      "keyEvents": ["1 iyun Uşaqların Müdafiəsi Günü", "Məhərrəm və Səfər (tarixi hər il dəyişir)"],
       "campaigns": [
         {
           "name": "Kampaniya adi AZ dilinde",
           "type": "bayram",
           "startDay": 1,
           "endDay": 15,
-          "startDate": "2026-06-01",
-          "endDate": "2026-06-15",
+          "startDate": "${year}-06-01",
+          "endDate": "${year}-06-15",
           "description": "Tesvir AZ dilinde",
           "methodology": "Pille 3: Heveslendirme",
           "doganRule": "Usaq strategiyasi: usaq razi qalanda aile tekrar gelir",
@@ -175,7 +179,7 @@ You MUST return a JSON object with EXACTLY these top-level keys in English:
     "topCategory": "promo",
     "totalBudget": "1500 AZN",
     "breakdown": "Her ay texminen 500 AZN",
-    "roiProjection": "Minimum 20% ROI hedeflenir"
+    "roiProjection": "Kampaniya bitəndə satışı əvvəlki ayla müqayisə edin"
   },
   "topRecommendations": [
     "Tovsiye 1 AZ dilinde",
@@ -191,7 +195,7 @@ You MUST return a JSON object with EXACTLY these top-level keys in English:
     { "action": "Google Business Profile-i yenile", "rationale": "AI search citation ucun lazimdir", "priority": "high" }
   ],
   "risksWatchout": [
-    { "period": "26 Iyun - 22 Avqust", "risk": "Meherrem ve Sefer toy gelirini azaldir", "mitigation": "Korporativ, konfrans, turist ve aile nahari paketleri" }
+    { "period": "Məhərrəm və Səfər ayları", "risk": "Toy və şənlik sifarişləri azalır", "mitigation": "Korporativ, konfrans, turist və ailə naharı paketləri" }
   ],
   "ahilikQuote": "Ahilik hikmeti AZ dilinde"
 }
@@ -211,22 +215,23 @@ CRITICAL RULES:
 12. "topRecommendations" MUST contain 3 to 5 strings.
 13. Every campaign MUST include "methodology" and "targetSegment"; "doganRule" is strongly recommended.
 14. Add "aeoRecommendations" and "risksWatchout" when relevant, especially for Meherrem/Sefer.
-15. Content values should be in Azerbaijani. Only JSON key names are English.
+15. Content values should be in Azerbaijani with correct letters (ə, ı, ö, ü, ç, ş, ğ). Only JSON key names are English.
 16. Return ONLY the JSON object. No markdown, no explanation.
 `;
 
 function buildUserPrompt(input: z.infer<typeof InputSchema>): string {
-  const monthNames = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'];
+  const monthNames = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun', 'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'];
   const selected = input.targetMonths.map((m) => monthNames[m - 1]).join(', ');
 
-  return `RESTORAN: ${input.restaurantName}
-KONSEPT: ${input.concept}
-SEHER: ${input.city}
-SECILMIS AYLAR: ${selected}
-${input.annualBudget ? `ILLIK BUDCE: ${input.annualBudget} AZN` : 'BUDCE: verilmeyib'}
-${input.localEvents ? `YERLI XUSUSI GUNLER: ${input.localEvents}` : ''}
+  return `Restoran: ${input.restaurantName}
+Konsept: ${input.concept}
+Şəhər: ${input.city}
+İl: ${new Date().getFullYear()}
+Seçilmiş aylar: ${selected}
+${input.annualBudget ? `İllik büdcə: ${input.annualBudget} AZN` : 'Büdcə: verilməyib (məbləğ yazma)'}
+${input.localEvents ? `Yerli xüsusi günlər: ${input.localEvents}` : ''}
 
-Bu aylar ucun kampaniya takvimi yarat. JSON formatinda ver.`;
+Bu aylar üçün kampaniya təqvimi yarat. JSON formatında ver.`;
 }
 
 // ── POST ────────────────────────────────────────────────────────────
@@ -255,7 +260,7 @@ export async function POST(req: Request) {
     try {
       aiResult = await callAIJson<unknown>(
         {
-          system: `${buildBrainContext('sezon-planlama')}\n\n=== TASK ===\n${SYSTEM_PROMPT}\n${STRICT_JSON_SCHEMA_INSTRUCTION}`,
+          system: `${buildBrainContext('sezon-planlama')}\n\n=== TASK ===\n${SYSTEM_PROMPT}\n${strictJsonSchemaInstruction(new Date().getFullYear())}`,
           prompt: buildUserPrompt(input),
           maxTokens: 5000,
           temperature: 0.7,

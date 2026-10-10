@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { getAuthFromCookie } from '@/lib/auth/jwt';
-import { checkToolAccess } from '@/lib/marketing-gating';
+import { checkToolAccess, logToolRun } from '@/lib/marketing-gating';
 import { AI_MODELS } from '@/lib/ai-models';
 
 export interface ROIChannelInput {
@@ -19,6 +19,9 @@ export interface ROIAIInput {
   campaignName: string;
   period: string;
   ltv: number;
+  /** TASK-0523: share of a sale left after food/packaging (%), ROI/LTV are already net of it. */
+  marginPct?: number;
+  breakevenROAS?: number;
   totalCAC: number;
   ltvCacRatio: number;
   bestChannel: string;
@@ -73,11 +76,15 @@ function sanitizeInput(input: ROIAIInput): ROIAIInput | null {
   const totalCAC = sanitizeNumber(input.totalCAC, false);
   const ltvCacRatio = sanitizeNumber(input.ltvCacRatio);
   if (ltv === null || totalCAC === null || ltvCacRatio === null) return null;
+  const marginPct = sanitizeNumber(input.marginPct ?? 0);
+  const breakevenROAS = sanitizeNumber(input.breakevenROAS ?? 0);
 
   return {
     campaignName: sanitizeText(input.campaignName || 'ROI kampaniyası', 80),
     period: sanitizeText(input.period || '-', 80),
     ltv,
+    marginPct: marginPct !== null && marginPct <= 100 ? marginPct : undefined,
+    breakevenROAS: breakevenROAS ?? undefined,
     totalCAC,
     ltvCacRatio,
     bestChannel: sanitizeText(input.bestChannel || '-', 40),
@@ -125,6 +132,8 @@ function buildPrompt(input: ROIAIInput) {
   ).join('\n');
 
   return `Kampaniya: ${input.campaignName}, Dövr: ${input.period}
+Satışdan qalan pay (yemək + qablaşdırma çıxılandan sonra): ${input.marginPct ?? '-'}%. ROI və LTV bu pay üzrə hesablanıb (gəlir × pay − xərc), ciro üzrə yox.
+Başabaş ROAS: ${input.breakevenROAS ?? '-'}x — bundan aşağı ROAS-lı kanal pul itirir.
 LTV: ${input.ltv} AZN, Ümumi CAC: ${input.totalCAC} AZN, LTV:CAC: ${input.ltvCacRatio}:1
 
 Kanal nəticələri:
@@ -176,6 +185,7 @@ export async function getROIAIAnalysis(input: ROIAIInput): Promise<ROIAIResult> 
         ],
       }),
       cache: 'no-store',
+      signal: AbortSignal.timeout(30_000),
     });
 
     if (!response.ok) return { ok: false, error: 'ai-failed' };
@@ -185,6 +195,7 @@ export async function getROIAIAnalysis(input: ROIAIInput): Promise<ROIAIResult> 
     };
     const analysis = data.choices?.[0]?.message?.content?.trim();
     if (!analysis) return { ok: false, error: 'ai-failed' };
+    await logToolRun({ userId: auth.userId, toolSlug: 'roi-kalkulator', input: { ...sanitized }, status: 'success' });
     return { ok: true, analysis: analysis.slice(0, 5000) };
   } catch {
     return { ok: false, error: 'ai-failed' };

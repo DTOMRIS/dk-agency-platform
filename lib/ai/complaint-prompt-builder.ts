@@ -1,16 +1,21 @@
 /**
  * @file complaint-prompt-builder.ts
- * @purpose Sikayet Cavablandirici AI system prompt + few-shot examples
- * @critical Ahilik deyerleri: uzr + konkret cozum + hormetli dil
- * @lastModified 2026-05-15 (TASK-0128)
+ * @purpose Şikayət Cavablandırıcı AI system prompt + few-shot examples
+ * @critical Üzr + konkret həll + hörmətli dil. TASK-0523 (owner 2026-10-09): kompensasiya
+ *           (endirim, ikram, geri ödəmə) YALNIZ sahib seçəndə yazılır; varsayılan = üzr + həll.
+ *           Əvvəl hər cavabda kupon/geri ödəmə məcburi idi və nümunələr «20% endirim» vəd edirdi.
+ * @lastModified 2026-10-10 (TASK-0523)
  */
 
 const LANG_MAP: Record<string, string> = {
-  az: 'Azərbaycan dili',
+  az: 'Azərbaycan dili (düzgün hərflərlə: ə, ı, ö, ü, ç, ş, ğ)',
   en: 'English',
   tr: 'Türkçe',
   ru: 'Русский',
 };
+
+export const COMPENSATION_OPTIONS = ['none', 'discount', 'treat', 'redo', 'refund'] as const;
+export type CompensationOption = (typeof COMPENSATION_OPTIONS)[number];
 
 export interface ComplaintPromptInput {
   complaintText: string;
@@ -18,56 +23,70 @@ export interface ComplaintPromptInput {
   complaintLang: string;
   responseLang: string;
   restaurantName?: string;
+  /** What the owner is willing to offer; 'none' (default) = apology + fix, no promise. */
+  compensation?: CompensationOption;
+  /** Owner's own words for the offer, e.g. «növbəti sifarişə 10% endirim». */
+  compensationDetail?: string;
 }
+
+const COMPENSATION_TEXT: Record<Exclude<CompensationOption, 'none'>, string> = {
+  discount: 'növbəti gəlişə endirim',
+  treat: 'növbəti gəlişdə ikram (məsələn, desert və ya içki)',
+  redo: 'yeməyi yenidən hazırlamaq / sifarişi yeniləmək',
+  refund: 'ödənişin geri qaytarılması',
+};
 
 export function buildComplaintSystemPrompt(input: ComplaintPromptInput): string {
   const responseLangName = LANG_MAP[input.responseLang] || input.responseLang;
   const restaurantCtx = input.restaurantName
-    ? `Restoran adi: "${input.restaurantName}". Cavablarda bu adi istifade et.`
-    : 'Restoran adi verilmeyib. "Restoranımız" ifadesini istifade et.';
+    ? `Restoranın adı: "${input.restaurantName}". Cavablarda bu adı işlət.`
+    : 'Restoranın adı verilməyib. «Restoranımız» ifadəsini işlət.';
 
-  return `Sen Azerbaijan restoran sahibine komek eden AI komekcisen.
-Veziven: Musteri sikayetine 3 ferqli tonda cavab yazmaq.
+  const compensation = input.compensation ?? 'none';
+  const compensationRule = compensation === 'none'
+    ? `- Heç bir kompensasiya VƏD ETMƏ: endirim, kupon, pulsuz yemək, ikram, geri ödəmə yazma. Sahib bunu seçməyib.
+- Həll = nə yoxlanılacaq / nə dəyişdiriləcək + qonağı birbaşa əlaqəyə dəvət (telefon və ya mesaj).`
+    : `- Sahib bu kompensasiyanı təklif etməyə razıdır: ${COMPENSATION_TEXT[compensation]}${input.compensationDetail ? ` — sahibin sözləri: «${input.compensationDetail}»` : ''}.
+- Yalnız bunu təklif et; faiz, məbləğ və ya başqa hədiyyə uydurma (sahib yazmayıbsa rəqəm vermə).`;
+
+  return `Sən Azərbaycanda restoran sahibinə qonaq şikayətlərinə cavab yazmaqda kömək edirsən.
+Vəzifə: şikayətə 3 fərqli tonda cavab yazmaq.
 
 ${restaurantCtx}
 
-Ahilik deyerleri:
-- Uzr isteme bacarigi (ozunu haqli cixarmaq YOX)
-- Konkret cozum teklifi (kupon, yeniden gelme deveti, pulun geri qaytarilmasi)
-- Semimi ve hormetli dil
-- Musterinin hisslerini etraf et, suclama yox
+Qaydalar:
+- Səmimi üzr istə; özünü haqlı çıxarma, qonağı günahlandırma.
+- Qonağın hisslərini qəbul et.
+- Konkret həll addımı yaz.
+${compensationRule}
+- Restoranda olmayan şeyi (yeni menecer, kamera, təlim keçirildi və s.) faktiki baş vermiş kimi yazma; «yoxlayırıq», «komandamızla danışacağıq» kimi yaz.
 
-Sikayetin novu: ${input.complaintType}
+Şikayətin növü: ${input.complaintType}
 
-Cavablari **${responseLangName}** dilinde yaz.
+Cavabları **${responseLangName}** dilində yaz.
 
 3 ton:
-1. RESMI — "Hormetli musteri..." baslanqici, formal dil, tam cumleler
-2. SEMIMI — "Salam!" baslanqici, isti dil, emoji YOX, dostane ton
-3. QISA — 2-3 cumle, birbasa uzr + cozum, basqa hec ne
+1. formal — «Hörmətli qonağımız…» ilə başlayır, rəsmi dil, tam cümlələr
+2. friendly — «Salam!» ilə başlayır, isti və dostcasına, emoji YOX
+3. short — 2-3 cümlə: üzr + həll, başqa heç nə
 
-Her cavab MUTLEQ bunlari ehtiva etmelidir:
-- Uzr
-- Konkret hell addimi (kupon, yeniden hazirlama, geri qaytarma ve s.)
-- Yeniden gelme deveti
-
-Output STRICT JSON (basqa hec bir metn olmasin):
+Cavabı YALNIZ JSON kimi qaytar (başqa mətn olmasın):
 { "formal": "...", "friendly": "...", "short": "..." }`;
 }
 
 export function buildComplaintUserPrompt(input: ComplaintPromptInput): string {
-  const fewShot = `Numune 1 (yemek sikayeti):
-Musteri: "Sifarisimiz 40 deqiqe gec geldi ve yemek soyuq idi."
+  const fewShot = `Nümunə 1 (yemək şikayəti, kompensasiya seçilməyib):
+Qonaq: "Sifarişimiz 40 dəqiqə gec gəldi və yemək soyuq idi."
 Cavab:
-{"formal":"Hormetli musterimiz, sifarisinizdeki gecikmeden ve yemeyin keyfiyyetinin asagi dusmesinden dolayi seimimi uzr isteyirik. Bu veziyyetin sebepleri arasdirilib ve mutfaq komandamiza elave talimat verilib. Sizi yeniden qebul etmek ve bu tecrubeni duzeltmek ucun 20% endirim kuponu gonderirik. Hormetle, restoran rehberliyi.","friendly":"Salam! Gec sifaris ve soyuq yemek ucun cox uzr isteyirik — biliriq ki, bele sey olmamaliydi. Bunu duzeltmek ucun novbeti gelisinizde 20% endirim hazirlamisiq. Sizi yeniden goreceyimize sevinirik!","short":"Uzr isteyirik — gecikmeli ve soyuq sifaris qebul edilemezdir. 20% endirim kuponu gonderdik, sizi yeniden gozleyirik."}
+{"formal":"Hörmətli qonağımız, sifarişinizin gecikməsinə və yeməyin soyuq çatmasına görə səmimi üzr istəyirik. Gecikmənin səbəbini mətbəx və çatdırılma komandamızla birlikdə yoxlayırıq. Sizinlə birbaşa danışıb nə baş verdiyini öyrənmək istərdik — zəhmət olmasa, bizə yazın və ya zəng edin. Hörmətlə, restoran rəhbərliyi.","friendly":"Salam! Gec gələn və soyumuş sifarişə görə çox üzr istəyirik — belə olmamalı idi. Səbəbini komandamızla yoxlayırıq. Bizə yazsanız, hər şeyi birlikdə aydınlaşdıraq.","short":"Gecikmə və soyuq yemək üçün üzr istəyirik. Səbəbini yoxlayırıq — zəhmət olmasa, bizə yazın."}
 
-Numune 2 (xidmet sikayeti):
-Musteri: "Garson cox laqeyd idi ve sifaris almaq ucun 20 deqiqe gozledik."
+Nümunə 2 (xidmət şikayəti, sahib «növbəti gəlişdə qəhvə bizdən» seçib):
+Qonaq: "Ofisiant çox laqeyd idi, sifariş vermək üçün 20 dəqiqə gözlədik."
 Cavab:
-{"formal":"Hormetli musterimiz, xidmetimizdeki bu gecikme ve diqqetsizlikden dolayi uzr isteyirik. Personal ile bu mesele muvafiq sekilde hell edilib. Sizi yeniden qebul etmek ucun bir fincan qehve ikramimiz var. Tesekkkur edirik ki, bildirdiniz.","friendly":"Salam! Gozleme ve laqeyd xidmet ucun cox uzr isteyirik. Bunu ciddi qebul etdik ve komanda ile danisdiq. Novbeti ziyaretinizde bir qehve bizden — sizi goreceyimize sevinirik!","short":"Uzr isteyirik — 20 deqiqe gozleme ve laqeyd xidmet qebul edilemezdir. Personal ile danisild, novbeti gelisinizde bir qehve bizdend."}
+{"formal":"Hörmətli qonağımız, gözləmə və diqqətsiz xidmətə görə üzr istəyirik. Bu məsələni xidmət komandamızla müzakirə edəcəyik. Növbəti gəlişinizdə qəhvəniz bizdən olacaq. Bildirdiyiniz üçün təşəkkür edirik.","friendly":"Salam! Gözləməyə və laqeyd xidmətə görə çox üzr istəyirik. Komandamızla danışacağıq. Növbəti dəfə qəhvə bizdən — sizi yenidən görməyə şad olarıq!","short":"20 dəqiqəlik gözləmə üçün üzr istəyirik. Komandamızla danışacağıq; növbəti gəlişinizdə qəhvə bizdən."}
 
-Indi bu sikayete cavab yaz:
-Musteri: "${input.complaintText}"`;
+İndi bu şikayətə cavab yaz:
+Qonaq: "${input.complaintText}"`;
 
   return fewShot;
 }

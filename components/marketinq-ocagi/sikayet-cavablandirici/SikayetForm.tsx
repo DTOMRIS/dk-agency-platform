@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { COMPENSATION_OPTIONS, type CompensationOption } from '@/lib/ai/complaint-prompt-builder';
 
 const COMPLAINT_TYPES = ['food', 'service', 'price', 'cleanliness', 'other'] as const;
 const LANGS = ['az', 'en', 'tr', 'ru'] as const;
@@ -20,6 +21,11 @@ const copy: Record<Locale, {
   maxLength: string;
   types: Record<string, string>;
   langs: Record<string, string>;
+  compensation: string;
+  compensationHint: string;
+  compensationDetail: string;
+  compensationDetailPlaceholder: string;
+  compensations: Record<CompensationOption, string>;
 }> = {
   az: {
     complaintText: 'Şikayət mətni',
@@ -34,6 +40,11 @@ const copy: Record<Locale, {
     maxLength: 'Şikayət maksimum 2000 simvol ola bilər',
     types: { food: 'Yemək', service: 'Xidmət', price: 'Qiymət', cleanliness: 'Təmizlik', other: 'Digər' },
     langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
+    compensation: 'Nə təklif edirsiniz?',
+    compensationHint: 'Seçməsəniz, cavab yalnız üzr və həll yazır — heç bir endirim və ya hədiyyə vəd etmir.',
+    compensationDetail: 'Təklifin dəqiq mətni (opsional)',
+    compensationDetailPlaceholder: 'məs. növbəti sifarişə 10% endirim',
+    compensations: { none: 'Heç nə — yalnız üzr və həll', discount: 'Növbəti gəlişə endirim', treat: 'İkram (desert, içki)', redo: 'Yeməyi yenidən hazırlamaq', refund: 'Pulu geri qaytarmaq' },
   },
   en: {
     complaintText: 'Complaint text',
@@ -48,6 +59,11 @@ const copy: Record<Locale, {
     maxLength: 'Complaint cannot exceed 2000 characters',
     types: { food: 'Food', service: 'Service', price: 'Price', cleanliness: 'Cleanliness', other: 'Other' },
     langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
+    compensation: 'What do you offer?',
+    compensationHint: 'If you pick nothing, the reply only apologises and explains the fix — no discount or gift is promised.',
+    compensationDetail: 'Exact wording of the offer (optional)',
+    compensationDetailPlaceholder: 'e.g. 10% off the next order',
+    compensations: { none: 'Nothing — apology and fix only', discount: 'Discount on next visit', treat: 'A treat (dessert, drink)', redo: 'Remake the dish', refund: 'Refund' },
   },
   tr: {
     complaintText: 'Şikayet metni',
@@ -62,6 +78,11 @@ const copy: Record<Locale, {
     maxLength: 'Şikayet en fazla 2000 karakter olabilir',
     types: { food: 'Yemek', service: 'Hizmet', price: 'Fiyat', cleanliness: 'Temizlik', other: 'Diğer' },
     langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
+    compensation: 'Ne teklif ediyorsunuz?',
+    compensationHint: 'Seçmezseniz yanıt yalnız özür ve çözüm yazar — indirim ya da hediye vaat etmez.',
+    compensationDetail: 'Teklifin tam metni (isteğe bağlı)',
+    compensationDetailPlaceholder: 'örn. sonraki siparişe %10 indirim',
+    compensations: { none: 'Hiçbir şey — yalnız özür ve çözüm', discount: 'Sonraki ziyarete indirim', treat: 'İkram (tatlı, içecek)', redo: 'Yemeği yeniden hazırlamak', refund: 'Parayı iade etmek' },
   },
   ru: {
     complaintText: 'Текст жалобы',
@@ -76,6 +97,11 @@ const copy: Record<Locale, {
     maxLength: 'Жалоба не может превышать 2000 символов',
     types: { food: 'Еда', service: 'Обслуживание', price: 'Цена', cleanliness: 'Чистота', other: 'Другое' },
     langs: { az: 'Azərbaycan', en: 'English', tr: 'Türkçe', ru: 'Русский' },
+    compensation: 'Что вы предлагаете?',
+    compensationHint: 'Если ничего не выбрать, ответ только извиняется и объясняет решение — без скидок и подарков.',
+    compensationDetail: 'Точная формулировка предложения (необязательно)',
+    compensationDetailPlaceholder: 'напр. скидка 10% на следующий заказ',
+    compensations: { none: 'Ничего — только извинение и решение', discount: 'Скидка на следующий визит', treat: 'Угощение (десерт, напиток)', redo: 'Приготовить блюдо заново', refund: 'Вернуть деньги' },
   },
 };
 
@@ -92,6 +118,8 @@ export default function SikayetForm({ locale, onResult, onError }: SikayetFormPr
   const [complaintLang, setComplaintLang] = useState<string>(locale);
   const [responseLang, setResponseLang] = useState<string>(locale);
   const [restaurantName, setRestaurantName] = useState('');
+  const [compensation, setCompensation] = useState<CompensationOption>('none');
+  const [compensationDetail, setCompensationDetail] = useState('');
   const [loading, setLoading] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -115,6 +143,8 @@ export default function SikayetForm({ locale, onResult, onError }: SikayetFormPr
           complaintLang,
           responseLang,
           ...(restaurantName ? { restaurantName } : {}),
+          compensation,
+          ...(compensation !== 'none' && compensationDetail.trim() ? { compensationDetail: compensationDetail.trim() } : {}),
         }),
       });
 
@@ -199,11 +229,33 @@ export default function SikayetForm({ locale, onResult, onError }: SikayetFormPr
         />
       </div>
 
+      {/* Compensation — opt-in (TASK-0523) */}
+      <div>
+        <label className={labelCls}>{c.compensation}</label>
+        <select value={compensation} onChange={(e) => setCompensation(e.target.value as CompensationOption)} className={inputCls} data-testid="complaint-compensation">
+          {COMPENSATION_OPTIONS.map((option) => (
+            <option key={option} value={option}>{c.compensations[option]}</option>
+          ))}
+        </select>
+        <p className="mt-1 text-xs text-slate-500">{c.compensationHint}</p>
+        {compensation !== 'none' && (
+          <input
+            type="text"
+            value={compensationDetail}
+            onChange={(e) => setCompensationDetail(e.target.value)}
+            placeholder={c.compensationDetailPlaceholder}
+            aria-label={c.compensationDetail}
+            className={`${inputCls} mt-2`}
+            maxLength={120}
+          />
+        )}
+      </div>
+
       {/* Submit */}
       <button
         type="submit"
         disabled={loading || charCount < 10}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-navy)] px-6 py-3 text-sm font-bold text-white transition hover:bg-[var(--dk-navy)]/90 disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-6 py-3 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-50"
       >
         {loading ? (
           <>{c.submitting}</>

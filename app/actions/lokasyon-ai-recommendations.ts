@@ -1,7 +1,7 @@
 'use server';
 
 import { getAuthFromCookie } from '@/lib/auth/jwt';
-import { checkToolAccess } from '@/lib/marketing-gating';
+import { checkToolAccess, logToolRun } from '@/lib/marketing-gating';
 import { callAIJson } from '@/lib/ai-router';
 import {
   calculateLocationAnalysis,
@@ -89,9 +89,18 @@ function validateAiResponse(data: unknown): string[] | null {
   return recommendations.slice(0, 3);
 }
 
+// TASK-0523: «Locale: az» alone let the model answer in English or in Azerbaijani without ə/ı/ş.
+const OUTPUT_LANGUAGE: Record<string, string> = {
+  az: 'Azerbaijani, with correct letters (ə, ı, ö, ü, ç, ş, ğ) and no English marketing jargon',
+  ru: 'Russian',
+  en: 'plain English',
+  tr: 'Turkish',
+};
+
 function buildPrompt(profile: LocationProfile, locale: string): string {
   const analysis = calculateLocationAnalysis(profile);
   return `Locale: ${locale}
+Write every recommendation in ${OUTPUT_LANGUAGE[locale] ?? OUTPUT_LANGUAGE.az}.
 Location profile:
 - Mode: ${profile.mode}
 - Location type: ${profile.locationType}
@@ -159,6 +168,7 @@ export async function generateLokasyonRecommendations(
     const recommendations = validateAiResponse(response.data);
     if (!recommendations) return { ok: false, source: 'fallback', reason: 'ai-unavailable' };
 
+    await logToolRun({ userId: auth.userId, toolSlug: 'lokasyon-analiz', input: { ...profile }, status: 'success', locale: locale });
     return { ok: true, source: 'ai', recommendations };
   } catch {
     return { ok: false, source: 'fallback', reason: 'ai-unavailable' };

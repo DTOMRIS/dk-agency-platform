@@ -28,37 +28,37 @@ const copy: Record<Locale, {
   redo: string; next: string;
 }> = {
   az: {
-    summaryTitle: 'Xülasə', total: 'Cəmi şikayət', topCat: 'Əsas kateqoriya', sentiment: 'Sentiment skor', urgency: 'Təcililik',
+    summaryTitle: 'Xülasə', total: 'Cəmi şikayət', topCat: 'Əsas kateqoriya', sentiment: 'Yüngüllük balı (100 = hamısı yüngül)', urgency: 'Təcililik',
     urgencyLevels: { low: 'Aşağı', medium: 'Orta', high: 'Yüksək', critical: 'Kritik' },
     catsTitle: 'Kateqoriya Analizi', rootCause: 'Kök səbəb', fix: 'Həll',
-    patternsTitle: 'Tapılan Pattern-lər', freq: 'Tezlik', impact: 'Təsir',
+    patternsTitle: 'Təkrarlanan mövzular', freq: 'Tezlik', impact: 'Təsir',
     planTitle: 'Həll Planı', priorities: { immediate: 'Dərhal', 'this-week': 'Bu həftə', 'this-month': 'Bu ay' }, expected: 'Gözlənilən nəticə',
     templatesTitle: 'Cavab Şablonları', copyBtn: 'Kopyala', copied: 'Kopyalandı!',
     redo: 'Yenidən Analiz', next: 'Növbəti Alət',
   },
   en: {
-    summaryTitle: 'Summary', total: 'Total complaints', topCat: 'Top category', sentiment: 'Sentiment score', urgency: 'Urgency',
+    summaryTitle: 'Summary', total: 'Total complaints', topCat: 'Top category', sentiment: 'Lightness score (100 = all minor)', urgency: 'Urgency',
     urgencyLevels: { low: 'Low', medium: 'Medium', high: 'High', critical: 'Critical' },
     catsTitle: 'Category Analysis', rootCause: 'Root cause', fix: 'Fix',
-    patternsTitle: 'Patterns Found', freq: 'Frequency', impact: 'Impact',
+    patternsTitle: 'Recurring themes', freq: 'Frequency', impact: 'Impact',
     planTitle: 'Action Plan', priorities: { immediate: 'Immediate', 'this-week': 'This week', 'this-month': 'This month' }, expected: 'Expected result',
     templatesTitle: 'Response Templates', copyBtn: 'Copy', copied: 'Copied!',
     redo: 'Re-analyze', next: 'Next Tool',
   },
   tr: {
-    summaryTitle: 'Özet', total: 'Toplam şikayet', topCat: 'Ana kategori', sentiment: 'Duygu skoru', urgency: 'Aciliyet',
+    summaryTitle: 'Özet', total: 'Toplam şikayet', topCat: 'Ana kategori', sentiment: 'Hafiflik puanı (100 = hepsi hafif)', urgency: 'Aciliyet',
     urgencyLevels: { low: 'Düşük', medium: 'Orta', high: 'Yüksek', critical: 'Kritik' },
     catsTitle: 'Kategori Analizi', rootCause: 'Kök neden', fix: 'Çözüm',
-    patternsTitle: 'Bulunan Kalıplar', freq: 'Sıklık', impact: 'Etki',
+    patternsTitle: 'Tekrarlanan konular', freq: 'Sıklık', impact: 'Etki',
     planTitle: 'Eylem Planı', priorities: { immediate: 'Hemen', 'this-week': 'Bu hafta', 'this-month': 'Bu ay' }, expected: 'Beklenen sonuç',
     templatesTitle: 'Yanıt Şablonları', copyBtn: 'Kopyala', copied: 'Kopyalandı!',
     redo: 'Tekrar Analiz', next: 'Sonraki Araç',
   },
   ru: {
-    summaryTitle: 'Итоги', total: 'Всего жалоб', topCat: 'Основная категория', sentiment: 'Балл настроения', urgency: 'Срочность',
+    summaryTitle: 'Итоги', total: 'Всего жалоб', topCat: 'Основная категория', sentiment: 'Балл лёгкости (100 = все мелкие)', urgency: 'Срочность',
     urgencyLevels: { low: 'Низкая', medium: 'Средняя', high: 'Высокая', critical: 'Критическая' },
     catsTitle: 'Анализ категорий', rootCause: 'Причина', fix: 'Решение',
-    patternsTitle: 'Обнаруженные паттерны', freq: 'Частота', impact: 'Влияние',
+    patternsTitle: 'Повторяющиеся темы', freq: 'Частота', impact: 'Влияние',
     planTitle: 'План действий', priorities: { immediate: 'Немедленно', 'this-week': 'На этой неделе', 'this-month': 'В этом месяце' }, expected: 'Ожидаемый результат',
     templatesTitle: 'Шаблоны ответов', copyBtn: 'Копировать', copied: 'Скопировано!',
     redo: 'Пересмотреть', next: 'Следующий',
@@ -185,7 +185,8 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
       )}
 
       {/* Ahilik */}
-      <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      {/* TASK-0523: no more AI-written «Ahilik» quotes; older saved runs still show theirs. */}
+      {result.ahilikQuote && <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>}
 
       {/* Actions */}
       <div className="flex gap-3">

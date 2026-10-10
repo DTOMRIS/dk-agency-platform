@@ -10,49 +10,65 @@ interface PricingInfo { priceSpread: number; psychologicalPricing: string[]; anc
 
 interface MenyuResult {
   matrix: { stars: MatrixItem[]; plowhorses: MatrixItem[]; puzzles: MatrixItem[]; dogs: MatrixItem[] };
+  /** TASK-0523: dishes without monthly sales or cost % — not placed in a group (older runs: absent). */
+  needsData?: string[];
   categoryBalance: Record<string, CategoryInfo>;
   pricing: PricingInfo;
   topRecommendations: string[];
   ahilikQuote: string;
 }
 
+// TASK-0523: group names are actions (owner: «kateqoriya = eylem adı»), same as /toolkit/menu-matrix.
 const copy: Record<Locale, {
   matrixTitle: string; stars: string; starsDesc: string; plowhorses: string; plowhorsesDesc: string;
   puzzles: string; puzzlesDesc: string; dogs: string; dogsDesc: string;
   catBalance: string; pricingTitle: string; spread: string; recsTitle: string;
-  redo: string; next: string;
+  redo: string; next: string; profit: string; dishes: string; avg: string;
+  needsDataTitle: string; needsDataBody: string; cats: Record<string, string>;
 }> = {
   az: {
-    matrixTitle: 'Menyu Mühəndisliyi Matrisi', stars: 'Ulduzlar', starsDesc: 'Yüksək satış + yüksək kar — QORUYUN',
-    plowhorses: 'İş atları', plowhorsesDesc: 'Yüksək satış + aşağı kar — QİYMƏT/MALİYYƏ yenilə',
-    puzzles: 'Tapmacalar', puzzlesDesc: 'Aşağı satış + yüksək kar — MARKETİNQ gücləndir',
-    dogs: 'İtlər', dogsDesc: 'Aşağı satış + aşağı kar — MENYUDAN SİL',
-    catBalance: 'Kateqoriya Balansı', pricingTitle: 'Qiymət Analizi', spread: 'Qiymət aralığı',
-    recsTitle: 'Tövsiyələr', redo: 'Yenidən Analiz Et', next: 'Növbəti Alət',
+    matrixTitle: 'Menyu qrupları', stars: 'Qoru', starsDesc: 'Çox satılır, porsiyadan qazanc yüksəkdir',
+    plowhorses: 'Qiymətini düzəlt', plowhorsesDesc: 'Çox satılır, porsiyadan qazanc azdır',
+    puzzles: 'Tanıt', puzzlesDesc: 'Az satılır, porsiyadan qazanc yüksəkdir',
+    dogs: 'Çıxar', dogsDesc: 'Az satılır, porsiyadan qazanc azdır',
+    catBalance: 'Menyu bölmələri', pricingTitle: 'Qiymət', spread: 'Ən baha / ən ucuz',
+    recsTitle: 'Tövsiyələr', redo: 'Yenidən təhlil et', next: 'Növbəti alət',
+    profit: 'qazanc', dishes: 'yemək', avg: 'orta',
+    needsDataTitle: 'Məlumat lazımdır', needsDataBody: 'Bu yeməklərin aylıq satış sayı və ya maya dəyəri (%) yazılmayıb — qrupa salınmadı. Rəqəmləri əlavə edib yenidən təhlil edin.',
+    cats: { salat: 'Salat', shorba: 'Şorba', et: 'Ət', toyuq: 'Toyuq', baliq: 'Balıq', sandvic: 'Sendviç', shirniyyat: 'Şirniyyat', icki: 'İçki' },
   },
   en: {
-    matrixTitle: 'Menu Engineering Matrix', stars: 'Stars', starsDesc: 'High sales + high margin — KEEP',
-    plowhorses: 'Plowhorses', plowhorsesDesc: 'High sales + low margin — REPRICE',
-    puzzles: 'Puzzles', puzzlesDesc: 'Low sales + high margin — PROMOTE',
-    dogs: 'Dogs', dogsDesc: 'Low sales + low margin — REMOVE',
-    catBalance: 'Category Balance', pricingTitle: 'Pricing Analysis', spread: 'Price spread',
-    recsTitle: 'Recommendations', redo: 'Re-analyze', next: 'Next Tool',
+    matrixTitle: 'Menu groups', stars: 'Keep', starsDesc: 'Sells a lot, high profit per portion',
+    plowhorses: 'Fix the price', plowhorsesDesc: 'Sells a lot, low profit per portion',
+    puzzles: 'Promote', puzzlesDesc: 'Sells little, high profit per portion',
+    dogs: 'Remove', dogsDesc: 'Sells little, low profit per portion',
+    catBalance: 'Menu sections', pricingTitle: 'Pricing', spread: 'Most / least expensive',
+    recsTitle: 'Recommendations', redo: 'Re-analyse', next: 'Next tool',
+    profit: 'profit', dishes: 'dishes', avg: 'avg',
+    needsDataTitle: 'Data needed', needsDataBody: 'Monthly sales or cost % is missing for these dishes, so they were not grouped. Add the numbers and run again.',
+    cats: { salat: 'Salads', shorba: 'Soups', et: 'Meat', toyuq: 'Chicken', baliq: 'Fish', sandvic: 'Sandwiches', shirniyyat: 'Desserts', icki: 'Drinks' },
   },
   tr: {
-    matrixTitle: 'Menü Mühendisliği Matrisi', stars: 'Yıldızlar', starsDesc: 'Yüksek satış + yüksek kâr — KORUYUN',
-    plowhorses: 'İş atları', plowhorsesDesc: 'Yüksek satış + düşük kâr — FİYAT/MALİYET yenile',
-    puzzles: 'Bulmacalar', puzzlesDesc: 'Düşük satış + yüksek kâr — PAZARLAMA güçlendir',
-    dogs: 'Köpekler', dogsDesc: 'Düşük satış + düşük kâr — MENÜDEN ÇIKAR',
-    catBalance: 'Kategori Dengesi', pricingTitle: 'Fiyat Analizi', spread: 'Fiyat aralığı',
-    recsTitle: 'Öneriler', redo: 'Tekrar Analiz', next: 'Sonraki Araç',
+    matrixTitle: 'Menü grupları', stars: 'Koru', starsDesc: 'Çok satılıyor, porsiyon kazancı yüksek',
+    plowhorses: 'Fiyatını düzelt', plowhorsesDesc: 'Çok satılıyor, porsiyon kazancı düşük',
+    puzzles: 'Tanıt', puzzlesDesc: 'Az satılıyor, porsiyon kazancı yüksek',
+    dogs: 'Çıkar', dogsDesc: 'Az satılıyor, porsiyon kazancı düşük',
+    catBalance: 'Menü bölümleri', pricingTitle: 'Fiyat', spread: 'En pahalı / en ucuz',
+    recsTitle: 'Öneriler', redo: 'Tekrar analiz et', next: 'Sonraki araç',
+    profit: 'kazanç', dishes: 'yemek', avg: 'ort.',
+    needsDataTitle: 'Veri gerekli', needsDataBody: 'Bu yemeklerin aylık satış adedi ya da maliyet yüzdesi yazılmamış — gruplanmadı. Rakamları ekleyip tekrar analiz edin.',
+    cats: { salat: 'Salata', shorba: 'Çorba', et: 'Et', toyuq: 'Tavuk', baliq: 'Balık', sandvic: 'Sandviç', shirniyyat: 'Tatlı', icki: 'İçecek' },
   },
   ru: {
-    matrixTitle: 'Матрица Меню', stars: 'Звёзды', starsDesc: 'Высокие продажи + маржа — СОХРАНИТЬ',
-    plowhorses: 'Рабочие лошади', plowhorsesDesc: 'Высокие продажи + низкая маржа — ПЕРЕСМОТРЕТЬ ЦЕНУ',
-    puzzles: 'Загадки', puzzlesDesc: 'Низкие продажи + высокая маржа — ПРОДВИГАТЬ',
-    dogs: 'Собаки', dogsDesc: 'Низкие продажи + низкая маржа — УБРАТЬ',
-    catBalance: 'Баланс Категорий', pricingTitle: 'Ценовой Анализ', spread: 'Ценовой разброс',
-    recsTitle: 'Рекомендации', redo: 'Перевнализировать', next: 'Следующий',
+    matrixTitle: 'Группы меню', stars: 'Беречь', starsDesc: 'Хорошо продаётся, прибыль с порции высокая',
+    plowhorses: 'Поправить цену', plowhorsesDesc: 'Хорошо продаётся, прибыль с порции низкая',
+    puzzles: 'Продвигать', puzzlesDesc: 'Продаётся мало, прибыль с порции высокая',
+    dogs: 'Убрать', dogsDesc: 'Продаётся мало, прибыль с порции низкая',
+    catBalance: 'Разделы меню', pricingTitle: 'Цены', spread: 'Самое дорогое / самое дешёвое',
+    recsTitle: 'Рекомендации', redo: 'Проанализировать снова', next: 'Следующий инструмент',
+    profit: 'прибыль', dishes: 'блюд', avg: 'ср.',
+    needsDataTitle: 'Нужны данные', needsDataBody: 'Для этих блюд не указаны продажи в месяц или себестоимость (%) — они не распределены. Добавьте цифры и запустите снова.',
+    cats: { salat: 'Салаты', shorba: 'Супы', et: 'Мясо', toyuq: 'Курица', baliq: 'Рыба', sandvic: 'Сэндвичи', shirniyyat: 'Десерты', icki: 'Напитки' },
   },
 };
 
@@ -77,7 +93,7 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
           {QUADRANTS.map(({ key, icon: Icon, color, textColor }) => {
             const items = result.matrix[key];
             const label = t[key];
-            const desc = t[`${key}Desc` as keyof typeof t];
+            const desc = t[`${key}Desc` as `${typeof key}Desc`];
             return (
               <div key={key} className={`rounded-xl border p-4 ${color}`}>
                 <div className="mb-2 flex items-center gap-2">
@@ -91,8 +107,8 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
                     {items.map((item, i) => (
                       <li key={i} className="text-xs text-slate-700">
                         <span className="font-semibold">{item.name}</span> — {item.price} ₼
-                        {item.margin !== undefined && <span className="text-slate-500"> (margin {item.margin}%)</span>}
-                        <p className="mt-0.5 text-[10px] text-slate-500">{item.reason}</p>
+                        {item.margin !== undefined && <span className="text-slate-500"> ({t.profit} {item.margin}%)</span>}
+                        {item.reason && <p className="mt-0.5 text-[10px] text-slate-500">{item.reason}</p>}
                       </li>
                     ))}
                   </ul>
@@ -105,6 +121,14 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
         </div>
       </div>
 
+      {result.needsData && result.needsData.length > 0 && (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5" data-testid="menu-needs-data">
+          <h3 className="mb-1 text-sm font-bold text-amber-800">{t.needsDataTitle}</h3>
+          <p className="mb-2 text-xs text-amber-800">{t.needsDataBody}</p>
+          <p className="text-xs font-semibold text-amber-900">{result.needsData.join(', ')}</p>
+        </div>
+      )}
+
       {/* Category balance */}
       <div className="rounded-2xl border border-slate-200 bg-white p-5">
         <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.catBalance}</h3>
@@ -112,8 +136,8 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
           {Object.entries(result.categoryBalance).map(([cat, info]) => (
             <div key={cat} className="flex items-start justify-between rounded-lg border border-slate-100 px-3 py-2">
               <div>
-                <span className="text-xs font-bold text-[var(--dk-navy)] capitalize">{cat}</span>
-                <span className="ml-2 text-[10px] text-slate-600">{info.count} yemək, ort. {info.avgPrice} ₼</span>
+                <span className="text-xs font-bold text-[var(--dk-navy)]">{t.cats[cat] ?? cat}</span>
+                <span className="ml-2 text-[10px] text-slate-600">{info.count} {t.dishes}, {t.avg} {info.avgPrice} ₼</span>
               </div>
               <p className="max-w-[50%] text-right text-[10px] text-slate-600">{info.recommendation}</p>
             </div>
@@ -139,13 +163,13 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
         </ol>
       </div>
 
-      {/* Ahilik */}
-      <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      {/* TASK-0523: no more AI-written «Ahilik» quotes; older saved runs still show theirs. */}
+      {result.ahilikQuote && <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>}
 
       {/* Actions */}
       <div className="flex gap-3">
         <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>
-        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90">{t.next}</Link>
+        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition hover:bg-dk-red-deep">{t.next}</Link>
       </div>
     </div>
   );
