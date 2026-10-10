@@ -11,7 +11,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowDownLeft, ArrowRight, ArrowUpRight, BookOpenText, BriefcaseBusiness, Calculator, FileSpreadsheet, ListChecks, Handshake, Megaphone, Store, Check, ChevronDown, ChevronRight, ClipboardCheck, FileText, Flame, Globe, LayoutDashboard, LayoutGrid, LogOut, Menu, MessageCircle, Newspaper, Radar, ShoppingBag, Sparkles, UserRound, Wand2, X } from 'lucide-react';
+import { ArrowDownLeft, ArrowRight, ArrowUpRight, BookOpenText, BriefcaseBusiness, Calculator, FileSpreadsheet, ListChecks, Handshake, Megaphone, Store, Check, ChevronDown, ChevronRight, ClipboardCheck, Flame, Globe, LayoutDashboard, LayoutGrid, LogOut, Menu, MessageCircle, Newspaper, Radar, ShoppingBag, Sparkles, UserRound, Wand2, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import MegaMenu from '@/components/layout/MegaMenu';
