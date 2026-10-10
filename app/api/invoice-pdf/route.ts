@@ -1,9 +1,14 @@
+import { requireApiMember } from '@/lib/api/guards';
 import { NextRequest, NextResponse } from 'next/server';
 import { extractPdfText, parsePdfTextToInvoice } from '@/lib/invoice-ocr/pdf-parser';
 
 // POST /api/invoice-pdf — PDF fatura import
 // Body: FormData with "file" field
 export async function POST(request: NextRequest) {
+  // TASK-0524 (security): server-side PDF parsing was open to anonymous callers. Logged-in users only (admin + B2B invoices).
+  const guard = await requireApiMember();
+  if (!guard.ok) return guard.response;
+
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
