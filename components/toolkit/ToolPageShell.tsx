@@ -17,6 +17,7 @@ import { Crumbs, LiveStatus } from '@/components/inner/InnerParts';
 import s from '@/components/inner/inner.module.css';
 import { getToolMeta } from '@/lib/toolkit/tool-directory';
 import ToolIntro from '@/components/toolkit/ToolIntro';
+import ToolTour from '@/components/toolkit/ToolTour';
 
 export default function ToolPageShell({
   slug,
@@ -52,6 +53,7 @@ export default function ToolPageShell({
                   {tc(`groupEyebrow.${meta.group}`)}
                 </span>
                 <LiveStatus label={tc('live')} />
+              <ToolTour toolId={slug} />
               </div>
               <h1>{title}</h1>
               <p className={s.lead}>{tt(`${meta.slug}.d`)}</p>

@@ -10,6 +10,11 @@
  * - «Xəbər top olsun?» (isTop) → those cards come first in the grid.
  * - dashboard/reklamlar placement «news-inline» → AdSlot between the lead and the grid
  *   (renders nothing when no active ad).
+ *
+ * TASK-0529 (owner 10.10, «xəbərlər axmalı, sağda trend — biznesmerkezi kimi»): the first «all» page is a
+ * newsroom front — lead/manşet on the left, «Xəbər axını» rail (newest stories, scrolls inside) on the
+ * right, then a «Trend xəbərlər» strip (top / gündəm / editor pick, getTrendNewsArticles). Category and
+ * later pages keep the card grid; page 2 continues right after the stories the rail showed.
  */
 import Link from 'next/link';
 import type { Metadata } from 'next';
@@ -17,10 +22,12 @@ import { getLocale, getTranslations } from 'next-intl/server';
 
 import AdSlot from '@/components/ads/AdSlot';
 import MansetVitrin from '@/components/news/MansetVitrin';
+import NewsFeedRail from '@/components/news/NewsFeedRail';
 import {
   getApprovedNewsArticles,
   getMansetNewsArticles,
   getPublicNewsStats,
+  getTrendNewsArticles,
   getVitrinNewsArticles,
   type NewsCategoryKey,
   type PublicNewsArticle,
@@ -76,11 +83,12 @@ export default async function HaberlerPage({
   const offset = (page - 1) * PAGE_SIZE;
   const firstAllPage = category === 'all' && page === 1;
 
-  const [result, vitrin, manset, stats] = await Promise.all([
+  const [result, vitrin, manset, stats, trendPool] = await Promise.all([
     getApprovedNewsArticles({ category, limit: PAGE_SIZE, offset }, locale),
     firstAllPage ? getVitrinNewsArticles(1, locale) : Promise.resolve([] as PublicNewsArticle[]),
     firstAllPage ? getMansetNewsArticles(6, locale).catch(() => [] as PublicNewsArticle[]) : Promise.resolve([] as PublicNewsArticle[]),
     getPublicNewsStats().catch(() => null),
+    firstAllPage ? getTrendNewsArticles(10, locale).catch(() => [] as PublicNewsArticle[]) : Promise.resolve([] as PublicNewsArticle[]),
   ]);
 
   const lead: PublicNewsArticle | undefined = manset.length > 0 ? undefined : (vitrin[0] ?? result.items[0]);
@@ -90,6 +98,19 @@ export default async function HaberlerPage({
     .filter((item) => !shownInLead.has(item.id))
     .sort((a, b) => Number('isTop' in b && b.isTop) - Number('isTop' in a && a.isTop));
   const totalPages = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
+  // TASK-0529: front page = lead + feed rail + trend strip (no grid, so nothing shows twice side by side).
+  const rail = firstAllPage ? result.items.filter((item) => !shownInLead.has(item.id)) : [];
+  const trend = (() => {
+    type Story = (typeof result.items)[number];
+    if (!firstAllPage) return [] as Story[];
+    const picked: Story[] = trendPool.filter((item) => !shownInLead.has(item.id));
+    const seen = new Set(picked.map((item) => item.id));
+    for (const item of result.items) {
+      if (picked.length >= 4) break;
+      if (!shownInLead.has(item.id) && !seen.has(item.id)) picked.push(item);
+    }
+    return picked.slice(0, 10);
+  })();
 
   const listHref = (cat: NewsCategoryKey, p = 1) => {
     const qs = new URLSearchParams();
@@ -160,65 +181,135 @@ export default async function HaberlerPage({
       </div>
 
       <div className={home.wrap}>
-        {manset.length > 0 ? (
-          <MansetVitrin
-            label={t('mansetLabel')}
-            featuredLabel={t('featured')}
-            prevLabel={t('mansetPrev')}
-            nextLabel={t('mansetNext')}
-            slideLabels={manset.map((_, i) => t('mansetSlide', { n: i + 1, total: manset.length }))}
-            slides={manset.map((item, i) => ({
-              id: item.id,
-              href: articleHref(item.slug),
-              title: item.title,
-              summary: stripMarkdown(item.summary),
-              meta: `${source(item)} · ${date(item.publishedAt)}`,
-              cover: (
+        <div className={firstAllPage && rail.length > 0 ? s.nwTop : undefined}>
+          <div className="min-w-0">
+            {manset.length > 0 ? (
+              <MansetVitrin
+                label={t('mansetLabel')}
+                featuredLabel={t('featured')}
+                prevLabel={t('mansetPrev')}
+                nextLabel={t('mansetNext')}
+                slideLabels={manset.map((_, i) => t('mansetSlide', { n: i + 1, total: manset.length }))}
+                slides={manset.map((item, i) => ({
+                  id: item.id,
+                  href: articleHref(item.slug),
+                  title: item.title,
+                  summary: stripMarkdown(item.summary),
+                  meta: `${source(item)} · ${date(item.publishedAt)}`,
+                  cover: (
+                    <NewsCover
+                      category={item.category}
+                      categoryLabel={catLabel(item.category)}
+                      source={source(item)}
+                      brand={t('brand')}
+                      imageUrl={item.imageUrl}
+                      alt={item.title}
+                      priority={i === 0}
+                      sizes="(max-width: 980px) 100vw, 640px"
+                    />
+                  ),
+                }))}
+              />
+            ) : !lead ? (
+              <div className={s.empty} style={{ marginTop: 26 }}>
+                {category === 'all' ? t('empty') : t('emptyCat')}
+              </div>
+            ) : (
+              <Link href={articleHref(lead.slug)} className={s.leadStory}>
                 <NewsCover
-                  category={item.category}
-                  categoryLabel={catLabel(item.category)}
-                  source={source(item)}
+                  category={lead.category}
+                  categoryLabel={catLabel(lead.category)}
+                  source={source(lead)}
                   brand={t('brand')}
-                  imageUrl={item.imageUrl}
-                  alt={item.title}
-                  priority={i === 0}
+                  imageUrl={lead.imageUrl}
+                  alt={lead.title}
+                  priority
                   sizes="(max-width: 980px) 100vw, 640px"
                 />
-              ),
-            }))}
-          />
-        ) : !lead ? (
-          <div className={s.empty} style={{ marginTop: 26 }}>
-            {category === 'all' ? t('empty') : t('emptyCat')}
+                <div className={s.lsBody}>
+                  <div className={s.metaRow}>
+                    <span className={s.cat}>{t('featured')}</span>
+                    <span>
+                      {source(lead)} · {date(lead.publishedAt)}
+                    </span>
+                  </div>
+                  <h2>{lead.title}</h2>
+                  <p>{stripMarkdown(lead.summary)}</p>
+                </div>
+              </Link>
+            )}
           </div>
-        ) : (
-          <Link href={articleHref(lead.slug)} className={s.leadStory}>
-            <NewsCover
-              category={lead.category}
-              categoryLabel={catLabel(lead.category)}
-              source={source(lead)}
-              brand={t('brand')}
-              imageUrl={lead.imageUrl}
-              alt={lead.title}
-              priority
-              sizes="(max-width: 980px) 100vw, 640px"
+          {firstAllPage ? (
+            <NewsFeedRail
+              eyebrow={t('feedEyebrow')}
+              title={t('feedTitle')}
+              upLabel={t('feedUp')}
+              downLabel={t('feedDown')}
+              items={rail.map((item) => ({
+                id: item.id,
+                href: articleHref(item.slug),
+                title: item.title,
+                category: catLabel(item.category),
+                date: date(item.publishedAt),
+                thumb: (
+                  <NewsCover
+                    category={item.category}
+                    categoryLabel={catLabel(item.category)}
+                    source={source(item)}
+                    brand={t('brand')}
+                    imageUrl={item.imageUrl}
+                    alt=""
+                    compact
+                    sizes="96px"
+                  />
+                ),
+              }))}
             />
-            <div className={s.lsBody}>
-              <div className={s.metaRow}>
-                <span className={s.cat}>{t('featured')}</span>
-                <span>
-                  {source(lead)} · {date(lead.publishedAt)}
-                </span>
-              </div>
-              <h2>{lead.title}</h2>
-              <p>{stripMarkdown(lead.summary)}</p>
-            </div>
-          </Link>
-        )}
+          ) : null}
+        </div>
 
         <AdSlot placement="news-inline" className={s.adInline} />
 
-        {grid.length > 0 ? (
+        {trend.length > 0 ? (
+          <section className={s.trendSec} aria-labelledby="news-trend-title" data-testid="news-trend">
+            <div className={s.trendHead}>
+              <div>
+                <p className={s.trendEyebrow}>{t('trendEyebrow')}</p>
+                <h2 id="news-trend-title">{t('trendTitle')}</h2>
+              </div>
+              {totalPages > 1 ? (
+                <Link href={listHref('all', 2)} className={s.trendMore}>
+                  {t('moreNews')} →
+                </Link>
+              ) : null}
+            </div>
+            <div className={s.trendRow}>
+              {trend.map((item) => (
+                <Link key={item.id} href={articleHref(item.slug)} className={s.trendCard}>
+                  <NewsCover
+                    category={item.category}
+                    categoryLabel={catLabel(item.category)}
+                    source={source(item)}
+                    brand={t('brand')}
+                    imageUrl={item.imageUrl}
+                    alt={item.title}
+                    sizes="260px"
+                  />
+                  <div className={s.nb}>
+                    <div className={s.metaRow}>
+                      <span>{catLabel(item.category)}</span>
+                      <span>·</span>
+                      <span>{date(item.publishedAt)}</span>
+                    </div>
+                    <h3>{item.title}</h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {!firstAllPage && grid.length > 0 ? (
           <div className={s.newsGrid}>
             {grid.map((item) => (
               <Link key={item.id} href={articleHref(item.slug)} className={s.ncard}>

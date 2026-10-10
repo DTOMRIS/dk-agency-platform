@@ -6841,6 +6841,32 @@
       "intro": {
         "what": "Bu alət nə edir?",
         "how": "Necə işləyir"
+      },
+      "tour": {
+        "start": "Bələdçi",
+        "skip": "Keç",
+        "next": "Növbəti",
+        "back": "Geri",
+        "done": "Başla",
+        "step": "{n} / {total}",
+        "steps": {
+          "intro": {
+            "title": "Bu alət nə edir",
+            "body": "Burada alətin hansı qərara kömək etdiyini və 3 addımda necə işlədiyini oxuyun."
+          },
+          "inputs": {
+            "title": "Rəqəmlərinizi bura yazın",
+            "body": "Öz məlumatınızı daxil edin — nəticə yazdıqca dərhal yenilənir. Heç nə yadda saxlanmır və göndərilmir."
+          },
+          "reset": {
+            "title": "Nümunə və Təmizlə",
+            "body": "«Nümunəni yüklə» hazır rəqəmlərlə alətin necə işlədiyini göstərir. «Təmizlə» bütün xanaları boşaldır; səhvən basdınızsa, «Geri al» var."
+          },
+          "result": {
+            "title": "Nəticə burada",
+            "body": "Hesablama və qısa izah bu hissədə görünür. Telefonda aşağıdakı paneli açıb baxın."
+          }
+        }
       }
     },
     "toolkit": {
@@ -7209,7 +7235,14 @@
       "mansetNext": "Növbəti manşet",
       "mansetSlide": "Manşet {n} / {total}",
       "latestListings": "Son ilanlar",
-      "allListings": "Bütün ilanlar"
+      "allListings": "Bütün ilanlar",
+      "feedEyebrow": "Son xəbərlər",
+      "feedTitle": "Xəbər axını",
+      "feedUp": "Yuxarı",
+      "feedDown": "Aşağı",
+      "trendEyebrow": "Trend",
+      "trendTitle": "Trend xəbərlər",
+      "moreNews": "Bütün xəbərlər"
     },
     "blog": {
       "eyebrow": "Bloq · Doğan Tomris",
@@ -7741,7 +7774,7 @@
       "message": "Mesaj",
       "status": "Status"
     },
-    "anonymous": "Anonim klik",
+    "anonymous": "Kim olduğu bilinmir",
     "open": "Aç",
     "noDetail": "Ayrı səhifə yoxdur",
     "channels": {
@@ -7776,7 +7809,9 @@
       "dismissed": "Bağlandı",
       "subscribed": "Abunədir",
       "unsubscribed": "Abunəlikdən çıxıb"
-    }
+    },
+    "refCode": "Kod: {code} — WhatsApp-da eyni kodlu mesajı axtarın",
+    "anonymousHint": "Yazsa, WhatsApp/Telegram tətbiqində görünür"
   },
   "authShell": {
     "back": "Ana səhifə",

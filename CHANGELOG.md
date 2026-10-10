@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0529` feat/fix: WhatsApp klikinə «Kod: DK-XXXX» — telefondakı söhbəti hansı səhifədən gəldiyi ilə eşləmək olur, panel «klik edənlə necə əlaqə saxlayım» deyir; alətlərdə İnteraktiv Bələdçi (ətraf blur, xanaları göstərir, «Keç») və daha görünən «Təmizlə»; həqiqi DK logosu; WhatsApp və «KAZAN AI» düymələri hər səhifədə eyni; Sektor Nəbzi-də xəbər axını (sağda) və trend xəbərlər zolağı.
 - `TASK-0528` fix: «saxta davranış» süpürgəsi — B2B «Yeni elan» indi həqiqətən saxlayır (əvvəl heç nə göndərmirdi), bildiriş ayarları yadda qalır, admin panelində xətalar «0» kimi gizlənmir, zəng düyməsi müraciətləri göstərir; 72 ölü fayl silindi. Sistem xəritəsi artıq saxta davranışı, ölü düymələri və istifadəsiz komponentləri özü tapır.
 - `TASK-0527` fix(deps): Hostinger-in 8 təhlükəsizlik xəbərdarlığı bağlandı — js-yaml 5.4.1, dompurify 3.4.16, protobufjs 7.6.5; canlı asılılıqlarda açıq qalmadı.
 - `TASK-0526` fix(panels): admin və müştəri panelində saxta davranışlar düzəldi — xətada uydurma faktura / elan göstərilmir, «saxlanıldı» və «şifrə dəyişdirildi» yalnız həqiqətən olanda deyilir (şifrə dəyişmə indi işləyir), admin çıxışı düzgün işləyir, funnel addımları məntiqli, «gözləyən elan» hər yerdə eyni rəqəm, müştəri panelində təkliflər öz kartında, bilinməyən panel ünvanı 404.

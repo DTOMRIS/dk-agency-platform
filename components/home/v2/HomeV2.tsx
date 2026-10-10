@@ -24,7 +24,6 @@ import B2BMarket from '@/components/home/v2/B2BMarket';
 import BlogPicks from '@/components/home/v2/BlogPicks';
 import { ReceiptHero } from '@/components/home/ReceiptHero';
 import { DoganNote } from '@/components/home/DoganNote';
-import WhatsAppButton from '@/components/ui/WhatsAppButton';
 
 const AiReadinessScore = dynamic(() => import('@/components/sections/AiReadinessScore'), {
   ssr: false,
@@ -196,8 +195,6 @@ export default function HomeV2({ adSlot }: { adSlot?: ReactNode }) {
       />
       <QuickAccess />
       <JoinCTA />
-      {/* TASK-0516: floating WhatsApp (bottom-left; KAZAN AI is bottom-right) via /api/leads/whatsapp. */}
-      <WhatsAppButton />
     </div>
   );
 }

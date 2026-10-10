@@ -1,15 +1,9 @@
-/* TASK-0524 — DK brand mark (same look as the v2 header's BrandMark) with an optional coin-flip:
-   one turn on load, one on hover, then a quiet turn every 8 s. Off for prefers-reduced-motion. */
+/* TASK-0524/0529 — the real DK logo (public/images/logo-mobil.png, red circle «DK») with an optional
+   coin-flip: one turn on load, one on hover, then a quiet turn every 8 s. Off for prefers-reduced-motion. */
 .mark {
-  display: grid;
-  place-items: center;
+  display: block;
   flex-shrink: 0;
-  border-radius: 10px;
-  background: #0f172a;
-  color: #fff;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  object-fit: contain;
 }
 .spin {
   transform-style: preserve-3d;
@@ -26,14 +20,20 @@ a:focus-visible .spin {
   }
   55% {
     transform: perspective(240px) rotateY(200deg);
-    background: #d63b54;
   }
   100% {
     transform: perspective(240px) rotateY(360deg);
-    background: #0f172a;
   }
 }
+/* header: flip only on hover / keyboard focus (no load / interval turn on every page) */
+a:hover .spinHover,
+a:focus-visible .spinHover {
+  transform-style: preserve-3d;
+  animation: dk-flip 0.7s cubic-bezier(0.45, 0, 0.2, 1) 0s 1 both;
+}
 @media (prefers-reduced-motion: reduce) {
+  a:hover .spinHover,
+  a:focus-visible .spinHover,
   .spin,
   .spin:hover,
   a:hover .spin {

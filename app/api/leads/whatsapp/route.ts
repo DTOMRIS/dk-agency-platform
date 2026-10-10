@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse, after } from 'next/server';
-import { createHash } from 'node:crypto';
+import { createHash, randomInt } from 'node:crypto';
 import { WHATSAPP_NUMBER } from '@/lib/contact-channels';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
@@ -10,7 +10,20 @@ import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
  * (source `wa_redirect`, channel `whatsapp` — both free varchar) and pinged to the owner's
  * Telegram. Logging runs after the redirect response, so the redirect stays instant and
  * can never fail because of it.
+ *
+ * TASK-0529 (owner 10.10: «başvurdu, nasıl iletişim kuracağım?»): a click alone never tells us who the
+ * visitor is — their name and number only reach the owner when they actually send the message in
+ * WhatsApp. So each click gets a short reference code appended to the pre-filled text («Kod: DK-7K3Q»);
+ * the same code is stored in `leads.prefill_text`, and the inbox / contact-tracking show it, so the owner
+ * can match the chat on his phone to the page the visitor came from (click-ID-in-message attribution).
  */
+const REF_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function refCode(): string {
+  let out = '';
+  for (let i = 0; i < 4; i += 1) out += REF_ALPHABET[randomInt(REF_ALPHABET.length)];
+  return `DK-${out}`;
+}
+
 async function logClick(req: NextRequest, message: string): Promise<void> {
   const referer = req.headers.get('referer');
   let page: string | null = null;
@@ -49,11 +62,10 @@ async function logClick(req: NextRequest, message: string): Promise<void> {
 }
 
 export function GET(req: NextRequest) {
-  const message = req.nextUrl.searchParams.get('text') ?? '';
+  const base = (req.nextUrl.searchParams.get('text') ?? '').slice(0, 900);
+  const message = `${base ? `${base}\n\n` : ''}Kod: ${refCode()}`;
   const url = new URL(`https://wa.me/${WHATSAPP_NUMBER}`);
-  if (message) {
-    url.searchParams.set('text', message);
-  }
+  url.searchParams.set('text', message);
 
   after(() => logClick(req, message));
   return NextResponse.redirect(url);

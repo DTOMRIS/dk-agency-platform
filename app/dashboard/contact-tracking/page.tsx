@@ -3,6 +3,8 @@ import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
 import { desc, eq, sql } from 'drizzle-orm';
 import { requireAdminPage } from '@/lib/auth/guards';
+import { extractRefCode } from '@/lib/leads/ref-code';
+import { WHATSAPP_NUMBER } from '@/lib/contact-channels';
 
 type LeadRow = {
   id: number;
@@ -146,6 +148,28 @@ export default async function ContactTrackingPage({
           </p>
         </div>
 
+        {/* TASK-0529 (owner 10.10: «başvurdu, nasıl iletişim kuracağım?») — say plainly where the person is. */}
+        <div className={`${cardCls} border-l-4 border-[#25D366] p-5 sm:p-6`} data-testid="contact-howto">
+          <p className="text-[15px] font-semibold text-slate-900">Klik edən adamla necə əlaqə saxlayım?</p>
+          <ul className="mt-2 space-y-1.5 text-[14px] leading-relaxed text-slate-700">
+            <li>
+              <strong className="font-semibold text-slate-900">Klik = adam düyməyə basdı.</strong> Sayt onun adını və nömrəsini görmür
+              (WhatsApp bunu heç bir sayta vermir). Mesajı göndərsə, adı və nömrəsi telefonunuzdakı{' '}
+              <strong className="font-semibold text-slate-900">WhatsApp Business-də (+{WHATSAPP_NUMBER})</strong> görünür — yazışma oradadır.
+            </li>
+            <li>
+              <strong className="font-semibold text-slate-900">Kod sütunu</strong>: hər klikin hazır mesajına «Kod: DK-XXXX» əlavə olunur.
+              WhatsApp-da gələn mesajda eyni kodu görsəniz, bu sətirdəki səhifədən gəldiyini bilirsiniz.
+              Kodsuz köhnə sətirlər 10.10.2026-dan əvvəlkidir.
+            </li>
+            <li>
+              <strong className="font-semibold text-slate-900">Telegram</strong>: düymə kanala aparır; kanala qoşulan adam özünü göstərmir.
+              «t.me/dkagency» olan köhnə sətirlər səhv (başqasının) kanalına gedirdi — 08.10.2026-da düzəldilib.
+            </li>
+            <li>Nömrəsini istəyirsinizsə: KAZAN və əlaqə forması adı və telefonu soruşur — onlar «Bütün müraciətlər»də adla görünür.</li>
+          </ul>
+        </div>
+
         {/* Summary cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {(
@@ -208,7 +232,7 @@ export default async function ContactTrackingPage({
                     <th className="px-5 py-4 font-semibold">Dil</th>
                     <th className="px-5 py-4 font-semibold">Səhifə</th>
                     <th className="px-5 py-4 font-semibold">Hazır mesaj</th>
-                    <th className="px-5 py-4 font-semibold">Hədəf</th>
+                    <th className="px-5 py-4 font-semibold">Kod</th>
                     <th className="px-5 py-4 font-semibold">Cihaz</th>
                     <th className="px-5 py-4 font-semibold">Tarix</th>
                   </tr>
@@ -238,11 +262,9 @@ export default async function ContactTrackingPage({
                       >
                         {row.prefillText ?? '—'}
                       </td>
-                      <td
-                        className="max-w-[160px] truncate px-5 py-3 font-mono text-[12px] text-slate-600"
-                        title={row.destinationPhone ?? undefined}
-                      >
-                        {row.destinationPhone ?? '—'}
+                      {/* TASK-0529: the destination is always our own number — show the click's code instead. */}
+                      <td className="whitespace-nowrap px-5 py-3 font-mono text-[12px] font-semibold text-slate-800" title={row.destinationPhone ? `Hədəf: ${row.destinationPhone}` : undefined}>
+                        {extractRefCode(row.prefillText) ?? (row.destinationPhone?.includes('dkagency') ? 'köhnə kanal' : '—')}
                       </td>
                       <td
                         className="px-5 py-3 text-[13px] text-slate-600"

@@ -19,6 +19,7 @@ import { Crumbs, LiveStatus } from '@/components/inner/InnerParts';
 import s from '@/components/inner/inner.module.css';
 import { getToolMeta } from '@/lib/toolkit/tool-directory';
 import ToolIntro from '@/components/toolkit/ToolIntro';
+import ToolTour from '@/components/toolkit/ToolTour';
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -206,6 +207,7 @@ export default function ToolkitStudioLayout({
                 </span>
               ) : null}
               <LiveStatus label={tc('live')} />
+              <ToolTour toolId={toolId} />
             </div>
             <h1>{toolName}</h1>
             {toolDescription ? <p className={s.lead}>{toolDescription}</p> : null}

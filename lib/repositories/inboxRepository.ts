@@ -24,6 +24,7 @@ import {
   listingLeads,
   listings,
 } from '@/lib/db/schema';
+import { extractRefCode } from '@/lib/leads/ref-code';
 
 export const INBOX_SOURCES = ['listing', 'contact', 'kazan', 'franchise', 'newsletter'] as const;
 export type InboxSource = (typeof INBOX_SOURCES)[number];
@@ -47,6 +48,8 @@ export type InboxItem = {
   origin: string | null;
   name: string | null;
   phone: string | null;
+  /** TASK-0529: «Kod: DK-XXXX» of a WhatsApp click (matches the chat on the owner's phone). */
+  refCode?: string | null;
   email: string | null;
   /** Listing title, page path or brand — "where it came from". */
   context: string | null;
@@ -203,6 +206,7 @@ export async function getInboxItems(periodDays: InboxPeriod): Promise<InboxItem[
       email: null,
       context: pagePath(row.sourceUrl),
       message: snippet(row.prefillText),
+      refCode: extractRefCode(row.prefillText),
       status: null,
       href: '/dashboard/contact-tracking',
     })),

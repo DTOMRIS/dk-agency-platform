@@ -6841,6 +6841,32 @@
       "intro": {
         "what": "Bu araç ne yapar?",
         "how": "Nasıl çalışır"
+      },
+      "tour": {
+        "start": "Rehber",
+        "skip": "Geç",
+        "next": "İleri",
+        "back": "Geri",
+        "done": "Başla",
+        "step": "{n} / {total}",
+        "steps": {
+          "intro": {
+            "title": "Bu araç ne yapar",
+            "body": "Aracın hangi karara yardım ettiğini ve 3 adımda nasıl çalıştığını burada okuyun."
+          },
+          "inputs": {
+            "title": "Rakamlarınızı buraya yazın",
+            "body": "Kendi verinizi girin — sonuç yazdıkça hemen güncellenir. Hiçbir şey kaydedilmez veya gönderilmez."
+          },
+          "reset": {
+            "title": "Örnek ve Temizle",
+            "body": "«Örneği yükle» aracı hazır rakamlarla gösterir. «Temizle» tüm alanları boşaltır; yanlışlıkla bastıysanız «Geri al» var."
+          },
+          "result": {
+            "title": "Sonuç burada",
+            "body": "Hesap ve kısa açıklama bu bölümde görünür. Telefonda alttaki paneli açın."
+          }
+        }
       }
     },
     "toolkit": {
@@ -7209,7 +7235,14 @@
       "mansetNext": "Sonraki manşet",
       "mansetSlide": "Manşet {n} / {total}",
       "latestListings": "Son ilanlar",
-      "allListings": "Tüm ilanlar"
+      "allListings": "Tüm ilanlar",
+      "feedEyebrow": "Son haberler",
+      "feedTitle": "Haber akışı",
+      "feedUp": "Yukarı",
+      "feedDown": "Aşağı",
+      "trendEyebrow": "Trend",
+      "trendTitle": "Trend haberler",
+      "moreNews": "Tüm haberler"
     },
     "blog": {
       "eyebrow": "Blog · Doğan Tomris",
@@ -7741,7 +7774,7 @@
       "message": "Mesaj",
       "status": "Durum"
     },
-    "anonymous": "Anonim tıklama",
+    "anonymous": "Kim olduğu bilinmiyor",
     "open": "Aç",
     "noDetail": "Ayrı sayfa yok",
     "channels": {
@@ -7776,7 +7809,9 @@
       "dismissed": "Kapatıldı",
       "subscribed": "Abone",
       "unsubscribed": "Abonelikten çıktı"
-    }
+    },
+    "refCode": "Kod: {code} — WhatsApp'ta aynı kodlu mesajı arayın",
+    "anonymousHint": "Yazarsa WhatsApp/Telegram uygulamasında görünür"
   },
   "authShell": {
     "back": "Ana sayfa",

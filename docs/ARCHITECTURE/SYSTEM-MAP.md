@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · 878c910
+> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · e8263a8
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -38,8 +38,8 @@ Cəmi **0** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazıl�
 - `components/dashboard/DashboardSidebar.tsx:144` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/DashboardTopBar.tsx:140` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/KazanLeadStatusActions.tsx:50` — router.refresh() right after re-renders the lead from the server
-- `components/kazan-ai/FloatingKazanWidget.tsx:163` — CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
-- `components/layout/Header.tsx:183` — logout: client session cleared and redirected either way (protected file)
+- `components/kazan-ai/FloatingKazanWidget.tsx:162` — CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
+- `components/layout/Header.tsx:179` — logout: client session cleared and redirected either way (protected file)
 - `components/members/MemberLogoutButton.tsx:17` — logout: the client session is cleared and the user redirected either way
 - `app/auth/login/page.tsx:168` — display-name sync only — role/login come from the signed JWT (TASK-0457)
 - `app/dashboard/reklamlar/page.tsx:84` — the list is reloaded from the server right after, so the screen always shows the truth
@@ -141,7 +141,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 |---|---|---|---|---|---|---|
 | `/blog` | səhifə | v2 | — | ✓ |  | inner/InnerParts.tsx, blog/BlogDirectory.tsx |
 | `/blog/[slug]` | səhifə | v2 | — | ✓ |  |  |
-| `/haberler` | səhifə | v2 | — | ✓ | 2 | ads/AdSlot.tsx, news/MansetVitrin.tsx, home/v2/homeV2.module.css |
+| `/haberler` | səhifə | v2 | — | ✓ | 2 | ads/AdSlot.tsx, news/MansetVitrin.tsx, news/NewsFeedRail.tsx |
 | `/haberler/[slug]` | səhifə | qarışıq | — | ✓ |  | news/BlogContentWrapper.tsx, ads/AdSlot.tsx, blog/index.ts |
 | `/xeberler` | səhifə | — | — | ✗ |  |  |
 | `/xeberler/[slug]` (yalnız kök) | səhifə | v2 | — | ✓ |  |  |
@@ -159,7 +159,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/dashboard/blog/new` | səhifə | köhnə | layout (/dashboard) | ✗ | 1 | dashboard/BlogEditorForm.tsx |
 | `/dashboard/blog/translation-status` | səhifə | — | səhifədə | ✗ | 12 | dashboard/TranslateAllButton.tsx, dashboard/MigrateStructureButtons.tsx |
 | `/dashboard/blog/yeni` | güzgü | — | layout (/dashboard) | ✗ |  |  |
-| `/dashboard/contact-tracking` | səhifə | köhnə | səhifədə | ✗ | 8 |  |
+| `/dashboard/contact-tracking` | səhifə | köhnə | səhifədə | ✗ | 12 |  |
 | `/dashboard/fatura-kateqoriyalar` | səhifə | — | layout (/dashboard) | ✓ | 13 |  |
 | `/dashboard/faturalar` | səhifə | — | layout (/dashboard) | ✓ | 4 |  |
 | `/dashboard/faturalar/[id]` | səhifə | — | layout (/dashboard) | ✓ | 16 |  |
@@ -329,7 +329,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 67 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 68 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |

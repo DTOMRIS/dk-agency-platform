@@ -1,6 +1,6 @@
 /**
  * @file WhatsAppButton.tsx
- * @purpose Floating WhatsApp contact (homepage). Goes through /api/leads/whatsapp (click is counted
+ * @purpose Floating WhatsApp contact (every public page, mounted in PublicChrome — TASK-0529). Goes through /api/leads/whatsapp (click is counted
  *          in `leads` + Telegram ping to the owner), never a bare wa.me link.
  *          Bottom-LEFT so it never meets the KAZAN AI button (bottom-right); below lg it sits above
  *          MobileBottomNav (64px) like KAZAN, and both lift above the cookie bar while it is shown

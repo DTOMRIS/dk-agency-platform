@@ -7,7 +7,6 @@ import {
   ChefHat,
   ExternalLink,
   Loader2,
-  MessageCircle,
   Send,
   Sparkles,
   Utensils,
@@ -303,13 +302,13 @@ export default function FloatingKazanWidget() {
             if (requireLeadForAction(event)) return;
             void patchLead({ meetingRequested: true });
           }}
-          className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[11px] font-black text-slate-700 transition hover:border-[var(--dk-gold)]"
+          className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[11px] font-black text-slate-700 transition hover:border-[#D63B54]"
         >
           {t('meetingCta')}
         </Link>
         <Link
           href={toolAction.href}
-          className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[11px] font-black text-slate-700 transition hover:border-[var(--dk-gold)]"
+          className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[11px] font-black text-slate-700 transition hover:border-[#D63B54]"
         >
           {toolAction.label}
         </Link>
@@ -331,16 +330,16 @@ export default function FloatingKazanWidget() {
             transition={{ duration: 0.2 }}
             className="mb-3 flex h-[min(680px,calc(100dvh-180px))] w-[calc(100vw-20px)] max-w-[460px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-950/20 sm:mb-4 sm:h-[min(720px,calc(100dvh-190px))] lg:h-[min(720px,calc(100dvh-110px))] sm:w-[calc(100vw-32px)]"
           >
-            <div className="flex items-center justify-between bg-[var(--dk-navy)] px-5 py-4 text-white">
+            <div className="flex items-center justify-between bg-[#0F172A] px-5 py-4 text-white">
               <div className="flex items-center gap-3">
-                <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[var(--dk-navy)]">
+                <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#0F172A]">
                   <ChefHat size={22} />
-                  <span className="absolute -right-0.5 -bottom-0.5 h-3 w-3 rounded-full border-2 border-[var(--dk-navy)] bg-emerald-400" />
+                  <span className="absolute -right-0.5 -bottom-0.5 h-3 w-3 rounded-full border-2 border-[#0F172A] bg-emerald-400" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 text-base font-black">
                     KAZAN AI
-                    <Sparkles size={15} className="text-[var(--dk-gold)]" />
+                    <Sparkles size={15} className="text-[#F28A9B]" />
                   </div>
                   <p className="text-xs font-semibold text-white/65">{t('subtitle')}</p>
                 </div>
@@ -394,7 +393,7 @@ export default function FloatingKazanWidget() {
                       key={prompt}
                       type="button"
                       onClick={() => void sendMessage(prompt)}
-                      className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-left text-xs font-bold text-slate-700 transition hover:border-[var(--dk-gold)] hover:bg-amber-50"
+                      className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-left text-xs font-bold text-slate-700 transition hover:border-[#D63B54] hover:bg-[#FBEFF1]"
                     >
                       {prompt}
                     </button>
@@ -405,14 +404,14 @@ export default function FloatingKazanWidget() {
               {leadGateOpen ? (
                 <form
                   onSubmit={submitLead}
-                  className="rounded-2xl border border-[var(--dk-gold)] bg-white p-4"
+                  className="rounded-2xl border border-[#E4DCCD] bg-white p-4"
                 >
                   <div className="mb-3 flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-[var(--dk-gold)]">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#FBEFF1] text-[#D63B54]">
                       <Bot size={20} />
                     </div>
                     <div>
-                      <p className="text-sm font-black text-[var(--dk-navy)]">
+                      <p className="text-sm font-black text-[#0F172A]">
                         {t('leadFormTitle')}
                       </p>
                       <p className="mt-1 text-xs leading-5 text-slate-500">{t('leadFormDesc')}</p>
@@ -425,7 +424,7 @@ export default function FloatingKazanWidget() {
                         setLeadForm((current) => ({ ...current, name: event.target.value }))
                       }
                       placeholder={t('namePlaceholder')}
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
+                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[#D63B54]"
                     />
                     <input
                       value={leadForm.phone}
@@ -433,7 +432,7 @@ export default function FloatingKazanWidget() {
                         setLeadForm((current) => ({ ...current, phone: event.target.value }))
                       }
                       placeholder={t('phonePlaceholder')}
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
+                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[#D63B54]"
                     />
                     <input
                       value={leadForm.email}
@@ -441,7 +440,7 @@ export default function FloatingKazanWidget() {
                         setLeadForm((current) => ({ ...current, email: event.target.value }))
                       }
                       placeholder={t('emailPlaceholder')}
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
+                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[#D63B54]"
                     />
                     <select
                       value={leadForm.businessType}
@@ -451,7 +450,7 @@ export default function FloatingKazanWidget() {
                           businessType: event.target.value as BusinessType,
                         }))
                       }
-                      className="min-h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[var(--dk-gold)]"
+                      className="min-h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#D63B54]"
                     >
                       {Object.entries(businessTypeLabels).map(([value, label]) => (
                         <option key={value} value={value}>
@@ -507,7 +506,7 @@ export default function FloatingKazanWidget() {
                   onChange={(event) => setInput(event.target.value)}
                   rows={1}
                   placeholder={t('inputPlaceholder')}
-                  className="max-h-28 min-h-11 flex-1 resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[var(--dk-gold)]"
+                  className="max-h-28 min-h-11 flex-1 resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[#D63B54]"
                 />
                 <button
                   type="submit"
@@ -536,9 +535,18 @@ export default function FloatingKazanWidget() {
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
         aria-label={open ? t('closePanel') : t('openPanel')}
-        className="ml-auto hidden h-14 w-14 items-center justify-center rounded-2xl lg:flex bg-[var(--dk-navy)] text-[var(--dk-gold)] shadow-2xl shadow-[var(--dk-navy)]/30 sm:h-16 sm:w-16"
+        // TASK-0529 (owner 10.10 «whatsapp digərlərində fərqli olmuş»): the old navy square with a chat
+        // bubble read as a second WhatsApp. Now a v2 ink pill that says what it is.
+        className="ml-auto hidden h-14 items-center justify-center gap-2 rounded-full bg-[#0F172A] px-5 text-[15px] font-black tracking-[-0.01em] text-white shadow-[0_14px_34px_-12px_rgba(15,23,42,0.55)] lg:flex"
       >
-        {open ? <X size={26} /> : <MessageCircle size={26} />}
+        {open ? (
+          <X size={22} />
+        ) : (
+          <>
+            <Sparkles size={18} className="text-[#F28A9B]" aria-hidden="true" />
+            KAZAN AI
+          </>
+        )}
       </motion.button>
     </div>
   );

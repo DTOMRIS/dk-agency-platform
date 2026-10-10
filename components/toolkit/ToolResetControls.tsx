@@ -87,9 +87,10 @@ export default function ToolResetControls<T>({
         type="button"
         onClick={() => act('cleared', onClear)}
         data-testid="tool-clear"
-        className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 text-xs font-semibold text-slate-800 transition-colors hover:border-slate-400 hover:bg-slate-50"
+        // TASK-0529 (owner 10.10 «təmizlə daha belirgin olmalı»): red-outlined pill, bigger than before.
+        className="inline-flex min-h-[40px] items-center gap-2 rounded-full border-2 border-[#D63B54] bg-white px-4 text-[13px] font-bold text-[#BE2F47] transition-colors hover:bg-[#D63B54] hover:text-white"
       >
-        <Eraser size={14} aria-hidden="true" />
+        <Eraser size={16} aria-hidden="true" />
         {t('clear')}
       </button>
       {onLoadExample ? (
@@ -97,9 +98,9 @@ export default function ToolResetControls<T>({
           type="button"
           onClick={() => act('example', onLoadExample)}
           data-testid="tool-example"
-          className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 text-xs font-semibold text-slate-800 transition-colors hover:border-slate-400 hover:bg-slate-50"
+          className="inline-flex min-h-[40px] items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-4 text-[13px] font-bold text-slate-800 transition-colors hover:border-[#0F172A] hover:bg-[#F6F1E9]"
         >
-          <Sparkles size={14} aria-hidden="true" />
+          <Sparkles size={16} aria-hidden="true" />
           {t('example')}
         </button>
       ) : null}

@@ -1119,3 +1119,30 @@ export async function translateNewsArticleBySlug(slug: string): Promise<NewsTran
   if (!row) return { ...EMPTY_TRANSLATE_RESULT(), error: 'not-found' };
   return autoTranslateNewsArticle(row.id);
 }
+
+/**
+ * TASK-0529: «Trend xəbərlər» strip on /haberler (owner 10.10, Biznes Mərkəzi pattern). Stories the
+ * editor flagged — top, gündəm or editor pick — from the last 30 days, newest first. The page tops the
+ * strip up with the newest stories when fewer than 4 are flagged.
+ */
+export async function getTrendNewsArticles(limit = 10, locale?: string) {
+  const loc = sanitizeLocale(locale);
+
+  if (!dbAvailable || !db) return [];
+
+  const rows = await db
+    .select(buildPublicArticleSelect())
+    .from(newsArticles)
+    .leftJoin(newsSources, eq(newsSources.id, newsArticles.sourceId))
+    .where(
+      and(
+        ...getPublicNewsConditions(),
+        sql`(${newsArticles.isTop} or ${newsArticles.isGundem} or ${newsArticles.isEditorPick})`,
+        sql`coalesce(${newsArticles.publishedAt}, ${newsArticles.createdAt}) >= now() - interval '30 days'`
+      )
+    )
+    .orderBy(desc(newsArticles.publishedAt), desc(newsArticles.createdAt))
+    .limit(limit);
+
+  return rows.map((row) => mapPublicArticle(row, loc));
+}
