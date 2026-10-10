@@ -171,7 +171,7 @@ const CORE_ENTRIES: Entry[] = [
     title: 'HoReCa Elanları',
     path: '/ilanlar',
     description:
-      'Restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və HORECA ekipman elanları bir vitrində.',
+      'Restoran devri, françayz, ortaq axtarışı, obyekt icarəsi və HORECA ekipman elanları bir vitrində.',
   },
   {
     title: 'DK Agency Şədd Rozeti',
@@ -222,11 +222,11 @@ export async function GET(): Promise<Response> {
         '- Şirkət: DK Agency (hüquqi ad: DENİS TOMRİS MMC, VÖEN 1405471681), Bakı, Azərbaycan. 2010-da qurulub.',
         '- Qurucu: Doğan Tomris (Qurucu) — 40 ildir HoReCa sektorunda; Türkiyə, Azərbaycan, Rusiya və Gürcüstanda restoran və otel layihələri.',
         '- Nə edir: restoranın rəqəmlərini (food cost, delivery komissiyası, kadr, kassa, gündəlik itki) bir yerə yığır, pulun harada sızdığını göstərir və hər siqnala bir addım təklif edir; qərar sahibdədir. Başlanğıc — WhatsApp ilə pulsuz diaqnostika.',
-        `- Alətlər: 35+ alət, ${FREE_TOOLKIT_COUNT}-si pulsuz — Toolkit-də ${FREE_TOOLKIT_COUNT} pulsuz hesablama aləti (/toolkit, qeydiyyatsız işləyir), üstəgəl Marketinq Ocağı AI alətləri, franchise alətləri və KAZAN AI.`,
+        `- Alətlər: 35+ alət, ${FREE_TOOLKIT_COUNT}-si pulsuz — Toolkit-də ${FREE_TOOLKIT_COUNT} pulsuz hesablama aləti (/toolkit, qeydiyyatsız işləyir), üstəgəl Marketinq Ocağı AI alətləri, françayz alətləri və KAZAN AI.`,
         '- OCAQ: çoxfilialı şəbəkə üçün gündəlik nəzarət — növbə checklist-i, HACCP, canlı satış, kassa ↔ bank üzləşdirməsi, itki nəzarəti; 10+ filiallı şəbəkədə hər gün işləyir.',
         '- KAZAN AI: HoReCa üzrə AI məsləhətçi, beta mərhələsində (/kazan-ai).',
         `- Sektor Nəbzi: ${feedCount} RSS lenti (HoReCa/turizm ticarət mətbuatı və Azərbaycan xəbər agentlikləri) hər 6 saatdan bir yoxlanılır; xəbərlər redaktorun Telegram-da təsdiqindən sonra /haberler səhifəsində və Telegram kanalında (${TELEGRAM_URL}) dərc olunur.`,
-        '- Digər: Şədd Rozeti (keyfiyyət/audit nişanı), HoReCa elanları, franchise (françayzinq) məsləhəti, ekspert bloqu.',
+        '- Digər: Şədd Rozeti (keyfiyyət/audit nişanı), HoReCa elanları, françayz (françayzinq) məsləhəti, ekspert bloqu.',
         '- Xidmət ərazisi: Azərbaycan (əsas), Türkiyə.',
         `- Əlaqə: info@dkagency.com.tr · WhatsApp ${whatsappDisplay} · Telegram kanalı ${TELEGRAM_URL} · ${SITE_URL}/elaqe — iş saatları bazar ertəsi–cümə, 09:00–18:00 (UTC+4).`,
       ].join('\n'),

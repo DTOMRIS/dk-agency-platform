@@ -12,6 +12,7 @@ import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import home from '@/components/home/v2/homeV2.module.css';
 import { inter } from '@/components/home/v2/font';
+import { useInToolTabs } from '@/components/marketinq-ocagi/ToolTabs';
 import { Crumbs } from '@/components/inner/InnerParts';
 import s from '@/components/inner/inner.module.css';
 import { getToolConfig, type MarketingToolTier } from '@/lib/marketing-tools-config';
@@ -44,13 +45,15 @@ export function ToolHeader({
   actions?: ReactNode;
 }) {
   const t = useTranslations('marketinq.v2');
+  const inTabs = useInToolTabs();
   const tool = getToolConfig(slug);
   const category = tool ? t(`categories.${tool.category}`) : null;
   const trail = [t('crumb'), category, typeof title === 'string' ? title : null].filter(Boolean).join(' / ');
 
   return (
     <div data-testid="tool-header">
-      <Crumbs backHref={backHref} backLabel={t('allTools')} trail={trail} />
+      {/* TASK-0535: inside a tabbed page the back link is above the tabs (ToolTabs). */}
+      {inTabs ? null : <Crumbs backHref={backHref} backLabel={t('allTools')} trail={trail} />}
       <div className={s.tpHead}>
         <div style={{ minWidth: 0 }}>
           <div className={s.tpHeadMeta}>

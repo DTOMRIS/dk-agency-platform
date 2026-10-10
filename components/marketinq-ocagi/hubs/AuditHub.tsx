@@ -13,6 +13,7 @@ export default function AuditHub({ initialTab = 'guest', backHref = '/b2b-panel/
   const t = useTranslations('marketinq.hubs.audit');
   return (
     <ToolTabs
+      backHref={backHref}
       label={t('label')}
       initialTab={initialTab}
       tabs={[

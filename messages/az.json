@@ -2,12 +2,12 @@
   "franchiseRadar": {
     "meta": {
       "title": "Franchise Radar — Azərbaycana gəlməmiş markalar | DK Agency",
-      "description": "Azərbaycanda hələ olmayan qlobal franchise markaları: investisiya aralığı, mənşə və giriş modeli. Maraqlandığınız markanı seçin."
+      "description": "Azərbaycanda hələ olmayan qlobal françayz markaları: investisiya aralığı, mənşə və giriş modeli. Maraqlandığınız markanı seçin."
     },
     "hero": {
       "badge": "Franchise Radar",
       "title": "Azərbaycana hələ gəlməmiş markalar",
-      "subtitle": "Qlobal franchise markalarının kataloqu — investisiya aralığı, mənşə və giriş modeli ilə. Maraqlandığınız markanı seçin, DK komandası əlaqə saxlasın."
+      "subtitle": "Qlobal françayz markalarının kataloqu — investisiya aralığı, mənşə və giriş modeli ilə. Maraqlandığınız markanı seçin, DK komandası əlaqə saxlasın."
     },
     "filters": {
       "all": "Hamısı"
@@ -17,7 +17,7 @@
       "notDisclosed": "Açıqlanmayıb",
       "interested": "Maraqlanıram"
     },
-    "disclaimer": "DK Agency bu markaların rəsmi nümayəndəsi deyil. Məlumatlar açıq mənbələrdən toplanıb və dəyişə bilər. İnvestisiya qərarı vermədən əvvəl rəsmi franchise sənədlərini (FDD) yoxlayın.",
+    "disclaimer": "DK Agency bu markaların rəsmi nümayəndəsi deyil. Məlumatlar açıq mənbələrdən toplanıb və dəyişə bilər. İnvestisiya qərarı vermədən əvvəl rəsmi françayz sənədlərini (FDD) yoxlayın.",
     "lead": {
       "title": "Maraqlanıram",
       "subtitle": "Müraciət — marka:",
@@ -42,7 +42,7 @@
       "convenience": "Convenience Store"
     },
     "entryModel": {
-      "unit_franchise": "Unit Franchise",
+      "unit_franchise": "Unit Françayz",
       "master_license": "Master Lisenziya",
       "country_license": "Ölkə Lisenziyası"
     },
@@ -85,9 +85,9 @@
     },
     "categoryLabels": {
       "devir": "İşletmə Devri",
-      "franchise-vermek": "Franchise Vermək",
-      "franchise-almak": "Franchise Almaq",
-      "franchise-almaq": "Franchise Almaq",
+      "franchise-vermek": "Françayz Vermək",
+      "franchise-almak": "Françayz Almaq",
+      "franchise-almaq": "Françayz Almaq",
       "ortak-tapmaq": "Ortaq Tapmaq",
       "yeni-investisiya": "Yeni İnvestisiya",
       "obyekt-icaresi": "Obyekt İcarəsi",
@@ -95,7 +95,7 @@
     },
     "offerItems": [
       "Kafe Devri üçün yeni təklif",
-      "Franchise sualı",
+      "Françayz sualı",
       "Elanınız seçilənlərə əlavə edildi"
     ],
     "offerTimes": [
@@ -130,7 +130,7 @@
   },
   "hero": {
     "title": "Azərbaycanın İlk AI-Dəstəkli HoReCa Platforması",
-    "subtitle": "Pulsuz toolkit, ekspert blog, restoran devri və franchise"
+    "subtitle": "Pulsuz toolkit, ekspert blog, restoran devri və françayz"
   },
   "footer": {
     "slogan": "Ustalığın nişanı, dijitalın şəddi. Azərbaycanın ilk AI-dəstəkli HoReCa platforması.",
@@ -1876,7 +1876,9 @@
       "mobileOpenMenu": "Menyunu aç",
       "mobileCloseMenu": "Menyunu bağla",
       "freePlan": "Pulsuz",
-      "excelTemplates": "Excel şablonları"
+      "excelTemplates": "Excel şablonları",
+      "memberPlan": "Üzv",
+      "adminPlan": "Admin"
     },
     "topBar": {
       "notifications": "Bildirişlər",
@@ -2068,7 +2070,7 @@
     "hoursLabel": "İş saatları",
     "hours": "Bazar ertəsi - Cümə, 09:00 - 18:00 (UTC+4)",
     "b2bTitle": "B2B əməkdaşlıq",
-    "b2bText": "Restoran şəbəkələri, franchise markaları və təchizatçılar üçün ayrıca əməkdaşlıq. Kanalı seçin, sizinlə əlaqə saxlayaq.",
+    "b2bText": "Restoran şəbəkələri, françayz markaları və təchizatçılar üçün ayrıca əməkdaşlıq. Kanalı seçin, sizinlə əlaqə saxlayaq.",
     "trackingError": "Klik qeyd olunmadı, amma kanal açılır."
   },
   "common": {
@@ -2300,8 +2302,8 @@
       "pnlResult_next": "Növbəti Alət"
     },
     "customerPersona": {
-      "title": "Müştəri Persona Yaradıcısı",
-      "subtitle": "Azərbaycan/Türkiyə kontekstinə uyğun müştəri profili yaradın",
+      "title": "Müştəri portreti",
+      "subtitle": "Restoranınızın əsas qonaqlarını tanıyın: kim gəlir, nə istəyir, nəyə görə sizi seçir.",
       "step1_title": "Restoran profili",
       "step2_title": "Müştəri müşahidələri",
       "restaurant_type": "Restoran növü",
@@ -2321,9 +2323,9 @@
       "arrival_method": "Necə gəlirlər?",
       "notes": "Xüsusi qeyd",
       "notes_placeholder": "Müştəriləriniz haqqında əlavə nə bilirsiniz?",
-      "generate_btn": "Persona Yarat",
-      "generating": "Persona yaradılır...",
-      "new_persona_btn": "Yeni Persona Yarat",
+      "generate_btn": "Portret yarat",
+      "generating": "Portret hazırlanır...",
+      "new_persona_btn": "Yeni portret",
       "demographics_label": "Demografiya",
       "psychographics_label": "Psixoqrafiya",
       "behavior_label": "Davranış",
@@ -2343,14 +2345,14 @@
       "menu_rec": "Menyu tövsiyəsi",
       "dos": "Etməli",
       "donts": "Etməməli",
-      "history_title": "Son personalar",
+      "history_title": "Son portretlər",
       "back_to_tools": "Bütün alətlər",
       "copy_result": "Nəticəni kopyala",
       "copied": "Kopyalandı",
       "export_pdf": "PDF kimi yüklə",
       "validation_error": "Xidmət modeli və yaş aralığı seçilməlidir.",
-      "tier_required_title": "Bu tool USTA üzvlüyü tələb edir",
-      "tier_required_body": "Müştəri Persona Yaradıcısı AI ilə detallı profil yaratdığı üçün USTA pilləsinə daxildir.",
+      "tier_required_title": "Bu alət USTA üzvlüyü tələb edir",
+      "tier_required_body": "Müştəri portreti AI ilə ətraflı profil hazırladığı üçün USTA pilləsinə daxildir.",
       "upgrade_cta": "USTA üzvlüyünə keç",
       "restaurant_types": {
         "milli_metbex": "Milli Mətbəx",
@@ -2411,7 +2413,7 @@
         "rate-limited": "10 dəqiqədə 5 persona limiti doldu. Bir az sonra yenidən cəhd edin.",
         "validation": "Zəhmət olmasa bütün sahələri doldurun.",
         "missing-key": "AI açarı serverdə qurulmayıb.",
-        "ai-failed": "Persona yaradıla bilmədi — yenidən cəhd edin.",
+        "ai-failed": "Portret hazırlana bilmədi — yenidən cəhd edin.",
         "json-parse": "AI cavabı düzgün formatda deyil — yenidən cəhd edin."
       }
     },
@@ -3043,7 +3045,7 @@
       "back_to_tools": "Bütün alətlər",
       "tier": "KALFA",
       "title": "Lokasyon Analiz",
-      "subtitle": "Yeni və mövcud restoran nöqtəsini franchise lokasyon meyarları, başabaş satışı və risk kartları ilə qiymətləndirin.",
+      "subtitle": "Yeni və mövcud restoran nöqtəsini françayz lokasyon meyarları, başabaş satışı və risk kartları ilə qiymətləndirin.",
       "lockedTitle": "Lokasyon Analiz KALFA üzvləri üçündür",
       "lockedBody": "Bu alət lokasyon skoru, başabaş satış həddi və AI/fallback tövsiyə verir. İstifadə üçün KALFA planı lazımdır.",
       "upgradeCta": "Üzvlüyə keç",
@@ -3203,7 +3205,7 @@
         "parkingCheck": "Müştəri yolunu sadələşdirin: park, giriş və sifariş istiqamətini Google Business və Instagram highlight-da ayrıca göstərin.",
         "rentGate": "Kirayəni emosional deyil, başabaş satış hədəfi ilə qiymətləndirin; hədəf real deyilsə danışıqsız imza atmayın."
       },
-      "aiUnavailableNote": "AI tövsiyə hazırda əlçatmazdır; statik franchise tövsiyəsi göstərilir.",
+      "aiUnavailableNote": "AI tövsiyə hazırda əlçatmazdır; statik françayz tövsiyəsi göstərilir.",
       "estimateDisclaimer": "Bu təxminidir; real rəqəmlər açılışdan sonra görünür. Bənzər restoranlarla müqayisə edin.",
       "cta": "Lokasiyanı analiz et",
       "loading": "Tövsiyə hazırlanır...",
@@ -3435,7 +3437,7 @@
       "pl-simulyatoru": "P&L Simulator",
       "sikayet-analitigi": "Şikayət Analitigi",
       "sikayet-cavablandirici": "Şikayət Cavablandırıcı",
-      "musteri-persona": "Müştəri Persona",
+      "musteri-persona": "Müştəri portreti",
       "sosial-metrik": "Sosial Metrik",
       "restoran-audit": "Restoran Audit",
       "trend-analiz": "Trend Analiz",
@@ -3555,7 +3557,7 @@
     "businessType": {
       "restoran": "Restoran",
       "kafe": "Kafe",
-      "franchise": "Franchise",
+      "franchise": "Françayz",
       "diger": "Digər"
     },
     "toolAction": {
@@ -3616,7 +3618,7 @@
       "auditLog": "Audit Log",
       "ads": "Reklamlar",
       "settings": "Parametrlər",
-      "franchiseLeads": "Franchise Leadləri",
+      "franchiseLeads": "Françayz Leadləri",
       "invoiceCategories": "Faktura Kateqoriyaları",
       "aqtaChecklist": "AQTA Checklist",
       "profileApprovals": "Profil Təsdiqi"
@@ -3675,7 +3677,7 @@
       "all": "Hamısı",
       "restoran": "Restoran",
       "kafe": "Kafe",
-      "franchise": "Franchise",
+      "franchise": "Françayz",
       "diger": "Digər"
     },
     "lead": "Lead",
@@ -4566,7 +4568,7 @@
   "devir": {
     "badge": "HoReCa Marketplace",
     "title": "HoReCa Elanları",
-    "subtitle": "HoReCa elanları bir yerdə: restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq.",
+    "subtitle": "HoReCa elanları bir yerdə: restoran devri, françayz, ortaq axtarışı, obyekt icarəsi və peşəkar avadanlıq.",
     "imageAlt": "HoReCa investor təqdimatı",
     "ctaPost": "Elan ver",
     "ctaMyListings": "Elanlarıma bax",
@@ -4695,11 +4697,11 @@
         "description": "Hazır restoran, kafe və ya filial nöqtələrinin devri üçün vitrin."
       },
       "franchise-vermek": {
-        "label": "Franchise Vermək",
-        "description": "Markasını böyütmək istəyən brendlər üçün franchise vitrini."
+        "label": "Françayz Vermək",
+        "description": "Markasını böyütmək istəyən brendlər üçün françayz vitrini."
       },
       "franchise-almaq": {
-        "label": "Franchise Almaq",
+        "label": "Françayz Almaq",
         "description": "Hazır brendlə bazara girmək istəyən investor və operatorlar üçün."
       },
       "ortak-tapmaq": {
@@ -4735,7 +4737,7 @@
       "propertyType": "Mülkiyyət tipi",
       "equipment": "Avadanlıq siyahısı",
       "brandName": "Brend adı",
-      "franchiseFee": "Franchise haqqı",
+      "franchiseFee": "Françayz haqqı",
       "royaltyPercent": "Royalty",
       "totalInvestment": "Ümumi investisiya",
       "supportPackage": "Dəstək paketi",
@@ -4871,7 +4873,7 @@
   "franchise": {
     "franchbook": {
       "badge": "AI Françbuk · USTA · BETA",
-      "title": "AI ilə franchise əl kitabı skeleti yaradın",
+      "title": "AI ilə françayz əl kitabı skeleti yaradın",
       "subtitle": "6 mərhələ · sabit AFA Akademiya outline · redaktə edilə bilən sənəd",
       "letter": "Bu alət əməliyyat bilginizi françbuk skeletinə çevirir. AI bölmə icad etmir; yalnız sabit strukturu sizin cavablarınızla doldurur.",
       "letterSign": "— DK Agency",
@@ -4891,7 +4893,7 @@
       },
       "banner": {
         "title": "Bu SKELETDİR.",
-        "body": "Yayımdan və franchise alanlara verilmədən əvvəl insan nəzərdən keçirməsi tələb olunur."
+        "body": "Yayımdan və françayz alanlara verilmədən əvvəl insan nəzərdən keçirməsi tələb olunur."
       },
       "steps": {
         "brand": {
@@ -4988,9 +4990,9 @@
     }
   },
   "franchiseRoi": {
-    "badge": "Franchise ROI Kalkulyatoru",
-    "title": "Bu franchise investisiyaya dəyərmi?",
-    "subtitle": "Rəqəmləri dəyişdikcə nəticə canlı yenilənir. Sağlam franchise üçün hədəf: geri-qaytarma ≤ 36 ay (bu, illik ROI ≈ %33 deməkdir).",
+    "badge": "Françayz ROI Kalkulyatoru",
+    "title": "Bu françayz investisiyaya dəyərmi?",
+    "subtitle": "Rəqəmləri dəyişdikcə nəticə canlı yenilənir. Sağlam françayz üçün hədəf: geri-qaytarma ≤ 36 ay (bu, illik ROI ≈ %33 deməkdir).",
     "roiLabel": "illik investisiya gəlirliliyi (ROI)",
     "months": "ay",
     "noProfit": "mənfəət yoxdur",
@@ -5020,7 +5022,7 @@
         "hint": "dövriyyə üzərindən"
       },
       "entryFee": {
-        "label": "Franchise giriş haqqı",
+        "label": "Françayz giriş haqqı",
         "hint": "birdəfəlik, müqavilə imzalananda ödənilir"
       },
       "setupCost": {
@@ -5046,7 +5048,7 @@
       "negative": "Bu ssenaridə xalis mənfəət yoxdur — model yenidən qurulmalıdır."
     },
     "explain": {
-      "toggle": "Anlamaq vacibdir: ödəniş növləri və franchise modelləri",
+      "toggle": "Anlamaq vacibdir: ödəniş növləri və françayz modelləri",
       "paymentTypesTitle": "Ödəniş növləri",
       "entryFeeTitle": "İlk giriş haqqı (birdəfəlik):",
       "entryFeeDesc": "Sistemə girişdir. Müqavilə imzalananda BİR DƏFƏ ödənilir — brendin adını, sistemini və təlimini \"açır\". Aylıq royalti ilə qarışdırılmamalıdır.",
@@ -5054,29 +5056,29 @@
       "royaltyDesc": "Brendi və dəstəyi davamlı istifadə haqqı. Adətən aylıq dövriyyənin faizidir.",
       "adFundTitle": "Reklam fondu (aylıq, davamlı):",
       "adFundDesc": "Mərkəzi marketinq üçün ortaq fond, dövriyyənin faizi.",
-      "franchiseTypesTitle": "Franchise növü — \"ölkə mənimdir\" yanılması",
-      "singleUnit": "Tək nöqtə franchise:",
+      "franchiseTypesTitle": "Françayz növü — \"ölkə mənimdir\" yanılması",
+      "singleUnit": "Tək nöqtə françayz:",
       "singleUnitDesc": "Yalnız BİR məkanda, BİR işlətmə hüququ. Ən yayğın model. Sənə bölgə və ya ölkə VERMİR.",
-      "area": "Bölgə (area) franchise:",
+      "area": "Bölgə (area) françayz:",
       "areaDesc": "Müəyyən ərazidə (şəhər/rayon) bir neçə şöbə açmaq hüququ.",
-      "master": "Master franchise:",
-      "masterDesc": "Bütöv bir ÖLKƏ və ya böyük region hüququ; başqalarına alt-franchise verə bilirsən. Ən bahalı, ən çox öhdəlikli.",
-      "sub": "Alt (sub) franchise:",
+      "master": "Master françayz:",
+      "masterDesc": "Bütöv bir ÖLKƏ və ya böyük region hüququ; başqalarına alt-françayz verə bilirsən. Ən bahalı, ən çox öhdəlikli.",
+      "sub": "Alt (sub) françayz:",
       "subDesc": "Master və ya bölgə alanın verdiyi hüquq — ana brenddən deyil.",
-      "warning": "Diqqət: \"Franchise aldım, deməli ölkə mənimdir\" DOĞRU DEYİL. Standart tək nöqtə franchise yalnız bir məkan verir. Ölkə hüququ = master franchise = ayrı və qat-qat yüksək haqq + öhdəlik.",
+      "warning": "Diqqət: \"Françayz aldım, deməli ölkə mənimdir\" DOĞRU DEYİL. Standart tək nöqtə françayz yalnız bir məkan verir. Ölkə hüququ = master françayz = ayrı və qat-qat yüksək haqq + öhdəlik.",
       "tip": "Giriş haqqı növə görə dəyişir: tək nöqtə < bölgə < master."
     },
     "live": "Canlı hesab",
     "cta": {
       "title": "Bu rəqəmlərə birlikdə baxaq",
-      "body": "Franchise təklifini və hesabı göndərin — müqavilədən əvvəl risklərə birlikdə baxırıq.",
+      "body": "Françayz təklifini və hesabı göndərin — müqavilədən əvvəl risklərə birlikdə baxırıq.",
       "button": "WhatsApp-da göndər",
-      "wa": "Salam Doğan bəy, franchise ROI hesabladım: ROI {roi}%, geri-qaytarma {payback}, investisiya {investment}. Birlikdə baxa bilərikmi?"
+      "wa": "Salam Doğan bəy, françayz ROI hesabladım: ROI {roi}%, geri-qaytarma {payback}, investisiya {investment}. Birlikdə baxa bilərikmi?"
     }
   },
   "franchiseReadiness": {
-    "badge": "Franchise Hazırlıq Testi",
-    "title": "Markanız franchise verməyə hazırdırmı?",
+    "badge": "Françayz Hazırlıq Testi",
+    "title": "Markanız françayz verməyə hazırdırmı?",
     "subtitle": "12 sual · təxminən 4 dəqiqə · sonunda şəxsi hazırlıq hesabatı",
     "letter": "Hörmətli sahibkar, uğurlu françayzinq markanızın dəyərini artırır və müəssisənizin dayanıqlı böyüməsini təmin edir. İllərlə qurduğunuz brend bizim üçün əmanətdir. Bu test markanızın güclü və inkişaf etdiriləcək tərəflərini birlikdə görmək üçün ilk addımdır.",
     "letterSign": "— Doğan Tomris, DK Agency",
@@ -5087,7 +5089,7 @@
     "seeResult": "Nəticəni gör →",
     "resultBadge": "Nəticə",
     "weakestLabel": "Ən zəif sahəniz",
-    "weakestBody": "Bu sahə franchise uğuru üçün kritikdir. DK Agency komandası ilk olaraq burada sizə dəstək verə bilər.",
+    "weakestBody": "Bu sahə françayz uğuru üçün kritikdir. DK Agency komandası ilk olaraq burada sizə dəstək verə bilər.",
     "franchbookCta": "Sənədləşmə zəifdirsə: AI ilə Françbuk skeleti qur",
     "aiLoading": "AI hesabatınız hazırlanır...",
     "aiReportTitle": "Şəxsi Hesabat",
@@ -5100,14 +5102,14 @@
       },
       "developing": {
         "title": "İnkişaf mərhələsi",
-        "sub": "Potensial var, amma bəzi sahələr franchise öncəsi möhkəmləndirilməlidir."
+        "sub": "Potensial var, amma bəzi sahələr françayz öncəsi möhkəmləndirilməlidir."
       },
       "almost": {
         "title": "Hazırlığa yaxın",
-        "sub": "Markanız güclüdür. Bir neçə addımla franchise verməyə hazır olacaq."
+        "sub": "Markanız güclüdür. Bir neçə addımla françayz verməyə hazır olacaq."
       },
       "ready": {
-        "title": "Franchise verməyə hazır",
+        "title": "Françayz verməyə hazır",
         "sub": "Markanız güclü françayzinq namizədidir. Sistemləşməyə keçə bilərik."
       }
     },
@@ -5134,7 +5136,7 @@
       },
       "2": {
         "cat": "Öyrədilə bilmə",
-        "q": "İşinizi yeni bir franchise alana nə qədər müddətə tam öyrədə bilərsiniz?",
+        "q": "İşinizi yeni bir françayz alana nə qədər müddətə tam öyrədə bilərsiniz?",
         "options": {
           "0": "Çox mürəkkəbdir, illər lazımdır",
           "1": "6 aydan çox",
@@ -5174,7 +5176,7 @@
       },
       "6": {
         "cat": "Münasib investisiya",
-        "q": "Bir franchise üçün ilkin investisiya hədəf sahibkar üçün nə qədər münasibdir?",
+        "q": "Bir françayz üçün ilkin investisiya hədəf sahibkar üçün nə qədər münasibdir?",
         "options": {
           "0": "Çox yüksək, az adam ödəyə bilər",
           "1": "Yüksək",
@@ -5184,7 +5186,7 @@
       },
       "7": {
         "cat": "Geri-qaytarma (ROI)",
-        "q": "Franchise alan investisiyasını nə qədər müddətə və hansı gəliriliklə qaytarır?",
+        "q": "Françayz alan investisiyasını nə qədər müddətə və hansı gəliriliklə qaytarır?",
         "options": {
           "0": "Bilmirik / hesablanmayıb",
           "1": "4 ildən çox",
@@ -5204,7 +5206,7 @@
       },
       "9": {
         "cat": "Kapital",
-        "q": "Franchise sistemini qurmaq üçün (hüquq, əl kitabı, dəstək komandası) kapitalınız varmı?",
+        "q": "Françayz sistemini qurmaq üçün (hüquq, əl kitabı, dəstək komandası) kapitalınız varmı?",
         "options": {
           "0": "Yoxdur",
           "1": "Məhduddur",
@@ -5214,7 +5216,7 @@
       },
       "10": {
         "cat": "Əlaqə idarəetməsi",
-        "q": "Franchise alanlarla uzunmüddətli əlaqə və performans izləmə modeliniz varmı?",
+        "q": "Françayz alanlarla uzunmüddətli əlaqə və performans izləmə modeliniz varmı?",
         "options": {
           "0": "Planlaşdırılmayıb",
           "1": "Ümumi fikir var",
@@ -5224,7 +5226,7 @@
       },
       "11": {
         "cat": "İdarəetmə gücü",
-        "q": "Franchise əməliyyatını idarə edəcək komanda təcrübəniz nə səviyyədədir?",
+        "q": "Françayz əməliyyatını idarə edəcək komanda təcrübəniz nə səviyyədədir?",
         "options": {
           "0": "Təcrübə azdır",
           "1": "Tək özüm idarə edirəm",
@@ -5246,10 +5248,10 @@
     "error": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
   },
   "franchiseBuyer": {
-    "badge": "Franchise Alıcı Çek-listi",
-    "title": "Bu franchise almağa dəyərmi?",
+    "badge": "Françayz Alıcı Çek-listi",
+    "title": "Bu françayz almağa dəyərmi?",
     "subtitle": "9 sahə · təxminən 3 dəqiqə · sonunda hazırlıq hesabatı",
-    "letter": "Franchise almaq böyük qərardır. Bu çek-list investisiyanızı qorumaq üçün franchisor-u düzgün qiymətləndirməyinizə kömək edir. Hər sahəni diqqətlə oxuyun və ən doğru cavabı seçin.",
+    "letter": "Françayz almaq böyük qərardır. Bu çek-list investisiyanızı qorumaq üçün franchisor-u düzgün qiymətləndirməyinizə kömək edir. Hər sahəni diqqətlə oxuyun və ən doğru cavabı seçin.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Çek-listə başla →",
     "stepLabel": "Sahə {current} / {total}",
@@ -5266,7 +5268,7 @@
     "verdict": {
       "risky": {
         "title": "Yüksək risk",
-        "sub": "Bu franchise-da ciddi suallar var. İnvestisiya etmədən əvvəl hər sahəni dərindən araşdırın."
+        "sub": "Bu françayzda ciddi suallar var. İnvestisiya etmədən əvvəl hər sahəni dərindən araşdırın."
       },
       "cautious": {
         "title": "Ehtiyatlı yanaşın",
@@ -5274,11 +5276,11 @@
       },
       "promising": {
         "title": "Perspektivli",
-        "sub": "Franchise əksər meyarlara uyğundur. Son qərar üçün bir neçə sahəni dəqiqləşdirin."
+        "sub": "Françayz əksər meyarlara uyğundur. Son qərar üçün bir neçə sahəni dəqiqləşdirin."
       },
       "strong": {
         "title": "Güclü namizəd",
-        "sub": "Bu franchise əsas meyarlara cavab verir. Hüquqi və maliyyə yoxlamasına keçə bilərsiniz."
+        "sub": "Bu françayz əsas meyarlara cavab verir. Hüquqi və maliyyə yoxlamasına keçə bilərsiniz."
       }
     },
     "questions": {
@@ -5302,9 +5304,9 @@
       },
       "2": {
         "cat": "Rəqabət",
-        "q": "Rəqibləriniz kimdir, sayı artırmı? Franchise sizə rəqabət üstünlüyü verirmi?",
+        "q": "Rəqibləriniz kimdir, sayı artırmı? Françayz sizə rəqabət üstünlüyü verirmi?",
         "options": {
-          "0": "Xeyr, rəqabət çox güclüdür, franchise üstünlük vermir",
+          "0": "Xeyr, rəqabət çox güclüdür, françayz üstünlük vermir",
           "1": "Qismən — üstünlük var amma rəqabət sıxdır",
           "2": "Bəli — aydın rəqabət üstünlüyü var"
         }
@@ -5368,7 +5370,7 @@
   "hotelReadiness": {
     "badge": "Otel hazırlıq testi",
     "title": "Oteliniz ulduz sertifikatına hazırdırmı?",
-    "subtitle": "12 sual · təxminən 4 dəqiqə · sonda Azərbaycan Hotel Assosiasiyasının (AHA) ulduz tələblərinə əsaslanan hesabat",
+    "subtitle": "12 sual · təxminən 4 dəqiqə · sonda milli ulduz təsnifatı meyarlarına (Hotelstars Union əsasında) əsaslanan hesabat",
     "letter": "Hörmətli otel, mehmanxana və pansiyon sahibi — ulduz almaq üçün tələblərin hamısı sistemli şəkildə ödənməlidir. Bu test otelinizin hansı sahələrdə hazır olduğunu, hansılarda işləmək lazım olduğunu göstərir.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Testə başla →",
@@ -5382,7 +5384,7 @@
     "aiLoading": "Süni intellekt hesabatınızı hazırlayır...",
     "aiReportTitle": "Sizin üçün hesabat",
     "shareDownload": "Nəticəni şəkil kimi yüklə (PNG)",
-    "disclaimer": "Bu test özünüzü ilkin yoxlamaq üçündür. Tam qiymətləndirmə və AHA-ya müraciət üçün peşəkar yoxlama lazımdır. © DK Agency",
+    "disclaimer": "Bu test özünüzü ilkin yoxlamaq üçündür. Ulduz təsnifatına müraciət üçün rəsmi qiymətləndirmə lazımdır. © DK Agency",
     "verdict": {
       "pansion": {
         "title": "Pansiyon səviyyəsi",
@@ -5390,7 +5392,7 @@
       },
       "tier12": {
         "title": "1–2 ulduz şansı",
-        "sub": "Əsas bina və avadanlıq var. Bir neçə sahəni gücləndirsəniz, AHA-ya müraciət edə bilərsiniz."
+        "sub": "Əsas bina və avadanlıq var. Bir neçə sahəni gücləndirsəniz, ulduz təsnifatına müraciət edə bilərsiniz."
       },
       "tier3": {
         "title": "3 ulduz əlçatandır",
@@ -5402,7 +5404,7 @@
       },
       "tier5": {
         "title": "5 ulduz şansı",
-        "sub": "Standartlarınız yüksəkdir. 5 ulduz üçün güclü namizədsiniz — AHA-ya müraciətə keçmək olar."
+        "sub": "Standartlarınız yüksəkdir. 5 ulduz üçün güclü namizədsiniz — ulduz təsnifatına müraciətə keçmək olar."
       }
     },
     "questions": {
@@ -5498,7 +5500,7 @@
       },
       "9": {
         "cat": "Sənədlər",
-        "q": "AHA-ya müraciət üçün sənədlər (vergi, gigiyena, yanğın təhlükəsizliyi) hazırdırmı?",
+        "q": "Ulduz təsnifatına müraciət üçün sənədlər (vergi, gigiyena, yanğın təhlükəsizliyi) hazırdırmı?",
         "options": {
           "0": "Heç bir sənəd hazır deyil",
           "1": "Vergi sənədi var, qalanları yarımçıqdır",
@@ -5518,7 +5520,7 @@
       },
       "11": {
         "cat": "Müraciətə hazırlıq",
-        "q": "AHA-ya müraciət üçün pul və vaxt baxımından hazırsınızmı?",
+        "q": "Ulduz təsnifatına müraciət üçün pul və vaxt baxımından hazırsınızmı?",
         "options": {
           "0": "Rüsum və sənəd hazırlığı üçün pul ayrılmayıb",
           "1": "Rüsum üçün pul var, sənəd hazırlığı başlamayıb",
@@ -5965,12 +5967,12 @@
     }
   },
   "sektorOtel": {
-    "pageTitle": "Otel Sektoru — AHA Hazırlıq, OTA və ROI Alətləri | DK Agency",
+    "pageTitle": "Otel sektoru — ulduz təsnifatına hazırlıq, OTA və ROI alətləri | DK Agency",
     "hero": {
-      "headline": "Otelinizi AHA Ulduz Standartına Hazırlayın",
-      "subline": "Otel sahibləri üçün pulsuz alətlər — AHA sertifikatından OTA kanallarına və gəlir hesabına qədər, DK Agency dəstəyi ilə.",
+      "headline": "Otelinizi ulduz təsnifatına hazırlayın",
+      "subline": "Otel sahibləri üçün pulsuz alətlər — ulduz təsnifatına hazırlıqdan OTA kanallarına və gəlir hesabına qədər, DK Agency dəstəyi ilə.",
       "statBadge": "2024-də +42% otel gəliri, 859 aktiv otel",
-      "primaryCtaText": "AHA Hazırlıq Testinə başla",
+      "primaryCtaText": "Ulduz hazırlıq testinə başla",
       "secondaryCtaText": "Pulsuz bələdçi al"
     },
     "stats": {
@@ -5987,7 +5989,7 @@
     "tools": {
       "sectionTitle": "Bu sektor üçün 3 alət",
       "tool1Title": "Otel Hazırlıq Testi",
-      "tool1Desc": "AHA ulduz standartına uyğunluq — 3 dəqiqəlik AI qiymətləndirmə",
+      "tool1Desc": "Milli ulduz meyarlarına uyğunluq — 4 dəqiqəlik özünüyoxlama",
       "tool1Cta": "Testə başla →",
       "tool2Title": "Otel ROI Kalkulyatoru",
       "tool2Desc": "Booking + Expedia komissiyası, otaq gəliri və geri qaytarma müddəti",
@@ -6000,14 +6002,14 @@
       "sectionTitle": "Bu sektordan oxumalı"
     },
     "leadCapture": {
-      "heading": "Pulsuz Otel AHA Hazırlıq Bələdçisi",
-      "body": "AHA ulduz sertifikatına və OTA kanallarına hazırlığın addım-addım bələdçisi — pulsuz.",
+      "heading": "Pulsuz otel ulduz hazırlıq bələdçisi",
+      "body": "Ulduz təsnifatına və OTA kanallarına hazırlığın addım-addım bələdçisi — pulsuz.",
       "buttonText": "Pulsuz Bələdçini Al"
     },
     "faq": {
       "sectionTitle": "Tez-tez verilən suallar",
-      "q1": "AHA ulduz sertifikatı necə alınır?",
-      "a1": "AHA (Azərbaycan Otel Assosiasiyası) standartlarına uyğunluq qiymətləndirilir: infrastruktur, xidmət və təhlükəsizlik. Otel Hazırlıq Testi sizi bu qiymətləndirməyə hazırlayır.",
+      "q1": "Otel ulduzu necə alınır?",
+      "a1": "Ulduz təsnifatı dövlətin təsdiqlədiyi milli meyarlarla aparılır: meyarları Dövlət Turizm Agentliyi müəyyən edir, sistem Avropanın Hotelstars Union meyarlarına əsaslanır (AZS 906-2022), sertifikat 3 il etibarlıdır. Otel Hazırlıq Testi sizi bu rəsmi qiymətləndirməyə hazırlayır.",
       "q2": "Booking komissiyası otel üçün nə qədərdir?",
       "a2": "Booking.com adətən 15-18% komissiya tutur. Birbaşa rezervasiya və Expedia balansı ilə bu xərci optimallaşdırmaq olar.",
       "q3": "Hansı OTA kanalları otel üçün vacibdir?",
@@ -6018,8 +6020,8 @@
       "a5": "Otel Hazırlıq Testi və ROI Kalkulyatoru pulsuzdur. Tam konsaltinq üçün əlaqə formundan müraciət edin."
     },
     "footerCta": {
-      "heading": "İlk addımı indi at — pulsuz AHA testi ilə başla",
-      "buttonText": "AHA Hazırlıq Testinə başla →"
+      "heading": "İlk addımı indi at — pulsuz ulduz hazırlıq testi ilə başla",
+      "buttonText": "Ulduz hazırlıq testinə başla →"
     }
   },
   "sektorRestoran": {
@@ -6152,32 +6154,32 @@
   },
   "franchisePillar": {
     "meta": {
-      "title": "Azərbaycanda Franchise — Almaq və Vermək | DK Agency",
-      "description": "Azərbaycanda franchise almaq və ya markanızı franchise vermək. Pulsuz alətlər: hazırlıq testi, ROI kalkulyatoru, alıcı çeklisti və Azərbaycana gəlməmiş markaların kataloqu."
+      "title": "Azərbaycanda Françayz — Almaq və Vermək | DK Agency",
+      "description": "Azərbaycanda françayz almaq və ya markanızı françayz vermək. Pulsuz alətlər: hazırlıq testi, ROI kalkulyatoru, alıcı çeklisti və Azərbaycana gəlməmiş markaların kataloqu."
     },
     "hero": {
-      "badge": "Franchise",
-      "title": "Azərbaycanda franchise",
-      "subtitle": "İki yol var: markanızı franchise verirsiniz, ya da hazır bir franchise alırsınız. Hər ikisi üçün pulsuz alət, şəxsi hesabat və addım planı burada."
+      "badge": "Françayz",
+      "title": "Azərbaycanda françayz",
+      "subtitle": "İki yol var: markanızı françayz verirsiniz, ya da hazır bir françayz alırsınız. Hər ikisi üçün pulsuz alət, şəxsi hesabat və addım planı burada."
     },
     "giver": {
       "eyebrow": "Marka sahibi üçün",
-      "title": "Markanızı franchise vermək",
+      "title": "Markanızı françayz vermək",
       "desc": "İllərlə qurduğunuz brendi təkrarlana bilən sistemə çevirmək. Əvvəlcə hazırlığı ölçün, sonra əl kitabının skeletini qurun."
     },
     "taker": {
       "eyebrow": "İnvestor və sahibkar üçün",
-      "title": "Franchise almaq",
+      "title": "Françayz almaq",
       "desc": "Marka seçimindən rəqəmə qədər: hansı markalar mövcuddur, investisiya geri qayıdırmı, müqavilədə nəyə baxmaq lazımdır."
     },
     "tools": {
       "readiness": {
-        "title": "Franchise Hazırlıq Testi",
-        "desc": "Markanız franchise verməyə hazırdırmı? 12 sual, təxminən 4 dəqiqə, sonunda şəxsi hazırlıq hesabatı."
+        "title": "Françayz Hazırlıq Testi",
+        "desc": "Markanız françayz verməyə hazırdırmı? 12 sual, təxminən 4 dəqiqə, sonunda şəxsi hazırlıq hesabatı."
       },
       "franchbook": {
         "title": "AI Françbuk Generatoru",
-        "desc": "AI ilə franchise əl kitabı skeleti: 6 mərhələ, sabit AFA Akademiya outline-ı, redaktə edilə bilən sənəd.",
+        "desc": "AI ilə françayz əl kitabı skeleti: 6 mərhələ, sabit AFA Akademiya outline-ı, redaktə edilə bilən sənəd.",
         "badge": "BETA"
       },
       "radar": {
@@ -6185,11 +6187,11 @@
         "desc": "Azərbaycana hələ gəlməmiş qlobal markalar: investisiya aralığı, mənşə və giriş modeli ilə."
       },
       "roi": {
-        "title": "Franchise ROI Kalkulyatoru",
-        "desc": "Bu franchise investisiyaya dəyərmi? Rəqəmləri dəyişdikcə nəticə canlı yenilənir."
+        "title": "Françayz ROI Kalkulyatoru",
+        "desc": "Bu françayz investisiyaya dəyərmi? Rəqəmləri dəyişdikcə nəticə canlı yenilənir."
       },
       "buyer": {
-        "title": "Franchise Alıcı Çeklisti",
+        "title": "Françayz Alıcı Çeklisti",
         "desc": "9 sahə, təxminən 3 dəqiqə: investisiya və xərclərdən müqavilə şərtlərinə qədər."
       },
       "open": "Alətə keç"
@@ -6200,17 +6202,17 @@
     },
     "faq": {
       "title": "Tez-tez verilən suallar",
-      "q1": "Franchise almaq üçün hansı ödənişlər var?",
+      "q1": "Françayz almaq üçün hansı ödənişlər var?",
       "a1": "Adətən üç əsas bədəl olur: ad haqqı, royalti və reklam bədəli. Çox sahibkar bu rəqəmlərə ayrı-ayrı baxır — halbuki üçü birləşəndə aylıq yükün real ölçüsü görünür. ROI kalkulyatoru ilə hamısını bir yerdə hesablaya bilərsiniz.",
-      "q2": "Markamı franchise vermək üçün nə lazımdır?",
-      "a2": "Ən əvvəl markanız rəsmi qeydiyyatdan keçməlidir. Qeydiyyatdan keçməyən markanı franchise vermək, sahibi olmadığın evi icarəyə vermək kimidir. Sonrakı addım hazırlığı ölçmək və əl kitabını qurmaqdır.",
-      "q3": "Franchise investisiyası nə vaxt sağlam sayılır?",
+      "q2": "Markamı françayz vermək üçün nə lazımdır?",
+      "a2": "Ən əvvəl markanız rəsmi qeydiyyatdan keçməlidir. Qeydiyyatdan keçməyən markanı françayz vermək, sahibi olmadığın evi icarəyə vermək kimidir. Sonrakı addım hazırlığı ölçmək və əl kitabını qurmaqdır.",
+      "q3": "Françayz investisiyası nə vaxt sağlam sayılır?",
       "a3": "Ümumi hədəf: illik ROI ən azı %20, geri-qaytarma müddəti isə 36 aydan çox olmasın. Öz rəqəmlərinizi ROI kalkulyatorunda yoxlaya bilərsiniz.",
       "q4": "Azərbaycanda hansı qlobal markalar hələ yoxdur?",
       "a4": "Franchise Radar kataloqunda Azərbaycana hələ gəlməmiş markalar investisiya aralığı, mənşə və giriş modeli ilə sıralanır. Maraqlandığınız markanı seçirsiniz, DK komandası əlaqə saxlayır."
     },
     "blog": {
-      "title": "Franchise haqqında yazılarımız",
+      "title": "Françayz haqqında yazılarımız",
       "cta": "Bütün yazılar"
     },
     "cta": {
@@ -7169,10 +7171,10 @@
         },
         "otel-hazirlig-testi": {
           "t": "Otel ulduz hazırlıq testi",
-          "d": "12 sualla otelinizin ulduz sertifikatına (AHA tələbləri) nə qədər hazır olduğunu yoxlayın.",
+          "d": "12 sualla otelinizin ulduz təsnifatına nə qədər hazır olduğunu yoxlayın.",
           "r": "Hazırlıq balı və real ulduz hədəfi",
           "kw": "otel mehmanxana ulduz aha sertifikat təsnifat",
-          "what": "Otelinizin hansı ulduz səviyyəsinə hazır olduğunu və AHA-ya müraciətdən əvvəl hansı sahəni gücləndirməli olduğunuzu göstərir.",
+          "what": "Otelinizin hansı ulduz səviyyəsinə hazır olduğunu və ulduz təsnifatına müraciətdən əvvəl hansı sahəni gücləndirməli olduğunuzu göstərir.",
           "how": [
             "12 suala cavab verin: bina, otaqlar, təmizlik, resepsiya, yemək, işçilər, sənədlər və s.",
             "Hər cavab 25–100 bal verir; orta bal ulduz hədəfinə çevrilir (məsələn, 65–74 bal — 3 ulduz hədəfi).",
@@ -7381,9 +7383,9 @@
         "K8": "Hazırlanma vaxtı qəbul edilir",
         "K9": "Yemək konsistent gəlir (eyni dad)",
         "K10": "Yemək paketinin keyfiyyəti (delivery)",
-        "S1": "Personalın dostlucu və xoş münasibəti",
+        "S1": "Personalın mehriban və xoş münasibəti",
         "S2": "Sifariş qəbul sürəti",
-        "S3": "Personalın menyu bilgisi",
+        "S3": "Personalın menyunu bilməsi",
         "S4": "Hesab gətirilmə sürəti",
         "S5": "Şikayətlərə cavab verilməsi",
         "S6": "Personal vahid forma geyinmiş",
@@ -7394,7 +7396,7 @@
         "T1": "Yemək sahəsi təmizdir (stol, döşəmə)",
         "T2": "Tualet daim təmiz",
         "T3": "Mətbəx təmizliyi (görünən hissə)",
-        "T4": "Personalın şəxsi gigieni",
+        "T4": "Personalın şəxsi gigiyenası",
         "T5": "Cihaz və qab təmizliyi",
         "T6": "Zibil idarəsi düzgündür",
         "T7": "Kondisioner/havalandırma işləyir",
@@ -7502,7 +7504,7 @@
       "peakHours": "Pik saatlar",
       "observations": "Əlavə müşahidə",
       "obsPlaceholder": "Müştəriləriniz haqqında bildiyiniz detallar...",
-      "submit": "Personamı Yarat",
+      "submit": "Portreti yarat",
       "submitting": "AI fikirləşir...",
       "concepts": {
         "fast-food": "Fast food",
@@ -7741,8 +7743,8 @@
       "next": "Növbəti Alət"
     },
     "musteriPersonaPage": {
-      "title": "Müştəri Persona",
-      "subtitle": "Hədəf müştəri profilini yaradın",
+      "title": "Müştəri portreti",
+      "subtitle": "Hədəf qonağınızın portretini çıxarın",
       "backToList": "Bütün alətlər",
       "whyTitle": "Niyə bu vacibdir?",
       "why": "Hər kəsə satmaq heç kimə satmaq deməkdir. AI sizin restoran üçün 2 ideal persona + 1 anti-persona yaradır, marketinq mesajını kəskinləşdirir.",
@@ -7796,20 +7798,20 @@
   },
   "dashboardInbox": {
     "title": "Bütün müraciətlər",
-    "subtitle": "Elan sorğuları, WhatsApp/əlaqə klikləri, KAZAN, franchise və bülletən abunələri bir siyahıda. Yalnız oxumaq üçündür; status dəyişmək üçün mənbə səhifəsini açın.",
+    "subtitle": "Elan sorğuları, WhatsApp/əlaqə klikləri, KAZAN, françayz və bülletən abunələri bir siyahıda. Yalnız oxumaq üçündür; status dəyişmək üçün mənbə səhifəsini açın.",
     "all": "Hamısı",
     "sources": {
       "listing": "Elan sorğuları",
       "contact": "WhatsApp / əlaqə klikləri",
       "kazan": "KAZAN leadləri",
-      "franchise": "Franchise / OTA / Radar",
+      "franchise": "Françayz / OTA / Radar",
       "newsletter": "Bülletən abunələri"
     },
     "sourcesShort": {
       "listing": "Elan",
       "contact": "Klik",
       "kazan": "KAZAN",
-      "franchise": "Franchise",
+      "franchise": "Françayz",
       "newsletter": "Bülletən"
     },
     "period": "Dövr",
@@ -7893,7 +7895,7 @@
   },
   "pageBack": {
     "home": "Ana səhifə",
-    "franchise": "Franchise",
+    "franchise": "Françayz",
     "sektor": "Sektorlar",
     "listings": "Elanlar"
   },

@@ -12,7 +12,7 @@ import type { ReactNode } from 'react';
 export const metadata: Metadata = {
   title: 'DK Agency Blog — HoReCa Analiz və Bələdçilər',
   description:
-    'HoReCa sektorunda ekspert analizlər, addım-addım bələdçilər və sektor trendləri. Food cost, franchise, menyu mühəndisliyi və AQTA mövzularında yazılar.',
+    'HoReCa sektorunda ekspert analizlər, addım-addım bələdçilər və sektor trendləri. Food cost, françayz, menyu mühəndisliyi və AQTA mövzularında yazılar.',
 };
 
 export default function BlogLayout({ children }: { children: ReactNode }) {

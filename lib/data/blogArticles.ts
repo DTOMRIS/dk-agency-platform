@@ -3332,7 +3332,7 @@ DK Agency-nin **Devir** platforması işləyən franchise və bizneslərin şəf
     id: 'blog-016',
     slug: 'aha-ulduz-sertifikati-otel-hazirliq',
     title: 'AHA Ulduz Sertifikatı: Otelinizi Milli Ulduz Təsnifatına Necə Hazırlayasınız?',
-    subtitle: 'Azərbaycanda hər mehmanxana 6 ay içində ulduz almağa məcburdur — və hələ də 70%-i bunu bacarmır',
+    subtitle: 'Ulduz təsnifatı nədir, meyarları kim müəyyən edir və otelinizi müraciətə necə hazırlamaq olar',
     category: 'Əməliyyat',
     categoryEmoji: '🔧',
     stage: 'Başla',
@@ -3344,7 +3344,7 @@ DK Agency-nin **Devir** platforması işləyən franchise və bizneslərin şəf
     tags: ['AHA', 'ulduz sertifikatı', 'otel', 'mehmanxana', 'Hotelstars Union', 'turizm', 'audit'],
     metaDescription: 'AHA Milli Ulduz Təsnifatı: 248 meyar, müraciət prosesi, 5 ən bahalı səhv və otelinizi 3 ayda hazırlamağın yolu.',
     focusKeyword: 'AHA ulduz sertifikatı otel',
-    summary: 'Azərbaycanda otel açan hər sahibkar 6 ay içində ulduz almağa məcburdur. 248 meyar, 5 ən bahalı səhv və 3 ayda hazırlıq planı.',
+    summary: 'Milli ulduz təsnifatı: meyarlar, müraciət prosesi, 5 ən bahalı səhv və hazırlıq planı.',
     content: `# AHA Ulduz Sertifikatı: Otelinizi Milli Ulduz Təsnifatına Necə Hazırlayasınız?
 
 *Kateqoriya: 🏨 Hotelçilik | Oxu müddəti: 12-15 dəq*
@@ -3353,7 +3353,7 @@ DK Agency-nin **Devir** platforması işləyən franchise və bizneslərin şəf
 
 Azərbaycanda otel açan hər sahibkar eyni anı yaşayır: açılış lentini kəsir, ilk müştərini qarşılayır, Booking.com-da profilini yaradır. Bir neçə ay sonra fərq edir — Booking-də "ulduzsuz mehmanxana" görünür. Müştəri sayı az qalır. Niyə?
 
-**Çünki Azərbaycanda hər mehmanxana 6 ay içində ulduz almağa məcburdur** — və hələ də 70%-i bunu bacarmır.
+**Ulduz təsnifatı qonağın gözündə otelin səviyyəsini göstərir** — və müraciətə hazırlıq vaxt tələb edir. Cari qaydaları Dövlət Turizm Agentliyindən dəqiqləşdirin.
 
 Bu yazıda Milli Ulduz Təsnifatının nə olduğunu, hansı qurumun verdiyini, 248 meyarın necə işlədiyini, hansı 5 səhvin müraciəti puç etdiyini, və otelinizi 3 ay içində hazırlamağın yolunu göstəririk.
 
@@ -3487,7 +3487,7 @@ Auditor ziyarətində bəzi sahibkarlar **gizlədir, danır, mübahisə edir**. 
 
 ---
 
-> 📝 **DOĞAN NOTU:** "DK Agency-də son 6 ayda 14 otel sahibi ilə hazırlıq işi apardıq — 11-i ulduz aldı, 3-ü dayandırıldı (sənəd çatışmazlığı, sonra düzəldildi). Fərq prosesin sistemləşməsindədir. Sahibkar 'mən özüm bacararam' deyəndə adətən rüsum itər, vaxt itər, marka zədələnir. Bu, çoxlu bilik və sənayə təcrübəsi tələb edən prosesdir — amma sistemləşdirilirsə, 3-4 ayda nəticə var."
+
 
 ---
 

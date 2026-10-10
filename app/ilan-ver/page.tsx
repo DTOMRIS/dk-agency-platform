@@ -7,7 +7,7 @@ import PageBack from '@/components/inner/PageBack';
 
 export const metadata: Metadata = {
   title: 'Elan ver',
-  description: 'HoReCa üçün devir, franchise, obyekt və avadanlıq elanı göndər.',
+  description: 'HoReCa üçün devir, françayz, obyekt və avadanlıq elanı göndər.',
 };
 
 export default async function IlanVerPage() {

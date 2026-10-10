@@ -113,7 +113,7 @@ const COPY: Record<Locale, Copy> = {
     back: 'Elanlara qayıt',
     title: 'WhatsApp-dan elan əlavə et',
     subtitle:
-      'Qruplardakı devir, franchise, icarə və ekipman elanlarını yapışdırın — AI qaralama hazırlayır, siz yoxlayıb təsdiqləyirsiniz.',
+      'Qruplardakı devir, françayz, icarə və ekipman elanlarını yapışdırın — AI qaralama hazırlayır, siz yoxlayıb təsdiqləyirsiniz.',
     textareaLabel: 'WhatsApp mətni',
     placeholder:
       '[06.10.26, 14:05] +994 51 444 55 66: Xırdalanda 60 yerlik kafe devir olunur…\n\nvə ya bir neçə mesajı sadəcə yapışdırın',
@@ -156,7 +156,7 @@ const COPY: Record<Locale, Copy> = {
     aiErrors: 'Bəzi mesajlar AI ilə təhlil olunmadı:',
     types: {
       devir: 'Devir',
-      'franchise-vermek': 'Franchise vermək',
+      'franchise-vermek': 'Françayz vermək',
       'franchise-almaq': 'Franchise almaq',
       'ortak-tapmaq': 'Ortaq tapmaq',
       'yeni-investisiya': 'Yeni investisiya',

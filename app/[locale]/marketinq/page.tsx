@@ -29,7 +29,7 @@ const tools = [
 const TOOL_LABELS: Record<string, { az: string; en: string; ru: string; tr: string }> = {
   'lokasyon-analiz': { az: 'Lokasiya Analizi', en: 'Location Analysis', ru: 'Анализ локации', tr: 'Lokasyon Analizi' },
   'menyu-analitik': { az: 'Menyu Analitikası', en: 'Menu Analytics', ru: 'Аналитика меню', tr: 'Menü Analitiği' },
-  'musteri-persona': { az: 'Müştəri Personası', en: 'Customer Persona', ru: 'Персона клиента', tr: 'Müşteri Personası' },
+  'musteri-persona': { az: 'Müştəri portreti', en: 'Guest profile', ru: 'Портрет гостя', tr: 'Müşteri profili' },
   'pl-simulyatoru': { az: 'P&L Simulyatoru', en: 'P&L Simulator', ru: 'Симулятор P&L', tr: 'P&L Simülatörü' },
   'reklam-roi': { az: 'Reklam ROI', en: 'Ad ROI', ru: 'ROI рекламы', tr: 'Reklam ROI' },
   'restoran-audit': { az: 'Restoran Audit', en: 'Restaurant Audit', ru: 'Аудит ресторана', tr: 'Restoran Denetimi' },

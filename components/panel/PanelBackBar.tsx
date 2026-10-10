@@ -9,6 +9,7 @@
  *          (the admin top bar is desktop-only).
  */
 
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
@@ -17,8 +18,21 @@ import { normalizeLocale, stripLocalePrefix, withLocale } from '@/i18n/config';
 
 export default function PanelBackBar({ root, className = '' }: { root: '/dashboard' | '/b2b-panel'; className?: string }) {
   const t = useTranslations('panelBack');
+  // TASK-0535 (owner screenshot: «Geri» + «Bütün alətlər» on one page): pages that render their own back link
+  // (marketing tools, tabbed hubs) keep theirs and this bar steps aside. Hidden until checked → no double flash.
+  const ref = useRef<HTMLDivElement>(null);
+  const [own, setOwn] = useState<boolean | null>(null);
+  const pathname = usePathname();
+  useEffect(() => {
+    const id = window.requestAnimationFrame(() => {
+      const mine = ref.current;
+      const others = Array.from(document.querySelectorAll('main [data-back-button]')).filter((el) => !mine?.contains(el));
+      setOwn(others.length > 0);
+    });
+    return () => window.cancelAnimationFrame(id);
+  }, [pathname]);
   const locale = normalizeLocale(useLocale());
-  const bare = stripLocalePrefix(usePathname()).replace(/\/+$/, '') || '/';
+  const bare = stripLocalePrefix(pathname).replace(/\/+$/, '') || '/';
 
   if (bare === root || !bare.startsWith(`${root}/`)) return null;
 
@@ -26,7 +40,7 @@ export default function PanelBackBar({ root, className = '' }: { root: '/dashboa
   const toHome = parent === root;
 
   return (
-    <div className={className}>
+    <div ref={ref} className={className} hidden={own !== false}>
       <Link
         href={withLocale(locale, parent)}
         data-back-button

@@ -12,6 +12,7 @@ export default function SezonHub({ initialTab = 'forecast', backHref = '/b2b-pan
   const t = useTranslations('marketinq.hubs.sezon');
   return (
     <ToolTabs
+      backHref={backHref}
       label={t('label')}
       initialTab={initialTab}
       tabs={[

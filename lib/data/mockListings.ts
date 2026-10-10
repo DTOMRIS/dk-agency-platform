@@ -132,7 +132,7 @@ export const MOCK_LISTINGS: MockListing[] = [
     type: 'franchise-vermek',
     sector: 'fast-food',
     status: 'showcase_ready',
-    title: 'Pizza Brendi Franchise Təklifi',
+    title: 'Pizza Brendi Françayz Təklifi',
     description:
       'Bakıda 3 nöqtə ilə işləyən pizza brendi yeni partnyorlar axtarır. Təlim, açılış paketi, menyu sistemi və marketinq dəstəyi təqdim olunur. Sürətli açılış üçün hazır SOP-lar mövcuddur.',
     price: 45000,
@@ -286,7 +286,7 @@ export const MOCK_LISTINGS: MockListing[] = [
     type: 'franchise-almaq',
     sector: 'fast-food',
     status: 'showcase_ready',
-    title: 'Beynəlxalq Fast-Food Franchise Almaq İstəyirəm',
+    title: 'Beynəlxalq Fast-Food Françayz Almaq İstəyirəm',
     description:
       'Bakı daxilində yüksək trafik lokasiyada beynəlxalq fast-food brendi ilə işləmək istəyən investor profili. Əməliyyat təcrübəsi olan komanda və ilkin kapital hazırdır. Güclü marka və açılış dəstəyi prioritetdir.',
     price: 100000,
@@ -321,7 +321,7 @@ export const MOCK_LISTINGS: MockListing[] = [
     type: 'franchise-almaq',
     sector: 'fast-food',
     status: 'submitted',
-    title: 'Regional Burger Franchise Almaq İstəyən Operator',
+    title: 'Regional Burger Françayz Almaq İstəyən Operator',
     description:
       'Yeni daxil olmuş investor sorğusudur. Büdcə və lokasiya tələbi göndərilib, ilkin baxış gözləyir.',
     price: 65000,

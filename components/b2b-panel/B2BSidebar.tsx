@@ -170,6 +170,7 @@ export default function B2BSidebar() {
     };
   }, []);
 
+  // TASK-0535: highlight = signed-in account (member/admin); the label below says what it really is.
   const isPremium = plan === 'member' || plan === 'admin';
   const pct = completion ?? 0;
 
@@ -253,7 +254,8 @@ export default function B2BSidebar() {
                       isPremium ? 'text-amber-600' : 'text-slate-500'
                     }`}
                   >
-                    {isPremium ? t('premium') : t('freePlan')}
+                    {/* TASK-0535: no paid plan is live — a registered member is «Üzv», not «PREMIUM». */}
+                    {plan === 'admin' ? t('adminPlan') : plan === 'member' ? t('memberPlan') : t('freePlan')}
                   </span>
                 </div>
               </div>

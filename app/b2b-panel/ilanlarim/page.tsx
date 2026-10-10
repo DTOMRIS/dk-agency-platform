@@ -82,7 +82,7 @@ const pageCopy: Record<Locale, {
     },
     categoryLabels: {
       'devir': 'İşletmə Devri',
-      'franchise-vermek': 'Franchise Vermək',
+      'franchise-vermek': 'Françayz Vermək',
       'franchise-almaq': 'Franchise Almaq',
       'ortak-tapmaq': 'Ortaq Tapmaq',
       'yeni-investisiya': 'Yeni İnvestisiya',

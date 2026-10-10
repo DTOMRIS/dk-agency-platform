@@ -5,7 +5,7 @@ import ListingsShowcasePage from '@/components/listings/ListingsShowcasePage';
 export const metadata: Metadata = {
   title: 'HoReCa Elanları',
   description:
-    'Restoran devri, franchise, ortaq axtarışı, obyekt icarəsi və HORECA ekipman elanları bir vitrində.',
+    'Restoran devri, françayz, ortaq axtarışı, obyekt icarəsi və HORECA ekipman elanları bir vitrində.',
 };
 
 export default function IlanlarPage() {
