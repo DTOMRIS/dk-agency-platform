@@ -58,7 +58,7 @@ const pageCopy: Record<
         title: 'Restoran Devri',
         desc: 'İşlətmənizi devir edin və ya hazır restoran alın',
       },
-      { title: 'Franchise', desc: 'Franchise verin və ya hazır brend ilə başlayın' },
+      { title: 'Françayz', desc: 'Françayz verin və ya hazır brend ilə başlayın' },
       {
         title: 'Ortaq Tapmaq',
         desc: 'Layihəniz üçün sərmayə və ya əməliyyat ortağı tapın',

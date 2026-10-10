@@ -13,6 +13,7 @@ export default function RoiHub({ initialTab = 'channels', backHref = '/b2b-panel
   const t = useTranslations('marketinq.hubs.roi');
   return (
     <ToolTabs
+      backHref={backHref}
       label={t('label')}
       initialTab={initialTab}
       tabs={[

@@ -134,7 +134,7 @@ export default async function DashboardFranchiseLeadsPage({
         {/* Header */}
         <div className="min-w-0">
           <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">
-            Franchise Leadləri
+            Françayz Leadləri
           </h1>
           <p className="mt-1 max-w-3xl text-[15px] text-slate-600">
             Franchise Radar, OTA Guide və konsaltinq alətlərindən daxil olan leadlər.

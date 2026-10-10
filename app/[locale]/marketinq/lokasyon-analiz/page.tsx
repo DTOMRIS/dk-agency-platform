@@ -40,7 +40,7 @@ export default async function LokasyonAnalizRoute({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-slate-50">
-      <LokasyonAnalizPage backHref="/b2b-panel/marketinq-ocagi" />
+      <LokasyonAnalizPage backHref={withLocalePrefix(locale, '/marketinq')} />
     </main>
   );
 }

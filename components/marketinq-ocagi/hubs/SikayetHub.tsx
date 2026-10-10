@@ -15,6 +15,7 @@ export default function SikayetHub({ initialTab = 'triage', backHref = '/b2b-pan
   const t = useTranslations('marketinq.hubs.sikayet');
   return (
     <ToolTabs
+      backHref={backHref}
       label={t('label')}
       initialTab={initialTab}
       tabs={[

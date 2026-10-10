@@ -1876,7 +1876,9 @@
       "mobileOpenMenu": "Menüyü aç",
       "mobileCloseMenu": "Menüyü kapat",
       "freePlan": "Ücretsiz",
-      "excelTemplates": "Excel şablonları"
+      "excelTemplates": "Excel şablonları",
+      "memberPlan": "Üye",
+      "adminPlan": "Yönetici"
     },
     "topBar": {
       "notifications": "Bildirimler",
@@ -2300,8 +2302,8 @@
       "pnlResult_next": "Sonraki Araç"
     },
     "customerPersona": {
-      "title": "Müşteri Persona Oluşturucu",
-      "subtitle": "AZ/TR pazarına uygun müşteri profili oluşturun",
+      "title": "Müşteri profili",
+      "subtitle": "Ana misafirlerinizi tanıyın: kim geliyor, ne istiyor, sizi neden seçiyor.",
       "step1_title": "Restoran profili",
       "step2_title": "Müşteri gözlemleri",
       "restaurant_type": "Restoran türü",
@@ -5368,7 +5370,7 @@
   "hotelReadiness": {
     "badge": "Otel hazırlık testi",
     "title": "Oteliniz yıldız belgesine hazır mı?",
-    "subtitle": "12 soru · yaklaşık 4 dakika · sonunda Azerbaycan Otel Birliği’nin (AHA) yıldız şartlarına dayalı rapor",
+    "subtitle": "12 soru · yaklaşık 4 dakika · sonunda ulusal yıldız sınıflandırması kriterlerine (Hotelstars Union esaslı) dayalı rapor",
     "letter": "Değerli otel, misafirhane ve pansiyon sahibi — yıldız almak için tüm şartların sistemli şekilde karşılanması gerekir. Bu test otelinizin hangi alanlarda hazır olduğunu, hangilerinde çalışmanız gerektiğini gösterir.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Teste başla →",
@@ -5382,7 +5384,7 @@
     "aiLoading": "Yapay zekâ raporunuzu hazırlıyor...",
     "aiReportTitle": "Size özel rapor",
     "shareDownload": "Sonucu resim olarak indir (PNG)",
-    "disclaimer": "Bu test ilk öz değerlendirme içindir. Tam değerlendirme ve AHA başvurusu için profesyonel denetim gerekir. © DK Agency",
+    "disclaimer": "Bu test ilk öz değerlendirme içindir. Yıldız sınıflandırması başvurusu için resmî değerlendirme gerekir. © DK Agency",
     "verdict": {
       "pansion": {
         "title": "Pansiyon seviyesi",
@@ -5390,7 +5392,7 @@
       },
       "tier12": {
         "title": "1–2 yıldız şansı",
-        "sub": "Temel bina ve donanım var. Birkaç alanı güçlendirirseniz AHA’ya başvurabilirsiniz."
+        "sub": "Temel bina ve donanım var. Birkaç alanı güçlendirirseniz yıldız sınıflandırmasına başvurabilirsiniz."
       },
       "tier3": {
         "title": "3 yıldız ulaşılabilir",
@@ -5402,7 +5404,7 @@
       },
       "tier5": {
         "title": "5 yıldız şansı",
-        "sub": "Standartlarınız yüksek. 5 yıldız için güçlü bir adaysınız — AHA başvurusuna geçebilirsiniz."
+        "sub": "Standartlarınız yüksek. 5 yıldız için güçlü bir adaysınız — yıldız sınıflandırması başvurusuna geçebilirsiniz."
       }
     },
     "questions": {
@@ -5498,7 +5500,7 @@
       },
       "9": {
         "cat": "Belgeler",
-        "q": "AHA başvurusu için belgeler (vergi, hijyen, yangın güvenliği) hazır mı?",
+        "q": "Yıldız sınıflandırması başvurusu için belgeler (vergi, hijyen, yangın güvenliği) hazır mı?",
         "options": {
           "0": "Hiçbir belge hazır değil",
           "1": "Vergi belgesi var, diğerleri eksik",
@@ -5518,7 +5520,7 @@
       },
       "11": {
         "cat": "Başvuruya hazırlık",
-        "q": "AHA başvurusu için para ve zaman açısından hazır mısınız?",
+        "q": "Yıldız sınıflandırması başvurusu için para ve zaman açısından hazır mısınız?",
         "options": {
           "0": "Ücret ve belge hazırlığı için bütçe ayrılmadı",
           "1": "Ücret için para var, belge hazırlığı başlamadı",
@@ -5965,12 +5967,12 @@
     }
   },
   "sektorOtel": {
-    "pageTitle": "Otel Sektörü — AHA Hazırlık, OTA ve ROI Araçları | DK Agency",
+    "pageTitle": "Otel sektörü — yıldız sınıflandırmasına hazırlık, OTA ve ROI araçları | DK Agency",
     "hero": {
-      "headline": "Otelinizi AHA Yıldız Standardına Hazırlayın",
-      "subline": "Otel sahipleri için ücretsiz araçlar — AHA sertifikasından OTA kanallarına ve gelir hesabına kadar, DK Agency desteğiyle.",
+      "headline": "Otelinizi yıldız sınıflandırmasına hazırlayın",
+      "subline": "Otel sahipleri için ücretsiz araçlar — yıldız hazırlığından OTA kanallarına ve gelir hesabına kadar, DK Agency desteğiyle.",
       "statBadge": "2024'te +%42 otel geliri, 859 aktif otel",
-      "primaryCtaText": "AHA Hazırlık Testine başla",
+      "primaryCtaText": "Yıldız hazırlık testine başla",
       "secondaryCtaText": "Ücretsiz rehber al"
     },
     "stats": {
@@ -5987,7 +5989,7 @@
     "tools": {
       "sectionTitle": "Bu sektör için 3 araç",
       "tool1Title": "Otel Hazırlık Testi",
-      "tool1Desc": "AHA yıldız standardına uygunluk — 3 dakikalık AI değerlendirme",
+      "tool1Desc": "Ulusal yıldız kriterlerine uygunluk — 4 dakikalık öz değerlendirme",
       "tool1Cta": "Teste başla →",
       "tool2Title": "Otel ROI Hesaplayıcı",
       "tool2Desc": "Booking + Expedia komisyonu, oda geliri ve geri dönüş süresi",
@@ -6000,14 +6002,14 @@
       "sectionTitle": "Bu sektörden okunmalı"
     },
     "leadCapture": {
-      "heading": "Ücretsiz Otel AHA Hazırlık Rehberi",
-      "body": "AHA yıldız sertifikasına ve OTA kanallarına hazırlığın adım adım rehberi — ücretsiz.",
+      "heading": "Ücretsiz otel yıldız hazırlık rehberi",
+      "body": "Yıldız sınıflandırmasına ve OTA kanallarına hazırlığın adım adım rehberi — ücretsiz.",
       "buttonText": "Ücretsiz Rehberi Al"
     },
     "faq": {
       "sectionTitle": "Sıkça sorulan sorular",
-      "q1": "AHA yıldız sertifikası nasıl alınır?",
-      "a1": "AHA (Azerbaycan Otel Birliği) standartlarına uygunluk değerlendirilir: altyapı, hizmet ve güvenlik. Otel Hazırlık Testi sizi bu değerlendirmeye hazırlar.",
+      "q1": "Otel yıldızı nasıl alınır?",
+      "a1": "Yıldız sınıflandırması devletin onayladığı ulusal kriterlerle yapılır: kriterleri Devlet Turizm Ajansı belirler, sistem Avrupa Hotelstars Union kriterlerine dayanır (AZS 906-2022), sertifika 3 yıl geçerlidir. Otel Hazırlık Testi sizi bu resmî değerlendirmeye hazırlar.",
       "q2": "Otel için Booking komisyonu ne kadar?",
       "a2": "Booking.com genelde %15-18 komisyon alır. Doğrudan rezervasyon ve Expedia dengesiyle bu maliyet optimize edilebilir.",
       "q3": "Otel için hangi OTA kanalları önemli?",
@@ -6018,8 +6020,8 @@
       "a5": "Otel Hazırlık Testi ve ROI Hesaplayıcı ücretsizdir. Tam danışmanlık için iletişim formundan başvurun."
     },
     "footerCta": {
-      "heading": "İlk adımı şimdi at — ücretsiz AHA testiyle başla",
-      "buttonText": "AHA Hazırlık Testine başla →"
+      "heading": "İlk adımı şimdi at — ücretsiz yıldız hazırlık testiyle başla",
+      "buttonText": "Yıldız hazırlık testine başla →"
     }
   },
   "sektorRestoran": {
@@ -7169,10 +7171,10 @@
         },
         "otel-hazirlig-testi": {
           "t": "Otel yıldız hazırlık testi",
-          "d": "12 soruyla otelinizin yıldız belgesine (AHA şartları) ne kadar hazır olduğunu kontrol edin.",
+          "d": "12 soruyla otelinizin yıldız sınıflandırmasına ne kadar hazır olduğunu kontrol edin.",
           "r": "Hazırlık puanı ve gerçekçi yıldız hedefi",
           "kw": "otel yıldız aha belge sınıflandırma",
-          "what": "Otelinizin hangi yıldız seviyesine hazır olduğunu ve AHA başvurusundan önce hangi alanı güçlendirmeniz gerektiğini gösterir.",
+          "what": "Otelinizin hangi yıldız seviyesine hazır olduğunu ve yıldız sınıflandırması başvurusundan önce hangi alanı güçlendirmeniz gerektiğini gösterir.",
           "how": [
             "12 soruyu cevaplayın: bina, odalar, temizlik, resepsiyon, yemek, personel, belgeler vb.",
             "Her cevap 25–100 puan verir; ortalama puan yıldız hedefine dönüşür (örneğin 65–74 puan — 3 yıldız hedefi).",
@@ -7981,6 +7983,22 @@
       "body": "İlk adım ücretsiz teşhis: menü, maliyetler, personel ve açılış planına birlikte bakıyor, sonra sistemi sizinle kuruyoruz.",
       "cta": "WhatsApp’tan yazın",
       "wa": "Merhaba Doğan Bey, aracı kullandım, ücretsiz teşhis istiyorum."
+    }
+  },
+  "kazanNudge": {
+    "aria": "KAZAN AI sorusu",
+    "meta": "KAZAN AI · yapay zekâ asistanı",
+    "placeholder": "Cevabınızı yazın",
+    "send": "Gönder",
+    "close": "Kapat",
+    "questions": {
+      "home": "Restoranınızda sizi en çok ne düşündürüyor: maliyetler, müşteri akışı mı, menü mü?",
+      "foodCost": "Hangi yemeğin maliyetini hesaplıyorsunuz? Yazın, birlikte bakalım.",
+      "toolkit": "Bu araçla hangi kararı vermek istiyorsunuz?",
+      "franchise": "Franchise vermeyi mi düşünüyorsunuz, almayı mı?",
+      "pricing": "Restoranınız ayda yaklaşık ne kadar satış yapıyor? Uygun planı söyleyelim.",
+      "blog": "Bu yazının konusu restoranınız için güncel mi?",
+      "news": "Bu haberlerden hangisi işinizi etkiliyor?"
     }
   }
 }

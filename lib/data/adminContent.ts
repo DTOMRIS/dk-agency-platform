@@ -105,7 +105,7 @@ export const adminSiteSettings = {
 export const adminNewsQueue = [
   { id: 'n1', title: 'Hospitality Net restoran əməliyyat xərclərini analiz edir', source: 'Hospitality Net', category: 'operations', status: 'fetched' as AdminNewsStatus, date: '2026-03-30' },
   { id: 'n2', title: 'Restaurant Business delivery marjalarını dəyərləndirir', source: 'Restaurant Business', category: 'finance', status: 'approved' as AdminNewsStatus, date: '2026-03-29' },
-  { id: 'n3', title: 'Nation’s Restaurant News franchise böyüməsini araşdırır', source: "Nation's Restaurant News", category: 'growth', status: 'fetched' as AdminNewsStatus, date: '2026-03-29' },
+  { id: 'n3', title: 'Nation’s Restaurant News françayz böyüməsini araşdırır', source: "Nation's Restaurant News", category: 'growth', status: 'fetched' as AdminNewsStatus, date: '2026-03-29' },
   { id: 'n4', title: 'The Caterer işçi planlaması haqqında yazır', source: 'The Caterer', category: 'operations', status: 'rejected' as AdminNewsStatus, date: '2026-03-28' },
   { id: 'n5', title: 'HotelNewsNow bazar trendlərini paylaşır', source: 'HotelNewsNow', category: 'market', status: 'approved' as AdminNewsStatus, date: '2026-03-27' },
   { id: 'n6', title: 'QSR Magazine texnologiya investisiyalarını dəyərləndirir', source: 'QSR Magazine', category: 'technology', status: 'fetched' as AdminNewsStatus, date: '2026-03-26' },

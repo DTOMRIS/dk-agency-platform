@@ -11,7 +11,7 @@ import AboutJsonLd from '@/components/seo/AboutJsonLd';
 export const metadata: Metadata = {
   title: 'Haqqımızda — DK Agency və Doğan Tomris',
   description:
-    'DK Agency Azərbaycanın ilk AI dəstəkli HoReCa B2B platformasıdır. 2010-dan bəri, 40 illik sektor təcrübəsi ilə: food cost, P&L, franchise tərəfdaşlığı və sektor məsləhəti.',
+    'DK Agency Azərbaycanın ilk AI dəstəkli HoReCa B2B platformasıdır. 2010-dan bəri, 40 illik sektor təcrübəsi ilə: food cost, P&L, françayz tərəfdaşlığı və sektor məsləhəti.',
 };
 
 export default function HaqqimizdaLayout({ children }: { children: ReactNode }) {

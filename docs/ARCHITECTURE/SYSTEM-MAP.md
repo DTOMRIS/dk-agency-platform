@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · c9aebb8
+> `node scripts/generate-system-map.mjs` · 2026-10-10 · feat/TASK-0523-marketinq-fixes · c6b5ac9
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -8,7 +8,7 @@
 - Dizayn (həqiqi səhifələr): v2 **8** · köhnə **57** · qarışıq **36** · işarəsiz 22
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 59 (+ 368 tapşırıq kartı)
+- Sənəd: 60 (+ 371 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -34,12 +34,12 @@ Cəmi **0** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazıl�
 
 Əsaslandırılmış istisnalar (`fake-scan-ok`): **11**
 - `components/analytics/PortalEngagementTracker.tsx:40` — analytics beacon, nothing is shown to the user
-- `components/b2b-panel/B2BSidebar.tsx:181` — logout: the client session is cleared and the user redirected either way
+- `components/b2b-panel/B2BSidebar.tsx:182` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/DashboardSidebar.tsx:144` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/DashboardTopBar.tsx:140` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/KazanLeadStatusActions.tsx:50` — router.refresh() right after re-renders the lead from the server
-- `components/kazan-ai/FloatingKazanWidget.tsx:166` — CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
-- `components/layout/Header.tsx:181` — logout: client session cleared and redirected either way (protected file)
+- `components/kazan-ai/FloatingKazanWidget.tsx:193` — CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
+- `components/layout/Header.tsx:199` — logout: client session cleared and redirected either way (protected file)
 - `components/members/MemberLogoutButton.tsx:17` — logout: the client session is cleared and the user redirected either way
 - `app/auth/login/page.tsx:168` — display-name sync only — role/login come from the signed JWT (TASK-0457)
 - `app/dashboard/reklamlar/page.tsx:84` — the list is reloaded from the server right after, so the screen always shows the truth
@@ -326,7 +326,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 77 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 81 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |
@@ -340,3 +340,4 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/n8n/SETUP.md` | n8n RSS Auto-Fetch — Setup Rehberi | 2026-04-27 | 93 |
 | `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-06-10 | 348 |
 | `docs/reports/2026-10-09-marketinq-ocagi-audit.md` | Marketinq Ocağı (24 alət) — audit + dünya araşdırması (09.10.2026) | 2026-10-09 | 36 |
+| `docs/reports/2026-10-11-owner-nory-marginedge.md` | Rəqib araşdırması — Owner.com, Nory, MarginEdge (2026-10-11) |  | 23 |

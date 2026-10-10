@@ -20,7 +20,7 @@ const copyByLocale: Record<Locale, {
     stages: [
       { emoji: '🏗️', title: 'Başla', description: 'Restoran açmaq istəyirsən? Checklist, rəsmi işlər, məkan seçimi və açılış planı.', hoverBorder: 'hover:border-[var(--dk-red)]', link: '/toolkit?stage=basla', count: '5 bələdçi', countClass: 'text-red-500' },
       { emoji: '📊', title: 'Böyüt', description: 'Mövcud restoranını optimallaşdır. Food cost, P&L, menyu, delivery və komanda nəzarəti.', hoverBorder: 'hover:border-[var(--dk-gold)]', link: '/toolkit?stage=boyut', count: '5 alət', countClass: 'text-amber-600' },
-      { emoji: '🔄', title: 'Devir & Satış', description: 'Restoran devri, ekipman satışı, franchise, ortaq və digər biznes keçid kateqoriyaları.', hoverBorder: 'hover:border-[var(--dk-purple)]', link: '/ilanlar', count: '7 kateqoriya', countClass: 'text-purple-600' },
+      { emoji: '🔄', title: 'Devir & Satış', description: 'Restoran devri, ekipman satışı, françayz, ortaq və digər biznes keçid kateqoriyaları.', hoverBorder: 'hover:border-[var(--dk-purple)]', link: '/ilanlar', count: '7 kateqoriya', countClass: 'text-purple-600' },
     ],
   },
   ru: {

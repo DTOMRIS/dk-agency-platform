@@ -17,7 +17,8 @@ import NewsCoverImage from './NewsCoverImage';
 
 export function BackLink({ href, label }: { href: string; label: string }) {
   return (
-    <Link href={href} className={s.back}>
+    // data-back-button: PanelBackBar hides itself when the page already has its own back link (TASK-0535).
+    <Link href={href} className={s.back} data-back-button="">
       <Icon name="left" />
       {label}
     </Link>

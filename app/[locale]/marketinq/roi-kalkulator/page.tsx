@@ -32,7 +32,7 @@ export default async function ROICalculatorPage({ params }: Props) {
           <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{t('tier_required_title')}</h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-slate-600">{t('tier_required_body')}</p>
           <Link
-            href={withLocalePrefix(locale, '/qiymet')}
+            href={withLocalePrefix(locale, '/pricing')}
             className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-dk-red-strong px-5 text-sm font-bold text-white transition hover:bg-[var(--dk-red)]/90"
           >
             {t('upgrade_cta')}
@@ -44,7 +44,7 @@ export default async function ROICalculatorPage({ params }: Props) {
 
   return (
     <main>
-      <RoiHub initialTab="channels" />
+      <RoiHub initialTab="channels" backHref={withLocalePrefix(locale, '/marketinq')} />
     </main>
   );
 }

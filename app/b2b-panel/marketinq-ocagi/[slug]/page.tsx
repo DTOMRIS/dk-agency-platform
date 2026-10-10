@@ -53,7 +53,7 @@ const pageCopy: Record<
       'pl-simulyatoru': { title: 'P&L Simulyatoru', subtitle: 'Gəlir-xərc, what-if və zərərsizlik analizi', why: 'P&L-i ayda 1 dəfə hazırlayan restoran rəqiblərinin çoxundan öndədir.' },
       'sikayet-analitigi': { title: 'Şikayət Analitiği', subtitle: 'Müştəri şikayətlərini AI ilə analiz et', why: 'Şikayətlərin çoxu bir neçə eyni səbəbdən gəlir: alət onları qruplaşdırır və ən çox təkrarlanan səbəbi göstərir.' },
       'sikayet-cavablandirici': { title: 'Şikayət Cavablandırıcı', subtitle: 'AI ilə Google və TripAdvisor şikayətlərinə 3 fərqli tonda cavab', why: 'Hər cavabsız şikayət potensial müştəri itkisidir. AI 3 tonda peşəkar cavab yaradır.' },
-      'musteri-persona': { title: 'Müştəri Persona', subtitle: 'Hədəf müştəri profilini yaradın', why: 'Hər kəsə satmaq heç kimə satmaq deməkdir. Persona ilə marketinq mesajı kəskinləşir.' },
+      'musteri-persona': { title: 'Müştəri portreti', subtitle: 'Hədəf qonağınızın portretini çıxarın', why: 'Hər kəsə satmaq heç kimə satmaq deməkdir. Qonağınızın portreti ilə marketinq mesajı dəqiqləşir.' },
       'sezon-planlama': { title: 'Sezon Planlaması', subtitle: '12 aylıq kampaniya və event takvimi', why: 'Novruz nə edək? sualını 1 həftə qala düşünmək — gec olur.' },
       'reklam-yazicisi': { title: 'Reklam Yazıcısı', subtitle: 'AI ilə reklam və post mətni yazın', why: 'Düzgün reklam mətni konversiyanı 3x artıra bilər.' },
       'sosial-medya-plan': { title: 'Sosial Medya Plan', subtitle: '7-günlük Instagram + TikTok planı', why: 'Tezliklə. Bir həftəlik Instagram və TikTok post planı hazırlayacaq — hazır olanda xəbər verəcəyik.' },

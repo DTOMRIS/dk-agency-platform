@@ -1876,7 +1876,9 @@
       "mobileOpenMenu": "Open menu",
       "mobileCloseMenu": "Close menu",
       "freePlan": "Free",
-      "excelTemplates": "Excel templates"
+      "excelTemplates": "Excel templates",
+      "memberPlan": "Member",
+      "adminPlan": "Admin"
     },
     "topBar": {
       "notifications": "Notifications",
@@ -2300,8 +2302,8 @@
       "pnlResult_next": "Next Tool"
     },
     "customerPersona": {
-      "title": "Customer Persona Creator",
-      "subtitle": "Create a customer profile tailored to the AZ/TR market",
+      "title": "Guest profile",
+      "subtitle": "Get to know your main guests: who comes, what they want and why they choose you.",
       "step1_title": "Restaurant profile",
       "step2_title": "Customer observations",
       "restaurant_type": "Restaurant type",
@@ -5368,7 +5370,7 @@
   "hotelReadiness": {
     "badge": "Hotel readiness test",
     "title": "Is your hotel ready for a star rating?",
-    "subtitle": "12 questions · about 4 minutes · a report based on the Azerbaijan Hotel Association (AHA) star requirements at the end",
+    "subtitle": "12 questions · about 4 minutes · a report based on the national star classification criteria (Hotelstars Union based) at the end",
     "letter": "Dear hotel, inn and guesthouse owner — to earn stars, every requirement has to be met in a systematic way. This test shows where your hotel is ready and where it needs work.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Start the test →",
@@ -5382,7 +5384,7 @@
     "aiLoading": "The AI is preparing your report...",
     "aiReportTitle": "Your report",
     "shareDownload": "Download the result as an image (PNG)",
-    "disclaimer": "This test is a first self-check. A full assessment and an AHA application need a professional inspection. © DK Agency",
+    "disclaimer": "This test is a first self-check. Applying for a star classification needs an official assessment. © DK Agency",
     "verdict": {
       "pansion": {
         "title": "Guesthouse level",
@@ -5390,7 +5392,7 @@
       },
       "tier12": {
         "title": "A chance at 1–2 stars",
-        "sub": "The basic building and equipment are there. Strengthen a few areas and you can apply to AHA."
+        "sub": "The basic building and equipment are there. Strengthen a few areas and you can apply for a star classification."
       },
       "tier3": {
         "title": "3 stars are within reach",
@@ -5402,7 +5404,7 @@
       },
       "tier5": {
         "title": "A chance at 5 stars",
-        "sub": "Your standards are high. You are a strong candidate for 5 stars — you can move on to the AHA application."
+        "sub": "Your standards are high. You are a strong candidate for 5 stars — you can move on to the star classification application."
       }
     },
     "questions": {
@@ -5498,7 +5500,7 @@
       },
       "9": {
         "cat": "Documents",
-        "q": "Are the documents for the AHA application (tax, hygiene, fire safety) ready?",
+        "q": "Are the documents for the star classification application (tax, hygiene, fire safety) ready?",
         "options": {
           "0": "No documents ready",
           "1": "Tax document ready, the rest incomplete",
@@ -5518,7 +5520,7 @@
       },
       "11": {
         "cat": "Application readiness",
-        "q": "Are you ready for the AHA application in money and time?",
+        "q": "Are you ready for the star classification application in money and time?",
         "options": {
           "0": "No budget set aside for the fee and documents",
           "1": "Money for the fee, document work not started",
@@ -5965,12 +5967,12 @@
     }
   },
   "sektorOtel": {
-    "pageTitle": "Hotel Sector — AHA Readiness, OTA & ROI Tools | DK Agency",
+    "pageTitle": "Hotel sector — star classification readiness, OTA and ROI tools | DK Agency",
     "hero": {
-      "headline": "Get Your Hotel Ready for the AHA Star Standard",
-      "subline": "Free tools for hoteliers — from AHA certification to OTA channels and revenue math, with DK Agency support.",
+      "headline": "Get your hotel ready for star classification",
+      "subline": "Free tools for hotel owners — from star classification readiness to OTA channels and revenue maths, with DK Agency support.",
       "statBadge": "+42% hotel revenue in 2024, 859 active hotels",
-      "primaryCtaText": "Start the AHA Readiness Test",
+      "primaryCtaText": "Start the star readiness test",
       "secondaryCtaText": "Get the free guide"
     },
     "stats": {
@@ -5987,7 +5989,7 @@
     "tools": {
       "sectionTitle": "3 tools for this sector",
       "tool1Title": "Hotel Readiness Test",
-      "tool1Desc": "AHA star-standard compliance — a 3-minute AI assessment",
+      "tool1Desc": "Fit with the national star criteria — a 4-minute self-check",
       "tool1Cta": "Start the test →",
       "tool2Title": "Hotel ROI Calculator",
       "tool2Desc": "Booking + Expedia commissions, room revenue and payback period",
@@ -6000,14 +6002,14 @@
       "sectionTitle": "Worth reading in this sector"
     },
     "leadCapture": {
-      "heading": "Free Hotel AHA Readiness Guide",
-      "body": "A step-by-step guide to AHA star certification and connecting OTA channels — free.",
+      "heading": "Free hotel star readiness guide",
+      "body": "A step-by-step guide to star classification and OTA channels — free.",
       "buttonText": "Get the Free Guide"
     },
     "faq": {
       "sectionTitle": "Frequently asked questions",
-      "q1": "How do I get the AHA star certificate?",
-      "a1": "Compliance with AHA (Azerbaijan Hotel Association) standards is assessed: infrastructure, service and safety. The Hotel Readiness Test prepares you for this assessment.",
+      "q1": "How does a hotel get its stars?",
+      "a1": "Star classification follows national criteria approved by the state: the State Tourism Agency sets the criteria, the system is based on the European Hotelstars Union criteria (AZS 906-2022), and the certificate is valid for 3 years. The Hotel Readiness Test prepares you for this official assessment.",
       "q2": "What is Booking's commission for a hotel?",
       "a2": "Booking.com usually charges 15-18% commission. Direct bookings and an Expedia balance help optimise this cost.",
       "q3": "Which OTA channels matter for a hotel?",
@@ -6018,8 +6020,8 @@
       "a5": "The Hotel Readiness Test and ROI Calculator are free. For full consulting, apply via the contact form."
     },
     "footerCta": {
-      "heading": "Take the first step now — start with the free AHA test",
-      "buttonText": "Start the AHA Readiness Test →"
+      "heading": "Take the first step now — start with the free star readiness test",
+      "buttonText": "Start the star readiness test →"
     }
   },
   "sektorRestoran": {
@@ -7169,10 +7171,10 @@
         },
         "otel-hazirlig-testi": {
           "t": "Hotel star readiness test",
-          "d": "Check in 12 questions how ready your hotel is for a star rating (AHA requirements).",
+          "d": "Check in 12 questions how ready your hotel is for star classification.",
           "r": "Readiness score and a realistic star target",
           "kw": "hotel star rating aha certificate classification",
-          "what": "Shows which star level your hotel is ready for and what to strengthen before applying to AHA.",
+          "what": "Shows which star level your hotel is ready for and what to strengthen before applying for star classification.",
           "how": [
             "Answer 12 questions: building, rooms, cleaning, reception, food, staff, documents and more.",
             "Each answer gives 25–100 points; the average becomes a star target (e.g. 65–74 points — a 3-star target).",
@@ -7981,6 +7983,22 @@
       "body": "The first step is a free diagnostic: we look at the menu, costs, staff and opening plan with you, then build the system together.",
       "cta": "Write on WhatsApp",
       "wa": "Hello Doğan, I used a tool and would like a free diagnostic."
+    }
+  },
+  "kazanNudge": {
+    "aria": "KAZAN AI question",
+    "meta": "KAZAN AI · AI assistant",
+    "placeholder": "Write your answer",
+    "send": "Send",
+    "close": "Close",
+    "questions": {
+      "home": "What worries you most in your restaurant: costs, guest flow or the menu?",
+      "foodCost": "Which dish are you costing? Tell us and we’ll look at it together.",
+      "toolkit": "What decision do you want to make with this tool?",
+      "franchise": "Are you thinking of franchising out or buying a franchise?",
+      "pricing": "Roughly how much does your restaurant sell per month? We’ll suggest the right plan.",
+      "blog": "Is the topic of this article relevant to your restaurant?",
+      "news": "Which of these news items affects your business?"
     }
   }
 }

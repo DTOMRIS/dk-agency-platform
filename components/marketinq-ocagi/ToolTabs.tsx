@@ -8,13 +8,23 @@
  *          Tabs stay mounted once opened, so switching does not wipe what the owner typed.
  */
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
+import { Crumbs } from '@/components/inner/InnerParts';
 import home from '@/components/home/v2/homeV2.module.css';
 import s from '@/components/inner/inner.module.css';
 
 export type ToolTab = { key: string; label: string; hint?: string; content: ReactNode };
 
-export default function ToolTabs({ tabs, initialTab, label }: { tabs: ToolTab[]; initialTab?: string; label: string }) {
+/**
+ * TASK-0535 (owner 10.10 screenshot: «Geri» above the tabs and «Bütün alətlər» again below them): inside a tabbed
+ * page the one back link sits above the tabs; the tools rendered in a tab hide their own (ToolHeader reads this).
+ */
+const ToolTabsEmbedContext = createContext(false);
+export const useInToolTabs = () => useContext(ToolTabsEmbedContext);
+
+export default function ToolTabs({ tabs, initialTab, label, backHref }: { tabs: ToolTab[]; initialTab?: string; label: string; backHref?: string }) {
+  const tv = useTranslations('marketinq.v2');
   const fallback = tabs.some((tab) => tab.key === initialTab) ? (initialTab as string) : tabs[0].key;
   const [active, setActive] = useState(fallback);
   const [opened, setOpened] = useState<Set<string>>(() => new Set([fallback]));
@@ -49,6 +59,11 @@ export default function ToolTabs({ tabs, initialTab, label }: { tabs: ToolTab[];
   const hint = tabs.find((tab) => tab.key === active)?.hint;
   return (
     <div>
+      {backHref ? (
+        <div className={home.wrap}>
+          <Crumbs backHref={backHref} backLabel={tv('allTools')} trail={`${tv('crumb')} / ${label}`} />
+        </div>
+      ) : null}
       <div className={`${home.wrap} border-b border-[#E4DCCD]`}>
         <div role="tablist" aria-label={label} className={s.tabs} data-testid="tool-tabs">
           {tabs.map((tab) => {
@@ -75,7 +90,7 @@ export default function ToolTabs({ tabs, initialTab, label }: { tabs: ToolTab[];
       {tabs.map((tab) =>
         opened.has(tab.key) ? (
           <div key={tab.key} role="tabpanel" id={`tool-panel-${tab.key}`} aria-labelledby={`tool-tab-${tab.key}`} hidden={tab.key !== active}>
-            {tab.content}
+            <ToolTabsEmbedContext.Provider value={Boolean(backHref)}>{tab.content}</ToolTabsEmbedContext.Provider>
           </div>
         ) : null,
       )}
