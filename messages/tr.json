@@ -6530,7 +6530,7 @@
       }
     },
     "modules": {
-      "eyebrow": "Modüller",
+      "eyebrow": "Araçlar ve çözümler",
       "title": "Bazıları para kazandırır. Bazıları parayı korur.",
       "desc": "Her modül bir soruyu yanıtlar ve sonunda bir adım verir. Durum rozeti gerçektir: <b>Canlı</b> çalışıyor, <b>Beta</b> test aşamasında.",
       "groupCost": "Maliyet",
@@ -7950,6 +7950,27 @@
         "b2": "Cari oran ve borç oranı",
         "b3": "«Kontrol» satırı hatayı hemen gösterir"
       }
+    }
+  },
+  "toolPitch": {
+    "ocaq": {
+      "eyebrow": "OCAQ",
+      "title": "Bu rakamı her gün görmek ister misiniz?",
+      "body": "OCAQ çok şubeli zincirde vardiya kontrol listesi, HACCP, kasa ↔ banka mutabakatı ve fire kontrolünü her gün yürütür; normun dışındaki rakam yöneticinin önüne gelir.",
+      "cta": "OCAQ’ı gösterin"
+    },
+    "marketing": {
+      "eyebrow": "Marketinq Ocağı",
+      "title": "Satışı artırmak için sonraki adım",
+      "body": "Reklam getirisi, sezon planı, şikâyet analizi ve müşteri profili — KALFA ve USTA araçları tek yerde.",
+      "cta": "Marketinq Ocağı’na bakın"
+    },
+    "service": {
+      "eyebrow": "Özel hizmet",
+      "title": "Bu işi birlikte kuralım",
+      "body": "İlk adım ücretsiz teşhis: menü, maliyetler, personel ve açılış planına birlikte bakıyor, sonra sistemi sizinle kuruyoruz.",
+      "cta": "WhatsApp’tan yazın",
+      "wa": "Merhaba Doğan Bey, aracı kullandım, ücretsiz teşhis istiyorum."
     }
   }
 }

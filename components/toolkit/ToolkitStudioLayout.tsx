@@ -20,6 +20,7 @@ import s from '@/components/inner/inner.module.css';
 import { getToolMeta } from '@/lib/toolkit/tool-directory';
 import ToolIntro from '@/components/toolkit/ToolIntro';
 import ToolTour from '@/components/toolkit/ToolTour';
+import ToolPitch from '@/components/toolkit/ToolPitch';
 
 // ── Types ───────────────────────────────────────────────────────────
 
@@ -245,6 +246,8 @@ export default function ToolkitStudioLayout({
               <div className={s.rsBody} id={sheetId}>
                 {resultSection}
                 <AIInsightPanel insight={aiInsight} onRequest={onRequestInsight} />
+                {/* TASK-0533: the product that solves this problem, where the number lands. */}
+                <ToolPitch toolId={toolId} />
               </div>
             </div>
           </aside>

@@ -18,6 +18,7 @@ import s from '@/components/inner/inner.module.css';
 import { getToolMeta } from '@/lib/toolkit/tool-directory';
 import ToolIntro from '@/components/toolkit/ToolIntro';
 import ToolTour from '@/components/toolkit/ToolTour';
+import ToolPitch from '@/components/toolkit/ToolPitch';
 
 export default function ToolPageShell({
   slug,
@@ -63,6 +64,8 @@ export default function ToolPageShell({
         <div style={{ maxWidth, margin: '0 auto', paddingTop: showHeader ? 0 : 24 }}>
           <ToolIntro slug={slug} />
           {children}
+          {/* TASK-0533: the product that solves this problem (checklists, quizzes). */}
+          <ToolPitch toolId={slug} className="mt-8" />
         </div>
       </div>
     </div>

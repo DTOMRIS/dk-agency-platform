@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0533` feat/perf: hər pulsuz alətin nəticəsində uyğun məhsul (OCAQ, Marketinq Ocağı və ya xüsusi xidmət); menyuda «Modullar» → «Həllər» (yalnız DK həlləri, pulsuz alətlər «Alətlər»-də); bütün saytda bir şrift — Inter (səhifədə şrift faylı 6 → 3).
 - `TASK-0532` feat(toolkit): üzvlər üçün 5 DK Excel şablonu — 12 aylıq mənfəət və zərər, anbar və maya dəyəri, əmək haqqı xərcləri, büdcə və faktiki, balans; formullu, logolu, Azərbaycan dilində düzgün mühasibat terminləri ilə (məs. «sığorta haqları (işəgötürən payı)»); /toolkit/excel-sablonlar, yükləmə üzvlərə.
 - `TASK-0531` perf/design/fix: KAZAN-ın markdown kitabxanası yalnız lazım olanda yüklənir (hər səhifədə −45 KB JS); Franchise ROI kalkulyatoru yeni dizaynda və məntiq xətası düzəldi (sağlam = geri-qaytarma ≤ 36 ay); işçi saxlama aləti bir işçinin getməsini 5 hissədə hesablayır; Sektor Nəbzi başlığı aydın; «Xüsusi xidmət» zolağı diaqnostikanın ilk addım olduğunu deyir.
 - `TASK-0530` fix(security/ux): pullu AI hesabatı, köhnə üzv girişi, klik sayğacları və analitika limitsiz idi — limit + bot filtri; uydurma xəbər verən API/RSS/bülletən və DB yoxdursa uydurma xəbər göstərən səhifələr həqiqi dataya bağlandı; e-poçt təsdiq səhifəsi və «Sessiya tarixi» indi həqiqi; hər səhifədə geri düyməsi (58 → 0, panellərdə bir ortaq düymə); sistem xəritəsi yanlış həyəcanlardan təmizləndi, API-lar da saxta davranış üçün yoxlanır.

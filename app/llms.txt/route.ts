@@ -230,7 +230,7 @@ export async function GET(): Promise<Response> {
         '- Xidmət ərazisi: Azərbaycan (əsas), Türkiyə.',
         `- Əlaqə: info@dkagency.com.tr · WhatsApp ${whatsappDisplay} · Telegram kanalı ${TELEGRAM_URL} · ${SITE_URL}/elaqe — iş saatları bazar ertəsi–cümə, 09:00–18:00 (UTC+4).`,
       ].join('\n'),
-      toSection('Modullar', moduleEntries),
+      toSection('Alətlər və həllər', moduleEntries),
       toSection(`Pulsuz alətlər (toolkit, ${FREE_TOOLKIT_COUNT})`, TOOLKIT_ENTRIES),
       toSection('Platforma', CORE_ENTRIES),
       toSection('Franchise (françayzinq)', franchiseEntries),

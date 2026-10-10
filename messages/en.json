@@ -6530,7 +6530,7 @@
       }
     },
     "modules": {
-      "eyebrow": "Modules",
+      "eyebrow": "Tools and solutions",
       "title": "Some bring money in. Others protect it.",
       "desc": "Each module answers one question and ends with one step. The status badge is real: <b>Live</b> is working, <b>Beta</b> is in testing.",
       "groupCost": "Costs",
@@ -7950,6 +7950,27 @@
         "b2": "Current ratio and debt ratio",
         "b3": "The «check» row flags mistakes at once"
       }
+    }
+  },
+  "toolPitch": {
+    "ocaq": {
+      "eyebrow": "OCAQ",
+      "title": "Want to see this number every day?",
+      "body": "OCAQ runs shift checklists, HACCP, cash ↔ bank reconciliation and waste control every day across a multi-branch chain; numbers out of range reach the manager.",
+      "cta": "Show me OCAQ"
+    },
+    "marketing": {
+      "eyebrow": "Marketinq Ocağı",
+      "title": "The next step to grow sales",
+      "body": "Ad return, season plan, complaint analysis and guest profile — KALFA and USTA tools in one place.",
+      "cta": "See Marketinq Ocağı"
+    },
+    "service": {
+      "eyebrow": "Dedicated service",
+      "title": "Let’s build this together",
+      "body": "The first step is a free diagnostic: we look at the menu, costs, staff and opening plan with you, then build the system together.",
+      "cta": "Write on WhatsApp",
+      "wa": "Hello Doğan, I used a tool and would like a free diagnostic."
     }
   }
 }

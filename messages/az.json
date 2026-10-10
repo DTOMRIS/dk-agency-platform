@@ -6530,7 +6530,7 @@
       }
     },
     "modules": {
-      "eyebrow": "Modullar",
+      "eyebrow": "Alətlər və həllər",
       "title": "Bəziləri pul gətirir. Bəziləri pulu qoruyur.",
       "desc": "Hər modul bir sualı cavablandırır və sonunda bir addım verir. Status nişanı realdır: <b>Canlı</b> işləyir, <b>Beta</b> sınaq mərhələsindədir.",
       "groupCost": "Xərc",
@@ -7950,6 +7950,27 @@
         "b2": "Cari likvidlik və borc əmsalı",
         "b3": "«Yoxlama» sətri səhvi dərhal göstərir"
       }
+    }
+  },
+  "toolPitch": {
+    "ocaq": {
+      "eyebrow": "OCAQ",
+      "title": "Bu rəqəmi hər gün görmək istəyirsiniz?",
+      "body": "OCAQ çoxfilialı şəbəkədə növbə checklist-i, HACCP, kassa ↔ bank üzləşdirməsi və itki nəzarətini hər gün aparır; normadan çıxan rəqəm rəhbərin qarşısına çıxır.",
+      "cta": "OCAQ-ı göstərin"
+    },
+    "marketing": {
+      "eyebrow": "Marketinq Ocağı",
+      "title": "Satışı artırmaq üçün növbəti addım",
+      "body": "Reklamın gəlirliliyi, sezon planı, şikayət analizi və müştəri portreti — KALFA və USTA alətləri bir yerdə.",
+      "cta": "Marketinq Ocağına baxın"
+    },
+    "service": {
+      "eyebrow": "Xüsusi xidmət",
+      "title": "Bu işi birlikdə quraq",
+      "body": "İlk addım pulsuz diaqnostikadır: menyu, xərclər, kadr və açılış planına birlikdə baxırıq, sonra sistemi sizinlə qururuq.",
+      "cta": "WhatsApp-da yazın",
+      "wa": "Salam Doğan bəy, alətdən istifadə etdim, pulsuz diaqnostika istəyirəm."
     }
   }
 }
