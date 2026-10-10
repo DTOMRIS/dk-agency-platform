@@ -206,7 +206,7 @@
         "shiftLeaderLazimDeyil": "Not needed yet",
         "laborMaliyyeti": "Staff cost",
         "aylig": "Monthly (estimate)",
-        "laborFaizi": "Share of sales",
+        "laborFaizi": "Kitchen staff cost as share of sales",
         "qsrHedep": "Common rule of thumb for fast food: staff cost should stay at or below {value}% of sales.",
         "ideal": "Within the norm",
         "dikkat": "Watch out: a bit high",
@@ -229,7 +229,8 @@
           "expeditor": "Order check and hand-out"
         },
         "noChecks": "Enter orders per day and the average check",
-        "empty": "Enter the number of menu items and orders per day — stations and staff will appear here."
+        "empty": "Enter the number of menu items and orders per day — stations and staff will appear here.",
+        "headcount": "≈ {n} people — all shifts, 40 hours a week"
       },
       "assumptions": {
         "title": "Example numbers in this calculation",
@@ -237,8 +238,9 @@
         "extraPct": "Extra cost on top of salary (%)",
         "extraPctHelp": "Taxes, social insurance etc. the employer pays on top of the salary",
         "avgCheck": "Average check (₼)",
-        "laborTarget": "Staff cost target (% of sales)",
-        "salary": "Monthly salary of one kitchen worker (₼)"
+        "laborTarget": "Total staff cost target (% of sales) — the kitchen is part of it",
+        "salary": "Monthly salary of one kitchen worker (₼)",
+        "openHours": "Kitchen hours per day"
       }
     },
     "personelPlanlayici": {
@@ -283,7 +285,8 @@
         "benchmark": "Common rule of thumb: staff cost should stay at or below {value}% of sales",
         "peakNote": "After the busiest hours you can reduce the number of staff.",
         "empty": "Enter seats, receipts per day, opening and closing hour — the result will appear here.",
-        "noSales": "Enter the average check — without sales the staff cost share cannot be calculated"
+        "noSales": "Enter the average check — without sales the staff cost share cannot be calculated",
+        "headcount": "≈ {n} people — all shifts, 40 hours a week"
       },
       "assumptions": {
         "title": "Example numbers in this calculation",

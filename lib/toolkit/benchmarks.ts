@@ -9,8 +9,33 @@
 
 /** Prime cost (food + labour) as % of revenue — at or below is healthy. */
 export const PRIME_COST_MAX_PCT = 65;
+/** TASK-0537: above this (up to PRIME_COST_MAX_PCT) = «watch» band (break-even tool showed 60–65 amber on its own). */
+export const PRIME_COST_WATCH_PCT = 60;
 /** Rent as % of revenue — at or below is healthy. */
 export const RENT_MAX_PCT = 10;
+/** TASK-0537: above this (up to RENT_MAX_PCT) = «watch» band. */
+export const RENT_WATCH_PCT = 8;
+/** TASK-0537: payback of a restaurant investment (own branch or franchise) — ≤ good, ≤ watch, above = risky. */
+export const PAYBACK_GOOD_MONTHS = 36;
+export const PAYBACK_WATCH_MONTHS = 48;
+
+/**
+ * TASK-0537 — staffing maths shared by the staff planner and kitchen stations.
+ * A post (one place on the floor or in the kitchen) open N hours a day, every day, needs
+ * N × days ÷ FULLTIME_HOURS_PER_MONTH people: normal working time is at most 40 hours a week
+ * (Əmək Məcəlləsi, normal iş vaxtı) → 40 × 52 ÷ 12 ≈ 173 hours a month.
+ */
+export const FULLTIME_HOURS_PER_MONTH = (40 * 52) / 12;
+/** Example: the extra peak crew works lunch + dinner, about 4 hours a day (editable assumption in spirit). */
+export const PEAK_HOURS_PER_DAY = 4;
+/** Example opening hours of a kitchen when the tool has no opening-hours input (editable assumption). */
+export const KITCHEN_OPEN_HOURS_DEFAULT = 12;
+/**
+ * TASK-0537 — ONE example default for employer contributions on top of salary in every tool (was 24.5 / 22 / 15).
+ * 22% social insurance + 0.5% unemployment + 2% medical = 24.5% on the full wage (pre-2026 flat rates). From 2026 the
+ * rates are tiered by wage — the tools show it as an editable example and say «mühasibinizdən dəqiqləşdirin».
+ */
+export const EMPLOYER_CONTRIB_PCT_DEFAULT = 24.5;
 /** Food cost as % of revenue used by the P&L tool's KPI (upper end of the restaurant band). */
 export const FOOD_COST_MAX_PCT = 32;
 /** Labour (staff + management) as % of revenue used by the P&L insight. */
@@ -48,7 +73,7 @@ export const STAFF_PLANNER_SALARY_DEFAULTS = {
   sommelier: 600,
 } as const;
 /** Staff planner: employer extras on top of salary (taxes, contributions), % — was the 1.22 multiplier. */
-export const STAFF_PLANNER_EXTRA_PCT_DEFAULT = 22;
+export const STAFF_PLANNER_EXTRA_PCT_DEFAULT = EMPLOYER_CONTRIB_PCT_DEFAULT;
 /** Staff planner: example average check per venue type, ₼. */
 export const STAFF_PLANNER_AVG_CHECK_DEFAULTS = {
   restoran_casual: 15,
@@ -69,7 +94,7 @@ export const STAFF_PLANNER_WORK_DAYS = 30;
 /** Kitchen stations (Mətbəx stansiyaları): example average monthly salary of a kitchen worker, ₼. */
 export const KITCHEN_SALARY_DEFAULT = 380;
 /** Kitchen stations: employer extras on top of salary, % — was the 1.15 multiplier. */
-export const KITCHEN_EXTRA_PCT_DEFAULT = 15;
+export const KITCHEN_EXTRA_PCT_DEFAULT = EMPLOYER_CONTRIB_PCT_DEFAULT;
 /** Kitchen stations: staff cost target as % of sales (fast food rule of thumb). */
 export const KITCHEN_LABOR_TARGET_DEFAULT = 32;
 /** Kitchen stations: example average check per concept, ₼. */
@@ -81,7 +106,8 @@ export const KITCHEN_AVG_CHECK_DEFAULTS = {
   catering: 25,
 } as const;
 /** Kitchen stations: working days per month used for monthly sales. */
-export const KITCHEN_WORK_DAYS = 26;
+/** TASK-0537: same month as the staff planner (was 26 here, 30 there). */
+export const KITCHEN_WORK_DAYS = STAFF_PLANNER_WORK_DAYS;
 
 /**
  * «İnşaatdan açılışa» example budget split for a 50–80 m², 30–40 seat restaurant, ₼ (min–max per row).

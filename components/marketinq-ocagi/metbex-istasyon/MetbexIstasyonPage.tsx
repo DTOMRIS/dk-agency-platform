@@ -15,6 +15,9 @@ import {
   KITCHEN_LABOR_TARGET_DEFAULT,
   KITCHEN_SALARY_DEFAULT,
   KITCHEN_WORK_DAYS,
+  KITCHEN_OPEN_HOURS_DEFAULT,
+  FULLTIME_HOURS_PER_MONTH,
+  PEAK_HOURS_PER_DAY,
 } from '@/lib/toolkit/benchmarks';
 
 type Concept = 'fast_food' | 'qsr_burger' | 'qsr_pizza' | 'dark_kitchen' | 'catering';
@@ -30,12 +33,15 @@ interface Kanallar {
 interface KitchenAssumptions {
   salary: number;
   extraPct: number;
+  /** TASK-0537: hours the kitchen works a day (example 12) — the cost covers every shift. */
+  openHours: number;
   avgCheck: Record<Concept, number>;
   laborTarget: number;
 }
 const exampleAssumptions = (): KitchenAssumptions => ({
   salary: KITCHEN_SALARY_DEFAULT,
   extraPct: KITCHEN_EXTRA_PCT_DEFAULT,
+  openHours: KITCHEN_OPEN_HOURS_DEFAULT,
   avgCheck: { ...KITCHEN_AVG_CHECK_DEFAULTS },
   laborTarget: KITCHEN_LABOR_TARGET_DEFAULT,
 });
@@ -127,7 +133,13 @@ function compute(
     oi++;
   }
 
-  const ayligLabor = Math.round(bazaKadro * a.salary * (1 + a.extraPct / 100));
+  // TASK-0537 (calc audit): was base crew × ONE salary (one shift). Now every post is covered for the kitchen's
+  // opening hours (hours × days ÷ full-time hours) and the peak crew for PEAK_HOURS_PER_DAY.
+  const days = KITCHEN_WORK_DAYS;
+  const perPost = (Math.max(1, a.openHours) * days) / FULLTIME_HOURS_PER_MONTH;
+  const peakPeople = ((peakKadro - bazaKadro) * PEAK_HOURS_PER_DAY * days) / FULLTIME_HOURS_PER_MONTH;
+  const kadrSayi = Math.ceil(bazaKadro * perPost + peakPeople);
+  const ayligLabor = Math.round((bazaKadro * perPost + peakPeople) * a.salary * (1 + a.extraPct / 100));
   const aylikGelir = fis * a.avgCheck[input.concept] * KITCHEN_WORK_DAYS;
   // TASK-0515: 0 checks → no revenue → no labour % and no status (was 0% → «ideal»).
   const laborFaizi = aylikGelir > 0 ? (ayligLabor / aylikGelir) * 100 : null;
@@ -149,6 +161,7 @@ function compute(
     axsamVardiyasi,
     shiftLeaderLazim,
     ayligLabor,
+    kadrSayi,
     laborFaizi,
     status,
   };
@@ -327,6 +340,13 @@ export default function MetbexIstasyonPage() {
             onChange={(v) => setAssumptions((a) => ({ ...a, extraPct: v }))}
           />
           <AssumptionField
+            id="mi-open-hours"
+            label={t('assumptions.openHours')}
+            value={assumptions.openHours}
+            max={24}
+            onChange={(v) => setAssumptions((a) => ({ ...a, openHours: v }))}
+          />
+          <AssumptionField
             id="mi-avg-check"
             label={t('assumptions.avgCheck')}
             value={assumptions.avgCheck[concept]}
@@ -454,6 +474,9 @@ export default function MetbexIstasyonPage() {
             </div>
             <div className="text-2xl font-black tabular-nums text-slate-900">
               {fmt(calc.ayligLabor)} <span className="text-base">AZN</span>
+            </div>
+            <div className="mt-0.5 text-[11.5px] font-semibold text-slate-600" data-testid="mi-headcount">
+              {t('result.headcount', { n: calc.kadrSayi })}
             </div>
           </div>
           <div className="text-right">

@@ -15,6 +15,8 @@ import {
   STAFF_PLANNER_LABOR_TARGET_DEFAULTS,
   STAFF_PLANNER_SALARY_DEFAULTS,
   STAFF_PLANNER_WORK_DAYS,
+  FULLTIME_HOURS_PER_MONTH,
+  PEAK_HOURS_PER_DAY,
 } from '@/lib/toolkit/benchmarks';
 
 type Concept = 'restoran_casual' | 'restoran_fine' | 'kafe' | 'bar';
@@ -70,11 +72,10 @@ const EXAMPLE: PlannerInput = {
   kapanisSaati: 23,
 };
 
-function compute(input: PlannerInput, a: PlannerAssumptions) {
-  const mult = GUN_CARPANI[input.gunTipi];
+/** Posts per role for a day type (mult = GUN_CARPANI). */
+function staffing(input: PlannerInput, mult: number) {
   const hours = Math.max(1, input.kapanisSaati - input.achilisVaxti);
   const isCafe = input.concept === 'kafe' || input.concept === 'bar';
-
   let opening: RoleCounts;
   let mainStaff: number; // garson or barista — the role peak scales
   let skeleton: number;
@@ -103,20 +104,36 @@ function compute(input: PlannerInput, a: PlannerAssumptions) {
     const sg = Math.ceil(input.koltukSayisi / 22);
     skeleton = sg + Math.ceil(sg * 0.75) + 2;
   }
+  return { opening, mainStaff, skeleton, isCafe, hours };
+}
+
+function compute(input: PlannerInput, a: PlannerAssumptions) {
+  const mult = GUN_CARPANI[input.gunTipi];
+  const { opening, mainStaff, skeleton, isCafe, hours } = staffing(input, mult);
 
   const acilisToplam = sumRoles(opening);
   const peakEkstra = Math.max(1, Math.ceil(mainStaff * 0.4));
   const peakToplam = acilisToplam + peakEkstra;
   const axsamToplam = Math.max(skeleton, Math.ceil(acilisToplam * 0.8));
 
-  // Labor cost
-  const toplamMaas =
-    (opening.garson ?? 0) * a.salary.garson +
-    (opening.barista ?? 0) * a.salary.barista +
-    opening.asci * a.salary.asci +
-    (opening.host ?? 0) * a.salary.host +
-    (opening.sommelier ?? 0) * a.salary.sommelier +
-    opening.kasa * a.salary.kasa;
+  // Labour cost — TASK-0537 (calc audit): before, only the opening-shift posts were paid ONE monthly salary, so a
+  // 10:00–23:00 floor (13 h × 30 days ≈ 2.3 full-time people per post) looked 2–3× cheaper and almost always «ideal»;
+  // the peak crew and the evening were unpaid and «weekend» turned into a whole month of weekend staffing.
+  // Now: weekday posts × (opening hours × days ÷ full-time hours) people, + the peak crew for PEAK_HOURS_PER_DAY.
+  const base = staffing(input, GUN_CARPANI.isgunu);
+  const days = STAFF_PLANNER_WORK_DAYS;
+  const perPost = (hours * days) / FULLTIME_HOURS_PER_MONTH;
+  const peakPeople = (Math.max(1, Math.ceil(base.mainStaff * 0.4)) * PEAK_HOURS_PER_DAY * days) / FULLTIME_HOURS_PER_MONTH;
+  const mainSalary = isCafe ? a.salary.barista : a.salary.garson;
+  const postsCost =
+    (base.opening.garson ?? 0) * a.salary.garson +
+    (base.opening.barista ?? 0) * a.salary.barista +
+    base.opening.asci * a.salary.asci +
+    (base.opening.host ?? 0) * a.salary.host +
+    (base.opening.sommelier ?? 0) * a.salary.sommelier +
+    base.opening.kasa * a.salary.kasa;
+  const toplamMaas = postsCost * perPost + peakPeople * mainSalary;
+  const kadrSayi = Math.ceil(sumRoles(base.opening) * perPost + peakPeople);
   const ayligLabor = Math.round(toplamMaas * (1 + a.extraPct / 100));
   const aylikGelir = input.gunlukFis * a.avgCheck[input.concept] * STAFF_PLANNER_WORK_DAYS;
   // No sales (average check 0) → no share and no status instead of a fake «ideal».
@@ -126,6 +143,7 @@ function compute(input: PlannerInput, a: PlannerAssumptions) {
     laborFaizi === null ? 'none' : laborFaizi <= hi ? 'ideal' : laborFaizi <= hi + 10 ? 'dikkat' : 'kritik';
 
   return {
+    kadrSayi,
     opening,
     isCafe,
     acilisToplam,
@@ -502,6 +520,10 @@ export default function PersonelPlanlayiciPage() {
             </div>
             <div className="text-2xl font-black tabular-nums text-slate-900">
               {fmt(calc.ayligLabor)} <span className="text-base">AZN</span>
+            </div>
+            {/* TASK-0537: the cost now covers every shift — say how many people that is. */}
+            <div className="mt-0.5 text-[11.5px] font-semibold text-slate-600" data-testid="pp-headcount">
+              {t('result.headcount', { n: calc.kadrSayi })}
             </div>
           </div>
           <div className="text-right">

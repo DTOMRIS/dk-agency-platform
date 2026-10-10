@@ -1,3 +1,5 @@
+import { PAYBACK_GOOD_MONTHS, PAYBACK_WATCH_MONTHS } from '@/lib/toolkit/benchmarks';
+
 /** Franchise ROI Calculator — data SSOT */
 
 export const ROI_DEFAULTS = {
@@ -36,8 +38,8 @@ export function calcRoi(input: RoiInput) {
   // pass at ROI ≥ 33% while the copy promised 20%. One measure now: payback 36 / 48 months (= ROI ≈ 33% / 25%).
   let verdict: RoiVerdict;
   if (netProfit <= 0) verdict = 'negative';
-  else if (paybackMonths <= 36) verdict = 'good';
-  else if (paybackMonths <= 48) verdict = 'mid';
+  else if (paybackMonths <= PAYBACK_GOOD_MONTHS) verdict = 'good';
+  else if (paybackMonths <= PAYBACK_WATCH_MONTHS) verdict = 'mid';
   else verdict = 'bad';
 
   return { investment, grossProfit, royaltyAdFund, netProfit, roi, paybackMonths, verdict };

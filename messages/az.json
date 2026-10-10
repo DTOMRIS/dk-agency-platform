@@ -206,7 +206,7 @@
         "shiftLeaderLazimDeyil": "Hələ lazım deyil",
         "laborMaliyyeti": "İşçi xərci",
         "aylig": "Aylıq (təxmini)",
-        "laborFaizi": "Satışdan payı",
+        "laborFaizi": "Mətbəx heyətinin xərci satışdan",
         "qsrHedep": "Fast food üçün geniş yayılmış qayda: işçi xərci satışın {value}%-indən çox olmamalıdır.",
         "ideal": "Normadadır",
         "dikkat": "Diqqət: bir az yüksəkdir",
@@ -229,7 +229,8 @@
           "expeditor": "Sifarişi yoxlayıb verən"
         },
         "noChecks": "Gündəlik sifariş sayını və orta çeki yazın",
-        "empty": "Menyudakı yemək sayını və gündəlik sifariş sayını yazın — stansiyalar və işçi sayı burada görünəcək."
+        "empty": "Menyudakı yemək sayını və gündəlik sifariş sayını yazın — stansiyalar və işçi sayı burada görünəcək.",
+        "headcount": "≈ {n} nəfər — bütün növbələr, həftədə 40 saat"
       },
       "assumptions": {
         "title": "Hesablamadakı nümunə rəqəmlər",
@@ -237,8 +238,9 @@
         "extraPct": "Əmək haqqına əlavə işəgötürən haqları (%)",
         "extraPctHelp": "İşəgötürənin əmək haqqına əlavə ödədiyi məcburi dövlət sosial sığorta, işsizlikdən sığorta və icbari tibbi sığorta haqları. Dərəcəni mühasibinizdən dəqiqləşdirin.",
         "avgCheck": "Orta çek (₼)",
-        "laborTarget": "İşçi xərci üçün hədəf (satışın %-i)",
-        "salary": "Bir mətbəx işçisinin aylıq maaşı (₼)"
+        "laborTarget": "Ümumi işçi xərci hədəfi (satışın %-i) — mətbəx bunun bir hissəsidir",
+        "salary": "Bir mətbəx işçisinin aylıq əmək haqqı (₼)",
+        "openHours": "Mətbəx gündə neçə saat işləyir"
       }
     },
     "personelPlanlayici": {
@@ -283,7 +285,8 @@
         "benchmark": "Geniş yayılmış qayda: işçi xərci satışın {value}%-indən çox olmamalıdır",
         "peakNote": "Ən sıx saatlardan sonra işçi sayını azaltmaq olar.",
         "empty": "Oturacaq sayını, gündəlik çek sayını, açılış və bağlanış saatını yazın — nəticə burada görünəcək.",
-        "noSales": "Orta çeki yazın — satış olmadan işçi xərcinin payı hesablanmır"
+        "noSales": "Orta çeki yazın — satış olmadan işçi xərcinin payı hesablanmır",
+        "headcount": "≈ {n} nəfər — bütün növbələr, həftədə 40 saat"
       },
       "assumptions": {
         "title": "Hesablamadakı nümunə rəqəmlər",

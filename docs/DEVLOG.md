@@ -14,6 +14,7 @@
 - **0533** nəticə panelində məhsul (OCAQ / Marketinq Ocağı / xüsusi xidmət), «Həllər» menyusu, hər yerdə Inter (şrift faylı 6 → 3).
 - **0534** öz denetim: `/qiymet`-də səhv şəxs adı və **səhv WhatsApp nömrəsi** (müraciət başqasına gedirdi), mənbəsiz rəqəmlər, hesab xətaları (ROI hədləri, başabaşda dövriyyə pulu iki dəfə, gizli vurucu, qonaq evi hökmü, P&L), AZ terminləri.
 - **0535** /marketinq geri → /marketinq, bir səhifədə bir geri, üst bar həqiqi sessiya, «PREMIUM» → «Üzv», françayz, AHA → dövlətin ulduz təsnifatı (Hotelstars Union, AZS 906-2022), «Müştəri portreti», `/tanitim` keçidi.
+- **0537** işçi planlayıcı/mətbəx bütün növbələr (173 saat/ay, Əmək Məcəlləsi), hədlər `benchmarks.ts`-də tək mənbə, «40 il» + canlı bloq SQL-i (`docs/ops/2026-10-11-blog-fixes.sql`).
 - **0536** KAZAN proaktiv sual balonu (owner.com nümunəsi), menyuda ikon + izah, Owner/Nory/MarginEdge araşdırması (`docs/reports/2026-10-11-owner-nory-marginedge.md`).
 
 **Test üsulu:** hər task `npm run dk:validate` (build daxil) + production build-də Playwright (dev server soyuq başlanğıcda reload dövrünə girir). AI çağıran və DB-yə yazan route-lar sınaqda çağırılmadı (route tutulub saxta cavab). Excel şablonları Microsoft Excel-də açılıb hesablanmış dəyərlər oxundu.

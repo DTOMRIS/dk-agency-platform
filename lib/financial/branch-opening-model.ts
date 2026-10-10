@@ -110,8 +110,10 @@ function buildRampSeries(months: number, openingPct: number): number[] {
 }
 
 function calcBand(value: number, bands: typeof TAX_BENCHMARK_BANDS.primeCost): 'green' | 'amber' | 'red' {
+  // TASK-0537: first match, upper bound inclusive — exactly 65% prime cost or 36 months payback is the same
+  // verdict as in the P&L / franchise tools (was «red» here and «healthy» there).
   for (const band of bands) {
-    if (value >= band.min && value < band.max) return band.labelKey;
+    if (value >= band.min && value <= band.max) return band.labelKey;
   }
   return 'red';
 }

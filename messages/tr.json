@@ -206,7 +206,7 @@
         "shiftLeaderLazimDeyil": "Henüz gerekli değil",
         "laborMaliyyeti": "Personel gideri",
         "aylig": "Aylık (tahmini)",
-        "laborFaizi": "Cirodaki payı",
+        "laborFaizi": "Mutfak personeli maliyetinin satışa oranı",
         "qsrHedep": "Fast food için yaygın kural: personel gideri cironun %{value}'ini geçmemeli.",
         "ideal": "Normal",
         "dikkat": "Dikkat: biraz yüksek",
@@ -229,7 +229,8 @@
           "expeditor": "Siparişi kontrol edip veren"
         },
         "noChecks": "Günlük sipariş sayısını ve ortalama hesabı yazın",
-        "empty": "Menüdeki yemek sayısını ve günlük sipariş sayısını yazın — istasyonlar ve çalışan sayısı burada görünecek."
+        "empty": "Menüdeki yemek sayısını ve günlük sipariş sayısını yazın — istasyonlar ve çalışan sayısı burada görünecek.",
+        "headcount": "≈ {n} kişi — tüm vardiyalar, haftada 40 saat"
       },
       "assumptions": {
         "title": "Hesaplamadaki örnek rakamlar",
@@ -237,8 +238,9 @@
         "extraPct": "Maaşın üstüne ek maliyet (%)",
         "extraPctHelp": "İşverenin maaşa ek olarak ödediği vergi, sosyal sigorta primi vb.",
         "avgCheck": "Ortalama hesap (₼)",
-        "laborTarget": "Personel maliyeti hedefi (satışın yüzdesi)",
-        "salary": "Bir mutfak çalışanının aylık maaşı (₼)"
+        "laborTarget": "Toplam personel maliyeti hedefi (satışın %’si) — mutfak bunun bir parçası",
+        "salary": "Bir mutfak çalışanının aylık maaşı (₼)",
+        "openHours": "Mutfak günde kaç saat çalışıyor"
       }
     },
     "personelPlanlayici": {
@@ -283,7 +285,8 @@
         "benchmark": "Yaygın kural: personel gideri cironun %{value}'ini geçmemeli",
         "peakNote": "En yoğun saatlerden sonra çalışan sayısı azaltılabilir.",
         "empty": "Oturma yeri, günlük fiş sayısı, açılış ve kapanış saatini yazın — sonuç burada görünecek.",
-        "noSales": "Ortalama hesabı yazın — satış olmadan personel maliyeti payı hesaplanamaz"
+        "noSales": "Ortalama hesabı yazın — satış olmadan personel maliyeti payı hesaplanamaz",
+        "headcount": "≈ {n} kişi — tüm vardiyalar, haftada 40 saat"
       },
       "assumptions": {
         "title": "Hesaplamadaki örnek rakamlar",
