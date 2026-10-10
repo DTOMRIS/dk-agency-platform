@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import {
   AlertCircle,
-  ArrowLeft,
   Check,
   Copy,
   History,
@@ -23,6 +22,7 @@ import {
   type CustomerType,
 } from '@/app/actions/complaint-analysis-ai';
 import { formatAzDate } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 type ActiveTab = 'response' | 'discovery' | 'internal';
 
@@ -77,7 +77,7 @@ const CATEGORY_META: Record<ComplaintCategory, { color: string; keywords: string
     keywords: ['çatdırılma', 'catdirilma', 'kuryer', 'gecikdi', 'delivery', 'wolt', 'bolt'],
   },
   other: {
-    color: 'border-slate-200 bg-slate-50 text-slate-700',
+    color: 'border-[#E4DCCD] bg-[#FBF8F3] text-slate-700',
     keywords: [],
   },
 };
@@ -139,7 +139,7 @@ function CopyButton({ text }: { text: string }) {
         setCopied(true);
         setTimeout(() => setCopied(false), 1800);
       }}
-      className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-bold text-[var(--dk-navy)] transition hover:border-[var(--dk-gold)]"
+      className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-[#E4DCCD] bg-white px-3 text-sm font-bold text-[#0F172A] transition hover:border-[#0F172A]"
     >
       {copied ? <Check size={15} /> : <Copy size={15} />}
       {copied ? t('copied') : t('copy_btn')}
@@ -237,23 +237,10 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8">
-      <Link href={backHref} className="mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="sikayet-analitigi" title={t('title')} subtitle={t('subtitle')} backHref={backHref} />
 
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <div className="mb-2 inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold uppercase text-amber-700">
-            KALFA
-          </div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)] sm:text-3xl">{t('title')}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-        </div>
-      </div>
-
-      <section className="mb-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <section className="mb-6 rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
         <div className="mb-4 flex items-start gap-3 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm leading-6 text-blue-900">
           <MessageSquareWarning size={18} className="mt-0.5 shrink-0" />
           <p>{t('philosophy')}</p>
@@ -261,13 +248,13 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
 
         <div className="grid gap-4">
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('complaint_label')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('complaint_label')}</span>
             <textarea
               value={complaintText}
               onChange={(event) => setComplaintText(event.target.value)}
               rows={5}
               maxLength={1000}
-              className="w-full resize-y rounded-lg border border-slate-200 px-3 py-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+              className="w-full resize-y rounded-lg border border-[#E4DCCD] px-3 py-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15"
               placeholder={t('complaint_placeholder')}
             />
             <span className="mt-1 block text-right text-xs text-slate-400">{complaintText.length}/1000</span>
@@ -275,37 +262,37 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
 
           <div className="grid gap-4 sm:grid-cols-3">
             <label>
-              <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('channel_label')}</span>
+              <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('channel_label')}</span>
               <select
                 value={channel}
                 onChange={(event) => setChannel(event.target.value as ComplaintChannel)}
-                className="min-h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-[var(--dk-navy)] outline-none focus:border-[var(--dk-gold)]"
+                className="min-h-11 w-full rounded-lg border border-[#E4DCCD] bg-white px-3 text-sm text-[#0F172A] outline-none focus:border-[#D63B54]"
               >
                 {CHANNELS.map((item) => <option key={item} value={item}>{t(`channels.${item}`)}</option>)}
               </select>
             </label>
             <label>
-              <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('customer_type_label')}</span>
+              <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('customer_type_label')}</span>
               <select
                 value={customerType}
                 onChange={(event) => setCustomerType(event.target.value as CustomerType)}
-                className="min-h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-[var(--dk-navy)] outline-none focus:border-[var(--dk-gold)]"
+                className="min-h-11 w-full rounded-lg border border-[#E4DCCD] bg-white px-3 text-sm text-[#0F172A] outline-none focus:border-[#D63B54]"
               >
                 {CUSTOMER_TYPES.map((item) => <option key={item} value={item}>{t(`customerTypes.${item}`)}</option>)}
               </select>
             </label>
             <label>
-              <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('date_label')}</span>
+              <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('date_label')}</span>
               <input
                 type="date"
                 value={date}
                 onChange={(event) => setDate(event.target.value)}
-                className="min-h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-[var(--dk-navy)] outline-none focus:border-[var(--dk-gold)]"
+                className="min-h-11 w-full rounded-lg border border-[#E4DCCD] bg-white px-3 text-sm text-[#0F172A] outline-none focus:border-[#D63B54]"
               />
             </label>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+          <div className="rounded-lg border border-[#E4DCCD] bg-[#FBF8F3] p-3">
             <p className="mb-2 text-xs font-bold uppercase tracking-wide text-slate-500">{t('instant_category')}</p>
             <div className="flex flex-wrap gap-2">
               {detectedCategories.length ? detectedCategories.map((category) => (
@@ -341,7 +328,7 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
       </section>
 
       {isPending && (
-        <section className="mb-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <section className="mb-6 rounded-2xl border border-[#E4DCCD] bg-white p-5 shadow-sm">
           <div className="space-y-3">
             <div className="h-4 w-10/12 animate-pulse rounded bg-slate-100" />
             <div className="h-4 w-8/12 animate-pulse rounded bg-slate-100" />
@@ -351,7 +338,7 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
       )}
 
       {result && (
-        <section className="mb-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <section className="mb-6 rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <CategoryBadge category={result.category} label={categoryLabels[result.category]} />
             {result.secondaryCategories.map((category) => (
@@ -374,7 +361,7 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className={`min-h-10 rounded-md px-2 text-xs font-bold transition sm:text-sm ${activeTab === tab ? 'bg-white text-[var(--dk-navy)] shadow-sm' : 'text-slate-500'}`}
+                className={`min-h-10 rounded-md px-2 text-xs font-bold transition sm:text-sm ${activeTab === tab ? 'bg-white text-[#0F172A] shadow-sm' : 'text-slate-500'}`}
               >
                 {tab === 'response' ? t('tab_response') : tab === 'discovery' ? t('tab_discovery') : t('tab_internal')}
               </button>
@@ -382,7 +369,7 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
           </div>
 
           {activeTab === 'response' && (
-            <div className="rounded-lg bg-slate-50 p-4">
+            <div className="rounded-lg bg-[#FBF8F3] p-4">
               <div className="mb-3 flex justify-end">
                 <CopyButton text={result.customerResponse} />
               </div>
@@ -396,8 +383,8 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
           {activeTab === 'discovery' && (
             <div className="space-y-3">
               {result.discoveryQuestions.map((question, index) => (
-                <div key={question} className="rounded-lg border border-slate-200 bg-white p-3 text-sm text-[var(--dk-navy)]">
-                  <span className="mr-2 font-bold text-[var(--dk-gold)]">{index + 1}.</span>
+                <div key={question} className="rounded-lg border border-[#E4DCCD] bg-white p-3 text-sm text-[#0F172A]">
+                  <span className="mr-2 font-bold text-[#BE2F47]">{index + 1}.</span>
                   {question}
                 </div>
               ))}
@@ -406,40 +393,40 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
 
           {activeTab === 'internal' && (
             <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-lg bg-slate-50 p-3">
+              <div className="rounded-lg bg-[#FBF8F3] p-3">
                 <p className="text-xs font-bold uppercase text-slate-500">{t('internal_owner')}</p>
-                <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{result.internalNote.owner}</p>
+                <p className="mt-1 text-sm font-bold text-[#0F172A]">{result.internalNote.owner}</p>
               </div>
-              <div className="rounded-lg bg-slate-50 p-3 sm:col-span-2">
+              <div className="rounded-lg bg-[#FBF8F3] p-3 sm:col-span-2">
                 <p className="text-xs font-bold uppercase text-slate-500">{t('internal_process')}</p>
-                <p className="mt-1 text-sm text-[var(--dk-navy)]">{result.internalNote.processCheck}</p>
+                <p className="mt-1 text-sm text-[#0F172A]">{result.internalNote.processCheck}</p>
               </div>
-              <div className="rounded-lg bg-slate-50 p-3 sm:col-span-3">
+              <div className="rounded-lg bg-[#FBF8F3] p-3 sm:col-span-3">
                 <p className="text-xs font-bold uppercase text-slate-500">{t('tab_internal')}</p>
-                <p className="mt-1 text-sm leading-6 text-[var(--dk-navy)]">{result.internalNote.note}</p>
+                <p className="mt-1 text-sm leading-6 text-[#0F172A]">{result.internalNote.note}</p>
               </div>
               <div className="rounded-lg border border-amber-100 bg-amber-50 p-3 sm:col-span-3">
                 <p className="text-xs font-bold uppercase text-amber-700">{t('capa_title')}</p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   <div>
                     <p className="text-xs font-bold text-slate-500">{t('capa_investigation')}</p>
-                    <p className="mt-1 text-sm leading-6 text-[var(--dk-navy)]">{result.capa.investigation}</p>
+                    <p className="mt-1 text-sm leading-6 text-[#0F172A]">{result.capa.investigation}</p>
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-500">{t('capa_closure')}</p>
-                    <p className="mt-1 text-sm leading-6 text-[var(--dk-navy)]">{result.capa.closureCriteria}</p>
+                    <p className="mt-1 text-sm leading-6 text-[#0F172A]">{result.capa.closureCriteria}</p>
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-500">{t('capa_corrective')}</p>
-                    <p className="mt-1 text-sm leading-6 text-[var(--dk-navy)]">{result.capa.correctiveAction}</p>
+                    <p className="mt-1 text-sm leading-6 text-[#0F172A]">{result.capa.correctiveAction}</p>
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-500">{t('capa_preventive')}</p>
-                    <p className="mt-1 text-sm leading-6 text-[var(--dk-navy)]">{result.capa.preventiveAction}</p>
+                    <p className="mt-1 text-sm leading-6 text-[#0F172A]">{result.capa.preventiveAction}</p>
                   </div>
                   <div className="sm:col-span-2">
                     <p className="text-xs font-bold text-slate-500">{t('capa_recurrence')}</p>
-                    <p className="mt-1 text-sm leading-6 text-[var(--dk-navy)]">{result.capa.recurrenceCheck}</p>
+                    <p className="mt-1 text-sm leading-6 text-[#0F172A]">{result.capa.recurrenceCheck}</p>
                   </div>
                 </div>
               </div>
@@ -448,9 +435,9 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
         </section>
       )}
 
-      <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
         <div className="mb-4 flex items-center justify-between gap-3">
-          <h2 className="inline-flex items-center gap-2 text-lg font-bold text-[var(--dk-navy)]">
+          <h2 className="inline-flex items-center gap-2 text-lg font-bold text-[#0F172A]">
             <History size={18} />
             {t('history_title')}
           </h2>
@@ -458,7 +445,7 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
             <button
               type="button"
               onClick={clearHistory}
-              className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-sm font-bold text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+              className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-[#E4DCCD] px-3 text-sm font-bold text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
             >
               <Trash2 size={15} />
               {t('history_clear')}
@@ -467,7 +454,7 @@ export default function ComplaintAnalysis({ backHref = '/b2b-panel/marketinq-oca
         </div>
         <div className="space-y-3">
           {history.length ? history.map((item) => (
-            <div key={item.id} className="rounded-lg border border-slate-200 p-3">
+            <div key={item.id} className="rounded-lg border border-[#E4DCCD] p-3">
               <div className="mb-2 flex flex-wrap gap-2">
                 <CategoryBadge category={item.category} label={categoryLabels[item.category]} />
                 <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-bold ${SEVERITY_COLOR[item.severity]}`}>

@@ -8,11 +8,11 @@
  */
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
-import { ArrowLeft, Clipboard, Printer } from 'lucide-react';
+import { Clipboard, Printer } from 'lucide-react';
 import ToolTabs from '../ToolTabs';
+import { ToolHeader } from '../MarketinqV2';
 import {
   analyseSurvey,
   DEFAULT_PERFECT_WARN_PCT,
@@ -39,9 +39,9 @@ const SAMPLE = [
   '4,4,4,5,4,4,4,4,8,125',
 ].join('\n');
 
-const card = 'rounded-2xl border border-slate-200 bg-white p-5 shadow-sm';
-const input = 'min-h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
-const ghostBtn = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-800 transition hover:border-slate-400';
+const card = 'rounded-2xl border border-[#E4DCCD] bg-white p-5 shadow-sm';
+const input = 'min-h-11 w-full rounded-2xl border border-[#E4DCCD] bg-white px-3 text-sm text-slate-900 outline-none focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
+const ghostBtn = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-[#E4DCCD] bg-white px-4 text-sm font-bold text-slate-800 transition hover:border-slate-400';
 const redBtn = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-dk-red-strong px-5 text-sm font-bold text-white transition hover:bg-dk-red-deep';
 
 function SurveyBuilder() {
@@ -104,7 +104,7 @@ function SurveyBuilder() {
         <p className="mt-1 text-xs text-slate-500">{t('scaleNote')}</p>
         <ol className="mt-4 space-y-3">
           {SURVEY_QUESTIONS.map((q, i) => (
-            <li key={q.id} className="flex flex-col gap-1.5 border-b border-slate-100 pb-3 sm:flex-row sm:items-center sm:justify-between">
+            <li key={q.id} className="flex flex-col gap-1.5 border-b border-[#EFE9DE] pb-3 sm:flex-row sm:items-center sm:justify-between">
               <span className="text-sm text-slate-800">
                 <span className="mr-1 font-bold">{i + 1}.</span>{t(`questions.${q.id}`)}
                 <span className="ml-2 text-[10px] font-bold uppercase text-slate-400">{t(`groups.${q.group}`)}</span>
@@ -157,7 +157,7 @@ function SurveyChecker() {
         <label className="block">
           <span className="mb-1.5 block text-sm font-bold text-slate-900">{t('pasteLabel')}</span>
           <textarea value={text} onChange={(e) => setText(e.target.value)} rows={8} placeholder={t('pastePlaceholder')}
-            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 font-mono text-xs text-slate-900 outline-none focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15" data-testid="qa-paste" />
+            className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-3 py-2 font-mono text-xs text-slate-900 outline-none focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15" data-testid="qa-paste" />
         </label>
         <label className="mt-3 block max-w-sm">
           <span className="mb-1.5 block text-sm font-bold text-slate-900">{t('perfectLabel')}</span>
@@ -244,16 +244,9 @@ function SurveyChecker() {
 export default function QonaqAnketiPage({ initialTab = 'build', backHref = '/b2b-panel/marketinq-ocagi' }: { initialTab?: 'build' | 'check'; backHref?: string }) {
   const t = useTranslations('mqForms.qonaqAnketi');
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
-        <Link href={backHref} className="no-print inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-slate-900">
-          <ArrowLeft size={16} aria-hidden="true" />{t('back')}
-        </Link>
-        <div className="mt-3">
-          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold uppercase text-emerald-700">{t('tier')}</span>
-          <h1 className="mt-3 text-2xl font-bold text-slate-900 sm:text-3xl">{t('title')}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-        </div>
+    <div>
+      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6">
+        <ToolHeader slug="qonaq-anketi" title={t('title')} subtitle={t('subtitle')} backHref={backHref} />
       </div>
       <ToolTabs
         label={t('tabsLabel')}

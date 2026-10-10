@@ -14,7 +14,7 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { LISTING_CATEGORIES } from '@/lib/data/listingCategories';
-import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
+import { type MockListing } from '@/lib/data/mockListings';
 import { getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { getSectorLabel } from '@/lib/data/listingSectors';
@@ -51,6 +51,7 @@ const pageCopy: Record<
     colReview: string;
     reviewAction: string;
     emptyState: string;
+    loadError: string;
     loading: string;
     paginationSummary: (total: number, current: number, pages: number) => string;
     prevPage: string;
@@ -86,6 +87,7 @@ const pageCopy: Record<
     colReview: 'İncələ',
     reviewAction: 'İncələ →',
     emptyState: 'Bu filtrə uyğun elan tapılmadı.',
+    loadError: 'Elanlar yüklənmədi — server cavab vermədi. Səhifəni yeniləyin.',
     loading: 'Yüklənir...',
     paginationSummary: (total, current, pages) => `${total} nəticə, səhifə ${current}/${pages}`,
     prevPage: 'Geri',
@@ -128,6 +130,7 @@ const pageCopy: Record<
     colReview: 'Просмотр',
     reviewAction: 'Просмотр →',
     emptyState: 'Объявления по данному фильтру не найдены.',
+    loadError: 'Объявления не загрузились — сервер не ответил. Обновите страницу.',
     loading: 'Загрузка...',
     paginationSummary: (total, current, pages) =>
       `${total} результатов, страница ${current}/${pages}`,
@@ -171,6 +174,7 @@ const pageCopy: Record<
     colReview: 'Review',
     reviewAction: 'Review →',
     emptyState: 'No listings found for this filter.',
+    loadError: 'Listings did not load — the server did not respond. Refresh the page.',
     loading: 'Loading...',
     paginationSummary: (total, current, pages) => `${total} results, page ${current}/${pages}`,
     prevPage: 'Back',
@@ -212,6 +216,7 @@ const pageCopy: Record<
     colReview: 'İncele',
     reviewAction: 'İncele →',
     emptyState: 'Bu filtreye uygun ilan bulunamadı.',
+    loadError: 'İlanlar yüklenmedi — sunucu yanıt vermedi. Sayfayı yenileyin.',
     loading: 'Yükleniyor...',
     paginationSummary: (total, current, pages) => `${total} sonuç, sayfa ${current}/${pages}`,
     prevPage: 'Geri',
@@ -261,6 +266,7 @@ export default function DashboardIlanlarPage() {
   const [total, setTotal] = useState(0);
   const [stats, setStats] = useState({ total: 0, pending: 0, showcase: 0, rejected: 0 });
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [page, setPage] = useState(1);
@@ -293,6 +299,7 @@ export default function DashboardIlanlarPage() {
         };
 
         if (!cancelled) {
+          setLoadError(false);
           setListings(Array.isArray(payload.data) ? payload.data : []);
           setTotal(payload.total ?? 0);
           if (payload.stats) {
@@ -300,33 +307,11 @@ export default function DashboardIlanlarPage() {
           }
         }
       } catch {
+        // TASK-0526: no more MOCK_LISTINGS on error — the admin was approving / rejecting fake listings.
         if (!cancelled) {
-          const selected = STATUS_FILTERS.find((item) => item.key === statusFilter);
-          const query = search.trim().toLowerCase();
-          const fallback = MOCK_LISTINGS.filter((listing) => {
-            const matchesStatus =
-              !selected || selected.apiStatus === 'all'
-                ? true
-                : listing.status === selected.apiStatus;
-            const matchesQuery =
-              !query ||
-              listing.title.toLowerCase().includes(query) ||
-              listing.trackingCode.toLowerCase().includes(query);
-            return matchesStatus && matchesQuery;
-          }).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-
-          const allStats = {
-            total: MOCK_LISTINGS.length,
-            pending: MOCK_LISTINGS.filter((item) =>
-              ['submitted', 'ai_checked', 'committee_review'].includes(item.status)
-            ).length,
-            showcase: MOCK_LISTINGS.filter((item) => item.status === 'showcase_ready').length,
-            rejected: MOCK_LISTINGS.filter((item) => item.status === 'rejected').length,
-          };
-
-          setTotal(fallback.length);
-          setListings(fallback.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
-          setStats(allStats);
+          setListings([]);
+          setTotal(0);
+          setLoadError(true);
         }
       } finally {
         if (!cancelled) setLoading(false);
@@ -620,7 +605,9 @@ export default function DashboardIlanlarPage() {
             </table>
           </div>
 
-          {!loading && listings.length === 0 ? (
+          {!loading && loadError ? (
+            <div role="alert" className="px-6 py-16 text-center text-sm font-semibold text-red-700">{copy.loadError}</div>
+          ) : !loading && listings.length === 0 ? (
             <div className="px-6 py-16 text-center text-sm text-slate-600">{copy.emptyState}</div>
           ) : null}
 

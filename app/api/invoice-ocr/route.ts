@@ -4,6 +4,7 @@
  * @critical KAZAN AI Invoice OCR — Həftə 1 POC
  */
 
+import { requireApiMember } from '@/lib/api/guards';
 import { NextRequest, NextResponse } from 'next/server';
 import { runInvoiceOcr } from '@/lib/invoice-ocr/ocr-providers';
 import type { OcrApiResponse } from '@/lib/invoice-ocr/types';
@@ -13,6 +14,10 @@ const ALLOWED_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 export async function POST(request: NextRequest): Promise<NextResponse<OcrApiResponse>> {
+  // TASK-0524 (security): paid AI OCR was open to anonymous callers (IP rate limit only). Logged-in users only (admin + B2B invoices).
+  const guard = await requireApiMember();
+  if (!guard.ok) return guard.response as never;
+
   const ip = getClientIp(request);
   const rl = checkRateLimit(`invoice-ocr:${ip}`, RATE_LIMITS.invoiceOcr);
   if (!rl.success) return rateLimitExceeded(rl) as NextResponse<OcrApiResponse>;

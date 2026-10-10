@@ -3,6 +3,7 @@
 import { Suspense, startTransition, useEffect, useState } from 'react';
 import Link from 'next/link';
 import PortalEngagementTracker from '@/components/analytics/PortalEngagementTracker';
+import DkMark from '@/components/brand/DkMark';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import {
@@ -191,20 +192,19 @@ export default function B2BSidebar() {
       <Suspense fallback={null}>
         <PortalEngagementTracker />
       </Suspense>
-      <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-slate-200 bg-white/95 px-4 backdrop-blur-md lg:hidden">
+      <div className="fixed inset-x-0 top-0 z-30 flex h-14 items-center gap-3 border-b border-[#E4DCCD] bg-[#F6F1E9] px-4 lg:hidden">
         <button
           type="button"
           onClick={() => setMobileOpen(true)}
           aria-label={t('mobileOpenMenu')}
           aria-expanded={mobileOpen}
           data-testid="b2b-mobile-menu"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-700"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#E4DCCD] bg-white text-[#0F172A]"
         >
           <Menu size={20} />
         </button>
-        <Link href="/b2b-panel" className="flex items-center gap-2">
-          <img src="/images/logo-mobil.png" alt="DK Agency Logo" className="h-8 w-8 object-contain" />
-          <span className="text-sm font-bold text-slate-900">DK Agency</span>
+        <Link href="/b2b-panel" aria-label="DK Agency">
+          <DkMark size="sm" withName />
         </Link>
       </div>
 
@@ -218,34 +218,26 @@ export default function B2BSidebar() {
 
       <aside
         data-testid="b2b-sidebar"
-        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-72 shrink-0 flex-col border-r border-slate-200 bg-white transition-transform duration-300 lg:static lg:h-auto lg:min-h-screen lg:translate-x-0 lg:bg-white/80 lg:backdrop-blur-md ${
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-72 shrink-0 flex-col border-r border-[#E4DCCD] bg-[#FBF8F3] transition-transform duration-300 lg:sticky lg:top-[68px] lg:z-20 lg:h-[calc(100vh-68px)] lg:translate-x-0 xl:top-[76px] xl:h-[calc(100vh-76px)] ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-start justify-between border-b border-slate-200 p-5">
-          <Link href="/b2b-panel" className="group flex items-center gap-3">
-            <img
-              src="/images/logo-mobil.png"
-              alt="DK Agency Logo"
-              className="h-11 w-11 shrink-0 object-contain shadow-sm transition-all group-hover:shadow-md"
-            />
-            <div>
-              <h1 className="font-bold text-slate-900">DK Agency</h1>
-              <p className="text-[10px] uppercase tracking-wider text-slate-500">B2B Portal</p>
-            </div>
+        <div className="flex items-start justify-between border-b border-[#E4DCCD] p-5 lg:hidden">
+          <Link href="/b2b-panel" aria-label="DK Agency">
+            <DkMark withName subtitle="B2B Portal" />
           </Link>
           <button
             type="button"
             onClick={() => setMobileOpen(false)}
             aria-label={t('mobileCloseMenu')}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 lg:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E4DCCD] bg-white text-slate-700 lg:hidden"
           >
             <X size={18} />
           </button>
         </div>
 
-        <div className="border-b border-slate-200 p-4">
-          <div className="rounded-xl border border-slate-200 bg-slate-50/50 backdrop-blur-sm p-4">
+        <div className="border-b border-[#E4DCCD] p-4">
+          <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4">
             <div className="flex items-center gap-3">
               <CompanyLogo />
               <div className="min-w-0 flex-1">
@@ -262,14 +254,14 @@ export default function B2BSidebar() {
                 </div>
               </div>
             </div>
-            <div className="mt-3 border-t border-slate-200 pt-3">
+            <div className="mt-3 border-t border-[#EFE9DE] pt-3">
               <div className="mb-1 flex items-center justify-between text-[10px] text-slate-500">
                 <span>{t('profileCompletion')}</span>
                 <span className="font-medium text-slate-900">
                   {completion === null ? '—' : `${pct}%`}
                 </span>
               </div>
-              <div className="h-1.5 overflow-hidden rounded-full bg-slate-200">
+              <div className="h-1.5 overflow-hidden rounded-full bg-[#EFE9DE]">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-dk-red to-dk-red-strong transition-all"
                   style={{ width: `${pct}%` }}
@@ -282,7 +274,7 @@ export default function B2BSidebar() {
         <nav className="flex-1 overflow-y-auto p-3">
           {NAV_SECTIONS.map((section, idx) => (
             <div key={section.titleKey} className={idx > 0 ? 'mt-6' : ''}>
-              <p className="mb-2 px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+              <p className="mb-2 px-3 text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-slate-500">
                 {t(section.titleKey)}
               </p>
               <ul className="space-y-1">
@@ -296,19 +288,19 @@ export default function B2BSidebar() {
                         href={item.href}
                         className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
                           active
-                            ? 'bg-dk-red/10 text-dk-red'
+                            ? 'bg-[#FDECEF] font-bold text-[#BE2F47]'
                             : item.highlight
                               ? 'border border-dashed border-emerald-300 text-slate-700 hover:border-emerald-400 hover:bg-emerald-50'
-                              : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                              : 'text-slate-700 hover:bg-[#F6F1E9] hover:text-slate-900'
                         }`}
                       >
                         <div
                           className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all ${
                             active
-                              ? 'bg-dk-red/15 text-dk-red'
+                              ? 'bg-white text-[#D63B54] ring-1 ring-[#F4B8C3]'
                               : item.highlight
                                 ? 'bg-emerald-100 text-emerald-600'
-                                : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700'
+                                : 'bg-white text-slate-500 ring-1 ring-[#EFE9DE] group-hover:text-slate-800'
                           }`}
                         >
                           <Icon size={15} />
@@ -317,7 +309,7 @@ export default function B2BSidebar() {
                         {item.badge ? (
                           <span
                             className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                              active ? 'bg-dk-red/15 text-dk-red' : 'bg-slate-200 text-slate-600'
+                              active ? 'bg-[#D63B54] text-white' : 'bg-[#EFE9DE] text-slate-700'
                             }`}
                           >
                             {item.badge}
@@ -338,29 +330,29 @@ export default function B2BSidebar() {
         </nav>
 
         <div className="p-4">
-          <div className="rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 to-white p-4">
+          <div className="rounded-2xl bg-[#0F172A] p-4 text-white">
             <div className="mb-2 flex items-center gap-2">
-              <Sparkles size={16} className="text-amber-600" />
-              <span className="text-sm font-bold text-slate-900">{t('kazanAiTitle')}</span>
+              <Sparkles size={16} className="text-amber-300" />
+              <span className="text-sm font-bold">{t('kazanAiTitle')}</span>
             </div>
-            <p className="mb-3 text-xs text-slate-600">{t('kazanAiDesc')}</p>
+            <p className="mb-3 text-xs text-slate-300">{t('kazanAiDesc')}</p>
             <Link
               href="/kazan-ai"
-              className="block w-full rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 py-2 text-center text-xs font-bold text-slate-900 transition-all hover:from-amber-300 hover:to-amber-400"
+              className="block w-full rounded-full bg-dk-red-strong py-2 text-center text-xs font-bold text-white transition-colors hover:bg-dk-red-deep"
             >
               {t('kazanAiCta')}
             </Link>
           </div>
         </div>
 
-        <div className="border-t border-slate-200 p-4">
+        <div className="border-t border-[#E4DCCD] p-4">
           <button
             type="button"
             onClick={handleLogout}
             disabled={loggingOut}
-            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-slate-500 transition-all hover:bg-slate-50 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-slate-600 transition-all hover:bg-[#F6F1E9] hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-slate-500 ring-1 ring-[#EFE9DE]">
               <LogOut size={15} />
             </div>
             <span className="text-sm font-medium">{t('logout')}</span>

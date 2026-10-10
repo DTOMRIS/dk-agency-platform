@@ -67,32 +67,6 @@ const MOCK_CATEGORIES: CategoryOption[] = [
   { id: 12, name: 'Sair', color: '#6B7280' },
 ];
 
-function buildMockDetail(id: string): InvoiceDetail {
-  return {
-    id: Number(id),
-    supplierName: 'Metro Cash & Carry',
-    supplierVoen: '1234567890',
-    invoiceNumber: 'FC-004521',
-    invoiceDate: '2026-04-27',
-    subtotal: 21580,
-    vatAmount: 3000,
-    grandTotal: 24580,
-    currency: 'AZN',
-    status: 'draft',
-    source: 'ocr_upload',
-    ocrConfidence: 0.92,
-    notes: null,
-    items: [
-      { id: 1, name: 'Toyuq eti (bud)', quantity: 5, unit: 'kq', unitPrice: 850, totalPrice: 4250, categoryId: 1, isEdited: false, sortOrder: 0 },
-      { id: 2, name: 'Zeytun yağı 1L', quantity: 2, unit: 'litr', unitPrice: 1200, totalPrice: 2400, categoryId: 5, isEdited: false, sortOrder: 1 },
-      { id: 3, name: 'Kartof', quantity: 10, unit: 'kq', unitPrice: 120, totalPrice: 1200, categoryId: 3, isEdited: false, sortOrder: 2 },
-      { id: 4, name: 'Coca Cola 1.5L', quantity: 6, unit: 'əd', unitPrice: 180, totalPrice: 1080, categoryId: 6, isEdited: false, sortOrder: 3 },
-      { id: 5, name: 'Duz 1kq', quantity: 3, unit: 'əd', unitPrice: 80, totalPrice: 240, categoryId: 8, isEdited: false, sortOrder: 4 },
-      { id: 6, name: 'Fairy 500ml', quantity: 2, unit: 'əd', unitPrice: 350, totalPrice: 700, categoryId: 10, isEdited: false, sortOrder: 5 },
-    ],
-  };
-}
-
 // ── Helpers ──────────────────────────────────────────────────────────
 
 function qepikToAzn(q: number) { return (q / 100).toFixed(2); }
@@ -152,12 +126,13 @@ export default function InvoiceDetailPage() {
           fetch('/api/invoice-categories').catch(() => null),
         ]);
 
+        // TASK-0526: no more invented «Metro Cash & Carry» invoice on error / 404 — the page shows
+        // «Faktura tapılmadı» instead, so an admin never edits or confirms fake data.
         if (invRes?.ok) {
           const data = await invRes.json();
-          if (data.data) setInvoice(data.data);
-          else setInvoice(buildMockDetail(id));
+          setInvoice(data.data ?? null);
         } else {
-          setInvoice(buildMockDetail(id));
+          setInvoice(null);
         }
 
         if (catRes?.ok) {
@@ -165,7 +140,7 @@ export default function InvoiceDetailPage() {
           if (data.data?.length > 0) setCategories(data.data);
         }
       } catch {
-        setInvoice(buildMockDetail(id));
+        setInvoice(null);
       }
       setLoading(false);
     }
@@ -265,8 +240,8 @@ export default function InvoiceDetailPage() {
     setFeedback(null);
 
     try {
-      // API call (uğursuz olarsa yenə UI feedback göstər)
-      await fetch(`/api/invoices/${id}`, {
+      // TASK-0526: the result decides the message (before: «Saxlanıldı» even when the request failed).
+      const res = await fetch(`/api/invoices/${id}`, {
         method: 'PATCH',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
@@ -275,14 +250,16 @@ export default function InvoiceDetailPage() {
         }),
       }).catch(() => null);
 
-      if (confirm) {
+      if (!res?.ok) {
+        setFeedback(t('detailSaveError'));
+      } else if (confirm) {
         setInvoice((prev) => prev ? { ...prev, status: 'confirmed' } : prev);
         setFeedback(t('detailConfirmedFeedback'));
       } else {
         setFeedback(t('detailSavedFeedback'));
       }
     } catch {
-      setFeedback(t('detailSavedLocalFeedback'));
+      setFeedback(t('detailSaveError'));
     }
     setSaving(false);
     setTimeout(() => setFeedback(null), 3000);

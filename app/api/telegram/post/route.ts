@@ -1,3 +1,4 @@
+import { requireApiAdmin } from '@/lib/api/guards';
 import { NextRequest, NextResponse } from 'next/server';
 
 type TelegramBody = {
@@ -15,6 +16,10 @@ function isValidUrl(url: string) {
 }
 
 export async function POST(request: NextRequest) {
+  // TASK-0524 (security): anyone could make the bot post any title + link to the owner's Telegram chat. Admin only (no caller in the app).
+  const guard = await requireApiAdmin();
+  if (!guard.ok) return guard.response;
+
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 

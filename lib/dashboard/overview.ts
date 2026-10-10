@@ -19,6 +19,7 @@ import {
   newsArticles,
   users,
 } from '@/lib/db/schema';
+import { PENDING_LISTING_STATUSES } from '@/lib/listings/pending-statuses';
 
 export type DaySeries = Array<{ day: string; value: number }>;
 
@@ -207,13 +208,8 @@ export async function getDashboardOverview(periodDays = 30): Promise<DashboardOv
   ]);
 
   // ---- Listings / blog
-  const pendingListingStatuses = [
-    'submitted',
-    'ai_checked',
-    'committee_review',
-    'shortlisted',
-    'docs_requested',
-  ] as const;
+  // TASK-0526: shared definition (lib/listings/pending-statuses.ts) — same number as the listings page and badge.
+  const pendingListingStatuses = PENDING_LISTING_STATUSES;
   const [live, pending, blogPublished] = await Promise.all([
     safe(
       async () =>

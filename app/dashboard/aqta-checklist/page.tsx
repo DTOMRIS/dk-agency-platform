@@ -75,12 +75,13 @@ const pageCopy: Record<
   }
 > = {
   az: {
-    badge: 'Compliance Control',
+    badge: 'Uyğunluq nəzarəti',
     pageTitle: 'AQTA Hazırlıq Paneli',
-    pageSubtitle: 'Admin üçün operativ gigiyena və sənədləşdirmə nəzarəti. Mock state ilə işləyir.',
+    // TASK-0526: was «Mock state ilə işləyir» — honest, but jargon on screen.
+    pageSubtitle: 'Gigiyena və sənəd hazırlığını yoxlamaq üçün. Qeydlər yadda saxlanmır — səhifəni yeniləyəndə sıfırlanır.',
     resetBtn: 'Sıfırla',
-    openToolBtn: 'Public aləti aç',
-    auditProgressLabel: 'Audit progress',
+    openToolBtn: 'İctimai aləti aç',
+    auditProgressLabel: 'Yoxlama gedişatı',
     auditProgressItems: 'nəzarət maddəsi tamamdır',
     openRiskLabel: 'Açıq risk',
     openRiskSub: 'Ən çox cərimə doğuran başlıq',

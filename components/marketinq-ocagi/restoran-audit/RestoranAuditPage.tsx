@@ -3,7 +3,7 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowLeft, ChevronDown, ClipboardCheck, Info, ShieldAlert } from 'lucide-react';
+import { ChevronDown, ClipboardCheck, Info, ShieldAlert } from 'lucide-react';
 import {
   AUDIT_AREAS,
   AUDIT_QUESTIONS,
@@ -17,6 +17,7 @@ import {
   type AuditQuestionId,
 } from '@/lib/marketing-tools/restoran-audit';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 function getIntlLocale(locale: string): string {
   if (locale === 'az') return AZ_NUMBER_LOCALE;
@@ -44,7 +45,7 @@ function severityClass(severity: ActionSeverity): string {
 }
 
 function answerClass(value: AuditAnswerValue, selected: boolean): string {
-  if (!selected) return 'border-slate-200 bg-white text-slate-500 hover:border-[var(--dk-gold)]';
+  if (!selected) return 'border-[#E4DCCD] bg-white text-slate-500 hover:border-[#0F172A]';
   if (value === 2) return 'border-emerald-300 bg-emerald-50 text-emerald-700';
   if (value === 1) return 'border-amber-300 bg-amber-50 text-amber-700';
   return 'border-red-300 bg-red-50 text-red-700';
@@ -150,32 +151,21 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-      <Link href={backHref} className="mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
-
-      <div className="mb-6">
-        <div className="mb-2 inline-flex rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-bold uppercase text-purple-700">
-          {t('tier')}
-        </div>
-        <h1 className="font-['Playfair_Display'] text-2xl font-bold text-[var(--dk-navy)] sm:text-3xl">{t('title')}</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-      </div>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="restoran-audit" title={t('title')} subtitle={t('subtitle')} backHref={backHref} />
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm font-extrabold text-[var(--dk-navy)]">{t('progress.title')}</p>
+              <p className="text-sm font-extrabold text-[#0F172A]">{t('progress.title')}</p>
               <p className="mt-1 text-xs text-slate-500">
                 {t('progress.answered', { answered: answeredCount, total: AUDIT_QUESTIONS.length })}
               </p>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 sm:w-56">
               <div
-                className="h-full rounded-full bg-[var(--dk-gold)]"
+                className="h-full rounded-full bg-[#D63B54]"
                 style={{ width: `${(answeredCount / AUDIT_QUESTIONS.length) * 100}%` }}
               />
             </div>
@@ -188,19 +178,19 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
           const isOpen = openAreas[areaId];
 
           return (
-            <section key={areaId} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <section key={areaId} className="overflow-hidden rounded-2xl border border-[#E4DCCD] bg-white shadow-sm">
               <button
                 type="button"
                 data-testid={`audit-area-${areaId}`}
                 onClick={() => toggleArea(areaId)}
-                className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left transition hover:bg-slate-50 sm:px-5"
+                className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left transition hover:bg-[#FBF8F3] sm:px-5"
               >
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 text-xs font-extrabold text-[var(--dk-navy)]">
+                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-slate-100 text-xs font-extrabold text-[#0F172A]">
                       {areaIndex + 1}
                     </span>
-                    <h2 className="text-sm font-extrabold text-[var(--dk-navy)] sm:text-base">{areaName(areaId)}</h2>
+                    <h2 className="text-sm font-extrabold text-[#0F172A] sm:text-base">{areaName(areaId)}</h2>
                     {areaScore && (
                       <span className="rounded-full border px-2 py-0.5 text-xs font-bold" style={{ color: scoreColor(areaScore.score), borderColor: `${scoreColor(areaScore.score)}55`, backgroundColor: `${scoreColor(areaScore.score)}10` }}>
                         {formatPercent(areaScore.score, locale)}%
@@ -213,16 +203,16 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
               </button>
 
               {isOpen && (
-                <div className="border-t border-slate-100 px-4 py-4 sm:px-5">
+                <div className="border-t border-[#EFE9DE] px-4 py-4 sm:px-5">
                   <div className="grid gap-3">
                     {questions.map((question, index) => (
-                      <div key={question.id} className="rounded-lg border border-slate-100 bg-slate-50 p-3">
+                      <div key={question.id} className="rounded-lg border border-[#EFE9DE] bg-[#FBF8F3] p-3">
                         <div className="flex gap-2">
                           <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white text-xs font-extrabold text-slate-500">
                             {index + 1}
                           </span>
                           <div className="min-w-0 flex-1">
-                            <p className="text-sm font-bold leading-5 text-[var(--dk-navy)]">{t(`questions.${question.id}.text`)}</p>
+                            <p className="text-sm font-bold leading-5 text-[#0F172A]">{t(`questions.${question.id}.text`)}</p>
                             <p className="mt-1 text-xs leading-5 text-slate-500">{t(`questions.${question.id}.tooltip`)}</p>
                             <div className="mt-3 grid gap-2 sm:grid-cols-3">
                               {([2, 1, 0] as const).map((value) => (
@@ -258,8 +248,8 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
 
       {submitted && (
         <div className="mt-8 space-y-6">
-          <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
-            <section className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-white p-5 shadow-sm" data-testid="restaurant-audit-score">
+          <div className="grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)]">
+            <section className="flex flex-col items-center justify-center rounded-2xl border border-[#E4DCCD] bg-white p-5 shadow-sm" data-testid="restaurant-audit-score">
               <svg viewBox="0 0 120 120" width="132" height="132" role="img" aria-label={t('results.scoreTitle')}>
                 <circle cx="60" cy="60" r="50" fill="none" stroke="#E5E7EB" strokeWidth="10" />
                 <circle
@@ -278,26 +268,26 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
                 </text>
                 <text x="60" y="73" textAnchor="middle" className="fill-slate-500 text-[10px] font-bold">/100</text>
               </svg>
-              <p className="mt-2 text-sm font-extrabold text-[var(--dk-navy)]">{t('results.scoreTitle')}</p>
+              <p className="mt-2 text-sm font-extrabold text-[#0F172A]">{t('results.scoreTitle')}</p>
               <span className={`mt-2 rounded-full border px-3 py-1 text-xs font-extrabold ${levelClass(result.level)}`}>
                 {t(`levels.${result.level}.name`)}
               </span>
               <p className="mt-2 text-center text-xs leading-5 text-slate-500">{t(`levels.${result.level}.description`)}</p>
             </section>
 
-            <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-              <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('results.areaChartTitle')}</h2>
+            <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+              <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('results.areaChartTitle')}</h2>
               <AreaBarChart areaScores={result.areaScores} areaLabel={areaName} chartLabel={t('results.areaChartTitle')} />
             </section>
           </div>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('actionPlan.title')}</h2>
+          <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('actionPlan.title')}</h2>
             <div className="grid gap-3 lg:grid-cols-3">
               {result.priorityActions.map((action) => (
                 <article key={action.areaId} className={`rounded-lg border p-4 ${severityClass(action.severity)}`}>
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className="text-sm font-extrabold text-[var(--dk-navy)]">{areaName(action.areaId)}</h3>
+                    <h3 className="text-sm font-extrabold text-[#0F172A]">{areaName(action.areaId)}</h3>
                     <span className="text-sm font-extrabold" style={{ color: scoreColor(action.score) }}>{action.score}%</span>
                   </div>
                   <p className="mt-2 text-xs leading-5 text-slate-600">{t(action.actionKey)}</p>
@@ -310,19 +300,19 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
             <section className="flex gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
               <ShieldAlert size={20} className="mt-0.5 shrink-0 text-[var(--dk-red)]" />
               <div>
-                <h2 className="text-sm font-extrabold text-[var(--dk-navy)]">{t('primeCostWarning.title')}</h2>
+                <h2 className="text-sm font-extrabold text-[#0F172A]">{t('primeCostWarning.title')}</h2>
                 <p className="mt-1 text-xs leading-5 text-slate-600">{t('primeCostWarning.body')}</p>
               </div>
             </section>
           )}
 
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-3 text-lg font-extrabold text-[var(--dk-navy)]">{t('unknown.title')}</h2>
+          <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-3 text-lg font-extrabold text-[#0F172A]">{t('unknown.title')}</h2>
             <p className="mb-4 text-sm leading-6 text-slate-600">{t('unknown.body')}</p>
             {result.unknownCriticalQuestionIds.length > 0 ? (
               <div className="grid gap-2 sm:grid-cols-2">
                 {result.unknownCriticalQuestionIds.map((questionId) => (
-                  <div key={questionId} className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-bold text-[var(--dk-navy)]">
+                  <div key={questionId} className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-bold text-[#0F172A]">
                     {t(`questions.${questionId}.text`)}
                   </div>
                 ))}
@@ -332,8 +322,8 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
             )}
           </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-3 text-lg font-extrabold text-[var(--dk-navy)]">{t('urgent.title')}</h2>
+          <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-3 text-lg font-extrabold text-[#0F172A]">{t('urgent.title')}</h2>
             {result.urgentQuestionIds.length > 0 ? (
               <div className="grid gap-2">
                 {result.urgentQuestionIds.slice(0, 10).map((questionId) => (
@@ -352,8 +342,8 @@ export default function RestoranAuditPage({ backHref = '/b2b-panel/marketinq-oca
               <Info size={18} className="mt-0.5 shrink-0 text-blue-500" />
               <p className="text-xs leading-5 text-blue-800">{t('sheddNote')}</p>
             </div>
-            <div className="rounded-lg border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/5 p-4">
-              <p className="font-['Playfair_Display'] text-sm font-bold italic leading-6 text-[var(--dk-navy)]">{t('ahilikQuote')}</p>
+            <div className="rounded-lg border border-[#F4B8C3] bg-[#F6F1E9] p-4">
+              <p className="text-sm font-bold italic leading-6 text-[#0F172A]">{t('ahilikQuote')}</p>
             </div>
           </div>
         </div>

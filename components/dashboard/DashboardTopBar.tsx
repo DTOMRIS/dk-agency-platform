@@ -121,7 +121,8 @@ export function DashboardTopBar() {
 
   const handleLogout = async () => {
     clearMemberSession();
-    await fetch('/api/member/auth/logout', { method: 'POST' });
+    // TASK-0526: was '/api/member/auth/logout' (no such route → the server cookie stayed); same as the sidebar.
+    await fetch('/api/auth/logout', { method: 'POST' }).catch(() => null);
     setUserMenuOpen(false);
     router.refresh();
     router.push('/auth/login');
@@ -129,7 +130,7 @@ export function DashboardTopBar() {
 
   return (
     <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-black/5 bg-white/80 px-6 backdrop-blur-xl lg:flex">
-      <p className="text-[15px] font-semibold tracking-tight text-slate-900">OCAQ</p>
+      <p className="text-[15px] font-semibold tracking-tight text-slate-900">DK Agency</p>
 
       <div className="flex items-center gap-3">
         <button

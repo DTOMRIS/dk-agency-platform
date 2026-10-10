@@ -18,6 +18,12 @@ Next.js 16 (App Router, TypeScript) · Drizzle ORM · Neon PostgreSQL · Tailwin
 - **Global Header**: Always use `Header.tsx`.
 - **Do Not Use**: `HospitalityHeader.tsx` for core platform UI.
 
+## Sistem xəritəsi — hər işdən ƏVVƏL (Doğan 10.10.2026)
+- `docs/ARCHITECTURE/SYSTEM-MAP.md` oxu: hər səhifə (nə göstərir, dizayn v2/köhnə, giriş, geri düyməsi), qorumasız API-lar, **eyni işi görən səhifə/komponent qrupları**, logo/header/sidebar variantları, bütün sənəd və araşdırmaların siyahısı.
+- Səhifəyə toxunmazdan əvvəl öz qrupuna bax: eyni iş başqa yerdə varsa düzəlişi ortaq komponentdə et (bir ünvan = bir UI). Yamaq yazıb başqa səhifədə eynisini saxlamaq YOX.
+- İş bitəndə: `node scripts/generate-system-map.mjs` → xəritə commit-ə girir.
+- v2 dizayn mənbəyi: `components/inner/*` (toolkit), `components/marketinq-ocagi/MarketinqV2.tsx` (alət başlığı), `components/brand/DkMark.tsx` (logo). Inter; Playfair/serif və navy/gold köhnədir (yalnız bloq məqalə başlığı serif qalır).
+
 ## Hard rules — NEVER (PreToolUse hook bu qaydaları zorla tətbiq edir)
 - `--no-verify` ilə commit/push etmə
 - `lib/member-access.ts`, `lib/listingFieldConfig.ts`, `middleware.ts` dəyişmə

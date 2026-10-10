@@ -89,7 +89,8 @@ const OutputSchema = z.object({
     risk: z.string(),
     mitigation: z.string(),
   })).optional(),
-  ahilikQuote: z.string(),
+  // TASK-0523: no longer requested; old saved runs may still have it.
+  ahilikQuote: z.string().optional(),
 });
 
 // ── AI PROMPT ───────────────────────────────────────────────────────
@@ -116,7 +117,6 @@ Her kampaniya ucun:
 Sonra:
 - Umumi budce xulasesi
 - 3-5 tovsiye (movsum strategiyasi, vaxt secimi)
-- Ahilik hikmeti
 
 MUHUM:
 - AZ bayramlari ve kulturel kontekst
@@ -196,12 +196,11 @@ You MUST return a JSON object with EXACTLY these top-level keys in English:
   ],
   "risksWatchout": [
     { "period": "Məhərrəm və Səfər ayları", "risk": "Toy və şənlik sifarişləri azalır", "mitigation": "Korporativ, konfrans, turist və ailə naharı paketləri" }
-  ],
-  "ahilikQuote": "Ahilik hikmeti AZ dilinde"
+  ]
 }
 
 CRITICAL RULES:
-1. Top-level keys MUST include: executiveSummary, context, calendar, totalCampaigns, budgetSummary, topRecommendations, ahilikQuote.
+1. Top-level keys MUST include: executiveSummary, context, calendar, totalCampaigns, budgetSummary, topRecommendations.
 2. Do NOT add extra top-level keys like restoran, konsept, seher, budce, tovsiyeler, ahilik_hikmeti.
 3. Do NOT use Azerbaijani or snake_case keys like kampaniya_takvimi, kampaniyalar, umumi_budce_xulasesi.
 4. "calendar" MUST be an array, NOT an object.

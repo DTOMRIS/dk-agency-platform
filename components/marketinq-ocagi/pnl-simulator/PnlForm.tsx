@@ -22,7 +22,7 @@ function NumField({ label, value, onChange, disabled }: { label: string; value: 
     <div>
       <label className="mb-1 block text-xs font-semibold text-slate-600">{label}</label>
       <input type="number" value={value || ''} onChange={(e) => onChange(parseFloat(e.target.value) || 0)} disabled={disabled}
-        className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20" />
+        className="w-full rounded-lg border border-[#E4DCCD] bg-white px-3 py-2 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15" />
     </div>
   );
 }
@@ -62,11 +62,11 @@ export default function PnlForm({ onResult, onError }: Props) {
   function ToggleSection({ sectionLabel, open, toggle, fields }: { sectionLabel: string; open: boolean; toggle: () => void; fields: readonly string[] }) {
     return (
       <>
-        <button type="button" onClick={toggle} className="flex w-full items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-xs font-semibold text-slate-500 transition hover:border-[var(--dk-navy)]">
+        <button type="button" onClick={toggle} className="flex w-full items-center justify-between rounded-xl border border-[#E4DCCD] px-4 py-3 text-xs font-semibold text-slate-500 transition hover:border-[#0F172A]">
           {sectionLabel} <ChevronDown size={14} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
         </button>
         {open && (
-          <div className="grid grid-cols-2 gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+          <div className="grid grid-cols-2 gap-3 rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] p-4">
             {fields.map((f) => <NumField key={f} label={label(f)} value={form[f]} onChange={(v) => set(f, v)} disabled={loading} />)}
           </div>
         )}

@@ -3,7 +3,8 @@
 import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { AlertCircle, ArrowLeft, Lock, LogIn, Mail, ShieldCheck } from 'lucide-react';
+import { AlertCircle, Lock, LogIn, Mail } from 'lucide-react';
+import AuthShell, { AUTH_BUTTON, AUTH_INPUT, AUTH_LABEL, AUTH_LINK } from '@/components/auth/AuthShell';
 import { type MemberSession, writeMemberSession } from '@/lib/member-access';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 
@@ -178,127 +179,81 @@ export default function LoginPage() {
     }
   };
 
+  // TASK-0524: v2 auth frame (cream, Inter, spinning DK mark top-left) — same as register / forgot / reset.
   return (
-    <div className="min-h-screen bg-[#0e0f22] text-[#eaeaea] flex flex-col justify-center p-4 lg:p-8">
-      <div className="mx-auto w-full max-w-5xl mb-4">
-        <Link
-          href={nextUrl}
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-400 transition-colors hover:text-white"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {copy.goBack}
-        </Link>
-      </div>
-
-      <div className="flex items-center justify-center">
-        <div className="grid w-full max-w-5xl overflow-hidden dk-glass-card md:grid-cols-[1.05fr_0.95fr]">
-          <div className="p-8 md:p-10">
-            <div className="mb-8">
-              <div className="mb-4 inline-flex rounded-full bg-[var(--dk-gold)]/10 border border-[var(--dk-gold)]/35 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--dk-gold)]">
-                {copy.badge}
-              </div>
-              <h1 className="text-3xl font-black text-white">{copy.title}</h1>
-              <p className="mt-2 text-slate-400">{copy.subtitle}</p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-300">{copy.emailLabel}</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="email"
-                    required
-                    autoComplete="username"
-                    value={formData.email}
-                    onChange={(event) => setFormData({ ...formData, email: event.target.value })}
-                    placeholder={copy.emailPlaceholder}
-                    className="w-full rounded-xl border border-[var(--dk-gold)]/20 bg-[#13142d]/60 py-3 pl-10 pr-4 text-white placeholder:text-slate-500 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/25"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-300">{copy.passwordLabel}</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="password"
-                    required
-                    autoComplete="current-password"
-                    value={formData.password}
-                    onChange={(event) => setFormData({ ...formData, password: event.target.value })}
-                    placeholder="••••••••"
-                    className="w-full rounded-xl border border-[var(--dk-gold)]/20 bg-[#13142d]/60 py-3 pl-10 pr-4 text-white placeholder:text-slate-500 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/25"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <label className="flex cursor-pointer items-center gap-2 select-none">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-600 bg-slate-900 text-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/25 cursor-pointer"
-                  />
-                  <span className="text-sm text-slate-400">{copy.rememberMe}</span>
-                </label>
-                <Link href="/forgot-password" className="text-sm font-bold text-[var(--dk-gold)] transition hover:text-[var(--dk-gold-hover)]">
-                  {copy.forgotPassword}
-                </Link>
-              </div>
-
-              {error ? (
-                <div className="flex items-center gap-2 rounded-xl border border-red-900/30 bg-red-950/40 p-3 text-sm text-red-400">
-                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                  {error}
-                </div>
-              ) : null}
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong py-3.5 font-bold text-white transition-all dk-hover-glow hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <LogIn className="h-5 w-5" />
-                {submitting ? copy.submitting : copy.submitBtn}
-              </button>
-            </form>
-
-            <div className="mt-5 flex items-center justify-between text-sm text-slate-400">
-              <span>{copy.noAccount}</span>
-              <Link
-                href={`/auth/register?next=${encodeURIComponent(nextUrl)}`}
-                className="font-bold text-[var(--dk-gold)] transition hover:text-[var(--dk-gold-hover)]"
-              >
-                {copy.signUp}
-              </Link>
-            </div>
-
-            <p className="mt-4 text-sm text-slate-400">
-              {copy.membershipInfo}{' '}
-              <Link href="/uzvluk" className="font-bold text-slate-300 transition hover:text-[var(--dk-gold)]">
-                /uzvluk
-              </Link>
-            </p>
-          </div>
-
-          <div className="bg-slate-950/40 border-t md:border-t-0 md:border-l border-[var(--dk-gold)]/15 p-8 text-white md:p-10 flex items-center">
-            <div className="flex flex-col items-center justify-center gap-4 text-center w-full">
-              <ShieldCheck className="h-12 w-12 text-[var(--dk-gold)]" />
-              <h2 className="text-xl font-bold">{copy.ctaHeading}</h2>
-              <p className="text-sm text-slate-400">{copy.ctaDesc}</p>
-              <Link
-                href={`/auth/register?next=${encodeURIComponent(nextUrl)}`}
-                className="mt-2 inline-block rounded-full bg-[var(--dk-gold)]/20 border border-[var(--dk-gold)]/40 px-6 py-2.5 text-sm font-bold text-[var(--dk-gold)] transition-all dk-hover-glow hover:bg-[var(--dk-gold)]/30"
-              >
-                {copy.ctaButton}
-              </Link>
-            </div>
+    <AuthShell title={copy.title} subtitle={copy.subtitle} backHref={nextUrl}>
+      <form onSubmit={handleSubmit} className="space-y-4" data-testid="login-form">
+        <div>
+          <label htmlFor="login-email" className={AUTH_LABEL}>{copy.emailLabel}</label>
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" aria-hidden="true" />
+            <input
+              id="login-email"
+              type="email"
+              required
+              autoComplete="username"
+              value={formData.email}
+              onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+              placeholder={copy.emailPlaceholder}
+              className={AUTH_INPUT}
+            />
           </div>
         </div>
+
+        <div>
+          <label htmlFor="login-password" className={AUTH_LABEL}>{copy.passwordLabel}</label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" aria-hidden="true" />
+            <input
+              id="login-password"
+              type="password"
+              required
+              autoComplete="current-password"
+              value={formData.password}
+              onChange={(event) => setFormData({ ...formData, password: event.target.value })}
+              placeholder="••••••••"
+              className={AUTH_INPUT}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <label className="flex cursor-pointer items-center gap-2 select-none">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="h-4 w-4 cursor-pointer rounded border-[#E4DCCD] accent-[#D63B54]"
+            />
+            <span className="text-sm text-slate-600">{copy.rememberMe}</span>
+          </label>
+          <Link href="/auth/forgot-password" className={`text-sm ${AUTH_LINK}`}>
+            {copy.forgotPassword}
+          </Link>
+        </div>
+
+        {error ? (
+          <div role="alert" className="flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">
+            <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+            {error}
+          </div>
+        ) : null}
+
+        <button type="submit" disabled={submitting} className={AUTH_BUTTON}>
+          <LogIn className="h-5 w-5" aria-hidden="true" />
+          {submitting ? copy.submitting : copy.submitBtn}
+        </button>
+      </form>
+
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-[#EFE9DE] pt-5 text-sm text-slate-600">
+        <span>{copy.noAccount}</span>
+        <Link href={`/auth/register?next=${encodeURIComponent(nextUrl)}`} className={AUTH_LINK}>
+          {copy.signUp}
+        </Link>
       </div>
-    </div>
+      <p className="mt-3 text-sm text-slate-600">
+        <Link href="/uzvluk" className={AUTH_LINK}>{copy.membershipInfo.replace(/:\s*$/, '')}</Link>
+      </p>
+    </AuthShell>
   );
 }

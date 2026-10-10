@@ -9,6 +9,8 @@
  */
 
 import { useEffect, useState, type ReactNode } from 'react';
+import home from '@/components/home/v2/homeV2.module.css';
+import s from '@/components/inner/inner.module.css';
 
 export type ToolTab = { key: string; label: string; hint?: string; content: ReactNode };
 
@@ -43,10 +45,12 @@ export default function ToolTabs({ tabs, initialTab, label }: { tabs: ToolTab[];
     }
   }
 
+  // TASK-0524: v2 pill tabs — same look as the /toolkit group tabs (ink pill = selected).
+  const hint = tabs.find((tab) => tab.key === active)?.hint;
   return (
     <div>
-      <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
-        <div role="tablist" aria-label={label} className="flex gap-1 overflow-x-auto rounded-xl bg-slate-100 p-1" data-testid="tool-tabs">
+      <div className={`${home.wrap} border-b border-[#E4DCCD]`}>
+        <div role="tablist" aria-label={label} className={s.tabs} data-testid="tool-tabs">
           {tabs.map((tab) => {
             const on = tab.key === active;
             return (
@@ -59,16 +63,14 @@ export default function ToolTabs({ tabs, initialTab, label }: { tabs: ToolTab[];
                 aria-controls={`tool-panel-${tab.key}`}
                 onClick={() => select(tab.key)}
                 data-testid={`tool-tab-${tab.key}`}
-                className={`min-h-11 flex-1 whitespace-nowrap rounded-lg px-4 text-sm font-bold transition ${on ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+                className={s.tab}
               >
                 {tab.label}
               </button>
             );
           })}
         </div>
-        {tabs.find((tab) => tab.key === active)?.hint && (
-          <p className="mt-2 text-xs text-slate-500">{tabs.find((tab) => tab.key === active)?.hint}</p>
-        )}
+        {hint && <p className="pb-3 text-[13px] font-semibold text-slate-600">{hint}</p>}
       </div>
       {tabs.map((tab) =>
         opened.has(tab.key) ? (

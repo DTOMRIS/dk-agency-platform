@@ -4,7 +4,6 @@ import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import {
-  ArrowLeft,
   Clipboard,
   Download,
   Loader2,
@@ -16,6 +15,7 @@ import {
 } from 'lucide-react';
 import { getROIAIAnalysis } from '@/app/actions/roi-ai-analysis';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 type ChannelRow = {
   id: string;
@@ -71,7 +71,7 @@ function statusColor(status: Status) {
   if (status === 'good') return 'border-emerald-200 bg-emerald-50 text-emerald-700';
   if (status === 'warning') return 'border-amber-200 bg-amber-50 text-amber-700';
   if (status === 'critical') return 'border-red-200 bg-red-50 text-red-700';
-  return 'border-slate-200 bg-slate-50 text-slate-600';
+  return 'border-[#E4DCCD] bg-[#FBF8F3] text-slate-600';
 }
 
 // TASK-0523: ROI counts the money left after food/packaging (revenue × margin), not revenue —
@@ -264,7 +264,7 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
     });
   }
 
-  const inputClass = 'min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+  const inputClass = 'min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 print:max-w-none print:px-0">
@@ -276,25 +276,12 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
         }
       `}</style>
 
-      <Link href={backHref} className="no-print mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
-
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <div className="mb-2 inline-flex rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-bold uppercase text-purple-700">
-            KALFA
-          </div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)] sm:text-3xl">{t('title')}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-        </div>
-        <div className="no-print flex flex-col gap-2 sm:flex-row">
+      <ToolHeader slug="roi-kalkulator" title={t('title')} subtitle={t('subtitle')} backHref={backHref} actions={<>
           <button
             type="button"
             onClick={copyResult}
             disabled={!analysis.channels.length}
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-[var(--dk-navy)] shadow-sm transition hover:border-[var(--dk-gold)] disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#E4DCCD] bg-white px-4 py-2 text-sm font-bold text-[#0F172A] shadow-sm transition hover:border-[#0F172A] disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Clipboard size={16} />
             {copied ? t('copied') : t('copy_result')}
@@ -303,43 +290,41 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
             type="button"
             onClick={() => window.print()}
             disabled={!analysis.channels.length}
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-[var(--dk-navy)] shadow-sm transition hover:border-[var(--dk-gold)] disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#E4DCCD] bg-white px-4 py-2 text-sm font-bold text-[#0F172A] shadow-sm transition hover:border-[#0F172A] disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Download size={16} />
             {t('export_pdf')}
-          </button>
-        </div>
-      </div>
+          </button></>} />
 
-      <section className="print-surface mb-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-        <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('general_params')}</h2>
+      <section className="print-surface mb-6 rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+        <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('general_params')}</h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           <label className="sm:col-span-2">
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('campaign_name')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('campaign_name')}</span>
             <input value={campaignName} onChange={(event) => setCampaignName(event.target.value)} className={inputClass} maxLength={80} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('start_date')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('start_date')}</span>
             <input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} className={inputClass} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('end_date')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('end_date')}</span>
             <input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} className={inputClass} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('avg_check')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('avg_check')}</span>
             <input value={avgCheck} onChange={(event) => setAvgCheck(event.target.value)} inputMode="decimal" className={inputClass} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('monthly_visits')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('monthly_visits')}</span>
             <input value={monthlyVisits} onChange={(event) => setMonthlyVisits(event.target.value)} inputMode="decimal" className={inputClass} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('loyalty_months')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('loyalty_months')}</span>
             <input value={loyaltyMonths} onChange={(event) => setLoyaltyMonths(event.target.value)} inputMode="decimal" className={inputClass} />
           </label>
           <label>
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('margin_pct')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('margin_pct')}</span>
             <input value={marginPct} onChange={(event) => setMarginPct(event.target.value)} inputMode="decimal" className={inputClass} data-testid="roi-margin" />
             <span className="mt-1 block text-xs leading-5 text-slate-500">{t('margin_hint')}</span>
           </label>
@@ -347,14 +332,14 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
       </section>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
-        <section className="print-surface rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <section className="print-surface rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <h2 className="text-lg font-extrabold text-[var(--dk-navy)]">{t('channels_title')}</h2>
+            <h2 className="text-lg font-extrabold text-[#0F172A]">{t('channels_title')}</h2>
             <button
               type="button"
               onClick={addChannel}
               disabled={channels.length >= 8}
-              className="no-print inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 px-3 text-sm font-bold text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] disabled:cursor-not-allowed disabled:opacity-50"
+              className="no-print inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 px-3 text-sm font-bold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Plus size={16} />
               {t('add_channel')}
@@ -365,14 +350,14 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
             {channels.map((channel, index) => {
               const metric = analysis.channels.find((item) => item.id === channel.id);
               return (
-                <div key={channel.id} className="rounded-xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
+                <div key={channel.id} className="rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] p-3 sm:p-4">
                   <div className="mb-3 flex items-center justify-between gap-3">
-                    <p className="text-sm font-extrabold text-[var(--dk-navy)]">{t('channel')} #{index + 1}</p>
+                    <p className="text-sm font-extrabold text-[#0F172A]">{t('channel')} #{index + 1}</p>
                     <button
                       type="button"
                       onClick={() => removeChannel(channel.id)}
                       disabled={channels.length <= 1}
-                      className="no-print inline-flex min-h-9 items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white px-2 text-xs font-bold text-slate-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="no-print inline-flex min-h-9 items-center justify-center gap-1 rounded-lg border border-[#E4DCCD] bg-white px-2 text-xs font-bold text-slate-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <Trash2 size={14} />
                       {t('remove_channel')}
@@ -381,27 +366,27 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
 
                   <div className="grid gap-3 sm:grid-cols-2">
                     <label>
-                      <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('channel_name')}</span>
+                      <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('channel_name')}</span>
                       <select value={channel.name} onChange={(event) => updateChannel(channel.id, 'name', event.target.value)} className={inputClass}>
                         {CHANNEL_OPTIONS.map((option) => <option key={option} value={option}>{option}</option>)}
                       </select>
                     </label>
                     {channel.name === 'Digər' && (
                       <label>
-                        <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('custom_channel')}</span>
+                        <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('custom_channel')}</span>
                         <input value={channel.customName} onChange={(event) => updateChannel(channel.id, 'customName', event.target.value)} className={inputClass} maxLength={40} />
                       </label>
                     )}
                     <label>
-                      <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('budget_spent')}</span>
+                      <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('budget_spent')}</span>
                       <input value={channel.spend} onChange={(event) => updateChannel(channel.id, 'spend', event.target.value)} inputMode="decimal" className={inputClass} placeholder="0" />
                     </label>
                     <label>
-                      <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('revenue_earned')}</span>
+                      <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('revenue_earned')}</span>
                       <input value={channel.revenue} onChange={(event) => updateChannel(channel.id, 'revenue', event.target.value)} inputMode="decimal" className={inputClass} placeholder="0" />
                     </label>
                     <label>
-                      <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('new_customers')}</span>
+                      <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('new_customers')}</span>
                       <input value={channel.newCustomers} onChange={(event) => updateChannel(channel.id, 'newCustomers', event.target.value)} inputMode="numeric" className={inputClass} placeholder="0" />
                     </label>
                   </div>
@@ -412,11 +397,11 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
                         <p className="text-[10px] font-bold uppercase">ROI</p>
                         <p className="text-base font-extrabold">{formatNumber(metric.roiPercent)}%</p>
                       </div>
-                      <div className="rounded-lg border border-slate-200 bg-white p-2 text-[var(--dk-navy)]">
+                      <div className="rounded-lg border border-[#E4DCCD] bg-white p-2 text-[#0F172A]">
                         <p className="text-[10px] font-bold uppercase text-slate-500">ROAS</p>
                         <p className="text-base font-extrabold">{formatNumber(metric.roas)}x</p>
                       </div>
-                      <div className="rounded-lg border border-slate-200 bg-white p-2 text-[var(--dk-navy)]">
+                      <div className="rounded-lg border border-[#E4DCCD] bg-white p-2 text-[#0F172A]">
                         <p className="text-[10px] font-bold uppercase text-slate-500">CAC</p>
                         <p className="text-base font-extrabold">{formatMoney(metric.cac)}</p>
                       </div>
@@ -429,10 +414,10 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
         </section>
 
         <div className="space-y-6">
-          <section className="print-surface rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <section className="print-surface rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-4 flex items-center gap-2">
               <TrendingUp size={18} className="text-[var(--dk-red)]" />
-              <h2 className="text-lg font-extrabold text-[var(--dk-navy)]">{t('results_title')}</h2>
+              <h2 className="text-lg font-extrabold text-[#0F172A]">{t('results_title')}</h2>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               {kpis.map((kpi) => (
@@ -441,19 +426,19 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
                     <p className="text-xs font-bold uppercase tracking-wide">{kpi.label}</p>
                     <span className="shrink-0 rounded-full bg-white/80 px-2 py-0.5 text-[11px] font-bold">{statusLabel(kpi.status)}</span>
                   </div>
-                  <p className="mt-2 text-xl font-extrabold text-[var(--dk-navy)]">{kpi.value}</p>
+                  <p className="mt-2 text-xl font-extrabold text-[#0F172A]">{kpi.value}</p>
                   {kpi.hint && <p className="mt-1 text-xs font-semibold opacity-80">{kpi.hint}</p>}
                 </div>
               ))}
             </div>
           </section>
 
-          <section className="print-surface rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('comparison_title')}</h2>
+          <section className="print-surface rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('comparison_title')}</h2>
             <div className="overflow-x-auto">
               <table className="min-w-[720px] w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200 text-xs uppercase text-slate-500">
+                  <tr className="border-b border-[#E4DCCD] text-xs uppercase text-slate-500">
                     <th className="py-3 pr-3">{t('channel_name')}</th>
                     <th className="py-3 pr-3">{t('budget_spent')}</th>
                     <th className="py-3 pr-3">{t('revenue_earned')}</th>
@@ -469,8 +454,8 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
                     const isWorst = channel.id === analysis.worstChannel?.id && analysis.sortedChannels.length > 1;
                     const status = roiStatus(channel.roiPercent);
                     return (
-                      <tr key={channel.id} className={`border-b border-slate-100 ${isBest ? 'bg-amber-50' : isWorst ? 'bg-slate-50 opacity-80' : ''}`}>
-                        <td className="py-3 pr-3 font-bold text-[var(--dk-navy)]">{channel.name}</td>
+                      <tr key={channel.id} className={`border-b border-[#EFE9DE] ${isBest ? 'bg-amber-50' : isWorst ? 'bg-[#FBF8F3] opacity-80' : ''}`}>
+                        <td className="py-3 pr-3 font-bold text-[#0F172A]">{channel.name}</td>
                         <td className="py-3 pr-3">{formatMoney(channel.spend)}</td>
                         <td className="py-3 pr-3">{formatMoney(channel.revenue)}</td>
                         <td className="py-3 pr-3 font-bold">{formatNumber(channel.roiPercent)}%</td>
@@ -487,8 +472,8 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
             </div>
           </section>
 
-          <section className="print-surface rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('chart_title')}</h2>
+          <section className="print-surface rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('chart_title')}</h2>
             <div className="space-y-3">
               {analysis.sortedChannels.map((channel) => {
                 const maxPositive = Math.max(100, ...analysis.sortedChannels.map((item) => item.roiPercent));
@@ -511,10 +496,10 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
             </div>
           </section>
 
-          <section className="print-surface rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <section className="print-surface rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-lg font-extrabold text-[var(--dk-navy)]">{t('ai_title')}</h2>
+                <h2 className="text-lg font-extrabold text-[#0F172A]">{t('ai_title')}</h2>
                 <p className="mt-1 text-sm text-slate-500">{t('ai_subtitle')}</p>
               </div>
               <button
@@ -539,14 +524,14 @@ ${t('worst_channel')}: ${analysis.worstChannel?.name ?? '-'}`;
             {!isPending && aiError && (
               <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800">
                 {aiError}
-                <button type="button" onClick={loadAI} className="ml-2 inline-flex items-center gap-1 font-extrabold text-[var(--dk-navy)]">
+                <button type="button" onClick={loadAI} className="ml-2 inline-flex items-center gap-1 font-extrabold text-[#0F172A]">
                   <RefreshCw size={14} /> {t('retry')}
                 </button>
               </div>
             )}
 
             {!isPending && aiText && (
-              <div className="whitespace-pre-wrap rounded-lg bg-slate-50 p-4 text-sm leading-7 text-slate-700">{aiText}</div>
+              <div className="whitespace-pre-wrap rounded-lg bg-[#FBF8F3] p-4 text-sm leading-7 text-slate-700">{aiText}</div>
             )}
           </section>
         </div>

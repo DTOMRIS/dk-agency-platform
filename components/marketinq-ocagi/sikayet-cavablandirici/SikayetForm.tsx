@@ -89,7 +89,7 @@ export default function SikayetForm({ locale, onResult, onError }: SikayetFormPr
     }
   }
 
-  const inputCls = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+  const inputCls = 'w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
   const labelCls = 'mb-1.5 block text-sm font-medium text-slate-700';
 
   return (

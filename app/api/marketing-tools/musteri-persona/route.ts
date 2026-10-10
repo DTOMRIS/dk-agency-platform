@@ -49,40 +49,35 @@ const OutputSchema = z.object({
     timing: z.string(),
   })),
   menuSuggestions: z.array(z.string()),
-  ahilikQuote: z.string(),
+  // TASK-0523: no longer requested; old saved runs may still have it.
+  ahilikQuote: z.string().optional(),
 });
 
 // ── AI PROMPT ───────────────────────────────────────────────────────
 
-const SYSTEM_PROMPT = `Sen bir HoReCa musteri segmentasiya ekspertisen. Restoran sahibi sene oz restorani haqqinda melumat verir, senin isin ideal musteri personalarini yaratmaqdir.
+// TASK-0523: proper Azerbaijani letters; no AI-written «Ahilik» quote (it was presented as a tradition's saying).
+const SYSTEM_PROMPT = `Sən restoranlar üçün qonaq seqmentləri üzrə mütəxəssissən. Restoran sahibi öz restoranı haqqında məlumat verir, sənin işin ideal qonaq personalarını yaratmaqdır.
 
-VEZIVEN:
-1. PRIMARY PERSONA — en cox gelen, en cox xerc eden ideal musteri
-   - Ad (AZ adi), yas araligi, pes, gelir seviyyesi, heyat terzi
-   - Ziyaret tezliyi, ortalama xerc
-   - 3 motivasiya (niye gelir)
-   - 3 pain point (neden narazidir)
-   - 3 kanal (hardan xeber alir)
-   - 1 cumle sitat ("Men bu restorana gelerin cunki...")
+Vəzifə:
+1. primaryPersona — ən çox gələn və ən çox xərcləyən ideal qonaq
+   - Ad (Azərbaycan adı), yaş aralığı, peşə, gəlir səviyyəsi, həyat tərzi
+   - Gəlmə tezliyi, orta xərc
+   - 3 motivasiya (niyə gəlir)
+   - 3 narazılıq səbəbi (nədən narazı qala bilər)
+   - 3 kanal (haradan xəbər tutur)
+   - 1 cümlə: «Bu restorana gəlirəm, çünki...»
+2. secondaryPersona — ikinci hədəf qrup (böyümə imkanı), eyni format
+3. antiPersona — bu restoran üçün uyğun OLMAYAN qonaq: kim və niyə (resursu boşa xərcləməmək üçün, günahlandırmadan)
+4. marketingTips — hər persona üçün kanal + mesaj + vaxt tövsiyəsi
+5. menuSuggestions — personaya uyğun 3-5 menyu tövsiyəsi
 
-2. SECONDARY PERSONA — ikinci hedef qrup (potensial artim)
-   - Eyni format
+Qaydalar:
+- Azərbaycan konteksti (yaş, gəlir, həyat tərzi yerli olsun)
+- Konkret ad, yaş, peşə ver — «25-35 yaş qadın» yox, «Leyla, 32, kadr meneceri» kimi
+- Statistika və ya faiz uydurma; halal: donuz əti və spirtli içki təklif etmə
+- Mətni Azərbaycan dilində düzgün hərflərlə yaz (ə, ı, ö, ü, ç, ş, ğ); ingiliscə marketinq termini (pain point, persona funnel) işlətmə. JSON açarları ingiliscə qalır.
 
-3. ANTI-PERSONA — bu restoran ucun UYGUN OLMAYAN musteri
-   - Kim ve niye gelmemeli (resurs itkisinin qarsisini almaq)
-
-4. MARKETING TIPS — her persona ucun 3 kanal+mesaj+zaman tovsiyesi
-
-5. MENU SUGGESTIONS — persona-ya uygun 3-5 menyu tovsiyesi
-
-6. Ahilik hikmeti
-
-MUHUM:
-- Azerbaycan/Turkiye konteksti (yas, gelir, heyat terzi yerli)
-- Konkret ad, yas, pes ver — abstrakt "25-35 yas qadin" yox, "Leyla, 32, HR meneceri" kimi
-- Anti-persona suclama deyil, resurs optimizasiyasidir
-
-Cavabi JSON formatinda ver.`;
+Cavabı JSON formatında ver.`;
 
 function buildUserPrompt(input: z.infer<typeof InputSchema>): string {
   return `RESTORAN: ${input.restaurantName}

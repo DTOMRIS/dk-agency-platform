@@ -28,6 +28,7 @@ export default function AyarlarPage() {
     confirm: '',
   });
   const [passwordMsg, setPasswordMsg] = useState('');
+  const [passwordOk, setPasswordOk] = useState(false);
 
   const handleNotifChange = (key: string) => {
     setNotifications((prev) => ({ ...prev, [key]: !prev[key as keyof typeof prev] }));
@@ -51,12 +52,28 @@ export default function AyarlarPage() {
       return;
     }
     setPasswordMsg('');
+    setPasswordOk(false);
     setSaving(true);
-    // TODO: POST /api/auth action=password-change
-    await new Promise((r) => setTimeout(r, 800));
-    setSaving(false);
-    setPasswordMsg('Şifrə uğurla dəyişdirildi.');
-    setPasswordForm({ current: '', newPass: '', confirm: '' });
+    // TASK-0526: real request (before: a 0.8 s wait, then «uğurla dəyişdirildi» — nothing was changed).
+    try {
+      const res = await fetch('/api/auth/change-password', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ currentPassword: passwordForm.current, newPassword: passwordForm.newPass }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { success?: boolean; error?: string; message?: string };
+      if (res.ok && data.success) {
+        setPasswordOk(true);
+        setPasswordMsg(data.message ?? 'Şifrəniz dəyişdirildi.');
+        setPasswordForm({ current: '', newPass: '', confirm: '' });
+      } else {
+        setPasswordMsg(data.error ?? 'Şifrə dəyişdirilmədi. Yenidən yoxlayın.');
+      }
+    } catch {
+      setPasswordMsg('Şifrə dəyişdirilmədi — şəbəkə xətası.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -140,7 +157,7 @@ export default function AyarlarPage() {
                 className="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red" />
             </div>
             {passwordMsg && (
-              <p className={`text-xs ${passwordMsg.includes('uğurla') ? 'text-emerald-600' : 'text-red-600'}`}>
+              <p className={`text-xs ${passwordOk ? 'text-emerald-600' : 'text-red-600'}`}>
                 {passwordMsg}
               </p>
             )}

@@ -95,14 +95,14 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
   return (
     <div className="space-y-4">
       {/* Progress bar */}
-      <div className="sticky top-0 z-10 rounded-xl border border-slate-200 bg-white px-4 py-3">
+      <div className="sticky top-0 z-10 rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3">
         <div className="mb-1 flex justify-between text-xs font-semibold text-slate-500">
           <span>{totalAnswered} / {TOTAL_QUESTIONS} {t('progress')}</span>
           <span>{progress}%</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-slate-100">
           <div
-            className="h-full rounded-full bg-[var(--dk-gold)] transition-all duration-300"
+            className="h-full rounded-full bg-[#D63B54] transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -115,14 +115,14 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
         const isOpen = openSections[cat];
 
         return (
-          <div key={cat} className="rounded-2xl border border-slate-200 bg-slate-50/50">
+          <div key={cat} className="rounded-2xl border border-[#E4DCCD] bg-slate-50/50">
             <button
               type="button"
               onClick={() => toggleSection(cat)}
               className="flex w-full items-center justify-between px-5 py-4 text-left"
             >
               <div className="flex items-center gap-3">
-                <span className="text-sm font-bold text-[var(--dk-navy)]">{t(`categories.${cat}`)}</span>
+                <span className="text-sm font-bold text-[#0F172A]">{t(`categories.${cat}`)}</span>
                 <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-600">
                   {answered}/{COUNTS[cat]}
                 </span>
@@ -156,7 +156,7 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
 
       {/* Notes */}
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t('notes')}</label>
+        <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t('notes')}</label>
         <textarea
           value={state.notes}
           onChange={(e) => dispatch({ type: 'SET_NOTES', value: e.target.value })}
@@ -164,7 +164,7 @@ export default function KSTQuestionnaireForm({ locale, onResult, onError }: Prop
           rows={3}
           maxLength={1000}
           disabled={loading}
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+          className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15"
         />
       </div>
 

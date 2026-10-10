@@ -8,7 +8,7 @@ import { Check, Copy, Mail, MessageCircle, Phone, Star } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getFieldsForType } from '@/lib/data/listingFieldConfig';
-import { MOCK_LISTINGS, type MockListing } from '@/lib/data/mockListings';
+import { type MockListing } from '@/lib/data/mockListings';
 import { canTransition, getAvailableTransitions, getStatusBadge, type ListingWorkflowStatus } from '@/lib/utils/listingStatus';
 import { AZ_NUMBER_LOCALE, formatAzDate } from '@/lib/i18n/format';
 
@@ -77,16 +77,7 @@ export default function DashboardIlanDetailPage() {
           setPrivateContact(nextListing.privateContact ?? null);
         }
       } catch {
-        const fallback = MOCK_LISTINGS.find((item) => item.id === Number(params.id)) ?? null;
-        if (!cancelled && fallback) {
-          setListing(fallback);
-          setStatus(fallback.status);
-          setNextStatus(fallback.status);
-          setIsFeatured(Boolean(fallback.isFeatured));
-          setIsShowcase(Boolean(fallback.isShowcase));
-          setNotes(fallback.reviewNotes ?? []);
-          setLeads(fallback.leads ?? []);
-        }
+        // TASK-0526: no MOCK_LISTINGS fallback — on error the page shows «not found», never a fake listing.
       } finally {
         if (!cancelled) {
           setLoading(false);

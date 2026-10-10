@@ -11,6 +11,8 @@ const copy: Record<Locale, {
   benchmark: string;
   skipped: string;
   noData: string;
+  loadError: string;
+  d7Of: string;
 }> = {
   az: {
     title: 'Aktivasiya funeli',
@@ -19,9 +21,11 @@ const copy: Record<Locale, {
     prioritiesSet: 'Prioritet seçim',
     toolClicked: 'Alət açma (24s)',
     d7Returned: 'D7 qayıdış',
-    benchmark: 'Top kvartil: aktivasiya 40%+, D7 30%+',
+    benchmark: 'Hər addım əvvəlkinin içindən sayılır: alət açma = prioritet seçimindən sonrakı 24 saat; D7 = aləti açanlardan qeydiyyatın 7–14-cü günü qayıdanlar (yalnız 7 günü tamam olanlar). Adminlər sayılmır.',
     skipped: 'Keçdi (skip)',
-    noData: 'Hələ kifayət qədər veri yoxdur',
+    noData: 'Bu dövrdə qeydiyyat yoxdur',
+    loadError: 'Məlumat yüklənmədi — verilənlər bazası cavab vermədi.',
+    d7Of: '7 günü tamam olan {n} nəfərdən',
   },
   en: {
     title: 'Activation funnel',
@@ -30,9 +34,11 @@ const copy: Record<Locale, {
     prioritiesSet: 'Priorities set',
     toolClicked: 'Tool opened (24h)',
     d7Returned: 'D7 return',
-    benchmark: 'Top quartile: activation 40%+, D7 30%+',
+    benchmark: 'Each step is counted inside the previous one: tool opened = within 24 h after setting priorities; D7 = of those, returned on day 7–14 after sign-up (only users at least 7 days old). Admins excluded.',
     skipped: 'Skipped',
-    noData: 'Not enough data yet',
+    noData: 'No sign-ups in this period',
+    loadError: 'Data did not load — the database did not respond.',
+    d7Of: 'of {n} users at least 7 days old',
   },
   ru: {
     title: 'Воронка активации',
@@ -41,9 +47,11 @@ const copy: Record<Locale, {
     prioritiesSet: 'Выбор приоритетов',
     toolClicked: 'Открытие инструмента (24ч)',
     d7Returned: 'Возврат D7',
-    benchmark: 'Топ квартиль: активация 40%+, D7 30%+',
+    benchmark: 'Каждый шаг считается внутри предыдущего: открытие инструмента = в течение 24 ч после выбора приоритетов; D7 = из них вернулись на 7–14-й день после регистрации (только тем, кому уже 7 дней). Админы не учитываются.',
     skipped: 'Пропустили',
-    noData: 'Пока недостаточно данных',
+    noData: 'В этот период регистраций нет',
+    loadError: 'Данные не загрузились — база данных не ответила.',
+    d7Of: 'из {n} пользователей старше 7 дней',
   },
   tr: {
     title: 'Aktivasyon hunisi',
@@ -52,9 +60,11 @@ const copy: Record<Locale, {
     prioritiesSet: 'Öncelik seçimi',
     toolClicked: 'Araç açma (24s)',
     d7Returned: 'D7 geri dönüş',
-    benchmark: 'Üst çeyrek: aktivasyon 40%+, D7 30%+',
+    benchmark: 'Her adım bir öncekinin içinden sayılır: araç açma = öncelik seçiminden sonraki 24 saat; D7 = bunlardan kaydın 7–14. gününde dönenler (yalnız 7 günü dolanlar). Adminler sayılmaz.',
     skipped: 'Atladı',
-    noData: 'Henüz yeterli veri yok',
+    noData: 'Bu dönemde kayıt yok',
+    loadError: 'Veri yüklenmedi — veritabanı yanıt vermedi.',
+    d7Of: '7 günü dolan {n} kişiden',
   },
 };
 
@@ -76,11 +86,13 @@ export default async function ActivationFunnelWidget({ locale, days = 30 }: Prop
   const data = await getActivationFunnel(days);
   const c = copy[locale];
 
-  if (data.registered === 0) {
+  if (data.error || data.registered === 0) {
     return (
       <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
         <h3 className="font-display text-xl font-black text-[var(--dk-navy)]">{c.title}</h3>
-        <p className="mt-2 text-sm text-slate-600">{c.noData}</p>
+        <p className={`mt-2 text-sm ${data.error ? 'font-semibold text-red-700' : 'text-slate-600'}`} role={data.error ? 'alert' : undefined}>
+          {data.error ? c.loadError : c.noData}
+        </p>
       </div>
     );
   }
@@ -124,7 +136,10 @@ export default async function ActivationFunnelWidget({ locale, days = 30 }: Prop
               <div className="flex items-baseline justify-between text-sm">
                 <span className="font-semibold text-slate-700">{stageLabels[key]}</span>
                 <span className="font-bold text-[var(--dk-navy)]">
-                  {val} <span className="text-xs font-normal text-slate-600">({pct}%)</span>
+                  {val}{' '}
+                  <span className="text-xs font-normal text-slate-600">
+                    {key === 'd7Returned' ? `(${c.d7Of.replace('{n}', String(data.d7Eligible))})` : `(${pct}%)`}
+                  </span>
                 </span>
               </div>
               <div className="mt-1.5 h-3 w-full overflow-hidden rounded-full bg-slate-100">

@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowLeft, Building2, Calculator, Loader2, MapPinned, Sparkles } from 'lucide-react';
+import { Building2, Calculator, Loader2, MapPinned, Sparkles } from 'lucide-react';
 import { generateLokasyonRecommendations } from '@/app/actions/lokasyon-ai-recommendations';
 import {
   CRITERIA,
@@ -22,6 +22,7 @@ import {
   type RiskFlagId,
 } from '@/lib/marketing-tools/lokasyon-analiz';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 function getIntlLocale(locale: string): string {
   if (locale === 'az') return AZ_NUMBER_LOCALE;
@@ -111,7 +112,7 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
   const analysis = useMemo(() => calculateLocationAnalysis(profile), [profile]);
   const applicableCriteria = useMemo(() => CRITERIA.filter((criterion) => criterion.appliesTo.includes(locationType)), [locationType]);
 
-  const numberClass = 'min-h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+  const numberClass = 'min-h-10 w-full rounded-lg border border-[#E4DCCD] bg-white px-3 text-sm font-semibold text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
   const answerButtons: Array<{ value: AnswerValue; keyName: 'yes' | 'partial' | 'no' }> = [
     { value: 2, keyName: 'yes' },
     { value: 1, keyName: 'partial' },
@@ -176,29 +177,20 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-      <Link href={backHref} className="mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="lokasyon-analiz" title={t('title')} subtitle={t('subtitle')} backHref={backHref} />
 
-      <div className="mb-6">
-        <div className="mb-2 inline-flex rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-bold uppercase text-purple-700">{t('tier')}</div>
-        <h1 className="font-['Playfair_Display'] text-2xl font-bold text-[var(--dk-navy)] sm:text-3xl">{t('title')}</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-5 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <form onSubmit={handleSubmit} className="space-y-5 rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
         <div className="grid gap-3 lg:grid-cols-2">
           <div>
-            <span className="mb-2 block text-sm font-bold text-[var(--dk-navy)]">{t('modes.label')}</span>
+            <span className="mb-2 block text-sm font-bold text-[#0F172A]">{t('modes.label')}</span>
             <div className="grid grid-cols-2 gap-2" data-testid="lokasyon-mode-toggle">
               {(['new', 'existing'] as LocationMode[]).map((item) => (
                 <button
                   key={item}
                   type="button"
                   onClick={() => { setMode(item); setSubmitted(false); }}
-                  className={`min-h-11 rounded-lg border px-3 text-sm font-bold transition ${mode === item ? 'border-[var(--dk-gold)] bg-[var(--dk-gold)]/10 text-[var(--dk-navy)]' : 'border-slate-200 text-slate-600 hover:border-slate-300'}`}
+                  className={`min-h-11 rounded-lg border px-3 text-sm font-bold transition ${mode === item ? 'border-[#0F172A] bg-[#F6F1E9] text-[#0F172A]' : 'border-[#E4DCCD] text-slate-600 hover:border-slate-300'}`}
                 >
                   {t(`modes.${item}`)}
                 </button>
@@ -206,7 +198,7 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
             </div>
           </div>
           <label>
-            <span className="mb-2 block text-sm font-bold text-[var(--dk-navy)]">{t('locationTypes.label')}</span>
+            <span className="mb-2 block text-sm font-bold text-[#0F172A]">{t('locationTypes.label')}</span>
             <select value={locationType} onChange={(event) => { setLocationType(event.target.value as LocationType); setSubmitted(false); }} className={numberClass} data-testid="lokasyon-type-select">
               {LOCATION_TYPES.map((item) => <option key={item} value={item}>{t(`locationTypes.${item}`)}</option>)}
             </select>
@@ -215,7 +207,7 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
 
         {locationType === 'mall' && (
           <section className="rounded-xl border border-blue-200 bg-blue-50 p-4" data-testid="lokasyon-avm-extra">
-            <h2 className="mb-3 flex items-center gap-2 text-sm font-extrabold text-[var(--dk-navy)]"><Building2 size={16} />{t('avmExtra.title')}</h2>
+            <h2 className="mb-3 flex items-center gap-2 text-sm font-extrabold text-[#0F172A]"><Building2 size={16} />{t('avmExtra.title')}</h2>
             <div className="grid gap-2 sm:grid-cols-2">
               {(['management', 'entryCounts', 'deliveryHours', 'freightLift'] as const).map((item) => (
                 <div key={item} className="rounded-lg border border-blue-100 bg-white p-3 text-xs font-semibold leading-5 text-blue-900">{t(`avmExtra.${item}`)}</div>
@@ -225,12 +217,12 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
         )}
 
         <section>
-          <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold text-[var(--dk-navy)]"><MapPinned size={18} />{t('criteria.title')}</h2>
+          <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold text-[#0F172A]"><MapPinned size={18} />{t('criteria.title')}</h2>
           <div className="grid gap-3 lg:grid-cols-2">
             {applicableCriteria.map((criterion) => (
-              <div key={criterion.id} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+              <div key={criterion.id} className="rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] p-3">
                 <div className="mb-3">
-                  <div className="text-sm font-extrabold text-[var(--dk-navy)]">{t(`criteria.${criterion.id}.label`)}</div>
+                  <div className="text-sm font-extrabold text-[#0F172A]">{t(`criteria.${criterion.id}.label`)}</div>
                   <div className="mt-1 text-xs leading-5 text-slate-500">{t(`criteria.${criterion.id}.tooltip`)}</div>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
@@ -239,7 +231,7 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
                       key={answer.keyName}
                       type="button"
                       onClick={() => setAnswer(criterion.id, answer.value)}
-                      className={`min-h-9 rounded-lg border px-2 text-xs font-bold transition ${answers[criterion.id] === answer.value ? 'border-[var(--dk-gold)] bg-white text-[var(--dk-navy)] shadow-sm' : 'border-slate-200 bg-white/70 text-slate-500 hover:border-slate-300'}`}
+                      className={`min-h-9 rounded-lg border px-2 text-xs font-bold transition ${answers[criterion.id] === answer.value ? 'border-[#0F172A] bg-white text-[#0F172A] shadow-sm' : 'border-[#E4DCCD] bg-white/70 text-slate-500 hover:border-slate-300'}`}
                     >
                       {t(`answers.${answer.keyName}`)}
                     </button>
@@ -251,8 +243,8 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
         </section>
 
         {mode === 'new' && (
-          <section className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-            <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold text-[var(--dk-navy)]"><Calculator size={18} />{t('breakeven.title')}</h2>
+          <section className="rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] p-4">
+            <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold text-[#0F172A]"><Calculator size={18} />{t('breakeven.title')}</h2>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {(Object.keys(DEFAULT_BREAKEVEN) as Array<keyof BreakevenInput>).map((field) => (
                 <label key={field}>
@@ -266,7 +258,7 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
 
         {mode === 'existing' && (
           <section className="rounded-xl border border-red-100 bg-red-50 p-4" data-testid="lokasyon-risk-flags">
-            <h2 className="mb-3 text-base font-extrabold text-[var(--dk-navy)]">{t('riskFlags.title')}</h2>
+            <h2 className="mb-3 text-base font-extrabold text-[#0F172A]">{t('riskFlags.title')}</h2>
             <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {RISK_FLAGS.map((flag) => (
                 <label key={flag} className="flex items-start gap-2 rounded-lg border border-red-100 bg-white p-3 text-sm font-semibold text-slate-700">
@@ -289,29 +281,29 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
       {submitted && (
         <div className="mt-8 space-y-6">
           <section className="grid gap-4 lg:grid-cols-3">
-            <div className="rounded-xl border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/5 p-4">
-              <div className="text-xs font-extrabold uppercase text-[var(--dk-gold)]">{t('results.score')}</div>
-              <div className="mt-2 text-4xl font-extrabold text-[var(--dk-navy)]">{analysis.score}</div>
+            <div className="rounded-xl border border-[#F4B8C3] bg-[#F6F1E9] p-4">
+              <div className="text-xs font-extrabold uppercase text-[#BE2F47]">{t('results.score')}</div>
+              <div className="mt-2 text-4xl font-extrabold text-[#0F172A]">{analysis.score}</div>
               <div className="mt-2 text-sm font-bold text-slate-600">{t(`levels.${analysis.level}`)}</div>
             </div>
             {mode === 'new' && (
-              <div className={`rounded-xl border p-4 lg:col-span-2 ${analysis.breakeven.sustainable ? 'border-slate-200 bg-white' : 'border-red-200 bg-red-50'}`} data-testid="lokasyon-breakeven-card">
+              <div className={`rounded-xl border p-4 lg:col-span-2 ${analysis.breakeven.sustainable ? 'border-[#E4DCCD] bg-white' : 'border-red-200 bg-red-50'}`} data-testid="lokasyon-breakeven-card">
                 <div className="text-xs font-extrabold uppercase text-slate-500">{t('breakeven.resultLabel')}</div>
-                <div className="mt-2 text-3xl font-extrabold text-[var(--dk-navy)]">{formatMoney(analysis.breakeven.monthlyBreakevenSales, locale)} {t('breakeven.currency')}</div>
+                <div className="mt-2 text-3xl font-extrabold text-[#0F172A]">{formatMoney(analysis.breakeven.monthlyBreakevenSales, locale)} {t('breakeven.currency')}</div>
                 <p className="mt-2 text-sm leading-6 text-slate-600">{analysis.breakeven.sustainable ? t('breakeven.resultHelp') : t('breakeven.unsustainable')}</p>
                 <p className="mt-2 text-xs leading-5 text-slate-500">{t('estimateDisclaimer')}</p>
               </div>
             )}
           </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-            <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('results.chartTitle')}</h2>
+          <section className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+            <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('results.chartTitle')}</h2>
             <LocationChart profile={profile} locale={locale} labelForCriterion={(criterionId) => t(`criteria.${criterionId}.label`)} chartLabel={t('results.chartTitle')} />
           </section>
 
           {mode === 'existing' && analysis.applicableRiskFlags.length > 0 && (
             <section className="rounded-xl border border-red-200 bg-red-50 p-4" data-testid="lokasyon-risk-results">
-              <h2 className="text-base font-extrabold text-[var(--dk-navy)]">{t('riskFlags.resultTitle')}</h2>
+              <h2 className="text-base font-extrabold text-[#0F172A]">{t('riskFlags.resultTitle')}</h2>
               <div className="mt-3 grid gap-2 sm:grid-cols-2">
                 {analysis.applicableRiskFlags.map((flag) => (
                   <div key={flag} className="rounded-lg border border-red-100 bg-white p-3 text-sm font-semibold text-red-800">{t(`riskFlags.${flag}`)}</div>
@@ -328,18 +320,18 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
 
           <section className="grid gap-4 lg:grid-cols-3" data-testid="lokasyon-recommendations">
             {(recommendations.length ? recommendations : fallbackRecommendations()).map((item, index) => (
-              <article key={`${item}-${index}`} className="rounded-xl border border-[var(--dk-gold)]/30 bg-white p-4 shadow-sm">
-                <div className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase text-[var(--dk-gold)]">
+              <article key={`${item}-${index}`} className="rounded-xl border border-[#F4B8C3] bg-white p-4 shadow-sm">
+                <div className="mb-2 flex items-center gap-2 text-xs font-extrabold uppercase text-[#BE2F47]">
                   <Sparkles size={14} />
                   {t('recommendations.title', { index: index + 1 })}
                 </div>
-                <p className="text-sm font-semibold leading-6 text-[var(--dk-navy)]">{item}</p>
+                <p className="text-sm font-semibold leading-6 text-[#0F172A]">{item}</p>
               </article>
             ))}
           </section>
 
-          <div className="rounded-lg border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/5 p-4">
-            <p className="font-['Playfair_Display'] text-sm font-bold italic leading-6 text-[var(--dk-navy)]">{t('ahilikQuote')}</p>
+          <div className="rounded-lg border border-[#F4B8C3] bg-[#F6F1E9] p-4">
+            <p className="text-sm font-bold italic leading-6 text-[#0F172A]">{t('ahilikQuote')}</p>
           </div>
         </div>
       )}

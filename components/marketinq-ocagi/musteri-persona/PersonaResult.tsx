@@ -13,7 +13,7 @@ interface PersonaResultData {
   antiPersona: { description: string; whyNot: string };
   marketingTips: MarketingTip[];
   menuSuggestions: string[];
-  ahilikQuote: string;
+  ahilikQuote?: string;
 }
 
 const copy: Record<Locale, {
@@ -56,22 +56,22 @@ const copy: Record<Locale, {
 function PersonaCard({ persona, title, locale }: { persona: Persona; title: string; locale: Locale }) {
   const t = copy[locale];
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+    <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
       <div className="mb-4 flex items-center gap-3">
-        <UserCircle size={24} className="text-[var(--dk-gold)]" />
+        <UserCircle size={24} className="text-[#BE2F47]" />
         <div>
-          <h3 className="text-sm font-bold text-[var(--dk-navy)]">{title}</h3>
-          <p className="text-lg font-bold text-[var(--dk-navy)]">{persona.name}</p>
+          <h3 className="text-sm font-bold text-[#0F172A]">{title}</h3>
+          <p className="text-lg font-bold text-[#0F172A]">{persona.name}</p>
         </div>
       </div>
 
       <div className="mb-4 grid grid-cols-3 gap-2 text-xs">
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.age}</span><span className="font-semibold">{persona.age}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.job}</span><span className="font-semibold">{persona.occupation}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.income}</span><span className="font-semibold">{persona.income}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.lifestyle}</span><span className="font-semibold">{persona.lifestyle}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.visits}</span><span className="font-semibold">{persona.visitFrequency}</span></div>
-        <div className="rounded-lg bg-slate-50 p-2 text-center"><span className="block text-[10px] text-slate-600">{t.spend}</span><span className="font-semibold">{persona.avgSpend}</span></div>
+        <div className="rounded-lg bg-[#FBF8F3] p-2 text-center"><span className="block text-[10px] text-slate-600">{t.age}</span><span className="font-semibold">{persona.age}</span></div>
+        <div className="rounded-lg bg-[#FBF8F3] p-2 text-center"><span className="block text-[10px] text-slate-600">{t.job}</span><span className="font-semibold">{persona.occupation}</span></div>
+        <div className="rounded-lg bg-[#FBF8F3] p-2 text-center"><span className="block text-[10px] text-slate-600">{t.income}</span><span className="font-semibold">{persona.income}</span></div>
+        <div className="rounded-lg bg-[#FBF8F3] p-2 text-center"><span className="block text-[10px] text-slate-600">{t.lifestyle}</span><span className="font-semibold">{persona.lifestyle}</span></div>
+        <div className="rounded-lg bg-[#FBF8F3] p-2 text-center"><span className="block text-[10px] text-slate-600">{t.visits}</span><span className="font-semibold">{persona.visitFrequency}</span></div>
+        <div className="rounded-lg bg-[#FBF8F3] p-2 text-center"><span className="block text-[10px] text-slate-600">{t.spend}</span><span className="font-semibold">{persona.avgSpend}</span></div>
       </div>
 
       <div className="space-y-3 text-sm">
@@ -83,7 +83,7 @@ function PersonaCard({ persona, title, locale }: { persona: Persona; title: stri
           <ul className="mt-1 space-y-0.5 text-slate-600">{persona.channels.map((c, i) => <li key={i}>{c}</li>)}</ul></div>
       </div>
 
-      <p className="mt-4 rounded-lg bg-[var(--dk-gold)]/5 px-4 py-3 text-sm italic text-[var(--dk-navy)]">&ldquo;{persona.quote}&rdquo;</p>
+      <p className="mt-4 rounded-lg bg-[#F6F1E9] px-4 py-3 text-sm italic text-[#0F172A]">&ldquo;{persona.quote}&rdquo;</p>
     </div>
   );
 }
@@ -112,35 +112,37 @@ export default function PersonaResult({ result, locale, onRedo }: Props) {
       </div>
 
       {/* Marketing tips */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-[var(--dk-navy)]"><Megaphone size={16} />{t.tipsTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-[#0F172A]"><Megaphone size={16} />{t.tipsTitle}</h3>
         <div className="space-y-3">
           {result.marketingTips.map((tip, i) => (
-            <div key={i} className="rounded-lg border border-slate-100 px-4 py-3">
+            <div key={i} className="rounded-lg border border-[#EFE9DE] px-4 py-3">
               <div className="flex items-center gap-3 text-xs text-slate-500">
-                <span className="font-bold text-[var(--dk-gold)]">{tip.channel}</span>
+                <span className="font-bold text-[#BE2F47]">{tip.channel}</span>
                 <span>·</span>
                 <span>{tip.timing}</span>
               </div>
-              <p className="mt-1 text-sm text-[var(--dk-navy)]">{tip.message}</p>
+              <p className="mt-1 text-sm text-[#0F172A]">{tip.message}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Menu suggestions */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-[var(--dk-navy)]"><UtensilsCrossed size={16} />{t.menuTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-[#0F172A]"><UtensilsCrossed size={16} />{t.menuTitle}</h3>
         <ul className="space-y-1.5 text-sm text-slate-600">
           {result.menuSuggestions.map((s, i) => <li key={i}>• {s}</li>)}
         </ul>
       </div>
 
-      <p className="text-center text-xs italic text-slate-400">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      {/* TASK-0523: AI no longer writes «Ahilik» quotes; old saved runs still show theirs. */}
+
+      {result.ahilikQuote && <p className="text-center text-xs italic text-slate-400">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>}
 
       <div className="flex gap-3">
-        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>
-        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90">{t.next}</Link>
+        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-[#E4DCCD] px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A]">{t.redo}</button>
+        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition hover:bg-dk-red-deep">{t.next}</Link>
       </div>
     </div>
   );

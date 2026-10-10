@@ -6,7 +6,6 @@ import { useLocale, useTranslations } from 'next-intl';
 import { classifyMenu, menuThresholds, POPULARITY_FACTOR, type MenuCategory } from '@/lib/toolkit/menu-matrix';
 import {
   AlertCircle,
-  ArrowLeft,
   Download,
   Plus,
   RefreshCw,
@@ -16,6 +15,7 @@ import {
 } from 'lucide-react';
 import { getMenuAnalyticsTips, type MenuAnalyticsCategory } from '@/app/actions/menu-analytics-ai';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 type MenuRow = {
   id: string;
@@ -239,7 +239,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 print:max-w-none print:px-0">
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6 print:max-w-none print:px-0">
       <style jsx global>{`
         @media print {
           body { background: white !important; }
@@ -249,51 +249,45 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
         }
       `}</style>
 
-      <Link href={backHref} className="no-print mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
+      <ToolHeader
+        slug="menyu-analitik"
+        title={t('title')}
+        subtitle={t('subtitle')}
+        backHref={backHref}
+        actions={
+          <button
+            type="button"
+            onClick={() => window.print()}
+            disabled={!hasAnalyzed}
+            className="no-print inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#E4DCCD] bg-white px-4 py-2 text-sm font-bold text-[#0F172A] shadow-sm transition hover:border-[#0F172A] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <Download size={16} />
+            {t('export_pdf')}
+          </button>
+        }
+      />
 
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <div className="mb-2 inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold uppercase text-amber-700">
-            KALFA
-          </div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)] sm:text-3xl">{t('title')}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-        </div>
-        <button
-          type="button"
-          onClick={() => window.print()}
-          disabled={!hasAnalyzed}
-          className="no-print inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-[var(--dk-navy)] shadow-sm transition hover:border-[var(--dk-gold)] disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <Download size={16} />
-          {t('export_pdf')}
-        </button>
-      </div>
-
-      <section className="print-surface print-break mb-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <section className="print-surface print-break mb-6 rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
         <div className="mb-4 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
           <label className="block">
-            <span className="mb-1.5 block text-sm font-bold text-[var(--dk-navy)]">{t('period_label')}</span>
+            <span className="mb-1.5 block text-sm font-bold text-[#0F172A]">{t('period_label')}</span>
             <input
               value={period}
               onChange={(event) => setPeriod(event.target.value)}
-              className="min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20"
+              className="min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15"
               placeholder="May 2026"
             />
           </label>
           <button
             type="button"
             onClick={loadDemoData}
-            className="no-print min-h-11 rounded-lg border border-dashed border-slate-300 px-4 text-sm font-bold text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+            className="no-print min-h-11 rounded-lg border border-dashed border-slate-300 px-4 text-sm font-bold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A]"
           >
             {t('load_demo')}
           </button>
         </div>
 
-        <div className="hidden rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold uppercase tracking-wide text-slate-500 md:grid md:grid-cols-[1.5fr_1fr_1fr_0.8fr_44px] md:gap-3">
+        <div className="hidden rounded-lg border border-[#E4DCCD] bg-[#FBF8F3] px-3 py-2 text-xs font-bold uppercase tracking-wide text-slate-500 md:grid md:grid-cols-[1.5fr_1fr_1fr_0.8fr_44px] md:gap-3">
           <span>{t('item_name')}</span>
           <span>{t('sell_price')}</span>
           <span>{t('food_cost')}</span>
@@ -303,14 +297,14 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
 
         <div className="mt-3 space-y-3">
           {rows.map((row, index) => (
-            <div key={row.id} className="grid gap-3 rounded-xl border border-slate-200 bg-white p-3 md:grid-cols-[1.5fr_1fr_1fr_0.8fr_44px] md:items-end md:border-0 md:p-0">
+            <div key={row.id} className="grid gap-3 rounded-2xl border border-[#E4DCCD] bg-white p-3 md:grid-cols-[1.5fr_1fr_1fr_0.8fr_44px] md:items-end md:border-0 md:p-0">
               <label>
                 <span className="mb-1 block text-xs font-bold text-slate-500 md:hidden">{t('item_name')}</span>
                 <input
                   value={row.name}
                   onChange={(event) => updateRow(row.id, 'name', event.target.value)}
                   maxLength={50}
-                  className="min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)]"
+                  className="min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54]"
                   placeholder={`${t('item_name')} #${index + 1}`}
                 />
               </label>
@@ -320,7 +314,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
                   value={row.price}
                   onChange={(event) => updateRow(row.id, 'price', event.target.value)}
                   inputMode="decimal"
-                  className="min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)]"
+                  className="min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54]"
                   placeholder="0.00"
                 />
               </label>
@@ -330,7 +324,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
                   value={row.cost}
                   onChange={(event) => updateRow(row.id, 'cost', event.target.value)}
                   inputMode="decimal"
-                  className="min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)]"
+                  className="min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54]"
                   placeholder="0.00"
                 />
               </label>
@@ -340,7 +334,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
                   value={row.sales}
                   onChange={(event) => updateRow(row.id, 'sales', event.target.value)}
                   inputMode="numeric"
-                  className="min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)]"
+                  className="min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54]"
                   placeholder="0"
                 />
               </label>
@@ -348,7 +342,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
                 type="button"
                 onClick={() => removeRow(row.id)}
                 disabled={rows.length <= 2}
-                className="no-print inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
+                className="no-print inline-flex min-h-11 items-center justify-center rounded-lg border border-[#E4DCCD] text-slate-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
                 aria-label={t('remove_item')}
               >
                 <Trash2 size={16} />
@@ -362,7 +356,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
             type="button"
             onClick={addRow}
             disabled={rows.length >= 20}
-            className="no-print inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 px-4 text-sm font-bold text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] disabled:cursor-not-allowed disabled:opacity-50"
+            className="no-print inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 px-4 text-sm font-bold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A] disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Plus size={16} />
             {t('add_item')}
@@ -386,19 +380,19 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
 
       {hasAnalyzed && analysis && (
         <div className="space-y-6">
-          <section className="print-surface print-break rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <section className="print-surface print-break rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-4 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-lg bg-slate-50 p-3">
+              <div className="rounded-lg bg-[#FBF8F3] p-3">
                 <p className="text-xs font-bold uppercase text-slate-500">{t('period_label')}</p>
-                <p className="mt-1 text-lg font-bold text-[var(--dk-navy)]">{period || '-'}</p>
+                <p className="mt-1 text-lg font-bold text-[#0F172A]">{period || '-'}</p>
               </div>
-              <div className="rounded-lg bg-slate-50 p-3">
+              <div className="rounded-lg bg-[#FBF8F3] p-3">
                 <p className="text-xs font-bold uppercase text-slate-500">{t('avg_cm')}</p>
-                <p className="mt-1 text-lg font-bold text-[var(--dk-navy)]">{formatNumber(analysis.averageContributionMargin, localeForIntl)} AZN</p>
+                <p className="mt-1 text-lg font-bold text-[#0F172A]">{formatNumber(analysis.averageContributionMargin, localeForIntl)} AZN</p>
               </div>
-              <div className="rounded-lg bg-slate-50 p-3">
+              <div className="rounded-lg bg-[#FBF8F3] p-3">
                 <p className="text-xs font-bold uppercase text-slate-500">{t('avg_mix')}</p>
-                <p className="mt-1 text-lg font-bold text-[var(--dk-navy)]">{formatNumber(analysis.averageMenuMixPercent, localeForIntl)}%</p>
+                <p className="mt-1 text-lg font-bold text-[#0F172A]">{formatNumber(analysis.averageMenuMixPercent, localeForIntl)}%</p>
               </div>
             </div>
 
@@ -406,7 +400,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
               <button
                 type="button"
                 onClick={() => setActiveTab('matrix')}
-                className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-bold transition ${activeTab === 'matrix' ? 'bg-white text-[var(--dk-navy)] shadow-sm' : 'text-slate-500'}`}
+                className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-bold transition ${activeTab === 'matrix' ? 'bg-white text-[#0F172A] shadow-sm' : 'text-slate-500'}`}
               >
                 <Sparkles size={16} />
                 {t('matrix_view')}
@@ -414,7 +408,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
               <button
                 type="button"
                 onClick={() => setActiveTab('table')}
-                className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-bold transition ${activeTab === 'table' ? 'bg-white text-[var(--dk-navy)] shadow-sm' : 'text-slate-500'}`}
+                className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md text-sm font-bold transition ${activeTab === 'table' ? 'bg-white text-[#0F172A] shadow-sm' : 'text-slate-500'}`}
               >
                 <Table2 size={16} />
                 {t('table_view')}
@@ -422,18 +416,18 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
             </div>
 
             {(activeTab === 'matrix') && (
-              <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-slate-200">
+              <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-[#E4DCCD]">
                 {(['puzzle', 'star', 'dog', 'plowhorse'] as MenuAnalyticsCategory[]).map((category) => {
                   const color = CATEGORY_COLORS[category];
                   return (
-                    <div key={category} className={`min-h-44 border-slate-200 p-3 sm:p-4 ${category === 'puzzle' || category === 'dog' ? 'border-r' : ''} ${category === 'puzzle' || category === 'star' ? 'border-b' : ''} ${color.bg}`}>
+                    <div key={category} className={`min-h-44 border-[#E4DCCD] p-3 sm:p-4 ${category === 'puzzle' || category === 'dog' ? 'border-r' : ''} ${category === 'puzzle' || category === 'star' ? 'border-b' : ''} ${color.bg}`}>
                       <div className="mb-3">
                         <h3 className={`text-sm font-extrabold uppercase ${color.text}`}>{quadrantMeta[category].title}</h3>
                         <p className="mt-1 text-xs leading-5 text-slate-600">{quadrantMeta[category].hint}</p>
                       </div>
                       <div className="space-y-2">
                         {grouped[category].length ? grouped[category].map((item) => (
-                          <div key={item.id} className="rounded-lg bg-white/80 px-3 py-2 text-xs font-bold text-[var(--dk-navy)] shadow-sm">
+                          <div key={item.id} className="rounded-lg bg-white/80 px-3 py-2 text-xs font-bold text-[#0F172A] shadow-sm">
                             {item.name}
                           </div>
                         )) : (
@@ -450,7 +444,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
               <div className="overflow-x-auto">
                 <table className="min-w-[760px] w-full border-collapse text-left text-sm">
                   <thead>
-                    <tr className="border-b border-slate-200 text-xs uppercase text-slate-500">
+                    <tr className="border-b border-[#E4DCCD] text-xs uppercase text-slate-500">
                       <th className="py-3 pr-3">{t('item')}</th>
                       <th className="py-3 pr-3">{t('price')}</th>
                       <th className="py-3 pr-3">{t('cost')}</th>
@@ -462,8 +456,8 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
                   </thead>
                   <tbody>
                     {analysis.items.map((item) => (
-                      <tr key={item.id} className="border-b border-slate-100">
-                        <td className="py-3 pr-3 font-bold text-[var(--dk-navy)]">{item.name}</td>
+                      <tr key={item.id} className="border-b border-[#EFE9DE]">
+                        <td className="py-3 pr-3 font-bold text-[#0F172A]">{item.name}</td>
                         <td className="py-3 pr-3">{formatNumber(item.price, localeForIntl)} AZN</td>
                         <td className="py-3 pr-3">{formatNumber(item.cost, localeForIntl)} AZN</td>
                         <td className="py-3 pr-3">{formatNumber(item.contributionMargin, localeForIntl)} AZN</td>
@@ -478,17 +472,17 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
             )}
           </section>
 
-          <section className="print-surface print-break rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <section className="print-surface print-break rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg font-bold text-[var(--dk-navy)]">{t('ai_tips')}</h2>
+                <h2 className="text-lg font-bold text-[#0F172A]">{t('ai_tips')}</h2>
                 <p className="mt-1 text-sm text-slate-500">{t('ai_tips_subtitle')}</p>
               </div>
               {tipsError && (
                 <button
                   type="button"
                   onClick={loadTips}
-                  className="no-print inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-sm font-bold text-[var(--dk-navy)] transition hover:border-[var(--dk-gold)]"
+                  className="no-print inline-flex min-h-10 items-center gap-2 rounded-lg border border-[#E4DCCD] px-3 text-sm font-bold text-[#0F172A] transition hover:border-[#0F172A]"
                 >
                   <RefreshCw size={15} />
                   {t('retry')}
@@ -512,7 +506,7 @@ export default function MenuAnalytics({ backHref = '/b2b-panel/marketinq-ocagi' 
             )}
 
             {!isPending && tips && (
-              <div className="whitespace-pre-wrap rounded-lg bg-slate-50 p-4 text-sm leading-7 text-slate-700">
+              <div className="whitespace-pre-wrap rounded-lg bg-[#FBF8F3] p-4 text-sm leading-7 text-slate-700">
                 {tips}
               </div>
             )}

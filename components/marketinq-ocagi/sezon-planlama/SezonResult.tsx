@@ -34,7 +34,7 @@ interface SezonResultData {
   topRecommendations: string[];
   aeoRecommendations?: AeoRecommendation[];
   risksWatchout?: RiskWatchout[];
-  ahilikQuote: string;
+  ahilikQuote?: string;
 }
 
 const typeColors: Record<string, string> = {
@@ -79,21 +79,21 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
     <div className="space-y-6">
       {/* Summary */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
           <p className="text-[10px] font-semibold uppercase text-slate-600">{t.total}</p>
-          <p className="mt-1 text-2xl font-bold text-[var(--dk-navy)]">{result.totalCampaigns}</p>
+          <p className="mt-1 text-2xl font-bold text-[#0F172A]">{result.totalCampaigns}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
           <p className="text-[10px] font-semibold uppercase text-slate-600">{t.budget}</p>
-          <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{result.budgetSummary.allocated}</p>
+          <p className="mt-1 text-sm font-bold text-[#0F172A]">{result.budgetSummary.allocated}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
           <p className="text-[10px] font-semibold uppercase text-slate-600">{t.perMonth}</p>
-          <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{result.budgetSummary.perMonth}</p>
+          <p className="mt-1 text-sm font-bold text-[#0F172A]">{result.budgetSummary.perMonth}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
           <p className="text-[10px] font-semibold uppercase text-slate-600">{t.topCat}</p>
-          <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{result.budgetSummary.topCategory}</p>
+          <p className="mt-1 text-sm font-bold text-[#0F172A]">{result.budgetSummary.topCategory}</p>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
           <div className="space-y-3">
             {result.risksWatchout.map((risk, i) => (
               <div key={i}>
-                <p className="font-semibold text-[var(--dk-navy)]">{risk.period}</p>
+                <p className="font-semibold text-[#0F172A]">{risk.period}</p>
                 <p className="text-sm text-slate-700">{risk.risk}</p>
                 <p className="mt-1 text-xs text-green-700">{risk.mitigation}</p>
               </div>
@@ -125,7 +125,7 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
           <div className="space-y-3">
             {result.aeoRecommendations.map((rec, i) => (
               <div key={i}>
-                <p className="font-semibold text-[var(--dk-navy)]">{rec.action}</p>
+                <p className="font-semibold text-[#0F172A]">{rec.action}</p>
                 <p className="text-sm text-slate-700">{rec.rationale}</p>
                 <span className={`mt-1 inline-flex rounded px-2 py-0.5 text-xs ${
                   rec.priority === 'high' ? 'bg-red-200 text-red-800'
@@ -142,20 +142,20 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
 
       {/* Calendar by month */}
       {result.calendar.map((month) => (
-        <div key={month.month} className="rounded-2xl border border-slate-200 bg-white p-5">
-          <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-[var(--dk-navy)]">
-            <Calendar size={16} className="text-[var(--dk-gold)]" />
+        <div key={month.month} className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+          <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-[#0F172A]">
+            <Calendar size={16} className="text-[#BE2F47]" />
             {month.monthName}
             <span className="text-xs text-slate-600">({month.campaigns.length})</span>
           </h3>
           <div className="space-y-3">
             {month.campaigns.map((c, i) => (
-              <div key={i} className="rounded-xl border border-slate-100 p-4">
+              <div key={i} className="rounded-xl border border-[#EFE9DE] p-4">
                 <div className="mb-2 flex flex-wrap items-center gap-2">
                   <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${typeColors[c.type] ?? 'bg-slate-100 text-slate-600'}`}>
                     {t.types[c.type] ?? c.type}
                   </span>
-                  <span className="text-sm font-bold text-[var(--dk-navy)]">{c.name}</span>
+                  <span className="text-sm font-bold text-[#0F172A]">{c.name}</span>
                   <span className="text-[10px] text-slate-600">{c.startDay}-{c.endDay}</span>
                 </div>
                 <p className="mb-2 text-xs text-slate-600">{c.description}</p>
@@ -175,18 +175,20 @@ export default function SezonResult({ result, locale, onRedo }: Props) {
       ))}
 
       {/* Recommendations */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{t.recsTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-3 text-sm font-bold text-[#0F172A]">{t.recsTitle}</h3>
         <ol className="list-inside list-decimal space-y-2 text-sm text-slate-600">
           {result.topRecommendations.map((r, i) => <li key={i}>{r}</li>)}
         </ol>
       </div>
 
-      <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>
+      {/* TASK-0523: AI no longer writes «Ahilik» quotes; old saved runs still show theirs. */}
+
+      {result.ahilikQuote && <p className="text-center text-xs italic text-slate-600">&ldquo;{result.ahilikQuote}&rdquo; — Əhilik</p>}
 
       <div className="flex gap-3">
-        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>
-        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90">{t.next}</Link>
+        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-[#E4DCCD] px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A]">{t.redo}</button>
+        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition hover:bg-dk-red-deep">{t.next}</Link>
       </div>
     </div>
   );

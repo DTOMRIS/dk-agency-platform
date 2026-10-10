@@ -1,19 +1,16 @@
 'use client';
 
+import { useMessages } from 'next-intl';
 import { useState } from 'react';
 import { Copy, Check, RefreshCw } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 
-const copy: Record<Locale, {
+// TASK-0523: copy moved to messages/*.json → mqForms.complaintReplyResults (was an in-file locale map).
+type ComplaintReplyResultsCopy = {
   tones: { formal: string; friendly: string; short: string };
   copyBtn: string;
   copied: string;
   regenerate: string;
-}> = {
-  az: { tones: { formal: 'Rəsmi', friendly: 'Səmimi', short: 'Qısa' }, copyBtn: 'Kopyala', copied: 'Kopyalandı!', regenerate: 'Yenidən yarat' },
-  en: { tones: { formal: 'Formal', friendly: 'Friendly', short: 'Short' }, copyBtn: 'Copy', copied: 'Copied!', regenerate: 'Regenerate' },
-  tr: { tones: { formal: 'Resmi', friendly: 'Samimi', short: 'Kısa' }, copyBtn: 'Kopyala', copied: 'Kopyalandı!', regenerate: 'Yeniden oluştur' },
-  ru: { tones: { formal: 'Официальный', friendly: 'Дружелюбный', short: 'Краткий' }, copyBtn: 'Копировать', copied: 'Скопировано!', regenerate: 'Сгенерировать заново' },
 };
 
 const TONE_COLORS: Record<string, { bg: string; border: string; badge: string }> = {
@@ -22,14 +19,14 @@ const TONE_COLORS: Record<string, { bg: string; border: string; badge: string }>
   short: { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700' },
 };
 
-interface SikayetCavablariProps {
+interface ComplaintReplyResultsProps {
   responses: { formal: string; friendly: string; short: string };
   locale: Locale;
   onRegenerate: () => void;
 }
 
-export default function SikayetCavablari({ responses, locale, onRegenerate }: SikayetCavablariProps) {
-  const c = copy[locale];
+export default function ComplaintReplyResults({ responses, locale, onRegenerate }: ComplaintReplyResultsProps) {
+  const c = (useMessages() as unknown as { mqForms: { complaintReplyResults: ComplaintReplyResultsCopy } }).mqForms.complaintReplyResults;
   const [copiedTone, setCopiedTone] = useState<string | null>(null);
 
   async function handleCopy(tone: string, text: string) {
@@ -60,7 +57,7 @@ export default function SikayetCavablari({ responses, locale, onRegenerate }: Si
               </span>
               <button
                 onClick={() => handleCopy(key, text)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:shadow-sm"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-[#E4DCCD] bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:shadow-sm"
               >
                 {isCopied ? (
                   <><Check size={14} className="text-emerald-500" />{c.copied}</>
@@ -76,7 +73,7 @@ export default function SikayetCavablari({ responses, locale, onRegenerate }: Si
 
       <button
         onClick={onRegenerate}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-600 transition hover:border-[var(--dk-gold)] hover:shadow-sm"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#E4DCCD] bg-white px-6 py-3 text-sm font-medium text-slate-600 transition hover:border-[#0F172A] hover:shadow-sm"
       >
         <RefreshCw size={16} />
         {c.regenerate}

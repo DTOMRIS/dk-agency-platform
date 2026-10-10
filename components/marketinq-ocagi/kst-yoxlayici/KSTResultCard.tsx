@@ -101,9 +101,9 @@ const resultCopy: Record<Locale, {
 function ScoreRing({ value, label, diff, locale }: { value: number; label: string; diff: number; locale: Locale }) {
   const copy = resultCopy[locale];
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 text-center">
+    <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
       <p className="mb-1 text-xs font-semibold text-slate-500">{label}</p>
-      <p className="text-3xl font-bold text-[var(--dk-navy)]">{value}%</p>
+      <p className="text-3xl font-bold text-[#0F172A]">{value}%</p>
       <p className={`mt-1 text-xs font-semibold ${diff >= 0 ? 'text-green-600' : 'text-amber-600'}`}>
         {diff >= 0 ? '+' : ''}{diff} {copy.vs}
       </p>
@@ -123,9 +123,9 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
   return (
     <div className="space-y-6">
       {/* Overall Score */}
-      <div className="rounded-2xl border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/5 p-6 text-center">
-        <p className="text-sm font-bold uppercase tracking-wider text-[var(--dk-gold)]">{copy.title}</p>
-        <p className="mt-2 text-6xl font-bold text-[var(--dk-navy)]">{result.scores.overall}%</p>
+      <div className="rounded-2xl border border-[#F4B8C3] bg-[#F6F1E9] p-6 text-center">
+        <p className="text-sm font-bold uppercase tracking-wider text-[#BE2F47]">{copy.title}</p>
+        <p className="mt-2 text-6xl font-bold text-[#0F172A]">{result.scores.overall}%</p>
         <p className="mt-2 text-xs text-slate-500">
           {copy.benchmark.replace('{v}', String(result.industryBenchmark.overall))}
         </p>
@@ -150,15 +150,15 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
 
       {/* Weakest answers (code-picked, ≤3/5 only — TASK-0523) */}
       {result.topIssues.length > 0 && (
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{copy.issuesTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{copy.issuesTitle}</h3>
         <div className="space-y-4">
           {result.topIssues.map((issue, i) => (
             <div key={i} className="border-l-4 border-amber-400 py-2 pl-4">
               <p className="text-xs text-slate-500">
                 {copy.cats[issue.category]} · {issue.questionText ?? issue.questionId} · {issue.score}/5
               </p>
-              {issue.rootCause && <p className="mt-1 text-sm font-semibold text-[var(--dk-navy)]">{issue.rootCause}</p>}
+              {issue.rootCause && <p className="mt-1 text-sm font-semibold text-[#0F172A]">{issue.rootCause}</p>}
               {issue.weekFixStep && (
                 <p className="mt-1 text-sm text-slate-600">
                   <span className="font-semibold">{copy.fixStep}:</span> {issue.weekFixStep}
@@ -171,12 +171,12 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
       )}
 
       {/* 30-day action plan */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{copy.planTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{copy.planTitle}</h3>
         <div className="space-y-5">
           {(['week1', 'week2', 'week3to4'] as const).map((week) => (
             <div key={week}>
-              <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-[var(--dk-gold)]">
+              <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-[#BE2F47]">
                 {copy.weeks[week]} — {result.actionPlan[week].title}
               </h4>
               <ul className="space-y-1.5 text-sm text-slate-600">
@@ -193,7 +193,7 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
       </div>
 
       {/* Ahilik + encouragement */}
-      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center">
+      <div className="rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] p-5 text-center">
         {/* TASK-0523: the AI no longer writes a quote «from the Ahilik tradition» (it was invented);
             older saved runs still show theirs. */}
         {result.ahilikQuote && (
@@ -202,7 +202,7 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
             <p className="mt-1 mb-4 text-xs text-slate-600">— Əhilik ənənəsi</p>
           </>
         )}
-        <p className="text-sm font-medium text-[var(--dk-navy)]">{result.encouragement}</p>
+        <p className="text-sm font-medium text-[#0F172A]">{result.encouragement}</p>
       </div>
 
       {/* Actions */}
@@ -210,13 +210,13 @@ export default function KSTResultCard({ result, locale, onRedo }: Props) {
         <button
           type="button"
           onClick={onRedo}
-          className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]"
+          className="flex-1 rounded-xl border border-[#E4DCCD] px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A]"
         >
           {copy.redo}
         </button>
         <Link
           href="/b2b-panel/marketinq-ocagi"
-          className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90"
+          className="flex flex-1 items-center justify-center rounded-xl bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition hover:bg-dk-red-deep"
         >
           {copy.next}
         </Link>

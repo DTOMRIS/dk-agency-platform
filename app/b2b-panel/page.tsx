@@ -110,10 +110,13 @@ export default function B2BPanelPage() {
       icon: Eye,
       color: 'bg-emerald-50 text-emerald-600',
     },
-    { label: copy.statLabels[2], value: 0, icon: Briefcase, color: 'bg-purple-50 text-purple-600' },
+    // TASK-0526: listing leads ARE the incoming offers (/b2b-panel/teklifler lists the same leads). Before,
+    // «Gələn Təkliflər» was a hard-coded 0 and the leads were shown as «Mesajlar», while the Messages page
+    // (no messaging backend yet) is always empty — the two cards now match their pages.
+    { label: copy.statLabels[2], value: totalMessages, icon: Briefcase, color: 'bg-purple-50 text-purple-600' },
     {
       label: copy.statLabels[3],
-      value: totalMessages,
+      value: 0,
       icon: MessageSquare,
       color: 'bg-rose-50 text-[var(--dk-red)]',
     },

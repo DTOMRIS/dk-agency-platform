@@ -87,8 +87,8 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
   return (
     <div className="space-y-6">
       {/* Matrix */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.matrixTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.matrixTitle}</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {QUADRANTS.map(({ key, icon: Icon, color, textColor }) => {
             const items = result.matrix[key];
@@ -130,13 +130,13 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
       )}
 
       {/* Category balance */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.catBalance}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.catBalance}</h3>
         <div className="space-y-3">
           {Object.entries(result.categoryBalance).map(([cat, info]) => (
-            <div key={cat} className="flex items-start justify-between rounded-lg border border-slate-100 px-3 py-2">
+            <div key={cat} className="flex items-start justify-between rounded-lg border border-[#EFE9DE] px-3 py-2">
               <div>
-                <span className="text-xs font-bold text-[var(--dk-navy)]">{t.cats[cat] ?? cat}</span>
+                <span className="text-xs font-bold text-[#0F172A]">{t.cats[cat] ?? cat}</span>
                 <span className="ml-2 text-[10px] text-slate-600">{info.count} {t.dishes}, {t.avg} {info.avgPrice} ₼</span>
               </div>
               <p className="max-w-[50%] text-right text-[10px] text-slate-600">{info.recommendation}</p>
@@ -146,8 +146,8 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
       </div>
 
       {/* Pricing */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{t.pricingTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-3 text-sm font-bold text-[#0F172A]">{t.pricingTitle}</h3>
         <p className="mb-3 text-xs text-slate-600">{t.spread}: <span className="font-bold">{result.pricing.priceSpread}x</span></p>
         <ul className="space-y-1 text-xs text-slate-600">
           {result.pricing.psychologicalPricing.map((tip, i) => <li key={i}>• {tip}</li>)}
@@ -156,8 +156,8 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
       </div>
 
       {/* Recommendations */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{t.recsTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-3 text-sm font-bold text-[#0F172A]">{t.recsTitle}</h3>
         <ol className="list-inside list-decimal space-y-2 text-sm text-slate-600">
           {result.topRecommendations.map((rec, i) => <li key={i}>{rec}</li>)}
         </ol>
@@ -168,7 +168,7 @@ export default function MenyuResultPanel({ result, locale, onRedo }: Props) {
 
       {/* Actions */}
       <div className="flex gap-3">
-        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>
+        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-[#E4DCCD] px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A]">{t.redo}</button>
         <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition hover:bg-dk-red-deep">{t.next}</Link>
       </div>
     </div>

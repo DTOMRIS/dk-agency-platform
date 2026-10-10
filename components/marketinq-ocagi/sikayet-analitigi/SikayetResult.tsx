@@ -41,7 +41,7 @@ function CopyBtn({ text, label, copiedLabel }: { text: string; label: string; co
   const [copied, setCopied] = useState(false);
   return (
     <button type="button" onClick={async () => { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
-      className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2 py-1 text-[10px] font-medium text-slate-500 transition hover:border-[var(--dk-gold)]">
+      className="inline-flex items-center gap-1 rounded-lg border border-[#E4DCCD] px-2 py-1 text-[10px] font-medium text-slate-500 transition hover:border-[#0F172A]">
       {copied ? <><Check size={10} />{copiedLabel}</> : <><Copy size={10} />{label}</>}
     </button>
   );
@@ -57,19 +57,19 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
     <div className="space-y-6">
       {/* Summary */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
           <p className="text-[10px] font-semibold uppercase text-slate-600">{t.total}</p>
-          <p className="mt-1 text-2xl font-bold text-[var(--dk-navy)]">{summary.totalComplaints}</p>
+          <p className="mt-1 text-2xl font-bold text-[#0F172A]">{summary.totalComplaints}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
           <p className="text-[10px] font-semibold uppercase text-slate-600">{t.topCat}</p>
-          <p className="mt-1 text-sm font-bold text-[var(--dk-navy)]">{summary.topCategory}</p>
+          <p className="mt-1 text-sm font-bold text-[#0F172A]">{summary.topCategory}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
           <p className="text-[10px] font-semibold uppercase text-slate-600">{t.sentiment}</p>
           <p className={`mt-1 text-2xl font-bold ${summary.sentimentScore > 60 ? 'text-green-600' : summary.sentimentScore > 30 ? 'text-amber-600' : 'text-red-600'}`}>{summary.sentimentScore}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-center">
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 text-center">
           <p className="text-[10px] font-semibold uppercase text-slate-600">{t.urgency}</p>
           <span className={`mt-1 inline-block rounded-full px-3 py-1 text-xs font-bold ${urgencyColors[summary.urgencyLevel] ?? ''}`}>
             {t.urgencyLevels[summary.urgencyLevel] ?? summary.urgencyLevel}
@@ -78,13 +78,13 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
       </div>
 
       {/* Categories */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.catsTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.catsTitle}</h3>
         <div className="space-y-4">
           {categories.map((cat, i) => (
             <div key={i} className="border-l-4 border-amber-400 py-2 pl-4">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-[var(--dk-navy)]">{cat.name}</span>
+                <span className="text-sm font-bold text-[#0F172A]">{cat.name}</span>
                 <span className="text-xs text-slate-500">{cat.count} ({cat.percentage}%)</span>
               </div>
               <p className="mt-1 text-xs text-slate-500"><span className="font-semibold">{t.rootCause}:</span> {cat.rootCause}</p>
@@ -96,12 +96,12 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
 
       {/* Patterns */}
       {patterns.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.patternsTitle}</h3>
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+          <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.patternsTitle}</h3>
           <div className="space-y-3">
             {patterns.map((p, i) => (
-              <div key={i} className="rounded-lg bg-slate-50 px-4 py-3">
-                <p className="text-sm font-semibold text-[var(--dk-navy)]">{p.pattern}</p>
+              <div key={i} className="rounded-lg bg-[#FBF8F3] px-4 py-3">
+                <p className="text-sm font-semibold text-[#0F172A]">{p.pattern}</p>
                 <p className="mt-1 text-xs text-slate-500">{t.freq}: {p.frequency} · {t.impact}: {p.impact}</p>
               </div>
             ))}
@@ -110,19 +110,19 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
       )}
 
       {/* Action Plan */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.planTitle}</h3>
+      <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+        <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.planTitle}</h3>
         <div className="space-y-3">
           {actionPlan.map((a, i) => {
             const Icon = priorityIcons[a.priority] ?? Clock;
             return (
-              <div key={i} className="flex gap-3 rounded-lg border border-slate-100 px-4 py-3">
-                <Icon size={16} className="mt-0.5 shrink-0 text-[var(--dk-gold)]" />
+              <div key={i} className="flex gap-3 rounded-lg border border-[#EFE9DE] px-4 py-3">
+                <Icon size={16} className="mt-0.5 shrink-0 text-[#BE2F47]" />
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[var(--dk-gold)]">{t.priorities[a.priority]}</span>
+                    <span className="text-xs font-bold text-[#BE2F47]">{t.priorities[a.priority]}</span>
                   </div>
-                  <p className="mt-1 text-sm text-[var(--dk-navy)]">{a.action}</p>
+                  <p className="mt-1 text-sm text-[#0F172A]">{a.action}</p>
                   <p className="mt-1 text-xs text-slate-500">{t.expected}: {a.expectedResult}</p>
                 </div>
               </div>
@@ -133,11 +133,11 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
 
       {/* Response Templates */}
       {responseTemplates.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <h3 className="mb-4 text-sm font-bold text-[var(--dk-navy)]">{t.templatesTitle}</h3>
+        <div className="rounded-2xl border border-[#E4DCCD] bg-white p-5">
+          <h3 className="mb-4 text-sm font-bold text-[#0F172A]">{t.templatesTitle}</h3>
           <div className="space-y-3">
             {responseTemplates.map((tmpl, i) => (
-              <div key={i} className="rounded-lg border border-slate-100 px-4 py-3">
+              <div key={i} className="rounded-lg border border-[#EFE9DE] px-4 py-3">
                 <div className="mb-2 flex items-center justify-between">
                   <span className="text-xs font-bold text-slate-500">{tmpl.forCategory}</span>
                   <CopyBtn text={tmpl.template} label={t.copyBtn} copiedLabel={t.copied} />
@@ -155,8 +155,8 @@ export default function SikayetResult({ result, locale, onRedo }: Props) {
 
       {/* Actions */}
       <div className="flex gap-3">
-        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-navy)] hover:text-[var(--dk-navy)]">{t.redo}</button>
-        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90">{t.next}</Link>
+        <button type="button" onClick={onRedo} className="flex-1 rounded-xl border border-[#E4DCCD] px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[#0F172A] hover:text-[#0F172A]">{t.redo}</button>
+        <Link href="/b2b-panel/marketinq-ocagi" className="flex flex-1 items-center justify-center rounded-xl bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition hover:bg-dk-red-deep">{t.next}</Link>
       </div>
     </div>
   );

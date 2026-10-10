@@ -2397,9 +2397,9 @@
           "validation": "İşçi xərci faizi 15-45 aralığında olmalıdır."
         },
         "foodCostPercent": {
-          "label": "Hədəf food cost faizi",
+          "label": "Hədəf ərzaq xərci faizi (food cost)",
           "placeholder": "32",
-          "validation": "Food cost faizi 20-45 aralığında olmalıdır."
+          "validation": "Ərzaq xərci faizi 20-45 aralığında olmalıdır."
         }
       },
       "restaurantTypes": {
@@ -2576,7 +2576,7 @@
     },
     "sosialMetrik": {
       "title": "Sosial Media Metrik Analizatoru",
-      "subtitle": "Instagram və TikTok engagement rate-nizi HoReCa sektoru ilə müqayisə edin",
+      "subtitle": "Instagram və TikTok-da izləyicilərinizin postlarınızla nə qədər maraqlandığını (qarşılıqlı əlaqə faizi) restoran sektoru ilə müqayisə edin",
       "tier": "KALFA",
       "back_to_tools": "Bütün alətlər",
       "cta": "Hesabla",
@@ -2590,17 +2590,17 @@
       "inputs": {
         "ig_title": "Instagram məlumatları",
         "tt_title": "TikTok məlumatları",
-        "followers": "Follower sayı",
+        "followers": "İzləyici sayı",
         "total_likes": "Cəmi bəyənmə (son 10 post)",
         "total_comments": "Cəmi şərh",
-        "total_saves": "Cəmi save",
+        "total_saves": "Cəmi yadda saxlama",
         "total_shares": "Cəmi paylaşım",
         "total_views": "Cəmi izlənmə (views)",
         "post_count": "Post sayı",
-        "avg_reach": "Orta reach (post başına)",
+        "avg_reach": "Orta çatım — post başına neçə nəfər gördü",
         "optional": "opsional",
         "reach_placeholder": "Varsa daha dəqiq nəticə verir",
-        "content_breakdown": "Kontent tipi breakdown",
+        "content_breakdown": "Kontent növünə görə bölgü",
         "count": "Say",
         "likes": "Bəyənmə",
         "comments": "Şərh",
@@ -2617,8 +2617,8 @@
         "chart_title": "ER vs HoReCa Benchmark",
         "your_er": "Sizin ER",
         "benchmark": "Benchmark",
-        "follower_based": "follower",
-        "reach_based": "reach",
+        "follower_based": "izləyiciyə görə",
+        "reach_based": "çatıma görə",
         "views_based": "views",
         "delta": "Benchmark fərqi",
         "total_interactions": "Cəmi interaksiya",
@@ -2626,9 +2626,9 @@
         "content_performance": "Kontent tipi performansı"
       },
       "benchmark": {
-        "nano": "<10K follower (HoReCa)",
-        "micro": "10K–100K follower (HoReCa)",
-        "mid": "100K+ follower (HoReCa)"
+        "nano": "10 min-ə qədər izləyici (restoran)",
+        "micro": "10 min – 100 min izləyici (restoran)",
+        "mid": "100 min-dən çox izləyici (restoran)"
       },
       "healthScore": {
         "title": "Sağlamlıq balı",
@@ -2639,16 +2639,16 @@
       },
       "actions": {
         "title": "Aksiyon tövsiyələri",
-        "switch_to_video": "Video/Reels-ə keçin",
-        "switch_to_video_detail": "Reels orta hesabla 2-5x daha yüksək ER əldə edir — statik postlardan video formatına keçid prioritet olmalıdır.",
+        "switch_to_video": "Videoya (Reels) keçin",
+        "switch_to_video_detail": "Video formatı adətən statik şəkildən daha çox qarşılıqlı əlaqə toplayır — hər həftə ən azı bir qısa video sınayın və nəticəni müqayisə edin.",
         "reply_fast": "Şərhlərə 1 saatda cavab verin",
-        "reply_fast_detail": "İlk saat ərzində cavablanan şərhlər gələcək postların ER-ni ~23% artırır (alqoritm siqnalı).",
+        "reply_fast_detail": "Şərhlərə tez cavab verin: söhbət davam edəndə post daha çox insana göstərilir.",
         "save_content": "Save-fokuslu kontent artırın",
-        "save_content_detail": "Resept, checklist, infographics — save edən izləyici alqoritmlə daha çox göstərilir.",
+        "save_content_detail": "Resept, yoxlama siyahısı, faydalı məsləhət — yadda saxlanılan postlar daha çox insana göstərilir.",
         "keep_going": "Davam edin — yaxşı nəticə!",
         "keep_going_detail": "Benchmark-dan yuxarısınız. Konsistentliyi qoruyun, eksperiment edin.",
         "experiment": "Yeni formatlar sınayın",
-        "experiment_detail": "Carousel ilə story hekayəsi, behind-the-scenes Reels — fərqli formatlar yeni auditoriya gətirir.",
+        "experiment_detail": "Karusel, hekayə, mətbəxin arxa tərəfindən qısa video — fərqli formatlar yeni izləyici gətirir.",
         "ugc": "Müştəri kontenti istifadə edin (UGC)",
         "ugc_detail": "Müştəri foto/videosu daha real görünür, etibar yaradır və paylaşımı artırır."
       },
@@ -2658,7 +2658,7 @@
       },
       "infoMethodology": {
         "title": "ER metodologiyası",
-        "body": "Bu alət follower-bazlı ER istifadə edir: (bəyənmə+şərh+save+paylaşım) / (post×follower) × 100. Reach-bazlı ER adətən daha yüksək çıxır. Mənbədən-mənbəyə fərq normal — bir metodologiyaya sadiq qalın."
+        "body": "Bu alət qarşılıqlı əlaqə faizini izləyici sayına görə hesablayır: (bəyənmə + şərh + yadda saxlama + paylaşım) / (post × izləyici) × 100. Çatıma görə hesablanan faiz adətən daha yüksək çıxır. Mənbələr fərqli hesablayır — həmişə eyni üsulla müqayisə edin."
       }
     },
     "restoranAudit": {
@@ -3268,6 +3268,22 @@
         "guestHint": "Keyfiyyət, servis, təmizlik və komanda — 35 sual, 1-5 bal.",
         "business": "Biznesin 6 sahəsi",
         "businessHint": "Maliyyə, mətbəx, komanda, qonaq təcrübəsi, onlayn görünüş və risklər."
+      }
+    },
+    "v2": {
+      "allTools": "Bütün alətlər",
+      "crumb": "Marketinq Ocağı",
+      "tiers": {
+        "sagird": "Şagird",
+        "kalfa": "Kalfa",
+        "usta": "Usta"
+      },
+      "categories": {
+        "analitika": "Analitika",
+        "emeliyyat": "Əməliyyat",
+        "maliyye": "Maliyyə",
+        "musteri": "Qonaq",
+        "kontent": "Kontent"
       }
     }
   },
@@ -4058,7 +4074,10 @@
     "importCancel": "Ləğv et",
     "importScannedPdf": "skan edilmiş PDF-dir — text tapılmadı. Şəkil kimi OCR yükləyin.",
     "importRowsFound": "sətir tapıldı,",
-    "importErrors": "xəta"
+    "importErrors": "xəta",
+    "detailSaveError": "Saxlanmadı — server cavab vermədi. Bir az sonra yenidən yoxlayın.",
+    "manualSaveError": "Faktura saxlanmadı — server cavab vermədi. Məlumatlar formada qalır, yenidən yoxlayın.",
+    "bulkDeleteError": "Silinmədi — server cavab vermədi. Yenidən yoxlayın."
   },
   "legal": {
     "fallbackNotice": "Bu sənəd hələ bu dilə tərcümə edilməyib, Azərbaycan dilindəki versiyası göstərilir."
@@ -7626,6 +7645,59 @@
       "copied": "Kopyalandı!",
       "redo": "Yenidən Analiz",
       "next": "Növbəti Alət"
+    },
+    "musteriPersonaPage": {
+      "title": "Müştəri Persona",
+      "subtitle": "Hədəf müştəri profilini yaradın",
+      "backToList": "Bütün alətlər",
+      "whyTitle": "Niyə bu vacibdir?",
+      "why": "Hər kəsə satmaq heç kimə satmaq deməkdir. AI sizin restoran üçün 2 ideal persona + 1 anti-persona yaradır, marketinq mesajını kəskinləşdirir.",
+      "tier": "KALFA",
+      "loading": "Yüklənir..."
+    },
+    "complaintReplyResults": {
+      "tones": {
+        "formal": "Rəsmi",
+        "friendly": "Səmimi",
+        "short": "Qısa"
+      },
+      "copyBtn": "Kopyala",
+      "copied": "Kopyalandı!",
+      "regenerate": "Yenidən yarat"
+    },
+    "complaintReplyPage": {
+      "title": "Şikayət Cavablandırıcı",
+      "subtitle": "Google, TripAdvisor və Yandex şikayətlərinə AI ilə 3 fərqli tonda cavab",
+      "backToList": "Bütün alətlər",
+      "whyTitle": "Niyə bu vacibdir?",
+      "why": "Hər cavabsız şikayət potensial müştəri itkisidir. Bu alət 3 tonda peşəkar cavab yaradır — siz sadəcə ən uyğununu kopyalayıb yapışdırırsınız.",
+      "tier": "KALFA",
+      "errors": {
+        "not-authenticated": "Daxil olmaq lazımdır",
+        "tier-too-low": "Bu alət KALFA tier üçündür. Yüksəldin.",
+        "rate-limit": "Günlük limit doldu (20 cavab/gün). Sabah yenidən yoxlayın.",
+        "ai-unavailable": "AI xidməti müvəqqəti əlçatmazdır. Bir az sonra yenidən cəhd edin.",
+        "network-error": "Şəbəkə xətası. İnternet bağlantınızı yoxlayın.",
+        "unknown": "Gözlənilməz xəta baş verdi."
+      }
+    },
+    "markaKompasiResult": {
+      "title": "Sənin Marka Kompasın",
+      "sections": {
+        "tagline": "Tagline",
+        "icp": "İdeal Müştəri",
+        "valueProp": "Niyə Sən?",
+        "differentiators": "Sənin Üç Üstünlüyün",
+        "useThisIn": "Bunu hara qoy?"
+      },
+      "icp": {
+        "who": "Kim:",
+        "context": "Kontekst:",
+        "painPoint": "Problem:"
+      },
+      "copied": "Kopyalandı!",
+      "redo": "Yenidən Doldur",
+      "next": "Növbəti Alət"
     }
   },
   "dashboardInbox": {
@@ -7701,5 +7773,19 @@
       "subscribed": "Abunədir",
       "unsubscribed": "Abunəlikdən çıxıb"
     }
+  },
+  "authShell": {
+    "back": "Ana səhifə",
+    "brandLine": "Restoran platforması",
+    "asideEyebrow": "Üzvlük",
+    "asideTitle": "Restoranınızın rəqəmləri bir yerdə",
+    "benefits": {
+      "b1": "35+ restoran aləti — food cost, P&L, menyu, sezon, şikayət",
+      "b2": "KAZAN AI — maliyyə və əməliyyat suallarına Azərbaycan dilində cavab",
+      "b3": "Elanlarınız və gələn müraciətlər bir paneldə",
+      "b4": "Premium məqalələr və sektor xəbərləri"
+    },
+    "asideNote": "Qeydiyyat pulsuzdur. Sualınız varsa WhatsApp-dan yazın.",
+    "backPrev": "Geri qayıt"
   }
 }

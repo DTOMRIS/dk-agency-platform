@@ -82,11 +82,11 @@
     "typescript": "^5"
   },
   "overrides": {
-    "protobufjs": "7.6.3",
+    "protobufjs": "7.6.5",
     "@protobufjs/utf8": "1.1.1",
     "ws": "8.21.0",
     "lodash": "4.18.1",
-    "dompurify": "3.4.11",
+    "dompurify": "3.4.16",
     "@opentelemetry/core": "2.8.0",
     "@opentelemetry/resources": "2.8.0",
     "@opentelemetry/sdk-trace-base": "2.8.0",
@@ -94,7 +94,7 @@
     "esbuild": "0.28.1",
     "flatted": "3.4.2",
     "picomatch": "4.0.4",
-    "js-yaml": "5.1.0",
+    "js-yaml": "5.4.1",
     "sharp": "$sharp"
   }
 }

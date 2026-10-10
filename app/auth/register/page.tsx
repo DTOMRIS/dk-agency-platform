@@ -2,7 +2,8 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Building2, Mail, Phone, Sparkles, User } from 'lucide-react';
+import { Building2, Mail, Phone, Sparkles, User } from 'lucide-react';
+import AuthShell, { AUTH_BUTTON, AUTH_INPUT, AUTH_LABEL, AUTH_LINK } from '@/components/auth/AuthShell';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 
 const registerCopy: Record<Locale, {
@@ -293,29 +294,9 @@ export default function RegisterPage() {
     }
   };
 
+  // TASK-0524: v2 auth frame (cream, Inter, spinning DK mark top-left) — same as login / forgot / reset.
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-red-50">
-      <div className="p-4">
-        <Link
-          href={nextUrl}
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {copy.goBack}
-        </Link>
-      </div>
-
-      <div className="flex items-center justify-center px-4 pb-12">
-        <div className="grid w-full max-w-6xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl md:grid-cols-[1fr_0.95fr]">
-          <div className="p-8 md:p-10">
-            <div className="mb-8">
-              <div className="mb-4 inline-flex rounded-full bg-dk-red/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-dk-red">
-                {copy.badge}
-              </div>
-              <h1 className="text-3xl font-black text-slate-900">{copy.title}</h1>
-              <p className="mt-2 text-slate-600">{copy.subtitle}</p>
-            </div>
-
+    <AuthShell title={copy.title} subtitle={copy.subtitle} backHref={nextUrl}>
             {notice ? (
               <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
                 <p className="font-semibold">{notice}</p>
@@ -327,7 +308,7 @@ export default function RegisterPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">{copy.nameLabel}</label>
+                <label className={AUTH_LABEL}>{copy.nameLabel}</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                   <input
@@ -336,13 +317,13 @@ export default function RegisterPage() {
                     value={formData.name}
                     onChange={(event) => setFormData({ ...formData, name: event.target.value })}
                     placeholder={copy.namePlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
+                    className={AUTH_INPUT}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">{copy.emailLabel}</label>
+                <label className={AUTH_LABEL}>{copy.emailLabel}</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                   <input
@@ -351,13 +332,13 @@ export default function RegisterPage() {
                     value={formData.email}
                     onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                     placeholder={copy.emailPlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
+                    className={AUTH_INPUT}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">{copy.companyLabel}</label>
+                <label className={AUTH_LABEL}>{copy.companyLabel}</label>
                 <div className="relative">
                   <Building2 className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                   <input
@@ -365,13 +346,13 @@ export default function RegisterPage() {
                     value={formData.company}
                     onChange={(event) => setFormData({ ...formData, company: event.target.value })}
                     placeholder={copy.companyPlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
+                    className={AUTH_INPUT}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">{copy.phoneLabel}</label>
+                <label className={AUTH_LABEL}>{copy.phoneLabel}</label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
                   <input
@@ -379,13 +360,13 @@ export default function RegisterPage() {
                     value={formData.phone}
                     onChange={(event) => setFormData({ ...formData, phone: event.target.value })}
                     placeholder={copy.phonePlaceholder}
-                    className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-10 pr-4 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
+                    className={AUTH_INPUT}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">{copy.passwordLabel}</label>
+                <label className={AUTH_LABEL}>{copy.passwordLabel}</label>
                 <input
                   type="password"
                   required
@@ -394,7 +375,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={(event) => setFormData({ ...formData, password: event.target.value })}
                   placeholder={copy.passwordPlaceholder}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-dk-red focus:ring-2 focus:ring-dk-red/20"
+                  className={`${AUTH_INPUT} !pl-4`}
                 />
               </div>
 
@@ -410,7 +391,7 @@ export default function RegisterPage() {
                     type="checkbox"
                     checked={consentAccepted}
                     onChange={(e) => setConsentAccepted(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 rounded border-slate-300 text-dk-red focus:ring-2 focus:ring-dk-red/20"
+                    className="mt-0.5 h-4 w-4 rounded border-[#E4DCCD] accent-[#D63B54]"
                   />
                   <span className="text-sm text-slate-700">
                     {copy.consentLabel.split('{terms}').map((part, i) => {
@@ -418,11 +399,11 @@ export default function RegisterPage() {
                       const [beforePrivacy, afterPrivacy] = part.split('{privacy}');
                       return (
                         <span key={i}>
-                          <Link href={locale === 'az' ? '/terms' : `/${locale}/terms`} target="_blank" rel="noopener noreferrer" className="font-semibold text-dk-red hover:underline">
+                          <Link href={locale === 'az' ? '/terms' : `/${locale}/terms`} target="_blank" rel="noopener noreferrer" className={AUTH_LINK}>
                             {copy.termsLink}
                           </Link>
                           {beforePrivacy}
-                          <Link href={locale === 'az' ? '/privacy' : `/${locale}/privacy`} target="_blank" rel="noopener noreferrer" className="font-semibold text-dk-red hover:underline">
+                          <Link href={locale === 'az' ? '/privacy' : `/${locale}/privacy`} target="_blank" rel="noopener noreferrer" className={AUTH_LINK}>
                             {copy.privacyLink}
                           </Link>
                           {afterPrivacy}
@@ -437,7 +418,7 @@ export default function RegisterPage() {
                     type="checkbox"
                     checked={marketingConsent}
                     onChange={(e) => setMarketingConsent(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 rounded border-slate-300 text-dk-red focus:ring-2 focus:ring-dk-red/20"
+                    className="mt-0.5 h-4 w-4 rounded border-[#E4DCCD] accent-[#D63B54]"
                   />
                   <span className="text-sm text-slate-500">
                     {copy.marketingLabel}
@@ -448,7 +429,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={submitting || !consentAccepted}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-dk-red-strong py-3.5 font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:bg-dk-red/60"
+                className={AUTH_BUTTON}
               >
                 <Sparkles className="h-5 w-5" />
                 {submitting ? copy.submitting : copy.submitBtn}
@@ -459,7 +440,7 @@ export default function RegisterPage() {
               {copy.alreadyHaveAccount}{' '}
               <Link
                 href={`/auth/login?next=${encodeURIComponent(nextUrl)}`}
-                className="font-semibold text-dk-red hover:text-dk-red-strong"
+                className={AUTH_LINK}
               >
                 {copy.signIn}
               </Link>
@@ -467,35 +448,10 @@ export default function RegisterPage() {
 
             <p className="mt-3 text-sm text-slate-500">
               {copy.membershipPage}{' '}
-              <Link href="/uzvluk" className="font-semibold text-slate-900 hover:text-dk-red">
+              <Link href="/uzvluk" className={AUTH_LINK}>
                 /uzvluk
               </Link>
             </p>
-          </div>
-
-          <div className="bg-dk-red-strong p-8 text-white md:p-10">
-            <h2 className="text-2xl font-black">{copy.panel.title}</h2>
-            <div className="mt-6 space-y-4 text-sm">
-              <div className="rounded-2xl bg-white/10 p-4">
-                <p className="font-semibold">{copy.panel.premiumTitle}</p>
-                <p className="mt-1 text-white/70">{copy.panel.premiumDesc}</p>
-              </div>
-              <div className="rounded-2xl bg-white/10 p-4">
-                <p className="font-semibold">{copy.panel.kazanTitle}</p>
-                <p className="mt-1 text-white/70">{copy.panel.kazanDesc}</p>
-              </div>
-              <div className="rounded-2xl bg-white/10 p-4">
-                <p className="font-semibold">{copy.panel.toolkitTitle}</p>
-                <p className="mt-1 text-white/70">{copy.panel.toolkitDesc}</p>
-              </div>
-              <div className="rounded-2xl bg-white/10 p-4">
-                <p className="font-semibold">{copy.panel.b2bTitle}</p>
-                <p className="mt-1 text-white/70">{copy.panel.b2bDesc}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </AuthShell>
   );
 }

@@ -3,7 +3,7 @@
 import { useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowLeft, AlertTriangle, CalendarDays, TrendingUp } from 'lucide-react';
+import { AlertTriangle, CalendarDays, TrendingUp } from 'lucide-react';
 import {
   calculateSeasonAnalysis,
   RESTAURANT_SEASON_TYPES,
@@ -11,6 +11,7 @@ import {
   type RestaurantSeasonType,
 } from '@/lib/marketing-tools/sezon-analitikasi';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 type ValidationErrors = {
   monthlyRevenue?: string;
@@ -96,29 +97,16 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
     setSubmitted(Object.keys(nextErrors).length === 0);
   }
 
-  const inputClass = 'min-h-11 w-full rounded-lg border border-slate-200 px-3 text-sm text-[var(--dk-navy)] outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
-  const labelClass = 'mb-1.5 block text-sm font-bold text-[var(--dk-navy)]';
+  const inputClass = 'min-h-11 w-full rounded-lg border border-[#E4DCCD] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
+  const labelClass = 'mb-1.5 block text-sm font-bold text-[#0F172A]';
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
-      <Link href={backHref} className="mb-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[var(--dk-navy)]">
-        <ArrowLeft size={16} />
-        {t('back_to_tools')}
-      </Link>
+    <div className="mx-auto w-full max-w-[1200px] px-4 pb-12 sm:px-6">
+      <ToolHeader slug="sezon-analitikasi" title={t('title')} subtitle={t('subtitle')} backHref={backHref} />
 
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <div className="mb-2 inline-flex rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-bold uppercase text-purple-700">
-            {t('tier')}
-          </div>
-          <h1 className="font-serif text-3xl font-bold text-[var(--dk-navy)] sm:text-4xl">{t('title')}</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{t('subtitle')}</p>
-        </div>
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-        <form onSubmit={submitForm} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-          <h2 className="mb-4 text-lg font-extrabold text-[var(--dk-navy)]">{t('inputs.title')}</h2>
+      <div className="grid gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
+        <form onSubmit={submitForm} className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
+          <h2 className="mb-4 text-lg font-extrabold text-[#0F172A]">{t('inputs.title')}</h2>
           <div className="space-y-4">
             <label>
               <span className={labelClass}>{t('inputs.monthlyRevenue.label')}</span>
@@ -184,13 +172,13 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
                 <MetricCard label={t('results.annualInventory')} value={formatMoney(analysis.annualInventoryBudget)} />
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+              <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm sm:p-5">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <h2 className="text-lg font-extrabold text-[var(--dk-navy)]">{t('results.chartTitle')}</h2>
+                    <h2 className="text-lg font-extrabold text-[#0F172A]">{t('results.chartTitle')}</h2>
                     <p className="text-xs font-semibold text-slate-500">{t('results.avgCoefficient')}: {formatPercent(analysis.averageCoefficient)}</p>
                   </div>
-                  <CalendarDays className="text-[var(--dk-gold)]" size={22} />
+                  <CalendarDays className="text-[#BE2F47]" size={22} />
                 </div>
 
                 <div data-testid="season-chart" className="overflow-x-auto">
@@ -240,10 +228,10 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
                 </div>
               )}
 
-              <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+              <div className="overflow-hidden rounded-2xl border border-[#E4DCCD] bg-white shadow-sm">
                 <div className="overflow-x-auto">
                   <table className="min-w-[760px] w-full text-left text-sm">
-                    <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                    <thead className="bg-[#FBF8F3] text-xs uppercase tracking-wide text-slate-500">
                       <tr>
                         <th className="px-4 py-3">{t('table.month')}</th>
                         <th className="px-4 py-3">{t('table.coefficient')}</th>
@@ -255,7 +243,7 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
                     <tbody className="divide-y divide-slate-100">
                       {analysis.months.map((month) => (
                         <tr key={month.month} className={month.isDeadMonth ? 'bg-red-50/45' : ''}>
-                          <td className="px-4 py-3 font-bold text-[var(--dk-navy)]">{monthName(month)}</td>
+                          <td className="px-4 py-3 font-bold text-[#0F172A]">{monthName(month)}</td>
                           <td className="px-4 py-3 text-slate-700">{formatPercent(month.coefficient)}</td>
                           <td className="px-4 py-3 text-slate-700">{formatMoney(month.projectedRevenue)}</td>
                           <td className="px-4 py-3 text-slate-700">{formatMoney(month.laborBudget)}</td>
@@ -267,7 +255,7 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
                 </div>
               </div>
 
-              <div className="rounded-xl border border-[var(--dk-gold)]/30 bg-[var(--dk-gold)]/10 p-4 text-sm font-semibold leading-6 text-[var(--dk-navy)]">
+              <div className="rounded-xl border border-[#F4B8C3] bg-[#F6F1E9] p-4 text-sm font-semibold leading-6 text-[#0F172A]">
                 {t('ahilikQuote')}
               </div>
             </>
@@ -280,9 +268,9 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
 
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm">
       <p className="text-xs font-bold uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-2 text-xl font-extrabold text-[var(--dk-navy)]">{value}</p>
+      <p className="mt-2 text-xl font-extrabold text-[#0F172A]">{value}</p>
     </div>
   );
 }
@@ -307,16 +295,16 @@ function RiskPanel({
   const color = accent === 'red' ? 'text-[var(--dk-red)] bg-red-50 border-red-100' : 'text-[#8A6F08] bg-amber-50 border-amber-100';
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-extrabold text-[var(--dk-navy)]">
+    <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 shadow-sm">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-extrabold text-[#0F172A]">
         <span className={`inline-flex h-8 w-8 items-center justify-center rounded-lg border ${color}`}>{icon}</span>
         {title}
       </h3>
       <div className="space-y-2">
         {months.map((month) => (
-          <div key={month.month} className="flex items-center justify-between gap-3 rounded-lg bg-slate-50 px-3 py-2">
+          <div key={month.month} className="flex items-center justify-between gap-3 rounded-lg bg-[#FBF8F3] px-3 py-2">
             <div>
-              <p className="text-sm font-bold text-[var(--dk-navy)]">{monthName(month)}</p>
+              <p className="text-sm font-bold text-[#0F172A]">{monthName(month)}</p>
               {month.isDeadMonth && warningText && <p className="mt-0.5 text-xs font-semibold text-[var(--dk-red)]">{warningText}</p>}
             </div>
             <div className="text-right">

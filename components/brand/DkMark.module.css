@@ -1,0 +1,42 @@
+/* TASK-0524 — DK brand mark (same look as the v2 header's BrandMark) with an optional coin-flip:
+   one turn on load, one on hover, then a quiet turn every 8 s. Off for prefers-reduced-motion. */
+.mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #0f172a;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.spin {
+  transform-style: preserve-3d;
+  animation: dk-flip 0.9s cubic-bezier(0.45, 0, 0.2, 1) 0.15s 1 both, dk-flip 0.9s cubic-bezier(0.45, 0, 0.2, 1) 8s infinite;
+}
+.spin:hover,
+a:hover .spin,
+a:focus-visible .spin {
+  animation: dk-flip 0.7s cubic-bezier(0.45, 0, 0.2, 1) 0s 1 both;
+}
+@keyframes dk-flip {
+  0% {
+    transform: perspective(240px) rotateY(0deg);
+  }
+  55% {
+    transform: perspective(240px) rotateY(200deg);
+    background: #d63b54;
+  }
+  100% {
+    transform: perspective(240px) rotateY(360deg);
+    background: #0f172a;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spin,
+  .spin:hover,
+  a:hover .spin {
+    animation: none;
+  }
+}

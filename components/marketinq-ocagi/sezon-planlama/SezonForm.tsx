@@ -45,7 +45,7 @@ const copy: Record<Locale, {
   },
 };
 
-const inputClass = 'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-[var(--dk-navy)] transition focus:border-[var(--dk-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+const inputClass = 'w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] transition focus:border-[#D63B54] focus:outline-none focus:ring-2 focus:ring-[#D63B54]/15';
 
 interface Props { locale: Locale; onResult: (data: unknown) => void; onError: (msg: string) => void }
 
@@ -84,29 +84,29 @@ export default function SezonForm({ locale, onResult, onError }: Props) {
     <div className="space-y-5">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t.restName}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t.restName}</label>
           <input type="text" value={form.restaurantName} onChange={(e) => setForm((p) => ({ ...p, restaurantName: e.target.value }))} disabled={loading} className={inputClass} />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t.concept}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t.concept}</label>
           <select value={form.concept} onChange={(e) => setForm((p) => ({ ...p, concept: e.target.value }))} disabled={loading} className={inputClass}>
             <option value="" disabled>—</option>
             {CONCEPTS.map((c) => <option key={c} value={c}>{t.concepts[c]}</option>)}
           </select>
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t.city}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t.city}</label>
           <input type="text" value={form.city} onChange={(e) => setForm((p) => ({ ...p, city: e.target.value }))} disabled={loading} className={inputClass} />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t.budget}</label>
+          <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t.budget}</label>
           <input type="number" value={form.budget} onChange={(e) => setForm((p) => ({ ...p, budget: e.target.value }))} disabled={loading} placeholder={t.budgetHelp} className={inputClass} />
         </div>
       </div>
 
       {/* Month selector */}
       <div>
-        <label className="mb-2 block text-sm font-semibold text-[var(--dk-navy)]">{t.months}</label>
+        <label className="mb-2 block text-sm font-semibold text-[#0F172A]">{t.months}</label>
         <div className="grid grid-cols-4 gap-2 sm:grid-cols-6">
           {months.map((name, i) => {
             const m = i + 1;
@@ -114,7 +114,7 @@ export default function SezonForm({ locale, onResult, onError }: Props) {
             return (
               <button key={m} type="button" onClick={() => toggleMonth(m)} disabled={loading}
                 className={`rounded-xl border px-3 py-2.5 text-xs font-semibold transition ${
-                  selected ? 'border-[var(--dk-gold)] bg-[var(--dk-gold)]/10 text-[var(--dk-navy)]' : 'border-slate-200 text-slate-500 hover:border-[var(--dk-gold)]'
+                  selected ? 'border-[#0F172A] bg-[#F6F1E9] text-[#0F172A]' : 'border-[#E4DCCD] text-slate-500 hover:border-[#0F172A]'
                 }`}>
                 {name}
               </button>
@@ -125,7 +125,7 @@ export default function SezonForm({ locale, onResult, onError }: Props) {
       </div>
 
       <div>
-        <label className="mb-1.5 block text-sm font-semibold text-[var(--dk-navy)]">{t.events}</label>
+        <label className="mb-1.5 block text-sm font-semibold text-[#0F172A]">{t.events}</label>
         <textarea value={form.localEvents} onChange={(e) => setForm((p) => ({ ...p, localEvents: e.target.value }))} disabled={loading}
           placeholder={t.eventsPlaceholder} rows={2} maxLength={500} className={inputClass} />
       </div>
