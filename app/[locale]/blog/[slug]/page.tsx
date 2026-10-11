@@ -181,7 +181,8 @@ export default async function BlogDetailPage({
   const summaryLines = summarySection ? teaserLines(summarySection.body) : [];
 
   const stageKey = article.stage ? STAGE_I18N_MAP[article.stage] : null;
-  const stageLabel = stageKey ? t(stageKey) : article.stage;
+  // TASK-0544: 9 posts carry stage «published» (bad data) — only the three real stages get a label.
+  const stageLabel = stageKey ? t(stageKey) : null;
 
   const pageUrl = localeUrl(locale, `/blog/${article.slug}`);
   const jsonLd = jsonLdGraph([
@@ -228,6 +229,9 @@ export default async function BlogDetailPage({
       ? formatInnerDate(article.updatedAt, normalizedLocale)
       : null;
   // «Növbəti addım» by stage: Başla → opening checklist, Böyüt → menu engineering, Devir → listings.
+  // TASK-0544 (owner: «2-3 farklı konsept yazmışsız»): every post ends the same way — Ustadan qeyd (when the
+  // note exists) → Növbəti addım (always) → «DK Agency necə kömək edir?» (always) → KAZAN.
+  // Next step: by stage; without a real stage → the post's own tool; otherwise the free diagnostic.
   const nextStep =
     article.stage === 'Devir'
       ? { href: withLocale(normalizedLocale, '/ilanlar'), title: tb('next.devir.t'), body: tb('next.devir.b') }
@@ -235,7 +239,9 @@ export default async function BlogDetailPage({
         ? { href: withLocale(normalizedLocale, '/toolkit/checklist'), title: tt('checklist.t'), body: tt('checklist.r') }
         : article.stage === 'Böyüt' && toolSlug !== 'menu-matrix'
           ? { href: withLocale(normalizedLocale, '/toolkit/menu-matrix'), title: tt('menu-matrix.t'), body: tt('menu-matrix.r') }
-          : null;
+          : tool
+            ? { href: toolHref, title: tt(`${tool.slug}.t`), body: tt(`${tool.slug}.r`) }
+            : { href: withLocale(normalizedLocale, '/tanitim'), title: tb('next.diag.t'), body: tb('next.diag.b') };
   const kazanHref = `${withLocale(normalizedLocale, '/kazan-ai')}?q=${encodeURIComponent(tb('kazanQ', { title: article.title }))}`;
 
   const founderNote = article.doganNote ? (
@@ -281,7 +287,7 @@ export default async function BlogDetailPage({
           <header className={s.postHero}>
             <div className={s.metaRow}>
               <span className={s.cat}>{catLabel}</span>
-              {article.stage ? <span className={s.stageT}>{stageLabel}</span> : null}
+              {stageLabel ? <span className={s.stageT}>{stageLabel}</span> : null}
               <span>{article.author}</span>
               <span>·</span>
               <span>{formatInnerDate(article.publishDate, normalizedLocale)}</span>
@@ -374,7 +380,7 @@ export default async function BlogDetailPage({
 
               {nextStep ? (
                 <Link href={nextStep.href} className={s.nextStep} data-testid="blog-next-step">
-                  <small>{tb('nextEyebrow', { stage: stageLabel ?? '' })}</small>
+                  <small>{stageLabel ? tb('nextEyebrow', { stage: stageLabel }) : tb('nextEyebrowPlain')}</small>
                   <b>{nextStep.title}</b>
                   <span>{nextStep.body}</span>
                   <Icon name="arrow" />
@@ -385,13 +391,13 @@ export default async function BlogDetailPage({
                   post has it. TASK-0453 testid kept (e2e/blog-cta.spec.ts); WhatsApp through the counting route. */}
               <section className={s.helpCard}>
                 <small>{tb('helpEyebrow')}</small>
-                <h3>{helpSection ? helpSection.title : t('ctaTitle')}</h3>
+                <h3>{tb('helpTitle')}</h3>
                 {helpSection ? (
                   <div className={s.helpBody}>
                     <MarkdownRenderer content={helpSection.body} className="text-[15.5px] leading-relaxed md:text-[16px]" />
                   </div>
                 ) : (
-                  <p>{t('ctaDesc')}</p>
+                  <p>{tb('helpDefault')}</p>
                 )}
                 <div className={s.helpBtns}>
                   <a

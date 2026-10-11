@@ -7379,8 +7379,15 @@
         "devir": {
           "t": "Devir ve satış ilanları",
           "b": "Satılık restoranlara bakın veya kendi işletmenizi ilan edin."
+        },
+        "diag": {
+          "t": "Ücretsiz teşhis",
+          "b": "İşletmenize birlikte bakalım — kaybın nerede olduğunu ve ilk adımı gösterelim."
         }
-      }
+      },
+      "nextEyebrowPlain": "Sonraki adım",
+      "helpTitle": "DK Agency nasıl yardımcı olur?",
+      "helpDefault": "Yazıdaki durum sizin restoranınızda, kafenizde veya otelinizde de varsa yazın: durumu birlikte değerlendirelim ve ilk adımı gösterelim. İlk teşhis ücretsizdir."
     },
     "miniCalc": {
       "eyebrow": "Kendi rakamınızla kontrol edin",

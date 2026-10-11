@@ -7379,8 +7379,15 @@
         "devir": {
           "t": "Devir və satış elanları",
           "b": "Satılan restoranlara baxın və ya öz obyektinizi yerləşdirin."
+        },
+        "diag": {
+          "t": "Pulsuz diaqnostika",
+          "b": "Biznesinizə birlikdə baxaq — itkinin harada olduğunu və ilk addımı göstərək."
         }
-      }
+      },
+      "nextEyebrowPlain": "Növbəti addım",
+      "helpTitle": "DK Agency necə kömək edir?",
+      "helpDefault": "Yazıdakı vəziyyət sizin restoranınızda, kafenizdə və ya otelinizdə də varsa, yazın: vəziyyəti birlikdə qiymətləndirək və ilk addımı göstərək. İlk diaqnostika pulsuzdur."
     },
     "miniCalc": {
       "eyebrow": "Öz rəqəminizlə yoxlayın",

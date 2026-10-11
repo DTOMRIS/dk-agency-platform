@@ -7379,8 +7379,15 @@
         "devir": {
           "t": "Transfer and sale listings",
           "b": "See restaurants for sale or list your own venue."
+        },
+        "diag": {
+          "t": "Free diagnostic",
+          "b": "Let’s look at your business together — where the leaks are and what to do first."
         }
-      }
+      },
+      "nextEyebrowPlain": "Next step",
+      "helpTitle": "How DK Agency helps",
+      "helpDefault": "If what this post describes is happening in your restaurant, café or hotel, write to us: we will look at it together and show you the first step. The first diagnostic is free."
     },
     "miniCalc": {
       "eyebrow": "Check with your own numbers",

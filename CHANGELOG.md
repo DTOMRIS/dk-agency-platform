@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0544` fix(blog): hər bloq yazısı eyni bitir — Ustadan qeyd → Növbəti addım → «DK Agency necə kömək edir?» → KAZAN (əvvəl məlumata görə 19 fərqli kombinasiya); səhv «published» mərhələ etiketi görünmür.
 - `TASK-0543` fix(blog): bloq yazılarında bir oxu ritmi — eyni şrift və sətir aralığı, başlıqlardan əvvəl 150 px boşluq yox, «Faydalı məlumat» / «Doğan notu» mətni qutunun içində, bütün qutular bir formada, düstur krem kartda, ikon təkrarı yox, müəllif kartında həqiqi foto.
 - `TASK-0542` feat(blog,news): bloq yazısında canlı mini kalkulyator (food cost, başabaş, çatdırılma, P&L), yuxarıda «Qısaca», ortada «Ustadan qeyd», sonda mərhələyə görə «Növbəti addım» və bir CTA; KAZAN yazıdan sualla açılır; xəbərdə «Restoranınız üçün nə deməkdir» kartı, DK baxışı fikir kimi ayrıca, alətlər mətnin içində. Araşdırma: NerdWallet, Toast, Nory, Owner.com, Skift, Semafor.
 - `TASK-0541` feat(analytics): hər müraciətin mənbəyi yazılır (reklam linki/UTM, Google, Instagram, Telegram, ChatGPT …) — Telegram bildirişində «Mənbə» sətri, admin «Bütün müraciətlər»-də «haradan gəlir» bölməsi; françayz formu və elan müraciəti artıq Telegram-a da gəlir.
