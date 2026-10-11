@@ -7311,7 +7311,11 @@
       "feedDown": "Aşağı",
       "trendEyebrow": "Trend",
       "trendTitle": "Trend xəbərlər",
-      "moreNews": "Bütün xəbərlər"
+      "moreNews": "Bütün xəbərlər",
+      "whyTitle": "Restoranınız üçün nə deməkdir",
+      "opinionTag": "Bu, xəbərin özü deyil — DK redaksiyasının şərhidir.",
+      "toolsTitle": "Bunu öz rəqəmlərinizlə yoxlayın",
+      "sourceNote": "DK Agency xəbəri Azərbaycan dilinə çevirib və qısaldıb."
     },
     "blog": {
       "eyebrow": "Bloq · Doğan Tomris",
@@ -7362,6 +7366,96 @@
       "acceptAll": "Hamısını qəbul et",
       "save": "Seçimi saxla",
       "note": "Seçiminiz bu cihazda yadda saxlanılır."
+    },
+    "blogExtra": {
+      "quickTitle": "Qısaca",
+      "quickMore": "Yekuna keç",
+      "updated": "Yenilənib: {date}",
+      "ustadEyebrow": "Ustadan qeyd",
+      "nextEyebrow": "Növbəti addım · {stage}",
+      "helpEyebrow": "DK Agency",
+      "kazanQ": "«{title}» yazısını oxudum. Bunu öz restoranımda necə tətbiq edim?",
+      "next": {
+        "devir": {
+          "t": "Devir və satış elanları",
+          "b": "Satılan restoranlara baxın və ya öz obyektinizi yerləşdirin."
+        }
+      }
+    },
+    "miniCalc": {
+      "eyebrow": "Öz rəqəminizlə yoxlayın",
+      "empty": "Rəqəmləri yazın — nəticə burada görünəcək.",
+      "foot": "Hesab brauzerinizdə aparılır, heç yerə göndərilmir.",
+      "full": "Tam kalkulyatoru aç",
+      "food-cost": {
+        "title": "Porsiyanın food cost faizi",
+        "f": {
+          "cost": "Porsiyanın maya dəyəri (₼)",
+          "price": "Menyu qiyməti (₼)"
+        },
+        "p": {
+          "cost": "məs. 3,40",
+          "price": "məs. 12"
+        },
+        "result": "Food cost",
+        "ok": "Bələdçi həddin ({max}%) içindədir.",
+        "high": "Bələdçi həddən ({max}%) yuxarıdır — reseptə və ya qiymətə baxın.",
+        "price": "{max}% üçün qiymət: {price}"
+      },
+      "basabas": {
+        "title": "Aylıq başabaş satışı",
+        "f": {
+          "fixed": "Aylıq sabit xərc (icarə, maaş …) ₼",
+          "check": "Orta çek (₼)",
+          "variable": "Dəyişən xərc (ərzaq, paket) %"
+        },
+        "p": {
+          "fixed": "məs. 9000",
+          "check": "məs. 18",
+          "variable": "məs. 35"
+        },
+        "result": "Başabaş satış / ay",
+        "perDay": "Gündə təxminən {n} çek (30 gün)",
+        "note": "Bu satışdan aşağı ay zərərlə bağlanır."
+      },
+      "delivery-calc": {
+        "title": "Çatdırılma sifarişindən sizə nə qalır",
+        "f": {
+          "price": "Menyu qiyməti (₼)",
+          "commission": "Platforma komissiyası %",
+          "cost": "Maya dəyəri + paket (₼)"
+        },
+        "p": {
+          "price": "məs. 15",
+          "commission": "məs. 30",
+          "cost": "məs. 6"
+        },
+        "result": "Sizə qalan",
+        "fee": "Platformaya: {fee}",
+        "margin": "Qiymətin {pct}-i sizdə qalır"
+      },
+      "pnl": {
+        "title": "Ayın sonunda nə qalır",
+        "f": {
+          "sales": "Aylıq satış (₼)",
+          "food": "Ərzaq (₼)",
+          "labor": "İşçi xərci (₼)",
+          "rent": "İcarə (₼)",
+          "other": "Digər xərclər (₼)"
+        },
+        "p": {
+          "sales": "məs. 40000",
+          "food": "məs. 12000",
+          "labor": "məs. 10000",
+          "rent": "məs. 4000",
+          "other": "məs. 6000"
+        },
+        "result": "Mənfəət · satışın {pct}-i",
+        "primeOk": "Əsas xərc (ərzaq + işçi) {pct} — {max}% həddinin içində.",
+        "primeHigh": "Əsas xərc (ərzaq + işçi) {pct} — {max}% həddindən yuxarı.",
+        "rentOk": "İcarə {pct} — {max}% həddinin içində.",
+        "rentHigh": "İcarə {pct} — {max}% həddindən yuxarı."
+      }
     }
   },
   "whatsappFloat": {

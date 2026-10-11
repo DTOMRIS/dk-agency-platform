@@ -2965,3 +2965,377 @@
 .trendCard .coverImg {
   min-height: 150px;
 }
+
+/* ── TASK-0542: article pages (research: NerdWallet, Toast, Nory, Owner.com, Skift, Semafor) ── */
+/* «Qısaca» — the author's own conclusion, first */
+.qisaca {
+  max-width: 860px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--red-ui);
+  border-radius: 22px;
+  padding: 18px 22px;
+  margin: 0 0 26px;
+  box-shadow: var(--shadow);
+}
+.qisaca small,
+.mcHead small,
+.ustad small,
+.nextStep small,
+.helpCard small,
+.why small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red-ui-h);
+  margin-bottom: 8px;
+}
+.qisaca ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+  display: grid;
+  gap: 6px;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.qisaca li::marker {
+  color: var(--red-ui);
+}
+.qisaca a {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink) !important;
+  text-decoration: none;
+}
+/* Mini calculator inside the post */
+.mc {
+  margin: 30px 0;
+  background: #fff;
+  border: 1.5px solid var(--ink);
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 18px 40px -26px rgba(15, 23, 42, 0.5);
+}
+.mcHead b {
+  display: block;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.mcGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 14px;
+}
+.mcFields {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.mcField {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.mcField input {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--cream);
+  padding: 0 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  outline: none;
+}
+.mcField input:focus {
+  border-color: var(--ink);
+  background: #fff;
+}
+.mcOut {
+  border-radius: 18px;
+  background: var(--cream);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+  min-height: 150px;
+}
+.mc_ok {
+  background: var(--green-soft);
+}
+.mc_warn {
+  background: var(--amber-soft);
+}
+.mc_bad {
+  background: var(--red-soft);
+}
+.mcLabel {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--ink-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.mcBig {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.mcLine {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.mcEmpty {
+  font-size: 14px;
+  color: var(--muted);
+}
+.mcFoot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.mcBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--red-ui);
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none;
+}
+.mcBtn:hover {
+  background: var(--red-ui-h);
+}
+/* «Ustadan qeyd» in the middle of the post */
+.ustad {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 14px;
+  margin: 30px 0;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: var(--ink);
+  color: #fff;
+}
+.ustad small {
+  color: #f4b8c3;
+}
+.ustadAv {
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+.ustadBody,
+.ustadBody :global(p),
+.ustadBody :global(li),
+.ustadBody :global(strong) {
+  color: #e2e8f0 !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+.ustadBody :global(p) {
+  margin: 0 0 8px;
+}
+.ustadSign {
+  display: block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+.guruList {
+  display: grid;
+  gap: 14px;
+  margin: 30px 0;
+}
+.guru {
+  margin: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 18px 22px;
+}
+.guru blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.guru figcaption {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.guru figcaption b {
+  color: var(--ink);
+}
+.legal {
+  margin: 24px 0;
+  border-radius: 18px;
+  background: var(--amber-soft);
+  border: 1px solid #f6d9a8;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+.legal p {
+  margin: 4px 0 0;
+}
+/* «Növbəti addım» by stage */
+.nextStep {
+  position: relative;
+  display: block;
+  margin: 30px 0 18px;
+  padding: 18px 56px 18px 20px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink) !important;
+  box-shadow: var(--shadow);
+}
+.nextStep b {
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.nextStep span {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.nextStep > svg {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+}
+.nextStep:hover {
+  border-color: var(--ink);
+}
+/* One CTA card */
+.helpCard {
+  margin: 18px 0;
+  border-radius: 22px;
+  background: var(--cream-2);
+  padding: 22px;
+}
+.helpCard h3 {
+  margin: 0 0 8px;
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.helpCard p,
+.helpBody :global(p),
+.helpBody :global(li) {
+  font-size: 15.5px !important;
+  line-height: 1.6 !important;
+  color: var(--ink-2);
+}
+.helpBtns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+/* News: «what it means for your restaurant» (Axios «Why it matters», Skift Take) */
+.why {
+  margin: 4px 0 22px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--red-ui);
+  padding: 18px 22px;
+  box-shadow: var(--shadow);
+}
+.whyPart + .whyPart {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-2);
+}
+.whyPart h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.opinionTag {
+  display: inline-block;
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.newsTools {
+  margin: 22px 0;
+  border-radius: 22px;
+  background: var(--cream-2);
+  padding: 18px 20px;
+}
+.newsTools h3 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--ink);
+}
+.newsToolsGrid {
+  display: grid;
+  gap: 10px;
+}
+@media (max-width: 1100px) {
+  /* mobile TOC stays reachable while reading */
+  .tocM {
+    position: sticky;
+    top: calc(var(--hdr) + 8px);
+    z-index: 5;
+    box-shadow: var(--shadow);
+  }
+}
+@media (max-width: 640px) {
+  .mcGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .mcOut {
+    min-height: 0;
+  }
+  .qisaca,
+  .why,
+  .mc,
+  .helpCard {
+    padding: 16px;
+  }
+  .qisaca ul {
+    font-size: 15.5px;
+  }
+}

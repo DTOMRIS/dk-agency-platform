@@ -1,5 +1,11 @@
 /**
- * /blog/[slug] — blog post, v2 inner design (TASK-0514, owner-approved mockup 09.10.2026):
+ * /blog/[slug] — blog post, v2 inner design (TASK-0514, owner-approved mockup 09.10.2026).
+ * TASK-0542 (owner 2026-10-11, research: NerdWallet, Toast, Nory, Owner.com, Skift — see
+ * docs/reports/2026-10-11-article-pages-research.md): «Qısaca» card at the top from the author's own
+ * «Yekun» section; a live mini-calculator instead of the plain tool link for food-cost / basabas /
+ * delivery / P&L posts; «Ustadan qeyd» in the middle of the article; «DK Agency necə kömək edir?» as one
+ * CTA card; «Növbəti addım» by stage; KAZAN opens with a question about the post (?q=).
+ * Earlier:
  * serif hero, real cover, sticky TOC from `##` headings, reading progress (BlogContentWrapper),
  * a mid-article tool card only when the post maps to a tool (BLOG_TOOL_MAP), founder card,
  * KAZAN AI box (link only — /kazan-ai has no ?q= prefill), related posts, back button.
@@ -12,7 +18,10 @@ import { notFound, redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import AdSlot from '@/components/ads/AdSlot';
 
-import { MarkdownRenderer, LegalDisclaimer, GuruQuoteBox, DoganNote } from '@/components/blog';
+import MarkdownRenderer from '@/components/blog/MarkdownRenderer';
+import MiniCalc from '@/components/blog/MiniCalc';
+import { isMiniCalcTool } from '@/lib/blog/mini-calc-tools';
+import { findSection, teaserLines } from '@/lib/blog/sections';
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import BlogToc from '@/components/blog/BlogToc';
 import { getBlogPostDetail, getRelatedBlogPosts, getSlugRedirect } from '@/lib/db/blog-repository';
@@ -30,7 +39,7 @@ import {
 } from '@/lib/seo/structured-data';
 import { normalizeLocale, withLocale } from '@/i18n/config';
 import { BLOG_CATEGORY_MESSAGE, normalizeBlogCategory } from '@/lib/blog/category-groups';
-import { extractToc } from '@/lib/blog/toc';
+import { extractToc, headingSlug } from '@/lib/blog/toc';
 import { BLOG_TOOL_MAP, getToolMeta } from '@/lib/toolkit/tool-directory';
 import { TELEGRAM_HANDLE, TELEGRAM_URL, whatsappHref } from '@/lib/contact-channels';
 import home from '@/components/home/v2/homeV2.module.css';
@@ -38,7 +47,6 @@ import { inter } from '@/components/home/v2/font';
 import { Icon } from '@/components/home/v2/shared';
 import {
   Crumbs,
-  FounderCard,
   KazanBox,
   ShareLinks,
   TOOL_GROUP_CLASS,
@@ -165,7 +173,12 @@ export default async function BlogDetailPage({
     session,
     false // paywall disabled — serve full content (see BlogContentWrapper PAYWALL_ENABLED)
   );
-  const cleanMarkdownContent = (renderedContent || '').replace(/^#\s+.+$/m, '').trim();
+  const fullMarkdown = (renderedContent || '').replace(/^#\s+.+$/m, '').trim();
+  // TASK-0542: «DK Agency necə kömək edir?» leaves the text and becomes the CTA card at the end;
+  // «Yekun» stays in place and its first lines also open the post («Qısaca»).
+  const { section: helpSection, rest: cleanMarkdownContent } = findSection(fullMarkdown, /DK Agency necə kömək edir/i, true);
+  const { section: summarySection } = findSection(cleanMarkdownContent, /^(yekun|nəticə|xülasə)\b/i, false, headingSlug);
+  const summaryLines = summarySection ? teaserLines(summarySection.body) : [];
 
   const stageKey = article.stage ? STAGE_I18N_MAP[article.stage] : null;
   const stageLabel = stageKey ? t(stageKey) : article.stage;
@@ -209,6 +222,34 @@ export default async function BlogDetailPage({
   const tc = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.common' });
   const tt = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.toolkit.tools' });
   const toolHref = tool ? withLocale(normalizedLocale, `/toolkit/${tool.slug}`) : '';
+  const tb = await getTranslations({ locale: normalizedLocale, namespace: 'innerV2.blogExtra' });
+  const updated =
+    article.updatedAt && article.publishDate && new Date(article.updatedAt).getTime() - new Date(article.publishDate).getTime() > 86_400_000
+      ? formatInnerDate(article.updatedAt, normalizedLocale)
+      : null;
+  // «Növbəti addım» by stage: Başla → opening checklist, Böyüt → menu engineering, Devir → listings.
+  const nextStep =
+    article.stage === 'Devir'
+      ? { href: withLocale(normalizedLocale, '/ilanlar'), title: tb('next.devir.t'), body: tb('next.devir.b') }
+      : article.stage === 'Başla' && toolSlug !== 'checklist'
+        ? { href: withLocale(normalizedLocale, '/toolkit/checklist'), title: tt('checklist.t'), body: tt('checklist.r') }
+        : article.stage === 'Böyüt' && toolSlug !== 'menu-matrix'
+          ? { href: withLocale(normalizedLocale, '/toolkit/menu-matrix'), title: tt('menu-matrix.t'), body: tt('menu-matrix.r') }
+          : null;
+  const kazanHref = `${withLocale(normalizedLocale, '/kazan-ai')}?q=${encodeURIComponent(tb('kazanQ', { title: article.title }))}`;
+
+  const founderNote = article.doganNote ? (
+    <aside className={s.ustad} data-testid="ustad-note">
+      <Image src={FOUNDER_PORTRAIT_SRC} alt="" width={52} height={52} sizes="52px" className={s.ustadAv} style={{ objectFit: 'cover', objectPosition: 'center 20%' }} />
+      <div>
+        <small>{tb('ustadEyebrow')}</small>
+        <div className={s.ustadBody}>
+          <MarkdownRenderer content={article.doganNote} className="text-[16px] leading-relaxed" />
+        </div>
+        <span className={s.ustadSign}>{ti('founderName')} · {ti('founderRole')}</span>
+      </div>
+    </aside>
+  ) : null;
 
   const toolCard = tool ? (
     <Link href={toolHref} className={s.toolInline}>
@@ -246,11 +287,29 @@ export default async function BlogDetailPage({
               <span>{formatInnerDate(article.publishDate, normalizedLocale)}</span>
               <span>·</span>
               <span>{tc('minRead', { n: minutes })}</span>
+              {updated ? (
+                <>
+                  <span>·</span>
+                  <span>{tb('updated', { date: updated })}</span>
+                </>
+              ) : null}
             </div>
             <h1>{article.title}</h1>
             {article.subtitle ? <p className={s.postSub}>{article.subtitle}</p> : null}
             <ShareLinks url={pageUrl} title={article.title} waLabel={tc('whatsapp')} tgLabel={tc('telegram')} />
           </header>
+
+          {summarySection && summaryLines.length > 0 ? (
+            <section className={s.qisaca} data-testid="blog-qisaca" aria-label={tb('quickTitle')}>
+              <small>{tb('quickTitle')}</small>
+              <ul>
+                {summaryLines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+              <a href={`#${summarySection.id}`}>{tb('quickMore')} ↓</a>
+            </section>
+          ) : null}
 
           {article.coverImage ? (
             <div className={s.postCover}>
@@ -278,9 +337,12 @@ export default async function BlogDetailPage({
               ) : null}
 
               <MarkdownRenderer content={partA} headingIds />
-              {tool ? toolCard : null}
+              {tool && isMiniCalcTool(toolSlug) ? <MiniCalc tool={toolSlug} fullHref={toolHref} /> : tool ? toolCard : null}
+              {/* TASK-0542: the founder's note sits in the middle of the read, not after it. */}
+              {!partB ? founderNote : null}
               {!tool && partB ? <AdSlot placement="blog-inline" className={s.adInline} /> : null}
               {partB ? <MarkdownRenderer content={partB} headingIds /> : null}
+              {partB ? founderNote : null}
               {tool && partC ? <AdSlot placement="blog-inline" className={s.adInline} /> : null}
               {partC ? <MarkdownRenderer content={partC} headingIds /> : null}
               {/* No mid-article split point → the inline ad follows the body. */}
@@ -288,70 +350,72 @@ export default async function BlogDetailPage({
                 <AdSlot placement="blog-inline" className={s.adInline} />
               ) : null}
 
-              {/* Strukturlu sahələr (editor field-by-field saxlayır) — L-037/Özbahçeci:
-                  guruBoxes + doganNote artıq route-a bağlıdır, markdown marker-dən asılı deyil */}
-              {article.guruBoxes && article.guruBoxes.length > 0 && (
-                <div className="mt-10 space-y-6">
+              {/* Strukturlu sahələr (editor field-by-field saxlayır) — L-037: guruBoxes + doganNote route-a bağlıdır. */}
+              {article.guruBoxes && article.guruBoxes.length > 0 ? (
+                <div className={s.guruList}>
                   {article.guruBoxes.map((box, index) => (
-                    <GuruQuoteBox
-                      key={`${box.guruName}-${index}`}
-                      name={box.guruName}
-                      title=""
-                      quote={box.quote}
-                      source={box.book}
-                      tqtaContext=""
-                      sourceLabel={t('source')}
-                      contextLabel={t('context')}
-                    />
+                    <figure key={`${box.guruName}-${index}`} className={s.guru}>
+                      <blockquote>{box.quote}</blockquote>
+                      <figcaption>
+                        <b>{box.guruName}</b>
+                        {box.book ? <span>{t('source')}: {box.book}</span> : null}
+                      </figcaption>
+                    </figure>
                   ))}
                 </div>
-              )}
+              ) : null}
 
-              {article.doganNote && (
-                <div className="mt-10">
-                  <DoganNote variantLabel={t('doganNoteDefault')}>{article.doganNote}</DoganNote>
+              {catKey === 'huquqi' ? (
+                <div className={s.legal} role="note">
+                  <b>{t('legalTitle')}</b>
+                  <p>{t('legalText')}</p>
                 </div>
-              )}
+              ) : null}
 
-              {catKey === 'huquqi' && <LegalDisclaimer title={t('legalTitle')} text={t('legalText')} />}
+              {nextStep ? (
+                <Link href={nextStep.href} className={s.nextStep} data-testid="blog-next-step">
+                  <small>{tb('nextEyebrow', { stage: stageLabel ?? '' })}</small>
+                  <b>{nextStep.title}</b>
+                  <span>{nextStep.body}</span>
+                  <Icon name="arrow" />
+                </Link>
+              ) : null}
 
-              <FounderCard
-                eyebrow={ti('founderEyebrow')}
-                name={ti('founderName')}
-                role={ti('founderRole')}
-                body={ti('founderBody')}
-                cta={ti('founderCta')}
-                ctaHref={whatsappHref(ti('founderText', { title: article.title }))}
-              />
+              {/* One CTA (was founder card + CTA box). The author's «DK Agency necə kömək edir?» text when the
+                  post has it. TASK-0453 testid kept (e2e/blog-cta.spec.ts); WhatsApp through the counting route. */}
+              <section className={s.helpCard}>
+                <small>{tb('helpEyebrow')}</small>
+                <h3>{helpSection ? helpSection.title : t('ctaTitle')}</h3>
+                {helpSection ? (
+                  <div className={s.helpBody}>
+                    <MarkdownRenderer content={helpSection.body} className="text-[15.5px] leading-relaxed md:text-[16px]" />
+                  </div>
+                ) : (
+                  <p>{t('ctaDesc')}</p>
+                )}
+                <div className={s.helpBtns}>
+                  <a
+                    href={whatsappHref(t('ctaWhatsappMessage', { title: article.title }))}
+                    data-testid="blog-cta-whatsapp"
+                    className={`${home.btn} ${home.btnRed}`}
+                  >
+                    <Icon name="chat" />
+                    {t('ctaWhatsapp')}
+                  </a>
+                  <Link href={withLocale(normalizedLocale, '/elaqe')} className={`${home.btn} ${home.btnGhost}`}>
+                    {t('ctaContact')}
+                  </Link>
+                </div>
+              </section>
+
               <KazanBox
                 eyebrow={ti('kazanEyebrow')}
                 title={ti('kazanTitle')}
                 body={ti('kazanBody')}
                 cta={ti('kazanCta')}
-                href={withLocale(normalizedLocale, '/kazan-ai')}
+                href={kazanHref}
                 foot={ti('kazanFoot')}
               />
-
-              {/* TASK-0453 CTA kept (e2e/blog-cta.spec.ts): WhatsApp with the post title + contact page. TASK-0517: through the lead route (whatsappHref), plain <a> so the counting redirect is not prefetched. */}
-              <div className="mt-10 rounded-3xl border border-[#E4DCCD] bg-white p-7 shadow-sm">
-                <h3 className="mb-2 text-xl font-black tracking-tight text-slate-900">{t('ctaTitle')}</h3>
-                <p className="mb-5 text-sm leading-relaxed text-slate-700">{t('ctaDesc')}</p>
-                <div className="flex flex-wrap items-center gap-3">
-                  <a
-                    href={whatsappHref(t('ctaWhatsappMessage', { title: article.title }))}
-                    data-testid="blog-cta-whatsapp"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#128C4A] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#0f7a40]"
-                  >
-                    {t('ctaWhatsapp')}
-                  </a>
-                  <Link
-                    href={withLocale(normalizedLocale, '/elaqe')}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 text-sm font-bold text-slate-800 transition hover:bg-slate-50"
-                  >
-                    {t('ctaContact')}
-                  </Link>
-                </div>
-              </div>
             </article>
 
             <aside className={s.aside} aria-label={ti('founderEyebrow')}>

@@ -18,7 +18,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 
 import BlogContentWrapper from '@/components/news/BlogContentWrapper';
 import AdSlot from '@/components/ads/AdSlot';
-import { MarkdownRenderer } from '@/components/blog';
+import MarkdownRenderer from '@/components/blog/MarkdownRenderer';
 import { normalizeLocale, withLocale } from '@/i18n/config';
 import { localeUrl } from '@/lib/seo/structured-data';
 import { TELEGRAM_HANDLE, TELEGRAM_URL } from '@/lib/contact-channels';
@@ -232,7 +232,11 @@ export default async function HaberDetailPage({
     inLanguage: locale,
   };
 
-  const sections = article.content ? parseNewsContent(article.content) : [];
+  const allSections = article.content ? parseNewsContent(article.content) : [];
+  // TASK-0542 (Axios «Why it matters», Skift Take): «Niyə önəmli» + «…üçün dərs» move up into one card
+  // right under the headline; the report follows; «DK baxışı» is labelled as opinion, apart from the facts.
+  const whyParts = allSections.filter((x) => x.type === 'important' || x.type === 'lesson');
+  const sections = allSections.filter((x) => x.type !== 'important' && x.type !== 'lesson');
   let blockNo = 0;
 
   return (
@@ -267,6 +271,17 @@ export default async function HaberDetailPage({
                 </span>
                 <ShareLinks url={shareUrl} title={article.title} waLabel={tc('whatsapp')} tgLabel={tc('telegram')} />
               </div>
+              {whyParts.length > 0 ? (
+                <section className={s.why} data-testid="news-why">
+                  <small>{t('whyTitle')}</small>
+                  {whyParts.map((part, i) => (
+                    <div key={i} className={s.whyPart}>
+                      {part.title ? <h3>{part.title}</h3> : null}
+                      <MarkdownRenderer content={part.body} className="text-slate-700 md:text-[17px]" />
+                    </div>
+                  ))}
+                </section>
+              ) : null}
               <NewsCover
                 category={article.category}
                 categoryLabel={catLabel(article.category)}
@@ -288,18 +303,37 @@ export default async function HaberDetailPage({
                         <span className={s.blkN}>{++blockNo}</span>
                         <h2>{section.title}</h2>
                       </div>
+                      {section.type === 'opinion' ? <span className={s.opinionTag}>{t('opinionTag')}</span> : null}
                       <MarkdownRenderer content={section.body} className="text-slate-700 md:text-[18px]" />
                     </section>
                   )
                 )}
               </div>
 
+              {tools.length > 0 ? (
+                <section className={s.newsTools} data-testid="news-tools">
+                  <h3>{t('toolsTitle')}</h3>
+                  <div className={s.newsToolsGrid}>
+                    {tools.map((tool) => (
+                      <ToolMini
+                        key={tool.slug}
+                        href={withLocale(locale, `/toolkit/${tool.slug}`)}
+                        icon={tool.icon}
+                        iconClass={TOOL_GROUP_CLASS[tool.group]}
+                        title={tt(`${tool.slug}.t`)}
+                        sub={t('toolSub')}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
               <div className={s.src}>
                 {sourceHost ? (
                   article.content ? (
                     <span>
                       {t('source')}{' '}
-                      <a href={sourceUrl} target="_blank" rel="noopener noreferrer">{sourceHost}</a> — {t('sourceOriginal')}
+                      <a href={sourceUrl} target="_blank" rel="noopener noreferrer">{sourceHost}</a> — {t('sourceOriginal')}. {t('sourceNote')}
                     </span>
                   ) : (
                     <a className={`${home.btn} ${home.btnRed} ${home.btnSm}`} href={sourceUrl} target="_blank" rel="noopener noreferrer">
@@ -315,21 +349,6 @@ export default async function HaberDetailPage({
             </article>
 
             <aside className={s.side}>
-              {tools.length > 0 ? (
-                <div>
-                  <h4>{t('relatedTool')}</h4>
-                  {tools.map((tool) => (
-                    <ToolMini
-                      key={tool.slug}
-                      href={withLocale(locale, `/toolkit/${tool.slug}`)}
-                      icon={tool.icon}
-                      iconClass={TOOL_GROUP_CLASS[tool.group]}
-                      title={tt(`${tool.slug}.t`)}
-                      sub={t('toolSub')}
-                    />
-                  ))}
-                </div>
-              ) : null}
               {blog ? (
                 <div>
                   <h4>{t('relatedBlog')}</h4>

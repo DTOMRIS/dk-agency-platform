@@ -7311,7 +7311,11 @@
       "feedDown": "Aşağı",
       "trendEyebrow": "Trend",
       "trendTitle": "Trend haberler",
-      "moreNews": "Tüm haberler"
+      "moreNews": "Tüm haberler",
+      "whyTitle": "Restoranınız için ne anlama geliyor",
+      "opinionTag": "Bu haberin kendisi değil — DK editörlerinin yorumudur.",
+      "toolsTitle": "Kendi rakamlarınızla kontrol edin",
+      "sourceNote": "DK Agency haberi çevirip kısalttı."
     },
     "blog": {
       "eyebrow": "Blog · Doğan Tomris",
@@ -7362,6 +7366,96 @@
       "acceptAll": "Tümünü kabul et",
       "save": "Seçimi kaydet",
       "note": "Seçimin bu cihazda saklanır."
+    },
+    "blogExtra": {
+      "quickTitle": "Kısaca",
+      "quickMore": "Sonuca geç",
+      "updated": "Güncellendi: {date}",
+      "ustadEyebrow": "Ustadan not",
+      "nextEyebrow": "Sonraki adım · {stage}",
+      "helpEyebrow": "DK Agency",
+      "kazanQ": "“{title}” yazısını okudum. Bunu kendi restoranımda nasıl uygularım?",
+      "next": {
+        "devir": {
+          "t": "Devir ve satış ilanları",
+          "b": "Satılık restoranlara bakın veya kendi işletmenizi ilan edin."
+        }
+      }
+    },
+    "miniCalc": {
+      "eyebrow": "Kendi rakamınızla kontrol edin",
+      "empty": "Rakamları yazın — sonuç burada görünür.",
+      "foot": "Hesap tarayıcınızda yapılır, hiçbir yere gönderilmez.",
+      "full": "Tam hesaplayıcıyı aç",
+      "food-cost": {
+        "title": "Porsiyonun food cost yüzdesi",
+        "f": {
+          "cost": "Porsiyon maliyeti (₼)",
+          "price": "Menü fiyatı (₼)"
+        },
+        "p": {
+          "cost": "örn. 3,40",
+          "price": "örn. 12"
+        },
+        "result": "Food cost",
+        "ok": "Rehber sınırın ({max}%) içinde.",
+        "high": "Rehber sınırın ({max}%) üstünde — reçeteye veya fiyata bakın.",
+        "price": "{max}% için fiyat: {price}"
+      },
+      "basabas": {
+        "title": "Aylık başabaş satışı",
+        "f": {
+          "fixed": "Aylık sabit gider (kira, maaş …) ₼",
+          "check": "Ortalama adisyon (₼)",
+          "variable": "Değişken gider (gıda, paket) %"
+        },
+        "p": {
+          "fixed": "örn. 9000",
+          "check": "örn. 18",
+          "variable": "örn. 35"
+        },
+        "result": "Başabaş satış / ay",
+        "perDay": "Günde yaklaşık {n} adisyon (30 gün)",
+        "note": "Bu satışın altındaki ay zararla kapanır."
+      },
+      "delivery-calc": {
+        "title": "Paket siparişten size ne kalıyor",
+        "f": {
+          "price": "Menü fiyatı (₼)",
+          "commission": "Platform komisyonu %",
+          "cost": "Maliyet + paket (₼)"
+        },
+        "p": {
+          "price": "örn. 15",
+          "commission": "örn. 30",
+          "cost": "örn. 6"
+        },
+        "result": "Size kalan",
+        "fee": "Platforma: {fee}",
+        "margin": "Fiyatın {pct} kadarı sizde kalıyor"
+      },
+      "pnl": {
+        "title": "Ay sonunda ne kalıyor",
+        "f": {
+          "sales": "Aylık satış (₼)",
+          "food": "Gıda (₼)",
+          "labor": "Personel (₼)",
+          "rent": "Kira (₼)",
+          "other": "Diğer giderler (₼)"
+        },
+        "p": {
+          "sales": "örn. 40000",
+          "food": "örn. 12000",
+          "labor": "örn. 10000",
+          "rent": "örn. 4000",
+          "other": "örn. 6000"
+        },
+        "result": "Kâr · satışın {pct} kadarı",
+        "primeOk": "Ana maliyet (gıda + personel) {pct} — {max}% sınırının içinde.",
+        "primeHigh": "Ana maliyet (gıda + personel) {pct} — {max}% sınırının üstünde.",
+        "rentOk": "Kira {pct} — {max}% sınırının içinde.",
+        "rentHigh": "Kira {pct} — {max}% sınırının üstünde."
+      }
     }
   },
   "whatsappFloat": {

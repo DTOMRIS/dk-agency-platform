@@ -45,7 +45,8 @@ export default function KazanAiChatClient() {
 
   const initialMessage = contextGreeting || t('chat.initialMessage');
   const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', content: initialMessage }]);
-  const [input, setInput] = useState('');
+  // TASK-0542: ?q= (blog «KAZAN-dan soruş») fills the box — the visitor reads it and presses Send.
+  const [input, setInput] = useState(() => (searchParams.get('q') ?? '').slice(0, 300));
   const [loading, setLoading] = useState(false);
   const [lastSentAt, setLastSentAt] = useState(0);
   const [throttleError, setThrottleError] = useState('');
