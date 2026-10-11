@@ -7,6 +7,8 @@
  */
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { FOUNDER_PORTRAIT_SRC } from '@/components/ui/FounderAvatar';
 import type { ReactNode } from 'react';
 import { TELEGRAM_URL } from '@/lib/contact-channels';
 import { APP_TIME_ZONE, formatAzDate } from '@/lib/i18n/format';
@@ -227,9 +229,16 @@ export function FounderCard({
 }) {
   return (
     <div className={s.founder}>
-      <span className={s.av} aria-hidden="true">
-        DT
-      </span>
+      {/* TASK-0543: the real portrait, not «DT» initials (owner screenshot 11.10). */}
+      <Image
+        src={FOUNDER_PORTRAIT_SRC}
+        alt=""
+        width={96}
+        height={96}
+        sizes="96px"
+        className={s.av}
+        style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
+      />
       <div>
         <span className={home.eyebrow}>{eyebrow}</span>
         <h3>{name}</h3>

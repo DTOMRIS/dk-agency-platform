@@ -27,7 +27,7 @@ export default function GuruQuoteBox({
   const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2);
 
   return (
-    <div className="my-8 rounded-2xl overflow-hidden bg-white border border-[#E4DCCD]">
+    <div className="my-7 rounded-[18px] overflow-hidden bg-white border border-[#E4DCCD]">
       {/* Header */}
       <div className="px-6 py-4 flex items-center gap-3 border-b border-[#EFE9DE]">
         <div className="w-10 h-10 rounded-full bg-[#FDECEF] flex items-center justify-center flex-shrink-0">
