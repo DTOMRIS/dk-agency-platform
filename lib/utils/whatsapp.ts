@@ -1,11 +1,10 @@
+import { WHATSAPP_NUMBER } from '@/lib/contact-channels';
+
 type LeadForWhatsapp = {
   name?: string | null;
   businessType?: string | null;
 };
 
-function normalizeWhatsappNumber(value?: string | null) {
-  return (value || '994502566279').replace(/[^\d]/g, '');
-}
 
 export function buildWhatsappLink(lead: LeadForWhatsapp, lastMessages: string[]) {
   const question = lastMessages.find(Boolean) || 'KAZAN AI danisigi';
@@ -15,6 +14,6 @@ export function buildWhatsappLink(lead: LeadForWhatsapp, lastMessages: string[])
       `İşletmə: ${lead.businessType || 'Qeyd edilməyib'}\n\n` +
       `Sual: ${question}`,
   );
-  const number = normalizeWhatsappNumber(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER);
-  return `https://wa.me/${number}?text=${text}`;
+  // TASK-0540: one number for the whole site (lib/contact-channels), not an env override.
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
 }

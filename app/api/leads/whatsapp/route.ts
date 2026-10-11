@@ -56,9 +56,18 @@ async function logClick(req: NextRequest, message: string): Promise<void> {
     // counting is best-effort
   }
 
+  // TASK-0540: the owner read this ping as «a WhatsApp message is on its way» and wondered why none
+  // arrived. A click only opens WhatsApp on the visitor's phone; the message comes only if they press Send.
+  const ref = message.match(/DK-[A-Z0-9]{4}/)?.[0];
   await notifyOwner({
-    title: '💬 WhatsApp kliki',
-    lines: [page ? `Səhifə: ${page}` : null, message ? `Hazır mesaj: ${message}` : null],
+    title: '💬 WhatsApp düyməsinə basıldı (mesaj hələ göndərilməyib)',
+    lines: [
+      page ? `Səhifə: ${page}` : null,
+      message ? `Hazır mesaj: ${message}` : null,
+      ref
+        ? `Ziyarətçi «Göndər»ə bassa, WhatsApp-a «${ref}» kodlu mesaj gələcək. Gəlməsə — göndərməyib.`
+        : 'Ziyarətçi «Göndər»ə bassa, mesaj WhatsApp-a gələcək. Gəlməsə — göndərməyib.',
+    ],
     buttons: leadButtons(null, '/dashboard/contact-tracking'),
   });
 }
