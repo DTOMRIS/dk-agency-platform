@@ -1,15 +1,13 @@
 # HANDOFF
 
-## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0538 sessiyası)
+## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0540 sessiyası)
 
-> Ətraflı: `CHANGELOG.md` [Unreleased], `docs/DEVLOG.md` (2026-10-11), kartlar `docs/tasks/TASK-0524…0538.md`, dərslər L-060…L-067.
-> Dal `feat/TASK-0523-marketinq-fixes`: PR #526 main-ə merge olunub (TASK-0533-ə qədər). 0535–0538 commit-ləri dalda — **yeni PR açılmalıdır** (bağlı PR-a push CI işlətmir).
+> Ətraflı: `CHANGELOG.md` [Unreleased], `docs/DEVLOG.md` (2026-10-11), kartlar `docs/tasks/TASK-0524…0540.md`, dərslər L-060…L-067.
+> Dal `feat/TASK-0523-marketinq-fixes`: PR #526 main-ə merge olunub (TASK-0533-ə qədər). 0535–0539 main-də (PR #528, #529); blog SQL canlıda işlədilib (11.10).
 
 ### Doğan-dan gözlənən
-- Yeni PR: `main...feat/TASK-0523-marketinq-fixes` → merge.
-- **Blog DB (canlı):** `docs/ops/2026-10-11-blog-fixes.sql`-i işlət (40 il + aşağıdakı AHA yazısı). `aha-ulduz-sertifikati-otel-hazirliq` — «hər mehmanxana 6 ay içində məcburdur», «70%-i bacarmır» və müştəri rəqəmli «DOĞAN NOTU» (14 otel / 11 ulduz) silinməli; admin: `/dashboard/blog/aha-ulduz-sertifikati-otel-hazirliq`. Statik ehtiyat nüsxə düzəldilib.
 - Müştəri nəticələri səhifəsi: 3–5 anonim vaka (sahə/şəhər, problem, nə etdik, nəticə rəqəmi, müddət) — rəqəm uydurulmur.
-- Qərar: WhatsApp avtomatik marketinq (OCAQ/Marketinq Ocağı) — əvvəl WhatsApp Business API qaydaları/qiyməti araşdırılsın.
+- WhatsApp avtomatlaşdırması (Doğan: «olsun»): araşdırma `docs/reports/2026-10-11-whatsapp-automation.md` — Meta Business hesabı + biznes təsdiqi Doğan-dan; sonra Cloud API + Coexistence (994502566279) ilə kod/müraciət eşləmə + salamlama.
 - API kreditləri (Max/Team): Hostinger-dəki `ANTHROPIC_API_KEY`-in Console təşkilatını claude.ai → Billing → «API credits»-ə bağla; istəsən KAZAN əsas modeli Claude-a keçər (DeepSeek fallback qalır).
 
 ### Açıq (kodda yoxlanıb — növbəti işlər)

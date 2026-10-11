@@ -1,5 +1,6 @@
 import { type Locale, defaultLocale } from '@/i18n/config';
 import { escapeEmailHtml, htmlToPlainText } from './content';
+import { WHATSAPP_NUMBER } from '@/lib/contact-channels';
 
 type EmailTemplate = {
   subject: string;
@@ -48,9 +49,9 @@ ${opts?.preheader ? `<div style="display:none;max-height:0;overflow:hidden;opaci
       <tr><td align="center" style="padding:0 0 10px;">
         <a href="mailto:info@dkagency.com.tr" style="color:#64748b;font-size:13px;text-decoration:none;">info@dkagency.com.tr</a>
         &nbsp;&middot;&nbsp;
-        <a href="https://wa.me/994502566279" style="color:#64748b;font-size:13px;text-decoration:none;">WhatsApp</a>
+        <a href="https://wa.me/${WHATSAPP_NUMBER}" style="color:#64748b;font-size:13px;text-decoration:none;">WhatsApp</a>
         &nbsp;&middot;&nbsp;
-        <a href="https://instagram.com/dkagency.az" style="color:#64748b;font-size:13px;text-decoration:none;">Instagram</a>
+        <a href="https://instagram.com/dkagency" style="color:#64748b;font-size:13px;text-decoration:none;">Instagram</a>
       </td></tr>
       <tr><td align="center">
         <p style="margin:0;color:#94a3b8;font-size:11px;">
@@ -242,7 +243,7 @@ export const emailTemplates = {
     <p style="margin:0 0 8px;color:#64748b;font-size:13px;">
       <a href="mailto:info@dkagency.com.tr" style="color:#64748b;text-decoration:none;">info@dkagency.com.tr</a>
       &nbsp;&middot;&nbsp;
-      <a href="https://wa.me/994507001636" style="color:#64748b;text-decoration:none;">WhatsApp</a>
+      <a href="https://wa.me/${WHATSAPP_NUMBER}" style="color:#64748b;text-decoration:none;">WhatsApp</a>
     </p>
     <p style="margin:0;color:#94a3b8;font-size:11px;">&copy; 2026 DK Agency</p>
   </td></tr>

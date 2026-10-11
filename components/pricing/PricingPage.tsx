@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { normalizeLocale, withLocalePrefix, type Locale } from '@/i18n/config';
 import { LAUNCH_CAMPAIGN, MARKETING_TOOLS, isLaunchActive, type MarketingToolConfig, type MarketingToolTier } from '@/lib/marketing-tools-config';
+import { WHATSAPP_NUMBER } from '@/lib/contact-channels';
 
 type TierKey = MarketingToolTier;
 
@@ -20,13 +21,6 @@ const TIERS: TierView[] = [
   { key: 'kalfa', highlighted: true },
   { key: 'usta', highlighted: false },
 ];
-
-const WHATSAPP_FALLBACK = '994502566279';
-
-function normalizeWhatsappNumber(value: string | undefined): string {
-  const digits = (value || WHATSAPP_FALLBACK).replace(/[^\d]/g, '');
-  return digits || WHATSAPP_FALLBACK;
-}
 
 interface TierTools {
   live: MarketingToolConfig[];
@@ -71,7 +65,8 @@ export function PricingPage() {
 
   const toolsByTier = useMemo(() => groupToolsByTier(), []);
   const launchActive = isLaunchActive();
-  const whatsappNumber = normalizeWhatsappNumber(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER);
+  // TASK-0540: one number for the whole site (lib/contact-channels), not an env override.
+  const whatsappNumber = WHATSAPP_NUMBER;
 
   const faqItems = t.raw('faq.items') as Array<{ question: string; answer: string }>;
 
