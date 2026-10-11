@@ -1,8 +1,8 @@
 # HANDOFF
 
-## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0540 sessiyası)
+## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0541 sessiyası)
 
-> Ətraflı: `CHANGELOG.md` [Unreleased], `docs/DEVLOG.md` (2026-10-11), kartlar `docs/tasks/TASK-0524…0540.md`, dərslər L-060…L-067.
+> Ətraflı: `CHANGELOG.md` [Unreleased], `docs/DEVLOG.md` (2026-10-11), kartlar `docs/tasks/TASK-0524…0541.md`, dərslər L-060…L-067.
 > Dal `feat/TASK-0523-marketinq-fixes`: PR #526 main-ə merge olunub (TASK-0533-ə qədər). 0535–0539 main-də (PR #528, #529); blog SQL canlıda işlədilib (11.10).
 
 ### Doğan-dan gözlənən
@@ -15,7 +15,7 @@
 - **i18n sayı:** xəritənin «sabit AZ» sütunu `/auth/*` və `/qiymet`-də fayl içi 4 dilli lüğətləri də sayır (borc deyil, yanlış həyəcan) — skript düzəlişi ayrıca.
 - **Mətn:** footer «dijitalın şəddi» şüarı (Doğan seçimi).
 - **Dizayn sırası (xəritə, 0538 sonu: v2 49 · köhnə 51 · qarışıq 4):** ictimai köhnə/qarışıq — `/blog/[slug]`, `/haberler/[slug]` (ayrıca PR planı), `/ilan-ver` (1256 sətir), `/pricing`, `/qiymet`, `/is-elanlari`, `/terefdashlar`, `/sedd-rozeti`, `/email-preferences`, `/settings`, `/toolkit/whatsapp-template-paketi`; qalanı admin və B2B panel.
-- Köhnə: UTM/reklam mənbəyi heç yerdə saxlanmır · B2B OnboardingModal hər girişdə klikləri bağlayır · listings repository DB yoxdursa mock qaytarır (production-da DB var).
+- Köhnə: B2B OnboardingModal hər girişdə klikləri bağlayır · listings repository DB yoxdursa mock qaytarır (production-da DB var).
 
 ## 2026-10-08 — Vəziyyət (Claude, TASK-0503/0504 sessiyası)
 

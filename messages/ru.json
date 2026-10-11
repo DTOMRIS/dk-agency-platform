@@ -7880,7 +7880,34 @@
       "unsubscribed": "Отписался"
     },
     "refCode": "Код: {code} — найдите сообщение в WhatsApp с этим кодом",
-    "anonymousHint": "Если напишет, сообщение будет в WhatsApp/Telegram"
+    "anonymousHint": "Если напишет, сообщение будет в WhatsApp/Telegram",
+    "sourcesTitle": "Откуда приходят заявки",
+    "sourcesNote": "Реклама (utm), Google, Instagram, Telegram и др. Учёт ведётся с 11.10.2026.",
+    "sourcesEmpty": "За этот период нет заявок с записанным источником.",
+    "sourceNames": {
+      "direct": "Прямой заход",
+      "unknown": "Неизвестно",
+      "google": "Google",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "yandex": "Яндекс",
+      "chatgpt": "ChatGPT"
+    },
+    "leadTypes": {
+      "register": "регистрация",
+      "whatsapp_click": "клик WhatsApp",
+      "channel_click": "клик контакт",
+      "kazan_lead": "KAZAN",
+      "ota_guide": "гид OTA",
+      "franchise_radar": "Франшиз-радар",
+      "franchise_lead": "франшиза",
+      "newsletter": "рассылка",
+      "listing_created": "новое объявление",
+      "listing_lead": "заявка по объявлению",
+      "other": "другое"
+    }
   },
   "authShell": {
     "back": "Главная",

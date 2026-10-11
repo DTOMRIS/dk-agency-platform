@@ -12,6 +12,8 @@ import {
 } from '@/lib/repositories/kazanLeadRepository';
 import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 import { buildWhatsappLink } from '@/lib/utils/whatsapp';
+import { attributionLine } from '@/lib/analytics/attribution';
+import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
 
 type LeadPostBody = {
   name?: string;
@@ -89,8 +91,10 @@ export async function POST(request: NextRequest) {
     });
 
     // TASK-0511: owner Telegram ping (fire-and-forget)
-    after(() =>
-      notifyOwner({
+    const leadAttr = readAttribution(request);
+    after(async () => {
+      await recordLeadSource(leadAttr, 'kazan_lead', null);
+      await notifyOwner({
         title: '🔔 Yeni lead · KAZAN AI',
         lines: [
           `Ad: ${name}`,
@@ -98,10 +102,11 @@ export async function POST(request: NextRequest) {
           email ? `E-poçt: ${email}` : null,
           `Biznes: ${businessType}`,
           `Niyyət: ${intent}`,
+          attributionLine(leadAttr),
         ],
         buttons: leadButtons(phone, '/dashboard/kazan-leads'),
-      })
-    );
+      });
+    });
 
     // Admin notification (fire-and-forget)
     import('@/lib/email/templates')

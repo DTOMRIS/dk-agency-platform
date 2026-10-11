@@ -1,9 +1,12 @@
 import { eq } from 'drizzle-orm';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { listingLeads, listings } from '@/lib/db/schema';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import { getListingLeadsByListingId } from '@/lib/repositories/listingRepository';
+import { attributionLine } from '@/lib/analytics/attribution';
+import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
+import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 
 export async function GET(
   _request: NextRequest,
@@ -62,6 +65,25 @@ export async function POST(
     .from(listings)
     .where(eq(listings.id, resolvedListingId))
     .then((items) => items[0]);
+
+  // TASK-0541: listing enquiries only went by e-mail — now also the owner's Telegram, with the source.
+  const leadAttr = readAttribution(request);
+  after(async () => {
+    await recordLeadSource(leadAttr, 'listing_lead', listing?.trackingCode ? `/ilanlar/${listing.trackingCode}` : null);
+    await notifyOwner({
+      title: '🔔 Yeni elan müraciəti',
+      lines: [
+        listing?.title ? `Elan: ${listing.title}` : null,
+        listing?.trackingCode ? `Kod: ${listing.trackingCode}` : null,
+        `Ad: ${body.name || 'Anonim'}`,
+        body.phone ? `Telefon: ${body.phone}` : null,
+        body.email ? `E-poçt: ${body.email}` : null,
+        body.message ? `Mesaj: ${body.message}` : null,
+        attributionLine(leadAttr),
+      ],
+      buttons: leadButtons(body.phone, `/dashboard/ilanlar/${resolvedListingId}`),
+    });
+  });
 
   if (listing) {
     import('@/lib/email/templates').then(({ emailTemplates, sendEmail }) => {

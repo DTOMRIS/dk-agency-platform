@@ -7880,7 +7880,34 @@
       "unsubscribed": "Unsubscribed"
     },
     "refCode": "Code: {code} — find the WhatsApp message with this code",
-    "anonymousHint": "If they write, it shows up in the WhatsApp/Telegram app"
+    "anonymousHint": "If they write, it shows up in the WhatsApp/Telegram app",
+    "sourcesTitle": "Where leads come from",
+    "sourcesNote": "Ads (utm), Google, Instagram, Telegram and more. Tracking started 11.10.2026.",
+    "sourcesEmpty": "No leads with a recorded source in this period.",
+    "sourceNames": {
+      "direct": "Direct",
+      "unknown": "Unknown",
+      "google": "Google",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "yandex": "Yandex",
+      "chatgpt": "ChatGPT"
+    },
+    "leadTypes": {
+      "register": "sign-up",
+      "whatsapp_click": "WhatsApp click",
+      "channel_click": "contact click",
+      "kazan_lead": "KAZAN",
+      "ota_guide": "OTA guide",
+      "franchise_radar": "Franchise Radar",
+      "franchise_lead": "franchise",
+      "newsletter": "newsletter",
+      "listing_created": "new listing",
+      "listing_lead": "listing enquiry",
+      "other": "other"
+    }
   },
   "authShell": {
     "back": "Home",

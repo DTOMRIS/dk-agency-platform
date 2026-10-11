@@ -6,6 +6,8 @@ import { checkRateLimit, getClientIp, RATE_LIMITS } from '@/lib/utils/rate-limit
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
 import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
+import { attributionLine, type Attribution } from '@/lib/analytics/attribution';
+import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
 
 /**
  * WhatsApp redirect. TASK-0511: every click is also counted in `leads`
@@ -26,7 +28,7 @@ function refCode(): string {
   return `DK-${out}`;
 }
 
-async function logClick(req: NextRequest, message: string): Promise<void> {
+async function logClick(req: NextRequest, message: string, leadAttr: Attribution | null): Promise<void> {
   const referer = req.headers.get('referer');
   let page: string | null = null;
   if (referer) {
@@ -59,6 +61,7 @@ async function logClick(req: NextRequest, message: string): Promise<void> {
   // TASK-0540: the owner read this ping as «a WhatsApp message is on its way» and wondered why none
   // arrived. A click only opens WhatsApp on the visitor's phone; the message comes only if they press Send.
   const ref = message.match(/DK-[A-Z0-9]{4}/)?.[0];
+  await recordLeadSource(leadAttr, 'whatsapp_click', page);
   await notifyOwner({
     title: '💬 WhatsApp düyməsinə basıldı (mesaj hələ göndərilməyib)',
     lines: [
@@ -67,6 +70,7 @@ async function logClick(req: NextRequest, message: string): Promise<void> {
       ref
         ? `Ziyarətçi «Göndər»ə bassa, WhatsApp-a «${ref}» kodlu mesaj gələcək. Gəlməsə — göndərməyib.`
         : 'Ziyarətçi «Göndər»ə bassa, mesaj WhatsApp-a gələcək. Gəlməsə — göndərməyib.',
+      attributionLine(leadAttr),
     ],
     buttons: leadButtons(null, '/dashboard/contact-tracking'),
   });
@@ -81,6 +85,9 @@ export function GET(req: NextRequest) {
   // public-ok: a plain link on every page; the redirect always works. TASK-0530: bots and more than
   // 20 clicks/hour from one IP are not counted and do not ping the owner.
   const counted = !isBotUserAgent(req.headers.get('user-agent')) && checkRateLimit(`lead-click:${getClientIp(req)}`, RATE_LIMITS.leadClick).success;
-  if (counted) after(() => logClick(req, message));
+  if (counted) {
+    const leadAttr = readAttribution(req);
+    after(() => logClick(req, message, leadAttr));
+  }
   return NextResponse.redirect(url);
 }

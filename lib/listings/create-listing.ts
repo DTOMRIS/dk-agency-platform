@@ -10,6 +10,8 @@
 import { db } from '@/lib/db';
 import { listingMedia, listings } from '@/lib/db/schema';
 import { notifyOwner, SITE_URL } from '@/lib/telegram/notify-owner';
+import { attributionLine, type Attribution } from '@/lib/analytics/attribution';
+import { recordLeadSource } from '@/lib/analytics/attribution-server';
 
 type ListingInsert = typeof listings.$inferInsert;
 
@@ -20,6 +22,8 @@ export interface CreateListingOptions {
   images?: unknown[];
   /** Run lib/listings/ai-analyze in the background (default true). */
   analyze?: boolean;
+  /** TASK-0541: where the submitter came from (site form only; imports have none). */
+  attribution?: Attribution | null;
 }
 
 export async function createListing(
@@ -58,6 +62,7 @@ export async function createListing(
 
   // TASK-0511: owner approval request (only fresh submissions; never throws).
   if (values.status === undefined || values.status === 'submitted') {
+    if (options.attribution !== undefined) void recordLeadSource(options.attribution, 'listing_created', null);
     void notifyOwner({
       title: '🏢 Yeni B2B elan',
       lines: [
@@ -67,6 +72,7 @@ export async function createListing(
           .filter(Boolean)
           .join(' · '),
         values.ownerName ? `Sahib: ${values.ownerName}` : null,
+        options.attribution !== undefined ? attributionLine(options.attribution) : null,
       ],
       buttons: [
         [
