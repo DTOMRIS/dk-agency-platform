@@ -1,0 +1,242 @@
+[
+ {
+  "id": 12,
+  "slug": "restoran-acarken-sehvler",
+  "blog_post_id": 3,
+  "guru_name": "DONALD BURNS",
+  "quote_az": "Restoranlar müştəri çatışmazlığından batmır. Sahibkarın hazırlıqsız açılışından batır. Açılış günü artıq gec olur.",
+  "book": "Your Restaurant Sucks!"
+ },
+ {
+  "id": 13,
+  "slug": "restoran-acarken-sehvler",
+  "blog_post_id": 3,
+  "guru_name": "DAVID SCOTT PETERS",
+  "quote_az": "Sənin biznesin food cost-u bilməyən sahibkarın hər ay çəkdiyi ən səssiz ölümdür. Heç kim ağrı çəkmir, amma hər ay azacıq pul yoxa çıxır.",
+  "book": "Restaurant Prosperity Formula"
+ },
+ {
+  "id": 15,
+  "slug": "restoran-acarken-sehvler",
+  "blog_post_id": 3,
+  "guru_name": "ROGER FIELDS",
+  "quote_az": "Restoranların 90%-i batır. Amma batanların əksəriyyəti pis yemək üzündən yox — pul idarəetməsi üzündən batır. Aşpaş olmaq başqa, sahibkar olmaq başqadır.",
+  "book": "Restaurant Success by the Numbers"
+ },
+ {
+  "id": 17,
+  "slug": "1-porsiya-food-cost-hesablama",
+  "blog_post_id": 7,
+  "guru_name": "DAVID SCOTT PETERS",
+  "quote_az": "Food cost-u bilməmək — gözübağlı avtomobil sürmək kimidir. Hara getdiyini bilmirsən, nə vaxt qəza olacağını da bilmirsən.",
+  "book": "Restaurant Prosperity Formula"
+ },
+ {
+  "id": 18,
+  "slug": "1-porsiya-food-cost-hesablama",
+  "blog_post_id": 7,
+  "guru_name": "ROGER FIELDS",
+  "quote_az": "Restoranların əksəriyyəti pis yemək üzündən yox, pul idarəetməsi üzündən batır. Food cost bunun 1 nömrəli göstəricisidir.",
+  "book": "Restaurant Success by the Numbers"
+ },
+ {
+  "id": 19,
+  "slug": "1-porsiya-food-cost-hesablama",
+  "blog_post_id": 7,
+  "guru_name": "DONALD BURNS",
+  "quote_az": "Restoran sahibləri menyu dizayn etməyə aşiqdir, amma P&L hesabatı oxumaqdan qaçır. Menyu gözəl görünür, kassa isə boşdur.",
+  "book": "Your Restaurant Sucks!"
+ },
+ {
+  "id": 20,
+  "slug": "1-porsiya-food-cost-hesablama",
+  "blog_post_id": 7,
+  "guru_name": "ANTHONY BOURDAIN",
+  "quote_az": "Şans biznes modeli deyil.",
+  "book": "Kitchen Confidential"
+ },
+ {
+  "id": 21,
+  "slug": "1-porsiya-food-cost-hesablama",
+  "blog_post_id": 7,
+  "guru_name": "JIM SULLIVAN",
+  "quote_az": "Hər ofisiant satıcıdır — ya bilinçli satır, ya bilinçsiz itirdir.",
+  "book": "Multiunit Leadership"
+ },
+ {
+  "id": 22,
+  "slug": "pnl-oxuya-bilmirsen",
+  "blog_post_id": 8,
+  "guru_name": "ROGER FIELDS",
+  "quote_az": "Restoranların 90%-i batır, amma batanların əksəriyyəti pis yemək üzündən yox, pul idarəetməsi üzündən batır.",
+  "book": "Restaurant Success by the Numbers"
+ },
+ {
+  "id": 23,
+  "slug": "pnl-oxuya-bilmirsen",
+  "blog_post_id": 8,
+  "guru_name": "DONALD BURNS",
+  "quote_az": "Restoran sahibləri menyu dizayn etməyə aşiqdir, amma P&L hesabatı oxumaqdan qaçır. Menyunun gözəl görünməsi sənin kassanı doldurmur.",
+  "book": "Your Restaurant Sucks!"
+ },
+ {
+  "id": 24,
+  "slug": "pnl-oxuya-bilmirsen",
+  "blog_post_id": 8,
+  "guru_name": "DANNY MEYER",
+  "quote_az": "Əsl liderlik kreslodan yox, rəqəmlərdən başlayır. İşçilərini tanımayan, proseslərinə nəzarət etməyən sahibkar müştərisinə də nəzarət edə bilməz.",
+  "book": "Setting the Table"
+ },
+ {
+  "id": 30,
+  "slug": "menyu-muhendisliyi-satis",
+  "blog_post_id": 10,
+  "guru_name": "JIM SULLIVAN",
+  "quote_az": "Hər ofisiant satıcıdır — ya bilinçli satır, ya bilinçsiz itirdir.",
+  "book": "Multiunit Leadership"
+ },
+ {
+  "id": 31,
+  "slug": "menyu-muhendisliyi-satis",
+  "blog_post_id": 10,
+  "guru_name": "GREGG RAPP",
+  "quote_az": "Menyu restoranın ən güclü satış alətidir — amma əksər sahibkarlar onu yemək siyahısı kimi istifadə edir.",
+  "book": null
+ },
+ {
+  "id": 32,
+  "slug": "menyu-muhendisliyi-satis",
+  "blog_post_id": 10,
+  "guru_name": "DONALD BURNS",
+  "quote_az": "Restoran sahibləri menyu dizayn etməyə aşiqdir, amma menyunun hansı yeməyinin pul qazandırdığını bilmir. Bu, silahı doldurub gözübağlı atəş açmaq kimidir.",
+  "book": "Your Restaurant Sucks!"
+ },
+ {
+  "id": 33,
+  "slug": "aqta-cerime-checklist",
+  "blog_post_id": 11,
+  "guru_name": "JON TAFFER",
+  "quote_az": "Mən heç vaxt uğursuz restoran görməmişəm — yalnız uğursuz sahibkarlar görmüşəm. Gigiyena problemi = idarəetmə problemi.",
+  "book": "Bar Rescue"
+ },
+ {
+  "id": 34,
+  "slug": "aqta-cerime-checklist",
+  "blog_post_id": 11,
+  "guru_name": "GORDON RAMSAY",
+  "quote_az": "İnsanlar mətbəx bağlandığı üçün batdıqlarını zənn edir. Əslində ofis bağlandığı üçün batırlar — yəni gigiyena, nəzarət, sənədləşdirmə sistemi yoxdur.",
+  "book": "Kitchen Nightmares"
+ },
+ {
+  "id": 35,
+  "slug": "wolt-bolt-komissiyon",
+  "blog_post_id": 12,
+  "guru_name": "ROGER FIELDS",
+  "quote_az": "Hər satış kanalının öz riyaziyyatı var. Gəlir gətirən kanal mənfəət gətirmir ola bilər — bunu yalnız rəqəmlərlə görə bilərsən.",
+  "book": "Restaurant Success by the Numbers"
+ },
+ {
+  "id": 36,
+  "slug": "wolt-bolt-komissiyon",
+  "blog_post_id": 12,
+  "guru_name": "DAVID SCOTT PETERS",
+  "quote_az": "Gəlir sənə yalan danışır. Mənfəət həqiqəti deyir. Hər kanalın — dine-in, delivery, banket — ayrı mənfəət hesabı olmalıdır.",
+  "book": "Restaurant Prosperity Formula"
+ },
+ {
+  "id": 37,
+  "slug": "wolt-bolt-komissiyon",
+  "blog_post_id": 12,
+  "guru_name": "ANTHONY BOURDAIN",
+  "quote_az": "Şans biznes modeli deyil.",
+  "book": "Kitchen Confidential"
+ },
+ {
+  "id": 38,
+  "slug": "kurumsal-kitabca-emeliyyat",
+  "blog_post_id": 13,
+  "guru_name": "JON TAFFER",
+  "quote_az": "Standart yoxdursa, hər kəs öz standartını qoyur. Və hər kəsin standartı fərqli olur. Nəticə: xaos.",
+  "book": "Raise the Bar"
+ },
+ {
+  "id": 39,
+  "slug": "kurumsal-kitabca-emeliyyat",
+  "blog_post_id": 13,
+  "guru_name": "HOWARD SCHULTZ",
+  "quote_az": "Starbucks-ı böyüdən qəhvənin dadı deyil, sistemin gücüdür. Sistem olmasaydı, 35.000 mağazada eyni təcrübəni vermək mümkün olmazdı.",
+  "book": "Pour Your Heart Into It"
+ },
+ {
+  "id": 40,
+  "slug": "kurumsal-kitabca-emeliyyat",
+  "blog_post_id": 13,
+  "guru_name": "WILL GUIDARA",
+  "quote_az": "Sistem olmalıdır ki, kreativlik üçün yer qalsın. Sistem olmadan — hər şey xaosdur.",
+  "book": "Unreasonable Hospitality"
+ },
+ {
+  "id": 41,
+  "slug": "insaatdan-acilisa-checklist",
+  "blog_post_id": 14,
+  "guru_name": "DANNY MEYER",
+  "quote_az": "Restoranlar pis yemək üzündən bağlanmır. Pis planlaşdırma üzündən bağlanır.",
+  "book": "Setting the Table"
+ },
+ {
+  "id": 46,
+  "slug": "restoran-markalasma-konsept",
+  "blog_post_id": 15,
+  "guru_name": "DANNY MEYER",
+  "quote_az": "Marka sənin haqqında danışmadığın zaman insanların sənin haqqında dedikləridir.",
+  "book": "Setting the Table"
+ },
+ {
+  "id": 47,
+  "slug": "basabas-noqtesi-hesablama",
+  "blog_post_id": 16,
+  "guru_name": "ROGER FIELDS",
+  "quote_az": "Başabaş nöqtəsini bilməmək — qazanıb-qazanmadığını bilmədən işləməkdir. Bu, təkcə pis iş deyil, delusiyondur (özünü aldatmadır).",
+  "book": "Restaurant Success by the Numbers"
+ },
+ {
+  "id": 48,
+  "slug": "basabas-noqtesi-hesablama",
+  "blog_post_id": 16,
+  "guru_name": "DONALD BURNS",
+  "quote_az": "Rəqəmləri bilmədən restoran idarə etmək, gözübağlı avtomobil sürməklə eynidir — hara getdiyini bilmirsən.",
+  "book": "Your Restaurant Sucks!"
+ },
+ {
+  "id": 49,
+  "slug": "basabas-noqtesi-hesablama",
+  "blog_post_id": 16,
+  "guru_name": "ANTHONY BOURDAIN",
+  "quote_az": "Şans biznes modeli deyil.",
+  "book": "Kitchen Confidential"
+ },
+ {
+  "id": 50,
+  "slug": "aha-ulduz-sertifikati-otel-hazirliq",
+  "blog_post_id": 32,
+  "guru_name": "FUAD NAĞIYEV",
+  "quote_az": "Ulduz almaq istəyən otellərin əksəriyyəti bunun üçün qoyulan tələbləri ödəyə bilmir. Müraciət edənlərin yalnız 30%-i sertifikat alır. Səbəb şəraitin və xidmətin keyfiyyətindəki problemlərdir.",
+  "book": null
+ },
+ {
+  "id": 51,
+  "slug": "aha-ulduz-sertifikati-otel-hazirliq",
+  "blog_post_id": 32,
+  "guru_name": "GÜNAY SAĞLAM",
+  "quote_az": "Hotellərin ulduz təsnifatı ilə bağlı 248 kriteriyamız var. Bəzi otellərdə qonaq qəbulunu hələ də kağızda qeyd edirlər. Belə vəziyyətdə 3 ulduz almaq mümkün deyil.",
+  "book": null
+ },
+ {
+  "id": 52,
+  "slug": "aha-ulduz-sertifikati-otel-hazirliq",
+  "blog_post_id": 32,
+  "guru_name": "HOTELSTARS UNION",
+  "quote_az": "Standart bir sənəd deyil — yaşayan bir tələbdir. Sertifikat alan otel hər gün eyni səviyyədə qalmağa borcludur. Müştəri tək bir gecədə yox, hər gecədə ulduz xidməti gözləyir.",
+  "book": null
+ }
+]

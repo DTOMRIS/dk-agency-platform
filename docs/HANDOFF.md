@@ -6,6 +6,7 @@
 > Dal `feat/TASK-0523-marketinq-fixes`: PR #526 main-ə merge olunub (TASK-0533-ə qədər). 0535–0539 main-də (PR #528, #529); blog SQL canlıda işlədilib (11.10).
 
 ### Doğan-dan gözlənən
+- **Bloq auditi (TASK-0545):** `docs/ops/2026-10-11-blog-content-audit.sql`-i işlət; sonra `2026-10-11-blog-anecdotes-OPTIONAL.sql`-də doğru olan anekdotları sil, qalanını işlət. 6 «Sahə qeydi» sitatı sizin sözünüzdürmü — təsdiq. Mülki Məcəllə m.726 yazısı hüquqçuya. Tərcümələr AZ düzəldikdən sonra yenilənməlidir.
 - Müştəri nəticələri səhifəsi: 3–5 anonim vaka (sahə/şəhər, problem, nə etdik, nəticə rəqəmi, müddət) — rəqəm uydurulmur.
 - WhatsApp avtomatlaşdırması (Doğan: «olsun»): araşdırma `docs/reports/2026-10-11-whatsapp-automation.md` — Meta Business hesabı + biznes təsdiqi Doğan-dan; sonra Cloud API + Coexistence (994502566279) ilə kod/müraciət eşləmə + salamlama.
 - API kreditləri (Max/Team): Hostinger-dəki `ANTHROPIC_API_KEY`-in Console təşkilatını claude.ai → Billing → «API credits»-ə bağla; istəsən KAZAN əsas modeli Claude-a keçər (DeepSeek fallback qalır).

@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-11 · feat/TASK-0542-article-pages · 0c2d8d95
+> `node scripts/generate-system-map.mjs` · 2026-10-11 · fix/TASK-0545-blog-content-audit · a78c7f64
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -8,7 +8,7 @@
 - Dizayn (həqiqi səhifələr): v2 **50** · köhnə **49** · qarışıq **2** · işarəsiz 22
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 62 (+ 379 tapşırıq kartı)
+- Sənəd: 63 (+ 380 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -316,7 +316,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/ENV-SETUP.md` | Environment Setup | 2026-04-24 | 23 |
 | `docs/FATURA-OCR-MASTERPLAN.md` | FATURA OCR MASTERPLAN — DK Agency | 2026-04-29 | 802 |
 | `docs/HANDOFF-11-IYUN-2026.md` | HANDOFF — 11 İyun 2026 Sessiyası | 2026-06-11 | 129 |
-| `docs/HANDOFF.md` | HANDOFF | 2026-10-11 | 597 |
+| `docs/HANDOFF.md` | HANDOFF | 2026-10-11 | 598 |
 | `docs/I18N-AUDIT.md` | i18n Component-Level Audit | 2026-05-08 | 153 |
 | `docs/LESSONS.md` | DK Agency — Acı Dərslər (yeni task-dan əvvəl oxu) | 2026-10-11 | 438 |
 | `docs/MARKETINQ_OCAGI_SPEC.md` | Marketinq Ocagi — Texniki Spec | 2026-05-11 | 238 |
@@ -327,7 +327,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 92 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 93 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |
@@ -342,5 +342,6 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-06-10 | 348 |
 | `docs/reports/2026-10-09-marketinq-ocagi-audit.md` | Marketinq Ocağı (24 alət) — audit + dünya araşdırması (09.10.2026) | 2026-10-09 | 36 |
 | `docs/reports/2026-10-11-article-pages-research.md` | Blog və xəbər səhifələri — dizayn araşdırması (2026-10-11, TASK-0542) | 2026-10-11 | 26 |
+| `docs/reports/2026-10-11-blog-content-audit.md` | Bloq məzmun auditi — 37 yazı (2026-10-11, TASK-0545) |  | 25 |
 | `docs/reports/2026-10-11-owner-nory-marginedge.md` | Rəqib araşdırması — Owner.com, Nory, MarginEdge (2026-10-11) | 2026-10-11 | 23 |
 | `docs/reports/2026-10-11-whatsapp-automation.md` | WhatsApp avtomatlaşdırması — araşdırma (2026-10-11, TASK-0540) | 2026-10-11 | 31 |
