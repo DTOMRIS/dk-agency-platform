@@ -15,6 +15,7 @@
 - **0534** öz denetim: `/qiymet`-də səhv şəxs adı və **səhv WhatsApp nömrəsi** (müraciət başqasına gedirdi), mənbəsiz rəqəmlər, hesab xətaları (ROI hədləri, başabaşda dövriyyə pulu iki dəfə, gizli vurucu, qonaq evi hökmü, P&L), AZ terminləri.
 - **0535** /marketinq geri → /marketinq, bir səhifədə bir geri, üst bar həqiqi sessiya, «PREMIUM» → «Üzv», françayz, AHA → dövlətin ulduz təsnifatı (Hotelstars Union, AZS 906-2022), «Müştəri portreti», `/tanitim` keçidi.
 - **0537** işçi planlayıcı/mətbəx bütün növbələr (173 saat/ay, Əmək Məcəlləsi), hədlər `benchmarks.ts`-də tək mənbə, «40 il» + canlı bloq SQL-i (`docs/ops/2026-10-11-blog-fixes.sql`).
+- **0539** şəkilsiz xəbərə kateqoriya örtüyü (5 şəkil `public/news/covers`, kart + OG + JSON-LD + Telegram); kəsiləndə sol kənar — kateqoriya adı görünsün.
 - **0538** calc audit-in qalanı (başabaş vergi rejimi, icarə vergisi `r/(100−r)`, test balları `(x−min)/(max−min)`, lokasiya 40% həddi, kuryer ₼/sifariş, sezon əmsalları redaktə + işçi 60% sabit), sektor rəqəmləri DSK/AirDNA ilə, 3 Excel şablonu (Excel-də hesablanıb oxundu), 5 səhifə ailəsi v2 (3 paralel agent; tərcümələr scratchpad JSON → birləşdirmə). KST miqyası qəsdən dəyişmədi — tarixçə müqayisəsi pozulardı. Elan müraciət forması uğursuzluqda da «göndərildi» deyirdi, API DB yoxdursa saxta 201 qaytarırdı → düzəldi.
 - **0536** KAZAN proaktiv sual balonu (owner.com nümunəsi), menyuda ikon + izah, Owner/Nory/MarginEdge araşdırması (`docs/reports/2026-10-11-owner-nory-marginedge.md`).
 

@@ -86,6 +86,7 @@ export async function approveNewsArticle(
         title: article.titleAz,
         summary: article.summaryAz,
         imageUrl: article.imageUrl,
+        category: article.category,
       });
     }
   }

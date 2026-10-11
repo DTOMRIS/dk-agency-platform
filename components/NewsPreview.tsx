@@ -19,6 +19,7 @@ import { formatAzDate } from '@/lib/i18n/format';
 import styles from '@/components/home/v2/homeV2.module.css';
 import { inter } from '@/components/home/v2/font';
 import { Icon, Reveal, type IconName } from '@/components/home/v2/shared';
+import { newsCategoryCover } from '@/lib/news/category-covers';
 
 interface NewsItem {
   id: number;
@@ -71,7 +72,9 @@ function sourceOf(item: NewsItem): string {
 
 function NewsCover({ item, label, big }: { item: NewsItem; label: string; big?: boolean }) {
   const [failed, setFailed] = useState(false);
+  const [coverFailed, setCoverFailed] = useState(false);
   const cat = CATEGORY_STYLE[catKey(item.category)];
+  const sizes = big ? '(max-width: 980px) 100vw, 700px' : '104px';
 
   if (item.imageUrl && !failed) {
     // TASK-0516: feed images go through next/image (resized; next.config allows any https host).
@@ -81,11 +84,26 @@ function NewsCover({ item, label, big }: { item: NewsItem; label: string; big?: 
         src={item.imageUrl}
         alt=""
         fill
-        sizes={big ? '(max-width: 980px) 100vw, 700px' : '104px'}
+        sizes={sizes}
         unoptimized={!item.imageUrl.startsWith('https://')}
         className={styles.nwImg}
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
+      />
+    );
+  }
+
+  // TASK-0539: no image (or it failed) → the owner-made category cover.
+  if (!coverFailed) {
+    return (
+      <Image
+        src={newsCategoryCover(item.category)}
+        alt=""
+        fill
+        sizes={sizes}
+        className={styles.nwImg}
+        style={{ objectPosition: 'left center' }}
+        onError={() => setCoverFailed(true)}
       />
     );
   }
