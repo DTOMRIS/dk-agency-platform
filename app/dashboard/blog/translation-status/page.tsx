@@ -40,6 +40,11 @@ export default async function TranslationStatusPage() {
   await requireAdminPage();
   const matrix = await getBlogTranslationMatrix();
 
+  // TASK-0545: the button translates only the posts that still have an empty / still-AZ field.
+  const pendingSlugs = matrix
+    .filter((post) => LANGS.some((lang) => FIELDS.some((field) => post.langs[lang][field as keyof PostLangStatus] !== 'ok')))
+    .map((post) => post.slug);
+
   let ok = 0;
   let untranslated = 0;
   let missing = 0;
@@ -63,7 +68,7 @@ export default async function TranslationStatusPage() {
             {matrix.length} blog × 3 dil × 5 sahə — canlı DB-dən hesablanır (saxlanan flaq yox).
           </p>
         </div>
-        <TranslateAllButton />
+        <TranslateAllButton slugs={pendingSlugs} />
       </div>
 
       <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50/60 p-4">
