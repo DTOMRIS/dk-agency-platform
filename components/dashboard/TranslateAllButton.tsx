@@ -4,46 +4,64 @@ import { useState } from 'react';
 
 type RunState = 'idle' | 'running' | 'done' | 'error';
 
-// One-click batch re-translation of ALL blog posts. Hits the admin-gated
-// /api/blog/translate/all (which routes through the echo-guarded
-// autoTranslateBlogPost), then surfaces a summary. No per-blog clicking, no SQL.
-export default function TranslateAllButton() {
+/**
+ * Batch re-translation of the blog posts that still need it (empty or still-AZ fields).
+ * TASK-0545: the old version called /api/blog/translate/all — one request for every post, which the proxy
+ * cut after ~1–3 minutes (Safari: «The string did not match the expected pattern» = an HTML error page,
+ * not JSON). Now each post goes through the background job of /api/blog/translate (POST starts it, GET
+ * polls — the TASK-0455 pattern), one post at a time, with progress. Re-clicking continues where it stopped.
+ */
+export default function TranslateAllButton({ slugs }: { slugs: string[] }) {
   const [state, setState] = useState<RunState>('idle');
   const [summary, setSummary] = useState('');
 
+  async function readJson(res: Response): Promise<Record<string, unknown>> {
+    try {
+      return (await res.json()) as Record<string, unknown>;
+    } catch {
+      return { error: `Server cavabı JSON deyil (HTTP ${res.status})` };
+    }
+  }
+
+  async function translateOne(slug: string): Promise<boolean> {
+    const start = await fetch('/api/blog/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug }),
+    });
+    if (!start.ok) return false;
+    // Poll every 4 s, up to ~8 min per post.
+    for (let i = 0; i < 120; i += 1) {
+      await new Promise((r) => setTimeout(r, 4000));
+      const res = await fetch(`/api/blog/translate?slug=${encodeURIComponent(slug)}`);
+      const data = await readJson(res);
+      if (data.status === 'done') return true;
+      if (data.status === 'failed' || data.status === 'idle') return false;
+    }
+    return false;
+  }
+
   async function run() {
-    if (state === 'running') return;
-    if (
-      !window.confirm(
-        'Bütün blogların boş və ya hələ AZ qalan sahələrini yenidən tərcümə et? (Düzgün tərcümələrə toxunulmur.)'
-      )
-    ) {
+    if (state === 'running' || slugs.length === 0) return;
+    if (!window.confirm(`${slugs.length} blogun boş və ya hələ AZ qalan sahələri tərcümə olunsun? (Düzgün tərcümələrə toxunulmur.)`)) {
       return;
     }
     setState('running');
-    setSummary('');
-    try {
-      const res = await fetch('/api/blog/translate/all', { method: 'POST' });
-      const data = (await res.json()) as {
-        ok?: boolean;
-        total?: number;
-        okCount?: number;
-        failCount?: number;
-        error?: string;
-      };
-      if (!res.ok) {
-        setState('error');
-        setSummary(data.error || `Xəta: ${res.status}`);
-        return;
+    let ok = 0;
+    const failed: string[] = [];
+    for (const [i, slug] of slugs.entries()) {
+      setSummary(`${i + 1}/${slugs.length} · ${slug}`);
+      try {
+        if (await translateOne(slug)) ok += 1;
+        else failed.push(slug);
+      } catch {
+        failed.push(slug);
       }
-      setState('done');
-      setSummary(
-        `${data.okCount ?? 0}/${data.total ?? 0} blog tam · ${data.failCount ?? 0} qismən/xəta. Statusu görmək üçün səhifəni yeniləyin.`
-      );
-    } catch (err) {
-      setState('error');
-      setSummary(err instanceof Error ? err.message : 'Şəbəkə xətası');
     }
+    setState(failed.length ? 'error' : 'done');
+    setSummary(
+      `${ok}/${slugs.length} blog tərcümə olundu${failed.length ? ` · alınmadı: ${failed.join(', ')} (yenidən basın)` : ''}. Statusu görmək üçün səhifəni yeniləyin.`
+    );
   }
 
   return (
@@ -51,15 +69,13 @@ export default function TranslateAllButton() {
       <button
         type="button"
         onClick={run}
-        disabled={state === 'running'}
+        disabled={state === 'running' || slugs.length === 0}
         className="rounded-lg bg-dk-red-strong px-4 py-2 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {state === 'running' ? 'Tərcümə olunur…' : 'Hamısını tərcümə et'}
+        {state === 'running' ? 'Tərcümə olunur…' : slugs.length ? `Hamısını tərcümə et (${slugs.length})` : 'Hamısı tərcümə olunub'}
       </button>
       {summary && (
-        <span
-          className={`text-sm font-semibold ${state === 'error' ? 'text-red-600' : 'text-emerald-700'}`}
-        >
+        <span className={`text-sm font-semibold ${state === 'error' ? 'text-red-600' : state === 'done' ? 'text-emerald-700' : 'text-slate-600'}`}>
           {summary}
         </span>
       )}
