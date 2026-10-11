@@ -364,7 +364,7 @@ export default async function BlogDetailPage({
                       <blockquote>{box.quote}</blockquote>
                       <figcaption>
                         <b>{box.guruName}</b>
-                        {box.book ? <span>{t('source')}: {box.book}</span> : null}
+                        {box.book ? <span>{t('source')} {box.book}</span> : null}
                       </figcaption>
                     </figure>
                   ))}
