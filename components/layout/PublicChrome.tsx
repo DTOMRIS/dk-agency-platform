@@ -7,6 +7,7 @@ import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import LazyCookiesBanner from '@/components/ui/LazyCookiesBanner';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import KazanNudge from '@/components/kazan-ai/KazanNudge';
+import AttributionCapture from '@/components/analytics/AttributionCapture';
 import { stripLocalePrefix } from '@/i18n/config';
 
 function isDashboardRoute(pathname: string) {
@@ -34,6 +35,8 @@ export default function PublicChrome({ children }: { children: React.ReactNode }
       <KazanNudge />
       <MobileBottomNav />
       <LazyCookiesBanner />
+      {/* TASK-0541: remembers where the visitor came from (utm / ad / referring site) for lead sources. */}
+      <AttributionCapture />
     </>
   );
 }

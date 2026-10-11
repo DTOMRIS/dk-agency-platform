@@ -17,6 +17,8 @@ import {
   RATE_LIMITS,
 } from '@/lib/utils/rate-limit';
 import { CONSENT_VERSION } from '@/lib/legal/consent-version';
+import { attributionLine } from '@/lib/analytics/attribution';
+import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
 
 const registerSchema = z.object({
   email: z.string().email().toLowerCase().trim(),
@@ -128,18 +130,21 @@ export async function POST(request: NextRequest) {
       productUpdatesSubscribed: body.marketingConsent,
     });
 
-    after(() =>
-      notifyOwner({
+    const leadAttr = readAttribution(request);
+    after(async () => {
+      await recordLeadSource(leadAttr, 'register', null);
+      await notifyOwner({
         title: '👤 Yeni üzv qeydiyyatı',
         lines: [
           `Ad: ${body.name}`,
           `E-poçt: ${body.email}`,
           body.phone ? `Telefon: ${body.phone}` : null,
           body.company ? `Şirkət: ${body.company}` : null,
+          attributionLine(leadAttr),
         ],
         buttons: leadButtons(body.phone, '/dashboard/users'),
-      })
-    );
+      });
+    });
 
     // Create email verification token
     const token = crypto.randomUUID();

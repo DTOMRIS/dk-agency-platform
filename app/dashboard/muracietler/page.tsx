@@ -8,6 +8,7 @@ import {
   INBOX_PERIODS,
   INBOX_SOURCES,
   getInboxItems,
+  getLeadSourceSummary,
   type InboxItem,
   type InboxPeriod,
   type InboxSource,
@@ -72,7 +73,7 @@ export default async function DashboardInboxPage({
     return query ? `${basePath}?${query}` : basePath;
   };
 
-  const all = await getInboxItems(filters.period);
+  const [all, sourceSummary] = await Promise.all([getInboxItems(filters.period), getLeadSourceSummary(filters.period)]);
 
   const cardCls =
     'rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]';
@@ -188,6 +189,42 @@ export default async function DashboardInboxPage({
             </div>
           </form>
         </div>
+
+        {/* TASK-0541: lead sources (utm / ad / referring site) in the same period */}
+        <section className={`${cardCls} p-5 sm:p-6`} data-testid="inbox-sources">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-[17px] font-semibold text-slate-900">{t('sourcesTitle')}</h2>
+            <p className="text-[12px] text-slate-500">{t('sourcesNote')}</p>
+          </div>
+          {sourceSummary && sourceSummary.length > 0 ? (
+            <ul className="mt-4 divide-y divide-slate-100">
+              {sourceSummary.map((row) => {
+                const max = sourceSummary[0].total || 1;
+                return (
+                  <li key={row.source} className="grid gap-2 py-3 sm:grid-cols-[180px_1fr_auto] sm:items-center">
+                    <span className="text-[14px] font-semibold text-slate-900">
+                      {t.has(`sourceNames.${row.source}`) ? t(`sourceNames.${row.source}`) : row.source}
+                    </span>
+                    <div className="min-w-0">
+                      <div className="h-2 rounded-full bg-[#F2F2F7]">
+                        <div className="h-2 rounded-full bg-[#0A5BD6]" style={{ width: `${Math.max(4, Math.round((row.total / max) * 100))}%` }} />
+                      </div>
+                      <p className="mt-1.5 text-[12px] text-slate-500">
+                        {Object.entries(row.byType)
+                          .sort((a, b) => b[1] - a[1])
+                          .map(([type, n]) => `${t.has(`leadTypes.${type}`) ? t(`leadTypes.${type}`) : type} ${n}`)
+                          .join(' · ')}
+                      </p>
+                    </div>
+                    <span className="text-[20px] font-semibold tabular-nums text-slate-900">{row.total}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="mt-3 text-[14px] text-slate-600">{t('sourcesEmpty')}</p>
+          )}
+        </section>
 
         <div className="flex flex-wrap items-baseline justify-between gap-2 px-1">
           <p className="text-[14px] font-semibold text-slate-900" data-testid="inbox-result-count">{t('results', { count: items.length })}</p>

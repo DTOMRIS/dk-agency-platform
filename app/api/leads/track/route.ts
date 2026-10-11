@@ -7,6 +7,8 @@ import { wrapEmail } from '@/lib/email/templates';
 import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 import { isBotUserAgent } from '@/lib/leads/ref-code';
 import { checkRateLimit, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
+import { attributionLine } from '@/lib/analytics/attribution';
+import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
 
 const ALLOWED_CHANNELS = ['kazan', 'whatsapp', 'telegram'] as const;
 const ALLOWED_SOURCES = ['contact_page', 'home_join'] as const;
@@ -140,18 +142,21 @@ export async function POST(req: NextRequest) {
       sendSmtpEmail(adminEmail, subject, html).catch(() => undefined);
 
       // TASK-0511: owner Telegram ping (never blocks or breaks the lead save).
-      after(() =>
-        notifyOwner({
+      const leadAttr = readAttribution(req);
+      after(async () => {
+        await recordLeadSource(leadAttr, 'channel_click', sourceUrl);
+        await notifyOwner({
           title: `🔔 Yeni lead · ${sourceLabel} (${channelLabel})`,
           lines: [
             destinationPhone ? `Hədəf: ${destinationPhone}` : null,
             sourceUrl ? `Səhifə: ${sourceUrl}` : null,
             prefillText ? `Hazır mesaj: ${prefillText}` : null,
             `Dil: ${locale.toUpperCase()}`,
+            attributionLine(leadAttr),
           ],
           buttons: leadButtons(null, '/dashboard/contact-tracking'),
-        })
-      );
+        });
+      });
     }
 
     return NextResponse.json({ ok: true });

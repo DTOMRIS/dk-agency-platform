@@ -23,6 +23,7 @@ import {
   leads,
   listingLeads,
   listings,
+  webConversionEvents,
 } from '@/lib/db/schema';
 import { extractRefCode } from '@/lib/leads/ref-code';
 
@@ -283,4 +284,37 @@ export async function countInboxSince(days: number): Promise<number | null> {
       ),
   ]);
   return [a, c, d, e].reduce((sum, rows) => sum + Number(rows[0]?.n ?? 0), 0);
+}
+
+export type LeadSourceRow = { source: string; total: number; byType: Record<string, number> };
+
+/**
+ * TASK-0541: where leads came from — `lead` rows written by lib/analytics/attribution-server in the
+ * period, grouped by source (instagram, google, direct …) and lead type. Tracking started 2026-10-11.
+ */
+export async function getLeadSourceSummary(periodDays: InboxPeriod): Promise<LeadSourceRow[] | null> {
+  if (!db) return null;
+  const from = since(periodDays);
+  try {
+    const rows = await db
+      .select({
+        source: webConversionEvents.source,
+        type: sql<string>`coalesce(${webConversionEvents.metadata}->>'type', 'other')`,
+        n: sql<number>`count(*)::int`,
+      })
+      .from(webConversionEvents)
+      .where(and(eq(webConversionEvents.eventName, 'lead'), gte(webConversionEvents.createdAt, from)))
+      .groupBy(webConversionEvents.source, sql`2`);
+    const map = new Map<string, LeadSourceRow>();
+    for (const row of rows) {
+      const key = row.source || 'unknown';
+      const entry = map.get(key) ?? { source: key, total: 0, byType: {} };
+      entry.total += Number(row.n);
+      entry.byType[row.type] = (entry.byType[row.type] ?? 0) + Number(row.n);
+      map.set(key, entry);
+    }
+    return [...map.values()].sort((a, b) => b.total - a.total);
+  } catch {
+    return null;
+  }
 }

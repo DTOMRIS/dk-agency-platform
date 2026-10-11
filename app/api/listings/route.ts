@@ -10,6 +10,7 @@ import { getAuthFromCookie } from '@/lib/auth/jwt';
 import { generateTrackingCode } from '@/lib/utils/tracking';
 import { isValidSector } from '@/lib/data/listingSectors';
 import { requireApiAdmin } from '@/lib/api/guards';
+import { readAttribution } from '@/lib/analytics/attribution-server';
 
 const MAX_FREE_LISTINGS = 2;
 
@@ -144,7 +145,7 @@ export async function POST(request: NextRequest) {
       equipment: Array.isArray(body.equipment) ? body.equipment : [],
       aiAnalysis: null,
     },
-    { images: Array.isArray(body.images) ? body.images : [] },
+    { images: Array.isArray(body.images) ? body.images : [], attribution: readAttribution(request) },
   );
 
   // Send confirmation email to submitter (fire-and-forget)
