@@ -5,6 +5,8 @@ import { z } from 'zod';
 import { saveEmailPreferences } from '@/lib/email/preferences';
 import { notifyOwner } from '@/lib/telegram/notify-owner';
 import { checkRateLimit, getClientIp, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
+import { attributionLine } from '@/lib/analytics/attribution';
+import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
 
 const subscribeSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
@@ -30,12 +32,14 @@ export async function POST(request: NextRequest) {
       productUpdatesSubscribed: false,
     });
 
-    after(() =>
-      notifyOwner({
+    const leadAttr = readAttribution(request);
+    after(async () => {
+      await recordLeadSource(leadAttr, 'newsletter', null);
+      await notifyOwner({
         title: '📨 Yeni abunə · bülletən',
-        lines: [`E-poçt: ${parsed.data.email}`, `Mənbə: ${parsed.data.source}`],
-      })
-    );
+        lines: [`E-poçt: ${parsed.data.email}`, `Forma: ${parsed.data.source}`, attributionLine(leadAttr)],
+      });
+    });
 
     return NextResponse.json({ ok: true });
   } catch (error) {

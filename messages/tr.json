@@ -7974,7 +7974,34 @@
       "unsubscribed": "Abonelikten çıktı"
     },
     "refCode": "Kod: {code} — WhatsApp'ta aynı kodlu mesajı arayın",
-    "anonymousHint": "Yazarsa WhatsApp/Telegram uygulamasında görünür"
+    "anonymousHint": "Yazarsa WhatsApp/Telegram uygulamasında görünür",
+    "sourcesTitle": "Başvurular nereden geliyor",
+    "sourcesNote": "Reklam (utm), Google, Instagram, Telegram vb. Takip 11.10.2026’da başladı.",
+    "sourcesEmpty": "Bu dönemde kaynağı kaydedilmiş başvuru yok.",
+    "sourceNames": {
+      "direct": "Doğrudan",
+      "unknown": "Bilinmiyor",
+      "google": "Google",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "yandex": "Yandex",
+      "chatgpt": "ChatGPT"
+    },
+    "leadTypes": {
+      "register": "kayıt",
+      "whatsapp_click": "WhatsApp tık",
+      "channel_click": "iletişim tık",
+      "kazan_lead": "KAZAN",
+      "ota_guide": "OTA rehberi",
+      "franchise_radar": "Franchise Radar",
+      "franchise_lead": "franchise",
+      "newsletter": "bülten",
+      "listing_created": "yeni ilan",
+      "listing_lead": "ilan başvurusu",
+      "other": "diğer"
+    }
   },
   "authShell": {
     "back": "Ana sayfa",

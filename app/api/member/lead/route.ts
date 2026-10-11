@@ -1,10 +1,13 @@
 // public-ok: public lead form, rate-limited
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { franchiseLeads } from '@/lib/db/schema';
 import { sendSmtpEmail } from '@/lib/email/smtp';
 import { sql } from 'drizzle-orm';
 import { createHash } from 'crypto';
+import { attributionLine } from '@/lib/analytics/attribution';
+import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
+import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 
 // ── Zod-free validation (zero extra deps) ──────────────────────────
 
@@ -164,6 +167,24 @@ export async function POST(req: NextRequest) {
   }).returning({ id: franchiseLeads.id });
 
   const leadId = inserted[0]?.id || 'unknown';
+
+  // TASK-0541: franchise leads only went by e-mail — now also the owner's Telegram, with the source.
+  const leadAttr = readAttribution(req);
+  after(async () => {
+    await recordLeadSource(leadAttr, 'franchise_lead', null);
+    await notifyOwner({
+      title: `🔔 Yeni lead · ${TOOL_LABELS[data.toolSource] || data.toolSource}`,
+      lines: [
+        `Ad: ${data.name}`,
+        data.brand ? `Brend: ${data.brand}` : null,
+        `Əlaqə: ${data.contact}`,
+        data.score ? `Bal: ${data.score}` : null,
+        `Dil: ${(data.locale || 'az').toUpperCase()}`,
+        attributionLine(leadAttr),
+      ],
+      buttons: leadButtons(data.contact.includes('@') ? null : data.contact, '/dashboard/franchise-leads'),
+    });
+  });
 
   // Fire-and-forget emails
   const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';

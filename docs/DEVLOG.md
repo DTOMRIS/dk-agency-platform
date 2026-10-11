@@ -15,6 +15,7 @@
 - **0534** öz denetim: `/qiymet`-də səhv şəxs adı və **səhv WhatsApp nömrəsi** (müraciət başqasına gedirdi), mənbəsiz rəqəmlər, hesab xətaları (ROI hədləri, başabaşda dövriyyə pulu iki dəfə, gizli vurucu, qonaq evi hökmü, P&L), AZ terminləri.
 - **0535** /marketinq geri → /marketinq, bir səhifədə bir geri, üst bar həqiqi sessiya, «PREMIUM» → «Üzv», françayz, AHA → dövlətin ulduz təsnifatı (Hotelstars Union, AZS 906-2022), «Müştəri portreti», `/tanitim` keçidi.
 - **0537** işçi planlayıcı/mətbəx bütün növbələr (173 saat/ay, Əmək Məcəlləsi), hədlər `benchmarks.ts`-də tək mənbə, «40 il» + canlı bloq SQL-i (`docs/ops/2026-10-11-blog-fixes.sql`).
+- **0541** müraciət mənbəyi: `dk_attr` çərəzi (son birbaşa olmayan toxunuş, razılıqsız sessiya) → `web_conversion_events` `lead` sətri (şema dəyişmədən), 10 endpoint, Telegram «Mənbə», admin xülasə; françayz və elan müraciəti Telegram-a getmirdi.
 - **0540** «WhatsApp-a gəlmir, Telegram-a gəlir» — saytda WhatsApp göndərişi yoxdur, Telegram klik bildirişi idi; mətn aydınlaşdı, e-poçtda səhv nömrə, env nömrə override-ı çıxdı; Cloud API + Coexistence araşdırması.
 - **0542** bloq/xəbər detalı araşdırma ilə (10 referans ekran şəkli): mini kalkulyator, Qısaca (müəllifin Yekun-u), Ustadan qeyd ortada, Növbəti addım, KAZAN ?q=, xəbərdə «nə deməkdir» kartı. Tələ: client faylındakı köməkçini server səhifəsindən çağırmaq — lint/tsc keçdi, yalnız brauzer 500 göstərdi.
 - **0539** şəkilsiz xəbərə kateqoriya örtüyü (5 şəkil `public/news/covers`, kart + OG + JSON-LD + Telegram); kəsiləndə sol kənar — kateqoriya adı görünsün.

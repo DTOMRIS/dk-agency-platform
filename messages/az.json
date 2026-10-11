@@ -7974,7 +7974,34 @@
       "unsubscribed": "Abunəlikdən çıxıb"
     },
     "refCode": "Kod: {code} — WhatsApp-da eyni kodlu mesajı axtarın",
-    "anonymousHint": "Yazsa, WhatsApp/Telegram tətbiqində görünür"
+    "anonymousHint": "Yazsa, WhatsApp/Telegram tətbiqində görünür",
+    "sourcesTitle": "Müraciətlər haradan gəlir",
+    "sourcesNote": "Reklam (utm), Google, Instagram, Telegram və s. İzləmə 11.10.2026-dan başlayıb.",
+    "sourcesEmpty": "Bu dövrdə mənbəsi yazılmış müraciət yoxdur.",
+    "sourceNames": {
+      "direct": "Birbaşa",
+      "unknown": "Bilinmir",
+      "google": "Google",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "yandex": "Yandex",
+      "chatgpt": "ChatGPT"
+    },
+    "leadTypes": {
+      "register": "qeydiyyat",
+      "whatsapp_click": "WhatsApp klik",
+      "channel_click": "əlaqə klik",
+      "kazan_lead": "KAZAN",
+      "ota_guide": "OTA bələdçisi",
+      "franchise_radar": "Françayz Radarı",
+      "franchise_lead": "françayz",
+      "newsletter": "bülletən",
+      "listing_created": "yeni elan",
+      "listing_lead": "elan müraciəti",
+      "other": "digər"
+    }
   },
   "authShell": {
     "back": "Ana səhifə",
