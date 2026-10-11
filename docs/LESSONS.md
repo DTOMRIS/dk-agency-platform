@@ -419,3 +419,11 @@ route patterni ile eyni).
 ## L-065: İkili fayl repoya girmir — pre-commit kodlama yoxlaması
 - **Səhv:** `.xlsx` şablonları `verify-encoding` tərəfindən «mojibake» kimi rədd edildi (zip baytları mətn kimi oxunur).
 - **Qayda:** hook-a toxunma (DEC-012). İkili məzmun base64 TS moduluna (generator yazır) və ya public/ şəkil kimi; yerli nüsxə `.gitignore`-da.
+
+## L-066: GUI ixracı iki dəfə səssiz uğursuz → dayan, saxta şəkil yox
+- **Səhv:** Excel şablon önizləməsi üçün Microsoft Excel PDF ixracı 2 dəfə heç nə yazmadı, Numbers ixracı asıldı, pəncərə ekran şəkli alınmadı — dördüncü cəhd sarmal idi.
+- **Qayda:** eyni GUI addımı 2 dəfə uğursuzdursa dayan (sarmal qadağası). Önizləmə yoxdursa uydurma/şəkil generasiyası yox — həqiqi məlumatdan (sütun başlıqları) yer tutucu; açıq maddə HANDOFF-a.
+
+## L-067: React compiler — props-dan törənən dəyərlər hook-lardan sonra
+- **Səhv:** `FranchiseQuiz`-də `displayScore` bloku `useCallback`/`useEffect`-dən əvvəl yazıldı → lint «Existing memoization could not be preserved» (`react-hooks/preserve-manual-memoization`).
+- **Qayda:** render-də hesablanan törəmə dəyərləri (yalnız JSX-də istifadə olunan) bütün hook-lardan sonra yerləşdir; hook asılılıqlarına yeni dəyər qatma, ehtiyac yoxdursa.

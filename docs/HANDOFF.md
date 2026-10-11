@@ -1,22 +1,22 @@
 # HANDOFF
 
-## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0536 sessiyası)
+## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0538 sessiyası)
 
-> Ətraflı: `CHANGELOG.md` [Unreleased], `docs/DEVLOG.md` (2026-10-11), kartlar `docs/tasks/TASK-0524…0536.md`, dərslər L-060…L-065.
-> Dal `feat/TASK-0523-marketinq-fixes`: PR #526 main-ə merge olunub (TASK-0533-ə qədər). 0535 + 0536 commit-ləri dalda — **yeni PR açılmalıdır** (bağlı PR-a push CI işlətmir).
+> Ətraflı: `CHANGELOG.md` [Unreleased], `docs/DEVLOG.md` (2026-10-11), kartlar `docs/tasks/TASK-0524…0538.md`, dərslər L-060…L-067.
+> Dal `feat/TASK-0523-marketinq-fixes`: PR #526 main-ə merge olunub (TASK-0533-ə qədər). 0535–0538 commit-ləri dalda — **yeni PR açılmalıdır** (bağlı PR-a push CI işlətmir).
 
 ### Doğan-dan gözlənən
 - Yeni PR: `main...feat/TASK-0523-marketinq-fixes` → merge.
 - **Blog DB (canlı):** `docs/ops/2026-10-11-blog-fixes.sql`-i işlət (40 il + aşağıdakı AHA yazısı). `aha-ulduz-sertifikati-otel-hazirliq` — «hər mehmanxana 6 ay içində məcburdur», «70%-i bacarmır» və müştəri rəqəmli «DOĞAN NOTU» (14 otel / 11 ulduz) silinməli; admin: `/dashboard/blog/aha-ulduz-sertifikati-otel-hazirliq`. Statik ehtiyat nüsxə düzəldilib.
 - Müştəri nəticələri səhifəsi: 3–5 anonim vaka (sahə/şəhər, problem, nə etdik, nəticə rəqəmi, müddət) — rəqəm uydurulmur.
-- Qərar: MarginEdge-dən 3 pulsuz Excel (nəzəri/faktiki istifadə, qaimə qiymət izləyicisi, yerə görə sayım); WhatsApp avtomatik marketinq (OCAQ/Marketinq Ocağı) — əvvəl WhatsApp Business API qaydaları/qiyməti araşdırılsın.
+- Qərar: WhatsApp avtomatik marketinq (OCAQ/Marketinq Ocağı) — əvvəl WhatsApp Business API qaydaları/qiyməti araşdırılsın.
 - API kreditləri (Max/Team): Hostinger-dəki `ANTHROPIC_API_KEY`-in Console təşkilatını claude.ai → Billing → «API credits»-ə bağla; istəsən KAZAN əsas modeli Claude-a keçər (DeepSeek fallback qalır).
 
 ### Açıq (kodda yoxlanıb — növbəti işlər)
-- **Hesab (calc audit, qalan):** başabaş vergi rejimi seçimi (sadələşdirilmiş 8%) və nümunə datası ziddiyyəti · sezon/sosial/lokasiya alətlərində mənbəsiz əmsallar · test balının alt həddi 25/20 (`(x−min)/(max−min)`).
-- **Mətn:** sektor səhifələrində yoxlanmamış statistika (AirDNA 1 134, DSK 859 otel, +42%) · «35+ alət» sayı (llms.txt) · footer «dijitalın şəddi» şüarı (Doğan seçimi).
-- **Dizayn sırası (agent, 0535):** /kazan-ai → /haqqimizda (36 sabit AZ sətir) → françayz ailəsi (FranchiseQuiz 572 sətir, 3 URL) → /ilanlar + /ilanlar/[slug] → /toolkit/pnl; sonra /ilan-ver (1256 sətir, ayrıca task). Admin paneldə 25, B2B-də 16 köhnə səhifə.
-- **i18n borcu:** ictimai səhifələrdə 86 sabit AZ sətir (xəritə AZ sütunu).
+- **TASK-0538-dən qalan:** KST balı 25–100 miqyasında qalır (ballar `marketing_tool_runs`-da tarixçə ilə — miqyas dəyişsə köhnə qaçışlarla müqayisə yanlış olar; dəyişmək üçün göstərmə qatında çevirmə + tarixçəni də çevirmək) · 3 yeni Excel şablonunun şəkil önizləməsi yoxdur (kartda sütun başlıqları; Excel-də PDF ixracı işləmədi) · `/haqqimizda` və kök `/ilanlar` metadata-sı yalnız AZ · KAZAN çatındakı daxili keçidlər locale önəksizdir · elan WhatsApp mətni hər dildə AZ, sahə/kateqoriya adları `lib/data`-da yalnız AZ.
+- **i18n sayı:** xəritənin «sabit AZ» sütunu `/auth/*` və `/qiymet`-də fayl içi 4 dilli lüğətləri də sayır (borc deyil, yanlış həyəcan) — skript düzəlişi ayrıca.
+- **Mətn:** footer «dijitalın şəddi» şüarı (Doğan seçimi).
+- **Dizayn sırası (xəritə, 0538 sonu: v2 49 · köhnə 51 · qarışıq 4):** ictimai köhnə/qarışıq — `/blog/[slug]`, `/haberler/[slug]` (ayrıca PR planı), `/ilan-ver` (1256 sətir), `/pricing`, `/qiymet`, `/is-elanlari`, `/terefdashlar`, `/sedd-rozeti`, `/email-preferences`, `/settings`, `/toolkit/whatsapp-template-paketi`; qalanı admin və B2B panel.
 - Köhnə: UTM/reklam mənbəyi heç yerdə saxlanmır · B2B OnboardingModal hər girişdə klikləri bağlayır · listings repository DB yoxdursa mock qaytarır (production-da DB var).
 
 ## 2026-10-08 — Vəziyyət (Claude, TASK-0503/0504 sessiyası)

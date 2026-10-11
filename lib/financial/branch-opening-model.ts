@@ -20,6 +20,8 @@ export interface BranchOpeningInput {
   otherFixedCosts: number;
   variableCostPct: number;
   rentTaxType: 'individual' | 'legalEntity';
+  /** TASK-0538: general = 20% profit tax; simplified = % of turnover (Baku 8%, regions 4%). Default general. */
+  taxRegime?: 'general' | 'simplifiedBaku' | 'simplifiedRegion';
   rampUpMonths: number;
   openingSalesPct: number;
   reserveMonths: number;
@@ -118,6 +120,17 @@ function calcBand(value: number, bands: typeof TAX_BENCHMARK_BANDS.primeCost): '
   return 'red';
 }
 
+/**
+ * TASK-0538 (calc audit): tax by regime. Before, every case paid 20% profit tax on EBITDA and the simplified tax
+ * (on turnover, Baku 8% / regions 4% — AZERBAIJAN_TAX_CONFIG) was configured but never used. Simplified tax is due
+ * on revenue even when the month loses money. Depreciation is not modelled, so «net» is an estimate.
+ */
+function monthlyTax(regime: BranchOpeningInput['taxRegime'], revenue: number, ebitdaValue: number): number {
+  if (regime === 'simplifiedBaku') return Math.max(0, revenue) * (AZERBAIJAN_TAX_CONFIG.simplifiedTaxRates.baku / 100);
+  if (regime === 'simplifiedRegion') return Math.max(0, revenue) * (AZERBAIJAN_TAX_CONFIG.simplifiedTaxRates.region / 100);
+  return Math.max(0, ebitdaValue) * (AZERBAIJAN_TAX_CONFIG.generalTaxRates.profit / 100);
+}
+
 function pickScenarioRevenue(baseRevenue: number, multiplier: number, rampBoost: number): number {
   return finite(baseRevenue * multiplier * rampBoost);
 }
@@ -161,13 +174,17 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
   const monthlyRevenue = round(dailyChecks * averageCheck * operatingDays);
   const monthlyVariableCosts = round(monthlyRevenue * (variableCostPct / 100));
   const socialContribution = round(finite(input.staffCosts) * (AZERBAIJAN_TAX_CONFIG.socialContributionRate / 100));
-  const leaseTax = round(monthlyRent * (rentTaxType === 'legalEntity' ? AZERBAIJAN_TAX_CONFIG.leaseTaxRates.legalEntity : AZERBAIJAN_TAX_CONFIG.leaseTaxRates.individual) / 100);
+  // TASK-0538: the 14% on rent paid to an individual is withheld at source by the tenant from the gross rent. The
+  // rent typed in is what the landlord gets in hand, so the tenant's extra cost is the gross-up: rent × r / (100 − r)
+  // (14% → +16.3%). Before, 14% was simply added on top of the net rent.
+  const leaseTaxRate = rentTaxType === 'legalEntity' ? AZERBAIJAN_TAX_CONFIG.leaseTaxRates.legalEntity : AZERBAIJAN_TAX_CONFIG.leaseTaxRates.individual;
+  const leaseTax = leaseTaxRate > 0 && leaseTaxRate < 100 ? round(monthlyRent * leaseTaxRate / (100 - leaseTaxRate)) : 0;
   const monthlyFixedCosts = round(monthlyRent + leaseTax + finite(input.staffCosts) + socialContribution + finite(input.utilities) + finite(input.otherFixedCosts));
   const grossProfit = round(monthlyRevenue - monthlyVariableCosts);
   // TASK-0534: staff cost includes the employer contributions (was left out).
   const primeCostPct = monthlyRevenue > 0 ? round(((monthlyVariableCosts + finite(input.staffCosts) + socialContribution) / monthlyRevenue) * 100) : 0;
   const ebitda = round(monthlyRevenue - monthlyVariableCosts - monthlyFixedCosts);
-  const profitTax = round(Math.max(0, ebitda) * (AZERBAIJAN_TAX_CONFIG.generalTaxRates.profit / 100));
+  const profitTax = round(monthlyTax(input.taxRegime, monthlyRevenue, ebitda));
   const netProfit = round(ebitda - profitTax);
   const ebitdaMarginPct = monthlyRevenue > 0 ? round((ebitda / monthlyRevenue) * 100) : 0;
   const breakEvenSales = round(monthlyFixedCosts / Math.max(0.01, 1 - (variableCostPct / 100)));
@@ -207,10 +224,10 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
         label: 'conservative',
         monthlyRevenue: round(revenue),
         grossProfit: round(gross),
-        primeCostPct: revenue > 0 ? round(((variable + finite(input.staffCosts)) / revenue) * 100) : 0,
+        primeCostPct: revenue > 0 ? round(((variable + finite(input.staffCosts) + socialContribution) / revenue) * 100) : 0,
         ebitda: round(ebitdaValue),
-        netProfit: round(ebitdaValue - round(Math.max(0, ebitdaValue) * (AZERBAIJAN_TAX_CONFIG.generalTaxRates.profit / 100))),
-        paybackMonths: ebitdaValue > 0 ? round(totalFundingNeed / round(ebitdaValue - round(Math.max(0, ebitdaValue) * (AZERBAIJAN_TAX_CONFIG.generalTaxRates.profit / 100)))) : null,
+        netProfit: round(ebitdaValue - round(monthlyTax(input.taxRegime, revenue, ebitdaValue))),
+        paybackMonths: ebitdaValue - monthlyTax(input.taxRegime, revenue, ebitdaValue) > 0 ? round(totalFundingNeed / round(ebitdaValue - monthlyTax(input.taxRegime, revenue, ebitdaValue))) : null,
         breakEvenSales: breakEvenRevenue,
         rentSharePct: revenue > 0 ? round((monthlyRent / revenue) * 100) : 0,
         runwayMonths,
@@ -226,10 +243,10 @@ export function calculateBranchOpeningModel(input: BranchOpeningInput): BranchOp
         label: 'optimistic',
         monthlyRevenue: round(revenue),
         grossProfit: round(gross),
-        primeCostPct: revenue > 0 ? round(((variable + finite(input.staffCosts)) / revenue) * 100) : 0,
+        primeCostPct: revenue > 0 ? round(((variable + finite(input.staffCosts) + socialContribution) / revenue) * 100) : 0,
         ebitda: round(ebitdaValue),
-        netProfit: round(ebitdaValue - round(Math.max(0, ebitdaValue) * (AZERBAIJAN_TAX_CONFIG.generalTaxRates.profit / 100))),
-        paybackMonths: ebitdaValue > 0 ? round(totalFundingNeed / round(ebitdaValue - round(Math.max(0, ebitdaValue) * (AZERBAIJAN_TAX_CONFIG.generalTaxRates.profit / 100)))) : null,
+        netProfit: round(ebitdaValue - round(monthlyTax(input.taxRegime, revenue, ebitdaValue))),
+        paybackMonths: ebitdaValue - monthlyTax(input.taxRegime, revenue, ebitdaValue) > 0 ? round(totalFundingNeed / round(ebitdaValue - monthlyTax(input.taxRegime, revenue, ebitdaValue))) : null,
         breakEvenSales: breakEvenRevenue,
         rentSharePct: revenue > 0 ? round((monthlyRent / revenue) * 100) : 0,
         runwayMonths,

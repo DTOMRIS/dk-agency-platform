@@ -78,7 +78,21 @@ export default async function ExcelTemplatesPage() {
           {EXCEL_TEMPLATES.map((tpl, i) => (
             <article key={tpl.slug} className="flex flex-col overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white" data-testid={`template-${tpl.slug}`}>
               <div className="relative aspect-[16/9] overflow-hidden border-b border-[#EFE9DE] bg-[#FBF8F3]">
-                <Image src={tpl.preview} alt={t('previewAlt', { name: t(`items.${tpl.slug}.title`) })} fill sizes="(max-width: 768px) 100vw, 600px" className="object-cover object-top" priority={i < 2} />
+                {tpl.preview ? (
+                  <Image src={tpl.preview} alt={t('previewAlt', { name: t(`items.${tpl.slug}.title`) })} fill sizes="(max-width: 768px) 100vw, 600px" className="object-cover object-top" priority={i < 2} />
+                ) : (
+                  <div className="flex h-full flex-col">
+                    <div className="flex items-center gap-2 bg-[#0F172A] px-4 py-3 text-[13px] font-bold text-white">
+                      <FileSpreadsheet size={16} className="text-[#F28A9B]" aria-hidden="true" />
+                      {t(`items.${tpl.slug}.title`)}
+                    </div>
+                    <div className="flex flex-1 flex-wrap content-start gap-1.5 p-4" aria-label={t('columnsLabel')}>
+                      {t(`items.${tpl.slug}.cols`).split(' · ').map((c) => (
+                        <span key={c} className="rounded-md border border-[#E4DCCD] bg-white px-2 py-1 text-[12px] font-semibold text-slate-700">{c}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="flex flex-1 flex-col p-5 sm:p-6">
                 <p className="inline-flex items-center gap-1.5 text-[11.5px] font-black uppercase tracking-[0.14em] text-[#BE2F47]">

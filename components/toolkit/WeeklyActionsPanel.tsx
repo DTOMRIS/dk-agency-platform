@@ -49,19 +49,19 @@ function ActionCard({
   const actionKey = action.translationKey.replace('weekly_actions.', '');
 
   return (
-    <div className="group relative flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-[var(--dk-red,#E94560)]/30 hover:shadow-md">
+    <div className="group relative flex gap-4 rounded-[18px] border border-[#E4DCCD] bg-white p-5 transition hover:border-[#0F172A]">
       {/* Step number */}
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--dk-red,#E94560)] to-[var(--dk-red,#E94560)]/80 text-sm font-black text-white shadow-sm">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-dk-red-strong text-sm font-black text-white">
         {index + 1}
       </div>
 
       {/* Content */}
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-3">
-          <h4 className="text-sm font-bold text-[var(--dk-navy,#1A1A2E)]">
+          <h4 className="text-sm font-bold text-[#0F172A]">
             {t(`weekly_actions.${actionKey}.title`)}
           </h4>
-          <span className="flex shrink-0 items-center gap-1 rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+          <span className="flex shrink-0 items-center gap-1 rounded-full border border-[#EFE9DE] bg-[#FBF8F3] px-2.5 py-1 text-xs font-medium text-slate-600">
             <Clock className="h-3 w-3" />
             {action.durationMinutes} {t('weekly_actions.duration_unit')}
           </span>
@@ -72,7 +72,7 @@ function ActionCard({
 
         <Link
           href={`/${locale}/toolkit/${action.toolSlug}`}
-          className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--dk-red,#E94560)] transition hover:underline"
+          className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[#BE2F47] transition hover:underline"
         >
           {t(`weekly_actions.${actionKey}.cta`)}
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
@@ -84,15 +84,16 @@ function ActionCard({
 
 export default function WeeklyActionsPanel({ metrics, context }: WeeklyActionsPanelProps) {
   const t = useTranslations('weekly_actions');
+  const tLabel = useTranslations('pnlV2.weeklyActions');
   const locale = useLocale();
   const actions = getRecommendedActions(metrics);
 
   // Severity summary for metrics
   const metricSeverities: Array<{ metric: MetricKey; label: string; severity: Severity }> = [
-    { metric: 'food_cost', label: 'Food Cost', severity: getSeverity('food_cost', metrics.food_cost) },
-    { metric: 'labor_cost', label: 'Labor Cost', severity: getSeverity('labor_cost', metrics.labor_cost) },
-    { metric: 'net_profit', label: 'Net Profit', severity: getSeverity('net_profit', metrics.net_profit) },
-    { metric: 'rent_ratio', label: 'Rent', severity: getSeverity('rent_ratio', metrics.rent_ratio) },
+    { metric: 'food_cost', label: tLabel('foodCost'), severity: getSeverity('food_cost', metrics.food_cost) },
+    { metric: 'labor_cost', label: tLabel('laborCost'), severity: getSeverity('labor_cost', metrics.labor_cost) },
+    { metric: 'net_profit', label: tLabel('netProfit'), severity: getSeverity('net_profit', metrics.net_profit) },
+    { metric: 'rent_ratio', label: tLabel('rent'), severity: getSeverity('rent_ratio', metrics.rent_ratio) },
   ];
 
   const hasIssues = metricSeverities.some((m) => m.severity !== 'OK');
@@ -105,7 +106,7 @@ export default function WeeklyActionsPanel({ metrics, context }: WeeklyActionsPa
 
   if (!hasIssues) {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-6 text-center">
+      <div className="rounded-[22px] border border-emerald-200 bg-emerald-50 p-6 text-center">
         <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-500" />
         <h3 className="mt-3 text-lg font-bold text-emerald-800">{t('all_good_title')}</h3>
         <p className="mt-1 text-sm text-emerald-600">{t('all_good_description')}</p>
@@ -118,15 +119,15 @@ export default function WeeklyActionsPanel({ metrics, context }: WeeklyActionsPa
   const metricsBase64 = btoa(JSON.stringify(metrics));
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-[var(--dk-red-light,#FFF0F3)]/30 shadow-lg">
+    <div className="overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-[#FBF8F3]">
       {/* Header */}
-      <div className="border-b border-slate-200 bg-white/80 px-6 py-5 backdrop-blur-sm">
+      <div className="border-b border-[#E4DCCD] bg-white px-6 py-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--dk-red,#E94560)]/10">
-            <Sparkles className="h-5 w-5 text-[var(--dk-red,#E94560)]" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBEFF1]">
+            <Sparkles className="h-5 w-5 text-[#BE2F47]" />
           </div>
           <div>
-            <h3 className="text-lg font-black text-[var(--dk-navy,#1A1A2E)]">
+            <h3 className="text-lg font-black tracking-[-0.02em] text-[#0F172A]">
               {t('panel_title')}
             </h3>
             <p className="text-xs text-slate-600">{t('panel_subtitle')}</p>
@@ -153,10 +154,10 @@ export default function WeeklyActionsPanel({ metrics, context }: WeeklyActionsPa
       </div>
 
       {/* KAZAN CTA */}
-      <div className="border-t border-slate-200 bg-white/60 px-6 py-5 backdrop-blur-sm">
+      <div className="border-t border-[#E4DCCD] bg-white px-6 py-5">
         <Link
           href={`/${locale}/kazan-ai?context=weekly_actions&source=${context}&metrics=${metricsBase64}`}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-navy,#1A1A2E)] py-3.5 font-bold text-white transition hover:bg-slate-800"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0F172A] py-3 font-bold text-white transition hover:bg-[#1E293B]"
         >
           <Sparkles className="h-5 w-5 text-amber-400" />
           {t('kazan_cta')}

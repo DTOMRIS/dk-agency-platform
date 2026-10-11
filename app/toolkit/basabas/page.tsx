@@ -62,6 +62,7 @@ interface BasabasState {
   branchOtherFixedCosts: number;
   branchVariableCostPct: number;
   rentTaxType: BranchOpeningInput['rentTaxType'];
+  taxRegime: NonNullable<BranchOpeningInput['taxRegime']>;
   branchRampUpMonths: number;
   branchOpeningSalesPct: number;
   branchReserveMonths: number;
@@ -71,7 +72,7 @@ interface BasabasState {
   startWorkingCapitalPct: number;
 }
 
-/** Example values (nümunə — a 100 m², 25-seat café) loaded by «Nümunəni yüklə». Not a sector norm. */
+/** Example values (nümunə — a 100 m², 25-seat café) loaded by «Nümunəni yüklə». Not a sector norm. TASK-0538: both parts describe the same café — 40 checks × 25 ₼ × 30 days = 30,000 ₼/month (was 18,000 vs 75,000). */
 const EXAMPLE_STATE: BasabasState = {
   businessType: 'cafe',
   availableBudget: 50000,
@@ -82,7 +83,7 @@ const EXAMPLE_STATE: BasabasState = {
   otherFixed: 700,
   variablePct: 35,
   avgCheck: 25,
-  currentSales: 18000,
+  currentSales: 30000,
   operatingDays: 30,
   inventoryDays: 14,
   receivableDays: 0,
@@ -95,7 +96,7 @@ const EXAMPLE_STATE: BasabasState = {
   areaSqm: 100,
   seats: 25,
   branchRent: 3000,
-  dailyChecks: 100,
+  dailyChecks: 40,
   branchAverageCheck: 25,
   openingBudget: 50000,
   fitoutCostPerSqm: 900,
@@ -109,6 +110,7 @@ const EXAMPLE_STATE: BasabasState = {
   branchOtherFixedCosts: 700,
   branchVariableCostPct: 36,
   rentTaxType: 'individual',
+  taxRegime: 'simplifiedBaku',
   branchRampUpMonths: 4,
   branchOpeningSalesPct: 40,
   branchReserveMonths: 3,
@@ -118,7 +120,7 @@ const EXAMPLE_STATE: BasabasState = {
   startWorkingCapitalPct: 20,
 };
 
-/** «Təmizlə»: every number → 0; the three dropdowns keep their current choice. */
+/** «Təmizlə»: every number → 0; the dropdowns keep their current choice. */
 function emptyState(state: BasabasState): BasabasState {
   return {
     businessType: state.businessType,
@@ -157,6 +159,7 @@ function emptyState(state: BasabasState): BasabasState {
     branchOtherFixedCosts: 0,
     branchVariableCostPct: 0,
     rentTaxType: state.rentTaxType,
+    taxRegime: state.taxRegime,
     branchRampUpMonths: 0,
     branchOpeningSalesPct: 0,
     branchReserveMonths: 0,
@@ -178,7 +181,7 @@ export default function BasabasPage() {
 
   // TASK-0517: the whole form is one state object so «Təmizlə» / «Nümunəni yüklə» / «Geri al» cover every field.
   const [form, setForm] = useState<BasabasState>(EXAMPLE_STATE);
-  const { businessType, availableBudget, openingInvestment, rent, salaries, utilities, otherFixed, variablePct, avgCheck, currentSales, operatingDays, inventoryDays, receivableDays, payableDays, depositsAndPrepaids, rampUpMonths, openingSalesPct, reserveMonths, branchFormat, areaSqm, seats, branchRent, dailyChecks, branchAverageCheck, openingBudget, fitoutCostPerSqm, ventilationCostPerSqm, kitchenEquipmentCost, barEquipmentCost, furnitureCostPerSeat, branchInventoryDays, branchStaffCosts, branchUtilities, branchOtherFixedCosts, branchVariableCostPct, rentTaxType, branchRampUpMonths, branchOpeningSalesPct, branchReserveMonths, openingMarketingPct, documentsCost, unexpectedPct, startWorkingCapitalPct } = form;
+  const { businessType, availableBudget, openingInvestment, rent, salaries, utilities, otherFixed, variablePct, avgCheck, currentSales, operatingDays, inventoryDays, receivableDays, payableDays, depositsAndPrepaids, rampUpMonths, openingSalesPct, reserveMonths, branchFormat, areaSqm, seats, branchRent, dailyChecks, branchAverageCheck, openingBudget, fitoutCostPerSqm, ventilationCostPerSqm, kitchenEquipmentCost, barEquipmentCost, furnitureCostPerSeat, branchInventoryDays, branchStaffCosts, branchUtilities, branchOtherFixedCosts, branchVariableCostPct, rentTaxType, taxRegime, branchRampUpMonths, branchOpeningSalesPct, branchReserveMonths, openingMarketingPct, documentsCost, unexpectedPct, startWorkingCapitalPct } = form;
   const setBusinessType = (value: BasabasState['businessType']) => setForm((prev) => ({ ...prev, businessType: value }));
   const setAvailableBudget = (value: BasabasState['availableBudget']) => setForm((prev) => ({ ...prev, availableBudget: value }));
   const setOpeningInvestment = (value: BasabasState['openingInvestment']) => setForm((prev) => ({ ...prev, openingInvestment: value }));
@@ -215,6 +218,7 @@ export default function BasabasPage() {
   const setBranchOtherFixedCosts = (value: BasabasState['branchOtherFixedCosts']) => setForm((prev) => ({ ...prev, branchOtherFixedCosts: value }));
   const setBranchVariableCostPct = (value: BasabasState['branchVariableCostPct']) => setForm((prev) => ({ ...prev, branchVariableCostPct: value }));
   const setRentTaxType = (value: BasabasState['rentTaxType']) => setForm((prev) => ({ ...prev, rentTaxType: value }));
+  const setTaxRegime = (value: BasabasState['taxRegime']) => setForm((prev) => ({ ...prev, taxRegime: value }));
   const setBranchRampUpMonths = (value: BasabasState['branchRampUpMonths']) => setForm((prev) => ({ ...prev, branchRampUpMonths: value }));
   const setBranchOpeningSalesPct = (value: BasabasState['branchOpeningSalesPct']) => setForm((prev) => ({ ...prev, branchOpeningSalesPct: value }));
   const setBranchReserveMonths = (value: BasabasState['branchReserveMonths']) => setForm((prev) => ({ ...prev, branchReserveMonths: value }));
@@ -242,6 +246,7 @@ export default function BasabasPage() {
     otherFixedCosts: branchOtherFixedCosts,
     variableCostPct: branchVariableCostPct,
     rentTaxType,
+    taxRegime,
     rampUpMonths: branchRampUpMonths,
     openingSalesPct: branchOpeningSalesPct,
     reserveMonths: branchReserveMonths,
@@ -253,7 +258,7 @@ export default function BasabasPage() {
   }), [branchFormat, areaSqm, seats, branchRent, dailyChecks, branchAverageCheck, openingBudget,
     fitoutCostPerSqm, ventilationCostPerSqm, kitchenEquipmentCost, barEquipmentCost,
     furnitureCostPerSeat, branchInventoryDays, branchStaffCosts, branchUtilities,
-    branchOtherFixedCosts, branchVariableCostPct, rentTaxType, branchRampUpMonths,
+    branchOtherFixedCosts, branchVariableCostPct, rentTaxType, taxRegime, branchRampUpMonths,
     branchOpeningSalesPct, branchReserveMonths, operatingDays, openingMarketingPct,
     documentsCost, unexpectedPct, startWorkingCapitalPct]);
 
@@ -380,6 +385,23 @@ export default function BasabasPage() {
               <option value="legalEntity">{t('rentTaxLegal')}</option>
             </select>
           </div>
+        </div>
+        {/* TASK-0538: tax regime — most small restaurants are on the simplified tax (on turnover). */}
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <div>
+            <label htmlFor="tax-regime" className="mb-1.5 block text-xs font-medium text-slate-700">{t('taxRegimeLabel')}</label>
+            <select
+              id="tax-regime"
+              value={taxRegime}
+              onChange={(event) => setTaxRegime(event.target.value as BasabasState['taxRegime'])}
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none focus:border-amber-300"
+            >
+              <option value="simplifiedBaku">{t('taxRegimeSimplifiedBaku')}</option>
+              <option value="simplifiedRegion">{t('taxRegimeSimplifiedRegion')}</option>
+              <option value="general">{t('taxRegimeGeneral')}</option>
+            </select>
+          </div>
+          <p className="self-end text-xs leading-5 text-slate-600 sm:col-span-2">{t('taxRegimeNote')}</p>
         </div>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-4">
@@ -661,7 +683,7 @@ export default function BasabasPage() {
         type="button"
         onClick={downloadReport}
         disabled={!branchIsValid}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-navy)] px-4 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] px-4 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-40"
       >
         <Download size={16} /> {t('downloadReport')}
       </button>

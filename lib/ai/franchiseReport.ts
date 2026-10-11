@@ -88,20 +88,29 @@ function sanitizeScoreKey(key: string) {
   return key.replace(/[\r\n:]/g, ' ').slice(0, 80).trim();
 }
 
-function normalizeScore(value: number) {
+/**
+ * TASK-0538: readiness/hotel/OTA answers score 25–100 (floor 25); the buyer checklist scores 0/50/100. The result
+ * screen shows 0–100 ((x − min) / (100 − min)), and the report must use the same numbers the owner sees.
+ */
+function answerMin(taskType: FranchiseReportTaskType): number {
+  return taskType === 'FranchiseBuyerReport' ? 0 : 25;
+}
+function normalizeScore(value: number, min = 0) {
   if (!Number.isFinite(value)) return 0;
-  return Math.max(0, Math.min(100, Math.round(value)));
+  const raw = Math.max(min, Math.min(100, value));
+  return Math.round(((raw - min) / (100 - min)) * 100);
 }
 
 export function buildFranchiseReportPrompt(input: FranchiseReportInput) {
   const taskType = input.taskType || 'FranchiseReadinessReport';
+  const min = answerMin(taskType);
   const scoreText = Object.entries(input.scores)
     .slice(0, 20)
-    .map(([category, value]) => `${sanitizeScoreKey(category)}: ${normalizeScore(value)}/100`)
+    .map(([category, value]) => `${sanitizeScoreKey(category)}: ${normalizeScore(value, min)}/100`)
     .join('\n');
 
   const userPrompt = [
-    `Average score: ${normalizeScore(input.avgScore)}/100`,
+    `Average score: ${normalizeScore(input.avgScore, min)}/100`,
     '',
     `Criteria scores:\n${scoreText}`,
     '',

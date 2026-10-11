@@ -8,10 +8,13 @@ import type { MockListing } from '@/lib/data/mockListings';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getSectorLabel } from '@/lib/data/listingSectors';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { LISTING_CARD_TONES, type ListingTone } from '@/components/listings/listing-tones';
 
 interface ListingCardProps {
   listing: MockListing;
   onOpen: (listing: MockListing) => void;
+  /** `v2` on the public /ilanlar showcase; `panel` (default) keeps the member-panel look. */
+  tone?: ListingTone;
 }
 
 function formatPrice(listing: MockListing) {
@@ -19,8 +22,10 @@ function formatPrice(listing: MockListing) {
   return `${new Intl.NumberFormat(AZ_NUMBER_LOCALE).format(listing.price)} ${listing.currency}`;
 }
 
-export default function ListingCard({ listing, onOpen }: ListingCardProps) {
+export default function ListingCard({ listing, onOpen, tone = 'panel' }: ListingCardProps) {
   const t = useTranslations('devir');
+  const tCard = useTranslations('listingsV2.card');
+  const ui = LISTING_CARD_TONES[tone];
   const locale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
   const category = getCategoryById(listing.type);
 
@@ -53,7 +58,7 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
     <button
       type="button"
       onClick={() => onOpen(listing)}
-      className="group block overflow-hidden rounded-2xl border border-slate-200/80 bg-white text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl ring-1 ring-slate-100 relative"
+      className={ui.root}
     >
       <div className="relative aspect-[16/9] overflow-hidden">
         <Image
@@ -80,7 +85,7 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
         {/* Status / Featured badge — sağ üst */}
         <div className="absolute right-3 top-3 flex max-w-[42%] flex-col items-end gap-1.5">
           {listing.isFeatured && (
-            <span className="inline-flex items-center gap-1 truncate rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black text-[var(--dk-gold)] shadow-sm backdrop-blur-sm">
+            <span className={`inline-flex items-center gap-1 truncate rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black ${ui.featured} shadow-sm backdrop-blur-sm`}>
               ⭐ {t('featured')}
             </span>
           )}
@@ -96,7 +101,8 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
           type="button"
           onClick={toggleFavorite}
           className="absolute right-3 bottom-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-slate-500 shadow-sm backdrop-blur-sm transition hover:scale-110 hover:text-amber-500 z-10"
-          title={isFavorite ? "Sevimlilərdən çıxart" : "Sevimlilərə əlavə et"}
+          title={isFavorite ? tCard('favRemove') : tCard('favAdd')}
+          aria-label={isFavorite ? tCard('favRemove') : tCard('favAdd')}
         >
           <Star size={16} className={isFavorite ? 'fill-amber-500 text-amber-500' : ''} />
         </button>
@@ -104,18 +110,18 @@ export default function ListingCard({ listing, onOpen }: ListingCardProps) {
 
       <div className="space-y-3 p-5">
         <div>
-          <h3 className="truncate font-display text-xl font-black text-[var(--dk-navy)]">{listing.title}</h3>
+          <h3 className={ui.title}>{listing.title}</h3>
           <div className="mt-1.5 inline-flex items-center gap-1.5 text-sm text-slate-500">
-            <MapPin className="h-3.5 w-3.5 text-[var(--dk-gold)]" />
+            <MapPin className={ui.pin} />
             {listing.city}{listing.district ? `, ${listing.district}` : ''}
           </div>
         </div>
 
-        <div className="text-2xl font-black text-[var(--dk-gold)]">{formatPrice(listing)}</div>
+        <div className={ui.price}>{formatPrice(listing)}</div>
 
         <p className="line-clamp-2 text-sm leading-relaxed text-slate-500">{listing.description}</p>
 
-        <div className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--dk-red)] transition-colors group-hover:text-[var(--dk-red-hover)]">
+        <div className={ui.more}>
           {t('viewDetails')} →
         </div>
       </div>

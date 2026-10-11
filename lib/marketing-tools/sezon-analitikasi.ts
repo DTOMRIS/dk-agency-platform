@@ -26,7 +26,15 @@ export type SeasonInput = {
   foodCostPercent: number;
   /** Year whose Ramadan months are marked; defaults to the current year. */
   year?: number;
+  /** TASK-0538: the owner's own month coefficients (1 = an average month); used as typed, not re-normalised. */
+  customCoefficients?: Partial<Record<MonthKey, number>>;
 };
+
+/**
+ * TASK-0538 (calc audit): share of the staff budget that does not move with the season (core team on salary).
+ * Before, staff cost was scaled 1:1 with sales, so a slow month suggested ~25% less staff cost. Example, not a norm.
+ */
+export const SEASON_LABOR_FIXED_SHARE = 0.6;
 
 export type MonthProjection = {
   month: MonthKey;
@@ -192,7 +200,8 @@ function topMonths(
 }
 
 export function calculateSeasonAnalysis(input: SeasonInput): SeasonAnalysis {
-  const coefficients = normalizedCoefficients(input.restaurantType);
+  const coefficients = { ...normalizedCoefficients(input.restaurantType), ...input.customCoefficients };
+  const baseLabor = input.monthlyRevenue * (input.laborPercent / 100);
   const ramadan = ramadanMonths(input.year ?? new Date().getFullYear());
   const months = MONTH_KEYS.map((month) => {
     const coefficient = coefficients[month];
@@ -202,7 +211,7 @@ export function calculateSeasonAnalysis(input: SeasonInput): SeasonAnalysis {
       month,
       coefficient,
       projectedRevenue: roundMoney(projectedRevenue),
-      laborBudget: roundMoney(projectedRevenue * (input.laborPercent / 100)),
+      laborBudget: roundMoney(baseLabor * (SEASON_LABOR_FIXED_SHARE + (1 - SEASON_LABOR_FIXED_SHARE) * coefficient)),
       inventoryBudget: roundMoney(projectedRevenue * (input.foodCostPercent / 100)),
       isRamadanWindow: ramadan.has(month),
       isDeadMonth: coefficient < 0.8,

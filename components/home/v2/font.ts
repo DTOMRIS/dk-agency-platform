@@ -3,7 +3,7 @@
  * @purpose Inter 400–900 for the homepage v2 sections (the approved /tanitim design uses Inter 800/900).
  * @task TASK-0512
  *       TASK-0533 (owner 10.10 «sen karar ver»): also the site-wide font — app/layout.tsx puts `inter.variable`
- *       (--font-sans) on <html>; DM Sans and Playfair Display were dropped (−92 KB per page, one typeface).
+ *       (--font-sans) on <html>; the old sans and serif display faces were dropped (−92 KB per page, one typeface).
  */
 import { Inter } from 'next/font/google';
 

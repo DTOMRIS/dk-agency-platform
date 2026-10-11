@@ -7,6 +7,8 @@ import { AlertTriangle, CalendarDays, TrendingUp } from 'lucide-react';
 import {
   calculateSeasonAnalysis,
   RESTAURANT_SEASON_TYPES,
+  SEASON_LABOR_FIXED_SHARE,
+  type MonthKey,
   type MonthProjection,
   type RestaurantSeasonType,
 } from '@/lib/marketing-tools/sezon-analitikasi';
@@ -43,6 +45,8 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
   const [restaurantType, setRestaurantType] = useState<RestaurantSeasonType>('city');
   const [laborPercent, setLaborPercent] = useState('28');
   const [foodCostPercent, setFoodCostPercent] = useState('32');
+  // TASK-0538: per-month overrides of the example coefficients (reset when the restaurant type changes).
+  const [customCoefficients, setCustomCoefficients] = useState<Partial<Record<MonthKey, number>>>({});
   const [submitted, setSubmitted] = useState(true);
   const [errors, setErrors] = useState<ValidationErrors>({});
 
@@ -51,7 +55,8 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
     restaurantType,
     laborPercent: clamp(parseNumber(laborPercent) || 28, 15, 45),
     foodCostPercent: clamp(parseNumber(foodCostPercent) || 32, 20, 45),
-  }), [foodCostPercent, laborPercent, monthlyRevenue, restaurantType]);
+    customCoefficients,
+  }), [customCoefficients, foodCostPercent, laborPercent, monthlyRevenue, restaurantType]);
 
   const analysis = useMemo(
     () => calculateSeasonAnalysis(normalizedInput),
@@ -124,7 +129,7 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
               <span className={labelClass}>{t('inputs.restaurantType.label')}</span>
               <select
                 value={restaurantType}
-                onChange={(event) => setRestaurantType(event.target.value as RestaurantSeasonType)}
+                onChange={(event) => { setRestaurantType(event.target.value as RestaurantSeasonType); setCustomCoefficients({}); }}
                 className={inputClass}
               >
                 {RESTAURANT_SEASON_TYPES.map((type) => (
@@ -244,7 +249,24 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
                       {analysis.months.map((month) => (
                         <tr key={month.month} className={month.isDeadMonth ? 'bg-red-50/45' : ''}>
                           <td className="px-4 py-3 font-bold text-[#0F172A]">{monthName(month)}</td>
-                          <td className="px-4 py-3 text-slate-700">{formatPercent(month.coefficient)}</td>
+                          <td className="px-4 py-2 text-slate-700">
+                            <input
+                              type="number"
+                              inputMode="decimal"
+                              min={0}
+                              max={300}
+                              step={5}
+                              aria-label={`${t('table.coefficient')} · ${monthName(month)}`}
+                              data-testid={`sezon-coef-${month.month}`}
+                              value={Math.round(month.coefficient * 100)}
+                              onChange={(event) => {
+                                const pct = clamp(parseNumber(event.target.value) || 0, 0, 300);
+                                setCustomCoefficients((prev) => ({ ...prev, [month.month]: pct / 100 }));
+                              }}
+                              className="w-20 rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 text-right font-semibold text-slate-900 outline-none focus:border-amber-300"
+                            />
+                            <span className="ml-1 text-xs text-slate-500">%</span>
+                          </td>
                           <td className="px-4 py-3 text-slate-700">{formatMoney(month.projectedRevenue)}</td>
                           <td className="px-4 py-3 text-slate-700">{formatMoney(month.laborBudget)}</td>
                           <td className="px-4 py-3 text-slate-700">{formatMoney(month.inventoryBudget)}</td>
@@ -253,6 +275,9 @@ export default function SezonAnalitikasiPage({ backHref = '/b2b-panel/marketinq-
                     </tbody>
                   </table>
                 </div>
+                <p className="border-t border-slate-100 px-4 py-3 text-xs leading-5 text-slate-600" data-testid="sezon-coef-note">
+                  {t('table.coefficientNote', { fixed: Math.round(SEASON_LABOR_FIXED_SHARE * 100) })}
+                </p>
               </div>
 
               <div className="rounded-xl border border-[#F4B8C3] bg-[#F6F1E9] p-4 text-sm font-semibold leading-6 text-[#0F172A]">

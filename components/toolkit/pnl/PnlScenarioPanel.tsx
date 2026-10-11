@@ -95,7 +95,7 @@ export default function PnlScenarioPanel({ revenue, variableCost, labor, otherFi
 
   return (
     <div className="space-y-4" data-testid="pnl-scenario-panel">
-      <div className={`rounded-2xl p-5 ring-1 ${gap !== null && gap >= 0 ? 'bg-emerald-50 text-emerald-800 ring-emerald-500/20' : 'bg-red-50 text-red-700 ring-red-500/20'}`}>
+      <div className={`rounded-[22px] p-5 ring-1 ${gap !== null && gap >= 0 ? 'bg-emerald-50 text-emerald-800 ring-emerald-500/20' : 'bg-red-50 text-red-700 ring-red-500/20'}`}>
         <div className="mb-2 text-[11px] font-bold tracking-widest text-slate-700 uppercase">{t('breakevenLabel')}</div>
         <div className="text-3xl font-black tabular-nums" data-testid="pnl-breakeven">{breakeven === null ? '—' : formatCurrency(breakeven)}</div>
         <p className="mt-1 text-xs font-semibold">
@@ -108,8 +108,8 @@ export default function PnlScenarioPanel({ revenue, variableCost, labor, otherFi
         <p className="mt-2 text-[11px] leading-5 text-slate-600">{t('breakevenNote')}</p>
       </div>
 
-      <div className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
-        <h3 className="text-sm font-bold text-slate-900">{t('title')}</h3>
+      <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-5">
+        <h3 className="text-[15px] font-black tracking-[-0.01em] text-[#0F172A]">{t('title')}</h3>
         <p className="mt-1 text-xs leading-5 text-slate-600">{t('subtitle')}</p>
         <div className="mt-4 space-y-4">
           {([
@@ -120,13 +120,13 @@ export default function PnlScenarioPanel({ revenue, variableCost, labor, otherFi
             <label key={key} className="block">
               <span className="flex items-center justify-between text-xs font-semibold text-slate-700">
                 {t(`sliders.${key}`)}
-                <span className="tabular-nums font-bold text-slate-900">{value > 0 && key === 'salesGrowth' ? '+' : ''}{value}%</span>
+                <span className="tabular-nums font-bold text-[#0F172A]">{value > 0 && key === 'salesGrowth' ? '+' : ''}{value}%</span>
               </span>
               <input type="range" min={min} max={max} step={1} value={value} onChange={(event) => setter(Number(event.target.value))} className={sliderClass} data-testid={`pnl-slider-${key}`} />
             </label>
           ))}
         </div>
-        <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-slate-50 p-3 text-sm">
+        <div className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] p-3 text-sm">
           <div>
             <div className="text-[11px] font-bold text-slate-500 uppercase">{t('scenarioNet')}</div>
             <div className={`text-lg font-black tabular-nums ${scenario.net >= 0 ? 'text-emerald-700' : 'text-red-700'}`} data-testid="pnl-scenario-net">{formatCurrency(scenario.net)}</div>
@@ -140,7 +140,7 @@ export default function PnlScenarioPanel({ revenue, variableCost, labor, otherFi
         </div>
       </div>
 
-      <div className="rounded-2xl bg-slate-950 p-5 text-white">
+      <div className="rounded-[22px] bg-[#0F172A] p-5 text-white">
         <div className="flex items-center gap-2">
           <Sparkles size={16} className="text-amber-300" aria-hidden="true" />
           <h3 className="text-sm font-bold">{t('aiTitle')}</h3>
@@ -148,7 +148,7 @@ export default function PnlScenarioPanel({ revenue, variableCost, labor, otherFi
         </div>
         <p className="mt-1 text-xs leading-5 text-slate-300">{t('aiBody')}</p>
         <button type="button" onClick={askAI} disabled={isPending} data-testid="pnl-ai-button"
-          className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-dk-red-strong px-4 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60">
+          className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-dk-red-strong px-4 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60">
           {isPending ? t('aiLoading') : t('aiCta')}
         </button>
         {needsUsta && (

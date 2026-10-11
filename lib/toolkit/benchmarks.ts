@@ -44,6 +44,13 @@ export const LABOR_MAX_PCT = 35;
 export const NET_MARGIN_LOW_PCT = 5;
 /** TASK-0534: lower end of the «10–15%» net profit range shown in the P&L benchmark panel. */
 export const NET_MARGIN_TARGET_PCT = 10;
+/**
+ * TASK-0538: location tool — share of sales left after food cost, royalty and marketing (contribution margin) that
+ * still has to pay rent, staff and the other fixed costs. Below this the site is flagged as weak. Rule of thumb:
+ * food ≤32% + royalty/marketing + packaging and card fees leave ~40% for fixed costs and profit. Editable example,
+ * not a sector norm (was > 10%, which let an 11% margin pass as «sustainable»).
+ */
+export const LOCATION_MIN_CONTRIBUTION_PCT = 40;
 
 /** Food cost sector bands of the Food Cost tool (owner 2026-10-09). */
 export const FOOD_COST_SECTOR_BANDS = [

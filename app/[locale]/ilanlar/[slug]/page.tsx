@@ -1,39 +1,40 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getLocale } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import { getListingBySlug } from '@/lib/db/listings-repository';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { getAlternates } from '@/lib/seo/alternates';
 import ListingDetailClient from '@/components/listings/ListingDetailClient';
 
-type DetailCopy = {
-  back: string;
-  details: string;
-  contact: string;
-  whatsapp: string;
-  leadTitle: string;
-  share: string;
-  shareLead: string;
-  copyLink: string;
-  linkCopied: string;
-};
-
 const SITE_URL = 'https://dkagency.com.tr';
 
-const detailCopy: Record<Locale, DetailCopy> = {
-  az: { back: '← Bütün elanlar', details: 'Tipə görə detallar', contact: 'Sürətli əlaqə', whatsapp: 'WhatsApp ilə yaz', leadTitle: 'Müraciət et', share: 'WhatsApp-da paylaş', shareLead: 'DK Agency elanı', copyLink: 'Linki kopyala', linkCopied: 'Link kopyalandı!' },
-  tr: { back: '← Tüm ilanlar', details: 'Tipe göre detaylar', contact: 'Hızlı iletişim', whatsapp: 'WhatsApp ile yaz', leadTitle: 'Başvur', share: 'WhatsApp’ta paylaş', shareLead: 'DK Agency ilanı', copyLink: 'Linki kopyala', linkCopied: 'Link kopyalandı!' },
-  en: { back: '← All listings', details: 'Type-specific details', contact: 'Quick contact', whatsapp: 'Message on WhatsApp', leadTitle: 'Inquire', share: 'Share on WhatsApp', shareLead: 'DK Agency listing', copyLink: 'Copy link', linkCopied: 'Link copied!' },
-  ru: { back: '← Все объявления', details: 'Детали по типу', contact: 'Быстрая связь', whatsapp: 'Написать в WhatsApp', leadTitle: 'Оставить заявку', share: 'Поделиться в WhatsApp', shareLead: 'Объявление DK Agency', copyLink: 'Скопировать ссылку', linkCopied: 'Ссылка скопирована!' },
-};
+/** TASK-0523 (v2): every label comes from messages (listingsV2.detail) — no hardcoded copy in the page. */
+async function getDetailCopy(locale: Locale) {
+  const t = await getTranslations({ locale, namespace: 'listingsV2.detail' });
+  return {
+    details: t('details'),
+    contact: t('contact'),
+    whatsapp: t('whatsapp'),
+    leadTitle: t('leadTitle'),
+    share: t('share'),
+    shareLead: t('shareLead'),
+    copyLink: t('copyLink'),
+    linkCopied: t('linkCopied'),
+    yes: t('yes'),
+    no: t('no'),
+  };
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
   const normalized = normalizeLocale(locale);
   const listing = await getListingBySlug(slug, normalized);
 
-  if (!listing) return { title: 'Elan tapılmadı' };
+  if (!listing) {
+    const t = await getTranslations({ locale: normalized, namespace: 'listingsV2.detail' });
+    return { title: t('notFound') };
+  }
 
   return {
     title: `${listing.title} | DK Agency`,
@@ -55,7 +56,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
 
   if (!listing) notFound();
 
-  const copy = detailCopy[normalized];
+  const copy = await getDetailCopy(normalized);
   const canonicalUrl = `${SITE_URL}${normalized === 'az' ? '' : `/${normalized}`}/ilanlar/${slug}`;
   // TASK-0497: the client component is serialized into the page — send it only public data
   // (inquiry leads, review notes and the owner e-mail are admin data).

@@ -7,11 +7,15 @@ import LeadForm from '@/components/listings/LeadForm';
 import { getCategoryById } from '@/lib/data/listingCategories';
 import { getFieldsForType } from '@/lib/data/listingFieldConfig';
 import type { MockListing } from '@/lib/data/mockListings';
+import { useTranslations } from 'next-intl';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { LISTING_MODAL_TONES, type ListingTone } from '@/components/listings/listing-tones';
 
 interface ListingModalProps {
   listing: MockListing | null;
   onClose: () => void;
+  /** `v2` on the public /ilanlar showcase; `panel` (default) keeps the member-panel look. */
+  tone?: ListingTone;
 }
 
 function formatPrice(listing: MockListing) {
@@ -19,15 +23,17 @@ function formatPrice(listing: MockListing) {
   return `${new Intl.NumberFormat(AZ_NUMBER_LOCALE).format(listing.price)} ${listing.currency}`;
 }
 
-function renderFieldValue(value: string | number | boolean | undefined) {
+function renderFieldValue(value: string | number | boolean | undefined, yes: string, no: string) {
   if (value === undefined || value === null || value === '') return '—';
   if (typeof value === 'boolean') {
-    return value ? '✅ Bəli' : '❌ Xeyr';
+    return value ? `✅ ${yes}` : `❌ ${no}`;
   }
   return String(value);
 }
 
-export default function ListingModal({ listing, onClose }: ListingModalProps) {
+export default function ListingModal({ listing, onClose, tone = 'panel' }: ListingModalProps) {
+  const t = useTranslations('listingsV2.detail');
+  const ui = LISTING_MODAL_TONES[tone];
   const [activeImage, setActiveImage] = useState(0);
   const [toast, setToast] = useState('');
   const category = listing ? getCategoryById(listing.type) : null;
@@ -59,7 +65,7 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
   const handleCopy = async () => {
     if (!shareLink || !navigator.clipboard) return;
     await navigator.clipboard.writeText(shareLink);
-    setToast('Link kopyalandı!');
+    setToast(t('linkCopied'));
     setTimeout(() => setToast(''), 2400);
   };
 
@@ -81,10 +87,11 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 bg-[rgba(15,23,42,0.72)] p-0 md:p-6">
-      <div className="relative h-full overflow-y-auto bg-white md:mx-auto md:h-auto md:max-w-6xl md:rounded-[32px]">
+      <div className={ui.sheet}>
         <button
           type="button"
           onClick={onClose}
+          aria-label={t('close')}
           className="sticky right-0 top-0 z-20 ml-auto mr-4 mt-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm"
         >
           <X className="h-5 w-5" />
@@ -92,7 +99,7 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
 
         <div className="grid gap-6 p-4 pb-8 md:grid-cols-[1.2fr_0.8fr] md:p-8">
           <div className="space-y-5">
-            <div className="overflow-hidden rounded-[28px] border border-slate-200">
+            <div className={ui.frame}>
               <div className="relative aspect-[16/10]">
                 <Image
                   src={listing.images[activeImage]?.url ?? listing.images[0].url}
@@ -110,7 +117,7 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
                   type="button"
                   key={image.id}
                   onClick={() => setActiveImage(index)}
-                  className={`relative overflow-hidden rounded-2xl border ${activeImage === index ? 'border-[var(--dk-gold)] ring-2 ring-amber-100' : 'border-slate-200'}`}
+                  className={`relative overflow-hidden rounded-2xl border ${activeImage === index ? ui.thumbActive : ui.thumb}`}
                 >
                   <div className="relative aspect-[4/3]">
                     <Image src={image.url} alt={image.alt} fill className="object-cover" sizes="160px" />
@@ -119,35 +126,35 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
               ))}
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-slate-50 p-6">
+            <div className={ui.infoCard}>
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold ${category?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
                   {category?.label ?? listing.type}
                 </span>
-                <span className="inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-semibold text-slate-500">
+                <span className={ui.code}>
                   {listing.trackingCode}
                 </span>
               </div>
 
-              <h2 className="font-display text-3xl font-black text-[var(--dk-navy)]">{listing.title}</h2>
+              <h2 className={ui.title}>{listing.title}</h2>
               <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-slate-500">
                 <span className="inline-flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-[var(--dk-gold)]" />
+                  <MapPin className={ui.pin} />
                   {listing.city}{listing.district ? `, ${listing.district}` : ''}
                 </span>
-                <span className="text-xl font-black text-[var(--dk-gold)]">{formatPrice(listing)}</span>
+                <span className={ui.price}>{formatPrice(listing)}</span>
               </div>
               <p className="mt-5 text-sm leading-7 text-slate-600">{listing.description}</p>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6">
-              <h3 className="font-display text-2xl font-black text-[var(--dk-navy)]">Tipə görə detallar</h3>
+            <div className={ui.card}>
+              <h3 className={ui.sectionTitle}>{t('details')}</h3>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {typeFields.map((field) => (
-                  <div key={field.key} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">{field.label}</div>
-                    <div className="mt-2 text-sm font-semibold text-slate-700">
-                      {renderFieldValue(listing.typeSpecificData[field.key])}
+                  <div key={field.key} className={ui.field}>
+                    <div className={ui.fieldLabel}>{field.label}</div>
+                    <div className={ui.fieldValue}>
+                      {renderFieldValue(listing.typeSpecificData[field.key], t('yes'), t('no'))}
                       {field.suffix && listing.typeSpecificData[field.key] !== undefined && typeof listing.typeSpecificData[field.key] !== 'boolean'
                         ? ` ${field.suffix}`
                         : ''}
@@ -159,10 +166,10 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
           </div>
 
           <div className="space-y-4">
-            <LeadForm trackingCode={listing.trackingCode} title={listing.title} />
+            <LeadForm trackingCode={listing.trackingCode} title={listing.title} tone={tone} />
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="font-display text-2xl font-black text-[var(--dk-navy)]">Sürətli əlaqə</h3>
+            <div className={`${ui.card} shadow-sm`}>
+              <h3 className={ui.sectionTitle}>{t('contact')}</h3>
               <div className="mt-4 space-y-3">
                 <button
                   type="button"
@@ -170,23 +177,23 @@ export default function ListingModal({ listing, onClose }: ListingModalProps) {
                   className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-emerald-600"
                 >
                   <MessageCircle className="h-4 w-4" />
-                  WhatsApp ilə yaz
+                  {t('whatsapp')}
                 </button>
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 px-5 py-3.5 text-sm font-bold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+                  className={ui.ghostButton}
                 >
                   <Copy className="h-4 w-4" />
-                  Linki kopyala
+                  {t('copyLink')}
                 </button>
                 <button
                   type="button"
                   onClick={handleShareWhatsapp}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 px-5 py-3.5 text-sm font-bold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+                  className={ui.ghostButton}
                 >
                   <Share2 className="h-4 w-4" />
-                  WhatsApp-da paylaş
+                  {t('share')}
                 </button>
               </div>
               {toast ? (

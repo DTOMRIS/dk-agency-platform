@@ -97,10 +97,10 @@ export const INSTAGRAM_BENCHMARKS = {
 } as const;
 
 // TikTok ER views-bazlı — F&B sektoru (2025-2026)
+// TASK-0538: the unused good/excellent (4.0 / 6.0) constants were removed — the status rule (getHealthStatus) uses
+// ratios to the median and contradicted them. The sources are now shown on screen (infoMethodology.body).
 export const TIKTOK_BENCHMARK = {
   er: 2.65, // views-based median for F&B
-  good: 4.0,
-  excellent: 6.0,
 } as const;
 
 // Content type ER multipliers (Instagram 2025-2026 data)

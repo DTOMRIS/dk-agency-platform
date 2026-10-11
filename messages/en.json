@@ -885,7 +885,7 @@
       "branchRentLabel": "Monthly rent (₼)",
       "dailyChecksLabel": "Checks per day",
       "rentTaxTypeLabel": "Landlord (for tax)",
-      "rentTaxIndividual": "Individual (14% tax on top of rent)",
+      "rentTaxIndividual": "Individual (rent is what the landlord receives; you withhold and pay the 14% tax)",
       "rentTaxLegal": "Company (0%)",
       "branchInventoryDaysLabel": "Days of ingredient stock at opening",
       "labelFitoutPerSqm": "Fit-out per m² (₼)",
@@ -1100,7 +1100,12 @@
       "article3Title": "How to calculate the food cost of one portion",
       "article3Tag": "Finance",
       "article3Slug": "1-porsiya-food-cost-hesablama",
-      "readLabel": "Read"
+      "readLabel": "Read",
+      "taxRegimeLabel": "Tax regime",
+      "taxRegimeSimplifiedBaku": "Simplified tax — Baku (8% of turnover)",
+      "taxRegimeSimplifiedRegion": "Simplified tax — regions (4% of turnover)",
+      "taxRegimeGeneral": "General regime (20% of profit)",
+      "taxRegimeNote": "Simplified tax is paid on turnover even in a loss-making month. Check the turnover threshold and VAT with your accountant; depreciation is not modelled — net profit is an estimate."
     },
     "deliveryCalc": {
       "title": "Delivery commission calculator",
@@ -1163,7 +1168,8 @@
       "blogLink2Tag": "Tool",
       "blogLink3Title": "Food cost calculator",
       "blogLink3Tag": "Tool",
-      "readLabel": "Open"
+      "readLabel": "Open",
+      "labelOwnCourierCost": "Own courier cost (₼ per order — pay + fuel)"
     },
     "menuMatrix": {
       "title": "Menu matrix",
@@ -2422,7 +2428,7 @@
     },
     "sezonAnalitikasi": {
       "title": "Season Analytics",
-      "subtitle": "12-month forecast of sales, staff cost and food budget, using the Azerbaijan calendar, resort season and Ramadan.",
+      "subtitle": "A 12-month plan for sales, staff cost and food budget based on the AZ calendar, resort season and Ramadan. The coefficients are examples — change them to match your own sales.",
       "tier": "KALFA",
       "back_to_tools": "All tools",
       "inputs": {
@@ -2481,7 +2487,8 @@
         "coefficient": "Coefficient",
         "projectedRevenue": "Forecast revenue",
         "laborBudget": "Recommended labor cost",
-        "inventoryBudget": "Recommended inventory"
+        "inventoryBudget": "Recommended inventory",
+        "coefficientNote": "The coefficients are examples (100% = an average month), not sector statistics — change each month to match last year's monthly sales. {fixed}% of staff cost is treated as fixed (the core team is on salary); the rest moves with sales."
       },
       "riskCard": {
         "weak": "3 riskiest months",
@@ -2704,7 +2711,7 @@
       },
       "infoMethodology": {
         "title": "ER methodology",
-        "body": "This tool uses follower-based ER: (likes+comments+saves+shares) / (posts×followers) × 100. Reach-based ER typically appears higher. Differences between sources are normal — stick to one methodology."
+        "body": "This tool uses follower-based ER: (likes+comments+saves+shares) / (posts×followers) × 100. Reach-based ER typically appears higher. Differences between sources are normal — stick to one methodology. Comparison figures: Socialinsider, Rival IQ and Hootsuite 2025 reports (global food & drink sector; there is no separate source for Azerbaijan) — for direction only."
       }
     },
     "restoranAudit": {
@@ -3143,7 +3150,7 @@
         "resultLabel": "Monthly breakeven sales",
         "currency": "AZN",
         "resultHelp": "After this sales level, the site has a realistic chance to enter profit zone.",
-        "unsustainable": "With this cost structure, gross margin is too low; the site does not look sustainable.",
+        "unsustainable": "Less than {pct}% of sales is left after food, royalty and marketing — hard to cover rent and staff; the site looks weak.",
         "inputs": {
           "rent": "Rent",
           "labor": "Labor + insurance",
@@ -4571,7 +4578,7 @@
   "devir": {
     "badge": "HoReCa Marketplace",
     "title": "HoReCa Listings",
-    "subtitle": "Azerbaijan's largest HoReCa listing platform. Restaurant transfers, franchises, partnerships, venue rentals, and equipment — all in one place.",
+    "subtitle": "HoReCa listings in one place: restaurant transfers, franchises, partner search, venue rentals and professional equipment.",
     "imageAlt": "HoReCa investor presentation",
     "ctaPost": "Post a listing",
     "ctaMyListings": "My listings",
@@ -5193,8 +5200,8 @@
         "options": {
           "0": "Unknown / not calculated",
           "1": "More than 4 years",
-          "2": "2–3 years, ROI ~15%",
-          "3": "≤2 years, ROI 20%+"
+          "2": "3–4 years",
+          "3": "Up to 3 years (annual ROI ~33%+)"
         }
       },
       "8": {
@@ -5916,20 +5923,20 @@
     "hero": {
       "headline": "Get Your Guesthouse OTA-Ready",
       "subline": "Free tools for guesthouses and Airbnb hosts — from Khinalig to Baku.",
-      "statBadge": "1,134 Airbnb listings + 800+ guesthouses in AZ",
+      "statBadge": "4,121 short-term rental listings in Baku (AirDNA, July 2026)",
       "primaryCtaText": "Start OTA Readiness Test",
       "secondaryCtaText": "Get free guide"
     },
     "stats": {
-      "stat1Label": "Airbnb listings in Baku",
-      "stat1Value": "1,134",
-      "stat1Source": "AirDNA 2026",
-      "stat2Label": "Booking guesthouses in AZ",
-      "stat2Value": "800+",
-      "stat2Source": "Booking partner data",
-      "stat3Label": "Uncertified properties",
-      "stat3Value": "600+",
-      "stat3Source": "State Tourism Agency"
+      "stat1Label": "Short-term rental listings in Baku",
+      "stat1Value": "4,121",
+      "stat1Source": "AirDNA, July 2026",
+      "stat2Label": "Listings on Airbnb only",
+      "stat2Value": "96%",
+      "stat2Source": "AirDNA, July 2026",
+      "stat3Label": "Listings, change over a year",
+      "stat3Value": "−16%",
+      "stat3Source": "AirDNA, July 2026"
     },
     "tools": {
       "sectionTitle": "3 tools for this sector",
@@ -5974,19 +5981,19 @@
     "hero": {
       "headline": "Get your hotel ready for star classification",
       "subline": "Free tools for hotel owners — from star classification readiness to OTA channels and revenue maths, with DK Agency support.",
-      "statBadge": "+42% hotel revenue in 2024, 859 active hotels",
+      "statBadge": "2024: 859 hotels, ₼694.2M revenue (State Statistics Committee)",
       "primaryCtaText": "Start the star readiness test",
       "secondaryCtaText": "Get the free guide"
     },
     "stats": {
-      "stat1Label": "2024 revenue growth",
-      "stat1Value": "+42%",
+      "stat1Label": "Hotel revenue, 2024",
+      "stat1Value": "₼694.2M",
       "stat1Source": "State Statistics Committee",
-      "stat2Label": "Active hotels",
+      "stat2Label": "Hotels and hotel-type facilities (2024)",
       "stat2Value": "859",
       "stat2Source": "State Statistics Committee",
-      "stat3Label": "Nights per year",
-      "stat3Value": "4.28M",
+      "stat3Label": "Growth in nights spent, H1 2024",
+      "stat3Value": "+35.8%",
       "stat3Source": "State Statistics Committee"
     },
     "tools": {
@@ -6210,7 +6217,7 @@
       "q2": "What do I need in order to franchise my brand?",
       "a2": "Above all, your trademark must be formally registered. Franchising an unregistered brand is like renting out a house you do not own. The next step is measuring readiness and building the manual.",
       "q3": "When is a franchise investment considered sound?",
-      "a3": "The general target: an annual ROI of at least 20% and a payback period no longer than 36 months. You can test your own numbers in the ROI calculator.",
+      "a3": "The general target: the investment comes back within 36 months (about 33% annual ROI); more than 48 months is risky. You can test your own numbers in the ROI calculator.",
       "q4": "Which global brands are not yet in Azerbaijan?",
       "a4": "The Franchise Radar catalogue lists brands that have not yet entered Azerbaijan, with investment range, origin, and entry model. You pick the brand you are interested in and the DK team gets in touch."
     },
@@ -7907,7 +7914,7 @@
     "trail": "Tools / Excel templates",
     "eyebrow": "Excel templates",
     "title": "Ready-made Excel templates for restaurants",
-    "lead": "Profit and loss, inventory, payroll, budget and balance sheet — formulas built in, in Azerbaijani. Enter your numbers, the template does the rest.",
+    "lead": "Profit and loss, stock, payroll, budget, balance sheet, waste and invoice prices — formulas built in, in Azerbaijani. Enter your numbers; the template does the rest.",
     "featuresLabel": "Template features",
     "features": {
       "f1": "Formulas ready",
@@ -7926,8 +7933,8 @@
     "locked": "Join to download",
     "previewAlt": "Preview of the «{name}» template (sample numbers)",
     "note": "The numbers in the templates are examples — replace them with your own. Confirm tax and insurance contribution rates with your accountant. You may use the templates freely in your business; selling them or sharing them under another name is not allowed.",
-    "bandTitle": "5 ready-made Excel templates for restaurants",
-    "bandBody": "Profit and loss (12 months), inventory and cost of sales, payroll, budget vs actual, balance sheet. Free for members.",
+    "bandTitle": "8 ready Excel templates for restaurants",
+    "bandBody": "Profit and loss (12 months), stock and cost of goods, payroll costs, budget vs actual, balance sheet, theoretical vs actual usage, invoice prices, count by storage place. Free for members.",
     "bandCta": "See the templates",
     "items": {
       "menfeet-zerer-12-ay": {
@@ -7964,8 +7971,33 @@
         "b1": "Current and non-current assets and liabilities",
         "b2": "Current ratio and debt ratio",
         "b3": "The «check» row flags mistakes at once"
+      },
+      "nezeri-ve-faktiki": {
+        "title": "Theoretical vs actual usage",
+        "body": "How much food the recipes say should have gone, how much the stock count says did go — the gap is waste in money.",
+        "b1": "Gap per item: quantity, ₼ and %",
+        "b2": "Actual and theoretical food cost side by side",
+        "b3": "You set the warning threshold",
+        "cols": "Item · Opening stock · Purchases · Count · Actual usage · Theoretical usage · Gap · Gap value (₼) · Status"
+      },
+      "qaime-qiymet-izleyicisi": {
+        "title": "Invoice price tracker",
+        "body": "Enter invoice lines: the previous price of the same item is found automatically and a warning shows when it rises.",
+        "b1": "100 invoice lines",
+        "b2": "Extra cost of increases in ₼",
+        "b3": "Works in Excel, Google Sheets and Numbers",
+        "cols": "Date · Supplier · Item · Quantity · Unit price · Amount · Previous price · Change (%) · Status"
+      },
+      "saxlama-yerine-gore-sayim": {
+        "title": "Count by storage place",
+        "body": "Items in the order they sit on the shelves: the counter goes shelf by shelf and misses nothing.",
+        "b1": "Fridge, freezer, dry store, bar — the list is editable",
+        "b2": "Value per place and stock total",
+        "b3": "The total feeds the «Stock and cost of goods» template",
+        "cols": "Storage place · Shelf order · Item · Unit · Unit price · Count · Value (₼)"
       }
-    }
+    },
+    "columnsLabel": "Template columns"
   },
   "toolPitch": {
     "ocaq": {
@@ -8002,6 +8034,101 @@
       "pricing": "Roughly how much does your restaurant sell per month? We’ll suggest the right plan.",
       "blog": "Is the topic of this article relevant to your restaurant?",
       "news": "Which of these news items affects your business?"
+    }
+  },
+  "aboutV2": {
+    "back": "Home",
+    "eyebrow": "DK Agency",
+    "title": "About Us",
+    "lead": "Winning in HoReCa is hard.",
+    "problemLabel": "The problem",
+    "intro": "The restaurant owner is in the kitchen at dawn, at the register at noon, in front of the guest at night. A franchise brand looks for the right partner — but are the \"best locations\" everyone talks about really the best? A supplier wants a reliable customer — but who is reliable? Everyone is searching for each other, yet nobody finds each other in the right place.",
+    "whyLabel": "Why we exist",
+    "whyTitle": "DK Agency was built to solve this.",
+    "why": "We are Azerbaijan's first AI-powered HoReCa B2B platform. Our goal is simple: give small operators the same tools as the large chains. Food cost calculation, profit and loss reports, franchise partner search, industry advice — these used to belong only to the big players. Now they belong to you, too.",
+    "promiseTitle": "What we offer",
+    "promises": {
+      "kazan": {
+        "name": "KAZAN AI",
+        "desc": "your industry adviser: food cost, pricing, everyday decisions"
+      },
+      "ocaq": {
+        "name": "OCAQ",
+        "desc": "your control panel: your entire business in one place"
+      },
+      "shedd": {
+        "name": "ŞEDD",
+        "desc": "a digital certificate: proof of quality for your partners and customers"
+      },
+      "marketplace": {
+        "name": "Business sale",
+        "desc": "our listings: buying and selling businesses, franchise partner search"
+      }
+    },
+    "storyTitle": "Our story",
+    "story1": "I founded DK Agency in 2010. My name is Doğan Tomris.",
+    "story2": "I've spent 40 years in the HoReCa sector. Turkey, Azerbaijan, Russia, Georgia — I worked in every one of them, learned the language of every kitchen. Over those years, I saw one thing clearly: technology wasn't reaching the small operator.",
+    "story3": "Some still keep their books in a notebook. Some never find time to learn Excel because they enter the kitchen at dawn and leave at midnight. Their problem isn't laziness — nobody ever gave them the right tool.",
+    "story4": "Big chains have till systems, AI advisers, professional consultants. What does the small restaurant owner have? A phone, a notebook, and a 16-hour workday.",
+    "closing": "DK Agency is here to close that gap. A bridge from the notebook to AI."
+  },
+  "listingsV2": {
+    "detail": {
+      "details": "Listing details",
+      "contact": "Quick contact",
+      "whatsapp": "Message on WhatsApp",
+      "leadTitle": "Inquire",
+      "share": "Share on WhatsApp",
+      "shareLead": "DK Agency listing",
+      "copyLink": "Copy link",
+      "linkCopied": "Link copied!",
+      "notFound": "Listing not found",
+      "yes": "Yes",
+      "no": "No",
+      "close": "Close"
+    },
+    "lead": {
+      "title": "I'm interested",
+      "body": "Send us your question about listing {code}.",
+      "name": "Full name",
+      "email": "E-mail (optional)",
+      "message": "Your question about this listing...",
+      "submit": "I'm interested",
+      "sending": "Sending...",
+      "sent": "Your request has been sent!",
+      "failed": "Not sent. Please try again in a moment or write to us on WhatsApp."
+    },
+    "card": {
+      "favAdd": "Add to favourites",
+      "favRemove": "Remove from favourites"
+    }
+  },
+  "pnlV2": {
+    "weeklyActions": {
+      "foodCost": "Food cost",
+      "laborCost": "Staff cost",
+      "netProfit": "Net profit",
+      "rent": "Rent"
+    }
+  },
+  "franchiseV2": {
+    "meta": {
+      "readiness": {
+        "title": "Franchise Readiness Test — Is Your Brand Ready?",
+        "description": "Is your brand ready to franchise? 12 questions, about 4 minutes, with a personal readiness report at the end."
+      },
+      "buyer": {
+        "title": "Franchise Buyer Checklist — Is This Franchise Worth Buying?",
+        "description": "9 areas to check before you buy a franchise: about 3 minutes, with a personal readiness report at the end. For franchise buyers in Azerbaijan."
+      },
+      "franchbook": {
+        "title": "Franchbook Generator — AI Franchise Manual",
+        "description": "Create a franchise manual skeleton with AI: 6 stages, the AFA Academy outline, an editable document."
+      },
+      "roi": {
+        "title": "Franchise ROI Calculator — Is It Worth the Investment?",
+        "description": "Calculate the ROI and payback period of a franchise investment. A healthy franchise target: payback ≤ 36 months (annual ROI ≈ 33%)."
+      }
     }
   }
 }

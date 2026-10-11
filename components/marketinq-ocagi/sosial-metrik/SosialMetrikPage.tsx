@@ -38,7 +38,7 @@ function statusColor(status: HealthStatus): string {
 
 function scoreColor(score: number): string {
   if (score >= 75) return '#10B981'; // emerald-500
-  if (score >= 50) return '#C5A022'; // dk-gold
+  if (score >= 50) return '#D97706'; // amber (was dk-gold)
   if (score >= 30) return '#F59E0B'; // amber-500
   return '#E94560'; // dk-red
 }

@@ -5,6 +5,8 @@
  * @lastModified 2026-05-18
  */
 
+import { LOCATION_MIN_CONTRIBUTION_PCT } from '@/lib/toolkit/benchmarks';
+
 export type LocationMode = 'new' | 'existing';
 export type LocationType = 'street' | 'mall' | 'plaza';
 export type AnswerValue = 0 | 1 | 2;
@@ -161,11 +163,13 @@ function calculateBreakeven(input: BreakevenInput): BreakevenResult {
     clampPercent(input.royaltyPercent) +
     clampPercent(input.marketingPercent)
   );
-  const sustainable = grossMarginPercent > 10;
+  // TASK-0538: this is a contribution margin (not gross margin); the bar comes from benchmarks.ts.
+  const sustainable = grossMarginPercent >= LOCATION_MIN_CONTRIBUTION_PCT;
   return {
     fixedCosts,
     grossMarginPercent,
-    monthlyBreakevenSales: sustainable ? Math.round(fixedCosts / (grossMarginPercent / 100)) : null,
+    // Shown even below the bar (with a warning) so the owner sees how high the needed sales are; none at ≤ 0%.
+    monthlyBreakevenSales: grossMarginPercent > 0 ? Math.round(fixedCosts / (grossMarginPercent / 100)) : null,
     sustainable,
   };
 }
