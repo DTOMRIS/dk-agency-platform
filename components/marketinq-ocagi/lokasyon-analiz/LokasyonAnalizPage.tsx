@@ -22,6 +22,7 @@ import {
   type RiskFlagId,
 } from '@/lib/marketing-tools/lokasyon-analiz';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { LOCATION_MIN_CONTRIBUTION_PCT } from '@/lib/toolkit/benchmarks';
 import { ToolHeader } from '@/components/marketinq-ocagi/MarketinqV2';
 
 function getIntlLocale(locale: string): string {
@@ -32,7 +33,7 @@ function getIntlLocale(locale: string): string {
 }
 
 function formatMoney(value: number | null, locale: string): string {
-  if (value === null) return 'N/A';
+  if (value === null) return '—';
   return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(value);
 }
 
@@ -289,8 +290,8 @@ export default function LokasyonAnalizPage({ backHref = '/b2b-panel/marketinq-oc
             {mode === 'new' && (
               <div className={`rounded-xl border p-4 lg:col-span-2 ${analysis.breakeven.sustainable ? 'border-[#E4DCCD] bg-white' : 'border-red-200 bg-red-50'}`} data-testid="lokasyon-breakeven-card">
                 <div className="text-xs font-extrabold uppercase text-slate-500">{t('breakeven.resultLabel')}</div>
-                <div className="mt-2 text-3xl font-extrabold text-[#0F172A]">{formatMoney(analysis.breakeven.monthlyBreakevenSales, locale)} {t('breakeven.currency')}</div>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{analysis.breakeven.sustainable ? t('breakeven.resultHelp') : t('breakeven.unsustainable')}</p>
+                <div className="mt-2 text-3xl font-extrabold text-[#0F172A]">{formatMoney(analysis.breakeven.monthlyBreakevenSales, locale)}{analysis.breakeven.monthlyBreakevenSales === null ? '' : ` ${t('breakeven.currency')}`}</div>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{analysis.breakeven.sustainable ? t('breakeven.resultHelp') : t('breakeven.unsustainable', { pct: LOCATION_MIN_CONTRIBUTION_PCT })}</p>
                 <p className="mt-2 text-xs leading-5 text-slate-500">{t('estimateDisclaimer')}</p>
               </div>
             )}

@@ -58,26 +58,30 @@ export default function RadarChart({ labels, values, maxValue = 100, size = 300 
 
   const labelPositions = labels.map((label, i) => {
     const p = pointAt(i, maxValue * 1.18);
-    return { label, x: p.x, y: p.y, anchor: p.x < cx - 5 ? 'end' : p.x > cx + 5 ? 'start' : 'middle' };
+    const anchor: 'end' | 'start' | 'middle' = p.x < cx - 5 ? 'end' : p.x > cx + 5 ? 'start' : 'middle';
+    return { label, x: p.x, y: p.y, anchor };
   });
 
+  // TASK-0538: side labels sit outside the 0…size box and were clipped («Öyrədilə…») — pad the viewBox.
+  const pad = size * 0.3;
+
   return (
-    <svg ref={ref} viewBox={`0 0 ${size} ${size}`} className="mx-auto w-full max-w-[320px]" aria-label="Radar chart">
+    <svg ref={ref} viewBox={`${-pad} 0 ${size + pad * 2} ${size}`} className="mx-auto w-full max-w-[440px]" aria-label="Radar chart">
       {/* Grid rings */}
       {gridRings.map((pts, i) => (
-        <polygon key={i} points={pts} fill="none" stroke="var(--dk-border-soft, #e2e8f0)" strokeWidth="1" opacity={0.6} />
+        <polygon key={i} points={pts} fill="none" stroke="#E4DCCD" strokeWidth="1" opacity={0.6} />
       ))}
 
       {/* Axes */}
       {axes.map((a, i) => (
-        <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="var(--dk-border-soft, #e2e8f0)" strokeWidth="1" opacity={0.4} />
+        <line key={i} x1={a.x1} y1={a.y1} x2={a.x2} y2={a.y2} stroke="#E4DCCD" strokeWidth="1" opacity={0.4} />
       ))}
 
       {/* Data polygon */}
       <polygon
         points={dataPolygon}
-        fill="rgba(197, 160, 34, 0.15)"
-        stroke="var(--dk-gold, #C5A022)"
+        fill="rgba(214, 59, 84, 0.12)"
+        stroke="#D63B54"
         strokeWidth="2.5"
         strokeLinejoin="round"
         className="transition-all duration-1000 ease-out"
@@ -85,15 +89,15 @@ export default function RadarChart({ labels, values, maxValue = 100, size = 300 
 
       {/* Data points */}
       {dataPoints.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r="4" fill="var(--dk-gold, #C5A022)" stroke="white" strokeWidth="2"
+        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#D63B54" stroke="white" strokeWidth="2"
           className="transition-all duration-1000 ease-out" />
       ))}
 
       {/* Labels */}
       {labelPositions.map((lp, i) => (
         <text key={i} x={lp.x} y={lp.y} textAnchor={lp.anchor} dominantBaseline="middle"
-          className="fill-slate-700 text-[9px] font-semibold" style={{ fontSize: '9px' }}>
-          {lp.label.length > 14 ? lp.label.slice(0, 12) + '…' : lp.label}
+          className="fill-[#0F172A] text-[9px] font-semibold" style={{ fontSize: '9px' }}>
+          {lp.label.length > 18 ? lp.label.slice(0, 16) + '…' : lp.label}
         </text>
       ))}
     </svg>

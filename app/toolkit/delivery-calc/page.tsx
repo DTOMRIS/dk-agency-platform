@@ -11,7 +11,9 @@ import DecimalInput from '@/components/toolkit/DecimalInput';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
 
 type PlatformKey = 'wolt' | 'bolt' | 'yango' | 'own';
-const PLATFORM_DEFAULTS: Record<PlatformKey, number> = { wolt: 30, bolt: 30, yango: 30, own: 10 };
+// TASK-0538 (calc audit): «own courier» is not a % commission — it is a cost per order in ₼ (courier pay + fuel).
+// Before it was modelled as a 10% commission. 3 ₼ is an editable example, not a norm.
+const PLATFORM_DEFAULTS: Record<PlatformKey, number> = { wolt: 30, bolt: 30, yango: 30, own: 3 };
 const ZERO_COMMISSIONS: Record<PlatformKey, number> = { wolt: 0, bolt: 0, yango: 0, own: 0 };
 
 /** Example values loaded by «Nümunəni yüklə» (TASK-0517) — the tool's previous defaults. */
@@ -67,8 +69,9 @@ export default function DeliveryCalcPage() {
     const dineInFoodCost = orderValue * (foodCostPct / 100);
     const dineInNet = orderValue - dineInFoodCost - laborCost;
     const rows = selectedPlatforms.map((platform) => {
-      const commissionPct = commissions[platform];
-      const commission = orderValue * (commissionPct / 100);
+      const isOwn = platform === 'own';
+      const commission = isOwn ? commissions.own : orderValue * (commissions[platform] / 100);
+      const commissionPct = isOwn ? (orderValue > 0 ? Math.round((commission / orderValue) * 1000) / 10 : 0) : commissions[platform];
       const foodCost = orderValue * (foodCostPct / 100);
       const net = orderValue - commission - foodCost - packagingCost - laborCost;
       return { platform, commissionPct, commission, foodCost, net, monthlyNet: net * dailyOrders * monthlyDays };
@@ -120,11 +123,11 @@ export default function DeliveryCalcPage() {
         {selectedPlatforms.map((platform) => (
           <div key={platform}>
             <label htmlFor={`dc-comm-${platform}`} className="mb-1.5 block text-xs font-semibold text-slate-700">
-              {t('labelCommissionFor', { platform: PLATFORM_LABELS[platform] })}
+              {platform === 'own' ? t('labelOwnCourierCost') : t('labelCommissionFor', { platform: PLATFORM_LABELS[platform] })}
             </label>
             <DecimalInput id={`dc-comm-${platform}`} blankZero value={commissions[platform]}
-              aria-label={t('labelCommissionFor', { platform: PLATFORM_LABELS[platform] })}
-              onValueChange={(v) => setCommissions((prev) => ({ ...prev, [platform]: Math.min(100, Math.max(0, v)) }))}
+              aria-label={platform === 'own' ? t('labelOwnCourierCost') : t('labelCommissionFor', { platform: PLATFORM_LABELS[platform] })}
+              onValueChange={(v) => setCommissions((prev) => ({ ...prev, [platform]: platform === 'own' ? Math.max(0, v) : Math.min(100, Math.max(0, v)) }))}
               className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold text-slate-900 outline-none transition-all focus:border-orange-300 focus:ring-2 focus:ring-orange-500/20" />
           </div>
         ))}

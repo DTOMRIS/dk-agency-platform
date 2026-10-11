@@ -1,4 +1,6 @@
+import type { Metadata } from 'next';
 import { useLocale, useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import RoiCalculator from '@/components/franchise/RoiCalculator';
 import LeadForm from '@/components/franchise/LeadForm';
 import home from '@/components/home/v2/homeV2.module.css';
@@ -6,6 +8,22 @@ import { inter } from '@/components/home/v2/font';
 import { Crumbs, LiveStatus } from '@/components/inner/InnerParts';
 import s from '@/components/inner/inner.module.css';
 import { normalizeLocale, withLocale } from '@/i18n/config';
+import { getAlternates } from '@/lib/seo/alternates';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale?: string }>;
+}): Promise<Metadata> {
+  const { locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+  const t = await getTranslations({ locale, namespace: 'franchiseV2.meta.roi' });
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: getAlternates(locale, '/franchise/roi-kalkulyatoru'),
+  };
+}
 
 /** TASK-0531: v2 frame (owner 10.10: «bu da eski model»). Back → /franchise, same header as the toolkit tools. */
 export default function RoiPage() {

@@ -112,8 +112,8 @@ eq(pnlBreakeven(1000, 1000, 500), null, 'P&L break-even impossible when food ≥
   eq(parsed.rows.length, 4, 'survey: 4 valid rows');
   eq(parsed.skipped, [6], 'survey: bad line reported by number');
   const a = analyseSurvey(parsed.rows, { perfectWarnPct: 50 });
-  // quality: (5+5)+(4+4)+(2+3)+(5+5) = 33 / 40 → 83
-  eq(a.groups.quality, 83, 'survey quality % = Σ / (n×5)');
+  // quality (TASK-0538: 1–5 → 0–100): avg 33 / 8 = 4.125 → (4.125 − 1) / 4 = 78
+  eq(a.groups.quality, 78, 'survey quality % = (avg − 1) / 4');
   // NPS: 10, 8, 5, 10 → promoters 2/4 = 50, detractors 1/4 = 25 → 25
   eq(a.nps, 25, 'survey NPS = promoters − detractors');
   eq(a.perfectPct, 50, 'survey all-5 + NPS 10 share');

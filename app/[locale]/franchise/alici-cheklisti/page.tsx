@@ -1,12 +1,47 @@
+import type { Metadata } from 'next';
+import { useLocale, useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import BuyerChecklist from '@/components/franchise/BuyerChecklist';
-import PageBack from '@/components/inner/PageBack';
+import home from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Crumbs } from '@/components/inner/InnerParts';
+import s from '@/components/inner/inner.module.css';
+import { normalizeLocale, withLocale } from '@/i18n/config';
+import { getAlternates } from '@/lib/seo/alternates';
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale?: string }>;
+}): Promise<Metadata> {
+  const { locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+  const t = await getTranslations({ locale, namespace: 'franchiseV2.meta.buyer' });
+  return {
+    title: t('title'),
+    description: t('description'),
+    alternates: getAlternates(locale, '/franchise/alici-cheklisti'),
+  };
+}
+
+/** Franchise v2 redesign: cream v2 frame + Inter; one back link (Crumbs → /franchise). */
 export default function BuyerChecklistPage() {
+  const tb = useTranslations('pageBack');
+  const tp = useTranslations('franchisePillar');
+  const locale = normalizeLocale(useLocale());
   return (
-    <div className="min-h-screen bg-[var(--dk-paper)]">
-      <PageBack to="franchise" />
-      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-        <BuyerChecklist />
+    <div className={`${s.page} ${inter.className}`}>
+      <div className={home.wrap}>
+        <div className="mx-auto max-w-3xl">
+          <Crumbs
+            backHref={withLocale(locale, '/franchise')}
+            backLabel={tb('franchise')}
+            trail={`${tb('franchise')} / ${tp('tools.buyer.title')}`}
+          />
+          <div className="pt-4">
+            <BuyerChecklist />
+          </div>
+        </div>
       </div>
     </div>
   );

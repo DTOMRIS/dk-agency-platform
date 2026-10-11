@@ -13,7 +13,7 @@ import {
   Wand2,
 } from 'lucide-react';
 
-import { normalizeLocale } from '@/i18n/config';
+import { normalizeLocale, withLocale } from '@/i18n/config';
 import { getAlternates } from '@/lib/seo/alternates';
 import { getBlogPostsFromDb } from '@/lib/db/blog-repository';
 import {
@@ -23,7 +23,10 @@ import {
   localeUrl,
   organizationNode,
 } from '@/lib/seo/structured-data';
-import PageBack from '@/components/inner/PageBack';
+import home from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
+import { Crumbs } from '@/components/inner/InnerParts';
+import s from '@/components/inner/inner.module.css';
 
 export async function generateMetadata({
   params,
@@ -66,6 +69,7 @@ export default async function FranchisePillarPage({
   const { locale: raw } = await params;
   const locale = normalizeLocale(raw);
   const t = await getTranslations({ locale, namespace: 'franchisePillar' });
+  const tb = await getTranslations({ locale, namespace: 'pageBack' });
   const posts = await getFranchisePosts(locale);
 
   const giverTools = [
@@ -113,61 +117,43 @@ export default async function FranchisePillarPage({
     faqNode(faqItems),
   ]);
 
+  // Franchise v2 redesign: cream v2 frame + Inter, toolkit-style header, rounded-[22px] cards, one red accent.
+  const sectionTitle = 'text-[clamp(24px,2.8vw,34px)] font-black leading-tight tracking-[-0.035em] text-[#0F172A]';
+
   return (
-    <div className="min-h-screen bg-[var(--dk-paper)]">
-      <PageBack />
+    <div className={`${s.page} ${inter.className}`}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+      <div className={home.wrap}>
+        <Crumbs backHref={withLocale(locale, '/')} backLabel={tb('home')} trail={t('hero.badge')} />
 
-      {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="border-b border-slate-100 bg-white py-14 sm:py-20">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-amber-50 px-3.5 py-1.5 text-xs font-black uppercase tracking-wider text-[var(--dk-gold)]">
-            <Handshake size={14} /> {t('hero.badge')}
+        {/* ── Hero ─────────────────────────────────────────────── */}
+        <div className={s.tpHead}>
+          <div style={{ minWidth: 0 }}>
+            <div className={s.tpHeadMeta}>
+              <span className={home.eyebrow}>
+                <span className={home.dot} />
+                {t('hero.badge')}
+              </span>
+            </div>
+            <h1>{t('hero.title')}</h1>
+            <p className={s.lead}>{t('hero.subtitle')}</p>
           </div>
-          <h1 className="font-serif text-4xl font-black leading-tight text-slate-900 sm:text-5xl">
-            {t('hero.title')}
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-            {t('hero.subtitle')}
-          </p>
         </div>
-      </section>
 
-      {/* ── İki yol ──────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
-        <div className="grid gap-6 lg:grid-cols-2">
+        {/* ── İki yol ──────────────────────────────────────────── */}
+        <section className="grid gap-5 lg:grid-cols-2">
           {[
-            {
-              ns: 'giver',
-              icon: Store,
-              tools: giverTools,
-              accent: 'text-[var(--dk-red)]',
-              ring: 'ring-red-200/70',
-              chip: 'bg-red-50',
-            },
-            {
-              ns: 'taker',
-              icon: Handshake,
-              tools: takerTools,
-              accent: 'text-[var(--dk-gold)]',
-              ring: 'ring-amber-200/70',
-              chip: 'bg-amber-50',
-            },
+            { ns: 'giver', icon: Store, tools: giverTools },
+            { ns: 'taker', icon: Handshake, tools: takerTools },
           ].map((path) => {
             const PathIcon = path.icon;
             return (
-              <div key={path.ns} className={`rounded-2xl bg-white p-6 ring-1 sm:p-8 ${path.ring}`}>
-                <div
-                  className={`mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-widest ${path.chip} ${path.accent}`}
-                >
-                  <PathIcon size={13} /> {t(`${path.ns}.eyebrow`)}
-                </div>
-                <h2 className="font-serif text-2xl font-black text-slate-900">
-                  {t(`${path.ns}.title`)}
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                  {t(`${path.ns}.desc`)}
+              <div key={path.ns} className="rounded-[22px] border border-[#E4DCCD] bg-white p-6 sm:p-8">
+                <p className="inline-flex items-center gap-2 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#BE2F47]">
+                  <PathIcon size={14} aria-hidden="true" /> {t(`${path.ns}.eyebrow`)}
                 </p>
+                <h2 className={`mt-3 ${sectionTitle}`}>{t(`${path.ns}.title`)}</h2>
+                <p className="mt-3 text-[15px] leading-7 text-slate-600">{t(`${path.ns}.desc`)}</p>
 
                 <div className="mt-6 space-y-3">
                   {path.tools.map((tool) => {
@@ -175,26 +161,26 @@ export default async function FranchisePillarPage({
                     return (
                       <Link
                         key={tool.key}
-                        href={tool.href}
-                        className="group flex items-start gap-3 rounded-xl bg-slate-50 p-4 transition-colors hover:bg-slate-100"
+                        href={withLocale(locale, tool.href)}
+                        className="group flex items-start gap-3.5 rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] p-4 transition-colors hover:border-[#0F172A] hover:bg-white"
                       >
-                        <ToolIcon size={18} className={`mt-0.5 shrink-0 ${path.accent}`} />
+                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-[#BE2F47] ring-1 ring-[#E4DCCD]">
+                          <ToolIcon size={18} aria-hidden="true" />
+                        </span>
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="text-sm font-bold text-slate-900 group-hover:text-[var(--dk-red)]">
+                            <h3 className="text-[15.5px] font-black tracking-[-0.01em] text-[#0F172A]">
                               {t(`tools.${tool.key}.title`)}
                             </h3>
                             {tool.badge && (
-                              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-amber-800">
+                              <span className="rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#BE2F47] ring-1 ring-[#F4B8C3]">
                                 {tool.badge}
                               </span>
                             )}
                           </div>
-                          <p className="mt-1 text-xs leading-relaxed text-slate-600">
-                            {t(`tools.${tool.key}.desc`)}
-                          </p>
-                          <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-slate-700 group-hover:text-[var(--dk-red)]">
-                            {t('tools.open')} <ArrowRight size={12} />
+                          <p className="mt-1 text-[13.5px] leading-6 text-slate-600">{t(`tools.${tool.key}.desc`)}</p>
+                          <span className="mt-2 inline-flex items-center gap-1 text-[13px] font-bold text-[#0F172A] group-hover:text-[#BE2F47]">
+                            {t('tools.open')} <ArrowRight size={13} aria-hidden="true" />
                           </span>
                         </div>
                       </Link>
@@ -204,94 +190,84 @@ export default async function FranchisePillarPage({
               </div>
             );
           })}
-        </div>
-      </section>
+        </section>
 
-      {/* ── Doğan Tomris notu ────────────────────────────────── */}
-      <section className="mx-auto max-w-4xl px-4 pb-14 sm:px-6 sm:pb-16">
-        <figure className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-950 to-slate-900 p-7 sm:p-10">
-          <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-red-500/15 blur-3xl" />
-          <blockquote className="relative">
-            <p className="font-serif text-lg leading-relaxed text-slate-100 sm:text-xl">
+        {/* ── Doğan Tomris notu ────────────────────────────────── */}
+        <figure className="mt-8 rounded-[22px] bg-[#0F172A] p-7 text-white sm:p-10">
+          <blockquote>
+            <p className="text-[clamp(18px,2vw,22px)] font-semibold leading-relaxed tracking-[-0.01em] text-slate-100">
               “{t('note.quote')}”
             </p>
-            <figcaption className="mt-5 text-sm font-bold text-red-300">
-              — {t('note.author')}
-            </figcaption>
           </blockquote>
+          <figcaption className="mt-5 flex items-center gap-3 text-[14px] font-bold text-[#F28A9B]">
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-dk-red-strong text-[13px] font-black text-white" aria-hidden="true">
+              DT
+            </span>
+            {t('note.author')}
+          </figcaption>
         </figure>
-      </section>
 
-      {/* ── FAQ ──────────────────────────────────────────────── */}
-      <section className="border-t border-slate-100 bg-white py-14 sm:py-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
-          <h2 className="mb-8 font-serif text-2xl font-black text-slate-900 sm:text-3xl">
-            {t('faq.title')}
-          </h2>
-          <div className="space-y-4">
+        {/* ── FAQ ──────────────────────────────────────────────── */}
+        <section className="mx-auto mt-14 max-w-3xl">
+          <h2 className={`mb-6 ${sectionTitle}`}>{t('faq.title')}</h2>
+          <div className="space-y-3">
             {faqItems.map((item) => (
-              <div key={item.question} className="rounded-xl bg-slate-50 p-5 sm:p-6">
-                <h3 className="text-base font-bold text-slate-900">{item.question}</h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-slate-700">{item.answer}</p>
+              <div key={item.question} className="rounded-[22px] border border-[#E4DCCD] bg-white p-5 sm:p-6">
+                <h3 className="text-[16px] font-black text-[#0F172A]">{item.question}</h3>
+                <p className="mt-2 text-[14.5px] leading-7 text-slate-600">{item.answer}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── Bloq yazıları (real DB) ──────────────────────────── */}
-      {posts.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
-          <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <BookOpen size={18} className="text-[var(--dk-red)]" />
-              <h2 className="font-serif text-2xl font-black text-slate-900">{t('blog.title')}</h2>
-            </div>
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-[var(--dk-red)]"
-            >
-              {t('blog.cta')} <ArrowRight size={14} />
-            </Link>
-          </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group block rounded-xl bg-white p-5 ring-1 ring-slate-200/70 transition-all hover:shadow-md"
-              >
-                <h3 className="text-sm font-bold leading-snug text-slate-900 group-hover:text-[var(--dk-red)]">
-                  {post.title}
-                </h3>
-                {post.summary && (
-                  <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-slate-600">
-                    {post.summary}
-                  </p>
-                )}
-              </Link>
-            ))}
-          </div>
         </section>
-      )}
 
-      {/* ── CTA ──────────────────────────────────────────────── */}
-      <section className="border-t border-slate-100 bg-white py-14 sm:py-16">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h2 className="font-serif text-2xl font-black text-slate-900 sm:text-3xl">
-            {t('cta.title')}
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-600">
-            {t('cta.desc')}
-          </p>
+        {/* ── Bloq yazıları (real DB) ──────────────────────────── */}
+        {posts.length > 0 && (
+          <section className="mt-14">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <BookOpen size={20} className="text-[#BE2F47]" aria-hidden="true" />
+                <h2 className={sectionTitle}>{t('blog.title')}</h2>
+              </div>
+              <Link
+                href={withLocale(locale, '/blog')}
+                className="inline-flex items-center gap-1.5 text-[14px] font-bold text-[#0F172A] hover:text-[#BE2F47]"
+              >
+                {t('blog.cta')} <ArrowRight size={14} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="grid gap-5 md:grid-cols-3">
+              {posts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={withLocale(locale, `/blog/${post.slug}`)}
+                  className="group block rounded-[22px] border border-[#E4DCCD] bg-white p-5 transition-colors hover:border-[#0F172A]"
+                >
+                  <h3 className="text-[15.5px] font-black leading-snug text-[#0F172A] group-hover:text-[#BE2F47]">
+                    {post.title}
+                  </h3>
+                  {post.summary && (
+                    <p className="mt-2 line-clamp-3 text-[13.5px] leading-6 text-slate-600">{post.summary}</p>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── CTA ──────────────────────────────────────────────── */}
+        <section className="mt-14 flex flex-col gap-5 rounded-[22px] border border-[#E4DCCD] bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div>
+            <h2 className={sectionTitle}>{t('cta.title')}</h2>
+            <p className="mt-2 max-w-xl text-[15px] leading-7 text-slate-600">{t('cta.desc')}</p>
+          </div>
           <Link
-            href="/elaqe"
-            className="mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--dk-gold)] px-6 py-3.5 text-sm font-black text-[var(--dk-navy)] transition-all hover:opacity-90 active:scale-95"
+            href={withLocale(locale, '/elaqe')}
+            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 self-start rounded-full bg-dk-red-strong px-6 text-[14px] font-bold text-white transition-colors hover:bg-dk-red-deep sm:self-auto"
           >
-            {t('cta.button')} <ArrowRight size={16} />
+            {t('cta.button')} <ArrowRight size={16} aria-hidden="true" />
           </Link>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

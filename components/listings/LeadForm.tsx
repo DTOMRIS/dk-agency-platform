@@ -1,11 +1,15 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { CheckCircle2, Loader2, Send } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { LEAD_FORM_TONES, type ListingTone } from '@/components/listings/listing-tones';
 
 interface LeadFormProps {
   trackingCode: string;
   title: string;
+  /** `v2` on the public listing pages; `panel` (default) keeps the member-panel look. */
+  tone?: ListingTone;
 }
 
 function normalizePhone(value: string) {
@@ -22,9 +26,12 @@ function normalizePhone(value: string) {
   return '+' + digits;
 }
 
-export default function LeadForm({ trackingCode, title }: LeadFormProps) {
+export default function LeadForm({ trackingCode, title, tone = 'panel' }: LeadFormProps) {
+  const t = useTranslations('listingsV2.lead');
+  const ui = LEAD_FORM_TONES[tone];
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState('');
+  const [failed, setFailed] = useState(false);
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -40,20 +47,25 @@ export default function LeadForm({ trackingCode, title }: LeadFormProps) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     }).catch(() => null);
-    // Email notification is handled server-side in /api/listings/[id]/leads POST
-    setSuccess('Müraciətiniz göndərildi!');
     setSubmitting(false);
+    // TASK-0538: «sent» was shown even when the request failed — the visitor thought the lead went through.
+    // On failure the form keeps what was typed so it can be sent again.
+    if (!response?.ok) {
+      setFailed(true);
+      return;
+    }
+    setFailed(false);
+    // Email notification is handled server-side in /api/listings/[id]/leads POST
+    setSuccess(t('sent'));
     setForm({ name: '', phone: '', email: '', message: '' });
     setTimeout(() => setSuccess(''), 3200);
   };
 
   return (
-    <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
+    <div className={ui.card}>
       <div className="mb-4">
-        <h3 className="font-display text-2xl font-black text-[var(--dk-navy)]">Maraqlanıram</h3>
-        <p className="mt-1 text-sm text-slate-600">
-          {trackingCode} nömrəli elan haqqında sualını bizə yaz.
-        </p>
+        <h3 className={ui.title}>{t('title')}</h3>
+        <p className={ui.body}>{t('body', { code: trackingCode })}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3">
@@ -61,8 +73,8 @@ export default function LeadForm({ trackingCode, title }: LeadFormProps) {
           required
           value={form.name}
           onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-          placeholder="Ad Soyad"
-          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[var(--dk-red)] focus:ring-4 focus:ring-rose-100"
+          placeholder={t('name')}
+          className={ui.input}
         />
         <input
           required
@@ -71,29 +83,29 @@ export default function LeadForm({ trackingCode, title }: LeadFormProps) {
             setForm((prev) => ({ ...prev, phone: normalizePhone(event.target.value) }))
           }
           placeholder="+994 XX XXX XX XX"
-          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[var(--dk-red)] focus:ring-4 focus:ring-rose-100"
+          className={ui.input}
         />
         <input
           type="email"
           value={form.email}
           onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
-          placeholder="E-mail (opsional)"
-          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[var(--dk-red)] focus:ring-4 focus:ring-rose-100"
+          placeholder={t('email')}
+          className={ui.input}
         />
         <textarea
           rows={4}
           value={form.message}
           onChange={(event) => setForm((prev) => ({ ...prev, message: event.target.value }))}
-          placeholder="Bu elan haqqında sualınız..."
-          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[var(--dk-red)] focus:ring-4 focus:ring-rose-100"
+          placeholder={t('message')}
+          className={ui.input}
         />
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-dk-red-strong px-5 py-3.5 text-sm font-bold text-white transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-70"
+          className={ui.submit}
         >
           {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-          {submitting ? 'Göndərilir...' : 'Maraqlanıram'}
+          {submitting ? t('sending') : t('submit')}
         </button>
       </form>
 
@@ -101,6 +113,12 @@ export default function LeadForm({ trackingCode, title }: LeadFormProps) {
         <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700">
           <CheckCircle2 className="h-4 w-4" />
           {success}
+        </div>
+      ) : null}
+      {failed ? (
+        <div role="alert" className="mt-3 inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-semibold text-red-700">
+          <AlertCircle className="h-4 w-4" />
+          {t('failed')}
         </div>
       ) : null}
     </div>

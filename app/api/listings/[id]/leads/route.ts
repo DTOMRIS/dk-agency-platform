@@ -28,7 +28,8 @@ export async function POST(
   const listingId = Number(id);
 
   if (!dbAvailable || !db) {
-    return NextResponse.json({ success: true, source: 'mock' }, { status: 201 });
+    // TASK-0538: was `success: true` (mock) — the lead was lost while the visitor saw «sent».
+    return NextResponse.json({ success: false, error: 'Müraciət hazırda qəbul edilmir.' }, { status: 503 });
   }
 
   const resolvedListingId = Number.isNaN(listingId)

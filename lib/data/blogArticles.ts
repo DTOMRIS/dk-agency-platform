@@ -4045,7 +4045,7 @@ Model Sumqayıtdan sonra turizm potensialı olan bölgələrə uyğunlaşdırıl
 
 Məzunların portfeli, sertifikatları, staj keçdiyi müəssisələr, bacarıq səviyyəsi və işə uyğunluğu rəqəmsal sistemdə izlənməlidir. Bu, sahibkar üçün işə qəbul prosesini sürətləndirər, akademiya üçün isə nəticələri ölçülə bilən edər.
 
-> 📝 **DOĞAN NOTU:** “36 ildir bu sektorun içindəyəm və hər dəfə eyni həqiqəti görmüşəm: marka tabela ilə yox, insanla qurulur. Ən gözəl menyu, ən bahalı avadanlıq, ən yaxşı interyer — zəif xidmətlə dəyərini itirir. Qonaq restoranı təkcə yeməklə yox, ona göstərilən münasibətlə xatırlayır. Türkiyə peşə təhsilini ‘memleket meselesi’ elan edəndə böyük bir cümlə qurdu: ölkənin sənayesi, xidməti və gələcəyi peşəli insandan başlayır. Bizim də vaxtımız gəlib. Kadrı yalnız ‘tapmağa’ çalışma. Kadrı yetişdir. Çünki sistemli yetişdirilmiş işçi ən bahalı avadanlıqdan daha dəyərlidir.”
+> 📝 **DOĞAN NOTU:** “40 ildir bu sektorun içindəyəm və hər dəfə eyni həqiqəti görmüşəm: marka tabela ilə yox, insanla qurulur. Ən gözəl menyu, ən bahalı avadanlıq, ən yaxşı interyer — zəif xidmətlə dəyərini itirir. Qonaq restoranı təkcə yeməklə yox, ona göstərilən münasibətlə xatırlayır. Türkiyə peşə təhsilini ‘memleket meselesi’ elan edəndə böyük bir cümlə qurdu: ölkənin sənayesi, xidməti və gələcəyi peşəli insandan başlayır. Bizim də vaxtımız gəlib. Kadrı yalnız ‘tapmağa’ çalışma. Kadrı yetişdir. Çünki sistemli yetişdirilmiş işçi ən bahalı avadanlıqdan daha dəyərlidir.”
 
 ## Yekun
 

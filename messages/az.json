@@ -1,11 +1,11 @@
 {
   "franchiseRadar": {
     "meta": {
-      "title": "Franchise Radar — Azərbaycana gəlməmiş markalar | DK Agency",
+      "title": "Françayz Radarı — Azərbaycana gəlməmiş markalar | DK Agency",
       "description": "Azərbaycanda hələ olmayan qlobal françayz markaları: investisiya aralığı, mənşə və giriş modeli. Maraqlandığınız markanı seçin."
     },
     "hero": {
-      "badge": "Franchise Radar",
+      "badge": "Françayz Radarı",
       "title": "Azərbaycana hələ gəlməmiş markalar",
       "subtitle": "Qlobal françayz markalarının kataloqu — investisiya aralığı, mənşə və giriş modeli ilə. Maraqlandığınız markanı seçin, DK komandası əlaqə saxlasın."
     },
@@ -206,7 +206,7 @@
         "shiftLeaderLazimDeyil": "Hələ lazım deyil",
         "laborMaliyyeti": "İşçi xərci",
         "aylig": "Aylıq (təxmini)",
-        "laborFaizi": "Satışdan payı",
+        "laborFaizi": "Mətbəx heyətinin xərci satışdan",
         "qsrHedep": "Fast food üçün geniş yayılmış qayda: işçi xərci satışın {value}%-indən çox olmamalıdır.",
         "ideal": "Normadadır",
         "dikkat": "Diqqət: bir az yüksəkdir",
@@ -229,7 +229,8 @@
           "expeditor": "Sifarişi yoxlayıb verən"
         },
         "noChecks": "Gündəlik sifariş sayını və orta çeki yazın",
-        "empty": "Menyudakı yemək sayını və gündəlik sifariş sayını yazın — stansiyalar və işçi sayı burada görünəcək."
+        "empty": "Menyudakı yemək sayını və gündəlik sifariş sayını yazın — stansiyalar və işçi sayı burada görünəcək.",
+        "headcount": "≈ {n} nəfər — bütün növbələr, həftədə 40 saat"
       },
       "assumptions": {
         "title": "Hesablamadakı nümunə rəqəmlər",
@@ -237,8 +238,9 @@
         "extraPct": "Əmək haqqına əlavə işəgötürən haqları (%)",
         "extraPctHelp": "İşəgötürənin əmək haqqına əlavə ödədiyi məcburi dövlət sosial sığorta, işsizlikdən sığorta və icbari tibbi sığorta haqları. Dərəcəni mühasibinizdən dəqiqləşdirin.",
         "avgCheck": "Orta çek (₼)",
-        "laborTarget": "İşçi xərci üçün hədəf (satışın %-i)",
-        "salary": "Bir mətbəx işçisinin aylıq maaşı (₼)"
+        "laborTarget": "Ümumi işçi xərci hədəfi (satışın %-i) — mətbəx bunun bir hissəsidir",
+        "salary": "Bir mətbəx işçisinin aylıq əmək haqqı (₼)",
+        "openHours": "Mətbəx gündə neçə saat işləyir"
       }
     },
     "personelPlanlayici": {
@@ -283,7 +285,8 @@
         "benchmark": "Geniş yayılmış qayda: işçi xərci satışın {value}%-indən çox olmamalıdır",
         "peakNote": "Ən sıx saatlardan sonra işçi sayını azaltmaq olar.",
         "empty": "Oturacaq sayını, gündəlik çek sayını, açılış və bağlanış saatını yazın — nəticə burada görünəcək.",
-        "noSales": "Orta çeki yazın — satış olmadan işçi xərcinin payı hesablanmır"
+        "noSales": "Orta çeki yazın — satış olmadan işçi xərcinin payı hesablanmır",
+        "headcount": "≈ {n} nəfər — bütün növbələr, həftədə 40 saat"
       },
       "assumptions": {
         "title": "Hesablamadakı nümunə rəqəmlər",
@@ -882,7 +885,7 @@
       "branchRentLabel": "Aylıq icarə (₼)",
       "dailyChecksLabel": "Gündə neçə çek",
       "rentTaxTypeLabel": "İcarəyə verən (vergi üçün)",
-      "rentTaxIndividual": "Fiziki şəxs (14% vergi icarənin üstünə)",
+      "rentTaxIndividual": "Fiziki şəxs (kirayə sahibin əlinə çatan məbləğdir; 14% vergini siz tutub ödəyirsiniz)",
       "rentTaxLegal": "Hüquqi şəxs (0%)",
       "branchInventoryDaysLabel": "Açılışda neçə günlük ərzaq ehtiyatı",
       "labelFitoutPerSqm": "Təmir, 1 m² üçün (₼)",
@@ -1097,7 +1100,12 @@
       "article3Title": "1 porsiyanın food cost-u necə hesablanır",
       "article3Tag": "Maliyyə",
       "article3Slug": "1-porsiya-food-cost-hesablama",
-      "readLabel": "Oxu"
+      "readLabel": "Oxu",
+      "taxRegimeLabel": "Vergi rejimi",
+      "taxRegimeSimplifiedBaku": "Sadələşdirilmiş vergi — Bakı (dövriyyənin 8%-i)",
+      "taxRegimeSimplifiedRegion": "Sadələşdirilmiş vergi — regionlar (dövriyyənin 4%-i)",
+      "taxRegimeGeneral": "Ümumi rejim (mənfəətin 20%-i)",
+      "taxRegimeNote": "Sadələşdirilmiş vergi zərərli ayda da dövriyyədən ödənilir. Dövriyyə həddi və ƏDV öhdəliyi üçün mühasibinizlə dəqiqləşdirin; amortizasiya nəzərə alınmır — xalis mənfəət təxminidir."
     },
     "deliveryCalc": {
       "title": "Çatdırılma komissiyası kalkulyatoru",
@@ -1160,7 +1168,8 @@
       "blogLink2Tag": "Alət",
       "blogLink3Title": "Food cost kalkulyatoru",
       "blogLink3Tag": "Alət",
-      "readLabel": "Bax"
+      "readLabel": "Bax",
+      "labelOwnCourierCost": "Öz kuryer xərci (₼ / sifariş — maaş + yanacaq)"
     },
     "menuMatrix": {
       "title": "Menyu matrisi",
@@ -2419,7 +2428,7 @@
     },
     "sezonAnalitikasi": {
       "title": "Sezon Analitikası",
-      "subtitle": "AZ təqvimi, kurort sezonu və Ramazanı nəzərə alaraq 12 aylıq satış, işçi xərci və ərzaq büdcəsi proqnozu.",
+      "subtitle": "AZ təqvimi, kurort sezonu və Ramazana görə 12 aylıq satış, işçi xərci və ərzaq büdcəsi planı. Əmsallar nümunədir — öz satışınıza görə dəyişin.",
       "tier": "KALFA",
       "back_to_tools": "Bütün alətlər",
       "inputs": {
@@ -2478,7 +2487,8 @@
         "coefficient": "Əmsal",
         "projectedRevenue": "Proqnoz dövriyyə",
         "laborBudget": "Tövsiyə işçi xərci",
-        "inventoryBudget": "Tövsiyə inventar"
+        "inventoryBudget": "Tövsiyə inventar",
+        "coefficientNote": "Əmsallar nümunədir (100% = orta ay), sektor statistikası deyil — keçən ilin aylıq satışına görə hər ayı dəyişin. İşçi xərcinin {fixed}%-i sabit sayılır (əsas komanda maaşla işləyir), qalanı satışla dəyişir."
       },
       "riskCard": {
         "weak": "Ən riskli 3 ay",
@@ -2701,7 +2711,7 @@
       },
       "infoMethodology": {
         "title": "ER metodologiyası",
-        "body": "Bu alət qarşılıqlı əlaqə faizini izləyici sayına görə hesablayır: (bəyənmə + şərh + yadda saxlama + paylaşım) / (post × izləyici) × 100. Çatıma görə hesablanan faiz adətən daha yüksək çıxır. Mənbələr fərqli hesablayır — həmişə eyni üsulla müqayisə edin."
+        "body": "Bu alət qarşılıqlı əlaqə faizini izləyici sayına görə hesablayır: (bəyənmə + şərh + yadda saxlama + paylaşım) / (post × izləyici) × 100. Çatıma görə hesablanan faiz adətən daha yüksək çıxır. Mənbələr fərqli hesablayır — həmişə eyni üsulla müqayisə edin. Müqayisə rəqəmləri: Socialinsider, Rival IQ və Hootsuite 2025 hesabatları (qlobal yemək-içmək sektoru; Azərbaycan üçün ayrıca mənbə yoxdur) — istiqamət üçündür."
       }
     },
     "restoranAudit": {
@@ -3140,7 +3150,7 @@
         "resultLabel": "Aylıq başabaş satış",
         "currency": "AZN",
         "resultHelp": "Bu satış həddindən sonra lokasyon mənfəət zonası üçün real şans yaradır.",
-        "unsustainable": "Bu xərc strukturu ilə brüt marja çox aşağıdır; lokasyon davamlı görünmür.",
+        "unsustainable": "Ərzaq, royalti və reklamdan sonra satışın {pct}%-dən azı qalır — kirayə və işçi xərclərini ödəmək çətindir; lokasyon zəif görünür.",
         "inputs": {
           "rent": "Kirayə",
           "labor": "İşçilik + sığorta",
@@ -3151,8 +3161,8 @@
           "insurance": "Sığorta",
           "maintenance": "Təmir-baxım",
           "other": "Digər sabit xərc",
-          "foodCostPercent": "Food cost %",
-          "royaltyPercent": "Royalty %",
+          "foodCostPercent": "Ərzaq xərci %",
+          "royaltyPercent": "Royalti %",
           "marketingPercent": "Reklam %"
         }
       },
@@ -5190,8 +5200,8 @@
         "options": {
           "0": "Bilmirik / hesablanmayıb",
           "1": "4 ildən çox",
-          "2": "2-3 il, ROI ~%15",
-          "3": "≤2 il, ROI %20+"
+          "2": "3–4 il",
+          "3": "3 ilə qədər (illik ROI ~%33+)"
         }
       },
       "8": {
@@ -5251,7 +5261,7 @@
     "badge": "Françayz Alıcı Çek-listi",
     "title": "Bu françayz almağa dəyərmi?",
     "subtitle": "9 sahə · təxminən 3 dəqiqə · sonunda hazırlıq hesabatı",
-    "letter": "Françayz almaq böyük qərardır. Bu çek-list investisiyanızı qorumaq üçün franchisor-u düzgün qiymətləndirməyinizə kömək edir. Hər sahəni diqqətlə oxuyun və ən doğru cavabı seçin.",
+    "letter": "Françayz almaq böyük qərardır. Bu çek-list investisiyanızı qorumaq üçün françayz verən şirkəti düzgün qiymətləndirməyinizə kömək edir. Hər sahəni diqqətlə oxuyun və ən doğru cavabı seçin.",
     "letterSign": "— Doğan Tomris, DK Agency",
     "startCta": "Çek-listə başla →",
     "stepLabel": "Sahə {current} / {total}",
@@ -5260,7 +5270,7 @@
     "seeResult": "Nəticəni gör →",
     "resultBadge": "Nəticə",
     "weakestLabel": "Ən zəif sahəniz",
-    "weakestBody": "Bu sahədə əlavə araşdırma və franchisor-dan açıqlama tələb olunur.",
+    "weakestBody": "Bu sahədə əlavə araşdırma və françayz verən şirkətdən açıqlama tələb olunur.",
     "aiLoading": "AI hesabatınız hazırlanır...",
     "aiReportTitle": "Şəxsi Hesabat",
     "shareDownload": "Nəticəni yüklə (PNG)",
@@ -5322,7 +5332,7 @@
       },
       "4": {
         "cat": "Brend imici",
-        "q": "Franchisor hörmətli, aydın imicli markadırmı?",
+        "q": "Françayz verən şirkət hörmətli, aydın imicli markadırmı?",
         "options": {
           "0": "Xeyr, brend tanınmır və ya mənfi rəyləri var",
           "1": "Qismən — tanınır amma imic qarışıqdır",
@@ -5357,8 +5367,8 @@
         }
       },
       "8": {
-        "cat": "Franchisor güvəni",
-        "q": "Franchisora güvənirsinizmi? Müqavilə şərtləri ədalətlidirmi?",
+        "cat": "Françayz verənə güvən",
+        "q": "Françayz verən şirkətə güvənirsinizmi? Müqavilə şərtləri ədalətlidirmi?",
         "options": {
           "0": "Xeyr, narahatlıqlarım var, müqavilə birtərəflidir",
           "1": "Qismən — ümumiyyətlə normal amma bəzi maddələr narahat edir",
@@ -5913,20 +5923,20 @@
     "hero": {
       "headline": "Qonaq Evinizi OTA Platformalarına Hazırlayın",
       "subline": "Pansiyon, qonaq evi və Airbnb host-ları üçün pulsuz alətlər — Xınalıqdan Bakıya, DK Agency dəstəyi ilə.",
-      "statBadge": "1 134 Airbnb elanı + 800+ pansiyon AZ-də",
+      "statBadge": "Bakıda 4 121 qısamüddətli kirayə elanı (AirDNA, iyul 2026)",
       "primaryCtaText": "OTA Hazırlıq Testinə başla",
       "secondaryCtaText": "Pulsuz bələdçi al"
     },
     "stats": {
-      "stat1Label": "Bakıda Airbnb elanı",
-      "stat1Value": "1,134",
-      "stat1Source": "AirDNA 2026",
-      "stat2Label": "AZ-də Booking pansiyon",
-      "stat2Value": "800+",
-      "stat2Source": "Booking partner data",
-      "stat3Label": "Sertifikatsız obyekt",
-      "stat3Value": "600+",
-      "stat3Source": "Dövlət Turizm Agentliyi"
+      "stat1Label": "Bakıda qısamüddətli kirayə elanı",
+      "stat1Value": "4 121",
+      "stat1Source": "AirDNA, iyul 2026",
+      "stat2Label": "Yalnız Airbnb-də olan elan",
+      "stat2Value": "96%",
+      "stat2Source": "AirDNA, iyul 2026",
+      "stat3Label": "Elan sayı, illik dəyişmə",
+      "stat3Value": "−16%",
+      "stat3Source": "AirDNA, iyul 2026"
     },
     "tools": {
       "sectionTitle": "Bu sektor üçün 3 alət",
@@ -5971,19 +5981,19 @@
     "hero": {
       "headline": "Otelinizi ulduz təsnifatına hazırlayın",
       "subline": "Otel sahibləri üçün pulsuz alətlər — ulduz təsnifatına hazırlıqdan OTA kanallarına və gəlir hesabına qədər, DK Agency dəstəyi ilə.",
-      "statBadge": "2024-də +42% otel gəliri, 859 aktiv otel",
+      "statBadge": "2024: 859 otel, 694,2 mln ₼ gəlir (Dövlət Statistika Komitəsi)",
       "primaryCtaText": "Ulduz hazırlıq testinə başla",
       "secondaryCtaText": "Pulsuz bələdçi al"
     },
     "stats": {
-      "stat1Label": "2024 gəlir artımı",
-      "stat1Value": "+42%",
+      "stat1Label": "2024 otel gəliri",
+      "stat1Value": "694,2 mln ₼",
       "stat1Source": "Dövlət Statistika Komitəsi",
-      "stat2Label": "Aktiv otel",
+      "stat2Label": "Otel və otel tipli obyekt (2024)",
       "stat2Value": "859",
       "stat2Source": "Dövlət Statistika Komitəsi",
-      "stat3Label": "İllik gecələmə",
-      "stat3Value": "4.28M",
+      "stat3Label": "Gecələmə artımı, 2024 I yarım",
+      "stat3Value": "+35,8%",
       "stat3Source": "Dövlət Statistika Komitəsi"
     },
     "tools": {
@@ -6183,7 +6193,7 @@
         "badge": "BETA"
       },
       "radar": {
-        "title": "Franchise Radar",
+        "title": "Françayz Radarı",
         "desc": "Azərbaycana hələ gəlməmiş qlobal markalar: investisiya aralığı, mənşə və giriş modeli ilə."
       },
       "roi": {
@@ -6207,9 +6217,9 @@
       "q2": "Markamı françayz vermək üçün nə lazımdır?",
       "a2": "Ən əvvəl markanız rəsmi qeydiyyatdan keçməlidir. Qeydiyyatdan keçməyən markanı françayz vermək, sahibi olmadığın evi icarəyə vermək kimidir. Sonrakı addım hazırlığı ölçmək və əl kitabını qurmaqdır.",
       "q3": "Françayz investisiyası nə vaxt sağlam sayılır?",
-      "a3": "Ümumi hədəf: illik ROI ən azı %20, geri-qaytarma müddəti isə 36 aydan çox olmasın. Öz rəqəmlərinizi ROI kalkulyatorunda yoxlaya bilərsiniz.",
+      "a3": "Ümumi hədəf: qoyulan pul 36 ay ərzində geri qayıtsın (bu, illik təxminən %33 ROI deməkdir); 48 aydan uzun müddət risklidir. Öz rəqəmlərinizi ROI kalkulyatorunda yoxlaya bilərsiniz.",
       "q4": "Azərbaycanda hansı qlobal markalar hələ yoxdur?",
-      "a4": "Franchise Radar kataloqunda Azərbaycana hələ gəlməmiş markalar investisiya aralığı, mənşə və giriş modeli ilə sıralanır. Maraqlandığınız markanı seçirsiniz, DK komandası əlaqə saxlayır."
+      "a4": "Françayz Radarı kataloqunda Azərbaycana hələ gəlməmiş markalar investisiya aralığı, mənşə və giriş modeli ilə sıralanır. Maraqlandığınız markanı seçirsiniz, DK komandası əlaqə saxlayır."
     },
     "blog": {
       "title": "Françayz haqqında yazılarımız",
@@ -7904,7 +7914,7 @@
     "trail": "Alətlər / Excel şablonları",
     "eyebrow": "Excel şablonları",
     "title": "Restoran üçün hazır Excel şablonları",
-    "lead": "Mənfəət və zərər, anbar, əmək haqqı, büdcə və balans — formulları qurulmuş, Azərbaycan dilində. Rəqəmlərinizi yazın, qalanını şablon hesablayır.",
+    "lead": "Mənfəət və zərər, anbar, əmək haqqı, büdcə, balans, itki və qaimə qiymətləri — formulları qurulmuş, Azərbaycan dilində. Rəqəmlərinizi yazın, qalanını şablon hesablayır.",
     "featuresLabel": "Şablonların xüsusiyyətləri",
     "features": {
       "f1": "Formullar hazırdır",
@@ -7923,8 +7933,8 @@
     "locked": "Üzv olub yüklə",
     "previewAlt": "«{name}» şablonunun görünüşü (nümunə rəqəmlərlə)",
     "note": "Şablonlardakı rəqəmlər nümunədir — silib öz rəqəmlərinizi yazın. Vergi və sığorta haqlarının dərəcələrini mühasibinizdən dəqiqləşdirin. Şablonları öz işinizdə sərbəst istifadə edə bilərsiniz; satmaq və ya başqa ad altında yaymaq olmaz.",
-    "bandTitle": "Restoran üçün 5 hazır Excel şablonu",
-    "bandBody": "Mənfəət və zərər (12 ay), anbar və maya dəyəri, əmək haqqı xərcləri, büdcə və faktiki, balans. Üzvlər üçün pulsuz.",
+    "bandTitle": "Restoran üçün 8 hazır Excel şablonu",
+    "bandBody": "Mənfəət və zərər (12 ay), anbar və maya dəyəri, əmək haqqı xərcləri, büdcə və faktiki, balans, nəzəri və faktiki istifadə, qaimə qiymətləri, saxlama yerinə görə sayım. Üzvlər üçün pulsuz.",
     "bandCta": "Şablonlara bax",
     "items": {
       "menfeet-zerer-12-ay": {
@@ -7961,8 +7971,33 @@
         "b1": "Qısamüddətli və uzunmüddətli aktivlər, öhdəliklər",
         "b2": "Cari likvidlik və borc əmsalı",
         "b3": "«Yoxlama» sətri səhvi dərhal göstərir"
+      },
+      "nezeri-ve-faktiki": {
+        "title": "Nəzəri və faktiki istifadə",
+        "body": "Reseptə görə nə qədər ərzaq getməli idi, anbar sayımına görə nə qədər getdi — fərq itkinin pul ilə ölçüsüdür.",
+        "b1": "Hər məhsul üçün fərq: miqdar, ₼ və faiz",
+        "b2": "Faktiki və nəzəri food cost yan-yana",
+        "b3": "Xəbərdarlıq həddini özünüz yazırsınız",
+        "cols": "Məhsul · Qalıq · Alış · Sayım · Faktiki istifadə · Nəzəri istifadə · Fərq · Fərqin dəyəri (₼) · Vəziyyət"
+      },
+      "qaime-qiymet-izleyicisi": {
+        "title": "Qaimə qiymət izləyicisi",
+        "body": "Qaimə sətirlərini yazın: eyni məhsulun əvvəlki qiyməti özü tapılır, qiymət artanda xəbərdarlıq görünür.",
+        "b1": "100 qaimə sətri",
+        "b2": "Artımın əlavə xərci ₼ ilə",
+        "b3": "Excel, Google Sheets və Numbers-də işləyir",
+        "cols": "Tarix · Təchizatçı · Məhsul · Miqdar · Vahid qiyməti · Məbləğ · Əvvəlki qiymət · Dəyişmə (%) · Vəziyyət"
+      },
+      "saxlama-yerine-gore-sayim": {
+        "title": "Saxlama yerinə görə sayım",
+        "body": "Məhsullar anbardakı düzülüş sırası ilə: sayan adam rəfdən-rəfə gedir, heç nə qaçmır.",
+        "b1": "Soyuducu, dondurucu, quru anbar, bar — siyahını dəyişə bilərsiniz",
+        "b2": "Hər yer üzrə dəyər və anbarın cəmi",
+        "b3": "Cəmi «Anbar və maya dəyəri» şablonuna keçir",
+        "cols": "Saxlama yeri · Rəf sırası · Məhsul · Ölçü vahidi · Vahid qiyməti · Sayım · Dəyər (₼)"
       }
-    }
+    },
+    "columnsLabel": "Şablonun sütunları"
   },
   "toolPitch": {
     "ocaq": {
@@ -7999,6 +8034,101 @@
       "pricing": "Restoranınızın ayda təxminən nə qədər satışı var? Uyğun planı deyək.",
       "blog": "Bu yazıdakı mövzu sizin restoranda aktualdırmı?",
       "news": "Bu xəbərlərdən hansı sizin işinizə təsir edir?"
+    }
+  },
+  "aboutV2": {
+    "back": "Ana səhifə",
+    "eyebrow": "DK Agency",
+    "title": "Haqqımızda",
+    "lead": "HoReCa-da qazanmaq çətindir.",
+    "problemLabel": "Problem",
+    "intro": "Restoran sahibi səhər mətbəxdə, günorta kassada, axşam müştəri qarşısındadır. Marka françayzı doğru tərəfdaş axtarır, amma hər kəsin \"ən yaxşı yer\" dediyi yerlər həqiqətən ən yaxşı yerdir? Tədarükçü etibarlı müştəri istəyir, amma kim etibarlıdır? Hamısı bir-birini axtarır, amma heç kim bir-birini doğru yerdə tapmır.",
+    "whyLabel": "Niyə varıq",
+    "whyTitle": "DK Agency bu problemi həll etmək üçün quruldu.",
+    "why": "Biz Azərbaycanın ilk AI dəstəkli HoReCa B2B platformasıyıq. Məqsədimiz sadədir: kiçik sahibkara böyüklərlə eyni alətləri vermək. Yeməyin maya dəyəri hesabı, gəlir-xərc hesabatı, françayz tərəfdaşı axtarışı, sektor məsləhəti — bunlar əvvəllər yalnız böyük zəncirlərin əlində idi. İndi sənin də əlindədir.",
+    "promiseTitle": "Bizim vədimiz",
+    "promises": {
+      "kazan": {
+        "name": "KAZAN AI",
+        "desc": "sənin sektor məsləhətçindir — maya dəyəri, qiymət qoyma, gündəlik iş qərarları"
+      },
+      "ocaq": {
+        "name": "OCAQ",
+        "desc": "sənin idarə panelindir — bütün biznesin bir yerdə"
+      },
+      "shedd": {
+        "name": "ŞEDD",
+        "desc": "rəqəmsal sertifikatdır — tərəfdaşlarına və müştərilərinə keyfiyyət təsdiqi"
+      },
+      "marketplace": {
+        "name": "Devir & Satış",
+        "desc": "elan bölməmizdir — biznesin alqı-satqısı, françayz tərəfdaşı axtarışı"
+      }
+    },
+    "storyTitle": "Hekayəmiz",
+    "story1": "DK Agency-ni 2010-da qurdum. Adım Doğan Tomris.",
+    "story2": "40 ildir HoReCa sektorundayam. Türkiyə, Azərbaycan, Rusiya, Gürcüstan — hər ölkədə işlərim oldu, hər mətbəxin öz dilini öyrəndim. Bu illər ərzində bir şey gördüm: texnologiya kiçik sahibkara çatmırdı.",
+    "story3": "Bəziləri hələ də dəftərlə hesab tutur. Bəziləri Excel-i öyrənməyə vaxt tapmır, çünki səhər tezdən mətbəxə girir, gecə yarısı evə dönür. Onların problemi tənbəllik deyil — onlara doğru alət heç vaxt verilməyib.",
+    "story4": "Böyük zəncirlərin kassa proqramları, AI məsləhətçiləri, peşəkar məsləhətçiləri var. Kiçik restoran sahibinin nə var? Bir telefon, bir not dəftəri və 16 saatlıq iş günü.",
+    "closing": "DK Agency həmin uçurumu bağlamaq üçün gəldi. Dəftərdən AI-yə bir körpü."
+  },
+  "listingsV2": {
+    "detail": {
+      "details": "Elanın detalları",
+      "contact": "Sürətli əlaqə",
+      "whatsapp": "WhatsApp ilə yaz",
+      "leadTitle": "Müraciət et",
+      "share": "WhatsApp-da paylaş",
+      "shareLead": "DK Agency elanı",
+      "copyLink": "Linki kopyala",
+      "linkCopied": "Link kopyalandı!",
+      "notFound": "Elan tapılmadı",
+      "yes": "Bəli",
+      "no": "Xeyr",
+      "close": "Bağla"
+    },
+    "lead": {
+      "title": "Maraqlanıram",
+      "body": "{code} nömrəli elan haqqında sualını bizə yaz.",
+      "name": "Ad Soyad",
+      "email": "E-mail (istəyə görə)",
+      "message": "Bu elan haqqında sualınız...",
+      "submit": "Maraqlanıram",
+      "sending": "Göndərilir...",
+      "sent": "Müraciətiniz göndərildi!",
+      "failed": "Göndərilmədi. Bir az sonra yenidən cəhd edin və ya WhatsApp ilə yazın."
+    },
+    "card": {
+      "favAdd": "Sevimlilərə əlavə et",
+      "favRemove": "Sevimlilərdən çıxart"
+    }
+  },
+  "pnlV2": {
+    "weeklyActions": {
+      "foodCost": "Ərzaq xərci",
+      "laborCost": "İşçi xərci",
+      "netProfit": "Xalis mənfəət",
+      "rent": "İcarə"
+    }
+  },
+  "franchiseV2": {
+    "meta": {
+      "readiness": {
+        "title": "Françayz Hazırlıq Testi — Markanız Hazırdırmı?",
+        "description": "Markanız françayz verməyə hazırdırmı? 12 sual, təxminən 4 dəqiqə, sonunda şəxsi hazırlıq hesabatı."
+      },
+      "buyer": {
+        "title": "Françayz Alıcı Çeklisti — Bu Françayz Almağa Dəyərmi?",
+        "description": "Françayz almazdan əvvəl yoxlanılası 9 sahə: təxminən 3 dəqiqə, sonunda şəxsi hazırlıq hesabatı. Azərbaycanda françayz alıcıları üçün."
+      },
+      "franchbook": {
+        "title": "Françbuk Generatoru — AI ilə Françayz Əl Kitabı",
+        "description": "AI ilə françayz əl kitabı skeleti yaradın: 6 mərhələ, AFA Akademiya outline-ı, redaktə edilə bilən sənəd."
+      },
+      "roi": {
+        "title": "Françayz ROI Kalkulyatoru — İnvestisiyaya Dəyərmi?",
+        "description": "Françayz investisiyasının ROI-sini və geri-qaytarma müddətini hesabla. Sağlam françayz hədəfi: geri-qaytarma ≤ 36 ay (illik ROI ≈ %33)."
+      }
     }
   }
 }

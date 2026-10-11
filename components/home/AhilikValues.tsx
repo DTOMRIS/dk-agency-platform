@@ -1,15 +1,17 @@
 /**
  * @file AhilikValues.tsx
- * @purpose Homepage Ahilik 3-value card section — trust layer, Pattern A (useTranslations)
+ * @purpose Ahilik 3-value card section — trust layer, Pattern A (useTranslations)
  * @pattern A (useTranslations) — L-004 uyğun
- * @task TASK-0106
- * @lastModified 2026-05-20
+ * @task TASK-0106 · v2 restyle (cream + Inter + red accent) for /haqqimizda
+ * @usage Only `/haqqimizda` (after DoganNote). The homepage (HomeV2) does not render it.
  */
 
 'use client';
 
 import { useTranslations } from 'next-intl';
 import { Award, Heart, Shield } from 'lucide-react';
+import home from '@/components/home/v2/homeV2.module.css';
+import { inter } from '@/components/home/v2/font';
 
 const values = [
   { key: 'mastery', Icon: Award },
@@ -23,51 +25,32 @@ export function AhilikValues() {
   const t = useTranslations('home.ahilikValues');
 
   return (
-    <section
-      className="bg-[#FAFAF8] py-16"
-      aria-labelledby="ahilik-values-title"
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Eyebrow + Başlıq + Subtitle */}
+    <section className={`${home.tokens} ${inter.className} bg-[#F6F1E9] py-16`} aria-labelledby="ahilik-values-title">
+      <div className={home.wrap}>
         <div className="mb-10 text-center">
-          <span className="mb-3 block text-sm font-semibold uppercase tracking-widest text-[#C5A022]">
+          <span className={home.eyebrow}>
+            <span className={home.dot} />
             {t('eyebrow')}
           </span>
-          <h2
-            id="ahilik-values-title"
-            className="mb-3 font-display text-3xl font-bold text-[#1A1A2E] sm:text-4xl"
-          >
+          <h2 id="ahilik-values-title" className={`${home.h2} text-center`}>
             {t('title')}
           </h2>
-          <p className="mx-auto max-w-2xl text-base text-gray-600">
-            {t('subtitle')}
-          </p>
+          <p className="mx-auto max-w-2xl text-[16px] leading-7 text-slate-600">{t('subtitle')}</p>
         </div>
 
-        {/* 3 Kart */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {values.map(({ key, Icon }) => (
             <article
               key={key}
-              className="rounded-2xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:border-[#C5A022] hover:shadow-lg"
+              className="rounded-[22px] border border-[#E4DCCD] bg-white p-6 transition-colors duration-200 hover:border-[#0F172A]"
             >
-              {/* İkon */}
-              <div className="mb-4 inline-flex items-center justify-center rounded-xl bg-[#C5A022]/10 p-3">
-                <Icon
-                  className="h-8 w-8 text-[#C5A022]"
-                  aria-hidden="true"
-                />
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FDECEF] text-[#BE2F47]">
+                <Icon className="h-6 w-6" aria-hidden="true" />
               </div>
-
-              {/* Ad */}
-              <h3 className="mb-2 font-display text-lg font-bold text-[#1A1A2E]">
+              <h3 className="mb-2 text-[18px] font-black tracking-[-0.01em] text-[#0F172A]">
                 {t(`${key}.name` as `${ValueKey}.name`)}
               </h3>
-
-              {/* Açıqlama */}
-              <p className="text-sm text-gray-700 leading-relaxed">
-                {t(`${key}.desc` as `${ValueKey}.desc`)}
-              </p>
+              <p className="text-[14.5px] leading-6 text-slate-600">{t(`${key}.desc` as `${ValueKey}.desc`)}</p>
             </article>
           ))}
         </div>

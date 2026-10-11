@@ -100,7 +100,8 @@ export function analyseSurvey(
       const values = rows.flatMap((row) =>
         SURVEY_QUESTIONS.map((q, i) => (q.group === group ? row.ratings[i] : null)).filter((v): v is number => v !== null),
       );
-      return [group, values.length ? Math.round((values.reduce((s, v) => s + v, 0) / (values.length * 5)) * 100) : null];
+      // TASK-0538: 1–5 ratings rescaled to 0–100 ((avg − 1) / 4) — before, /5 × 100 made «all 1s» show as 20%.
+      return [group, values.length ? Math.round(((values.reduce((s, v) => s + v, 0) / values.length - 1) / 4) * 100) : null];
     }),
   ) as Record<SurveyGroup, number | null>;
   const answered = SURVEY_GROUPS.map((g) => groups[g]).filter((v): v is number => v !== null);

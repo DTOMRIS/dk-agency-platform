@@ -1,11 +1,48 @@
 'use client';
 
-import { startTransition, useState, useEffect, useCallback, useRef } from 'react';
+import { startTransition, useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import LeadForm from './LeadForm';
 import RadarChart from './RadarChart';
 import ToolResetControls from '@/components/toolkit/ToolResetControls';
+
+/* v2 look (cream / ink / one red accent, rounded-[22px] cards) — shared by the franchise quizzes, the
+   Franchbook wizard and the Toolkit hotel / OTA quizzes. Styling only; scoring is untouched. */
+const CARD = 'rounded-[22px] border border-[#E4DCCD] bg-white p-6 sm:p-8';
+const EYEBROW = 'inline-flex items-center gap-2 text-[12px] font-extrabold uppercase tracking-[0.14em] text-[#BE2F47]';
+const H1 = 'text-[clamp(28px,4vw,44px)] font-black leading-[1.05] tracking-[-0.04em] text-[#0F172A]';
+const H2 = 'text-[clamp(20px,2.4vw,26px)] font-black leading-tight tracking-[-0.03em] text-[#0F172A]';
+const BTN_PRIMARY =
+  'inline-flex min-h-11 items-center justify-center rounded-full bg-dk-red-strong px-6 text-[14px] font-bold text-white transition-colors hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-40';
+const BTN_SECONDARY =
+  'inline-flex min-h-11 items-center justify-center rounded-full border border-[#E4DCCD] bg-white px-5 text-[14px] font-bold text-[#0F172A] transition-colors hover:border-[#0F172A]';
+const LETTER = 'my-6 rounded-2xl border-l-[3px] border-[#BE2F47] bg-[#FBF8F3] px-5 py-4 text-[14.5px] leading-6 text-slate-700';
+const INPUT =
+  'w-full rounded-xl border border-[#E4DCCD] bg-white px-4 py-3 text-[15px] text-[#0F172A] placeholder:text-slate-400 outline-none focus:border-[#D63B54] focus:ring-2 focus:ring-[#D63B54]/15';
+
+function Eyebrow({ children }: { children: ReactNode }) {
+  return (
+    <span className={EYEBROW}>
+      <span className="h-[7px] w-[7px] rounded-full bg-[#E94560]" aria-hidden="true" />
+      {children}
+    </span>
+  );
+}
+
+function Progress({ label, progress }: { label: string; progress: number }) {
+  return (
+    <>
+      <div className="mb-2 flex justify-between text-[12.5px] font-bold text-slate-600">
+        <span>{label}</span>
+        <span className="tabular-nums">{Math.round(progress)}%</span>
+      </div>
+      <div className="mb-6 h-2 overflow-hidden rounded-full bg-[#F3ECE1]">
+        <div className="h-full rounded-full bg-dk-red-strong transition-all duration-300" style={{ width: `${progress}%` }} />
+      </div>
+    </>
+  );
+}
 
 /** Minimal markdown→HTML for AI report output (trusted source, no user input). */
 function renderMarkdown(md: string): string {
@@ -101,7 +138,7 @@ function ScoreRing({ score }: { score: number }) {
   return (
     <div className="relative mx-auto mb-4 h-44 w-44">
       <svg width="176" height="176" className="-rotate-90">
-        <circle cx="88" cy="88" r={radius} fill="none" stroke="#eee" strokeWidth="13" />
+        <circle cx="88" cy="88" r={radius} fill="none" stroke="#EFE9DE" strokeWidth="13" />
         <circle
           cx="88"
           cy="88"
@@ -116,12 +153,12 @@ function ScoreRing({ score }: { score: number }) {
         />
         <defs>
           <linearGradient id="ring-grad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#C5A022" />
-            <stop offset="1" stopColor="#E94560" />
+            <stop offset="0" stopColor="#F28A9B" />
+            <stop offset="1" stopColor="#BE2F47" />
           </linearGradient>
         </defs>
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center font-display text-5xl font-extrabold text-slate-900">
+      <div className="absolute inset-0 flex items-center justify-center text-5xl font-black tracking-[-0.04em] text-[#0F172A] tabular-nums">
         {displayScore}
       </div>
     </div>
@@ -164,20 +201,15 @@ function WizardQuiz({ config }: { config: WizardQuizConfig }) {
 
   if (step === -1) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-        <span className="mb-3 inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-700">
-          {t('badge')}
-        </span>
-        <h1 className="mb-3 font-display text-3xl font-extrabold text-slate-900">{t('title')}</h1>
-        <p className="mb-2 text-base text-slate-500">{t('subtitle')}</p>
-        <div className="my-6 border-l-[3px] border-[var(--dk-gold)] pl-5 text-sm text-slate-600">
+      <div className={CARD}>
+        <Eyebrow>{t('badge')}</Eyebrow>
+        <h1 className={`mt-3 mb-3 ${H1}`}>{t('title')}</h1>
+        <p className="mb-2 text-[16px] leading-7 text-slate-600">{t('subtitle')}</p>
+        <div className={LETTER}>
           <p>{t('letter')}</p>
-          <p className="mt-2 font-display font-bold text-slate-900">{t('letterSign')}</p>
+          <p className="mt-2 font-bold text-[#0F172A]">{t('letterSign')}</p>
         </div>
-        <button
-          onClick={() => setStep(0)}
-          className="rounded-full bg-[var(--dk-gold)] px-7 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-400"
-        >
+        <button type="button" onClick={() => setStep(0)} className={BTN_PRIMARY}>
           {t('startCta')}
         </button>
       </div>
@@ -199,30 +231,19 @@ function WizardQuiz({ config }: { config: WizardQuizConfig }) {
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-      <div className="mb-1 flex justify-between text-xs font-semibold text-slate-400">
-        <span>{t('stepLabel', { current: step + 1, total: config.steps.length })}</span>
-        <span>{Math.round(progress)}%</span>
-      </div>
-      <div className="mb-6 h-2 overflow-hidden rounded-full bg-amber-50">
-        <div
-          className="h-full rounded-full bg-gradient-to-r from-[var(--dk-gold)] to-[var(--dk-red)] transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
+    <div className={CARD}>
+      <Progress label={t('stepLabel', { current: step + 1, total: config.steps.length })} progress={progress} />
 
-      <div className="mb-1 text-xs font-bold uppercase tracking-widest text-[var(--dk-red)]">
-        {t(`steps.${current.key}.eyebrow`)}
-      </div>
-      <h2 className="mb-5 font-display text-xl font-bold text-slate-900">{t(`steps.${current.key}.title`)}</h2>
+      <Eyebrow>{t(`steps.${current.key}.eyebrow`)}</Eyebrow>
+      <h2 className={`mt-2 mb-5 ${H2}`}>{t(`steps.${current.key}.title`)}</h2>
 
       <div className="space-y-4">
         {current.fields.map((field) => {
-          const inputClass = 'w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 focus:border-[var(--dk-gold)] focus:outline-none';
+          const inputClass = INPUT;
           const value = values[field.name] ?? '';
           return (
             <label key={field.name} className="block">
-              <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-500">
+              <span className="mb-1.5 block text-[14px] font-bold text-[#0F172A]">
                 {t(`fields.${field.name}.label`)}
               </span>
               {field.type === 'textarea' ? (
@@ -248,13 +269,10 @@ function WizardQuiz({ config }: { config: WizardQuizConfig }) {
         })}
       </div>
 
-      <div className="mt-6 flex gap-3">
+      <div className="mt-6 flex flex-wrap gap-3">
         {step > 0 && (
-          <button
-            onClick={() => setStep((currentStep) => currentStep - 1)}
-            className="rounded-full bg-slate-100 px-5 py-3 text-sm font-bold text-slate-700"
-          >
-            {'<'} {t('back')}
+          <button type="button" onClick={() => setStep((currentStep) => currentStep - 1)} className={BTN_SECONDARY}>
+            ← {t('back')}
           </button>
         )}
         <button
@@ -262,8 +280,9 @@ function WizardQuiz({ config }: { config: WizardQuizConfig }) {
             if (step === config.steps.length - 1) void submitWizard();
             else setStep((currentStep) => currentStep + 1);
           }}
+          type="button"
           disabled={!canContinue || submitting}
-          className="rounded-full bg-[var(--dk-gold)] px-6 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-400 disabled:opacity-40"
+          className={BTN_PRIMARY}
         >
           {submitting ? t('submitting') : step === config.steps.length - 1 ? t(config.submitLabelKey || 'submit') : t('next')}
         </button>
@@ -363,6 +382,11 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
   }, [aiReport, aiReportPath, fetchAiReport, questionCount, step]);
 
   const verdict = config.getVerdict(avgScore);
+  // TASK-0538 (calc audit): answers score 25–100, so the worst possible average was shown as 25%. The ring, the
+  // card and the bars show it rescaled to 0–100 ((x − min) / (max − min)); verdicts keep reading the raw average.
+  const minOption = scoreOptions[0] ?? 0;
+  const maxOption = scoreOptions[scoreOptions.length - 1] || 100;
+  const displayScore = validAnswers.length > 0 ? rescaleToPercent(avgScore, minOption, maxOption) : 0;
   const weakIdx = config.getWeakestIndex(validAnswers);
   const franchbookIdx = config.franchbookCtaIndex === undefined ? 5 : config.franchbookCtaIndex;
 
@@ -387,20 +411,15 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
 
   if (step === -1) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-        <span className="mb-3 inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-700">
-          {t('badge')}
-        </span>
-        <h1 className="mb-3 font-display text-3xl font-extrabold text-slate-900">{t('title')}</h1>
-        <p className="mb-2 text-base text-slate-500">{t('subtitle')}</p>
-        <div className="my-6 border-l-[3px] border-[var(--dk-gold)] pl-5 text-sm text-slate-600">
+      <div className={CARD}>
+        <Eyebrow>{t('badge')}</Eyebrow>
+        <h1 className={`mt-3 mb-3 ${H1}`}>{t('title')}</h1>
+        <p className="mb-2 text-[16px] leading-7 text-slate-600">{t('subtitle')}</p>
+        <div className={LETTER}>
           <p>{t('letter')}</p>
-          <p className="mt-2 font-display font-bold text-slate-900">{t('letterSign')}</p>
+          <p className="mt-2 font-bold text-[#0F172A]">{t('letterSign')}</p>
         </div>
-        <button
-          onClick={() => setStep(0)}
-          className="rounded-full bg-[var(--dk-gold)] px-7 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-400"
-        >
+        <button type="button" onClick={() => setStep(0)} className={BTN_PRIMARY}>
           {t('startCta')}
         </button>
       </div>
@@ -413,22 +432,11 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
     return (
       <>
       {resetControls}
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm" data-testid="tool-inputs">
-        <div className="mb-1 flex justify-between text-xs font-semibold text-slate-600">
-          <span>{t('stepLabel', { current: step + 1, total: questionCount })}</span>
-          <span>{Math.round(progress)}%</span>
-        </div>
-        <div className="mb-6 h-2 overflow-hidden rounded-full bg-amber-50">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-[var(--dk-gold)] to-[var(--dk-red)] transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+      <div className={CARD} data-testid="tool-inputs">
+        <Progress label={t('stepLabel', { current: step + 1, total: questionCount })} progress={progress} />
 
-        <div className="mb-1 text-xs font-bold uppercase tracking-widest text-[var(--dk-red)]">
-          {t(`questions.${step}.cat`)}
-        </div>
-        <h2 className="mb-5 font-display text-xl font-bold text-slate-900">{t(`questions.${step}.q`)}</h2>
+        <Eyebrow>{t(`questions.${step}.cat`)}</Eyebrow>
+        <h2 className={`mt-2 mb-5 ${H2}`}>{t(`questions.${step}.q`)}</h2>
 
         <div className="space-y-3">
           {scoreOptions.map((score, optIdx) => (
@@ -437,31 +445,36 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
               type="button"
               aria-pressed={answers[step] === score}
               onClick={() => pick(optIdx)}
-              className={`block w-full rounded-xl border p-4 text-left text-sm transition ${
+              className={`flex w-full items-start gap-3 rounded-2xl border p-4 text-left text-[15px] leading-6 transition ${
                 answers[step] === score
-                  ? 'border-[var(--dk-navy)] bg-amber-50 font-semibold text-slate-900'
-                  : 'border-slate-200 text-slate-700 hover:border-[var(--dk-gold)] hover:text-slate-900'
+                  ? 'border-[#0F172A] bg-[#FBF8F3] font-semibold text-[#0F172A] ring-1 ring-[#0F172A]'
+                  : 'border-[#E4DCCD] bg-white text-slate-700 hover:border-[#0F172A] hover:text-[#0F172A]'
               }`}
             >
-              <span className="mr-2 font-bold text-slate-900">{String.fromCharCode(65 + optIdx)}.</span>
+              <span
+                className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-[12.5px] font-black ${
+                  answers[step] === score ? 'bg-[#0F172A] text-white' : 'bg-[#F6F1E9] text-[#0F172A]'
+                }`}
+                aria-hidden="true"
+              >
+                {String.fromCharCode(65 + optIdx)}
+              </span>
               {t(`questions.${step}.options.${optIdx}`)}
             </button>
           ))}
         </div>
 
-        <div className="mt-6 flex gap-3">
+        <div className="mt-6 flex flex-wrap gap-3">
           {step > 0 && (
-            <button
-              onClick={() => setStep((current) => current - 1)}
-              className="rounded-full bg-slate-100 px-5 py-3 text-sm font-bold text-slate-700"
-            >
-              {'<'} {t('back')}
+            <button type="button" onClick={() => setStep((current) => current - 1)} className={BTN_SECONDARY}>
+              ← {t('back')}
             </button>
           )}
           <button
+            type="button"
             onClick={() => setStep((current) => current + 1)}
             disabled={answers[step] === null}
-            className="rounded-full bg-[var(--dk-gold)] px-6 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-400 disabled:opacity-40"
+            className={BTN_PRIMARY}
           >
             {step === questionCount - 1 ? t('seeResult') : t('next')}
           </button>
@@ -479,48 +492,47 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
   return (
     <>
     {resetControls}
-    <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-      <span className="mb-4 inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-700">
-        {t('resultBadge')}
-      </span>
-      <ScoreRing score={avgScore} />
-      <h2 className="text-center font-display text-2xl font-extrabold text-slate-900">{t(`verdict.${verdict}.title`)}</h2>
-      <p className="mb-6 text-center text-sm text-slate-500">{t(`verdict.${verdict}.sub`)}</p>
+    <div className={CARD}>
+      <div className="mb-4">
+        <Eyebrow>{t('resultBadge')}</Eyebrow>
+      </div>
+      <ScoreRing score={displayScore} />
+      <h2 className={`text-center ${H2}`}>{t(`verdict.${verdict}.title`)}</h2>
+      <p className="mx-auto mt-2 mb-6 max-w-xl text-center text-[14.5px] leading-6 text-slate-600">{t(`verdict.${verdict}.sub`)}</p>
 
       {/* Radar Chart */}
       <div className="mb-6">
         <RadarChart
           labels={Array.from({ length: questionCount }, (_, i) => t(`questions.${i}.cat`))}
-          values={answers.map((a) => a ?? 0)}
-          maxValue={scoreOptions[scoreOptions.length - 1] || 100}
+          values={answers.map((a) => (a == null ? 0 : rescaleToPercent(a, minOption, maxOption)))}
+          maxValue={100}
         />
       </div>
 
       {/* Share / Download */}
       <div className="mb-6 flex justify-center gap-3">
         <a
-          href={`/api/franchise/result-card?type=${config.reportType === 'FranchiseBuyerReport' ? 'buyer' : 'readiness'}&score=${avgScore}&verdict=${encodeURIComponent(t(`verdict.${verdict}.title`))}&locale=${locale}`}
-          download={`dk-franchise-${avgScore}.png`}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+          href={`/api/franchise/result-card?type=${config.reportType === 'FranchiseBuyerReport' ? 'buyer' : 'readiness'}&score=${displayScore}&verdict=${encodeURIComponent(t(`verdict.${verdict}.title`))}&locale=${locale}`}
+          download={`dk-franchise-${displayScore}.png`}
+          className={`${BTN_SECONDARY} gap-2`}
         >
           {t('shareDownload')}
         </a>
       </div>
 
-      <div className="mb-6 space-y-2">
+      <div className="mb-6 space-y-3 rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] p-4 sm:p-5">
         {Array.from({ length: questionCount }, (_, i) => {
           const val = answers[i] ?? 0;
-          const maxScore = scoreOptions[scoreOptions.length - 1] || 100;
-          const pct = Math.max(0, Math.min(100, (val / maxScore) * 100));
-          const color = pct >= 75 ? 'bg-[var(--dk-gold)]' : pct >= 50 ? 'bg-amber-400' : 'bg-[var(--dk-red)]';
+          const pct = answers[i] == null ? 0 : rescaleToPercent(val, minOption, maxOption);
+          const color = val >= 75 ? 'bg-emerald-500' : val >= 50 ? 'bg-amber-400' : 'bg-dk-red-strong';
 
           return (
             <div key={i}>
-              <div className="flex justify-between text-xs font-semibold text-slate-900">
+              <div className="mb-1 flex justify-between gap-3 text-[13px] font-semibold text-[#0F172A]">
                 <span>{t(`questions.${i}.cat`)}</span>
-                <span>{val}</span>
+                <span className="tabular-nums">{answers[i] == null ? '—' : `${pct}%`}</span>
               </div>
-              <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+              <div className="h-2 overflow-hidden rounded-full bg-[#EFE9DE]">
                 <div className={`h-full rounded-full ${color} transition-all`} style={{ width: `${pct}%` }} />
               </div>
             </div>
@@ -528,30 +540,30 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
         })}
       </div>
 
-      <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
-        <h3 className="mb-1 text-sm font-bold text-slate-900">
+      <div className="mb-6 rounded-2xl border border-[#F4B8C3] bg-[#FDECEF] p-4 sm:p-5">
+        <h3 className="mb-1 text-[15px] font-black text-[#0F172A]">
           {t('weakestLabel')}: {t(`questions.${weakIdx}.cat`)}
         </h3>
-        <p className="text-sm text-slate-600">{t('weakestBody')}</p>
+        <p className="text-[14px] leading-6 text-slate-700">{t('weakestBody')}</p>
       </div>
 
       {franchbookIdx !== null && weakIdx === franchbookIdx && (
         <Link
           href="/franchise/francbuk-generatoru"
-          className="mb-6 block rounded-xl border border-[var(--dk-gold)] bg-amber-50 p-4 text-sm font-bold text-[var(--dk-navy)] transition hover:bg-amber-100"
+          className="mb-6 block rounded-2xl bg-[#0F172A] p-4 text-[14.5px] font-bold text-white transition-colors hover:bg-[#1E293B] sm:p-5"
         >
           {t('franchbookCta')}
         </Link>
       )}
 
       {aiLoading && (
-        <div className="mb-6 rounded-xl bg-slate-50 p-4 text-center text-sm text-slate-500">
+        <div className="mb-6 rounded-2xl bg-[#FBF8F3] p-4 text-center text-[14px] text-slate-600">
           {t('aiLoading')}
         </div>
       )}
       {aiReport && (
-        <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
-          <h3 className="mb-2 text-sm font-bold text-slate-900">{t('aiReportTitle')}</h3>
+        <div className="mb-6 rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] p-5 sm:p-6">
+          <h3 className="mb-2 text-[15px] font-black text-[#0F172A]">{t('aiReportTitle')}</h3>
           <div
             className="prose prose-sm prose-slate max-w-none text-sm leading-relaxed text-slate-700 [&_strong]:text-slate-900 [&_h1]:text-lg [&_h1]:font-bold [&_h1]:text-slate-900 [&_h2]:text-base [&_h2]:font-bold [&_h2]:text-slate-900 [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-slate-900 [&_ul]:list-disc [&_ul]:pl-4 [&_ol]:list-decimal [&_ol]:pl-4 [&_li]:mb-1"
             dangerouslySetInnerHTML={{ __html: renderMarkdown(aiReport) }}
@@ -560,10 +572,16 @@ function ScoreQuiz({ config }: { config: ScoreQuizConfig }) {
       )}
 
       <LeadForm toolSource={toolSource} score={scoreData} />
-      <p className="mt-6 text-center text-xs text-slate-600">{t('disclaimer')}</p>
+      <p className="mt-6 text-center text-[12.5px] leading-5 text-slate-500">{t('disclaimer')}</p>
     </div>
     </>
   );
+}
+
+/** TASK-0538: (x − min) / (max − min) on a 0–100 scale. */
+function rescaleToPercent(value: number, min: number, max: number): number {
+  if (max <= min) return 0;
+  return Math.round(Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100)));
 }
 
 export default function FranchiseQuiz({ config }: { config: QuizConfig }) {

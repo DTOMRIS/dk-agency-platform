@@ -427,3 +427,160 @@ process.on('beforeExit', () => {
     'Balansı ildə ən azı bir dəfə mühasibinizlə birlikdə doldurun. Aylıq nəticə üçün: «12 aylıq mənfəət-zərər» şablonu.',
   ])], 'Balans hesabatı — DK Agency şablonu', 'Aktivlər, öhdəliklər, kapital və əsas göstəricilər');
 }
+
+// ═══ 6. Nəzəri və faktiki istifadə (TASK-0538, MarginEdge «theoretical vs actual» idea — own design) ═════════
+{
+  const sh = new Sheet('Nəzəri və faktiki', { widths: [15, 24, 10, 13, 13, 13, 14, 13, 15, 12, 14, 11, 12, 4, 36, 16], logo: true, freeze: 'A8', tab: 'FF0F172A' });
+  header(sh, 15, 'Nəzəri və faktiki istifadə', 'Reseptə görə nə qədər getməli idi, anbara görə nə qədər getdi? Fərq = itki, porsiya pozuntusu və ya qeydə alınmamış satış. Ay: __________');
+  legend(sh, 5);
+  const heads = ['Kateqoriya', 'Məhsul', 'Ölçü vahidi', 'Vahid qiyməti (₼)', 'Ayın əvvəlində qalıq', 'Ay ərzində alış', 'Ayın sonunda sayım', 'Faktiki istifadə', 'Nəzəri istifadə (resept × satılan porsiya)', 'Fərq (miqdar)', 'Fərqin dəyəri (₼)', 'Fərq (%)', 'Vəziyyət'];
+  heads.forEach((h, i) => sh.set(`${col(i)}7`, h, 'head'));
+  sh.height(7, 58);
+  const ex = [
+    ['Ət və toyuq', 'Mal əti', 'kq', 18, 20, 40, 15, 41],
+    ['Ət və toyuq', 'Toyuq filesi', 'kq', 9.5, 15, 60, 8, 64],
+    ['Tərəvəz', 'Pomidor', 'kq', 2.2, 10, 80, 12, 70],
+    ['Quru məhsul', 'Düyü', 'kq', 3, 30, 50, 22, 56],
+    ['Süd məhsulları', 'Pendir', 'kq', 12, 6, 15, 4, 16],
+    ['Yağlar', 'Günəbaxan yağı', 'l', 3.4, 20, 40, 18, 36],
+  ];
+  const first = 8, last = 37;
+  for (let r = first; r <= last; r++) {
+    const e = ex[r - first];
+    sh.set(`A${r}`, e ? e[0] : '', 'inText');
+    sh.set(`B${r}`, e ? e[1] : '', 'inText');
+    sh.set(`C${r}`, e ? e[2] : '', 'inText');
+    sh.set(`D${r}`, e ? e[3] : '', 'inMoney');
+    sh.set(`E${r}`, e ? e[4] : '', 'inMoney');
+    sh.set(`F${r}`, e ? e[5] : '', 'inMoney');
+    sh.set(`G${r}`, e ? e[6] : '', 'inMoney');
+    sh.set(`H${r}`, { f: `IF(B${r}="","",N(E${r})+N(F${r})-N(G${r}))` }, 'fMoney');
+    sh.set(`I${r}`, e ? e[7] : '', 'inMoney');
+    sh.set(`J${r}`, { f: `IF(OR(B${r}="",I${r}=""),"",H${r}-I${r})` }, 'fMoney');
+    sh.set(`K${r}`, { f: `IF(J${r}="","",J${r}*D${r})` }, 'fMoney');
+    sh.set(`L${r}`, { f: `IF(OR(J${r}="",N(I${r})=0),"",J${r}/I${r})` }, 'fPct');
+    sh.set(`M${r}`, { f: `IF(L${r}="","",IF(L${r}>$P$15,"Yoxla",IF(L${r}<-$P$15,"Sayımı yoxla","Normal")))` }, 'fText');
+  }
+  sh.over(`M${first}:M${last}`, `OR(M${first}="Yoxla",M${first}="Sayımı yoxla")`, 0);
+  sh.over(`K${first}:K${last}`, `AND(ISNUMBER(K${first}),K${first}>0)`, 0);
+  sh.set('O7', 'Ayın yekunu', 'head').set('P7', '', 'head');
+  const sum = [
+    ['Faktiki istifadənin dəyəri (₼)', `SUMPRODUCT(D${first}:D${last},H${first}:H${last})`, 'fMoney'],
+    ['Nəzəri istifadənin dəyəri (₼)', `SUMPRODUCT(D${first}:D${last},I${first}:I${last})`, 'fMoney'],
+    ['Fərq (₼) — itki və pozuntu', 'P8-P9', 'totMoney'],
+  ];
+  sum.forEach(([l, f, s], i) => { sh.set(`O${8 + i}`, l, i === 2 ? 'totLabel' : 'labelCell'); sh.set(`P${8 + i}`, { f }, s); });
+  sh.set('O11', 'Ayın ərzaq satışı (₼)', 'labelCell').set('P11', 12000, 'inMoney');
+  sh.set('O12', 'Faktiki food cost', 'labelCell').set('P12', { f: 'IF(P11>0,P8/P11,"")' }, 'fPct');
+  sh.set('O13', 'Nəzəri food cost', 'labelCell').set('P13', { f: 'IF(P11>0,P9/P11,"")' }, 'fPct');
+  sh.set('O14', 'Fərq (faiz bəndi)', 'totLabel').set('P14', { f: 'IF(P11>0,P12-P13,"")' }, 'totPct');
+  sh.set('O15', 'Xəbərdarlıq həddi (%) — öz həddinizi yazın', 'labelCell').set('P15', 0.05, 'inPct');
+  sh.set('O17', 'Nəzəri istifadə: hər yeməyin reseptindəki miqdar × ay ərzində satılan porsiya (kassa hesabatından). «Yoxla» = reseptdən çox gedib (itki, böyük porsiya, oğurluq). «Sayımı yoxla» = reseptdən az gedib — çox vaxt sayım və ya qaimə səhvidir.', 'note').merge('O17:P24');
+  footer(sh, 40, 15);
+  save('dk-nezeri-ve-faktiki.xlsx', [sh, guide('Nəzəri və faktiki istifadə', [
+    'Ayın əvvəlində qalığı, ay ərzində alışları (qaimələrə görə) və ayın sonundakı sayımı yazın — «Faktiki istifadə» özü hesablanır.',
+    'Kassa hesabatından hər yeməyin ay ərzində neçə porsiya satıldığını götürün və reseptdəki miqdara vurun: bu, həmin məhsulun «Nəzəri istifadə»sidir.',
+    'Bir məhsul bir neçə yeməkdə varsa, hamısının nəzəri miqdarını toplayıb bir sətirdə yazın.',
+    '«Fərqin dəyəri» müsbət və böyükdürsə, ilk həmin məhsula baxın: porsiya ölçüsü, itki qeydi, anbarın qorunması.',
+    'Sağdakı blokda ayın ərzaq satışını yazın: faktiki və nəzəri food cost arasındakı fərq itkinin pul ilə ölçüsüdür.',
+    'Reseptin maya dəyərini hesablamaq üçün: dkagency.com.tr/toolkit/food-cost.',
+  ])], 'Nəzəri və faktiki istifadə — DK Agency şablonu', 'Resept üzrə gözlənilən və anbar üzrə faktiki istifadə, itkinin dəyəri');
+}
+
+// ═══ 7. Qaimə qiymət izləyicisi (TASK-0538, MarginEdge «invoice price tracking» idea — own design) ════════════
+{
+  const sh = new Sheet('Qaimələr', { widths: [12, 20, 22, 10, 11, 13, 14, 14, 12, 15, 14, 4, 36, 16], logo: true, freeze: 'A8', tab: 'FF0F172A' });
+  header(sh, 13, 'Qaimə qiymət izləyicisi', 'Hər qaimə sətrini yazın: eyni məhsulun əvvəlki qiyməti özü tapılır və qiymət artanda xəbərdarlıq görünür.');
+  legend(sh, 5);
+  const heads = ['Tarix', 'Təchizatçı', 'Məhsul', 'Ölçü vahidi', 'Miqdar', 'Vahid qiyməti (₼)', 'Məbləğ (₼)', 'Əvvəlki qiymət (₼)', 'Dəyişmə (%)', 'Vəziyyət', 'Artımın əlavə xərci (₼)'];
+  heads.forEach((h, i) => sh.set(`${col(i)}7`, h, 'head'));
+  sh.height(7, 40);
+  const ex = [
+    ['03.09', 'Təchizatçı A', 'Mal əti', 'kq', 20, 17.5],
+    ['03.09', 'Təchizatçı B', 'Pomidor', 'kq', 40, 2.0],
+    ['10.09', 'Təchizatçı A', 'Mal əti', 'kq', 20, 18.0],
+    ['10.09', 'Təchizatçı B', 'Pomidor', 'kq', 40, 2.2],
+    ['17.09', 'Təchizatçı C', 'Günəbaxan yağı', 'l', 20, 3.4],
+    ['24.09', 'Təchizatçı A', 'Mal əti', 'kq', 20, 19.2],
+    ['24.09', 'Təchizatçı B', 'Pomidor', 'kq', 40, 2.1],
+  ];
+  const first = 8, last = 107;
+  for (let r = first; r <= last; r++) {
+    const e = ex[r - first];
+    sh.set(`A${r}`, e ? e[0] : '', 'inText');
+    sh.set(`B${r}`, e ? e[1] : '', 'inText');
+    sh.set(`C${r}`, e ? e[2] : '', 'inText');
+    sh.set(`D${r}`, e ? e[3] : '', 'inText');
+    sh.set(`E${r}`, e ? e[4] : '', 'inMoney');
+    sh.set(`F${r}`, e ? e[5] : '', 'inMoney');
+    sh.set(`G${r}`, { f: `IF(C${r}="","",N(E${r})*N(F${r}))` }, 'fMoney');
+    // Last earlier price of the same product (rows above). LOOKUP(2, 1/(match), …) works in Excel, Sheets, Numbers.
+    sh.set(`H${r}`, r === first ? '' : { f: `IF(C${r}="","",IFERROR(LOOKUP(2,1/($C$${first}:C${r - 1}=C${r}),$F$${first}:F${r - 1}),""))` }, 'fMoney');
+    sh.set(`I${r}`, { f: `IF(OR(H${r}="",N(H${r})=0,F${r}=""),"",F${r}/H${r}-1)` }, 'fPct');
+    sh.set(`J${r}`, { f: `IF(I${r}="","",IF(I${r}>=$N$12,"Qiymət artıb",IF(I${r}<=-$N$12,"Ucuzlaşıb","Normal")))` }, 'fText');
+    sh.set(`K${r}`, { f: `IF(J${r}="Qiymət artıb",N(E${r})*(N(F${r})-N(H${r})),"")` }, 'fMoney');
+  }
+  sh.over(`J${first}:J${last}`, `J${first}="Qiymət artıb"`, 0);
+  sh.over(`J${first}:J${last}`, `J${first}="Ucuzlaşıb"`, 1);
+  sh.set('M7', 'Yekun', 'head').set('N7', '', 'head');
+  sh.set('M8', 'Qaimələrin cəmi (₼)', 'labelCell').set('N8', { f: `SUM(G${first}:G${last})` }, 'totMoney');
+  sh.set('M9', 'Qiyməti artan sətir sayı', 'labelCell').set('N9', { f: `COUNTIF(J${first}:J${last},"Qiymət artıb")` }, 'fInt');
+  sh.set('M10', 'Artımın bu qaimələrə əlavə xərci (₼)', 'totLabel').set('N10', { f: `SUM(K${first}:K${last})` }, 'totMoney');
+  sh.set('M12', 'Xəbərdarlıq həddi (%) — öz həddinizi yazın', 'labelCell').set('N12', 0.05, 'inPct');
+  sh.set('M14', 'Məhsulun adını hər dəfə eyni yazın («Mal əti», «mal əti» deyil) — əvvəlki qiymət ada görə tapılır. Qiymət artıbsa: başqa təchizatçıdan qiymət soruşun, menyu qiymətini və reseptin maya dəyərini yenidən hesablayın.', 'note').merge('M14:N21');
+  footer(sh, 110, 13);
+  save('dk-qaime-qiymet-izleyicisi.xlsx', [sh, guide('Qaimə qiymət izləyicisi', [
+    'Hər gələn qaimənin sətirlərini tarix sırası ilə yazın: tarix, təchizatçı, məhsul, ölçü vahidi, miqdar və vahid qiyməti.',
+    '«Əvvəlki qiymət» eyni məhsulun yuxarıdakı son qiymətidir — özü tapılır; məhsul adını hər dəfə eyni yazın.',
+    '«Vəziyyət» sütununda «Qiymət artıb» görünürsə, artım sizin həddinizdən (sağda, nümunə 5%) böyükdür.',
+    'Sağdakı blok qiymət artımının bu qaimələrə nə qədər əlavə xərc gətirdiyini göstərir.',
+    'Ayda bir dəfə ən çox artan 3 məhsula baxın: təchizatçı ilə danışın və ya alternativ qiymət alın.',
+    'Qiymət dəyişəndə yeməyin maya dəyərini yeniləyin: dkagency.com.tr/toolkit/food-cost.',
+  ])], 'Qaimə qiymət izləyicisi — DK Agency şablonu', 'Qaimə sətirləri, əvvəlki qiymət və qiymət artımı xəbərdarlığı');
+}
+
+// ═══ 8. Saxlama yerinə görə sayım (TASK-0538, MarginEdge «count by storage location» idea — own design) ════════
+{
+  const sh = new Sheet('Sayım', { widths: [16, 9, 24, 10, 13, 12, 14, 4, 30, 16], logo: true, freeze: 'A8', tab: 'FF0F172A' });
+  header(sh, 9, 'Saxlama yerinə görə sayım', 'Məhsulları anbardakı düzülüş sırası ilə yazın: sayan adam rəfdən-rəfə gedir, heç nə qaçmır. Tarix: ________   Sayan: ________');
+  legend(sh, 5);
+  const heads = ['Saxlama yeri', 'Rəf sırası', 'Məhsul', 'Ölçü vahidi', 'Vahid qiyməti (₼)', 'Sayım', 'Dəyər (₼)'];
+  heads.forEach((h, i) => sh.set(`${col(i)}7`, h, 'head'));
+  sh.height(7, 36);
+  const places = ['Soyuducu', 'Dondurucu', 'Quru anbar', 'Bar', 'Mətbəx rəfi'];
+  const ex = [
+    ['Soyuducu', 1, 'Pendir', 'kq', 12, 4],
+    ['Soyuducu', 2, 'Süd', 'l', 1.6, 12],
+    ['Dondurucu', 1, 'Mal əti', 'kq', 18, 15],
+    ['Dondurucu', 2, 'Toyuq filesi', 'kq', 9.5, 8],
+    ['Quru anbar', 1, 'Düyü', 'kq', 3, 22],
+    ['Quru anbar', 2, 'Un', 'kq', 1.1, 35],
+    ['Bar', 1, 'Mineral su 0,5 l', 'ədəd', 0.6, 150],
+  ];
+  const first = 8, last = 67;
+  for (let r = first; r <= last; r++) {
+    const e = ex[r - first];
+    sh.set(`A${r}`, e ? e[0] : '', 'inText');
+    sh.set(`B${r}`, e ? e[1] : '', 'inInt');
+    sh.set(`C${r}`, e ? e[2] : '', 'inText');
+    sh.set(`D${r}`, e ? e[3] : '', 'inText');
+    sh.set(`E${r}`, e ? e[4] : '', 'inMoney');
+    sh.set(`F${r}`, e ? e[5] : '', 'inMoney');
+    sh.set(`G${r}`, { f: `IF(C${r}="","",N(E${r})*N(F${r}))` }, 'fMoney');
+  }
+  sh.list(`A${first}:A${last}`, places);
+  sh.set('I7', 'Saxlama yeri', 'head').set('J7', 'Dəyər (₼)', 'head');
+  places.forEach((p, i) => { sh.set(`I${8 + i}`, p, 'labelCell'); sh.set(`J${8 + i}`, { f: `SUMIF($A$${first}:$A$${last},I${8 + i},$G$${first}:$G$${last})` }, 'fMoney'); });
+  const tr = 8 + places.length;
+  sh.set(`I${tr}`, 'Anbarın cəmi dəyəri', 'totLabel').set(`J${tr}`, { f: `SUM(G${first}:G${last})` }, 'totMoney');
+  sh.set(`I${tr + 2}`, 'Saxlama yerlərini özünüzə görə dəyişin (A sütunundakı siyahı). Bu cəmi «Anbar və maya dəyəri» şablonunda «Ayın sonunda sayım» kimi istifadə edin.', 'note').merge(`I${tr + 2}:J${tr + 8}`);
+  footer(sh, 70, 9);
+  save('dk-saxlama-yerine-gore-sayim.xlsx', [sh, guide('Saxlama yerinə görə sayım', [
+    'Bir dəfə: hər saxlama yerinin (soyuducu, dondurucu, quru anbar, bar) məhsullarını rəfdəki düzülüş sırası ilə yazın.',
+    'Sayım günü vərəqi çap edin və ya telefonda açın: sayan adam yerdən-yerə, rəfdən-rəfə gedir və yalnız «Sayım» sütununu doldurur.',
+    'Vahid qiymətini son qaimədən yazın — «Dəyər» və sağdakı yer üzrə cəmlər özü hesablanır.',
+    'Eyni məhsul iki yerdə saxlanırsa, iki sətir yazın (hər yer üçün bir).',
+    'Ayın sonundakı cəmi «Anbar və maya dəyəri» şablonuna köçürün — food cost faizi oradan hesablanır.',
+    'Sayımı hər ay eyni gündə və eyni saatda edin (məsələn, ayın son günü bağlanışdan sonra).',
+  ])], 'Saxlama yerinə görə sayım — DK Agency şablonu', 'Rəf sırası ilə anbar sayımı və yer üzrə dəyər');
+}
