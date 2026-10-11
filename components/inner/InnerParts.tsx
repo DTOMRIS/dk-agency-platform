@@ -14,6 +14,7 @@ import home from '@/components/home/v2/homeV2.module.css';
 import { Icon, type IconName } from '@/components/home/v2/shared';
 import s from './inner.module.css';
 import NewsCoverImage from './NewsCoverImage';
+import { newsCategoryCover } from '@/lib/news/category-covers';
 
 export function BackLink({ href, label }: { href: string; label: string }) {
   return (
@@ -179,18 +180,32 @@ export function NewsCover({
       </div>
     </div>
   );
-  if (!imageUrl) return generated;
+  const boxSizes = sizes ?? (compact ? '56px' : NEWS_CARD_SIZES);
+  // TASK-0539: no article image → the owner-made category cover; the generated cover stays as the
+  // last fallback (only if the local file itself fails).
+  const categoryCover = (
+    <NewsCoverImage
+      src={newsCategoryCover(cat)}
+      alt={alt}
+      sizes={boxSizes}
+      priority={priority}
+      className={s.coverImg}
+      fallback={generated}
+      objectPosition="left center"
+    />
+  );
+  if (!imageUrl) return categoryCover;
   // External news images (RSS, any host): next/image resizes them through the optimizer
   // (next.config remotePatterns allows any https host — TASK-0516, owner-approved 2026-10-09).
-  // The box is sized by CSS (`fill` + object-fit); a failed image falls back to the generated cover.
+  // The box is sized by CSS (`fill` + object-fit); a failed image falls back to the category cover.
   return (
     <NewsCoverImage
       src={imageUrl}
       alt={alt}
-      sizes={sizes ?? (compact ? '56px' : NEWS_CARD_SIZES)}
+      sizes={boxSizes}
       priority={priority}
       className={s.coverImg}
-      fallback={generated}
+      fallback={categoryCover}
     />
   );
 }

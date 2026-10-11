@@ -25,6 +25,7 @@ import { TELEGRAM_HANDLE, TELEGRAM_URL } from '@/lib/contact-channels';
 import { getBlogPostDetail } from '@/lib/db/blog-repository';
 import { getLatestShowcaseListings } from '@/lib/db/listings-repository';
 import { getToolkitEntries } from '@/lib/news/toolkit-catalog';
+import { newsCategoryCoverAbsolute } from '@/lib/news/category-covers';
 import { getToolMeta } from '@/lib/toolkit/tool-directory';
 import home from '@/components/home/v2/homeV2.module.css';
 import { inter } from '@/components/home/v2/font';
@@ -141,20 +142,19 @@ export async function generateMetadata({
       url: `https://dkagency.com.tr${localePrefix}/haberler/${article.slug}`,
       title: `${article.title} | DK Agency`,
       description: article.summary,
-      images: article.imageUrl
-        ? [
-            {
-              url: article.imageUrl,
-              alt: article.title,
-            },
-          ]
-        : [],
+      // TASK-0539: no article image → category cover (share previews are never empty).
+      images: [
+        {
+          url: article.imageUrl || newsCategoryCoverAbsolute(article.category),
+          alt: article.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${article.title} | DK Agency`,
       description: article.summary,
-      images: article.imageUrl ? [article.imageUrl] : [],
+      images: [article.imageUrl || newsCategoryCoverAbsolute(article.category)],
     },
   };
 }
@@ -217,7 +217,7 @@ export default async function HaberDetailPage({
     '@type': 'NewsArticle',
     headline: article.title,
     description: article.summary,
-    image: article.imageUrl ? [article.imageUrl] : undefined,
+    image: [article.imageUrl || newsCategoryCoverAbsolute(article.category)],
     author: { '@id': 'https://dkagency.com.tr/#organization', '@type': 'Organization', name: 'DK Agency', url: 'https://dkagency.com.tr' },
     publisher: {
       '@type': 'Organization',

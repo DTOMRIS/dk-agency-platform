@@ -23,6 +23,7 @@ export default function NewsCoverImage({
   priority,
   className,
   fallback,
+  objectPosition,
 }: {
   src: string;
   alt: string;
@@ -30,6 +31,8 @@ export default function NewsCoverImage({
   priority: boolean;
   className: string;
   fallback: ReactNode;
+  /** TASK-0539: category covers keep their left edge (the category name) when the box crops them. */
+  objectPosition?: string;
 }) {
   const [failed, setFailed] = useState(false);
   if (failed) return <>{fallback}</>;
@@ -44,6 +47,7 @@ export default function NewsCoverImage({
         unoptimized={!canOptimize(src)}
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
+        style={objectPosition ? { objectPosition } : undefined}
       />
     </div>
   );

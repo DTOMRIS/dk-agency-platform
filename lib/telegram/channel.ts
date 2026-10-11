@@ -9,6 +9,7 @@
 
 import { escapeHtml, telegramApi } from '@/lib/telegram/news-approval';
 import { TELEGRAM_HANDLE } from '@/lib/contact-channels';
+import { newsCategoryCoverAbsolute } from '@/lib/news/category-covers';
 
 const SITE_URL = 'https://dkagency.com.tr';
 
@@ -17,6 +18,8 @@ export type ChannelNews = {
   title: string;
   summary?: string | null;
   imageUrl?: string | null;
+  /** TASK-0539: no usable image → the category cover is posted. */
+  category?: string | null;
 };
 
 function channelId(): string {
@@ -38,7 +41,7 @@ export async function postNewsToChannel(news: ChannelNews): Promise<boolean> {
   };
 
   try {
-    const image = news.imageUrl && /^https?:\/\//.test(news.imageUrl) ? news.imageUrl : null;
+    const image = news.imageUrl && /^https?:\/\//.test(news.imageUrl) ? news.imageUrl : newsCategoryCoverAbsolute(news.category);
     if (image) {
       const res = await telegramApi(token, 'sendPhoto', {
         chat_id: channelId(),
