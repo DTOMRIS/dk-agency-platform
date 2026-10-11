@@ -236,7 +236,7 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
           h3: ({ children }) => {
             const text = React.Children.toArray(children).join('').toLowerCase();
             const calloutMap: Record<string, { icon: string; color: string; border: string }> = {
-              'guru kutusu': { icon: '🎓', color: 'bg-[color:color-mix(in_srgb,var(--dk-gold)_13%,transparent)]', border: 'border-[color:color-mix(in_srgb,var(--dk-gold)_19%,transparent)]' },
+              'guru kutusu': { icon: '🎓', color: 'bg-amber-50', border: 'border-amber-200' },
               'faydalı məlumat': { icon: 'ℹ️', color: 'bg-blue-50', border: 'border-blue-200' },
               'praktik tətbiq': { icon: '🔧', color: 'bg-emerald-50', border: 'border-emerald-200' },
               'investor qutusu': { icon: '💼', color: 'bg-indigo-50', border: 'border-indigo-200' },
@@ -467,17 +467,17 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             </figure>
           ),
           table: ({ children }) => (
-            <div className="my-6 overflow-x-auto rounded-xl border border-slate-200 bg-white">
+            <div className="my-6 overflow-x-auto rounded-2xl border border-[#E4DCCD] bg-white">
               <table className="w-full text-sm border-collapse">
                 {children}
               </table>
             </div>
           ),
           thead: ({ children }) => (
-            <thead className="bg-red-50">{children}</thead>
+            <thead className="bg-[#F6F1E9]">{children}</thead>
           ),
           th: ({ children }) => (
-            <th className="border-b border-slate-200 bg-red-50 px-4 py-3 text-left font-semibold text-red-700">
+            <th className="whitespace-nowrap border-b border-[#E4DCCD] bg-[#F6F1E9] px-4 py-3 text-left font-semibold text-[#0F172A]">
               {children}
             </th>
           ),

@@ -427,3 +427,7 @@ route patterni ile eyni).
 ## L-067: React compiler — props-dan törənən dəyərlər hook-lardan sonra
 - **Səhv:** `FranchiseQuiz`-də `displayScore` bloku `useCallback`/`useEffect`-dən əvvəl yazıldı → lint «Existing memoization could not be preserved» (`react-hooks/preserve-manual-memoization`).
 - **Qayda:** render-də hesablanan törəmə dəyərləri (yalnız JSX-də istifadə olunan) bütün hook-lardan sonra yerləşdir; hook asılılıqlarına yeni dəyər qatma, ehtiyac yoxdursa.
+
+## L-068: 'use client' faylından funksiya server komponentində çağırılmır
+- **Səhv:** `isMiniCalcTool()` `MiniCalc.tsx` ('use client') içində idi; server səhifə onu çağıranda bütün bloq yazıları 500 verdi. Lint və tsc keçdi — yalnız brauzer testi tutdu.
+- **Qayda:** client komponent faylından yalnız komponent idxal et; köməkçi funksiya/sabit server-təhlükəsiz ayrıca faylda (`lib/...`). Yeni client komponenti olan səhifəni production build-də ən azı bir dəfə aç.

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0542` feat(blog,news): bloq yazısında canlı mini kalkulyator (food cost, başabaş, çatdırılma, P&L), yuxarıda «Qısaca», ortada «Ustadan qeyd», sonda mərhələyə görə «Növbəti addım» və bir CTA; KAZAN yazıdan sualla açılır; xəbərdə «Restoranınız üçün nə deməkdir» kartı, DK baxışı fikir kimi ayrıca, alətlər mətnin içində. Araşdırma: NerdWallet, Toast, Nory, Owner.com, Skift, Semafor.
 - `TASK-0541` feat(analytics): hər müraciətin mənbəyi yazılır (reklam linki/UTM, Google, Instagram, Telegram, ChatGPT …) — Telegram bildirişində «Mənbə» sətri, admin «Bütün müraciətlər»-də «haradan gəlir» bölməsi; françayz formu və elan müraciəti artıq Telegram-a da gəlir.
 - `TASK-0540` fix(contact): Telegram-dakı «WhatsApp kliki» bildirişi artıq «mesaj hələ göndərilməyib» deyir (klik ≠ mesaj); e-poçtların altında səhv WhatsApp nömrəsi və Instagram düzəldi; bütün WhatsApp linkləri bir nömrədən; WhatsApp avtomatlaşdırması araşdırması.
 - `TASK-0539` feat(news): şəkli olmayan xəbərlərdə Doğan-ın hazırladığı kateqoriya şəkli (Maliyyə, Əməliyyat, Böyümə, Bazar, Texnologiya) — kartlarda, xəbər səhifəsində, paylaşım önizləməsində və Telegram kanalında; RSS şəkli açılmayanda da.

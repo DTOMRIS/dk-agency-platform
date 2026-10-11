@@ -1,14 +1,14 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-11 · feat/TASK-0541-utm-attribution · e2154af
+> `node scripts/generate-system-map.mjs` · 2026-10-11 · feat/TASK-0542-article-pages · 1a6af60e
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
 - Ünvan: **137** (həqiqi səhifə 123, yönləndirmə 10, güzgü 4) · page faylı 253
-- Dizayn (həqiqi səhifələr): v2 **48** · köhnə **49** · qarışıq **4** · işarəsiz 22
+- Dizayn (həqiqi səhifələr): v2 **50** · köhnə **49** · qarışıq **2** · işarəsiz 22
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 61 (+ 376 tapşırıq kartı)
+- Sənəd: 62 (+ 377 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -49,10 +49,11 @@ Cəmi **0** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazıl�
 Cəmi **0**.
 
 ## İstifadə olunmayan komponentlər (heç bir fayl import etmir)
-Cəmi **7**. Silməzdən əvvəl dinamik import / string ilə çağırış yoxlanır.
+Cəmi **8**. Silməzdən əvvəl dinamik import / string ilə çağırış yoxlanır.
 - `components/AdsPreview.tsx`
 - `components/StageSelector.tsx`
 - `components/ToolkitShowcase.tsx`
+- `components/blog/index.ts`
 - `components/home/PlatformCards.tsx`
 - `components/home/design.tokens.ts`
 - `components/types.ts`
@@ -135,13 +136,13 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/b2b-panel/toolkit/workforce` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
 | `/b2b-panel/yeni-ilan` | səhifə | köhnə | səhifədə | ✓ |  | listings/CreateListingForm.tsx |
 
-### Bloq / xəbərlər — 6 ünvan (v2 2 · köhnə 0 · qarışıq 2)
+### Bloq / xəbərlər — 6 ünvan (v2 4 · köhnə 0 · qarışıq 0)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/blog` | səhifə | v2 | — | ✓ |  | inner/InnerParts.tsx, blog/BlogDirectory.tsx |
-| `/blog/[slug]` | səhifə | qarışıq | səhifədə | ✓ |  | ui/FounderAvatar.tsx, ads/AdSlot.tsx, blog/index.ts |
+| `/blog/[slug]` | səhifə | v2 | səhifədə | ✓ | 2 | ui/FounderAvatar.tsx, ads/AdSlot.tsx, blog/MarkdownRenderer.tsx |
 | `/haberler` | səhifə | v2 | — | ✓ | 2 | ads/AdSlot.tsx, news/MansetVitrin.tsx, news/NewsFeedRail.tsx |
-| `/haberler/[slug]` | səhifə | qarışıq | — | ✓ |  | news/BlogContentWrapper.tsx, ads/AdSlot.tsx, blog/index.ts |
+| `/haberler/[slug]` | səhifə | v2 | — | ✓ |  | news/BlogContentWrapper.tsx, ads/AdSlot.tsx, blog/MarkdownRenderer.tsx |
 | `/xeberler` | → /haberler | — | — | ✗ |  |  |
 | `/xeberler/[slug]` (yalnız kök) | güzgü | v2 | — | ✓ |  |  |
 
@@ -311,13 +312,13 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/DECISIONS.md` | DECISIONS | 2026-05-27 | 6 |
 | `docs/DELIVERY-SYSTEM.md` | Delivery System (No-Regression Mode) | 2026-02-22 | 51 |
 | `docs/DEPLOYMENT.md` | DK Agency Deployment Guide | 2026-09-13 | 132 |
-| `docs/DEVLOG.md` | DK Agency Platform — Dev Log | 2026-10-11 | 1167 |
+| `docs/DEVLOG.md` | DK Agency Platform — Dev Log | 2026-10-11 | 1168 |
 | `docs/ENV-SETUP.md` | Environment Setup | 2026-04-24 | 23 |
 | `docs/FATURA-OCR-MASTERPLAN.md` | FATURA OCR MASTERPLAN — DK Agency | 2026-04-29 | 802 |
 | `docs/HANDOFF-11-IYUN-2026.md` | HANDOFF — 11 İyun 2026 Sessiyası | 2026-06-11 | 129 |
 | `docs/HANDOFF.md` | HANDOFF | 2026-10-11 | 597 |
 | `docs/I18N-AUDIT.md` | i18n Component-Level Audit | 2026-05-08 | 153 |
-| `docs/LESSONS.md` | DK Agency — Acı Dərslər (yeni task-dan əvvəl oxu) | 2026-10-11 | 430 |
+| `docs/LESSONS.md` | DK Agency — Acı Dərslər (yeni task-dan əvvəl oxu) | 2026-10-11 | 434 |
 | `docs/MARKETINQ_OCAGI_SPEC.md` | Marketinq Ocagi — Texniki Spec | 2026-05-11 | 238 |
 | `docs/ONBOARDING.md` | DK Agency Onboarding — 5 Dəqiqəlik Başlangıc | 2026-05-27 | 88 |
 | `docs/PLATFORM-STANDARDS.md` | Platform Standards (SEO + Security + Mobile + PWA) | 2026-02-22 | 48 |
@@ -326,7 +327,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 88 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 90 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |
@@ -340,5 +341,6 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/n8n/SETUP.md` | n8n RSS Auto-Fetch — Setup Rehberi | 2026-04-27 | 93 |
 | `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-06-10 | 348 |
 | `docs/reports/2026-10-09-marketinq-ocagi-audit.md` | Marketinq Ocağı (24 alət) — audit + dünya araşdırması (09.10.2026) | 2026-10-09 | 36 |
+| `docs/reports/2026-10-11-article-pages-research.md` | Blog və xəbər səhifələri — dizayn araşdırması (2026-10-11, TASK-0542) | 2026-10-11 | 26 |
 | `docs/reports/2026-10-11-owner-nory-marginedge.md` | Rəqib araşdırması — Owner.com, Nory, MarginEdge (2026-10-11) | 2026-10-11 | 23 |
 | `docs/reports/2026-10-11-whatsapp-automation.md` | WhatsApp avtomatlaşdırması — araşdırma (2026-10-11, TASK-0540) | 2026-10-11 | 31 |

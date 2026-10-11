@@ -7311,7 +7311,11 @@
       "feedDown": "Down",
       "trendEyebrow": "Trending",
       "trendTitle": "Trending news",
-      "moreNews": "All news"
+      "moreNews": "All news",
+      "whyTitle": "What it means for your restaurant",
+      "opinionTag": "This is not the news itself — it is the DK editors’ view.",
+      "toolsTitle": "Check it with your own numbers",
+      "sourceNote": "DK Agency translated and shortened the story."
     },
     "blog": {
       "eyebrow": "Blog · Doğan Tomris",
@@ -7362,6 +7366,96 @@
       "acceptAll": "Accept all",
       "save": "Save choice",
       "note": "Your choice is stored on this device."
+    },
+    "blogExtra": {
+      "quickTitle": "In short",
+      "quickMore": "Go to the conclusion",
+      "updated": "Updated: {date}",
+      "ustadEyebrow": "Note from the master",
+      "nextEyebrow": "Next step · {stage}",
+      "helpEyebrow": "DK Agency",
+      "kazanQ": "I read “{title}”. How do I apply this in my restaurant?",
+      "next": {
+        "devir": {
+          "t": "Transfer and sale listings",
+          "b": "See restaurants for sale or list your own venue."
+        }
+      }
+    },
+    "miniCalc": {
+      "eyebrow": "Check with your own numbers",
+      "empty": "Enter the numbers — the result shows here.",
+      "foot": "Calculated in your browser, nothing is sent.",
+      "full": "Open the full calculator",
+      "food-cost": {
+        "title": "Food cost of one portion",
+        "f": {
+          "cost": "Portion cost (₼)",
+          "price": "Menu price (₼)"
+        },
+        "p": {
+          "cost": "e.g. 3.40",
+          "price": "e.g. 12"
+        },
+        "result": "Food cost",
+        "ok": "Within the guide limit ({max}%).",
+        "high": "Above the guide limit ({max}%) — check the recipe or the price.",
+        "price": "Price for {max}%: {price}"
+      },
+      "basabas": {
+        "title": "Monthly break-even sales",
+        "f": {
+          "fixed": "Monthly fixed costs (rent, salaries …) ₼",
+          "check": "Average check (₼)",
+          "variable": "Variable costs (food, packaging) %"
+        },
+        "p": {
+          "fixed": "e.g. 9000",
+          "check": "e.g. 18",
+          "variable": "e.g. 35"
+        },
+        "result": "Break-even sales / month",
+        "perDay": "About {n} checks a day (30 days)",
+        "note": "A month below this closes at a loss."
+      },
+      "delivery-calc": {
+        "title": "What a delivery order leaves you",
+        "f": {
+          "price": "Menu price (₼)",
+          "commission": "Platform commission %",
+          "cost": "Food cost + packaging (₼)"
+        },
+        "p": {
+          "price": "e.g. 15",
+          "commission": "e.g. 30",
+          "cost": "e.g. 6"
+        },
+        "result": "Left for you",
+        "fee": "To the platform: {fee}",
+        "margin": "You keep {pct} of the price"
+      },
+      "pnl": {
+        "title": "What is left at month end",
+        "f": {
+          "sales": "Monthly sales (₼)",
+          "food": "Food (₼)",
+          "labor": "Labour (₼)",
+          "rent": "Rent (₼)",
+          "other": "Other costs (₼)"
+        },
+        "p": {
+          "sales": "e.g. 40000",
+          "food": "e.g. 12000",
+          "labor": "e.g. 10000",
+          "rent": "e.g. 4000",
+          "other": "e.g. 6000"
+        },
+        "result": "Profit · {pct} of sales",
+        "primeOk": "Prime cost (food + labour) {pct} — within {max}%.",
+        "primeHigh": "Prime cost (food + labour) {pct} — above {max}%.",
+        "rentOk": "Rent {pct} — within {max}%.",
+        "rentHigh": "Rent {pct} — above {max}%."
+      }
     }
   },
   "whatsappFloat": {
