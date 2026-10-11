@@ -2998,8 +2998,8 @@
   list-style: disc;
   display: grid;
   gap: 6px;
-  font-size: 16.5px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--ink);
 }
 .qisaca li::marker {
@@ -3153,7 +3153,7 @@
 .ustadBody :global(strong) {
   color: #e2e8f0 !important;
   font-size: 16px !important;
-  line-height: 1.6 !important;
+  line-height: 1.65 !important;
 }
 .ustadBody :global(p) {
   margin: 0 0 8px;
@@ -3260,8 +3260,8 @@
 .helpCard p,
 .helpBody :global(p),
 .helpBody :global(li) {
-  font-size: 15.5px !important;
-  line-height: 1.6 !important;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
   color: var(--ink-2);
 }
 .helpBtns {
@@ -3337,5 +3337,6 @@
   }
   .qisaca ul {
     font-size: 15.5px;
+    line-height: 1.6;
   }
 }

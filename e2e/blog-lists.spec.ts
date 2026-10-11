@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 /**
  * @smoke Bloq siyahıları — TASK-0456.
- * `globals.css` (PROTECTED) `.blog-content li { list-style: none }` ☐ checklist üçün yazılıb,
+ * `globals.css` (PROTECTED) `.blog-content li { list-style: none }` ☐ checklist üçün yazılıb (TASK-0543: renderer artıq `.dk-prose`),
  * amma bütün siyahıların nöqtəsini və nömrəsini silirdi (sahibin ekran görüntüsü, 2026-09-26).
  * Yoxlanır: adi siyahı — disc, nömrəli — decimal, ☐ maddəsi — işarəsiz.
  * + 390px-də cədvəl səhifəni daşdırmır (grid elementi `min-w-0` olmadan cədvəlin enini götürürdü).
@@ -20,7 +20,7 @@ test.describe('@smoke Bloq siyahıları', () => {
     const res = await page.goto(`/blog/${SLUG}`);
     expect(res?.status()).toBe(200);
 
-    const styles = await page.locator('.blog-content li').evaluateAll((items) =>
+    const styles = await page.locator('.dk-prose li').evaluateAll((items) =>
       items.map((li) => ({
         parent: li.parentElement?.tagName ?? '',
         checkbox: /^\s*[☐☑✅✔]/.test(li.textContent ?? ''),
@@ -45,7 +45,7 @@ test.describe('@smoke Bloq siyahıları', () => {
     await page.setViewportSize({ width: 390, height: 900 });
     const res = await page.goto(`/blog/${SLUG}`);
     expect(res?.status()).toBe(200);
-    await expect(page.locator('.blog-content table').first()).toBeVisible();
+    await expect(page.locator('.dk-prose table').first()).toBeVisible();
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - window.innerWidth
     );

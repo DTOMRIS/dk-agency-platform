@@ -431,3 +431,7 @@ route patterni ile eyni).
 ## L-068: 'use client' faylından funksiya server komponentində çağırılmır
 - **Səhv:** `isMiniCalcTool()` `MiniCalc.tsx` ('use client') içində idi; server səhifə onu çağıranda bütün bloq yazıları 500 verdi. Lint və tsc keçdi — yalnız brauzer testi tutdu.
 - **Qayda:** client komponent faylından yalnız komponent idxal et; köməkçi funksiya/sabit server-təhlükəsiz ayrıca faylda (`lib/...`). Yeni client komponenti olan səhifəni production build-də ən azı bir dəfə aç.
+
+## L-069: Qatsız qlobal CSS Tailwind sinfini həmişə üstələyir
+- **Səhv:** `MarkdownRenderer`-də Tailwind sinifləri dəyişdirildi, amma `globals.css` (PROTECTED, qatsız) `.blog-content p:first-of-type`, `em`, `code`, `hr` qaydaları qalib gəldi — hər parçanın ilk abzası böyüdü, `hr` 2.5rem saxladı. Doğan «kutular ayrı kafadan çalışıyor» dedi.
+- **Qayda:** üslub dəyişəndə brauzerdə `getComputedStyle` ilə ölç (sinfə baxmaq kifayət deyil). Qorunan qlobal qaydadan qaçmaq üçün sinif adını dəyiş və ya inline stil; `globals.css`-ə toxunma.

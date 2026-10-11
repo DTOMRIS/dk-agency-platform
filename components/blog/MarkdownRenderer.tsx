@@ -151,6 +151,87 @@ function getBlockquoteContent(children: React.ReactNode): string {
   return text;
 }
 
+/**
+ * TASK-0543 (owner 2026-10-11: «kutular ayrı kafadan çalışıyor, satır aralıkları»): one rhythm for every
+ * post. Body 17px/1.75 in one colour, every box the same shape (18px radius, 20px padding, 28px gap,
+ * 16px/1.65 text) and only three tones (amber = warning, green = tip/tool, red = DK note/quote).
+ * `---` before a heading no longer stacks 40 + 24 + 48 px of empty space.
+ */
+const BOX = 'my-7 rounded-[18px] border border-l-4 p-5 text-[16px] leading-[1.65] text-[#334155] [&_p]:mb-2 [&_p:last-child]:mb-0 [&_p]:text-[16px] [&_p]:leading-[1.65] [&_p]:text-[#334155]';
+const TONE = {
+  amber: 'border-[#F6D9A8] border-l-[#B45309] bg-[#FEF3E2]',
+  green: 'border-[#A7F3D0] border-l-[#047857] bg-[#E7F6EF]',
+  red: 'border-[#E4DCCD] border-l-[#D63B54] bg-white',
+  neutral: 'border-[#E4DCCD] border-l-[#0F172A] bg-white',
+} as const;
+const LABEL_TONE = {
+  amber: 'bg-[#FEF3E2] text-[#B45309]',
+  green: 'bg-[#E7F6EF] text-[#047857]',
+  red: 'bg-[#FDECEF] text-[#BE2F47]',
+  neutral: 'bg-[#F6F1E9] text-[#0F172A]',
+} as const;
+const CALLOUT_MAP: Record<string, { icon: string; tone: keyof typeof LABEL_TONE }> = {
+  'guru kutusu': { icon: '🎓', tone: 'amber' },
+  'faydalı məlumat': { icon: 'ℹ️', tone: 'neutral' },
+  'praktik tətbiq': { icon: '🔧', tone: 'green' },
+  'investor qutusu': { icon: '💼', tone: 'neutral' },
+  'final investor': { icon: '🏁', tone: 'neutral' },
+  'sadə nümunə': { icon: '📊', tone: 'neutral' },
+  'sadə müqayisə': { icon: '⚖️', tone: 'neutral' },
+  'hüquqi risk': { icon: '🚨', tone: 'red' },
+  'qırmızı bayraq': { icon: '🚩', tone: 'red' },
+  'favök yoxlama': { icon: '📋', tone: 'amber' },
+  'vacib qeyd': { icon: '⚠️', tone: 'amber' },
+  'franchise üçün qırmızı': { icon: '🚩', tone: 'red' },
+  'faydalı alət': { icon: '🔗', tone: 'green' },
+  'doğan notu': { icon: '📋', tone: 'red' },
+};
+
+/**
+ * TASK-0543: a «### Faydalı məlumat qutusu» / «### Doğan notu» heading used to draw only the top of a box —
+ * the text under it sat outside, on the page. This rehype step wraps the heading and everything after it
+ * (up to the next heading or `---`) in one element, rendered as a real box by the `div` component below.
+ */
+type HNode = { type: string; tagName?: string; value?: string; properties?: Record<string, unknown>; children?: HNode[] };
+function hText(n: HNode): string {
+  return n.type === 'text' ? n.value ?? '' : (n.children ?? []).map(hText).join('');
+}
+function calloutFor(text: string) {
+  const t = text.toLowerCase();
+  return Object.entries(CALLOUT_MAP).find(([key]) => t.includes(key))?.[1];
+}
+function rehypeCalloutBoxes() {
+  return (tree: HNode) => {
+    const kids = tree.children ?? [];
+    const out: HNode[] = [];
+    for (let i = 0; i < kids.length; i += 1) {
+      const k = kids[i];
+      const hit = k.type === 'element' && k.tagName === 'h3' ? calloutFor(hText(k)) : undefined;
+      if (!hit) {
+        out.push(k);
+        continue;
+      }
+      const body: HNode[] = [];
+      let j = i + 1;
+      while (j < kids.length && !(kids[j].type === 'element' && /^(h[1-4]|hr)$/.test(kids[j].tagName ?? ''))) {
+        body.push(kids[j]);
+        j += 1;
+      }
+      out.push({ type: 'element', tagName: 'div', properties: { dataCallout: hit.tone }, children: [k, ...body] });
+      i = j - 1;
+    }
+    tree.children = out;
+  };
+}
+
+/** The text already opens with an emoji (e.g. «⚠️ Xəbərdarlıq») — do not add a second icon. */
+function startsWithEmoji(text: string): boolean {
+  return /^\s*\p{Extended_Pictographic}/u.test(text);
+}
+function isInternalHref(href?: string): boolean {
+  return !!href && (href.startsWith('/') || href.startsWith('#') || /^https?:\/\/(www\.)?dkagency\.com\.tr/i.test(href));
+}
+
 export default function MarkdownRenderer({ content, className = '', headingIds = false }: MarkdownRendererProps) {
   // Pre-process content to handle guru boxes
   const processedContent = useMemo(() => {
@@ -184,8 +265,8 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
       /:::images\{cols=(\d)\}\n([\s\S]*?):::/g,
       (_match, cols, inner) => {
         const urls = inner.trim().split('\n').map((line: string) => line.trim()).filter(Boolean);
-        const imgs = urls.map((url: string) => `<div class="overflow-hidden rounded-2xl border border-slate-200"><img src="${url}" alt="" class="w-full h-full object-cover" loading="lazy" /></div>`).join('\n');
-        return `<div class="dk-image-grid grid gap-3 my-8" style="grid-template-columns: repeat(${cols}, 1fr)">${imgs}</div>`;
+        const imgs = urls.map((url: string) => `<div class="overflow-hidden rounded-[18px] border border-[#E4DCCD]"><img src="${url}" alt="" class="w-full h-full object-cover" loading="lazy" /></div>`).join('\n');
+        return `<div class="dk-image-grid grid gap-3 my-7" style="grid-template-columns: repeat(${cols}, 1fr)">${imgs}</div>`;
       }
     );
 
@@ -194,8 +275,8 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
       /:::gallery\n([\s\S]*?):::/g,
       (_match, inner) => {
         const urls = inner.trim().split('\n').map((line: string) => line.trim()).filter(Boolean);
-        const imgs = urls.map((url: string) => `<div class="overflow-hidden rounded-2xl border border-slate-200"><img src="${url}" alt="" class="w-full object-cover" loading="lazy" /></div>`).join('\n');
-        return `<div class="dk-gallery grid grid-cols-2 md:grid-cols-3 gap-3 my-8">${imgs}</div>`;
+        const imgs = urls.map((url: string) => `<div class="overflow-hidden rounded-[18px] border border-[#E4DCCD]"><img src="${url}" alt="" class="w-full object-cover" loading="lazy" /></div>`).join('\n');
+        return `<div class="dk-gallery grid grid-cols-2 md:grid-cols-3 gap-3 my-7">${imgs}</div>`;
       }
     );
 
@@ -205,9 +286,9 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
       (_match, src) => {
         const ytMatch = src.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
         if (ytMatch) {
-          return `<div class="my-8 overflow-hidden rounded-2xl border border-slate-200 aspect-video"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}" class="w-full h-full" loading="lazy" allowfullscreen title="Video"></iframe></div>`;
+          return `<div class="my-7 overflow-hidden rounded-[18px] border border-[#E4DCCD] aspect-video"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}" class="w-full h-full" loading="lazy" allowfullscreen title="Video"></iframe></div>`;
         }
-        return `<div class="my-8 overflow-hidden rounded-2xl border border-slate-200 aspect-video"><video src="${src}" controls class="w-full h-full object-cover"></video></div>`;
+        return `<div class="my-7 overflow-hidden rounded-[18px] border border-[#E4DCCD] aspect-video"><video src="${src}" controls class="w-full h-full object-cover"></video></div>`;
       }
     );
 
@@ -215,11 +296,21 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
   }, [content]);
 
   return (
-    <div className={`blog-content ${className}`}>
+    // TASK-0543: `dk-prose`, not `blog-content` — the unlayered `.blog-content` rules in globals.css (PROTECTED)
+    // beat every Tailwind class here: each split chunk's first paragraph grew to 1.2rem, italics turned gold,
+    // code red, `hr` kept 2.5rem. The two useful bits (word wrapping, no marker on ☐ items) live here now.
+    <div className={`dk-prose [overflow-wrap:anywhere] text-[#334155] [&_hr+h2]:mt-0 [&_hr+h3]:mt-0 ${className}`}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw]}
+        rehypePlugins={[rehypeRaw, rehypeCalloutBoxes]}
         components={{
+          div: ({ node, children, ...rest }) => {
+            const tone = (node as HNode | undefined)?.properties?.dataCallout as keyof typeof TONE | undefined;
+            if (tone && tone in TONE) {
+              return <div className={`${BOX} ${TONE[tone]} [&>h3:first-child]:mt-0 [&_ul]:mb-0 [&_ol]:mb-0 [&_li]:text-[16px]`}>{children}</div>;
+            }
+            return <div {...rest}>{children}</div>;
+          },
           h1: ({ children }) => (
             <h1 className="mt-12 mb-6 text-3xl font-black leading-tight text-slate-950 md:text-4xl">
               {children}
@@ -228,49 +319,32 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
           h2: ({ node, children }) => (
             <h2
               id={headingIds ? headingSlug(nodeText(node).trim()) : undefined}
-              className="mt-12 mb-4 scroll-mt-28 font-display text-2xl font-bold leading-tight text-slate-950 md:text-[26px]"
+              className="mt-10 mb-3 scroll-mt-28 text-2xl font-bold leading-tight tracking-tight text-[#0F172A] md:text-[26px]"
             >
               {children}
             </h2>
           ),
           h3: ({ children }) => {
             const text = React.Children.toArray(children).join('').toLowerCase();
-            const calloutMap: Record<string, { icon: string; color: string; border: string }> = {
-              'guru kutusu': { icon: '🎓', color: 'bg-amber-50', border: 'border-amber-200' },
-              'faydalı məlumat': { icon: 'ℹ️', color: 'bg-blue-50', border: 'border-blue-200' },
-              'praktik tətbiq': { icon: '🔧', color: 'bg-emerald-50', border: 'border-emerald-200' },
-              'investor qutusu': { icon: '💼', color: 'bg-indigo-50', border: 'border-indigo-200' },
-              'final investor': { icon: '🏁', color: 'bg-indigo-50', border: 'border-indigo-200' },
-              'sadə nümunə': { icon: '📊', color: 'bg-slate-50', border: 'border-slate-200' },
-              'sadə müqayisə': { icon: '⚖️', color: 'bg-slate-50', border: 'border-slate-200' },
-              'hüquqi risk': { icon: '🚨', color: 'bg-red-50', border: 'border-red-200' },
-              'qırmızı bayraq': { icon: '🚩', color: 'bg-red-50', border: 'border-red-200' },
-              'favök yoxlama': { icon: '📋', color: 'bg-amber-50', border: 'border-amber-200' },
-              'vacib qeyd': { icon: '⚠️', color: 'bg-amber-50', border: 'border-amber-200' },
-              'franchise üçün qırmızı': { icon: '🚩', color: 'bg-red-50', border: 'border-red-200' },
-              'faydalı alət': { icon: '🔗', color: 'bg-emerald-50', border: 'border-emerald-200' },
-              'doğan notu': { icon: '📋', color: 'bg-red-50', border: 'border-red-200' },
-            };
-            for (const [key, style] of Object.entries(calloutMap)) {
+            for (const [key, style] of Object.entries(CALLOUT_MAP)) {
               if (text.includes(key)) {
+                // A label, not half a box: the old header strip had no box under it.
                 return (
-                  <div className={`mt-8 mb-1 flex items-center gap-2 rounded-t-xl ${style.color} border ${style.border} border-b-0 px-5 py-3`}>
-                    <span className="text-lg">{style.icon}</span>
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-slate-700">
-                      {children}
-                    </h3>
-                  </div>
+                  <h3 className={`mt-8 mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[12.5px] font-bold uppercase tracking-wider ${LABEL_TONE[style.tone]}`}>
+                    {startsWithEmoji(text) ? null : <span aria-hidden="true">{style.icon}</span>}
+                    {children}
+                  </h3>
                 );
               }
             }
             return (
-              <h3 className="mt-10 mb-3 text-xl font-semibold text-slate-900">
+              <h3 className="mt-8 mb-2 text-xl font-semibold text-[#0F172A]">
                 {children}
               </h3>
             );
           },
           h4: ({ children }) => (
-            <h4 className="mt-8 mb-2 text-lg font-semibold text-slate-900">
+            <h4 className="mt-6 mb-2 text-lg font-semibold text-[#0F172A]">
               {children}
             </h4>
           ),
@@ -296,16 +370,16 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             }
 
             return (
-              <p className="mb-6 break-words text-[17px] leading-[1.85] text-slate-600">
+              <p className="mb-5 break-words text-[17px] leading-[1.75] text-[#334155]">
                 {children}
               </p>
             );
           },
           strong: ({ children }) => (
-            <strong className="font-bold text-slate-950">{children}</strong>
+            <strong className="font-bold text-[#0F172A]">{children}</strong>
           ),
           em: ({ children }) => (
-            <em className="italic text-amber-700">{children}</em>
+            <em className="italic">{children}</em>
           ),
           blockquote: ({ children }) => {
             const rawText = getBlockquoteContent(children);
@@ -330,12 +404,10 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             // Warning Box
             if (blockType === 'warning') {
               return (
-                <div className="my-8 rounded-xl border border-amber-200 border-l-4 border-l-amber-500 bg-amber-50 p-5">
+                <div className={`${BOX} ${TONE.amber}`}>
                   <div className="flex items-start gap-3">
-                    <span className="text-2xl flex-shrink-0">⚠️</span>
-                    <div className="text-slate-700 [&>p]:mb-0 [&_strong]:text-amber-700">
-                      {children}
-                    </div>
+                    {startsWithEmoji(rawText) ? null : <span className="text-xl leading-[1.4] flex-shrink-0" aria-hidden="true">⚠️</span>}
+                    <div className="min-w-0">{children}</div>
                   </div>
                 </div>
               );
@@ -344,21 +416,12 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             // Doğan Note
             if (blockType === 'dogan-note') {
               return (
-                <div className="my-8 overflow-hidden rounded-2xl border border-red-200 bg-white">
-                  <div className="flex items-center gap-2 border-b border-red-100 bg-red-50 px-5 py-3">
-                    <span className="text-lg">📋</span>
-                    <span className="text-sm font-bold tracking-wider text-red-600">
-                      DK AGENCY NOTU
-                    </span>
-                  </div>
-                  <div className="px-5 py-4">
-                    <div className="leading-relaxed text-slate-800 [&>p]:mb-0">
-                      {children}
-                    </div>
-                    <div className="mt-3 flex items-center gap-2">
-                      <FounderAvatar size={28} className="h-7 w-7" />
-                      <span className="text-[var(--dk-muted)] text-sm">— Doğan Tomris</span>
-                    </div>
+                <div className={`${BOX} ${TONE.red}`}>
+                  <span className="mb-2 block text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#BE2F47]">DK Agency notu</span>
+                  <div>{children}</div>
+                  <div className="mt-3 flex items-center gap-2">
+                    <FounderAvatar size={28} className="h-7 w-7" />
+                    <span className="text-sm text-[#5B6474]">— Doğan Tomris</span>
                   </div>
                 </div>
               );
@@ -367,12 +430,10 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             // Tool Box
             if (blockType === 'tool') {
               return (
-                <div className="my-8 rounded-xl border border-emerald-200 border-l-4 border-l-emerald-600 bg-emerald-50 p-5">
+                <div className={`${BOX} ${TONE.green}`}>
                   <div className="flex items-start gap-3">
-                    <span className="text-2xl flex-shrink-0">🔧</span>
-                    <div className="text-slate-700 [&>p]:mb-0 [&_a]:font-semibold [&_a]:text-emerald-800 [&_a]:underline [&_a]:underline-offset-2">
-                      {children}
-                    </div>
+                    {startsWithEmoji(rawText) ? null : <span className="text-xl leading-[1.4] flex-shrink-0" aria-hidden="true">🔧</span>}
+                    <div className="min-w-0 [&_a]:font-semibold [&_a]:text-[#047857]">{children}</div>
                   </div>
                 </div>
               );
@@ -381,12 +442,10 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             // Tip Box
             if (blockType === 'tip') {
               return (
-                <div className="my-8 rounded-xl border border-emerald-200 border-l-4 border-l-emerald-500 bg-emerald-50 p-5">
+                <div className={`${BOX} ${TONE.green}`}>
                   <div className="flex items-start gap-3">
-                    <span className="text-2xl flex-shrink-0">💡</span>
-                    <div className="text-slate-700 [&>p]:mb-0 [&_strong]:text-emerald-700">
-                      {children}
-                    </div>
+                    {startsWithEmoji(rawText) ? null : <span className="text-xl leading-[1.4] flex-shrink-0" aria-hidden="true">💡</span>}
+                    <div className="min-w-0">{children}</div>
                   </div>
                 </div>
               );
@@ -394,27 +453,26 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
 
             // Regular blockquote
             return (
-              <blockquote className="my-8 rounded-r-xl border-l-4 border-red-500 bg-slate-50 px-6 py-4 italic text-slate-800">
+              <blockquote className={`${BOX} ${TONE.red}`}>
                 {children}
               </blockquote>
             );
           },
           ul: ({ children }) => (
-            <ul className="mb-6 list-disc space-y-2 pl-6 text-[16px] text-slate-700 marker:text-red-500">
+            <ul className="mb-5 list-disc space-y-2 pl-6 text-[17px] text-[#334155] marker:text-[#D63B54]">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="mb-6 list-decimal space-y-2 pl-6 text-[16px] text-slate-700 marker:text-red-500">
+            <ol className="mb-5 list-decimal space-y-2 pl-6 text-[17px] text-[#334155] marker:font-bold marker:text-[#D63B54]">
               {children}
             </ol>
           ),
-          // globals.css (PROTECTED) `.blog-content li { list-style: none }` ☐ checklist üçündür, amma
-          // bütün siyahıların işarəsini/nömrəsini silirdi — adi maddə ul/ol-un list-style-unu geri alır.
+          // ☐ / ☑ checklist items carry their own mark — no bullet; every other item keeps the ul/ol marker.
           li: ({ children, node }) => (
             <li
-              className="leading-[1.85]"
-              style={isCheckboxItem(node) ? undefined : { listStyleType: 'inherit' }}
+              className="leading-[1.75]"
+              style={isCheckboxItem(node) ? { listStyleType: 'none' } : { listStyleType: 'inherit' }}
             >
               {children}
             </li>
@@ -423,37 +481,38 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             const isInline = !className;
             if (isInline) {
               return (
-                <code className="rounded bg-slate-100 px-2 py-0.5 text-sm font-mono text-red-700">
+                <code className="rounded-md bg-[#F6F1E9] px-1.5 py-0.5 font-mono text-[0.9em] text-[#0F172A]">
                   {children}
                 </code>
               );
             }
             return (
-              <code className="font-mono text-sm leading-relaxed text-slate-100" {...props}>
+              <code className="font-mono text-[15px] font-semibold leading-relaxed text-[#0F172A]" {...props}>
                 {children}
               </code>
             );
           },
           pre: ({ children }) => (
-            <pre className="my-6 overflow-x-auto rounded-xl border border-slate-200 bg-slate-900 p-5">
+            // Posts use code blocks for formulas («Satış qiyməti = …»): a cream formula card, not a terminal.
+            <pre className="my-7 overflow-x-auto whitespace-pre-wrap rounded-[18px] border border-[#E4DCCD] bg-[#F6F1E9] p-5">
               {children}
             </pre>
           ),
           a: ({ href, children }) => (
-            <a 
-              href={href} 
-              className="break-words text-red-600 underline underline-offset-2 transition-colors hover:text-red-800" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <a
+              href={href}
+              className="break-words font-medium text-[#BE2F47] underline underline-offset-2 transition-colors hover:text-[#0F172A]"
+              {...(isInternalHref(href) ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
             >
               {children}
             </a>
           ),
           hr: () => (
-            <hr className="my-10 border-slate-200" />
+            // globals.css (PROTECTED) styles every `hr` with 2.5rem margins (unlayered, beats classes) — inline wins.
+            <hr style={{ margin: '28px 0', border: 0, borderTop: '1px solid #E4DCCD' }} />
           ),
           img: ({ src, alt }) => (
-            <figure className="my-8">
+            <figure className="my-7">
               <img 
                 src={src} 
                 alt={alt || ''} 
@@ -467,8 +526,8 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             </figure>
           ),
           table: ({ children }) => (
-            <div className="my-6 overflow-x-auto rounded-2xl border border-[#E4DCCD] bg-white">
-              <table className="w-full text-sm border-collapse">
+            <div className="my-7 overflow-x-auto rounded-[18px] border border-[#E4DCCD] bg-white">
+              <table className="w-full border-collapse text-[15px]">
                 {children}
               </table>
             </div>
@@ -482,12 +541,12 @@ export default function MarkdownRenderer({ content, className = '', headingIds =
             </th>
           ),
           td: ({ children }) => (
-            <td className="border-b border-slate-100 px-4 py-3 text-slate-700">
+            <td className="border-b border-[#EFE9DE] px-4 py-3 align-top leading-[1.55] text-[#334155]">
               {children}
             </td>
           ),
           tr: ({ children }) => (
-            <tr className="transition-colors hover:bg-slate-50">{children}</tr>
+            <tr className="transition-colors hover:bg-[#FBF8F3]">{children}</tr>
           ),
         }}
       >
