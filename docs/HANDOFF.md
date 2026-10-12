@@ -1,21 +1,27 @@
 # HANDOFF
 
-## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0541 sessiyası)
+## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0546 sessiyası)
 
-> Ətraflı: `CHANGELOG.md` [Unreleased], `docs/DEVLOG.md` (2026-10-11), kartlar `docs/tasks/TASK-0524…0541.md`, dərslər L-060…L-067.
+> Ətraflı: `CHANGELOG.md` [Unreleased], `docs/DEVLOG.md` (2026-10-11), kartlar `docs/tasks/TASK-0524…0546.md`, dərslər L-060…L-067.
 > Dal `feat/TASK-0523-marketinq-fixes`: PR #526 main-ə merge olunub (TASK-0533-ə qədər). 0535–0539 main-də (PR #528, #529); blog SQL canlıda işlədilib (11.10).
 
 ### Doğan-dan gözlənən
-- **Bloq auditi (TASK-0545):** `docs/ops/2026-10-11-blog-content-audit.sql`-i işlət; sonra `2026-10-11-blog-anecdotes-OPTIONAL.sql`-də doğru olan anekdotları sil, qalanını işlət. 6 «Sahə qeydi» sitatı sizin sözünüzdürmü — təsdiq. Mülki Məcəllə m.726 yazısı hüquqçuya. Tərcümələr AZ düzəldikdən sonra yenilənməlidir.
-- Müştəri nəticələri səhifəsi: 3–5 anonim vaka (sahə/şəhər, problem, nə etdik, nəticə rəqəmi, müddət) — rəqəm uydurulmur.
-- WhatsApp avtomatlaşdırması (Doğan: «olsun»): araşdırma `docs/reports/2026-10-11-whatsapp-automation.md` — Meta Business hesabı + biznes təsdiqi Doğan-dan; sonra Cloud API + Coexistence (994502566279) ilə kod/müraciət eşləmə + salamlama.
-- API kreditləri (Max/Team): Hostinger-dəki `ANTHROPIC_API_KEY`-in Console təşkilatını claude.ai → Billing → «API credits»-ə bağla; istəsən KAZAN əsas modeli Claude-a keçər (DeepSeek fallback qalır).
+- **TASK-0546 SQL:** `node --env-file=.env.local scripts/ops/run-sql.mjs docs/ops/2026-10-11-blog-language.sql` (quru sınaq) → `--commit`; sonra /dashboard/blog/translation-status «Hamısını tərcümə et (6)».
+- Müştəri nəticələri səhifəsi: 3–5 anonim vaka — rəqəm uydurulmur.
+- **WhatsApp avtomatlaşdırması** (Meta Business hesabı var): Meta Business Suite → WhatsApp Manager → «Nömrə əlavə et» → mövcud WhatsApp Business tətbiqindəki 994502566279-u **Coexistence** ilə bağla (tətbiq ≥ 2.24.17, nömrə ≥ 7 gün tətbiqdə) → sistem istifadəçisi tokeni + Phone Number ID Hostinger env-ə. Sonra kod: gələn mesajdakı `Kod: DK-XXXX` → müraciət eşləmə + salamlama. Araşdırma: `docs/reports/2026-10-11-whatsapp-automation.md`.
+- Hüquqçu: `mulki-mecelle-726-franchise-devri` — m.726 / m.723–731 nömrələri.
+- API kreditləri (istəyə görə): `ANTHROPIC_API_KEY` təşkilatı → claude.ai Billing.
+
+### Qərarlar (Claude, Doğan «sen karar ver», 11.10)
+- Footer şüarı AZ: «Ustalığın nişanı, rəqəmsalın şəddi» («dijitalın» türkcə idi).
+- Yeni xəbərlərə məcburi «Restoranınız üçün nə deməkdir» sətri **yoxdur** (TASK-0492 şablon qərarı + uydurma riski); kart yalnız köhnə strukturlu xəbərlərdə.
+- Bloq anekdotları və 6 «Sahə qeydi» Doğan-ındır — qalır. AFA: «qurucularından biri».
 
 ### Açıq (kodda yoxlanıb — növbəti işlər)
-- **TASK-0538-dən qalan:** KST balı 25–100 miqyasında qalır (ballar `marketing_tool_runs`-da tarixçə ilə — miqyas dəyişsə köhnə qaçışlarla müqayisə yanlış olar; dəyişmək üçün göstərmə qatında çevirmə + tarixçəni də çevirmək) · 3 yeni Excel şablonunun şəkil önizləməsi yoxdur (kartda sütun başlıqları; Excel-də PDF ixracı işləmədi) · `/haqqimizda` və kök `/ilanlar` metadata-sı yalnız AZ · KAZAN çatındakı daxili keçidlər locale önəksizdir · elan WhatsApp mətni hər dildə AZ, sahə/kateqoriya adları `lib/data`-da yalnız AZ.
+- **Qalan kiçik:** KST balı 25–100 miqyasında (tarixçə müqayisəsi) · 3 yeni Excel şablonunun şəkil önizləməsi yoxdur · KAZAN çatındakı daxili keçidlər locale önəksizdir · elan WhatsApp mətni hər dildə AZ · `/settings` mətni komponentdə AZ.
 - **i18n sayı:** xəritənin «sabit AZ» sütunu `/auth/*` və `/qiymet`-də fayl içi 4 dilli lüğətləri də sayır (borc deyil, yanlış həyəcan) — skript düzəlişi ayrıca.
 - **Mətn:** footer «dijitalın şəddi» şüarı (Doğan seçimi).
-- **Dizayn sırası (xəritə, 0538 sonu: v2 49 · köhnə 51 · qarışıq 4):** ictimai köhnə/qarışıq — `/blog/[slug]`, `/haberler/[slug]` (ayrıca PR planı), `/ilan-ver` (1256 sətir), `/pricing`, `/qiymet`, `/is-elanlari`, `/terefdashlar`, `/sedd-rozeti`, `/email-preferences`, `/settings`, `/toolkit/whatsapp-template-paketi`; qalanı admin və B2B panel.
+- **Dizayn (xəritə, 0546 sonu: v2 68 · köhnə 34 · qarışıq 1):** ictimai səhifələrin hamısı v2; köhnə qalanlar admin və B2B paneldir. Növbəti (Doğan «ileride»): koddan render olunan motion loop-lar (alət tanıtımı, Sektor Nəbzi kartları).
 - Köhnə: B2B OnboardingModal hər girişdə klikləri bağlayır · listings repository DB yoxdursa mock qaytarır (production-da DB var).
 
 ## 2026-10-08 — Vəziyyət (Claude, TASK-0503/0504 sessiyası)

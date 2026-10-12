@@ -4,11 +4,13 @@ import { getTranslations } from 'next-intl/server';
 import CreateListingForm from '@/components/listings/CreateListingForm';
 import { getServerMemberSession } from '@/lib/members/server-session';
 import PageBack from '@/components/inner/PageBack';
+import home from '@/components/home/v2/homeV2.module.css';
+import s from '@/components/inner/inner.module.css';
 
-export const metadata: Metadata = {
-  title: 'Elan ver',
-  description: 'HoReCa üçün devir, françayz, obyekt və avadanlıq elanı göndər.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('createListing.meta');
+  return { title: t('title'), description: t('description') };
+}
 
 export default async function IlanVerPage() {
   const session = await getServerMemberSession();
@@ -16,43 +18,56 @@ export default async function IlanVerPage() {
 
   if (!session.loggedIn) {
     return (
-      <div className="min-h-screen bg-white px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
-        <PageBack to="listings" inline className="mb-6" />
-        <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm sm:rounded-[32px] sm:p-8">
-          <span className="inline-flex rounded-full bg-dk-red-strong px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
-            {t('loginRequired')}
-          </span>
-          <h1 className="mt-5 font-display text-2xl font-black text-[var(--dk-navy)] sm:text-4xl">
-            {t('loginTitle')}
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500">
-            {t('loginDesc')}
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/auth/login?next=/ilan-ver"
-              className="rounded-full bg-dk-red-strong px-6 py-3 text-sm font-bold text-white"
-            >
-              {t('loginButton')}
-            </Link>
-            <Link
-              href="/auth/register?next=/ilan-ver"
-              className="rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700"
-            >
-              {t('registerButton')}
-            </Link>
+      <div className={`${s.page} min-h-screen bg-[#F6F1E9]`}>
+        <PageBack to="listings" />
+        <section className={`${home.wrap} pb-16 pt-2 sm:pb-24`}>
+          <div className="mx-auto max-w-2xl rounded-[22px] border border-[#E4DCCD] bg-white px-5 py-8 text-center sm:px-10 sm:py-12">
+            <span className={home.eyebrow}>
+              <span className={home.dot} />
+              {t('loginRequired')}
+            </span>
+            <h1 className="mt-4 text-[clamp(28px,4vw,40px)] font-black leading-[1.08] tracking-[-0.04em] text-[#0F172A]">
+              {t('loginTitle')}
+            </h1>
+            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-7 text-[#5B6474]">
+              {t('loginDesc')}
+            </p>
+            <div className="mt-8 flex flex-col justify-center gap-2.5 sm:flex-row">
+              <Link
+                href="/auth/login?next=/ilan-ver"
+                className="inline-flex min-h-11 items-center justify-center rounded-full bg-dk-red-strong px-6 text-sm font-bold text-white transition hover:bg-dk-red-deep"
+              >
+                {t('loginButton')}
+              </Link>
+              <Link
+                href="/auth/register?next=/ilan-ver"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#E4DCCD] bg-white px-6 text-sm font-bold text-[#0F172A] transition hover:border-[#0F172A]"
+              >
+                {t('registerButton')}
+              </Link>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     );
   }
 
   return (
-      <div className="min-h-screen bg-white px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
-        <PageBack to="listings" inline className="mb-4" />
-      <div className="mx-auto max-w-6xl">
-        <CreateListingForm session={{ name: session.name, email: session.email }} />
-      </div>
+    <div className={`${s.page} min-h-screen bg-[#F6F1E9]`}>
+      <PageBack to="listings" />
+      <section className={`${home.wrap} pb-16 sm:pb-24`}>
+        <header className="max-w-3xl pb-6 pt-2 sm:pb-8">
+          <span className={home.eyebrow}>
+            <span className={home.dot} />
+            {t('page.eyebrow')}
+          </span>
+          <h1 className="mt-4 text-[clamp(30px,4.4vw,52px)] font-black leading-[1.04] tracking-[-0.045em] text-[#0F172A]">
+            {t('page.title')}
+          </h1>
+          <p className={`${s.lead} mt-3`}>{t('page.lead')}</p>
+        </header>
+        <CreateListingForm tone="v2" session={{ name: session.name, email: session.email }} />
+      </section>
     </div>
   );
 }

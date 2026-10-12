@@ -4817,7 +4817,40 @@
     "loginTitle": "Log in to post a listing",
     "loginDesc": "You need to be logged in to create a listing, upload photos, and get a tracking code.",
     "loginButton": "Log in",
-    "registerButton": "No account? Register"
+    "registerButton": "No account? Register",
+    "meta": {
+      "title": "Post a listing",
+      "description": "Post a HoReCa business transfer, franchise, premises or equipment listing."
+    },
+    "page": {
+      "eyebrow": "Post a listing",
+      "title": "List your business, franchise or equipment",
+      "lead": "Five short steps: category, main details, specifics, photos and review. Your listing goes live on the showcase after our team reviews it."
+    },
+    "stepOf": "{number} / {total}",
+    "copyCode": "Copy code",
+    "photosDeleted": "{count} photos deleted",
+    "deleteSelected": "Delete {count} photos",
+    "video": {
+      "label": "Video (YouTube / Instagram)",
+      "placeholder": "https://youtube.com/watch?v=... or https://instagram.com/reel/...",
+      "clear": "Clear video link",
+      "invalid": "Enter a YouTube or Instagram link",
+      "previewTitle": "Video preview"
+    },
+    "admin": {
+      "manageLink": "Manage listings",
+      "title": "Admin controls",
+      "initialStatus": "Initial status",
+      "statusSubmitted": "Submitted (standard flow)",
+      "statusCommittee": "Committee review",
+      "statusShowcase": "On showcase (publish directly)",
+      "showOnShowcase": "Show on showcase",
+      "featured": "Featured listing",
+      "note": "Admin note (hidden from the member)",
+      "notePlaceholder": "Internal note — visible only in the admin panel",
+      "submit": "Create listing (admin)"
+    }
   },
   "onboarding": {
     "errors": {
@@ -8198,7 +8231,9 @@
     "story2": "I've spent 40 years in the HoReCa sector. Turkey, Azerbaijan, Russia, Georgia — I worked in every one of them, learned the language of every kitchen. Over those years, I saw one thing clearly: technology wasn't reaching the small operator.",
     "story3": "Some still keep their books in a notebook. Some never find time to learn Excel because they enter the kitchen at dawn and leave at midnight. Their problem isn't laziness — nobody ever gave them the right tool.",
     "story4": "Big chains have till systems, AI advisers, professional consultants. What does the small restaurant owner have? A phone, a notebook, and a 16-hour workday.",
-    "closing": "DK Agency is here to close that gap. A bridge from the notebook to AI."
+    "closing": "DK Agency is here to close that gap. A bridge from the notebook to AI.",
+    "metaTitle": "About — DK Agency and Doğan Tomris",
+    "metaDescription": "DK Agency is Azerbaijan’s first AI-powered HoReCa B2B platform. Since 2010, with 40 years of industry experience: food cost, P&L, franchise partnerships and industry advice."
   },
   "listingsV2": {
     "detail": {

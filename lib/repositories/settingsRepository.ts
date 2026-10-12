@@ -16,7 +16,7 @@ export interface SiteSettingsPayload {
 
 const DEFAULT_SETTINGS: SiteSettingsPayload = {
   siteName: 'DK Agency',
-  slogan: 'Ustaligin Nisani, Dijitalin Seddi',
+  slogan: 'Ustalığın Nişanı, Rəqəmsalın Şəddi',
   logoUrl: '',
   socialFacebook: '',
   socialInstagram: '',

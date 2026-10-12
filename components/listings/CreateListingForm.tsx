@@ -34,6 +34,7 @@ import { getConceptsForSector, getConceptLabel, type ConceptKey } from '@/lib/da
 import { getAllSectors } from '@/lib/data/listingSectors';
 import { compressImage, generateThumbnail, validateImage } from '@/lib/utils/imageUtils';
 import { AZ_NUMBER_LOCALE } from '@/lib/i18n/format';
+import { CREATE_LISTING_TONES, type CreateListingTone } from '@/components/listings/create-listing-tones';
 
 type FormStep = 1 | 2 | 3 | 4 | 5;
 
@@ -130,8 +131,18 @@ interface AdminOptions {
   videoUrl: string;
 }
 
-export default function CreateListingForm({ session, isAdmin = false }: { session?: SessionLike; isAdmin?: boolean }) {
+export default function CreateListingForm({
+  session,
+  isAdmin = false,
+  tone = 'panel',
+}: {
+  session?: SessionLike;
+  isAdmin?: boolean;
+  /** `v2` on the public /ilan-ver; the member/admin panels keep `panel` (their current look). */
+  tone?: CreateListingTone;
+}) {
   const t = useTranslations('createListing');
+  const c = CREATE_LISTING_TONES[tone];
   const locale = useLocale() as 'az' | 'en' | 'ru' | 'tr';
 
   const [step, setStep] = useState<FormStep>(1);
@@ -203,7 +214,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
 
   const formatPreviewValue = (field: FieldConfig, value: string | number | boolean | undefined) => {
     if (value === undefined || value === null || value === '') {
-      return <span className="italic text-slate-400">—</span>;
+      return <span className={c.emptyValue}>—</span>;
     }
     if (field.type === 'boolean') {
       return value ? `✅ ${t('yes')}` : `❌ ${t('no')}`;
@@ -421,7 +432,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
       return kept;
     });
     setSelectedForDelete(new Set());
-    pushToast(`${selectedForDelete.size} foto silindi`);
+    pushToast(t('photosDeleted', { count: selectedForDelete.size }));
   };
 
   const handleSubmit = async () => {
@@ -490,38 +501,39 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
 
   if (submittedCode) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-8">
+      <div className={c.successCard}>
         <div className="text-center">
-          <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+          <div className={c.successIcon}>
             <CheckCircle2 className="h-8 w-8" />
           </div>
-          <h1 className="mt-5 font-display text-2xl font-black text-[var(--dk-navy)] sm:text-4xl">
+          <h1 className={c.successTitle}>
             {t('successTitle')}
           </h1>
-          <div className="mt-5 inline-flex items-center gap-3 rounded-full bg-slate-50 px-5 py-3 text-lg font-black text-[var(--dk-navy)]">
+          <div className={c.codePill}>
             {submittedCode}
             <button
               type="button"
               onClick={() => navigator.clipboard?.writeText(submittedCode)}
-              className="rounded-full border border-slate-200 p-2 text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+              aria-label={t('copyCode')}
+              className={c.copyButton}
             >
               <Copy className="h-4 w-4" />
             </button>
           </div>
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-500">
+          <p className={c.body}>
             {t('successDesc')}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href={isAdmin ? '/dashboard/ilanlar' : '/b2b-panel/ilanlarim'}
-              className="rounded-full bg-dk-red-strong px-6 py-3 text-sm font-bold text-white"
+              className={c.primaryPill}
             >
-              {isAdmin ? 'Elan idarəetmə' : t('viewListings')}
+              {isAdmin ? t('admin.manageLink') : t('viewListings')}
             </Link>
             <button
               type="button"
               onClick={resetForm}
-              className="rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700"
+              className={c.ghostPill}
             >
               {t('newListing')}
             </button>
@@ -532,50 +544,54 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
   }
 
   return (
-    <div className="space-y-8">
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
-        <div className="flex gap-3 overflow-x-auto pb-1 md:grid md:grid-cols-5 md:gap-4 md:overflow-visible md:pb-0">
+    <div className={c.stack}>
+      <div className={c.stepCard}>
+        <div className={c.stepList}>
           {STEP_KEYS.map((key, index) => {
             const stepNumber = (index + 1) as FormStep;
             const isDone = step > stepNumber;
             const isActive = step === stepNumber;
 
             return (
-              <div key={key} className="flex min-w-[170px] items-center gap-3 md:min-w-0">
-                <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm font-black ${
-                    isDone
-                      ? 'border-emerald-200 bg-emerald-50 text-emerald-600'
-                      : isActive
-                        ? 'border-amber-300 bg-amber-50 text-[var(--dk-gold)]'
-                        : 'border-slate-200 bg-slate-50 text-slate-400'
-                  }`}
-                >
+              <div key={key} className={c.stepItem} aria-current={isActive ? 'step' : undefined}>
+                <div className={`${c.stepDot} ${isDone ? c.stepDone : isActive ? c.stepActive : c.stepIdle}`}>
                   {isDone ? <Check className="h-5 w-5" /> : stepNumber}
                 </div>
-                <div className={isActive ? 'text-[var(--dk-navy)]' : 'text-slate-500'}>
-                  <div className="text-xs font-black uppercase tracking-[0.18em]">{t('stepLabel', { number: stepNumber })}</div>
-                  <div className="text-sm font-semibold">{t(`steps.${key}`)}</div>
+                <div className={isActive ? c.stepTextActive : c.stepTextIdle}>
+                  <div className={c.stepKicker}>{t('stepLabel', { number: stepNumber })}</div>
+                  <div className={c.stepName}>{t(`steps.${key}`)}</div>
                 </div>
               </div>
             );
           })}
         </div>
+        {tone === 'v2' ? (
+          // Mobile: the step names are hidden in the dots row, so the current one is named here, with a progress bar.
+          <div className="mt-3 md:hidden">
+            <div className="flex items-baseline justify-between gap-3 text-sm">
+              <span className="min-w-0 truncate font-bold text-[#0F172A]">{t(`steps.${STEP_KEYS[step - 1]}`)}</span>
+              <span className="shrink-0 text-xs font-bold tabular-nums text-[#5B6474]">{t('stepOf', { number: step, total: STEP_KEYS.length })}</span>
+            </div>
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#EFE9DE]">
+              <div className="h-full rounded-full bg-dk-red-strong transition-all" style={{ width: `${(step / STEP_KEYS.length) * 100}%` }} />
+            </div>
+          </div>
+        ) : null}
       </div>
 
       {toast ? (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+        <div className={c.toast}>
           {toast}
         </div>
       ) : null}
 
       {step === 1 ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
-          <h2 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{t('selectCategory')}</h2>
-          <p className="mt-2 text-sm text-slate-500">
+        <div className={c.card}>
+          <h2 className={c.h2}>{t('selectCategory')}</h2>
+          <p className={c.lead}>
             {t('selectCategoryDesc')}
           </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className={c.catGrid}>
             {LISTING_CATEGORIES.map((item) => {
               const selected = formData.type === item.id;
               return (
@@ -583,86 +599,83 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                   type="button"
                   key={item.id}
                   onClick={() => setField('type', item.id)}
-                  className={`rounded-2xl border bg-white p-4 text-left transition sm:rounded-[28px] sm:p-5 ${
-                    selected
-                      ? 'border-[var(--dk-gold)] shadow-lg shadow-amber-100'
-                      : 'border-slate-200 hover:border-[var(--dk-gold)] hover:shadow-md'
-                  }`}
+                  aria-pressed={selected}
+                  className={`${c.catCard} ${selected ? c.catSelected : c.catIdle}`}
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <span className={`inline-flex rounded-2xl px-3 py-2 text-xs font-bold ${item.badgeClass}`}>
+                    <span className={`${c.catBadge} ${item.badgeClass}`}>
                       {catLabel(item.id)}
                     </span>
                     {selected ? (
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+                      <span className={c.catCheck}>
                         <Check className="h-4 w-4" />
                       </span>
                     ) : null}
                   </div>
-                  <h3 className="mt-4 font-display text-xl font-black text-[var(--dk-navy)] sm:text-2xl">{catLabel(item.id)}</h3>
-                  <p className="mt-2 text-sm leading-7 text-slate-500">{catDesc(item.id)}</p>
+                  <h3 className={c.catTitle}>{catLabel(item.id)}</h3>
+                  <p className={c.catDesc}>{catDesc(item.id)}</p>
                 </button>
               );
             })}
           </div>
-          {errors.type ? <p className="mt-4 text-sm font-semibold text-[var(--dk-red)]">{errors.type}</p> : null}
+          {errors.type ? <p className={c.errorLg}>{errors.type}</p> : null}
         </div>
       ) : null}
 
       {step === 2 ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
-          <div className="grid gap-5 md:grid-cols-2">
+        <div className={c.card}>
+          <div className={c.fieldGrid}>
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('titleLabel')} *</label>
+              <label className={c.label}>{t('titleLabel')} *</label>
               <input
                 value={formData.title}
                 onChange={(event) => setField('title', event.target.value)}
                 placeholder={t('titlePlaceholder')}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                className={c.input}
               />
-              {errors.title ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.title}</p> : null}
+              {errors.title ? <p className={c.error}>{errors.title}</p> : null}
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('priceLabel')} *</label>
-              <div className="flex min-w-0 items-center rounded-2xl border border-slate-200 bg-white">
+              <label className={c.label}>{t('priceLabel')} *</label>
+              <div className={c.affixWrap}>
                 <input
                   type="number"
                   min={1}
                   value={formData.price}
                   onChange={(event) => setField('price', event.target.value)}
-                  className="min-w-0 w-full rounded-2xl bg-transparent px-4 py-3 text-sm text-slate-900 outline-none"
+                  className={c.affixInput}
                 />
-                <span className="shrink-0 px-3 text-sm font-bold text-slate-500 sm:px-4">AZN</span>
+                <span className={c.suffix}>AZN</span>
               </div>
-              {errors.price ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.price}</p> : null}
+              {errors.price ? <p className={c.error}>{errors.price}</p> : null}
             </div>
 
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('descriptionLabel')} *</label>
+              <label className={c.label}>{t('descriptionLabel')} *</label>
               <textarea
                 rows={5}
                 value={formData.description}
                 onChange={(event) => setField('description', event.target.value)}
                 placeholder={t('descriptionPlaceholder')}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                className={c.textarea}
               />
               <div className="mt-2 flex items-center justify-between text-xs">
                 {errors.description ? (
-                  <span className="font-semibold text-[var(--dk-red)]">{errors.description}</span>
+                  <span className={c.errorInline}>{errors.description}</span>
                 ) : (
-                  <span className="text-slate-400">{t('minChars', { count: 50 })}</span>
+                  <span className={c.hint}>{t('minChars', { count: 50 })}</span>
                 )}
-                <span className="font-semibold text-slate-500">{t('charCount', { count: formData.description.length })}</span>
+                <span className={c.counter}>{t('charCount', { count: formData.description.length })}</span>
               </div>
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('cityLabel')} *</label>
+              <label className={c.label}>{t('cityLabel')} *</label>
               <select
                 value={formData.city}
                 onChange={(event) => setField('city', event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                className={c.input}
               >
                 {CITY_OPTIONS.filter((item) => item.value !== 'all').map((item) => (
                   <option key={item.value} value={item.label}>
@@ -673,11 +686,11 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('sectorLabel')} *</label>
+              <label className={c.label}>{t('sectorLabel')} *</label>
               <select
                 value={formData.sector}
                 onChange={(event) => setField('sector', event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                className={c.input}
               >
                 <option value="">{t('selectPlaceholder')}</option>
                 {getAllSectors(locale).map((item) => (
@@ -686,16 +699,16 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                   </option>
                 ))}
               </select>
-              {errors.sector ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.sector}</p> : null}
+              {errors.sector ? <p className={c.error}>{errors.sector}</p> : null}
             </div>
 
             {formData.city === 'Bakı' ? (
               <div>
-                <label className="mb-2 block text-sm font-bold text-slate-700">{t('districtLabel')}</label>
+                <label className={c.label}>{t('districtLabel')}</label>
                 <select
                   value={formData.district}
                   onChange={(event) => setField('district', event.target.value)}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                  className={c.input}
                 >
                   <option value="">{t('selectPlaceholder')}</option>
                   {currentDistricts.map((item) => (
@@ -708,57 +721,57 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
             ) : null}
 
             <div className="md:col-span-2 pt-4">
-              <div className="border-t border-slate-200 pt-5">
-                <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('contactInfo')}</div>
+              <div className={c.sectionRule}>
+                <div className={c.sectionLabel}>{t('contactInfo')}</div>
               </div>
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('nameLabel')} *</label>
+              <label className={c.label}>{t('nameLabel')} *</label>
               <input
                 value={formData.ownerName}
                 onChange={(event) => setField('ownerName', event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                className={c.input}
               />
-              {errors.ownerName ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.ownerName}</p> : null}
+              {errors.ownerName ? <p className={c.error}>{errors.ownerName}</p> : null}
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('phoneLabel')} *</label>
+              <label className={c.label}>{t('phoneLabel')} *</label>
               <input
                 value={formData.phone}
                 onChange={(event) => setField('phone', normalizePhone(event.target.value))}
                 placeholder="+994 XX XXX XX XX"
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                className={c.input}
               />
-              {errors.phone ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.phone}</p> : null}
+              {errors.phone ? <p className={c.error}>{errors.phone}</p> : null}
             </div>
 
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-bold text-slate-700">{t('emailLabel')}</label>
+              <label className={c.label}>{t('emailLabel')}</label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(event) => setField('email', event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                className={c.input}
               />
-              {errors.email ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.email}</p> : null}
+              {errors.email ? <p className={c.error}>{errors.email}</p> : null}
             </div>
           </div>
         </div>
       ) : null}
 
       {step === 3 ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
+        <div className={c.card}>
           <div className="mb-5 flex items-center gap-3">
             <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${selectedCategory?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
               {t('selectedCategory', { name: selectedCategory ? catLabel(selectedCategory.id) : '' })}
             </span>
           </div>
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className={c.fieldGrid}>
             {dynamicFields.map((field) => (
               <div key={field.key} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
-                <label className="mb-2 block text-sm font-bold text-slate-700">
+                <label className={c.label}>
                   {fieldLabel(field)}
                   {field.required ? ' *' : ''}
                 </label>
@@ -768,41 +781,42 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                     value={String(formData.typeSpecificData[field.key] ?? '')}
                     onChange={(event) => setDynamicField(field.key, event.target.value)}
                     placeholder={field.placeholder}
-                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                    className={c.textarea}
                   />
                 ) : field.type === 'boolean' ? (
-                  <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
+                  <label className={c.checkRow}>
                     <input
                       type="checkbox"
                       checked={Boolean(formData.typeSpecificData[field.key])}
                       onChange={(event) => setDynamicField(field.key, event.target.checked)}
-                      className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]"
+                      className={c.checkbox}
                     />
                     {fieldLabel(field)}
                   </label>
                 ) : field.type === 'equipment-list' ? (
                   <div className="space-y-3 md:col-span-2">
                     {equipment.map((eq, idx) => (
-                      <div key={idx} className="flex items-center gap-3">
+                      <div key={idx} className={c.eqRow}>
                         <input type="text" value={eq.name} placeholder={t('equipmentName')}
                           onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, name: e.target.value } : item))}
-                          className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[var(--dk-gold)]" />
+                          className={c.eqName} />
                         <select value={eq.condition}
                           onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, condition: e.target.value as 'new' | 'used' } : item))}
-                          className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none">
+                          className={c.eqSelect}>
                           <option value="used">{t('equipmentUsed')}</option>
                           <option value="new">{t('equipmentNew')}</option>
                         </select>
                         <input type="number" min="1" value={eq.count ?? ''} placeholder={t('equipmentCount')}
                           onChange={(e) => setEquipment(prev => prev.map((item, i) => i === idx ? { ...item, count: Number(e.target.value) || undefined } : item))}
-                          className="w-20 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[var(--dk-gold)]" />
+                          className={c.eqCount} />
                         <button type="button" onClick={() => setEquipment(prev => prev.filter((_, i) => i !== idx))}
-                          className="text-slate-400 hover:text-red-500"><Trash2 size={16} /></button>
+                          aria-label={t('delete')}
+                          className={c.eqRemove}><Trash2 size={16} /></button>
                       </div>
                     ))}
                     <button type="button"
                       onClick={() => setEquipment(prev => [...prev, { name: '', condition: 'used' }])}
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--dk-gold)] hover:text-amber-600">
+                      className={c.addLink}>
                       {t('addEquipment')}
                     </button>
                   </div>
@@ -810,7 +824,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                   <select
                     value={String(formData.typeSpecificData[field.key] ?? '')}
                     onChange={(event) => setDynamicField(field.key, event.target.value)}
-                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                    className={c.input}
                   >
                     <option value="">{t('selectPlaceholder')}</option>
                     {field.options?.map((option) => (
@@ -820,7 +834,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                     ))}
                   </select>
                 ) : (
-                  <div className="flex min-w-0 items-center rounded-2xl border border-slate-200 bg-white">
+                  <div className={c.affixWrap}>
                     <input
                       type={field.type === 'number' ? 'number' : 'text'}
                       value={String(formData.typeSpecificData[field.key] ?? '')}
@@ -831,23 +845,23 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                         )
                       }
                       placeholder={field.placeholder}
-                      className="min-w-0 w-full rounded-2xl bg-transparent px-4 py-3 text-sm text-slate-900 outline-none"
+                      className={c.affixInput}
                     />
-                    {field.suffix ? <span className="shrink-0 whitespace-nowrap px-3 text-sm font-bold text-slate-500 sm:px-4">{field.suffix}</span> : null}
+                    {field.suffix ? <span className={c.suffix}>{field.suffix}</span> : null}
                   </div>
                 )}
-                {errors[`dynamic:${field.key}`] ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors[`dynamic:${field.key}`]}</p> : null}
+                {errors[`dynamic:${field.key}`] ? <p className={c.error}>{errors[`dynamic:${field.key}`]}</p> : null}
               </div>
             ))}
 
             {availableConcepts.length > 0 ? (
-              <div className="md:col-span-2 border-t border-slate-200 pt-5">
+              <div className={`md:col-span-2 ${c.sectionRule}`}>
                 <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('conceptTitle')}</div>
-                    <p className="mt-1 text-sm text-slate-500">{t('conceptHelp')}</p>
+                    <div className={c.sectionLabel}>{t('conceptTitle')}</div>
+                    <p className={c.sectionHelp}>{t('conceptHelp')}</p>
                   </div>
-                  <span className="rounded-full bg-slate-50 px-3 py-1 text-xs font-bold text-slate-500">
+                  <span className={c.countChip}>
                     {t('conceptCount', { count: selectedConcepts.length })}
                   </span>
                 </div>
@@ -861,13 +875,8 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                         type="button"
                         disabled={disabled}
                         onClick={() => toggleConcept(concept)}
-                        className={`rounded-full border px-3 py-2 text-sm font-bold transition sm:px-4 ${
-                          selected
-                            ? 'border-amber-300 bg-amber-50 text-amber-800'
-                            : disabled
-                              ? 'border-slate-100 bg-slate-50 text-slate-300'
-                              : 'border-slate-200 bg-white text-slate-700 hover:border-amber-300'
-                        }`}
+                        aria-pressed={selected}
+                        className={`${c.chip} ${selected ? c.chipOn : disabled ? c.chipDisabled : c.chipIdle}`}
                       >
                         {getConceptLabel(concept, locale)}
                       </button>
@@ -878,25 +887,25 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
             ) : null}
 
             {locationFields.length > 0 ? (
-              <div className="md:col-span-2 border-t border-slate-200 pt-5">
+              <div className={`md:col-span-2 ${c.sectionRule}`}>
                 <div className="mb-4">
-                  <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('locationDetailsTitle')}</div>
-                  <p className="mt-1 text-sm text-slate-500">{t('locationDetailsHelp')}</p>
+                  <div className={c.sectionLabel}>{t('locationDetailsTitle')}</div>
+                  <p className={c.sectionHelp}>{t('locationDetailsHelp')}</p>
                 </div>
-                <div className="grid gap-5 md:grid-cols-2">
+                <div className={c.fieldGrid}>
                   {locationFields.map((field) => (
                     <div key={field.key}>
-                      <label className="mb-2 block text-sm font-bold text-slate-700">
+                      <label className={c.label}>
                         {fieldLabel(field)}
                         {field.required ? ' *' : ''}
                       </label>
                       {field.type === 'boolean' ? (
-                        <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
+                        <label className={c.checkRow}>
                           <input
                             type="checkbox"
                             checked={Boolean(locationData[field.key])}
                             onChange={(event) => setLocationField(field.key, event.target.checked)}
-                            className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]"
+                            className={c.checkbox}
                           />
                           {fieldLabel(field)}
                         </label>
@@ -904,7 +913,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                         <select
                           value={String(locationData[field.key] ?? '')}
                           onChange={(event) => setLocationField(field.key, event.target.value)}
-                          className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                          className={c.input}
                         >
                           <option value="">{t('selectPlaceholder')}</option>
                           {field.options?.map((option) => (
@@ -914,7 +923,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                           ))}
                         </select>
                       ) : (
-                        <div className="flex min-w-0 items-center rounded-2xl border border-slate-200 bg-white">
+                        <div className={c.affixWrap}>
                           <input
                             type={field.type === 'number' ? 'number' : 'text'}
                             value={String(locationData[field.key] ?? '')}
@@ -925,12 +934,12 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                               )
                             }
                             placeholder={field.placeholder}
-                            className="min-w-0 w-full rounded-2xl bg-transparent px-4 py-3 text-sm text-slate-900 outline-none"
+                            className={c.affixInput}
                           />
-                          {field.suffix ? <span className="shrink-0 whitespace-nowrap px-3 text-sm font-bold text-slate-500 sm:px-4">{field.suffix}</span> : null}
+                          {field.suffix ? <span className={c.suffix}>{field.suffix}</span> : null}
                         </div>
                       )}
-                      {errors[`location:${field.key}`] ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors[`location:${field.key}`]}</p> : null}
+                      {errors[`location:${field.key}`] ? <p className={c.error}>{errors[`location:${field.key}`]}</p> : null}
                     </div>
                   ))}
                 </div>
@@ -940,7 +949,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
             {conceptWarnings.length > 0 ? (
               <div className="md:col-span-2 space-y-2">
                 {conceptWarnings.map((warning) => (
-                  <div key={warning} className="flex items-start gap-2 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+                  <div key={warning} className={c.warning}>
                     <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                     {warning}
                   </div>
@@ -952,37 +961,37 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
       ) : null}
 
       {step === 4 ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
-          <h2 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{t('photosTitle')}</h2>
-          <p className="mt-2 text-sm leading-7 text-slate-500">
+        <div className={c.card}>
+          <h2 className={c.h2}>{t('photosTitle')}</h2>
+          <p className={c.leadLoose}>
             {t('photosDesc')}
           </p>
 
-          <label className="mt-6 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-8 text-center text-sm font-semibold text-slate-600 sm:flex-row sm:rounded-[28px] sm:px-6 sm:py-10">
-            <UploadCloud className="h-5 w-5 text-[var(--dk-gold)]" />
+          <label className={c.dropzone}>
+            <UploadCloud className={c.dropIcon} />
             {t('addPhoto')}
             <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleImages} />
           </label>
 
-          <div className="mt-4 flex items-center justify-between">
-            <div className="text-sm font-semibold text-slate-500">{t('photoCount', { count: images.length })}</div>
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
+            <div className={c.photoCount}>{t('photoCount', { count: images.length })}</div>
             {selectedForDelete.size > 0 && (
               <button
                 type="button"
                 onClick={bulkDeleteImages}
-                className="inline-flex items-center gap-2 rounded-full bg-rose-500 px-4 py-2 text-xs font-bold text-white"
+                className={c.bulkDelete}
               >
                 <Trash2 className="h-3.5 w-3.5" />
-                {selectedForDelete.size} foto sil
+                {t('deleteSelected', { count: selectedForDelete.size })}
               </button>
             )}
           </div>
-          {errors.images ? <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">{errors.images}</p> : null}
+          {errors.images ? <p className={c.error}>{errors.images}</p> : null}
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className={c.imgGrid}>
             {images.map((image, index) => (
-              <div key={image.id} className={`rounded-[24px] border bg-white p-4 shadow-sm ${selectedForDelete.has(image.id) ? 'border-rose-300 ring-2 ring-rose-100' : 'border-slate-200'}`}>
-                <div className="relative overflow-hidden rounded-2xl bg-slate-100">
+              <div key={image.id} className={`${c.imgCard} ${selectedForDelete.has(image.id) ? c.imgCardSelected : c.imgCardIdle}`}>
+                <div className={c.imgFrame}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={image.preview} alt={image.file.name} className="aspect-[4/3] w-full object-cover" />
                   <label className="absolute left-3 top-3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-lg bg-white/90 shadow">
@@ -994,26 +1003,26 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                     />
                   </label>
                 </div>
-                <div className="mt-3 text-sm font-semibold text-slate-700">{image.file.name}</div>
-                <div className="mt-1 text-xs font-semibold text-emerald-600">{image.sizeReduction}</div>
+                <div className={c.imgName}>{image.file.name}</div>
+                <div className={c.imgSaving}>{image.sizeReduction}</div>
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   {coverIndex === index ? (
-                    <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-[var(--dk-gold)]">{t('coverPhoto')}</span>
+                    <span className={c.coverBadge}>{t('coverPhoto')}</span>
                   ) : (
-                    <button type="button" onClick={() => setCoverIndex(index)} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-600">
+                    <button type="button" onClick={() => setCoverIndex(index)} className={c.miniButton}>
                       {t('setCover')}
                     </button>
                   )}
-                  <button type="button" onClick={() => removeImage(index)} className="rounded-full border border-rose-200 px-3 py-1 text-xs font-bold text-[var(--dk-red)]">
+                  <button type="button" onClick={() => removeImage(index)} className={c.miniDanger}>
                     <Trash2 className="mr-1 inline h-3.5 w-3.5" />
                     {t('delete')}
                   </button>
                 </div>
-                <div className="mt-3 flex gap-2">
-                  <button type="button" disabled={index === 0} onClick={() => moveImage(index, index - 1)} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-600 disabled:opacity-40">
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button type="button" disabled={index === 0} onClick={() => moveImage(index, index - 1)} className={`${c.miniButton} disabled:opacity-40`}>
                     {t('moveUp')}
                   </button>
-                  <button type="button" disabled={index === images.length - 1} onClick={() => moveImage(index, index + 1)} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-600 disabled:opacity-40">
+                  <button type="button" disabled={index === images.length - 1} onClick={() => moveImage(index, index + 1)} className={`${c.miniButton} disabled:opacity-40`}>
                     {t('moveDown')}
                   </button>
                 </div>
@@ -1022,39 +1031,39 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
           </div>
 
           {/* Video embed — YouTube / Instagram link */}
-          <div className="mt-8 border-t border-slate-200 pt-6">
-            <div className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-slate-400">
+          <div className={c.videoBlock}>
+            <div className={c.videoLabel}>
               <Film className="h-4 w-4" />
-              Video (YouTube / Instagram)
+              {t('video.label')}
             </div>
             <div className="mt-3 flex gap-3">
               <input
                 type="url"
                 value={adminOpts.videoUrl}
                 onChange={(e) => setAdminOpts((prev) => ({ ...prev, videoUrl: e.target.value }))}
-                placeholder="https://youtube.com/watch?v=... və ya https://instagram.com/reel/..."
-                className="flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                placeholder={t('video.placeholder')}
+                className={c.videoInput}
               />
               {adminOpts.videoUrl && (
-                <button type="button" onClick={() => setAdminOpts((prev) => ({ ...prev, videoUrl: '' }))} className="rounded-2xl border border-slate-200 px-3 text-slate-400 hover:text-slate-700">
+                <button type="button" onClick={() => setAdminOpts((prev) => ({ ...prev, videoUrl: '' }))} aria-label={t('video.clear')} className={c.videoClear}>
                   <X className="h-4 w-4" />
                 </button>
               )}
             </div>
             {adminOpts.videoUrl && parseVideoUrl(adminOpts.videoUrl) && (
-              <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
+              <div className={c.videoFrame}>
                 <iframe
                   src={parseVideoUrl(adminOpts.videoUrl)!.embedUrl}
                   className="aspect-video w-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                  title="Video preview"
+                  title={t('video.previewTitle')}
                 />
               </div>
             )}
             {adminOpts.videoUrl && !parseVideoUrl(adminOpts.videoUrl) && (
-              <p className="mt-2 text-sm font-semibold text-[var(--dk-red)]">
-                YouTube və ya Instagram linki daxil edin
+              <p className={c.error}>
+                {t('video.invalid')}
               </p>
             )}
           </div>
@@ -1062,15 +1071,15 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
       ) : null}
 
       {step === 5 ? (
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[32px] sm:p-6">
+        <div className={c.card}>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{t('previewTitle')}</h2>
-              <p className="mt-2 text-sm text-slate-500">{t('previewDesc')}</p>
+              <h2 className={c.h2}>{t('previewTitle')}</h2>
+              <p className={c.lead}>{t('previewDesc')}</p>
             </div>
           </div>
 
-          <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white sm:rounded-[28px]">
+          <div className={c.previewShell}>
             {images[coverIndex] ? (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -1082,7 +1091,7 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                 <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${selectedCategory?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
                   {selectedCategory ? catLabel(selectedCategory.id) : t('categoryFallback')}
                 </span>
-                <button type="button" onClick={() => setStep(1)} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
+                <button type="button" onClick={() => setStep(1)} className={c.editLink}>
                   <Pencil className="h-4 w-4" />
                   {t('edit')}
                 </button>
@@ -1090,43 +1099,43 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
 
               <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
                 <div>
-                  <h3 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">{formData.title}</h3>
-                  <div className="mt-3 text-xl font-black text-[var(--dk-gold)] sm:text-2xl">
+                  <h3 className={c.previewTitle}>{formData.title}</h3>
+                  <div className={c.previewPrice}>
                     {Number(formData.price || 0).toLocaleString(AZ_NUMBER_LOCALE)} {formData.currency}
                   </div>
-                  <p className="mt-3 text-sm text-slate-500">
+                  <p className={c.previewMeta}>
                     {formData.city}{formData.district ? `, ${formData.district}` : ''}
                     {formData.sector ? ` · ${getAllSectors(locale).find(s => s.value === formData.sector)?.label ?? formData.sector}` : ''}
                   </p>
-                  <div className="mt-5 rounded-2xl bg-slate-50 p-4 text-sm leading-7 text-slate-600">{formData.description}</div>
-                  <button type="button" onClick={() => setStep(2)} className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
+                  <div className={c.previewDesc}>{formData.description}</div>
+                  <button type="button" onClick={() => setStep(2)} className={`mt-3 ${c.editLink}`}>
                     <Pencil className="h-4 w-4" />
                     {t('editMainInfo')}
                   </button>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className={c.box}>
                     <div className="flex items-center justify-between">
-                      <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('typeDetails')}</div>
-                      <button type="button" onClick={() => setStep(3)} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
+                      <div className={c.sectionLabel}>{t('typeDetails')}</div>
+                      <button type="button" onClick={() => setStep(3)} className={c.editLink}>
                         <Pencil className="h-4 w-4" />
                         {t('edit')}
                       </button>
                     </div>
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
                       {dynamicFields.map((field) => (
-                        <div key={field.key} className="rounded-2xl bg-white p-4 text-sm">
-                          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{fieldLabel(field)}</div>
-                          <div className="mt-2 font-semibold text-slate-700">{formatPreviewValue(field, formData.typeSpecificData[field.key])}</div>
+                        <div key={field.key} className={c.tile}>
+                          <div className={c.tileLabel}>{fieldLabel(field)}</div>
+                          <div className={c.tileValue}>{formatPreviewValue(field, formData.typeSpecificData[field.key])}</div>
                         </div>
                       ))}
                       {selectedConcepts.length > 0 ? (
-                        <div className="rounded-2xl bg-white p-4 text-sm sm:col-span-2">
-                          <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{t('conceptTitle')}</div>
+                        <div className={`${c.tile} sm:col-span-2`}>
+                          <div className={c.tileLabel}>{t('conceptTitle')}</div>
                           <div className="mt-2 flex flex-wrap gap-2">
                             {selectedConcepts.map((concept) => (
-                              <span key={concept} className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800">
+                              <span key={concept} className={c.conceptTag}>
                                 {getConceptLabel(concept, locale)}
                               </span>
                             ))}
@@ -1136,36 +1145,36 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
                       {locationFields
                         .filter((field) => locationData[field.key] !== undefined && locationData[field.key] !== '')
                         .map((field) => (
-                          <div key={field.key} className="rounded-2xl bg-white p-4 text-sm">
-                            <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{fieldLabel(field)}</div>
-                            <div className="mt-2 font-semibold text-slate-700">{formatPreviewValue(field, locationData[field.key])}</div>
+                          <div key={field.key} className={c.tile}>
+                            <div className={c.tileLabel}>{fieldLabel(field)}</div>
+                            <div className={c.tileValue}>{formatPreviewValue(field, locationData[field.key])}</div>
                           </div>
                         ))}
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className={c.box}>
                     <div className="flex items-center justify-between">
-                      <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('photosTitle')}</div>
-                      <button type="button" onClick={() => setStep(4)} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
+                      <div className={c.sectionLabel}>{t('photosTitle')}</div>
+                      <button type="button" onClick={() => setStep(4)} className={c.editLink}>
                         <Pencil className="h-4 w-4" />
                         {t('edit')}
                       </button>
                     </div>
                     <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4">
                       {images.map((image, index) => (
-                        <div key={image.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                        <div key={image.id} className={c.thumb}>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={image.thumbnail} alt={image.file.name} className="aspect-square w-full object-cover" />
-                          {coverIndex === index ? <div className="px-2 py-1 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--dk-gold)]">{t('vitrin')}</div> : null}
+                          {coverIndex === index ? <div className={c.thumbCover}>{t('vitrin')}</div> : null}
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-sm font-black uppercase tracking-[0.18em] text-slate-400">{t('contact')}</div>
-                    <div className="mt-3 space-y-2 text-sm text-slate-600">
+                  <div className={c.box}>
+                    <div className={c.sectionLabel}>{t('contact')}</div>
+                    <div className={c.contactList}>
                       <div><strong>{t('nameField')}:</strong> {formData.ownerName}</div>
                       <div><strong>{t('phoneField')}:</strong> {formData.phone}</div>
                       <div><strong>{t('emailField')}:</strong> {formData.email || '—'}</div>
@@ -1176,62 +1185,62 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
 
               {/* Admin controls */}
               {isAdmin && (
-                <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50/50 p-5">
-                  <div className="flex items-center gap-2 text-sm font-black uppercase tracking-[0.18em] text-amber-700">
+                <div className={c.adminBox}>
+                  <div className={c.adminTitle}>
                     <Star className="h-4 w-4" />
-                    Admin idarəetmə
+                    {t('admin.title')}
                   </div>
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <div>
-                      <label className="mb-2 block text-sm font-bold text-slate-700">Başlanğıc status</label>
+                      <label className={c.label}>{t('admin.initialStatus')}</label>
                       <select
                         value={adminOpts.initialStatus}
                         onChange={(e) => setAdminOpts((prev) => ({ ...prev, initialStatus: e.target.value }))}
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                        className={c.select}
                       >
-                        <option value="submitted">Göndərildi (standart axın)</option>
-                        <option value="committee_review">Komitə baxışı</option>
-                        <option value="showcase_ready">Vitrində (birbaşa yayımla)</option>
+                        <option value="submitted">{t('admin.statusSubmitted')}</option>
+                        <option value="committee_review">{t('admin.statusCommittee')}</option>
+                        <option value="showcase_ready">{t('admin.statusShowcase')}</option>
                       </select>
                     </div>
                     <div className="flex flex-col gap-3">
-                      <label className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-700">
+                      <label className={c.adminCheck}>
                         <input
                           type="checkbox"
                           checked={adminOpts.isShowcase}
                           onChange={(e) => setAdminOpts((prev) => ({ ...prev, isShowcase: e.target.checked }))}
-                          className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]"
+                          className={c.checkbox}
                         />
                         <Eye className="h-4 w-4 text-slate-400" />
-                        Vitrində göstər
+                        {t('admin.showOnShowcase')}
                       </label>
-                      <label className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-700">
+                      <label className={c.adminCheck}>
                         <input
                           type="checkbox"
                           checked={adminOpts.isFeatured}
                           onChange={(e) => setAdminOpts((prev) => ({ ...prev, isFeatured: e.target.checked }))}
-                          className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]"
+                          className={c.checkbox}
                         />
                         <Star className="h-4 w-4 text-slate-400" />
-                        Seçilmiş elan
+                        {t('admin.featured')}
                       </label>
                     </div>
                   </div>
                   <div className="mt-4">
-                    <label className="mb-2 block text-sm font-bold text-slate-700">Admin qeydi (üzv görməz)</label>
+                    <label className={c.label}>{t('admin.note')}</label>
                     <textarea
                       value={adminOpts.adminNote}
                       onChange={(e) => setAdminOpts((prev) => ({ ...prev, adminNote: e.target.value }))}
                       rows={3}
-                      placeholder="Daxili qeyd — yalnız admin panelində görünür"
-                      className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                      placeholder={t('admin.notePlaceholder')}
+                      className={c.textarea}
                     />
                   </div>
                 </div>
               )}
 
-              <button type="button" onClick={handleSubmit} disabled={submitting} className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-dk-red-strong px-6 py-4 text-sm font-bold text-white disabled:opacity-60">
-                {submitting ? t('submitting') : (isAdmin ? 'Elan yarat (Admin)' : t('submitButton'))}
+              <button type="button" onClick={handleSubmit} disabled={submitting} className={c.submit}>
+                {submitting ? t('submitting') : (isAdmin ? t('admin.submit') : t('submitButton'))}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>
@@ -1241,11 +1250,11 @@ export default function CreateListingForm({ session, isAdmin = false }: { sessio
 
       {!submittedCode ? (
         <div className="flex items-center justify-between gap-3">
-          <button type="button" onClick={handleBack} disabled={step === 1} className="min-w-0 rounded-full border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700 disabled:opacity-40 sm:px-5">
+          <button type="button" onClick={handleBack} disabled={step === 1} className={c.navBack}>
             {t('back')}
           </button>
           {step < 5 ? (
-            <button type="button" onClick={handleContinue} className="min-w-0 rounded-full bg-dk-red-strong px-4 py-3 text-sm font-bold text-white sm:px-5">
+            <button type="button" onClick={handleContinue} className={c.navNext}>
               {t('continue')}
             </button>
           ) : null}

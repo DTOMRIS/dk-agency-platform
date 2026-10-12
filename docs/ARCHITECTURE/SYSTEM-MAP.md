@@ -1,14 +1,14 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-11 · fix/TASK-0545-blog-content-audit · a78c7f64
+> `node scripts/generate-system-map.mjs` · 2026-10-11 · feat/TASK-0546-finish-round · b28467be
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
 - Ünvan: **137** (həqiqi səhifə 123, yönləndirmə 10, güzgü 4) · page faylı 253
-- Dizayn (həqiqi səhifələr): v2 **50** · köhnə **49** · qarışıq **2** · işarəsiz 22
+- Dizayn (həqiqi səhifələr): v2 **67** · köhnə **32** · qarışıq **1** · işarəsiz 23
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 63 (+ 380 tapşırıq kartı)
+- Sənəd: 63 (+ 381 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -28,9 +28,10 @@
 | Persona | /marketinq/musteri-persona | 4: marketinq-ocagi/musteri-persona/MusteriPersonaPage.tsx, marketinq-ocagi/musteri-persona/PersonaForm.tsx, marketinq-ocagi/musteri-persona/PersonaResult.tsx, marketinq/CustomerPersona.tsx | /api/marketing-tools/musteri-persona |
 
 ## Saxta davranış taraması (UI olmayan şeyi «oldu» deyir)
-Cəmi **0** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazılır.
+Cəmi **1** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazılır.
 | Qayda | Fayl:sətir | Kod |
 |---|---|---|
+| Saxta gözləmə (setTimeout ilə «uğurlu») | `components/dashboard/TranslateAllButton.tsx:36` | `await new Promise((r) => setTimeout(r, 4000));` |
 
 Əsaslandırılmış istisnalar (`fake-scan-ok`): **11**
 - `components/analytics/PortalEngagementTracker.tsx:40` — analytics beacon, nothing is shown to the user
@@ -68,7 +69,7 @@ Cəmi **8**. Silməzdən əvvəl dinamik import / string ilə çağırış yoxla
 ## Səhifələr — bölmə üzrə
 Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 = krem + Inter + inner/v2 tokenləri; köhnə = navy/gold/serif/boz fon) · **Giriş** · **Geri** · **AZ** = faylda sabit Azərbaycan mətni (i18n olmalıdır).
 
-### İctimai səhifələr — 26 ünvan (v2 7 · köhnə 7 · qarışıq 0)
+### İctimai səhifələr — 26 ünvan (v2 14 · köhnə 0 · qarışıq 0)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/` | səhifə | v2 | — | ✓ |  | ads/AdSlot.tsx, home/v2/HomeV2.tsx, home/v2/homeV2.module.css |
@@ -77,23 +78,23 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/contact` | → /elaqe | — | — | ✗ |  |  |
 | `/cookies` | səhifə | — | — | ✓ | 2 | legal/LegalPageLayout.tsx |
 | `/elaqe` | səhifə | v2 | — | ✓ |  | contact/ContactFunnel.tsx, home/v2/font.ts |
-| `/email-preferences` | səhifə | köhnə | — | ✓ |  | inner/PageBack.tsx |
+| `/email-preferences` | səhifə | v2 | — | ✓ |  | inner/PageBack.tsx, home/v2/homeV2.module.css, inner/inner.module.css |
 | `/forgot-password` | səhifə | v2 | — | ✓ |  | auth/ForgotPasswordPageClient.tsx |
 | `/haqqimizda` | səhifə | v2 | — | ✓ |  | home/v2/homeV2.module.css, home/v2/font.ts, inner/InnerParts.tsx |
-| `/is-elanlari` | səhifə | köhnə | — | ✓ |  | jobs/JobsPage.tsx, inner/PageBack.tsx |
+| `/is-elanlari` | səhifə | v2 | — | ✓ |  | jobs/JobsPage.tsx, inner/PageBack.tsx |
 | `/kazan-ai` | səhifə | v2 | — | ✓ |  | kazan-ai/KazanAiChatClient.tsx, inner/PageBack.tsx |
 | `/listings` | → /ilanlar | — | — | ✗ |  |  |
 | `/news` | → /haberler | — | — | ✗ |  |  |
-| `/pricing` | səhifə | köhnə | — | ✓ |  | pricing/PricingPage.tsx, inner/PageBack.tsx |
+| `/pricing` | səhifə | v2 | — | ✓ |  | pricing/PricingPage.tsx, inner/PageBack.tsx |
 | `/privacy` | səhifə | — | — | ✓ | 2 | legal/LegalPageLayout.tsx |
-| `/qiymet` | səhifə | köhnə | — | ✓ | 66 | inner/PageBack.tsx |
+| `/qiymet` | səhifə | v2 | — | ✓ | 66 | inner/PageBack.tsx, home/v2/homeV2.module.css, inner/inner.module.css |
 | `/randevu` | səhifə | — | — | ✓ | 2 | inner/PageBack.tsx |
 | `/reset-password` | səhifə | v2 | — | ✓ |  | auth/ResetPasswordPageClient.tsx |
-| `/sedd-rozeti` | səhifə | köhnə | — | ✓ |  | inner/PageBack.tsx |
+| `/sedd-rozeti` | səhifə | v2 | — | ✓ |  | inner/PageBack.tsx, home/v2/homeV2.module.css, inner/inner.module.css |
 | `/sektor` | səhifə | — | — | ✓ |  | inner/PageBack.tsx |
 | `/sektor/[slug]` | səhifə | — | — | ✓ | 1 | sektor/SektorLanding.tsx, inner/PageBack.tsx |
-| `/settings` | səhifə | köhnə | səhifədə | ✓ |  | settings/SettingsPageClient.tsx |
-| `/terefdashlar` | səhifə | köhnə | — | ✓ | 3 | shared/ComingSoon.tsx |
+| `/settings` | səhifə | v2 | səhifədə | ✓ |  | settings/SettingsPageClient.tsx |
+| `/terefdashlar` | səhifə | v2 | — | ✓ | 3 | shared/ComingSoon.tsx |
 | `/terms` | səhifə | — | — | ✓ | 2 | legal/LegalPageLayout.tsx |
 | `/uzvluk` | səhifə | — | səhifədə | ✓ |  | members/CheckoutActions.tsx, members/MemberLogoutButton.tsx, inner/PageBack.tsx |
 | `/verify-email` | səhifə | v2 | — | ✓ |  | auth/VerifyEmailPageClient.tsx |
@@ -105,7 +106,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/auth/login` | səhifə | v2 | — | ✓ | 25 | auth/AuthShell.tsx |
 | `/auth/register` | səhifə | v2 | — | ✓ | 54 | auth/AuthShell.tsx |
 
-### Müştəri paneli (b2b-panel) — 27 ünvan (v2 0 · köhnə 16 · qarışıq 1)
+### Müştəri paneli (b2b-panel) — 27 ünvan (v2 8 · köhnə 7 · qarışıq 1)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/b2b-panel` | səhifə | — | layout (/b2b-panel) | — (panel ana səhifəsi) | 1 | dashboard/RecommendationWidget.tsx, dashboard/NudgeBanner.tsx |
@@ -125,16 +126,16 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/b2b-panel/profil` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✓ | 40 |  |
 | `/b2b-panel/teklifler` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✓ | 1 | b2b-panel/useOwnerListings.ts |
 | `/b2b-panel/toolkit` | → /toolkit | — | layout (/b2b-panel) | ✓ |  |  |
-| `/b2b-panel/toolkit/financial-health` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
-| `/b2b-panel/toolkit/franchise-readiness` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
-| `/b2b-panel/toolkit/inventory` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
-| `/b2b-panel/toolkit/lsm-planner` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
-| `/b2b-panel/toolkit/operational-audit` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 2 | shared/ComingSoon.tsx |
-| `/b2b-panel/toolkit/pnl-simulator` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 2 | shared/ComingSoon.tsx |
+| `/b2b-panel/toolkit/financial-health` (yalnız kök) | səhifə | v2 | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
+| `/b2b-panel/toolkit/franchise-readiness` (yalnız kök) | səhifə | v2 | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
+| `/b2b-panel/toolkit/inventory` (yalnız kök) | səhifə | v2 | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
+| `/b2b-panel/toolkit/lsm-planner` (yalnız kök) | səhifə | v2 | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
+| `/b2b-panel/toolkit/operational-audit` (yalnız kök) | səhifə | v2 | layout (/b2b-panel) | ✓ | 2 | shared/ComingSoon.tsx |
+| `/b2b-panel/toolkit/pnl-simulator` (yalnız kök) | səhifə | v2 | layout (/b2b-panel) | ✓ | 2 | shared/ComingSoon.tsx |
 | `/b2b-panel/toolkit/roi-calculator` (yalnız kök) | səhifə | — | layout (/b2b-panel) | ✓ | 15 |  |
-| `/b2b-panel/toolkit/talent-up` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 2 | shared/ComingSoon.tsx |
-| `/b2b-panel/toolkit/workforce` (yalnız kök) | səhifə | köhnə | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
-| `/b2b-panel/yeni-ilan` | səhifə | köhnə | səhifədə | ✓ |  | listings/CreateListingForm.tsx |
+| `/b2b-panel/toolkit/talent-up` (yalnız kök) | səhifə | v2 | layout (/b2b-panel) | ✓ | 2 | shared/ComingSoon.tsx |
+| `/b2b-panel/toolkit/workforce` (yalnız kök) | səhifə | v2 | layout (/b2b-panel) | ✓ | 3 | shared/ComingSoon.tsx |
+| `/b2b-panel/yeni-ilan` | səhifə | — | səhifədə | ✓ |  | listings/CreateListingForm.tsx |
 
 ### Bloq / xəbərlər — 6 ünvan (v2 4 · köhnə 0 · qarışıq 0)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
@@ -194,10 +195,10 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/franchise/radar` | səhifə | v2 | — | ✓ |  | franchise/FranchiseRadarCatalog.tsx, home/v2/homeV2.module.css, home/v2/font.ts |
 | `/franchise/roi-kalkulyatoru` | səhifə | v2 | — | ✓ |  | franchise/RoiCalculator.tsx, franchise/LeadForm.tsx, home/v2/homeV2.module.css |
 
-### Elanlar — 3 ünvan (v2 2 · köhnə 1 · qarışıq 0)
+### Elanlar — 3 ünvan (v2 3 · köhnə 0 · qarışıq 0)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
-| `/ilan-ver` | səhifə | köhnə | səhifədə | ✓ | 1 | listings/CreateListingForm.tsx, inner/PageBack.tsx |
+| `/ilan-ver` | səhifə | v2 | səhifədə | ✓ |  | listings/CreateListingForm.tsx, inner/PageBack.tsx, home/v2/homeV2.module.css |
 | `/ilanlar` | səhifə | v2 | — | ✓ | 2 | listings/ListingsShowcasePage.tsx |
 | `/ilanlar/[slug]` | səhifə | v2 | — | ✓ |  | listings/ListingDetailClient.tsx |
 
@@ -217,7 +218,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/marketinq/sosial-metrik` | səhifə | v2 | səhifədə | ✓ |  | marketinq-ocagi/sosial-metrik/SosialMetrikPage.tsx |
 | `/marketinq/trend-analiz` | səhifə | v2 | səhifədə | ✓ |  | marketinq-ocagi/trend-analiz/TrendAnalizPage.tsx |
 
-### Toolkit — 20 ünvan (v2 19 · köhnə 0 · qarışıq 1)
+### Toolkit — 20 ünvan (v2 20 · köhnə 0 · qarışıq 0)
 | Ünvan | Növ | Dizayn | Giriş | Geri | AZ | Əsas komponent |
 |---|---|---|---|---|---|---|
 | `/toolkit` | səhifə | v2 | — | ✓ |  | toolkit/ToolkitDirectory.tsx |
@@ -239,7 +240,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/toolkit/pnl-simulator` | səhifə | v2 | — | ✓ | 2 |  |
 | `/toolkit/qonaq-evi-roi-kalkulyatoru` | səhifə | v2 | — | ✓ |  | toolkit/GuesthouseRoiCalculator.tsx, toolkit/ToolPageShell.tsx |
 | `/toolkit/staff-retention` | səhifə | v2 | — | ✓ |  | toolkit/ToolkitStudioLayout.tsx, toolkit/DecimalInput.tsx, toolkit/ToolResetControls.tsx |
-| `/toolkit/whatsapp-template-paketi` | səhifə | qarışıq | — | ✓ |  | toolkit/WhatsappTemplatesPanel.tsx, toolkit/ToolPageShell.tsx |
+| `/toolkit/whatsapp-template-paketi` | səhifə | v2 | — | ✓ |  | toolkit/WhatsappTemplatesPanel.tsx, toolkit/ToolPageShell.tsx |
 
 ## API — qoruma işarəsi olmayan route-lar
 İctimai (lead forması, ictimai elan siyahısı, tracking, cron-un özü və s.) normaldır. Admin/üzv datası qaytaran varsa — dərhal düzəlt.
@@ -302,7 +303,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/ADR/README.md` | Architecture Decision Records (ADR) | 2026-10-08 | 37 |
 | `docs/ADR/_TEMPLATE.md` | ADR-NNNN: {Başlıq} | 2026-05-27 | 25 |
 | `docs/API-MAP.md` | API Map — DK Agency Platform | 2026-05-27 | 167 |
-| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-10-11 | 347 |
+| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-10-11 | 349 |
 | `docs/BLOG-CITATION-AUDIT.md` | Blog Atıf (Citation) Auditi — Tiered | 2026-06-06 | 73 |
 | `docs/BRAND-GUIDE.md` | DK Agency -- Marka Qaydalari | 2026-03-24 | 47 |
 | `docs/CHANGELOG.md` | CHANGELOG | 2026-10-06 | 658 |
@@ -316,7 +317,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/ENV-SETUP.md` | Environment Setup | 2026-04-24 | 23 |
 | `docs/FATURA-OCR-MASTERPLAN.md` | FATURA OCR MASTERPLAN — DK Agency | 2026-04-29 | 802 |
 | `docs/HANDOFF-11-IYUN-2026.md` | HANDOFF — 11 İyun 2026 Sessiyası | 2026-06-11 | 129 |
-| `docs/HANDOFF.md` | HANDOFF | 2026-10-11 | 598 |
+| `docs/HANDOFF.md` | HANDOFF | 2026-10-11 | 604 |
 | `docs/I18N-AUDIT.md` | i18n Component-Level Audit | 2026-05-08 | 153 |
 | `docs/LESSONS.md` | DK Agency — Acı Dərslər (yeni task-dan əvvəl oxu) | 2026-10-11 | 438 |
 | `docs/MARKETINQ_OCAGI_SPEC.md` | Marketinq Ocagi — Texniki Spec | 2026-05-11 | 238 |
@@ -327,7 +328,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 93 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 97 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |
@@ -342,6 +343,6 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-06-10 | 348 |
 | `docs/reports/2026-10-09-marketinq-ocagi-audit.md` | Marketinq Ocağı (24 alət) — audit + dünya araşdırması (09.10.2026) | 2026-10-09 | 36 |
 | `docs/reports/2026-10-11-article-pages-research.md` | Blog və xəbər səhifələri — dizayn araşdırması (2026-10-11, TASK-0542) | 2026-10-11 | 26 |
-| `docs/reports/2026-10-11-blog-content-audit.md` | Bloq məzmun auditi — 37 yazı (2026-10-11, TASK-0545) |  | 25 |
+| `docs/reports/2026-10-11-blog-content-audit.md` | Bloq məzmun auditi — 37 yazı (2026-10-11, TASK-0545) | 2026-10-11 | 25 |
 | `docs/reports/2026-10-11-owner-nory-marginedge.md` | Rəqib araşdırması — Owner.com, Nory, MarginEdge (2026-10-11) | 2026-10-11 | 23 |
 | `docs/reports/2026-10-11-whatsapp-automation.md` | WhatsApp avtomatlaşdırması — araşdırma (2026-10-11, TASK-0540) | 2026-10-11 | 31 |

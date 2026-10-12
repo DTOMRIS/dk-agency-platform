@@ -133,7 +133,7 @@
     "subtitle": "Pulsuz toolkit, ekspert blog, restoran devri və françayz"
   },
   "footer": {
-    "slogan": "Ustalığın nişanı, dijitalın şəddi. Azərbaycanın ilk AI-dəstəkli HoReCa platforması.",
+    "slogan": "Ustalığın nişanı, rəqəmsalın şəddi. Azərbaycanın ilk AI-dəstəkli HoReCa platforması.",
     "colTools": "Alətlər",
     "colStart": "Başla",
     "colResources": "Resurslar",
@@ -3351,7 +3351,7 @@
   },
   "pricing": {
     "title": "Marketinq Ocağı Qiymətləri",
-    "slogan": "Ustalığın Nişanı, Dijitalin Şeddi",
+    "slogan": "Ustalığın Nişanı, Rəqəmsalın Şəddi",
     "subtitle": "Restoranınızın mərhələsinə uyğun alətləri seçin: pulsuz başlanğıc, KALFA idarəetməsi və USTA dərin analitikası.",
     "tiers": {
       "sagird": {
@@ -4817,7 +4817,40 @@
     "loginTitle": "Elan vermək üçün hesabınıza daxil olun",
     "loginDesc": "Elan yaratmaq, şəkil yükləmək və tracking code almaq üçün əvvəlcə üzv girişi lazımdır.",
     "loginButton": "Daxil ol",
-    "registerButton": "Hesabınız yoxdur? Qeydiyyat"
+    "registerButton": "Hesabınız yoxdur? Qeydiyyat",
+    "meta": {
+      "title": "Elan ver",
+      "description": "HoReCa üçün devir, françayz, obyekt və avadanlıq elanı göndər."
+    },
+    "page": {
+      "eyebrow": "Elan ver",
+      "title": "Obyektinizi, françayzınızı və ya avadanlığınızı elan edin",
+      "lead": "Beş qısa addım: kateqoriya, əsas məlumat, detallar, şəkillər və yoxlama. Elan komitəmizin baxışından sonra vitrinə çıxır."
+    },
+    "stepOf": "{number} / {total}",
+    "copyCode": "Kodu kopyala",
+    "photosDeleted": "{count} şəkil silindi",
+    "deleteSelected": "{count} şəkli sil",
+    "video": {
+      "label": "Video (YouTube / Instagram)",
+      "placeholder": "https://youtube.com/watch?v=... və ya https://instagram.com/reel/...",
+      "clear": "Video linkini təmizlə",
+      "invalid": "YouTube və ya Instagram linki daxil edin",
+      "previewTitle": "Videoya baxış"
+    },
+    "admin": {
+      "manageLink": "Elanların idarəsi",
+      "title": "Admin idarəetməsi",
+      "initialStatus": "Başlanğıc status",
+      "statusSubmitted": "Göndərildi (standart axın)",
+      "statusCommittee": "Komitə baxışı",
+      "statusShowcase": "Vitrində (birbaşa yayımla)",
+      "showOnShowcase": "Vitrində göstər",
+      "featured": "Seçilmiş elan",
+      "note": "Admin qeydi (üzv görmür)",
+      "notePlaceholder": "Daxili qeyd — yalnız admin panelində görünür",
+      "submit": "Elan yarat (admin)"
+    }
   },
   "onboarding": {
     "errors": {
@@ -5773,7 +5806,7 @@
     },
     "shareCard": {
       "title": "Qonaq Evimin Hazırlıq Skoru",
-      "tagline": "Ustalığın Nişanı · Dijitalın Şeddi",
+      "tagline": "Ustalığın Nişanı · Rəqəmsalın Şəddi",
       "downloadButton": "Nəticəni yüklə (PNG)"
     },
     "footer": "Bu test ilkin özünüqiymətləndirmə alətidir. Tam plan üçün fərdi məsləhət tövsiyə olunur."
@@ -8198,7 +8231,9 @@
     "story2": "40 ildir HoReCa sektorundayam. Türkiyə, Azərbaycan, Rusiya, Gürcüstan — hər ölkədə işlərim oldu, hər mətbəxin öz dilini öyrəndim. Bu illər ərzində bir şey gördüm: texnologiya kiçik sahibkara çatmırdı.",
     "story3": "Bəziləri hələ də dəftərlə hesab tutur. Bəziləri Excel-i öyrənməyə vaxt tapmır, çünki səhər tezdən mətbəxə girir, gecə yarısı evə dönür. Onların problemi tənbəllik deyil — onlara doğru alət heç vaxt verilməyib.",
     "story4": "Böyük zəncirlərin kassa proqramları, AI məsləhətçiləri, peşəkar məsləhətçiləri var. Kiçik restoran sahibinin nə var? Bir telefon, bir not dəftəri və 16 saatlıq iş günü.",
-    "closing": "DK Agency həmin uçurumu bağlamaq üçün gəldi. Dəftərdən AI-yə bir körpü."
+    "closing": "DK Agency həmin uçurumu bağlamaq üçün gəldi. Dəftərdən AI-yə bir körpü.",
+    "metaTitle": "Haqqımızda — DK Agency və Doğan Tomris",
+    "metaDescription": "DK Agency Azərbaycanın ilk AI dəstəkli HoReCa B2B platformasıdır. 2010-dan bəri, 40 illik sektor təcrübəsi ilə: food cost, P&L, françayz tərəfdaşlığı və sektor məsləhəti."
   },
   "listingsV2": {
     "detail": {
