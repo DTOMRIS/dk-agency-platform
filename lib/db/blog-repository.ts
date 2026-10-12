@@ -471,13 +471,26 @@ export type BlogTranslateResult = {
 
 // AZ-specific characters that don't exist in Russian or English.
 // If a "translated" RU/EN field contains these → it's still AZ text, not translated.
-const AZ_CHARS = /[əöüğışçƏÖÜĞIŞÇ]/;
 
 // A target locale value needs (re)translation when:
 // 1. Target is empty/null
 // 2. Target is identical to AZ source (exact copy)
 // 3. Target is case-insensitive equal to AZ (DeepSeek sometimes copies with case changes)
 // 4. Target contains AZ-specific chars for ru/en targets (means it was never translated)
+const AZ_CHARS_G = /[əƏğĞıİöÖüÜşŞçÇ]/g;
+/**
+ * Share of AZ-specific letters, but only when it is above what proper names leave behind: > 2% of the letters
+ * in a long text, or ≥ 3 such letters in a short one (titles). Returns 0 when it looks translated.
+ */
+function azLetterShare(text: string, re: RegExp): number {
+  const letters = (text.match(/\p{L}/gu) || []).length;
+  const hits = (text.match(re) || []).length;
+  if (letters === 0 || hits === 0) return 0;
+  const share = hits / letters;
+  if (letters < 150) return hits >= 3 ? share : 0;
+  return share > 0.02 ? share : 0;
+}
+
 function needsTranslation(
   targetValue: unknown,
   azSource: string | null | undefined,
@@ -491,10 +504,13 @@ function needsTranslation(
   if (target === source) return true;
   // Case-insensitive match (DeepSeek copies with case change = not translated)
   if (target.toLowerCase() === source.toLowerCase()) return true;
-  // `ə` (schwa) is Azerbaijani-only (absent in tr/ru/en) → reliable AZ signal for ALL targets, incl tr
-  if (/[əƏ]/.test(target)) return true;
+  // TASK-0546: a single AZ letter is not proof — names stay in translations («Doğan Tomris», «Bakı», «Xınalıq»),
+  // so every post read as untranslated and «Hamısını tərcümə et» re-translated good texts. Measured on the live
+  // DB: AZ sources have 15–20% AZ-specific letters, real en/ru/tr translations 0–0.2%. Use the share instead.
+  // `ə` (schwa) is Azerbaijani-only → signal for ALL targets, incl. tr
+  if (azLetterShare(target, /[əƏ]/g) > 0) return true;
   // Full AZ char set is only meaningful for ru/en (tr legitimately shares ö/ü/ğ/ı/ş/ç)
-  if ((targetLang === 'ru' || targetLang === 'en') && AZ_CHARS.test(target)) return true;
+  if ((targetLang === 'ru' || targetLang === 'en') && azLetterShare(target, AZ_CHARS_G) > 0) return true;
   return false;
 }
 
@@ -552,10 +568,9 @@ export async function getBlogTranslationMatrix(): Promise<PostTranslationStatus[
       let guru: FieldStatus = 'ok';
       for (const box of boxes) {
         const b = box as unknown as Record<string, unknown>;
-        for (const s of [
-          fieldStatus(b[`quote_${lang}`], b.quote_az as string, lang),
-          fieldStatus(b[`guruName_${lang}`], b.guruName as string, lang),
-        ]) {
+        // TASK-0546: guru names are proper nouns («DANNY MEYER») — the same in every language, so an
+        // equal value is not «untranslated»; only the quote is checked.
+        for (const s of [fieldStatus(b[`quote_${lang}`], b.quote_az as string, lang)]) {
           if (s === 'missing') guru = 'missing';
           else if (s === 'untranslated' && guru !== 'missing') guru = 'untranslated';
         }

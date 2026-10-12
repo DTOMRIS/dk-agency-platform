@@ -1,11 +1,12 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import Link from 'next/link';
 import { Check, Crown, Flame, GraduationCap, MessageCircle } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import PageBack from '@/components/inner/PageBack';
 import { whatsappHref } from '@/lib/contact-channels';
+import home from '@/components/home/v2/homeV2.module.css';
+import s from '@/components/inner/inner.module.css';
 
 /* ------------------------------------------------------------------ */
 /*  Copy                                                               */
@@ -298,15 +299,15 @@ export default function PricingPage() {
   );
 
   return (
-    <div className="bg-white pb-24 pt-12">
+    <div className={`${s.page} pb-24`}>
       <PageBack />
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className={home.wrap}>
         {/* Header */}
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="font-display text-4xl font-black tracking-tight text-[var(--dk-navy)] sm:text-5xl">
+        <div className="mx-auto max-w-2xl pt-6 text-center">
+          <h1 className="text-[clamp(34px,4.6vw,56px)] font-black leading-none tracking-[-0.05em] text-[#0F172A]">
             {c.title}
           </h1>
-          <p className="mt-4 text-lg leading-8 text-slate-600">{c.subtitle}</p>
+          <p className="mt-4 text-lg leading-8 text-[#5B6474]">{c.subtitle}</p>
         </div>
 
         {/* Tier Grid */}
@@ -314,10 +315,10 @@ export default function PricingPage() {
           {c.tiers.map((tier) => (
             <div
               key={tier.key}
-              className={`relative flex flex-col rounded-[28px] border p-7 shadow-sm transition hover:shadow-lg ${
+              className={`relative flex flex-col rounded-[22px] border bg-white p-7 transition ${
                 tier.highlight
-                  ? 'border-[var(--dk-red)] bg-gradient-to-b from-rose-50/60 to-white ring-1 ring-rose-200'
-                  : 'border-slate-200 bg-white'
+                  ? 'border-[#0F172A] shadow-[0_18px_40px_-24px_rgba(15,23,42,0.35)]'
+                  : 'border-[#E4DCCD] hover:border-[#0F172A]'
               }`}
             >
               {tier.highlight ? (
@@ -326,22 +327,22 @@ export default function PricingPage() {
                 </div>
               ) : null}
 
-              <div className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${
-                tier.key === 'usta' ? 'bg-amber-100 text-[var(--dk-gold)]' : tier.key === 'kalfa' ? 'bg-rose-100 text-[var(--dk-red)]' : 'bg-slate-100 text-slate-600'
-              }`}>
+              <div
+                className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${
+                  tier.highlight ? 'bg-[#FDECEF] text-[#BE2F47]' : 'bg-[#FBF8F3] text-[#0F172A] ring-1 ring-[#E4DCCD]'
+                }`}
+              >
                 <TierIcon tier={tier.key} />
               </div>
 
-              <h2 className="mt-4 font-display text-2xl font-black text-[var(--dk-navy)]">{tier.name}</h2>
+              <h2 className="mt-4 text-2xl font-black tracking-[-0.03em] text-[#0F172A]">{tier.name}</h2>
 
-              <div className="mt-2 text-3xl font-black text-[var(--dk-navy)]">
-                {tier.price}
-              </div>
+              <div className="mt-2 text-3xl font-black tracking-[-0.04em] text-[#0F172A]">{tier.price}</div>
 
               <ul className="mt-6 flex-1 space-y-3">
                 {tier.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm text-slate-700">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+                  <li key={f} className="flex items-start gap-3 text-sm text-[#334155]">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#BE2F47]" />
                     <span>{f}</span>
                   </li>
                 ))}
@@ -351,12 +352,12 @@ export default function PricingPage() {
                 href={tier.key === 'sagird' ? '/uzvluk' : wa}
                 target={tier.key === 'sagird' ? undefined : '_blank'}
                 rel={tier.key === 'sagird' ? undefined : 'noreferrer'}
-                className={`mt-8 block rounded-2xl px-5 py-3.5 text-center text-sm font-bold transition ${
+                className={`mt-8 block rounded-full px-5 py-3.5 text-center text-sm font-bold transition ${
                   tier.highlight
-                    ? 'bg-dk-red-strong text-white hover:opacity-90'
+                    ? 'bg-dk-red-strong text-white hover:bg-dk-red-deep'
                     : tier.key === 'usta'
-                      ? 'bg-[var(--dk-navy)] text-white hover:opacity-90'
-                      : 'border border-slate-200 text-slate-700 hover:bg-slate-50'
+                      ? 'bg-[#0F172A] text-white hover:bg-[#1E293B]'
+                      : 'border border-[#E4DCCD] bg-white text-[#0F172A] hover:border-[#0F172A]'
                 }`}
               >
                 {tier.cta}
@@ -366,25 +367,25 @@ export default function PricingPage() {
         </div>
 
         {/* Trust */}
-        <p className="mt-10 text-center text-sm text-slate-500">{c.trust}</p>
+        <p className="mt-10 text-center text-sm text-[#5B6474]">{c.trust}</p>
 
         {/* Contact CTA */}
-        <div className="mx-auto mt-16 max-w-xl rounded-[28px] border border-slate-200 bg-slate-50 p-8 text-center shadow-sm">
-          <h3 className="font-display text-2xl font-black text-[var(--dk-navy)]">{c.contactTitle}</h3>
-          <p className="mt-3 text-sm text-slate-600">{c.contactBody}</p>
+        <div className="mx-auto mt-16 max-w-xl rounded-[22px] border border-[#E4DCCD] bg-white p-8 text-center">
+          <h3 className="text-2xl font-black tracking-[-0.03em] text-[#0F172A]">{c.contactTitle}</h3>
+          <p className="mt-3 text-sm text-[#5B6474]">{c.contactBody}</p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <a
               href={wa}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-bold text-white transition hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-dk-red-strong px-6 py-3 text-sm font-bold text-white transition hover:bg-dk-red-deep"
             >
               <MessageCircle className="h-4 w-4" />
               {c.whatsapp}
             </a>
             <a
               href="mailto:info@dkagency.com.tr"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
+              className="inline-flex items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-6 py-3 text-sm font-bold text-[#0F172A] transition hover:border-[#0F172A]"
             >
               {c.email}
             </a>

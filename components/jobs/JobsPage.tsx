@@ -34,6 +34,8 @@ import {
   type JobCategory,
   type TqtaJob,
 } from '@/lib/tqta/jobs';
+import home from '@/components/home/v2/homeV2.module.css';
+import s from '@/components/inner/inner.module.css';
 
 export interface JobsSearchParams {
   kategori?: string | string[];
@@ -76,14 +78,14 @@ function CompanyMark({ job }: { job: TqtaJob }) {
         alt=""
         loading="lazy"
         referrerPolicy="no-referrer"
-        className="h-12 w-12 shrink-0 rounded-xl border border-slate-200 bg-white object-contain p-1"
+        className="h-12 w-12 shrink-0 rounded-xl border border-[#E4DCCD] bg-white object-contain p-1"
       />
     );
   }
   return (
     <span
       aria-hidden="true"
-      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--dk-navy)] text-sm font-black tracking-wide text-[var(--dk-gold)]"
+      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#0F172A] text-sm font-black tracking-wide text-white"
     >
       {job.initials}
     </span>
@@ -142,38 +144,33 @@ export default async function JobsPage({
 
   const chipBase =
     'inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-semibold transition';
-  const chipIdle = `${chipBase} border-slate-200 bg-white text-slate-700 hover:border-[var(--dk-gold)] hover:text-slate-900`;
-  const chipActive = `${chipBase} border-[var(--dk-navy)] bg-[var(--dk-navy)] text-white`;
+  const chipIdle = `${chipBase} border-[#E4DCCD] bg-white text-[#334155] hover:border-[#0F172A] hover:text-[#0F172A]`;
+  const chipActive = `${chipBase} border-[#0F172A] bg-[#0F172A] text-white`;
 
   return (
-    <div className="min-h-screen bg-[var(--dk-paper)] pb-24">
-      {/* ── Hero (dark surface) ─────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-[var(--dk-navy)] to-slate-950 py-14 sm:py-20">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute right-[-10%] top-[-20%] h-[420px] w-[420px] rounded-full bg-[var(--dk-gold)]/10 blur-[100px]" />
-        </div>
-        <div className="relative mx-auto grid max-w-7xl items-end gap-10 px-4 sm:px-6 lg:grid-cols-[1.4fr_1fr] lg:px-8">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--dk-gold)]/20 px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-[var(--dk-gold)]">
+    <div className={`${s.page} pb-24`}>
+      {/* ── Hero ────────────────────────────────────────────── */}
+      <section className={home.wrap}>
+        <div className="grid items-end gap-10 pb-10 pt-4 lg:grid-cols-[1.4fr_1fr]">
+          <div className="min-w-0">
+            <span className={home.eyebrow}>
               <GraduationCap className="h-3.5 w-3.5" aria-hidden="true" />
               {t('badge')}
             </span>
-            <h1 className="mt-5 font-display text-4xl font-black text-white lg:text-5xl">
+            <h1 className="mt-4 text-[clamp(34px,4.6vw,56px)] font-black leading-none tracking-[-0.05em] text-[#0F172A]">
               {t('title')}
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-              {t('subtitle')}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <p className={`${s.lead} mt-4`}>{t('subtitle')}</p>
+            <div className="mt-7 flex flex-wrap gap-2.5">
               <a
                 href={`#${LIST_ANCHOR}`}
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-6 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:opacity-90"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-dk-red-strong px-5 text-[14px] font-bold text-white transition hover:bg-dk-red-deep"
               >
                 {t('ctaBrowse')} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
                 href="#isegoturen"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/25 px-6 py-3 text-sm font-bold text-white transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-gold)]"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-5 text-[14px] font-bold text-[#0F172A] transition hover:border-[#0F172A]"
               >
                 {t('ctaEmployer')}
               </a>
@@ -188,10 +185,10 @@ export default async function JobsPage({
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="flex flex-col-reverse justify-end rounded-2xl border border-white/10 bg-white/5 px-3 py-4 text-center backdrop-blur-sm"
+                  className="flex flex-col-reverse justify-end rounded-[22px] border border-[#E4DCCD] bg-white px-3 py-4 text-center"
                 >
-                  <dt className="mt-1 text-xs font-semibold text-slate-300">{stat.label}</dt>
-                  <dd className="font-display text-3xl font-black tabular-nums text-white [font-variant-numeric:lining-nums_tabular-nums]">{stat.value}</dd>
+                  <dt className="mt-1 text-xs font-semibold text-[#5B6474]">{stat.label}</dt>
+                  <dd className="text-3xl font-black tabular-nums tracking-[-0.03em] text-[#0F172A] [font-variant-numeric:lining-nums_tabular-nums]">{stat.value}</dd>
                 </div>
               ))}
             </dl>
@@ -200,12 +197,12 @@ export default async function JobsPage({
       </section>
 
       {/* ── Certified staff strip ───────────────────────────── */}
-      <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <section className="border-y border-[#E4DCCD] bg-white">
+        <div className={`${home.wrap} flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between`}>
           <div className="flex items-start gap-3">
             <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" aria-hidden="true" />
-            <p className="text-sm leading-6 text-slate-700">
-              <strong className="font-bold text-slate-900">{t('certTitle')}.</strong>{' '}
+            <p className="text-sm leading-6 text-[#334155]">
+              <strong className="font-bold text-[#0F172A]">{t('certTitle')}.</strong>{' '}
               {t('certBody')}
             </p>
           </div>
@@ -213,7 +210,7 @@ export default async function JobsPage({
             href={TQTA_HOME_URL}
             target="_blank"
             rel="noopener"
-            className="inline-flex shrink-0 items-center gap-1 text-sm font-bold text-[var(--dk-navy)] underline-offset-4 hover:underline"
+            className="inline-flex shrink-0 items-center gap-1 text-sm font-bold text-[#0F172A] underline-offset-4 hover:text-[#BE2F47] hover:underline"
           >
             {t('certCta')} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </a>
@@ -223,24 +220,24 @@ export default async function JobsPage({
       {/* ── Listing ─────────────────────────────────────────── */}
       <section
         id={LIST_ANCHOR}
-        className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8"
+        className={`${home.wrap} scroll-mt-24 py-10`}
       >
         {!ok ? (
-          <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+          <div className="rounded-[22px] border border-dashed border-[#E4DCCD] bg-white px-6 py-14 text-center">
             <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
               <CircleAlert className="h-8 w-8 text-amber-700" aria-hidden="true" />
             </div>
-            <h2 className="mt-5 font-display text-2xl font-black text-[var(--dk-navy)]">
+            <h2 className="mt-5 text-[22px] font-black tracking-[-0.02em] text-[#0F172A]">
               {t('unavailableTitle')}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-700">
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[#5B6474]">
               {t('unavailableBody')}
             </p>
             <a
               href={TQTA_CAREER_URL}
               target="_blank"
               rel="noopener"
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[var(--dk-navy)] px-6 py-3 text-sm font-bold text-white transition hover:opacity-90"
+              className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-dk-red-strong px-6 text-sm font-bold text-white transition hover:bg-dk-red-deep"
             >
               {t('unavailableCta')} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
@@ -249,10 +246,10 @@ export default async function JobsPage({
           <>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
-                <h2 className="font-display text-2xl font-black text-[var(--dk-navy)] sm:text-3xl">
+                <h2 className="text-[clamp(22px,2.6vw,30px)] font-black leading-tight tracking-[-0.03em] text-[#0F172A]">
                   {t('listTitle')}
                 </h2>
-                <p className="mt-1 text-sm text-slate-700">{t('sourceNote')}</p>
+                <p className="mt-1 text-sm text-[#5B6474]">{t('sourceNote')}</p>
               </div>
               <p className="rounded-full bg-emerald-50 px-4 py-1.5 text-sm font-bold text-emerald-800">
                 {t('resultCount', { count: filtered.length })}
@@ -260,7 +257,7 @@ export default async function JobsPage({
             </div>
 
             {/* Filters — links (server-side, no JS); chips wrap (L-045) */}
-            <div className="mt-6 space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+            <div className="mt-6 space-y-4 rounded-[22px] border border-[#E4DCCD] bg-white p-4 sm:p-5">
               <div>
                 <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-slate-700">
                   {t('filterCategory')}
@@ -328,7 +325,7 @@ export default async function JobsPage({
               {(activeCategory || activeCity) && (
                 <Link
                   href={`${basePath}#${LIST_ANCHOR}`}
-                  className="inline-flex text-sm font-bold text-slate-700 underline underline-offset-4 hover:text-[var(--dk-red)]"
+                  className="inline-flex text-sm font-bold text-[#334155] underline underline-offset-4 hover:text-[#BE2F47]"
                 >
                   {t('filterReset')}
                 </Link>
@@ -336,19 +333,19 @@ export default async function JobsPage({
             </div>
 
             {filtered.length === 0 ? (
-              <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
-                <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
-                  <SearchX className="h-8 w-8 text-[var(--dk-gold)]" aria-hidden="true" />
+              <div className="mt-8 rounded-[22px] border border-dashed border-[#E4DCCD] bg-white px-6 py-14 text-center">
+                <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#FBF8F3] ring-1 ring-[#E4DCCD]">
+                  <SearchX className="h-8 w-8 text-[#BE2F47]" aria-hidden="true" />
                 </div>
-                <h3 className="mt-5 font-display text-2xl font-black text-[var(--dk-navy)]">
+                <h3 className="mt-5 text-[22px] font-black tracking-[-0.02em] text-[#0F172A]">
                   {t('emptyFilteredTitle')}
                 </h3>
-                <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-700">
+                <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[#5B6474]">
                   {t('emptyFilteredBody')}
                 </p>
                 <Link
                   href={`${basePath}#${LIST_ANCHOR}`}
-                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-6 py-3 text-sm font-bold text-[var(--dk-navy)]"
+                  className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-dk-red-strong px-6 text-sm font-bold text-white transition hover:bg-dk-red-deep"
                 >
                   {t('filterReset')}
                 </Link>
@@ -360,8 +357,8 @@ export default async function JobsPage({
                   return (
                     <li
                       key={job.id}
-                      className={`flex min-w-0 flex-col rounded-2xl border bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
-                        job.featured ? 'border-[var(--dk-gold)]/60' : 'border-slate-200'
+                      className={`flex min-w-0 flex-col rounded-[22px] border bg-white p-5 transition hover:border-[#0F172A] ${
+                        job.featured ? 'border-[#F4B8C3]' : 'border-[#E4DCCD]'
                       }`}
                     >
                       <div className="flex items-start gap-3">
@@ -374,12 +371,12 @@ export default async function JobsPage({
                             />
                             <span className="truncate">{job.company}</span>
                           </p>
-                          <h3 className="mt-1 break-words font-display text-lg font-black leading-snug text-slate-900">
+                          <h3 className="mt-1 break-words text-lg font-black leading-snug tracking-[-0.01em] text-[#0F172A]">
                             {job.title}
                           </h3>
                         </div>
                         {job.featured && (
-                          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-black uppercase tracking-wide text-amber-800">
+                          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#FDECEF] px-2.5 py-1 text-[11px] font-black uppercase tracking-wide text-[#BE2F47]">
                             <Sparkles className="h-3 w-3" aria-hidden="true" />
                             {t('featured')}
                           </span>
@@ -388,16 +385,16 @@ export default async function JobsPage({
 
                       <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold">
                         {job.city && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-slate-800">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-[#FBF8F3] px-2.5 py-1 text-[#334155] ring-1 ring-[#EFE9DE]">
                             <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
                             {job.city}
                           </span>
                         )}
-                        <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-slate-800">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[#FBF8F3] px-2.5 py-1 text-[#334155] ring-1 ring-[#EFE9DE]">
                           <Briefcase className="h-3.5 w-3.5" aria-hidden="true" />
                           {t(`types.${job.type}`)}
                         </span>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-slate-800">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[#FBF8F3] px-2.5 py-1 text-[#334155] ring-1 ring-[#EFE9DE]">
                           <Users className="h-3.5 w-3.5" aria-hidden="true" />
                           {t(`categories.${job.category}`)}
                         </span>
@@ -431,7 +428,7 @@ export default async function JobsPage({
                           target="_blank"
                           rel="noopener"
                           aria-label={t('applyAria', { title: job.title, company: job.company })}
-                          className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-dk-red-strong px-4 py-2.5 text-sm font-bold text-white transition hover:bg-dk-red-deep"
+                          className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-dk-red-strong px-4 py-2.5 text-sm font-bold text-white transition hover:bg-dk-red-deep"
                         >
                           {t('apply')} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                         </a>
@@ -446,10 +443,10 @@ export default async function JobsPage({
       </section>
 
       {/* ── Employer CTA (dark surface) ─────────────────────── */}
-      <section id="isegoturen" className="mx-auto max-w-7xl scroll-mt-24 px-4 sm:px-6 lg:px-8">
-        <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--dk-navy)] via-slate-900 to-slate-950 p-6 sm:p-10 lg:grid lg:grid-cols-[1.3fr_1fr] lg:items-center lg:gap-10">
+      <section id="isegoturen" className={`${home.wrap} scroll-mt-24`}>
+        <div className="overflow-hidden rounded-[22px] bg-[#0F172A] p-6 sm:p-10 lg:grid lg:grid-cols-[1.3fr_1fr] lg:items-center lg:gap-10">
           <div>
-            <h2 className="font-display text-3xl font-black text-white sm:text-4xl">
+            <h2 className="text-[clamp(26px,3vw,38px)] font-black leading-tight tracking-[-0.035em] text-white">
               {t('employerTitle')}
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">{t('employerBody')}</p>
@@ -457,7 +454,7 @@ export default async function JobsPage({
               href={TQTA_EMPLOYER_URL}
               target="_blank"
               rel="noopener"
-              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-6 py-3 text-sm font-bold text-[var(--dk-navy)] transition hover:opacity-90"
+              className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full bg-dk-red-strong px-6 text-sm font-bold text-white transition hover:bg-dk-red-deep"
             >
               {t('employerCta')} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
@@ -469,7 +466,7 @@ export default async function JobsPage({
                 className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-100"
               >
                 <BadgeCheck
-                  className="mt-0.5 h-4 w-4 shrink-0 text-[var(--dk-gold)]"
+                  className="mt-0.5 h-4 w-4 shrink-0 text-[#F28A9B]"
                   aria-hidden="true"
                 />
                 {point}

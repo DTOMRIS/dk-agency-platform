@@ -4817,7 +4817,40 @@
     "loginTitle": "İlan vermek için hesabınıza giriş yapın",
     "loginDesc": "İlan oluşturmak, fotoğraf yüklemek ve takip kodu almak için üye girişi gereklidir.",
     "loginButton": "Giriş yap",
-    "registerButton": "Hesabınız yok mu? Kayıt ol"
+    "registerButton": "Hesabınız yok mu? Kayıt ol",
+    "meta": {
+      "title": "İlan ver",
+      "description": "HoReCa için devir, franchise, mekân ve ekipman ilanı gönder."
+    },
+    "page": {
+      "eyebrow": "İlan ver",
+      "title": "İşletmenizi, franchise'ınızı veya ekipmanınızı ilan edin",
+      "lead": "Beş kısa adım: kategori, temel bilgiler, detaylar, fotoğraflar ve kontrol. İlan, ekibimizin incelemesinden sonra vitrine çıkar."
+    },
+    "stepOf": "{number} / {total}",
+    "copyCode": "Kodu kopyala",
+    "photosDeleted": "{count} fotoğraf silindi",
+    "deleteSelected": "{count} fotoğrafı sil",
+    "video": {
+      "label": "Video (YouTube / Instagram)",
+      "placeholder": "https://youtube.com/watch?v=... veya https://instagram.com/reel/...",
+      "clear": "Video bağlantısını temizle",
+      "invalid": "YouTube veya Instagram bağlantısı girin",
+      "previewTitle": "Video önizlemesi"
+    },
+    "admin": {
+      "manageLink": "İlan yönetimi",
+      "title": "Admin yönetimi",
+      "initialStatus": "Başlangıç durumu",
+      "statusSubmitted": "Gönderildi (standart akış)",
+      "statusCommittee": "Komite incelemesi",
+      "statusShowcase": "Vitrinde (doğrudan yayınla)",
+      "showOnShowcase": "Vitrinde göster",
+      "featured": "Öne çıkan ilan",
+      "note": "Admin notu (üye görmez)",
+      "notePlaceholder": "Dahili not — yalnızca admin panelinde görünür",
+      "submit": "İlan oluştur (admin)"
+    }
   },
   "onboarding": {
     "errors": {
@@ -8198,7 +8231,9 @@
     "story2": "40 yıldır HoReCa sektöründeyim. Türkiye, Azerbaycan, Rusya, Gürcistan — her ülkede işim oldu, her mutfağın kendi dilini öğrendim. Bu yıllar içinde bir şey gördüm: teknoloji küçük işletmeciye ulaşmıyordu.",
     "story3": "Bazıları hâlâ deftere yazıyor. Bazıları Excel öğrenmeye vakit bulamıyor, çünkü mutfağa sabah erken girip eve gece yarısı dönüyor. Sorunları tembellik değil — onlara doğru alet hiç verilmedi.",
     "story4": "Büyük zincirlerin kasa programları, AI danışmanları, profesyonel uzmanları var. Küçük restoran sahibinin nesi var? Bir telefon, bir not defteri ve 16 saatlik iş günü.",
-    "closing": "DK Agency bu uçurumu kapatmak için geldi. Defterden AI'a bir köprü."
+    "closing": "DK Agency bu uçurumu kapatmak için geldi. Defterden AI'a bir köprü.",
+    "metaTitle": "Hakkımızda — DK Agency ve Doğan Tomris",
+    "metaDescription": "DK Agency, Azerbaycan’ın ilk AI destekli HoReCa B2B platformudur. 2010’dan beri, 40 yıllık sektör deneyimiyle: food cost, P&L, franchise ortaklığı ve sektör danışmanlığı."
   },
   "listingsV2": {
     "detail": {

@@ -225,7 +225,6 @@ CI/CD workflow (GitHub Actions):
 
 ## 11. ÖYRƏNILƏN DƏRSLƏR (POZMA!)
 
-<<<<<<< HEAD
 ### TASK-0141 Menyu Analitiği formula
 Menyu mühəndisliyi BCG matrisi yalnız verilən rəqəmlərlə hesablanır:
 - Contribution Margin = Satış qiyməti - Yemək məsrəfi

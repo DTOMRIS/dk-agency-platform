@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { CheckCircle, Mail, Rss, Package, AlertCircle } from 'lucide-react';
 import PageBack from '@/components/inner/PageBack';
+import home from '@/components/home/v2/homeV2.module.css';
+import s from '@/components/inner/inner.module.css';
 
 type Preferences = {
   email: string;
@@ -38,8 +40,8 @@ function Toggle({
       type="button"
       onClick={() => onChange(!checked)}
       className={[
-        'relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dk-red)] focus-visible:ring-offset-2',
-        checked ? 'bg-[var(--dk-red)]' : 'bg-slate-300',
+        'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE2F47] focus-visible:ring-offset-2',
+        checked ? 'bg-dk-red-strong' : 'bg-[#D8CFBF]',
       ].join(' ')}
     >
       <span
@@ -123,207 +125,212 @@ export default function EmailPreferencesPage() {
 
   if (!token) {
     return (
-      <main className="min-h-screen bg-white flex items-center justify-center px-4">
+      <main className={`${s.page} min-h-screen pb-24`}>
         <PageBack />
-        <div className="max-w-md w-full text-center space-y-4">
-          <AlertCircle className="mx-auto h-12 w-12 text-slate-400" aria-hidden="true" />
-          <h1 className="text-2xl font-semibold text-[var(--dk-navy)]">
-            {t('tokenTitle')}
-          </h1>
-          <p className="text-slate-700 text-sm leading-relaxed">
-            {t('tokenBody')}
-          </p>
+        <div className={home.wrap}>
+          <div className="mx-auto mt-10 max-w-md space-y-4 rounded-[22px] border border-[#E4DCCD] bg-white p-8 text-center">
+            <AlertCircle className="mx-auto h-12 w-12 text-[#BE2F47]" aria-hidden="true" />
+            <h1 className="text-2xl font-black tracking-[-0.02em] text-[#0F172A]">
+              {t('tokenTitle')}
+            </h1>
+            <p className="text-sm leading-relaxed text-[#5B6474]">
+              {t('tokenBody')}
+            </p>
+          </div>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-white px-4 py-12">
-      <div className="max-w-lg mx-auto space-y-6">
-        {/* Success banner */}
-        {showSuccess && (
-          <div
-            role="status"
-            className="flex items-start gap-3 rounded-lg bg-green-50 border border-green-200 px-4 py-3"
-          >
-            <CheckCircle
-              className="mt-0.5 h-5 w-5 flex-shrink-0 text-green-600"
-              aria-hidden="true"
-            />
-            <p className="text-sm font-medium text-green-800">
-              {t('updated')}
-            </p>
-          </div>
-        )}
-
-        {/* Save success banner */}
-        {saveState === 'saved' && (
-          <div
-            role="status"
-            className="flex items-start gap-3 rounded-lg bg-green-50 border border-green-200 px-4 py-3"
-          >
-            <CheckCircle
-              className="mt-0.5 h-5 w-5 flex-shrink-0 text-green-600"
-              aria-hidden="true"
-            />
-            <p className="text-sm font-medium text-green-800">{t('saved')}</p>
-          </div>
-        )}
-
-        {/* Save error banner */}
-        {saveState === 'error' && (
-          <div
-            role="alert"
-            className="flex items-start gap-3 rounded-lg bg-red-50 border border-red-200 px-4 py-3"
-          >
-            <AlertCircle
-              className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-600"
-              aria-hidden="true"
-            />
-            <p className="text-sm font-medium text-red-800">
-              {t('saveError')}
-            </p>
-          </div>
-        )}
-
-        {/* Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8 space-y-6">
-          <div>
-            <h1 className="text-2xl font-semibold text-[var(--dk-navy)] leading-tight">
-              {t('title')}
-            </h1>
-            {fetchState.status === 'ready' && (
-              <p className="mt-1 text-sm text-slate-700">{fetchState.preferences.email}</p>
-            )}
-          </div>
-
-          {/* Loading */}
-          {fetchState.status === 'loading' && (
-            <div className="space-y-4 animate-pulse">
-              {[0, 1, 2].map((i) => (
-                <div key={i} className="h-14 rounded-lg bg-slate-100" />
-              ))}
+    <main className={`${s.page} min-h-screen pb-24`}>
+      <PageBack />
+      <div className={home.wrap}>
+        <div className="mx-auto max-w-lg space-y-6 pt-6">
+          {/* Success banner */}
+          {showSuccess && (
+            <div
+              role="status"
+              className="flex items-start gap-3 rounded-2xl border border-green-200 bg-green-50 px-4 py-3"
+            >
+              <CheckCircle
+                className="mt-0.5 h-5 w-5 flex-shrink-0 text-green-600"
+                aria-hidden="true"
+              />
+              <p className="text-sm font-medium text-green-800">
+                {t('updated')}
+              </p>
             </div>
           )}
 
-          {/* Fetch error */}
-          {fetchState.status === 'error' && (
-            <div className="flex items-start gap-3 rounded-lg bg-red-50 border border-red-200 px-4 py-3">
+          {/* Save success banner */}
+          {saveState === 'saved' && (
+            <div
+              role="status"
+              className="flex items-start gap-3 rounded-2xl border border-green-200 bg-green-50 px-4 py-3"
+            >
+              <CheckCircle
+                className="mt-0.5 h-5 w-5 flex-shrink-0 text-green-600"
+                aria-hidden="true"
+              />
+              <p className="text-sm font-medium text-green-800">{t('saved')}</p>
+            </div>
+          )}
+
+          {/* Save error banner */}
+          {saveState === 'error' && (
+            <div
+              role="alert"
+              className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3"
+            >
               <AlertCircle
                 className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-600"
                 aria-hidden="true"
               />
-              <p className="text-sm font-medium text-red-800">{fetchState.message}</p>
+              <p className="text-sm font-medium text-red-800">
+                {t('saveError')}
+              </p>
             </div>
           )}
 
-          {/* Preference toggles */}
-          {(fetchState.status === 'ready' || fetchState.status === 'idle') && (
-            <fieldset className="space-y-4 border-0 p-0 m-0">
-              <legend className="sr-only">{t('legend')}</legend>
+          {/* Card */}
+          <div className="space-y-6 rounded-[22px] border border-[#E4DCCD] bg-white p-6 sm:p-8">
+            <div>
+              <h1 className="text-[28px] font-black leading-tight tracking-[-0.03em] text-[#0F172A]">
+                {t('title')}
+              </h1>
+              {fetchState.status === 'ready' && (
+                <p className="mt-1 text-sm text-[#5B6474]">{fetchState.preferences.email}</p>
+              )}
+            </div>
 
-              {/* Newsletter */}
-              <div className="flex items-center justify-between gap-4 rounded-lg border border-slate-200 px-4 py-3">
-                <div className="flex items-start gap-3">
-                  <Mail
-                    className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--dk-red)]"
-                    aria-hidden="true"
-                  />
-                  <div>
-                    <label
-                      htmlFor="toggle-newsletter"
-                      className="block text-sm font-medium text-slate-900 cursor-pointer"
-                    >
-                      {t('newsletter')}
-                    </label>
-                    <p className="text-xs text-slate-700 mt-0.5">
-                      {t('newsletterDesc')}
-                    </p>
-                  </div>
-                </div>
-                <Toggle
-                  id="toggle-newsletter"
-                  checked={newsletter}
-                  onChange={setNewsletter}
-                />
+            {/* Loading */}
+            {fetchState.status === 'loading' && (
+              <div className="space-y-4 animate-pulse">
+                {[0, 1, 2].map((i) => (
+                  <div key={i} className="h-14 rounded-2xl bg-[#EFE9DE]" />
+                ))}
               </div>
+            )}
 
-              {/* Blog digest */}
-              <div className="flex items-center justify-between gap-4 rounded-lg border border-slate-200 px-4 py-3">
-                <div className="flex items-start gap-3">
-                  <Rss
-                    className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--dk-red)]"
-                    aria-hidden="true"
-                  />
-                  <div>
-                    <label
-                      htmlFor="toggle-blog-digest"
-                      className="block text-sm font-medium text-slate-900 cursor-pointer"
-                    >
-                      {t('blogDigest')}
-                    </label>
-                    <p className="text-xs text-slate-700 mt-0.5">
-                      {t('blogDigestDesc')}
-                    </p>
-                  </div>
-                </div>
-                <Toggle
-                  id="toggle-blog-digest"
-                  checked={blogDigest}
-                  onChange={setBlogDigest}
+            {/* Fetch error */}
+            {fetchState.status === 'error' && (
+              <div className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3">
+                <AlertCircle
+                  className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-600"
+                  aria-hidden="true"
                 />
+                <p className="text-sm font-medium text-red-800">{fetchState.message}</p>
               </div>
+            )}
 
-              {/* Product updates */}
-              <div className="flex items-center justify-between gap-4 rounded-lg border border-slate-200 px-4 py-3">
-                <div className="flex items-start gap-3">
-                  <Package
-                    className="mt-0.5 h-5 w-5 flex-shrink-0 text-[var(--dk-red)]"
-                    aria-hidden="true"
-                  />
-                  <div>
-                    <label
-                      htmlFor="toggle-product-updates"
-                      className="block text-sm font-medium text-slate-900 cursor-pointer"
-                    >
-                      {t('productUpdates')}
-                    </label>
-                    <p className="text-xs text-slate-700 mt-0.5">
-                      {t('productUpdatesDesc')}
-                    </p>
+            {/* Preference toggles */}
+            {(fetchState.status === 'ready' || fetchState.status === 'idle') && (
+              <fieldset className="space-y-4 border-0 p-0 m-0">
+                <legend className="sr-only">{t('legend')}</legend>
+
+                {/* Newsletter */}
+                <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] px-4 py-3">
+                  <div className="flex items-start gap-3">
+                    <Mail
+                      className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#BE2F47]"
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <label
+                        htmlFor="toggle-newsletter"
+                        className="block cursor-pointer text-sm font-bold text-[#0F172A]"
+                      >
+                        {t('newsletter')}
+                      </label>
+                      <p className="mt-0.5 text-xs text-[#5B6474]">
+                        {t('newsletterDesc')}
+                      </p>
+                    </div>
                   </div>
+                  <Toggle
+                    id="toggle-newsletter"
+                    checked={newsletter}
+                    onChange={setNewsletter}
+                  />
                 </div>
-                <Toggle
-                  id="toggle-product-updates"
-                  checked={productUpdates}
-                  onChange={setProductUpdates}
-                />
-              </div>
-            </fieldset>
-          )}
 
-          {/* Save button */}
-          {(fetchState.status === 'ready' || fetchState.status === 'idle') && (
-            <button
-              type="button"
-              onClick={() => void handleSave()}
-              disabled={saveState === 'saving'}
-              className="w-full rounded-lg bg-dk-red-strong px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-dk-red-deep focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--dk-red)] focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                {/* Blog digest */}
+                <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] px-4 py-3">
+                  <div className="flex items-start gap-3">
+                    <Rss
+                      className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#BE2F47]"
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <label
+                        htmlFor="toggle-blog-digest"
+                        className="block cursor-pointer text-sm font-bold text-[#0F172A]"
+                      >
+                        {t('blogDigest')}
+                      </label>
+                      <p className="mt-0.5 text-xs text-[#5B6474]">
+                        {t('blogDigestDesc')}
+                      </p>
+                    </div>
+                  </div>
+                  <Toggle
+                    id="toggle-blog-digest"
+                    checked={blogDigest}
+                    onChange={setBlogDigest}
+                  />
+                </div>
+
+                {/* Product updates */}
+                <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] px-4 py-3">
+                  <div className="flex items-start gap-3">
+                    <Package
+                      className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#BE2F47]"
+                      aria-hidden="true"
+                    />
+                    <div>
+                      <label
+                        htmlFor="toggle-product-updates"
+                        className="block cursor-pointer text-sm font-bold text-[#0F172A]"
+                      >
+                        {t('productUpdates')}
+                      </label>
+                      <p className="mt-0.5 text-xs text-[#5B6474]">
+                        {t('productUpdatesDesc')}
+                      </p>
+                    </div>
+                  </div>
+                  <Toggle
+                    id="toggle-product-updates"
+                    checked={productUpdates}
+                    onChange={setProductUpdates}
+                  />
+                </div>
+              </fieldset>
+            )}
+
+            {/* Save button */}
+            {(fetchState.status === 'ready' || fetchState.status === 'idle') && (
+              <button
+                type="button"
+                onClick={() => void handleSave()}
+                disabled={saveState === 'saving'}
+                className="w-full rounded-full bg-dk-red-strong px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-dk-red-deep focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE2F47] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {saveState === 'saving' ? t('saving') : t('save')}
+              </button>
+            )}
+          </div>
+
+          {/* Unsubscribe all link */}
+          <div className="text-center">
+            <a
+              href={`/api/email/unsubscribe?token=${encodeURIComponent(token)}&type=all`}
+              className="text-sm text-[#5B6474] underline underline-offset-2 transition-colors hover:text-[#0F172A]"
             >
-              {saveState === 'saving' ? t('saving') : t('save')}
-            </button>
-          )}
-        </div>
-
-        {/* Unsubscribe all link */}
-        <div className="text-center">
-          <a
-            href={`/api/email/unsubscribe?token=${encodeURIComponent(token)}&type=all`}
-            className="text-sm text-slate-600 underline underline-offset-2 hover:text-slate-900 transition-colors"
-          >
-            {t('unsubscribeAll')}
-          </a>
+              {t('unsubscribeAll')}
+            </a>
+          </div>
         </div>
       </div>
     </main>

@@ -7,7 +7,7 @@ import { normalizeLocale } from '@/i18n/config';
 const metaCopy = {
   az: {
     title: 'HoReCa Elanları',
-    description: 'Restoran devri, françayz, ortaq axtarışı, obyekt icarəsi və HORECA ekipman elanları bir vitrində.',
+    description: 'Restoran devri, françayz, ortaq axtarışı, obyekt icarəsi və HoReCa avadanlıq elanları bir vitrində.',
   },
   ru: {
     title: 'Объявления HoReCa',
@@ -19,7 +19,7 @@ const metaCopy = {
   },
   tr: {
     title: 'HoReCa İlanları',
-    description: 'Restoran devri, franchise, ortak arayışı, mekan kiralama ve HORECA ekipman ilanları tek bir vitirinde.',
+    description: 'Restoran devri, franchise, ortak arayışı, mekan kiralama ve HoReCa ekipman ilanları tek bir vitrinde.',
   },
 } as const;
 

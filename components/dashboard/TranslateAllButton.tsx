@@ -23,22 +23,28 @@ export default function TranslateAllButton({ slugs }: { slugs: string[] }) {
     }
   }
 
-  async function translateOne(slug: string): Promise<boolean> {
+  /** Returns '' on success, otherwise a short reason (shown next to the slug). */
+  async function translateOne(slug: string): Promise<string> {
     const start = await fetch('/api/blog/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ slug }),
     });
-    if (!start.ok) return false;
+    if (!start.ok) return `başlamadı (HTTP ${start.status})`;
     // Poll every 4 s, up to ~8 min per post.
     for (let i = 0; i < 120; i += 1) {
       await new Promise((r) => setTimeout(r, 4000));
       const res = await fetch(`/api/blog/translate?slug=${encodeURIComponent(slug)}`);
       const data = await readJson(res);
-      if (data.status === 'done') return true;
-      if (data.status === 'failed' || data.status === 'idle') return false;
+      if (data.status === 'done') return '';
+      if (data.status === 'failed') {
+        const langs = data.langs as Record<string, string> | undefined;
+        const bad = langs ? Object.entries(langs).filter(([, v]) => v === 'failed').map(([k]) => k) : [];
+        return `${bad.length ? bad.join('/') + ' ' : ''}${String(data.error ?? 'xəta').slice(0, 60)}`;
+      }
+      if (data.status === 'idle') return 'server yenidən başladı';
     }
-    return false;
+    return 'vaxt bitdi';
   }
 
   async function run() {
@@ -52,10 +58,11 @@ export default function TranslateAllButton({ slugs }: { slugs: string[] }) {
     for (const [i, slug] of slugs.entries()) {
       setSummary(`${i + 1}/${slugs.length} · ${slug}`);
       try {
-        if (await translateOne(slug)) ok += 1;
-        else failed.push(slug);
+        const reason = await translateOne(slug);
+        if (!reason) ok += 1;
+        else failed.push(`${slug} (${reason})`);
       } catch {
-        failed.push(slug);
+        failed.push(`${slug} (şəbəkə)`);
       }
     }
     setState(failed.length ? 'error' : 'done');

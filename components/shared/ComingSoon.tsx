@@ -3,8 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowLeft, Wrench, BookOpen } from 'lucide-react';
+import { Wrench, BookOpen } from 'lucide-react';
 import { normalizeLocale, withLocale } from '@/i18n/config';
+import home from '@/components/home/v2/homeV2.module.css';
+import s from '@/components/inner/inner.module.css';
+import { BackLink } from '@/components/inner/InnerParts';
 
 interface ComingSoonProps {
   title: string;
@@ -41,71 +44,71 @@ export default function ComingSoon({ title, description, category }: ComingSoonP
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-[var(--dk-paper)] flex items-center justify-center px-4 py-16">
-      <div className="max-w-md w-full text-center">
-        <div className="w-16 h-16 bg-[color-mix(in srgb, var(--dk-gold) 22%, white)] rounded-2xl flex items-center justify-center mx-auto mb-8">
-          <Wrench size={32} className="text-[color-mix(in srgb, var(--dk-gold) 78%, black)]" aria-hidden="true" />
-        </div>
+    <div className={`${s.page} flex min-h-[calc(100vh-4rem)] items-center justify-center py-16`}>
+      <div className={home.wrap}>
+        <div className="mx-auto w-full max-w-md rounded-[22px] border border-[#E4DCCD] bg-white p-8 text-center">
+          <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FDECEF]">
+            <Wrench size={32} className="text-[#BE2F47]" aria-hidden="true" />
+          </div>
 
-        {category && (
-          <span className="text-[10px] font-bold text-brand-red uppercase tracking-[0.3em] mb-4 block">
-            {category}
-          </span>
-        )}
+          {category && (
+            <span className="mb-4 block text-[10px] font-bold uppercase tracking-[0.3em] text-[#BE2F47]">
+              {category}
+            </span>
+          )}
 
-        <h1 className="text-3xl font-display font-bold text-[var(--dk-navy)] mb-4">{title}</h1>
-        <p className="text-slate-700 text-base leading-relaxed mb-10">{description}</p>
+          <h1 className="mb-4 text-3xl font-black tracking-[-0.035em] text-[#0F172A]">{title}</h1>
+          <p className="mb-10 text-base leading-relaxed text-[#5B6474]">{description}</p>
 
-        {status !== 'success' ? (
-          <form onSubmit={handleSubmit} className="mb-10">
-            <div className="flex gap-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t('emailPlaceholder')}
-                aria-label={t('emailLabel')}
-                autoComplete="email"
-                className="min-w-0 flex-1 bg-white border-[1.5px] border-[var(--dk-border-soft)] rounded-xl px-4 py-3.5 text-sm text-slate-900 focus:outline-none focus:border-[var(--dk-gold)] transition-colors"
-                required
-              />
-              <button
-                type="submit"
-                disabled={status === 'loading'}
-                className="bg-[var(--dk-gold)] text-white rounded-xl px-6 py-3.5 text-sm font-bold hover:bg-[color-mix(in srgb, var(--dk-gold) 92%, black)] transition-colors whitespace-nowrap disabled:opacity-60"
-              >
-                {status === 'loading' ? '...' : t('notifyCta')}
-              </button>
+          {status !== 'success' ? (
+            <form onSubmit={handleSubmit} className="mb-10">
+              <div className="flex gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t('emailPlaceholder')}
+                  aria-label={t('emailLabel')}
+                  autoComplete="email"
+                  className="min-w-0 flex-1 rounded-full border border-[#E4DCCD] bg-white px-4 py-3.5 text-sm text-[#0F172A] transition-colors focus:border-[#0F172A] focus:outline-none"
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="whitespace-nowrap rounded-full bg-dk-red-strong px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-dk-red-deep disabled:opacity-60"
+                >
+                  {status === 'loading' ? '...' : t('notifyCta')}
+                </button>
+              </div>
+              {status === 'error' && <p role="alert" className="mt-3 text-sm font-medium text-rose-700">{t('error')}</p>}
+            </form>
+          ) : (
+            <div className="mb-10 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+              <p role="status" className="text-sm font-medium text-emerald-800">{t('success')}</p>
             </div>
-            {status === 'error' && <p role="alert" className="mt-3 text-sm font-medium text-rose-700">{t('error')}</p>}
-          </form>
-        ) : (
-          <div className="bg-[color-mix(in srgb, var(--dk-success) 12%, white)] border border-[color-mix(in srgb, var(--dk-success) 28%, white)] rounded-xl p-4 mb-10">
-            <p role="status" className="text-[color-mix(in srgb, var(--dk-success) 76%, black)] font-medium text-sm">{t('success')}</p>
-          </div>
-        )}
+          )}
 
-        <div className="border-t border-[var(--dk-border-soft)] pt-8 mb-8">
-          <p className="text-sm text-slate-700 mb-4">{t('meanwhile')}</p>
-          <div className="flex gap-3 justify-center">
-            <Link
-              href={withLocale(locale, '/blog')}
-              className="flex items-center gap-2 bg-white border border-[var(--dk-border-soft)] rounded-xl px-5 py-3 text-sm font-semibold text-slate-700 hover:border-[var(--dk-gold)] transition-colors"
-            >
-              <BookOpen size={16} aria-hidden="true" /> {t('blog')}
-            </Link>
-            <Link
-              href={withLocale(locale, '/toolkit')}
-              className="flex items-center gap-2 bg-white border border-[var(--dk-border-soft)] rounded-xl px-5 py-3 text-sm font-semibold text-slate-700 hover:border-[var(--dk-gold)] transition-colors"
-            >
-              <Wrench size={16} aria-hidden="true" /> {t('toolkit')}
-            </Link>
+          <div className="mb-8 border-t border-[#EFE9DE] pt-8">
+            <p className="mb-4 text-sm text-[#5B6474]">{t('meanwhile')}</p>
+            <div className="flex justify-center gap-3">
+              <Link
+                href={withLocale(locale, '/blog')}
+                className="flex items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-5 py-3 text-sm font-semibold text-[#0F172A] transition-colors hover:border-[#0F172A]"
+              >
+                <BookOpen size={16} aria-hidden="true" /> {t('blog')}
+              </Link>
+              <Link
+                href={withLocale(locale, '/toolkit')}
+                className="flex items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-5 py-3 text-sm font-semibold text-[#0F172A] transition-colors hover:border-[#0F172A]"
+              >
+                <Wrench size={16} aria-hidden="true" /> {t('toolkit')}
+              </Link>
+            </div>
           </div>
+
+          <BackLink href={withLocale(locale, '/')} label={t('backHome')} />
         </div>
-
-        <Link href={withLocale(locale, '/')} className="text-sm text-slate-700 hover:text-[var(--dk-gold)] transition-colors inline-flex items-center gap-2">
-          <ArrowLeft size={14} aria-hidden="true" /> {t('backHome')}
-        </Link>
       </div>
     </div>
   );

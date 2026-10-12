@@ -4,6 +4,8 @@ import { FormEvent, useMemo, useState } from 'react';
 import { type MemberSession } from '@/lib/member-access';
 import { formatAzDateTime } from '@/lib/i18n/format';
 import PageBack from '@/components/inner/PageBack';
+import home from '@/components/home/v2/homeV2.module.css';
+import s from '@/components/inner/inner.module.css';
 
 function getPasswordStrength(password: string) {
   if (password.length < 8) return { label: 'zəif', color: 'bg-red-500' };
@@ -79,89 +81,89 @@ export default function SettingsPageClient({
   };
 
   return (
-    <div className="min-h-screen bg-white px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl space-y-6">
+    <div className={`${s.page} min-h-screen pb-16`}>
+      <div className={`${home.wrap} space-y-6 pt-6`}>
         <PageBack inline />
         {toast ? <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700">{toast}</div> : null}
 
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">Hesab ayarları</h1>
-          <p className="mt-2 text-sm text-slate-500">Profil məlumatları, şifrə yeniləmə və son giriş cəhdləri.</p>
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+          <h1 className="text-[clamp(30px,3.6vw,44px)] font-black leading-none tracking-[-0.045em] text-[#0F172A]">Hesab ayarları</h1>
+          <p className="mt-2 text-sm text-[#5B6474]">Profil məlumatları, şifrə yeniləmə və son giriş cəhdləri.</p>
         </div>
 
         <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-          <form onSubmit={saveProfile} className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Hesab məlumatları</h2>
+          <form onSubmit={saveProfile} className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+            <h2 className="text-2xl font-black tracking-[-0.03em] text-[#0F172A]">Hesab məlumatları</h2>
             <div className="mt-5 grid gap-4">
               <div>
-                <label className="mb-2 block text-sm font-bold text-slate-700">Ad Soyad</label>
+                <label className="mb-2 block text-sm font-bold text-[#334155]">Ad Soyad</label>
                 <input
                   value={profile.name}
                   onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none"
+                  className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A]"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-bold text-slate-700">Email</label>
+                <label className="mb-2 block text-sm font-bold text-[#334155]">Email</label>
                 <input
                   value={profile.email}
                   readOnly
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-500 outline-none"
+                  className="w-full rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] px-4 py-3 text-sm text-[#5B6474] outline-none"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-bold text-slate-700">Telefon</label>
+                <label className="mb-2 block text-sm font-bold text-[#334155]">Telefon</label>
                 <input
                   value={profile.phone}
                   onChange={(e) => setProfile((p) => ({ ...p, phone: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none"
+                  className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A]"
                 />
               </div>
             </div>
             <button
               type="submit"
               disabled={savingProfile}
-              className="mt-6 rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white disabled:opacity-60"
+              className="mt-6 rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60"
             >
               {savingProfile ? 'Yadda saxlanır...' : 'Yadda saxla'}
             </button>
           </form>
 
-          <form onSubmit={changePassword} className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Şifrə dəyiş</h2>
+          <form onSubmit={changePassword} className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+            <h2 className="text-2xl font-black tracking-[-0.03em] text-[#0F172A]">Şifrə dəyiş</h2>
             <div className="mt-5 grid gap-4">
               <div>
-                <label className="mb-2 block text-sm font-bold text-slate-700">Mövcud şifrə</label>
+                <label className="mb-2 block text-sm font-bold text-[#334155]">Mövcud şifrə</label>
                 <input
                   type="password"
                   value={passwordForm.currentPassword}
                   onChange={(e) => setPasswordForm((p) => ({ ...p, currentPassword: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none"
+                  className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A]"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-sm font-bold text-slate-700">Yeni şifrə</label>
+                <label className="mb-2 block text-sm font-bold text-[#334155]">Yeni şifrə</label>
                 <input
                   type="password"
                   value={passwordForm.newPassword}
                   onChange={(e) => setPasswordForm((p) => ({ ...p, newPassword: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none"
+                  className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A]"
                 />
-                <div className="mt-2 h-2 rounded-full bg-slate-100">
+                <div className="mt-2 h-2 rounded-full bg-[#EFE9DE]">
                   <div
                     className={`h-2 rounded-full ${strength.color}`}
                     style={{ width: strength.label === 'zəif' ? '33%' : strength.label === 'orta' ? '66%' : '100%' }}
                   />
                 </div>
-                <p className="mt-2 text-xs font-semibold text-slate-500">Şifrə gücü: {strength.label}</p>
+                <p className="mt-2 text-xs font-semibold text-[#5B6474]">Şifrə gücü: {strength.label}</p>
               </div>
               <div>
-                <label className="mb-2 block text-sm font-bold text-slate-700">Yeni şifrəni təsdiqlə</label>
+                <label className="mb-2 block text-sm font-bold text-[#334155]">Yeni şifrəni təsdiqlə</label>
                 <input
                   type="password"
                   value={passwordForm.confirmPassword}
                   onChange={(e) => setPasswordForm((p) => ({ ...p, confirmPassword: e.target.value }))}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none"
+                  className="w-full rounded-2xl border border-[#E4DCCD] bg-white px-4 py-3 text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A]"
                 />
               </div>
               {error ? <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div> : null}
@@ -169,20 +171,20 @@ export default function SettingsPageClient({
             <button
               type="submit"
               disabled={changingPassword}
-              className="mt-6 rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white disabled:opacity-60"
+              className="mt-6 rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60"
             >
               {changingPassword ? 'Şifrə yenilənir...' : 'Şifrəni dəyiş'}
             </button>
           </form>
         </div>
 
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Sessiya Tarixi</h2>
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+          <h2 className="text-2xl font-black tracking-[-0.03em] text-[#0F172A]">Sessiya Tarixi</h2>
           <div className="mt-5 overflow-x-auto">
             {logs.length ? (
               <table className="min-w-full text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200 text-left text-slate-400">
+                  <tr className="border-b border-[#E4DCCD] text-left text-[#5B6474]">
                     <th className="pb-3 font-black uppercase tracking-[0.18em]">Tarix/saat</th>
                     <th className="pb-3 font-black uppercase tracking-[0.18em]">IP</th>
                     <th className="pb-3 font-black uppercase tracking-[0.18em]">Cihaz</th>
@@ -192,7 +194,7 @@ export default function SettingsPageClient({
                 </thead>
                 <tbody>
                   {logs.map((log, index) => (
-                    <tr key={`${log.ipAddress}-${index}`} className="border-b border-slate-100 text-slate-600">
+                    <tr key={`${log.ipAddress}-${index}`} className="border-b border-[#EFE9DE] text-[#334155]">
                       <td className="py-3">{formatAzDateTime(log.createdAt)}</td>
                       <td className="py-3">{log.ipAddress}</td>
                       <td className="py-3">{log.userAgent}</td>
@@ -213,7 +215,7 @@ export default function SettingsPageClient({
                 </tbody>
               </table>
             ) : (
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+              <div className="rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] p-5 text-sm text-[#5B6474]">
                 Hələ giriş jurnalı yoxdur.
               </div>
             )}

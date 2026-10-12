@@ -126,7 +126,9 @@ for (const file of pageFiles) {
   const second = comps.flatMap((c) => importsOf(c, read(c)).filter((p) => p.startsWith('components/')));
   const texts = [src, ...comps.map(read), ...second.map(read)];
   // TASK-0530: the shared back pill (v2 CSS) must not make an old page count as v2 / mixed.
-  const NAV_ONLY = /components\/inner\/PageBack|components\/panel\/PanelBackBar/;
+  // TASK-0546: `*-tones.ts` files hold both looks of a shared component (panel + v2, e.g. listing-tones,
+  // create-listing-tones); the page picks one with a prop, so the file itself says nothing about the page.
+  const NAV_ONLY = /components\/inner\/PageBack|components\/panel\/PanelBackBar|-tones\.ts$/;
   const designComps = comps.filter((c) => !NAV_ONLY.test(c));
   const designSecond = designComps.flatMap((c) => importsOf(c, read(c)).filter((p) => p.startsWith('components/') && !NAV_ONLY.test(p)));
   const designTexts = [src, ...designComps.map(read), ...designSecond.map(read)];
