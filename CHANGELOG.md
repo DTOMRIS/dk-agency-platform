@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0547` fix(translate): içində AZ xüsusi adı olan bloq yazılarının tərcüməsi artıq rədd edilmir (tək «ə» hərfi «tərcümə olunmayıb» sayılırdı) — qalan 5 yazı tərcümə oluna bilər.
 - `TASK-0546` fix/design: qiymət, iş elanları, Şedd rozeti, e-poçt ayarları, ayarlar, WhatsApp şablonları, «Tezliklə» və elan vermə səhifələri yeni dizaynda; bloqda türkcə kalkalar və yazı xətaları (SQL — Doğan işlədir); tərcümə statusu artıq düzgün tərcümələri «tərcümə olunmayıb» saymır (38 → 6); footer şüarı «rəqəmsalın şəddi».
 - `TASK-0545` fix(blog): köhnə yazıların auditi — 30 uydurma sitat, mövcud olmayan alət və xidmət iddiaları, mənbəsiz rəqəmlər, səhv linklər, «12 il» → «40 il», «françayz»; DB düzəlişi SQL faylındadır (Doğan işlədir), anekdotlar ayrıca faylda — yalnız Doğan qərar verir.
 - `TASK-0544` fix(blog): hər bloq yazısı eyni bitir — Ustadan qeyd → Növbəti addım → «DK Agency necə kömək edir?» → KAZAN (əvvəl məlumata görə 19 fərqli kombinasiya); səhv «published» mərhələ etiketi görünmür.
