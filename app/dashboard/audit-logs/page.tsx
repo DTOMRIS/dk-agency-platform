@@ -19,7 +19,7 @@ const ACTION_BADGE: Record<string, string> = {
   'member.created': 'bg-emerald-50 text-emerald-700 border-emerald-200',
   'member.role_changed': 'bg-amber-50 text-amber-700 border-amber-200',
   'member.deleted': 'bg-red-50 text-red-700 border-red-200',
-  'member.password_reset': 'bg-blue-50 text-blue-700 border-blue-200',
+  'member.password_reset': 'bg-[#EEE6D8] text-[#0F172A] border-[#E4DCCD]',
 };
 
 const ACTIONS = ['member.created', 'member.role_changed', 'member.deleted', 'member.password_reset'];
@@ -69,19 +69,19 @@ export default function AuditLogsPage() {
   }, [fetchLogs]);
 
   const inputCls =
-    'rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+    'h-11 rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A] focus:ring-2 focus:ring-[#0F172A]/10';
 
   return (
-    <div className="bg-white p-6 lg:p-8">
+    <div className="min-h-full bg-[#F6F1E9] p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)]">{t('title')}</h1>
-          <p className="mt-1 text-sm text-slate-500">{t('subtitle')}</p>
+          <h1 className="text-2xl font-bold tracking-tight text-[#0F172A] sm:text-[28px]">{t('title')}</h1>
+          <p className="mt-1 text-sm text-[#5B6474]">{t('subtitle')}</p>
         </div>
 
         {/* Filters */}
         <div className="flex flex-wrap items-center gap-3">
-          <Filter size={16} className="text-slate-600" />
+          <Filter size={16} className="text-[#334155]" />
           <select
             value={actionFilter}
             onChange={(e) => { setActionFilter(e.target.value); setPage(1); }}
@@ -109,15 +109,15 @@ export default function AuditLogsPage() {
         </div>
 
         {/* Table */}
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+        <div className="overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
           {loading ? (
-            <div className="py-16 text-center text-sm text-slate-600">{t('loading')}</div>
+            <div className="py-16 text-center text-sm text-[#334155]">{t('loading')}</div>
           ) : logs.length === 0 ? (
-            <div className="py-16 text-center text-sm text-slate-600">{t('empty')}</div>
+            <div className="py-16 text-center text-sm text-[#334155]">{t('empty')}</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
-                <thead className="bg-slate-50 text-left text-slate-500">
+                <thead className="border-b border-[#E4DCCD] bg-[#FBF8F3] text-left text-[#5B6474]">
                   <tr>
                     <th className="px-4 py-3 font-semibold">{t('colDate')}</th>
                     <th className="px-4 py-3 font-semibold">{t('colAdmin')}</th>
@@ -128,16 +128,16 @@ export default function AuditLogsPage() {
                 </thead>
                 <tbody>
                   {logs.map((log) => (
-                    <tr key={log.id} className="border-t border-slate-100 hover:bg-slate-50/50">
-                      <td className="px-4 py-3 text-slate-500 whitespace-nowrap">{formatDate(log.createdAt)}</td>
-                      <td className="px-4 py-3 text-slate-700">{log.adminEmail}</td>
+                    <tr key={log.id} className="border-t border-[#EFE9DE] hover:bg-[#FBF8F3]">
+                      <td className="px-4 py-3 text-[#5B6474] whitespace-nowrap">{formatDate(log.createdAt)}</td>
+                      <td className="px-4 py-3 text-[#334155]">{log.adminEmail}</td>
                       <td className="px-4 py-3">
-                        <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${ACTION_BADGE[log.action] || 'bg-slate-50 text-slate-500 border-slate-200'}`}>
+                        <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${ACTION_BADGE[log.action] || 'bg-[#FBF8F3] text-[#5B6474] border-[#E4DCCD]'}`}>
                           {t(`actions.${log.action}`)}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-slate-600">{log.targetEmail || '-'}</td>
-                      <td className="px-4 py-3 text-xs text-slate-600">
+                      <td className="px-4 py-3 text-[#334155]">{log.targetEmail || '-'}</td>
+                      <td className="px-4 py-3 text-xs text-[#334155]">
                         {log.metadata ? JSON.stringify(log.metadata) : '-'}
                       </td>
                     </tr>
@@ -154,18 +154,18 @@ export default function AuditLogsPage() {
             <button
               onClick={() => setPage(page - 1)}
               disabled={page <= 1}
-              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-40"
+              className="inline-flex items-center gap-1 rounded-full border border-[#E4DCCD] bg-white px-3.5 py-1.5 text-xs font-semibold text-[#0F172A] transition hover:bg-[#EEE6D8] disabled:opacity-40"
             >
               <ChevronLeft size={14} />
               {t('prev')}
             </button>
-            <span className="text-xs text-slate-600">
+            <span className="text-xs text-[#334155]">
               {t('pageLabel')} {page} / {totalPages}
             </span>
             <button
               onClick={() => setPage(page + 1)}
               disabled={page >= totalPages}
-              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-40"
+              className="inline-flex items-center gap-1 rounded-full border border-[#E4DCCD] bg-white px-3.5 py-1.5 text-xs font-semibold text-[#0F172A] transition hover:bg-[#EEE6D8] disabled:opacity-40"
             >
               {t('next')}
               <ChevronRight size={14} />

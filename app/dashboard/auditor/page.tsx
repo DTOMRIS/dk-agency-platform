@@ -85,12 +85,21 @@ function formatDate(d: string) {
 
 // ── Main Component ──────────────────────────────────────────────────
 
-export default function AuditorDashboard() {
+// TASK-0548: v2 page surface (cream) around every auditor view (list / new / detail).
+export default function AuditorPage() {
+  return (
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
+      <AuditorDashboard />
+    </div>
+  );
+}
+
+function AuditorDashboard() {
   const t = useTranslations('dashboardAuditor');
 
   const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-    draft: { label: t('statusDraft'), color: 'text-slate-600', bg: 'bg-slate-100' },
-    sent: { label: t('statusSent'), color: 'text-blue-600', bg: 'bg-blue-100' },
+    draft: { label: t('statusDraft'), color: 'text-[#334155]', bg: 'bg-[#F6F1E9]' },
+    sent: { label: t('statusSent'), color: 'text-[#0F172A]', bg: 'bg-[#EEE6D8]' },
     meeting: { label: t('statusMeeting'), color: 'text-amber-600', bg: 'bg-amber-100' },
     converted: { label: t('statusConverted'), color: 'text-emerald-600', bg: 'bg-emerald-100' },
     rejected: { label: t('statusRejected'), color: 'text-red-600', bg: 'bg-red-100' },
@@ -152,13 +161,13 @@ export default function AuditorDashboard() {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black text-[var(--dk-navy)]">{t('pageTitle')}</h1>
-          <p className="mt-1 text-sm text-slate-500">{t('pageSubtitle')}</p>
+          <h1 className="text-2xl font-bold tracking-tight text-[#0F172A] sm:text-[28px]">{t('pageTitle')}</h1>
+          <p className="mt-1 text-sm text-[#5B6474]">{t('pageSubtitle')}</p>
         </div>
         <button
           type="button"
           onClick={() => setView('new')}
-          className="inline-flex items-center gap-2 rounded-xl bg-[var(--dk-navy)] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--dk-navy)]/90 active:scale-[0.98]"
+          className="inline-flex items-center gap-2 rounded-full bg-dk-red-strong px-5 py-2.5 text-sm font-bold text-white transition hover:bg-dk-red-deep active:scale-[0.98]"
         >
           <Plus size={16} /> {t('newAudit')}
         </button>
@@ -167,7 +176,7 @@ export default function AuditorDashboard() {
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-2">
         {['all', ...STATUSES].map((s) => {
-          const cfg = s === 'all' ? { label: t('filterAll'), bg: 'bg-slate-100', color: 'text-slate-700' } : STATUS_CONFIG[s];
+          const cfg = s === 'all' ? { label: t('filterAll'), bg: 'bg-[#F6F1E9]', color: 'text-[#334155]' } : STATUS_CONFIG[s];
           const count = s === 'all' ? audits.length : audits.filter((a) => a.status === s).length;
           return (
             <button
@@ -175,7 +184,7 @@ export default function AuditorDashboard() {
               type="button"
               onClick={() => setStatusFilter(s)}
               className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                statusFilter === s ? `${cfg.bg} ${cfg.color} ring-2 ring-offset-1 ring-slate-300` : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                statusFilter === s ? `${cfg.bg} ${cfg.color} ring-2 ring-offset-1 ring-[#E4DCCD]` : 'bg-[#FBF8F3] text-[#5B6474] hover:bg-[#F6F1E9]'
               }`}
             >
               {cfg.label}
@@ -184,14 +193,14 @@ export default function AuditorDashboard() {
           );
         })}
 
-        <div className="ml-auto flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2">
-          <Search size={14} className="text-slate-600" />
+        <div className="ml-auto flex items-center gap-2 h-11 rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-3 focus-within:border-[#0F172A]">
+          <Search size={14} className="text-[#334155]" />
           <input
             type="text"
             placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-32 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-600 sm:w-48"
+            className="w-32 bg-transparent text-sm text-[#334155] outline-none placeholder:text-[#5B6474] sm:w-48"
           />
         </div>
       </div>
@@ -199,7 +208,7 @@ export default function AuditorDashboard() {
       {/* Audit Cards */}
       {loading ? (
         <div className="flex h-48 items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-slate-600" />
+          <Loader2 className="h-6 w-6 animate-spin text-[#334155]" />
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -212,7 +221,7 @@ export default function AuditorDashboard() {
             <p role="alert" className="px-4 py-6 text-center text-sm font-semibold text-red-700">{t('loadError')}</p>
           )}
           {!loadError && audits.length === 0 && (
-            <div className="col-span-full py-16 text-center text-sm text-slate-600">
+            <div className="col-span-full py-16 text-center text-sm text-[#334155]">
               {t('emptyState')}
             </div>
           )}
@@ -232,38 +241,38 @@ function AuditCard({ audit, onClick, aiPending, statusConfig }: { audit: AuditRo
     <button
       type="button"
       onClick={onClick}
-      className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-4 text-left transition hover:border-[var(--dk-gold)] hover:shadow-lg active:scale-[0.99]"
+      className="group flex flex-col rounded-[22px] border border-[#E4DCCD] bg-white p-4 text-left transition hover:border-[#0F172A] hover:shadow-lg active:scale-[0.99]"
     >
       {/* Photo */}
       {audit.photos.length > 0 ? (
-        <div className="mb-3 h-36 w-full overflow-hidden rounded-xl bg-slate-100">
+        <div className="mb-3 h-36 w-full overflow-hidden rounded-xl bg-[#F6F1E9]">
           <img src={audit.photos[0]} alt={audit.name} className="h-full w-full object-cover" />
         </div>
       ) : (
-        <div className="mb-3 flex h-36 w-full items-center justify-center rounded-xl bg-slate-100">
-          <Store size={32} className="text-slate-500" />
+        <div className="mb-3 flex h-36 w-full items-center justify-center rounded-xl bg-[#F6F1E9]">
+          <Store size={32} className="text-[#5B6474]" />
         </div>
       )}
 
       {/* Info */}
       <div className="flex items-start justify-between gap-2">
-        <h3 className="text-sm font-bold text-slate-800 group-hover:text-[var(--dk-navy)]">{audit.name}</h3>
+        <h3 className="text-sm font-bold text-[#0F172A] group-hover:text-[#0F172A]">{audit.name}</h3>
         <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${cfg.bg} ${cfg.color}`}>
           {cfg.label}
         </span>
       </div>
 
       {audit.address && (
-        <p className="mt-1 flex items-center gap-1 text-xs text-slate-600">
+        <p className="mt-1 flex items-center gap-1 text-xs text-[#334155]">
           <MapPin size={10} /> {audit.address}
         </p>
       )}
 
-      <p className="mt-2 line-clamp-2 text-xs text-slate-500">{summary}</p>
+      <p className="mt-2 line-clamp-2 text-xs text-[#5B6474]">{summary}</p>
 
       <div className="mt-3 flex items-center justify-between">
-        <span className="text-[10px] text-slate-600">{formatDate(audit.createdAt)}</span>
-        <ChevronRight size={14} className="text-slate-500 transition group-hover:text-[var(--dk-gold)]" />
+        <span className="text-[10px] text-[#334155]">{formatDate(audit.createdAt)}</span>
+        <ChevronRight size={14} className="text-[#5B6474] transition group-hover:text-[#0F172A]" />
       </div>
     </button>
   );
@@ -346,20 +355,20 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
 
   return (
     <div className="mx-auto max-w-lg space-y-5">
-      <button type="button" onClick={onBack} className="flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-[var(--dk-navy)]">
+      <button type="button" onClick={onBack} className="flex items-center gap-1 text-sm font-semibold text-[#5B6474] hover:text-[#0F172A]">
         <ArrowLeft size={16} /> {t('back')}
       </button>
 
-      <h1 className="text-xl font-black text-[var(--dk-navy)]">{t('newAuditTitle')}</h1>
+      <h1 className="text-xl font-black text-[#0F172A]">{t('newAuditTitle')}</h1>
 
       {/* Form */}
-      <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5">
+      <div className="space-y-4 rounded-[22px] border border-[#E4DCCD] bg-white p-5">
         <Field label={t('fieldName')} value={name} onChange={setName} placeholder="Şuşa Restoran" />
         <Field label={t('fieldAddress')} value={address} onChange={setAddress} placeholder="Nizami küç. 45, Bakı" />
         <Field label={t('fieldPhone')} value={phone} onChange={setPhone} placeholder="+994501234567" />
 
         <div>
-          <label className="mb-1 block text-xs font-semibold text-slate-500">{t('fieldCategory')}</label>
+          <label className="mb-1 block text-xs font-semibold text-[#5B6474]">{t('fieldCategory')}</label>
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((c) => (
               <button
@@ -368,8 +377,8 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
                 onClick={() => setCategory(c.key)}
                 className={`rounded-xl px-3 py-2 text-xs font-semibold transition ${
                   category === c.key
-                    ? 'bg-[var(--dk-navy)] text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-[#0F172A] text-white'
+                    : 'bg-[#F6F1E9] text-[#334155] hover:bg-[#EEE6D8]'
                 }`}
               >
                 {c.label}
@@ -380,10 +389,10 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
 
         {/* Photo Upload */}
         <div>
-          <label className="mb-1 block text-xs font-semibold text-slate-500">{t('fieldPhotos')}</label>
+          <label className="mb-1 block text-xs font-semibold text-[#5B6474]">{t('fieldPhotos')}</label>
           <div className="flex flex-wrap gap-2">
             {photos.map((url, i) => (
-              <div key={i} className="group relative h-20 w-20 overflow-hidden rounded-xl bg-slate-100">
+              <div key={i} className="group relative h-20 w-20 overflow-hidden rounded-xl bg-[#F6F1E9]">
                 <img src={url} alt="" className="h-full w-full object-cover" />
                 <button
                   type="button"
@@ -397,7 +406,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
             <button
               type="button"
               onClick={() => photoRef.current?.click()}
-              className="flex h-20 w-20 items-center justify-center rounded-xl border-2 border-dashed border-slate-300 text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+              className="flex h-20 w-20 items-center justify-center rounded-xl border-2 border-dashed border-[#E4DCCD] text-[#334155] transition hover:border-[#0F172A] hover:text-[#0F172A]"
             >
               <Camera size={24} />
             </button>
@@ -411,7 +420,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
             className="hidden"
             onChange={handlePhotoUpload}
           />
-          <p className="mt-1 text-[10px] text-slate-600">{t('photoHint')}</p>
+          <p className="mt-1 text-[10px] text-[#334155]">{t('photoHint')}</p>
         </div>
 
         {/* Social & Delivery */}
@@ -433,7 +442,7 @@ function NewAuditView({ onBack, onSuccess }: { onBack: () => void; onSuccess: (a
         type="button"
         onClick={handleSubmit}
         disabled={submitting}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--dk-navy)] py-3.5 text-sm font-bold text-white transition hover:bg-[var(--dk-navy)]/90 disabled:opacity-60 active:scale-[0.98]"
+        className="flex w-full items-center justify-center gap-2 rounded-full bg-dk-red-strong py-3.5 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60 active:scale-[0.98]"
       >
         {submitting ? (
           <>
@@ -503,7 +512,7 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
   if (loading || !audit) {
     return (
       <div className="flex h-48 items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-slate-600" />
+        <Loader2 className="h-6 w-6 animate-spin text-[#334155]" />
       </div>
     );
   }
@@ -515,15 +524,15 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
     <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <button type="button" onClick={onBack} className="flex items-center gap-1 text-sm font-semibold text-slate-500 hover:text-[var(--dk-navy)]">
+        <button type="button" onClick={onBack} className="flex items-center gap-1 text-sm font-semibold text-[#5B6474] hover:text-[#0F172A]">
           <ArrowLeft size={16} /> {t('back')}
         </button>
         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${cfg.bg} ${cfg.color}`}>{cfg.label}</span>
       </div>
 
-      <h1 className="text-xl font-black text-[var(--dk-navy)]">{audit.name}</h1>
-      {audit.address && <p className="flex items-center gap-1 text-sm text-slate-500"><MapPin size={12} /> {audit.address}</p>}
-      {audit.phone && <p className="flex items-center gap-1 text-sm text-slate-500"><Phone size={12} /> {audit.phone}</p>}
+      <h1 className="text-xl font-black text-[#0F172A]">{audit.name}</h1>
+      {audit.address && <p className="flex items-center gap-1 text-sm text-[#5B6474]"><MapPin size={12} /> {audit.address}</p>}
+      {audit.phone && <p className="flex items-center gap-1 text-sm text-[#5B6474]"><Phone size={12} /> {audit.phone}</p>}
 
       {/* Photos */}
       {audit.photos.length > 0 && (
@@ -546,7 +555,7 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
               className={`rounded-xl px-3 py-2 text-xs font-semibold transition ${
                 audit.status === s
                   ? `${sc.bg} ${sc.color} ring-2 ring-offset-1`
-                  : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                  : 'bg-[#FBF8F3] text-[#5B6474] hover:bg-[#F6F1E9]'
               }`}
             >
               {sc.label}
@@ -559,11 +568,11 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
       {analysis && (
         <div className="space-y-4">
           {/* Summary */}
-          <div className="rounded-2xl border border-slate-200 bg-white p-5">
-            <h2 className="mb-2 text-sm font-bold text-[var(--dk-navy)]">{t('sectionSummary')}</h2>
-            <p className="text-sm text-slate-600">{analysis.summary}</p>
+          <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-5">
+            <h2 className="mb-2 text-sm font-bold text-[#0F172A]">{t('sectionSummary')}</h2>
+            <p className="text-sm text-[#334155]">{analysis.summary}</p>
             {analysis.estimatedRevenue && (
-              <p className="mt-2 text-xs text-slate-600">
+              <p className="mt-2 text-xs text-[#334155]">
                 {t('estimatedRevenue')} {analysis.estimatedRevenue.min.toLocaleString()}-{analysis.estimatedRevenue.max.toLocaleString()} {analysis.estimatedRevenue.currency}
               </p>
             )}
@@ -582,21 +591,21 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
 
           {/* Recommendations */}
           {analysis.recommendations.length > 0 && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-5">
-              <h2 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{t('sectionRecommendations')}</h2>
+            <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-5">
+              <h2 className="mb-3 text-sm font-bold text-[#0F172A]">{t('sectionRecommendations')}</h2>
               <div className="space-y-3">
                 {analysis.recommendations.map((rec, i) => (
-                  <div key={i} className="rounded-xl border border-slate-100 p-3">
+                  <div key={i} className="rounded-xl border border-[#EFE9DE] p-3">
                     <div className="flex items-center gap-2">
                       <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                         rec.priority === 'yüksək' ? 'bg-red-100 text-red-600' :
                         rec.priority === 'orta' ? 'bg-amber-100 text-amber-600' :
-                        'bg-slate-100 text-slate-600'
+                        'bg-[#F6F1E9] text-[#334155]'
                       }`}>{rec.priority}</span>
-                      <span className="text-xs font-semibold text-slate-700">{rec.area}</span>
+                      <span className="text-xs font-semibold text-[#334155]">{rec.area}</span>
                     </div>
-                    <p className="mt-1 text-sm text-slate-600">{rec.action}</p>
-                    <p className="mt-1 text-xs text-blue-600">DK Agency: {rec.dkAgencyHelp}</p>
+                    <p className="mt-1 text-sm text-[#334155]">{rec.action}</p>
+                    <p className="mt-1 text-xs font-medium text-[#334155]">DK Agency: {rec.dkAgencyHelp}</p>
                   </div>
                 ))}
               </div>
@@ -608,7 +617,7 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
             <button
               type="button"
               onClick={copyWhatsApp}
-              className="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100 active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100 active:scale-[0.98]"
             >
               {copied ? <Check size={16} /> : <MessageCircle size={16} />}
               {copied ? t('copied') : t('whatsappTemplate')}
@@ -619,7 +628,7 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
                 const { exportAuditToPdf } = await import('@/lib/audit/audit-pdf');
                 exportAuditToPdf(audit, analysis);
               }}
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-4 py-2.5 text-sm font-semibold text-[#0F172A] transition hover:bg-[#EEE6D8] active:scale-[0.98]"
             >
               <FileText size={16} /> {t('pdfExport')}
             </button>
@@ -629,14 +638,14 @@ function DetailView({ auditId, onBack, onRefresh, statusConfig }: { auditId: num
 
       {/* Action History */}
       {audit.actions?.length > 0 && (
-        <div className="rounded-2xl border border-slate-200 bg-white p-5">
-          <h2 className="mb-3 text-sm font-bold text-[var(--dk-navy)]">{t('sectionHistory')}</h2>
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-5">
+          <h2 className="mb-3 text-sm font-bold text-[#0F172A]">{t('sectionHistory')}</h2>
           <div className="space-y-2">
             {audit.actions.map((action) => (
               <div key={action.id} className="flex items-center gap-3 text-xs">
-                <span className="rounded-full bg-slate-100 px-2 py-0.5 font-semibold text-slate-600">{action.actionType}</span>
-                <span className="text-slate-600">{formatDate(action.date)}</span>
-                {action.notes && <span className="text-slate-500">{action.notes}</span>}
+                <span className="rounded-full bg-[#F6F1E9] px-2 py-0.5 font-semibold text-[#334155]">{action.actionType}</span>
+                <span className="text-[#334155]">{formatDate(action.date)}</span>
+                {action.notes && <span className="text-[#5B6474]">{action.notes}</span>}
               </div>
             ))}
           </div>
@@ -653,13 +662,13 @@ function Field({ label, value, onChange, placeholder, small }: {
 }) {
   return (
     <div>
-      <label className={`mb-1 block font-semibold text-slate-500 ${small ? 'text-[10px]' : 'text-xs'}`}>{label}</label>
+      <label className={`mb-1 block font-semibold text-[#5B6474] ${small ? 'text-[10px]' : 'text-xs'}`}>{label}</label>
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className={`w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm text-slate-700 outline-none transition focus:border-[var(--dk-gold)] focus:bg-white ${small ? 'py-2' : 'py-2.5'}`}
+        className={`w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A] focus:bg-white ${small ? 'h-10' : 'h-11'}`}
       />
     </div>
   );
@@ -675,11 +684,11 @@ function Section({ title, items, color }: { title: string; items: string[]; colo
   const dotColors = { emerald: 'bg-emerald-400', amber: 'bg-amber-400', red: 'bg-red-400' };
 
   return (
-    <div className={`rounded-2xl border p-5 ${colors[color]}`}>
-      <h2 className="mb-2 text-sm font-bold text-[var(--dk-navy)]">{title}</h2>
+    <div className={`rounded-[22px] border p-5 ${colors[color]}`}>
+      <h2 className="mb-2 text-sm font-bold text-[#0F172A]">{title}</h2>
       <ul className="space-y-1.5">
         {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+          <li key={i} className="flex items-start gap-2 text-sm text-[#334155]">
             <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${dotColors[color]}`} />
             {item}
           </li>

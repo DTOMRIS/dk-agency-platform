@@ -31,7 +31,7 @@ export default function DashboardBottomNav({ onMore }: { onMore: () => void }) {
   ] as const;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[var(--dk-warm-border)] bg-white/95 backdrop-blur-md pb-safe lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#E4DCCD] bg-[#FBF8F3]/95 backdrop-blur-md pb-safe lg:hidden">
       <div className="flex items-stretch justify-around px-1">
         {links.map(({ key, href, icon: Icon, highlight }) => {
           const active = isActive(href);
@@ -40,12 +40,12 @@ export default function DashboardBottomNav({ onMore }: { onMore: () => void }) {
               key={key}
               href={withLocale(currentLocale, href)}
               className={`flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 py-2 ${
-                active ? 'font-bold text-[var(--dk-navy)]' : 'text-slate-500'
+                active ? 'font-bold text-[#0F172A]' : 'text-[#5B6474]'
               }`}
             >
-              <span className={highlight ? 'rounded-full bg-[var(--dk-gold)]/20 p-1.5' : ''}>
+              <span className={highlight ? 'rounded-full bg-dk-red-strong/10 p-1.5' : active ? 'rounded-full bg-[#EEE6D8] p-1.5' : ''}>
                 <Icon
-                  className={`h-6 w-6 ${active || highlight ? 'text-[var(--dk-navy)]' : 'text-slate-600'}`}
+                  className={`h-6 w-6 ${active || highlight ? 'text-[#0F172A]' : 'text-[#5B6474]'}`}
                 />
               </span>
               <span className="text-[10px] tracking-tight">{t(`nav.${key}`)}</span>
@@ -55,10 +55,10 @@ export default function DashboardBottomNav({ onMore }: { onMore: () => void }) {
         <button
           type="button"
           onClick={onMore}
-          className="flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 py-2 text-slate-500"
+          className="flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 py-2 text-[#5B6474]"
         >
           <span>
-            <Menu className="h-6 w-6 text-slate-600" />
+            <Menu className="h-6 w-6 text-[#5B6474]" />
           </span>
           <span className="text-[10px] tracking-tight">{t('nav.more')}</span>
         </button>

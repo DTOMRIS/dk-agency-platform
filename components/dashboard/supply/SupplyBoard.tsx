@@ -46,16 +46,16 @@ export default function SupplyBoard() {
   ];
 
   return (
-    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mx-auto max-w-[1320px] space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0 max-w-3xl">
-            <h1 className="text-[30px] font-bold tracking-tight text-slate-900 sm:text-[38px]">
+            <h1 className="text-[30px] font-black tracking-[-0.03em] text-[#0F172A] sm:text-[38px]">
               {copy.pageTitle}
             </h1>
-            <p className="mt-1 text-[15px] text-slate-700">{copy.pageSubtitle}</p>
-            <p className="mt-2 inline-flex items-start gap-1.5 text-[13px] font-medium text-slate-700">
-              <Lock size={14} className="mt-0.5 shrink-0 text-slate-700" aria-hidden="true" />
+            <p className="mt-1 text-[15px] text-[#334155]">{copy.pageSubtitle}</p>
+            <p className="mt-2 inline-flex items-start gap-1.5 text-[13px] font-medium text-[#334155]">
+              <Lock size={14} className="mt-0.5 shrink-0 text-[#334155]" aria-hidden="true" />
               {copy.privacyNote}
             </p>
           </div>
@@ -63,7 +63,7 @@ export default function SupplyBoard() {
             type="button"
             aria-expanded={showImport}
             onClick={() => setShowImport((value) => !value)}
-            className={`${PILL_BTN} h-11 bg-[#E11D48] px-5 text-[14px] text-white hover:bg-[#BE123C]`}
+            className={`${PILL_BTN} h-11 bg-dk-red-strong px-5 text-[14px] text-white hover:bg-dk-red-deep`}
           >
             <Upload size={16} aria-hidden="true" />
             {showImport ? copy.importHide : copy.importToggle}
@@ -80,8 +80,8 @@ export default function SupplyBoard() {
               <Database size={18} className="text-amber-800" aria-hidden="true" />
             </span>
             <div className="min-w-0">
-              <h2 className="text-[16px] font-bold text-slate-900">{copy.tablesMissingTitle}</h2>
-              <p className="mt-1 text-[14px] leading-relaxed text-slate-700">
+              <h2 className="text-[16px] font-bold text-[#0F172A]">{copy.tablesMissingTitle}</h2>
+              <p className="mt-1 text-[14px] leading-relaxed text-[#334155]">
                 {copy.tablesMissingBody}
               </p>
             </div>
@@ -93,7 +93,7 @@ export default function SupplyBoard() {
         <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
           <div
             role="tablist"
-            className="inline-flex gap-1 rounded-full bg-white p-1 shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
+            className="inline-flex gap-1 rounded-full border border-[#E4DCCD] bg-white p-1"
           >
             {tabs.map(([value, label]) => (
               <button
@@ -103,7 +103,7 @@ export default function SupplyBoard() {
                 aria-selected={tab === value}
                 onClick={() => setTab(value)}
                 className={`h-9 whitespace-nowrap rounded-full px-5 text-[14px] font-semibold transition-colors ${
-                  tab === value ? 'bg-[#EEF4FF] text-slate-900' : 'text-slate-700 hover:bg-slate-50'
+                  tab === value ? 'bg-[#0F172A] text-white' : 'text-[#334155] hover:bg-[#FBF8F3]'
                 }`}
               >
                 {label}

@@ -84,7 +84,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
   if (!category) {
     return (
       <div className="p-8 text-center">
-        <p className="text-gray-500">Kategori bulunamadı</p>
+        <p className="text-[#5B6474]">Kategori bulunamadı</p>
       </div>
     );
   }
@@ -200,8 +200,8 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
   const renderField = (field: FormField) => {
     const value = formData[field.name];
     const error = errors[field.name];
-    const baseInputClass = `w-full px-4 py-3 border rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors ${
-      error ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
+    const baseInputClass = `w-full px-4 py-3 border rounded-xl text-[#0F172A] placeholder:text-[#5B6474] focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors ${
+      error ? 'border-red-500 bg-red-50' : 'border-[#E4DCCD] bg-white'
     }`;
 
     switch (field.type) {
@@ -229,7 +229,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
               className={`${baseInputClass} ${field.suffix ? 'pr-14' : ''}`}
             />
             {field.suffix && (
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-medium">
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A8A196] text-sm font-medium">
                 {field.suffix}
               </span>
             )}
@@ -272,9 +272,9 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
                   value={opt.value}
                   checked={value === opt.value}
                   onChange={(e) => handleChange(field.name, e.target.value)}
-                  className="w-5 h-5 text-red-600 focus:ring-red-500 border-gray-300"
+                  className="w-5 h-5 text-red-600 focus:ring-red-500 border-[#E4DCCD]"
                 />
-                <span className="text-gray-700">{opt.label}</span>
+                <span className="text-[#334155]">{opt.label}</span>
               </label>
             ))}
           </div>
@@ -287,9 +287,9 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
               type="checkbox"
               checked={!!value}
               onChange={(e) => handleChange(field.name, e.target.checked)}
-              className="w-5 h-5 rounded text-red-600 focus:ring-red-500 border-gray-300"
+              className="w-5 h-5 rounded text-red-600 focus:ring-red-500 border-[#E4DCCD]"
             />
-            <span className="text-gray-700">Evet</span>
+            <span className="text-[#334155]">Evet</span>
           </label>
         );
 
@@ -304,9 +304,9 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
               min={field.min}
               max={field.max}
               step={(field.max || 1000000) / 100}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-red-600"
+              className="w-full h-2 bg-[#EEE6D8] rounded-lg appearance-none cursor-pointer accent-red-600"
             />
-            <div className="flex justify-between text-sm text-gray-500">
+            <div className="flex justify-between text-sm text-[#5B6474]">
               <span>{field.min?.toLocaleString('tr-TR')} {field.suffix}</span>
               <span className="font-semibold text-red-600">{rangeValue.toLocaleString('tr-TR')} {field.suffix}</span>
               <span>{field.max?.toLocaleString('tr-TR')} {field.suffix}</span>
@@ -316,10 +316,10 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
 
       case 'file':
         return (
-          <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-red-300 transition-colors cursor-pointer">
-            <Upload size={24} className="mx-auto text-gray-400 mb-2" />
-            <p className="text-sm text-gray-600">Dosya yüklemek için tıklayın</p>
-            <p className="text-xs text-gray-400 mt-1">PNG, JPG, PDF - Max 10MB</p>
+          <div className="border-2 border-dashed border-[#E4DCCD] rounded-xl p-6 text-center hover:border-red-300 transition-colors cursor-pointer">
+            <Upload size={24} className="mx-auto text-[#A8A196] mb-2" />
+            <p className="text-sm text-[#5B6474]">Dosya yüklemek için tıklayın</p>
+            <p className="text-xs text-[#A8A196] mt-1">PNG, JPG, PDF - Max 10MB</p>
           </div>
         );
 
@@ -334,15 +334,15 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
         <div className="w-20 h-20 mx-auto rounded-full bg-green-100 flex items-center justify-center mb-6">
           <CheckCircle size={40} className="text-green-600" />
         </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">İlan Başarıyla Gönderildi!</h3>
-        <p className="text-gray-500 mb-6">İlanınız incelendikten sonra yayınlanacaktır.</p>
+        <h3 className="text-2xl font-bold text-[#334155] mb-2">İlan Başarıyla Gönderildi!</h3>
+        <p className="text-[#5B6474] mb-6">İlanınız incelendikten sonra yayınlanacaktır.</p>
         <div className="flex justify-center gap-4">
           <button
             onClick={() => {
               setSubmitted(false);
               setFormData({});
             }}
-            className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-colors"
+            className="px-6 py-3 bg-white border border-[#E4DCCD] hover:border-[#0F172A] text-[#334155] font-semibold rounded-full transition-colors"
           >
             Yeni İlan Oluştur
           </button>
@@ -367,16 +367,16 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
           <Icon size={24} className="text-white" />
         </div>
         <div className="flex-1">
-          <h2 className="text-xl font-bold text-gray-900">{category.title}</h2>
-          <p className="text-sm text-gray-500">{category.description}</p>
+          <h2 className="text-xl font-bold text-[#334155]">{category.title}</h2>
+          <p className="text-sm text-[#5B6474]">{category.description}</p>
         </div>
         {onCancel && (
           <button
             type="button"
             onClick={onCancel}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-[#FBF8F3] rounded-lg transition-colors"
           >
-            <X size={20} className="text-gray-400" />
+            <X size={20} className="text-[#A8A196]" />
           </button>
         )}
       </div>
@@ -394,7 +394,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
       <div className="space-y-6">
         {category.fields.map((field) => (
           <div key={field.name}>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-[#334155] mb-2">
               {field.label} {field.required && <span className="text-red-500">*</span>}
             </label>
             {renderField(field)}
@@ -407,9 +407,9 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
 
       {/* Concept Selection (sector-dependent) */}
       {availableConcepts.length > 0 && (
-        <div className="mt-8 pt-6 border-t border-gray-100">
-          <label className="block text-sm font-bold text-gray-900 mb-3">
-            Konsept seçin <span className="text-gray-400 font-normal">(maks. 3)</span>
+        <div className="mt-8 pt-6 border-t border-[#E4DCCD]">
+          <label className="block text-sm font-bold text-[#334155] mb-3">
+            Konsept seçin <span className="text-[#A8A196] font-normal">(maks. 3)</span>
           </label>
           <div className="flex flex-wrap gap-2">
             {availableConcepts.map((key) => {
@@ -424,8 +424,8 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
                     selected
                       ? 'border-amber-500 bg-amber-50 text-amber-800'
                       : disabled
-                        ? 'border-gray-100 bg-gray-50 text-gray-300 cursor-not-allowed'
-                        : 'border-gray-200 bg-white text-gray-700 hover:border-amber-300'
+                        ? 'border-[#E4DCCD] bg-[#FBF8F3] text-[#A8A196] cursor-not-allowed'
+                        : 'border-[#E4DCCD] bg-white text-[#334155] hover:border-amber-300'
                   }`}
                 >
                   {getConceptLabel(key)}
@@ -438,12 +438,12 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
 
       {/* Sector-Conditional Location Fields */}
       {locationFields.length > 0 && (
-        <div className="mt-6 pt-6 border-t border-gray-100">
-          <h3 className="text-sm font-bold text-gray-900 mb-4">Lokasyon detalları</h3>
+        <div className="mt-6 pt-6 border-t border-[#E4DCCD]">
+          <h3 className="text-sm font-bold text-[#334155] mb-4">Lokasyon detalları</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {locationFields.map((field) => (
               <div key={field.key}>
-                <label className="block text-xs font-medium text-gray-600 mb-1">
+                <label className="block text-xs font-medium text-[#5B6474] mb-1">
                   {field.label} {field.required && <span className="text-red-500">*</span>}
                 </label>
                 {field.type === 'boolean' ? (
@@ -452,15 +452,15 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
                       type="checkbox"
                       checked={!!locationData[field.key]}
                       onChange={(e) => handleLocationChange(field.key, e.target.checked)}
-                      className="w-5 h-5 rounded text-amber-600 focus:ring-amber-500 border-gray-300"
+                      className="w-5 h-5 rounded text-amber-600 focus:ring-amber-500 border-[#E4DCCD]"
                     />
-                    <span className="text-sm text-gray-700">Bəli</span>
+                    <span className="text-sm text-[#334155]">Bəli</span>
                   </label>
                 ) : field.type === 'select' ? (
                   <select
                     value={(locationData[field.key] as string) || ''}
                     onChange={(e) => handleLocationChange(field.key, e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-[#E4DCCD] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   >
                     <option value="">Seçin...</option>
                     {field.options?.map((opt) => (
@@ -473,10 +473,10 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
                       type={field.type === 'number' ? 'number' : 'text'}
                       value={(locationData[field.key] as string | number) ?? ''}
                       onChange={(e) => handleLocationChange(field.key, field.type === 'number' ? Number(e.target.value) : e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      className="w-full px-3 py-2 border border-[#E4DCCD] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                     />
                     {field.suffix && (
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">{field.suffix}</span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#A8A196]">{field.suffix}</span>
                     )}
                   </div>
                 )}
@@ -499,7 +499,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
       )}
 
       {/* Submit */}
-      <div className="mt-8 pt-6 border-t border-gray-100 space-y-6">
+      <div className="mt-8 pt-6 border-t border-[#E4DCCD] space-y-6">
         {/* AI Analysis Checkbox */}
         <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-5">
           <label className="flex items-start gap-4 cursor-pointer">
@@ -555,7 +555,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
                 <FileText size={16} className="text-purple-600" />
                 <span className="text-sm font-semibold text-purple-800">Özet</span>
               </div>
-              <p className="text-sm text-gray-700">{aiResult.summary}</p>
+              <p className="text-sm text-[#334155]">{aiResult.summary}</p>
             </div>
 
             {/* Strengths & Risks */}
@@ -639,7 +639,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 px-6 py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-colors"
+              className="flex-1 px-6 py-4 bg-white border border-[#E4DCCD] hover:border-[#0F172A] text-[#334155] font-semibold rounded-full transition-colors"
             >
               İptal
             </button>
@@ -660,7 +660,7 @@ export default function ListingForm({ categoryId, onSubmit, onCancel, initialDat
           <button
             type="submit"
             disabled={submitting || aiAnalyzing}
-            className={`flex-1 flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white px-6 py-4 rounded-xl font-bold transition-colors ${
+            className={`flex-1 flex items-center justify-center gap-3 bg-dk-red-strong hover:bg-dk-red-deep disabled:bg-[#E4DCCD] text-white px-6 py-4 rounded-full font-bold transition-colors ${
               !onCancel ? 'w-full' : ''
             }`}
           >

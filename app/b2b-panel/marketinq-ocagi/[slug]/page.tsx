@@ -1,10 +1,9 @@
 'use client';
 
 import { useParams, usePathname } from 'next/navigation';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 import { normalizeLocale, type Locale } from '@/i18n/config';
-import { getToolConfig, TIER_COLORS } from '@/lib/marketing-tools-config';
+import { getToolConfig } from '@/lib/marketing-tools-config';
+import { ToolHeader, ToolWrap } from '@/components/marketinq-ocagi/MarketinqV2';
 import { notFound, redirect } from 'next/navigation';
 import { EXTERNAL_TOOL_HREF } from '@/lib/marketing-tools-links';
 import SosialMetrikPage from '@/components/marketinq-ocagi/sosial-metrik/SosialMetrikPage';
@@ -219,50 +218,31 @@ export default function ToolSlugPage() {
     redirect(externalHref);
   }
 
-  const tierColors = TIER_COLORS[tool.tier];
   const toolCopy = copy.tools[slug];
 
+  // TASK-0548: planned tools use the public Marketinq v2 tool header (back pill + crumb, category eyebrow,
+  // tier pill) on the cream frame from ./layout.tsx — the same look as the live tools above.
   return (
-    <div className="mx-auto max-w-3xl px-6 py-8">
-      <Link
-        href="/b2b-panel/marketinq-ocagi"
-        className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-[var(--dk-navy)]"
-      >
-        <ArrowLeft size={16} />
-        {copy.backToList}
-      </Link>
+    <ToolWrap className="py-6 sm:py-8">
+      <ToolHeader slug={slug} title={toolCopy?.title ?? slug} subtitle={toolCopy?.subtitle ?? ''} />
 
-      <div className="mb-6 flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-[var(--dk-navy)]">
-            {toolCopy?.title ?? slug}
-          </h1>
-          <p className="mt-1 text-sm text-slate-500">
-            {toolCopy?.subtitle ?? ''}
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-6 mt-6 rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+          <h2 className="mb-2 border-b border-[#EFE9DE] pb-2 text-sm font-extrabold text-[#0F172A]">
+            {copy.whyTitle}
+          </h2>
+          <p className="text-[15px] leading-relaxed text-[#334155]">
+            {toolCopy?.why ?? ''}
           </p>
         </div>
-        <span
-          className={`rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-wider ${tierColors.bg} ${tierColors.text} ${tierColors.border}`}
-        >
-          {copy.tiers[tool.tier]}
-        </span>
-      </div>
 
-      <div className="mb-8 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-        <h2 className="mb-2 text-sm font-bold text-[var(--dk-navy)]">
-          {copy.whyTitle}
-        </h2>
-        <p className="text-sm leading-relaxed text-slate-600">
-          {toolCopy?.why ?? ''}
-        </p>
+        {tool.status === 'planned' && (
+          <div className="rounded-[22px] border-2 border-dashed border-[#E4DCCD] bg-[#FBF8F3] p-8 text-center">
+            <p className="text-lg font-extrabold text-[#0F172A]">{copy.comingSoon}</p>
+            <p className="mt-2 text-sm text-[#5B6474]">{copy.comingSoonDesc}</p>
+          </div>
+        )}
       </div>
-
-      {tool.status === 'planned' && (
-        <div className="rounded-2xl border-2 border-dashed border-slate-300 p-8 text-center">
-          <p className="text-lg font-bold text-slate-500">{copy.comingSoon}</p>
-          <p className="mt-2 text-sm text-slate-600">{copy.comingSoonDesc}</p>
-        </div>
-      )}
-    </div>
+    </ToolWrap>
   );
 }

@@ -380,21 +380,21 @@ export default function DashboardIlanlarPage() {
   function getAgeBadge(createdAt: string) {
     const days = Math.floor((Date.now() - new Date(createdAt).getTime()) / 86400000);
     if (days === 0) return { label: 'Yeni', color: 'bg-emerald-50 text-emerald-700' };
-    if (days <= 2) return { label: `${days} gün`, color: 'bg-blue-50 text-blue-700' };
+    if (days <= 2) return { label: `${days} gün`, color: 'bg-sky-50 text-sky-800' };
     if (days <= 7) return { label: `${days} gün`, color: 'bg-amber-50 text-amber-700' };
     return { label: `${days} gün`, color: 'bg-rose-50 text-rose-700' };
   }
 
   const cardCls =
-    'rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]';
+    'rounded-[22px] border border-[#E4DCCD] bg-white';
 
   return (
-    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mx-auto max-w-[1320px] space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
-            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">{copy.pageTitle}</h1>
-            <p className="mt-1 text-[15px] text-slate-600">{copy.pageSubtitle}</p>
+            <h1 className="text-[32px] font-black tracking-[-0.03em] text-[#0F172A] sm:text-[38px]">{copy.pageTitle}</h1>
+            <p className="mt-1 text-[15px] text-[#5B6474]">{copy.pageSubtitle}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Link
@@ -406,7 +406,7 @@ export default function DashboardIlanlarPage() {
             </Link>
             <Link
               href="/dashboard/ilanlar/yarat"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-dk-red-strong px-5 text-[14px] font-semibold text-white transition-colors hover:bg-dk-red-deep"
             >
               <Plus className="h-4 w-4" />
               {copy.newListing}
@@ -416,7 +416,7 @@ export default function DashboardIlanlarPage() {
 
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {[
-            { label: copy.statTotal, value: stats.total, dot: 'bg-slate-400' },
+            { label: copy.statTotal, value: stats.total, dot: 'bg-[#5B6474]' },
             { label: copy.statPending, value: stats.pending, dot: 'bg-amber-500' },
             { label: copy.statShowcase, value: stats.showcase, dot: 'bg-emerald-500' },
             { label: copy.statRejected, value: stats.rejected, dot: 'bg-rose-500' },
@@ -424,9 +424,9 @@ export default function DashboardIlanlarPage() {
             <div key={card.label} className={`${cardCls} p-5`}>
               <div className="flex items-center gap-2">
                 <span className={`h-2 w-2 shrink-0 rounded-full ${card.dot}`} aria-hidden="true" />
-                <p className="truncate text-[14px] font-medium text-slate-600">{card.label}</p>
+                <p className="truncate text-[14px] font-medium text-[#5B6474]">{card.label}</p>
               </div>
-              <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">
+              <p className="mt-3 text-[34px] font-black leading-none tracking-[-0.03em] text-[#0F172A] tabular-nums">
                 {card.value}
               </p>
             </div>
@@ -435,7 +435,7 @@ export default function DashboardIlanlarPage() {
 
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-            <div className="inline-flex gap-1 rounded-full bg-white p-1 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+            <div className="inline-flex gap-1 rounded-full border border-[#E4DCCD] bg-white p-1">
               {STATUS_FILTERS.map((tab) => (
                 <button
                   key={tab.key}
@@ -446,7 +446,7 @@ export default function DashboardIlanlarPage() {
                     setPage(1);
                   }}
                   className={`h-9 whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors ${
-                    statusFilter === tab.key ? 'bg-[#EEF4FF] text-slate-900' : 'text-slate-700 hover:bg-slate-50'
+                    statusFilter === tab.key ? 'bg-[#0F172A] text-white' : 'text-[#334155] hover:bg-[#FBF8F3]'
                   }`}
                 >
                   {copy.statusLabels[tab.key] ?? tab.key}
@@ -456,7 +456,7 @@ export default function DashboardIlanlarPage() {
           </div>
 
           <div className="relative w-full lg:max-w-sm">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#5B6474]" aria-hidden="true" />
             <input
               value={search}
               onChange={(event) => {
@@ -465,7 +465,7 @@ export default function DashboardIlanlarPage() {
               }}
               placeholder={copy.searchPlaceholder}
               aria-label={copy.searchPlaceholder}
-              className="h-11 w-full rounded-full border-0 bg-white pl-10 pr-4 text-[14px] text-slate-800 shadow-[0_1px_2px_rgba(0,0,0,0.05)] outline-none transition focus:ring-2 focus:ring-[#0A7AFF]/30"
+              className="h-11 w-full rounded-full border border-[#E4DCCD] bg-white pl-10 pr-4 text-[14px] text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
           </div>
         </div>
@@ -473,7 +473,7 @@ export default function DashboardIlanlarPage() {
         {/* Batch action bar */}
         {selectedIds.size > 0 && (
           <div className={`${cardCls} flex flex-wrap items-center gap-2 p-3 sm:p-4`}>
-            <span className="inline-flex h-8 items-center rounded-full bg-[#EEF4FF] px-3 text-[13px] font-semibold text-[#0A5BD6]">
+            <span className="inline-flex h-8 items-center rounded-full bg-[#EFE9DE] px-3 text-[13px] font-semibold text-[#0F172A]">
               {selectedIds.size} {copy.selectedCount}
             </span>
             <button
@@ -498,7 +498,7 @@ export default function DashboardIlanlarPage() {
                 onChange={(e) => setBatchReason(e.target.value)}
                 placeholder={copy.rejectReasonPlaceholder}
                 aria-label={copy.rejectReasonPlaceholder}
-                className="h-8 min-w-0 flex-1 rounded-full border border-rose-200 bg-white px-3 text-[12px] text-slate-800 outline-none focus:border-rose-400 sm:w-48 sm:flex-none"
+                className="h-8 min-w-0 flex-1 rounded-full border border-rose-200 bg-white px-3 text-[12px] text-[#0F172A] outline-none focus:border-rose-400 sm:w-48 sm:flex-none"
               />
               <button
                 type="button"
@@ -512,11 +512,11 @@ export default function DashboardIlanlarPage() {
             <button
               type="button"
               onClick={() => { setSelectedIds(new Set()); setBatchReason(''); }}
-              className="ml-auto inline-flex h-8 items-center rounded-full px-3 text-[12px] font-semibold text-slate-700 hover:bg-slate-100"
+              className="ml-auto inline-flex h-8 items-center rounded-full px-3 text-[12px] font-semibold text-[#334155] hover:bg-[#EFE9DE]"
             >
               {copy.batchCancel}
             </button>
-            {batchLoading && <Loader2 className="h-4 w-4 animate-spin text-slate-500" />}
+            {batchLoading && <Loader2 className="h-4 w-4 animate-spin text-[#5B6474]" />}
           </div>
         )}
 
@@ -524,10 +524,10 @@ export default function DashboardIlanlarPage() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1080px] text-sm">
               <thead>
-                <tr className="text-left text-[12px] uppercase tracking-wide text-slate-500">
+                <tr className="bg-[#FBF8F3] text-left text-[12px] uppercase tracking-wide text-[#5B6474]">
                   <th className="w-10 px-4 py-4">
-                    <button type="button" onClick={toggleAll} className="text-slate-600 hover:text-slate-900">
-                      {selectedIds.size === listings.length && listings.length > 0 ? <CheckSquare className="h-4 w-4 text-[#0A5BD6]" /> : <Square className="h-4 w-4" />}
+                    <button type="button" onClick={toggleAll} className="text-[#5B6474] hover:text-[#0F172A]">
+                      {selectedIds.size === listings.length && listings.length > 0 ? <CheckSquare className="h-4 w-4 text-[#0F172A]" /> : <Square className="h-4 w-4" />}
                     </button>
                   </th>
                   <th className="px-4 py-4 font-semibold">{copy.colTrackingCode}</th>
@@ -551,33 +551,33 @@ export default function DashboardIlanlarPage() {
                   return (
                     <tr
                       key={listing.id}
-                      className={`border-t border-slate-100 text-slate-600 transition-colors ${isSelected ? 'bg-[#EEF4FF]/60' : 'hover:bg-[#F9F9FB]'}`}
+                      className={`border-t border-[#EFE9DE] text-[#5B6474] transition-colors ${isSelected ? 'bg-[#EFE9DE]' : 'hover:bg-[#FBF8F3]'}`}
                     >
                       <td className="px-4 py-3.5">
-                        <button type="button" onClick={() => toggleSelect(listing.id)} className="text-slate-600 hover:text-slate-900">
-                          {isSelected ? <CheckSquare className="h-4 w-4 text-[#0A5BD6]" /> : <Square className="h-4 w-4" />}
+                        <button type="button" onClick={() => toggleSelect(listing.id)} className="text-[#5B6474] hover:text-[#0F172A]">
+                          {isSelected ? <CheckSquare className="h-4 w-4 text-[#0F172A]" /> : <Square className="h-4 w-4" />}
                         </button>
                       </td>
-                      <td className="whitespace-nowrap px-4 py-3.5 font-mono text-[12px] font-semibold text-slate-700">{listing.trackingCode}</td>
+                      <td className="whitespace-nowrap px-4 py-3.5 font-mono text-[12px] font-semibold text-[#334155]">{listing.trackingCode}</td>
                       <td className="max-w-[260px] px-4 py-3.5">
-                        <div className="truncate font-medium text-slate-900">{listing.title}</div>
+                        <div className="truncate font-medium text-[#0F172A]">{listing.title}</div>
                       </td>
                       <td className="px-4 py-3.5">
-                        <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold ${category?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
+                        <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold ${category?.badgeClass ?? 'bg-[#EFE9DE] text-[#334155]'}`}>
                           {category?.label ?? listing.type}
                         </span>
                       </td>
                       <td className="px-4 py-3.5">
                         {listing.sector ? (
-                          <span className="inline-flex whitespace-nowrap rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                          <span className="inline-flex whitespace-nowrap rounded-full bg-[#EFE9DE] px-2.5 py-1 text-[11px] font-semibold text-[#334155]">
                             {getSectorLabel(listing.sector, locale)}
                           </span>
                         ) : (
-                          <span className="text-slate-500">—</span>
+                          <span className="text-[#5B6474]">—</span>
                         )}
                       </td>
-                      <td className="px-4 py-3.5 text-slate-700">{listing.city}</td>
-                      <td className="whitespace-nowrap px-4 py-3.5 font-semibold text-slate-900 tabular-nums">
+                      <td className="px-4 py-3.5 text-[#334155]">{listing.city}</td>
+                      <td className="whitespace-nowrap px-4 py-3.5 font-semibold text-[#0F172A] tabular-nums">
                         {formatPrice(listing.price, listing.currency, listing.priceLabel)}
                       </td>
                       <td className="px-4 py-3.5">
@@ -593,7 +593,7 @@ export default function DashboardIlanlarPage() {
                       <td className="px-4 py-3.5">
                         <Link
                           href={`/dashboard/ilanlar/${listing.id}`}
-                          className="inline-flex h-8 items-center whitespace-nowrap rounded-full bg-[#EEF4FF] px-3 text-[12px] font-semibold text-[#0A5BD6] transition-colors hover:bg-[#E0EBFF]"
+                          className="inline-flex h-8 items-center whitespace-nowrap rounded-full bg-[#EFE9DE] px-3 text-[12px] font-semibold text-[#0F172A] transition-colors hover:bg-[#E4DCCD]"
                         >
                           {copy.reviewAction}
                         </Link>
@@ -608,11 +608,11 @@ export default function DashboardIlanlarPage() {
           {!loading && loadError ? (
             <div role="alert" className="px-6 py-16 text-center text-sm font-semibold text-red-700">{copy.loadError}</div>
           ) : !loading && listings.length === 0 ? (
-            <div className="px-6 py-16 text-center text-sm text-slate-600">{copy.emptyState}</div>
+            <div className="px-6 py-16 text-center text-sm text-[#5B6474]">{copy.emptyState}</div>
           ) : null}
 
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 px-5 py-4">
-            <p className="text-[13px] text-slate-600">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#EFE9DE] px-5 py-4">
+            <p className="text-[13px] text-[#5B6474]">
               {loading ? copy.loading : copy.paginationSummary(total, currentPage, totalPages)}
             </p>
             <div className="flex items-center gap-2">
@@ -620,7 +620,7 @@ export default function DashboardIlanlarPage() {
                 type="button"
                 disabled={currentPage === 1}
                 onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-                className="inline-flex h-9 items-center gap-1 rounded-full bg-[#F2F2F7] px-4 text-[13px] font-semibold text-slate-700 transition-colors hover:bg-slate-200 disabled:opacity-40"
+                className="inline-flex h-9 items-center gap-1 rounded-full bg-[#F6F1E9] px-4 text-[13px] font-semibold text-[#334155] transition-colors hover:bg-[#E4DCCD] disabled:opacity-40"
               >
                 <ChevronLeft className="h-4 w-4" />
                 {copy.prevPage}
@@ -629,7 +629,7 @@ export default function DashboardIlanlarPage() {
                 type="button"
                 disabled={currentPage === totalPages}
                 onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-                className="inline-flex h-9 items-center gap-1 rounded-full bg-[#F2F2F7] px-4 text-[13px] font-semibold text-slate-700 transition-colors hover:bg-slate-200 disabled:opacity-40"
+                className="inline-flex h-9 items-center gap-1 rounded-full bg-[#F6F1E9] px-4 text-[13px] font-semibold text-[#334155] transition-colors hover:bg-[#E4DCCD] disabled:opacity-40"
               >
                 {copy.nextPage}
                 <ChevronRight className="h-4 w-4" />

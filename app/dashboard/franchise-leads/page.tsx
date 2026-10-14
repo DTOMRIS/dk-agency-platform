@@ -63,10 +63,10 @@ export default async function DashboardFranchiseLeadsPage({
   await requireAdminPage();
   if (!db) {
     return (
-      <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+      <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
         <div className="mx-auto max-w-[1320px]">
-          <div className="rounded-[22px] bg-white px-6 py-12 text-center shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
-            <p className="text-sm font-bold text-slate-700">
+          <div className="rounded-[22px] border border-dashed border-[#E4DCCD] bg-white px-6 py-12 text-center">
+            <p className="text-sm font-bold text-[#334155]">
               Veritabanı əlaqəsi yoxdur. Zəhmət olmasa konfiqurasiyani yoxlayın.
             </p>
           </div>
@@ -118,7 +118,7 @@ export default async function DashboardFranchiseLeadsPage({
   ];
 
   const cardCls =
-    'rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]';
+    'rounded-[22px] border border-[#E4DCCD] bg-white';
   const initials = (name: string) =>
     name
       .split(/\s+/)
@@ -126,20 +126,20 @@ export default async function DashboardFranchiseLeadsPage({
       .slice(0, 2)
       .map((w) => w[0]?.toUpperCase())
       .join('') || '?';
-  const dots = ['bg-[#0A5BD6]', 'bg-amber-500', 'bg-violet-500', 'bg-emerald-500'];
+  const dots = ['bg-[#0F172A]', 'bg-amber-500', 'bg-violet-500', 'bg-emerald-500'];
 
   return (
-    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mx-auto max-w-[1320px] space-y-6">
         {/* Header */}
         <div className="min-w-0">
-          <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">
+          <h1 className="text-[32px] font-black tracking-[-0.03em] text-[#0F172A] sm:text-[38px]">
             Françayz Leadləri
           </h1>
-          <p className="mt-1 max-w-3xl text-[15px] text-slate-600">
+          <p className="mt-1 max-w-3xl text-[15px] text-[#5B6474]">
             Franchise Radar, OTA Guide və konsaltinq alətlərindən daxil olan leadlər.
             Cəmi{' '}
-            <span className="font-semibold text-slate-900 tabular-nums">{allLeads.length}</span> lead.
+            <span className="font-semibold text-[#0F172A] tabular-nums">{allLeads.length}</span> lead.
           </p>
         </div>
 
@@ -149,16 +149,16 @@ export default async function DashboardFranchiseLeadsPage({
             <div key={label} className={`${cardCls} p-5`}>
               <div className="flex items-center gap-2">
                 <span className={`h-2 w-2 shrink-0 rounded-full ${dots[i % dots.length]}`} aria-hidden="true" />
-                <p className="truncate text-[14px] font-medium text-slate-600">{label}</p>
+                <p className="truncate text-[14px] font-medium text-[#5B6474]">{label}</p>
               </div>
-              <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">{value}</p>
+              <p className="mt-3 text-[34px] font-black leading-none tracking-[-0.03em] text-[#0F172A] tabular-nums">{value}</p>
             </div>
           ))}
         </div>
 
         {/* Filter chips */}
         <div className={`${cardCls} p-5 sm:p-6`}>
-          <p className="text-[13px] font-semibold text-slate-900">Mənbəyə görə filter</p>
+          <p className="text-[13px] font-semibold text-[#0F172A]">Mənbəyə görə filter</p>
           <div className="mt-2.5 flex flex-wrap gap-2">
             {toolSourceOptions.map((option) => (
               <Link
@@ -167,8 +167,8 @@ export default async function DashboardFranchiseLeadsPage({
                 aria-current={currentToolSource === option ? 'true' : undefined}
                 className={`inline-flex h-9 items-center whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors ${
                   currentToolSource === option
-                    ? 'bg-[#EEF4FF] text-slate-900 ring-1 ring-[#0A5BD6]/20'
-                    : 'bg-[#F2F2F7] text-slate-700 hover:bg-slate-200'
+                    ? 'bg-[#0F172A] text-white'
+                    : 'border border-[#E4DCCD] bg-white text-[#334155] hover:border-[#0F172A]'
                 }`}
               >
                 {toolSourceLabels[option]}
@@ -179,7 +179,7 @@ export default async function DashboardFranchiseLeadsPage({
 
         {/* Lead list */}
         {filteredLeads.length === 0 ? (
-          <div className={`${cardCls} px-6 py-16 text-center text-sm text-slate-600`}>
+          <div className={`${cardCls} px-6 py-16 text-center text-sm text-[#5B6474]`}>
             Bu filterlə heç bir lead tapılmadı.
           </div>
         ) : (
@@ -187,7 +187,7 @@ export default async function DashboardFranchiseLeadsPage({
             <div className="overflow-x-auto">
               <table className="w-full min-w-[760px] text-sm">
                 <thead>
-                  <tr className="text-left text-[12px] uppercase tracking-wide text-slate-500">
+                  <tr className="bg-[#FBF8F3] text-left text-[12px] uppercase tracking-wide text-[#5B6474]">
                     <th className="px-5 py-4 font-semibold">Ad</th>
                     <th className="px-5 py-4 font-semibold">Əlaqə</th>
                     <th className="px-5 py-4 font-semibold">Brend</th>
@@ -198,33 +198,33 @@ export default async function DashboardFranchiseLeadsPage({
                 </thead>
                 <tbody>
                   {filteredLeads.map((lead) => (
-                    <tr key={lead.id} className="border-t border-slate-100 transition-colors hover:bg-[#F9F9FB]">
+                    <tr key={lead.id} className="border-t border-[#EFE9DE] transition-colors hover:bg-[#FBF8F3]">
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-3">
                           <span
-                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8F1FF] text-[13px] font-semibold text-[#0A5BD6]"
+                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EFE9DE] text-[13px] font-semibold text-[#0F172A]"
                             aria-hidden="true"
                           >
                             {initials(lead.name)}
                           </span>
-                          <span className="truncate font-medium text-slate-900">{lead.name}</span>
+                          <span className="truncate font-medium text-[#0F172A]">{lead.name}</span>
                         </div>
                       </td>
-                      <td className="px-5 py-3.5 text-slate-700">{lead.contact}</td>
-                      <td className="px-5 py-3.5 text-slate-700">
-                        {lead.brand ?? <span className="text-slate-500">—</span>}
+                      <td className="px-5 py-3.5 text-[#334155]">{lead.contact}</td>
+                      <td className="px-5 py-3.5 text-[#334155]">
+                        {lead.brand ?? <span className="text-[#5B6474]">—</span>}
                       </td>
                       <td className="px-5 py-3.5">
-                        <span className="inline-flex whitespace-nowrap rounded-full bg-slate-100 px-2.5 py-1 text-[12px] font-semibold text-slate-700">
+                        <span className="inline-flex whitespace-nowrap rounded-full bg-[#EFE9DE] px-2.5 py-1 text-[12px] font-semibold text-[#334155]">
                           {toolSourceLabels[lead.toolSource] ?? lead.toolSource}
                         </span>
                       </td>
                       <td className="px-5 py-3.5">
-                        <span className="inline-flex rounded-full bg-[#EEF4FF] px-2.5 py-1 text-[12px] font-semibold uppercase text-[#0A5BD6]">
+                        <span className="inline-flex rounded-full bg-[#EFE9DE] px-2.5 py-1 text-[12px] font-semibold uppercase text-[#0F172A]">
                           {lead.locale}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap px-5 py-3.5 text-slate-600 tabular-nums">
+                      <td className="whitespace-nowrap px-5 py-3.5 text-[#5B6474] tabular-nums">
                         {new Date(lead.createdAt).toLocaleDateString('az-AZ')}
                       </td>
                     </tr>

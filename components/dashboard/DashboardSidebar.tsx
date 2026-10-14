@@ -234,11 +234,11 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
       ) : null}
 
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-[var(--dk-warm-border)] bg-white transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-[#E4DCCD] bg-[#FBF8F3] transition-transform duration-300 lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex h-20 items-center justify-between border-b border-[var(--dk-warm-border)] px-5">
+        <div className="flex h-20 items-center justify-between border-b border-[#E4DCCD] px-5">
           <Link href={withLocale(currentLocale, '/dashboard')} className="flex items-center gap-3">
             <Image
               src="/images/logo-mobil.png"
@@ -249,7 +249,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
               className="h-11 w-11 shrink-0 rounded-2xl object-contain"
             />
             <div className="flex flex-col">
-              <div className="text-sm font-black tracking-wide text-[var(--dk-navy)]">
+              <div className="text-sm font-black tracking-wide text-[#0F172A]">
                 {t('panelTitle')}
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#E4DCCD] bg-white text-[#0F172A] transition hover:bg-[#F6F1E9] lg:hidden"
           >
             <ChevronLeft size={18} />
           </button>
@@ -269,7 +269,7 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
             {navSections.map((section) => (
               <div key={section.titleKey ?? 'home'}>
                 {section.titleKey ? (
-                  <div className="mb-1.5 px-4 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-600">
+                  <div className="mb-1.5 px-4 text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-[#5B6474]">
                     {t(`sections.${section.titleKey}`)}
                   </div>
                 ) : null}
@@ -286,13 +286,13 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
                         key={def.href}
                         href={withLocale(currentLocale, def.href)}
                         className={`group flex items-center gap-3 rounded-xl px-3 py-2 transition-colors ${
-                          active ? 'bg-[#EEF4FF] text-[#0A5BD6]' : 'text-slate-700 hover:bg-[#F2F2F7] hover:text-slate-900'
+                          active ? 'bg-[#0F172A] text-white' : 'text-[#334155] hover:bg-[#EEE6D8] hover:text-[#0F172A]'
                         }`}
                       >
-                        <Icon size={18} className={active ? 'text-[#0A7AFF]' : 'text-slate-500'} aria-hidden="true" />
+                        <Icon size={18} className={active ? 'text-white' : 'text-[#5B6474] group-hover:text-[#0F172A]'} aria-hidden="true" />
                         <span className="min-w-0 flex-1 truncate text-[14px] font-medium">{title}</span>
                         {badge ? (
-                          <span className="min-w-[22px] rounded-full bg-[#E11D48] px-2 py-0.5 text-center text-[11px] font-bold text-white">
+                          <span className="min-w-[22px] rounded-full bg-dk-red-strong px-2 py-0.5 text-center text-[11px] font-bold text-white">
                             {badge}
                           </span>
                         ) : null}
@@ -305,12 +305,12 @@ export default function DashboardSidebar({ isOpen = true, onClose }: DashboardSi
           </div>
         </nav>
 
-        <div className="border-t border-[var(--dk-warm-border)] p-4">
+        <div className="border-t border-[#E4DCCD] p-4">
           <button
             type="button"
             onClick={handleLogout}
             disabled={loggingOut}
-            className="flex w-full items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-red)] hover:text-[var(--dk-red)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex w-full items-center gap-3 rounded-full border border-[#E4DCCD] bg-white px-4 py-3 text-sm font-semibold text-[#334155] transition hover:border-dk-red-strong hover:text-dk-red-strong disabled:cursor-not-allowed disabled:opacity-60"
           >
             <LogOut size={18} />
             {t('logout')}

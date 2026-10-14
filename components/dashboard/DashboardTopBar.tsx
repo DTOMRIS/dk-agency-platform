@@ -49,17 +49,17 @@ function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
   };
 
   return (
-    <div className="flex h-10 items-center rounded-lg border border-[var(--dk-warm-border)] bg-white px-1">
+    <div className="flex h-10 items-center rounded-full border border-[#E4DCCD] bg-white px-1">
       {locales.map((locale) => (
         isDashboard ? (
           <button
             key={locale}
             type="button"
             onClick={() => handleSwitch(locale)}
-            className={`rounded-md px-2.5 py-1.5 text-xs font-bold transition ${
+            className={`rounded-full px-2.5 py-1.5 text-xs font-bold transition ${
               currentLocale === locale
-                ? 'bg-[var(--dk-navy)] text-white'
-                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+                ? 'bg-[#0F172A] text-white'
+                : 'text-[#5B6474] hover:bg-[#F6F1E9] hover:text-[#0F172A]'
             }`}
           >
             {localeLabels[locale]}
@@ -68,10 +68,10 @@ function LanguageSwitcher({ currentLocale }: { currentLocale: Locale }) {
           <Link
             key={locale}
             href={switchLocalePath(pathname, locale)}
-            className={`rounded-md px-2.5 py-1.5 text-xs font-bold transition ${
+            className={`rounded-full px-2.5 py-1.5 text-xs font-bold transition ${
               currentLocale === locale
-                ? 'bg-[var(--dk-navy)] text-white'
-                : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+                ? 'bg-[#0F172A] text-white'
+                : 'text-[#5B6474] hover:bg-[#F6F1E9] hover:text-[#0F172A]'
             }`}
           >
             {localeLabels[locale]}
@@ -144,15 +144,15 @@ export function DashboardTopBar() {
   };
 
   return (
-    <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-black/5 bg-white/80 px-6 backdrop-blur-xl lg:flex">
-      <p className="text-[15px] font-semibold tracking-tight text-slate-900">DK Agency</p>
+    <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-[#E4DCCD] bg-[#F6F1E9]/90 px-6 backdrop-blur-xl lg:flex">
+      <p className="text-[15px] font-semibold tracking-tight text-[#0F172A]">DK Agency</p>
 
       <div className="flex items-center gap-3">
         <Link
           href="/dashboard/muracietler"
           aria-label={t('notifications')}
           data-testid="topbar-inbox"
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-600 transition hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900"
+          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#E4DCCD] bg-white text-[#334155] transition hover:bg-[#EEE6D8] hover:text-[#0F172A]"
         >
           <Bell size={18} />
           {unreadCount > 0 ? (
@@ -168,19 +168,19 @@ export function DashboardTopBar() {
           <button
             type="button"
             onClick={() => setUserMenuOpen((open) => !open)}
-            className="flex h-10 items-center gap-2 rounded-lg border border-gray-200 bg-white pl-1 pr-3 text-sm font-semibold text-gray-700 transition hover:border-gray-300 hover:bg-gray-50"
+            className="flex h-10 items-center gap-2 rounded-full border border-[#E4DCCD] bg-white pl-1 pr-3 text-sm font-semibold text-[#0F172A] transition hover:bg-[#EEE6D8]"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--dk-navy)] text-xs font-black text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0F172A] text-xs font-black text-white">
               {getInitials(memberSession)}
             </span>
             <ChevronDown size={15} />
           </button>
 
           {userMenuOpen ? (
-            <div className="absolute right-0 mt-2 w-52 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
+            <div className="absolute right-0 mt-2 w-52 overflow-hidden rounded-2xl border border-[#E4DCCD] bg-white shadow-[0_12px_32px_rgba(15,23,42,0.10)]">
               <Link
                 href={withLocale(currentLocale, '/dashboard/profile')}
-                className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-[#334155] hover:bg-[#F6F1E9]"
                 onClick={() => setUserMenuOpen(false)}
               >
                 <UserRound size={16} />
@@ -189,7 +189,7 @@ export function DashboardTopBar() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="flex w-full items-center gap-2 border-t border-gray-100 px-4 py-3 text-left text-sm font-semibold text-[var(--dk-red)] hover:bg-red-50"
+                className="flex w-full items-center gap-2 border-t border-[#EFE9DE] px-4 py-3 text-left text-sm font-semibold text-dk-red-strong hover:bg-red-50"
               >
                 <LogOut size={16} />
                 {t('logout')}

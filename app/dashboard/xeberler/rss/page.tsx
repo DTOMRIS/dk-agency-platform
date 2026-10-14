@@ -47,12 +47,12 @@ export default function DashboardXeberlerRssPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F6F1E9] p-6 lg:p-8">
       <div className="mx-auto max-w-6xl space-y-6">
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">RSS menbeleri</h1>
-          <p className="mt-3 text-sm text-slate-500">
-            `news_sources` cedveli uzerinden source statusu ve son fetch vaxti idare olunur.
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+          <h1 className="text-[32px] font-bold tracking-tight text-[#0F172A] sm:text-[38px]">RSS mənbələri</h1>
+          <p className="mt-3 text-sm text-[#5B6474]">
+            `news_sources` cədvəli üzrə mənbənin statusu və son yoxlama vaxtı.
           </p>
         </div>
 
@@ -60,30 +60,31 @@ export default function DashboardXeberlerRssPage() {
           {sources.map((source) => (
             <div
               key={source.id}
-              className="grid gap-4 rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm md:grid-cols-2 xl:grid-cols-[1fr_1fr_160px_160px_200px_120px]"
+              className="grid gap-4 rounded-[22px] border border-[#E4DCCD] bg-white p-5 min-w-0 md:grid-cols-2 2xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1.4fr)_120px_140px_180px_auto]"
             >
               <div>
-                <div className="text-sm font-bold text-[var(--dk-navy)]">{source.name}</div>
-                <div className="mt-1 text-xs text-slate-500">{source.url}</div>
+                <div className="text-sm font-bold text-[#0F172A]">{source.name}</div>
+                <div className="mt-1 text-xs text-[#5B6474]">{source.url}</div>
               </div>
-              <div className="truncate rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+              <div className="truncate rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#334155]">
                 {source.rssUrl}
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+              <div className="rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#334155]">
                 {source.language}
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+              <div className="rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#334155]">
                 {source.category}
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+              <div className="rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#334155]">
                 {source.lastFetchedAt
                   ? formatAzDateTime(source.lastFetchedAt)
-                  : 'Hele fetch edilmeyib'}
+                  : 'Hələ yoxlanmayıb'}
               </div>
-              <label className="inline-flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
+              <label className="inline-flex items-center gap-3 rounded-2xl bg-[#FBF8F3] px-4 py-3 text-sm font-semibold text-[#334155]">
                 <input
                   type="checkbox"
                   checked={source.isActive}
+                  className="h-4 w-4 accent-[#0F172A]"
                   onChange={(e) => void toggleSource(source.id, e.target.checked)}
                 />
                 Aktiv
@@ -93,7 +94,7 @@ export default function DashboardXeberlerRssPage() {
         </div>
 
         {!loading && sources.length === 0 ? (
-          <div className="rounded-[28px] border border-slate-200 bg-white p-6 text-sm text-slate-500 shadow-sm">
+          <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6 text-sm text-[#5B6474] shadow-sm">
             Source tapilmadi.
           </div>
         ) : null}

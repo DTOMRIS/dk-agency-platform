@@ -64,13 +64,13 @@ export default async function EditNewsPage({ params }: { params: Promise<{ id: s
   };
 
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F6F1E9] p-6 lg:p-8">
       <div className="mx-auto max-w-6xl space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">Xəbəri düzəlt</h1>
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+          <h1 className="text-[32px] font-bold tracking-tight text-[#0F172A] sm:text-[38px]">Xəbəri düzəlt</h1>
           <Link
             href="/dashboard/xeberler"
-            className="inline-flex min-h-11 items-center rounded-full border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700"
+            className="inline-flex min-h-11 items-center rounded-full border border-[#E4DCCD] bg-white px-5 py-3 text-sm font-bold text-[#334155]"
           >
             Xəbərlər siyahısına qayıt
           </Link>

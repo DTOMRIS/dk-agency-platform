@@ -21,8 +21,8 @@
 - **Qalan kiçik:** KST balı 25–100 miqyasında (tarixçə müqayisəsi) · 3 yeni Excel şablonunun şəkil önizləməsi yoxdur · KAZAN çatındakı daxili keçidlər locale önəksizdir · elan WhatsApp mətni hər dildə AZ · `/settings` mətni komponentdə AZ.
 - **i18n sayı:** xəritənin «sabit AZ» sütunu `/auth/*` və `/qiymet`-də fayl içi 4 dilli lüğətləri də sayır (borc deyil, yanlış həyəcan) — skript düzəlişi ayrıca.
 - **Mətn:** footer «dijitalın şəddi» şüarı (Doğan seçimi).
-- **Dizayn (xəritə, 0546 sonu: v2 68 · köhnə 34 · qarışıq 1):** ictimai səhifələrin hamısı v2; köhnə qalanlar admin və B2B paneldir. Növbəti (Doğan «ileride»): koddan render olunan motion loop-lar (alət tanıtımı, Sektor Nəbzi kartları).
-- Köhnə: B2B OnboardingModal hər girişdə klikləri bağlayır · listings repository DB yoxdursa mock qaytarır (production-da DB var).
+- **Dizayn (xəritə, 0546 sonu: v2 68 · köhnə 34 · qarışıq 1):** ictimai, admin və B2B — hamısı v2 (0548 sonu: 105/105). Növbəti (Doğan «ileride»): koddan render olunan motion loop-lar (alət tanıtımı, Sektor Nəbzi kartları).
+- Köhnə: listings repository DB yoxdursa mock qaytarır (production-da DB var).
 
 ## 2026-10-08 — Vəziyyət (Claude, TASK-0503/0504 sessiyası)
 

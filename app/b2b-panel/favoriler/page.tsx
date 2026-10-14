@@ -56,15 +56,15 @@ export default function FavoritesPage() {
   const favoriteListings = listings.filter((item) => favoriteIds.includes(item.id));
 
   return (
-    <div className="p-6 lg:p-8 min-h-screen bg-slate-50/30">
+    <div className="min-h-screen bg-[#F6F1E9] p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-8">
-          <span className="inline-flex rounded-full bg-[var(--dk-gold)]/20 px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--dk-gold)]">
+          <span className="inline-flex rounded-full border border-[#E4DCCD] bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#5B6474]">
             KABİNET
           </span>
-          <h1 className="mt-4 font-display text-4xl font-black text-[var(--dk-navy)]">Sevimlilər</h1>
-          <p className="mt-2 text-sm text-slate-500">
+          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[#0F172A] sm:text-4xl">Sevimlilər</h1>
+          <p className="mt-2 text-sm text-[#5B6474]">
             Yadda saxladığınız, bəyəndiyiniz və izlədiyiniz elanlar.
           </p>
         </div>
@@ -73,29 +73,29 @@ export default function FavoritesPage() {
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <div className="aspect-[16/9] animate-pulse bg-slate-200" />
+              <div key={i} className="overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white">
+                <div className="aspect-[16/9] animate-pulse bg-[#EFE9DE]" />
                 <div className="space-y-3 p-5">
-                  <div className="h-6 w-3/4 animate-pulse rounded-full bg-slate-200" />
-                  <div className="h-4 w-1/2 animate-pulse rounded-full bg-slate-200" />
-                  <div className="h-5 w-1/3 animate-pulse rounded-full bg-slate-200" />
+                  <div className="h-6 w-3/4 animate-pulse rounded-full bg-[#EFE9DE]" />
+                  <div className="h-4 w-1/2 animate-pulse rounded-full bg-[#EFE9DE]" />
+                  <div className="h-5 w-1/3 animate-pulse rounded-full bg-[#EFE9DE]" />
                 </div>
               </div>
             ))}
           </div>
         ) : favoriteListings.length === 0 ? (
           /* Empty State */
-          <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center max-w-2xl mx-auto mt-8">
-            <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 shadow-sm">
-              <Star className="h-8 w-8 text-amber-400" />
+          <div className="mx-auto mt-8 max-w-2xl rounded-[22px] border border-dashed border-[#E4DCCD] bg-white px-6 py-16 text-center">
+            <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full border border-[#E4DCCD] bg-[#FBF8F3]">
+              <Star className="h-8 w-8 text-[#0F172A]" />
             </div>
-            <h2 className="mt-5 font-display text-2xl font-black text-[var(--dk-navy)]">Siyahınız boşdur</h2>
-            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-500">
+            <h2 className="mt-5 text-2xl font-extrabold text-[#0F172A]">Siyahınız boşdur</h2>
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#334155]">
               Hələ ki heç bir elanı sevimlilərə əlavə etməmisiniz. Kataloqa keçərək maraqlı təklifləri ulduz işarəsi ilə yadda saxlaya bilərsiniz.
             </p>
             <Link
               href="/listings"
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[var(--dk-gold)] px-6 py-3 text-sm font-bold text-[var(--dk-navy)] hover:opacity-95 transition"
+              className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-dk-red-strong px-6 text-sm font-bold text-white transition hover:opacity-90"
             >
               Elanları Kəşf Et
             </Link>
@@ -104,13 +104,13 @@ export default function FavoritesPage() {
           /* Grid of Favorites */
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {favoriteListings.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} onOpen={setActiveListing} />
+              <ListingCard key={listing.id} listing={listing} onOpen={setActiveListing} tone="v2" />
             ))}
           </div>
         )}
       </div>
 
-      <ListingModal listing={activeListing} onClose={() => setActiveListing(null)} />
+      <ListingModal listing={activeListing} onClose={() => setActiveListing(null)} tone="v2" />
     </div>
   );
 }

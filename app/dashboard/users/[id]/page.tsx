@@ -31,12 +31,12 @@ const ACTION_BADGE: Record<string, string> = {
   'member.created': 'bg-emerald-50 text-emerald-700 border-emerald-200',
   'member.role_changed': 'bg-amber-50 text-amber-700 border-amber-200',
   'member.deleted': 'bg-red-50 text-red-700 border-red-200',
-  'member.password_reset': 'bg-blue-50 text-blue-700 border-blue-200',
+  'member.password_reset': 'bg-[#EEE6D8] text-[#0F172A] border-[#E4DCCD]',
 };
 
 const ROLE_BADGE: Record<string, string> = {
   admin: 'bg-red-50 text-red-700 border-red-200',
-  member: 'bg-slate-50 text-slate-600 border-slate-200',
+  member: 'bg-[#FBF8F3] text-[#334155] border-[#E4DCCD]',
 };
 
 function formatDate(d: string | null) {
@@ -95,18 +95,27 @@ export default function MemberDetailPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-32">
-        <span className="text-sm text-slate-600">{t('loading')}</span>
+      // TASK-0548: the page's own back link is rendered from the first frame, so PanelBackBar (which looks for
+      // [data-back-button] once per route) steps aside and the page keeps exactly one back control.
+      <div className="min-h-full bg-[#F6F1E9] p-6 lg:p-8">
+        <div className="mx-auto max-w-4xl">
+          <Link href="/dashboard/users" data-back-button className="inline-flex items-center gap-1 rounded-full border border-[#E4DCCD] bg-white px-3.5 py-1.5 text-sm font-semibold text-[#0F172A] hover:bg-[#EEE6D8]">
+            <ArrowLeft size={14} /> {t('back')}
+          </Link>
+          <div className="flex items-center justify-center py-32">
+            <span className="text-sm text-[#5B6474]">{t('loading')}</span>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (error || !user) {
     return (
-      <div className="bg-white p-6 lg:p-8">
+      <div className="min-h-full bg-[#F6F1E9] p-6 lg:p-8">
         <div className="mx-auto max-w-3xl text-center py-16">
-          <p className="text-sm text-slate-500">{error === 'not-found' ? t('notFound') : t('error')}</p>
-          <Link href="/dashboard/users" className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-[var(--dk-gold)] hover:underline">
+          <p className="text-sm text-[#5B6474]">{error === 'not-found' ? t('notFound') : t('error')}</p>
+          <Link href="/dashboard/users" data-back-button className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#0F172A] hover:underline">
             <ArrowLeft size={14} /> {t('back')}
           </Link>
         </div>
@@ -118,18 +127,18 @@ export default function MemberDetailPage() {
   const isVerified = user.emailVerified === true;
 
   return (
-    <div className="bg-white p-6 lg:p-8">
+    <div className="min-h-full bg-[#F6F1E9] p-6 lg:p-8">
       <div className="mx-auto max-w-4xl space-y-6">
         {/* Back */}
-        <Link href="/dashboard/users" className="inline-flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-[var(--dk-navy)]">
+        <Link href="/dashboard/users" data-back-button className="inline-flex items-center gap-1 rounded-full border border-[#E4DCCD] bg-white px-3.5 py-1.5 text-sm font-semibold text-[#0F172A] hover:bg-[#EEE6D8]">
           <ArrowLeft size={14} /> {t('back')}
         </Link>
 
         {/* Profile Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6">
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="font-display text-2xl font-bold text-[var(--dk-navy)]">
+              <h1 className="text-2xl font-bold tracking-tight text-[#0F172A] sm:text-[28px]">
                 {user.fullName || user.email}
               </h1>
               <div className="mt-2 flex flex-wrap items-center gap-3">
@@ -144,28 +153,28 @@ export default function MemberDetailPage() {
           </div>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <div className="flex items-center gap-3 text-sm text-slate-600">
-              <Mail size={16} className="text-slate-600" />
+            <div className="flex items-center gap-3 text-sm text-[#334155]">
+              <Mail size={16} className="text-[#334155]" />
               {user.email}
             </div>
             {user.phone && (
-              <div className="flex items-center gap-3 text-sm text-slate-600">
-                <Phone size={16} className="text-slate-600" />
+              <div className="flex items-center gap-3 text-sm text-[#334155]">
+                <Phone size={16} className="text-[#334155]" />
                 {user.phone}
               </div>
             )}
             {user.company && (
-              <div className="flex items-center gap-3 text-sm text-slate-600">
-                <Building2 size={16} className="text-slate-600" />
+              <div className="flex items-center gap-3 text-sm text-[#334155]">
+                <Building2 size={16} className="text-[#334155]" />
                 {user.company}
               </div>
             )}
-            <div className="flex items-center gap-3 text-sm text-slate-600">
-              <Calendar size={16} className="text-slate-600" />
+            <div className="flex items-center gap-3 text-sm text-[#334155]">
+              <Calendar size={16} className="text-[#334155]" />
               {t('joined')}: {formatDate(user.createdAt)}
             </div>
-            <div className="flex items-center gap-3 text-sm text-slate-600">
-              <Shield size={16} className="text-slate-600" />
+            <div className="flex items-center gap-3 text-sm text-[#334155]">
+              <Shield size={16} className="text-[#334155]" />
               {t('role')}: {role}
             </div>
           </div>
@@ -175,21 +184,21 @@ export default function MemberDetailPage() {
         <QuickActions userId={user.id} isSelf={user.id === currentUserId} t={t} onSuccess={fetchDetail} onDeleted={() => router.push('/dashboard/users')} />
 
         {/* Recent Activity */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="font-display text-lg font-bold text-[var(--dk-navy)]">{t('recentActivity')}</h2>
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
+          <h2 className="text-lg font-bold tracking-tight text-[#0F172A]">{t('recentActivity')}</h2>
           {activity.length === 0 ? (
-            <p className="mt-4 text-sm text-slate-600">{t('noActivity')}</p>
+            <p className="mt-4 text-sm text-[#334155]">{t('noActivity')}</p>
           ) : (
             <div className="mt-4 space-y-3">
               {activity.map((log) => (
-                <div key={log.id} className="flex items-center justify-between rounded-xl border border-slate-100 px-4 py-3">
+                <div key={log.id} className="flex items-center justify-between rounded-xl border border-[#EFE9DE] px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${ACTION_BADGE[log.action] || 'bg-slate-50 text-slate-500 border-slate-200'}`}>
+                    <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${ACTION_BADGE[log.action] || 'bg-[#FBF8F3] text-[#5B6474] border-[#E4DCCD]'}`}>
                       {tAudit(`actions.${log.action}`)}
                     </span>
-                    <span className="text-xs text-slate-500">{log.adminEmail}</span>
+                    <span className="text-xs text-[#5B6474]">{log.adminEmail}</span>
                   </div>
-                  <span className="text-xs text-slate-600 whitespace-nowrap">{formatDateTime(log.createdAt)}</span>
+                  <span className="text-xs text-[#334155] whitespace-nowrap">{formatDateTime(log.createdAt)}</span>
                 </div>
               ))}
             </div>
@@ -245,8 +254,8 @@ function QuickActions({ userId, isSelf, t, onSuccess, onDeleted }: { userId: num
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6">
-      <h2 className="font-display text-lg font-bold text-[var(--dk-navy)]">{t('quickActions')}</h2>
+    <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
+      <h2 className="text-lg font-bold tracking-tight text-[#0F172A]">{t('quickActions')}</h2>
       {message && (
         <div className={`mt-3 rounded-xl border px-4 py-2 text-sm ${message.type === 'success' ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-red-200 bg-red-50 text-red-700'}`}>
           {message.text}
@@ -257,7 +266,7 @@ function QuickActions({ userId, isSelf, t, onSuccess, onDeleted }: { userId: num
           type="button"
           onClick={handleResetPassword}
           disabled={resetting}
-          className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:border-[var(--dk-gold)] hover:bg-[var(--dk-gold)]/5 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-4 py-2.5 text-sm font-semibold text-[#0F172A] transition hover:bg-[#EEE6D8] disabled:opacity-50"
         >
           <KeyRound size={16} />
           {resetting ? '...' : t('resetPassword')}
@@ -269,14 +278,14 @@ function QuickActions({ userId, isSelf, t, onSuccess, onDeleted }: { userId: num
               if (!window.confirm(t('deleteConfirm1'))) return;
               setShowDeleteConfirm(true);
             }}
-            className="inline-flex items-center gap-2 rounded-xl border border-red-200 px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-white px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-50"
           >
             <Trash2 size={16} />
             {t('deleteAccount')}
           </button>
         )}
         {isSelf && (
-          <span className="inline-flex items-center gap-2 rounded-xl border border-slate-100 px-4 py-2.5 text-sm text-slate-600 cursor-not-allowed" title={t('deleteSelfForbidden')}>
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#EFE9DE] px-4 py-2.5 text-sm text-[#5B6474] cursor-not-allowed" title={t('deleteSelfForbidden')}>
             <Trash2 size={16} />
             {t('deleteAccount')}
           </span>
@@ -291,7 +300,7 @@ function QuickActions({ userId, isSelf, t, onSuccess, onDeleted }: { userId: num
             type="text"
             value={deleteInput}
             onChange={(e) => setDeleteInput(e.target.value)}
-            className="w-full rounded-lg border border-red-300 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-red-300"
+            className="h-11 w-full rounded-xl border border-red-300 bg-white px-3 text-sm text-[#0F172A] outline-none focus:ring-2 focus:ring-red-300"
             placeholder="SİL"
           />
           <div className="flex gap-2">
@@ -299,14 +308,14 @@ function QuickActions({ userId, isSelf, t, onSuccess, onDeleted }: { userId: num
               type="button"
               onClick={handleDelete}
               disabled={deleteInput !== 'SİL' || deleting}
-              className="rounded-lg bg-red-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-40"
+              className="rounded-full bg-red-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-40"
             >
               {deleting ? '...' : t('deleteConfirmBtn')}
             </button>
             <button
               type="button"
               onClick={() => { setShowDeleteConfirm(false); setDeleteInput(''); }}
-              className="rounded-lg border border-slate-200 px-4 py-2 text-xs font-medium text-slate-600"
+              className="rounded-full border border-[#E4DCCD] bg-white px-4 py-2 text-xs font-semibold text-[#0F172A]"
             >
               {t('cancel')}
             </button>

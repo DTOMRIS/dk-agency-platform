@@ -670,9 +670,9 @@ export default function DashboardXeberlerPage() {
   };
 
   const statusTone: Record<FilterStatus, string> = {
-    all: "bg-slate-100 text-slate-700",
+    all: "bg-[#F6F1E9] text-[#334155]",
     fetched: "bg-amber-50 text-amber-800",
-    translated: "bg-[#EEF4FF] text-[#0A5BD6]",
+    translated: "bg-[#F6F1E9] text-[#0F172A]",
     approved: "bg-emerald-50 text-emerald-700",
     rejected: "bg-rose-50 text-rose-700",
   };
@@ -691,12 +691,12 @@ export default function DashboardXeberlerPage() {
     if (item.newsType === "photo")
       badges.push([
         copy.badgePhoto,
-        "bg-slate-100 text-slate-800 ring-slate-200",
+        "bg-[#F6F1E9] text-[#0F172A] ring-[#E4DCCD]",
       ]);
     if (item.newsType === "video")
       badges.push([
         copy.badgeVideo,
-        "bg-slate-100 text-slate-800 ring-slate-200",
+        "bg-[#F6F1E9] text-[#0F172A] ring-[#E4DCCD]",
       ]);
     if (item.isEditorPick)
       badges.push([
@@ -712,27 +712,27 @@ export default function DashboardXeberlerPage() {
     "inline-flex h-9 items-center whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60";
 
   return (
-    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mx-auto max-w-[1320px] space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
-            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">
+            <h1 className="text-[32px] font-bold tracking-tight text-[#0F172A] sm:text-[38px]">
               {copy.pageTitle}
             </h1>
-            <p className="mt-1 text-[15px] text-slate-600">
+            <p className="mt-1 text-[15px] text-[#5B6474]">
               {copy.pageSubtitle}
             </p>
           </div>
           <Link
             href="/dashboard/xeberler/yeni"
-            className="inline-flex h-11 items-center rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
+            className="inline-flex h-11 items-center rounded-full bg-dk-red-strong px-5 text-[14px] font-semibold text-white transition-colors hover:opacity-90"
           >
             {copy.newArticle}
           </Link>
         </div>
 
         <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-          <div className="inline-flex gap-1 rounded-full bg-white p-1 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+          <div className="inline-flex gap-1 rounded-full border border-[#E4DCCD] bg-white p-1">
             {filterButtons.map(([value, label]) => (
               <button
                 key={value}
@@ -741,8 +741,8 @@ export default function DashboardXeberlerPage() {
                 aria-pressed={filter === value}
                 className={`h-9 whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors ${
                   filter === value
-                    ? "bg-[#EEF4FF] text-slate-900"
-                    : "text-slate-700 hover:bg-slate-50"
+                    ? "bg-[#0F172A] text-white"
+                    : "text-[#334155] hover:bg-[#FBF8F3]"
                 }`}
               >
                 {label}
@@ -767,9 +767,9 @@ export default function DashboardXeberlerPage() {
           <div
             role="toolbar"
             aria-label={copy.selectedCount(selected.size)}
-            className="sticky top-2 z-20 flex flex-wrap items-center gap-2 rounded-[18px] border border-slate-200 bg-white px-4 py-3 shadow-[0_8px_24px_rgba(15,23,42,0.12)]"
+            className="sticky top-2 z-20 flex flex-wrap items-center gap-2 rounded-[18px] border border-[#E4DCCD] bg-white px-4 py-3 shadow-[0_8px_24px_rgba(15,23,42,0.12)]"
           >
-            <span className="mr-auto text-[14px] font-semibold text-slate-900">
+            <span className="mr-auto text-[14px] font-semibold text-[#0F172A]">
               {bulkBusy ? copy.bulkWorking : copy.selectedCount(selected.size)}
             </span>
             <button
@@ -800,14 +800,14 @@ export default function DashboardXeberlerPage() {
               type="button"
               disabled={bulkBusy}
               onClick={() => setSelected(new Set())}
-              className={`${bulkBtn} border border-slate-200 bg-white text-slate-700 hover:bg-slate-50`}
+              className={`${bulkBtn} border border-[#E4DCCD] bg-white text-[#334155] hover:bg-[#FBF8F3]`}
             >
               {copy.bulkClear}
             </button>
           </div>
         ) : null}
 
-        <div className="overflow-hidden rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
+        <div className="overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[980px] table-fixed text-sm">
               <colgroup>
@@ -819,7 +819,7 @@ export default function DashboardXeberlerPage() {
                 <col className="w-[100px]" />
                 <col className="w-[196px]" />
               </colgroup>
-              <thead className="text-left text-[12px] uppercase tracking-wide text-slate-500">
+              <thead className="text-left text-[12px] uppercase tracking-wide text-[#5B6474]">
                 <tr>
                   <th className="px-3 py-4">
                     <input
@@ -829,7 +829,7 @@ export default function DashboardXeberlerPage() {
                       disabled={loading || items.length === 0}
                       aria-label={copy.selectAllOnPage}
                       title={copy.selectAllOnPage}
-                      className="h-4 w-4 cursor-pointer accent-[#0A5BD6]"
+                      className="h-4 w-4 cursor-pointer accent-[#0F172A]"
                     />
                   </th>
                   <th className="px-3 py-4 font-semibold">
@@ -852,8 +852,8 @@ export default function DashboardXeberlerPage() {
                   return (
                     <tr
                       key={item.id}
-                      className={`border-t border-slate-100 align-top transition-colors ${
-                        isSelected ? "bg-[#F5F8FF]" : "hover:bg-[#F9F9FB]"
+                      className={`border-t border-[#EFE9DE] align-top transition-colors ${
+                        isSelected ? "bg-[#FBF8F3]" : "hover:bg-[#FBF8F3]"
                       }`}
                     >
                       <td className="px-3 py-3">
@@ -863,21 +863,21 @@ export default function DashboardXeberlerPage() {
                           onChange={() => toggleRow(item.id)}
                           disabled={loading}
                           aria-label={`${copy.selectRow} #${item.id}`}
-                          className="mt-0.5 h-4 w-4 cursor-pointer accent-[#0A5BD6]"
+                          className="mt-0.5 h-4 w-4 cursor-pointer accent-[#0F172A]"
                         />
                       </td>
                       <td className="px-3 py-3">
                         <div
-                          className="line-clamp-2 break-words font-medium text-slate-900"
+                          className="line-clamp-2 break-words font-medium text-[#0F172A]"
                           title={item.title}
                         >
                           {item.title}
                         </div>
-                        <div className="mt-1 text-[12px] text-slate-500">
+                        <div className="mt-1 text-[12px] text-[#5B6474]">
                           {item.category}
                         </div>
                       </td>
-                      <td className="px-3 py-3 text-slate-700">
+                      <td className="px-3 py-3 text-[#334155]">
                         {item.titleAz ? (
                           <div
                             className="line-clamp-2 break-words"
@@ -886,24 +886,24 @@ export default function DashboardXeberlerPage() {
                             {item.titleAz}
                           </div>
                         ) : (
-                          <span className="text-slate-500">
+                          <span className="text-[#5B6474]">
                             {copy.pendingTranslation}
                           </span>
                         )}
                       </td>
                       <td className="px-3 py-3">
                         <div
-                          className="truncate text-slate-700"
+                          className="truncate text-[#334155]"
                           title={source ?? undefined}
                         >
                           {source || (
-                            <span className="text-slate-500">
+                            <span className="text-[#5B6474]">
                               {copy.noSource}
                             </span>
                           )}
                         </div>
                         {item.origin ? (
-                          <span className="mt-1 inline-flex rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-slate-600">
+                          <span className="mt-1 inline-flex rounded bg-[#F6F1E9] px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-[#5B6474]">
                             {item.origin}
                           </span>
                         ) : null}
@@ -929,14 +929,14 @@ export default function DashboardXeberlerPage() {
                           </div>
                         ) : null}
                       </td>
-                      <td className="px-3 py-3 text-[13px] text-slate-600 tabular-nums">
+                      <td className="px-3 py-3 text-[13px] text-[#5B6474] tabular-nums">
                         {formatAzDate(item.publishedAt)}
                       </td>
                       <td className="px-3 py-3">
                         <div className="flex flex-wrap gap-1">
                           <Link
                             href={`/dashboard/xeberler/${item.id}`}
-                            className={`${actionBtn} bg-[#EEF4FF] text-[#0A5BD6] hover:bg-[#E0EBFF]`}
+                            className={`${actionBtn} bg-[#F6F1E9] text-[#0F172A] hover:bg-[#EFE9DE]`}
                           >
                             {copy.actionEdit}
                           </Link>
@@ -972,7 +972,7 @@ export default function DashboardXeberlerPage() {
                             className={`${actionBtn} ${
                               item.isEditorPick
                                 ? "bg-amber-100 text-amber-900"
-                                : "bg-slate-100 text-slate-700 hover:bg-amber-50"
+                                : "bg-[#F6F1E9] text-[#334155] hover:bg-amber-50"
                             }`}
                           >
                             {copy.actionEditorPick}
@@ -980,7 +980,7 @@ export default function DashboardXeberlerPage() {
                           <button
                             type="button"
                             onClick={() => void deleteItem(item.id)}
-                            className={`${actionBtn} border border-slate-200 bg-white text-slate-700 hover:border-red-200 hover:bg-red-50 hover:text-red-700`}
+                            className={`${actionBtn} border border-[#E4DCCD] bg-white text-[#334155] hover:border-red-200 hover:bg-red-50 hover:text-red-700`}
                           >
                             {copy.actionDelete}
                           </button>
@@ -994,20 +994,20 @@ export default function DashboardXeberlerPage() {
           </div>
 
           {loading && items.length === 0 ? (
-            <div className="px-6 py-16 text-center text-sm text-slate-600">
+            <div className="px-6 py-16 text-center text-sm text-[#5B6474]">
               {copy.loading}
             </div>
           ) : null}
 
           {!loading && items.length === 0 ? (
-            <div className="px-6 py-16 text-center text-sm text-slate-600">
+            <div className="px-6 py-16 text-center text-sm text-[#5B6474]">
               {copy.emptyState}
             </div>
           ) : null}
 
           {total > 0 ? (
-            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 px-4 py-3">
-              <span className="text-[13px] text-slate-700 tabular-nums">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#EFE9DE] px-4 py-3">
+              <span className="text-[13px] text-[#334155] tabular-nums">
                 {copy.pageInfo(page, pageCount, total)}
               </span>
               <div className="flex gap-2">
@@ -1015,7 +1015,7 @@ export default function DashboardXeberlerPage() {
                   type="button"
                   disabled={loading || page <= 1}
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className={`${bulkBtn} border border-slate-200 bg-white text-slate-700 hover:bg-slate-50`}
+                  className={`${bulkBtn} border border-[#E4DCCD] bg-white text-[#334155] hover:bg-[#FBF8F3]`}
                 >
                   {copy.pagePrev}
                 </button>
@@ -1023,7 +1023,7 @@ export default function DashboardXeberlerPage() {
                   type="button"
                   disabled={loading || page >= pageCount}
                   onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
-                  className={`${bulkBtn} border border-slate-200 bg-white text-slate-700 hover:bg-slate-50`}
+                  className={`${bulkBtn} border border-[#E4DCCD] bg-white text-[#334155] hover:bg-[#FBF8F3]`}
                 >
                   {copy.pageNext}
                 </button>

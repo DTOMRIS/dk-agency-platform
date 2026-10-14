@@ -28,7 +28,7 @@ interface Stats {
 }
 
 const STAT_CARDS = [
-  { key: 'total' as const, icon: Users, color: 'text-[var(--dk-navy)]' },
+  { key: 'total' as const, icon: Users, color: 'text-[#0F172A]' },
   { key: 'verified' as const, icon: ShieldCheck, color: 'text-emerald-600' },
   { key: 'kalfa' as const, icon: Crown, color: 'text-purple-600' },
   { key: 'usta' as const, icon: GraduationCap, color: 'text-amber-600' },
@@ -122,17 +122,17 @@ export default function DashboardUsersPage() {
   );
 
   return (
-    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mx-auto max-w-[1320px] space-y-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">{t('pageTitle')}</h1>
-            <p className="mt-1 text-[15px] text-slate-600">{t('pageSubtitle')}</p>
+            <h1 className="text-[32px] font-bold tracking-tight text-[#0F172A] sm:text-[38px]">{t('pageTitle')}</h1>
+            <p className="mt-1 text-[15px] text-[#5B6474]">{t('pageSubtitle')}</p>
           </div>
           <button
             type="button"
             onClick={() => setAddModalOpen(true)}
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C]"
+            className="inline-flex h-11 items-center gap-2 rounded-full bg-dk-red-strong px-5 text-[14px] font-bold text-white transition-colors hover:bg-dk-red-deep"
           >
             <UserPlus size={16} />
             {t('addMember.button')}
@@ -141,14 +141,14 @@ export default function DashboardUsersPage() {
 
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {STAT_CARDS.map(({ key, icon: Icon, color }) => (
-            <div key={key} className="rounded-[22px] bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
+            <div key={key} className="rounded-[22px] border border-[#E4DCCD] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
               <div className="flex items-center justify-between">
-                <p className="text-[14px] font-medium text-slate-600">{t(`stats.${key}`)}</p>
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F2F2F7]">
+                <p className="text-[14px] font-medium text-[#5B6474]">{t(`stats.${key}`)}</p>
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F6F1E9]">
                   <Icon size={18} className={color} aria-hidden="true" />
                 </span>
               </div>
-              <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">{stats[key]}</p>
+              <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-[#0F172A] tabular-nums">{stats[key]}</p>
             </div>
           ))}
         </div>

@@ -215,53 +215,53 @@ export default function FoodCostDashboard() {
 
   if (loading) {
     return (
-      <div className="flex h-96 items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-slate-600" />
+      <div className="flex h-96 items-center justify-center bg-[#F6F1E9]">
+        <Loader2 className="h-8 w-8 animate-spin text-[#5B6474]" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-full space-y-6 bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       {loadError && (
         <p role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{t('loadError')}</p>
       )}
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black text-[var(--dk-navy)]">{t('pageTitle')}</h1>
-          <p className="mt-1 text-sm text-slate-500">{t('pageSubtitle')}</p>
+          <h1 className="text-[clamp(26px,3vw,34px)] font-black leading-tight tracking-[-0.03em] text-[#0F172A]">{t('pageTitle')}</h1>
+          <p className="mt-1 text-sm text-[#5B6474]">{t('pageSubtitle')}</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           {/* Export buttons */}
-          <button type="button" onClick={handleExportCsv} className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-slate-200 px-3 text-xs font-semibold text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]">
+          <button type="button" onClick={handleExportCsv} className="inline-flex h-10 items-center gap-1.5 rounded-full border border-[#E4DCCD] bg-white px-4 text-xs font-bold text-[#0F172A] transition hover:border-[#0F172A] hover:text-[#0F172A]">
             <Download size={14} /> CSV
           </button>
-          <button type="button" onClick={handleExportExcel} className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-slate-200 px-3 text-xs font-semibold text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]">
+          <button type="button" onClick={handleExportExcel} className="inline-flex h-10 items-center gap-1.5 rounded-full border border-[#E4DCCD] bg-white px-4 text-xs font-bold text-[#0F172A] transition hover:border-[#0F172A] hover:text-[#0F172A]">
             <FileSpreadsheet size={14} /> Excel
           </button>
-          <button type="button" onClick={handleExportPdf} className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-slate-200 px-3 text-xs font-semibold text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]">
+          <button type="button" onClick={handleExportPdf} className="inline-flex h-10 items-center gap-1.5 rounded-full border border-[#E4DCCD] bg-white px-4 text-xs font-bold text-[#0F172A] transition hover:border-[#0F172A] hover:text-[#0F172A]">
             <FileText size={14} /> PDF
           </button>
 
           {/* Separator */}
-          <div className="mx-1 h-6 w-px bg-slate-200" />
+          <div className="mx-1 h-6 w-px bg-[#E4DCCD]" />
 
           {/* Month Selector */}
           <button
             type="button"
             onClick={() => setMonthOffset((p) => p - 1)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#E4DCCD] bg-white text-[#0F172A] transition hover:border-[#0F172A] hover:text-[#0F172A]"
           >
             <ChevronLeft size={18} />
           </button>
-          <span className="min-w-[140px] text-center text-sm font-bold text-[var(--dk-navy)]">{label}</span>
+          <span className="min-w-[140px] text-center text-sm font-bold text-[#0F172A]">{label}</span>
           <button
             type="button"
             onClick={() => setMonthOffset((p) => Math.min(p + 1, 0))}
             disabled={monthOffset >= 0}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)] disabled:opacity-30"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#E4DCCD] bg-white text-[#0F172A] transition hover:border-[#0F172A] hover:text-[#0F172A] disabled:opacity-30"
           >
             <ChevronRight size={18} />
           </button>
@@ -275,7 +275,7 @@ export default function FoodCostDashboard() {
           value={`${formatMoney(currentMonthTotal)} ₼`}
           sub={`${report?.invoiceCount ?? 0} ${t('invoiceUnit')}`}
           icon={<Receipt size={20} />}
-          color="text-[var(--dk-navy)]"
+          color="text-[#0F172A]"
         />
         <KpiCard
           title={t('kpiMonthlyTrend')}
@@ -289,22 +289,22 @@ export default function FoodCostDashboard() {
           value={`${report && report.invoiceCount > 0 ? formatMoney(Math.round(currentMonthTotal / report.invoiceCount)) : '0.00'} ₼`}
           sub={t('perInvoice')}
           icon={<ShoppingCart size={20} />}
-          color="text-[var(--dk-navy)]"
+          color="text-[#0F172A]"
         />
         <KpiCard
           title={t('kpiCategories')}
           value={`${report?.categories.length ?? 0}`}
           sub={t('activeCategories')}
           icon={<Package size={20} />}
-          color="text-[var(--dk-navy)]"
+          color="text-[#0F172A]"
         />
       </div>
 
       {/* Trend Chart */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6">
+      <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
         <div className="mb-4 flex items-center gap-2">
-          <TrendingUp size={18} className="text-[var(--dk-gold)]" />
-          <h2 className="text-sm font-bold text-[var(--dk-navy)]">{t('trendChartTitle')}</h2>
+          <TrendingUp size={18} className="text-[#BE2F47]" />
+          <h2 className="text-sm font-bold text-[#0F172A]">{t('trendChartTitle')}</h2>
         </div>
         <div className="flex items-end gap-3" style={{ height: 180 }}>
           {trend.map((item) => {
@@ -312,13 +312,13 @@ export default function FoodCostDashboard() {
             const isCurrentMonth = item.month === `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
             return (
               <div key={item.month} className="flex flex-1 flex-col items-center gap-1">
-                <span className="text-[10px] font-semibold text-slate-500">{formatMoneyShort(item.totalAmount)}₼</span>
+                <span className="text-[10px] font-semibold text-[#5B6474]">{formatMoneyShort(item.totalAmount)}₼</span>
                 <div
-                  className={`w-full rounded-t-lg transition-all ${isCurrentMonth ? 'bg-[var(--dk-gold)]' : 'bg-slate-200'}`}
+                  className={`w-full rounded-t-lg transition-all ${isCurrentMonth ? 'bg-dk-red-strong' : 'bg-[#E4DCCD]'}`}
                   style={{ height: h }}
                   title={`${formatMoney(item.totalAmount)} ₼ — ${item.invoiceCount} ${t('invoiceUnit')}`}
                 />
-                <span className="text-[11px] font-medium text-slate-500">{formatMonth(item.month, monthsShort)}</span>
+                <span className="text-[11px] font-medium text-[#5B6474]">{formatMonth(item.month, monthsShort)}</span>
               </div>
             );
           })}
@@ -326,8 +326,8 @@ export default function FoodCostDashboard() {
       </div>
 
       {/* Tabs: Categories / Suppliers / Products */}
-      <div className="rounded-2xl border border-slate-200 bg-white">
-        <div className="flex overflow-x-auto border-b border-slate-200">
+      <div className="rounded-[22px] border border-[#E4DCCD] bg-white">
+        <div className="flex overflow-x-auto border-b border-[#E4DCCD]">
           {[
             { key: 'categories' as const, label: t('tabCategories'), icon: <BarChart3 size={16} /> },
             { key: 'suppliers' as const, label: t('tabSuppliers'), icon: <ShoppingCart size={16} /> },
@@ -339,8 +339,8 @@ export default function FoodCostDashboard() {
               onClick={() => setActiveTab(tab.key)}
               className={`flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 px-5 py-3 text-sm font-semibold transition ${
                 activeTab === tab.key
-                  ? 'border-[var(--dk-gold)] text-[var(--dk-navy)]'
-                  : 'border-transparent text-slate-500 hover:text-slate-700'
+                  ? 'border-[#0F172A] text-[#0F172A]'
+                  : 'border-transparent text-[#5B6474] hover:text-[#334155]'
               }`}
             >
               {tab.icon}
@@ -385,7 +385,7 @@ export default function FoodCostDashboard() {
       <div className="flex justify-center">
         <Link
           href="/dashboard/faturalar"
-          className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-[var(--dk-gold)] hover:text-[var(--dk-navy)]"
+          className="rounded-full border border-[#E4DCCD] bg-white px-5 py-2.5 text-sm font-bold text-[#0F172A] transition hover:border-[#0F172A] hover:text-[#0F172A]"
         >
           {t('goToInvoices')} &rarr;
         </Link>
@@ -404,15 +404,15 @@ function KpiCard({ title, value, sub, icon, color }: {
   color: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+    <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-5">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-600">{title}</p>
-        <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 ${color}`}>
+        <p className="text-xs font-semibold uppercase tracking-wider text-[#5B6474]">{title}</p>
+        <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#EFE9DE] ${color}`}>
           {icon}
         </span>
       </div>
       <p className={`mt-2 text-2xl font-black ${color}`}>{value}</p>
-      <p className="mt-1 text-xs text-slate-500">{sub}</p>
+      <p className="mt-1 text-xs text-[#5B6474]">{sub}</p>
     </div>
   );
 }
@@ -425,7 +425,7 @@ function CategoriesTab({ categories, grandTotal, emptyMsg, productUnit, grandTot
   grandTotalLabel: string;
 }) {
   if (categories.length === 0) {
-    return <p className="py-8 text-center text-sm text-slate-600">{emptyMsg}</p>;
+    return <p className="py-8 text-center text-sm text-[#5B6474]">{emptyMsg}</p>;
   }
 
   return (
@@ -437,13 +437,13 @@ function CategoriesTab({ categories, grandTotal, emptyMsg, productUnit, grandTot
 
           {/* Name + item count */}
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-slate-800">{cat.categoryName}</p>
-            <p className="text-xs text-slate-600">{cat.itemCount} {productUnit}</p>
+            <p className="truncate text-sm font-semibold text-[#0F172A]">{cat.categoryName}</p>
+            <p className="text-xs text-[#5B6474]">{cat.itemCount} {productUnit}</p>
           </div>
 
           {/* Progress bar */}
           <div className="hidden w-40 sm:block">
-            <div className="h-2 rounded-full bg-slate-100">
+            <div className="h-2 rounded-full bg-[#EFE9DE]">
               <div
                 className="h-2 rounded-full transition-all"
                 style={{ width: `${Math.min(cat.percentage, 100)}%`, backgroundColor: cat.categoryColor }}
@@ -453,18 +453,18 @@ function CategoriesTab({ categories, grandTotal, emptyMsg, productUnit, grandTot
 
           {/* Amount + Percentage */}
           <div className="text-right">
-            <p className="text-sm font-bold text-slate-800">{formatMoney(cat.totalAmount)} ₼</p>
-            <p className="text-xs font-medium text-slate-500">{cat.percentage}%</p>
+            <p className="text-sm font-bold text-[#0F172A]">{formatMoney(cat.totalAmount)} ₼</p>
+            <p className="text-xs font-medium text-[#5B6474]">{cat.percentage}%</p>
           </div>
         </div>
       ))}
 
       {/* Grand Total */}
-      <div className="flex items-center gap-4 border-t border-slate-200 pt-3">
+      <div className="flex items-center gap-4 border-t border-[#E4DCCD] pt-3">
         <div className="h-3 w-3 shrink-0" />
-        <p className="flex-1 text-sm font-black text-[var(--dk-navy)]">{grandTotalLabel}</p>
+        <p className="flex-1 text-sm font-black text-[#0F172A]">{grandTotalLabel}</p>
         <div className="hidden w-40 sm:block" />
-        <p className="text-right text-sm font-black text-[var(--dk-navy)]">{formatMoney(grandTotal)} ₼</p>
+        <p className="text-right text-sm font-black text-[#0F172A]">{formatMoney(grandTotal)} ₼</p>
       </div>
     </div>
   );
@@ -477,7 +477,7 @@ function SuppliersTab({ suppliers, emptyMsg, invoiceUnit, avgLabel }: {
   avgLabel: string;
 }) {
   if (suppliers.length === 0) {
-    return <p className="py-8 text-center text-sm text-slate-600">{emptyMsg}</p>;
+    return <p className="py-8 text-center text-sm text-[#5B6474]">{emptyMsg}</p>;
   }
 
   const maxAmount = Math.max(...suppliers.map((s) => s.totalAmount), 1);
@@ -486,22 +486,22 @@ function SuppliersTab({ suppliers, emptyMsg, invoiceUnit, avgLabel }: {
     <div className="space-y-3">
       {suppliers.map((s, i) => (
         <div key={s.supplierName} className="flex items-center gap-4">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-500">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#EFE9DE] text-xs font-bold text-[#5B6474]">
             {i + 1}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-slate-800">{s.supplierName}</p>
-            <p className="text-xs text-slate-600">{s.invoiceCount} {invoiceUnit} &middot; {avgLabel} {formatMoney(s.avgAmount)} ₼</p>
+            <p className="truncate text-sm font-semibold text-[#0F172A]">{s.supplierName}</p>
+            <p className="text-xs text-[#5B6474]">{s.invoiceCount} {invoiceUnit} &middot; {avgLabel} {formatMoney(s.avgAmount)} ₼</p>
           </div>
           <div className="hidden w-32 sm:block">
-            <div className="h-2 rounded-full bg-slate-100">
+            <div className="h-2 rounded-full bg-[#EFE9DE]">
               <div
-                className="h-2 rounded-full bg-[var(--dk-gold)] transition-all"
+                className="h-2 rounded-full bg-dk-red-strong transition-all"
                 style={{ width: `${(s.totalAmount / maxAmount) * 100}%` }}
               />
             </div>
           </div>
-          <p className="text-right text-sm font-bold text-slate-800">{formatMoney(s.totalAmount)} ₼</p>
+          <p className="text-right text-sm font-bold text-[#0F172A]">{formatMoney(s.totalAmount)} ₼</p>
         </div>
       ))}
     </div>
@@ -518,31 +518,31 @@ function ProductsTab({ products, emptyMsg, colProduct, colCategory, colQuantity,
   colTotal: string;
 }) {
   if (products.length === 0) {
-    return <p className="py-8 text-center text-sm text-slate-600">{emptyMsg}</p>;
+    return <p className="py-8 text-center text-sm text-[#5B6474]">{emptyMsg}</p>;
   }
 
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-slate-200 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
-            <th className="pb-2 pr-4">#</th>
-            <th className="pb-2 pr-4">{colProduct}</th>
-            <th className="pb-2 pr-4">{colCategory}</th>
-            <th className="pb-2 pr-4 text-right">{colQuantity}</th>
-            <th className="pb-2 pr-4 text-right">{colAvgPrice}</th>
-            <th className="pb-2 text-right">{colTotal}</th>
+          <tr className="border-b border-[#EFE9DE] bg-[#FBF8F3] text-left text-xs font-semibold uppercase tracking-wider text-[#5B6474]">
+            <th className="px-3 py-2.5">#</th>
+            <th className="px-3 py-2.5">{colProduct}</th>
+            <th className="px-3 py-2.5">{colCategory}</th>
+            <th className="px-3 py-2.5 text-right">{colQuantity}</th>
+            <th className="px-3 py-2.5 text-right">{colAvgPrice}</th>
+            <th className="px-3 py-2.5 text-right">{colTotal}</th>
           </tr>
         </thead>
         <tbody>
           {products.map((p, i) => (
-            <tr key={`${p.name}-${p.unit}`} className="border-b border-slate-100 last:border-0">
-              <td className="py-2.5 pr-4 text-xs font-bold text-slate-600">{i + 1}</td>
-              <td className="py-2.5 pr-4 font-semibold text-slate-800">{p.name}</td>
-              <td className="py-2.5 pr-4 text-slate-500">{p.categoryName}</td>
-              <td className="py-2.5 pr-4 text-right text-slate-600">{p.totalQuantity} {p.unit}</td>
-              <td className="py-2.5 pr-4 text-right text-slate-600">{formatMoney(p.avgUnitPrice)} ₼</td>
-              <td className="py-2.5 text-right font-bold text-slate-800">{formatMoney(p.totalAmount)} ₼</td>
+            <tr key={`${p.name}-${p.unit}`} className="border-b border-[#EFE9DE] last:border-0">
+              <td className="px-3 py-2.5 text-xs font-bold text-[#5B6474]">{i + 1}</td>
+              <td className="px-3 py-2.5 font-semibold text-[#0F172A]">{p.name}</td>
+              <td className="px-3 py-2.5 text-[#5B6474]">{p.categoryName}</td>
+              <td className="px-3 py-2.5 text-right text-[#5B6474]">{p.totalQuantity} {p.unit}</td>
+              <td className="px-3 py-2.5 text-right text-[#5B6474]">{formatMoney(p.avgUnitPrice)} ₼</td>
+              <td className="px-3 py-2.5 text-right font-bold text-[#0F172A]">{formatMoney(p.totalAmount)} ₼</td>
             </tr>
           ))}
         </tbody>

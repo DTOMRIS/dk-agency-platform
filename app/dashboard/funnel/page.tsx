@@ -13,7 +13,7 @@ export default async function FunnelPage() {
   const locale = normalizeLocale(rawLocale);
 
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F6F1E9] p-6 lg:p-8">
       <div className="mx-auto max-w-3xl">
         <ActivationFunnelWidget locale={locale} days={30} />
       </div>

@@ -55,17 +55,17 @@ export default async function DashboardKazanLeadsPage({
   };
 
   const cardCls =
-    'rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]';
+    'rounded-[22px] border border-[#E4DCCD] bg-white';
   const chipCls = (active: boolean) =>
     `inline-flex h-9 items-center whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors ${
-      active ? 'bg-[#EEF4FF] text-slate-900 ring-1 ring-[#0A5BD6]/20' : 'bg-[#F2F2F7] text-slate-700 hover:bg-slate-200'
+      active ? 'bg-[#0F172A] text-white' : 'border border-[#E4DCCD] bg-white text-[#334155] hover:border-[#0F172A]'
     }`;
   const statusTone: Record<string, string> = {
-    new: 'bg-[#EEF4FF] text-[#0A5BD6]',
+    new: 'bg-sky-50 text-sky-800',
     contacted: 'bg-amber-50 text-amber-800',
     qualified: 'bg-violet-50 text-violet-700',
     converted: 'bg-emerald-50 text-emerald-700',
-    dismissed: 'bg-slate-100 text-slate-600',
+    dismissed: 'bg-[#EFE9DE] text-[#5B6474]',
   };
   const labelFrom = (
     list: readonly string[],
@@ -81,17 +81,17 @@ export default async function DashboardKazanLeadsPage({
       .join('') || '?';
 
   return (
-    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mx-auto max-w-[1320px] space-y-6">
         <div className="min-w-0">
-          <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">{t('title')}</h1>
-          <p className="mt-1 max-w-3xl text-[15px] text-slate-600">{t('subtitle')}</p>
+          <h1 className="text-[32px] font-black tracking-[-0.03em] text-[#0F172A] sm:text-[38px]">{t('title')}</h1>
+          <p className="mt-1 max-w-3xl text-[15px] text-[#5B6474]">{t('subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {(
             [
-              [t('summary.new'), summary.new, 'bg-[#0A5BD6]'],
+              [t('summary.new'), summary.new, 'bg-[#0F172A]'],
               [t('summary.contacted'), summary.contacted, 'bg-amber-500'],
               [t('summary.qualified'), summary.qualified, 'bg-violet-500'],
               [t('summary.converted'), summary.converted, 'bg-emerald-500'],
@@ -100,9 +100,9 @@ export default async function DashboardKazanLeadsPage({
             <div key={label} className={`${cardCls} p-5`}>
               <div className="flex items-center gap-2">
                 <span className={`h-2 w-2 shrink-0 rounded-full ${dot}`} aria-hidden="true" />
-                <p className="truncate text-[14px] font-medium text-slate-600">{label}</p>
+                <p className="truncate text-[14px] font-medium text-[#5B6474]">{label}</p>
               </div>
-              <p className="mt-3 text-[34px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">{value}</p>
+              <p className="mt-3 text-[34px] font-black leading-none tracking-[-0.03em] text-[#0F172A] tabular-nums">{value}</p>
             </div>
           ))}
         </div>
@@ -116,7 +116,7 @@ export default async function DashboardKazanLeadsPage({
             ] as const
           ).map(([labelKey, options, field, ns]) => (
             <div key={field}>
-              <p className="text-[13px] font-semibold text-slate-900">{t(labelKey)}</p>
+              <p className="text-[13px] font-semibold text-[#0F172A]">{t(labelKey)}</p>
               <div className="mt-2.5 flex flex-wrap gap-2">
                 {options.map((option) => (
                   <Link
@@ -135,7 +135,7 @@ export default async function DashboardKazanLeadsPage({
 
         <div className="space-y-4">
           {leads.length === 0 ? (
-            <div className={`${cardCls} px-6 py-16 text-center text-sm text-slate-600`}>{t('emptyState')}</div>
+            <div className={`${cardCls} px-6 py-16 text-center text-sm text-[#5B6474]`}>{t('emptyState')}</div>
           ) : null}
 
           {leads.map((lead) => {
@@ -150,23 +150,23 @@ export default async function DashboardKazanLeadsPage({
                   <div className="min-w-0 flex-1 space-y-5">
                     <div className="flex items-start gap-4">
                       <span
-                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F1FF] text-[16px] font-semibold text-[#0A5BD6]"
+                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#EFE9DE] text-[16px] font-semibold text-[#0F172A]"
                         aria-hidden="true"
                       >
                         {initials(lead.name)}
                       </span>
                       <div className="min-w-0">
-                        <p className="text-[12px] font-medium text-slate-500">{t('lead')}</p>
-                        <h2 className="truncate text-[22px] font-semibold tracking-tight text-slate-900">{lead.name}</h2>
+                        <p className="text-[12px] font-medium text-[#5B6474]">{t('lead')}</p>
+                        <h2 className="truncate text-[22px] font-black tracking-[-0.02em] text-[#0F172A]">{lead.name}</h2>
                         <div className="mt-2 flex flex-wrap gap-1.5 text-[12px] font-semibold">
-                          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-slate-700 tabular-nums">{lead.phone}</span>
+                          <span className="rounded-full bg-[#EFE9DE] px-2.5 py-1 text-[#334155] tabular-nums">{lead.phone}</span>
                           <span className="rounded-full bg-amber-50 px-2.5 py-1 text-amber-800">
                             {labelFrom(businessTypeOptions, 'businessTypeOptions', lead.businessType)}
                           </span>
-                          <span className="rounded-full bg-[#EEF4FF] px-2.5 py-1 text-[#0A5BD6]">
+                          <span className="rounded-full bg-[#EFE9DE] px-2.5 py-1 text-[#0F172A]">
                             {labelFrom(intentOptions, 'intentOptions', lead.intent)}
                           </span>
-                          <span className={`rounded-full px-2.5 py-1 ${statusTone[lead.status] ?? 'bg-slate-100 text-slate-700'}`}>
+                          <span className={`rounded-full px-2.5 py-1 ${statusTone[lead.status] ?? 'bg-[#EFE9DE] text-[#334155]'}`}>
                             {labelFrom(statusOptions, 'statusOptions', lead.status)}
                           </span>
                         </div>
@@ -174,16 +174,16 @@ export default async function DashboardKazanLeadsPage({
                     </div>
 
                     <div>
-                      <p className="text-[13px] font-semibold text-slate-900">{t('lastMessages')}</p>
+                      <p className="text-[13px] font-semibold text-[#0F172A]">{t('lastMessages')}</p>
                       <div className="mt-3 space-y-2">
                         {(lead.conversationContext || []).map((message, index) => (
                           <div
                             key={`${lead.id}-${index}`}
-                            className={`rounded-[16px] px-4 py-3 text-[14px] leading-relaxed text-slate-800 ${
-                              message.role === 'user' ? 'bg-[#EEF4FF]' : 'bg-[#F2F2F7]'
+                            className={`rounded-[16px] px-4 py-3 text-[14px] leading-relaxed text-[#0F172A] ${
+                              message.role === 'user' ? 'bg-[#EFE9DE]' : 'bg-[#F6F1E9]'
                             }`}
                           >
-                            <span className="mr-2 font-semibold text-slate-900">
+                            <span className="mr-2 font-semibold text-[#0F172A]">
                               {message.role === 'user' ? t('roleUser') : t('roleAi')}
                             </span>
                             {message.content}
@@ -193,8 +193,8 @@ export default async function DashboardKazanLeadsPage({
                     </div>
                   </div>
 
-                  <div className="w-full space-y-3 rounded-[18px] bg-[#F2F2F7] p-4 lg:max-w-sm">
-                    <p className="text-[13px] font-semibold text-slate-900">{t('actions')}</p>
+                  <div className="w-full space-y-3 rounded-[18px] border border-[#EFE9DE] bg-[#FBF8F3] p-4 lg:max-w-sm">
+                    <p className="text-[13px] font-semibold text-[#0F172A]">{t('actions')}</p>
                     <a
                       href={buildWhatsappLink(lead, userMessages)}
                       target="_blank"
@@ -214,8 +214,8 @@ export default async function DashboardKazanLeadsPage({
                     />
                     <dl className="space-y-1.5 rounded-[14px] bg-white px-4 py-3 text-[12px]">
                       <div className="flex justify-between gap-3">
-                        <dt className="text-slate-500">{t('createdAt')}</dt>
-                        <dd className="text-right font-medium text-slate-800 tabular-nums">
+                        <dt className="text-[#5B6474]">{t('createdAt')}</dt>
+                        <dd className="text-right font-medium text-[#0F172A] tabular-nums">
                           {new Date(lead.createdAt).toLocaleString(
                             locale === 'az'
                               ? 'az-AZ'
@@ -228,12 +228,12 @@ export default async function DashboardKazanLeadsPage({
                         </dd>
                       </div>
                       <div className="flex justify-between gap-3">
-                        <dt className="text-slate-500">{t('whatsapp')}</dt>
-                        <dd className="font-medium text-slate-800">{lead.whatsappHandoff ? t('yes') : t('no')}</dd>
+                        <dt className="text-[#5B6474]">{t('whatsapp')}</dt>
+                        <dd className="font-medium text-[#0F172A]">{lead.whatsappHandoff ? t('yes') : t('no')}</dd>
                       </div>
                       <div className="flex justify-between gap-3">
-                        <dt className="text-slate-500">{t('meeting')}</dt>
-                        <dd className="font-medium text-slate-800">{lead.meetingRequested ? t('requested') : t('none')}</dd>
+                        <dt className="text-[#5B6474]">{t('meeting')}</dt>
+                        <dd className="font-medium text-[#0F172A]">{lead.meetingRequested ? t('requested') : t('none')}</dd>
                       </div>
                     </dl>
                   </div>

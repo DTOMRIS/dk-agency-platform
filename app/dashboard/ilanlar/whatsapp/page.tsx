@@ -352,10 +352,10 @@ const COPY: Record<Locale, Copy> = {
 };
 
 const card =
-  'rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]';
+  'rounded-[22px] border border-[#E4DCCD] bg-white';
 const input =
-  'h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-[14px] text-slate-900 outline-none transition focus:border-[#0A5BD6] focus:ring-2 focus:ring-[#0A5BD6]/15';
-const label = 'mb-1 block text-[12px] font-semibold uppercase tracking-wide text-slate-600';
+  'h-10 w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-3 text-[14px] text-[#0F172A] outline-none transition focus:border-[#0F172A] focus:ring-2 focus:ring-[#0F172A]/10';
+const label = 'mb-1 block text-[12px] font-semibold uppercase tracking-wide text-[#5B6474]';
 /** Same as `input` but without w-full, for inputs sized inside a flex row. */
 const inputNoWidth = input.replace('w-full ', '');
 
@@ -524,29 +524,29 @@ export default function WhatsAppImportPage() {
   }
 
   return (
-    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mx-auto max-w-[1100px] space-y-6">
         <div>
           <Link
             href={`${base}/dashboard/ilanlar`}
-            className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-slate-700 hover:text-slate-900"
+            className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#334155] hover:text-[#0F172A]"
           >
             <ArrowLeft className="h-4 w-4" />
             {copy.back}
           </Link>
-          <h1 className="mt-3 flex items-center gap-3 text-[28px] font-bold tracking-tight text-slate-900 sm:text-[36px]">
+          <h1 className="mt-3 flex items-center gap-3 text-[28px] font-black tracking-[-0.03em] text-[#0F172A] sm:text-[36px]">
             <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
               <MessageCircle className="h-5 w-5" />
             </span>
             {copy.title}
           </h1>
-          <p className="mt-2 max-w-3xl text-[15px] text-slate-600">{copy.subtitle}</p>
+          <p className="mt-2 max-w-3xl text-[15px] text-[#5B6474]">{copy.subtitle}</p>
         </div>
 
         <div className={`${card} flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between`}>
           <div className="min-w-0">
-            <div className="text-[15px] font-semibold text-slate-900">{copy.tgTitle}</div>
-            <p className="mt-0.5 text-[13px] text-slate-600">{copy.tgHint}</p>
+            <div className="text-[15px] font-semibold text-[#0F172A]">{copy.tgTitle}</div>
+            <p className="mt-0.5 text-[13px] text-[#5B6474]">{copy.tgHint}</p>
             {tgState.status === 'ok' && (
               <p className="mt-1.5 text-[13px] font-semibold text-emerald-700">✓ {copy.tgOk}</p>
             )}
@@ -558,7 +558,7 @@ export default function WhatsAppImportPage() {
             type="button"
             onClick={() => void connectTelegram()}
             disabled={tgState.status === 'busy'}
-            className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#EEF4FF] px-5 text-[14px] font-semibold text-[#0A5BD6] transition-colors hover:bg-[#E0EBFF] disabled:opacity-60"
+            className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#EFE9DE] px-5 text-[14px] font-semibold text-[#0F172A] transition-colors hover:bg-[#E4DCCD] disabled:opacity-60"
           >
             {tgState.status === 'busy' ? copy.tgChecking : copy.tgButton}
           </button>
@@ -574,28 +574,28 @@ export default function WhatsAppImportPage() {
           <div className={`${card} p-6`} data-testid="wa-created">
             <div className="flex items-center gap-3">
               <CheckCircle2 className="h-6 w-6 text-emerald-600" />
-              <h2 className="text-[20px] font-bold text-slate-900">
+              <h2 className="text-[20px] font-bold text-[#0F172A]">
                 {copy.createdTitle(created.length)}
               </h2>
             </div>
-            <p className="mt-1 text-[14px] text-slate-600">{copy.createdHint}</p>
-            <ul className="mt-4 divide-y divide-slate-100">
+            <p className="mt-1 text-[14px] text-[#5B6474]">{copy.createdHint}</p>
+            <ul className="mt-4 divide-y divide-[#EFE9DE]">
               {created.map((draft) => (
                 <li
                   key={draft.id}
                   className="flex flex-wrap items-center justify-between gap-3 py-3"
                 >
                   <div className="min-w-0">
-                    <div className="text-[12px] font-semibold text-slate-500">
+                    <div className="text-[12px] font-semibold text-[#5B6474]">
                       {draft.trackingCode}
                     </div>
-                    <div className="truncate text-[15px] font-semibold text-slate-900">
+                    <div className="truncate text-[15px] font-semibold text-[#0F172A]">
                       {draft.title}
                     </div>
                   </div>
                   <Link
                     href={`${base}/dashboard/ilanlar/${draft.id}`}
-                    className="inline-flex h-8 items-center rounded-full bg-[#EEF4FF] px-3 text-[12px] font-semibold text-[#0A5BD6] hover:bg-[#E0EBFF]"
+                    className="inline-flex h-8 items-center rounded-full bg-[#EFE9DE] px-3 text-[12px] font-semibold text-[#0F172A] hover:bg-[#E4DCCD]"
                   >
                     {copy.openDraft}
                   </Link>
@@ -606,13 +606,13 @@ export default function WhatsAppImportPage() {
               <button
                 type="button"
                 onClick={reset}
-                className="inline-flex h-10 items-center rounded-full bg-[#E11D48] px-5 text-[14px] font-semibold text-white hover:bg-[#BE123C]"
+                className="inline-flex h-10 items-center rounded-full bg-dk-red-strong px-5 text-[14px] font-semibold text-white hover:bg-dk-red-deep"
               >
                 {copy.newImport}
               </button>
               <Link
                 href={`${base}/dashboard/ilanlar`}
-                className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-5 text-[14px] font-semibold text-slate-700 hover:bg-slate-50"
+                className="inline-flex h-10 items-center rounded-full border border-[#E4DCCD] bg-white px-5 text-[14px] font-semibold text-[#334155] hover:bg-[#FBF8F3]"
               >
                 {copy.backToList}
               </Link>
@@ -630,16 +630,16 @@ export default function WhatsAppImportPage() {
               placeholder={copy.placeholder}
               rows={items ? 5 : 11}
               maxLength={60000}
-              className="w-full resize-y rounded-2xl border border-slate-200 bg-[#FAFAFC] px-4 py-3 font-mono text-[13px] leading-6 text-slate-900 outline-none placeholder:text-slate-500 focus:border-[#0A5BD6] focus:ring-2 focus:ring-[#0A5BD6]/15"
+              className="w-full resize-y rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-mono text-[13px] leading-6 text-[#0F172A] outline-none placeholder:text-[#5B6474] focus:border-[#0F172A] focus:ring-2 focus:ring-[#0F172A]/10"
             />
-            <p className="mt-2 text-[13px] text-slate-600">{copy.hint}</p>
-            <p className="mt-1 text-[13px] text-slate-500">{copy.imagesNote}</p>
+            <p className="mt-2 text-[13px] text-[#5B6474]">{copy.hint}</p>
+            <p className="mt-1 text-[13px] text-[#5B6474]">{copy.imagesNote}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={analyze}
                 disabled={analyzing || rawText.trim().length < 10}
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-[#E11D48] px-6 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C] disabled:opacity-50"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-dk-red-strong px-6 text-[14px] font-semibold text-white transition-colors hover:bg-dk-red-deep disabled:opacity-50"
               >
                 {analyzing ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -652,7 +652,7 @@ export default function WhatsAppImportPage() {
                 <button
                   type="button"
                   onClick={reset}
-                  className="inline-flex h-11 items-center rounded-full border border-slate-200 bg-white px-5 text-[14px] font-semibold text-slate-700 hover:bg-slate-50"
+                  className="inline-flex h-11 items-center rounded-full border border-[#E4DCCD] bg-white px-5 text-[14px] font-semibold text-[#334155] hover:bg-[#FBF8F3]"
                 >
                   {copy.clear}
                 </button>
@@ -664,14 +664,14 @@ export default function WhatsAppImportPage() {
         {items && !created && (
           <>
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="text-[15px] font-semibold text-slate-900" data-testid="wa-summary">
+              <p className="text-[15px] font-semibold text-[#0F172A]" data-testid="wa-summary">
                 {copy.summary(items.length, skipped.length, meta.candidates)}
               </p>
               {items.length > 0 && (
-                <label className="inline-flex cursor-pointer items-center gap-2 text-[14px] font-semibold text-slate-700">
+                <label className="inline-flex cursor-pointer items-center gap-2 text-[14px] font-semibold text-[#334155]">
                   <input
                     type="checkbox"
-                    className="h-4 w-4 accent-[#0A5BD6]"
+                    className="h-4 w-4 accent-[#0F172A]"
                     checked={selected.size === items.length}
                     onChange={() =>
                       setSelected(
@@ -703,14 +703,14 @@ export default function WhatsAppImportPage() {
                 return (
                   <div
                     key={item.key}
-                    className={`${card} p-5 transition ${isSelected ? 'ring-2 ring-[#0A5BD6]/40' : ''}`}
+                    className={`${card} p-5 transition ${isSelected ? 'ring-2 ring-[#0F172A]' : ''}`}
                     data-testid="wa-item"
                   >
                     <div className="flex items-start gap-3">
                       <input
                         type="checkbox"
                         aria-label={item.title}
-                        className="mt-2.5 h-5 w-5 shrink-0 cursor-pointer accent-[#0A5BD6]"
+                        className="mt-2.5 h-5 w-5 shrink-0 cursor-pointer accent-[#0F172A]"
                         checked={isSelected}
                         onChange={() => toggle(item.key)}
                       />
@@ -788,7 +788,7 @@ export default function WhatsAppImportPage() {
                               onChange={(event) =>
                                 updateItem(item.key, { city: event.target.value || null })
                               }
-                              className={`${input} placeholder:text-slate-500`}
+                              className={`${input} placeholder:text-[#5B6474]`}
                             />
                           </div>
                           <div>
@@ -838,7 +838,7 @@ export default function WhatsAppImportPage() {
                             onChange={(event) =>
                               updateItem(item.key, { description: event.target.value })
                             }
-                            className="w-full resize-y rounded-xl border border-slate-200 bg-white px-3 py-2 text-[14px] leading-6 text-slate-800 outline-none focus:border-[#0A5BD6] focus:ring-2 focus:ring-[#0A5BD6]/15"
+                            className="w-full resize-y rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-3 py-2 text-[14px] leading-6 text-[#0F172A] outline-none focus:border-[#0F172A] focus:ring-2 focus:ring-[#0F172A]/10"
                           />
                         </div>
 
@@ -849,17 +849,17 @@ export default function WhatsAppImportPage() {
                               {fieldEntries.map(([key, value]) => (
                                 <span
                                   key={key}
-                                  className="inline-flex items-center rounded-full bg-[#F2F2F7] px-2.5 py-1 text-[12px] text-slate-800"
+                                  className="inline-flex items-center rounded-full bg-[#F6F1E9] px-2.5 py-1 text-[12px] text-[#0F172A]"
                                 >
-                                  <span className="font-semibold text-slate-600">
+                                  <span className="font-semibold text-[#5B6474]">
                                     {fieldLabel(item.type, key)}:
                                   </span>
                                   &nbsp;{fieldValue(value)}
                                 </span>
                               ))}
                               {item.equipment.length > 0 && (
-                                <span className="inline-flex items-center rounded-full bg-[#F2F2F7] px-2.5 py-1 text-[12px] text-slate-800">
-                                  <span className="font-semibold text-slate-600">
+                                <span className="inline-flex items-center rounded-full bg-[#F6F1E9] px-2.5 py-1 text-[12px] text-[#0F172A]">
+                                  <span className="font-semibold text-[#5B6474]">
                                     {copy.equipmentLabel}:
                                   </span>
                                   &nbsp;
@@ -881,7 +881,7 @@ export default function WhatsAppImportPage() {
                           </p>
                         )}
 
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl border border-dashed border-amber-300 bg-amber-50/60 px-3 py-2 text-[13px] text-slate-800">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl border border-dashed border-amber-300 bg-amber-50/60 px-3 py-2 text-[13px] text-[#0F172A]">
                           <span className="font-semibold text-amber-900">{copy.contactLabel}:</span>
                           {item.contactName || item.contactPhone || item.contactEmail ? (
                             <span className="break-all">
@@ -890,16 +890,16 @@ export default function WhatsAppImportPage() {
                                 .join(' · ')}
                             </span>
                           ) : (
-                            <span className="text-slate-600">{copy.noContact}</span>
+                            <span className="text-[#5B6474]">{copy.noContact}</span>
                           )}
-                          <span className="text-[12px] text-slate-600">({copy.contactHint})</span>
+                          <span className="text-[12px] text-[#5B6474]">({copy.contactHint})</span>
                         </div>
 
-                        <details className="text-[13px] text-slate-700">
-                          <summary className="cursor-pointer font-semibold text-slate-700">
+                        <details className="text-[13px] text-[#334155]">
+                          <summary className="cursor-pointer font-semibold text-[#334155]">
                             {copy.original}
                           </summary>
-                          <p className="mt-2 whitespace-pre-wrap rounded-xl bg-[#FAFAFC] p-3 font-mono text-[12px] leading-5 text-slate-700">
+                          <p className="mt-2 whitespace-pre-wrap rounded-xl bg-[#FBF8F3] p-3 font-mono text-[12px] leading-5 text-[#334155]">
                             {item.sourceExcerpt}
                           </p>
                         </details>
@@ -912,16 +912,16 @@ export default function WhatsAppImportPage() {
 
             {skipped.length > 0 && (
               <div className="space-y-2" data-testid="wa-skipped">
-                <h2 className="text-[14px] font-semibold uppercase tracking-wide text-slate-600">
+                <h2 className="text-[14px] font-semibold uppercase tracking-wide text-[#5B6474]">
                   {copy.skippedTitle}
                 </h2>
                 {skipped.map((item) => (
                   <div
                     key={item.key}
-                    className="rounded-[18px] border border-slate-200 bg-white/60 px-4 py-3"
+                    className="rounded-[18px] border border-[#E4DCCD] bg-white/60 px-4 py-3"
                   >
-                    <div className="text-[13px] font-semibold text-slate-700">{item.reason}</div>
-                    <p className="mt-1 line-clamp-2 text-[13px] text-slate-500">
+                    <div className="text-[13px] font-semibold text-[#334155]">{item.reason}</div>
+                    <p className="mt-1 line-clamp-2 text-[13px] text-[#5B6474]">
                       {item.sourceExcerpt}
                     </p>
                   </div>
@@ -930,14 +930,14 @@ export default function WhatsAppImportPage() {
             )}
 
             {items.length > 0 && (
-              <div className="sticky bottom-[84px] z-20 lg:bottom-3 flex flex-wrap items-center justify-end gap-3 rounded-[18px] border border-slate-200 bg-white px-4 py-3 shadow-[0_8px_24px_rgba(15,23,42,0.12)]">
+              <div className="sticky bottom-[84px] z-20 lg:bottom-3 flex flex-wrap items-center justify-end gap-3 rounded-[18px] border border-[#E4DCCD] bg-white px-4 py-3 shadow-[0_8px_24px_rgba(15,23,42,0.12)]">
                 <button
                   type="button"
                   onClick={createDrafts}
                   disabled={
                     creating || selectedItems.length === 0 || selectedItems.length > MAX_ITEMS
                   }
-                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-[#E11D48] px-6 text-[14px] font-semibold text-white transition-colors hover:bg-[#BE123C] disabled:opacity-50 sm:w-auto"
+                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-dk-red-strong px-6 text-[14px] font-semibold text-white transition-colors hover:bg-dk-red-deep disabled:opacity-50 sm:w-auto"
                 >
                   {creating && <Loader2 className="h-4 w-4 animate-spin" />}
                   {creating ? copy.creating : copy.create(selectedItems.length)}
