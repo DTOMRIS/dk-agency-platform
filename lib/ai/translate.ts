@@ -51,10 +51,16 @@ function sleep(ms: number): Promise<void> {
  * at least one Cyrillic char. Brand names are stripped first so a Latin brand
  * (e.g. "KAZAN AI") cannot fool the ru/Cyrillic check.
  */
-function looksUntranslated(output: string, targetLang: string): boolean {
+export function looksUntranslated(output: string, targetLang: string): boolean {
   let probe = output;
   for (const brand of KEEP) probe = probe.split(brand).join(' ');
-  if (/[əƏ]/.test(probe)) return true;
+  // TASK-0547: one `ə` is not an echo — real translations keep AZ proper names («Mülki Məcəllə», «Qida
+  // Təhlükəsizliyi Agentliyi», «Gəncə»), and the 5 posts that carry them failed all 3 retries every time.
+  // Count WORDS with `ə`: in Azerbaijani prose about half the words have one, in a translation that keeps a
+  // few names it is ~5–10%. Echo = more than 20% of the words (more than half for a text under 8 words).
+  const words = probe.match(/\p{L}+/gu) || [];
+  const azWords = words.filter((w) => /[əƏ]/.test(w)).length;
+  if (azWords > 0 && azWords / words.length > (words.length < 8 ? 0.5 : 0.2)) return true;
   if (targetLang === 'ru' && !/[Ѐ-ӿ]/.test(probe)) return true;
   return false;
 }
