@@ -19,7 +19,7 @@ const nextStatusMap: Record<LeadStatus, LeadStatus | null> = {
 function scoreColor(score: number): string {
   if (score >= 70) return 'bg-emerald-50 text-emerald-700';
   if (score >= 45) return 'bg-amber-50 text-amber-700';
-  return 'bg-slate-100 text-slate-600';
+  return 'bg-[#EFE9DE] text-[#5B6474]';
 }
 
 export default function KazanLeadStatusActions({
@@ -78,7 +78,7 @@ export default function KazanLeadStatusActions({
           </span>
         ) : null}
         {nextContactAt ? (
-          <span className="rounded-full bg-indigo-50 px-2 py-0.5 font-bold text-indigo-700">
+          <span className="rounded-full bg-[#EFE9DE] px-2 py-0.5 font-bold text-[#0F172A]">
             📅 {formatAzDate(nextContactAt)}
           </span>
         ) : null}
@@ -91,7 +91,7 @@ export default function KazanLeadStatusActions({
             type="button"
             disabled={loading}
             onClick={() => void patch({ status: nextStatus })}
-            className="rounded-full bg-dk-red-strong px-3 py-2 text-xs font-bold text-white disabled:opacity-60"
+            className="rounded-full bg-dk-red-strong px-3 py-2 text-xs font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-60"
           >
             {loading ? t('updating') : t('nextStatus', { status: nextStatus })}
           </button>
@@ -101,7 +101,7 @@ export default function KazanLeadStatusActions({
             type="button"
             disabled={loading}
             onClick={() => void patch({ status: 'dismissed' })}
-            className="rounded-full border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 disabled:opacity-60"
+            className="rounded-full border border-[#E4DCCD] bg-white px-3 py-2 text-xs font-bold text-[#334155] transition hover:border-[#0F172A] disabled:opacity-60"
           >
             {t('dismiss')}
           </button>
@@ -109,7 +109,7 @@ export default function KazanLeadStatusActions({
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="rounded-full border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 hover:border-[var(--dk-gold)]"
+          className="rounded-full border border-[#E4DCCD] bg-white px-3 py-2 text-xs font-bold text-[#334155] transition hover:border-[#0F172A]"
         >
           {t('noteToggle')}
         </button>
@@ -117,12 +117,12 @@ export default function KazanLeadStatusActions({
 
       {/* Notes panel */}
       {open ? (
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+        <div className="rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] p-3">
           {notes.length > 0 ? (
             <ul className="mb-3 space-y-1.5">
               {notes.map((n, i) => (
-                <li key={i} className="text-xs text-slate-700">
-                  <span className="font-semibold text-slate-600">
+                <li key={i} className="text-xs text-[#334155]">
+                  <span className="font-semibold text-[#5B6474]">
                     {formatAzDateTime(n.at)}:
                   </span>{' '}
                   {n.text}
@@ -130,28 +130,28 @@ export default function KazanLeadStatusActions({
               ))}
             </ul>
           ) : (
-            <p className="mb-3 text-xs text-slate-600">{t('noNotes')}</p>
+            <p className="mb-3 text-xs text-[#5B6474]">{t('noNotes')}</p>
           )}
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
             placeholder={t('notePlaceholder')}
             rows={2}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-600 focus:border-[var(--dk-gold)]"
+            className="w-full rounded-xl border border-[#E4DCCD] bg-white px-3 py-2 text-sm text-[#0F172A] outline-none placeholder:text-[#5B6474] focus:border-[#0F172A]"
           />
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <label className="text-xs font-semibold text-slate-700">{t('nextContact')}</label>
+            <label className="text-xs font-semibold text-[#334155]">{t('nextContact')}</label>
             <input
               type="date"
               value={reminder}
               onChange={(e) => setReminder(e.target.value)}
-              className="rounded-lg border border-slate-200 px-2 py-1.5 text-xs text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+              className="rounded-xl border border-[#E4DCCD] bg-white px-2 py-1.5 text-xs text-[#0F172A] outline-none focus:border-[#0F172A]"
             />
             <button
               type="button"
               disabled={loading}
               onClick={() => void saveNote()}
-              className="ml-auto rounded-full bg-[var(--dk-navy)] px-4 py-2 text-xs font-bold text-white disabled:opacity-60"
+              className="ml-auto rounded-full bg-[#0F172A] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#1E293B] disabled:opacity-60"
             >
               {loading ? t('updating') : t('saveNote')}
             </button>

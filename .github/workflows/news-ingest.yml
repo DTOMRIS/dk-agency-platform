@@ -7,6 +7,11 @@ on:
     - cron: '0 0,6,12,18 * * *'
   workflow_dispatch:  # Manual trigger for testing
 
+# TASK-0549 (Actions budget rule 5): never two ingests at once (a slow run must not overlap the next schedule).
+concurrency:
+  group: news-ingest
+  cancel-in-progress: true
+
 jobs:
   ingest:
     runs-on: ubuntu-latest

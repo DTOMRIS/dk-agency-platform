@@ -131,18 +131,18 @@ export default function OwnerListingEditPage({
 
   if (loading) {
     return (
-      <div className="p-8 flex items-center justify-center">
-        <Loader2 size={24} className="animate-spin text-dk-red" />
-        <span className="ml-3 text-gray-500">{copy.loading}</span>
+      <div className="flex min-h-full items-center justify-center bg-[#F6F1E9] p-8">
+        <Loader2 size={24} className="animate-spin text-[#0F172A]" />
+        <span className="ml-3 text-[#5B6474]">{copy.loading}</span>
       </div>
     );
   }
 
   if (error || !listing) {
     return (
-      <div className="p-8 text-center">
-        <AlertTriangle size={48} className="mx-auto text-gray-300 mb-4" />
-        <p className="text-gray-500">{copy.notFound}</p>
+      <div className="min-h-full bg-[#F6F1E9] p-8 text-center">
+        <AlertTriangle size={48} className="mx-auto text-[#5B6474] mb-4" />
+        <p className="text-[#5B6474]">{copy.notFound}</p>
       </div>
     );
   }
@@ -150,13 +150,13 @@ export default function OwnerListingEditPage({
   // Status guard on client side
   if (!EDITABLE_STATUSES.includes(listing.status)) {
     return (
-      <div className="p-8 text-center">
-        <AlertTriangle size={48} className="mx-auto text-amber-400 mb-4" />
-        <p className="text-lg font-semibold text-gray-900">{copy.notEditable}</p>
-        <p className="text-gray-500 mt-2">{copy.notEditableHint}{listing.status}</p>
+      <div className="min-h-full bg-[#F6F1E9] p-8 text-center">
+        <AlertTriangle size={48} className="mx-auto mb-4 text-[#8A5A12]" />
+        <p className="text-lg font-semibold text-[#0F172A]">{copy.notEditable}</p>
+        <p className="text-[#5B6474] mt-2">{copy.notEditableHint}{listing.status}</p>
         <Link
           href={`/b2b-panel/ilanlarim/${listingId}`}
-          className="text-dk-red hover:underline mt-4 inline-block"
+          className="mt-4 inline-flex h-10 items-center rounded-full border border-[#E4DCCD] bg-white px-4 text-sm font-bold text-[#0F172A] hover:border-[#0F172A]"
         >
           {copy.back}
         </Link>
@@ -235,35 +235,38 @@ export default function OwnerListingEditPage({
   };
 
   return (
-    <div className="p-6 lg:p-8 max-w-3xl">
+    <div className="min-h-full bg-[#F6F1E9]">
+    <div className="max-w-3xl p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <Link
         href={`/b2b-panel/ilanlarim/${listingId}`}
-        className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 mb-4"
+        data-back-button
+        className="mb-4 inline-flex min-h-9 items-center gap-1.5 rounded-full border border-[#E4DCCD] bg-white px-3.5 text-[13px] font-semibold text-[#334155] transition hover:border-[#0F172A] hover:text-[#0F172A]"
       >
         <ArrowLeft size={16} />
         {copy.back}
       </Link>
 
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">{copy.editing}</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-2xl font-extrabold tracking-tight text-[#0F172A] sm:text-3xl">{copy.editing}</h1>
+        <p className="text-sm text-[#5B6474] mt-1">
           #{listing.trackingCode} &middot; {listing.title}
         </p>
       </div>
 
       {/* Save message */}
       {saveMsg && (
-        <div className={`mb-4 p-3 rounded-xl text-sm font-medium ${
+        <div className={`mb-4 rounded-2xl p-3 text-sm font-semibold ${
           saveMsg.type === 'success'
-            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-            : 'bg-rose-50 text-rose-700 border border-rose-200'
+            ? 'border border-[#BFDCCB] bg-[#E9F5EE] text-[#1F7A4D]'
+            : 'border border-[#F1C9C9] bg-[#FBECEC] text-[#A12B2B]'
         }`}>
           {saveMsg.text}
         </div>
       )}
 
-      {/* ListingForm in edit mode */}
+      {/* ListingForm in edit mode — white v2 card around the shared form */}
+      <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-4 sm:p-6">
       <ListingForm
         categoryId={listing.type as ListingCategory}
         initialData={initialData}
@@ -271,6 +274,8 @@ export default function OwnerListingEditPage({
         onSubmit={handleSubmit}
         onCancel={() => router.push(`/b2b-panel/ilanlarim/${listingId}`)}
       />
+      </div>
+    </div>
     </div>
   );
 }

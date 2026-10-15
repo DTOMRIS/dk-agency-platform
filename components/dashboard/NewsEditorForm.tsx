@@ -636,9 +636,9 @@ export default function NewsEditorForm({
         {copy.autoSaveNote}
       </div>
 
-      <div className="grid gap-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm xl:grid-cols-[1.15fr_0.85fr]">
+      <div className="grid gap-6 rounded-[22px] border border-[#E4DCCD] bg-white p-6 xl:grid-cols-[1.15fr_0.85fr]">
         <div className="grid gap-4">
-          <div className="flex gap-1 rounded-2xl bg-slate-100 p-1">
+          <div className="flex gap-1 rounded-full border border-[#E4DCCD] bg-[#FBF8F3] p-1">
             {LOCALE_TABS.map((tab) => {
               const hasTitle = Boolean((draft[titleKey(tab.key)] as string)?.trim());
               return (
@@ -646,10 +646,10 @@ export default function NewsEditorForm({
                   key={tab.key}
                   type="button"
                   onClick={() => setActiveLocale(tab.key)}
-                  className={`relative flex-1 rounded-xl px-4 py-2.5 text-sm font-bold transition ${
+                  className={`relative flex-1 rounded-full px-4 py-2.5 text-sm font-bold transition ${
                     activeLocale === tab.key
-                      ? 'bg-white text-[var(--dk-navy)] shadow-sm'
-                      : 'text-slate-500 hover:text-slate-700'
+                      ? 'bg-[#0F172A] text-white shadow-sm'
+                      : 'text-[#5B6474] hover:text-[#0F172A]'
                   }`}
                 >
                   {tab.label}
@@ -657,7 +657,7 @@ export default function NewsEditorForm({
                     <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald-400" />
                   ) : null}
                   {!hasTitle && tab.key !== 'az' ? (
-                    <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-slate-300" />
+                    <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#D9CFBE]" />
                   ) : null}
                 </button>
               );
@@ -669,25 +669,25 @@ export default function NewsEditorForm({
               type="button"
               onClick={() => void translateNow()}
               disabled={!savedSlug || translating}
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--dk-navy)] px-4 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-slate-300"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0F172A] px-4 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-[#D9CFBE]"
             >
               {translating ? '⏳ Tərcümə olunur…' : '🌐 Avtomatik tərcümə (RU/EN/TR)'}
             </button>
             {!savedSlug ? (
-              <span className="text-xs text-slate-500">Əvvəlcə yadda saxla, sonra tərcümə et</span>
+              <span className="text-xs text-[#5B6474]">Əvvəlcə yadda saxla, sonra tərcümə et</span>
             ) : null}
             {translateMsg ? (
-              <span className="text-xs font-semibold text-slate-700">{translateMsg}</span>
+              <span className="text-xs font-semibold text-[#334155]">{translateMsg}</span>
             ) : null}
           </div>
 
           {/* TODO B-step: AI title suggest button */}
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">
+            <label className="mb-2 block text-sm font-bold text-[#334155]">
               {copy.titleLabel} ({activeLocale.toUpperCase()})
               {activeLocale !== 'az' ? (
-                <span className="ml-2 text-xs font-normal text-slate-600">{copy.fallbackNote}</span>
+                <span className="ml-2 text-xs font-normal text-[#5B6474]">{copy.fallbackNote}</span>
               ) : null}
             </label>
             <input
@@ -698,7 +698,7 @@ export default function NewsEditorForm({
                 if (!initialDraft && activeLocale === 'az') setField('slug', slugifyAz(title));
               }}
               placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} başlıq...` : ''}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
             {activeLocale === 'az' && errors.titleAz ? (
               <p className="mt-2 text-xs text-red-600">{errors.titleAz}</p>
@@ -706,20 +706,20 @@ export default function NewsEditorForm({
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">{copy.slugLabel}</label>
+            <label className="mb-2 block text-sm font-bold text-[#334155]">{copy.slugLabel}</label>
             <input
               value={draft.slug}
               onChange={(e) => setField('slug', e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 font-mono text-sm text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 font-mono text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
             {errors.slug ? <p className="mt-2 text-xs text-red-600">{errors.slug}</p> : null}
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">
+            <label className="mb-2 block text-sm font-bold text-[#334155]">
               {copy.summaryLabel} ({activeLocale.toUpperCase()})
               {activeLocale !== 'az' ? (
-                <span className="ml-2 text-xs font-normal text-slate-600">{copy.fallbackNote}</span>
+                <span className="ml-2 text-xs font-normal text-[#5B6474]">{copy.fallbackNote}</span>
               ) : null}
             </label>
             <textarea
@@ -727,19 +727,19 @@ export default function NewsEditorForm({
               value={draft[summaryKey(activeLocale)] as string}
               onChange={(e) => setStringField(summaryKey(activeLocale), e.target.value)}
               placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} xülasə...` : ''}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">
+              <label className="mb-2 block text-sm font-bold text-[#334155]">
                 {copy.categoryLabel}
               </label>
               <select
                 value={draft.category}
                 onChange={(e) => setField('category', e.target.value as NewsDraft['category'])}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               >
                 {NEWS_CATEGORY_OPTIONS.map((item) => (
                   <option key={item.value} value={item.value}>
@@ -750,13 +750,13 @@ export default function NewsEditorForm({
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">
+              <label className="mb-2 block text-sm font-bold text-[#334155]">
                 {copy.authorLabel}
               </label>
               <select
                 value={draft.author}
                 onChange={(e) => setField('author', e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               >
                 {AUTHOR_OPTIONS.map((item) => (
                   <option key={item}>{item}</option>
@@ -765,23 +765,23 @@ export default function NewsEditorForm({
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">
+              <label className="mb-2 block text-sm font-bold text-[#334155]">
                 {copy.publishDateLabel}
               </label>
               <input
                 type="date"
                 value={draft.publishedAt}
                 onChange={(e) => setField('publishedAt', e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">{copy.imageLabel}</label>
+            <label className="mb-2 block text-sm font-bold text-[#334155]">{copy.imageLabel}</label>
             <label
-              className={`flex items-center justify-center rounded-2xl border border-dashed border-slate-300 px-4 py-6 text-sm font-semibold text-slate-600 ${
-                uploadingImage ? 'cursor-wait opacity-60' : 'cursor-pointer hover:border-slate-400'
+              className={`flex items-center justify-center rounded-2xl border border-dashed border-[#E4DCCD] px-4 py-6 text-sm font-semibold text-[#5B6474] ${
+                uploadingImage ? 'cursor-wait opacity-60' : 'cursor-pointer hover:border-[#0F172A]'
               }`}
             >
               {uploadingImage ? copy.imageUploading : copy.imageUpload}
@@ -796,7 +796,7 @@ export default function NewsEditorForm({
             <button
               type="button"
               onClick={() => showToast('Şəkil axtarışı tezliklə aktiv olacaq.')}
-              className="mt-2 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+              className="mt-2 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-4 py-2 text-xs font-semibold text-[#5B6474] transition hover:bg-[#FBF8F3]"
             >
               {copy.searchImageLib}
             </button>
@@ -813,7 +813,7 @@ export default function NewsEditorForm({
                     setImagePreview('');
                     setField('imageUrl', '');
                   }}
-                  className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-xs font-bold text-slate-600 shadow"
+                  className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-xs font-bold text-[#5B6474] shadow"
                 >
                   Sil
                 </button>
@@ -822,32 +822,32 @@ export default function NewsEditorForm({
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">{copy.externalUrl}</label>
+            <label className="mb-2 block text-sm font-bold text-[#334155]">{copy.externalUrl}</label>
             <input
               type="url"
               value={draft.externalUrl}
               onChange={(e) => setField('externalUrl', e.target.value)}
               placeholder="https://..."
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
           </div>
         </div>
 
-        <div className="space-y-4 rounded-[28px] bg-slate-50 p-5">
+        <div className="space-y-4 rounded-[22px] bg-[#FBF8F3] p-5">
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">
+            <label className="mb-2 block text-sm font-bold text-[#334155]">
               {copy.seoTitle} ({seoTitleCount}/70)
             </label>
             <input
               maxLength={70}
               value={draft.seoTitle}
               onChange={(e) => setField('seoTitle', e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">
+            <label className="mb-2 block text-sm font-bold text-[#334155]">
               {copy.seoDescription} ({seoDescCount}/160)
             </label>
             <textarea
@@ -855,16 +855,16 @@ export default function NewsEditorForm({
               rows={3}
               value={draft.seoDescription}
               onChange={(e) => setField('seoDescription', e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
           </div>
 
           <div className="space-y-2">
-            <div className="text-sm font-bold text-slate-700">{copy.statusLabel}</div>
+            <div className="text-sm font-bold text-[#334155]">{copy.statusLabel}</div>
             {NEWS_STATUS_OPTIONS.map((item) => (
               <label
                 key={item.value}
-                className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm text-slate-700"
+                className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm text-[#334155]"
               >
                 <input
                   type="radio"
@@ -876,12 +876,12 @@ export default function NewsEditorForm({
             ))}
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 space-y-3">
-            <div className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">
+          <div className="rounded-2xl border border-[#E4DCCD] bg-white p-4 space-y-3">
+            <div className="text-xs font-black uppercase tracking-[0.16em] text-[#5B6474]">
               Xüsusi parametrlər
             </div>
 
-            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-slate-700">
+            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-[#334155]">
               <input
                 type="checkbox"
                 checked={draft.isManset}
@@ -891,7 +891,7 @@ export default function NewsEditorForm({
               {copy.manset}
             </label>
 
-            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-slate-700">
+            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-[#334155]">
               <input
                 type="checkbox"
                 checked={draft.isTop}
@@ -901,7 +901,7 @@ export default function NewsEditorForm({
               {copy.top}
             </label>
 
-            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-slate-700">
+            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-[#334155]">
               <input
                 type="checkbox"
                 checked={draft.isGundem}
@@ -911,7 +911,7 @@ export default function NewsEditorForm({
               {copy.gundem}
             </label>
 
-            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-slate-700">
+            <label className="flex min-h-[44px] cursor-pointer items-center gap-3 text-sm font-semibold text-[#334155]">
               <input
                 type="checkbox"
                 checked={draft.isEditorPick}
@@ -924,10 +924,10 @@ export default function NewsEditorForm({
             {/* Telegram + Logo overlay — backend inteqrasiyası hələ yoxdur, gizlədilib */}
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">{copy.newsType}</label>
+              <label className="mb-2 block text-sm font-bold text-[#334155]">{copy.newsType}</label>
               <div className="flex gap-3 flex-wrap">
                 {NEWS_TYPE_OPTIONS.map((item) => (
-                  <label key={item.value} className="flex items-center gap-2 text-sm text-slate-700">
+                  <label key={item.value} className="flex items-center gap-2 text-sm text-[#334155]">
                     <input
                       type="radio"
                       name="newsType"
@@ -943,16 +943,16 @@ export default function NewsEditorForm({
         </div>
       </div>
 
-      <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-        <label className="mb-2 block text-sm font-bold text-slate-700">
+      <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+        <label className="mb-2 block text-sm font-bold text-[#334155]">
           {copy.contentLabel} ({activeLocale.toUpperCase()})
           {activeLocale !== 'az' ? (
-            <span className="ml-2 text-xs font-normal text-slate-600">{copy.fallbackNote}</span>
+            <span className="ml-2 text-xs font-normal text-[#5B6474]">{copy.fallbackNote}</span>
           ) : null}
         </label>
 
         {/* Markdown toolbar + Visual block inserts */}
-        <div className="flex flex-wrap items-center gap-1 rounded-t-2xl border border-b-0 border-slate-200 bg-slate-50 px-3 py-2 mt-2">
+        <div className="flex flex-wrap items-center gap-1 rounded-t-2xl border border-b-0 border-[#E4DCCD] bg-[#FBF8F3] px-3 py-2 mt-2">
           {[
             { label: 'B', md: '**', tip: 'Bold' },
             { label: 'I', md: '*', tip: 'İtalik' },
@@ -966,7 +966,7 @@ export default function NewsEditorForm({
               key={btn.label}
               type="button"
               title={btn.tip}
-              className="rounded-lg px-2.5 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors"
+              className="rounded-lg px-2.5 py-1 text-xs font-bold text-[#5B6474] hover:bg-[#EFE9DE] transition-colors"
               onClick={() => {
                 const ta = document.getElementById('news-content-textarea') as HTMLTextAreaElement | null;
                 if (!ta) return;
@@ -988,7 +988,7 @@ export default function NewsEditorForm({
             </button>
           ))}
 
-          <span className="mx-1 h-5 w-px bg-slate-300" />
+          <span className="mx-1 h-5 w-px bg-[#D9CFBE]" />
 
           {/* Image grid insert */}
           <select
@@ -1053,15 +1053,15 @@ export default function NewsEditorForm({
           value={draft[contentKey(activeLocale)] as string}
           onChange={(e) => setStringField(contentKey(activeLocale), e.target.value)}
           placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} məzmun...` : ''}
-          className="w-full rounded-b-2xl border border-t-0 border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+          className="w-full rounded-b-2xl border border-t-0 border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
         />
 
         {activeLocale !== 'az' && draft.contentAz ? (
-          <details className="mt-3 rounded-2xl border border-slate-100 bg-slate-50 p-4">
-            <summary className="cursor-pointer text-xs font-bold text-slate-500">
+          <details className="mt-3 rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] p-4">
+            <summary className="cursor-pointer text-xs font-bold text-[#5B6474]">
               AZ mənbə məzmunu (referans)
             </summary>
-            <pre className="mt-3 max-h-48 overflow-y-auto whitespace-pre-wrap text-xs leading-6 text-slate-600">
+            <pre className="mt-3 max-h-48 overflow-y-auto whitespace-pre-wrap text-xs leading-6 text-[#5B6474]">
               {draft.contentAz.slice(0, 600)}
               {draft.contentAz.length > 600 ? '...' : ''}
             </pre>
@@ -1084,7 +1084,7 @@ export default function NewsEditorForm({
           type="button"
           onClick={() => void submitDraft('fetched')}
           disabled={submitting || deleting || uploadingImage}
-          className="min-h-[44px] rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700 disabled:opacity-60"
+          className="min-h-[44px] rounded-full border border-[#E4DCCD] bg-white px-6 py-3 text-sm font-bold text-[#334155] disabled:opacity-60"
         >
           {copy.saveDraft}
         </button>

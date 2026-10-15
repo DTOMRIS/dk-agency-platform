@@ -230,14 +230,14 @@ const COPY: Record<
 };
 
 const KIND_STYLE: Record<DecisionItem['kind'], string> = {
-  news: 'bg-blue-50 text-blue-800',
+  news: 'bg-[#EEE6D8] text-[#0F172A]',
   listing: 'bg-amber-50 text-amber-900',
   profile: 'bg-emerald-50 text-emerald-800',
   lead: 'bg-rose-50 text-rose-800',
 };
 
 const SOURCE_COLOR: Record<string, string> = {
-  contact: '#0A7AFF',
+  contact: '#0F172A',
   franchise: '#E11D48',
   kazan: '#7C3AED',
   listing: '#F59E0B',
@@ -261,16 +261,16 @@ export default async function DashboardPage() {
   const leadDelta = o.leads.total - o.leads.previous;
 
   return (
-    <div className="min-h-full bg-[#F2F2F7] px-4 py-6 sm:px-8 sm:py-8">
+    <div className="min-h-full bg-[#F6F1E9] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mx-auto flex max-w-[1320px] flex-col gap-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">
+            <h1 className="text-[32px] font-bold tracking-tight text-[#0F172A] sm:text-[38px]">
               {t.title}
             </h1>
-            <p className="mt-1 text-[15px] text-slate-600">{t.greeting(o.decisions.length)}</p>
+            <p className="mt-1 text-[15px] text-[#5B6474]">{t.greeting(o.decisions.length)}</p>
           </div>
-          <span className="rounded-full bg-white px-3 py-1.5 text-[13px] font-medium text-slate-600 shadow-sm">
+          <span className="rounded-full border border-[#E4DCCD] bg-white px-3 py-1.5 text-[13px] font-medium text-[#334155]">
             {t.last30}
           </span>
         </div>
@@ -291,24 +291,24 @@ export default async function DashboardPage() {
                 <li key={d.id}>
                   <Link
                     href={withLocale(locale, d.href)}
-                    className="group flex items-center gap-3 rounded-2xl border border-slate-100 px-4 py-3 transition-colors hover:bg-slate-50"
+                    className="group flex items-center gap-3 rounded-2xl border border-[#EFE9DE] px-4 py-3 transition-colors hover:bg-[#FBF8F3]"
                   >
                     <span
-                      className={`shrink-0 rounded-md px-2 py-1 text-[12px] font-semibold ${KIND_STYLE[d.kind]}`}
+                      className={`shrink-0 rounded-full px-2.5 py-1 text-[12px] font-semibold ${KIND_STYLE[d.kind]}`}
                     >
                       {t.kinds[d.kind]}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[15px] font-medium text-slate-900">
+                      <span className="block truncate text-[15px] font-medium text-[#0F172A]">
                         {d.title}
                       </span>
-                      <span className="block truncate text-[12px] text-slate-500">
+                      <span className="block truncate text-[12px] text-[#5B6474]">
                         {d.kind === 'lead' ? t.sourceNames.franchise : d.note}
                         {d.at ? ` · ${relTime(d.at, locale)}` : ''}
                       </span>
                     </span>
                     <ArrowRight
-                      className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5"
+                      className="h-4 w-4 shrink-0 text-[#5B6474] transition-transform group-hover:translate-x-0.5"
                       aria-hidden="true"
                     />
                   </Link>
@@ -317,13 +317,13 @@ export default async function DashboardPage() {
             </ul>
           )}
           {o.staleDecisions > 0 && (
-            <p className="mt-3 text-[13px] text-slate-500">
+            <p className="mt-3 text-[13px] text-[#5B6474]">
               {t.stale(o.staleDecisions)}{' '}
-              <Link href={withLocale(locale, '/dashboard/xeberler')} className="font-medium text-[#0A5BD6] hover:underline">
+              <Link href={withLocale(locale, '/dashboard/xeberler')} className="font-semibold text-[#0F172A] underline-offset-2 hover:underline">
                 {t.news}
               </Link>
               {' · '}
-              <Link href={withLocale(locale, '/dashboard/ilanlar')} className="font-medium text-[#0A5BD6] hover:underline">
+              <Link href={withLocale(locale, '/dashboard/ilanlar')} className="font-semibold text-[#0F172A] underline-offset-2 hover:underline">
                 {t.listings}
               </Link>
             </p>
@@ -348,7 +348,7 @@ export default async function DashboardPage() {
 
           <DashCard title={t.sources} subtitle={t.leads} range={t.last30}>
             {o.leads.bySource.length === 0 ? (
-              <div className="mt-6 flex flex-col items-center gap-2 py-8 text-slate-500">
+              <div className="mt-6 flex flex-col items-center gap-2 py-8 text-[#5B6474]">
                 <Inbox className="h-8 w-8" aria-hidden="true" />
                 <span className="text-[14px]">0</span>
               </div>
@@ -358,7 +358,7 @@ export default async function DashboardPage() {
                 parts={o.leads.bySource.map((s) => ({
                   label: t.sourceNames[s.source] ?? s.source,
                   value: s.value,
-                  color: SOURCE_COLOR[s.source] ?? '#94A3B8',
+                  color: SOURCE_COLOR[s.source] ?? '#B8AE9C',
                 }))}
               />
             )}
@@ -373,15 +373,15 @@ export default async function DashboardPage() {
 
           <DashCard title={t.news} subtitle={t.newsSub}>
             <BigNumber value={fmt(o.news.published)} caption={t.newsCaption} />
-            <AreaChart data={o.news.series} locale={locale} color="#0A7AFF" label={t.news} />
+            <AreaChart data={o.news.series} locale={locale} color="#0F172A" label={t.news} />
             <div className="mt-3 flex flex-wrap gap-2 text-[12px]">
               <Link
                 href={withLocale(locale, '/dashboard/xeberler')}
-                className="rounded-full bg-blue-50 px-2.5 py-1 font-medium text-blue-800"
+                className="rounded-full bg-[#EEE6D8] px-2.5 py-1 font-medium text-[#0F172A]"
               >
                 {t.newsAwaiting(o.news.awaiting)}
               </Link>
-              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-slate-700">
+              <span className="rounded-full bg-[#F6F1E9] px-2.5 py-1 text-[#334155]">
                 {t.newsQueue(o.news.queue)}
               </span>
             </div>
@@ -389,11 +389,11 @@ export default async function DashboardPage() {
 
           <DashCard title={t.listings} subtitle={`${t.listingsLive} · ${t.listingsPending}`}>
             <div className="mt-3 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl bg-[#F2F2F7] p-4">
-                <div className="text-[30px] font-semibold tabular-nums text-slate-900">
+              <div className="rounded-2xl bg-[#F6F1E9] p-4">
+                <div className="text-[30px] font-semibold tabular-nums text-[#0F172A]">
                   {fmt(o.listings.live)}
                 </div>
-                <div className="text-[13px] text-slate-600">{t.listingsLive}</div>
+                <div className="text-[13px] text-[#5B6474]">{t.listingsLive}</div>
               </div>
               <Link
                 href={withLocale(locale, '/dashboard/ilanlar')}
@@ -418,7 +418,7 @@ export default async function DashboardPage() {
               <Link
                 key={q.href}
                 href={withLocale(locale, q.href)}
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-[#F2F2F7] px-4 text-[14px] font-medium text-slate-900 transition-colors hover:bg-slate-200"
+                className="inline-flex h-11 items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-4 text-[14px] font-medium text-[#0F172A] transition-colors hover:bg-[#EEE6D8]"
               >
                 {q.label} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>

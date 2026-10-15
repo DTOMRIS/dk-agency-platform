@@ -195,14 +195,14 @@ export default function SuppliersTab({
             <span className="sr-only">{copy.searchSuppliers}</span>
             <Search
               size={16}
-              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600"
+              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5B6474]"
               aria-hidden="true"
             />
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder={copy.searchSuppliers}
-              className={`${FIELD} w-full pl-10 placeholder:text-slate-500`}
+              className={`${FIELD} w-full pl-10 placeholder:text-[#5B6474]`}
             />
           </label>
           <select
@@ -261,8 +261,8 @@ export default function SuppliersTab({
             onClick={() => update({ phone: !filters.phone })}
             className={`${PILL_BTN} ${
               filters.phone
-                ? 'bg-[#EEF4FF] text-[#0A4FB8] ring-1 ring-[#0A7AFF]/30'
-                : 'bg-white text-slate-800 ring-1 ring-slate-200'
+                ? 'bg-[#0F172A] text-white'
+                : 'bg-white text-[#0F172A] ring-1 ring-[#E4DCCD]'
             }`}
           >
             {copy.hasPhone}
@@ -270,7 +270,7 @@ export default function SuppliersTab({
         </div>
 
         <div>
-          <span className="mb-2 block text-[12px] font-semibold uppercase tracking-wide text-slate-700">
+          <span className="mb-2 block text-[12px] font-semibold uppercase tracking-wide text-[#334155]">
             {copy.filterCategory}
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -284,8 +284,8 @@ export default function SuppliersTab({
                   onClick={() => toggleCategory(key)}
                   className={`h-8 rounded-full px-3 text-[12px] font-semibold transition-colors ${
                     active
-                      ? 'bg-slate-900 text-white'
-                      : 'bg-[#F2F2F7] text-slate-800 hover:bg-slate-200'
+                      ? 'bg-[#0F172A] text-white'
+                      : 'bg-[#F6F1E9] text-[#0F172A] hover:bg-[#E4DCCD]'
                   }`}
                 >
                   {categoryLabel(key, locale)}
@@ -295,21 +295,21 @@ export default function SuppliersTab({
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#EFE9DE] pt-3">
           <div className="flex flex-wrap gap-2 text-[12px] font-semibold">
             {data ? (
               <>
-                <span className="rounded-full bg-[#F2F2F7] px-3 py-1 text-slate-900">
+                <span className="rounded-full bg-[#F6F1E9] px-3 py-1 text-[#0F172A]">
                   {copy.summaryTotal(data.summary.total)}
                 </span>
-                <span className="rounded-full bg-[#F2F2F7] px-3 py-1 text-slate-900">
+                <span className="rounded-full bg-[#F6F1E9] px-3 py-1 text-[#0F172A]">
                   {copy.summaryWithPhone(data.summary.withPhone)}
                 </span>
                 <span className="rounded-full bg-emerald-50 px-3 py-1 text-emerald-800">
                   {copy.summaryConsented(data.summary.consented)}
                 </span>
                 {hasFilters ? (
-                  <span className="rounded-full bg-[#EEF4FF] px-3 py-1 text-[#0A4FB8]">
+                  <span className="rounded-full bg-[#EFE9DE] px-3 py-1 text-[#0F172A]">
                     {copy.resultsCount(data.total)}
                   </span>
                 ) : null}
@@ -325,7 +325,7 @@ export default function SuppliersTab({
                   setFilters(EMPTY_SUPPLIER_FILTERS);
                   setPage(1);
                 }}
-                className={`${PILL_BTN} h-9 bg-white text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50`}
+                className={`${PILL_BTN} h-9 bg-white text-[#0F172A] ring-1 ring-[#E4DCCD] hover:bg-[#FBF8F3]`}
               >
                 <X size={14} aria-hidden="true" />
                 {copy.clearFilters}
@@ -334,7 +334,7 @@ export default function SuppliersTab({
             <a
               href={`/api/dashboard/supply/suppliers?${csvParams.toString()}`}
               download
-              className={`${PILL_BTN} h-9 bg-slate-900 text-white hover:bg-slate-800`}
+              className={`${PILL_BTN} h-9 bg-[#0F172A] text-white hover:bg-[#1E293B]`}
             >
               <Download size={14} aria-hidden="true" />
               {copy.exportCsv}
@@ -355,8 +355,8 @@ export default function SuppliersTab({
             className="w-full min-w-[980px] text-left text-[13px]"
             data-testid="supply-suppliers-table"
           >
-            <thead className="bg-[#FAFAFC]">
-              <tr className="text-[11px] uppercase tracking-wide text-slate-700">
+            <thead className="bg-[#FBF8F3]">
+              <tr className="text-[11px] uppercase tracking-wide text-[#334155]">
                 <th className="px-5 py-3 font-semibold">{copy.colSupplier}</th>
                 <th className="px-3 py-3 font-semibold">{copy.colCategories}</th>
                 <th className="px-3 py-3 font-semibold">{copy.colPhones}</th>
@@ -369,32 +369,32 @@ export default function SuppliersTab({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#EFE9DE]">
               {loading && !data ? (
                 <tr>
-                  <td colSpan={8} className="px-5 py-10 text-center text-[14px] text-slate-700">
+                  <td colSpan={8} className="px-5 py-10 text-center text-[14px] text-[#334155]">
                     {copy.loading}
                   </td>
                 </tr>
               ) : null}
               {data && data.rows.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-5 py-10 text-center text-[14px] text-slate-700">
+                  <td colSpan={8} className="px-5 py-10 text-center text-[14px] text-[#334155]">
                     {hasFilters ? copy.emptySuppliers : copy.emptySuppliersAll}
                   </td>
                 </tr>
               ) : null}
               {data?.rows.map((row) => (
-                <tr key={row.id} className="align-top hover:bg-[#FAFAFC]">
+                <tr key={row.id} className="align-top hover:bg-[#FBF8F3]">
                   <td className="px-5 py-3">
                     <div className="flex items-start gap-3">
                       <Avatar name={row.displayName} />
                       <div className="min-w-0">
-                        <div className="max-w-[220px] truncate font-semibold text-slate-900">
+                        <div className="max-w-[220px] truncate font-semibold text-[#0F172A]">
                           {row.displayName}
                         </div>
                         {row.company ? (
-                          <div className="max-w-[220px] truncate text-[12px] text-slate-700">
+                          <div className="max-w-[220px] truncate text-[12px] text-[#334155]">
                             {row.company}
                           </div>
                         ) : null}
@@ -407,10 +407,10 @@ export default function SuppliersTab({
                   <td className="px-3 py-3">
                     <PhoneList phones={row.phones} copy={copy} />
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3 tabular-nums text-slate-800">
+                  <td className="whitespace-nowrap px-3 py-3 tabular-nums text-[#0F172A]">
                     {formatAzDate(row.lastSeen)}
                   </td>
-                  <td className="px-3 py-3 text-right tabular-nums font-semibold text-slate-900">
+                  <td className="px-3 py-3 text-right tabular-nums font-semibold text-[#0F172A]">
                     {row.postCount}
                   </td>
                   <td className="px-3 py-3">
@@ -438,7 +438,7 @@ export default function SuppliersTab({
                       onClick={() => setSelected(row)}
                       aria-label={`${copy.details}: ${row.displayName}`}
                       title={copy.details}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#F2F2F7] text-slate-900 hover:bg-slate-200"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#F6F1E9] text-[#0F172A] hover:bg-[#E4DCCD]"
                     >
                       <ChevronRight size={16} aria-hidden="true" />
                     </button>
@@ -516,20 +516,20 @@ function SupplierDrawer({
         type="button"
         aria-label={copy.close}
         onClick={onClose}
-        className="absolute inset-0 bg-slate-950/30"
+        className="absolute inset-0 bg-[#0F172A]/30"
       />
       <aside className="relative flex h-full w-full max-w-[520px] flex-col bg-white shadow-2xl">
-        <header className="flex items-start justify-between gap-3 border-b border-slate-100 px-5 py-4">
+        <header className="flex items-start justify-between gap-3 border-b border-[#EFE9DE] px-5 py-4">
           <div className="flex min-w-0 items-start gap-3">
             <Avatar name={supplier.displayName} />
             <div className="min-w-0">
               <h2
                 id="supplier-drawer-title"
-                className="truncate text-[18px] font-bold text-slate-900"
+                className="truncate text-[18px] font-bold text-[#0F172A]"
               >
                 {supplier.displayName}
               </h2>
-              <p className="text-[12px] font-medium text-slate-700">
+              <p className="text-[12px] font-medium text-[#334155]">
                 {copy.firstSeen}: {formatAzDate(supplier.firstSeen)} · {copy.colLastSeen}:{' '}
                 {formatAzDate(supplier.lastSeen)} · {copy.postsCount(supplier.postCount)}
               </p>
@@ -539,7 +539,7 @@ function SupplierDrawer({
             type="button"
             onClick={onClose}
             aria-label={copy.close}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F2F2F7] text-slate-900 hover:bg-slate-200"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F6F1E9] text-[#0F172A] hover:bg-[#E4DCCD]"
           >
             <X size={16} aria-hidden="true" />
           </button>
@@ -565,26 +565,26 @@ function SupplierDrawer({
           </div>
 
           <section>
-            <h3 className="mb-1.5 text-[12px] font-semibold uppercase tracking-wide text-slate-700">
+            <h3 className="mb-1.5 text-[12px] font-semibold uppercase tracking-wide text-[#334155]">
               {copy.colPhones}
             </h3>
             <PhoneList phones={supplier.phones} copy={copy} />
           </section>
           <section>
-            <h3 className="mb-1.5 text-[12px] font-semibold uppercase tracking-wide text-slate-700">
+            <h3 className="mb-1.5 text-[12px] font-semibold uppercase tracking-wide text-[#334155]">
               {copy.colCategories}
             </h3>
             <CategoryBadges keys={supplier.categories} locale={locale} />
           </section>
           <section>
-            <h3 className="mb-1.5 text-[12px] font-semibold uppercase tracking-wide text-slate-700">
+            <h3 className="mb-1.5 text-[12px] font-semibold uppercase tracking-wide text-[#334155]">
               {copy.sourceGroups}
             </h3>
-            <p className="text-[13px] text-slate-800">{supplier.sourceGroups.join(' · ')}</p>
+            <p className="text-[13px] text-[#0F172A]">{supplier.sourceGroups.join(' · ')}</p>
           </section>
 
           <label className="block">
-            <span className="mb-1.5 block text-[12px] font-semibold uppercase tracking-wide text-slate-700">
+            <span className="mb-1.5 block text-[12px] font-semibold uppercase tracking-wide text-[#334155]">
               {copy.company}
             </span>
             <input
@@ -592,11 +592,11 @@ function SupplierDrawer({
               maxLength={200}
               onChange={(event) => setCompany(event.target.value)}
               placeholder={copy.companyPlaceholder}
-              className={`${FIELD} w-full placeholder:text-slate-500`}
+              className={`${FIELD} w-full placeholder:text-[#5B6474]`}
             />
           </label>
           <label className="block">
-            <span className="mb-1.5 block text-[12px] font-semibold uppercase tracking-wide text-slate-700">
+            <span className="mb-1.5 block text-[12px] font-semibold uppercase tracking-wide text-[#334155]">
               {copy.notes}
             </span>
             <textarea
@@ -605,7 +605,7 @@ function SupplierDrawer({
               rows={4}
               onChange={(event) => setNotes(event.target.value)}
               placeholder={copy.notesPlaceholder}
-              className="w-full rounded-[16px] border border-slate-200 bg-white px-4 py-3 text-[13px] text-slate-900 outline-none placeholder:text-slate-500 focus:border-[#0A7AFF] focus:ring-2 focus:ring-[#0A7AFF]/20"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[13px] text-[#0F172A] outline-none placeholder:text-[#5B6474] focus:border-[#0F172A] focus:ring-2 focus:ring-[#0F172A]/10"
             />
           </label>
           <div className="flex items-center gap-3">
@@ -613,7 +613,7 @@ function SupplierDrawer({
               type="button"
               disabled={busy}
               onClick={() => void save()}
-              className={`${PILL_BTN} bg-slate-900 text-white hover:bg-slate-800`}
+              className={`${PILL_BTN} bg-[#0F172A] text-white hover:bg-[#1E293B]`}
             >
               {busy ? copy.saving : copy.save}
             </button>
@@ -626,16 +626,16 @@ function SupplierDrawer({
           </div>
 
           <section>
-            <h3 className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-slate-700">
+            <h3 className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-[#334155]">
               {copy.sampleOffers}
             </h3>
             <ul className="space-y-3">
               {supplier.sampleOffers.map((offer) => (
-                <li key={offer.k || offer.date} className="rounded-[16px] bg-[#F7F7FA] p-3">
-                  <div className="mb-1 text-[11px] font-semibold text-slate-700">
+                <li key={offer.k || offer.date} className="rounded-[16px] bg-[#FBF8F3] p-3">
+                  <div className="mb-1 text-[11px] font-semibold text-[#334155]">
                     {formatAzDate(offer.date)} · {offer.group}
                   </div>
-                  <p className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-slate-900">
+                  <p className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-[#0F172A]">
                     {offer.text}
                   </p>
                 </li>

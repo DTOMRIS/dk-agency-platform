@@ -1,14 +1,15 @@
 /**
  * @file components/dashboard/ui/Charts.tsx
  * @purpose OCAQ v2 (TASK-0483): dependency-free SVG charts + card shell in a clean, light dashboard style.
- * Server-renderable (no hooks). Colors: bars/lines #0A84FF-like blue for neutral metrics, brand red for leads.
+ * Server-renderable (no hooks). Colors (v2, TASK-0548): bars/lines in ink #0F172A for neutral metrics, brand red for leads.
  */
 
 import type { ReactNode } from 'react';
 
 export type Point = { day: string; value: number };
 
-const BLUE = '#0A7AFF';
+// v2 (TASK-0548): neutral metrics in ink, not iOS blue.
+const BLUE = '#0F172A';
 
 function niceMax(max: number): number {
   if (max <= 4) return 4;
@@ -46,14 +47,14 @@ export function DashCard({
 }) {
   return (
     <section
-      className={`flex min-w-0 flex-col rounded-[22px] bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)] sm:p-6 ${className}`}
+      className={`flex min-w-0 flex-col rounded-[22px] border border-[#E4DCCD] bg-white p-5 shadow-[0_1px_2px_rgba(15,23,42,0.03)] sm:p-6 ${className}`}
     >
       <header className="mb-1 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h2 className="truncate text-[17px] font-semibold text-slate-900">{title}</h2>
-          {subtitle && <p className="mt-0.5 truncate text-[12px] text-slate-500">{subtitle}</p>}
+          <h2 className="truncate text-[17px] font-semibold text-[#0F172A]">{title}</h2>
+          {subtitle && <p className="mt-0.5 truncate text-[12px] text-[#5B6474]">{subtitle}</p>}
         </div>
-        <div className="flex shrink-0 items-center gap-2 text-[13px] text-slate-500">
+        <div className="flex shrink-0 items-center gap-2 text-[13px] text-[#5B6474]">
           {range && <span>{range}</span>}
           {action}
         </div>
@@ -80,16 +81,16 @@ export function BigNumber({
       ? 'text-emerald-700'
       : deltaTone === 'down'
         ? 'text-rose-700'
-        : 'text-slate-500';
+        : 'text-[#5B6474]';
   return (
     <div className="mt-2">
       <div className="flex items-baseline gap-2">
-        <span className="text-[38px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums sm:text-[42px]">
+        <span className="text-[38px] font-semibold leading-none tracking-tight text-[#0F172A] tabular-nums sm:text-[42px]">
           {value}
         </span>
         {delta && <span className={`text-[14px] font-medium ${tone}`}>{delta}</span>}
       </div>
-      <p className="mt-1.5 text-[14px] text-slate-500">{caption}</p>
+      <p className="mt-1.5 text-[14px] text-[#5B6474]">{caption}</p>
     </div>
   );
 }
@@ -125,8 +126,8 @@ export function BarChart({
         const y = plotH - t * plotH;
         return (
           <g key={t}>
-            <line x1={0} x2={plotW} y1={y} y2={y} stroke="#E5E7EB" strokeWidth={1} />
-            <text x={W - 2} y={y + 4} textAnchor="end" fontSize={11} fill="#6B7280">
+            <line x1={0} x2={plotW} y1={y} y2={y} stroke="#EFE9DE" strokeWidth={1} />
+            <text x={W - 2} y={y + 4} textAnchor="end" fontSize={11} fill="#5B6474">
               {Math.round(max * t)}
             </text>
           </g>
@@ -143,7 +144,7 @@ export function BarChart({
                 x2={x + barW / 2}
                 y1={0}
                 y2={plotH}
-                stroke="#F1F5F9"
+                stroke="#F6F1E9"
                 strokeDasharray="3 3"
               />
             )}
@@ -163,7 +164,7 @@ export function BarChart({
                 y={H - 6}
                 textAnchor={i === 0 ? 'start' : 'middle'}
                 fontSize={11}
-                fill="#6B7280"
+                fill="#5B6474"
               >
                 {shortDay(p.day, locale)}
               </text>
@@ -220,7 +221,7 @@ export function AreaChart({
           x2={W}
           y1={plotH - t * plotH}
           y2={plotH - t * plotH}
-          stroke="#E5E7EB"
+          stroke="#EFE9DE"
         />
       ))}
       <polygon points={`0,${plotH} ${pts.join(' ')} ${W},${plotH}`} fill={`url(#${id})`} />
@@ -240,7 +241,7 @@ export function AreaChart({
             y={H - 4}
             textAnchor={i === 0 ? 'start' : 'middle'}
             fontSize={11}
-            fill="#6B7280"
+            fill="#5B6474"
           >
             {shortDay(p.day, locale)}
           </text>
@@ -265,7 +266,7 @@ export function RingChart({
   return (
     <div className="mt-4 flex flex-wrap items-center gap-6">
       <svg viewBox="0 0 140 140" className="h-36 w-36 shrink-0" role="img" aria-label={label}>
-        <circle cx={70} cy={70} r={R} fill="none" stroke="#EEF2F7" strokeWidth={16} />
+        <circle cx={70} cy={70} r={R} fill="none" stroke="#EFE9DE" strokeWidth={16} />
         {total > 0 &&
           parts.map((p) => {
             const len = (p.value / total) * C;
@@ -292,13 +293,13 @@ export function RingChart({
       </svg>
       <ul className="m-0 flex list-none flex-col gap-2 p-0 text-[14px]">
         {parts.map((p) => (
-          <li key={p.label} className="flex items-center gap-2 text-slate-700">
+          <li key={p.label} className="flex items-center gap-2 text-[#334155]">
             <span
               className="inline-block h-2.5 w-2.5 rounded-full"
               style={{ background: p.color }}
             />
             <span>{p.label}</span>
-            <span className="ml-auto pl-4 font-semibold tabular-nums text-slate-900">
+            <span className="ml-auto pl-4 font-semibold tabular-nums text-[#0F172A]">
               {p.value}
             </span>
           </li>

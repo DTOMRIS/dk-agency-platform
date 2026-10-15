@@ -27,7 +27,7 @@ interface ProfileRow {
 }
 
 const STATUS_CONFIG: Record<ApprovalStatus, { label: string; color: string; bg: string }> = {
-  draft: { label: 'Qaralama', color: 'text-slate-600', bg: 'bg-slate-100' },
+  draft: { label: 'Qaralama', color: 'text-[#5B6474]', bg: 'bg-[#EFE9DE]' },
   submitted: { label: 'Gözləyir', color: 'text-amber-700', bg: 'bg-amber-50' },
   approved: { label: 'Təsdiqləndi', color: 'text-emerald-700', bg: 'bg-emerald-50' },
   rejected: { label: 'Rədd edildi', color: 'text-red-700', bg: 'bg-red-50' },
@@ -85,23 +85,24 @@ export default function ProfilOnayPage() {
   };
 
   return (
+    <div className="min-h-full bg-[#F6F1E9]">
     <div className="mx-auto max-w-[1320px] px-4 py-6 sm:px-8 sm:py-8">
       <div className="mb-8">
-        <h1 className="text-[32px] font-bold tracking-tight text-slate-900 sm:text-[38px]">Profil onayları</h1>
-        <p className="mt-1 text-[15px] text-slate-600">Üzv profillərini yoxlayın, təsdiq edin və ya rədd edin.</p>
+        <h1 className="text-[32px] font-black tracking-[-0.03em] text-[#0F172A] sm:text-[38px]">Profil onayları</h1>
+        <p className="mt-1 text-[15px] text-[#5B6474]">Üzv profillərini yoxlayın, təsdiq edin və ya rədd edin.</p>
       </div>
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         <div className="relative w-full sm:max-w-md sm:flex-1">
-          <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+          <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#5B6474]" aria-hidden="true" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Şirkət, email, ad axtar..."
             aria-label="Şirkət, email, ad axtar..."
-            className="w-full pl-10 pr-4 h-11 rounded-full border-0 bg-white text-[14px] text-slate-800 shadow-[0_1px_2px_rgba(0,0,0,0.05)] outline-none transition focus:ring-2 focus:ring-[#0A7AFF]/30"
+            className="w-full pl-10 pr-4 h-11 rounded-full border border-[#E4DCCD] bg-white text-[14px] text-[#0F172A] outline-none transition focus:border-[#0F172A]"
           />
         </div>
         {(['submitted', 'approved', 'rejected', 'draft', 'all'] as const).map((s) => (
@@ -112,8 +113,8 @@ export default function ProfilOnayPage() {
             aria-pressed={statusFilter === s}
             className={`h-9 whitespace-nowrap rounded-full px-4 text-[13px] font-semibold transition-colors ${
               statusFilter === s
-                ? 'bg-[#EEF4FF] text-slate-900 ring-1 ring-[#0A5BD6]/20'
-                : 'bg-white text-slate-700 shadow-[0_1px_2px_rgba(0,0,0,0.05)] hover:bg-slate-50'
+                ? 'bg-[#0F172A] text-white'
+                : 'border border-[#E4DCCD] bg-white text-[#334155] hover:border-[#0F172A]'
             }`}
           >
             {s === 'all' ? 'Hamısı' : STATUS_CONFIG[s].label}
@@ -123,19 +124,19 @@ export default function ProfilOnayPage() {
 
       {/* Table */}
       {loading ? (
-        <div className="flex items-center justify-center py-20 rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-200 border-t-[#0A5BD6]" />
+        <div className="flex items-center justify-center py-20 rounded-[22px] border border-[#E4DCCD] bg-white">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#E4DCCD] border-t-[#0F172A]" />
         </div>
       ) : profiles.length === 0 ? (
-        <div className="py-20 text-center rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
-          <Shield size={40} className="mx-auto mb-4 text-slate-400" />
-          <p className="text-sm text-slate-600">Bu statusda profil yoxdur.</p>
+        <div className="py-20 text-center rounded-[22px] border border-[#E4DCCD] bg-white">
+          <Shield size={40} className="mx-auto mb-4 text-[#5B6474]" />
+          <p className="text-sm text-[#5B6474]">Bu statusda profil yoxdur.</p>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
+        <div className="overflow-x-auto rounded-[22px] border border-[#E4DCCD] bg-white">
           <table className="w-full min-w-[760px] text-sm">
             <thead>
-              <tr className="text-[12px] uppercase tracking-wide text-slate-500">
+              <tr className="bg-[#FBF8F3] text-[12px] uppercase tracking-wide text-[#5B6474]">
                 <th className="px-4 py-3 text-left font-semibold">Şirkət</th>
                 <th className="px-4 py-3 text-left font-semibold">E-poçt</th>
                 <th className="px-4 py-3 text-left font-semibold">Sektor</th>
@@ -148,29 +149,29 @@ export default function ProfilOnayPage() {
               {profiles.map((p) => {
                 const cfg = STATUS_CONFIG[p.approvalStatus] || STATUS_CONFIG.draft;
                 return (
-                  <tr key={p.id} className="border-t border-slate-100 transition-colors hover:bg-[#F9F9FB]">
+                  <tr key={p.id} className="border-t border-[#EFE9DE] transition-colors hover:bg-[#FBF8F3]">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         {p.logoUrl ? (
                           <img src={p.logoUrl} alt="" className="h-9 w-9 rounded-full object-cover" />
                         ) : (
-                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E8F1FF]">
-                            <Building2 size={14} className="text-[#0A5BD6]" />
+                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#EFE9DE]">
+                            <Building2 size={14} className="text-[#0F172A]" />
                           </div>
                         )}
-                        <span className="font-medium text-slate-900">{p.company || '—'}</span>
+                        <span className="font-medium text-[#0F172A]">{p.company || '—'}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-slate-600">{p.email}</td>
-                    <td className="px-4 py-3 text-slate-600">{p.sector || '—'}</td>
-                    <td className="px-4 py-3 text-slate-600">{p.city || '—'}</td>
+                    <td className="px-4 py-3 text-[#5B6474]">{p.email}</td>
+                    <td className="px-4 py-3 text-[#5B6474]">{p.sector || '—'}</td>
+                    <td className="px-4 py-3 text-[#5B6474]">{p.city || '—'}</td>
                     <td className="px-4 py-3">
                       <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-[12px] font-semibold ${cfg.color} ${cfg.bg}`}>
                         {cfg.label}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-center">
-                      <button type="button" onClick={() => setDetail(p)} aria-label="Profil detalları" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#EEF4FF] text-[#0A5BD6] transition-colors hover:bg-[#E0EBFF]">
+                      <button type="button" onClick={() => setDetail(p)} aria-label="Profil detalları" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#EFE9DE] text-[#0F172A] transition-colors hover:bg-[#E4DCCD]">
                         <Eye size={16} />
                       </button>
                     </td>
@@ -186,9 +187,9 @@ export default function ProfilOnayPage() {
       {detail && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4 backdrop-blur-sm">
           <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[22px] bg-white shadow-[0_24px_64px_rgba(0,0,0,0.18)]">
-            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-              <h2 className="text-[17px] font-semibold text-slate-900">Profil detalları</h2>
-              <button type="button" onClick={() => { setDetail(null); setRejectionReason(''); }} aria-label="Bağla" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#F2F2F7] text-slate-700 hover:bg-slate-200">
+            <div className="flex items-center justify-between border-b border-[#EFE9DE] px-6 py-4">
+              <h2 className="text-[17px] font-semibold text-[#0F172A]">Profil detalları</h2>
+              <button type="button" onClick={() => { setDetail(null); setRejectionReason(''); }} aria-label="Bağla" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#E4DCCD] bg-white text-[#334155] hover:border-[#0F172A]">
                 <X size={20} />
               </button>
             </div>
@@ -196,15 +197,15 @@ export default function ProfilOnayPage() {
               {/* Logo + company */}
               <div className="flex items-center gap-4">
                 {detail.logoUrl ? (
-                  <img src={detail.logoUrl} alt="" className="h-16 w-16 rounded-full border border-slate-200 object-cover" />
+                  <img src={detail.logoUrl} alt="" className="h-16 w-16 rounded-full border border-[#E4DCCD] object-cover" />
                 ) : (
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#E8F1FF]">
-                    <Building2 size={28} className="text-[#0A5BD6]" />
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#EFE9DE]">
+                    <Building2 size={28} className="text-[#0F172A]" />
                   </div>
                 )}
                 <div>
-                  <h3 className="text-[22px] font-semibold tracking-tight text-slate-900">{detail.company || 'Ad yoxdur'}</h3>
-                  <p className="text-sm text-slate-500">{detail.sector || '—'} · {detail.city || '—'}</p>
+                  <h3 className="text-[22px] font-semibold tracking-tight text-[#0F172A]">{detail.company || 'Ad yoxdur'}</h3>
+                  <p className="text-sm text-[#5B6474]">{detail.sector || '—'} · {detail.city || '—'}</p>
                 </div>
               </div>
 
@@ -219,7 +220,7 @@ export default function ProfilOnayPage() {
               </div>
 
               {detail.slug && (
-                <div className="flex items-center gap-2 text-xs text-slate-500 pt-2 border-t border-slate-100">
+                <div className="flex items-center gap-2 text-xs text-[#5B6474] pt-2 border-t border-[#EFE9DE]">
                   <ExternalLink size={12} />
                   <span>Public URL: /uzv/{detail.slug}</span>
                 </div>
@@ -227,7 +228,7 @@ export default function ProfilOnayPage() {
 
               {/* Actions */}
               {(detail.approvalStatus === 'submitted' || detail.approvalStatus === 'draft') && (
-                <div className="pt-4 border-t border-slate-100 space-y-3">
+                <div className="pt-4 border-t border-[#EFE9DE] space-y-3">
                   <div className="flex gap-3">
                     <button
                       type="button"
@@ -260,7 +261,7 @@ export default function ProfilOnayPage() {
                     value={rejectionReason}
                     onChange={(e) => setRejectionReason(e.target.value)}
                     aria-label="Rədd səbəbi (rədd edirsinizsə)..."
-                    className="w-full rounded-full border border-slate-200 bg-[#F9F9FB] px-4 py-2.5 text-[14px] text-slate-900 outline-none focus:border-rose-300 focus:bg-white"
+                    className="w-full rounded-full border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-2.5 text-[14px] text-[#0F172A] outline-none focus:border-rose-300 focus:bg-white"
                   />
                 </div>
               )}
@@ -275,16 +276,17 @@ export default function ProfilOnayPage() {
         </div>
       )}
     </div>
+    </div>
   );
 }
 
 function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | null | undefined }) {
   return (
-    <div className="flex items-start gap-2.5 rounded-[14px] bg-[#F2F2F7] px-3.5 py-2.5">
-      <span className="mt-0.5 text-[#0A5BD6]">{icon}</span>
+    <div className="flex items-start gap-2.5 rounded-[14px] bg-[#FBF8F3] px-3.5 py-2.5">
+      <span className="mt-0.5 text-[#0F172A]">{icon}</span>
       <div className="min-w-0">
-        <p className="text-[12px] text-slate-500">{label}</p>
-        <p className="break-words text-sm font-medium text-slate-900">{value || '—'}</p>
+        <p className="text-[12px] text-[#5B6474]">{label}</p>
+        <p className="break-words text-sm font-medium text-[#0F172A]">{value || '—'}</p>
       </div>
     </div>
   );

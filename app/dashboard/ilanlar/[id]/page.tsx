@@ -98,9 +98,9 @@ export default function DashboardIlanDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white p-6 lg:p-8">
-        <div className="mx-auto max-w-3xl rounded-[28px] border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <p className="text-sm text-slate-500">{t('loading')}</p>
+      <div className="min-h-screen bg-[#F6F1E9] p-6 lg:p-8">
+        <div className="mx-auto max-w-3xl rounded-[22px] border border-[#E4DCCD] bg-white p-8 text-center">
+          <p className="text-sm text-[#5B6474]">{t('loading')}</p>
         </div>
       </div>
     );
@@ -108,13 +108,13 @@ export default function DashboardIlanDetailPage() {
 
   if (!listing) {
     return (
-      <div className="min-h-screen bg-white p-6 lg:p-8">
-        <div className="mx-auto max-w-3xl rounded-[28px] border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <h1 className="font-display text-3xl font-black text-[var(--dk-navy)]">{t('notFound')}</h1>
-          <p className="mt-3 text-sm text-slate-500">{t('notFoundDesc')}</p>
+      <div className="min-h-screen bg-[#F6F1E9] p-6 lg:p-8">
+        <div className="mx-auto max-w-3xl rounded-[22px] border border-[#E4DCCD] bg-white p-8 text-center">
+          <h1 className="text-3xl font-black tracking-[-0.02em] text-[#0F172A]">{t('notFound')}</h1>
+          <p className="mt-3 text-sm text-[#5B6474]">{t('notFoundDesc')}</p>
           <Link
             href="/dashboard/ilanlar"
-            className="mt-6 inline-flex rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white"
+            className="mt-6 inline-flex rounded-full bg-dk-red-strong px-5 py-3 text-sm font-bold text-white transition hover:bg-dk-red-deep"
           >
             {t('backToList')}
           </Link>
@@ -194,14 +194,14 @@ export default function DashboardIlanDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F6F1E9] p-6 lg:p-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
-            <Link href="/dashboard/ilanlar" className="text-sm font-semibold text-slate-500 hover:text-[var(--dk-red)]">
+            <Link href="/dashboard/ilanlar" className="text-sm font-semibold text-[#5B6474] hover:text-[var(--dk-red)]">
               ← {t('backToList')}
             </Link>
-            <h1 className="mt-3 font-display text-4xl font-black text-[var(--dk-navy)]">{listing.title}</h1>
+            <h1 className="mt-3 text-4xl font-black tracking-[-0.02em] text-[#0F172A]">{listing.title}</h1>
           </div>
           {toast ? (
             <div className="rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
@@ -212,7 +212,7 @@ export default function DashboardIlanDetailPage() {
 
         <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
           <div className="space-y-6">
-            <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white">
               <div className="relative aspect-[16/9]">
                 <Image
                   src={listing.images[activeImage]?.url ?? listing.images[0].url}
@@ -228,7 +228,7 @@ export default function DashboardIlanDetailPage() {
                     type="button"
                     key={image.id}
                     onClick={() => setActiveImage(index)}
-                    className={`relative overflow-hidden rounded-2xl border ${activeImage === index ? 'border-[var(--dk-gold)] ring-2 ring-amber-100' : 'border-slate-200'}`}
+                    className={`relative overflow-hidden rounded-2xl border ${activeImage === index ? 'border-[#0F172A] ring-2 ring-[#E4DCCD]' : 'border-[#E4DCCD]'}`}
                   >
                     <div className="relative aspect-[4/3]">
                       <Image src={image.url} alt={image.alt} fill className="object-cover" sizes="200px" />
@@ -238,50 +238,50 @@ export default function DashboardIlanDetailPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <button
                   type="button"
                   onClick={handleCopyTracking}
-                  className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#EFE9DE] px-3 py-1 text-xs font-bold text-[#5B6474]"
                 >
                   {listing.trackingCode}
                   <Copy className="h-3.5 w-3.5" />
                 </button>
-                <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${category?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
+                <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${category?.badgeClass ?? 'bg-[#EFE9DE] text-[#334155]'}`}>
                   {category?.label ?? listing.type}
                 </span>
               </div>
-              <p className="text-sm leading-7 text-slate-600">{listing.description}</p>
+              <p className="text-sm leading-7 text-[#334155]">{listing.description}</p>
               <div className="mt-5 grid gap-4 md:grid-cols-2">
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">Qiymət</div>
-                  <div className="mt-2 text-2xl font-black text-[var(--dk-gold)]">
+                <div className="rounded-2xl bg-[#FBF8F3] p-4">
+                  <div className="text-xs font-black uppercase tracking-[0.18em] text-[#5B6474]">Qiymət</div>
+                  <div className="mt-2 text-2xl font-black text-[#BE2F47]">
                     {formatPrice(listing.price, listing.currency, listing.priceLabel)}
                   </div>
                 </div>
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">Tarix</div>
-                  <div className="mt-2 text-base font-semibold text-slate-700">{formatDate(listing.createdAt)}</div>
+                <div className="rounded-2xl bg-[#FBF8F3] p-4">
+                  <div className="text-xs font-black uppercase tracking-[0.18em] text-[#5B6474]">Tarix</div>
+                  <div className="mt-2 text-base font-semibold text-[#334155]">{formatDate(listing.createdAt)}</div>
                 </div>
               </div>
-              <div className="mt-5 text-sm text-slate-500">
+              <div className="mt-5 text-sm text-[#5B6474]">
                 {listing.city}{listing.district ? `, ${listing.district}` : ''} • {listing.currency}
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
               <div className="flex items-center gap-3">
-                <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Tipə görə məlumatlar</h2>
-                <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold ${category?.badgeClass ?? 'bg-slate-100 text-slate-700'}`}>
+                <h2 className="text-2xl font-black tracking-[-0.02em] text-[#0F172A]">Tipə görə məlumatlar</h2>
+                <span className={`inline-flex rounded-full px-3 py-1 text-[11px] font-bold ${category?.badgeClass ?? 'bg-[#EFE9DE] text-[#334155]'}`}>
                   {category?.label ?? listing.type}
                 </span>
               </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {fields.map((field) => (
-                  <div key={field.key} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-600">{field.label}</div>
-                    <div className="mt-2 text-sm font-semibold text-slate-700">
+                  <div key={field.key} className="rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] p-4">
+                    <div className="text-xs font-black uppercase tracking-[0.18em] text-[#5B6474]">{field.label}</div>
+                    <div className="mt-2 text-sm font-semibold text-[#334155]">
                       {renderFieldValue(listing.typeSpecificData[field.key])}
                       {field.suffix && listing.typeSpecificData[field.key] !== undefined && typeof listing.typeSpecificData[field.key] !== 'boolean'
                         ? ` ${field.suffix}`
@@ -292,15 +292,15 @@ export default function DashboardIlanDetailPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Sahibkar</h2>
-              <div className="mt-4 space-y-2 text-sm text-slate-600">
+            <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+              <h2 className="text-2xl font-black tracking-[-0.02em] text-[#0F172A]">Sahibkar</h2>
+              <div className="mt-4 space-y-2 text-sm text-[#5B6474]">
                 <div><strong>{t('labelName')}</strong> {listing.ownerName}</div>
                 <div><strong>{t('labelPhone')}</strong> +{listing.phone}</div>
                 <div><strong>{t('labelEmail')}</strong> {listing.email}</div>
               </div>
               <div className="mt-5 flex flex-wrap gap-3">
-                <a href={`tel:+${listing.phone}`} className="rounded-full bg-dk-red-strong px-5 py-2.5 text-sm font-bold text-white">
+                <a href={`tel:+${listing.phone}`} className="rounded-full bg-dk-red-strong px-5 py-2.5 text-sm font-bold text-white transition hover:bg-dk-red-deep">
                   <Phone className="mr-2 inline h-4 w-4" />
                   Zəng et
                 </a>
@@ -308,7 +308,7 @@ export default function DashboardIlanDetailPage() {
                   <MessageCircle className="mr-2 inline h-4 w-4" />
                   WhatsApp
                 </a>
-                <a href={`mailto:${listing.email}`} className="rounded-full border border-slate-200 px-5 py-2.5 text-sm font-bold text-slate-700">
+                <a href={`mailto:${listing.email}`} className="rounded-full border border-[#E4DCCD] px-5 py-2.5 text-sm font-bold text-[#334155]">
                   <Mail className="mr-2 inline h-4 w-4" />
                   Email
                 </a>
@@ -316,10 +316,10 @@ export default function DashboardIlanDetailPage() {
             </div>
 
             {privateContact && (privateContact.contactName || privateContact.contactPhone || privateContact.contactEmail || privateContact.committeeNotes) && (
-              <div className="rounded-[28px] border border-amber-200 bg-amber-50 p-6 shadow-sm">
-                <h2 className="font-display text-xl font-black text-[var(--dk-navy)]">{t('privateContactTitle')}</h2>
+              <div className="rounded-[22px] border border-amber-200 bg-amber-50 p-6">
+                <h2 className="text-xl font-black tracking-[-0.02em] text-[#0F172A]">{t('privateContactTitle')}</h2>
                 <p className="mt-1 text-xs font-medium text-amber-900">{t('privateContactHint')}</p>
-                <div className="mt-4 space-y-2 text-sm text-slate-800">
+                <div className="mt-4 space-y-2 text-sm text-[#0F172A]">
                   {privateContact.contactName && <div><strong>{t('labelName')}</strong> {privateContact.contactName}</div>}
                   {privateContact.contactPhone && (
                     <div>
@@ -330,7 +330,7 @@ export default function DashboardIlanDetailPage() {
                     </div>
                   )}
                   {privateContact.contactEmail && <div><strong>{t('labelEmail')}</strong> {privateContact.contactEmail}</div>}
-                  {privateContact.committeeNotes && <div className="text-slate-700"><strong>{t('sourceNote')}</strong> {privateContact.committeeNotes}</div>}
+                  {privateContact.committeeNotes && <div className="text-[#334155]"><strong>{t('sourceNote')}</strong> {privateContact.committeeNotes}</div>}
                 </div>
               </div>
             )}
@@ -339,8 +339,8 @@ export default function DashboardIlanDetailPage() {
           <div className="space-y-6">
             {/* AI Analysis Panel */}
             {listing.aiAnalysis && (
-              <div className="rounded-[28px] border border-blue-200 bg-blue-50/50 p-6 shadow-sm">
-                <h2 className="font-display text-xl font-black text-[var(--dk-navy)] flex items-center gap-2">
+              <div className="rounded-[22px] border border-sky-200 bg-sky-50/60 p-6">
+                <h2 className="text-xl font-black tracking-[-0.02em] text-[#0F172A] flex items-center gap-2">
                   🤖 AI Analiz
                   {(listing.aiAnalysis as Record<string, unknown>).qualityScore != null && (
                     <span className={`ml-2 inline-flex rounded-full px-3 py-1 text-xs font-bold ${
@@ -354,13 +354,13 @@ export default function DashboardIlanDetailPage() {
                     </span>
                   )}
                 </h2>
-                <p className="mt-3 text-sm text-slate-600">
+                <p className="mt-3 text-sm text-[#5B6474]">
                   {String((listing.aiAnalysis as Record<string, unknown>).summary ?? '')}
                 </p>
                 {Array.isArray((listing.aiAnalysis as Record<string, unknown>).strengths) && (
                   <div className="mt-3">
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-600 mb-1">Güclü tərəflər</div>
-                    <ul className="text-sm text-slate-600 space-y-1">
+                    <ul className="text-sm text-[#5B6474] space-y-1">
                       {((listing.aiAnalysis as Record<string, unknown>).strengths as string[]).map((s, i) => (
                         <li key={i} className="flex items-start gap-2"><span className="text-emerald-500">+</span>{s}</li>
                       ))}
@@ -370,7 +370,7 @@ export default function DashboardIlanDetailPage() {
                 {Array.isArray((listing.aiAnalysis as Record<string, unknown>).risks) && (
                   <div className="mt-3">
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-rose-600 mb-1">Risklər</div>
-                    <ul className="text-sm text-slate-600 space-y-1">
+                    <ul className="text-sm text-[#5B6474] space-y-1">
                       {((listing.aiAnalysis as Record<string, unknown>).risks as string[]).map((r, i) => (
                         <li key={i} className="flex items-start gap-2"><span className="text-rose-500">!</span>{r}</li>
                       ))}
@@ -379,7 +379,7 @@ export default function DashboardIlanDetailPage() {
                 )}
                 {(listing.aiAnalysis as Record<string, unknown>).recommendation && (
                   <div className="mt-3 text-xs">
-                    <span className="font-bold text-slate-500">Tövsiyə: </span>
+                    <span className="font-bold text-[#5B6474]">Tövsiyə: </span>
                     <span className={`font-bold ${
                       (listing.aiAnalysis as Record<string, unknown>).recommendation === 'approve' ? 'text-emerald-600' :
                       (listing.aiAnalysis as Record<string, unknown>).recommendation === 'review' ? 'text-amber-600' : 'text-rose-600'
@@ -394,14 +394,14 @@ export default function DashboardIlanDetailPage() {
 
             {/* Rejection Reason (if rejected) */}
             {listing.rejectedReason && status === 'rejected' && (
-              <div className="rounded-[28px] border border-rose-200 bg-rose-50 p-6 shadow-sm">
-                <h2 className="font-display text-xl font-black text-rose-700">Rədd səbəbi</h2>
+              <div className="rounded-[22px] border border-rose-200 bg-rose-50 p-6">
+                <h2 className="text-xl font-black tracking-[-0.02em] text-rose-700">Rədd səbəbi</h2>
                 <p className="mt-2 text-sm text-rose-600">{listing.rejectedReason}</p>
               </div>
             )}
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Status idarəsi</h2>
+            <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+              <h2 className="text-2xl font-black tracking-[-0.02em] text-[#0F172A]">Status idarəsi</h2>
               {badge ? (
                 <div className={`mt-4 inline-flex rounded-full border px-4 py-2 text-sm font-bold ${badge.color}`}>
                   {badge.label}
@@ -411,7 +411,7 @@ export default function DashboardIlanDetailPage() {
                 <select
                   value={nextStatus}
                   onChange={(event) => setNextStatus(event.target.value as ListingWorkflowStatus)}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                  className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#0F172A] outline-none focus:border-[#0F172A]"
                 >
                   <option value={status}>Hazırkı status</option>
                   {transitions.map((item) => (
@@ -431,38 +431,38 @@ export default function DashboardIlanDetailPage() {
                       onChange={(e) => setRejectedReason(e.target.value)}
                       rows={3}
                       placeholder="Rədd səbəbini yazın (owner-ə göstəriləcək)..."
-                      className="w-full rounded-xl border border-rose-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-rose-400"
+                      className="w-full rounded-xl border border-rose-200 bg-white px-4 py-3 text-sm text-[#0F172A] outline-none focus:border-rose-400"
                     />
                   </div>
                 )}
 
-                <label className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
-                  <input type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]" />
+                <label className="flex items-center gap-3 rounded-2xl bg-[#FBF8F3] px-4 py-3 text-sm font-semibold text-[#334155]">
+                  <input type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} className="h-4 w-4 rounded border-[#E4DCCD] text-[var(--dk-red)]" />
                   Seçilmiş elan
                 </label>
-                <label className="flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700">
-                  <input type="checkbox" checked={isShowcase} onChange={(e) => setIsShowcase(e.target.checked)} className="h-4 w-4 rounded border-slate-300 text-[var(--dk-red)]" />
+                <label className="flex items-center gap-3 rounded-2xl bg-[#FBF8F3] px-4 py-3 text-sm font-semibold text-[#334155]">
+                  <input type="checkbox" checked={isShowcase} onChange={(e) => setIsShowcase(e.target.checked)} className="h-4 w-4 rounded border-[#E4DCCD] text-[var(--dk-red)]" />
                   Vitrində göstər
                 </label>
 
                 <button
                   type="button"
                   onClick={handleStatusUpdate}
-                  className="w-full rounded-2xl bg-dk-red-strong px-5 py-3.5 text-sm font-bold text-white"
+                  className="w-full rounded-full bg-dk-red-strong px-5 py-3.5 text-sm font-bold text-white transition hover:bg-dk-red-deep"
                 >
                   Dəyiş
                 </button>
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">İncələmə qeydləri</h2>
+            <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+              <h2 className="text-2xl font-black tracking-[-0.02em] text-[#0F172A]">İncələmə qeydləri</h2>
               <textarea
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
                 rows={4}
                 placeholder="Qeyd yaz..."
-                className="mt-4 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-[var(--dk-gold)]"
+                className="mt-4 w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#0F172A] outline-none focus:border-[#0F172A]"
               />
               <div className="mt-4 flex items-center gap-2">
                 {Array.from({ length: 5 }).map((_, index) => (
@@ -470,7 +470,7 @@ export default function DashboardIlanDetailPage() {
                     type="button"
                     key={index}
                     onClick={() => setScore(index + 1)}
-                    className={index < score ? 'text-[var(--dk-gold)]' : 'text-slate-500'}
+                    className={index < score ? 'text-[#BE2F47]' : 'text-[#5B6474]'}
                   >
                     <Star className="h-5 w-5 fill-current" />
                   </button>
@@ -479,44 +479,44 @@ export default function DashboardIlanDetailPage() {
               <button
                 type="button"
                 onClick={handleSaveNote}
-                className="mt-4 w-full rounded-2xl border border-slate-200 px-5 py-3 text-sm font-bold text-slate-700"
+                className="mt-4 w-full rounded-full border border-[#E4DCCD] bg-white px-5 py-3 text-sm font-bold text-[#0F172A] transition hover:border-[#0F172A]"
               >
                 Saxla
               </button>
               <div className="mt-5 space-y-3">
                 {notes.map((item, index) => (
-                  <div key={`${item.createdAt}-${index}`} className="rounded-2xl bg-slate-50 p-4">
+                  <div key={`${item.createdAt}-${index}`} className="rounded-2xl bg-[#FBF8F3] p-4">
                     <div className="flex items-center justify-between gap-3">
-                      <div className="text-sm font-bold text-slate-800">{item.reviewer}</div>
-                      <div className="text-xs text-slate-600">{formatDate(item.createdAt)}</div>
+                      <div className="text-sm font-bold text-[#0F172A]">{item.reviewer}</div>
+                      <div className="text-xs text-[#5B6474]">{formatDate(item.createdAt)}</div>
                     </div>
-                    <div className="mt-2 text-sm text-slate-600">{item.note}</div>
-                    <div className="mt-2 text-xs font-semibold text-[var(--dk-gold)]">{item.score}/5 bal</div>
+                    <div className="mt-2 text-sm text-[#5B6474]">{item.note}</div>
+                    <div className="mt-2 text-xs font-semibold text-[#BE2F47]">{item.score}/5 bal</div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Maraq bildirişləri</h2>
+            <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+              <h2 className="text-2xl font-black tracking-[-0.02em] text-[#0F172A]">Maraq bildirişləri</h2>
               <div className="mt-4 space-y-3">
                 {leads.length ? (
                   leads.map((item, index) => (
-                    <div key={`${item.phone}-${index}`} className="rounded-2xl bg-slate-50 p-4">
+                    <div key={`${item.phone}-${index}`} className="rounded-2xl bg-[#FBF8F3] p-4">
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-sm font-bold text-slate-800">{item.name}</div>
-                        <div className="rounded-full bg-white px-3 py-1 text-[11px] font-bold text-slate-600">
+                        <div className="text-sm font-bold text-[#0F172A]">{item.name}</div>
+                        <div className="rounded-full bg-white px-3 py-1 text-[11px] font-bold text-[#5B6474]">
                           {item.status === 'new' ? 'Yeni' : 'Əlaqə saxlanıldı'}
                         </div>
                       </div>
-                      <div className="mt-2 text-sm text-slate-600">{item.phone}</div>
-                      <div className="mt-1 text-sm text-slate-500">{item.message}</div>
-                      <div className="mt-2 text-xs text-slate-600">{formatDate(item.createdAt)}</div>
+                      <div className="mt-2 text-sm text-[#5B6474]">{item.phone}</div>
+                      <div className="mt-1 text-sm text-[#5B6474]">{item.message}</div>
+                      <div className="mt-2 text-xs text-[#5B6474]">{formatDate(item.createdAt)}</div>
                       {item.status === 'new' ? (
                         <button
                           type="button"
                           onClick={() => handleLeadStatus(index)}
-                          className="mt-3 rounded-full border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700"
+                          className="mt-3 rounded-full border border-[#E4DCCD] px-4 py-2 text-xs font-bold text-[#334155]"
                         >
                           Əlaqə saxlanıldı
                         </button>
@@ -524,7 +524,7 @@ export default function DashboardIlanDetailPage() {
                     </div>
                   ))
                 ) : (
-                  <div className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-500">
+                  <div className="rounded-2xl bg-[#FBF8F3] p-4 text-sm text-[#5B6474]">
                     Hələ maraq bildirişi yoxdur.
                   </div>
                 )}

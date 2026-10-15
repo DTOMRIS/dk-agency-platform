@@ -44,10 +44,10 @@ export default async function DashboardBlogDetailPage({ params }: { params: Prom
   if (!post) notFound();
 
   return (
-    <div className="min-h-screen bg-white p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F6F1E9] p-6 lg:p-8">
       <div className="mx-auto max-w-7xl space-y-6">
-        <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-4xl font-black text-[var(--dk-navy)]">Blog yazısını düzəlt</h1>
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
+          <h1 className="text-[32px] font-bold tracking-tight text-[#0F172A] sm:text-[38px]">Blog yazısını düzəlt</h1>
         </div>
         <BlogEditorForm initialPost={toDraft(post)} />
       </div>

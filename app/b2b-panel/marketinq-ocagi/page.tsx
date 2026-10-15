@@ -31,6 +31,8 @@ import {
   type MarketingToolCategory,
 } from '@/lib/marketing-tools-config';
 import { toolHref } from '@/lib/marketing-tools-links';
+import home from '@/components/home/v2/homeV2.module.css';
+import { MarketinqFrame } from '@/components/marketinq-ocagi/MarketinqV2';
 
 // ── ICON MAP ────────────────────────────────────────────────────────
 
@@ -270,16 +272,16 @@ function ToolCard({
   const card = (
     <div
       data-testid="tool-card"
-      className={`group relative rounded-2xl border p-5 transition-all ${
+      className={`group relative h-full rounded-[22px] border p-5 transition-all ${
         isPlanned
-          ? 'border-slate-200 bg-slate-50/50'
-          : 'border-slate-200 bg-white hover:border-[var(--dk-gold)] hover:shadow-lg'
+          ? 'border-dashed border-[#E4DCCD] bg-[#FBF8F3]'
+          : 'border-[#E4DCCD] bg-white hover:-translate-y-0.5 hover:border-[#0F172A]'
       }`}
     >
       <div className="mb-3 flex items-start justify-between">
         <span
           className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${
-            isPlanned ? 'bg-slate-100 text-slate-600' : 'bg-slate-100 text-[var(--dk-navy)]'
+            isPlanned ? 'border border-[#E4DCCD] bg-white text-[#5B6474]' : 'bg-[#0F172A] text-white'
           }`}
         >
           <Icon size={20} />
@@ -291,7 +293,7 @@ function ToolCard({
             {copy.tiers[tool.tier]}
           </span>
           {isPlanned && (
-            <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+            <span className="rounded-full border border-[#E4DCCD] bg-white px-2 py-0.5 text-[10px] font-semibold text-[#5B6474]">
               {copy.comingSoon}
             </span>
           )}
@@ -299,13 +301,13 @@ function ToolCard({
       </div>
 
       <h3
-        className={`text-sm font-bold ${
-          isPlanned ? 'text-slate-500' : 'text-[var(--dk-navy)]'
+        className={`text-[15px] font-extrabold tracking-tight ${
+          isPlanned ? 'text-[#5B6474]' : 'text-[#0F172A]'
         }`}
       >
         {toolCopy?.title ?? tool.slug}
       </h3>
-      <p className="mt-1 text-xs leading-relaxed text-slate-500">
+      <p className="mt-1 text-[13px] leading-relaxed text-[#334155]">
         {toolCopy?.subtitle ?? ''}
       </p>
 
@@ -314,7 +316,7 @@ function ToolCard({
           {requested ? (
             <span
               data-testid="notify-done"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1F7A4D]"
             >
               <BellRing size={14} />
               {copy.notifyDone}
@@ -329,17 +331,17 @@ function ToolCard({
                 const ok = await onNotify(tool.slug);
                 setNotifyState(ok ? 'idle' : 'error');
               }}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-[var(--dk-gold)] hover:text-slate-900 disabled:opacity-60"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#E4DCCD] bg-white px-3 py-1.5 text-xs font-bold text-[#0F172A] transition hover:border-[#0F172A] disabled:opacity-60"
             >
               <Bell size={14} />
               {copy.notifyMe}
             </button>
           )}
           {waitingCount !== null && (
-            <span className="text-[11px] font-medium text-slate-700">{copy.waiting(waitingCount)}</span>
+            <span className="text-[11px] font-medium text-[#334155]">{copy.waiting(waitingCount)}</span>
           )}
           {notifyState === 'error' && (
-            <span className="w-full text-[11px] font-medium text-red-700">{copy.notifyError}</span>
+            <span className="w-full text-[11px] font-medium text-dk-red-strong">{copy.notifyError}</span>
           )}
         </div>
       )}
@@ -349,7 +351,7 @@ function ToolCard({
   if (isPlanned) return card;
 
   return (
-    <Link href={toolHref(tool.slug)}>
+    <Link href={toolHref(tool.slug)} className="block h-full">
       {card}
     </Link>
   );
@@ -399,12 +401,13 @@ export default function MarketinqOcagiPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
+    <MarketinqFrame>
+    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[var(--dk-navy)]">
+        <h1 className="text-3xl font-black tracking-tight text-[#0F172A] sm:text-4xl">
           {copy.title}
         </h1>
-        <p className="mt-1 text-sm text-slate-500">{copy.subtitle}</p>
+        <p className="mt-2 text-[15px] text-[#5B6474]">{copy.subtitle}</p>
       </div>
 
       {TOOL_CATEGORIES.map((category) => {
@@ -413,7 +416,8 @@ export default function MarketinqOcagiPage() {
 
         return (
           <section key={category} className="mb-10">
-            <h2 className="mb-4 text-base font-bold text-[var(--dk-navy)]">
+            <h2 className={`${home.eyebrow} mb-4`}>
+              <span className={home.dot} />
               {copy.categories[category]}
             </h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -432,5 +436,6 @@ export default function MarketinqOcagiPage() {
         );
       })}
     </div>
+    </MarketinqFrame>
   );
 }

@@ -119,11 +119,11 @@ export default function ImportPanel({
         <div className="min-w-0 max-w-3xl">
           <h2
             id="supply-import-title"
-            className="text-[20px] font-bold tracking-tight text-slate-900"
+            className="text-[20px] font-bold tracking-tight text-[#0F172A]"
           >
             {copy.importTitle}
           </h2>
-          <p className="mt-1 text-[14px] leading-relaxed text-slate-700">{copy.importIntro}</p>
+          <p className="mt-1 text-[14px] leading-relaxed text-[#334155]">{copy.importIntro}</p>
         </div>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[12px] font-semibold text-emerald-800">
           <ShieldCheck size={14} aria-hidden="true" />
@@ -133,7 +133,7 @@ export default function ImportPanel({
 
       <div className="mt-5 grid gap-4 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_auto]">
         <div className="min-w-0">
-          <span className="mb-1.5 block text-[12px] font-semibold text-slate-700">
+          <span className="mb-1.5 block text-[12px] font-semibold text-[#334155]">
             {copy.fileLabel}
           </span>
           <div className="flex min-w-0 items-center gap-3">
@@ -141,12 +141,12 @@ export default function ImportPanel({
               type="button"
               onClick={() => inputRef.current?.click()}
               disabled={busy}
-              className={`${PILL_BTN} bg-[#EEF4FF] text-[#0A4FB8] hover:bg-[#E0EBFF]`}
+              className={`${PILL_BTN} bg-[#EFE9DE] text-[#0F172A] hover:bg-[#E4DCCD]`}
             >
               <FileUp size={16} aria-hidden="true" />
               {copy.chooseFile}
             </button>
-            <span className="min-w-0 truncate text-[13px] font-medium text-slate-800">
+            <span className="min-w-0 truncate text-[13px] font-medium text-[#0F172A]">
               {file
                 ? copy.fileSelected(file.name, (file.size / 1024 / 1024).toFixed(1))
                 : copy.noFile}
@@ -163,7 +163,7 @@ export default function ImportPanel({
           </div>
         </div>
         <label className="min-w-0">
-          <span className="mb-1.5 block text-[12px] font-semibold text-slate-700">
+          <span className="mb-1.5 block text-[12px] font-semibold text-[#334155]">
             {copy.groupLabel}
           </span>
           <input
@@ -171,14 +171,14 @@ export default function ImportPanel({
             maxLength={120}
             onChange={(event) => setGroup(event.target.value)}
             placeholder={copy.groupPlaceholder}
-            className={`${FIELD} w-full placeholder:text-slate-500`}
+            className={`${FIELD} w-full placeholder:text-[#5B6474]`}
           />
         </label>
         <div>
-          <span className="mb-1.5 block text-[12px] font-semibold text-slate-700">
+          <span className="mb-1.5 block text-[12px] font-semibold text-[#334155]">
             {copy.windowLabel}
           </span>
-          <div className="flex flex-wrap gap-1 rounded-full bg-[#F2F2F7] p-1">
+          <div className="flex flex-wrap gap-1 rounded-full bg-[#F6F1E9] p-1">
             {IMPORT_WINDOWS.map((value) => (
               <button
                 key={value}
@@ -191,8 +191,8 @@ export default function ImportPanel({
                 }}
                 className={`h-8 whitespace-nowrap rounded-full px-3 text-[12px] font-semibold transition-colors ${
                   months === value
-                    ? 'bg-white text-slate-900 shadow-sm'
-                    : 'text-slate-700 hover:text-slate-900'
+                    ? 'bg-white text-[#0F172A]'
+                    : 'text-[#334155] hover:text-[#0F172A]'
                 }`}
               >
                 {copy.windowOption(value)}
@@ -207,7 +207,7 @@ export default function ImportPanel({
           type="button"
           onClick={() => void send('preview')}
           disabled={busy || !file}
-          className={`${PILL_BTN} bg-slate-900 text-white hover:bg-slate-800`}
+          className={`${PILL_BTN} bg-[#0F172A] text-white hover:bg-[#1E293B]`}
         >
           {phase === 'analysing' || phase === 'extracting' ? (
             <Loader2 size={16} className="animate-spin" />
@@ -222,12 +222,12 @@ export default function ImportPanel({
           type="button"
           onClick={() => void send('commit')}
           disabled={!canImport}
-          className={`${PILL_BTN} bg-[#E11D48] text-white hover:bg-[#BE123C]`}
+          className={`${PILL_BTN} bg-dk-red-strong text-white hover:bg-dk-red-deep`}
         >
           {phase === 'importing' ? <Loader2 size={16} className="animate-spin" /> : null}
           {phase === 'importing' ? copy.importing : copy.importButton}
         </button>
-        <span className="text-[12px] font-medium text-slate-700">{copy.reimportNote}</span>
+        <span className="text-[12px] font-medium text-[#334155]">{copy.reimportNote}</span>
       </div>
 
       {error ? (
@@ -244,14 +244,14 @@ export default function ImportPanel({
       {summary ? (
         <div className="mt-6 space-y-5" data-testid="supply-preview">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h3 className="text-[17px] font-bold text-slate-900">
+            <h3 className="text-[17px] font-bold text-[#0F172A]">
               {copy.previewTitle}
               {summary.group ? (
-                <span className="font-medium text-slate-700"> · {summary.group}</span>
+                <span className="font-medium text-[#334155]"> · {summary.group}</span>
               ) : null}
             </h3>
             {summary.firstDate && summary.lastDate ? (
-              <span className="text-[13px] font-medium text-slate-700">
+              <span className="text-[13px] font-medium text-[#334155]">
                 {copy.period(formatAzDate(summary.since), formatAzDate(summary.lastDate))}
               </span>
             ) : null}
@@ -292,28 +292,28 @@ export default function ImportPanel({
           </div>
 
           <div className="grid gap-4 lg:grid-cols-2">
-            <div className="min-w-0 overflow-x-auto rounded-[18px] ring-1 ring-slate-200">
+            <div className="min-w-0 overflow-x-auto rounded-[18px] ring-1 ring-[#E4DCCD]">
               <table className="w-full min-w-[320px] text-left text-[13px]">
-                <caption className="px-4 pt-3 text-left text-[13px] font-bold text-slate-900">
+                <caption className="px-4 pt-3 text-left text-[13px] font-bold text-[#0F172A]">
                   {copy.classTableTitle}
                 </caption>
                 <thead>
-                  <tr className="text-[11px] uppercase tracking-wide text-slate-700">
+                  <tr className="bg-[#FBF8F3] text-[11px] uppercase tracking-wide text-[#334155]">
                     <th className="px-4 py-2 font-semibold">{copy.colClass}</th>
                     <th className="px-4 py-2 text-right font-semibold">{copy.colMessages}</th>
                     <th className="px-4 py-2 text-right font-semibold">{copy.colUnique}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-[#EFE9DE]">
                   {relevantClasses.map((row) => (
                     <tr key={row.cls}>
-                      <td className="px-4 py-1.5 font-medium text-slate-900">
+                      <td className="px-4 py-1.5 font-medium text-[#0F172A]">
                         {copy.classLabels[row.cls] ?? row.cls}
                       </td>
-                      <td className="px-4 py-1.5 text-right tabular-nums text-slate-800">
+                      <td className="px-4 py-1.5 text-right tabular-nums text-[#0F172A]">
                         {row.messages}
                       </td>
-                      <td className="px-4 py-1.5 text-right tabular-nums text-slate-800">
+                      <td className="px-4 py-1.5 text-right tabular-nums text-[#0F172A]">
                         {row.unique}
                       </td>
                     </tr>
@@ -321,28 +321,28 @@ export default function ImportPanel({
                 </tbody>
               </table>
             </div>
-            <div className="min-w-0 overflow-x-auto rounded-[18px] ring-1 ring-slate-200">
+            <div className="min-w-0 overflow-x-auto rounded-[18px] ring-1 ring-[#E4DCCD]">
               <table className="w-full min-w-[320px] text-left text-[13px]">
-                <caption className="px-4 pt-3 text-left text-[13px] font-bold text-slate-900">
+                <caption className="px-4 pt-3 text-left text-[13px] font-bold text-[#0F172A]">
                   {copy.categoriesTitle}
                 </caption>
                 <thead>
-                  <tr className="text-[11px] uppercase tracking-wide text-slate-700">
+                  <tr className="bg-[#FBF8F3] text-[11px] uppercase tracking-wide text-[#334155]">
                     <th className="px-4 py-2 font-semibold">{copy.colCategories}</th>
                     <th className="px-4 py-2 text-right font-semibold">{copy.colSuppliers}</th>
                     <th className="px-4 py-2 text-right font-semibold">{copy.colRequests}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-[#EFE9DE]">
                   {SUPPLY_CATEGORY_KEYS.map((key) => (
                     <tr key={key}>
-                      <td className="px-4 py-1.5 font-medium text-slate-900">
+                      <td className="px-4 py-1.5 font-medium text-[#0F172A]">
                         {categoryLabel(key, locale)}
                       </td>
-                      <td className="px-4 py-1.5 text-right tabular-nums text-slate-800">
+                      <td className="px-4 py-1.5 text-right tabular-nums text-[#0F172A]">
                         {summary.suppliers.categories[key] ?? 0}
                       </td>
-                      <td className="px-4 py-1.5 text-right tabular-nums text-slate-800">
+                      <td className="px-4 py-1.5 text-right tabular-nums text-[#0F172A]">
                         {summary.requests.categories[key] ?? 0}
                       </td>
                     </tr>
@@ -353,24 +353,24 @@ export default function ImportPanel({
           </div>
 
           <div className="grid gap-4 lg:grid-cols-2">
-            <div className="min-w-0 overflow-x-auto rounded-[18px] ring-1 ring-slate-200">
+            <div className="min-w-0 overflow-x-auto rounded-[18px] ring-1 ring-[#E4DCCD]">
               <table className="w-full min-w-[440px] text-left text-[13px]">
-                <caption className="px-4 pt-3 text-left text-[13px] font-bold text-slate-900">
+                <caption className="px-4 pt-3 text-left text-[13px] font-bold text-[#0F172A]">
                   {copy.sampleSuppliers}
                 </caption>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-[#EFE9DE]">
                   {summary.suppliers.sample.map((row, index) => (
                     <tr key={`${row.displayName}-${index}`} className="align-top">
                       <td className="min-w-[180px] px-4 py-2">
-                        <div className="font-semibold text-slate-900">{row.displayName}</div>
-                        <div className="text-[12px] text-slate-700">
+                        <div className="font-semibold text-[#0F172A]">{row.displayName}</div>
+                        <div className="text-[12px] text-[#334155]">
                           {copy.postsCount(row.posts)} · {copy.phonesCount(row.phones)}
                         </div>
                       </td>
                       <td className="px-4 py-2">
                         <CategoryBadges keys={row.categories} locale={locale} />
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-right text-[12px] tabular-nums text-slate-700">
+                      <td className="whitespace-nowrap px-4 py-2 text-right text-[12px] tabular-nums text-[#334155]">
                         {formatAzDate(row.lastSeen)}
                       </td>
                     </tr>
@@ -378,26 +378,26 @@ export default function ImportPanel({
                 </tbody>
               </table>
             </div>
-            <div className="min-w-0 overflow-x-auto rounded-[18px] ring-1 ring-slate-200">
+            <div className="min-w-0 overflow-x-auto rounded-[18px] ring-1 ring-[#E4DCCD]">
               <table className="w-full min-w-[440px] text-left text-[13px]">
-                <caption className="px-4 pt-3 text-left text-[13px] font-bold text-slate-900">
+                <caption className="px-4 pt-3 text-left text-[13px] font-bold text-[#0F172A]">
                   {copy.sampleRequests}
                 </caption>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-[#EFE9DE]">
                   {summary.requests.sample.map((row, index) => (
                     <tr key={`${row.requesterName}-${index}`} className="align-top">
                       <td className="px-4 py-2">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="font-semibold text-slate-900">{row.requesterName}</span>
-                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-800">
+                          <span className="font-semibold text-[#0F172A]">{row.requesterName}</span>
+                          <span className="rounded-full bg-[#EFE9DE] px-2 py-0.5 text-[11px] font-semibold text-[#0F172A]">
                             {copy.requestTypes[
                               row.requestType as keyof SupplyCopy['requestTypes']
                             ] ?? row.requestType}
                           </span>
                         </div>
-                        <p className="mt-1 line-clamp-2 text-[12px] text-slate-700">{row.text}</p>
+                        <p className="mt-1 line-clamp-2 text-[12px] text-[#334155]">{row.text}</p>
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2 text-right text-[12px] tabular-nums text-slate-700">
+                      <td className="whitespace-nowrap px-4 py-2 text-right text-[12px] tabular-nums text-[#334155]">
                         {formatAzDate(row.postedAt)}
                       </td>
                     </tr>
@@ -414,12 +414,12 @@ export default function ImportPanel({
 
 function Stat({ label, value, hint }: { label: string; value: number; hint?: string }) {
   return (
-    <div className="rounded-[18px] bg-[#F7F7FA] p-4">
-      <p className="text-[13px] font-medium text-slate-700">{label}</p>
-      <p className="mt-2 text-[28px] font-semibold leading-none tracking-tight text-slate-900 tabular-nums">
+    <div className="rounded-[18px] bg-[#FBF8F3] p-4">
+      <p className="text-[13px] font-medium text-[#334155]">{label}</p>
+      <p className="mt-2 text-[28px] font-black leading-none tracking-[-0.03em] text-[#0F172A] tabular-nums">
         {value}
       </p>
-      {hint ? <p className="mt-1.5 text-[12px] font-medium text-slate-700">{hint}</p> : null}
+      {hint ? <p className="mt-1.5 text-[12px] font-medium text-[#334155]">{hint}</p> : null}
     </div>
   );
 }

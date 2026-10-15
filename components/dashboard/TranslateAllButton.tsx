@@ -77,12 +77,12 @@ export default function TranslateAllButton({ slugs }: { slugs: string[] }) {
         type="button"
         onClick={run}
         disabled={state === 'running' || slugs.length === 0}
-        className="rounded-lg bg-dk-red-strong px-4 py-2 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-full bg-dk-red-strong px-5 py-2 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:opacity-60"
       >
         {state === 'running' ? 'Tərcümə olunur…' : slugs.length ? `Hamısını tərcümə et (${slugs.length})` : 'Hamısı tərcümə olunub'}
       </button>
       {summary && (
-        <span className={`text-sm font-semibold ${state === 'error' ? 'text-red-600' : state === 'done' ? 'text-emerald-700' : 'text-slate-600'}`}>
+        <span className={`text-sm font-semibold ${state === 'error' ? 'text-red-600' : state === 'done' ? 'text-emerald-700' : 'text-[#5B6474]'}`}>
           {summary}
         </span>
       )}

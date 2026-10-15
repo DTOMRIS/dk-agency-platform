@@ -63,13 +63,13 @@ export default function NudgeBanner() {
   const ctaHref = nudge.ctaHref ?? `/${locale}/marketinq`;
 
   return (
-    <div className="mb-6 flex items-center gap-4 rounded-xl border-l-4 border-amber-400 bg-amber-50 px-5 py-3">
+    <div className="mb-6 flex items-center gap-4 rounded-[22px] border border-amber-200 bg-amber-50 px-5 py-3">
       <Lightbulb className="h-5 w-5 flex-shrink-0 text-amber-600" />
-      <p className="flex-1 text-sm text-gray-700">{message}</p>
+      <p className="flex-1 text-sm text-[#334155]">{message}</p>
       <Link
         href={ctaHref}
         onClick={() => track('nudge_clicked', { key: nudge.key })}
-        className="inline-flex items-center gap-1 whitespace-nowrap rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-amber-600"
+        className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-dk-red-strong px-3.5 py-1.5 text-xs font-bold text-white hover:bg-dk-red-deep"
       >
         {cta}
         <ArrowRight className="h-3 w-3" />

@@ -61,19 +61,19 @@ export default function AddMemberModal({ open, onClose, onSuccess }: AddMemberMo
   };
 
   const inputCls =
-    'w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-800 outline-none transition focus:border-[var(--dk-gold)] focus:ring-2 focus:ring-[var(--dk-gold)]/20';
+    'h-11 w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-3 text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A] focus:ring-2 focus:ring-[#0F172A]/10';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white shadow-xl">
-        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-          <h2 className="font-display text-lg font-bold text-[var(--dk-navy)]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/30 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-md rounded-[22px] border border-[#E4DCCD] bg-white shadow-[0_24px_60px_rgba(15,23,42,0.18)]">
+        <div className="flex items-center justify-between border-b border-[#EFE9DE] px-6 py-4">
+          <h2 className="text-lg font-bold tracking-tight text-[#0F172A]">
             {t('addMember.title')}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-600 transition hover:bg-slate-100 hover:text-slate-600"
+            className="rounded-full p-1.5 text-[#5B6474] transition hover:bg-[#F6F1E9] hover:text-[#0F172A]"
           >
             <X size={18} />
           </button>
@@ -87,7 +87,7 @@ export default function AddMemberModal({ open, onClose, onSuccess }: AddMemberMo
           )}
 
           <div>
-            <label className="mb-1 block text-xs font-semibold text-slate-500">
+            <label className="mb-1 block text-xs font-semibold text-[#5B6474]">
               {t('addMember.fieldName')} *
             </label>
             <input
@@ -101,7 +101,7 @@ export default function AddMemberModal({ open, onClose, onSuccess }: AddMemberMo
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-semibold text-slate-500">
+            <label className="mb-1 block text-xs font-semibold text-[#5B6474]">
               {t('addMember.fieldEmail')} *
             </label>
             <input
@@ -115,7 +115,7 @@ export default function AddMemberModal({ open, onClose, onSuccess }: AddMemberMo
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-semibold text-slate-500">
+            <label className="mb-1 block text-xs font-semibold text-[#5B6474]">
               {t('addMember.fieldRole')}
             </label>
             <select value={role} onChange={(e) => setRole(e.target.value)} className={inputCls}>
@@ -127,7 +127,7 @@ export default function AddMemberModal({ open, onClose, onSuccess }: AddMemberMo
           <button
             type="submit"
             disabled={loading || !name.trim() || !email.trim()}
-            className="w-full rounded-xl bg-[var(--dk-gold)] px-4 py-2.5 text-sm font-bold text-white transition hover:opacity-90 disabled:opacity-50"
+            className="w-full rounded-full bg-dk-red-strong px-4 py-2.5 text-sm font-bold text-white transition hover:bg-dk-red-deep disabled:opacity-50"
           >
             {loading ? t('states.loading') : t('addMember.submit')}
           </button>

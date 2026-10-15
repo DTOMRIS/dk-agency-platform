@@ -172,14 +172,14 @@ export default function RequestsTab({
           <span className="sr-only">{copy.searchRequests}</span>
           <Search
             size={16}
-            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600"
+            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#5B6474]"
             aria-hidden="true"
           />
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder={copy.searchRequests}
-            className={`${FIELD} w-full pl-10 placeholder:text-slate-500`}
+            className={`${FIELD} w-full pl-10 placeholder:text-[#5B6474]`}
           />
         </label>
         <select
@@ -235,7 +235,7 @@ export default function RequestsTab({
           ))}
         </select>
         {data ? (
-          <span className="rounded-full bg-[#F2F2F7] px-3 py-1.5 text-[12px] font-semibold text-slate-900">
+          <span className="rounded-full bg-[#F6F1E9] px-3 py-1.5 text-[12px] font-semibold text-[#0F172A]">
             {copy.resultsCount(data.total)}
           </span>
         ) : null}
@@ -248,12 +248,12 @@ export default function RequestsTab({
       ) : null}
 
       {loading && !data ? (
-        <div className={`${CARD} px-5 py-10 text-center text-[14px] text-slate-700`}>
+        <div className={`${CARD} px-5 py-10 text-center text-[14px] text-[#334155]`}>
           {copy.loading}
         </div>
       ) : null}
       {data && data.rows.length === 0 ? (
-        <div className={`${CARD} px-5 py-10 text-center text-[14px] text-slate-700`}>
+        <div className={`${CARD} px-5 py-10 text-center text-[14px] text-[#334155]`}>
           {hasFilters ? copy.emptyRequests : copy.emptyRequestsAll}
         </div>
       ) : null}
@@ -320,12 +320,12 @@ function RequestCard({
           <Avatar name={row.requesterName} />
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-semibold text-slate-900">{row.requesterName}</span>
+              <span className="font-semibold text-[#0F172A]">{row.requesterName}</span>
               <span className="rounded-full bg-violet-50 px-2 py-0.5 text-[11px] font-semibold text-violet-800">
                 {typeLabel}
               </span>
             </div>
-            <div className="text-[12px] font-medium text-slate-700">
+            <div className="text-[12px] font-medium text-[#334155]">
               {formatAzDate(row.postedAt)} · {row.sourceGroup}
             </div>
           </div>
@@ -339,7 +339,7 @@ function RequestCard({
         />
       </div>
 
-      <p className="mt-3 whitespace-pre-wrap break-words text-[14px] leading-relaxed text-slate-900">
+      <p className="mt-3 whitespace-pre-wrap break-words text-[14px] leading-relaxed text-[#0F172A]">
         {row.text}
       </p>
 
@@ -348,7 +348,7 @@ function RequestCard({
         {row.phones.length ? <PhoneList phones={row.phones} copy={copy} /> : null}
       </div>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-3">
+      <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-[#EFE9DE] pt-3">
         <button
           type="button"
           aria-expanded={expanded}
@@ -356,7 +356,7 @@ function RequestCard({
           className={`${PILL_BTN} h-9 ${
             row.matchCount > 0
               ? 'bg-emerald-50 text-emerald-900 hover:bg-emerald-100'
-              : 'bg-[#F2F2F7] text-slate-800'
+              : 'bg-[#F6F1E9] text-[#0F172A]'
           }`}
         >
           {copy.matchesButton(row.matchCount)}
@@ -377,7 +377,7 @@ function RequestCard({
             }}
             onBlur={() => void saveNotes()}
             placeholder={copy.notesPlaceholder}
-            className={`${FIELD} h-9 w-full placeholder:text-slate-500`}
+            className={`${FIELD} h-9 w-full placeholder:text-[#5B6474]`}
           />
         </label>
         {noteSaved ? (
@@ -386,28 +386,28 @@ function RequestCard({
       </div>
 
       {expanded ? (
-        <div className="mt-3 rounded-[16px] bg-[#F7F7FA] p-3">
+        <div className="mt-3 rounded-[16px] bg-[#FBF8F3] p-3">
           {row.categories.length === 0 ? (
-            <p className="text-[13px] text-slate-700">{copy.noCategories}</p>
+            <p className="text-[13px] text-[#334155]">{copy.noCategories}</p>
           ) : row.matches.length === 0 ? (
-            <p className="text-[13px] text-slate-700">{copy.noMatches}</p>
+            <p className="text-[13px] text-[#334155]">{copy.noMatches}</p>
           ) : (
             <>
-              <ul className="divide-y divide-slate-200/70">
+              <ul className="divide-y divide-[#EFE9DE]">
                 {row.matches.map((match) => (
                   <li
                     key={match.id}
                     className="flex flex-wrap items-start justify-between gap-3 py-2"
                   >
                     <div className="min-w-0">
-                      <div className="font-semibold text-slate-900">{match.displayName}</div>
+                      <div className="font-semibold text-[#0F172A]">{match.displayName}</div>
                       <div className="mt-1">
                         <CategoryBadges keys={match.categories} locale={locale} />
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-1">
                       <PhoneList phones={match.phones} copy={copy} />
-                      <span className="text-[11px] font-medium text-slate-700">
+                      <span className="text-[11px] font-medium text-[#334155]">
                         {copy.colLastSeen}: {formatAzDate(match.lastSeen)}
                       </span>
                     </div>
@@ -418,7 +418,7 @@ function RequestCard({
                 <button
                   type="button"
                   onClick={() => onShowSuppliers(row.categories)}
-                  className="mt-2 text-[13px] font-semibold text-[#0A5BD6] hover:underline"
+                  className="mt-2 text-[13px] font-semibold text-[#BE2F47] hover:underline"
                 >
                   {copy.showInSuppliers} ({row.matchCount})
                 </button>

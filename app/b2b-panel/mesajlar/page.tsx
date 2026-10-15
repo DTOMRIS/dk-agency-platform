@@ -160,56 +160,56 @@ export default function B2BMessagesPage() {
   const unreadCount = messages.filter((m) => !m.read).length;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F6F1E9]">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-5">
-        <div className="flex items-center justify-between">
+      <div className="px-4 pt-6 sm:px-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{copy.heading}</h1>
-            <p className="text-sm text-gray-500 mt-1">{copy.subheading}</p>
+            <h1 className="text-3xl font-extrabold tracking-tight text-[#0F172A]">{copy.heading}</h1>
+            <p className="text-sm text-[#5B6474] mt-1">{copy.subheading}</p>
           </div>
-          <button className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-dk-red-strong to-dk-red-deep hover:from-dk-red-deep hover:to-dk-red-deep text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl">
+          <button className="inline-flex h-11 items-center gap-2 self-start rounded-full bg-dk-red-strong px-5 text-sm font-bold text-white transition-colors hover:bg-dk-red-deep sm:self-auto">
             <Plus size={18} />
             {copy.newMessage}
           </button>
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         {/* Quick Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
+          <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-                <Inbox size={20} className="text-blue-600" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E4DCCD] bg-[#FBF8F3]">
+                <Inbox size={20} className="text-[#0F172A]" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900">{messages.length}</p>
-                <p className="text-xs text-gray-500">{copy.statTotal}</p>
+                <p className="text-2xl font-bold text-[#0F172A]">{messages.length}</p>
+                <p className="text-xs text-[#5B6474]">{copy.statTotal}</p>
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
+          <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
-                <Bell size={20} className="text-amber-600" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E4DCCD] bg-[#FBF8F3]">
+                <Bell size={20} className="text-[#0F172A]" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900">{unreadCount}</p>
-                <p className="text-xs text-gray-500">{copy.statUnread}</p>
+                <p className="text-2xl font-bold text-[#0F172A]">{unreadCount}</p>
+                <p className="text-xs text-[#5B6474]">{copy.statUnread}</p>
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
+          <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
-                <Sparkles size={20} className="text-purple-600" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#E4DCCD] bg-[#FBF8F3]">
+                <Sparkles size={20} className="text-[#0F172A]" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-2xl font-bold text-[#0F172A]">
                   {messages.filter((m) => m.avatar === 'AI').length}
                 </p>
-                <p className="text-xs text-gray-500">{copy.statAiReports}</p>
+                <p className="text-xs text-[#5B6474]">{copy.statAiReports}</p>
               </div>
             </div>
           </div>
@@ -218,47 +218,47 @@ export default function B2BMessagesPage() {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Message List */}
           <div
-            className={`${selectedMessage ? 'hidden lg:block lg:w-[400px]' : 'flex-1'} bg-white rounded-2xl border border-gray-200 overflow-hidden`}
+            className={`${selectedMessage ? 'hidden lg:block lg:w-[400px]' : 'flex-1'} overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white`}
           >
             {/* Search & Filter */}
-            <div className="p-4 border-b border-gray-100">
+            <div className="border-b border-[#EFE9DE] p-4">
               <div className="relative mb-4">
                 <Search
                   size={18}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#5B6474]"
                 />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={copy.searchPlaceholder}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-slate-900 placeholder:text-slate-400 bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
+                  className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] py-2.5 pl-10 pr-4 text-[#0F172A] placeholder:text-[#5B6474]/70 focus:border-[#0F172A] focus:outline-none"
                 />
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => setFilter('all')}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors ${
                     filter === 'all'
-                      ? 'bg-dk-red-strong text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-[#0F172A] text-white'
+                      : 'border border-[#E4DCCD] bg-white text-[#334155] hover:border-[#0F172A]'
                   }`}
                 >
                   {copy.filterAll}
                 </button>
                 <button
                   onClick={() => setFilter('unread')}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2 ${
+                  className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors flex items-center gap-2 ${
                     filter === 'unread'
-                      ? 'bg-dk-red-strong text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-[#0F172A] text-white'
+                      : 'border border-[#E4DCCD] bg-white text-[#334155] hover:border-[#0F172A]'
                   }`}
                 >
                   {copy.filterUnread}
                   {unreadCount > 0 && (
                     <span
                       className={`px-1.5 py-0.5 text-xs rounded-full ${
-                        filter === 'unread' ? 'bg-white/20' : 'bg-red-100 text-red-700'
+                        filter === 'unread' ? 'bg-white/20' : 'bg-dk-red-strong text-white'
                       }`}
                     >
                       {unreadCount}
@@ -267,10 +267,10 @@ export default function B2BMessagesPage() {
                 </button>
                 <button
                   onClick={() => setFilter('starred')}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors ${
                     filter === 'starred'
-                      ? 'bg-dk-red-strong text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-[#0F172A] text-white'
+                      : 'border border-[#E4DCCD] bg-white text-[#334155] hover:border-[#0F172A]'
                   }`}
                 >
                   <Star size={14} className={filter === 'starred' ? 'fill-white' : ''} />
@@ -281,7 +281,7 @@ export default function B2BMessagesPage() {
             {/* Messages */}
             <div className="max-h-[600px] overflow-y-auto">
               {filteredMessages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-16 text-gray-500">
+                <div className="flex flex-col items-center justify-center py-16 text-[#5B6474]">
                   <Mail size={48} className="mb-4 opacity-50" />
                   <p>{copy.noMessages}</p>
                 </div>
@@ -290,11 +290,11 @@ export default function B2BMessagesPage() {
                   <div
                     key={message.id}
                     onClick={() => setSelectedMessage(message)}
-                    className={`p-4 border-b border-gray-100 cursor-pointer transition-all ${
+                    className={`p-4 border-b border-[#EFE9DE] cursor-pointer transition-all ${
                       selectedMessage?.id === message.id
-                        ? 'bg-red-50 border-l-4 border-l-dk-red'
-                        : 'hover:bg-gray-50'
-                    } ${!message.read ? 'bg-blue-50/30' : ''}`}
+                        ? 'bg-[#FBF8F3] border-l-4 border-l-[#0F172A]'
+                        : 'hover:bg-[#FBF8F3]'
+                    } ${!message.read ? 'bg-[#FBF8F3]/60' : ''}`}
                   >
                     <div className="flex items-start gap-3">
                       <div
@@ -307,7 +307,7 @@ export default function B2BMessagesPage() {
                                 ? 'bg-gradient-to-br from-blue-500 to-cyan-600'
                                 : message.avatar === 'SY'
                                   ? 'bg-gradient-to-br from-amber-500 to-orange-600'
-                                  : 'bg-gradient-to-br from-gray-500 to-gray-700'
+                                  : 'bg-[#334155]'
                         }`}
                       >
                         {message.avatar === 'AI' ? <Sparkles size={18} /> : message.avatar}
@@ -316,27 +316,27 @@ export default function B2BMessagesPage() {
                         <div className="flex items-center justify-between mb-1">
                           <div className="flex items-center gap-2">
                             <p
-                              className={`text-sm truncate ${!message.read ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}`}
+                              className={`text-sm truncate ${!message.read ? 'font-bold text-[#0F172A]' : 'font-medium text-[#334155]'}`}
                             >
                               {message.from}
                             </p>
-                            {message.isFromAdmin && <Shield size={12} className="text-red-600" />}
+                            {message.isFromAdmin && <Shield size={12} className="text-dk-red-strong" />}
                           </div>
                           <div className="flex items-center gap-2 shrink-0">
                             {message.starred && (
                               <Star size={14} className="text-amber-500 fill-amber-500" />
                             )}
-                            <span className="text-xs text-gray-400">{message.time}</span>
+                            <span className="text-xs text-[#5B6474]">{message.time}</span>
                           </div>
                         </div>
                         <p
-                          className={`text-sm truncate ${!message.read ? 'font-semibold text-gray-800' : 'text-gray-600'}`}
+                          className={`text-sm truncate ${!message.read ? 'font-semibold text-[#0F172A]' : 'text-[#5B6474]'}`}
                         >
                           {message.subject}
                         </p>
-                        <p className="text-xs text-gray-500 truncate mt-1">{message.preview}</p>
+                        <p className="text-xs text-[#5B6474] truncate mt-1">{message.preview}</p>
                         {message.hasAttachment && (
-                          <div className="flex items-center gap-1 mt-2 text-gray-400">
+                          <div className="flex items-center gap-1 mt-2 text-[#5B6474]">
                             <Paperclip size={12} />
                             <span className="text-xs">{copy.attachmentLabel}</span>
                           </div>
@@ -351,13 +351,13 @@ export default function B2BMessagesPage() {
 
           {/* Message Detail */}
           {selectedMessage && (
-            <div className="flex-1 bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col">
+            <div className="flex flex-1 flex-col overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white">
               {/* Header */}
-              <div className="p-6 border-b border-gray-200">
+              <div className="border-b border-[#EFE9DE] p-5 sm:p-6">
                 <div className="flex items-start gap-4">
                   <button
                     onClick={() => setSelectedMessage(null)}
-                    className="p-3 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
+                    className="rounded-full border border-[#E4DCCD] p-3 transition-colors hover:border-[#0F172A] lg:hidden"
                   >
                     <ArrowLeft size={20} />
                   </button>
@@ -371,7 +371,7 @@ export default function B2BMessagesPage() {
                             ? 'bg-gradient-to-br from-blue-500 to-cyan-600'
                             : selectedMessage.avatar === 'SY'
                               ? 'bg-gradient-to-br from-amber-500 to-orange-600'
-                              : 'bg-gradient-to-br from-gray-500 to-gray-700'
+                              : 'bg-[#334155]'
                     }`}
                   >
                     {selectedMessage.avatar === 'AI' ? (
@@ -381,26 +381,26 @@ export default function B2BMessagesPage() {
                     )}
                   </div>
                   <div className="flex-1">
-                    <h2 className="text-lg font-bold text-gray-900">{selectedMessage.subject}</h2>
+                    <h2 className="text-lg font-extrabold text-[#0F172A]">{selectedMessage.subject}</h2>
                     <div className="flex items-center gap-2 mt-1">
-                      <p className="text-sm text-gray-600">{selectedMessage.from}</p>
+                      <p className="text-sm text-[#5B6474]">{selectedMessage.from}</p>
                       {selectedMessage.isFromAdmin && (
-                        <span className="flex items-center gap-1 px-2 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded-full">
+                        <span className="flex items-center gap-1 rounded-full bg-[#0F172A] px-2 py-0.5 text-xs font-semibold text-white">
                           <Shield size={10} />
                           {copy.officialBadge}
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                    <p className="text-xs text-[#5B6474] mt-1 flex items-center gap-1">
                       <Clock size={12} />
                       {selectedMessage.time}
                     </p>
                   </div>
-                  <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                  <button className="rounded-full p-2 transition-colors hover:bg-[#FBF8F3]">
                     <Star
                       size={20}
                       className={
-                        selectedMessage.starred ? 'text-amber-500 fill-amber-500' : 'text-gray-400'
+                        selectedMessage.starred ? 'text-amber-500 fill-amber-500' : 'text-[#5B6474]'
                       }
                     />
                   </button>
@@ -409,32 +409,32 @@ export default function B2BMessagesPage() {
 
               {/* Content */}
               <div className="flex-1 overflow-y-auto p-6">
-                <div className="whitespace-pre-wrap text-gray-700 leading-relaxed text-sm">
+                <div className="whitespace-pre-wrap text-[#334155] leading-relaxed text-sm">
                   {selectedMessage.content}
                 </div>
 
                 {selectedMessage.hasAttachment && (
-                  <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-                    <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                  <div className="mt-6 rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] p-4">
+                    <p className="text-sm font-semibold text-[#334155] mb-3 flex items-center gap-2">
                       <Paperclip size={16} />
                       {copy.attachments}
                     </p>
                     <div className="space-y-2">
-                      <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 transition-colors cursor-pointer">
+                      <div className="flex cursor-pointer items-center justify-between rounded-xl border border-[#E4DCCD] bg-white p-3 transition-colors hover:border-[#0F172A]">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                            <FileText size={20} className="text-red-600" />
+                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F3EEE5]">
+                            <FileText size={20} className="text-[#0F172A]" />
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-gray-900">
+                            <p className="text-sm font-medium text-[#0F172A]">
                               {selectedMessage.avatar === 'AI'
                                 ? 'ai_valuation_report.pdf'
                                 : 'approval_certificate.pdf'}
                             </p>
-                            <p className="text-xs text-gray-500">PDF • 1.2 MB</p>
+                            <p className="text-xs text-[#5B6474]">PDF • 1.2 MB</p>
                           </div>
                         </div>
-                        <button className="px-3 py-1.5 bg-dk-red-strong hover:bg-dk-red-deep text-white text-xs font-semibold rounded-lg transition-colors">
+                        <button className="rounded-full bg-dk-red-strong px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-dk-red-deep">
                           {copy.download}
                         </button>
                       </div>
@@ -444,13 +444,13 @@ export default function B2BMessagesPage() {
               </div>
 
               {/* Reply */}
-              <div className="p-6 border-t border-gray-200 bg-gray-50">
-                <div className="flex gap-3">
-                  <button className="flex items-center gap-2 px-5 py-2.5 bg-dk-red-strong hover:bg-dk-red-deep text-white rounded-xl font-semibold transition-colors">
+              <div className="border-t border-[#EFE9DE] bg-[#FBF8F3] p-5 sm:p-6">
+                <div className="flex flex-wrap gap-3">
+                  <button className="flex h-11 items-center gap-2 rounded-full bg-dk-red-strong px-5 text-sm font-bold text-white transition-colors hover:bg-dk-red-deep">
                     <Reply size={16} />
                     {copy.reply}
                   </button>
-                  <button className="flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl font-medium transition-colors">
+                  <button className="flex h-11 items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-5 text-sm font-bold text-[#0F172A] transition-colors hover:border-[#0F172A]">
                     <CheckCircle2 size={16} />
                     {copy.markRead}
                   </button>

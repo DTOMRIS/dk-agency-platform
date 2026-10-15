@@ -60,22 +60,22 @@ export default async function TranslationStatusPage() {
   }
 
   return (
-    <div className="p-6 text-slate-900">
+    <div className="min-h-screen bg-[#F6F1E9] p-6 text-[#0F172A] lg:p-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-black text-slate-900">Tərcümə statusu</h1>
-          <p className="text-sm text-slate-600">
+          <h1 className="text-2xl font-black text-[#0F172A]">Tərcümə statusu</h1>
+          <p className="text-sm text-[#5B6474]">
             {matrix.length} blog × 3 dil × 5 sahə — canlı DB-dən hesablanır (saxlanan flaq yox).
           </p>
         </div>
         <TranslateAllButton slugs={pendingSlugs} />
       </div>
 
-      <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50/60 p-4">
-        <h2 className="text-sm font-bold text-slate-800">
+      <div className="mb-8 rounded-[22px] border border-amber-200 bg-amber-50/60 p-5">
+        <h2 className="text-sm font-bold text-[#0F172A]">
           Struktur migration (köhnə → strukturlu)
         </h2>
-        <p className="mb-3 text-xs text-slate-600">
+        <p className="mb-3 text-xs text-[#5B6474]">
           Köhnə blogların markdown içindəki guru/Doğan bloklarını strukturlu sahələrə köçürür. Əvvəl{' '}
           <strong>Öncəbaxış</strong> bas, çıxışı yoxla, sonra <strong>Tətbiq et</strong>. ⚠️
           Tətbiqdən əvvəl Neon backup al.
@@ -83,7 +83,7 @@ export default async function TranslationStatusPage() {
         <MigrateStructureButtons />
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-4 text-sm font-semibold text-slate-700">
+      <div className="mb-6 flex flex-wrap gap-4 text-sm font-semibold text-[#334155]">
         <span className="flex items-center gap-2">
           <span className="h-3 w-3 rounded-full bg-emerald-500" /> Tərcümə var: {ok}
         </span>
@@ -96,30 +96,30 @@ export default async function TranslationStatusPage() {
       </div>
 
       {matrix.length === 0 ? (
-        <p className="text-sm text-slate-600">Blog tapılmadı (və ya DB əlçatan deyil).</p>
+        <p className="text-sm text-[#5B6474]">Blog tapılmadı (və ya DB əlçatan deyil).</p>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+        <div className="overflow-x-auto rounded-[22px] border border-[#E4DCCD] bg-white">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="bg-slate-50">
-                <th className="px-4 py-3 text-left font-bold text-slate-700">Blog</th>
+              <tr className="bg-[#FBF8F3]">
+                <th className="px-4 py-3 text-left font-bold text-[#334155]">Blog</th>
                 {LANGS.map((lang) => (
                   <th
                     key={lang}
                     colSpan={FIELDS.length}
-                    className="border-l border-slate-200 px-2 py-3 text-center font-bold uppercase tracking-wider text-slate-700"
+                    className="border-l border-[#E4DCCD] px-2 py-3 text-center font-bold uppercase tracking-wider text-[#334155]"
                   >
                     {lang}
                   </th>
                 ))}
               </tr>
-              <tr className="bg-slate-50 text-[11px] text-slate-500">
+              <tr className="bg-[#FBF8F3] text-[11px] text-[#5B6474]">
                 <th className="px-4 py-1" />
                 {LANGS.map((lang) =>
                   FIELDS.map((field) => (
                     <th
                       key={`${lang}-${field}`}
-                      className="border-l border-slate-100 px-2 py-1 font-semibold"
+                      className="border-l border-[#EFE9DE] px-2 py-1 font-semibold"
                     >
                       {FIELD_LABEL[field]}
                     </th>
@@ -129,9 +129,9 @@ export default async function TranslationStatusPage() {
             </thead>
             <tbody>
               {matrix.map((post) => (
-                <tr key={post.id} className="border-t border-slate-100 hover:bg-slate-50">
+                <tr key={post.id} className="border-t border-[#EFE9DE] hover:bg-[#FBF8F3]">
                   <td
-                    className="max-w-[18rem] truncate px-4 py-2 font-medium text-slate-800"
+                    className="max-w-[18rem] truncate px-4 py-2 font-medium text-[#0F172A]"
                     title={post.titleAz}
                   >
                     {post.titleAz || post.slug}
@@ -140,7 +140,7 @@ export default async function TranslationStatusPage() {
                     FIELDS.map((field) => (
                       <td
                         key={`${lang}-${field}`}
-                        className="border-l border-slate-100 px-2 py-2 text-center"
+                        className="border-l border-[#EFE9DE] px-2 py-2 text-center"
                       >
                         <Dot status={post.langs[lang][field as keyof PostLangStatus]} />
                       </td>

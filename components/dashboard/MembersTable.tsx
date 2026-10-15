@@ -45,7 +45,7 @@ const PLAN_BADGE: Record<string, string> = {
 
 const ROLE_BADGE: Record<string, string> = {
   admin: 'bg-red-50 text-red-700 border-red-200',
-  member: 'bg-slate-50 text-slate-600 border-slate-200',
+  member: 'bg-[#FBF8F3] text-[#334155] border-[#E4DCCD]',
 };
 
 function getPlanKey(plan: string) {
@@ -139,7 +139,7 @@ export default function MembersTable(props: MembersTableProps) {
   };
 
   const inputCls =
-    'h-11 rounded-full border-0 bg-white px-4 text-[14px] text-slate-800 shadow-[0_1px_2px_rgba(0,0,0,0.05)] outline-none transition focus:ring-2 focus:ring-[#0A7AFF]/30';
+    'h-11 rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 text-[14px] text-[#0F172A] outline-none transition focus:border-[#0F172A] focus:bg-white';
 
   return (
     <div className="space-y-4">
@@ -151,7 +151,7 @@ export default function MembersTable(props: MembersTableProps) {
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1">
-          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5B6474]" aria-hidden="true" />
           <input
             type="text"
             value={search}
@@ -183,7 +183,7 @@ export default function MembersTable(props: MembersTableProps) {
             type="button"
             onClick={handleBulkDelete}
             disabled={bulkDeleting}
-            className="inline-flex items-center gap-1 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-bold text-white transition hover:bg-red-700 disabled:opacity-50"
+            className="inline-flex items-center gap-1 rounded-full bg-red-600 px-3.5 py-1.5 text-xs font-bold text-white transition hover:bg-red-700 disabled:opacity-50"
           >
             <Trash2 size={12} />
             {bulkDeleting ? '...' : t('bulkDelete')}
@@ -191,15 +191,15 @@ export default function MembersTable(props: MembersTableProps) {
         </div>
       )}
 
-      <div className="overflow-hidden rounded-[22px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]">
+      <div className="overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
         {loading ? (
-          <div className="py-16 text-center text-sm text-slate-600">{t('states.loading')}</div>
+          <div className="py-16 text-center text-sm text-[#334155]">{t('states.loading')}</div>
         ) : members.length === 0 ? (
-          <div className="py-16 text-center text-sm text-slate-600">{t('states.empty')}</div>
+          <div className="py-16 text-center text-sm text-[#334155]">{t('states.empty')}</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="text-left text-[12px] uppercase tracking-wide text-slate-500">
+              <thead className="border-b border-[#E4DCCD] bg-[#FBF8F3] text-left text-[12px] uppercase tracking-wide text-[#5B6474]">
                 <tr>
                   <th className="w-10 px-4 py-3">
                     <input type="checkbox" checked={selected.size === members.length && members.length > 0} onChange={toggleAll} className="rounded" />
@@ -219,22 +219,22 @@ export default function MembersTable(props: MembersTableProps) {
                   const isSelf = m.id === currentUserId;
                   const role = m.role || 'member';
                   return (
-                    <tr key={m.id} className="border-t border-slate-100 transition-colors hover:bg-[#F9F9FB]">
+                    <tr key={m.id} className="border-t border-[#EFE9DE] transition-colors hover:bg-[#FBF8F3]">
                       <td className="w-10 px-4 py-3">
                         <input type="checkbox" checked={selected.has(m.id)} onChange={() => toggleSelect(m.id)} className="rounded" />
                       </td>
                       <td className="px-4 py-3.5">
                         <div className="flex items-center gap-3">
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8F1FF] text-[13px] font-semibold text-[#0A5BD6]" aria-hidden="true">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEE6D8] text-[13px] font-semibold text-[#0F172A]" aria-hidden="true">
                             {(m.fullName || m.email).split(/[\s@.]+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase()).join('')}
                           </span>
                           <div className="min-w-0">
-                            <div className="truncate font-medium text-slate-900">{m.fullName || '—'}</div>
-                            <div className="truncate text-[12px] text-slate-500">{m.email}</div>
+                            <div className="truncate font-medium text-[#0F172A]">{m.fullName || '—'}</div>
+                            <div className="truncate text-[12px] text-[#5B6474]">{m.email}</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-slate-500">{m.company || '-'}</td>
+                      <td className="px-4 py-3 text-[#5B6474]">{m.company || '-'}</td>
                       <td className="px-4 py-3">
                         {isSelf ? (
                           <span
@@ -248,7 +248,7 @@ export default function MembersTable(props: MembersTableProps) {
                             value={role}
                             onChange={(e) => handleRoleSelect(m.id, e.target.value)}
                             disabled={changingRoleId === m.id}
-                            className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider outline-none transition ${ROLE_BADGE[role] || ROLE_BADGE.member} ${changingRoleId === m.id ? 'opacity-50' : 'cursor-pointer hover:ring-2 hover:ring-[var(--dk-gold)]/20'}`}
+                            className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider outline-none transition ${ROLE_BADGE[role] || ROLE_BADGE.member} ${changingRoleId === m.id ? 'opacity-50' : 'cursor-pointer hover:ring-2 hover:ring-[#0F172A]/15'}`}
                           >
                             <option value="member">{t('roles.member')}</option>
                             <option value="admin">{t('roles.admin')}</option>
@@ -259,29 +259,29 @@ export default function MembersTable(props: MembersTableProps) {
                         {m.plan ? (
                           <span
                             className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                              PLAN_BADGE[m.plan] || 'bg-slate-50 text-slate-500 border-slate-200'
+                              PLAN_BADGE[m.plan] || 'bg-[#FBF8F3] text-[#5B6474] border-[#E4DCCD]'
                             }`}
                           >
                             {m.plan in PLAN_BADGE ? t(`plans.${getPlanKey(m.plan)}`) : m.plan}
                           </span>
                         ) : (
-                          <span className="text-slate-500">-</span>
+                          <span className="text-[#5B6474]">-</span>
                         )}
                       </td>
                       <td className="px-4 py-3">
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-[#5B6474]">
                           {m.subStatus && ['active', 'trial', 'expired', 'cancelled'].includes(m.subStatus)
                             ? t(`statuses.${getStatusKey(m.subStatus)}`)
                             : m.subStatus || '-'}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-slate-500">{m.phone || '-'}</td>
-                      <td className="px-4 py-3 text-slate-600">{formatDate(m.createdAt)}</td>
+                      <td className="px-4 py-3 text-[#5B6474]">{m.phone || '-'}</td>
+                      <td className="px-4 py-3 text-[#334155]">{formatDate(m.createdAt)}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <Link
                             href={withLocale(locale, `/dashboard/users/${m.id}`)}
-                            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-50 hover:border-[var(--dk-gold)]"
+                            className="inline-flex items-center gap-1 rounded-full border border-[#E4DCCD] bg-white px-3 py-1 text-xs font-semibold text-[#0F172A] transition hover:bg-[#EEE6D8]"
                           >
                             <Eye size={12} />
                             {t('view')}
@@ -290,7 +290,7 @@ export default function MembersTable(props: MembersTableProps) {
                             <button
                               type="button"
                               onClick={() => handleSingleDelete(m.id, m.email)}
-                              className="inline-flex items-center gap-1 rounded-lg border border-red-200 px-2.5 py-1 text-xs font-medium text-red-600 transition hover:bg-red-50"
+                              className="inline-flex items-center gap-1 rounded-full border border-red-200 bg-white px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50"
                             >
                               <Trash2 size={12} />
                             </button>
@@ -311,18 +311,18 @@ export default function MembersTable(props: MembersTableProps) {
           <button
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-40"
+            className="inline-flex items-center gap-1 rounded-full border border-[#E4DCCD] bg-white px-3.5 py-1.5 text-xs font-semibold text-[#0F172A] transition hover:bg-[#EEE6D8] disabled:opacity-40"
           >
             <ChevronLeft size={14} />
             {t('pagination.prev')}
           </button>
-          <span className="text-xs text-slate-600">
+          <span className="text-xs text-[#334155]">
             {t('pagination.pageLabel')} {page} / {totalPages}
           </span>
           <button
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages}
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-40"
+            className="inline-flex items-center gap-1 rounded-full border border-[#E4DCCD] bg-white px-3.5 py-1.5 text-xs font-semibold text-[#0F172A] transition hover:bg-[#EEE6D8] disabled:opacity-40"
           >
             {t('pagination.next')}
             <ChevronRight size={14} />

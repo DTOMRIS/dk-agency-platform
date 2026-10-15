@@ -219,7 +219,7 @@ const STATUS_ICON_MAP: Record<string, typeof Clock> = {
 };
 
 const STATUS_COLOR_MAP: Record<string, string> = {
-  submitted: 'text-slate-700 bg-slate-100',
+  submitted: 'text-[#334155] bg-[#F3EEE5]',
   ai_checked: 'text-blue-700 bg-blue-50',
   committee_review: 'text-amber-700 bg-amber-50',
   shortlisted: 'text-purple-700 bg-purple-50',
@@ -227,7 +227,7 @@ const STATUS_COLOR_MAP: Record<string, string> = {
   showcase_ready: 'text-emerald-700 bg-emerald-50',
   rejected: 'text-rose-700 bg-rose-50',
   sold: 'text-teal-700 bg-teal-50',
-  expired: 'text-gray-600 bg-gray-100',
+  expired: 'text-[#5B6474] bg-[#F3EEE5]',
 };
 
 const EDITABLE_STATUSES = ['submitted', 'docs_requested'];
@@ -273,16 +273,16 @@ export default function IlanlarimPage() {
   };
 
   return (
-    <div className="p-6 lg:p-8">
+    <div className="min-h-full bg-[#F6F1E9] p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{copy.heading}</h1>
-          <p className="text-gray-500 mt-1">{copy.subheading}</p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#0F172A]">{copy.heading}</h1>
+          <p className="text-[#5B6474] mt-1">{copy.subheading}</p>
         </div>
         <Link
           href="/b2b-panel/yeni-ilan"
-          className="inline-flex items-center gap-2 bg-dk-red-strong hover:bg-dk-red-deep text-white px-5 py-3 rounded-xl font-semibold transition-colors"
+          className="inline-flex h-11 items-center gap-2 rounded-full bg-dk-red-strong px-5 text-sm font-bold text-white transition-colors hover:bg-dk-red-deep"
         >
           <Plus size={18} />
           {copy.newListing}
@@ -290,99 +290,99 @@ export default function IlanlarimPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-xl border border-gray-200 p-4 text-center">
-          <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
-          <p className="text-xs text-gray-500">{copy.statTotal}</p>
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-4 text-center">
+          <p className="text-2xl font-bold text-[#0F172A]">{stats.total}</p>
+          <p className="text-xs text-[#5B6474]">{copy.statTotal}</p>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4 text-center">
-          <p className="text-2xl font-bold text-green-600">{stats.active}</p>
-          <p className="text-xs text-gray-500">{copy.statActive}</p>
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-4 text-center">
+          <p className="text-2xl font-extrabold text-[#1F7A4D]">{stats.active}</p>
+          <p className="text-xs text-[#5B6474]">{copy.statActive}</p>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4 text-center">
-          <p className="text-2xl font-bold text-amber-600">{stats.pending}</p>
-          <p className="text-xs text-gray-500">{copy.statPending}</p>
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-4 text-center">
+          <p className="text-2xl font-extrabold text-[#8A5A12]">{stats.pending}</p>
+          <p className="text-xs text-[#5B6474]">{copy.statPending}</p>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4 text-center">
-          <p className="text-2xl font-bold text-rose-600">{stats.rejected}</p>
-          <p className="text-xs text-gray-500">{copy.statRejected}</p>
+        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-4 text-center">
+          <p className="text-2xl font-extrabold text-dk-red-strong">{stats.rejected}</p>
+          <p className="text-xs text-[#5B6474]">{copy.statRejected}</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6">
+      <div className="mb-6 rounded-[22px] border border-[#E4DCCD] bg-white p-4">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1 relative">
-            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#5B6474]" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder={copy.searchPlaceholder}
-              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl text-slate-900 placeholder:text-slate-400 bg-white focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red"
+              className="w-full pl-11 pr-4 py-3 border border-[#E4DCCD] rounded-xl text-[#0F172A] placeholder:text-[#5B6474] bg-[#FBF8F3] focus:outline-none focus:border-[#0F172A]"
             />
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <div className="relative">
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red text-slate-900 bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-[#E4DCCD] rounded-xl focus:outline-none focus:border-[#0F172A] text-[#0F172A] bg-[#FBF8F3]"
               >
                 <option value="all">{copy.allStatuses}</option>
                 {Object.entries(copy.statusLabels).map(([key, label]) => (
                   <option key={key} value={key}>{label}</option>
                 ))}
               </select>
-              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5B6474] pointer-events-none" />
             </div>
             <div className="relative">
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red text-slate-900 bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-[#E4DCCD] rounded-xl focus:outline-none focus:border-[#0F172A] text-[#0F172A] bg-[#FBF8F3]"
               >
                 <option value="all">{copy.allCategories}</option>
                 {Object.entries(copy.categoryLabels).map(([key, label]) => (
                   <option key={key} value={key}>{label}</option>
                 ))}
               </select>
-              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5B6474] pointer-events-none" />
             </div>
             <div className="relative">
               <select
                 value={filterSector}
                 onChange={(e) => setFilterSector(e.target.value)}
-                className="appearance-none pl-4 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dk-red/20 focus:border-dk-red text-slate-900 bg-white"
+                className="appearance-none pl-4 pr-10 py-3 border border-[#E4DCCD] rounded-xl focus:outline-none focus:border-[#0F172A] text-[#0F172A] bg-[#FBF8F3]"
               >
                 <option value="all">{copy.allSectors}</option>
                 {SECTOR_KEYS.map((key) => (
                   <option key={key} value={key}>{getSectorLabel(key, locale)}</option>
                 ))}
               </select>
-              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+              <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5B6474] pointer-events-none" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Listings */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="overflow-hidden rounded-[22px] border border-[#E4DCCD] bg-white">
         {loading ? (
           <div className="p-12 text-center">
-            <Loader2 size={24} className="mx-auto animate-spin text-dk-red mb-3" />
-            <p className="text-sm text-gray-500">{copy.loading}</p>
+            <Loader2 size={24} className="mx-auto mb-3 animate-spin text-[#0F172A]" />
+            <p className="text-sm text-[#5B6474]">{copy.loading}</p>
           </div>
         ) : filteredListings.length === 0 ? (
           <div className="p-12 text-center">
-            <div className="w-16 h-16 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
-              <Filter size={24} className="text-gray-400" />
+            <div className="w-16 h-16 mx-auto bg-[#F3EEE5] rounded-full flex items-center justify-center mb-4">
+              <Filter size={24} className="text-[#5B6474]" />
             </div>
-            <p className="text-gray-500 font-medium">{copy.noListings}</p>
-            <p className="text-sm text-gray-400 mt-1">{copy.noListingsHint}</p>
+            <p className="text-[#5B6474] font-medium">{copy.noListings}</p>
+            <p className="text-sm text-[#5B6474] mt-1">{copy.noListingsHint}</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-[#EFE9DE]">
             {filteredListings.map((listing) => {
               const StatusIcon = STATUS_ICON_MAP[listing.status] || Clock;
               const statusColor = STATUS_COLOR_MAP[listing.status] || STATUS_COLOR_MAP.submitted;
@@ -390,15 +390,15 @@ export default function IlanlarimPage() {
               const canEdit = EDITABLE_STATUSES.includes(listing.status);
 
               return (
-                <div key={listing.id} className="p-4 hover:bg-gray-50 transition-colors">
+                <div key={listing.id} className="p-4 hover:bg-[#FBF8F3] transition-colors">
                   <div className="flex items-center gap-4">
                     {/* Thumbnail */}
                     {listing.images?.[0]?.url ? (
-                      <div className="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 shrink-0 hidden sm:block">
+                      <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#F3EEE5] shrink-0 hidden sm:block">
                         <img src={listing.images[0].url} alt="" className="w-full h-full object-cover" />
                       </div>
                     ) : (
-                      <div className="w-14 h-14 rounded-xl bg-gray-100 shrink-0 hidden sm:block" />
+                      <div className="w-14 h-14 rounded-xl bg-[#F3EEE5] shrink-0 hidden sm:block" />
                     )}
 
                     {/* Content */}
@@ -406,29 +406,29 @@ export default function IlanlarimPage() {
                       <div className="flex items-center gap-3 mb-1">
                         <Link
                           href={`/b2b-panel/ilanlarim/${listing.id}`}
-                          className="font-semibold text-gray-900 truncate hover:text-dk-red transition-colors"
+                          className="truncate font-bold text-[#0F172A] transition-colors hover:text-dk-red-strong"
                         >
                           {listing.title}
                         </Link>
-                        <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-lg shrink-0 ${statusColor}`}>
+                        <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-0.5 rounded-full shrink-0 ${statusColor}`}>
                           <StatusIcon size={12} />
                           {statusLabel}
                         </span>
                       </div>
-                      <div className="flex items-center gap-4 text-sm">
-                        <span className="text-gray-400 text-xs">#{listing.trackingCode}</span>
-                        <span className="text-gray-500">{copy.categoryLabels[listing.type] || listing.type}</span>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                        <span className="text-[#5B6474] text-xs">#{listing.trackingCode}</span>
+                        <span className="text-[#5B6474]">{copy.categoryLabels[listing.type] || listing.type}</span>
                         {listing.sector ? (
-                          <span className="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600">
+                          <span className="inline-flex rounded-full bg-[#F3EEE5] px-2 py-0.5 text-[10px] font-bold text-[#5B6474]">
                             {getSectorLabel(listing.sector, locale)}
                           </span>
                         ) : null}
                         {listing.price > 0 && (
-                          <span className="font-semibold text-dk-red">
+                          <span className="font-bold text-[#0F172A]">
                             {listing.price.toLocaleString()} {listing.currency}
                           </span>
                         )}
-                        <span className="text-gray-400 text-xs">
+                        <span className="text-[#5B6474] text-xs">
                           {listing.city}
                         </span>
                       </div>
@@ -437,7 +437,7 @@ export default function IlanlarimPage() {
                     {/* Stats */}
                     <div className="hidden md:flex items-center gap-4">
                       <div className="text-center">
-                        <div className="flex items-center gap-1 text-gray-600">
+                        <div className="flex items-center gap-1 text-[#5B6474]">
                           <MessageSquare size={14} />
                           <span className="font-semibold text-sm">{listing.leads?.length || 0}</span>
                         </div>
@@ -448,7 +448,7 @@ export default function IlanlarimPage() {
                     <div className="flex items-center gap-1">
                       <Link
                         href={`/b2b-panel/ilanlarim/${listing.id}`}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[#E4DCCD] bg-white px-3 py-1.5 text-xs font-bold text-[#0F172A] transition-colors hover:border-[#0F172A]"
                         title={copy.view}
                       >
                         <ExternalLink size={14} />
@@ -457,7 +457,7 @@ export default function IlanlarimPage() {
                       {canEdit && (
                         <Link
                           href={`/b2b-panel/ilanlarim/${listing.id}/edit`}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-dk-red hover:bg-red-50 rounded-lg transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-full bg-[#0F172A] px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-[#1E293B]"
                           title={copy.edit}
                         >
                           <Pencil size={14} />

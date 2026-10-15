@@ -426,9 +426,9 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
         </div>
       ) : null}
 
-      <div className="grid gap-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm xl:grid-cols-[1.15fr_0.85fr]">
+      <div className="grid gap-6 rounded-[22px] border border-[#E4DCCD] bg-white p-6 xl:grid-cols-[1.15fr_0.85fr]">
         <div className="grid gap-4">
-          <div className="flex gap-1 rounded-2xl bg-slate-100 p-1">
+          <div className="flex gap-1 rounded-full border border-[#E4DCCD] bg-[#FBF8F3] p-1">
             {LOCALE_TABS.map((tab) => {
               const hasContent = Boolean((post[titleKey(tab.key)] as string)?.trim());
               return (
@@ -436,10 +436,10 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                   key={tab.key}
                   type="button"
                   onClick={() => setActiveLocale(tab.key)}
-                  className={`relative flex-1 rounded-xl px-4 py-2.5 text-sm font-bold transition ${
+                  className={`relative flex-1 rounded-full px-4 py-2.5 text-sm font-bold transition ${
                     activeLocale === tab.key
-                      ? 'bg-white text-[var(--dk-navy)] shadow-sm'
-                      : 'text-slate-500 hover:text-slate-700'
+                      ? 'bg-[#0F172A] text-white shadow-sm'
+                      : 'text-[#5B6474] hover:text-[#0F172A]'
                   }`}
                 >
                   {tab.label}
@@ -447,7 +447,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                     <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald-400" />
                   ) : null}
                   {!hasContent && tab.key !== 'az' ? (
-                    <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-slate-300" />
+                    <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#D9CFBE]" />
                   ) : null}
                 </button>
               );
@@ -459,15 +459,15 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               type="button"
               onClick={() => void translateNow()}
               disabled={!initialPost || translating}
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[var(--dk-navy)] px-4 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-slate-300"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#0F172A] px-4 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:bg-[#D9CFBE]"
             >
               {translating ? '⏳ Tərcümə olunur…' : '🌐 Avtomatik tərcümə (RU/EN/TR)'}
             </button>
             {!initialPost ? (
-              <span className="text-xs text-slate-500">Əvvəlcə yazını yadda saxla</span>
+              <span className="text-xs text-[#5B6474]">Əvvəlcə yazını yadda saxla</span>
             ) : null}
             {translateMsg ? (
-              <span className="text-xs font-semibold text-slate-700">{translateMsg}</span>
+              <span className="text-xs font-semibold text-[#334155]">{translateMsg}</span>
             ) : null}
             <input
               ref={importInputRef}
@@ -480,13 +480,13 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             <button
               type="button"
               onClick={() => importInputRef.current?.click()}
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 text-sm font-bold text-slate-800 transition hover:border-slate-400"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[#E4DCCD] bg-white px-4 text-sm font-bold text-[#0F172A] transition hover:border-[#0F172A]"
             >
               📄 Markdown faylı yüklə
             </button>
             {importMsg ? (
               <div className="w-full text-xs" data-testid="blog-md-import-msg">
-                <p className="font-semibold text-slate-700">{importMsg.text}</p>
+                <p className="font-semibold text-[#334155]">{importMsg.text}</p>
                 {importMsg.warnings.map((w) => (
                   <p key={w} className="text-amber-800">⚠️ {w}</p>
                 ))}
@@ -495,10 +495,10 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">
+            <label className="mb-2 block text-sm font-bold text-[#334155]">
               Başlıq ({activeLocale.toUpperCase()})
               {activeLocale !== 'az' ? (
-                <span className="ml-2 text-xs font-normal text-slate-600">
+                <span className="ml-2 text-xs font-normal text-[#5B6474]">
                   Boşdursa AZ göstərilir
                 </span>
               ) : null}
@@ -511,7 +511,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                 if (!initialPost && activeLocale === 'az') setField('slug', slugifyAz(title));
               }}
               placeholder={activeLocale !== 'az' ? `${activeLocale.toUpperCase()} tərcümə...` : ''}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
             {activeLocale === 'az' && errors.titleAz ? (
               <p className="mt-2 text-xs text-red-600">{errors.titleAz}</p>
@@ -519,23 +519,23 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">Slug</label>
+            <label className="mb-2 block text-sm font-bold text-[#334155]">Slug</label>
             <input
               value={post.slug}
               onChange={(e) => setField('slug', e.target.value)}
               onBlur={() => setField('slug', slugifyAz(post.slug))}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
             {errors.slug ? <p className="mt-2 text-xs text-red-600">{errors.slug}</p> : null}
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Kateqoriya</label>
+              <label className="mb-2 block text-sm font-bold text-[#334155]">Kateqoriya</label>
               <select
                 value={post.category}
                 onChange={(e) => setField('category', e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               >
                 {CATEGORY_OPTIONS.map((item) => (
                   <option key={item}>{item}</option>
@@ -544,11 +544,11 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Mərhələ (Stage)</label>
+              <label className="mb-2 block text-sm font-bold text-[#334155]">Mərhələ (Stage)</label>
               <select
                 value={post.stage}
                 onChange={(e) => setField('stage', e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               >
                 {STAGE_OPTIONS.map((item) => (
                   <option key={item} value={item}>
@@ -559,11 +559,11 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Müəllif</label>
+              <label className="mb-2 block text-sm font-bold text-[#334155]">Müəllif</label>
               <select
                 value={post.author}
                 onChange={(e) => setField('author', e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               >
                 {AUTHOR_OPTIONS.map((item) => (
                   <option key={item}>{item}</option>
@@ -572,24 +572,24 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-bold text-slate-700">Oxu müddəti</label>
-              <div className="flex items-center rounded-2xl border border-slate-200 bg-white px-4 py-3">
+              <label className="mb-2 block text-sm font-bold text-[#334155]">Oxu müddəti</label>
+              <div className="flex items-center rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 focus-within:border-[#0F172A]">
                 <input
                   type="number"
                   min={1}
                   value={post.readTime}
                   onChange={(e) => setField('readTime', Number(e.target.value))}
-                  className="w-full bg-transparent text-slate-900 outline-none"
+                  className="w-full bg-transparent text-[#0F172A] outline-none"
                 />
-                <span className="text-sm text-slate-600">dəq</span>
+                <span className="text-sm text-[#5B6474]">dəq</span>
               </div>
             </div>
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">Önə çıxan şəkil</label>
+            <label className="mb-2 block text-sm font-bold text-[#334155]">Önə çıxan şəkil</label>
             <label
-              className={`flex items-center justify-center rounded-2xl border border-dashed border-slate-300 px-4 py-6 text-sm font-semibold text-slate-600 ${
+              className={`flex items-center justify-center rounded-2xl border border-dashed border-[#E4DCCD] px-4 py-6 text-sm font-semibold text-[#5B6474] ${
                 uploadingImage ? 'cursor-wait opacity-60' : 'cursor-pointer'
               }`}
             >
@@ -606,7 +606,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             </label>
             {uploadingImage && uploadProgress !== null ? (
               <div
-                className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200"
+                className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#EFE9DE]"
                 role="progressbar"
                 aria-valuenow={uploadProgress}
                 aria-valuemin={0}
@@ -628,21 +628,21 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           </div>
         </div>
 
-        <div className="space-y-4 rounded-[28px] bg-slate-50 p-5">
+        <div className="space-y-4 rounded-[22px] bg-[#FBF8F3] p-5">
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">
+            <label className="mb-2 block text-sm font-bold text-[#334155]">
               SEO title ({seoTitleCount}/60)
             </label>
             <input
               maxLength={60}
               value={post.seoTitle}
               onChange={(e) => setField('seoTitle', e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">
+            <label className="mb-2 block text-sm font-bold text-[#334155]">
               SEO description ({seoDescriptionCount}/160)
             </label>
             <textarea
@@ -650,12 +650,12 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               rows={4}
               value={post.seoDescription}
               onChange={(e) => setField('seoDescription', e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-bold text-slate-700">
+            <label className="mb-2 block text-sm font-bold text-[#334155]">
               Doğan notu ({doganNoteCount}/200)
             </label>
             <textarea
@@ -663,11 +663,11 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               rows={4}
               value={post.doganNote}
               onChange={(e) => setField('doganNote', e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+              className="w-full rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
             />
           </div>
 
-          <label className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-700">
+          <label className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-[#334155]">
             <input
               type="checkbox"
               checked={post.paywall}
@@ -677,11 +677,11 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           </label>
 
           <div className="space-y-2">
-            <div className="text-sm font-bold text-slate-700">Status</div>
+            <div className="text-sm font-bold text-[#334155]">Status</div>
             {STATUS_OPTIONS.map((item) => (
               <label
                 key={item.value}
-                className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm text-slate-700"
+                className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-sm text-[#334155]"
               >
                 <input
                   type="radio"
@@ -695,13 +695,13 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
         </div>
       </div>
 
-      <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
         <div className="grid gap-4">
           <div className="flex items-center justify-between">
-            <label className="block text-sm font-bold text-slate-700">
+            <label className="block text-sm font-bold text-[#334155]">
               Məzmun ({activeLocale.toUpperCase()})
               {activeLocale !== 'az' ? (
-                <span className="ml-2 text-xs font-normal text-slate-600">
+                <span className="ml-2 text-xs font-normal text-[#5B6474]">
                   Boşdursa AZ göstərilir
                 </span>
               ) : null}
@@ -710,7 +710,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               <button
                 type="button"
                 onClick={() => translateField('content', activeLocale as 'tr' | 'en')}
-                className="rounded-full border border-slate-200 px-4 py-1.5 text-xs font-semibold text-slate-600"
+                className="rounded-full border border-[#E4DCCD] bg-white px-4 py-1.5 text-xs font-semibold text-[#5B6474]"
               >
                 AZ-dan tərcümə et
               </button>
@@ -718,7 +718,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           </div>
 
           {/* Markdown toolbar + Toolkit insert */}
-          <div className="flex flex-wrap items-center gap-1 rounded-t-2xl border border-b-0 border-slate-200 bg-slate-50 px-3 py-2">
+          <div className="flex flex-wrap items-center gap-1 rounded-t-2xl border border-b-0 border-[#E4DCCD] bg-[#FBF8F3] px-3 py-2">
             {[
               { label: 'B', md: '**', tip: 'Bold' },
               { label: 'I', md: '*', tip: 'İtalik' },
@@ -732,7 +732,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                 key={btn.label}
                 type="button"
                 title={btn.tip}
-                className="rounded-lg px-2.5 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200 transition-colors"
+                className="rounded-lg px-2.5 py-1 text-xs font-bold text-[#5B6474] hover:bg-[#EFE9DE] transition-colors"
                 onClick={() => {
                   const ta = document.getElementById('blog-content-textarea') as HTMLTextAreaElement | null;
                   if (!ta) return;
@@ -750,11 +750,11 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               </button>
             ))}
 
-            <span className="mx-1 h-5 w-px bg-slate-300" />
+            <span className="mx-1 h-5 w-px bg-[#D9CFBE]" />
 
             {/* Callout insert */}
             <select
-              className="rounded-lg border-0 bg-transparent px-2 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-200 cursor-pointer"
+              className="rounded-lg border-0 bg-transparent px-2 py-1 text-xs font-semibold text-[#5B6474] hover:bg-[#EFE9DE] cursor-pointer"
               value=""
               onChange={(ev) => {
                 const key = ev.target.value;
@@ -778,7 +778,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               <option value="Faydalı alət">🔗 Faydalı alət</option>
             </select>
 
-            <span className="mx-1 h-5 w-px bg-slate-300" />
+            <span className="mx-1 h-5 w-px bg-[#D9CFBE]" />
 
             {/* Toolkit link insert */}
             <select
@@ -817,7 +817,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
               <option value="/toolkit/whatsapp-template-paketi|WhatsApp Şablon Paketi">💬 WhatsApp Şablon</option>
             </select>
 
-            <span className="mx-1 h-5 w-px bg-slate-300" />
+            <span className="mx-1 h-5 w-px bg-[#D9CFBE]" />
 
             {/* Image grid insert */}
             <select
@@ -884,18 +884,18 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
             placeholder={
               activeLocale !== 'az' ? `${activeLocale.toUpperCase()} məzmun tərcüməsi...` : ''
             }
-            className="w-full rounded-b-2xl border border-t-0 border-slate-200 bg-white px-4 py-3 font-mono text-sm text-slate-900 outline-none"
+            className="w-full rounded-b-2xl border border-t-0 border-[#E4DCCD] bg-white px-4 py-3 font-mono text-sm text-[#0F172A] outline-none transition focus:border-[#0F172A]"
           />
           {activeLocale === 'az' && errors.contentAz ? (
             <p className="mt-2 text-xs text-red-600">{errors.contentAz}</p>
           ) : null}
 
           {activeLocale !== 'az' && post.contentAz ? (
-            <details className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-              <summary className="cursor-pointer text-xs font-bold text-slate-500">
+            <details className="rounded-2xl border border-[#EFE9DE] bg-[#FBF8F3] p-4">
+              <summary className="cursor-pointer text-xs font-bold text-[#5B6474]">
                 AZ mənbə məzmunu (referans)
               </summary>
-              <pre className="mt-3 max-h-48 overflow-y-auto whitespace-pre-wrap text-xs leading-6 text-slate-600">
+              <pre className="mt-3 max-h-48 overflow-y-auto whitespace-pre-wrap text-xs leading-6 text-[#5B6474]">
                 {post.contentAz.slice(0, 500)}
                 {post.contentAz.length > 500 ? '...' : ''}
               </pre>
@@ -904,9 +904,9 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
         </div>
       </div>
 
-      <div className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
         <div className="flex items-center justify-between gap-4">
-          <h2 className="font-display text-2xl font-black text-[var(--dk-navy)]">Guru kutuları</h2>
+          <h2 className="font-display text-2xl font-black text-[#0F172A]">Guru kutuları</h2>
           <button
             type="button"
             onClick={() =>
@@ -916,7 +916,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                 guruBoxes: [...prev.guruBoxes, { guru: '', quote: '', book: '' }],
               }))
             }
-            className="rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700"
+            className="rounded-full border border-[#E4DCCD] bg-white px-4 py-2 text-sm font-bold text-[#334155]"
           >
             Guru kutusu əlavə et +
           </button>
@@ -926,25 +926,25 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           {post.guruBoxes.map((box, index) => (
             <div
               key={`${box.guru}-${index}`}
-              className="grid gap-4 rounded-3xl bg-slate-50 p-5 md:grid-cols-[1fr_1fr_1fr_auto]"
+              className="grid gap-4 rounded-3xl bg-[#FBF8F3] p-5 md:grid-cols-[1fr_1fr_1fr_auto]"
             >
               <input
                 value={box.guru}
                 onChange={(e) => setGuruBoxField(index, 'guru', e.target.value)}
                 placeholder="Guru adı"
-                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               />
               <input
                 value={box.quote}
                 onChange={(e) => setGuruBoxField(index, 'quote', e.target.value)}
                 placeholder="Sitat"
-                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               />
               <input
                 value={box.book}
                 onChange={(e) => setGuruBoxField(index, 'book', e.target.value)}
                 placeholder="Kitab adı"
-                className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none"
+                className="rounded-xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-[#0F172A] outline-none transition focus:border-[#0F172A]"
               />
               <button
                 type="button"
@@ -954,7 +954,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
                     guruBoxes: prev.guruBoxes.filter((_, idx) => idx !== index),
                   }))
                 }
-                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-slate-700"
+                className="rounded-full border border-[#E4DCCD] bg-white px-4 py-2 text-sm font-bold text-[#334155]"
               >
                 ✕
               </button>
@@ -968,7 +968,7 @@ export default function BlogEditorForm({ initialPost }: { initialPost?: BlogDraf
           type="button"
           onClick={() => void submitPost('draft')}
           disabled={submitting || uploadingImage}
-          className="rounded-full border border-slate-200 px-6 py-3 text-sm font-bold text-slate-700 disabled:opacity-60"
+          className="rounded-full border border-[#E4DCCD] bg-white px-6 py-3 text-sm font-bold text-[#334155] disabled:opacity-60"
         >
           Qaralama olaraq saxla
         </button>

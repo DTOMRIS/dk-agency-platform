@@ -50,15 +50,15 @@ export default function RecommendationWidget() {
   };
 
   return (
-    <div className="mb-8 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-white p-6">
+    <div className="mb-8 rounded-[22px] border border-[#E4DCCD] bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EEE6D8] text-[#0F172A]">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-bold text-gray-900">{t('recommendations.title')}</h3>
-            <p className="text-sm text-gray-500">{t('recommendations.subtitle')}</p>
+            <h3 className="font-bold text-[#0F172A]">{t('recommendations.title')}</h3>
+            <p className="text-sm text-[#5B6474]">{t('recommendations.subtitle')}</p>
           </div>
         </div>
         {showGap ? (
@@ -86,12 +86,12 @@ export default function RecommendationWidget() {
               key={slug}
               href={`/${locale}/marketinq/${getToolRoute(slug)}`}
               onClick={() => track('tool_recommended_clicked', { slug })}
-              className="group flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 transition hover:border-amber-300 hover:shadow-sm"
+              className="group flex items-center justify-between rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] p-4 transition hover:border-[#0F172A] hover:bg-white"
             >
-              <span className="text-sm font-semibold text-gray-900 group-hover:text-amber-700">
+              <span className="text-sm font-semibold text-[#0F172A]">
                 {toolName}
               </span>
-              <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600 opacity-0 transition group-hover:opacity-100">
+              <span className="inline-flex items-center gap-1 text-xs font-bold text-dk-red-strong opacity-0 transition group-hover:opacity-100">
                 {t('recommendations.tryButton')}
                 <ArrowRight className="h-3 w-3" />
               </span>
@@ -104,7 +104,7 @@ export default function RecommendationWidget() {
         <button
           type="button"
           onClick={handleEditPriorities}
-          className="text-xs font-medium text-gray-600 hover:text-amber-600"
+          className="text-xs font-medium text-[#5B6474] hover:text-[#0F172A]"
         >
           {t('recommendations.editPrioritiesLink')}
         </button>
