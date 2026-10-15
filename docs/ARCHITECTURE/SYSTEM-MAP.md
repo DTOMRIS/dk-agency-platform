@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-10-14 · feat/TASK-0548-panels-v2 · 14230f0c
+> `node scripts/generate-system-map.mjs` · 2026-10-15 · feat/TASK-0548-panels-v2 · fc65177e
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -8,7 +8,7 @@
 - Dizayn (həqiqi səhifələr): v2 **102** · köhnə **0** · qarışıq **0** · işarəsiz 21
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 63 (+ 383 tapşırıq kartı)
+- Sənəd: 63 (+ 384 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -182,7 +182,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/dashboard/users/[id]` | səhifə | v2 | layout (/dashboard) | ✓ | 2 |  |
 | `/dashboard/xeberler` | səhifə | v2 | layout (/dashboard) | ✓ | 105 |  |
 | `/dashboard/xeberler/[id]` | səhifə | v2 | səhifədə | ✓ | 1 | dashboard/NewsEditorForm.tsx |
-| `/dashboard/xeberler/rss` | səhifə | v2 | layout (/dashboard) | ✓ | 2 |  |
+| `/dashboard/xeberler/rss` | səhifə | v2 | səhifədə | ✓ | 9 |  |
 | `/dashboard/xeberler/yeni` | səhifə | v2 | layout (/dashboard) | ✓ | 1 | dashboard/NewsEditorForm.tsx |
 
 ### Franchise — 6 ünvan (v2 6 · köhnə 0 · qarışıq 0)
@@ -317,7 +317,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/ENV-SETUP.md` | Environment Setup | 2026-04-24 | 23 |
 | `docs/FATURA-OCR-MASTERPLAN.md` | FATURA OCR MASTERPLAN — DK Agency | 2026-04-29 | 802 |
 | `docs/HANDOFF-11-IYUN-2026.md` | HANDOFF — 11 İyun 2026 Sessiyası | 2026-06-11 | 129 |
-| `docs/HANDOFF.md` | HANDOFF | 2026-10-12 | 604 |
+| `docs/HANDOFF.md` | HANDOFF | 2026-10-14 | 604 |
 | `docs/I18N-AUDIT.md` | i18n Component-Level Audit | 2026-05-08 | 153 |
 | `docs/LESSONS.md` | DK Agency — Acı Dərslər (yeni task-dan əvvəl oxu) | 2026-10-11 | 438 |
 | `docs/MARKETINQ_OCAGI_SPEC.md` | Marketinq Ocagi — Texniki Spec | 2026-05-11 | 238 |
@@ -328,7 +328,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
 | `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 40 |
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 99 |
+| `docs/SESSION-JOURNAL.md` | Session Journal | 2026-06-09 | 100 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-10-05 | 359 |
 | `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-08 | 76 |

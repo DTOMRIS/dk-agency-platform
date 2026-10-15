@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0549` fix(news): eyni xəbər fərqli mənbələrdən təkrar gəlmir, bir mənbə növbəni doldurmur (dövrdə ən çox 3), press-release-lər çıxdı; admin «Xəbər mənbələri» həqiqi mənbələri və son 7 günün rəqəmlərini göstərir.
 - `TASK-0548` design: admin və üzv (B2B) panelləri yeni dizaynda — 35 səhifə, menyu, üst panel və qrafiklər; bütün sayt artıq bir dizayndadır (105/105).
 - `TASK-0547` fix(translate): içində AZ xüsusi adı olan bloq yazılarının tərcüməsi artıq rədd edilmir (tək «ə» hərfi «tərcümə olunmayıb» sayılırdı) — qalan 5 yazı tərcümə oluna bilər.
 - `TASK-0546` fix/design: qiymət, iş elanları, Şedd rozeti, e-poçt ayarları, ayarlar, WhatsApp şablonları, «Tezliklə» və elan vermə səhifələri yeni dizaynda; bloqda türkcə kalkalar və yazı xətaları (SQL — Doğan işlədir); tərcümə statusu artıq düzgün tərcümələri «tərcümə olunmayıb» saymır (38 → 6); footer şüarı «rəqəmsalın şəddi».

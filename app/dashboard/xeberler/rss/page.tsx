@@ -1,103 +1,104 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+/**
+ * /dashboard/xeberler/rss — news sources (read-only).
+ * TASK-0549: this page listed the old `news_sources` table (6 feeds, each twice, never fetched since April) with an
+ * «Aktiv» switch that changed nothing — the pipeline reads RSS_FEEDS in lib/news/rss-ingest.ts and NewsData.io
+ * queries. Now it shows the real feed list and what each feed brought in the last 7 days.
+ */
+import { sql } from 'drizzle-orm';
+import { requireAdminPage } from '@/lib/auth/guards';
+import { db } from '@/lib/db';
 import { formatAzDateTime } from '@/lib/i18n/format';
+import { RSS_FEEDS } from '@/lib/news/rss-ingest';
 
-interface NewsSourceRow {
-  id: number;
-  name: string;
-  url: string;
-  rssUrl: string;
-  language: 'en' | 'tr' | 'az';
-  category: 'operations' | 'finance' | 'growth' | 'market' | 'technology';
-  isActive: boolean;
-  lastFetchedAt: string | null;
+export const dynamic = 'force-dynamic';
+
+type Row = { src: string; total: number; approved: number; last: string | null };
+
+async function loadCounts(): Promise<Map<string, Row>> {
+  const map = new Map<string, Row>();
+  if (!db) return map;
+  const res = (await db.execute(sql`
+    select coalesce(author, '?') as src,
+           count(*)::int as total,
+           count(*) filter (where status = 'approved')::int as approved,
+           max(created_at) as last
+    from news_articles
+    where created_at > now() - interval '7 days'
+    group by 1
+  `)) as unknown as { rows?: Row[] } | Row[];
+  const rows = (Array.isArray(res) ? res : (res.rows ?? [])) as Row[];
+  for (const r of rows) map.set(r.src, { ...r, total: Number(r.total), approved: Number(r.approved) });
+  return map;
 }
 
-export default function DashboardXeberlerRssPage() {
-  const [sources, setSources] = useState<NewsSourceRow[]>([]);
-  const [loading, setLoading] = useState(true);
+export default async function DashboardXeberlerRssPage() {
+  await requireAdminPage();
+  const counts = await loadCounts();
+  const feedNames = new Set(RSS_FEEDS.map((f) => f.name));
+  const others = [...counts.values()].filter((r) => !feedNames.has(r.src));
+  const othersTotal = others.reduce((sum, r) => sum + r.total, 0);
+  const othersApproved = others.reduce((sum, r) => sum + r.approved, 0);
 
-  async function loadSources() {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/news/admin?resource=sources');
-      if (!response.ok) throw new Error('load failed');
-      const payload = (await response.json()) as { data?: NewsSourceRow[] };
-      setSources(payload.data || []);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    void loadSources();
-  }, []);
-
-  async function toggleSource(id: number, isActive: boolean) {
-    const response = await fetch(`/api/news/sources/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ isActive }),
-    });
-
-    if (response.ok) {
-      setSources((prev) => prev.map((item) => (item.id === id ? { ...item, isActive } : item)));
-    }
-  }
-
+  const card = 'rounded-[22px] border border-[#E4DCCD] bg-white';
   return (
     <div className="min-h-screen bg-[#F6F1E9] p-6 lg:p-8">
       <div className="mx-auto max-w-6xl space-y-6">
-        <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6">
-          <h1 className="text-[32px] font-bold tracking-tight text-[#0F172A] sm:text-[38px]">RSS mənbələri</h1>
-          <p className="mt-3 text-sm text-[#5B6474]">
-            `news_sources` cədvəli üzrə mənbənin statusu və son yoxlama vaxtı.
+        <div className={`${card} p-6`}>
+          <h1 className="text-[32px] font-bold tracking-tight text-[#0F172A] sm:text-[38px]">Xəbər mənbələri</h1>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-[#5B6474]">
+            Xəbər axını gündə 4 dəfə bu RSS mənbələrini və NewsData.io axtarışlarını oxuyur. Hər mənbədən bir
+            dövrdə ən çox 3 yeni xəbər götürülür; başqa mənbədə artıq olan eyni xəbər (son 7 gün) təkrar götürülmür.
+            Rəqəmlər son 7 gündür.
           </p>
         </div>
 
-        <div className="grid gap-4">
-          {sources.map((source) => (
-            <div
-              key={source.id}
-              className="grid gap-4 rounded-[22px] border border-[#E4DCCD] bg-white p-5 min-w-0 md:grid-cols-2 2xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1.4fr)_120px_140px_180px_auto]"
-            >
-              <div>
-                <div className="text-sm font-bold text-[#0F172A]">{source.name}</div>
-                <div className="mt-1 text-xs text-[#5B6474]">{source.url}</div>
-              </div>
-              <div className="truncate rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#334155]">
-                {source.rssUrl}
-              </div>
-              <div className="rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#334155]">
-                {source.language}
-              </div>
-              <div className="rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#334155]">
-                {source.category}
-              </div>
-              <div className="rounded-2xl border border-[#E4DCCD] bg-[#FBF8F3] px-4 py-3 text-sm text-[#334155]">
-                {source.lastFetchedAt
-                  ? formatAzDateTime(source.lastFetchedAt)
-                  : 'Hələ yoxlanmayıb'}
-              </div>
-              <label className="inline-flex items-center gap-3 rounded-2xl bg-[#FBF8F3] px-4 py-3 text-sm font-semibold text-[#334155]">
-                <input
-                  type="checkbox"
-                  checked={source.isActive}
-                  className="h-4 w-4 accent-[#0F172A]"
-                  onChange={(e) => void toggleSource(source.id, e.target.checked)}
-                />
-                Aktiv
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {!loading && sources.length === 0 ? (
-          <div className="rounded-[22px] border border-[#E4DCCD] bg-white p-6 text-sm text-[#5B6474] shadow-sm">
-            Source tapilmadi.
+        <div className={`${card} overflow-hidden`}>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead className="bg-[#F6F1E9] text-left text-[12px] uppercase tracking-wider text-[#5B6474]">
+                <tr>
+                  <th className="px-5 py-3 font-semibold">Mənbə</th>
+                  <th className="px-5 py-3 font-semibold">Növ</th>
+                  <th className="px-5 py-3 text-right font-semibold">Gəldi</th>
+                  <th className="px-5 py-3 text-right font-semibold">Dərc olundu</th>
+                  <th className="px-5 py-3 font-semibold">Son xəbər</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#EFE9DE]">
+                {RSS_FEEDS.map((feed) => {
+                  const c = counts.get(feed.name);
+                  return (
+                    <tr key={feed.url}>
+                      <td className="px-5 py-3">
+                        <div className="font-semibold text-[#0F172A]">{feed.name}</div>
+                        <div className="max-w-[360px] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-[#5B6474]">
+                          {feed.url}
+                        </div>
+                      </td>
+                      <td className="px-5 py-3 text-[#334155]">
+                        {feed.kind === 'trade' ? 'Sektor' : 'Ümumi'}
+                        {feed.region === 'az' ? ' · AZ' : ''}
+                      </td>
+                      <td className="px-5 py-3 text-right tabular-nums text-[#334155]">{c?.total ?? 0}</td>
+                      <td className="px-5 py-3 text-right font-semibold tabular-nums text-[#0F172A]">{c?.approved ?? 0}</td>
+                      <td className="px-5 py-3 text-[#5B6474]">{c?.last ? formatAzDateTime(c.last) : '—'}</td>
+                    </tr>
+                  );
+                })}
+                <tr className="bg-[#FBF8F3]">
+                  <td className="px-5 py-3">
+                    <div className="font-semibold text-[#0F172A]">NewsData.io (axtarış)</div>
+                    <div className="text-xs text-[#5B6474]">{others.length} müxtəlif nəşr</div>
+                  </td>
+                  <td className="px-5 py-3 text-[#334155]">Axtarış</td>
+                  <td className="px-5 py-3 text-right tabular-nums text-[#334155]">{othersTotal}</td>
+                  <td className="px-5 py-3 text-right font-semibold tabular-nums text-[#0F172A]">{othersApproved}</td>
+                  <td className="px-5 py-3 text-[#5B6474]">—</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        ) : null}
+        </div>
       </div>
     </div>
   );
