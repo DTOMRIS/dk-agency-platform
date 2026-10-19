@@ -3,10 +3,10 @@
 Auto-generated. Do not edit manually.
 
 ## Snapshot
-- GeneratedAt: 2026-10-05T12:04:29.152Z
+- GeneratedAt: 2026-10-19T10:32:46.391Z
 - BuildStatus: PASS
 
-## Routes (244)
+## Routes (254)
 - /
 - /(dev)/heromotif
 - /[locale]
@@ -48,10 +48,13 @@ Auto-generated. Do not edit manually.
 - /[locale]/dashboard/funnel
 - /[locale]/dashboard/ilanlar
 - /[locale]/dashboard/ilanlar/[id]
+- /[locale]/dashboard/ilanlar/whatsapp
 - /[locale]/dashboard/kazan-leads
 - /[locale]/dashboard/marketinq-ocagi
 - /[locale]/dashboard/marketinq-ocagi/[slug]
+- /[locale]/dashboard/muracietler
 - /[locale]/dashboard/reklamlar
+- /[locale]/dashboard/techizatcilar
 - /[locale]/dashboard/users
 - /[locale]/dashboard/users/[id]
 - /[locale]/dashboard/xeberler
@@ -73,6 +76,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/ilan-ver
 - /[locale]/ilanlar
 - /[locale]/ilanlar/[slug]
+- /[locale]/is-elanlari
 - /[locale]/kazan-ai
 - /[locale]/listings
 - /[locale]/marketinq
@@ -106,6 +110,7 @@ Auto-generated. Do not edit manually.
 - /[locale]/toolkit/branding-guide
 - /[locale]/toolkit/checklist
 - /[locale]/toolkit/delivery-calc
+- /[locale]/toolkit/excel-sablonlar
 - /[locale]/toolkit/food-cost
 - /[locale]/toolkit/insaat-checklist
 - /[locale]/toolkit/menu-matrix
@@ -175,12 +180,15 @@ Auto-generated. Do not edit manually.
 - /dashboard/funnel
 - /dashboard/ilanlar
 - /dashboard/ilanlar/[id]
+- /dashboard/ilanlar/whatsapp
 - /dashboard/ilanlar/yarat
 - /dashboard/kazan-leads
 - /dashboard/marketinq-ocagi
 - /dashboard/marketinq-ocagi/[slug]
+- /dashboard/muracietler
 - /dashboard/profil-onay
 - /dashboard/reklamlar
+- /dashboard/techizatcilar
 - /dashboard/users
 - /dashboard/users/[id]
 - /dashboard/xeberler
@@ -202,6 +210,7 @@ Auto-generated. Do not edit manually.
 - /ilan-ver
 - /ilanlar
 - /ilanlar/[slug]
+- /is-elanlari
 - /kazan-ai
 - /listings
 - /marketinq
@@ -235,6 +244,7 @@ Auto-generated. Do not edit manually.
 - /toolkit/branding-guide
 - /toolkit/checklist
 - /toolkit/delivery-calc
+- /toolkit/excel-sablonlar
 - /toolkit/food-cost
 - /toolkit/insaat-checklist
 - /toolkit/menu-matrix
@@ -252,7 +262,7 @@ Auto-generated. Do not edit manually.
 - /xeberler
 - /xeberler/[slug]
 
-## API Routes (100)
+## API Routes (112)
 - /api/admin/ads
 - /api/admin/ads/[id]
 - /api/admin/audit-logs
@@ -291,6 +301,13 @@ Auto-generated. Do not edit manually.
 - /api/cron/admin-digest
 - /api/cron/onboarding-drip
 - /api/cron/weekly-digest
+- /api/cron/weekly-telegram
+- /api/dashboard/muracietler/count
+- /api/dashboard/supply/import
+- /api/dashboard/supply/requests
+- /api/dashboard/supply/requests/[id]
+- /api/dashboard/supply/suppliers
+- /api/dashboard/supply/suppliers/[id]
 - /api/email/preferences
 - /api/email/unsubscribe
 - /api/food-cost
@@ -312,17 +329,21 @@ Auto-generated. Do not edit manually.
 - /api/listings/[id]/leads
 - /api/listings/[id]/reviews
 - /api/listings/[id]/status
+- /api/listings/admin/whatsapp-import
 - /api/listings/batch-status
 - /api/marketing-tools/kst-yoxlayici
 - /api/marketing-tools/marka-kompasi
 - /api/marketing-tools/menyu-analitigi
 - /api/marketing-tools/musteri-persona
+- /api/marketing-tools/notify
 - /api/marketing-tools/pnl-simulator
 - /api/marketing-tools/promosyon-roi
 - /api/marketing-tools/sezon-planlama
 - /api/marketing-tools/sikayet-analitigi
 - /api/member/auth
 - /api/member/checkout
+- /api/member/email-preferences
+- /api/member/excel-templates/[slug]
 - /api/member/lead
 - /api/member/session
 - /api/member/webhook
@@ -332,6 +353,7 @@ Auto-generated. Do not edit manually.
 - /api/news/[slug]
 - /api/news/admin
 - /api/news/admin/[id]
+- /api/news/admin/batch
 - /api/news/admin/translate
 - /api/news/fetch
 - /api/news/sources/[id]
