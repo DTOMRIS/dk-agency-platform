@@ -73,7 +73,8 @@ const nextConfig: NextConfig = {
               "media-src 'self' blob: https:",
               "font-src 'self' data:",
               "style-src 'self' 'unsafe-inline'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.com",
+              // TASK-0551: Cloudflare Web Analytics beacon (its report goes to cloudflareinsights.com, covered by connect-src https:).
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.com https://static.cloudflareinsights.com",
               "connect-src 'self' https: https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://*.sentry.io",
               "frame-ancestors 'none'",
               "base-uri 'self'",

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- `TASK-0551` feat(analytics): ziyarətçi statistikası — Cloudflare Web Analytics (çərəzsiz, pulsuz): neçə nəfər, hansı ölkədən, hansı səhifəyə, haradan gəlib; admin panel sayılmır. Saytın təhlükəsizlik siyasəti (CSP) skripti bloklayırdı — icazə əlavə olundu.
 - `TASK-0550` fix(security): Next.js 16.4.3 (şəkil optimizatorunda kritik RCE və Server Actions DoS açıqları bağlandı), Sentry, DOMPurify, Zod, Nodemailer, fast-uri yeniləndi — `npm audit` 6 açıqdan 0-a; validator-un təsadüfi «Build FAIL»-ı da bu idi (Next.js köhnə versiyada build-i dayandırırdı).
 - `TASK-0549` fix(news): eyni xəbər fərqli mənbələrdən təkrar gəlmir, bir mənbə növbəni doldurmur (dövrdə ən çox 3), press-release-lər çıxdı; admin «Xəbər mənbələri» həqiqi mənbələri və son 7 günün rəqəmlərini göstərir.
 - `TASK-0548` design: admin və üzv (B2B) panelləri yeni dizaynda — 35 səhifə, menyu, üst panel və qrafiklər; bütün sayt artıq bir dizayndadır (105/105).

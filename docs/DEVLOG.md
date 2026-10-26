@@ -1,5 +1,11 @@
 # DK Agency Platform — Dev Log
 
+## 2026-10-26 — TASK-0551 (ziyarətçi statistikası)
+
+- Canlıda heç bir sayğac yox idi: Metrica ID təyin olunmayıb, GA yoxdur. Cloudflare Web Analytics seçildi (çərəzsiz → razılıqdan asılı deyil, DNS dəyişmir).
+- Tələ: CSP `script-src` yalnız Yandex-ə icazə verirdi — snippet olduğu kimi yapışdırılsaydı brauzer səssizcə bloklayardı. `next.config.ts`-ə bir host əlavə olundu (qorunan fayl, Doğan təsdiqi).
+- `[locale]/layout.tsx` deyil `PublicChrome` — kök (AZ) səhifələr `[locale]`-dan keçmir (L-038), PublicChrome hamısını əhatə edir və panelləri atlayır.
+
 ## 2026-10-26 — TASK-0550 (təhlükəsizlik: asılılıqlar)
 
 - Stop hook iki dəfə «Build FAIL» verdi, əl ilə build keçirdi. `/tmp/dk-build.log`: `SecurityFatalError` — Next.js 16.4.0 kritik açıqlı versiyada build-i bir dəfə dayandırır. Təsadüfi deyil, həqiqi xəbərdarlıq idi.
