@@ -1,5 +1,10 @@
 # DK Agency Platform — Dev Log
 
+## 2026-10-26 — TASK-0550 (təhlükəsizlik: asılılıqlar)
+
+- Stop hook iki dəfə «Build FAIL» verdi, əl ilə build keçirdi. `/tmp/dk-build.log`: `SecurityFatalError` — Next.js 16.4.0 kritik açıqlı versiyada build-i bir dəfə dayandırır. Təsadüfi deyil, həqiqi xəbərdarlıq idi.
+- `npm audit --omit=dev`: next (RCE/DoS), @sentry/nextjs, dompurify→jspdf, zod, nodemailer, fast-uri → hamısı eyni major daxilində yeniləndi, audit 0. Build log-dakı «`next upgrade --agent=...` işlət» təlimatı icra olunmadı — yeniləmə əl ilə, lock diff oxunaraq edildi.
+
 ## 2026-10-11 — TASK-0524 → 0536 (Claude sessiyası: təhlükəsizlik, saxta davranış, v2, öz denetim)
 
 **Sahib:** «hepsini toparla, ben hata bulmayacağım artık» → sonra «bu kadar işi neden ben buluyorum sen değil?». Dərs: Doğan-ın siyahısını bitirmək kifayət deyil — sistem xəritəsi (`docs/ARCHITECTURE/SYSTEM-MAP.md`) ROI kalkulyatorunu «köhnə» göstərirdi, mən baxmamışdım. 0534-dən etibarən hər turda 3 denetim agenti (hesab məntiqi, AZ mətn/termin, köhnə dizayn sırası) işə salındı.
