@@ -8,6 +8,7 @@ import LazyCookiesBanner from '@/components/ui/LazyCookiesBanner';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import KazanNudge from '@/components/kazan-ai/KazanNudge';
 import AttributionCapture from '@/components/analytics/AttributionCapture';
+import CloudflareWebAnalytics from '@/components/analytics/CloudflareWebAnalytics';
 import { stripLocalePrefix } from '@/i18n/config';
 
 function isDashboardRoute(pathname: string) {
@@ -37,6 +38,8 @@ export default function PublicChrome({ children }: { children: React.ReactNode }
       <LazyCookiesBanner />
       {/* TASK-0541: remembers where the visitor came from (utm / ad / referring site) for lead sources. */}
       <AttributionCapture />
+      {/* TASK-0551: cookieless visitor counts (countries, pages, referrers) in Cloudflare Web Analytics. */}
+      <CloudflareWebAnalytics />
     </>
   );
 }
