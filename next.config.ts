@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from 'next-intl/plugin';
 import { withSentryConfig } from '@sentry/nextjs';
+import { OPTIMIZED_REMOTE_HOSTS } from './lib/images/optimizedHosts';
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -24,30 +25,10 @@ const nextConfig: NextConfig = {
   images: {
     // Cache resized external images for a day so the optimizer is not re-hit per request.
     minimumCacheTTL: 86400,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'randomuser.me',
-      },
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-      },
-      // TASK-0516 (owner approved 2026-10-09): news images come from 40+ RSS hosts that change daily,
-      // so an allowlist cannot keep up. Any https host; Next blocks private/local IPs by default.
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    // TASK-0552 (owner approved 2026-11-01): explicit allowlist only. The previous `hostname: '**'`
+    // (TASK-0516) turned /_next/image into an open resize proxy for any https image. RSS news
+    // covers now render `unoptimized` (see lib/images/optimizedHosts.ts → canOptimizeImage).
+    remotePatterns: OPTIMIZED_REMOTE_HOSTS.map((hostname) => ({ protocol: 'https' as const, hostname })),
     formats: ['image/avif', 'image/webp'],
   },
   allowedDevOrigins: [

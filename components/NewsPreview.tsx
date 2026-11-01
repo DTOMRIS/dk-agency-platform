@@ -20,6 +20,7 @@ import styles from '@/components/home/v2/homeV2.module.css';
 import { inter } from '@/components/home/v2/font';
 import { Icon, Reveal, type IconName } from '@/components/home/v2/shared';
 import { newsCategoryCover } from '@/lib/news/category-covers';
+import { canOptimizeImage } from '@/lib/images/optimizedHosts';
 
 interface NewsItem {
   id: number;
@@ -77,15 +78,15 @@ function NewsCover({ item, label, big }: { item: NewsItem; label: string; big?: 
   const sizes = big ? '(max-width: 980px) 100vw, 700px' : '104px';
 
   if (item.imageUrl && !failed) {
-    // TASK-0516: feed images go through next/image (resized; next.config allows any https host).
-    // Plain http URLs are not in remotePatterns, so they are passed through unoptimized.
+    // TASK-0552: only allowlisted hosts are optimized; RSS publisher images load straight from
+    // their source (unoptimized) so /_next/image is never an open resize proxy.
     return (
       <Image
         src={item.imageUrl}
         alt=""
         fill
         sizes={sizes}
-        unoptimized={!item.imageUrl.startsWith('https://')}
+        unoptimized={!canOptimizeImage(item.imageUrl)}
         className={styles.nwImg}
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}

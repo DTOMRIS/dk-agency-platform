@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-11-01 — TASK-0552: şəkil optimizatoru allowlist (`hostname: '**'` silindi)
+
+**Why:** `next.config.ts` `remotePatterns`-də `hostname: '**'` (TASK-0516) `/_next/image`-i istənilən https şəkil üçün açıq resize proxy edirdi. Canlı yoxlama (dk-agency-platform.vercel.app, 01.11): trend.az şəkli bizim optimizatordan 200 image/jpeg qaytardı — kənar şəxs serverimizin CPU-su / kvotası ilə istənilən şəkli kiçildə bilər.
+
+**What:** `lib/images/optimizedHosts.ts` — vahid allowlist (`OPTIMIZED_REMOTE_HOSTS`) + `canOptimizeImage`. `next.config.ts` (qorunan, Doğan təsdiqi 01.11) `remotePatterns`-i bu siyahıdan qurur. `NewsCoverImage` + `NewsPreview` RSS şəkillərini `unoptimized` göstərir (CSP `img-src https:` icazə verir). DB yoxlaması (Neon `dk-agency`): xəbər xaricindəki bütün uzaq şəkillər `res.cloudinary.com` (blog 9), qalanı relative/data-uri — allowlist xaricində `next/image` ilə render olunan heç nə qalmır.
+
+**Yoxlama:** `e2e/optimized-hosts.test.ts` 9/9; dəyişən fayllarda eslint 0; tsc — dəyişən fayllarda yeni xəta yox (next.config.ts-dəki 2 xəta əvvəldən var: `trustHostHeader`, `disableSourceMapUpload`). Lokal `next build` sandbox-da Google Fonts çəkə bilmədi (şəbəkə) → build/route yoxlaması Vercel preview-də.
+
 ## 2026-10-10 — TASK-0523: Marketinq Ocağı — limit, ROI/P&L düsturları, kodla hesablanan rəqəmlər, birləşdirmə, Qonaq anketi
 
 **Why:** 09.10 audit (docs/reports/2026-10-09-marketinq-ocagi-audit.md) + sahib qərarları: 7 AI aləti aylıq limiti yazmırdı; ROI ciro üzrə, P&L başabaşı işçini dəyişən sayırdı; KST/şikayət/menyu rəqəmlərini LLM hesablayırdı (menyuda satışı «təxmin et» deyirdi); şikayət cavabı hər dəfə kupon vəd edirdi; marka kompası «B2B SaaS» promptu; sezon əmsalları orta ≠ 1; mənbəsiz norma/qayda/sitatlar; dublikat alətlər.

@@ -1,20 +1,16 @@
 /**
  * @file NewsCoverImage.tsx
- * @purpose External news image through next/image (resized + AVIF/WebP by the optimizer instead
- *          of the full-size RSS original). If the image fails to load, the generated category
- *          cover passed as `fallback` is shown instead.
- * @task TASK-0516 (next.config allows any https host, owner-approved 2026-10-09)
+ * @purpose News cover image. Allowlisted hosts and same-origin paths go through the optimizer;
+ *          RSS publisher images render `unoptimized` (loaded straight from the source). If the
+ *          image fails to load, the generated category cover passed as `fallback` is shown.
+ * @task TASK-0516, TASK-0552 (optimizer allowlist instead of `hostname: '**'`)
  */
 
 'use client';
 
 import Image from 'next/image';
 import { useState, type ReactNode } from 'react';
-
-/** Only https and same-origin paths go through the optimizer (remotePatterns is https-only). */
-function canOptimize(src: string): boolean {
-  return src.startsWith('https://') || (src.startsWith('/') && !src.startsWith('//'));
-}
+import { canOptimizeImage } from '@/lib/images/optimizedHosts';
 
 export default function NewsCoverImage({
   src,
@@ -44,7 +40,7 @@ export default function NewsCoverImage({
         fill
         sizes={sizes}
         priority={priority}
-        unoptimized={!canOptimize(src)}
+        unoptimized={!canOptimizeImage(src)}
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
         style={objectPosition ? { objectPosition } : undefined}
