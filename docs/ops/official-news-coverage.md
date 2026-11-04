@@ -14,7 +14,7 @@ The shared registry `lib/news/official-sources.ts` contains five verified public
 | KOBİA | https://smb.gov.az/az/all-news | dated cards + relevant official article text |
 | Dövlət Vergi Xidməti | https://www.taxes.gov.az/az/page/xeberler | dated cards + article body; video-only pages skipped |
 
-Official discovery runs with the existing 00:00 UTC collection (04:00 Baku), once daily. Other RSS runs remain 06/12/18 UTC. AI remains 05/14 UTC (09/18 Baku). A manual `official_sources:true`, `synthesize:false` dispatch collects only official pages. If both flags are set, synthesis takes priority and official collection is skipped.
+Official discovery runs with the existing 00:00 UTC collection (04:00 Baku), once daily. Other RSS runs remain 06/12/18 UTC. AI remains 05/14 UTC (09/18 Baku). A manual `official_sources:true`, `synthesize:false` dispatch collects only official pages. Set `official_dry_run:true` to check the same pages from GitHub without database writes. If both flags are set, synthesis takes priority and official collection is skipped.
 
 ## Limits and failure semantics
 

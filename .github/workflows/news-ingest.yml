@@ -18,6 +18,10 @@ on:
         description: 'Collect official press pages only (no AI or Telegram)'
         type: boolean
         default: false
+      official_dry_run:
+        description: 'Read-only test for official_sources (no database writes)'
+        type: boolean
+        default: false
 
 # TASK-0549 (Actions budget rule 5): never two ingests at once (a slow run must not overlap the next schedule).
 concurrency:
@@ -63,6 +67,7 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && (github.event.schedule == '0 0 * * *' || inputs.official_sources) && !inputs.synthesize }}
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          OFFICIAL_DRY_RUN: ${{ inputs.official_dry_run }}
         run: npx tsx scripts/news-official-fetch.ts --commit
 
       - name: Synthesize with DeepSeek

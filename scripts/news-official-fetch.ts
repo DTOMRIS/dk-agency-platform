@@ -4,7 +4,7 @@ import { ingestOfficialNews } from '../lib/news/official-ingest';
 const annotation = (message: string) => message.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
 
 async function main() {
-  const write = process.argv.includes('--commit');
+  const write = process.argv.includes('--commit') && process.env.OFFICIAL_DRY_RUN !== 'true';
   const result = await ingestOfficialNews(write);
   console.log(`[news:official] ${write ? 'COMMIT' : 'READ-ONLY'}: ${result.sourcesOk} sources read, ${result.accepted.length} ${write ? 'inserted' : 'candidates'}`);
   console.log(`  Duplicates: ${result.duplicates}; old: ${result.tooOld}; irrelevant: ${result.irrelevant}; weak: ${result.weak}`);
