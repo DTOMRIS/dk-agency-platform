@@ -2,6 +2,13 @@ import type { OfficialSource } from './official-sources';
 
 const MAX_BYTES = 1_000_000;
 
+function connectionReason(error: unknown): string {
+  if (!(error instanceof Error)) return 'unknown connection error';
+  const cause = error.cause;
+  if (cause && typeof cause === 'object' && 'code' in cause && typeof cause.code === 'string') return cause.code;
+  return error.name === 'Error' ? error.message.slice(0, 160) : error.name;
+}
+
 /** Follow only this configured official host (www alias allowed), never arbitrary redirects. */
 export function allowedOfficialRequest(raw: string, source: OfficialSource): boolean {
   try {
@@ -15,12 +22,31 @@ export function allowedOfficialRequest(raw: string, source: OfficialSource): boo
 
 export async function fetchOfficialHtml(source: OfficialSource, initialUrl = source.url, fetcher: typeof fetch = fetch): Promise<string> {
   let url = initialUrl;
+  let aliasTried = false;
+  const connectionErrors: string[] = [];
+  // The whole redirect/alias chain is bounded too, not just each individual response.
+  const deadline = AbortSignal.timeout(20_000);
   for (let redirect = 0; redirect <= 3; redirect++) {
     if (!allowedOfficialRequest(url, source)) throw new Error('Untrusted official-source URL/redirect');
-    const response = await fetcher(url, {
-      redirect: 'manual', signal: AbortSignal.timeout(10_000),
-      headers: { 'User-Agent': 'DKAgencyNewsBot/1.0 (+https://dkagency.com.tr)', Accept: 'text/html' },
-    });
+    let response: Response;
+    try {
+      response = await fetcher(url, {
+        redirect: 'manual', signal: AbortSignal.any([deadline, AbortSignal.timeout(10_000)]),
+        headers: { 'User-Agent': 'DKAgencyNewsBot/1.0 (+https://dkagency.com.tr)', Accept: 'text/html' },
+      });
+    } catch (error) {
+      connectionErrors.push(connectionReason(error));
+      // Only a normal official www/bare alias, only on connection failure. Never retry a 403
+      // through another host, change the bot identity, or disable TLS verification.
+      if (!aliasTried && !deadline.aborted) {
+        aliasTried = true;
+        const alias = new URL(url);
+        alias.hostname = alias.hostname.startsWith('www.') ? alias.hostname.slice(4) : `www.${alias.hostname}`;
+        url = alias.href;
+        continue;
+      }
+      throw new Error(`Fetch failed (${connectionErrors.join(' → ')})`);
+    }
     if (response.status >= 300 && response.status < 400) {
       const location = response.headers.get('location');
       await response.body?.cancel();

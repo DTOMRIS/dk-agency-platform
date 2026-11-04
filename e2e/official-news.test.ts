@@ -32,6 +32,18 @@ async function main() {
  assert(!isOfficialTopic('Əməkdaşlar arasında şahmat turniri',dta));
  const htmlFetch: typeof fetch = async () => new Response(dtaHtml,{headers:{'Content-Type':'text/html'}});
  assert.equal(await fetchOfficialHtml(dta, dta.url, htmlFetch),dtaHtml);
+ let calls=0;
+ assert.equal(await fetchOfficialHtml(dta,dta.url,async(url)=>{
+  calls++;
+  if(calls===1) throw new Error('fetch failed',{cause:{code:'UND_ERR_CONNECT_TIMEOUT'}});
+  assert(String(url).startsWith('https://www.tourism.gov.az/'));
+  return new Response(dtaHtml,{headers:{'Content-Type':'text/html'}});
+ }),dtaHtml);
+ assert.equal(calls,2,'one ordinary www alias on connection failure');
+ calls=0;
+ await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>{calls++;return new Response('',{status:403});}),/403/);
+ assert.equal(calls,1,'access denial is not retried on another host');
+ await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>{throw new Error('fetch failed',{cause:{code:'ENOTFOUND'}});}),/ENOTFOUND/);
  await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>new Response('',{status:403})),/403/);
  await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>new Response('not html',{headers:{'Content-Type':'application/json'}})),/Expected HTML/);
  await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>new Response('',{status:302,headers:{location:'https://evil.example/news/a'}})),/Untrusted/);
