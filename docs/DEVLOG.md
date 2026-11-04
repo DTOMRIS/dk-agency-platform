@@ -1183,3 +1183,10 @@ Hostinger runs Next.js standalone behind a reverse proxy. The internal server bi
 - Durable owner delivery stores message IDs, bounded retries, backoff and uncertain outcomes; setup only drains tracked outbox, never replays historical queue. Six delivery attempts/run, up to two new review alerts/run.
 - Atomic PostgreSQL allowances: six synthesis attempts/run, twelve/Baku day, manual runs included. Deletion does not refund budget. Four collection runs retained; AI at 09:00/18:00 Baku.
 - No production migrations, protected-file edits, environment writes or deployments. Migration 0022 must precede activation.
+
+
+## 2026-11-04 — TASK-0554: official press discovery
+- Five verified official press templates, source publication dates, title-specific relevance, bounded source text and HTTPS same-host requests. No dependency, schema or API additions.
+- Daily official step reuses RSS persistence and the existing event/AI/approval queue; explicit manual mode collects without AI/Telegram. Partial source failures are annotated; DB/all-source failures fail the job.
+- Sources screen shows official registry, fixes stale dedupe/schedule copy and uses Pattern A in AZ/RU/EN/TR. Manual rows are excluded from discovery counts.
+- Live read-only discovery: 5 sources read, 9 candidates (not deduplicated against production DB), 11 old, 10 irrelevant, 3 weak. No production writes or deploy. Statistika news is HTTP 500 and remains deferred. Report works locally but failed with 403 on GitHub; do not pretend a URL change fixed it.

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0554` feat(news): AQTA, Dövlət Turizm Agentliyi, Turizm Bürosu, KOBİA və Vergi Xidmətinin rəsmi press səhifələri gündəlik toplanır; tarixsiz, köhnə və yetərli mətni olmayan siqnallar yazdırılmır. Mənbə xətaları GitHub xəbərdarlıqlarında görünür; mənbə ekranı həqiqi siyahı və 4 dilli izahla yenilənib. AI/Telegram hədləri və təsdiq axını saxlanılır.
+
 - `TASK-0553` fix(news): mənbələr hadisə üzrə AI-dan əvvəl birləşdirilir; statistik ziddiyyətlər panel yoxlamasına yönəlir və yayın bloklanır; Telegram çatdırılması qeyd edilir, qeyri-müəyyən nəticə kor təkrarlanmır; yazım 6/icra və 12/Bakı günü ilə məhduddur. Toplama 4 dəfə, yazım 09:00/18:00. Miqrasiya 0022 tələb olunur; hələ deploy edilməyib.
 
 - `TASK-0552` fix(security): şəkil optimizatoru artıq açıq proxy deyil — `hostname: '**'` silindi, yalnız öz mənbələrimiz (Cloudinary, Unsplash və s.) optimizasiya olunur; RSS xəbər şəkilləri birbaşa mənbədən yüklənir (`unoptimized`). Kənar şəxs `/_next/image` ilə istənilən şəkli bizim serverdə kiçildə bilirdi.

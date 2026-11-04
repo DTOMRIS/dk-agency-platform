@@ -270,42 +270,44 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
       continue;
     }
 
-    const hash = urlHash(c.link);
-    const existing = await db
-      .select({ id: newsArticles.id })
-      .from(newsArticles)
-      .where(or(eq(newsArticles.sourceUrlHash, hash), eq(newsArticles.externalUrl, c.link)))
-      .then((rows) => rows[0]);
-    if (existing) {
-      result.duplicates++;
-      continue;
-    }
-
-    try {
-      await db.insert(newsArticles).values({
-        externalUrl: c.link,
-        sourceUrlHash: hash,
-        slug: `${slugifyAz(c.title).slice(0, 80) || 'xeber'}-${Date.now().toString(36).slice(-5)}`,
-        title: c.title,
-        summary: c.summary,
-        category: categoryFor(`${c.title} ${c.summary}`),
-        imageUrl: c.imageUrl,
-        author: c.feed.name.slice(0, 150),
-        publishedAt: c.publishedAt ?? new Date(),
-        status: 'fetched',
-        origin: 'rss',
-        relevanceScore: c.feed.region === 'az' ? c.score + AZ_RELEVANCE_BONUS : c.score,
-      });
+    const stored = await storeRssCandidate(c);
+    if (stored.kind === 'inserted') {
       result.inserted.push({ score: c.score, title: c.title.slice(0, 110), source: c.feed.name });
       perFeed.set(c.feed.name, (perFeed.get(c.feed.name) ?? 0) + 1);
-    } catch (err) {
-      const cause = (err as { cause?: Error })?.cause;
-      const msg = cause?.message || (err instanceof Error ? err.message : 'Insert error');
-      if (msg.includes('unique') || msg.includes('duplicate') || msg.includes('23505'))
-        result.duplicates++;
-      else result.errors.push(`[insert] ${msg.slice(0, 160)}`);
-    }
+    } else if (stored.kind === 'duplicate') result.duplicates++;
+    else result.errors.push(stored.error);
   }
 
   return result;
+}
+
+/** Shared persistence for RSS and official press adapters; one URL/idempotency contract. */
+export async function hasStoredSourceUrl(link: string): Promise<boolean> {
+  if (!db) return false;
+  const rows = await db.select({ id: newsArticles.id }).from(newsArticles)
+    .where(or(eq(newsArticles.sourceUrlHash, urlHash(link)), eq(newsArticles.externalUrl, link))).limit(1);
+  return rows.length > 0;
+}
+
+export async function storeRssCandidate(c: Candidate): Promise<
+  { kind: 'inserted' } | { kind: 'duplicate' } | { kind: 'error'; error: string }
+> {
+  if (!db) return { kind: 'error', error: 'Database not available' };
+  try {
+    if (await hasStoredSourceUrl(c.link)) return { kind: 'duplicate' };
+    await db.insert(newsArticles).values({
+      externalUrl: c.link, sourceUrlHash: urlHash(c.link),
+      slug: `${slugifyAz(c.title).slice(0, 80) || 'xeber'}-${Date.now().toString(36).slice(-5)}`,
+      title: c.title, summary: c.summary, category: categoryFor(`${c.title} ${c.summary}`),
+      imageUrl: c.imageUrl, author: c.feed.name.slice(0, 150),
+      publishedAt: c.publishedAt ?? new Date(), status: 'fetched', origin: 'rss',
+      relevanceScore: c.feed.region === 'az' ? c.score + AZ_RELEVANCE_BONUS : c.score,
+    });
+    return { kind: 'inserted' };
+  } catch (err) {
+    const cause = (err as { cause?: Error })?.cause;
+    const msg = cause?.message || (err instanceof Error ? err.message : 'Insert error');
+    return /unique|duplicate|23505/i.test(msg) ? { kind: 'duplicate' }
+      : { kind: 'error', error: `[insert] ${msg.slice(0, 160)}` };
+  }
 }

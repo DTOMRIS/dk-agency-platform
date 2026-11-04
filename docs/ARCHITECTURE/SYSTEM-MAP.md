@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-11-04 · fix/TASK-0553-news-reliability · 60d3848f
+> `node scripts/generate-system-map.mjs` · 2026-11-04 · feat/TASK-0554-official-news-coverage · ef518976
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -8,7 +8,7 @@
 - Dizayn (həqiqi səhifələr): v2 **102** · köhnə **0** · qarışıq **0** · işarəsiz 21
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 63 (+ 388 tapşırıq kartı)
+- Sənəd: 64 (+ 389 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -182,7 +182,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/dashboard/users/[id]` | səhifə | v2 | layout (/dashboard) | ✓ | 2 |  |
 | `/dashboard/xeberler` | səhifə | v2 | layout (/dashboard) | ✓ | 105 |  |
 | `/dashboard/xeberler/[id]` | səhifə | v2 | səhifədə | ✓ | 1 | dashboard/NewsEditorForm.tsx |
-| `/dashboard/xeberler/rss` | səhifə | v2 | səhifədə | ✓ | 9 |  |
+| `/dashboard/xeberler/rss` | səhifə | v2 | səhifədə | ✓ |  |  |
 | `/dashboard/xeberler/yeni` | səhifə | v2 | layout (/dashboard) | ✓ | 1 | dashboard/NewsEditorForm.tsx |
 
 ### Franchise — 6 ünvan (v2 6 · köhnə 0 · qarışıq 0)
@@ -303,7 +303,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/ADR/README.md` | Architecture Decision Records (ADR) | 2026-10-08 | 37 |
 | `docs/ADR/_TEMPLATE.md` | ADR-NNNN: {Başlıq} | 2026-05-27 | 25 |
 | `docs/API-MAP.md` | API Map — DK Agency Platform | 2026-05-27 | 167 |
-| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-10-26 | 349 |
+| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-11-04 | 350 |
 | `docs/BLOG-CITATION-AUDIT.md` | Blog Atıf (Citation) Auditi — Tiered | 2026-06-06 | 73 |
 | `docs/BRAND-GUIDE.md` | DK Agency -- Marka Qaydalari | 2026-03-24 | 47 |
 | `docs/CHANGELOG.md` | CHANGELOG | 2026-10-06 | 658 |
@@ -313,11 +313,11 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/DECISIONS.md` | DECISIONS | 2026-05-27 | 6 |
 | `docs/DELIVERY-SYSTEM.md` | Delivery System (No-Regression Mode) | 2026-02-22 | 51 |
 | `docs/DEPLOYMENT.md` | DK Agency Deployment Guide | 2026-09-13 | 132 |
-| `docs/DEVLOG.md` | DK Agency Platform — Dev Log | 2026-10-26 | 1186 |
+| `docs/DEVLOG.md` | DK Agency Platform — Dev Log | 2026-11-04 | 1193 |
 | `docs/ENV-SETUP.md` | Environment Setup | 2026-04-24 | 23 |
 | `docs/FATURA-OCR-MASTERPLAN.md` | FATURA OCR MASTERPLAN — DK Agency | 2026-04-29 | 802 |
 | `docs/HANDOFF-11-IYUN-2026.md` | HANDOFF — 11 İyun 2026 Sessiyası | 2026-06-11 | 129 |
-| `docs/HANDOFF.md` | TASK-0553 — 2026-11-04 (prepared, not deployed) | 2026-10-14 | 611 |
+| `docs/HANDOFF.md` | TASK-0554 — 2026-11-04 (prepared for review) | 2026-11-04 | 619 |
 | `docs/I18N-AUDIT.md` | i18n Component-Level Audit | 2026-05-08 | 153 |
 | `docs/LESSONS.md` | DK Agency — Acı Dərslər (yeni task-dan əvvəl oxu) | 2026-10-11 | 438 |
 | `docs/MARKETINQ_OCAGI_SPEC.md` | Marketinq Ocagi — Texniki Spec | 2026-05-11 | 238 |
@@ -330,7 +330,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
 | `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
 | `docs/STATE.md` | STATE | 2026-11-02 | 381 |
-| `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-10-26 | 76 |
+| `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-11-04 | 76 |
 | `docs/TASK-CARD-TEMPLATE.md` | Task Card Template | 2026-03-26 | 15 |
 | `docs/TECH_DEBT.md` | Tech Debt Registry — DK Agency Platform | 2026-09-29 | 281 |
 | `docs/XEBER-TERCUME-SISTEMI.md` | Xəbər Tərcümə Sistemi — Texniki Sənəd | 2026-03-26 | 142 |
@@ -339,7 +339,8 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/kazan-kb-v2.md` | KAZAN AI Knowledge Base v2 | 2026-04-27 | 61 |
 | `docs/member-env-checklist.md` | Member Env Checklist | 2026-03-26 | 58 |
 | `docs/n8n/SETUP.md` | n8n RSS Auto-Fetch — Setup Rehberi | 2026-04-27 | 93 |
-| `docs/ops/news-pipeline-reliability.md` | TASK-0553 — News pipeline rollout and recovery |  | 50 |
+| `docs/ops/news-pipeline-reliability.md` | TASK-0553 — News pipeline rollout and recovery | 2026-11-04 | 50 |
+| `docs/ops/official-news-coverage.md` | TASK-0554 — Official press coverage |  | 46 |
 | `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-06-10 | 348 |
 | `docs/reports/2026-10-09-marketinq-ocagi-audit.md` | Marketinq Ocağı (24 alət) — audit + dünya araşdırması (09.10.2026) | 2026-10-09 | 36 |
 | `docs/reports/2026-10-11-article-pages-research.md` | Blog və xəbər səhifələri — dizayn araşdırması (2026-10-11, TASK-0542) | 2026-10-11 | 26 |

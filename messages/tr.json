@@ -8293,5 +8293,20 @@
         "description": "Franchise yatırımının ROI'sini ve geri dönüş süresini hesaplayın. Sağlıklı franchise hedefi: geri dönüş ≤ 36 ay (yıllık ROI ≈ %33)."
       }
     }
+  },
+  "newsSources": {
+    "title": "Haber kaynakları",
+    "intro": "RSS ve NewsData.io günde 4 kez, resmi basın sayfaları günde 1 kez kontrol edilir. Sinyaller olay bazında gruplanır. Yazım ve Telegram onayı Bakü saatiyle 09:00 ve 18:00’de, çalışma başına en fazla 6 ve günde 12 haber sınırıyla yapılır. Tablo son 7 günde alınan sinyalleri gösterir; sayılar kaynağın şu anda erişilebilir olduğunu göstermez. Erişim hataları GitHub Actions günlüklerinde ve uyarılarında görünür.",
+    "source": "Kaynak",
+    "type": "Tür",
+    "received": "Alınan",
+    "published": "Yayımlanan",
+    "latest": "Son haber",
+    "official": "Resmi site · günde 1 kez",
+    "trade": "Sektörel RSS",
+    "general": "Genel RSS",
+    "searchTitle": "NewsData.io (arama)",
+    "outlets": "{count} farklı yayın",
+    "search": "Arama"
   }
 }

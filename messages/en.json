@@ -8293,5 +8293,20 @@
         "description": "Calculate the ROI and payback period of a franchise investment. A healthy franchise target: payback ≤ 36 months (annual ROI ≈ 33%)."
       }
     }
+  },
+  "newsSources": {
+    "title": "News sources",
+    "intro": "RSS and NewsData.io are checked four times daily; official press pages once daily. Signals are grouped by event. Writing and Telegram approval run at 09:00 and 18:00 Baku time, capped at 6 articles per run and 12 per day. The table shows signals received over the last 7 days; these counts do not establish current source availability. Access failures appear in GitHub Actions logs and warnings.",
+    "source": "Source",
+    "type": "Type",
+    "received": "Received",
+    "published": "Published",
+    "latest": "Latest item",
+    "official": "Official site · daily",
+    "trade": "Trade RSS",
+    "general": "General RSS",
+    "searchTitle": "NewsData.io (search)",
+    "outlets": "{count} distinct outlets",
+    "search": "Search"
   }
 }

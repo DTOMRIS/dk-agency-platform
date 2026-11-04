@@ -15,13 +15,19 @@ async function main() {
   console.log(`  Inserted:        ${r.inserted.length}`);
   console.log(`  Below threshold: ${r.rejected.length}`);
   console.log(`  Too old:         ${r.tooOld}  duplicates: ${r.duplicates}  over cap: ${r.overCap}`);
-  for (const f of r.feedsFailed) console.log(`  ! ${f}`);
+  for (const f of r.feedsFailed) {
+    console.warn(`  ! ${f}`);
+    if (process.env.GITHUB_ACTIONS === 'true') {
+      const safe = f.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+      console.warn(`::warning title=RSS news coverage::${safe}`);
+    }
+  }
   for (const i of r.inserted) console.log(`  + [${i.score}] ${i.title} (${i.source})`);
   for (const i of [...r.rejected].sort((a, b) => b.score - a.score).slice(0, 25)) {
     console.log(`  - [${i.score}] ${i.title} (${i.source})`);
   }
   for (const e of r.errors) console.error(`  ERROR ${e}`);
-  if (r.errors.includes('Database not available')) process.exit(1);
+  if (r.errors.length > 0 || r.feedsOk === 0) process.exit(1);
   // TASK-0481: keep-alive sockets (feeds / DB pool) kept the process alive until the job timed out.
   process.exit(0);
 }
