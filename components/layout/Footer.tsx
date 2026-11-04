@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import DkMark from '@/components/brand/DkMark';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
@@ -108,7 +109,7 @@ export function Footer() {
           {/* Brand column */}
           <div className="col-span-2 lg:col-span-1">
             <div className="mb-4 flex items-center gap-2">
-              <img src="/images/logo-mobil.png" alt={t('logoAlt')} className="h-9 w-9 shrink-0 object-contain" />
+              <DkMark />
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-[var(--dk-ink)]">DK Agency</span>
                 <span className="text-[10px] font-medium tracking-wider text-dk-gold-text">{t('brandTagline')}</span>

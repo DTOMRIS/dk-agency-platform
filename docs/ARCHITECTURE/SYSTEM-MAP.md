@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-11-04 · feat/TASK-0554-official-news-coverage · ef518976
+> `node scripts/generate-system-map.mjs` · 2026-11-04 · feat/TASK-0555-victory-week · 6a97164c
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -8,7 +8,7 @@
 - Dizayn (həqiqi səhifələr): v2 **102** · köhnə **0** · qarışıq **0** · işarəsiz 21
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 64 (+ 389 tapşırıq kartı)
+- Sənəd: 64 (+ 390 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -61,7 +61,7 @@ Cəmi **8**. Silməzdən əvvəl dinamik import / string ilə çağırış yoxla
 - `components/ui/CookiesBanner.tsx`
 
 ## Ortaq UI variantları (bir olmalıdır)
-- **Logo (DK işarəsi)** (8): `components/auth/AuthShell.tsx`, `components/b2b-panel/B2BSidebar.tsx`, `components/brand/DkMark.tsx`, `components/dashboard/DashboardSidebar.tsx`, `components/layout/Footer.tsx`, `components/layout/Header.tsx`, `app/api/news/card/[id]/route.tsx`, `app/haberler/[slug]/page.tsx`
+- **Logo (DK işarəsi)** (7): `components/auth/AuthShell.tsx`, `components/b2b-panel/B2BSidebar.tsx`, `components/brand/DkMark.tsx`, `components/dashboard/DashboardSidebar.tsx`, `components/layout/Footer.tsx`, `components/layout/Header.tsx`, `app/haberler/[slug]/page.tsx`
 - **Üst bar / header** (3): `components/dashboard/supply/SuppliersTab.tsx`, `components/dashboard/ui/Charts.tsx`, `components/layout/Header.tsx`
 - **Geri düyməsi komponenti** (3): `components/inner/InnerParts.tsx`, `components/inner/PageBack.tsx`, `components/panel/PanelBackBar.tsx`
 - **Yan menyu (sidebar)** (2): `components/b2b-panel/B2BSidebar.tsx`, `components/dashboard/DashboardSidebar.tsx`
@@ -340,7 +340,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/member-env-checklist.md` | Member Env Checklist | 2026-03-26 | 58 |
 | `docs/n8n/SETUP.md` | n8n RSS Auto-Fetch — Setup Rehberi | 2026-04-27 | 93 |
 | `docs/ops/news-pipeline-reliability.md` | TASK-0553 — News pipeline rollout and recovery | 2026-11-04 | 50 |
-| `docs/ops/official-news-coverage.md` | TASK-0554 — Official press coverage |  | 46 |
+| `docs/ops/official-news-coverage.md` | TASK-0554 — Official press coverage | 2026-11-04 | 46 |
 | `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-06-10 | 348 |
 | `docs/reports/2026-10-09-marketinq-ocagi-audit.md` | Marketinq Ocağı (24 alət) — audit + dünya araşdırması (09.10.2026) | 2026-10-09 | 36 |
 | `docs/reports/2026-10-11-article-pages-research.md` | Blog və xəbər səhifələri — dizayn araşdırması (2026-10-11, TASK-0542) | 2026-10-11 | 26 |

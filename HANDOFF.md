@@ -271,3 +271,6 @@ Marketinq Ocagi Sprint 5 is complete: TASK-0146..0151, 6/6 tools.
 Next work should be scoped separately:
 - Enrich TASK-0149 audit with the remaining restaurant evaluation and profitability sections.
 - Move the broader franchise manual sections into KAZAN AI knowledge base in a dedicated session.
+
+## 2026-11-04 — TASK-0555
+Seasonal brand PR: owner supplied flag logo immediately, public greeting starts 5 November Baku, Flag Day copy 9 November, both automatically end 10 November. Existing favicon/PWA and historical generated cards remain unchanged. Logo input preserved; optimized WebP/PNG derived by resize/format conversion only. Owner must review visual screenshots and merge; Hostinger rebuild/restart required.

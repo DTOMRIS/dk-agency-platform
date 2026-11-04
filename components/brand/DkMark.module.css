@@ -40,3 +40,6 @@ a:focus-visible .spinHover {
     animation: none;
   }
 }
+
+/* Preserve owner artwork; blend its white backdrop into the shared cream surfaces. */
+.seasonal { mix-blend-mode: multiply; border-radius: 18%; }

@@ -1,3 +1,4 @@
+import { brandLogoPath, LOGO_START, CAMPAIGN_END } from '@/lib/brand/seasonal';
 // public-ok: social image of an approved story (Meta fetches it by public URL)
 /**
  * @file app/api/news/card/[id]/route.tsx
@@ -140,7 +141,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   const titleSize = title.length > 90 ? 70 : title.length > 60 ? 80 : 88;
 
-  const logo = await readFile(path.join(process.cwd(), 'public/images/logo-mobil.png'));
+  const brandNow = Date.now();
+  const nextBrandBoundary = brandNow < LOGO_START ? LOGO_START : brandNow < CAMPAIGN_END ? CAMPAIGN_END : Infinity;
+  const brandCacheSeconds = Math.max(0, Math.min(86400, Math.floor((nextBrandBoundary - brandNow) / 1000)));
+  const logo = await readFile(path.join(process.cwd(), `public${brandLogoPath(brandNow)}`));
   const logoSrc = `data:image/png;base64,${logo.toString('base64')}`;
 
   const sansText = `DK Agency ${copy.pulse} ${category} ${summary} ${footer} ${copy.more}`;
@@ -274,7 +278,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         { name: 'Inter', data: interRegular, weight: 400, style: 'normal' },
         { name: 'Inter', data: interBold, weight: 700, style: 'normal' },
       ],
-      headers: { 'Cache-Control': 'public, max-age=3600, s-maxage=86400' },
+      headers: { 'Cache-Control': `public, max-age=${Math.min(3600, brandCacheSeconds)}, s-maxage=${brandCacheSeconds}` },
     }
   );
 }
