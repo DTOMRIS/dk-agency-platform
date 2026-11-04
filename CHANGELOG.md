@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0556` design(brand): bayram zolağı saten bayraq kurdeleleri ilə — masaüstü və mobil üçün ayrı yüngül fon, ortada oxunaqlı HTML mətn; mövcud DK loqosu və tarixlər saxlanılır.
+
 - `TASK-0555` feat(brand): bayraqlı DK loqosu bütün ortaq sayt nişanlarında; 5–9 noyabr üçün dörd dildə bayram zolağı, Bakı vaxtı ilə avtomatik keçid və bitmə, azaldılmış hərəkət dəstəyi.
 
 - `TASK-0554` feat(news): AQTA, Dövlət Turizm Agentliyi, Turizm Bürosu, KOBİA və Vergi Xidmətinin rəsmi press səhifələri gündəlik toplanır; tarixsiz, köhnə və yetərli mətni olmayan siqnallar yazdırılmır. Mənbə xətaları GitHub xəbərdarlıqlarında görünür; mənbə ekranı həqiqi siyahı və 4 dilli izahla yenilənib. AI/Telegram hədləri və təsdiq axını saxlanılır.
