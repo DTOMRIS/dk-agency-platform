@@ -28,7 +28,7 @@ export async function telegramApi<T = unknown>(
   token: string,
   method: string,
   payload: Record<string, unknown>
-): Promise<{ ok: boolean; result?: T; description?: string }> {
+): Promise<{ ok: boolean; result?: T; description?: string; uncertain?: boolean }> {
   const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -36,10 +36,12 @@ export async function telegramApi<T = unknown>(
     cache: 'no-store',
     signal: AbortSignal.timeout(15_000),
   });
-  return (await res.json().catch(() => ({ ok: false, description: `HTTP ${res.status}` }))) as {
+  if (res.status >= 500) return { ok: false, uncertain: true };
+  return (await res.json().catch(() => ({ ok: false, uncertain: true, description: `HTTP ${res.status}` }))) as {
     ok: boolean;
     result?: T;
     description?: string;
+    uncertain?: boolean;
   };
 }
 
@@ -65,6 +67,8 @@ export type ApprovalCandidate = {
   category?: string | null;
   /** TASK-0492: editor pass note for the owner. */
   editorNote?: string | null;
+  sourceUrls?: string[];
+  reviewOnly?: boolean;
 };
 
 /** Plain-text preview of the AZ analysis (markdown headings/bold stripped), max ~700 chars. */
@@ -80,8 +84,15 @@ function preview(candidate: ApprovalCandidate): string {
 
 /** Send one article to the owner's chat with publish / reject buttons. Never throws. */
 export async function sendNewsForApproval(candidate: ApprovalCandidate): Promise<boolean> {
+  return (await deliverNewsForApproval(candidate)).state === 'sent';
+}
+
+export type ApprovalDelivery = { state: 'sent' | 'failed' | 'uncertain'; messageId?: number };
+
+/** Only an explicit Telegram rejection is safe to retry. A timeout may have delivered. */
+export async function deliverNewsForApproval(candidate: ApprovalCandidate): Promise<ApprovalDelivery> {
   const config = telegramConfig();
-  if (!config) return false;
+  if (!config) return { state: 'failed' };
 
   const host = hostOf(candidate.externalUrl);
   const lines = [
@@ -94,27 +105,30 @@ export async function sendNewsForApproval(candidate: ApprovalCandidate): Promise
       ? `Mənbə: <a href="${escapeHtml(candidate.externalUrl)}">${escapeHtml(host)}</a>`
       : '',
     candidate.editorNote ? `🖊 <i>Redaktor: ${escapeHtml(candidate.editorNote)}</i>` : '',
+    ...(candidate.sourceUrls ?? []).slice(0, 5).map((url) =>
+      `Əlavə mənbə: <a href="${escapeHtml(url)}">${escapeHtml(hostOf(url))}</a>`),
     `#${candidate.id}`,
   ].filter((line, i, all) => line !== '' || (all[i - 1] ?? '') !== '');
 
   try {
-    const res = await telegramApi(config.token, 'sendMessage', {
+    const res = await telegramApi<{ message_id: number }>(config.token, 'sendMessage', {
       chat_id: config.chatId,
       text: lines.join('\n').slice(0, 4000),
       parse_mode: 'HTML',
       link_preview_options: { is_disabled: true },
       reply_markup: {
         inline_keyboard: [
-          [
+          ...(candidate.reviewOnly ? [] : [[
             { text: '✅ Yayınla', callback_data: `${NEWS_CALLBACK.approve}${candidate.id}` },
             { text: '❌ Rədd et', callback_data: `${NEWS_CALLBACK.reject}${candidate.id}` },
-          ],
+          ]]),
           [{ text: '✏️ Paneldə aç', url: `${SITE_URL}/dashboard/xeberler/${candidate.id}` }],
         ],
       },
     });
-    return res.ok;
+    if (res.ok && Number.isSafeInteger(res.result?.message_id)) return { state: 'sent', messageId: res.result?.message_id };
+    return { state: res.ok || res.uncertain ? 'uncertain' : 'failed' };
   } catch {
-    return false;
+    return { state: 'uncertain' };
   }
 }

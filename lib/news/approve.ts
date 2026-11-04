@@ -9,6 +9,7 @@ import {
   updateNewsArticleAdmin,
 } from '@/lib/repositories/newsRepository';
 import { postNewsToChannel } from '@/lib/telegram/channel';
+import { publicationIssue } from './pipeline-state';
 
 type ApproveSideEffectText = {
   titleAz?: string | null;
@@ -58,7 +59,7 @@ export function runApproveSideEffects(
 
 export type ApprovalOutcome =
   | { ok: true; slug: string | null; title: string; text?: ApproveSideEffectText }
-  | { ok: false; reason: 'not_found' | 'no_az_content' | 'already_decided'; status?: string };
+  | { ok: false; reason: 'not_found' | 'no_az_content' | 'already_decided' | 'source_review'; status?: string };
 
 /**
  * Approve a synthesized article. Unlike the admin form, this refuses articles that have no
@@ -74,6 +75,7 @@ export async function approveNewsArticle(
     return { ok: false, reason: 'already_decided', status: article.status };
   }
   if (!article.titleAz || !article.contentAz) return { ok: false, reason: 'no_az_content' };
+  if (await publicationIssue(articleId)) return { ok: false, reason: 'source_review' };
 
   await updateNewsArticleAdmin(articleId, { status: 'approved' });
   // sideEffects: false → caller runs performApproveSideEffects itself (bulk queue).

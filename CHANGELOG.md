@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0553` fix(news): mənbələr hadisə üzrə AI-dan əvvəl birləşdirilir; statistik ziddiyyətlər panel yoxlamasına yönəlir və yayın bloklanır; Telegram çatdırılması qeyd edilir, qeyri-müəyyən nəticə kor təkrarlanmır; yazım 6/icra və 12/Bakı günü ilə məhduddur. Toplama 4 dəfə, yazım 09:00/18:00. Miqrasiya 0022 tələb olunur; hələ deploy edilməyib.
+
 - `TASK-0552` fix(security): şəkil optimizatoru artıq açıq proxy deyil — `hostname: '**'` silindi, yalnız öz mənbələrimiz (Cloudinary, Unsplash və s.) optimizasiya olunur; RSS xəbər şəkilləri birbaşa mənbədən yüklənir (`unoptimized`). Kənar şəxs `/_next/image` ilə istənilən şəkli bizim serverdə kiçildə bilirdi.
 - `TASK-0551` feat(analytics): ziyarətçi statistikası — Cloudflare Web Analytics (çərəzsiz, pulsuz): neçə nəfər, hansı ölkədən, hansı səhifəyə, haradan gəlib; admin panel sayılmır. Saytın təhlükəsizlik siyasəti (CSP) skripti bloklayırdı — icazə əlavə olundu.
 - `TASK-0550` fix(security): Next.js 16.4.3 (şəkil optimizatorunda kritik RCE və Server Actions DoS açıqları bağlandı), Sentry, DOMPurify, Zod, Nodemailer, fast-uri yeniləndi — `npm audit` 6 açıqdan 0-a; validator-un təsadüfi «Build FAIL»-ı da bu idi (Next.js köhnə versiyada build-i dayandırırdı).

@@ -2,20 +2,26 @@ name: News Ingest Pipeline
 
 on:
   schedule:
-    # Twice daily: 06:00 UTC and 14:00 UTC (10:00 and 18:00 Baku time)
-    # TASK-0494: every 6h — Azerbaijani firehose feeds only hold the last ~12h of items.
+    # Collection remains every 6h so short local feeds are not missed.
     - cron: '0 0,6,12,18 * * *'
-  workflow_dispatch:  # Manual trigger for testing
+    # AI + owner delivery at 09:00 / 18:00 Baku. GitHub may delay scheduled jobs.
+    - cron: '0 5,14 * * *'
+  workflow_dispatch:
+    inputs:
+      synthesize:
+        description: 'Write/send news (shares the daily cap); otherwise collect only'
+        type: boolean
+        default: false
 
 # TASK-0549 (Actions budget rule 5): never two ingests at once (a slow run must not overlap the next schedule).
 concurrency:
   group: news-ingest
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   ingest:
     runs-on: ubuntu-latest
-    timeout-minutes: 20  # TASK-0481: RSS (25 feeds) + synthesis of up to 15 items
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -31,6 +37,7 @@ jobs:
         run: npm ci
 
       - name: Fetch from NewsData.io
+        if: github.event.schedule != '0 5,14 * * *' && !inputs.synthesize
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEWSDATA_API_KEY: ${{ secrets.NEWSDATA_API_KEY }}
@@ -39,11 +46,13 @@ jobs:
       # TASK-0480: verified trade-press RSS (Skift AI, Restaurant/Hotel Dive, Hospitality Net, Turizm Güncel,
       # Report.az/Trend titles…) → same scoring → same synthesis + Telegram approval.
       - name: Fetch trade-press RSS
+        if: github.event.schedule != '0 5,14 * * *' && !inputs.synthesize
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npx tsx scripts/news-rss-fetch.ts
 
       - name: Synthesize with DeepSeek
+        if: github.event.schedule == '0 5,14 * * *' || inputs.synthesize
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}

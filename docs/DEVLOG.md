@@ -1176,3 +1176,10 @@ Hostinger runs Next.js standalone behind a reverse proxy. The internal server bi
 **Fix:** `NewsEditorForm` save məntiqi reusable `saveArticle()` helper-inə çıxarıldı. `Önizle` indi əvvəl `fetched` statusu ilə POST/PATCH edir, API-nin qaytardığı real `slug`-u state-ə yazır, sonra `/haberler/{savedSlug}?preview=true` açır.
 
 **Verification:** Canlıda verilən preview URL 404 qaytardı və DB-də həmin slug yoxdur. Fix yeni preview axınında əvvəl DB yazısı yaratmağa məcbur edir.
+
+
+## 2026-11-04 — TASK-0553: news reliability
+- Preserved source rows for pre-AI event grouping, trusted-source selection and statistical conflict quarantine. Normal Telegram, single-admin and bulk publication recheck conflicts.
+- Durable owner delivery stores message IDs, bounded retries, backoff and uncertain outcomes; setup only drains tracked outbox, never replays historical queue. Six delivery attempts/run, up to two new review alerts/run.
+- Atomic PostgreSQL allowances: six synthesis attempts/run, twelve/Baku day, manual runs included. Deletion does not refund budget. Four collection runs retained; AI at 09:00/18:00 Baku.
+- No production migrations, protected-file edits, environment writes or deployments. Migration 0022 must precede activation.

@@ -3,23 +3,21 @@
  *
  * GET /api/telegram/setup            → registers the webhook (secret derived from the bot token)
  *                                       and returns Telegram's webhook info.
- * GET /api/telegram/setup?pending=10 → also sends up to N synthesized, not-yet-decided articles
- *                                       to the owner's chat for approval.
+ * GET /api/telegram/setup?pending=6 → drains at most six tracked pending deliveries.
+ *                                   Does not replay historical drafts or uncertain/sent messages.
  *
  * The bot token never leaves the server; the owner just opens this URL while logged in as admin.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { and, desc, eq, isNotNull } from 'drizzle-orm';
 import { db, dbAvailable } from '@/lib/db';
-import { newsArticles } from '@/lib/db/schema';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
 import {
-  sendNewsForApproval,
   telegramApi,
   telegramConfig,
   webhookSecret,
 } from '@/lib/telegram/news-approval';
+import { deliverPendingApprovals } from '@/lib/news/pipeline-state';
 
 const WEBHOOK_URL = 'https://dkagency.com.tr/api/telegram/webhook';
 
@@ -76,29 +74,17 @@ export async function GET(request: NextRequest) {
   }
   const info = await telegramApi<WebhookInfo>(config.token, 'getWebhookInfo', {});
 
-  const pendingLimit = Math.min(Number(request.nextUrl.searchParams.get('pending') || 0) || 0, 20);
+  const pendingLimit = Math.min(Number(request.nextUrl.searchParams.get('pending') || 0) || 0, 6);
   let sent = 0;
+  let deliveryErrors: string[] = [];
   if (pendingLimit > 0 && dbAvailable && db) {
-    const rows = await db
-      .select({
-        id: newsArticles.id,
-        titleAz: newsArticles.titleAz,
-        summaryAz: newsArticles.summaryAz,
-        contentAz: newsArticles.contentAz,
-        externalUrl: newsArticles.externalUrl,
-        category: newsArticles.category,
-      })
-      .from(newsArticles)
-      .where(and(eq(newsArticles.status, 'translated'), isNotNull(newsArticles.contentAz)))
-      .orderBy(desc(newsArticles.id))
-      .limit(pendingLimit);
-    for (const row of rows) {
-      if (row.titleAz && (await sendNewsForApproval({ ...row, titleAz: row.titleAz }))) sent++;
-    }
+    const delivery = await deliverPendingApprovals(pendingLimit);
+    sent = delivery.sent;
+    deliveryErrors = delivery.errors;
   }
 
   return NextResponse.json({
-    ok: setWebhook.ok,
+    ok: setWebhook.ok && deliveryErrors.length === 0,
     setWebhook: setWebhook.description ?? 'ok',
     webhook: {
       url: info.result?.url,
@@ -107,5 +93,6 @@ export async function GET(request: NextRequest) {
       lastError: info.result?.last_error_message,
     },
     pendingSent: sent,
+    deliveryErrors,
   });
 }

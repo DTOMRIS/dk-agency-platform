@@ -5,12 +5,13 @@
  */
 
 import { synthesizeFetchedNews } from '../lib/news/synthesize';
+import { randomUUID } from 'node:crypto';
 
 async function main() {
   console.log('[news:synthesize] Starting DeepSeek synthesis...');
   const start = Date.now();
 
-  const result = await synthesizeFetchedNews();
+  const result = await synthesizeFetchedNews(6, process.env.GITHUB_RUN_ID || randomUUID());
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
   console.log(`[news:synthesize] Done in ${elapsed}s`);
@@ -25,11 +26,8 @@ async function main() {
     }
   }
 
-  // Only fail if ALL items errored (not just weak signals)
-  const fatalErrors = result.errors.filter((e) => !e.includes('[validate]') && !e.includes('[parse]'));
-  if (result.synthesized === 0 && fatalErrors.length > 0) {
-    process.exit(1);
-  }
+  // Partial delivery/AI failures must not be hidden behind a successful job.
+  process.exit(result.errors.length ? 1 : 0);
 }
 
 main().catch((err) => {
