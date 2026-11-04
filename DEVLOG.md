@@ -1677,3 +1677,6 @@ Sprint 1 (Faza 0) — yalniz infrastruktur, hec bir alet implement edilmir:
 **What:** The existing `/toolkit/basabas` screen now supports five business types and produces deterministic viability metrics, conditional verdicts, three sensitivity levers, and a shareable single-file HTML report. The existing toolkit AI action is reused only for grounded commentary.
 
 **Verification:** Build, focused lint, and deterministic multi-sector smoke checks passed. A final Playwright rerun remains for the next session.
+
+## 2026-11-04 — TASK-0555
+Owner-approved seasonal identity: exact provided artwork optimized to 8,060-byte WebP, PNG only for server news cards. Shared logo now also used by footer/admin sidebar. Banner 5–8 November Victory, 9 November Flag, stops 10 November Baku. No dependency, database, config or auth changes.

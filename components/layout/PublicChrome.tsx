@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import HolidayBanner from '@/components/brand/HolidayBanner';
 import Header from '@/components/layout/Header';
 import { Footer, KazanAIBot } from '@/components/layout/Footer';
 import MobileBottomNav from '@/components/layout/MobileBottomNav';
@@ -25,6 +26,7 @@ export default function PublicChrome({ children }: { children: React.ReactNode }
 
   return (
     <>
+      <HolidayBanner />
       <Header />
       <main className="pb-16 lg:pb-0">{children}</main>
       <Footer />

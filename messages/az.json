@@ -1,4 +1,12 @@
 {
+  "holiday2026": {
+    "month": "NOYABR",
+    "label": "Bayram təbriki",
+    "victoryTitle": "8 Noyabr — Zəfər Günümüz mübarək!",
+    "victoryNote": "Şəhidlərimizi ehtiramla anırıq.",
+    "flagTitle": "Dövlət Bayrağı Günü mübarək!",
+    "flagNote": "Üçrəngli bayrağımız qürurumuzdur."
+  },
   "franchiseRadar": {
     "meta": {
       "title": "Françayz Radarı — Azərbaycana gəlməmiş markalar | DK Agency",

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0555` feat(brand): bayraqlı DK loqosu bütün ortaq sayt nişanlarında; 5–9 noyabr üçün dörd dildə bayram zolağı, Bakı vaxtı ilə avtomatik keçid və bitmə, azaldılmış hərəkət dəstəyi.
+
 - `TASK-0554` feat(news): AQTA, Dövlət Turizm Agentliyi, Turizm Bürosu, KOBİA və Vergi Xidmətinin rəsmi press səhifələri gündəlik toplanır; tarixsiz, köhnə və yetərli mətni olmayan siqnallar yazdırılmır. Mənbə xətaları GitHub xəbərdarlıqlarında görünür; mənbə ekranı həqiqi siyahı və 4 dilli izahla yenilənib. AI/Telegram hədləri və təsdiq axını saxlanılır.
 
 - `TASK-0553` fix(news): mənbələr hadisə üzrə AI-dan əvvəl birləşdirilir; statistik ziddiyyətlər panel yoxlamasına yönəlir və yayın bloklanır; Telegram çatdırılması qeyd edilir, qeyri-müəyyən nəticə kor təkrarlanmır; yazım 6/icra və 12/Bakı günü ilə məhduddur. Toplama 4 dəfə, yazım 09:00/18:00. Miqrasiya 0022 tələb olunur; hələ deploy edilməyib.

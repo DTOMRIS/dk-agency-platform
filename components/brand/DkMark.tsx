@@ -5,7 +5,10 @@
  *          `spin` = coin-flip animation (owner 10.10: «logo dönsün»).
  */
 
+'use client';
+
 import s from './DkMark.module.css';
+import { useSeasonalLogo } from './useSeasonalBrand';
 
 const SIZE = {
   sm: 'h-8 w-8',
@@ -25,10 +28,11 @@ export default function DkMark({
   withName?: boolean;
   subtitle?: string;
 }) {
+  const seasonal = useSeasonalLogo();
   return (
     <span className="inline-flex items-center gap-2.5">
       {/* eslint-disable-next-line @next/next/no-img-element -- 9 KB static brand file, same as the footer */}
-      <img src="/images/logo-mobil.png" alt="" aria-hidden="true" width={48} height={48} className={`${s.mark} ${SIZE[size]} ${spin === 'hover' ? s.spinHover : spin ? s.spin : ''}`} />
+      <img src={seasonal ? "/images/dk-victory-2026.webp" : "/images/logo-mobil.png"} alt="" aria-hidden="true" width={48} height={48} className={`${s.mark} ${seasonal ? s.seasonal : ''} ${SIZE[size]} ${!seasonal && spin === 'hover' ? s.spinHover : !seasonal && spin ? s.spin : ''}`} />
       {withName && (
         <span className="flex flex-col leading-tight">
           <span className={`whitespace-nowrap font-extrabold tracking-[-0.02em] text-[#0F172A] ${size === 'sm' ? 'text-[15.5px]' : 'text-[15.5px] sm:text-[17px]'}`}>DK Agency</span>

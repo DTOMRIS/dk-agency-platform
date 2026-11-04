@@ -1,4 +1,12 @@
 {
+  "holiday2026": {
+    "month": "KASIM",
+    "label": "Bayram kutlaması",
+    "victoryTitle": "8 Kasım — Zafer Günümüz kutlu olsun!",
+    "victoryNote": "Şehitlerimizi saygıyla anıyoruz.",
+    "flagTitle": "Devlet Bayrağı Günü kutlu olsun!",
+    "flagNote": "Üç renkli bayrağımız gururumuzdur."
+  },
   "franchiseRadar": {
     "meta": {
       "title": "Franchise Radar — Azerbaycan'a gelmemiş markalar | DK Agency",

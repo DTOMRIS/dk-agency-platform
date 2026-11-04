@@ -1,4 +1,12 @@
 {
+  "holiday2026": {
+    "month": "NOVEMBER",
+    "label": "Holiday greeting",
+    "victoryTitle": "8 November — Happy Victory Day!",
+    "victoryNote": "We honour the memory of our martyrs.",
+    "flagTitle": "Happy National Flag Day!",
+    "flagNote": "Our tricolour flag is our pride."
+  },
   "franchiseRadar": {
     "meta": {
       "title": "Franchise Radar — brands not yet in Azerbaijan | DK Agency",
