@@ -9,16 +9,15 @@ export default function HolidayBanner() {
   if (!phase) return null;
   return (
     <aside className={s.banner} aria-label={t('label')} data-holiday={phase}>
+      <picture className={s.art} aria-hidden="true">
+        <source media="(max-width: 650px)" srcSet="/images/dk-holiday-satin-mobile-2026.webp" />
+        {/* eslint-disable-next-line @next/next/no-img-element -- decorative responsive WebP, 11–12 KB per viewport */}
+        <img src="/images/dk-holiday-satin-desktop-2026.webp" width={1920} height={120} alt="" />
+      </picture>
       <div className={s.content}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- local, optimized owner-supplied brand art */}
-        <img src="/images/dk-victory-2026.webp" width={64} height={64} alt="" aria-hidden="true" className={s.logo} />
-        <div className={s.copy}>
-          <p className={s.title}>{t(phase === 'flag' ? 'flagTitle' : 'victoryTitle')}</p>
-          <p className={s.note}>{t(phase === 'flag' ? 'flagNote' : 'victoryNote')}</p>
-        </div>
-        <span className={s.date} aria-hidden="true">{phase === 'flag' ? '09' : '08'}<small>{t('month')}</small></span>
+        <p className={s.title}>{t(phase === 'flag' ? 'flagTitle' : 'victoryTitle')}</p>
+        <p className={s.note}>{t(phase === 'flag' ? 'flagNote' : 'victoryNote')}</p>
       </div>
-      <span className={s.ribbon} aria-hidden="true" />
     </aside>
   );
 }

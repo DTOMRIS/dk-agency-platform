@@ -1,6 +1,6 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-11-04 · feat/TASK-0555-victory-week · 6a97164c
+> `node scripts/generate-system-map.mjs` · 2026-11-04 · feat/TASK-0556-satin-holiday-banner · 64e0ba8a
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
@@ -8,7 +8,7 @@
 - Dizayn (həqiqi səhifələr): v2 **102** · köhnə **0** · qarışıq **0** · işarəsiz 21
 - Geri düyməsi yoxdur: **0** səhifə
 - API: **114** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 64 (+ 390 tapşırıq kartı)
+- Sənəd: 64 (+ 391 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |

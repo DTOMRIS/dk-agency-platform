@@ -1,10 +1,28 @@
-.banner{position:relative;overflow:hidden;background:linear-gradient(110deg,#fffdf9,#f4eee4 65%,#fffdf9);color:#17202c;border-bottom:1px solid #ddd4c5}
-.content{position:relative;max-width:1280px;min-height:88px;margin:auto;display:flex;align-items:center;gap:20px;padding:8px 28px}
-.logo{width:72px;height:72px;flex-shrink:0;object-fit:contain;border-radius:18px;mix-blend-mode:multiply}
-.copy{min-width:0;flex:1}.title{margin:0;font-size:clamp(15px,1.7vw,22px);font-weight:800;letter-spacing:-.025em;line-height:1.3}.note{margin:5px 0 0;color:#465260;font-size:12px;line-height:1.4}
-.date{font-size:36px;font-weight:800;line-height:1;text-align:center;letter-spacing:-.05em;color:#25313b}.date small{display:block;margin-top:5px;font-size:9px;letter-spacing:.18em}
-.ribbon{display:block;height:5px;background:linear-gradient(90deg,#0097c8 0 33.333%,#e52332 33.333% 66.666%,#00a05a 66.666%);box-shadow:inset 0 1px 1px #ffffff80}
-.banner:after{content:"";pointer-events:none;position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,#ffffff90 50%,transparent 65%);transform:translateX(110%);animation:shine 1.8s ease-out 1}
-@keyframes shine{from{transform:translateX(-110%)}to{transform:translateX(110%)}}
-@media(max-width:600px){.content{min-height:80px;padding:8px 16px;gap:12px}.logo{width:56px;height:56px;border-radius:12px}.date{display:none}.title{font-size:15px}.note{font-size:11px;margin-top:4px}}
-@media(prefers-reduced-motion:reduce){.banner:after{animation:none;display:none}}
+.banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f8f5ed;
+  color: #17202c;
+  border-bottom: 1px solid #e4dccd;
+}
+.art { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.art img { display: block; width: 100%; height: 100%; object-fit: fill; }
+.content {
+  position: relative;
+  min-height: clamp(80px, 6.25vw, 120px);
+  padding: 12px 22%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
+}
+.title { margin: 0; font-size: clamp(14px, 1.4vw, 21px); font-weight: 800; letter-spacing: -.025em; line-height: 1.35; text-wrap: balance; }
+.note { margin: 0; color: #465260; font-size: 12px; line-height: 1.4; text-wrap: balance; }
+@media (max-width: 650px) {
+  .content { min-height: 92px; padding: 12px 22%; gap: 4px; }
+  .title { font-size: 12px; line-height: 1.4; }
+  .note { font-size: 10px; line-height: 1.4; }
+}

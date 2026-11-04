@@ -274,3 +274,6 @@ Next work should be scoped separately:
 
 ## 2026-11-04 — TASK-0555
 Seasonal brand PR: owner supplied flag logo immediately, public greeting starts 5 November Baku, Flag Day copy 9 November, both automatically end 10 November. Existing favicon/PWA and historical generated cards remain unchanged. Logo input preserved; optimized WebP/PNG derived by resize/format conversion only. Owner must review visual screenshots and merge; Hostinger rebuild/restart required.
+
+## 2026-11-04 — TASK-0556
+Satin edge ribbon holiday banner replaces first minimal band per owner reference. Exact supplied desktop/mobile assets copied; no image generator or dependency needed. Logo and dates unchanged. Review screenshots before owner merge; Hostinger deploy required.

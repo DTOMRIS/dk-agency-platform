@@ -12,10 +12,13 @@ for (const locale of ['', '/ru', '/en', '/tr']) {
     await expect(banner).toBeVisible();
     await expect(page.locator('header img').first()).toHaveAttribute('src', '/images/dk-victory-2026.webp');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
-    expect(await banner.evaluate(el => getComputedStyle(el, '::after').animationName)).toBe('none');
+    expect(await banner.evaluate(el => getComputedStyle(el).animationName)).toBe('none');
     expect(await page.locator('header img').first().evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth === 256)).toBeTruthy();
+    const art = banner.locator('picture img');
+    await expect(art).toBeVisible();
+    expect(await art.evaluate((el: HTMLImageElement) => el.currentSrc.endsWith('dk-holiday-satin-mobile-2026.webp') && el.complete && el.naturalWidth === 1080)).toBeTruthy();
     expect(errors).toEqual([]);
-    if (!locale) await page.screenshot({ path: '/private/tmp/dk-holiday-mobile.png', fullPage: false });
+    if (!locale) await page.screenshot({ path: '/private/tmp/dk-satin-mobile.png', fullPage: false });
   });
 }
 
@@ -41,5 +44,7 @@ test('desktop composition', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('[data-holiday="victory"]')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
-  await page.screenshot({ path: '/private/tmp/dk-holiday-desktop.png', fullPage: false });
+  expect(await page.locator('[data-holiday] picture img').evaluate((el: HTMLImageElement) => el.currentSrc.endsWith('dk-holiday-satin-desktop-2026.webp') && el.complete && el.naturalWidth === 1920)).toBeTruthy();
+  await page.clock.runFor(2500);
+  await page.screenshot({ path: '/private/tmp/dk-satin-desktop.png', fullPage: false });
 });
