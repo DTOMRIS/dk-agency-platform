@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
 import { getAdminNewsArticleById, updateNewsArticleAdmin, deleteNewsArticle } from '@/lib/repositories/newsRepository';
 import { runApproveSideEffects } from '@/lib/news/approve';
+import { publicationIssue } from '@/lib/news/pipeline-state';
 
 export async function PATCH(
   request: NextRequest,
@@ -19,6 +20,11 @@ export async function PATCH(
 
   if (!article) {
     return NextResponse.json({ success: false, error: 'Xeber tapilmadi.' }, { status: 404 });
+  }
+
+  if (body.status === 'approved') {
+    const issue = await publicationIssue(articleId);
+    if (issue) return NextResponse.json({ success: false, error: issue }, { status: 409 });
   }
 
   // If titleAz/summaryAz missing, fall back to original English — don't block approve

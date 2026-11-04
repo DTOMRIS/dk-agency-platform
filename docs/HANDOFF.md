@@ -1,3 +1,10 @@
+# TASK-0553 — 2026-11-04 (prepared, not deployed)
+
+- Nə dəyişdi: event/source checks before AI; durable Telegram outbox; 6/run, 12/day synthesis budget; separate collection/write schedules.
+- Nə dəyişmədi: existing production content, protected schema/config and env files. No merge/deploy/production DB writes.
+- Risklər: migration `0022_news_pipeline_reliability.sql` required. Statistical matching is deliberately narrow, not universal semantic verification. Unknown Telegram delivery requires manual reconciliation. Existing strict TypeScript debt remains outside changed files.
+- Sonrakı addım: owner reviews PR; migration then workflow activation under owner-controlled rollout. See `docs/ops/news-pipeline-reliability.md`.
+
 # HANDOFF
 
 ## 2026-10-11 — Vəziyyət (Claude, TASK-0524 → 0546 sessiyası)

@@ -153,6 +153,9 @@ export async function POST(request: NextRequest) {
     }
   } else if (outcome.reason === 'already_decided') {
     status = outcome.status === 'approved' ? 'ℹ️ Artıq yayınlanıb' : 'ℹ️ Artıq rədd edilib';
+  } else if (outcome.reason === 'source_review') {
+    status = '⚠️ Mənbə ziddiyyəti və ya təkrar xəbər — paneldə yoxlayın';
+    buttons = [[{ text: '✏️ Paneldə aç', url: `${SITE_URL}/dashboard/xeberler/${articleId}` }]];
   } else if (outcome.reason === 'no_az_content') {
     status = '⚠️ AZ mətni yoxdur — paneldə redaktə edin';
     buttons = [[{ text: '✏️ Paneldə aç', url: `${SITE_URL}/dashboard/xeberler/${articleId}` }]];

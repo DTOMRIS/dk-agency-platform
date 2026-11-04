@@ -17,14 +17,13 @@
  */
 
 import { createHash } from 'crypto';
-import { eq, gte, or } from 'drizzle-orm';
+import { eq, or } from 'drizzle-orm';
 import Parser from 'rss-parser';
 import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
 import { slugifyAz } from '@/lib/utils/slugify-az';
 import { FEED_IMAGE_CUSTOM_FIELDS, pickFeedImage, type FeedImageFields } from './feed-image';
 import { isTechTopic, scoreNewsItem, SCORE_THRESHOLD } from './scoring-config';
-import { sameStory, storyKey, type StoryKey } from './story-dedupe';
 
 type FeedKind = 'trade' | 'general';
 /**
@@ -112,8 +111,6 @@ export const MAX_ITEMS_PER_FEED = 50;
  * of the approval queue (mostly US hotel deals), so restaurant feeds never got a turn.
  */
 const MAX_PER_FEED_PER_RUN = 3;
-/** TASK-0549: a story already stored (any status) in this window is not fetched again from another feed. */
-const STORY_WINDOW_DAYS = 7;
 
 export interface RssIngestResult {
   feedsOk: number;
@@ -255,33 +252,14 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
     }
   }
 
-  // Best first; the same story can appear in several feeds — keep the first (highest score) link per title.
+  // Keep source rows for conflict checks; event grouping happens before synthesis (TASK-0553).
   // TASK-0494: Azerbaijani items first (up to AZ_RESERVED_SLOTS), then everything by score.
   candidates.sort((a, b) => b.score - a.score);
   const azFirst = candidates.filter((c) => c.feed.region === 'az').slice(0, AZ_RESERVED_SLOTS);
   const azFirstSet = new Set(azFirst);
   candidates.splice(0, candidates.length, ...azFirst, ...candidates.filter((c) => !azFirstSet.has(c)));
-  const seenTitles = new Set<string>();
-  // TASK-0549: the same story from another feed (different URL and wording) — compare with this run and the
-  // last STORY_WINDOW_DAYS of stored titles.
-  const recent = await db
-    .select({ title: newsArticles.title })
-    .from(newsArticles)
-    .where(gte(newsArticles.createdAt, new Date(Date.now() - STORY_WINDOW_DAYS * 24 * 60 * 60 * 1000)));
-  const storyKeys: StoryKey[] = recent.map((r) => storyKey(r.title ?? ''));
   const perFeed = new Map<string, number>();
   for (const c of candidates) {
-    const titleKey = c.title.toLowerCase().replace(/\W+/g, ' ').trim();
-    if (seenTitles.has(titleKey)) {
-      result.duplicates++;
-      continue;
-    }
-    seenTitles.add(titleKey);
-    const key = storyKey(c.title);
-    if (storyKeys.some((k) => sameStory(k, key))) {
-      result.duplicates++;
-      continue;
-    }
     if ((perFeed.get(c.feed.name) ?? 0) >= MAX_PER_FEED_PER_RUN) {
       result.overCap++;
       continue;
@@ -319,7 +297,6 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
         relevanceScore: c.feed.region === 'az' ? c.score + AZ_RELEVANCE_BONUS : c.score,
       });
       result.inserted.push({ score: c.score, title: c.title.slice(0, 110), source: c.feed.name });
-      storyKeys.push(key);
       perFeed.set(c.feed.name, (perFeed.get(c.feed.name) ?? 0) + 1);
     } catch (err) {
       const cause = (err as { cause?: Error })?.cause;

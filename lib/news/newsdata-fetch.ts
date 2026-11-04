@@ -7,11 +7,11 @@
  */
 
 import { createHash } from 'crypto';
-import { eq, gte } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
 import { isTechTopic, scoreNewsItem, SCORE_THRESHOLD } from './scoring-config';
-import { PRESS_RELEASE_SOURCE, sameStory, storyKey, type StoryKey } from './story-dedupe';
+import { PRESS_RELEASE_SOURCE } from './story-dedupe';
 import { slugifyAz } from '@/lib/utils/slugify-az';
 
 const NEWSDATA_BASE = 'https://newsdata.io/api/1/latest';
@@ -146,13 +146,6 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
 
   const result: FetchResult = { fetched: 0, accepted: [], rejected: [], skipped: 0, belowThreshold: 0, duplicates: 0, errors: [] };
 
-  // TASK-0549: the same story from another outlet (different URL) — compare with the last 7 days.
-  const recent = await db
-    .select({ title: newsArticles.title })
-    .from(newsArticles)
-    .where(gte(newsArticles.createdAt, new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)));
-  const storyKeys: StoryKey[] = recent.map((r) => storyKey(r.title ?? ''));
-
   for (const querySet of QUERY_SETS) {
     let articles: NewsDataArticle[];
     try {
@@ -185,12 +178,6 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
           // ignore
         }
         result.rejected.push({ score, title: article.title.slice(0, 110), domain });
-        continue;
-      }
-
-      const key = storyKey(article.title);
-      if (storyKeys.some((k) => sameStory(k, key))) {
-        result.duplicates++;
         continue;
       }
 
@@ -237,7 +224,6 @@ export async function fetchAndScoreNews(): Promise<FetchResult> {
         });
         result.fetched++;
         result.accepted.push({ score, title: article.title.slice(0, 110) });
-        storyKeys.push(key);
       } catch (err) {
         const cause = (err as { cause?: Error })?.cause;
         const msg = cause?.message || (err instanceof Error ? err.message : 'Insert error');
