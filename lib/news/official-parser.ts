@@ -79,8 +79,12 @@ export function officialUrl(raw: string, source: OfficialSource): string | null 
   try {
     const base = new URL(source.url);
     const url = new URL(raw.trim(), `${base.origin}/`);
-    if (url.protocol !== 'https:' || url.origin !== base.origin || !url.pathname.startsWith(source.articlePath)
+    if (url.protocol !== 'https:' || url.port
+      || url.hostname.replace(/^www\./, '') !== base.hostname.replace(/^www\./, '')
+      || !url.pathname.startsWith(source.articlePath)
       || url.username || url.password) return null;
+    // Match fetch's verified www/bare alias policy and store one canonical URL per article.
+    url.hostname = base.hostname;
     url.hash = ''; url.search = '';
     return url.href;
   } catch { return null; }

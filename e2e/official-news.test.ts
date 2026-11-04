@@ -25,6 +25,9 @@ async function main() {
  assert.equal(officialUrl('https://evil.example/news/test',dta),null);
  assert.equal(officialUrl('http://tourism.gov.az/news/test',dta),null);
  assert.equal(officialUrl('https://tourism.gov.az.evil.example/news/test',dta),null);
+ assert.equal(officialUrl('https://www.tourism.gov.az/news/test',dta),'https://tourism.gov.az/news/test');
+ assert.equal(officialUrl('https://tourism.gov.az:8443/news/test',dta),null);
+ assert.equal(parseOfficialListing(dtaHtml.replaceAll('https://tourism.gov.az/','https://www.tourism.gov.az/'),dta).items.length,1,'www-served cards use canonical source URLs');
  assert(!allowedOfficialRequest('https://127.0.0.1/news/test',dta));
  assert(!isOfficialTopic('Heyvanların identifikasiyası haqqında iclas',aqta),'agency boilerplate is not relevance');
  assert(isOfficialTopic('İctimai iaşə obyektində nöqsanlar aşkarlanıb',aqta));
