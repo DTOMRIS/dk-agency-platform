@@ -3,13 +3,23 @@ name: News Ingest Pipeline
 on:
   schedule:
     # Collection remains every 6h so short local feeds are not missed.
-    - cron: '0 0,6,12,18 * * *'
+    - cron: '0 6,12,18 * * *'
+    # The fourth collection also checks official press pages once daily (04:00 Baku).
+    - cron: '0 0 * * *'
     # AI + owner delivery at 09:00 / 18:00 Baku. GitHub may delay scheduled jobs.
     - cron: '0 5,14 * * *'
   workflow_dispatch:
     inputs:
       synthesize:
         description: 'Write/send news (shares the daily cap); otherwise collect only'
+        type: boolean
+        default: false
+      official_sources:
+        description: 'Collect official press pages only (no AI or Telegram)'
+        type: boolean
+        default: false
+      official_dry_run:
+        description: 'Read-only test for official_sources (no database writes)'
         type: boolean
         default: false
 
@@ -34,10 +44,11 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        id: dependencies
         run: npm ci
 
       - name: Fetch from NewsData.io
-        if: github.event.schedule != '0 5,14 * * *' && !inputs.synthesize
+        if: github.event.schedule != '0 5,14 * * *' && !inputs.synthesize && !inputs.official_sources
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEWSDATA_API_KEY: ${{ secrets.NEWSDATA_API_KEY }}
@@ -46,10 +57,18 @@ jobs:
       # TASK-0480: verified trade-press RSS (Skift AI, Restaurant/Hotel Dive, Hospitality Net, Turizm Güncel,
       # Report.az/Trend titles…) → same scoring → same synthesis + Telegram approval.
       - name: Fetch trade-press RSS
-        if: github.event.schedule != '0 5,14 * * *' && !inputs.synthesize
+        if: github.event.schedule != '0 5,14 * * *' && !inputs.synthesize && !inputs.official_sources
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npx tsx scripts/news-rss-fetch.ts
+
+      - name: Fetch official press pages
+        # Official coverage must not disappear when NewsData or RSS failed earlier.
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && (github.event.schedule == '0 0 * * *' || inputs.official_sources) && !inputs.synthesize }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          OFFICIAL_DRY_RUN: ${{ inputs.official_dry_run }}
+        run: npx tsx scripts/news-official-fetch.ts --commit
 
       - name: Synthesize with DeepSeek
         if: github.event.schedule == '0 5,14 * * *' || inputs.synthesize

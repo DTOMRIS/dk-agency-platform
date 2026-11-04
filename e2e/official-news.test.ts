@@ -1,0 +1,56 @@
+import assert from 'node:assert/strict';
+import { OFFICIAL_SOURCES } from '../lib/news/official-sources';
+import { htmlText, isOfficialTopic, officialUrl, parseOfficialDate, parseOfficialListing } from '../lib/news/official-parser';
+import { allowedOfficialRequest, fetchOfficialHtml } from '../lib/news/official-fetch';
+
+async function main() {
+ const [dta, atb, aqta, kobia, tax] = OFFICIAL_SOURCES;
+ const dtaHtml = `<div class="news__box"><div><a href=" https://tourism.gov.az/news/test "><h2 class="news__box__info__title">Turizm &amp; xidmət</h2></a></div><span class="_date">03.11.2026</span><div><div>nested</div></div></div>`;
+ const result = parseOfficialListing(dtaHtml, dta);
+ assert.equal(result.items.length,1); assert.equal(result.items[0].title,'Turizm & xidmət');
+ assert.equal(result.items[0].link,'https://tourism.gov.az/news/test');
+ assert.equal(result.items[0].publishedAt.toISOString(),'2026-11-02T20:00:00.000Z');
+ const atbHtml=`<div class="new-component-box"><span class="date-badge">03 Nov 2026</span><a class="card-title-v2" href="/news/123-test">Azerbaijan tourism</a><p class="card-desc-v2">A source summary.</p></div>`;
+ assert.equal(parseOfficialListing(atbHtml,atb).items[0].summary,'A source summary.');
+ const aqtaHtml=`<div class="news__item"><a href="az/xeberler/test" class="news__title">İaşə obyektində yoxlama</a><a href="az/xeberler/test"><div class="news__desc"><span class="content__date">4 Noyabr 2026 09:28</span><p>Only the article body belongs in this summary.</p></div></a></div>`;
+ assert.equal(parseOfficialListing(aqtaHtml,aqta).items[0].link,'https://afsa.gov.az/az/xeberler/test');
+ assert(!parseOfficialListing(aqtaHtml,aqta).items[0].summary.includes('09:28'));
+ const kobiaHtml=`<div class="col-xs-12"><div class="col-md-4"><a href="/az/all-news/a"><span class="news-title">Restoran bir</span><span class="date">03.11.26</span></a></div><div class="col-md-4"><a href="/az/all-news/b"><span class="news-title">Restoran iki</span><span class="date">02.11.26</span></a></div></div>`;
+ assert.equal(parseOfficialListing(kobiaHtml,kobia).items.length,2,'outer layout must not swallow cards');
+ const taxHtml=`<a class="news-card" href="https://www.taxes.gov.az/az/post/123"><time class="news-card-date">3 noyabr 2026 , 12:46</time><p class="news-card-title">E-kassa haqqında</p></a>`;
+ assert.equal(parseOfficialListing(taxHtml,tax).items.length,1);
+ assert.equal(parseOfficialListing(dtaHtml.replace('03.11.2026','unknown'),dta).items.length,0,'never use fetch date');
+ assert.equal(parseOfficialDate('31.02.2026'),null); assert.equal(parseOfficialDate('03.13.26'),null);
+ assert.equal(htmlText('<script>news fake</script><p>G&ouml;yg&ouml;l &#601; &ccedil; &Ouml;</p>'),'Göygöl ə ç Ö');
+ assert.equal(officialUrl('https://evil.example/news/test',dta),null);
+ assert.equal(officialUrl('http://tourism.gov.az/news/test',dta),null);
+ assert.equal(officialUrl('https://tourism.gov.az.evil.example/news/test',dta),null);
+ assert.equal(officialUrl('https://www.tourism.gov.az/news/test',dta),'https://tourism.gov.az/news/test');
+ assert.equal(officialUrl('https://tourism.gov.az:8443/news/test',dta),null);
+ assert.equal(parseOfficialListing(dtaHtml.replaceAll('https://tourism.gov.az/','https://www.tourism.gov.az/'),dta).items.length,1,'www-served cards use canonical source URLs');
+ assert(!allowedOfficialRequest('https://127.0.0.1/news/test',dta));
+ assert(!isOfficialTopic('Heyvanların identifikasiyası haqqında iclas',aqta),'agency boilerplate is not relevance');
+ assert(isOfficialTopic('İctimai iaşə obyektində nöqsanlar aşkarlanıb',aqta));
+ assert(isOfficialTopic('ƏDV geri al və e-kassa qaydaları',tax));
+ assert(!isOfficialTopic('Əməkdaşlar arasında şahmat turniri',dta));
+ const htmlFetch: typeof fetch = async () => new Response(dtaHtml,{headers:{'Content-Type':'text/html'}});
+ assert.equal(await fetchOfficialHtml(dta, dta.url, htmlFetch),dtaHtml);
+ let calls=0;
+ assert.equal(await fetchOfficialHtml(dta,dta.url,async(url)=>{
+  calls++;
+  if(calls===1) throw new Error('fetch failed',{cause:{code:'UND_ERR_CONNECT_TIMEOUT'}});
+  assert(String(url).startsWith('https://www.tourism.gov.az/'));
+  return new Response(dtaHtml,{headers:{'Content-Type':'text/html'}});
+ }),dtaHtml);
+ assert.equal(calls,2,'one ordinary www alias on connection failure');
+ calls=0;
+ await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>{calls++;return new Response('',{status:403});}),/403/);
+ assert.equal(calls,1,'access denial is not retried on another host');
+ await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>{throw new Error('fetch failed',{cause:{code:'ENOTFOUND'}});}),/ENOTFOUND/);
+ await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>new Response('',{status:403})),/403/);
+ await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>new Response('not html',{headers:{'Content-Type':'application/json'}})),/Expected HTML/);
+ await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>new Response('',{status:302,headers:{location:'https://evil.example/news/a'}})),/Untrusted/);
+ await assert.rejects(()=>fetchOfficialHtml(dta,dta.url,async()=>new Response('x'.repeat(1_000_001),{headers:{'Content-Type':'text/html'}})),/1 MB/);
+ console.log('official-news: OK (five templates, dates, isolated summaries, topics, redirects, byte cap)');
+}
+main().catch((e:unknown)=>{console.error(e);process.exit(1);});

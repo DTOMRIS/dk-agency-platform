@@ -1,3 +1,11 @@
+# TASK-0554 — 2026-11-04 (prepared for review)
+
+- Nə dəyişdi: five official press adapters and daily collection; bounded/datelined signals enter shared RSS persistence; source failures become GitHub annotations; source page uses Pattern A.
+- Nə dəyişmədi: production data and env, protected files, AI/Telegram limits and publication approval. This task did not merge or deploy.
+- Risklər: official templates can change; missing dates/content are skipped visibly. Statistika news returns 500 and is deferred. Report RSS remains blocked from GitHub despite working locally.
+- Sonrakı addım: review PR; owner merges and verifies scheduled collection. Read-only CLI is safe; --commit inserts drafts.
+- Prior TASK-0553 rollout is complete: PR #549 merged ef518976; migration 0022 applied; collection run 41779375896 and synthesis run 41779496212 succeeded. Official conference article #3018 sent to Telegram (message 2110).
+
 # TASK-0553 — 2026-11-04 (prepared, not deployed)
 
 - Nə dəyişdi: event/source checks before AI; durable Telegram outbox; 6/run, 12/day synthesis budget; separate collection/write schedules.
