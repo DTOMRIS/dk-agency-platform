@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-11-04 18:37:22 | Branch: feat/TASK-0556-satin-holiday-banner | 64e0ba8a
+> Son güncəlləmə: 2026-11-05 16:28:55 | Branch: fix/TASK-0557-news-coverage | cdc25abb
 
 ## Route İnventarı
 | Kateqoriya | Say |

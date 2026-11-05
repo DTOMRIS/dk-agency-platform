@@ -109,6 +109,20 @@ export const CORE_TERMS: Record<string, number> = {
   turizm: 2,
   туризм: 2,
   tourism: 2,
+  // TASK-0557: health / thermal tourism and its sector association (owner request 2026-11-05 —
+  // AHTTSA chair Ceyhun Aşurov's afn.az interview scored 2 and was dropped).
+  'sağlamlıq turizm': 3,
+  'termal turizm': 3,
+  'tibbi turizm': 3,
+  'оздоровительного туризм': 3,
+  'оздоровительный туризм': 3,
+  'медицинского туризм': 3,
+  'медицинский туризм': 3,
+  'health tourism': 3,
+  'wellness tourism': 3,
+  'medical tourism': 3,
+  ahttsa: 3,
+  'ceyhun aşurov': 3,
 };
 
 /** Supporting signals — only count when a core term is present. */
@@ -147,6 +161,24 @@ export const KEYWORD_WEIGHTS: Record<string, number> = {
   bankruptcy: 2,
   occupancy: 2,
   doluluk: 2,
+
+  // TASK-0557: tax / regulation — the owner's money. "Restoran və kafelər üçün yeni vergi güzəşti"
+  // scored 6 (threshold 5) and lost the daily slots to routine agency items.
+  vergi: 4,
+  güzəşt: 3,
+  ədv: 4,
+  aksiz: 3,
+  rüsum: 2,
+  'vergi məcəlləs': 3,
+  'sadələşdirilmiş vergi': 3,
+  'vergi indirimi': 3,
+  kdv: 3,
+  налог: 4,
+  льгот: 3,
+  ндс: 4,
+  tax: 3,
+  'tax break': 3,
+  'tax relief': 3,
 
   // Azerbaijan / region
   bakı: 2,
@@ -328,6 +360,13 @@ export const SOURCE_WEIGHTS: Record<string, number> = {
   'turizmgazetesi.com': 3,
   'turizmguncel.com': 2,
   'turizmajansi.com': 2,
+  // TASK-0557: economy / tax desks and tourism trade press with working RSS (checked 2026-11-05)
+  'oxu.az': 3,
+  'metbuat.az': 2,
+  'banker.az': 2,
+  'xezerxeber.az': 2,
+  'turizmplus.az': 3,
+  'afn.az': 2,
   'hurriyet.com.tr': 1,
   'sozcu.com.tr': 1,
   'dunya.com': 1,
@@ -444,4 +483,16 @@ export function scoreNewsItem(title: string, description: string, sourceUrl: str
   }
 
   return score;
+}
+
+/** TASK-0557: tax / regulation vocabulary — such stories get reserved synthesis slots. */
+export const REGULATION_TERMS = [
+  'vergi', 'güzəşt', 'ədv', 'aksiz', 'rüsum', 'vergi məcəlləs', 'sadələşdirilmiş vergi', 'kdv',
+  'vergi indirimi', 'налог', 'льгот', 'ндс', 'tax break', 'tax relief',
+];
+
+/** True when the text is about tax / regulation (word-based, same matcher as scoring). */
+export function isRegulationTopic(text: string): boolean {
+  const variants = foldVariants(text);
+  return REGULATION_TERMS.some((term) => hasTerm(variants, term));
 }

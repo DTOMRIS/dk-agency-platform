@@ -5,14 +5,16 @@ import { db } from '@/lib/db';
 import { newsArticles } from '@/lib/db/schema';
 import { slugifyAz } from '@/lib/utils/slugify-az';
 import { draftNewsArticle } from './editorial';
-import { conflictingSignals, groupSignals, preferredSignal } from './story-policy';
-import { deliverPendingApprovals, queueApproval, recentSignals, reserveSynthesis } from './pipeline-state';
+import { conflictingSignals, groupSignals, orderForSynthesis, preferredSignal, SOURCE_DAILY_CAP } from './story-policy';
+import { deliverPendingApprovals, queueApproval, recentSignals, reserveSynthesis, todaySourceCounts } from './pipeline-state';
+import { RUN_SYNTHESIS_CAP } from './pipeline-sql';
+import { isRegulationTopic } from './scoring-config';
 
 export interface SynthesizeResult {
   synthesized: number; skipped: number; unpublishable: number; errors: string[];
 }
 
-export async function synthesizeFetchedNews(limit = 6, runKey: string = randomUUID()): Promise<SynthesizeResult> {
+export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: string = randomUUID()): Promise<SynthesizeResult> {
   const result: SynthesizeResult = { synthesized: 0, skipped: 0, unpublishable: 0, errors: [] };
   const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!db || !apiKey) {
@@ -23,12 +25,12 @@ export async function synthesizeFetchedNews(limit = 6, runKey: string = randomUU
   const delivery = await deliverPendingApprovals();
   result.errors.push(...delivery.errors);
   const signals = await recentSignals();
-  const groups = groupSignals(signals).sort((a, b) =>
-    Math.max(...b.map((x) => x.relevanceScore ?? 0)) - Math.max(...a.map((x) => x.relevanceScore ?? 0)));
+  const groups = orderForSynthesis(groupSignals(signals), isRegulationTopic);
+  const perSource = await todaySourceCounts();
   let attempts = 0;
   let reviews = 0;
   for (const group of groups) {
-    if (attempts >= Math.min(6, Math.max(0, limit))) break;
+    if (attempts >= Math.min(RUN_SYNTHESIS_CAP, Math.max(0, limit))) break;
     const eligible = group.filter((x) => ['rss', 'newsdata'].includes(x.origin)
       && x.status === 'fetched' && !x.contentAz && x.publishedAt
       && +x.publishedAt >= Date.now() - 14 * 86400_000 && +x.publishedAt <= Date.now() + 3600_000);
@@ -48,9 +50,12 @@ export async function synthesizeFetchedNews(limit = 6, runKey: string = randomUU
       continue;
     }
     const article = preferredSignal(eligible);
+    const source = article.author ?? '';
+    if ((perSource.get(source) ?? 0) >= SOURCE_DAILY_CAP) { result.skipped++; continue; }
     const sourceUrls = group.filter((x) => x.id !== article.id).map((x) => x.externalUrl);
     if (!await reserveSynthesis(article.id, runKey)) { result.skipped++; continue; }
     attempts++;
+    perSource.set(source, (perSource.get(source) ?? 0) + 1);
     try {
       const outcome = await draftNewsArticle(article, apiKey);
       if (outcome.kind === 'error') { result.errors.push(`${outcome.error} for article #${article.id}`); continue; }
@@ -71,7 +76,7 @@ export async function synthesizeFetchedNews(limit = 6, runKey: string = randomUU
       result.errors.push(`[synthesis] ${err instanceof Error ? err.message : 'Unknown error'} for article #${article.id}`);
     }
   }
-  const after = await deliverPendingApprovals(6 - delivery.attempted);
+  const after = await deliverPendingApprovals(RUN_SYNTHESIS_CAP - delivery.attempted);
   result.errors.push(...after.errors);
   return result;
 }

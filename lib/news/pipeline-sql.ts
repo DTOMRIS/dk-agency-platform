@@ -1,12 +1,19 @@
 /** Shared SQL for the production store and isolated PostgreSQL integration tests. */
 import { sql } from 'drizzle-orm';
 
+/**
+ * TASK-0557 (owner 2026-11-05): 12/day (TASK-0553) cut published news from ~12–15 to ~8 a day, because
+ * about half of the drafts are rejected in Telegram. Back to 30 writes a day, 15 per scheduled run.
+ */
+export const DAILY_SYNTHESIS_CAP = 30;
+export const RUN_SYNTHESIS_CAP = 15;
+
 export function reserveQuery(day: string, articleId: number, runKey: string) {
   return sql`INSERT INTO news_pipeline_budget(day, slot, article_id, run_key)
     SELECT ${day}::date, s, ${articleId}, ${runKey}
-    FROM generate_series(1,12) s
+    FROM generate_series(1,${sql.raw(String(DAILY_SYNTHESIS_CAP))}) s
     WHERE NOT EXISTS (SELECT 1 FROM news_pipeline_budget b WHERE b.day=${day}::date AND b.slot=s)
-      AND (SELECT count(*) FROM news_pipeline_budget WHERE run_key=${runKey}) < 6
+      AND (SELECT count(*) FROM news_pipeline_budget WHERE run_key=${runKey}) < ${sql.raw(String(RUN_SYNTHESIS_CAP))}
       AND NOT EXISTS (SELECT 1 FROM news_pipeline_budget WHERE day=${day}::date AND article_id=${articleId})
     ORDER BY s LIMIT 1 ON CONFLICT DO NOTHING RETURNING slot`;
 }

@@ -92,9 +92,20 @@ export const RSS_FEEDS: Feed[] = [
   { url: 'https://zerkalo.az/rss', name: 'Zerkalo', kind: 'general', region: 'az' },
   { url: 'https://haqqin.az/rss', name: 'Haqqin.az', kind: 'general', region: 'az' },
   { url: 'https://minval.az/rss', name: 'Minval', kind: 'general', region: 'az' },
+  // TASK-0557: economy/tax desks + tourism trade press (marja.az has no RSS; the same tax stories run here).
+  { url: 'https://oxu.az/feed', name: 'Oxu.az', kind: 'general', region: 'az' },
+  { url: 'https://metbuat.az/rss.xml', name: 'Metbuat.az', kind: 'general', region: 'az' },
+  { url: 'https://banker.az/feed/', name: 'Banker.az', kind: 'general', region: 'az' },
+  { url: 'https://xezerxeber.az/rss', name: 'Xəzər Xəbər', kind: 'general', region: 'az' },
+  { url: 'https://afn.az/rss.xml', name: 'AFN.az', kind: 'general', region: 'az' },
+  { url: 'https://turizmplus.az/feed/', name: 'Turizmplus.az', kind: 'trade', region: 'az' },
   { url: 'https://www.hurriyet.com.tr/rss/ekonomi', name: 'Hürriyet Ekonomi', kind: 'general' },
   { url: 'https://www.dunya.com/rss', name: 'Dünya', kind: 'general' },
 ];
+
+// TASK-0494: Report.az answers 403 to bot user agents.
+const FEED_USER_AGENT =
+  'Mozilla/5.0 (compatible; DKAgencyNewsBot/1.0; +https://dkagency.com.tr) AppleWebKit/537.36 Chrome/128 Safari/537.36';
 
 const MAX_AGE_DAYS = 4;
 const MAX_INSERT_PER_RUN = 30;
@@ -173,11 +184,7 @@ export type Candidate = {
 export function createFeedParser(): Parser<Record<string, unknown>, FeedImageFields> {
   return new Parser<Record<string, unknown>, FeedImageFields>({
     timeout: 15_000,
-    // TASK-0494: Report.az answers 403 to bot user agents.
-    headers: {
-      'User-Agent':
-        'Mozilla/5.0 (compatible; DKAgencyNewsBot/1.0; +https://dkagency.com.tr) AppleWebKit/537.36 Chrome/128 Safari/537.36',
-    },
+    headers: { 'User-Agent': FEED_USER_AGENT },
     customFields: { item: FEED_IMAGE_CUSTOM_FIELDS },
   });
 }
@@ -204,6 +211,51 @@ export function evaluateFeedItem(feed: Feed, item: FeedItem): Candidate | null {
   return { feed, title, link, summary, imageUrl: pickFeedImage(item, link), publishedAt, score };
 }
 
+/** Feeds read at the same time. */
+const FEED_CONCURRENCY = 8;
+
+/** Run `fn` over `list` with at most `limit` calls in flight; results keep the input order. */
+export async function mapLimit<T, R>(list: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const out = new Array<R>(list.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < list.length) {
+      const i = next++;
+      out[i] = await fn(list[i]);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, list.length) }, worker));
+  return out;
+}
+
+/**
+ * TASK-0557: some CMS feeds (AFN.az) put raw HTML with unclosed <img>/<br> tags inside <description>
+ * and the Yandex/Turbo body fields,
+ * which breaks the XML parser. Wrap such bodies in CDATA so the item titles/links survive.
+ */
+export function repairFeedXml(xml: string): string {
+  return xml.replace(
+    /<(description|content:encoded|yandex:full-text|turbo:content)>(?!\s*<!\[CDATA\[)([\s\S]*?)<\/\1>/g,
+    (_m, tag: string, body: string) => `<${tag}><![CDATA[${body.replace(/\]\]>/g, ']]&gt;')}]]></${tag}>`
+  );
+}
+
+export async function readFeed(parser: Parser<Record<string, unknown>, FeedImageFields>, feed: Feed): Promise<FeedItem[]> {
+  try {
+    return (await parser.parseURL(feed.url)).items ?? [];
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    // Only malformed XML is retried; network/HTTP errors are reported as they are.
+    if (!/close tag|unexpected|invalid|attribute|unclosed|non-whitespace/i.test(message)) throw err;
+    const res = await fetch(feed.url, {
+      headers: { 'User-Agent': FEED_USER_AGENT },
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) throw new Error(`Status code ${res.status}`);
+    return (await parser.parseString(repairFeedXml(await res.text()))).items ?? [];
+  }
+}
+
 export async function ingestTradeRss(): Promise<RssIngestResult> {
   const result: RssIngestResult = {
     feedsOk: 0,
@@ -225,17 +277,23 @@ export async function ingestTradeRss(): Promise<RssIngestResult> {
   const azCutoff = Date.now() - AZ_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
   const candidates: Candidate[] = [];
 
-  for (const feed of RSS_FEEDS) {
-    let items: FeedItem[];
+  // TASK-0557: feeds are read in parallel (the collection now runs every 2 h on the web server).
+  const fetched = await mapLimit(RSS_FEEDS, FEED_CONCURRENCY, async (feed) => {
     try {
-      items = (await parser.parseURL(feed.url)).items ?? [];
-      result.feedsOk++;
+      return { feed, items: await readFeed(parser, feed) };
     } catch (err) {
-      result.feedsFailed.push(
-        `${feed.name}: ${(err instanceof Error ? err.message : String(err)).slice(0, 80)}`
-      );
+      return { feed, error: (err instanceof Error ? err.message : String(err)).slice(0, 80) };
+    }
+  });
+
+  for (const entry of fetched) {
+    const { feed } = entry;
+    const items = entry.items;
+    if (!items) {
+      result.feedsFailed.push(`${feed.name}: ${entry.error}`);
       continue;
     }
+    result.feedsOk++;
 
     for (const item of items.slice(0, feed.maxItems ?? MAX_ITEMS_PER_FEED)) {
       const c = evaluateFeedItem(feed, item);

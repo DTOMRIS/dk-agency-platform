@@ -11,7 +11,7 @@ async function main() {
   console.log('[news:synthesize] Starting DeepSeek synthesis...');
   const start = Date.now();
 
-  const result = await synthesizeFetchedNews(6, process.env.GITHUB_RUN_ID || randomUUID());
+  const result = await synthesizeFetchedNews(undefined, process.env.GITHUB_RUN_ID || randomUUID());
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
   console.log(`[news:synthesize] Done in ${elapsed}s`);

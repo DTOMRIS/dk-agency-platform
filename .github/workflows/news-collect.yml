@@ -1,0 +1,29 @@
+name: News Collect (every 2h)
+
+# TASK-0557 (owner 2026-11-05): Report.az / APA / Oxu.az RSS hold only the last 2.5–4 hours, so the
+# 6-hourly collection missed most agency stories (e.g. the restaurant tax-relief news).
+# The web server reads the feeds; this job is one curl (~1 min). 12 runs/day ≈ 360 min/month, offset by
+# dropping three heavy `npm ci` collection runs from news-ingest.yml (net Actions cost ≈ unchanged).
+on:
+  schedule:
+    - cron: '30 */2 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: news-collect
+  cancel-in-progress: true
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Call collection endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          code=$(curl -sS -o /tmp/out.json -w '%{http_code}' --max-time 170 \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            https://dkagency.com.tr/api/cron/news-collect)
+          cat /tmp/out.json; echo
+          test "$code" = "200"
