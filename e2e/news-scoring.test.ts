@@ -55,7 +55,21 @@ const FIXTURES: Fixture[] = [
   { title: 'Azerbaijan tourism revenue hits record', url: 'https://en.trend.az/x', pass: true },
 
   // A single sector word from an unknown source stays below the threshold.
-  { title: 'Lokanta sahipleri yeni vergi düzenlemesine tepkili', pass: false },
+  { title: 'Lokanta sahipleri yeni düzenlemeye tepkili', pass: false },
+  // TASK-0557: stories missed on 2026-11-05 (owner report)
+  { title: 'Restoran və kafelər üçün yeni vergi güzəşti gəlir', pass: true },
+  { title: 'Restoran və kafe işlədənlər üçün yeni güzəşt olacaq', url: 'https://baku.ws/x', pass: true },
+  { title: 'Lokanta sahipleri yeni vergi düzenlemesine tepkili', pass: true },
+  {
+    title: 'Məqsədimiz insanlara sağlamlıq və keyfiyyətli xidmət təqdim edən davamlı turizm modeli yaratmaqdır – Ceyhun Aşurov',
+    url: 'https://afn.az/178066-x.html',
+    pass: true,
+  },
+  { title: 'AHTTSA III Beynəlxalq Sağlamlıq Turizmi Konfransında iştirak edib', pass: true },
+  { title: 'В Баку проходит III Международная конференция по оздоровительному туризму', url: 'https://report.az/x', pass: true },
+  // Tax words alone are not HoReCa.
+  { title: 'Ağıllı saatlara da vergi tətbiq olunacaq', url: 'https://metbuat.az/x', pass: false },
+  { title: 'Taksi sürücüləri üçün vergi qaydaları dəyişir', url: 'https://oxu.az/x', pass: false },
   // --- should fail ---
   { title: 'Azerbaijan Basketball Federation unveils plans', pass: false },
   { title: 'ADEX 2026-nın rəsmi açılış mərasimi', pass: false },

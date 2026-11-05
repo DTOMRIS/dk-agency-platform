@@ -2,16 +2,15 @@ name: News Ingest Pipeline
 
 on:
   schedule:
-    # Collection remains every 6h so short local feeds are not missed.
-    - cron: '0 6,12,18 * * *'
-    # The fourth collection also checks official press pages once daily (04:00 Baku).
+    # TASK-0557: RSS collection moved to news-collect.yml (every 2 h, server-side curl). Here: official press
+    # pages once daily (04:00 Baku) plus NewsData/RSS right before each writing run.
     - cron: '0 0 * * *'
-    # AI + owner delivery at 09:00 / 18:00 Baku. GitHub may delay scheduled jobs.
+    # AI + owner delivery at 09:00 / 18:00 Baku (collects first). GitHub may delay scheduled jobs.
     - cron: '0 5,14 * * *'
   workflow_dispatch:
     inputs:
       synthesize:
-        description: 'Write/send news (shares the daily cap); otherwise collect only'
+        description: 'Collect, then write/send news (shares the daily cap); otherwise collect only'
         type: boolean
         default: false
       official_sources:
@@ -48,7 +47,7 @@ jobs:
         run: npm ci
 
       - name: Fetch from NewsData.io
-        if: github.event.schedule != '0 5,14 * * *' && !inputs.synthesize && !inputs.official_sources
+        if: ${{ !inputs.official_sources }}
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEWSDATA_API_KEY: ${{ secrets.NEWSDATA_API_KEY }}
@@ -57,7 +56,7 @@ jobs:
       # TASK-0480: verified trade-press RSS (Skift AI, Restaurant/Hotel Dive, Hospitality Net, Turizm Güncel,
       # Report.az/Trend titles…) → same scoring → same synthesis + Telegram approval.
       - name: Fetch trade-press RSS
-        if: github.event.schedule != '0 5,14 * * *' && !inputs.synthesize && !inputs.official_sources
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && !inputs.official_sources }}
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npx tsx scripts/news-rss-fetch.ts
@@ -71,7 +70,8 @@ jobs:
         run: npx tsx scripts/news-official-fetch.ts --commit
 
       - name: Synthesize with DeepSeek
-        if: github.event.schedule == '0 5,14 * * *' || inputs.synthesize
+        # TASK-0557: a failed collection step must not block writing what is already collected.
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && (github.event.schedule == '0 5,14 * * *' || inputs.synthesize) }}
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}

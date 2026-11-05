@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-11-05 — TASK-0557: xəbər əhatəsi — 2 saatlıq toplama, vergi/sağlamlıq turizmi balı, yeni AZ mənbələri, 30/gün
+
+**Why:** Doğan: marja.az vergi güzəşti və afn.az Ceyhun Aşurov (AHTTSA) xəbərləri gəlmədi, 12 xəbər azdır. Ölçmə (Neon read-only): Report.az RSS 30 element ≈ 2,5–3 saat, Oxu/APA ≈ 4 saat — 6 saatlıq toplama əksəriyyəti görmürdü; vergi xəbəri yalnız Baku.ws-dən gəldi (bal 6, hədd 5) və 12 slot artıq dolmuşdu (AQTA 7 + DTA/Büro 6). TASK-0553-dən sonra gündə ~8 dərc (əvvəl 11–15).
+
+**What:** `scoring-config` — vergi/regulyasiya dəstək sözləri + `isRegulationTopic`, sağlamlıq/termal/tibbi turizm, AHTTSA, «Ceyhun Aşurov» core; 6 yeni domen çəkisi. `rss-ingest` — 6 yeni feed, `mapLimit` (8 paralel), `readFeed` + `repairFeedXml` (AFN.az xarab XML → CDATA). `app/api/cron/news-collect` (CRON_SECRET) + `news-collect.yml` (2 saatda bir curl); `news-ingest.yml` 3 ağır toplama cron-u çıxdı, toplama yazımdan əvvəl. `pipeline-sql` DAILY 30 / RUN 15; `story-policy.orderForSynthesis` (3 regulyasiya slotu öndə) + SOURCE_DAILY_CAP 5; `pipeline-state.todaySourceCounts`, köhnə slot check «gün dolu» sayılır. Miqrasiya `0023_news_budget_daily_30.sql`.
+
+**Yoxlama:** `e2e/news-coverage.test.ts` OK; `news-scoring` 37/37 (bu günün qaçan başlıqları daxil); PGlite inteqrasiya OK (0022 + 0023 iki dəfə, 0023-dən əvvəl 12-də dayanır, 15/icra, 30/gün, paralel 15); digər xəbər testləri OK; real şəbəkə: 51 feed 3,7 s, yeni 6 mənbənin hamısı oxunur. tsc 23 (baseline 23), eslint 0 error.
+
 ## 2026-11-01 — TASK-0552: şəkil optimizatoru allowlist (`hostname: '**'` silindi)
 
 **Why:** `next.config.ts` `remotePatterns`-də `hostname: '**'` (TASK-0516) `/_next/image`-i istənilən https şəkil üçün açıq resize proxy edirdi. Canlı yoxlama (dk-agency-platform.vercel.app, 01.11): trend.az şəkli bizim optimizatordan 200 image/jpeg qaytardı — kənar şəxs serverimizin CPU-su / kvotası ilə istənilən şəkli kiçildə bilər.

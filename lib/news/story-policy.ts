@@ -5,7 +5,28 @@ export type Signal = {
   id: number; title: string; summary: string | null; externalUrl: string;
   publishedAt: Date | null; status: string; origin: string;
   contentAz: string | null; relevanceScore: number | null;
+  /** Source name (feed / agency); TASK-0557 per-source daily cap. */
+  author?: string | null;
 };
+
+/** TASK-0557: tax / regulation stories reserved at the head of each run. */
+export const REGULATION_SLOTS = 3;
+/** TASK-0557: one source may take at most this many synthesis slots per Baku day. */
+export const SOURCE_DAILY_CAP = 5;
+
+/**
+ * TASK-0557: synthesis order. Up to REGULATION_SLOTS tax/regulation events go first (owner: the tax-relief
+ * story lost every slot to routine agency items), then every other event by its best relevance score.
+ */
+export function orderForSynthesis(groups: Signal[][], isRegulation: (text: string) => boolean): Signal[][] {
+  const best = (g: Signal[]) => Math.max(...g.map((x) => x.relevanceScore ?? 0));
+  const sorted = [...groups].sort((a, b) => best(b) - best(a));
+  const regulation = sorted
+    .filter((g) => g.some((x) => isRegulation(x.title)))
+    .slice(0, REGULATION_SLOTS);
+  const head = new Set(regulation);
+  return [...regulation, ...sorted.filter((g) => !head.has(g))];
+}
 
 function normalized(title: string): string {
   return title.normalize('NFKC').toLocaleLowerCase('az').replace(/ı/g, 'i');
