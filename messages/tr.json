@@ -7506,6 +7506,26 @@
       }
     }
   },
+  "messageForm": {
+    "title": "Bize yazın",
+    "subtitle": "Mesajınız doğrudan bize ulaşır — genellikle aynı gün yanıtlıyoruz.",
+    "name": "Adınız",
+    "namePlaceholder": "Örn. Elvin",
+    "phone": "Telefon (WhatsApp)",
+    "phonePlaceholder": "+994 50 123 45 67",
+    "message": "Mesajınız",
+    "submit": "Gönder",
+    "sending": "Gönderiliyor…",
+    "successTitle": "Mesajınız ulaştı",
+    "successBody": "Yakında verdiğiniz numaradan sizinle iletişime geçeceğiz.",
+    "close": "Kapat",
+    "errorFields": "Adı, telefon numarasını ve mesajı kontrol edin.",
+    "errorRate": "Kısa sürede çok fazla mesaj gönderildi. Biraz sonra tekrar deneyin veya WhatsApp’tan yazın.",
+    "errorGeneric": "Mesaj gönderilemedi. Tekrar deneyin veya WhatsApp’tan yazın.",
+    "privacy": "Bilgileriniz yalnızca size yanıt vermek için kullanılır.",
+    "whatsappAlt": "WhatsApp’tan yazmayı mı tercih edersiniz?",
+    "whatsappLink": "WhatsApp’ı aç"
+  },
   "whatsappFloat": {
     "label": "Bize yazın",
     "aria": "WhatsApp'tan bize yazın",

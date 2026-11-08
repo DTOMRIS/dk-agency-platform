@@ -9,6 +9,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { TELEGRAM_HANDLE, TELEGRAM_URL, WHATSAPP_NUMBER } from '@/lib/contact-channels';
+import { openContact } from '@/lib/contact/message-form';
 
 type ContactChannel = 'kazan' | 'whatsapp' | 'telegram';
 
@@ -111,7 +112,7 @@ export function ContactFunnel() {
         type="button"
         onClick={() => {
           track('whatsapp', { prefillText: whatsappPreFill, destinationPhone: WHATSAPP_NUMBER });
-          openExternal(whatsappUrl);
+          openContact(whatsappUrl);
         }}
         className={`${CARD} bg-[#0F172A] text-white shadow-[0_18px_40px_-18px_rgba(15,23,42,0.55)] focus-visible:ring-[#E94560]/40`}
       >
