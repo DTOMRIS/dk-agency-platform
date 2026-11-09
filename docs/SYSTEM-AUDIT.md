@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-11-05 16:28:55 | Branch: fix/TASK-0557-news-coverage | cdc25abb
+> Son güncəlləmə: 2026-11-08 20:02:11 | Branch: claude/deploy-commit-changelog-upr6me-msg | 40f027c
 
 ## Route İnventarı
 | Kateqoriya | Say |
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 6051 | 6051 | 6051 | 6051 | ✅ |
+| 6069 | 6069 | 6069 | 6069 | ✅ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`
@@ -53,7 +53,7 @@ AI Insight bağlı səhifə: **9**
 |-----------|--------|
 | Provider | ✅ Hostinger SMTP (nodemailer) |
 | Templates | ✅ lib/email/templates.ts |
-| Routes | ✅ 10 API route sendEmail() |
+| Routes | ✅ 11 API route sendEmail() |
 | SMTP_USER | ⚠️ boş → console.log mock |
 
 ## Fatura OCR

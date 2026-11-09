@@ -19,7 +19,8 @@ export type LeadType =
   | 'franchise_lead'
   | 'newsletter'
   | 'listing_created'
-  | 'listing_lead';
+  | 'listing_lead'
+  | 'site_message';
 
 export function readAttribution(req: Pick<NextRequest, 'cookies'>): Attribution | null {
   try {

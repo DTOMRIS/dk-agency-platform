@@ -3,6 +3,7 @@
 import { useLocale } from 'next-intl';
 import { normalizeLocale, type Locale } from '@/i18n/config';
 import { TELEGRAM_URL, WHATSAPP_NUMBER } from '@/lib/contact-channels';
+import { openContact } from '@/lib/contact/message-form';
 import styles from '@/components/home/v2/homeV2.module.css';
 import { inter } from '@/components/home/v2/font';
 import { Icon, Reveal } from '@/components/home/v2/shared';
@@ -176,7 +177,7 @@ export function JoinCTA() {
                     prefillText: copy.whatsappPrefill,
                     destinationPhone: WHATSAPP_NUMBER,
                   });
-                  openExternal(
+                  openContact(
                     `/api/leads/whatsapp?text=${encodeURIComponent(copy.whatsappPrefill)}`
                   );
                 }}

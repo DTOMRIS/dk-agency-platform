@@ -7,6 +7,7 @@ import { Footer, KazanAIBot } from '@/components/layout/Footer';
 import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import LazyCookiesBanner from '@/components/ui/LazyCookiesBanner';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
+import MessageFormModal from '@/components/contact/MessageFormModal';
 import KazanNudge from '@/components/kazan-ai/KazanNudge';
 import AttributionCapture from '@/components/analytics/AttributionCapture';
 import CloudflareWebAnalytics from '@/components/analytics/CloudflareWebAnalytics';
@@ -33,6 +34,8 @@ export default function PublicChrome({ children }: { children: React.ReactNode }
       {/* TASK-0529: one floating set on every public page (WhatsApp left, KAZAN AI right) — before,
           WhatsApp lived only on the home page. */}
       <WhatsAppButton />
+      {/* TASK-0558: WhatsApp buttons open the site message form first — the text reaches Telegram + e-mail. */}
+      <MessageFormModal />
       <KazanAIBot />
       {/* TASK-0536: proactive one-question bubble above the KAZAN launcher (desktop). */}
       <KazanNudge />

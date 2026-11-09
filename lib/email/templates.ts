@@ -558,6 +558,23 @@ export const emailTemplates = {
   },
 
   // Admin-only notifications — always AZ
+  // TASK-0558: site message form — the visitor's own text, so the owner can answer without opening the panel.
+  siteMessageAdmin: (leadName: string, phone: string, message: string, page: string | null): EmailTemplate => ({
+    subject: `Saytdan yeni mesaj: ${escapeEmailHtml(leadName)}`,
+    html: wrapEmail(`
+      <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">Saytdan yeni mesaj</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <tr><td style="padding:8px 0;color:#64748b;">Ad</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(leadName)}</td></tr>
+        <tr><td style="padding:8px 0;color:#64748b;">Telefon</td><td style="padding:8px 0;font-weight:600;">${escapeEmailHtml(phone)}</td></tr>
+        ${page ? `<tr><td style="padding:8px 0;color:#64748b;">Səhifə</td><td style="padding:8px 0;">${escapeEmailHtml(page)}</td></tr>` : ''}
+      </table>
+      <p style="margin:16px 0 0;padding:12px 16px;background:#F9FAFB;border-left:3px solid #E94560;color:#1A1A2E;white-space:pre-wrap;">${escapeEmailHtml(message)}</p>
+      <p style="margin-top:20px;">
+        <a href="https://dkagency.com.tr/dashboard/kazan-leads" style="${ctaStyle}font-size:14px;">Paneldə aç</a>
+      </p>
+    `),
+  }),
+
   kazanLeadAdmin: (leadName: string, phone: string, businessType: string, intent: string): EmailTemplate => ({
     subject: `KAZAN AI \u2014 Yeni lead: ${escapeEmailHtml(leadName)}`,
     html: wrapEmail(`

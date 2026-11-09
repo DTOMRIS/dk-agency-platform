@@ -1,14 +1,14 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-11-05 · fix/TASK-0557-news-coverage · cdc25abb
+> `node scripts/generate-system-map.mjs` · 2026-11-09 · claude/deploy-commit-changelog-upr6me-msg · 25c2166
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
 - Ünvan: **137** (həqiqi səhifə 123, yönləndirmə 10, güzgü 4) · page faylı 253
 - Dizayn (həqiqi səhifələr): v2 **102** · köhnə **0** · qarışıq **0** · işarəsiz 21
 - Geri düyməsi yoxdur: **0** səhifə
-- API: **115** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 33
-- Sənəd: 64 (+ 392 tapşırıq kartı)
+- API: **116** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 34
+- Sənəd: 64 (+ 393 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -266,6 +266,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/api/kazan-ai` | POST | app/api/kazan-ai/route.ts | public KAZAN assistant, rate-limited 30 / min per IP |
 | `/api/lead/franchise-radar` | POST | app/api/lead/franchise-radar/route.ts | public lead form, rate-limited |
 | `/api/lead/ota-guide` | POST | app/api/lead/ota-guide/route.ts | public lead form, rate-limited |
+| `/api/leads/message` | POST | app/api/leads/message/route.ts | anonymous visitors write to the owner; rate-limited + honeypot. |
 | `/api/leads/track` | POST | app/api/leads/track/route.ts | contact-button click counter (no data returned). TASK-0530: it writes a row and e-mails / |
 | `/api/leads/whatsapp` | GET | app/api/leads/whatsapp/route.ts | a plain link on every page; the redirect always works. TASK-0530: bots and more than |
 | `/api/member/auth` | POST | app/api/member/auth/route.ts | legacy member login, rate-limited (TASK-0530) |
@@ -283,65 +284,65 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 ## Sənədlər, araşdırmalar, qərarlar — işə başlamazdan əvvəl oxu
 | Fayl | Başlıq | Son dəyişiklik | Sətir |
 |---|---|---|---|
-| `docs/ADR/0001-nextjs-app-router.md` | ADR-001: Next.js + App Router | 2026-05-27 | 29 |
-| `docs/ADR/0002-custom-auth.md` | ADR-0002: Custom JWT Auth Instead of NextAuth | 2026-05-27 | 27 |
-| `docs/ADR/0003-drizzle-orm.md` | ADR-0003: Drizzle ORM Over Prisma | 2026-05-27 | 27 |
-| `docs/ADR/0004-neon-postgresql.md` | ADR-0004: Neon Serverless PostgreSQL | 2026-05-27 | 27 |
-| `docs/ADR/0005-hostinger-deploy.md` | ADR-0005: Hostinger Over Vercel for Deployment | 2026-05-27 | 26 |
-| `docs/ADR/0006-four-languages.md` | ADR-0006: Four-Locale i18n Strategy | 2026-05-27 | 28 |
-| `docs/ADR/0007-ahilik-tier.md` | ADR-0007: Ahilik Guild Naming for Membership Tiers | 2026-05-27 | 27 |
-| `docs/ADR/0008-i18n-pattern-a.md` | ADR-0008: i18n Pattern Hierarchy | 2026-05-27 | 28 |
-| `docs/ADR/0009-deepseek-primary.md` | ADR-0009: DeepSeek as Primary AI Model with Claude Fallback | 2026-05-27 | 28 |
-| `docs/ADR/0010-yandex-metrica-kvkk.md` | ADR-0010: Yandex Metrica with KVKK Consent Gating | 2026-05-27 | 28 |
-| `docs/ADR/0011-kazan-context-injection.md` | ADR-0011: URL Query Param Context Injection for KAZAN AI | 2026-05-27 | 29 |
-| `docs/ADR/0012-metro-3-block.md` | ADR-0012: Metro 3-Block Tool Description Format | 2026-05-27 | 29 |
-| `docs/ADR/0013-dk-validator.md` | ADR-0013: DK Validator Agent as Pre-Merge Quality Gate | 2026-05-27 | 32 |
-| `docs/ADR/0014-task-card-system.md` | ADR-0014: Task Card System for Work Tracking | 2026-05-27 | 29 |
-| `docs/ADR/0015-auto-approve-mode.md` | ADR-0015: Claude Code Auto-Approve Mode | 2026-05-27 | 28 |
-| `docs/ADR/0016-dashboard-route-pruning.md` | ADR-0016: Dashboard route təmizliyi — saxta səhifələr silinir, real olanlar menyuya, sideb | 2026-09-13 | 39 |
+| `docs/ADR/0001-nextjs-app-router.md` | ADR-001: Next.js + App Router | 2026-10-06 | 29 |
+| `docs/ADR/0002-custom-auth.md` | ADR-0002: Custom JWT Auth Instead of NextAuth | 2026-10-06 | 27 |
+| `docs/ADR/0003-drizzle-orm.md` | ADR-0003: Drizzle ORM Over Prisma | 2026-10-06 | 27 |
+| `docs/ADR/0004-neon-postgresql.md` | ADR-0004: Neon Serverless PostgreSQL | 2026-10-06 | 27 |
+| `docs/ADR/0005-hostinger-deploy.md` | ADR-0005: Hostinger Over Vercel for Deployment | 2026-10-06 | 26 |
+| `docs/ADR/0006-four-languages.md` | ADR-0006: Four-Locale i18n Strategy | 2026-10-06 | 28 |
+| `docs/ADR/0007-ahilik-tier.md` | ADR-0007: Ahilik Guild Naming for Membership Tiers | 2026-10-06 | 27 |
+| `docs/ADR/0008-i18n-pattern-a.md` | ADR-0008: i18n Pattern Hierarchy | 2026-10-06 | 28 |
+| `docs/ADR/0009-deepseek-primary.md` | ADR-0009: DeepSeek as Primary AI Model with Claude Fallback | 2026-10-06 | 28 |
+| `docs/ADR/0010-yandex-metrica-kvkk.md` | ADR-0010: Yandex Metrica with KVKK Consent Gating | 2026-10-06 | 28 |
+| `docs/ADR/0011-kazan-context-injection.md` | ADR-0011: URL Query Param Context Injection for KAZAN AI | 2026-10-06 | 29 |
+| `docs/ADR/0012-metro-3-block.md` | ADR-0012: Metro 3-Block Tool Description Format | 2026-10-06 | 29 |
+| `docs/ADR/0013-dk-validator.md` | ADR-0013: DK Validator Agent as Pre-Merge Quality Gate | 2026-10-06 | 32 |
+| `docs/ADR/0014-task-card-system.md` | ADR-0014: Task Card System for Work Tracking | 2026-10-06 | 29 |
+| `docs/ADR/0015-auto-approve-mode.md` | ADR-0015: Claude Code Auto-Approve Mode | 2026-10-06 | 28 |
+| `docs/ADR/0016-dashboard-route-pruning.md` | ADR-0016: Dashboard route təmizliyi — saxta səhifələr silinir, real olanlar menyuya, sideb | 2026-10-06 | 39 |
 | `docs/ADR/0017-landing-v2-identity-and-channels.md` | ADR-0017: Landing v2 — HoReCa food-cost kimliyi, Kutlerri/R365 dizayn dili, sahib kanallar | 2026-10-09 | 37 |
 | `docs/ADR/README.md` | Architecture Decision Records (ADR) | 2026-10-08 | 37 |
-| `docs/ADR/_TEMPLATE.md` | ADR-NNNN: {Başlıq} | 2026-05-27 | 25 |
-| `docs/API-MAP.md` | API Map — DK Agency Platform | 2026-05-27 | 167 |
-| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-11-04 | 350 |
-| `docs/BLOG-CITATION-AUDIT.md` | Blog Atıf (Citation) Auditi — Tiered | 2026-06-06 | 73 |
-| `docs/BRAND-GUIDE.md` | DK Agency -- Marka Qaydalari | 2026-03-24 | 47 |
+| `docs/ADR/_TEMPLATE.md` | ADR-NNNN: {Başlıq} | 2026-10-06 | 25 |
+| `docs/API-MAP.md` | API Map — DK Agency Platform | 2026-10-06 | 167 |
+| `docs/ARCHITECTURE/SYSTEM-MAP.md` | DK Agency — Sistem xəritəsi (avtomatik) | 2026-11-05 | 350 |
+| `docs/BLOG-CITATION-AUDIT.md` | Blog Atıf (Citation) Auditi — Tiered | 2026-10-06 | 73 |
+| `docs/BRAND-GUIDE.md` | DK Agency -- Marka Qaydalari | 2026-10-06 | 47 |
 | `docs/CHANGELOG.md` | CHANGELOG | 2026-10-06 | 658 |
-| `docs/CLAUDE-DESIGN.md` | CLAUDE DESIGN | 2026-06-03 | 11 |
-| `docs/CODING-STANDARDS.md` | DK Agency -- Kod Yazma Qaydalari | 2026-03-24 | 35 |
-| `docs/DATA-MODEL.md` | DK Agency Data Model | 2026-05-27 | 147 |
-| `docs/DECISIONS.md` | DECISIONS | 2026-05-27 | 6 |
-| `docs/DELIVERY-SYSTEM.md` | Delivery System (No-Regression Mode) | 2026-02-22 | 51 |
-| `docs/DEPLOYMENT.md` | DK Agency Deployment Guide | 2026-09-13 | 132 |
+| `docs/CLAUDE-DESIGN.md` | CLAUDE DESIGN | 2026-10-06 | 11 |
+| `docs/CODING-STANDARDS.md` | DK Agency -- Kod Yazma Qaydalari | 2026-10-06 | 35 |
+| `docs/DATA-MODEL.md` | DK Agency Data Model | 2026-10-06 | 147 |
+| `docs/DECISIONS.md` | DECISIONS | 2026-10-06 | 6 |
+| `docs/DELIVERY-SYSTEM.md` | Delivery System (No-Regression Mode) | 2026-10-06 | 51 |
+| `docs/DEPLOYMENT.md` | DK Agency Deployment Guide | 2026-10-06 | 132 |
 | `docs/DEVLOG.md` | DK Agency Platform — Dev Log | 2026-11-04 | 1193 |
-| `docs/ENV-SETUP.md` | Environment Setup | 2026-04-24 | 23 |
-| `docs/FATURA-OCR-MASTERPLAN.md` | FATURA OCR MASTERPLAN — DK Agency | 2026-04-29 | 802 |
-| `docs/HANDOFF-11-IYUN-2026.md` | HANDOFF — 11 İyun 2026 Sessiyası | 2026-06-11 | 129 |
+| `docs/ENV-SETUP.md` | Environment Setup | 2026-10-06 | 23 |
+| `docs/FATURA-OCR-MASTERPLAN.md` | FATURA OCR MASTERPLAN — DK Agency | 2026-10-06 | 802 |
+| `docs/HANDOFF-11-IYUN-2026.md` | HANDOFF — 11 İyun 2026 Sessiyası | 2026-10-06 | 129 |
 | `docs/HANDOFF.md` | TASK-0554 — 2026-11-04 (prepared for review) | 2026-11-04 | 619 |
-| `docs/I18N-AUDIT.md` | i18n Component-Level Audit | 2026-05-08 | 153 |
-| `docs/LESSONS.md` | DK Agency — Acı Dərslər (yeni task-dan əvvəl oxu) | 2026-10-11 | 438 |
-| `docs/MARKETINQ_OCAGI_SPEC.md` | Marketinq Ocagi — Texniki Spec | 2026-05-11 | 238 |
-| `docs/ONBOARDING.md` | DK Agency Onboarding — 5 Dəqiqəlik Başlangıc | 2026-05-27 | 88 |
-| `docs/PLATFORM-STANDARDS.md` | Platform Standards (SEO + Security + Mobile + PWA) | 2026-02-22 | 48 |
-| `docs/PROTECTED.md` | Protected Files — Toxunulmaz | 2026-05-28 | 35 |
-| `docs/README.md` | DK Agency Documentation | 2026-05-27 | 55 |
-| `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-04 | 29 |
-| `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-03-26 | 46 |
-| `docs/RUNBOOK.md` | RUNBOOK | 2026-09-13 | 67 |
-| `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-06-07 | 80 |
+| `docs/I18N-AUDIT.md` | i18n Component-Level Audit | 2026-10-06 | 153 |
+| `docs/LESSONS.md` | DK Agency — Acı Dərslər (yeni task-dan əvvəl oxu) | 2026-11-08 | 444 |
+| `docs/MARKETINQ_OCAGI_SPEC.md` | Marketinq Ocagi — Texniki Spec | 2026-10-06 | 238 |
+| `docs/ONBOARDING.md` | DK Agency Onboarding — 5 Dəqiqəlik Başlangıc | 2026-10-06 | 88 |
+| `docs/PLATFORM-STANDARDS.md` | Platform Standards (SEO + Security + Mobile + PWA) | 2026-10-06 | 48 |
+| `docs/PROTECTED.md` | Protected Files — Toxunulmaz | 2026-10-06 | 35 |
+| `docs/README.md` | DK Agency Documentation | 2026-10-06 | 55 |
+| `docs/REPO-GOVERNANCE.md` | REPO GOVERNANCE | 2026-10-06 | 29 |
+| `docs/RSS-SOURCES.md` | RSS Mənbələri — Xəbər Aqreqasiyası | 2026-11-05 | 46 |
+| `docs/RUNBOOK.md` | RUNBOOK | 2026-10-06 | 67 |
+| `docs/SKILL-MATRIX.md` | DK Agency Skill Matrix (v1) | 2026-10-06 | 80 |
 | `docs/STATE.md` | STATE | 2026-11-02 | 381 |
-| `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-11-04 | 76 |
-| `docs/TASK-CARD-TEMPLATE.md` | Task Card Template | 2026-03-26 | 15 |
-| `docs/TECH_DEBT.md` | Tech Debt Registry — DK Agency Platform | 2026-09-29 | 281 |
-| `docs/XEBER-TERCUME-SISTEMI.md` | Xəbər Tərcümə Sistemi — Texniki Sənəd | 2026-03-26 | 142 |
-| `docs/devir-satis-spec.md` | DK Agency Devir & Satis Feature Spec | 2026-03-28 | 874 |
-| `docs/handoff/TASK-0157C-CONTINUATION.md` | TASK-0157C Continuation — Dashboard i18n Remaining 5 Files | 2026-05-22 | 111 |
-| `docs/kazan-kb-v2.md` | KAZAN AI Knowledge Base v2 | 2026-04-27 | 61 |
-| `docs/member-env-checklist.md` | Member Env Checklist | 2026-03-26 | 58 |
-| `docs/n8n/SETUP.md` | n8n RSS Auto-Fetch — Setup Rehberi | 2026-04-27 | 93 |
+| `docs/SYSTEM-AUDIT.md` | DK Agency — System Audit (CANLI) | 2026-11-08 | 76 |
+| `docs/TASK-CARD-TEMPLATE.md` | Task Card Template | 2026-10-06 | 15 |
+| `docs/TECH_DEBT.md` | Tech Debt Registry — DK Agency Platform | 2026-10-06 | 281 |
+| `docs/XEBER-TERCUME-SISTEMI.md` | Xəbər Tərcümə Sistemi — Texniki Sənəd | 2026-10-06 | 142 |
+| `docs/devir-satis-spec.md` | DK Agency Devir & Satis Feature Spec | 2026-10-06 | 874 |
+| `docs/handoff/TASK-0157C-CONTINUATION.md` | TASK-0157C Continuation — Dashboard i18n Remaining 5 Files | 2026-10-06 | 111 |
+| `docs/kazan-kb-v2.md` | KAZAN AI Knowledge Base v2 | 2026-10-06 | 61 |
+| `docs/member-env-checklist.md` | Member Env Checklist | 2026-10-06 | 58 |
+| `docs/n8n/SETUP.md` | n8n RSS Auto-Fetch — Setup Rehberi | 2026-10-06 | 93 |
 | `docs/ops/news-pipeline-reliability.md` | TASK-0553 — News pipeline rollout and recovery | 2026-11-04 | 50 |
 | `docs/ops/official-news-coverage.md` | TASK-0554 — Official press coverage | 2026-11-04 | 46 |
-| `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-06-10 | 348 |
+| `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-10-06 | 348 |
 | `docs/reports/2026-10-09-marketinq-ocagi-audit.md` | Marketinq Ocağı (24 alət) — audit + dünya araşdırması (09.10.2026) | 2026-10-09 | 36 |
 | `docs/reports/2026-10-11-article-pages-research.md` | Blog və xəbər səhifələri — dizayn araşdırması (2026-10-11, TASK-0542) | 2026-10-11 | 26 |
 | `docs/reports/2026-10-11-blog-content-audit.md` | Bloq məzmun auditi — 37 yazı (2026-10-11, TASK-0545) | 2026-10-11 | 25 |

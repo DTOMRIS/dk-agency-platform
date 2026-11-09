@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-11-08 — TASK-0558: sayt mesaj formu — WhatsApp-dan əvvəl, mesaj Telegram + mail + panelə
+
+**Why:** Doğan Telegram screenshot-u ilə: «hep yazıyorsun ama mesaj bana gelmiyor». Bildirişlər yalnız klik idi — WhatsApp ziyarətçinin telefonunda açılır, «Göndər»ə basmasa heç nə çatmır. Ref kodu (TASK-0529) və «hələ göndərilməyib» mətni (TASK-0540) bunu yalnız izah edirdi, həll etmirdi.
+
+**What:** `POST /api/leads/message` → `kazan_leads` (sxem dəyişmədən: `diger`/`general`, mesaj `conversation_context`-də — panel artıq göstərir) + `notifyOwner` (gözlənilir, tam mətn) + mail (`after`). `MessageFormModal` PublicChrome-da: `/api/leads/whatsapp` linklərini capture-da tutur, `openContact()` hadisəsi JS düymələri üçün; panel səhifələrində dinləyici yoxdur → WhatsApp əvvəlki kimi. Limit doğrulamadan sonra — yazı səhvi kvota yemir, testlər də limitə dəymir.
+
+**Yoxlama:** spec 5/5 + 10/10, köhnə kodla 5/5 FAIL; real API lokal 503 (DB/Telegram yox — yalan «çatdı» yoxdur), 429 6-cıda; əlaqəli spec-lər keçir; formatlayıcı `templates.ts`-i bütöv yenidən yazdı → geri qaytarıldı, blok perl ilə (L-051).
+
 ## 2026-11-05 — TASK-0557: xəbər əhatəsi — 2 saatlıq toplama, vergi/sağlamlıq turizmi balı, yeni AZ mənbələri, 30/gün
 
 **Why:** Doğan: marja.az vergi güzəşti və afn.az Ceyhun Aşurov (AHTTSA) xəbərləri gəlmədi, 12 xəbər azdır. Ölçmə (Neon read-only): Report.az RSS 30 element ≈ 2,5–3 saat, Oxu/APA ≈ 4 saat — 6 saatlıq toplama əksəriyyəti görmürdü; vergi xəbəri yalnız Baku.ws-dən gəldi (bal 6, hədd 5) və 12 slot artıq dolmuşdu (AQTA 7 + DTA/Büro 6). TASK-0553-dən sonra gündə ~8 dərc (əvvəl 11–15).

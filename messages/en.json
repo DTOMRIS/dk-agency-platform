@@ -7506,6 +7506,26 @@
       }
     }
   },
+  "messageForm": {
+    "title": "Write to us",
+    "subtitle": "Your message comes straight to us — we usually reply the same day.",
+    "name": "Your name",
+    "namePlaceholder": "e.g. Elvin",
+    "phone": "Phone (WhatsApp)",
+    "phonePlaceholder": "+994 50 123 45 67",
+    "message": "Your message",
+    "submit": "Send",
+    "sending": "Sending…",
+    "successTitle": "Message delivered",
+    "successBody": "We will contact you soon on the number you gave.",
+    "close": "Close",
+    "errorFields": "Please check your name, phone number and message.",
+    "errorRate": "Too many messages in a short time. Try again later or write on WhatsApp.",
+    "errorGeneric": "The message was not sent. Try again or write on WhatsApp.",
+    "privacy": "Your details are used only to reply to you.",
+    "whatsappAlt": "Prefer WhatsApp?",
+    "whatsappLink": "Open WhatsApp"
+  },
   "whatsappFloat": {
     "label": "Message us",
     "aria": "Message us on WhatsApp",

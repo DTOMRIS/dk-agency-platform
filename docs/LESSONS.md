@@ -435,3 +435,9 @@ route patterni ile eyni).
 ## L-069: Qatsız qlobal CSS Tailwind sinfini həmişə üstələyir
 - **Səhv:** `MarkdownRenderer`-də Tailwind sinifləri dəyişdirildi, amma `globals.css` (PROTECTED, qatsız) `.blog-content p:first-of-type`, `em`, `code`, `hr` qaydaları qalib gəldi — hər parçanın ilk abzası böyüdü, `hr` 2.5rem saxladı. Doğan «kutular ayrı kafadan çalışıyor» dedi.
 - **Qayda:** üslub dəyişəndə brauzerdə `getComputedStyle` ilə ölç (sinfə baxmaq kifayət deyil). Qorunan qlobal qaydadan qaçmaq üçün sinif adını dəyiş və ya inline stil; `globals.css`-ə toxunma.
+
+## L-070: Klik bildirişi mesaj deyil — əlaqə mətnini saytda topla
+- **Səhv:** WhatsApp düymələri hər klikdə sahibə Telegram bildirişi göndərirdi; sahib bunu «mesaj gəlir» kimi oxuyurdu, amma mesaj gəlmirdi (TASK-0511 → 0529 ref kodu → 0540 «hələ göndərilməyib» mətni — üç dəfə izah, həll yox).
+- **Kök səbəb:** `wa.me` linki yalnız ziyarətçinin WhatsApp-ını hazır mətnlə açır; göndərmə ziyarətçinin əlindədir və biz onu görə bilmirik. Bildirişin mətnini dəyişmək davranışı dəyişmir.
+- **Qayda:** Sahibə «müraciət» çatmalıdırsa, mətn saytda toplanır və serverdən çatdırılır (`/api/leads/message`: Telegram + mail + panel). Kanal düyməsi (WhatsApp/Telegram) yalnız alternativdir. Ziyarətçiyə «çatdı» yalnız real çatdırma (baza və ya Telegram) uğurlu olanda deyilir.
+- **Nəticə:** TASK-0558 — `MessageFormModal` saytdakı bütün `/api/leads/whatsapp` linklərini tutur.
