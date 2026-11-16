@@ -198,7 +198,7 @@ export default function KazanAiChatClient() {
             </div>
 
             <form onSubmit={handleSubmit} className="border-t border-[#EFE9DE] bg-white p-4 sm:p-5">
-              {messages.some(m => m.role === 'user') && <div className="mb-3"><KazanContactAction messages={messages} source="kazan_page" /></div>}
+              {!loading && messages.at(-1)?.role === 'assistant' && messages.some(m => m.role === 'user') && <div className="mb-3"><KazanContactAction messages={messages} source="kazan_page" /></div>}
               <div className="flex flex-col gap-3 sm:flex-row">
                 <textarea
                   value={input}
