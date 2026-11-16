@@ -7519,12 +7519,22 @@
     "successTitle": "Message delivered",
     "successBody": "We will contact you soon on the number you gave.",
     "close": "Close",
-    "errorFields": "Please check your name, phone number and message.",
+    "errorFields": "Please check your name, phone number, message and, if supplied, email address.",
     "errorRate": "Too many messages in a short time. Try again later or write on WhatsApp.",
     "errorGeneric": "The message was not sent. Try again or write on WhatsApp.",
-    "privacy": "Your details are used only to reply to you.",
+    "privacy": "By sending, you request a reply about this enquiry. When coming from KAZAN, recent conversation context is also sent.",
     "whatsappAlt": "Prefer WhatsApp?",
-    "whatsappLink": "Open WhatsApp"
+    "whatsappLink": "Open WhatsApp",
+    "businessName": "Business name (optional)",
+    "businessType": "Business type",
+    "businessTypes": {
+      "restoran": "Restaurant",
+      "kafe": "Café",
+      "franchise": "Franchise",
+      "diger": "Other / not specified"
+    },
+    "email": "Email (optional)",
+    "optionalDetails": "Business and additional contact details (optional)"
   },
   "whatsappFloat": {
     "label": "Message us",
@@ -8068,8 +8078,11 @@
       "newsletter": "newsletter",
       "listing_created": "new listing",
       "listing_lead": "listing enquiry",
-      "other": "other"
-    }
+      "other": "other",
+      "site_message": "Website enquiry"
+    },
+    "identifiedRecords": "Records with contact details",
+    "clicksSeparate": "Anonymous clicks are shown separately; this is not a sales or customer count."
   },
   "authShell": {
     "back": "Home",
@@ -8336,5 +8349,12 @@
     "searchTitle": "NewsData.io (search)",
     "outlets": "{count} distinct outlets",
     "search": "Search"
+  },
+  "contactCapture": {
+    "title": "Discuss this result with Doğan?",
+    "description": "Send a contact request with a short conversation context. You can keep chatting without sharing your details.",
+    "request": "Contact me",
+    "requestText": "Please contact me to discuss my result.",
+    "saved": "Your contact request has arrived. The team can use these details to follow up."
   }
 }

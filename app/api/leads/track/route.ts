@@ -2,22 +2,13 @@ import { NextRequest, NextResponse, after } from 'next/server';
 import crypto from 'crypto';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
-import { sendSmtpEmail } from '@/lib/email/smtp';
-import { wrapEmail } from '@/lib/email/templates';
-import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 import { isBotUserAgent } from '@/lib/leads/ref-code';
 import { checkRateLimit, rateLimitExceeded, RATE_LIMITS } from '@/lib/utils/rate-limit';
-import { attributionLine } from '@/lib/analytics/attribution';
 import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
 
 const ALLOWED_CHANNELS = ['kazan', 'whatsapp', 'telegram'] as const;
 const ALLOWED_SOURCES = ['contact_page', 'home_join'] as const;
 
-// Admin e-mail label per source (TASK-0502: home page contact block).
-const SOURCE_LABELS: Record<(typeof ALLOWED_SOURCES)[number], string> = {
-  contact_page: 'Əlaqə səhifəsi',
-  home_join: 'Ana səhifə',
-};
 const ALLOWED_LOCALES = ['az', 'ru', 'en', 'tr'] as const;
 
 type Channel = (typeof ALLOWED_CHANNELS)[number];
@@ -45,16 +36,6 @@ function cleanStr(value: unknown, max: number): string | null {
   const trimmed = value.trim();
   if (!trimmed) return null;
   return trimmed.slice(0, max);
-}
-
-// These values are attacker-controllable (client POST) and land in an admin
-// email's HTML body, so escape before interpolation to prevent HTML injection.
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }
 
 function getClientIp(request: NextRequest) {
@@ -120,44 +101,9 @@ export async function POST(req: NextRequest) {
       createdAt,
     });
 
-    if (channel === 'whatsapp' || channel === 'telegram') {
-      const adminEmail = process.env.ADMIN_EMAIL ?? 'info@dkagency.com.tr';
-      const channelLabel = channel === 'whatsapp' ? 'WhatsApp' : 'Telegram';
-      const sourceLabel = SOURCE_LABELS[source];
-      const subject = `[DK Lead] ${sourceLabel} — ${channelLabel}`;
-      const html = wrapEmail(`
-        <h2 style="color:#1A1A2E;font-size:20px;margin:0 0 16px;">${sourceLabel} — ${channelLabel}</h2>
-        <table style="width:100%;border-collapse:collapse;font-size:14px;">
-          <tr><td style="padding:8px 0;color:#64748b;width:100px">Kanal:</td><td style="padding:8px 0;font-weight:700">${channelLabel}</td></tr>
-          <tr><td style="padding:8px 0;color:#64748b">Dil:</td><td style="padding:8px 0">${locale.toUpperCase()}</td></tr>
-          ${destinationPhone ? `<tr><td style="padding:8px 0;color:#64748b">Hədəf:</td><td style="padding:8px 0">${escapeHtml(destinationPhone)}</td></tr>` : ''}
-          ${sourceUrl ? `<tr><td style="padding:8px 0;color:#64748b">Səhifə:</td><td style="padding:8px 0">${escapeHtml(sourceUrl)}</td></tr>` : ''}
-          ${prefillText ? `<tr><td style="padding:8px 0;color:#64748b">Hazır mesaj:</td><td style="padding:8px 0">${escapeHtml(prefillText)}</td></tr>` : ''}
-          <tr><td style="padding:8px 0;color:#64748b">Vaxt:</td><td style="padding:8px 0">${createdAt.toISOString()}</td></tr>
-        </table>
-        <p style="margin-top:20px;">
-          <a href="https://dkagency.com.tr/dashboard/contact-tracking" style="display:inline-block;background:#E11D48;color:#ffffff;padding:12px 24px;border-radius:9999px;text-decoration:none;font-weight:700;font-size:14px;">Tracking-ə bax</a>
-        </p>
-      `);
-      sendSmtpEmail(adminEmail, subject, html).catch(() => undefined);
-
-      // TASK-0511: owner Telegram ping (never blocks or breaks the lead save).
-      const leadAttr = readAttribution(req);
-      after(async () => {
-        await recordLeadSource(leadAttr, 'channel_click', sourceUrl);
-        await notifyOwner({
-          title: `🔔 Yeni lead · ${sourceLabel} (${channelLabel})`,
-          lines: [
-            destinationPhone ? `Hədəf: ${destinationPhone}` : null,
-            sourceUrl ? `Səhifə: ${sourceUrl}` : null,
-            prefillText ? `Hazır mesaj: ${prefillText}` : null,
-            `Dil: ${locale.toUpperCase()}`,
-            attributionLine(leadAttr),
-          ],
-          buttons: leadButtons(null, '/dashboard/contact-tracking'),
-        });
-      });
-    }
+    // Anonymous contact interest stays in the click history and daily summary.
+    const leadAttr = readAttribution(req);
+    after(() => recordLeadSource(leadAttr, 'channel_click', sourceUrl));
 
     return NextResponse.json({ ok: true });
   } catch (error) {

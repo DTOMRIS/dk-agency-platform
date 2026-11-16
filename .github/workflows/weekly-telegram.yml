@@ -5,6 +5,7 @@ name: Weekly Telegram Summary
 on:
   schedule:
     - cron: '0 4 * * 1'
+    - cron: '0 16 * * *'
   workflow_dispatch:
 
 concurrency:
@@ -20,8 +21,10 @@ jobs:
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
+          period=weekly
+          if [ "${{ github.event.schedule }}" = '0 16 * * *' ]; then period=daily; fi
           code=$(curl -sS -o /tmp/out.json -w '%{http_code}' --max-time 60 \
             -H "Authorization: Bearer $CRON_SECRET" \
-            https://dkagency.com.tr/api/cron/weekly-telegram)
+            "https://dkagency.com.tr/api/cron/weekly-telegram?period=$period")
           cat /tmp/out.json; echo
           test "$code" = "200"

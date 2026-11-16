@@ -1,7 +1,7 @@
 # DK Agency — System Audit (CANLI)
 
 > Avtomatik: `node scripts/generate-audit.mjs` | Hər PR-ın DoD-una daxil.
-> Son güncəlləmə: 2026-11-08 20:02:11 | Branch: claude/deploy-commit-changelog-upr6me-msg | 40f027c
+> Son güncəlləmə: 2026-11-16 13:42:21 | Branch: feat/TASK-0559-lead-conversion | c50d628
 
 ## Route İnventarı
 | Kateqoriya | Say |
@@ -22,7 +22,7 @@ AI Insight bağlı səhifə: **9**
 ## i18n
 | AZ | EN | RU | TR | Parity |
 |----|----|----|----|----|
-| 6069 | 6069 | 6069 | 6069 | ✅ |
+| 6084 | 6084 | 6084 | 6084 | ✅ |
 
 ## Protected (14)
 - `lib/data/listingFieldConfig.ts`

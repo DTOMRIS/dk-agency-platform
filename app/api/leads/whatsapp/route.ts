@@ -5,8 +5,7 @@ import { isBotUserAgent } from '@/lib/leads/ref-code';
 import { checkRateLimit, getClientIp, RATE_LIMITS } from '@/lib/utils/rate-limit';
 import { db } from '@/lib/db';
 import { leads } from '@/lib/db/schema';
-import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
-import { attributionLine, type Attribution } from '@/lib/analytics/attribution';
+import { type Attribution } from '@/lib/analytics/attribution';
 import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
 
 /**
@@ -58,22 +57,8 @@ async function logClick(req: NextRequest, message: string, leadAttr: Attribution
     // counting is best-effort
   }
 
-  // TASK-0540: the owner read this ping as «a WhatsApp message is on its way» and wondered why none
-  // arrived. A click only opens WhatsApp on the visitor's phone; the message comes only if they press Send.
-  const ref = message.match(/DK-[A-Z0-9]{4}/)?.[0];
+  // TASK-0559: anonymous intent is counted, never announced as a new customer.
   await recordLeadSource(leadAttr, 'whatsapp_click', page);
-  await notifyOwner({
-    title: '💬 WhatsApp düyməsinə basıldı (mesaj hələ göndərilməyib)',
-    lines: [
-      page ? `Səhifə: ${page}` : null,
-      message ? `Hazır mesaj: ${message}` : null,
-      ref
-        ? `Ziyarətçi «Göndər»ə bassa, WhatsApp-a «${ref}» kodlu mesaj gələcək. Gəlməsə — göndərməyib.`
-        : 'Ziyarətçi «Göndər»ə bassa, mesaj WhatsApp-a gələcək. Gəlməsə — göndərməyib.',
-      attributionLine(leadAttr),
-    ],
-    buttons: leadButtons(null, '/dashboard/contact-tracking'),
-  });
 }
 
 export function GET(req: NextRequest) {

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0559` feat(contact): mobil KAZAN səhifəsi və widget mövcud mesaj formu ilə könüllü geri dönüş istəyini qəbul edir; ad/telefon, biznes məlumatı və son iki danışıq mesajı panelə/bildirişə ötürülür. Üçüncü sual bloklanmır. Anonim kliklər üçün fərdi Telegram/e-poçt dayandırılıb; gündəlik xülasədə kliklər əlaqə məlumatlı müraciət qeydlərindən ayrı göstərilir. Köhnə klik tarixçəsi saxlanılır; mənbə hesabatında lead sayılmır.
+
 - `TASK-0558` feat(contact): saytdakı WhatsApp düymələri əvvəl «Bizə yazın» formunu açır (ad, telefon, mesaj) — mətn birbaşa sahibin Telegram-ına (tam mətn + «WhatsApp-da yaz» düyməsi), `ADMIN_EMAIL`-ə və `/dashboard/kazan-leads`-ə çatır. Əvvəl yalnız «düyməyə basıldı» bildirişi gəlirdi, ziyarətçi WhatsApp-da «Göndər»ə basmayanda mesaj itirdi. `POST /api/leads/message` (honeypot, 5/saat), «çatdı» yalnız baza və ya Telegram uğurlu olanda; WhatsApp seçimi formun altında qalır. 4 dil. `e2e/message-form.spec.ts` 5/5 (köhnə kodla 5/5 FAIL).
 
 - `TASK-0557` fix(news): xəbərlər 6 saatda bir yox, 2 saatda bir toplanır (Report.az/APA/Oxu.az RSS yalnız son 3–4 saatı saxlayır — əksər xəbər görünmürdü); vergi/güzəşt/ƏDV və sağlamlıq-termal turizm, AHTTSA/Ceyhun Aşurov xəbərləri yüksək bal alır, vergi xəbərləri hər yazımda önə keçir; yeni mənbələr Oxu.az, Metbuat, Banker, Xəzər Xəbər, AFN.az (xarab XML düzəldilir), Turizmplus; gündəlik yazım 12 → 30 (15/icra, bir mənbəyə ən çox 5). Miqrasiya 0023 tələb olunur; Actions xərci dəyişmir.

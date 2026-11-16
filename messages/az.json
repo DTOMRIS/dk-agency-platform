@@ -7519,12 +7519,22 @@
     "successTitle": "Mesajınız çatdı",
     "successBody": "Tezliklə göstərdiyiniz nömrə ilə əlaqə saxlayacağıq.",
     "close": "Bağla",
-    "errorFields": "Ad, telefon nömrəsi və mesajı yoxlayın.",
+    "errorFields": "Ad, telefon nömrəsi, mesaj və doldurmusunuzsa e-poçt ünvanını yoxlayın.",
     "errorRate": "Qısa müddətdə çox mesaj göndərildi. Bir az sonra yenidən yoxlayın və ya WhatsApp-da yazın.",
     "errorGeneric": "Mesaj göndərilmədi. Yenidən yoxlayın və ya WhatsApp-da yazın.",
-    "privacy": "Məlumatlarınız yalnız sizə cavab vermək üçün istifadə olunur.",
+    "privacy": "Göndərməklə bu müraciətlə bağlı sizinlə əlaqə saxlamağımızı istəyirsiniz. KAZAN-dan gəldikdə son danışıq konteksti də göndərilir.",
     "whatsappAlt": "WhatsApp-da yazmağı üstün tutursunuz?",
-    "whatsappLink": "WhatsApp-da aç"
+    "whatsappLink": "WhatsApp-da aç",
+    "businessName": "Müəssisənin adı (istəyə görə)",
+    "businessType": "Biznes növü",
+    "businessTypes": {
+      "restoran": "Restoran",
+      "kafe": "Kafe",
+      "franchise": "Françayz",
+      "diger": "Digər / qeyd edilməyib"
+    },
+    "email": "E-poçt (istəyə görə)",
+    "optionalDetails": "Müəssisə və əlavə əlaqə məlumatı (istəyə görə)"
   },
   "whatsappFloat": {
     "label": "Bizə yazın",
@@ -8068,8 +8078,11 @@
       "newsletter": "bülletən",
       "listing_created": "yeni elan",
       "listing_lead": "elan müraciəti",
-      "other": "digər"
-    }
+      "other": "digər",
+      "site_message": "Sayt müraciəti"
+    },
+    "identifiedRecords": "Əlaqə məlumatlı qeydlər",
+    "clicksSeparate": "Anonim kliklər ayrıca göstərilir; bu, satış və ya müştəri sayı deyil."
   },
   "authShell": {
     "back": "Ana səhifə",
@@ -8336,5 +8349,12 @@
     "searchTitle": "NewsData.io (axtarış)",
     "outlets": "{count} müxtəlif nəşr",
     "search": "Axtarış"
+  },
+  "contactCapture": {
+    "title": "Nəticəni Doğan bəylə qiymətləndirək?",
+    "description": "Əlaqə istəyinizi və söhbətin qısa kontekstini göndərin. Söhbəti məlumat vermədən də davam etdirə bilərsiniz.",
+    "request": "Mənimlə əlaqə saxlayın",
+    "requestText": "Nəticəmi müzakirə etmək üçün mənimlə əlaqə saxlayın.",
+    "saved": "Əlaqə istəyiniz çatdı. Komanda bu məlumatlarla sizinlə əlaqə saxlaya bilər."
   }
 }

@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-11-16 — TASK-0559: klikdən könüllü əlaqə istəyinə
+
+**Səbəb:** Gündəlik «WhatsApp düyməsinə basıldı» bildirişi yazan insan sayı kimi anlaşılırdı; anonim klikdən telefon əldə olunmur. Cari main-də TASK-0558 formu artıq var: yeni forma/bot yaradılmadan həmin axın KAZAN səhifəsi və widget ilə birləşdirildi.
+
+**Davranış:** Söhbət əlaqə məlumatı vermədən davam edir; könüllü geri dönüşdə ad/telefon/mesaj, optional müəssisə/e-poçt və son iki mesaj mövcud `kazan_leads` sahələrinə yazılır. Telefon normallaşdırılır, ikiqat submit bloklanır, uğursuz çatdırılma uğur deyil. Telegram HTML genişlənməsi nəzərə alınaraq təhlükəsiz preview alır; tam qəbul olunan mətn DB/e-poçtda qalır. Klik qeydiyyatı qalır, fərdi klik bildirişləri yoxdur. Mövcud cron-da 20:00 Bakı gündəlik xülasə + həftəlik xülasə; anonim kliklər və əlaqə məlumatlı müraciət qeydləri ayrı, unikal insan/satış iddiası yoxdur. Köhnə click attribution da lead mənbə hesabatından çıxır. Schema/auth/layout dəyişməyib; miqrasiya/WhatsApp Cloud API yoxdur.
+
+**Yoxlama:** Contact capture pure test (telefon, iki mesaj həddi, klik təsnifatı, HTML escape büdcəsi) PASS. Hədəf Playwright 12/12 PASS (uğurlu göndəriş intercepted; canlı əlaqə göndərilmədi), 390px mobil və desktop screenshot baxışı. Yerli real API boş/səhv sahə 400, honeypot 200, DB/Telegram olmayanda 503; cron auth 401. Dəyişən fayllarda ESLint 0 error; tsc baseline ilə eyni (mövcud xətalar ayrıca). Tam smoke/validator və build nəticəsi TASK-0559 kartında qeyd olunur. Production çatdırılması və authentikasiya olunmuş DB ekranları burada sınanmadı: clone-da env/servis açarı yoxdur.
+
 ## 2026-11-08 — TASK-0558: sayt mesaj formu — WhatsApp-dan əvvəl, mesaj Telegram + mail + panelə
 
 **Why:** Doğan Telegram screenshot-u ilə: «hep yazıyorsun ama mesaj bana gelmiyor». Bildirişlər yalnız klik idi — WhatsApp ziyarətçinin telefonunda açılır, «Göndər»ə basmasa heç nə çatmır. Ref kodu (TASK-0529) və «hələ göndərilməyib» mətni (TASK-0540) bunu yalnız izah edirdi, həll etmirdi.

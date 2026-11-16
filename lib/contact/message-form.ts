@@ -15,6 +15,14 @@ export const MESSAGE_FORM_SKIP_ATTR = 'data-message-form-skip';
 export type MessageFormRequest = {
   /** The counting WhatsApp redirect (`/api/leads/whatsapp?text=…`) — offered as the alternative. */
   whatsappHref: string;
+  context?: ContactContext;
+};
+
+export type SavedContact = { id: string | null; name: string; phone: string; businessType: 'restoran' | 'kafe' | 'franchise' | 'diger'; intent: 'food_cost' | 'pnl' | 'aqta' | 'delivery' | 'general' };
+export type ContactContext = {
+  source: 'kazan_page' | 'kazan_widget';
+  messages: Array<{ role: 'user' | 'assistant'; content: string }>;
+  onSaved?: (contact: SavedContact) => void;
 };
 
 /** True for our own WhatsApp redirect (not a listing owner's wa.me link). */
@@ -35,9 +43,9 @@ export function prefillFromWhatsappHref(href: string): string {
  * Opens the message form for a WhatsApp contact; where the form is not mounted (dashboard / member panel)
  * the event is not handled and WhatsApp opens as before.
  */
-export function openContact(whatsappHref: string): void {
+export function openContact(whatsappHref: string, context?: ContactContext): void {
   const event = new CustomEvent<MessageFormRequest>(MESSAGE_FORM_EVENT, {
-    detail: { whatsappHref },
+    detail: { whatsappHref, context },
     cancelable: true,
   });
   const handled = !window.dispatchEvent(event);

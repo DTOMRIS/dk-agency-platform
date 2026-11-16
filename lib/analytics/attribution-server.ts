@@ -8,6 +8,7 @@ import type { NextRequest } from 'next/server';
 import { db, dbAvailable } from '@/lib/db';
 import { webConversionEvents } from '@/lib/db/schema';
 import { ATTR_COOKIE, parseAttribution, type Attribution } from '@/lib/analytics/attribution';
+import { isAnonymousClick } from '@/lib/contact/capture';
 
 export type LeadType =
   | 'register'
@@ -44,7 +45,7 @@ export async function recordLeadSource(
       await db.insert(webConversionEvents).values({
         sessionId: a?.id ?? 'no-cookie',
         pagePath: (pagePath || a?.l || '/').slice(0, 500),
-        eventName: 'lead',
+        eventName: isAnonymousClick(type) ? 'contact_click' : 'lead',
         source: a?.s ?? 'unknown',
         campaign: a?.c ?? null,
         metadata: { type, medium: a?.m ?? null, referrer: a?.r ?? null, landing: a?.l ?? null, touchAt: a?.t ?? null },

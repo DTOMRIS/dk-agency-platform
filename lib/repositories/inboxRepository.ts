@@ -303,7 +303,8 @@ export async function getLeadSourceSummary(periodDays: InboxPeriod): Promise<Lea
         n: sql<number>`count(*)::int`,
       })
       .from(webConversionEvents)
-      .where(and(eq(webConversionEvents.eventName, 'lead'), gte(webConversionEvents.createdAt, from)))
+      .where(and(eq(webConversionEvents.eventName, 'lead'), gte(webConversionEvents.createdAt, from),
+        sql`coalesce(${webConversionEvents.metadata}->>'type', '') not in ('whatsapp_click', 'channel_click')`))
       .groupBy(webConversionEvents.source, sql`2`);
     const map = new Map<string, LeadSourceRow>();
     for (const row of rows) {

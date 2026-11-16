@@ -7519,12 +7519,22 @@
     "successTitle": "Mesajınız ulaştı",
     "successBody": "Yakında verdiğiniz numaradan sizinle iletişime geçeceğiz.",
     "close": "Kapat",
-    "errorFields": "Adı, telefon numarasını ve mesajı kontrol edin.",
+    "errorFields": "Adı, telefon numarasını, mesajı ve doldurduysanız e-posta adresini kontrol edin.",
     "errorRate": "Kısa sürede çok fazla mesaj gönderildi. Biraz sonra tekrar deneyin veya WhatsApp’tan yazın.",
     "errorGeneric": "Mesaj gönderilemedi. Tekrar deneyin veya WhatsApp’tan yazın.",
-    "privacy": "Bilgileriniz yalnızca size yanıt vermek için kullanılır.",
+    "privacy": "Göndererek bu başvuruyla ilgili sizinle iletişime geçmemizi istiyorsunuz. KAZAN’dan geldiğinizde son konuşma bağlamı da gönderilir.",
     "whatsappAlt": "WhatsApp’tan yazmayı mı tercih edersiniz?",
-    "whatsappLink": "WhatsApp’ı aç"
+    "whatsappLink": "WhatsApp’ı aç",
+    "businessName": "İşletme adı (isteğe bağlı)",
+    "businessType": "İşletme türü",
+    "businessTypes": {
+      "restoran": "Restoran",
+      "kafe": "Kafe",
+      "franchise": "Franchise",
+      "diger": "Diğer / belirtilmedi"
+    },
+    "email": "E-posta (isteğe bağlı)",
+    "optionalDetails": "İşletme ve ek iletişim bilgisi (isteğe bağlı)"
   },
   "whatsappFloat": {
     "label": "Bize yazın",
@@ -8068,8 +8078,11 @@
       "newsletter": "bülten",
       "listing_created": "yeni ilan",
       "listing_lead": "ilan başvurusu",
-      "other": "diğer"
-    }
+      "other": "diğer",
+      "site_message": "Site başvurusu"
+    },
+    "identifiedRecords": "İletişim bilgisi olan kayıtlar",
+    "clicksSeparate": "Anonim tıklamalar ayrı gösterilir; bu, satış veya müşteri sayısı değildir."
   },
   "authShell": {
     "back": "Ana sayfa",
@@ -8336,5 +8349,12 @@
     "searchTitle": "NewsData.io (arama)",
     "outlets": "{count} farklı yayın",
     "search": "Arama"
+  },
+  "contactCapture": {
+    "title": "Sonucu Doğan Bey ile değerlendirelim mi?",
+    "description": "İletişim talebinizi ve konuşmanın kısa bağlamını gönderin. Bilgi vermeden sohbete devam edebilirsiniz.",
+    "request": "Benimle iletişime geçin",
+    "requestText": "Sonucumu görüşmek için benimle iletişime geçin.",
+    "saved": "İletişim talebiniz ulaştı. Ekip bu bilgilerle size geri dönebilir."
   }
 }

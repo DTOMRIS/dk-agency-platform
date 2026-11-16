@@ -5,6 +5,8 @@ import { leadButtons, notifyOwner } from '@/lib/telegram/notify-owner';
 import { attributionLine } from '@/lib/analytics/attribution';
 import { readAttribution, recordLeadSource } from '@/lib/analytics/attribution-server';
 import { checkRateLimit, getClientIp, RATE_LIMITS } from '@/lib/utils/rate-limit';
+import { captureContext, contactNotificationPreview, normalizeContactPhone } from '@/lib/contact/capture';
+import { detectKazanIntent, normalizeBusinessType } from '@/lib/repositories/kazanLeadRepository';
 
 /**
  * Site message form (TASK-0558). public-ok: anonymous visitors write to the owner; rate-limited + honeypot.
@@ -49,18 +51,24 @@ export async function POST(req: NextRequest) {
   }
 
   const name = text(body.name, 100);
-  const phone = text(body.phone, 30);
+  const phone = normalizeContactPhone(text(body.phone, 30));
   const message = text(body.message, MESSAGE_MAX);
   const page = text(body.page, 300) || null;
-  const phoneDigits = phone.replace(/\D/g, '');
+  const email = text(body.email, 255);
+  const businessName = text(body.businessName, 100);
+  const businessType = normalizeBusinessType(text(body.businessType, 30));
+  const source = body.source === 'kazan_page' || body.source === 'kazan_widget' ? body.source : 'site_form';
+  const context = captureContext(body.conversationContext);
+  const intent = detectKazanIntent([...context.map(x => x.content), message].join(' '));
 
   const fields: FieldError[] = [];
   if (name.length < 2) fields.push('name');
-  if (phoneDigits.length < 7 || phoneDigits.length > 15) fields.push('phone');
+  if (!phone) fields.push('phone');
   if (message.length < 2) fields.push('message');
   if (fields.length > 0) {
     return NextResponse.json({ success: false, error: 'invalid_fields', fields }, { status: 400 });
   }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({ success: false, error: 'invalid_fields', fields: ['email'] }, { status: 400 });
 
   // Counted only for well-formed messages: a typo does not use up the visitor's quota.
   if (!checkRateLimit(`lead-message:${getClientIp(req)}`, RATE_LIMITS.leadMessage).success) {
@@ -74,12 +82,14 @@ export async function POST(req: NextRequest) {
         .insert(kazanLeads)
         .values({
           name,
-          phone,
-          businessType: 'diger',
-          intent: 'general',
-          conversationContext: [{ role: 'user', content: message }],
+          phone: phone!,
+          email: email || null,
+          businessType,
+          intent,
+          conversationContext: [...context, { role: 'user', content: message }].slice(-3),
           notes: [
             { at: new Date().toISOString(), text: `Sayt mesaj formu${page ? ` · ${page}` : ''}` },
+            { at: new Date().toISOString(), text: `Əlaqə istəyi · ${source}${businessName ? ` · ${businessName}` : ''}` },
           ],
         })
         .returning({ id: kazanLeads.id });
@@ -92,15 +102,20 @@ export async function POST(req: NextRequest) {
   const leadAttr = readAttribution(req);
   const telegramSent = await notifyOwner({
     title: '✉️ Yeni mesaj · sayt formu',
-    lines: [
+    lines: contactNotificationPreview([
       `Ad: ${name}`,
       `Telefon: ${phone}`,
+      leadId ? null : '⚠️ Bazaya yazılmadı — mesaj yalnız buradadır.',
+      businessName ? `Müəssisə: ${businessName}` : null,
+      `Biznes: ${businessType} · mövzu: ${intent}`,
+      `Forma: ${source} · geri dönüş istənilir`,
+      email ? `E-poçt: ${email}` : null,
       page ? `Səhifə: ${page}` : null,
       'Mesaj:',
       ...chunks(message, TELEGRAM_CHUNK),
+      ...context.flatMap(x => chunks(`${x.role === 'user' ? 'Ziyarətçi' : 'KAZAN'}: ${x.content}`, TELEGRAM_CHUNK)),
       attributionLine(leadAttr),
-      leadId ? null : '⚠️ Bazaya yazılmadı — mesaj yalnız buradadır.',
-    ],
+    ]),
     buttons: leadButtons(phone, '/dashboard/kazan-leads'),
   });
 
@@ -115,7 +130,7 @@ export async function POST(req: NextRequest) {
       const adminEmail = process.env.ADMIN_EMAIL || 'info@dkagency.com.tr';
       await sendEmail(
         adminEmail,
-        emailTemplates.siteMessageAdmin(name, phone, message, page),
+        emailTemplates.siteMessageAdmin(name, phone!, `${businessName ? `${businessName}\n` : ''}${message}\n${context.map(x => `${x.role}: ${x.content}`).join('\n')}`, page),
         'site_message'
       );
     } catch {
@@ -123,5 +138,5 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true, contact: { id: leadId, name, phone, businessType, intent } });
 }
