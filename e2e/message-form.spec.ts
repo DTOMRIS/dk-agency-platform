@@ -51,6 +51,11 @@ test.describe('@smoke Sayt mesaj formu', () => {
     await page.keyboard.press('Escape');
     await expect(page.getByTestId('kazan-contact-request')).toHaveCount(0);
     await expect(chat).toBeEnabled();
+    await page.waitForTimeout(3_100); // Existing chat throttle; the next question must complete.
+    await chat.fill('Marjamı necə yaxşılaşdırım?');
+    await chat.locator('..').getByRole('button', { name: /Göndər/ }).click();
+    await expect(page.getByText('Əvvəlcə məhsulun maya dəyərini hesablayaq.', { exact: true })).toHaveCount(2);
+    await expect(page.getByTestId('kazan-contact-request')).toHaveCount(0);
   });
 
   test('widget: üçüncü sual əlaqə formu ilə bloklanmır', async ({ page }) => {

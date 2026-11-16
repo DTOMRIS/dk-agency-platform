@@ -359,7 +359,7 @@ export default function FloatingKazanWidget() {
             </div>
 
             <div className="border-t border-slate-200 bg-white px-4 py-3">
-              {!loading && messages.at(-1)?.role === 'assistant' && messages.some(m => m.role === 'user') && <div className="mb-3"><KazanContactAction messages={messages} source="kazan_widget" contactSaved={!!lead} onSaved={contact => setLead({ ...contact, id: contact.id ?? '' })} /></div>}
+              {messages.some(m => m.role === 'user') && <div hidden={loading || messages.at(-1)?.role !== 'assistant'} className="mb-3"><KazanContactAction messages={messages} source="kazan_widget" contactSaved={!!lead} onSaved={contact => setLead({ ...contact, id: contact.id ?? '' })} /></div>}
               <div className="mb-3 grid grid-cols-2 gap-2">
                 <Link
                   href="/elaqe"
