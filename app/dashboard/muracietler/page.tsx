@@ -132,8 +132,9 @@ export default async function DashboardInboxPage({
             aria-current={filters.source === 'all' ? 'true' : undefined}
             className={`${cardCls} col-span-2 block p-4 transition-shadow hover:border-[#0F172A] sm:p-5 lg:col-span-1 ${filters.source === 'all' ? 'ring-2 ring-[#0F172A]' : ''}`}
           >
-            <p className="flex min-h-[36px] items-start text-[13px] font-medium text-[#5B6474]">{t('all')}</p>
-            <p className="mt-2 text-[30px] font-black leading-none tracking-[-0.03em] text-[#0F172A] tabular-nums">{searched.length}</p>
+            <p className="flex min-h-[36px] items-start text-[13px] font-medium text-[#5B6474]">{t('identifiedRecords')}</p>
+            <p className="mt-2 text-[30px] font-black leading-none tracking-[-0.03em] text-[#0F172A] tabular-nums">{searched.filter(x => x.source !== 'contact').length}</p>
+            <p className="mt-2 text-xs text-slate-700">{t('clicksSeparate')}</p>
           </Link>
           {INBOX_SOURCES.map((source) => (
             <Link

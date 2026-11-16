@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import {
-  Bot,
   CalendarCheck,
   ChefHat,
   ExternalLink,
@@ -16,6 +15,9 @@ import Link from 'next/link';
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
+import KazanContactAction from "@/components/kazan-ai/KazanContactAction";
+import { openContact } from "@/lib/contact/message-form";
+import { whatsappHref as siteWhatsappHref } from "@/lib/contact-channels";
 import { buildWhatsappLink } from '@/lib/utils/whatsapp';
 
 // TASK-0531: the markdown renderer loads only when a reply is drawn (not on every page view).
@@ -37,13 +39,6 @@ type KazanLead = {
   phone: string;
   businessType: BusinessType;
   intent: LeadIntent;
-};
-
-type LeadFormState = {
-  name: string;
-  phone: string;
-  email: string;
-  businessType: BusinessType;
 };
 
 function detectIntent(text: string): LeadIntent {
@@ -86,28 +81,11 @@ export default function FloatingKazanWidget() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [leadSaving, setLeadSaving] = useState(false);
   const [lead, setLead] = useState<KazanLead | null>(null);
-  const [leadGateOpen, setLeadGateOpen] = useState(false);
-  const [leadError, setLeadError] = useState('');
-  const [pendingQuestion, setPendingQuestion] = useState('');
-  const [leadForm, setLeadForm] = useState<LeadFormState>({
-    name: '',
-    phone: '',
-    email: '',
-    businessType: 'restoran',
-  });
   const messagesRef = useRef<HTMLDivElement>(null);
   const contactContextAddedRef = useRef(false);
 
   const samplePrompts = [t('prompt1'), t('prompt2'), t('prompt3'), t('prompt4')];
-  const businessTypeLabels: Record<BusinessType, string> = {
-    restoran: t('businessType.restoran'),
-    kafe: t('businessType.kafe'),
-    franchise: t('businessType.franchise'),
-    diger: t('businessType.diger'),
-  };
-
   function toolkitAction(intent: LeadIntent) {
     if (intent === 'pnl') return { label: t('toolAction.pnl'), href: '/toolkit/pnl' };
     if (intent === 'aqta') return { label: t('toolAction.aqta'), href: '/toolkit/aqta-checklist' };
@@ -118,14 +96,14 @@ export default function FloatingKazanWidget() {
 
   const activeIntent =
     lead?.intent ||
-    detectIntent([pendingQuestion, ...messages.map((message) => message.content)].join(' '));
+    detectIntent(messages.map((message) => message.content).join(' '));
   const toolAction = toolkitAction(activeIntent);
   const whatsappHref = buildWhatsappLink(
     {
-      name: lead?.name || leadForm.name,
-      businessType: lead?.businessType || leadForm.businessType,
+      name: lead?.name,
+      businessType: lead?.businessType,
     },
-    lastUserQuestions(messages, pendingQuestion)
+    lastUserQuestions(messages)
   );
 
   // TASK-0536: the proactive question bubble (KazanNudge) asks one question; the visitor's answer arrives here
@@ -234,67 +212,9 @@ export default function FloatingKazanWidget() {
 
   async function sendMessage(question: string) {
     const trimmed = question.trim();
-    if (!trimmed || loading || leadSaving) return;
-
-    const userMessageCount = messages.filter((message) => message.role === 'user').length;
-    if (!lead && userMessageCount >= 2) {
-      setPendingQuestion(trimmed);
-      setInput('');
-      setLeadGateOpen(true);
-      setLeadError(t('leadGateRequired'));
-      scrollToBottom();
-      return;
-    }
+    if (!trimmed || loading) return;
 
     await callAi(trimmed, messages);
-  }
-
-  async function submitLead(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const name = leadForm.name.trim();
-    const phone = leadForm.phone.trim();
-
-    if (!name || !phone) {
-      setLeadError(t('leadNamePhoneRequired'));
-      return;
-    }
-
-    setLeadSaving(true);
-    setLeadError('');
-    const questionForIntent =
-      pendingQuestion ||
-      messages.filter((message) => message.role === 'user').at(-1)?.content ||
-      '';
-
-    try {
-      // fake-scan-ok: CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
-      const response = await fetch('/api/kazan-ai/leads', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          ...leadForm,
-          conversationContext: recentMessages(messages, pendingQuestion),
-          intent: detectIntent(questionForIntent),
-        }),
-      });
-      const payload = (await response.json()) as { data?: KazanLead; error?: string };
-      if (!response.ok || !payload.data) {
-        throw new Error(payload.error || t('leadSaveFailed'));
-      }
-
-      setLead(payload.data);
-      setLeadGateOpen(false);
-      const question = pendingQuestion;
-      setPendingQuestion('');
-      if (question) {
-        await callAi(question, messages);
-      }
-    } catch {
-      setLeadError(t('leadSaveError'));
-    } finally {
-      setLeadSaving(false);
-      scrollToBottom();
-    }
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -305,9 +225,7 @@ export default function FloatingKazanWidget() {
   function requireLeadForAction(event: MouseEvent<HTMLAnchorElement>) {
     if (lead) return false;
     event.preventDefault();
-    setLeadGateOpen(true);
-    setLeadError(t('leadActionRequired'));
-    scrollToBottom();
+    openContact(siteWhatsappHref(lastUserQuestions(messages)[0] || t('welcome')), { source: 'kazan_widget', messages, onSaved: contact => setLead({ ...contact, id: contact.id ?? '' }) });
     return true;
   }
 
@@ -430,78 +348,6 @@ export default function FloatingKazanWidget() {
                 </div>
               ) : null}
 
-              {leadGateOpen ? (
-                <form
-                  onSubmit={submitLead}
-                  className="rounded-2xl border border-[#E4DCCD] bg-white p-4"
-                >
-                  <div className="mb-3 flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#FBEFF1] text-[#D63B54]">
-                      <Bot size={20} />
-                    </div>
-                    <div>
-                      <p className="text-sm font-black text-[#0F172A]">
-                        {t('leadFormTitle')}
-                      </p>
-                      <p className="mt-1 text-xs leading-5 text-slate-500">{t('leadFormDesc')}</p>
-                    </div>
-                  </div>
-                  <div className="grid gap-2">
-                    <input
-                      value={leadForm.name}
-                      onChange={(event) =>
-                        setLeadForm((current) => ({ ...current, name: event.target.value }))
-                      }
-                      placeholder={t('namePlaceholder')}
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[#D63B54]"
-                    />
-                    <input
-                      value={leadForm.phone}
-                      onChange={(event) =>
-                        setLeadForm((current) => ({ ...current, phone: event.target.value }))
-                      }
-                      placeholder={t('phonePlaceholder')}
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[#D63B54]"
-                    />
-                    <input
-                      value={leadForm.email}
-                      onChange={(event) =>
-                        setLeadForm((current) => ({ ...current, email: event.target.value }))
-                      }
-                      placeholder={t('emailPlaceholder')}
-                      className="min-h-11 rounded-lg border border-slate-200 px-3 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-[#D63B54]"
-                    />
-                    <select
-                      value={leadForm.businessType}
-                      onChange={(event) =>
-                        setLeadForm((current) => ({
-                          ...current,
-                          businessType: event.target.value as BusinessType,
-                        }))
-                      }
-                      className="min-h-11 rounded-lg border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#D63B54]"
-                    >
-                      {Object.entries(businessTypeLabels).map(([value, label]) => (
-                        <option key={value} value={value}>
-                          {label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  {leadError ? (
-                    <p className="mt-2 text-xs font-semibold text-[var(--dk-red)]">{leadError}</p>
-                  ) : null}
-                  <button
-                    type="submit"
-                    disabled={leadSaving}
-                    className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-dk-red-strong px-4 text-sm font-black text-white transition hover:bg-dk-red-deep disabled:bg-slate-300"
-                  >
-                    {leadSaving ? <Loader2 size={16} className="mr-2 animate-spin" /> : null}
-                    {t('continueBtn')}
-                  </button>
-                </form>
-              ) : null}
-
               {loading ? (
                 <div className="flex justify-start">
                   <div className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
@@ -513,6 +359,7 @@ export default function FloatingKazanWidget() {
             </div>
 
             <div className="border-t border-slate-200 bg-white px-4 py-3">
+              {messages.some(m => m.role === 'user') && <div hidden={loading || messages.at(-1)?.role !== 'assistant'} className="mb-3"><KazanContactAction messages={messages} source="kazan_widget" contactSaved={!!lead} onSaved={contact => setLead({ ...contact, id: contact.id ?? '' })} /></div>}
               <div className="mb-3 grid grid-cols-2 gap-2">
                 <Link
                   href="/elaqe"
@@ -539,7 +386,7 @@ export default function FloatingKazanWidget() {
                 />
                 <button
                   type="submit"
-                  disabled={loading || leadSaving || !input.trim()}
+                  disabled={loading || !input.trim()}
                   aria-label={t('sendMessage')}
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-dk-red-strong text-white transition hover:bg-dk-red-deep disabled:cursor-not-allowed disabled:bg-slate-300"
                 >

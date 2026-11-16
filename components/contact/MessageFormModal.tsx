@@ -14,12 +14,16 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { whatsappHref as contactHref } from '@/lib/contact-channels';
+import { captureContext } from '@/lib/contact/capture';
 import {
   isSiteWhatsappHref,
   MESSAGE_FORM_EVENT,
   MESSAGE_FORM_SKIP_ATTR,
   prefillFromWhatsappHref,
   type MessageFormRequest,
+  type ContactContext,
+  type SavedContact,
 } from '@/lib/contact/message-form';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
@@ -36,14 +40,22 @@ export default function MessageFormModal() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [businessType, setBusinessType] = useState<SavedContact['businessType']>('diger');
+  const contextRef = useRef<ContactContext | undefined>(undefined);
+  const sendingRef = useRef(false);
   const [website, setWebsite] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [errorKey, setErrorKey] = useState<ErrorKey | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
-  const show = useCallback((href: string) => {
+  const show = useCallback((href: string, context?: ContactContext) => {
+    if (sendingRef.current) return;
     setWhatsappHref(href);
-    setMessage(prefillFromWhatsappHref(href));
+    contextRef.current = context;
+    setMessage(context?.messages.filter(x => x.role === 'user').at(-1)?.content || prefillFromWhatsappHref(href));
     setStatus('idle');
     setErrorKey(null);
     setOpen(true);
@@ -54,7 +66,7 @@ export default function MessageFormModal() {
       const detail = (event as CustomEvent<MessageFormRequest>).detail;
       if (!detail || !isSiteWhatsappHref(detail.whatsappHref)) return;
       event.preventDefault();
-      show(detail.whatsappHref);
+      show(detail.whatsappHref, detail.context);
     };
     const onClick = (event: MouseEvent) => {
       if (
@@ -83,26 +95,39 @@ export default function MessageFormModal() {
 
   useEffect(() => {
     if (!open) return;
+    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     nameRef.current?.focus();
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape' && !sendingRef.current) setOpen(false);
+      if (event.key === 'Tab') {
+        const nodes = [...(dialogRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled):not([tabindex="-1"]), textarea:not(:disabled), select:not(:disabled), summary') ?? [])].filter(n => n.getClientRects().length);
+        const first = nodes[0], last = nodes.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => { window.removeEventListener('keydown', onKey); previous?.focus(); };
   }, [open]);
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (sendingRef.current) return;
+    sendingRef.current = true;
     setStatus('sending');
     setErrorKey(null);
     try {
       const res = await fetch('/api/leads/message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, message, website, page: pathname }),
+        body: JSON.stringify({ name, phone, message, email, businessName, businessType, website, page: pathname,
+          source: contextRef.current?.source ?? 'site_form', conversationContext: captureContext(contextRef.current?.messages) }),
       });
-      if (res.ok) {
+      const payload = await res.json() as { success?: boolean; contact?: SavedContact };
+      if (res.ok && payload.success) {
         setStatus('sent');
+        setWhatsappHref(contactHref(message));
+        if (payload.contact) contextRef.current?.onSaved?.(payload.contact);
         setMessage('');
         return;
       }
@@ -111,7 +136,7 @@ export default function MessageFormModal() {
       );
     } catch {
       setErrorKey('errorGeneric');
-    }
+    } finally { sendingRef.current = false; }
     setStatus('error');
   };
 
@@ -120,10 +145,11 @@ export default function MessageFormModal() {
   return (
     <div
       className="fixed inset-0 z-[90] flex items-end justify-center bg-slate-900/50 p-0 sm:items-center sm:p-4"
-      onClick={() => setOpen(false)}
+      onClick={() => { if (!sendingRef.current) setOpen(false); }}
     >
       <div
         role="dialog"
+        ref={dialogRef}
         aria-modal="true"
         aria-labelledby="dk-message-form-title"
         data-testid="message-form"
@@ -132,7 +158,8 @@ export default function MessageFormModal() {
       >
         <button
           type="button"
-          onClick={() => setOpen(false)}
+          onClick={() => { if (!sendingRef.current) setOpen(false); }}
+          disabled={status === 'sending'}
           aria-label={t('close')}
           className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full text-slate-700 hover:bg-slate-100 hover:text-slate-900"
         >
@@ -166,6 +193,8 @@ export default function MessageFormModal() {
               {t('successTitle')}
             </h2>
             <p className="mt-2 text-[15px] text-slate-700">{t('successBody')}</p>
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" {...{ [MESSAGE_FORM_SKIP_ATTR]: '' }}
+              className="mt-4 inline-flex min-h-11 items-center justify-center rounded-xl border border-emerald-700 px-5 font-semibold text-emerald-800">{t('whatsappLink')}</a>
             <button
               type="button"
               onClick={() => setOpen(false)}
@@ -181,7 +210,7 @@ export default function MessageFormModal() {
             </h2>
             <p className="mt-1 text-sm text-slate-700">{t('subtitle')}</p>
 
-            <div className="mt-5 space-y-4">
+            <fieldset disabled={status === 'sending'} className="mt-5 space-y-4">
               <label className="block text-sm font-semibold text-slate-900">
                 {t('name')}
                 <input
@@ -223,7 +252,23 @@ export default function MessageFormModal() {
                   className={`${inputClass} resize-y`}
                 />
               </label>
-            </div>
+              <details className="rounded-xl border border-slate-200 p-3"><summary className="min-h-8 cursor-pointer text-sm font-semibold text-slate-800">{t('optionalDetails')}</summary><div className="mt-3 space-y-3">
+              <label className="block text-sm font-semibold text-slate-900">
+                {t('businessName')}
+                <input name="businessName" autoComplete="organization" maxLength={100} value={businessName} onChange={e => setBusinessName(e.target.value)} className={inputClass} />
+              </label>
+              <label className="block text-sm font-semibold text-slate-900">
+                {t('businessType')}
+                <select name="businessType" value={businessType} onChange={e => setBusinessType(e.target.value as SavedContact['businessType'])} className={inputClass}>
+                  {(['restoran', 'kafe', 'franchise', 'diger'] as const).map(v => <option key={v} value={v}>{t(`businessTypes.${v}`)}</option>)}
+                </select>
+              </label>
+              <label className="block text-sm font-semibold text-slate-900">
+                {t('email')}
+                <input name="email" type="email" autoComplete="email" maxLength={255} value={email} onChange={e => setEmail(e.target.value)} className={inputClass} />
+              </label>
+              </div></details>
+            </fieldset>
             {/* Honeypot — hidden from people, bots fill it. Outside space-y so it adds no gap. */}
             <input
               type="text"

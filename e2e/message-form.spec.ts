@@ -24,6 +24,59 @@ test.describe('@smoke Sayt mesaj formu', () => {
     await page.addInitScript(() => window.localStorage.setItem('dk_user_language_set', 'e2e'));
   });
 
+  test('mobil KAZAN: könüllü əlaqə istəyi kontekstlə göndərilir, söhbət açıq qalır', async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.route('**/api/kazan-ai', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ message: 'Əvvəlcə məhsulun maya dəyərini hesablayaq.' }) }));
+    let sent: Record<string, unknown> | null = null;
+    await page.route('**/api/leads/message', async route => {
+      sent = route.request().postDataJSON();
+      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, contact: { id: 'test-only', name: 'Elvin', phone: '+994501234567', businessType: 'restoran', intent: 'food_cost' } }) });
+    });
+    await page.goto('/kazan-ai');
+    const chat = page.locator('textarea').first();
+    await chat.fill('Restoranımda food cost çox yüksəkdir');
+    await chat.locator('..').getByRole('button', { name: /Göndər/ }).click();
+    await expect(page.getByText('Əvvəlcə məhsulun maya dəyərini hesablayaq.', { exact: true })).toBeVisible();
+    await expect(chat).toBeEnabled();
+    await page.getByTestId('kazan-contact-request').click();
+    const form = page.getByTestId('message-form');
+    await expect(form.locator('textarea[name="message"]')).toHaveValue('Restoranımda food cost çox yüksəkdir');
+    await page.screenshot({ path: '/private/tmp/dk-0559-mobile.png', fullPage: true });
+    await form.locator('input[name="name"]').fill('Elvin');
+    await form.locator('input[name="phone"]').fill('050 123 45 67');
+    await form.getByRole('button', { name: 'Göndər', exact: true }).click();
+    await expect(page.getByTestId('message-form-sent')).toBeVisible();
+    expect(sent).toMatchObject({ source: 'kazan_page', conversationContext: [{ role: 'user', content: 'Restoranımda food cost çox yüksəkdir' }, { role: 'assistant', content: 'Əvvəlcə məhsulun maya dəyərini hesablayaq.' }] });
+    await page.keyboard.press('Escape');
+    await expect(page.getByTestId('kazan-contact-request')).toHaveCount(0);
+    await expect(chat).toBeEnabled();
+    await page.waitForTimeout(3_100); // Existing chat throttle; the next question must complete.
+    await chat.fill('Marjamı necə yaxşılaşdırım?');
+    await chat.locator('..').getByRole('button', { name: /Göndər/ }).click();
+    await expect(page.getByText('Əvvəlcə məhsulun maya dəyərini hesablayaq.', { exact: true })).toHaveCount(2);
+    await expect(page.getByTestId('kazan-contact-request')).toHaveCount(0);
+  });
+
+  test('widget: üçüncü sual əlaqə formu ilə bloklanmır', async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.route('**/api/kazan-ai', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ message: 'Hesablamanı birlikdə davam etdirək.' }) }));
+    await page.goto('/');
+    await page.getByTestId('kazan-launcher').click();
+    const chat = page.locator('textarea').first();
+    let answers = 0;
+    for (const q of ['Menyu maya dəyəri', 'Satış qiyməti necə olsun?', 'Brüt marja nədir?']) {
+      await chat.fill(q);
+      await chat.locator('..').getByRole('button').click();
+      await expect(chat).toHaveValue('');
+      await expect(page.getByText('Hesablamanı birlikdə davam etdirək.', { exact: true })).toHaveCount(++answers);
+    }
+    await expect(page.getByTestId('message-form')).toHaveCount(0);
+    await page.getByTestId('kazan-contact-request').click();
+    await expect(page.getByTestId('message-form')).toBeVisible();
+    await page.screenshot({ path: '/private/tmp/dk-0559-desktop.png', fullPage: true });
+  });
+
   test('API: boş / səhv sahələr 400, honeypot səssiz 200', async ({ request }) => {
     const empty = await request.post('/api/leads/message', { data: {} });
     expect(empty.status()).toBe(400);

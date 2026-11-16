@@ -26,7 +26,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, error: 'Database unavailable' }, { status: 503 });
   }
 
-  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const daily = request.nextUrl.searchParams.get('period') === 'daily';
+  const days = daily ? 1 : 7;
+  const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
   const [contactBySource, franchiseBySource, kazan, members, news, newListings] = await Promise.all([
     db
@@ -53,15 +55,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     ...franchiseBySource.map((row) => `• ${row.source}: ${row.value}`),
     `• kazan_ai: ${Number(kazan[0]?.value ?? 0)}`,
   ];
+  const clicks = contactBySource.reduce((sum, row) => sum + Number(row.value), 0);
   const leadTotal =
-    contactBySource.reduce((sum, row) => sum + Number(row.value), 0) +
     franchiseBySource.reduce((sum, row) => sum + Number(row.value), 0) +
     Number(kazan[0]?.value ?? 0);
 
   const sent = await notifyOwner({
-    title: '📊 Həftəlik xülasə (son 7 gün)',
+    title: daily ? '📊 Gündəlik müraciət xülasəsi (son 24 saat)' : '📊 Həftəlik xülasə (son 7 gün)',
     lines: [
-      `Lead/klik cəmi: ${leadTotal}`,
+      `Əlaqə məlumatlı müraciət qeydləri: ${leadTotal}`,
+      `Anonim düymə klikləri: ${clicks} (insan və ya mesaj sayı deyil)`,
       ...sourceLines,
       `Yeni üzv: ${Number(members[0]?.value ?? 0)}`,
       `Dərc olunan xəbər: ${Number(news[0]?.value ?? 0)}`,
