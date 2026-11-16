@@ -1,5 +1,13 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-11-16 — TASK-0560: satış və geri dönüş izləməsi
+
+Mövcud /dashboard/kazan-leads genişləndirildi, ikinci CRM/səhifə yaradılmadı. Yeni məsul/plan/təklif/tahsilat/vaxt/səbəb yaddaşı ayrı typed cədvəldədir; core qorunan schema/config/layout dəyişməyib. 0024 yalnız əlavə cədvəldir; Production migration/merge/deploy owner tərəfindən edilir. Standart görüş və 3 xidmət çərçivəsi, redaktə olunan WhatsApp layihələri 4 dildə; qiymət və qənaət uydurulmur. WhatsApp sadəcə müştərinin nömrəsinə açılır, göndəriş deyil.
+
+Öz tapıntılar: əvvəlki admin WhatsApp `buildWhatsappLink` ilə DK nömrəsinə yönlənirdi — `customerWhatsappHref` ilə müştəri telefonuna düzəldi. Köhnə PATCH private not/status-u admin qorumasız dəyişir və tam lead qaytarırdı — yalnız siqnallar açıq qaldı, private yazı yeni versiyalı admin API-dadır. Mövcud getKazanLeads son100 limiti köhnə açıq işi gizlədə bilərdi — bütün bazada SQL filtrlər/aggregate və 25-lik səhifələmə quruldu. Mənbələr: lib/utils/whatsapp.ts, app/api/kazan-ai/leads/route.ts, lib/repositories/kazanLeadRepository.ts.
+
+Yoxlama: pure field/summary/day/WhatsApp PASS; real PostgreSQL WASM: idempotent migration, atomik status+not, köhnə versiya, rollback, qismən tahsilat, bütün qeydlərin cəmi və literal wildcard axtarışı PASS. Hədəf Playwright2/2 PASS: anon401/member403/admin400, mobil390px, real müştəri URL-i, saxla müqaviləsi və uğursuz503 UI. Full smoke, CI Node22 build və validator yekunu TASK-0560 kartındadır. Production DB və real mesaj göndərişi sınanmayıb.
+
 ## 2026-11-16 — TASK-0559: klikdən könüllü əlaqə istəyinə
 
 **Səbəb:** Gündəlik «WhatsApp düyməsinə basıldı» bildirişi yazan insan sayı kimi anlaşılırdı; anonim klikdən telefon əldə olunmur. Cari main-də TASK-0558 formu artıq var: yeni forma/bot yaradılmadan həmin axın KAZAN səhifəsi və widget ilə birləşdirildi.

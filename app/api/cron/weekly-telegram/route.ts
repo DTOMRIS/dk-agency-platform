@@ -16,6 +16,8 @@ import {
   users,
 } from '@/lib/db/schema';
 import { notifyOwner } from '@/lib/telegram/notify-owner';
+import { salesSummaryQuery } from '@/lib/sales/repository';
+import { bakuDay } from '@/lib/sales/followup';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const cronSecret = process.env.CRON_SECRET;
@@ -60,17 +62,27 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     franchiseBySource.reduce((sum, row) => sum + Number(row.value), 0) +
     Number(kazan[0]?.value ?? 0);
 
+  let followupLine = 'Satış izləməsi oxunmadı — paneldə yaddaş bağlantısını yoxlayın.';
+  try {
+    const result = await db.execute(salesSummaryQuery(bakuDay()));
+    const row = result.rows[0];
+    followupLine = `Hazırkı izləmə vəziyyəti (dövr cəmi deyil): gecikmiş ${Number(row?.overdue ?? 0)}, plansız ${Number(row?.unplanned ?? 0)}`;
+  } catch {
+    // A pending sales migration must not suppress the existing business summary.
+  }
+
   const sent = await notifyOwner({
     title: daily ? '📊 Gündəlik müraciət xülasəsi (son 24 saat)' : '📊 Həftəlik xülasə (son 7 gün)',
     lines: [
       `Əlaqə məlumatlı müraciət qeydləri: ${leadTotal}`,
       `Anonim düymə klikləri: ${clicks} (insan və ya mesaj sayı deyil)`,
+      followupLine,
       ...sourceLines,
       `Yeni üzv: ${Number(members[0]?.value ?? 0)}`,
       `Dərc olunan xəbər: ${Number(news[0]?.value ?? 0)}`,
       `Yeni elan: ${Number(newListings[0]?.value ?? 0)}`,
     ],
-    buttons: [[{ text: '✏️ Paneldə aç', url: 'https://dkagency.com.tr/dashboard' }]],
+    buttons: [[{ text: '✏️ Satış izləməsini aç', url: 'https://dkagency.com.tr/dashboard/kazan-leads' }]],
   });
 
   return NextResponse.json({ ok: true, sent, leadTotal });

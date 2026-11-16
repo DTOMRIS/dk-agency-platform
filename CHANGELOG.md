@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0560` feat(sales): mövcud KAZAN Leads ekranı satış izləməsinə genişləndi: məsul, növbəti addım/gün, təklif mərhələsi və məbləği, faktiki tahsilat, vaxt və itirilmə səbəbi. Bütün baza üzrə göstəricilər, gecikmiş/plansız növbə, 25-lik səhifələmə, 4 dildə görüş/WhatsApp layihələri; admin WhatsApp cavabı DK xəttinə deyil müştəriyə açılır. Köhnə private PATCH bağlandı, versiyalı atomik saxla. Yeni əlavə cədvəl üçün **0024 migration tələb olunur**, production-da tətbiq edilməyib.
+
 - `TASK-0559` feat(contact): mobil KAZAN səhifəsi və widget mövcud mesaj formu ilə könüllü geri dönüş istəyini qəbul edir; ad/telefon, biznes məlumatı və son iki danışıq mesajı panelə/bildirişə ötürülür. Üçüncü sual bloklanmır. Anonim kliklər üçün fərdi Telegram/e-poçt dayandırılıb; gündəlik xülasədə kliklər əlaqə məlumatlı müraciət qeydlərindən ayrı göstərilir. Köhnə klik tarixçəsi saxlanılır; mənbə hesabatında lead sayılmır.
 
 - `TASK-0558` feat(contact): saytdakı WhatsApp düymələri əvvəl «Bizə yazın» formunu açır (ad, telefon, mesaj) — mətn birbaşa sahibin Telegram-ına (tam mətn + «WhatsApp-da yaz» düyməsi), `ADMIN_EMAIL`-ə və `/dashboard/kazan-leads`-ə çatır. Əvvəl yalnız «düyməyə basıldı» bildirişi gəlirdi, ziyarətçi WhatsApp-da «Göndər»ə basmayanda mesaj itirdi. `POST /api/leads/message` (honeypot, 5/saat), «çatdı» yalnız baza və ya Telegram uğurlu olanda; WhatsApp seçimi formun altında qalır. 4 dil. `e2e/message-form.spec.ts` 5/5 (köhnə kodla 5/5 FAIL).

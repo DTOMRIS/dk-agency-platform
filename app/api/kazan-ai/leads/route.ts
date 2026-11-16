@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse, after } from 'next/server';
+import { requireApiAdmin } from '@/lib/api/guards';
 import { canAccessNewsAdmin } from '@/lib/news/admin-access';
 import {
   createKazanLead,
@@ -6,7 +7,6 @@ import {
   getKazanLeads,
   normalizeBusinessType,
   normalizeIntent,
-  normalizeStatus,
   updateKazanLead,
   type KazanLeadConversation,
 } from '@/lib/repositories/kazanLeadRepository';
@@ -137,27 +137,28 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const body = (await request.json()) as LeadPatchBody;
+    const parsed: unknown = await request.json();
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return NextResponse.json({ error: 'invalid_body' }, { status: 400 });
+    const body = parsed as LeadPatchBody;
+    const adminFields = ['status', 'addNote', 'leadScore', 'nextContactAt'];
+    if (adminFields.some(key => key in body)) {
+      const auth = await requireApiAdmin();
+      if (!auth.ok) return auth.response;
+      return NextResponse.json({ error: 'use_versioned_sales_followup' }, { status: 409 });
+    }
     const id = cleanText(body.id, 80);
     if (!id) {
       return NextResponse.json({ error: 'Lead id məcburidir.' }, { status: 400 });
     }
 
-    const lead = await updateKazanLead({
+    await updateKazanLead({
       id,
       whatsappHandoff: typeof body.whatsappHandoff === 'boolean' ? body.whatsappHandoff : undefined,
-      meetingRequested:
-        typeof body.meetingRequested === 'boolean' ? body.meetingRequested : undefined,
-      status: body.status ? normalizeStatus(body.status) : undefined,
-      addNote: typeof body.addNote === 'string' ? body.addNote : undefined,
-      leadScore: typeof body.leadScore === 'number' ? body.leadScore : undefined,
-      nextContactAt:
-        body.nextContactAt === null || typeof body.nextContactAt === 'string'
-          ? body.nextContactAt
-          : undefined,
+      meetingRequested: typeof body.meetingRequested === 'boolean' ? body.meetingRequested : undefined,
     });
 
-    return NextResponse.json({ success: true, data: lead });
+    // Public handoff analytics must not expose the private contact/notes record.
+    return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(
       {

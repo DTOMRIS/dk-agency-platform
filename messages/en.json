@@ -3672,7 +3672,7 @@
     },
     "filters": {
       "status": "Status",
-      "intent": "Intent",
+      "intent": "Topic",
       "businessType": "Business type"
     },
     "statusOptions": {
@@ -3699,8 +3699,8 @@
       "diger": "Other"
     },
     "lead": "Lead",
-    "roleUser": "User",
-    "roleAi": "AI"
+    "roleUser": "Visitor",
+    "roleAi": "KAZAN"
   },
   "kazanLeadActions": {
     "updating": "Updating...",
@@ -8356,5 +8356,97 @@
     "request": "Contact me",
     "requestText": "Please contact me to discuss my result.",
     "saved": "Your contact request has arrived. The team can use these details to follow up."
+  },
+  "salesFollowup": {
+    "title": "Sales and follow-up",
+    "subtitle": "Track website and KAZAN enquiries from conversation to proposal, customer and collection.",
+    "loading": "Loading enquiries…",
+    "loadError": "Enquiries could not be loaded. Check the connection and retry. If it continues, contact the administrator.",
+    "retry": "Try again",
+    "sampleNote": "Matching enquiries: {count}. Metrics cover the current state of all records; filters only change the list. Collections are recorded totals, not period revenue or unique customers. Dates use Baku time.",
+    "playbook": "Conversation and service plan",
+    "discoveryQuestions": "First conversation: what is the main problem? What sales and cost data is available? Who decides and when is change wanted?\nAgree the next action, owner and date. Prices and outcome commitments belong in the agreed proposal.",
+    "filters": "Enquiry filters",
+    "search": "Name, phone or owner",
+    "all": "All",
+    "visible": "Enquiries shown: {count}",
+    "empty": "No enquiries match this selection.",
+    "stage": "Stage",
+    "owner": "Responsible person",
+    "nextAction": "Next action",
+    "nextDate": "Next contact day",
+    "service": "Service",
+    "proposalAmount": "Proposal amount · ₼",
+    "collectedAmount": "Total collected · ₼",
+    "moneyHelp": "Proposal and collection are separate. Enter the cumulative collected total each time; this is not a complete accounting ledger.",
+    "spentMinutes": "Total time spent · minutes",
+    "lossReason": "Loss reason",
+    "addNote": "New conversation / proposal note",
+    "requiredHelp": "Active enquiries require an owner, next action and date; lost enquiries require a reason.",
+    "invalid": "Check owner, action and date; amounts cannot be negative. Supply a reason for lost enquiries.",
+    "conflict": "The record changed or was not found. Refresh and review its latest state; your change was not saved.",
+    "saveError": "Not saved. Check the database and try again.",
+    "saved": "Changes saved.",
+    "save": "Save follow-up",
+    "saving": "Saving…",
+    "notes": "History and notes",
+    "whatsappDraft": "WhatsApp reply to customer",
+    "template": "Message type",
+    "message": "Edit before sending",
+    "draftHelp": "Opens a message to {phone}. Opening is not sending; review and send it yourself in WhatsApp.",
+    "openWhatsapp": "Open customer WhatsApp",
+    "invalidPhone": "Check the phone country code.",
+    "priceUnspecified": "not yet agreed",
+    "generalTopic": "your enquiry",
+    "score": "Initial fit score",
+    "stages": {
+      "new": "New",
+      "contacted": "Contacted",
+      "qualified": "Qualified",
+      "proposal": "Proposal sent",
+      "won": "Won",
+      "lost": "Lost"
+    },
+    "services": {
+      "undecided": "Undecided",
+      "discovery": "Discovery conversation",
+      "diagnostic": "Paid diagnostic",
+      "monthly": "Monthly follow-up"
+    },
+    "flags": {
+      "closed": "Closed",
+      "unplanned": "Plan incomplete",
+      "overdue": "Overdue",
+      "today": "Today",
+      "scheduled": "Scheduled"
+    },
+    "metrics": {
+      "total": "Enquiry records",
+      "won": "Won records",
+      "overdue": "Overdue contacts",
+      "unplanned": "Unplanned enquiries",
+      "pipeline": "Open proposal amount",
+      "collected": "Recorded collections",
+      "minutes": "Minutes spent"
+    },
+    "templates": {
+      "discovery": "First contact",
+      "proposal": "Proposal draft",
+      "followup": "Follow-up"
+    },
+    "scopes": {
+      "undecided": "Let us agree the scope and price.",
+      "discovery": "A short first conversation to establish the problem, fit and next step.",
+      "diagnostic": "Analysis of supplied real data, priorities and an agreed action plan.",
+      "monthly": "Regular tracking of the agreed plan, responsibilities and results."
+    },
+    "drafts": {
+      "discovery": "Hello {name}, we are Doğan’s team at DK Agency. We are responding to your enquiry: “{topic}”. When would a short conversation suit you?",
+      "proposal": "Hello {name}, a proposal draft for discussion:\nService: {service}\nScope: {scope}\nProposed amount: {amount}\nLet us confirm the timing, payment terms and exact scope together.",
+      "followup": "Hello {name}, we would like to continue our conversation about “{topic}”. When could we agree the next step?"
+    },
+    "previous": "Previous",
+    "next": "Next",
+    "pageNumber": "Page {page}"
   }
 }
