@@ -3672,7 +3672,7 @@
     },
     "filters": {
       "status": "Status",
-      "intent": "Intent",
+      "intent": "Mövzu",
       "businessType": "Biznes tipi"
     },
     "statusOptions": {
@@ -3699,8 +3699,8 @@
       "diger": "Digər"
     },
     "lead": "Lead",
-    "roleUser": "User",
-    "roleAi": "AI"
+    "roleUser": "Ziyarətçi",
+    "roleAi": "KAZAN"
   },
   "kazanLeadActions": {
     "updating": "Yenilənir...",
@@ -8356,5 +8356,97 @@
     "request": "Mənimlə əlaqə saxlayın",
     "requestText": "Nəticəmi müzakirə etmək üçün mənimlə əlaqə saxlayın.",
     "saved": "Əlaqə istəyiniz çatdı. Komanda bu məlumatlarla sizinlə əlaqə saxlaya bilər."
+  },
+  "salesFollowup": {
+    "title": "Satış və geri dönüş izləməsi",
+    "subtitle": "Sayt və KAZAN müraciətlərini görüşdən təklifə, müştəriyə və tahsilata qədər izləyin.",
+    "loading": "Müraciətlər yüklənir…",
+    "loadError": "Müraciətlər yüklənmədi. Bağlantını yoxlayıb yenidən sınayın. Davam edərsə sistem administratoruna bildirin.",
+    "retry": "Yenidən yoxla",
+    "sampleNote": "Uyğun müraciət: {count}. Göstəricilər bütün qeydlərin cari vəziyyətinə aiddir; filtrlər yalnız siyahını dəyişir. Tahsilat yazılan cəmlərdir, dövr gəliri və unikal müştəri sayı deyil. Günlər Bakı vaxtı ilədir.",
+    "playbook": "Görüş və xidmət planı",
+    "discoveryQuestions": "İlk görüş: əsas problem nədir? Hansı satış və xərc məlumatı var? Qərarı kim verir və nə vaxt dəyişiklik etmək istəyir?\nGörüşün sonunda növbəti addımı, məsulu və tarixi razılaşdırın. Qiymət və nəticə zəmanəti yalnız razılaşdırılmış təklifdə göstərilir.",
+    "filters": "Müraciət filtrləri",
+    "search": "Ad, telefon və ya məsul",
+    "all": "Hamısı",
+    "visible": "Göstərilən müraciət: {count}",
+    "empty": "Bu seçimə uyğun müraciət yoxdur.",
+    "stage": "Mərhələ",
+    "owner": "Məsul şəxs",
+    "nextAction": "Növbəti addım",
+    "nextDate": "Növbəti əlaqə günü",
+    "service": "Xidmət",
+    "proposalAmount": "Təklif məbləği · ₼",
+    "collectedAmount": "Cəmi tahsilat · ₼",
+    "moneyHelp": "Təklif və tahsilat ayrı saxlanılır. Tahsilatı hər dəfə toplanmış cəmi ilə yeniləyin; bu, tam maliyyə uçotu deyil.",
+    "spentMinutes": "Cəmi sərf olunan vaxt · dəqiqə",
+    "lossReason": "İtirilmə səbəbi",
+    "addNote": "Yeni görüş / təklif qeydi",
+    "requiredHelp": "Açıq müraciət üçün məsul, növbəti addım və tarix; itirilmiş müraciət üçün səbəb tələb olunur.",
+    "invalid": "Sahələri yoxlayın: məsul, addım və tarix; məbləğlər mənfi ola bilməz. İtirilibsə səbəbi yazın.",
+    "conflict": "Qeyd dəyişib və ya tapılmadı. Yeniləyib son vəziyyətə baxın; dəyişiklik saxlanmadı.",
+    "saveError": "Saxlanmadı. Baza bağlantısını yoxlayıb yenidən sınayın.",
+    "saved": "Dəyişiklik saxlandı.",
+    "save": "İzləməni saxla",
+    "saving": "Saxlanır…",
+    "notes": "Tarixçə və qeydlər",
+    "whatsappDraft": "Müştəriyə WhatsApp cavabı",
+    "template": "Mesaj növü",
+    "message": "Göndərmədən əvvəl redaktə edin",
+    "draftHelp": "Mesaj {phone} nömrəsinə açılacaq. Düyməyə basmaq göndərmək deyil; WhatsApp-da yoxlayıb özünüz göndərin.",
+    "openWhatsapp": "Müştərinin WhatsApp-ını aç",
+    "invalidPhone": "Telefonun ölkə kodunu yoxlayın.",
+    "priceUnspecified": "hələ razılaşdırılmayıb",
+    "generalTopic": "müraciətiniz",
+    "score": "İlkin uyğunluq balı",
+    "stages": {
+      "new": "Yeni",
+      "contacted": "Əlaqə saxlanıldı",
+      "qualified": "Uyğunluğu təsdiqləndi",
+      "proposal": "Təklif verildi",
+      "won": "Müştəri oldu",
+      "lost": "İtirildi"
+    },
+    "services": {
+      "undecided": "Seçilməyib",
+      "discovery": "İlkin tanışlıq",
+      "diagnostic": "Ödənişli diaqnostika",
+      "monthly": "Aylıq izləmə"
+    },
+    "flags": {
+      "closed": "Bağlanıb",
+      "unplanned": "Planı tamamlanmayıb",
+      "overdue": "Gecikib",
+      "today": "Bu gün",
+      "scheduled": "Planlanıb"
+    },
+    "metrics": {
+      "total": "Müraciət qeydləri",
+      "won": "Müştəri olan qeydlər",
+      "overdue": "Gecikmiş əlaqə",
+      "unplanned": "Plansız müraciət",
+      "pipeline": "Açıq təklif məbləği",
+      "collected": "Qeydə alınmış tahsilat",
+      "minutes": "Sərf olunan dəqiqə"
+    },
+    "templates": {
+      "discovery": "İlk əlaqə",
+      "proposal": "Təklif layihəsi",
+      "followup": "Geri dönüş"
+    },
+    "scopes": {
+      "undecided": "Əhatə və qiyməti birlikdə müəyyən edək.",
+      "discovery": "Qısa ilkin görüş: problemi, uyğunluğu və növbəti addımı müəyyən etmək.",
+      "diagnostic": "Təqdim edilən real məlumatların təhlili, prioritetlər və razılaşdırılmış fəaliyyət planı.",
+      "monthly": "Razılaşdırılmış planın icrası, məsullar və nəticələrin müntəzəm izlənməsi."
+    },
+    "drafts": {
+      "discovery": "Salam {name}, DK Agency-dən Doğan bəyin komandasıyıq. «{topic}» müraciətinizlə bağlı yazırıq. Qısa görüş üçün hansı vaxt sizə uyğundur?",
+      "proposal": "Salam {name}, müzakirə üçün təklif layihəsi:\nXidmət: {service}\nƏhatə: {scope}\nTəklif məbləği: {amount}\nMüddət, ödəniş şərtləri və dəqiq əhatəni birlikdə təsdiqləyək.",
+      "followup": "Salam {name}, «{topic}» mövzusundakı danışığımızı davam etdirmək istərdik. Növbəti addımı razılaşdırmaq üçün hansı vaxt uyğundur?"
+    },
+    "previous": "Əvvəlki",
+    "next": "Sonrakı",
+    "pageNumber": "Səhifə {page}"
   }
 }

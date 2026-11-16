@@ -3672,7 +3672,7 @@
     },
     "filters": {
       "status": "Durum",
-      "intent": "Niyet",
+      "intent": "Konu",
       "businessType": "İş tipi"
     },
     "statusOptions": {
@@ -3699,8 +3699,8 @@
       "diger": "Diğer"
     },
     "lead": "Lead",
-    "roleUser": "User",
-    "roleAi": "AI"
+    "roleUser": "Ziyaretçi",
+    "roleAi": "KAZAN"
   },
   "kazanLeadActions": {
     "updating": "Güncelleniyor...",
@@ -8356,5 +8356,97 @@
     "request": "Benimle iletişime geçin",
     "requestText": "Sonucumu görüşmek için benimle iletişime geçin.",
     "saved": "İletişim talebiniz ulaştı. Ekip bu bilgilerle size geri dönebilir."
+  },
+  "salesFollowup": {
+    "title": "Satış ve geri dönüş takibi",
+    "subtitle": "Site ve KAZAN başvurularını görüşmeden teklife, müşteriye ve tahsilata kadar izleyin.",
+    "loading": "Başvurular yükleniyor…",
+    "loadError": "Başvurular yüklenemedi. Bağlantıyı kontrol edip yeniden deneyin. Devam ederse sistem yöneticisine bildirin.",
+    "retry": "Yeniden dene",
+    "sampleNote": "Eşleşen başvuru: {count}. Göstergeler tüm kayıtların mevcut durumuna aittir; filtreler yalnız listeyi değiştirir. Tahsilat kaydedilen toplamdır; dönem geliri veya benzersiz müşteri sayısı değildir. Günler Bakü saatine göredir.",
+    "playbook": "Görüşme ve hizmet planı",
+    "discoveryQuestions": "İlk görüşme: temel sorun ne? Hangi satış ve maliyet verileri var? Kararı kim veriyor, değişiklik ne zaman isteniyor?\nGörüşme sonunda sonraki adımı, sorumluyu ve tarihi kararlaştırın. Fiyat ve sonuç taahhüdü yalnız onaylanmış teklifte belirtilir.",
+    "filters": "Başvuru filtreleri",
+    "search": "Ad, telefon veya sorumlu",
+    "all": "Tümü",
+    "visible": "Gösterilen başvuru: {count}",
+    "empty": "Bu seçime uygun başvuru yok.",
+    "stage": "Aşama",
+    "owner": "Sorumlu kişi",
+    "nextAction": "Sonraki adım",
+    "nextDate": "Sonraki iletişim günü",
+    "service": "Hizmet",
+    "proposalAmount": "Teklif tutarı · ₼",
+    "collectedAmount": "Toplam tahsilat · ₼",
+    "moneyHelp": "Teklif ve tahsilat ayrıdır. Tahsilatı her defasında birikmiş toplam olarak güncelleyin; bu tam bir muhasebe kaydı değildir.",
+    "spentMinutes": "Toplam harcanan süre · dakika",
+    "lossReason": "Kaybetme nedeni",
+    "addNote": "Yeni görüşme / teklif notu",
+    "requiredHelp": "Açık başvuruda sorumlu, sonraki adım ve tarih; kaybedilen başvuruda neden gereklidir.",
+    "invalid": "Alanları kontrol edin: sorumlu, adım ve tarih; tutarlar negatif olamaz. Kaybedildiyse nedenini yazın.",
+    "conflict": "Kayıt değişti veya bulunamadı. Yenileyip son durumu kontrol edin; değişiklik kaydedilmedi.",
+    "saveError": "Kaydedilemedi. Veritabanını kontrol edip yeniden deneyin.",
+    "saved": "Değişiklik kaydedildi.",
+    "save": "Takibi kaydet",
+    "saving": "Kaydediliyor…",
+    "notes": "Geçmiş ve notlar",
+    "whatsappDraft": "Müşteriye WhatsApp yanıtı",
+    "template": "Mesaj türü",
+    "message": "Göndermeden önce düzenleyin",
+    "draftHelp": "Mesaj {phone} numarasına açılır. Düğmeye basmak göndermek değildir; WhatsApp’ta kontrol edip kendiniz gönderin.",
+    "openWhatsapp": "Müşterinin WhatsApp’ını aç",
+    "invalidPhone": "Telefonun ülke kodunu kontrol edin.",
+    "priceUnspecified": "henüz kararlaştırılmadı",
+    "generalTopic": "başvurunuz",
+    "score": "İlk uygunluk puanı",
+    "stages": {
+      "new": "Yeni",
+      "contacted": "İletişim kuruldu",
+      "qualified": "Uygun bulundu",
+      "proposal": "Teklif verildi",
+      "won": "Müşteri oldu",
+      "lost": "Kaybedildi"
+    },
+    "services": {
+      "undecided": "Seçilmedi",
+      "discovery": "İlk tanışma",
+      "diagnostic": "Ücretli teşhis",
+      "monthly": "Aylık takip"
+    },
+    "flags": {
+      "closed": "Kapandı",
+      "unplanned": "Plan eksik",
+      "overdue": "Gecikti",
+      "today": "Bugün",
+      "scheduled": "Planlandı"
+    },
+    "metrics": {
+      "total": "Başvuru kayıtları",
+      "won": "Müşteri olan kayıtlar",
+      "overdue": "Geciken iletişim",
+      "unplanned": "Plansız başvuru",
+      "pipeline": "Açık teklif tutarı",
+      "collected": "Kaydedilen tahsilat",
+      "minutes": "Harcanan dakika"
+    },
+    "templates": {
+      "discovery": "İlk iletişim",
+      "proposal": "Teklif taslağı",
+      "followup": "Geri dönüş"
+    },
+    "scopes": {
+      "undecided": "Kapsamı ve fiyatı birlikte belirleyelim.",
+      "discovery": "Kısa ilk görüşme: sorunu, uygunluğu ve sonraki adımı belirleme.",
+      "diagnostic": "Sunulan gerçek verilerle analiz, öncelikler ve kararlaştırılmış eylem planı.",
+      "monthly": "Kararlaştırılmış planın uygulanmasını, sorumluları ve sonuçları düzenli takip."
+    },
+    "drafts": {
+      "discovery": "Merhaba {name}, DK Agency’den Doğan Bey’in ekibiyiz. «{topic}» başvurunuzla ilgili yazıyoruz. Kısa görüşme için hangi zaman uygundur?",
+      "proposal": "Merhaba {name}, görüşmek üzere teklif taslağı:\nHizmet: {service}\nKapsam: {scope}\nTeklif tutarı: {amount}\nSüreyi, ödeme koşullarını ve kesin kapsamı birlikte onaylayalım.",
+      "followup": "Merhaba {name}, «{topic}» konulu görüşmemizi sürdürmek isteriz. Sonraki adımı kararlaştırmak için hangi zaman uygundur?"
+    },
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "pageNumber": "Sayfa {page}"
   }
 }

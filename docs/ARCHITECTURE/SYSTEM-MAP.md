@@ -1,14 +1,14 @@
 # DK Agency — Sistem xəritəsi (avtomatik)
 
-> `node scripts/generate-system-map.mjs` · 2026-11-16 · feat/TASK-0559-lead-conversion · c50d628
+> `node scripts/generate-system-map.mjs` · 2026-11-16 · feat/TASK-0560-sales-followup · c09ad3f
 > **Qayda (Doğan 10.10.2026):** səhifəyə toxunmazdan əvvəl bu faylı oxu. Eyni işi görən başqa səhifə / komponent varsa, düzəlişi ORADA və ya ortaq komponentdə et — yeni yamaq yazma. İş bitəndə xəritəni yenidən yarat.
 
 ## Xülasə
 - Ünvan: **137** (həqiqi səhifə 123, yönləndirmə 10, güzgü 4) · page faylı 253
 - Dizayn (həqiqi səhifələr): v2 **102** · köhnə **0** · qarışıq **0** · işarəsiz 21
 - Geri düyməsi yoxdur: **0** səhifə
-- API: **116** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 34
-- Sənəd: 64 (+ 394 tapşırıq kartı)
+- API: **117** route · yoxlanmamış qorumasız: **0** · qəsdən ictimai (səbəbli): 34
+- Sənəd: 65 (+ 395 tapşırıq kartı)
 
 ## Eyni işi görən yerlər (dublikat riski)
 | İş | Səhifələr | Komponentlər | API |
@@ -33,12 +33,11 @@ Cəmi **1** yer. Hər biri ya düzəldilir, ya da kodda niyə qaldığı yazıl�
 |---|---|---|
 | Saxta gözləmə (setTimeout ilə «uğurlu») | `components/dashboard/TranslateAllButton.tsx:36` | `await new Promise((r) => setTimeout(r, 4000));` |
 
-Əsaslandırılmış istisnalar (`fake-scan-ok`): **11**
+Əsaslandırılmış istisnalar (`fake-scan-ok`): **10**
 - `components/analytics/PortalEngagementTracker.tsx:40` — analytics beacon, nothing is shown to the user
 - `components/b2b-panel/B2BSidebar.tsx:182` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/DashboardSidebar.tsx:144` — logout: the client session is cleared and the user redirected either way
 - `components/dashboard/DashboardTopBar.tsx:140` — logout: the client session is cleared and the user redirected either way
-- `components/dashboard/KazanLeadStatusActions.tsx:50` — router.refresh() right after re-renders the lead from the server
 - `components/kazan-ai/FloatingKazanWidget.tsx:171` — CTA analytics only — the visitor's WhatsApp/meeting step must not depend on it
 - `components/layout/Header.tsx:199` — logout: client session cleared and redirected either way (protected file)
 - `components/members/MemberLogoutButton.tsx:17` — logout: the client session is cleared and the user redirected either way
@@ -62,7 +61,7 @@ Cəmi **8**. Silməzdən əvvəl dinamik import / string ilə çağırış yoxla
 
 ## Ortaq UI variantları (bir olmalıdır)
 - **Logo (DK işarəsi)** (7): `components/auth/AuthShell.tsx`, `components/b2b-panel/B2BSidebar.tsx`, `components/brand/DkMark.tsx`, `components/dashboard/DashboardSidebar.tsx`, `components/layout/Footer.tsx`, `components/layout/Header.tsx`, `app/haberler/[slug]/page.tsx`
-- **Üst bar / header** (3): `components/dashboard/supply/SuppliersTab.tsx`, `components/dashboard/ui/Charts.tsx`, `components/layout/Header.tsx`
+- **Üst bar / header** (4): `components/dashboard/KazanSalesBoard.tsx`, `components/dashboard/supply/SuppliersTab.tsx`, `components/dashboard/ui/Charts.tsx`, `components/layout/Header.tsx`
 - **Geri düyməsi komponenti** (3): `components/inner/InnerParts.tsx`, `components/inner/PageBack.tsx`, `components/panel/PanelBackBar.tsx`
 - **Yan menyu (sidebar)** (2): `components/b2b-panel/B2BSidebar.tsx`, `components/dashboard/DashboardSidebar.tsx`
 
@@ -171,7 +170,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `/dashboard/ilanlar/[id]` | səhifə | v2 | layout (/dashboard) | ✓ | 16 |  |
 | `/dashboard/ilanlar/whatsapp` | səhifə | v2 | layout (/dashboard) | ✓ | 72 |  |
 | `/dashboard/ilanlar/yarat` (yalnız kök) | səhifə | v2 | layout (/dashboard) | ✓ |  | listings/CreateListingForm.tsx |
-| `/dashboard/kazan-leads` | səhifə | v2 | səhifədə | ✓ |  | dashboard/KazanLeadStatusActions.tsx |
+| `/dashboard/kazan-leads` | səhifə | v2 | səhifədə | ✓ |  | dashboard/KazanSalesBoard.tsx |
 | `/dashboard/marketinq-ocagi` | → /b2b-panel/marketinq-ocagi | — | layout (/dashboard) | ✓ |  |  |
 | `/dashboard/marketinq-ocagi/[slug]` | → /b2b-panel/marketinq-ocagi/${encodeURIComponent(slug)} | — | layout (/dashboard) | ✓ |  |  |
 | `/dashboard/muracietler` | səhifə | v2 | səhifədə | ✓ |  |  |
@@ -340,6 +339,7 @@ Sütunlar: **Növ** (səhifə / → yönləndirmə / güzgü) · **Dizayn** (v2 
 | `docs/kazan-kb-v2.md` | KAZAN AI Knowledge Base v2 | 2026-11-16 | 61 |
 | `docs/member-env-checklist.md` | Member Env Checklist | 2026-11-16 | 58 |
 | `docs/n8n/SETUP.md` | n8n RSS Auto-Fetch — Setup Rehberi | 2026-11-16 | 93 |
+| `docs/ops/kazan-sales-followup.md` | DK Agency — satış izləməsi (TASK-0560) |  | 45 |
 | `docs/ops/news-pipeline-reliability.md` | TASK-0553 — News pipeline rollout and recovery | 2026-11-16 | 50 |
 | `docs/ops/official-news-coverage.md` | TASK-0554 — Official press coverage | 2026-11-16 | 46 |
 | `docs/reports/2026-06-10-news-editor-deploy.md` | 2026-06-10 — Manuel Haber Editörü Deploy + Hotfix Raporu | 2026-11-16 | 348 |
