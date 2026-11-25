@@ -9,6 +9,7 @@ import { conflictingSignals, groupSignals, orderForSynthesis, preferredSignal, S
 import { deliverPendingApprovals, queueApproval, recentSignals, reserveSynthesis, todaySourceCounts } from './pipeline-state';
 import { RUN_SYNTHESIS_CAP } from './pipeline-sql';
 import { isRegulationTopic } from './scoring-config';
+import { loadDecisionContext } from './owner-feedback';
 
 export interface SynthesizeResult {
   synthesized: number; skipped: number; unpublishable: number; errors: string[];
@@ -27,6 +28,8 @@ export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: s
   const signals = await recentSignals();
   const groups = orderForSynthesis(groupSignals(signals), isRegulationTopic);
   const perSource = await todaySourceCounts();
+  // TASK-0561: the owner's last decisions + titles he already saw this week steer the editor pass.
+  const decisions = await loadDecisionContext();
   let attempts = 0;
   let reviews = 0;
   for (const group of groups) {
@@ -57,7 +60,7 @@ export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: s
     attempts++;
     perSource.set(source, (perSource.get(source) ?? 0) + 1);
     try {
-      const outcome = await draftNewsArticle(article, apiKey);
+      const outcome = await draftNewsArticle(article, apiKey, decisions);
       if (outcome.kind === 'error') { result.errors.push(`${outcome.error} for article #${article.id}`); continue; }
       if (outcome.kind === 'unpublishable') {
         await db.update(newsArticles).set({ origin: 'synthesized', seoDescription: `[unpublishable] ${outcome.reason}`.slice(0, 160) })
@@ -67,6 +70,7 @@ export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: s
       }
       // Queue before saving content; a crash cannot leave a completed draft without delivery state.
       await queueApproval(article.id, outcome.editorNote, sourceUrls);
+      decisions.recentTitles.push(outcome.titleAz); // same-run repeats are caught too
       await db.update(newsArticles).set({ titleAz: outcome.titleAz,
         slug: `${slugifyAz(outcome.titleAz).slice(0, 80) || 'xeber'}-${article.id}`,
         contentAz: outcome.bodyAz, summaryAz: outcome.summaryAz, origin: 'synthesized', status: 'translated',

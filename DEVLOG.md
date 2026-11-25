@@ -1,5 +1,12 @@
 # DEVLOG — DK Agency Platform
 
+## 2026-11-25 — TASK-0561: xəbər hattı sahibin qərarlarından öyrənir
+- Ölçmə (Neon, read-only): 30 gündə 405 qaralama, 43% rədd; təkrar hadisə, otel proqram təminatı PR-ı, uzaq layihələr.
+- Kök səbəb: `recentSignals()` rədd ediləni qrupa salmır; mənbə başlıqları müxtəlif dildədir.
+- `lib/news/owner-feedback.ts` + redaktor qaydaları 9–10 + AZ başlıq backstop + Telegram səbəb düymələri + migration 0025.
+- Replay: backstop 177 rədddən 34-ünü tutur; 236 təsdiqdən 5-i işarələnir (4-ü həqiqətən eyni hadisə). İlk versiyada `'a' + 'b'.split()` prioritet xətası ümumi kök siyahısını sındırırdı — replay ilə tapıldı.
+- Yoxlama: `e2e/news-owner-feedback.test.ts`, `story-dedupe`, `news-delivery`, `news-coverage` OK; tsc yeni xəta yoxdur (main-də 23 köhnə); eslint təmiz. `npm run build` kompilyasiya + səhifələr OK, sonda Next.js `SecurityFatalError` (next 16.4.3, moderate advisory, 16.0.0–16.4.4) — bu dəyişikliklə bağlı deyil, ayrıca task.
+
 ## 2026-11-16 — TASK-0560: satış və geri dönüş izləməsi
 
 Mövcud /dashboard/kazan-leads genişləndirildi, ikinci CRM/səhifə yaradılmadı. Yeni məsul/plan/təklif/tahsilat/vaxt/səbəb yaddaşı ayrı typed cədvəldədir; core qorunan schema/config/layout dəyişməyib. 0024 yalnız əlavə cədvəldir; Production migration/merge/deploy owner tərəfindən edilir. Standart görüş və 3 xidmət çərçivəsi, redaktə olunan WhatsApp layihələri 4 dildə; qiymət və qənaət uydurulmur. WhatsApp sadəcə müştərinin nömrəsinə açılır, göndəriş deyil.

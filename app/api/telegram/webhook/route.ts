@@ -14,6 +14,12 @@ import { createImportedDrafts } from '@/lib/listings/whatsapp-import-db';
 import { approveListingFromTelegram, rejectListingFromTelegram } from '@/lib/listings/set-status';
 import { approveNewsArticle, rejectNewsArticle } from '@/lib/news/approve';
 import {
+  parseReasonCallback,
+  recordRejectReason,
+  rejectReasonButtons,
+  REJECT_REASONS,
+} from '@/lib/news/owner-feedback';
+import {
   classifyTelegramUpdate,
   handleListingForward,
   type ListingForwardDeps,
@@ -129,6 +135,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
+  // TASK-0561: after ❌ the owner taps why (Təkrar / Reklam / Uzaq / Maraqsız) — the next runs learn from it.
+  const why = parseReasonCallback(query.data, NEWS_CALLBACK.why);
+  if (why) {
+    const saved = await recordRejectReason(why.articleId, why.reason);
+    const label = REJECT_REASONS[why.reason].button;
+    await answer(saved ? `Qeyd edildi: ${label}` : 'Qeyd alınmadı');
+    await telegramApi(config.token, 'editMessageReplyMarkup', {
+      chat_id: query.message.chat.id,
+      message_id: query.message.message_id,
+      reply_markup: { inline_keyboard: [] },
+    }).catch(() => undefined);
+    if (saved) {
+      await telegramApi(config.token, 'sendMessage', {
+        chat_id: query.message.chat.id,
+        text: `Səbəb: ${label} — növbəti seçimlərdə nəzərə alınacaq (#${why.articleId})`,
+        reply_parameters: { message_id: query.message.message_id },
+      }).catch(() => undefined);
+    }
+    return NextResponse.json({ ok: true });
+  }
+
   const isApprove = query.data.startsWith(NEWS_CALLBACK.approve);
   const isReject = query.data.startsWith(NEWS_CALLBACK.reject);
   const articleId = Number(query.data.split(':').pop());
@@ -142,14 +169,15 @@ export async function POST(request: NextRequest) {
     : await rejectNewsArticle(articleId);
 
   let status: string;
-  let buttons: Array<Array<{ text: string; url: string }>> = [];
+  let buttons: Array<Array<{ text: string; url: string } | { text: string; callback_data: string }>> = [];
   if (outcome.ok) {
     if (isApprove) {
       const url = outcome.slug ? `${SITE_URL}/haberler/${outcome.slug}` : `${SITE_URL}/haberler`;
       status = '✅ Yayınlandı — RU/EN/TR tərcümə arxa planda gedir';
       buttons = [[{ text: '🔗 Saytda bax', url }]];
     } else {
-      status = '❌ Rədd edildi';
+      status = '❌ Rədd edildi — səbəbi seçin (istəyə görə)';
+      buttons = rejectReasonButtons(articleId, NEWS_CALLBACK.why);
     }
   } else if (outcome.reason === 'already_decided') {
     status = outcome.status === 'approved' ? 'ℹ️ Artıq yayınlanıb' : 'ℹ️ Artıq rədd edilib';
