@@ -7,6 +7,7 @@
  */
 
 import { AI_MODELS } from '@/lib/ai-models';
+import { EMPTY_DECISION_CONTEXT, ownerTasteBlock, repeatsRecentTitle, type OwnerDecisionContext } from './owner-feedback';
 
 export interface NewsSignal {
   title: string;
@@ -93,6 +94,9 @@ YOXLA:
 6. Təravət: əsas meyar "Mənbədə dərc tarixi"dir. Xəbərin ƏSAS hadisəsi "Bu gün"dən 2 aydan çox əvvəl baş veribsə (köhnə tədbir, hesabat, açılış; başlıqda keçmiş il) → reject, reject_reason: "köhnə xəbər". Təzə dərc olunmuş yazıda keçmişə istinad (arxa plan) köhnəlik DEYİL.
 7. Terminlər: "hotel/hotelçilik" → "otel/otelçilik".
 8. Xəbər dəyəri: Azərbaycan HoReCa oxucusu üçün bunu dərc etməyə dəyərmi? Mövzu kənardırsa və ya fakt çox zəifdirsə → reject.
+
+9. Təkrar (TASK-0561): girişdə "BU HƏFTƏ SAHİBƏ ARTIQ GÖNDƏRİLƏN BAŞLIQLAR" varsa və bu qaralama onlardan biri ilə EYNİ HADİSƏDİRSƏ (başqa dildə, başqa mənbədən, başqa sözlərlə olsa belə) → reject, reject_reason: "təkrar xəbər". Eyni mövzuda YENİ fakt (yeni rəqəm, yeni mərhələ) varsa təkrar sayılmır.
+10. Sahibin zövqü (TASK-0561): girişdə sahibin son təsdiq (+) və rədd (-) etdiyi başlıqlar ola bilər. Qaralama açıq-aydın rədd edilənlərin növünə bənzəyirsə (məs. otel proqram təminatı şirkətinin reklam/görüş yazısı, Azərbaycandan uzaq kiçik otel layihəsi) və təsdiq edilənlərə bənzəmirsə → reject, reject_reason: "sahibin seçiminə uyğun deyil: <qısa səbəb>". Şübhəlisənsə rədd etmə — sahib özü qərar verəcək.
 
 QAYDA: yeni fakt əlavə etmə. Mətni yaxşılaşdırarkən uzatma — qısaltmaq olar.
 
@@ -198,7 +202,8 @@ function plainSummary(summary: string, body: string, title: string): string {
  */
 export async function draftNewsArticle(
   signal: NewsSignal,
-  apiKey: string
+  apiKey: string,
+  context: OwnerDecisionContext = EMPTY_DECISION_CONTEXT
 ): Promise<EditorialOutcome> {
   const signalText = [
     `Bu gün: ${new Date().toISOString().slice(0, 10)}`,
@@ -226,7 +231,9 @@ export async function draftNewsArticle(
   const editor = await callDeepSeek(
     apiKey,
     EDITOR_PROMPT,
-    `SİQNAL:\n${signalText}\n\nQARALAMA (JSON):\n${JSON.stringify(draft)}`,
+    [`SİQNAL:\n${signalText}`, ownerTasteBlock(context), `QARALAMA (JSON):\n${JSON.stringify(draft)}`]
+      .filter(Boolean)
+      .join('\n\n'),
     3000
   );
 
@@ -256,6 +263,10 @@ export async function draftNewsArticle(
   } else {
     note = `Redaktor yoxlaması alınmadı (${editor.error}) — mətni diqqətlə oxu.`;
   }
+
+  // TASK-0561: deterministic backstop — the editor may miss a repeat; the owner must not see it twice.
+  const repeat = repeatsRecentTitle(titleAz, context.recentTitles);
+  if (repeat) return { kind: 'unpublishable', reason: `Təkrar: «${repeat.slice(0, 80)}»` };
 
   const issues = lintArticle(titleAz, bodyAz);
   if (issues.some((i) => i.startsWith('qadağan söz'))) {

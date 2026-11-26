@@ -11,7 +11,7 @@ import { createHash } from 'node:crypto';
 
 const SITE_URL = 'https://dkagency.com.tr';
 
-export const NEWS_CALLBACK = { approve: 'news:approve:', reject: 'news:reject:' } as const;
+export const NEWS_CALLBACK = { approve: 'news:approve:', reject: 'news:reject:', why: 'news:why:' } as const;
 
 export function telegramConfig(): { token: string; chatId: string } | null {
   const token = process.env.TELEGRAM_BOT_TOKEN;

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0561` feat(news): Sektor Nəbzi sahibin qərarlarından öyrənir. Son 30 gündə Telegram-a gələn qaralamaların 43%-i rədd edilib; əsas səbəb eyni hadisənin ertəsi gün başqa mənbədən/dildə yenidən gəlməsi idi (rədd edilən xəbərlər təkrar yoxlamasına daxil deyildi). İndi: bu həftə göndərilən başlıqlarla eyni hadisə göndərilmir (AZ başlıq üzrə yoxlama + redaktor), redaktor sahibin son 25 təsdiq / 25 rədd başlığını görür, ❌-dan sonra istəyə görə səbəb düyməsi (Təkrar / Reklam / Uzaq / Maraqsız). Real 30 günlük məlumatla yoxlanılıb. **0025 migration** (əlavə sütun) tələb olunur. Actions xərci dəyişmir.
+
 - `TASK-0562` fix(deps): Next.js 16.4.3 → 16.4.6. Köhnə versiyada bilinən təhlükəsizlik boşluğu (moderate) var idi və `next build` sonda `SecurityFatalError` ilə dayanırdı — Hostinger deploy-u da eyni build-i işlədir. Kod dəyişikliyi yoxdur; build 212/212 səhifə, smoke OK.
 
 - `TASK-0560` feat(sales): mövcud KAZAN Leads ekranı satış izləməsinə genişləndi: məsul, növbəti addım/gün, təklif mərhələsi və məbləği, faktiki tahsilat, vaxt və itirilmə səbəbi. Bütün baza üzrə göstəricilər, gecikmiş/plansız növbə, 25-lik səhifələmə, 4 dildə görüş/WhatsApp layihələri; admin WhatsApp cavabı DK xəttinə deyil müştəriyə açılır. Köhnə private PATCH bağlandı, versiyalı atomik saxla. Yeni əlavə cədvəl üçün **0024 migration tələb olunur**, production-da tətbiq edilməyib.
