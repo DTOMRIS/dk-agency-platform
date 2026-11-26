@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `TASK-0562` fix(deps): Next.js 16.4.3 → 16.4.6. Köhnə versiyada bilinən təhlükəsizlik boşluğu (moderate) var idi və `next build` sonda `SecurityFatalError` ilə dayanırdı — Hostinger deploy-u da eyni build-i işlədir. Kod dəyişikliyi yoxdur; build 212/212 səhifə, smoke OK.
+
 - `TASK-0560` feat(sales): mövcud KAZAN Leads ekranı satış izləməsinə genişləndi: məsul, növbəti addım/gün, təklif mərhələsi və məbləği, faktiki tahsilat, vaxt və itirilmə səbəbi. Bütün baza üzrə göstəricilər, gecikmiş/plansız növbə, 25-lik səhifələmə, 4 dildə görüş/WhatsApp layihələri; admin WhatsApp cavabı DK xəttinə deyil müştəriyə açılır. Köhnə private PATCH bağlandı, versiyalı atomik saxla. Yeni əlavə cədvəl üçün **0024 migration tələb olunur**, production-da tətbiq edilməyib.
 
 - `TASK-0559` feat(contact): mobil KAZAN səhifəsi və widget mövcud mesaj formu ilə könüllü geri dönüş istəyini qəbul edir; ad/telefon, biznes məlumatı və son iki danışıq mesajı panelə/bildirişə ötürülür. Üçüncü sual bloklanmır. Anonim kliklər üçün fərdi Telegram/e-poçt dayandırılıb; gündəlik xülasədə kliklər əlaqə məlumatlı müraciət qeydlərindən ayrı göstərilir. Köhnə klik tarixçəsi saxlanılır; mənbə hesabatında lead sayılmır.
