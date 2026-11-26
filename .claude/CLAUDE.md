@@ -16,7 +16,7 @@ Consulting + digital tools + AI is the core model.
 - DM Sans (body) + Playfair Display (headings)
 - Drizzle ORM + Neon PostgreSQL
 - next-intl (3 languages: AZ, TR, EN)
-- Vercel deployment
+- Hostinger deployment (Node.js app; Vercel istifadə olunmur)
 
 ## Colors
 - Background: `#FAFAF8`
