@@ -26,8 +26,18 @@ async function main() {
     }
   }
 
-  // Partial delivery/AI failures must not be hidden behind a successful job.
-  process.exit(result.errors.length ? 1 : 0);
+  if (result.warnings.length) {
+    console.warn(`  Article warnings (${result.warnings.length}):`);
+    for (const w of result.warnings) {
+      console.warn(`    - ${w}`);
+      console.log(`::warning title=News article skipped::${w}`);
+    }
+  }
+
+  // TASK-0563: delivery/system failures still fail the job (owner gets the alert mail). A single article the AI
+  // could not draft does not, while others shipped; if every attempted article failed, that is a real outage.
+  const allDraftsFailed = result.warnings.length > 0 && result.synthesized === 0;
+  process.exit(result.errors.length || allDraftsFailed ? 1 : 0);
 }
 
 main().catch((err) => {
