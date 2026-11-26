@@ -10,10 +10,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: state-snapshot
+  cancel-in-progress: true
+
 jobs:
   snapshot:
     runs-on: ubuntu-latest
-    timeout-minutes: 20  # TASK-0504: build daxildir
+    timeout-minutes: 5  # TASK-0564: build/npm ci yoxdur
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,16 +28,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
+      # TASK-0564: `npm ci` + tam `npm run build` çıxarıldı — build nəticəsi yalnız "PASS" sözü idi
+      # (main-ə gələn hər push artıq ci.yml-də build olunur), generate-state.mjs isə yalnız
+      # node:fs/node:path işlədir. Run ~8-10 dəq → ~1 dəq.
       - name: Generate STATE.md
-        run: BUILD_STATUS=PASS npm run snapshot:state
+        run: BUILD_STATUS="main CI (ci.yml)" npm run snapshot:state
 
       # TASK-0473: main-koruma ruleset birbaşa bot push-unu bağlayır (TASK-0466 ilə eyni səbəb).
       # Snapshot ayrıca bot/state-* branch-ə gedir və PR açılır; auto-merge-content.yml yalnız
