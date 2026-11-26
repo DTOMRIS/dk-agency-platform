@@ -12,11 +12,15 @@ import { isRegulationTopic } from './scoring-config';
 import { loadDecisionContext } from './owner-feedback';
 
 export interface SynthesizeResult {
-  synthesized: number; skipped: number; unpublishable: number; errors: string[];
+  synthesized: number; skipped: number; unpublishable: number;
+  /** System failures (DB, API key, Telegram delivery): the run must go red. */
+  errors: string[];
+  /** TASK-0563: one article the AI could not draft (forbidden word, bad JSON). The rest still ship. */
+  warnings: string[];
 }
 
 export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: string = randomUUID()): Promise<SynthesizeResult> {
-  const result: SynthesizeResult = { synthesized: 0, skipped: 0, unpublishable: 0, errors: [] };
+  const result: SynthesizeResult = { synthesized: 0, skipped: 0, unpublishable: 0, errors: [], warnings: [] };
   const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!db || !apiKey) {
     result.errors.push(!db ? 'Database not available' : 'DEEPSEEK_API_KEY not set');
@@ -61,7 +65,7 @@ export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: s
     perSource.set(source, (perSource.get(source) ?? 0) + 1);
     try {
       const outcome = await draftNewsArticle(article, apiKey, decisions);
-      if (outcome.kind === 'error') { result.errors.push(`${outcome.error} for article #${article.id}`); continue; }
+      if (outcome.kind === 'error') { result.warnings.push(`${outcome.error} for article #${article.id}`); continue; }
       if (outcome.kind === 'unpublishable') {
         await db.update(newsArticles).set({ origin: 'synthesized', seoDescription: `[unpublishable] ${outcome.reason}`.slice(0, 160) })
           .where(eq(newsArticles.id, article.id));
@@ -77,7 +81,7 @@ export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: s
       }).where(eq(newsArticles.id, article.id));
       result.synthesized++;
     } catch (err) {
-      result.errors.push(`[synthesis] ${err instanceof Error ? err.message : 'Unknown error'} for article #${article.id}`);
+      result.warnings.push(`[synthesis] ${err instanceof Error ? err.message : 'Unknown error'} for article #${article.id}`);
     }
   }
   const after = await deliverPendingApprovals(RUN_SYNTHESIS_CAP - delivery.attempted);
