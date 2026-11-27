@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- `TASK-0567` chore(news): **xəbər toplama Hostinger cron-a köçdü** — `scripts/cron/news-collect.mjs` (CRON_SECRET saytın öz env-indən), GitHub `news-collect.yml` cədvəli söndürüldü (~360 dəq/ay qənaət).
 - `TASK-0566` fix(news): **run limiti sahibə gedən qaralamaları sayır** — 15 slot yalnız redaktordan keçən qaralamaya ayrılır; «yayınlanmaz» nəticələr slot yemir (26–27.11-də 15 cəhddən 3–4 xəbər gəlirdi). AI cəhdi/run ≤ 40.
 - `TASK-0565` content(blog): **159–163 üz qabığı şəkilləri** — `public/images/blog/*.webp` (1600×900); Cloudinary yükləməni rədd edir (`cloud_name is disabled`), ona görə lokal yol.
 - `TASK-0563` fix(news): **tək xəbərin xətası run-ı qırmızı etmir** — AI-nin yaza bilmədiyi xəbər (qadağan söz, pozuq JSON) `warnings`-ə düşür; run yalnız sistem xətasında (DB, açar, Telegram) və ya bütün xəbərlər alınmayanda qırmızı olur.

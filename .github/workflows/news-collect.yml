@@ -4,9 +4,9 @@ name: News Collect (every 2h)
 # 6-hourly collection missed most agency stories (e.g. the restaurant tax-relief news).
 # The web server reads the feeds; this job is one curl (~1 min). 12 runs/day ≈ 360 min/month, offset by
 # dropping three heavy `npm ci` collection runs from news-ingest.yml (net Actions cost ≈ unchanged).
+# TASK-0567: schedule moved to Hostinger cron (scripts/cron/news-collect.mjs, every 2 h at :30).
+# This workflow stays for manual runs only.
 on:
-  schedule:
-    - cron: '30 */2 * * *'
   workflow_dispatch:
 
 concurrency:
