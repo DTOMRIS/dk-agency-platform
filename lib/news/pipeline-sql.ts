@@ -7,6 +7,11 @@ import { sql } from 'drizzle-orm';
  */
 export const DAILY_SYNTHESIS_CAP = 30;
 export const RUN_SYNTHESIS_CAP = 15;
+/**
+ * TASK-0566: AI drafting attempts per run (writer + editor pass each). Unpublishable results no longer
+ * spend RUN_SYNTHESIS_CAP slots, so this bounds DeepSeek cost and run time (~6 s per attempt).
+ */
+export const MAX_AI_ATTEMPTS_PER_RUN = 40;
 
 export function reserveQuery(day: string, articleId: number, runKey: string) {
   return sql`INSERT INTO news_pipeline_budget(day, slot, article_id, run_key)

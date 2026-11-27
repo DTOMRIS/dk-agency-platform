@@ -7,7 +7,7 @@ import { slugifyAz } from '@/lib/utils/slugify-az';
 import { draftNewsArticle } from './editorial';
 import { conflictingSignals, groupSignals, orderForSynthesis, preferredSignal, SOURCE_DAILY_CAP } from './story-policy';
 import { deliverPendingApprovals, queueApproval, recentSignals, reserveSynthesis, todaySourceCounts } from './pipeline-state';
-import { RUN_SYNTHESIS_CAP } from './pipeline-sql';
+import { MAX_AI_ATTEMPTS_PER_RUN, RUN_SYNTHESIS_CAP } from './pipeline-sql';
 import { isRegulationTopic } from './scoring-config';
 import { loadDecisionContext } from './owner-feedback';
 
@@ -34,10 +34,16 @@ export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: s
   const perSource = await todaySourceCounts();
   // TASK-0561: the owner's last decisions + titles he already saw this week steer the editor pass.
   const decisions = await loadDecisionContext();
+  // TASK-0566: the run cap counts drafts that reach the owner, not AI attempts. Since TASK-0561 the
+  // editor pass rejects ~2/3 of title-only signals as unpublishable; when those spent the 15 slots, a
+  // run delivered only 3–4 drafts (26–27.11). Budget slots are now reserved only for publishable drafts;
+  // AI calls per run are bounded separately by MAX_AI_ATTEMPTS_PER_RUN.
+  const cap = Math.min(RUN_SYNTHESIS_CAP, Math.max(0, limit));
   let attempts = 0;
+  let drafted = 0;
   let reviews = 0;
   for (const group of groups) {
-    if (attempts >= Math.min(RUN_SYNTHESIS_CAP, Math.max(0, limit))) break;
+    if (drafted >= cap || attempts >= MAX_AI_ATTEMPTS_PER_RUN) break;
     const eligible = group.filter((x) => ['rss', 'newsdata'].includes(x.origin)
       && x.status === 'fetched' && !x.contentAz && x.publishedAt
       && +x.publishedAt >= Date.now() - 14 * 86400_000 && +x.publishedAt <= Date.now() + 3600_000);
@@ -60,9 +66,7 @@ export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: s
     const source = article.author ?? '';
     if ((perSource.get(source) ?? 0) >= SOURCE_DAILY_CAP) { result.skipped++; continue; }
     const sourceUrls = group.filter((x) => x.id !== article.id).map((x) => x.externalUrl);
-    if (!await reserveSynthesis(article.id, runKey)) { result.skipped++; continue; }
     attempts++;
-    perSource.set(source, (perSource.get(source) ?? 0) + 1);
     try {
       const outcome = await draftNewsArticle(article, apiKey, decisions);
       if (outcome.kind === 'error') { result.warnings.push(`${outcome.error} for article #${article.id}`); continue; }
@@ -72,6 +76,11 @@ export async function synthesizeFetchedNews(limit = RUN_SYNTHESIS_CAP, runKey: s
         result.unpublishable++;
         continue;
       }
+      // TASK-0566: reserve the day/run slot only now. A full day or run ends the loop; the draft is dropped
+      // and the signal stays `fetched` for the next run.
+      if (!await reserveSynthesis(article.id, runKey)) { result.skipped++; break; }
+      drafted++;
+      perSource.set(source, (perSource.get(source) ?? 0) + 1);
       // Queue before saving content; a crash cannot leave a completed draft without delivery state.
       await queueApproval(article.id, outcome.editorNote, sourceUrls);
       decisions.recentTitles.push(outcome.titleAz); // same-run repeats are caught too
