@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- `TASK-0566` fix(news): **run limiti sahibə gedən qaralamaları sayır** — 15 slot yalnız redaktordan keçən qaralamaya ayrılır; «yayınlanmaz» nəticələr slot yemir (26–27.11-də 15 cəhddən 3–4 xəbər gəlirdi). AI cəhdi/run ≤ 40.
 - `TASK-0565` content(blog): **159–163 üz qabığı şəkilləri** — `public/images/blog/*.webp` (1600×900); Cloudinary yükləməni rədd edir (`cloud_name is disabled`), ona görə lokal yol.
 - `TASK-0563` fix(news): **tək xəbərin xətası run-ı qırmızı etmir** — AI-nin yaza bilmədiyi xəbər (qadağan söz, pozuq JSON) `warnings`-ə düşür; run yalnız sistem xətasında (DB, açar, Telegram) və ya bütün xəbərlər alınmayanda qırmızı olur.
 - `TASK-0564` chore(ci): **workflow qoruyucuları** — `state-snapshot.yml`-dən `npm ci` + tam build çıxarıldı (nəticəsi yalnız "PASS" sözü idi; skript yalnız `node:fs/path` işlədir), timeout 20 → 5 dəq; `state-snapshot`, `drift-audit`, `fetch-news`, `auto-merge-content`-ə `concurrency` + `cancel-in-progress`. `.claude/CLAUDE.md`: hosting Vercel deyil, Hostinger.

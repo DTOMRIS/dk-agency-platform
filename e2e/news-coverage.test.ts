@@ -7,7 +7,7 @@ import Parser from 'rss-parser';
 import { mapLimit, repairFeedXml, RSS_FEEDS } from '../lib/news/rss-ingest';
 import { isRegulationTopic, scoreNewsItem } from '../lib/news/scoring-config';
 import { orderForSynthesis, REGULATION_SLOTS, SOURCE_DAILY_CAP, type Signal } from '../lib/news/story-policy';
-import { DAILY_SYNTHESIS_CAP, RUN_SYNTHESIS_CAP } from '../lib/news/pipeline-sql';
+import { DAILY_SYNTHESIS_CAP, MAX_AI_ATTEMPTS_PER_RUN, RUN_SYNTHESIS_CAP } from '../lib/news/pipeline-sql';
 
 async function main() {
   // 1. AFN.az shape (2026-11-05): raw HTML with an unclosed <img> inside <description>.
@@ -57,6 +57,9 @@ async function main() {
   // 4. Caps (owner 2026-11-05: back to the old volume).
   assert.equal(DAILY_SYNTHESIS_CAP, 30);
   assert.equal(RUN_SYNTHESIS_CAP, 15);
+  // TASK-0566: run cap counts delivered drafts; AI attempts bounded separately and above the cap.
+  assert.equal(MAX_AI_ATTEMPTS_PER_RUN, 40);
+  assert.ok(MAX_AI_ATTEMPTS_PER_RUN > RUN_SYNTHESIS_CAP);
   assert.equal(SOURCE_DAILY_CAP, 5);
 
   // 5. mapLimit keeps order and never exceeds the limit.
